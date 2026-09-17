@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4B64F93B3;
-	Thu, 17 Sep 2026 16:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5844F93B4;
+	Thu, 17 Sep 2026 16:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664248; cv=none; b=eFln8n45L2475z9nAV+T7P4tHu9rXTGJV1vCGROyu+rOnDKT3qDKD8PscaJvnqlYqHQIfCnpMJC+Cx1lwuOSR76cQQnQ/iw2NfcnJrx1vIY6t4ArY/tn/QiXm7EE3GU+Hn2D22e+Ee5CdWth6uEcIiw3uKZ7Vr6cMAo6hEBY8jA=
+	t=1789664251; cv=none; b=u/oKJIT8u8gAkbs39vg6VdlgcxhqkZPvFzFWASF7FJLj5x7BkqLg711CnI5XEBVldL2wQpq32HK5JcFmNa0up8aR8CLoAVFUPBBr17thaM0ltM8vrvQEP0dv7p2d7PM1qusPba8bbogneXTe67rHs55uAuQ88kStp5bDH2v05u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664248; c=relaxed/simple;
-	bh=FmSrhdRg9avKIptGBYRwW2k/ew1cYj43Pmm4mbzZkTQ=;
+	s=arc-20240116; t=1789664251; c=relaxed/simple;
+	bh=XOuP2j0OHxQ8dLvw+drMPoR+l4vS06yW0uLBk0z5Luo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9FRmizqlvCXF5fgtM2tN3FaHOTAhYJWgIPo0cwDNECoZlAwNVOOVSwRc67q4c6StECfHRgrhRILy4IEK7gx2CWrkgCsYvlIsCfi9hYKfrkdl6svgwm08rvn78ZcT7NeAcEQVEV6md+ekThRCtON70PJUp8E3wz/h9hftOKFQ/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wi8wjPwI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UCeI+h7mHyqhzMJWaz+PQsoeUiTRxl26Gmm63kkFKCtDh32dJWvhsbyrUgBUp9utKDnJUWQCatEKQXe4JFDxmiiystoOkHkUex1fyIJeSUVNT8zNcw3f6oB4Q077cOtbj2mO5mOYukIkgk1lrvxjpFwD9FxutY105c0N7WqkhRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twjwEYFI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wi8wjPwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430111F000FF;
-	Thu, 17 Sep 2026 16:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twjwEYFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F1A1F000FF;
+	Thu, 17 Sep 2026 16:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664246;
-	bh=eeHsivM2BY/93VLdVdC0sYEW32Zcfx2qZQ2Zvg4bWCg=;
+	s=korg; t=1789664249;
+	bh=CVj5HlsOqR2IpffAtO8MDHCT3RsF+zdNPx51LCftuaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wi8wjPwIQFNahurdx0hvGDALp48mY52TdDMh7YD9X05OndTw+L9dwg9TAvboCLxe4
-	 4eBDqqdObrsbsg3C9Rw0wL0He2U3AH8kzckdg5DlARFptBepcLcr0vRtwJZIbhmkw0
-	 D7BaDTDVaGtHB6r0ru1lg75RaZFT/KkNNQy/Wmkw=
+	b=twjwEYFIbHLueA4NiY0xZbUZj8NWwA7okk42nQDSLKkXJTQtTMnLFn7WoCs1dnRz0
+	 iJfGE4cmq8AGuTMmU9lXSLPCM+x1MqVqGWRPXhF/doBcv9Qpwgzig+cOwRv8ZR9B99
+	 Jb1QpbBay3k9e4Sy+HloobBbBGMXdHHHpXvQh4Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0309/1250] wifi: iwlwifi: add support for AX231
-Date: Thu, 17 Sep 2026 16:01:44 +0100
-Message-ID: <20260917151600.482517510@linuxfoundation.org>
+Subject: [PATCH 6.18 0310/1250] usb: xhci: Improve Soft Retries after short transfers
+Date: Thu, 17 Sep 2026 16:01:45 +0100
+Message-ID: <20260917151600.508868487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,98 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 1821c068aa5ea852970b5c9ca05b21681f5d8e83 ]
+[ Upstream commit e765ab012f73717238c95ab9c34bfc3c767fa48c ]
 
-AX231 is a device that is based on AX211 that doesn't support 6E and
-its bandwidth is limited to 80 MHz.
-Just reuse the radio config from AX203 which has the exact same
-characteristics.
-It has a specific subdevice ID to allow the driver to differentiate
-between AX211 and AX231.
+A short transfer is a successful one, so reset the error count.
+Otherwise, endpoints which always complete short are limited to
+three retries per endpoint life rather than per URB.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260512082114.0685ed313987.Ibcfa24e196ac778405d2843f0984b66ca167704e@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260603091132.1110849-7-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/cfg/rf-gf.c  | 3 ++-
- drivers/net/wireless/intel/iwlwifi/iwl-config.h | 4 +++-
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c   | 3 ++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/rf-gf.c b/drivers/net/wireless/intel/iwlwifi/cfg/rf-gf.c
-index c16cda087a7c3..307b557dce997 100644
---- a/drivers/net/wireless/intel/iwlwifi/cfg/rf-gf.c
-+++ b/drivers/net/wireless/intel/iwlwifi/cfg/rf-gf.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-  * Copyright (C) 2015-2017 Intel Deutschland GmbH
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- #include "iwl-config.h"
- 
-@@ -71,6 +71,7 @@ const char iwl_ax411_killer_1690i_name[] =
- 
- const char iwl_ax210_name[] = "Intel(R) Wi-Fi 6E AX210 160MHz";
- const char iwl_ax211_name[] = "Intel(R) Wi-Fi 6E AX211 160MHz";
-+const char iwl_ax231_name[] = "Intel(R) Wi-Fi 6 AX231";
- const char iwl_ax411_name[] = "Intel(R) Wi-Fi 6E AX411 160MHz";
- 
- IWL_FW_AND_PNVM(IWL_SO_A_GF_A_FW_PRE, IWL_GF_UCODE_API_MAX);
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-config.h b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-index 3b4f990a8d0bb..cfdea6afe3bf6 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (C) 2005-2014, 2018-2021 Intel Corporation
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- #ifndef __IWL_CONFIG_H__
- #define __IWL_CONFIG_H__
-@@ -670,6 +670,7 @@ extern const char iwl_ax411_killer_1690s_name[];
- extern const char iwl_ax411_killer_1690i_name[];
- extern const char iwl_ax210_name[];
- extern const char iwl_ax211_name[];
-+extern const char iwl_ax231_name[];
- extern const char iwl_ax411_name[];
- extern const char iwl_killer_be1750s_name[];
- extern const char iwl_killer_be1750i_name[];
-@@ -739,6 +740,7 @@ extern const struct iwl_rf_cfg iwl_rf_hr;
- extern const struct iwl_rf_cfg iwl_rf_hr_80mhz;
- 
- extern const struct iwl_rf_cfg iwl_rf_gf;
-+#define iwl_rf_ot iwl_rf_hr_80mhz
- #endif /* CONFIG_IWLMVM */
- 
- #if IS_ENABLED(CONFIG_IWLMLD)
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index cd0c416e927a7..0e8481219839b 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2005-2014, 2018-2025 Intel Corporation
-+ * Copyright (C) 2005-2014, 2018-2026 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -1016,6 +1016,7 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct iwl_dev_info iwl_dev_info_table[] = {
- 
- /* GF RF */
- 	IWL_DEV_INFO(iwl_rf_gf, iwl_ax211_name, RF_TYPE(GF)),
-+	IWL_DEV_INFO(iwl_rf_ot, iwl_ax231_name, RF_TYPE(GF), SUBDEV(0x0294)),
- 	IWL_DEV_INFO(iwl_rf_gf, iwl_ax411_name, RF_TYPE(GF), CDB),
- 	IWL_DEV_INFO(iwl_rf_gf, iwl_ax210_name, DEVICE(0x2725)),
- 
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 71d292598de85..75f0e438f34fd 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2584,6 +2584,7 @@ static void process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
+ 		td->status = 0;
+ 		break;
+ 	case COMP_SHORT_PACKET:
++		ep->err_count = 0;
+ 		td->status = 0;
+ 		break;
+ 	case COMP_STOPPED_SHORT_PACKET:
 -- 
 2.53.0
 
