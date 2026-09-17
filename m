@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72935503910;
-	Thu, 17 Sep 2026 17:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82596502D6C;
+	Thu, 17 Sep 2026 17:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667329; cv=none; b=TUFXzcydIdc23URSArfc23s6mSbPc10re//qWZntxIP8TexNOHaUKBxlfvViRRR/zsow9ImgLsUkucFghfMcTLYw7D3aBn/gCc4swaLbw8pi3CL+6jh2Rd7w8YuGJuUxQ2sglzHlH7RRZ42uaSJxknc+0dPInNN/uZrXbn/T8T0=
+	t=1789667332; cv=none; b=drkiIqACEpyvrQ51asyEyk+SssL1Xuc+lWnlSrlAoQlcbOGFpO+bQo9X9dcfrXykYqBY7sAGNU912a+ccbJ3jycrzsnPCS9dlhs5PDfydM7JL0XOXYDxOJ0WgFspXt8DOJeQ4baFav0eRMzwu0f6b0polNlSRY+mBeDo5tNuoBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667329; c=relaxed/simple;
-	bh=ucDAxXQRmBJEx7neLpTryY7Q4WW6ZXdXoccvBDVNi9s=;
+	s=arc-20240116; t=1789667332; c=relaxed/simple;
+	bh=RWmgRm05WfVKJjVWF69+L6zNl+hvSEMbBTNexP82omc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBkb6Ag93oYwk3E9RIDW4V5Aq+K2BtnQV2pbBJq2xIvyll87CexbdcQnXDGbGJXEC40xe8xYSfiMEG9UwHlfJ5BERUM+ezFMlWv5NriwPO6HbhtRzpbxdeFDwx6iwo0cDV2oWtIaikf3pTehBW+9GeIM7gV5zUBBKkxGu4m+cK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwR53zpv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uNnklqsqk4RffbnyN0xWNhM/OFbcmoFeHJM85O5EsjFxX8lvmpO2GSowFoglzxY6gWpzGRKGaJYl4FvDJYruwwB1lV+2WCg9pScsgdQsgqqlAZgqbIGOrRydd7AGmf0riO/3lhfdCJK1hrivzxk19sQDLCgQVdm2sgIrcJ3RgZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=borYYz2G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwR53zpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EBF1F000FF;
-	Thu, 17 Sep 2026 17:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="borYYz2G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34871F000FF;
+	Thu, 17 Sep 2026 17:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667328;
-	bh=td4Pd2woWoSLdFn1+nLjc/BDHa0jT44TEuYEQ93qZy4=;
+	s=korg; t=1789667331;
+	bh=4m+Ttd3/S0eL7WApO/P7cTwigxrwuen5GFXUkcAGUb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GwR53zpvDMFKlpyQfsTkNPc57oUxOfBTERlTNAY6F26TOOK+osFSJIWM/HsunDZUP
-	 wa4BPG+CJgvBeh4lMGp0lhrxcQo4iIrwBRHwRf9hD2OjxVl2F2EzdeXVOuo+SXP7k1
-	 w25YuIgfRSgEnXG8nOj3ewF3WpzFvuZCckCr7Ba4=
+	b=borYYz2GAUEMA0qrhBRvLtAKX2+8ifpMs7LSbTKPD4P9DQSxgPGJa8x31MeXHQUJA
+	 NrXzroNrHX6pcpZw4pXfRjm6JMm9eVXPk6mqmWj+X1i70TiE1BsN7NSnY2j9LMuSDF
+	 rLgpm6GkhSKUbQEBBxfC9f7AA/O7Qv6mi3rRoEXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0057/1102] dlm: add usercopy whitelist to dlm_cb cache
-Date: Thu, 17 Sep 2026 16:00:00 +0100
-Message-ID: <20260917151540.884771775@linuxfoundation.org>
+Subject: [PATCH 6.12 0058/1102] PCI/sysfs: Add CAP_SYS_ADMIN check to __resource_resize_store()
+Date: Thu, 17 Sep 2026 16:00:01 +0100
+Message-ID: <20260917151540.910596777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,52 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit b5314f2c6654a3616fd72777deb1ca766cc50618 ]
+[ Upstream commit 25ec7f57deceec633f27bc93b615f951e2ade814 ]
 
-The dlm_cb slab cache is created with kmem_cache_create(), which
-provides no usercopy whitelist. When a callback carries LVB data,
-dlm_user_add_ast() copies the LVB into the inline lvbptr[] array within
-the slab-allocated struct dlm_callback and redirects ua->lksb.sb_lvbptr
-to point to it. copy_result_to_user() then calls copy_to_user() with
-this pointer. With CONFIG_HARDENED_USERCOPY enabled, this triggers
-usercopy_abort().
+Currently, the __resource_resize_store() allows writing to the
+resourceN_resize sysfs attribute to change a BAR's size without checking
+for capabilities, currently relying only on the file access check.
 
-Switch to kmem_cache_create_usercopy() with a whitelist covering the
-lvbptr field.
+Resizing a BAR modifies PCI device configuration and can disrupt active
+drivers.  After the upcoming conversion to static attributes, it will also
+trigger resource file updates via sysfs_update_groups().
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Add a CAP_SYS_ADMIN check to prevent unprivileged users from performing BAR
+resize operations.
+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260508043543.217179-6-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/memory.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/pci-sysfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/dlm/memory.c b/fs/dlm/memory.c
-index 5c35cc67aca4c..ee55994ce90d8 100644
---- a/fs/dlm/memory.c
-+++ b/fs/dlm/memory.c
-@@ -48,8 +48,10 @@ int __init dlm_memory_init(void)
- 	if (!rsb_cache)
- 		goto rsb;
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index bfbb605c40191..458c99388a305 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1431,6 +1431,9 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
+ 	int ret;
+ 	u16 cmd;
  
--	cb_cache = kmem_cache_create("dlm_cb", sizeof(struct dlm_callback),
-+	cb_cache = kmem_cache_create_usercopy("dlm_cb", sizeof(struct dlm_callback),
- 				     __alignof__(struct dlm_callback), 0,
-+					 offsetof(struct dlm_callback, lvbptr),
-+					 sizeof_field(struct dlm_callback, lvbptr),
- 				     NULL);
- 	if (!cb_cache)
- 		goto cb;
++	if (!capable(CAP_SYS_ADMIN))
++		return -EPERM;
++
+ 	if (kstrtoul(buf, 0, &size) < 0)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
