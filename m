@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE4B50257F;
-	Thu, 17 Sep 2026 17:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A385370D6D;
+	Thu, 17 Sep 2026 17:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665069; cv=none; b=RN7HJSS8IumR1vPB4FCyT9SyOvq6ySVPdmtc6cfMyrae+NZ1D9MdMT3gDLlKfotrqymA0w+oad+Ji1oSu0YQHIeLeRXFo/BL6vJ8FuUG3ylwtNRl2pXN9tOSoi7IRmXhoUZl6gn/Y1Naiy1ZzLHGNsHIwzDBoMuVrpm/xEowCf0=
+	t=1789665073; cv=none; b=Fvw1DPHquzhCU+0rDpsVnhFHVCzDGopzwS718jnydW6z8O4M2d0Wd7w0bDjdIv0TG/mqN+aSjK3cuboQwKP3YIH7SJumJMuPn49NrvBaNcIIUMsYtRmbzlpMEu7y3UQIfJ0bdCKMOBnhUwDLqWgUCp3/R4LHEjWQxTDvocIJh8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665069; c=relaxed/simple;
-	bh=VyAisWUoynKO5KRDjhTTs2RRs7sVRYA4SDG/PTD09Rk=;
+	s=arc-20240116; t=1789665073; c=relaxed/simple;
+	bh=uegayGGWDAWBv0ADLnF7Xo/YlnP9vWRWW4+JBRyDhQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdPCfrewO6ctvkzSo6HoETI3nNZPh3E0N2IQWNjQpf8n77tYJ2ut9G+brh9hic8AySxFG8l4137dWQYDRuWdk83jxCxhkLERqy42t9UIK/lYV5N5DloHOsP5IT08SpD714TUe3O/QiBU/m7f2ZxK96nckC4XtlMQBjbHaeoBGVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4a2tN3A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYosC7+CWdFUP5uYbF3lpOpARbzFCFNkUInAvX8O+mfOCrKFzMbBZBsThr1kYVPxaSt4GJsRkMqQANQwfS2jKZByDHhSLm9t8dUz4LFSeMYiZ7QjwTVsHpj5SMoS/R5NbmFnEn5JZb8z2ye02yeneQnYnrYydo52x+oXWmUXYH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xo8NOH/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4a2tN3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4131F00893;
-	Thu, 17 Sep 2026 17:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xo8NOH/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D4D1F00893;
+	Thu, 17 Sep 2026 17:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665068;
-	bh=FMy54a/WMjKHZwBoCfsTxjdvODGE1ijkvF8u/O14JHc=;
+	s=korg; t=1789665071;
+	bh=kSbnl+7WgizQmccsJ2lF302g/ULlILBDrPDcfVfcWxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4a2tN3AucZwPkIa97csmDIH5Bmq6Nx84r3oz5PSMlIKvCeb8fKVS5j8MG+XkwZ3v
-	 qDWIMxffWQk3/x9MEzzpr//dh6qIv2sPGRY40fpJ+NQjneDxTHLEpL+rM/Ea+47PJz
-	 I0/413t3AmXKkuX52ylx4cSOfJz9TpYo53LQdQCs=
+	b=xo8NOH/7BInH6ko0SvSOtm7nwL/T6nPPufiigYV2iGJyoNpkxLHtIaTEFXd1P1VAn
+	 xJdCbJF3pB2tnlF7MSZdphBWB72yhhwDdsDlWY1xwqcwLagbwsrkGBoutn484jewWj
+	 XB1uJ0YioEgZedILNmYCYVoiyENj3uk+/U3uED5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0582/1250] netfs: Fix barriering when walking subrequest list
-Date: Thu, 17 Sep 2026 16:06:17 +0100
-Message-ID: <20260917151607.663061494@linuxfoundation.org>
+Subject: [PATCH 6.18 0583/1250] bpf: Mask pseudo pointer values in verifier logs
+Date: Thu, 17 Sep 2026 16:06:18 +0100
+Message-ID: <20260917151607.690317196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,66 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 
-[ Upstream commit 5c6ce05e406520290c1d89da97fb3cd70c09137d ]
+[ Upstream commit 72a85e9464a5332fb2cd7efd26d9295275ceda2d ]
 
-Fix the barriering used when walking the subrequest list in retry as
-there's a possibility of seeing a subreq that's just been added by the
-application thread.
+print_bpf_insn() masks ldimm64 immediates for pointer-bearing pseudo
+sources when pointer leaks are not allowed, but the mask only covers
+BPF_PSEUDO_MAP_FD and BPF_PSEUDO_MAP_VALUE.
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Link: https://sashiko.dev/#/patchset/20260608145432.681865-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/138807.1782980582@warthog.procyon.org.uk
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+BPF_PSEUDO_MAP_IDX, BPF_PSEUDO_MAP_IDX_VALUE, and BPF_PSEUDO_BTF_ID can
+also be resolved to kernel pointer values before the verifier log prints
+the instruction. Include them in the existing pointer classification so
+the log prints 0x0 instead of the rewritten address.
+
+Fixes: 4976b718c355 ("bpf: Introduce pseudo_btf_id")
+Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
+Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+Link: https://lore.kernel.org/r/20260623-f01-13-pseudo-btf-id-cap-bpf-v2-1-a190ebb8f3e2@mails.tsinghua.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/read_retry.c  | 7 ++++++-
- fs/netfs/write_retry.c | 7 ++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ kernel/bpf/disasm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index f59a70f3a086b..2b42758e01ec9 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -98,7 +98,12 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
- 			goto abandon;
- 		}
+diff --git a/kernel/bpf/disasm.c b/kernel/bpf/disasm.c
+index 20883c6b1546c..f52c174f2dbb1 100644
+--- a/kernel/bpf/disasm.c
++++ b/kernel/bpf/disasm.c
+@@ -323,7 +323,10 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
+ 			 */
+ 			u64 imm = ((u64)(insn + 1)->imm << 32) | (u32)insn->imm;
+ 			bool is_ptr = insn->src_reg == BPF_PSEUDO_MAP_FD ||
+-				      insn->src_reg == BPF_PSEUDO_MAP_VALUE;
++				      insn->src_reg == BPF_PSEUDO_MAP_VALUE ||
++				      insn->src_reg == BPF_PSEUDO_MAP_IDX ||
++				      insn->src_reg == BPF_PSEUDO_MAP_IDX_VALUE ||
++				      insn->src_reg == BPF_PSEUDO_BTF_ID;
+ 			char tmp[64];
  
--		list_for_each_continue(next, &stream->subrequests) {
-+		for (;;) {
-+			/* Read pointer to subreq before reading subreq state. */
-+			next = smp_load_acquire(&next->next);
-+			if (next == &stream->subrequests)
-+				break;
-+
- 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
- 			if (subreq->start + subreq->transferred != start + len ||
- 			    test_bit(NETFS_SREQ_BOUNDARY, &subreq->flags) ||
-diff --git a/fs/netfs/write_retry.c b/fs/netfs/write_retry.c
-index 32735abfa03f0..058bc7a166a59 100644
---- a/fs/netfs/write_retry.c
-+++ b/fs/netfs/write_retry.c
-@@ -72,7 +72,12 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
- 		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags))
- 			return;
- 
--		list_for_each_continue(next, &stream->subrequests) {
-+		for (;;) {
-+			/* Read pointer to subreq before reading subreq state. */
-+			next = smp_load_acquire(&next->next);
-+			if (next == &stream->subrequests)
-+				break;
-+
- 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
- 			if (subreq->start + subreq->transferred != start + len ||
- 			    test_bit(NETFS_SREQ_BOUNDARY, &subreq->flags) ||
+ 			if (is_ptr && !allow_ptr_leaks)
 -- 
 2.53.0
 
