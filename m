@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA31A4E77F9;
-	Thu, 17 Sep 2026 17:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A944ED18A;
+	Thu, 17 Sep 2026 17:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667085; cv=none; b=sCgcfYlmcZjMIsMSPNeTIpT05Vwp9Yt82SOQQsWFrKZjcAENblgNwSEwO+NMEeVLtx5P0sEDvxRc/EOCvkRhPN5Ajadoh27MMqdulGMTcxumPTnSJc2tDV97HfJ51RU86oMSr4uWccbtQ7DYoEY+v8y4dyvkteRBskGpHvYHo74=
+	t=1789667088; cv=none; b=H6qwnurosneWjnwJ/Kmb7BpIcfsIqIlqOqFUCuBxXpjE2UzKmB9G65QRUECnaFA7Vy3GVxeP1+n+fy00WAIt3jrK2kf44ye31flgj7xA8BeZYSJXl9UX3QtnQF0lGDlmU/ZiLaiGNgAiYk5Cz0rAxfnXOBpnoh0DnqP0FCmQn10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667085; c=relaxed/simple;
-	bh=Sd+Eicj2nLROxY6oXVPTv2qe9BRIxWzlD+Mbdj5e2H0=;
+	s=arc-20240116; t=1789667088; c=relaxed/simple;
+	bh=neTVCV3D+KhtpRVJfZvo03QuKsWBqacM91crJQ1A4nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qP0ctWRx5rgz70OsNDFbh6ZxWRaq/ngvk+1hZa0jlPdPNBSt6L2ZstWH0Ue6bXMu+giP9b3ECZzpp95g5GeIxDWeZlTRaMsPxuNrhZYyqJA37J5glZHLekcL4vV7m22CJq9v3B7aJKnk4ZURsFAO4tl3056ICFzv64DPg4nRvlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kebEs8mL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hPUZDlOIFOtKagTrgTnsY7xmeKIbZvMH6fpdqJcgOhq7unB45GVXh3UtnXuF/uOZ8O/u/QjbPsc4IYk6exTW4EpYq+qtIte8lwv5O9OdoBPZDwdsYAJZICx3qcK/mFnE8aBHtbX/Noujwp3SJtex64FGxl1vbV2ddJzDRkyg8Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6saVlmf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kebEs8mL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278E11F00893;
-	Thu, 17 Sep 2026 17:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6saVlmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285CC1F00893;
+	Thu, 17 Sep 2026 17:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667083;
-	bh=Er36CgeRoHS2dM4TlGcxnnEUiELR39IuyQGKBuuz6sg=;
+	s=korg; t=1789667086;
+	bh=jM5N3UWQnqZAwzqnzeefRitiC+NnPNCmerVoF7Kz294=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kebEs8mLWuyvpo1GIiKa2rhWJK7SWQsTX0wXLXSTJV3yTmyeZa0U6WMMJwZtToiTB
-	 sC1XvvyJh7yUApzigMai9yIFVxrGpbNFKBkH7Yo37+S51Jmzx+W89QVMAshe+zLELs
-	 7JVlAvyjrgnbt6IzCxpk+79iWaeTAh7MxV/upKlo=
+	b=A6saVlmf9XnvuRiy+cxjs+YYp8ZdunISR+RRCKomuGqRpROSEVFtJnbfDY580vk5m
+	 ycwfOESDegldqWkoVp85//ULIi+ItUZqG19aEr0IQKgEOirCXQwXQ7cH+ElH/7DfKS
+	 5ZnqxNVRD0Vi7LC6TJUwzFaPG1t70qORdWFr13BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1222/1250] erofs: separate plain and compressed filesystems formally
-Date: Thu, 17 Sep 2026 16:16:57 +0100
-Message-ID: <20260917151625.407703298@linuxfoundation.org>
+Subject: [PATCH 6.18 1223/1250] erofs: add sysfs feature entry for xattr prefixes
+Date: Thu, 17 Sep 2026 16:16:58 +0100
+Message-ID: <20260917151625.432672256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,110 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit 7cef3c8341940febf75db6c25199cd83fb74d52f ]
+[ Upstream commit 839f075aabdf5c21048f9801b87c0b841dd3d064 ]
 
-The EROFS on-disk format uses a tiny, plain metadata design that
-prioritizes performance and minimizes complex inconsistencies against
-common writable disk filesystems (almost all serious metadata
-inconsistency cannot happen in well-designed immutable filesystems like
-EROFS). EROFS deliberately avoids artificial design flaws to eliminate
-serious security risks from untrusted remote sources by design,
-although human-made implementation bugs can still happen sometimes.
+Let /sys/fs/erofs/features/xattr_prefixes advertise that this kernel
+supports the EROFS_FEATURE_INCOMPAT_XATTR_PREFIXES on-disk format.
 
-Currently, there is no strict check to prevent compressed inodes,
-especially LZ4-compressed inodes, from being read in plain filesystems.
-
-Starting with erofs-utils 1.0 and Linux 5.3, LZ4_0PADDING sb feature
-is automatically enabled for LZ4-compressed EROFS images to support
-in-place decompression. Furthermore, since Linux 5.4 LTS is no longer
-supported, we no longer need to handle ancient LZ4-compressed EROFS
-images generated by erofs-utils prior to 1.0.
-
-To formally distinguish different filesystem types for improved
-security:
-
- - Use the presence of LZ4_0PADDING or a non-zero
-   `dsb->u1.lz4_max_distance` as a marker for compressed filesystems
-   containing LZ4-compressed inodes only;
-
- - For other algorithms, use `dsb->u1.available_compr_algs` bitmap.
-
-Note: LZ4_0PADDING has been supported since Linux 5.4 (the first formal
-kernel version), so exposing it via sysfs is no longer necessary and is
-now deprecated (but remain it for five more years until 2031):
-
-  `dsb->u1` has been strictly non-zero for all EROFS images containing
-  compressed inodes starting with erofs-utils v1.3 and it is actually
-  a much better marker for compressed filesystems.
-
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-
-Backport dependency note for Linux 6.18:
-
-Retain only the zero_padding sysfs feature removal and the corresponding
-feature-list documentation update.  The documentation layout is required
-for target 839f075aabdf5c21048f9801b87c0b841dd3d064 ("erofs: add sysfs
-feature entry for xattr prefixes") to apply without modification, and the
-sysfs removal keeps that list consistent with the attributes exposed.
-
-Drop the decompressor, inode, superblock, and internal-header changes.
-Those changes are unrelated to the target, and the decompressor hunks
-assume upstream's newer string-based error reporting instead of this
-stable branch's integer-return implementation.  Leave the existing
-compression behavior intact; no functions are added by this dependency.
-
-[ sashal: Reduced backport -- upstream 7cef3c8341940 touches 7 file(s), this
-  backport carries 2. Not backported here:
-  fs/erofs/decompressor.c
-  fs/erofs/erofs_fs.h
-  fs/erofs/inode.c
-  fs/erofs/internal.h
-  fs/erofs/super.c
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 839f075aabdf ("erofs: add sysfs feature entry for xattr prefixes")
+Fixes: 6a318ccd7e08 ("erofs: enable long extended attribute name prefixes")
+Cc: stable@vger.kernel.org # 6.4+
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-fs-erofs |    6 +++---
- fs/erofs/sysfs.c                         |    2 --
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ Documentation/ABI/testing/sysfs-fs-erofs |    2 +-
+ fs/erofs/sysfs.c                         |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 --- a/Documentation/ABI/testing/sysfs-fs-erofs
 +++ b/Documentation/ABI/testing/sysfs-fs-erofs
-@@ -3,9 +3,9 @@ Date:		November 2021
- Contact:	"Huang Jianan" <huangjianan@oppo.com>
- Description:	Shows all enabled kernel features.
+@@ -5,7 +5,7 @@ Description:	Shows all enabled kernel fe
  		Supported features:
--		zero_padding, compr_cfgs, big_pcluster, chunked_file,
--		device_table, compr_head2, sb_chksum, ztailpacking,
--		dedupe, fragments, 48bit, metabox.
-+		compr_cfgs, big_pcluster, chunked_file, device_table,
-+		compr_head2, sb_chksum, ztailpacking, dedupe, fragments,
-+		48bit, metabox.
+ 		compr_cfgs, big_pcluster, chunked_file, device_table,
+ 		compr_head2, sb_chksum, ztailpacking, dedupe, fragments,
+-		48bit, metabox.
++		xattr_prefixes, 48bit, metabox.
  
  What:		/sys/fs/erofs/<disk>/sync_decompress
  Date:		November 2021
 --- a/fs/erofs/sysfs.c
 +++ b/fs/erofs/sysfs.c
-@@ -86,7 +86,6 @@ static struct attribute *erofs_attrs[] =
- ATTRIBUTE_GROUPS(erofs);
- 
- /* Features this copy of erofs supports */
--EROFS_ATTR_FEATURE(zero_padding);
- EROFS_ATTR_FEATURE(compr_cfgs);
- EROFS_ATTR_FEATURE(big_pcluster);
- EROFS_ATTR_FEATURE(chunked_file);
-@@ -100,7 +99,6 @@ EROFS_ATTR_FEATURE(48bit);
+@@ -95,6 +95,7 @@ EROFS_ATTR_FEATURE(sb_chksum);
+ EROFS_ATTR_FEATURE(ztailpacking);
+ EROFS_ATTR_FEATURE(fragments);
+ EROFS_ATTR_FEATURE(dedupe);
++EROFS_ATTR_FEATURE(xattr_prefixes);
+ EROFS_ATTR_FEATURE(48bit);
  EROFS_ATTR_FEATURE(metabox);
  
- static struct attribute *erofs_feat_attrs[] = {
--	ATTR_LIST(zero_padding),
- 	ATTR_LIST(compr_cfgs),
- 	ATTR_LIST(big_pcluster),
- 	ATTR_LIST(chunked_file),
+@@ -108,6 +109,7 @@ static struct attribute *erofs_feat_attr
+ 	ATTR_LIST(ztailpacking),
+ 	ATTR_LIST(fragments),
+ 	ATTR_LIST(dedupe),
++	ATTR_LIST(xattr_prefixes),
+ 	ATTR_LIST(48bit),
+ 	ATTR_LIST(metabox),
+ 	NULL,
 
 
