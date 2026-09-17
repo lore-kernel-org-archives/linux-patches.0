@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803FD48488B;
-	Thu, 17 Sep 2026 15:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B744E3237;
+	Thu, 17 Sep 2026 15:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658778; cv=none; b=InrQB8WvOSU6XmCTCFDQfRKy+BLRKlCQ5ChIsUrDd64xMOQDboXm3HZjIi1kIy4gSuhSR2TnOa/X6csW6uk8x4/JOXVXGZR0KwK5DeLwtvUjGZrScIc3+V7yktmhLN6MTcKqAB8/CaWTTIWuExSS8pdbxUAaL1B2hAB8vmU7Q5A=
+	t=1789658790; cv=none; b=P001Djzi7V9yc0HAh/qpRKpQyGm/+Lul6P3RnIkhhwVaZuH1ymltT4+Y9FvK+Fp1wyBT/Vzwy5WiSgD4TqOmxGxbEpVgEFwCNGAUDAa4uzg+Ys7KVX1TAl5XUKK+NkRZ3/59qXj9sVzzHyYoFNgHMVMU/3h//Cxn4XrksV5p9D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658778; c=relaxed/simple;
-	bh=nZQO9urTrfSh0UrQoEY1bn4iYJxhdz9+PGvEXLaoyeQ=;
+	s=arc-20240116; t=1789658790; c=relaxed/simple;
+	bh=3jX19FaI5fWBl1IzxFVC7WFpcAoNSZkrvJ1+WcutVe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTTAi/iO4UHW0aPFUyQt+oL1w26zwyUzZ7bEFah/eSDpPuKPMXgjkN89WMzp/0QDoy+8bLJZqMHewYvHPvT/2bMevQCAoJXBEfswRFZ2J7QdoT2OArG88qSy5T83m3+4GfRfpuBvnxdALb8IG+HmzB14j3R+Rp63OVaFPiKLGYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mR9HfBGF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=haljy1+3wf4vKFkXujIgq2S3BcrNjf49yJPRBfp8zfEKINn110fzSKKF57gkMJpNGsXqCY3COX0d9qQh9uNcmlnn401QBWHruFyW3Iu4T6rlPYPF24r7LRJWjz1XHaVbmhkVCpiyYSf0i7y1XtsQOpCJRjF9Sbvk5HK4nRBLSGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/Bq2BOs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mR9HfBGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F151F00898;
-	Thu, 17 Sep 2026 15:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/Bq2BOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEAA1F00898;
+	Thu, 17 Sep 2026 15:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658766;
-	bh=Zwm7l+bg7bG8HCBpVRmBRluPfWl3oXF+esS2fdkcL2k=;
+	s=korg; t=1789658779;
+	bh=orLAE7UWMKUbKyLcv0On9lgpg5hooENGeYXGnNkWgG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mR9HfBGF6YliBkZ9SIYe0RLqzJw94sxAeECb5Er9evAoSD25quwNVSIPt1kYUJwRo
-	 1itkKEyoChVLw3069kxqFNLohfyPYR6JpPZugZViDXwEICZldCZgt5jple943U1oBn
-	 817szdkCiFeXcTzXYA5IpTOaOSMvqDiwBO/m4Tzc=
+	b=e/Bq2BOs5BKY8Z5ytUCND5lIiOdPDNgtqytNzZhbaw4ngt3JsJCfRAaIrAtUO4cj+
+	 LxoKUW5rbugI4RERP1FBQoT4z97aohhgd2zIqeW3XYK1t9HlkhW5CZsX1LgHrYygQb
+	 dhLfT7AGN/vOeuaUC4DzZ6SppAuXgH7mJPTCUc7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 032/733] selftests/cgroup: Drop invalid boot isolation comparison
-Date: Thu, 17 Sep 2026 16:05:40 +0100
-Message-ID: <20260917151351.533178458@linuxfoundation.org>
+Subject: [PATCH 7.2 035/733] ufs: do not treat unreadable directory blocks as empty
+Date: Thu, 17 Sep 2026 16:05:43 +0100
+Message-ID: <20260917151351.613441251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,60 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 2bf404b1bd94f50747443234c0a4a5e18e2569bf ]
+[ Upstream commit 08edfb34ee9ca54383970c65ed3a6013e84f5e16 ]
 
-check_isolcpus() clears ISOLCPUS before rebuilding it from sched domain
-data. Comparing that empty value with
-/sys/devices/system/cpu/isolated makes the test fail whenever
-isolcpus=domain is present.
+ufs_empty_dir() scans every directory block to decide whether a
+directory is empty before rmdir() removes it. When ufs_get_folio()
+cannot read or validate a block it returns an error pointer, and the
+loop currently skips that block with continue and keeps scanning the
+remaining blocks.
 
-That sysfs file is generated from HK_TYPE_DOMAIN_BOOT and does not change
-when cpuset updates HK_TYPE_DOMAIN. Re-reading it cannot validate dynamic
-housekeeping updates. The cpuset.cpus.isolated and sched domain checks
-already cover the two dynamic interfaces, so remove the invalid comparison.
+If none of the readable blocks hold an entry, the function returns 1
+and the caller unlinks the directory. A directory whose contents live
+in a block that cannot be read, for example because of an I/O error or
+corrupted directory metadata, is therefore seen as empty and removed,
+losing the entries it still holds.
 
-This can be reproduced on a kernel booted with isolcpus=domain,15:
+Follow the ext2 behaviour and treat an unreadable block as a reason to
+consider the directory not empty, so rmdir() fails instead of
+discarding data that could not be verified.
 
-    # tools/testing/selftests/cgroup/test_cpuset_prs.sh
-
-The test fails its first state-matrix isolation check before the change and
-continues past that check afterward.
-
-Fixes: 6df415aa46ec ("cgroup/cpuset: Defer housekeeping_update() calls from CPU hotplug to workqueue")
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260801013942.279992-1-ali@iusegentoo.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_cpuset_prs.sh | 6 ------
- 1 file changed, 6 deletions(-)
+ fs/ufs/dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-index b2e60671273ec..ebbc5b4def243 100755
---- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-+++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-@@ -791,7 +791,6 @@ check_isolcpus()
- 	EXPECTED_ISOLCPUS=$1
- 	ISCPUS=${CGROUP2}/cpuset.cpus.isolated
- 	ISOLCPUS=$(cat $ISCPUS)
--	HKICPUS=$(cat /sys/devices/system/cpu/isolated)
- 	LASTISOLCPU=
- 	SCHED_DOMAINS=/sys/kernel/debug/sched/domains
- 	if [[ $EXPECTED_ISOLCPUS = . ]]
-@@ -829,11 +828,6 @@ check_isolcpus()
- 	ISOLCPUS=
- 	EXPECTED_ISOLCPUS=$EXPECTED_SDOMAIN
+diff --git a/fs/ufs/dir.c b/fs/ufs/dir.c
+index e62fe56676710..ce43cf20b07c9 100644
+--- a/fs/ufs/dir.c
++++ b/fs/ufs/dir.c
+@@ -590,7 +590,7 @@ int ufs_empty_dir(struct inode * inode)
  
--	#
--	# The inverse of HK_TYPE_DOMAIN cpumask in $HKICPUS should match $ISOLCPUS
--	#
--	[[ "$ISOLCPUS" != "$HKICPUS" ]] && return 1
--
- 	#
- 	# Use the sched domain in debugfs to check isolated CPUs, if available
- 	#
+ 		kaddr = ufs_get_folio(inode, i, &folio);
+ 		if (IS_ERR(kaddr))
+-			continue;
++			return 0;
+ 
+ 		de = (struct ufs_dir_entry *)kaddr;
+ 		kaddr += ufs_last_byte(inode, i) - UFS_DIR_REC_LEN(1);
 -- 
 2.53.0
 
