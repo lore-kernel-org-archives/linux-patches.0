@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5861351588A;
-	Thu, 17 Sep 2026 17:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E1451597A;
+	Thu, 17 Sep 2026 17:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666989; cv=none; b=SXUWdWajIV6L0uZ0sXyeEk/Ext5E2DWUn4PYPyWoUkUdMW0N0cVM1S5uuwQH1xOPZnZSerktro35vLjhwbdW3bbNPrijdC2G06h7vOLL6jdGbf3tHvWoKF2O6mNh+9/ary4Zx+Pr+PrvxKcdgFJ/OBYpuo1awzSDR7qG/1NNss4=
+	t=1789666992; cv=none; b=uGPq3MFwuvuJ0SDV9UfYKCLQE8PBaylHTXQfGKuihyIx7dH/JLrTGdJYVn7vMlYjH/NaTPHV7Wpx7rDrH1S4LbxoxNoSNRX44gFHLqVClBFWyK/H030NCTEjVBYLUYa4nbXTXu6sKvlyTFsoXkZEC97LD4PSyuUCtJmBTwa/3mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666989; c=relaxed/simple;
-	bh=Zpk2HQ2KkCwAonfqx9BJbBFNi/izmJrefZsXSdPsQQQ=;
+	s=arc-20240116; t=1789666992; c=relaxed/simple;
+	bh=M4/cOtAzLT56NtkeywnFiB389Nj/LkBBASlpN7zj7Cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWeYLsMoLnoJuojtVME8tnVHOtUnYLUIXfyNMhfezAIrtJveeuhgmDNaw1lTR2LYNRMxxgFGIUmlU9p//aMvLoLTMHOIsYiQm/X+1bVdZStNtWRPUVUiFmMvTgGLtpikLPmAAnSvd/yV78A+Dcb/Osa1fdzuMLkZvTfJRQGgNhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fu96Q/O/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIWXDIiI5XNSx64Lvr7YYBU+DIwmSZ6MbotOEXGqLONXOXYkSXC92WoY+DI8EhJQwqdI+XtLO2h22RPiYtQGiC4MW88RGldd10Gv9/2uvmhy1TPFXt5pJW5+7Qfba5i6TzU8g+OooA+CwORZV1/XegBmXJ6YJYCu+eamVFzSUgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5PLqpsO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fu96Q/O/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D751F000FF;
-	Thu, 17 Sep 2026 17:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5PLqpsO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909B61F000FF;
+	Thu, 17 Sep 2026 17:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666988;
-	bh=gItvZDFg9MuICasFZkj79dwEV3hHgWf/ecjD60E3Tfg=;
+	s=korg; t=1789666991;
+	bh=EdUt0unv3OMIyluh47MhM2bZGDm7Hn1IDKOoPn7Sba4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fu96Q/O/EyM25qlViajBbno5w184f0PynWFz+/hJ5KVghXfn5dduSHiQRp6EJfovJ
-	 xkdNdAmlgURwrAr7MIv+4d6hBD6nwEniEOXaNWQgmI4lH/IyRv7UFMdB4/+UY7PI3s
-	 SyxpgZmtKQh1xk0iPoQraU7ajRyJDaFSflJGohbU=
+	b=A5PLqpsOhXQnRXMAhVfmbk+28Dxj1TDLG1vRUR0kZAb0Q5qGAQi3VdM38e1MwsSR0
+	 SlHEhgQbRVAFqDq8I1MlI+WSl2+2SWYd71D2hDw/UErznJkwa4mLnUEIVISP/gI6+e
+	 1UURCa83Ep68MFcQuJbYaMWVYVYZpyJX69mV8d68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.18 1153/1250] i2c: smbus: reject oversized block transfers in the common path
-Date: Thu, 17 Sep 2026 16:15:48 +0100
-Message-ID: <20260917151623.514841376@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1144/1250] Revert "arm64: dts: qcom: sar2130p: Fix the PCIe iommu-map entries"
+Date: Thu, 17 Sep 2026 16:15:39 +0100
+Message-ID: <20260917151623.267526399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,101 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+This reverts commit 54176af35d989264e4dce0bee10dd3e4dafb4efb.
 
-commit 3051cd060fa496df42954291fa2306ed2eab4ecc upstream.
-
-The SMBus block transfer length data->block[0] is validated in
-i2c_smbus_xfer_emulated() but that check runs too late for tracepoints
-and is skipped entirely when the adapter provides a native smbus_xfer
-implementation. This allows user-controlled oversized block lengths to
-reach tracepoint memcpy calls and driver callbacks unchecked.
-
-Add an early validation in __i2c_smbus_xfer() that rejects block
-transfers whose caller-supplied length is zero or exceeds
-I2C_SMBUS_BLOCK_MAX before any tracepoint fires or driver callback
-runs. data->block[0] is filled in by the device on SMBus block reads,
-so the check is scoped to operations where the length is actually
-supplied by the caller. This is consistent with the existing -EINVAL
-convention in the emulated path and protects all downstream consumers
-at once: the smbus_write tracepoint, all native smbus_xfer driver
-implementations, and the emulated path.
-
-Two distinct bugs are fixed by this change:
-
-Bug 1: smbus_write tracepoint OOB (include/trace/events/smbus.h)
-  trace_smbus_write() fires before any validation and copies
-  data->block[0]+1 bytes into a 34-byte event buffer. With
-  block[0]=0xfe the tracepoint copies 255 bytes, overflowing by 221.
-
- BUG: KASAN: stack-out-of-bounds in trace_event_raw_event_smbus_write+0x27c/0x530
- Read of size 255 at addr ffff88800d98fcf8 by task poc_smbus/91
- Call Trace:
-  <TASK>
-  __asan_memcpy+0x23/0x80
-  trace_event_raw_event_smbus_write+0x27c/0x530
-  __i2c_smbus_xfer+0x43a/0xa40
-  i2c_smbus_xfer+0x19e/0x340
-  i2cdev_ioctl_smbus+0x38f/0x7f0
-  i2cdev_ioctl+0x35e/0x680
-  __x64_sys_ioctl+0x147/0x1e0
-  do_syscall_64+0xcf/0x15a0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  </TASK>
-
-Bug 2: i2c-stub I2C_SMBUS_I2C_BLOCK_DATA OOB (drivers/i2c/i2c-stub.c)
-  stub_xfer() implements .smbus_xfer directly and only clamps
-  block[0] against 256-command, not I2C_SMBUS_BLOCK_MAX. With
-  block[0]=0xff and command=0 the loop accesses block[1+i] for
-  i up to 254, far past the 34-byte union.
-
- UBSAN: array-index-out-of-bounds in drivers/i2c/i2c-stub.c:223:44
- index 34 is out of range for type '__u8 [34]'
- Call Trace:
-  <TASK>
-  __ubsan_handle_out_of_bounds+0xd7/0x120
-  stub_xfer+0x1971/0x198f [i2c_stub]
-  __i2c_smbus_xfer+0x306/0xa40
-  i2c_smbus_xfer+0x19e/0x340
-  i2cdev_ioctl_smbus+0x38f/0x7f0
-  i2cdev_ioctl+0x35e/0x680
-  __x64_sys_ioctl+0x147/0x1e0
-  do_syscall_64+0xcf/0x15a0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  </TASK>
-
-Both traces reproduced on v7.0-rc6+i2c/for-current with KASAN+UBSAN.
-
-Fixes: 8a325997d95d ("i2c: Add message transfer tracepoints for SMBUS [ver #2]")
-Fixes: 4710317891e4 ("i2c-stub: Implement I2C block support")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-smbus.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/i2c-core-smbus.c
-+++ b/drivers/i2c/i2c-core-smbus.c
-@@ -566,6 +566,18 @@ s32 __i2c_smbus_xfer(struct i2c_adapter
- 	if (res)
- 		return res;
+diff --git a/arch/arm64/boot/dts/qcom/sar2130p.dtsi b/arch/arm64/boot/dts/qcom/sar2130p.dtsi
+index d7a80d832f080..d65ad0df68652 100644
+--- a/arch/arm64/boot/dts/qcom/sar2130p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sar2130p.dtsi
+@@ -1329,8 +1329,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 					 &config_noc SLAVE_PCIE_0 QCOM_ICC_TAG_ALWAYS>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
  
-+	/* Reject invalid caller-supplied block lengths before any
-+	 * tracepoint or native smbus_xfer callback runs.
-+	 */
-+	if (data &&
-+	    (protocol == I2C_SMBUS_I2C_BLOCK_DATA ||
-+	     protocol == I2C_SMBUS_BLOCK_PROC_CALL ||
-+	     (protocol == I2C_SMBUS_BLOCK_DATA &&
-+	      read_write == I2C_SMBUS_WRITE)) &&
-+	    (data->block[0] == 0 ||
-+	     data->block[0] > I2C_SMBUS_BLOCK_MAX))
-+		return -EINVAL;
-+
- 	/* If enabled, the following two tracepoints are conditional on
- 	 * read_write and protocol.
- 	 */
+-			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
++				    <0x100 &apps_smmu 0x1c01 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1455,8 +1455,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 					 &config_noc SLAVE_PCIE_1 QCOM_ICC_TAG_ALWAYS>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+-			iommu-map = <0x0   &apps_smmu 0x1e00 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1e01 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
++				    <0x100 &apps_smmu 0x1e01 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
+-- 
+2.53.0
+
 
 
