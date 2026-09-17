@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDEA53B5F8;
-	Thu, 17 Sep 2026 15:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785F14ABBAD;
+	Thu, 17 Sep 2026 15:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659327; cv=none; b=uWA/6oKZmPOBajJItGVi8gUqPdyRFaWv3JW5AfLFWCKyuPl4kq6FbfVEjM9AWKKzYFnT/Hxs6iFsJotazzuN05SA7ul4X/1fFJf9i2d+zO2JRfxTHzpyoMSCewGFJiq821UsML1u6dAJ2iLTPNaYSI5Xjq1V5I8y6nc2KO5secQ=
+	t=1789659334; cv=none; b=l0JpNfC0WGDA+5elTiPzG3tAHKRA4gRpB9oje9iy6fO0VI2Um+SsgC9Z2+1Ibc0mYo16ZaQUZZwaEdE46VxyQiqUSygaXOjE1y8vfgtmzocmY6V9L9mxmo1ab3sgvlJBT+fyWukDe0ApjiCsSld43yzA8YkrDl9jourOlDyY6G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659327; c=relaxed/simple;
-	bh=zQvS5BuO9AKvLIveh4EeDEzYW+3ZoSXCOp6GMszTi5g=;
+	s=arc-20240116; t=1789659334; c=relaxed/simple;
+	bh=yr2JSTahjmxav2VyZfO4sr/8ER/rAIWaXkWMhmsr8f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sd8vXjYy+kV/itcrBQC1WNl//yorQNWRrE8UIBeoI136mXK8QycR98u4+pMbb6FTWiP7rf59Ew3tPy+i3j3Lgw1n/Fir2GC1KBxIMnif9+CpZpoe4R1RXXhQqpLdHhpE/Wi6lvfXQpo5B+r27b+iWvT9WOCMcuu6me/7sVwN5HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+qF8gb8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R97caoPYByuTg9H0Qg45xYGuRMv70/rIIawH12lEy7x5vsuvY/9PDumr/OEWCfSwBkRl50t+EPqjrkap2hqBBw6K3O2+HNQa/20QpK1n/Nt6tHt9TlJV04Cnfj6A2MEmig7M3sAUd+/wO/+XoTHjflMRNrWjYM9csD5WqFh0Ync=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trmmAp2x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+qF8gb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F9F1F00898;
-	Thu, 17 Sep 2026 15:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trmmAp2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524AE1F000FF;
+	Thu, 17 Sep 2026 15:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659321;
-	bh=1o5Yw8uRUOtptzBacl/943pwIXKEY/UjfTbHPWbltUs=;
+	s=korg; t=1789659323;
+	bh=+lH2Vq++U3fmtyeen1iFLohXWOhR4ZBuyOXV+JTx9fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B+qF8gb8rqmXW1FOCOjdS/ZFwAElop1jLxh4BWNS4nqLfgZpWHGt5/Xcp32I3626M
-	 sVPh9P4DmXxEs8N7j9PF8DWaW7ikgKzrzc7ZCUu91xBPoKDQQsnv6plLZqLjJpxrnb
-	 o4EWxDHjlwKL5MOqSFIrQFHLTHc81wTOps9xvJ5s=
+	b=trmmAp2xTjWG49Wj0Vsc+vXB+zJ75XSPqa6wul6geZtv1xN3I9q8+yEJx8WIekGWv
+	 cfAvYpNOLZ2LU+dzaUISHXdCVXGtA3CbCypGVPD6yFpfPiIOWByWvhey4xUmfj+9mS
+	 KR6IyC3g0m2x/U1nNpymFL7PV3QW2x2f3yvBMxXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Zhaoping Shu <zhaoping.shu@mediatek.com>,
+	HW He <hw.he@mediatek.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 218/733] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
-Date: Thu, 17 Sep 2026 16:08:46 +0100
-Message-ID: <20260917151356.633383183@linuxfoundation.org>
+Subject: [PATCH 7.2 219/733] net: gro: Fix nesting of TCP GSO SKBs in skb_gro_receive_list()
+Date: Thu, 17 Sep 2026 16:08:47 +0100
+Message-ID: <20260917151356.660090351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,47 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: HW He <hw.he@mediatek.com>
 
-[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
+[ Upstream commit 66817a9794263cd2a5dc4e99bf8e5fcc5ff7181e ]
 
-The core software reset issued in stmmac_init_dma_engine() during
-ndo_open() callback clears the MTL RX packet parser registers, but
-stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
-After an ifdown/ifup cycle the hardware therefore runs with the default
-all-pass table while priv->tc_entries still reports the filters as
-installed. Re-apply the RX packet parser table from priv->tc_entries in
-stmmac_hw_setup(), right after the software reset, so the filters are
-restored when the interface is brought up again.
+Fraglist GRO and hardware GRO can create an fraglist of
+HW-GRO packets. This cannot be segmented back into
+the original form on TCP tethering scenario.
 
-Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
+Avoid constructing such a GSO packet, by flushing an already
+built fraglist GRO packet if a hardware GRO packet arrives.
+
+Scenario (Tethering/Forwarding):
+1.Driver submits a single TCP packet, P1. P1 is kept in the
+gro_list as the first packet.
+
+2. The driver submits a TCP GSO skb, P2. P2 has already aggregated
+multiple TCP packets by HW_GRO, and its non-linear data is stored in
+frags[].
+
+3. P1 and P2 match the GRO rules, and since there is no local socket,
+they are aggregated by skb_gro_receive_list(). The resulting skb,
+P3, has a frag_list entry that still contains frags[]:
+P3: [ Linear Data ] -> frag_list -> [ Linear Data ]
+                                    [ frag[1] ]
+                                    [ frag[2] ]
+                                    ...
+4. Later, tcp4_gso_segment() or tcp6_gso_segment() calls
+skb_segment_list() to segment P3. However, skb_segment_list() only
+segments the entries in frag_list. It does not segment the frags[]
+inside P2, so P3 is not restored to the original packets, which leads
+to IP fragmentation or packet drop in the following path.
+
+Check skb_is_gso(skb) and current GRO method, make sure fraglist GRO
+applies to consecutive non-GSO skb, others adopt regular GRO path.
+
+Fixes: 8d95dc474f85 ("net: add code for TCP fraglist GRO")
+Signed-off-by: Zhaoping Shu <zhaoping.shu@mediatek.com>
+Signed-off-by: HW He <hw.he@mediatek.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260901082312.14596-1-zhaoping.shu@mediatek.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ipv4/tcp_offload.c   | 22 ++++++++++++++++------
+ net/ipv6/tcpv6_offload.c | 15 +++++++++++++--
+ 2 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 1946361081fc2..1e88575fdddbb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3676,6 +3676,14 @@ static int stmmac_hw_setup(struct net_device *dev)
- 	/* Initialize MTL*/
- 	stmmac_mtl_configuration(priv);
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index 3b1fdcd3cb29b..e74d99ca9face 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -332,6 +332,7 @@ struct sk_buff *tcp_gro_receive(struct list_head *head, struct sk_buff *skb,
+ 		flush |= skb->ip_summed != p->ip_summed;
+ 		flush |= skb->csum_level != p->csum_level;
+ 		flush |= NAPI_GRO_CB(p)->count >= 64;
++		flush |= NAPI_GRO_CB(p)->is_flist != NAPI_GRO_CB(skb)->is_flist;
+ 		skb_set_network_header(skb, skb_gro_receive_network_offset(skb));
  
-+	/* Apply the RX packet parser table */
-+	if (priv->tc_entries) {
-+		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
-+					priv->tc_entries_max);
-+		if (ret)
-+			return ret;
-+	}
+ 		if (flush || skb_gro_receive_list(p, skb))
+@@ -395,12 +396,20 @@ static void tcp4_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 	struct net *net;
+ 	int iif, sdif;
+ 
+-	if (likely(!(skb->dev->features & NETIF_F_GRO_FRAGLIST)))
+-		return;
+-
+ 	p = tcp_gro_lookup(head, th);
+ 	if (p) {
+-		NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++		/* flist GRO applies to consecutive non-GSO skbs */
++		if (!skb_is_gso(skb) || !NAPI_GRO_CB(p)->is_flist) {
++			NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++			return;
++		}
 +
- 	/* Initialize Safety Features */
- 	stmmac_safety_feat_configuration(priv);
++		/* Fall back to the regular GRO path */
++		if (NAPI_GRO_CB(p)->count == 1)
++			NAPI_GRO_CB(p)->is_flist = 0;
++
++		NAPI_GRO_CB(skb)->is_flist = 0;
++
+ 		return;
+ 	}
  
+@@ -410,7 +419,7 @@ static void tcp4_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 	sk = __inet_lookup_established(net, iph->saddr, th->source,
+ 				       iph->daddr, ntohs(th->dest),
+ 				       iif, sdif);
+-	NAPI_GRO_CB(skb)->is_flist = !sk;
++	NAPI_GRO_CB(skb)->is_flist = !sk && !skb_is_gso(skb);
+ 	if (sk)
+ 		sock_gen_put(sk);
+ }
+@@ -430,7 +439,8 @@ struct sk_buff *tcp4_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 	if (!th)
+ 		goto flush;
+ 
+-	tcp4_check_fraglist_gro(head, skb, th);
++	if (unlikely(skb->dev->features & NETIF_F_GRO_FRAGLIST))
++		tcp4_check_fraglist_gro(head, skb, th);
+ 
+ 	return tcp_gro_receive(head, skb, th);
+ 
+diff --git a/net/ipv6/tcpv6_offload.c b/net/ipv6/tcpv6_offload.c
+index f2a659cd6183c..eec3778855eb8 100644
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -26,7 +26,18 @@ static void tcp6_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 
+ 	p = tcp_gro_lookup(head, th);
+ 	if (p) {
+-		NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++		/* flist GRO applies to consecutive non-GSO skbs */
++		if (!skb_is_gso(skb) || !NAPI_GRO_CB(p)->is_flist) {
++			NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++			return;
++		}
++
++		/* Fall back to the regular GRO path */
++		if (NAPI_GRO_CB(p)->count == 1)
++			NAPI_GRO_CB(p)->is_flist = 0;
++
++		NAPI_GRO_CB(skb)->is_flist = 0;
++
+ 		return;
+ 	}
+ 
+@@ -36,7 +47,7 @@ static void tcp6_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 	sk = __inet6_lookup_established(net, &hdr->saddr, th->source,
+ 					&hdr->daddr, ntohs(th->dest),
+ 					iif, sdif);
+-	NAPI_GRO_CB(skb)->is_flist = !sk;
++	NAPI_GRO_CB(skb)->is_flist = !sk && !skb_is_gso(skb);
+ 	if (sk)
+ 		sock_gen_put(sk);
+ #endif /* IS_ENABLED(CONFIG_IPV6) */
 -- 
 2.53.0
 
