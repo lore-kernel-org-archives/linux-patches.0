@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3364ABBBF;
-	Thu, 17 Sep 2026 16:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972804E3247;
+	Thu, 17 Sep 2026 16:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661020; cv=none; b=oTax7ufm5FBpn0wem4gCzodmy7+R3w96z2Xx0AY85K9n749kVOTheCr33e22gK5uCB6M9gD37uMLHCWeKIAao5lLMFc+fZX6N23nWkf07m1cvU9ZxtcSUkxFwDpU2ySaiup1PCkNS6kzWYTwnh4MWlxdiynOl4gpBwYGhMIlFHg=
+	t=1789661022; cv=none; b=TElvV4Zy9ny5hdZJ60TBrfl9TvJGZyIn8CA1Ct9KgllTa9S+sYqkuRmhDGQwJZLRiXJhFan0z1v9g0D/j8CIIgg1kAGz+AP7JP1/ZH2DEayEZZ22ds3wHmBwQUav3CKSYko2iYrj+QesdZ4k4FCgMmXyFMfWRhBaCUAB8Rmr95s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661020; c=relaxed/simple;
-	bh=t/Jzsu/W3Jdv5AR6JWIqXlnjnQT3FdBSC7HOC+GZq2A=;
+	s=arc-20240116; t=1789661022; c=relaxed/simple;
+	bh=fUDl5HtfgiQfotLhbJrNpoebnqvOsIbViFmMpmTOL1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9MlWB647YhcHQ4gxuWBFoGMm7CNSVby9DuqKf2DT7L/PTOMIN9TYWeIvKuO6nMqeLYLQYWXsxKQCL8XDuSXkP1ulH7dt4c7HqO49nLupNNytXaH6RbpR/lz0wwCptQWrD4wu7x/GifA+9PQ9rtzzpQHySfeN6B7gADAXi/znec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfGfMEyF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D9LlqFN4pKPEbZdA5u/C340bJAp158oSL0PkVWkIuBodV30fKXdtilaFuqm/AacdCPAG1lLesWkb54Ma5KLVmVV+N6h+xQ4ujkqsSF9hcJR/XE3S8jpl0juoZDeg+S0bmHZ9Xjm/PP+DLgvgkcFo4tLF2lHFu1i0sIdhc4Wj4fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07MbmMo6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfGfMEyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C7E1F000FF;
-	Thu, 17 Sep 2026 16:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07MbmMo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE79B1F000FF;
+	Thu, 17 Sep 2026 16:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661018;
-	bh=vjWyhaEs0T2nySp6TCPHxxaEszpgaD7LybSy1Ox9b3k=;
+	s=korg; t=1789661021;
+	bh=w60FO+AmNjyPBUVe6AGDBGPZjDtlxU8JLTO77hZ/EOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfGfMEyF+vgJYA8wA9hxhfJ7EGZpaTH/HTpRUWQ8FA3FquYIAiEV68t+MkPkIRvCS
-	 6Jp7JnBTYpeSK0mnnzjKAEODPrB2bOjZ/C61u4HZOCg17KoGNBttnLBaHjd5furK/h
-	 KUtm7EwQmvYH6P/vT6niPqVdPu5gmpbQe3n9F0cs=
+	b=07MbmMo6swG/TYoOHGiHZL++1IP2tXulSqSaqhXcucsxjrg1XjXMGMKnKAZnboSbX
+	 m2SLxICZfrnzzjmzF/Crq7Tt5lMj7W9juT4WdKkz7Vct5ybBqLht93f2X3h82sjq+v
+	 kEEioHoBc4GUtaheAGQlqYpi93u16dJhj8Uzl77E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0055/1250] thunderbolt: Avoid reserved fields in path config space for USB4 routers
-Date: Thu, 17 Sep 2026 15:57:30 +0100
-Message-ID: <20260917151553.429266532@linuxfoundation.org>
+Subject: [PATCH 6.18 0056/1250] thunderbolt: Dont disable lane adapter if XDomain lane bonding isnt possible
+Date: Thu, 17 Sep 2026 15:57:31 +0100
+Message-ID: <20260917151553.457924437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,87 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 7e49bb89df860bb7352974100cd5dd48752bb646 ]
+[ Upstream commit 7c7345bcde6c611fa8fa13e624207c6005798aa8 ]
 
-According to USB4 spec, USB4 Connection Manager shall not change value
-of any fields that are defined as "RsvdZ" or "VD".  Specifically fields:
-Path Credits Allocated, IFC, ISE fields in path config space shall not
-be written by CM. To handle this, CM shall first read current path
-config space from the hardware, change only the fields that can be
-changed, and then write back the path config space.
+This happens when firmware connection manager is being used. It will
+deal with disabling the lane 1 adapter after the tunnel has been
+established and re-enabling it afterwards. For this reason only do this
+when we know that lane bonding is possible (e.g running software
+connection manager).
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/path.c | 31 ++++++++++++++++++++++---------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ drivers/thunderbolt/xdomain.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/path.c b/drivers/thunderbolt/path.c
-index f9b11dadfbdd5..d8e547286127a 100644
---- a/drivers/thunderbolt/path.c
-+++ b/drivers/thunderbolt/path.c
-@@ -426,7 +426,8 @@ static int __tb_path_deactivate_hop(struct tb_port *port, int hop_index,
- 				 * in the USB4 spec so we clear them
- 				 * only for pre-USB4 adapters.
- 				 */
--				if (!tb_switch_is_usb4(port->sw)) {
-+				if (tb_port_is_null(port) ||
-+				    !tb_switch_is_usb4(port->sw)) {
- 					hop.ingress_fc = 0;
- 					hop.ingress_shared_buffer = 0;
- 				}
-@@ -546,15 +547,18 @@ int tb_path_activate(struct tb_path *path)
- 		__tb_path_deactivate_hop(path->hops[i].in_port,
- 				path->hops[i].in_hop_index, path->clear_fc);
- 
--		/* dword 0 */
-+		/* Needed for USB4 routers, read path config space before write */
-+		res = tb_port_read(path->hops[i].in_port, &hop, TB_CFG_HOPS,
-+				   2 * path->hops[i].in_hop_index, 2);
-+		if (res)
-+			goto err;
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index 6b16fc7254b8e..b27ef872edeac 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -1951,7 +1951,13 @@ static void tb_xdomain_link_exit(struct tb_xdomain *xd)
+ 	if (tb_port_get_link_generation(down) >= 4) {
+ 		down->bonded = false;
+ 		down->dual_link_port->bonded = false;
+-	} else if (xd->link_width > TB_LINK_WIDTH_SINGLE) {
++		return;
++	}
 +
- 		hop.next_hop = path->hops[i].next_hop_index;
- 		hop.out_port = path->hops[i].out_port->port;
--		hop.initial_credits = path->hops[i].initial_credits;
- 		hop.pmps = path->hops[i].pm_support;
- 		hop.unknown1 = 0;
- 		hop.enable = 1;
- 
--		/* dword 1 */
- 		out_mask = (i == path->path_length - 1) ?
- 				TB_PATH_DESTINATION : TB_PATH_INTERNAL;
- 		in_mask = (i == 0) ? TB_PATH_SOURCE : TB_PATH_INTERNAL;
-@@ -564,12 +568,21 @@ int tb_path_activate(struct tb_path *path)
- 		hop.drop_packages = path->drop_packages;
- 		hop.counter = path->hops[i].in_counter_index;
- 		hop.counter_enable = path->hops[i].in_counter_index != -1;
--		hop.ingress_fc = path->ingress_fc_enable & in_mask;
- 		hop.egress_fc = path->egress_fc_enable & out_mask;
--		hop.ingress_shared_buffer = path->ingress_shared_buffer
--					    & in_mask;
--		hop.egress_shared_buffer = path->egress_shared_buffer
--					    & out_mask;
-+		hop.egress_shared_buffer = path->egress_shared_buffer & out_mask;
-+		/*
-+		 * Protocol adapters IFC and ISE bits, and Path Credits
-+		 * Allocated are vendor defined in the USB4 spec so we
-+		 * program them only for pre-USB4 and lane adapters.
-+		 */
-+		if (tb_port_is_null(path->hops[i].in_port) ||
-+		    !tb_switch_is_usb4(path->hops[i].in_port->sw)) {
-+			hop.initial_credits = path->hops[i].initial_credits;
-+			hop.ingress_fc = path->ingress_fc_enable & in_mask;
-+			hop.ingress_shared_buffer =
-+				path->ingress_shared_buffer & in_mask;
-+		}
++	if (!xd->bonding_possible)
++		return;
 +
- 		hop.unknown3 = 0;
- 
- 		tb_port_dbg(path->hops[i].in_port, "Writing hop %d\n", i);
++	if (xd->link_width > TB_LINK_WIDTH_SINGLE) {
+ 		/*
+ 		 * Just return port structures back to way they were and
+ 		 * update credits. No need to update userspace because
 -- 
 2.53.0
 
