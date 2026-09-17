@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD6259C99E;
-	Thu, 17 Sep 2026 16:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194B359C983;
+	Thu, 17 Sep 2026 16:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660916; cv=none; b=OPWcWcKlzMlEWqP2123JpAnHGcHfS6vgacpUar98UwkPvW/k5+8Cvq70riFGSWWdl3B/cA5IU1bLAgC4wPwY+98mZ+aV08TEO/J3cVyOEmRRtTT2m+ITUUtUZgD7XohTPbXkgzKVGq1xVH3GiQoxn9ePlr2w5mPeOP+uzEL9PQ8=
+	t=1789660919; cv=none; b=UvmrgJyLJtY0uL4Qt7matYxRUrcfh2BeuSjn6BLpsqZq4FwNssGvKT5pMri0osSrBoxRiAgLwxpxd8GgJZpei9CC56wO2ayUuJugQ/sL9WEv2c8Mz5qzWfyXgjsudtdLABvXACYC/nKokVPp7s2EqtjllJddV0OAdvSqkdphdK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660916; c=relaxed/simple;
-	bh=hft8+TyttsTYUngNs40RpCN+PD8axRDM67jf3mu3cuo=;
+	s=arc-20240116; t=1789660919; c=relaxed/simple;
+	bh=zkwMT6JNgS03cctPhNuYNokdNP3gq/Dtuwuo3cSl72M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YCWy2Hl0sOgTIX1R2t2xSqzxQBcbqgLeoVLUa9XhdF+JAd5dcKcFb81M7X7P+NaxrQZ/kmCQQTlnuvhyJ9WIGd2FcCrPPFv7I+/FLusDjCLYXdHKtAXZSF1bMdSQwV9ZumnerbbVL/B+opK1ZIWK4vHFbKqblfq/sFOZDNLAeYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGhB+j7T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Udnjs/F8rhtzVvSrZx5JCBZZMJV7sVYo0fylExyQg9Vdin4IOakRIT76VMnh+YeNj83Purtb3rZp90xMcVZcSqVTai78tWDyQ9qUFiOnA5mseipMpstqsY6OsuMMLdFlJDexhYHKywe4I+QBP438BVBL4SCkTs2ywy5f7u9PMS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7TFHc/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGhB+j7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711D91F000FF;
-	Thu, 17 Sep 2026 16:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7TFHc/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7841F00893;
+	Thu, 17 Sep 2026 16:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660915;
-	bh=JYlkOO5ywiT3cmfAODAnx3JXzfszZnd1s5zEewW9gF0=;
+	s=korg; t=1789660918;
+	bh=wwMDog6dCnCPBoW1ZXDB++owAHCwPoKJZ2iOwmgUxP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGhB+j7TyeOqBiIckBMeBURYNBSEfZBd9Qe+PegPMNjj4wQp7f6zbELySi6IrRY9n
-	 +lcJJxHRLPI8PloSM+R6xJPsSkht4WQZ2OENaymeFyFhZRdL2VCboyGAxxeVReknVs
-	 6dnGVS3CySi3woD/LtrHMRIh+7g/h/p3Eu8RyKPc=
+	b=p7TFHc/Lo+eggNFXkefo+TWRxBVWji4d/POcna17ihvN0r1vnCqMRj3KYjKGUCpNw
+	 JdX6ZkAZIW4cBaf3eAqEz3LjeZfhpCau3zQR1hBT68qAQQJkIh5S4Bbri0FfHZ0vqS
+	 /xE9LmOII81mFKUI7853AwGF8NdQSO8Lxlq900hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0021/1250] pinctrl: renesas: rzg2l: Add SR register cache for PM suspend/resume
-Date: Thu, 17 Sep 2026 15:56:56 +0100
-Message-ID: <20260917151552.504281211@linuxfoundation.org>
+Subject: [PATCH 6.18 0022/1250] ima: return error early if file xattr cannot be changed
+Date: Thu, 17 Sep 2026 15:56:57 +0100
+Message-ID: <20260917151552.530433909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,141 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 29df31ae3e8a0152dd8e8c2376816aad2f233473 ]
+[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
 
-Include the SR (Slew Rate) register in the PM suspend/resume register
-cache.
+During early boot, the filesystem is read-only and any changes
+to xattrs are not allowed. This fails in case of ext4 because
+changing xattr starts an ext4 transaction which fails with the
+following warning.
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260413182456.811543-3-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
+CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
+Call Trace:
+  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  __vfs_setxattr+0x9a/0xd0
+  __vfs_setxattr_noperm+0x76/0x1f0
+  ima_appraise_measurement+0x23e/0xe40
+  ima_d_path+0x5a/0xd0
+  process_measurement+0xb29/0xc40
+  ? copy_from_kernel_nofault+0x21/0xe0
+  ? fscrypt_file_open+0xc0/0xe0
+  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
+  ? __bpf_prog_exit+0x23/0xd0
+  ? __bpf_tramp_exit+0xd/0x50
+  ? bpf_trampoline_6442530367+0x9f/0xea
+  ima_file_check+0x57/0x80
+  security_file_post_open+0x50/0xf0
+  path_openat+0x493/0x1650
+  do_filp_open+0xc7/0x170
+
+Detect the state of the file early and return the error.
+
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 38 +++++++++++++++++++++++--
- 1 file changed, 35 insertions(+), 3 deletions(-)
+ security/integrity/ima/ima_appraise.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index ab8d64a14dd0a..b4d7e80dd6468 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -322,6 +322,7 @@ struct rzg2l_pinctrl_pin_settings {
-  * @pupd: PUPD registers cache
-  * @ien: IEN registers cache
-  * @smt: SMT registers cache
-+ * @sr: SR registers cache
-  * @sd_ch: SD_CH registers cache
-  * @eth_poc: ET_POC registers cache
-  * @oen: Output Enable register cache
-@@ -336,6 +337,7 @@ struct rzg2l_pinctrl_reg_cache {
- 	u32	*ien[2];
- 	u32	*pupd[2];
- 	u32	*smt[2];
-+	u32	*sr[2];
- 	u8	sd_ch[2];
- 	u8	eth_poc[2];
- 	u8	oen;
-@@ -2746,6 +2748,11 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
- 		if (!cache->smt[i])
- 			return -ENOMEM;
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index 6a33484fcd6fe..a87ef7c05f11e 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -90,6 +90,11 @@ static int ima_fix_xattr(struct dentry *dentry, struct ima_iint_cache *iint)
+ 	int rc, offset;
+ 	u8 algo = iint->ima_hash->algo;
  
-+		cache->sr[i] = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->sr[i]),
-+					    GFP_KERNEL);
-+		if (!cache->sr[i])
-+			return -ENOMEM;
++	if (IS_RDONLY(d_inode(dentry)))
++		return -EROFS;
++	if (IS_IMMUTABLE(d_inode(dentry)))
++		return -EPERM;
 +
- 		/* Allocate dedicated cache. */
- 		dedicated_cache->iolh[i] = devm_kcalloc(pctrl->dev, n_dedicated_pins,
- 							sizeof(*dedicated_cache->iolh[i]),
-@@ -2758,6 +2765,12 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
- 						       GFP_KERNEL);
- 		if (!dedicated_cache->ien[i])
- 			return -ENOMEM;
-+
-+		dedicated_cache->sr[i] = devm_kcalloc(pctrl->dev, n_dedicated_pins,
-+						      sizeof(*dedicated_cache->sr[i]),
-+						      GFP_KERNEL);
-+		if (!dedicated_cache->sr[i])
-+			return -ENOMEM;
- 	}
- 
- 	pctrl->cache = cache;
-@@ -2989,7 +3002,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 	struct rzg2l_pinctrl_reg_cache *cache = pctrl->cache;
- 
- 	for (u32 port = 0; port < nports; port++) {
--		bool has_iolh, has_ien, has_pupd, has_smt;
-+		bool has_iolh, has_ien, has_pupd, has_smt, has_sr;
- 		u32 off, caps;
- 		u8 pincnt;
- 		u64 cfg;
-@@ -3010,6 +3023,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 		has_ien = !!(caps & PIN_CFG_IEN);
- 		has_pupd = !!(caps & PIN_CFG_PUPD);
- 		has_smt = !!(caps & PIN_CFG_SMT);
-+		has_sr = !!(caps & PIN_CFG_SR);
- 
- 		if (suspend)
- 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PFC(off), cache->pfc[port]);
-@@ -3061,6 +3075,15 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 							 cache->smt[1][port]);
- 			}
- 		}
-+
-+		if (has_sr) {
-+			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SR(off),
-+						 cache->sr[0][port]);
-+			if (pincnt >= 4) {
-+				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SR(off) + 4,
-+							 cache->sr[1][port]);
-+			}
-+		}
- 	}
- }
- 
-@@ -3075,7 +3098,7 @@ static void rzg2l_pinctrl_pm_setup_dedicated_regs(struct rzg2l_pinctrl *pctrl, b
- 	 * port offset are close together.
- 	 */
- 	for (i = 0, caps = 0; i < pctrl->data->n_dedicated_pins; i++) {
--		bool has_iolh, has_ien;
-+		bool has_iolh, has_ien, has_sr;
- 		u32 off, next_off = 0;
- 		u64 cfg, next_cfg;
- 		u8 pincnt;
-@@ -3097,6 +3120,7 @@ static void rzg2l_pinctrl_pm_setup_dedicated_regs(struct rzg2l_pinctrl *pctrl, b
- 		has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B |
- 				      PIN_CFG_IOLH_C | PIN_CFG_IOLH_RZV2H));
- 		has_ien = !!(caps & PIN_CFG_IEN);
-+		has_sr = !!(caps & PIN_CFG_SR);
- 		pincnt = hweight8(FIELD_GET(RZG2L_SINGLE_PIN_BITS_MASK, cfg));
- 
- 		if (has_iolh) {
-@@ -3107,7 +3131,10 @@ static void rzg2l_pinctrl_pm_setup_dedicated_regs(struct rzg2l_pinctrl *pctrl, b
- 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + IEN(off),
- 						 cache->ien[0][i]);
- 		}
--
-+		if (has_sr) {
-+			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SR(off),
-+						 cache->sr[0][i]);
-+		}
- 		if (pincnt >= 4) {
- 			if (has_iolh) {
- 				RZG2L_PCTRL_REG_ACCESS32(suspend,
-@@ -3119,6 +3146,11 @@ static void rzg2l_pinctrl_pm_setup_dedicated_regs(struct rzg2l_pinctrl *pctrl, b
- 							 pctrl->base + IEN(off) + 4,
- 							 cache->ien[1][i]);
- 			}
-+			if (has_sr) {
-+				RZG2L_PCTRL_REG_ACCESS32(suspend,
-+							 pctrl->base + SR(off) + 4,
-+							 cache->sr[1][i]);
-+			}
- 		}
- 		caps = 0;
- 	}
+ 	if (algo <= HASH_ALGO_SHA1) {
+ 		offset = 1;
+ 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
 -- 
 2.53.0
 
