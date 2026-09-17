@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA3149D5A6;
-	Thu, 17 Sep 2026 17:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4E64F5DE6;
+	Thu, 17 Sep 2026 17:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665721; cv=none; b=nhVEv8/WtPm1Lbqa7j4nZOqS7Vgp1dEgGra+ZBoZ8zVfqBeZQa533F8l9+9FNimOvDBWHkxRBr8juw7nn3LTCgSeKQxVTSHBLggKl9dFFyCoODx3IFq/UzllWv4c26EAfDl3/qp1daXEAs3wR3UfsNdEs1mp5F0ofs2DhoJOSD8=
+	t=1789665725; cv=none; b=T6/QK3q68+7FD0e9Bbf93VVjtmfRkCJTXdtiiqs4Kaa2vGrdfahDGmfs7GpXCnUL7EEtgqSLOacsn8/LMhjZx8PhP/sR6uHSFdHl560l0zc9WY7IC6b67Z60SpHIYQOJJnQRYmtntDLQCwLESZwsGNbJi3DqvCOPEr+7MeVUBNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665721; c=relaxed/simple;
-	bh=6ECjFeYm2J19a6bSRhKEd+ee+h61mXsb5X8fipDjWno=;
+	s=arc-20240116; t=1789665725; c=relaxed/simple;
+	bh=USmbzBR3YoGdXO5v1/OszSW9WtJ6JFVDxPLboddPB0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtcQHxmb1xU0Jh8EkUwd0/8yAvWytyQTZaFsV0VthBd32uMaj265Ma25Xiluzpr2VHkJUrcCyEZcHIlMGFVIHFBhwRbBKBawJqhJ/ko+M2xngTy9vQgmHpTGGDD/cUKKRR1adcfBG1ij5k42cJDM50N37o6KK8hZmzrmTarlAsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evUDoSoh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=avVFgehasQkUpm1BeCxs1QmfPIEZna6y1Aevsq+emGfYuqQkWQXLiKKYuoFPix06Wo2mr3O/kBdg5+91h0qvU/+cPfIfkCuWVkpxU4bY/DyZNaCJxfiJkkwHG9Eqc+c5GkvDIzxXEy2VX9lVAIO1icZHpYDwiADYI5ftK7DZDWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADovpkly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evUDoSoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1111F000FF;
-	Thu, 17 Sep 2026 17:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADovpkly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47951F000FF;
+	Thu, 17 Sep 2026 17:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665720;
-	bh=JmWR2rd3Q6Lrtuv3wZ04dd7i/slhxtT1xg4I9yoJE/0=;
+	s=korg; t=1789665723;
+	bh=G45pLO1HXaNViyLAw8HUSjOVM+TLsCHD+B8d7O30Lho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evUDoSohtX3ZLK4UPUbWmHzlPfH2LhdWoVH0IR1l1OsAghQGr3oorbrUTALwqJ1qY
-	 lNLsjV3ETpb1uIQ78BzWJWzcGY0j1C7jgGUnhv5OOhPFSuLjDpdwljGeYhed9zZrBk
-	 V8mDkckPmL5G9/lFWgPcLLBryyvRZAkJGbCkAOAA=
+	b=ADovpklyqB+SW8roSMn9LNYN94WW6/oRgBaTtVmXm1BBBzX/qcx68Rsmo0vgH9C1P
+	 vJAUgc7NLTxmEiy1hAzImBM3i9ApjE1F8Jr5VxoULQ4HhgLiu94080Eps6nbL7pc52
+	 ufVrpZMiSODFOTSVAU6IcryeUmc1dixPiWfJYrN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mete Durlu <meted@linux.ibm.com>,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
 	Alexandra Winter <wintera@linux.ibm.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0798/1250] dibs: Remove reset of static vars in dibs_init()
-Date: Thu, 17 Sep 2026 16:09:53 +0100
-Message-ID: <20260917151613.531844705@linuxfoundation.org>
+Subject: [PATCH 6.18 0799/1250] dibs: change dibs_class to a const struct
+Date: Thu, 17 Sep 2026 16:09:54 +0100
+Message-ID: <20260917151613.559786667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,39 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Jori Koolstra <jkoolstra@xs4all.nl>
 
-[ Upstream commit 182663bbff784e88cf7acbae7c53c6c5e0cb9ca4 ]
+[ Upstream commit ad3dfa80be765757f612da04318248f6d20e4f71 ]
 
-'clients' and 'max_client' are static variables and therefore don't need to
-be initialized.
+The class_create() call has been deprecated in favor of class_register()
+as the driver core now allows for a struct class to be in read-only
+memory. Change dibs_class to be a const struct class and drop the
+class_create() call.
 
-Reported-by: Mete Durlu <meted@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20251023150636.3995476-1-wintera@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/all/2023040244-duffel-pushpin-f738@gregkh/
+
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260303163104.3749311-1-jkoolstra@xs4all.nl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 1668a31e3b1a ("dibs: Unregister dibs_class after error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dibs/dibs_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/dibs/dibs_main.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/dibs/dibs_main.c b/drivers/dibs/dibs_main.c
-index cf96f0a4a5af6..d6ea178e70c44 100644
+index d6ea178e70c44..c3ec36e8c10fc 100644
 --- a/drivers/dibs/dibs_main.c
 +++ b/drivers/dibs/dibs_main.c
-@@ -248,9 +248,6 @@ static int __init dibs_init(void)
+@@ -20,7 +20,9 @@
+ MODULE_DESCRIPTION("Direct Internal Buffer Sharing class");
+ MODULE_LICENSE("GPL");
+ 
+-static struct class *dibs_class;
++static const struct class dibs_class = {
++	.name		= "dibs",
++};
+ 
+ /* use an array rather a list for fast mapping: */
+ static struct dibs_client *clients[MAX_DIBS_CLIENTS];
+@@ -140,7 +142,7 @@ struct dibs_dev *dibs_dev_alloc(void)
+ 		return dibs;
+ 	spin_lock_init(&dibs->lock);
+ 	dibs->dev.release = dibs_dev_release;
+-	dibs->dev.class = dibs_class;
++	dibs->dev.class = &dibs_class;
+ 	device_initialize(&dibs->dev);
+ 
+ 	return dibs;
+@@ -248,9 +250,9 @@ static int __init dibs_init(void)
  {
  	int rc;
  
--	memset(clients, 0, sizeof(clients));
--	max_client = 0;
--
- 	dibs_class = class_create("dibs");
- 	if (IS_ERR(dibs_class))
- 		return PTR_ERR(dibs_class);
+-	dibs_class = class_create("dibs");
+-	if (IS_ERR(dibs_class))
+-		return PTR_ERR(dibs_class);
++	rc = class_register(&dibs_class);
++	if (rc)
++		return rc;
+ 
+ 	rc = dibs_loopback_init();
+ 	if (rc)
+@@ -262,7 +264,7 @@ static int __init dibs_init(void)
+ static void __exit dibs_exit(void)
+ {
+ 	dibs_loopback_exit();
+-	class_destroy(dibs_class);
++	class_unregister(&dibs_class);
+ }
+ 
+ module_init(dibs_init);
 -- 
 2.53.0
 
