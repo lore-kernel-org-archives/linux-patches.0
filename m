@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1457547052;
-	Thu, 17 Sep 2026 17:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B129A54705B;
+	Thu, 17 Sep 2026 17:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665091; cv=none; b=Uiq60aaJHmWQoc6WkGd03grk4j5hzZELtAamFX5IzSQyhKpGQzzbDbzBzjCZ3SANNluh4+abjP+oqfcjOUR5PoN1UxxlFiROaFm+mwcgWSq0pYAroDW/w62cy6/JRGwLGPIyQ6kYA31zKeCKK3HUPC+f3Yhf7+y+z+iNUtZQGXw=
+	t=1789665094; cv=none; b=QORCX/6SU/Ma90W9LAEi5K4y5WKvsvatV1fWq3HnqEEdXE5oxiAFk7vnByelDEXWZ3VLO3u1EAavA/Cwejs3QReLaDiwJfQGmuPh2JCOFN69sisSNzmvalJVmt9fRMJib81KPANzABQYZZ5SacUhswwznExavunyTEY+ehIOHms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665091; c=relaxed/simple;
-	bh=vYJPVHt2QGkC75j6emqiK646st/Ue68yo6aXg++kN58=;
+	s=arc-20240116; t=1789665094; c=relaxed/simple;
+	bh=xs/R0aZc3cuL9pfW1ntXXMD3RgqfyIxIJkdXb4l0284=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVguX/wwZuXeCv5QQci0qRQ59iFPYifxGaHGTvNH6b3QOKNNjYNQyxBxPznRdPYsiDvLfRU68l2CcVs9hFc5C467sDdcpifUR4VT+ZNru2etv3hPy1/G3BhCtID/tN+4YfEOpOlfz/LEq133fU9X+JsjvPw0tpUAzuBRMDWU2Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZi7Q2ML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mrGRVj4WtAFO7eH0etrT6mKujwwPUCfEEnMOjCgT+9e6t1SBLiJbYjS8Z6fg7SKefCRPKXVc/IqRj2y/9ZF9omSls345YSIvwamxAKuV7slISvruxlN6WrcO2seFt1Tt1HBPJnG28I3DWo1Eq7GmBHkAWnn58xQQwdaoRYBQaCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xinDwrmv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZi7Q2ML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0618F1F000FF;
-	Thu, 17 Sep 2026 17:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xinDwrmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB081F000FF;
+	Thu, 17 Sep 2026 17:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665089;
-	bh=D7B1nKyQc9+nCDGBheG4rlRbatjv9PXgIHaTJzlX98w=;
+	s=korg; t=1789665093;
+	bh=LqmHy1B+JGfgR6JS1M6Utqc7gQc37DapGo8el4b4FW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZi7Q2MLzc1VOqUbUYrUeC7K0838w5A2G/f00mbmPM2ALXdrW4ZfOX+vk3pbSBtNf
-	 LEhSiIxTDl443W9HrjmpYPOPz70ZcwIa7mxmsUkww0Dur20+sNfxF2QTESdL2g11OJ
-	 NxNDRQS7SDcgcyXoS8F+z1//phNifI+2MTCPGBPA=
+	b=xinDwrmvkU/y6h3LMale2MZcyuEyXzzMgB/qgkNvUvbjvXcxxy1rfO/KtyedLs2Ke
+	 uPlW9tPiObxtlzoOgRBYMM6s0c7b8XcjQufR11H0l4tbJkFEruL1BgKVv2fud1rLZD
+	 lI1CugGfdzmCGz/0LmIcibWMzr7QeV5YNqylzNJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0588/1250] RDMA/bnxt_re: Proper rollback if the ioremap fails
-Date: Thu, 17 Sep 2026 16:06:23 +0100
-Message-ID: <20260917151607.824320832@linuxfoundation.org>
+Subject: [PATCH 6.18 0589/1250] bpf: Guard __get_user acesss with access_ok for uprobe_multi data
+Date: Thu, 17 Sep 2026 16:06:24 +0100
+Message-ID: <20260917151607.849334908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,57 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 87267803a8c824616eb147c5dad7030a5db6f878 ]
+[ Upstream commit 4d87a251d45b4a95eb4c0abcfab809c9f231258a ]
 
-bnxt_qplib_alloc_dpi returns success even if ioremap fails.
-Add the proper rollback when the ioremap fails and return
--ENOMEM status.
+As reported by sashiko [1] we need to use access_ok to check the user
+space data bounds before we use __get-user to get it.
 
-Fixes: 0ac20faf5d83 ("RDMA/bnxt_re: Reorg the bar mapping")
-Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
-Link: https://patch.msgid.link/r/20260615224751.232802-11-selvin.xavier@broadcom.com
-Reviewed-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[1] https://lore.kernel.org/bpf/20260610145235.CB1441F00893@smtp.kernel.org/
+Fixes: 0b779b61f651 ("bpf: Add cookies support for uprobe_multi link")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20260611114230.950379-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 11 +++++++++++
+ kernel/trace/bpf_trace.c | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index d321acb07335b..0fcea79eb110d 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -721,9 +721,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
- 		break;
- 	case BNXT_QPLIB_DPI_TYPE_WC:
- 		dpi->dbr = ioremap_wc(umaddr, PAGE_SIZE);
-+		if (!dpi->dbr)
-+			goto fail_ioremap;
- 		break;
- 	default:
- 		dpi->dbr = ioremap(umaddr, PAGE_SIZE);
-+		if (!dpi->dbr)
-+			goto fail_ioremap;
- 		break;
- 	}
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 22d779ae345d0..e692d67907e49 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3168,6 +3168,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	unsigned long __user *uoffsets;
+ 	u64 __user *ucookies;
+ 	void __user *upath;
++	unsigned long size;
+ 	u32 flags, cnt, i;
+ 	struct path path;
+ 	char *name;
+@@ -3205,6 +3206,16 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+ 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
  
-@@ -731,6 +735,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
- 	mutex_unlock(&res->dpi_tbl_lock);
- 	return 0;
- 
-+fail_ioremap:
-+	/* Roll back the bit we just claimed. */
-+	set_bit(bit_num, dpit->tbl);
-+	dpit->app_tbl[bit_num] = NULL;
-+	mutex_unlock(&res->dpi_tbl_lock);
-+	return -ENOMEM;
++	/*
++	 * All uoffsets/uref_ctr_offsets/ucookies arrays have the same value
++	 * size, we need to check their address range is safe for __get_user
++	 * calls.
++	 */
++	size = sizeof(*uoffsets) * cnt;
++	if (!access_ok(uoffsets, size) || !access_ok(uref_ctr_offsets, size) ||
++	    !access_ok(ucookies, size))
++		return -EFAULT;
 +
- }
- 
- int bnxt_qplib_dealloc_dpi(struct bnxt_qplib_res *res,
+ 	name = strndup_user(upath, PATH_MAX);
+ 	if (IS_ERR(name)) {
+ 		err = PTR_ERR(name);
 -- 
 2.53.0
 
