@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DCA52CCC3;
-	Thu, 17 Sep 2026 17:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34B7318EC7;
+	Thu, 17 Sep 2026 17:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664442; cv=none; b=PONMXZ/ZAxu8EGHGMJ2A6mtMH7/qEYISM0cujWYg16yxRcQBmdtnomJB5EkRGvEGUKktTtk3V+tZOTwW1X2s3noEnuBLSNMgPq856pcJKb4OxOUnIHhLYpSqRM1V6MyUVXb1YSuLwggGQ4fo7P6SZC0HgRGrJlOEmqYNpIvdd4k=
+	t=1789664445; cv=none; b=ajSoyIflFtU1rzwX2bXhMbLHbkylMH8YhR/pMW2qMIqM/whcwGtqNxunrxCXH/+LNIOZinqq35qjckxkbquR+7ElQa3dXdF5CjIF7jBxFicz5U1op5lYFHLCUOzknN9M1aY79RrKgphdLgMQ0TV9LHgly4Mq6Fae+mszdRiD+hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664442; c=relaxed/simple;
-	bh=DYBOnIL5nsohE9QkGfJzUfxqPIalv/YJY4NLnjITrXo=;
+	s=arc-20240116; t=1789664445; c=relaxed/simple;
+	bh=taA+9MJI2elW0IgXZF0u34yuHYEFG5G+1QOVpbb/VM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyBrm/qumOVrY2rd8KXrj1ajuwvsOYjyt1sz4egcvmLQ1VxgYhe/xJp0AslnzT0xUZe7xWxT9S6wheI2eQp+w5nNgWy5K0y4KzJ8HsGssgyUmu5EXKNJ4073yfIhsS13VUVvyoEIRR2pSD/B2bElob9Ai01YPME19aiFwwlWVKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cP4XyY0m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SL+pyq4cWHyUZAKJ0sbjPmE2d0E25zBNEFERNo3rSr4WupD3lefsHpgVv/HiDlWJnxl6b0z5p8D6BjldRHrZZjDCD+4GDLy5TipSFxCIln2N+E+JpTTqfMUu/IDGiI/P7bHtnDNDMTPJIcyMrh7dDlGsFEPHLnlGEjQQkf39CoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyadGuwO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cP4XyY0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379071F00899;
-	Thu, 17 Sep 2026 17:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyadGuwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384E71F00893;
+	Thu, 17 Sep 2026 17:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664440;
-	bh=FlkrbxsHr0VYjf1yeNchFU+cLWufn/1ZgACVxuf/Pl8=;
+	s=korg; t=1789664443;
+	bh=uB2Mwomld9j+eaNi+Omgv0NpzilxRmgDEc7QWMSeCwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cP4XyY0mvPDe719JGP81YbsJILQxASuJxMUD6jnTLMUXSICiNhUhCgLiT8tqidBtE
-	 ukR6bpwNWepdRcWoYvJyCxYS/AzuV8VZAUNLkqWcPI5lQwRUkmxGzbBYi9KUEnaTMZ
-	 ezP8txDDMQSijkZynVDYrd9FJX5urbL7ta/Pz98A=
+	b=pyadGuwO6LSpq+MN0XtNYnxw7VuLQeWLXoBUHyibIHRSduQRKFJCuOixfq8kmQCti
+	 7pVoox5xIctlFOn1yrUAe7dRO+Ctd33f9TYoHdQD85eb4X6krx8sBfwHQbHFcsJC3K
+	 UiiEAyMyQ9todDpspRI7ajDyvuDz6nkwWIzjlDkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <asj@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Ben Maurer <bmaurer@meta.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0373/1250] btrfs: use on-disk uuid for s_uuid in temp_fsid mounts
-Date: Thu, 17 Sep 2026 16:02:48 +0100
-Message-ID: <20260917151602.164487313@linuxfoundation.org>
+Subject: [PATCH 6.18 0374/1250] btrfs: use lockless read in nr_cached_objects shrinker callback
+Date: Thu, 17 Sep 2026 16:02:49 +0100
+Message-ID: <20260917151602.192207250@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,45 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <asj@kernel.org>
+From: Ben Maurer <bmaurer@meta.com>
 
-[ Upstream commit df84f6c773771fa7b78fe06931709df1aca5907f ]
+[ Upstream commit 1ba72d847c7aa3c0887f749115af5232fd61b598 ]
 
-When mounting a cloned filesystem with a temporary fsuuid (temp_fsid),
-layered modules like overlayfs require a persistent identifier.
+Under heavy memcg-driven slab reclaim with many memcgs and CPUs,
+shrink_slab_memcg() invokes the per-superblock count callback once per
+(memcg, NUMA node) tuple. For btrfs that callback reaches
+percpu_counter_sum_positive() on fs_info->evictable_extent_maps, which
+takes the percpu_counter's raw spinlock with IRQs disabled and walks
+every online CPU. With hundreds of memcgs driving reclaim on a host with
+dozens of CPUs, this counter lock becomes a global serialization point:
+profiles show CPU pinned in the spin_lock_irqsave acquire under
+__percpu_counter_sum, with cross-CPU IPIs hitting csd_lock_wait_toolong
+while waiting for spinning vCPUs.
 
-While internal in-memory fs_devices->fsid must remain unique to
-the kernel module, let s_uuid carry the original on-disk UUID.
+The shrinker count is advisory -- super_cache_count() already notes
+"counts can change between super_cache_count and super_cache_scan, so we
+really don't need locks here." Use percpu_counter_read_positive(), which
+is lockless. Worst-case skew is bounded by batch * num_online_cpus (a
+few thousand), negligible compared to the millions of extent maps a busy
+filesystem accumulates and well within the noise that the shrinker
+already tolerates.
 
-Signed-off-by: Anand Jain <asj@kernel.org>
+Tested-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Ben Maurer <bmaurer@meta.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/btrfs/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 15b6a67d17ddc..8863479a19d3e 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3430,7 +3430,16 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 	/* Update the values for the current filesystem. */
- 	sb->s_blocksize = sectorsize;
- 	sb->s_blocksize_bits = blksize_bits(sectorsize);
--	memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
-+	/*
-+	 * When temp_fsid is active, fs_devices->fsid is assigned a random UUID
-+	 * at mount. This inconsistent UUID causes issues for layered filesystems
-+	 * like OverlayFS. Since metadata_uuid may or may not be set, provide the
-+	 * on-disk UUID directly from the super_copy.
-+	 */
-+	if (fs_info->fs_devices->temp_fsid)
-+		memcpy(&sb->s_uuid, fs_info->super_copy->fsid, BTRFS_FSID_SIZE);
-+	else
-+		memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 157d551344707..105f21759c99f 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2410,7 +2410,7 @@ static int btrfs_show_devname(struct seq_file *m, struct dentry *root)
+ static long btrfs_nr_cached_objects(struct super_block *sb, struct shrink_control *sc)
+ {
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
+-	const s64 nr = percpu_counter_sum_positive(&fs_info->evictable_extent_maps);
++	const s64 nr = percpu_counter_read_positive(&fs_info->evictable_extent_maps);
  
- 	mutex_lock(&fs_info->chunk_mutex);
- 	ret = btrfs_read_sys_array(fs_info);
+ 	trace_btrfs_extent_map_shrinker_count(fs_info, nr);
+ 
 -- 
 2.53.0
 
