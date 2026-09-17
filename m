@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EAE3CCFD4;
-	Thu, 17 Sep 2026 18:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF472379C40;
+	Thu, 17 Sep 2026 18:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671588; cv=none; b=pvFaWazCJ/ivQLIVlg/lXXP0nOgO5A5WYzVlHGTmBY+dw0ztFgIMS2++rf3k6WklRfkFdsCZuMSgPv2TZEdj8WXCXpZZo9hpGzqwDwhpB+Q7AY9A/2o1tacsFhWeKbgfuQzA9VVXTbWAdc5VB/7IomwjMzDL1jD2rdlQVjTMi6Q=
+	t=1789671591; cv=none; b=iILHTpgtw0kutUNOICIDLOrV2SRGgkOmC7G7SpY5n37eQ4TPrPvpHfNerKTW4E81/vmZlFxiDmKnlgM+cHruBplhXMefmzz87n7fhAfgzElfYGnRArUR2uMEUj1hS2QwR6UxZFT+mJbvU4GbFuYLLzvsGJtbtqXGnhHAiQ1mzbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671588; c=relaxed/simple;
-	bh=2v4z7QtT395d82Klf0vkuDB0Ey6SiOLGbYhkQColFvc=;
+	s=arc-20240116; t=1789671591; c=relaxed/simple;
+	bh=4Gxl+lDwoONepjUqMVhIoAjPfPT6LXp5f/ZTVTzBLOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoQFVghr12K8vyxtZSR/vKHtWjtBrYc7zaXFvuMM858CQ6r2h1WCXfw4HqGq5VwiNBm8GIywyPNypvDU5I+v1+A9h4gPRkdBfe6CnIZEXWVjceE90cGyK2aTaPPsqnJgxQxNNhD/AAsPhqQkRaF5bslaSeWh8QmkU/D7eyyNs6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nf5JEeOt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YRnS0pwlE0EwQmS1qGitF6Yu7KoHedY03GfUd+AtAFhOyHApQ7CB2Kmbe93Vhfl/CAbuHOIwrmWvGx/1RN4LkHClNcTfbbUYLJIkZMOguaMBp1Ea3qfWOEt7V+oXtMyInHPezcK+V+FbKhzA4/WGPE2wVYRXs326IPRSbFP6uOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mE2zEaYX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nf5JEeOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C20E1F000FF;
-	Thu, 17 Sep 2026 18:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mE2zEaYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2658E1F000FF;
+	Thu, 17 Sep 2026 18:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671586;
-	bh=PPgrFLdD5bh0G7Z2RoVcm2bLijYFbJPQXV1n3Sljk4k=;
+	s=korg; t=1789671589;
+	bh=tOKfuxEuVrKrJ5O0DQVkPDy/FNsqvPxzxp+AmlC1ieU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nf5JEeOteS1mzHKJiTZa22XVsVgY5YLk8I5MyoNLJ3Txn5NvvbMuChFY3vJyMsAiB
-	 b7oVQkwZULP+CRhX6KiPyDjY8lPvAHNO1Zwy08EipRTGNJ71HOpVFMkolYChca3pHK
-	 cFaGInw+3SF7ubeEzr3wy8Mcc8UEccQ3KAHrglDE=
+	b=mE2zEaYXLPGDIFfecB2iSg6HjKrhvoThONicmr2YLsyAX9fWK8vCJKsTVxuCi53GI
+	 dmSxopE64/2s2hJmZrl9/ZFq/Zr9ilZoNfBxrM7+mbk4dyop1X6lE1ImjaSsEJ29ji
+	 p/QnEuxoj0SCr8635ILRHReyal98eqUQIHrE9Ogk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1025/1102] nfsd: dedup nfs4_client_to_reclaim inserts
-Date: Thu, 17 Sep 2026 16:16:08 +0100
-Message-ID: <20260917151606.497344785@linuxfoundation.org>
+Subject: [PATCH 6.12 1026/1102] nfsd: RCU-protect cl_cb_session to fix use-after-free on session teardown
+Date: Thu, 17 Sep 2026 16:16:09 +0100
+Message-ID: <20260917151606.524676474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,377 +55,379 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 9b57793863f69c608691c98e57c2f9be2db9dfed ]
+[ Upstream commit 01c5d5f58a5db9b0ee5afba2e49d3157788687b2 ]
 
-nfs4_client_to_reclaim() unconditionally allocates a new
-nfs4_client_reclaim, prepends it to reclaim_str_hashtbl[], and bumps
-reclaim_str_hashtbl_size with no check for an existing entry for the
-same client name.  After a reboot with a populated recovery directory
-that inflates the counter by one for every client that reclaims:
+After a DESTROY_SESSION the per-session teardown path can free a
+session while rpciod still holds an inflight callback rpc_task that
+dereferences clp->cl_cb_session.  nfsd4_probe_callback_sync() flushes
+cl_callback_wq, but once nfsd4_run_cb_work() has called
+rpc_call_async() the rpc_task lives on rpciod; flushing the workqueue
+does not wait for it.  rpc_shutdown_client() does drain rpciod tasks,
+but uses a 1-second wait_event_timeout — tasks stuck in rpc_delay()
+(e.g. 2-second NFS4ERR_DELAY retries) can outlive the drain.
 
-    boot:    load_recdir()
-               nfs4_client_to_reclaim(name)   /* entry #1, size++ */
+    destroy path                       rpciod
+    ------------                       ------
+    unhash_session(ses)
+    nfsd4_probe_callback_sync(clp)
+      flush_workqueue(cl_callback_wq)
+      /* returns; rpc_task still live */
+    nfsd4_put_session_locked(ses)
+    free_session(ses) -> kfree(ses)
+                                       nfsd4_cb_sequence_done()
+                                         reads cb_clp->cl_cb_session
+                                         /* freed slab */
 
-    grace:   RECLAIM_COMPLETE
-               __nfsd4_create_reclaim_record_grace()
-                 nfs4_client_to_reclaim(name) /* entry #2, size++ */
+A second window exists in nfsd4_process_cb_update().  When
+__nfsd4_find_backchannel() returns NULL because unhash_session() has
+already removed the destroyed session from cl_sessions,
+setup_callback_client() takes the v4.1 early return so
+clp->cl_cb_session = ses never fires and the field retains a pointer
+to the about-to-be-freed session.
 
-inc_reclaim_complete() ends the grace period early only when
+Fix both by converting cl_cb_session to an RCU-protected pointer:
 
-    atomic_inc_return(&nn->nr_reclaim_complete) ==
-        nn->reclaim_str_hashtbl_size
+  - Move the cl_cb_session = ses assignment in setup_callback_client()
+    to after rpc_create() succeeds, so it is only published when a
+    working backchannel exists.  Clear cl_cb_session on the error
+    return in nfsd4_process_cb_update().  Both stores use
+    rcu_assign_pointer().
 
-With reclaim_str_hashtbl_size at 2N and nr_reclaim_complete capped at
-N, the equality never holds and the fast end-of-grace path is dead.
-The grace period always runs out the full 90-second laundromat timer,
-and the shadow entry left in the hash table carries a dangling cr_clp
-for any reader that walks it.
+  - Annotate cl_cb_session with __rcu.  All rpciod-side readers use
+    rcu_read_lock()/rcu_dereference() and check for NULL, bailing to
+    the appropriate error or requeue path:
+    encode_cb_sequence4args(), decode_cb_sequence4resok(),
+    nfsd41_cb_get_slot(), nfsd41_cb_release_slot(),
+    nfsd4_cb_prepare(), and nfsd4_cb_sequence_done().
 
-Fix nfs4_client_to_reclaim() to look the name up with
-nfsd4_find_reclaim_client() first and, on a hit, fold the new
-princhash into the existing record (if it lacks one) and return that
-record without allocating or touching reclaim_str_hashtbl_size.  On
-kmemdup() failure during the fold-in, return NULL so
-__cld_pipe_inprogress_downcall() surfaces -EFAULT to nfsdcld, matching
-the miss-path contract.
+  - Switch __free_session() from kfree() to kfree_rcu() so the
+    session slab is not reclaimed until after an RCU grace period,
+    guaranteeing that rpciod readers inside rcu_read_lock() never
+    dereference freed memory.
 
-Add an rw_semaphore (reclaim_str_hashtbl_lock) to struct nfsd_net that
-serialises all access to reclaim_str_hashtbl[] and
-reclaim_str_hashtbl_size.  Writers (nfs4_client_to_reclaim,
-nfs4_remove_reclaim_record callers) hold the write side; readers
-(nfsd4_cld_check*, inc_reclaim_complete, clients_still_reclaiming,
-nfs4_has_reclaimed_state, nfsd4_check_legacy_client) hold the read
-side.  All call sites are in sleepable context, and none is a hot
-path, so the rwsem cost is negligible.
+  - Pass the session pointer to the nfsd_cb_seq_status and
+    nfsd_cb_free_slot tracepoints instead of having them re-read
+    cl_cb_session.
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 362063a595be ("nfsd: keep a tally of RECLAIM_COMPLETE operations when using nfsdcld")
+  - nfsd4_cb_prepare() calls rpc_exit() when the session is NULL,
+    routing through the done/release path to requeue the callback.
+
+Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chris Mason <clm@meta.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-4-f27e8eb4d974@kernel.org
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-2-f27e8eb4d974@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ retained 6.12 boolean fields and crypto-shash API while adding balanced unlocks to older error paths. ]
+[ adapted RCU session lifetime handling to the older single-slot callback model and flexible-array session layout ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/netns.h       |    6 ++++
- fs/nfsd/nfs4recover.c |   39 ++++++++++++++++++++++++++-----
- fs/nfsd/nfs4state.c   |   61 +++++++++++++++++++++++++++++++++++++++++++++-----
- 3 files changed, 92 insertions(+), 14 deletions(-)
+ fs/nfsd/nfs4callback.c |   78 ++++++++++++++++++++++++++++++++++++++++---------
+ fs/nfsd/nfs4state.c    |    4 +-
+ fs/nfsd/state.h        |    3 +
+ fs/nfsd/trace.h        |   14 +++-----
+ 4 files changed, 75 insertions(+), 24 deletions(-)
 
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -84,6 +84,7 @@ struct nfsd_net {
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -387,12 +387,19 @@ static void encode_cb_sequence4args(stru
+ 				    const struct nfsd4_callback *cb,
+ 				    struct nfs4_cb_compound_hdr *hdr)
+ {
+-	struct nfsd4_session *session = cb->cb_clp->cl_cb_session;
++	struct nfsd4_session *session;
+ 	__be32 *p;
+ 
+ 	if (hdr->minorversion == 0)
+ 		return;
+ 
++	rcu_read_lock();
++	session = rcu_dereference(cb->cb_clp->cl_cb_session);
++	if (!session) {
++		rcu_read_unlock();
++		return;
++	}
++
+ 	encode_nfs_cb_opnum4(xdr, OP_CB_SEQUENCE);
+ 	encode_sessionid4(xdr, session);
+ 
+@@ -404,6 +411,7 @@ static void encode_cb_sequence4args(stru
+ 	xdr_encode_empty_array(p);		/* csa_referring_call_lists */
+ 
+ 	hdr->nops++;
++	rcu_read_unlock();
+ }
+ 
+ /*
+@@ -430,21 +438,32 @@ static void encode_cb_sequence4args(stru
+ static int decode_cb_sequence4resok(struct xdr_stream *xdr,
+ 				    struct nfsd4_callback *cb)
+ {
+-	struct nfsd4_session *session = cb->cb_clp->cl_cb_session;
++	struct nfsd4_session *session;
+ 	int status = -ESERVERFAULT;
+ 	__be32 *p;
+ 	u32 dummy;
+ 
++	rcu_read_lock();
++	session = rcu_dereference(cb->cb_clp->cl_cb_session);
++	if (!session) {
++		rcu_read_unlock();
++		cb->cb_seq_status = -NFS4ERR_BADSESSION;
++		return -NFS4ERR_BADSESSION;
++	}
++
+ 	/*
+ 	 * If the server returns different values for sessionID, slotID or
+ 	 * sequence number, the server is looney tunes.
  	 */
- 	struct list_head *reclaim_str_hashtbl;
- 	int reclaim_str_hashtbl_size;
-+	struct rw_semaphore reclaim_str_hashtbl_lock;
- 	struct list_head *conf_id_hashtbl;
- 	struct rb_root conf_name_tree;
- 	struct list_head *unconf_id_hashtbl;
-@@ -96,7 +97,10 @@ struct nfsd_net {
- 	 * close_lru holds (open) stateowner queue ordered by nfs4_stateowner.so_time
- 	 * for last close replay.
- 	 *
--	 * All of the above fields are protected by the client_mutex.
-+	 * reclaim_str_hashtbl[], reclaim_str_hashtbl_size are protected by
-+	 * reclaim_str_hashtbl_lock.
-+	 *
-+	 * All of the remaining fields are protected by the client_lock.
+ 	p = xdr_inline_decode(xdr, NFS4_MAX_SESSIONID_LEN + 4 + 4 + 4 + 4);
+-	if (unlikely(p == NULL))
++	if (unlikely(p == NULL)) {
++		rcu_read_unlock();
+ 		goto out_overflow;
++	}
+ 
+ 	if (memcmp(p, session->se_sessionid.data, NFS4_MAX_SESSIONID_LEN)) {
+ 		dprintk("NFS: %s Invalid session id\n", __func__);
++		rcu_read_unlock();
+ 		goto out;
+ 	}
+ 	p += XDR_QUADLEN(NFS4_MAX_SESSIONID_LEN);
+@@ -452,18 +471,21 @@ static int decode_cb_sequence4resok(stru
+ 	dummy = be32_to_cpup(p++);
+ 	if (dummy != session->se_cb_seq_nr) {
+ 		dprintk("NFS: %s Invalid sequence number\n", __func__);
++		rcu_read_unlock();
+ 		goto out;
+ 	}
+ 
+ 	dummy = be32_to_cpup(p++);
+ 	if (dummy != 0) {
+ 		dprintk("NFS: %s Invalid slotid\n", __func__);
++		rcu_read_unlock();
+ 		goto out;
+ 	}
+ 
+ 	/*
+ 	 * FIXME: process highest slotid and target highest slotid
  	 */
- 	struct list_head client_lru;
- 	struct list_head close_lru;
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -355,10 +355,12 @@ __nfsd4_remove_reclaim_record_grace(cons
++	rcu_read_unlock();
+ 	status = 0;
+ out:
+ 	cb->cb_seq_status = status;
+@@ -1060,9 +1082,8 @@ static int setup_callback_client(struct
+ 	} else {
+ 		if (!conn->cb_xprt || !ses)
+ 			return -EINVAL;
+-		clp->cl_cb_session = ses;
+ 		args.bc_xprt = conn->cb_xprt;
+-		args.prognumber = clp->cl_cb_session->se_cb_prog;
++		args.prognumber = ses->se_cb_prog;
+ 		args.protocol = conn->cb_xprt->xpt_class->xcl_ident |
+ 				XPRT_TRANSPORT_BC;
+ 		args.authflavor = ses->se_cb_sec.flavor;
+@@ -1080,8 +1101,10 @@ static int setup_callback_client(struct
+ 		return -ENOMEM;
+ 	}
+ 
+-	if (clp->cl_minorversion != 0)
++	if (clp->cl_minorversion != 0) {
+ 		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
++		rcu_assign_pointer(clp->cl_cb_session, ses);
++	}
+ 	clp->cl_cb_client = client;
+ 	clp->cl_cb_cred = cred;
+ 	rcu_read_lock();
+@@ -1226,15 +1249,21 @@ static void nfsd4_cb_prepare(struct rpc_
+ 	trace_nfsd_cb_rpc_prepare(clp);
+ 	cb->cb_seq_status = 1;
+ 	cb->cb_status = 0;
+-	if (minorversion && !nfsd41_cb_get_slot(cb, task))
+-		return;
++	if (minorversion) {
++		if (!rcu_access_pointer(clp->cl_cb_session)) {
++			rpc_exit(task, -EIO);
++			return;
++		}
++		if (!nfsd41_cb_get_slot(cb, task))
++			return;
++	}
+ 	rpc_call_start(task);
+ }
+ 
+ static bool nfsd4_cb_sequence_done(struct rpc_task *task, struct nfsd4_callback *cb)
+ {
+ 	struct nfs4_client *clp = cb->cb_clp;
+-	struct nfsd4_session *session = clp->cl_cb_session;
++	struct nfsd4_session *session;
+ 	bool ret = true;
+ 
+ 	if (!clp->cl_minorversion) {
+@@ -1256,8 +1285,15 @@ static bool nfsd4_cb_sequence_done(struc
+ 	if (!cb->cb_holds_slot)
+ 		goto need_restart;
+ 
++	rcu_read_lock();
++	session = rcu_dereference(clp->cl_cb_session);
++	if (!session) {
++		rcu_read_unlock();
++		goto need_restart;
++	}
++
+ 	/* This is the operation status code for CB_SEQUENCE */
+-	trace_nfsd_cb_seq_status(task, cb);
++	trace_nfsd_cb_seq_status(task, cb, session);
+ 	switch (cb->cb_seq_status) {
+ 	case 0:
+ 		/*
+@@ -1285,19 +1321,25 @@ static bool nfsd4_cb_sequence_done(struc
+ 	case -NFS4ERR_BADSESSION:
+ 		nfsd4_mark_cb_fault(cb->cb_clp);
+ 		ret = false;
++		rcu_read_unlock();
+ 		goto need_restart;
+ 	case -NFS4ERR_DELAY:
+ 		cb->cb_seq_status = 1;
+-		if (!rpc_restart_call(task))
++		if (!rpc_restart_call(task)) {
++			rcu_read_unlock();
+ 			goto out;
++		}
+ 
+ 		rpc_delay(task, 2 * HZ);
++		rcu_read_unlock();
+ 		return false;
+ 	case -NFS4ERR_BADSLOT:
++		rcu_read_unlock();
+ 		goto retry_nowait;
+ 	case -NFS4ERR_SEQ_MISORDERED:
+ 		if (session->se_cb_seq_nr != 1) {
+ 			session->se_cb_seq_nr = 1;
++			rcu_read_unlock();
+ 			goto retry_nowait;
+ 		}
+ 		break;
+@@ -1306,7 +1348,8 @@ static bool nfsd4_cb_sequence_done(struc
+ 	}
+ 	nfsd41_cb_release_slot(cb);
+ 
+-	trace_nfsd_cb_free_slot(task, cb);
++	trace_nfsd_cb_free_slot(task, cb, session);
++	rcu_read_unlock();
+ 
+ 	if (RPC_SIGNALLED(task))
+ 		goto need_restart;
+@@ -1415,7 +1458,15 @@ static struct nfsd4_conn * __nfsd4_find_
+  * Note there isn't a lot of locking in this code; instead we depend on
+  * the fact that it is run from clp->cl_callback_wq, which won't run two
+  * work items at once.  So, for example, clp->cl_callback_wq handles all
+- * access of cl_cb_client and all calls to rpc_create or rpc_shutdown_client.
++ * access of cl_cb_client, and all calls to rpc_create or
++ * rpc_shutdown_client.
++ *
++ * cl_cb_session is written only from cl_callback_wq (via
++ * rcu_assign_pointer) and read from rpciod under rcu_read_lock (via
++ * rcu_dereference) by encode_cb_sequence4args(), decode_cb_sequence4resok(),
++ * and nfsd4_cb_sequence_done(). Sessions are freed with kfree_rcu() so that
++ * rpciod readers in an RCU read-side critical section never dereference a
++ * freed session.
+  */
+ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ {
+@@ -1467,6 +1518,7 @@ static void nfsd4_process_cb_update(stru
+ 		nfsd4_mark_cb_down(clp);
+ 		if (c)
+ 			svc_xprt_put(c->cn_xprt);
++		rcu_assign_pointer(clp->cl_cb_session, ses);
  		return;
  	}
- 	name.len = len;
-+	down_write(&nn->reclaim_str_hashtbl_lock);
- 	crp = nfsd4_find_reclaim_client(name, nn);
--	kfree(name.data);
- 	if (crp)
- 		nfs4_remove_reclaim_record(crp, nn);
-+	up_write(&nn->reclaim_str_hashtbl_lock);
-+	kfree(name.data);
  }
- 
- static void
-@@ -559,6 +561,7 @@ nfs4_legacy_state_init(struct net *net)
- 	for (i = 0; i < CLIENT_HASH_SIZE; i++)
- 		INIT_LIST_HEAD(&nn->reclaim_str_hashtbl[i]);
- 	nn->reclaim_str_hashtbl_size = 0;
-+	init_rwsem(&nn->reclaim_str_hashtbl_lock);
- 
- 	return 0;
- }
-@@ -678,13 +681,16 @@ nfsd4_check_legacy_client(struct nfs4_cl
- 		goto out_enoent;
- 	}
- 	name.len = HEXDIR_LEN;
-+	down_read(&nn->reclaim_str_hashtbl_lock);
- 	crp = nfsd4_find_reclaim_client(name, nn);
--	kfree(name.data);
- 	if (crp) {
- 		set_bit(NFSD4_CLIENT_STABLE, &clp->cl_flags);
- 		crp->cr_clp = clp;
--		return 0;
- 	}
-+	up_read(&nn->reclaim_str_hashtbl_lock);
-+	kfree(name.data);
-+	if (crp)
-+		return 0;
- 
- out_enoent:
- 	return -ENOENT;
-@@ -1285,6 +1291,7 @@ nfsd4_cld_check(struct nfs4_client *clp)
- 		return 0;
- 
- 	/* look for it in the reclaim hashtable otherwise */
-+	down_read(&nn->reclaim_str_hashtbl_lock);
- 	crp = nfsd4_find_reclaim_client(clp->cl_name, nn);
- 	if (crp)
- 		goto found;
-@@ -1296,13 +1303,16 @@ nfsd4_cld_check(struct nfs4_client *clp)
- 		struct xdr_netobj name;
- 
- 		status = nfs4_make_rec_clidname(dname, &clp->cl_name);
--		if (status)
-+		if (status) {
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
-+		}
- 
- 		name.data = kmemdup(dname, HEXDIR_LEN, GFP_KERNEL);
- 		if (!name.data) {
- 			dprintk("%s: failed to allocate memory for name.data!\n",
- 				__func__);
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
- 		}
- 		name.len = HEXDIR_LEN;
-@@ -1313,9 +1323,11 @@ nfsd4_cld_check(struct nfs4_client *clp)
- 
- 	}
- #endif
-+	up_read(&nn->reclaim_str_hashtbl_lock);
- 	return -ENOENT;
- found:
- 	crp->cr_clp = clp;
-+	up_read(&nn->reclaim_str_hashtbl_lock);
- 	return 0;
- }
- 
-@@ -1335,6 +1347,7 @@ nfsd4_cld_check_v2(struct nfs4_client *c
- 		return 0;
- 
- 	/* look for it in the reclaim hashtable otherwise */
-+	down_read(&nn->reclaim_str_hashtbl_lock);
- 	crp = nfsd4_find_reclaim_client(clp->cl_name, nn);
- 	if (crp)
- 		goto found;
-@@ -1345,13 +1358,16 @@ nfsd4_cld_check_v2(struct nfs4_client *c
- 		char dname[HEXDIR_LEN];
- 
- 		status = nfs4_make_rec_clidname(dname, &clp->cl_name);
--		if (status)
-+		if (status) {
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
-+		}
- 
- 		name.data = kmemdup(dname, HEXDIR_LEN, GFP_KERNEL);
- 		if (!name.data) {
- 			dprintk("%s: failed to allocate memory for name.data\n",
- 					__func__);
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
- 		}
- 		name.len = HEXDIR_LEN;
-@@ -1362,6 +1378,7 @@ nfsd4_cld_check_v2(struct nfs4_client *c
- 
- 	}
- #endif
-+	up_read(&nn->reclaim_str_hashtbl_lock);
- 	return -ENOENT;
- found:
- 	if (crp->cr_princhash.len) {
-@@ -1369,26 +1386,33 @@ found:
- 			principal = clp->cl_cred.cr_raw_principal;
- 		else if (clp->cl_cred.cr_principal)
- 			principal = clp->cl_cred.cr_principal;
--		if (principal == NULL)
-+		if (principal == NULL) {
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
-+		}
- 		cksum.len = crypto_shash_digestsize(tfm);
- 		cksum.data = kmalloc(cksum.len, GFP_KERNEL);
--		if (cksum.data == NULL)
-+		if (cksum.data == NULL) {
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
-+		}
- 		status = crypto_shash_tfm_digest(tfm, principal,
- 						 strlen(principal), cksum.data);
- 		if (status) {
- 			kfree(cksum.data);
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
- 		}
- 		if (memcmp(crp->cr_princhash.data, cksum.data,
- 				crp->cr_princhash.len)) {
- 			kfree(cksum.data);
-+			up_read(&nn->reclaim_str_hashtbl_lock);
- 			return -ENOENT;
- 		}
- 		kfree(cksum.data);
- 	}
- 	crp->cr_clp = clp;
-+	up_read(&nn->reclaim_str_hashtbl_lock);
- 	return 0;
- }
- 
-@@ -1488,6 +1512,7 @@ nfs4_cld_state_init(struct net *net)
- 	for (i = 0; i < CLIENT_HASH_SIZE; i++)
- 		INIT_LIST_HEAD(&nn->reclaim_str_hashtbl[i]);
- 	nn->reclaim_str_hashtbl_size = 0;
-+	init_rwsem(&nn->reclaim_str_hashtbl_lock);
- 	nn->track_reclaim_completes = true;
- 	atomic_set(&nn->nr_reclaim_complete, 0);
- 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -2565,14 +2565,21 @@ static void inc_reclaim_complete(struct
- 
- 	if (!nn->track_reclaim_completes)
- 		return;
--	if (!nfsd4_find_reclaim_client(clp->cl_name, nn))
-+
-+	down_read(&nn->reclaim_str_hashtbl_lock);
-+	if (!nfsd4_find_reclaim_client(clp->cl_name, nn)) {
-+		up_read(&nn->reclaim_str_hashtbl_lock);
- 		return;
-+	}
- 	if (atomic_inc_return(&nn->nr_reclaim_complete) ==
- 			nn->reclaim_str_hashtbl_size) {
-+		up_read(&nn->reclaim_str_hashtbl_lock);
- 		printk(KERN_INFO "NFSD: all clients done reclaiming, ending NFSv4 grace period (net %x)\n",
- 				clp->net->ns.inum);
- 		nfsd4_end_grace(nn);
-+		return;
- 	}
-+	up_read(&nn->reclaim_str_hashtbl_lock);
- }
- 
- static void expire_client(struct nfs4_client *clp)
-@@ -6467,10 +6474,15 @@ static bool clients_still_reclaiming(str
- 
- 	if (READ_ONCE(nn->grace_end_forced))
- 		return false;
--	if (nn->track_reclaim_completes &&
--			atomic_read(&nn->nr_reclaim_complete) ==
--			nn->reclaim_str_hashtbl_size)
--		return false;
-+	if (nn->track_reclaim_completes) {
-+		int size;
-+
-+		down_read(&nn->reclaim_str_hashtbl_lock);
-+		size = nn->reclaim_str_hashtbl_size;
-+		up_read(&nn->reclaim_str_hashtbl_lock);
-+		if (atomic_read(&nn->nr_reclaim_complete) == size)
-+			return false;
-+	}
- 	if (!nn->somebody_reclaimed)
- 		return false;
- 	nn->somebody_reclaimed = false;
-@@ -8673,9 +8685,13 @@ bool
- nfs4_has_reclaimed_state(struct xdr_netobj name, struct nfsd_net *nn)
+@@ -2223,7 +2223,7 @@ static void nfsd4_del_conns(struct nfsd4
+ static void __free_session(struct nfsd4_session *ses)
  {
- 	struct nfs4_client_reclaim *crp;
-+	bool found;
- 
-+	down_read(&nn->reclaim_str_hashtbl_lock);
- 	crp = nfsd4_find_reclaim_client(name, nn);
--	return (crp && crp->cr_clp);
-+	found = (crp && crp->cr_clp);
-+	up_read(&nn->reclaim_str_hashtbl_lock);
-+	return found;
+ 	free_session_slots(ses);
+-	kfree(ses);
++	kfree_rcu(ses, rcu_head);
  }
  
- /*
-@@ -8688,10 +8704,39 @@ nfs4_client_to_reclaim(struct xdr_netobj
- 	unsigned int strhashval;
- 	struct nfs4_client_reclaim *crp;
+ static void free_session(struct nfsd4_session *ses)
+@@ -3283,7 +3283,7 @@ static struct nfs4_client *create_client
+ 	clear_bit(0, &clp->cl_cb_slot_busy);
+ 	copy_verf(clp, verf);
+ 	memcpy(&clp->cl_addr, sa, sizeof(struct sockaddr_storage));
+-	clp->cl_cb_session = NULL;
++	RCU_INIT_POINTER(clp->cl_cb_session, NULL);
+ 	clp->net = net;
+ 	clp->cl_nfsd_dentry = nfsd_client_mkdir(
+ 		nn, &clp->cl_nfsdfs,
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -310,6 +310,7 @@ struct nfsd4_session {
+ 	struct list_head	se_conns;
+ 	u32			se_cb_prog;
+ 	u32			se_cb_seq_nr;
++	struct rcu_head		rcu_head;
+ 	struct nfsd4_slot	*se_slots[];	/* forward channel slots */
+ };
  
-+	down_write(&nn->reclaim_str_hashtbl_lock);
-+
-+	/*
-+	 * A reclaim record for this client name may already exist (for
-+	 * example, populated at boot from the recovery directory before
-+	 * an in-grace RECLAIM_COMPLETE or an nfsdcld downcall delivers
-+	 * the same name). Dedup here so reclaim_str_hashtbl_size stays
-+	 * equal to the number of distinct client names; inc_reclaim_complete
-+	 * relies on that equality to end the grace period via the fast path.
-+	 */
-+	crp = nfsd4_find_reclaim_client(name, nn);
-+	if (crp) {
-+		if (princhash.len && crp->cr_princhash.len == 0) {
-+			void *pdata = kmemdup(princhash.data, princhash.len,
-+					      GFP_KERNEL);
-+			if (pdata) {
-+				crp->cr_princhash.data = pdata;
-+				crp->cr_princhash.len = princhash.len;
-+			} else {
-+				dprintk("%s: failed to allocate memory for princhash.data!\n",
-+					__func__);
-+				crp = NULL;
-+			}
-+		}
-+		up_write(&nn->reclaim_str_hashtbl_lock);
-+		return crp;
-+	}
-+
- 	name.data = kmemdup(name.data, name.len, GFP_KERNEL);
- 	if (!name.data) {
- 		dprintk("%s: failed to allocate memory for name.data!\n",
- 			__func__);
-+		up_write(&nn->reclaim_str_hashtbl_lock);
- 		return NULL;
- 	}
- 	if (princhash.len) {
-@@ -8700,6 +8745,7 @@ nfs4_client_to_reclaim(struct xdr_netobj
- 			dprintk("%s: failed to allocate memory for princhash.data!\n",
- 				__func__);
- 			kfree(name.data);
-+			up_write(&nn->reclaim_str_hashtbl_lock);
- 			return NULL;
- 		}
- 	} else
-@@ -8719,6 +8765,7 @@ nfs4_client_to_reclaim(struct xdr_netobj
- 		kfree(name.data);
- 		kfree(princhash.data);
- 	}
-+	up_write(&nn->reclaim_str_hashtbl_lock);
- 	return crp;
- }
+@@ -422,7 +423,7 @@ struct nfs4_client {
+ #define NFSD4_CB_FAULT		3
+ 	int			cl_cb_state;
+ 	struct nfsd4_callback	cl_cb_null;
+-	struct nfsd4_session	*cl_cb_session;
++	struct nfsd4_session	__rcu *cl_cb_session;
  
-@@ -8738,6 +8785,7 @@ nfs4_release_reclaim(struct nfsd_net *nn
- 	struct nfs4_client_reclaim *crp = NULL;
- 	int i;
+ 	/* for all client information that callback code might need: */
+ 	spinlock_t		cl_lock;
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -1619,9 +1619,10 @@ DEFINE_NFSD_CB_LIFETIME_EVENT(bc_shutdow
+ TRACE_EVENT(nfsd_cb_seq_status,
+ 	TP_PROTO(
+ 		const struct rpc_task *task,
+-		const struct nfsd4_callback *cb
++		const struct nfsd4_callback *cb,
++		const struct nfsd4_session *session
+ 	),
+-	TP_ARGS(task, cb),
++	TP_ARGS(task, cb, session),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned int, task_id)
+ 		__field(unsigned int, client_id)
+@@ -1633,8 +1634,6 @@ TRACE_EVENT(nfsd_cb_seq_status,
+ 		__field(int, seq_status)
+ 	),
+ 	TP_fast_assign(
+-		const struct nfs4_client *clp = cb->cb_clp;
+-		const struct nfsd4_session *session = clp->cl_cb_session;
+ 		const struct nfsd4_sessionid *sid =
+ 			(struct nfsd4_sessionid *)&session->se_sessionid;
  
-+	down_write(&nn->reclaim_str_hashtbl_lock);
- 	for (i = 0; i < CLIENT_HASH_SIZE; i++) {
- 		while (!list_empty(&nn->reclaim_str_hashtbl[i])) {
- 			crp = list_entry(nn->reclaim_str_hashtbl[i].next,
-@@ -8746,6 +8794,7 @@ nfs4_release_reclaim(struct nfsd_net *nn
- 		}
- 	}
- 	WARN_ON_ONCE(nn->reclaim_str_hashtbl_size);
-+	up_write(&nn->reclaim_str_hashtbl_lock);
- }
+@@ -1660,9 +1659,10 @@ TRACE_EVENT(nfsd_cb_seq_status,
+ TRACE_EVENT(nfsd_cb_free_slot,
+ 	TP_PROTO(
+ 		const struct rpc_task *task,
+-		const struct nfsd4_callback *cb
++		const struct nfsd4_callback *cb,
++		const struct nfsd4_session *session
+ 	),
+-	TP_ARGS(task, cb),
++	TP_ARGS(task, cb, session),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned int, task_id)
+ 		__field(unsigned int, client_id)
+@@ -1673,8 +1673,6 @@ TRACE_EVENT(nfsd_cb_free_slot,
+ 		__field(u32, slot_seqno)
+ 	),
+ 	TP_fast_assign(
+-		const struct nfs4_client *clp = cb->cb_clp;
+-		const struct nfsd4_session *session = clp->cl_cb_session;
+ 		const struct nfsd4_sessionid *sid =
+ 			(struct nfsd4_sessionid *)&session->se_sessionid;
  
- /*
 
 
