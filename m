@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13F143E06C;
-	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE47C3DB339;
+	Thu, 17 Sep 2026 19:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671682; cv=none; b=ucp4RNAzPWpVCq75gHhNp57Cv9TmZIOW+OxW2minFgs886zvbafDVKM/Jsbhy/lGpMaG2ktmWRUmTIJktvpVSMcxnCf9CvPYHHmae1/pBqJoY8dVARrL8/glQ/VzTJtw7cHqIRw7gWDkcUXrmq1hs43KW9MDHd4g/v5lGuj2L/U=
+	t=1789671682; cv=none; b=Uc5SZ7grpa2FgoLAmHUtetu3OzZlOxm7MKvHN6vKE8P/IN6uZ1q9bUwYNT37QRTw3NEb+EdoGvzgtLcvAKYI1hNG1WrVpXqzK3aEnS1P8B3ztYRfFVii/V+STlaU7VokSrHjrn7loR5Tz9EPqKbRlTXejxTPLCH4OFwD35+Kipw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789671682; c=relaxed/simple;
-	bh=rZcjuOs1a5UM8A7aRIOEPodJIf2lgk20wHgn4wFWI+I=;
+	bh=VxqOLdwKtDqmb2klTP3uCpRaxOxNhtnmTyWKOdmeVyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6gDAIbGAPkAcm5x4D7LC3Ws2MttaiL4ME2yC/+LiQYMuMxXXHWHa4Roc1zgcB88argH9rUhN24deceQSfrFQFMDSYWV7A6x48yh/Sl5irzlJ0yUkkpjdItgmH9+RA++KfczGetwW+y1TO9Ii6WL7cwMwfyuo6NIhT44uwMneU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGkJkKjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nHFowsTi3n/AUM/TNuceDAWV+WblqhCkt20Lpr3zQQPQVHvR9p879GptnvrOMW98+AENQ8NuZGjhRWIhtkDVqwtkMSnW9xzVNWZf49sHZEW064In8Disk2yg5U0coSOXBX4S7WoZYovJOCUSMA2x72phlblTnqtAkTAYgIXmMmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/5aNDyk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGkJkKjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B111F0089A;
-	Thu, 17 Sep 2026 19:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/5aNDyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109611F0089C;
+	Thu, 17 Sep 2026 19:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671657;
-	bh=WCdLykQrQHR/YYnxwcZQguRUfUW8DWzwDiX6KSa7XTg=;
+	s=korg; t=1789671648;
+	bh=MTqT+08ogNyGYL8OU5IHdMYktRzwJ3d9TQCsNKqYmMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGkJkKjR0cW//bOwDItMPqnjmHF6ijy2mr4Qr1p/49esc3flXLruJik5X70r8uFjD
-	 xxcrYK2Dw4Fvrg0TJmH08jene9uq7X5uIrhX6DsZddcYMy2QQ56StqFUZDbB706epH
-	 UHAwke5So56TJlcPpsPA8XuA/20T/BZwbLGk52jI=
+	b=M/5aNDykv88M5xDO4onyP1Gtx+xOlUN2TLUcA5vDxsTp+EHEmnEQ1Py5qHpuiJH5J
+	 /zgfpHaMtkG7ZoOUSbqYnilZxI2nprR2xcYF+15oyczDz/6m+GSziHcuAgSuB4keWR
+	 A/yU1uRUWu++FJNQU1d8uK2wg/+FE2HbJRHij7J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	Neill Kapron <nkapron@google.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1010/1102] usb: gadget: f_fs: Fix Use-After-Free in AIO error path
-Date: Thu, 17 Sep 2026 16:15:53 +0100
-Message-ID: <20260917151606.103196188@linuxfoundation.org>
+Subject: [PATCH 6.12 1043/1102] btrfs: expose per-inode stable writes flag
+Date: Thu, 17 Sep 2026 16:16:26 +0100
+Message-ID: <20260917151606.977888589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,66 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit e78dcb1f7ec271449c54984dc90c62a5ba272de7 ]
+[ Upstream commit ecde48a1a6b3256bd49db8780bf37556b157783c ]
 
-In ffs_epfile_write_iter() and ffs_epfile_read_iter(), when ffs_epfile_io()
-fails with an error other than -EIOCBQUEUED, the io_data structure (`p`) is
-freed. However, for AIO operations, the kiocb cancel function was already
-armed and kiocb->private was set to `p`.
+The address space flag AS_STABLE_WRITES determine if FGP_STABLE for will
+wait for the folio to finish its writeback.
 
-If a concurrent cancel operation (such as sys_io_cancel()) executes after
-ffs_epfile_io() fails but before the function frees `p`, a Use-After-Free
-can occur when the cancellation handler accesses the freed pointer.
+For btrfs, due to the default data checksum behavior, if we modify the
+folio while it's still under writeback, it will cause data checksum
+mismatch.  Thus for quite some call sites we manually call
+folio_wait_writeback() to prevent such problem from happening.
 
-To securely fix this race condition, we must properly un-arm the
-cancellation. Invoking `kiocb->ki_complete()` does exactly this by
-acquiring `ctx->ctx_lock` and safely removing the kiocb from the active
-sequence. In doing so, it ensures that a parallel io_cancel can no longer
-discover the kiocb, effectively closing the race window.
+Currently there is only one call site inside btrfs really utilizing
+FGP_STABLE, and in that case we also manually call folio_wait_writeback()
+to do the waiting.
 
-We then return -EIOCBQUEUED to notify the VFS layer that the kiocb has been
-consumed and it should avoid attempting to complete the request again or
-triggering subsequent completion handlers.
+But it's better to properly expose the stable writes flag to a per-inode
+basis, to allow call sites to fully benefit from FGP_STABLE flag.
+E.g. for inodes with NODATASUM allowing beginning dirtying the page
+without waiting for writeback.
 
-Fixes: de2080d41b5d ("gadget/function/f_fs.c: close leaks")
-Cc: stable@vger.kernel.org
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260724235100.106011-1-nkapron@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This involves:
+
+- Update the mapping's stable write flag when setting/clearing NODATASUM
+  inode flag using ioctl
+  This only works for empty files, so it should be fine.
+
+- Update the mapping's stable write flag when reading an inode from disk
+
+- Remove the explicit folio_wait_writeback() for FGP_BEGINWRITE call
+  site
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+
+[ sashal: Reduced backport -- upstream ecde48a1a6b32 touches 4 file(s), this
+  backport carries 3. Not backported here:
+  fs/btrfs/btrfs_inode.h
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
+Stable-dep-of: 15f7c86215e8 ("btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/file.c  |    3 +--
+ fs/btrfs/inode.c |    8 ++++++++
+ fs/btrfs/ioctl.c |    4 ++++
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1273,8 +1273,10 @@ static ssize_t ffs_epfile_write_iter(str
- 	if (res == -EIOCBQUEUED)
- 		return res;
- 	if (p->aio) {
-+		kiocb->ki_complete(kiocb, res);
- 		mmdrop(p->mm);
- 		kfree(p);
-+		return -EIOCBQUEUED;
- 	} else {
- 		*from = p->data;
- 	}
-@@ -1322,9 +1324,11 @@ static ssize_t ffs_epfile_read_iter(stru
- 		return res;
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -884,7 +884,7 @@ static int prepare_uptodate_page(struct
  
- 	if (p->aio) {
-+		kiocb->ki_complete(kiocb, res);
- 		mmdrop(p->mm);
- 		kfree(p->to_free);
- 		kfree(p);
-+		return -EIOCBQUEUED;
- 	} else {
- 		*to = p->data;
+ static fgf_t get_prepare_fgp_flags(bool nowait)
+ {
+-	fgf_t fgp_flags = FGP_LOCK | FGP_ACCESSED | FGP_CREAT;
++	fgf_t fgp_flags = FGP_LOCK | FGP_ACCESSED | FGP_CREAT | FGP_STABLE;
+ 
+ 	if (nowait)
+ 		fgp_flags |= FGP_NOWAIT;
+@@ -954,7 +954,6 @@ again:
+ 			faili = i - 1;
+ 			goto fail;
+ 		}
+-		wait_on_page_writeback(pages[i]);
  	}
+ 
+ 	return 0;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3854,6 +3854,10 @@ static int btrfs_read_locked_inode(struc
+ 
+ 	btrfs_inode_split_flags(btrfs_inode_flags(leaf, inode_item),
+ 				&BTRFS_I(inode)->flags, &BTRFS_I(inode)->ro_flags);
++	if (BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)
++		mapping_clear_stable_writes(inode->i_mapping);
++	else
++		mapping_set_stable_writes(inode->i_mapping);
+ 
+ cache_index:
+ 	/*
+@@ -6313,6 +6317,10 @@ int btrfs_create_new_inode(struct btrfs_
+ 		if (btrfs_test_opt(fs_info, NODATACOW))
+ 			BTRFS_I(inode)->flags |= BTRFS_INODE_NODATACOW |
+ 				BTRFS_INODE_NODATASUM;
++		if (BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)
++			mapping_clear_stable_writes(inode->i_mapping);
++		else
++			mapping_set_stable_writes(inode->i_mapping);
+ 	}
+ 
+ 	ret = btrfs_insert_inode_locked(inode);
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -391,6 +391,10 @@ int btrfs_fileattr_set(struct mnt_idmap
+ 
+ update_flags:
+ 	inode->flags = inode_flags;
++	if (inode->flags & BTRFS_INODE_NODATASUM)
++		mapping_clear_stable_writes(inode->vfs_inode.i_mapping);
++	else
++		mapping_set_stable_writes(inode->vfs_inode.i_mapping);
+ 	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
+ 	inode_inc_iversion(&inode->vfs_inode);
+ 	inode_set_ctime_current(&inode->vfs_inode);
 
 
