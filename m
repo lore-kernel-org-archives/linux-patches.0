@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37634E4C20;
-	Thu, 17 Sep 2026 16:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAFE4DDB42;
+	Thu, 17 Sep 2026 16:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661038; cv=none; b=AnhKUAiD9qXAWiKw8/arkwED+0yP2TAg1gGNnbcCKPSuzjOQ4boMEKKxQ6HMCxMOoAClY3ylO2ktpXAWjVB3ONMNSyTzNSbaAaD6AsSxOXIRuqWcJw31sYQ4nx7fBqRfVhzHfUr/VpJ2J2jI/3ldlFgTA2lAOR+SJ4ln9yF/ASY=
+	t=1789661041; cv=none; b=s/THIrPNiHrU/o3TePovs67BmT+hvTvLzO5P9sfvxfezN2Myg+pwWurZ9c9l32umBSvnBa/S7QMpvtMn/g/AEMvhZp8sw8LEy0RRC8v2/nkRqmSja1cAh0ZS0hWfApqRtj4EvNW8aDyIGm2ekfS05EXKGJNQweLqciCSGQBSu/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661038; c=relaxed/simple;
-	bh=MBeopyYRrGwwR42ikcPE7uPI8ZaOX1kL7wO+cDP0h1o=;
+	s=arc-20240116; t=1789661041; c=relaxed/simple;
+	bh=ZfSWp3P3e7STpdmPJ//93S5gjSI64PUL2KcWGATANRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQVxOSQSrVk0R4H06hVX7qaoV7V0VqoR6FiWe+dpvdAZpcTR1Xkn7nzH+k+vPujmJoX6Eni07zDhL8KHia+vZfgX6/6cqLjR+vJgQToHbl+u1yMKDqjWHL3FKCY66uG6rRSAZO18D544GJDh+83az9UYVdFu0+EUgO2NZiw2dxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=go/LgdcE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QOHO3pea73qyQSq52veBFM9JzEjEcLNWkjkme2B6hr6OmepIyz5dCgJU1kSYiLVOohfYxXk75tzjIbpemN4YcSKGfarfjxZp8IlV1yUw7cuIdJ+kNZQ7yvJTSftL8qepj1RccJiraCRhrqYrPQONUMUGXBfbeKSZi0enu6vCoZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQ8Yb8WP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="go/LgdcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5E61F00893;
-	Thu, 17 Sep 2026 16:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQ8Yb8WP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42A61F000FF;
+	Thu, 17 Sep 2026 16:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661036;
-	bh=NHloUzipSpSJSstPSMrHEDNWnpRKo+x6bdibF/qKcxQ=;
+	s=korg; t=1789661039;
+	bh=etcvlZ45Vu1qjVdr33dVhg/yQDEowbgC2OedD43ObgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=go/LgdcE6AUbmcpHzS8OWvIoe2GdAYbTadqM1p1SOlXXZb5VuzQq9rCYIlx1GRkIC
-	 mh5n3B2Hugu2DCb3HaACY5nmr2qT8TVQPrQqTQMqAhBQYhsnQSftIgtUdQ7TqG1nfJ
-	 wiKH7zC3zxs9JnqytjtjllX4PwRJ3nhS7XQDooyA=
+	b=uQ8Yb8WPoo4Zx5CqX9HWagTq5oLHWKG9C6GDsfExv9NpyUSYQBnkNqBpPHjq1fZqP
+	 J5kDTSvcaTduSn2OMXS3WWisFDdnGhpN0VgaCTnj0DlNA/u/84nYosnpS0wr8nUosU
+	 sZUaWKxpe4RihwdIJv6M5pnvI14icHWN8Cy1L498=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Oleksandr Havrylov <goainwo@gmail.com>,
-	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>,
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0034/1250] wifi: rtw88: Add NULL check for chip->edcca_th in rtw_fw_adaptivity_result()
-Date: Thu, 17 Sep 2026 15:57:09 +0100
-Message-ID: <20260917151552.861313565@linuxfoundation.org>
+Subject: [PATCH 6.18 0061/1250] thunderbolt: Dont create multiple DMA tunnels on firmware connection manager
+Date: Thu, 17 Sep 2026 15:57:36 +0100
+Message-ID: <20260917151553.597350481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,58 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-[ Upstream commit d5e6f353ce1e1c25b8458ea390ed09d2377412c5 ]
+[ Upstream commit cf0c38ee554c3e9062408cc3a38325483d52ecd0 ]
 
-It was recently reported that rtw_fw_adaptivity_result()
-in fw.c dereferences rtwdev->chip->edcca_th without
-a NULL check. The issue is that devices with the
-8821CE chip don't define edcca_th in their chip
-info. As a result, when rtw_fw_adaptivity_result()
-tries to dereference it, the kernel triggers an oops.
+Firmware connection manager supports only one DMA tunnel per XDomain
+connection. Firmware prior Intel Titan Ridge failed the operation
+directly but the same does not happen anymore on Titan Ridge and
+forward. For this reason add an explicit check, and fail the operation
+accordingly in the driver.
 
-Add a NULL check for edcca_th before dereferencing
-it in rtw_fw_adaptivity_result() in fw.c. Placing
-the check at the function entry avoids logging any
-garbage values.
-
-This change does not address the root cause for
-this behavior, but it prevents the NULL dereference
-and the resulting oops while a more permanent solution
-is developed.
-
-Tested on a 8822CE chip which defines edcca_th, so
-this issue is not present on it, but it still uses
-this driver and I can verify there are no regressions.
-
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Reported-by: Oleksandr Havrylov <goainwo@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221286
-Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Oleksandr Havrylov <goainwo@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260415052959.14844-1-npetrakopoulos2003@gmail.com
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/fw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thunderbolt/icm.c     | 10 ++++++++++
+ drivers/thunderbolt/xdomain.c | 25 +++++++++++++++++++------
+ include/linux/thunderbolt.h   |  2 ++
+ 3 files changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/fw.c b/drivers/net/wireless/realtek/rtw88/fw.c
-index c68a9fff68082..7ea8390f4d5a8 100644
---- a/drivers/net/wireless/realtek/rtw88/fw.c
-+++ b/drivers/net/wireless/realtek/rtw88/fw.c
-@@ -279,6 +279,9 @@ static void rtw_fw_adaptivity_result(struct rtw_dev *rtwdev, u8 *payload,
- 	const struct rtw_hw_reg_offset *edcca_th = rtwdev->chip->edcca_th;
- 	struct rtw_c2h_adaptivity *result = (struct rtw_c2h_adaptivity *)payload;
+diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
+index ae9bb76b05424..cafd91a443bc8 100644
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -587,6 +587,11 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
+ 	struct icm_fr_pkg_approve_xdomain request;
+ 	int ret;
  
-+	if (!edcca_th)
-+		return;
++	if (atomic_read(&xd->ntunnels) >= 1) {
++		tb_warn(tb, "only one tunnel is supported by the firmware\n");
++		return -EOPNOTSUPP;
++	}
 +
- 	rtw_dbg(rtwdev, RTW_DBG_ADAPTIVITY,
- 		"Adaptivity: density %x igi %x l2h_th_init %x l2h %x h2l %x option %x\n",
- 		result->density, result->igi, result->l2h_th_init, result->l2h,
+ 	memset(&request, 0, sizeof(request));
+ 	request.hdr.code = ICM_APPROVE_XDOMAIN;
+ 	request.link_info = xd->depth << ICM_LINK_INFO_DEPTH_SHIFT | xd->link;
+@@ -1157,6 +1162,11 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
+ 	struct icm_tr_pkg_approve_xdomain request;
+ 	int ret;
+ 
++	if (atomic_read(&xd->ntunnels) >= 1) {
++		tb_warn(tb, "only one tunnel is supported by the firmware\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	memset(&request, 0, sizeof(request));
+ 	request.hdr.code = ICM_APPROVE_XDOMAIN;
+ 	request.route_hi = upper_32_bits(xd->route);
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index 1eb149445fa05..e2c46366c8160 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -2021,6 +2021,7 @@ struct tb_xdomain *tb_xdomain_alloc(struct tb *tb, struct device *parent,
+ 	INIT_DELAYED_WORK(&xd->state_work, tb_xdomain_state_work);
+ 	INIT_DELAYED_WORK(&xd->properties_changed_work,
+ 			  tb_xdomain_properties_changed);
++	atomic_set(&xd->ntunnels, 0);
+ 
+ 	xd->local_uuid = kmemdup(local_uuid, sizeof(uuid_t), GFP_KERNEL);
+ 	if (!xd->local_uuid)
+@@ -2302,9 +2303,15 @@ int tb_xdomain_enable_paths(struct tb_xdomain *xd, int transmit_path,
+ 			    int transmit_ring, int receive_path,
+ 			    int receive_ring)
+ {
+-	return tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
+-					       transmit_ring, receive_path,
+-					       receive_ring);
++	int ret;
++
++	ret = tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
++					      transmit_ring, receive_path,
++					      receive_ring);
++	if (ret)
++		return ret;
++	atomic_inc(&xd->ntunnels);
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(tb_xdomain_enable_paths);
+ 
+@@ -2327,9 +2334,15 @@ int tb_xdomain_disable_paths(struct tb_xdomain *xd, int transmit_path,
+ 			     int transmit_ring, int receive_path,
+ 			     int receive_ring)
+ {
+-	return tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
+-						  transmit_ring, receive_path,
+-						  receive_ring);
++	int ret;
++
++	ret = tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
++						 transmit_ring, receive_path,
++						 receive_ring);
++	if (ret)
++		return ret;
++	atomic_dec(&xd->ntunnels);
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(tb_xdomain_disable_paths);
+ 
+diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
+index 7204586c10c3e..466f315f0be7b 100644
+--- a/include/linux/thunderbolt.h
++++ b/include/linux/thunderbolt.h
+@@ -230,6 +230,7 @@ enum tb_link_width {
+  *				changed notification
+  * @bonding_possible: True if lane bonding is possible on local side
+  * @target_link_width: Target link width from the remote host
++ * @ntunnels: Keeps track of how many tunnels go through this XDomain
+  * @link: Root switch link the remote domain is connected (ICM only)
+  * @depth: Depth in the chain the remote domain is connected (ICM only)
+  *
+@@ -276,6 +277,7 @@ struct tb_xdomain {
+ 	int properties_changed_retries;
+ 	bool bonding_possible;
+ 	u8 target_link_width;
++	atomic_t ntunnels;
+ 	u8 link;
+ 	u8 depth;
+ };
 -- 
 2.53.0
 
