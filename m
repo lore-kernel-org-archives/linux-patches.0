@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024294E532B;
-	Thu, 17 Sep 2026 18:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005844E73A1;
+	Thu, 17 Sep 2026 18:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669107; cv=none; b=juxgcgMS2omXDj4dCsCefEywNYQH2lujFvyIJnTRc9n1D8R7qrMy8O4467UEw3q2swXm1dbybCK92e1Tk8DpsWJiZvUdbLqKoXiEJ1+Foe9exGUo5kPNW+uEPgf6KDv2XsfVvoBqb/3eaqiEuYYEj7hxgC4eOOSKBJTHmgCQwAk=
+	t=1789669110; cv=none; b=JkJ/UALVBQSX74ro66xArZrMVU0+9PiiNx6wdRJ/V+WorjeC3scrRDvWOyyaBH2MmvLHAYgSkeipRe47ZGKYrQdlmFRV8RPX/4VXiu44YPM2IGtdGAfj+LKArWVuPsaYR7QTuwbPkNBqcV+Ad7S3Dd69Sm1x5332+4ghD4iqwI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669107; c=relaxed/simple;
-	bh=KpIavQws4WzVUX9q2/XD0sRcxC1Ek3jjhNeSvp/VsIw=;
+	s=arc-20240116; t=1789669110; c=relaxed/simple;
+	bh=orOOuEcLV4tOa6dUui6I5RO44287fTrRTIoLw9L25cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2UE62wZ5tvdB2Fph/zdGetnw4d885QDi3oXwRLUv6sWzswRySUfMIRrObTBjaM0S2vJy0KCeRNyCviIU55Wgl/fv3PWUXLtUVoydn0BqdO+iIRrrfGEc+besfMJASjeL9xA1QBcnEN1Z9wjQ37sywHh4iSF/KBbsRbix4ztnU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDuUqtbD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O58bTVbk3U/T4i7408rlc+23yhWKAXgWFqaEdRLDxUUre+qbOlqVvkdbEC8GMexI6T5nH98y5UCMKZNEjFr1JHuVPzV+EYSykgZi2ultnamzhOFvOY4i6U6vLuE1Dmh6dnia9t1/poa99AeYhGWkjxaqkF17CoGvRsHwUewD8Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stbiPbXf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDuUqtbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B62B1F000FF;
-	Thu, 17 Sep 2026 18:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stbiPbXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568681F000FF;
+	Thu, 17 Sep 2026 18:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669105;
-	bh=sftt+TYs/+D5TyPKuWDbbUio6RPzPgwKUnE1RoAFn+U=;
+	s=korg; t=1789669108;
+	bh=ifuke+HDbdGFgKr9Rr+270+Vs/WYB8YZV30hlWp3uEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDuUqtbDkMMoZe7pYx4zkXa8p7wjXtFKi1NtpF4lmPR12FWA67IkfkJbw8Qmde0BB
-	 7Gd4aFg6v3zmFj0NCCn+uid4jPNW6cDQLBCZhAH2DYhkiekDos3cDZqi5hUtADL6Ee
-	 fKZnv54jAcVyXp1XE6LxfSDFKT/14dH5eXWYL27k=
+	b=stbiPbXf7ykO7fHchq5YTfGjgHRdRgovd1p1Mmtcl80FImOurXS5SEPZZeogB95Pt
+	 iIv4y0hwjkI/iBdQpwrq8WSfo+0dU+gc7CIC8+jfGEMvF0Ts43H9Gp9gZHq+tn85p7
+	 mokIuq2wjjvITPBBv6fKBD1NoOthoT0AEvo0JX5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0599/1102] ALSA: rawmidi: Expose the tied device number in info ioctl
-Date: Thu, 17 Sep 2026 16:09:02 +0100
-Message-ID: <20260917151555.035125537@linuxfoundation.org>
+Subject: [PATCH 6.12 0600/1102] ALSA: rawmidi: Show substream activity in info ioctl
+Date: Thu, 17 Sep 2026 16:09:03 +0100
+Message-ID: <20260917151555.063375010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,111 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit bdf46443f350dd5d226fd528a5a5954ff762f591 ]
+[ Upstream commit b8fefed73a952a33521ad416fb39683abd87454b ]
 
-The UMP legacy rawmidi is derived from the UMP rawmidi, but currently
-there is no way to know which device is involved in other side.
+The UMP legacy rawmidi may turn on/off the substream dynamically
+depending on the UMP Function Block information.  So far, there was no
+direct way to know whether the substream is disabled (inactive) or
+not; at most one can take a look at the substream name string or try
+to open and get -ENODEV.
 
-This patch extends the rawmidi info ioctl to show the tied device
-number.  As default it stores -1, indicating that no tied device.
+This patch extends the rawmidi info ioctl to show the current inactive
+state of the given substream.  When the selected substream is
+inactive, info flags field contains the new bit flag
+SNDRV_RAWMIDI_INFO_STREAM_INACTIVE.
 
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250110155943.31578-2-tiwai@suse.de
+Link: https://patch.msgid.link/20250110155943.31578-3-tiwai@suse.de
 Stable-dep-of: adeee7187694 ("ALSA: ump: do not touch legacy_rmidi before it exists")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/sound/designs/midi-2.0.rst | 5 +++++
+ Documentation/sound/designs/midi-2.0.rst | 6 ++++++
  include/sound/rawmidi.h                  | 1 +
- include/uapi/sound/asound.h              | 5 ++++-
+ include/uapi/sound/asound.h              | 1 +
  sound/core/rawmidi.c                     | 2 ++
- sound/core/ump.c                         | 3 +++
- 5 files changed, 15 insertions(+), 1 deletion(-)
+ sound/core/ump.c                         | 9 +++++----
+ 5 files changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/sound/designs/midi-2.0.rst b/Documentation/sound/designs/midi-2.0.rst
-index 086487ca7ab11..d525bc2805f72 100644
+index d525bc2805f72..d6c17a47c8320 100644
 --- a/Documentation/sound/designs/midi-2.0.rst
 +++ b/Documentation/sound/designs/midi-2.0.rst
-@@ -293,6 +293,11 @@ Rawmidi API Extensions
-   status 0x05).  When UMP core receives such a message, it updates the
-   UMP EP info and the corresponding sequencer clients as well.
+@@ -298,6 +298,12 @@ Rawmidi API Extensions
+   On the other hand, the UMP rawmidi device number is found in
+   `tied_device` field of the legacy rawmidi info, too.
  
-+* The legacy rawmidi device number is found in the new `tied_device`
-+  field of the rawmidi info.
-+  On the other hand, the UMP rawmidi device number is found in
-+  `tied_device` field of the legacy rawmidi info, too.
++* Each substream of the legacy rawmidi may be enabled / disabled
++  dynamically depending on the UMP FB state.
++  When the selected substream is inactive, it's indicated by the bit
++  0x10 (`SNDRV_RAWMIDI_INFO_STREAM_INACTIVE`) in the `flags` field of
++  the legacy rawmidi info.
 +
  
  Control API Extensions
  ======================
 diff --git a/include/sound/rawmidi.h b/include/sound/rawmidi.h
-index f31cabf0158c9..7f1fec786b72f 100644
+index 7f1fec786b72f..6f2e95298fc76 100644
 --- a/include/sound/rawmidi.h
 +++ b/include/sound/rawmidi.h
-@@ -118,6 +118,7 @@ struct snd_rawmidi {
- 	struct list_head list;
- 	unsigned int device;		/* device number */
- 	unsigned int info_flags;	/* SNDRV_RAWMIDI_INFO_XXXX */
-+	unsigned int tied_device;
- 	char id[64];
- 	char name[80];
- 
+@@ -89,6 +89,7 @@ struct snd_rawmidi_substream {
+ 	unsigned int framing;		/* whether to frame input data */
+ 	unsigned int clock_type;	/* clock source to use for input framing */
+ 	int use_count;			/* use counter (for output) */
++	bool inactive;			/* inactive substream (for UMP legacy) */
+ 	size_t bytes;
+ 	spinlock_t lock;
+ 	struct snd_rawmidi *rmidi;
 diff --git a/include/uapi/sound/asound.h b/include/uapi/sound/asound.h
-index f35e5b0561399..fafc89efa1396 100644
+index fafc89efa1396..3ae6e9cbf3dde 100644
 --- a/include/uapi/sound/asound.h
 +++ b/include/uapi/sound/asound.h
-@@ -729,6 +729,8 @@ enum {
+@@ -728,6 +728,7 @@ enum {
+ #define SNDRV_RAWMIDI_INFO_INPUT		0x00000002
  #define SNDRV_RAWMIDI_INFO_DUPLEX		0x00000004
  #define SNDRV_RAWMIDI_INFO_UMP			0x00000008
++#define SNDRV_RAWMIDI_INFO_STREAM_INACTIVE	0x00000010
  
-+#define SNDRV_RAWMIDI_DEVICE_UNKNOWN		-1
-+
- struct snd_rawmidi_info {
- 	unsigned int device;		/* RO/WR (control): device number */
- 	unsigned int subdevice;		/* RO/WR (control): subdevice number */
-@@ -740,7 +742,8 @@ struct snd_rawmidi_info {
- 	unsigned char subname[32];	/* name of active or selected subdevice */
- 	unsigned int subdevices_count;
- 	unsigned int subdevices_avail;
--	unsigned char reserved[64];	/* reserved for future use */
-+	int tied_device;		/* R: tied rawmidi device (UMP/legacy) */
-+	unsigned char reserved[60];	/* reserved for future use */
- };
+ #define SNDRV_RAWMIDI_DEVICE_UNKNOWN		-1
  
- #define SNDRV_RAWMIDI_MODE_FRAMING_MASK		(7<<0)
 diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
-index 81ede597d3179..d765d1c2698e3 100644
+index d765d1c2698e3..c7b39e07e7c39 100644
 --- a/sound/core/rawmidi.c
 +++ b/sound/core/rawmidi.c
-@@ -635,6 +635,7 @@ static int snd_rawmidi_info(struct snd_rawmidi_substream *substream,
- 	info->subdevices_count = substream->pstr->substream_count;
- 	info->subdevices_avail = (substream->pstr->substream_count -
- 				  substream->pstr->substream_opened);
-+	info->tied_device = rmidi->tied_device;
- 	return 0;
- }
- 
-@@ -1834,6 +1835,7 @@ int snd_rawmidi_init(struct snd_rawmidi *rmidi,
- 	INIT_LIST_HEAD(&rmidi->streams[SNDRV_RAWMIDI_STREAM_INPUT].substreams);
- 	INIT_LIST_HEAD(&rmidi->streams[SNDRV_RAWMIDI_STREAM_OUTPUT].substreams);
- 	rmidi->info_flags = info_flags;
-+	rmidi->tied_device = SNDRV_RAWMIDI_DEVICE_UNKNOWN;
- 
- 	if (id != NULL)
- 		strscpy(rmidi->id, id, sizeof(rmidi->id));
+@@ -629,6 +629,8 @@ static int snd_rawmidi_info(struct snd_rawmidi_substream *substream,
+ 	info->subdevice = substream->number;
+ 	info->stream = substream->stream;
+ 	info->flags = rmidi->info_flags;
++	if (substream->inactive)
++		info->flags |= SNDRV_RAWMIDI_INFO_STREAM_INACTIVE;
+ 	strcpy(info->id, rmidi->id);
+ 	strcpy(info->name, rmidi->name);
+ 	strcpy(info->subname, substream->name);
 diff --git a/sound/core/ump.c b/sound/core/ump.c
-index f69b9e70de011..069fb0d743df4 100644
+index 069fb0d743df4..912e1e23b7e51 100644
 --- a/sound/core/ump.c
 +++ b/sound/core/ump.c
-@@ -1315,6 +1315,9 @@ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
- 	ump->legacy_rmidi = rmidi;
- 	update_legacy_names(ump);
- 
-+	rmidi->tied_device = ump->core.device;
-+	ump->core.tied_device = rmidi->device;
-+
- 	ump_dbg(ump, "Created a legacy rawmidi #%d (%s)\n", device, id);
- 	return 0;
+@@ -1250,8 +1250,8 @@ static int fill_legacy_mapping(struct snd_ump_endpoint *ump)
+ 	return num;
  }
+ 
+-static void fill_substream_names(struct snd_ump_endpoint *ump,
+-				 struct snd_rawmidi *rmidi, int dir)
++static void update_legacy_substreams(struct snd_ump_endpoint *ump,
++				     struct snd_rawmidi *rmidi, int dir)
+ {
+ 	struct snd_rawmidi_substream *s;
+ 	const char *name;
+@@ -1265,6 +1265,7 @@ static void fill_substream_names(struct snd_ump_endpoint *ump,
+ 		scnprintf(s->name, sizeof(s->name), "Group %d (%.16s)%s",
+ 			  idx + 1, name,
+ 			  ump->groups[idx].active ? "" : " [Inactive]");
++		s->inactive = !ump->groups[idx].active;
+ 	}
+ }
+ 
+@@ -1272,8 +1273,8 @@ static void update_legacy_names(struct snd_ump_endpoint *ump)
+ {
+ 	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
+ 
+-	fill_substream_names(ump, rmidi, SNDRV_RAWMIDI_STREAM_INPUT);
+-	fill_substream_names(ump, rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT);
++	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_INPUT);
++	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT);
+ }
+ 
+ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
 -- 
 2.53.0
 
