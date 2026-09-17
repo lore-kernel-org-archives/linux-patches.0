@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ABE3D890F;
-	Thu, 17 Sep 2026 18:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7E43D890F;
+	Thu, 17 Sep 2026 18:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668751; cv=none; b=gIIiLIJAYLHCbPNZsL2LQVK5kiGh6SllDM3CqnOLy6r5jfwjFSbwwh9FX430s8AzmNjiBNJYtgt7V7U9Xn8clmjaIzcSUeLmc5T5eb9l84aRSVyvOAIGTncBUZyl7qPOqrPRwUfSK/k28V20JU9dKgFp1EsUVHiFMV7WNc++ffY=
+	t=1789668754; cv=none; b=C+p87rX+eiYb3Msx7HoXZFRDlMR+DMUj4ZtwY91EomlBy8U7ELdKfFexuPQIC1ooCCci56azAG2HXTle8gmjNeyWN5JCyLdZNl4p/6G43OeQOKrXFgIjVmxHOJ3kWLDu6xJB3Ma7KX6W9B6vufVjcZYM2bemttKN1DMqOUbtuVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668751; c=relaxed/simple;
-	bh=/vvHbmrSI9/iW/BDBPd7WhV0XY7W4/bhNXkBptUbZTs=;
+	s=arc-20240116; t=1789668754; c=relaxed/simple;
+	bh=gfbzEGIqFSZfy0d89y9YiQIsiwpS6P7QyLAx1MYjhxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/Yww6/MS7PRhZUg3nTqEuTLiSeJ8/FBZF838z18nSb0cI+/gY1FM8ZviM1oDDQ7DkTar03o2UU2M63vUyObrPgH9Tf9RDbFwZzPOoiZbNLoT/Tfr/jgxHCRK/y8/4LPg/XZlrp4a1vl6l0Y1dPzuXtikIB944Y7vdOq5V0pY7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytxfRcn8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ifYZYRY3RyPCP+PBg8BJGs3PW/JPa1PoESksmWSoZX1wBQRXkF0JdXaTQIS2DD5CfzOssNfVOreSe2Lirwvxunk5CLcw6d+AA/TxXV2UndrYPec1ipLmLCyBC3T6aFxoZCav8Xf8MrEjs1ymbEkhfiZgqAUu8dKGgdNAcVHo0C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V83uoPmK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytxfRcn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C881F00893;
-	Thu, 17 Sep 2026 18:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V83uoPmK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD631F000FF;
+	Thu, 17 Sep 2026 18:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668750;
-	bh=sykxM8fx9pzkVBc8InmzTiZJ3ttLyY+uZG3UZRP0F0E=;
+	s=korg; t=1789668753;
+	bh=DJfzQmv7Ey57CEmNeDXIWGzBnZkCHTw6YC3F/DRryZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ytxfRcn8aZeFqAWmsTmB4Bss3Wx+Vhh1JCtEG0EUIg8gwYvOJY15dHOGSydkbn6un
-	 ol+lL+pR6npYqPGSHvn4za5mKNCI2XIa28vtRjU1Qs169uo03H/BQoC6fM3f5a62xr
-	 nrXpFCJ5cTEIV/HTrC2p9QkgveERGZ5hvbN7oTL0=
+	b=V83uoPmKD9xeyhW8w3Gi6hlTvOjvRCSrFKqZWFrI3uULuFyNfy5lOznSEx6Vx3J72
+	 /yqsVzdnDaUbEqQRRbSZ+S/TVtEiN6Mrr7Ty82+eM5vqak4vlWIDyJUUF4J7UU3YJl
+	 HYJB3IiavS+kdRbKbCNJ7wvde8ZbSlp60Jl0POqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0530/1102] smb/client: fix integer truncation in collapse range
-Date: Thu, 17 Sep 2026 16:07:53 +0100
-Message-ID: <20260917151553.103791474@linuxfoundation.org>
+Subject: [PATCH 6.12 0531/1102] smb: client: transport: Fix debug printing in __release_mid()
+Date: Thu, 17 Sep 2026 16:07:54 +0100
+Message-ID: <20260917151553.130947442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7811701d6af7db76481a82b9bc3c4adf7863acf5 ]
+[ Upstream commit d83a21bb26015bfdd79b0440fe816b271b8bbab3 ]
 
-smb3_collapse_range() stores the ssize_t return value of
-smb2_copychunk_range() in an int. A successful copy larger than
-INT_MAX is truncated to a negative value and treated as an error.
+Long time ago during upgrading printk():s to the respective pr_<level>()
+calls one misconversion happened and nobody has noticed that. So,
+previously printk(KERN_DEBUG) + printk() worked as one long debug print
+since the trailing '\n' is only present in the followup printk() format
+string. The culprit change missed that and split the message to two on
+the different levels. Restore the original behaviour to make users be
+less confused in the most likely never happen cases of partially getting
+that message.
 
-Reproducer:
-
-	MNT=/mnt/scratch
-
-	truncate -s 2056M "$MNT/file"
-	fallocate --collapse-range -o 1M -l 1M "$MNT/file"
-
-Fix this by using __smb2_copychunk_range(), which reports success as
-zero instead of returning the copied byte count.
-
-Before this change, the reproducer fails with:
-
-	fallocate: fallocate failed: Success
-
-and the file size remains unchanged at 2056 MiB. After this change, the
-reproducer succeeds and the file size becomes the expected 2055 MiB.
-
-Fixes: 5476b5dd82c8 ("cifs: add support for FALLOC_FL_COLLAPSE_RANGE")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 0b456f04bcdf ("cifs: convert printk(LEVEL...) to pr_<level>")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/transport.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index c420720b1d190..8dc045669c6a0 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3904,8 +3904,8 @@ static long smb3_collapse_range(struct file *file, struct cifs_tcon *tcon,
- 	ictx->zero_point = old_eof;
- 	netfs_wait_for_outstanding_io(inode);
- 
--	rc = smb2_copychunk_range(xid, cfile, cfile, off + len,
--				  old_eof - off - len, off);
-+	rc = __smb2_copychunk_range(xid, cfile, cfile, off + len,
-+				    old_eof - off - len, off);
- 	if (rc < 0)
- 		goto out_2;
- 
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index d7dbbd908cd90..c3940d3ecd5f3 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -144,12 +144,11 @@ void __release_mid(struct kref *refcount)
+ 		trace_smb3_slow_rsp(smb_cmd, midEntry->mid, midEntry->pid,
+ 			       midEntry->when_sent, midEntry->when_received);
+ 		if (cifsFYI & CIFS_TIMER) {
+-			pr_debug("slow rsp: cmd %d mid %llu",
+-				 midEntry->command, midEntry->mid);
+-			cifs_info("A: 0x%lx S: 0x%lx R: 0x%lx\n",
+-				  now - midEntry->when_alloc,
+-				  now - midEntry->when_sent,
+-				  now - midEntry->when_received);
++			pr_debug("slow rsp: cmd %d mid %llu A: 0x%lx S: 0x%lx R: 0x%lx\n",
++				 midEntry->command, midEntry->mid,
++				 now - midEntry->when_alloc,
++				 now - midEntry->when_sent,
++				 now - midEntry->when_received);
+ 		}
+ 	}
+ #endif
 -- 
 2.53.0
 
