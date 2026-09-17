@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550C13A48E3;
-	Thu, 17 Sep 2026 15:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C94155931E;
+	Thu, 17 Sep 2026 15:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660067; cv=none; b=LMTzTidkbLbPSTEz6hZWiHG4/kUU+QaVqcrfBvIRSxwd3KPUBpTUGglCIOT+UYMHwTG2O6CrEHuJUGr6gFQViZ+NZ5MISEC8Nj4zNKWa9doGOKPZ3qFqDjkqpLIwOSP8fSCvawHRmhlDDzi2EJmqRdp/DfcXeN328T6z7FN1JYA=
+	t=1789660074; cv=none; b=Aeegnw7c503bnh+Hreu7bUq3zuQFErCCVL5I5LDEW3tKKgEwtbQAJPhCuuFjN86xym0kDqTUyfwotUPSmikDOtegT7Ilesvg7Wy3k8hxzdWxK5TwfXziwAP+niRYJILQ9AO0IM+TGHKQOjNoTy4iJbSC3Wwc6hba2MZMKUtZ9aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660067; c=relaxed/simple;
-	bh=ymPDzgxFGxfUzsin9XqOgYkxcLqklix2EKP2C5GtcXI=;
+	s=arc-20240116; t=1789660074; c=relaxed/simple;
+	bh=KN5fRzYzhZ2nPreBmrAvlMNKGdZukKcQpfjhFfVRsdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alcgW2+uIQMgFljH1eMvO21JO04DkODHUP9VXn0oqXSewmBjngBTqX+ykwAd/KAkkevEZnP0BTPwUCqb5QGwHntZEQmlKX3EklGoU05ntpsi6MKyqEupbPoZSGqGO7fbF1N2PPkRZ5TWwfx2KgL30nKoHkgSikDrKvKt+nQYP7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlljIPUV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tZf18BciLILoVNucZVsofDq9eKhoA/YFU7pRiaGVkoPAOnAAsRcuOmFy+/i+D407QhEjlNMC3jFc5Hl7m50h87SyH6i098GXD6Zq4A43rMDe/aCmtkMeiLG0igpokEuzU8RInEBOXAlglbWLLrXfX0PdkOk0lNtdO1Md7KjWopA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kmg6LhyU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlljIPUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FE51F00893;
-	Thu, 17 Sep 2026 15:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kmg6LhyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B91F000FF;
+	Thu, 17 Sep 2026 15:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660062;
-	bh=nbHI/fcuPtg+YXUp3FC7MsUtgG1wEplFxvpjXZE3IG8=;
+	s=korg; t=1789660064;
+	bh=QYvITrfhbFd8o0sQQkwKgjuc4rnVu2Vu90IgcIyaX4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GlljIPUV5AodcM3jVFIhrpyLOIooB/9KWJYPoZxfXjQ1oi33OTatlsp3N62Mjrhae
-	 bcr1r/Mh+NXFRriTcLwM3oyos463q90EvTZ/XaDw/YXmwxsXHoZmCWbLy+mqct77Fs
-	 +8F644fs9B7Y94RvqSPdm51ttCgm2I0fuESHRZK0=
+	b=Kmg6LhyUqQ4p/b3v6WNLBhNpXG8Hj60E7mlSobL4a1GY4yDwR3if1R8JYdKBhGPDh
+	 I69tHszWbjLKrx8sgrE37uwpNtwgiyS4pxfBjRXAzmb9x+wUakbz7w+3F8xBw/L7OG
+	 5cetCifXvUviLXNO9nWmuThNu766NXFwhc1Y41lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Bradley Morgan <include@grrlz.net>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 467/733] ftrace: Use rcu_assign_pointer() for tmp_ops filter hash
-Date: Thu, 17 Sep 2026 16:12:55 +0100
-Message-ID: <20260917151403.612979891@linuxfoundation.org>
+Subject: [PATCH 7.2 468/733] ftrace: fork: Initialize function graph state before copy_exec_state()
+Date: Thu, 17 Sep 2026 16:12:56 +0100
+Message-ID: <20260917151403.641082138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -45,49 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit b4dcc18b97913888e8d009624e07c8014ce41b84 upstream.
+commit 08cacffeef8f64f1a222c93467ca84f24a46c953 upstream.
 
-tmp_ops.func_hash->filter_hash is annotated __rcu, but
-update_ftrace_direct_mod() assigns hash to it directly. Sparse reports an
-address-space mismatch.
+dup_task_struct() copies the parent's task_struct, including ret_stack.
+ftrace_graph_init_task() clears the copied function graph state, but it
+currently runs after copy_exec_state().
 
-Use rcu_assign_pointer() for the assignment.
+For non-CLONE_VM forks, copy_exec_state() allocates a new task_exec_state.
+If that allocation fails, copy_process() reaches bad_fork_free and
+free_task() calls ftrace_graph_exit_task(). Since the child still carries
+the parent's ret_stack pointer, the unwind frees the parent's active
+function graph return stack. The parent subsequently accesses freed memory
+from function_graph_enter_regs().
+
+KASAN reports:
+
+[   22.190920] ==================================================================
+[   22.195899] BUG: KASAN: slab-use-after-free in function_graph_enter_regs+0xa76/0xb90
+[   22.200747] Write of size 8 at addr ff110000054dc0a8 by task repro/1
+[   22.205134]
+[   22.210770] CPU: 0 UID: 0 PID: 1 Comm: repro Not tainted 7.2.0-07732-g9328b3b03bdc-dirty #3 PREEMPT(lazy)
+[   22.212576] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   22.213750] Call Trace:
+[   22.215271]  <TASK>
+[   22.216242]  ? ftrace_stub_direct_tramp+0x10/0x10
+[   22.217774]  dump_stack_lvl+0x4e/0x70
+[   22.220531]  print_report+0x157/0x4b4
+[   22.223202]  ? fixup_red_left+0x9/0x30
+[   22.224407]  ? complete_report_info+0x83/0x110
+[   22.226679]  ? function_graph_enter_regs+0xa76/0xb90
+[   22.228084]  kasan_report+0xce/0x100
+[   22.230109]  ? function_graph_enter_regs+0xa76/0xb90
+[   22.232860]  ? stack_trace_save+0x4/0xd0
+[   22.234156]  function_graph_enter_regs+0xa76/0xb90
+[   22.236090]  ? kasan_save_stack+0x30/0x50
+[   22.237752]  ? __pfx_function_graph_enter_regs+0x10/0x10
+[   22.238694]  ? ring_buffer_lock_reserve+0x345/0xf80
+[   22.239628]  ? stack_trace_save+0x4/0xd0
+[   22.242121]  ? stack_trace_save+0x4/0xd0
+[   22.243588]  ftrace_graph_func+0xda/0x160
+[   22.245362]  ? ftrace_stub_direct_tramp+0x10/0x10
+[   22.246520]  0xffffffffa0000095
+[   22.250528]  ? stack_trace_save+0x9/0xd0
+[   22.251757]  ? ring_buffer_unlock_commit+0x11d/0x5c0
+[   22.253152]  stack_trace_save+0x9/0xd0
+[   22.254264]  kasan_save_stack+0x30/0x50
+[   22.273631]  kasan_save_track+0x14/0x30
+[   22.276763]  kasan_save_free_info+0x3b/0x70
+[   22.278296]  __kasan_slab_free+0x43/0x70
+[   22.280157]  kmem_cache_free+0xbf/0x3b0
+[   22.282963]  ? ftrace_stub_direct_tramp+0x10/0x10
+[   22.284001]  free_task+0xa2/0x160
+[   22.285699]  ? ftrace_stub_direct_tramp+0x10/0x10
+[   22.286752]  copy_process+0x2aae/0x7bc0
+
+Initialize the child function graph state immediately after
+dup_task_struct(), before the first fallible operation.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260911142512.19344-1-leon.hwang@linux.dev
-Fixes: 50b35c9e50a8 ("ftrace: Use hash argument for tmp_ops in update_ftrace_direct_mod")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609110704.Q3M5vCDV-lkp@intel.com/
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Fixes: 6b1c66c9cca9 ("exec_state: relocate dumpable information")
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Link: https://patch.msgid.link/20260822195321.962383-2-Jeremy.Jean@oss.cyber.gouv.fr
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/fork.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 53d5db60bfa5..673a54fdf392 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -6675,7 +6675,7 @@ int update_ftrace_direct_mod(struct ftrace_ops *ops, struct ftrace_hash *hash, b
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2114,6 +2114,11 @@ __latent_entropy struct task_struct *cop
+ 	p = dup_task_struct(current, node);
+ 	if (!p)
+ 		goto fork_out;
++	/*
++	 * Must run before the first fallible op, so error paths never
++	 * free the parent's ret_stack.
++	 */
++	ftrace_graph_init_task(p);
+ 	retval = copy_exec_state(clone_flags, p);
+ 	if (retval)
+ 		goto bad_fork_free;
+@@ -2140,8 +2145,6 @@ __latent_entropy struct task_struct *cop
+ 	 */
+ 	p->clear_child_tid = (clone_flags & CLONE_CHILD_CLEARTID) ? args->child_tid : NULL;
  
- 	/* Enable the tmp_ops to have the same functions as the hash object. */
- 	ftrace_ops_init(&tmp_ops);
--	tmp_ops.func_hash->filter_hash = hash;
-+	rcu_assign_pointer(tmp_ops.func_hash->filter_hash, hash);
+-	ftrace_graph_init_task(p);
+-
+ 	rt_mutex_init_task(p);
+ 	raw_spin_lock_init(&p->blocked_lock);
  
- 	err = register_ftrace_function_nolock(&tmp_ops);
- 	if (err)
--- 
-2.55.0
-
 
 
