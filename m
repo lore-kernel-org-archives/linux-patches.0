@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF1B3A6B66;
-	Thu, 17 Sep 2026 15:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741634DDB20;
+	Thu, 17 Sep 2026 15:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658762; cv=none; b=hxiaKmsuxGNQSbZEdRx3beOomSbeipA0Etle8pIDNO8CDyvqN9HcfDrrA/eOlWPpSEEzLvXdwaPlHuOleNaGX6j6goHY7xWoEU6SQzDUILDvHPJNOqs7sF+KYcRJPCKFwzh5A9Xd9/+y1kz6cxWVTsdjGiJQ1cdN3+kjVpXMKP8=
+	t=1789658767; cv=none; b=BGtDwHUm2CIf4nPoADV+k7QjtYaTbAHNLquaOwuUZMNEp4u1hk1qg9iHUywPoX4TCIqN8Z9tQGYTxWb7x1ca+zfK+y5vuv/ChO5dsbGAjl0u7EtQ/+1QYM3AOgySDR619Smrtx3ggD2HmyEpsJqE4ayqlePtlrdT8PsgkTKD3mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658762; c=relaxed/simple;
-	bh=+TE0Ngz1BZ0aiuH3n1oAtsQoarwAjRjPbyewYKh3azw=;
+	s=arc-20240116; t=1789658767; c=relaxed/simple;
+	bh=GhZPf+sw4hpOD3mgFW2Y2T0vDvhojZLNccQweP8vG4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYR/5Gey/rWcya/e6zVHyG75PUb0SIUx//tCcOfxiFdTyNmhZVI3RraRPljivrM4CvWIS9hOY4rmCX7vVoTJUqQydLI5tP2RkIG7KYFGjAifM9i45gFGkFqJ2m3y6+hoSn1EiWTUuhkBkFiHlPvp1RycWg0E22br95rgLgAvvfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYjvxa20; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qq+/nDYR7+CLSoc3hiblKs8V4REjK8xyKT3makxXnGMBI7iopteKxFBIM7w0EV359aMnwBwCYTnKCQMEhJIQLJ5WYfjh6cV/dh+ORvsWjljZSKRDQR3yiyPLL8bSV7YC04ZXp9AcXV7xIW4a7orr8RkqWX4RxQfd488gBL3KNu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2kWEflp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYjvxa20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C581F00898;
-	Thu, 17 Sep 2026 15:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2kWEflp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA451F0089A;
+	Thu, 17 Sep 2026 15:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658752;
-	bh=CdjjJAD31iBdq3Gnum3nP10EpaabA4eeb/3HtQAtOJM=;
+	s=korg; t=1789658755;
+	bh=5MuAV9dZ9vqaqCuvBOAx8ckZo0jw15SMeaAa10tEBc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYjvxa20yNZMeEeJkYjI0Ac+naBBDi2xIeIX/2rX9yJsxJ3xozaS6qoBONmjzMpYS
-	 YyQVwuZH3hMPgov6rIBl2wSTKWYfZvZ51JoaoYTY3xw9mb+8W8OnI6L3WJ4gah4kTF
-	 6V5jkWOigStpaP6OtOPXM3+0RCkBFGlI33wg5PiU=
+	b=u2kWEflp/I7Sk60Kb5e0VWVkjL6OdPLccCIwpBoxVnR8FDby4KCnJHqseyy0kf1hx
+	 2YvafyKGVnQKBnmBybFG/2JjUxdsyoN4a+btBa27GQLfzAhk2OhOhYA1vf06SIRURp
+	 GoXRuNrlSBhHo7HAGkkZjlW+rpOhg80GcJkOutwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+efe2810681f1b065d3a8@syzkaller.appspotmail.com,
-	Sajal Gupta <sajal2005gupta@gmail.com>,
-	Ruben Wauters <rubenru09@aol.com>,
+	syzbot+1ebbc20f223b99446034@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 027/733] drm/gud: validate GUD_ROTATION_0 is present in supported rotations
-Date: Thu, 17 Sep 2026 16:05:35 +0100
-Message-ID: <20260917151351.390350794@linuxfoundation.org>
+Subject: [PATCH 7.2 028/733] printk: Dont WARN on kthread_run failure.
+Date: Thu, 17 Sep 2026 16:05:36 +0100
+Message-ID: <20260917151351.421469975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,47 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sajal Gupta <sajal2005gupta@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit cb732d027aa18e1fcf9d2797f47d20b179ebc59c ]
+[ Upstream commit 72dd0ec09e7cc98ed58ddeac26575e5d1ab8a93d ]
 
-The rotation argument to drm_plane_create_rotation_property() is set to
-DRM_MODE_ROTATE_0, and the device reported rotation bitmask is used as
-the supported_rotations argument. The driver never validates that
-GUD_ROTATION_0 is present, so a device that omits it from its
-GUD_PROPERTY_ROTATION triggers the
-WARN_ON(rotation & ~supported_rotations) in
-drm_plane_create_rotation_property()
+Since __kthread_create_on_node() returns -EINTR upon SIGKILL,
+we should not use WARN_ON() in order to catch kthread_run() failure.
 
-Fix this by skipping the creation of rotation property if the device
-doesn't have the GUD_ROTATION_0 bit
-
-Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
-Reported-by: syzbot+efe2810681f1b065d3a8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=efe2810681f1b065d3a8
-Tested-by: syzbot+efe2810681f1b065d3a8@syzkaller.appspotmail.com
-Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
-Acked-by: Ruben Wauters <rubenru09@aol.com>
-Signed-off-by: Ruben Wauters <rubenru09@aol.com>
-Link: https://patch.msgid.link/20260821071812.16500-1-sajal2005gupta@gmail.com
+Reported-by: syzbot+1ebbc20f223b99446034@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1ebbc20f223b99446034
+Fixes: 5f53ca3ff83b ("printk: Implement legacy printer kthread for PREEMPT_RT")
+Fixes: 76f258bf3f2a ("printk: nbcon: Introduce printer kthreads")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/76bb4c1c-5d85-4635-b3bb-fc06f292c59e@I-love.SAKURA.ne.jp
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gud/gud_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/printk/nbcon.c  | 2 +-
+ kernel/printk/printk.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/gud/gud_drv.c b/drivers/gpu/drm/gud/gud_drv.c
-index 89bd6ca36003f..3a1b9e2a2eaa1 100644
---- a/drivers/gpu/drm/gud/gud_drv.c
-+++ b/drivers/gpu/drm/gud/gud_drv.c
-@@ -289,6 +289,8 @@ static int gud_plane_add_properties(struct gud_device *gdrm)
- 			 * but mask out any additions on future devices.
- 			 */
- 			val &= GUD_ROTATION_MASK;
-+			if (!(val & GUD_ROTATION_0))
-+				continue;
- 			ret = drm_plane_create_rotation_property(&gdrm->plane,
- 								 DRM_MODE_ROTATE_0, val);
- 			break;
+diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
+index 4b03b019cd5ee..a5921a84a80ed 100644
+--- a/kernel/printk/nbcon.c
++++ b/kernel/printk/nbcon.c
+@@ -1382,7 +1382,7 @@ bool nbcon_kthread_create(struct console *con)
+ 		return true;
+ 
+ 	kt = kthread_run(nbcon_kthread_func, con, "pr/%s%d", con->name, con->index);
+-	if (WARN_ON(IS_ERR(kt))) {
++	if (IS_ERR(kt)) {
+ 		con_printk(KERN_ERR, con, "failed to start printing thread\n");
+ 		return false;
+ 	}
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 6d363e42e2a05..96ff9547e888b 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -3732,7 +3732,7 @@ static bool legacy_kthread_create(void)
+ 	lockdep_assert_console_list_lock_held();
+ 
+ 	kt = kthread_run(legacy_kthread_func, NULL, "pr/legacy");
+-	if (WARN_ON(IS_ERR(kt))) {
++	if (IS_ERR(kt)) {
+ 		pr_err("failed to start legacy printing thread\n");
+ 		return false;
+ 	}
 -- 
 2.53.0
 
