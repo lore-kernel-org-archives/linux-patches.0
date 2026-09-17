@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957FB4EB845;
-	Thu, 17 Sep 2026 15:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416734C10C4;
+	Thu, 17 Sep 2026 15:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659153; cv=none; b=ADNQSPlIlsjqnKfVlXs6bwXjxnEiJh/qdXk5RraeD2aYDXtkWqvnGjktLOyCqFkQFdKU5wBe2H3T1pj8DIGDERl221S9JGFbLOUy49np9ai58bRg/vOon6XPAF2aRGnzCj6s4d8/dFnrrYPli5wQ6318lCJ9dy3ZGzKf01nILLI=
+	t=1789659157; cv=none; b=lMVSRLmiTyNydifSb5RFS4gGxJ+/AS1mLLS8XHoS7WKFO3kNoFP5xI5aTBDB2M6h75TM4TaZy8HJ2kOik1pvEHTytxqwA0DAs7Go2kXy5TOVCKWA6PuUXeJ6ZybbtaWdIxDNqmTHUV9G/+BhR2ItrMVoUmoue2MV1LpDExR6EyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659153; c=relaxed/simple;
-	bh=cz66Gu5+W3Rfu9xqyFWg3ZYXehcyGyR3huHppYDh7Sg=;
+	s=arc-20240116; t=1789659157; c=relaxed/simple;
+	bh=W5dobtXqN/SOadVbskOeu21Eex1OOMDbYzqswbP9rAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MF84oCvbj6tVk5ne/ySVLj66hbA3z6hJXcGvfLBw4WldbXj4VNZu9xP4CVxOdwqeCSkp4O8QwKkdJn6SMaJUZ4vUbREMYzByyRWBhkGTJXp4QeehF5+K/aQ9uHfsQBGFf6CN9Y+oLOdrCiMoZ8XDkr/4j+0bDekCpSgaOoQ4L/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRJVmJDd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTFfoUc/HAG2fNoA1+d0rAREjuNlZ7xhfednJutEwn3ayMEolt89VXjkEQfxmxvm6wDanj9cbLJlqwfmTGa2FG0Q/AcZBkAEPSmgNsJAGR735TZYVRgKI9l9wenKgyKvm3YD0HixcQbKCv0vN8TF9da6GZ45/BYYLFbzAvEyc5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLHo9s5K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRJVmJDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8920B1F00893;
-	Thu, 17 Sep 2026 15:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLHo9s5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF331F00899;
+	Thu, 17 Sep 2026 15:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659144;
-	bh=S8SFMT9E2W8L8lRboRrUqszL2xSM8kIQnTb2P8EXNp0=;
+	s=korg; t=1789659150;
+	bh=FvFRPjxW72fGstZqAdIiQVyGlCokUZAaOjDGSjPTE0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRJVmJDdY2uQbabH/vVf3ZuyXj5hPXIbLLfo+Bj86bDnlUbCrJFI9pa9q6LredzkK
-	 lzJTfMFyczMKPz6VuUiNixufqx7k1o1pkIjS1OHKLIARcC96LbX4KhX7aQwCDuBR14
-	 SH+wtiJk661AhxOJGkQTSxNwH53GTluhM8O5xV+0=
+	b=tLHo9s5Klu3HwVhbegCDYrEP67CHXj5N6UWFoABUUn+7hbZjtDuGIJrWxZM29utTd
+	 Kgs8uAjFAzhNk1HjicWt5NEbGBj4P7MvjDnBbcBSFkSkx4DvF0GJvubH4mDiufRanT
+	 Dg8lPM4Zs+sfr1VLq9mehKWf+MVu3njnnh5P1hpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 157/733] ASoC: amd: yc: fix memory leak in acp6x_pdm_dma_close()
-Date: Thu, 17 Sep 2026 16:07:45 +0100
-Message-ID: <20260917151354.979745964@linuxfoundation.org>
+Subject: [PATCH 7.2 123/733] ASoC: ab8500: Skip missing DMIC GPIOs on AB8505
+Date: Thu, 17 Sep 2026 16:07:11 +0100
+Message-ID: <20260917151354.073333606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,38 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1b67e0d3b9691d7b6b74e18960ddd2be24f9dc9d ]
+[ Upstream commit 711178754287db3fd0f7accff3c2a7575f8873b7 ]
 
-acp6x_pdm_dma_close() does not free the runtime->private_data buffer
-allocated in acp6x_pdm_dma_open(). Add the missing kfree.
+GPIO27, GPIO29 and GPIO31 provide the digital microphone clock
+outputs on AB8500, but these GPIOs do not exist on AB8505. The shared
+codec driver nevertheless accesses their direction register while
+setting up every AB8505 codec.
 
-Fixes: 7610174a5bfe ("ASoC: amd: add acp6x pdm platform driver")
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260824063507.483784-2-wangdich9700@163.com
+Identify the parent MFD device and leave the nonexistent GPIOs
+untouched on AB8505.
+
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-6-f85024e717e3@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-pdm-dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/ab8500-codec.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-pdm-dma.c b/sound/soc/amd/yc/acp6x-pdm-dma.c
-index 710db721ffa48..40c4d833f4ed3 100644
---- a/sound/soc/amd/yc/acp6x-pdm-dma.c
-+++ b/sound/soc/amd/yc/acp6x-pdm-dma.c
-@@ -275,9 +275,11 @@ static int acp6x_pdm_dma_close(struct snd_soc_component *component,
- 			       struct snd_pcm_substream *substream)
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 11142d15df450..e1a0e35836e6c 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -1540,6 +1540,8 @@ static int ab8500_audio_init_audioblock(struct snd_soc_component *component)
+ static int ab8500_audio_setup_mics(struct snd_soc_component *component,
+ 			struct amic_settings *amics)
  {
- 	struct pdm_dev_data *adata = dev_get_drvdata(component->dev);
-+	struct snd_pcm_runtime *runtime = substream->runtime;
++	struct device *dev = component->dev;
++	struct ab8500 *ab8500 = dev_get_drvdata(dev->parent);
+ 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
+ 	u8 value8;
+ 	unsigned int value;
+@@ -1548,20 +1550,21 @@ static int ab8500_audio_setup_mics(struct snd_soc_component *component,
  
- 	acp6x_disable_pdm_interrupts(adata->acp6x_base);
- 	adata->capture_stream = NULL;
-+	kfree(runtime->private_data);
- 	return 0;
- }
+ 	dev_dbg(component->dev, "%s: Enter.\n", __func__);
  
+-	/* Set DMic-clocks to outputs */
+-	status = abx500_get_register_interruptible(component->dev, AB8500_MISC,
+-						AB8500_GPIO_DIR4_REG,
+-						&value8);
+-	if (status < 0)
+-		return status;
+-	value = value8 | GPIO27_DIR_OUTPUT | GPIO29_DIR_OUTPUT |
+-		GPIO31_DIR_OUTPUT;
+-	status = abx500_set_register_interruptible(component->dev,
+-						AB8500_MISC,
+-						AB8500_GPIO_DIR4_REG,
+-						value);
+-	if (status < 0)
+-		return status;
++	/* Set DMic-clocks to outputs; these GPIOs do not exist on AB8505. */
++	if (!is_ab8505(ab8500)) {
++		status = abx500_get_register_interruptible(dev, AB8500_MISC,
++							   AB8500_GPIO_DIR4_REG,
++							   &value8);
++		if (status < 0)
++			return status;
++		value = value8 | GPIO27_DIR_OUTPUT | GPIO29_DIR_OUTPUT |
++			GPIO31_DIR_OUTPUT;
++		status = abx500_set_register_interruptible(dev, AB8500_MISC,
++							   AB8500_GPIO_DIR4_REG,
++							   value);
++		if (status < 0)
++			return status;
++	}
+ 
+ 	/* Attach regulators to AMic DAPM-paths */
+ 	dev_dbg(component->dev, "%s: Mic 1a regulator: %s\n", __func__,
 -- 
 2.53.0
 
