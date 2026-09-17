@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CF6503900;
-	Thu, 17 Sep 2026 18:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF355012BE;
+	Thu, 17 Sep 2026 18:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668706; cv=none; b=A9AsPbtJtckZO7dTCrXw5v9cR1QbTH3UPWx1TETJkZGHspw6xyg9K1TyWHjVwkJzFDP2nPK6mGwJ4ivSFKpQDUp4ItKXxbmHn+lY0ERp0TAhAtpOGCIkxcjAIAc15xWRIq5kOeZ5GvN4ypmxIC4pPqtFuTB1AfpL4waoGiIkFJE=
+	t=1789668709; cv=none; b=Q1U6jWQ6VQPdaVuKGPw0jPdH7Fk4tuzHf/X4rDKaeZ6tvpeuraIJ2Rb10dfTW/rqQJEKZ/XyjNhLaabPsaLk+D56bRq4pYc45Jmz7TB3D2A9trEXxej6hK+uvG4zT6DhGeiJrMFUkeO6r9a3Vuv4hmImgQ43A8m3ZKE75CB4af4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668706; c=relaxed/simple;
-	bh=WMW9lRrKJ5Uoppkj1yGi4wso7z96rBUZpuzy99joFo8=;
+	s=arc-20240116; t=1789668709; c=relaxed/simple;
+	bh=JEAg3nu9+dPXFzVaOx5Ia4+EeVDKppRyWXAGtIdBzio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrtdN1+0Ke3d+R1ukheYKgt94rnCYbh2pGWNwk5Kgdjn/9oP+h4Pf5Aj3kdVWofpYbTeLGoWZpgKbo1TlhYU1p1NzKGoOmTWhpYNFGR2Ittb7kqMLpncZxea/x7XJSSGZGvqVKl8gzqcR6sJMbrQOqDvJ4jbrwbLIaU0S2OinyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azHTh1Cx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fal58Gb2S0Z9z9juqUEbkEstqgLX9xleMDDMrtO8HbhehEOa2oZp5TigBKuonRerwsomC7HhyFs5tkwOvvl1yBkQCq0Y3ajs4whJaWwEGfACkH7rwRwDi0NIZFU1O+4G6GzkPSPdlbJVcDxiUb+TKiIZvi4Jh9BQQt7rSEyBlvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpQM7g98; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azHTh1Cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1BA1F00893;
-	Thu, 17 Sep 2026 18:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpQM7g98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A803E1F00893;
+	Thu, 17 Sep 2026 18:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668705;
-	bh=fpVSCtIdiVyinwel5G3a6PqI1/N1aK8U/09HTRzTxxM=;
+	s=korg; t=1789668708;
+	bh=6y9iJBsQT+ZHkRqDnAGFgr96jWGl1U9kKE8qVm0uEK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azHTh1CxpRuInXRSmrDQPjZYuEJo73m0ft2IamPNTpq+fkGDRJa+llGqdoPER2ruw
-	 V1u+0nGnnMR0hPxgHj3CYV3VvPV1RZrIDt7yuDTlOTsILShDl3qqjrVfXIXPmhokrd
-	 UyqMCI9YEzv3nhBQMWoPB08x+3P2/gV1a1vnPXkc=
+	b=YpQM7g98wDpNKEsZcYMLuRz/EVWxlwm+ZJ4klPIKovncj+c3uCsczqQMOtANNXwus
+	 5xGgSjtxoUfDgDbNqZLaUIvY2qWuD5Idaf7nQMujK93i2oGgmEEIxdWbhOePBk9YAJ
+	 WiwQFPSgUAjH8NG87jRzCIILUVoSrZmLhk6Yy3ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hiker Cl <clhiker365@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0511/1102] bpf: Fix REG INVARIANTS VIOLATION on speculative pointer arithmetic
-Date: Thu, 17 Sep 2026 16:07:34 +0100
-Message-ID: <20260917151552.574190731@linuxfoundation.org>
+Subject: [PATCH 6.12 0466/1102] bpftool: Strip all -Wformat* flags from bootstrap libbpf build
+Date: Thu, 17 Sep 2026 16:06:49 +0100
+Message-ID: <20260917151551.389749085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,101 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 150aeba624e8b7cac51c39440d7e8e1fd11de9a0 ]
+[ Upstream commit a954c9e3168cdf0c3cad07b43dfc8ca2945d773a ]
 
-Take the following unprivileged program as an example:
+Commit 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
+started building the bootstrap libbpf with HOST_CFLAGS, stripping the
+warning options that are unsuitable for that build by filtering out
+-W -Wall -Wextra -Wformat -Wformat-signedness.
 
-	r0 = bpf_map_lookup_elem(...)	/* PTR_TO_MAP_VALUE, offset 0 */
-	...
-	14: r0 += r1			/* r1 is a bounded scalar */
-	15: r9 = r0
+HOST_CFLAGS inherits EXTRA_WARNINGS, which includes -Wformat-security
+and -Wformat-y2k. The filter drops -Wall and -Wformat (the latter being
+what actually enables -Wformat), but leaves those two -Wformat-* children
+in LIBBPF_BOOTSTRAP_CFLAGS. Building the bootstrap libbpf with it then
+warns:
 
-Loading it triggers a verifier warning from reg_bounds_sanity_check():
+  cc1: warning: '-Wformat-y2k' ignored without '-Wformat'
+  cc1: warning: '-Wformat-security' ignored without '-Wformat'
 
-	verifier bug: REG INVARIANTS VIOLATION (alu): const subreg tnum out
-	of sync with range bounds r64={.base=0x0, .size=0x0}
-	r32={.base=0x0, .size=0xffffffff} var_off=(0x0, 0x0)
+The warning is easy to miss in an in-tree build: tools/lib/bpf/Makefile
+re-adds -Wall via "override CFLAGS += -Wall", which re-enables -Wformat
+for the libbpf objects, so only libbpf's feature-detection probe (which
+uses the passed CFLAGS verbatim) leaks the two warnings. The standalone
+libbpf Makefile (github.com/libbpf/libbpf, used by the bpftool mirror)
+instead uses "CFLAGS ?= ... -Wall", which the passed-in CFLAGS overrides,
+so -Wall is never re-added and every bootstrap object warns.
 
-What happens:
+Use a -Wformat% wildcard in the filter-out so the orphaned children are
+removed together with the parent.
 
-1. Processing insn 14 (r0 += r1) in adjust_ptr_min_max_vals(), the new
-   offset is computed into dst_reg's var_off and 32/64-bit ranges.
-
-2. Because pointer registers do not track 32-bit subregister bounds,
-   __mark_reg32_unbounded() first sets r32 to the full range; r32 is
-   re-derived from the offset at the end of the function by
-   reg_bounds_sync().
-
-3. On the unprivileged path, sanitize_ptr_alu() is called and, via
-   sanitize_speculative_path() -> push_stack(), snapshots the current
-   register state and schedules the next instruction (insn 15) to be
-   verified directly as a speculative path.
-
-4. That snapshot is taken between step 2 and the final reg_bounds_sync():
-   at this point dst_reg's var_off still holds the (const) original
-   offset while r32 has just been blanked to the full range, i.e. the two
-   are out of sync. When the speculative path later verifies insn 15
-   (r9 = r0), the inconsistent state reaches reg_bounds_sanity_check() and
-   trips the warning.
-
-var_off and the 32-bit range must always be consistent. There are two
-ways to keep the snapshot consistent:
-
-  1. sync var_off and r32 before the snapshot so they match, or
-  2. leave r32 at its original (already consistent) value and blank it
-     only after the snapshot.
-
-The whole point of sanitize_ptr_alu() is to insert a harmless masking
-sequence that keeps the access in bounds under speculation, so the state
-it snapshots should faithfully represent that. Take approach 2: move
-__mark_reg32_unbounded() to after sanitize_ptr_alu(), so the speculative
-snapshot keeps the pointer's original, consistent r32. The non-speculative
-path is unchanged: r32 is still blanked before the offset is applied and
-re-derived by reg_bounds_sync().
-
-Fixes: 5f99f312bd3b ("bpf: add register bounds sanity checks and sanitization")
-Reported-by: Hiker Cl <clhiker365@gmail.com>
-Closes: https://lore.kernel.org/bpf/CAGM=xGB1fJ9kT8XTitVo74B0WGqgjkoUHdLwzytwV0AyqeVApw@mail.gmail.com/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260819125840.286434-1-jiayuan.chen@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260630205418.3483969-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ tools/bpf/bpftool/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f9f2095eab4a0..84a7b8d4f04dd 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13579,9 +13579,6 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
- 		return -EINVAL;
+diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
+index f92cdb7dbd428..6c2d32c874a6a 100644
+--- a/tools/bpf/bpftool/Makefile
++++ b/tools/bpf/bpftool/Makefile
+@@ -95,7 +95,7 @@ HOST_CFLAGS := $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
+ HOST_LDFLAGS := $(LDFLAGS)
  
--	/* pointer types do not carry 32-bit bounds at the moment. */
--	__mark_reg32_unbounded(dst_reg);
--
- 	if (sanitize_needed(opcode)) {
- 		ret = sanitize_ptr_alu(env, insn, ptr_reg, off_reg, dst_reg,
- 				       &info, false);
-@@ -13589,6 +13586,14 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 			return sanitize_err(env, insn, ret, off_reg, dst_reg);
- 	}
+ # Remove warnings for libbpf bootstrap build
+-LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat -Wformat-signedness,$(HOST_CFLAGS))
++LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat%,$(HOST_CFLAGS))
  
-+	/*
-+	 * Pointer types do not carry 32-bit bounds at the moment. Blank r32
-+	 * only after sanitize_ptr_alu() may have snapshotted dst_reg into a
-+	 * speculative path: otherwise reg_bounds_sanity_check() might hit some
-+	 * constraints violations.
-+	 */
-+	__mark_reg32_unbounded(dst_reg);
-+
- 	switch (opcode) {
- 	case BPF_ADD:
- 		/* We can take a fixed offset as long as it doesn't overflow
+ INSTALL ?= install
+ RM ?= rm -f
 -- 
 2.53.0
 
