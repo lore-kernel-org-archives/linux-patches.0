@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8873F3B9922;
-	Thu, 17 Sep 2026 18:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7664ABBCC;
+	Thu, 17 Sep 2026 18:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670510; cv=none; b=bILXkQS3NC6xZ0Jeen6ynD/Wov7pZPfEDzG9sZjmnLYEydbOcZ0oKpQZfpp1I8XdDjmUMtMIQ8Ysmb/baqvfe6EXAID3MwqVsoJYU4i8pygG5akdO9sLYVZiA+KRvZ7rw8o18zlm7KE/l5h1jhxM8qndXwCz97amr/iIpoyoNH4=
+	t=1789670514; cv=none; b=Qfqt9KZxtQjmKLCaKx+6lGEN6e5CniL/frIbPOTiSsVOJQxc0GfW8kt/CyWSeOf2Vto6bbMMTL0nxDWo+uYJILNCzIaLtUdXPmP3QpA1mIev0osF2TM8Y7PDwj3T+GgalqVJ3269gWO+1DBSec1EiaehWY7+7wr9U8sUiiUYAZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670510; c=relaxed/simple;
-	bh=/iWaBAcNPH3tAZtwBgJoOulSsaFIL7ERhqyAI2HW6CA=;
+	s=arc-20240116; t=1789670514; c=relaxed/simple;
+	bh=McStbwgePR8woPwEHO0KjvICagkfrqJEPdJivAGkwgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TIaf4vS/uJ5BJTnVxylFocoV2xO14vXtdzZBl4UuuUlTKCD4U/nfkZ/WzxSWHy+aWD5WLCouwy0TULQTW1w6A1Rmn7A/+EuoR79+in/2jSp2JQbCs/k56xouFk0F4N889RGa8+XrBLR/b8NMYP/a35eYqB9rmwGtDPWvnHRvXuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMW48iHk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jNLohZEPsoTBJWfR4sH2RrwijcMGB/pBN+3nNr1L7YZ7bf/pC3KZKClsrbowU0G895FRhAhYRY/DbAA53Bu0Y/Rcp44RWYuoY+CygxgY1Q4tQOHel79U0y4D5etoNHJJsMblgmhdekI6HN0dlMN4Ng8qnQFayKxyT18P3n8lMag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNWJupjN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMW48iHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8DA1F000FF;
-	Thu, 17 Sep 2026 18:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNWJupjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933441F000FF;
+	Thu, 17 Sep 2026 18:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670509;
-	bh=b6v/Shq1XlQau1VMLeb8XuBXskIZ8UB7aX1b/H/c8cY=;
+	s=korg; t=1789670512;
+	bh=WmxPPd8oeJ0Fm9xhyeko1XkX0PHtvpwLZjRhxChv9Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMW48iHknPA2IwGJNB1NXUNA3IJ7aeQUEO50CQyUjcpIrybb6TmhFdnzpHrYLBG+j
-	 Q5zr9whp/vO0s0k1RBnuq71we8XGp5ffa/MNzyZpaFMLLnxQC1Ro1aW3kfZPzbrXob
-	 XHp+jMFBiDtFtqWCcvOV9pVOo90u5OJyTR0PBAHI=
+	b=kNWJupjN3Rvqdn0owParuCm3PzM9f+yvXsJbEsYOy/WpILhDls2wB2vjelAbUd5O0
+	 dmzjGVkZ/WoIkAYb08Q6tOnHkyMgmxWcsLDiHXuQjxAzGMceCCbsyObborqpJcmH3e
+	 5w39C0d3ihkL0Ug0X67qQSR8jGJm6oHnHkqygsHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Winter <jjx@live.nl>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0677/1102] net: usb: cx82310_eth: drop URB after 0xffff reboot sentinel to prevent partial_data heap overflow
-Date: Thu, 17 Sep 2026 16:10:20 +0100
-Message-ID: <20260917151557.233534842@linuxfoundation.org>
+Subject: [PATCH 6.12 0686/1102] net/sched: defer qdisc freeing after failed creation
+Date: Thu, 17 Sep 2026 16:10:29 +0100
+Message-ID: <20260917151557.483079572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,62 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Winter <jjx@live.nl>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 5d50e90add8b4a978395e893e81954d19d58a7c5 ]
+[ Upstream commit e6662f2100f8d33b0f4d0047c219efd6bba186ea ]
 
-The 0xffff length sentinel detects a router reboot and schedules
-re-enabling of ethernet mode, but then falls through to the rest
-of the loop body.  The next check is
+An RTM_NEWQDISC request can make clsact bind a populated shared ingress
+block during ->init(), publishing an embedded mini_Qdisc to lockless
+readers.  If the same request has an invalid TCA_RATE, estimator setup
+fails after ->init(); the unwind removes the pointer but synchronously
+frees its containing qdisc while tc_run() may still hold it.
 
-	} else if (len > CX82310_MTU) {
+Retire failed qdiscs through the same RCU helper as normal destruction.
+Inline the synchronous free into the callback now that no direct callers
+remain.
 
-which is the else of the just-matched if -- it never fires for
-len == 0xffff.  The MTU bound that normally caps the
-incomplete-packet save path is silently bypassed.
-
-With 0xffff > skb->len always true (rx_urb_size is 4096), the
-incomplete-packet branch saves dev->partial_len = skb->len bytes
-into dev->partial_data.  partial_data is kmalloc(hard_mtu) =
-kmalloc(CX82310_MTU + 2) = 1516 bytes, but skb->len after the
-2-byte header pull can be up to 4094.  A device that sends a
-4096-byte URB starting with [0xff 0xff] therefore copies 4094
-device-provided bytes into a buffer allocated for 1516 bytes,
-exceeding its requested size by 2578 bytes.
-
-The next URB then reads dev->partial_len (4094) back from the same
-1516-byte buffer and dev->partial_rem (65535 - 4094 = 61441) from
-the new URB's ~4KB skb, both well past their allocations, and
-delivers the spliced result as a 64KB "frame" to the network
-stack.
-
-Bail out of rx_fixup after scheduling the re-enable work; the
-remainder of a reboot-marker URB is not meaningful packet data.
-This restores the invariant that partial_len < CX82310_MTU + 2 on
-the save path, since every other route there has already passed
-the MTU check.
-
-Fixes: ca139d76b0d9 ("cx82310_eth: re-enable ethernet mode after router reboot")
-Signed-off-by: Jason Winter <jjx@live.nl>
-Link: https://patch.msgid.link/BESP194MB283265DDDC63B6B78D8D34FBB8B72@BESP194MB2832.EURP194.PROD.OUTLOOK.COM
+Fixes: 51ab2994c387 ("net: sched: allow ingress and clsact qdiscs to share filter blocks")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/netdev/20260805102505.740806-1-david.lee@trailofbits.com/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260902155231.2149915-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cx82310_eth.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/sch_generic.h |  2 +-
+ net/sched/sch_api.c       |  2 +-
+ net/sched/sch_generic.c   | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/usb/cx82310_eth.c b/drivers/net/usb/cx82310_eth.c
-index 79a47e2fd4378..840d014ac1aa8 100644
---- a/drivers/net/usb/cx82310_eth.c
-+++ b/drivers/net/usb/cx82310_eth.c
-@@ -282,6 +282,7 @@ static int cx82310_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		if (len == 0xffff) {
- 			netdev_info(dev->net, "router was rebooted, re-enabling ethernet mode");
- 			schedule_work(&priv->reenable_work);
-+			return 0;
- 		} else if (len > CX82310_MTU) {
- 			netdev_err(dev->net, "RX packet too long: %d B\n", len);
- 			return 0;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 1b461d1816479..2c1bb37c929ee 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -755,7 +755,7 @@ void qdisc_offload_query_caps(struct net_device *dev,
+ struct Qdisc *qdisc_alloc(struct netdev_queue *dev_queue,
+ 			  const struct Qdisc_ops *ops,
+ 			  struct netlink_ext_ack *extack);
+-void qdisc_free(struct Qdisc *qdisc);
++void qdisc_free_rcu(struct Qdisc *qdisc);
+ struct Qdisc *qdisc_create_dflt(struct netdev_queue *dev_queue,
+ 				const struct Qdisc_ops *ops, u32 parentid,
+ 				struct netlink_ext_ack *extack);
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 1d76f78534048..f25201067cceb 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1408,7 +1408,7 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
+ err_out3:
+ 	lockdep_unregister_key(&sch->root_lock_key);
+ 	netdev_put(dev, &sch->dev_tracker);
+-	qdisc_free(sch);
++	qdisc_free_rcu(sch);
+ err_out2:
+ 	module_put(ops->owner);
+ err_out:
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index db24aa644ad95..6a61bd0c081c6 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1050,21 +1050,21 @@ void qdisc_reset(struct Qdisc *qdisc)
+ }
+ EXPORT_SYMBOL(qdisc_reset);
+ 
+-void qdisc_free(struct Qdisc *qdisc)
++static void qdisc_free_cb(struct rcu_head *head)
+ {
+-	if (qdisc_is_percpu_stats(qdisc)) {
+-		free_percpu(qdisc->cpu_bstats);
+-		free_percpu(qdisc->cpu_qstats);
++	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
++
++	if (qdisc_is_percpu_stats(q)) {
++		free_percpu(q->cpu_bstats);
++		free_percpu(q->cpu_qstats);
+ 	}
+ 
+-	kfree(qdisc);
++	kfree(q);
+ }
+ 
+-static void qdisc_free_cb(struct rcu_head *head)
++void qdisc_free_rcu(struct Qdisc *qdisc)
+ {
+-	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
+-
+-	qdisc_free(q);
++	call_rcu(&qdisc->rcu, qdisc_free_cb);
+ }
+ 
+ static void __qdisc_destroy(struct Qdisc *qdisc)
+@@ -1091,7 +1091,7 @@ static void __qdisc_destroy(struct Qdisc *qdisc)
+ 
+ 	trace_qdisc_destroy(qdisc);
+ 
+-	call_rcu(&qdisc->rcu, qdisc_free_cb);
++	qdisc_free_rcu(qdisc);
+ }
+ 
+ void qdisc_destroy(struct Qdisc *qdisc)
 -- 
 2.53.0
 
