@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A214EF140;
-	Thu, 17 Sep 2026 16:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0072A3B3BE2;
+	Thu, 17 Sep 2026 16:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663918; cv=none; b=SmLe5rdu7ezyMI/cBjagdK4+qj5IpC33iJsFCZO/MqrXR4W6oqHP/V3A21qkL39bGfEavnGx4VDh+Wmk9V2BVvAh9IgJQ/YHjim/AUAWz/gV5sRN+eXFQ3aLIWq6OnInCtG67Y3T4R5NNB5qdzaejm8SGlGyIejcj81JqYzXaco=
+	t=1789663920; cv=none; b=pHPllQMmYXeaT1xie/kqneRJkq939VZnVUcwXuill1QXQEF+Q1VMY85o5b5kLXjaYns6RX8ZVmrgOHK9SR07SQhhAt/Z+xzgMhMYqv2X6RVJVLpZ374FCeNRKaeFsPMKk6gNgVuHWO0b2nPH8fYjjlWiDBfRaAx0qhUpRF0zAb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663918; c=relaxed/simple;
-	bh=4ufAx9c70rjsAvj4OtshA/EJFFh3vCvdhCn0CUYqvqE=;
+	s=arc-20240116; t=1789663920; c=relaxed/simple;
+	bh=ncKyV4R99/SsSe6BSxFhFl3U17vu4QVnzTxgRXT6ksE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcDzbLzUVPxC0oG+wNQ7vlJYvfDBb6tqRTWZ/3qymsT99pU1wdbJ/UmcUaM6kLbiRBBLEJxc8LoegP36CYyAnxMkCwK0gDkBbW3Vx+qxMtCQUgthc/PhfXpON83QpyCtwHPy2pUpnJ6HwUChBjQHk2R7oG7kyV5wshzJ2TSk/lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQgfxjVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bcxRFkYz4ttM0q4sxhvPIP6ycsJq4T2boVoXQq1F+3wxf4NzKmda1Clqx7cGKEjFUVqvek65x0urjdVtL9KWcxE2A0BnYDlCeVZrmBo7FsSGk5wNvw2YRvy9W/lxl5yNvrdJR9B7/O0/euaA4MVHthnyEz3DTxnEM8q9EPFL1TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiTFThPp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQgfxjVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294E31F000FF;
-	Thu, 17 Sep 2026 16:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiTFThPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1391F1F00893;
+	Thu, 17 Sep 2026 16:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663915;
-	bh=N0nYWxtKOY0pzADMaMi1tZBqS/H87bcEQ6Xm1d3iAAY=;
+	s=korg; t=1789663918;
+	bh=K9cv/e7y5vZiOqJAr3oN24Dg9o9kZ8wis9O7vWU9utE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BQgfxjVFZk4GnP9C2Sg7etv+0FgcM4nCWxOQHVQ4Ok/GckHDhGh2dXQiA8mxgQgBK
-	 dDYfK56xRmDpGTZAUILCA+mOhcA0uhPwPy6k2kCPl/1dE2z7f5KMRphaITFjZNxKZy
-	 eXEo24C9m78ycSShKutpADxzspFpvNu6ctTJCjwc=
+	b=HiTFThPpsxRWixBkDm8xXS11ASdTWN6MQOGRIr7Q78dE6oB1Z+Rv8soZuw11s6B8F
+	 wMBODJ3ZbjJiGfiZT/gWjp2DJECH6b0WNdUKK3P/5HdUqrq43I2q1if3rjANn55Ary
+	 XXf4AnUkXjiOFwiiGZvMzt89qDhNYUvJuRjTsDuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sascha Bischoff <sascha.bischoff@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0197/1250] gpib: Suppress setting END on error from NI_USB dongle
-Date: Thu, 17 Sep 2026 15:59:52 +0100
-Message-ID: <20260917151557.456504194@linuxfoundation.org>
+Subject: [PATCH 6.18 0198/1250] irqchip/gic-v5: Immediately exec priority drop following activate
+Date: Thu, 17 Sep 2026 15:59:53 +0100
+Message-ID: <20260917151557.484664620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Sascha Bischoff <sascha.bischoff@arm.com>
 
-[ Upstream commit 7c19b47f5a1839817e5ddc5ba589224fcfb6255d ]
+[ Upstream commit abf60331ebe9a9a7937a72aac7699c2907ab9307 ]
 
-The NI USB adapter sets the END bit in the status word when an error
-occurs such as a read being interrupted by the setting of ATN. This
-happens for example when a device clear is received from the
-controller in charge during a read.
+With GICv5 an interrupt of equal or lower priority cannot be signalled
+until there has been a priority drop. This is done via the GIC CDEOI
+system instruction. Once this has been executed, the hardware is able
+to signal the next interrupt if there is one.
 
-The common driver changes the error return to 0 whenever the END bit
-is set in order to avoid errors such as timeout or interrupt to be
-reported after the full message has actually been read. The behaviour
-of the NI USB adapter in setting the END bit on errors was causing
-actual errors (-EINTR, -ETIMEDOUT) not to be reported.
+As all interrupts are programmed to have the same priority, no new
+interrupts can be signalled until the priority drop has happened. This
+can cause issues when, for example, an interrupt remains active while
+a long running process takes place, such as when injecting a physical
+interrupt into a guest VM in software.
 
-We avoid setting the END bit in the ni_usb_gpib driver when an error
-is reported in error_code of the status from the adaptor.
+The GICv5 driver has so far done the priority drop as part of
+irq_eoi(), i.e., at the same time as deactivating the interrupt. This
+means that any long running process (or VM) could block incoming
+interrupts, effectively causing a denial of service for all other
+interrupts.
 
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://patch.msgid.link/20260422074807.3194-1-dpenkler@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Rather than doing the EOI as part of irq_eoi() (which the name would
+suggest would be a good place for it), move it to happen immediately
+after acknowledging an interrupt in the main GICv5 interrupt
+handler. The deactivation of interrupts (GIC CDDI) remains implemented
+as part of irq_eoi(), which means that the same interrupt cannot be
+signalled a second time until deactivated by software.
+
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Link: https://lore.kernel.org/r/20260520091949.542365-18-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/ni_usb/ni_usb_gpib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v5.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-index b6fddb437f552..67cc3398e2831 100644
---- a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-+++ b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-@@ -720,7 +720,7 @@ static int ni_usb_read(struct gpib_board *board, u8 *buffer, size_t length,
- 		break;
- 	}
- 	ni_usb_soft_update_status(board, status.ibsta, 0);
--	if (status.ibsta & END)
-+	if ((status.ibsta & END) && (status.error_code == NIUSB_NO_ERROR))
- 		*end = 1;
- 	else
- 		*end = 0;
+diff --git a/drivers/irqchip/irq-gic-v5.c b/drivers/irqchip/irq-gic-v5.c
+index ebeb26b25dac8..222ef50acf100 100644
+--- a/drivers/irqchip/irq-gic-v5.c
++++ b/drivers/irqchip/irq-gic-v5.c
+@@ -207,17 +207,13 @@ static void gicv5_hwirq_eoi(u32 hwirq_id, u8 hwirq_type)
+ 	       FIELD_PREP(GICV5_GIC_CDDI_TYPE_MASK, hwirq_type);
+ 
+ 	gic_insn(cddi, CDDI);
+-
+-	gic_insn(0, CDEOI);
+ }
+ 
+ static void gicv5_ppi_irq_eoi(struct irq_data *d)
+ {
+ 	/* Skip deactivate for forwarded PPI interrupts */
+-	if (irqd_is_forwarded_to_vcpu(d)) {
+-		gic_insn(0, CDEOI);
++	if (irqd_is_forwarded_to_vcpu(d))
+ 		return;
+-	}
+ 
+ 	gicv5_hwirq_eoi(d->hwirq, GICV5_HWIRQ_TYPE_PPI);
+ }
+@@ -917,6 +913,13 @@ static void __exception_irq_entry gicv5_handle_irq(struct pt_regs *regs)
+ 	 */
+ 	isb();
+ 
++	/*
++	 * Ensure that we can receive the next interrupts in the event that we
++	 * have a long running handler or directly enter a guest by doing the
++	 * priority drop immediately.
++	 */
++	gic_insn(0, CDEOI);
++
+ 	hwirq = FIELD_GET(GICV5_HWIRQ_INTID, ia);
+ 
+ 	handle_irq_per_domain(hwirq);
 -- 
 2.53.0
 
