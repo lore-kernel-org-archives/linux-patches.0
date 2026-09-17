@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E924F402E;
-	Thu, 17 Sep 2026 17:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9184F402D;
+	Thu, 17 Sep 2026 17:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665998; cv=none; b=fCOvebqZ345rESQe3VtwQqeiV2b/+fA+OT04hAXhFZdQeKCR6YAIwsvPhZZGrA7c3zp5ncRcwLHvC6EwjtJo4C/l0lWG8N2OJTy6h14YqZW3T1u3PsNHkb/aTNfwWvCoTJ9t2eqCx8AkauGA+vUVpnSzpgsOoK5Sy/5lWDmedts=
+	t=1789666001; cv=none; b=l8e3SqwJKZUm6ILaZWc5zjFe+FOicu1VQP6YVfiJKCAFrnNAFbrWUE/O9MX71CO/w2ka0kbkHjeVrfdAZaT5fzzEBqurK8anOAIziSsvjKFvBf/PM4OwyayItC2AY8ykzO2nYI/OwkeUlxDtldp0GuXiZ03D8vsL3kyTS8bwZ2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665998; c=relaxed/simple;
-	bh=bgU0zVogSZtduJWH/pOiE3MFRl7nDBsMuVMznA3QyKI=;
+	s=arc-20240116; t=1789666001; c=relaxed/simple;
+	bh=WIcoZSDpS2e3ExoSwQ+Llo/cX35tQFQXwOo/bYazWQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QffRqwg3BgUFCaldCUXRtHhXZd0mP6ceG2Tb1X82AIrm7DtnbMoUCFcb60LfVknlT2jzPutNBhpUgIg70kj21sN2o/rto5/FnPmfd+hjTI/PXHSEExhDTTroFV+WPhrTNe8ZdXr04uSOik/0lnrCnXM8hJbqlgWJPs4kiLocJh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1texG9jY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PVOXHHKA8ipsUxWGJ+fCPaPLZi67xMSJk3pXvmgByXHaF9SDbR8nuQZ3AAoG3q9IqduvlF0HRS5pYMIVUKX1IPXo3CVu5MgYb0C/Mqx1KmAFFyk8oBYQgAXXv2L0+rQT8icNUrOkFBSVkXwTdTYdzpw2viEkM8D7d5MzYhdx/pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0TmkGBs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1texG9jY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B911F000FF;
-	Thu, 17 Sep 2026 17:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0TmkGBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F311F000FF;
+	Thu, 17 Sep 2026 17:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665996;
-	bh=db2SX4DN7hOKfY2iKHvHqPir7NKuScpDMWL7M45uFQA=;
+	s=korg; t=1789665999;
+	bh=qS70nZFeA2ONAm2iiNYT6p8S8BUmqbJgp3nDTZ0wOMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1texG9jYk8VAinJS30HQZg5hwH3MA7FtPYHMEoqnOTspLTgAMIj+P4S988RRqX+z3
-	 nPBq/r+byB146P0jWQVX/Y6mxAKSkICKCFP1JVlwrBZBJEfkYiB3hcqHGQkhVeaQLn
-	 j5Z9KesRgh4sCWwMPzjQgYj+1PJ+m4BGiKaDzK6I=
+	b=j0TmkGBsRmmua6HDhGSlciWav5JVCbzCowR5aLHks4l7l0r6qZv2RtU8Vgo8FSQZ2
+	 cf2c39MnXMZk3M/2rxrty4S6vOO2C90b9443BJ0BbE9CYJZcwPU2xTDlDyET15mASZ
+	 nQW+76UnYDssS+Dx0nOPOHYu02XKj8AkYqq1GLAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0889/1250] net: macb: put the "mdio" child node reference on success
-Date: Thu, 17 Sep 2026 16:11:24 +0100
-Message-ID: <20260917151616.080296718@linuxfoundation.org>
+Subject: [PATCH 6.18 0890/1250] mptcp: remove unneeded READ_ONCE() annotation
+Date: Thu, 17 Sep 2026 16:11:25 +0100
+Message-ID: <20260917151616.108058210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,42 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 382a373d9ea7a6ac4de9c022385b6217f65ae3cc ]
+[ Upstream commit caa4a79f74f32084ce28aee8653bc04df745970d ]
 
-macb_mii_init() holds the reference returned by of_get_child_by_name()
-for macb_mdiobus_register() and drops it only on the error paths, so
-every successful probe leaks a node reference. On a CM5, overlay
-removal after four bind cycles reports
+The subflow->fully_established flag is always written under the subflow
+socket lock. Reading such value under the same lock does not require any
+ONCE annotation.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 5
-
-Drop the reference after registration, where __mdiobus_register() has
-already taken its own for the lifetime of the bus.
-
-Fixes: 8a6631f1cece ("net: macb: avoid redundant lookup for "mdio" child node in MDIO setup")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260907210856.1673589-3-nb@tipi-net.de
+Fixes: 581c8cbfa934 ("mptcp: annotate data-races around subflow->fully_established")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-10-df1de70348b6@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/options.c  | 4 ++--
+ net/mptcp/protocol.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 9889ee4bef00b..1e488f17f5aa9 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1058,6 +1058,8 @@ static int macb_mii_init(struct macb *bp)
- 	if (err)
- 		goto err_out_unregister_bus;
+diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+index 7f7aa5af6092c..45deaa3279e61 100644
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -530,7 +530,7 @@ static bool mptcp_established_options_mp(struct sock *sk, struct sk_buff *skb,
+ 		return false;
  
-+	of_node_put(mdio_np);
-+
- 	return 0;
+ 	/* MPC/MPJ needed only on 3rd ack packet, DATA_FIN and TCP shutdown take precedence */
+-	if (READ_ONCE(subflow->fully_established) || snd_data_fin_enable ||
++	if (subflow->fully_established || snd_data_fin_enable ||
+ 	    subflow->snd_isn != TCP_SKB_CB(skb)->seq ||
+ 	    sk->sk_state != TCP_ESTABLISHED)
+ 		return false;
+@@ -997,7 +997,7 @@ static bool check_fully_established(struct mptcp_sock *msk, struct sock *ssk,
+ 	/* here we can process OoO, in-window pkts, only in-sequence 4th ack
+ 	 * will make the subflow fully established
+ 	 */
+-	if (likely(READ_ONCE(subflow->fully_established))) {
++	if (likely(subflow->fully_established)) {
+ 		/* on passive sockets, check for 3rd ack retransmission
+ 		 * note that msk is always set by subflow_syn_recv_sock()
+ 		 * for mp_join subflows
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 20c449fd74102..4f22cd78abaec 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3614,7 +3614,7 @@ static void schedule_3rdack_retransmission(struct sock *ssk)
+ 	struct tcp_sock *tp = tcp_sk(ssk);
+ 	unsigned long timeout;
  
- err_out_unregister_bus:
+-	if (READ_ONCE(mptcp_subflow_ctx(ssk)->fully_established))
++	if (mptcp_subflow_ctx(ssk)->fully_established)
+ 		return;
+ 
+ 	/* reschedule with a timeout above RTT, as we must look only for drop */
 -- 
 2.53.0
 
