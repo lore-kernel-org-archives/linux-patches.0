@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A652D4EB86C;
-	Thu, 17 Sep 2026 15:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A75F4ABBB8;
+	Thu, 17 Sep 2026 15:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659100; cv=none; b=VX4QZ17Nb+w/1qBopYeWjfluVPxUYd/kr525vv1ruUc7x5vI/NUhHIWP9RbFNvlpp9Uoya+w9iIdmbQMcOsjXGkz9ClncesptuDKTSYQktoLyPucKbXFnlXF2eQs+QZXRFChu1M8PlAWR5uwdbXfUc8MH2PEgD6NJauxw5FgTFU=
+	t=1789659102; cv=none; b=iWKBv7iOhf8jBSA0JqV3pAU96xUToTAEhZEVBf3+lk5PwhZC1bxDYkJnVGbgvai5VCBJumQwir/cTDsHyGbkTxfQRljUhj27LtiXC5mfzUDckn2E2a2J0uw7CGFhjO8QG7OajyXIEjolHiYUrpNn0A0rVtUKMHNLNo5yIqcYqps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659100; c=relaxed/simple;
-	bh=98Ib58MRJPlsW/ushh91XHSQh4D5EK4UlYLxRB6dBVM=;
+	s=arc-20240116; t=1789659102; c=relaxed/simple;
+	bh=tXBR1kWOG4+aAh3lQN36Do3cC5XFhF8sSei1zlSn7qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+boC7O1SNttaoSNfTR6rgJZUivpm9eilpjcs5sDeixgrqyRDyh55NatrRSSOaPWL8PgVQsX0g4nzUve2Cx6Ro56o7lG2xsbl5Q0aogUTd7i+ft57S6A+iiWRHhJn0uFr2tyIDdQ9a5WpHjswNQFOj25GXA9fmN0jpoBZd9QhJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw4SjVlo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tOeSSeqL6OA0WYzVebTePqkSl6vXtOKpskO+2z2vC7QfEdYNjZMuG+OY0VVfNTk0kGHKFcfSeL5Cd2SiYVk4aZsoR+91ix6x6S2T74lAZIMkWMUW7KBRlJylnIDc2yHWkmhNF+TiH/bq/cQ1A/pvxsoeGgmt959Oi0GC/IqA0qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybrignOm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw4SjVlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA191F000FF;
-	Thu, 17 Sep 2026 15:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybrignOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C1C1F00898;
+	Thu, 17 Sep 2026 15:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659096;
-	bh=GSn9NordhRAFJxSc4fm9GL33M/BZaX4BNm973O19QXU=;
+	s=korg; t=1789659093;
+	bh=ZUzRlcafHG4ejd++/6E3qZ1QB0rDT1n2r1SxsfeSNUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qw4SjVlo1vTWu+yAxpkutJAwWoNtI6PbuRYFEOleVrK0pH0TccCCXVHyw56Zj74fp
-	 IeZDTZ120eBbAfq/vRaLZnmwAyweN+ibke5HgOdUoucX4U6RoHLOhXj9ufbr7LbZia
-	 bgaxaHz2P0qJVYVfECL/9VveRmg7m1xXbets6nAM=
+	b=ybrignOmPSEBRi7zllz0WikaGXU0GdFP7s2xX5aul1rXGHbhEp6TxqyiAXsToA3FL
+	 1w2LIB+ursxsUI9Y3mMxYRM9aWHHhqEzhsn8YiiKZMpvVFQzTSZBn/i8yr7aXHm+9m
+	 kN3JjX34wm6//XBKL4XgAEVjVaq5gHAhp57o7BSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 142/733] ipv6: mcast: fix delay calculation in igmp6_join_group()
-Date: Thu, 17 Sep 2026 16:07:30 +0100
-Message-ID: <20260917151354.576411212@linuxfoundation.org>
+Subject: [PATCH 7.2 141/733] ipv6: mcast: use copy-on-write RCU updates in ip6_mc_source()
+Date: Thu, 17 Sep 2026 16:07:29 +0100
+Message-ID: <20260917151354.550053111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -55,76 +55,200 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 75fa9caeb8aaba19c2463dee0b0a1e09d39c04af ]
+[ Upstream commit c073d1b070f171d206b19c98d71739a97f15b3f1 ]
 
-When joining a multicast group, if a report work is already pending
-(e.g. scheduled by a query or a previous join), igmp6_join_group()
-cancels the delayed work and recalculates the delay:
+pmc->sflist is read locklessly under rcu_read_lock() by
+inet6_mc_check() during packet reception in the UDP and RAW
+multicast receive paths.
 
-	if (cancel_delayed_work(&ma->mca_work)) {
-		refcount_dec(&ma->mca_refcnt);
-		delay = ma->mca_work.timer.expires - jiffies;
-	}
+ip6_mc_source() mutated psl->sl_addr and psl->sl_count in-place
+when adding or removing a source filter. Additionally, when expanding
+the filter buffer, newpsl was published via rcu_assign_pointer()
+before writing the new source into the array.
 
-Unlike igmp6_group_queried(), igmp6_join_group() did not check
-if delay >= interval. This leads to two issues:
+Because 16-byte struct in6_addr writes are not atomic and array
+shifting is not synchronized with RCU readers, concurrent readers in
+inet6_mc_check() could read torn IPv6 addresses or observe
+duplicated/missed source entries.
 
-1. If the timer has already expired (timer.expires <= jiffies), the
-   stale expiry is reused by mod_delayed_work(), causing the second
-   unsolicited report to fire on the very next tick without a
-   randomized delay.
-2. If the timer was originally armed by a query with a large
-   maximum response delay, delay could exceed
-   unsolicited_report_interval(ma->idev).
+Fix this by switching ip6_mc_source() to copy-on-write RCU updates:
+allocate and fully populate newpsl before publishing it via
+rcu_assign_pointer(), and reclaim the old filter via kfree_rcu(),
+matching ip6_mc_msfilter().
 
-Fix this by initializing delay to unsolicited_report_interval(ma->idev)
-and re-randomizing it with get_random_u32_below(interval) when
-delay >= interval, mirroring the logic in igmp6_group_queried().
+Also remove the now unused IP6_SFBLOCK macro.
 
-Fixes: 2d9a93b4902b ("mld: convert from timer to delayed work")
+Fixes: 882ba1f73c06 ("mld: convert ipv6_mc_socklist->sflist to RCU")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: Taehee Yoo <ap420073@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20260828084531.1826790-4-edumazet@google.com
+Link: https://patch.msgid.link/20260828084531.1826790-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/if_inet6.h |  2 -
+ net/ipv6/mcast.c       | 98 ++++++++++++++++++++++++------------------
+ 2 files changed, 56 insertions(+), 44 deletions(-)
 
+diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
+index 238ad3349456a..795fb41b45f5d 100644
+--- a/include/net/if_inet6.h
++++ b/include/net/if_inet6.h
+@@ -88,8 +88,6 @@ struct ip6_sf_socklist {
+ 	struct in6_addr		sl_addr[] __counted_by(sl_max);
+ };
+ 
+-#define IP6_SFBLOCK	10	/* allocate this many at once */
+-
+ struct ipv6_mc_socklist {
+ 	struct in6_addr		addr;
+ 	int			ifindex;
 diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 3ff7c1c1bf4f8..62c9a1c08b9a2 100644
+index 54acc9d4cae03..3ff7c1c1bf4f8 100644
 --- a/net/ipv6/mcast.c
 +++ b/net/ipv6/mcast.c
-@@ -2638,7 +2638,7 @@ static void ip6_mc_clear_src(struct ifmcaddr6 *pmc)
- 
- static void igmp6_join_group(struct ifmcaddr6 *ma)
+@@ -355,12 +355,12 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
  {
--	unsigned long delay;
-+	unsigned long delay, interval;
+ 	struct ipv6_pinfo *inet6 = inet6_sk(sk);
+ 	struct in6_addr *source, *group;
++	struct ip6_sf_socklist *newpsl, *psl;
+ 	struct net *net = sock_net(sk);
+ 	struct ipv6_mc_socklist *pmc;
+-	struct ip6_sf_socklist *psl;
+ 	struct inet6_dev *idev;
+ 	int leavegroup = 0;
+-	int i, j, rv;
++	int i, j;
+ 	int err;
  
- 	mc_assert_locked(ma->idev);
+ 	source = &((struct sockaddr_in6 *)&pgsr->gsr_source)->sin6_addr;
+@@ -409,13 +409,11 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
+ 	if (!add) {
+ 		if (!psl)
+ 			goto done;	/* err = -EADDRNOTAVAIL */
+-		rv = !0;
+ 		for (i = 0; i < psl->sl_count; i++) {
+-			rv = !ipv6_addr_equal(&psl->sl_addr[i], source);
+-			if (rv == 0)
++			if (ipv6_addr_equal(&psl->sl_addr[i], source))
+ 				break;
+ 		}
+-		if (rv)		/* source not found */
++		if (i == psl->sl_count)		/* source not found */
+ 			goto done;	/* err = -EADDRNOTAVAIL */
  
-@@ -2647,13 +2647,17 @@ static void igmp6_join_group(struct ifmcaddr6 *ma)
+ 		/* special case - (INCLUDE, empty) == LEAVE_GROUP */
+@@ -424,58 +422,74 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
+ 			goto done;
+ 		}
  
- 	igmp6_send(&ma->mca_addr, ma->idev->dev, ICMPV6_MGM_REPORT);
- 
--	delay = get_random_u32_below(unsolicited_report_interval(ma->idev));
-+	interval = unsolicited_report_interval(ma->idev);
-+	delay = interval;
- 
- 	if (cancel_delayed_work(&ma->mca_work)) {
- 		refcount_dec(&ma->mca_refcnt);
- 		delay = ma->mca_work.timer.expires - jiffies;
- 	}
- 
-+	if (delay >= interval)
-+		delay = get_random_u32_below(interval);
++		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
++			   &sk->sk_omem_alloc);
 +
- 	if (!mod_delayed_work(mld_wq, &ma->mca_work, delay))
- 		refcount_inc(&ma->mca_refcnt);
- 	WRITE_ONCE(ma->mca_flags, ma->mca_flags |
++		if (psl->sl_count == 1) {
++			newpsl = NULL;
++		} else {
++			newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr,
++							      psl->sl_count - 1),
++					      GFP_KERNEL);
++			if (!newpsl) {
++				atomic_add(struct_size(psl, sl_addr, psl->sl_max),
++					   &sk->sk_omem_alloc);
++				err = -ENOBUFS;
++				goto done;
++			}
++			newpsl->sl_max = psl->sl_count - 1;
++			newpsl->sl_count = psl->sl_count - 1;
++			for (j = 0; j < i; j++)
++				newpsl->sl_addr[j] = psl->sl_addr[j];
++			for (j = i + 1; j < psl->sl_count; j++)
++				newpsl->sl_addr[j - 1] = psl->sl_addr[j];
++		}
++
+ 		/* update the interface filter */
+ 		ip6_mc_del_src(idev, group, omode, 1, source, 1);
+ 
+-		for (j = i+1; j < psl->sl_count; j++)
+-			psl->sl_addr[j-1] = psl->sl_addr[j];
+-		psl->sl_count--;
++		rcu_assign_pointer(pmc->sflist, newpsl);
++		kfree_rcu(psl, rcu);
+ 		err = 0;
+ 		goto done;
+ 	}
+ 	/* else, add a new source to the filter */
+ 
+-	if (psl && psl->sl_count >= sysctl_mld_max_msf) {
++	if (psl && psl->sl_count >= READ_ONCE(sysctl_mld_max_msf)) {
+ 		err = -ENOBUFS;
+ 		goto done;
+ 	}
+-	if (!psl || psl->sl_count == psl->sl_max) {
+-		struct ip6_sf_socklist *newpsl;
+-		int count = IP6_SFBLOCK;
+-
+-		if (psl)
+-			count += psl->sl_max;
+-		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, count),
+-				      GFP_KERNEL);
+-		if (!newpsl) {
+-			err = -ENOBUFS;
+-			goto done;
+-		}
+-		newpsl->sl_max = count;
+-		newpsl->sl_count = count - IP6_SFBLOCK;
+-		if (psl) {
+-			for (i = 0; i < psl->sl_count; i++)
+-				newpsl->sl_addr[i] = psl->sl_addr[i];
+-			atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
+-				   &sk->sk_omem_alloc);
++	if (psl) {
++		for (i = 0; i < psl->sl_count; i++) {
++			if (ipv6_addr_equal(&psl->sl_addr[i], source))
++				goto done; /* err = -EADDRNOTAVAIL */
+ 		}
+-		rcu_assign_pointer(pmc->sflist, newpsl);
+-		kfree_rcu(psl, rcu);
+-		psl = newpsl;
+ 	}
+-	rv = 1;	/* > 0 for insert logic below if sl_count is 0 */
+-	for (i = 0; i < psl->sl_count; i++) {
+-		rv = !ipv6_addr_equal(&psl->sl_addr[i], source);
+-		if (rv == 0) /* There is an error in the address. */
+-			goto done;
++
++	i = psl ? psl->sl_count + 1 : 1;
++	newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, i),
++			      GFP_KERNEL);
++	if (!newpsl) {
++		err = -ENOBUFS;
++		goto done;
+ 	}
+-	for (j = psl->sl_count-1; j >= i; j--)
+-		psl->sl_addr[j+1] = psl->sl_addr[j];
+-	psl->sl_addr[i] = *source;
+-	psl->sl_count++;
+-	err = 0;
++	newpsl->sl_max = i;
++	newpsl->sl_count = i;
++	if (psl) {
++		for (j = 0; j < psl->sl_count; j++)
++			newpsl->sl_addr[j] = psl->sl_addr[j];
++	}
++	newpsl->sl_addr[i - 1] = *source;
++
+ 	/* update the interface list */
+ 	ip6_mc_add_src(idev, group, omode, 1, source, 1);
++
++	if (psl)
++		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
++			   &sk->sk_omem_alloc);
++	rcu_assign_pointer(pmc->sflist, newpsl);
++	kfree_rcu(psl, rcu);
++	err = 0;
+ done:
+ 	mutex_unlock(&idev->mc_lock);
+ 	in6_dev_put(idev);
 -- 
 2.53.0
 
