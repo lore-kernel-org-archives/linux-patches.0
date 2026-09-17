@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1086454704B;
-	Thu, 17 Sep 2026 17:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FBA54707F;
+	Thu, 17 Sep 2026 17:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666427; cv=none; b=KJY180+rQTsrrJWQw5TAnQBo8GdQKRhCa2Q800kFj1KJ3RpVmS78nmtnofGayMLpF25XcdLvzGKb4J9boJjoo9pWR0daOBbNeGcaS7dCyy/PYKf2iETicXNh88krPS0dJ7C7CjV2NU5jCSH4YcUYHDBUGdOBf5KNc8xCKebVwDc=
+	t=1789666430; cv=none; b=ZDwCkYCcj4sy2ayxppP12UHYkiuMgdAWZaHC4IU2Ac375UqfhTbMeeMlwZ0CGqXt9gMKL89J4ZhGdsSIDx52uFbVSzmJAte6XI2OpLJcW6GZDU5AqrhDkHBQ+Y/uFHv0qwukOCbQc4IPWrws6PUDX/SyCmEBPJ7ePeJAlVVYNRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666427; c=relaxed/simple;
-	bh=9F2DSc4wTVxyDWK+pflCee2cJmJ2W9OI11v2+w98/+A=;
+	s=arc-20240116; t=1789666430; c=relaxed/simple;
+	bh=MLCZazHFKvVuyvsAR6AZGq4C+G5VKGVfKUJtYt7hYPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKPf94T5TQ8aOfLaEXLgim7BWh5Ir9aUSOn9Tt8/2jg0SG1cy6IFDLJWOmNCwJj88nnjRTh+1S+MTfKTS7SaaIvhQAzQ5mzY38E/Ld1VvdbG8bnZ2XChD4h6FXL/UPBwMNpEtbia9qudWrKq7We85BxJzxwhIFtJLvAakly2FcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6/pNU3/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HOTsBLHBh5kMum9FsHoKSp1hXHcHqbYw2J6uz9pZcpBXS44HM+T4Pq8y38yYrj3LlEAxYNWWOvykinZ8azmZODKRUBfDCSGTo+9I7Mmomlk5YWPiAiduPWS0RYzL8lBaLrpNywYBvPdcM7xOTjvH8MgqAlRvfyLUJMSzwIYL36I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vp/k98Vk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6/pNU3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662A61F000FF;
-	Thu, 17 Sep 2026 17:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vp/k98Vk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED3D1F000FF;
+	Thu, 17 Sep 2026 17:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666426;
-	bh=2RAEx5wQENhW9zsB0N+hxKSCv5cg3t4P6ig1fewKR+c=;
+	s=korg; t=1789666429;
+	bh=4QDewlBPIw/AvdabfEjwkpg+iGKXbd+6+EGz6kHHg3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U6/pNU3/awf/3I+Myil5Gv9nQUmHedCnOnhLKXCnExeAP3wcY0N5LbK9Rel5KUCy1
-	 7viCgDXRyBLb1mGYuE0MR+ZLhoqwDhcTOkHqyb2tSVivwYnGPaNUfgR67asYn07qv0
-	 6IYLtLZgTXnGaodHkhfyhOYd/wvE37V7HmDnBiGg=
+	b=Vp/k98Vk9pXutqAPcP3bqaqu5yAn0eTDeutfAIAp5Tfvyyml3yDUoAaaqOqstRIQZ
+	 6IL/BB5fcLieqA3611p1vpOABmDlqt8MIwdVXesFocYSlJRNORXJX6Qc3U5+6fKK2q
+	 ISN9VFcPK7bDIiJ5PMaFkJojJ4l4UOaxv06g6AWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com,
-	David Carlier <devnexen@gmail.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.18 1034/1250] ieee802154: hwsim: serialize pib updates to fix double-free
-Date: Thu, 17 Sep 2026 16:13:49 +0100
-Message-ID: <20260917151620.103799129@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Petr Vorel <pvorel@suse.cz>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1035/1250] ipv4: fib: bound automatic table ID allocation
+Date: Thu, 17 Sep 2026 16:13:50 +0100
+Message-ID: <20260917151620.132297936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,80 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 979d5b8de8ed4e1f997aef12da5694b99be7b871 upstream.
+commit efdfb1e27a3328085b79540dfe781d537b576ea1 upstream.
 
-hwsim_update_pib() does an unserialized read-swap-free of phy->pib:
+fib_empty_table() probes every table ID from 1 until it finds a
+free one.  IPv4 tables are stored in a 256-bucket hash table, so a
+dense set of IDs makes each probe walk a growing hash chain while
+RTNL is held.
 
-	pib_old = rtnl_dereference(phy->pib);
-	...
-	rcu_assign_pointer(phy->pib, pib);
-	kfree_rcu(pib_old, rcu);
+Automatic table assignment ("ip rule ... table 0") is an IPv4-only
+legacy path.  Bound the automatically allocated ID to 4096 so the
+RTNL hold stays bounded, without changing lookups of explicitly
+specified table IDs.
 
-It assumes the RTNL is held, but ->set_channel is not always called
-under it: the mac802154 scan worker changes channels via
-drv_set_channel() without the RTNL. Such an update can race an
-RTNL-held one on the same phy; both read the same pib_old and both
-kfree_rcu() it, double-freeing the object. With SLUB percpu sheaves
-batching kfree_rcu(), this surfaces as a KASAN invalid-free in
-rcu_free_sheaf().
+This changes user-visible behavior.  A table-0 rule previously
+received the lowest free ID in 1..RT_TABLE_MAX (0xFFFFFFFF).  After
+this patch the search stops at 4096 and the rule add fails with
+ENOBUFS if that range is fully occupied.  Explicit table IDs above
+4096 remain usable.
 
-struct hwsim_phy has no lock for pib. Add one and make the swap atomic
-with rcu_replace_pointer() under it, dropping the misleading
-rtnl_dereference().
+The automatic path is unused in practice: it is IPv4-only, not
+documented by ip-rule, uncovered by kernel selftests, and both
+NetworkManager and systemd refuse table 0.
 
-Reported-by: syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=60332fd095f8bb2946ad
-Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Fixes: b801f54917b7 ("[NET]: Increate RT_TABLE_MAX to 2^32")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20260709221858.158063-1-devnexen@gmail.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Link: https://patch.msgid.link/6f2f2a7a136aee005512a2e1ac8ede62ac8c7bb6.1788258884.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ieee802154/mac802154_hwsim.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/ipv4/fib_rules.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ieee802154/mac802154_hwsim.c
-+++ b/drivers/net/ieee802154/mac802154_hwsim.c
-@@ -72,6 +72,8 @@ struct hwsim_phy {
- 	struct ieee802154_hw *hw;
- 	u32 idx;
- 
-+	/* Serializes phy->pib_updates. */
-+	spinlock_t pib_lock;
- 	struct hwsim_pib __rcu *pib;
- 
- 	bool suspended;
-@@ -102,8 +104,6 @@ static int hwsim_update_pib(struct ieee8
- 	if (!pib)
- 		return -ENOMEM;
- 
--	pib_old = rtnl_dereference(phy->pib);
--
- 	pib->page = page;
- 	pib->channel = channel;
- 	pib->filt.short_addr = filt->short_addr;
-@@ -112,7 +112,10 @@ static int hwsim_update_pib(struct ieee8
- 	pib->filt.pan_coord = filt->pan_coord;
- 	pib->filt_level = filt_level;
- 
--	rcu_assign_pointer(phy->pib, pib);
-+	spin_lock_bh(&phy->pib_lock);
-+	pib_old = rcu_replace_pointer(phy->pib, pib,
-+				      lockdep_is_held(&phy->pib_lock));
-+	spin_unlock_bh(&phy->pib_lock);
- 	kfree_rcu(pib_old, rcu);
- 	return 0;
+--- a/net/ipv4/fib_rules.c
++++ b/net/ipv4/fib_rules.c
+@@ -214,6 +214,8 @@ INDIRECT_CALLABLE_SCOPE int fib4_rule_ma
+ 	return 1;
  }
-@@ -952,6 +955,7 @@ static int hwsim_add_one(struct genl_inf
- 		goto err_pib;
- 	}
  
-+	spin_lock_init(&phy->pib_lock);
- 	pib->channel = 13;
- 	pib->filt.short_addr = cpu_to_le16(IEEE802154_ADDR_BROADCAST);
- 	pib->filt.pan_id = cpu_to_le16(IEEE802154_PANID_BROADCAST);
++#define FIB_MAX_AUTO_TABLE_ID  4096
++
+ static struct fib_table *fib_empty_table(struct net *net)
+ {
+ 	u32 id = 1;
+@@ -222,7 +224,7 @@ static struct fib_table *fib_empty_table
+ 		if (!fib_get_table(net, id))
+ 			return fib_new_table(net, id);
+ 
+-		if (id++ == RT_TABLE_MAX)
++		if (id++ == FIB_MAX_AUTO_TABLE_ID)
+ 			break;
+ 	}
+ 	return NULL;
 
 
