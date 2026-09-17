@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA91D497387;
-	Thu, 17 Sep 2026 16:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5956497384;
+	Thu, 17 Sep 2026 16:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660957; cv=none; b=DdhAEkagiB0qRIC1+3NUOVUMLCtYAmeAWOUdQO+DMHEKFOu4DNGKNoPFHsOQ12EXos6aAnPk412r6OYANmrxTPEHstx5nSwiaj8vfYN7rmB++FFequiXb5Z2nQzbEmPRPc1hKhOkTJhVCOOhvXMysRW81XNem8S+e2M38mlJM/0=
+	t=1789660960; cv=none; b=emM9QNJPW50ZSiWfq6P1tx7vsK+sRYAF5nWPmTYQWKurxVA0A6tIUMYG5bOnKkn3tMvZIYkoHHB3nKsYBVr63w0uijjo3oR+fdivrM54BUUovuEwK9HXVZ7nhOFEGBowTfQ1R0am1Vjy9LeB1WKvNxT4ucofJR1sBbD7x8euUBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660957; c=relaxed/simple;
-	bh=qHeQkOlKpPzOXzsKwjVk+m8Y0yhEJEqGn86Umbbwhgg=;
+	s=arc-20240116; t=1789660960; c=relaxed/simple;
+	bh=hG3Xgbcq/XktMYDSY7qZRIYKHfyWUAN3gudJ5UxddPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Equr5hvHlHr8AoCT/8J9oU+RrsKRmOSAr7Yad7cPixq2vpkmPSjL2jYiJt4D16J6MisYw87ZDQj/SnyVu/U23sTWo4uE57Vl9uAppHpkwiiVhXBJzBuBOUseZGYEXAXNMUzROXsBtSunxdo9k09KUmSwqlBke+o779ZtbU8t4XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQADGFO3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=egMgkQOv8OG/5uXnhgKVe4thpdq8GAzcmQ6gqBPysHiGkhgNa/bhf9KKvNONJjdog1IhmY0djEVsv0CxidrHGEg78ONF0SRjxqZVKyQpsI8+CMasOHAfute+jYCieJh7PYLF9JjbaxfBxxE5p+op56M6GxRwPk/V8aW69/NPWSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVR02M82; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQADGFO3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF261F000FF;
-	Thu, 17 Sep 2026 16:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVR02M82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15F11F00893;
+	Thu, 17 Sep 2026 16:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660956;
-	bh=PeTLp1SSvN1e6sdbKcHwBd2dOt4exKrzHUl0HfLYcvA=;
+	s=korg; t=1789660959;
+	bh=xOjgKFzzOlsplNg7cz5x/jEBLNl0Xiid2Hpnt/GrtgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQADGFO36HcrvNcvg4M80vHMnsq7KzoPo38f9FRSvGmAtnzFEDcxiodXyZfYJk6mx
-	 IpHxQq29ESlkJBNAlhQwcYzZu15xrz5dzm2A26w9GT38xWUx9A/ZLvd27sIze3GV+Q
-	 VahHjZ8TMLjg33nuHdL8veS8gjZjsHtkvvjEFjYI=
+	b=dVR02M82DZ9DCg8X9RIHN51h1Xj1ZwtVkvincxOpVe/Dy5wJvaSkxl+Sa4N94BKET
+	 8YtLAzanb41FfqMAjd9YcveQaSv0oU14f/D2s5orOR543g3mLZRM9DtUOYGZTKsqOo
+	 xYIUf1VokrPVe0lf3dLbx671galw5+30jkCFmBRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Dominik Kaszewski <dominik.kaszewski@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Riccardo Mereu <r.mereu@arduino.cc>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0009/1250] drm/amd/display: Fix DPMS using partially updated pipe context
-Date: Thu, 17 Sep 2026 15:56:44 +0100
-Message-ID: <20260917151552.174429758@linuxfoundation.org>
+Subject: [PATCH 6.18 0010/1250] drm/panel: jadard-jd9365da-h3: set prepare_prev_first
+Date: Thu, 17 Sep 2026 15:56:45 +0100
+Message-ID: <20260917151552.203133968@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,71 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Kaszewski <dominik.kaszewski@amd.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 6fd45b5d8955bbc362ac3dfe181529f7b1cfd224 ]
+[ Upstream commit b55a4b5d4769a650f52ea3f1ae680610169d125e ]
 
-[Why & How]
-DPMS functions should not use partially updated pipe context passed
-as argument of commit_planes_do_stream_update, and instead use the
-one in current_state, which is guaranteed to be the most recently
-programmed HW config.
+Sending DSI commands from the prepare() callback requires DSI link to be
+up at that point. For DSI hosts is guaranteed only if the panel driver
+sets the .prepare_prev_first flag. Set it to let these panels work with
+the DSI hosts which don't power on the link in their .mode_set callback.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Riccardo Mereu <r.mereu@arduino.cc>
+Link: https://patch.msgid.link/20260413-waveshare-dsi-touch-v3-13-3aeb53022c32@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 927837249479f..627a9fb4c551e 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3690,27 +3690,34 @@ static void commit_planes_do_stream_update(struct dc *dc,
- 				resource_build_test_pattern_params(&context->res_ctx, pipe_ctx);
- 			}
+diff --git a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+index 5c2530598ddb9..9e5287829b952 100644
+--- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
++++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+@@ -1157,6 +1157,8 @@ static int jadard_dsi_probe(struct mipi_dsi_device *dsi)
+ 	if (ret)
+ 		return ret;
  
-+			// DPMS should not use partially updated pipe context
-+			struct pipe_ctx *dpms_pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[j];
++	jadard->panel.prepare_prev_first = true;
 +
- 			if (stream_update->dpms_off) {
- 				if (*stream_update->dpms_off) {
--					dc->link_srv->set_dpms_off(pipe_ctx);
-+					dc->link_srv->set_dpms_off(dpms_pipe_ctx);
- 					/* for dpms, keep acquired resources*/
--					if (pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only)
--						pipe_ctx->stream_res.audio->funcs->az_disable(pipe_ctx->stream_res.audio);
-+					if (dpms_pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only) {
-+						struct audio *audio = dpms_pipe_ctx->stream_res.audio;
-+
-+						audio->funcs->az_disable(audio);
-+					}
+ 	drm_panel_add(&jadard->panel);
  
- 					dc->optimized_required = true;
- 
- 				} else {
- 					if (get_seamless_boot_stream_count(context) == 0)
- 						dc->hwss.prepare_bandwidth(dc, dc->current_state);
--					dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
-+					dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
- 				}
--			} else if (pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change && stream_update->output_color_space
--					&& !stream->dpms_off && dc_is_dp_signal(pipe_ctx->stream->signal)) {
-+			} else if (dpms_pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change &&
-+					stream_update->output_color_space &&
-+					!stream->dpms_off && dc_is_dp_signal(dpms_pipe_ctx->stream->signal)) {
- 				/*
- 				 * Workaround for firmware issue in some receivers where they don't pick up
- 				 * correct output color space unless DP link is disabled/re-enabled
- 				 */
--				dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
-+				dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
- 			}
- 
- 			if (stream_update->abm_level && pipe_ctx->stream_res.abm) {
+ 	mipi_dsi_set_drvdata(dsi, jadard);
 -- 
 2.53.0
 
