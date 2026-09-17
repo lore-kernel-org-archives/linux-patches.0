@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D6D38E5C5;
-	Thu, 17 Sep 2026 18:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8582F49D5AB;
+	Thu, 17 Sep 2026 18:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668611; cv=none; b=W67j8qx+re0yfEd/KDMDKj4+EDWq+v7EiG+wzZSGhKdagiqcvtqSaZzSSDMBH18vn/QE4FrEPdZ7KH1W+Q75AaPROKi7KDqQPgX7n0kV/XszxbalmYTpweVqPQyWnOtWleBuJyMp6EBkvSZfAAL0LQJfhqjm724bGGHi9FNkY+I=
+	t=1789668613; cv=none; b=p/tDGS/sDOw393xCMB30zasrMahOBkimDhHNDjwPTCT1OqhP2fKkTanul7qpFiHoN0gtEMPuNIC3bcb7kW6Ou0l6Cg+GxvzqOTPM5+T6OcdsA3wY2DYGvNJAOJZDNW7JeqSwxkTGpV1+kclET5j5J7TxHCpDGcdYUGbEO7shw6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668611; c=relaxed/simple;
-	bh=y0nfQOlXGFJjojmusS7G8y4dmJPIis+JO5BnjXCeNYY=;
+	s=arc-20240116; t=1789668613; c=relaxed/simple;
+	bh=pOruO3v5/LRBnJG0dWvu9VyRJac1f2taiavOw3y3pt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swvLrX2RD6X7HYKMXvvSPclgHDNxLJSRQcFyqitmnAt9RvRtrKjlfdLZvYcY/RScNnheT6sOJP8ZHX2CP/3v0YyWB2IuujmoN1hj4e9qlZ4AI3w6jr06rI6ThK3Xjd1HpJ6OK5VhKz/+Su16wra9hYPr2bPd1EQwsd4V7NjJEQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVSevxUG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6Sa0TxJLqML/59vQrWJFyU4eX7NU/RBf55QbB/0zBHuKCxTGmRPzsZJMkxVbRiLGKOH3U13Ogd9l/yVRpx9DbH4tWDdeF+cdWbO6W2HJmxZU+VdowImENLSjuLFbaYfDjIlg2p4NLKZoRUwohTcQfzGGtTmF6odxfbHKguut9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHu7at4u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVSevxUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF2A1F000FF;
-	Thu, 17 Sep 2026 18:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHu7at4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04251F000FF;
+	Thu, 17 Sep 2026 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668609;
-	bh=UnNe0Vgw6m/YcHUNLiVT9cjxs5vy7F0GzR619Z6AMNo=;
+	s=korg; t=1789668612;
+	bh=/5avORS2bRZJVXrt1wgdTDaHHNhllJv0WuA2b5MKymk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVSevxUGvqWmJ2UDHagM7pQlDZ4AvBQkDvS+0oLJVji5rH0krT253RHrPs9ALIeTR
-	 SJxn7mkbkQnkr4tHc9vRI0cIqQY4a+VoOHpY9R9MCkNj2PPNH34kxCXNAofoEOSfv2
-	 nLwNkWJIuGdu8m4jh3o3gi7PGEpaOUtCi4YZdlPw=
+	b=vHu7at4u01URuIkUHKeS4h5ZvLZRm9QCpMbV1Yk4j/97SsEdZVphpbit6JcN0kuYi
+	 QHvSySL4nsvhWpCv1ycnUsEOtm8We/+gzDzJPYloMFeD5XxtAlaOZf0NKYBAL2Dmkx
+	 Lmbz4ldU8wSDfX8zEXupEy2fzlPOnkhMN9AeGFYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0482/1102] bpf: Reject redirect helpers without a bpf_net_context
-Date: Thu, 17 Sep 2026 16:07:05 +0100
-Message-ID: <20260917151551.798896866@linuxfoundation.org>
+Subject: [PATCH 6.12 0483/1102] Bluetooth: ISO: fix malformed ISO_END/CONT handling
+Date: Thu, 17 Sep 2026 16:07:06 +0100
+Message-ID: <20260917151551.823844453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,120 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 3f4920d165b29052255527d8ae7619e7ec132ece ]
+[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
 
-The bpf_redirect*() helpers and skb_do_redirect() obtain the per-task
-bpf_redirect_info via bpf_net_ctx_get_ri(), which dereferences the
-current->bpf_net_context unconditionally. That context is established
-on the paths that run tc BPF such as sch_handle_{ingress,egress}(),
-*except* for the case where {cls,act}_bpf was attached to a proper
-qdisc. A program running from there reaches the NULL deref in two ways:
+Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
+ISO_CONT, ISO_END packets.  We currently reject them if they are last.
 
-* It calls bpf_redirect() directly, which dereferences the context at
-  the top of the helper:
+If controller sends malformed sequence
 
-     tc qdisc add dev eth0 root handle 1: red limit 1MB min 10KB max 20KB \
-        avpkt 1000 burst 100 qevent early_drop block 10
-     tc filter add block 10 pref 1 bpf obj redirect.o
+    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
 
-* It simply returns TC_ACT_REDIRECT without helper call: tcf_qevent_handle()
-  then dispatches to skb_do_redirect(), which dereferences the context
+that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
+too long ISO_END, we panic on skb_put. If controller sends too short
+ISO_END we accept it.
 
-Rather than extending bpf_net_context management into the qdisc path,
-make the redirect helpers refuse to operate when no context exists, and
-have tcf_qevent_handle() drop a TC_ACT_REDIRECT verdict instead of
-calling skb_do_redirect(). Previous behaviour was a crash, so nothing
-regresses by not supporting it.
+Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
+skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
+as they require the same initial checks. Reject too short ISO_END
+packets.
 
-Fixes: 401cb7dae813 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
-Fixes: 3625750f05ec ("net: sched: Introduce helpers for qevent blocks")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260706185609.330006-2-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c   | 17 +++++++++++------
- net/sched/cls_api.c |  6 ++----
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ net/bluetooth/iso.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index bf7c57b06ed91..e0f757ffcfc5b 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2559,11 +2559,13 @@ int skb_do_redirect(struct sk_buff *skb)
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index a8b4676bc8df5..6e1fac4b1cf63 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2329,7 +2329,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 	switch (pb) {
+ 	case ISO_START:
+ 	case ISO_SINGLE:
+-		if (conn->rx_len) {
++		if (conn->rx_skb || conn->rx_len) {
+ 			BT_ERR("Unexpected start frame (len %d)", skb->len);
+ 			kfree_skb(conn->rx_skb);
+ 			conn->rx_skb = NULL;
+@@ -2396,12 +2396,14 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		break;
  
- BPF_CALL_2(bpf_redirect, u32, ifindex, u64, flags)
- {
--	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
-+	struct bpf_redirect_info *ri;
+ 	case ISO_CONT:
+-		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
++	case ISO_END:
++		BT_DBG("%s: frag len %d (expecting %d)",
++		       (pb == ISO_END) ? "End" : "Cont", skb->len,
+ 		       conn->rx_len);
  
--	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
-+	if (unlikely(!bpf_net_ctx_get() ||
-+		     (flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL))))
- 		return TC_ACT_SHOT;
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected continuation frame (len %d)",
+-			       skb->len);
++		if (!conn->rx_skb) {
++			BT_ERR("Unexpected ISO %s frame (len %d)",
++			       (pb == ISO_END) ? "End" : "Cont", skb->len);
+ 			goto drop;
+ 		}
  
-+	ri = bpf_net_ctx_get_ri();
- 	ri->flags = flags;
- 	ri->tgt_index = ifindex;
+@@ -2417,17 +2419,9 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+ 					  skb->len);
+ 		conn->rx_len -= skb->len;
+-		break;
  
-@@ -2580,11 +2582,12 @@ static const struct bpf_func_proto bpf_redirect_proto = {
+-	case ISO_END:
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected end frame (len %d)", skb->len);
+-			goto drop;
+-		}
+-
+-		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+-					  skb->len);
+-		conn->rx_len -= skb->len;
++		if (pb == ISO_CONT)
++			break;
  
- BPF_CALL_2(bpf_redirect_peer, u32, ifindex, u64, flags)
- {
--	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
-+	struct bpf_redirect_info *ri;
- 
--	if (unlikely(flags))
-+	if (unlikely(!bpf_net_ctx_get() || flags))
- 		return TC_ACT_SHOT;
- 
-+	ri = bpf_net_ctx_get_ri();
- 	ri->flags = BPF_F_PEER;
- 	ri->tgt_index = ifindex;
- 
-@@ -2602,11 +2605,13 @@ static const struct bpf_func_proto bpf_redirect_peer_proto = {
- BPF_CALL_4(bpf_redirect_neigh, u32, ifindex, struct bpf_redir_neigh *, params,
- 	   int, plen, u64, flags)
- {
--	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
-+	struct bpf_redirect_info *ri;
- 
--	if (unlikely((plen && plen < sizeof(*params)) || flags))
-+	if (unlikely((plen && plen < sizeof(*params)) ||
-+		     !bpf_net_ctx_get() || flags))
- 		return TC_ACT_SHOT;
- 
-+	ri = bpf_net_ctx_get_ri();
- 	ri->flags = BPF_F_NEIGH | (plen ? BPF_F_NEXTHOP : 0);
- 	ri->tgt_index = ifindex;
- 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 53f5cab47e01e..f8c89e30fc04a 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -4059,6 +4059,8 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
- 	fl = rcu_dereference_bh(qe->filter_chain);
- 
- 	switch (tcf_classify(skb, NULL, fl, &cl_res, false)) {
-+	case TC_ACT_REDIRECT:
-+		fallthrough;
- 	case TC_ACT_SHOT:
- 		qdisc_qstats_drop(sch);
- 		__qdisc_drop(skb, to_free);
-@@ -4070,10 +4072,6 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
- 		__qdisc_drop(skb, to_free);
- 		*ret = __NET_XMIT_STOLEN;
- 		return NULL;
--	case TC_ACT_REDIRECT:
--		skb_do_redirect(skb);
--		*ret = __NET_XMIT_STOLEN;
--		return NULL;
- 	case TC_ACT_CONSUMED:
- 		*ret = __NET_XMIT_STOLEN;
- 		return NULL;
+ 		if (!conn->rx_len) {
+ 			struct sk_buff *rx_skb = conn->rx_skb;
+@@ -2438,6 +2432,13 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 			 */
+ 			conn->rx_skb = NULL;
+ 			iso_recv_frame(conn, rx_skb);
++		} else {
++			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
++			       skb->len, conn->rx_len);
++			kfree_skb(conn->rx_skb);
++			conn->rx_skb = NULL;
++			conn->rx_len = 0;
++			goto drop;
+ 		}
+ 		break;
+ 	}
 -- 
 2.53.0
 
