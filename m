@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A8D4FD29C;
-	Thu, 17 Sep 2026 17:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFED34C10C0;
+	Thu, 17 Sep 2026 17:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667157; cv=none; b=Z9gv3UfJ4sZkaaI5L2Vf0VxENUiCOf88HtMEiPoN5lLsAEGmEcZ8eiUBPd5YNRnSjNB7NQv4mvtjsIGI4fdM0+3Hsz+qk6iF9RcvNsHSucGqBfjGt1ocQz3pBsL+FgA6nSjexMexN8OFjw6OkEDz9u/31kQlqznrfVmmmWQCnOo=
+	t=1789667160; cv=none; b=Bo9m867yLECWlYqDY34gXK8VZRS8zGplO1phRav8F8ayglnzI27t7jXDjt+SyohHrh9zWo94lvD+8se8R+n76zLKySmhYaOP3Q4OR/d4Mqt6tmj2RRZKrUR0OYJ3CJ7rF+CwAvMOb8Ia8DSFsPUCcNgl0BCdx6xwONTKGdVudU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667157; c=relaxed/simple;
-	bh=Wajz/DAFosYoXndJnoLG0dlnJaJh4S3EskaiGibaicM=;
+	s=arc-20240116; t=1789667160; c=relaxed/simple;
+	bh=bU7XMbM+GmwY1vOLLIDohrIdS5Jj4vpLL1O6qR63FBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lnkhoyo9IjXxvtUYUNBE1y4M43JTvgwrZvWqJcwDXjh3dWeAeYtI5Bl9Uw3Vwz/Bf/VvWmQW0SepNBBYz7zE8dUDC3G7aS06ULgb14OXBM9KE5gfPCYiVFh55tevKyzgZt/D2ZqEGMv27nCTyg9RLWHDqsxLAZ8QN19+M8eXT1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGM8aUqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BfWbXeZIV/PkoV15CR2FzhrYT/dAOyX8SuXV3jtp8utfhedkWToCNFxiRnbgZKcXbffqSHGnDIu5o6eCXBROScQ0NfZ+D1RMX9CE1blZAu15Ek7VXTr6ELpRpgAKLltNDOk6PXTiZPxcFbgUIXtKdSyXaXFkFCQAfKZp/WbKTtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9CjCiJw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGM8aUqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F4E1F0089A;
-	Thu, 17 Sep 2026 17:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9CjCiJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547231F00893;
+	Thu, 17 Sep 2026 17:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667155;
-	bh=MYsk118QlVYhV6g6CujJesNIpIsXreUjPlJN1M49CpI=;
+	s=korg; t=1789667158;
+	bh=86q72MkvrKizXJchvd04V4Y3r5Kd6Qi/N8Cqh3RxF+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nGM8aUqhGu/wn4ax6wMxbVov/iI/HV63AxRAblKtG+AShvtBzefArIsYp+HRL9Nqr
-	 Bj3HtIJPfiqmX1RPqwxtZKF6Em7NbBIx7Xe7n4v5vEPKkJUtK0V+sw7sM5kQ/+Yno9
-	 ptLMO/LbFVH5d1KCHGi/qdy+NfjNHKjKLR2Gc64k=
+	b=p9CjCiJwtSu1R1BDlVSdFECrojL7i+mNVwr35SwLZfFYGY/+0dCm4FSfgB67r26EA
+	 f/cQiesh/ZF8KD5qXxsQydhYoJPGzLyLPOUm2rIG2jHtyTFEjHW3j0iFHDckXFINEl
+	 5a5H+nyxl3eHzuVCmqsZSeR9pimYZxfhxZMOzhIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Christian Koenig <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Matthew Brost <matthew.brost@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1247/1250] drm/ttm: Drop tt->restore after successful restore
-Date: Thu, 17 Sep 2026 16:17:22 +0100
-Message-ID: <20260917151626.101707354@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.18 1248/1250] drm/ttm: Fix bo resource use-after-free
+Date: Thu, 17 Sep 2026 16:17:23 +0100
+Message-ID: <20260917151626.128046458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -62,115 +53,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 941ac10529b3be5965a88d432a161ab459672ba8 ]
+commit 91d7e9df42598af28ca440b95b16a4e51a408771 upstream.
 
-ttm_pool_restore_and_alloc() can successfully complete the restore
-process via ttm_pool_restore_commit(), but tt->restore is not dropped
-afterward. As a result, subsequent backup/restore flows observe what
-appears to be a completed restore, while in reality shmem handles are
-still installed in tt->pages, leading to the stack trace below.
+When allocating a lot of buffers and putting the TTM under memory pressure,
+during swapout, it might crash the system with the stack trace below.
 
-Fix this by freeing and dropping tt->restore in
-ttm_pool_restore_and_alloc() upon successful completion of the restore.
+It turns out that ttm_bo_swapout_cb might replace bo->resource when it
+moves it to system cached.
 
-20545 [  309.784531] RIP: 0010:sg_alloc_append_table_from_pages+0x38c/0x490
-20547 [  309.809570] RSP: 0018:ffffc9000623b838 EFLAGS: 00010206
-20548 [  309.814827] RAX: 0000000000001000 RBX: ffff88816e42a160 RCX: 0000000000000000
-20549 [  309.821986] RDX: 0000000000002000 RSI: 0000000000000003 RDI: 0000000000001000
-20550 [  309.829147] RBP: ffff88816e42a168 R08: 0000000000000002 R09: 000000007ffff000
-20551 [  309.836310] R10: ffffc9000623b928 R11: 0000000000000000 R12: 000000007ffff000
-20552 [  309.843471] R13: ffff88815ba5a100 R14: 0000000000000000 R15: 0000000000000001
-20553 [  309.850634] FS:  00007f9ff305e700(0000) GS:ffff888276c94000(0000) knlGS:0000000000000000
-20554 [  309.858749] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-20555 [  309.864519] CR2: 00007f9fca701000 CR3: 00000001565e2005 CR4: 0000000008f70ef0
-20556 [  309.871678] PKRU: 55555558
-20557 [  309.874403] Call Trace:
-20558 [  309.876866]  <TASK>
-20559 [  309.878988]  sg_alloc_table_from_pages_segment+0x60/0x100
-20560 [  309.884415]  ? ttm_resource_manager_usage+0x36/0x60 [ttm]
-20561 [  309.889845]  ? xe_tt_map_sg+0x7d/0xd0 [xe]
-20562 [  309.894045]  xe_tt_map_sg+0x7d/0xd0 [xe]
-20563 [  309.898037]  xe_bo_move+0x927/0xaa0 [xe]
-20564 [  309.902029]  ttm_bo_handle_move_mem+0xba/0x170 [ttm]
-20565 [  309.907022]  ttm_bo_validate+0xbe/0x190 [ttm]
-20566 [  309.911405]  xe_bo_validate+0x9a/0x120 [xe]
-20567 [  309.915663]  xe_gpuvm_validate+0xd9/0x140 [xe]
-20568 [  309.920206]  drm_gpuvm_validate+0x2f0/0x5b0 [drm_gpuvm]
-20569 [  309.925459]  ? drm_exec_lock_obj+0x63/0x210 [drm_exec]
-20570 [  309.930627]  xe_vm_validate_rebind+0x46/0xb0 [xe]
-20571 [  309.935428]  xe_exec_fn+0x20/0x40 [xe]
-20572 [  309.939249]  drm_gpuvm_exec_lock+0x78/0xc0 [drm_gpuvm]
-20573 [  309.944410]  xe_validation_exec_lock+0x5a/0xa0 [xe]
-20574 [  309.949385]  xe_exec_ioctl+0x806/0xc30 [xe]
-20575 [  309.953639]  ? ttwu_queue_wakelist+0xd9/0xf0
-20576 [  309.957935]  ? __pfx_xe_exec_fn+0x10/0x10 [xe]
-20577 [  309.962449]  ? __wake_up_common+0x73/0xa0
-20578 [  309.966482]  ? __pfx_xe_exec_ioctl+0x10/0x10 [xe]
-20579 [  309.971263]  drm_ioctl_kernel+0xa3/0x100
-20580 [  309.975209]  drm_ioctl+0x213/0x440
-20581 [  309.978637]  ? __pfx_xe_exec_ioctl+0x10/0x10 [xe]
-20582 [  309.983415]  xe_drm_ioctl+0x67/0xd0 [xe]
-20583 [  309.987408]  __x64_sys_ioctl+0x7f/0xd0
+When commit c06da4b3573a ("drm/ttm: Tidy usage of local variables a little
+bit") used a local variable for bo->resource, it used the freed resource
+later in the function, leading to a UAF.
 
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Fixes: b63d715b8090 ("drm/ttm/pool, drm/ttm/tt: Provide a helper to shrink pages")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260617015531.1164189-1-matthew.brost@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move back to using bo->resource in all cases in that function instead of a
+local variable.
+
+[  604.814275] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  604.814284] #PF: supervisor read access in kernel mode
+[  604.814288] #PF: error_code(0x0000) - not-present page
+[  604.814291] PGD 0 P4D 0
+[  604.814296] Oops: Oops: 0000 [#1] SMP NOPTI
+[  604.814303] CPU: 2 UID: 0 PID: 4408 Comm: vulkan Tainted: G        W           7.0.0-rc2-00001-gc50a051e6aca #21 PREEMPT(full)  aef6eb0c02036a7c8a5e62e0c84a30c2be90688d
+[  604.814309] Tainted: [W]=WARN
+[  604.814311] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0133 08/05/2024
+[  604.814314] RIP: 0010:ttm_resource_move_to_lru_tail+0x100/0x160 [ttm]
+[  604.814329] Code: 5b 5d e9 83 b4 1b cb 48 63 d2 48 c1 e0 04 48 8b 4e 40 48 8d 7e 40 48 8b ac d3 d8 00 00 00 48 89 c3 48 8d 54 05 68 48 8b 46 48 <48> 3b 38 0f 85 b3 3b 00 00 48 3b 79 08 0f 85 a9 3b 00 00 48 89 41
+[  604.814332] RSP: 0018:ffffcfe54e3d7578 EFLAGS: 00010256
+[  604.814336] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffff8cf09eced300
+[  604.814339] RDX: 0000000000000068 RSI: ffff8cf1d4c1fc00 RDI: ffff8cf1d4c1fc40
+[  604.814341] RBP: 0000000000000000 R08: ffff8cf09eced300 R09: 0000000000000000
+[  604.814344] R10: 0000000000000000 R11: 0000000000000016 R12: ffff8cf1d4c1fc00
+[  604.814346] R13: 0000000000000400 R14: ffff8cf096289c00 R15: ffff8cf084c8f688
+[  604.814349] FS:  00007f00531b7780(0000) GS:ffff8cf4217a0000(0000) knlGS:0000000000000000
+[  604.814352] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  604.814355] CR2: 0000000000000000 CR3: 000000018e3df000 CR4: 0000000000350ef0
+[  604.814358] Call Trace:
+[  604.814362]  <TASK>
+[  604.814368]  ttm_bo_swapout_cb+0x24c/0x280 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814380]  ttm_lru_walk_for_evict+0xac/0x1d0 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814394]  ttm_bo_swapout+0x5b/0x80 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814405]  ttm_global_swapout+0x63/0x100 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814415]  ttm_tt_populate+0x82/0x130 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814424]  ttm_bo_populate+0x37/0xa0 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814433]  ttm_bo_handle_move_mem+0x157/0x170 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814443]  ttm_bo_validate+0xd9/0x180 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814453]  ttm_bo_init_reserved+0xa0/0x1b0 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.814461]  ? srso_return_thunk+0x5/0x5f
+[  604.814469]  amdgpu_bo_create+0x1f5/0x500 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.814855]  ? __pfx_amdgpu_bo_user_destroy+0x10/0x10 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.815182]  amdgpu_bo_create_user+0x3d/0x70 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.815504]  amdgpu_gem_create_ioctl+0x16c/0x3b0 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.815830]  ? __pfx_amdgpu_bo_user_destroy+0x10/0x10 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.816155]  ? __pfx_amdgpu_gem_create_ioctl+0x10/0x10 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.816478]  drm_ioctl_kernel+0xae/0x100
+[  604.816486]  drm_ioctl+0x283/0x510
+[  604.816491]  ? __pfx_amdgpu_gem_create_ioctl+0x10/0x10 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.816819]  amdgpu_drm_ioctl+0x4a/0x80 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.817135]  __x64_sys_ioctl+0x96/0xe0
+[  604.817142]  do_syscall_64+0x11b/0x7e0
+[  604.817148]  ? srso_return_thunk+0x5/0x5f
+[  604.817152]  ? srso_return_thunk+0x5/0x5f
+[  604.817156]  ? walk_system_ram_range+0xb0/0x110
+[  604.817161]  ? srso_return_thunk+0x5/0x5f
+[  604.817165]  ? __pte_offset_map+0x1b/0xb0
+[  604.817170]  ? srso_return_thunk+0x5/0x5f
+[  604.817174]  ? pte_offset_map_lock+0x87/0xf0
+[  604.817179]  ? srso_return_thunk+0x5/0x5f
+[  604.817183]  ? insert_pfn+0x9f/0x1f0
+[  604.817188]  ? srso_return_thunk+0x5/0x5f
+[  604.817192]  ? vmf_insert_pfn_prot+0x97/0x190
+[  604.817197]  ? srso_return_thunk+0x5/0x5f
+[  604.817201]  ? ttm_bo_vm_fault_reserved+0x1a6/0x3f0 [ttm a469cf7fcb6737fdcf3fb5cdbcc8b1ca41f3e302]
+[  604.817213]  ? srso_return_thunk+0x5/0x5f
+[  604.817217]  ? amdgpu_gem_fault+0xe2/0x100 [amdgpu 361516226706227f4403914dbfdd3f90996136ca]
+[  604.817542]  ? srso_return_thunk+0x5/0x5f
+[  604.817546]  ? __do_fault+0x33/0x180
+[  604.817550]  ? srso_return_thunk+0x5/0x5f
+[  604.817554]  ? do_fault+0x178/0x610
+[  604.817559]  ? srso_return_thunk+0x5/0x5f
+[  604.817562]  ? __handle_mm_fault+0x9be/0x1120
+[  604.817567]  ? srso_return_thunk+0x5/0x5f
+[  604.817574]  ? srso_return_thunk+0x5/0x5f
+[  604.817578]  ? count_memcg_events+0xc4/0x160
+[  604.817583]  ? srso_return_thunk+0x5/0x5f
+[  604.817587]  ? handle_mm_fault+0x1d7/0x2e0
+[  604.817593]  ? srso_return_thunk+0x5/0x5f
+[  604.817596]  ? do_user_addr_fault+0x173/0x660
+[  604.817602]  ? srso_return_thunk+0x5/0x5f
+[  604.817607]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  604.817612] RIP: 0033:0x7f00532cef4d
+[  604.817617] Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
+[  604.817620] RSP: 002b:00007ffd69ab0650 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+[  604.817624] RAX: ffffffffffffffda RBX: 00007ffd69ab07d0 RCX: 00007f00532cef4d
+[  604.817627] RDX: 00007ffd69ab0700 RSI: 00000000c0206440 RDI: 0000000000000005
+[  604.817629] RBP: 00007ffd69ab06a0 R08: 00007f00533a0ac0 R09: 0000000000000000
+[  604.817632] R10: 00007ffd69ab07c0 R11: 0000000000000246 R12: 00007ffd69ab0700
+[  604.817634] R13: 00000000c0206440 R14: 0000000000000005 R15: 0000000000000243
+[  604.817642]  </TASK>
+
+Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Christian König <christian.koenig@amd.com>
+Fixes: c06da4b3573a ("drm/ttm: Tidy usage of local variables a little bit")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260304-ttm_bo_res_uaf-v1-1-43f20125b67f@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -838,6 +838,7 @@ int ttm_pool_restore_and_alloc(struct tt
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -1104,8 +1104,7 @@ struct ttm_bo_swapout_walk {
+ static s64
+ ttm_bo_swapout_cb(struct ttm_lru_walk *walk, struct ttm_buffer_object *bo)
  {
- 	struct ttm_pool_tt_restore *restore = tt->restore;
- 	struct ttm_pool_alloc_state alloc;
-+	int ret;
+-	struct ttm_resource *res = bo->resource;
+-	struct ttm_place place = { .mem_type = res->mem_type };
++	struct ttm_place place = { .mem_type = bo->resource->mem_type };
+ 	struct ttm_bo_swapout_walk *swapout_walk =
+ 		container_of(walk, typeof(*swapout_walk), walk);
+ 	struct ttm_operation_ctx *ctx = walk->arg.ctx;
+@@ -1145,7 +1144,7 @@ ttm_bo_swapout_cb(struct ttm_lru_walk *w
+ 	/*
+ 	 * Move to system cached
+ 	 */
+-	if (res->mem_type != TTM_PL_SYSTEM) {
++	if (bo->resource->mem_type != TTM_PL_SYSTEM) {
+ 		struct ttm_resource *evict_mem;
+ 		struct ttm_place hop;
  
- 	if (WARN_ON(!ttm_tt_is_backed_up(tt)))
- 		return -EINVAL;
-@@ -861,14 +862,22 @@ int ttm_pool_restore_and_alloc(struct tt
- 	} else {
- 		alloc = restore->snapshot_alloc;
- 		if (ttm_pool_restore_valid(restore)) {
--			int ret = ttm_pool_restore_commit(restore, tt->backup,
--							  ctx, &alloc);
-+			ret = ttm_pool_restore_commit(restore, tt->backup,
-+						      ctx, &alloc);
+@@ -1177,15 +1176,15 @@ ttm_bo_swapout_cb(struct ttm_lru_walk *w
  
- 			if (ret)
- 				return ret;
- 		}
--		if (!alloc.remaining_pages)
-+		if (!alloc.remaining_pages) {
-+			ret = ttm_pool_apply_caching(&alloc);
-+			if (ret)
-+				return ret;
-+
-+			kfree(tt->restore);
-+			tt->restore = NULL;
-+
- 			return 0;
-+		}
+ 	if (ttm_tt_is_populated(tt)) {
+ 		spin_lock(&bdev->lru_lock);
+-		ttm_resource_del_bulk_move(res, bo);
++		ttm_resource_del_bulk_move(bo->resource, bo);
+ 		spin_unlock(&bdev->lru_lock);
+ 
+ 		ret = ttm_tt_swapout(bdev, tt, swapout_walk->gfp_flags);
+ 
+ 		spin_lock(&bdev->lru_lock);
+ 		if (ret)
+-			ttm_resource_add_bulk_move(res, bo);
+-		ttm_resource_move_to_lru_tail(res);
++			ttm_resource_add_bulk_move(bo->resource, bo);
++		ttm_resource_move_to_lru_tail(bo->resource);
+ 		spin_unlock(&bdev->lru_lock);
  	}
  
- 	return __ttm_pool_alloc(pool, tt, ctx, &alloc, restore);
 
 
