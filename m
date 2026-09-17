@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5893921DC;
-	Thu, 17 Sep 2026 18:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35CC4EF139;
+	Thu, 17 Sep 2026 18:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668625; cv=none; b=R5gg29WiDp4MkcaqEndq/EMcU2vYE7UyRf4Ta/yKzvBnzmhcH/XpKwU5H1zYyDmcHGDC4vpLmHobACHxhYdZR/RryE3wUpT4xRrQ+9uQHNPpclv5RV52XWm/a1Jckk+xPUUpSbu+4M2Ocn98nlP7CUKtblp4/W8Lg9GmQj3AZ9Y=
+	t=1789668628; cv=none; b=AwjrwtyXgajDcxgQOjyjqMuY7gYnt06E8zq3GtmOUAljzwPTPauckadgzoSxxjizFR0ofRQuIaLvHeASzZB/61XDr/0DaQUsEfv9nI+DjouhgkXrfTJQ4kXpDpI3Ia89m1L2epXp2xG4oeFKZnDHukHoS5x/3ptr0YpFC2GZWAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668625; c=relaxed/simple;
-	bh=1ZH0my8Pt6dDk6qYO60+irjFj8ZorlhNoFXiXlIrVmo=;
+	s=arc-20240116; t=1789668628; c=relaxed/simple;
+	bh=KN5Mnn17WOqOthK4LgVfFjENFD4zod+sO4gwgTWK1Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rc4U2KrNV5cz8o+PlO2GJhmOOQ7spvmuY3HYP0KoS5mDht7JYPIMQ7Rj/1IqURsJiw0EkqJx4/291RyVvqPe5NnYzV2VNgy6/u093PFmtWJcKDoAwiEYzibTiElqh0FluxLYhLiG6Rr62DKXaZMPoGYUT2Tp9tnEMTt5zjDm/oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gg0iJzC2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hjBkrUMQh/zyLhSQqTVlhtwiTg4sAzslBggOsvtShQkWXBD/bQ8uFhHSTrtcPmVUwlxw4OkH+Bs75rBGDODgQmb2UteZle02LNE1krQhLzPFt1C9+4JoVT6RgH4eZNll26KSIyOkaXDCCpfvjYcJ8+4HeyVH+ZlNF8WJYo/litw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyDrEA9/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gg0iJzC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C6A1F000FF;
-	Thu, 17 Sep 2026 18:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyDrEA9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBA61F000FF;
+	Thu, 17 Sep 2026 18:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668624;
-	bh=jOB2P0fRReES9tDf/t60HlzLBSed+BgQvkttWLOHMts=;
+	s=korg; t=1789668627;
+	bh=+DXsEilhbfOoBxFdIWOjRy6EkyOmTCfurwBjMrGZIes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gg0iJzC2jik8wAwT7Zc8b77pidWKNNo2Hxl0SORJNlDsQUBYDXDlQhgx/UIGISfr5
-	 6bwN7vGqqd5nKkBv1ve8g8TsbJzh0YOne/fy5kB/x0X5/7NWX9fWFbK5YZ9Hh5vP/+
-	 +oo+HF0bpBmin+xlpn6vLQc2durAb0oBrXVbtwl0=
+	b=uyDrEA9/F/8YGfN+pim/C7r09nhowzN4kmXMjVWymEVfJM/PzlMf8WPwr0CxnCvdg
+	 HVSblzsMSpMYlf00N4o3w7J9ORu0euQHbO8lJbnA2Dtxhs+HhhOiXkranW3AfBoxPH
+	 e0nmmV53gx+Ym4LuVb7m4n+qJJP4AC4Mol9qqkEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0487/1102] coresight: platform: defer connection counter increment until alloc succeeds
-Date: Thu, 17 Sep 2026 16:07:10 +0100
-Message-ID: <20260917151551.929001404@linuxfoundation.org>
+Subject: [PATCH 6.12 0488/1102] RDMA/bnxt_re: Proper rollback if the ioremap fails
+Date: Thu, 17 Sep 2026 16:07:11 +0100
+Message-ID: <20260917151551.957151144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,80 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Gan <jie.gan@oss.qualcomm.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 1563ae33dc4f5ebac96b93af2ef72e72aaaa31ae ]
+[ Upstream commit 87267803a8c824616eb147c5dad7030a5db6f878 ]
 
-coresight_add_out_conn() increments nr_outconns before calling
-devm_krealloc_array() and again before devm_kmalloc(). If either
-allocation fails, the counter is already bumped while the corresponding
-array entry is NULL or uninitialized garbage.
+bnxt_qplib_alloc_dpi returns success even if ioremap fails.
+Add the proper rollback when the ioremap fails and return
+-ENOMEM status.
 
-coresight_add_in_conn() has the same problem with nr_inconns and
-devm_krealloc_array().
-
-In both cases the probe returns -ENOMEM, which causes
-coresight_get_platform_data() to call coresight_release_platform_data()
-for cleanup. That function iterates up to nr_outconns (or nr_inconns)
-entries and dereferences each pointer unconditionally, hitting the NULL
-or garbage entry and panicking instead of failing gracefully.
-
-Fix by moving the counter increments to after all allocations succeed,
-so the struct is always consistent on any error path.
-
-Fixes: 3d4ff657e454 ("coresight: Dynamically add connections")
-Fixes: e3f4e68797a9 ("coresight: Store in-connections as well as out-connections")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260511-fix-ref-count-issue-v1-1-99d647810d3c@oss.qualcomm.com
+Fixes: 0ac20faf5d83 ("RDMA/bnxt_re: Reorg the bar mapping")
+Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
+Link: https://patch.msgid.link/r/20260615224751.232802-11-selvin.xavier@broadcom.com
+Reviewed-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-platform.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 64e171eaad82c..ebb1cbb79f3c9 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -45,9 +45,8 @@ coresight_add_out_conn(struct device *dev,
- 		}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index cf8208f652d3b..5a99fa8e9be39 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -737,9 +737,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
+ 		break;
+ 	case BNXT_QPLIB_DPI_TYPE_WC:
+ 		dpi->dbr = ioremap_wc(umaddr, PAGE_SIZE);
++		if (!dpi->dbr)
++			goto fail_ioremap;
+ 		break;
+ 	default:
+ 		dpi->dbr = ioremap(umaddr, PAGE_SIZE);
++		if (!dpi->dbr)
++			goto fail_ioremap;
+ 		break;
  	}
  
--	pdata->nr_outconns++;
- 	pdata->out_conns =
--		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns,
-+		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns + 1,
- 				    sizeof(*pdata->out_conns), GFP_KERNEL);
- 	if (!pdata->out_conns)
- 		return ERR_PTR(-ENOMEM);
-@@ -63,7 +62,8 @@ coresight_add_out_conn(struct device *dev,
- 	 * used right away.
- 	 */
- 	*conn = *new_conn;
--	pdata->out_conns[pdata->nr_outconns - 1] = conn;
-+	pdata->out_conns[pdata->nr_outconns] = conn;
-+	pdata->nr_outconns++;
- 	return conn;
- }
- EXPORT_SYMBOL_GPL(coresight_add_out_conn);
-@@ -86,13 +86,13 @@ int coresight_add_in_conn(struct coresight_connection *out_conn)
- 			return 0;
- 		}
- 
--	pdata->nr_inconns++;
- 	pdata->in_conns =
--		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns,
-+		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns + 1,
- 				    sizeof(*pdata->in_conns), GFP_KERNEL);
- 	if (!pdata->in_conns)
- 		return -ENOMEM;
--	pdata->in_conns[pdata->nr_inconns - 1] = out_conn;
-+	pdata->in_conns[pdata->nr_inconns] = out_conn;
-+	pdata->nr_inconns++;
+@@ -747,6 +751,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
+ 	mutex_unlock(&res->dpi_tbl_lock);
  	return 0;
+ 
++fail_ioremap:
++	/* Roll back the bit we just claimed. */
++	set_bit(bit_num, dpit->tbl);
++	dpit->app_tbl[bit_num] = NULL;
++	mutex_unlock(&res->dpi_tbl_lock);
++	return -ENOMEM;
++
  }
- EXPORT_SYMBOL_GPL(coresight_add_in_conn);
+ 
+ int bnxt_qplib_dealloc_dpi(struct bnxt_qplib_res *res,
 -- 
 2.53.0
 
