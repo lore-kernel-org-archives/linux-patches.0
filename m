@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A29497396;
-	Thu, 17 Sep 2026 18:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B774AD4D4;
+	Thu, 17 Sep 2026 18:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670867; cv=none; b=JovNjrJYG5usEkU85Mhrf/a+ZdTke7x3Ij4UjL2CI1CQHyqaYYtVG/XkLsNz+awDA9mFMYQmgyXOlj3ypMbbCaWG0VvHr47c7bOgSf/QWsK9+id/vAeZsuSDN5BmfTV0z5F9gfsi1OS+yHE6tF/2BzMeTMNzLdMFqsehCQzHT0M=
+	t=1789670870; cv=none; b=b3rROZeDa+0TbB0bwynHACBX3y/adcxb6MrfGryrVtACV6SJ+GK+Usy6O8PsddjvKs/Bw3QDviaQ4z90zQ7p0BlAHYCW8RE2G3744/vfmYyMJLCYPmKMZAVWYVO//itvtgUlLBqoBku3NC55Yi7uY2UaGmpPiSXn2oxPzDSlefY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670867; c=relaxed/simple;
-	bh=mz0wCQufJpEl7pYxUQmJLbUshHA9QdBHjz2WVV9IyQM=;
+	s=arc-20240116; t=1789670870; c=relaxed/simple;
+	bh=/KnZ5xSnx7QWf7MGovkJlLfZ9sjklT6MigrMlsUfmDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhybVKj7aTDbHlDXxaIvtF8T+uYU4O6QRzdKGEvCyERN6dgvhg5BzhdlyZFh5pQP4d48O9VnGtkJEN3EF0HDbThuCgHQcJYlobvXzGk6w1vGvScYv7W1W7v1Mf6hai+vcQby36lkrBT95KwfXoDHxkm5m7G7h6EbOAo1tZI3PMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbdFNKOV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FscFhwq46UBouFAZlJJ0axeu8NG5pEC5dwfTBVCYBePhJXR74rSYM9Q/NbukiTrtFTS3O0vFZF8PqMiw8vUISMDAhvbgb8ED3NzhyN01nZdYICwxVDaoXzErTyK5lj/sSXkLBwLIn1uT7H2MgrLE1yEBNedgmGIR1HvUqz0iUwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idiHXjP2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbdFNKOV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDBA1F00893;
-	Thu, 17 Sep 2026 18:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idiHXjP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E51F00898;
+	Thu, 17 Sep 2026 18:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670866;
-	bh=DZu4aaPE5IlU8gMXy51QKCqhKhgs4Yq+pgZcqL/f2rA=;
+	s=korg; t=1789670869;
+	bh=tTENmiquG5Dt2I5SRr7qe0KB6id9jG2+Fl8Kg3gjiF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbdFNKOV08jDWg89fvh6bXsn74/LWGz+xQ2jlNEAqORKz2IUKqTWZ2W5MLBuTZOpO
-	 Rk9niI5eyFY37paYD5oBSOQsIjw+aMthI0iprvr4orRC39UlIGXC/jgdtZFsW3hesW
-	 NgGa7xYtMO0/cgKK8+lc6ZlmmM1N2GNohy6bXQT8=
+	b=idiHXjP2pYmpTJc25hEnkuqgMSVLiWSvuUZfQ0Gi4igufOPxy2XqWzeENk3X+Ebyr
+	 aTvOSA4Ab7k0/h0/ZzjJsnEHiU8wCCGOA7OLiKn3jVm3UaptQPak6yUpgcpWWOiaMd
+	 De8iZ9VrBUaocTImixfNo8PrWlSNPcPrqf8BD03E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0794/1102] net: stmmac: add TSO check for header length
-Date: Thu, 17 Sep 2026 16:12:17 +0100
-Message-ID: <20260917151600.405068622@linuxfoundation.org>
+Subject: [PATCH 6.12 0795/1102] net: stmmac: fix TX descriptor availability check for TSO traffic
+Date: Thu, 17 Sep 2026 16:12:18 +0100
+Message-ID: <20260917151600.430614609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,61 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 6732e474f880468435a79d05811c8c814c5d71f8 ]
+[ Upstream commit 5e38d732ec67a5b1f9a56e6c73add480c4b6030a ]
 
-According to the STM32MP151 documentation which covers dwmac v4.2, the
-hardware TSO feature can handle header lengths up to a maximum of 1023
-bytes.
+stmmac_tso_xmit() estimates the number of free TX descriptors required by
+a TSO skb as:
 
-Add a .ndo_features_check() method implementation to check the header
-length meets these requirements, otherwise fall back to software GSO.
+	(skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1w7ptO-0000000EatC-39il@rmk-PC.armlinux.org.uk
+which assumes the payload is split into TSO_MAX_BUFF_SIZE chunks. This
+underestimates the descriptors actually consumed by stmmac_tso_allocator(),
+since each fragment is mapped individually and so it needs at least one
+descriptor regardless of its size. Moreover, one descriptor is used for
+the L2/L3/L4 headers and, when the MSS changes, one more is consumed for
+the MSS context descriptor.
+For a highly fragmented TSO skb the check can therefore pass even when the
+ring has too few free slots. stmmac_tso_allocator() then writes past the
+available descriptors, overwriting descriptors still owned by the DMA
+engine, corrupting the TX ring.
+Add stmmac_tso_get_num_desc() to compute the exact number of descriptors
+needed for the header, the linear payload and each fragment, plus the MSS
+context descriptor when required, and use it in the availability check.
+
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907-stmmac-fix-tso-nfrags-check-v1-1-328459906cdb@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 31 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 409d36c1960c3..0ac8c57079321 100644
+index 0ac8c57079321..91c07c04435f2 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4163,6 +4163,20 @@ static size_t stmmac_tso_header_size(struct sk_buff *skb)
- 	return size;
+@@ -4177,6 +4177,26 @@ static bool stmmac_tso_valid_packet(struct sk_buff *skb)
+ 	return header_len <= 1023;
  }
  
-+/* STM32MP151 (dwmac v4.2) and STM32MP25xx (dwmac v5.3) states for TDES2 normal
-+ * (read format) descriptor that the maximum header length supported for the
-+ * TSO feature is 1023 bytes.
-+ *
-+ * While IPv4 is limited to MAC+VLAN+IPv4+ext+TCP+ext = 138 bytes, the IPv6
-+ * extension headers aren't similarly limited.
-+ */
-+static bool stmmac_tso_valid_packet(struct sk_buff *skb)
++static int stmmac_tso_get_num_desc(struct stmmac_tx_queue *tx_q,
++				   struct sk_buff *skb, u32 pay_len)
 +{
-+	size_t header_len = stmmac_tso_header_size(skb);
++	int i, ndesc = 1;
 +
-+	return header_len <= 1023;
++	/* head payload */
++	ndesc += DIV_ROUND_UP(pay_len, TSO_MAX_BUFF_SIZE);
++	/* frag payload */
++	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
++		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
++
++		ndesc += DIV_ROUND_UP(skb_frag_size(frag),
++				      TSO_MAX_BUFF_SIZE);
++	}
++	/* MSS update requires a new descriptor */
++	ndesc += !!(skb_shinfo(skb)->gso_size != tx_q->mss);
++
++	return ndesc;
 +}
 +
  /**
   *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
   *  @skb : the socket buffer
-@@ -4734,7 +4748,8 @@ static netdev_features_t stmmac_features_check(struct sk_buff *skb,
+@@ -4220,9 +4240,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	unsigned int first_entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
++	int i, first_tx, nfrags, ndesc;
+ 	struct stmmac_tx_queue *tx_q;
+ 	u32 pay_len, mss, queue;
+-	int i, first_tx, nfrags;
+ 	u8 proto_hdr_len, hdr;
+ 	dma_addr_t des;
+ 	bool set_ic;
+@@ -4249,14 +4269,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 	if (skb_is_gso(skb)) {
- 		queue = skb_get_queue_mapping(skb);
--		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue))
-+		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue) ||
-+		    !stmmac_tso_valid_packet(skb))
- 			features &= ~NETIF_F_GSO_MASK;
+ 	/* Compute header lengths */
+ 	proto_hdr_len = stmmac_tso_header_size(skb);
++	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
++
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
+ 		hdr = sizeof(struct udphdr);
+ 	else
+ 		hdr = tcp_hdrlen(skb);
+ 
+-	/* Desc availability based on threshold should be enough safe */
+-	if (unlikely(stmmac_tx_avail(priv, queue) <
+-		(((skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1)))) {
++	ndesc = stmmac_tso_get_num_desc(tx_q, skb, pay_len);
++	if (unlikely(stmmac_tx_avail(priv, queue) < ndesc)) {
+ 		if (!netif_tx_queue_stopped(netdev_get_tx_queue(dev, queue))) {
+ 			netif_tx_stop_queue(netdev_get_tx_queue(priv->dev,
+ 								queue));
+@@ -4268,8 +4289,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		return NETDEV_TX_BUSY;
  	}
  
+-	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
+-
+ 	mss = skb_shinfo(skb)->gso_size;
+ 
+ 	/* set new MSS value if needed */
 -- 
 2.53.0
 
