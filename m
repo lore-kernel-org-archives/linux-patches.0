@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C086E4D17A2;
-	Thu, 17 Sep 2026 17:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B134EB87C;
+	Thu, 17 Sep 2026 17:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667064; cv=none; b=Am6569jsCpPLG7oaJldIMwmXd1BBI2FVmllvwyDiuPvhrR4PHUuvCTJu+FEIM9OjW/NJBatO9j02AuShG9WBBi1oTguDluCBZd1wa6Mk9F2Uysezr+x02OIw/Brf8MoLxycaHNMrGiFjSHeI+aLbM05c24wMoNzrhAxlt6vNHx8=
+	t=1789667066; cv=none; b=Kt6XfVChSrrYucZowTxXi/6cqpgsi8aqYOSgTFdIx6Ou8NBAK3eoWIWo8a+IahbNspPrQiHkF6tATBQt1NqzlKqCwDRD1frpl2oVppyv2Rs4nx6EcidmcqN1HyrZH09llkbbtHu/ByrALMzxs+DdbulWnCF21dXMhKGZ9EHEMDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667064; c=relaxed/simple;
-	bh=BRJcX+vTU7YKN2qShKkDSRbBazvm9t7cteZpgBf4mjQ=;
+	s=arc-20240116; t=1789667066; c=relaxed/simple;
+	bh=b1dxcU1sV6mluwIlmrvBxVPaavSGFaIqePwiG/4Xazo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJukBHm2EmaA0nEcbdvZcWH4CKqcBghHN7e0mVo4toniizztbwR0n7yAx+93qG0YexY61ioKArx8EQbmrliB1e2RRH3tyxtXu4PSNPECLUwLfLpFIl91sFmbtIyMsKdVMwom3eqHWevob/WVwK2mgQUNhe812HhJkGrmKfikVkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUoMZ2Dj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fXBl6pJl2WiIRFJwqoDFQO0vzNeIPRSqFPI29LSqSDzMHW/U7stmO10vmKF+XyWKLqw/DOR30bG3mtzg8u/zUAqzS7MxoEAPuVe7RUXTsflbh3ASAG20TzwiBmiHbc+7CZhhbJ7/3Mslw0W1vve5pEZUFusZy+Nn64ANAhisHAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQpiidG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUoMZ2Dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A5A1F000FF;
-	Thu, 17 Sep 2026 17:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQpiidG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A8D1F000FF;
+	Thu, 17 Sep 2026 17:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667062;
-	bh=/1bI+JH7nOXnjWXp24wvUGKENUmpYqQD0nRimnZ7kFk=;
+	s=korg; t=1789667065;
+	bh=YvCq7db5IBVgA4hODwt6gXRutmG0BVswcZStGfwFsfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUoMZ2DjQsV1mwzB3W3RROxlJDrNiyn6e0+Vg9tRsmPwqd1ufqk66fCjwvvrmx8eo
-	 s0uC5+4vOjswoGaErAt0Cxd8nfqA3+Sh4TSoke+pp6/b6e016uCqx2tSXdjlqSZdoA
-	 ETng/DkgHErl0oEbT36Q5Iw9cGC0e9MBug+gWwxo=
+	b=OQpiidG/AKjIihOUTkUQkvZuAFGHEIJrz2ggyL/xfBgvJt8NfFChegbs5cYm6/Qd1
+	 2GBxKlPMYd38YnPr0zL/GAsZKcEt9Hv4gF+196YQsgrCDhjLsbDZOXZgeslI7P1jtB
+	 yHvjF0dNxaTX9b6cXGZdOCchYgUm4B1lCOsjPE6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot@syzkaller.appspotmail.com,
 	Jeff Layton <jlayton@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1215/1250] ns: add __ns_ref_read()
-Date: Thu, 17 Sep 2026 16:16:50 +0100
-Message-ID: <20260917151625.217060613@linuxfoundation.org>
+Subject: [PATCH 6.18 1216/1250] ns: rename to exit_nsproxy_namespaces()
+Date: Thu, 17 Sep 2026 16:16:51 +0100
+Message-ID: <20260917151625.244830416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,38 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 6b053576edb12c7739ea9c7c9900031361922631 ]
+[ Upstream commit 4b06b70c8244b442d58ae0fb59870cf31fdb422e ]
 
-Implement ns_ref_read() the same way as ns_ref_{get,put}().
-No point in making that any more special or different from the other
-helpers.
+The current naming is very misleading as this really isn't exiting all
+of the task's namespaces. It is only exiting the namespaces that hang of
+off nsproxy. Reflect that in the name.
 
-Link: https://patch.msgid.link/20251029-work-namespace-nstree-listns-v4-9-2e6f823ebdc0@kernel.org
-Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20251029-work-namespace-nstree-listns-v4-10-2e6f823ebdc0@kernel.org
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: cdd812d0683d ("exit: hold a reference to thread_pid across proc_flush_pid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ns_common.h |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/nsproxy.h |    2 +-
+ kernel/cgroup/cgroup.c  |    6 +++---
+ kernel/exit.c           |    2 +-
+ kernel/fork.c           |    2 +-
+ kernel/nsproxy.c        |    2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/include/linux/ns_common.h
-+++ b/include/linux/ns_common.h
-@@ -156,7 +156,12 @@ static __always_inline __must_check bool
- 	return refcount_inc_not_zero(&ns->__ns_ref);
+--- a/include/linux/nsproxy.h
++++ b/include/linux/nsproxy.h
+@@ -93,7 +93,7 @@ static inline struct cred *nsset_cred(st
+  */
+ 
+ int copy_namespaces(u64 flags, struct task_struct *tsk);
+-void exit_task_namespaces(struct task_struct *tsk);
++void exit_nsproxy_namespaces(struct task_struct *tsk);
+ void switch_task_namespaces(struct task_struct *tsk, struct nsproxy *new);
+ int exec_task_namespaces(void);
+ void free_nsproxy(struct nsproxy *ns);
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1522,9 +1522,9 @@ static struct cgroup *current_cgns_cgrou
+ 	} else {
+ 		/*
+ 		 * NOTE: This function may be called from bpf_cgroup_from_id()
+-		 * on a task which has already passed exit_task_namespaces() and
+-		 * nsproxy == NULL. Fall back to cgrp_dfl_root which will make all
+-		 * cgroups visible for lookups.
++		 * on a task which has already passed exit_nsproxy_namespaces()
++		 * and nsproxy == NULL. Fall back to cgrp_dfl_root which will
++		 * make all cgroups visible for lookups.
+ 		 */
+ 		return &cgrp_dfl_root.cgrp;
+ 	}
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -973,7 +973,7 @@ void __noreturn do_exit(long code)
+ 	exit_fs(tsk);
+ 	if (group_dead)
+ 		disassociate_ctty(1);
+-	exit_task_namespaces(tsk);
++	exit_nsproxy_namespaces(tsk);
+ 	exit_task_work(tsk);
+ 	exit_thread(tsk);
+ 
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2455,7 +2455,7 @@ bad_fork_cleanup_io:
+ 	if (p->io_context)
+ 		exit_io_context(p);
+ bad_fork_cleanup_namespaces:
+-	exit_task_namespaces(p);
++	exit_nsproxy_namespaces(p);
+ bad_fork_cleanup_mm:
+ 	if (p->mm) {
+ 		mm_clear_owner(p->mm, p);
+--- a/kernel/nsproxy.c
++++ b/kernel/nsproxy.c
+@@ -241,7 +241,7 @@ void switch_task_namespaces(struct task_
+ 		put_nsproxy(ns);
  }
  
--#define ns_ref_read(__ns) refcount_read(&to_ns_common((__ns))->__ns_ref)
-+static __always_inline __must_check int __ns_ref_read(const struct ns_common *ns)
-+{
-+	return refcount_read(&ns->__ns_ref);
-+}
-+
-+#define ns_ref_read(__ns) __ns_ref_read(to_ns_common((__ns)))
- #define ns_ref_inc(__ns) refcount_inc(&to_ns_common((__ns))->__ns_ref)
- #define ns_ref_get(__ns) __ns_ref_get(to_ns_common((__ns)))
- #define ns_ref_put(__ns) __ns_ref_put(to_ns_common((__ns)))
+-void exit_task_namespaces(struct task_struct *p)
++void exit_nsproxy_namespaces(struct task_struct *p)
+ {
+ 	switch_task_namespaces(p, NULL);
+ }
 
 
