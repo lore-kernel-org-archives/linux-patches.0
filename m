@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A514B44A4;
-	Thu, 17 Sep 2026 16:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F634ABBD4;
+	Thu, 17 Sep 2026 16:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661112; cv=none; b=lhTI8pOWD8F466bhn3wDn9qe5DsziXVYm8xIcNcZourU5VIZ61veMQAe3NRB8UcK9c0MSktMz66d2k5G4k2zqzglUTni1BjXGbVuFZmd0adLz5UFiCb5qkat3frA0f3m6K2gckf9dnrTFAHuyejqweu5ONxmYt8OZ69886sgg1c=
+	t=1789661116; cv=none; b=Bj6o8npZHcJd6TjUDznZQToyutUGD1CpMDD06ovszDDtyjnXTBmReW5qM/PtUQ2AV8Cwu0f/nBuvbZipd09BbhadBuBQUM/wL+LYlkqCeTKY477Qcca5exxrlYm9+/rKyiEZzivlDcsUgrBP5tJstw/aeBqDII+pjEOpo3RRysw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661112; c=relaxed/simple;
-	bh=gM6TGsRm0U9ss0qK2jDAP+89YLTdC/c3JnewXur+fSU=;
+	s=arc-20240116; t=1789661116; c=relaxed/simple;
+	bh=nXUfXtF9jFbVNkjQOsM17dguV3WROzMEEKqZaHoPy0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0zNPzcQS6uOb7cBxQ1tt2MUKo586p004lErG9XYO4hPB9kBGDjbtXP3zm34sC9oxpf67u3Rf/3ScDq46VKJoMahS1eCVpM2pJPTEmYWTTHNfjWSZorS27Hbpqii7xh8eZ0EinCpGs+1ISh7r+glZsehGlatP9yfaz+I2wdglNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNm9z3Uf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cyhe4ZtflMLEvlOG3UdYV2mFdgnT7pQW1OmNPjAbVCLZ7sYYd4Tkdq6Yu1B5q6PifRk5TZig+GYTDef9QAKuI9P4AaA3i5MhId364+TiCOVJEb0VIC6zbFJSTh1yuOSZBGub8pu2KgACaApC0G/FdPH9bcSyiAIkDMkFOevHlJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSnJehHd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNm9z3Uf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CE01F000FF;
-	Thu, 17 Sep 2026 16:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSnJehHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD1D1F000FF;
+	Thu, 17 Sep 2026 16:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661111;
-	bh=mrX0Ej7u7i+iZgGmnEw0OtiVP36KZVy5S7aLtiCF0zM=;
+	s=korg; t=1789661114;
+	bh=YF2QaR0mSxSuLJJPjrIQigjTs5Zp3bfB/rl14X99sHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNm9z3Uf4B6rdYJPzpMr6aI9dVL4mo11hIdp2jYeBC45gbvkB9Pi0715Jgofe1Z1H
-	 VkGH6LeYoIw515wIovwSGtcFcittiWcwlxW2yPnIE1r/cZFL0TJXKfSgTTn4KlpsUE
-	 d/pY7uhSy64Z92o/VmgSgXgYiEaJWH1Nk+LvV198=
+	b=qSnJehHdQ63bA2wDRsyaHBxVP9B/TAxzR7K8Hk0x4Io/GBElzldQMmEYy2OoLqEp8
+	 Pgf3Uvgog6mlUlqITJRVD7zewxiJY6uDIezkMjhQiBOGERahixXW+7S3jlg6+cN430
+	 JqsrX3zAR4tWfhR2Rf+7m3rcEP2Yjq+oKVBjSQvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0087/1250] watchdog: imx7ulp_wdt: Keep WDOG running until A55 enters WFI on i.MX94
-Date: Thu, 17 Sep 2026 15:58:02 +0100
-Message-ID: <20260917151554.340958821@linuxfoundation.org>
+Subject: [PATCH 6.18 0088/1250] watchdog: lenovo_se10_wdt: Fix use-after-free and resource leak risk
+Date: Thu, 17 Sep 2026 15:58:03 +0100
+Message-ID: <20260917151554.367929570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,79 +51,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 1f5b29add64e7c1500530079bbbe359cad28cb63 ]
+[ Upstream commit 3394e894880a60338a2981dd688fd25e88d79667 ]
 
-On i.MX94, watchdog sources clock from bus clock that will be always on
-during the lifecycle of Linux. There is a Low Power Clock Gating(LPCG)
-between the bus clock and watchdog, but the LPCG is not exported for
-software to control, it is hardware automatically controlled. When
-Cortex-A55 executes WFI during suspend flow, the LPCG will automatically
-gate off the clock to stop watchdog and resume clock when Cortex-A55 is
-woke up.
+Review by sashiko.dev highlighted potential use after free and resource
+leak instances.
 
-So watchdog could always be alive to protect Linux, except Cortex-A
-platform WFI is executed in Linux suspend flow.
+Set se10_pdev to null to prevent use after free
 
-Introduce a new hardware feature flag to indicate CPU low-power-mode
-auto clock gating support, and use it to avoid stopping the watchdog
-during suspend when LPCG can safely keep it running.
+Remove DMI call back and instead directly call
+se10_create_platform_device. Handle error cases appropriately
 
-Add i.MX94-specific watchdog hardware data and DT compatible entry to
-enable this behavior.
+Link: https://sashiko.dev/#/patchset/20260428124954.1193450-1-mpearson-lenovo%40squebb.ca
 
-Signed-off-by: Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>
-[peng.fan@nxp.com: rewrite commit log for clarity]
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20260206-imx94-wdog-v2-1-4dd725faec1f@nxp.com
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20260504180159.999189-1-mpearson-lenovo@squebb.ca
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/imx7ulp_wdt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/watchdog/lenovo_se10_wdt.c | 32 ++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/watchdog/imx7ulp_wdt.c b/drivers/watchdog/imx7ulp_wdt.c
-index 03479110453ce..855dc9d5083a5 100644
---- a/drivers/watchdog/imx7ulp_wdt.c
-+++ b/drivers/watchdog/imx7ulp_wdt.c
-@@ -56,6 +56,7 @@ MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
- struct imx_wdt_hw_feature {
- 	bool prescaler_enable;
- 	bool post_rcs_wait;
-+	bool cpu_lpm_auto_cg;
- 	u32 wdog_clock_rate;
+diff --git a/drivers/watchdog/lenovo_se10_wdt.c b/drivers/watchdog/lenovo_se10_wdt.c
+index 99ff01af41243..503e220263f95 100644
+--- a/drivers/watchdog/lenovo_se10_wdt.c
++++ b/drivers/watchdog/lenovo_se10_wdt.c
+@@ -224,7 +224,7 @@ static struct platform_driver se10_wdt_driver = {
+ 	.probe  = se10_wdt_probe,
  };
  
-@@ -360,7 +361,7 @@ static int __maybe_unused imx7ulp_wdt_suspend_noirq(struct device *dev)
+-static int se10_create_platform_device(const struct dmi_system_id *id)
++static int se10_create_platform_device(void)
  {
- 	struct imx7ulp_wdt_device *imx7ulp_wdt = dev_get_drvdata(dev);
+ 	int err;
  
--	if (watchdog_active(&imx7ulp_wdt->wdd))
-+	if (watchdog_active(&imx7ulp_wdt->wdd) && !imx7ulp_wdt->hw->cpu_lpm_auto_cg)
- 		imx7ulp_wdt_stop(&imx7ulp_wdt->wdd);
+@@ -233,9 +233,10 @@ static int se10_create_platform_device(const struct dmi_system_id *id)
+ 		return -ENOMEM;
  
- 	clk_disable_unprepare(imx7ulp_wdt->clk);
-@@ -408,10 +409,17 @@ static const struct imx_wdt_hw_feature imx93_wdt_hw = {
- 	.wdog_clock_rate = 125,
+ 	err = platform_device_add(se10_pdev);
+-	if (err)
++	if (err) {
+ 		platform_device_put(se10_pdev);
+-
++		se10_pdev = NULL;
++	}
+ 	return err;
+ }
+ 
+@@ -246,7 +247,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "12NH"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10",
+@@ -254,7 +254,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "12NJ"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10",
+@@ -262,7 +261,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "12NK"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10",
+@@ -270,7 +268,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "12NL"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10",
+@@ -278,7 +275,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "12NM"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -286,7 +282,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13LJ"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -294,7 +289,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13LK"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -302,7 +296,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S1"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -310,7 +303,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S2"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -318,7 +310,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S3"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -326,7 +317,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S4"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -334,7 +324,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S5"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{
+ 		.ident = "LENOVO-SE10-G2",
+@@ -342,7 +331,6 @@ static const struct dmi_system_id se10_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "13S6"),
+ 		},
+-		.callback = se10_create_platform_device,
+ 	},
+ 	{}
  };
+@@ -350,10 +338,20 @@ MODULE_DEVICE_TABLE(dmi, se10_dmi_table);
  
-+static const struct imx_wdt_hw_feature imx94_wdt_hw = {
-+	.prescaler_enable = true,
-+	.wdog_clock_rate = 125,
-+	.cpu_lpm_auto_cg = true,
-+};
+ static int __init se10_wdt_init(void)
+ {
++	int err;
 +
- static const struct of_device_id imx7ulp_wdt_dt_ids[] = {
- 	{ .compatible = "fsl,imx7ulp-wdt", .data = &imx7ulp_wdt_hw, },
- 	{ .compatible = "fsl,imx8ulp-wdt", .data = &imx8ulp_wdt_hw, },
- 	{ .compatible = "fsl,imx93-wdt", .data = &imx93_wdt_hw, },
-+	{ .compatible = "fsl,imx94-wdt", .data = &imx94_wdt_hw, },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, imx7ulp_wdt_dt_ids);
+ 	if (!dmi_check_system(se10_dmi_table))
+ 		return -ENODEV;
+ 
+-	return platform_driver_register(&se10_wdt_driver);
++	err = platform_driver_register(&se10_wdt_driver);
++	if (err)
++		return err;
++
++	err = se10_create_platform_device();
++	if (err)
++		platform_driver_unregister(&se10_wdt_driver);
++
++	return err;
+ }
+ 
+ static void __exit se10_wdt_exit(void)
 -- 
 2.53.0
 
