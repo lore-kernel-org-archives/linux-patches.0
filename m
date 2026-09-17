@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF64D1797;
-	Thu, 17 Sep 2026 17:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694124D17BA;
+	Thu, 17 Sep 2026 17:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666130; cv=none; b=YjRgySp00zbYAVg8CO6OWkUo1E49T9DsU1/Rf1+KbCKkvHpGpmYqCOkhryNFe+5BO1iYF1ijvRX7urPjckJXew6C/fYThfoB9ADMDcHKyt2iT2Lkrp/dpc4L7Jf1CbPTs7VoX1ydn44uESjL2k6iJoqwQc5K9adYgKHkbPMobVM=
+	t=1789666133; cv=none; b=bZQzy7gO7PE7oO/bRTsRdW78ZOeLE6YuZwch1fYRMjjXMCIWr6rrsidVmZtrQiDrXWhf0iYZfkuW0qbDq/tvzUY/hPpgb1dzmBuAMAVutJHBZk5OwQmGTb/F0VFdumi6qqNHC0cT6gJf93KMb5oOrq5GXGFVJwTez/pKVBbBa5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666130; c=relaxed/simple;
-	bh=cacakrBxfPXT5H6yPjqAGwr52pqyaKJE/0Nmnn3eWEQ=;
+	s=arc-20240116; t=1789666133; c=relaxed/simple;
+	bh=NVHqH9Atu+aP/xmddIa8z2ANrnLj8vVN/u5M+3184Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcLGr+Y+U7MANT9Uqz237qSsshQ4EBICkTa3PhSimlc4lzK22h01pxT0oIYMndW+h0S1IlEBBJNxrBx4clyPTlBhVSIGMvEdBcFFLtOIXqyBpz25Pi4P1wH9e9wXeUkIyHnD6IcGS7l5wSM95EmN80Naevzfyp+LIIKJV1c+Zws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s24b5HG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mWoso0YASa3//XWDMXE4aBoIPjQILe8hs8JPLfzwOgpVmfwTc9g6HRTaJ1thayy0K6LHR8mSc/mwaDdUoLBMzwShLASea2yVwRBFt0prCmnGE9LDpKRy3A+kKiOGQ77RK4wp+6pwmXO88x7lBgSXjYRcIOIwjzbOSBJTFfih3q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRwWRiU6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s24b5HG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B6F1F000FF;
-	Thu, 17 Sep 2026 17:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRwWRiU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523201F000FF;
+	Thu, 17 Sep 2026 17:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666128;
-	bh=c8Oyow9YD7d/1PLHhTTDAna2+Ct9/rE5cNuDY1A6Mog=;
+	s=korg; t=1789666131;
+	bh=KJVkjdJVd40NxDaths1dIsD2Tizpg+Fs654w9SQac5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s24b5HG2YCRnsNvK8wp6XeIEFizLaFdCaaHe/1wJQKdMsixPmhmtqIFqukIbST2fD
-	 W5Vc+J+UNnU7nqh8L70VfgsJd4xPkyu8vpgMIf1+nfeO4dHLCHZ5Gb0Nv2qGAxKuLn
-	 e9EeAFvYhNGdCi5quFXrvAKgvDbnJd8wpYSDqWG8=
+	b=XRwWRiU6u6AlfRrmtF6wEnIoZQ4CY8R6HIUbiDl5QCvxDA+/tAlLpjSAwLaweu9+z
+	 KJlClJK+31zC2ugRFigVQrCu0ohG/U6Xd5Uq5gGWkXJCZaW0C3k0R6ITpnMow8GkKL
+	 +i9xA+jPHlLQyJWUyxJbhYh6MoHhG6UBU3KwdpU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Sviridkin <f@lex.la>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0933/1250] net: ethernet: mtk_eth_soc: populate lpi_interfaces to fix EEE support
-Date: Thu, 17 Sep 2026 16:12:08 +0100
-Message-ID: <20260917151617.304739751@linuxfoundation.org>
+Subject: [PATCH 6.18 0934/1250] net: phy: mediatek-ge: disable EEE on the MT7530 PHY
+Date: Thu, 17 Sep 2026 16:12:09 +0100
+Message-ID: <20260917151617.331589396@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,120 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Sviridkin <f@lex.la>
+From: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
 
-[ Upstream commit d876c9cb2d16ed259449fe9da08c37a5cb81d724 ]
+[ Upstream commit ccbe7540e4aad0d1c3acc249697350b93ccb8025 ]
 
-phylink_create() decides once and for all that a MAC supports managed
-EEE, and it requires the tx_lpi ops plus non-empty lpi_capabilities and
-lpi_interfaces. mtk_add_mac() leaves lpi_interfaces empty.
+The MT7530 internal GE PHY advertises EEE by hardware default, but its
+EEE support is defective: with EEE advertised, some link partners fail
+to establish a stable link. On a 2-pair (4-wire) cable where both ends
+advertise gigabit, 1000BASE-T training cannot succeed, and instead of
+falling back to 100 Mbps the port loops, so no link or DHCP lease is
+ever obtained. MediaTek confirms the hardware is the root cause (Landen
+Chao, 2021): "EEE of the 10-year-old MT7530 internal gephy has many IOT
+problems, so it is recommended to disable its EEE."
 
-So ever since EEE support was added, ethtool has answered "Not
-supported" on every MAC that uses mtk_phylink_ops, and
-phy_disable_eee() has locked userspace out of turning EEE on. MT7628
-is unaffected, as rt5350_phylink_ops has no tx_lpi methods.
+mtk_gephy_config_init() used to clear the EEE advertisement early, but
+commit af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE
+advertisement") removed that on the rationale that the DSA subdriver
+already performs an early disable. That holds for MT7531, whose
+mt7531_setup() clears MDIO_AN_EEE_ADV on each switch PHY, but not for
+the MT7530 PHY: neither the MT7621 integrated switch nor the dedicated
+MT7530 IC ever had such a loop, so removing it left those boards
+without any working early EEE disable and the link flapping came back.
 
-Leave 2.5 Gbps out of both bitmaps, and the xGMII modes that
-mtk_mac_enable_tx_lpi() already refuses. MAC_MCR folds SPEED_2500 onto
-MAC_MCR_SPEED_1000, so MAC_MCR_EEE1G would govern LPI on such a link,
-and that is unvalidated rather than known unsupported: MediaTek's SDK
-driver sets the EEE force bits for 100 Mbps and 1 Gbps only, and the
-unit of the wakeup timers is undocumented with the port clock at
-2.5 times the rate.
+Since the broken hardware is the PHY, fix it in the PHY driver so it
+covers all users of this PHY, integrated in a switch or standalone:
 
-mtk_mac_enable_tx_lpi() programs wake-up times taken from MT7531's
-reset values, and the SoC's own field has no reset value to fall
-back on. Only MT7981 has been seen to exit LPI cleanly with them, so
-the LPI interfaces sit behind a new MTK_GMAC_EEE capability that only
-MT7981 sets; every other SoC keeps the current behaviour until it has
-been confirmed.
+  - clear MDIO_AN_EEE_ADV in probe(), as early as possible, before
+    anything can negotiate EEE with the link partner;
+  - clear it again in config_init() and call phy_disable_eee() there.
+    config_init() is what phy_init_hw() replays after a PHY reset, when
+    the register is back at its EEE-advertising hardware default, and
+    it runs after of_set_phy_eee_broken() in phy_probe(), so the
+    eee_disabled_modes mask survives and neither phylib nor userspace
+    can re-enable EEE. dp83867 disables broken EEE from config_init()
+    the same way.
 
-LPI stays off until userspace enables it, but the EEE advertisement of
-a PHY that advertises it out of reset comes back, since phylink stops
-force-clearing it.
+Auto-negotiation then falls back to a stable 100 Mbps link instead of
+looping at gigabit. Tested on ASUS RT-AX53U (MT7621): with a 2-pair
+cable on the WAN port, a single clean 100 Mbps link comes up and a
+DHCP lease is obtained, where the unpatched driver loops.
 
-Fixes: 952d7325362f ("net: ethernet: mediatek: add EEE support")
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260903123644.23800-3-f@lex.la
+Fixes: af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE advertisement")
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
+Link: https://patch.msgid.link/20260908145213.3976508-1-vladislav.karmanov.dev@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 18 +++++++++++++++---
- drivers/net/ethernet/mediatek/mtk_eth_soc.h |  4 +++-
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/net/phy/mediatek/mtk-ge.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index dcf86a8cd8c02..31eee8739c575 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4825,7 +4825,7 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
- 	phy_interface_t phy_mode;
- 	struct phylink *phylink;
- 	struct mtk_mac *mac;
--	int id, err;
-+	int id, err, i;
- 	int txqs = 1;
- 	u32 val;
+diff --git a/drivers/net/phy/mediatek/mtk-ge.c b/drivers/net/phy/mediatek/mtk-ge.c
+index 73d9b72f9d9e2..96d8ac5154e5e 100644
+--- a/drivers/net/phy/mediatek/mtk-ge.c
++++ b/drivers/net/phy/mediatek/mtk-ge.c
+@@ -62,10 +62,38 @@ static void mtk_gephy_config_init(struct phy_device *phydev)
+ 		       FIELD_PREP(MTK_MCC_NEARECHO_OFFSET_MASK, 0x3));
+ }
  
-@@ -4904,8 +4904,8 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
- 	mac->phylink_config.type = PHYLINK_NETDEV;
- 	mac->phylink_config.mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
- 		MAC_10 | MAC_100 | MAC_1000 | MAC_2500FD;
--	mac->phylink_config.lpi_capabilities = MAC_100FD | MAC_1000FD |
--		MAC_2500FD;
-+	/* LPI above 1 Gbps is not supported */
-+	mac->phylink_config.lpi_capabilities = MAC_100FD | MAC_1000FD;
- 	mac->phylink_config.lpi_timer_default = 1000;
- 
- 	/* MT7623 gmac0 is now missing its speed-specific PLL configuration
-@@ -4963,6 +4963,18 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
- 		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
- 			  mac->phylink_config.supported_interfaces);
- 
-+	/* LPI wake-up timing is only verified on MTK_GMAC_EEE SoCs */
-+	if (MTK_HAS_CAPS(eth->soc->caps, MTK_GMAC_EEE)) {
-+		phy_interface_copy(mac->phylink_config.lpi_interfaces,
-+				   mac->phylink_config.supported_interfaces);
-+		__clear_bit(PHY_INTERFACE_MODE_2500BASEX,
-+			    mac->phylink_config.lpi_interfaces);
-+		for (i = 0; i < PHY_INTERFACE_MODE_MAX; i++)
-+			if (mtk_interface_mode_is_xgmii(eth, i))
-+				__clear_bit(i,
-+					    mac->phylink_config.lpi_interfaces);
-+	}
++static int mt7530_phy_probe(struct phy_device *phydev)
++{
++	/* The MT7530 internal GE PHY has broken EEE: with EEE advertised,
++	 * some link partners fail to establish a stable link (on a 2-pair
++	 * cable, 1000BASE-T training fails and the port loops instead of
++	 * falling back). MediaTek recommends disabling EEE on this PHY.
++	 * Clear the advertisement as early as possible, before anything
++	 * can negotiate EEE with the link partner.
++	 */
++	return phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
++}
 +
- 	phylink = phylink_create(&mac->phylink_config,
- 				 of_fwnode_handle(mac->of_node),
- 				 phy_mode, mac_ops);
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 0168e2fbc6197..88a9b3b23bea5 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -994,6 +994,7 @@ enum mkt_eth_capabilities {
- 	MTK_U3_COPHY_V2_BIT,
- 	MTK_SRAM_BIT,
- 	MTK_36BIT_DMA_BIT,
-+	MTK_GMAC_EEE_BIT,
+ static int mt7530_phy_config_init(struct phy_device *phydev)
+ {
++	int ret;
++
+ 	mtk_gephy_config_init(phydev);
  
- 	/* MUX BITS*/
- 	MTK_ETH_MUX_GDM1_TO_GMAC1_ESW_BIT,
-@@ -1034,6 +1035,7 @@ enum mkt_eth_capabilities {
- #define MTK_U3_COPHY_V2		BIT_ULL(MTK_U3_COPHY_V2_BIT)
- #define MTK_SRAM		BIT_ULL(MTK_SRAM_BIT)
- #define MTK_36BIT_DMA	BIT_ULL(MTK_36BIT_DMA_BIT)
-+#define MTK_GMAC_EEE		BIT_ULL(MTK_GMAC_EEE_BIT)
- 
- #define MTK_ETH_MUX_GDM1_TO_GMAC1_ESW		\
- 	BIT_ULL(MTK_ETH_MUX_GDM1_TO_GMAC1_ESW_BIT)
-@@ -1117,7 +1119,7 @@ enum mkt_eth_capabilities {
- #define MT7981_CAPS  (MTK_GMAC1_SGMII | MTK_GMAC2_SGMII | MTK_GMAC2_GEPHY | \
- 		      MTK_MUX_GMAC12_TO_GEPHY_SGMII | MTK_QDMA | \
- 		      MTK_MUX_U3_GMAC2_TO_QPHY | MTK_U3_COPHY_V2 | \
--		      MTK_RSTCTRL_PPE1 | MTK_SRAM)
-+		      MTK_RSTCTRL_PPE1 | MTK_SRAM | MTK_GMAC_EEE)
- 
- #define MT7986_CAPS  (MTK_GMAC1_SGMII | MTK_GMAC2_SGMII | \
- 		      MTK_MUX_GMAC12_TO_GEPHY_SGMII | MTK_QDMA | \
++	/* The probe() clear alone is not durable: phy_init_hw() replays only
++	 * ->config_init after a PHY reset, with the register back at its
++	 * EEE-advertising hardware default, and phy_probe() zeroes
++	 * eee_disabled_modes (of_set_phy_eee_broken()) after ->probe already
++	 * ran. Clear the advertisement again and mark EEE disabled, so that
++	 * neither phylib nor userspace can re-enable it; dp83867 disables
++	 * broken EEE from config_init() the same way.
++	 */
++	ret = phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
++	if (ret)
++		return ret;
++
++	phy_disable_eee(phydev);
++
+ 	/* Increase post_update_timer */
+ 	phy_write_paged(phydev, MTK_PHY_PAGE_EXTENDED_3,
+ 			MTK_PHY_RG_LPI_PCS_DSP_CTRL_REG11, 0x4b);
+@@ -100,6 +128,7 @@ static struct phy_driver mtk_gephy_driver[] = {
+ 	{
+ 		PHY_ID_MATCH_EXACT(MTK_GPHY_ID_MT7530),
+ 		.name		= "MediaTek MT7530 PHY",
++		.probe		= mt7530_phy_probe,
+ 		.config_init	= mt7530_phy_config_init,
+ 		/* Interrupts are handled by the switch, not the PHY
+ 		 * itself.
 -- 
 2.53.0
 
