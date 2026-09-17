@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A3B518133;
-	Thu, 17 Sep 2026 17:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C5A4B7A59;
+	Thu, 17 Sep 2026 17:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666968; cv=none; b=Rkv9b+0dr2S3+535IIktgO105fo4dnNRLzDtW2vh353vv2v1CYxOkRC0F2FdylyJPOIkWHaNUdtOxBjOrYgcvDehyHGyTtmrR68m2aOeFZacEVZi/viUNLbhOKRu5zLspdZ2HGbNehUq9A97/PLtC5JoYZiaZpqgEm/pdc8B9q8=
+	t=1789666971; cv=none; b=Xkqf9ZlpDbxHP9Dj62rOSZZZkTb2MLosSSswmfctPV64oAIoeka+H/XP6iio7Xozbbc3CSwKOlckjmIz5uqPDrTX5dg6oxbWfUzzoczhRewifVSJ2VRdstNDNI4hclA0DZ3pPqOCDi6NNCCg7j0+ExmSanvxuuYFmHTNto8xxYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666968; c=relaxed/simple;
-	bh=tLwDU4i801IBwKMoUs+XBoKP+TrNONSLmGfX24EQPGE=;
+	s=arc-20240116; t=1789666971; c=relaxed/simple;
+	bh=uTQ11a7jSwGREsO9vHxqO/B9xzMueiJs57tpCwxnInY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMhadHaWWdkXxsRko55oXL1kqYPSic356Ltq05cRLJ84k0HPbQbZp7C9QsW1tjTi93uioGrQP3sfQ/nQlU6jmu1ayjdM50Xex7RhC++IhEt7BdJIUyNmvYjnpTVBJ9qtdvIaclWaRe0W7WaWVNzLbqLfbK8bSvNY7gtm9yQrpII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2bUVO36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EKMAYExhubphn+Pk7j7Eaj8Qjq3JRbz/HMPtsvgvbltmZBKP3Il8E95q/5SXsYqnd7aNRTR3Zva3KKz2l0/b4CJImo8Lyq3LHCz+UV84KVLPyiX1Ye8PqYiwuq/78uxqE5Y45hrbaz2xlAaoS+LDxvUYFSVEiWUvlP/oa1NecwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTnqAECa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2bUVO36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872CB1F000FF;
-	Thu, 17 Sep 2026 17:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTnqAECa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D45A1F000FF;
+	Thu, 17 Sep 2026 17:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666967;
-	bh=9sH9p2DDjM6+BPHWiYOVuNlpV80uNETZ473BdVR4Fok=;
+	s=korg; t=1789666970;
+	bh=F4hyyu7lRa61ylbNLbnZ9hP6BIIs7PA4MiyqQzxix90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H2bUVO36PV3DfpYlGTc+PWeMB8xiKo41h6v5StLFn618hcv6RgEJzBnhzNbPp9+Rq
-	 MfMQOGFSrTyXYOSmuHfYJAYt8W+cpe7pITE7cpo+f0PaO6SYKtvhbijfc6Ra5m4SVx
-	 FAdemy4+DsTaQGhO6l59PIuxmOSPinkFBqOFNIPU=
+	b=qTnqAECaR75lWsNKD7wNHHDGCaufZ5iLjiZaD9S1R9IOGjtzzOGOPQrzopo+TQH6x
+	 JWHFIVIIW5erNSDO+KXzZv8cbZ5S+UBxjtxyJERTBDtk2TpzNMfpVqu5Mln8j3Oce6
+	 UWi9mv+tP8ATxo1q0l+09D7L8vi01Z8SBRegjJaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1183/1250] drm/amdgpu: reorder IB schedule sequence
-Date: Thu, 17 Sep 2026 16:16:18 +0100
-Message-ID: <20260917151624.347568594@linuxfoundation.org>
+Subject: [PATCH 6.18 1148/1250] wifi: ath9k_htc: dont store usb_device_id
+Date: Thu, 17 Sep 2026 16:15:43 +0100
+Message-ID: <20260917151623.383003378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,98 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit d3499de3b737f3f6a2058382f7bff641c74f52a4 ]
+[ Upstream commit 14d2ac442d660e112efc0ce87ad10085013ed2b1 ]
 
-This reorders the IB schedule sequence to cleanly
-separate the vm operation from the IB submission.
-This makes the two independent so we can cleanly
-associate each one with its respective fence.
+usb_device_id is not guaranteed to live longer than probe due to presence
+of dynamic ID. All information apart from driver_data can be easily
+retrieved from usb_device, so just store driver_data.
 
-v2: fixes for VCN
-
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-1-632dcf3adfba@garyguo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c |   22 +++++++++++-----------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   11 +++++++++++
- 2 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 12 ++++++------
+ drivers/net/wireless/ath/ath9k/hif_usb.h |  2 +-
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-@@ -208,16 +208,6 @@ int amdgpu_ib_schedule(struct amdgpu_rin
- 		dma_fence_put(tmp);
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 0a3d2190b9bee..c15219257499f 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1097,7 +1097,7 @@ static int ath9k_hif_usb_download_fw(struct hif_device_usb *hif_dev)
  	}
+ 	kfree(buf);
  
--	if ((ib->flags & AMDGPU_IB_FLAG_EMIT_MEM_SYNC) && ring->funcs->emit_mem_sync)
--		ring->funcs->emit_mem_sync(ring);
--
--	if (ring->funcs->emit_wave_limit &&
--	    ring->hw_prio == AMDGPU_GFX_PIPE_PRIO_HIGH)
--		ring->funcs->emit_wave_limit(ring, true);
--
--	if (ring->funcs->insert_start)
--		ring->funcs->insert_start(ring);
--
- 	if (job) {
- 		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
- 		if (r) {
-@@ -228,6 +218,16 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+-	if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++	if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 		firm_offset = AR7010_FIRMWARE_TEXT;
+ 	else
+ 		firm_offset = AR9271_FIRMWARE_TEXT;
+@@ -1192,7 +1192,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
+ 	if (MAJOR_VERSION_REQ == 1 && hif_dev->fw_minor_index == 3) {
+ 		const char *filename;
  
- 	amdgpu_ring_ib_begin(ring);
+-		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++		if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 			filename = FIRMWARE_AR7010_1_1;
+ 		else
+ 			filename = FIRMWARE_AR9271;
+@@ -1208,7 +1208,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
  
-+	if (ring->funcs->insert_start)
-+		ring->funcs->insert_start(ring);
-+
-+	if ((ib->flags & AMDGPU_IB_FLAG_EMIT_MEM_SYNC) && ring->funcs->emit_mem_sync)
-+		ring->funcs->emit_mem_sync(ring);
-+
-+	if (ring->funcs->emit_wave_limit &&
-+	    ring->hw_prio == AMDGPU_GFX_PIPE_PRIO_HIGH)
-+		ring->funcs->emit_wave_limit(ring, true);
-+
- 	if (ring->funcs->emit_gfx_shadow && adev->gfx.cp_gfx_shadow)
- 		amdgpu_ring_emit_gfx_shadow(ring, shadow_va, csa_va, gds_va,
- 					    init_shadow, vmid);
-@@ -312,6 +312,7 @@ int amdgpu_ib_schedule(struct amdgpu_rin
- 	    ring->hw_prio == AMDGPU_GFX_PIPE_PRIO_HIGH)
- 		ring->funcs->emit_wave_limit(ring, false);
+ 		return -ENOENT;
+ 	} else {
+-		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++		if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 			chip = "7010";
+ 		else
+ 			chip = "9271";
+@@ -1265,9 +1265,9 @@ static void ath9k_hif_usb_firmware_cb(const struct firmware *fw, void *context)
  
-+	amdgpu_ring_ib_end(ring);
- 	/* Save the wptr associated with this fence.
- 	 * This must be last for resets to work properly
- 	 * as we need to save the wptr associated with this
-@@ -320,7 +321,6 @@ int amdgpu_ib_schedule(struct amdgpu_rin
- 	 */
- 	amdgpu_fence_save_wptr(*f);
+ 	ret = ath9k_htc_hw_init(hif_dev->htc_handle,
+ 				&hif_dev->interface->dev,
+-				hif_dev->usb_device_id->idProduct,
++				le16_to_cpu(hif_dev->udev->descriptor.idProduct),
+ 				hif_dev->udev->product,
+-				hif_dev->usb_device_id->driver_info);
++				hif_dev->id_info);
+ 	if (ret) {
+ 		ret = -EINVAL;
+ 		goto err_htc_hw_init;
+@@ -1381,7 +1381,7 @@ static int ath9k_hif_usb_probe(struct usb_interface *interface,
  
--	amdgpu_ring_ib_end(ring);
- 	amdgpu_ring_commit(ring);
- 
- 	return 0;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -814,6 +814,17 @@ int amdgpu_vm_flush(struct amdgpu_ring *
- 		return 0;
- 
- 	amdgpu_ring_ib_begin(ring);
-+
-+	/* There is no matching insert_end for this on purpose for the vm flush.
-+	 * The IB portion of the submission has both.  Having multiple
-+	 * insert_start sequences is ok, but you can only have one insert_end
-+	 * per submission based on the way VCN FW works.  For JPEG
-+	 * you can as many insert_start and insert_end sequences as you like as
-+	 * long as the rest of the packets come between start and end sequences.
-+	 */
-+	if (ring->funcs->insert_start)
-+		ring->funcs->insert_start(ring);
-+
- 	if (ring->funcs->init_cond_exec)
- 		patch = amdgpu_ring_init_cond_exec(ring,
- 						   ring->cond_exe_gpu_addr);
+ 	hif_dev->udev = udev;
+ 	hif_dev->interface = interface;
+-	hif_dev->usb_device_id = id;
++	hif_dev->id_info = id->driver_info;
+ #ifdef CONFIG_PM
+ 	udev->reset_resume = 1;
+ #endif
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.h b/drivers/net/wireless/ath/ath9k/hif_usb.h
+index b3e66b0485a56..02655ed4e66ff 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.h
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.h
+@@ -115,7 +115,7 @@ struct cmd_buf {
+ struct hif_device_usb {
+ 	struct usb_device *udev;
+ 	struct usb_interface *interface;
+-	const struct usb_device_id *usb_device_id;
++	int id_info;
+ 	const void *fw_data;
+ 	size_t fw_size;
+ 	struct completion fw_done;
+-- 
+2.53.0
+
 
 
