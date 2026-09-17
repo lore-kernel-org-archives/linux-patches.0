@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE154FD7AD;
-	Thu, 17 Sep 2026 17:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C93769EC;
+	Thu, 17 Sep 2026 17:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667249; cv=none; b=a9VJJspzC6/EQEoYDLmSmYHiPks41wB96Bf/vbeAx/cIxHhviz/tkW6UUATtkMYbNo+8zZiqwZ6rTtMZ107yTBiLBBFkdWhM1Iu0ZYSDkZq6084NnHufiwLVKjTzfbnCjEEYzSRdIdUB5m9z55nTI+6Scyh+xwcUzdOstoNE86U=
+	t=1789667252; cv=none; b=Xdj+QGI1Nqc3kEaXYa9DumBH/Nsh0SFtbVSxC9g0nRkRKYKtWJEMQKxN/TbqWjlNvd4Kkf+tsaoFVt4f3HWn6vajoeMVJp6DoOzdK5MCiKXt6XkWknsTJ2Dfdwaxhs5SA2tYf7nTQLHCZDpJlDjMOg3K5CdKgqofMuU930PhJ8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667249; c=relaxed/simple;
-	bh=7i9Kghz5yyT8aUZ+D8M+7/f2lHGIN3VEG3wL6W7ol/k=;
+	s=arc-20240116; t=1789667252; c=relaxed/simple;
+	bh=EUdpxM6gAiFErYCsoqUDWuDbJI48AKXZGoKQguieEiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXwGYiNyeyKCGlfIHOpqhOaXDM18UIRKkZvZup7Ovw7Mq5zni2SmSvzvRiyVf3/8lW4wuFJCLibJiDVmplznlD3rdI7Xk6jI0g8siBBQwoEbqUbz0wEUcLdIaTxLPyUL+3ZU4dO+Vk5SZueh1CcH76GO4hMtbAn5tpd/zkle8UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y674XQXq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WSp5cT9t44842DSrxMcQsniv7oKpSK9+KejBwzYH9zoQeRwG52pODchsFxyyxqRjzhy5SQte3za8/6gH2Ii//eANIY3ZnNsKk6I5UehbnyHbkBSRRcubSMmwLJMowZvkEjX2p+sqPhnZyTgtK0ZnmOnHXYEn6WtheIdXYMFo2Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C6rX4RU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y674XQXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCEE1F000FF;
-	Thu, 17 Sep 2026 17:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C6rX4RU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2156B1F000FF;
+	Thu, 17 Sep 2026 17:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667247;
-	bh=cLP6E1VxPX+65U2PEemUvpIpY0FjiGUnsnHhJoOC43w=;
+	s=korg; t=1789667250;
+	bh=vNqsoCCp5/7UQuUw1f8L6JxYPwsm68Mm0eb++jagm1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y674XQXqix2S/c9X9HFiGz1uVl5x34XVueci+lpvDFlc0t/X5eACXTwoN1tVJFg6u
-	 jmxzVzpeNcSEqwSv/MrhuvAfCXZBGQ8DZy4CELi03P4PB4MxQMhM6g8ASWkgubdEiM
-	 mhjsLpAUsvW5C+0obRHB8hdAPhu6gFlAsAywxAhE=
+	b=2C6rX4RUx8Ew2ll8om6r5BtdbtpoGujDzqYxsqwckVwn4yIvVnecx8FmaV5zX8JbC
+	 9xuirw2vdA74YiqJWvSdChHWQ5BC0FCqpSN8yWrOjJCtIzOrCrEp1jZOfZxLbG368X
+	 xFVKg/vFsHTu2imUBuqrO6Of8qQQkuX+7JvqEAng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0029/1102] soundwire: validate DT compatible before parsing it
-Date: Thu, 17 Sep 2026 15:59:32 +0100
-Message-ID: <20260917151540.170198901@linuxfoundation.org>
+Subject: [PATCH 6.12 0030/1102] media: chips-media: wave5: Fix Reports from Kernel Lock Validator
+Date: Thu, 17 Sep 2026 15:59:33 +0100
+Message-ID: <20260917151540.196091580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,41 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Brandon Brnich <b-brnich@ti.com>
 
-[ Upstream commit 45c7bda7b7440183850012153988e40b300f40d0 ]
+[ Upstream commit 7d5d364f8b2dcc9b6b92456fb55632fde4a4d96f ]
 
-`sdw_of_find_slaves()` fetches raw `"compatible"` bytes with
-`of_get_property()` and then immediately parses them with
-`sscanf("sdw%01x%04hx%04hx%02hhx", ...)`.
+handle_dynamic_resolution change requires that the state_lock be acquired
+based on the lockdep_assert_held. However, the
+handle_dynamic_resolution_change call in initialize_sequence does not
+properly obtain the lock before calling.
 
-Live-tree OF properties are stored as raw bytes plus a separate length;
-they are not globally guaranteed to be NUL-terminated. Validate the
-first compatible string before parsing it.
+Since the v4l2_ctrl_find and s_ctrl can sleep, they should not be called
+while a lock is already held. Store off the fbc_buf_count then properly
+update control once lock has been freed.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260403183504.4-soundwire-compatible-pengpeng@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+Tested-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/slave.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../chips-media/wave5/wave5-vpu-dec.c         | 47 +++++++++++++------
+ 1 file changed, 33 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
-index 2bcb733de4de4..918110421c5d7 100644
---- a/drivers/soundwire/slave.c
-+++ b/drivers/soundwire/slave.c
-@@ -228,8 +228,8 @@ int sdw_of_find_slaves(struct sdw_bus *bus)
- 		struct sdw_slave_id id;
- 		const __be32 *addr;
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index 72b3cab567300..2f506ef24e159 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -356,10 +356,23 @@ static void send_eos_event(struct vpu_instance *inst)
+ 	inst->eos = false;
+ }
  
--		compat = of_get_property(node, "compatible", NULL);
--		if (!compat)
-+		ret = of_property_read_string(node, "compatible", &compat);
-+		if (ret)
- 			continue;
++static void wave5_update_min_bufs_ctrl(struct vpu_instance *inst, u32 fbc_buf_count)
++{
++	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
++	struct v4l2_ctrl *ctrl;
++
++	if (!fbc_buf_count || fbc_buf_count == v4l2_m2m_num_dst_bufs_ready(m2m_ctx))
++		return;
++
++	ctrl = v4l2_ctrl_find(&inst->v4l2_ctrl_hdl,
++			      V4L2_CID_MIN_BUFFERS_FOR_CAPTURE);
++	if (ctrl)
++		v4l2_ctrl_s_ctrl(ctrl, fbc_buf_count);
++}
++
+ static int handle_dynamic_resolution_change(struct vpu_instance *inst)
+ {
+ 	struct v4l2_fh *fh = &inst->v4l2_fh;
+-	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
  
- 		ret = sscanf(compat, "sdw%01x%04hx%04hx%02hhx", &sdw_version,
+ 	static const struct v4l2_event vpu_event_src_ch = {
+ 		.type = V4L2_EVENT_SOURCE_CHANGE,
+@@ -378,14 +391,6 @@ static int handle_dynamic_resolution_change(struct vpu_instance *inst)
+ 
+ 	inst->needs_reallocation = true;
+ 	inst->fbc_buf_count = initial_info->min_frame_buffer_count + 1;
+-	if (inst->fbc_buf_count != v4l2_m2m_num_dst_bufs_ready(m2m_ctx)) {
+-		struct v4l2_ctrl *ctrl;
+-
+-		ctrl = v4l2_ctrl_find(&inst->v4l2_ctrl_hdl,
+-				      V4L2_CID_MIN_BUFFERS_FOR_CAPTURE);
+-		if (ctrl)
+-			v4l2_ctrl_s_ctrl(ctrl, inst->fbc_buf_count);
+-	}
+ 
+ 	if (p_dec_info->initial_info_obtained) {
+ 		inst->conf_win.left = initial_info->pic_crop_rect.left;
+@@ -494,19 +499,24 @@ static void wave5_vpu_dec_finish_decode(struct vpu_instance *inst)
+ 	if ((dec_info.index_frame_display == DISPLAY_IDX_FLAG_SEQ_END ||
+ 	     dec_info.sequence_changed)) {
+ 		unsigned long flags;
++		u32 fbc_buf_count = 0;
+ 
+ 		spin_lock_irqsave(&inst->state_spinlock, flags);
+ 		if (!v4l2_m2m_has_stopped(m2m_ctx)) {
+ 			switch_state(inst, VPU_INST_STATE_STOP);
+ 
+-			if (dec_info.sequence_changed)
++			if (dec_info.sequence_changed) {
+ 				handle_dynamic_resolution_change(inst);
+-			else
++				fbc_buf_count = inst->fbc_buf_count;
++			} else {
+ 				send_eos_event(inst);
++			}
+ 
+ 			flag_last_buffer_done(inst);
+ 		}
+ 		spin_unlock_irqrestore(&inst->state_spinlock, flags);
++
++		wave5_update_min_bufs_ctrl(inst, fbc_buf_count);
+ 	}
+ 
+ 	/*
+@@ -1625,8 +1635,9 @@ static const struct vpu_instance_ops wave5_vpu_dec_inst_ops = {
+ static int initialize_sequence(struct vpu_instance *inst)
+ {
+ 	struct dec_initial_info initial_info;
+-	int ret = 0;
+ 	unsigned long flags;
++	u32 fbc_buf_count;
++	int ret = 0;
+ 
+ 	memset(&initial_info, 0, sizeof(struct dec_initial_info));
+ 
+@@ -1650,8 +1661,11 @@ static int initialize_sequence(struct vpu_instance *inst)
+ 
+ 	spin_lock_irqsave(&inst->state_spinlock, flags);
+ 	handle_dynamic_resolution_change(inst);
++	fbc_buf_count = inst->fbc_buf_count;
+ 	spin_unlock_irqrestore(&inst->state_spinlock, flags);
+ 
++	wave5_update_min_bufs_ctrl(inst, fbc_buf_count);
++
+ 	return 0;
+ }
+ 
+@@ -1684,6 +1698,7 @@ static void wave5_vpu_dec_device_run(void *priv)
+ 		ret = initialize_sequence(inst);
+ 		if (ret) {
+ 			unsigned long flags;
++			u32 fbc_buf_count = 0;
+ 
+ 			spin_lock_irqsave(&inst->state_spinlock, flags);
+ 			if (wave5_is_draining_or_eos(inst) &&
+@@ -1692,14 +1707,18 @@ static void wave5_vpu_dec_device_run(void *priv)
+ 
+ 				switch_state(inst, VPU_INST_STATE_STOP);
+ 
+-				if (vb2_is_streaming(dst_vq))
++				if (vb2_is_streaming(dst_vq)) {
+ 					send_eos_event(inst);
+-				else
++				} else {
+ 					handle_dynamic_resolution_change(inst);
++					fbc_buf_count = inst->fbc_buf_count;
++				}
+ 
+ 				flag_last_buffer_done(inst);
+ 			}
+ 			spin_unlock_irqrestore(&inst->state_spinlock, flags);
++
++			wave5_update_min_bufs_ctrl(inst, fbc_buf_count);
+ 		} else {
+ 			switch_state(inst, VPU_INST_STATE_INIT_SEQ);
+ 		}
 -- 
 2.53.0
 
