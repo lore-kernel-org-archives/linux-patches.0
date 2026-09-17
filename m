@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A99C4F5DF7;
-	Thu, 17 Sep 2026 16:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF684F5E0D;
+	Thu, 17 Sep 2026 16:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664128; cv=none; b=L4Rxd53J/m7LjvryfuHK4FFCk9Th/yUtsg28PQp76r/GL8wBQwDYVRQebEGq04QFq0c0oisx1B7wwHVpqjkn3BoQ/yWxxa3NKkBfNbe3dRW2jbUZsI8HQCX1puJ3xBRWjCaWSWaNz8dv1gkY2BXnhZL7nK7Zztce3C1pCw+0uzA=
+	t=1789664131; cv=none; b=gHzRUKJU+XV4y+v73aVVHT/OH8cNHYv5dmKzj9KdNhNt7cipXHciBbogPWC+L1Hu/+fj5/7Lb9hcuSMiIyXNn0fTtffmt/XDDLjPNyuckH0NgXrxzlAyiOPH/PDfoyZFyDL4o6h0Sob8f25vnPZ2Abue6hXX/FcP/ScQykL0nEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664128; c=relaxed/simple;
-	bh=IK1tluLNatXUek3ol8QyKsUUIpZtMe7WxKaptDaZ0sg=;
+	s=arc-20240116; t=1789664131; c=relaxed/simple;
+	bh=WordIIWP3fWpu2xnBqUAhPMiHps9GwCS1l4ymxn9qfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEkFu8PKYuelhBK3X2ludqCWlshrwjqKNI9B4M32U3TN7KgwZ8+p1v0D9qmAWbgha7SW+tJpTNSMC8eM738sYDzYDWwEOs5yautRCCz8SlERE7Bh0vp5Ei8IpRHqAcsC1uRWNxWyyEX7tIzhpXsTuCjHPKNNiRaQzBTMlFKFAR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIkWvg1t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hr1FDmQ1CGIcYA2Z3xk8Rw8JHX0tH/6MaVW3SGbZG7oSR6Bhy8cMIgW2wKR4OU248+jVRrL0ybywt0uycSWdwr3+NZXpdS+Db1BpsAPpBajFNYUhZ5Bms2UUtgme9wHEtpm0rUKFZ0UT7YqE396rMMvqpbqOSB7WtnmyqSwVwSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py+QNXKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIkWvg1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F36A1F000FF;
-	Thu, 17 Sep 2026 16:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py+QNXKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968B11F00893;
+	Thu, 17 Sep 2026 16:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664126;
-	bh=Xq+IR+rGai+bSnzat3HeXykdyEKuGjMugJ4zoFkmj7Q=;
+	s=korg; t=1789664129;
+	bh=eUxsqvjDBpmu/4uqiOyRLk7ZXEnwJ5wkWQPVI2z8P1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIkWvg1tjMB5mRZ7n6OfHZhNPbYZmbehrTgpVPtCtJt5cfgs/KF8ufjT2Jkz9Okhd
-	 bcMSui7QwJvs6A6YKuqO7amI8u+VSAD+FCCc73WPk3eFBfzr3oZ6Ufk/at5q/nsjcx
-	 Ey/c3rAMWWaSQQVasDJeai4wJUYliFLi/+miner4=
+	b=py+QNXKtmTA5vUhE5BShQ2GhPUJX770On8tbE1EZk1rZzVKe79xUDdVlfgijPtXP6
+	 pewpvgX5UsPtJyHm6ked4El9X9G5uP+GsK8Yr9JhvEi/8Gr0UzzjgxqbojAoFHfyy0
+	 rocO//XAJp/gyTMdb9nQD5IuI6d+8trt3T1hDPPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denzeel Oliva <wachiturroxd150@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0269/1250] clk: samsung: exynos990: Fix PERIC0/1 USI clock types
-Date: Thu, 17 Sep 2026 16:01:04 +0100
-Message-ID: <20260917151559.433254929@linuxfoundation.org>
+Subject: [PATCH 6.18 0270/1250] media: qcom: camss: vfe-340: Proper client handling
+Date: Thu, 17 Sep 2026 16:01:05 +0100
+Message-ID: <20260917151559.461069849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,377 +52,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denzeel Oliva <wachiturroxd150@gmail.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit e11560b050ce867bd7d3ccea138231db54e2250a ]
+[ Upstream commit 880a3e40337e5ddf18ab8d8e07fe963de8789cbf ]
 
-Use nMUX() for USI and UART user muxes to allow reparenting between
-OSC and CMU IP output when changing rates, and use DIV_F() with
-CLK_SET_RATE_PARENT on their dividers and gates so rate requests
-propagate upward.
+We need to properly map camss WM index to our internal WM client
+instance. Today we only support RDI interfaces with the RDI_WM
+macro, introduce a __wm_to_client helper to support any interface.
 
-Consolidate identical USI parent arrays into shared
-mout_peric0_nonbususer_p and mout_peric1_nonbususer_p.
-
-Signed-off-by: Denzeel Oliva <wachiturroxd150@gmail.com>
-Link: https://patch.msgid.link/20260528-perics-usi-v1-1-13a6ee4d1a6f@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-exynos990.c | 307 +++++++++++++---------------
- 1 file changed, 143 insertions(+), 164 deletions(-)
+ .../media/platform/qcom/camss/camss-vfe-340.c | 84 ++++++++++---------
+ 1 file changed, 43 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk-exynos990.c b/drivers/clk/samsung/clk-exynos990.c
-index 6277dd557fab6..4385c3b76dd68 100644
---- a/drivers/clk/samsung/clk-exynos990.c
-+++ b/drivers/clk/samsung/clk-exynos990.c
-@@ -1546,54 +1546,44 @@ static const unsigned long peric0_clk_regs[] __initconst = {
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+index 30d7630b3e8b3..d129b0d3a6edb 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-340.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+@@ -69,24 +69,19 @@
+ #define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
+ #define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
  
- /* Parent clock list for CMU_PERIC0 muxes */
- PNAME(mout_peric0_bus_user_p) = { "oscclk", "dout_cmu_peric0_bus" };
--PNAME(mout_peric0_uart_dbg_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi00_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi01_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi02_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi03_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi04_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi05_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi13_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi14_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi15_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
--PNAME(mout_peric0_usi_i2c_user_p) = { "oscclk", "dout_cmu_peric0_ip" };
-+PNAME(mout_peric0_nonbususer_p) = { "oscclk", "dout_cmu_peric0_ip" };
+-/*
+- * TODO: differentiate the port id based on requested type of RDI, BHIST etc
+- *
+- * TFE write master IDs (clients)
+- *
+- * BAYER		0
+- * IDEAL_RAW		1
+- * STATS_TINTLESS_BG	2
+- * STATS_BHIST		3
+- * STATS_AWB_BG		4
+- * STATS_AEC_BG		5
+- * STATS_BAF		6
+- * RDI0			7
+- * RDI1			8
+- * RDI2			9
+- */
+-#define RDI_WM(n)		(7 + (n))
+-#define TFE_WM_NUM		10
++enum tfe_client {
++	TFE_CLI_BAYER,
++	TFE_CLI_IDEAL_RAW,
++	TFE_CLI_STATS_TINTLESS_BG,
++	TFE_CLI_STATS_BHIST,
++	TFE_CLI_STATS_AWB_BG,
++	TFE_CLI_STATS_AEC_BG,
++	TFE_CLI_STATS_BAF,
++	TFE_CLI_RDI0,
++	TFE_CLI_RDI1,
++	TFE_CLI_RDI2,
++	TFE_CLI_NUM
++};
  
- static const struct samsung_mux_clock peric0_mux_clks[] __initconst = {
- 	MUX(CLK_MOUT_PERIC0_BUS_USER, "mout_peric0_bus_user",
- 	    mout_peric0_bus_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_BUS_USER,
- 	    4, 1),
--	MUX(CLK_MOUT_PERIC0_UART_DBG, "mout_peric0_uart_dbg",
--	    mout_peric0_uart_dbg_p, PLL_CON0_MUX_CLKCMU_PERIC0_UART_DBG,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI00_USI_USER, "mout_peric0_usi00_usi_user",
--	    mout_peric0_usi00_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI00_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI01_USI_USER, "mout_peric0_usi01_usi_user",
--	    mout_peric0_usi01_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI01_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI02_USI_USER, "mout_peric0_usi02_usi_user",
--	    mout_peric0_usi02_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI02_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI03_USI_USER, "mout_peric0_usi03_usi_user",
--	    mout_peric0_usi03_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI03_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI04_USI_USER, "mout_peric0_usi04_usi_user",
--	    mout_peric0_usi04_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI04_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI05_USI_USER, "mout_peric0_usi05_usi_user",
--	    mout_peric0_usi05_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI05_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI13_USI_USER, "mout_peric0_usi13_usi_user",
--	    mout_peric0_usi13_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI13_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI14_USI_USER, "mout_peric0_usi14_usi_user",
--	    mout_peric0_usi14_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI14_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC0_USI15_USI_USER, "mout_peric0_usi15_usi_user",
--	    mout_peric0_usi15_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI15_USI_USER,
--	    4, 1),
-+	nMUX(CLK_MOUT_PERIC0_UART_DBG, "mout_peric0_uart_dbg",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_UART_DBG,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI00_USI_USER, "mout_peric0_usi00_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI00_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI01_USI_USER, "mout_peric0_usi01_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI01_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI02_USI_USER, "mout_peric0_usi02_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI02_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI03_USI_USER, "mout_peric0_usi03_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI03_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI04_USI_USER, "mout_peric0_usi04_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI04_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI05_USI_USER, "mout_peric0_usi05_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI05_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI13_USI_USER, "mout_peric0_usi13_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI13_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI14_USI_USER, "mout_peric0_usi14_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI14_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC0_USI15_USI_USER, "mout_peric0_usi15_usi_user",
-+	     mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI15_USI_USER,
-+	     4, 1),
- 	MUX(CLK_MOUT_PERIC0_USI_I2C_USER, "mout_peric0_usi_i2c_user",
--	    mout_peric0_usi_i2c_user_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI_I2C_USER,
-+	    mout_peric0_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC0_USI_I2C_USER,
- 	    4, 1),
+ enum tfe_iface {
+ 	TFE_IFACE_PIX,
+@@ -108,6 +103,13 @@ enum tfe_subgroups {
+ 	TFE_SUBGROUP_NUM
  };
  
-@@ -1602,42 +1592,42 @@ static const struct samsung_div_clock peric0_div_clks[] __initconst = {
- 	    "mout_peric0_uart_dbg",
- 	    CLK_CON_DIV_DIV_CLK_PERIC0_UART_DBG,
- 	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI00_USI, "dout_peric0_usi00_usi",
--	    "mout_peric0_usi00_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI00_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI01_USI, "dout_peric0_usi01_usi",
--	    "mout_peric0_usi01_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI01_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI02_USI, "dout_peric0_usi02_usi",
--	    "mout_peric0_usi02_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI02_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI03_USI, "dout_peric0_usi03_usi",
--	    "mout_peric0_usi03_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI03_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI04_USI, "dout_peric0_usi04_usi",
--	    "mout_peric0_usi04_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI04_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI05_USI, "dout_peric0_usi05_usi",
--	    "mout_peric0_usi05_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI05_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI13_USI, "dout_peric0_usi13_usi",
--	    "mout_peric0_usi13_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI13_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI14_USI, "dout_peric0_usi14_usi",
--	    "mout_peric0_usi14_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI14_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC0_USI15_USI, "dout_peric0_usi15_usi",
--	    "mout_peric0_usi15_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC0_USI15_USI,
--	    0, 4),
-+	DIV_F(CLK_DOUT_PERIC0_USI00_USI, "dout_peric0_usi00_usi",
-+	      "mout_peric0_usi00_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI00_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI01_USI, "dout_peric0_usi01_usi",
-+	      "mout_peric0_usi01_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI01_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI02_USI, "dout_peric0_usi02_usi",
-+	      "mout_peric0_usi02_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI02_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI03_USI, "dout_peric0_usi03_usi",
-+	      "mout_peric0_usi03_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI03_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI04_USI, "dout_peric0_usi04_usi",
-+	      "mout_peric0_usi04_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI04_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI05_USI, "dout_peric0_usi05_usi",
-+	      "mout_peric0_usi05_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI05_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI13_USI, "dout_peric0_usi13_usi",
-+	      "mout_peric0_usi13_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI13_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI14_USI, "dout_peric0_usi14_usi",
-+	      "mout_peric0_usi14_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI14_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC0_USI15_USI, "dout_peric0_usi15_usi",
-+	      "mout_peric0_usi15_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC0_USI15_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
- 	DIV(CLK_DOUT_PERIC0_USI_I2C, "dout_peric0_usi_i2c",
- 	    "mout_peric0_usi_i2c_user",
- 	    CLK_CON_DIV_DIV_CLK_PERIC0_USI_I2C,
-@@ -2107,58 +2097,47 @@ static const unsigned long peric1_clk_regs[] __initconst = {
++static enum tfe_client tfe_wm_client_map[VFE_LINE_NUM_MAX] = {
++	[VFE_LINE_RDI0] = TFE_CLI_RDI0,
++	[VFE_LINE_RDI1] = TFE_CLI_RDI1,
++	[VFE_LINE_RDI2] = TFE_CLI_RDI2,
++	[VFE_LINE_PIX] = TFE_CLI_BAYER,
++};
++
+ static enum tfe_iface tfe_line_iface_map[VFE_LINE_NUM_MAX] = {
+ 	[VFE_LINE_RDI0] = TFE_IFACE_RDI0,
+ 	[VFE_LINE_RDI1] = TFE_IFACE_RDI1,
+@@ -209,10 +211,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 	status = readl_relaxed(vfe->base + TFE_BUS_OVERFLOW_STATUS);
+ 	if (status) {
+ 		writel_relaxed(status, vfe->base + TFE_BUS_STATUS_CLEAR);
+-		for (i = 0; i < TFE_WM_NUM; i++) {
++		for (i = 0; i < TFE_CLI_NUM; i++) {
+ 			if (status & BIT(i))
+ 				dev_err_ratelimited(vfe->camss->dev,
+-						    "VFE%u: bus overflow for wm %u\n",
++						    "VFE%u: bus overflow for client %u\n",
+ 						    vfe->id, i);
+ 		}
+ 	}
+@@ -235,49 +237,49 @@ static void vfe_enable_irq(struct vfe_device *vfe)
+ 	       TFE_BUS_IRQ_MASK_0_IMG_VIOL, vfe->base + TFE_BUS_IRQ_MASK_0);
+ }
  
- /* Parent clock list for CMU_PERIC1 muxes */
- PNAME(mout_peric1_bus_user_p)  = { "oscclk", "dout_cmu_peric1_bus" };
--PNAME(mout_peric1_uart_bt_user_p) = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi06_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi07_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi08_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi09_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi10_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi11_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi12_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi18_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi16_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi17_user_p)  = { "oscclk", "dout_cmu_peric1_ip" };
--PNAME(mout_peric1_usi_i2c_user_p) = { "oscclk", "dout_cmu_peric1_ip" };
-+PNAME(mout_peric1_nonbususer_p) = { "oscclk", "dout_cmu_peric1_ip" };
+-static void vfe_wm_update(struct vfe_device *vfe, u8 rdi, u32 addr,
++static void vfe_wm_update(struct vfe_device *vfe, u8 wm, u32 addr,
+ 			  struct vfe_line *line)
+ {
+-	u8 wm = RDI_WM(rdi);
++	u8 client = tfe_wm_client_map[wm];
  
- static const struct samsung_mux_clock peric1_mux_clks[] __initconst = {
- 	MUX(CLK_MOUT_PERIC1_BUS_USER, "mout_peric1_bus_user",
- 	    mout_peric1_bus_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_BUS_USER,
- 	    4, 1),
--	MUX(CLK_MOUT_PERIC1_UART_BT_USER, "mout_peric1_uart_bt_user",
--	    mout_peric1_uart_bt_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_UART_BT_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI06_USI_USER, "mout_peric1_usi06_usi_user",
--	    mout_peric1_usi06_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI06_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI07_USI_USER, "mout_peric1_usi07_usi_user",
--	    mout_peric1_usi07_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI07_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI08_USI_USER, "mout_peric1_usi08_usi_user",
--	    mout_peric1_usi08_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI08_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI09_USI_USER, "mout_peric1_usi09_usi_user",
--	    mout_peric1_usi09_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI09_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI10_USI_USER, "mout_peric1_usi10_usi_user",
--	    mout_peric1_usi10_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI10_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI11_USI_USER, "mout_peric1_usi11_usi_user",
--	    mout_peric1_usi11_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI11_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI12_USI_USER, "mout_peric1_usi12_usi_user",
--	    mout_peric1_usi12_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI12_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI18_USI_USER, "mout_peric1_usi18_usi_user",
--	    mout_peric1_usi18_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI18_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI16_USI_USER, "mout_peric1_usi16_usi_user",
--	    mout_peric1_usi16_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI16_USI_USER,
--	    4, 1),
--	MUX(CLK_MOUT_PERIC1_USI17_USI_USER, "mout_peric1_usi17_usi_user",
--	    mout_peric1_usi17_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI17_USI_USER,
--	    4, 1),
-+	nMUX(CLK_MOUT_PERIC1_UART_BT_USER, "mout_peric1_uart_bt_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_UART_BT_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI06_USI_USER, "mout_peric1_usi06_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI06_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI07_USI_USER, "mout_peric1_usi07_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI07_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI08_USI_USER, "mout_peric1_usi08_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI08_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI09_USI_USER, "mout_peric1_usi09_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI09_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI10_USI_USER, "mout_peric1_usi10_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI10_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI11_USI_USER, "mout_peric1_usi11_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI11_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI12_USI_USER, "mout_peric1_usi12_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI12_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI18_USI_USER, "mout_peric1_usi18_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI18_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI16_USI_USER, "mout_peric1_usi16_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI16_USI_USER,
-+	     4, 1),
-+	nMUX(CLK_MOUT_PERIC1_USI17_USI_USER, "mout_peric1_usi17_usi_user",
-+	     mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI17_USI_USER,
-+	     4, 1),
- 	MUX(CLK_MOUT_PERIC1_USI_I2C_USER, "mout_peric1_usi_i2c_user",
--	    mout_peric1_usi_i2c_user_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI_I2C_USER,
-+	    mout_peric1_nonbususer_p, PLL_CON0_MUX_CLKCMU_PERIC1_USI_I2C_USER,
- 	    4, 1),
- };
+-	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(wm));
++	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(client));
+ }
  
-@@ -2167,46 +2146,46 @@ static const struct samsung_div_clock peric1_div_clks[] __initconst = {
- 	    "mout_peric1_uart_bt_user",
- 	    CLK_CON_DIV_DIV_CLK_PERIC1_UART_BT,
- 	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI06_USI, "dout_peric1_usi06_usi",
--	    "mout_peric1_usi06_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI06_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI07_USI, "dout_peric1_usi07_usi",
--	    "mout_peric1_usi07_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI07_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI08_USI, "dout_peric1_usi08_usi",
--	    "mout_peric1_usi08_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI08_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI18_USI, "dout_peric1_usi18_usi",
--	    "mout_peric1_usi18_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI18_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI12_USI, "dout_peric1_usi12_usi",
--	    "mout_peric1_usi12_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI12_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI09_USI, "dout_peric1_usi09_usi",
--	    "mout_peric1_usi09_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI09_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI10_USI, "dout_peric1_usi10_usi",
--	    "mout_peric1_usi10_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI10_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI11_USI, "dout_peric1_usi11_usi",
--	    "mout_peric1_usi11_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI11_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI16_USI, "dout_peric1_usi16_usi",
--	    "mout_peric1_usi16_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI16_USI,
--	    0, 4),
--	DIV(CLK_DOUT_PERIC1_USI17_USI, "dout_peric1_usi17_usi",
--	    "mout_peric1_usi17_usi_user",
--	    CLK_CON_DIV_DIV_CLK_PERIC1_USI17_USI,
--	    0, 4),
-+	DIV_F(CLK_DOUT_PERIC1_USI06_USI, "dout_peric1_usi06_usi",
-+	      "mout_peric1_usi06_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI06_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI07_USI, "dout_peric1_usi07_usi",
-+	      "mout_peric1_usi07_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI07_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI08_USI, "dout_peric1_usi08_usi",
-+	      "mout_peric1_usi08_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI08_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI18_USI, "dout_peric1_usi18_usi",
-+	      "mout_peric1_usi18_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI18_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI12_USI, "dout_peric1_usi12_usi",
-+	      "mout_peric1_usi12_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI12_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI09_USI, "dout_peric1_usi09_usi",
-+	      "mout_peric1_usi09_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI09_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI10_USI, "dout_peric1_usi10_usi",
-+	      "mout_peric1_usi10_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI10_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI11_USI, "dout_peric1_usi11_usi",
-+	      "mout_peric1_usi11_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI11_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI16_USI, "dout_peric1_usi16_usi",
-+	      "mout_peric1_usi16_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI16_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
-+	DIV_F(CLK_DOUT_PERIC1_USI17_USI, "dout_peric1_usi17_usi",
-+	      "mout_peric1_usi17_usi_user",
-+	      CLK_CON_DIV_DIV_CLK_PERIC1_USI17_USI, 0, 4,
-+	      CLK_SET_RATE_PARENT, 0),
- 	DIV(CLK_DOUT_PERIC1_USI_I2C, "dout_peric1_usi_i2c",
- 	    "mout_peric1_usi_i2c_user",
- 	    CLK_CON_DIV_DIV_CLK_PERIC1_USI_I2C,
+-static void vfe_wm_start(struct vfe_device *vfe, u8 rdi, struct vfe_line *line)
++static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
+ {
+ 	struct v4l2_pix_format_mplane *pix = &line->video_out.active_fmt.fmt.pix_mp;
+ 	u32 stride = pix->plane_fmt[0].bytesperline;
+-	u8 wm = RDI_WM(rdi);
++	u8 client = tfe_wm_client_map[wm];
+ 
+ 	/* Configuration for plain RDI frames */
+-	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(wm));
+-	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(wm));
+-	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(wm));
+-	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(wm));
+-	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(wm));
++	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(client));
++	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
++	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
++	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
++	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(client));
+ 
+ 	/* No dropped frames, one irq per frame */
+-	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(wm));
+-	writel_relaxed(1, vfe->base + TFE_BUS_FRAMEDROP_CFG_1(wm));
+-	writel_relaxed(0, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_0(wm));
+-	writel_relaxed(1, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_1(wm));
++	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(client));
++	writel_relaxed(1, vfe->base + TFE_BUS_FRAMEDROP_CFG_1(client));
++	writel_relaxed(0, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_0(client));
++	writel_relaxed(1, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_1(client));
+ 
+ 	vfe_enable_irq(vfe);
+ 
+ 	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
+-	       vfe->base + TFE_BUS_CLIENT_CFG(wm));
++	       vfe->base + TFE_BUS_CLIENT_CFG(client));
+ 
+-	dev_dbg(vfe->camss->dev, "VFE%u: Started RDI%u width %u height %u stride %u\n",
+-		vfe->id, rdi, pix->width, pix->height, stride);
++	dev_dbg(vfe->camss->dev, "VFE%u: Started client %u width %u height %u stride %u\n",
++		vfe->id, client, pix->width, pix->height, client);
+ }
+ 
+-static void vfe_wm_stop(struct vfe_device *vfe, u8 rdi)
++static void vfe_wm_stop(struct vfe_device *vfe, u8 wm)
+ {
+-	u8 wm = RDI_WM(rdi);
++	u8 client = tfe_wm_client_map[wm];
+ 
+-	writel(0, vfe->base + TFE_BUS_CLIENT_CFG(wm));
++	writel(0, vfe->base + TFE_BUS_CLIENT_CFG(client));
+ 
+-	dev_dbg(vfe->camss->dev, "VFE%u: Stopped RDI%u\n", vfe->id, rdi);
++	dev_dbg(vfe->camss->dev, "VFE%u: Stopped client %u\n", vfe->id, client);
+ }
+ 
+ static const struct camss_video_ops vfe_video_ops_520 = {
 -- 
 2.53.0
 
