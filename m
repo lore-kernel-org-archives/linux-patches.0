@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8A44FDA57;
-	Thu, 17 Sep 2026 17:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CF54FDA76;
+	Thu, 17 Sep 2026 17:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664940; cv=none; b=s4m+Oer0i3HBfAyiRKvggslS/rNuWaiUByqxxG/ah5P7zdTVyoyMk0s+uMhZYNhVcg8FLFJOmhvdRTxXIXeFASDNuI9UHWYclOiWn7aUzfeRFrhNHTd7qSFINoRsJVQfV4P8vZwL1UJ7wHmPib9esMpRKNuP6okCcVWw3PSjsVM=
+	t=1789664944; cv=none; b=Rj1Epzl7RxBINwlUVv0YLZ2FI7LiFyvuuTs+PjKpRUXcb1hZQ49MhKjDPgK64bjTyfDV85NvghiFovDEMN5c07vb2LRQbpo2rXZkUOYlYc+0ZXifHsadfQmomc3qKLiyxF3nLz5QOu7Hp56XqGvtI3YEgw+/GseEYtssR3MJsag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664940; c=relaxed/simple;
-	bh=gKHmaUecaIVVY7/wTGdXSSytRWvLWU2rux/exRDO2zk=;
+	s=arc-20240116; t=1789664944; c=relaxed/simple;
+	bh=Whb8l41xDl/sRimkLyZPJzsnOEfWlCPZ0jevcPa6CZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOG6FC6zMNV8Dnu54heD1UX6RPEjenmLeIGsYnZ/EniXEcTvOkMOPYYHaBBQzxzQz3yURn41TsgBHv72C8gP4twYpdS9bnGcqpL3S1y7Le3uP5hYoRXGYUJpN6kHpmIhiNoUWTDgPyV+jaYB28HO8nAQvh2Nc4i7mWZPLJfUwhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5qyoyXg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ecyW/Axvkb4sHolOsK5O7wQH9mNRTT3G6ONbGv0SSJ4/QsPdVb8+ARO7KH8QaemWQcBIaQIeOGE2saFyOs+9SCgxsgYuqbwUPI+rZhMr1SUPnuoIDcX4/JpSwWDRv9nTQO2lfsabfrAA0RSUc9XRPF8gCWoYRdmlpJhviJVkMQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCQXktjy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5qyoyXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0DB1F000FF;
-	Thu, 17 Sep 2026 17:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCQXktjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE5E1F000FF;
+	Thu, 17 Sep 2026 17:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664939;
-	bh=OhgtW7Thv/y9nFpKDCOZvXxYPWus3tuTatNBWCrzXfU=;
+	s=korg; t=1789664942;
+	bh=wdhNWWOFVrH1sszqg1bVoNpvqkc/4ZPM4cZ7T9QknLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5qyoyXgfxaxJHlAngH7mTvGoJUdWNWwDyi3UceSqJxNTl5KUUY3M0Y2yppmBMjwE
-	 k7kTb9+GECxKunvieKlPOtT3WMiB+uyrKo71jjjGX3v2KsBxhAZn5pzAyoUgzoZ/cO
-	 e9KCP509xi+0cwVAs34Q56tCZwBuT0orucbSCp50=
+	b=QCQXktjyiWqBwEYdxshIxjfUN7vJxWJf598sA6PPS1svy1jTDRSHlSttd9HhGcwcK
+	 4Jn3GOFvpYvELIxAxw7vqccovGW9FGZGer0ulSB03Y5PTtxSK4mWM8DjUSuLTbV3MR
+	 rocYQmlZfqIGc9RZZIb61lp5yVG6FCRdWjC48Fzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgi Valkov <gvalkov@gmail.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jay Vadayath <jay@artiphishell.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0539/1250] wifi: mwifiex: replace one-element arrays with flexible array members
-Date: Thu, 17 Sep 2026 16:05:34 +0100
-Message-ID: <20260917151606.551172302@linuxfoundation.org>
+Subject: [PATCH 6.18 0540/1250] smb: client: bound dirent name against end of SMB response in cifs_filldir
+Date: Thu, 17 Sep 2026 16:05:35 +0100
+Message-ID: <20260917151606.580358556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,142 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgi Valkov <gvalkov@gmail.com>
+From: Jay Vadayath <jay@artiphishell.com>
 
-[ Upstream commit 1cb5845a58d8e1f85d5766c6fbcbfddf96c212a1 ]
+[ Upstream commit f8cf09a53a0dc1da298e9dd0ba5f21710cf119d6 ]
 
-Replace deprecated one-element arrays with flexible array members.
-CONFIG_FORTIFY_SOURCE reports the following warning when
-one-element arrays are used as variable-length buffers:
+cifs_filldir() copies the entry name out of an SMB1 TRANS2_FIND_FIRST /
+FIND_NEXT response using a length (de.namelen) supplied by the server.
+The kmalloc'd SMB response buffer is bounded, but nothing checks that
+de.name + de.namelen still lies inside that buffer before the eventual
+filldir64() -> verify_dirent_name() -> memchr() reads namelen bytes.
 
-sta_cmd.c:1033 mwifiex_sta_prepare_cmd
-memcpy: detected field-spanning write (size 84) of single field
-"domain->triplet" at .../marvell/mwifiex/sta_cmd.c:1033 (size 3)
+A hostile SMB1 server that returns an oversized FileNameLength in a
+directory entry therefore causes memchr() to read past the end of the
+response slab buffer. Reachable from any user who can list a directory
+on a CIFS mount served by an attacker-controlled server (getdents64()
+on the mounted directory):
 
-Convert affected structs to use flexible array members.
-- Preserve existing wire layouts.
-- Use DECLARE_FLEX_ARRAY() for structs inside affected unions.
+  BUG: KASAN: slab-out-of-bounds in memchr+0x71/0x80
+  Read of size 1 at addr ffff88800e0640cc by task poc/115
+  Call Trace:
+   dump_stack_lvl+0x64/0x80
+   print_report+0xce/0x620
+   kasan_report+0xec/0x120
+   memchr+0x71/0x80
+   filldir64+0x4c/0x6a0
+   cifs_filldir.constprop.0+0x9bb/0x1e00
+   cifs_readdir+0x2101/0x3380
+   iterate_dir+0x19c/0x520
+   __x64_sys_getdents64+0x126/0x210
+   do_syscall_64+0x107/0x5a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Tested-on: WRT3200ACM, OpenWrt
-Signed-off-by: Georgi Valkov <gvalkov@gmail.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260716001728.57799-1-gvalkov@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Pass the end-of-response pointer down to cifs_filldir() and reject
+entries whose name would extend past that boundary.
+
+This bug was discovered by Artiphishell's vTriage pipeline, which
+generated a userspace reproducer (an emulated hostile SMB1 server plus
+a getdents64() client) that reliably triggers the KASAN report on an
+unpatched kernel. The fix below was drafted with the Claude coding
+assistant; a userspace reproducer is available on request.
+
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Jay Vadayath <jay@artiphishell.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/fw.h      | 18 +++++++++---------
- drivers/net/wireless/marvell/mwifiex/join.c    |  8 ++++----
- drivers/net/wireless/marvell/mwifiex/sta_cmd.c |  2 +-
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ fs/smb/client/readdir.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index e9e8966069121..93561116959ac 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -823,7 +823,7 @@ struct chan_band_param_set {
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index f0ce26622a140..d61ce7c6be645 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -949,7 +949,7 @@ static bool cifs_dir_emit(struct dir_context *ctx,
+ static int cifs_filldir(char *find_entry, struct file *file,
+ 			struct dir_context *ctx,
+ 			char *scratch_buf, unsigned int max_len,
+-			struct cached_fid *cfid)
++			char *end_of_smb, struct cached_fid *cfid)
+ {
+ 	struct cifsFileInfo *file_info = file->private_data;
+ 	struct super_block *sb = file_inode(file)->i_sb;
+@@ -970,6 +970,11 @@ static int cifs_filldir(char *find_entry, struct file *file,
+ 		return -EINVAL;
+ 	}
  
- struct mwifiex_ie_types_chan_band_list_param_set {
- 	struct mwifiex_ie_types_header header;
--	struct chan_band_param_set chan_band_param[1];
-+	struct chan_band_param_set chan_band_param[];
- } __packed;
- 
- struct mwifiex_ie_types_rates_param_set {
-@@ -886,7 +886,7 @@ struct mwifiex_ie_types_wildcard_ssid_params {
- #define TSF_DATA_SIZE            8
- struct mwifiex_ie_types_tsf_timestamp {
- 	struct mwifiex_ie_types_header header;
--	u8 tsf_data[1];
-+	u8 tsf_data[];
- } __packed;
- 
- struct mwifiex_cf_param_set {
-@@ -903,8 +903,8 @@ struct mwifiex_ibss_param_set {
- struct mwifiex_ie_types_ss_param_set {
- 	struct mwifiex_ie_types_header header;
- 	union {
--		struct mwifiex_cf_param_set cf_param_set[1];
--		struct mwifiex_ibss_param_set ibss_param_set[1];
-+		DECLARE_FLEX_ARRAY(struct mwifiex_cf_param_set, cf_param_set);
-+		DECLARE_FLEX_ARRAY(struct mwifiex_ibss_param_set, ibss_param_set);
- 	} cf_ibss;
- } __packed;
- 
-@@ -922,8 +922,8 @@ struct mwifiex_ds_param_set {
- struct mwifiex_ie_types_phy_param_set {
- 	struct mwifiex_ie_types_header header;
- 	union {
--		struct mwifiex_fh_param_set fh_param_set[1];
--		struct mwifiex_ds_param_set ds_param_set[1];
-+		DECLARE_FLEX_ARRAY(struct mwifiex_fh_param_set, fh_param_set);
-+		DECLARE_FLEX_ARRAY(struct mwifiex_ds_param_set, ds_param_set);
- 	} fh_ds;
- } __packed;
- 
-@@ -1383,7 +1383,7 @@ struct host_cmd_ds_802_11_snmp_mib {
- 	__le16 query_type;
- 	__le16 oid;
- 	__le16 buf_size;
--	u8 value[1];
-+	u8 value[];
- } __packed;
- 
- struct mwifiex_rate_scope {
-@@ -1551,7 +1551,7 @@ struct mwifiex_scan_cmd_config {
- 	 *  TLV_TYPE_CHANLIST, mwifiex_ie_types_chan_list_param_set
- 	 *  WLAN_EID_SSID, mwifiex_ie_types_ssid_param_set
- 	 */
--	u8 tlv_buf[1];	/* SSID TLV(s) and ChanList TLVs are stored
-+	u8 tlv_buf[];	/* SSID TLV(s) and ChanList TLVs are stored
- 				   here */
- } __packed;
- 
-@@ -1683,7 +1683,7 @@ struct host_cmd_ds_802_11_bg_scan_query_rsp {
- struct mwifiex_ietypes_domain_param_set {
- 	struct mwifiex_ie_types_header header;
- 	u8 country_code[IEEE80211_COUNTRY_STRING_LEN];
--	struct ieee80211_country_ie_triplet triplet[1];
-+	struct ieee80211_country_ie_triplet triplet[];
- } __packed;
- 
- struct host_cmd_ds_802_11d_domain_info {
-diff --git a/drivers/net/wireless/marvell/mwifiex/join.c b/drivers/net/wireless/marvell/mwifiex/join.c
-index b48f7febaf03f..259140395d353 100644
---- a/drivers/net/wireless/marvell/mwifiex/join.c
-+++ b/drivers/net/wireless/marvell/mwifiex/join.c
-@@ -421,15 +421,15 @@ int mwifiex_cmd_802_11_associate(struct mwifiex_private *priv,
- 
- 	phy_tlv = (struct mwifiex_ie_types_phy_param_set *) pos;
- 	phy_tlv->header.type = cpu_to_le16(WLAN_EID_DS_PARAMS);
--	phy_tlv->header.len = cpu_to_le16(sizeof(phy_tlv->fh_ds.ds_param_set));
--	memcpy(&phy_tlv->fh_ds.ds_param_set,
-+	phy_tlv->header.len = cpu_to_le16(sizeof(*phy_tlv->fh_ds.ds_param_set));
-+	memcpy(phy_tlv->fh_ds.ds_param_set,
- 	       &bss_desc->phy_param_set.ds_param_set.current_chan,
--	       sizeof(phy_tlv->fh_ds.ds_param_set));
-+	       sizeof(*phy_tlv->fh_ds.ds_param_set));
- 	pos += sizeof(phy_tlv->header) + le16_to_cpu(phy_tlv->header.len);
- 
- 	ss_tlv = (struct mwifiex_ie_types_ss_param_set *) pos;
- 	ss_tlv->header.type = cpu_to_le16(WLAN_EID_CF_PARAMS);
--	ss_tlv->header.len = cpu_to_le16(sizeof(ss_tlv->cf_ibss.cf_param_set));
-+	ss_tlv->header.len = cpu_to_le16(sizeof(*ss_tlv->cf_ibss.cf_param_set));
- 	pos += sizeof(ss_tlv->header) + le16_to_cpu(ss_tlv->header.len);
- 
- 	/* Get the common rates supported between the driver and the BSS Desc */
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-index dcca71158fc68..0a0458e15e289 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-@@ -108,7 +108,7 @@ static int mwifiex_cmd_802_11_snmp_mib(struct mwifiex_private *priv,
- 		    "cmd: SNMP_CMD: cmd_oid = 0x%x\n", cmd_oid);
- 	cmd->command = cpu_to_le16(HostCmd_CMD_802_11_SNMP_MIB);
- 	cmd->size = cpu_to_le16(sizeof(struct host_cmd_ds_802_11_snmp_mib)
--				- 1 + S_DS_GEN);
-+				+ S_DS_GEN);
- 
- 	snmp_mib->oid = cpu_to_le16((u16)cmd_oid);
- 	if (cmd_action == HostCmd_ACT_GEN_GET) {
++	if (de.name + de.namelen > end_of_smb) {
++		cifs_dbg(VFS, "search entry name extends past end of SMB\n");
++		return -EINVAL;
++	}
++
+ 	/* skip . and .. since we added them first */
+ 	if (cifs_entry_is_dot(&de, file_info->srch_inf.unicode))
+ 		return 0;
+@@ -1190,7 +1195,7 @@ int cifs_readdir(struct file *file, struct dir_context *ctx)
+ 		 */
+ 		*tmp_buf = 0;
+ 		rc = cifs_filldir(current_entry, file, ctx,
+-				  tmp_buf, max_len, cfid);
++				  tmp_buf, max_len, end_of_smb, cfid);
+ 		if (rc) {
+ 			if (rc > 0)
+ 				rc = 0;
 -- 
 2.53.0
 
