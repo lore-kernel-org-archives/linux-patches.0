@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E1A53F6A7;
-	Thu, 17 Sep 2026 17:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF82541449;
+	Thu, 17 Sep 2026 17:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664925; cv=none; b=cfNG2WmWNDoAsIdGJpIBoZ86csxQbfj+gJPj7h2KoF3ewHtidrIQwftXc0/KB4Hj6brDmYl5+hAY+J2bhEsfCTB5xXQd71YoZmAoJhrUaErx2aVyqcvavlpRy2ZGoR6BdS9X6YJ3fWaL1cq82/HppHhjAU2ktups9OPm4Aeh5j8=
+	t=1789664928; cv=none; b=jDIJl1UUDj2HtYzQ1CxeG67dl9UtARqc3unRNBkM2Vx/DN/9Qy1h75PRyioWnXWwF+3VQS1OaHbImXYMQWK+AvWelbaDILqh5Yxg1Mty63c/JaBpRuOdwXe2BDFm2/chcyvVWH5hKcvF360EH8LXCLnalvuQvXcxgu+g0v+3l9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664925; c=relaxed/simple;
-	bh=16k7vAHphzevvsI44jcMIpAQz9slxKsJw0q+95IFQTo=;
+	s=arc-20240116; t=1789664928; c=relaxed/simple;
+	bh=BsgU8n2DAlZ/ra4K4HX6sWIb202qGtWYm7eadKWGnro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3BQSbALoNSXFT8gQUYLgtlJzRYAwLX402e7bcURNGapc3+Yz+ZNzH7bEnti8/b/qOyL4OKPmpIXSnhkn9GyX76eFsSQNHQ9/b6TBinKme9XZb+D2l2R1xei07sGdf1tGlgTePU7tlxMrH4qjhAqsDKbEPsN9XZ8wUXXrWSDiN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/5172DI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l6V2CpWW8+IrZ/UasTxgeUSBJceZ0Vcd5h4VxQWTa+0iE18vk7IcKST5uHxc9ysO/M7xtYc7emmskH1RcFX/RBgmxF3hRogjvgqBwwRSNEsPYFwc/rdG20g/+sSRUI1pLFSnpHrNLuYlaY4sxxnF0TREymK5byVCMjNZxjgsYp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOahVTjN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/5172DI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBE71F0089A;
-	Thu, 17 Sep 2026 17:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOahVTjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9541F000FF;
+	Thu, 17 Sep 2026 17:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664924;
-	bh=slu7CczgwmnxiUpbAaDUL29lxBP78LCXy+mDwGCN8uo=;
+	s=korg; t=1789664927;
+	bh=5kgQAoFnVZPMMdSfzgvF5Gr3aZLRUGtl65Y5b8mMtW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/5172DIj/p7MOaOcHZAz5mrh6pLLVAakCbY5GNdRXeC8lLpUsPorkjXyGZJLjN5+
-	 KnWLQBzGZud1Bo1c/rZckcK+rmFwIiySkisZYuFL5Ac4ZU0xZ2EjPTZvVgEvH+Tc6P
-	 B5HLl/BKTw9wO2pw4jxce7ommO1vxPClRowpTk3E=
+	b=jOahVTjNdJDTG9XzojcW7gLphDiWSxV3Rko3a8/I5UlIXfsi4jikLjcGWvScmk834
+	 /EGeNu89Aq+cXrUSJZWhnA50h1bXEXOJvoXzajZmc7sL2Gb9an4BdAY1/AkYBmQENt
+	 tmCCUhZq5WDtSYDmJoWd9H2lGjUA2aW2IA7rgTwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0534/1250] ALSA: hda/realtek: Add quirk for HP Pavilion x360
-Date: Thu, 17 Sep 2026 16:05:29 +0100
-Message-ID: <20260917151606.410644442@linuxfoundation.org>
+Subject: [PATCH 6.18 0535/1250] wifi: iwlwifi: bound aligned TLV advance in FW parser
+Date: Thu, 17 Sep 2026 16:05:30 +0100
+Message-ID: <20260917151606.438300264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,68 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 02bbbf05d19f49c5cc9f249dd8844b2a7f2a2b8c ]
+[ Upstream commit acad742714bdc70e7fd7f234323807c596828213 ]
 
-HP Pavilion x360 sets a bogus PCI SSID (103c:0000), hence the driver
-picks up a wrong quirk entry, resulting in an almost silent output.
-And yet, the existing quirk for x390 doesn't seem sufficing, and we
-need the extra setup for the amp.
+Validate ALIGN(tlv_len, 4) against remaining parser length before
+consuming bytes from the firmware image.
 
-This patch adds the quirk entry for the codec SSID (103c:8486) to
-initialize the amp via COEF verbs and chains to the existing quirk for
-another x360 model to address the silent output.
+This avoids length underflow on malformed TLVs.
 
-Closes: https://lore.kernel.org/CAF2ktaUW2oaWwGazGtJQ3o1JyE2R4O2xPd-Dchr=qqi7_QRruQ@mail.gmail.com
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260716064916.540616-1-tiwai@suse.de
+Assisted-by: GitHubCopilot:GPT-5.3-Codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260717173215.393c286488f9.Ia39144dc3ca334325ee4eacb7420901e2446fc23@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index bf7d4793d8725..a2cda3a964fee 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3823,6 +3823,7 @@ enum {
- 	ALC256_FIXUP_HUAWEI_MACH_WX9_PINS,
- 	ALC298_FIXUP_HUAWEI_MBX_STEREO,
- 	ALC295_FIXUP_HP_X360,
-+	ALC295_FIXUP_HP_PAVILION_X360,
- 	ALC221_FIXUP_HP_HEADSET_MIC,
- 	ALC285_FIXUP_LENOVO_HEADPHONE_NOISE,
- 	ALC295_FIXUP_HP_AUTO_MUTE,
-@@ -5135,6 +5136,19 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_HP_MUTE_LED_MIC3
- 	},
-+	[ALC295_FIXUP_HP_PAVILION_X360] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			/* force amp gain and processing state */
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x07 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x7770 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x0d },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x3000 },
-+			{}
-+		},
-+		.chained = true,
-+		.chain_id = ALC295_FIXUP_HP_X360
-+	},
- 	[ALC221_FIXUP_HP_HEADSET_MIC] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -6729,6 +6743,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x82c0, "HP G3 mini premium", ALC221_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x83b9, "HP Spectre x360", ALC269_FIXUP_HP_MUTE_LED_MIC3),
- 	SND_PCI_QUIRK(0x103c, 0x841c, "HP Pavilion 15-CK0xx", ALC269_FIXUP_HP_MUTE_LED_MIC3),
-+	HDA_CODEC_QUIRK(0x103c, 0x8486, "HP Pavilion x360", ALC295_FIXUP_HP_PAVILION_X360),
- 	SND_PCI_QUIRK(0x103c, 0x8497, "HP Envy x360", ALC269_FIXUP_HP_MUTE_LED_MIC3),
- 	SND_PCI_QUIRK(0x103c, 0x84a6, "HP 250 G7 Notebook PC", ALC269_FIXUP_HP_LINE1_MIC1_LED),
- 	SND_PCI_QUIRK(0x103c, 0x84ae, "HP 15-db0403ng", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index 0f002ef261fcc..3a4bcfd60905c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -803,6 +803,7 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
+ 	u32 build, paging_mem_size;
+ 	int num_of_cpus;
+ 	bool usniffer_req = false;
++	size_t aligned_tlv_len;
+ 
+ 	if (len < sizeof(*ucode)) {
+ 		IWL_ERR(drv, "uCode has invalid length: %zd\n", len);
+@@ -851,8 +852,16 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
+ 				len, tlv_len);
+ 			return -EINVAL;
+ 		}
+-		len -= ALIGN(tlv_len, 4);
+-		data += sizeof(*tlv) + ALIGN(tlv_len, 4);
++
++		aligned_tlv_len = ALIGN(tlv_len, 4);
++		if (len < aligned_tlv_len) {
++			IWL_ERR(drv, "invalid aligned TLV len: %zd/%zu\n",
++				len, aligned_tlv_len);
++			return -EINVAL;
++		}
++
++		len -= aligned_tlv_len;
++		data += sizeof(*tlv) + aligned_tlv_len;
+ 
+ 		switch (tlv_type) {
+ 		case IWL_UCODE_TLV_INST:
 -- 
 2.53.0
 
