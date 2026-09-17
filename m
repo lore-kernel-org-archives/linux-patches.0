@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D924F68AC;
-	Thu, 17 Sep 2026 16:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B334EF143;
+	Thu, 17 Sep 2026 16:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663932; cv=none; b=aaR+3H+a78qPJoqpx1JsuE9nJCsyvdOsvxYfVfV44z2YMwDLAxjwx3VZoXMMpLjEzL61+qDKGz9PV2DmiIzQF6bYIUw602pL0WuFRS1GeurL3bZeXJTFh39G89HhXGXQdusFLU0ftQBNhY2IUFcvMh0yRR64wgixYMb7auQFUbM=
+	t=1789663935; cv=none; b=EQdokfVEDn+rTkRIPmUXlsihSyiYCDEjKUKOSY3YxDS9yu6ny3IrwIcwxVSy1WS6TKGKBpHiV517UG+P4MA6OHWqBzDcPZTxKDyXiNi8eXsXTYdC/0wIo5Tc28NJjL6qHV+c270B/6PH+wyY7lPM5oNQY8MjnBl8YZPNzaNw2R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663932; c=relaxed/simple;
-	bh=xXv3KjeJxt9WI3FbNSyCXKnS/r1eRVGYFLabnG2ssEM=;
+	s=arc-20240116; t=1789663935; c=relaxed/simple;
+	bh=qpomd2w+Klg0rZdjdUQwH0tDMbAEYF0iRb+KAiqtPwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJuWl2O0XfGFGg20JpSIAkoe0sT7xgIMeSmJHK+a4zCF19nPk8Glxz2+7Dco5fgXD6n6C4nkJqYIg/Up91TNzPU/lANLWXwLvvoMWeq7CD3JKMlpOuUlMBz0/8McQeruPhsWyzmYo2Dlz02FOqOSp3ssN/2ajvRL6UfgK+rH9zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsDWJBoj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ijvG8AutBqM80O+dBZPRNA3y9WUGhTR/4RDjuVOjTZJbhG3t59BC+e1GxoVjGv33q+P+K4x1nd9CZGeqpO/WEJVSkquIBgU6fKxK/qNHIiUCCDJMvG26pknQHDPxljarL/NpfeYYDVY3Vtsv0VuBJIs29je3yFBz7b02sI09Bgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kz1HLwnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsDWJBoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253F51F000FF;
-	Thu, 17 Sep 2026 16:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kz1HLwnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291C91F000FF;
+	Thu, 17 Sep 2026 16:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663930;
-	bh=XfFATLSsSYN4d8EGDpsXHCbmHFWaIbzVb1sbvk/M4lw=;
+	s=korg; t=1789663933;
+	bh=VRanbwJB6pMY1NSTzccPqkkt7DanlncY37azUTp6gQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsDWJBoj5TG4ZvOKqPfViyMNec+ZewzwYST6WYtZZhJxkvB/hDmGjFdb7gJgePhUj
-	 dpA3GKEKl0FdQASkZOwk16silFQiz3g1zZr8L/LrlU/syP6OwBqTWSWTGT+tNiO/bU
-	 QC7PyxgRLIUYk8/Ha4q+CiDTnDj9o73hZ2tohEqU=
+	b=kz1HLwnPU/kJBJ6WyYqregCkPPirzViwAQtBWjp7pCM9A1GHmgJTW8BOH0Hz7J7MN
+	 2wPnqAU6fDDENf8/Pbg0g2dzHlDJZRT5PqL4oUeLVF2zI3pWM5EKoj8nFZnHRx8bXg
+	 yK7hfRlAxXtQX3QGfK8TCQq7YwhjwxNW/IErqpls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sicong Huang <congei42@163.com>,
-	Fei Li <fei1.li@intel.com>,
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0201/1250] virt: acrn: Fix irqfd use-after-free during eventfd shutdown
-Date: Thu, 17 Sep 2026 15:59:56 +0100
-Message-ID: <20260917151557.568514252@linuxfoundation.org>
+Subject: [PATCH 6.18 0202/1250] wifi: rtw89: pci: enable LTR based on pcie control register
+Date: Thu, 17 Sep 2026 15:59:57 +0100
+Message-ID: <20260917151557.595021953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,228 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicong Huang <congei42@163.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 666c7f9e07925aa0863348f960e09bb89f8f05a3 ]
+[ Upstream commit 779bbe1902f29d0ef131249ddd42a8dfbe21d0fb ]
 
-acrn_irqfd_deassign() and the eventfd EPOLLHUP wakeup can race and free
-the same struct hsm_irqfd:
+Originally, driver always transmits LTR (Latency Tolerance Reporting) to
+pcie host, but it may cause pcie link down on some platforms because
+LTR is not supported. As a result, driver will check the control
+register of LTR setting to decide whether to enable LTR feature.
 
-  CPU0                                 CPU1
-  ----                                 ----
-  eventfd_release()
-    wake_up_poll(EPOLLHUP)
-      hsm_irqfd_wakeup()
-        queue_work(&irqfd->shutdown)
-                                       acrn_irqfd_deassign()
-                                         hsm_irqfd_shutdown()
-                                           list_del_init()
-                                           eventfd_ctx_remove_wait_queue()
-                                           eventfd_ctx_put()
-                                         kfree(irqfd)
-  hsm_irqfd_shutdown_work()
-    container_of(work, ..., shutdown)
-    irqfd->vm                  <-- use-after-free
+This applies to Wi-Fi 6 chips only. For Wi-Fi 7 chips, although the
+driver still issues LTR, the hardware has its own internal logic
+to determine whether to actually transmit it to pcie host.
 
-The deassign path freed the irqfd while a shutdown work item was
-already queued by EPOLLHUP (or vice versa), so the work item could
-resurrect a dangling pointer through container_of().
-
-Switch to the lifetime model used by KVM irqfds:
-
- - Deassign/deinit only deactivate the irqfd: remove it from vm->irqfds
-   under irqfds_lock and queue the cleanup work.
- - hsm_irqfd_shutdown_work() becomes the sole owner that unhooks the
-   eventfd waitqueue entry, drops the eventfd reference and frees the
-   irqfd.
- - A new HSM_IRQFD_FLAG_SHUTDOWN bit guarded by test_and_set_bit()
-   ensures the cleanup work is queued at most once, no matter how many
-   of {EPOLLHUP, deassign, deinit} fire concurrently.  This is safe to
-   call from the waitqueue callback, which runs with wqh->lock held and
-   IRQs disabled and therefore cannot take irqfds_lock.
- - acrn_irqfd_deassign() flushes vm->irqfd_wq before returning so the
-   eventfd is fully detached on return.  acrn_irqfd_deinit() deactivates
-   every irqfd, flushes the workqueue and only then destroys it, so no
-   path can queue_work() onto a torn-down workqueue.
- - acrn_irqfd_assign() now installs the eventfd waitqueue entry and
-   publishes the irqfd to vm->irqfds under irqfds_lock, so the irqfd is
-   never visible to deassign/deinit before its waitqueue entry is in
-   place, and any EPOLLHUP that fires in the assign window queues
-   cleanup work that blocks on irqfds_lock until publication is done.
-
-Signed-off-by: Sicong Huang <congei42@163.com>
-Reviewed-by: Fei Li <fei1.li@intel.com>
-Link: https://patch.msgid.link/20260519112018.2135000-2-congei42@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260515014433.16168-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/acrn/irqfd.c | 71 ++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 27 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virt/acrn/irqfd.c b/drivers/virt/acrn/irqfd.c
-index 64d32c8fbf79b..b18d1a9021fb4 100644
---- a/drivers/virt/acrn/irqfd.c
-+++ b/drivers/virt/acrn/irqfd.c
-@@ -16,6 +16,9 @@
- 
- #include "acrn_drv.h"
- 
-+/* Cleanup work has been queued; set via test_and_set_bit(). */
-+#define HSM_IRQFD_FLAG_SHUTDOWN	0
-+
- /**
-  * struct hsm_irqfd - Properties of HSM irqfd
-  * @vm:		Associated VM pointer
-@@ -25,6 +28,7 @@
-  * @list:	Entry within &acrn_vm.irqfds of irqfds of a VM
-  * @pt:		Structure for select/poll on the associated eventfd
-  * @msi:	MSI data
-+ * @flags:	Internal lifecycle flags (HSM_IRQFD_FLAG_*)
-  */
- struct hsm_irqfd {
- 	struct acrn_vm		*vm;
-@@ -34,6 +38,7 @@ struct hsm_irqfd {
- 	struct list_head	list;
- 	poll_table		pt;
- 	struct acrn_msi_entry	msi;
-+	unsigned long		flags;
- };
- 
- static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
-@@ -44,30 +49,29 @@ static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
- 			irqfd->msi.msi_data);
- }
- 
--static void hsm_irqfd_shutdown(struct hsm_irqfd *irqfd)
-+/* Queue the cleanup work at most once. Safe from atomic context. */
-+static void hsm_irqfd_queue_shutdown(struct hsm_irqfd *irqfd)
- {
--	u64 cnt;
--
--	lockdep_assert_held(&irqfd->vm->irqfds_lock);
--
--	/* remove from wait queue */
--	list_del_init(&irqfd->list);
--	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
--	eventfd_ctx_put(irqfd->eventfd);
--	kfree(irqfd);
-+	if (!test_and_set_bit(HSM_IRQFD_FLAG_SHUTDOWN, &irqfd->flags))
-+		queue_work(irqfd->vm->irqfd_wq, &irqfd->shutdown);
- }
- 
-+/* Sole owner of @irqfd: unhook waitqueue, drop eventfd ref, free. */
- static void hsm_irqfd_shutdown_work(struct work_struct *work)
- {
--	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
-+	struct hsm_irqfd *irqfd = container_of(work, struct hsm_irqfd,
-+					       shutdown);
-+	struct acrn_vm *vm = irqfd->vm;
-+	u64 cnt;
- 
--	irqfd = container_of(work, struct hsm_irqfd, shutdown);
--	vm = irqfd->vm;
- 	mutex_lock(&vm->irqfds_lock);
- 	if (!list_empty(&irqfd->list))
--		hsm_irqfd_shutdown(irqfd);
-+		list_del_init(&irqfd->list);
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
-+	eventfd_ctx_put(irqfd->eventfd);
-+	kfree(irqfd);
- }
- 
- /* Called with wqh->lock held and interrupts disabled */
-@@ -76,17 +80,16 @@ static int hsm_irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode,
- {
- 	unsigned long poll_bits = (unsigned long)key;
- 	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
- 
- 	irqfd = container_of(wait, struct hsm_irqfd, wait);
--	vm = irqfd->vm;
-+
- 	if (poll_bits & POLLIN)
- 		/* An event has been signaled, inject an interrupt */
- 		acrn_irqfd_inject(irqfd);
- 
- 	if (poll_bits & POLLHUP)
--		/* Do shutdown work in thread to hold wqh->lock */
--		queue_work(vm->irqfd_wq, &irqfd->shutdown);
-+		/* Defer teardown to the cleanup work; can't sleep here. */
-+		hsm_irqfd_queue_shutdown(irqfd);
- 
- 	return 0;
- }
-@@ -142,6 +145,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 	init_waitqueue_func_entry(&irqfd->wait, hsm_irqfd_wakeup);
- 	init_poll_funcptr(&irqfd->pt, hsm_irqfd_poll_func);
- 
-+	/*
-+	 * Hold irqfds_lock across waitqueue install and list_add so the
-+	 * irqfd is not visible to deassign/deinit before its waitqueue
-+	 * entry is in place, and any racing EPOLLHUP cleanup work blocks
-+	 * on irqfds_lock until publication completes.
-+	 */
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry(tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd != tmp->eventfd)
-@@ -150,14 +159,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 		mutex_unlock(&vm->irqfds_lock);
- 		goto fail;
- 	}
--	list_add_tail(&irqfd->list, &vm->irqfds);
--	mutex_unlock(&vm->irqfds_lock);
- 
--	/* Check the pending event in this stage */
- 	events = vfs_poll(fd_file(f), &irqfd->pt);
--
-+	list_add_tail(&irqfd->list, &vm->irqfds);
- 	if (events & EPOLLIN)
- 		acrn_irqfd_inject(irqfd);
-+	mutex_unlock(&vm->irqfds_lock);
- 
- 	return 0;
- fail:
-@@ -180,13 +187,17 @@ static int acrn_irqfd_deassign(struct acrn_vm *vm,
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry_safe(irqfd, tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd == eventfd) {
--			hsm_irqfd_shutdown(irqfd);
-+			list_del_init(&irqfd->list);
-+			hsm_irqfd_queue_shutdown(irqfd);
- 			break;
- 		}
- 	}
- 	mutex_unlock(&vm->irqfds_lock);
- 	eventfd_ctx_put(eventfd);
- 
-+	/* Wait for cleanup work to finish so the eventfd is fully detached. */
-+	flush_workqueue(vm->irqfd_wq);
-+
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index b24237c1e7df7..364278a71e87d 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -3036,6 +3036,17 @@ static int rtw89_pci_mode_op(struct rtw89_dev *rtwdev)
  	return 0;
  }
  
-@@ -219,9 +230,15 @@ void acrn_irqfd_deinit(struct acrn_vm *vm)
- 	struct hsm_irqfd *irqfd, *next;
++static bool rtw89_pci_dev_ltr_enabled(struct rtw89_dev *rtwdev)
++{
++	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	struct pci_dev *pdev = rtwpci->pdev;
++	u16 cap;
++
++	pcie_capability_read_word(pdev, PCI_EXP_DEVCTL2, &cap);
++
++	return !!(cap & PCI_EXP_DEVCTL2_LTR_EN);
++}
++
+ static int rtw89_pci_ops_deinit(struct rtw89_dev *rtwdev)
+ {
+ 	const struct rtw89_pci_info *info = rtwdev->pci_info;
+@@ -3140,7 +3151,7 @@ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en)
+ {
+ 	u32 val;
  
- 	dev_dbg(acrn_dev.this_device, "VM %u irqfd deinit.\n", vm->vmid);
--	destroy_workqueue(vm->irqfd_wq);
+-	if (!en)
++	if (!en || !rtw89_pci_dev_ltr_enabled(rtwdev))
+ 		return 0;
+ 
+ 	val = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+@@ -3176,6 +3187,9 @@ int rtw89_pci_ltr_set_v1(struct rtw89_dev *rtwdev, bool en)
+ 	u32 dec_ctrl;
+ 	u32 val32;
+ 
++	if (!rtw89_pci_dev_ltr_enabled(rtwdev))
++		return 0;
 +
- 	mutex_lock(&vm->irqfds_lock);
--	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list)
--		hsm_irqfd_shutdown(irqfd);
-+	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list) {
-+		list_del_init(&irqfd->list);
-+		hsm_irqfd_queue_shutdown(irqfd);
-+	}
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	/* Drain all cleanup work before tearing the workqueue down. */
-+	flush_workqueue(vm->irqfd_wq);
-+	destroy_workqueue(vm->irqfd_wq);
- }
+ 	val32 = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+ 	if (rtw89_pci_ltr_is_err_reg_val(val32))
+ 		return -EINVAL;
 -- 
 2.53.0
 
