@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998833DD86A;
-	Thu, 17 Sep 2026 18:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66603DD86A;
+	Thu, 17 Sep 2026 18:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671011; cv=none; b=KLSxAzPGuyg61WKURVEKPl9E3NpcHJaNn5ZURytB+GyUR/yEoVHYbSZ3eP4wPIpDF5ZAj5rMDCRPHoe245b6hzpA3avMurOLrKTaVlubzYaJqquGquxZU4gflQmjmuk/5u4IjjaCCBP93+htKDYNyLN8rLsVPOONjeghMZSKL4I=
+	t=1789671014; cv=none; b=RmEGsnuzJ2FZCqlugykojbW7MtgTiSsc4V+WPsqEGNuN08S1GT0Xq30GO9+P/63MhFCkiNCUgs1FA+o1/IY574Ho5MziIn73ZLOGwXmn8+SS9apOz+Actc0p5F2nUL+mpud8XpaxTe2pN8PYK96JnZOBuucEMjKOszLhzlmhnzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671011; c=relaxed/simple;
-	bh=Ci+FB6RlQGUpw9vMjq4011FxTdL6EnC7+BUVWeB9gVw=;
+	s=arc-20240116; t=1789671014; c=relaxed/simple;
+	bh=xrdHLUL6lE/JEVHqT76zgKgZMvmQe11OmMfz5pR7ugU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzM5YqSOlQfmzqlATDlkuqC0Xcyj97dsyhXnVLgZxU/jXPQpsf97G+z1LUJABb6X+BBjvV9RJ5k5dKy8KSURrePrYZX6bIxaNz8Q6FXW0VO9WwEHnMS5V9oGW7NTgpIjqUjrhUTT5YN9tATLaEraP2C/nWYvMgz9hkrsGaws1rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjUNBOcw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8x5CrssewaSBbqdRG/DYZVB/9Ii7AttDwbpCE46V55jP8i0qS2cJhsTzhAVZNsUuiF/EAbCCGs8wMaGV0J93mDhxYyVUGaOb3p5BmPDsU7F9AIcHwxrgMywPjPMppBvrEdXqmXUmrtVqFqeBVLZ+1QNq8z90VIKWvTSSwsmua8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keR8JeEx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjUNBOcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6E61F000FF;
-	Thu, 17 Sep 2026 18:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keR8JeEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C931F000FF;
+	Thu, 17 Sep 2026 18:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671010;
-	bh=wKYgjqosXIFs3ECkycGcelGyFbdqetxsqcb2bKOyoy4=;
+	s=korg; t=1789671013;
+	bh=J4XLJqVigRUEQB2xpAOBi62D079wtpYwRAJ69zx39hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qjUNBOcwN6VmvYMqr0ogex0pm9jY3GtjF+da29xZnA4GWhAcIfxygi1o+vuqDwVUh
-	 VjV2w6jUIEWr8J73isZqPb9Y28AiqZoAD3JEtjmvsffZN6a1DVFIO3i6uD5/9aZ9gh
-	 hgu/mygYsNWkm97IfSH+HoSAiuiRUzKktaiCxSVU=
+	b=keR8JeEx2FRAxwkkRry9TagmRPRlRYYWr9KmXjWKLeHgDE5R4FvG54cuiPDiqycYC
+	 aGFf8DyZhRj4DR4joRWZZ0308gwyzE9JHKXFQ+RuLgMhNhlHuu4rLG+KUhKe/Tp6bm
+	 wKfpB5uYN2kFPpuEpiA48UUJAXFSG1tHkxT5pSL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 0803/1102] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
-Date: Thu, 17 Sep 2026 16:12:26 +0100
-Message-ID: <20260917151600.640239875@linuxfoundation.org>
+	Taehee Yoo <ap420073@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 0804/1102] crypto: x86/aria - add missing vzeroupper in AVX2 code
+Date: Thu, 17 Sep 2026 16:12:27 +0100
+Message-ID: <20260917151600.667309171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,57 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit c5e68706527968282e49de205cc2b935823cb88a upstream.
+commit ac53977611428db3bc0b4ac0225e19c3e08ae50b upstream.
 
-The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
-safe") refactored the EEH code such that the pci_rescan_remove_lock is
-held at the beginning of eeh_handle_normal_event() and the
-eeh_reset_device() is called with that lock being held. Looks like the
-commit missed to remove the existing lock/unlock inside eeh_rmv_device()
-which is no longer necessary. This is causing the eehd to hang on the
-lock which it actually holds when that code path is taken.
+Since the AVX2 optimized ARIA code uses YMM registers, execute
+vzeroupper before returning from it.  This is needed to avoid degrading
+the performance of any later SSE code that may happen to be executed.
 
-[<0>] 0xc00000011c78f870
-[<0>] __switch_to+0xfc/0x1a0
-[<0>] pci_lock_rescan_remove+0x30/0x44
-[<0>] eeh_rmv_device+0x290/0x2e0
-[<0>] eeh_pe_dev_traverse+0x80/0x130
-[<0>] eeh_reset_device+0xcc/0x23c
-[<0>] eeh_handle_normal_event+0x830/0xa80
-[<0>] eeh_event_handler+0xf8/0x190
-[<0>] kthread+0x194/0x1b0
-[<0>] start_kernel_thread+0x14/0x18
-
-The issue is seen for cases where the errors are detected on the PHB
-directly AND|OR for devices where the driver error_detected() returns
-PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
-error handlers like slot_reset(), resume() etc defined).
-
-Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
+Fixes: 37d8d3ae7a58 ("crypto: x86/aria - implement aria-avx2")
+Cc: stable@vger.kernel.org
+Cc: Taehee Yoo <ap420073@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/eeh_driver.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/crypto/aria-aesni-avx2-asm_64.S |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
- 		if (rmv_data)
- 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
- 	} else {
--		pci_lock_rescan_remove();
- 		pci_stop_and_remove_bus_device(dev);
--		pci_unlock_rescan_remove();
- 	}
- }
+--- a/arch/x86/crypto/aria-aesni-avx2-asm_64.S
++++ b/arch/x86/crypto/aria-aesni-avx2-asm_64.S
+@@ -988,6 +988,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_enc
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
  
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_encrypt_32way)
+@@ -1013,6 +1014,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_dec
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_decrypt_32way)
+@@ -1215,6 +1217,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_ctr
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %r10);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_ctr_crypt_32way)
+@@ -1366,6 +1369,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_encrypt_32way)
+@@ -1391,6 +1395,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_decrypt_32way)
+@@ -1435,6 +1440,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %r10);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_ctr_crypt_32way)
 
 
