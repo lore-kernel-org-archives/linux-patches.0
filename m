@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83BC4D1789;
-	Thu, 17 Sep 2026 17:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B62E4D1789;
+	Thu, 17 Sep 2026 18:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667998; cv=none; b=F4ZZLf7TAhVbCWNehyd/eqkrbAULqxOnimG3OCXoyZimtcUwfYPUa6e46j9u0ENCCqPo5AioDctrgB91rvev8H15v1ONMvE1I3FgwJtjoO5xlqZh342//rvnuktgvWZMQCNAUqpjlMh/5qkCXJEEMcCZcwtl6ZPsp0Z4mo+yXnM=
+	t=1789668002; cv=none; b=lAI+HORj2tDppiC2EaKbw+n1b2Mq4wy4anTlNHjmL2R1UhIRxtEX8+gkJhuVxkHIxkfSgKWkalM57dzF0uxzqKdyn7O6OWtSYJBxdQ/eQv0gXvJy1K3HC94x9pOWYlihj7IPrY5VWDJNlLCnMmXEF//kJnhswSX34ZeJTc8NEVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667998; c=relaxed/simple;
-	bh=86QhOBAKJUrck0rac0hPu1R44QjJA0n6yxJFFrkU3jE=;
+	s=arc-20240116; t=1789668002; c=relaxed/simple;
+	bh=vhUi0Z51HqyXdJE65xOQ0sqSdaW6yU82dE5QCB25qZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alSNe7Qf4ID3Ok8hieccTb9dcvW6VmtqOKNsUfSsKCBklRoHDeM+Dmbu8U70eMY7MvvIKV8mk442Etm7DhrGgFG56dBvLZucQPKlkX8QP4iAHjhxh0SLaIO27FXuh6qO41Tsk/pDVyjnJDTyM4Y/rysJ57y+512kM9XjP7OZkp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctxGaM5d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TgU8U18ThHyXiz+HTFKD3uxUNrtLeATCpAJgDYecYGAWt9p9fJr8PuHusbgSmlNi96BFHz0Lnxr9lxIPKDcdzA/eqg0l6FmPNCSY+mWb0jlrrAR72QX6HlPiqX1KKPwkKDo1YMwfdeZEmbEz40x+6g8q1aDE7TiwN1wV3s9UroI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZD+nUXS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctxGaM5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D300B1F000FF;
-	Thu, 17 Sep 2026 17:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZD+nUXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2371F000FF;
+	Thu, 17 Sep 2026 17:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667997;
-	bh=AyLJuuteo+R2Oi/nim+IgnAckdidbEpaFW8fIBzV0Ao=;
+	s=korg; t=1789668001;
+	bh=39Ejdc7X163Q+FMlyBpC7KRCmQkKu60Muo8Z9dZxJe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctxGaM5d6Vw+9cX3vmsG0Xmj/7P7ibai9KBIO4Pto84J4gwmB33tFVQvdiSvs7/5v
-	 maWOFQK84ML3juqsdoFAGgihLtlWujhuIOFpn/VoEe89DBw38AVT8dkz/aOYmBnMSh
-	 uO08Zawqa8B5wxL+lKz5MweZ8pk7RsQDiiqTpZxg=
+	b=IZD+nUXSmr5l8A9RhBPCnnyiPDLo8IlJdGfHu/L9H2Kv6yGZZuwH6dMi6U5V+8l9z
+	 sC/RarmZobyodf8jOI6U4x8U7EnLjR2AHTjns4RztC3UF9IK8DDS07jHR7CU+E2l1N
+	 lIWjzTtKDJ8arq10cSBmphseB6MkkkhbMT5axK4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Carey <carvsdriver@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0278/1102] sctp: Unwind address notifier registration on failure
-Date: Thu, 17 Sep 2026 16:03:41 +0100
-Message-ID: <20260917151546.589465120@linuxfoundation.org>
+Subject: [PATCH 6.12 0279/1102] HID: multitouch: Honor ContactCount for Yoga Book 9 to suppress ghost contacts
+Date: Thu, 17 Sep 2026 16:03:42 +0100
+Message-ID: <20260917151546.615515710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,76 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Dave Carey <carvsdriver@gmail.com>
 
-[ Upstream commit c8459ee2fef502d6ef6c063751c33d9ac7943eab ]
+[ Upstream commit ef257b8be9776915ca468bae6c91e31757e69734 ]
 
-sctp_v4_add_protocol() and sctp_v6_add_protocol() register their
-address notifiers before registering the SCTP protocol handlers. If
-protocol registration fails, the functions return without unregistering
-the notifiers.
+The INGENIC 17EF:6161 firmware on the Lenovo Yoga Book 9 14IAH10
+does not clear stale contact slots when fingers are lifted.  Each
+HID report contains up to 10 finger slots, but only the first
+ContactCount slots represent valid contacts; the remaining slots
+retain TipSwitch=1 with positions from previous touches.
 
-Unregister the notifiers on the protocol registration failure paths.
-Also propagate notifier registration failures instead of ignoring them.
+Raw HID capture confirms this: across a 60-second capture with
+repeated multi-finger gestures, 90% of frames had more TipSwitch=1
+slots than the reported ContactCount.  The ContactCount field itself
+is always accurate.
 
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260608162230.46644-1-dbgh9129@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add MT_QUIRK_CONTACT_CNT_ACCURATE to the MT_CLS_YOGABOOK9I class so
+the driver stops processing slots once ContactCount valid contacts
+have been consumed, discarding the stale ghost entries per HID
+specification section 17.  MT_QUIRK_NOT_SEEN_MEANS_UP (already in
+the class) ensures that any slot skipped by this guard is released
+via INPUT_MT_DROP_UNUSED at frame sync.
+
+Signed-off-by: Dave Carey <carvsdriver@gmail.com>
+Tested-by: Dave Carey <carvsdriver@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/ipv6.c     | 10 ++++++++--
- net/sctp/protocol.c | 10 ++++++++--
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/hid/hid-multitouch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index b45cc51dfc353..bf54fb1ee6549 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -1223,11 +1223,17 @@ void sctp_v6_protosw_exit(void)
- /* Register with inet6 layer. */
- int sctp_v6_add_protocol(void)
- {
-+	int ret;
-+
- 	/* Register notifier for inet6 address additions/deletions. */
--	register_inet6addr_notifier(&sctp_inet6addr_notifier);
-+	ret = register_inet6addr_notifier(&sctp_inet6addr_notifier);
-+	if (ret)
-+		return ret;
- 
--	if (inet6_add_protocol(&sctpv6_protocol, IPPROTO_SCTP) < 0)
-+	if (inet6_add_protocol(&sctpv6_protocol, IPPROTO_SCTP) < 0) {
-+		unregister_inet6addr_notifier(&sctp_inet6addr_notifier);
- 		return -EAGAIN;
-+	}
- 
- 	return 0;
- }
-diff --git a/net/sctp/protocol.c b/net/sctp/protocol.c
-index fd2620bd15bbd..c6d74fa517cd8 100644
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1279,12 +1279,18 @@ static void sctp_v4_protosw_exit(void)
- 
- static int sctp_v4_add_protocol(void)
- {
-+	int ret;
-+
- 	/* Register notifier for inet address additions/deletions. */
--	register_inetaddr_notifier(&sctp_inetaddr_notifier);
-+	ret = register_inetaddr_notifier(&sctp_inetaddr_notifier);
-+	if (ret)
-+		return ret;
- 
- 	/* Register SCTP with inet layer.  */
--	if (inet_add_protocol(&sctp_protocol, IPPROTO_SCTP) < 0)
-+	if (inet_add_protocol(&sctp_protocol, IPPROTO_SCTP) < 0) {
-+		unregister_inetaddr_notifier(&sctp_inetaddr_notifier);
- 		return -EAGAIN;
-+	}
- 
- 	return 0;
- }
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 9547c1909efbe..454bb8b9b732f 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -411,6 +411,7 @@ static const struct mt_class mt_classes[] = {
+ 		{ .name = MT_CLS_YOGABOOK9I,
+ 		.quirks = MT_QUIRK_NOT_SEEN_MEANS_UP |
+ 			MT_QUIRK_ALWAYS_VALID |
++			MT_QUIRK_CONTACT_CNT_ACCURATE |
+ 			MT_QUIRK_FORCE_MULTI_INPUT |
+ 			MT_QUIRK_SEPARATE_APP_REPORT |
+ 			MT_QUIRK_HOVERING |
 -- 
 2.53.0
 
