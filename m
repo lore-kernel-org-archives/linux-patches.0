@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B626D51597F;
-	Thu, 17 Sep 2026 17:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB3F5172C9;
+	Thu, 17 Sep 2026 17:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666915; cv=none; b=RbQoDTrkpVlvWG2QVCAsFbt266DXeImDRwBrVgi1tCyhsjHrjQq7J4aEDc0WNIgfRAzxzseBznPy4sm0f9u9ztUkDxBWM0QyAOhwPgnF3Si0WH46/iCbi9/ayx7HTRdp9aU9MpfTpFlpOvk2ROBmDSVnRd6zxYaLsY6D34KojgM=
+	t=1789666919; cv=none; b=MGO29/ScRtVN5A5EyyQC9RQ9oGBSwnJAJM6EbjnE2uoE8sd7hzvXTiDmlI9LMBjVUctuDdj4xrBYWTaQaNTBOzIS84S1MVuwFphjcJZxznpoedo5WwliVMGm5rpQSMHIrFX2Wmj0CzUBnswARO5dS5Rx7PcwEnekIkj1iv8f8jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666915; c=relaxed/simple;
-	bh=wITX8mAjQtp8BJgWPyV3QeqAkc0zalCs9ITeT7PE8ow=;
+	s=arc-20240116; t=1789666919; c=relaxed/simple;
+	bh=FtNW6ZWLUIDAO+JVfR1SyzNMBACLjwtwUbrfOWW5rb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBjpvxD1OscpS7RXZ3W0U0UhR9aLLEtzmlUAJpXoCvyKi1sj5rzmE6MkzQpaEpHRKlUfwJpMx1bwnniQVyKYYHLkxCXc8Rk1JHgRV1meCkmZ6tUDHZY7u+ySGLSg3ZVya7SlnYL9qpV2SHboiOO22WzC9O4V144xAC0IwVOPN80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7ZB4LIz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUrKDVXJau28qn4KeiRUCK4LYvvqcJaV47imeBzdnHLMGJ4DhfooFsX4fFEZd+8cW6JoidKXfKUzcLRY72W/8x0Y7Ui/J3vN/ear1B2SRet7IAdcYRuhWkB56u5HJXBllpHyt4XTFo04ieOZWzydfTN3AMaQI4gNhnSmuhlnNIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anHUUb28; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7ZB4LIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192901F000FF;
-	Thu, 17 Sep 2026 17:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anHUUb28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DE91F000FF;
+	Thu, 17 Sep 2026 17:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666914;
-	bh=ZuAraWZwowcc9TJybkx7dssxxYwKBdqsxFcCQwJUc3Q=;
+	s=korg; t=1789666917;
+	bh=rw2EPufRZiGGK10k+JFoh9Msd6hyOJ2+2s0oY5rLMO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7ZB4LIzJu2sB/pT44Pn8l4fF4riMSuEninLcE2WEdgT3ZYqlKCHg3qlR5u5nXKD4
-	 xqqufgppX8WrOrAbO9M3azpS7iewOcEt/FzuLTkR68BnGuhC/PnR2TXbkXDJhySchR
-	 nSr36MYvvwxjyTHSFHWqzdBOjp1z7GJ6N5SZIH5Q=
+	b=anHUUb28e458HGDTNs/1rdSJtBWa5wcVXqBQMAH+yVX9vjCT4WDL1kp9kvbJAmzyL
+	 wV2Z9Cj6YRkmI0hEPn9AHLjziBGuN3xNGPoLVgrfSraKl/zT8z1VwaS1iGWgxDAGhz
+	 YyPSctFmdh8EKYieexivkwzBfFlEfBwRwTtXtkRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1167/1250] scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot
-Date: Thu, 17 Sep 2026 16:16:02 +0100
-Message-ID: <20260917151623.917714268@linuxfoundation.org>
+Subject: [PATCH 6.18 1168/1250] scsi: qla2xxx: Fix soft lockup polling continuation IOCB signature
+Date: Thu, 17 Sep 2026 16:16:03 +0100
+Message-ID: <20260917151623.944866674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,50 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 626e44f3d8a924a97a3848a9fd45833947e081e9 ]
+[ Upstream commit d7e3fa7d06bf7fcaac186d3c4d635caac166d36c ]
 
-For QLAFX00 the request ring is ioremapped device I/O memory
-(ha->iobase + req_que_off), not DMA-coherent RAM, which is why the rest
-of the FX00 path accesses it through memcpy_toio() and the wrt_reg_*
-helpers. __qla2x00_alloc_iocbs() however zeroed the producer slot with a
-plain memset(). On architectures such as ARM64 a regular memset() may
-emit unaligned or block-zeroing instructions (e.g. DC ZVA) that are
-invalid on Device memory, leading to a synchronous external abort.
+qla27xx_copy_multiple_pkt() and qla27xx_copy_fpin_pkt() poll
+rsp_q->ring_ptr->signature for RESPONSE_PROCESSED (0xDEADDEAD) to decide
+whether the next continuation IOCB has arrived, spinning on cpu_relax()
+without advancing the ring or decrementing the entry count while it has
+not. response_t::signature lives at byte offset 60, but a continuation
+IOCB (sts_cont_entry_t / struct sts_cont_entry_ext) carries raw FC frame
+payload at that offset (data[56..59]). A received frame whose payload
+bytes happen to equal 0xDEADDEAD is therefore misread as "not yet
+arrived", and the loop spins forever in interrupt/DPC context, causing a
+CPU soft lockup.
 
-Use memset_io() to clear the slot for QLAFX00, matching the I/O
-accessors used elsewhere on this ring. Other adapters keep the plain
-memset() on their DMA-coherent rings. The zero-fill is retained for FX00
-because its IOCB builders (e.g. qlafx00_fxdisc_iocb()) copy only part of
-the entry and rely on the unused tail being pre-zeroed.
+The poll is also unnecessary: callers of qla27xx_copy_multiple_pkt()
+(PT_LS4_UNSOL and the NVMe purls path) already gate on
+qla_chk_cont_iocb_avail(), which guarantees all entry_count IOCBs are
+present before copying begins. The sibling helper
+__qla_copy_purex_to_buffer() already drops the signature poll and relies
+on the entry_type == STATUS_CONT_TYPE guard instead.
 
-Fixes: 8ae6d9c7eb10 ("[SCSI] qla2xxx: Enhancements to support ISPFx00.")
+Remove the signature busy-wait from both helpers, keeping the entry_type
+guard, and gate the FPIN path with qla_chk_cont_iocb_avail() so it defers
+and re-processes on the next interrupt once all continuation IOCBs have
+arrived, mirroring the ELS_AUTH_ELS and PT_LS4_UNSOL arms. With this the
+signature field is never read on a continuation IOCB, eliminating the
+payload-aliasing lockup.
+
+Fixes: 9f2475fe7406 ("scsi: qla2xxx: SAN congestion management implementation")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-12-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-15-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ replaced unavailable qla_rsp_ring_rewind_to() with direct ring pointer and index assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_isr.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2351,11 +2351,13 @@ __qla2x00_alloc_iocbs(struct qla_qpair *
- 	 */
- 	req->cnt -= req_cnt;
- 	pkt = qla_req_ring_slot(ha, req);
--	memset(pkt, 0, qla_req_entry_size(ha));
- 	if (IS_QLAFX00(ha)) {
-+		memset_io((void __iomem __force *)pkt, 0,
-+			  qla_req_entry_size(ha));
- 		wrt_reg_byte((u8 __force __iomem *)&pkt->entry_count, req_cnt);
- 		wrt_reg_dword((__le32 __force __iomem *)&pkt->handle, handle);
- 	} else {
-+		memset(pkt, 0, qla_req_entry_size(ha));
- 		pkt->entry_count = req_cnt;
- 		pkt->handle = handle;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -921,14 +921,6 @@ qla27xx_copy_multiple_pkt(struct scsi_ql
+ 
+ 	do {
+ 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
+-			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
+-				ql_dbg(ql_dbg_async, vha, 0x5084,
+-				       "Ran out of IOCBs, partial data 0x%x\n",
+-				       buffer_copy_offset);
+-				cpu_relax();
+-				continue;
+-			}
+-
+ 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
+ 			*pkt = new_pkt;
+ 
+@@ -1205,14 +1197,6 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_ho
+ 
+ 	do {
+ 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
+-			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
+-				ql_dbg(ql_dbg_async, vha, 0x5084,
+-				       "Ran out of IOCBs, partial data 0x%x\n",
+-				       buffer_copy_offset);
+-				cpu_relax();
+-				continue;
+-			}
+-
+ 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
+ 			*pkt = new_pkt;
+ 
+@@ -4142,9 +4126,24 @@ process_err:
+ 					       "SCM not active for this port\n");
+ 					break;
+ 				}
++				if (qla_chk_cont_iocb_avail(vha, rsp,
++				    (response_t *)pkt, rsp_in)) {
++					/*
++					 * ring_ptr and ring_index were
++					 * pre-incremented above. Reset them
++					 * back to current. Wait for next
++					 * interrupt with all IOCBs to arrive
++					 * and re-process.
++					 */
++					rsp->ring_ptr = (response_t *)pkt;
++					rsp->ring_index = cur_ring_index;
++
++					ql_dbg(ql_dbg_init, vha, 0x5095,
++					    "Defer processing FPIN...\n");
++					return;
++				}
+ 				pure_item = qla27xx_copy_fpin_pkt(vha,
+ 							  (void **)&pkt, &rsp);
+-				__update_rsp_in(is_shadow_hba, rsp, rsp_in);
+ 				if (!pure_item)
+ 					break;
+ 				qla24xx_queue_purex_item(vha, pure_item,
 
 
