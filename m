@@ -1,98 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp-bc0f.mail.infomaniak.ch (smtp-bc0f.mail.infomaniak.ch [45.157.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA0B4DDB30;
-	Thu, 17 Sep 2026 15:42:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA77E4E73CA
+	for <patches@lists.linux.dev>; Thu, 17 Sep 2026 15:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.157.188.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659757; cv=none; b=cBJ6tMSp2PThEmTcn8bh1Ensw47pdnQxxFFfLsWCQf22zGVnjFlurirBmjAL9WyoQCjnVFR+pr4ZJnZ06ib8vGm3tke++CVk5X0bZWtlNlg4p5201YpJdxkzhzDg8xENYXmtFOHzAthwQ8Xln4lsPAwPsityuMKvbC3TXxBBOgU=
+	t=1789659764; cv=none; b=MmorG37lQ8M8iDE1MzSU4jVJiZHNyjAzcUAXmxg3iK66Pj5MerAac23BfKFKEqadH2PjwlHQcpNKK4MJu/udkiHMLv/C4/auUck0Rc5AbouNb+bxQa2BClKm4scdxfs7gKod9ZEhfAy55ciLYOe6MM5A/sWwkD01SZM08M/DZQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659757; c=relaxed/simple;
-	bh=yvRB2qHvtmdGzBUtH0BvhFW4n7aZ3mP09dhGdkfrFsM=;
+	s=arc-20240116; t=1789659764; c=relaxed/simple;
+	bh=xFvgNitfMvo65FADLIbS9Nu1T8sk1RSn3GrcQ2vUUes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYd/mFY0Gs2skvidrkPF8RzZA/wdIcR0pIChsPfQBNl/wa8pFrV1jvAtktZx1B0b+jiaylH4j7Uk1HnNAQgB9NK2uam7xR+DMQvEXpDFjuk9GSxhRWwaps+xfxXzsK0Qnm+HiK+zuTTtFwW6fuHV1TbHjUeQk87CFaYAtjvvYdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqhsoP69; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ujn2+8kTt6ugu9TErs0fRIahFmyOWaX9PvtKrBA0s0HypVgOU2Qe9wnx9ioCK0e7O/76kSaEVGsoE144jYl8SBGfNkP0ZWQhIoX8KODWq849h8Ahxb/LaVATIMg6z1XoFRo9gUmpysrfW6gfIoJKpXjGXHNLy9gjnQUyPz5oqj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=x67mbk2p; arc=none smtp.client-ip=45.157.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqhsoP69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345261F0089B;
-	Thu, 17 Sep 2026 15:42:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659749;
-	bh=n4IxYd9uZGRk0l+t/YEekZ4HHgy8ubohhuV1llegpFg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqhsoP69EK1q2Plo76OF0wBrP1zt7Qx8Tn7fDV4sP7Npm+zy4DfyPJW6mj4zYBuA9
-	 lSsO1THqT7++LdAX3UDbvuDJJmkMcM60bl/NG0IyRdpJS731yJI/9Rw0ydsoVSkCPD
-	 Ck8xoakUJnKGR59vp5w20vE9ciZqZ9yp9Fk48QyY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="x67mbk2p"
+Received: from smtp-3-0001.mail.infomaniak.ch (smtp-3-0001.mail.infomaniak.ch [10.4.36.108])
+	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hm0Pj1C3RzBPN;
+	Thu, 17 Sep 2026 17:42:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1789659752;
+	bh=TuhqDm8FDSxFczLLbID82yK/CBX52AdJb09RSZAIB80=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=x67mbk2pO3WCDOqIJriniHeF731V/3oFNWg9ZQg28dh+TyndkdYok0KdGbWYYTELL
+	 wpovOy2UERjYVTdN6Cd0JasToUN1EVFWEyW0EpTAQ7sa1XiVuJzLRfbCFctTwM3hBV
+	 erXyG67VAhqWj9RTUXw+2B4D6NZp6cSLobAwKAy8=
+Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4hm0Ph0KcxzLmD;
+	Thu, 17 Sep 2026 17:42:32 +0200 (CEST)
+From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
 To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Sviridkin <f@lex.la>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 360/733] net: macb: zero the link settings taprio reads back
-Date: Thu, 17 Sep 2026 16:11:08 +0100
-Message-ID: <20260917151400.572406693@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
-References: <20260917151350.597953846@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	Christian Brauner <brauner@kernel.org>,
+	=?utf-8?q?G=C3=BCnther_Noack?= <gnoack@google.com>
+Subject: [PATCH 7.2.y 1/3] selftests/landlock: Use an actual chardev for MAKE_CHAR audit test
+Date: Thu, 17 Sep 2026 17:42:27 +0200
+Message-ID: <1aa1d524419bd5119577f0ccb8b6c058b32021e4.1789655724.git.mic@digikod.net>
+In-Reply-To: <20260904045811.854612571@linuxfoundation.org>
+References: <20260904045811.854612571@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Infomaniak-Routing: alpha
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+From: Günther Noack <gnoack@google.com>
 
-------------------
+[ Upstream commit 173b1bd8730825e1f6862dbd07856e7d68447a41 ]
 
-From: Aleksei Sviridkin <f@lex.la>
+By passing a (0, 0) device number, the audit test for
+LANDLOCK_ACCESS_FS_MAKE_CHAR was accidentally creating a whiteout object
+rather than a char device.  In preparation to treating whiteout objects
+differently, use an actual character device instead.
 
-[ Upstream commit 0523d5c52a450590bf5992bd6925394f3cc403e8 ]
-
-macb_taprio_setup_replace() calls phylink_ethtool_ksettings_get() with
-an uninitialised kset, and kset is not only an out-parameter. On a
-fixed link, or an in-band link with no PHY, phylink writes speed and
-duplex only if kset->base.rate_matching already reads RATE_MATCH_NONE,
-a field it never writes itself; in PHY mode before the PHY is attached
-it writes port and supported and nothing more. Either way the speed
-read back afterwards can be stack garbage. The ethtool core zeroes the
-structure on every path into the op, which is why its callers never
-see this; taprio is the only in-kernel caller passing its own variable.
-
-Fixes: 89934dbf169e ("net: macb: Add TAPRIO traffic scheduling support")
-Assisted-by: LLM
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260903123652.23900-2-f@lex.la
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260813093157.1436894-2-gnoack@google.com
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index cd140f98cbc83..09fd83782ae3f 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -4331,9 +4331,9 @@ static int macb_taprio_setup_replace(struct net_device *netdev,
- 	u64 total_on_time = 0, start_time_sec = 0, start_time = conf->base_time;
- 	u32 configured_queues = 0, speed = 0, start_time_nsec;
- 	struct macb_queue_enst_config *enst_queue;
--	struct tc_taprio_sched_entry *entry;
-+	struct ethtool_link_ksettings kset = {};
- 	struct macb *bp = netdev_priv(netdev);
--	struct ethtool_link_ksettings kset;
-+	struct tc_taprio_sched_entry *entry;
- 	struct macb_queue *queue;
- 	u32 queue_mask;
- 	u8 queue_id;
--- 
-2.53.0
-
-
-
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index 86e08aa6e0a7..e82b56a74c5f 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -7436,7 +7436,7 @@ TEST_F(audit_layout1, make_char)
+ 
+ 	enforce_fs(_metadata, ACCESS_ALL, NULL);
+ 
+-	EXPECT_EQ(-1, mknod(file1_s1d3, S_IFCHR | 0644, 0));
++	EXPECT_EQ(-1, mknod(file1_s1d3, S_IFCHR | 0644, makedev(7, 0)));
+ 	EXPECT_EQ(EACCES, errno);
+ 	EXPECT_EQ(0, matches_log_fs(_metadata, self->audit_fd, "fs\\.make_char",
+ 				    dir_s1d3));
