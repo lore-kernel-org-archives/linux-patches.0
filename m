@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE283CC7F8;
-	Thu, 17 Sep 2026 19:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FA63B634E;
+	Thu, 17 Sep 2026 19:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671740; cv=none; b=d48qsSKkdoLKsg55XVRxlYIzYD/1JZ0NzQY5Bj/EBnunHnaOXHRZkMtxTp5v1ylqkCFP8dX+tHcbFLoJ7KjPSBLHaWqKF5F4tqyDZMbjgSvHfdeiQjd7F7l2D0V6J5oBcxocKjW+Em8dQfr5rDYs21+TVUkcbTYqK7S8DQi1Rjg=
+	t=1789671743; cv=none; b=cOHaVpJAK4c7umOqQEYm7NZWxhCp5+F8PsceT3oTwlRiyU7OF+65eK/+chWCAeUVAlWif4xjmBZBtTW4u4eIXOe9jKgzdHjhP9aOukBv+2fp9WtkcVw2Ux6H1SbdbR1Mtr2IudAzjjbHnWtPI2itOhRWpXYHXrACgkNWbvGkN2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671740; c=relaxed/simple;
-	bh=c6wwXlNoPoGVgTHJangoi38XRSmB07wE2Cz4ao/jwLc=;
+	s=arc-20240116; t=1789671743; c=relaxed/simple;
+	bh=2Oo33LYpKnabheWZo4eR+97x3v6a2Py07Od6Oo8Uhd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4ngit6nsEZAjUTBXOeTLAvC6jyYudCT+WY1dlJAnpN2IM0sVBvyk171QWx/BUjRXvIPm4d+YCObnojRmfrn1Em31qhJrjlvEJvb8M5dkey3wooX0ox7etV1NFE+PKO9vCF7Ue4/EMdirtCJLeRi0AfV36ltKTEjovINH+3BToU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+BAy3RF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WnZJNFp5s+L3J0wI7A33i+9+8E42TtL+CQ5gBeKADEaR0k1Td+khIXUh2VKRslzBhH6DiC7cs95+BydlSLkhPEozsK8z+xmc5f4xrdYjBb8qLnBuMt1//mZIDixN6aS/nbWLlBrgWsreMccIPDbjCEilQNo7Pu6byA8IA23z6B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHR97Yxn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+BAy3RF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3308B1F000FF;
-	Thu, 17 Sep 2026 19:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHR97Yxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C50E1F000FF;
+	Thu, 17 Sep 2026 19:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671738;
-	bh=pHzg22qT6pkTkiiCE2sJ6IIrIAkdU/jqn/6yXaIBQYw=;
+	s=korg; t=1789671742;
+	bh=ln8z1Qdj6fav/UmLuQVPsTDBMMDuIF9+QB9hdDaBWGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y+BAy3RFVHIYRlyNOu9PnU+qHv6nf1+HzRq36CJ6tKP5K6ifcsOwCm10LS4r97WP0
-	 1g1B0+PRkcixoGpv5EDVLYu0tFLeTveOMi/um6iiG1jZOTxMGMoODK0Cbg2EPbd/ia
-	 2imFj4H+0q3AKIbM3fy+pqC0qEysKB3ZN6bJHpfg=
+	b=tHR97YxnvE8PzVc0+BC1S8Uqa/GXdD3R27IUjIO55cXSZZkQLP5rp2jS8ihJ3MMYH
+	 Y4GzrSaQV5bwnH+eoKixgU7u5vyBG6AjjsT3UqMdsBbVjY50mkdEW/bHS7njxe0z/0
+	 oGhd6B0V8VjORUNRZKEbKGM8ji36kSkD95rOeHqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1047/1102] btrfs: prepare btrfs_punch_hole_lock_range() for large data folios
-Date: Thu, 17 Sep 2026 16:16:30 +0100
-Message-ID: <20260917151607.082567058@linuxfoundation.org>
+Subject: [PATCH 6.12 1074/1102] ACPI: TAD: Add locking around AML evaluations
+Date: Thu, 17 Sep 2026 16:16:57 +0100
+Message-ID: <20260917151607.797997163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,161 +45,150 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260917151630.sFcsUYJnubdFvysniojdr9ezKToknOE1pcUp__ALZcc@z>
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 1e5773e0bab761c853eaf7286394905a544ef02d ]
+[ Upstream commit a3df8bbe0a704fa5c1609b9666b594f350558fe0 ]
 
-The function btrfs_punch_hole_lock_range() needs to make sure there is
-no other folio in the range, thus it goes with filemap_range_has_page(),
-which works pretty fine.
+In the ACPI TAD driver, there are hidden assumptions that the ACPI
+control methods used by it will not be evaluated concurrently due
+to ACPICA namespace and interpreter locking.
 
-But if we have large folios, under the following case
-filemap_range_has_page() will always return true, forcing
-btrfs_punch_hole_lock_range() to do a very time consuming busy loop:
+However, that may not be the case since ACPICA may drop and re-acquire
+the namespace and interpreter locks during the evaluation of a given
+object in a few cases, including the one in which the AML in question
+sleeps causing acpi_ex_system_do_sleep() to be called.  In that case,
+the evaluation of one control method may be started while the
+evaluation of another one is still in progress.
 
-        start                            end
-        |                                |
-  |//|//|//|//|  |  |  |  |  |  |  |  |//|//|
-   \         /                         \   /
-    Folio A                            Folio B
+For this reason, add a global lock to the ACPI TAD driver and
+acquire it every time before evaluating an ACPI control method,
+except for the initial evaluation of _GCP in acpi_tad_probe().
 
-In the above case, folio A and B contain our start/end indexes, and there
-are no other folios in the range.  Thus we do not need to retry inside
-btrfs_punch_hole_lock_range().
-
-To prepare for large data folios, introduce a helper,
-check_range_has_page(), which will:
-
-- Shrink the search range towards page boundaries
-  If the rounded down end (exclusive, otherwise it can underflow when @end
-  is inside the folio at file offset 0) is no larger than the rounded up
-  start, it means the range contains no other pages other than the ones
-  covering @start and @end.
-
-  Can return false directly in that case.
-
-- Grab all the folios inside the range
-
-- Skip any large folios that cover the start and end indexes
-
-- If any other folios are found return true
-
-- Otherwise return false
-
-This new helper is going to handle both large folios and regular ones.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 3f950867c307 ("btrfs: fix extent map leak in NOCOW direct I/O write")
+Fixes: 95c513ec84f7 ("ACPI: Add Time and Alarm Device (TAD) driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/12951141.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file.c |   67 ++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 56 insertions(+), 11 deletions(-)
+ drivers/acpi/acpi_tad.c |   48 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 19 deletions(-)
 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2204,11 +2204,29 @@ static int find_first_non_hole(struct bt
- 	return ret;
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -23,6 +23,7 @@
+ #include <linux/acpi.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/suspend.h>
+@@ -80,6 +81,8 @@ static bool acpi_tad_rt_is_invalid(struc
+ 	    rt->daylight > 3;
  }
  
--static void btrfs_punch_hole_lock_range(struct inode *inode,
--					const u64 lockstart,
--					const u64 lockend,
--					struct extent_state **cached_state)
-+/*
-+ * Check if there is no folio in the range.
-+ *
-+ * We cannot utilize filemap_range_has_page() in a filemap with large folios
-+ * as we can hit the following false positive:
-+ *
-+ *        start                            end
-+ *        |                                |
-+ *  |//|//|//|//|  |  |  |  |  |  |  |  |//|//|
-+ *   \         /                         \   /
-+ *    Folio A                            Folio B
-+ *
-+ * That large folio A and B cover the start and end indexes.
-+ * In that case filemap_range_has_page() will always return true, but the above
-+ * case is fine for btrfs_punch_hole_lock_range() usage.
-+ *
-+ * So here we only ensure that no other folios is in the range, excluding the
-+ * head/tail large folio.
-+ */
-+static bool check_range_has_page(struct inode *inode, u64 start, u64 end)
++static DEFINE_MUTEX(acpi_tad_aml_lock);
++
+ static int acpi_tad_set_real_time(struct device *dev, struct acpi_tad_rt *rt)
  {
-+	struct folio_batch fbatch;
-+	bool ret = false;
- 	/*
- 	 * For subpage case, if the range is not at page boundary, we could
- 	 * have pages at the leading/tailing part of the range.
-@@ -2219,17 +2237,45 @@ static void btrfs_punch_hole_lock_range(
- 	 *
- 	 * And do not decrease page_lockend right now, as it can be 0.
- 	 */
--	const u64 page_lockstart = round_up(lockstart, PAGE_SIZE);
--	const u64 page_lockend = round_down(lockend + 1, PAGE_SIZE);
-+	const u64 page_lockstart = round_up(start, PAGE_SIZE);
-+	const u64 page_lockend = round_down(end + 1, PAGE_SIZE);
-+	const pgoff_t start_index = page_lockstart >> PAGE_SHIFT;
-+	const pgoff_t end_index = (page_lockend - 1) >> PAGE_SHIFT;
-+	pgoff_t tmp = start_index;
-+	int found_folios;
-+
-+	/* The same page or adjacent pages. */
-+	if (page_lockend <= page_lockstart)
-+		return false;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+@@ -101,6 +104,8 @@ static int acpi_tad_set_real_time(struct
  
-+	folio_batch_init(&fbatch);
-+	found_folios = filemap_get_folios(inode->i_mapping, &tmp, end_index, &fbatch);
-+	for (int i = 0; i < found_folios; i++) {
-+		struct folio *folio = fbatch.folios[i];
+ 	pm_runtime_get_sync(dev);
+ 
++	guard(mutex)(&acpi_tad_aml_lock);
 +
-+		/* A large folio begins before the start. Not a target. */
-+		if (folio->index < start_index)
-+			continue;
-+		/* A large folio extends beyond the end. Not a target. */
-+		if (folio->index + folio_nr_pages(folio) > end_index)
-+			continue;
-+		/* A folio doesn't cover the head/tail index. Found a target. */
-+		ret = true;
-+		break;
+ 	status = acpi_evaluate_integer(handle, "_SRT", &arg_list, &retval);
+ 
+ 	pm_runtime_put_sync(dev);
+@@ -115,30 +120,27 @@ static int acpi_tad_evaluate_grt(struct
+ {
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER };
+-	union acpi_object *out_obj;
+-	struct acpi_tad_rt *data;
+ 	acpi_status status;
+ 	int ret = -EIO;
+ 
+-	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
+-	if (ACPI_FAILURE(status))
+-		goto out_free;
+-
+-	out_obj = output.pointer;
+-	if (out_obj->type != ACPI_TYPE_BUFFER)
+-		goto out_free;
+-
+-	if (out_obj->buffer.length != sizeof(*rt))
+-		goto out_free;
+-
+-	data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
+-	if (!data->valid)
+-		goto out_free;
++	guard(mutex)(&acpi_tad_aml_lock);
+ 
+-	memcpy(rt, data, sizeof(*rt));
+-	ret = 0;
++	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
++	if (ACPI_SUCCESS(status)) {
++		union acpi_object *out_obj;
+ 
+-out_free:
++		out_obj = output.pointer;
++		if (out_obj->type == ACPI_TYPE_BUFFER &&
++		    out_obj->buffer.length == sizeof(*rt)) {
++			struct acpi_tad_rt *data;
++
++			data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
++			if (data->valid) {
++				memcpy(rt, data, sizeof(*rt));
++				ret = 0;
++			}
++		}
 +	}
-+	folio_batch_release(&fbatch);
-+	return ret;
-+}
+ 	ACPI_FREE(output.pointer);
+ 	return ret;
+ }
+@@ -188,6 +190,8 @@ static int __acpi_tad_wake_set(struct de
+ 	args[0].integer.value = timer_id;
+ 	args[1].integer.value = value;
+ 
++	guard(mutex)(&acpi_tad_aml_lock);
 +
-+static void btrfs_punch_hole_lock_range(struct inode *inode,
-+					const u64 lockstart, const u64 lockend,
-+					struct extent_state **cached_state)
-+{
- 	while (1) {
- 		truncate_pagecache_range(inode, lockstart, lockend);
+ 	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
+ 	if (ACPI_FAILURE(status) || retval)
+ 		return -EIO;
+@@ -210,6 +214,8 @@ static int __acpi_tad_wake_read(struct d
  
- 		lock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
- 			    cached_state);
--		/* The same page or adjacent pages. */
--		if (page_lockend <= page_lockstart)
--			break;
- 		/*
- 		 * We can't have ordered extents in the range, nor dirty/writeback
- 		 * pages, because we have locked the inode's VFS lock in exclusive
-@@ -2240,8 +2286,7 @@ static void btrfs_punch_hole_lock_range(
- 		 * locking the range check if we have pages in the range, and if
- 		 * we do, unlock the range and retry.
- 		 */
--		if (!filemap_range_has_page(inode->i_mapping, page_lockstart,
--					    page_lockend - 1))
-+		if (!check_range_has_page(inode, lockstart, lockend))
- 			break;
+ 	args[0].integer.value = timer_id;
  
- 		unlock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
++	guard(mutex)(&acpi_tad_aml_lock);
++
+ 	status = acpi_evaluate_integer(handle, method, &arg_list, retval);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+@@ -426,6 +432,8 @@ static int acpi_tad_clear_status(struct
+ 
+ 	pm_runtime_get_sync(dev);
+ 
++	guard(mutex)(&acpi_tad_aml_lock);
++
+ 	status = acpi_evaluate_integer(handle, "_CWS", &arg_list, &retval);
+ 
+ 	pm_runtime_put_sync(dev);
+@@ -467,6 +475,8 @@ static ssize_t acpi_tad_status_read(stru
+ 
+ 	pm_runtime_get_sync(dev);
+ 
++	guard(mutex)(&acpi_tad_aml_lock);
++
+ 	status = acpi_evaluate_integer(handle, "_GWS", &arg_list, &retval);
+ 
+ 	pm_runtime_put_sync(dev);
 
 
