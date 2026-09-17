@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E813454704A;
-	Thu, 17 Sep 2026 18:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA32DB79F;
+	Thu, 17 Sep 2026 18:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668848; cv=none; b=enLXdNquaKAGU+bbQzgW3pXN4g6pFqPY1HJE8lLa+pBi3Gdn+VD8bRTbFeOFdTOCLML06W1+tijqMW/hje6wS2bMFgURke3iWkr+CrTeaC7ZSkV6H5DvKNOQbVT54JcTr6dTBHxY+wfT2AQfJmPKPTeCoZZVFPIxgwM+BeIwDd4=
+	t=1789668851; cv=none; b=CEny0eNSujGJp3ZClGq7NqGmJJFXVQKOPxYJIWHJ9+xFZcokF1oDPx6qd9zv53OAeqOI1G9TKTZGnIDmhpRgMeDOkEln0ysFlaBQ2ykc/eF9zikNajUNhg0TUcgem8uN7ertyhUBqY5beCh5nn/azKdKsVURHxlmU6OvuLblV98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668848; c=relaxed/simple;
-	bh=EqrO8xA6jI6KJ+8op0wJHWsE6S7lnA59BDE9ULxzsiI=;
+	s=arc-20240116; t=1789668851; c=relaxed/simple;
+	bh=ymGhle0FZwmC4cotQOBlT8XsHtbm+rluSWU79Ahcs1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=spIKKXZOsZcK7uQ7ukzUDgSjz2c3KyngwIITbBgJ0Q/Om7uNvDZH9g9x5rl8ajPOw7xXuWy7ZexYO31LWWRVLzqrDaM+dwoc6+X6CnTqWjW52BUoZNXgFny9F2HaKuSlKGsTXKOYjNgqoaSP/Tbf6snBXaawDKjEWQYn2tFQpQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGIGXkw9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LD21OOItnHgjdtx59O1lLzXfKemElOrEWjScKSSu42ClrrbNK6wt0nCBpF+QFHId7i7ed6WivZKw/aNdJTzwlY2K6xcPZmyyHT1m3qXrYaSwlPY/ySr9cjzPVtrfertFwAxo5dhO8PVtTxtVVdxJZQP9SRlHngXQ28mO1h2+8n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t30J+iOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGIGXkw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF911F000FF;
-	Thu, 17 Sep 2026 18:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t30J+iOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A23D1F000FF;
+	Thu, 17 Sep 2026 18:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668846;
-	bh=3BJoALNGde869QNJFWtHPJjF27NK9lIx8Mruac6hh60=;
+	s=korg; t=1789668849;
+	bh=DLZmzi1npUiAoFiWGayNCjFJwiOP19O+TK8uqxyum3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TGIGXkw90nEUBXQhVFXtoMSHQK8L5CxKmGNlG1jeXH9mkizudkMitg1tOaCWgVUDY
-	 8dUH5MdE+QhIVYKgo5pvQ0IZ/EaPWjROpep2fMP15cTrKtLIlbgiss6M22HyLOC9tv
-	 OMEDUgc9SLinsY4GCnJU8LDWH26upFysje+mkQCU=
+	b=t30J+iOflv6ME3lVRbXBBQrDZHWmsj2Bc7gd/mFQslzk70qrakmo7FUUoh/FgECYn
+	 D4txjtKZiC6v4riUCYRSaxogGAn861HbRhaNSFDBFjqC3K+hl2k0Kf/JcEa+/V5DDH
+	 wf6wQo6sJOr8C1A6z8LOCTzlzEl07/ecIY9AiGUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0512/1102] ufs: do not treat unreadable directory blocks as empty
-Date: Thu, 17 Sep 2026 16:07:35 +0100
-Message-ID: <20260917151552.602262109@linuxfoundation.org>
+Subject: [PATCH 6.12 0554/1102] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
+Date: Thu, 17 Sep 2026 16:08:17 +0100
+Message-ID: <20260917151553.755881399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,49 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 08edfb34ee9ca54383970c65ed3a6013e84f5e16 ]
+[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
 
-ufs_empty_dir() scans every directory block to decide whether a
-directory is empty before rmdir() removes it. When ufs_get_folio()
-cannot read or validate a block it returns an error pointer, and the
-loop currently skips that block with continue and keeps scanning the
-remaining blocks.
+l2cap_chan_connect() tries to ensure there are no more than
+L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
+same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
 
-If none of the readable blocks hold an entry, the function returns 1
-and the caller unlinks the directory. A directory whose contents live
-in a block that cannot be read, for example because of an I/O error or
-corrupted directory metadata, is therefore seen as empty and removed,
-losing the entries it still holds.
+However, the check only counts deferred channels.  If 6 L2CAP sockets
+are connected at the same time in order DDDDND (D=deferred,
+N=non-deferred), the last can bump the total to max+1.  It results to
+one __le16 written out of bounds of the scid array, and an invalid
+ECRED_CONN_REQ being sent.
 
-Follow the ext2 behaviour and treat an unreadable block as a reason to
-consider the directory not empty, so rmdir() fails instead of
-discarding data that could not be verified.
+Fix by leaving room for the non-deferred pending ECRED channels in the
+counting in l2cap_chan_connect(), so the limit can't be exceeded.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801013942.279992-1-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Move counting under same critical section where the channel is added.
+Although race conditions involving this appear unreachable, it's easier
+to see.
+
+Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
+less brittle.
+
+Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ufs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ufs/dir.c b/fs/ufs/dir.c
-index d6e6a21989715..254d9a0b1b241 100644
---- a/fs/ufs/dir.c
-+++ b/fs/ufs/dir.c
-@@ -590,7 +590,7 @@ int ufs_empty_dir(struct inode * inode)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index b98bb57ef6781..9991afc177426 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1340,7 +1340,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
+ struct l2cap_ecred_conn_data {
+ 	struct {
+ 		struct l2cap_ecred_conn_req_hdr req;
+-		__le16 scid[5];
++		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
+ 	} __packed pdu;
+ 	struct l2cap_chan *chan;
+ 	struct pid *pid;
+@@ -1368,6 +1368,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
+ 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
+ 		return;
  
- 		kaddr = ufs_get_folio(inode, i, &folio);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
++	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
++	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
++		return;
++
+ 	l2cap_ecred_init(chan, 0);
  
- 		de = (struct ufs_dir_entry *)kaddr;
- 		kaddr += ufs_last_byte(inode, i) - UFS_DIR_REC_LEN(1);
+ 	/* Set the same ident so we can match on the rsp */
+@@ -7343,6 +7347,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		goto done;
+ 	}
+ 
++	mutex_lock(&conn->lock);
++	l2cap_chan_lock(chan);
++
+ 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
+ 		struct l2cap_chan_data data;
+ 
+@@ -7350,19 +7357,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		data.pid = chan->ops->get_peer_pid(chan);
+ 		data.count = 1;
+ 
+-		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++
++		/* Leave room for non-deferred channel that ends the group. */
++		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
++			data.count += 1;
+ 
+ 		/* Check if there isn't too many channels being connected */
+ 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
+ 			hci_conn_drop(hcon);
+ 			err = -EPROTO;
+-			goto done;
++			goto chan_unlock;
+ 		}
+ 	}
+ 
+-	mutex_lock(&conn->lock);
+-	l2cap_chan_lock(chan);
+-
+ 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
+ 		hci_conn_drop(hcon);
+ 		err = -EBUSY;
 -- 
 2.53.0
 
