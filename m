@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBC54F393A;
-	Thu, 17 Sep 2026 15:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1520F4B7A4B;
+	Thu, 17 Sep 2026 15:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660412; cv=none; b=m17q2glIAMaKOIGpGownYKSjhHuBrUgabXqTIrpIHYLatMGpCGLboW2l44o+istgsiTqxgvUY/j/sUQxBYgZAGXc/lM1gEbF4O08k166PpHus6sXm1RuT6xCJmEzAftL1T53uXZ2kqRwKbggYReIaeDT8xyj+L7vVbsL49R6OBk=
+	t=1789660415; cv=none; b=UdXMDV3vsFhmkgt0fBHIYfe5bfYHrgI0llHvtCSLQ6WTX990Gg7YPs0lBEHJB/BcCbJ0SUJ8EyrsM67b5SWeeJGy5UlbAXbjXC9SoHOBzjNpBr98rBMlxW/Eg9FyfvMZ/bEf44wjltFfCgaQUfzNu63H+lRjpJD/qVa10ZqotHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660412; c=relaxed/simple;
-	bh=CuXSWftArLuSokxMPD0mZHy/PVRZcfONomzVOXc2OhY=;
+	s=arc-20240116; t=1789660415; c=relaxed/simple;
+	bh=+82QvroPN0+P8O7Xw53V5HLuEmiEehbkhITdv0QlEz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9fSYM4m0RvEzIYUhWW7T5OllpflKAEBo3tlw41nRxmsdgx2xl1CdITstXDmq2Vzwr9evpRYBqumLXj9YkjaS2FK2yy/srt6hGzderc6kw0/isaG+1sWYevm8whBwP54rh0T60VeJHOeCRLEFkzuiYDw5d1OpA5tPluYhLpTDRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABjRwe3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTi6jr2BAvjSGBtFGajdzXI6vO/BPKRANk6g1TbY9vlvkvZn2wVzHLyH1HesePCKYROMsck7U9hBfPaQgd/gvk5xX3FFwgS2PEewy7qVZHEXeBWF3kLudVC558sa+wSVYmDTXg7WR/mbaiWPtoXbeVQyFw0rMWJNy32FwX1u5ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RND911s7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABjRwe3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4911F000FF;
-	Thu, 17 Sep 2026 15:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RND911s7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9D91F000FF;
+	Thu, 17 Sep 2026 15:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660410;
-	bh=dCzudl6PkDPz3SL4JOP0yaQJYha8+rn+7onnLfUdAX8=;
+	s=korg; t=1789660413;
+	bh=TWncvBt+cxFHRtbXLxxGBS5FRx3QKC/hqE9Q9rjwxCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABjRwe3GhmaveD/H7jEXVnF19811Qk7Z4nuRZYo9OYrk21es5ux63a47G2hmLn8K/
-	 JL3eNY3bAS9R/LTDA2k1CTqwEChYleqgdWTQ0GJOqUC//HqXRjmt7kYt6h9xDMRFoy
-	 z7v4qST4roFJos9APW5X0zkD6ycRiEA0XeYHBzW8=
+	b=RND911s7h2u5PYO2S4JzjIMPJuYyt170P0qWoetIxt7oSPMyHfHu60af6qEzSqgKm
+	 QgdjYx0OZsE288FT7+tPsbUxJaxYBDhEn5QEQuYM/WV2GJFhFB3R6/uA4+4CLrCHs2
+	 x0PYmxFVSPK5TlUmoxPwlq8jR+Ebz76ihNi4pacU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.2 576/733] s390/crypto: Fix use of mutex in atomic context
-Date: Thu, 17 Sep 2026 16:14:44 +0100
-Message-ID: <20260917151406.722570945@linuxfoundation.org>
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 7.2 585/733] perf: RISC-V: use BIT_ULL for u64 overflow masks
+Date: Thu, 17 Sep 2026 16:14:53 +0100
+Message-ID: <20260917151406.993919286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,134 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-commit d1c44a7d085473173bb360b7218a43699c3f56c7 upstream.
+commit 6693171c8c540b3a54e671992f0561613076fc3b upstream.
 
-The AES CTR implementation used a mutex to lock one page of exclusive
-memory for fast CTR processing. Unfortunately a mutex is not save to
-use in atomic or interrupt context. So use a binary semaphore instead
-which is save to use in such environments.
+Overflow status and restart masks are u64, but bits were built with
+BIT(). On RV32 that is an unsigned long shift, so indices >= 32 truncate
+or wrap and corrupt the mask.
 
-Furthermore rework the code to get rid of conditional locking. So
-restructure the AES CRT code by extracting the main loop into a
-separate function and just give in information about the (locked) page
-can be used or not (is not locked).
+Use BIT_ULL() for those u64 bitops.
 
-Fixes: 7988fb2c03c8 ("crypto: s390/aes - convert to skcipher API")
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 5.5+
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: a8625217a054 ("drivers/perf: riscv: Implement SBI PMU snapshot function")
+Assisted-by: DeepSeek:deepseek-v3
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/prpmask01bitul.v2.1786434000.git.liuxixin@kylinos.cn
+Cc: stable@vger.kernel.org
+[pjw@kernel.org: updated to apply]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/aes_s390.c |   63 +++++++++++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ drivers/perf/riscv_pmu_sbi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/s390/crypto/aes_s390.c
-+++ b/arch/s390/crypto/aes_s390.c
-@@ -26,14 +26,14 @@
- #include <linux/module.h>
- #include <linux/cpufeature.h>
- #include <linux/init.h>
--#include <linux/mutex.h>
- #include <linux/fips.h>
-+#include <linux/semaphore.h>
- #include <linux/string.h>
- #include <crypto/xts.h>
- #include <asm/cpacf.h>
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -1038,7 +1038,7 @@ static inline void pmu_sbi_start_ovf_ctr
+ 	struct riscv_pmu_snapshot_data *sdata = cpu_hw_evt->snapshot_addr;
  
- static u8 *ctrblk;
--static DEFINE_MUTEX(ctrblk_lock);
-+static DEFINE_SEMAPHORE(ctrblk_sem, 1);
+ 	for_each_set_bit(idx, cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS) {
+-		if (ctr_ovf_mask & BIT(idx)) {
++		if (ctr_ovf_mask & BIT_ULL(idx)) {
+ 			event = cpu_hw_evt->events[idx];
+ 			hwc = &event->hw;
+ 			max_period = riscv_pmu_ctr_get_width_mask(event);
+@@ -1147,14 +1147,14 @@ static irqreturn_t pmu_sbi_ovf_handler(i
+ 			hidx = info->csr - CSR_CYCLE;
  
- static cpacf_mask_t km_functions, kmc_functions, kmctr_functions,
- 		    kma_functions;
-@@ -562,46 +562,61 @@ static unsigned int __ctrblk_init(u8 *ct
- 	return n;
- }
+ 		/* check if the corresponding bit is set in scountovf or overflow mask in shmem */
+-		if (!(overflow & BIT(hidx)))
++		if (!(overflow & BIT_ULL(hidx)))
+ 			continue;
  
-+static int __ctr_aes_crypt(struct s390_aes_ctx *sctx,
-+			   struct skcipher_walk *walk, bool locked)
-+{
-+	unsigned int n, nbytes;
-+	int ret = 0;
-+	u8 *ctrptr;
-+
-+	while (!ret && ((nbytes = walk->nbytes) >= AES_BLOCK_SIZE)) {
-+		n = AES_BLOCK_SIZE;
-+		if (nbytes >= 2 * AES_BLOCK_SIZE && locked)
-+			n = __ctrblk_init(ctrblk, walk->iv, nbytes);
-+		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk->iv;
-+		cpacf_kmctr(sctx->fc, sctx->key, walk->dst.virt.addr,
-+			    walk->src.virt.addr, n, ctrptr);
-+		if (ctrptr == ctrblk)
-+			memcpy(walk->iv, ctrptr + n - AES_BLOCK_SIZE,
-+			       AES_BLOCK_SIZE);
-+		crypto_inc(walk->iv, AES_BLOCK_SIZE);
-+		ret = skcipher_walk_done(walk, nbytes - n);
-+	}
-+
-+	return ret;
-+}
-+
- static int ctr_aes_crypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct s390_aes_ctx *sctx = crypto_skcipher_ctx(tfm);
--	u8 buf[AES_BLOCK_SIZE], *ctrptr;
- 	struct skcipher_walk walk;
--	unsigned int n, nbytes;
--	int ret, locked;
-+	u8 buf[AES_BLOCK_SIZE];
-+	int ret;
- 
- 	if (unlikely(!sctx->fc))
- 		return fallback_skcipher_crypt(sctx, req, 0);
- 
--	locked = mutex_trylock(&ctrblk_lock);
--
- 	ret = skcipher_walk_virt(&walk, req, false);
--	while (!ret && ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE)) {
--		n = AES_BLOCK_SIZE;
-+	if (ret)
-+		return ret;
- 
--		if (nbytes >= 2*AES_BLOCK_SIZE && locked)
--			n = __ctrblk_init(ctrblk, walk.iv, nbytes);
--		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk.iv;
--		cpacf_kmctr(sctx->fc, sctx->key, walk.dst.virt.addr,
--			    walk.src.virt.addr, n, ctrptr);
--		if (ctrptr == ctrblk)
--			memcpy(walk.iv, ctrptr + n - AES_BLOCK_SIZE,
--			       AES_BLOCK_SIZE);
--		crypto_inc(walk.iv, AES_BLOCK_SIZE);
--		ret = skcipher_walk_done(&walk, nbytes - n);
-+	if (down_trylock(&ctrblk_sem) == 0) {
-+		ret = __ctr_aes_crypt(sctx, &walk, true);
-+		up(&ctrblk_sem);
-+	} else {
-+		ret = __ctr_aes_crypt(sctx, &walk, false);
- 	}
--	if (locked)
--		mutex_unlock(&ctrblk_lock);
-+
- 	/*
- 	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
- 	 */
--	if (!ret && nbytes) {
-+	if (!ret && walk.nbytes > 0) {
- 		memset(buf, 0, AES_BLOCK_SIZE);
--		memcpy(buf, walk.src.virt.addr, nbytes);
-+		memcpy(buf, walk.src.virt.addr, walk.nbytes);
- 		cpacf_kmctr(sctx->fc, sctx->key, buf, buf,
- 			    AES_BLOCK_SIZE, walk.iv);
--		memcpy(walk.dst.virt.addr, buf, nbytes);
-+		memcpy(walk.dst.virt.addr, buf, walk.nbytes);
- 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
- 		ret = skcipher_walk_done(&walk, 0);
- 	}
+ 		/*
+ 		 * Keep a track of overflowed counters so that they can be started
+ 		 * with updated initial value.
+ 		 */
+-		overflowed_ctrs |= BIT(lidx);
++		overflowed_ctrs |= BIT_ULL(lidx);
+ 		hw_evt = &event->hw;
+ 		/* Update the event states here so that we know the state while reading */
+ 		hw_evt->state |= PERF_HES_STOPPED;
 
 
