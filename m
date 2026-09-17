@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A804973B4;
-	Thu, 17 Sep 2026 18:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231B82ED154;
+	Thu, 17 Sep 2026 18:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670584; cv=none; b=kBQ2U7R28E0PUIuluJSqbeVAWg0qLJRbgwWityoVKdd5nDmPICDgk/1Al9K013HSxarsaNbP9VRe/Mazj4C/Y28OvUHFdcjTkCie+Be0Z+o1L8hstTqCWm/a6ORWdBAlZItl0VbTPrDueAN19XtIIbPiSrnnU+DQJHiqSz8fmCE=
+	t=1789670587; cv=none; b=g8bxchmy3zFnrmUvhykzmMq7ZRs2mgpxBJO0wWAbIDjVe2oYI9qhXAoLtX6jBqqZPozxsmo8VEC+NY0PCzdXw2+p82+QkbzyLyCj+USoJmsVSOctuCCzC2qkl0rlrIUGJdk7VQkvngrvrkW6DQwK4KD67gdkw1VIvlzaOyZ8SJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670584; c=relaxed/simple;
-	bh=JoPzgX/5y43vbeiEfN4TiBtrSZwT1oKYDd6weMVnHrg=;
+	s=arc-20240116; t=1789670587; c=relaxed/simple;
+	bh=sdiPyNaxcYyX6qvNmVYEy8nLG8d+NCwZ2YZbgDn+Cns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Np14wFj7utSz2/mphVrjV66jphqPgasdA9aWzqmQsJA3hREXEJmfN1xqSY3gH2U9+L1fVhaSncK58k5/3NoC1gzgseIGrXfbs9IqX/+2w6drzW2GS7fi48FUH4FiNjVhuYgKfFRk2Xywdkgnm2+GSZuRkJgUh9its3RSWClTm9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsIeC2AV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTA568cx1bgCqi9jkvgoc+CRGYYMd89OYE6vCrX4OS9/OicDT2010Tx6tm65nM3kvVRgG325rjWVkWrOg5B7EXN/8MYRLqIBXV9WUGVdnwLQlZqpady3wMJZslta65ZvDUTpaS/SR6v0kS8+iUil4oHnRT1Mua8rBXKIMjkmVOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TncdZ20X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsIeC2AV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4831F000FF;
-	Thu, 17 Sep 2026 18:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TncdZ20X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CBA1F000FF;
+	Thu, 17 Sep 2026 18:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670582;
-	bh=iVNm+/7MqlyqKZ6iwn7/inzyD7Z3GI3nxJUZ19S/bjI=;
+	s=korg; t=1789670586;
+	bh=8c4fJU5YSfm3T4zUfVk47/F09+AnSzMajBjmLnNF6wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HsIeC2AVj4vEs44gAmQ8RbSlNqywziC9RmQ+3I6GAeqa0gSP/R2pb0VAUK8YgYXJX
-	 ry9PX5cW0OGWGCrR2p9kSIQ96R600r5lH3ZqNbe9gmqgutcfstSZif+KAMYseVWrYn
-	 NJPk8fzaJixS2pkVTIpT4J2U3SV38CSq34dXd2yw=
+	b=TncdZ20XzqayCCIDu2TaNjHnNGFC5Q1DRjLuDW9jw8Cl64uLprPOCvUkitTSgHeN6
+	 yn5Ky3NW6vf0BG2QLYshSNCkjyUFKyF6L81PxrdUF2fmIzVfWf1xVypj99vcus82Id
+	 26Xyk5+O/4/75TmatDbUgk/2aNZpGYdmvkrXMPpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0707/1102] ASoC: Intel: SST: Publish the PCI module aliases
-Date: Thu, 17 Sep 2026 16:10:50 +0100
-Message-ID: <20260917151558.069649432@linuxfoundation.org>
+Subject: [PATCH 6.12 0708/1102] netfilter: nfnetlink_log: cope with concurrent instance destruction
+Date: Thu, 17 Sep 2026 16:10:51 +0100
+Message-ID: <20260917151558.096488390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,38 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d112159df5c6cc5ee6ab91cc32bf6ed29939df38 ]
+[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
 
-The legacy SST PCI driver matches Intel Tangier devices using
-intel_sst_ids, but its only explicit module alias is "sst". That alias
-does not match PCI modalias events when this driver is built as a module.
+Instances are refcounted. However, only memory release happens on the
+1 -> 0 transition; the unlink from hashes can occur with any refcount.
 
-Publish its PCI table. The independently configurable SOF driver does
-not provide aliases for the legacy SST module.
+Uncooperative userspace can force a situation where a queue is pending
+for destruction from netlink event while a different socket with same
+portid processes an UNBIND request.
 
-Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905133133.63661-1-hppiscas@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+With right timing, this will unhash the instance again:
+
+Oops: general protection fault, [..]
+Call Trace:
+ <TASK>
+ nfulnl_recv_config+0x31a/0xd50
+ nfnetlink_rcv_msg+0x7c2/0xeb0
+
+Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/atom/sst/sst_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nfnetlink_log.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/intel/atom/sst/sst_pci.c b/sound/soc/intel/atom/sst/sst_pci.c
-index 296bea33e16ff..745e2e60a1440 100644
---- a/sound/soc/intel/atom/sst/sst_pci.c
-+++ b/sound/soc/intel/atom/sst/sst_pci.c
-@@ -178,6 +178,7 @@ static const struct pci_device_id intel_sst_ids[] = {
- 	{ PCI_DEVICE_DATA(INTEL, SST_TNG, 0) },
- 	{ 0, }
- };
-+MODULE_DEVICE_TABLE(pci, intel_sst_ids);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 14f723f3e0729..080cc30c7aba9 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -228,13 +228,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
+ static void
+ __instance_destroy(struct nfulnl_instance *inst)
+ {
++	spin_lock(&inst->lock);
++	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
++		/* attempt to UNBIND a queue already pending
++		 * destruction via netlink close event. Ignore.
++		 */
++		spin_unlock(&inst->lock);
++		return;
++	}
++
+ 	/* first pull it out of the global list */
+ 	hlist_del_rcu(&inst->hlist);
  
- static struct pci_driver sst_driver = {
- 	.name = SST_DRV_NAME,
+-	/* then flush all pending packets from skb */
+-
+-	spin_lock(&inst->lock);
+-
+ 	/* lockless readers wont be able to use us */
+ 	inst->copy_mode = NFULNL_COPY_DISABLED;
+ 
 -- 
 2.53.0
 
