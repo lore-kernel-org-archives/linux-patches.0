@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573ED539797;
-	Thu, 17 Sep 2026 17:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D3553A386;
+	Thu, 17 Sep 2026 17:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664583; cv=none; b=vFAYh82F31SICFUqHxcnHAazJk4rqHCvDD/LzJ0UzQKxCTKpJ+Zm122zTCKe8zdQwlIxwfe43UwGoDlxJevVNUEWlIjusVJ6avEItt4A/9PwgtlRXOFx6nWHoYigZQ8Qa1ZgrZz3EuS9oEgtDLiSw51TsPI3subA169RM1L0b8E=
+	t=1789664587; cv=none; b=JjOlvxkh8gpmbCZUrHhZrB3cHhoRETNNknAdiHU3VwbMT2txOsYI4Ps5tsGgvwt7de9l3VuQOKPip4RrLvZ8ZjRvQDKpLHXAlQEsYUkRX/AE9mwIghBouOFFRk2E/i648Y6VI4vjrw/Dl2s03cR0+hiB/KRIK6Lcl8yRIRHmf1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664583; c=relaxed/simple;
-	bh=ZEiS01/60rP8TDqx3O3hHcRrbtIkNM4nT1ZYS4J2jiw=;
+	s=arc-20240116; t=1789664587; c=relaxed/simple;
+	bh=FJH1WsMJx/5JK9vkRqw2YX7JNxwU8r6aMwEqCc7zyzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apF3rfwO3ktaj94L73jxsTFWfMRJnpXHGad6OqBqcg/gauq41tW/W74+FewugPRhEtyO7tOdZ5S7kv4IdkcVJUJQ6O8pHuq1fNGgeon03mcEYLcoFpQXpxEs/LvCtKIXJQD+QOmlCMc9hUDbJWDmJnZKjvIHcYDrzVbkW8kLS0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klntWBLh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=blxaUp3ZOr9nTxU4D2imHgmvNh4dSGeIs/xXtcbP56mz+SZ02q1KAjdfD7+DZS1fi5of1iMQyxDwetB+0afJYlbjo6G7Izvqs+FIfyP6m/1f2u4o3tFSkasCsBp+zRUxFpzOlnUN/LnBrcqBl9q8GVTj0Gz2U9jkDCoZMXWVtO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2L8lmiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klntWBLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7F81F000FF;
-	Thu, 17 Sep 2026 17:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2L8lmiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21C21F00893;
+	Thu, 17 Sep 2026 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664582;
-	bh=C3fRbienXHuJ8Ao8pDnONqC5eQkYqBgifVDERkUalys=;
+	s=korg; t=1789664585;
+	bh=mb5O31YZ4+1PSl4oqoAn93i0WPqLNQSndHZH9F76S+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klntWBLh1VM7ppDxon2f7X+hiqIzkpH99gCEfs23RFTIUTF5KKZLUhoxw4/CUU5fE
-	 hdvViJXBWZx3rFGZfXdz/TzVyZX/1NKoTOdNoLw11lQVcZQ4wa23GDeoYeNDO1hAPv
-	 kY3ycPqnfgYil6trQdNUrza14QrZjIRCVaKTh8wo=
+	b=g2L8lmiuzmIFGqzaZoEin2ISwQk88G2GNHJ9OrB6oFgCOjXcpTF+i1tu6nkk6GXCI
+	 kZQSLMkdXv7SJZcA/LmL5qEfEW13w8mXa3NHDpUQrOwv1j8rdNp8DdVn6iiDoLe/6e
+	 yTTP2YV0WyOUgM9XEzRcrUVgm+Q3hyeasW8aXRsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Menshin <ripeeerr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yung-Tse Cheng <mes900903@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0419/1250] ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT
-Date: Thu, 17 Sep 2026 16:03:34 +0100
-Message-ID: <20260917151603.377290039@linuxfoundation.org>
+Subject: [PATCH 6.18 0420/1250] virtio-fs: avoid double-free on failed queue setup
+Date: Thu, 17 Sep 2026 16:03:35 +0100
+Message-ID: <20260917151603.403280077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viktor Menshin <ripeeerr@gmail.com>
+From: Yung-Tse Cheng <mes900903@gmail.com>
 
-[ Upstream commit 3a3e810e91080a5121170ee11554a55ed89a1c8b ]
+[ Upstream commit 6af3330ec5d5fb8c06c04eb520a71cf73ea5a765 ]
 
-The Lenovo Xiaoxin 14 GT (Chinese market model, AMD Ryzen AI 9 365)
-produces constant electrical hissing and crackling noise from both
-internal speakers and 3.5mm headphone jack during audio playback.
-Audio works correctly on Windows.
+virtio_fs_setup_vqs() allocates fs->vqs and fs->mq_map before calling
+virtio_find_vqs(). If virtio_find_vqs() fails, the error path frees both
+pointers and returns an error to virtio_fs_probe().
 
-The PCI SSID 17aa:3912 is not present in the quirk list. The device
-shares the same AMD platform and ALC287 codec as neighboring Lenovo
-14" AMD models (17aa:3911, 17aa:390d), so apply the same fixup.
+virtio_fs_probe() then drops the last kobject reference, and
+virtio_fs_ktype_release() frees fs->vqs and fs->mq_map again. This leaves
+dangling pointers in struct virtio_fs and can trigger a double-free during
+probe failure cleanup.
 
-Note: the fixup selection is based on similarity with neighboring
-models and has not been verified by testing a compiled kernel.
-Guidance from maintainers on the correct fixup is welcome.
+Set fs->vqs and fs->mq_map to NULL immediately after kfree() in the
+virtio_fs_setup_vqs() error path so that the later kobject release sees an
+uninitialized state and kfree(NULL) becomes harmless.
 
-Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
-Link: https://patch.msgid.link/20260615092515.1082-1-ripeeerr@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This can be reproduced when a broken virtio-fs device advertises more
+request queues than the transport actually provides. In that case
+virtio_find_vqs() fails while setting up the extra queue, and the probe
+path reaches the double-free cleanup sequence.
+
+Signed-off-by: Yung-Tse Cheng <mes900903@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/virtio_fs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a634f1c1ca4b8..2843171e9c718 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7508,6 +7508,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index b2f6486fe1d56..2b3daa93e299a 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -988,7 +988,9 @@ static int virtio_fs_setup_vqs(struct virtio_device *vdev,
+ 	kfree(vqs);
+ 	if (ret) {
+ 		kfree(fs->vqs);
++		fs->vqs = NULL;
+ 		kfree(fs->mq_map);
++		fs->mq_map = NULL;
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
