@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C16D50E59C;
-	Thu, 17 Sep 2026 17:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B5D5172EF;
+	Thu, 17 Sep 2026 17:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666928; cv=none; b=Bv7awGmvq4nRdil8DilR/97qK6O4X53AxVIWPkt9S/daMItcW/FBdVdFlxGndZKjId/agXJ6M+Ncp24ms8ZBZn/ukGW+yopFi4Kt3IcSsMtCG59OgdfHFlQCU30Qv37mqv6j3yFOuOm5mx0J2hGY/lWpaG0QXTDFdOULDgHkwpg=
+	t=1789666931; cv=none; b=d45p9nyCwIsgM9luZ0d85DJSjBMiW5QhSqg/5QjBkPOprFqtx3pqJNYfDryUlydP53dp3gztdesu5QTs+VrVXJNpujHtfiDh3lWmC9yGSxUyF8AixNrgzIL7CIeazzOqiu1l2YOKkSHVuXRcUefDsJjNVKQj4FdGYAYA05LLAvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666928; c=relaxed/simple;
-	bh=VXaNbm2tF5FZM6SFYRjyRtzSjiwCBF3fmDgnRp7N/Mc=;
+	s=arc-20240116; t=1789666931; c=relaxed/simple;
+	bh=pECN09MKqGGWJxUvtw7dYf+DoofaaJqDT2eKDRK9NaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8WKV/uEtNje4eu2DQnPDWL5GuBqj7+y/4W9+YQ7ubqw14zgrvWCRQvcFLzKcc+zHJXB+9/GNq601wtkTGeWWWvDneIcE+bZICEERZdvkB/72HEuON0Ti1ute33GGZFZSCcBHu9zayaV1QrC+foQhbNGaq8t38/VJLch4Dqpl0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKI3JI9k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsrCSODkGdf9QaeRTx92exkbF51DabX1i86NRVfjwLe5Q0VmsxyewNOXMMTe6nKupQk2v6cLp1G21Tb2ei4bMGQAantJE+12sKEIAx4+1mfvovW47wnHixP+S9elE14Ljadw7xrgEh8DEMXRrO06Zx224s53LybraJ01lvl/GV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfO6EftJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKI3JI9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35631F000FF;
-	Thu, 17 Sep 2026 17:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfO6EftJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2E71F000FF;
+	Thu, 17 Sep 2026 17:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666926;
-	bh=tJUdwxDjF/sgWQxeqnB2Enms5vxvQxkbl6IF1euy2f0=;
+	s=korg; t=1789666929;
+	bh=i7NfNhLMyHNPnY4L+u+NYQ8DWEjEQVEqXn0DpQSlMH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jKI3JI9kidcmxFWYoS7bwTrPbTUlZM8ljYtE9TS7d5fI+Bwrr4nMU9bFUNqJAxh7a
-	 nRpfM5WMO3t6tXs9dNcOfytqrcUmt9uyTLodeuu5O83jlxanIbQ6x/PAu+KHb1oeao
-	 18juXBVR4bcpFErb3ULOaSKAZa69KT0Ic+/ey3gk=
+	b=hfO6EftJb+Bp5WbtKIwJuQAkN/iz9VEXrWuosp7MF9J2q0ElV/sByNekuMxRbFRV3
+	 rvwx33SsOjYzBgyUxncrNwMbXhGgBfFkLXJ3MKvzKBfkpl1RMz1AH391sOI9NVNPvd
+	 GGDssH0V5qls9wHGkNiqBDAfj77XdwBdGT2fexVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1171/1250] scsi: qla2xxx: Serialize NVMe unsol ctx list with a per-fcport lock
-Date: Thu, 17 Sep 2026 16:16:06 +0100
-Message-ID: <20260917151624.024563124@linuxfoundation.org>
+Subject: [PATCH 6.18 1172/1250] scsi: qla2xxx: Validate BSG request_len before reading vendor_cmd[]
+Date: Thu, 17 Sep 2026 16:16:07 +0100
+Message-ID: <20260917151624.053508356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,106 +54,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 76da0c43c63eb0496649e372ac64466364d0fe7d ]
+[ Upstream commit 4cf38dd9465736141263ebb63375868311a0ec81 ]
 
-The fcport->unsol_ctx_head list is modified from several contexts without
-a common lock. Entries are added in qla2xxx_process_purls_iocb() from the
-response queue ISR (under the qpair qp_lock), while they are removed from
-qla2xxx_process_purls_pkt() (DPC/purex worker), qla_nvme_xmt_ls_rsp()
-(NVMe-FC transport callback) and qla_nvme_release_lsrsp_cmd_kref() (SRB
-completion). The qpair qp_lock cannot serialize this per-fcport list since
-multiqueue adapters add entries through different qpairs, so a concurrent
-add and delete (or two concurrent deletes) can corrupt the list pointers.
+The FC BSG transport allocates job->request via memdup_user() using the
+exact user-supplied request_len. For FC_BSG_HST_VENDOR,
+fc_bsg_host_dispatch() only guarantees request_len covers msgcode and
+vendor_id; it does not account for the vendor_cmd[] flexible array.
 
-Introduce a dedicated per-fcport spinlock, unsol_ctx_lock, initialized in
-qla2x00_alloc_fcport(), and take it around every list_add_tail()/list_del()
-on unsol_ctx_head. The add nests under the existing qp_lock; no delete path
-takes qp_lock, so the lock order is consistent and deadlock free.
+qla2xxx then reads the command selector vendor_cmd[0] and, in several
+sub-handlers, vendor_cmd[1]/[2] or structures overlaid on the vendor
+command area without verifying request_len. A caller holding
+CAP_SYS_RAWIO can submit a short request whose vendor_id matches the
+host, triggering out-of-bounds heap reads (KASAN-detectable, and able to
+mis-select a command or panic).
 
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
+Add a central guard in qla2x00_process_vendor_specific() so the selector
+is always in bounds, restrict the early vendor_cmd[0] read in
+qla24xx_bsg_request() to sufficiently long vendor messages, and add
+request_len checks to the sub-handlers that read further:
+qla24xx_proc_fcp_prio_cfg_cmd(), qla2x00_process_loopback(),
+qla84xx_reset(), qla84xx_updatefw(), qla2x00_read_optrom(),
+qla2x00_update_optrom(), qlafx00_mgmt_cmd() and
+qla28xx_validate_flash_image().
+
+Fixes: 01e0e15c8b3b ("scsi: don't use fc_bsg_job::request and fc_bsg_job::reply directly")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-28-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-31-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ adapted hunks to the existing OPTROM helper and absence of qla28xx_validate_flash_image(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |    2 ++
- drivers/scsi/qla2xxx/qla_init.c |    1 +
- drivers/scsi/qla2xxx/qla_nvme.c |    9 +++++++++
- 3 files changed, 12 insertions(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |   45 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -2570,6 +2570,8 @@ typedef struct fc_port {
- 	struct list_head list;
- 	struct scsi_qla_host *vha;
- 	struct list_head unsol_ctx_head;
-+	/* Serializes unsol_ctx_head against ISR, DPC and NVMe transport. */
-+	spinlock_t unsol_ctx_lock;
- 
- 	unsigned int conf_compl_supported:1;
- 	unsigned int deleted:2;
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -5649,6 +5649,7 @@ qla2x00_alloc_fcport(scsi_qla_host_t *vh
- 	INIT_LIST_HEAD(&fcport->gnl_entry);
- 	INIT_LIST_HEAD(&fcport->list);
- 	INIT_LIST_HEAD(&fcport->unsol_ctx_head);
-+	spin_lock_init(&fcport->unsol_ctx_lock);
- 
- 	INIT_LIST_HEAD(&fcport->sess_cmd_list);
- 	spin_lock_init(&fcport->sess_cmd_lock);
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -257,7 +257,9 @@ static void qla_nvme_release_lsrsp_cmd_k
- 
- 	fd_rsp = uctx->fd_rsp;
- 
-+	spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 	list_del(&uctx->elem);
-+	spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 
- 	fd_rsp->done(fd_rsp);
- 	kfree(uctx);
-@@ -446,7 +448,9 @@ out:
- 		qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
- 		spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -158,6 +158,12 @@ qla24xx_proc_fcp_prio_cfg_cmd(struct bsg
+ 		goto exit_fcp_prio_cfg;
  	}
-+	spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 	list_del(&uctx->elem);
-+	spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 	kfree(uctx);
- 	return rval;
- }
-@@ -1216,7 +1220,9 @@ qla2xxx_process_purls_pkt(struct scsi_ql
- 			spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr,
- 					       flags);
- 		}
-+		spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 		list_del(&uctx->elem);
-+		spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 		kfree(uctx);
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t)) {
++		ret = -EINVAL;
++		goto exit_fcp_prio_cfg;
++	}
++
+ 	/* Get the sub command */
+ 	oper = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+ 
+@@ -756,6 +762,10 @@ qla2x00_process_loopback(struct bsg_job
+ 		return -EIO;
  	}
- }
-@@ -1258,6 +1264,7 @@ void qla2xxx_process_purls_iocb(void **p
- 	struct purex_item *item;
- 	port_id_t d_id = {0};
- 	port_id_t id = {0};
-+	unsigned long flags;
- 	u8 *opcode;
- 	bool xmt_reject = false;
  
-@@ -1323,7 +1330,9 @@ void qla2xxx_process_purls_iocb(void **p
- 	uctx->ox_id = p->ox_id;
- 	qla_rport->uctx = uctx;
- 	INIT_LIST_HEAD(&uctx->elem);
-+	spin_lock_irqsave(&fcport->unsol_ctx_lock, flags);
- 	list_add_tail(&uctx->elem, &fcport->unsol_ctx_head);
-+	spin_unlock_irqrestore(&fcport->unsol_ctx_lock, flags);
- 	item->purls_context = (void *)uctx;
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 3 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	memset(&elreq, 0, sizeof(elreq));
  
- 	ql_dbg(ql_dbg_unsol, vha, 0x2121,
+ 	elreq.req_sg_cnt = dma_map_sg(&ha->pdev->dev,
+@@ -988,6 +998,10 @@ qla84xx_reset(struct bsg_job *bsg_job)
+ 		return -EINVAL;
+ 	}
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	flag = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+ 
+ 	rval = qla84xx_reset_chip(vha, flag == A84_ISSUE_RESET_DIAG_FW);
+@@ -1032,6 +1046,10 @@ qla84xx_updatefw(struct bsg_job *bsg_job
+ 		return -EINVAL;
+ 	}
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	sg_cnt = dma_map_sg(&ha->pdev->dev, bsg_job->request_payload.sg_list,
+ 		bsg_job->request_payload.sg_cnt, DMA_TO_DEVICE);
+ 	if (!sg_cnt) {
+@@ -1482,6 +1500,10 @@ qla2x00_read_optrom(struct bsg_job *bsg_
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	if (ha->flags.nic_core_reset_hdlr_active)
+ 		return -EBUSY;
+ 
+@@ -1519,6 +1541,10 @@ qla2x00_update_optrom(struct bsg_job *bs
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	mutex_lock(&ha->optrom_mutex);
+ 	rval = qla2x00_optrom_setup(bsg_job, vha, 1);
+ 	if (rval) {
+@@ -2010,6 +2036,11 @@ qlafx00_mgmt_cmd(struct bsg_job *bsg_job
+ 	struct fc_port *fcport;
+ 	char  *type = "FC_BSG_HST_FX_MGMT";
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + sizeof(uint32_t) +
++	    sizeof(struct qla_mt_iocb_rqst_fx00))
++		return -EINVAL;
++
+ 	/* Copy the IOCB specific information */
+ 	piocb_rqst = (struct qla_mt_iocb_rqst_fx00 *)
+ 	    &bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+@@ -2899,6 +2930,13 @@ qla2x00_process_vendor_specific(struct s
+ {
+ 	struct fc_bsg_request *bsg_request = bsg_job->request;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + sizeof(uint32_t)) {
++		ql_log(ql_log_warn, vha, 0x7000,
++		       "BSG request too small for vendor cmd.\n");
++		return -EINVAL;
++	}
++
+ 	ql_dbg(ql_dbg_edif, vha, 0x911b, "%s FC_BSG_HST_VENDOR cmd[0]=0x%x\n",
+ 	    __func__, bsg_request->rqst_data.h_vendor.vendor_cmd[0]);
+ 
+@@ -3024,8 +3062,11 @@ qla24xx_bsg_request(struct bsg_job *bsg_
+ 	}
+ 
+ 	/* Disable port will bring down the chip, allow enable command */
+-	if (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
+-	    bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS)
++	if (bsg_request->msgcode == FC_BSG_HST_VENDOR &&
++	    bsg_job->request_len >=
++		sizeof(struct fc_bsg_request) + sizeof(uint32_t) &&
++	    (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
++	     bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS))
+ 		goto skip_chip_chk;
+ 
+ 	if (vha->hw->flags.port_isolated) {
 
 
