@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B27B3B7752;
-	Thu, 17 Sep 2026 19:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C3643E06C;
+	Thu, 17 Sep 2026 19:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671789; cv=none; b=YvHvuvDr0THm+eO3Ba9tIZ1/7ZxzuZfB2qReml45QY4am7W2gXfsH2OT7ki5HQz3QWJPuW4ZPC1S/onTA6DoTqAnGebc9m2pBFITded0MGx6lpUgxW9ldyMKNJsY5iqfs30mvr+q29EX5t963/2TUQ8AFRHPbuMjWhrwbN08Bfk=
+	t=1789671792; cv=none; b=DFAZ8yiMlaWQhRdejQB+nWesDvVNygQmgbshxwOvKf4dPToLAuw+7wYg3uePuH9+gk+U5SfbSiiwBr3+vqDxEYq8EumNSTRdgh+q11PUe0tcXIKtPbQHshRvpq+2V1kd9qApZcyfL9Df2z6ypmqQDks9YfGE3zXQ6WVht1getZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671789; c=relaxed/simple;
-	bh=CoxD1exTO9cKo5kpRE5/eWGtdFryGZvZut3H3SvOJ1Q=;
+	s=arc-20240116; t=1789671792; c=relaxed/simple;
+	bh=KPh+eze34D2we9hPR3KE0MBp3vZYuXJawbVJNsJCFw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjzdis67m5wS5LmVXYNu9eb7FgEgWd9Oyfuwh8WEKMV181JKx4/r4NWIotta+0lrSmytJE80mpSQP/ryCC4uJQmQ0VQ58gCJl/wH/OjWHIICtwvvKY1cdVo8ML6Q3ZRm+Nhul00iaiCxgptCWC9nWmMbRUlF2ognY1EdHkMDWnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN0FfmrW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AiZ3rojwFp80Uof3PegBmmek7j1CJNB717BQbzFQR9RpPlnzpxfbj6UIcCGwFL6w+Ea9KxSOSAn395SnOayv21CuKSbe6I/Qxl2/32jjKKEJ+oCYK2SdCgk2xU+pIDR9jHOpzwarkB7Ylh3ZBlV9aiUlBQgAYnVykBoT0uafn7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrX1lith; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN0FfmrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9168F1F000FF;
-	Thu, 17 Sep 2026 19:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrX1lith"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD011F000FF;
+	Thu, 17 Sep 2026 19:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671788;
-	bh=cMCObnMflf51AIjptxOKYJbtrI9+NdilxHypPlmp2lY=;
+	s=korg; t=1789671791;
+	bh=npIilqSeM0IBMhzzsPZINQTgCNAOAtoVG/Cw//V9M7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vN0FfmrWF0VV78XUJ379vM/3Ai3BYfIQDB09IKQjg5YhwhyA0bmzU+ug543i03wYR
-	 OY4OPi8b/NYXJp7wfq21rIjLKwZfQSpn4rDH60yvEOalqKevL0eUFtfv4jq5568LHW
-	 xioOppqHw57W4w/Y8tv2Bk0BBE5XgE1k+iNGHeu0=
+	b=OrX1lithrZ6X/jz0bTqbFCFp4RYuojeDrAJiD1yO24X1CTTbAQCEIaHHSXZgCyRY/
+	 LaVuH7hJALJ6U9eu+TMkPGQPVOGpS+BSxfPAgQLB72d7TEfbpxWqgoGaI5J0u//A7q
+	 bmjze7SBy8LYcAXxS0Sg3iTXAiIiz2LKVc9QoW6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jiri Kosina <jkosina@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1053/1102] HID: sony: fix UAF of ghl_poke_timer / ghl_urb at driver unbind
-Date: Thu, 17 Sep 2026 16:16:36 +0100
-Message-ID: <20260917151607.244982828@linuxfoundation.org>
+Subject: [PATCH 6.12 1044/1102] btrfs: update include and forward declarations in headers
+Date: Thu, 17 Sep 2026 16:16:27 +0100
+Message-ID: <20260917151607.002986963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,80 +50,314 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit a26705bd2e2728833e7a538ce91e58a5eeff496a ]
+[ Upstream commit 6149c82bdaff63203e58a4910d9245468d281f39 ]
 
-For GHL (Guitar Hero Live) dongles, sony_probe() arms a periodic timer:
-ghl_magic_poke() (the timer callback) submits sc->ghl_urb, and the URB
-completion ghl_magic_poke_cb() re-arms the timer with mod_timer().
+Pass over all header files and add missing forward declarations,
+includes or fix include types.
 
-sony_remove() drained the timer with timer_delete_sync() and then freed
-the URB with usb_free_urb():
-
-	timer_delete_sync(&sc->ghl_poke_timer);
-	usb_free_urb(sc->ghl_urb);
-
-timer_delete_sync() does not block re-arming, and while the URB is in
-flight the timer is not pending, so the sync delete is a no-op. A URB
-completion that runs after the delete re-arms the timer, and usb_free_urb()
-only drops a reference -- it does not kill an in-flight URB. sc is
-allocated with devm_kzalloc() and freed once sony_remove() returns, so the
-re-armed ghl_poke_timer (embedded in sc) then fires on freed memory, a
-use-after-free from timer softirq. This is a disconnect/rmmod race.
-
-Poison the URB first, then shut the timer down, before freeing the URB.
-usb_poison_urb() kills any in-flight URB and permanently rejects further
-submissions, so a poke timer that is still pending cannot re-submit the
-URB from ghl_magic_poke() in the window before timer_shutdown_sync() runs.
-usb_kill_urb() would not suffice: it only cancels the in-flight URB and
-leaves it submittable once it returns, so the pending timer could
-re-submit it and put a fresh URB in flight over the freed sc.
-timer_shutdown_sync() then drains any last callback and blocks re-arming.
-The probe error path is unaffected: it is only reached before the timer
-is armed.
-
-Reproduced under KASAN on next-20260710 via dummy_hcd + raw-gadget
-emulation of the GHL PS4 dongle (VID 0x1430 / PID 0x07bb): hid-sony binds
-and arms the poke timer, the poke URB is held in flight, the driver is
-unbound (freeing sc), then the URB is released. The completion re-arms the
-timer on the freed sc, and the re-armed timer fires ~8 s later:
-
-  BUG: KASAN: slab-use-after-free in ghl_magic_poke+0x98/0xb0
-  Read of size 8 at addr ffff88810b02fd50 by task swapper/0/0
-   ghl_magic_poke+0x98/0xb0
-   call_timer_fn+0x35/0x2b0
-   __run_timers+0x69c/0x9a0
-   run_timer_softirq+0x173/0x2a0
-  Allocated by task 169:  sony_probe
-  Freed by task 338:      devres_release_group <- hid_device_remove (sony_remove)
-
-Found by 0sec (https://0sec.ai) using automated source analysis.
-
-Fixes: cc894ac55360 ("HID: sony: support for ghlive ps3/wii u dongles")
-Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ changed the old del_timer_sync() call to timer_shutdown_sync() ]
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 15f7c86215e8 ("btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sony.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/accessors.h        |    1 +
+ fs/btrfs/acl.h              |    2 ++
+ fs/btrfs/ctree.h            |    2 +-
+ fs/btrfs/delayed-ref.h      |    2 ++
+ fs/btrfs/dir-item.h         |    1 +
+ fs/btrfs/direct-io.h        |    2 ++
+ fs/btrfs/discard.h          |    1 +
+ fs/btrfs/extent-tree.h      |    1 -
+ fs/btrfs/file-item.h        |    2 ++
+ fs/btrfs/file.h             |    2 ++
+ fs/btrfs/fs.c               |    1 -
+ fs/btrfs/ioctl.h            |    2 ++
+ fs/btrfs/locking.c          |    1 -
+ fs/btrfs/ordered-data.h     |    1 +
+ fs/btrfs/print-tree.h       |    2 ++
+ fs/btrfs/props.h            |    1 +
+ fs/btrfs/qgroup.h           |    3 +++
+ fs/btrfs/raid-stripe-tree.h |    1 +
+ fs/btrfs/send.c             |    1 -
+ fs/btrfs/space-info.c       |    2 +-
+ fs/btrfs/subpage.c          |    1 -
+ fs/btrfs/sysfs.h            |    1 +
+ fs/btrfs/volumes.h          |    4 ++++
+ fs/btrfs/xattr.h            |    2 ++
+ 24 files changed, 32 insertions(+), 7 deletions(-)
 
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -2163,7 +2163,9 @@ static void sony_remove(struct hid_devic
- 	struct sony_sc *sc = hid_get_drvdata(hdev);
+--- a/fs/btrfs/accessors.h
++++ b/fs/btrfs/accessors.h
+@@ -12,6 +12,7 @@
+ #include <linux/string.h>
+ #include <linux/mm.h>
+ #include <uapi/linux/btrfs_tree.h>
++#include "extent_io.h"
  
- 	if (sc->quirks & (GHL_GUITAR_PS3WIIU | GHL_GUITAR_PS4)) {
--		del_timer_sync(&sc->ghl_poke_timer);
-+		/* poison, not kill: a pending timer must not re-submit during teardown */
-+		usb_poison_urb(sc->ghl_urb);
-+		timer_shutdown_sync(&sc->ghl_poke_timer);
- 		usb_free_urb(sc->ghl_urb);
- 	}
+ struct extent_buffer;
  
+--- a/fs/btrfs/acl.h
++++ b/fs/btrfs/acl.h
+@@ -3,6 +3,8 @@
+ #ifndef BTRFS_ACL_H
+ #define BTRFS_ACL_H
+ 
++#include <linux/types.h>
++
+ struct posix_acl;
+ struct inode;
+ struct btrfs_trans_handle;
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -6,7 +6,7 @@
+ #ifndef BTRFS_CTREE_H
+ #define BTRFS_CTREE_H
+ 
+-#include "linux/cleanup.h"
++#include <linux/cleanup.h>
+ #include <linux/spinlock.h>
+ #include <linux/rbtree.h>
+ #include <linux/mutex.h>
+--- a/fs/btrfs/delayed-ref.h
++++ b/fs/btrfs/delayed-ref.h
+@@ -14,6 +14,8 @@
+ #include <linux/spinlock.h>
+ #include <linux/slab.h>
+ #include <uapi/linux/btrfs_tree.h>
++#include "fs.h"
++#include "messages.h"
+ 
+ struct btrfs_trans_handle;
+ struct btrfs_fs_info;
+--- a/fs/btrfs/dir-item.h
++++ b/fs/btrfs/dir-item.h
+@@ -10,6 +10,7 @@ struct fscrypt_str;
+ struct btrfs_fs_info;
+ struct btrfs_key;
+ struct btrfs_path;
++struct btrfs_inode;
+ struct btrfs_root;
+ struct btrfs_trans_handle;
+ 
+--- a/fs/btrfs/direct-io.h
++++ b/fs/btrfs/direct-io.h
+@@ -5,6 +5,8 @@
+ 
+ #include <linux/types.h>
+ 
++struct kiocb;
++
+ int __init btrfs_init_dio(void);
+ void __cold btrfs_destroy_dio(void);
+ 
+--- a/fs/btrfs/discard.h
++++ b/fs/btrfs/discard.h
+@@ -3,6 +3,7 @@
+ #ifndef BTRFS_DISCARD_H
+ #define BTRFS_DISCARD_H
+ 
++#include <linux/types.h>
+ #include <linux/sizes.h>
+ 
+ struct btrfs_fs_info;
+--- a/fs/btrfs/extent-tree.h
++++ b/fs/btrfs/extent-tree.h
+@@ -4,7 +4,6 @@
+ #define BTRFS_EXTENT_TREE_H
+ 
+ #include <linux/types.h>
+-#include "misc.h"
+ #include "block-group.h"
+ #include "locking.h"
+ 
+--- a/fs/btrfs/file-item.h
++++ b/fs/btrfs/file-item.h
+@@ -3,8 +3,10 @@
+ #ifndef BTRFS_FILE_ITEM_H
+ #define BTRFS_FILE_ITEM_H
+ 
++#include <linux/blk_types.h>
+ #include <linux/list.h>
+ #include <uapi/linux/btrfs_tree.h>
++#include "ctree.h"
+ #include "accessors.h"
+ 
+ struct extent_map;
+--- a/fs/btrfs/file.h
++++ b/fs/btrfs/file.h
+@@ -9,6 +9,8 @@ struct file;
+ struct extent_state;
+ struct kiocb;
+ struct iov_iter;
++struct inode;
++struct folio;
+ struct page;
+ struct btrfs_ioctl_encoded_io_args;
+ struct btrfs_drop_extents_args;
+--- a/fs/btrfs/fs.c
++++ b/fs/btrfs/fs.c
+@@ -1,7 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+ #include "messages.h"
+-#include "ctree.h"
+ #include "fs.h"
+ #include "accessors.h"
+ 
+--- a/fs/btrfs/ioctl.h
++++ b/fs/btrfs/ioctl.h
+@@ -9,6 +9,8 @@ struct file;
+ struct dentry;
+ struct mnt_idmap;
+ struct fileattr;
++struct inode;
++struct io_uring_cmd;
+ struct btrfs_fs_info;
+ struct btrfs_ioctl_balance_args;
+ 
+--- a/fs/btrfs/locking.c
++++ b/fs/btrfs/locking.c
+@@ -9,7 +9,6 @@
+ #include <linux/page-flags.h>
+ #include <asm/bug.h>
+ #include <trace/events/btrfs.h>
+-#include "misc.h"
+ #include "ctree.h"
+ #include "extent_io.h"
+ #include "locking.h"
+--- a/fs/btrfs/ordered-data.h
++++ b/fs/btrfs/ordered-data.h
+@@ -17,6 +17,7 @@
+ struct inode;
+ struct page;
+ struct extent_state;
++struct btrfs_block_group;
+ struct btrfs_inode;
+ struct btrfs_root;
+ struct btrfs_fs_info;
+--- a/fs/btrfs/print-tree.h
++++ b/fs/btrfs/print-tree.h
+@@ -6,6 +6,8 @@
+ #ifndef BTRFS_PRINT_TREE_H
+ #define BTRFS_PRINT_TREE_H
+ 
++#include <linux/types.h>
++
+ /* Buffer size to contain tree name and possibly additional data (offset) */
+ #define BTRFS_ROOT_NAME_BUF_LEN				48
+ 
+--- a/fs/btrfs/props.h
++++ b/fs/btrfs/props.h
+@@ -6,6 +6,7 @@
+ #ifndef BTRFS_PROPS_H
+ #define BTRFS_PROPS_H
+ 
++#include <linux/types.h>
+ #include <linux/compiler_types.h>
+ 
+ struct inode;
+--- a/fs/btrfs/qgroup.h
++++ b/fs/btrfs/qgroup.h
+@@ -22,6 +22,9 @@ struct btrfs_ioctl_quota_ctl_args;
+ struct btrfs_trans_handle;
+ struct btrfs_delayed_ref_root;
+ struct btrfs_inode;
++struct btrfs_transaction;
++struct btrfs_block_group;
++struct btrfs_qgroup_swapped_blocks;
+ 
+ /*
+  * Btrfs qgroup overview
+--- a/fs/btrfs/raid-stripe-tree.h
++++ b/fs/btrfs/raid-stripe-tree.h
+@@ -9,6 +9,7 @@
+ #include <linux/types.h>
+ #include <uapi/linux/btrfs_tree.h>
+ #include "fs.h"
++#include "accessors.h"
+ 
+ #define BTRFS_RST_SUPP_BLOCK_GROUP_MASK    (BTRFS_BLOCK_GROUP_DUP |		\
+ 					    BTRFS_BLOCK_GROUP_RAID1_MASK |	\
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -17,7 +17,6 @@
+ #include <linux/compat.h>
+ #include <linux/crc32c.h>
+ #include <linux/fsverity.h>
+-
+ #include "send.h"
+ #include "ctree.h"
+ #include "backref.h"
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-#include "linux/spinlock.h"
++#include <linux/spinlock.h>
+ #include <linux/minmax.h>
+ #include "misc.h"
+ #include "ctree.h"
+--- a/fs/btrfs/subpage.c
++++ b/fs/btrfs/subpage.c
+@@ -2,7 +2,6 @@
+ 
+ #include <linux/slab.h>
+ #include "messages.h"
+-#include "ctree.h"
+ #include "subpage.h"
+ #include "btrfs_inode.h"
+ 
+--- a/fs/btrfs/sysfs.h
++++ b/fs/btrfs/sysfs.h
+@@ -7,6 +7,7 @@
+ #include <linux/compiler_types.h>
+ #include <linux/kobject.h>
+ 
++struct block_device;
+ struct btrfs_fs_info;
+ struct btrfs_device;
+ struct btrfs_fs_devices;
+--- a/fs/btrfs/volumes.h
++++ b/fs/btrfs/volumes.h
+@@ -7,6 +7,7 @@
+ #define BTRFS_VOLUMES_H
+ 
+ #include <linux/blk_types.h>
++#include <linux/blkdev.h>
+ #include <linux/sizes.h>
+ #include <linux/atomic.h>
+ #include <linux/sort.h>
+@@ -18,14 +19,17 @@
+ #include <linux/completion.h>
+ #include <linux/rbtree.h>
+ #include <uapi/linux/btrfs.h>
++#include <uapi/linux/btrfs_tree.h>
+ #include "messages.h"
+ #include "rcu-string.h"
++#include "extent-io-tree.h"
+ 
+ struct block_device;
+ struct bdev_handle;
+ struct btrfs_fs_info;
+ struct btrfs_block_group;
+ struct btrfs_trans_handle;
++struct btrfs_transaction;
+ struct btrfs_zoned_device_info;
+ 
+ #define BTRFS_MAX_DATA_CHUNK_SIZE	(10ULL * SZ_1G)
+--- a/fs/btrfs/xattr.h
++++ b/fs/btrfs/xattr.h
+@@ -6,6 +6,8 @@
+ #ifndef BTRFS_XATTR_H
+ #define BTRFS_XATTR_H
+ 
++#include <linux/types.h>
++
+ struct dentry;
+ struct inode;
+ struct qstr;
 
 
