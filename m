@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5D64E77EC;
-	Thu, 17 Sep 2026 18:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48A44D9F8B;
+	Thu, 17 Sep 2026 18:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668503; cv=none; b=OWNFSS3udvvdSHbtpiKhVQ6AX5MbdBk5F21T+7nD+mgqyvBJUiIjGa3t8DR3GzkP/3UDNfE2rU9c/2XVr4MhhdzvVSMJeutY31KHnNljkrIyM9lVOqPW3v/JER4rA1REe9GMQmQTC8OcFCd22ex6KmQ0xqViJhnxJr1rBmYtM4E=
+	t=1789668506; cv=none; b=XhOMQ957ywRggPHfpO8g+sMn7sauqJAQxWH5M+AtFh2NTLrFVlPUj5AXBZn3R/RWQjXq+jBkfT5dZt95R6sY1Qld1/SUKbLpVqSdi2b8Ro/hnCzHn7R7AIBxdoWyGGxYFjrGRBGJ+koHckrP8BJqWFAARjjl1jUNsX1WuKk7eL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668503; c=relaxed/simple;
-	bh=dyxyjaM71sAX8u9vht6Pnv7FlPJanzEpRp56qOU5jSU=;
+	s=arc-20240116; t=1789668506; c=relaxed/simple;
+	bh=WwWtPhvvSEeVsWkF/wEaB/WwreQzULvLxk8HXAAtOHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcPeQoh7uFpoOniP1BfolEuTIBzSr5lfYgH+geb25o00zq634Y0WhygyjaY8eC9wwnxlqCXBHb+fRuEBdWou1t5r8xTAexWwFv1PjEY2l/pXhIxtgQT9rtUuFQgUx5TJvudR7tuT22jaFyA0M4Zf6Qpdz1aU9zHypvgafPOYUCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cllykjR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VezQ4sdfe1IA5Tf1GQwlU8MYPK7PYi+Sjki82ISfucyUIf35zuP15HAshe7qt1OGycGB7y+AVbhTueNrSLGHqPKWPGjmtqmnIExSgXXlbIWL/FUsoNOZ/xZdvbeRffykw06ytez10Yi5xrpgaN6+GMNNnxYZhb2N50TXHE3PiVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDAXzR+T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cllykjR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589B01F000FF;
-	Thu, 17 Sep 2026 18:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDAXzR+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D3A1F00893;
+	Thu, 17 Sep 2026 18:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668501;
-	bh=bIOC7KzV48VQhFjOnEre9PxClzyLalXDW8lmO8+srPU=;
+	s=korg; t=1789668504;
+	bh=XTZIMBHnSmAbxOioE4e+L8DEo23FuCvK3ydDLu900Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cllykjR6o6BtjiUg4OFv1RYyv7QzZC3XmXNH0JkbDzqUs92tRXNFMlw5qMLqzH6bt
-	 TEWPA/rrIHbgSqv0ZH4PiTpEIMyQhP9aFxvV9hqXYNk6shYE3L2//cLlOMNBoROCjt
-	 u2E+Xg9MgxLCMgpgbXAGEJIgpn5TIFOnK0X/TXu0=
+	b=lDAXzR+TCr0YxDur0Y/EXmjOXhPeLB/JGlhShT4m1VLP52k2t4YQRXOmFoUaKdjHF
+	 XFThMgjA6KxenLZT187/IsICIXBzATUHB/ISRoCgGb/Tn3aW/Qe4em+uER1Und5AdP
+	 9lJK94X/OknPcZ/+f4wUoyNi9blyaIzCaBDxO95Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 0445/1102] ice: pass the return value of skb_checksum_help()
-Date: Thu, 17 Sep 2026 16:06:28 +0100
-Message-ID: <20260917151550.851467979@linuxfoundation.org>
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Anushree Mathur <anushree.mathur@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0446/1102] powerpc/pseries: Ensure vpa,slb_shadow & dtl are unregistered during crash
+Date: Thu, 17 Sep 2026 16:06:29 +0100
+Message-ID: <20260917151550.877904442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,85 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
 
-[ Upstream commit 2d19302f628853742c4828381abbd668c1315598 ]
+[ Upstream commit 810d07fb4cf7577847f85a6fd6273b69cad8d580 ]
 
-skb_checksum_help() can fail. Pass its return value back to the caller.
+Currently pseries_kexec_cpu_down() skips unregistering vpa, slb_shadow and
+dtl areas during a crash and kexec shutdown path. It was done to avoid
+doing an HCALL while crashing. However recently Anushree reported that
+during kernel crash while the kdump kernel was coming up, Hypervisor
+reported invalid values for 'vpa.yield_count' while it dispatching L2-KVM
+Guest vcpus. The error manifested as debug build Hypervisor assert
+triggering to indicate possible VPA corruption.
 
-Commonize this software path in goto.
+Looking at the kexec cpu offline path it was discovered that during crash
+kernel doesn't unregister the VPA/SLB-Shadow/DTL area with
+Hypervisor. Instead it re-allocates and re-registers these areas
+for cpus during boot. During kexec boot the previously allocated areas
+can get overwritten with new content without hypervisor knowledge. This
+creates a small window where while kexec kernel boots and the L2-VCPUs are
+being dispatched, Hypervisor may try to read/write to a wrong memory area
+which previously belonged to older VPA.
 
-Instead of just returning error try calculating software checksum first.
-There is a check for TSO in checksum_sw_fb.
+Fix this possible race and memory corruption by updating
+pseries_kexec_cpu_down() to also unregister vpa,slb_shadow & dtl areas
+during a kernel crash.
 
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-4-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260708015802.274271-1-vaibhav@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ arch/powerpc/platforms/pseries/kexec.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 431a6ed498a4e..0bb9f0dbf5350 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -1857,7 +1857,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			ret = ipv6_skip_exthdr(skb, exthdr - skb->data,
- 					       &l4_proto, &frag_off);
- 			if (ret < 0)
--				return -1;
-+				goto checksum_sw_fb;
- 		}
- 
- 		/* define outer transport */
-@@ -1876,11 +1876,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			l4.hdr = skb_inner_network_header(skb);
- 			break;
- 		default:
--			if (first->tx_flags & ICE_TX_FLAGS_TSO)
--				return -1;
--
--			skb_checksum_help(skb);
--			return 0;
-+			goto checksum_sw_fb;
- 		}
- 
- 		/* compute outer L3 header size */
-@@ -1939,7 +1935,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			ipv6_skip_exthdr(skb, exthdr - skb->data, &l4_proto,
- 					 &frag_off);
- 	} else {
--		return -1;
-+		goto checksum_sw_fb;
- 	}
- 
- 	/* compute inner L3 header size */
-@@ -1968,15 +1964,17 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 		break;
- 
- 	default:
--		if (first->tx_flags & ICE_TX_FLAGS_TSO)
--			return -1;
--		skb_checksum_help(skb);
--		return 0;
-+		goto checksum_sw_fb;
- 	}
- 
- 	off->td_cmd |= cmd;
- 	off->td_offset |= offset;
- 	return 1;
-+
-+checksum_sw_fb:
-+	if (first->tx_flags & ICE_TX_FLAGS_TSO)
-+		return -1;
-+	return skb_checksum_help(skb);
- }
- 
- /**
+diff --git a/arch/powerpc/platforms/pseries/kexec.c b/arch/powerpc/platforms/pseries/kexec.c
+index 431be156ca9bb..29f7c97ff1932 100644
+--- a/arch/powerpc/platforms/pseries/kexec.c
++++ b/arch/powerpc/platforms/pseries/kexec.c
+@@ -20,12 +20,15 @@
+ void pseries_kexec_cpu_down(int crash_shutdown, int secondary)
+ {
+ 	/*
+-	 * Don't risk a hypervisor call if we're crashing
+-	 * XXX: Why? The hypervisor is not crashing. It might be better
+-	 * to at least attempt unregister to avoid the hypervisor stepping
+-	 * on our memory.
++	 * Ensure vpa/slb_shadow/dtl cleanup even while we are crashing.
++	 * Why? The hypervisor is not crashing so at least attempt unregister to
++	 * avoid the hypervisor stepping on our memory. If hypervisor or kexec
++	 * kernel steps on the old memory allocated to these areas before the
++	 * new kexec-kernel happens to allocate and register new areas,
++	 * the hypervisor will see invalid content which may cause
++	 * unexpected behavior.
+ 	 */
+-	if (firmware_has_feature(FW_FEATURE_SPLPAR) && !crash_shutdown) {
++	if (firmware_has_feature(FW_FEATURE_SPLPAR)) {
+ 		int ret;
+ 		int cpu = smp_processor_id();
+ 		int hwcpu = hard_smp_processor_id();
 -- 
 2.53.0
 
