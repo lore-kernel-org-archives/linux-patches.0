@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4D44C10E9;
-	Thu, 17 Sep 2026 17:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCD3502776;
+	Thu, 17 Sep 2026 17:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667578; cv=none; b=QHf/topCU5lXOyEur6d8c4pe12kMono9gJtXy7UiQotDhgkgffptBShCziN0VstlRxN0aR7FucMuOHS+FxOt1Ph8q1X1d4WjffV3EtFEO4ALf5imEGIOzpSteXp1NGvI1sOjU1zgRwGPKabMWWwIgfbPkvgfkm6DdEGZXLWjEuA=
+	t=1789667582; cv=none; b=nMkvnIIdOKTp+qCRmid5FkNbcs8y0a2Oy1M9dV1FuWdwDVEToKkzEXNhpeWgr6cX1j5R48ct3jp4ZEqRJ7uqKa/n6ao7/Uu6r0FEoP3z8jJBL2OmGzvTDQXda1S7ii7HVvCU2VEQWa7r4mYQF5WaQXyixRLCU6BWys2ASARuIrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667578; c=relaxed/simple;
-	bh=Cq5uWJLPKC/iXrxR09VLROB9LjPS0765OuGayuDKonQ=;
+	s=arc-20240116; t=1789667582; c=relaxed/simple;
+	bh=TZxK7laLNLA3XobeiR5POUxbULgr7/GwFjir/rtxP2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cW2Vf++eA2MBpc27OtAGXdUXqvhs+F8OKzZLTpbbm0AsOO1DpXjYyzIfmudmnRfOqQ+TLWJu2eltgHNbAxi298M886GHuHO0iUBudKaQ66q8nWAvHOVGpPjz2DIXOS1qCXIMNOSW1ZGUEPXh3J6Kc+Cw9sR8bLdIpRTtcW2zKSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxL94jBQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GI+sndrBkt2hcqlR3xRdss5H+cwPmH4LxGfSkjldZk0DztMlZaMdqNEPbk/bWbftd0E+Vr3AxOmAoID0lSugiS8yxBdPNTRRENZjloihhBDUfJymlAjEItcuuax+WEVfhaBWBIyLdZgbXmkouTlECPtxuFw5qLu+WvjXEI1xICM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvZ5al41; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxL94jBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBB51F000FF;
-	Thu, 17 Sep 2026 17:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvZ5al41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1341F000FF;
+	Thu, 17 Sep 2026 17:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667577;
-	bh=RPtL4+eZl1pSf3Gk0K0roN7q0HCFQRNvOtHuktxav+A=;
+	s=korg; t=1789667580;
+	bh=66/xKcUwRdPbr5gg7y3RIYRmBQt71rUla6kcMMpTyWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zxL94jBQNgOII47obzoY/8xHlMpGmUE0vuXg1Tvq7SCPKBLIUzjD9ICjJEzUsTwAH
-	 EcFuHGxgiUvnicIf6Ygs1XR+eu9t8TN6vfcBvKKBKCcHc3UZLuYTDB4gd/ie4zVTj6
-	 SFDNCXQSPi4WJfpOh5miXwuQppZedREOVH0Bd9Ug=
+	b=vvZ5al413ZBy83fjkpPapyfFAgqmd0rAglv/qDYgkfa6D5lREhPiECNz+y69B63CG
+	 h5qz//XscVWGfEOk7iOLZyUjshgPAlm1KNo3cuCfBSFAooEnczrgNNQWuqMimqttX1
+	 b6q6ft0EQ9PUEoj1bqjRxT5ie0nEhEtVlzI/Ngig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0140/1102] rcu-tasks: Fix possible boot-time tests failed for the call_rcu_tasks()
-Date: Thu, 17 Sep 2026 16:01:23 +0100
-Message-ID: <20260917151543.037807152@linuxfoundation.org>
+Subject: [PATCH 6.12 0141/1102] wifi: rtw89: pci: enable LTR based on pcie control register
+Date: Thu, 17 Sep 2026 16:01:24 +0100
+Message-ID: <20260917151543.062677564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,78 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 42c5468f9cdc0c892fec3c0916b3ac5b670775af ]
+[ Upstream commit 779bbe1902f29d0ef131249ddd42a8dfbe21d0fb ]
 
-The following scenarios will cause the call_rcu_tasks() boot-time
-tests failed:
+Originally, driver always transmits LTR (Latency Tolerance Reporting) to
+pcie host, but it may cause pcie link down on some platforms because
+LTR is not supported. As a result, driver will check the control
+register of LTR setting to decide whether to enable LTR feature.
 
-                     CPU0								CPU1
+This applies to Wi-Fi 6 chips only. For Wi-Fi 7 chips, although the
+driver still issues LTR, the hardware has its own internal logic
+to determine whether to actually transmit it to pcie host.
 
-rcu_init_tasks_generic()
-->rcu_tasks_initiate_self_tests()
-  ->call_rcu_tasks_trace(&tests[1].rh, test_rcu_tasks_callback)
-    ->call_rcu_tasks_generic()
-      ->havekthread = smp_load_acquire(&rtp->kthread_ptr)
-       "The havekthread is false"
-    ....
-								       rcu_tasks_kthread()
-								       ->smp_store_release(&rtp->kthread_ptr, current)
-								         ->rcu_tasks_one_gp()
-								           ->rcuwait_wait_event()
-								             ->rcu_tasks_need_gpcb()
-								               ->for (cpu = 0; cpu < dequeue_limit; cpu++)
-								                 ->rcu_segcblist_n_cbs(&rtpcp->cblist) == 0
-								           ->schedule()
-
-     ->raw_spin_trylock_rcu_node()
-     ->needwake = (func == wakeme_after_rcu) ||
-     (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim)
-
-       "the rcu_task_lazy_lim default value is 32, and the
-        func pointer is test_rcu_tasks_callback, lead to needwake
-        is false."
-
-     ->if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer))
-        "the havekthread is false, will not enter here."
-     ....
-
-        "the needwake is false lead to rtp_irq_work can not queue,
-         even if the rtp->kthread_ptr already exists at this point."
-
-      ->if (needwake && READ_ONCE(rtp->kthread_ptr))
-        ->irq_work_queue(&rtpcp->rtp_irq_work)
-
-For the above scenarios, if the call_rcu_tasks() is not called again
-afterward, the rcu_tasks_kthread will not have a chance to be wakeup,
-the test_rcu_tasks_callback() will never be called, the boot-time tests
-failed can happen, this commit therefore check havekthread variable, if
-it's false and the rtpcp->cblist is empty, set needwake variable is true,
-if the rtp->kthread_ptr exist, the rtpcp->rtp_irq_work can be queued to
-wakeup rcu_tasks_kthread.
-
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260515014433.16168-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 4d7ee95df06e6..c2ef90db25b4c 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -376,7 +376,8 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
- 	// Queuing callbacks before initialization not yet supported.
- 	if (WARN_ON_ONCE(!rcu_segcblist_is_enabled(&rtpcp->cblist)))
- 		rcu_segcblist_init(&rtpcp->cblist);
--	needwake = (func == wakeme_after_rcu) ||
-+	needwake = (!havekthread && rcu_segcblist_empty(&rtpcp->cblist)) ||
-+		   (func == wakeme_after_rcu) ||
- 		   (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim);
- 	if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer)) {
- 		if (rtp->lazy_jiffies)
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index c3a8a7af06472..cd094b32884a9 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -2794,6 +2794,17 @@ static int rtw89_pci_mode_op(struct rtw89_dev *rtwdev)
+ 	return 0;
+ }
+ 
++static bool rtw89_pci_dev_ltr_enabled(struct rtw89_dev *rtwdev)
++{
++	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	struct pci_dev *pdev = rtwpci->pdev;
++	u16 cap;
++
++	pcie_capability_read_word(pdev, PCI_EXP_DEVCTL2, &cap);
++
++	return !!(cap & PCI_EXP_DEVCTL2_LTR_EN);
++}
++
+ static int rtw89_pci_ops_deinit(struct rtw89_dev *rtwdev)
+ {
+ 	const struct rtw89_pci_info *info = rtwdev->pci_info;
+@@ -2898,7 +2909,7 @@ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en)
+ {
+ 	u32 val;
+ 
+-	if (!en)
++	if (!en || !rtw89_pci_dev_ltr_enabled(rtwdev))
+ 		return 0;
+ 
+ 	val = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+@@ -2934,6 +2945,9 @@ int rtw89_pci_ltr_set_v1(struct rtw89_dev *rtwdev, bool en)
+ 	u32 dec_ctrl;
+ 	u32 val32;
+ 
++	if (!rtw89_pci_dev_ltr_enabled(rtwdev))
++		return 0;
++
+ 	val32 = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+ 	if (rtw89_pci_ltr_is_err_reg_val(val32))
+ 		return -EINVAL;
 -- 
 2.53.0
 
