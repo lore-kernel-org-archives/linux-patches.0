@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188032DC792;
-	Thu, 17 Sep 2026 18:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D0F3D4137;
+	Thu, 17 Sep 2026 18:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670700; cv=none; b=QfBSYwh9gq4pojBQ19haPnjdSiNxJMePo3pZ8RcHMz+EQGMAk27zHFUuaXSdjrVcDlrtsHLALZoXlET6BIjleo8d+yAzMzbMet41w94C57mG0qXmEXXhkRr3ZPsv+/IjaTlbzZkjMTtiu+Axbm8C2QZnhwNCQX5222Yv0wqec0Y=
+	t=1789670702; cv=none; b=FZInNqz5VAwIi3fQnAWDuzlqx552/QwwnwN51g1IY7N5qVBUis7lX10hulAM/xhZL5p275fZwzx2WXnLg9bgQXOSSLJ9GFlEPsGYgl5KploC2CuKR7Uva9TR8cMiMGW+Qa1AwZFp+UVRRYhFkRIbmLqzuUuXfggn+CmOXFhzO2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670700; c=relaxed/simple;
-	bh=2TjuQZgE5aIJEV7hM3ck19iiGJjR7et3VOlW5dtZ0gU=;
+	s=arc-20240116; t=1789670702; c=relaxed/simple;
+	bh=rAeCcU3yIsr5sGCun7XapWjvxr0jaZVOVgJc2y/xlEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKnuh1KzUFiIDqSgJ3ttkgs3LRvZbjYuFEYfQAjbN8+/k5jwHAz1fuM39hvFTlWb3iWBinXbv7v5kRWmJqTIXD/hP6rF4YZInE10sQjZjDUk5zyi2+7mfHLlTcywEa7kRtS/gmsZeoo64CSFVmkbVdBNs0TpAoPF5Ee6ZbQzcr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCilIFAe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K0cPiOw5ufBafKKbk3mtPFWK4fxS4dLKXO1z4RYeKM0EpxZ+Vms4yNWQijiN9kI2uhAmmdIQAvZcWsUixc+nLeAIk/k5e+DpXt57TE38i7tyg2u3amECndrifG/KsRmnvsCQ1TQnfT4Us5PO6hgvb3HHPup/hws0A+rR5c6NEGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD0C3UWK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCilIFAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2471F000FF;
-	Thu, 17 Sep 2026 18:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD0C3UWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6541F000FF;
+	Thu, 17 Sep 2026 18:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670698;
-	bh=gR9w+NlX5v2ldNrWWcSbhuyltC9qTnkGKQf6o5fdk6c=;
+	s=korg; t=1789670701;
+	bh=njY00kbHfCM43pZ0GKHrvzdG51Iys5jWGjf0Km2pCwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rCilIFAeYD7o5jWpkyhbiQBYAR355E0LeskbFhuyvBim9NQbwejA5oKrUcN4rNdGz
-	 jdtaMcdABiyLy5HuIsNtOcXz9/wdbv+6+a3q3DYqWzUiEFORyYZogCwihWQ8CpLQAh
-	 sshrLF57kHuCEcI5BYLQKe5awTTFpeb7skw85PtA=
+	b=qD0C3UWKgfgTgMJqfHBWzu4hAeHvbNChf1CuyX4RoPpY/y5GA6B8FFCFeUSGXmiIX
+	 cFjiQViuEfXTfVFQrZj32xga744U3JpqQAMY6LFMEwQ0x5KIBhXREahiAQujvc/eod
+	 6D0KoQSDb23t7nbDpEU4F0j5b4NcTsPWN2AWeeU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Hu <ivan.hu@canonical.com>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0742/1102] Bluetooth: btmtk: Declare MT7920 (MT7961 1a) Bluetooth firmware
-Date: Thu, 17 Sep 2026 16:11:25 +0100
-Message-ID: <20260917151559.033537886@linuxfoundation.org>
+Subject: [PATCH 6.12 0743/1102] Bluetooth: btusb: mediatek: Fix leaked runtime PM reference in reset
+Date: Thu, 17 Sep 2026 16:11:26 +0100
+Message-ID: <20260917151559.061396736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,53 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Hu <ivan.hu@canonical.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit 3d8a8e81ea8ad8813d4c82a12ba53ecb597b217d ]
+[ Upstream commit e486a891c412d9d82ee865987f4eead6196e1f96 ]
 
-btmtk_fw_get_filename() constructs the firmware name at runtime, so for
-the MT7920 variant (dev_id 0x7961 with fw_flavor set) it requests
-"mediatek/BT_RAM_CODE_MT7961_1a_2_hdr.bin" without ever declaring it via
-MODULE_FIRMWARE(). Tools that select firmware from module metadata (e.g.
-"modinfo -F firmware") therefore omit this blob, so request_firmware()
-fails and Bluetooth does not initialise on MT7920, even though the file
-is present in linux-firmware.
+MT7925 on HP Pro Mini 260 sometimes timed out during reloading driver
+and reset usb device. btusb_suspend is not called again after closing
+bluetooth interface.
 
-Declare it with MODULE_FIRMWARE(), as the mt76 driver already does for
-the corresponding MT7920 wifi firmware.
+ usbcore: registered new interface driver btusb
+ Bluetooth: hci0: HW/SW Version: 0x00000000, Build Time: 20260605184935
+ Bluetooth: hci0: Execution of wmt command timed out
+ Bluetooth: hci0: Failed to send wmt patch dwnld (-110)
+ Bluetooth: hci0: Failed to set up firmware (-110)
+ usb 3-10: reset high-speed USB device number 4 using xhci_hcd
+ Bluetooth: hci0: HW/SW Version: 0x00000000, Build Time: 20260605184935
+ Bluetooth: hci0: Device setup in 1856545 usecs
+ Bluetooth: hci0: AOSP extensions version v1.00
+ Bluetooth: hci0: AOSP quality report is supported
+ Bluetooth: MGMT ver 1.23
 
-Fixes: 1cb63d80fff6 ("Bluetooth: btusb: Add support Mediatek MT7920")
-Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
+btusb_mtk_reset calls usb_autopm_get_interface to resume the device
+before driving the hardware reset, but never calls the matching
+usb_autopm_put_interface. Every hardware reset therefore leaks a PM
+usage reference of the interface, preventing the device from being
+runtime suspended again until it is unbound.
+
+Add the BTUSB_RESET flag. It is set before usb_queue_reset_device
+and is cleared in btusb_disconnect, which drops the reference as well.
+If the flag is already set when a new reset is requested, drop one
+reference.
+
+Also clear BTMTK_HW_RESET_ACTIVE if usb_autopm_get_interface fails,
+otherwise no further reset could ever be attempted.
+
+Fixes: 25b6d7593a3a ("Bluetooth: btmtk: introduce btmtk reset work")
+Assisted-by: Claude:qwen3.8-max
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 1 +
- drivers/bluetooth/btmtk.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index 5d19b4496e767..eb42b694da7f2 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -1564,5 +1564,6 @@ MODULE_FIRMWARE(FIRMWARE_MT7663);
- MODULE_FIRMWARE(FIRMWARE_MT7668);
- MODULE_FIRMWARE(FIRMWARE_MT7922);
- MODULE_FIRMWARE(FIRMWARE_MT7961);
-+MODULE_FIRMWARE(FIRMWARE_MT7920);
- MODULE_FIRMWARE(FIRMWARE_MT7925);
- MODULE_FIRMWARE(FIRMWARE_MT7927);
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index 8f40180ca92e3..92e2deb29b586 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -7,6 +7,7 @@
- #define FIRMWARE_MT7922		"mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin"
- #define FIRMWARE_MT7902		"mediatek/BT_RAM_CODE_MT7902_1_1_hdr.bin"
- #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
-+#define FIRMWARE_MT7920		"mediatek/BT_RAM_CODE_MT7961_1a_2_hdr.bin"
- #define FIRMWARE_MT7925		"mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin"
- #define FIRMWARE_MT7927		"mediatek/mt7927/BT_RAM_CODE_MT6639_2_1_hdr.bin"
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index d75a11b6fee2f..6f9b9084c4ddf 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -911,6 +911,7 @@ struct qca_dump_info {
+ #define BTUSB_USE_ALT3_FOR_WBS	15
+ #define BTUSB_ALT6_CONTINUOUS_TX	16
+ #define BTUSB_HW_SSR_ACTIVE	17
++#define BTUSB_RESET		19
  
+ struct btusb_data {
+ 	struct hci_dev       *hdev;
+@@ -2844,8 +2845,11 @@ static int btusb_mtk_reset(struct hci_dev *hdev, void *rst_data)
+ 	}
+ 
+ 	err = usb_autopm_get_interface(data->intf);
+-	if (err < 0)
++	if (err < 0) {
++		bt_dev_err(hdev, "Failed usb_autopm_get_interface: %d", err);
++		clear_bit(BTMTK_HW_RESET_ACTIVE, &btmtk_data->flags);
+ 		return err;
++	}
+ 
+ 	/* Release MediaTek ISO data interface */
+ 	btusb_mtk_release_iso_intf(hdev);
+@@ -2855,6 +2859,11 @@ static int btusb_mtk_reset(struct hci_dev *hdev, void *rst_data)
+ 
+ 	err = btmtk_usb_subsys_reset(hdev, btmtk_data->dev_id);
+ 
++	if (test_and_set_bit(BTUSB_RESET, &data->flags)) {
++		bt_dev_err(hdev, "last usb reset failed? Resetting again");
++		usb_autopm_put_interface_no_suspend(data->intf);
++	}
++
+ 	usb_queue_reset_device(data->intf);
+ 	clear_bit(BTMTK_HW_RESET_ACTIVE, &btmtk_data->flags);
+ 
+@@ -4252,6 +4261,9 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 	if (data->reset_gpio)
+ 		gpiod_put(data->reset_gpio);
+ 
++	if (test_and_clear_bit(BTUSB_RESET, &data->flags))
++		usb_autopm_put_interface_no_suspend(data->intf);
++
+ 	if (intf == data->intf) {
+ 		if (data->isoc)
+ 			usb_driver_release_interface(&btusb_driver, data->isoc);
 -- 
 2.53.0
 
