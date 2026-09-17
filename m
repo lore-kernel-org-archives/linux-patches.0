@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FE03783BE;
-	Thu, 17 Sep 2026 17:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01253C9EF3;
+	Thu, 17 Sep 2026 17:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665125; cv=none; b=Xo/oR0ICP87X2qwkYPUhmlrLTqDUT55yB44OxQUz7MR9AMBiftk1yyRIHb75+H8LXrdaCG9UftKJJRvJlxcj6Fp2mE1wgAksli/HCMcRbWJsCX28+zXYgSd3yQlsqHNaQYLOMYgZc6sg4kT4ZdFUQ7Hox1jEqj7qXXMUuECEKS4=
+	t=1789665128; cv=none; b=b9nbLVStUsoQPg4QmHgEwDW1kHSSiCDxchBFneL8GmG2QkGDjP0qCrRojFKk6mginhnLegNwmJ8t7saXMqlkOIqE3FFU5hfR1Q3wbt/JCNPVhbRboo+BhU6rHO4Ol2X1i62tfhbrr4cznUXxDSjGKHOVRqeh+bYafXhvUGecM6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665125; c=relaxed/simple;
-	bh=IXQT2ug6bJQLTATJv4MrFIsAnSVItx6vQ1iW332FEAk=;
+	s=arc-20240116; t=1789665128; c=relaxed/simple;
+	bh=TtO//GxhnfuHPQr1LHoBpCi2p01KP2bmLPQIycCt/68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlC7tKagS5u8w/NG2kPdmFNKJYQSDQjjjPPG+N/Z2LBGb7BomoYd5jcv1VGv3w4SYMtyDQ3YP4bs8acZaZEzMyhI52vROkSwjcnDvkogloNSib69L5eHoARe/OO1Zj25Kc6TSuq+4PcQ8vbYv/DA9Q6ZDPo6VJR98RqcXQIzAY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iSKGfLi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l7uTQK4tQviE2X5cH/S22xy6VL1hPTMhz8fTsJ1f7ttQA3CcdkI2Xt7zEg3WDD/toB9qCdX4FFrj5F8tGPLQ1kOWR0B4lQQSK1D1uOLg/xZfd/EtT3EQJsEeA/w84FKIjH7dlKMIZUlOlN6Y/cqv9ol4N1AMzsb9UCRjgIFUcpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqhBFb2s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iSKGfLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CE1F000FF;
-	Thu, 17 Sep 2026 17:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqhBFb2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0372B1F000FF;
+	Thu, 17 Sep 2026 17:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665123;
-	bh=ZNdYC3GckW908RgmpimUYCTkDSvPzHKTjB/loN7mazg=;
+	s=korg; t=1789665126;
+	bh=df7Nu1kb0lsXUaI+ZEtOOkdXzfrmJqniLom5ri38l4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2iSKGfLiPhRyooCIL3wiCl7YsxCZIbE56oYc6GiPBAEcP6FMNq7ZRk76sSGWjHz41
-	 pxH2dCT7QIbaCZScJ8ztLTAnCxXufoKo3kbP/eI2P381ugf2r1Do/AgMpuy+9g8USE
-	 YTMMyNEULMyHbyEHaz8OCEjbjl4jHg/GEh5EkuwA=
+	b=FqhBFb2sgJ8ME0JO7e53WlDiDHj5q0hIfs+bKwNEujFulCsHfDTlc0jwiF5gRxX25
+	 AGM5uIkLVTM/fU7RD+aW3AxtIuLRwdy+EFO82iQIdEu+GxST3WC7BEJ7Y48hqP4dhN
+	 HOzk+i7mlc+ET3cHiJzrsXw1L3pgtvyjHt5n6T5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0598/1250] rtc: cmos: Use platform_get_irq_optional() in cmos_platform_probe()
-Date: Thu, 17 Sep 2026 16:06:33 +0100
-Message-ID: <20260917151608.089025032@linuxfoundation.org>
+Subject: [PATCH 6.18 0599/1250] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
+Date: Thu, 17 Sep 2026 16:06:34 +0100
+Message-ID: <20260917151608.116809083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,58 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
 
-[ Upstream commit e9f850ba66cdf6b77fb4f005e46c4b605c4de434 ]
+[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
 
-The rtc-cmos driver can live without an IRQ and returning an error
-code from platform_get_irq() is not a problem for it in general, so
-make it call platform_get_irq_optional() in cmos_platform_probe()
-instead of platform_get_irq() to avoid a confusing error message
-printed by the latter if an IRQ cannot be found for index 0, which
-is possible on x86 platforms.
+PREEMPT_RT requires interrupts to be enabled when sending signals.
 
-Additionally, on x86, if the IRQ is not defined and the system has
-a legacy PIC, hardcode it to RTC_IRQ, which should be safe then (and
-which is what the dropped PNP code did).
+When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
+that is `inf->fn()` return a non-zero value, and the interrupts are not
+enabled within the hook function, force_sig_fault() will be called
+with interrupts disabled.
 
-Fixes: d15f1c2e413e ("ACPI: PNP: Drop CMOS RTC PNP device support")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/linux-acpi/20260303060752.GA2749263@ax162/
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/12857714.O9o76ZdvQC@rafael.j.wysocki
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This can be triggered by user programs executing the bkpt instruction,
+with kernel config CONFIG_PERF_EVENTS=n.
+
+Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
+user faults are triggered to fix the issue.
+
+Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
+Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
+Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm/mm/fault.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 7ac39c435f630..b537f40654b72 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1508,9 +1508,18 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
- 	else
- 		resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
-+	irq = platform_get_irq_optional(pdev, 0);
-+	if (irq < 0) {
- 		irq = -1;
-+#ifdef CONFIG_X86
-+		/*
-+		 * On some x86 systems, the IRQ is not defined, but it should
-+		 * always be safe to hardcode it on systems with a legacy PIC.
-+		 */
-+		if (nr_legacy_irqs())
-+			irq = RTC_IRQ;
-+#endif
-+	}
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 65b652b4dec3d..5c6135b3931d2 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -649,6 +649,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
+ 		return;
  
- 	return cmos_do_probe(&pdev->dev, resource, irq);
- }
++	if (likely(user_mode(regs)))
++		local_irq_enable();
++
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, fsr, addr);
+@@ -687,6 +690,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
+ 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
+ 		return;
+ 
++	if (likely(user_mode(regs)))
++		local_irq_enable();
++
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, ifsr, addr);
 -- 
 2.53.0
 
