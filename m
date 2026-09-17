@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DA153E319;
-	Thu, 17 Sep 2026 17:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9194F96CB;
+	Thu, 17 Sep 2026 17:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664842; cv=none; b=maHpRNqRqRaP1/vPI3OgpY1GwNx5uP+3c4h25tGd/CTX5lESPwqUDagtvznyYZ+m+aox16NipB8yGgCnl48SWLfbk0naf7BMerQZR7XTLUPQvUm29FiHDlMdbvOtGJlANB76aqsRlrNK+yA5lDKBXpR0vOSUL3cwYBmb12OMn0s=
+	t=1789664845; cv=none; b=DC6o82OHWnyGjoQiCBI4/Hyx+Qr6lMELs9YmpP5UzoNyAdEAAZWNgJGRdTP3ggqxwHEr3BDFO6dEPvhf5+nsftgOfXkY3Ce1P5XfhYremdGeGU7UfjtmJ6IvP9pDzKIYM/WEggoZd9TCQJDz5kB5ROgZoaWMZYmtfyMJe/yJW0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664842; c=relaxed/simple;
-	bh=zoZksgqIrUPUc0iLwkYFrB7VWF27baV6/7TzH62ghak=;
+	s=arc-20240116; t=1789664845; c=relaxed/simple;
+	bh=6E0FPNjNfa87/MDRr3OXzqE/UVD8rGGSk1RKngNrOI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ob1SMAV80ceSNsB554GR1LgTXsbfGwaB0+ucbl1Qi294fxmfFK/75QymJ5NtMzdnVoogHjLIA6FQa9AIzsua78AXmgghwPDQ0sXsTcYj9F/G+eP7DZrxCQ6teVVdak6OWzHsjiGPQxhjW4KkO6A9lXBE5Dr5yLZC20m6vc/nWDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKiRuVmq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4p8VsShrtKhDX6u6a/heNtP6B2xqLVm00HdAad0PLXJEJx3ZHw1ZCJmet7+FWfiLXVPQdbl8q9OP3ZGFAQqKMKAcc72I0tvNWB0waN/x7HGYT/WwGIVmvq2+aFFUBy/fzPq2FKCnQgEqXjImwk72m0C54Y++ir0TZlRYXemHEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOOy1Xxv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKiRuVmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BE11F00893;
-	Thu, 17 Sep 2026 17:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOOy1Xxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6051F000FF;
+	Thu, 17 Sep 2026 17:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664841;
-	bh=mMi3YdljJxNPUIFzuQVY9RemY8MKxutCfQlWKeXzpKQ=;
+	s=korg; t=1789664843;
+	bh=mb05EITSdl9m2HLfBQ66Sm03WVFSzmuyCLEIhTz2B+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SKiRuVmqDloKX/gqIE0y/ZkX37cSR51jibfeuzmlZ+0E3BjEDowS1i2Qg03aqZgqW
-	 TU54zQDz5iVUyQM3S41G8EKohtHdlCZryMLWIkfX7Zi6DnC8OztR5fpUkDlASu/g1c
-	 S9ckfl09rtq6zUZKvuF0/eYNgPVKCB48Pcjn29pQ=
+	b=eOOy1XxvQ8vNrhJO+kPx6367ksfV955fnHy4+Cw84OadSTnxkXfca3FM9B/EQ3Cbq
+	 +Hki2nyhGIWcRp33ujeLKgfX37CqwZuHBMC0/wSDz9Q425VqxxyudPLQxvRBlD8rjQ
+	 /yx+K7xv13K0BFBLSmIQztjnq5LBs9RO0AglGV2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tianze Shao <shaotianze@outlook.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0505/1250] wifi: rsi: validate beacon length before fixed buffer copy
-Date: Thu, 17 Sep 2026 16:05:00 +0100
-Message-ID: <20260917151605.647420688@linuxfoundation.org>
+Subject: [PATCH 6.18 0506/1250] ASoC: rt712-sdca: reset codec at io_init to fix silent headphone
+Date: Thu, 17 Sep 2026 16:05:01 +0100
+Message-ID: <20260917151605.673975881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,52 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Tianze Shao <shaotianze@outlook.com>
 
-[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
+[ Upstream commit 4c9854ad3cdc7ce408453207f153bb910cc6f3c1 ]
 
-rsi_prepare_beacon() copies the mac80211 beacon frame after
-FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
-than MAX_MGMT_PKT_SIZE after alignment.
+On ThinkPad X1 Carbon Gen 13 (Lunar Lake, RT712-SDCA version VA) the
+3.5mm headphone jack is silent after rebooting from Windows.
+rt712_sdca_va_io_init() gates rt712_sdca_calibration() on the persisted
+vendor SW_CONFIG1 flag, and io_init writes SW_CONFIG1=1 at the end
+regardless of whether the calibration succeeded. Across a warm reboot
+the codec keeps power, so SW_CONFIG1 stays unchanged, the calibration
+may be skipped, and the retained state can be invalid, leaving the
+headphone amp disabled.
 
-Validate the beacon length against the actual tailroom before the copy
-and skb_put(). Leave ownership of the management skb with the caller on
-error, matching the existing rsi_send_beacon() cleanup path.
+This patch mimics the reset sequence in rt711-sdca.c, it adds an
+rt712_sdca_reset() helper, and calls it from io_init so the codec is
+reset before initialization. RT712_PARA_VERB_CTL,
+RT712_HIDDEN_REG_SW_RESET and RT712_HDA_LEGACY_RESET_CTL are already
+defined but were unused. The reset clears SW_CONFIG1 and the analog
+state so rt712_sdca_calibration() runs from a clean state and
+completes.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Problem reproducible: boot Windows (headphone is good) -> reboot
+to Linux (silent).
+The reproducibility may depend on Windows' behaviour.
+
+Signed-off-by: Tianze Shao <shaotianze@outlook.com>
+Link: https://patch.msgid.link/TYCPR01MB872223CB999D2099A5E0F58DC4F62@TYCPR01MB8722.jpnprd01.prod.outlook.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/codecs/rt712-sdca.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index 7d26314a3e76a..50f77f3eee92c 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	struct ieee80211_vif *vif;
- 	struct sk_buff *mac_bcn;
- 	u8 vap_id = 0, i;
-+	unsigned int tailroom;
- 	u16 tim_offset = 0;
+diff --git a/sound/soc/codecs/rt712-sdca.c b/sound/soc/codecs/rt712-sdca.c
+index 0ebaae426e73b..d8b40663fa92f 100644
+--- a/sound/soc/codecs/rt712-sdca.c
++++ b/sound/soc/codecs/rt712-sdca.c
+@@ -1849,6 +1849,15 @@ static void rt712_sdca_vb_io_init(struct rt712_sdca_priv *rt712)
+ 	}
+ }
  
- 	for (i = 0; i < RSI_MAX_VIFS; i++) {
-@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	if (mac_bcn->data[tim_offset + 2] == 0)
- 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
- 
-+	tailroom = skb_tailroom(skb);
-+	if (tailroom < FRAME_DESC_SZ ||
-+	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
-+		dev_kfree_skb(mac_bcn);
-+		return -EMSGSIZE;
-+	}
++static void rt712_sdca_reset(struct rt712_sdca_priv *rt712)
++{
++	rt712_sdca_index_update_bits(rt712, RT712_VENDOR_REG,
++		RT712_PARA_VERB_CTL, RT712_HIDDEN_REG_SW_RESET,
++		RT712_HIDDEN_REG_SW_RESET);
++	rt712_sdca_index_update_bits(rt712, RT712_VENDOR_HDA_CTL,
++		RT712_HDA_LEGACY_RESET_CTL, 0x1, 0x1);
++}
 +
- 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
- 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
+ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+ {
+ 	struct rt712_sdca_priv *rt712 = dev_get_drvdata(dev);
+@@ -1876,6 +1885,8 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
  
+ 	pm_runtime_get_noresume(&slave->dev);
+ 
++	rt712_sdca_reset(rt712);
++
+ 	rt712_sdca_index_read(rt712, RT712_VENDOR_REG, RT712_JD_PRODUCT_NUM, &val);
+ 	rt712->hw_id = (val & 0xf000) >> 12;
+ 	rt712->version_id = (val & 0x0f00) >> 8;
 -- 
 2.53.0
 
