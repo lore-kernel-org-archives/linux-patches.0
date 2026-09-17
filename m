@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B6B4D1799;
-	Thu, 17 Sep 2026 19:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7794DDB5A;
+	Thu, 17 Sep 2026 19:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671821; cv=none; b=EUaeY7TZpejfULJjZ97QdcNna4P8IJASQSuwjWdlZ2UpOyirXVWyCg1MURgGlGDbzzy+hzvelp3UjmoQcKtjfl+a/WJmmsns3etBBO5mwltg+kQ93LCjwgnuENK49wQgRxwKTh1DP3GrEAhFjkUCsDJpFtzGvatg3Jy5TsuWT8A=
+	t=1789671824; cv=none; b=Gwj2nHI88pz7LX+NdHV0d9WkD76+RkWgZlpvEYAU1kbBPb9irUztdTVawbtAmy0623Eooi1ye9jNlEwnQdiaylOnTkIrHOv0m67MOT4FvQZnnFAxZs+0PfwrX6ZFV1mWrLzAxQU7gRGkurziG14OfrnAqnJRVAUFx2J0c6xlNHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671821; c=relaxed/simple;
-	bh=NnNRV2wHq+7sRF3mwNbbU+lhdXVhuM903gG0yvSJcHs=;
+	s=arc-20240116; t=1789671824; c=relaxed/simple;
+	bh=JXMUm2qi9HXr3De7uKjR3gEL7qsdqNlgSMgtne7RDo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tF4D3YlFLvqgXjB3x5jPVtJzHaOeYatyKPiHK9H+/W97i2m/SWw7vHzpkW3bVcwTOJNeFT5Y8XVSLc3TDX7/QdAjd8KHS30apgbbRL/+KQzyUNNPYliE/5ct3dwLmn0NJPK/qdE3YARr1cnzoLP2gJdMzbXsvPPw2/iNl5jAsuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3cpUnWs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cVwRlcq8kP7EXfmIydw6mSJz4rl9Md3V0IuhJrdUuk/knX+dyD8dKrM7Z9Qo1awyd2ozCwpZHjilKlJuB9/3E6GEM50koTwhT/tW+/hJwOkG2DfMoZildjhBWmyf3gpchf29/gajJKqXqMrCktoGXVY7ouuXmDX0VfkgWa6dVpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnFLyPEl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3cpUnWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36361F00893;
-	Thu, 17 Sep 2026 19:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnFLyPEl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F641F000FF;
+	Thu, 17 Sep 2026 19:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671819;
-	bh=OOWTCL5ooodDhE8XHOLK7r1ULENh7R9bRskk4lDLTKk=;
+	s=korg; t=1789671822;
+	bh=AaVjgT2OF7RxKmAFYKPRjMfjpjI+lCFqcgAixAJqfzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3cpUnWsrjc+v+q5Wf8qXeSqxQ+RantJCgjuOXfysWVgs2DShhazhRND4CSKZf9d7
-	 Vy88pZxATfoZ941QtzNcWgRiSrUn250IxVRbiSjfJC8wdiiVljENp79KrV7kW9zrgK
-	 CXF79yTimN9lY4z3JLX/u6SJBoNQcffTFLALWjJ8=
+	b=rnFLyPElT58uYfcVcDjqIXOBu5iYoobTWAigTZmdT9a4Xa9H4zIT6sYBQarbk49ho
+	 3bY6UyGPlgSp8wO7ScreOosFBfiwCJ+gH3A2UUz74td8EpjRguSRPz2Y557fPvV4u/
+	 h0d4rP1oJ3ed8+906t9CTIe9pAJUOUXBpYvaJPMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 1100/1102] workqueue: Update documentation as per system_percpu_wq naming
-Date: Thu, 17 Sep 2026 16:17:23 +0100
-Message-ID: <20260917151608.490401923@linuxfoundation.org>
+	Ameer Hamza <ameer.hamza@truenas.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 1101/1102] SUNRPC: Restore NUMA_NO_NODE for svc thread allocations in global mode
+Date: Thu, 17 Sep 2026 16:17:24 +0100
+Message-ID: <20260917151608.515752005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,72 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit 4a91a33f15c634fb3477d122bdf1eef098d77ee3 upstream.
+commit 0574da29ae12be7714df217c4ce7ff6ba9b0c23b upstream.
 
-Update documentation to use "per-CPU workqueue" instead of
-"global workqueue" to match the system_wq to system_percpu_wq
-rename. The workqueue behavior remains unchanged; this just
-aligns terminology with the clearer naming.
+Commit d57e43b72bf2 ("SUNRPC: Update svcxdr_init_decode() to call
+xdr_set_scratch_folio()") changed svc_pool_map_get_node() to return
+numa_mem_id() instead of NUMA_NO_NODE, because __folio_alloc_node()
+cannot accept NUMA_NO_NODE. That return value is not equivalent: it
+is evaluated in the context of the task creating the nfsd threads,
+once per thread created, and it is passed to kthread_create_on_node()
+and to the per-thread allocations in svc_prepare_thread().
 
-Fixes: a2be943b46b4 ("workqueue: replace use of system_wq with system_percpu_wq")
-Signed-off-by: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Since commit d1a89197589c ("kthread: Default affine kthread to its
+preferred NUMA node"), the node argument of kthread_create_on_node()
+no longer only places the task structure and stack: a kthread created
+with a real node id normally affines itself to that node's CPUs when
+it is first woken to run its thread function. All nfsd threads are
+typically started together, by one task writing to
+/proc/fs/nfsd/threads, so under the default pool_mode=global each
+nfsd thread is now affined to the local-memory node of the CPU its
+creating iteration happened to run on - typically the same node for
+every thread. The CPUs of the other nodes are then unable to run
+nfsd at all, and the threads' allocations - svc_rqst structures,
+page pointer arrays, newly allocated task stacks, and the per-RPC
+pages allocated at run time - all prefer that one node.
+
+Restore the NUMA_NO_NODE behaviour that global mode has had since
+commit 11fd165c68b7 ("sunrpc: use better NUMA affinities"), and
+handle NUMA_NO_NODE at the one call site that cannot take it by
+resolving it to numa_mem_id() there, exactly as alloc_pages_node()
+did for the scratch page before the conversion. The mapped percpu
+and pernode branches are unchanged. Unpooled services such as lockd
+and the NFS client callback service also take this fallback when no
+percpu or pernode map is active, restoring their thread placement in
+that case.
+
+A bisect of a 2x NFS READ throughput regression between v6.17 and
+v6.18 converged on d57e43b72bf2. On the affected 4-node server every
+nfsd thread comes up with its CPU affinity restricted to the CPUs of
+a single node; with this change the threads are runnable on all CPUs
+again and the observed regression is resolved.
+
+Fixes: d57e43b72bf2 ("SUNRPC: Update svcxdr_init_decode() to call xdr_set_scratch_folio()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260722182012.2063936-1-ameer.hamza@truenas.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/workqueue.h |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/sunrpc/svc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -708,14 +708,14 @@ static inline bool schedule_work_on(int
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -352,7 +352,7 @@ static int svc_pool_map_get_node(unsigne
+ 		if (m->mode == SVC_POOL_PERNODE)
+ 			return m->pool_to[pidx];
+ 	}
+-	return numa_mem_id();
++	return NUMA_NO_NODE;
  }
+ /*
+  * Set the given thread's cpus_allowed mask so that it
+@@ -763,7 +763,9 @@ svc_prepare_thread(struct svc_serv *serv
+ 	rqstp->rq_server = serv;
+ 	rqstp->rq_pool = pool;
  
- /**
-- * schedule_work - put work task in global workqueue
-+ * schedule_work - put work task in per-CPU workqueue
-  * @work: job to be done
-  *
-- * Returns %false if @work was already on the kernel-global workqueue and
-+ * Returns %false if @work was already on the system per-CPU workqueue and
-  * %true otherwise.
-  *
-- * This puts a job in the kernel-global workqueue if it was not already
-- * queued and leaves it in the same position on the kernel-global
-+ * This puts a job in the system per-CPU workqueue if it was not already
-+ * queued and leaves it in the same position on the system per-CPU
-  * workqueue otherwise.
-  *
-  * Shares the same memory-ordering properties of queue_work(), cf. the
-@@ -792,12 +792,12 @@ extern void __warn_flushing_systemwide_w
- })
+-	rqstp->rq_scratch_folio = __folio_alloc_node(GFP_KERNEL, 0, node);
++	rqstp->rq_scratch_folio = __folio_alloc_node(GFP_KERNEL, 0,
++						     node == NUMA_NO_NODE ?
++						     numa_mem_id() : node);
+ 	if (!rqstp->rq_scratch_folio)
+ 		goto out_enomem;
  
- /**
-- * schedule_delayed_work_on - queue work in global workqueue on CPU after delay
-+ * schedule_delayed_work_on - queue work in per-CPU workqueue on CPU after delay
-  * @cpu: cpu to use
-  * @dwork: job to be done
-  * @delay: number of jiffies to wait
-  *
-- * After waiting for a given time this puts a job in the kernel-global
-+ * After waiting for a given time this puts a job in the system per-CPU
-  * workqueue on the specified CPU.
-  */
- static inline bool schedule_delayed_work_on(int cpu, struct delayed_work *dwork,
-@@ -807,11 +807,11 @@ static inline bool schedule_delayed_work
- }
- 
- /**
-- * schedule_delayed_work - put work task in global workqueue after delay
-+ * schedule_delayed_work - put work task in per-CPU workqueue after delay
-  * @dwork: job to be done
-  * @delay: number of jiffies to wait or 0 for immediate execution
-  *
-- * After waiting for a given time this puts a job in the kernel-global
-+ * After waiting for a given time this puts a job in the system per-CPU
-  * workqueue.
-  */
- static inline bool schedule_delayed_work(struct delayed_work *dwork,
 
 
