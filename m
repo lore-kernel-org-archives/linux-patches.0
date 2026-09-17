@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FA3547075;
-	Thu, 17 Sep 2026 17:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AB23C9EF3;
+	Thu, 17 Sep 2026 17:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667422; cv=none; b=pEvVbvQ6xKkM7Ppa/3lFKu7O6ssGoVFp6indC9YzgYF6PfiEO2TXyIQw3LulalnC+wKWdnRr5b21ZCjKFybP0aT68qcl818hnK+B6nevZeQR2c7ZVffvOWkY3o+WPDyqD+qe4RYHodvshB3bn5/7ajopB6LCuzJhEOjNii87pCg=
+	t=1789667424; cv=none; b=PKF2e59yN7JOnuJK5iamGjagwzeI8l0Iw4zDanGqhmgAVuQlRRG1WtOa0m9QUw36nFDI2YSt7IQZsj10c+ziA3e5pYWfbwZOm+FLazHaQdtbK0FEC8Au3JpWbxhBV95vjCaSRz0NIQ2QSlUKrtDa+UMpaZsng5EtVY65EFyu9Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667422; c=relaxed/simple;
-	bh=S4+KIA8N01Ull+giovqzMsd0SskdkWES5bNK1JbDOj8=;
+	s=arc-20240116; t=1789667424; c=relaxed/simple;
+	bh=m8HJvwKyPsfFaNU3ffukk/40mC7Ooz4BbP6EvPey6aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LuMDC7TXa7wRLDvURrLQ7nrbjnjaoFgHzdVPaWEc6CDGEoBrwtF/2eKQR1S+4f/tloXNNm00e2kArqN6NGp3xRxDmPsSujH+6UCCMrc9GAJyqkNcprSDQEq7a+UYevsKDbKKlqjagoDLUiFNRuEFZzT5ofzyV1BMHfStU0viV4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSGcElva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fJeG2jjF6qhCH4luv5RwFW51u1i9FIuVF6K36AWlD5PivPYeLHrYFwmG7njNwAu+igTH7wUZ0/hkyq8++Bv3fMy0s6AT8jYPva1J0F1KqeIHzhEqMBrRsA6oUQRTYAXxR/iJ/NQEGjUfTXQQSHKT9Mm+ClVrqoRqEXNx1yWYUEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7NUm8aR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSGcElva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3691F000FF;
-	Thu, 17 Sep 2026 17:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7NUm8aR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40FA1F000FF;
+	Thu, 17 Sep 2026 17:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667420;
-	bh=jJWkZ5q4dY+wuDvFjzPVORhFsJ8B+TdODhpBMEHUdYE=;
+	s=korg; t=1789667423;
+	bh=HHGmW37RLeMarcUFrmND/9P9jh/FDItKvUcoJ8PAvCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DSGcElvaoZZ8SCAyGdotiwGQrK0wD2Oi5fKxC+bVrrthB6d68UV092PQHbF7apYso
-	 poHtX+ynTlu42jxSpklEaFL0KZovADKbVc7sJpys9Iv6l63Nutz5queXayJIbtSQu9
-	 dScqTg6w3RO60S0t2k8pf61kQBu23BwysB2jViug=
+	b=w7NUm8aRMkgDH7ytNVwVAE5wzz5inwSQOc9QpJLrC8LD84+0pSBTM2/8jlIQzTLlG
+	 WyXlwzWxmMInv8eiRUAMaBoVkzfrzLfsE2LP0OziyJcmXKirpG5zbTekqnImDMahFK
+	 cSBGKXW6Xlri5janCXXbDlxAApxk3m6w8XystV1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0049/1102] net: dsa: mv88e6xxx: enable .rmu_disable() for 6320 family
-Date: Thu, 17 Sep 2026 15:59:52 +0100
-Message-ID: <20260917151540.679757988@linuxfoundation.org>
+Subject: [PATCH 6.12 0050/1102] media: em28xx-video: fix missing res_free() on init_usb_xfer failure
+Date: Thu, 17 Sep 2026 15:59:53 +0100
+Message-ID: <20260917151540.705623359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,48 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit e0fdb4157a85056bd256a7aebac4a3a2f580b201 ]
+[ Upstream commit cc20e81da6d99926f94fad7af21f75c07e865769 ]
 
-Commit 9e5baf9b3636 ("net: dsa: mv88e6xxx: add RMU disable op") did not
-add the .rmu_disable() method for the 6320 family. Add it now.
+res_get() is called before em28xx_init_usb_xfer(), but the error
+path of em28xx_init_usb_xfer() does not release the resource,
+leading to a persistent busy state.
 
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260504153227.1390546-5-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/em28xx/em28xx-video.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 93e6e3ed69789..2c7d462f046ce 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5211,6 +5211,7 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
-+	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.stu_getnext = mv88e6352_g1_stu_getnext,
-@@ -5264,6 +5265,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
-+	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.stu_getnext = mv88e6352_g1_stu_getnext,
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index 5d89894d6868d..dd0cf2ebcc5b6 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -1105,8 +1105,10 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
+ 					  dev->max_pkt_size,
+ 					  dev->packet_multiplier,
+ 					  em28xx_urb_data_copy);
+-		if (rc < 0)
++		if (rc < 0) {
++			res_free(dev, vq->type);
+ 			return rc;
++		}
+ 
+ 		/*
+ 		 * djh: it's not clear whether this code is still needed.  I'm
 -- 
 2.53.0
 
