@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C144E5325;
-	Thu, 17 Sep 2026 17:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F684E322C;
+	Thu, 17 Sep 2026 17:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665520; cv=none; b=UgwY1c4F22VHIMMQFCbzHQ996rZBludguttK2T6eNlOcVCn0d8Ljhz9bOaDo5DJPSJk5xF0muLb7Wayf4FSbMLec3yFDlqGY74mqaae3VwFe9KjqJ2fOrgDrY/h3b3M1+w/Pd6i6JiN673wNhV/UQSn7+eChqWUujWrcSY9Td+0=
+	t=1789665522; cv=none; b=e+Pe5rKtdQepEKrTvt0LOFELxRpWmNLIayRrs7BrCZR4pRdQV9LeV71scELDU8cMwyaHpPlRUu1LkigboaERC0HWoKwU+q5PlGZOa97DoKYTYp7JWHqUjvEqQz2Q803Wvhk1ZBpNGZ68pPgc9DkmTKT2PBBjwbxPCWnCYYj5syc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665520; c=relaxed/simple;
-	bh=zgsqOKgttCbQRgaVT4o5kR+kEVnQHIRuaF0j37d4HaQ=;
+	s=arc-20240116; t=1789665522; c=relaxed/simple;
+	bh=6ZVLYtAGwRtlr3nV7+p7R5FKwWypz4BqgDARTri5XxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNsoJEjN9zsxm86rI92Un1JDR3SrpVwV1148Xbw/eVMx7H0ctlNixvN31+/owCENbLcIbG47EcfZlCzWOSQsHHihOenfDL4ghixXB02HfzFf41dJb3msRF6WySa+eCmXijLzTc5HCuEFW/Qd2RDXzDll+bJrN1vgESBJ0XxT3Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STq6lnnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nqVuwGzw5/JfZhgSRGAuiZIaetRL0HaQRTd6CbACUI94jp5QedIJT9+LQ4a2dNnJySd4c6Ji0Pe7ibjHwgpCXlgagE7P+ov7X+NDCYc0U4TIPsniG67qL/5/zzyrOFm0GrYZnpJozDw96BCcMapsyilUswCgd7MLR/CxRU2VrlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKA6utXU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STq6lnnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7301F000FF;
-	Thu, 17 Sep 2026 17:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKA6utXU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3D1F000FF;
+	Thu, 17 Sep 2026 17:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665518;
-	bh=wq7AuKZcKwsNRR24zTOOMErHTi8I5vYiMm12XsbdjKc=;
+	s=korg; t=1789665521;
+	bh=7j9SPqmJ3A6y52STBkNazWd8Ujmgv0yj1421liBBb9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=STq6lnnj8Ytdiv+pvIxOn1zhWsF/x7n9JsZcKqQ4z6YT7En7lOHKdbBta8G1aOmux
-	 L7vajN3MRdITQWCZT86+qEfQix42MgvIOpkThp8g71J7kvhyv/8+TBhdH59lG24gn/
-	 cgeHmuMCmMX/UMjf8EFDYU06hPj/xNQvh3dOrNkE=
+	b=FKA6utXUcYQK2HNZokqPjRhjqP6t7D+B6dr5WxSnJnfwSkhqoduPgHfF5VLx1W59A
+	 bpqq39kBO76cZkWbICNn7S65B92LTKY8OwU7KmqNSwpL5wSh+ft5lTQhnHG4Ju+MgA
+	 FDgB+OKIF2eBzBBWUPmWkdk8Prv2VWJRcJlMo6ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
+	FAN YE <fy15309206903@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0729/1250] btrfs: do not force reloc root creation during qgroup_account_snapshot()
-Date: Thu, 17 Sep 2026 16:08:44 +0100
-Message-ID: <20260917151611.647547979@linuxfoundation.org>
+Subject: [PATCH 6.18 0730/1250] btrfs: zstd: fix lost wakeup when waiting for a workspace
+Date: Thu, 17 Sep 2026 16:08:45 +0100
+Message-ID: <20260917151611.676547827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,182 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: FAN YE <fy15309206903@gmail.com>
 
-[ Upstream commit cacf35832292997018837e484283f95a9301ebf5 ]
+[ Upstream commit 2acb9f3d1cc8f65dc81ed55e238cbf8e5b60bff7 ]
 
-[BUG]
-When running btrfs/252 with quota enabled through MKFS_OPTIONS="-O quota",
-it has a high chance to trigger the following kernel warning and flips
-the fs RO:
+A writer can sleep forever in zstd_get_workspace() even though a workspace
+is free.  When zstd_alloc_workspace() fails, the task is queued on
+zwsm->wait and schedules unconditionally, never re-testing the pool.
+zstd_put_workspace() publishes the workspace and then calls cond_wake_up(),
+which only wakes when a sleeper is already visible, so a workspace returned
+between the failed allocation and prepare_to_wait() wakes nobody.  The
+window is wide: zstd_alloc_workspace() goes through kvmalloc() and may
+enter reclaim.
 
-  BTRFS info (device dm-2): relocating block group 30408704 flags metadata|dup
-  ------------[ cut here ]------------
-  WARNING: fs/btrfs/extent-tree.c:879 at lookup_inline_extent_backref+0x74b/0x960 [btrfs], CPU#4: btrfs/2173
-  CPU: 4 UID: 0 PID: 2173 Comm: btrfs Not tainted 7.2.0-rc6-custom+ #457 PREEMPT(full)  3adc6528fb66f7a55fe1095385818e742f200aab
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:lookup_inline_extent_backref+0x74b/0x960 [btrfs]
-  Call Trace:
-   <TASK>
-   insert_inline_extent_backref+0x7c/0x160 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   __btrfs_inc_extent_ref+0xa9/0x270 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   __btrfs_run_delayed_refs+0x4af/0x11c0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_run_delayed_refs+0x9d/0xf0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   create_pending_snapshot+0x39d/0xf00 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   create_pending_snapshots+0x9b/0xc0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_commit_transaction+0x280/0xeb0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   prepare_to_relocate+0x147/0x200 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   relocate_block_group+0x6b/0x5e0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_relocate_block_group+0x92c/0x2380 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_relocate_chunk+0x3f/0x1a0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_balance+0xa2c/0x19c0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   btrfs_ioctl+0x2839/0x2d30 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
-   __x64_sys_ioctl+0x416/0x9a0
-   do_syscall_64+0xe1/0x790
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  BTRFS info (device dm-2): leaf 4593991680 gen 233 total ptrs 175 free space 5953 owner 2
-  BTRFS info (device dm-2): refs 3 lock_owner 2173 current 2173
-  	item 0 key (166772736 METADATA_ITEM 1) itemoff 16250 itemsize 33
-  		extent refs 1 gen 222 flags 2
-  		ref#0: tree block backref root 266
-         [ Skip the tree dump ]
-  	item 174 key (263225344 METADATA_ITEM 0) itemoff 10328 itemsize 33
-  		extent refs 1 gen 162 flags 258
-  		ref#0: tree block backref root 267
-  BTRFS error (device dm-2): extent item not found for insert, bytenr 179847168 num_bytes 16384 parent 4594335744 root_objectid 273 owner 0 offset 0
-  BTRFS error (device dm-2): failed to run delayed ref for logical 179847168 num_bytes 16384 type 182 action 1 ref_mod 1: -117
+Only a max level workspace triggers the wakeup and one is deliberately kept
+allocated as the fallback every waiter waits for, so once its wakeup is
+lost the writer stays in TASK_UNINTERRUPTIBLE until some other task happens
+to return one.  Re-check the pool after prepare_to_wait() has published the
+waiter, and use the workspace if one turned up.
 
-[CAUSE]
-The above error is showing that there is a tree reference to a metadata
-extent that is no longer there.
-
-With "ref_verify" mount option (requires CONFIG_BTRFS_DEBUG), there is
-some extra debug output:
-
-  BTRFS error (device dm-2): dumping block entry [180961280 16384], num_refs 0, metadata 1, from disk 0
-  BTRFS error (device dm-2):   root entry 256, num_refs 18446744073709551615
-  BTRFS error (device dm-2):   root entry 273, num_refs 18446744073709551615
-  BTRFS error (device dm-2):   Ref action 3, root 273, ref_root 273, parent 0, owner 0, offset 0, num_refs 1
-     btrfs_force_cow_block+0x129/0x7d0 [btrfs]
-     btrfs_cow_block+0x10a/0x250 [btrfs]
-     btrfs_search_slot+0x5eb/0xf40 [btrfs]
-     btrfs_insert_empty_items+0x3a/0x70 [btrfs]
-     insert_with_overflow+0x53/0x130 [btrfs]
-     btrfs_insert_dir_item+0x125/0x290 [btrfs]
-     btrfs_add_link+0xaa/0x410 [btrfs]
-     btrfs_rename+0x5ea/0xcd0 [btrfs]
-     btrfs_rename2+0x28/0x60 [btrfs]
-     vfs_rename+0x5b2/0xe10
-     filename_renameat2+0x244/0x430
-     __x64_sys_rename+0x48/0x70
-     do_syscall_64+0xe1/0x790
-     entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  BTRFS error (device dm-2):   Ref action 2, root 273, ref_root 273, parent 0, owner 0, offset 0, num_refs 18446744073709551615
-     btrfs_force_cow_block+0x327/0x7d0 [btrfs]
-     btrfs_cow_block+0x10a/0x250 [btrfs]
-     btrfs_search_slot+0x5eb/0xf40 [btrfs]
-     btrfs_lookup_file_extent+0x4d/0x70 [btrfs]
-     btrfs_drop_extents+0x151/0xf00 [btrfs]
-     insert_reserved_file_extent+0xfe/0x3e0 [btrfs]
-     btrfs_finish_one_ordered+0x549/0xc40 [btrfs]
-     btrfs_work_helper+0xde/0x350 [btrfs]
-     process_one_work+0x198/0x380
-     worker_thread+0x1c8/0x330
-     kthread+0xee/0x120
-     ret_from_fork+0x28f/0x310
-     ret_from_fork_asm+0x11/0x20
-  BTRFS error (device dm-2):   Ref action 1, root 273, ref_root 0, parent 4594335744, owner 0, offset 0, num_refs 1
-     __btrfs_mod_ref+0x1c5/0x2d0 [btrfs]
-     btrfs_copy_root+0x262/0x390 [btrfs]
-     create_reloc_root+0xb9/0x370 [btrfs]
-     btrfs_init_reloc_root+0xb0/0x1b0 [btrfs]
-     record_root_in_trans+0xa6/0xd0 [btrfs]
-     create_pending_snapshot+0x383/0xf00 [btrfs]
-     create_pending_snapshots+0x9b/0xc0 [btrfs]
-     btrfs_commit_transaction+0x280/0xeb0 [btrfs]
-     prepare_to_relocate+0x147/0x200 [btrfs]
-     relocate_block_group+0x6b/0x5e0 [btrfs]
-     btrfs_relocate_block_group+0x92c/0x2380 [btrfs]
-     btrfs_relocate_chunk+0x3f/0x1a0 [btrfs]
-     btrfs_balance+0xa2c/0x19c0 [btrfs]
-     btrfs_ioctl+0x2839/0x2d30 [btrfs]
-     __x64_sys_ioctl+0x416/0x9a0
-     do_syscall_64+0xe1/0x790
-
-The above shows the direct cause, Ref action 3 is the oldest operation,
-which shows the tree block is created by COW.  Then ref action 2 shows
-it's COWed away, by a metadata update, meaning the tree block is already
-released, should not be referred any more.
-
-Then the final one, is trying to create a reloc tree for subvolume 273,
-and that reloc root creation is referring to the already dropped tree
-block.
-
-The root cause is that, during qgroup_account_snapshot(), we are calling
-record_root_in_trans() with "force = true".
-So if the root has no reloc root, we will create one, but at that
-timing it's already too late.
-
-Normally reloc root should be created before the commit and current
-roots diverge, to avoid the same problem we are hitting.
-
-But during relocation initialization, we are committing the current
-running transaction, with a new reloc_control attached halfway.
-
-And if qgroup is enabled, the record_root_in_trans() with "force = true"
-calls will force reloc root creation even if we do not and should not
-create reloc root at that timing.
-
-[FIX]
-Do not force reloc root creation during record_root_in_trans() with
-"force = true" cases, which is only called by qgroup_account_snapshot().
-
-If we're really under relocation, the reloc root should be created way
-early, before the commit and current root diverge.  If the root has no
-reloc tree yet, it means we're still initializing the reloc, and do not
-need a reloc root.
-
-So skipping the reloc tree creation in qgroup_account_snapshot() should
-be safe.
-
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1275740
-Fixes: 4d31778aa2fa ("btrfs: qgroup: Fix root item corruption when multiple same source snapshots are created with quota enabled")
-Assisted-by: LLM (initial analysis, but incorrect conclusion with too many burnt tokens)
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Fixes: 3f93aef535c8 ("btrfs: add zstd compression level support")
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: FAN YE <fy15309206903@gmail.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/btrfs/zstd.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index bd6cf479b3272..32835d0271be9 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -456,8 +456,19 @@ static int record_root_in_trans(struct btrfs_trans_handle *trans,
- 		 * through btrfs_record_root_in_trans without having to take the
- 		 * lock.  smp_wmb() makes sure that all the writes above are
- 		 * done before we pop in the zero below
-+		 *
-+		 * If @force is true, it means the call is from
-+		 * qgroup_account_snapshot(), which only requires radix tree
-+		 * tracking.
-+		 * We should not force reloc root creation here, as the root
-+		 * may have already been modified, and in that case
-+		 * root->commit_root has already been dropped.
-+		 *
-+		 * Using that commit root will cause the reloc root to refer
-+		 * to a deleted extent, causing extent tree corruption.
- 		 */
--		ret = btrfs_init_reloc_root(trans, root);
-+		if (!force)
-+			ret = btrfs_init_reloc_root(trans, root);
- 		smp_mb__before_atomic();
- 		clear_bit(BTRFS_ROOT_IN_TRANS_SETUP, &root->state);
+diff --git a/fs/btrfs/zstd.c b/fs/btrfs/zstd.c
+index c9cddcfa337b9..baaf3c1436323 100644
+--- a/fs/btrfs/zstd.c
++++ b/fs/btrfs/zstd.c
+@@ -307,8 +307,17 @@ struct list_head *zstd_get_workspace(struct btrfs_fs_info *fs_info, int level)
+ 		DEFINE_WAIT(wait);
+ 
+ 		prepare_to_wait(&zwsm->wait, &wait, TASK_UNINTERRUPTIBLE);
+-		schedule();
++		/*
++		 * Re-check after being queued: zstd_put_workspace() only wakes
++		 * a queue that already has a sleeper, so a workspace returned
++		 * since the failed allocation woke nobody.
++		 */
++		ws = zstd_find_workspace(fs_info, level);
++		if (!ws)
++			schedule();
+ 		finish_wait(&zwsm->wait, &wait);
++		if (ws)
++			return ws;
+ 
+ 		goto again;
  	}
 -- 
 2.53.0
