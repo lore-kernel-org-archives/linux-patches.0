@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71254C10E8;
-	Thu, 17 Sep 2026 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FFB4D4878;
+	Thu, 17 Sep 2026 15:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659108; cv=none; b=nGfPo9kIayEu8ibo8P21gCea7u3LthyJZ1R/HVh5zDucTXA7vuJlVoThMYCm3sBLcJBaL62sdRlL6vqwoCko+88XDHRy2DWO4cLrHAEDImjX5DA3xWhMKgjJfnpYvWvhYN2kb4b+5PcRpnVPitEQYppHvcBu+yZBqAyrM4z7Z3I=
+	t=1789659111; cv=none; b=UcfAgtlPddvGS1zZQvG98xEmJ754AVDykQcGGGgHZwAhIoGDshTqRRj0cEn8j9g5hwl8gdrkDQjqzzWXnCWjXjWFZhJ7ac0X5FwjsqIXQMF4PUjsUA+3BjoN9jEOOL3rnb5pf8CVuT2A4f4HlCMsxXR7lbtnDPZ08Fg36OFrBaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659108; c=relaxed/simple;
-	bh=Jv9fcoSxGaC60/C7jL8R1LMReaTvrKkHJravcMtD1gI=;
+	s=arc-20240116; t=1789659111; c=relaxed/simple;
+	bh=rl32tq+KGvLralFry+T5viiTgBrjMQWWvz3jLYgyers=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fyq7zjJwlu0ZP+58Yq1QxYIZLQ8JwVSfZFqO865ZeRQPayjjHZe+Wd/vR59y11PV/fjazd3qS2YHJNFYlqJ/TL3+XzFWE+5FM4XTkzQ7DLPwx5PtTVZKLMdYoG+Ks+qAgVY7esxJxjqeVaA+ZBu//P0wjfG2yopkqHOhzyn2tnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+luC1YH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEdiAYfcVGsrkxuCF4lPQ9vwKHy/o3mWSvihGR4GKnz9hZoBdW9LwUsrOoWAeLP9pcFZ/cKXwXXhU6dTtOjpHXQ3Ot5C8tO3tjkdTMbGQC0t9mqzayXLoQ2rtSlotPfnc2JQ7gNf1QUQn25Pha4hmh6YznkR9fF3ufIu4WU2fIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcJFEUlb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+luC1YH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00A21F00893;
-	Thu, 17 Sep 2026 15:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcJFEUlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DCB1F000FF;
+	Thu, 17 Sep 2026 15:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659099;
-	bh=YdFgrHRY7KBaut9NiEA/kuLLbRHdS4viAJ8s1dRPCtc=;
+	s=korg; t=1789659102;
+	bh=zPXNOk+Q/KB3a18ji6i6jFvagJoXEFx+g3U0WOZVLxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D+luC1YHornEfnQc2a+AV2N3Qkb0hOIqSzWD1T1d0DIXRKl/WkLYzjHRQmgiBNydX
-	 mPbiBwIYcGAH61HcW2sC3z60/PkJ9rt6bDDTe0Ad3aRDOrznWqqagPN8cF71NIWkzB
-	 BOGEx/j7kTPVBaRrod0EiHY0vAcyOz+LiUrOa3sI=
+	b=kcJFEUlbsG36pWp8/7bnd2tEo4I+sFmVNaCKm2rV/6PQtJqRWLiV+7cdB90k5D9oo
+	 B/iq7zZozcp5F8gMaLSvw3t4hNSuTMg79oWKYk0jSOnnkzk+f4a/to3oS/k1nXZldH
+	 pQ/O0idTNds8skVcwYGwAMb1AGW5SLAY880gpH18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 143/733] ipv6: mcast: use rcu_assign_pointer() for __rcu list updates
-Date: Thu, 17 Sep 2026 16:07:31 +0100
-Message-ID: <20260917151354.603808202@linuxfoundation.org>
+Subject: [PATCH 7.2 144/733] ipv6: mcast: use jiffies_delta_to_clock_t() in igmp6_mc_seq_show()
+Date: Thu, 17 Sep 2026 16:07:32 +0100
+Message-ID: <20260917151354.630356272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -55,107 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0c8f56c583c3250408367880c98e4d6fbc929315 ]
+[ Upstream commit b4cf4a092a7bdaa62acca39c28f386b6d1674968 ]
 
-Several places in net/ipv6/mcast.c update RCU-protected lists
-(np->ipv6_mc_list, idev->mc_list, idev->mc_tomb) using direct pointer
-assignments instead of rcu_assign_pointer():
+If a multicast group timer has expired but the delayed work has
+not yet run to clear MAF_TIMER_RUNNING, expires - jiffies produces
+a negative value.
 
-1. In __ipv6_dev_mc_dec(), unlinking a group from idev->mc_list did:
-       *map = ma->next;
-   without rcu_assign_pointer() while concurrent readers traverse
-   idev->mc_list locklessly under rcu_read_lock().
-2. In ipv6_sock_mc_drop() and __ipv6_sock_mc_close(), unlinking a group
-   from np->ipv6_mc_list directly assigned *lnk = mc_lst->next and
-   np->ipv6_mc_list = mc_lst->next without rcu_assign_pointer(), racing
-   with lockless readers in inet6_mc_check().
-3. In __ipv6_sock_mc_join(), mc_lst->next was initialized to
-   np->ipv6_mc_list via raw assignment before publishing mc_lst.
-4. In mld_del_delrec() and __ipv6_dev_mc_inc(), __rcu source pointers
-   passed into rcu_assign_pointer() lacked explicit dereference helpers.
+Because unsigned arithmetic was used with jiffies_to_clock_t(),
+expires - jiffies underflows to a huge value and reports invalid
+timer durations in /proc/net/igmp6.
 
-Fix these by consistently using rcu_assign_pointer() along with
-mc_dereference() / sock_dereference().
+Use jiffies_delta_to_clock_t() with a signed long delta to properly
+cap expired deltas to 0, matching IPv4 igmp_mc_seq_show() and commit
+a399a8053164 ("time: jiffies_delta_to_clock_t() helper to the rescue").
 
-Fixes: 456b61bca8ee ("ipv6: mcast: RCU conversion")
-Fixes: 88e2ca308094 ("mld: convert ifmcaddr6 to RCU")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828084531.1826790-5-edumazet@google.com
+Link: https://patch.msgid.link/20260828084531.1826790-6-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/ipv6/mcast.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 62c9a1c08b9a2..d5db3b449cd08 100644
+index d5db3b449cd08..fad53a5cdfffb 100644
 --- a/net/ipv6/mcast.c
 +++ b/net/ipv6/mcast.c
-@@ -240,7 +240,8 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 		return err;
- 	}
+@@ -3028,7 +3028,7 @@ static int igmp6_mc_seq_show(struct seq_file *seq, void *v)
+ 	struct ifmcaddr6 *im = (struct ifmcaddr6 *)v;
+ 	struct igmp6_mc_iter_state *state = igmp6_mc_seq_private(seq);
+ 	unsigned int mca_flags = READ_ONCE(im->mca_flags);
+-	unsigned long expires = READ_ONCE(im->mca_work.timer.expires);
++	long delta = READ_ONCE(im->mca_work.timer.expires) - jiffies;
  
--	mc_lst->next = np->ipv6_mc_list;
-+	rcu_assign_pointer(mc_lst->next,
-+			   sock_dereference(np->ipv6_mc_list, sk));
- 	rcu_assign_pointer(np->ipv6_mc_list, mc_lst);
- 
+ 	seq_printf(seq,
+ 		   "%-4d %-15s %pi6 %5d %08X %ld\n",
+@@ -3036,7 +3036,7 @@ static int igmp6_mc_seq_show(struct seq_file *seq, void *v)
+ 		   &im->mca_addr,
+ 		   READ_ONCE(im->mca_users), mca_flags,
+ 		   (mca_flags & MAF_TIMER_RUNNING) ?
+-		   jiffies_to_clock_t(expires - jiffies) : 0);
++		   jiffies_delta_to_clock_t(delta) : 0);
  	return 0;
-@@ -300,7 +301,8 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
- 	      lnk = &mc_lst->next) {
- 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
- 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
--			*lnk = mc_lst->next;
-+			rcu_assign_pointer(*lnk,
-+					   sock_dereference(mc_lst->next, sk));
- 			__ipv6_sock_mc_drop(sk, mc_lst);
- 			return 0;
- 		}
-@@ -333,7 +335,8 @@ void __ipv6_sock_mc_close(struct sock *sk)
- 	struct ipv6_mc_socklist *mc_lst;
- 
- 	while ((mc_lst = sock_dereference(np->ipv6_mc_list, sk)) != NULL) {
--		np->ipv6_mc_list = mc_lst->next;
-+		rcu_assign_pointer(np->ipv6_mc_list,
-+				   sock_dereference(mc_lst->next, sk));
- 		__ipv6_sock_mc_drop(sk, mc_lst);
- 	}
  }
-@@ -798,9 +801,11 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
- 	if (!pmc)
- 		return;
- 	if (pmc_prev)
--		rcu_assign_pointer(pmc_prev->next, pmc->next);
-+		rcu_assign_pointer(pmc_prev->next,
-+				   mc_dereference(pmc->next, idev));
- 	else
--		rcu_assign_pointer(idev->mc_tomb, pmc->next);
-+		rcu_assign_pointer(idev->mc_tomb,
-+				   mc_dereference(pmc->next, idev));
  
- 	im->idev = pmc->idev;
- 	if (im->mca_sfmode == MCAST_INCLUDE) {
-@@ -979,7 +984,7 @@ static int __ipv6_dev_mc_inc(struct net_device *dev,
- 		return -ENOMEM;
- 	}
- 
--	rcu_assign_pointer(mc->next, idev->mc_list);
-+	rcu_assign_pointer(mc->next, mc_dereference(idev->mc_list, idev));
- 	rcu_assign_pointer(idev->mc_list, mc);
- 
- 	mld_del_delrec(idev, mc);
-@@ -1013,7 +1018,8 @@ int __ipv6_dev_mc_dec(struct inet6_dev *idev, const struct in6_addr *addr)
- 
- 			WRITE_ONCE(ma->mca_users, new_users);
- 			if (new_users == 0) {
--				*map = ma->next;
-+				rcu_assign_pointer(*map,
-+						   mc_dereference(ma->next, idev));
- 
- 				igmp6_group_dropped(ma);
- 				inet6_ifmcaddr_notify(idev->dev, ma,
 -- 
 2.53.0
 
