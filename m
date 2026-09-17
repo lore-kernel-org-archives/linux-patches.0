@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE755172ED;
-	Thu, 17 Sep 2026 16:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7F05172F0;
+	Thu, 17 Sep 2026 16:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664286; cv=none; b=gmC+dFv4yKI6qx0/8hJqrOBsKSi1/37WNMOGdMAo3UthEOngootQGQHjZ7ZP7V6aZ8zHmyzrYC0OPFbrmnmWrzVhOz+YX5VD//u5qnfBoeJHYPcUTFOFCR2ry7wo67XjTrnJoBevi9oKS7gK7c5AqWYIcAWw8pXeCfrP6JB6b9I=
+	t=1789664290; cv=none; b=rhDSbX92RKunQ9X/UXmBF6W1eB/gKDhnPOVkfrm07WzUNvk+I6w36obMCSpC+G4fYqpHN7+VhGy/GH/8/fhxo+GGnfhYzGujc7DG2SbXrQEvOd+7/3Cooh2T1IaShgtKHwCVkLna1L6GkoZSlhIy7crj5HAQbgK9BVPuDXwJBG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664286; c=relaxed/simple;
-	bh=CDow917Rt2MyaWjgj4y/SHrOd6U1jxW8Wpd8Do1S0dc=;
+	s=arc-20240116; t=1789664290; c=relaxed/simple;
+	bh=V6C2D10cwV33LwS4v1BoW0k0J9+IdDJmuitKy5hhTu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ejt8P3gYa6MmTEp/eQYLkAvYJAe/W1kRD6GdDofhNaB8SprKs3hb5vDWkZsflDUbT27q1psri0U8QUYo1Jx0MXzTVXna4XqJY0ynnY2wC/L2ISyxEqNJrVwWK5O7HjsgcTbAAWQRcs19oO9ruRh/zEnKJVEACvG/iCeZWesJZcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTDSnN8k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DP92TmDV42SEUVLVZ6/J62xrT4D+m+0OLxcITKEI/GOdXYmZHU5OoLkuK1U5Xqi2oDcAEEuDXdUkmDyb2mbYzr9wJpdWNKa+Nbl9+J+R6JEba10HR2r3jMqCYVucXAq4i7i0JDfhwM6O/JAuQbeDox57vdNdr7rRBzUVNQSTSpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwiD5Lh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTDSnN8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8401F00899;
-	Thu, 17 Sep 2026 16:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwiD5Lh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD411F000FF;
+	Thu, 17 Sep 2026 16:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664285;
-	bh=StwnKHbXJYBULfBrZToQG8LA2aCL6ym8SPTcxXZS07w=;
+	s=korg; t=1789664288;
+	bh=gZlevP+J4up6lSEnNIiww26hQsBEXrRcgoqHY8YIZoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTDSnN8kJi/iZquI2NnS+rjUYVoZxyO1OlzNjRg2+SiyqufAHWMGCdoKOyqUSNq7T
-	 kG89DD0jlekSTTKgZh1rLbfrFm2Y8992Vh2WSNqoPyTYIAzfYpKSVKANiLvc3B4d+n
-	 oaqr3FhIJoBIKh6kAGo1xGNQMNeHmGF4itTOar/E=
+	b=rwiD5Lh4bvSFUYBBmx3e/yB1M/PZh/CelylX0KTpWaqniU9Bj2YHKKv7d2B13VDYI
+	 blsGWzE4l5urcl4OhCaEJ5SOIalvkMNEKVGlG8PcfuwmONpS47Y9mvwzSjoBS4BFFV
+	 hwB3kvsUNbMB8HMYw/pC8YIcWHZ6K+ARVw8R1dZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0321/1250] net/mlx5e: Verify unique vhca_id count instead of range
-Date: Thu, 17 Sep 2026 16:01:56 +0100
-Message-ID: <20260917151600.799832242@linuxfoundation.org>
+Subject: [PATCH 6.18 0295/1250] ASoC: codecs: rk3328: Use managed GPIO and clock helpers
+Date: Thu, 17 Sep 2026 16:01:30 +0100
+Message-ID: <20260917151600.120302583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -47,74 +45,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 0b1c4495aa007932e9cbd7b45a8037e7b4fe34b0 ]
+[ Upstream commit 0cf3489bba9ad13aae052232e223e19a620fe7a7 ]
 
-Change verify_num_vhca_ids() to count the number of unique vhca_ids
-and verify this count doesn't exceed max_num_vhca_id, rather than
-validating individual vhca_id values are within a specific range.
+rk3328_platform_probe() acquires the mute GPIO with gpiod_get_optional()
+but never releases it. It also enables mclk and pclk manually while
+relying on probe error labels for unwind, and the driver has no platform
+remove callback to disable those clocks after a successful unbind.
 
-The previous implementation checked if each vhca_id was in the range
-[0, max_num_vhca_id - 1], which is overly restrictive. The hardware
-capability max_rqt_vhca_id represents the maximum number of unique
-vhca_ids that can be used, not a range constraint on individual IDs.
+This path has already needed fixes for missing clock unwinds on probe
+errors. Use devm_gpiod_get_optional() and devm_clk_get_enabled() so the
+GPIO and enabled clock lifetimes are tied to the device. This removes the
+manual error labels and makes both probe failure and driver unbind follow
+the normal devres cleanup path.
 
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260531113954.395443-14-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260525-asoc-rk3328-devm-resources-v1-1-2abde0006f89@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/rqt.c  | 27 ++++++++++++++-----
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ sound/soc/codecs/rk3328_codec.c | 54 ++++++++-------------------------
+ 1 file changed, 13 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
-index 8d9a3b5ec973b..c845ed8f9ebfa 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
-@@ -8,13 +8,28 @@ static bool verify_num_vhca_ids(struct mlx5_core_dev *mdev, u32 *vhca_ids,
- 				unsigned int size)
- {
- 	unsigned int max_num_vhca_id = MLX5_CAP_GEN_2(mdev, max_rqt_vhca_id);
--	int i;
-+	unsigned int unique_count = 0;
-+	int i, j;
-+
-+	/* Count unique vhca_ids */
-+	for (i = 0; i < size; i++) {
-+		bool is_unique = true;
-+
-+		/* Check if vhca_ids[i] was already seen */
-+		for (j = 0; j < i; j++) {
-+			if (vhca_ids[j] == vhca_ids[i]) {
-+				is_unique = false;
-+				break;
-+			}
-+		}
-+		if (is_unique)
-+			unique_count++;
-+	}
+diff --git a/sound/soc/codecs/rk3328_codec.c b/sound/soc/codecs/rk3328_codec.c
+index 9697aefc6e030..5871b5a819757 100644
+--- a/sound/soc/codecs/rk3328_codec.c
++++ b/sound/soc/codecs/rk3328_codec.c
+@@ -425,7 +425,6 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 	struct rk3328_codec_priv *rk3328;
+ 	struct regmap *grf;
+ 	void __iomem *base;
+-	int ret = 0;
  
--	/* Verify that all vhca_ids are in range [0, max_num_vhca_ids - 1] */
--	for (i = 0; i < size; i++)
--		if (vhca_ids[i] >= max_num_vhca_id)
--			return false;
--	return true;
-+	/* Verify that number of unique vhca_ids doesn't exceed
-+	 * max_num_vhca_id
-+	 */
-+	return unique_count <= max_num_vhca_id;
+ 	rk3328 = devm_kzalloc(&pdev->dev, sizeof(*rk3328), GFP_KERNEL);
+ 	if (!rk3328)
+@@ -441,14 +440,13 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 	regmap_write(grf, RK3328_GRF_SOC_CON2,
+ 		     (BIT(14) << 16 | BIT(14)));
+ 
+-	ret = of_property_read_u32(rk3328_np, "spk-depop-time-ms",
+-				   &rk3328->spk_depop_time);
+-	if (ret < 0) {
++	if (of_property_read_u32(rk3328_np, "spk-depop-time-ms",
++				 &rk3328->spk_depop_time)) {
+ 		dev_info(&pdev->dev, "spk_depop_time use default value.\n");
+ 		rk3328->spk_depop_time = 200;
+ 	}
+ 
+-	rk3328->mute = gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
++	rk3328->mute = devm_gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(rk3328->mute))
+ 		return PTR_ERR(rk3328->mute);
+ 	/*
+@@ -461,57 +459,31 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 		regmap_write(grf, RK3328_GRF_SOC_CON10, BIT(17) | BIT(1));
+ 	}
+ 
+-	rk3328->mclk = devm_clk_get(&pdev->dev, "mclk");
++	rk3328->mclk = devm_clk_get_enabled(&pdev->dev, "mclk");
+ 	if (IS_ERR(rk3328->mclk))
+ 		return PTR_ERR(rk3328->mclk);
+ 
+-	ret = clk_prepare_enable(rk3328->mclk);
+-	if (ret)
+-		return ret;
+ 	clk_set_rate(rk3328->mclk, INITIAL_FREQ);
+ 
+-	rk3328->pclk = devm_clk_get(&pdev->dev, "pclk");
+-	if (IS_ERR(rk3328->pclk)) {
+-		dev_err(&pdev->dev, "can't get acodec pclk\n");
+-		ret = PTR_ERR(rk3328->pclk);
+-		goto err_unprepare_mclk;
+-	}
+-
+-	ret = clk_prepare_enable(rk3328->pclk);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to enable acodec pclk\n");
+-		goto err_unprepare_mclk;
+-	}
++	rk3328->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
++	if (IS_ERR(rk3328->pclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rk3328->pclk),
++				     "failed to get or enable acodec pclk\n");
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(base)) {
+-		ret = PTR_ERR(base);
+-		goto err_unprepare_pclk;
+-	}
++	if (IS_ERR(base))
++		return PTR_ERR(base);
+ 
+ 	rk3328->regmap = devm_regmap_init_mmio(&pdev->dev, base,
+ 					       &rk3328_codec_regmap_config);
+-	if (IS_ERR(rk3328->regmap)) {
+-		ret = PTR_ERR(rk3328->regmap);
+-		goto err_unprepare_pclk;
+-	}
++	if (IS_ERR(rk3328->regmap))
++		return PTR_ERR(rk3328->regmap);
+ 
+ 	platform_set_drvdata(pdev, rk3328);
+ 
+-	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
++	return devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
+ 					       rk3328_dai,
+ 					       ARRAY_SIZE(rk3328_dai));
+-	if (ret)
+-		goto err_unprepare_pclk;
+-
+-	return 0;
+-
+-err_unprepare_pclk:
+-	clk_disable_unprepare(rk3328->pclk);
+-
+-err_unprepare_mclk:
+-	clk_disable_unprepare(rk3328->mclk);
+-	return ret;
  }
  
- static bool rqt_verify_vhca_ids(struct mlx5_core_dev *mdev, u32 *vhca_ids,
+ static const struct of_device_id rk3328_codec_of_match[] __maybe_unused = {
 -- 
 2.53.0
 
