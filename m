@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13D24D17BC;
-	Thu, 17 Sep 2026 17:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B2348C6B;
+	Thu, 17 Sep 2026 17:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667968; cv=none; b=heW7h7jjvlzvb97IaLTdrs8CMQUUJf/WZ2/YTnid0ScZ9N+R7xzpeGZAPOD5vXsH464pFagCc42Jk1zXJHC+sv5IEQSf40vwpY4O/HQWBJvc/OFwKjywoL26k3xVgk3nRONxl9hrcOK9k/lrNe3jrTBVdtdR2LMfE1WjcSkW2I0=
+	t=1789667971; cv=none; b=ZeBBfYPuQMHHyjZBKelQ7bfy4R/q8PTfif9u289SLYibnbCDVLlDPquFTORBEjjOWcdJ/9asBEiVFP70saGGenuym6c+RqxjNMlTdX6dzaDrxtL6qHepf2MD5lJ/tQpvQoXCCOI3uV3B1QMijpCxb0kjwbKW9Hjy2Ni3xN72mxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667968; c=relaxed/simple;
-	bh=HEKuxjXaimt3quIWc+5PkS7PUyqsqgcug0AFc4ST9bM=;
+	s=arc-20240116; t=1789667971; c=relaxed/simple;
+	bh=E0gtkd0qwvgod+5QjtKScSoamk6z0G+hrUeyCnRj73c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqVBOOjtKj9nwwMaVO5H25vhSO4pRyEgJ1+lJFRZneLZJKGk+iICLOKzp+HDOeqCFYv98RTGL4nGGfayMaD90eqLPXy1lI/7M2flvpp5W1VUxfCbSmZbqQykf3QsycmACz+EyWfCI5vU/b0u96RuRe7ZE66gJQpFXS477RQ91/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg2lT/NQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1wWdtSf3Vj8ZX1ymNs35qWEz4sWW2zjNXLqq1/I8tKnI+wtzi0FSbFXiWFJH0qOuROXsXEG83dW3GEc37yGCvZH+ykOTVbyDk2XaqSzNySSjw+WHeGbUo0sTwjnuoeqZkdQtMNR/9FKeJoN/2XUjDvvrzlnbTgwI7wRkXKKSus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFyOnBJl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg2lT/NQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307741F000FF;
-	Thu, 17 Sep 2026 17:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFyOnBJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9731F000FF;
+	Thu, 17 Sep 2026 17:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667966;
-	bh=85Fg+45V0+FTll+7sZ4psliaWVaU6D8DU8UgNwtgo0c=;
+	s=korg; t=1789667970;
+	bh=gja6UO6mZIAjiYivww3tt1+P5lMa4cmvUuvNt2FnoJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rg2lT/NQsI0sYJjjTIqYH/h/VjbbQx04GJH8ERlT/2A0/FECu6lA+qL9JWKb0Fbwa
-	 Z4rODxp50gxKSJaLfz9t5qArY3TKmvS0CEfzI0Hh2pWXTzOAwl4H97aOpnfQhzalgH
-	 EpNa59AtFC5vzblIL9uNcQU4W+VmS+rktzVHYpFk=
+	b=tFyOnBJlz7gnBLuDEP3/qFc2eSiqlkdj+3hLrwVrQoASF5DwZwaw1I2G1mkSedcds
+	 KUfpLtY21zRkuT3k8DTUIu34TNra0vseZqKE+y+TcymNnREimgcW4Vr3T3D4aWAmND
+	 n1/FArQQf8TmxL8t03APWO1cENCsRiCCVmVq8/Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	George Moussalem <george.moussalem@outlook.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0269/1102] net: dsa: qca8k: Add support for force mode for fixed link topology
-Date: Thu, 17 Sep 2026 16:03:32 +0100
-Message-ID: <20260917151546.360085525@linuxfoundation.org>
+Subject: [PATCH 6.12 0270/1102] net: lan966x: restore RX state on reload failure
+Date: Thu, 17 Sep 2026 16:03:33 +0100
+Message-ID: <20260917151546.385952083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,77 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Moussalem <george.moussalem@outlook.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e0a77b1ed9001bdd0c73b99c67abb90f4bd7d7f5 ]
+[ Upstream commit aa97f11a76e545ed73cc455bcdd1ece4b480b507 ]
 
-A fixed link topology is commonly used to connect this switch (on port
-0 or 6) to a SoC's MAC over SGMII. When inband negotiation is not used,
-the switch needs to be configured to operate in force mode. As such,
-enable support for force mode.
+lan966x_fdma_reload() backs up rx->page_pool and rx->fdma before
+reallocating the RX resources for the new MTU. If the allocation fails,
+the restore path puts these fields back before restarting RX.
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-Link: https://patch.msgid.link/20260605-qca8337-force-mode-v2-1-d9a6b6545bfa@outlook.com
+However, the reload path also updates rx->page_order and rx->max_mtu
+before calling lan966x_fdma_rx_alloc(). These fields are not restored on
+failure, so RX can be restarted with the old pages, old FDMA state and
+old page pool, but with the page geometry from the failed new MTU.
+
+This can make the XDP path advertise a frame size derived from the new
+page_order while the actual RX pages still come from the old allocation.
+For example, after a failed reload to a jumbo MTU, xdp_init_buff() may be
+called with a frame size larger than the restored RX pages.
+
+lan966x_fdma_rx_alloc_page_pool() also registers the newly allocated page
+pool with each port's XDP RXQ before fdma_alloc_coherent() is called. If
+fdma_alloc_coherent() fails, the new page pool is destroyed, but the
+rollback path does not restore the per-port XDP RXQ mem model
+registration either.
+
+Save and restore rx->page_order and rx->max_mtu, and restore the old page
+pool registration for each port's XDP RXQ before RX is started again.
+This keeps the restored RX state consistent after a failed reload.
+
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260607145747.1494514-1-lgs201920130244@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 22 ++++++++++++++++------
- drivers/net/dsa/qca/qca8k.h      |  1 +
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_fdma.c | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index 59b4a7240b583..a0bb836805c6e 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -1538,7 +1538,7 @@ static int qca8k_pcs_config(struct phylink_pcs *pcs, unsigned int neg_mode,
- {
- 	struct qca8k_priv *priv = pcs_to_qca8k_pcs(pcs)->priv;
- 	int cpu_port_index, ret, port;
--	u32 reg, val;
-+	u32 mask, reg, val;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index 646f3d65274e3..b13c60438b978 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -816,6 +816,7 @@ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
+ 	struct page *(*old_pages)[FDMA_RX_DCB_MAX_DBS];
+ 	struct page_pool *page_pool;
+ 	struct fdma fdma_rx_old;
++	int page_order, max_mtu;
+ 	int err, i, j;
  
- 	port = pcs_to_qca8k_pcs(pcs)->port;
- 	switch (port) {
-@@ -1611,11 +1611,21 @@ static int qca8k_pcs_config(struct phylink_pcs *pcs, unsigned int neg_mode,
- 	if (priv->ports_config.sgmii_tx_clk_falling_edge)
- 		val |= QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE;
+ 	old_pages = kmemdup(lan966x->rx.page, sizeof(lan966x->rx.page),
+@@ -826,6 +827,8 @@ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
+ 	/* Store these for later to free them */
+ 	memcpy(&fdma_rx_old, &lan966x->rx.fdma, sizeof(struct fdma));
+ 	page_pool = lan966x->rx.page_pool;
++	page_order = lan966x->rx.page_order;
++	max_mtu = lan966x->rx.max_mtu;
  
--	if (val)
--		ret = qca8k_rmw(priv, reg,
--				QCA8K_PORT0_PAD_SGMII_RXCLK_FALLING_EDGE |
--				QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE,
--				val);
-+	mask = (val) ? (QCA8K_PORT0_PAD_SGMII_RXCLK_FALLING_EDGE |
-+			QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE) : 0;
-+
+ 	napi_synchronize(&lan966x->napi);
+ 	napi_disable(&lan966x->napi);
+@@ -855,7 +858,24 @@ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
+ 	return 0;
+ restore:
+ 	lan966x->rx.page_pool = page_pool;
++	lan966x->rx.page_order = page_order;
++	lan966x->rx.max_mtu = max_mtu;
+ 	memcpy(&lan966x->rx.fdma, &fdma_rx_old, sizeof(struct fdma));
 +	/*
-+	 * (Un)set force mode on QCA8337 only, don't include it in the mask for
-+	 * others. It is written to the PORT0 PAD register for both port 0 and 6.
++	 * lan966x_fdma_rx_alloc_page_pool() registered the new pool with
++	 * each port's XDP RXQ before the allocation failed. The new pool is
++	 * destroyed by lan966x_fdma_rx_alloc(), so restore the old pool's
++	 * registration before restarting RX.
 +	 */
-+	if (priv->switch_id == QCA8K_ID_QCA8337) {
-+		if (neg_mode == PHYLINK_PCS_NEG_OUTBAND)
-+			val |= QCA8K_PORT_PAD_SGMII_FORCE_MODE;
-+		mask |= QCA8K_PORT_PAD_SGMII_FORCE_MODE;
++	for (i = 0; i < lan966x->num_phys_ports; i++) {
++		if (!lan966x->ports[i])
++			continue;
++
++		xdp_rxq_info_unreg_mem_model(&lan966x->ports[i]->xdp_rxq);
++		xdp_rxq_info_reg_mem_model(&lan966x->ports[i]->xdp_rxq,
++					   MEM_TYPE_PAGE_POOL, page_pool);
 +	}
 +
-+	if (mask)
-+		ret = qca8k_rmw(priv, reg, mask, val);
+ 	lan966x_fdma_rx_start(&lan966x->rx);
  
- 	return 0;
- }
-diff --git a/drivers/net/dsa/qca/qca8k.h b/drivers/net/dsa/qca/qca8k.h
-index 3664a2e2f1f64..2e4092f816f97 100644
---- a/drivers/net/dsa/qca/qca8k.h
-+++ b/drivers/net/dsa/qca/qca8k.h
-@@ -58,6 +58,7 @@
- #define	  QCA8K_PORT_PAD_RGMII_TX_DELAY_EN		BIT(25)
- #define   QCA8K_PORT_PAD_RGMII_RX_DELAY_EN		BIT(24)
- #define   QCA8K_PORT_PAD_SGMII_EN			BIT(7)
-+#define   QCA8K_PORT_PAD_SGMII_FORCE_MODE		BIT(3)
- #define QCA8K_REG_PWS					0x010
- #define   QCA8K_PWS_POWER_ON_SEL			BIT(31)
- /* This reg is only valid for QCA832x and toggle the package
+ 	lan966x_fdma_wakeup_netdev(lan966x);
 -- 
 2.53.0
 
