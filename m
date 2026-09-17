@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F964DA9B0;
-	Thu, 17 Sep 2026 17:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478F54F93A3;
+	Thu, 17 Sep 2026 17:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665633; cv=none; b=Q/v6u4gJ2bx0UndJyBzQYt5rdHqZTGtN895vcUVs4RHkHgfaDgbiu3fw4FHv+CZ3hoBqopn6khjTcr0I6XjI11P5IRu7VNYuUD/X9i2I9b3GBp+H2ENYM8V7cFfl3TVD7Qy/CfqiQUCN68I/SF8GeFUjJDbe58bkzyjTKsWF4lE=
+	t=1789665636; cv=none; b=ADgcp0lQGogrgh4IkxVnXfFnva5RURxv1V8Ho3DBnjIo1jBKBsvM8Xig3sTx0yfiyc49ZWX02b9ozOLAKsYE+IL2ho9FJoKiCP2LjXxBmijEl8QKA7y8JkoUvTX3fWc2l1gvyM2mNKC4vg3vp59xjecb/hRiutP8erFoi9AwdKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665633; c=relaxed/simple;
-	bh=qArMimAegNbxWuaM/V9QbpMk4TWw38bfdXKUYeWIZlI=;
+	s=arc-20240116; t=1789665636; c=relaxed/simple;
+	bh=0pcoJBacm6btQNVInNUfU9rtK3mtDZhsHwQvZNL4Bmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIwmWAIE+EjFQezS4ToWRc5Rbuj5EEwE0yyvF6kznCzh9MYEQOYYIBgRoqdUq/030AXa3hNAlOpHRqepNhVI2PO0pG6Ud3b02ShynBcYGFvZ9lXDbeiJuSgwQL4wsMbYWO8KfEMQmv5dlFA1mcu8cAcZROe/fMc4kxc620V3qmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPAbEtYr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c4Oa0bpkqovtZuQcMY6cUQbMSIwkOFEdufPEwuYXxpn8Hz4119cSjZWpDeg/1b1HhFm5M4dZsJ81G5szbMaGMPYgGvFjUjQL1H8cfmCOfO3xTIYYVf7hWJd4Z7j707N4drevYyobYAUq7M+4wwTtj3l3otc1kDGZf+y7ln9VPTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnerBKhD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPAbEtYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A961F000FF;
-	Thu, 17 Sep 2026 17:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnerBKhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6DD1F000FF;
+	Thu, 17 Sep 2026 17:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665632;
-	bh=2yM3/BJWq27UwucOQZ/x0uaxps2b94c4xmlYXMmdPQQ=;
+	s=korg; t=1789665635;
+	bh=5QcAPYFOes5LQbwNj86OfGusnktVtO4QUbNOEntVuNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPAbEtYrSMItF2AFDPnNmKuFQTVZPnzVzFncdvhswm72bLt5SItIYJYcp4Mtc/ze0
-	 HMWqWdUxlyV+KCxcBnlVGhL3ruetFcMU0gDC0S7hSU6dyR4EtH15lA85qDzU0p0KSg
-	 oDGyCgiiyoopVK8sCmYbEMyDrPCsOSRrAErLlkSk=
+	b=YnerBKhDCTFrZ+5bIv6u3i0YKw5zjmx1GK6l5itXiFnvIMFWp2McHFGEoxeUCXafz
+	 yVVOxxtiRhwliixx0B1dCpC0iWlPEy0OCtaCfVMzGvc1Houy+wZB2ZfGAWTwq46sgU
+	 M0JnGG1KM642WdefzSwdSMHvIE5acfV4uF6n/GI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Danesh Petigara <danesh.petigara@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0768/1250] ASoC: Intel: avs: Refactor and fix init_config access
-Date: Thu, 17 Sep 2026 16:09:23 +0100
-Message-ID: <20260917151612.694596242@linuxfoundation.org>
+Subject: [PATCH 6.18 0769/1250] net: bcmasp: clear txcb->last before writing each descriptor
+Date: Thu, 17 Sep 2026 16:09:24 +0100
+Message-ID: <20260917151612.720482984@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,160 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 681e91035dc794896a904852040837190e5041f5 ]
+[ Upstream commit 18e5e0ec0e9282c897e2aa81a3e43ccaee03b003 ]
 
-Existing code accesses enties found in ->init_configs array through
-indexes that are part of ->config_ids array.  Those two are limited by:
-->num_init_configs and ->num_config_ids respectively.  Using ID larger
-or equal to ->num_init_configs leads to out-of-bounds access:
+bcmasp_xmit() only wrote txcb->last = true for the final fragment
+of an SKB; non-final fragments left the field untouched.  If a
+descriptor slot was reused while it still held a stale true from
+a previous SKB (possible when tx_spb_ring_full() underreported
+fullness), bcmasp_tx_reclaim() would see last == true mid-SKB and
+call dev_consume_skb_any() prematurely, freeing the sk_buff while
+its remaining fragments were still in flight.
 
-avs_path_module_send_init_configs()
-loop:
-	(...) &acomp->tplg->init_configs[ids[i]]
-					^ out-of-bounds candidate
+Unconditionally clear txcb->last before the conditional set so every
+descriptor slot starts from a known false state regardless of what a
+prior transmission left behind.
 
-Rather than adding another if-statement, refactor the code.  There is no
-need to store the IDs, have a list of pointers to actual config-entries
-instead.  As the verification of ->init_config entries does not differ from
-verification of other types that are part of the topology.c file, simply
-reuse the code.
-
-Fixes: 8a49ef789b1b ("ASoC: Intel: avs: Send initial config to module if present")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260902081814.1590883-10-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260831184235.4133351-2-danesh.petigara@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/path.c     | 11 +++-----
- sound/soc/intel/avs/topology.c | 47 +++++++++++++++++++---------------
- sound/soc/intel/avs/topology.h |  4 +--
- 3 files changed, 32 insertions(+), 30 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
-index 899906e0bcb46..d42ccf8b645ce 100644
---- a/sound/soc/intel/avs/path.c
-+++ b/sound/soc/intel/avs/path.c
-@@ -838,15 +838,10 @@ static int avs_path_module_type_create(struct avs_dev *adev, struct avs_path_mod
- 
- static int avs_path_module_send_init_configs(struct avs_dev *adev, struct avs_path_module *mod)
- {
--	struct avs_soc_component *acomp;
--
--	acomp = to_avs_soc_component(mod->template->owner->owner->owner->owner->comp);
--
--	u32 num_ids = mod->template->num_config_ids;
--	u32 *ids = mod->template->config_ids;
-+	struct avs_tplg_module *template = mod->template;
- 
--	for (int i = 0; i < num_ids; i++) {
--		struct avs_tplg_init_config *config = &acomp->tplg->init_configs[ids[i]];
-+	for (int i = 0; i < template->num_init_configs; i++) {
-+		struct avs_tplg_init_config *config = template->init_configs[i];
- 		size_t len = config->length;
- 		void *data = config->data;
- 		u32 param = config->param;
-diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
-index 0a267937044de..c9837d78e6234 100644
---- a/sound/soc/intel/avs/topology.c
-+++ b/sound/soc/intel/avs/topology.c
-@@ -350,6 +350,7 @@ AVS_DEFINE_PTR_PARSER(modcfg_base, struct avs_tplg_modcfg_base, modcfgs_base);
- AVS_DEFINE_PTR_PARSER(modcfg_ext, struct avs_tplg_modcfg_ext, modcfgs_ext);
- AVS_DEFINE_PTR_PARSER(pplcfg, struct avs_tplg_pplcfg, pplcfgs);
- AVS_DEFINE_PTR_PARSER(binding, struct avs_tplg_binding, bindings);
-+AVS_DEFINE_PTR_PARSER(init_config, struct avs_tplg_init_config, init_configs);
- AVS_DEFINE_PTR_PARSER(nhlt_config, struct avs_tplg_nhlt_config, nhlt_configs);
- 
- static int
-@@ -1198,7 +1199,7 @@ static const struct avs_tplg_token_parser module_parsers[] = {
- 	{
- 		.token = AVS_TKN_MOD_INIT_CONFIG_NUM_IDS_U32,
- 		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
--		.offset = offsetof(struct avs_tplg_module, num_config_ids),
-+		.offset = offsetof(struct avs_tplg_module, num_init_configs),
- 		.parse = avs_parse_byte_token,
- 	},
- 	{
-@@ -1214,10 +1215,32 @@ static const struct avs_tplg_token_parser init_config_parsers[] = {
- 		.token = AVS_TKN_MOD_INIT_CONFIG_ID_U32,
- 		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
- 		.offset = 0,
--		.parse = avs_parse_word_token,
-+		.parse = avs_parse_init_config_ptr,
- 	},
- };
- 
-+static int avs_tplg_module_init_configs(struct snd_soc_component *comp,
-+					struct avs_tplg_module *module,
-+					struct snd_soc_tplg_vendor_array *tuples, u32 block_size)
-+{
-+	struct avs_tplg_init_config **cfgs;
-+	int ret;
-+
-+	if (!module->num_init_configs)
-+		return -EINVAL;
-+
-+	cfgs = devm_kcalloc(comp->card->dev, module->num_init_configs, sizeof(*cfgs), GFP_KERNEL);
-+	if (!cfgs)
-+		return -ENOMEM;
-+
-+	ret = parse_dictionary_entries(comp, tuples, block_size, cfgs, module->num_init_configs,
-+				       sizeof(*cfgs), AVS_TKN_MOD_INIT_CONFIG_ID_U32,
-+				       init_config_parsers, ARRAY_SIZE(init_config_parsers));
-+	if (!ret)
-+		module->init_configs = cfgs;
-+	return ret;
-+}
-+
- static struct avs_tplg_module *
- avs_tplg_module_create(struct snd_soc_component *comp, struct avs_tplg_pipeline *owner,
- 		       struct snd_soc_tplg_vendor_array *tuples, u32 block_size)
-@@ -1244,27 +1267,11 @@ avs_tplg_module_create(struct snd_soc_component *comp, struct avs_tplg_pipeline
- 	block_size -= esize;
- 	/* Parse trailing config ids if any. */
- 	if (block_size) {
--		u32 num_config_ids = module->num_config_ids;
--		u32 *config_ids;
--
--		if (!num_config_ids)
--			return ERR_PTR(-EINVAL);
--
--		config_ids = devm_kcalloc(comp->card->dev, num_config_ids, sizeof(*config_ids),
--					   GFP_KERNEL);
--		if (!config_ids)
--			return ERR_PTR(-ENOMEM);
--
- 		tuples = avs_tplg_vendor_array_at(tuples, esize);
--		ret = parse_dictionary_entries(comp, tuples, block_size,
--					       config_ids, num_config_ids, sizeof(*config_ids),
--					       AVS_TKN_MOD_INIT_CONFIG_ID_U32,
--					       init_config_parsers,
--					       ARRAY_SIZE(init_config_parsers));
-+
-+		ret = avs_tplg_module_init_configs(comp, module, tuples, block_size);
- 		if (ret)
- 			return ERR_PTR(ret);
--
--		module->config_ids = config_ids;
- 	}
- 
- 	module->owner = owner;
-diff --git a/sound/soc/intel/avs/topology.h b/sound/soc/intel/avs/topology.h
-index b5799c994b887..189984ce7b51e 100644
---- a/sound/soc/intel/avs/topology.h
-+++ b/sound/soc/intel/avs/topology.h
-@@ -221,8 +221,8 @@ struct avs_tplg_module {
- 	u8 domain;
- 	struct avs_tplg_modcfg_ext *cfg_ext;
- 	u32 ctl_id;
--	u32 num_config_ids;
--	u32 *config_ids;
-+	u32 num_init_configs;
-+	struct avs_tplg_init_config **init_configs;
- 	struct avs_tplg_nhlt_config *nhlt_config;
- 
- 	struct avs_tplg_pipeline *owner;
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index ceb6c11431dd9..4e2edd537da57 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -333,6 +333,7 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		txcb->bytes_sent = total_bytes;
+ 		dma_unmap_addr_set(txcb, dma_addr, mapping);
+ 		dma_unmap_len_set(txcb, dma_len, size);
++		txcb->last = false;
+ 		if (!i) {
+ 			desc->flags |= DESC_SOF;
+ 			if (csum_hw)
 -- 
 2.53.0
 
