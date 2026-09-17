@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDBC3D9DA2;
-	Thu, 17 Sep 2026 17:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495483DEFE2;
+	Thu, 17 Sep 2026 17:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665169; cv=none; b=EpZD9PEr8TtqUVAkNjggfDV3jcZ1ADyJvVe+/8iVD8GW18d1duVjCA811Wu3w1vQmPzp2cJRYUA2aWiLGg3bPl4m+YTMbvhyFUHbGeYtbDvrLcys93PgizmfWmQDJJbS187nYU5XKFdV95JoJH6f1dmh4LLMRf50D38ZsTsAeLM=
+	t=1789665172; cv=none; b=E9zwDG+kYY5+6fSVGZHt1FuTcBODol1XBOa3+9C8yxvp1EgtExTfmqhAEyK9HHu0VtcmHD0GZWZf3Kv6lfafoJkCyvke0vMW9x/Taj/7Ir757iptjmdrDhbWnVtT2PSaRWEdrIy+ooyuDO0k0p9uV5GOWzoL5b+ta46SW338hV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665169; c=relaxed/simple;
-	bh=jMzXtSHuAm7wXKhEcRVuO3BcBXEDYyhD06dyD0DFKVc=;
+	s=arc-20240116; t=1789665172; c=relaxed/simple;
+	bh=no6lY7026nAqQuOXzn8AmbrC9OxqYz+fau+oVjtRKws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvImsC1riEFhsghaoWruCUJxZoFv7S8pEAn90hmnZQnvnZ0ipAFI5FIExghIGXlBF1bWO44865oTlrgz7oiWlKOksfKY09EvgT+MxQO3Ra1cABcJED3UEtw4Wj1cmz2USRBz5xjIEBYzTzL0FiE0MG5LbTYIGzsjJMKKOxHz2uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahUh0MbY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tyz8AwUOj08UYlu3duYvlbJm9eeX/bIrlT2bMGw1lFTMykgM5yaB3iHAQQyQ+aOed/E+OWYJwPpl++lODaSCm70Lcber9zawBraElLejLHgD0fknPJGwrJ/w3bdm1XkycXq8hrNLc4gwSlVsEgpmfm2jmyitZKWx4p/8KaHv4xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09iQH0Re; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahUh0MbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B221F000FF;
-	Thu, 17 Sep 2026 17:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09iQH0Re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952F91F000FF;
+	Thu, 17 Sep 2026 17:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665168;
-	bh=xOYe7rHkDufiLTXoIcG42H/ZRFgbx20zL0TzfP8XGHE=;
+	s=korg; t=1789665171;
+	bh=uKJdXksY4/7rQUAHhGkDlntzpyBcQ8jTYRfawLY6Ed0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ahUh0MbYGLYWFSXPzGsUPnwLCX7ByKGwq7ksoudXlHhR3GsgFAsV2flYJpMhCkSKt
-	 IyN3ppE5xr/5xRq/PKbGysirBnNee8sMTH6bbnTM3dj5cn/1Y4o5A6LXUTPYpJbiHf
-	 1YKzcLL86XUsaaMaxL8wC9OvBaqCtctZxncddtWE=
+	b=09iQH0Re7JCMf6ZFwROtlKJU2WjQ1fOuShtbr1QePaQhlv553TBs4iv8kWWsT8LHq
+	 nefbrg/f/iGiuVoZSuTL1SH9kXBERt+yYTQehNtbka9DGS3nxTWh31WWABW5RSbNOL
+	 LlKxwr9f85qtD+WgJ4+kRq56zz2xqbpgB0sGdat4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	syzbot+2442951a6abb004df963@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0616/1250] ufs: do not treat unreadable directory blocks as empty
-Date: Thu, 17 Sep 2026 16:06:51 +0100
-Message-ID: <20260917151608.568236684@linuxfoundation.org>
+Subject: [PATCH 6.18 0617/1250] drm/cirrus-qemu: Validate BAR0 size during probe
+Date: Thu, 17 Sep 2026 16:06:52 +0100
+Message-ID: <20260917151608.594155483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,49 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit 08edfb34ee9ca54383970c65ed3a6013e84f5e16 ]
+[ Upstream commit 92312d333bf700798f92f30406c721bce87506f3 ]
 
-ufs_empty_dir() scans every directory block to decide whether a
-directory is empty before rmdir() removes it. When ufs_get_folio()
-cannot read or validate a block it returns an error pointer, and the
-loop currently skips that block with continue and keeps scanning the
-remaining blocks.
+The `cirrus-qemu` driver relies on `CIRRUS_VRAM_SIZE` (4 MB) to validate
+framebuffer sizes. However, during PCI probe, the driver mapped BAR0
+without verifying that its size matches `CIRRUS_VRAM_SIZE`.
 
-If none of the readable blocks hold an entry, the function returns 1
-and the caller unlinks the directory. A directory whose contents live
-in a block that cannot be read, for example because of an I/O error or
-corrupted directory metadata, is therefore seen as empty and removed,
-losing the entries it still holds.
+If a PCI device with a BAR0 smaller than 4 MB is bound to the driver, the
+mapped VRAM will be smaller than expected. Because validation checks assume
+4 MB VRAM, framebuffers larger than the mapped memory can be created.
 
-Follow the ext2 behaviour and treat an unreadable block as a reason to
-consider the directory not empty, so rmdir() fails instead of
-discarding data that could not be verified.
+When the display plane is updated (e.g. during release),
+`cirrus_primary_plane_helper_atomic_update()` copies the framebuffer to
+VRAM using `drm_fb_memcpy()`. Writing past the end of the mapped I/O memory
+causes a supervisor write page fault:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801013942.279992-1-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+BUG: unable to handle page fault for address: ffffc9000389c000
+...
+RIP: 0010:memcpy_toio+0x7c/0xe0 arch/x86/lib/iomem.c:110
+...
+Call Trace:
+ <TASK>
+ iosys_map_memcpy_to include/linux/iosys-map.h:285 [inline]
+ drm_fb_memcpy+0x325/0x5d0 drivers/gpu/drm/drm_format_helper.c:442
+ cirrus_primary_plane_helper_atomic_update+0x98a/0xb00
+ drivers/gpu/drm/tiny/cirrus-qemu.c:358
+ drm_atomic_helper_commit_planes+0x626/0xea0
+ drivers/gpu/drm/drm_atomic_helper.c:3038
+ drm_atomic_helper_commit_tail+0x60/0x510
+ drivers/gpu/drm/drm_atomic_helper.c:1989
+ commit_tail+0x2b1/0x3c0 drivers/gpu/drm/drm_atomic_helper.c:2074
+ drm_atomic_helper_commit+0xa77/0xb10
+ drivers/gpu/drm/drm_atomic_helper.c:2312
+
+Fix this by validating in `cirrus_pci_probe()` that the PCI BAR0 resource
+is not less than `CIRRUS_VRAM_SIZE`, returning `-ENODEV` if it is less.
+
+Fixes: ab3e023b1b4c ("drm/cirrus: rewrite and modernize driver.")
+Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+2442951a6abb004df963@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2442951a6abb004df963
+Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260825120729.493611-1-sst@poczta.fm
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ufs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/tiny/cirrus-qemu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ufs/dir.c b/fs/ufs/dir.c
-index 0388a1bae326b..ec58edaf57c9e 100644
---- a/fs/ufs/dir.c
-+++ b/fs/ufs/dir.c
-@@ -589,7 +589,7 @@ int ufs_empty_dir(struct inode * inode)
+diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
+index 97a93adc5669d..a6ce6aa99477e 100644
+--- a/drivers/gpu/drm/tiny/cirrus-qemu.c
++++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
+@@ -570,6 +570,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+ 	struct cirrus_device *cirrus;
+ 	int ret;
  
- 		kaddr = ufs_get_folio(inode, i, &folio);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
- 
- 		de = (struct ufs_dir_entry *)kaddr;
- 		kaddr += ufs_last_byte(inode, i) - UFS_DIR_REC_LEN(1);
++	if (pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE)
++		return -ENODEV;
++
+ 	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
