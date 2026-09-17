@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8074398F5;
-	Thu, 17 Sep 2026 18:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F4E3A5E84;
+	Thu, 17 Sep 2026 18:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670632; cv=none; b=oTiBXcKhmu718pw3RXw3B/uOm/v/FrDO3i0IJjyOoY/afL+ONDcPZHV9QaWSZvSVyf0X9cYX/njQFm0Qdu9sCNcdadFbqaD/N3hsXsg3CM0GLoenL7hEc3ce7wp+ZsgI77z3ReFWlpffe19TtKJVIewBHQjquVgb01aDE1R67Bc=
+	t=1789670635; cv=none; b=FwNVRGKMdR2PToTlyDBhzSjhJGFUk9shhur0NVyen+HzzrcAvq/70OG8nT24/s8U3jcz1OTMmF337XxdPJrTGirJyVtS1yfrOV++gnVZIlTOJN6l1AAMiMi8Yu8DJc0TIwQqclwLUfymhRN0aaLws8D/MoOxTLuFedpc5GJOywU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670632; c=relaxed/simple;
-	bh=e5Gm7VPA/1qge7a5g6czKLr47BE2TzXkj7aeUGBXsEw=;
+	s=arc-20240116; t=1789670635; c=relaxed/simple;
+	bh=JfG8SZwSCXnhXIz0ZfsuDadlyYsoljl9bEXqkK4HpN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8MZf741lao4bbqTZP7HjtIhOnmmxfGWqjggBOJ3pp1wehDo3uyXWMmlm1TdZmmjscX1JzhdET8/w8UXGnXKOwtPSJOgFGN5pWvCc0fDnC2tKrp+y8rBe9GgwqdTu93OCPBPikAX+u0h7L3QKo5RrNjDRbB8DgzM7ZFIpeNyQVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRKO2pIe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcEEpgO0UdscAa4AyEINKiCVVS3g54GLnVVgiLlj6k5Cg+j0Wx/qlBjbefK+jrtTww5oUWDT2A/+CWhUZk4vD1StX9AfQIHVJN9h4DdKEn6X2QNXo5n3b0nAf7jHqD3uBjz9elIObyeGtOMRDUOq8DKDkrWGGR9NMut4B7vVJBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArbGjgvG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRKO2pIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76391F000FF;
-	Thu, 17 Sep 2026 18:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArbGjgvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BA51F000FF;
+	Thu, 17 Sep 2026 18:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670631;
-	bh=6tj6ct1LmU6rFzqFqZNWPiDaKRozPSfzd2DcYC/wWvo=;
+	s=korg; t=1789670634;
+	bh=iQbd7cxtY/QuzGL76VUlieyuyHAXTcslQ2sWBYeGSI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRKO2pIeGtPNvJE4CQn0013BB+dqBmjK2D3mW7mwgk61HQyXrXdeeOTjbe91D2Z5B
-	 V9pFrb+LFwM2X3SkLF2OoBDHxYJv2d6VesUZiiJdiSaR5p633h8Y+q6uTJRC7QBzW/
-	 ixO8bWSwvifakR9mZP7Uw7L7ceAeTnsjuzStCtB0=
+	b=ArbGjgvGg8U5ClLAG9jovrv5CmLw5xJrT6v6pyF4TvZ08QYI4RwqiHMT8pcCrBZVY
+	 cneORO69SpzHhoDirAscA7dk62YX3O2TxtoEwh6SU2u84r+SDwfLEeNH1/RSzo5IZv
+	 PDnuB1JQWvpEZqidT1IlaZ7U4u3tlGvMlREo0PkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0676/1102] ionic: use netif_txq_maybe_stop() in ionic_tx()
-Date: Thu, 17 Sep 2026 16:10:19 +0100
-Message-ID: <20260917151557.207371459@linuxfoundation.org>
+Subject: [PATCH 6.12 0717/1102] vdpa_sim_net: check TX pull result before RX copy
+Date: Thu, 17 Sep 2026 16:11:00 +0100
+Message-ID: <20260917151558.343058929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,66 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit c91b4d6e5cc30ceea3f23ebe29aec012709a065f ]
+[ Upstream commit 0d195797a80b77f2ec56718cd26d3ee65d0093e8 ]
 
-Commit 061b9bedbef1 ("ionic: Rework Tx start/stop flow") replaced
-ionic_maybe_stop_tx() with netif_txq_maybe_stop() to get the memory
-barriers around the stop/start bits right, but did not cover the stop
-in ionic_tx() added by commit 138506ab249b ("ionic: Check stop no
-restart"). Convert the remaining site.
+vringh_iov_pull_iotlb() returns a signed byte count.  A failed TX pull is
+currently added to the unsigned byte counter and then passed as a size_t
+length to receive_filter() and vringh_iov_push_iotlb().  A negative error
+can therefore become a large length in the RX path.
 
-netif_txq_maybe_stop() requires the ring indexes to be updated before
-it is invoked, so the post has to come first. But ring_dbell comes
-from __netdev_tx_sent_queue(), which runs after that and reads the
-stop bit, so it is not known in time to pass to ionic_txq_post(). Post
-without the doorbell and ring it separately.
+Handle non-positive pull results before every length use.  Count the TX
+error and complete the consumed TX descriptor with zero bytes.
 
-The stop condition is unchanged. The re-check only clears the stop bit
-when space has become available, so the doorbell starvation fixed by
-commit 138506ab249b ("ionic: Check stop no restart") cannot recur.
+I found this bug myself, though the patch was written with AI assistance.
 
-Fixes: 138506ab249b ("ionic: Check stop no restart")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260901055627.1373129-1-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cfe226892913 ("vdpa_sim: filter destination mac address")
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260901094842.25875-1-linfeng.sun.dev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index 14d5961f78fdf..e8a0161ae4528 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -1668,15 +1668,22 @@ static int ionic_tx(struct net_device *netdev, struct ionic_queue *q,
- 	stats->pkts++;
- 	stats->bytes += skb->len;
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index 6caf09a1907b5..b596d4a532d01 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -225,10 +225,15 @@ static void vdpasim_net_work(struct vdpasim *vdpasim)
+ 			break;
+ 		}
  
-+	ionic_txq_post(q, false);
-+
- 	if (likely(!ionic_txq_hwstamp_enabled(q))) {
- 		struct netdev_queue *ndq = q_to_ndq(netdev, q);
+-		++tx_pkts;
+ 		read = vringh_iov_pull_iotlb(&txq->vring, &txq->out_iov,
+ 					     net->buffer, PAGE_SIZE);
++		if (read <= 0) {
++			++tx_errors;
++			vdpasim_net_complete(txq, 0);
++			continue;
++		}
  
--		if (unlikely(!ionic_q_has_space(q, MAX_SKB_FRAGS + 1)))
--			netif_tx_stop_queue(ndq);
-+		netif_txq_maybe_stop(ndq, ionic_q_space_avail(q),
-+				     MAX_SKB_FRAGS + 1, MAX_SKB_FRAGS + 1);
- 		ring_dbell = __netdev_tx_sent_queue(ndq, skb->len,
- 						    netdev_xmit_more());
- 	}
--	ionic_txq_post(q, ring_dbell);
-+
-+	if (ring_dbell) {
-+		ionic_dbell_ring(q->lif->kern_dbpage, q->hw_type,
-+				 q->dbval | q->head_idx);
-+		q->dbell_jiffies = jiffies;
-+	}
++		++tx_pkts;
+ 		tx_bytes += read;
  
- 	return 0;
- }
+ 		if (!receive_filter(vdpasim, read)) {
 -- 
 2.53.0
 
