@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D374D178D;
-	Thu, 17 Sep 2026 17:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EBD4D1794;
+	Thu, 17 Sep 2026 17:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664619; cv=none; b=uxKwRmmxZoTRsW1O7jZK6a/2GyjeE/AUYtqcCCZuwU4b+SmcUw7CyoDK/wrgqjJXPIJIQh77GZMdAbkxsUUy+n+TWLC0D7J2ZwKlDQN3UFjbPG52jwjxmj/EBzkQ4S6qCE0iYz2lhEyj/t+FTW5ZKqLHStdzYb7MwmKa5s5JSUw=
+	t=1789664622; cv=none; b=GsOjlxn5NeV0UzrhmtKIzTOKadaVxkdxLidypPa8iBlSWNOPetT3xit6jlSRmkGjVbrmEjEAPnTz7iLVXeR0BTWqNIDU4iKK0O5u2a5XwjIhn3Wzuub65h3fYIdIAWhhyfiavXhwOCfHQYdYJXpuuABWPJfXym3gOmICpA54Zvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664619; c=relaxed/simple;
-	bh=CebIyoqYkh02ZfyQRiaO3Wsh9ol54DftYeAGUclZr2E=;
+	s=arc-20240116; t=1789664622; c=relaxed/simple;
+	bh=FgzsPWfe38i4jkRCw/f5mTvJaM2SR1/Sz4z44DDQeDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uj6kuuC696shHP3Mg+eGAZ2P/YLF8ZfBsPit+VGeJfcPt7EBu6VLMlarRw9btJX/p5zfR2bgbPIdUybdPUGQygCr+5k2Cedax9kCOgR0gkF0u3W72dXA3JOjDhaui/v1SU95IAWYDLo2yw+sF6ywrpd6jhJtYIDYH7we2lQWTYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnrRkvBi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=STcFKunDjbABfP1anuRsobxNJlixySanrN7TH/F1nzCw5kuK9hpcXaaCatjFUmBkkRQ9b9gop22pCQSnFKJo5dOoa4uuAhk+l3FDMbaqJDBdGN6oUaK99VwbXyCd6SosSb7uiRNA78MZT7ZWaLgH3ajFmfnwoou3dZ11K8EGpYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHm+87Nr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnrRkvBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF9A1F000FF;
-	Thu, 17 Sep 2026 17:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHm+87Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C6D1F00893;
+	Thu, 17 Sep 2026 17:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664618;
-	bh=SRPuD5Sie7CrFHztvttaWXeP8YecVOQ9xUcLr1UXv8U=;
+	s=korg; t=1789664621;
+	bh=P0VksnxHbKut2Rw0FMb00g4b8z5YX6B573z3MS289s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OnrRkvBig6+BgiK6maeqUAIpCxWwo/utrPsA1gsNKgFIiFC6laImmvbCOp67/61Oy
-	 VwE5S0Pg0BVRN9mPm94p+ZMSp+MRZZ3lVF2ROGp7QUfRzq/Rie+V3+upNq7MCK9Zpi
-	 6H8E5OgbzGn9V1cPpG24tq+FdznRn/vHbD5KZV48=
+	b=hHm+87NrJMtOcjn6Ct6aTn20n+frmtwZYEzjZ16g/pZ1buWbhbPBY/sseVV474/TX
+	 i0DdnAN6Fb4psQcGuiq20Ny56PjWL3aaKDpubQ02QtuXQtXzdKhjnAble1Fb4cfX4J
+	 PnbOy9mCrtxg+mJvPjE220kL65y2ANHHymsQFEwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
+	Chen Zhang <zhangchen01@kylinos.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0393/1250] Bluetooth: btusb: Add support for Intel Lizard Peak 2 (0x8087:0x0040)
-Date: Thu, 17 Sep 2026 16:03:08 +0100
-Message-ID: <20260917151602.686843140@linuxfoundation.org>
+Subject: [PATCH 6.18 0394/1250] Bluetooth: btusb: Add Realtek RTL8922AE VID/PID 0bda/d922
+Date: Thu, 17 Sep 2026 16:03:09 +0100
+Message-ID: <20260917151602.712017501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,18 +52,24 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: Chen Zhang <zhangchen01@kylinos.cn>
 
-[ Upstream commit 5269f7231c2b78774c39ae3a27ce2c497cd5aff4 ]
+[ Upstream commit 480dcc68f2826a9768e6fc9e81f02078c1ed0e01 ]
 
-Device from /sys/kernel/debug/usb/devices:
+Add the vendor/product ID (0x0bda, 0xd922) to usb_device_id table for
+Realtek RTL8922AE.
 
-T:  Bus=09 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 2.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=8087 ProdID=0040 Rev= 0.00
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+The device info from /sys/kernel/debug/usb/devices as below.
+
+T:  Bus=10 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=d922 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00E04C885A01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
 I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=1ms
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
 E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
@@ -87,25 +94,27 @@ I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
 E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
 
-Signed-off-by: Ravindra <ravindra@intel.com>
+Signed-off-by: Chen Zhang <zhangchen01@kylinos.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ec914e23c3060..f145d99a133b4 100644
+index f145d99a133b4..481988d27f707 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -485,6 +485,7 @@ static const struct usb_device_id quirks_table[] = {
- 	{ USB_DEVICE(0x8087, 0x0037), .driver_info = BTUSB_INTEL_COMBINED },
- 	{ USB_DEVICE(0x8087, 0x0038), .driver_info = BTUSB_INTEL_COMBINED },
- 	{ USB_DEVICE(0x8087, 0x0039), .driver_info = BTUSB_INTEL_COMBINED },
-+	{ USB_DEVICE(0x8087, 0x0040), .driver_info = BTUSB_INTEL_COMBINED }, /* Lizard Peak 2 */
- 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
- 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL_COMBINED |
- 						     BTUSB_INTEL_NO_WBS_SUPPORT |
+@@ -603,6 +603,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Realtek 8922AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x8922), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xd922), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3617), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3616), .driver_info = BTUSB_REALTEK |
 -- 
 2.53.0
 
