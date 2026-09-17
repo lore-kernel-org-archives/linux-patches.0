@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC38835C680;
-	Thu, 17 Sep 2026 15:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164E04ABBD0;
+	Thu, 17 Sep 2026 15:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659994; cv=none; b=T2/IACh27n9jODKLtH/stY76p//QAAUB4ME7S2Mz7HRCac/MOO1m4QH/NKR3JSTvW5fvkTJpfs8Bal0DYouTaOInfE5ycM0COu9U6HsL5ofriNxSwbHWjOGI2CiwmmYgF0orCJsVYC9UU1eT5miHZhR5m2Gk0WckgEKV3TZ3JEE=
+	t=1789659999; cv=none; b=NLRED5OXUy9QG+ai9nb1Z3nYR7l9JhiivepvY+lwmUwXnxXNZsLWIZL6fA5iPP1Vc73AmTYZe072kdnHtSfddQIhhn/7MXI+7V7Rnypv95pWNiOZt8W/p3BYTmFmszOMHDyXGFhquQobBClym0Vdc+7wvBaVwdCcirA4RbY+mK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659994; c=relaxed/simple;
-	bh=NlA339dEud3B0H8A+Yi8aRkuXE++a1WVzxD4KfpNI8s=;
+	s=arc-20240116; t=1789659999; c=relaxed/simple;
+	bh=Ys/hBc8+AGk2larD2CBjU2W872iUzduIw+antJNTLDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZY4D6KBfj1LOTMCWzdGW41SbF4F9KdSvbXOT7h0w56alF2KT+oPZZGcFKBTh3iGD+7+wJoOoWosWLf+83SUpsqaFNGt/QKyHjfNTb8itKF1Kq7rluBg7V6frW6+g6u9eC/+NKdhtloKV3/2YGI4KYb5dgwDCuyuwEBBhwjuuXjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr5npsgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EVhtZwGieG7qBnOIRbEwh8iT4ptiOs75g+GwmwIuRjQAsKeMlNwDj6MFcHMqjI1jaGj0HWdgIrhPKiGSiDHRS3GE8lsjrAEAFPi1N8MkaEragXVBgWDbwTnFLdUJghqrwYpj+SduwBsldL1qcLgRAotaGjqey+6Uy3pzuySqXaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ6Kj/H0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr5npsgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4831F00899;
-	Thu, 17 Sep 2026 15:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ6Kj/H0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9212C1F00893;
+	Thu, 17 Sep 2026 15:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659988;
-	bh=EsTjoXnmYHWOnpkl0UB0lP1ndmHNA1qyBblR/6XnnY0=;
+	s=korg; t=1789659991;
+	bh=O9vOR1B9MWDVm5Ci0XLe9InykCykI+Z3m1X/hLt8t3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qr5npsgygSbvE4fjoQCto4yWTb0zLo6bVfEzoYAYCyMcH8GzpyVAPEzeUgSgEXUfs
-	 Ajl/TIGj80koD5ddUdTttLs2U+u8OVlj/VYoe7HJgUxY6JM+8V3QluETGDCzeZss5S
-	 v7LXmY3MB6Itr6PmuqV6y1d1nE1XEs0O2g3bgAWM=
+	b=jZ6Kj/H048BzBQEm/UOGI4mgUEObgKr0nxCJ42P/ci9UNnDtMvkl2mHMCpKNCEh6S
+	 ZwR2P2E50Umba+Oysve2f0VffWk++LKuz91CrpYhP68bLS1Ff0Pg7yWgkrxBp0QItG
+	 raB9OaXTqPyl8JtrcGDPoSKzZYGLFN5xE2ig7+Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Binglei Wang <l3b2w1@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 440/733] ublk: clear force_abort in ublk_queue_reset_io_flags()
-Date: Thu, 17 Sep 2026 16:12:28 +0100
-Message-ID: <20260917151402.832865580@linuxfoundation.org>
+Subject: [PATCH 7.2 441/733] erofs: add missing buf->off in erofs_bread()
+Date: Thu, 17 Sep 2026 16:12:29 +0100
+Message-ID: <20260917151402.861027193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,36 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: Binglei Wang <l3b2w1@gmail.com>
 
-[ Upstream commit 8a14be55bdc6d5a25cd7b0ac5d4d884fcc727b49 ]
+[ Upstream commit 135d84c66f85426299db01a09d93a79a87af18ba ]
 
-Quiesce sets ubq->force_abort for batch I/O. Recovery never clears
-it, so batch fetch keeps failing with -ENODEV and the device stays
-QUIESCED.
+erofs_bread() locates the target folio with
 
-Fixes: a4d883755399 ("ublk: add UBLK_U_IO_FETCH_IO_CMDS for batch I/O processing")
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260821103047.369522-2-yangxiuwei@kylinos.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+ index = (buf->off + offset) >> PAGE_SHIFT;
+
+but computes the in-folio offset without taking buf->off into account:
+
+ return buf->base + (offset & ~PAGE_MASK);
+
+If buf->off is not page-aligned, the returned pointer misses the in-page
+component of buf->off, so callers end up fetching data from a wrong
+offset.
+
+buf->off is set to sbi->dif0.fsoff in erofs_init_metabuf(), and fsoff can
+be specified via the "fsoffset=" mount option, which only requires
+block-size alignment. Therefore, on an image with a sub-page block size
+(e.g. 512 bytes), a non-page-aligned fsoff (e.g. 512) triggers the issue,
+since 512 is a multiple of the block size but not of PAGE_SIZE.
+
+It can be reproduced by mounting an image that is placed at a
+non-page-aligned offset:
+
+ mkfs.erofs -b512 -zlz4hc sub.erofs src/
+ # prepend 512 bytes of padding to the image
+ mount -t erofs -o loop,fsoffset=512 padded.erofs /mnt
+
+which fails with
+
+ erofs (device loop0): cannot find valid erofs superblock
+
+because the on-disk superblock (at offset 1024 within the image, i.e.
+1536 within the padded file) is read from a wrong in-folio offset. With
+this fixed, the very same image mounts successfully and its file contents
+match those read from the unpadded image.
+
+Fix it by including buf->off in the in-folio offset calculation, so that
+it is consistent with the folio index calculation.
+
+Fixes: c36ec00d7f67 ("erofs: add 'fsoffset' mount option to specify filesystem offset")
+Signed-off-by: Binglei Wang <l3b2w1@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/erofs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index b71283588ea77..d879e8492d59c 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -3040,6 +3040,7 @@ static void ublk_queue_reset_io_flags(struct ublk_queue *ubq)
- 	ubq->canceling = false;
- 	spin_unlock(&ubq->cancel_lock);
- 	ubq->fail_io = false;
-+	ubq->force_abort = false;
+diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+index 9aa48c8d67d12..b6cdffd0d8936 100644
+--- a/fs/erofs/data.c
++++ b/fs/erofs/data.c
+@@ -61,7 +61,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
+ 		return NULL;
+ 	if (!buf->base)
+ 		buf->base = kmap_local_page(buf->page);
+-	return buf->base + (offset & ~PAGE_MASK);
++	return buf->base + ((buf->off + offset) & ~PAGE_MASK);
  }
  
- /* device can only be started after all IOs are ready */
+ int erofs_init_metabuf(struct erofs_buf *buf, struct super_block *sb,
 -- 
 2.53.0
 
