@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2CE4FDA4A;
-	Thu, 17 Sep 2026 17:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D33F4B7A44;
+	Thu, 17 Sep 2026 17:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666238; cv=none; b=tWqtLKAKeat4oliNVXJVo1yR4rkUGKgDuRmDv9SBmz34GZGrlFfDhf8EZqBPYyFg1G22h6pus3U9BBb53GHIWJFNuqu+dkYiWSoizZVkuvt1FOI9DhB0Z/4Heo99LkDKM9Y/oj8F3W7LdzO5gtCDyGQ1xMyXChfiuEbKT9SvYcw=
+	t=1789666240; cv=none; b=qUUODAXDatHNrRHzosnAT8mLgASZ2Rc9/SkCMV5WkyZ5w3L19cMty9NZacW1gB7JdQK67y4erP8BSy5L0h5PpYhMb75aTtQL65EabgDbPI5cNE+PUG04e9gSvnGOb/ZO0lO8PpbyvbxYkLE+dbxU4wLHAL+cp52SB9AfPI1wO/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666238; c=relaxed/simple;
-	bh=16UrTlMPPcxS/a0mnoQwwmPyOTI4cI50jPZH910SlrQ=;
+	s=arc-20240116; t=1789666240; c=relaxed/simple;
+	bh=Dc35Nb70cBAQrUCceN++RSD+VklZa8/0nEYVGL44tCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZ8fvToDsRn5WpRKuD4guQWzrQ5Gc8JN/QZP9Pfn6rAjfALWePm+EBw1QDzI0E96KpKGU4UrnIUxYRuv1LR7AfL+ixm4kXUAevaSgi2tCwm7ZAKNXAXY8alhTxpSmLIxogC2myDAHcMrGDgarwL1KMoXZySFQqPZtZ0yCmWdOWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h11+ZjXE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lw8V1DEzBqgi3J1YBBtDfIVT0WJMNgVMkNJ6C7eAv0foEEVfhvjBRuHoqQSb7g1OsHahep4gL182qUDHoWNJYIAGC99bKMuaI/pmjdVjaHtARIfU6MAEClNoMK2Az1uGVm0V7Fof0AVl+BaTvXQ2Ftt60OBzXyCkWrfBiDjeb3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gag+q7Y2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h11+ZjXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2311F000FF;
-	Thu, 17 Sep 2026 17:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gag+q7Y2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EEF1F000FF;
+	Thu, 17 Sep 2026 17:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666236;
-	bh=alR4XBPsiQL4m+d56gU3AvVFALZZBG1WYwGoKRsOsUM=;
+	s=korg; t=1789666239;
+	bh=WetziyplhvtVcZ3hKb6CLw4JfewgwfwLGEFzcsLjGvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h11+ZjXE7zL2FUX+1GH6tSQak3H9BlB+aLNR9WIHVRysJL2n4NTRFpf+Oyq19RyiL
-	 nQ2hoDEoRj07INNTK1eiIeNHusesiMLUg780u1OvmpgEUUbTRFSvXXAgr3yZpt3ulu
-	 oGqJQXYEcB3Rqc4fx+zlUZkJF1VTXAaOcaoF6/3U=
+	b=gag+q7Y2TcwMJXVEkD+B54nDg16M9snL9fQ7vKD8T9D44Y0Ovcm2q95vLsRY/nOOH
+	 Sb6SmOV/tH7GnCfnywF4K8LSJZvgHiYziunC/JlJiq+Ugx1ggYUS8uIaKKQ8KmPypy
+	 Px6CRIjvfRlRtkbslGgBzWpSTT4Q+X0QRw05KAXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 0969/1250] tracing: Fix memory corruption from a "STACKTRACE" histogram key
-Date: Thu, 17 Sep 2026 16:12:44 +0100
-Message-ID: <20260917151618.280221020@linuxfoundation.org>
+	John Hubbard <jhubbard@nvidia.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 0970/1250] rust: allow `clippy::as_underscore` in the generated bindings
+Date: Thu, 17 Sep 2026 16:12:45 +0100
+Message-ID: <20260917151618.306467515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,59 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: John Hubbard <jhubbard@nvidia.com>
 
-commit 7f711e62355bb3123a2ca2f97a2facbfebc678c6 upstream.
+commit 2ac74c6db40adaa29c50cbb281ae9a6f63de18e1 upstream.
 
-"cpu", "CPU", "stacktrace" and "STACKTRACE" are generic fields, defined
-with an offset and a size of zero so that the filter code can match them
-by name. parse_field() maps them onto their common_* equivalents for
-backward compatibility, but unlike the common_* names it hands the
-placeholder back to the caller instead of NULL.
+A CLIPPY=1 build emitted about 15000 `as _` conversion warnings, all of
+them in bindgen's generated output and none in hand-written code.
 
-create_hist_field() takes a non-NULL field as a promise that the record
-carries a stacktrace and picks HIST_FIELD_FN_STACK, so the __data_loc
-word is read from offset 0, that is from common_type, and its low 16
-bits are followed as an offset into the record. What is found there
-becomes the length of an unbounded memcpy. Pick an event whose id is
-small enough that the offset stays inside its own record and the length
-is a kernel text address:
+[ The lint messages look like:
 
-  # cd /sys/kernel/tracing
-  # echo 'hist:keys=STACKTRACE' > events/ftrace/print/trigger
-  # echo hello > trace_marker
+    error: using `as _` conversion
+         --> rust/bindings/bindings_generated.rs:18947:9
+          |
+    18947 |         self._bitfield_1.get_const::<0usize, 16u8>() as u32 as _
+          |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-
+          |                                                                |
+          |                                                                help: consider giving the type explicitly: `u32`
+          |
+          = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#as_underscore
+          = note: `-D clippy::as-underscore` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(clippy::as_underscore)]`
 
-  Oops: general protection fault, probably for non-canonical address
-  RIP: 0010:rb_next+0x23/0x60
-   </IRQ>
-  RIP: 0010:memcpy+0xc/0x30
-   event_hist_trigger+0x2e7/0x12c0
-  Kernel panic - not syncing: Fatal exception in interrupt
+    - Miguel ]
 
-Leave the field NULL, which is what the comment above the branch says
-the code does and what common_stacktrace already does. FILTER_CPU and
-FILTER_COMM are left alone, their create_hist_field() branches never
-look at the field.
+bindgen 0.73 returns each bitfield read through a trailing `as _`, and
+0.72 returns it through a transmute, which the lint ignores. The
+bindings and uapi crates allow `clippy::all` over the generated code.
+That group does not cover `clippy::as_underscore`, a restriction lint.
 
-Cc: stable@vger.kernel.org
-Fixes: 4b512860bdbd ("tracing: Rename stacktrace field to common_stacktrace")
-Link: https://patch.msgid.link/20260907155045.692664-3-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Allow `clippy::as_underscore` by name in the bindings and uapi crates.
+
+Assisted-by: LLM
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Link: https://patch.msgid.link/20260906215822.1201022-1-jhubbard@nvidia.com
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+[ Removed CI sentence. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    1 +
- 1 file changed, 1 insertion(+)
+ rust/bindings/lib.rs |    1 +
+ rust/uapi/lib.rs     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2411,6 +2411,7 @@ parse_field(struct hist_trigger_data *hi
- 				*flags |= HIST_FIELD_FL_CPU;
- 			} else if (field && field->filter_type == FILTER_STACKTRACE) {
- 				*flags |= HIST_FIELD_FL_STACKTRACE;
-+				field = NULL;
- 			} else if (field && field->filter_type == FILTER_COMM) {
- 				*flags |= HIST_FIELD_FL_COMM | HIST_FIELD_FL_STRING;
- 			} else {
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -25,6 +25,7 @@
+ )]
+ 
+ #[allow(dead_code)]
++#[allow(clippy::as_underscore)]
+ #[allow(clippy::cast_lossless)]
+ #[allow(clippy::ptr_as_ptr)]
+ #[allow(clippy::ref_as_ptr)]
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -14,6 +14,7 @@
+ #![cfg_attr(test, allow(unsafe_op_in_unsafe_fn))]
+ #![allow(
+     clippy::all,
++    clippy::as_underscore,
+     clippy::cast_lossless,
+     clippy::ptr_as_ptr,
+     clippy::ref_as_ptr,
 
 
