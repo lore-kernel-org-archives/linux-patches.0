@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB564E534E;
-	Thu, 17 Sep 2026 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792974E5358;
+	Thu, 17 Sep 2026 16:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664160; cv=none; b=Z/f24pfw9jGCJxYMhps9BO+BPR2349h0Gef73ic+FEBP82VDFk/VRl2qXKfAoG3wPgVj6bKT/zfNWV2xmnW/cciFyfF+9CtDGndUPpSfp4nvTLP9NDwDaiXXEjpXWsAoyL/Genzt97ksN3p5LrH4GixCyjSJXE2ybHwEiLNoXQk=
+	t=1789664163; cv=none; b=Jp+TSKpb2apH593ENKV13E1oB7ryor91XJDuqhaTjkRKs8UP0gZvXsPVOP+wf/+8+c+KbdJixfwCWTcwe9LfdgbWYa3jb67AV4B3fMRkxnRptP913HtV/i9dakZEpyTlfnhuoS4w2MCFbm0vttasGZW5D0uKey0PT5Ic4T9f30k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664160; c=relaxed/simple;
-	bh=/Gb556OGp25M4oeyNYDdrkd0dig7EhqQCDsv6qNrd5k=;
+	s=arc-20240116; t=1789664163; c=relaxed/simple;
+	bh=5MXV3OarFuOeMP4Vt2qQAENwLqkizH4gmO0Xt2+dEww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBzMPzVWrzNhI2/AwPtOGpD+VZI7fDxptHSF2s4gM/OhVrKU7aSP7NS1JZvdm5/L11QMwmigyvs2BElK8cL1jqa85Wc9DXAi1W8T7miRkGtXZ/uuoQUmX5v73ifFGautFpkfjIa6zFvqEuXbyW2rEXWGzG60uyiMrAd/K+Mt4V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk+GdR8x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ESZMUDKs+XF1QxoweQnu+/qZcTK5lF57FloLvwCBSEBD4rDlTPrvITYW5dIq5gBKg3vlfKlvIUaa7RfomnG+GEM1dG8vD33tZO1rCEZG1ZC3CJkSLgxu6SY0N0qVVchYb5hMJc1b4HTKlIw9b6VKZxt54/aNC+fi/At8Dpe5qA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMI3OZcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk+GdR8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB3F1F000FF;
-	Thu, 17 Sep 2026 16:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMI3OZcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3511F000FF;
+	Thu, 17 Sep 2026 16:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664159;
-	bh=+2hBQYueoirjUFHjs5nCPOI7Vx5GfBRDc8fmvaQNHBE=;
+	s=korg; t=1789664162;
+	bh=uDCFK1nvQt75WUYmuvzGjbFvSs6UpW84yW+JOxVOfwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tk+GdR8xEpPSNtge3trmr0mbqcLrW3z9rSZMQ2M6Yd28J+nLN/225h7Jqy3apw0+7
-	 3sJ9pBuPsJ6wrMqr+FdLLSS1H76Jdks2IM5CCMTarhtb+7OjS1NoK6Dab/4xUY3MnX
-	 nceudNOQm9A87gPfLdMxknERf5eMUOBjo6PgcAj4=
+	b=bMI3OZcVQfYS55VWr1ikSfddPQtf8aSyx0vhjSwyLNZ6Y/Gu9DZMPZ6grtydN+4cN
+	 d9gfGKP1TeoWszpsHKLJeJ7jd6ZMfhJEf98SM7KteHEpREqxiyYEXkGX/kVOmISS87
+	 7sw9Yp2/vYZgu+5Mr/Y4vgT7XvjMc4wdfQMrDpF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0279/1250] ASoC: qcom: q6apm: return error code to consumers on failures
-Date: Thu, 17 Sep 2026 16:01:14 +0100
-Message-ID: <20260917151559.698479167@linuxfoundation.org>
+Subject: [PATCH 6.18 0280/1250] ASoC: codecs: pcm3168a: Drop CONFIG_PM-conditional preproc directive
+Date: Thu, 17 Sep 2026 16:01:15 +0100
+Message-ID: <20260917151559.725986576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 3075ae5abbc370d2a9a01bd6d554a412d406f5bd ]
+[ Upstream commit eb7107264da8545ba7381a76818bae553e1fd1e4 ]
 
-Return errors from audioreach_set_media_format() to ensure callers are
-notified when media format setup fails.
+Revert changes done in commit 489db5d94150 ("ASoC: pcm3168a:
+Don't disable pcm3168a when CONFIG_PM defined") and add
+pm_runtime_status_suspended() check.
 
-This could hide failures while programming media format parameters for
-individual modules and allow graph setup to continue with incomplete
-configuration.
+The suspended-check addresses regulator's "unbalanced disables"
+warning during driver removal even when CONFIG_PM is enabled.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260528185806.6316-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260525201801.1336936-4-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/codecs/pcm3168a.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 16b2e227a6f13..9122876e00a2a 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -203,10 +203,7 @@ int q6apm_graph_media_format_shmem(struct q6apm_graph *graph,
- 	if (!module)
- 		return -ENODEV;
- 
--	audioreach_set_media_format(graph, module, cfg);
--
--	return 0;
--
-+	return audioreach_set_media_format(graph, module, cfg);
+diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
+index 7f8d64fb0e57f..2066cf6c1e976 100644
+--- a/sound/soc/codecs/pcm3168a.c
++++ b/sound/soc/codecs/pcm3168a.c
+@@ -822,15 +822,6 @@ int pcm3168a_probe(struct device *dev, struct regmap *regmap)
  }
- EXPORT_SYMBOL_GPL(q6apm_graph_media_format_shmem);
+ EXPORT_SYMBOL_GPL(pcm3168a_probe);
  
-@@ -374,6 +371,7 @@ int q6apm_graph_media_format_pcm(struct q6apm_graph *graph, struct audioreach_mo
- 	struct audioreach_sub_graph *sgs;
- 	struct audioreach_container *container;
- 	struct audioreach_module *module;
-+	int ret;
+-static void pcm3168a_disable(struct device *dev)
+-{
+-	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
+-
+-	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies),
+-			       pcm3168a->supplies);
+-	clk_disable_unprepare(pcm3168a->scki);
+-}
+-
+ void pcm3168a_remove(struct device *dev)
+ {
+ 	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
+@@ -842,10 +833,12 @@ void pcm3168a_remove(struct device *dev)
+ 	 * The asserted level of GPIO_ACTIVE_LOW is LOW.
+ 	 */
+ 	gpiod_set_value_cansleep(pcm3168a->gpio_rst, 1);
++
+ 	pm_runtime_disable(dev);
+-#ifndef CONFIG_PM
+-	pcm3168a_disable(dev);
+-#endif
++	if (!pm_runtime_status_suspended(dev)) {
++		regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
++		clk_disable_unprepare(pcm3168a->scki);
++	}
+ }
+ EXPORT_SYMBOL_GPL(pcm3168a_remove);
  
- 	list_for_each_entry(sgs, &info->sg_list, node) {
- 		list_for_each_entry(container, &sgs->container_list, node) {
-@@ -382,7 +380,9 @@ int q6apm_graph_media_format_pcm(struct q6apm_graph *graph, struct audioreach_mo
- 					(module->module_id == MODULE_ID_RD_SHARED_MEM_EP))
- 					continue;
+@@ -900,7 +893,8 @@ static int pcm3168a_rt_suspend(struct device *dev)
  
--				audioreach_set_media_format(graph, module, cfg);
-+				ret = audioreach_set_media_format(graph, module, cfg);
-+				if (ret)
-+					return ret;
- 			}
- 		}
- 	}
+ 	regcache_cache_only(pcm3168a->regmap, true);
+ 
+-	pcm3168a_disable(dev);
++	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
++	clk_disable_unprepare(pcm3168a->scki);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
