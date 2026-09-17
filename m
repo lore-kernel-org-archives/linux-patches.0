@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550E551DAEB;
-	Thu, 17 Sep 2026 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6985326B6;
+	Thu, 17 Sep 2026 17:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664500; cv=none; b=qgON0Yln52prIbpT59uh59hO98b9aFEq4tvJMyQt/j0sFDwREJokpr0RnThQLLIVsCEJL5w+kAANWv4A9zwY1iRhcNnnQxt3MbP+6+Ey46VM32BSazyJlgkqsSqoaGQHYBMujZMdHeq+PP5jMwmP1RUDwqLQmSDUW4R01ZaD2pM=
+	t=1789664503; cv=none; b=Dwj6fMBxIiix88Z+zD2uT2D7HfGOiPYwjI86U/b+tmP8lJELA5RNzvzngZ9SqPSex3sXs74YjpiQXsGE4nUJdPc4jCBmbjkV5+5ND3szPhohbeTsQOdo/E+NLnwx9EDPLuPpMOnmhGec0f2XIahEfbRSws8Gs7nepJT2fUr9Xoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664500; c=relaxed/simple;
-	bh=H2uycM1yUYN+o/XQM+31r05OO6Z9vueMswW0E3BFaaI=;
+	s=arc-20240116; t=1789664503; c=relaxed/simple;
+	bh=wDe+/5QR/34LuK2zihlshB3chxyEknXpVJRguy5lcZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NDL5esj5bG+5fxk+oQAWbs36Zeeelwbm1Ew6rV3BUVJqJXzL1OC9Sv1N9DPNyeWg8XEGRo3unvt7U/8xRRVkQCNWzhExdyzRiXgG8E3+hTK6YlsAP7GNQnpFuGirgpQS84R9YukxK1S3Qzad2Ke6DrMmmdMwIZ0IETSk9HOUp3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsD/204Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oegT384XYZc/gIN9f83LhC7xx7Ubnf6RSKMj2OdzApZpczB0E2+z2W7v2SGV72i9ANpWK6Gz0qXCJR1pLff5mG2m8Ze6rv95Tc8nsMazE4/lx2wkt8oGocRgEMULIf7xUJvjqlYYXDwIfuWstBAeTnVzZE6mVamyORQPfy4uSfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyYLy+45; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsD/204Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421091F00898;
-	Thu, 17 Sep 2026 17:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyYLy+45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAC81F00898;
+	Thu, 17 Sep 2026 17:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664498;
-	bh=xEgDtZ6SmoqXLGd9p+4WdoR5PxEZvBP0ThGUh9anj/U=;
+	s=korg; t=1789664501;
+	bh=CE5ARa+T2WkGQsFpE7AjVuaKWu5lQdjrQAJ7oqIhnTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsD/204QTi1kKZg9VLRfFWTnb+Xe3n1AmnaBp5QEXPV5wDS/KeSA2Ys2eV6C0LfPk
-	 fIgz8L6DIdHlWWxVQCGdLqx0CexDlsuijukAWuJ+WrS662sIUvg4CjkpSwwGrjSyZ0
-	 tg0yiPGSrRG1786XWR8STePxDLVXe5mxiwro90eA=
+	b=TyYLy+45GHVxPUmkdZ45AbRsCh8sYEZQbXrV80ddSEAwitbgs4uZ/ncFGrLZ5Su6J
+	 s4BOooBj77orqzsCmQiLwkexvC7lXupR39J/y0dfb8/Zv+MJQhdBg+Pf0c3xDMegaZ
+	 qLuapxkJL+SyxXxrqi3Dsj0BBh+D2CuHkO7C+m0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin FM <marcin@lgic.pl>,
-	Cristian-Florin Radoi <radoi.chris@gmail.com>,
-	George Salukvadze <giosal90@gmail.com>,
-	Evgeny Kapusta <3193631@gmail.com>,
-	Samu Toljamo <samu.toljamo@gmail.com>,
-	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
-	Chapuis Dario <chapuisdario4@gmail.com>,
-	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
-	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Javier Tia <floss@jetm.me>,
-	Felix Fietkau <nbd@nbd.name>,
+	Luis de Carlos <reskoldo73@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0361/1250] wifi: mt76: mt7925: handle 320MHz bandwidth in RXV and TXS
-Date: Thu, 17 Sep 2026 16:02:36 +0100
-Message-ID: <20260917151601.851112049@linuxfoundation.org>
+Subject: [PATCH 6.18 0362/1250] platform/x86: msi-ec: Add support for MSI Pulse GL66 12th Gen
+Date: Thu, 17 Sep 2026 16:02:37 +0100
+Message-ID: <20260917151601.877505769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -62,64 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Tia <floss@jetm.me>
+From: Luis de Carlos <reskoldo73@gmail.com>
 
-[ Upstream commit 2237b7b332990f135c1f1550b45ac77b29bcbf7b ]
+[ Upstream commit ab7be7ed913086e076bfd8aba79f614f415cd6dc ]
 
-The RX vector (RXV) and TX status (TXS) parsing in mac.c lack handling
-for 320MHz channel width. When the hardware reports 320MHz in the
-bandwidth field, mt7925_mac_fill_rx_rate() returns -EINVAL and
-mt7925_mac_add_txs_skb() records no bandwidth stats.
+Add the firmware string '1583EMS1.109' to the ALLOWED_FW_10 array.
+This enables Embedded Controller support, including battery charge
+thresholds, for the MSI Pulse GL66 12UEK (MS-1583) laptop.
 
-Add IEEE80211_STA_RX_BW_320 cases to both functions. The RXV parser
-also handles BW_320+1 since the hardware can report 320MHz in two
-adjacent encoding positions.
-
-Tested-by: Marcin FM <marcin@lgic.pl>
-Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
-Tested-by: George Salukvadze <giosal90@gmail.com>
-Tested-by: Evgeny Kapusta <3193631@gmail.com>
-Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
-Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
-Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
-Tested-by: Thibaut François <tibo@humeurlibre.fr>
-Tested-by: 张旭涵 <Loong.0x00@gmail.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Javier Tia <floss@jetm.me>
-Link: https://patch.msgid.link/20260425195011.790265-4-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Luis de Carlos <reskoldo73@gmail.com>
+Link: https://patch.msgid.link/20260527134750.25263-1-reskoldo73@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/x86/msi-ec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index f9980b5f4532f..a8572fdba634a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -338,6 +338,11 @@ mt7925_mac_fill_rx_rate(struct mt792x_dev *dev,
- 	case IEEE80211_STA_RX_BW_160:
- 		status->bw = RATE_INFO_BW_160;
- 		break;
-+	/* RXV can report 320 in two positions */
-+	case IEEE80211_STA_RX_BW_320:
-+	case IEEE80211_STA_RX_BW_320 + 1:
-+		status->bw = RATE_INFO_BW_320;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -995,6 +1000,10 @@ mt7925_mac_add_txs_skb(struct mt792x_dev *dev, struct mt76_wcid *wcid,
- 	stats->tx_mode[mode]++;
+diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
+index f19504dbf164c..0157e233e4300 100644
+--- a/drivers/platform/x86/msi-ec.c
++++ b/drivers/platform/x86/msi-ec.c
+@@ -823,6 +823,7 @@ static struct msi_ec_conf CONF9 __initdata = {
  
- 	switch (FIELD_GET(MT_TXS0_BW, txs)) {
-+	case IEEE80211_STA_RX_BW_320:
-+		rate.bw = RATE_INFO_BW_320;
-+		stats->tx_bw[4]++;
-+		break;
- 	case IEEE80211_STA_RX_BW_160:
- 		rate.bw = RATE_INFO_BW_160;
- 		stats->tx_bw[3]++;
+ static const char * const ALLOWED_FW_10[] __initconst = {
+ 	"1582EMS1.107", // GF66 11UC
++	"1583EMS1.109", // Pulse GL66 12UEK
+ 	NULL
+ };
+ 
 -- 
 2.53.0
 
