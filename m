@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C135547076;
-	Thu, 17 Sep 2026 18:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401134B44BF;
+	Thu, 17 Sep 2026 18:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668488; cv=none; b=HsIMozO+xjorEoxiH/1zoI2CTg5DILuRGB26IvTgdiAzk/0fI0tXmIWkeow44pu4Xg8mtF8Wi2EGfd4AQY6FOEEMqQGV5vvGDr7lTwOQvHUjfoAKlBIx8tfi6Z4qRRETWo8IpckuS9iPJfiIIS4Mp/b1Mi6vdMQv4JDKAqv0CHc=
+	t=1789668491; cv=none; b=LjcLaLIX9Yw0APqzty6tV4EPaxH5hc0nl9y/qgY24sUm8mX6+NmcCmDadUc43rLulaOb83hbabdIin04n7lVUmA680+q5pKJsgciB9rV8C91MMlpkpmwUzgOD2PGBrbtwtcEPz2rDHFlTrWgzv19Isemwq0O5irpf/WTi7P2x2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668488; c=relaxed/simple;
-	bh=Cep+mCOIYD+bjV/ijBgHw1xc/5Rn+KwEnGO5sUNsimU=;
+	s=arc-20240116; t=1789668491; c=relaxed/simple;
+	bh=gvS49tH1gybbOrTh/8WM4uE0lvyBz95tkv3sCpcGijE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRnse7skUwGblsa6Sw0+ibISD32dIvgcLdcMxV1iEQ/+yBRU7twbAUVYytgeevYelhQ95LXcGuq3xxEy3OJl7bFSyM53JIayTTgx3S4479IerwDwQwI95KiK9TQqJOnTfzLMAs8SMTl/06fEy4ahHX6lcqrTeOvFQ5N1eqwemAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTYkrPiX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PkKD6JOKhGSe9ZEsrxAfTMX3gmMWKqm24R5npERnmFpVnUgA5h69I5SGi/09tBHxOOV/6iBR1CGyzw1607fkJwUZcBbif/iix8TnKdtpxVldZrOE507VRJIPYXTs3Fc/3l4rfHGrIkpzVox3YebadCVtZ6C4p0whvJ+jttLkH54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXZWm/NZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTYkrPiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735201F000FF;
-	Thu, 17 Sep 2026 18:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXZWm/NZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC421F000FF;
+	Thu, 17 Sep 2026 18:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668487;
-	bh=KRSbK7A5NHcK0mVh8KPSxDYPrnAcAz+d8b2CZb41buw=;
+	s=korg; t=1789668490;
+	bh=SMlbvNKyBibwvmknn/4y+SJ6YHYaUTLw6LJWImahNUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTYkrPiXcerk7eNi8dugQVsEN2+jv21DgxhEIRkofSlb44NMUy54W4Sz22jMu5D5s
-	 uTYVk/+hDxchBtKO00y6rTJ6QfV9DEbJ70XgXULsxrzrBneULA++UN3dtMCnXNXAsg
-	 jLJvavpW1weGVDfkKMweSp/hyZZAUmQSoCbWrsjA=
+	b=aXZWm/NZkTMEH3McXNL3EAp8CNAgGD9UK6RZhU0ek9B1wFEmjAsJHA9K9W0PpY4q4
+	 hTOiTavs1KKnLdvWvbPei7juXz2OwaTglmCLTnvBamajwLIvyi13dN9LPExpqC3vgp
+	 XrDJUYCKWuT8LnkrenI/T7oF3TEvg4IaCreLxdZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <trilobyte777@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0440/1102] ksmbd: preserve VFS inherited POSIX ACL mask
-Date: Thu, 17 Sep 2026 16:06:23 +0100
-Message-ID: <20260917151550.722304971@linuxfoundation.org>
+Subject: [PATCH 6.12 0441/1102] drm/gma500: return errors from Oaktrail HDMI I2C reads
+Date: Thu, 17 Sep 2026 16:06:24 +0100
+Message-ID: <20260917151550.748367434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,69 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e148e567a9252643baa125cb65d7ae9c2c6cf68a ]
+[ Upstream commit 9b5ce5c496efd20c1c662cedba88465d39ec1f93 ]
 
-The VFS initializes a child's POSIX ACL from the parent's default ACL and
-the requested creation mode. Do not mutate the parent ACL or overwrite the
-child's VFS-computed access and default ACLs afterwards.
+xfer_read() waits for the HDMI I2C transaction to reach
+I2C_TRANSACTION_DONE, but it ignores both timeout and signal returns from
+wait_for_completion_interruptible_timeout().  If the interrupt never
+advances the transaction state, the loop can wait forever.
 
-This preserves restrictive ACL_MASK entries and prevents SMB object creation
-from widening effective permissions.
+Return -ETIMEDOUT when the completion wait expires, propagate interrupted
+waits, and make the I2C master_xfer callback return the first transfer
+error instead of reporting a successful message count.
 
-Reported-by: Charles Vosburgh <trilobyte777@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patch.msgid.link/20260625003240.6923-1-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 26 +-------------------------
- 1 file changed, 1 insertion(+), 25 deletions(-)
+ drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 13cb68135d1a1..7785bc10aff11 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1965,10 +1965,6 @@ int ksmbd_vfs_inherit_posix_acl(struct mnt_idmap *idmap,
- 				struct path *path, struct inode *parent_inode)
- {
- 	struct posix_acl *acls;
--	struct posix_acl_entry *pace;
--	struct dentry *dentry = path->dentry;
--	struct inode *inode = d_inode(dentry);
--	int rc, i;
+diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
+index 6daa6669ed237..4f1d095fc5a81 100644
+--- a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
++++ b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
+@@ -95,6 +95,7 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
+ 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
+ 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
+ 	u32 temp;
++	int ret;
  
- 	if (!IS_ENABLED(CONFIG_FS_POSIX_ACL))
- 		return -EOPNOTSUPP;
-@@ -1976,27 +1972,7 @@ int ksmbd_vfs_inherit_posix_acl(struct mnt_idmap *idmap,
- 	acls = get_inode_acl(parent_inode, ACL_TYPE_DEFAULT);
- 	if (IS_ERR_OR_NULL(acls))
- 		return -ENOENT;
--	pace = acls->a_entries;
--
--	for (i = 0; i < acls->a_count; i++, pace++) {
--		if (pace->e_tag == ACL_MASK) {
--			pace->e_perm = 0x07;
--			break;
--		}
--	}
--
--	rc = set_posix_acl(idmap, dentry, ACL_TYPE_ACCESS, acls);
--	if (rc < 0)
--		ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_ACCESS) failed, rc : %d\n",
--			    rc);
--	if (S_ISDIR(inode->i_mode)) {
--		rc = set_posix_acl(idmap, dentry, ACL_TYPE_DEFAULT,
--				   acls);
--		if (rc < 0)
--			ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_DEFAULT) failed, rc : %d\n",
--				    rc);
--	}
+ 	i2c_dev->status = I2C_STAT_INIT;
+ 	i2c_dev->msg = pmsg;
+@@ -106,9 +107,14 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
+ 	HDMI_WRITE(HDMI_HI2CHCR, temp);
+ 	HDMI_READ(HDMI_HI2CHCR);
  
- 	posix_acl_release(acls);
--	return rc;
-+	return 0;
+-	while (i2c_dev->status != I2C_TRANSACTION_DONE)
+-		wait_for_completion_interruptible_timeout(&i2c_dev->complete,
++	while (i2c_dev->status != I2C_TRANSACTION_DONE) {
++		ret = wait_for_completion_interruptible_timeout(&i2c_dev->complete,
+ 								10 * HZ);
++		if (ret < 0)
++			return ret;
++		if (!ret)
++			return -ETIMEDOUT;
++	}
+ 
+ 	return 0;
  }
+@@ -127,7 +133,7 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
+ {
+ 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
+ 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
+-	int i;
++	int i, ret = 0;
+ 
+ 	mutex_lock(&i2c_dev->i2c_lock);
+ 
+@@ -139,9 +145,11 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
+ 	for (i = 0; i < num; i++) {
+ 		if (pmsg->len && pmsg->buf) {
+ 			if (pmsg->flags & I2C_M_RD)
+-				xfer_read(adap, pmsg);
++				ret = xfer_read(adap, pmsg);
+ 			else
+-				xfer_write(adap, pmsg);
++				ret = xfer_write(adap, pmsg);
++			if (ret)
++				break;
+ 		}
+ 		pmsg++;         /* next message */
+ 	}
+@@ -151,6 +159,9 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
+ 
+ 	mutex_unlock(&i2c_dev->i2c_lock);
+ 
++	if (ret)
++		return ret;
++
+ 	return i;
+ }
+ 
 -- 
 2.53.0
 
