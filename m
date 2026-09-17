@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3653C0628;
-	Thu, 17 Sep 2026 17:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0CB515963;
+	Thu, 17 Sep 2026 17:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666910; cv=none; b=r+D0wXnmPF2nE1g0i0OpZdLNl7VbkF93C1P+fBew2aQTpwXoYWcn61owR5yMtKs5fN7/v7POawj5SE9lFxK1rXHkTaGJUMpaXKPsjob7bKqAqQrnAlAp0tszTj9MNdADfguvLwYC+BB1sV1+NlEXRnhflzZSJkgcZPu8FUp9BcQ=
+	t=1789666914; cv=none; b=nvh/YKpo5653KogoPFNLAoiKhLBxnsE3+JqUT4P0SzjuwaNK/5M8HcXUtKR2d0kx6zyBkXSi2xwhMPJgZnuvso5nfaagX7ztgYUfTlt9v9yg7QhWs9zx0TopSUuE3VElwOzT9TQ0ioc3Bzc5MZB4IBB8NvqmDvb0AcKNoF2Dep8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666910; c=relaxed/simple;
-	bh=oXOXJeMzdBNaB+NbePfqAcNt5wti2YEZF55svLfYg3s=;
+	s=arc-20240116; t=1789666914; c=relaxed/simple;
+	bh=UwQcFaURwXy8T8h9rdeZCLGD4w393BjJ6nGSTGEY0hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obGA5guDR3l7LwBIEd0HCMNC5qpseoIL7ia9SHpvObuxbWjN/lwCw4tmpSAeug9EakKH+tKA489tRehJ7PGUhD1u+fKS/JNnnmIGkovy1wsPQnvKL3o/HpG4ZJpTakcG69sqOjeC63lGPH+v5FfvxtBeX1gCK8qpinN9FwoCTwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SafbpgRx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dx+KUpy5+VyMIsEX61/Q0FviqmE5NzHyTd4T1xygHI8cdqL0KJcdyYlZlt2cmgem2qg3WIuc1fb86nLCVPS57IFlviukpcBWKfWv2ky039rL7UU8qzDtNFo73MWNTf1fVCHBGiEO06KlQiX4+fTisjxjRqWYHYH0BgtiI492B6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUPCgNLj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SafbpgRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A5F1F000FF;
-	Thu, 17 Sep 2026 17:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUPCgNLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C7A1F00898;
+	Thu, 17 Sep 2026 17:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666908;
-	bh=sNqCePJsUOTHZ6NiWYCuXn3iUndUWrMk4nD+cD/lb8U=;
+	s=korg; t=1789666911;
+	bh=1jzVQkXopVPdo/zzPySaIybJ84wweltHUdARGtFSPUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SafbpgRxapkW5EcPMeVaLjyGTiU5ElG2dJ4Ec+QMO4S/wUdNGTclSjnEE3d+jMdsi
-	 b8y2wGsG1fIARuBVSLFYHc7vdcYrZ63TSHSoAcUCT8n8XuJLPbIPGw1YFr5+sR/Ctm
-	 pHA15/NPWuDWEjH8elCBDXvm0iDtY77U3E2iM8xc=
+	b=PUPCgNLj7YXke3a0gOyzWzeZrWu4QvkkodIE/fDnaDzaHPCDRCPnGxcdHG6RDj5V7
+	 /GHE+A6DAJksP6OKdNznUoO7TqxCA+caOMF6za4b0Qvo5aqTDJMT2ouizxCLp5GGvb
+	 C5Gd11gm0qVt4gUSqIh2NxZxmO/9W/4MXli5/bVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1165/1250] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
-Date: Thu, 17 Sep 2026 16:16:00 +0100
-Message-ID: <20260917151623.860185931@linuxfoundation.org>
+Subject: [PATCH 6.18 1166/1250] scsi: qla2xxx: Use ring-slot helpers in __qla2x00_alloc_iocbs
+Date: Thu, 17 Sep 2026 16:16:01 +0100
+Message-ID: <20260917151623.888384350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,50 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
+[ Upstream commit 7e51b6d2d8f6b7f48d9cef1cf87471b55b12f6de ]
 
-qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
-vport_slock, takes a vref_count on the matching vport and calls
-qla_update_host_map() to register its port id.
+__qla2x00_alloc_iocbs() open-codes ring pointer selection and entry size
+based on IS_QLA29XX(ha): 29xx reaches the slot via ring_ext_ptr and
+zeroes REQUEST_ENTRY_SIZE_EXT bytes, while other adapters use ring_ptr
+with REQUEST_ENTRY_SIZE bytes.
 
-A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
-qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
-vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
-in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
-but does not touch host_map. In the window in between, report ID
-acquisition can still find the vport on vp_list and call
-qla_update_host_map(); with d_id already zeroed it takes the
-btree_insert32() path and re-inserts the dying vport into host_map.
-Nothing cleans that entry afterwards, so once scsi_host_put() frees the
-vha a later host_map lookup dereferences freed memory.
+Replace the two branches with the qla_req_ring_slot() and
+qla_req_entry_size() helpers, and initialise pkt at declaration.  The
+IS_QLAFX00 register-mapped writes remain guarded because IS_QLAFX00 and
+IS_QLA29XX cannot be true simultaneously.
 
-Skip a vport that has VPORT_DELETE set before taking the reference, so it
-is neither re-registered nor scheduled for DPC re-registration. This
-mirrors the existing guard in qla2x00_alert_all_vps().
+No functional change: the bytes written to the firmware-visible IOCB are
+identical.
 
-Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-24-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ Adjusted context to use rptid_entry->vp_idx instead of the missing local vp_idx variable. ]
+
+Stable adaptation:
+This tree has no QLA29xx support, extended request ring, or ring-slot
+helpers. Provide file-local macro helpers mapping to req->ring_ptr and
+REQUEST_ENTRY_SIZE, preserving the existing 64-byte ring behavior without
+adding functions or importing the unrelated QLA29xx support series.
+
+Retain the helper calls and declaration initialization from this change.
+Use a multiline packet-preparation comment so commit 626e44f3d8a9
+("scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot")
+applies unchanged, including its leading context. That commit remains
+responsible for changing the FX00 clearing operation to memset_io().
+
+Stable-dep-of: 626e44f3d8a9 ("scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_iocb.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_h
- 			spin_lock_irqsave(&ha->vport_slock, flags);
- 			list_for_each_entry(vp, &ha->vp_list, list) {
- 				if (rptid_entry->vp_idx == vp->vp_idx) {
-+					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
-+						break;
- 					found = 1;
- 					atomic_inc(&vp->vref_count);
- 					break;
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -11,6 +11,10 @@
+ 
+ #include <scsi/scsi_tcq.h>
+ 
++/* All adapters supported by this tree use the 64-byte request ring. */
++#define qla_req_ring_slot(ha, req) ((req)->ring_ptr)
++#define qla_req_entry_size(ha) REQUEST_ENTRY_SIZE
++
+ static int qla_start_scsi_type6(srb_t *sp);
+ /**
+  * qla2x00_get_cmd_direction() - Determine control_flag data direction.
+@@ -2286,10 +2290,9 @@ __qla2x00_alloc_iocbs(struct qla_qpair *
+ 	struct req_que *req = qpair->req;
+ 	device_reg_t *reg = ISP_QUE_REG(ha, req->id);
+ 	uint32_t handle;
+-	request_t *pkt;
+ 	uint16_t cnt, req_cnt;
++	request_t *pkt = NULL;
+ 
+-	pkt = NULL;
+ 	req_cnt = 1;
+ 	handle = 0;
+ 
+@@ -2343,10 +2346,12 @@ __qla2x00_alloc_iocbs(struct qla_qpair *
+ 		sp->handle = handle;
+ 	}
+ 
+-	/* Prep packet */
++	/*
++	 * Prep the current request-ring slot.
++	 */
+ 	req->cnt -= req_cnt;
+-	pkt = req->ring_ptr;
+-	memset(pkt, 0, REQUEST_ENTRY_SIZE);
++	pkt = qla_req_ring_slot(ha, req);
++	memset(pkt, 0, qla_req_entry_size(ha));
+ 	if (IS_QLAFX00(ha)) {
+ 		wrt_reg_byte((u8 __force __iomem *)&pkt->entry_count, req_cnt);
+ 		wrt_reg_dword((__le32 __force __iomem *)&pkt->handle, handle);
 
 
