@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0B952CCCF;
-	Thu, 17 Sep 2026 17:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE1F5187DE;
+	Thu, 17 Sep 2026 17:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665960; cv=none; b=hUzVAdIFgdK+ZXjfPHaEAN7URkZLgkgA/iUBhuP8661ZzdLVjaYZNc3d2+ny/Gp7PupSNtrugU33gY5ncNUVlrxrUXxqXqw0TZeN7udxU3h2UivsGDd2emow2Ah4D/Z6dJnyPyYvUKsyHUIB5oH0SOxgiXIXYZneB+w8Nr05sRM=
+	t=1789665963; cv=none; b=OTh7Dl0G9K1NzIa0TvOqiSv+OFcWV6jgMpRnt+lK3ziX5GDz9yPt1drPaKIg6wJuMPrOlviDz63tlpZR2bVnRdXPras3plAc7vGZTyqQt7Hgn/MRVpNlr0Joc4h858kgTAdMmUB+FrP8aGbkJ+qcR95Ufxv6qi8q62R1CX/D9b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665960; c=relaxed/simple;
-	bh=BQeaMXrPaFItMeLAJT6cf/JS6FZLrXYwp5bz65Y6Z9Y=;
+	s=arc-20240116; t=1789665963; c=relaxed/simple;
+	bh=0LxU4ZeLzID0kSZ4IYEoGeMdmKC1puJKzKUi++iG4bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOMu3zMtMbsitLnuuXBMaePQJ+/gn9FckUQFgXyLNBHMqMMyBDjsbeLWUsnnx9RkM3ClLGtrCPYQqTbOzL54eD9lt26NEhSX1GR0Cq1vX2ectQHRdJ+cabRkBFlH/cEq4r9KQtQ9umWYMabb12oZgk5SWHUBf+kp8Lsvqm48F4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rgk0iEov; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=leSxCepzi7MoV+nXYVKhVMRzDQK0ymbDIkJejMXsjXMRNrLTe4JBDBNdXUj3HUx4ESD76pcQJq13GmwYuldpwjHOmo6+sq8MRpfNyy7xSrj84BjIRDoU9g+eCPKZCobi7Yn5cUGXgSZCjL5zFFE7MnhUa89yl8LblsAPPyZQ5MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkVKu381; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rgk0iEov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB271F000FF;
-	Thu, 17 Sep 2026 17:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkVKu381"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0637E1F000FF;
+	Thu, 17 Sep 2026 17:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665958;
-	bh=uvvm/mKvKs8N/LnWmQvnCc2U023M3M+zYcVaJmRTGdk=;
+	s=korg; t=1789665961;
+	bh=Hj0k/UKN4QI+lWl+k+ycR5wpFahC6a/Iuf9a6gWdDag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rgk0iEov3HI4iBTzZah6Yp1PwaprOvHcX785vqfBt4Cs8jpaCjL6uUQXAoyIKR5Ep
-	 OsoJNznMDye24gFsluo8C9Jx19L5XGhmr0Hsp8NcgFTv8GwQu0cJUhqXcxZ1RbTmWp
-	 YkvYkWsSqTz8sGHbGh4wDcOgBk8jkpV1QI8gJ8IA=
+	b=VkVKu3812IADKofNEEJBV3u/murWo7cxf5VkJhID+O4we5GUahZ9W3yewMLf8laYc
+	 BFGMw1BUFLeRL/QGeMpSo/KCEL3PT+p/+KlBUk2CXIU5/x09ElbRZOJKbqA52SDdqB
+	 CLDO2OnOfEOrvbjDdknB+rIE6eCof65Q07qBK1SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 0877/1250] ice: add missing xa_destroy for sched_node_ids
-Date: Thu, 17 Sep 2026 16:11:12 +0100
-Message-ID: <20260917151615.751256193@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0878/1250] eth: ice: dont dereference pointers from TP_printk()
+Date: Thu, 17 Sep 2026 16:11:13 +0100
+Message-ID: <20260917151615.781093088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,136 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 53432c4c3e869076350aef319534431af8ba99c1 ]
+[ Upstream commit b8bf9bfda5f62e11444e483c2b4aaff90c5cfc6b ]
 
-Commit 16dfa49406bc ("ice: Introduce new parameters in ice_sched_node")
-added a sched_node_ids xarray to the port info structure, but never called
-xa_destroy on it.
+After forwarding net-next during the v7.3 merge window we started
+seeing:
 
-Since xarrays can allocate internal memory, this can result in a memory
-leak even if every element in the xarray has been removed.
+  TRACE EVENT ERROR: Event ice_tx_dim_work has double dereference in TP_printk: REC->q_vector->tx.tx_ring->q_index
+  WARNING: kernel/trace/trace_events.c:420 at test_double_dereference.cold+0x39/0x4b
 
-The xarray is currently embedded in the port_info structure. This appears
-to have been done because its use is within functions that take the
-port_info as a primary argument.
+this is due to extra checks added in tracing subsystem in
+commit b5cc230af5e5 ("tracing: Warn when an event dereferences a pointer in TP_printk()").
 
-However, this complicates managing the lifecycle of the field. The
-port_info structure is allocated in ice_init_hw() using devm, and it is
-not released until the devm cleanup when the driver is unloaded.
+Printing happens long after the event was recorded, by which point
+the pointers may be invalid (the ring or the dim instance).
+Copy the eight scalars into the event instead.
 
-The ice_init_hw() function is called in many places, including devlink
-reload, and possibly during DDP load after updating the Tx scheduler
-layout.
-
-Adding a call of xa_destroy to the ice_deinit_hw() causes Sashiko to raise
-multiple concerns due to potential ordering issues and possible ways that
-port_info could be a dangling reference.
-
-To handle this, move the sched_node_ids out of port_info and into the hw
-structure. All users of the array already have a pointer to hw anyways, and
-there is only one sched_node_ids per adapter. While here, remove the overly
-verbose comment explaining the nature of the sched_node_ids xarray.
-
-Add the missing xa_destroy to the cleanup path and to ice_deinit_hw(),
-ensuring that we properly release the xarray memory.
-
-This was caught by Sashiko during development of unrelated code.
-
-Fixes: 16dfa49406bc ("ice: Introduce new parameters in ice_sched_node")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Fixes: 3089cf6d3caa ("ice: add tracepoints")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c | 9 ++++++---
- drivers/net/ethernet/intel/ice/ice_sched.c  | 4 ++--
- drivers/net/ethernet/intel/ice/ice_type.h   | 2 +-
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_trace.h | 64 ++++++++++++++--------
+ 1 file changed, 42 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index f71e45ab809e0..dfc9a11631a3b 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1086,14 +1086,13 @@ int ice_init_hw(struct ice_hw *hw)
+diff --git a/drivers/net/ethernet/intel/ice/ice_trace.h b/drivers/net/ethernet/intel/ice/ice_trace.h
+index 4f35ef8d6b299..7568c917cdbe1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_trace.h
++++ b/drivers/net/ethernet/intel/ice/ice_trace.h
+@@ -63,23 +63,33 @@
+ DECLARE_EVENT_CLASS(ice_rx_dim_template,
+ 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
+ 		    TP_ARGS(q_vector, dim),
+-		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
+-				     __field(struct dim *, dim)
++		    TP_STRUCT__entry(__field(u16, q_index)
++				     __field(u8, state)
++				     __field(u8, profile_ix)
++				     __field(u8, tune_state)
++				     __field(u8, steps_right)
++				     __field(u8, steps_left)
++				     __field(u8, tired)
+ 				     __string(devname, q_vector->rx.rx_ring->netdev->name)),
  
- 	hw->evb_veb = true;
+-		    TP_fast_assign(__entry->q_vector = q_vector;
+-				   __entry->dim = dim;
++		    TP_fast_assign(__entry->q_index = q_vector->rx.rx_ring->q_index;
++				   __entry->state = dim->state;
++				   __entry->profile_ix = dim->profile_ix;
++				   __entry->tune_state = dim->tune_state;
++				   __entry->steps_right = dim->steps_right;
++				   __entry->steps_left = dim->steps_left;
++				   __entry->tired = dim->tired;
+ 				   __assign_str(devname);),
  
--	/* init xarray for identifying scheduling nodes uniquely */
--	xa_init_flags(&hw->port_info->sched_node_ids, XA_FLAGS_ALLOC);
-+	xa_init_flags(&hw->sched_node_ids, XA_FLAGS_ALLOC);
+ 		    TP_printk("netdev: %s Rx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
+ 			      __get_str(devname),
+-			      __entry->q_vector->rx.rx_ring->q_index,
+-			      __entry->dim->state,
+-			      __entry->dim->profile_ix,
+-			      __entry->dim->tune_state,
+-			      __entry->dim->steps_right,
+-			      __entry->dim->steps_left,
+-			      __entry->dim->tired)
++			      __entry->q_index,
++			      __entry->state,
++			      __entry->profile_ix,
++			      __entry->tune_state,
++			      __entry->steps_right,
++			      __entry->steps_left,
++			      __entry->tired)
+ );
  
- 	/* Query the allocated resources for Tx scheduler */
- 	status = ice_sched_query_res_alloc(hw);
- 	if (status) {
- 		ice_debug(hw, ICE_DBG_SCHED, "Failed to get scheduler allocated resources\n");
--		goto err_unroll_alloc;
-+		goto err_unroll_xarray;
- 	}
- 	ice_sched_get_psm_clk_freq(hw);
+ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
+@@ -90,23 +100,33 @@ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
+ DECLARE_EVENT_CLASS(ice_tx_dim_template,
+ 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
+ 		    TP_ARGS(q_vector, dim),
+-		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
+-				     __field(struct dim *, dim)
++		    TP_STRUCT__entry(__field(u16, q_index)
++				     __field(u8, state)
++				     __field(u8, profile_ix)
++				     __field(u8, tune_state)
++				     __field(u8, steps_right)
++				     __field(u8, steps_left)
++				     __field(u8, tired)
+ 				     __string(devname, q_vector->tx.tx_ring->netdev->name)),
  
-@@ -1184,6 +1183,8 @@ int ice_init_hw(struct ice_hw *hw)
- 	ice_cleanup_fltr_mgmt_struct(hw);
- err_unroll_sched:
- 	ice_sched_cleanup_all(hw);
-+err_unroll_xarray:
-+	xa_destroy(&hw->sched_node_ids);
- err_unroll_alloc:
- 	devm_kfree(ice_hw_to_dev(hw), hw->port_info);
- err_unroll_cqinit:
-@@ -1224,6 +1225,8 @@ void ice_deinit_hw(struct ice_hw *hw)
+-		    TP_fast_assign(__entry->q_vector = q_vector;
+-				   __entry->dim = dim;
++		    TP_fast_assign(__entry->q_index = q_vector->tx.tx_ring->q_index;
++				   __entry->state = dim->state;
++				   __entry->profile_ix = dim->profile_ix;
++				   __entry->tune_state = dim->tune_state;
++				   __entry->steps_right = dim->steps_right;
++				   __entry->steps_left = dim->steps_left;
++				   __entry->tired = dim->tired;
+ 				   __assign_str(devname);),
  
- 	/* Clear VSI contexts if not already cleared */
- 	ice_clear_all_vsi_ctx(hw);
-+
-+	xa_destroy(&hw->sched_node_ids);
- }
+ 		    TP_printk("netdev: %s Tx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
+ 			      __get_str(devname),
+-			      __entry->q_vector->tx.tx_ring->q_index,
+-			      __entry->dim->state,
+-			      __entry->dim->profile_ix,
+-			      __entry->dim->tune_state,
+-			      __entry->dim->steps_right,
+-			      __entry->dim->steps_left,
+-			      __entry->dim->tired)
++			      __entry->q_index,
++			      __entry->state,
++			      __entry->profile_ix,
++			      __entry->tune_state,
++			      __entry->steps_right,
++			      __entry->steps_left,
++			      __entry->tired)
+ );
  
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
-index fff0c1afdb414..ffa18d86729a0 100644
---- a/drivers/net/ethernet/intel/ice/ice_sched.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sched.c
-@@ -371,7 +371,7 @@ void ice_free_sched_node(struct ice_port_info *pi, struct ice_sched_node *node)
- 
- 	devm_kfree(ice_hw_to_dev(hw), node->children);
- 	kfree(node->name);
--	xa_erase(&pi->sched_node_ids, node->id);
-+	xa_erase(&hw->sched_node_ids, node->id);
- 	devm_kfree(ice_hw_to_dev(hw), node);
- }
- 
-@@ -977,7 +977,7 @@ ice_sched_add_elems(struct ice_port_info *pi, struct ice_sched_node *tc_node,
- 		if (!new_node->name)
- 			return -ENOMEM;
- 
--		status = xa_alloc(&pi->sched_node_ids, &new_node->id, NULL, XA_LIMIT(0, UINT_MAX),
-+		status = xa_alloc(&hw->sched_node_ids, &new_node->id, NULL, XA_LIMIT(0, UINT_MAX),
- 				  GFP_KERNEL);
- 		if (status) {
- 			ice_debug(hw, ICE_DBG_SCHED, "xa_alloc failed for sched node status =%d\n",
-diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
-index b0a1b67071c5e..94b807a066ecc 100644
---- a/drivers/net/ethernet/intel/ice/ice_type.h
-+++ b/drivers/net/ethernet/intel/ice/ice_type.h
-@@ -759,7 +759,6 @@ struct ice_port_info {
- 	/* List contain profile ID(s) and other params per layer */
- 	struct list_head rl_prof_list[ICE_AQC_TOPO_MAX_LEVEL_NUM];
- 	struct ice_qos_cfg qos_cfg;
--	struct xarray sched_node_ids;
- 	u8 is_vf:1;
- 	u8 is_custom_tx_enabled:1;
- };
-@@ -922,6 +921,7 @@ struct ice_hw {
- 	u8 sw_entry_point_layer;
- 	u16 max_children[ICE_AQC_TOPO_MAX_LEVEL_NUM];
- 	struct list_head agg_list;	/* lists all aggregator */
-+	struct xarray sched_node_ids;
- 
- 	struct ice_vsi_ctx *vsi_ctx[ICE_MAX_VSI];
- 	u8 evb_veb;		/* true for VEB, false for VEPA */
+ DEFINE_EVENT(ice_tx_dim_template, ice_tx_dim_work,
 -- 
 2.53.0
 
