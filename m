@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4075049D587;
-	Thu, 17 Sep 2026 18:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B82A4B7A38;
+	Thu, 17 Sep 2026 18:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670544; cv=none; b=upzJPyqxanm/kAZxzTxZn9mzxN/2VIiGpSdsopmDL8F0mRmA1GfyLU8vtZpH0SaoqT27phbLYhyA7T3i41/VM29xiP+OWcztRicPHogsudE24xuwkp2wdD6JNyZQf2khcCsKniFRC+mNlQrhksiVtyLnkEdt5FNGIo/oClILrt8=
+	t=1789670547; cv=none; b=H7Quwi0HKN+xXkbLVK3ahPJK5+bq7SMxhelA9j9WK0Zf8kziNI5YdTWKGcJLnApTwc7MUQ6YzTetsTKaTR4SjvDnI6r8Y07tm5L0JdfjZo813qUdXnjXR13xCXovrgPu8s9DqxYpsoxJFJzbpvVXB2KDmoxVwjtn7nmp00Ru9pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670544; c=relaxed/simple;
-	bh=dwSPjAo/3hLZOxbJkan9Dn6UDrlHQzVvjg9kocghzJw=;
+	s=arc-20240116; t=1789670547; c=relaxed/simple;
+	bh=oTgWDVzm+XAEqSpVDfM5CWIAy560QOz0QDnq2x1RjM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7j8eZRKVqKK0WTpDyZ5BnfmYNC57JR/iZxKzUM2M0vjnhE2bN3PM7l8CW5h0eOdJwUlKUVV8oAUc9eDM0Wqk2ABrDdvQFAsPDmFLcx/mV2ZV4PROe+rucdw/YaDvsuP+PggMXXifH3in2OIje8vRXXAHmV2ln1hO/Bqnu9AgEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1ITtDsI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XRsUNIyrlHmACDt0Vt8uN1qf+kGDdhgpXJGGeASP8ltey4oSMMsrJZ9YIncxpn2MPneYhBgFpgNf7rhYKMfx8xs07C30aifJ02XpW1mWgU8DdRbYx5VLUuHho2PD51FNbXu2ET8ivTy632/cNiw4T+Nn6KsAtrQPelFTW8lX/gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isE5F+JO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1ITtDsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEF81F000FF;
-	Thu, 17 Sep 2026 18:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isE5F+JO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846A11F000FF;
+	Thu, 17 Sep 2026 18:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670543;
-	bh=jSvobYaQ0H3g5w5PCTrOPEeS6jHfX9AwDMQy3rzv46U=;
+	s=korg; t=1789670546;
+	bh=VMu8b9mDSc/ChNQ2U61z8UCDV+7/2+0of6CapaLg5uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A1ITtDsIl0ToNFOdO4ZpX9FkczxlwHAEBtXgT5h9KTwbr4JXJTAHuHFUmWMB+1hdz
-	 0okCkiuZ+H/p4Xfx2n88iu9sLdh6XskppqHFzynyTUkU4vbwRs1LT/mNCML1S4ZQOl
-	 lnr/peyzfaUCVtHuKMefNh7TRv5aueTOxnpqvmq8=
+	b=isE5F+JOTp7w/Qp5Krqk328ib1wiL1181J87qmbh7rCwg4sT2gPVPsnsO83lZ39m2
+	 6fGbvXqJBQjYRhDYFxxZIavg4oYBHL0z1mselD3uq+01Bd5RrWyO20wk9SeeUKAmJw
+	 AaC/dtRhU8QZ3Y/HhGAS/MmGBaKDW1xH2EV1PMd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0678/1102] s390/ism: folio_put() after error
-Date: Thu, 17 Sep 2026 16:10:21 +0100
-Message-ID: <20260917151557.259640048@linuxfoundation.org>
+Subject: [PATCH 6.12 0696/1102] net/sched: drr: clamp quantum in change class
+Date: Thu, 17 Sep 2026 16:10:39 +0100
+Message-ID: <20260917151557.764666017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,55 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 907a56ab3eb8a58500a58daa76087f17bb2b6826 ]
+[ Upstream commit 8382abec0f1568d0a5590d75a3df92f23fcf5196 ]
 
-dmb->cpu_addr was allocated via folio_alloc(). Use folio_put() instead of
-kfree() in the error exit of ism_alloc_dmb() to avoid slab allocator
-corruption.
+drr_change_class() rejects explicit quantum==0 but falls back to
+psched_mtu() with no floor. With a crafted size table qdisc_pkt_len
+reaches ~2 GiB, so quantum=1 (or a zero psched_mtu on a headerless
+device) makes the deficit-refill loop spin under the qdisc lock.
 
-While at it, reset dmb->cpu_addr after folio_put to avoid unintentional UAF
-by future callers.
+Add clamp_t(u32, quantum, 256, 1<<20) after the zero reject and on the
+fallback path. The explicit-zero reject is preserved.
 
-Fixes: 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20260902143733.433574-1-wintera@linux.ibm.com
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_DRR=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
+
+  tc qdisc add dev dummy0 root drr
+  tc class add dev dummy0 parent 1: classid 1:1 drr quantum 1
+
+Fixes: 13d2a1d2b032 ("pkt_sched: add DRR scheduler")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.8
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/sch_drr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index 7cfc4f9862977..f2264cf6f40d8 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -297,6 +297,7 @@ static void ism_free_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
- 	dma_unmap_page(&ism->pdev->dev, dmb->dma_addr, dmb->dmb_len,
- 		       DMA_FROM_DEVICE);
- 	folio_put(virt_to_folio(dmb->cpu_addr));
-+	dmb->cpu_addr = NULL;
- }
+diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
+index faafb29056259..ba802db279932 100644
+--- a/net/sched/sch_drr.c
++++ b/net/sched/sch_drr.c
+@@ -82,8 +82,9 @@ static int drr_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 			NL_SET_ERR_MSG(extack, "Specified DRR quantum cannot be zero");
+ 			return -EINVAL;
+ 		}
++		quantum = clamp_t(u32, quantum, 256, 1 << 20);
+ 	} else
+-		quantum = psched_mtu(qdisc_dev(sch));
++		quantum = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
  
- static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
-@@ -340,7 +341,8 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
- 	return 0;
- 
- out_free:
--	kfree(dmb->cpu_addr);
-+	folio_put(folio);
-+	dmb->cpu_addr = NULL;
- out_bit:
- 	clear_bit(dmb->sba_idx, ism->sba_bitmap);
- 	return rc;
+ 	if (cl != NULL) {
+ 		if (tca[TCA_RATE]) {
 -- 
 2.53.0
 
