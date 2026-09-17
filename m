@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC2354705A;
-	Thu, 17 Sep 2026 17:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E76547053;
+	Thu, 17 Sep 2026 17:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666397; cv=none; b=oSbINhPDuj8BoWuc1IyCORy4RmnQ5Wl6bO0iFTILmMlRng008pCjskcnsTMsl5szrrMvoLD2YhTdo5tRA/9xfvwGW7Ot+mDvvjet1XySM5XaK3XDeNymnk/D94syN1xRj/NonNe7eBRFOgth5hmyHHZW0vkf5GiuZ/GovjuNbhY=
+	t=1789666400; cv=none; b=FfKGDRmqkM7rHcrmEdEkYzGi02WW06fLJk4gucG7xn8WC0pCdPPutUkM/RLF/VOJZLOMZBjQGOIAGy3imUHfmwOjtJyUdpJvDrjGsOGwI7boC4Cuf2LrGOyyxymP2DFmPhhkgSg5+YpPU2qR0WvPTOGhmozL29GUozePH+Hv8kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666397; c=relaxed/simple;
-	bh=HnHaRk0JRsMkgdifvu7WdYMvW7Hm8731jzVTuuM/iPk=;
+	s=arc-20240116; t=1789666400; c=relaxed/simple;
+	bh=oltG8704lXSQ9g53FA+F7XBUCsWm0A324gaorOJyblA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NDRE2Mp+ZSNyV59kV3N/4ramjNxvcArjdkM9RdAx7qqylT9VgBR4LmlH1c79jzN4lvYLoaMmiwg6hAbKx5m0eMzwEG/lExr5GVDoppVBthhRf0jMsvZIbBsYpA+DnqIUsHBjmO9hTweiZdLy4mHIbjuzZx8/vXeK09uANSyikWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8SrewqW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjy1Cwbk60FxV9ZmR9Ik+cKakzIIK8YluNd9agNNgQs18neCgz2h07ClieHGsXxUnp8+U/7miBHYETVN5/sO0THUkAWDrQKdETVrwFreB3C6T0IaX7HHyEYS3UdBfy+A9Duf2XUFE2UGJ5Wp363MIPEeYvIiWJT3/d0bsbOzOeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCQiNfNh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8SrewqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437881F000FF;
-	Thu, 17 Sep 2026 17:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCQiNfNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6921F000FF;
+	Thu, 17 Sep 2026 17:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666395;
-	bh=ReS6Su5LuA5o39TofM90KFBLxt9PPGVwpUPs5q8+dTo=;
+	s=korg; t=1789666398;
+	bh=GpeIxxUNzHFAY9kVGLR+NBXkaPz4OAYBt3I6PbDUgxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8SrewqWWj8k+oO9/pENIctlayUJmvuhoaxRVHPmt/jnMOfsRMCAh+IYnLi71v1Sg
-	 w+RPtXGoUvJEy3P2hA3BkKHt3dItMfoatkUX6GtF0E8seIugMRqFHXOxn5IIXAKcZh
-	 LH1PqEPmJZeFeU5nDSP64vWjOKUgHJLZhQnV5nSw=
+	b=zCQiNfNhMNzCaSs49StxPp6iYHic+NrobBq9jQRXkPyRoqmOO8qs0G9dGpgyY6aAF
+	 UfivW0QxewUjUWhLJeTTrj5wvtHFPBAhAIy+WtSEJMYvUtfRobyjAHDJxZPR0x20Zc
+	 IJddA+6PPHhH7FrSkKlSRxqig4hospynNIEWq7Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>
-Subject: [PATCH 6.18 0985/1250] tick/broadcast: Plug clockevents replacement race
-Date: Thu, 17 Sep 2026 16:13:00 +0100
-Message-ID: <20260917151618.725237191@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>
+Subject: [PATCH 6.18 0986/1250] tools/bootconfig: Fix integer overflow and truncation in size checks
+Date: Thu, 17 Sep 2026 16:13:01 +0100
+Message-ID: <20260917151618.753024804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -47,207 +45,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 upstream.
+commit 462d0b066b613103f579793031429db2ca23abc0 upstream.
 
-朱恺乾 reported and decoded the following race condition when a broadcast
-device is replaced:
+Sashiko reported that on 32-bit systems, if an attacker crafts size in
+the bootconfig footer such that adding BOOTCONFIG_FOOTER_SIZE wraps around
+(for instance, if size is 0xFFFFFFFF), the size check in
+load_xbc_from_initrd() can be bypassed:
 
-CPUA					CPUB
- __tick_broadcast_oneshot_control()
-   bc = tick_broadcast_device.evtdev;
-					tick_install_broadcast_device(dev)
-        				clockevents_exchange_device(cur, dev)
-					   shutdown(cur);
-					   detach(cur);
-					   cur->handler = noop;
-					   tick_broadcast_device.evtdev = dev;
+    if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
+        pr_err("bootconfig size is too big\n");
+        return -E2BIG;
+    }
 
-  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
+Furthermore, on 64-bit systems with an initrd > 4.29 GB, comparing a
+corrupted 32-bit size (e.g. 0xFFFFFFFF) against
+stat.st_size - BOOTCONFIG_FOOTER_SIZE can also bypass the check if
+size is not bounded. Similarly, load_xbc_file() passes 64-bit stat.st_size
+directly into the 32-bit int size parameter of load_xbc_fd(), truncating
+large standalone files (>= 2GB).
 
-If the original broadcast device has a restricted interrupt affinity mask
-and the last CPU in that mask goes offline then the BUG() in
-tick_cleanup_dead_cpu() triggers because the clockevent device is not in
-detached state.
+In both cases, passing 0xFFFFFFFF to load_xbc_fd() truncates to -1,
+resulting in malloc(0), an integer overflow in read(), and an
+out-of-bounds null-byte write.
 
-The reason for this is that tick_install_broadcast_device() is not
-serialized vs. tick broadcast operations.
+Fix this by:
+1. Rejecting size > XBC_DATA_MAX or
+   size > stat.st_size - BOOTCONFIG_FOOTER_SIZE in load_xbc_from_initrd().
+2. Rejecting stat.st_size > XBC_DATA_MAX in load_xbc_file() before passing
+   it to load_xbc_fd().
+3. Checking size < 0 || size > XBC_DATA_MAX defensively in load_xbc_fd().
 
-The obvious cure is to serialize tick_install_broadcast_device() with
-tick_broadcast_lock against a concurrent tick broadcast operation.
+Link: https://lore.kernel.org/all/178905332413.213925.3179977110281463499.stgit@devnote2/
 
-That requires to split clockevents_exchange_device() into two parts, one
-which does the exchange, shutdown and detach operation and the other which
-drops the module reference count. This is required because the module
-reference cannot be dropped while holding tick_broadcast_lock.
-
-Let clockevents_exchange_device() do both operations as before, but let the
-broadcast device code take the two step approach and do the device
-exchange under tick_broadcast_lock and drop the module reference count
-after releasing it.
-
-Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
-Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Tested-by: 刘术高 <liushugao@xiaomi.com>
+Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260909161113.16C691F00A3A@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/clockevents.c    |   33 ++++++++++++++++++++-------------
- kernel/time/tick-broadcast.c |   36 ++++++++++++++++++++++--------------
- kernel/time/tick-internal.h  |    2 ++
- 3 files changed, 44 insertions(+), 27 deletions(-)
+ tools/bootconfig/main.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/kernel/time/clockevents.c
-+++ b/kernel/time/clockevents.c
-@@ -565,34 +565,41 @@ void clockevents_handle_noop(struct cloc
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -140,6 +140,9 @@ static int load_xbc_fd(int fd, char **bu
  {
- }
+ 	int ret;
  
--/**
-- * clockevents_exchange_device - release and request clock devices
-- * @old:	device to release (can be NULL)
-- * @new:	device to request (can be NULL)
-- *
-- * Called from various tick functions with clockevents_lock held and
-- * interrupts disabled.
-- */
--void clockevents_exchange_device(struct clock_event_device *old,
--				 struct clock_event_device *new)
-+void __clockevents_exchange_device(struct clock_event_device *old,
-+				   struct clock_event_device *new)
- {
- 	/*
- 	 * Caller releases a clock event device. We queue it into the
- 	 * released list and do a notify add later.
- 	 */
- 	if (old) {
--		module_put(old->owner);
- 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
- 		list_move(&old->list, &clockevents_released);
- 	}
- 
- 	if (new) {
--		BUG_ON(!clockevent_state_detached(new));
-+		WARN_ON(!clockevent_state_detached(new));
- 		clockevents_shutdown(new);
- 	}
- }
- 
- /**
-+ * clockevents_exchange_device - release and request clock devices
-+ * @old:	device to release (can be NULL)
-+ * @new:	device to request (can be NULL)
-+ *
-+ * Called from various tick functions with clockevents_lock held and
-+ * interrupts disabled.
-+ */
-+void clockevents_exchange_device(struct clock_event_device *old,
-+				 struct clock_event_device *new)
-+{
-+	__clockevents_exchange_device(old, new);
-+	if (old)
-+		module_put(old->owner);
-+}
++	if (size < 0 || size > XBC_DATA_MAX)
++		return -EINVAL;
 +
-+/**
-  * clockevents_suspend - suspend clock devices
-  */
- void clockevents_suspend(void)
-@@ -649,7 +656,7 @@ void tick_offline_cpu(unsigned int cpu)
- 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
- 		    cpumask_weight(dev->cpumask) == 1 &&
- 		    !tick_is_broadcast_device(dev)) {
--			BUG_ON(!clockevent_state_detached(dev));
-+			WARN_ON(!clockevent_state_detached(dev));
- 			list_del(&dev->list);
- 		}
+ 	*buf = malloc(size + 1);
+ 	if (!*buf)
+ 		return -ENOMEM;
+@@ -168,6 +171,13 @@ static int load_xbc_file(const char *pat
+ 		return ret;
  	}
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -162,23 +162,31 @@ static bool tick_set_oneshot_wakeup_devi
-  */
- void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
- {
--	struct clock_event_device *cur = tick_broadcast_device.evtdev;
-+	struct clock_event_device *cur;
  
--	if (tick_set_oneshot_wakeup_device(dev, cpu))
--		return;
-+	scoped_guard(raw_spinlock_irqsave, &tick_broadcast_lock) {
- 
--	if (!tick_check_broadcast_device(cur, dev))
--		return;
-+		if (tick_set_oneshot_wakeup_device(dev, cpu))
-+			return;
- 
--	if (!try_module_get(dev->owner))
--		return;
-+		cur = tick_broadcast_device.evtdev;
-+		if (!tick_check_broadcast_device(cur, dev))
-+			return;
- 
--	clockevents_exchange_device(cur, dev);
-+		if (!try_module_get(dev->owner))
-+			return;
-+
-+		__clockevents_exchange_device(cur, dev);
-+		if (cur)
-+			cur->event_handler = clockevents_handle_noop;
-+		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
-+		if (!cpumask_empty(tick_broadcast_mask))
-+			tick_broadcast_start_periodic(dev);
++	if (stat.st_size > XBC_DATA_MAX) {
++		pr_err("%s size is too big\n", path);
++		ret = -E2BIG;
++		close(fd);
++		return ret;
 +	}
 +
-+	/* Module release must be outside of the lock */
- 	if (cur)
--		cur->event_handler = clockevents_handle_noop;
--	tick_broadcast_device.evtdev = dev;
--	if (!cpumask_empty(tick_broadcast_mask))
--		tick_broadcast_start_periodic(dev);
-+		module_put(cur->owner);
+ 	ret = load_xbc_fd(fd, buf, stat.st_size);
  
- 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
- 		return;
-@@ -1211,7 +1219,7 @@ int tick_broadcast_oneshot_active(void)
-  */
- bool tick_broadcast_oneshot_available(void)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
+ 	close(fd);
+@@ -218,7 +228,8 @@ static int load_xbc_from_initrd(int fd,
+ 	csum = le32toh(csum);
  
- 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
- }
-@@ -1219,7 +1227,7 @@ bool tick_broadcast_oneshot_available(vo
- #else
- int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
- 		return -EBUSY;
---- a/kernel/time/tick-internal.h
-+++ b/kernel/time/tick-internal.h
-@@ -54,6 +54,8 @@ static inline void clockevent_set_state(
- }
- 
- extern void clockevents_shutdown(struct clock_event_device *dev);
-+extern void __clockevents_exchange_device(struct clock_event_device *old,
-+					  struct clock_event_device *new);
- extern void clockevents_exchange_device(struct clock_event_device *old,
- 					struct clock_event_device *new);
- extern void clockevents_switch_state(struct clock_event_device *dev,
+ 	/* Wrong size error  */
+-	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
++	if (size > XBC_DATA_MAX ||
++	    size > stat.st_size - BOOTCONFIG_FOOTER_SIZE) {
+ 		pr_err("bootconfig size is too big\n");
+ 		return -E2BIG;
+ 	}
 
 
