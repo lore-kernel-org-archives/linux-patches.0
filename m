@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA95455610;
-	Thu, 17 Sep 2026 16:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07C34F55D3;
+	Thu, 17 Sep 2026 16:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661154; cv=none; b=hPeIi9HffGqz1vAWn5AsRMDvocmXrIVRxvWY6QbfS7Maxc8KiAK4nuh6e3VJdPWq/TYQPcdnGilhI14oZ3X2yqKVbac5NnOCHHBIQJdMQ4s11SgKrHCzfTxtrPOwWkvw4/9iOTbAOsnKqhTWXXIAMQDkJ7wtMDvC7pue13ljAH8=
+	t=1789661157; cv=none; b=WtB0aym1LYzzSJkPQCyGyBTgkHLR6JrdRS38Ofy1SHVQkhM2Z74+3AXCRG5uQKnK6xST5/bRedTnCIJzZq0wHc+anbEe/g96ZZruhRQt+Eoe5AUwaiuoJCmQMVX3EnD/lFT/Je0omOA+U0agnR/dbzzEj8mKoeV9p12Xt+Yvk/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661154; c=relaxed/simple;
-	bh=tt4gyebQjsHiuVexeEABjuZastvc0WppWJ6wmEqn/5Q=;
+	s=arc-20240116; t=1789661157; c=relaxed/simple;
+	bh=0sgLagasoa39+FbAzF3j9wJsj734c5+hEmM6lYVLmpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebwo+CFXs3W+Xn+7wvyD44ApMmlB0I0C/lK4NCCXUp1RrgK6sEFBwFXV6LSDT0mykwr1Y7Blom+gR8prFM8+aruQELdDnzdVFSKClISjLaNNGY3vgKtbOMRR37bYMaBG8NP/fLk+H9k/K8GxwGgDjaB0Im950v1s/ZgOk4kSyqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmNRoObH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rbWLVyel8umR3p1peUUFCQLGZDK17EhehT1+Ejsp9B2aScdn0CmBcReXzDouXyjJf0pQThBly03bfg2pV6wGQcEKqcISyg0VCc9YfjdRHmR0WqWZtzuovmMnPq1HiBfnSxYEHL54j2+Y4xdm2OXoaGzjzpowFy10+h/RYcSOd0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lknrUIhA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmNRoObH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7FE1F000FF;
-	Thu, 17 Sep 2026 16:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lknrUIhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CAB1F000FF;
+	Thu, 17 Sep 2026 16:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661152;
-	bh=fSJpgSdffRkHAzKnCL1SNZb07STXcSEzaY1l1sAzGRA=;
+	s=korg; t=1789661155;
+	bh=lgDYxkmVMDfxqGIHAWwHKhvsyFFO26/P/M/GY4F70bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OmNRoObHjMn9xfSlkuiYt8cfieCerXBkMHZWID7vgtIPy7m/NeLFxHwBwXKShe3GO
-	 Ry2gqCyDHIFKbXyBoifNg8tv0I0du6RdFXILtmzvz/xIORTPMUP/LPyACuY0onIxu/
-	 3vz29eLZ82ZzOLN4O8c2Fw8U/cvgGFsK2+HUl33g=
+	b=lknrUIhAQs6Og8/xovvvmxJ5P1IdrvE63EdVEfKyhA8ZneJHbEZ007nEVKKwlrueV
+	 BTKS8qFS6cQ66+mRu4GM7fS/g6XO+lpiLfMFJ8maurdhw84Bvxs7WUGD02gv2Cmppw
+	 F+rcyGS9ZhfVeEJVieTtMrSoH3DNmeRi7zao4o2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Xiang Liu <xiang.liu@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0100/1250] pinctrl: mediatek: common-v1: bypass pinctrl GPIO layer in set GPIO direction
-Date: Thu, 17 Sep 2026 15:58:15 +0100
-Message-ID: <20260917151554.702524293@linuxfoundation.org>
+Subject: [PATCH 6.18 0101/1250] drm/amd/ras: Fix CPER ring debugfs read overflow
+Date: Thu, 17 Sep 2026 15:58:16 +0100
+Message-ID: <20260917151554.730976795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,80 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Xiang Liu <xiang.liu@amd.com>
 
-[ Upstream commit 3982db2df3ed4c195e5f0a9a4513545a15901107 ]
+[ Upstream commit 1e40ef87ffdc291e05ccdade8b9170cc9c1c4249 ]
 
-pinctrl_gpio_direction_input() / pinctrl_gpio_direction_output() take
-the pinctrl mutex. This causes a gpiochip operations to need to sleep.
-Worse yet, the .can_sleep field in the gpiochip is not set. This causes
-the shared GPIO proxy to trip over, as it uses gpiod_cansleep() to check
-whether it can use a spinlock or needs a mutex. In this case, it ends
-up taking a spinlock, then calls pinctrl_gpio_direction_output(), which
-takes a mutex. This causes a huge warning.
+The legacy CPER debugfs reader can reach the payload path without a
+valid pointer snapshot. The remaining user byte count is also treated as
+the ring occupancy in dwords, so reads past the header can copy more than
+requested.
 
-Since the Mediatek hardware has separate clear/set registers, there is
-no risk of clobbering other bits like with a read-modify-write pattern.
-Also, once the GPIO function is selected / muxed in, further GPIO
-operations do not involve pinctrl operations or state. The GPIO direction
-and level values do not require toggling the pinmux or any other pin config
-options.
+Take the CPER lock before sampling pointers. Resample rptr/wptr for
+payload reads, bound the payload copy by available dwords and the
+remaining user size, and advance the file position for each dword copied.
 
-Switch to directly calling mtk_pmx_gpio_set_direction() in the GPIO set
-direction callbacks to avoid taking the pinctrl mutex. Drop the
-.gpio_set_direction field in mtk_pmx_ops to signal we are no longer using
-the pinctrl GPIO layer for setting the direction.
-
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 29 +++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index 3f518dce6d23f..dd2c8aa039385 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -802,20 +802,27 @@ static const struct pinmux_ops mtk_pmx_ops = {
- 	.get_function_name	= mtk_pmx_get_func_name,
- 	.get_function_groups	= mtk_pmx_get_func_groups,
- 	.set_mux		= mtk_pmx_set_mux,
--	.gpio_set_direction	= mtk_pmx_gpio_set_direction,
- 	.gpio_request_enable	= mtk_pmx_gpio_request_enable,
- };
- 
-+static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
-+{
-+	struct mtk_pinctrl *pctl = gpiochip_get_data(chip);
-+
-+	return mtk_pmx_gpio_set_direction(pctl->pctl_dev, NULL, offset, true);
-+}
-+
- static int mtk_gpio_direction_output(struct gpio_chip *chip,
- 					unsigned offset, int value)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+index 304564ec2f59a..431cc39ea0178 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -498,8 +498,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 					size_t size, loff_t *pos)
  {
-+	struct mtk_pinctrl *pctl = gpiochip_get_data(chip);
- 	int ret;
+ 	struct amdgpu_ring *ring = file_inode(f)->i_private;
+-	uint32_t value, result, early[3];
++	u32 value, result, early[3] = { 0 };
+ 	uint64_t p;
++	u32 avail_dw, start_dw, read_dw;
+ 	loff_t i;
+ 	int r;
  
- 	ret = mtk_gpio_set(chip, offset, value);
- 	if (ret)
- 		return ret;
+@@ -508,10 +509,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
  
--	return pinctrl_gpio_direction_output(chip, offset);
-+	return mtk_pmx_gpio_set_direction(pctl->pctl_dev, NULL, offset, false);
- }
+ 	result = 0;
  
- static int mtk_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
-@@ -895,7 +902,7 @@ static const struct gpio_chip mtk_gpio_chip = {
- 	.request		= gpiochip_generic_request,
- 	.free			= gpiochip_generic_free,
- 	.get_direction		= mtk_gpio_get_direction,
--	.direction_input	= pinctrl_gpio_direction_input,
-+	.direction_input	= mtk_gpio_direction_input,
- 	.direction_output	= mtk_gpio_direction_output,
- 	.get			= mtk_gpio_get,
- 	.set			= mtk_gpio_set,
+-	if (*pos < 12) {
+-		if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
+-			mutex_lock(&ring->adev->cper.ring_lock);
++	if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
++		mutex_lock(&ring->adev->cper.ring_lock);
+ 
++	if (*pos < 12) {
+ 		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
+ 		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
+ 		early[2] = ring->wptr & ring->buf_mask;
+@@ -543,13 +544,24 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 			*pos += 4;
+ 		}
+ 	} else {
++		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
++		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
++
+ 		p = early[0];
+ 		if (early[0] <= early[1])
+-			size = (early[1] - early[0]);
++			avail_dw = early[1] - early[0];
+ 		else
+-			size = ring->ring_size - (early[0] - early[1]);
++			avail_dw = ring->buf_mask + 1 - (early[0] - early[1]);
+ 
+-		while (size) {
++		start_dw = (*pos > 12) ? ((*pos - 12) >> 2) : 0;
++		if (start_dw >= avail_dw)
++			goto out;
++
++		p = (p + start_dw) & ring->ptr_mask;
++		avail_dw -= start_dw;
++		read_dw = min_t(u32, avail_dw, size >> 2);
++
++		while (read_dw) {
+ 			if (p == early[1])
+ 				goto out;
+ 
+@@ -562,9 +574,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 
+ 			buf += 4;
+ 			result += 4;
+-			size--;
++			read_dw--;
+ 			p++;
+ 			p &= ring->ptr_mask;
++			*pos += 4;
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
