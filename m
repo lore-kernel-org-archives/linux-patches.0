@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8B04F5DED;
-	Thu, 17 Sep 2026 17:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5A649D5A5;
+	Thu, 17 Sep 2026 17:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667855; cv=none; b=egXv5GQ4duMkq3obPIzzj15Ve8pi14xr44dwwQslTILkXYj1AuPMT8MKwAHK64ziD4AWBBBXwxfKnoULSZJMwG0TeL+/3YQRbS0ukvzU2i2P1vm4P7Kw6752KJWi5QJ0QtSDXdLNzYroBv5gxw1JYTR8UbnSBsznUHD5X3quAVY=
+	t=1789667858; cv=none; b=j8GufCqAoXfvR8qlOkM+KpwSmfGLb8uedvzZpfh8XVqSeiY3/hFoTPuYHZKQHwwVkbEyZ8bOGd+N9TdX3942ujsnnqYJh2ZassOC4ttl05lMEDCB/6exftl8xV3ZdoeuarnBJmmCzRB3s7eg2t7W0mhfNVd6iFZLXC3PzgBbRGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667855; c=relaxed/simple;
-	bh=edv9KjSPoRq0LDez2Bdp0YIoQEHtDIcXx+Ui8xahdw0=;
+	s=arc-20240116; t=1789667858; c=relaxed/simple;
+	bh=7NzibjCj9cPr68/4U+svY47F1cnr2wNI+4u0uBjfnzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4G+qjB6ZyqRbK6Mpqcuq5WqWHZQ2zo5cOKA7GFRBWQvxneA+8S01FDAKBQ8fSlbq+SB3xx/fj8FTVc2m5pYy2h4eHAKt9QPHOwN7ZNk/mYDhMCpWbFCT3ux5Z/Rll/DmntwF6hTKnufNpXaKWOljm0nU2O6zF2NDOyIub5hqhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdzX2gt+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qiOMTIFj5+l+h6CGhBoRDC9hMLK8eMWhQgJSflXS3T9erRSf7U/pkoi/EiiLiigxBPSY8H8RA10az9+KT3ZZMF62Pwp/PfN+ECwpEW2eZZfxL2h6GZd3s9XNYul0bdUSPxMw0cwRVk+ujleP9FnwPw2zSQjzELvK+wzNekcU8gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXkivtgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdzX2gt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857361F000FF;
-	Thu, 17 Sep 2026 17:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXkivtgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F61E1F000FF;
+	Thu, 17 Sep 2026 17:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667853;
-	bh=Rys5aLyvZ59ZUSj9fYZY9YZY24vuVzpjPr69d12orM4=;
+	s=korg; t=1789667857;
+	bh=zaKV3LMsYlH8xlRfEe5j0zDN8iz4EIqqgXsqmSldW4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdzX2gt+iQdVYwHT5+eAi8Ang88mMObUaXsw7v9Ucq3lT4Z+la35OO0MWRrAtGlb9
-	 Fwf38nHezsUzLqg5dNqoMQHSyA+HBdxjAtS6DE2deBI9/L11fbC6vSx6FZKAP8J4/5
-	 +KwTpmWBXYJUi/cUgXvee8OH9YzUowRaSmuXQoM8=
+	b=RXkivtgAvAjpUhMDUlQSRn3mc2lzWs2ZkvihXi8EwmqppNYFnoGAssAcOJdlfXKjl
+	 SnWJ9Cz9R4QxNTqGHJs/4koMJ44ejnR8Lm4CgD13MwkE+aW0J8Usm5FQ6MmmwGO02L
+	 2FVNRLwkd2KopZBDSZcQvGmuD3gEPkcL4EyBuDtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0231/1102] drm/amdkfd: Unwind debug trap enable on copy_to_user failure
-Date: Thu, 17 Sep 2026 16:02:54 +0100
-Message-ID: <20260917151545.384637500@linuxfoundation.org>
+Subject: [PATCH 6.12 0232/1102] ipv6: use READ_ONCE() for bindv6only default in inet6_create()
+Date: Thu, 17 Sep 2026 16:02:55 +0100
+Message-ID: <20260917151545.410992039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,44 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 01112e241e37f9ac98b6f418d93ce2e0b87b7ee0 ]
+[ Upstream commit 7a20eb54224ab7481c1f5a1619a6a5677be93eed ]
 
-If kfd_dbg_trap_enable() fails while copying runtime_info to userspace,
-it had already activated the trap, set debug_trap_enabled, taken an extra
-process reference, and opened the debug event file. Return -EFAULT without
-unwinding that state, leaving inconsistent trap state and a refcount
-imbalance that could break later DISABLE/ENABLE.
+inet6_create() reads net->ipv6.sysctl.bindv6only locklessly.
 
-On copy_to_user failure, deactivate the trap and undo the rest of the
-enable setup before returning.
+Use READ_ONCE() for this sysctl access.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602002414.1504106-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_debug.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/af_inet6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-index 3a8df47aa5821..897c402a4e484 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-@@ -816,6 +816,12 @@ int kfd_dbg_trap_enable(struct kfd_process *target, uint32_t fd,
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index 0786155715249..0fb93bb4c0adf 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -226,7 +226,7 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
+ 	inet6_assign_bit(REPFLOW, sk, READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
+ 				      FLOWLABEL_REFLECT_ESTABLISHED);
+-	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
++	sk->sk_ipv6only	= READ_ONCE(net->ipv6.sysctl.bindv6only);
+ 	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
  
- 	if (copy_to_user(runtime_info, (void *)&target->runtime_info, copy_size)) {
- 		kfd_dbg_trap_deactivate(target, false, 0);
-+		fput(target->dbg_ev_file);
-+		target->dbg_ev_file = NULL;
-+		if (target->debugger_process)
-+			atomic_dec(&target->debugger_process->debugged_process_count);
-+		target->debug_trap_enabled = false;
-+		kfd_unref_process(target);
- 		r = -EFAULT;
- 	}
- 
+ 	/* Init the ipv4 part of the socket since we can have sockets
 -- 
 2.53.0
 
