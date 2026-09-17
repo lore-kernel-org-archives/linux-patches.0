@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF514DA9A9;
-	Thu, 17 Sep 2026 15:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40532E141;
+	Thu, 17 Sep 2026 15:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660244; cv=none; b=FmQae5EfWsAlizD2hjARciY8d/p8JJcADNnGFOBYOyviaE4Y4tDiwjvibPcB6Klr1VTjeHnKQhh9J9l1tk+bjM0KdnVu2kLUU3JFf/JIv1vIpDgUZn17IpRsERn3rh92sEX5cloJCKeGb1hxR+e3baj3EQdznn0YUZoZn+31fTk=
+	t=1789660247; cv=none; b=XuVXjkZ6suCmFUQ4paNysoEG7WSX5JwjdKvanKMtsbxuUiKULcGkTuuDCx47qx0eb53IIl4Au99VP+dolfgGjGKUOmM/J0DEqNDE7PpLxDL4cq+0XAJ+hqaAO8QP8c8y4WtOhCYLQrPWlCz+ikT8bOiFMb7ST2dvFpdWmxkJrz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660244; c=relaxed/simple;
-	bh=YukoIh3H93hzzFJtyz7HvyoEeRTcVpu/zAcuxk28+dw=;
+	s=arc-20240116; t=1789660247; c=relaxed/simple;
+	bh=QTqN00xhgECU3HoBsrCZfQmFoZtua/JBOHq/MIL+Tjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BT38r+7JEXjyuCfV489stBEFjEQbjTVfEO5KJo6uBMVHAIkgTVShGE2gTb6WxxW/Ca0E//XVY6RQLlF6uTVHtdiTip36PhW5l8JjUOgerJuZOmsTZQszVdf+qK1xjPkLkI4mrJIwEMBlkPpmui2tMt7L7S7Jh9BOI3mzPshDLlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTgAnmhm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uILlZDvDt8JxQ4Y42Jc/xoi/bemBsQTGXYMo8gt3BCVVkOr/Os/NPmGcGHxOd2KBmZA8+ESvTPhSDKxrWNhI9g6D+NKjFusjqaPaMBCG4hgVHfCQbBhoEMpVHtq24YVgfmarADW/jdrTZPoE6v4ViQ28hSPEQg6n6MYBMAeQpio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8KmL3cM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTgAnmhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394001F000FF;
-	Thu, 17 Sep 2026 15:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8KmL3cM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB191F0089A;
+	Thu, 17 Sep 2026 15:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660235;
-	bh=K0R2O8u6dEx7RdMZFX5XaCs4N8ABsRoVq24yRhHaU48=;
+	s=korg; t=1789660241;
+	bh=PVt49exP6dgUEnEO9NQXny4RtQQDwmR8PuMAr5fxIzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTgAnmhmEBtvQRaKkpnDk/4bmn5VK54HkBjKReYOAAEYogc6k0YEAbkEyDBCS7LRs
-	 1qQy+29J733LH4r0TDf2Kuhnf5Fj1+C/LLtfsjUKcBG/+h+Xalw4jQu2q4xT0ypVLX
-	 T/KBiiO9rdfcgTx7mqdWTmTc1gX0r81psbVhbVAI=
+	b=t8KmL3cM2pp+0ZI1AScAHOMyg7dfAaK2Adm7zUmjLMpF2DTpy4ONFr0sYNerhhAWa
+	 pG7EnHy1gcO+8qepVc71XYmfF0t0Fog3EEQHQLCUWNDYl18T6FGWRlSERu/RtnbBu5
+	 Aqjvu4tXiLCJy2lcunStUBEY9IDXoDwExfMS+aTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Tanner <moritz.tanner@linbit.com>,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 523/733] fs: dont return -EINVAL for successful nested thaw
-Date: Thu, 17 Sep 2026 16:13:51 +0100
-Message-ID: <20260917151405.202069445@linuxfoundation.org>
+	XingWang Xiang <v3rdant.xiang@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 525/733] genetlink: pin family module during policy dump
+Date: Thu, 17 Sep 2026 16:13:53 +0100
+Message-ID: <20260917151405.261433350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,89 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moritz Tanner <moritz.tanner@linbit.com>
+From: XingWang Xiang <v3rdant.xiang@gmail.com>
 
-commit fe967191e5851ea79818c5fe4e781c3882139218 upstream.
+commit 6a1094c34d176827b2b173e163dcc964a13af93f upstream.
 
-Commit 7366f8b6fc6a ("fs: handle freezing from multiple devices")
-replaced the freeze_holders bitmask with per-holder counters to allow
-nested freezes. In the bitmask version, a thaw that released a shared
-hold while another holder remained returned 0. Since the rework,
-thaw_super_locked() drops the freeze reference via freeze_dec() but
-then returns -EINVAL when other freezers remain, misinforming the
-caller: the thaw did succeed, the superblock just stays frozen for the
-remaining holders.
+The generic netlink controller's policy dump keeps pointers to the target
+family's operation and policy tables in its callback state.  A dump may be
+split across multiple skbs and remain pending after the initial request.
 
-This breaks bdev-initiated freezing. When a filesystem is frozen with
-FIFREEZE and additionally frozen via bdev_freeze() -- which nests by
-design, see fs_bdev_freeze() -- the subsequent bdev_thaw() receives
--EINVAL from the holder op although its freeze reference was dropped,
-and therefore keeps bd_fsfreeze_count elevated. Then device-mapper's
-unlock_fs() ignores bdev_thaw()'s return value, so nothing rebalances
-the count. After the user's FITHAW and umount, the block device can
-never be mounted again:
+Netlink pins the module which owns the dump callback, but in this case
+that is the controller's owner rather than the target family's owner.  The
+target family can consequently be unregistered and its module unloaded
+while a policy dump is pending.  Advancing the dump then dereferences
+policy memory from the unloaded module.
 
-    dm-1: Can't mount, blockdev is frozen
+Take a reference to the target family's module when the dump starts.
+Drop it from the error and done paths.  This matches the lifetime for which
+the dump context retains the family and policy pointers.
 
-There is no way for userspace to drop the leaked count; only
-destroying the block device (or a reboot) recovers the device.
-
-Reproducer (any kernel since v6.8):
-
-    dmsetup create dut --table "0 $(blockdev --getsz "$DEV") linear $DEV 0"
-    mkfs.ext4 /dev/mapper/dut
-    mount /dev/mapper/dut /mnt
-    fsfreeze --freeze /mnt      # freeze_ucount == 1
-    dmsetup suspend dut         # bd_fsfreeze_count == 1, ucount == 2
-    dmsetup resume dut          # ucount 2 -> 1, but thaw_super()
-                                # returns -EINVAL, so bdev_thaw()
-                                # keeps bd_fsfreeze_count at 1
-    fsfreeze --unfreeze /mnt    # filesystem thaws fine
-    umount /mnt
-    mount /dev/mapper/dut /mnt  # EBUSY, forever
-
-The same happens with fsfreeze held across an LVM snapshot of the
-origin volume.
-
-fs_bdev_thaw()'s documentation already describes the intended
-semantics: "If this function returns zero it doesn't mean that the
-filesystem is unfrozen as it may have been frozen multiple times".
-Restore them by returning 0 when a nested thaw drops its hold while
-other freezers remain. Thawing without holding a freeze still fails
-with -EINVAL as may_unfreeze() rejects that case before the reference
-count is touched.
-
-Fixes: 7366f8b6fc6a ("fs: handle freezing from multiple devices")
-Cc: stable@vger.kernel.org # needs adjustments for < 6.17 (no may_unfreeze())
-Signed-off-by: Moritz Tanner <moritz.tanner@linbit.com>
-Link: https://patch.msgid.link/20260821085451.65206-1-moritz.tanner@linbit.com
-Tested-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Reviewed-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d07dcf9aadd6 ("netlink: add infrastructure to expose policies to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260902084317.4092542-1-v3rdant.xiang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/netlink/genetlink.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -2122,11 +2122,14 @@ static int thaw_super_locked(struct supe
- 		goto out_unlock;
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1513,6 +1513,7 @@ struct ctrl_dump_policy_ctx {
+ 	struct netlink_policy_dump_state *state;
+ 	const struct genl_family *rt;
+ 	struct genl_op_iter *op_iter;
++	struct module *owner;
+ 	u32 op;
+ 	u16 fam_id;
+ 	u8 dump_map:1,
+@@ -1555,6 +1556,9 @@ static int ctrl_dumppolicy_start(struct
+ 		return -ENOENT;
  
- 	/*
--	 * All freezers share a single active reference.
--	 * So just unlock in case there are any left.
-+	 * All freezers share a single active reference. If other freezers
-+	 * remain, drop our hold and report success; the superblock stays
-+	 * frozen until the last holder thaws it.
- 	 */
--	if (freeze_dec(sb, who))
-+	if (freeze_dec(sb, who)) {
-+		error = 0;
- 		goto out_unlock;
+ 	ctx->rt = rt;
++	ctx->owner = rt->module;
++	if (!try_module_get(ctx->owner))
++		return -ENOENT;
+ 
+ 	if (tb[CTRL_ATTR_OP]) {
+ 		struct genl_split_ops doit, dump;
+@@ -1565,7 +1569,7 @@ static int ctrl_dumppolicy_start(struct
+ 		err = genl_get_cmd_both(ctx->op, rt, &doit, &dump);
+ 		if (err) {
+ 			NL_SET_BAD_ATTR(cb->extack, tb[CTRL_ATTR_OP]);
+-			return err;
++			goto err_put_owner;
+ 		}
+ 
+ 		if (doit.policy) {
+@@ -1583,16 +1587,20 @@ static int ctrl_dumppolicy_start(struct
+ 				goto err_free_state;
+ 		}
+ 
+-		if (!ctx->state)
+-			return -ENODATA;
++		if (!ctx->state) {
++			err = -ENODATA;
++			goto err_put_owner;
++		}
+ 
+ 		ctx->dump_map = 1;
+ 		return 0;
+ 	}
+ 
+ 	ctx->op_iter = kmalloc_obj(*ctx->op_iter);
+-	if (!ctx->op_iter)
+-		return -ENOMEM;
++	if (!ctx->op_iter) {
++		err = -ENOMEM;
++		goto err_put_owner;
 +	}
  
- 	if (sb_rdonly(sb)) {
- 		sb->s_writers.frozen = SB_UNFROZEN;
+ 	genl_op_iter_init(rt, ctx->op_iter);
+ 	ctx->dump_map = genl_op_iter_next(ctx->op_iter);
+@@ -1624,6 +1632,8 @@ err_free_state:
+ 	netlink_policy_dump_free(ctx->state);
+ err_free_op_iter:
+ 	kfree(ctx->op_iter);
++err_put_owner:
++	module_put(ctx->owner);
+ 	return err;
+ }
+ 
+@@ -1760,6 +1770,7 @@ static int ctrl_dumppolicy_done(struct n
+ 
+ 	kfree(ctx->op_iter);
+ 	netlink_policy_dump_free(ctx->state);
++	module_put(ctx->owner);
+ 	return 0;
+ }
+ 
 
 
