@@ -1,155 +1,185 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9803854707D;
-	Thu, 17 Sep 2026 18:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56B72D7D47
+	for <patches@lists.linux.dev>; Thu, 17 Sep 2026 18:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671397; cv=none; b=IkEUdgmlFIa2IV1LX2rW3FzUurpygtXNO9SMXkUeOYc1Oh5pB/bX5PJtAmGtLvADJ3B/53E5x2FVr87PXGq9Y3Rg9MXqOhJEmzP0d5pAzK+eMP/DiYEPVpi6600crhqsaI+D29ayFA1GaMKc+lRtlF3I4FHy7F0pBqXiyFlDb7U=
+	t=1789671400; cv=none; b=W3eK5mNx14W196W/nPZI8NAkDDmDPdrXc8IuBfgrD9qDAokWmR6M1tRUJcuIpj6EPIlTURvw7kJO0AE/wdgaUhmQkzcVvnl+SkgMgnkqbR0tJyteOU+hGtkuWNr1Hlj+O7ZW8E5X125nRqv57j6iyMc5kGgW+7KYWyjtBO3BzM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671397; c=relaxed/simple;
-	bh=lXbTCIcMl4YAmxjKCNdbzIWAP7BkfkazJHVt+2AaaZ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sumgEyurZKt1CEcE7D7EHMBNHobXCxH0napqEx+xsEed4uL/vPOX6vd1lnQmCcNhiFW3+RWu8YV3qo5IWLjOeMFONbcZv1YWN2r+YkED2pjmJdJMEYoNmyqV35Kxlrn3+Cq7s8flHsX34M1EnyRXxdYhF6Td+TCSlm0RWjoWKOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BL+sRtYS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789671400; c=relaxed/simple;
+	bh=+yachkDqEvQAiGt5k6YG+uN4h05LsFAbms5v2hp+GiE=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=UBdjxnFJUjrDIAGnRWQ17GMxEPw9YbnoYYsZUPGioRxbK2vCgzTjbbxDhahVWDaIYD/T4xjnVpWjCL3muEyDRL60ijy6pNqNUflnLGw3CJqqkrG/l9VPgwAeXFz27gfdca1iILU6hFbXxh2tkoIvGjBK1Ra559hf6izzAR4Hz54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max06.net; spf=pass smtp.mailfrom=max06.net; dkim=pass (2048-bit key) header.d=max06.net header.i=@max06.net header.b=dF1gRP12; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zl+MjQK5; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max06.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max06.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BL+sRtYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62891F000FF;
-	Thu, 17 Sep 2026 18:56:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671396;
-	bh=ZaRwYieMICTsAD2soPiZ8FK7u/CYUfEBTNrB/RFQ8ak=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BL+sRtYS2wTLqTYBcItRwxjXgPjA5iZBaOyGwXLMffzpozaSG7FxzLd0VsEBKVVUy
-	 Grg1CfkUIvJP9kr3kK/RyapHi2ffCnXySVINOoOZQx9oA3UABH6Lw2bbs+hbkaB9Mw
-	 XS2KbRJz+WHFNCFlNA3e+POfvHacfG2j8vQf9u80=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0960/1102] fuse: fix race between interrupt and resend
-Date: Thu, 17 Sep 2026 16:15:03 +0100
-Message-ID: <20260917151604.765211478@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
-References: <20260917151539.408551884@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=max06.net header.i=@max06.net header.b="dF1gRP12";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zl+MjQK5"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id EE1A21D000C2;
+	Thu, 17 Sep 2026 14:56:37 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-03.internal (MEProxy); Thu, 17 Sep 2026 14:56:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max06.net; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1789671397;
+	 x=1789757797; bh=EdJ8bmXVQpzlXzBcluUqZxbOqlsNo95tMQtAw++mfLw=; b=
+	dF1gRP12OLea3M57VySE09JerIMUIT6qjpDyEjUt2eo2epu3WSK8pJH9NgFzRRq7
+	jZNXNKkAqD9t07kkIDReK3v1AjbGaSQ1+FiuUp+Krkqqb6MPz+78FGc93ZRY9Tkb
+	/6WnSSD0S/N6NSjs8IegMR+smdhOAhe007GzE16lWzx1qArE/eN5dlFgPDlRYZuq
+	gX4/i3xz4ik9Dm63y9CFdfkvJJUjh/mCseTIn4iRYeLBcCOv9UOAq7p89HPgKgwC
+	9UKgUYkVis+FL66HtUr56KhAt3PHJ80jtAAJBuhu+pixOo2NUHyoY54I9LmlrIax
+	+hzoOMvtxNtuyfw9uQzx5Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789671397; x=
+	1789757797; bh=EdJ8bmXVQpzlXzBcluUqZxbOqlsNo95tMQtAw++mfLw=; b=Z
+	l+MjQK5/4nrX/RXcda4dTEgFtIZftaG1CE+9y4gn4113aX3xDKwOWSofOJy0+w4T
+	C/FVI5+Cx5sEz82XrDWV4LZGKe8ZFCElPoK40cCfUzGL2wnFadwB97S3XnfxpVHi
+	CGGO3sD3n/k7D5QgFKG9ZygMG3U27t/PCrVC993cIX8XB3vdKHec45yMGSz94eFt
+	TrsFQxS/ZT7s1sfyxkqAty2ESbmHMyGETugEp1WrCTtv070z5EdIUktRf4Odtl5v
+	xoRJoApHkoTtZzQKRbSO6xZzPcY1rYGXUZRxAKOiHdcaQ+YCLWtJNhAozuYS/qLU
+	fTBzLVpic04JBcTB+SxWg==
+X-ME-Sender: <xms:5TesamIFLnIWP4r4hIgaD5ZToWsMcGTQD80emFkhTFrxY3hgR9gUag>
+    <xme:5Tesao8qVcSFCk-LjexvmSmy1eSXHqD_WsgtxOSk2qhgTau0HWGvDB6J8UhvOoOcm
+    LsLxbbwg7fBAU1TXo-q_NvUDnON_vlHDOjflVVTXtQTC0pls5d5c3Pv>
+X-ME-Proxy-Cause: dmFkZTFAveyLDB4/jUEC1CFzi0gfZzbI+GkkmlhPu2D65aKAvO1Vedfn5968PbgV4zFnFA
+    Px8PtEV/kxU4/dFHOW8/ka5J44j/N3AdtHVaPwrs/wVvNV/KU2L7f0QkAcjm9mZbRYRcFc
+    bui8tie+564Ate4sdP/Gb0NT2BmX5dUiMOygKgMlPrGfYccFsSgRE9vdIxjSuP/doVcZRm
+    1N4pe88lWNbahB2pK8SfIWl/JvA9K60YScZWWrmgxI6CUFFhf5x3oyTcjLPbLj9dPWx8/A
+    kqWC70xHNKjjDYIEm7djbGI7QUurUQvlXEamBhYJa0CL2VXi9taOLtlMRjpa2i4zoFGxo7
+    uSKrJMdpO0B0MEOc73P9pw4DNuKt0XHF7A/8TdMQIxJYpAY+9bMOCGfjqQUJI517inxYwo
+    RbEsI7c0CgYFlpezMO0eMj/G/CBYuHblH+pO3qn+x/Ox+Mq9F5z43n94086/mk0qcMocX5
+    5BmX2UVekLnJi8XJKFhCcBKcKKKrVoQzrWbIKTM0O+966nZLt/OFFG2s+B4dcLbstK7wXE
+    1l45N+lYuyufol7LmykDpyz9arM1fWVGSS490GL76xodkiXzw46cpXpnGRTHMT5uiDpPIb
+    ZNs1OLkFoo4Yu+OGllc40eEHONfSHlYHysojXGAvu6RTy/V4p2KBm0jIcZBw
+X-ME-Proxy: <xmx:5Tesassm9wV6ig6vNEjEGYMKxaRCDjeAYXaqI5BstPL325-_7FeckQ>
+    <xmx:5TesarAj6JbYJLXzM2Yh-_Nrmp02mCNWMfRH3WntzM7cQHhSgXy5wg>
+    <xmx:5TesanDosZ3iECJGxlll8hflDj2PRsgSTM9z0sI3Db58Bw47NpFCQg>
+    <xmx:5Tesalpp042kWX1psfOJBlVbINk6BUTClYIcrK9YESKSpQqxnPy79w>
+    <xmx:5TesarnpMdi49QSx4jiTAw5p-IofpDOb3FUQWRnvTIMOjjUX-rfXTxAF>
+Feedback-ID: i81964b54:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 794B73020081; Thu, 17 Sep 2026 14:56:37 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: Ah_FbNH1XifB
+Date: Thu, 17 Sep 2026 20:56:17 +0200
+From: =?UTF-8?Q?Flo_M=C3=BCller?= <flo@max06.net>
+To: "Sasha Levin" <sashal@kernel.org>, patches@lists.linux.dev,
+ stable@vger.kernel.org
+Cc: "Ido Schimmel" <idosch@nvidia.com>, "David Ahern" <dsahern@kernel.org>,
+ "Jakub Kicinski" <kuba@kernel.org>, davem@davemloft.net, edumazet@google.com,
+ pabeni@redhat.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-Id: <6b4dfa7d-09c1-4717-bd4a-5bca2d984139@app.fastmail.com>
+In-Reply-To: <20260831133314.4125787-211-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
+ <20260831133314.4125787-211-sashal@kernel.org>
+Subject: Re: [PATCH AUTOSEL 6.18-5.10] ipv6: Honor oif when choosing nexthop for
+ locally generated traffic
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Aug 31, 2026 at 09:23:59AM -0400, Sasha Levin wrote:
+> From: Ido Schimmel <idosch@nvidia.com>
+>
+> [ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
+[...]
+> **Step 3.5 =E2=80=94 Dependencies**
+> Record: Patch 2 is **standalone for classic multipath routes**
+> (reproducer in commit message). For **nexthop object** multipath, patch
+> 1/3 is also needed so `fib6_table_lookup()` picks the best-scoring
+> nexthop before path selection is skipped. Patch 1 not in tree; patch 2
+> alone does not worsen nexthop-object behavior.
+[...]
+> **Recommendation for v6.18.y:** Backport this commit. Ideally backport
+> patch 1/3 from the same series together for complete nexthop-object
+> multipath coverage; patch 2 alone is still valuable and safe for class=
+ic
+> multipath routes.
 
-------------------
+Hi Sasha,
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+we are the nexthop-object case from your dependency note, hit in
+production on 6.12.y, so here is a real-world data point and a request
+to carry patch 1/3 along.
 
-[ Upstream commit ed9c881f3b498383f73c42712b359419da42a7b0 ]
+(Disclaimer: Analysis below done by AI, watched and confirmed by human)
 
-After commit f8fce75fedf7 ("fuse: clear intr_entry in fuse_resend and
-fuse_remove_pending_req") the WARN_ON(!list_empty(&req->intr_entry)) in
-fuse_request_free() still triggers due to the following race:
+Setup: Debian 13 host, kernel 6.12.101, dual-homed to two ToR switches
+over unnumbered eBGP (FRR). FRR installs the default route through a
+nexthop group, which is what every FRR or Cilium dual-homed host looks
+like:
 
-In request_wait_answer()
-  if (test_bit(FR_SENT, &req->flags)) -> returns true
+  $ ip -6 route show default
+  default nhid 20 proto bgp metric 20 pref medium
+          nexthop via fe80::<tor-a> dev ens31f0np0 weight 1
+          nexthop via fe80::<tor-b> dev ens30f0np0 weight 1
+          nexthop via fe80::<tor-a> dev ens31f1np1 weight 1
+          nexthop via fe80::<tor-b> dev ens30f1np1 weight 1
 
-In fuse_chan_resend()
-  clear_bit(FR_SENT, &req->flags)
+The kernel's own lookup ignores the oif for this route, with and
+without a source address:
 
-In request_wait_answer()
-  queue_interrupt(req)
+  $ ip -6 route get 2606:4700:4700::1111 oif ens31f1np1
+  2606:4700:4700::1111 from :: via fe80::<tor-b> dev ens30f1np1 \
+      proto bgp src fd00:2:1::11 metric 20 pref medium
+  $ ip -6 route get 2606:4700:4700::1111 oif ens31f1np1 from 2001:db8:a:=
+:1
+  2606:4700:4700::1111 from 2001:db8:a::1 via fe80::<tor-b> dev ens30f1n=
+p1 \
+      proto bgp src fd00:2:1::11 metric 20 pref medium
 
-Fix by:
+Same for a socket. A test tool sends UDP on an AF_INET6/SOCK_RAW/
+IPPROTO_UDP socket with IPV6_HDRINCL and SO_BINDTODEVICE=3Dens31f1np1
+(root; the source address is a service address of the host, not the
+interface address). The option is accepted and readable back:
 
- - move clearing FR_SENT inside fpq->lock
+  setsockopt(SO_BINDTODEVICE, "ens31f1np1") =3D 0
+  getsockopt(SO_BINDTODEVICE) -> "ens31f1np1"
 
- - move setting FR_PENDING inside fiq->lock
+but the frames leave the sibling interface. tcpdump on both NICs while
+3 packets are sent:
 
- - recheck FR_SENT after acquiring fiq->lock in fuse_dev_queue_interrupt()
+  ens31f1np1 (the bound device):  0 packets captured
+  ens30f1np1:                     3 packets captured
+    IP6 2001:db8:a::1.41022 > 2606:4700:4700::1111.53: ...
 
-Reported-by: zdi-disclosures@trendmicro.com
-Fixes: f8fce75fedf7 ("fuse: clear intr_entry in fuse_resend and fuse_remove_pending_req")
-Cc: stable@vger.kernel.org # 6.9
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ renamed upstream's fuse_chan_resend()/fuse_dev_end_requests() identifiers back to this tree's pre-refactor fuse_resend()/end_requests() names ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/fuse/dev.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+Impact for us: anything that pins traffic to one uplink of a dual-homed
+BGP host (per-link probes, validation of switch-side policy routing)
+silently takes another link. We lost a day to it before suspecting the
+kernel.
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -267,7 +267,8 @@ static void fuse_dev_queue_forget(struct
- static void fuse_dev_queue_interrupt(struct fuse_iqueue *fiq, struct fuse_req *req)
- {
- 	spin_lock(&fiq->lock);
--	if (list_empty(&req->intr_entry)) {
-+	/* Repeat FR_SENT test after obtaining the lock to prevent race with fuse_resend() */
-+	if (list_empty(&req->intr_entry) && test_bit(FR_SENT, &req->flags)) {
- 		list_add_tail(&req->intr_entry, &fiq->interrupts);
- 		/*
- 		 * Pairs with smp_mb() implied by test_and_set_bit()
-@@ -1870,7 +1871,7 @@ copy_finish:
- static void fuse_resend(struct fuse_conn *fc)
- {
- 	struct fuse_dev *fud;
--	struct fuse_req *req, *next;
-+	struct fuse_req *req;
- 	struct fuse_iqueue *fiq = &fc->iq;
- 	LIST_HEAD(to_queue);
- 	unsigned int i;
-@@ -1885,24 +1886,20 @@ static void fuse_resend(struct fuse_conn
- 		struct fuse_pqueue *fpq = &fud->pq;
- 
- 		spin_lock(&fpq->lock);
--		for (i = 0; i < FUSE_PQ_HASH_SIZE; i++)
--			list_splice_tail_init(&fpq->processing[i], &to_queue);
-+		for (i = 0; i < FUSE_PQ_HASH_SIZE; i++) {
-+			struct list_head *this_queue = &fpq->processing[i];
-+
-+			list_for_each_entry(req, this_queue, list)
-+				clear_bit(FR_SENT, &req->flags);
-+			list_splice_tail_init(this_queue, &to_queue);
-+		}
- 		spin_unlock(&fpq->lock);
- 	}
- 	spin_unlock(&fc->lock);
- 
--	list_for_each_entry_safe(req, next, &to_queue, list) {
--		set_bit(FR_PENDING, &req->flags);
--		clear_bit(FR_SENT, &req->flags);
--		/* mark the request as resend request */
--		req->in.h.unique |= FUSE_UNIQUE_RESEND;
--	}
--
- 	spin_lock(&fiq->lock);
- 	if (!fiq->connected) {
- 		spin_unlock(&fiq->lock);
--		list_for_each_entry(req, &to_queue, list)
--			clear_bit(FR_PENDING, &req->flags);
- 		end_requests(&to_queue);
- 		return;
- 	}
-@@ -1911,6 +1908,10 @@ static void fuse_resend(struct fuse_conn
- 	 * intr_entry on fiq->interrupts after the request is re-queued.
- 	 */
- 	list_for_each_entry(req, &to_queue, list) {
-+		set_bit(FR_PENDING, &req->flags);
-+		/* mark the request as resend request */
-+		req->in.h.unique |= FUSE_UNIQUE_RESEND;
-+
- 		if (test_bit(FR_INTERRUPTED, &req->flags))
- 			list_del_init(&req->intr_entry);
- 	}
+From reading 6.12 route.c: with nexthop objects, fib6_table_lookup()
+returns the first nexthop of the group unless the lookup is strict, so
+the have_oif_match test that this patch adds to ip6_pol_route() only
+becomes true for nexthop groups once 484bb9d164df ("ipv6: Select best
+matching nexthop object in fib6_table_lookup()") makes the table lookup
+prefer the oif-matching nexthop. Its commit message describes it as
+preparation for this patch. For nexthop-object users this patch is
+therefore incomplete on its own; please consider queueing both:
 
+  484bb9d164df ipv6: Select best matching nexthop object in fib6_table_l=
+ookup()
+  d25e7e9d8a6c ipv6: Honor oif when choosing nexthop for locally generat=
+ed traffic
 
+  https://patch.msgid.link/20260611154605.992528-2-idosch@nvidia.com
+  https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
+
+Happy to test a 6.12.y tree with one or both applied on these hosts and
+report back.
+
+Thanks,
+Flo
