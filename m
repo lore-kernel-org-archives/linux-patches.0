@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11994A0F14;
-	Thu, 17 Sep 2026 15:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288EE4EB873;
+	Thu, 17 Sep 2026 15:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659443; cv=none; b=tvJ2sU/o2Kt5rlVkLJ7rgG5LhSnTsODgwWRqoq5f/NHYJtfLSXS+UPE3r3Tbm14rqHeNGKJ88x8Wm5Va02w6YPvrwMC0noapsLwYcfwtzuAYQqCibPWSSP6VpQ8LxieBT5Y2SUm+aH1/7lD4M88JQLVq6DM3oWFdexfCrgOH4e8=
+	t=1789659444; cv=none; b=uXh0O5C5AzSu+VvRXF3Bzo6dvSNUbcko29+BNjr3WJ3AbdCkomea1CoMXNIPqRMtGJ6l5OGyhDRhlU5QJeivd4++ha7HZqE35y6V3a7qPoAY+t459LYTPr6G3Fs5H4xD1KqwnRNvL37ehSLb+i8GxOylU/toMbo9+TTc4Q3ap3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659443; c=relaxed/simple;
-	bh=d3JgYLMMxtfkLwiYz+78D6eUjqF9z98bW+yhHbuFTmU=;
+	s=arc-20240116; t=1789659444; c=relaxed/simple;
+	bh=25H0RqS2Ol45jQyYnHXa2Ydzv3pleS2TowDsr9nb+o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftqln1HQenXsSX2e5O43s9Iwl73NWx06E+sPx7/qGHtqo1PkulaJmXWzmEoe0ozOq4O3eqNbKbO8f+NQDCmujDlMPyueGhA9sCPDiYzRhsL6goyBFlkBU18X7SsUq7s8X+9BAoTbX+ZUOG2ojN8cNQz/W04xtNmmNePxTDEUmOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXM1m4Zf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5kQ3aGIPqZWoJlSY7DNKTZ6kQKZNug0llWZ9iZ6T0/G5sCJ0zOIcIf9CHRZJJgtkZLaIprpA/f/mHiXrITWVlgWAL8dvdqxexJVE11qkyGRpYjN5InSpbailmHEp6dDY14sefR9l+B24w2yWyRIvsftqJ0Ixb2z7pu0eLBOE64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2EQLGZh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXM1m4Zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420981F0089B;
-	Thu, 17 Sep 2026 15:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2EQLGZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E301F000FF;
+	Thu, 17 Sep 2026 15:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659436;
-	bh=C63Bpzojx9h2M5KdF2tXp2hqeG7PIkPpp+hAndaGgR4=;
+	s=korg; t=1789659439;
+	bh=kilfd6afYPJoAr4tLxttgi1OPSBZtt3rCn6EwVO+YFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iXM1m4ZfHROnbEl/Qy8MyfuLxuXuKZkS3GzuTZU1SV2xH4H7xjqOUUNDB9R/ym3mL
-	 MggDz+8ADjJFI1rznoK2/9nDVFJ14bP70e6as4AYIPtvuZ4Ox/4qLqX4sbs0y7Vtqu
-	 /roTxxBIANsNAPUp0UupHUgEOKAjs517d+f/HEjo=
+	b=f2EQLGZhLfuuIFYs6PM9pKPKxS86yNn7l7Jfasf/3cVi1gzqSgas0ztCLmeXyhcHy
+	 EhqYpQgUJbJA1znvOuTNJPMluDGzVd7wdnkQfqb6JeygQH9f7q26KesdkxV50Pt0wJ
+	 EXVc2KcXoqOI6a6oci4Dtdo1zETOzIKWU/+Fh0mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 257/733] bpf: Mark the zero register precise for a register-form NULL check
-Date: Thu, 17 Sep 2026 16:09:25 +0100
-Message-ID: <20260917151357.708215497@linuxfoundation.org>
+Subject: [PATCH 7.2 258/733] thermal: sysfs: switch to use scnprintf() to suppress truncation warning
+Date: Thu, 17 Sep 2026 16:09:26 +0100
+Message-ID: <20260917151357.738663853@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,63 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 6aed0134d3cda6382385a734ae0158eb7df6b142 ]
+[ Upstream commit 5ad0af4f4367202b1bc71813052fe39b5116cdb9 ]
 
-check_cond_jmp_op() accepts "if rA <op> rB" as a NULL check for a
-nullable pointer rA when rB is a scalar known to be zero,
-lifts PTR_MAYBE_NULL from rA in the corresponding branch and does not
-mark rB precise. Consider the following program:
+Switch the sysfs code to use scnprintf() to avoid warnings about potential
+truncation of the names of the sysfs attributes. We can't increase the buffer
+size because the size is the part of an ABI for some reason. Note, with
+the current size of buffer the affected attributes have a room for up to
+1000 names, which ought to be enough for all cases. There is no functional
+change, as the same limitation was implied before.
 
-  r0 = bpf_get_prandom_u32();
-  r6 = 1;                  /* the r6 == 0 path is explored first */
-  if (r0 == 0) goto 1f;
-  r6 = 0;
-1:
-  r0 = bpf_map_lookup_elem(map, &0);  /* absent, NULL at runtime */
-  if (r0 == r6) goto 2f;   /* taken as a NULL check for r0       */
-  *(u8 *)(r0 + 0);         /* verifier: map value; runtime: zero */
-2:
-  return 0;
-
-The r6 == 0 path is explored first and the dereference is accepted.
-The r6 == 1 path is pruned at the checkpoint recorded for (1),
-so the comparison is never verified with a non-zero r6. At runtime a
-failed lookup returns NULL, NULL != 1 takes the non-NULL edge and the
-program dereferences a pointer that is zero.
-
-Fixes: 2f4cb53eed44 ("bpf: detect non null pointer with register operand in JEQ/JNE.")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260904083325.2083493-7-eddyz87@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: c56f5c0342df ("Thermal: Make Thermal trip points writeable")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260817103324.1020212-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/thermal/thermal_sysfs.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d68f54a53c644..f913e3603a5ea 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -16296,6 +16296,15 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	    type_may_be_null(dst_reg->type) &&
- 	    ((BPF_SRC(insn->code) == BPF_K && insn->imm == 0) ||
- 	     (BPF_SRC(insn->code) == BPF_X && bpf_register_is_null(src_reg)))) {
-+		/*
-+		 * For BPF_X the zero is a property of this execution path,
-+		 * hence src_reg has to be precise.
-+		 */
-+		if (BPF_SRC(insn->code) == BPF_X) {
-+			err = mark_chain_precision(env, insn->src_reg);
-+			if (err)
-+				return err;
-+		}
- 		/* Mark all identical registers in each branch as either
- 		 * safe or unknown depending R == 0 or R != 0 conditional.
- 		 */
+diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
+index b44abfc997edf..44bd7c50e4ac2 100644
+--- a/drivers/thermal/thermal_sysfs.c
++++ b/drivers/thermal/thermal_sysfs.c
+@@ -400,8 +400,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
+ 		struct thermal_trip_attrs *trip_attrs = &td->trip_attrs;
+ 
+ 		/* create trip type attribute */
+-		snprintf(trip_attrs->type.name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_type", i);
++		scnprintf(trip_attrs->type.name, sizeof(trip_attrs->type.name),
++			  "trip_point_%d_type", i);
+ 
+ 		sysfs_attr_init(&trip_attrs->type.attr.attr);
+ 		trip_attrs->type.attr.attr.name = trip_attrs->type.name;
+@@ -410,8 +410,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
+ 		attrs[i] = &trip_attrs->type.attr.attr;
+ 
+ 		/* create trip temp attribute */
+-		snprintf(trip_attrs->temp.name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_temp", i);
++		scnprintf(trip_attrs->temp.name, sizeof(trip_attrs->temp.name),
++			  "trip_point_%d_temp", i);
+ 
+ 		sysfs_attr_init(&trip_attrs->temp.attr.attr);
+ 		trip_attrs->temp.attr.attr.name = trip_attrs->temp.name;
+@@ -423,8 +423,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
+ 		}
+ 		attrs[i + tz->num_trips] = &trip_attrs->temp.attr.attr;
+ 
+-		snprintf(trip_attrs->hyst.name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_hyst", i);
++		scnprintf(trip_attrs->hyst.name, sizeof(trip_attrs->hyst.name),
++			  "trip_point_%d_hyst", i);
+ 
+ 		sysfs_attr_init(&trip_attrs->hyst.attr.attr);
+ 		trip_attrs->hyst.attr.attr.name = trip_attrs->hyst.name;
 -- 
 2.53.0
 
