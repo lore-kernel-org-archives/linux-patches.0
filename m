@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7AC4F4CEB;
-	Thu, 17 Sep 2026 17:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96386395AD4;
+	Thu, 17 Sep 2026 17:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665003; cv=none; b=uNYL1qbjq5l8Hu743S8karRHw8uSh8lIznLNwpCUrWBqneZJKPYRorzTKJJQFN7UQ9KiAZ/GQElHWGoIKutMACeX4tCSNf9RXMyTin+IwlhYT/tj8bhTKctjo9cGCjI1UPADXp9726wyTXKrMnQjQ4GOfFrP811KINI1XCQz7NY=
+	t=1789665006; cv=none; b=PuLek35oPRUImVYgH4CKXSDG00LKKq8jAl5O9GkS8aQqvWk3/6a0/thbBskEGIABccWNfwn9EH8Yb/Oucsw4J1LRmoDAN9Z0NRPvKeFN1lMLlWn37Sb7JAox05iCXmM9icVhAJl/AcP9ifFDrLf0DsHYqCN2vBsopWRcT6ziVV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665003; c=relaxed/simple;
-	bh=8CWxtQmXj92WxXIW1qNRpoGKhF/GYp5mxBM6A8EQ+UY=;
+	s=arc-20240116; t=1789665006; c=relaxed/simple;
+	bh=4kf65R4HTRu/DAQ214zqtRSrBRgr5FO6WQt//0+gOSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKOEk2nmvFPYwnpvqlAqfinjsiIe+S784FC16N9RH38/cmwcSmxoIBGlQRFpucoBrQv3VvQxkX5Y7ZKdA2RurHn85PYq2U6wGLF2MJxr2BUmQcluDhegHRRVPHVjy/pVWpI8+G954bCW/TYJzGG+CG0UuVUvrte+vVy79Q87590=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BrCHt9C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n7sdTb/2LMDyZSIyjUyvf6HWjZecQIlqqCig6DEalFydxqiH4OEdDIO5viyZp5oSFfIH0lvmF01pKLNlCc3PVyg10zY0NYymExo8nBS1/lQOtbrC+0Pn7/OnsEBXVb8Ny629xQLSjNOLZc/Ex/vK3xfZhr4sxkLhjNeGGgCFN3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze2IcmC8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BrCHt9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB02F1F000FF;
-	Thu, 17 Sep 2026 17:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze2IcmC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC12D1F000FF;
+	Thu, 17 Sep 2026 17:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665002;
-	bh=VqDIAIDAsu+pcylJZwh69nKJgGK7RalzQBC9MJj4glA=;
+	s=korg; t=1789665005;
+	bh=zfY9wRvNhLe0V8EXcpEuTKC7aNQyaLf07C3Mr+zkmcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1BrCHt9CODHnjiGwbE/T5NPmWXnoxirV+pxRhG3dmC/0URZ89EtG8uGsVfHPc4Mvv
-	 CM0wk9gGk0xmp+RE9n2WHyDLM5dfsazFpi05gKS+TNfp1eWdZvjgkT8siMxLB5reic
-	 49154qS8dFpvU1CzJX2M89KvzS1ON9UqsvHE2M+E=
+	b=ze2IcmC8+cTGwUON8HokVisttBXsd3gYH8AV+2/kSp3G89kH5LTvDrfS7K35Ewvjt
+	 YCjYEoNq6V+oAVAv6+5mZNyCgwOLSlYluUQnq62cNiaLCDId38zECS2dGWhSTBpXvX
+	 JaLwkoJ9Syr8b23gcZbEmpX2KsxksFWGZfuFY6RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0520/1250] wifi: iwlwifi: mvm: parse beacon notif per layout
-Date: Thu, 17 Sep 2026 16:05:15 +0100
-Message-ID: <20260917151606.042823076@linuxfoundation.org>
+Subject: [PATCH 6.18 0521/1250] wifi: iwlwifi: mvm: fix sched scan IE sizing
+Date: Thu, 17 Sep 2026 16:05:16 +0100
+Message-ID: <20260917151606.070259247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,121 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit b77c6f50b1f80414cb3f542ae72e532ed90fc7f7 ]
+[ Upstream commit 4f155d262b31b9b17e0f9856bdabe0968eb4930f ]
 
-The beacon TX notification can arrive in different layouts, and fields
-must be read only after selecting the expected format.
+Scheduled scan built the probe request before iwl_mvm_scan_fits(),
+so oversized IEs could be copied into the fixed preq buffer before
+length validation. Move iwl_mvm_build_scan_probe() after the fits
+check.
 
-Parse gp2 and TSF from the matching notification structure in each
-branch, and keep using the parsed gp2 for CSA countdown and debug output.
-Drop the obsolete cached gp2 field.
+Also advertise max_sched_scan_ie_len using iwl_mvm_max_scan_ie_len()
+so userspace limits account for driver-inserted DS/TPC bytes.
 
-Assisted-by: GitHub Copilot:gpt-5.3-codex
+Assisted-by: GitHubCopilot:gpt-5.3-codex
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.cc8aa937f8e5.I921f8dadcb20cb73e8283e1b8546e1778205411f@changeid
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Link: https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb922efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mvm/mac-ctxt.c | 25 +++++++++++--------
- .../net/wireless/intel/iwlwifi/mvm/mac80211.c |  1 -
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  3 ---
- 3 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 4 +---
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c     | 4 ++--
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-index 44380ebfe09d0..cee6bde6ec822 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-@@ -1504,49 +1504,54 @@ void iwl_mvm_rx_beacon_notif(struct iwl_mvm *mvm,
- {
- 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
- 	unsigned int pkt_len = iwl_rx_packet_payload_len(pkt);
--	struct iwl_extended_beacon_notif *beacon = (void *)pkt->data;
--	struct iwl_extended_beacon_notif_v5 *beacon_v5 = (void *)pkt->data;
- 	struct ieee80211_vif *csa_vif;
- 	struct ieee80211_vif *tx_blocked_vif;
- 	struct agg_tx_status *agg_status;
-+	u32 beacon_gp2;
- 	u16 status;
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
--	mvm->ap_last_beacon_gp2 = le32_to_cpu(beacon->gp2);
--
- 	if (!iwl_mvm_is_short_beacon_notif_supported(mvm)) {
-+		struct iwl_extended_beacon_notif_v5 *beacon = (void *)pkt->data;
- 		struct iwl_tx_resp *beacon_notify_hdr =
--			&beacon_v5->beacon_notify_hdr;
-+			&beacon->beacon_notify_hdr;
- 
--		if (unlikely(pkt_len < sizeof(*beacon_v5)))
-+		if (unlikely(pkt_len < sizeof(*beacon)))
- 			return;
- 
--		mvm->ibss_manager = beacon_v5->ibss_mgr_status != 0;
-+		beacon_gp2 = le32_to_cpu(beacon->gp2);
-+
-+		mvm->ibss_manager = beacon->ibss_mgr_status != 0;
- 		agg_status = iwl_mvm_get_agg_status(mvm, beacon_notify_hdr);
- 		status = le16_to_cpu(agg_status->status) & TX_STATUS_MSK;
- 		IWL_DEBUG_RX(mvm,
- 			     "beacon status %#x retries:%d tsf:0x%016llX gp2:0x%X rate:%d\n",
- 			     status, beacon_notify_hdr->failure_frame,
- 			     le64_to_cpu(beacon->tsf),
--			     mvm->ap_last_beacon_gp2,
-+			     beacon_gp2,
- 			     le32_to_cpu(beacon_notify_hdr->initial_rate));
- 	} else {
-+		const struct iwl_extended_beacon_notif *beacon =
-+			(void *)pkt->data;
-+
- 		if (unlikely(pkt_len < sizeof(*beacon)))
- 			return;
- 
-+		beacon_gp2 = le32_to_cpu(beacon->gp2);
-+
- 		mvm->ibss_manager = beacon->ibss_mgr_status != 0;
- 		status = le32_to_cpu(beacon->status) & TX_STATUS_MSK;
- 		IWL_DEBUG_RX(mvm,
- 			     "beacon status %#x tsf:0x%016llX gp2:0x%X\n",
- 			     status, le64_to_cpu(beacon->tsf),
--			     mvm->ap_last_beacon_gp2);
-+			     beacon_gp2);
- 	}
- 
- 	csa_vif = rcu_dereference_protected(mvm->csa_vif,
- 					    lockdep_is_held(&mvm->mutex));
- 	if (unlikely(csa_vif && csa_vif->bss_conf.csa_active))
--		iwl_mvm_csa_count_down(mvm, csa_vif, mvm->ap_last_beacon_gp2,
-+		iwl_mvm_csa_count_down(mvm, csa_vif, beacon_gp2,
- 				       (status == TX_STATUS_SUCCESS));
- 
- 	tx_blocked_vif = rcu_dereference_protected(mvm->csa_tx_blocked_vif,
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 92471bc7b505b..83fb3f9af4745 100644
+index 83fb3f9af4745..a0bf9815aef6b 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -3100,7 +3100,6 @@ void iwl_mvm_stop_ap_ibss_common(struct iwl_mvm *mvm,
+@@ -625,9 +625,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
+ 	hw->wiphy->max_sched_scan_reqs = 1;
+ 	hw->wiphy->max_sched_scan_ssids = PROBE_OPTION_MAX;
+ 	hw->wiphy->max_match_sets = iwl_umac_scan_get_max_profiles(mvm->fw);
+-	/* we create the 802.11 header and zero length SSID IE. */
+-	hw->wiphy->max_sched_scan_ie_len =
+-		SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2;
++	hw->wiphy->max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm);
+ 	hw->wiphy->max_sched_scan_plans = IWL_MAX_SCHED_SCAN_PLANS;
+ 	hw->wiphy->max_sched_scan_plan_interval = U16_MAX;
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index b588f1dcf20d5..bc2c240160b2c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -3148,8 +3148,6 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
+ 	if (ret)
+ 		return ret;
+ 
+-	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
+-
+ 	/* for 6 GHZ band only PSC channels need to be added */
+ 	for (i = 0; i < params.n_channels; i++) {
+ 		struct ieee80211_channel *channel = params.channels[i];
+@@ -3183,6 +3181,8 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
+ 		goto out;
  	}
  
- 	mvmvif->ap_ibss_active = false;
--	mvm->ap_last_beacon_gp2 = 0;
- 
- 	if (vif->type == NL80211_IFTYPE_AP && !vif->p2p) {
- 		iwl_mvm_vif_set_low_latency(mvmvif, false,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index 2628361332895..319301504b7eb 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -1180,9 +1180,6 @@ struct iwl_mvm {
- 	struct ieee80211_vif __rcu *csa_tx_blocked_vif;
- 	u8 csa_tx_block_bcn_timeout;
- 
--	/* system time of last beacon (for AP/GO interface) */
--	u32 ap_last_beacon_gp2;
--
- 	/* indicates that we transmitted the last beacon */
- 	bool ibss_manager;
- 
++	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
++
+ 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
+ 	if (uid < 0) {
+ 		ret = uid;
 -- 
 2.53.0
 
