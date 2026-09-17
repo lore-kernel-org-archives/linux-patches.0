@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436263B27DF;
-	Thu, 17 Sep 2026 16:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7E54848BD;
+	Thu, 17 Sep 2026 16:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663890; cv=none; b=Kna9eWkblI+saeGg9mHSWs09TUmJcil88L5mLWgp0vznnkoD5pQaPM2/HxS+CwdhkTNpAHhpuDfmP8ySZbXy2xFZZ9YLVs3+GRrd5RkAGpY/PvK9h2bokI8M712rP4P9WvYHqDYItQwAjwhT3zH5Bt5H80gqlu+qoarW8W6YAls=
+	t=1789663893; cv=none; b=T/iMDv10y+8GgxMkyhxpNUWTlHYG+9JOVG6BU8B+45aldpWNikApPwl82zf7bB721TH8gpFhbvs9BQuTOYfHgiJUlmPY/Hmvv82MyCicWfLTzSX5smKWSiFRm1Q52SVduVHgHyBid8Iv2qnSrdJVHImj0D48eykCi7Fikpqmzzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663890; c=relaxed/simple;
-	bh=3jWkmU4Phd6/5A/nzqVsgz6dlH7NPRy0tTCy+9pQa9Y=;
+	s=arc-20240116; t=1789663893; c=relaxed/simple;
+	bh=KpnWF9CAsDV13N1Bsy/XN4vrKIv4XFwc5oeQd5+HMj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFIdxj3SWhKyEUFf7pgaDStIFpLduRUf2cw5MpY3JbcEPyk1MI7wIgQT4oPAp27jH4NEexcRLM17aR4Bh28/TUZzYQeZd9PvP/XfuqTeXVf423hhEpHwv/+hHRrfqxgwYL21FOQz5Xad3I7M74Ffi4vbNCEUlNS5/qzVp3CnjIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXK+37WC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K9NT2vALquvjSoSFteNrqtWgro77nMAqvgWkmb0cjOBJCxAFU1m0hGo3SqJH537S8c1zthsUAbw4q8dyD7fEcZ2xG+MbfwNYXrmOmsdxpJmeQW7eUNqSTotN2Hs9BpiJxAbWvJDxREva6pqynpIuev6JSCPqFHXkmK99O2Y+Gng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m81wF+mi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXK+37WC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641411F000FF;
-	Thu, 17 Sep 2026 16:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m81wF+mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9E31F00893;
+	Thu, 17 Sep 2026 16:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663888;
-	bh=3eehNoyaNR9TYO+c6urY9nJuzqA4eE45YkcnA0RLup8=;
+	s=korg; t=1789663891;
+	bh=WMQ/uoUaqPo1zovcWt5HQV4EUgUthdNqNPlHRqOfJlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nXK+37WCnqXWoz2X3gclZ02IinAU7UnM9J64IgtxSQcAgJla501WgHSyqDtHvolVC
-	 whC+703tpwJrr2Z4Y8EgKcKHGJC6TpkGm5sli6V7lhGBf12yVrvIFxquyjghg1aWxA
-	 gXTGDbiEDwZQBXQprYpCuzsUv8aCswQuZFXEL0rM=
+	b=m81wF+mia51vsdsQihKbMJXdu4RVLcjNgPHAtQEWYo88VPY6scbQ3+C9GFDlReuob
+	 +CzjXZg6jCsOz9MGoaWed5YyOqWEiwiVK9Ob8jcGsb1i456GuTgFxdwWlseaxt6tiW
+	 U9gUIUfsj4JezLnA8P2A5KHOMSKRtXl5JeG/PSWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Carey <carvsdriver@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0171/1250] net/rds: Dont sleep inside rds_ib_conn_path_shutdown
-Date: Thu, 17 Sep 2026 15:59:26 +0100
-Message-ID: <20260917151556.730257769@linuxfoundation.org>
+Subject: [PATCH 6.18 0189/1250] USB: cdc-acm: start bulk-IN polling when ALWAYS_POLL_CTRL is set
+Date: Thu, 17 Sep 2026 15:59:44 +0100
+Message-ID: <20260917151557.239533091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,67 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Dave Carey <carvsdriver@gmail.com>
 
-[ Upstream commit 16f48efaeb6991193fb7775c577f06f5b20b0c90 ]
+[ Upstream commit e5ab27ddd74e2d67a94c51c6f2ad87b1ff13912b ]
 
-New rds rdma self tests exposed a hang when tearing down
-the ib network configs.  This is caused by the shutdown worker
-thread sleeping on the wait_event call, which blocks other work
-items in the queue. Fix this by changing wait_event to
-wait_event timeout, and looping until the wait check succeeds.
+The INGENIC 17EF:6161 touchscreen composite device has a ~55-second
+watchdog that resets the USB device if the bulk-IN endpoint on the CDC
+data interface goes unread.  The existing ALWAYS_POLL_CTRL quirk keeps
+the notification endpoint (ctrlurb / EP 0x82) polling continuously, but
+that alone is insufficient: the firmware monitors bulk-IN activity, not
+just notification-endpoint activity.
 
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260518012443.2629206-2-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add acm_submit_read_urbs() calls to the two ALWAYS_POLL_CTRL paths that
+already restart the ctrlurb:
+
+  1. acm_probe(): start bulk reads at probe time alongside the ctrlurb,
+     so the watchdog is satisfied from first bind without requiring a
+     userspace process to open /dev/ttyACMn.
+
+  2. acm_port_shutdown(): restart bulk reads after port close alongside
+     the ctrlurb restart, so the watchdog keeps running when the last
+     TTY user closes the port.
+
+acm_read_bulk_callback() already resubmits each URB unconditionally on
+normal completion, so once submitted the reads remain active until an
+explicit kill (disconnect, suspend).  acm_submit_read_urb() is a no-op
+for URBs that are already in flight (read_urbs_free bit clear), so the
+existing acm_port_activate() call remains correct and races are avoided.
+
+Tested on Lenovo Yoga Book 9 14IAH10 (83KJ): without this patch the
+device resets every ~55 s when no TTY is open; with it the device
+remains stable indefinitely.
+
+Signed-off-by: Dave Carey <carvsdriver@gmail.com>
+Link: https://patch.msgid.link/20260515141940.751397-1-carvsdriver@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_cm.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/usb/class/cdc-acm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
-index e50e01abb0799..d9b6c9d2f6791 100644
---- a/net/rds/ib_cm.c
-+++ b/net/rds/ib_cm.c
-@@ -1043,6 +1043,19 @@ int rds_ib_conn_path_connect(struct rds_conn_path *cp)
- 	return ret;
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 12f9fe62199ba..d6a2f1591460a 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -797,6 +797,9 @@ static void acm_port_shutdown(struct tty_port *port)
+ 				"ctrl polling restart failed after port close\n");
+ 		/* port_shutdown() cleared DTR/RTS; restore them */
+ 		acm_set_control(acm, USB_CDC_CTRL_DTR | USB_CDC_CTRL_RTS);
++		if (acm_submit_read_urbs(acm, GFP_KERNEL))
++			dev_dbg(&acm->control->dev,
++				"read urb restart failed after port close\n");
+ 	}
  }
  
-+static unsigned long rds_ib_conn_path_shutdown_check_wait(struct rds_conn_path *cp)
-+{
-+	struct rds_connection *conn = cp->cp_conn;
-+	struct rds_ib_connection *ic = conn->c_transport_data;
-+
-+	return (!ic->i_cm_id ||
-+		(rds_ib_ring_empty(&ic->i_recv_ring) &&
-+		 (atomic_read(&ic->i_signaled_sends) == 0) &&
-+		 (atomic_read(&ic->i_fastreg_inuse_count)) == 0 &&
-+		 (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR))) ? 0
-+		: msecs_to_jiffies(1000);
-+}
-+
- /*
-  * This is so careful about only cleaning up resources that were built up
-  * so that it can be called at any point during startup.  In fact it
-@@ -1083,11 +1096,13 @@ void rds_ib_conn_path_shutdown(struct rds_conn_path *cp)
- 		 * sends to complete we're ensured that there will be no
- 		 * more tx processing.
- 		 */
--		wait_event(rds_ib_ring_empty_wait,
--			   rds_ib_ring_empty(&ic->i_recv_ring) &&
--			   (atomic_read(&ic->i_signaled_sends) == 0) &&
--			   (atomic_read(&ic->i_fastreg_inuse_count) == 0) &&
--			   (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR));
-+		while (!wait_event_timeout(rds_ib_ring_empty_wait,
-+					   rds_ib_conn_path_shutdown_check_wait(cp) == 0,
-+					   msecs_to_jiffies(1000))) {
-+			tasklet_schedule(&ic->i_send_tasklet);
-+			tasklet_schedule(&ic->i_recv_tasklet);
-+		}
-+
- 		tasklet_kill(&ic->i_send_tasklet);
- 		tasklet_kill(&ic->i_recv_tasklet);
+@@ -1564,6 +1567,9 @@ static int acm_probe(struct usb_interface *intf,
+ 		if (usb_submit_urb(acm->ctrlurb, GFP_KERNEL))
+ 			dev_warn(&intf->dev,
+ 				 "failed to start persistent ctrl polling\n");
++		if (acm_submit_read_urbs(acm, GFP_KERNEL))
++			dev_warn(&intf->dev,
++				 "failed to start persistent bulk read polling\n");
+ 	}
  
+ 	return 0;
 -- 
 2.53.0
 
