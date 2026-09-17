@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7972949D5AF;
-	Thu, 17 Sep 2026 17:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F27318EC7;
+	Thu, 17 Sep 2026 17:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667861; cv=none; b=QVaCqblwEvkw2v74Gix9kv7pp16YdAf/HVKaqfioS8GwusetV8WABqzaD2xJt5DWlEX5P3kuajHNsG5qwMJvlae0zXkEFtV2j0IRgz5FNJzSAftKtbA4CA3ecv2WCuHblOKxa3C29fI8ubiGUyNNpLgOMG+JAStQXEUyG9yrPec=
+	t=1789667864; cv=none; b=sO0xGeV6CZ10ckpMsE7OjuSoHjAFUo4QpWXtwks+H6m7z6SNLXNgJ6N2MayCLJOdPhKynxIzTiyydWKMIQxhRLZZPYUOc6MTD4jTu7r9+m0wLhcanjcaRs2irpaKQaB1LiR17HHn8+YNIXKzY+yzOnOXrmWlgZixWea/C5qN3jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667861; c=relaxed/simple;
-	bh=+58Wx1DjfTU6rqV6pI0914GlR5Ivl96Tb9sRt7+g8hI=;
+	s=arc-20240116; t=1789667864; c=relaxed/simple;
+	bh=vFM4i09cS7gNgwWG62HeTs4jTjqeY4R9s+EKh095HDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4jMKAh5LJhyHml7O9qL372YKb2JeKQdKT5Kxic3UpNgoReNkz2xoB+AaN+a9fjyYiOJT6TPHlQpkNxMWcWynvxwMf77eUrUeUdJYiApQKA3eZ6sQ6et4bAwBLl0Vvm5CRqTWXgsRUKSAe52CXr6DAlxiYa3KzM/sgSVrf8ueG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eo96QLVG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KbRl0BkwFZPO2ycCcF2i1Fkb6CbKA61YpWgMUaLMD5O8sDL0XDGe1CcnQ8azBHv8op0RaoHwQcTG8bBABcYSwIZpw0WMMResDUp+bUIIFiBb01uVaFVZvuxVEOchTX6B1ZuDki0MogTW5Xm1nfQ0yi/6i3W8bt+Rp+llR7irtbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPP0H8wc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eo96QLVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E271F000FF;
-	Thu, 17 Sep 2026 17:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPP0H8wc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B2A1F000FF;
+	Thu, 17 Sep 2026 17:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667860;
-	bh=dhtcyBBT/EiRNdwhIubuD/p2gY/1SHFZ2Jm0wxadqXg=;
+	s=korg; t=1789667863;
+	bh=zKVpW7k57mz+q3dQ+s4uE2ksS61SWSEzYrtB29SfwIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eo96QLVGBMDGFIXpB88+KhQjI1XAVkyXtJPmLuc5w41K5Z00j4i4dDBl0o5WLgrwp
-	 4jvSxP7YkD/noi0JJ8yo5ovEBK5pVFlUSaeQGjffkBPOyVMOEixKjqWvcrTfj5m/Yq
-	 PcnYCl0ni5cgpiZyAvaUybQoK+a4hSR6UBmAcFDQ=
+	b=kPP0H8wc2FewmyhdgPfFAVVPakOgp5rb/s2PZZ5ib5t9IlpG9L57ESm+hxx7km8X+
+	 KaBiXRNqbNMqsPr6u69IFDaZWxRqqGhvvjt338D3szItZOJLovyvJRVl1//fzgYtyh
+	 8Drd5vUj+r0curEY+wDuzkejVtoLayiA70PhF9w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0233/1102] wifi: nl80211: Increase ie_len size to prevent truncated IEs in new peer notifications
-Date: Thu, 17 Sep 2026 16:02:56 +0100
-Message-ID: <20260917151545.436344496@linuxfoundation.org>
+Subject: [PATCH 6.12 0234/1102] RDMA/umem: Be careful about boundary conditions in ib_umem_find_best_pgsz()
+Date: Thu, 17 Sep 2026 16:02:57 +0100
+Message-ID: <20260917151545.461851302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,53 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit dfb67ae569bf0726187725b1ef8d89377778861e ]
+[ Upstream commit 09ea6837a0434fb4db99528a5055b6d822135dcf ]
 
-Currently, ie_len in cfg80211_notify_new_peer_candidate is defined as
-1-byte field, capping the maximum IE list size at 255 bytes. When a
-large beacon is received, the IE list is truncated, passing incomplete
-data to wpa_supplicant. This causes supplicant to fail parsing the IEs.
+Several corner cases, especially important on 32 bits:
 
-Increasing the size of ie_len to allow the full length of the IE list to
-be forwarded properly.
+- umem->iova is u64, the function argument should pass in u64 or
+  iova will be truncated
+- Check that the length is not too large for the iova
+- Check that lengths > 4G don't overflow the GENMASK
 
-Signed-off-by: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
-Link: https://patch.msgid.link/20260605054307.427874-1-thiyagarajan@aerlync.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/r/2-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 2 +-
- net/wireless/nl80211.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/umem.c | 18 ++++++++++++------
+ include/rdma/ib_umem.h         |  4 ++--
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 8dcb218e08047..fcc5934a20c0f 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -7810,7 +7810,7 @@ void cfg80211_ibss_joined(struct net_device *dev, const u8 *bssid,
-  * cfg80211 then sends a notification to userspace.
+diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
+index fd3a774904f8d..468d662c42c47 100644
+--- a/drivers/infiniband/core/umem.c
++++ b/drivers/infiniband/core/umem.c
+@@ -78,14 +78,17 @@ static void __ib_umem_release(struct ib_device *dev, struct ib_umem *umem, int d
   */
- void cfg80211_notify_new_peer_candidate(struct net_device *dev,
--		const u8 *macaddr, const u8 *ie, u8 ie_len,
-+		const u8 *macaddr, const u8 *ie, size_t ie_len,
- 		int sig_dbm, gfp_t gfp);
+ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 				     unsigned long pgsz_bitmap,
+-				     unsigned long virt)
++				     u64 virt)
+ {
+ 	unsigned long curr_len = 0;
+ 	dma_addr_t curr_base = ~0;
+-	unsigned long va, pgoff;
++	unsigned long pgoff;
+ 	struct scatterlist *sg;
+-	dma_addr_t mask;
++	unsigned long mask = 0;
++	unsigned int bits;
+ 	dma_addr_t end;
++	u64 last_va;
++	u64 va;
+ 	int i;
+ 
+ 	umem->iova = va = virt;
+@@ -103,9 +106,12 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 	 * number of required pages. Compute the largest page size that could
+ 	 * work based on VA address bits that don't change.
+ 	 */
+-	mask = pgsz_bitmap &
+-	       GENMASK(BITS_PER_LONG - 1,
+-		       bits_per((umem->length - 1 + virt) ^ virt));
++	if (check_add_overflow(umem->length - 1, virt, &last_va))
++		return 0;
++	bits = bits_per(virt ^ last_va);
++	if (bits < BITS_PER_LONG)
++		mask = pgsz_bitmap & GENMASK(BITS_PER_LONG - 1, bits);
++
+ 	/* offset into first SGL */
+ 	pgoff = umem->address & ~PAGE_MASK;
+ 
+diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
+index 4c5329b504d0c..821f23d2a4458 100644
+--- a/include/rdma/ib_umem.h
++++ b/include/rdma/ib_umem.h
+@@ -81,7 +81,7 @@ int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offset,
+ 		      size_t length);
+ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 				     unsigned long pgsz_bitmap,
+-				     unsigned long virt);
++				     u64 virt);
  
  /**
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index d9fa7e8447877..b302caafd4d31 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -18581,7 +18581,7 @@ void nl80211_send_ibss_bssid(struct cfg80211_registered_device *rdev,
+  * ib_umem_find_best_pgoff - Find best HW page size
+@@ -161,7 +161,7 @@ static inline int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offs
  }
- 
- void cfg80211_notify_new_peer_candidate(struct net_device *dev, const u8 *addr,
--					const u8 *ie, u8 ie_len,
-+					const u8 *ie, size_t ie_len,
- 					int sig_dbm, gfp_t gfp)
+ static inline unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 						   unsigned long pgsz_bitmap,
+-						   unsigned long virt)
++						   u64 virt)
  {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	return 0;
+ }
 -- 
 2.53.0
 
