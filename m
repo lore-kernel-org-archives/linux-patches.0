@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C566395AD4;
-	Thu, 17 Sep 2026 17:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B09C50254F;
+	Thu, 17 Sep 2026 17:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665009; cv=none; b=Bu/NoHAB6krvXecUcbQvHdNJACgkSZnVBabu7c58dX0NORAwI4ULyOZ5y1Sh4UVhXHM2kdeFAHLpKyIIHVwjHgEI9LtqzEmL3q5Gj0HxOFZK8B+kxs4StZzSOc5a7IZIpxB1pzJJFbVTdnzyvy8EmQjP6EvGI5Np0h0aqMjnL74=
+	t=1789665012; cv=none; b=j7ykZcy3Sg7LSWqcxWOPZZT2ziMQVXGsJVY7gyqIl5xW1s70k7822bxWNuNbBgvSNFWWe8BqJUFoxwwqHj3UoDZ3IxvNTDMjUmR4GzUn+AnHrpRgHVEzRp2QBb1uqoavhtflFWJ0fvl+kpzifIS1HZWFGXyxRk+O9y8HUtMuiwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665009; c=relaxed/simple;
-	bh=eCq9RFV6fbJ+3IGom1a+Pm6m/0Ccfzycami8qSfVDr4=;
+	s=arc-20240116; t=1789665012; c=relaxed/simple;
+	bh=VI2hHtmYmBRPM+zN3TMoS33eXuOQyM1ip4OaZrOYZaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xi1O0I171ubGUCXZlZ0MyApRy5ApJfvKa/gcYp6fzziAWdI3OGNXpEQOmLFPkZtjW7FwdG07yJ7yA6ds94AZ3X3VtOB0VygjkRaFljeKKVwCAAM3qvIxwqfk6qkRHXIcPkRYL/iqtYs26pnLsWlQGuznCe30Fu9stLOJbnUYvUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5xkYjh/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GWbDAcGi/KNq7jbrlsevZ5tKdLzePdIaLW080GP6aYu8reFZajbnZQqZ66RvHgOM6Z7ez7In50anxlVAL+TRBvm3BapPyCaL+VPzDwc3yqSL1kwHwBndJZCcGOrigwOGPVWdtchrrxzcStmb+p8gcUSg3R7Db+OVjwopv6fyXHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkRuE96z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5xkYjh/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E061F000FF;
-	Thu, 17 Sep 2026 17:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkRuE96z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C31E1F000FF;
+	Thu, 17 Sep 2026 17:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665008;
-	bh=bCpLM/3NGUDW6dPvixcrOaGYmuMLvrxR3S051jJvkzg=;
+	s=korg; t=1789665011;
+	bh=Wx61SxgBTr51fY17Me/926ZWTX3J7eRxthqTgKBY3KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5xkYjh/ukKuDaQU6iqxbP4LqklGIKwDK6PA+3qUX3r5xOZ0JZxtGUqWu9Gud7mkE
-	 FBmL5Q1KqY8TaiUl+3o7dfQh7vjrURfvwbT0cwLUv+QfO0To/NrJBtI58RvpUaJsCU
-	 u1kFgICFq3dOn658bnouCJd6blsMbq6KR0qPPhMY=
+	b=NkRuE96z5bXZntFEDQGFCh9RDW2tlJSxsPbLjQVW8AkwPd+Blm5cywTndsW+Q7Mvf
+	 NxiooIbFegFgL2Nvb2MHh6KzXaUKdDuBpCfFgnIDpnw6FrhJ86zj0VDX3lykSIeCzB
+	 QxueujUXtOwQqQvFpdTWOwYBpl8VC58Xi2Kiy/i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0512/1250] cifs: Fix support for creating SFU fifo
-Date: Thu, 17 Sep 2026 16:05:07 +0100
-Message-ID: <20260917151605.837612197@linuxfoundation.org>
+Subject: [PATCH 6.18 0556/1250] ata: libata-core: Disable LPM on WD Green 2.5 480GB
+Date: Thu, 17 Sep 2026 16:05:51 +0100
+Message-ID: <20260917151607.001168017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,64 +45,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 608362facd2d0f2667f68b7f42207707d59a0071 ]
+[ Upstream commit d549df8a0ace611bff0a336a907f93420648b462 ]
 
-SFU fifos are natively supported (created and recognized) at least by:
-- Microsoft POSIX subsystem
-- OpenNT/Interix subsystem
-- Microsoft SFU (Windows Services for UNIX)
-- Microsoft SUA (Subsystem for UNIX-based Applications)
-- Windows NFS server (up to the Windows Server 2008 R2)
+According to a user report, the WD Green 2.5 480GB has problems with LPM.
 
-Windows NFS server since Windows Server 2012 uses new reparse point format
-for storing new fifos, but still can recognize this old format (also in the
-latest Windows Server 2022 version).
-
-SFU-style fifo is empty regular file which has system attribute set.
-
-These SFU-style fifos are already recognized by Linux SMB client.
-
-But Linux SMB client is currently creating new SFU fifos in different
-format which is not compatible with all those SFU-style consumers. Fix this
-by creating new fifos in correct SFU format which would be recognized by
-all those applications and also by existing Linux SMB clients.
-
-This change affects only creating new fifos when mount option -o sfu is used.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/linux-ide/CAGiKK17Fg4SgS+y0GzD3new44QzD_yPZU5V3ZeHdUr9mFnfn1Q@mail.gmail.com/
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/ata/libata-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 248ad60586e2e..1af1789bec5a5 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5350,10 +5350,8 @@ int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
- 		type[0] = '\0';
- 		break;
- 	case S_IFIFO:
--		type_len = 8;
--		strscpy(type, "LnxFIFO");
--		data = (u8 *)&pdev;
--		data_len = sizeof(pdev);
-+		/* SFU fifo is system file which is empty */
-+		type_len = 0;
- 		break;
- 	default:
- 		rc = -EPERM;
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index ae1e5f82026c5..a7a89b675a912 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4379,6 +4379,7 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
+ 	 */
+ 	{ "WDC WD100EFGX-68CPLN0",	NULL,	ATA_QUIRK_NOLPM },
+ 	{ "WDC WD102KFBX-68M95N0",	NULL,	ATA_QUIRK_NOLPM },
++	{ "WD Green 2.5 480GB",		NULL,	ATA_QUIRK_NOLPM },
+ 
+ 	/*
+ 	 * This sata dom device goes on a walkabout when the ATA_LOG_DIRECTORY
 -- 
 2.53.0
 
