@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6414D487C;
-	Thu, 17 Sep 2026 18:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC894E06F5;
+	Thu, 17 Sep 2026 18:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670413; cv=none; b=mSHicYZmQ0bcmKj1kM1mkiwAQh0C2rqXUbIY0A6yMacNfAjmH2uF1xzxnTNkbkTT2tucRyxwVMQH6dhefHupfXaz9hJF3KPA/QwURECE2zxPaJsjqY6hhcVKuWwkrgDldiExV8OUAgPgJ94iGwuq6eoTS2loLxhGrcffYYOlYeg=
+	t=1789670415; cv=none; b=MRPT9jNmUH6JILB7NmOYBSUB7/JV0Qm7kH7v6rLdM5TT/JKjH9JIh3EL5bPak+eGy0rjD+pgZdMN+qjjK4X+c2tG7nqiuoKZyz/xwPbbYvuIQ9zsiWPwAwbiaP3BajIWBkGeNfb6PD5ZC8FkVYmT1k5AfTiOpmzjNnrTCo6CIpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670413; c=relaxed/simple;
-	bh=pH7LiiTzuF0JabfUajgiZhH7Xr+9EZCGBk1YCHKUFdA=;
+	s=arc-20240116; t=1789670415; c=relaxed/simple;
+	bh=2Gy7OIuqXEe2b21xPxX/z9emM4zJrViLNcAiOC4f4ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsTe8FJ2ed3yq5SSBGkym6JK9gFPXPcFK/W53KRWMD6R/HUimZl3FBNf85Xgs3EufcjVhv5ofwyb6eR6kXN+nmFCQVLiUHUuGFFtp03NLD17OgTCV5aQwDPPdsf0Cf8Ex4QjikXaO8Gncdgp0JB31qZCNXmHnjhx0Wgjnz/Et5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJPFYdp3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KnDTkPz3FaDPSCkse1+lJA0+SpWid8cw/4k4NBgRbunclWfRt2200L6/Iupzyt19JqGfRZH6VCWtsyTx2CqC1EpMoN9BbqrQIvk7j32wPa0v3S+I1a9uohw8quBVRaMm4rytF7l9v8+GiHUo1zwtCE4epNPDOd7ddMgOG/7T+Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPgFXFni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJPFYdp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4ADD1F000FF;
-	Thu, 17 Sep 2026 18:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPgFXFni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CADD31F00893;
+	Thu, 17 Sep 2026 18:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670410;
-	bh=X9GuOHLeWFh6nANEABPajYBitw7t8FioyjJEgDpSI9w=;
+	s=korg; t=1789670413;
+	bh=n25ObKQuqM7bfnHw6t92wHwoFDRN6LeCPpvqaRUITOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJPFYdp3xqPdb6DQdRfrazqhOlmOXNXIvvnyYc8cwZNpAkyW5VZ7eG+YQf+Ma1Lvs
-	 UHBKDJv9+IuEoa1UcMG73HdXXRTtoPMnJEe31fBli2N3vVlSedEeYsYHVgCDLHwAq2
-	 4mf6scEdMDU7kQ5e79tbXoOe+hxvKuhOMtNSVM5A=
+	b=LPgFXFniIjDhhfEFGC+L/Qh6yn6feKr0z0zvHBl4JQ4yteXyttndpce/C8/Qmherp
+	 FJjI6/SePBoxjy0v4t0C58+mNkO1VFlFNLnGA/ujfINdxhSn0wVoXmpt4501UwQgvZ
+	 XTjatyCabgjrX/9dVkHmX4itc6fL39Wj+kXNRnIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Zhaoping Shu <zhaoping.shu@mediatek.com>,
+	HW He <hw.he@mediatek.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0654/1102] bpf: Mark bpf_btf_find_by_name_kind() as sleepable
-Date: Thu, 17 Sep 2026 16:09:57 +0100
-Message-ID: <20260917151556.589279922@linuxfoundation.org>
+Subject: [PATCH 6.12 0637/1102] net: gro: Fix nesting of TCP GSO SKBs in skb_gro_receive_list()
+Date: Thu, 17 Sep 2026 16:09:40 +0100
+Message-ID: <20260917151556.118046938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,48 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: HW He <hw.he@mediatek.com>
 
-[ Upstream commit 620614bf7672130c43b3cff375525a2202f61979 ]
+[ Upstream commit 66817a9794263cd2a5dc4e99bf8e5fcc5ff7181e ]
 
-When bpf_btf_find_by_name_kind() finds a type in module BTF, it
-returns a new BTF object fd through __btf_new_fd(). This reaches
-anon_inode_getfd(), which can sleep while allocating or expanding the
-current task fd table.
+Fraglist GRO and hardware GRO can create an fraglist of
+HW-GRO packets. This cannot be segmented back into
+the original form on TCP tethering scenario.
 
-The helper prototype does not set might_sleep, so the verifier allows
-the helper in non-sleepable contexts such as BPF timer callbacks. The
-fd allocation can then sleep in softirq context and install the fd into
-the interrupted task.
+Avoid constructing such a GSO packet, by flushing an already
+built fraglist GRO packet if a hardware GRO packet arrives.
 
-Mark the helper as sleepable. This preserves calls from the main body
-of a sleepable syscall program while rejecting calls from its
-non-sleepable regions.
+Scenario (Tethering/Forwarding):
+1.Driver submits a single TCP packet, P1. P1 is kept in the
+gro_list as the first packet.
 
-Fixes: 3d78417b60fb ("bpf: Add bpf_btf_find_by_name_kind() helper.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/bpf/20260903155150.D57251F000E9@smtp.kernel.org
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260903214758.2727663-4-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+2. The driver submits a TCP GSO skb, P2. P2 has already aggregated
+multiple TCP packets by HW_GRO, and its non-linear data is stored in
+frags[].
+
+3. P1 and P2 match the GRO rules, and since there is no local socket,
+they are aggregated by skb_gro_receive_list(). The resulting skb,
+P3, has a frag_list entry that still contains frags[]:
+P3: [ Linear Data ] -> frag_list -> [ Linear Data ]
+                                    [ frag[1] ]
+                                    [ frag[2] ]
+                                    ...
+4. Later, tcp4_gso_segment() or tcp6_gso_segment() calls
+skb_segment_list() to segment P3. However, skb_segment_list() only
+segments the entries in frag_list. It does not segment the frags[]
+inside P2, so P3 is not restored to the original packets, which leads
+to IP fragmentation or packet drop in the following path.
+
+Check skb_is_gso(skb) and current GRO method, make sure fraglist GRO
+applies to consecutive non-GSO skb, others adopt regular GRO path.
+
+Fixes: 8d95dc474f85 ("net: add code for TCP fraglist GRO")
+Signed-off-by: Zhaoping Shu <zhaoping.shu@mediatek.com>
+Signed-off-by: HW He <hw.he@mediatek.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260901082312.14596-1-zhaoping.shu@mediatek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_offload.c   | 22 ++++++++++++++++------
+ net/ipv6/tcpv6_offload.c | 15 +++++++++++++--
+ 2 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 15e9fd471a05d..f219a03ceefff 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -8253,6 +8253,7 @@ BPF_CALL_4(bpf_btf_find_by_name_kind, char *, name, int, name_sz, u32, kind, int
- const struct bpf_func_proto bpf_btf_find_by_name_kind_proto = {
- 	.func		= bpf_btf_find_by_name_kind,
- 	.gpl_only	= false,
-+	.might_sleep	= true,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index 591b957384b29..17f28f0ba9300 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -356,6 +356,7 @@ struct sk_buff *tcp_gro_receive(struct list_head *head, struct sk_buff *skb,
+ 		flush |= skb->ip_summed != p->ip_summed;
+ 		flush |= skb->csum_level != p->csum_level;
+ 		flush |= NAPI_GRO_CB(p)->count >= 64;
++		flush |= NAPI_GRO_CB(p)->is_flist != NAPI_GRO_CB(skb)->is_flist;
+ 		skb_set_network_header(skb, skb_gro_receive_network_offset(skb));
+ 
+ 		if (flush || skb_gro_receive_list(p, skb))
+@@ -419,12 +420,20 @@ static void tcp4_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 	struct net *net;
+ 	int iif, sdif;
+ 
+-	if (likely(!(skb->dev->features & NETIF_F_GRO_FRAGLIST)))
+-		return;
+-
+ 	p = tcp_gro_lookup(head, th);
+ 	if (p) {
+-		NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++		/* flist GRO applies to consecutive non-GSO skbs */
++		if (!skb_is_gso(skb) || !NAPI_GRO_CB(p)->is_flist) {
++			NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++			return;
++		}
++
++		/* Fall back to the regular GRO path */
++		if (NAPI_GRO_CB(p)->count == 1)
++			NAPI_GRO_CB(p)->is_flist = 0;
++
++		NAPI_GRO_CB(skb)->is_flist = 0;
++
+ 		return;
+ 	}
+ 
+@@ -435,7 +444,7 @@ static void tcp4_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 				       iph->saddr, th->source,
+ 				       iph->daddr, ntohs(th->dest),
+ 				       iif, sdif);
+-	NAPI_GRO_CB(skb)->is_flist = !sk;
++	NAPI_GRO_CB(skb)->is_flist = !sk && !skb_is_gso(skb);
+ 	if (sk)
+ 		sock_gen_put(sk);
+ }
+@@ -455,7 +464,8 @@ struct sk_buff *tcp4_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 	if (!th)
+ 		goto flush;
+ 
+-	tcp4_check_fraglist_gro(head, skb, th);
++	if (unlikely(skb->dev->features & NETIF_F_GRO_FRAGLIST))
++		tcp4_check_fraglist_gro(head, skb, th);
+ 
+ 	return tcp_gro_receive(head, skb, th);
+ 
+diff --git a/net/ipv6/tcpv6_offload.c b/net/ipv6/tcpv6_offload.c
+index 36c6c4be2b1a0..066c5fa5ba512 100644
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -29,7 +29,18 @@ static void tcp6_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 
+ 	p = tcp_gro_lookup(head, th);
+ 	if (p) {
+-		NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++		/* flist GRO applies to consecutive non-GSO skbs */
++		if (!skb_is_gso(skb) || !NAPI_GRO_CB(p)->is_flist) {
++			NAPI_GRO_CB(skb)->is_flist = NAPI_GRO_CB(p)->is_flist;
++			return;
++		}
++
++		/* Fall back to the regular GRO path */
++		if (NAPI_GRO_CB(p)->count == 1)
++			NAPI_GRO_CB(p)->is_flist = 0;
++
++		NAPI_GRO_CB(skb)->is_flist = 0;
++
+ 		return;
+ 	}
+ 
+@@ -40,7 +51,7 @@ static void tcp6_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 					&hdr->saddr, th->source,
+ 					&hdr->daddr, ntohs(th->dest),
+ 					iif, sdif);
+-	NAPI_GRO_CB(skb)->is_flist = !sk;
++	NAPI_GRO_CB(skb)->is_flist = !sk && !skb_is_gso(skb);
+ 	if (sk)
+ 		sock_gen_put(sk);
+ #endif /* IS_ENABLED(CONFIG_IPV6) */
 -- 
 2.53.0
 
