@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9AC39C63E;
-	Thu, 17 Sep 2026 18:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF7C49D588;
+	Thu, 17 Sep 2026 18:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670882; cv=none; b=iz4AGVFCRr6IzxjxyKtdCGsl+WVkhSykVzacxvs56DnI4Pqj0gLDfmMRAyZvfiSW7NhtO2ZnANPWOxlCnTdoeMovC9SEtxgq6db/hzeXmoWWxyBQY4x9JQLmirwBvo/rcEkFZEnNjmtBGF3bV4NFUA9pBopW0bONuu/EF+VEIzQ=
+	t=1789670885; cv=none; b=Zn41uhpbBpLlohaQMJ+nMqnwi2DALEfPBZvF2HZO+QuH+JcOd21YsPiD8Hfhm23knUKnQN5B9CKSo+GWQg5quaU3RkEk8DGmUYai8n6zmBlweGy/2cqaUVNo/giTxXv3Q8wRugfiR342sNjJXtH8A+qzB0+B4pHhCIKLXUQbM+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670882; c=relaxed/simple;
-	bh=eQoAEx2ptvqMJGNA//zmapxyxtVQuNhg4gzvdS96zjY=;
+	s=arc-20240116; t=1789670885; c=relaxed/simple;
+	bh=MVkMkiN6XxeVDwHV5dJPtc45DyL4a+fKX8FAmNzTEFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgF5NBHT//BRCvJpA2ulCHPDC9mK0SNaYOdHVbDHKcvrclSk+JPVVlOemP1QlclFb2D90pijG34ljZVXZeYF8qW2u8h16EQTDA7qIsW7snbNmI/IUb1bL+L6nh93Np5gNtRP/N6EQxLhV8HBlRdTFx76d/LrnOYNh+w9xsmQGoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhmBB99W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TiCoz2TfplXft6lH1/sHvyWLqZu5w+z2q5MrAiVrcMGJGwaHdc1GKEMLL26xPUoEtalun/edHvmy4PYNIxLywoIA+mgKHkcjgA8+3D09h3Fkp8qJFcEyXyAecQmLA6Irix5PIt1Riq/D3aIqPP9sP0/8dHCauZWpotPpocoSP9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtzsKLTf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhmBB99W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1831F000FF;
-	Thu, 17 Sep 2026 18:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtzsKLTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B111F000FF;
+	Thu, 17 Sep 2026 18:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670881;
-	bh=n0WuJZkXxwq5LyGv1jI1Uf0vtkHcyBSQ4Cx37ITSIPo=;
+	s=korg; t=1789670884;
+	bh=S/RrVwMgX4OGthGYOaOviWnvOo1BesYjEdvBBKvIoSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhmBB99WPkWSnDofKoItOTLA+vX9qQIMSQC6jkneAFPleyKqqtq7qa4M9Hs/IuH4/
-	 06KieYH7MC7SZZ0nsUP0hA9WCa1DNg5yTmPtRWVn3mAYz/qZGqE2oTx+/yQMLNdHA+
-	 N95C2rdmJPtH2yD6qrBrRiYTlpJg0T1L83AOTE10=
+	b=RtzsKLTf6CZ4Znqr3jOl5WiQ0iGwqanuFndZZzisWrWfVm7Q39juc/16IcOIROmRi
+	 x54eKqCib/dcPwuQ8WNQrvhvoFGhbzZTFb3+YOyY98Z//C4urSbelC/4bYC9/M9M4W
+	 ZpJpL85bqGqLr+iXcz2ZQXFjHbqVt70XuqBQgYJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0763/1102] hwmon: (corsair-cpro) Remove debugfs entries when probe fails
-Date: Thu, 17 Sep 2026 16:11:46 +0100
-Message-ID: <20260917151559.592272641@linuxfoundation.org>
+Subject: [PATCH 6.12 0764/1102] octeontx2-pf: reset HTB scheduler topology before freeing queues
+Date: Thu, 17 Sep 2026 16:11:47 +0100
+Message-ID: <20260917151559.616938837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,52 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 4ee875c423c66c45d7ef7bbff403cd0e3971e0a2 ]
+[ Upstream commit ef39fca8508597fa565cf2be72a884a712fb98af ]
 
-ccp_debugfs_init() registers debugfs files whose private data is the devm
-allocated ccp.  If hwmon_device_register_with_info() fails right after it,
-ccp_probe() returns without removing them: the HID core then frees ccp,
-and ccp_remove() is not called for a failed probe, so the files stay
-behind.  Reading one of them dereferences the freed pointer.
+HTB offload programs NIX_AF_TLxX_TOPOLOGY on QoS-allocated scheduler
+queues via otx2_qos_txschq_set_parent_topology(), but teardown freed
+those queues without clearing TOPOLOGY.  The AF only restores PARENT and
+SCHEDULE on free, so PRIO_ANCHOR/RR_PRIO settings can survive in the
+shared scheduler pool and affect later allocations.
 
-Remove the debugfs entries on that error path.  debugfs_remove_recursive()
-waits for readers already inside the show callbacks, so ccp is no longer
-reachable through debugfs by the time probe returns.
+Add otx2_qos_reset_schq_topology() and otx2_qos_free_hw_schq() to zero
+TL4 through TL2 TOPOLOGY before each schq is returned to the AF during
+hierarchy teardown and cfg rollback.  Skip the aggregation level (TL1):
+it is a per-tx-link queue shared by the PF, default Tx hierarchy and VFs,
+and is not freed back to the AF by nix_txschq_free_one().
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hwmon/20260708031612.BD7E61F000E9@smtp.kernel.org/
-Fixes: 5997eb60f896 ("hwmon: (corsair-cpro) Add firmware and bootloader information")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260828061949.3151191-1-lilinmao@kylinos.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260903020533.3068041-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/nic/qos.c  | 60 +++++++++++++++++--
+ 1 file changed, 55 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 1eac947078826..bf7775a731fbe 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -642,13 +642,15 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 							 ccp, &ccp_chip_info, NULL);
- 	if (IS_ERR(ccp->hwmon_dev)) {
- 		ret = PTR_ERR(ccp->hwmon_dev);
--		goto out_hw_close;
-+		goto out_debugfs_remove;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index 5765bac119f0e..69dfb34008572 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -235,13 +235,63 @@ static int otx2_qos_txschq_set_parent_topology(struct otx2_nic *pfvf,
+ 	return rc;
+ }
+ 
++static int otx2_qos_reset_schq_topology(struct otx2_nic *pfvf, u16 lvl,
++					u16 schq)
++{
++	struct mbox *mbox = &pfvf->mbox;
++	struct nix_txschq_config *cfg;
++	int rc;
++
++	if (lvl < NIX_TXSCH_LVL_TL4 || lvl >= NIX_TXSCH_LVL_TL1)
++		return 0;
++
++	mutex_lock(&mbox->lock);
++
++	cfg = otx2_mbox_alloc_msg_nix_txschq_cfg(mbox);
++	if (!cfg) {
++		mutex_unlock(&mbox->lock);
++		return -ENOMEM;
++	}
++
++	cfg->lvl = lvl;
++	cfg->num_regs = 1;
++
++	if (lvl == NIX_TXSCH_LVL_TL4)
++		cfg->reg[0] = NIX_AF_TL4X_TOPOLOGY(schq);
++	else if (lvl == NIX_TXSCH_LVL_TL3)
++		cfg->reg[0] = NIX_AF_TL3X_TOPOLOGY(schq);
++	else if (lvl == NIX_TXSCH_LVL_TL2)
++		cfg->reg[0] = NIX_AF_TL2X_TOPOLOGY(schq);
++
++	cfg->regval[0] = 0;
++
++	rc = otx2_sync_mbox_msg(mbox);
++
++	mutex_unlock(&mbox->lock);
++
++	return rc;
++}
++
++static void otx2_qos_free_hw_schq(struct otx2_nic *pfvf, u16 lvl, u16 schq)
++{
++	int err;
++
++	err = otx2_qos_reset_schq_topology(pfvf, lvl, schq);
++	if (err)
++		netdev_warn(pfvf->netdev,
++			    "QoS: failed to reset topology for schq %u at level %u: %d\n",
++			    schq, lvl, err);
++
++	otx2_txschq_free_one(pfvf, lvl, schq);
++}
++
+ static void otx2_qos_free_hw_node_schq(struct otx2_nic *pfvf,
+ 				       struct otx2_qos_node *parent)
+ {
+ 	struct otx2_qos_node *node;
+ 
+ 	list_for_each_entry_reverse(node, &parent->child_schq_list, list)
+-		otx2_txschq_free_one(pfvf, node->level, node->schq);
++		otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ }
+ 
+ static void otx2_qos_free_hw_node(struct otx2_nic *pfvf,
+@@ -252,7 +302,7 @@ static void otx2_qos_free_hw_node(struct otx2_nic *pfvf,
+ 	list_for_each_entry_safe(node, tmp, &parent->child_list, list) {
+ 		otx2_qos_free_hw_node(pfvf, node);
+ 		otx2_qos_free_hw_node_schq(pfvf, node);
+-		otx2_txschq_free_one(pfvf, node->level, node->schq);
++		otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ 	}
+ }
+ 
+@@ -266,7 +316,7 @@ static void otx2_qos_free_hw_cfg(struct otx2_nic *pfvf,
+ 	otx2_qos_free_hw_node_schq(pfvf, node);
+ 
+ 	/* free node hw mappings */
+-	otx2_txschq_free_one(pfvf, node->level, node->schq);
++	otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ 
+ 	mutex_unlock(&pfvf->qos.qos_lock);
+ }
+@@ -913,7 +963,7 @@ static void otx2_qos_free_cfg(struct otx2_nic *pfvf, struct otx2_qos_cfg *cfg)
+ 	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++) {
+ 		for (idx = 0; idx < cfg->schq[lvl]; idx++) {
+ 			schq = cfg->schq_list[lvl][idx];
+-			otx2_txschq_free_one(pfvf, lvl, schq);
++			otx2_qos_free_hw_schq(pfvf, lvl, schq);
+ 		}
  	}
  
- 	ccp_debugfs_init(ccp, fw_valid, bl_valid);
- 
- 	return 0;
- 
-+out_debugfs_remove:
-+	debugfs_remove_recursive(ccp->debugfs);
- out_hw_close:
- 	hid_hw_close(hdev);
- 	hid_device_io_stop(hdev);
+@@ -921,7 +971,7 @@ static void otx2_qos_free_cfg(struct otx2_nic *pfvf, struct otx2_qos_cfg *cfg)
+ 		for (idx = 0; idx < cfg->schq_contig[lvl]; idx++) {
+ 			if (cfg->schq_index_used[lvl][idx]) {
+ 				schq = cfg->schq_contig_list[lvl][idx];
+-				otx2_txschq_free_one(pfvf, lvl, schq);
++				otx2_qos_free_hw_schq(pfvf, lvl, schq);
+ 			}
+ 		}
+ 	}
 -- 
 2.53.0
 
