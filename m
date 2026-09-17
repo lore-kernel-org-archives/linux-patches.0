@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4C4848B1;
-	Thu, 17 Sep 2026 18:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3883B776A;
+	Thu, 17 Sep 2026 18:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671044; cv=none; b=a47BwdoBvFeS/AfwGZlCPK+fk/JW0+4h4EHdpznAasIsUifbxVJ5fHYu+eoX1fCGOcRtR8BPY7ef+oJIVYamZP/FoMHyEBBqxjJBknMK0TSoQjvh0Qh9TExtjJUj+JhKTDYOrHFtlhCIKOzzUDuaJ+MzUJhUnqXe76ielEjBF+I=
+	t=1789671049; cv=none; b=dp97nuzqPY7EaTjqPlT+O7jLjtRCGwAzOtL7Vdkoa5j3883fwjjn89Ca2fITKNiXajG/wiwdvr2XUs9ETNSctbkRznWxsWWTEK+6pPoz4w6jfUpQQrvaHXsycPY6IvxrgE3HKmTowhtGH4dggAaq/Fqoow+meXy0x2gwk9ZmwCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671044; c=relaxed/simple;
-	bh=Cl03GqdC50K+9u/uZMfILOgnGZHkt99D3WvAVbPDXSI=;
+	s=arc-20240116; t=1789671049; c=relaxed/simple;
+	bh=q/w+DN8EJwFBupsthrv8pPjMUY0SkRj2du+3dz/Vo4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T66D26N+bL+QoAZvixSdvGuJWbPrRXG/HYRO0tRYVK8UMR8VydPXg1Z9chI72SDvroqs62uTvfYMYPmGmYlicEE3rfwLIlWcsUA765ZjkQffmExGU0c27ID/7BMDvA+Jhg5kRP9iNlUO+SosTTbNbC1SAv/p94EXwpfiJoZ1fjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6HBBZlL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ehr5SuQPHYxBYMyxoTe4yGJq4Zhfw0DB4u215ISBgzA8KNX1sqJFu7UK7wGlenMzCtD7rGWDaYr8FA0we0U/SjvXHFNC1uC7uVO1GCoLo6VkZxAw/ZwUV0mD3rS3NSMCBA6/W+mxh7U4i6Ytyw/tZrjbISUmjT6rJr0t5WvtF5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0o6efil; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6HBBZlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176751F000FF;
-	Thu, 17 Sep 2026 18:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0o6efil"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEF51F000FF;
+	Thu, 17 Sep 2026 18:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671042;
-	bh=rHZ0hcYcaaWz3amPpBvxexdXp7XsVY3iGagk2v6eWjQ=;
+	s=korg; t=1789671047;
+	bh=zefQk6oLUj5MA936tiq5vmq40uIVjBh3h2R4lpyxKxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6HBBZlLSmdtCd3EYAU/g7nVWjiIV419t0oP3H08q23DWpUPURYm91v1yQ/WyjLSh
-	 3FTcsUSsLKgt6D7V+44Q8SkTO+PsIpo+DxwzclxyTmUOgLu4th9lkjbSzNNc+RWqwg
-	 mNj3dspU4+hQBdegXVpRd/bZcp6rRptC4NiqvxXk=
+	b=K0o6efilTFaSEmnwmvMy7R5JJ7PQEesBUqVJ4HFxCsZR2MZOTHZkRUecBhFkyWmQY
+	 jjvfUrj10nqiFxnLkTdwdFNnhbzxZYvQrXv4oARUE5blP5DbbuffjKNIGa1ohzXxTE
+	 jD0abuIl9SChMY6Zvvud3wTspve0QVBly6t2TAH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+df1db6e034b3953e19f5@syzkaller.appspotmail.com,
-	Jeffin Philip <jeffinphilip14@gmail.com>,
-	Ian Kent <raven@themaw.net>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 0851/1102] fs: autofs: fix memory leak in autofs_fill_super()
-Date: Thu, 17 Sep 2026 16:13:14 +0100
-Message-ID: <20260917151601.902976956@linuxfoundation.org>
+	Nikhil Gurudasani <nikhilgurudasani314@gmail.com>,
+	Gao Xiang <xiang@kernel.org>
+Subject: [PATCH 6.12 0852/1102] erofs: preserve LZMA decoders on resize failure
+Date: Thu, 17 Sep 2026 16:13:15 +0100
+Message-ID: <20260917151601.927945914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,43 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
 
-commit 5ab54837fce04a1c9923d0bfd3d5de51fdc768b3 upstream.
+commit 617d0d8d199ba1790c94310fd75a22d01c97a8d6 upstream.
 
-In autofs_fill_super(), we create a new inode using
-autofs_new_ino(), however, if we fail to create root_inode,
-(that is, root_inode failure path), we return -ENOMEM without
-freeing the new inode(ino) that we created causing a memory leak.
-Fix this by adding autofs_free_ino() to free the inode we created
-in root_inode failure path before returning ENOMEM.
+The pool-resize path frees each stream's old decoder before allocating
+its replacement. If an allocation fails after some streams have already
+been replaced, the failed stream is put back on the list with state ==
+NULL. z_erofs_lzma_max_dictsize is still advanced as if the whole
+pool had been resized.
 
-Reported-by: syzbot+df1db6e034b3953e19f5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=df1db6e034b3953e19f5
-Fixes: 66917f85db60 ("autofs: add: new_inode check in autofs_fill_super()")
+An existing LZMA mount can select the broken stream and pass
+NULL to xz_dec_microlzma_reset(). A retry at the same size also
+skip another resize attempt. Since the global maximum was advanced,
+thus, the invalid state is left unrepaired.
+
+Allocate each replacement before freeing the old decoder, temporarily
+retaining one old decoder during allocation. Stop at the first failure
+and advance z_erofs_lzma_max_dictsize only after all streams satisfy
+the request.
+
+Record each stream's dictionary capacity so retries can skip streams
+already enlarged before a partial failure.
+
+Fixes: 622ceaddb764 ("erofs: lzma compression support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260903081048.132524-1-jeffinphilip14@gmail.com
-Signed-off-by: Ian Kent <raven@themaw.net>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/autofs/inode.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor_lzma.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/fs/autofs/inode.c
-+++ b/fs/autofs/inode.c
-@@ -322,8 +322,10 @@ static int autofs_fill_super(struct supe
- 		return -ENOMEM;
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -5,6 +5,7 @@
+ struct z_erofs_lzma {
+ 	struct z_erofs_lzma *next;
+ 	struct xz_dec_microlzma *state;
++	unsigned int dict_size;
+ 	u8 bounce[PAGE_SIZE];
+ };
  
- 	root_inode = autofs_get_inode(s, S_IFDIR | 0755);
--	if (!root_inode)
-+	if (!root_inode) {
-+		autofs_free_ino(ino);
- 		return -ENOMEM;
-+	}
+@@ -128,11 +129,19 @@ again:
+ 	err = 0;
+ 	/* 2. walk each isolated stream and grow max dict_size if needed */
+ 	for (strm = head; strm; strm = strm->next) {
++		struct xz_dec_microlzma *state;
++
++		if (strm->dict_size >= dict_size)
++			continue;
++		state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
++		if (!state) {
++			err = -ENOMEM;
++			break;
++		}
+ 		if (strm->state)
+ 			xz_dec_microlzma_end(strm->state);
+-		strm->state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
+-		if (!strm->state)
+-			err = -ENOMEM;
++		strm->state = state;
++		strm->dict_size = dict_size;
+ 	}
  
- 	root_inode->i_uid = ctx->uid;
- 	root_inode->i_gid = ctx->gid;
+ 	/* 3. push back all to the global list and update max dict_size */
+@@ -142,7 +151,8 @@ again:
+ 	spin_unlock(&z_erofs_lzma_lock);
+ 	wake_up_all(&z_erofs_lzma_wq);
+ 
+-	z_erofs_lzma_max_dictsize = dict_size;
++	if (!err)
++		z_erofs_lzma_max_dictsize = dict_size;
+ 	mutex_unlock(&lzma_resize_mutex);
+ 	return err;
+ }
 
 
