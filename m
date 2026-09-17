@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95973B1ED7;
-	Thu, 17 Sep 2026 17:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34374E36ED;
+	Thu, 17 Sep 2026 17:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665364; cv=none; b=qbXnHVG4Ow0lI2goqhFAJQGRVXn/NLrIv7UQYcR+l1H6ly5/ZP5d73bQ952EvXFQFUiBz/WL7Z7EfZ0irNVVd2JnZZLCqidK4Q7arkXPqKbMMp3e/cZ9bV8/1ooamBd1L1EWtwuz/kJE6Pjx1wHx0/DXsAgn85Og3qDyY1pnofs=
+	t=1789665367; cv=none; b=GUFmq3Yt2JGutTlyINmgNehi8Jho0LCvFizXeRtK2I+4BaUWkmKl3LAyTNaDJYg8wqmPBFIMXeP61uTkeydS+h92hT8Py/WRye+8LZ1V1UzMb8W5h2i+MC0xW5fcfrfLsidGYrZ+nJtZYtn+bV8wnEPnV64WxjXfmFCD74YsVM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665364; c=relaxed/simple;
-	bh=gW2dDINiZPPXTBu3vUBFT4DS3Y/zVH1qz3nQI7DvMUM=;
+	s=arc-20240116; t=1789665367; c=relaxed/simple;
+	bh=L17pe6eJxzFYjssMlLMh04tkgjj7Qb/l0cQHn26MBnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MH28yOGNPe/qePYxxJpZiqxFFkG0CkdsbMgmrF+m4H+Kbakpy8TMYbHOzPlyJDqzvsZLprYBhMoGFnXkOodzjxW/TPJzOhs9T6/Z4NFjqfjG73IYL9tIRjMPm7JnmJDgCXFp7UW6haO1E3GsBrDykYuLouqeltodC1OGq81Fbdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoaQlmtV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rDsyZQ59gzx4aVikcteMy/rHK2HFAkZiy96yi8jSFGuDN8fjH2xHtGPMLI0u533k81WwLByCJZX5vpncxUC5T1mnn9DeJD+cJllblHU6Pbri2y+pOKtye8XOYfwFK001MdFlgposJ4m8IR2a8UIR3FDtl8TQRl4lE3wJq4lT9i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIm5qsw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoaQlmtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E32B1F00898;
-	Thu, 17 Sep 2026 17:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIm5qsw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7A01F000FF;
+	Thu, 17 Sep 2026 17:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665362;
-	bh=n6zmxgWIVmzyYayi7XK5mcxHl8Iwj/kE3mYN8EgHwQM=;
+	s=korg; t=1789665365;
+	bh=4NvhhnJu6yP4Qvm1cR7cqgz1xQChcnQ9L7KxqyOthus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yoaQlmtVlM0OOguvvp4BCHtdvGBH8cewk4nGJboGikziUOMGl/e6xIbWFK6RHasyH
-	 ReiNVkMfdPrnGKpp+uI3am5eFtKuGVO1zsYLAU4AXZrNgX105quNnz/EhASJDaUiU2
-	 QsOd7QK7pElZUGRG6xuTytsAXFTNAe6uxjnYcKXo=
+	b=EIm5qsw9s3hxUf3hwuFeFu4UC5C9Qgc2gKDJd8EHH1BEuFbO6Kj/M+nGLrQJy7JRn
+	 1Om5i4ix9bIDvXfQCc1tXG8RpkznkKJcqcNwirl9fkTdRCiT8pCAfsQVfjLY/j2vpY
+	 P2MQeS55JMB4zwMaMDcZ6CU8GQdQcZJdnmvmlLz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0679/1250] net: ethernet: oa_tc6: Fix for the wrong data type
-Date: Thu, 17 Sep 2026 16:07:54 +0100
-Message-ID: <20260917151610.288583645@linuxfoundation.org>
+Subject: [PATCH 6.18 0680/1250] net/sched: cls_u32: fix duplicate handle when node ID pool is exhausted
+Date: Thu, 17 Sep 2026 16:07:55 +0100
+Message-ID: <20260917151610.315192267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,42 +47,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 3cc2aa96b97184abd6fc106aac626ddf14389813 ]
+[ Upstream commit d7e7e98d23f42a92d9ab7e36302bd96bd9b33b5f ]
 
-Inadvertently bool data type is used where int is supposed to
-be used. This might turn a negative error code into true or
-false and sign of the return code would be lost.
+gen_new_kid() falls back to returning max (htid | 0xFFF) when both
+idr_alloc_u32() ranges are full, instead of reporting an error.
+u32_change() trusts that value and inserts a new knode with a handle
+that is already live in the hash table, breaking handle uniqueness
+within the table's node ID space.
 
-Fixes: 8f9bf857e43b ("net: ethernet: oa_tc6: implement internal PHY initialization")
-Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Link: https://patch.msgid.link/20260824-fix-race-condition-and-crash-v7-4-4323279b18f2@onsemi.com
+The handle was never reserved in ht->handle_idr, so every later error
+path that does idr_remove(&ht->handle_idr, handle) removes the
+reservation of a different, live knode, which is then reused — one
+failed add compounds into further duplicates.
+
+The 4095 limit is per (table, bucket) — ht->handle_idr is per hash
+table and the range is derived from htid (bucketid), so a table with
+divisor 256 can legitimately hold 256*4095 knodes.
+
+The sibling helper gen_new_htid() has the same silent in-band failure:
+it returns 0 when the tp_c handle pool (1..0x7FF) is full, and
+u32_init() publishes the root hash table with handle 0 without
+checking.  Two root tables with handle 0 alias in u32_lookup_ht(),
+allowing cross-tcf_proto knode add/lookup/delete.  Add the same
+exhaustion check that the divisor path already has.
+
+Return an error so u32_change() fails with ENOSPC/ENOMEM when the
+node ID space is exhausted, and so u32_init() fails with -ENOMEM
+when the hash table ID space is exhausted.  The extack message
+distinguishes pool exhaustion (-ENOSPC) from a transient allocation
+failure (-ENOMEM).
+
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_CLS_U32=y (or =m with module loaded)
+- Create a clsact qdisc on a device, then add 4095 u32 filters with
+  auto-generated handles to fill the node ID space for the root hash
+  table (single bucket). The 4096th auto-handle filter add triggers
+  the duplicate handle (fh 800::fff reused). Reachable at Level 2
+  (unshare -Urn, namespace-local CAP_NET_ADMIN).
+- For gen_new_htid: create 2047 u32 proto entries on the same block
+  to fill the tp_c handle pool, then create one more. The root table
+  gets handle 0 and aliases with other handle-0 root tables.
+
+Fixes: 7801db8aec95 ("net_sched: avoid generating same handle for u32 filters")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260825081052.133898-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_u32.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
-index e4949a310af2f..b6743710608fe 100644
---- a/drivers/net/ethernet/oa_tc6.c
-+++ b/drivers/net/ethernet/oa_tc6.c
-@@ -411,7 +411,7 @@ static int oa_tc6_mdiobus_read(struct mii_bus *bus, int addr, int regnum)
- {
- 	struct oa_tc6 *tc6 = bus->priv;
- 	u32 regval;
--	bool ret;
-+	int ret;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index a90de52e1ac8d..83a60698cc009 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -370,6 +370,10 @@ static int u32_init(struct tcf_proto *tp)
  
- 	ret = oa_tc6_read_register(tc6, OA_TC6_PHY_STD_REG_ADDR_BASE |
- 				   (regnum & OA_TC6_PHY_STD_REG_ADDR_MASK),
+ 	refcount_set(&root_ht->refcnt, 1);
+ 	root_ht->handle = tp_c ? gen_new_htid(tp_c, root_ht) : id2handle(0);
++	if (root_ht->handle == 0) {
++		kfree(root_ht);
++		return -ENOMEM;
++	}
+ 	root_ht->prio = tp->prio;
+ 	root_ht->is_root = true;
+ 	idr_init(&root_ht->handle_idr);
+@@ -695,21 +699,33 @@ static int u32_delete(struct tcf_proto *tp, void *arg, bool *last,
+ 	return ret;
+ }
+ 
+-static u32 gen_new_kid(struct tc_u_hnode *ht, u32 htid)
++static u32 gen_new_kid(struct tc_u_hnode *ht, u32 htid, int *err)
+ {
+ 	u32 index = htid | 0x800;
+ 	u32 max = htid | 0xFFF;
+ 
++	*err = 0;
++
+ 	if (idr_alloc_u32(&ht->handle_idr, NULL, &index, max, GFP_KERNEL)) {
+ 		index = htid + 1;
+-		if (idr_alloc_u32(&ht->handle_idr, NULL, &index, max,
+-				 GFP_KERNEL))
+-			index = max;
++		*err = idr_alloc_u32(&ht->handle_idr, NULL, &index, max,
++				     GFP_KERNEL);
++		if (*err)
++			return 0;
+ 	}
+ 
+ 	return index;
+ }
+ 
++static int u32_kid_extack(int err, struct netlink_ext_ack *extack)
++{
++	if (err == -ENOSPC)
++		NL_SET_ERR_MSG_MOD(extack, "Hash table node ID pool exhausted");
++	else
++		NL_SET_ERR_MSG_MOD(extack, "Failed to allocate node ID");
++	return err;
++}
++
+ static const struct nla_policy u32_policy[TCA_U32_MAX + 1] = {
+ 	[TCA_U32_CLASSID]	= { .type = NLA_U32 },
+ 	[TCA_U32_HASH]		= { .type = NLA_U32 },
+@@ -1076,7 +1092,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		 * handle which is used to uniquely identify the match entry.
+ 		 */
+ 		if (!TC_U32_NODE(handle)) {
+-			handle = gen_new_kid(ht, htid);
++			handle = gen_new_kid(ht, htid, &err);
++			if (err)
++				return u32_kid_extack(err, extack);
+ 		} else {
+ 			handle = htid | TC_U32_NODE(handle);
+ 			err = idr_alloc_u32(&ht->handle_idr, NULL, &handle,
+@@ -1088,7 +1106,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		/* The user did not give us a handle; lets just generate one
+ 		 * from the table's pool of nodeids.
+ 		 */
+-		handle = gen_new_kid(ht, htid);
++		handle = gen_new_kid(ht, htid, &err);
++		if (err)
++			return u32_kid_extack(err, extack);
+ 	}
+ 
+ 	if (tb[TCA_U32_SEL] == NULL) {
 -- 
 2.53.0
 
