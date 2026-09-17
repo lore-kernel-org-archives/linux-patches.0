@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29154E36C2;
-	Thu, 17 Sep 2026 18:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2A4E3234;
+	Thu, 17 Sep 2026 18:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668354; cv=none; b=it+lYTNgEjFemjwytMIe9Idy9Dm/WTy5jlTEdCsq/YYPT0bVKGnYNpmIK9k6K/tlnuUBWjIknHBR1o1m3tvjEgO/opXIOmfTA0WgdotGUgOUzYYVWvWqEC6ufTyYvoHJNA4f3eq2jguPNncFE/AnUnFRNHJ/7VskoO8gdTRFrzA=
+	t=1789668358; cv=none; b=qj7/5qTkO6FFCW8MBEE7JlRzzWGOSw+5rqtmxt62cHq0Sboj7M+O7o3uvdcxxifwX8z9UP/NR4jf7UaGyvx0TuVNmyUzm9nGSnfNmLeYKncixB3mKyW3HLt8eJ3IA8ReskTEWy1kau8VHB0u73WMtFgznkMJ2u9wwaUdno6Uigc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668354; c=relaxed/simple;
-	bh=42MpPFais6AdiI2/esZjNirfiucbqqJXbma04yRyBlQ=;
+	s=arc-20240116; t=1789668358; c=relaxed/simple;
+	bh=4TTvVxHXDlwBolOV+7bDqaLI1anZRomwAw8JPTkYUy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyoCpWFtE9qFA+DJOkOBzYkgdiIBAIcidfvJy6OCCdDNM6DXCmY2s9YwpSidDRkrpXGQpoIbD89e9uE2/tU/JgnaScI6XEfUjem7Yb9Sj3/2GyPm5W7NJ5YKiMCBR4osDO6ApDZObgWDm5mi7iUedl0Ba673e+y+R+3NjoCpPpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zacwpxcr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gPrA5GQ32mSaj/mMHcNYHHAGlG0Y9/yTKgxqrY+eYJFud7VhOAbyNL9a/LEdHaLaMNeE79ZOKgauvFzNWkRxyAGgDXUarbYqrRu7+Ikz4RSiyGutbzR/5sUbaQIXzCryHJ6m/fkqD91ZhYGJ2XGlh/Qq8v/YnqrVqGPC1rJyLsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNby2XzU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zacwpxcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19F71F000FF;
-	Thu, 17 Sep 2026 18:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNby2XzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5261F000FF;
+	Thu, 17 Sep 2026 18:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668353;
-	bh=7yAAWNKDdGY0O29+o+rU9iYC20fLPHSdhOEk2b0XztU=;
+	s=korg; t=1789668356;
+	bh=tyKiyaIQ/vWp46j5Xk/zCfGmzC6asF6vTzlZP+pgD2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zacwpxcr3+jWNylzxBav3WjgE/W2iKsUPwVwWKm5wPQn9jvH0nGV0YpbtU01ToARL
-	 OLkpW5H0W7WdL+PCQ8J1BJ9HRsRxeB4dDs0x9L+0qDipPsvjJzDcSbpvaNipTAMxx1
-	 r5C4SgVafZ3QFYsJcF/OymKx7lziNm2RKfrk4fjc=
+	b=GNby2XzUrG3sUAG6eZOVhhdZ5Jay/S9DBDRV3DlqIFJIV/rX/6xNy86IJaDWe5JeV
+	 QQRcapqC8yxh0lyTp7MB8wh1yPxf61OxYsFHou59HfMCeeJ6nJ8zbtjIIKcDIyBgiq
+	 /i4/cwHbuQl5e+3QwuZT4/YNE8t3XmodJNZ/0QUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0396/1102] wifi: cfg80211: validate rx/tx MLME callback frame lengths before access
-Date: Thu, 17 Sep 2026 16:05:39 +0100
-Message-ID: <20260917151549.601101396@linuxfoundation.org>
+Subject: [PATCH 6.12 0397/1102] wifi: mac80211: ibss: wait for in-flight TX on disconnect
+Date: Thu, 17 Sep 2026 16:05:40 +0100
+Message-ID: <20260917151549.626438418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,129 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit d5e4586546974179feca305a94e07fac3e9727fe ]
+[ Upstream commit d0e69d9afa59b93c30294eba89b1f15f69e91105 ]
 
-cfg80211_rx_mlme_mgmt() and cfg80211_tx_mlme_mgmt() call tracepoints
-before rejecting frames shorter than the frame-control field. After
-that, they only require len >= 2 before dispatching into subtype
-handlers that assume their fixed fields are present.
+While leaving an IBSS in ieee80211_ibss_disconnect() mac80211 flushes
+stations, turns the carrier off and immediately tells the driver to
+leave as well. While there may be synchronize_net() in station flush
+and in this code later, packets can still be transmitted due to
+cross-CPU race conditions after carrier off is set.
+Therefore, it's possible for a race to happen where a TX to the
+driver occurs while or after telling it to leave the IBSS. This can
+be confusing to drivers, and in the case of iwlwifi leads to an
+attempt to use invalid queues.
 
-The frames that trip this are not shorter than 2 bytes; they are short
-relative to their subtype. mwifiex is a concrete in-tree example on the
-length side: mwifiex_process_mgmt_packet() only requires a 4-address
-ieee80211_hdr plus the 2-byte firmware length prefix before handing the
-frame to cfg80211_rx_mlme_mgmt(). After stripping the length prefix and
-removing addr4, pkt_len can be exactly 24: a bare 3-address management
-header with no reason-code body. The existing WARN_ON(len < 2) does not
-fire on such a frame, and cfg80211_process_deauth() then reads
-u.deauth.reason_code as a two-byte access starting at offset 24,
-immediately past the 24-byte buffer.
+Move netif_carrier_off() to occur before sta_info_flush() during
+IBSS disconnect, and add synchronize_net() if flushing didn't,
+so that the synchronize_net() always happens between turning the
+carrier off and telling the driver, avoiding this race.
 
-Add a frame-control length gate, then validate each subtype's minimum
-frame size in an if/else-if chain that mirrors the dispatch logic. Trace
-only after the frame is known to be well-formed.
-
-Side effects of this change:
- - The WARN_ON(len < 2) is dropped. It only guarded the frame_control
-   read, never the subtype fixed fields, and it does not fire on the
-   frames that actually trigger the out-of-bounds read (which are >= 2).
-   The len >= 2 check is kept as the guard before dereferencing
-   frame_control, but without the warning: these are exported callbacks
-   and a malformed frame from a driver should be dropped silently rather
-   than backtraced.
- - cfg80211_tx_mlme_mgmt() previously routed every non-deauth subtype
-   through disassociation handling; it now silently ignores unrecognised
-   subtypes.
-
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260707025336.22557-1-enderaoelyther@gmail.com
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ net/mac80211/ibss.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index f9a2892337933..65f93f99e5254 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -164,19 +164,35 @@ void cfg80211_rx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len)
- {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
- 	struct ieee80211_mgmt *mgmt = (void *)buf;
-+	__le16 fc;
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index 3f74bbceeca5e..ce22d4e98efaa 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -682,7 +682,9 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
  
- 	lockdep_assert_wiphy(wdev->wiphy);
+ 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
  
--	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
-+	if (len < sizeof(fc))
-+		return;
-+
-+	fc = mgmt->frame_control;
+-	sta_info_flush(sdata, -1);
++	netif_carrier_off(sdata->dev);
++	if (!sta_info_flush(sdata, -1))
++		synchronize_net();
  
--	if (WARN_ON(len < 2))
-+	if (ieee80211_is_auth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.auth.status_code))
-+			return;
-+	} else if (ieee80211_is_deauth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
-+			return;
-+	} else if (ieee80211_is_disassoc(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
-+			return;
-+	} else {
- 		return;
-+	}
-+
-+	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
+ 	spin_lock_bh(&ifibss->incomplete_lock);
+ 	while (!list_empty(&ifibss->incomplete_stations)) {
+@@ -696,8 +698,6 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+ 	}
+ 	spin_unlock_bh(&ifibss->incomplete_lock);
  
--	if (ieee80211_is_auth(mgmt->frame_control))
-+	if (ieee80211_is_auth(fc))
- 		cfg80211_process_auth(wdev, buf, len);
--	else if (ieee80211_is_deauth(mgmt->frame_control))
-+	else if (ieee80211_is_deauth(fc))
- 		cfg80211_process_deauth(wdev, buf, len, false);
--	else if (ieee80211_is_disassoc(mgmt->frame_control))
-+	else
- 		cfg80211_process_disassoc(wdev, buf, len, false);
- }
- EXPORT_SYMBOL(cfg80211_rx_mlme_mgmt);
-@@ -229,15 +245,28 @@ void cfg80211_tx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len,
- {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
- 	struct ieee80211_mgmt *mgmt = (void *)buf;
-+	__le16 fc;
+-	netif_carrier_off(sdata->dev);
+-
+ 	sdata->vif.cfg.ibss_joined = false;
+ 	sdata->vif.cfg.ibss_creator = false;
+ 	sdata->vif.bss_conf.enable_beacon = false;
+@@ -724,7 +724,6 @@ static void ieee80211_csa_connection_drop_work(struct wiphy *wiphy,
+ 			     u.ibss.csa_connection_drop_work);
  
- 	lockdep_assert_wiphy(wdev->wiphy);
+ 	ieee80211_ibss_disconnect(sdata);
+-	synchronize_rcu();
+ 	skb_queue_purge(&sdata->skb_queue);
  
--	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
-+	if (len < sizeof(fc))
-+		return;
+ 	/* trigger a scan to find another IBSS network to join */
+@@ -1838,8 +1837,6 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
+ 	memset(&ifibss->ht_capa, 0, sizeof(ifibss->ht_capa));
+ 	memset(&ifibss->ht_capa_mask, 0, sizeof(ifibss->ht_capa_mask));
  
--	if (WARN_ON(len < 2))
-+	fc = mgmt->frame_control;
-+
-+	if (ieee80211_is_deauth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
-+			return;
-+	} else if (ieee80211_is_disassoc(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
-+			return;
-+	} else {
- 		return;
-+	}
-+
-+	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
+-	synchronize_rcu();
+-
+ 	skb_queue_purge(&sdata->skb_queue);
  
--	if (ieee80211_is_deauth(mgmt->frame_control))
-+	if (ieee80211_is_deauth(fc))
- 		cfg80211_process_deauth(wdev, buf, len, reconnect);
- 	else
- 		cfg80211_process_disassoc(wdev, buf, len, reconnect);
+ 	del_timer_sync(&sdata->u.ibss.timer);
 -- 
 2.53.0
 
