@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4E14EDCBB;
-	Thu, 17 Sep 2026 17:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C864E780D;
+	Thu, 17 Sep 2026 17:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667773; cv=none; b=pHC2+QeinB+XV+bLWTCSKLkIFG3js67KMLOG8a045JWMUPyZWCYCvOmtgq0n4X4XsLp/OayCVPQ5p0XoqcPPzI/9vyeBEKzm8dRM5gKAWrIi1/LGRbkEGNHSiEGWSfJsDvzYSM+rz39m+IlxmqnhTuB3EROjeTMbhA3aK5BoykM=
+	t=1789667776; cv=none; b=fxaOhCAZZpIGaXzUErYaNGHrlZbNtGC05JpEPmJm5jAdM5uQJR+EygFjJ7QfNjBkq3MVI4jCsEkOPVHMlGFU+sKm7JVP4IwPu/FIgCRD6MOov+px/eYVGsdOBYh5OfSsIbz4YsvjUtBU8OHIB9DiiL6qoV6ju8yvRWUgNWUm8JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667773; c=relaxed/simple;
-	bh=KSk6x40BMqVWhvlYnrH7XkQu5Fp8uzqZAq6pO4jk+WQ=;
+	s=arc-20240116; t=1789667776; c=relaxed/simple;
+	bh=d8o7bm76Ie0pNF2oR3BGsIZFS4tAZIvGXZ176gCKZ1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lz/MCeRfT14P9LQXXWEUQPxhjaWASyw68ptoK3OitZbCbrT4geeS6nu8CSbsftphCAMPDKcOK58nAdn3bWs095cbyodmH3m31Jp7HJD4dxmsieg86Q0n7Rc8pwSEu/Bv+bsEPdt/eTTNFStGVgBFMwReLmwTQkDf0wjYMfdnVFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnlCgPwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKaDSatTLYuZNFUBvruLUjGo9q8H6KD5h6L5uj4inZW0RI0LgdMwAWgAB8stse7qdjEJtGQQWLUwaHh5pafy/yYuo1UxdcwUOOWGl3wcKPAR4FjXhZgQawMOF1nM8ywiTH8H40G7KFIIH/QjRp09nQPV8fODeYUjGItkWfAXTDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0B7/zPGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnlCgPwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9694A1F000FF;
-	Thu, 17 Sep 2026 17:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0B7/zPGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EE21F000FF;
+	Thu, 17 Sep 2026 17:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667772;
-	bh=KQ3JMNacOCt+ZVsP03vyas303Ddc7CIzBxWCi5KjXtc=;
+	s=korg; t=1789667775;
+	bh=gMZcwWnb5SoRQWk7K211kDBjN2bghDl6o6FIb24xuIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnlCgPwXKhJUGL1KwWg4AmYhfkZ1/Pc7v3Vhc21yhkg491nZIXft9+8tURmPlMDbw
-	 Wqv0UPWVX2vG31MFsy96UR/wRAkr29TECVOBD5OvhnI9D7O0vU6ImN+iNsR44ttJeV
-	 kKYTok0LLDNdgFe/G+qm+6vssARt/FZK1Eh6WgdU=
+	b=0B7/zPGYwYQ2gCR1MNYUreewqFkAeAAqp5FQD95T7QWcMVR7wjlfZxdZ1xb2gK3i/
+	 mhGu9vSXS0j2hyReqCLWRlF0Dp3lhGz4sFd7u/wD8DCwUftpykBg1ca6axpUxIwZXl
+	 1ShyxpkIy+wLY1YEHOVvmjlYLfO7Z/T77yHEgXNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0203/1102] net: qrtr: fix node refcount leak on ctrl packet alloc failure
-Date: Thu, 17 Sep 2026 16:02:26 +0100
-Message-ID: <20260917151544.671039402@linuxfoundation.org>
+Subject: [PATCH 6.12 0204/1102] net: wwan: t7xx: Add delay between MD and SAP suspend
+Date: Thu, 17 Sep 2026 16:02:27 +0100
+Message-ID: <20260917151544.695832639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,45 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 3b09ff54114566864eea59020f6b69c5bb325b9d ]
+[ Upstream commit ae733795e593272f67d607c09d2a00637ac13ed0 ]
 
-qrtr_send_resume_tx() calls qrtr_node_lookup() which takes a
-reference on the returned node. If the subsequent call to
-qrtr_alloc_ctrl_packet() fails due to memory allocation failure, the
-function returns -ENOMEM without calling qrtr_node_release() to
-release the node reference.
+SAP (Service Access Point) suspend occasionally times out with error
+-110 (ETIMEDOUT), followed by modem port errors and complete modem
+failure requiring a system reboot to recover.
 
-Add qrtr_node_release(node) before returning on the allocation failure
-path to properly release the reference.
+Error symptoms:
+  mtk_t7xx 0000:72:00.0: [PM] SAP suspend error: -110
+  mtk_t7xx 0000:72:00.0: can't suspend (...returned -110)
+  mtk_t7xx 0000:07:00.0: Failed to send skb: -22
+  mtk_t7xx 0000:07:00.0: Write error on MBIM port, -22
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260528080019.1176700-1-vulab@iscas.ac.cn
+The modem firmware needs time after receiving the MD (modem) suspend
+request to complete internal operations before it is ready to accept
+the SAP suspend request. Without this delay, if runtime PM attempts
+to suspend while the firmware is busy, the SAP suspend command times
+out, leaving the modem in an unrecoverable state.
+
+Root cause and userspace interaction:
+ModemManager 1.24+ includes changes that reduce the likelihood of this
+issue by ensuring the modem is in a low-power state before the kernel
+attempts runtime suspend. However, the kernel driver should not depend
+on specific userspace behavior or ModemManager versions. Older versions
+(1.20-1.22) are still widely deployed, and the kernel should be robust
+regardless of userspace implementation details.
+
+There appears to be no hardware status register or other mechanism
+available to query whether the firmware is ready for SAP suspend.
+A delay between the two suspend requests is the most reliable solution
+found through testing.
+
+Add a 50ms delay between MD suspend and SAP suspend. This gives the
+firmware adequate time to complete internal operations without adding
+significant latency to the suspend path. This makes the driver robust
+across all ModemManager versions and system conditions.
+
+Testing: 96+ hours of continuous operation with ModemManager 1.20.2
+and Fibocom FM350-GL modem. Zero SAP suspend timeouts observed across
+2000+ successful suspend/resume cycles. Previously failed within
+24 hours with 100% reproducibility.
+
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260527061451.12710-1-jtornosm@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wwan/t7xx/t7xx_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index fcd24a7df3f00..1f40496d84a33 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -1009,8 +1009,10 @@ static int qrtr_send_resume_tx(struct qrtr_cb *cb)
- 		return -EINVAL;
+diff --git a/drivers/net/wwan/t7xx/t7xx_pci.c b/drivers/net/wwan/t7xx/t7xx_pci.c
+index c7020d107903a..b37cb00f8ac3d 100644
+--- a/drivers/net/wwan/t7xx/t7xx_pci.c
++++ b/drivers/net/wwan/t7xx/t7xx_pci.c
+@@ -400,6 +400,9 @@ static int __t7xx_pci_pm_suspend(struct pci_dev *pdev)
+ 		goto abort_suspend;
+ 	}
  
- 	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
--	if (!skb)
-+	if (!skb) {
-+		qrtr_node_release(node);
- 		return -ENOMEM;
-+	}
- 
- 	pkt->cmd = cpu_to_le32(QRTR_TYPE_RESUME_TX);
- 	pkt->client.node = cpu_to_le32(cb->dst_node);
++	/* Delay to prevent SAP suspend timeout */
++	msleep(50);
++
+ 	ret = t7xx_send_pm_request(t7xx_dev, H2D_CH_SUSPEND_REQ_AP);
+ 	if (ret) {
+ 		t7xx_send_pm_request(t7xx_dev, H2D_CH_RESUME_REQ);
 -- 
 2.53.0
 
