@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7CF3CEB9E;
-	Thu, 17 Sep 2026 18:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56299768EA;
+	Thu, 17 Sep 2026 18:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671094; cv=none; b=EVK7uaSs0iGCK2PRk4UU5hFfs6aUuRGLyEye8+QiYJ2AHRCPuTaDIgAb11gO3XpqCirzxEcr/B+mT2+e0xd7m3MQJy3dLEMtNrHdSaLSw/w2KGyLZVNX9VBY8m7FmWV9x9hEp6YyChhmvvFkRMCjLe3QycOJy+TOkD287UjTx+s=
+	t=1789671097; cv=none; b=qMoD0lpLQp8S16c7wzVzNKVFQ56kn43WTlyxIBmYBkEM0fxZvaEvYMFF8s0x2UVxtyLj0VPj0jSNJkRfyJ1YoXhM8kx9CwSv6vDSaMeAIF24xIV664U5yj/a2yK+TTP5IQfDVW2b8EOO9lUA5ygmEr/ZZthbenQgxYjs5tK5tb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671094; c=relaxed/simple;
-	bh=TO6bK2JMnBfKl6BzPYqS+3IOVNQmD4XWiIOQKFi7k+w=;
+	s=arc-20240116; t=1789671097; c=relaxed/simple;
+	bh=17Iv5CSSZbBY4t5o+Gg1BZYRbpZdrxNXp0Eh1pe8FU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+Wj3NM4oGAfVbIEHp7ku15eEjELuV63EmQ8ZXXhDfFfi/22myO4LYgnCMkZVwXOhcMn9fSh3wIafQamRk/vzELLM54U8PxADeSikqvYCdCn7gDBu5YZBbk0ZyQKkQFTONXwmfVo1sOUZ2nn+fJR+0o9KdpCCwYK1O91scqGsRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6xDcNGs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EZ1XaDacEZV98ALgluuBySajXVtuWw/cmIApWYmowxUd5PAdRdD6T10MEw6dDh+SoT09BR2Du9P4Bo7WjpYt3Ep5FCyJYfWJmGN1ZHw2L2IcpOdgOw4CbJ2RjCCKX+eGYLiWZGBR2tLeqjyPvfH0a5JnUxNmiWJx2Nq+nK3rzUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kljI3yJy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6xDcNGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD121F000FF;
-	Thu, 17 Sep 2026 18:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kljI3yJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F8E1F000FF;
+	Thu, 17 Sep 2026 18:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671093;
-	bh=bnqMP4drx8xKac6XVaQ5spofM7aAMQQF608GCI3GBug=;
+	s=korg; t=1789671096;
+	bh=W0WOXUoRXkSnYVoEByGkZJ5zOTfL1bt446jVgKdfcqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E6xDcNGs9qrBf34FTfXJs6LJ/VzfivMyG2z79O/lE1z9nBZRhWbWVHlh0qtnxCnBS
-	 IvsTbQw4PD0c+0AWU5w8YIDicvnfE65ru8ybPUfPwJIHwCBo7oiWiWHXRmpLhiHUjK
-	 nu4ojPYLcbOLw5eetuwSIxN7ri3C/iLbVP3vI7BI=
+	b=kljI3yJyi127grIZQZE0pJLoVaDB4mBenpW3bHW5/c5CfVzbj0KGBnih2rxAH/mqu
+	 ngPwiOuo5++8mfKS70oksDEz+StpFh03gJcpmmgp1kLGm9shqfcu9Ry41XOJqIn9dx
+	 F5D2pteBJ7Ynk9+GFaI3zoYnxzg9B6/jTXZOhfsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.12 0865/1102] s390/crypto: Fix missing scrub of temp buffers with AES ctr and gcm algorithm
-Date: Thu, 17 Sep 2026 16:13:28 +0100
-Message-ID: <20260917151602.270028950@linuxfoundation.org>
+	Xixin Liu <liuxixin@kylinos.cn>,
+	stable@kernel.org,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.12 0866/1102] perf: RISC-V: store available counter mask as bitmap
+Date: Thu, 17 Sep 2026 16:13:29 +0100
+Message-ID: <20260917151602.294707019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,72 +51,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-commit 8b7c3b6914f19caf648d05726a86af6326d3c2c6 upstream.
+commit 6809da6e9c08ccc9a09cb0a48c61471679274aaa upstream.
 
-In function ctr_aes_crypt() there is a buffer used to process
-remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
-thus could lead to expose of unwanted data. When the buffer is used
-explicitly scrub it at the end of the code block to avoid exposure of
-maybe sensitive data.
+The available-counter mask was a single unsigned long, but iteration
+uses RISCV_MAX_COUNTERS, which is 64. On RV32 that reads past the object.
+Filling with an unsigned-long bit at index 32 and above is also wrong.
 
-In a similar way the function gcm_aes_crypt() hat an error path where
-the CPACF param block was not scrubbed. Instead of return early now
-these error paths go to end of function where explicit scrubbing is
-done. Similar with the buffers which are part of the gcm_sg_walk
-structs from the variables gw_in and gw_out.
+Use DECLARE_BITMAP and set_bit/bitmap helpers. Walk each bitmap word
+into CFG_MATCH when checking events, when allocating an index, and when
+stopping all counters. Set the counter base to i times BITS_PER_LONG.
+Share the CFG_MATCH ecall through a small helper so the 32-bit argument
+split is not duplicated. On qemu-system-riscv32 the probe bitmap has bits
+above XLEN set, so the first word alone is not enough.
 
-Fixes: d07f951903fa ("crypto: s390/aes - Fix buffer overread in CTR mode")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 6.8+
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: e9991434596f ("RISC-V: Add perf platform driver based on SBI PMU extension")
+Assisted-by: DeepSeek:deepseek-v3
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/prpmask02cmap.v2.1786434000.git.liuxixin@kylinos.cn
+Cc: stable@kernel.org
+[pjw@kernel.org: updated to apply; fixed checkpatch.pl issues]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/aes_s390.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/perf/riscv_pmu_legacy.c |    5 +-
+ drivers/perf/riscv_pmu_sbi.c    |   88 ++++++++++++++++++++++++++++------------
+ include/linux/perf/riscv_pmu.h  |    2 
+ 3 files changed, 66 insertions(+), 29 deletions(-)
 
---- a/arch/s390/crypto/aes_s390.c
-+++ b/arch/s390/crypto/aes_s390.c
-@@ -726,6 +726,7 @@ static int ctr_aes_crypt(struct skcipher
- 		memcpy(walk.dst.virt.addr, buf, walk.nbytes);
- 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
- 		ret = skcipher_walk_done(&walk, 0);
-+		memzero_explicit(buf, sizeof(buf));
+--- a/drivers/perf/riscv_pmu_legacy.c
++++ b/drivers/perf/riscv_pmu_legacy.c
+@@ -111,8 +111,9 @@ static void pmu_legacy_init(struct riscv
+ {
+ 	pr_info("Legacy PMU implementation is available\n");
+ 
+-	pmu->cmask = BIT(RISCV_PMU_LEGACY_CYCLE) |
+-		BIT(RISCV_PMU_LEGACY_INSTRET);
++	bitmap_zero(pmu->cmask, RISCV_MAX_COUNTERS);
++	set_bit(RISCV_PMU_LEGACY_CYCLE, pmu->cmask);
++	set_bit(RISCV_PMU_LEGACY_INSTRET, pmu->cmask);
+ 	pmu->ctr_start = pmu_legacy_ctr_start;
+ 	pmu->ctr_stop = NULL;
+ 	pmu->event_map = pmu_legacy_event_map;
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -97,7 +97,7 @@ static unsigned int riscv_pmu_irq_mask;
+ static unsigned int riscv_pmu_irq;
+ 
+ /* Cache the available counters in a bitmask */
+-static unsigned long cmask;
++static DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
+ 
+ struct sbi_pmu_event_data {
+ 	union {
+@@ -298,16 +298,38 @@ static struct sbi_pmu_event_data pmu_cac
+ 	},
+ };
+ 
++static struct sbiret pmu_sbi_ctr_cfg_match(unsigned long cbase,
++					   unsigned long ctr_mask,
++					   unsigned long cflags,
++					   unsigned long event_idx,
++					   u64 config)
++{
++#if defined(CONFIG_32BIT)
++	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
++			 ctr_mask, cflags, event_idx, config, config >> 32);
++#else
++	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
++			 ctr_mask, cflags, event_idx, config, 0);
++#endif
++}
++
+ static void pmu_sbi_check_event(struct sbi_pmu_event_data *edata)
+ {
+-	struct sbiret ret;
++	struct sbiret ret = { .error = SBI_ERR_NOT_SUPPORTED };
++	int i;
+ 
+-	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH,
+-			0, cmask, 0, edata->event_idx, 0, 0);
+-	if (!ret.error) {
+-		sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
+-			  ret.value, 0x1, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
+-	} else if (ret.error == SBI_ERR_NOT_SUPPORTED) {
++	for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
++		if (!cmask[i])
++			continue;
++		ret = pmu_sbi_ctr_cfg_match(i * BITS_PER_LONG, cmask[i], 0,
++					    edata->event_idx, 0);
++		if (!ret.error) {
++			sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
++				  ret.value, 0x1, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
++			return;
++		}
++	}
++	if (ret.error == SBI_ERR_NOT_SUPPORTED) {
+ 		/* This event cannot be monitored by any counter */
+ 		edata->event_idx = -ENOENT;
+ 	}
+@@ -353,10 +375,10 @@ int riscv_pmu_get_hpm_info(u32 *hw_ctr_w
+ 	union sbi_pmu_ctr_info *info;
+ 	u32 hpm_width = 0, hpm_count = 0;
+ 
+-	if (!cmask)
++	if (bitmap_empty(cmask, RISCV_MAX_COUNTERS))
+ 		return -EINVAL;
+ 
+-	for_each_set_bit(i, &cmask, RISCV_MAX_COUNTERS) {
++	for_each_set_bit(i, cmask, RISCV_MAX_COUNTERS) {
+ 		info = &pmu_ctr_list[i];
+ 		if (!info)
+ 			continue;
+@@ -405,8 +427,8 @@ static int pmu_sbi_ctr_get_idx(struct pe
+ 	struct riscv_pmu *rvpmu = to_riscv_pmu(event->pmu);
+ 	struct cpu_hw_events *cpuc = this_cpu_ptr(rvpmu->hw_events);
+ 	struct sbiret ret;
+-	int idx;
+-	uint64_t cbase = 0, cmask = rvpmu->cmask;
++	int idx, i;
++	u64 cbase = 0, cmask = 0;
+ 	unsigned long cflags = 0;
+ 
+ 	cflags = pmu_sbi_get_filter_flags(event);
+@@ -427,14 +449,21 @@ static int pmu_sbi_ctr_get_idx(struct pe
  	}
  
- 	return ret;
-@@ -1027,10 +1028,14 @@ static int gcm_aes_crypt(struct aead_req
- 			  gw_in.ptr, aad_bytes);
- 
- 		n = aad_bytes + pc_bytes;
--		if (gcm_in_walk_done(&gw_in, n) != n)
--			return -ENOMEM;
--		if (gcm_out_walk_done(&gw_out, n) != n)
--			return -ENOMEM;
-+		if (gcm_in_walk_done(&gw_in, n) != n) {
-+			ret = -ENOMEM;
-+			goto out;
+ 	/* retrieve the available counter index */
+-#if defined(CONFIG_32BIT)
+-	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
+-			cmask, cflags, hwc->event_base, hwc->config,
+-			hwc->config >> 32);
+-#else
+-	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
+-			cmask, cflags, hwc->event_base, hwc->config, 0);
+-#endif
++	if (cmask) {
++		ret = pmu_sbi_ctr_cfg_match(cbase, cmask, cflags, hwc->event_base,
++					    hwc->config);
++	} else {
++		ret.error = SBI_ERR_NOT_SUPPORTED;
++		for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
++			if (!rvpmu->cmask[i])
++				continue;
++			cbase = i * BITS_PER_LONG;
++			ret = pmu_sbi_ctr_cfg_match(cbase, rvpmu->cmask[i], cflags,
++						    hwc->event_base, hwc->config);
++			if (!ret.error)
++				break;
 +		}
-+		if (gcm_out_walk_done(&gw_out, n) != n) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
- 		aadlen -= aad_bytes;
- 		pclen -= pc_bytes;
- 	} while (aadlen + pclen > 0);
-@@ -1042,7 +1047,10 @@ static int gcm_aes_crypt(struct aead_req
- 	} else
- 		scatterwalk_map_and_copy(param.t, req->dst, len, taglen, 1);
++	}
+ 	if (ret.error) {
+ 		pr_debug("Not able to find a counter for event %lx config %llx\n",
+ 			hwc->event_base, hwc->config);
+@@ -442,7 +471,7 @@ static int pmu_sbi_ctr_get_idx(struct pe
+ 	}
  
-+out:
- 	memzero_explicit(&param, sizeof(param));
-+	memzero_explicit(gw_in.buf, sizeof(gw_in.buf));
-+	memzero_explicit(gw_out.buf, sizeof(gw_out.buf));
- 	return ret;
+ 	idx = ret.value;
+-	if (!test_bit(idx, &rvpmu->cmask) || !pmu_ctr_list[idx].value)
++	if (!test_bit(idx, rvpmu->cmask) || !pmu_ctr_list[idx].value)
+ 		return -ENOENT;
+ 
+ 	/* Additional sanity check for the counter id */
+@@ -791,7 +820,7 @@ static int pmu_sbi_get_ctrinfo(int nctr,
+ 			/* The logical counter ids are not expected to be contiguous */
+ 			continue;
+ 
+-		*mask |= BIT(i);
++		set_bit(i, mask);
+ 
+ 		cinfo.value = ret.value;
+ 		if (cinfo.type == SBI_PMU_CTR_TYPE_FW)
+@@ -808,12 +837,19 @@ static int pmu_sbi_get_ctrinfo(int nctr,
+ 
+ static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu)
+ {
++	int i;
++
+ 	/*
+ 	 * No need to check the error because we are disabling all the counters
+ 	 * which may include counters that are not enabled yet.
+ 	 */
+-	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
+-		  0, pmu->cmask, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
++	for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
++		if (!pmu->cmask[i])
++			continue;
++		sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
++			  i * BITS_PER_LONG, pmu->cmask[i],
++			  SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
++	}
  }
  
+ static inline void pmu_sbi_stop_hw_ctrs(struct riscv_pmu *pmu)
+@@ -1352,7 +1388,7 @@ static int pmu_sbi_device_probe(struct p
+ 	}
+ 
+ 	/* cache all the information about counters now */
+-	if (pmu_sbi_get_ctrinfo(num_counters, &cmask))
++	if (pmu_sbi_get_ctrinfo(num_counters, cmask))
+ 		goto out_free;
+ 
+ 	ret = pmu_sbi_setup_irqs(pmu, pdev);
+@@ -1364,7 +1400,7 @@ static int pmu_sbi_device_probe(struct p
+ 
+ 	pmu->pmu.attr_groups = riscv_pmu_attr_groups;
+ 	pmu->pmu.parent = &pdev->dev;
+-	pmu->cmask = cmask;
++	bitmap_copy(pmu->cmask, cmask, RISCV_MAX_COUNTERS);
+ 	pmu->ctr_start = pmu_sbi_ctr_start;
+ 	pmu->ctr_stop = pmu_sbi_ctr_stop;
+ 	pmu->event_map = pmu_sbi_event_map;
+--- a/include/linux/perf/riscv_pmu.h
++++ b/include/linux/perf/riscv_pmu.h
+@@ -55,7 +55,7 @@ struct riscv_pmu {
+ 
+ 	irqreturn_t	(*handle_irq)(int irq_num, void *dev);
+ 
+-	unsigned long	cmask;
++	DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
+ 	u64		(*ctr_read)(struct perf_event *event);
+ 	int		(*ctr_get_idx)(struct perf_event *event);
+ 	int		(*ctr_get_width)(int idx);
 
 
