@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4904FD7A1;
-	Thu, 17 Sep 2026 17:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4DC4F96BF;
+	Thu, 17 Sep 2026 17:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667194; cv=none; b=IulYr9F8mqI3XEleh4n+FVnXLZg94SyOCW5C6QqolBo/hT2v/IsuzS2qiNQksYfrp+QpudrrG8qlKvmaNQ8iuIWviAvnrdQCu7kDn+qs22OWFefJfT+hWdmgQTAadNziil4KpP/9wlZxvMEXcCGCLbASKyHp8rnkLbOckDeHxcE=
+	t=1789667196; cv=none; b=gcZZY/dS5LdjkWLUwBC9KqyMnpFZX3/aJXC9cHQesvo7vL4uQhmQNPui+JVG3e7shi8KzGRi1S7EwqBVoVt3cNuYibVBSFoT0e47eZRuWWPi9KksgCrwxBza/u517VXf1SbFX777nsHutgVT9TPhbo27esnNd10JmHb18+DsEGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667194; c=relaxed/simple;
-	bh=PNYhb8njtGvCsDmFguU3dJQcTrecv5VXcRhLOApmyzQ=;
+	s=arc-20240116; t=1789667196; c=relaxed/simple;
+	bh=EFy2c3HsKc3g3Bv7DdLPMrBpuioS4zTA6JMRkJ95bgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXeNwQk9ewBVm1g9/VzeXnInmfJcyd2PbKiZsvzK0xmV1CHXl7GMEXcrP/s8cjOvp7Ru6NHP+UIc7T1ScJUcm2qCcu8Dc52rf8Ss+rl3go6uAfczMu7wn/4trUaNzDaESyZCWrjbyjqPZd5NNszAuihvyr8oQlPZi0qee1liZlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmcS0yyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MlrBwYfRqr/KiYCoGWWr+m1Ipm2PTTuH9JS67nj+ERGkyR8iKlbXzzvfncef98zj2hrJPhXFNPSBLuVBToimNdAu2YU73qXVrs2HHPPq3LLImlcfG1ekXhOYIw+tZzMOAtcZV+JJePj8kltauHqDvhzGc9cDvI5q3E8qNPIrcYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2/WZbzW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmcS0yyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9601F00893;
-	Thu, 17 Sep 2026 17:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2/WZbzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180511F000FF;
+	Thu, 17 Sep 2026 17:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667192;
-	bh=GF3xt7oio8B51LQd5d/aRJrpzrMKgG9GSVr7CvpjUR0=;
+	s=korg; t=1789667195;
+	bh=OeWY39KBG+rDiE9EJBIypixjWz8iMaUotH0bOGyFzf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmcS0yyXoE+DMAU8nJp2MHVE6QdIp5HbB5f938VUyQsNvVG2yPW5iik1VA7Fz/AmF
-	 JFwAShzbX98MQUO6fM2PMvMkms15606ojeyVcP+zSQWgbdrzXR+TC0I0HUBLNpSRVI
-	 kTB9xHPTHHeQ+4B/5C4jckcn5kW644HtNKgxCJEE=
+	b=S2/WZbzWJULUaKaTQf7m1LDPBcOxYe+WLlpSDLx023DOPNfjz6uu8nwNrqug/K3kg
+	 1xkePJ8VN+W1bJ6kEcOpn+6keUs2PjzgFufagp5Appv7lbz1apJKVGQt0yRAxejM74
+	 PuvbkZUwF1IKfEOojbdl9kfsMiino72OSPFV2M2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0004/1102] drm: rz-du: Ensure correct suspend/resume ordering with VSP
-Date: Thu, 17 Sep 2026 15:59:07 +0100
-Message-ID: <20260917151539.529953499@linuxfoundation.org>
+Subject: [PATCH 6.12 0013/1102] ima: return error early if file xattr cannot be changed
+Date: Thu, 17 Sep 2026 15:59:16 +0100
+Message-ID: <20260917151539.757435785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,91 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit c94e765abb051df62b9f7c27116ef9307216c868 ]
+[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
 
-The VSP serves as an interface to memory and a compositor to the DU. It
-therefore needs to be suspended after and resumed before the DU, to be
-properly stopped and restarted in a controlled fashion driven by the DU
-driver. This currently works by chance. Avoid relying on luck by
-enforcing the correct suspend/resume ordering with device links.
+During early boot, the filesystem is read-only and any changes
+to xattrs are not allowed. This fails in case of ext4 because
+changing xattr starts an ext4 transaction which fails with the
+following warning.
 
-Based on similar work done by Laurent Pinchart for R-Car DU.
-commit db5be3a7d6bd ("drm: rcar-du: Ensure correct suspend/resume
-ordering with VSP")
+WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
+CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
+Call Trace:
+  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  __vfs_setxattr+0x9a/0xd0
+  __vfs_setxattr_noperm+0x76/0x1f0
+  ima_appraise_measurement+0x23e/0xe40
+  ima_d_path+0x5a/0xd0
+  process_measurement+0xb29/0xc40
+  ? copy_from_kernel_nofault+0x21/0xe0
+  ? fscrypt_file_open+0xc0/0xe0
+  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
+  ? __bpf_prog_exit+0x23/0xd0
+  ? __bpf_tramp_exit+0xd/0x50
+  ? bpf_trampoline_6442530367+0x9f/0xea
+  ima_file_check+0x57/0x80
+  security_file_post_open+0x50/0xf0
+  path_openat+0x493/0x1650
+  do_filp_open+0xc7/0x170
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330144651.817338-1-tommaso.merciai.xr@bp.renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Detect the state of the file early and return the error.
+
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c | 16 ++++++++++++++++
- drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h |  2 ++
- 2 files changed, 18 insertions(+)
+ security/integrity/ima/ima_appraise.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-index 8643ff2eec46e..ca7bfc7735f06 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-@@ -20,6 +20,7 @@
- #include <drm/drm_vblank.h>
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index 7eb2c25076118..6787bf185f9f2 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -89,6 +89,11 @@ static int ima_fix_xattr(struct dentry *dentry, struct ima_iint_cache *iint)
+ 	int rc, offset;
+ 	u8 algo = iint->ima_hash->algo;
  
- #include <linux/bitops.h>
-+#include <linux/device.h>
- #include <linux/dma-mapping.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-@@ -293,6 +294,9 @@ static void rzg2l_du_vsp_cleanup(struct drm_device *dev, void *res)
- {
- 	struct rzg2l_du_vsp *vsp = res;
- 
-+	if (vsp->link)
-+		device_link_del(vsp->link);
++	if (IS_RDONLY(d_inode(dentry)))
++		return -EROFS;
++	if (IS_IMMUTABLE(d_inode(dentry)))
++		return -EPERM;
 +
- 	put_device(vsp->vsp);
- }
- 
-@@ -317,6 +321,18 @@ int rzg2l_du_vsp_init(struct rzg2l_du_vsp *vsp, struct device_node *np,
- 	if (ret < 0)
- 		return ret;
- 
-+	/*
-+	 * Enforce suspend/resume ordering between the DU (consumer) and the
-+	 * VSP (supplier). The DU will be suspended before and resume after the
-+	 * VSP.
-+	 */
-+	vsp->link = device_link_add(rcdu->dev, vsp->vsp, DL_FLAG_STATELESS);
-+	if (!vsp->link) {
-+		dev_err(rcdu->dev, "Failed to create device link to VSP %s\n",
-+			dev_name(vsp->vsp));
-+		return -EINVAL;
-+	}
-+
- 	ret = vsp1_du_init(vsp->vsp);
- 	if (ret < 0)
- 		return ret;
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-index 322eb80dcbaff..a22aaf0843ed7 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-@@ -15,6 +15,7 @@
- #include <linux/scatterlist.h>
- 
- struct device;
-+struct device_link;
- struct drm_framebuffer;
- struct rzg2l_du_device;
- struct rzg2l_du_format_info;
-@@ -29,6 +30,7 @@ struct rzg2l_du_vsp_plane {
- struct rzg2l_du_vsp {
- 	unsigned int index;
- 	struct device *vsp;
-+	struct device_link *link;
- 	struct rzg2l_du_device *dev;
- };
- 
+ 	if (algo <= HASH_ALGO_SHA1) {
+ 		offset = 1;
+ 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
 -- 
 2.53.0
 
