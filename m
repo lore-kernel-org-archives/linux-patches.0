@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C834D17A0;
-	Thu, 17 Sep 2026 17:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1D94F5E08;
+	Thu, 17 Sep 2026 17:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666035; cv=none; b=j9s+71+0IZQCVP2xH3np/NL+dAzqdNfLAwHnd8rh/gcP/vltzdy5popBLTAPsEpbse5DbkT6D5bIEFbsdznfN6WY+puLKcGc4ORF8PaYpaZvyi5TDvnTV8ndiAkkgTAyzaFoTlaTZ8JPqXMeqnFuYdTlBRnrRXmfI55eSJ9m+dE=
+	t=1789666038; cv=none; b=d23//HjpIkyfBBavooPJYJdrln7RauYgaCIdbaiwkHmM9rkSdPv/99nNVQnluOX681fVdPkabydtc/5v7qgKUkTBy17S+fRwheOn771M7abLlafuFajM5iQhayUDrlS9iaPG6ePoV5RUtOt2KBMrSNhQufJIJ16AobWaRQVMKVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666035; c=relaxed/simple;
-	bh=YZ6Nq9qE1Ok9BapzK4jChRV8d8HljQlokL3JDpgZaAs=;
+	s=arc-20240116; t=1789666038; c=relaxed/simple;
+	bh=cq+9ISvm1wSXjeMp3KNxDlPFLx0S3aLFB2oxZNRkBmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iuz6NkDRx32RHTY7JVksaRADwIftJv4ahhEimz3LzfxvdUvXUFjlDwI3IouEOm7DPM+AOb0P0XeV09oFiIEgk7H0b1AtSSH+mWbVMWhO9OalzUApAL+iWgjlmDgym74jzy8q7zl+aKYKA/cuW9wkJiJBatr+txQ3qIKNa6OK7Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WE9ALPH3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uZDrbVGmYJDvjgjFUQ4CYri9gIwh3M1WCuRD/Xs/lLp6cCHg0JozEDbWDuDBGgd9sVSPaVT9OMUb6TEwhS3W55FzsVpKd/MT9p1MUD/9DBRDDGAQJecw2cRb+s7WQy/OD6+eh5vuJOaMZLpKAjsiI5LkWlNbsPgP0h/A3G5OWyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flz5Z1RA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WE9ALPH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF121F000FF;
-	Thu, 17 Sep 2026 17:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flz5Z1RA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AF31F000FF;
+	Thu, 17 Sep 2026 17:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666034;
-	bh=5SPapA9HQ2WqMjCMqFQJDZPmrDQZe+Tbr6tBjaoqDfk=;
+	s=korg; t=1789666037;
+	bh=MKxifP2s9/028gSeVk58j8MbZcWJ07oOkDBoEmekq2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WE9ALPH3yJYbvCpw+TrjAw+8qaKlY7hDPW9nZTrFfXolVgtO0x4q/NTpFuzheXMiE
-	 z6c3UnbmToJ815UQbXpuJuUTwsFWR1jA5Dpkr6zBkVTgotHFT43Hkzbq7qyi8Erc21
-	 9iwQYovtBFEaXMc6hTF1IbUaGAABHgA5BTrxnWYI=
+	b=Flz5Z1RAh4c5pn4TQ2sBSlMlmokvNx3AurxTYxNpRpU0XR0T3RNvrDR9K68v5BZkw
+	 PCRApmyw6LKc5U6sdfK2dI4p5KLRg3lSstlE7byF9pZA8Kksi5kTKrdmCx8RqkcPKl
+	 5IgJOAK20Ppy+zzlAxl1SDZi03+K8EsjtBCxPI6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com,
-	Alice Mikityanska <alice@isovalent.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Zhang <yuz08559@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0864/1250] net: ipv4: Fix UDP length overflow with PMTU discover and big MTU
-Date: Thu, 17 Sep 2026 16:10:59 +0100
-Message-ID: <20260917151615.389991107@linuxfoundation.org>
+Subject: [PATCH 6.18 0855/1250] vhost-vdpa: dont install the eventfd_ctx_fdget() error in config_ctx
+Date: Thu, 17 Sep 2026 16:10:50 +0100
+Message-ID: <20260917151615.143515553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,59 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit b83641e0ab8b20eefcc4cdc5a059f897375291a2 ]
+[ Upstream commit e74a9fa50749b9940b4fb13199652325e08d3c4a ]
 
-This commit bounds cork->base.fragsize to IP_MAX_MTU to avoid a
-possible overflow of UDP length that triggers a WARN in
-udp_set_len_short when setsockopt IP_MTU_DISCOVER is set to
-IP_PMTUDISC_PROBE, and a large packet is sent over a netdev with an
-unusually large MTU.
+vhost_vdpa_set_config_call() swaps the eventfd_ctx_fdget() return value
+into v->config_ctx before checking it, so on failure the field briefly
+holds an ERR_PTR:
 
-Steps to reproduce:
+	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
+	swap(ctx, v->config_ctx);
 
-1. Set device MTU bigger than IP_MAX_MTU + 20. cork->base.fragsize will
-   be set to that MTU in ip_setup_cork.
-2. Set IP_MTU_DISCOVER to IP_PMTUDISC_PROBE. It lets maxnonfragsize be
-   set to device MTU (cork->fragsize) in __ip_append_data, rather than
-   to IP_MAX_MTU.
-3. Send 65528 bytes of payload (+8 bytes of UDP header, +20 bytes of
-   IPv4 header). Device MTU allows it (it's only one byte bigger than
-   IP_MAX_MTU + IPv4 header, and the device MTU is bigger than that).
-4. The UDP length in the built packet is 65536, which overflows the
-   16-bit length field and triggers the WARN in udp_set_len_short.
+	if (!IS_ERR_OR_NULL(ctx))
+		eventfd_ctx_put(ctx);
 
-Note: IP_PMTUDISC_DO with IPv4 is safe, because ip_dst_mtu_maybe_forward
-always clamps at IP_MAX_MTU, unlike ip6_dst_mtu_maybe_forward.
+	if (IS_ERR(v->config_ctx)) {
+		long ret = PTR_ERR(v->config_ctx);
 
-The Fixes tag points at the first commit where I could reproduce the
-overflow with IPv4 and IP_PMTUDISC_PROBE.
+		v->config_ctx = NULL;
+		return ret;
+	}
 
-Fixes: daba287b299e ("ipv4: fix DO and PROBE pmtu mode regarding local fragmentation with UFO/CORK")
-Reported-by: syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a6a966c.86abc875.e5c3d.0054.GAE@google.com/
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260901195714.673548-2-alice.kernel@fastmail.im
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Commit 0bde59c1723a ("vhost-vdpa: set v->config_ctx to NULL if
+eventfd_ctx_fdget() fails") added that clearing, and spelled out the
+invariant the rest of the file relies on: "we consider 'v->config_ctx'
+valid if it is not NULL".  The window between the swap and the clearing
+still breaks it.  vhost_vdpa_config_cb() only tests for NULL, so a config
+interrupt delivered inside the window hands the ERR_PTR to
+eventfd_signal().
+
+Check the fd before installing it instead.  That closes the window and
+matches how vhost_vring_ioctl() handles the same failure for the vq call
+fd.
+
+It also stops a rejected fd from tearing down a config interrupt that was
+working: until now the swap replaced the live context and put it, so
+after an EBADF the device silently stopped delivering config interrupts
+until userspace installed a new fd.
+
+Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260807100025.19750-2-yuz08559@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vhost/vdpa.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 267ac4730b590..4c4e9d1940f7d 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1304,6 +1304,7 @@ static int ip_setup_cork(struct sock *sk, struct inet_cork *cork,
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 068fb6aa33fa7..0d0206862cced 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -539,18 +539,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
+ 		return  -EFAULT;
  
- 	cork->fragsize = ip_sk_use_pmtu(sk) ?
- 			 dst4_mtu(&rt->dst) : READ_ONCE(rt->dst.dev->mtu);
-+	cork->fragsize = min(cork->fragsize, IP_MAX_MTU);
+ 	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
++	if (IS_ERR(ctx))
++		return PTR_ERR(ctx);
++
+ 	swap(ctx, v->config_ctx);
  
- 	if (!inetdev_valid_mtu(cork->fragsize))
- 		return -ENETUNREACH;
+-	if (!IS_ERR_OR_NULL(ctx))
++	if (ctx)
+ 		eventfd_ctx_put(ctx);
+ 
+-	if (IS_ERR(v->config_ctx)) {
+-		long ret = PTR_ERR(v->config_ctx);
+-
+-		v->config_ctx = NULL;
+-		return ret;
+-	}
+-
+ 	v->vdpa->config->set_config_cb(v->vdpa, &cb);
+ 
+ 	return 0;
 -- 
 2.53.0
 
