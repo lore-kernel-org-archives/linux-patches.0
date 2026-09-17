@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5779E502D67;
-	Thu, 17 Sep 2026 17:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E27950254F;
+	Thu, 17 Sep 2026 17:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665019; cv=none; b=ba+l5p3IbaQXfQomhCBDzXNKprnS7zHCf4/aQoVEbO5aUP6+oo/Ks2io9XUgoxCIrZNiTwLlFcsYIbgJMlqWpcRqFxRqt1SZ/tGgg11e6YsfpOFBU+EuVuZf2JjrG4sFpgLRs0bxZKNPalUMeLd/H0bv9lasR0NFvzpBDGZjimk=
+	t=1789665022; cv=none; b=ne5Qwy8JcguWNsW/GWMJETq7g0CPeVzVBJekkYXgZ7lI9jRww9s4CF4SijBVwIOrKt0h+VLM46fcCF/8KZOSjIbEqYZwNcSpqT2nWfXu687uAdq8nuJT6PeswsEX/6+m2yG1Wj9vZgZm7mchV4p4DKEcapq9FO2HhLBYMIi1jbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665019; c=relaxed/simple;
-	bh=PGGnPhFxeUQD+W82LfJQPP2fFO91Dc6lhW5Ytld2OaI=;
+	s=arc-20240116; t=1789665022; c=relaxed/simple;
+	bh=6wpu8ONKX1G/UVdF/UYtWS9uVsyMWmuOdjxMDnTUE2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBk2aErkkgpXJdQ8c+qlyNQy0EUkLXTMUAvHlt1+g/M6O2JzHM7Q11YuO1CGuA5RGwk5s5+GDl2BfAD/xYIxnDxCSpx/rFZ2+QWzYH33YrA68lPdkltAvoT8Bqizbq4lkmcpn6kLGrZ9OkHk8dpI+uMprJGlha3eSrvX+V3hdtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfHQd3FG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ooz+HczuaBgl3Yz35PY/l+CvOP2rUpJPhPl/+htK7Fe1BOQCsjD4K0D4O6/VRbl/e2n4QUDRdRWcHUL9WRsNXgB4K/l16TXAqVsyvYfhJb1Fhmenxm5jDHyg/p1wMNrGeVasXUUjmQpfn35jAWwcSeawB6EvLQjuoyMqTr6LYwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STbAn4+O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfHQd3FG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D2A1F00893;
-	Thu, 17 Sep 2026 17:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STbAn4+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBE51F000FF;
+	Thu, 17 Sep 2026 17:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665017;
-	bh=HGbsznYV9G24N0EQWBpGM4SzpxG+enaDcC2y5DlA1UY=;
+	s=korg; t=1789665020;
+	bh=kHcJC7r/upxzM3jgRXOKw1u9Uv9htrlDjs/qCZJUaFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FfHQd3FG5ZHRjpTuSBTkiFa6cOyiuKgFA48tVbwfKHUADaJp5NA9TwNQKZil3hFfZ
-	 3NxK19kGcQiIbzoWwD7uscVsMMYBNmHsiXQOKy1x3mDvNiM9Wawb6Dkn57vEG9t9go
-	 Zcf0L+QVYSX5GwP85CanMhVQjnbJMvo1cojDbUlg=
+	b=STbAn4+OX11NYdnvTfnOgYQdHM+vn8OqYU7JzqoJB/Oxg+Vugcd4T9/4S+cJ/mYbD
+	 8aG4GwzVczOra8zAtvArGv5gewN0/XDkZwvaL6awYyRvcAGmml3Os57Xe03kkMWvM4
+	 rAfQ69vCMIGA7uJ38a7rxhWbtp2sx4166ulV9KkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0566/1250] netfilter: nfnetlink_log: wait for rcu grace period before freeing pernet state
-Date: Thu, 17 Sep 2026 16:06:01 +0100
-Message-ID: <20260917151607.261069581@linuxfoundation.org>
+Subject: [PATCH 6.18 0567/1250] bpftool: Strip all -Wformat* flags from bootstrap libbpf build
+Date: Thu, 17 Sep 2026 16:06:02 +0100
+Message-ID: <20260917151607.286963447@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,85 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 33d1469b0124cc0baaea7a2032123b77a81e0940 ]
+[ Upstream commit a954c9e3168cdf0c3cad07b43dfc8ca2945d773a ]
 
-sashiko reports: "nfnl_log_net_exit() calls nf_log_unset(), which
-clears the logger pointer without an RCU grace period.  Immediately after,
-ops_free_list() frees the per-net state while concurrent packets might
-still be executing nf_log_packet() under rcu_read_lock()."
+Commit 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
+started building the bootstrap libbpf with HOST_CFLAGS, stripping the
+warning options that are unsuitable for that build by filtering out
+-W -Wall -Wextra -Wformat -Wformat-signedness.
 
-Clear the pointer via .pre_exit to make sure rcu readers have completed
-before pernet storage is free'd.  The change in nf_log_syslog.c is only
-done for consistency: it doesn't use pernet data.
+HOST_CFLAGS inherits EXTRA_WARNINGS, which includes -Wformat-security
+and -Wformat-y2k. The filter drops -Wall and -Wformat (the latter being
+what actually enables -Wformat), but leaves those two -Wformat-* children
+in LIBBPF_BOOTSTRAP_CFLAGS. Building the bootstrap libbpf with it then
+warns:
 
-Link: https://sashiko.dev/#/patchset/20260731151806.849724-1-pablo%40netfilter.org
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  cc1: warning: '-Wformat-y2k' ignored without '-Wformat'
+  cc1: warning: '-Wformat-security' ignored without '-Wformat'
+
+The warning is easy to miss in an in-tree build: tools/lib/bpf/Makefile
+re-adds -Wall via "override CFLAGS += -Wall", which re-enables -Wformat
+for the libbpf objects, so only libbpf's feature-detection probe (which
+uses the passed CFLAGS verbatim) leaks the two warnings. The standalone
+libbpf Makefile (github.com/libbpf/libbpf, used by the bpftool mirror)
+instead uses "CFLAGS ?= ... -Wall", which the passed-in CFLAGS overrides,
+so -Wall is never re-added and every bootstrap object warns.
+
+Use a -Wformat% wildcard in the filter-out so the orphaned children are
+removed together with the parent.
+
+Fixes: 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260630205418.3483969-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_log_syslog.c |  4 ++--
- net/netfilter/nfnetlink_log.c | 13 +++++++++----
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ tools/bpf/bpftool/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 6fa0812cd79ca..07a4f4725fcb2 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -1006,7 +1006,7 @@ static int __net_init nf_log_syslog_net_init(struct net *net)
- 	return ret;
- }
+diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
+index 4b6670bad86e7..0081f5bf73b72 100644
+--- a/tools/bpf/bpftool/Makefile
++++ b/tools/bpf/bpftool/Makefile
+@@ -94,7 +94,7 @@ HOST_CFLAGS := $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
+ HOST_LDFLAGS := $(LDFLAGS)
  
--static void __net_exit nf_log_syslog_net_exit(struct net *net)
-+static void __net_exit nf_log_syslog_net_pre_exit(struct net *net)
- {
- 	nf_log_unset(net, &nf_ip_logger);
- 	nf_log_unset(net, &nf_arp_logger);
-@@ -1017,7 +1017,7 @@ static void __net_exit nf_log_syslog_net_exit(struct net *net)
+ # Remove warnings for libbpf bootstrap build
+-LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat -Wformat-signedness,$(HOST_CFLAGS))
++LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat%,$(HOST_CFLAGS))
  
- static struct pernet_operations nf_log_syslog_net_ops = {
- 	.init = nf_log_syslog_net_init,
--	.exit = nf_log_syslog_net_exit,
-+	.pre_exit = nf_log_syslog_net_pre_exit,
- };
- 
- static int __init nf_log_syslog_init(void)
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index a6989966d80d5..68e5429338330 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -1160,21 +1160,26 @@ static int __net_init nfnl_log_net_init(struct net *net)
- 	return 0;
- }
- 
--static void __net_exit nfnl_log_net_exit(struct net *net)
-+static void __net_exit nfnl_log_net_pre_exit(struct net *net)
- {
--	struct nfnl_log_net *log = nfnl_log_pernet(net);
--	unsigned int i;
--
- #ifdef CONFIG_PROC_FS
- 	remove_proc_entry("nfnetlink_log", net->nf.proc_netfilter);
- #endif
- 	nf_log_unset(net, &nfulnl_logger);
-+}
-+
-+static void __net_exit nfnl_log_net_exit(struct net *net)
-+{
-+	struct nfnl_log_net *log = nfnl_log_pernet(net);
-+	unsigned int i;
-+
- 	for (i = 0; i < INSTANCE_BUCKETS; i++)
- 		WARN_ON_ONCE(!hlist_empty(&log->instance_table[i]));
- }
- 
- static struct pernet_operations nfnl_log_net_ops = {
- 	.init	= nfnl_log_net_init,
-+	.pre_exit = nfnl_log_net_pre_exit,
- 	.exit	= nfnl_log_net_exit,
- 	.id	= &nfnl_log_net_id,
- 	.size	= sizeof(struct nfnl_log_net),
+ INSTALL ?= install
+ RM ?= rm -f
 -- 
 2.53.0
 
