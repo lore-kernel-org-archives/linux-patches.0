@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8DC4D179A;
-	Thu, 17 Sep 2026 17:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245E94FD283;
+	Thu, 17 Sep 2026 17:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666091; cv=none; b=XIi+D0yvMLJfFNF+44H5Uho8MIAGMXGX/HmALaTGdZWj7VoGy624y3ewGVLRhGrLkh+nviOsmE+k3WEx1NU+s36PbsUldYbwGKbbcEGXHYyGV2KSJmy3XwjDjCkQxhDw0uyYot5PMVvTgtXuCR3J/gsNlxav5L0iOEQ8soo4vNU=
+	t=1789666094; cv=none; b=N9f3ZxqLfNBKRzsvlfBTWIR612Xdpk773MF/mGNaRzk1Z973KNGQccLbsBOTzGNOFEzeMYp3Na9ftCgFHVHr79BbvyRjLXAwqMRyyIYqy+ysJfOBMtCaErlnO8zlM2fft+5nckJN+eOYIGnBZEkGn4gr6VNof8owdk0JYW6EBQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666091; c=relaxed/simple;
-	bh=zjjEo0dC65XPDCyLjt0VLHXfpEauikZYyxO5cnArIF4=;
+	s=arc-20240116; t=1789666094; c=relaxed/simple;
+	bh=TPogbWQ8nb+76d+/vIpfQkjiH0VPp/bgIOrGiU803E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEdrdSu4BRfZANmXERoRycH4AJ/VHWtzxqcsMEGyIV2TPOcZ6G9CEZ9crjnrq6VrCqUfZ8MngjOIp3f5m9J5se+PHFl34sdXMLCUF2sJl+WpTTJ9lDGoP6+OvqT3aLszA+L8NPPtnTxmjwefYmpi+yLyIkY9A7rVaPKy+2JaIcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imB66G4t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iVnPkQAdruReYbc4N0Ee0VvxfvM93prkSnCcrb87NkvrTp6jr8IT/q1AcVhX8C9kj+eODvww4+2BYHzcBHwx5YGPZcPiClRMkCsxmuMQCVzqiwem0F9UpPsdgEUkb1qNVwweU29bCnpy5WLbjLMyukFf9ypa2oFWIUst+C0saZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uny2Hjel; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imB66G4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726001F000FF;
-	Thu, 17 Sep 2026 17:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uny2Hjel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD981F000FF;
+	Thu, 17 Sep 2026 17:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666090;
-	bh=1nAchl0QlQ3pwXPYp/1S5GNP209OXikkTbY61SMthN0=;
+	s=korg; t=1789666093;
+	bh=jZcNuBnDZPvnfJmDC7J9WTYOwWyWb8qTnxInjb5uw/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imB66G4tUFeCtU7axKzX1MGXrBZXBq7qZ/37RMcjnQBVIfdlv+JB3g+HpOh6OuyXz
-	 RRNGCVDmKlUEOK+xV7hftocWzmFPgftU+4rdUMvVgXsFMES59iuf+fldtgpFYDjB1u
-	 Qxo7MQychm+FUhE8gO8DwUdWHZze8k5EVu8fRGuk=
+	b=uny2Hjel0OdNYdVyVpWaov6gd/QNP1wqFmDAWtNvfnhL34I2XwY7QFLojbXuDQ+0e
+	 EKaY0XnyHaVL/MD+xLLqERvYryDvFskhBQGWxona1qQ+80EydmQ22LIS38+nJFuuIy
+	 dSEK+IFmUv/G7MvFG5hMa3VYTQJhvBHvxdpKgntI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
 	Hui Su <sh_def@163.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	John Stultz <jstultz@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0921/1250] sched: Account cgroup CPU time to the execution context
-Date: Thu, 17 Sep 2026 16:11:56 +0100
-Message-ID: <20260917151616.969385155@linuxfoundation.org>
+Subject: [PATCH 6.18 0922/1250] sched/core: Call wq_worker_tick() for the execution context
+Date: Thu, 17 Sep 2026 16:11:57 +0100
+Message-ID: <20260917151616.997082532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,63 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Hui Su <sh_def@163.com>
 
-[ Upstream commit c23810313bdf6b02f39a1f2a1464c4b18bd39e31 ]
+[ Upstream commit f5741d2b34519d387edf6e9798fc7030c20a35f3 ]
 
-Proxy execution separates the scheduling context from the execution
-context. Commit aa4f74dfd42b ("sched: Fix runtime accounting w/ split
-exec & sched contexts") made per-task and thread-group runtime
-accounting follow the task that actually executes, while cgroup CPU
-usage is charged to the donor.
+wq_worker_tick() accounts CPU time and detects CPU-intensive work for
+the kworker that is actually running. With proxy execution, rq->donor
+is the scheduling context while rq->curr is the execution context.
 
-When the donor and execution task belong to different cgroups, this
-makes a task's execution time count against a different cgroup from the
-one the task belongs to.
+Calling the hook with rq->donor can skip workqueue accounting when a
+kworker is executing on behalf of a donor task. It can also account a
+blocked kworker when the donor is a worker but rq->curr is the task
+actually executing. The former can delay WORKER_CPU_INTENSIVE handling
+and pool concurrency management, which can delay pending kernel work
+and userspace operations depending on it.
 
-Cgroup CPU usage should follow the execution context, matching the
-per-task, thread-group, and cgroup user/system accounting. Keep
-scheduling state associated with the donor, but charge cgroup CPU
-usage to rq->curr.
+Use rq->curr for the workqueue tick hook while retaining rq->donor for
+scheduler accounting.
 
-A reproducer with the donor and execution task in separate cgroups
-showed the execution task accumulating runtime while cgroup CPU usage
-was charged to the donor's cgroup. With this change, the execution
-task's cgroup accumulates the CPU usage instead. The same behavior was
-verified with an RT donor and with legacy cpuacct accounting.
-
-Fixes: aa4f74dfd42b ("sched: Fix runtime accounting w/ split exec & sched contexts")
-Suggested-by: Tejun Heo <tj@kernel.org>
+Fixes: af0c8b2bf67b ("sched: Split scheduler and execution contexts")
 Signed-off-by: Hui Su <sh_def@163.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Acked-by: Tejun Heo <tj@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260904034707.268416-1-sh_def@163.com
+Link: https://patch.msgid.link/20260902150208.1209922-2-sh_def@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/sched/core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 325aedbdb32a7..67e8c2065d827 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -1250,7 +1250,6 @@ static s64 update_se(struct rq *rq, struct sched_entity *se)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a46716a8afc7a..43f3ac16b0e8a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -5598,8 +5598,8 @@ void sched_tick(void)
+ {
+ 	int cpu = smp_processor_id();
+ 	struct rq *rq = cpu_rq(cpu);
+-	/* accounting goes to the donor task */
+-	struct task_struct *donor;
++	/* scheduler accounting goes to the donor task */
++	struct task_struct *curr, *donor;
+ 	struct rq_flags rf;
+ 	unsigned long hw_pressure;
+ 	u64 resched_latency;
+@@ -5610,6 +5610,7 @@ void sched_tick(void)
+ 	sched_clock_tick();
  
- 	se->exec_start = now;
- 	if (entity_is_task(se)) {
--		struct task_struct *donor = task_of(se);
- 		struct task_struct *running = rq->curr;
- 		/*
- 		 * If se is a task, we account the time against the running
-@@ -1262,8 +1261,7 @@ static s64 update_se(struct rq *rq, struct sched_entity *se)
- 		trace_sched_stat_runtime(running, delta_exec);
- 		account_group_exec_runtime(running, delta_exec);
+ 	rq_lock(rq, &rf);
++	curr = rq->curr;
+ 	donor = rq->donor;
  
--		/* cgroup time is always accounted against the donor */
--		cgroup_account_cputime(donor, delta_exec);
-+		cgroup_account_cputime(running, delta_exec);
- 	} else {
- 		/* If not task, account the time against donor se  */
- 		se->sum_exec_runtime += delta_exec;
+ 	psi_account_irqtime(rq, donor, NULL);
+@@ -5636,8 +5637,8 @@ void sched_tick(void)
+ 
+ 	perf_event_task_tick();
+ 
+-	if (donor->flags & PF_WQ_WORKER)
+-		wq_worker_tick(donor);
++	if (curr->flags & PF_WQ_WORKER)
++		wq_worker_tick(curr);
+ 
+ 	if (!scx_switched_all()) {
+ 		rq->idle_balance = idle_cpu(cpu);
 -- 
 2.53.0
 
