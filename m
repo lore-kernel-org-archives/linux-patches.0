@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB174ABBC2;
-	Thu, 17 Sep 2026 15:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E342F360A;
+	Thu, 17 Sep 2026 15:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659992; cv=none; b=ELHPj2K4tOVazKlXxbCi68Ud/psvnWJG1pW++qVhgbihHFvQj0x7kWYDji6mmq36aFIlYVNgWkSdAFW6e0ibnltGbRDSl4lpaxSyPDU7qrKbqJwocV05L5DwpwyWkYC6Zmu1OEL3HkwglOxYgSo7+L5cbo6xC5SJUc+eaLltL1s=
+	t=1789659992; cv=none; b=Rzc5BOenQOwjIDz6hODsTNYdT8r7Jr7GBW5JIYvijiidyb6kJIsccdU11cmLBh8+5s/FZCdYV/v8kxanthGHAnV+9s1TKNFHbrYerc9xqeu3eJqYLnPBz4ysfUzNcx0bSa+cZNPZv8egD+rAqVGQXzt/uWkW+bsNzEKY6Yd2Jl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659992; c=relaxed/simple;
-	bh=P6xjvsSopvHHupzkvJqL2zQ+CnWHMIOvFc7jb6Ep2Nc=;
+	bh=b8YQfWwpcRyIQDJNQP0w5vuPw1rdlZpQn9570E15YMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRKpmoLIs1Ke2md9WPdkRlrXvW55tpQi3Gcrd94S1soxRPGfMsDf/DnWGuGf7NOc67Ty3fUdhhCRvirQYBtSEBJoBwFFFZTqN5rqcva6g49pE3QCylxAVLlZcPVDkM5lJ76G8uI+eAxCoXURabsEe+JSSTlI4Rgnav+DfzX7A1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkpC8tHc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvx3RFW0eMY5o6bn+qaLhFLiw9/B0d+Kx7dk4JDfIswyDYNsBZoVlYm28m3haRtpHQP/Z/zwRUcDcC4LEj7AIRmiUbsKe3NQVJyAWdQpJNO43NQRaViQH9Ypcy/iT5w39/jYh/p12DvUiqxajBuJo+4efd5qgzj1FmzufdGHTnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQJ9qQUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkpC8tHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A446B1F000FF;
-	Thu, 17 Sep 2026 15:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQJ9qQUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07B91F00898;
+	Thu, 17 Sep 2026 15:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659985;
-	bh=9pcMgQ5LzzHHhjDjWWgbC/72imMTd8APNTPjomtd0c0=;
+	s=korg; t=1789659982;
+	bh=QoRitSp622IpmMNB/N+EQ8mM+6yaZvFVX5RmioqnT3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xkpC8tHcry+rl7+K+hIX3jStcyz/WH2dDOu5fQWYcMju3/zba8a4jZvtU1nswrni0
-	 cvSQAkBw7peV1Zb5/RaRBkTFE2Yhi8DEskzJFL1wBFY9/LOGhudRVZYp9uM/PaAhGV
-	 NhWX0X/ZVFPl7t105zFpWKi2uSBo3vTG2ZuI1eZg=
+	b=dQJ9qQUKGsQl7E/JvnUYKjDAn5w3IqE+6ddo7qlaj66kr+L2jXlBRd3KkQs9tKOL9
+	 iMJaTbpE6MXwlKxuXHHU4KiFl0O7xmurEpuORE50O3mv4JVk4U1I67s6+RTukzXrET
+	 86HSvw5sTMhL1VSL4lZhX66FfDrE5JMvvHULswmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Stian Halseth <stian@itx.no>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 413/733] perf/core: Allow list_del during perf_event_overflow()
-Date: Thu, 17 Sep 2026 16:12:01 +0100
-Message-ID: <20260917151402.069400804@linuxfoundation.org>
+Subject: [PATCH 7.2 439/733] sunvdc: unmap LDC cookies when the descriptor send fails
+Date: Thu, 17 Sep 2026 16:12:27 +0100
+Message-ID: <20260917151402.800394062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,64 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Stian Halseth <stian@itx.no>
 
-[ Upstream commit 59e63416f5153e7d58652c616fbdcb7d5e01fff7 ]
+[ Upstream commit 0c6da21fa35e03fc74f09895433ccd6d4a9c3530 ]
 
-A PMU might use perf_sched_cb_inc() and perf_sched_cb_dec()
-interface to get the PMU call back function pmu::sched_task
-invoked at schedule in and schedule out. This is achieved
-by walking along the list anchored by sched_cb_list.
+__send_request() maps the request's pages into the LDC channel's map
+table (ldc_map_sg()), fills in the descriptor and marks it
+VIO_DESC_READY before ringing the doorbell via __vdc_tx_trigger().
+When the trigger fails, the error path only prints a message: the
+descriptor stays READY and the cookies are never unmapped. The
+mapping is normally released in vdc_end_one() when the peer completes
+the descriptor - but a descriptor whose doorbell was never sent will
+never complete, and since dr->prod is not advanced on failure, the
+reset path (vdc_requeue_inflight(), which walks [cons, prod)) never
+visits it either. The map table entries are leaked permanently.
 
-The following scenario might lead to a list corruption.
+Since commit a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop
+when vio_ldc_send() returns EAGAIN") trigger failures occur in
+practice under load, so every resulting I/O error also leaks one
+request's worth of entries from the fixed-size (8192 entries per
+channel) map table. Because the allocator hands out contiguous
+ranges, fragmentation makes large multi-segment requests fail first
+as the table drains, until ldc_map_sg() fails permanently and the
+disk is dead until reboot.
 
-   perf_pmu_sched_task()
-      for_each_list_entry(..., &sched_cb_list)
-      +--> __perf_pmu_sched_task()
-           +--> event->pmu->sched_task())
-                +--> PMU_push_sample()
-                     +--> perf_event_overflow()
-                          +--> __perf_event_overflow()
-                               +--> pmu->stop()
-                                    +--> perf_sched_cb_dec()
-                                         remove entry from sched_cb_list
-                                         while list node in use.
+It also makes any retry-based recovery unusable: requeuing the
+request on -EAGAIN remaps the pages on every attempt, overwriting
+desc->cookies and orphaning the previous mapping, so the table
+drains at the retry rate. This is the memory exhaustion observed
+when the requeue approach was first tested in October 2025.
 
-This happens when ioctl(fd, PERF_EVENT_IOC_REFRESH, xxx) has been
-invoked and perf_event::event_limit hits zero.
+Roll back on failure: unmap the cookies, mark the descriptor FREE
+again and clear the request entry. If the trigger failed with
+-ENOTCONN, __vdc_tx_trigger() has already reset the port, which
+tears down and reallocates both the dring and the LDC channel
+including its map table - nothing to roll back, and the stale
+descriptor must not be touched.
 
-Prevent the list corruption and convert for_each_list_entry()
-to for_each_list_entry_safe().
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260908105637.627004-1-tmricht@linux.ibm.com
+Fixes: a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://github.com/sparclinux/issues/issues/2
+Signed-off-by: Stian Halseth <stian@itx.no>
+Link: https://patch.msgid.link/20260901173947.3292110-2-stian@itx.no
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/sunvdc.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ed3b62b0f948f..bd8c1acf59e2e 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -3925,13 +3925,13 @@ static void perf_pmu_sched_task(struct task_struct *prev,
- 				bool sched_in)
- {
- 	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
--	struct perf_cpu_pmu_context *cpc;
-+	struct perf_cpu_pmu_context *cpc, *cpc2;
- 
- 	/* cpuctx->task_ctx will be handled in perf_event_context_sched_in/out */
- 	if (prev == next || cpuctx->task_ctx)
- 		return;
- 
--	list_for_each_entry(cpc, this_cpu_ptr(&sched_cb_list), sched_cb_entry)
-+	list_for_each_entry_safe(cpc, cpc2, this_cpu_ptr(&sched_cb_list), sched_cb_entry)
- 		__perf_pmu_sched_task(cpc, sched_in ? next : prev, sched_in);
- }
- 
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index 020bd9f1a7b6a..24ad56536ed60 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -525,6 +525,23 @@ static int __send_request(struct request *req)
+ 	err = __vdc_tx_trigger(port);
+ 	if (err < 0) {
+ 		printk(KERN_ERR PFX "vdc_tx_trigger() failure, err=%d\n", err);
++		/*
++		 * If the port was reset (-ENOTCONN), the dring and the
++		 * LDC channel including all of its mappings are already
++		 * torn down and reallocated - there is nothing to undo
++		 * and @desc must not be touched.
++		 *
++		 * For any other failure the descriptor was never handed
++		 * to the peer: unmap the cookies and free the descriptor
++		 * again, so that a later retry of the request does not
++		 * leak LDC map table entries.
++		 */
++		if (err != -ENOTCONN) {
++			ldc_unmap(port->vio.lp, desc->cookies,
++				  desc->ncookies);
++			desc->hdr.state = VIO_DESC_FREE;
++			rqe->req = NULL;
++		}
+ 	} else {
+ 		port->req_id++;
+ 		dr->prod = vio_dring_next(dr, dr->prod);
 -- 
 2.53.0
 
