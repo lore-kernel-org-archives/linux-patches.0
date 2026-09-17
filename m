@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163444A0F14;
-	Thu, 17 Sep 2026 15:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101C64C10D5;
+	Thu, 17 Sep 2026 15:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660311; cv=none; b=EEQZtpfhfZDKsU6kZXmCxy6/4mwY8Ljmt8WIl+MmnRJXwe/W4e2WqNfz2e/owEJ8WJlk8dcg2HLwOpbuJHiMeTy+8t5klGB0IvKLHRagu99wM5N57uBwKlKRWLE9Cnu6HaPDLsqrcT2/pl3U8Lo1Aa/vghE6ZSSC3euuKR1Xp+Q=
+	t=1789660314; cv=none; b=Stka04vn5r/NcRKHyx1WKtMQHmLqRGBTGvcYhpO3Ql90JzaCODeNc2tSlRm2KkmF3ukZZN2LqwWFz5twNg5Ndb4P2Kk6obmPUg4a2N2ikL4Uhd+OrRHstYyx+iBYxYiBs1wDFmGiXrr0QI6WkiSum/7f80CZsRB1n+j8yhgT1iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660311; c=relaxed/simple;
-	bh=ofz4vOalD9AUMqMfszxysUGtDL/zCBS2aFarGPJuebA=;
+	s=arc-20240116; t=1789660314; c=relaxed/simple;
+	bh=WFpo00y8DkxPxZKRCsM2feDwKaIpUTVC8Xlw8wPzxsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYCZlDl4v44z/MrlUpxBvxDtNemhV6MKaEzYKXxSUba7mLbjprH+/Uf0wHuiP8L6qUBfueIbQF6UDv9iG5BX42tGonq/qksEWiaDp0JLgLcG8OxrIiyRw7PGm0174VLuB/rwkzMMWXp6VR3sEqdifkp7OEBDAvmLvEV4aBEzwTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUcDea8H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WWJv8LC6R7O3kt2LlknWeujucpkgPhv4O8E6tdt2ucuQKvRUi9Niq6pN9WRPRoj7MWp+jDRFXTGpHKSL+2IBNgmNHtwqP+rPXCbsZ5OE6fk9XrEFHeTsmQk7nc0WLXMJ6BNGd8xuD3DM2WO7qg+1HmKRP9Hpg5dB0KOWwQIu2Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3jYzpy+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUcDea8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A41B1F000FF;
-	Thu, 17 Sep 2026 15:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3jYzpy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BD11F000FF;
+	Thu, 17 Sep 2026 15:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660309;
-	bh=LzXra9miWr39erii7/KyPONrni/makxtnXZLuuDWv1w=;
+	s=korg; t=1789660313;
+	bh=rdu5k0V1miqBA0A/ADQu6ramwHKgdUUB7eRMC23PoTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dUcDea8Hp72sLt2HaniN1Thnaj+p/FqtAw702eyP4jeEZ5ExCMeOsorFLWmKqdT/R
-	 jqSxfCR3Pc8TplKeildi36U8Q3WI6fiwKznovXzqJME353u2zfWthpGnDqw3n8o94E
-	 3HeDfVlxpy1DwfzrnTuGdnp0DE9+yrpOjWyJkPIs=
+	b=J3jYzpy+OHDudFoKpEaN7zyA6+FjLQbg8+PqHPePCN7XTvvwvYfq/bSeyOu8HGBz1
+	 Mr7WYHDWgcat+qO5I1YJ/ZY4xz13M0vwvcelafJsxHuytosU5c4ik+x48IumQ1BRLP
+	 pLRtOa0na/h/HoscAmpVhERSqV6rmV961j8Pciy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 550/733] net: phy: dp83td510: handle the active-high LED polarity mode
-Date: Thu, 17 Sep 2026 16:14:18 +0100
-Message-ID: <20260917151405.968541657@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 551/733] netfs: Fix uninitialized return value in netfs_unbuffered_write()
+Date: Thu, 17 Sep 2026 16:14:19 +0100
+Message-ID: <20260917151405.997669733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,46 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 6ca81bbc31cdc964e4b74d17b86215d4a810a56f upstream.
+commit f18e8774f4d3137fa0a5fb8ffa83d59a719666d8 upstream.
 
-dp83td510_led_polarity_set() only recognizes PHY_LED_ACTIVE_LOW, so
-PHY_LED_ACTIVE_HIGH falls through to the default case and returns -EINVAL.
-of_phy_led() propagates the error, of_phy_leds() drops the LEDs registered
-so far and passes it on, and phy_probe() returns it. A device tree marking
-a DP83TD510 LED as 'active-high', which leds/common.yaml allows and
-ethernet-phy.yaml references for led@N nodes, thus leaves the mdio device
-unbound, so phy_attach_direct() falls back to the genphy driver, which
-cannot drive this 10BASE-T1L single-mode PHY, so the interface has no
-usable link.
+If preparation of the first subrequest fails,
+netfs_unbuffered_write() exits its loop before ret is initialized. The
+empty-iterator check can do the same.
 
-The callback initializes polarity to DP83TD510E_LED_POLARITY(index), which
-is the active-high setting, so the request is already satisfied and only
-the case label is missing.
+For synchronous writes, netfs_unbuffered_write_iter_locked() may then
+return an unrelated error instead of wreq->error. This is reachable
+through CIFS if cifs_prepare_write() fails to reopen the file or obtain
+credits.
 
+Initialize ret to 0 so the caller returns wreq->error if no data was
+written, or the number of bytes already written otherwise.
+
+Found with Clang's -Wconditional-uninitialized.
+
+Fixes: a0b4c7a49137e ("netfs: Fix unbuffered/DIO writes to dispatch subrequests in strict sequence")
 Cc: stable@vger.kernel.org
-Fixes: 5b281fe7e396 ("net: phy: dp83td510: introduce LED framework support")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260908105959.70453-3-donggeunyoo.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260827134304.2075713-2-dhowells@redhat.com
+Acked-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83td510.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/netfs/direct_write.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/phy/dp83td510.c
-+++ b/drivers/net/phy/dp83td510.c
-@@ -439,6 +439,9 @@ static int dp83td510_led_polarity_set(st
- 		case PHY_LED_ACTIVE_LOW:
- 			polarity = 0;
- 			break;
-+		case PHY_LED_ACTIVE_HIGH:
-+			polarity = DP83TD510E_LED_POLARITY(index);
-+			break;
- 		default:
- 			return -EINVAL;
- 		}
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -95,7 +95,7 @@ static int netfs_unbuffered_write(struct
+ {
+ 	struct netfs_io_subrequest *subreq = NULL;
+ 	struct netfs_io_stream *stream = &wreq->io_streams[0];
+-	int ret;
++	int ret = 0;
+ 
+ 	_enter("%llx", wreq->len);
+ 
 
 
