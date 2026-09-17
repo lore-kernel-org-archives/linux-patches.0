@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A8E398911;
-	Thu, 17 Sep 2026 15:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65496554090;
+	Thu, 17 Sep 2026 15:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659217; cv=none; b=R6as+P52Yiv1QVb27YTRDlz/3tSQBM7Vdqn7fp+sZ4tCe1nv/tPPMTacw8xVp4JZzschgSiVdkGnqQs81NA9Lk9xNWHcF/FAKKVOQpmKX/hEp/NSqmhznRao23YFOHQm+8nq/6HVwTKOdnAkzOs1srLn6anJB7JKIT2rAVGdZ+g=
+	t=1789659218; cv=none; b=BipLiOwUqV9KCfzCDRD8nILngrutg/ipJqzbETM9pgofMeWS360s+zNGsz2Ln74B3xcD+eaEEe9PtkctOo6lBsh33EtMaNAhdICGv0kAvT79OiDjuNylgwQsqKFsyyvzevhAfPb9Go81x+gmMs7Cbdy0pUOeKEglcAL7Gh6ZB7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659217; c=relaxed/simple;
-	bh=aQREflve+Vz882UoZFDTAwcfhmZqm09noD/NYR2VVsI=;
+	s=arc-20240116; t=1789659218; c=relaxed/simple;
+	bh=vHSbvNoDpLRkVpd/XHt+eGDzXE/7BdnYEPGhikBGCMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S7UqLbFA/0RHQj+Tv8t/edMQIOBrngeec+uX80tjqLBj3dVhraKanAZB98EPVlwxbeWTH4tl/TRblHF+xKyZ0v2JP4bCWF8j/uCV7DcWrmZ2c5t2qP4k+AN+IGkdap1k1WWNGQbq36fLKRwFxx3mMA8Uu1UDSefBYJw2v6Sqp2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzhhhC/8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ai8C0rvCJrrQdXQNekKhEQ4Lq6fYDHcRxZujF5HNN1+cqJHJKAMcnIVAKir3qngH8uC+2oLXNtkkneSsIr7uYecHiIJETA9ZVDiWSYDQItdOGrfikRR1tmj5mCqnWub5sBREDPukh7Y+gz/E7FBkdkzEanN14h8jpX5BJGuLm3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEFiEvcI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzhhhC/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893EB1F00898;
-	Thu, 17 Sep 2026 15:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEFiEvcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879D51F00899;
+	Thu, 17 Sep 2026 15:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659209;
-	bh=gRiQxntk4SLvR+vBHi68iRqk23v4lTVUh19eE2ecevU=;
+	s=korg; t=1789659215;
+	bh=7yzaKKqdKZctRk3ZCbN+a7oDJTKB0OV9NjNTsdPP0/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zzhhhC/8K/fSUnFCt3t2+q8Ii3QbnCFbgwG2AVZacb21Bd1EZ03gLsnOHXLuzbcgO
-	 l2tVfeY6cEhmrl2rnt6MR9ja/Z2UQKB6aK7w0lY0dwhEyWUQIp7ouPAsyJaVRkFRWX
-	 1Ox1ViXwTXleoxHsSiJZa0JGpnVmi/A2uberJUDo=
+	b=XEFiEvcITRgoLGWGTLCmqYeb7JIF3MhhxSJfBy3ZQCu4oiy0atcnAeMd4sf4h6Zhy
+	 cqC/1uJdmLyOrcOMAzxOrvluNY52uEMRrWgyaNfXtw2f952/Wcc0amrDhOhARIAL3x
+	 cYoIh2dUIW/I+RWRv/r/61Pskf4yvKUAM1aRpHsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Taimuraz Kaitmazov <taimuraz@kaitmazov.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 163/733] accel/amdxdna: refuse to flush an imported BO
-Date: Thu, 17 Sep 2026 16:07:51 +0100
-Message-ID: <20260917151355.139478432@linuxfoundation.org>
+Subject: [PATCH 7.2 182/733] ASoC: ux500: Validate MSP DAI configuration
+Date: Thu, 17 Sep 2026 16:08:10 +0100
+Message-ID: <20260917151355.667686469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -46,72 +45,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 0ba8e0f90039da68342febf613019f4a68d86620 ]
+[ Upstream commit 9ccbacf5a0120964fc1ffacb8151e3347bee9287 ]
 
-SYNC_BO clflushes an imported BO's scatterlist. An importer may not do
-that: the memory belongs to the exporter, and dma-buf gives the importer
-no interface to ask for maintenance on it. Refuse the request instead.
+Installing channel constraints from hw_params is too late to affect the
+parameters being committed. The driver consequently accepts channel
+counts which disagree with the I2S or TDM setup. It also silently
+truncates out-of-range slot masks and accepts inverted bit clock formats
+which prepare then rejects.
 
-is_import_bo() is (obj)->attach, which covers more than foreign buffers.
-A userptr BO arrives through a ubuf, and on a carveout device every share
-BO and the device heap arrive through a cbuf, so SYNC_BO answers
--EOPNOTSUPP for those too, including the AMDXDNA_BO_DEV path that flushes
-through its heap.
+Validate the selected channel count directly, reject invalid masks
+before changing cached TDM state, and implement all four standard clock
+and frame inversion combinations. Use the requested format in
+validation diagnostics.
 
-Only the ubuf case gives up maintenance it was getting: on a 64 MiB
-userptr BO a 4 KiB sync and a full sync both cost 659 us, this arm having
-ignored the range. amdxdna_cbuf_map() fills in only the DMA address and
-length, so drm_clflush_sg() already walks zero pages on carveout memory.
-Userspace maintains these through the mapping it already holds, as XRT's
-buffer::sync() does unless it is told to sync through the driver.
-
-Fixes: dbc8fd7a03cb ("accel/amdxdna: Add expandable device heap support")
-Reported-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/dri-devel/a505f9e5-b416-43e9-934d-c5c29b8a70e9@amd.com/
-Suggested-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260819224458.257346-5-taimuraz@kaitmazov.com
+Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-4-4b60b002d55a@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 41 ++++++++++++++++++++++-----------
+ sound/soc/ux500/ux500_msp_i2s.c |  7 ++++--
+ sound/soc/ux500/ux500_msp_i2s.h |  1 +
+ 3 files changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 2a16de96e6a4e..219dacdfa527c 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -1240,6 +1240,9 @@ static int amdxdna_flush_bo(struct amdxdna_gem_obj *abo, u64 offset, u64 size)
- {
- 	u64 end;
- 
-+	if (is_import_bo(abo))
-+		return -EOPNOTSUPP;
+diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
+index 0a9cc7e769fe3..599de5de23dde 100644
+--- a/sound/soc/ux500/ux500_msp_dai.c
++++ b/sound/soc/ux500/ux500_msp_dai.c
+@@ -130,7 +130,16 @@ static int setup_clocking(struct snd_soc_dai *dai,
+ 	case SND_SOC_DAIFMT_NB_IF:
+ 		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
+ 		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
++		break;
 +
- 	if (offset >= abo->mem.size)
++	case SND_SOC_DAIFMT_IB_NF:
++		msp_config->bclk_inverted = true;
++		break;
+ 
++	case SND_SOC_DAIFMT_IB_IF:
++		msp_config->bclk_inverted = true;
++		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
++		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
+ 		break;
+ 
+ 	default:
+@@ -453,7 +462,6 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_soc_dai *dai)
+ {
+ 	unsigned int mask, slots_active;
+-	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
+ 
+ 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter.\n",
+@@ -461,9 +469,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
+ 
+ 	switch (drvdata->fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S:
+-		snd_pcm_hw_constraint_minmax(runtime,
+-				SNDRV_PCM_HW_PARAM_CHANNELS,
+-				1, 2);
++		if (params_channels(params) < 1 || params_channels(params) > 2)
++			return -EINVAL;
+ 		break;
+ 
+ 	case SND_SOC_DAIFMT_DSP_B:
+@@ -475,9 +482,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
+ 		slots_active = hweight32(mask);
+ 		dev_dbg(dai->dev, "TDM-slots active: %d", slots_active);
+ 
+-		snd_pcm_hw_constraint_single(runtime,
+-				SNDRV_PCM_HW_PARAM_CHANNELS,
+-				slots_active);
++		if (!slots_active || params_channels(params) != slots_active)
++			return -EINVAL;
+ 		break;
+ 
+ 	default:
+@@ -510,20 +516,21 @@ static int ux500_msp_dai_set_dai_fmt(struct snd_soc_dai *dai,
+ 	default:
+ 		dev_err(dai->dev,
+ 			"%s: Error: Unsupported protocol/master (fmt = 0x%x)!\n",
+-			__func__, drvdata->fmt);
++			__func__, fmt);
  		return -EINVAL;
+ 	}
  
-@@ -1250,9 +1253,7 @@ static int amdxdna_flush_bo(struct amdxdna_gem_obj *abo, u64 offset, u64 size)
- 	if (!size)
- 		return 0;
+ 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+ 	case SND_SOC_DAIFMT_NB_NF:
+ 	case SND_SOC_DAIFMT_NB_IF:
++	case SND_SOC_DAIFMT_IB_NF:
+ 	case SND_SOC_DAIFMT_IB_IF:
+ 		break;
  
--	if (is_import_bo(abo))
--		drm_clflush_sg(abo->base.sgt);
--	else if (amdxdna_gem_vmap(abo))
-+	if (amdxdna_gem_vmap(abo))
- 		drm_clflush_virt_range(amdxdna_gem_vmap(abo) + offset, size);
- 	else if (abo->base.pages)
- 		drm_clflush_pages(abo->base.pages, abo->mem.size >> PAGE_SHIFT);
+ 	default:
+ 		dev_err(dai->dev,
+ 			"%s: Error: Unsupported inversion (fmt = 0x%x)!\n",
+-			__func__, drvdata->fmt);
++			__func__, fmt);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -557,17 +564,23 @@ static int ux500_msp_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ 			__func__, slots);
+ 		return -EINVAL;
+ 	}
+-	drvdata->slots = slots;
+ 
+-	if (!(slot_width == 16)) {
++	if (slot_width != 16) {
+ 		dev_err(dai->dev, "%s: Error: Unsupported slot-width (%d)!\n",
+ 			__func__, slot_width);
+ 		return -EINVAL;
+ 	}
+-	drvdata->slot_width = slot_width;
+ 
+-	drvdata->tx_mask = tx_mask & cap;
+-	drvdata->rx_mask = rx_mask & cap;
++	if ((tx_mask | rx_mask) & ~cap) {
++		dev_err(dai->dev, "%s: Slot mask exceeds %d slots\n",
++			__func__, slots);
++		return -EINVAL;
++	}
++
++	drvdata->slots = slots;
++	drvdata->slot_width = slot_width;
++	drvdata->tx_mask = tx_mask;
++	drvdata->rx_mask = rx_mask;
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
+index ef41de92d8e76..bc77174e00707 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.c
++++ b/sound/soc/ux500/ux500_msp_i2s.c
+@@ -201,10 +201,12 @@ static int configure_protocol(struct ux500_msp *msp,
+ 
+ 	/* The code below should not be separated. */
+ 	temp_reg = readl(msp->registers + MSP_GCR) & ~TX_CLK_POL_RISING;
+-	temp_reg |= MSP_TX_CLKPOL_BIT(~protdesc->tx_clk_pol);
++	temp_reg |= MSP_TX_CLKPOL_BIT(!protdesc->tx_clk_pol ^
++					  config->bclk_inverted);
+ 	writel(temp_reg, msp->registers + MSP_GCR);
+ 	temp_reg = readl(msp->registers + MSP_GCR) & ~RX_CLK_POL_RISING;
+-	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol);
++	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol ^
++					  config->bclk_inverted);
+ 	writel(temp_reg, msp->registers + MSP_GCR);
+ 
+ 	return 0;
+@@ -441,6 +443,7 @@ static bool ux500_msp_config_compatible(struct ux500_msp *msp,
+ 	       active->data_size == config->data_size &&
+ 	       active->def_elem_len == config->def_elem_len &&
+ 	       active->clock_provider == config->clock_provider &&
++	       active->bclk_inverted == config->bclk_inverted &&
+ 	       !memcmp(&active->protdesc, &config->protdesc,
+ 		       sizeof(active->protdesc));
+ }
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 80085dde50793..17b5c37a7e5d5 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -459,6 +459,7 @@ struct ux500_msp_config {
+ 	unsigned int def_elem_len;
+ 	unsigned int iodelay;
+ 	bool clock_provider;
++	bool bclk_inverted;
+ };
+ 
+ struct ux500_msp {
 -- 
 2.53.0
 
