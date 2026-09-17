@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0E84B44C4;
-	Thu, 17 Sep 2026 15:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2164F393A;
+	Thu, 17 Sep 2026 15:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659796; cv=none; b=nvNylAH4TxB3kxI07JLDTEay5C4YvweqOzheuvdurvDA5aZfvyzZ1j5PIljHZlJik+GWcOb4dCTSqKR0huZytQUyLru8pUOms3FbGLuIfCZANU7j0JnH8vNERFjpRS7koGzQKyRxUSNp1b8aw5NY6ZykphRyw35LC0t7sgMg0ss=
+	t=1789659802; cv=none; b=PfCexQxDB6I3Z8PJt4qumoozuyGj/7rcRLeUW7iSRu85B2Ga07TvBF7KNRw1oaELCkjlzSW+gcaFoDYDZip3/XfaYdnVtbCJiBgN+m1VIBa2Hd1+QX7rh9gqvT95XORY62YqF69PjiFWX+OeAEFw7xMXZqKoFBLmhGHA5st0vUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659796; c=relaxed/simple;
-	bh=Sr6bH8BP32iL3z0ofgmIzvMg4xvJCJVu1iFu3CE/Gyw=;
+	s=arc-20240116; t=1789659802; c=relaxed/simple;
+	bh=ZMDHSDEt4pvQYfrjn8x2YYTNvfjDLyQ3Qp/uDQpRAQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ej23m/XDUI5End0SC0BI1hUhtb4ij4Gj8QAJy1WPQI/IvO/+2GX689/ANshU8QREDED89jmbtHc6q+FXCwszTuo3sis8OO+eysY5AtLclobfD6YdMD14vtJisky41NEbpiGGVCdvFqQJJFBkA+nXrOhL1v2Bd10i2PB2DGL+kP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isUu7zTK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jk1eC+CT9OujGv/i4H2s9u440RkKeYj40xcdcg8xEtjlL+XAvrgNAKrCtlLYXW1sWUsVDDuXgA0z9CPkItGNhSA3Gr2xtzBuAyF8n9KZTfvFRb18JQI8kcOmaY/8Ynmon0TiLAIIsXXHrZ9fNDyBDwIWq6atRozopEjM1Qs4YZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/vh3b8+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isUu7zTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3D71F00893;
-	Thu, 17 Sep 2026 15:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/vh3b8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDA91F00898;
+	Thu, 17 Sep 2026 15:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659785;
-	bh=ULU2rDjuO8YIZm7rcbvHcn1nZtMtm+yvhhz1V8Mwf3A=;
+	s=korg; t=1789659788;
+	bh=+8MEd583WSK1DnHEYrRoF+6B3mYxIhyUek/kRO35QsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isUu7zTKgVM/u5CLgHQ+bQWI88lBaauityeZv5XbULH8C0sEXOVTmYaobLkEyU/wV
-	 ynKzh/L4XY2ROPbL5X7+Yh+ct9NBRm+nC0jlynwHmjQ9s51L1zxHra2yiC5/7ezH8I
-	 GZgx8k4Kj3bnwcCzSnmrzqaKtvckhuHjtrgBBhVE=
+	b=X/vh3b8+irl8a+XC3xh6LG8oIWBFF3jduSAOWZOWb3/q7K5cC3NfeyqcaVGmh0UNW
+	 79TipkjiNLnkDb0IHXa89sZPNPSVHSJpxG69N55wb6RZbvm2nHnLhuHgBumV2+/9ut
+	 yzMII02lsLehHgcE96xlyHRXKGM/SA/BENeiQyPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 335/733] btrfs: fix unnecessary transaction commit fallback from btrfs_log_all_parents()
-Date: Thu, 17 Sep 2026 16:10:43 +0100
-Message-ID: <20260917151359.883332314@linuxfoundation.org>
+Subject: [PATCH 7.2 336/733] netfilter: nfnetlink_log: cope with concurrent instance destruction
+Date: Thu, 17 Sep 2026 16:10:44 +0100
+Message-ID: <20260917151359.909259425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,61 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 36f9aafa46f5b9fecf92d9218c5574f1ef6b4907 ]
+[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
 
-When btrfs_log_all_parents() returns without doing any work (because all
-parent directories were already logged), it returns 1, which is propagated
-up the fsync call chain up to btrfs_log_dentry_safe(), and that causes
-btrfs_sync_file() to trigger am unnecessary transaction commit.
+Instances are refcounted. However, only memory release happens on the
+1 -> 0 transition; the unlink from hashes can occur with any refcount.
 
-This all happens because the call to btrfs_search_slot() in
-btrfs_log_all_parents() always returns 1, as there can not be any inode
-ref keys with an offset 0 (an invalid inode number), so if the while loop
-below it does not do any work because all parent directories were already
-logged, the 'ret' variable remains with a value of 1, which is then
-returned up the call chain to btrfs_sync_file().
+Uncooperative userspace can force a situation where a queue is pending
+for destruction from netlink event while a different socket with same
+portid processes an UNBIND request.
 
-Fix this by setting 'ret' to 0 after the call to btrfs_search_slot().
+With right timing, this will unhash the instance again:
 
-Fixes: 0f24ea456ae1 ("btrfs: tracepoints: add trace event for btrfs_log_all_parents()")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Oops: general protection fault, [..]
+Call Trace:
+ <TASK>
+ nfulnl_recv_config+0x31a/0xd50
+ nfnetlink_rcv_msg+0x7c2/0xeb0
+
+Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/netfilter/nfnetlink_log.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 875e4ddc68eae..c87f6a7e8d612 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -7307,6 +7307,22 @@ static int btrfs_log_all_parents(struct btrfs_trans_handle *trans,
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
- 	if (ret < 0)
- 		goto out;
-+	/*
-+	 * There can't be an inode ref key with offset 0 because inode numbers
-+	 * start at BTRFS_FIRST_FREE_OBJECTID.
-+	 */
-+	if (WARN_ON_ONCE(ret == 0)) {
-+		btrfs_err(trans->fs_info,
-+		  "found inode ref key with offset 0 for root %llu inode %llu",
-+			  btrfs_root_id(root), ino);
-+		ret = BTRFS_LOG_FORCE_COMMIT;
-+		goto out;
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 6c7fa2ed34f5c..8fc002ae08bcd 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -228,13 +228,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
+ static void
+ __instance_destroy(struct nfulnl_instance *inst)
+ {
++	spin_lock(&inst->lock);
++	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
++		/* attempt to UNBIND a queue already pending
++		 * destruction via netlink close event. Ignore.
++		 */
++		spin_unlock(&inst->lock);
++		return;
 +	}
-+	/*
-+	 * Set to 0 so that in case we don't do any work below, we won't return
-+	 * 1 and trigger an unnecessary transaction commit.
-+	 */
-+	ret = 0;
++
+ 	/* first pull it out of the global list */
+ 	hlist_del_rcu(&inst->hlist);
  
- 	while (true) {
- 		struct extent_buffer *leaf = path->nodes[0];
+-	/* then flush all pending packets from skb */
+-
+-	spin_lock(&inst->lock);
+-
+ 	/* lockless readers wont be able to use us */
+ 	inst->copy_mode = NFULNL_COPY_DISABLED;
+ 
 -- 
 2.53.0
 
