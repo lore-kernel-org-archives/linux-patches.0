@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372395218A4;
-	Thu, 17 Sep 2026 17:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA255218B1;
+	Thu, 17 Sep 2026 17:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665891; cv=none; b=q4zVLiLbKl3hBupa3lzFdV/jFqf10Nqi56bjg4GT8vlTpQ51tex0hGHQX6kQkQC4kA6yzsCUwYbom0ifPngAJkzOuHiqFWB8DpUgpE9tYz78e65B0sER8mcgDL5ktsAORSRfMGrRj/FmOaK2fhLr9MgdSzFGWv9yT08E3dBevbc=
+	t=1789665894; cv=none; b=r4hZkJjLDRDl5wlT2lPzu9icpYk3obWBT05R23xswSLZazU4PgGSGnTBABhYMRMF40720MDCuXvLZo01+r+JX/ai4BD5XBuKVBdWHbNPvsmrhAj3edDczFJvwxbSYONEZ3mVDzviGMIn1OSkkFwgRng20JorZIUF8oSALvV+6hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665891; c=relaxed/simple;
-	bh=0QJrMgF++ghNPndZeR2Z69zARrJz2pkrB378whdfcj8=;
+	s=arc-20240116; t=1789665894; c=relaxed/simple;
+	bh=2qq9dWDSgZwGNcLWP4tDloVZAwnettd8gvMLY2IcUlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcfP3urS1irrVFsp3zXCqadB8Mo3Gs+XsoofWphLZOsFWxJJM5C3O8LWxEVJFFqcM9z3ZKiw578cjnbyrIHypzZNvrLY+jJGSdVtlHVFYxEdH+o43rLF/jt+54o0kMvQFR2UKqNrSRMGIArrF23GYB4+Zm59MadiuS30TL0nQlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrHoCNoR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=skwh3TywCZRcw/QHWkR6RCqbeKQCimBbeUcDFh0G2JX8gqAUV0WU1B5gwmDLLYietWcESawVvLEkuvKflZUQ/lt0emkLTvFgPIcN8Pc/nG5v66DtNJuepkwU4+08sMNbTwD3YhO1wT2NNtPAw1TK61qD8j0ftVy3EDccON3XMuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOHkJu9Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrHoCNoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC4A1F000FF;
-	Thu, 17 Sep 2026 17:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOHkJu9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919671F000FF;
+	Thu, 17 Sep 2026 17:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665890;
-	bh=O4B+vTxoHxNkLYcZqYpUb7OusL2oYlFL8jkgZ8p4YiQ=;
+	s=korg; t=1789665893;
+	bh=Pet23uJxW3gACUaJN/nmJzp9H5a6QBgvrfc4Kig9KAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hrHoCNoRilSnBWpsf/iDczuO2kuqt8TO1BcfZkBqUWB6XW/pSLxbuYUwCRvQeDVSZ
-	 21uwOMBFWHORd5Z6MhmXK0+tBUwbwySfkXb+qTcTYLK2lXnvhTEaCh7ErWLjZfRxUO
-	 u1pm0X4XA88tgiE9AfryNHsBUfD+1PPaeldHetY0=
+	b=WOHkJu9Z9CrQq9bkXTxgB6Va2dtykJvlN/UhJCxFvGsJdutw0EXNMCRO+FqOhcavK
+	 XkfDuoj+9IatVtolMUxysD3V78KeYMJKp+ntPEtOEJMXqZ/Z+1kEhIskXB1Ubg/OS1
+	 8xOsl+P+tDpPR1pGvJjyN4hytif8w+dJhxfxEsqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0853/1250] virtio_console: do not free control-out buffers on remove
-Date: Thu, 17 Sep 2026 16:10:48 +0100
-Message-ID: <20260917151615.086129693@linuxfoundation.org>
+Subject: [PATCH 6.18 0818/1250] net/mlx5e: Keep HW timestamp stats monotonic across reconfiguration
+Date: Thu, 17 Sep 2026 16:10:13 +0100
+Message-ID: <20260917151614.103530549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,75 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 894f98e73983f37354214a89a3a7fd35bf9e3072 ]
+[ Upstream commit df99553f840e4c529c1ba4c29bd39396466ca11a ]
 
-__send_control_msg() publishes &portdev->cpkt as the control-out
-virtqueue cookie. remove_vqs() walks every virtqueue and passes leftover
-cookies to free_buf(), which treats them as struct port_buffer and
-reads sgpages.
+`mlx5e_stats_ts_get()` currently selects either DMA or port timestamp
+counters based on `tx_ptp_opened`. This flag is intentionally kept set
+once the PTP TX queues have been opened so their statistics remain
+available after queue teardown. As a result, DMA timestamps are no
+longer reported after switching from port timestamping back to DMA
+timestamping.
 
-If a control message is still on c_ovq when the device is unbound,
-free_buf() reads past the ports_device object.
+The function also reads statistics only from the currently active
+channels and TCs. Reducing the number of channels or TCs can therefore
+drop previously accumulated timestamp counters from the reported value.
 
-KASAN reported slab-out-of-bounds in free_buf():
+Read the persistent channel statistics instead and always include DMA
+timestamp counters. Once the PTP TX queues have been opened, also
+include the port timestamp counters.
 
-	free_buf
-	remove_vqs
-	virtcons_remove
-	unbind_store
+This also drops state_lock. It previously protected live channel/PTP
+pointers, the new code only reads persistent channel_stats and
+ptp_stats via mlx5e_stats_nch_read(), which is already safe for
+lockless stats access.
 
-The object was the ports_device allocated in virtcons_probe().
-
-Drain c_ovq without freeing. The packet lives in portdev and is released
-with it.
-
-Fixes: a7a69ec0d8e4 ("virtio_console: free buffers after reset")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819021230.292696-1-physicalmtea@gmail.com>
+Fixes: 3579032c08c1 ("net/mlx5e: Implement ethtool hardware timestamping statistics")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260902193731.3668958-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en_stats.c    | 51 ++++++++-----------
+ 1 file changed, 20 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
-index c355f6d392748..76f934b5d84be 100644
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1893,13 +1893,28 @@ static const struct file_operations portdev_fops = {
- static void remove_vqs(struct ports_device *portdev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+index 5ae501f448338..8450b07b0146e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+@@ -1170,50 +1170,39 @@ void mlx5e_stats_rmon_get(struct mlx5e_priv *priv,
+ void mlx5e_stats_ts_get(struct mlx5e_priv *priv,
+ 			struct ethtool_ts_stats *ts_stats)
  {
- 	struct virtqueue *vq;
-+	bool multiport = use_multiport(portdev);
+-	int i, j;
++	u16 nch = mlx5e_stats_nch_read(priv);
++	int i, tc;
  
- 	virtio_device_for_each_vq(portdev->vdev, vq) {
- 		struct port_buffer *buf;
-+		unsigned int len;
+-	mutex_lock(&priv->state_lock);
++	ts_stats->pkts = 0;
  
--		flush_bufs(vq, true);
--		while ((buf = virtqueue_detach_unused_buf(vq)))
--			free_buf(buf, true);
-+		/*
-+		 * c_ovq cookies are &portdev->cpkt, not port_buffer.
-+		 * Detach them but do not free_buf().
+-	if (priv->tx_ptp_opened) {
+-		struct mlx5e_ptp *ptp = priv->channels.ptp;
++	for (i = 0; i < nch; i++) {
++		struct mlx5e_channel_stats *channel_stats =
++			priv->channel_stats[i];
+ 
+-		ts_stats->pkts = 0;
++		for (tc = 0; tc < priv->max_opened_tc; tc++)
++			ts_stats->pkts += channel_stats->sq[tc].timestamps;
++	}
++
++	/* Accumulate DMA and port timestamp counters so values stay monotonic
++	 * across channel teardown and mode switches.
++	 */
++	if (priv->tx_ptp_opened) {
++		/* Err and Lost stats are only relevant for port timestamping,
++		 * as the DMA layer will always successfully timestamp packets.
 +		 */
-+		if (multiport && vq == portdev->c_ovq) {
-+			spin_lock(&portdev->c_ovq_lock);
-+			while (virtqueue_get_buf(vq, &len))
-+				;
-+			while (virtqueue_detach_unused_buf(vq))
-+				;
-+			spin_unlock(&portdev->c_ovq_lock);
-+		} else {
-+			flush_bufs(vq, true);
-+			while ((buf = virtqueue_detach_unused_buf(vq)))
-+				free_buf(buf, true);
-+		}
- 		cond_resched();
+ 		ts_stats->err = 0;
+ 		ts_stats->lost = 0;
+ 
+-		if (!ptp)
+-			goto out;
+-
+-		/* Aggregate stats across all TCs */
+-		for (i = 0; i < ptp->num_tc; i++) {
++		for (tc = 0; tc < priv->max_opened_tc; tc++) {
+ 			struct mlx5e_ptp_cq_stats *stats =
+-				ptp->ptpsq[i].cq_stats;
++				&priv->ptp_stats.cq[tc];
+ 
+ 			ts_stats->pkts += stats->cqe;
+ 			ts_stats->err += stats->abort + stats->err_cqe +
+-				stats->late_cqe;
++					stats->late_cqe;
+ 			ts_stats->lost += stats->lost_cqe;
+ 		}
+-	} else {
+-		/* DMA layer will always successfully timestamp packets. Other
+-		 * counters do not make sense for this layer.
+-		 */
+-		ts_stats->pkts = 0;
+-
+-		/* Aggregate stats across all SQs */
+-		for (j = 0; j < priv->channels.num; j++) {
+-			struct mlx5e_channel *c = priv->channels.c[j];
+-
+-			for (i = 0; i < c->num_tc; i++) {
+-				struct mlx5e_sq_stats *stats = c->sq[i].stats;
+-
+-				ts_stats->pkts += stats->timestamps;
+-			}
+-		}
  	}
- 	portdev->vdev->config->del_vqs(portdev->vdev);
+-
+-out:
+-	mutex_unlock(&priv->state_lock);
+ }
+ 
+ #define PPORT_PHY_LAYER_OFF(c) \
 -- 
 2.53.0
 
