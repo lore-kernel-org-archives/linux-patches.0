@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B75377004;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A55581F7;
 	Thu, 17 Sep 2026 15:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659019; cv=none; b=QN/e+QHii5DEdbgh8O/keFFw76mu9CnC6Rhcw2/OhkEt8qYmENNmWGdyhdQtITQHUo1traeUoCzRacf8eopQKjJTH55E9hxES0tni+XwxLKQFItf05x0cl7I/kukLZFq5aflumiuorHWANZ9Vx4vsHGIc2dmochBVnMnqFdydLI=
+	t=1789659019; cv=none; b=f8LSjMkHxIHfeCHcI3R1AZRBPV6GBUQxrlDqFnDfBNaZQUZnClibDkaU9CZLzcnTlY9E8eFUDQR4IEUrApaowxc+Y7WXe9zl2vFtrktH5uK0sojgr+NtZ4xgDhsdwtzhhr8S9yC0vbnqOIG/dGqXetPDfuEus6nTHWLZsZ+PK2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659019; c=relaxed/simple;
-	bh=4G9f6cMeC/lBXjfge9ka0Q4kJIr8sh1p4mcr+MUPKRU=;
+	bh=v4u/J6vhtp9Ra/GILAjsGyTetLN03G4K7Q6MPPsGwtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xp3Sae4IrNa5ZbKTRn6Cqlvlza/V6SWWqdYrfRPVqCTXf4DXY5SvIyIPBCkai7Jb8m6cyxEJTkgnkmhzEbttKo1MPUW1Yis+iEx77QiVoilEIJSCC4AUSF2WjIJZrwTz7/UsMmAO18qVTWhx53Y7gNr5+Q9yUNeFmVKJSaDDFkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deHj4KtL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fnmF8OrCKKq1sFZRIiWRKp2ESUr2Zng3R6qahnSSyYoRy/EJT+d/Iw4XjtxL8Ebn0Kl/dyxFlBq2kouAmT2AKsZac8lw6XbfCnMrB/G7DPhI4r02KQQPjzXzHlJ/XDFWO6xuulWOz2PVcUJ3mmT3f2l9/x/o+ow5HJ6Aigl0y7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1x5o2Yq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deHj4KtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06331F0089D;
-	Thu, 17 Sep 2026 15:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1x5o2Yq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0821F00899;
+	Thu, 17 Sep 2026 15:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659010;
-	bh=rVegcjuUGR1ZPkPBU1Uq5d7ed+tMbYbvYGnsgmZLgDQ=;
+	s=korg; t=1789659007;
+	bh=w5ktI75tKqhjKXR1z08PXK7p+nJbxHT34gLtTObmXik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deHj4KtL1m1ZeYn8FNmrT6fXW1QQGRqybLrLopS+fCU1x8v4tQGiVfXNLOcYON4/e
-	 lHagRl6zYfSK91+7DG9+4AkoTsqERbLPP/raveIh/bBL437G//GkOcAT8uSov59T9Q
-	 y8fgN5u7/TjKhgJjkDsABKFz63+qktr8Gwnco8x0=
+	b=L1x5o2YqrMggnn0XgxAlDABiDqE52Taqo0uLulANZlMK5jD8RWC1CqiVAz5ENle0E
+	 vWrbxBP7W5g8wDX9EZHOrWGIakMuqlqAI9wuDh2E9uXJPl5dIzVSDd+DlXAxcfV000
+	 hMdjvt9wOSgw1QzaLeWU986z7JQVbsLYoy0ufB6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 112/733] Bluetooth: L2CAP: fix chan mode for LE_CONN_REQ + EXT_FLOWCTL pchan
-Date: Thu, 17 Sep 2026 16:07:00 +0100
-Message-ID: <20260917151353.776540199@linuxfoundation.org>
+Subject: [PATCH 7.2 111/733] Bluetooth: hci_core: Fix race condition during device registration
+Date: Thu, 17 Sep 2026 16:06:59 +0100
+Message-ID: <20260917151353.749823532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,66 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 4ef05db5b08b176a551b4a6287372045998806b0 ]
+[ Upstream commit 57938bbdb9bf7fd41cbd5cd509ec10c4b22bec18 ]
 
-l2cap_new_connection() sets default value of channel mode to match the
-parent channel.  l2cap_le_connect_req() left this at the default, and
-created L2CAP_MODE_EXT_FLOWCTL channels if listening pchan has that
-mode.  This causes FLAG_DEFER_SETUP channels to reply to
-L2CAP_LE_CONN_REQ with L2CAP_ECRED_CONN_RSP, which is incorrect.
+In hci_register_dev(), the power_on work item is queued to
+hdev->req_workqueue before initializing hdev->adv_monitors_idr and
+registering the MSFT extension via msft_register(). For devices marked with
+quirks such as HCI_QUIRK_RAW_DEVICE, the HCI_UNCONFIGURED flag is set on
+the device. When the power_on work item runs concurrently on another CPU,
+hci_power_on() detects that the device is unconfigured and immediately
+invokes hci_dev_do_close(), which calls msft_do_close().
 
-It can also result to stack OOB write (of l2cap_alloc_cid determined
-values) in l2cap_ecred_rsp_defer(), as l2cap_le_connect_req() does not
-limit maximum number of deferred channels or check for duplicate ident.
+Concurrently, msft_register() allocates the msft structure and exposes it
+to hdev->msft_data prior to calling mutex_init(&msft->filter_lock). If
+msft_do_close() executes while hdev->msft_data is already assigned but the
+mutex has not yet been initialized, mutex_lock(&msft->filter_lock) operates
+on an uninitialized mutex, triggering a DEBUG_LOCKS warning:
 
-Fix by setting chan->mode correctly in l2cap_le_connect_req().
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: kernel/locking/mutex.c:625 at __mutex_lock_common
+kernel/locking/mutex.c:625 [inline]
+WARNING: kernel/locking/mutex.c:625 at __mutex_lock+0x12d8/0x1550
+kernel/locking/mutex.c:821
+...
+Call Trace:
+ <TASK>
+ msft_do_close+0x308/0x7b0 net/bluetooth/msft.c:693
+ hci_dev_close_sync+0x86b/0x10a0 net/bluetooth/hci_sync.c:5522
+ hci_dev_do_close net/bluetooth/hci_core.c:499 [inline]
+ hci_power_on+0x32c/0x750 net/bluetooth/hci_core.c:937
+ process_one_work kernel/workqueue.c:3322 [inline]
+ process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+ worker_thread+0x92d/0xe10 kernel/workqueue.c:3486
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
 
-Also check channel mode in l2cap_ecred_rsp_defer(), and do WARN_ON_ONCE
-instead of OOB write to make it less brittle.
+Fix this by moving the queue_work() call in hci_register_dev() to after
+idr_init(&hdev->adv_monitors_idr) and msft_register(hdev) so that device
+structures and extensions are fully initialized before asynchronous tasks
+can access them. Additionally, assign hdev->msft_data in msft_register()
+only after mutex_init(&msft->filter_lock) has completed.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: 9e14606d8f38 ("Bluetooth: msft: Extended monitor tracking by address filter")
+Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=14ce1b05b7d5a989abbe
+Link: https://syzkaller.appspot.com/ai_job?id=2bc9e8aa-ca6d-43e2-be2c-fd5d9f649d7e
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/hci_core.c | 4 ++--
+ net/bluetooth/msft.c     | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 30d7120d3a150..d9d72cac9269b 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3893,6 +3893,9 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	struct l2cap_ecred_conn_rsp *rsp_flex =
- 		container_of(&rsp->pdu.rsp, struct l2cap_ecred_conn_rsp, hdr);
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index f346505c3f88c..f747492da5f66 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2629,11 +2629,11 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (error)
+ 		BT_WARN("register suspend notifier failed error:%d\n", error);
  
-+	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
+-	queue_work(hdev->req_workqueue, &hdev->power_on);
+-
+ 	idr_init(&hdev->adv_monitors_idr);
+ 	msft_register(hdev);
+ 
++	queue_work(hdev->req_workqueue, &hdev->power_on);
 +
- 	/* Check if channel for outgoing connection or if it wasn't deferred
- 	 * since in those cases it must be skipped.
- 	 */
-@@ -3903,6 +3906,10 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	/* Reset ident so only one response is sent */
- 	chan->ident = 0;
+ 	return id;
  
-+	/* Unreachable, check in l2cap_ecred_conn_req. If reached, drop rest */
-+	if (WARN_ON_ONCE(rsp->count >= ARRAY_SIZE(rsp->pdu.scid)))
-+		rsp->pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_NO_MEM);
-+
- 	/* Include all channels pending with the same ident */
- 	if (!rsp->pdu.rsp.result)
- 		rsp_flex->dcid[rsp->count++] = cpu_to_le16(chan->scid);
-@@ -5062,6 +5069,7 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
+ err_wqueue:
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index ded68568e6c9b..d9dd722db3ebd 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -769,8 +769,8 @@ void msft_register(struct hci_dev *hdev)
  
- 	chan->ident = cmd->ident;
-+	chan->mode = L2CAP_MODE_LE_FLOWCTL;
+ 	INIT_LIST_HEAD(&msft->handle_map);
+ 	INIT_LIST_HEAD(&msft->address_filters);
+-	hdev->msft_data = msft;
+ 	mutex_init(&msft->filter_lock);
++	hdev->msft_data = msft;
+ }
  
- 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 		l2cap_state_change(chan, BT_CONNECT2);
+ void msft_release(struct hci_dev *hdev)
 -- 
 2.53.0
 
