@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7A13CDBD3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13F143E06C;
 	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671682; cv=none; b=dFGMVazXb6++kb6Rd1U8O8ky1vY8HjBlaVE7xF6D9TWBqMgKI49Et3tgWcYQo9kf1x2Em4Ozbyu6wAco4J4jy6I664gahOv6RojaWU+3UU3jeOGyOrpM8JPQO1FTZkJgBFlfNskxOHXI0Xk3aY6orKSM/7LJp4OLe9II0E3OHfg=
+	t=1789671682; cv=none; b=ucp4RNAzPWpVCq75gHhNp57Cv9TmZIOW+OxW2minFgs886zvbafDVKM/Jsbhy/lGpMaG2ktmWRUmTIJktvpVSMcxnCf9CvPYHHmae1/pBqJoY8dVARrL8/glQ/VzTJtw7cHqIRw7gWDkcUXrmq1hs43KW9MDHd4g/v5lGuj2L/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789671682; c=relaxed/simple;
-	bh=4NAXNc6+dqez8XTmt89vHm22ExuyqYT6SryLKOVZmH8=;
+	bh=rZcjuOs1a5UM8A7aRIOEPodJIf2lgk20wHgn4wFWI+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruhkimNIFaQAXHcB0H7yWBvgVc2EIwd3aWgmrPDyFhDFZBP6VviKfkUC9le53Bs2e1varOCWQy0P9jT0hvRI8tcNskh6TGSHNPMAemEM37HJUvwfZG5GIZ9Kzu4d0HBxceTzFaX3HV+E2796+pb1Nl1rz68OSapPwdYn6odLk9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAlZjMsd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6gDAIbGAPkAcm5x4D7LC3Ws2MttaiL4ME2yC/+LiQYMuMxXXHWHa4Roc1zgcB88argH9rUhN24deceQSfrFQFMDSYWV7A6x48yh/Sl5irzlJ0yUkkpjdItgmH9+RA++KfczGetwW+y1TO9Ii6WL7cwMwfyuo6NIhT44uwMneU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGkJkKjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAlZjMsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275E81F008A0;
-	Thu, 17 Sep 2026 19:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGkJkKjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B111F0089A;
+	Thu, 17 Sep 2026 19:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671663;
-	bh=5JFCXPmpXnjmWqaiP1TcEIl+K3WWXSJ5bEFvwcyYyTU=;
+	s=korg; t=1789671657;
+	bh=WCdLykQrQHR/YYnxwcZQguRUfUW8DWzwDiX6KSa7XTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PAlZjMsdu6h4Qm0BFb0xnA+xI6IZmFgtItMWtKAbKtr5vXsDoR6ZoWNKpEd7KBXtz
-	 mMbW9dGKQ5SePWTCwm4nL/g/k+amf0ZYnsKzp878zxqHOwLqwFAgSL79Np6bAtxNl6
-	 gop6cjzBmFLNF4WroG0OpxCwTfmcROVWGLGD1zns=
+	b=NGkJkKjR0cW//bOwDItMPqnjmHF6ijy2mr4Qr1p/49esc3flXLruJik5X70r8uFjD
+	 xxcrYK2Dw4Fvrg0TJmH08jene9uq7X5uIrhX6DsZddcYMy2QQ56StqFUZDbB706epH
+	 UHAwke5So56TJlcPpsPA8XuA/20T/BZwbLGk52jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Xingyu Jin <xingyuj@google.com>,
+	Neill Kapron <nkapron@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1012/1102] zram: fix out-of-bounds access in read_block_state()
-Date: Thu, 17 Sep 2026 16:15:55 +0100
-Message-ID: <20260917151606.154273914@linuxfoundation.org>
+Subject: [PATCH 6.12 1010/1102] usb: gadget: f_fs: Fix Use-After-Free in AIO error path
+Date: Thu, 17 Sep 2026 16:15:53 +0100
+Message-ID: <20260917151606.103196188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,53 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Neill Kapron <nkapron@google.com>
 
-[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
+[ Upstream commit e78dcb1f7ec271449c54984dc90c62a5ba272de7 ]
 
-read_block_state() calculates nr_pages before taking dev_lock.  If the
-device is reset and reinitialized with a smaller disksize before lock
-acquisition, nr_pages still describes the old table.  The subsequent loop
-can then call slot_lock() past the end of the newly allocated table.
+In ffs_epfile_write_iter() and ffs_epfile_read_iter(), when ffs_epfile_io()
+fails with an error other than -EIOCBQUEUED, the io_data structure (`p`) is
+freed. However, for AIO operations, the kiocb cancel function was already
+armed and kiocb->private was set to `p`.
 
-Read disksize after acquiring dev_lock and checking that the device is
-initialized.  The read lock then keeps the table and its bound stable for
-the duration of the scan.
+If a concurrent cancel operation (such as sys_io_cancel()) executes after
+ffs_epfile_io() fails but before the function frees `p`, a Use-After-Free
+can occur when the cancellation handler accesses the freed pointer.
 
-Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
-Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+To securely fix this race condition, we must properly un-arm the
+cancellation. Invoking `kiocb->ki_complete()` does exactly this by
+acquiring `ctx->ctx_lock` and safely removing the kiocb from the active
+sequence. In doing so, it ensures that a parallel io_cancel can no longer
+discover the kiocb, effectively closing the race window.
+
+We then return -EIOCBQUEUED to notify the VFS layer that the kiocb has been
+consumed and it should avoid attempting to complete the request again or
+triggering subsequent completion handlers.
+
+Fixes: de2080d41b5d ("gadget/function/f_fs.c: close leaks")
+Cc: stable@vger.kernel.org
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260724235100.106011-1-nkapron@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -868,7 +868,7 @@ static ssize_t read_block_state(struct f
- 	char *kbuf;
- 	ssize_t index, written = 0;
- 	struct zram *zram = file->private_data;
--	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
-+	unsigned long nr_pages;
- 
- 	kbuf = kvmalloc(count, GFP_KERNEL);
- 	if (!kbuf)
-@@ -881,6 +881,8 @@ static ssize_t read_block_state(struct f
- 		return -EINVAL;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1273,8 +1273,10 @@ static ssize_t ffs_epfile_write_iter(str
+ 	if (res == -EIOCBQUEUED)
+ 		return res;
+ 	if (p->aio) {
++		kiocb->ki_complete(kiocb, res);
+ 		mmdrop(p->mm);
+ 		kfree(p);
++		return -EIOCBQUEUED;
+ 	} else {
+ 		*from = p->data;
  	}
+@@ -1322,9 +1324,11 @@ static ssize_t ffs_epfile_read_iter(stru
+ 		return res;
  
-+	nr_pages = zram->disksize >> PAGE_SHIFT;
-+
- 	for (index = *ppos; index < nr_pages; index++) {
- 		int copied;
- 		struct timespec64 ts;
+ 	if (p->aio) {
++		kiocb->ki_complete(kiocb, res);
+ 		mmdrop(p->mm);
+ 		kfree(p->to_free);
+ 		kfree(p);
++		return -EIOCBQUEUED;
+ 	} else {
+ 		*to = p->data;
+ 	}
 
 
