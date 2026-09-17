@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AB24E77FB;
-	Thu, 17 Sep 2026 15:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AE94E77F1;
+	Thu, 17 Sep 2026 15:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660079; cv=none; b=edHquMg+YGeLeGhfVyqp3pZxBhgEC2jH9c6CZLZOeosV+JXfJWj0nFLNSxEVlcoL+PBW/zEY/pGastG52tNc4Ok4bxhuEtAu91OpwxuSH8wNmpS1PIKXl6Gk7e2yNQlcbdVWr429fAKhOMA7ZgBTNqdW7N/b2JG1Xar7r2S6GDw=
+	t=1789660084; cv=none; b=qnIxzYtjNrT6vNW5vkrM+TMkXeaDrZ4Jabm30yTQELqRt/lZC9wkiGCakUjX9+klCL9/zdLUB1bJ4JBbNNdWQVIOROOULgqFqO+L9B6kQREsMSU3F5X0S2pVyJpt1tw5Lp2JSCloVfqDHLBzFqTG+rVRweP88mQ7kiunS4fyHyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660079; c=relaxed/simple;
-	bh=yr5ZcUaRp2i9cfs4eh43o4ntooB5dF+VgRXbu9VRWew=;
+	s=arc-20240116; t=1789660084; c=relaxed/simple;
+	bh=ioRCnt2RvcabLGUE0TKsT/faIvjl63EWKwggeZqh0hQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+1DPwVmxFKqw2O4167saAsIy1vyL7L2xzA07NTgl9cTD/YL8tx367nlC52VtEMyk23JIkHwvIJI2zVO0xnuj5xr2NkMvMiTiBrdwHqEMo1WZn8PSZpQT76hy0Be8wgSN+GgZiJgujcjpQ70KOq0GHxpe4T6gdV21Y4W2/N3kOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM4qc+sA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cDsIl20FkHXVvJj14EmdtKoaif0bKTxczWPLapj34Fb5bHcL0tBrDZOwI0GEB6N3ANJYKX4TYwEdVYRUiyMui2asEa81GRuJzX9xNq28e9GDEbdxBRY92Cx5nJgNJLZHPmgJosrn605T/d5GS6EXgzWdKIEtgStGangRekLFnv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntYjv9LJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM4qc+sA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299701F00899;
-	Thu, 17 Sep 2026 15:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntYjv9LJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193FF1F000FF;
+	Thu, 17 Sep 2026 15:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660073;
-	bh=RATRjiaVZHXcvTGP3/Bx4nZrDDsPCWJqihs4qK3lkwg=;
+	s=korg; t=1789660076;
+	bh=e5RJP3u7CG8TdOABsYlWJw5Pu63RCzoXOCZLoGPXKnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bM4qc+sA4Cmg4GCuw8e5x5H41HoCmKcyR2IimYRgcAa7HLkZqP++MdrbyzqwwA6FZ
-	 kixIIcimr6gw2AzUTEuBKSq7b8XmFvkHxYJcW4d8OxKfyiwz7EwHtWZ6wdaxVtxS4A
-	 KVMdXixTBoQVIXpnzchj89bYXuK9xbUnJVqoLiBw=
+	b=ntYjv9LJaKBuOJm3/2njuB8GzZv5zyV87oylpk6WyjITK9klZBhs+6V6ehb4Dd3T5
+	 Mjg/LbNAHZBD9uW/1x196EgGIFX0Kzx2g9oJiJAHlN911GlsDc0bsAcpQDHValLrqz
+	 Z4CZM28BYJBHSCs8wD3vEdvfjDyzVQjVkE8uUClk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>
-Subject: [PATCH 7.2 453/733] x86/amd_node: Avoid divide by zero on virtualized systems
-Date: Thu, 17 Sep 2026 16:12:41 +0100
-Message-ID: <20260917151403.202072527@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 471/733] tracing: Set the trace clock before registering the histogram trigger
+Date: Thu, 17 Sep 2026 16:12:59 +0100
+Message-ID: <20260917151403.726780399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,51 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 72bd92bd8190d7869ecb462649ca40f297822a33 upstream.
+commit 6ede78d0563a2a3ae3e46f9c07cedb5d79645429 upstream.
 
-On a virtualized system, the number of nodes does not have a relationship to
-the number of roots.  A Xen PVH dom0 can calculate roots_per_node as 0, which
-crashes with a divide by zero in:
+hist_register_trigger() puts the trigger on the global named_triggers
+list in cmd_ops->init(), and only then sets the trace clock:
 
-  if (count++ % roots_per_node)
+	if (data->cmd_ops->init) {
+		ret = data->cmd_ops->init(data);
+		if (ret < 0)
+			goto out;
+	}
 
-because the underlying topology code on Xen ends up making num_nodes
-2 and num_roots 1 and the integer division result is 0.
+	if (hist_data->enable_timestamps) {
+		ret = tracing_set_clock(file->tr, hist_data->attrs->clock);
+		if (ret) {
+			hist_err(tr, HIST_ERR_SET_CLOCK_FAIL, errpos(clock));
+			goto out;
+		}
 
-The issue is seen with Xen, but it could affect other systems.
+The clock string is not checked anywhere before that call, so a named
+trigger using common_timestamp with an unknown clock fails after it has
+already become findable. event_hist_trigger_parse() then frees it
+without taking it off the list, and the next lookup by name reads the
+freed object:
 
-Set roots_per_node to 1 in this case. Print a firmware bug when this is
-performed for non-virtualized systems.
+ ~# cd /sys/kernel/tracing/events/sched/sched_switch
+ ~# echo 'hist:name=foo:keys=common_pid:ts=common_timestamp:clock=bogus' > trigger
+ bash: echo: write error: Invalid argument
+ ~# echo 'hist:name=foo:keys=common_pid' > trigger
 
-  [ bp: Massage commit message. ]
+  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+  Read of size 8 at addr ffff88800915d760 by task init/1
+   find_named_trigger+0xac/0xc0
+   hist_register_trigger+0xc1/0x900
+   event_hist_trigger_parse+0x3146/0x6af0
+   event_trigger_write+0xce/0x160
+  Freed by task 63:
+   kfree+0x154/0x420
+   trigger_kthread_fn+0xfd/0x160
 
-Fixes: 0a4b61d9c2e4 ("x86/amd_node: Fix AMD root device caching")
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Set the clock before the trigger is registered, so that nothing which
+can fail runs after it is published, the way commit 6f86bdeab633
+("tracing: Fix bad hist from corrupting named_triggers list") moved the
+registration below the rest of the setup.
+
+tracing_set_filter_buffering() is reference counted, so the init failure
+path has to drop the reference that the clock block now takes first.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260825214805.39148-2-jason.andryuk@amd.com
+Fixes: a4072fe85ba3 ("tracing: Add a clock attribute for hist triggers")
+Link: https://patch.msgid.link/20260907091415.554535-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_node.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/trace/trace_events_hist.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kernel/amd_node.c
-+++ b/arch/x86/kernel/amd_node.c
-@@ -287,6 +287,11 @@ static int __init amd_smn_init(void)
- 		return -ENOMEM;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6631,12 +6631,6 @@ static int hist_register_trigger(char *g
+ 		data->cmd_ops = cmd_ops;
+ 	}
  
- 	roots_per_node = num_roots / num_nodes;
-+	if (!roots_per_node) {
-+		if (!cpu_feature_enabled(X86_FEATURE_HYPERVISOR))
-+			pr_warn(FW_BUG "Error detecting roots per node.\n");
-+		roots_per_node = 1;
+-	if (data->cmd_ops->init) {
+-		ret = data->cmd_ops->init(data);
+-		if (ret < 0)
+-			goto out;
+-	}
+-
+ 	if (hist_data->enable_timestamps) {
+ 		char *clock = hist_data->attrs->clock;
+ 
+@@ -6649,6 +6643,15 @@ static int hist_register_trigger(char *g
+ 		tracing_set_filter_buffering(file->tr, true);
+ 	}
+ 
++	if (data->cmd_ops->init) {
++		ret = data->cmd_ops->init(data);
++		if (ret < 0) {
++			if (hist_data->enable_timestamps)
++				tracing_set_filter_buffering(file->tr, false);
++			goto out;
++		}
 +	}
- 
- 	count = 0;
- 	node = 0;
++
+ 	if (named_data) {
+ 		remove_hist_vars(hist_data);
+ 		destroy_hist_data(hist_data);
 
 
