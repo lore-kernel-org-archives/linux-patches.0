@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFB14EB860;
-	Thu, 17 Sep 2026 15:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B1C3438A8;
+	Thu, 17 Sep 2026 15:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660042; cv=none; b=I/H+TRdZ0ompBB7NcoZVDGcBmbJidOvsEIXWYclGAm8r2KsSFjnFD+g8tJM9y/Ql8ThflmCanP+NBccEtk9E52a2Flksz60ywVO8EON0359QDE1lqFy39vYKCHHAaUjfmjP1TZGIqpZhLR3Xem5EBnKvTAnDK3/Z+p/8ePqr4BA=
+	t=1789660047; cv=none; b=uX96fZhkjRF1RzeRVk+FelipBUdr/9BWzJcc+c+2NXiAHwaudLliCQ786ik6F4nYf2Vaty0wlZGblhL651QixrJi3/2+FLtPLjcs3gkjfr1AzFPtTU8JX4PsBZPRCATaaYwNk5xgpT7qhXeaG5HIXZ7fe1HUb5EcqKQAejq9Uvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660042; c=relaxed/simple;
-	bh=UxzPibLZ637m5C3CzyKb9HHxW1fXvD8ALhTz59pN9Ys=;
+	s=arc-20240116; t=1789660047; c=relaxed/simple;
+	bh=DUEtevrRnsHKhbcL12v+mNB4F9iIbDxYJ7LBNtjXidE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkS2LTp5H/Cdumdasjx+LAdamulu51ZvuIESLOuSE+sUM7JUkj6AXOpJ1GWV2BNVd0wH/NmBsIMczmqy5SicyvC8YNY6091dPYuATjNEuiYTdKOKTe7xhDasjuSPcFQ+reOBGL4spQdHHcGX8QNCpztOXoan/NjYMDCqy+jZEqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY83fNPY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pxey7pUb9Lt7PKZet0jaKC6Mdvfx1A5+y7/BzjeL2ISVR4/b1njNRtXct+M42Gsd0AIXT7au62pb+rVrBfUbM42qRha4ONEQRyuiLkWEz2B16/TRnZ2N8j7c5XX1L15Rmx/wIoORfUtmHqOxgYvsRc7xBUR9T000UgZYN1dHP6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8JVFN5+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY83fNPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F005C1F000FF;
-	Thu, 17 Sep 2026 15:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8JVFN5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7C81F00893;
+	Thu, 17 Sep 2026 15:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660038;
-	bh=4jL3ELlYOHjGT1YMv5Auk6ASlxbXENHk3q3e1rfX7Wc=;
+	s=korg; t=1789660041;
+	bh=zxhXljTg9mi6TsIVg4OM99k8qBP7eHSOMcgecFpig2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iY83fNPYxGdT5hbX4rvHP4d8MrDX13p7pokma3hvlzV3b9xwr0wfxq9OeZeOwYU06
-	 0jxKQ44sndrXbceyj+nFovlLDJpXRNeYhgoF6jFJsCme9XDvUz/I7FULtEkdtDE9F6
-	 1sYt/VMsHnCWgMkICd3/lq9zukJ0wwA10zxdhLcg=
+	b=a8JVFN5+3GAiSPPWNf9PB6TP9odLtx519KBZtV3G7BMOwmIQOHggfD4S7HWkCoeFQ
+	 iBiqB++Pn9Mzh0Quj2OO8Eraa4DkGKNGNUNKL7oVUqOvRHIPEG4ZTWa9ZWcKUZDSQh
+	 T27xxFA61E1Rrrq8Awt05uyIgn9hkL+FynXGkFvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 410/733] powerpc/entry: Fix double accounting of user time on interrupt entry
-Date: Thu, 17 Sep 2026 16:11:58 +0100
-Message-ID: <20260917151401.983263241@linuxfoundation.org>
+	stable@kernel.org,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.2 452/733] powerpc: pci-ioda: Fix the stale irq chip reference
+Date: Thu, 17 Sep 2026 16:12:40 +0100
+Message-ID: <20260917151403.175235944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -56,103 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-[ Upstream commit 11ae2e1dc58304a48816fc8ca4afa8f2ef9d1bdf ]
+commit d96171d911e3b89ca2957c04264019cf2f96287b upstream.
 
-Since the switch to generic entry, an interrupt from user mode
-accounts user time twice: once in arch_interrupt_enter_prepare()
-and again in arch_enter_from_user_mode(), which irqentry_enter()
-invokes for the same interrupt:
+The commit f0ac60e6e311 ("powerpc/powernv/pci: Switch to use
+msi_create_parent_irq_domain()") removed the legacy MSI irq chip
+pnv_pci_msi_irq_chip but left behind the static definition of it and
+its reference in is_pnv_opal_msi().
 
-	arch_interrupt_enter_prepare()
-	  account_cpu_user_entry()		/* first */
-	irqentry_enter()
-	  arch_enter_from_user_mode()
-	    account_cpu_user_entry()		/* second */
+The KVM IRQ bypass for vfio devices is broken because the
+comparision in is_pnv_opal_msi() fails on the comparision with
+stale unused variable showing the below errors in dmesg.
 
-The second call charges the same interval again, because
-account_cpu_user_entry() accumulates the time spent in user mode
-since the last return to user space.
+ kvmppc_set_passthru_irq_hv: Could not assign IRQ map for (X,Y)
+ kvmppc_set_passthru_irq (irq X, gsi Y) fails: -2
+ vfio-pci A:B:C.D irq bypass producer (eventfd Z) registration fails: -2
 
-The two calls come from the GENERIC_ENTRY preparation series,
-where each step was a no-op on its own. Commit 09a9d3a8499d
-("powerpc: introduce arch_enter_from_user_mode") added the hook
-with the user-time accounting in it, but nothing called it yet.
-Commit 893082ac769b ("powerpc: Prepare for IRQ entry exit")
-copied interrupt_enter_prepare() verbatim into entry-common.h as
-arch_interrupt_enter_prepare(); that copy was equally unused, as
-handlers still called interrupt_enter_prepare().
+The patch removes the stale variable definition and fixes the
+is_pnv_opal_msi() by comparing against the chip name prefix.
 
-Commit bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
-made both live. On the syscall side it did the full conversion:
-system_call_exception() now accounts once through the hook via
-syscall_enter_from_user_mode(), rather than calling
-account_cpu_user_entry() directly. On the interrupt side it
-switched the handler macros to arch_interrupt_enter_prepare()
-followed by irqentry_enter(), which also runs the hook, but the
-accounting in arch_interrupt_enter_prepare() was not removed to
-match. The double accounting starts with that commit.
-
-With CONFIG_VIRT_CPU_ACCOUNTING_NATIVE=y this roughly doubles the
-reported user time of any workload that takes interrupts. The
-other accounting modes compile account_cpu_user_entry() to an
-empty stub, so they are not affected.
-
-Remove the accounting from arch_interrupt_enter_prepare() and rely
-on arch_enter_from_user_mode(), which already runs for both
-syscalls and interrupts. The duplicate account_stolen_time() call
-is removed the same way.
-
-On a pseries LPAR a busy loop reports 6s user time in 3s elapsed
-(~210% CPU) before the fix, and 3s (~105% CPU) after it:
-
-  $ python3 -c 'while True: pass' &
-  $ sleep 3; ps -p $! -o etime,time,pcpu
-
-            ELAPSED     TIME  %CPU
-  Before      00:03 00:00:06   210
-  After       00:03 00:00:03   105
-
-A 50% load reports ~70% usr / 30% idle before the fix, and
-~49% usr / 51% idle after it:
-
-  $ taskset -c 6 stress-ng --cpu 1 --cpu-load 50 &
-  $ mpstat -P 6 1
-
-            CPU    %usr   %idle
-  Before      6   69.74   30.26
-  After       6   48.51   50.50
-
-Fixes: bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fixes: f0ac60e6e311 ("powerpc/powernv/pci: Switch to use msi_create_parent_irq_domain()")
+Cc: stable@kernel.org
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260904025831.3439809-1-aboorvad@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/178716225364.1437.6201568081502251835.stgit@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/entry-common.h | 2 --
- 1 file changed, 2 deletions(-)
+ arch/powerpc/platforms/powernv/pci-ioda.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/entry-common.h b/arch/powerpc/include/asm/entry-common.h
-index 80b07750b531b..8e91489fdf2bb 100644
---- a/arch/powerpc/include/asm/entry-common.h
-+++ b/arch/powerpc/include/asm/entry-common.h
-@@ -222,8 +222,6 @@ static inline void arch_interrupt_enter_prepare(struct pt_regs *regs)
+--- a/arch/powerpc/platforms/powernv/pci-ioda.c
++++ b/arch/powerpc/platforms/powernv/pci-ioda.c
+@@ -1623,15 +1623,13 @@ int64_t pnv_opal_pci_msi_eoi(struct irq_
+ 	return opal_pci_msi_eoi(phb->opal_id, d->parent_data->hwirq);
+ }
  
- 	if (user_mode(regs)) {
- 		kuap_lock();
--		account_cpu_user_entry();
--		account_stolen_time();
- 	} else {
- 		kuap_save_and_lock(regs);
- 		/*
--- 
-2.53.0
-
+-static struct irq_chip pnv_pci_msi_irq_chip;
+-
+ /*
+  * Returns true iff chip is something that we could call
+  * pnv_opal_pci_msi_eoi for.
+  */
+ bool is_pnv_opal_msi(struct irq_chip *chip)
+ {
+-	return chip == &pnv_pci_msi_irq_chip;
++	return chip && chip->name && str_has_prefix(chip->name, "PNV-");
+ }
+ EXPORT_SYMBOL_GPL(is_pnv_opal_msi);
+ 
+@@ -1728,7 +1726,7 @@ static const struct msi_parent_ops pnv_m
+ 	.chip_flags		= MSI_CHIP_FLAG_SET_EOI,
+ 	.bus_select_token	= DOMAIN_BUS_NEXUS,
+ 	.bus_select_mask	= MATCH_PCI_MSI,
+-	.prefix			= "PNV-",
++	.prefix			= "PNV-", /* Note: is_pnv_opal_msi() uses this */
+ 	.init_dev_msi_info	= pnv_init_dev_msi_info,
+ };
+ 
 
 
