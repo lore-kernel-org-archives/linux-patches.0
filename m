@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2440337B3FD;
-	Thu, 17 Sep 2026 16:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79646522F0F;
+	Thu, 17 Sep 2026 16:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664224; cv=none; b=uVeCOCHDbPH9HDufbFHMUHzNMjSQpFmeJhiykJA8cLgHAD6GEBtDiBc+yaQZT4lp8P6kRsXeJZfRS/ZO+e8ShpZfuB83lF2fCLKwZ1SCBjWydCJ0YM4dzJcCrFslxWD4SZo3ga3l+DkdqvlNNz+4BWy1kW0L4fr7dkIAzo51BGk=
+	t=1789664228; cv=none; b=K1/uSzyuV5cHwZNDaxwR9ERj/sf+9yHVf3wG4DU3qXKMbdvF0W3Fc+oZTC3qAws1QreyhysY/Eop7w6RRFEFCAe3DU/tqe9AwdV57GbPBWH0BdWrQjnjzFzTG0CxlkwRzY0xPA2cAEMdKrxIAR9LfrWhNvDoU7I+FA0Caj2Mbtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664224; c=relaxed/simple;
-	bh=OEbbIL8V7CgD3UryX1n+qJwwKby/oue6UJ2PVnID5d8=;
+	s=arc-20240116; t=1789664228; c=relaxed/simple;
+	bh=5B1LSNgQbLHWxAELl1KyfoWY+mqsd9ASdVCM6NYsXuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9D+csJ5FMOKHtEv9bMjNbcsVgegtXhz4k86DpcKIFVZzOI5s6KVayMemWnMurNte8FOEUR+QxW3JmymO/3kqhoMeCGxHdz7c/nxIICC8H3pu+9yo8bzVtMGPeT75cYETACTqBAZ6VGmi4oPiU0YhKKXufXmqp2DbQZyfSQmC/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcXUg8TX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eLk2ksHcc/d8/dN5JigXD9GLJQ368wcPOJws4ge+U5T+ZgOOg5SVm+H+o//+r4HvEoiLihVUrhTYwbcVvTOZztrkGv1NIhZ2qsgLIZ13ERr8QEGyGGX6zPSI6IYHjwwC2SO1H0Q1wqPxpBTmfih0hdOV/TYfVFgW9Le0CkhytUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aYoQd2A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcXUg8TX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9781A1F000FF;
-	Thu, 17 Sep 2026 16:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aYoQd2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F84A1F000FF;
+	Thu, 17 Sep 2026 16:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664223;
-	bh=sY1PzGTzMZVmtf7i7bGYyKqlyz6rtyP7dCHEg8n6O7U=;
+	s=korg; t=1789664226;
+	bh=ZINimAjzmorqQXA+kVN2lGrTmSyydx/S0AE9MWgXF2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcXUg8TXkP2gkpNEwzbhM7rSmReMFo0HU+c/qv7ohwYE/RnZaNg/+05Oa+73jlJEU
-	 3+jVqr9CcUgqLSyD6XFVQSYubyOC3Il5Av7ffs1q353tLlsL9bbGb1HTvihqpOkYq0
-	 7CYvXxWgF2n6LSiJzkl3A0vPKaaBqKpUw2RZRIk8=
+	b=0aYoQd2Aptf/mTb2iEsqGp7lbYqu4JhdwcWgbIg5m9mqgxx+V8t9qGqfseMSTzliu
+	 t2oKV101xVR/vsfnqJ2/iWSsX1X3PhheRH8JKB2X9NWT+I0vjqimS2USqbNKvJxOr6
+	 ZhRM8qaTKcDSz8cHsRLAmMpkvsGfAtOsck3nA4Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Priyansh Jain <priyansh.jain@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0293/1250] fs/ntfs3: validate index entry key bounds
-Date: Thu, 17 Sep 2026 16:01:28 +0100
-Message-ID: <20260917151600.067479523@linuxfoundation.org>
+Subject: [PATCH 6.18 0302/1250] thermal/drivers/qcom/tsens: Atomic temperature read with hardware-guided retries
+Date: Thu, 17 Sep 2026 16:01:37 +0100
+Message-ID: <20260917151600.302059500@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,207 +52,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
 
-[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
+[ Upstream commit e28ef2f3ccea276436bd0f30c93f99e764ba492b ]
 
-[BUG]
-A malformed NTFS directory index entry can advertise a key_size larger
-than the bytes actually present in its NTFS_DE payload. Directory lookup
-then passes that malformed key to cmp_fnames(), which can read past the
-end of the kmalloc'ed index buffer.
+The existing TSENS temperature read logic polls the valid bit and then
+reads the temperature register. When temperature reads are triggered
+at very short intervals, this can race with hardware updates and allow
+the temperature field to be read while it is still being updated.
 
-BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
-BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
-Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
+In this case, the valid bit may already be asserted even though the
+temperature value is transitioning, resulting in an incorrect reading.
 
-Call Trace:
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xd1/0x650 mm/kasan/report.c:482
- kasan_report+0xfb/0x140 mm/kasan/report.c:595
- __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
- fname_full_size fs/ntfs3/ntfs.h:590 [inline]
- cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
- hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
- indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
+Hardware programming guidelines require the temperature value and the
+valid bit to be sampled atomically in the same read transaction. A
+reading is considered valid only if the valid bit is observed set in
+that same sample.
 
-Allocated by task 9279:
- kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
- kasan_save_track+0x14/0x40 mm/kasan/common.c:77
- kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
- poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
- __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
- kasan_kmalloc include/linux/kasan.h:262 [inline]
- __do_kmalloc_node mm/slub.c:5650 [inline]
- __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
- kmalloc_noprof include/linux/slab.h:961 [inline]
- indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
- indx_find+0x447/0x900 fs/ntfs3/index.c:1179
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
+The guidelines further specify that software should attempt the
+temperature read up to three times to account for transient update
+windows. If none of the attempts yields a valid sample, a stable fallback
+value must be returned: if the first and second samples match, the second
+value is returned;otherwise, if the second and third samples match, the
+third value is returned;if neither pair matches, -EAGAIN is returned.
 
-[CAUSE]
-The index-header validators only validated INDEX_HDR-level geometry.
-They did not walk each NTFS_DE to verify entry alignment, subnode
-layout, or that key_size fit inside the entry payload. They also
-allowed a last sentinel entry to carry a non-zero key_size.
+Update the TSENS sensor read logic to implement atomic sampling along
+with the recommended retry-and-compare fallback behavior. This removes
+the race window and ensures deterministic temperature values in
+accordance with hardware requirements.
 
-[FIX]
-Walk every NTFS_DE in ntfs3's index-header validators and reject
-entries with invalid layout, mismatched subnode state, oversized
-key_size, or non-zero sentinel keys before lookup or log replay can
-consume them.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260514113643.1954111-1-priyansh.jain@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
- fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ drivers/thermal/qcom/tsens.c | 111 ++++++++++++++++++++++++-----------
+ drivers/thermal/qcom/tsens.h |   1 +
+ 2 files changed, 78 insertions(+), 34 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 79d5ae5863b93..ae15c2fc48646 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
- 
- bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
- 	__le16 mask;
- 	u32 min_de, de_off, used, total;
- 	const struct NTFS_DE *e;
- 
--	if (hdr_has_subnode(hdr)) {
-+	if (has_subnode) {
- 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
- 		mask = NTFS_IE_HAS_SUBNODES;
- 	} else {
-@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- 		return false;
- 	}
- 
--	e = Add2Ptr(hdr, de_off);
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	for (;;) {
- 		u16 esize = le16_to_cpu(e->size);
--		struct NTFS_DE *next = Add2Ptr(e, esize);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
- 
--		if (esize < min_de || PtrOffset(hdr, next) > used ||
-+		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
- 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
- 			return false;
- 		}
- 
--		if (de_is_last(e))
-+		if (size_add(de_off, esize) > used)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
- 			break;
-+		}
-+
-+		data_size = esize - min_de;
-+		if (key_size > data_size)
-+			return false;
- 
--		e = next;
-+		de_off += esize;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	}
- 
- 	return true;
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index a9c5dcc23a5ce..dd54c966babca 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
-  */
- static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
-+	const u16 min_size = sizeof(struct NTFS_DE) +
-+			     (has_subnode ? sizeof(u64) : 0);
- 	u32 end = le32_to_cpu(hdr->used);
- 	u32 tot = le32_to_cpu(hdr->total);
- 	u32 off = le32_to_cpu(hdr->de_off);
-+	const struct NTFS_DE *e;
- 
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    size_add(off, sizeof(struct NTFS_DE)) > end) {
-+	    size_add(off, min_size) > end) {
- 		/* incorrect index buffer. */
- 		return false;
- 	}
- 
-+	/* Ensure every key stays inside its entry before lookup walks it. */
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	for (;;) {
-+		u16 e_size = le16_to_cpu(e->size);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
-+
-+		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
-+		    de_has_vcn(e) != has_subnode) {
-+			/* incorrect index entry. */
-+			return false;
-+		}
-+
-+		if (size_add(off, e_size) > end)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
-+			break;
-+		}
-+
-+		data_size = e_size - min_size;
-+		if (key_size > data_size)
-+			return false;
-+
-+		off += e_size;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	}
-+
- 	return true;
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index a2422ebee8169..40f27c1a1cd59 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -316,9 +316,66 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
  }
  
+ /**
+- * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * tsens_read_temp - Retrieve temperature readings from the hardware.
+  * @s:     Pointer to sensor struct
+  * @field: Index into regmap_field array pointing to temperature data
++ * @temp: temperature in deciCelsius to be read from hardware
++ *
++ * This function handles temperature returned in ADC code or deciCelsius
++ * depending on IP version.
++ *
++ * Return: 0 on success, a negative errno will be returned in error cases
++ */
++static int tsens_read_temp(const struct tsens_sensor *s, int field, int *temp)
++{
++	struct tsens_priv *priv = s->priv;
++	int temp_val[MAX_READ_RETRY] = {0};
++	u32 status;
++	int ret;
++	u32 last_temp_mask = GENMASK(priv->fields[LAST_TEMP_0].msb,
++					priv->fields[LAST_TEMP_0].lsb);
++	u32 valid_bit = priv->rf[VALID_0] ? BIT(priv->fields[VALID_0].lsb) : 0;
++
++	for (int i = 0; i < MAX_READ_RETRY; i++) {
++		ret = regmap_read(priv->tm_map, priv->fields[field].reg, &status);
++		if (ret)
++			return ret;
++
++		/* VER_0 doesn't have a VALID bit */
++		if (!valid_bit) {
++			*temp = status & last_temp_mask;
++			return 0;
++		}
++
++		temp_val[i] = status & last_temp_mask;
++
++		if (status & valid_bit) {
++			*temp = temp_val[i];
++			return 0;
++		}
++	}
++
++	/*
++	 * As per the HW guidelines, if none of the attempts observe a
++	 * valid sample, a stable fallback value must be returned. If the
++	 * first and second samples match, the second value is returned;
++	 * otherwise, if the second and third samples match, the third
++	 * value is returned.
++	 */
++	if (temp_val[0] == temp_val[1])
++		*temp = temp_val[1];
++	else if (temp_val[1] == temp_val[2])
++		*temp = temp_val[2];
++	else
++		return -EAGAIN;
++
++	return 0;
++}
++
++/**
++ * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * @s:     Pointer to sensor struct
++ * @temp: temperature in milliCelsius to be read from hardware
+  *
+  * This function handles temperature returned in ADC code or deciCelsius
+  * depending on IP version.
+@@ -326,20 +383,14 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+  * Return: Temperature in milliCelsius on success, a negative errno will
+  * be returned in error cases
+  */
+-static int tsens_hw_to_mC(const struct tsens_sensor *s, int field)
++static int tsens_hw_to_mC(const struct tsens_sensor *s, int temp)
+ {
+ 	struct tsens_priv *priv = s->priv;
+ 	u32 resolution;
+-	u32 temp = 0;
+-	int ret;
+ 
+ 	resolution = priv->fields[LAST_TEMP_0].msb -
+ 		priv->fields[LAST_TEMP_0].lsb;
+ 
+-	ret = regmap_field_read(priv->rf[field], &temp);
+-	if (ret)
+-		return ret;
+-
+ 	/* Convert temperature from ADC code to milliCelsius */
+ 	if (priv->feat->adc)
+ 		return code_to_degc(temp, s) * 1000;
+@@ -514,8 +565,10 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 					&d->crit_irq_mask);
+ 		if (ret)
+ 			return ret;
+-
+-		d->crit_thresh = tsens_hw_to_mC(s, CRIT_THRESH_0 + hw_id);
++		ret = regmap_field_read(priv->rf[CRIT_THRESH_0 + hw_id], &d->crit_thresh);
++		if (ret)
++			return ret;
++		d->crit_thresh = tsens_hw_to_mC(s, d->crit_thresh);
+ 	} else {
+ 		/* No mask register on older TSENS */
+ 		d->up_irq_mask = 0;
+@@ -525,8 +578,16 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 		d->crit_thresh = 0;
+ 	}
+ 
+-	d->up_thresh  = tsens_hw_to_mC(s, UP_THRESH_0 + hw_id);
+-	d->low_thresh = tsens_hw_to_mC(s, LOW_THRESH_0 + hw_id);
++	ret = regmap_field_read(priv->rf[UP_THRESH_0 + hw_id], &d->up_thresh);
++	if (ret)
++		return ret;
++
++	d->up_thresh = tsens_hw_to_mC(s, d->up_thresh);
++	ret = regmap_field_read(priv->rf[LOW_THRESH_0 + hw_id], &d->low_thresh);
++	if (ret)
++		return ret;
++
++	d->low_thresh = tsens_hw_to_mC(s, d->low_thresh);
+ 
+ 	dev_dbg(priv->dev, "[%u] %s%s: status(%u|%u|%u) | clr(%u|%u|%u) | mask(%u|%u|%u)\n",
+ 		hw_id, __func__,
+@@ -750,33 +811,15 @@ static void tsens_disable_irq(struct tsens_priv *priv)
+ 
+ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+ {
+-	struct tsens_priv *priv = s->priv;
+ 	int hw_id = s->hw_id;
+ 	u32 temp_idx = LAST_TEMP_0 + hw_id;
+-	u32 valid_idx = VALID_0 + hw_id;
+-	u32 valid;
+ 	int ret;
+ 
+-	/* VER_0 doesn't have VALID bit */
+-	if (tsens_version(priv) == VER_0)
+-		goto get_temp;
+-
+-	/* Valid bit is 0 for 6 AHB clock cycles.
+-	 * At 19.2MHz, 1 AHB clock is ~60ns.
+-	 * We should enter this loop very, very rarely.
+-	 * Wait 1 us since it's the min of poll_timeout macro.
+-	 * Old value was 400 ns.
+-	 */
+-	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
+-					     valid, 1, 20 * USEC_PER_MSEC);
+-	if (ret)
+-		return ret;
+-
+-get_temp:
+-	/* Valid bit is set, OK to read the temperature */
+-	*temp = tsens_hw_to_mC(s, temp_idx);
++	ret = tsens_read_temp(s, temp_idx, temp);
++	if (!ret)
++		*temp = tsens_hw_to_mC(s, *temp);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int get_temp_common(const struct tsens_sensor *s, int *temp)
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index 2a7afa4c899b9..ab57ad88c3f7c 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -21,6 +21,7 @@
+ #define THRESHOLD_MIN_ADC_CODE	0x0
+ 
+ #define MAX_SENSORS 16
++#define MAX_READ_RETRY 3
+ 
+ #include <linux/interrupt.h>
+ #include <linux/thermal.h>
 -- 
 2.53.0
 
