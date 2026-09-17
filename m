@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB174E2F08;
-	Thu, 17 Sep 2026 15:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C684E01F9;
+	Thu, 17 Sep 2026 15:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660358; cv=none; b=GFsTgx8CKW0OChddU4W4zK7rd6ECY9Iil00/ar4E6ODS4CzxJtlfDJUaUNROYWad66bFMXeAydSy840yHeYiQcq/cQ2k1W58Nd7VI3V0hgjer7zBuGtflNtb674NuuY4Jz+7QOLAAZGHcouXRWa+mrhdL+ZCX9qWOLf2/Jp2sGA=
+	t=1789660362; cv=none; b=qI327OehF58MQYTOgg4drHZZt6uZkKW7NlvXKTRlfJVMQ4qSp/4yZpsyiJ4RpLcpaZCoxCx4KNvm5JadvTDogWD+ehRBcQbosDsg0lkgQlLYUwLhsfpUhQDvZcQIa12NOs6jW4rltst8vr/nqP/KWJbWmZsD8pg3z7okMrwo4Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660358; c=relaxed/simple;
-	bh=nmmZiVhC86bga9qDkJX+RJELR0AcZV3IRVmQCrz4/yw=;
+	s=arc-20240116; t=1789660362; c=relaxed/simple;
+	bh=ix8XAZxvzrF5Hz5jbRAL8HQD8rneSwvxDcxrTzprXRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFKBlteNPWAfFIvoCucXD+UlSrUtCpuxU3yxgpK1YdJeP0rqujPlXFQGrNtTC+rv4QVLL09DjDP/d+qP/Guo/8WW764cJz6y/iTpUrTmzAnXcoBbPfLhtr1brfNeydzqiDI5PzmfqaOi0pT8hHAGcWu1h4tPew6H+1iuVkh0cQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9avT3Pv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s5iEdmt1GIFZX8eC8VfSm6D2GOAVsmg1nf/JDThaP+oAOXgvsgchTlPoZdVrDSbE05agQzNzXSCGV3scq/PSqSr5c5yA8VaEGmKjOWzVYayxaXdvQiclLvTX9sDpC4hDk2Euhm4TRbNSvNYO8evUq/ZstxKGAy/VT/xDXLSv1Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlX4L9nA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9avT3Pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76781F000FF;
-	Thu, 17 Sep 2026 15:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlX4L9nA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFBA1F000FF;
+	Thu, 17 Sep 2026 15:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660357;
-	bh=IbDUvfFVDLVLkXttfgd97jcGBeo7SzkBAYFeC2OZcTk=;
+	s=korg; t=1789660360;
+	bh=7hNAALEoGksf1AHsD60xOTPCRCusmXzyexMtGgGiNTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9avT3PvQBKMwehWUtU5hrJvVRXpdGifr9szhoHuO07TcYplrtGVdToHupyBERDsU
-	 avqecqUXzV28p5gmknZh8xnqzKb2fYShzPXhR6g51nZq3TTaVFf9af7IfXiTzCKd65
-	 qerUin7jnwctYP3ZeQVEXa0J2rB0yl4TH4ZpU9lU=
+	b=vlX4L9nA2EAtBWEx9fviSScVRgNSon5cHI6aVlYicEuXSMkkdkg0hUuup/avrJq1p
+	 sBKBnEFQORxwVhbN/YmvC/b/SMT7OH6LQTmiKMbicUGyIYy3lCnUB4eiQnRoHOf4At
+	 9lOTAYZXZl6ZhhLqGeoM0/twJP4qickQN0e4BbYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 7.2 564/733] ieee802154: 6lowpan: fix NULL dereference in lowpan_newlink
-Date: Thu, 17 Sep 2026 16:14:32 +0100
-Message-ID: <20260917151406.379984493@linuxfoundation.org>
+Subject: [PATCH 7.2 565/733] ieee802154: cc2520: fix FIFOP work use-after-free
+Date: Thu, 17 Sep 2026 16:14:33 +0100
+Message-ID: <20260917151406.407177267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,38 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit bf79662bc85e820ac3b846e2f347da29fbf6ac95 upstream.
+commit ff5891b266a7fc6a062710836be84f1cc19338b5 upstream.
 
-TUNSETLINK allows a TUN device to change its link-layer type to
-ARPHRD_IEEE802154 without initializing ieee802154_ptr. lowpan_newlink()
-checks only the device type before dereferencing the pointer, so an
-RTM_NEWLINK request can trigger a NULL pointer dereference.
+The FIFOP interrupt handler queues cc2520_fifop_irqwork.  On removal,
+cc2520_remove() only flushes the work.  The devm-managed FIFOP IRQ
+remains active until after ->remove() returns and can queue the work
+again after that flush, allowing it to run after the private data is
+released.
 
-Reject devices without ieee802154_ptr along with devices of the wrong type.
+Disable the work with disable_work_sync() instead of flushing it, so
+the handler can no longer queue it once removal begins.  Destroy the
+buffer mutex last, since the worker and the stop callback invoked
+through ieee802154_unregister_hw() both take it.
 
-Fixes: 51e0e5d8124e ("ieee802154: 6lowpan: remove multiple lowpan per wpan support")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://lore.kernel.org/0b715da69bd15a86ddc47dad5cf12da648211050.1787997209.git.zhilinz@nebusec.ai
+Found by an in-house static analysis tool.
+
+Fixes: 0da6bc8cc341 ("ieee802154: cc2520: adds driver for TI CC2520 radio")
+Cc: stable@vger.kernel.org # v6.10+
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://lore.kernel.org/20260812061714.175966-1-fanwu01@zju.edu.cn
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/6lowpan/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ieee802154/cc2520.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/ieee802154/6lowpan/core.c
-+++ b/net/ieee802154/6lowpan/core.c
-@@ -150,7 +150,7 @@ static int lowpan_newlink(struct net_dev
- 	wdev = dev_get_by_index(dev_net(ldev), nla_get_u32(tb[IFLA_LINK]));
- 	if (!wdev)
- 		return -ENODEV;
--	if (wdev->type != ARPHRD_IEEE802154) {
-+	if (wdev->type != ARPHRD_IEEE802154 || !wdev->ieee802154_ptr) {
- 		dev_put(wdev);
- 		return -EINVAL;
- 	}
+--- a/drivers/net/ieee802154/cc2520.c
++++ b/drivers/net/ieee802154/cc2520.c
+@@ -1156,11 +1156,10 @@ static void cc2520_remove(struct spi_dev
+ {
+ 	struct cc2520_private *priv = spi_get_drvdata(spi);
+ 
+-	mutex_destroy(&priv->buffer_mutex);
+-	flush_work(&priv->fifop_irqwork);
+-
++	disable_work_sync(&priv->fifop_irqwork);
+ 	ieee802154_unregister_hw(priv->hw);
+ 	ieee802154_free_hw(priv->hw);
++	mutex_destroy(&priv->buffer_mutex);
+ }
+ 
+ static const struct spi_device_id cc2520_ids[] = {
 
 
