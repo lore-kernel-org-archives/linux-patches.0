@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383A3358D27;
-	Thu, 17 Sep 2026 15:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D71501F26;
+	Thu, 17 Sep 2026 15:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659532; cv=none; b=TRku9vFQVCyvclCjE2trY8jc5NbYQzoXOtSZ1y9Yg/4SlQgsExA/J6d4ttmO/uUhfBhM47XJUwRLqlslsP3wTVPEBPSpFxjs1qNiJhCLqoWc+4+5jIu4im1r7wu5OqMIrRr06to/KQTMRPXTXHfHquMKOhJn7nm5X7h3Jf3U8SU=
+	t=1789659533; cv=none; b=rCaRFkb9WtQrlGXagelyqicJPmWhgPKu5c58/Q6yAP611i84QWoA3wnn5qB0xvtROJfJElhajp7yH/CQRtGUYHEx9c7ncUcyjRlhSnHoewXOWlVF0zmxzxdZMK0mNWITsNRnYzEWudaCdYRgZwYv7Fkqe6XJs8iJIW+s6LHX190=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659532; c=relaxed/simple;
-	bh=FgCWKk9bwheamEE/CCYND8EDXr1X/DXM2TU8MV3erhY=;
+	s=arc-20240116; t=1789659533; c=relaxed/simple;
+	bh=seHjh1vWe+g6zmrlZtmdT1FygJuW91Mq3GN8ViD0qMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XW9nXJTH5RC4Md57YDP3o1UctMLe/rQmYLZkNUpPlouMqoRadgwmWAgpg6U7s4+u10Xr3yYOLXx5h/gt+my9WdUkfHgSAqyTM6b12egweDFySV3TUkmgjhU+LtmgN2ymWKnXkPkbzx7WH+xbQOIIvUwYZl858T/vuLYiH42y+DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLY6V5Ix; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V04XkNkCoUmpGXnkZulldpRBtzZ6D5ZRjUosY+AQXaRd/wAqkg0bvbtu2CPEzDaQRO6atMBmhFlM/A6LZVtZchFFyCEtcm22Trt3LqrZ3yM93NEkeRhJsBdwuzPUrOmmv0+pbLJDsO8jBpnbscuqXNTkCDRnWwJobQhcIAj1U7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZnRDKej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLY6V5Ix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A85E1F0089A;
-	Thu, 17 Sep 2026 15:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZnRDKej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DCE1F00893;
+	Thu, 17 Sep 2026 15:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659525;
-	bh=inSB4QJt0Il01cliMnu4IwwZVeiji5hD0tLfis77eI8=;
+	s=korg; t=1789659522;
+	bh=NGodG6yVhZzkVza7smFteHsmKTcWa3eGGbXj48ArjB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLY6V5IxbYSDQHlZG8z2u9rmcrCB1fFuC2YFIWBzCqnTG+SIbKMe00dnYZK3IrWYE
-	 Axh0OU9ooZRApTJFxwIs6TVLc5jiPd2Jyzp/XXXRkDydN6Hbia1LI52L3kAY0FDjIS
-	 /3UMztE/kWDd6J4TbHQCYNWbrUVFqwBF5YXsB1Oc=
+	b=IZnRDKej89g4vu+P4ltM4Mr4ib1ai5clopCkXDT1yrtiIT4CwUJAjSbdfUoYDQG6j
+	 mn0RCRkaGO4QwlF54varmC/pGRhg11i9a6+07PncFYVC8I6+veyy7TREWBos7kRFgH
+	 1nmRw4GUcfvWKpTHcvXM4y6jJNPOtsMIRkSfBfe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Seungwon Bae <qotmddnjs@ajou.ac.kr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 284/733] vxlan: reject dynamic fdb entries that reference a nexthop id
-Date: Thu, 17 Sep 2026 16:09:52 +0100
-Message-ID: <20260917151358.461553776@linuxfoundation.org>
+Subject: [PATCH 7.2 248/733] bpf: dont rewrite bpf_fastcall patterns entered by a jump
+Date: Thu, 17 Sep 2026 16:09:16 +0100
+Message-ID: <20260917151357.464723632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,128 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungwon Bae <qotmddnjs@ajou.ac.kr>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 98fc57d167446b95b4e719815fe79edef93f8e7a ]
+[ Upstream commit 0b1c83dc3c4401cd7e846548f62e3caf3d06742e ]
 
-The commit cited in the Fixes tag allowed VXLAN FDB entries to point to
-FDB nexthops so that overlay traffic could be load balanced across
-multiple VTEPs. Such entries can only be configured from user space,
-cannot be learned and cannot roam. They only make sense with a user space
-control plane such as E-VPN where data plane learning is disabled.
+mark_fastcall_pattern_for_call() must ensure that matched
+"spill; call; fill" instruction series is not interrupted by a jump.
+Otherwise the rewrite applied by bpf_remove_fastcall_spills_fills()
+is not sound.
 
-Despite that, the VXLAN driver does not currently prevent such entries
-from being configured with the "dynamic" flag. The per-nexthop FDB list
-is only protected by the per-device hash lock, which is not sufficient
-when two VXLAN devices point to the same FDB nexthop and therefore share
-the list. Aging runs in softirq context without RTNL, so an entry deleted
-by one device can race with an addition or deletion from the other,
-leading to list corruption:
+Record the instructions targeted by jumps in
+insn_aux_data[*].jump_target when the CFG is built and use this flag
+to stop growing a pattern at such an instruction. Jumps to the first
+spill are fine.
 
-  list_del corruption. next->prev should be ffff8881069d9548, but was
-  dead000000000122. (next=ffff8881069d9448)
-  WARNING: CPU: 0 PID: 90 at lib/list_debug.c:65
-  __list_del_entry_valid_or_report+0x1aa/0x210
-  ...
-   vxlan_fdb_destroy+0x5b8/0xad0
-   vxlan_cleanup+0x328/0x450
-   call_timer_fn+0x2a/0x1c0
-   run_timer_softirq+0x18c/0x210
-  BUG: KASAN: slab-use-after-free in vxlan_fdb_destroy
+Note that existing insn_aux_data[*].jmp_point field can't be reused,
+as it marks subprogram return instructions.
 
-Fix this by rejecting the bogus configuration of dynamic FDB entries that
-point to FDB nexthops, both when created and when an existing entry is
-updated. As such, the per-nexthop FDB list is only ever mutated under the
-RTNL lock. Add test cases to make sure that this does not regress in the
-future.
-
-Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Seungwon Bae <qotmddnjs@ajou.ac.kr>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260902155956.296699-1-qotmddnjs@ajou.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b5f51bff1b6 ("bpf: no_caller_saved_registers attribute for helper calls")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260903205820.1743087-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c              | 11 ++++++++
- tools/testing/selftests/net/fib_nexthops.sh | 28 +++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ include/linux/bpf_verifier.h | 12 ++++++++++++
+ kernel/bpf/cfg.c             |  3 +++
+ kernel/bpf/verifier.c        |  8 ++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 44ea8499e7877..1d76e1dbc41f2 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -996,6 +996,12 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
- 		return -EOPNOTSUPP;
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 39a851e690ec4..ad7b8335ebc82 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -704,6 +704,8 @@ struct bpf_insn_aux_data {
+ 	 */
+ 	u32 calls_callback:1;
+ 	u32 indirect_target:1; /* if it is an indirect jump target */
++	/* true if some jump or call instruction targets this instruction */
++	u32 jump_target:1;
+ 	/*
+ 	 * CFG strongly connected component this instruction belongs to,
+ 	 * zero if it is a singleton SCC.
+@@ -1115,6 +1117,16 @@ static inline void mark_jmp_point(struct bpf_verifier_env *env, int idx)
+ 	env->insn_aux_data[idx].jmp_point = true;
+ }
+ 
++static inline void mark_jump_target(struct bpf_verifier_env *env, int idx)
++{
++	env->insn_aux_data[idx].jump_target = true;
++}
++
++static inline bool bpf_is_jump_target(struct bpf_verifier_env *env, int insn_idx)
++{
++	return env->insn_aux_data[insn_idx].jump_target;
++}
++
+ static inline struct bpf_func_state *cur_func(struct bpf_verifier_env *env)
+ {
+ 	struct bpf_verifier_state *cur = env->cur_state;
+diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
+index 26d37066465f3..d5fc03f12969b 100644
+--- a/kernel/bpf/cfg.c
++++ b/kernel/bpf/cfg.c
+@@ -120,6 +120,7 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env)
+ 		/* mark branch target for state pruning */
+ 		mark_prune_point(env, w);
+ 		mark_jmp_point(env, w);
++		mark_jump_target(env, w);
  	}
  
-+	if (rcu_access_pointer(f->nh) &&
-+	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
-+		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	/* Do not allow an externally learned entry to take over an entry added
- 	 * by the user.
- 	 */
-@@ -1257,6 +1263,11 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
- 	if (err)
- 		return err;
+ 	if (insn_state[w] == 0) {
+@@ -378,6 +379,7 @@ static int visit_gotox_insn(int t, struct bpf_verifier_env *env)
+ 		}
  
-+	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
-+		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
-+		return -EINVAL;
-+	}
-+
- 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
- 		return -EAFNOSUPPORT;
+ 		mark_jmp_point(env, w);
++		mark_jump_target(env, w);
  
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index ac868a7316946..daceb1ec592ab 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -522,6 +522,20 @@ ipv6_fdb_grp_fcnal()
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 61 self"
- 	log_test $? 255 "Fdb mac add with nexthop"
+ 		/* EXPLORED || DISCOVERED */
+ 		if (insn_state[w])
+@@ -539,6 +541,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
  
-+	# fdb entries with a nexthop group cannot be aged out
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
-+	log_test $? 0 "Fdb mac add with nexthop group and static state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
-+	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
-+	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+
- 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
- 	log_test $? 2 "Route add with fdb nexthop"
+ 		mark_prune_point(env, t + off + 1);
+ 		mark_jmp_point(env, t + off + 1);
++		mark_jump_target(env, t + off + 1);
  
-@@ -622,6 +636,20 @@ ipv4_fdb_grp_fcnal()
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 12 self"
- 	log_test $? 255 "Fdb mac add with nexthop"
+ 		return ret;
  
-+	# fdb entries with a nexthop group cannot be aged out
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
-+	log_test $? 0 "Fdb mac add with nexthop group and static state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
-+	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
-+	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
-+	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
-+	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+
- 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
- 	log_test $? 2 "Route add with fdb nexthop"
- 
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index bc5aea31df589..d1f6365e2a817 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16856,6 +16856,10 @@ bool bpf_get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call,
+  *   r0 = *(u64 *)(r10 - 8);             r0 += r1;
+  *   r0 += r1;                           exit;
+  *   exit;
++ *
++ * Both uses of the marks assume that a pattern is entered at its first
++ * spill and thus executes as a unit, hence a pattern is not grown past
++ * an instruction targeted by a jump.
+  */
+ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 					   struct bpf_subprog_info *subprog,
+@@ -16894,6 +16898,10 @@ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 	for (i = 1, off = lowest_off; i <= ARRAY_SIZE(caller_saved); ++i, off += BPF_REG_SIZE) {
+ 		if (insn_idx - i < 0 || insn_idx + i >= env->prog->len)
+ 			break;
++		/* stx/ldx/call must not be a jump targets, a jump to the first stx is fine */
++		if (bpf_is_jump_target(env, insn_idx - i + 1) ||
++		    bpf_is_jump_target(env, insn_idx + i))
++			break;
+ 		stx = &insns[insn_idx - i];
+ 		ldx = &insns[insn_idx + i];
+ 		/* must be a stack spill/fill pair */
 -- 
 2.53.0
 
