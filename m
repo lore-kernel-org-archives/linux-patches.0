@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66614848B5;
-	Thu, 17 Sep 2026 15:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CD74C10E5;
+	Thu, 17 Sep 2026 15:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659166; cv=none; b=VuMsV3FEHT8Ue1fJkekKrvuE4HEjCZcpRlPDsyjTKiUPwZmXzkULpq0TCjv3LhTbMYhhlVmSTGiRjy/9/kvHZcmnDjyeqOvKpFlA7JhindDZ/YgV0yuYPciYKd4bFbMfMDavptIGuL8KE5RClzgi5ce018+7ZHdLeYIxOHiC0pA=
+	t=1789659172; cv=none; b=tcZJgVKKb69mC2ENBjcStWJtRur8XlBCbOhOHOcuSapYRGVpmYlyFWWZAy5Vu/GLA++wx5OcwGW2OfFLKF7O0iKIZOWoIBUehAG5H9I1G32kLrkz9/nxQnHaS8Ag/lChu8/peTvtop/zdH33VFE51cGUJLDg2MgyzwWfe0mgZeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659166; c=relaxed/simple;
-	bh=WStNIfiPZeYG1DqQZulSVfN3RxYrt8a4sD8/S7s8E1A=;
+	s=arc-20240116; t=1789659172; c=relaxed/simple;
+	bh=C0ExRJivDyOiO/79h3xuFcDzsWlHDZjBKKKKdAe07lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dtqPLU0zMneeVTB+MmdsEW382VFOXLLIVXVqy7CxjkceGtl4JChOXelmHUEBPYCaLqJUibXZ4nYZHy7gJTV2j6SNyvq5N5tUFbHNFHSPIn6UBU9pSLHJjRPuCe/zTtZ41lonv7FqUWOdO8Gn2Tm80vIy0f/F8m7f/G6nJbXpOAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU4jAaeP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsh0MEXyLFDzqrWO1T1Doel9xHMrYDOc1opLnTOPfaSF3IjL7gn8fzWKTj0q32Xk9yq0/sxUWWKHUGP6Onn1JpjH+o3HzIhDpvvToVBkmII3RhvwjA1V565dNJ/C1gsittHBv2o8btLJTJUj/SniE1BTiGF/OAUs0XSgIvhSFNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXuu/Hpg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU4jAaeP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3122A1F00898;
-	Thu, 17 Sep 2026 15:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXuu/Hpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C13D1F00893;
+	Thu, 17 Sep 2026 15:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659158;
-	bh=PGSvLZXMIaknGPmVo+FJO/nOJ/y5ez5fl/45zXCjO88=;
+	s=korg; t=1789659164;
+	bh=B0B6UjCQyujdymS8CQQfwfGBCJIDbdgIkChVkYmGUs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xU4jAaePhZFMOXuI0zFD2KSRPIKwxIBGMgJRn14domn/NB1iVXZ31h48+8y3gTEon
-	 gfX/mA6XJa5iwtlB8OX0gNNebBzmw0DlnSLRmEUZmdF9LOB+UM33DgTr2M1e29jyrv
-	 Jmq3tKaYxbjtFNnOl92VEXKbCElf6iecshXjJf1o=
+	b=UXuu/HpgC1a3MbMm+2oGbIrDveOeFDuU4s4lG2L4bgdg5M2RCThzhPS8FtFme+utn
+	 Ul1V678RfDQf9UV8GcbLJTzGNrvmtvfNZJOwNabXztMI+MHmScxoz6BxzcXw2mBWyG
+	 CE0etLuX1P440139NLwWVaN7xmWlAKlMVgNBSv3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 124/733] drm/pagemap: Prevent double migration of device pages
-Date: Thu, 17 Sep 2026 16:07:12 +0100
-Message-ID: <20260917151354.100786399@linuxfoundation.org>
+Subject: [PATCH 7.2 126/733] net: ethernet: oa_tc6: Handle the OA TC6 SPI protected mode
+Date: Thu, 17 Sep 2026 16:07:14 +0100
+Message-ID: <20260917151354.156258329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,382 +45,263 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Ciprian Regus <ciprian.regus@analog.com>
 
-[ Upstream commit c4126f1db36e6b2e1c79b0e30a8a2de91c568f4c ]
+[ Upstream commit 7d0e4c4b8c85d8ea2c77a90e1f7a7f74ce531e52 ]
 
-A device-private folio migrated to system memory by a CPU fault can
-remain reachable through the raw-PFN eviction path until migration
-finalization drops the source reference.
+Implement the OA TC6 standard defined protected mode for control (register
+access) transactions. In addition to the current register access formats
+the oa_tc6 driver handles, 1's complement values of the data field
+are included (by both the host and the MACPHY) in the SPI transfer frames.
+This feature acts as an integrity check.
 
-If eviction selects the same device-private folio during this window,
-it can attempt to migrate the folio again. The second migration can leave
-an uncharged folio on an LRU list, causing folio_lruvec_lock_irqsave() to
-retry indefinitely and resulting in a soft lockup and RCU stall.
+Control write transactions look like this:
 
-Mark successfully migrated device-private folios using a low bit of
-their zone_device_data before migration finalization. Make both CPU-fault
-and raw-PFN migration paths skip device-private folios carrying this
-flag.
+          |<- 32 bits ->|<--- data_size --->|<- 32 bits ->|
+    MOSI: | ctrl header | reg write data    | ignored     |
+    MISO: | (discard)   | echoed ctrl hdr   | echoed data |
 
-Mask the flag when retrieving the drm_pagemap_zdd pointer and preserve
-it when a device-private folio is split. Keeping the state on the physical
-folio also avoids depending on a virtual address that may change before a
-fault occurs.
+    data_size (LEN = number of registers to read in a sequence):
+      Unprotected: 32 x (LEN + 1) bits
+      Protected:   2 x 32 x (LEN + 1) bits
 
-v2:
-- Replace the retired-PFN XArray with an embedded bitmap. (Matthew Brost)
-- Mark every base page covered by a migrated folio so retirement remains
-  valid if the folio is later split.
+Control read transaction:
 
-v3:
-- Store the migrated state in a low bit of zone_device_data instead of
-  adding virtual-range and bitmap tracking to the ZDD. (Matthew Brost)
-- Mask the flag when retrieving the ZDD and preserve it when splitting
-  a folio.
-- Drop the pre-existing fixes already covered by Matthew Brost's series:
-  https://patchwork.freedesktop.org/series/171651/
+          |<- 32 bits ->|<--- 32 bits --> |<- data_size ->|
+    MOSI: | ctrl header | ignored ...                     |
+    MISO: | (discard)   | echoed ctrl hdr | reg read data |
 
-v4:
-- Advance by the folio size only for migration entries marked with
-  MIGRATE_PFN_COMPOUND. (Sashiko)
+    data_size (LEN = number of registers to read in a sequence):
+      Unprotected: 32 x (LEN + 1) bits
+      Protected:   2 x 32 x (LEN + 1) bits
 
-v5:
-- Simplify ZDD flag updates and folio iteration. (Matthew Brost)
-- Skip retired device-private folios in the CPU-fault path. (Matthew Brost)
-- Preserve flag bits while taking a new ZDD reference for split folios.
+Register data format ("reg write data" and "reg read data"):
 
-v6:
-- Restore MIGRATE_PFN_COMPOUND-aware stepping so non-compound migration
-  entries are processed one at a time. (Sashiko)
-- Drop the pre-existing fixes already covered by Matthew Brost's series:
-  https://patchwork.freedesktop.org/series/171651/
+    Unprotected:
+      | W1 (normal) | W2 (normal) | ... | Wx (normal) |
 
-The lockup was observed as:
-[10109.860465] watchdog: BUG: soft lockup - CPU#9 stuck for 26s! [kworker/u65:5:6557]
-[10109.860524] Tainted: [S]=CPU_OUT_OF_SPEC, [O]=OOT_MODULE
-[10109.860524] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
-[10109.860525] Workqueue: xe_page_fault_work_queue xe_pagefault_queue_work [xe]
-[10109.860644] RIP: 0010:_raw_spin_unlock_irqrestore+0x57/0x80
-[10109.860655] Call Trace:
-[10109.860655]  <TASK>
-[10109.860657]  folio_lruvec_lock_irqsave+0x216/0x220
-[10109.860661]  ? __pfx_lru_add+0x10/0x10
-[10109.860665]  folio_batch_move_lru+0xc8/0x450
-[10109.860670]  ? lock_acquire+0xc4/0x2d0
-[10109.860674]  ? __folio_batch_add_and_move+0x60/0x2e0
-[10109.860677]  ? folio_migrate_mapping+0xa6/0x110
-[10109.860679]  ? folio_migrate_flags+0x13b/0x1b0
-[10109.860681]  ? __pfx_lru_add+0x10/0x10
-[10109.860683]  __folio_batch_add_and_move+0xe7/0x2e0
-[10109.860685]  ? dma_iova_try_alloc+0xb0/0x140
-[10109.860689]  folio_add_lru+0x64/0x80
-[10109.860691]  __migrate_device_finalize+0x12c/0x270
-[10109.860695]  migrate_device_finalize+0x10/0x20
-[10109.860698]  drm_pagemap_evict_to_ram+0x185/0x370 [drm_gpusvm_helper]
-[10109.860704]  ? drm_pagemap_evict_to_ram+0x96/0x370 [drm_gpusvm_helper]
-[10109.860709]  xe_svm_bo_evict+0x15/0x20 [xe]
-[10109.860819]  ? xe_svm_bo_evict+0x15/0x20 [xe]
-[10109.860921]  xe_bo_move+0x107e/0x1570 [xe]
-[10109.860992]  ? xe_ttm_tt_create+0x168/0x340 [xe]
-[10109.861059]  ? __up_read+0x98/0x2b0
-[10109.861061]  ? lock_is_held_type+0xa3/0x130
-[10109.861067]  ttm_bo_handle_move_mem+0xe8/0x1e0 [ttm]
-[10109.861075]  ttm_bo_evict+0x141/0x1c0 [ttm]
-[10109.861081]  ttm_bo_evict_cb+0x9f/0x100 [ttm]
-[10109.861086]  ttm_lru_walk_for_evict+0x84/0x190 [ttm]
-[10109.861091]  ? xe_ttm_vram_mgr_new+0x258/0x3a0 [xe]
-[10109.861198]  ttm_bo_alloc_resource+0x219/0x750 [ttm]
-[10109.861203]  ? ttm_bo_alloc_resource+0xa9/0x750 [ttm]
-[10109.861208]  ? lock_acquire+0xc4/0x2d0
-[10109.861214]  ttm_bo_validate+0x94/0x1c0 [ttm]
-[10109.861218]  ? ww_mutex_trylock+0x19d/0x3d0
-[10109.861219]  ? _raw_write_unlock+0x22/0x50
-[10109.861223]  ttm_bo_init_reserved+0x17d/0x1f0 [ttm]
-[10109.861228]  xe_bo_init_locked+0x20a/0x620 [xe]
-[10109.861294]  ? __pfx_xe_ttm_bo_destroy+0x10/0x10 [xe]
-[10109.861359]  ? mark_held_locks+0x46/0x90
-[10109.861361]  ? __create_object+0x68/0xc0
-[10109.861366]  __xe_bo_create_locked+0x384/0xa20 [xe]
-[10109.861432]  ? lock_acquire+0xc4/0x2d0
-[10109.861434]  ? xe_drm_pagemap_populate_mm+0xd3/0x340 [xe]
-[10109.861542]  xe_bo_create_locked+0x23/0x40 [xe]
-[10109.861609]  xe_drm_pagemap_populate_mm+0x12e/0x340 [xe]
-[10109.861707]  ? __lock_acquire+0x43e/0x2930
-[10109.861716]  drm_pagemap_populate_mm+0x74/0xe0 [drm_gpusvm_helper]
-[10109.861720]  xe_svm_alloc_vram+0xb5/0x2c0 [xe]
-[10109.861817]  ? seqcount_lockdep_reader_access.constprop.0+0x9f/0xc0
-[10109.861819]  ? ktime_get+0x23/0x130
-[10109.861821]  ? trace_hardirqs_on+0x22/0xe0
-[10109.861823]  ? seqcount_lockdep_reader_access.constprop.0+0x9f/0xc0
-[10109.861826]  __xe_svm_handle_pagefault+0x77d/0xbf0 [xe]
-[10109.861924]  ? rwsem_down_write_slowpath+0x43a/0x9a0
-[10109.861926]  ? _raw_spin_unlock_irq+0x27/0x70
-[10109.861928]  ? rwsem_down_write_slowpath+0x43a/0x9a0
-[10109.861929]  ? trace_hardirqs_on+0x22/0xe0
-[10109.861931]  ? _raw_spin_unlock_irq+0x27/0x70
-[10109.861933]  ? rwsem_down_write_slowpath+0x459/0x9a0
-[10109.861937]  xe_svm_handle_pagefault+0x3d/0xb0 [xe]
-[10109.862030]  xe_pagefault_queue_work+0x1a9/0x520 [xe]
-[10109.862122]  process_one_work+0x239/0x730
-[10109.862127]  worker_thread+0x200/0x3f0
-[10109.862130]  ? __pfx_worker_thread+0x10/0x10
-[10109.862132]  kthread+0x10d/0x150
-[10109.862133]  ? __pfx_kthread+0x10/0x10
-[10109.862135]  ret_from_fork+0x3bd/0x470
-[10109.862138]  ? __pfx_kthread+0x10/0x10
-[10109.862140]  ret_from_fork_asm+0x1a/0x30
-[10109.862146]  </TASK>
+    Protected:
+    | W1 (normal) | W1 (complement) | ... | Wx (normal) | Wx (complement)|
 
-Fixes: 99624bdff867 ("drm/gpusvm: Add support for GPU Shared Virtual Memory")
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Assisted-by: Claude:claude-opus-4-8
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260810092845.2776097-1-arvind.yadav@intel.com
+The protected mode state can be read from the bit 5 of CONFIG0 (0x4)
+register, and this setting is usually only configured during the
+MACPHY's reset (depending on the device it can be done by setting the
+state of a pin). We can read the protected mode configuration before any
+other register access and since the SPI transfer is initially sized for an
+unprotected read, the MACPHY's complement words are never clocked out
+and no checking is required. The data transactions (Ethernet frames)
+remain unchanged.
+
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Link: https://patch.msgid.link/20260708-adin1140-driver-v5-2-4aca7b51a58b@analog.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 5443d9c4f55d ("net: ethernet: oa_tc6: Protect skb pointer used by two different kernel instances")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_pagemap.c | 127 ++++++++++++++++++++++++++++++++--
- include/drm/drm_pagemap.h     |   8 ++-
- 2 files changed, 129 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 93 ++++++++++++++++++++++++++++-------
+ 1 file changed, 76 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_pagemap.c b/drivers/gpu/drm/drm_pagemap.c
-index 05eb7254028f7..72ca5a48d4a66 100644
---- a/drivers/gpu/drm/drm_pagemap.c
-+++ b/drivers/gpu/drm/drm_pagemap.c
-@@ -1195,12 +1195,117 @@ void drm_pagemap_put(struct drm_pagemap *dpagemap)
- }
- EXPORT_SYMBOL(drm_pagemap_put);
+diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
+index 0727d53345a33..8b96558834960 100644
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -25,6 +25,7 @@
+ #define OA_TC6_REG_CONFIG0			0x0004
+ #define CONFIG0_SYNC				BIT(15)
+ #define CONFIG0_ZARFE_ENABLE			BIT(12)
++#define CONFIG0_PROTE				BIT(5)
  
-+/**
-+ * drm_pagemap_page_get_flags() - Read flags from a device-private folio
-+ * @page: Pointer to a page of the device-private folio
-+ *
-+ * Return: The DRM_PAGEMAP_ZDD_FLAG_* bits encoded in zone_device_data.
-+ */
-+static unsigned long drm_pagemap_page_get_flags(struct page *page)
-+{
-+	struct folio *folio = page_folio(page);
+ /* Status Register #0 */
+ #define OA_TC6_REG_STATUS0			0x0008
+@@ -90,14 +91,17 @@
+ #define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
+ #define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
+ 
++#define OA_TC6_CTRL_PROT_REPLY_SIZE		4
+ #define OA_TC6_CTRL_HEADER_SIZE			4
+ #define OA_TC6_CTRL_REG_VALUE_SIZE		4
+ #define OA_TC6_CTRL_IGNORED_SIZE		4
+ #define OA_TC6_CTRL_MAX_REGISTERS		128
+-#define OA_TC6_CTRL_SPI_BUF_SIZE		(OA_TC6_CTRL_HEADER_SIZE +\
+-						(OA_TC6_CTRL_MAX_REGISTERS *\
+-						OA_TC6_CTRL_REG_VALUE_SIZE) +\
+-						OA_TC6_CTRL_IGNORED_SIZE)
++#define OA_TC6_CTRL_SPI_BUF_SIZE	(OA_TC6_CTRL_HEADER_SIZE +\
++					(OA_TC6_CTRL_MAX_REGISTERS *\
++					(OA_TC6_CTRL_REG_VALUE_SIZE +\
++					OA_TC6_CTRL_PROT_REPLY_SIZE)) +\
++					OA_TC6_CTRL_IGNORED_SIZE)
 +
-+	return (unsigned long)folio_zone_device_data(folio) &
-+		DRM_PAGEMAP_ZDD_FLAG_MASK;
-+}
-+
-+/**
-+ * drm_pagemap_page_set_flags() - Set flags on a device-private folio
-+ * @page: Pointer to a page of the device-private folio
-+ * @flags: DRM_PAGEMAP_ZDD_FLAG_* bits to set
-+ *
-+ * Preserve any flags already encoded alongside the ZDD pointer.
-+ */
-+static void drm_pagemap_page_set_flags(struct page *page,
-+				       unsigned long flags)
-+{
-+	struct folio *folio = page_folio(page);
-+	unsigned long old;
-+
-+	if (WARN_ON_ONCE(flags & ~DRM_PAGEMAP_ZDD_FLAG_MASK))
-+		return;
-+
-+	old = (unsigned long)folio_zone_device_data(folio);
-+	folio_set_zone_device_data(folio, (void *)(old | flags));
-+}
-+
-+/**
-+ * drm_pagemap_retire_migrated_pages() - Record migrated device-private folios
-+ * @src_pfns: source array after migrate_vma_pages() or migrate_device_pages()
-+ * @npages: number of entries in @src_pfns
-+ *
-+ * Flag device-private folios successfully migrated to RAM before finalize
-+ * unlocks the sources. The migrated state is stored in the physical folio, so
-+ * it survives later folio splits and subsequent migrations can skip it.
-+ */
-+static void drm_pagemap_retire_migrated_pages(unsigned long *src_pfns,
-+					      unsigned long npages)
-+{
-+	unsigned long i = 0;
-+
-+	while (i < npages) {
-+		struct page *page = migrate_pfn_to_page(src_pfns[i]);
-+		unsigned long nr = 1;
-+
-+		if (!page) {
-+			i++;
-+			continue;
-+		}
-+
-+		if (src_pfns[i] & MIGRATE_PFN_COMPOUND)
-+			nr = folio_nr_pages(page_folio(page));
-+
-+		if ((src_pfns[i] & MIGRATE_PFN_MIGRATE) &&
-+		    is_device_private_page(page))
-+			drm_pagemap_page_set_flags(page,
-+						   DRM_PAGEMAP_ZDD_FLAG_MIGRATED);
-+
-+		i += nr;
+ #define OA_TC6_CHUNK_PAYLOAD_SIZE		64
+ #define OA_TC6_DATA_HEADER_SIZE			4
+ #define OA_TC6_CHUNK_SIZE			(OA_TC6_DATA_HEADER_SIZE +\
+@@ -130,6 +134,7 @@ struct oa_tc6 {
+ 	bool rx_buf_overflow;
+ 	bool int_flag;
+ 	bool disable_traffic;
++	bool prot_ctrl;
+ };
+ 
+ enum oa_tc6_header_type {
+@@ -213,25 +218,36 @@ static void oa_tc6_update_ctrl_write_data(struct oa_tc6 *tc6, u32 value[],
+ {
+ 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf + OA_TC6_CTRL_HEADER_SIZE;
+ 
+-	for (int i = 0; i < length; i++)
++	for (int i = 0; i < length; i++) {
+ 		*tx_buf++ = cpu_to_be32(value[i]);
++		if (tc6->prot_ctrl)
++			*tx_buf++ = cpu_to_be32(~value[i]);
 +	}
-+}
+ }
+ 
+-static u16 oa_tc6_calculate_ctrl_buf_size(u8 length)
++static u16 oa_tc6_calculate_ctrl_buf_size(u8 length, bool ctrl_prot)
+ {
++	u32 reply_size = OA_TC6_CTRL_REG_VALUE_SIZE;
 +
-+/**
-+ * drm_pagemap_skip_retired_pages() - Skip retired device-private folios
-+ * @src_pfns: MIGRATE_PFN-encoded source array
-+ * @npages: number of entries in @src_pfns
-+ *
-+ * Skip source folios already migrated to RAM, identified by the migrated flag
-+ * stored in the physical folio's zone_device_data.
-+ */
-+static void drm_pagemap_skip_retired_pages(unsigned long *src_pfns,
-+					   unsigned long npages)
-+{
-+	unsigned long i = 0;
++	if (ctrl_prot)
++		reply_size += OA_TC6_CTRL_PROT_REPLY_SIZE;
 +
-+	while (i < npages) {
-+		struct page *page = migrate_pfn_to_page(src_pfns[i]);
-+		unsigned long nr = 1;
+ 	/* Control command consists 4 bytes header + 4 bytes register value for
+-	 * each register + 4 bytes ignored value.
++	 * each register (+ 4 bytes for the register value complement in case
++	 * protected mode is used) + 4 bytes ignored value.
+ 	 */
+-	return OA_TC6_CTRL_HEADER_SIZE + OA_TC6_CTRL_REG_VALUE_SIZE * length +
++	return OA_TC6_CTRL_HEADER_SIZE + reply_size * length +
+ 	       OA_TC6_CTRL_IGNORED_SIZE;
+ }
+ 
+ static void oa_tc6_prepare_ctrl_spi_buf(struct oa_tc6 *tc6, u32 address,
+ 					u32 value[], u8 length,
+-					enum oa_tc6_register_op reg_op)
++					enum oa_tc6_register_op reg_op,
++					u16 buf_size)
+ {
+ 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
+ 
++	memset(tx_buf, 0, buf_size);
+ 	*tx_buf = oa_tc6_prepare_ctrl_header(address, length, reg_op);
+ 
+ 	if (reg_op == OA_TC6_CTRL_REG_WRITE)
+@@ -254,10 +270,12 @@ static int oa_tc6_check_ctrl_write_reply(struct oa_tc6 *tc6, u8 size)
+ 	return 0;
+ }
+ 
+-static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
++static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 length)
+ {
+-	u32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
+-	u32 *tx_buf = tc6->spi_ctrl_tx_buf;
++	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
++	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
++	u32 complement;
++	u32 reply;
+ 
+ 	/* The echoed control read header must match with the one that was
+ 	 * transmitted.
+@@ -265,6 +283,20 @@ static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
+ 	if (*tx_buf != *rx_buf)
+ 		return -EPROTO;
+ 
++	if (tc6->prot_ctrl) {
++		/* Skip past the echoed header to the value/complement pairs */
++		rx_buf += 1;
++		for (int i = 0; i < length; i++) {
++			reply = be32_to_cpu(rx_buf[0]);
++			complement = be32_to_cpu(rx_buf[1]);
 +
-+		if (!page) {
-+			i++;
-+			continue;
++			if (complement != ~reply)
++				return -EPROTO;
++
++			rx_buf += 2;
 +		}
-+
-+		if (src_pfns[i] & MIGRATE_PFN_COMPOUND)
-+			nr = folio_nr_pages(page_folio(page));
-+
-+		if ((src_pfns[i] & MIGRATE_PFN_MIGRATE) &&
-+		    is_device_private_page(page) &&
-+		    (drm_pagemap_page_get_flags(page) &
-+		     DRM_PAGEMAP_ZDD_FLAG_MIGRATED))
-+			src_pfns[i] &= ~MIGRATE_PFN_MIGRATE;
-+
-+		i += nr;
 +	}
++
+ 	return 0;
+ }
+ 
+@@ -274,8 +306,13 @@ static void oa_tc6_copy_ctrl_read_data(struct oa_tc6 *tc6, u32 value[],
+ 	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE +
+ 			 OA_TC6_CTRL_HEADER_SIZE;
+ 
+-	for (int i = 0; i < length; i++)
++	for (int i = 0; i < length; i++) {
+ 		value[i] = be32_to_cpu(*rx_buf++);
++
++		/* skip complement word */
++		if (tc6->prot_ctrl)
++			rx_buf++;
++	}
+ }
+ 
+ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+@@ -284,10 +321,10 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+ 	u16 size;
+ 	int ret;
+ 
+-	/* Prepare control command and copy to SPI control buffer */
+-	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op);
++	size = oa_tc6_calculate_ctrl_buf_size(length, tc6->prot_ctrl);
+ 
+-	size = oa_tc6_calculate_ctrl_buf_size(length);
++	/* Prepare control command and copy to SPI control buffer */
++	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op, size);
+ 
+ 	/* Perform SPI transfer */
+ 	ret = oa_tc6_spi_transfer(tc6, OA_TC6_CTRL_HEADER, size);
+@@ -302,7 +339,7 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+ 		return oa_tc6_check_ctrl_write_reply(tc6, size);
+ 
+ 	/* Check echoed/received control read command reply for errors */
+-	ret = oa_tc6_check_ctrl_read_reply(tc6, size);
++	ret = oa_tc6_check_ctrl_read_reply(tc6, length);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1272,6 +1309,20 @@ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
+ }
+ EXPORT_SYMBOL_GPL(oa_tc6_start_xmit);
+ 
++static int oa_tc6_check_ctrl_protection(struct oa_tc6 *tc6)
++{
++	u32 regval;
++	int ret;
++
++	ret = oa_tc6_read_register(tc6, OA_TC6_REG_CONFIG0, &regval);
++	if (ret)
++		return ret;
++
++	tc6->prot_ctrl = FIELD_GET(CONFIG0_PROTE, regval);
++
++	return 0;
 +}
 +
  /**
-  * drm_pagemap_evict_to_ram() - Evict GPU SVM range to RAM
-  * @devmem_allocation: Pointer to the device memory allocation
-  *
-- * Similar to __drm_pagemap_migrate_to_ram but does not require mmap lock and
-- * migration done via migrate_device_* functions.
-+ * Similar to __drm_pagemap_migrate_to_ram(), but uses the
-+ * migrate_device_* helpers and does not require the mmap lock.
-+ * Device-private PFNs already migrated to RAM by either path are skipped.
-  *
-  * Return: 0 on success, negative error code on failure.
-  */
-@@ -1241,6 +1346,8 @@ int drm_pagemap_evict_to_ram(struct drm_pagemap_devmem *devmem_allocation)
- 	if (err)
- 		goto err_free;
+  * oa_tc6_init - allocates and initializes oa_tc6 structure.
+  * @spi: device with which data will be exchanged.
+@@ -1324,6 +1375,14 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
+ 	if (!tc6->spi_data_rx_buf)
+ 		return NULL;
  
-+	drm_pagemap_skip_retired_pages(src, npages);
++	/* Check the PROTE bit status so that we can reset the device */
++	ret = oa_tc6_check_ctrl_protection(tc6);
++	if (ret) {
++		dev_err(&tc6->spi->dev,
++			"Failed to check the protection mode: %d\n", ret);
++		return NULL;
++	}
 +
- 	err = drm_pagemap_migrate_populate_ram_pfn(NULL, NULL, npages, &mpages,
- 						   src, dst, 0);
- 	if (err || !mpages)
-@@ -1263,6 +1370,7 @@ int drm_pagemap_evict_to_ram(struct drm_pagemap_devmem *devmem_allocation)
- 	if (err)
- 		drm_pagemap_migration_unlock_put_pages(npages, dst);
- 	migrate_device_pages(src, dst, npages);
-+	drm_pagemap_retire_migrated_pages(src, npages);
- 	migrate_device_finalize(src, dst, npages);
- 	drm_pagemap_migrate_unmap_pages(devmem_allocation->dev, pagemap_addr, dst, npages,
- 					DMA_FROM_DEVICE, &state);
-@@ -1360,13 +1468,15 @@ static int __drm_pagemap_migrate_to_ram(struct vm_area_struct *vas,
- 	if (!migrate.cpages)
- 		goto err_free;
- 
-+	drm_pagemap_skip_retired_pages(migrate.src, npages);
-+
- 	ops = zdd->devmem_allocation->ops;
- 	dev = zdd->devmem_allocation->dev;
- 
- 	err = drm_pagemap_migrate_populate_ram_pfn(vas, page, npages, &mpages,
- 						   migrate.src, migrate.dst,
- 						   start);
--	if (err)
-+	if (err || !mpages)
- 		goto err_finalize;
- 
- 	err = drm_pagemap_migrate_map_system_pages(dev, pagemap_addr,
-@@ -1386,6 +1496,7 @@ static int __drm_pagemap_migrate_to_ram(struct vm_area_struct *vas,
- 	if (err)
- 		drm_pagemap_migration_unlock_put_pages(npages, migrate.dst);
- 	migrate_vma_pages(&migrate);
-+	drm_pagemap_retire_migrated_pages(migrate.src, npages);
- 	migrate_vma_finalize(&migrate);
- 	if (dev)
- 		drm_pagemap_migrate_unmap_pages(dev, pagemap_addr, migrate.dst,
-@@ -1438,13 +1549,19 @@ static vm_fault_t drm_pagemap_migrate_to_ram(struct vm_fault *vmf)
- static void drm_pagemap_folio_split(struct folio *orig_folio, struct folio *new_folio)
- {
- 	struct drm_pagemap_zdd *zdd;
-+	unsigned long orig_data, new_data;
- 
- 	if (!new_folio)
- 		return;
- 
- 	new_folio->pgmap = orig_folio->pgmap;
--	zdd = folio_zone_device_data(orig_folio);
--	folio_set_zone_device_data(new_folio, drm_pagemap_zdd_get(zdd));
-+
-+	orig_data = (unsigned long)folio_zone_device_data(orig_folio);
-+	zdd = (struct drm_pagemap_zdd *)(orig_data & ~DRM_PAGEMAP_ZDD_FLAG_MASK);
-+
-+	new_data = (unsigned long)drm_pagemap_zdd_get(zdd);
-+	new_data |= orig_data & DRM_PAGEMAP_ZDD_FLAG_MASK;
-+	folio_set_zone_device_data(new_folio, (void *)new_data);
- }
- 
- static const struct dev_pagemap_ops drm_pagemap_pagemap_ops = {
-diff --git a/include/drm/drm_pagemap.h b/include/drm/drm_pagemap.h
-index 95eb4b66b0577..ebbd3b0ddf367 100644
---- a/include/drm/drm_pagemap.h
-+++ b/include/drm/drm_pagemap.h
-@@ -2,6 +2,7 @@
- #ifndef _DRM_PAGEMAP_H_
- #define _DRM_PAGEMAP_H_
- 
-+#include <linux/bits.h>
- #include <linux/dma-direction.h>
- #include <linux/hmm.h>
- #include <linux/memremap.h>
-@@ -339,6 +340,9 @@ struct drm_pagemap_migrate_details {
- 
- #if IS_ENABLED(CONFIG_ZONE_DEVICE)
- 
-+#define DRM_PAGEMAP_ZDD_FLAG_MIGRATED	BIT(0)
-+#define DRM_PAGEMAP_ZDD_FLAG_MASK	DRM_PAGEMAP_ZDD_FLAG_MIGRATED
-+
- int drm_pagemap_migrate_to_devmem(struct drm_pagemap_devmem *devmem_allocation,
- 				  struct mm_struct *mm,
- 				  unsigned long start, unsigned long end,
-@@ -373,7 +377,9 @@ static inline struct drm_pagemap_zdd *drm_pagemap_page_zone_device_data(struct p
- {
- 	struct folio *folio = page_folio(page);
- 
--	return folio_zone_device_data(folio);
-+	return (struct drm_pagemap_zdd *)
-+		((unsigned long)folio_zone_device_data(folio) &
-+		 ~DRM_PAGEMAP_ZDD_FLAG_MASK);
- }
- 
- #else
+ 	ret = oa_tc6_sw_reset_macphy(tc6);
+ 	if (ret) {
+ 		dev_err(&tc6->spi->dev,
 -- 
 2.53.0
 
