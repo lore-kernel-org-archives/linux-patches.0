@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D644C10EF;
-	Thu, 17 Sep 2026 15:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72032398911;
+	Thu, 17 Sep 2026 15:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659234; cv=none; b=TJw1bIiq/EdB42UiSX/7UqruflEs2/92wspc/AtrUL8yP+CAjmzp5MbwL5inhZuUSGn8CyH+c7RuLFQ6oxfSaMywalKuewqnbFnwJd8LVQULgjbpfGwHSN3V3wGx/pp/oBNLFmtuE83Uqs6NGrOpcZK6vkHzJIhY+UgEFHrWFu0=
+	t=1789659238; cv=none; b=oSZhQx6zX0g/cXT4bIyHRu6UXVtFo5OQyLiM5BXaqZ2lbMc/ZHllwgAy1QeTblXBrrw9dHXKSri68LZKnirXiRoY/IiodK+m0At+tSFbLVej8uqEwKQ4ipIYqJ6DRc4gDNGydK0aTp4CKIdReGYWJfkYAlopkxOTHd63knhEgE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659234; c=relaxed/simple;
-	bh=eF2t85mOjtz/DtquUwrljgVl9cErsIVDuVDo1Nj/MeI=;
+	s=arc-20240116; t=1789659238; c=relaxed/simple;
+	bh=U77hhnsN8GwokcwrVciqodmkQzzvpNDj5cKWtOZdvAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cF/VsqwZhkip+jCw6dKhLAbx5VNyFuqGg4DVJRYN2Hbyjk1KAA4DdzHD45gMxzp7cNBHAnUj1L0SvljKEp+mpayGmpYpLFzU43T5RXqb+fekU9d6CMW6/jVwKKM1mvY9+sizSfy0yLIEeT/NObCXwci3YM5GXfDw+nJvTrbYHzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLnJdfmq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyFhvI8YOprWfhFRevg3U40TjTAmxmmejVTxVJ2eH198+1Xzqbg2w3oChY1zo2QbxcJUCufwXlKagca9qgycBPp2yETtrDGLBPmbvTVPSjGTVmucL2Hi5Ss8EiCSjQvFT8MzVNpmbRRa+1E8cUikJG/53xcYgcSMtWRkkFp8FdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLf75Qxn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLnJdfmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB5E1F000FF;
-	Thu, 17 Sep 2026 15:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLf75Qxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D08B1F00898;
+	Thu, 17 Sep 2026 15:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659230;
-	bh=vsnLS7RROXt4Bj65dc4AOJEV+uViEiCU2c3CDFzU/Vs=;
+	s=korg; t=1789659227;
+	bh=rl+3Qg7iy+FAV6MCUDZk6sSam92ok4x2Bm/Fuge/gUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLnJdfmq9FhS/U+SbhQP5NhGdgHD3Q6rLMgS5KevLcfFfNDMJ6GDQCTL19pV+I5B2
-	 QRm941v73YlFSkbeU+xJyK7c0J/HrSgdV0Gq1yZl5D9BA1cixZxX7jdRoWpeGQSsBj
-	 dkwCvUH87r+ABLOrzI8yCAml00WA7pemwhPm+0LQ=
+	b=sLf75QxntTWkSAPC3B9gZao1Fi5vHkN4GdsOCiRbAX+Tw1CrscR6XACw1dOGu6O0i
+	 LJb71q1HLZ3RD+8jlz8C3YaBc/N/pfb6Yb/HR+zrHFTfrese4FIj4eUZiYOMmO4syV
+	 GXi2iqCGlx2A/GCCbiDERBKht+0a0hqbUXqnjxqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 187/733] ASoC: ux500: Allow repeated MSP prepare calls
-Date: Thu, 17 Sep 2026 16:08:15 +0100
-Message-ID: <20260917151355.798282549@linuxfoundation.org>
+Subject: [PATCH 7.2 186/733] ASoC: ux500: Remove obsolete PRCMU QoS calls
+Date: Thu, 17 Sep 2026 16:08:14 +0100
+Message-ID: <20260917151355.773242353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,103 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit dc1a1b1e22066f01bb86a9b11ee998d4dc72db66 ]
+[ Upstream commit 7b819677b503667422b0b7bdb21853e0066f8606 ]
 
-ALSA can call the DAI prepare callback again after an XRUN without
-first shutting down the stream. The MSP open helper rejects the second
-call with -EBUSY because the direction remains configured.
+The DB8500 PRCMU QoS interface consists of unconditional inline stubs,
+so the MSP calls and cached constraint state have no effect. Device
+power and clocks are already represented by the regulator, power-domain
+and common-clock frameworks.
 
-Track successful playback and capture configurations at the DAI layer.
-Make repeated prepare calls no-ops and only close directions which were
-successfully prepared.
+Remove the dead calls and their private state instead of pretending to
+change the APE operating point.
 
-Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-8-4b60b002d55a@kernel.org
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-7-4b60b002d55a@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: dc1a1b1e2206 ("ASoC: ux500: Allow repeated MSP prepare calls")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 28 +++++++++++++++++++++-------
- sound/soc/ux500/ux500_msp_dai.h |  1 +
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 26 --------------------------
+ sound/soc/ux500/ux500_msp_dai.h |  2 --
+ 2 files changed, 28 deletions(-)
 
 diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 5b4b3126637e4..37c48cc70394e 100644
+index b3de115d829a7..5b4b3126637e4 100644
 --- a/sound/soc/ux500/ux500_msp_dai.c
 +++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -388,15 +388,21 @@ static void ux500_msp_dai_shutdown(struct snd_pcm_substream *substream,
- 	int ret;
- 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
- 	bool is_playback = (substream->stream == SNDRV_PCM_STREAM_PLAYBACK);
-+	unsigned int configured = is_playback ? PLAYBACK_CONFIGURED :
-+		CAPTURE_CONFIGURED;
-+	unsigned int dir = is_playback ? MSP_DIR_TX : MSP_DIR_RX;
+@@ -15,7 +15,6 @@
+ #include <linux/of.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
+-#include <linux/mfd/db8500-prcmu.h>
  
+ #include <sound/soc.h>
+ #include <sound/soc-dai.h>
+@@ -393,12 +392,6 @@ static void ux500_msp_dai_shutdown(struct snd_pcm_substream *substream,
  	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter.\n", __func__, dai->id,
  		snd_pcm_stream_str(substream));
  
--	if (ux500_msp_i2s_close(drvdata->msp,
--				is_playback ? MSP_DIR_TX : MSP_DIR_RX)) {
--		dev_err(dai->dev,
--			"%s: Error: MSP %d (%s): Unable to close i2s.\n",
--			__func__, dai->id, snd_pcm_stream_str(substream));
-+	if (drvdata->configured & configured) {
-+		if (ux500_msp_i2s_close(drvdata->msp, dir)) {
-+			dev_err(dai->dev,
-+				"%s: Error: MSP %d (%s): Unable to close i2s.\n",
-+				__func__, dai->id,
-+				snd_pcm_stream_str(substream));
-+		}
-+		drvdata->configured &= ~configured;
- 	}
- 
- 	/* Disable and unprepare clocks */
-@@ -414,14 +420,20 @@ static void ux500_msp_dai_shutdown(struct snd_pcm_substream *substream,
- static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
- 				struct snd_soc_dai *dai)
- {
--	int ret = 0;
- 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct ux500_msp_config msp_config;
-+	bool is_playback = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
-+	unsigned int configured = is_playback ? PLAYBACK_CONFIGURED :
-+		CAPTURE_CONFIGURED;
-+	int ret;
- 
- 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter (rate = %d).\n", __func__,
- 		dai->id, snd_pcm_stream_str(substream), runtime->rate);
- 
-+	if (drvdata->configured & configured)
-+		return 0;
-+
- 	ret = setup_msp_config(substream, dai, &msp_config);
- 	if (ret)
- 		return ret;
-@@ -433,7 +445,9 @@ static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
+-	if (drvdata->vape_opp_constraint == 1) {
+-		prcmu_qos_update_requirement(PRCMU_QOS_APE_OPP,
+-					"ux500_msp_i2s", 50);
+-		drvdata->vape_opp_constraint = 0;
+-	}
+-
+ 	if (ux500_msp_i2s_close(drvdata->msp,
+ 				is_playback ? MSP_DIR_TX : MSP_DIR_RX)) {
+ 		dev_err(dai->dev,
+@@ -440,21 +433,6 @@ static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
  		return ret;
  	}
  
--	return ret;
-+	drvdata->configured |= configured;
-+
-+	return 0;
+-	/* Set OPP-level */
+-	if ((drvdata->fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) &&
+-		(drvdata->msp->f_bitclk > 19200000)) {
+-		/* If the bit-clock is higher than 19.2MHz, Vape should be
+-		 * run in 100% OPP. Only when bit-clock is used (MSP master)
+-		 */
+-		prcmu_qos_update_requirement(PRCMU_QOS_APE_OPP,
+-					"ux500-msp-i2s", 100);
+-		drvdata->vape_opp_constraint = 1;
+-	} else {
+-		prcmu_qos_update_requirement(PRCMU_QOS_APE_OPP,
+-					"ux500-msp-i2s", 50);
+-		drvdata->vape_opp_constraint = 0;
+-	}
+-
+ 	return ret;
  }
  
- static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
+@@ -710,8 +688,6 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 			__func__, ret);
+ 		return ret;
+ 	}
+-	prcmu_qos_add_requirement(PRCMU_QOS_APE_OPP, (char *)pdev->name, 50);
+-
+ 	drvdata->pclk = devm_clk_get(&pdev->dev, "apb_pclk");
+ 	if (IS_ERR(drvdata->pclk)) {
+ 		ret = PTR_ERR(drvdata->pclk);
+@@ -780,8 +756,6 @@ static void ux500_msp_drv_remove(struct platform_device *pdev)
+ 
+ 	snd_soc_unregister_component(&pdev->dev);
+ 
+-	prcmu_qos_remove_requirement(PRCMU_QOS_APE_OPP, "ux500_msp_i2s");
+-
+ 	ux500_msp_i2s_cleanup_msp(pdev, drvdata->msp);
+ }
+ 
 diff --git a/sound/soc/ux500/ux500_msp_dai.h b/sound/soc/ux500/ux500_msp_dai.h
-index ad4ce69bfbf5c..aae582030d959 100644
+index 19058c238420e..ad4ce69bfbf5c 100644
 --- a/sound/soc/ux500/ux500_msp_dai.h
 +++ b/sound/soc/ux500/ux500_msp_dai.h
-@@ -36,6 +36,7 @@ struct ux500_msp_i2s_drvdata {
- 	struct ux500_msp *msp;
- 	struct regulator *reg_vape;
- 	unsigned int fmt;
-+	unsigned int configured;
- 	unsigned int tx_mask;
- 	unsigned int rx_mask;
- 	int slots;
+@@ -46,8 +46,6 @@ struct ux500_msp_i2s_drvdata {
+ 	struct clk *clk;
+ 	struct clk *pclk;
+ 
+-	/* Regulators */
+-	int vape_opp_constraint;
+ };
+ 
+ int ux500_msp_dai_set_data_delay(struct snd_soc_dai *dai, int delay);
 -- 
 2.53.0
 
