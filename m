@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19895012B0;
-	Thu, 17 Sep 2026 17:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DAB392C27;
+	Thu, 17 Sep 2026 17:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666326; cv=none; b=MtyqeU+DUJKzhDV13Y7kyC7O56f3dObYNp3uemNhnTZYkr+ZzICuWwMc7S+U+xuBQ6AMcxaNERYIcWT4HTIB33LU/78U/y2MVdtgFYCDUheeiVrZBLtlshcE7BDBf9f3mVnI+GWaIerSjj8NpcDE1Fd8o711MwB6BbQWg1kxkJs=
+	t=1789666328; cv=none; b=tOW1Zv9rnYEa2xFeRl+VyKfmHc2foPRW11bWhLUNSFceFx9Gf8CJXBm2Qc4AVnjJJDoSWeIviOv6PLGDnXDRp5Om1i4dDiF4VXLPamx2z96CwX7WR4qJe5qWvFzpoV7EXVNtReXdYh9K1jJeYEJ2IUXncKV6qVm663Jh6Zwf4vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666326; c=relaxed/simple;
-	bh=32RAonvGakRl1g0BTgi4vUHsFzw4prIHRDXgCHjKPns=;
+	s=arc-20240116; t=1789666328; c=relaxed/simple;
+	bh=eizsrmNJeqpSrSDCIpgoIM/DXw2ObaOiijBckRBziOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYdTck4ey/MXA3t64+9VhFKvoPi2X3SY432eUvQRuIs702JDfrReaDx6dQAtV5p5RK15CUmN6GFPBGHUCledyzA8RJ2KrKFsd3Bl6CVLYfivrwiO92TEawl5hL1p0B9D05nw9F3hpIRZ4OkHiANYhtUYBL1gcoO/b07AtOIDQOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIoDdffN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AL4FeckBwvflFSqmGPVYXTscMsK5sEW7BRl+nVKLdYKCC8B5EjS4/U02Jl56Gv6mGbC/4BKQPuXAV/Rca5l+mrb4Qg6q+mAePqo1yg9b/l8IcLWwBQ2fiMtDlJr2YRpDILJCZk+OcaZQbDQTLlkEdqzoszFcdCcUqqlUeGyWSC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngFifRqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIoDdffN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA6E1F000FF;
-	Thu, 17 Sep 2026 17:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngFifRqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D531F000FF;
+	Thu, 17 Sep 2026 17:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666324;
-	bh=REQCHJPgg7D341rOBUqKEnnFdOBMwxmuGLfZrujVMUs=;
+	s=korg; t=1789666327;
+	bh=C+TmStfUZaG+wL1iH8rCsqbWRbj8cLqzNX2nPOKz/8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIoDdffNGcvmMYepSgyww2aX3MKy2921vcf1GApylY9NFseLUAmqnWJTtBwXur3om
-	 32SGlRHFDO9dGHW3i55pcvbrhMmbc52M/8XI9cYN/WwvBmwPCi+cauUb7CGsAiSAPh
-	 zn6/qqz1Gws9H9TxphMSJAPd0w4mCZx0AjLVy5ww=
+	b=ngFifRqvxplNfBZBUcjxOsek9wf0QZC/yu6RyD/3Vvoofx1nuN5BsE/E2k68k9Dny
+	 wN3uMgiTm7PdPqur/crhmUCoVgwiyD8Mc+XWlCwbkwRTHeAESVSoZCi1057B6IOCx6
+	 9XiFzHYD+fxK0+dPfDRBEu4BCDLPvC1irCUPbCn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 0999/1250] Bluetooth: btrtl: Dont leak return code when parsing firmware format v2
-Date: Thu, 17 Sep 2026 16:13:14 +0100
-Message-ID: <20260917151619.114327883@linuxfoundation.org>
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 1000/1250] cpufreq: zero-initialize policy cpumask before sysfs publication
+Date: Thu, 17 Sep 2026 16:13:15 +0100
+Message-ID: <20260917151619.140866454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,47 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-commit 83e3e515fd261600ed8491fb0a8bcdfb115c904e upstream.
+commit 54d37bcf2f497140b9207968557ddb484058e749 upstream.
 
-When key_id from chip is zero, rtlbt_parse_firmware_v2() intentionally
-ignores all security headers. However, the implementation simply breaks
-from a switch statement and leaks uninitialized return code `rc' (if the
-first section is a security one) or the previous section's `rc'.
+cpufreq_policy_alloc() allocates policy->cpus with alloc_cpumask_var(),
+i.e. without __GFP_ZERO, unlike the sibling related_cpus and real_cpus
+masks. With CONFIG_CPUMASK_OFFSTACK=y the mask is a separate
+kmalloc_node() allocation, so its bitmap holds whatever the slab allocator
+left behind:
 
-Fix it by really skipping a loop with `continue'. For consistency and
-readability, also do the same for the default case.
+  cpufreq_online()
+    cpufreq_policy_alloc()
+      alloc_cpumask_var(&policy->cpus)    /* bitmap is uninitialized */
+      kobject_init_and_add()              /* policy%u/ appears in sysfs */
+    cpufreq_policy_online()
+      cpumask_copy(policy->cpus, cpumask_of(cpu))  /* first valid value */
 
-Fixes: 9a24ce5e29b1 ("Bluetooth: btrtl: Firmware format v2 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rong Zhang <i@rong.moe>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This leaves a window in which the sysfs attributes are already reachable
+while policy->cpus is still garbage. show()/store() gate on
+policy_is_inactive(), i.e. cpumask_empty(policy->cpus), so a non-zero
+bitmap makes them run the attribute callbacks on a policy that is not
+initialized yet.
+
+Fix this by using zalloc_cpumask_var() for policy->cpus.
+
+Fixes: 2fc3384dc75b ("cpufreq: Initialize policy->kobj while allocating policy")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20260901143635.4106960-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btrtl.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -591,7 +591,7 @@ static int rtlbt_parse_firmware_v2(struc
- 			 * headers.
- 			 */
- 			if (!key_id)
--				break;
-+				continue;
- 			rc = btrtl_parse_section(hdev, btrtl_dev, opcode,
- 						 ptr, section_len);
- 			break;
-@@ -600,8 +600,7 @@ static int rtlbt_parse_firmware_v2(struc
- 						 ptr, section_len);
- 			break;
- 		default:
--			rc = 0;
--			break;
-+			continue;
- 		}
- 		if (rc < 0) {
- 			rtl_dev_err(hdev, "RTL: Parse section (%u) err %d",
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1261,7 +1261,7 @@ static struct cpufreq_policy *cpufreq_po
+ 	if (!policy)
+ 		return NULL;
+ 
+-	if (!alloc_cpumask_var(&policy->cpus, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&policy->cpus, GFP_KERNEL))
+ 		goto err_free_policy;
+ 
+ 	if (!zalloc_cpumask_var(&policy->related_cpus, GFP_KERNEL))
 
 
