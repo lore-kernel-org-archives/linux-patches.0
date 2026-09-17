@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CEB53C3CC;
-	Thu, 17 Sep 2026 17:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0826753D0D2;
+	Thu, 17 Sep 2026 17:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664760; cv=none; b=O/PNX4i7L799hExLhnRiY+4ozqd0EkCax6YrZccbkNdZZxlkaufI4xlbStkoHep//KFBbM26xXXGAf9vbk52Ja26RNwlIQXtZjOPgIYvZDED9UXSCpMF+Vtcpfd44Nxflm86nokeXzme2umQNc2m70E4hPWTO01X0GcIiPDzfJ8=
+	t=1789664763; cv=none; b=P1K6KdjxtabTA6tvTN04xWpvNQWFC6zC1ZrGbdm+MAWVyvaWFjPjJeoNaI0tX7eyZE6EPYk16LJXmKY2yIvwFI9BiadvhXOdWTXsVrGp3b09dXaOVEJLNPmZIy7X1DwsNRFSYeP+4RAF5fGA1tURiqcAyFYv4TWNai2hkbPlN78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664760; c=relaxed/simple;
-	bh=hNkcGwAVCZ8Ij+6REGLRgoVIKnoqzF2/KgIxmX7iVC0=;
+	s=arc-20240116; t=1789664763; c=relaxed/simple;
+	bh=lRfjYWc1mQxk+sVn8C11p91Nm4NT6b2RJgCW5ennew0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xtun9pO7dwSG/xhsTVuWuKqyx3L7e8WHXCU54i55Wxn2o4AlKRnOVdUK6PfOB8YwjVC83LsBoWwQzg48emvo6GMnbJEPF2KFRkbScL+IN7uiFTD54jaRYOlkN0CLakrR3h7obZUEwrK/H1zVRXIJMEE4FqShdpFPa2vskiCNyQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2Jf5DGG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qoOSKlTn6RMglk7AW8HF+gPidp1VwRivFKcmiQwGyI+CAFE+crlhvtDJAidqG4X07UZEki9fP0RSzlPFMrH9ukwUT6VsDOx+qlwgI3eIfVhQ9uco1fj6tO6JAlmAXObrKmIHU4cEaRk98SUR4GCLk+03RE+SuLpI2Jz6mXrqd0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLgtz/vK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2Jf5DGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C871F000FF;
-	Thu, 17 Sep 2026 17:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLgtz/vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B98C1F000FF;
+	Thu, 17 Sep 2026 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664758;
-	bh=Yw5X1hGQzBx2jf3hZ8MlLZwWfdRjr0otvAwA2RqSvbQ=;
+	s=korg; t=1789664761;
+	bh=ETgbp5dYP1wsGwWekSPvS4pKdWPP7VEJW0AqtWlkpVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2Jf5DGGe/SKpHV1GW2GyR7rlkBLk+BU24+H1Nrd2741Y3uiFQpTR6Ux3gxOtayba
-	 LKQse/4a1kmxYWrIqEdg5qYgoRlP41k12r2k2ZyvRW1uaFFPEILR/S5dbzv+V3xDtP
-	 /qwsLxCoSXQGNpXT8oYR4gC9y9qDf/yC7sN0pfdo=
+	b=TLgtz/vKtvaoHVbClLNyJMvoJ6sYuWF7QbVXcPALCRiiCi6OgyzvFfvdlJAxqLo8B
+	 +VZbSDKusdc7XK1gUjTb3OXsQ0iuT008Hp09RenQQJh8lzXemcF+4zZf7idWNijMYO
+	 lg24Pyu31qvQCSBU7crzYR5yiXpjP6oIADnsdkLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Helge Deller <deller@gmx.de>,
+	Qiang Liu <liuqiang@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0472/1250] fbdev: pm2fb: unwind WC setup on probe failure
-Date: Thu, 17 Sep 2026 16:04:27 +0100
-Message-ID: <20260917151604.764262824@linuxfoundation.org>
+Subject: [PATCH 6.18 0481/1250] ksmbd: fix n.data memory leak in ksmbd_vfs_set_dos_attrib_xattr
+Date: Thu, 17 Sep 2026 16:04:36 +0100
+Message-ID: <20260917151605.003567075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,33 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Qiang Liu <liuqiang@kylinos.cn>
 
-[ Upstream commit 16eb19f0c90af03bda6ba66586d7bb0e9cf85b43 ]
+[ Upstream commit 7ac657bb9c5c1b0f7bdf1fa6d3ad532f969be5cf ]
 
-Add arch_phys_wc_del() on error path to keep the
-write-combining setup balanced when later probe
-steps fail.
+Free ndr buffer data when ndr_encode_dos_attr() returns error
+to avoid memory leak.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pm2fb.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/vfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
-index f34429829b7d7..82408503c2812 100644
---- a/drivers/video/fbdev/pm2fb.c
-+++ b/drivers/video/fbdev/pm2fb.c
-@@ -1711,6 +1711,7 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-  err_exit_both:
- 	kfree(info->pixmap.addr);
-  err_exit_pixmap:
-+	arch_phys_wc_del(default_par->wc_cookie);
- 	iounmap(info->screen_base);
- 	release_mem_region(pm2fb_fix.smem_start, pm2fb_fix.smem_len);
-  err_exit_mmio:
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 938f83d647c52..4c9d46c50b600 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1661,14 +1661,15 @@ int ksmbd_vfs_set_dos_attrib_xattr(struct mnt_idmap *idmap,
+ 
+ 	err = ndr_encode_dos_attr(&n, da);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	err = ksmbd_vfs_setxattr(idmap, path, XATTR_NAME_DOS_ATTRIBUTE,
+ 				 (void *)n.data, n.offset, 0, get_write);
+ 	if (err)
+ 		ksmbd_debug(SMB, "failed to store dos attribute in xattr\n");
+-	kfree(n.data);
+ 
++out:
++	kfree(n.data);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
