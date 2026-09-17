@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23904D957E;
-	Thu, 17 Sep 2026 18:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D6D38E5C5;
+	Thu, 17 Sep 2026 18:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668607; cv=none; b=IXmceOhWnoEAgY5nDMnzpJPWoLIEWy7kPEjRlHq6C2TCmXpvrjqtlpDRhgErPIz2gFq5XRTTl8y9w6OL4V7oQOa6nFynz+66GEidPDnIBX7La95v5jGhqkxxHm1eQ4y/RZsMNzJBfjb48875HkBU2MD/ox9PfswDmazHqz9r/Vc=
+	t=1789668611; cv=none; b=W67j8qx+re0yfEd/KDMDKj4+EDWq+v7EiG+wzZSGhKdagiqcvtqSaZzSSDMBH18vn/QE4FrEPdZ7KH1W+Q75AaPROKi7KDqQPgX7n0kV/XszxbalmYTpweVqPQyWnOtWleBuJyMp6EBkvSZfAAL0LQJfhqjm724bGGHi9FNkY+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668607; c=relaxed/simple;
-	bh=tdXhTyxtZYhV235986F+ZjgNDzOfiuuwo464G3cyfLc=;
+	s=arc-20240116; t=1789668611; c=relaxed/simple;
+	bh=y0nfQOlXGFJjojmusS7G8y4dmJPIis+JO5BnjXCeNYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nhjz9fm5w3q0C/ydFg4NYCGbNCGO1gEJ4m1F0JCWlApPYpPH576/G2+MaDkp8lj+8Ua9gfK0XUqA9RzJJbsvU+N3ejcXdfqrL/9WKG6XfYvPV/8dZhH1V3XNBFO0c9xvJtqWPOEpU5YxRvLVIW45z6aWe9PqWHotUnJHXfLVhfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBspJYIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=swvLrX2RD6X7HYKMXvvSPclgHDNxLJSRQcFyqitmnAt9RvRtrKjlfdLZvYcY/RScNnheT6sOJP8ZHX2CP/3v0YyWB2IuujmoN1hj4e9qlZ4AI3w6jr06rI6ThK3Xjd1HpJ6OK5VhKz/+Su16wra9hYPr2bPd1EQwsd4V7NjJEQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVSevxUG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBspJYIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0F71F000FF;
-	Thu, 17 Sep 2026 18:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVSevxUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF2A1F000FF;
+	Thu, 17 Sep 2026 18:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668606;
-	bh=K8/fHSe7z7svSdXySLjDNc2YqXePHGMN8AFFM2slpcQ=;
+	s=korg; t=1789668609;
+	bh=UnNe0Vgw6m/YcHUNLiVT9cjxs5vy7F0GzR619Z6AMNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBspJYIjOa8uAP+J0is+RtI6LCDbOmZ7kMRfrXQXPklLokhRcAMCrrshJzKuhnbue
-	 bpCSHh6H+JAaCsvocx4i06zdi38O+hSKui0q33sc4/x0p9prDwAb/pTPkjL41VmztO
-	 z9lqCV0DuoqaGSqRinoJO4166AedoL/K42rgHM10=
+	b=nVSevxUGvqWmJ2UDHagM7pQlDZ4AvBQkDvS+0oLJVji5rH0krT253RHrPs9ALIeTR
+	 SJxn7mkbkQnkr4tHc9vRI0cIqQY4a+VoOHpY9R9MCkNj2PPNH34kxCXNAofoEOSfv2
+	 nLwNkWJIuGdu8m4jh3o3gi7PGEpaOUtCi4YZdlPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0481/1102] drm/vc4: hvs/v3d: Fix null dereference in unbind
-Date: Thu, 17 Sep 2026 16:07:04 +0100
-Message-ID: <20260917151551.773259457@linuxfoundation.org>
+Subject: [PATCH 6.12 0482/1102] bpf: Reject redirect helpers without a bpf_net_context
+Date: Thu, 17 Sep 2026 16:07:05 +0100
+Message-ID: <20260917151551.798896866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,63 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 7dc3680b7ffe01add3e9299fde8471d2dd53a8ae ]
+[ Upstream commit 3f4920d165b29052255527d8ae7619e7ec132ece ]
 
-The hvs and v3d drivers use dev_get_drvdata(master) in their unbind
-functions. Since the vc4-drm gets removed before its dependent drivers
-(vc4_hvs/vc4_v3d) the vc4_hvs_unbind/vc4_v3d_unbind functions try to
-get drvdata of its master and fails with a null dereference error.
+The bpf_redirect*() helpers and skb_do_redirect() obtain the per-task
+bpf_redirect_info via bpf_net_ctx_get_ri(), which dereferences the
+current->bpf_net_context unconditionally. That context is established
+on the paths that run tc BPF such as sch_handle_{ingress,egress}(),
+*except* for the case where {cls,act}_bpf was attached to a proper
+qdisc. A program running from there reaches the NULL deref in two ways:
 
-Use the data pointer passed to the unbind functions directly instead of
-dev_get_drvdata(master). This avoids using potentially freed memory.
+* It calls bpf_redirect() directly, which dereferences the context at
+  the top of the helper:
 
-Fixes: d3f5168a0810 ("drm/vc4: Bind and initialize the V3D engine.")
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Link: https://patch.msgid.link/20260721-rpi-vc4-fix-v2-1-b813dcd01dc7@linutronix.de
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+     tc qdisc add dev eth0 root handle 1: red limit 1MB min 10KB max 20KB \
+        avpkt 1000 burst 100 qevent early_drop block 10
+     tc filter add block 10 pref 1 bpf obj redirect.o
+
+* It simply returns TC_ACT_REDIRECT without helper call: tcf_qevent_handle()
+  then dispatches to skb_do_redirect(), which dereferences the context
+
+Rather than extending bpf_net_context management into the qdisc path,
+make the redirect helpers refuse to operate when no context exists, and
+have tcf_qevent_handle() drop a TC_ACT_REDIRECT verdict instead of
+calling skb_do_redirect(). Previous behaviour was a crash, so nothing
+regresses by not supporting it.
+
+Fixes: 401cb7dae813 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
+Fixes: 3625750f05ec ("net: sched: Introduce helpers for qevent blocks")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260706185609.330006-2-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
- drivers/gpu/drm/vc4/vc4_v3d.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/core/filter.c   | 17 +++++++++++------
+ net/sched/cls_api.c |  6 ++----
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index c389e82463bfd..a52c4843a9929 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -1052,7 +1052,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- static void vc4_hvs_unbind(struct device *dev, struct device *master,
- 			   void *data)
- {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
- 	struct vc4_hvs *hvs = vc4->hvs;
- 	struct drm_mm_node *node, *next;
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index 334d2cfe3433b..a9a57a9c6f63d 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -492,7 +492,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
- static void vc4_v3d_unbind(struct device *dev, struct device *master,
- 			   void *data)
- {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index bf7c57b06ed91..e0f757ffcfc5b 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2559,11 +2559,13 @@ int skb_do_redirect(struct sk_buff *skb)
  
- 	vc4_irq_uninstall(drm);
+ BPF_CALL_2(bpf_redirect, u32, ifindex, u64, flags)
+ {
+-	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
++	struct bpf_redirect_info *ri;
+ 
+-	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
++	if (unlikely(!bpf_net_ctx_get() ||
++		     (flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL))))
+ 		return TC_ACT_SHOT;
+ 
++	ri = bpf_net_ctx_get_ri();
+ 	ri->flags = flags;
+ 	ri->tgt_index = ifindex;
+ 
+@@ -2580,11 +2582,12 @@ static const struct bpf_func_proto bpf_redirect_proto = {
+ 
+ BPF_CALL_2(bpf_redirect_peer, u32, ifindex, u64, flags)
+ {
+-	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
++	struct bpf_redirect_info *ri;
+ 
+-	if (unlikely(flags))
++	if (unlikely(!bpf_net_ctx_get() || flags))
+ 		return TC_ACT_SHOT;
+ 
++	ri = bpf_net_ctx_get_ri();
+ 	ri->flags = BPF_F_PEER;
+ 	ri->tgt_index = ifindex;
+ 
+@@ -2602,11 +2605,13 @@ static const struct bpf_func_proto bpf_redirect_peer_proto = {
+ BPF_CALL_4(bpf_redirect_neigh, u32, ifindex, struct bpf_redir_neigh *, params,
+ 	   int, plen, u64, flags)
+ {
+-	struct bpf_redirect_info *ri = bpf_net_ctx_get_ri();
++	struct bpf_redirect_info *ri;
+ 
+-	if (unlikely((plen && plen < sizeof(*params)) || flags))
++	if (unlikely((plen && plen < sizeof(*params)) ||
++		     !bpf_net_ctx_get() || flags))
+ 		return TC_ACT_SHOT;
+ 
++	ri = bpf_net_ctx_get_ri();
+ 	ri->flags = BPF_F_NEIGH | (plen ? BPF_F_NEXTHOP : 0);
+ 	ri->tgt_index = ifindex;
+ 
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 53f5cab47e01e..f8c89e30fc04a 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -4059,6 +4059,8 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
+ 	fl = rcu_dereference_bh(qe->filter_chain);
+ 
+ 	switch (tcf_classify(skb, NULL, fl, &cl_res, false)) {
++	case TC_ACT_REDIRECT:
++		fallthrough;
+ 	case TC_ACT_SHOT:
+ 		qdisc_qstats_drop(sch);
+ 		__qdisc_drop(skb, to_free);
+@@ -4070,10 +4072,6 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
+ 		__qdisc_drop(skb, to_free);
+ 		*ret = __NET_XMIT_STOLEN;
+ 		return NULL;
+-	case TC_ACT_REDIRECT:
+-		skb_do_redirect(skb);
+-		*ret = __NET_XMIT_STOLEN;
+-		return NULL;
+ 	case TC_ACT_CONSUMED:
+ 		*ret = __NET_XMIT_STOLEN;
+ 		return NULL;
 -- 
 2.53.0
 
