@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D904EFFC5;
-	Thu, 17 Sep 2026 16:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E774E4C40;
+	Thu, 17 Sep 2026 16:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661145; cv=none; b=ZGchOEZkj2SSrIpvpZMV5nNvswpjXf+CSjOZ9JTHKousPoYweVYMqVpHV/X2YNXqR3VJIwY0i/XFt7OkeMtUxcgr8ASjkIHu3qOTryymLNr9pyZsmplrsGPkaAcAnYy5WQHeNM/raECrOz2VaiCsPiFUD6tzVY65jzn8BA5/kYs=
+	t=1789661148; cv=none; b=bBC7sHTxDTYBMM4qFITH/xkuLcCD4sobH37oWVnnzouh9BsRotjaeEqRQNFdBF8FPyjqbSbIE8pIsBJyqfTfr3oDdqbjLSWeyaQEMQ5qbo8McNlb+T1SFnNegf+8LF5hK/SIKNj3BeWf0kjGbhmTdsSdI7dnKa9qmCE8HmzyJjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661145; c=relaxed/simple;
-	bh=bVdLA+qLBitIJGEOfDrISXKt0GPdhlaopcsSeiB1jTc=;
+	s=arc-20240116; t=1789661148; c=relaxed/simple;
+	bh=4Nf5MZ5C682Do1XyKrgRaOoNQh0pa1UTsmKlum9H3hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNUUrWn3DqW2MDapbPhd7DEShjVEvVFj8XnZRRcs4rSaUhzFzPf4c9sdT3ipLZJ/YbqfW9KqqxPDe8j9tf2wsOfXIPlbrfmgo++TgchTM9CE7G5rebkorRbiy3MOFstPtU9Yg84Boen+vym+MCyYkRZ7GXD1uDlEb1TrsY5Niws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsOaZcw5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tL7Fft+lAwtvFrBJA45CdfGm21AhyvgwA10/GOZjD8a+pXj9arWjhWf/B2nA6+N0iW/eEt2ozKfi77T3QpXiPF+LlwlUWCmiIrUivKMPBuMNqWjzDNXLaktyt7JCenCgwujq6ewEhAJDRLiOzzvM7RX7tpqVmf6JMo+fJaSgINY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7sKtvD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsOaZcw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D221F000FF;
-	Thu, 17 Sep 2026 16:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7sKtvD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D161F000FF;
+	Thu, 17 Sep 2026 16:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661144;
-	bh=HMoMNJk7igp8DVCBKGBEyw2XNMObUtqDsqYQc9lTafk=;
+	s=korg; t=1789661146;
+	bh=cyVAzkTh//e8e/ZqzEvuxD4ULnCn0AXS2YXsH6kZlyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsOaZcw5L5crRUpH8m7RVvAhJL3e4ry2vDBO1dIWTfO1n/NNkdNl7WKWVXu4e4JK8
-	 kh3Bgw1n16LT7+Z6Onj84FpzyGAhmxntCExMswnkFG9o/Y+iI0iipqp3r7gT5FWgdB
-	 Pxrwi2fWdB2E6CdO3pZ1flKlFe5zw91yq8dYEW/o=
+	b=n7sKtvD0agoBAUF+l9mYO24rzGMYdkXKW0fzxgwwYrIJ83WCGXz1TLPhjBcIuio5I
+	 db67HKgp8YK2AiNNrgScR3J+/teHI2YzpkIPBLuy6hKAiXhNjPKQ3MKZY/ySS+Sdqo
+	 WROwDwDEROiGGLWve3aLcVVg2wYkF1/qsxMautmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Joslyn <robert.joslyn@redrectangle.org>,
-	Brodie Abrew <brodie_abrew@selinc.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	James Lin <pinglei.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0097/1250] platform/x86: sel3350-platform: Retain LED state on load and unload
-Date: Thu, 17 Sep 2026 15:58:12 +0100
-Message-ID: <20260917151554.615619734@linuxfoundation.org>
+Subject: [PATCH 6.18 0098/1250] drm/amd/display: Fix CRC open failure during active rendering
+Date: Thu, 17 Sep 2026 15:58:13 +0100
+Message-ID: <20260917151554.643499956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,240 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brodie Abrew <brodie_abrew@selinc.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 18bc6ce6bb618e1dff4473d7dd528d22519abbd7 ]
+[ Upstream commit 5eb2fdafeb6f4a442643b77a21a4c9e70586a146 ]
 
-When the platform driver is loaded or unloaded, it overwrites the
-existing LED states. This can cause a loss of early boot state when the
-driver loads, and it can cause the ALARM contact to change state or
-flicker.
+[Why]
+Opening the CRC data file during active rendering can fail with -EINVAL.
+The wait for commit->hw_done returns remaining jiffies on success, but
+the CRC path was treating that as an error.
 
-Explicitly retain the existing LED state to prevent overwriting on
-driver load and unload.
+[How]
+Handle wait_for_completion_interruptible_timeout() correctly:
+positive return as success, 0 as timeout, and negative as error.
 
-Tested-By: Robert Joslyn <robert.joslyn@redrectangle.org>
-Reviewed-by: Robert Joslyn <robert.joslyn@redrectangle.org>
-Signed-off-by: Brodie Abrew <brodie_abrew@selinc.com>
-Link: https://patch.msgid.link/20260507004916.6710-1-brodie_abrew@selinc.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/sel3350-platform.c | 136 ++++++++++++++++++------
- 1 file changed, 103 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/sel3350-platform.c b/drivers/platform/x86/sel3350-platform.c
-index 02e2081e2333b..f3a3142356325 100644
---- a/drivers/platform/x86/sel3350-platform.c
-+++ b/drivers/platform/x86/sel3350-platform.c
-@@ -9,6 +9,8 @@
-  */
- 
- #include <linux/acpi.h>
-+#include <linux/array_size.h>
-+#include <linux/err.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio/machine.h>
- #include <linux/leds.h>
-@@ -30,19 +32,82 @@
- #define SEL_PS_B_DETECT "sel_ps_b_detect"
- #define SEL_PS_B_GOOD   "sel_ps_b_good"
- 
-+#define AUX_LED_GRN1        "sel_aux_led_grn1"
-+#define AUX_LED_GRN2        "sel_aux_led_grn2"
-+#define AUX_LED_GRN3        "sel_aux_led_grn3"
-+#define AUX_LED_GRN4        "sel_aux_led_grn4"
-+#define ALARM_STATE_USER    "sel_alarm_state_user"
-+#define ENABLE_STATE_USER   "sel_enable_state_user"
-+#define AUX_LED_RED1        "sel_aux_led_red1"
-+#define AUX_LED_RED2        "sel_aux_led_red2"
-+#define AUX_LED_RED3        "sel_aux_led_red3"
-+#define AUX_LED_RED4        "sel_aux_led_red4"
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+index e20aa74380665..596a97092e0dd 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+@@ -584,8 +584,13 @@ int amdgpu_dm_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+ 		 */
+ 		ret = wait_for_completion_interruptible_timeout(
+ 			&commit->hw_done, 10 * HZ);
+-		if (ret)
++		if (ret < 0)
++			goto cleanup;
 +
-+static const char *const sel3350_leds_gpio_names[] = {
-+	AUX_LED_GRN1,
-+	AUX_LED_GRN2,
-+	AUX_LED_GRN3,
-+	AUX_LED_GRN4,
-+	ALARM_STATE_USER,
-+	ENABLE_STATE_USER,
-+	AUX_LED_RED1,
-+	AUX_LED_RED2,
-+	AUX_LED_RED3,
-+	AUX_LED_RED4,
-+};
-+
- /* LEDs */
--static const struct gpio_led sel3350_leds[] = {
--	{ .name = "sel:green:aux1" },
--	{ .name = "sel:green:aux2" },
--	{ .name = "sel:green:aux3" },
--	{ .name = "sel:green:aux4" },
--	{ .name = "sel:red:alarm" },
-+static struct gpio_led sel3350_leds[] = {
-+	{ .name = "sel:green:aux1",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:green:aux2",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:green:aux3",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:green:aux4",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:red:alarm",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
- 	{ .name = "sel:green:enabled",
--	  .default_state = LEDS_GPIO_DEFSTATE_ON },
--	{ .name = "sel:red:aux1" },
--	{ .name = "sel:red:aux2" },
--	{ .name = "sel:red:aux3" },
--	{ .name = "sel:red:aux4" },
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:red:aux1",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:red:aux2",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:red:aux3",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
-+	{ .name = "sel:red:aux4",
-+	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
-+	  .retain_state_suspended = 1,
-+	  .retain_state_shutdown = 1,
-+	},
- };
- 
- static const struct gpio_led_platform_data sel3350_leds_pdata = {
-@@ -50,25 +115,6 @@ static const struct gpio_led_platform_data sel3350_leds_pdata = {
- 	.leds = sel3350_leds,
- };
- 
--/* Map GPIOs to LEDs */
--static struct gpiod_lookup_table sel3350_leds_table = {
--	.dev_id = "leds-gpio",
--	.table = {
--		GPIO_LOOKUP_IDX(BXT_NW, 49, NULL, 0, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_NW, 50, NULL, 1, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_NW, 51, NULL, 2, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_NW, 52, NULL, 3, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_W,  20, NULL, 4, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_W,  21, NULL, 5, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_SW, 37, NULL, 6, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_SW, 38, NULL, 7, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_SW, 39, NULL, 8, GPIO_ACTIVE_HIGH),
--		GPIO_LOOKUP_IDX(BXT_SW, 40, NULL, 9, GPIO_ACTIVE_HIGH),
--		{},
--	}
--};
--
--/* Map GPIOs to power supplies */
- static struct gpiod_lookup_table sel3350_gpios_table = {
- 	.dev_id = B2093_GPIO_ACPI_ID ":00",
- 	.table = {
-@@ -76,6 +122,16 @@ static struct gpiod_lookup_table sel3350_gpios_table = {
- 		GPIO_LOOKUP(BXT_NW, 45, SEL_PS_A_GOOD,   GPIO_ACTIVE_LOW),
- 		GPIO_LOOKUP(BXT_NW, 46, SEL_PS_B_DETECT, GPIO_ACTIVE_LOW),
- 		GPIO_LOOKUP(BXT_NW, 47, SEL_PS_B_GOOD,   GPIO_ACTIVE_LOW),
-+		GPIO_LOOKUP(BXT_NW, 49, AUX_LED_GRN1, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_NW, 50, AUX_LED_GRN2, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_NW, 51, AUX_LED_GRN3, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_NW, 52, AUX_LED_GRN4, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_W,  20, ALARM_STATE_USER, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_W,  21, ENABLE_STATE_USER, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_SW, 37, AUX_LED_RED1, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_SW, 38, AUX_LED_RED2, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_SW, 39, AUX_LED_RED3, GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP(BXT_SW, 40, AUX_LED_RED4, GPIO_ACTIVE_HIGH),
- 		{},
- 	}
- };
-@@ -149,6 +205,7 @@ struct sel3350_data {
- static int sel3350_probe(struct platform_device *pdev)
- {
- 	int rs;
-+	int i;
- 	struct sel3350_data *sel3350;
- 	struct power_supply_config ps_cfg = {};
- 
-@@ -158,9 +215,19 @@ static int sel3350_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, sel3350);
- 
--	gpiod_add_lookup_table(&sel3350_leds_table);
- 	gpiod_add_lookup_table(&sel3350_gpios_table);
- 
-+	for (i = 0; i < ARRAY_SIZE(sel3350_leds); ++i) {
-+		sel3350_leds[i].gpiod = devm_gpiod_get(&pdev->dev,
-+						       sel3350_leds_gpio_names[i],
-+						       GPIOD_ASIS);
-+		if (IS_ERR_OR_NULL(sel3350_leds[i].gpiod)) {
-+			rs = -EPROBE_DEFER;
-+			goto err_gpio_loop;
++		if (ret == 0) {
++			ret = -ETIMEDOUT;
+ 			goto cleanup;
 +		}
-+		gpiod_set_consumer_name(sel3350_leds[i].gpiod, sel3350_leds[i].name);
-+	}
-+
- 	sel3350->leds_pdev = platform_device_register_data(
- 			NULL,
- 			"leds-gpio",
-@@ -209,11 +276,15 @@ static int sel3350_probe(struct platform_device *pdev)
+ 	}
  
- 	return 0;
- 
-+err_gpio_loop:
-+	while (i--)
-+		devm_gpiod_put(&pdev->dev, sel3350_leds[i].gpiod);
-+	goto err_platform;
-+
- err_ps:
- 	platform_device_unregister(sel3350->leds_pdev);
- err_platform:
- 	gpiod_remove_lookup_table(&sel3350_gpios_table);
--	gpiod_remove_lookup_table(&sel3350_leds_table);
- 
- 	return rs;
- }
-@@ -224,7 +295,6 @@ static void sel3350_remove(struct platform_device *pdev)
- 
- 	platform_device_unregister(sel3350->leds_pdev);
- 	gpiod_remove_lookup_table(&sel3350_gpios_table);
--	gpiod_remove_lookup_table(&sel3350_leds_table);
- }
- 
- static const struct acpi_device_id sel3350_device_ids[] = {
+ 	enable = amdgpu_dm_is_valid_crc_source(source);
 -- 
 2.53.0
 
