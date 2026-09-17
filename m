@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584B64E4C5E;
-	Thu, 17 Sep 2026 15:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4954ABBC1;
+	Thu, 17 Sep 2026 15:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659894; cv=none; b=G5BCqDfHhFP7a1cG0WB7TVQ8fGeWvRHDqABbAN9NlUcpwiiX/7jw17fDrwsNfdr9ci+2N9FzMoJQKJVhXCaz0ltnHagcbs8l/1GF327Wytsuu+0ebIuMYVOumy03+T3QyaJ7oj7SyCfBiEaTouqdRE4h0Si0GxG866JyFQauc2Q=
+	t=1789659898; cv=none; b=k1q+marl6fBdGXKTYqdma2MU652A5GHmOE2ePldnvVS2kwC57tr1awpXgKqIrdchOyiB1mKZ17o9Q8SXLyYJDqbC7Tytt/JpMOp66JgjixsbWDYwoRN73FWMMp7rFcXmKKHImEN8h8QTOPQjHz3vsrmwp2n87TrHaiocSh6pNvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659894; c=relaxed/simple;
-	bh=nVy3LCn9xRHRFjWqGSEpOsEZLOWRZFqbC1aM9Rnco8E=;
+	s=arc-20240116; t=1789659898; c=relaxed/simple;
+	bh=1d1B3Xt6EDW04sDOUSLFXLHHFvMrqUJQRO3ohd5fOzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X99xb4R/HOXK6N9AoaHOcfmICVL8eBGVLmyQBf/nUSqdgyjPosOMLEoGDq9JmcXbGLcELNhnyNeFACDNDxOyBfv4ZpfC9QExzJhS1By+nBxfNtsFpUN4BlbHcdYt2SW41AFhyvHf5Gxyb4BJoiIyi/a7ztmmbxdg8qJ/FL1Vk8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdohib6d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vac9q7kacrs9KO4sZp/SxIAr5L0VB2vgUm0VelcFRtJVq9hwf8iA4CUVJWgKPti6BCDIDDNljtEKkW0NXHsA1LUXgS/Nt9XqdoywoP1rmbMErBEOBD12qI5Sba4FAjHVvVeoEpKA2vLhxL+wXwAOJx105srlwBF2Hhh4TqfELPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQIG/Vhj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdohib6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4E91F00893;
-	Thu, 17 Sep 2026 15:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQIG/Vhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A71F00898;
+	Thu, 17 Sep 2026 15:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659887;
-	bh=O2YMziWDZ6AhJ2mxDnG6Dk8X/ByhxENF06qSSyzTcVs=;
+	s=korg; t=1789659893;
+	bh=AMCXKikK8Fb107s9pCh+2+e8xxofWKLBXOu6GznZoAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdohib6dPBVFd7+rd+QHng0mL/u8/Ym2zI49wjizwSUyEJjwiz3dS5BweGVmEoTvl
-	 QczLrUV/uO+THaGfzNR2KhvwQ2jk5FMgDLYUF2mJ9U4mqcg0kh3w7gdwvRN6fuf2vq
-	 rCVARBdj7glz5KsVGV3RTtRE7CpElcIRwwv/0dlk=
+	b=oQIG/VhjhheTMlfzInYasVZbLna9CeHWMWMDivIsn8QsY1GFpaOGIoYmJ4CdUptf7
+	 R/phUl65VMHI/3FLKpbfn5GLy8a2djrHqrBvvWse++eEd+N2QNYOXzRpkPuNRAns12
+	 koijwuZUt4g4lOwyH9QWciFJFmIcCo1MaE1Wy6xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 406/733] ppp_synctty: ensure a writeable skb header
-Date: Thu, 17 Sep 2026 16:11:54 +0100
-Message-ID: <20260917151401.872163845@linuxfoundation.org>
+Subject: [PATCH 7.2 372/733] idpf: account for VLAN header when parsing RSC packet header
+Date: Thu, 17 Sep 2026 16:11:20 +0100
+Message-ID: <20260917151400.914012434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,57 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Joshua Hay <joshua.a.hay@intel.com>
 
-[ Upstream commit 8aaeb56aff2a557a88f83ae866da2c91ad247e59 ]
+[ Upstream commit cc6d60ef92278a31ffc2e94966a0921b9646af18 ]
 
-ppp_sync_txmunge() checks headroom before prepending the address and
-control bytes, but does not ensure that the skb header is writable.
-A received skb can reach this function through PPP channel bridging
-without passing through ppp_start_xmit(), which calls skb_cow_head().
+While parsing the header of a Receive Side Coalesced (RSC) packet, check
+if a VLAN tag is present and adjust the header parsing accordingly.
+Otherwise, Rx TCP traffic is completely broken for any VLAN interface
+whose underlying interface has RSC (rx-gro-hw) enabled.
 
-For example, a PPPoE frame may share its buffer with a clone queued to
-an AF_PACKET socket. If it is bridged to a synchronous tty channel, the
-address/control bytes can overwrite data still visible to that socket.
+We only need to worry about one VLAN header since Rx packets with
+multiple VLAN headers are not candidates for RSC.
 
-Use skb_cow_head() to ensure both sufficient headroom and a writable
-header.
-
-Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260908072135.877364-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3a8845af66edb ("idpf: add RX splitq napi poll support")
+Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Reviewed-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 0208e752ef1eb..1b64e610f9609 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -457,17 +457,9 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index 91ca75e454630..0b4e3d075fb05 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -3299,6 +3299,7 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 		       struct libeth_rx_pt decoded)
+ {
+ 	u16 rsc_segments, rsc_seg_len;
++	u16 l3_start = 0;
+ 	bool ipv4, ipv6;
+ 	int len;
  
- 	/* prepend address/control fields if necessary */
- 	if ((ap->flags & SC_COMP_AC) == 0 || islcp) {
--		if (skb_headroom(skb) < 2) {
--			struct sk_buff *npkt = dev_alloc_skb(skb->len + 2);
--			if (npkt == NULL) {
--				kfree_skb(skb);
--				return NULL;
--			}
--			skb_reserve(npkt,2);
--			skb_copy_from_linear_data(skb,
--				      skb_put(npkt, skb->len), skb->len);
--			consume_skb(skb);
--			skb = npkt;
-+		if (skb_cow_head(skb, 2)) {
-+			kfree_skb(skb);
-+			return NULL;
- 		}
- 		skb_push(skb,2);
- 		skb->data[0] = PPP_ALLSTATIONS;
+@@ -3321,7 +3322,10 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 	NAPI_GRO_CB(skb)->count = rsc_segments;
+ 	skb_shinfo(skb)->gso_size = rsc_seg_len;
+ 
+-	skb_reset_network_header(skb);
++	if (unlikely(eth_type_vlan(skb->protocol)))
++		l3_start = VLAN_HLEN;
++
++	skb_set_network_header(skb, l3_start);
+ 
+ 	if (ipv4) {
+ 		struct iphdr *ipv4h = ip_hdr(skb);
+@@ -3329,7 +3333,7 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 		skb_shinfo(skb)->gso_type = SKB_GSO_TCPV4;
+ 
+ 		/* Reset and set transport header offset in skb */
+-		skb_set_transport_header(skb, sizeof(struct iphdr));
++		skb_set_transport_header(skb, l3_start + sizeof(struct iphdr));
+ 		len = skb->len - skb_transport_offset(skb);
+ 
+ 		/* Compute the TCP pseudo header checksum*/
+@@ -3339,7 +3343,7 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 		struct ipv6hdr *ipv6h = ipv6_hdr(skb);
+ 
+ 		skb_shinfo(skb)->gso_type = SKB_GSO_TCPV6;
+-		skb_set_transport_header(skb, sizeof(struct ipv6hdr));
++		skb_set_transport_header(skb, l3_start + sizeof(struct ipv6hdr));
+ 		len = skb->len - skb_transport_offset(skb);
+ 		tcp_hdr(skb)->check =
+ 			~tcp_v6_check(len, &ipv6h->saddr, &ipv6h->daddr, 0);
 -- 
 2.53.0
 
