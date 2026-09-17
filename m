@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3D059B695;
-	Thu, 17 Sep 2026 16:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CE64E73C8;
+	Thu, 17 Sep 2026 16:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660904; cv=none; b=QUge1X3D1eGzclZ3eAcKy+xatUbC8Nm6WF+JJO00KN6Yr/M6KtbtoFtCtNVW7/opeMBkLGqwNzBdMrpiHRiGHD7crN5hZ3Q00qmp6c4rC6Dzvf98xR5u/PLQljQCpZjD6jyu6mftUwzZgEaPcgL/eV1xaVoMRyCO2enWS9acroA=
+	t=1789660908; cv=none; b=A8ugjXGb9dEc2V2zKWe1Ue2FOGB3L4ussxais6BmZNwZlIQO/mbyk4Dzc0xgei9EvFtI5RWVCLxpz1N19f3oseMjh3Fqz1z3AUyzdN1cfERsBG1C1EOldGukuuwePAzQBm9kqY507HQ+ALtRAZ7mWaHWYcQydEjVzS+FswWtRek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660904; c=relaxed/simple;
-	bh=jXFS/x9JjnMZcCXbVfmU3TjwxB0iFarimMdMj//j6vk=;
+	s=arc-20240116; t=1789660908; c=relaxed/simple;
+	bh=imz/iponcNdqeiEB+il9BtJXVQfh2/Zgla9Fhjmv8Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/q+2GUbU27JQqDJSmi1+fsCwLMIY/df9LBwfsnT2XEjFoxL3wLmYKeBxIeT6b21RTezeg7uUBNxYX7lzKq9Zq02zz4YR6KqqZuE18oJqkPDutraEXE7SbCORXSTljGBGvta5CrBKtOYMfC+Wfjep0Gi+jA7Zi24mweyOoLrbjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejQC6jN3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qAeAnRan3K90DfE25RlvinpKCE262QomfaWCS988OCu0aG2lNRF6BsL3ThXXPyOeRk+fWTwxlx370MvWqb/oewhNjjoDh24IXzqYwBL1jEaEZEAjDawR0AfWxu+/WX0UoNbWF1V8Q9djeBf4UkvpnW3sjp5MvZwrGp52ajn7AW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQxLagYp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejQC6jN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64781F000FF;
-	Thu, 17 Sep 2026 16:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQxLagYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FD31F000FF;
+	Thu, 17 Sep 2026 16:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660903;
-	bh=/LJ9+wXwgxLXT9wa2gxAM/9K1q2nr44iT8Ga7UKGvPQ=;
+	s=korg; t=1789660906;
+	bh=3pFlaFQxIIIRjlf3s+j30zgz/IegwvkH3gz6ggSkfqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejQC6jN3XHmQX3fDhEs1ntEiDicoRAcZGqnhdiNEV7PLGMpCNQoCoWUKMqTCb8Q6r
-	 4CIABJbezRoGxpzBjq2E9YjQXfUDUxy3bw/Q5h699pL9iCHiIadMDqM7Dgv7l55fNO
-	 Dp2vqo13/trAEyb2x7VyZ5XH224cj++E5Msa2CAk=
+	b=NQxLagYpvCtkvHcQkueKU5A3ewKl6WtdlmQm76AEPrdNlJpkSI750Sh/Z9yKHA1iQ
+	 KnEN0eoIo/7N9mS7z0UdVnOCH7y6MEyq3KAYDxXfQdBy3KewsB0d2oJEblcbHTRNcY
+	 En26mXRZQ4fnGxRbUzCUKEao1tEblOr+RMczHqRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Kevin Tung <kevin.tung.openbmc@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0017/1250] driver core: Replace dev->can_match with dev_can_match()
-Date: Thu, 17 Sep 2026 15:56:52 +0100
-Message-ID: <20260917151552.394033109@linuxfoundation.org>
+Subject: [PATCH 6.18 0018/1250] iio: adc: rtq6056: add i2c_device_id support
+Date: Thu, 17 Sep 2026 15:56:53 +0100
+Message-ID: <20260917151552.421399230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,170 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Kevin Tung <kevin.tung.openbmc@gmail.com>
 
-[ Upstream commit f2648bb3150a71241a2254aa4ac10680d7f9fb16 ]
+[ Upstream commit ce80292ead5bb42b50a6b63e44fd95c0edf9d334 ]
 
-In C, bitfields are not necessarily safe to modify from multiple
-threads without locking. Switch "can_match" over to the "flags" field
-so modifications are safe.
+Add i2c_device_id table to support legacy I2C instantiation.
+Update probe to use i2c_get_match_data() so device data can be
+retrieved consistently for both OF and legacy I2C instantiation.
 
-Cc: Saravana Kannan <saravanak@kernel.org>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260406162231.v5.2.I54b3ae6311ff34ad30227659d91bb109911a4aea@changeid
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Kevin Tung <kevin.tung.openbmc@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 10 +++++-----
- drivers/base/dd.c      | 10 +++++-----
- include/linux/device.h |  9 +++++----
- 3 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/iio/adc/rtq6056.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 5034d9b103642..2b0179096c73d 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1084,7 +1084,7 @@ static void device_links_missing_supplier(struct device *dev)
+diff --git a/drivers/iio/adc/rtq6056.c b/drivers/iio/adc/rtq6056.c
+index 2bf3a09ac6b04..e2b1da13c0d31 100644
+--- a/drivers/iio/adc/rtq6056.c
++++ b/drivers/iio/adc/rtq6056.c
+@@ -728,7 +728,7 @@ static int rtq6056_probe(struct i2c_client *i2c)
+ 	if (!i2c_check_functionality(i2c->adapter, I2C_FUNC_SMBUS_WORD_DATA))
+ 		return -EOPNOTSUPP;
  
- static bool dev_is_best_effort(struct device *dev)
- {
--	return (fw_devlink_best_effort && dev->can_match) ||
-+	return (fw_devlink_best_effort && dev_can_match(dev)) ||
- 		(dev->fwnode && fwnode_test_flag(dev->fwnode, FWNODE_FLAG_BEST_EFFORT));
- }
+-	devdata = device_get_match_data(dev);
++	devdata = i2c_get_match_data(i2c);
+ 	if (!devdata)
+ 		return dev_err_probe(dev, -EINVAL, "Invalid dev data\n");
  
-@@ -1152,7 +1152,7 @@ int device_links_check_suppliers(struct device *dev)
- 
- 			if (dev_is_best_effort(dev) &&
- 			    device_link_test(link, DL_FLAG_INFERRED) &&
--			    !link->supplier->can_match) {
-+			    !dev_can_match(link->supplier)) {
- 				ret = -EAGAIN;
- 				continue;
- 			}
-@@ -1435,7 +1435,7 @@ void device_links_driver_bound(struct device *dev)
- 		} else if (dev_is_best_effort(dev) &&
- 			   device_link_test(link, DL_FLAG_INFERRED) &&
- 			   link->status != DL_STATE_CONSUMER_PROBE &&
--			   !link->supplier->can_match) {
-+			   !dev_can_match(link->supplier)) {
- 			/*
- 			 * When dev_is_best_effort() is true, we ignore device
- 			 * links to suppliers that don't have a driver.  If the
-@@ -1823,7 +1823,7 @@ static int fw_devlink_no_driver(struct device *dev, void *data)
- {
- 	struct device_link *link = to_devlink(dev);
- 
--	if (!link->supplier->can_match)
-+	if (!dev_can_match(link->supplier))
- 		fw_devlink_relax_link(link);
- 
- 	return 0;
-@@ -3775,7 +3775,7 @@ int device_add(struct device *dev)
- 	 * match with any driver, don't block its consumers from probing in
- 	 * case the consumer device is able to operate without this supplier.
- 	 */
--	if (dev->fwnode && fw_devlink_drv_reg_done && !dev->can_match)
-+	if (dev->fwnode && fw_devlink_drv_reg_done && !dev_can_match(dev))
- 		fw_devlink_unblock_consumers(dev);
- 
- 	if (parent)
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index dabdfc088f3f6..d019d0f98ad47 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -132,7 +132,7 @@ static DECLARE_WORK(deferred_probe_work, deferred_probe_work_func);
- 
- void driver_deferred_probe_add(struct device *dev)
- {
--	if (!dev->can_match)
-+	if (!dev_can_match(dev))
- 		return;
- 
- 	mutex_lock(&deferred_probe_mutex);
-@@ -858,14 +858,14 @@ static int __driver_probe_device(const struct device_driver *drv, struct device
- 		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
- 
- 	/*
--	 * Set can_match = true after calling dev_ready_to_probe(), so
-+	 * Call dev_set_can_match() after calling dev_ready_to_probe(), so
- 	 * driver_deferred_probe_add() won't actually add the device to the
- 	 * deferred probe list when dev_ready_to_probe() returns false.
- 	 *
- 	 * When dev_ready_to_probe() returns false, it means that device_add()
- 	 * will do another probe() attempt for us.
- 	 */
--	dev->can_match = true;
-+	dev_set_can_match(dev);
- 	dev_dbg(dev, "bus: '%s': %s: matched device with driver %s\n",
- 		drv->bus->name, __func__, drv->name);
- 
-@@ -1011,7 +1011,7 @@ static int __device_attach_driver(struct device_driver *drv, void *_data)
- 		return 0;
- 	} else if (ret == -EPROBE_DEFER) {
- 		dev_dbg(dev, "Device match requests probe deferral\n");
--		dev->can_match = true;
-+		dev_set_can_match(dev);
- 		driver_deferred_probe_add(dev);
- 		/*
- 		 * Device can't match with a driver right now, so don't attempt
-@@ -1255,7 +1255,7 @@ static int __driver_attach(struct device *dev, void *data)
- 		return 0;
- 	} else if (ret == -EPROBE_DEFER) {
- 		dev_dbg(dev, "Device match requests probe deferral\n");
--		dev->can_match = true;
-+		dev_set_can_match(dev);
- 		driver_deferred_probe_add(dev);
- 		/*
- 		 * Driver could not match with device, but may match with
-diff --git a/include/linux/device.h b/include/linux/device.h
-index dc1252a06480c..56e5a9314367d 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -485,10 +485,14 @@ struct device_physical_location {
-  *
-  * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
-  *		initialization that probe could be called.
-+ * @DEV_FLAG_CAN_MATCH: The device has matched with a driver at least once or it
-+ *		is in a bus (like AMBA) which can't check for matching drivers
-+ *		until other devices probe successfully.
-  * @DEV_FLAG_COUNT: Number of defined struct_device_flags.
-  */
- enum struct_device_flags {
- 	DEV_FLAG_READY_TO_PROBE = 0,
-+	DEV_FLAG_CAN_MATCH = 1,
- 
- 	DEV_FLAG_COUNT
+@@ -871,6 +871,13 @@ static const struct richtek_dev_data rtq6059_devdata = {
+ 	.set_average = rtq6059_adc_set_average,
  };
-@@ -575,9 +579,6 @@ enum struct_device_flags {
-  * @state_synced: The hardware state of this device has been synced to match
-  *		  the software state of this device by calling the driver/bus
-  *		  sync_state() callback.
-- * @can_match:	The device has matched with a driver at least once or it is in
-- *		a bus (like AMBA) which can't check for matching drivers until
-- *		other devices probe successfully.
-  * @dma_coherent: this particular device is dma coherent, even if the
-  *		architecture supports non-coherent devices.
-  * @dma_ops_bypass: If set to %true then the dma_ops are bypassed for the
-@@ -696,7 +697,6 @@ struct device {
- 	bool			offline:1;
- 	bool			of_node_reused:1;
- 	bool			state_synced:1;
--	bool			can_match:1;
- #if defined(CONFIG_ARCH_HAS_SYNC_DMA_FOR_DEVICE) || \
-     defined(CONFIG_ARCH_HAS_SYNC_DMA_FOR_CPU) || \
-     defined(CONFIG_ARCH_HAS_SYNC_DMA_FOR_CPU_ALL)
-@@ -738,6 +738,7 @@ static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
- }
  
- __create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
-+__create_dev_flag_accessors(can_match, DEV_FLAG_CAN_MATCH);
- 
- #undef __create_dev_flag_accessors
++static const struct i2c_device_id rtq6056_id[] = {
++	{ "rtq6056", (kernel_ulong_t)&rtq6056_devdata },
++	{ "rtq6059", (kernel_ulong_t)&rtq6059_devdata },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, rtq6056_id);
++
+ static const struct of_device_id rtq6056_device_match[] = {
+ 	{ .compatible = "richtek,rtq6056", .data = &rtq6056_devdata },
+ 	{ .compatible = "richtek,rtq6059", .data = &rtq6059_devdata },
+@@ -885,6 +892,7 @@ static struct i2c_driver rtq6056_driver = {
+ 		.pm = pm_ptr(&rtq6056_pm_ops),
+ 	},
+ 	.probe = rtq6056_probe,
++	.id_table = rtq6056_id,
+ };
+ module_i2c_driver(rtq6056_driver);
  
 -- 
 2.53.0
