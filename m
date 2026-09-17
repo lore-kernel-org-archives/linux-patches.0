@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8A44C10C4;
-	Thu, 17 Sep 2026 18:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD465547041;
+	Thu, 17 Sep 2026 18:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671569; cv=none; b=SCsAjyaLYkZ2iT8bt7pN3LtfZcPQRMsribZ5QuIlahtweUWrP/m4RYTtoU47LvAdlgzK19pHRWl3E5lM8UCtUscQiZqtG+aQllWGuEOLqqgrmuWm5g2QQ/Xsa01qzJV/Sd1U7r+I6r/zopYfUpj6ik4IKAkSt782U5or670dFxU=
+	t=1789671572; cv=none; b=eXcmFCxu8W40spDZuirVJ9JDRsgL8MBoXZFEVNq8cN7grotxfd3N4dmg6Zqs5k324+RudZoUepmshlhgLuJ/6CLRZQM33gYw/+uct1tdjZ7xtOALPoGr0CujhAwrguwfxj+MLgyoDKWCYVnTye7ILqnM913NhTp287mLgzge46k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671569; c=relaxed/simple;
-	bh=YBw9E2dq0CDOJfV34WAKR14li/uYhg/HgPexhpxEuIo=;
+	s=arc-20240116; t=1789671572; c=relaxed/simple;
+	bh=ApHs6VoKvIILHPE79ZDRh6ktgzShyEXpXIPtOOp3dhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nndk+InHw6HLcM+YvZFwXNpT6lIsIRsULJhJd99MYAPLkT0uUKTsqs4empWl5GQ8qeLv+v5BscqZzwxTvDl1XdqxMr1WuvgIqHtYPqF3xMzGl98k5xhJAwxvjCq2t01dcmQZ0GAhN0T3jTqrv14cQYKIomqI4xIQg2ipEd9MYC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwGAM4K5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCXU8iahOpiaop84T8asbycxi49RXFjeZd7AnJ7mH302bpLNC70zwlHCIKsEU4fQcqWwgHjdZ/iWU4Atoyc/QWIpIM4VylcjKk8eRgkKUKikNswes9UzuVX5xec6I0kE0tWORZ/F5erQpxyQpfz4J/Gwf2qCJVPpT+yyTaKz/V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Um83DH1k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwGAM4K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22DA1F0089F;
-	Thu, 17 Sep 2026 18:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Um83DH1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F166E1F000FF;
+	Thu, 17 Sep 2026 18:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671567;
-	bh=RrDCH/ptgi+2gOIsLdvFIpWvGJ6n+uUZI7H8Ed4akTw=;
+	s=korg; t=1789671570;
+	bh=CaNDclD/kQABpR2J+nqvR8rS5mir2zVfXFk5HFDM8CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwGAM4K5+vr4TsFrCEgKqVbCGRhcX24CFSziyKx+CZ+KjS8MTXsFqOW9NJ1P+nZRb
-	 TBzMgemZ/m0U2ZGitGXhS+4V8y1j9J2xMKqYWvrqDmxNtxtNoNmPS6EatgPqOz8CL/
-	 2JlGb/dJ0f/6xHQ47bPvCAhvDaCX/mLxmwcFfMuk=
+	b=Um83DH1kbVR286l2n8Y0dImZ0NgVGUbJMa0TCwd9Mjcg/yuop+0O4xpIPfkbKrR2H
+	 6meApVxchhzn01REr2f/44F/nCImtGftI5Fejw0M+gTCTXi3i5tseRpyHHFjOe9gBH
+	 DG1MX+qzhmk39GVgJuS1nU/OTxznWE4gjnQFxUzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1020/1102] nfsd: check nfsd4_acl_to_attr() return value in nfsd4_create()
-Date: Thu, 17 Sep 2026 16:16:03 +0100
-Message-ID: <20260917151606.364400222@linuxfoundation.org>
+Subject: [PATCH 6.12 1021/1102] NFSD: Rename a function parameter
+Date: Thu, 17 Sep 2026 16:16:04 +0100
+Message-ID: <20260917151606.390650278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,65 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 2c7912732184773dbd371a411da87af1cc080b86 ]
+[ Upstream commit 71bc2c6c413b78e5a47b4a62284f712d9f719007 ]
 
-nfsd4_create() stores the return value of nfsd4_acl_to_attr() in
-status, but the switch(create->cr_type) block unconditionally
-overwrites it in every branch. ACL translation errors are silently
-discarded, and the CREATE proceeds without the requested ACL.
+Clean up: A function parameter called "rqstp" typically refers to an
+object of type "struct svc_rqst", so it's confusing when such an
+parameter refers to a different struct type with field names that are
+very similar to svc_rqst.
 
-Add an early exit check after nfsd4_acl_to_attr(), matching the
-pattern already used in nfsd4_setattr().
-
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: prefer NFS4ERR_BADTYPE over NFS4ERR_ATTRNOTSUPP ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-5-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
-[ retained unconditional ACL conversion because the older helper already handles null ACLs ]
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: a99d720ed2a5 ("nfsd: widen nfsd_genl_rqstp address fields to sockaddr_storage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/nfsd/nfsctl.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -796,7 +796,23 @@ nfsd4_create(struct svc_rqst *rqstp, str
- 	if (status)
- 		return status;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1494,7 +1494,7 @@ unsigned int nfsd_net_id;
  
-+	/* Sanitize cr_type to avoid returning ATTRNOTSUPP. */
-+	switch (create->cr_type) {
-+	case NF4LNK:
-+	case NF4BLK:
-+	case NF4CHR:
-+	case NF4SOCK:
-+	case NF4FIFO:
-+	case NF4DIR:
-+		break;
-+	default:
-+		status = nfserr_badtype;
-+		goto out_aftermask;
-+	}
-+
- 	status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl, &attrs);
-+	if (status != nfs_ok)
-+		goto out_aftermask;
- 	current->fs->umask = create->cr_umask;
- 	switch (create->cr_type) {
- 	case NF4LNK:
-@@ -863,6 +879,7 @@ out:
- 	fh_put(&resfh);
- out_umask:
- 	current->fs->umask = 0;
-+out_aftermask:
- 	nfsd_attrs_free(&attrs);
- 	return status;
- }
+ static int nfsd_genl_rpc_status_compose_msg(struct sk_buff *skb,
+ 					    struct netlink_callback *cb,
+-					    struct nfsd_genl_rqstp *rqstp)
++					    struct nfsd_genl_rqstp *genl_rqstp)
+ {
+ 	void *hdr;
+ 	u32 i;
+@@ -1504,22 +1504,22 @@ static int nfsd_genl_rpc_status_compose_
+ 	if (!hdr)
+ 		return -ENOBUFS;
+ 
+-	if (nla_put_be32(skb, NFSD_A_RPC_STATUS_XID, rqstp->rq_xid) ||
+-	    nla_put_u32(skb, NFSD_A_RPC_STATUS_FLAGS, rqstp->rq_flags) ||
+-	    nla_put_u32(skb, NFSD_A_RPC_STATUS_PROG, rqstp->rq_prog) ||
+-	    nla_put_u32(skb, NFSD_A_RPC_STATUS_PROC, rqstp->rq_proc) ||
+-	    nla_put_u8(skb, NFSD_A_RPC_STATUS_VERSION, rqstp->rq_vers) ||
++	if (nla_put_be32(skb, NFSD_A_RPC_STATUS_XID, genl_rqstp->rq_xid) ||
++	    nla_put_u32(skb, NFSD_A_RPC_STATUS_FLAGS, genl_rqstp->rq_flags) ||
++	    nla_put_u32(skb, NFSD_A_RPC_STATUS_PROG, genl_rqstp->rq_prog) ||
++	    nla_put_u32(skb, NFSD_A_RPC_STATUS_PROC, genl_rqstp->rq_proc) ||
++	    nla_put_u8(skb, NFSD_A_RPC_STATUS_VERSION, genl_rqstp->rq_vers) ||
+ 	    nla_put_s64(skb, NFSD_A_RPC_STATUS_SERVICE_TIME,
+-			ktime_to_us(rqstp->rq_stime),
++			ktime_to_us(genl_rqstp->rq_stime),
+ 			NFSD_A_RPC_STATUS_PAD))
+ 		return -ENOBUFS;
+ 
+-	switch (rqstp->rq_saddr.sa_family) {
++	switch (genl_rqstp->rq_saddr.sa_family) {
+ 	case AF_INET: {
+ 		const struct sockaddr_in *s_in, *d_in;
+ 
+-		s_in = (const struct sockaddr_in *)&rqstp->rq_saddr;
+-		d_in = (const struct sockaddr_in *)&rqstp->rq_daddr;
++		s_in = (const struct sockaddr_in *)&genl_rqstp->rq_saddr;
++		d_in = (const struct sockaddr_in *)&genl_rqstp->rq_daddr;
+ 		if (nla_put_in_addr(skb, NFSD_A_RPC_STATUS_SADDR4,
+ 				    s_in->sin_addr.s_addr) ||
+ 		    nla_put_in_addr(skb, NFSD_A_RPC_STATUS_DADDR4,
+@@ -1534,8 +1534,8 @@ static int nfsd_genl_rpc_status_compose_
+ 	case AF_INET6: {
+ 		const struct sockaddr_in6 *s_in, *d_in;
+ 
+-		s_in = (const struct sockaddr_in6 *)&rqstp->rq_saddr;
+-		d_in = (const struct sockaddr_in6 *)&rqstp->rq_daddr;
++		s_in = (const struct sockaddr_in6 *)&genl_rqstp->rq_saddr;
++		d_in = (const struct sockaddr_in6 *)&genl_rqstp->rq_daddr;
+ 		if (nla_put_in6_addr(skb, NFSD_A_RPC_STATUS_SADDR6,
+ 				     &s_in->sin6_addr) ||
+ 		    nla_put_in6_addr(skb, NFSD_A_RPC_STATUS_DADDR6,
+@@ -1549,9 +1549,9 @@ static int nfsd_genl_rpc_status_compose_
+ 	}
+ 	}
+ 
+-	for (i = 0; i < rqstp->rq_opcnt; i++)
++	for (i = 0; i < genl_rqstp->rq_opcnt; i++)
+ 		if (nla_put_u32(skb, NFSD_A_RPC_STATUS_COMPOUND_OPS,
+-				rqstp->rq_opnum[i]))
++				genl_rqstp->rq_opnum[i]))
+ 			return -ENOBUFS;
+ 
+ 	genlmsg_end(skb, hdr);
 
 
