@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA32DB79F;
-	Thu, 17 Sep 2026 18:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005074E4C40;
+	Thu, 17 Sep 2026 18:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668851; cv=none; b=CEny0eNSujGJp3ZClGq7NqGmJJFXVQKOPxYJIWHJ9+xFZcokF1oDPx6qd9zv53OAeqOI1G9TKTZGnIDmhpRgMeDOkEln0ysFlaBQ2ykc/eF9zikNajUNhg0TUcgem8uN7ertyhUBqY5beCh5nn/azKdKsVURHxlmU6OvuLblV98=
+	t=1789668854; cv=none; b=kpfv2lk40XVMkbVaF+Ds5Ht/UOZtMFy2iHNZ+FNUsUf2S68KjnLgmmagbJpT6VSXR0R3u4Gst8u0YEKJZmB20rJ7MG9m4QvRW1rfVf5Nv4EbZ8rG5jPCfv2/sW7j7kMYVGxiQRsjKLVCfDYAqdImdLGA0Ftp7kNN+b+zHm/KYgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668851; c=relaxed/simple;
-	bh=ymGhle0FZwmC4cotQOBlT8XsHtbm+rluSWU79Ahcs1s=;
+	s=arc-20240116; t=1789668854; c=relaxed/simple;
+	bh=acY9MCeUTqg9Mthz9ZFqiryCEwZVtUskKYlzPdn+XhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LD21OOItnHgjdtx59O1lLzXfKemElOrEWjScKSSu42ClrrbNK6wt0nCBpF+QFHId7i7ed6WivZKw/aNdJTzwlY2K6xcPZmyyHT1m3qXrYaSwlPY/ySr9cjzPVtrfertFwAxo5dhO8PVtTxtVVdxJZQP9SRlHngXQ28mO1h2+8n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t30J+iOf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DjKIqOEoDCu6hMGAGypHLA9+AE9PwPEQYEQ1IVOCMMFtiStHU/PdVeBoVL7baO4xO1/OAWltP/NEpuzSgaVS22xmhyGIMbnoxXWXnC1rL5wb46+Gtr1zFmRwd7VM8vHAzeIDlzBTBGf/+m5n/1hsSVqVyZ5c2aexa1QaV+WxJu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtoLq3aT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t30J+iOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A23D1F000FF;
-	Thu, 17 Sep 2026 18:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtoLq3aT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541CF1F000FF;
+	Thu, 17 Sep 2026 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668849;
-	bh=DLZmzi1npUiAoFiWGayNCjFJwiOP19O+TK8uqxyum3M=;
+	s=korg; t=1789668852;
+	bh=vuP1KSsynNGSdSXJ3tnj48GB+FeRmAh0UawHVPRHINU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t30J+iOflv6ME3lVRbXBBQrDZHWmsj2Bc7gd/mFQslzk70qrakmo7FUUoh/FgECYn
-	 D4txjtKZiC6v4riUCYRSaxogGAn861HbRhaNSFDBFjqC3K+hl2k0Kf/JcEa+/V5DDH
-	 wf6wQo6sJOr8C1A6z8LOCTzlzEl07/ecIY9AiGUg=
+	b=HtoLq3aTCoENAXlTwE/Ksg+LH2WfLWdJsU5Hgsr+NVvVKBJUFHPoEvaRjL9RZJk27
+	 ZVDYI/wzN3HybxIYHNZjxsw5dgdzYvI8Wq3evmLd8mUr9dO7P3Wue0dVw65MG1BkNX
+	 MNz1w6b0VbZDrN9mDwfUYDrE18dER12aQ2GO+kqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0554/1102] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
-Date: Thu, 17 Sep 2026 16:08:17 +0100
-Message-ID: <20260917151553.755881399@linuxfoundation.org>
+Subject: [PATCH 6.12 0563/1102] net: ethernet: oa_tc6: Export standard defined registers
+Date: Thu, 17 Sep 2026 16:08:26 +0100
+Message-ID: <20260917151554.017858367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,104 +46,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Ciprian Regus <ciprian.regus@analog.com>
 
-[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
+[ Upstream commit 9210d402bdf54240b8aec9815b2f9aad360fcb42 ]
 
-l2cap_chan_connect() tries to ensure there are no more than
-L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
-same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
+Move defines for standard Open Alliance TC6 register addresses and
+subfields in the oa_tc6's header. As such, other ethernet drivers
+that rely on oa_tc6 can use them directly.
 
-However, the check only counts deferred channels.  If 6 L2CAP sockets
-are connected at the same time in order DDDDND (D=deferred,
-N=non-deferred), the last can bump the total to max+1.  It results to
-one __le16 written out of bounds of the scid array, and an invalid
-ECRED_CONN_REQ being sent.
-
-Fix by leaving room for the non-deferred pending ECRED channels in the
-counting in l2cap_chan_connect(), so the limit can't be exceeded.
-
-Move counting under same critical section where the channel is added.
-Although race conditions involving this appear unreachable, it's easier
-to see.
-
-Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
-less brittle.
-
-Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Link: https://patch.msgid.link/20260708-adin1140-driver-v5-5-4aca7b51a58b@analog.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 172c974113bf ("net: ethernet: oa_tc6: Improve the error recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 50 -----------------------------------
+ include/linux/oa_tc6.h        | 50 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 50 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index b98bb57ef6781..9991afc177426 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1340,7 +1340,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
- struct l2cap_ecred_conn_data {
- 	struct {
- 		struct l2cap_ecred_conn_req_hdr req;
--		__le16 scid[5];
-+		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
- 	} __packed pdu;
- 	struct l2cap_chan *chan;
- 	struct pid *pid;
-@@ -1368,6 +1368,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
- 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
- 		return;
+diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
+index 3321ed4201963..6a01c5e3f14c6 100644
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -12,47 +12,6 @@
+ #include <linux/phy.h>
+ #include <linux/oa_tc6.h>
  
-+	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
-+	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
-+		return;
-+
- 	l2cap_ecred_init(chan, 0);
- 
- 	/* Set the same ident so we can match on the rsp */
-@@ -7343,6 +7347,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		goto done;
- 	}
- 
-+	mutex_lock(&conn->lock);
-+	l2cap_chan_lock(chan);
-+
- 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
- 		struct l2cap_chan_data data;
- 
-@@ -7350,19 +7357,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		data.pid = chan->ops->get_peer_pid(chan);
- 		data.count = 1;
- 
--		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
-+		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
-+
-+		/* Leave room for non-deferred channel that ends the group. */
-+		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
-+			data.count += 1;
- 
- 		/* Check if there isn't too many channels being connected */
- 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
- 			hci_conn_drop(hcon);
- 			err = -EPROTO;
--			goto done;
-+			goto chan_unlock;
- 		}
- 	}
- 
--	mutex_lock(&conn->lock);
--	l2cap_chan_lock(chan);
+-/* OPEN Alliance TC6 registers */
+-/* Standard Capabilities Register */
+-#define OA_TC6_REG_STDCAP			0x0002
+-#define STDCAP_DIRECT_PHY_REG_ACCESS		BIT(8)
 -
- 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
- 		hci_conn_drop(hcon);
- 		err = -EBUSY;
+-/* Reset Control and Status Register */
+-#define OA_TC6_REG_RESET			0x0003
+-#define RESET_SWRESET				BIT(0)	/* Software Reset */
+-
+-/* Configuration Register #0 */
+-#define OA_TC6_REG_CONFIG0			0x0004
+-#define CONFIG0_SYNC				BIT(15)
+-#define CONFIG0_ZARFE_ENABLE			BIT(12)
+-#define CONFIG0_PROTE				BIT(5)
+-
+-/* Status Register #0 */
+-#define OA_TC6_REG_STATUS0			0x0008
+-#define STATUS0_RESETC				BIT(6)	/* Reset Complete */
+-#define STATUS0_HEADER_ERROR			BIT(5)
+-#define STATUS0_LOSS_OF_FRAME_ERROR		BIT(4)
+-#define STATUS0_RX_BUFFER_OVERFLOW_ERROR	BIT(3)
+-#define STATUS0_TX_PROTOCOL_ERROR		BIT(0)
+-
+-/* Buffer Status Register */
+-#define OA_TC6_REG_BUFFER_STATUS		0x000B
+-#define BUFFER_STATUS_TX_CREDITS_AVAILABLE	GENMASK(15, 8)
+-#define BUFFER_STATUS_RX_CHUNKS_AVAILABLE	GENMASK(7, 0)
+-
+-/* Interrupt Mask Register #0 */
+-#define OA_TC6_REG_INT_MASK0			0x000C
+-#define INT_MASK0_HEADER_ERR_MASK		BIT(5)
+-#define INT_MASK0_LOSS_OF_FRAME_ERR_MASK	BIT(4)
+-#define INT_MASK0_RX_BUFFER_OVERFLOW_ERR_MASK	BIT(3)
+-#define INT_MASK0_TX_PROTOCOL_ERR_MASK		BIT(0)
+-#define INT_MASK0_ALL_INTERRUPTS                (GENMASK(5, 0) | \
+-						 GENMASK(12, 7))
+-
+-/* PHY Clause 22 registers base address and mask */
+-#define OA_TC6_PHY_STD_REG_ADDR_BASE		0xFF00
+-#define OA_TC6_PHY_STD_REG_ADDR_MASK		0x1F
+-
+ /* Control command header */
+ #define OA_TC6_CTRL_HEADER_DATA_NOT_CTRL	BIT(31)
+ #define OA_TC6_CTRL_HEADER_WRITE_NOT_READ	BIT(29)
+@@ -82,15 +41,6 @@
+ #define OA_TC6_DATA_FOOTER_END_BYTE_OFFSET	GENMASK(13, 8)
+ #define OA_TC6_DATA_FOOTER_TX_CREDITS		GENMASK(5, 1)
+ 
+-/* PHY – Clause 45 registers memory map selector (MMS) as per table 6 in the
+- * OPEN Alliance specification.
+- */
+-#define OA_TC6_PHY_C45_PCS_MMS2			2	/* MMD 3 */
+-#define OA_TC6_PHY_C45_PMA_PMD_MMS3		3	/* MMD 1 */
+-#define OA_TC6_PHY_C45_VS_PLCA_MMS4		4	/* MMD 31 */
+-#define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
+-#define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
+-
+ #define OA_TC6_CTRL_PROT_REPLY_SIZE		4
+ #define OA_TC6_CTRL_HEADER_SIZE			4
+ #define OA_TC6_CTRL_REG_VALUE_SIZE		4
+diff --git a/include/linux/oa_tc6.h b/include/linux/oa_tc6.h
+index 15f58e3c56c74..97c6ed0bf34df 100644
+--- a/include/linux/oa_tc6.h
++++ b/include/linux/oa_tc6.h
+@@ -10,6 +10,56 @@
+ #include <linux/etherdevice.h>
+ #include <linux/spi/spi.h>
+ 
++/* OPEN Alliance TC6 registers */
++/* Standard Capabilities Register */
++#define OA_TC6_REG_STDCAP			0x0002
++#define STDCAP_DIRECT_PHY_REG_ACCESS		BIT(8)
++
++/* Reset Control and Status Register */
++#define OA_TC6_REG_RESET			0x0003
++#define RESET_SWRESET				BIT(0)	/* Software Reset */
++
++/* Configuration Register #0 */
++#define OA_TC6_REG_CONFIG0			0x0004
++#define CONFIG0_SYNC				BIT(15)
++#define CONFIG0_ZARFE_ENABLE			BIT(12)
++#define CONFIG0_PROTE				BIT(5)
++
++/* Status Register #0 */
++#define OA_TC6_REG_STATUS0			0x0008
++#define STATUS0_RESETC				BIT(6)	/* Reset Complete */
++#define STATUS0_HEADER_ERROR			BIT(5)
++#define STATUS0_LOSS_OF_FRAME_ERROR		BIT(4)
++#define STATUS0_RX_BUFFER_OVERFLOW_ERROR	BIT(3)
++#define STATUS0_TX_PROTOCOL_ERROR		BIT(0)
++
++/* Buffer Status Register */
++#define OA_TC6_REG_BUFFER_STATUS		0x000B
++#define BUFFER_STATUS_TX_CREDITS_AVAILABLE	GENMASK(15, 8)
++#define BUFFER_STATUS_RX_CHUNKS_AVAILABLE	GENMASK(7, 0)
++
++/* Interrupt Mask Register #0 */
++#define OA_TC6_REG_INT_MASK0			0x000C
++#define INT_MASK0_HEADER_ERR_MASK		BIT(5)
++#define INT_MASK0_LOSS_OF_FRAME_ERR_MASK	BIT(4)
++#define INT_MASK0_RX_BUFFER_OVERFLOW_ERR_MASK	BIT(3)
++#define INT_MASK0_TX_PROTOCOL_ERR_MASK		BIT(0)
++#define INT_MASK0_ALL_INTERRUPTS                (GENMASK(5, 0) | \
++						 GENMASK(12, 7))
++
++/* PHY Clause 22 registers base address and mask */
++#define OA_TC6_PHY_STD_REG_ADDR_BASE		0xFF00
++#define OA_TC6_PHY_STD_REG_ADDR_MASK		0x1F
++
++/* PHY – Clause 45 registers memory map selector (MMS) as per table 6 in the
++ * OPEN Alliance specification.
++ */
++#define OA_TC6_PHY_C45_PCS_MMS2			2	/* MMD 3 */
++#define OA_TC6_PHY_C45_PMA_PMD_MMS3		3	/* MMD 1 */
++#define OA_TC6_PHY_C45_VS_PLCA_MMS4		4	/* MMD 31 */
++#define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
++#define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
++
+ struct oa_tc6;
+ 
+ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev);
 -- 
 2.53.0
 
