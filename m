@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9177E4E3232;
-	Thu, 17 Sep 2026 17:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2715012A7;
+	Thu, 17 Sep 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667311; cv=none; b=JrYqz88HWA7NTi37WN4aKN34o3vpRWeNRh13q7LEWyYbEsT0jYVkeE5PMuDbCsxJp2dBaRGEyivbUmoSEPIMpxvOTOmO0DrDb2Q38iovYG4bYr0L0pqQZp2VZxXzD6Gnf3QLSjjgyBFVnbqclMwgeCyeqbZRBfTeA5ZACsM7djQ=
+	t=1789667315; cv=none; b=GrDOsPJtUfL12L0A1bgseK1VChyJrCzhmTRpzjh12lK0+En5mAfFWx4+lT01wmK0IcmhH6ps6yoZvP5USju50sBdXGTyzX8vOPyTEpENPYoNhjEzjBYXo822l+3QTIfQkTbfc78un7xErB9V1wOfUVEQJI4oAAZfUS+K6gt5w3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667311; c=relaxed/simple;
-	bh=bjb3g/bxv4nFKGYfypMebT+CnMJbyaSLo5A3Ya/RJLY=;
+	s=arc-20240116; t=1789667315; c=relaxed/simple;
+	bh=UtkDYCLcuJITM3XaLUfXerLHpC0oeIcXNZYoK85sQqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YsyDBP1sevHJibWdaXpfDwkpEFPcER4s+H/aIGwtMjgbq3Tib+91ktgsI91NO70ywMJzPW2j4OZp6XzleDqAh8dSo+gNFB3XDCkp+lO7iMni6OWa77l3CqyFH7J0BDWw2PYFEozk0pWUh0RwqbOnRtTK+mC/RFApIU1+FkT9128=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loBktqex; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NCdGhAu8OMEGZ3h9RCIFeYPbNmb6nym3w12h9yWalzt9Vhho7q9sXbSUQMaifR8PSd+DTvcRPkHpodFnzTVWEGV8ixTMuur1lrVkkbZKrBgVapB3VIF4DW/2NTdEJbqQYBbJpNXK+P1NYy5SyyXQVGf0KqzA2G2tm42Lt5vjzlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1605do9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loBktqex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E458C1F000FF;
-	Thu, 17 Sep 2026 17:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1605do9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9561F000FF;
+	Thu, 17 Sep 2026 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667310;
-	bh=sxdftGKao571MeptArm1mK+QsnZDTkWzYRCPGshpoqA=;
+	s=korg; t=1789667313;
+	bh=jW9ATMGB5++2oAvr1B7eqnxRZdDtjsoAyJ4azzO4QAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loBktqexdWalRVfvc1nf42k7Mmqq/kudy6L7uitS8Oyq6y615WW1/HgscQ16UlLkn
-	 zwmpO13rGfUnANfdV6QIABL7s1Kc7NT8e74AOB8KsS9yZDTe6iyrxjieaPQC3sey6p
-	 V1akdXSrhuDhxEgaf7YeW4EPry7V+iGErnvUD+Co=
+	b=O1605do9Ku91PthKGMUNyjdJYCPI5Un2tCdO43j5XNBWqKjjPM88+HEpT9ZXKPqr/
+	 R7ao12FBiQ8huT+2q19WkHl+3SrCmRuToCRw0t+rndbWduzgpSLrF81VmC3I7Xxw8R
+	 GQ80AbqF+YwpJWGBfsGXi6eOOoErYWTjnioq8qNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0012/1102] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
-Date: Thu, 17 Sep 2026 15:59:15 +0100
-Message-ID: <20260917151539.732378967@linuxfoundation.org>
+Subject: [PATCH 6.12 0003/1102] bus: fsl-mc: wait for the MC firmware to complete its boot
+Date: Thu, 17 Sep 2026 15:59:06 +0100
+Message-ID: <20260917151539.503653575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,84 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
+[ Upstream commit 208858b1b48eba83d073542372329cf8ed606526 ]
 
-mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
-mixer_ctl_selector_put() ignore failures from their SET_CUR helper
-routines and report the control as changed whenever the requested
-value differs from the current one.
+There are use cases in which the Management Complex firmware boot
+process is started by the bootloader which does not wait for the boot to
+complete. This is mainly done in order to reduce the overall boot time
+of a DPAA2 based SoC.
 
-If the device rejects the write, userspace still sees success although
-the hardware state did not change. Propagate write failures instead,
-using filter_error() so ignore_ctl_error keeps the same semantics as
-the existing get paths.
+In this kind of circumstance, the fsl-mc bus driver needs to make sure
+that the MC firmware boot process is finished before proceeding to the
+usual operations such as interrogating the firmware to gather all
+existent DPAA2 objects, creating the fsl-mc devices on the bus etc.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
+Add this kind of check early in the boot process of the fsl-mc bus and
+defer the probe in case the firmware is still in its boot process.
+
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20260401144508.3062019-1-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 46 +++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 0472451494b03..82c8596264047 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1463,7 +1463,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 				return -EINVAL;
- 			val = get_abs_value(cval, val);
- 			if (oval != val) {
--				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
-+				err = snd_usb_set_cur_mix_value(cval, c + 1,
-+								cnt, val);
-+				if (err < 0)
-+					return filter_error(cval, err);
- 				changed = 1;
- 			}
- 			cnt++;
-@@ -1478,7 +1481,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 			return -EINVAL;
- 		val = get_abs_value(cval, val);
- 		if (val != oval) {
--			snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			if (err < 0)
-+				return filter_error(cval, err);
- 			changed = 1;
- 		}
- 	}
-@@ -2343,7 +2348,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
- 	}
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index 2810f3b6e2f6c..2742647bff594 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -66,6 +66,13 @@ struct fsl_mc_addr_translation_range {
+ #define GCR1_P1_STOP	BIT(31)
+ #define GCR1_P2_STOP	BIT(30)
+ 
++#define FSL_MC_GSR		0x8
++#define FSL_MC_GSR_BOOT_DONE	BIT(0)
++#define FSL_MC_GSR_MCS_MASK	GENMASK(7, 0)
++#define FSL_MC_GSR_MCS_ERR_MASK	GENMASK(7, 1)
++#define FSL_MC_GSR_BC_MASK	GENMASK(15, 8)
++#define FSL_MC_GSR_BC_SHIFT	8
++
+ #define FSL_MC_FAPR	0x28
+ #define MC_FAPR_PL	BIT(18)
+ #define MC_FAPR_BMT	BIT(17)
+@@ -1006,6 +1013,41 @@ static int get_mc_addr_translation_ranges(struct device *dev,
  	return 0;
-@@ -2707,7 +2714,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
+ }
+ 
++static u32 fsl_mc_read_gsr(struct fsl_mc *mc)
++{
++	return readl(mc->fsl_mc_regs + FSL_MC_GSR);
++}
++
++static int fsl_mc_firmware_check(struct platform_device *pdev)
++{
++	struct fsl_mc *mc = platform_get_drvdata(pdev);
++	u32 gsr, boot_done, boot_code, mcs;
++
++	gsr = fsl_mc_read_gsr(mc);
++	boot_code = (gsr & FSL_MC_GSR_BC_MASK) >> FSL_MC_GSR_BC_SHIFT;
++	if (boot_code == 0xDD) {
++		dev_err(&pdev->dev,
++			"fsl-mc: DPL processing was not started, DPAA2 will not work!\n");
++		return -EOPNOTSUPP;
++	}
++
++	boot_done = gsr & FSL_MC_GSR_BOOT_DONE;
++	if (!boot_done) {
++		dev_dbg(&pdev->dev,
++			"fsl-mc: DPL processing in progress, defer probe\n");
++		return -EPROBE_DEFER;
++	}
++
++	mcs = gsr & FSL_MC_GSR_MCS_MASK;
++	if (mcs & FSL_MC_GSR_MCS_ERR_MASK) {
++		dev_err(&pdev->dev,
++			"fsl-mc: MC boot completed with error 0x%x\n", mcs);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ /*
+  * fsl_mc_bus_probe - callback invoked when the root MC bus is being
+  * added
+@@ -1070,6 +1112,10 @@ static int fsl_mc_bus_probe(struct platform_device *pdev)
+ 		       mc->fsl_mc_regs + FSL_MC_GCR1);
  	}
- 	return 0;
+ 
++	error = fsl_mc_firmware_check(pdev);
++	if (error)
++		return error;
++
+ 	/*
+ 	 * Get physical address of MC portal for the root DPRC:
+ 	 */
 -- 
 2.53.0
 
