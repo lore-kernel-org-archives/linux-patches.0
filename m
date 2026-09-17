@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188ED56E06B;
-	Thu, 17 Sep 2026 15:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096E7583AD6;
+	Thu, 17 Sep 2026 15:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660601; cv=none; b=DEvelV1JXwIKWWc4UfmvFPcRqkFB9BPvkOHKZVlQas0Ti8D3E6b6O9icfY20DhO5GbdplmnMOlXKR+HhuCGcI+I9GYIr7T3c9nWX4p2tXWV3F1XYBj40y+UuAzQXM1E3iZcqKApW1AD3e9PpwlRltQiSmNxlUq2nXTZzW0+WyO8=
+	t=1789660604; cv=none; b=Dmbv1j+FkfzKntWeT8ecl2nIVW/HciuTYxWLeNGHmjYmVfPegtSZJ5PfZCR18SrEX1HPcrkgtAKq9ExyiQDl+pSBqKB5nUreTsEMdJNBJ0nwJT84VmY22DuJSZiaabriTLR1iqmuxwZycf9KLwMXAJPmzILyi4sj35xkcJOXBQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660601; c=relaxed/simple;
-	bh=VyxNifvzDt8XxHxIBHOSkr84loVbQV/cEEwHY2TbrPw=;
+	s=arc-20240116; t=1789660604; c=relaxed/simple;
+	bh=sm4FTTh0i3EiAweGIWy0mXdFBSgMjJQHZjRo8I2N4pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=busgfEsv9TW1x8qTG4Ojeb5I+BzKDKtr57CBZwdqyCDmSXX2nQah+8BcKQPDckESvlmZHfUPNSAp1/nA3nzZXzs8LoVMozKh4ysRd0G3gahW9cDxugi/fQaaLBllifPBwI4YtNKt5teNp14mf0yOLkijbHd6juPrBpgObaFdE8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSfOAtey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qNTWVXtE0fQxlvabkrLtKaJAqMWtT/GYgLJspyVV0X403K+sGtBhGBMq9HePLlRDxL6RUzW5WgY//b/Gkr14alj4Jp9S3w+o8g0sdoV8njkieDZHttWdSQbT6lW6UVgrQmztJ+A4Lbe2KcltAypyNe/FvtV1l0hFVNKhFFUUye0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uplJE5vr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSfOAtey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F11D1F00898;
-	Thu, 17 Sep 2026 15:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uplJE5vr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3CC1F00893;
+	Thu, 17 Sep 2026 15:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660599;
-	bh=bKqm4oa30uQ63b+x+yss0Gd6BA4xC92u5lkamftkOJI=;
+	s=korg; t=1789660602;
+	bh=fui5Qn/4ahpA/E7oc7vhDfklioTY6mt0V3P3TTjeRj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSfOAteySsqWjFugOU7wO6WlARNA6zkHZaigdlbMbPijEyBjsbx7RVgShPr6Tp527
-	 rthcZO7Sn+kJ48RUopgteobh/5/mcFcJ+XmBz0rUoV3qP7qojXelNJ/+GF7rtLKQ+j
-	 B4m2M9CJyjeM6shZI0tPJLPl5dOWrlNK0BItLjQ4=
+	b=uplJE5vri+DZMXT+ty6t63CTk7qgQGLcNYRbhpSBZ5vGQSumI+aZIHbCZEmZx4bh1
+	 XHwkTZ6yBEebzc+xDaW2f9S+mAclD9P1euhb6SzT4ZHXhSf7MRA4KBcex5ZMRSd1ux
+	 O9Nq2A/riKPoCJQmDTZ4K6k9Ni9rzsC7GELE4cgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 646/733] xfs: signal inode btree xref error if get_rec returns an error
-Date: Thu, 17 Sep 2026 16:15:54 +0100
-Message-ID: <20260917151408.706641395@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 620/733] mptcp: prevent race between disconnect() and rtx
+Date: Thu, 17 Sep 2026 16:15:28 +0100
+Message-ID: <20260917151407.983321669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,48 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 8c71ad4d4f3e20c30b663bd292526fcbc4d3913f upstream.
+commit 85c580b0d8590520ae00a15c29e9fb9c99427a3e upstream.
 
-LOLLM points out that xchk_finobt_xref_inobt and xchk_inobt_xref_finobt
-both ignore errors being returned from the xfs_btree_get_rec function
-and proceed with a (possibly stale) "true" value for has_record.  If the
-*simple* btree record checks fail during cross-referencing, we can
-immediately conclude that there's a cross-referncing error in the other
-btree.  On those grounds, we can bubble up the returned error instead of
-wasting time cross-referencing with garbage.
+Sashiko noted that the two event can race, leading to inconsistent
+status. Prevent the race using the synchronous timer stop operation.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: bc0f3b55467e1b ("xfs: directly cross-reference the inode btrees with each other")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-6-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/ialloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mptcp/protocol.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/ialloc.c
-+++ b/fs/xfs/scrub/ialloc.c
-@@ -85,6 +85,8 @@ xchk_inobt_xref_finobt(
- 		goto no_record;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3456,6 +3456,7 @@ static void mptcp_destroy_common(struct
  
- 	error = xfs_inobt_get_rec(cur, &frec, &has_record);
-+	if (error)
-+		return error;
- 	if (!has_record)
- 		return -EFSCORRUPTED;
+ static int mptcp_disconnect(struct sock *sk, int flags)
+ {
++	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
  
-@@ -188,6 +190,8 @@ xchk_finobt_xref_inobt(
- 		goto no_record;
+ 	/* We are on the fastopen error path. We can't call straight into the
+@@ -3468,8 +3469,13 @@ static int mptcp_disconnect(struct sock
+ 	mptcp_check_listen_stop(sk);
+ 	mptcp_set_state(sk, TCP_CLOSE);
  
- 	error = xfs_inobt_get_rec(cur, &irec, &has_record);
-+	if (error)
-+		return error;
- 	if (!has_record)
- 		return -EFSCORRUPTED;
+-	mptcp_stop_rtx_timer(sk);
+-	mptcp_stop_tout_timer(sk);
++	/* The later subflow close can not kick again the tout timer,
++	 * as the msk is already in closed status.
++	 */
++	msk->timer_ival = icsk->icsk_rto_min;
++	sk_stop_timer_sync(sk, &sk->mptcp_retransmit_timer);
++	icsk->icsk_mtup.probe_timestamp = 0;
++	sk_stop_timer_sync(sk, &icsk->mptcp_tout_timer);
+ 
+ 	mptcp_pm_connection_closed(msk);
  
 
 
