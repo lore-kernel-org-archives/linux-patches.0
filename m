@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4394F3936;
-	Thu, 17 Sep 2026 15:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6419E26B2AD;
+	Thu, 17 Sep 2026 15:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660287; cv=none; b=avhVPtE+5mHRbX2PEmR1RWGbxov0SMzx+97GZOo1PGpOQ3zmD/odr8Y9BifQLE1vBaD7MQ7GS61Yqacij4PARrVWs1GdbxrwRZ1XAVZGflrNnfJ/dFjbfe7ruQ+H1du+cLDwgeLu0DHCC8rkbfYahdk5iAhB0B4UoZcGixwYR/8=
+	t=1789660290; cv=none; b=f62WJXGmchjLbZIKUN+MrBu1ilMu5+/WYm38UgBTn0+9Jon7kAHdsX0DPMRod6ynHHjJ59kVew3rs6cdoQ8/DrSSwKLbpL2P94+Wq4ZkExSsKT83x4+b7jjJrIU6yHXeNwqFamjXl4FRgB/w7uKGvWQ6VrH4LgnAfgvIWB1cM6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660287; c=relaxed/simple;
-	bh=T05NCPQ/oQliRDBZm5RPiPsZo28apRxImtnT2gdp/tA=;
+	s=arc-20240116; t=1789660290; c=relaxed/simple;
+	bh=77G6SsZUhUKlMJbBlxLZbRXzicLFujweQZTuSgR1lsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hn4F/EodniXMOayREdb4I6lITKO3jF8XULty/5Lrw68M4S1zk4msmDvuhanKo9IAXoEmBaxQDKV/B7CLB8xU0gsqnalK4TpOSmzGbQV9n87f/2fkqkrjYBr6VDQmOQHXdViDihuoMgq6dptDhqeNfEKaCrnQWwzieX2lDTsx5xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYnjkd4K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASQ0xbZwSnZ9Up3ZZszo1YdkdY7OXTTIhcHHmoNmmgUwKQfe2Tb5341k1CGm//kVjR2Q1ZBxcpInB+VMW3ci2dFIsjz1AeWRPFTW9FtD7Ihry9XbEdPFKokxkU0mrBwZaXraG4K6M36pB9W+T5l22odTv2OQ3na0wp7EuOQO6sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8O+xC4/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYnjkd4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9116A1F000FF;
-	Thu, 17 Sep 2026 15:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8O+xC4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDC11F000FF;
+	Thu, 17 Sep 2026 15:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660286;
-	bh=6VILPpiGYuQdTGdiGp+FwWTvqshPXND9QolLbianViw=;
+	s=korg; t=1789660289;
+	bh=/rgIhTCWrD/Z2/pRqS72m4PvCSJx5ekMPHaIGg3HHl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IYnjkd4KS2v0grjuVMgH70vXoMxqohe1gTn81GnZXKRnCHaVPW9NERv+KPGXZC6aY
-	 UCUPhdSZ5GB8cQDq4z8FtkoB9qGDfAip9B+CzRhG5mIriFJwhu3BMO+piTsoNXoOjZ
-	 COOUf54BJ5EwRKSLUWsRENIvPbHvPDPUdpRhRRdM=
+	b=M8O+xC4/DsZ6HFKsmHx/zTEXJ0RfOEvVttDbD2ZIYoSK/wkPrj+U56YGUmBSIBEnj
+	 u+McENsHLNaMUIYRXQogRz/3jN5ijgeU39HpUrHUEnvhcUz11dzgPuLcu6kzTq/yW9
+	 AX59J4pholJLyaXqFfjA4kry3Uw01TOoay16nTl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 492/733] ufs: validate cylinder group metadata before caching it
-Date: Thu, 17 Sep 2026 16:13:20 +0100
-Message-ID: <20260917151404.321977194@linuxfoundation.org>
+	Roman Li <roman.li@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 535/733] drm/amd/display: Exit IPS before connector detection on resume
+Date: Thu, 17 Sep 2026 16:14:03 +0100
+Message-ID: <20260917151405.541902544@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,68 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Fangzhi Zuo <jerry.zuo@amd.com>
 
-commit c9d263be26806d388129fab8c6904bed197fc6af upstream.
+commit 3001d2073d6542a9e51fa5bca3a39a078094d3c6 upstream.
 
-ufs_read_cylinder() copies the cylinder group index and the rotor
-positions straight from the on-disk group and caches them without any
-check:
+[Why & How]
+On resume, dm_resume() walks the connector list and, for each connector,
+calls dc_link_detect_connection_type() at the top of the loop iteration
+before the per-connector dc_exit_ips_for_hw_access() that sits in the
+detection branch. There is no dc_exit_ips_for_hw_access() before the loop,
+so the very first HW access relies on an earlier connector having already
+taken the display out of IPS.
 
-	ucpi->c_cgx    = fs32_to_cpu(sb, ucg->cg_cgx);
-	ucpi->c_rotor  = fs32_to_cpu(sb, ucg->cg_rotor);
-	ucpi->c_frotor = fs32_to_cpu(sb, ucg->cg_frotor);
-	ucpi->c_irotor = fs32_to_cpu(sb, ucg->cg_irotor);
+Commit d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
+skips the eDP connector when no panel is present. On a DCN3.5 APU whose
+eDP link has no sink, the eDP iteration - which used to bring the HW out
+of IPS first - is now skipped, so a downstream DP connector becomes the
+first one processed. Its initial DDC/AUX access then runs while the HW is
+still idle, the AUX transfers time out (-ETIMEDOUT), and the EDID read
+fails:
 
-They are then used as indices during allocation and free:
+  [drm:dm_helpers_read_local_edid [amdgpu]] *ERROR* EDID err: 2, on connector: DP-1
+  amdgpu: [drm] *ERROR* No EDID read.
 
-  - c_cgx indexes the cylinder summary array as
-    UFS_SB(sb)->fs_cs(ucpi->c_cgx), so a value past s_ncg writes a 32
-    bit count outside the s_csp allocation.
+Take the display out of IPS once before the detection loop so the first
+connector processed no longer touches the AUX/DDC engine while the HW is
+still in idle power state. This keeps the eDP-skip boot/resume
+optimization while fixing the DP EDID read failure.
 
-  - c_frotor becomes a bitmap scan start, start = c_frotor >> 3, and
-    then length = ((s_fpg + 7) >> 3) - start. A start beyond the block
-    bitmap wraps the unsigned length to a huge value, so ubh_scanc()
-    walks far past the cylinder group buffers. c_irotor drives the
-    inode bitmap the same way.
-
-A crafted image can set any of these freely, turning an ordinary
-allocation into an out of bounds access.
-
-Reject a cylinder group whose recorded index does not match the group
-being read, or whose rotors fall outside the group, before the metadata
-is cached. Valid filesystems keep cg_cgx equal to the group number and
-the rotors within the group, so only malformed images are rejected.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 86420fe3093161971b4064e05be11ffff1df76aa)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801071306.59484-3-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/cylinder.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ufs/cylinder.c
-+++ b/fs/ufs/cylinder.c
-@@ -68,6 +68,16 @@ static bool ufs_read_cylinder(struct sup
- 	ucpi->c_clustersumoff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clustersumoff);
- 	ucpi->c_clusteroff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clusteroff);
- 	ucpi->c_nclusterblks = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_nclusterblks);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3925,6 +3925,10 @@ static int dm_resume(struct amdgpu_ip_bl
+ 	/* On resume we need to rewrite the MSTM control bits to enable MST*/
+ 	s3_handle_mst(ddev, false);
+ 
++	/* Exit IPS before the detection loop's first AUX/DDC access. */
++	scoped_guard(mutex, &dm->dc_lock)
++		dc_exit_ips_for_hw_access(dm->dc);
 +
-+	/* these on-disk values become array and bitmap indices */
-+	if (ucpi->c_cgx != cgno ||
-+	    ucpi->c_rotor >= uspi->s_fpg ||
-+	    ucpi->c_frotor >= uspi->s_fpg ||
-+	    ucpi->c_irotor >= uspi->s_ipg) {
-+		ufs_error(sb, __func__,
-+			  "inconsistent metadata in cylinder group %u\n", cgno);
-+		goto failed;
-+	}
- 	UFSD("EXIT\n");
- 	return true;
- 	
+ 	/* Do detection*/
+ 	drm_connector_list_iter_begin(ddev, &iter);
+ 	drm_for_each_connector_iter(connector, &iter) {
 
 
