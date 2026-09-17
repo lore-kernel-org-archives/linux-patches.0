@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304754C10D4;
-	Thu, 17 Sep 2026 17:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF9547C0F1;
+	Thu, 17 Sep 2026 17:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665044; cv=none; b=XcHtBnnEaD+w9V/MTO95Zk5Lg1lnzHluooWr4LFixpBe/3KFzQmuGWr0y6HmyVEFHrRZuH+r61PpoU/+fLWHFZF5B7a81RmZjdWooU0CslAPPlvEl7f39paZZaoiw4qb3PaKA03SELnyepHFqs2Yvej6MHExaRwcGRFsPZ+vnag=
+	t=1789665048; cv=none; b=G7PPglKMV0Vdv84O7O4/nyK/+TbRLIsYodh9WESBUfWUTVDAZZMb7tB8cAO3y8LG8dObDUW9bQXXQ5mpL9pVeG+p7SsLxBzldzU774wglDssUWEuDL26MIiJomh2iNa/zWxLp13nnSEjneGCWOECD5eiAmz7pLgtjhmB6sPSFvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665044; c=relaxed/simple;
-	bh=REHuvgEvySdKSuo6wPhbR9OctBFm5Pt69yiSwH2iQ98=;
+	s=arc-20240116; t=1789665048; c=relaxed/simple;
+	bh=C2cBtBg9bcnqyukaSHr2q7c4tUIOk2WSrKBUAMfohEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqgTNUfSiiIzh7pCbNhTVZnFuvke+U3qIAe4WdU+D/h5CMLts+qIrnicaTIRNG2L7oJjhjobEWPovstwWgeMnPD65EzSVwwjkBiB/2njyCWB5x5y5KfgbPOYE/XVhl+XakWfJ5BcFP7K2zqRNhUsWB31hqUiqGN0l4XhW93bEXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKgObSzJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tBPXuIV5sDudXnkj8ExA/ayzUxNfJ5swmkQ+D94RPxmR1d1lwTiNv0BHLHuBycL5yUMNrRo72UDY646r/CNvee22C74Y+MOcMnQCVb0JlpBIKIPJvO57W+/LZt8eVbt5ltC+8qnJiDC8/uFO5qaj0MKJ11To4KNzCipt13S5Ar4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+7pzQjS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKgObSzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DFF1F000FF;
-	Thu, 17 Sep 2026 17:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+7pzQjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908F21F00893;
+	Thu, 17 Sep 2026 17:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665041;
-	bh=80K/mwKRZhKw3iAyfCHkwYLiZQQQ8CENzsKnNKtCDyo=;
+	s=korg; t=1789665044;
+	bh=n7Wb+PuLnlgtnBkp6XsX6czHNZK8oSd8pNx9dRMtZig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DKgObSzJsAdELSCfT/DmyQtK3P2cRe1G4JeGJkmNzpTiSfm/yQNV+oe2/T51Nj/0L
-	 e97LJCfyi4QYn6y/8Rc5tl4U8xjwlwiI5Q5sp2HeKyUMDSRZut+95r5Xom8dV50n/K
-	 KCcWwOdrwGhu6baN6wuz0KctMyWGnKbdZEhxQDj0=
+	b=O+7pzQjSVNDbgahnVV5qjDvYdKjKaKuHVdF9Zg2/y7Cm/ORDiT2f5s7IiKJrgK1j6
+	 8P61AR37GjTt2swFFihyr3f2nEyvmR2fXGS7RO3exTTTq3Tz8n00pYtTJUDNCtMQ4J
+	 UaLcIUDONJngNsQJqnRamZ1JITxM62/xrQU7TNLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vlatko Kosturjak <kost@linux.hr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hardik Garg <hargar@linux.microsoft.com>,
+	Tianyu Lan <Tianyu.Lan@microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0574/1250] ppp_async: drop the errored frame instead of resetting its headroom
-Date: Thu, 17 Sep 2026 16:06:09 +0100
-Message-ID: <20260917151607.462416979@linuxfoundation.org>
+Subject: [PATCH 6.18 0557/1250] Drivers: hv: vmbus: add VTL2 redirect connection ID
+Date: Thu, 17 Sep 2026 16:05:52 +0100
+Message-ID: <20260917151607.027618728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,94 +55,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlatko Kosturjak <kost@linux.hr>
+From: Hardik Garg <hargar@linux.microsoft.com>
 
-[ Upstream commit 8dc5d98a16fa23c00999aecf10018c9f69fa5bf4 ]
+[ Upstream commit 92d0593128023cf93ae61b7728dcc3062f8d514f ]
 
-ppp_receive_nonmp_frame() prepends a two-byte direction tag before running
-the pass/active BPF filters:
+VMBus sends CHANNELMSG_INITIATE_CONTACT through a Hyper-V message
+connection ID. Older protocol versions use VMBUS_MESSAGE_CONNECTION_ID,
+while protocol version 5.0 and newer normally use
+VMBUS_MESSAGE_CONNECTION_ID_4.
 
-	*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+For a VTL2 kernel using VMBus protocol 5.0 or newer, the host
+may expect INITIATE_CONTACT on either the redirect connection ID or
+VMBUS_MESSAGE_CONNECTION_ID_4. There is no capability indication that
+identifies which ID is active, so the driver must determine it at runtime.
 
-Nothing on the receive path guarantees those two bytes of headroom. The
-frame-error path in ppp_async's process_input_packet() resets a reused skb's
-headroom to zero while claiming to restore it to a freshly allocated state -
-but a fresh skb from dev_alloc_skb() carries NET_SKB_PAD:
+During VMBus negotiation, the redirect ID is tried first because it is
+used by VTL2 configurations with VMBus redirection enabled. If the
+redirect ID is unavailable, the host rejects it synchronously with
+HV_STATUS_INVALID_CONNECTION_ID, allowing fallback to the standard ID.
 
-	err:
-		if (skb) {
-			/* make skb appear as freshly allocated */
-			skb_trim(skb, 0);
-			skb_reserve(skb, - skb_headroom(skb));
-		}
+Return a distinct error for an invalid Initiate Contact connection ID so
+this fallback does not mask other post-message failures or
+protocol-version rejections. Preserve the existing connection ID
+selection for older protocol versions or when running below VTL2.
 
-ap->rpkt still points at that skb, so the next frame is reassembled into it
-with no headroom at all. A peer that sends a bad-FCS frame followed by one
-beginning ff 03 then leaves a single byte of headroom by the time the filter
-tag is pushed, which lands one byte below skb->head:
-
-  skbuff: skb_under_panic: len:49 put:2 head:ffff888003c10000
-          data:ffff888003c0ffff tail:0x30 end:0x640 dev:<NULL>
-  kernel BUG at net/core/skbuff.c:214!
-  RIP: 0010:skb_panic+0x13e/0x230
-  Call Trace:
-   skb_push+0xbd/0x100
-   ppp_receive_nonmp_frame+0x48a/0x1d10
-   ppp_input+0x4e9/0x2f80
-   ppp_async_process+0x2a/0xe0
-   tasklet_action_common+0x20f/0x8a0
-   handle_softirqs+0x18e/0x590
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Zeroing the headroom violates the NET_SKB_PAD guarantee that dev_alloc_skb()
-gives the rest of the receive path. Besides the filter panic above, when CCP
-compression is enabled ppp_decompress_frame() hands skb->data - 2 to
-->decompress()/->incomp(), which then reads out of bounds before skb->head
-for the same reason.
-
-Rather than restore the headroom, drop the errored frame - as ppp_synctty
-already does on its error path - and clear ap->rpkt so the next frame is
-reassembled into a fresh skb with proper headroom. This is simpler and fixes
-both the filter under-panic and the CCP out-of-bounds read.
-
-The original V1 of this patch made room in ppp_receive_nonmp_frame() with
-skb_cow_head(); Eric pointed out that fixing the root cause in the transport
-is the right approach.
-
-Found by fuzzing the PPP receive path with a mutating peer on a pty; it is an
-interesting (remote) DoS: root configures PPP, the peer supplies two crashing
-frames. The reproducer (repro-ppp-skb.c, unchanged from v1) panics in about a
-second, and returns cleanly with this applied.
-
-Fixes: 6722e78c9005 ("[PPP]: handle misaligned accesses")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Vlatko Kosturjak <kost@linux.hr>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/apkR6ZU+tqP2C3Fl@griffin.linux.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
+Reviewed-by: Tianyu Lan <Tianyu.Lan@microsoft.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/hv/connection.c   | 47 +++++++++++++++++++++++----------------
+ drivers/hv/hyperv_vmbus.h |  2 ++
+ 2 files changed, 30 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index c97406c6004d4..ab602a0228d38 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -812,11 +812,8 @@ process_input_packet(struct asyncppp *ap)
-  err:
- 	/* frame had an error, remember that, reset SC_TOSS & SC_ESCAPE */
- 	ap->state = SC_PREV_ERROR;
--	if (skb) {
--		/* make skb appear as freshly allocated */
--		skb_trim(skb, 0);
--		skb_reserve(skb, - skb_headroom(skb));
--	}
-+	kfree_skb(skb);
-+	ap->rpkt = NULL;
+diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
+index 1fe3573ae52a4..9be2af772867d 100644
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -71,7 +71,8 @@ module_param(max_version, uint, S_IRUGO);
+ MODULE_PARM_DESC(max_version,
+ 		 "Maximal VMBus protocol version which can be negotiated");
+ 
+-int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo, u32 version)
++static int vmbus_try_connection_id(struct vmbus_channel_msginfo *msginfo,
++				   u32 version, u32 connection_id)
+ {
+ 	int ret = 0;
+ 	struct vmbus_channel_initiate_contact *msg;
+@@ -86,20 +87,20 @@ int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo, u32 version)
+ 	msg->vmbus_version_requested = version;
+ 
+ 	/*
+-	 * VMBus protocol 5.0 (VERSION_WIN10_V5) and higher require that we must
+-	 * use VMBUS_MESSAGE_CONNECTION_ID_4 for the Initiate Contact Message,
+-	 * and for subsequent messages, we must use the Message Connection ID
+-	 * field in the host-returned Version Response Message. And, with
+-	 * VERSION_WIN10_V5 and higher, we don't use msg->interrupt_page, but we
+-	 * tell the host explicitly that we still use VMBUS_MESSAGE_SINT(2) for
+-	 * compatibility.
++	 * For VMBus protocol 5.0 (VERSION_WIN10_V5) and higher, use the
++	 * caller-supplied connection_id for the Initiate Contact message so
++	 * the caller can implement the required retry scheme. For subsequent
++	 * messages, use the Message Connection ID field in the host-returned
++	 * Version Response message. With VERSION_WIN10_V5 and higher, we don't
++	 * use msg->interrupt_page, but tell the host explicitly that we still
++	 * use VMBUS_MESSAGE_SINT(2) for compatibility.
+ 	 *
+ 	 * On old hosts, we should always use VMBUS_MESSAGE_CONNECTION_ID (1).
+ 	 */
+ 	if (version >= VERSION_WIN10_V5) {
+ 		msg->msg_sint = VMBUS_MESSAGE_SINT;
+ 		msg->msg_vtl = ms_hyperv.vtl;
+-		vmbus_connection.msg_conn_id = VMBUS_MESSAGE_CONNECTION_ID_4;
++		vmbus_connection.msg_conn_id = connection_id;
+ 	} else {
+ 		msg->interrupt_page = virt_to_phys(vmbus_connection.int_page);
+ 		vmbus_connection.msg_conn_id = VMBUS_MESSAGE_CONNECTION_ID;
+@@ -161,6 +162,22 @@ int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo, u32 version)
+ 	return ret;
  }
  
- /* Called when the tty driver has data for us. Runs parallel with the
++int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo, u32 version)
++{
++	int ret;
++
++	/* Try the redirect ID first for VTL2 with VMBus protocol 5.0+. */
++	if (version >= VERSION_WIN10_V5 && ms_hyperv.vtl == 2) {
++		ret = vmbus_try_connection_id(msginfo, version,
++					      VMBUS_MESSAGE_CONNECTION_ID_REDIRECT);
++		if (ret != -ENXIO)
++			return ret;
++	}
++
++	return vmbus_try_connection_id(msginfo, version,
++				       VMBUS_MESSAGE_CONNECTION_ID_4);
++}
++
+ /*
+  * vmbus_connect - Sends a connect request on the partition service connection
+  */
+@@ -454,18 +471,10 @@ int vmbus_post_msg(void *buffer, size_t buflen, bool can_sleep)
+ 
+ 		switch (ret) {
+ 		case HV_STATUS_INVALID_CONNECTION_ID:
+-			/*
+-			 * See vmbus_negotiate_version(): VMBus protocol 5.0
+-			 * and higher require that we must use
+-			 * VMBUS_MESSAGE_CONNECTION_ID_4 for the Initiate
+-			 * Contact message, but on old hosts that only
+-			 * support VMBus protocol 4.0 or lower, here we get
+-			 * HV_STATUS_INVALID_CONNECTION_ID and we should
+-			 * return an error immediately without retrying.
+-			 */
++			/* Allow INITIATE_CONTACT to try another connection ID. */
+ 			hdr = buffer;
+ 			if (hdr->msgtype == CHANNELMSG_INITIATE_CONTACT)
+-				return -EINVAL;
++				return -ENXIO;
+ 			/*
+ 			 * We could get this if we send messages too
+ 			 * frequently.
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index 39cdded062e8b..f16395ba5d823 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -108,6 +108,8 @@ struct hv_input_post_message {
+ enum {
+ 	VMBUS_MESSAGE_CONNECTION_ID	= 1,
+ 	VMBUS_MESSAGE_CONNECTION_ID_4	= 4,
++	/* VTL2 redirect connection ID for INITIATE_CONTACT. */
++	VMBUS_MESSAGE_CONNECTION_ID_REDIRECT = 0x800074,
+ 	VMBUS_MESSAGE_PORT_ID		= 1,
+ 	VMBUS_EVENT_CONNECTION_ID	= 2,
+ 	VMBUS_EVENT_PORT_ID		= 2,
 -- 
 2.53.0
 
