@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E14E3226;
-	Thu, 17 Sep 2026 15:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA164EB840;
+	Thu, 17 Sep 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660778; cv=none; b=J9EcPfDrBU8Q5fwbu8gEA9+Bcj3jQsP8EGkMfthcKh0zAZPg/9ai0mzNXnN1BVJ14hHPmrtLw4lVst4/hI50iIrHjJCpNoqeOjM7dOW32TaUAMX2sQOWzwK2ou2TsPF9XtXmrqYmHmKV7U5yISpBgNm/bVvXy8K1/6sMCkapxWA=
+	t=1789660781; cv=none; b=p1UHACDvG1/dXNsMe0VMUBvnihOQvWxHUBJR0JHJP2DbORAi1f0YAGu5DvVF9XSdAP/C4uslOfXPOgWl0Ar84H9C1FXm55bMlXXB0tef3a9Z6A5LmMaXZ/SiotSQbBX7T2FmlBACBbUGHCHxs5QIXR5Yue22Z8w0kxLcaosIxMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660778; c=relaxed/simple;
-	bh=OndRcE25wDhOBxhseXC6tXUPKp7AXNV4DM3l4uLwvSs=;
+	s=arc-20240116; t=1789660781; c=relaxed/simple;
+	bh=pnPhuuF3FTMz/lopv/27SP07OlvLWIyMAvY58mDXpUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFrl0a8ui0uUuxbQDu6s6ESZEvobU+nnA/Azebdk14IE9hn2f3KdrKB/K4sHGYPEqhdGQQ8bV9g8i3V2QvqseUTVwfrO1eO3+EuKLCi9TDf4/mqT0vcnHdXDQnJIovuCWM2NLZZJQsZhxdCKxx+JVWlnmDaBRAfHMs9gA7HGyZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk97C+0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qaVwFVhUC2li1tEC4LxKidNQjRIhtQzIqIXj22aROwaBZQsqDUg+F98Z3X74JYG6DHow6ba7cFRCgCBISCwqk9Zbb/nwKtKShgMMxKAuU3bMI1N8OPGc2s6CJb/IgiYaijK7qDJUvZO3ocBi6Zn8wwKEHR3xBeIXvYRaklfDm9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fasG19Xv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk97C+0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B961F000FF;
-	Thu, 17 Sep 2026 15:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fasG19Xv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5F41F00898;
+	Thu, 17 Sep 2026 15:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660777;
-	bh=avJVGXImmaweMn8GEaWSS9jmG/WK23Xi4alRE80mV+A=;
+	s=korg; t=1789660780;
+	bh=iZGG+tAOF4q3jBIMcQZNc/mqhCM651NYBk2ovz3QREM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lk97C+0+VBj3HJtRQ0GBbOs4+UUMEMElxm70btlge1sWDRfhk0ZMG1oKYEXmdGxhw
-	 ELO3qHVleiDcOsWqPmQpeEwF4lqiwzv1n1+W02YePxEUGaVwWGk0A1GMJGfbAqH9x3
-	 NJkZptYENKrpF92fL0iq5SUzyrWO7T9kbM+LNLgk=
+	b=fasG19Xv0IJjpxbb1iE+dlwhCuKq+gZa987Y19m2FxdCwI+L/ocgbgVXcBZ87D+oT
+	 dXgo5SIl4oRC7I53Ou4IT29wjxnSnejURITAKUw8s+Lus4k0thkC6Y1GzpnoDBvE9V
+	 /DkvoOO6Otu3a87iVYw3QOKbJl4P/a7WvoJXrhwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 657/733] xfs: fix xfs_rtrmapbt_mem_cursor for non-rmap filesystems
-Date: Thu, 17 Sep 2026 16:16:05 +0100
-Message-ID: <20260917151409.030671507@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 700/733] media: qcom: iris: fix runtime PM reference leaks
+Date: Thu, 17 Sep 2026 16:16:48 +0100
+Message-ID: <20260917151410.292812562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,40 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 022d5f5fce7f0b6125d404eb74044e6238aef369 upstream.
+[ Upstream commit f87d7eda07fca21efe4b96169ae59007db46e60e ]
 
-It's possible to construct an in-memory rtrmap btree for filesystems
-that don't have the rmap feature enabled.  The kernel doesn't do this,
-but xfs_repair will, if asked to reindex a filesystem that has rtreflink
-enabled but not rtrmap.  Therefore, we must create the cursor with
-enough levels to handle a maximally sized btree possible.
+Use pm_runtime_resume_and_get() in iris_enable_power_domains()
+to avoid leaking a runtime PM usage count on failure.
 
-Note that the rtrmapbt btree cursor slab creates objects large enough to
-handle xfs_rtrmap_maxlevels_ondisk() levels, so setting bc_nlevels to
-the same value isn't costing us any extra memory.
+Also ensure pm_runtime_put_sync() is always called in
+iris_disable_power_domains(), even when iris_opp_set_rate()
+fails, so runtime PM references remain balanced.
 
-Cc: stable@vger.kernel.org # v6.14
-Fixes: 4a61f12eb11958 ("xfs: create a shadow rmap btree during realtime rmap repair")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: bb8a95aa038e ("media: iris: implement power management")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_rtrmap_btree.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_resources.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_rtrmap_btree.c
-+++ b/fs/xfs/libxfs/xfs_rtrmap_btree.c
-@@ -618,7 +618,7 @@ xfs_rtrmapbt_mem_cursor(
- 	struct xfs_btree_cur	*cur;
+--- a/drivers/media/platform/qcom/iris/iris_resources.c
++++ b/drivers/media/platform/qcom/iris/iris_resources.c
+@@ -78,20 +78,21 @@ int iris_enable_power_domains(struct iri
+ 	if (ret)
+ 		return ret;
  
- 	cur = xfs_btree_alloc_cursor(mp, tp, &xfs_rtrmapbt_mem_ops,
--			mp->m_rtrmap_maxlevels, xfs_rtrmapbt_cur_cache);
-+			xfs_rtrmapbt_maxlevels_ondisk(), xfs_rtrmapbt_cur_cache);
- 	cur->bc_mem.xfbtree = xfbt;
- 	cur->bc_nlevels = xfbt->nlevels;
- 	cur->bc_group = xfs_group_hold(rtg_group(rtg));
+-	return pm_runtime_get_sync(pd_dev);
++	return pm_runtime_resume_and_get(pd_dev);
+ }
+ 
+ int iris_disable_power_domains(struct iris_core *core, struct device *pd_dev)
+ {
+ 	int ret;
++	int pm_ret;
+ 
+ 	ret = iris_opp_set_rate(core->dev, 0);
+-	if (ret)
+-		return ret;
+ 
+-	pm_runtime_put_sync(pd_dev);
++	pm_ret = pm_runtime_put_sync(pd_dev);
++	if (!ret)
++		ret = pm_ret;
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static struct clk *iris_get_clk_by_type(struct iris_core *core, enum platform_clk_type clk_type)
 
 
