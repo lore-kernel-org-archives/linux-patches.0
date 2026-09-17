@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1167454706B;
-	Thu, 17 Sep 2026 18:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C154705A;
+	Thu, 17 Sep 2026 18:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668218; cv=none; b=MO5t8qGVoeyAGREJrNzUewxSZ03mbMhDAC1osqUAT2+ZubRltL3Na9aDdk33QFDOhT4ruNIMYfWNT2fcGX4SM6m1VSFjmdePQ11Fcmdk+VoMWvd19iBqRkDsZ8Rbyh1gd4rmbqRAo4ZmRO6flyw+lyBuO2Vv6MrRsOEcrO/lZg8=
+	t=1789668221; cv=none; b=kVsMX5RPfeQF8HevWmdxx00YNEn0qJ4LFnpAkBiMWr7AX6CM3TteE9wal3SuFSGSS+2ewlvTxyaOer8K0U/VoAzOiqGU1ZoFO5cDsd981OLKVHI8ZBbcKSDIL3vEL8rsBm2VJHYaBHCS8JshwHBObKWTZZ1RzSOhE6JVwC3hLRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668218; c=relaxed/simple;
-	bh=hc+g4ekDlgjG+nL15qc7Dklr1nfXbOjwhw/m6ZmRIz8=;
+	s=arc-20240116; t=1789668221; c=relaxed/simple;
+	bh=F5h+YJzFiR24mLlyJhFDVorKvsc7KxCC+7LFfDTCreA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HihwvDyjx0xoLxK1WH35oKIDc3MxCmRYHzAuLGG+IdzQQ3Ay05BhpEEyaruTEPWAj8Ap4ugFib+DMoxRcGyIhrCB7u1EzsmkEiHmxn93rTMuqhHMBgudAvGUEPsATG0meD7hoTT2BD0DZUjGHIk7oTB0ingjNCCWecRyVR2uiZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv+q9IWw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qAOCMDuw5gIIQEfpa4R6s1GDyOt9A5o33KW29x94+EcEx081Of7BtYYZS+uqN6a20Mf68CrEA86K4epiHL2z3mKupFj1jdUrpzaADOYRk7aAORaSBJgFOiMT5/31WKQwV3MQtb4w2adIJx0GQKs51l1NP3gX0UIERDj0FWiA840=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgLmCDSk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv+q9IWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5963D1F000FF;
-	Thu, 17 Sep 2026 18:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgLmCDSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F071F000FF;
+	Thu, 17 Sep 2026 18:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668216;
-	bh=uXnmoLKWDvUMo/rvAIpmgGWTvBS5BiadV7h8Je9S6+I=;
+	s=korg; t=1789668219;
+	bh=DVmw645xhQ3BozA7xIrjzD/VdRygEZ5Y+HSQLuEnQmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rv+q9IWwyAfcDlnL4H9UgZpzoowT5FYp1/T4NCZjtjpdXxLQDeh/RrysTg9l3wNgt
-	 27jAUwZkp8O0sH1DKf6H+STyKlxeH2kEFG0gn27w1AbXZL3hwjfaabUJe80sxutDN3
-	 u8/YSW4KOsuNneFkkqWNGjlfmTljAecBMKLLT6k0=
+	b=tgLmCDSk+E32NPeu20WUZOILTFQV6Lybv0AIXWn2E1c6vf8fCWixCKgR4QPLiHT75
+	 C+w5jtcVoK3Zxm8ITlP7HqHA9sUaQgskhCodNLp4Z4ovAOUGXE6Jhr67BQ76F5WIGT
+	 +kfJNYhQvwkJodI9gR33J7+FPI70Y9sy/s65gb5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Akashdeep Kaur <a-kaur@ti.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0352/1102] ksmbd: align SMB2 oplock break ack handling
-Date: Thu, 17 Sep 2026 16:04:55 +0100
-Message-ID: <20260917151548.482872013@linuxfoundation.org>
+Subject: [PATCH 6.12 0326/1102] mfd: tps65219: Make poweroff handler conditional on system-power-controller
+Date: Thu, 17 Sep 2026 16:04:29 +0100
+Message-ID: <20260917151547.815794776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,176 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Akashdeep Kaur <a-kaur@ti.com>
 
-[ Upstream commit 80a56d4a826c6c84430286fcf7d8655f7c5b0868 ]
+[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
 
-Handle SMB2 oplock break acknowledgments according to the server-side
-validation rules in MS-SMB2.
+Currently, the TPS65219 driver unconditionally registers a poweroff
+handler. This causes issues on systems where a different component
+(such as TF-A firmware) should handle system poweroff instead.
 
-Return STATUS_INVALID_DEVICE_STATE when an ACK arrives while the open is
-not breaking, reject SMB2_OPLOCK_LEVEL_LEASE with
-STATUS_INVALID_PARAMETER, allow BATCH acknowledgments to EXCLUSIVE, and
-make invalid ACK levels fail with STATUS_INVALID_OPLOCK_PROTOCOL after
-lowering the oplock to NONE.
+Make the poweroff handler registration conditional based on the
+"system-power-controller" device tree property. This follows the
+standard kernel pattern where only the designated power controller
+registers for system poweroff operations.
 
-Update the successful response from the final granted oplock level instead
-of relying on the oplock transition helpers, which could turn invalid ACKs
-into successful responses.
+On systems where the property is absent, the PMIC will not register
+a poweroff handler, allowing other poweroff mechanisms to function.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
+Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 104 ++++++++++++++++++----------------------
- 1 file changed, 46 insertions(+), 58 deletions(-)
+ drivers/mfd/tps65219.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 7feca52aef51e..e71ff33a0b1be 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8678,11 +8678,10 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	struct smb2_oplock_break *rsp;
- 	struct ksmbd_file *fp;
- 	struct oplock_info *opinfo = NULL;
--	__le32 err = 0;
--	int ret = 0;
-+	__le32 status = STATUS_SUCCESS;
-+	int ret;
- 	u64 volatile_id, persistent_id;
- 	char req_oplevel = 0, rsp_oplevel = 0;
--	unsigned int oplock_change_type;
- 
- 	WORK_BUFFERS(work, req, rsp);
- 
-@@ -8708,71 +8707,55 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 		return;
+diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
+index d3b77abec786e..5bd95e75f6e78 100644
+--- a/drivers/mfd/tps65219.c
++++ b/drivers/mfd/tps65219.c
+@@ -280,13 +280,15 @@ static int tps65219_probe(struct i2c_client *client)
+ 		return ret;
  	}
  
--	if (opinfo->level == SMB2_OPLOCK_LEVEL_NONE) {
--		rsp->hdr.Status = STATUS_INVALID_OPLOCK_PROTOCOL;
-+	if (opinfo->op_state != OPLOCK_ACK_WAIT) {
-+		ksmbd_debug(SMB, "unexpected oplock state 0x%x\n",
-+			    opinfo->op_state);
-+		status = STATUS_INVALID_DEVICE_STATE;
- 		goto err_out;
- 	}
- 
--	if (opinfo->op_state == OPLOCK_STATE_NONE) {
--		ksmbd_debug(SMB, "unexpected oplock state 0x%x\n", opinfo->op_state);
--		rsp->hdr.Status = STATUS_UNSUCCESSFUL;
-+	if (req_oplevel == SMB2_OPLOCK_LEVEL_LEASE) {
-+		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
-+		status = STATUS_INVALID_PARAMETER;
- 		goto err_out;
- 	}
- 
--	if ((opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE ||
--	     opinfo->level == SMB2_OPLOCK_LEVEL_BATCH) &&
--	    (req_oplevel != SMB2_OPLOCK_LEVEL_II &&
--	     req_oplevel != SMB2_OPLOCK_LEVEL_NONE)) {
--		err = STATUS_INVALID_OPLOCK_PROTOCOL;
--		oplock_change_type = OPLOCK_WRITE_TO_NONE;
--	} else if (opinfo->level == SMB2_OPLOCK_LEVEL_II &&
--		   req_oplevel != SMB2_OPLOCK_LEVEL_NONE) {
--		err = STATUS_INVALID_OPLOCK_PROTOCOL;
--		oplock_change_type = OPLOCK_READ_TO_NONE;
--	} else if (req_oplevel == SMB2_OPLOCK_LEVEL_II ||
--		   req_oplevel == SMB2_OPLOCK_LEVEL_NONE) {
--		err = STATUS_INVALID_DEVICE_STATE;
--		if ((opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE ||
--		     opinfo->level == SMB2_OPLOCK_LEVEL_BATCH) &&
--		    req_oplevel == SMB2_OPLOCK_LEVEL_II) {
--			oplock_change_type = OPLOCK_WRITE_TO_READ;
--		} else if ((opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE ||
--			    opinfo->level == SMB2_OPLOCK_LEVEL_BATCH) &&
--			   req_oplevel == SMB2_OPLOCK_LEVEL_NONE) {
--			oplock_change_type = OPLOCK_WRITE_TO_NONE;
--		} else if (opinfo->level == SMB2_OPLOCK_LEVEL_II &&
--			   req_oplevel == SMB2_OPLOCK_LEVEL_NONE) {
--			oplock_change_type = OPLOCK_READ_TO_NONE;
--		} else {
--			oplock_change_type = 0;
--		}
--	} else {
--		oplock_change_type = 0;
-+	if (opinfo->level == SMB2_OPLOCK_LEVEL_NONE) {
-+		status = STATUS_INVALID_OPLOCK_PROTOCOL;
-+		goto err_out;
- 	}
- 
--	switch (oplock_change_type) {
--	case OPLOCK_WRITE_TO_READ:
--		ret = opinfo_write_to_read(opinfo);
--		rsp_oplevel = SMB2_OPLOCK_LEVEL_II;
--		break;
--	case OPLOCK_WRITE_TO_NONE:
--		ret = opinfo_write_to_none(opinfo);
--		rsp_oplevel = SMB2_OPLOCK_LEVEL_NONE;
--		break;
--	case OPLOCK_READ_TO_NONE:
--		ret = opinfo_read_to_none(opinfo);
--		rsp_oplevel = SMB2_OPLOCK_LEVEL_NONE;
--		break;
--	default:
--		pr_err("unknown oplock change 0x%x -> 0x%x\n",
--		       opinfo->level, rsp_oplevel);
-+	if (opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_II &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_NONE) {
-+		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
-+		status = STATUS_INVALID_OPLOCK_PROTOCOL;
-+		goto err_out;
- 	}
- 
--	if (ret < 0) {
--		rsp->hdr.Status = err;
-+	if (opinfo->level == SMB2_OPLOCK_LEVEL_BATCH &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_II &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_NONE &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
-+		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
-+		status = STATUS_INVALID_OPLOCK_PROTOCOL;
-+		goto err_out;
-+	}
-+
-+	if (opinfo->level == SMB2_OPLOCK_LEVEL_II &&
-+	    req_oplevel != SMB2_OPLOCK_LEVEL_NONE) {
-+		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
-+		status = STATUS_INVALID_OPLOCK_PROTOCOL;
- 		goto err_out;
- 	}
- 
-+	if (req_oplevel == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
-+		rsp_oplevel = SMB2_OPLOCK_LEVEL_NONE;
-+	else
-+		rsp_oplevel = req_oplevel;
-+
-+	opinfo->level = rsp_oplevel;
-+
- 	rsp->StructureSize = cpu_to_le16(24);
- 	rsp->OplockLevel = rsp_oplevel;
- 	rsp->Reserved = 0;
-@@ -8780,11 +8763,16 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	rsp->VolatileFid = volatile_id;
- 	rsp->PersistentFid = persistent_id;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_oplock_break));
+-	ret = devm_register_power_off_handler(tps->dev,
+-					      tps65219_power_off_handler,
+-					      tps);
 -	if (ret) {
-+	if (ret)
-+		ksmbd_debug(SMB, "failed to pin oplock break response: %d\n",
-+			    ret);
-+	goto out;
+-		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
+-		return ret;
++	if (of_device_is_system_power_controller(tps->dev->of_node)) {
++		ret = devm_register_power_off_handler(tps->dev,
++						      tps65219_power_off_handler,
++						      tps);
++		if (ret)
++			return dev_err_probe(tps->dev, ret,
++					     "Failed to register power-off handler\n");
+ 	}
 +
- err_out:
--		smb2_set_err_rsp(work);
--	}
-+	rsp->hdr.Status = status;
-+	smb2_set_err_rsp(work);
+ 	return 0;
+ }
  
-+out:
- 	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	opinfo_put(opinfo);
 -- 
 2.53.0
 
