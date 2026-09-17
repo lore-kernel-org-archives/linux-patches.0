@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF4554706A;
-	Thu, 17 Sep 2026 17:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0504547040;
+	Thu, 17 Sep 2026 17:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665098; cv=none; b=U6Q08EzqDjY9U5ghe34tXSjy0+1pG7ouBxkWycTnrr7uCD/4QC8ShTsQJYN2xqJ0imNlbXdDEMCvdRDW5OU+cUPccZKuPH8bfi3XeadJYGdEjwmSKKDaUZ5RZmXNJU5NfsRm01RAIt4auvfVYAsCeHD1/YtEIB3WaJFLEZ3at4c=
+	t=1789665101; cv=none; b=axpZrgpVIqDLWy9PdujIEWECkfID11YOJay8QRJJ8pWQmmYV3n2aq2foVXdP2XF+EXudcp9TDGvGsCHBdIU9Lp0vVN0up/qKeYJwcHp3ZMzwv+/FSLcG/QqqaCtOlKymJBT8+7ABNvyDlejPEqkiISjE238CB/RyUEF2AKvDJhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665098; c=relaxed/simple;
-	bh=m4qmnZc5g5SIE0Dm8E7mzMResQTpsnln7L//9F+tNzw=;
+	s=arc-20240116; t=1789665101; c=relaxed/simple;
+	bh=9ObK2F3lSVm4/cK+2lPOHcdunyebMu8Q/newV5Ygq2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBrrxCFg/OHXBocPGrPgQUFmEk8BNb7eWPa1s/Bl8wfHk22/UHmSyQyR3mpQ+eKrsZGUtC7wbmn2d/97Ve9d2xupqfGfOjqNTSzsXGRO730ug3wY7AQOGJe7jboZQsh6ZOZZImuZgHCrHT/TYU/YvDzdCPYrLbORio16p35r910=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA2YiviV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8TisjDsbgaVdS+Xerk1sXSHpvx1Va/fMl+MoUaCknPznSFb4l9XP7LBavJUdzhoAoCFO2AJ241X6WJdxVZggmWgop5RrC9iZadIJ4tWPB/LCnD9H8FJWQx+LKrZTXfqTVxkBxU1nSKw3IjYOfYa/GXwfipVm/AUNmwL2Pl6RSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IF7Xv1NM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA2YiviV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157811F000FF;
-	Thu, 17 Sep 2026 17:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IF7Xv1NM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193C71F000FF;
+	Thu, 17 Sep 2026 17:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665096;
-	bh=mxIbIPIBAQ+LMIGnThjD7Y90xLdcwnKQIZYhulrv4WA=;
+	s=korg; t=1789665099;
+	bh=v7iaI4Gut1gGFgsu4lt3w2vPaz4tbq4wmHDDfOpflhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uA2YiviVY5XT6K7zXHrC+1H91nDgDKNKiwHEWG7+ETIab7yE4HLtSlhbOKaihsL3t
-	 bctI6ALzO+mr4iDK1EYMdgBooTywREQJKuq8mtDzIfW37L+3WDyLJHjoysksQwfGHv
-	 v522Bd8+O/ktdmUEygBf1U1i/v0uJAg+SLTLZrjs=
+	b=IF7Xv1NM6WvyKMpDmRsZtpinNp3mZ+NVl3qFDzITU0+s4K+lZ7hLzYrw8ZnvzFXZO
+	 pBFozWhLMb0v2CQBmfVTpNeDgNqtwUri3W0/cXm1vhT7mGLTVAK1Eu/ckpQNZ6Y/9G
+	 5ekNXXwXNM29INTeiYJzbgAFaAI2JBOn5RPBj69I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Michael Chan <michael.chan@broadcom.com>,
+	syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0590/1250] bnxt: fix head underflow on XDP head-grow
-Date: Thu, 17 Sep 2026 16:06:25 +0100
-Message-ID: <20260917151607.874960444@linuxfoundation.org>
+Subject: [PATCH 6.18 0591/1250] ipv4: fib: Dont dump dying fib_info in fib_leaf_notify().
+Date: Thu, 17 Sep 2026 16:06:26 +0100
+Message-ID: <20260917151607.901281739@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,146 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit e26657fe3b85c068b01f42bb0c602f242d643ba9 ]
+[ Upstream commit 06b693d2eb6651a63ad85bad8673de3b7d4edd6d ]
 
-The xdp.py test test_xdp_native_adjst_head_grow_data crashes when run on
-a bnxt machine (and also crashes in NIPA).
+syzbot reported use-after-free in nsim_fib4_prepare_event(). [0]
 
-It seems that the bug is an underflow in bnxt_rx_multi_page_skb, which
-builds the skb head:
+The problem is that the following functions call fib_info_hold() /
+refcount_inc() while dumping fib_info under RCU, which is unsafe.
 
-  napi_build_skb(data_ptr - bp->rx_offset, rxr->rx_page_size);
+  * mlxsw_sp_router_fib4_event()
+  * rocker_router_fib_event()
+  * nsim_fib4_prepare_event()
 
-The problem with this expression is that in page mode, rx_offset is:
+refcount_inc_not_zero() must be used, but it would be too late
+there.
 
-  bp->rx_offset = NET_IP_ALIGN + XDP_PACKET_HEADROOM;
+Let's guarantee the lifetime of fib_info in fib_leaf_notify().
 
-Which evaluates (at least on x86_64) to 258.
+Note that IPv6 does not need the corresponding change since
+fib6_table_dump() holds fib6_table.tb6_lock.
 
-The test test_xdp_native_adjst_head_grow_data tests a case where the
-head is adjusted by -256.
+[0]:
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25, CPU#0: kworker/u8:15/3420
+Modules linked in:
+CPU: 0 UID: 0 PID: 3420 Comm: kworker/u8:15 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+Workqueue: netns cleanup_net
+RIP: 0010:refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25
+Code: eb 66 85 db 74 3e 83 fb 01 75 4c e8 1b f1 22 fd 48 8d 3d 84 cb f1 0a 67 48 0f b9 3a eb 4a e8 08 f1 22 fd 48 8d 3d 81 cb f1 0a <67> 48 0f b9 3a eb 37 e8 f5 f0 22 fd 48 8d 3d 7e cb f1 0a 67 48 0f
+RSP: 0018:ffffc9000f2c7270 EFLAGS: 00010293
+RAX: ffffffff84a18858 RBX: 0000000000000002 RCX: ffff888032ff9ec0
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8f9353e0
+RBP: 0000000000000000 R08: ffff888032ff9ec0 R09: 0000000000000005
+R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880570cc000
+R13: dffffc0000000000 R14: ffff88802b40563c R15: ffff8880570cc000
+FS:  0000000000000000(0000) GS:ffff888126173000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb1f4d5d000 CR3: 000000006072a000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+ __refcount_inc include/linux/refcount.h:366 [inline]
+ refcount_inc include/linux/refcount.h:383 [inline]
+ fib_info_hold include/net/ip_fib.h:629 [inline]
+ nsim_fib4_prepare_event drivers/net/netdevsim/fib.c:930 [inline]
+ nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1000 [inline]
+ nsim_fib_event_nb+0x1055/0x1240 drivers/net/netdevsim/fib.c:1043
+ call_fib_notifier+0x45/0x80 net/core/fib_notifier.c:25
+ call_fib_entry_notifier net/ipv4/fib_trie.c:90 [inline]
+ fib_leaf_notify net/ipv4/fib_trie.c:2176 [inline]
+ fib_table_notify net/ipv4/fib_trie.c:2194 [inline]
+ fib_notify+0x36b/0x5e0 net/ipv4/fib_trie.c:2217
+ fib_net_dump net/core/fib_notifier.c:70 [inline]
+ register_fib_notifier+0x184/0x360 net/core/fib_notifier.c:108
+ nsim_fib_create+0x85d/0x9f0 drivers/net/netdevsim/fib.c:1596
+ nsim_dev_reload_create drivers/net/netdevsim/dev.c:1604 [inline]
+ nsim_dev_reload_up+0x374/0x7c0 drivers/net/netdevsim/dev.c:1058
+ devlink_reload+0x501/0x8d0 net/devlink/dev.c:475
+ devlink_pernet_pre_exit+0x1ff/0x420 net/devlink/core.c:558
+ ops_pre_exit_list net/core/net_namespace.c:161 [inline]
+ ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
+ cleanup_net+0x56e/0x800 net/core/net_namespace.c:702
+ process_one_work kernel/workqueue.c:3314 [inline]
+ process_scheduled_works+0xb5d/0x1860 kernel/workqueue.c:3397
+ worker_thread+0xa53/0xfc0 kernel/workqueue.c:3478
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
 
-When this test runs, data_ptr is shifted to frag_start + 2 (where
-frag_start = page_address(page) + offset).
-
-Then, bnxt_rx_multi_page_skb is invoked and the napi_build_skb
-expression subtracts 258, landing at an address before frag_start. This
-could be either the previous fragment or the previous physical page when
-the offset is < 256 (e.g. if the fragment started at offset 0).
-
-When the skb is freed, the page pool fragment reference is dropped on
-either the wrong page or the wrong frag of the right page. In either
-case, the corrupted reference count can lead to the page being
-prematurely recycled while still in use. Once (incorrectly) recycled, it
-can be handed out again and on driver teardown this would result in a
-double free.
-
-The commit under fixes updated this code to handle the case where the
-native page size is >= 64k, but it unintentionally broke the head grow
-case.
-
-To fix this, add an offset field to struct bnxt_sw_rx_bd, mirroring the
-existing offset field in struct bnxt_sw_rx_agg_bd. Populate it on
-allocation and preserve it on reuse.
-
-In bnxt_rx_multi_page_skb, use the newly added offset field to compute
-the fragment start and pass that to napi_build_skb. Adjust the layout
-with skb_reserve.
-
-There are two cases, the non-adjustment case and the adjustment case.
-
-In both cases, the skb is built at page_address(page) + offset to
-account for the case where the native page size >= 64K and skb_reserve
-is called with data_ptr - (page_address(page) + offset). That
-difference equals bp->rx_offset when data_ptr was not moved, or
-bp->rx_offset + xdp_adjust when XDP adjusted the head.
-
-Re-running the failing test with this commit applied causes the test to
-run successfully to completion.
-
-The other rx_skb_func implementations don't have this issue.
-
-Fixes: f6974b4c2d8e ("bnxt_en: Fix page pool logic for page size >= 64K")
-Signed-off-by: Joe Damato <joe@dama.to>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260609204458.2237787-2-joe@dama.to
+Fixes: 0ae3eb7b4611 ("netdevsim: fib: Perform the route programming in a non-atomic context")
+Fixes: c3852ef7f2f8 ("ipv4: fib: Replay events when registering FIB notifier")
+Reported-by: syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a290011.39669fcc.33b062.00b1.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 ++++++++--
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  1 +
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ include/net/ip_fib.h | 5 +++++
+ net/ipv4/fib_trie.c  | 4 ++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index e2bceec96932b..ca14bb1dabc5d 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -981,6 +981,7 @@ int bnxt_alloc_rx_data(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 		mapping += bp->rx_dma_offset;
- 		rx_buf->data = page;
- 		rx_buf->data_ptr = page_address(page) + offset + bp->rx_offset;
-+		rx_buf->offset = offset;
- 	} else {
- 		u8 *data = __bnxt_alloc_rx_frag(bp, &mapping, rxr, gfp);
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 24023c19c7b1f..040eed88fc672 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -628,6 +628,11 @@ static inline void fib_info_hold(struct fib_info *fi)
+ 	refcount_inc(&fi->fib_clntref);
+ }
  
-@@ -989,6 +990,7 @@ int bnxt_alloc_rx_data(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 
- 		rx_buf->data = data;
- 		rx_buf->data_ptr = data + bp->rx_offset;
-+		rx_buf->offset = 0;
- 	}
- 	rx_buf->mapping = mapping;
- 
-@@ -1010,6 +1012,7 @@ void bnxt_reuse_rx_data(struct bnxt_rx_ring_info *rxr, u16 cons, void *data)
- 	prod_rx_buf->data_ptr = cons_rx_buf->data_ptr;
- 
- 	prod_rx_buf->mapping = cons_rx_buf->mapping;
-+	prod_rx_buf->offset = cons_rx_buf->offset;
- 
- 	prod_bd = &rxr->rx_desc_ring[RX_RING(bp, prod)][RX_IDX(prod)];
- 	cons_bd = &rxr->rx_desc_ring[RX_RING(bp, cons)][RX_IDX(cons)];
-@@ -1145,8 +1148,11 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 	struct page *page = data;
- 	u16 prod = rxr->rx_prod;
- 	struct sk_buff *skb;
-+	void *frag_start;
- 	int err;
- 
-+	frag_start = page_address(page) + rxr->rx_buf_ring[cons].offset;
++static inline bool fib_info_hold_safe(struct fib_info *fi)
++{
++	return refcount_inc_not_zero(&fi->fib_clntref);
++}
 +
- 	err = bnxt_alloc_rx_data(bp, rxr, prod, GFP_ATOMIC);
- 	if (unlikely(err)) {
- 		bnxt_reuse_rx_data(rxr, cons, data);
-@@ -1155,13 +1161,13 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 	dma_addr -= bp->rx_dma_offset;
- 	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, rxr->rx_page_size,
- 				bp->rx_dir);
--	skb = napi_build_skb(data_ptr - bp->rx_offset, rxr->rx_page_size);
-+	skb = napi_build_skb(frag_start, rxr->rx_page_size);
- 	if (!skb) {
- 		page_pool_recycle_direct(rxr->page_pool, page);
- 		return NULL;
+ static inline void fib_info_put(struct fib_info *fi)
+ {
+ 	if (refcount_dec_and_test(&fi->fib_clntref))
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 2dc87e2156d37..9bf5550e2fb73 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -2172,10 +2172,14 @@ static int fib_leaf_notify(struct key_vector *l, struct fib_table *tb,
+ 		if (fa->fa_slen == last_slen)
+ 			continue;
+ 
++		if (!fib_info_hold_safe(fa->fa_info))
++			continue;
++
+ 		last_slen = fa->fa_slen;
+ 		err = call_fib_entry_notifier(nb, FIB_EVENT_ENTRY_REPLACE,
+ 					      l->key, KEYLENGTH - fa->fa_slen,
+ 					      fa, extack);
++		fib_info_put(fa->fa_info);
+ 		if (err)
+ 			return err;
  	}
- 	skb_mark_for_recycle(skb);
--	skb_reserve(skb, bp->rx_offset);
-+	skb_reserve(skb, data_ptr - (u8 *)frag_start);
- 	__skb_put(skb, len);
- 
- 	return skb;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 9d9ad2be3239b..f02508600c1d2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -902,6 +902,7 @@ struct bnxt_sw_rx_bd {
- 	void			*data;
- 	u8			*data_ptr;
- 	dma_addr_t		mapping;
-+	unsigned int		offset;
- };
- 
- struct bnxt_sw_rx_agg_bd {
 -- 
 2.53.0
 
