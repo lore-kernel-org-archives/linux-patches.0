@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454074B44CC;
-	Thu, 17 Sep 2026 15:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7964C10D1;
+	Thu, 17 Sep 2026 15:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659493; cv=none; b=WW/hc3HoSh0w2sun8Bigh8Y2+vjO008oHkaRj7vjyxykbAxTNfv9StItZWtuv/jZ4G3kgvZz5KEGJ/+Qg60RqHFB2dmUx9kDuLrB5ZzyPaAHZ5W7UTrgeJt1r1rVlPnBckGbzteRWU3O0fmzdy7TBrsTWzI3YDxnGPpMFbrNgSM=
+	t=1789659495; cv=none; b=U5sRiu6NtVKBp8cIJ9X98czZdHZ000WBhdlnCXrAk+I8Pozo9VY1X3nJztrwlhJyXeoUvLRrXasRaPAuKeUJgK8yS3dPQfFKDcY3M8qAg9V/CKEWpf0u3MT1vhMU6rb7xWSWKWwzko8bb7j+8+ceaPdSCJfWU+rM4Ac0JCsoiSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659493; c=relaxed/simple;
-	bh=U591tsCwOio8HFGEHszi7g2CVRO0aQwiWSy1aywOK8k=;
+	s=arc-20240116; t=1789659495; c=relaxed/simple;
+	bh=dsqsRAI1XeyMea77QcANoEGZCnhJtyUDaYHDmaXyIIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttl53eIpQLmsCZBH9lXN/f5JeLb3t/hshXtdLq+qYNEvaytphQ52J8+ZH7xVfbDroOKcas2TE0HJ4+Y/CyJLTOCBfiZ1gp4zLtFzu5YmJPlA64osYXZN1G77Bx20IukSV3wc569c90mNX6XhwYQ0duAOqVU9f1mWzmqELQOlmJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpQSKcul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G0anNl2SiIMfD6t+Bi2HsgJHAi6GdYU5p4+HqnDnEMdxoklpF9zGMmklAkMXKdeF2Yplnf3iwQhiLQ9qxVLSJrjlpK/J2tqILnDLV244Eek/v1RzfKoOKFpOD2QQByKb9Zv4vvAPS/g5F64b75FYSgfxLudGDFtyHwaPOvISPRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRdf1oGL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpQSKcul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFA41F00898;
-	Thu, 17 Sep 2026 15:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRdf1oGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AD11F00893;
+	Thu, 17 Sep 2026 15:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659487;
-	bh=XlJIlo/jlK91tBe2exG2p8Uu73ks/OIwVYpzcFx6lq4=;
+	s=korg; t=1789659490;
+	bh=C8wPGI2P6IDfT2cNZqeNr/Wx0TIwv7byT/OohJx7s9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpQSKculSmLF2h3eHmWQTiM2jUTSDprBoWM7ll+bAJEGX4AdiK6ssP7N5ux9blEeQ
-	 UU24WiKw6tY5yU8RjYoI9dZrySq5MQkbdfmDLVc+MAv2xg6NYWf0NojaCHq0qVLmvb
-	 5u6uXAhTj/OrRNLWuKHeBU0nCaYCDfhBE1VQIJo4=
+	b=JRdf1oGLmJM+v7Df47mIG4txX0yHhlaYgw4QvsAW0RuWOOjMKV34cMY7Yh1p6kDPo
+	 jEFOdIqH1/Pl8W4GHDE9vjPLXanXIQNAxxqig4HtPwB6kFTT4rLbK0e1QCnMeLFhJQ
+	 P1hzs1TE5yzLbKzIZX5f76SHlefwts55ngxotqhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 273/733] bonding: use skb_cow_head() in bond_do_alb_xmit() and rlb_arp_xmit()
-Date: Thu, 17 Sep 2026 16:09:41 +0100
-Message-ID: <20260917151358.154389287@linuxfoundation.org>
+Subject: [PATCH 7.2 247/733] bpf: zero extend the result of an arena 32-bit cmpxchg
+Date: Thu, 17 Sep 2026 16:09:15 +0100
+Message-ID: <20260917151357.439544522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,97 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 1746ef2e2df2ad71c66eca56364d56bde284523b ]
+[ Upstream commit 4814ed6406f3493bd554ad046da5f7fc04833571 ]
 
-In bond_do_alb_xmit() and rlb_arp_xmit(), make sure to unclone
-skb head via skb_cow_head() before modifying the source MAC address
-(Ethernet header and ARP payload) to avoid silent corruption if
-the skb is shared or cloned. Avoid caching the header pointers
-across skb_cow_head().
+bpf_convert_ctx_accesses() rewrites an atomic on an arena pointer from
+BPF_STX | BPF_ATOMIC to BPF_STX | BPF_PROBE_ATOMIC, and it runs before
+bpf_opt_subreg_zext_lo32_rnd_hi32().
 
-In rlb_arp_xmit(), only modify arp->mac_src if it differs from
-tx_slave->dev->dev_addr to avoid an unnecessary copy and head
-reallocation.
+That pass emits an explicit zero extension for a 32-bit cmpxchg even
+when bpf_jit_needs_zext() is false. This is done because on some
+architectures 32-bit cmpxchg requires explicit zero extension for the
+dst register. E.g. on x86-64 'lock cmpxchg' does not change the %eax
+if comparison is successful, while BPF semantics declare that each
+operation on a 32-bit register zero extends it's upper half.
 
-Also, we should not assume mac header is set in output path.
+is_cmpxchg_insn() matches BPF_MODE == BPF_ATOMIC only, so an arena
+cmpxchg misses said zero extension adjustment. This patch adjusts
+is_cmpxchg_insn() to match BPF_PROBE_ATOMIC alongside BPF_ATOMIC.
 
-Use skb_eth_hdr() instead of eth_hdr() to fix the issue,
-and remove now redundant skb_reset_mac_header() calls.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260903143940.1180513-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260903171542.1438050-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ kernel/bpf/fixups.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index 654f051d00239..43ac8e28e4182 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -678,9 +678,15 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
- 	if (arp->op_code == htons(ARPOP_REPLY)) {
- 		/* the arp must be sent on the selected rx channel */
- 		tx_slave = rlb_choose_channel(skb, bond, arp);
--		if (tx_slave)
-+		if (tx_slave &&
-+		    !ether_addr_equal_64bits(arp->mac_src,
-+					     tx_slave->dev->dev_addr)) {
-+			if (unlikely(skb_cow_head(skb, 0)))
-+				return NULL;
-+			arp = (struct arp_pkt *)skb_network_header(skb);
- 			bond_hw_addr_copy(arp->mac_src, tx_slave->dev->dev_addr,
- 					  tx_slave->dev->addr_len);
-+		}
- 		netdev_dbg(bond->dev, "(slave %s): Server sent ARP Reply packet\n",
- 			   tx_slave ? tx_slave->dev->name : "NULL");
- 	} else if (arp->op_code == htons(ARPOP_REQUEST)) {
-@@ -1340,7 +1346,6 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
- 				    struct slave *tx_slave)
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index cd42eb838d6c2..48acb61854ed4 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -13,10 +13,15 @@
+ 
+ #define verbose(env, fmt, args...) bpf_verifier_log_write(env, fmt, ##args)
+ 
++/*
++ * Matches BPF_PROBE_ATOMIC too: bpf_convert_ctx_accesses() rewrites arena
++ * atomics before bpf_opt_subreg_zext_lo32_rnd_hi32() runs.
++ */
+ static bool is_cmpxchg_insn(const struct bpf_insn *insn)
  {
- 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
--	struct ethhdr *eth_data = eth_hdr(skb);
+ 	return BPF_CLASS(insn->code) == BPF_STX &&
+-	       BPF_MODE(insn->code) == BPF_ATOMIC &&
++	       (BPF_MODE(insn->code) == BPF_ATOMIC ||
++		BPF_MODE(insn->code) == BPF_PROBE_ATOMIC) &&
+ 	       insn->imm == BPF_CMPXCHG;
+ }
  
- 	if (!tx_slave) {
- 		/* unbalanced or unassigned, send through primary */
-@@ -1351,7 +1356,9 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
- 
- 	if (tx_slave && bond_slave_can_tx(tx_slave)) {
- 		if (tx_slave != rcu_access_pointer(bond->curr_active_slave)) {
--			ether_addr_copy(eth_data->h_source,
-+			if (unlikely(skb_cow_head(skb, 0)))
-+				return bond_tx_drop(bond->dev, skb);
-+			ether_addr_copy(skb_eth_hdr(skb)->h_source,
- 					tx_slave->dev->dev_addr);
- 		}
- 
-@@ -1375,8 +1382,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
- 	struct ethhdr *eth_data;
- 	u32 hash_index;
- 
--	skb_reset_mac_header(skb);
--	eth_data = eth_hdr(skb);
-+	eth_data = skb_eth_hdr(skb);
- 
- 	/* Do not TX balance any multicast or broadcast */
- 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
-@@ -1428,8 +1434,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
- 	u32 hash_index = 0;
- 	int hash_size = 0;
- 
--	skb_reset_mac_header(skb);
--	eth_data = eth_hdr(skb);
-+	eth_data = skb_eth_hdr(skb);
- 
- 	switch (ntohs(skb->protocol)) {
- 	case ETH_P_IP: {
 -- 
 2.53.0
 
