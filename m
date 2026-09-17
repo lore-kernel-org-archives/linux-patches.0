@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8373B7771;
-	Thu, 17 Sep 2026 17:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BD051AEE9;
+	Thu, 17 Sep 2026 17:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666596; cv=none; b=kppHR8PDyWiLx9NzCfPUvFDkc7KZU1O5PEc9AZh1a9otMYCWgDhcG7JBXPuUXkHjmUf0rD7TQHTmLTgYpkjPVhFMojxVNUPiq9TCYJfpehjG9LMg/J17BvdI57jOzKLL9tht3njTuFcm6ubYWOzn7MXFpg0EoMyy6uMTjWJkwFs=
+	t=1789666599; cv=none; b=bgtklyOCwMjoUecRtZ2DcINn6MI8om5+0AQZMB1AtLKPuNaCN8Doa2Mz6f4jQlon90UEnnRT6yvcgt80xw2TKzlPBfdcaWXfwYKd80WGJkngxzTZWf3tOFRITz1Q9J1XTGcka5vhbM/3oAj3UT4f53vrrAPqkEG0p8Sx/yrgQzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666596; c=relaxed/simple;
-	bh=tJBvL51GNC9ziCkMmOBLPXHyW++Gv+RA2GH7EEC96eg=;
+	s=arc-20240116; t=1789666599; c=relaxed/simple;
+	bh=+TylFsf8U4U0XP0oRc/xAjGesodfay4cXQwiryF5s+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6hunJrASozex2DK0iyj6q7hamHfW8HjS6fhKb9tu5WeN5OnvoKCMVZnQzrLuf3hKZn6vJO0gkFXk6KrhSup+FChqMNjtE11s7/xxSoJfKYCQmFHlAGOc9xFl+lztkq4h0hIUqSqvjJ8tAQm0K31s2pH0KAN3AAcySXfcsCHRhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbJXBqCj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ac/AT6gYtabTM3PQ1kCuUzmLtFcQFrE7nuSXPCIWuoKSYHOqNC5i82Jk6zsAh+ivcB0TbfpUSDcMg/JinFzV2tG0Hpzuh/RngTRFTJWECLGTv+bOzXH30fPGuzXNKLHHRBcE2hmEpbpSB9/4FWOoRqky/s5bJ+3B55Ie7EARabw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMzy2OU5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbJXBqCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5C01F008BD;
-	Thu, 17 Sep 2026 17:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMzy2OU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF21F1F000FF;
+	Thu, 17 Sep 2026 17:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666595;
-	bh=FqxNb8boyi4Yv1vpN+fKLzoKJ4MGby5n9tzXKUGsbKE=;
+	s=korg; t=1789666598;
+	bh=WZpypwwJXdF4wkxYHCYy3LEM6UwrXeB6hFb7Sk+8eBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pbJXBqCjYu8rcTv8LTvA1jv169OWJYc/T1Hne/vdOUKxVi2K2EvkqK7DCR/JHxsC3
-	 SyRmxo2oCku0RE7Z99vC8iL6/4WfUZDV40p9sBUu4gyUAvejv6R3evSozWqf6Edy43
-	 KElX3+wfyyl+KdF/ETjGd/37qNtyeVev2q8jS99s=
+	b=MMzy2OU5a45WD2xBvpS6sptEkh4+sajdPd/aNpyhIudjjE2abXSRDWT6ACY6MmXi4
+	 9zaQ5RVWm61YS5ekvj8s069H9olEn7wS6gryVvlTfIra7Ft1H55/lW0kXFI9moTh2j
+	 dSL979e89XH2eIareC2d+KkY5gcfqWlJs6kF75yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1090/1250] xfs: strengthen the "is cow staging" helpers in scrub
-Date: Thu, 17 Sep 2026 16:14:45 +0100
-Message-ID: <20260917151621.705141639@linuxfoundation.org>
+Subject: [PATCH 6.18 1091/1250] xfs: snapshot scrub stats when rendering them
+Date: Thu, 17 Sep 2026 16:14:46 +0100
+Message-ID: <20260917151621.732030464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,57 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0d43368844a75ad13561a1198a3b027940730756 upstream.
+commit 568a1588b906780dc3e9be56a61217afb4f7800e upstream.
 
-LOLLM pointed out a bug in both of the refcount scrub predicates that
-determine if a range of blocks is marked as CoW staging in the btree.
-While it compares blockcount < len, this isn't enough to determine that
-the CoW staging record is at least as large as the range passed into the
-helper.  Fix both of them.
+LOLLM complains about concurrency problems in the scrub stats code
+because xchk_stats_format doesn't synchronize in any way with updates.
+These stats are only reported through debugfs so I don't think it really
+matters, but I guess I exist to make bots happy now.
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: f6d5fc21fdc713 ("xfs: cross-reference refcount btree during scrub")
+Note: We snapshot the entire stats object with a spinlock so that we
+don't have to worry about users seeing slightly weird numbers (e.g.
+invocations has incremented but none of the outcomes have been yet) if
+we race with xchk_stats_merge_one.  This isn't a hot path.
+
+Cc: stable@vger.kernel.org # v6.6
+Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/refcount.c   |    6 +++++-
- fs/xfs/scrub/rtrefcount.c |    6 +++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/stats.c |   32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/fs/xfs/scrub/refcount.c
-+++ b/fs/xfs/scrub/refcount.c
-@@ -582,8 +582,12 @@ xchk_xref_is_cow_staging(
- 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+--- a/fs/xfs/scrub/stats.c
++++ b/fs/xfs/scrub/stats.c
+@@ -99,25 +99,31 @@ xchk_stats_format(
+ 	int			ret = 0;
  
-+	/* Can't start after bno */
-+	if (rc.rc_startblock > agbno)
-+		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+ 	for (i = 0; i < XFS_SCRUB_TYPE_NR; i++, css++) {
++		struct xchk_scrub_stats	fss;
 +
- 	/* Must be at least as long as what was passed in */
--	if (rc.rc_blockcount < len)
-+	if (rc.rc_startblock + rc.rc_blockcount < agbno + len)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
- }
+ 		if (!name_map[i])
+ 			continue;
  
---- a/fs/xfs/scrub/rtrefcount.c
-+++ b/fs/xfs/scrub/rtrefcount.c
-@@ -610,8 +610,12 @@ xchk_xref_is_rt_cow_staging(
- 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
- 		xchk_btree_xref_set_corrupt(sc, sc->sr.refc_cur, 0);
- 
-+	/* Can't start after bno */
-+	if (rc.rc_startblock > bno)
-+		xchk_btree_xref_set_corrupt(sc, sc->sr.refc_cur, 0);
++		spin_lock(&css->css_lock);
++		memcpy(&fss, css, offsetof(struct xchk_scrub_stats, css_lock));
++		spin_unlock(&css->css_lock);
 +
- 	/* Must be at least as long as what was passed in */
--	if (rc.rc_blockcount < len)
-+	if (rc.rc_startblock + rc.rc_blockcount < bno + len)
- 		xchk_btree_xref_set_corrupt(sc, sc->sr.refc_cur, 0);
- }
+ 		ret = scnprintf(buf, remaining,
+  "%s %u %u %u %u %u %u %u %u %u %llu %u %u %llu\n",
+ 				name_map[i],
+-				(unsigned int)css->invocations,
+-				(unsigned int)css->clean,
+-				(unsigned int)css->corrupt,
+-				(unsigned int)css->preen,
+-				(unsigned int)css->xfail,
+-				(unsigned int)css->xcorrupt,
+-				(unsigned int)css->incomplete,
+-				(unsigned int)css->warning,
+-				(unsigned int)css->retries,
+-				(unsigned long long)css->checktime_us,
+-				(unsigned int)css->repair_invocations,
+-				(unsigned int)css->repair_success,
+-				(unsigned long long)css->repairtime_us);
++				(unsigned int)fss.invocations,
++				(unsigned int)fss.clean,
++				(unsigned int)fss.corrupt,
++				(unsigned int)fss.preen,
++				(unsigned int)fss.xfail,
++				(unsigned int)fss.xcorrupt,
++				(unsigned int)fss.incomplete,
++				(unsigned int)fss.warning,
++				(unsigned int)fss.retries,
++				(unsigned long long)fss.checktime_us,
++				(unsigned int)fss.repair_invocations,
++				(unsigned int)fss.repair_success,
++				(unsigned long long)fss.repairtime_us);
+ 		if (ret <= 0)
+ 			break;
  
 
 
