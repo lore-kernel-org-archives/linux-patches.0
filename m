@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7C44E532B;
-	Thu, 17 Sep 2026 18:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF634FD27A;
+	Thu, 17 Sep 2026 18:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668145; cv=none; b=rSLNhlqolRmr1Tdl5pGB+GQv6a9w3sT0mzcbM5y5gA2caGViQrfPyB3cRdzgaASJYp8jJ/GSj4mBRk7ggYoqAO7ZVIxfwGbUuGC4RAb/LaMkBSUAabQDeFDLpT4pBd0moCEOWP0J3aiyksX+nJLZbM5wGBax4I7ytcjAK19Ds6o=
+	t=1789668147; cv=none; b=s2mTosh0PYMRzEyPwreoBoaWXv9KK+za9TklobCpsSQfmYFDnt3rcQoTDtJa8u/pW6P/Q4tabOC8erYskvmb47DUNHjirSN1Ae9/Q42LrVv3t/cc/d6hXAJrN/wUqMLPIIVso0olLunwuDt2mCZrGZjCkvSd9AWx7V+DrWRlxl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668145; c=relaxed/simple;
-	bh=Xp2U7uVVqCToiaHQe9cz+CZ+z+qxdGJiKeQhxQBvmhU=;
+	s=arc-20240116; t=1789668147; c=relaxed/simple;
+	bh=6jX7fI/NWNzc2q2unSrjgRz2LEbfzFH+BtDf0xU0vRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqODiwhDRGPZYFf3zOJqvPP3QAd+rGq6O/pCz81BtWfUVO9mJx4x6PG67BPjwPi/m0YJEnG/3/3+rTIp93iu3fYjlwUpb+Dl5heMH2BMOUcIYLfZjQ6JGO0QtEaCyxwCrePeLiGGJtFaxpu7teLDRBPrcN2pT5Hudf1H9habCHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWz1kbVg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WOqcR1bLMnZH+2tsXXa4Z0WdJaLz+9ddAYMNm3MLywVpidOgMz583VXH02MB5bncQjbr1vF6p/pAcbNPU+zqh328hkrv4zxGjHFOlOIHxhU4+1sptByoO68+FzLlOdeZV0UrCSG8NbDSzpaMngOyBnqhR6ohAUl2sRUdj5q67Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WxmWbeu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWz1kbVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B00F1F000FF;
-	Thu, 17 Sep 2026 18:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WxmWbeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4AA1F000FF;
+	Thu, 17 Sep 2026 18:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668143;
-	bh=dKRFSqG8IvgdHuPC3d6WOoem1+cVaTG8uZXFmPTzhds=;
+	s=korg; t=1789668146;
+	bh=WLkQBgRvzRv2ukkfw0rz8NVQcM1yoJwjBCGLFCMp3DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWz1kbVgsb2cm6ssIFRZB+wZGGjAIy1JflHaMwR6lR9rheJilg5xl+mrXYQaQqgoO
-	 xjT6Wwo2A2NOTZvVtmJdrBWUbapR5msk1/nfVF2+TmGTDA9x+/4Yh+T0n5CmA5MVna
-	 C+4dCZRcGyaYeO6pzUMEQvD5KZhjcklxuwG2Moj4=
+	b=1WxmWbeuOUfW5jx0w6pRWrrHxu2HOWfgs3Lr3rheaK1xOY7C/KS8KmQk4tm+uKMXP
+	 Vgu3VQUOiRPZhIRWTbDGPthsgeWEwP4rNo4EA+i2ZR8A0KujBnXlD3aCib9mJVYS1C
+	 auRnqXqrENBJAksmdjwou1I8PWWv76OwpIeb+d3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
+	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0290/1102] Bluetooth: btmtk: Disable remote wakeup for MT7922/MT7925
-Date: Thu, 17 Sep 2026 16:03:53 +0100
-Message-ID: <20260917151546.896142814@linuxfoundation.org>
+Subject: [PATCH 6.12 0291/1102] Bluetooth: btusb: MT7925: Add VID/PID 0e8d/8c38
+Date: Thu, 17 Sep 2026 16:03:54 +0100
+Message-ID: <20260917151546.921435906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,115 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit e31d761628ad7e96490fc78105ed0a064ec1c1d9 ]
+[ Upstream commit 69b2f05df3ee63e1273608cdb81a7d664e9de2b8 ]
 
-These NICs are often reported to lose their Bluetooth interfaces, i.e,
-their USB interfaces suddenly become completely unresponsive, causing
-the USB core to reset them, only to find that they are no longer
-accessible. A power cycle is required to make the Bluetooth interfaces
-recover.
+Add VID 0e8d & PID 8c38 for MediaTek MT7925 USB Bluetooth chip.
 
-After some investigations, I found that their USB autosuspend remote
-wakeup capabilities are so broken that they are precisely the culprit
-behind the issue:
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-  [27452.608056] hub 3-0:1.0: state 7 ports 5 chg 0000 evt 0020
-  [27452.702018] usb 3-5: usb wakeup-resume
-  [27452.716038] usb 3-5: Waited 0ms for CONNECT
-  [27452.716642] usb 3-5: finish resume
-  /* usbmon showed that the device was completely unresponsive to any
-     URBs after the remote wakeup */
-  [27457.836030] usb 3-5: retry with reset-resume
-  [27457.956046] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
-  [27463.332047] usb 3-5: device descriptor read/64, error -110
-  [27478.948117] usb 3-5: device descriptor read/64, error -110
-  [27479.172430] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
-  [27484.332035] usb 3-5: device descriptor read/64, error -110
-  [27499.940039] usb 3-5: device descriptor read/64, error -110
-  [27500.164060] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
-  [27505.196142] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27510.576045] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27510.784038] usb 3-5: device not accepting address 4, error -62
-  [27510.912215] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
-  [27515.948307] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27521.324380] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27521.525107] usb 3-5: device not accepting address 4, error -62
-  [27521.525928] usb usb3-port5: logical disconnect
-  [27521.525996] usb 3-5: gone after usb resume? status -19
-  [27521.526230] usb 3-5: can't resume, status -19
-  [27521.526434] usb usb3-port5: logical disconnect
-  [27521.526469] usb usb3-port5: resume, status -19
-  [27521.526493] usb usb3-port5: status 0503, change 0004, 480 Mb/s
-  [27521.526528] usb 3-5: USB disconnect, device number 4
-  [27521.526736] usb 3-5: unregistering device
-  [27521.804029] usb 3-5: new high-speed USB device number 5 using xhci_hcd
-  [27527.076067] usb 3-5: device descriptor read/64, error -110
-  [27542.692027] usb 3-5: device descriptor read/64, error -110
-  [27542.916047] usb 3-5: new high-speed USB device number 6 using xhci_hcd
-  [27548.068043] usb 3-5: device descriptor read/64, error -110
-  [27563.684073] usb 3-5: device descriptor read/64, error -110
-  [27563.792133] usb usb3-port5: attempt power cycle
-  [27563.924381] hub 3-0:1.0: port_wait_reset: err = -11
-  [27563.925213] usb usb3-port5: not enabled, trying reset again...
-  [27564.184398] usb 3-5: new high-speed USB device number 7 using xhci_hcd
-  [27569.196322] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27574.572040] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27574.776053] usb 3-5: device not accepting address 7, error -62
-  [27574.900165] usb 3-5: new high-speed USB device number 8 using xhci_hcd
-  [27579.948039] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27585.324331] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
-  [27585.528040] usb 3-5: device not accepting address 8, error -62
-  [27585.528389] usb usb3-port5: unable to enumerate USB device
-  [27585.528424] hub 3-0:1.0: state 7 ports 5 chg 0000 evt 0020
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=8c38 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-To reproduce the issue, these conditions must be met:
-- a noisy radio environment (cafe or office) to cause frequent remote
-  wakeup events
-- no Bluetooth device is connected, so autosuspend is not prohibited
-- the Bluetooth interface is opened, so remote wakeup is enabled when
-  the device runs into autosuspend
-
-Then I can reproduce the issue within sereval hours each time.
-
-Increasing TRSMRCY or setting USB_QUIRK_RESET doesn't help at all.
-
-Since the remote wakeup capability is super broken, just disable it to
-get rid of the troubles. The device can still be autosuspended when
-the bluetooth interface is closed, which won't break the device as
-remote wakeup is unneeded in this case.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=308169
-Link: https://bbs.bee-link.com/d/7694-gtr9-pro-ai-max-395-usb-issues
-Signed-off-by: Rong Zhang <i@rong.moe>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index e7d01f1e26b8a..5d19b4496e767 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -1380,6 +1380,16 @@ int btmtk_usb_setup(struct hci_dev *hdev)
- 		break;
- 	case 0x7922:
- 	case 0x7925:
-+		/*
-+		 * A remote wakeup could cause the device completely unresponsive, and
-+		 * recovering from such a state needs a power cycle.
-+		 *
-+		 * Since the remote wakeup capability is super broken, just disable it
-+		 * to get rid of the troubles. The device can still be autosuspended
-+		 * when the bluetooth interface is closed.
-+		 */
-+		device_set_wakeup_capable(&btmtk_data->udev->dev, false);
-+		fallthrough;
- 	case 0x7961:
- 	case 0x7902:
- 	case 0x6639:
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 90d098d5c4106..3dbe00521a81f 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -736,6 +736,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe151), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0e8d, 0x8c38), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3602), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3603), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
