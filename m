@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D093BD65D;
-	Thu, 17 Sep 2026 18:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5EF4848A0;
+	Thu, 17 Sep 2026 18:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670848; cv=none; b=Mmi/v+ZSh20+eN4/XOuegPF8H14O42gVkc8yhdqW4y+WPkOrO/P4kjtnrH/T8Ydo9PcdMhPG4Y/3u/sYATd8Vczp6gTdE7QUnHqDu7nsnYtfYfQAUEXO3WfVrLB85mmy8rMZ/2jW0MPEEfgt+zUornZT+pSOsc2Hm4BOOAPER3g=
+	t=1789670851; cv=none; b=lGZO9J/BG+z1jsn3BdZt85NiVv3wAvIw7gp1Db9o7EC9L6glP0PYRktdEyJUCzoRgHuEr+hDksXcTo8R+DAzGry62F48nMLzLX3RGM0/ztt6Tw6zIHt7frQqs8pRlezCDcHpHcm+rP2j7ZaZBi+vnWRjSp184MkU7qngQkNdhpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670848; c=relaxed/simple;
-	bh=ilBuBAeUxhQaaYm6p1LA8N5HEr0JV9TRdXNGRIK/Rlw=;
+	s=arc-20240116; t=1789670851; c=relaxed/simple;
+	bh=kWBBt1m5LQy7QPHJPrzn77J8GPB5S0l4jqiJPXjjqTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4lRoX0mGPiQ6V7XoR+i+E2u4UQ1cuqUoRuxgZ/4TX7xl6AwrnC/UBIj6qCgX3gtoPJXCzgCTpsvUaOHbg2LgrD/Ok3lSh5c5KyozW3jzNXyovzy0TIXtLNapeMkwZUboC0V1/fu58Hqjp5xezLdNi/8DFgf46Wc3Q7zcPtztdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VG1d5+0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZHMlSAkkihiDZxjCr+6+pr7n0xmHwHk0Bojea+WF9ePNZtAGvG0H6pqYqPbzqvJ6x+h3buTOU0jvkyMMHIS78UB5N8YqI43FIb9KXghm5ASOVpe/AR9U8hQtrijiOepXSwXZ+UQrxEN6dxmpVX1a/4hJOCFNppMfQUCJZZuB9zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWwuPTkZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VG1d5+0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6811F000FF;
-	Thu, 17 Sep 2026 18:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWwuPTkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BA81F000FF;
+	Thu, 17 Sep 2026 18:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670846;
-	bh=KEsTEW2ee7HvDHybREXR/qwnzFnDNCRTt2nz4HkQDpc=;
+	s=korg; t=1789670850;
+	bh=tBWQVZ4tz1L6u8ApUM4cBXCiK1wCFUprKtPJgGLur/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VG1d5+0VDrNNGScMhXztiY577tCfgXn+nAcvXu4l83cOl0bptpbfC0+n1vqCgqgaC
-	 dJahuutHc8Vo1yTAvvnL2YLMXVJtp2OlnVI8P6YCZxyNiXxWX2VE+M2zjfiKrcNk94
-	 qzI5krUTcF7QcCbQol30ArsQcPwYqaUPrP7K19ok=
+	b=kWwuPTkZFk39SsxDS0Z2dYAHsDTAuDPkBB73xs4GD2RvPJtvDbG047ry6TGqLZ6Hz
+	 1tcSbSJfpT6ezdBR494VQB8r3OD/oew2CZQS5fhH8S6Y2Q6wtcz4lhhDDU3x8kSxLA
+	 rPy/nprvo/p4NTly7sNpFpgceTLsONjYKebR5qB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0788/1102] net: phy: mediatek-ge: disable EEE on the MT7530 PHY
-Date: Thu, 17 Sep 2026 16:12:11 +0100
-Message-ID: <20260917151600.249688803@linuxfoundation.org>
+Subject: [PATCH 6.12 0789/1102] octeontx2-af: fix PF/CGX debugfs PCI bus lookup
+Date: Thu, 17 Sep 2026 16:12:12 +0100
+Message-ID: <20260917151600.275645596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,107 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit ccbe7540e4aad0d1c3acc249697350b93ccb8025 ]
+[ Upstream commit 4f4b743c2d2bbc336cb164d9d3d2ed6956ad8437 ]
 
-The MT7530 internal GE PHY advertises EEE by hardware default, but its
-EEE support is defective: with EEE advertised, some link partners fail
-to establish a stable link. On a 2-pair (4-wire) cable where both ends
-advertise gigabit, 1000BASE-T training cannot succeed, and instead of
-falling back to 100 Mbps the port loops, so no link or DHCP lease is
-ever obtained. MediaTek confirms the hardware is the root cause (Landen
-Chao, 2021): "EEE of the 10-year-old MT7530 internal gephy has many IOT
-problems, so it is recommended to disable its EEE."
+rvu_dbg_rvu_pf_cgx_map_display() locates each RVU PF PCI device via
+pci_get_domain_bus_and_slot() when printing the PF-to-CGX map. It
+assumed PF0 always sits on PCI bus 1 and derived other PF bus numbers
+as pf + 1, but the AF device can be enumerated on a different bus.
 
-mtk_gephy_config_init() used to clear the EEE advertisement early, but
-commit af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE
-advertisement") removed that on the rationale that the DSA subdriver
-already performs an early disable. That holds for MT7531, whose
-mt7531_setup() clears MDIO_AN_EEE_ADV on each switch PHY, but not for
-the MT7530 PHY: neither the MT7621 integrated switch nor the dedicated
-MT7530 IC ever had such a loop, so removing it left those boards
-without any working early EEE disable and the link flapping came back.
+Use rvu->pdev->bus->number as the base bus instead, so each PF lookup
+uses pf + start on systems where RVU functions are on contiguous buses
+but do not start at bus 1.
 
-Since the broken hardware is the PHY, fix it in the PHY driver so it
-covers all users of this PHY, integrated in a switch or standalone:
-
-  - clear MDIO_AN_EEE_ADV in probe(), as early as possible, before
-    anything can negotiate EEE with the link partner;
-  - clear it again in config_init() and call phy_disable_eee() there.
-    config_init() is what phy_init_hw() replays after a PHY reset, when
-    the register is back at its EEE-advertising hardware default, and
-    it runs after of_set_phy_eee_broken() in phy_probe(), so the
-    eee_disabled_modes mask survives and neither phylib nor userspace
-    can re-enable EEE. dp83867 disables broken EEE from config_init()
-    the same way.
-
-Auto-negotiation then falls back to a stable 100 Mbps link instead of
-looping at gigabit. Tested on ASUS RT-AX53U (MT7621): with a 2-pair
-cable on the WAN port, a single clean 100 Mbps link comes up and a
-DHCP lease is obtained, where the unpatched driver loops.
-
-Fixes: af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE advertisement")
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
-Link: https://patch.msgid.link/20260908145213.3976508-1-vladislav.karmanov.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e2fb373038654 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904085114.3385530-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mediatek/mtk-ge.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/mediatek/mtk-ge.c b/drivers/net/phy/mediatek/mtk-ge.c
-index 54ea64a37ab3a..b22e50d1677ae 100644
---- a/drivers/net/phy/mediatek/mtk-ge.c
-+++ b/drivers/net/phy/mediatek/mtk-ge.c
-@@ -40,10 +40,38 @@ static void mtk_gephy_config_init(struct phy_device *phydev)
- 	phy_write_mmd(phydev, MDIO_MMD_VEND1, 0xa6, 0x300);
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index f4a4fe5f4a79e..7117f0a71e54d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -852,19 +852,25 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
+ 	int pf, domain, blkid;
+ 	u8 cgx_id, lmac_id;
+ 	u16 pcifunc;
++	u8 start;
  
-+static int mt7530_phy_probe(struct phy_device *phydev)
-+{
-+	/* The MT7530 internal GE PHY has broken EEE: with EEE advertised,
-+	 * some link partners fail to establish a stable link (on a 2-pair
-+	 * cable, 1000BASE-T training fails and the port loops instead of
-+	 * falling back). MediaTek recommends disabling EEE on this PHY.
-+	 * Clear the advertisement as early as possible, before anything
-+	 * can negotiate EEE with the link partner.
+-	domain = 2;
++	domain = pci_domain_nr(rvu->pdev->bus);
+ 	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
+ 	/* There can be no CGX devices at all */
+ 	if (!mac_ops)
+ 		return 0;
+ 	seq_printf(filp, "PCI dev\t\tRVU PF Func\tNIX block\t%s\tLMAC\tCHAN\n",
+ 		   mac_ops->name);
++
++	/* All the PF devices are on contiguous PCI bus numbers, but the PF0(AF)
++	 * may not start from 1 always. Hence get domain and bus from PCI device.
 +	 */
-+	return phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
-+}
-+
- static int mt7530_phy_config_init(struct phy_device *phydev)
- {
-+	int ret;
-+
- 	mtk_gephy_config_init(phydev);
++	start = rvu->pdev->bus->number;
+ 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
+ 		if (!is_pf_cgxmapped(rvu, pf))
+ 			continue;
  
-+	/* The probe() clear alone is not durable: phy_init_hw() replays only
-+	 * ->config_init after a PHY reset, with the register back at its
-+	 * EEE-advertising hardware default, and phy_probe() zeroes
-+	 * eee_disabled_modes (of_set_phy_eee_broken()) after ->probe already
-+	 * ran. Clear the advertisement again and mark EEE disabled, so that
-+	 * neither phylib nor userspace can re-enable it; dp83867 disables
-+	 * broken EEE from config_init() the same way.
-+	 */
-+	ret = phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
-+	if (ret)
-+		return ret;
-+
-+	phy_disable_eee(phydev);
-+
- 	/* Increase post_update_timer */
- 	phy_write_paged(phydev, MTK_PHY_PAGE_EXTENDED_3, 0x11, 0x4b);
+-		pdev =  pci_get_domain_bus_and_slot(domain, pf + 1, 0);
++		pdev =  pci_get_domain_bus_and_slot(domain, pf + start, 0);
+ 		if (!pdev)
+ 			continue;
  
-@@ -69,6 +97,7 @@ static struct phy_driver mtk_gephy_driver[] = {
- 	{
- 		PHY_ID_MATCH_EXACT(0x03a29412),
- 		.name		= "MediaTek MT7530 PHY",
-+		.probe		= mt7530_phy_probe,
- 		.config_init	= mt7530_phy_config_init,
- 		/* Interrupts are handled by the switch, not the PHY
- 		 * itself.
 -- 
 2.53.0
 
