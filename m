@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806344DDB5A;
-	Thu, 17 Sep 2026 19:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF5B3CDBD3;
+	Thu, 17 Sep 2026 19:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671804; cv=none; b=iIrx9BruioQW2412HsixTdTjcFRpddyJ1Z1hVRBcF6rQ7gOUXwxw5CMOWbSO6yG/YvezBt7oArAtiRti1js8Ql5BqI8ft04OIXdrE6QU4i+FrYTPPIQgicMoyAJ0mQKBSKWJaaPXg34YqGDfQJ2uqz29zmUphYoEsxSWkLbGCMA=
+	t=1789671808; cv=none; b=QwvA55OP0OK1NsjR1FzsSt7ZcLtzkGJ0ApzHzVwPFFywtifr/jU+NKmvdbHwnj2kZNEbJvnImxOHQhju9vcwGfBq7joDK3YCE4bdnmTwYViySFaOnfmOZklDBDBIuW/Qnl0Gm+1uk519h6IyQti8Hs4TKNNKLRss5fxiY+PyLOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671804; c=relaxed/simple;
-	bh=rgwm8gAK+bWlzaxNRzsoWDe15S0HXR5P3KVtXoDb8EI=;
+	s=arc-20240116; t=1789671808; c=relaxed/simple;
+	bh=xnL4idslVn+sGT0UKypbVhM6UuZB7fN0b9Zv/mydS48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYEf8c2QIzrn/HKIjfNykHuokIjFRmhmlSdflOocSTba7xQNxxWwrQrdRbz1emrjPEVOfZXkDzsFSC8oKGuyCihZ6qGChAUD5oMjQn1hvAQp7bpgiDuwB07yU+YsPg+ATT35ldhid+z2Vgow2fnwXgJyTJ2QDmH8VeNUd7D84eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TArw/qTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DTo3cUfBDj2gIF3qnzYfEsj+d0ns1JiXTou/h5W2qEZqPfDsEjzDcEvSefYt6IDugpOuQdsH6orD/TBQsmvIWArQJaNL/CCiZczeUR96AUwm09sTMGWVZGxDKiecy0Q0sQY9V+1yRqxQMFySkXt3VK/ofX6prUmu/bxIjGAl2lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeJxGRMp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TArw/qTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22E21F00893;
-	Thu, 17 Sep 2026 19:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeJxGRMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EA51F000FF;
+	Thu, 17 Sep 2026 19:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671803;
-	bh=PSBfGOHRBk3+bIRtrKqVE9IGcl0qtRZA8CihbyYTzL4=;
+	s=korg; t=1789671806;
+	bh=PV2b2XdqaBefqUhA6Qu7wxjq+yPvCNct66IupvYQ3Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TArw/qTccGlxWMVegbClmgyqPr63/Vc50w5+QvV7OInR/oz8nM85iG84k/cPIkvAT
-	 TFHa6pauPz86Sp6Vn+YZjvLGPOay5amA7UX9c5nxHCjNblxUiTA7mKTPZjYw/M7Xwo
-	 SNSzubl1pziBxtFTqyBJ0Xzcc5ylOBNncBlqV9CM=
+	b=VeJxGRMp79NPrW/buOwkiE9g0A4PHotcMuoVZIFmq99UvS1IYTWm7oDl3lZjNUGJG
+	 xBhSuKo53fi+mHbcujLL0tlkSDVqgu2ifmNogngaAVsr4hqQ1uhmoJmz4ansDAc83V
+	 TqY/LUG01O+9Yz8HLo1LMk2rBr/LozXAXBpaor+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1095/1102] sched_ext: Fix inverted ops.core_sched_before() invocation
-Date: Thu, 17 Sep 2026 16:17:18 +0100
-Message-ID: <20260917151608.358147182@linuxfoundation.org>
+Subject: [PATCH 6.12 1096/1102] ocfs2: validate dx_root extent list fields during block read
+Date: Thu, 17 Sep 2026 16:17:19 +0100
+Message-ID: <20260917151608.384669131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,75 +57,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit f7b6d128dd49a6eec09066ecfd29095f12588786 ]
+[ Upstream commit 775c17386a6fd695f999d4cda90e3931386570dd ]
 
-scx_prio_less() implements prio_less() semantics - %true means that @a is
-the lower priority and should run after @b. ops.core_sched_before() is
-documented to return %true when @a should run before @b. scx_prio_less()
-returns the op's value as-is, inverting the documented semantics at runtime.
+Patch series "ocfs2: consolidate extent list validation into block read
+callbacks".
 
-Call the op with the arguments swapped.
+ocfs2 validates extent list fields (l_count, l_next_free_rec) at various
+points during extent tree traversal.  This is fragile because each caller
+must remember to check for corrupted on-disk data before using it.
 
-scx_qmap followed the wiring instead of the documentation and returned %true
-for the younger task, so the two inversions canceled out and it behaved as
-intended. Flip its comparison to match. scx_qmap is likely the only current
-user in or out of the kernel tree. Any scheduler written the same way needs
-the same flip, while schedulers following the documentation are fixed by
-this change.
+This series moves those checks into the block read validation callbacks
+(ocfs2_validate_dx_root and ocfs2_validate_extent_block), so corrupted
+fields are caught early at block read time.  Redundant post-read checks
+are then removed.
 
-Fixes: 7b0888b7cc19 ("sched_ext: Implement core-sched support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ adapted the change to kernel/sched/ext.c with the older SCX_CALL_OP_2TASKS_RET() macro signature. ]
+This patch (of 4):
+
+Move the extent list l_count validation from ocfs2_dx_dir_lookup_rec()
+into ocfs2_validate_dx_root(), so that corrupted on-disk fields are caught
+early at block read time rather than during directory lookups.
+
+Additionally, add a l_next_free_rec <= l_count check to prevent
+out-of-bounds access when iterating over extent records.
+
+Both checks are skipped for inline dx roots (OCFS2_DX_FLAG_INLINE), which
+use dr_entries instead of dr_list.
+
+Link: https://lkml.kernel.org/r/20260403090803.3860971-1-joseph.qi@linux.alibaba.com
+Link: https://lkml.kernel.org/r/20260403090803.3860971-2-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: bc70726ddad5 ("ocfs2: validate directory-index entry counts when reading metadata")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c             |   10 ++++++++--
- tools/sched_ext/scx_qmap.bpf.c |    2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ fs/ocfs2/dir.c |   26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3173,19 +3173,25 @@ static struct task_struct *pick_task_scx
-  *
-  * When ops.core_sched_before() is enabled, @p->scx.core_sched_at is used to
-  * implement FIFO ordering within each local DSQ. See pick_task_scx().
-+ *
-+ * Return: %true if @a should run after @b.
-  */
- bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
- 		   bool in_fi)
- {
- 	/*
-+	 * scx_prio_less() returns whether @a should run after @b while
-+	 * ops.core_sched_before() returns whether its first argument should run
-+	 * before the second. Swap the arguments.
-+	 *
- 	 * The const qualifiers are dropped from task_struct pointers when
- 	 * calling ops.core_sched_before(). Accesses are controlled by the
- 	 * verifier.
- 	 */
- 	if (SCX_HAS_OP(core_sched_before) && !scx_rq_bypassing(task_rq(a)))
- 		return SCX_CALL_OP_2TASKS_RET(SCX_KF_REST, core_sched_before,
--					      (struct task_struct *)a,
--					      (struct task_struct *)b);
-+					      (struct task_struct *)b,
-+					      (struct task_struct *)a);
- 	else
- 		return time_after64(a->scx.core_sched_at, b->scx.core_sched_at);
- }
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -529,7 +529,7 @@ static s64 task_qdist(struct task_struct
- bool BPF_STRUCT_OPS(qmap_core_sched_before,
- 		    struct task_struct *a, struct task_struct *b)
- {
--	return task_qdist(a) > task_qdist(b);
-+	return task_qdist(a) < task_qdist(b);
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -580,7 +580,7 @@ static int ocfs2_validate_dx_root(struct
+ 		mlog(ML_ERROR,
+ 		     "Checksum failed for dir index root block %llu\n",
+ 		     (unsigned long long)bh->b_blocknr);
+-		return ret;
++		goto bail;
+ 	}
+ 
+ 	if (!OCFS2_IS_VALID_DX_ROOT(dx_root)) {
+@@ -588,8 +588,32 @@ static int ocfs2_validate_dx_root(struct
+ 				  "Dir Index Root # %llu has bad signature %.*s\n",
+ 				  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
+ 				  7, dx_root->dr_signature);
++		goto bail;
+ 	}
+ 
++	if (!(dx_root->dr_flags & OCFS2_DX_FLAG_INLINE)) {
++		struct ocfs2_extent_list *el = &dx_root->dr_list;
++
++		if (le16_to_cpu(el->l_count) != ocfs2_extent_recs_per_dx_root(sb)) {
++			ret = ocfs2_error(sb,
++					  "Dir Index Root # %llu has invalid l_count %u (expected %u)\n",
++					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
++					  le16_to_cpu(el->l_count),
++					  ocfs2_extent_recs_per_dx_root(sb));
++			goto bail;
++		}
++
++		if (le16_to_cpu(el->l_next_free_rec) > le16_to_cpu(el->l_count)) {
++			ret = ocfs2_error(sb,
++					  "Dir Index Root # %llu has invalid l_next_free_rec %u (l_count %u)\n",
++					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
++					  le16_to_cpu(el->l_next_free_rec),
++					  le16_to_cpu(el->l_count));
++			goto bail;
++		}
++	}
++
++bail:
+ 	return ret;
  }
  
- void BPF_STRUCT_OPS(qmap_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
 
 
