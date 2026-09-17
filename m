@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A7F4CDDF1;
-	Thu, 17 Sep 2026 15:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050844B44AF;
+	Thu, 17 Sep 2026 15:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658411; cv=none; b=Kml9xOBre98ZVeNBudy1xvLldjaGnrPId9FD9m0pA6MckYJLOUA/xKR32lgxwzLxQ5dvCTF4Ypc0r84hp0/7pIUKsEBhlRHmSxMz7Ae6NLw0YprAYQBjQ/YCD5IFxCmt1WGM0kfI9i+sgjMip1x7xR3/7s8g9gMNCClrO0dkEGE=
+	t=1789658414; cv=none; b=IZqp9H19sQaSbLDPFFAOpJsEG0Lrcn34zhPEsxA++UpEvvzf9dBkh49T3ikwA+vK6hZnnAzKs28l0+0Ilkco0tStOj/xAhoVc/Z6n7ANMHb22rcUCjaem/N12fA8yKoX8LgKxyfzjfYesMtZjx9utFjPSvHu2w3bIuXFFb6KuZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658411; c=relaxed/simple;
-	bh=O7mGVLfTOAEcatJt3riWTWYDbIuc7EU+5Cr83kw5K28=;
+	s=arc-20240116; t=1789658414; c=relaxed/simple;
+	bh=az1VTLp2mW90IBsk7YsFGV8HLrZ235AscPATYyKld0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQvKYwE4EWYBzYtPMnOhLp9aVSXJRByw1Ev8v47RPjDoXeisTKTEKu/hBfBZ8muXed55A6RiQSZ5A1i8TRxWhBRiUMJN+rE2NvYdoe+FlIB07RpmgyZdnyGkxSup2RQ8ZfvM3eCcrrGfDolsYW9gCgSGeMYi9pRlKhW0JuQH9u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLqV9iTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NRbcKOYx/dkPDH4e6fhYyr0En6eV+7IXUWpU3bctrfZlhTPYdNCxmRSdipG1pV081L+FOK+sQBP76+3y4skK093mBI3qlKGKZ3c0gswsQZHyKjOBoZ6t16ILFmeMoP44hp4Sw2wfdzJEl+Eh7JtiIbl0HaoyZBoraF1wn9G6bNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WclPI9Sg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLqV9iTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15DA1F000FF;
-	Thu, 17 Sep 2026 15:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WclPI9Sg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4891F00893;
+	Thu, 17 Sep 2026 15:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658398;
-	bh=JI4t365Rr6cGCopR8odaKj2Rz2prcHOkTwQ+nzpopQA=;
+	s=korg; t=1789658393;
+	bh=OnectFlbgRNPnJ3Vzs/sq27gtZx5AxILj7+5SKWclUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLqV9iTn+rOhFA/lurq3z74FGCPqZInMdvkfJLQt97FmZFUjzklrI1YvKwmJKU5eL
-	 h8DKXDRJyKJjAa6nByICUOGm1T7PR2pC2wmjgiqnQh+4vyIJn9YE7TV3HkjCxwCPU/
-	 uqnQhv9HM1HvlyQAzG9xwRWWRrofaeNkpwn58/zc=
+	b=WclPI9Sg6oJvNak233xciDiJMcOl5d+IOkTaEuKwLfboPuU3t5SjWPbaxPjoxtd6N
+	 gssh6m/FXgfwX0RpEClazkHYrIpnY5FXW1U+adgrM/iozD/ZfxBjxgYq87Rh4Ma0uU
+	 tLv6f4L+LKCPnKXoiX+HUF+cMk/IVFQJLBPAikK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0001/1102] ksmbd: fix use-after-free in oplock break notification
-Date: Thu, 17 Sep 2026 15:59:04 +0100
-Message-ID: <20260917151539.453422396@linuxfoundation.org>
+Subject: [PATCH 6.18 0002/1250] mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
+Date: Thu, 17 Sep 2026 15:56:37 +0100
+Message-ID: <20260917151551.982317194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
-References: <20260917151539.408551884@linuxfoundation.org>
+In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
+References: <20260917151551.901433442@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,306 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-commit 0e753899627b5e28a9fea8bca98262a6f65a2452 upstream.
+commit 123e4619ab6c8ab1c4cb1d7a58311a2af13929cd upstream.
 
-smb2_oplock_break_noti() reads opinfo->conn without any lock and
-dereferences it after two allocations which may sleep.  When the
-durable handle owning the oplock is disconnected, session_fd_check()
-clears opinfo->conn and drops its conn reference under ci->m_lock, and
-the last ksmbd_conn_put() frees the connection.  A break triggered by
-another connection that races with the teardown can then resurrect the
-freed connection: ksmbd_conn_get() is a plain atomic_inc, and the
-queued break work later dereferences the stale conn via
-ksmbd_conn_write(), a use-after-free reachable by any authenticated
-client holding a durable batch oplock.
+Patch series "mm/damon: unurgent fixes for infinite loop, NULL de-ref and
+races", v1.1.
 
-Thread the caller's inode into the notification path instead of taking
-a new reference on it.  Every caller of oplock_break() already holds a
-live ksmbd_file (or an explicit ksmbd_inode_lookup_lock() reference,
-in the parent lease break paths) on the inode that owns the break
-target's oplock list, so ci cannot be freed during the call, and its
-lock can be taken without dereferencing opinfo->o_fp, which a
-concurrent close may free.  Select and pin the connection under
-ci->m_lock, the same lock session_fd_check() and
-ksmbd_reopen_durable_fd() use to update opinfo->conn, so a concurrent
-detach either loses the race to the clear or keeps the connection
-alive until the notification work releases it.  Transfer the reference
-to the work item and release it on allocation failures.
+Sashiko found a few issues in DAMON that could cause infinite loop, NULL
+dereference and monitoring results degradation.  The first two sounds
+scary but the infinite loop happens only under unreasonable user setup.
+The NULL dereference is only in a unit test.  Monitoring results
+degradation is trivial since it is only best-effort, and those happens
+from only unlikely races.  Still those are bugs that better to fix if
+possible.  Fix those.
 
-[ This tree predates the deferred break machinery
-  (oplock_break_add()/oplock_break_drain_none()) that the original
-  commit is layered on, so it is ported in the same patch: the three
-  walks that hold ci->m_lock (smb_send_parent_lease_break_noti(),
-  smb_lazy_parent_lease_break_close(), smb_break_all_levII_oplock())
-  collect the breaks and drain them after releasing the lock, and
-  every oplock_break() call site runs outside ci->m_lock, so
-  smb2_oplock_break_conn_get() takes the read lock itself, as in the
-  6.18.y backport. ]
+This patch (of 6):
 
-Fixes: b003086d7696 ("ksmbd: fix NULL-deref of opinfo->conn in oplock/lease break notifiers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Due to online parameter update like events, the number of DAMON regions
+could be higher than the user-set upper limit.  kdamond_merge_regions()
+repeats merge regions until the number meets the limit, while doubling the
+merge threshold up to the theoretical maximum threshold.  It is tried only
+up to the theoretical maximum threshold because even the aggressive
+merging can fail from reducing the number of regions under the
+user-defined upper limit.  For example, there could be many user-defined
+non-contiguous regions that cannot be merged.
+
+The threshold based loop break condition is evaluated by comparing the
+threshold for the next merging try against the theoretical maximum
+threshold.  If max_thres is larger than UINT_MAX / 2, doubling the
+threshold could make it overflow, and bypass the loop break condition.  In
+the case, if the number of regions cannot be reduced under the upper limit
+like explained above, the loop will run infinitely.
+
+Prevent the case by doing the break condition check before doubling the
+threshold.  Also, prevent the threshold exceeding the maximum threshold,
+as it could overflow and apply the wrong merge threshold.
+
+This issue is unlikely to occur in real world, since having the max_thres
+higher than UINT_MAX / 2 require unrealistically large aggregation
+intervals compared to the sampling interval.  Also, it requires an
+unrealistically large number of uncontiguous regions setup.  Nonetheless,
+the consequence is bad and the fix is simple.
+
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260715031002.108504-1-sj@kernel.org
+Link: https://lore.kernel.org/20260715031002.108504-2-sj@kernel.org
+Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [1]
+Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.10.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 118 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 104 insertions(+), 14 deletions(-)
+ mm/damon/core.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index d83370f53d6f0..935e337a95b8e 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -708,31 +708,67 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
- 	ksmbd_conn_put(conn);
- }
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a9168a03b3402..6fa02025d2af1 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2415,7 +2415,7 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
  
-+/*
-+ * Select and pin the connection used for an oplock break before doing any
-+ * allocations which may sleep.  The caller of oplock_break() holds a live
-+ * reference on ci (a file being opened, a file being operated on, or an
-+ * explicit ksmbd_inode_lookup_lock() reference in the parent lease break
-+ * paths), so the inode cannot be freed during the call.
-+ *
-+ * opinfo->conn is cleared under ci->m_lock by session_fd_check() when the
-+ * durable handle owning the oplock is disconnected, reassigned by
-+ * ksmbd_reopen_durable_fd() under the same lock, and the last
-+ * ksmbd_conn_put() of the old connection frees it.  Holding the read lock
-+ * excludes both writers, so the connection cannot be freed while it is
-+ * selected.
-+ */
-+static struct ksmbd_conn *smb2_oplock_break_conn_get(struct oplock_info *opinfo,
-+						     struct ksmbd_inode *ci)
-+{
-+	struct ksmbd_conn *conn;
-+
-+	down_read(&ci->m_lock);
-+	conn = READ_ONCE(opinfo->conn);
-+	if (conn && !ksmbd_conn_releasing(conn))
-+		conn = ksmbd_conn_get(conn);
-+	else
-+		conn = NULL;
-+	up_read(&ci->m_lock);
-+
-+	return conn;
-+}
-+
- /**
-  * smb2_oplock_break_noti() - send smb2 exclusive/batch to level2 oplock
-  *		break command from server to client
-  * @opinfo:		oplock info object
-+ * @ci:		inode owning the break target's oplock list, pinned by
-+ *		the caller
-  *
-  * Return:      0 on success, otherwise error
-  */
--static int smb2_oplock_break_noti(struct oplock_info *opinfo)
-+static int smb2_oplock_break_noti(struct oplock_info *opinfo,
-+				  struct ksmbd_inode *ci)
- {
- 	struct ksmbd_conn *conn;
- 	struct oplock_break_info *br_info;
- 	int ret = 0;
- 	struct ksmbd_work *work;
- 
--	conn = READ_ONCE(opinfo->conn);
-+	conn = smb2_oplock_break_conn_get(opinfo, ci);
- 	if (!conn)
- 		return 0;
- 
- 	work = ksmbd_alloc_work_struct();
--	if (!work)
-+	if (!work) {
-+		ksmbd_conn_put(conn);
- 		return -ENOMEM;
-+	}
- 
- 	br_info = kmalloc(sizeof(struct oplock_break_info), KSMBD_DEFAULT_GFP);
- 	if (!br_info) {
- 		ksmbd_free_work_struct(work);
-+		ksmbd_conn_put(conn);
- 		return -ENOMEM;
- 	}
- 
-@@ -741,7 +777,8 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
- 	br_info->open_trunc = opinfo->open_trunc;
- 
- 	work->request_buf = (char *)br_info;
--	work->conn = ksmbd_conn_get(conn);
-+	/* Transfer the reference acquired by smb2_oplock_break_conn_get(). */
-+	work->conn = conn;
- 	work->sess = opinfo->sess;
- 
- 	ksmbd_conn_r_count_inc(conn);
-@@ -890,8 +927,8 @@ static void wait_lease_breaking(struct oplock_info *opinfo)
- 	}
- }
- 
--static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
--			struct ksmbd_work *in_work)
-+static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
-+			int req_op_level, struct ksmbd_work *in_work)
- {
- 	int err = 0;
- 
-@@ -957,7 +994,7 @@ static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
- 	if (brk_opinfo->is_lease)
- 		err = smb2_lease_break_noti(brk_opinfo);
- 	else
--		err = smb2_oplock_break_noti(brk_opinfo);
-+		err = smb2_oplock_break_noti(brk_opinfo, ci);
- 
- 	ksmbd_debug(OPLOCK, "oplock granted = %d\n", brk_opinfo->level);
- 	if (brk_opinfo->op_state == OPLOCK_CLOSING)
-@@ -969,6 +1006,43 @@ static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
- 	return err;
- }
- 
-+struct oplock_break_entry {
-+	struct list_head	list;
-+	struct oplock_info	*opinfo;
-+};
-+
-+/*
-+ * Collect an oplock for a deferred break.  oplock_break() may block for
-+ * the client's break acknowledgment, and the close that wakes that wait
-+ * needs ci->m_lock for write, so the walks that hold ci->m_lock defer the
-+ * break until the lock is released.
-+ */
-+static int oplock_break_add(struct list_head *head, struct oplock_info *opinfo)
-+{
-+	struct oplock_break_entry *ent;
-+
-+	ent = kmalloc_obj(struct oplock_break_entry, KSMBD_DEFAULT_GFP);
-+	if (!ent)
-+		return -ENOMEM;
-+
-+	ent->opinfo = opinfo;
-+	list_add_tail(&ent->list, head);
-+	return 0;
-+}
-+
-+static void oplock_break_drain_none(struct list_head *head,
-+				    struct ksmbd_inode *ci)
-+{
-+	struct oplock_break_entry *ent, *tmp;
-+
-+	list_for_each_entry_safe(ent, tmp, head, list) {
-+		oplock_break(ent->opinfo, ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
-+		list_del(&ent->list);
-+		opinfo_put(ent->opinfo);
-+		kfree(ent);
-+	}
-+}
-+
- void destroy_lease_table(struct ksmbd_conn *conn)
- {
- 	struct lease_table *lb, *lbtmp;
-@@ -1112,6 +1186,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- {
- 	struct oplock_info *opinfo;
- 	struct ksmbd_inode *p_ci = NULL;
-+	LIST_HEAD(brk_list);
- 
- 	if (lctx->version != 2)
- 		return;
-@@ -1137,12 +1212,14 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 				continue;
- 			}
- 
--			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
--			opinfo_put(opinfo);
-+			if (oplock_break_add(&brk_list, opinfo))
-+				opinfo_put(opinfo);
+ 	max_thres = c->attrs.aggr_interval /
+ 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+-	do {
++	while (true) {
+ 		nr_regions = 0;
+ 		damon_for_each_target(t, c) {
+ 			damon_merge_regions_of(t, threshold, sz_limit,
+@@ -2423,9 +2423,14 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 			nr_regions += damon_nr_regions(t);
  		}
- 	}
- 	up_read(&p_ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, p_ci);
-+
- 	ksmbd_inode_put(p_ci);
+ 		count_age = false;
+-		threshold = max(1, threshold * 2);
+-	} while (nr_regions > c->attrs.max_nr_regions &&
+-			threshold / 2 < max_thres);
++		if (nr_regions <= c->attrs.max_nr_regions ||
++				max_thres <= threshold)
++			break;
++		if (threshold < max_thres / 2)
++			threshold = max(1, threshold * 2);
++		else
++			threshold = max_thres;
++	}
  }
  
-@@ -1150,6 +1227,7 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
- {
- 	struct oplock_info *opinfo;
- 	struct ksmbd_inode *p_ci = NULL;
-+	LIST_HEAD(brk_list);
- 
- 	rcu_read_lock();
- 	opinfo = rcu_dereference(fp->f_opinfo);
-@@ -1178,12 +1256,14 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
- 				continue;
- 			}
- 
--			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
--			opinfo_put(opinfo);
-+			if (oplock_break_add(&brk_list, opinfo))
-+				opinfo_put(opinfo);
- 		}
- 	}
- 	up_read(&p_ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, p_ci);
-+
- 	ksmbd_inode_put(p_ci);
- }
- 
-@@ -1280,7 +1360,7 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		goto op_break_not_needed;
- 	}
- 
--	err = oplock_break(prev_opinfo, SMB2_OPLOCK_LEVEL_II, work);
-+	err = oplock_break(prev_opinfo, fp->f_ci, SMB2_OPLOCK_LEVEL_II, work);
- 	opinfo_put(prev_opinfo);
- 	if (err == -ENOENT)
- 		goto set_lev;
-@@ -1366,7 +1446,7 @@ static void smb_break_all_write_oplock(struct ksmbd_work *work,
- 	}
- 
- 	brk_opinfo->open_trunc = is_trunc;
--	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II, work);
-+	oplock_break(brk_opinfo, fp->f_ci, SMB2_OPLOCK_LEVEL_II, work);
- 	opinfo_put(brk_opinfo);
- }
- 
-@@ -1383,6 +1463,7 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 	struct oplock_info *op, *brk_op;
- 	struct ksmbd_inode *ci;
- 	struct ksmbd_conn *conn = work->conn;
-+	LIST_HEAD(brk_list);
- 
- 	if (!test_share_config_flag(work->tcon->share_conf,
- 				    KSMBD_SHARE_FLAG_OPLOCKS))
-@@ -1430,12 +1511,21 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			    SMB2_LEASE_KEY_SIZE))
- 			goto next;
- 		brk_op->open_trunc = is_trunc;
--		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE, NULL);
-+
-+		/*
-+		 * Defer the break until ci->m_lock is released: oplock_break()
-+		 * may block waiting for the break acknowledgment, and the
-+		 * close that wakes that wait needs ci->m_lock for write.
-+		 */
-+		if (!oplock_break_add(&brk_list, brk_op))
-+			continue;
- next:
- 		opinfo_put(brk_op);
- 	}
- 	up_read(&ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, ci);
-+
- 	if (op)
- 		opinfo_put(op);
- }
+ /*
 -- 
 2.53.0
 
