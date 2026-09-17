@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DE54848B1;
-	Thu, 17 Sep 2026 16:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C54C4F4D06;
+	Thu, 17 Sep 2026 16:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663952; cv=none; b=b7j4kpfar7Y0UlqsHKGaI8frSHedkPhR399grCWK6EQ074gqikbEqpQ1AybLlnbZ0tjmQjZTRooRpJfVrP5+gBGWlQIrNdlTrdVMrg9jvAcRPb4AFUg3AtYqg0C9cFfSNIwFFx01jB/SKx99GMvV9FLomD3HxJFF9/1nauVnye8=
+	t=1789663955; cv=none; b=O7pLPS3M0lmHUwCHH40CG93SPEi4Y+Y48ihvduB2q38J0COdQbhLm0RkgnCRd4+vXAmsWarNR+6o1/wxeMQwkdMrt96HeEQPh7RibEXq/nbHtTBnBT3/KBJ8heFxeIxMlykXpnZSQLRCwXA5PMOF1VFzXHKNFQW5QUmUoHiMc8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663952; c=relaxed/simple;
-	bh=wlado+N30ermI0zNuEpT51h7frejAt9nazpTYyd6VWU=;
+	s=arc-20240116; t=1789663955; c=relaxed/simple;
+	bh=CogOaUMYwpRjQ7ftmoGDK1/LgwhfE/G7mIL99CHEWjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kl1KPto93ebWL0pktJ+rdocoznKP07VBXY7PK76Feuv2KmWfDe5ykAjKE1lS7HIdJG+KCeNaXVDmiryXBbQjIiaEBPavYwiriL9XV0zxCikNsBSD/9AC/lR6RliaYxIV0f/V7vTFsZdp7xVxlc89K/JNHmrKc41g/PLMPbLU+ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/0orHCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bc0zb/u6pS9KQRe1ttrxXeZea1uvmevpjiE0ZZPoIopmkXtTIGgVeeFgGcYiTjWihZgmBhlBItv5MB+hrueQ3qi9P9tUCQCfJDTLPXnmI5RM/g5xjc5ABKLYRGqLPR++FbbM5fVYKO+B6TcVv7r2HZqzqPVeR97LBUIprSrrgaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSbXlMhO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/0orHCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C905B1F000FF;
-	Thu, 17 Sep 2026 16:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSbXlMhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47C71F000FF;
+	Thu, 17 Sep 2026 16:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663951;
-	bh=iwrtMcY0JeXfkUso9ccjXeg1MthANOuLNmVCd3xOhp0=;
+	s=korg; t=1789663954;
+	bh=rHDtFIRp19Arxw7uxfCu+eJwIxo/4bHmQNKg8AFgvH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/0orHCL9CkupkX0N/Ldewqiz3cQALavTiG/VV1+RpUehelTScVhcKS9ErUnLZdUL
-	 WQr/6uSx8enVkSk6XIRJaFQITzhIsQecZ70kx1xX8RQQBpqf/alXg7Hkmo86EhoLbm
-	 wtdAm3OonSvK104gOUB5bjoyYZTu+D1cOa9aN110=
+	b=RSbXlMhOutSI+ZRbRfL0wxImWVCG+rEhlDVksCwL5AXCNNU+8EL+FUUsYIMq/odM0
+	 fDg/U5ELhbLtPd7Y8HE85hmzNaD5J6uc1FCq6cNw5vrvSKiQ8yIqxMKKGh54PV3ihF
+	 h5bC3gDpWlJ52n1JRH0sc5Xu46LJS6o7wIBWbtM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Thomas Lin <thomas_lin@lecomputing.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0208/1250] s390/zcore: Removed unused variables
-Date: Thu, 17 Sep 2026 16:00:03 +0100
-Message-ID: <20260917151557.761996962@linuxfoundation.org>
+Subject: [PATCH 6.18 0173/1250] spi: dw-mmio: Add ACPI ID LECA0002 for LECARC SoCs
+Date: Thu, 17 Sep 2026 15:59:28 +0100
+Message-ID: <20260917151556.785645401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,53 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Thomas Lin <thomas_lin@lecomputing.com>
 
-[ Upstream commit 0a2aa995c0a1d363b5f0803862e84834e3876ae2 ]
+[ Upstream commit 019947c495850461242fdcc0780258805595036c ]
 
-allmodconfig with clang W=1 points out unused global variables:
+This ID requires a custom initialization function
+dw_spi_hssi_no_dma_init() that sets dws->dws.ip to DW_HSSI_ID.
 
-drivers/s390/char/zcore.c:49:23: error: variable
- 'zcore_reipl_file' set but not used [-Werror,-Wunused-but-set-global]
-drivers/s390/char/zcore.c:50:23: error: variable
- 'zcore_hsa_file' set but not used [-Werror,-Wunused-but-set-global]
-
-Remove both of them, since there is no point in keeping them.
-
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Thomas Lin <thomas_lin@lecomputing.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260521-lecarc-acpi-ids-v1-2-ae0ae90b2817@lecomputing.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/zcore.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/acpi/acpi_apd.c   | 7 +++++++
+ drivers/spi/spi-dw-mmio.c | 7 ++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/char/zcore.c b/drivers/s390/char/zcore.c
-index 33cebb91b9338..e74f41f201099 100644
---- a/drivers/s390/char/zcore.c
-+++ b/drivers/s390/char/zcore.c
-@@ -47,8 +47,6 @@ struct ipib_info {
- static struct debug_info *zcore_dbf;
- static int hsa_available;
- static struct dentry *zcore_dir;
--static struct dentry *zcore_reipl_file;
--static struct dentry *zcore_hsa_file;
- static struct ipl_parameter_block *zcore_ipl_block;
- static unsigned long os_info_flags;
+diff --git a/drivers/acpi/acpi_apd.c b/drivers/acpi/acpi_apd.c
+index 49539f7528c64..cd0fcfaeafc75 100644
+--- a/drivers/acpi/acpi_apd.c
++++ b/drivers/acpi/acpi_apd.c
+@@ -181,6 +181,12 @@ static const struct apd_device_desc hip08_spi_desc = {
+ 	.setup = acpi_apd_setup,
+ 	.fixed_clk_rate = 250000000,
+ };
++
++static const struct apd_device_desc leca_spi_desc = {
++	.setup = acpi_apd_setup,
++	.fixed_clk_rate = 400000000,
++};
++
+ #endif /* CONFIG_ARM64 */
  
-@@ -354,10 +352,8 @@ static int __init zcore_init(void)
- 		goto fail;
+ #endif
+@@ -251,6 +257,7 @@ static const struct acpi_device_id acpi_apd_device_ids[] = {
+ 	{ "HISI02A2", APD_ADDR(hip08_i2c_desc) },
+ 	{ "HISI02A3", APD_ADDR(hip08_lite_i2c_desc) },
+ 	{ "HISI0173", APD_ADDR(hip08_spi_desc) },
++	{ "LECA0002", APD_ADDR(leca_spi_desc) },
+ 	{ "NXP0001", APD_ADDR(nxp_i2c_desc) },
+ #endif
+ 	{ }
+diff --git a/drivers/spi/spi-dw-mmio.c b/drivers/spi/spi-dw-mmio.c
+index 7a5197586919c..8f7afe0e49aea 100644
+--- a/drivers/spi/spi-dw-mmio.c
++++ b/drivers/spi/spi-dw-mmio.c
+@@ -228,8 +228,8 @@ static int dw_spi_hssi_init(struct platform_device *pdev,
+ 	return 0;
+ }
  
- 	zcore_dir = debugfs_create_dir("zcore" , NULL);
--	zcore_reipl_file = debugfs_create_file("reipl", S_IRUSR, zcore_dir,
--						NULL, &zcore_reipl_fops);
--	zcore_hsa_file = debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir,
--					     NULL, &zcore_hsa_fops);
-+	debugfs_create_file("reipl", S_IRUSR, zcore_dir, NULL, &zcore_reipl_fops);
-+	debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir, NULL, &zcore_hsa_fops);
+-static int dw_spi_intel_init(struct platform_device *pdev,
+-			     struct dw_spi_mmio *dwsmmio)
++static int dw_spi_hssi_no_dma_init(struct platform_device *pdev,
++				   struct dw_spi_mmio *dwsmmio)
+ {
+ 	dwsmmio->dws.ip = DW_HSSI_ID;
  
- 	register_reboot_notifier(&zcore_reboot_notifier);
- 	atomic_notifier_chain_register(&panic_notifier_list, &zcore_on_panic_notifier);
+@@ -413,7 +413,7 @@ static const struct of_device_id dw_spi_mmio_of_match[] = {
+ 	{ .compatible = "amazon,alpine-dw-apb-ssi", .data = dw_spi_alpine_init},
+ 	{ .compatible = "renesas,rzn1-spi", .data = dw_spi_pssi_init},
+ 	{ .compatible = "snps,dwc-ssi-1.01a", .data = dw_spi_hssi_init},
+-	{ .compatible = "intel,keembay-ssi", .data = dw_spi_intel_init},
++	{ .compatible = "intel,keembay-ssi", .data = dw_spi_hssi_no_dma_init},
+ 	{
+ 		.compatible = "intel,mountevans-imc-ssi",
+ 		.data = dw_spi_mountevans_imc_init,
+@@ -428,6 +428,7 @@ MODULE_DEVICE_TABLE(of, dw_spi_mmio_of_match);
+ #ifdef CONFIG_ACPI
+ static const struct acpi_device_id dw_spi_mmio_acpi_match[] = {
+ 	{"HISI0173", (kernel_ulong_t)dw_spi_pssi_init},
++	{"LECA0002", (kernel_ulong_t)dw_spi_hssi_no_dma_init},
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(acpi, dw_spi_mmio_acpi_match);
 -- 
 2.53.0
 
