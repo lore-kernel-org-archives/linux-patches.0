@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCD1556B85;
-	Thu, 17 Sep 2026 15:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A84D4EB85E;
+	Thu, 17 Sep 2026 15:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659641; cv=none; b=UqOjA3D6bsPnFcCpPXQ45XL0QsVm9XoayXto7OKA/pvrlM7PBXIXEKv5HpWpVDopWq/pdFQ+s6kSiEsrKzr7c3QoY34kvU1zbCC6twTJuhEvU3rREWYdsta2KiRXoMed/iWH4BvW5gH5Uo7LxYl8SjE0RnWg0xw1cEO92vmpREQ=
+	t=1789659645; cv=none; b=O61SmyOlu+e6NnOLk1ArcoplogNt8ziZNcU4ZWlVknFZkVZNLxL2aa0ilBadKY7G9gNDnNs3c5wApR+PfP4SWKx0wT7M9a2NC9cTJBc3mp0MUV0KlCK0TPOZI6eMIaBHiCaFIFCVvmvv1EgFCsZWKUfpl5Xgj+5XOqGPQt72jMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659641; c=relaxed/simple;
-	bh=HZplwaJnG6MOa+O31PT3kevUf6JCA4boazr+k29E7CU=;
+	s=arc-20240116; t=1789659645; c=relaxed/simple;
+	bh=tFP8linhE3aBmNkwGo0if/TqaCycd0iPlX/4L8IXIK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNMEzeuj1NqrzQ+4NHSgVW9j4YZ7eOSKDpBBewG8LJ5/AFdz4Or7z7frGa38woiy8OY8orUVjO3otFor67+xf+8Lpe5aG1K+azwhCukWOzNqr8grsQl4T9wW59dYidsylsLDqjxUGRs1WXtXoBh7oo7PkjkHGETib3KV/1P9nfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rq4XjqX3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AOwt/CNYqJIyo87EHO+THaRqqURlZEljRQzz0FrsRaoOhTSQ1GkbeHv/mMowFktnu5O31DCTqf50Tg3d2LaqDPO+oS9+vozhf+pbDJ1KzjYJ4pJBrhFgF/Y1APx90/CS//JhulfYTTB3nW0pBMlGSFGPp87UkqUmSDeYSTFL+UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kP1WRaDS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rq4XjqX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9541F00893;
-	Thu, 17 Sep 2026 15:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kP1WRaDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47561F00899;
+	Thu, 17 Sep 2026 15:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659631;
-	bh=BwG8Ar68cuUMwcX/pRQ7PiyCIZQ/wtIu1SqjpsBiSQs=;
+	s=korg; t=1789659634;
+	bh=LjBUDz7IC+c1Yb2C9gkK5/jQQGXGLfMWvSBamdmxrBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rq4XjqX3/XnCrf5ctU2whH1oGFws9pjL1rDpk134Sebq3D8NT5hOgVUwRobSQC4AG
-	 9xWo2+j9O//xTgGaOoN6zhL00SQOkI5ms16IpLwoOGNIFsnOjbZGA/YrJ7XLY+sVR4
-	 ux5bEqPjmX3bz1s2gf94JSSACl87NHQw0aL/7GGg=
+	b=kP1WRaDSR7VIUb9ttdr5Ackse+K6c03a+BIkkcLNeJlTFwQK79LIpKJXNFA7ocs1Q
+	 78qd/QETjUv7er8zV0YUp3a/iYyBOsKanvXo+8PNt2SFag+dIWD3sTsS+zXWFJP6sl
+	 eINzZrmXVhC3ZAmGfz219ZJpP4h1j+WWIREphrXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Juch <andreas@juch.cc>,
+	Hemanth Selam <hemanth.selam@gmail.com>,
 	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 320/733] iommu/amd: Fix premature break in init_iommu_one() again
-Date: Thu, 17 Sep 2026 16:10:28 +0100
-Message-ID: <20260917151359.469556430@linuxfoundation.org>
+Subject: [PATCH 7.2 321/733] iommu/amd: Fix ineffective error check in nested domain allocation
+Date: Thu, 17 Sep 2026 16:10:29 +0100
+Message-ID: <20260917151359.496058195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,65 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit eb29b7bbc8ba28bbb0b9fdd655e931e1d1fa625c ]
+[ Upstream commit fa5c0827f0b7bac6d0a188f10118151769ae68fd ]
 
-Commit 283d245468a2 ("iommu/amd: Fix premature break in
-init_iommu_one()") unintentionally broke older platforms - such as
-the ASRockRack B550D4-4L - where the BIOS advertises incorrect IOMMU
-features.
+amd_iommu_pdom_id_alloc() returns an int: a domain ID on success, or the
+negative errno from ida_alloc_range() when the ID space is exhausted or
+memory is short.  amd_iommu_alloc_domain_nested() stores that return value
+in gdom_info->hdom_id, which is a u32, and only then tests it:
 
-Move the HATDis check ahead of the GASup check, and re-introduce the
-break inside the GASup check to restore correct behavior on affected
-platforms.
+	gdom_info->hdom_id = amd_iommu_pdom_id_alloc();
+	if (gdom_info->hdom_id <= 0) {
 
-This is a short-term fix to resolve the regression. Longer term, we
-should rework how EFRs are tracked and prioritize the MMIO-advertised
-EFR over the one reported via IVRS. That requires more extensive
-changes and will be addressed separately.
+The assignment discards the sign, so -ENOSPC becomes 0xffffffe4 and the
+test never fires.  The nested domain is then set up with a host domain ID
+that was never allocated, instead of the allocation failing with -ENOSPC.
 
-Fixes: 283d245468a2 ("iommu/amd: Fix premature break in init_iommu_one()")
-Reported-by: Andreas Juch <andreas@juch.cc>
-Closes: https://lore.kernel.org/linux-iommu/07b2d390-f7a0-47e2-bc2c-eb0853acf52e@juch.cc/
-Tested-by: Andreas Juch <andreas@juch.cc>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Keep the value in an int, test it there, and store it only once it is
+known to be valid, which is what the other amd_iommu_pdom_id_alloc()
+callers already do.
+
+Fixes: 757d2b1fdf5b ("iommu/amd: Introduce gDomID-to-hDomID Mapping and handle parent domain invalidation")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/iommu/amd/nested.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 16ffc75ef3f0d..3509be3fc744e 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1919,19 +1919,20 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
- 		else
- 			iommu->mmio_phys_end = MMIO_CNTR_CONF_OFFSET;
+diff --git a/drivers/iommu/amd/nested.c b/drivers/iommu/amd/nested.c
+index 63b53b29e0298..f1c7987fc5859 100644
+--- a/drivers/iommu/amd/nested.c
++++ b/drivers/iommu/amd/nested.c
+@@ -96,7 +96,7 @@ struct iommu_domain *
+ amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
+ 			      const struct iommu_user_data *user_data)
+ {
+-	int ret;
++	int ret, hdom_id;
+ 	unsigned long irqflags;
+ 	struct nested_domain *ndom;
+ 	struct guest_domain_mapping_info *gdom_info;
+@@ -161,8 +161,8 @@ amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
+ 	}
  
-+		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
-+			pr_warn_once("Host Address Translation is not supported.\n");
-+			amd_iommu_hatdis = true;
-+		}
-+
- 		/* XT and GAM require GA mode. */
- 		if ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0) {
- 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
-+			break;
- 		} else {
- 			if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
- 				amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
- 		}
+ 	/* The gDomID does not exist. We allocate new hdom_id */
+-	gdom_info->hdom_id = amd_iommu_pdom_id_alloc();
+-	if (gdom_info->hdom_id <= 0) {
++	hdom_id = amd_iommu_pdom_id_alloc();
++	if (hdom_id <= 0) {
+ 		__xa_cmpxchg(&aviommu->gdomid_array,
+ 			     ndom->gdom_id, gdom_info, NULL, GFP_ATOMIC);
+ 		xa_unlock_irqrestore(&aviommu->gdomid_array, irqflags);
+@@ -170,6 +170,7 @@ amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
+ 		goto out_err_gdom_info;
+ 	}
  
--		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
--			pr_warn_once("Host Address Translation is not supported.\n");
--			amd_iommu_hatdis = true;
--		}
--
- 		early_iommu_features_init(iommu, h);
++	gdom_info->hdom_id = hdom_id;
+ 	ndom->gdom_info = gdom_info;
+ 	refcount_set(&gdom_info->users, 1);
  
- 		break;
 -- 
 2.53.0
 
