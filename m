@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CAD58FD2D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F404B524AE7;
 	Thu, 17 Sep 2026 15:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658983; cv=none; b=lYq9GPfVB4MCh7p3HOR4jUkt/f3tpnyer/voFL4L/724dqQIjYODCRQ0toqDPIMeHXp32QDX+xHZI9Ot/drveoRZvC4XNYOm/O/YX4cg4qfSCWJNR9CB6O6/1jlmvqsTUuUwKBncWpCQdyW/CAww30cdSR2iZhZEPWyTn/DMj+g=
+	t=1789658983; cv=none; b=bmCvAl1zZBmXOnqSiTrXURQGczSCH4qYfJoVmptvY+Y/AMqfrYw6Y6vlf736PG4/00wfNWV0bhORKjWZU9k+LfOyeS9OgtDpVu7wt+mjhWmYv2r+tGsSSk8YZQ7qnYS7zHaePEq45iCFSXeRHiye3/bDYEa8Ff10WkIuXEikXDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789658983; c=relaxed/simple;
-	bh=bAbM83pVMmxg/fRHrWioIFxJSUWC0mImcItewETTTVs=;
+	bh=RfUuNIwD1SW74754mDwCVsz1z8xCme73xH0XJb6QMTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVFHeQzx7Yz6CjOQi72NV9A7VWjTCtW6xVURllpp0A1Xq+JWQyzbnBHI01UnI57wy5TQEHIY/U4xZt4s+xW7oVYqa4Eofaipv8vnKeLFTdZzP7Ixpu60Les2mt+EEd2/sRbhbMGy6XrlcPYFfTCWQumsXmIt8zCBb7DIpgY2EGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGD5uG7/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qzFA5awfo6hpXYa8/u3oWr82/+ul6JESawbJGeTUl2EbPSXU28OwtxLgSVGAfR1O4h5qb5XRI/LKumjopPzsRMyXUTiQr21BbHvH+7eTV9L4lREU96ZGeIcfQjwVXVb7VLOUnjLWJjRqtz7hrWMzzJs2oxqbhUBWQgbxiG3rZx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZRZ38cH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGD5uG7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDAC1F00898;
-	Thu, 17 Sep 2026 15:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZRZ38cH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F401F00899;
+	Thu, 17 Sep 2026 15:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658974;
-	bh=aNGYabKnTzLAC6mokFqP8gGZkTUaK1kuilJU3+Hydfc=;
+	s=korg; t=1789658971;
+	bh=5ezqZROagRiBibwaJhEX4/EaxjlPhLZiXfFz7IarLVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GGD5uG7/m9Bbpv12mrupSPeT6S3xKfr1UXrYk5LHiNswIgfjlzWP4O8z3TJy5smv3
-	 CvIWFyyjXiFljHkVT0w9C2AmMGnwdPH+byL1mtg5V7WxIiDa18FhcEvBsCpc3zIXET
-	 IDRdUDIm2FaFn4jr84aBwesx+pBJDjoB6MmWyI3I=
+	b=UZRZ38cHHyiqhhrmEbRCQN4w4e5d30wH67/lxvf7C8iGlMv0e7szsY+VXF5mM5zVK
+	 LS0avm2IwZUYWvj2gcBWYz1ANlGv8qlWXct36AAYo1Z8tPZ6StJNCLVji5mn+Qw7nS
+	 buvUDOLa4X6Rcs6KMgmeMicJCCYHP5Pby+Hr6e0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Christoph Schlameuss <schlameuss@linux.ibm.com>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 101/733] s390/ipl: Fix NULL deref in kdump without re-IPL parm block
-Date: Thu, 17 Sep 2026 16:06:49 +0100
-Message-ID: <20260917151353.473492085@linuxfoundation.org>
+Subject: [PATCH 7.2 100/733] s390/time: Use jiffies instead of jiffies_64
+Date: Thu, 17 Sep 2026 16:06:48 +0100
+Message-ID: <20260917151353.444618092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,50 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 7f918871112e8e7c581e99eb8e545af4e59c8367 ]
+[ Upstream commit ca1f4a5ecab084af7f405baa902edbed171b57e6 ]
 
-Some IPL types, like HMC FTP boot or QEMU direct kernel boot, might
-not provide an IPL parameter block. In this case, reipl_type_init()
-selects IPL_TYPE_UNKNOWN, and reipl_block_actual remains NULL.
+Christoph Schlameuss and Alexander Egorenkov reported a data-race
+reported by KCSAN when jiffies_64 is read:
 
-kdump passes the re-IPL parameter block to the dump kernel through
-os_info. Before commit 3b9678472bab ("s390/ipl: correct kdump reipl
-block checksum calculation"), the os_info entry was added only for
-IPL types which initialized reipl_block_actual. That commit moved the
-os_info update to machine_crash_shutdown(), making it unconditional. As
-a result, set_os_info_reipl_block() dereferences reipl_block_actual for
-IPL_TYPE_UNKNOWN. This may happen to work by chance when address zero
-contains readable lowcore data and the resulting empty os_info entry is
-ignored by the dump kernel.
+==================================================================
+BUG: KCSAN: data-race in do_account_vtime / tick_do_update_jiffies64
 
-Skip the os_info update when no re-IPL parameter block is available.
-Kdump then collect the dump and reboot without setting re-IPL parameter
-block.
+write to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 6:
+ tick_do_update_jiffies64+0x140/0x250
+=============================================================>
+BUG: KCSAN: data-race in do_account_vtime / tick_do_update_ji>
 
-Fixes: 3b9678472bab ("s390/ipl: correct kdump reipl block checksum calculation")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+write to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 6:
+ tick_do_update_jiffies64+0x140/0x250
+ tick_nohz_handler+0x2e6/0x300
+ __run_hrtimer+0x156/0x4d0
+ __hrtimer_run_queues+0xd2/0x150
+...
+ system_call+0x72/0x90
+
+read to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 12:
+ do_account_vtime+0x7d6/0x860
+ vtime_flush+0x26/0xe0
+ update_process_times+0x32/0x160
+ tick_nohz_handler+0x12a/0x300
+...
+ system_call+0x72/0x90
+
+value changed: 0x00000000ffffaa6c -> 0x00000000ffffaa6d
+...
+=============================================================>
+
+Problem is that jiffies_64 instead of jiffies is used. Both are at the
+same address, but only jiffies is of volatile type, which prevents this
+warning.
+
+Change the vtime code so jiffies instead of jiffies_64 is used
+everywhere. This addresses also the inconsistency that both jiffies and
+jiffies_64 were used in the original patch which introduced this.
+
+Fixes: f341b8dff982 ("s390/vtime: limit MT scaling value updates")
+Reported-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Reviewed-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/ipl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/kernel/vtime.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
-index 3c346b02ceb95..7024fc4137152 100644
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -1157,6 +1157,8 @@ static struct attribute_group reipl_nss_attr_group = {
+diff --git a/arch/s390/kernel/vtime.c b/arch/s390/kernel/vtime.c
+index d804e1140c2e9..efcbf406f03e7 100644
+--- a/arch/s390/kernel/vtime.c
++++ b/arch/s390/kernel/vtime.c
+@@ -32,7 +32,7 @@ static atomic64_t virt_timer_elapsed;
+ DEFINE_PER_CPU(u64, mt_cycles[8]);
+ static DEFINE_PER_CPU(u64, mt_scaling_mult) = { 1 };
+ static DEFINE_PER_CPU(u64, mt_scaling_div) = { 1 };
+-static DEFINE_PER_CPU(u64, mt_scaling_jiffies);
++static DEFINE_PER_CPU(unsigned long, mt_scaling_jiffies);
  
- void set_os_info_reipl_block(void)
+ static inline void set_vtimer(u64 expires)
  {
-+	if (!reipl_block_actual)
-+		return;
- 	os_info_entry_add_data(OS_INFO_REIPL_BLOCK, reipl_block_actual,
- 			       reipl_block_actual->hdr.len);
+@@ -81,7 +81,7 @@ static void update_mt_scaling(void)
+ 		memcpy(cycles_old, cycles_new,
+ 		       sizeof(u64) * (smp_cpu_mtid + 1));
+ 	}
+-	__this_cpu_write(mt_scaling_jiffies, jiffies_64);
++	__this_cpu_write(mt_scaling_jiffies, jiffies);
  }
+ 
+ static inline u64 update_tsk_timer(unsigned long *tsk_vtime, u64 new)
+@@ -144,7 +144,7 @@ static int do_account_vtime(struct task_struct *tsk)
+ 		lc->system_timer += timer;
+ 
+ 	/* Update MT utilization calculation */
+-	if (smp_cpu_mtid && time_after64(jiffies_64, __this_cpu_read(mt_scaling_jiffies)))
++	if (smp_cpu_mtid && time_after(jiffies, __this_cpu_read(mt_scaling_jiffies)))
+ 		update_mt_scaling();
+ 
+ 	/* Calculate cputime delta */
 -- 
 2.53.0
 
