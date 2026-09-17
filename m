@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7325372D4;
-	Thu, 17 Sep 2026 17:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB0D5372D8;
+	Thu, 17 Sep 2026 17:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664557; cv=none; b=Eo364XMTdCem+/Zme2crTH0UHSoMw9zqsX78xVwYwsLdzOqdJzuO8ci1Gr48mPoZctI+ZH1tyHd8hKO6T1dUdIhBLpaqcF5aT9bN4zmaVnYPVr5RYNhOnCyRmY5tkTrmklqrr2pFPTLTba+nNLpOeNSzCKcfXeGMIk6NZTVL/No=
+	t=1789664559; cv=none; b=Y26pEl7OKc8/7MAFvSWRsdWM1n1xBmkQjFs8GPxcNV2CSjXpxrZsFdTSa5uVM5HXc5zE80EsCfpsw8EW5KTslIBgAQhLsAEcpWG4GdzT9z6x/EJOlt3vuRCuoVQU3wkngWBNOVxzx37JP/ZoeTYPm0d0ix3iiNzl/S5ERlmRdk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664557; c=relaxed/simple;
-	bh=YtslD1NvKopIcvh6K92NJdV/k4X63AkiE6XQeBBKci4=;
+	s=arc-20240116; t=1789664559; c=relaxed/simple;
+	bh=2kficQas1ZwMO/0o/bWpuvpuFHqAs+cYqrM+3l56vk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P19+4+4Vz7gNPdDScFzqQ4O8ngaCV8CYpfxG1qCnH+ry1eyLztdKZehpNkPYGT8tgWYLd2yXTBZEkeTd3dh3lOGRdR9TYf/9L5b07NjgYqJOaLElTDnqvmKE4VayvGNyxtzZx67blmi+85P13gNltkwW4+1zSpx+y/80QPoxGZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIYAs9V2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J/vhf9nHK+JWicBB/V7u0d0sYQMeDEN5v+rvXnEuKgfhFIckqYV5D1QpEXu0aJDXrT5frW1uCczD8EpFUN81dmKGNeXcA+s4/qjAjZiPyuKqm1QLp01SU1MsqgmGMxKW3TrpWwTaGxUcZuVRZV9qgpIUIG3y3D9MIZkYnV6E1nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX28NngH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIYAs9V2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BA11F0089A;
-	Thu, 17 Sep 2026 17:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX28NngH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4B81F000FF;
+	Thu, 17 Sep 2026 17:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664555;
-	bh=1QxygpTGJkv1iWgbBY1aWRUK6V3taHmriZH+rcU1FaQ=;
+	s=korg; t=1789664558;
+	bh=spFHGWWFHC5Fc9DpGxYz66q8Bw+PEcXKEBxwn+LbVbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIYAs9V2aeFh1THlySSVJsPxgByDB+8oeZWYQ4oyNBiOQs2EXrXyqhcDHYQ47+8FG
-	 6tEu+D1wAJQwNrY3+DHd6Epk1MkoV9rhm16UIOwnGYb6QTEK7j2ctTngwvRm1/vVjG
-	 Gyl90nAVGNZVDG6Krt2uR1gkOwjbwr6XvkeQWvXA=
+	b=mX28NngHW+yy4Dodr5zQxrMxPfIj1uKgzu3sM4jxSjOAtu7izgHsBU09qmdCSk2xm
+	 +YrbTSODmKlBaPIPIZbSBCQjATSveLeEjmMUQHbhF34FJxvnGj4FaDPP+DlLQvXbps
+	 9pVgm+/e0QPzBwVg/kKX3jGqf+P9jrIrs9RAKvTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0411/1250] net: hns3: improve the unused_tuple parameter setting
-Date: Thu, 17 Sep 2026 16:03:26 +0100
-Message-ID: <20260917151603.164396131@linuxfoundation.org>
+Subject: [PATCH 6.18 0412/1250] apparmor: propagate -ENOMEM correctly in unpack_table
+Date: Thu, 17 Sep 2026 16:03:27 +0100
+Message-ID: <20260917151603.190408727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,71 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Maxime Bélair <maxime.belair@canonical.com>
 
-[ Upstream commit 1ad6f1ff3e96c7ee888475740c8acdaf822e0813 ]
+[ Upstream commit 1c8a839442823ce5c627d645730d8c61d828aafa ]
 
-Currently, when the tc tool is used to set flow table rules, the IP address
-and MAC address can be configured separately, for example, src_xx or dst_xx
-can be configured separately.
+Currently, if the `kvzalloc` in `unpack_table` fails, it returns NULL.
+This is masked by `aa_dfa_unpack` which interprets NULL as a -EPROTO,
+leading to confusing error messages in `apparmor_parser` [1].
 
-Therefore, the driver needs to check whether the mask is all zero in
-keys, such as FLOW_DISSECTOR_KEY_IPV4_ADDRS, FLOW_DISSECTOR_KEY_IPV6_ADDRS,
-and FLOW_DISSECTOR_KEY_ETH_ADDRS.
-If the mask is all zero, the tuple is not configured.
-In this case, the driver adds the tuple to unused_tuple.
+The fixed behavior correctly propagates -ENOMEM on allocation failure.
 
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://gitlab.com/apparmor/apparmor/-/issues/592
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ security/apparmor/match.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 02fee71c20886..f6fa60f3126f5 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -7261,6 +7261,10 @@ static void hclge_get_cls_key_mac(const struct flow_rule *flow,
- 		ether_addr_copy(rule->tuples_mask.dst_mac, match.mask->dst);
- 		ether_addr_copy(rule->tuples.src_mac, match.key->src);
- 		ether_addr_copy(rule->tuples_mask.src_mac, match.mask->src);
-+		if (is_zero_ether_addr(match.mask->dst))
-+			rule->unused_tuple |= BIT(INNER_DST_MAC);
-+		if (is_zero_ether_addr(match.mask->src))
-+			rule->unused_tuple |= BIT(INNER_SRC_MAC);
- 	} else {
- 		rule->unused_tuple |= BIT(INNER_DST_MAC);
- 		rule->unused_tuple |= BIT(INNER_SRC_MAC);
-@@ -7309,6 +7313,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
- 		rule->tuples.dst_ip[IPV4_INDEX] = be32_to_cpu(match.key->dst);
- 		rule->tuples_mask.dst_ip[IPV4_INDEX] =
- 						be32_to_cpu(match.mask->dst);
-+		if (!match.mask->src)
-+			rule->unused_tuple |= BIT(INNER_SRC_IP);
-+		if (!match.mask->dst)
-+			rule->unused_tuple |= BIT(INNER_DST_IP);
- 	} else if (addr_type == FLOW_DISSECTOR_KEY_IPV6_ADDRS) {
- 		struct flow_match_ipv6_addrs match;
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index 0de249725efbf..b2a4bee4e3939 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -27,13 +27,13 @@
+  * @blob: data to unpack (NOT NULL)
+  * @bsize: size of blob
+  *
+- * Returns: pointer to table else NULL on failure
++ * Returns: pointer to table else ERR_PTR on failure
+  *
+  * NOTE: must be freed by kvfree (not kfree)
+  */
+ static struct table_header *unpack_table(char *blob, size_t bsize)
+ {
+-	struct table_header *table = NULL;
++	struct table_header *table = ERR_PTR(-EPROTO);
+ 	struct table_header th;
+ 	size_t tsize;
  
-@@ -7321,6 +7329,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
- 				      match.key->dst.s6_addr32);
- 		ipv6_addr_be32_to_cpu(rule->tuples_mask.dst_ip,
- 				      match.mask->dst.s6_addr32);
-+		if (ipv6_addr_any(&match.mask->src))
-+			rule->unused_tuple |= BIT(INNER_SRC_IP);
-+		if (ipv6_addr_any(&match.mask->dst))
-+			rule->unused_tuple |= BIT(INNER_DST_IP);
- 	} else {
- 		rule->unused_tuple |= BIT(INNER_SRC_IP);
- 		rule->unused_tuple |= BIT(INNER_DST_IP);
+@@ -74,20 +74,21 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
+ 		else if (th.td_flags == YYTD_DATA32)
+ 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
+ 				     u32, __be32, get_unaligned_be32);
+-		else
+-			goto fail;
++		else {
++			kvfree(table);
++			table = ERR_PTR(-EPROTO);
++			goto out;
++		}
+ 		/* if table was vmalloced make sure the page tables are synced
+ 		 * before it is used, as it goes live to all cpus.
+ 		 */
+ 		if (is_vmalloc_addr(table))
+ 			vm_unmap_aliases();
+-	}
++	} else
++		table = ERR_PTR(-ENOMEM);
+ 
+ out:
+ 	return table;
+-fail:
+-	kvfree(table);
+-	return NULL;
+ }
+ 
+ /**
+@@ -359,8 +360,11 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
+ 
+ 	while (size > 0) {
+ 		table = unpack_table(data, size);
+-		if (!table)
++		if (IS_ERR(table)) {
++			error = PTR_ERR(table);
++			table = NULL;
+ 			goto fail;
++		}
+ 
+ 		switch (table->td_id) {
+ 		case YYTD_ID_ACCEPT:
 -- 
 2.53.0
 
