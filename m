@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F5D4E77FE;
-	Thu, 17 Sep 2026 18:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD474E77FE;
+	Thu, 17 Sep 2026 18:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668968; cv=none; b=D0J+ahmdQfFA3sR1NsH7EjzvWH+RrjYUJrjTGJr20ZUEXUiD0voK+8Scuw9OL6lleKF0jtH0A205zfIInL7L+Y35D4QapzrkT+2ZUFkrXx084btGaYU+SzO24iGF9xVbk6g6vXj5X81tB7++zXWKZT1RXvQlPALqdsf5G4QPtv0=
+	t=1789668971; cv=none; b=KydDczEcyWuK4FwmmZwQqLX9S7gMr1wSitHcE5I9e5WOPToCI4NHbixX5u6MUpKbstML5FEYXBbCJwadKRe1ExppCIEaei393JOaBLPC+H7s87sqgs9y6zxmPSEzo2EksXEJsfYsrzzeTsvfuWMfz/CITmXxKJukMLHZkwveeJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668968; c=relaxed/simple;
-	bh=vAObw3jz34nhnZSmS+8xomG4E3RLV7cveYflsLO2eMo=;
+	s=arc-20240116; t=1789668971; c=relaxed/simple;
+	bh=2S6IQorDO0epiSD54bTkcaATV//u/R41VnxxDWNB95k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1lRw2+Mo6HCfoO4/BAd2QOoLHfhfqbfe8H9C9tfxltEjw4R/Uvi11Y6ikcRP0Rclxg8jOO/TXFj3yZtE+pART2hwOcJk0bdP/N8ahdymnMTTSbJ6110mNov1j5XOLsRQVOinDBFiQwNpzWwnyNUjn9W91Sqr8qu1aCparQ1VuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/Dtaal+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wk845xmtBvpyyEAf0ElbX2/01dLaNZuJX6Q54De/kopYZPeEbLG3f9gYYJsmTBuTs1dE26t8MzUDlflbcNnleiZw2ljJS/XMIzywkfnb7piIc2EeWrIxP8Bh1ald/VPIutVMS/1T+lbrsxQ/Myeg5BVAp7x4gH/Svn9jNKVoQIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dffwEuk8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/Dtaal+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885E21F000FF;
-	Thu, 17 Sep 2026 18:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dffwEuk8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8150D1F000FF;
+	Thu, 17 Sep 2026 18:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668967;
-	bh=ZTpfsS5PyGE5ZOzt9F1Mv6da7eHjKvUEpmHsZ6lIDow=;
+	s=korg; t=1789668970;
+	bh=L61pqgXlldMW8daZGqhK5c0udX0Fh5ReBMkJBw35loQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K/Dtaal+ZEq/USTHjNIpKns9KXHCdus6VVFEncCMiE4kS7MrBpUNCJQ0I+nxGFk1U
-	 qKSnVpsMK3VTSKNMbaTeu4Oc4uRk+KArD8GTS2/BD2XEZOW1POAU+ZJaZ5uXjaIqZt
-	 bK12lP9vRqLqfd/Zjork41klF5rTkSAh5TBEizEw=
+	b=dffwEuk8lI+2EppNFzeM8w8//1/cvzCzy62GsGIO+x8eE/YdoAzopZ7g+xzJKrXcN
+	 cYyEGw3GKxAAHNcj7vRcf7jeWuOiodhslKKtijQePFyqB7euXAB0oKpd/1u5DlyPZZ
+	 t1z39R7z3605mtbS11eDG/rWenzRg5NopLC5lIJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ciprian Regus <ciprian.regus@analog.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0562/1102] net: ethernet: oa_tc6: Handle the OA TC6 SPI protected mode
-Date: Thu, 17 Sep 2026 16:08:25 +0100
-Message-ID: <20260917151553.989274075@linuxfoundation.org>
+Subject: [PATCH 6.12 0553/1102] Bluetooth: L2CAP: fix chan mode for LE_CONN_REQ + EXT_FLOWCTL pchan
+Date: Thu, 17 Sep 2026 16:08:16 +0100
+Message-ID: <20260917151553.728149590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,263 +46,71 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260917150825.SmszJzqPI5xCsg99m7IoaMq3s5ozvwoTqMxiiDtM48E@z>
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ciprian Regus <ciprian.regus@analog.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 7d0e4c4b8c85d8ea2c77a90e1f7a7f74ce531e52 ]
+[ Upstream commit 4ef05db5b08b176a551b4a6287372045998806b0 ]
 
-Implement the OA TC6 standard defined protected mode for control (register
-access) transactions. In addition to the current register access formats
-the oa_tc6 driver handles, 1's complement values of the data field
-are included (by both the host and the MACPHY) in the SPI transfer frames.
-This feature acts as an integrity check.
+l2cap_new_connection() sets default value of channel mode to match the
+parent channel.  l2cap_le_connect_req() left this at the default, and
+created L2CAP_MODE_EXT_FLOWCTL channels if listening pchan has that
+mode.  This causes FLAG_DEFER_SETUP channels to reply to
+L2CAP_LE_CONN_REQ with L2CAP_ECRED_CONN_RSP, which is incorrect.
 
-Control write transactions look like this:
+It can also result to stack OOB write (of l2cap_alloc_cid determined
+values) in l2cap_ecred_rsp_defer(), as l2cap_le_connect_req() does not
+limit maximum number of deferred channels or check for duplicate ident.
 
-          |<- 32 bits ->|<--- data_size --->|<- 32 bits ->|
-    MOSI: | ctrl header | reg write data    | ignored     |
-    MISO: | (discard)   | echoed ctrl hdr   | echoed data |
+Fix by setting chan->mode correctly in l2cap_le_connect_req().
 
-    data_size (LEN = number of registers to read in a sequence):
-      Unprotected: 32 x (LEN + 1) bits
-      Protected:   2 x 32 x (LEN + 1) bits
+Also check channel mode in l2cap_ecred_rsp_defer(), and do WARN_ON_ONCE
+instead of OOB write to make it less brittle.
 
-Control read transaction:
-
-          |<- 32 bits ->|<--- 32 bits --> |<- data_size ->|
-    MOSI: | ctrl header | ignored ...                     |
-    MISO: | (discard)   | echoed ctrl hdr | reg read data |
-
-    data_size (LEN = number of registers to read in a sequence):
-      Unprotected: 32 x (LEN + 1) bits
-      Protected:   2 x 32 x (LEN + 1) bits
-
-Register data format ("reg write data" and "reg read data"):
-
-    Unprotected:
-      | W1 (normal) | W2 (normal) | ... | Wx (normal) |
-
-    Protected:
-    | W1 (normal) | W1 (complement) | ... | Wx (normal) | Wx (complement)|
-
-The protected mode state can be read from the bit 5 of CONFIG0 (0x4)
-register, and this setting is usually only configured during the
-MACPHY's reset (depending on the device it can be done by setting the
-state of a pin). We can read the protected mode configuration before any
-other register access and since the SPI transfer is initially sized for an
-unprotected read, the MACPHY's complement words are never clocked out
-and no checking is required. The data transactions (Ethernet frames)
-remain unchanged.
-
-Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
-Link: https://patch.msgid.link/20260708-adin1140-driver-v5-2-4aca7b51a58b@analog.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 172c974113bf ("net: ethernet: oa_tc6: Improve the error recovery")
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c | 93 ++++++++++++++++++++++++++++-------
- 1 file changed, 76 insertions(+), 17 deletions(-)
+ net/bluetooth/l2cap_core.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
-index cf5249f81651f..3321ed4201963 100644
---- a/drivers/net/ethernet/oa_tc6.c
-+++ b/drivers/net/ethernet/oa_tc6.c
-@@ -25,6 +25,7 @@
- #define OA_TC6_REG_CONFIG0			0x0004
- #define CONFIG0_SYNC				BIT(15)
- #define CONFIG0_ZARFE_ENABLE			BIT(12)
-+#define CONFIG0_PROTE				BIT(5)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c88caeefb6786..b98bb57ef6781 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3858,6 +3858,9 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
+ 	struct l2cap_ecred_conn_rsp *rsp_flex =
+ 		container_of(&rsp->pdu.rsp, struct l2cap_ecred_conn_rsp, hdr);
  
- /* Status Register #0 */
- #define OA_TC6_REG_STATUS0			0x0008
-@@ -90,14 +91,17 @@
- #define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
- #define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
- 
-+#define OA_TC6_CTRL_PROT_REPLY_SIZE		4
- #define OA_TC6_CTRL_HEADER_SIZE			4
- #define OA_TC6_CTRL_REG_VALUE_SIZE		4
- #define OA_TC6_CTRL_IGNORED_SIZE		4
- #define OA_TC6_CTRL_MAX_REGISTERS		128
--#define OA_TC6_CTRL_SPI_BUF_SIZE		(OA_TC6_CTRL_HEADER_SIZE +\
--						(OA_TC6_CTRL_MAX_REGISTERS *\
--						OA_TC6_CTRL_REG_VALUE_SIZE) +\
--						OA_TC6_CTRL_IGNORED_SIZE)
-+#define OA_TC6_CTRL_SPI_BUF_SIZE	(OA_TC6_CTRL_HEADER_SIZE +\
-+					(OA_TC6_CTRL_MAX_REGISTERS *\
-+					(OA_TC6_CTRL_REG_VALUE_SIZE +\
-+					OA_TC6_CTRL_PROT_REPLY_SIZE)) +\
-+					OA_TC6_CTRL_IGNORED_SIZE)
++	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
++		return;
 +
- #define OA_TC6_CHUNK_PAYLOAD_SIZE		64
- #define OA_TC6_DATA_HEADER_SIZE			4
- #define OA_TC6_CHUNK_SIZE			(OA_TC6_DATA_HEADER_SIZE +\
-@@ -131,6 +135,7 @@ struct oa_tc6 {
- 	bool rx_buf_overflow;
- 	bool int_flag;
- 	bool disable_traffic;
-+	bool prot_ctrl;
- };
- 
- enum oa_tc6_header_type {
-@@ -214,25 +219,36 @@ static void oa_tc6_update_ctrl_write_data(struct oa_tc6 *tc6, u32 value[],
- {
- 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf + OA_TC6_CTRL_HEADER_SIZE;
- 
--	for (int i = 0; i < length; i++)
-+	for (int i = 0; i < length; i++) {
- 		*tx_buf++ = cpu_to_be32(value[i]);
-+		if (tc6->prot_ctrl)
-+			*tx_buf++ = cpu_to_be32(~value[i]);
-+	}
- }
- 
--static u16 oa_tc6_calculate_ctrl_buf_size(u8 length)
-+static u16 oa_tc6_calculate_ctrl_buf_size(u8 length, bool ctrl_prot)
- {
-+	u32 reply_size = OA_TC6_CTRL_REG_VALUE_SIZE;
-+
-+	if (ctrl_prot)
-+		reply_size += OA_TC6_CTRL_PROT_REPLY_SIZE;
-+
- 	/* Control command consists 4 bytes header + 4 bytes register value for
--	 * each register + 4 bytes ignored value.
-+	 * each register (+ 4 bytes for the register value complement in case
-+	 * protected mode is used) + 4 bytes ignored value.
+ 	/* Check if channel for outgoing connection or if it wasn't deferred
+ 	 * since in those cases it must be skipped.
  	 */
--	return OA_TC6_CTRL_HEADER_SIZE + OA_TC6_CTRL_REG_VALUE_SIZE * length +
-+	return OA_TC6_CTRL_HEADER_SIZE + reply_size * length +
- 	       OA_TC6_CTRL_IGNORED_SIZE;
- }
+@@ -3868,6 +3871,10 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
+ 	/* Reset ident so only one response is sent */
+ 	chan->ident = 0;
  
- static void oa_tc6_prepare_ctrl_spi_buf(struct oa_tc6 *tc6, u32 address,
- 					u32 value[], u8 length,
--					enum oa_tc6_register_op reg_op)
-+					enum oa_tc6_register_op reg_op,
-+					u16 buf_size)
- {
- 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
- 
-+	memset(tx_buf, 0, buf_size);
- 	*tx_buf = oa_tc6_prepare_ctrl_header(address, length, reg_op);
- 
- 	if (reg_op == OA_TC6_CTRL_REG_WRITE)
-@@ -255,10 +271,12 @@ static int oa_tc6_check_ctrl_write_reply(struct oa_tc6 *tc6, u8 size)
- 	return 0;
- }
- 
--static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
-+static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 length)
- {
--	u32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
--	u32 *tx_buf = tc6->spi_ctrl_tx_buf;
-+	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
-+	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
-+	u32 complement;
-+	u32 reply;
- 
- 	/* The echoed control read header must match with the one that was
- 	 * transmitted.
-@@ -266,6 +284,20 @@ static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
- 	if (*tx_buf != *rx_buf)
- 		return -EPROTO;
- 
-+	if (tc6->prot_ctrl) {
-+		/* Skip past the echoed header to the value/complement pairs */
-+		rx_buf += 1;
-+		for (int i = 0; i < length; i++) {
-+			reply = be32_to_cpu(rx_buf[0]);
-+			complement = be32_to_cpu(rx_buf[1]);
++	/* Unreachable, check in l2cap_ecred_conn_req. If reached, drop rest */
++	if (WARN_ON_ONCE(rsp->count >= ARRAY_SIZE(rsp->pdu.scid)))
++		rsp->pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_NO_MEM);
 +
-+			if (complement != ~reply)
-+				return -EPROTO;
-+
-+			rx_buf += 2;
-+		}
-+	}
-+
- 	return 0;
- }
+ 	/* Include all channels pending with the same ident */
+ 	if (!rsp->pdu.rsp.result)
+ 		rsp_flex->dcid[rsp->count++] = cpu_to_le16(chan->scid);
+@@ -5042,6 +5049,7 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
+ 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
  
-@@ -275,8 +307,13 @@ static void oa_tc6_copy_ctrl_read_data(struct oa_tc6 *tc6, u32 value[],
- 	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE +
- 			 OA_TC6_CTRL_HEADER_SIZE;
+ 	chan->ident = cmd->ident;
++	chan->mode = L2CAP_MODE_LE_FLOWCTL;
  
--	for (int i = 0; i < length; i++)
-+	for (int i = 0; i < length; i++) {
- 		value[i] = be32_to_cpu(*rx_buf++);
-+
-+		/* skip complement word */
-+		if (tc6->prot_ctrl)
-+			rx_buf++;
-+	}
- }
- 
- static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
-@@ -285,10 +322,10 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
- 	u16 size;
- 	int ret;
- 
--	/* Prepare control command and copy to SPI control buffer */
--	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op);
-+	size = oa_tc6_calculate_ctrl_buf_size(length, tc6->prot_ctrl);
- 
--	size = oa_tc6_calculate_ctrl_buf_size(length);
-+	/* Prepare control command and copy to SPI control buffer */
-+	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op, size);
- 
- 	/* Perform SPI transfer */
- 	ret = oa_tc6_spi_transfer(tc6, OA_TC6_CTRL_HEADER, size);
-@@ -303,7 +340,7 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
- 		return oa_tc6_check_ctrl_write_reply(tc6, size);
- 
- 	/* Check echoed/received control read command reply for errors */
--	ret = oa_tc6_check_ctrl_read_reply(tc6, size);
-+	ret = oa_tc6_check_ctrl_read_reply(tc6, length);
- 	if (ret)
- 		return ret;
- 
-@@ -1273,6 +1310,20 @@ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
- }
- EXPORT_SYMBOL_GPL(oa_tc6_start_xmit);
- 
-+static int oa_tc6_check_ctrl_protection(struct oa_tc6 *tc6)
-+{
-+	u32 regval;
-+	int ret;
-+
-+	ret = oa_tc6_read_register(tc6, OA_TC6_REG_CONFIG0, &regval);
-+	if (ret)
-+		return ret;
-+
-+	tc6->prot_ctrl = FIELD_GET(CONFIG0_PROTE, regval);
-+
-+	return 0;
-+}
-+
- /**
-  * oa_tc6_init - allocates and initializes oa_tc6 structure.
-  * @spi: device with which data will be exchanged.
-@@ -1325,6 +1376,14 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
- 	if (!tc6->spi_data_rx_buf)
- 		return NULL;
- 
-+	/* Check the PROTE bit status so that we can reset the device */
-+	ret = oa_tc6_check_ctrl_protection(tc6);
-+	if (ret) {
-+		dev_err(&tc6->spi->dev,
-+			"Failed to check the protection mode: %d\n", ret);
-+		return NULL;
-+	}
-+
- 	ret = oa_tc6_sw_reset_macphy(tc6);
- 	if (ret) {
- 		dev_err(&tc6->spi->dev,
+ 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
+ 		l2cap_state_change(chan, BT_CONNECT2);
 -- 
 2.53.0
 
