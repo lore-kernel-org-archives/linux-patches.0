@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86C64DE720;
-	Thu, 17 Sep 2026 17:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEC249E5DD;
+	Thu, 17 Sep 2026 17:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665481; cv=none; b=AIueGLTfgiNDqFjcmS2aXY8qVfbuvVrTgNvyzPEl46wS+a1V48+SIdURAeJlY2e+OwbJt7mbh+SeZz6D559DXDi0KT+qtHPPB24c40/OQLfYaNcKbVkOZA1cJmYoc5xvF8nAhL9cuUSdhD5R+47rzonjZKj6k7W40w0TbsjbdYY=
+	t=1789665483; cv=none; b=fSxMEjo/zJ9lQpWUUi0slkYqCduZA67QBkADZrI0UpXh7RpdwwyujnFT1EBacJjK4ZtluswnA2DDtxNYzthRMk89OhiyyFrBaJ/6S+2aTZN0jReJIVKRj9wZCeMiyddEyzHoakl5ohxQ7qJLFX3PB1ekkh0IIg9neNhv5D1JH3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665481; c=relaxed/simple;
-	bh=hvTrQ8rCd5OBc9q4GcMPeMPF5WjWgJgRUjmqPUEZBkI=;
+	s=arc-20240116; t=1789665483; c=relaxed/simple;
+	bh=EWc8BGjJlMiDtk5vlDOgEgYl7CoHaWafchZnE68C1y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZDJ9xmf9hvyBl4yVMeJV7+8C1SabHtfq/N0MsAXP7fu73b/xJGVET2+7isQG5vhyj/CNEOmhBmpw9VsPflmmeCvJfohteUlLmezd1nEsM65yyryasJA/FfB5AVe+H5tQHu0euv0a645SZKeNWINggsPX++zDm3qsEqyc9q0QaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbJQdn4y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T4NS2JveeZXAyUE80pPRnzTPtNIVbuyR6Z0fdgxFtrirsHRhJ/26h+XztEwAA2YO6KYvQpfXRrOptqpdW5hC2qzBJfB7yR0CsmVfHJUlLP3Jh/3bZXMgZwSBWpfDYSDEYlSlHT+RrgTYA2MIKOKLmM6iXhxyz3tO5XMF05vcW+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qijkS6GI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbJQdn4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67F61F00893;
-	Thu, 17 Sep 2026 17:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qijkS6GI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76441F000FF;
+	Thu, 17 Sep 2026 17:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665479;
-	bh=hJx1ztDNizuamD8nYvjz1s1HQBma5XYfiGrq5zrkaEs=;
+	s=korg; t=1789665482;
+	bh=cmHcVECRmZSwjC076Wpyp4F4V690ewJcZNT7KPEzbA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WbJQdn4ytl9FL29mj857DEzIbFbWp9VpngF0R+W+S3yrFvTFq9dedpuLISNwr/qFB
-	 TM5+y2DCbWVfAwn8VMuX4WsBedniyDKPlXRLsCFv/3O8BP+wp9ji0vnejpu9dPlClH
-	 mfrfTPPTK6uYBUhPiY8IctnqkNjLCZZXzWD+sSlM=
+	b=qijkS6GILcbhSvGXHQp+299UkO6ZmwYnqMwUSK7lJH0+RSVV2xQPRpnADrjxsjT4L
+	 fbUuFK+oAgLnu1/ma7yHLsKnNVTwh0RrlXWRcmKTXnBOr1JilPa1aLZyaj90iS0qIg
+	 Kx4S7yN3gu5Acoxx0n/urZcGIC6z0jsSxayW0v2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0718/1250] ASoC: ux500: Deassert the MSP reset during probe
-Date: Thu, 17 Sep 2026 16:08:33 +0100
-Message-ID: <20260917151611.355499030@linuxfoundation.org>
+Subject: [PATCH 6.18 0692/1250] ALSA: hda: restore MFG widget enumeration after core split
+Date: Thu, 17 Sep 2026 16:08:07 +0100
+Message-ID: <20260917151610.647152368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 66ec63e7a90bedc56aa050fbe437964008c3d584 ]
+[ Upstream commit 32d7226e6105c257ef7b3d0ec819f11a81f53b6d ]
 
-The devicetree has described each MSP reset line since the PRCC reset
-controller was added, but the driver never acquires or deasserts it. The
-block can consequently remain inaccessible when firmware has left it in
-reset.
+Before commit 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff
+into hdac_device"), widget enumeration selected the function group with
 
-Acquire the reset exclusively and keep it deasserted for the lifetime of
-the bound device.
+	codec->afg ? codec->afg : codec->mfg
 
-Fixes: 95f04048325c ("ARM: dts: ux500: Add reset lines to IP blocks")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-5-4b60b002d55a@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+and read subordinate nodes from that group.
+
+The core split moved this logic into snd_hdac_refresh_widgets(), but
+hard-coded codec->afg there. For an MFG-only codec, codec->afg is zero,
+so the Root Node is queried and codec->start_nid/num_nodes are populated
+from the function-group range instead of the MFG's subordinate nodes.
+
+Restore the pre-split AFG-or-MFG selection.
+
+Fixes: 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff into hdac_device")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/44809B8FF80DCCA2+20260901034024.2407783-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/core/device.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 78278927cc53a..b3de115d829a7 100644
---- a/sound/soc/ux500/ux500_msp_dai.c
-+++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -14,6 +14,7 @@
- #include <linux/clk.h>
- #include <linux/of.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/reset.h>
- #include <linux/mfd/db8500-prcmu.h>
- 
- #include <sound/soc.h>
-@@ -686,6 +687,7 @@ static const struct snd_soc_component_driver ux500_msp_component = {
- static int ux500_msp_drv_probe(struct platform_device *pdev)
+diff --git a/sound/hda/core/device.c b/sound/hda/core/device.c
+index 160c8d0453b0e..ebaa106d0f018 100644
+--- a/sound/hda/core/device.c
++++ b/sound/hda/core/device.c
+@@ -404,6 +404,7 @@ static void setup_fg_nodes(struct hdac_device *codec)
+  */
+ int snd_hdac_refresh_widgets(struct hdac_device *codec)
  {
- 	struct ux500_msp_i2s_drvdata *drvdata;
-+	struct reset_control *reset;
- 	int ret = 0;
++	hda_nid_t fg = codec->afg ? codec->afg : codec->mfg;
+ 	hda_nid_t start_nid;
+ 	int nums, err = 0;
  
- 	drvdata = devm_kzalloc(&pdev->dev,
-@@ -733,6 +735,11 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+@@ -412,10 +413,10 @@ int snd_hdac_refresh_widgets(struct hdac_device *codec)
+ 	 * widgets array.
+ 	 */
+ 	guard(mutex)(&codec->widget_lock);
+-	nums = snd_hdac_get_sub_nodes(codec, codec->afg, &start_nid);
++	nums = snd_hdac_get_sub_nodes(codec, fg, &start_nid);
+ 	if (!start_nid || nums <= 0 || nums >= 0xff) {
+ 		dev_err(&codec->dev, "cannot read sub nodes for FG 0x%02x\n",
+-			codec->afg);
++			fg);
  		return -EINVAL;
  	}
  
-+	reset = devm_reset_control_get_exclusive_deasserted(&pdev->dev, NULL);
-+	if (IS_ERR(reset))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(reset),
-+				     "Failed to deassert MSP reset\n");
-+
- 	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
- 	if (ret) {
- 		dev_err(&pdev->dev,
 -- 
 2.53.0
 
