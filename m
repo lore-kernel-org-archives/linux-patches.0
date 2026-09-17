@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D64E9C20;
-	Thu, 17 Sep 2026 18:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4224E9C20;
+	Thu, 17 Sep 2026 18:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669070; cv=none; b=T4YjVwdbIBCNrCddZJo1Y80CiapTGcDDzNEssS6HyBzxuBzryt8kLqqFOA/3uxzVXEbcI7g8ijji+/p4J2clqfhqS65WG/Mv62JLn2LMfPdXOX+i/Msop4Ia0oGIAvKSpI0QZhVJicNm5R+ksI0uHpogM5nGZlZbWKeiSv90WR0=
+	t=1789669073; cv=none; b=sOK4RN3R4mJHhx8nvTQe8v05qeQssxuWtejgGkrl8H05LM3rhhNxH0jYHDPKWmxUjknjd2wEVCnGh3+eG6cjQgonoQYq/81Xhl7tmuXwIgHUO6g8P1aNKZU2HvWmXV3jwhKZ/+q5RZ7tBeZebF/LhVxxMBkqGxvcbZYNDPszZq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669070; c=relaxed/simple;
-	bh=nWfXY69PnX+9ug1kh7TexqplhPlLW/Yoj1qohAzWQpE=;
+	s=arc-20240116; t=1789669073; c=relaxed/simple;
+	bh=TittC0evq7/YypvmoP+fofTbuHryhhTZFppIWElLsgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yu0Hdn2sXpkCgjr5AVPDN44oJx1A3CVx7SlzUxjymHFGLNlC6FSNMMcMfTH0LuHysnK2RhLpohzRdyBM3U3foqcvr0CWReuGAXzyXQ2UjdUAiYtmsVOO/ky15GtB7bdS1XK0DUcJZw+i5Mh8lv1SX8VndBeRtBOmmPiIswzarW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2StXbzn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OfzdU9NlReoEB0hO188N6yHh5SCfFQoZSWnQCnFy07y1CjhI8MRJ899jQHvHF5oYL0YQhCRnAEWAdwFv4lqLMQ+tOMadqokNP1w6GyGvEPgpt46JGHwnq1yWZ5Yiar9EvbV+vCF1A4Hact5T3R8akzZiPRgJaavjrKHJopxzLNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htZR/XAI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2StXbzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627881F000FF;
-	Thu, 17 Sep 2026 18:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htZR/XAI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E24D1F000FF;
+	Thu, 17 Sep 2026 18:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669068;
-	bh=U/72QoCi+gVG1HP+qHkqzNMXp24wictbqb/xounf1KQ=;
+	s=korg; t=1789669072;
+	bh=yfYDesJUvqao39kTybrh7Hf7HKZMyX10B3jmwEQaJqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2StXbznU3y7PEUoLhoK/qei1wv/ChZooBRC8pwKSIWWV4vyhPvOfy9a/Dynl8o9k
-	 FdNsS6/L08NHuguithsy4rAQtuVDz/9HnG5pCdsrHavtezEhjEFKJcTr5X5ez3qOj0
-	 +eEkFH2zvEyhazpUH+MxjIDDGx51m2tmCy9TAs0w=
+	b=htZR/XAIxP9kDMWAOjddV1UHr+FFLRDLYhOTiZRY2OZs8LNKTNbHO3VBSWPEKMslr
+	 XhrzLNQJ7ECG5G3qmkrSkxHQFxy0LWaNQPgNHl4B/TKK2LnFEt+GnbYEwr9mZCLCME
+	 2PFAPXSwQUH95o0R2Sqb0U+gwfUdd/npkKS+6sXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0633/1102] net/rds: acquire RDS_IN_XMIT in rds_tcp_reset_callbacks()
-Date: Thu, 17 Sep 2026 16:09:36 +0100
-Message-ID: <20260917151556.006777758@linuxfoundation.org>
+Subject: [PATCH 6.12 0598/1102] octeontx2-af: Fix limiting SRIOV VF count logic
+Date: Thu, 17 Sep 2026 16:09:01 +0100
+Message-ID: <20260917151555.007416286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,175 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Sunil Goutham <sgoutham@marvell.com>
 
-[ Upstream commit 02c5f9dc2efd823e061954d564ce00bacd1bebeb ]
+[ Upstream commit f695390ea63941a9e412bf1f3afe65ab245fc681 ]
 
-rds_tcp_reset_callbacks() quiesces the transmit path by setting the
-path state to RDS_CONN_RESETTING and then waiting for RDS_IN_XMIT to
-be sampled clear before swapping the underlying socket and calling
-rds_send_path_reset().
+When RVU PF0/AF's VFs are SDP instead of LBK, limiting the VF count
+based on the LBK channel count is incorrect.
 
-Sampling the bit clear is not the same as owning it: rds_send_xmit()
-can re-acquire RDS_IN_XMIT right after the wait_event() returns.  Its
-state recheck after taking the lock is a store-buffering pattern (the
-resetter writes the state and reads the bit, the sender writes the
-bit and reads the state) and acquire_in_xmit() is only an acquire
-operation, so on weakly ordered architectures both sides can miss
-each other's write and the transmit path then runs concurrently with
-rds_send_path_reset() rewriting cp_xmit_* state - which is exactly
-what the comment above rds_send_path_reset() tells its callers to
-prevent.
+Apply LBK channel-based VF limits only when the VF device ID matches
+the LBK RVU AFVF device.
 
-Take the lock instead, hold it across the socket swap and
-rds_send_path_reset(), and release it with a wake-up at the end.  The
-lock-ordering constraint documented above the wait still holds: the
-lock is acquired before lock_sock(), so a sender inside tcp_sendmsg()
-can never be waited on while we hold the socket lock.
-
-Two details of the old code go away with the same change:
-
- - t_sock is now read only after the lock is acquired.  The old code
-   cached it before waiting; the teardown in rds_conn_shutdown()
-   releases that socket and clears t_sock, so a pointer cached before
-   the wait can be stale by the time the accept path resumes.  Reading
-   it under RDS_IN_XMIT is what makes the exclusion complete once the
-   teardown owns the same lock, which the next patch arranges; until
-   then the teardown still only samples the bit, and the two paths
-   remain as exposed to each other as they are today.
-
- - The old !osock early path called rds_send_path_reset() with no
-   serialization at all.  It now runs under the lock like the normal
-   path.  The conditional RDS_CONN_RESETTING transition of the
-   previous patch happens before the socket check either way: a path
-   found without a socket is either still connecting (its reconnect
-   worker blocked on t_conn_path_lock) and legitimately goes
-   RESETTING -> UP on the new socket, or it has been torn down
-   meanwhile and is dropped.
-
-The in-function comment describing the old wait-based quiesce is
-rewritten to describe the lock-based one, and the stale block comment
-above the function (which still described a return value and an
-incomplete list of t_sock writers) is refreshed to name all four
-writers - the connect, accept, teardown and swap paths - and what
-serializes each of them.
-
-Fixes: 335b48d980f6 ("RDS: TCP: Add/use rds_tcp_reset_callbacks to reset tcp socket safely")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-6-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9bd6caf33567 ("octeontx2-af: Enable sriov on AF to create VFs")
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 70 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 45 insertions(+), 25 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   | 33 +++++++++++--------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 84cd673b8b7e1..6acc1da677556 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -115,42 +115,48 @@ void rds_tcp_restore_callbacks(struct socket *sock,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index f64171359ec8c..dc2f1900d4a95 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -3280,6 +3280,8 @@ int rvu_get_num_lbk_chans(void)
+ 	return ret;
  }
  
- /*
-- * rds_tcp_reset_callbacks() switches the to the new sock and
-- * returns the existing tc->t_sock.
-+ * rds_tcp_reset_callbacks() switches a path to a new socket and
-+ * releases the old one it finds in tc->t_sock, resolving a duelling
-+ * SYN.
-  *
-- * The only functions that set tc->t_sock are rds_tcp_set_callbacks
-- * and rds_tcp_reset_callbacks.  Send and receive trust that
-- * it is set.  The absence of RDS_CONN_UP bit protects those paths
-- * from being called while it isn't set.
-+ * tc->t_sock is set by rds_tcp_set_callbacks() and cleared by
-+ * rds_tcp_restore_callbacks().  Four paths write it: the active
-+ * connect in rds_tcp_conn_path_connect(), which sets it and clears it
-+ * again on failure; the accept path in rds_tcp_accept_one(), which
-+ * sets it for a path with no socket yet; the teardown in
-+ * rds_tcp_conn_path_shutdown(), which clears it; and the swap done
-+ * here, which does both.  The connect and accept paths are serialized
-+ * against each other by t_conn_path_lock.  Send and receive trust
-+ * that it is set: the absence of RDS_CONN_UP protects those paths
-+ * from being called while it isn't, and the swap done here runs under
-+ * RDS_IN_XMIT so that it cannot interleave with a sender already
-+ * inside rds_send_xmit().
-  */
- void rds_tcp_reset_callbacks(struct socket *sock,
- 			     struct rds_conn_path *cp)
++#define PCI_DEVID_OCTEONTX2_RVU_AFVF	0xA0F8
++
+ static int rvu_enable_sriov(struct rvu *rvu)
  {
- 	struct rds_tcp_connection *tc = cp->cp_transport_data;
--	struct socket *osock = tc->t_sock;
+ 	struct pci_dev *pdev = rvu->pdev;
+@@ -3298,24 +3300,27 @@ static int rvu_enable_sriov(struct rvu *rvu)
+ 		return 0;
+ 	pci_read_config_word(pdev, pos + PCI_SRIOV_VF_DID, &rvu->vf_devid);
+ 
+-	chans = rvu_get_num_lbk_chans();
+-	if (chans < 0)
+-		return chans;
 -
--	if (!osock)
--		goto newsock;
-+	struct socket *osock;
+ 	vfs = pci_sriov_get_totalvfs(pdev);
+-
+-	/* Limit VFs in case we have more VFs than LBK channels available. */
+-	if (vfs > chans)
+-		vfs = chans;
+-
+ 	if (!vfs)
+ 		return 0;
  
- 	/* Need to resolve a duelling SYN between peers.
- 	 * We have an outstanding SYN to this peer, which may
- 	 * potentially have transitioned to the RDS_CONN_UP state,
- 	 * so we must quiesce any send threads before resetting
--	 * cp_transport_data. We quiesce these threads by setting
--	 * cp_state to something other than RDS_CONN_UP, and then
--	 * waiting for any existing threads in rds_send_xmit to
--	 * complete release_in_xmit(). (Subsequent threads entering
--	 * rds_send_xmit() will bail on !rds_conn_up().
-+	 * cp_transport_data.  Setting cp_state to something other
-+	 * than RDS_CONN_UP stops new senders, and owning RDS_IN_XMIT
-+	 * excludes any thread already inside rds_send_xmit() for the
-+	 * whole socket swap and the rds_send_path_reset() below.
- 	 *
--	 * However an incoming syn-ack at this point would end up
--	 * marking the conn as RDS_CONN_UP, and would again permit
--	 * rds_send_xmi() threads through, so ideally we would
--	 * synchronize on RDS_CONN_UP after lock_sock(), but cannot
--	 * do that: waiting on !RDS_IN_XMIT after lock_sock() may
--	 * end up deadlocking with tcp_sendmsg(), and the RDS_IN_XMIT
--	 * would not get set. As a result, we set c_state to
--	 * RDS_CONN_RESETTTING, to ensure that rds_tcp_state_change
--	 * cannot mark rds_conn_path_up() in the window before lock_sock().
-+	 * An incoming syn-ack at this point would end up marking the
-+	 * conn as RDS_CONN_UP, and would again permit rds_send_xmit()
-+	 * threads through, so ideally we would synchronize on
-+	 * RDS_CONN_UP after lock_sock(), but cannot do that: acquiring
-+	 * RDS_IN_XMIT after lock_sock() may end up deadlocking with
-+	 * tcp_sendmsg(), which takes the socket lock while holding
-+	 * RDS_IN_XMIT.  As a result, we set c_state to
-+	 * RDS_CONN_RESETTING, to ensure that rds_tcp_state_change
-+	 * cannot mark rds_conn_path_up() in the window before
-+	 * lock_sock().
- 	 *
- 	 * Only make that transition if the path is still connecting
- 	 * (or already resetting from an earlier duel).  A path in any
-@@ -166,7 +172,18 @@ void rds_tcp_reset_callbacks(struct socket *sock,
- 	    !rds_conn_path_transition(cp, RDS_CONN_RESETTING,
- 				      RDS_CONN_RESETTING))
- 		rds_conn_path_drop(cp, 0);
--	wait_event(cp->cp_waitq, !test_bit(RDS_IN_XMIT, &cp->cp_flags));
-+	wait_event(cp->cp_waitq,
-+		   !test_and_set_bit_lock(RDS_IN_XMIT, &cp->cp_flags));
+-	/* LBK channel number 63 is used for switching packets between
+-	 * CGX mapped VFs. Hence limit LBK pairs till 62 only.
+-	 */
+-	if (vfs > 62)
+-		vfs = 62;
++	if (rvu->vf_devid == PCI_DEVID_OCTEONTX2_RVU_AFVF) {
++		chans = rvu_get_num_lbk_chans();
++		if (chans < 0)
++			return chans;
 +
-+	/* Read t_sock only while owning RDS_IN_XMIT, never before the
-+	 * wait: the teardown in rds_conn_shutdown() releases the old
-+	 * socket and clears t_sock, so a pointer sampled earlier can
-+	 * be stale by the time we wake up.
-+	 */
-+	osock = tc->t_sock;
-+	if (!osock)
-+		goto newsock;
++		/* The last LBK channel is reserved for switching packets between
++		 * CGX mapped VFs. Also, since LBK VFs work in pairs, limit VF
++		 * count to available LBK channels minus 2.
++		 */
++		vfs = min(vfs, chans - 2);
 +
- 	/* reset receive side state for rds_tcp_data_recv() for osock  */
- 	cancel_delayed_work_sync(&cp->cp_send_w);
- 	cancel_delayed_work_sync(&cp->cp_recv_w);
-@@ -185,6 +202,9 @@ void rds_tcp_reset_callbacks(struct socket *sock,
- 	lock_sock(sock->sk);
- 	rds_tcp_set_callbacks(sock, cp);
- 	release_sock(sock->sk);
-+
-+	clear_bit_unlock(RDS_IN_XMIT, &cp->cp_flags);
-+	wake_up_all(&cp->cp_waitq);
- }
++		if (vfs <= 0) {
++			dev_warn(&pdev->dev,
++				 "Skipping SRIOV enablement, not enough LBK channels available\n");
++			return 0;
++		}
++	}
  
- /* Add tc to rds_tcp_tc_list and set tc->t_sock. See comments
+ 	/* Save VFs number for reference in VF interrupts handlers.
+ 	 * Since interrupts might start arriving during SRIOV enablement
 -- 
 2.53.0
 
