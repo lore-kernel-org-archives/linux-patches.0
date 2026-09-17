@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01253C9EF3;
-	Thu, 17 Sep 2026 17:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67503C661D;
+	Thu, 17 Sep 2026 17:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665128; cv=none; b=b9nbLVStUsoQPg4QmHgEwDW1kHSSiCDxchBFneL8GmG2QkGDjP0qCrRojFKk6mginhnLegNwmJ8t7saXMqlkOIqE3FFU5hfR1Q3wbt/JCNPVhbRboo+BhU6rHO4Ol2X1i62tfhbrr4cznUXxDSjGKHOVRqeh+bYafXhvUGecM6Y=
+	t=1789665131; cv=none; b=nA7js6KSfnx2K14WxH2UyrQgSsfr6jkFYVsWsSC4f1isH5lLH55b1UO3Q46OnHcVHHNPOi6VhZeX5v+bHH6yh0k0xtYPe5e1LNTCNZCPiM/onfdM7LQcKTAIDIn1ptF15Pj3tK9mKKHWQzRxd4UgPHfFCVHbLM1K7ToXyjXoG9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665128; c=relaxed/simple;
-	bh=TtO//GxhnfuHPQr1LHoBpCi2p01KP2bmLPQIycCt/68=;
+	s=arc-20240116; t=1789665131; c=relaxed/simple;
+	bh=nQeMPp2NAIURByz2h4XLwRq1L6RHgw7gsJYIhBHMrqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7uTQK4tQviE2X5cH/S22xy6VL1hPTMhz8fTsJ1f7ttQA3CcdkI2Xt7zEg3WDD/toB9qCdX4FFrj5F8tGPLQ1kOWR0B4lQQSK1D1uOLg/xZfd/EtT3EQJsEeA/w84FKIjH7dlKMIZUlOlN6Y/cqv9ol4N1AMzsb9UCRjgIFUcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqhBFb2s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2Jz7NuZ7K6cJ+0mFMEI5Ykawde/Gxmq74RAbAFGBy7yoX822O65phNgeF9MqEya7PnOIXbmbpu3/KQvmRvb69ZSBkvVHgrXCVWoCPqZudb27518oiF7HWbrqkJFxcFM/7T5lspIeGjzlG4923hlHlY4xbYvu2hsHFMAv3MUZkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+dYGXA+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqhBFb2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0372B1F000FF;
-	Thu, 17 Sep 2026 17:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+dYGXA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44ED1F000FF;
+	Thu, 17 Sep 2026 17:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665126;
-	bh=df7Nu1kb0lsXUaI+ZEtOOkdXzfrmJqniLom5ri38l4k=;
+	s=korg; t=1789665129;
+	bh=Glwc1L+ZxCOQDViqzpc1rnbFyAnf2oVa4qhjJToF5uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FqhBFb2sgJ8ME0JO7e53WlDiDHj5q0hIfs+bKwNEujFulCsHfDTlc0jwiF5gRxX25
-	 AGM5uIkLVTM/fU7RD+aW3AxtIuLRwdy+EFO82iQIdEu+GxST3WC7BEJ7Y48hqP4dhN
-	 HOzk+i7mlc+ET3cHiJzrsXw1L3pgtvyjHt5n6T5E=
+	b=O+dYGXA+r+Wbk2FYJMtPCmSsvkkrM3LglwbeJlyBQGRiA0spX2rPK5BeAfYdwvlT3
+	 /sTPd8Y27LV45ZdA8bkfa/YJm/pRkhKMPqAelnlQHRiDg27xg34cu94LQKv3uSyMo/
+	 M2LDvOVvUqEacpDGkCM67dv27tTtTRVljKUD/O8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	"Yadi.hu" <yadi.hu@windriver.com>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Linus Walleij <linusw@kernel.org>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0599/1250] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
-Date: Thu, 17 Sep 2026 16:06:34 +0100
-Message-ID: <20260917151608.116809083@linuxfoundation.org>
+Subject: [PATCH 6.18 0600/1250] ARM: ensure interrupts are enabled in __do_user_fault()
+Date: Thu, 17 Sep 2026 16:06:35 +0100
+Message-ID: <20260917151608.145209343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,59 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
+[ Upstream commit 59e4f3b45b96a24fc9b7a89e5f8a2168b30f95af ]
 
-PREEMPT_RT requires interrupts to be enabled when sending signals.
+__do_user_fault() may be called from fault handling paths where the
+interrupts are enabled or disabled. E.g. do_page_fault() calls this
+with interrupts enabled, whereas do_sect_fault()->do_bad_area()
+will call this with interrupts disabled. Since this is a userspace
+fault, we know that interrupts were enabled in the parent context,
+so call local_irq_enable() here to give a consistent interrupt state.
 
-When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
-that is `inf->fn()` return a non-zero value, and the interrupts are not
-enabled within the hook function, force_sig_fault() will be called
-with interrupts disabled.
+This is necessary for force_sig_info() when PREEMPT_RT is enabled.
 
-This can be triggered by user programs executing the bkpt instruction,
-with kernel config CONFIG_PERF_EVENTS=n.
-
-Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
-user faults are triggered to fix the issue.
-
-Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
-Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
-Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
+Reported-by: Yadi.hu <yadi.hu@windriver.com>
 Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/mm/fault.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 65b652b4dec3d..5c6135b3931d2 100644
+index 5c6135b3931d2..577103c37d1bf 100644
 --- a/arch/arm/mm/fault.c
 +++ b/arch/arm/mm/fault.c
-@@ -649,6 +649,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
- 		return;
+@@ -190,7 +190,8 @@ __do_kernel_fault(struct mm_struct *mm, unsigned long addr, unsigned int fsr,
  
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
-@@ -687,6 +690,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
- 		return;
+ /*
+  * Something tried to access memory that isn't in our memory map..
+- * User mode accesses just cause a SIGSEGV
++ * User mode accesses just cause a SIGSEGV. Ensure interrupts are enabled
++ * for preempt RT.
+  */
+ static void
+ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+@@ -198,6 +199,8 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ {
+ 	struct task_struct *tsk = current;
  
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
++	local_irq_enable();
 +
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, ifsr, addr);
+ #ifdef CONFIG_DEBUG_USER
+ 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
+ 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
+@@ -272,6 +275,7 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
+ 		 * should not be faulting in kernel space, which includes the
+ 		 * vector/khelper page. Handle the branch predictor hardening
+ 		 * while interrupts are still disabled, then send a SIGSEGV.
++		 * Note that __do_user_fault() will enable interrupts.
+ 		 */
+ 		harden_branch_predictor();
+ 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
 -- 
 2.53.0
 
