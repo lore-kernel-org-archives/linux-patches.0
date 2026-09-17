@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86093A6B66;
-	Thu, 17 Sep 2026 15:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33D52F83B5;
+	Thu, 17 Sep 2026 15:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658714; cv=none; b=krmagV/QRGy/P/H8blTd5rD6zg17r8zCe7DmSEpoWXVgP2dkGd+j9zgPU7yN+RQexo4F+l8kKlLFaR2iFGHLuwwmhodzx3yoTLrtvhSjYf6MLOlQpGZuHn5nUEPyEBwb9uMyNKfTqJKCmnt5yqo1Fi89/fYrkXAegFhJl3NBYHk=
+	t=1789658714; cv=none; b=rV5fadG6oInMMtrnRwrYgjMXrfSVIkftqaHj+wh9whL9SU7w9syaYPOD9OeVBQ9TIcRO741MdiMj6eHtiz9pVYEP6jHftovxajYq3s/0WXPdamINlLDg/BwJ7cKh/ulizZ8ODkHaXmwtmdTu9oCKETNZs4BddYA4Su3PkLB/Nmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789658714; c=relaxed/simple;
-	bh=bIINg8THVd426YSZi5FAgHULUkOANLIG1EOjwoR3T60=;
+	bh=7w/raTwPj4nUUVMMq7iGTtdbhcc3PWh1oTcGVy+vc14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZcrYpNJwh8+H8TI1xjIECzHvtpzeFsUXN5fpNpQqJDqwnWpL6YWIrSwkEiQS9jqHs1q3oS/OFtqIjwmKfeabXFIhjCfMiuHnPJAADzRNMYHf0phUde7UuBCJ/hHEtShMftXhbKgBmzsxdXtzcnv7YEWhRxaX0wOzu6wmkX8pf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trnBf4t2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eKC8i20cpN5LtLI2H/kPGDl7n3gRxyaFh0ywns0Aa+7dnNffsGr+bCk5W2Hg+0JogQV3BMM0yOz8yE1jSlpx90zVqhae02EH8V8YsS0S+U5JNHKEPIeonIIEtFS8lmQUpNcigNpYP3JH+JNY5gc281lnpfGEHKwSljArOhDOygI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYvlCDvK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trnBf4t2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DE21F000FF;
-	Thu, 17 Sep 2026 15:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYvlCDvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7894C1F00893;
+	Thu, 17 Sep 2026 15:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658704;
-	bh=aT+nWSZHoVfRu+kFQCmEv3J9ZUx/o/yiagrawl3KCTA=;
+	s=korg; t=1789658707;
+	bh=Ki6NX5qUQvL4i+fj4YPkBikyIFL17WjRhCcTIwE7JOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trnBf4t2yAN3mGOb4kpRdevP8O1IiDHs05I/CzKell9s6/GbAfdFD+n+lDCuv75Je
-	 eyZwMNpo0xk1/J13+4nPcnjehKA/+raLjx9ntcDrnjOzq/AP6lsDXgXyS1JbzMqGZX
-	 msQE11YQtnbny0kWaIMxCyz0phhniE+WTX2HAyrA=
+	b=nYvlCDvKxEcYGQgRHBviZTyFQupgBHhfEHHR/+cNcoJootxQhNVos10PG1YdnaxmA
+	 nMIqW9FyDMJgE3645m8qqDcWwlSBB4hMgXlueKqAa05Fxno1Ge73KfOupejbn3xCZi
+	 GmTD7KOhz/gW3SNz6n8p3Hzs0b/vQjqrk+b8Ipo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
-	Lee Jones <lee@kernel.org>,
+	Ben Leggett <benjamin@edera.io>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 004/733] leds: st1202: Validate pattern input before stopping the sequence
-Date: Thu, 17 Sep 2026 16:05:12 +0100
-Message-ID: <20260917151350.730727438@linuxfoundation.org>
+Subject: [PATCH 7.2 013/733] drm/virtio: use the DMA API for resource backing on Xen
+Date: Thu, 17 Sep 2026 16:05:21 +0100
+Message-ID: <20260917151350.988218779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,55 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Benjamin Leggett <benjamin@edera.io>
 
-[ Upstream commit fd2529ba8fb44cd4b56f1069363b949644b42cec ]
+[ Upstream commit 6a736d2f9d0c6e6217fe7532bc4c50ceca71db78 ]
 
-Input validation for pattern duration is performed inside the write
-loop, after the pattern sequence has already been stopped. If
-validation fails mid-loop the chip is left with the sequence stopped
-and partially written pattern data, with no recovery.
+On a Xen PV domain page addresses bear no relation to the real machine
+addresses the host would have to use to reach it.
+virtio_ring.c handles this correctly, vring_use_map_api() returns true
+for any xen_domain() regardless of VIRTIO_F_ACCESS_PLATFORM.
 
-Move all input validation before the mutex and before any hardware
-interaction, so an invalid input leaves the chip state unchanged.
+virtio-gpu makes the same decision independently, but its copy
+looks only at the feature bit:
 
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
-Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/GV1PR08MB84975929B6ED7CDFBCEB7D76C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+	bool use_dma_api = !virtio_has_dma_quirk(vgdev->vdev);
+
+QEMU does not set iommu_platform on virtio-vga by default, so
+VIRTIO_F_ACCESS_PLATFORM is not negotiated, use_dma_api is false, and
+virtio_gpu_object_shmem_init() describes the framebuffer's backing pages
+to the host with sg_phys().  Those are guest-physical addresses. In a PV
+domain they resolve, on the host side, to pages belonging to some other
+domain, so the host scans out unrelated memory.
+
+Move the decision into virtio_gpu_use_dma_api() and give it the
+xen_domain() check, like vring_use_map_api() has. This
+additionally enables the dma_sync_sgtable_for_device() calls in
+virtgpu_vq.c, which are required for correctness whenever swiotlb
+is in play.
+
+Reproduced with a Xen 4.21 PV dom0 nested inside QEMU 8.2 with
+virtio-vga, on both a distro 6.8 kernel and 6.18 LTS. A PVH dom0
+works fine and doesn't need this fix because it is identity-mapped,
+only PV dom0s are affected.
+
+Fixes: a3b815f09bb8 ("drm/virtio: add iommu support.")
+Signed-off-by: Ben Leggett <benjamin@edera.io>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260806-virtgpu-xen-dma-v1-1-e499b345bbad@edera.io
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.h    | 20 ++++++++++++++++++++
+ drivers/gpu/drm/virtio/virtgpu_object.c |  2 +-
+ drivers/gpu/drm/virtio/virtgpu_vq.c     |  6 +++---
+ 3 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 2593ff39f22a6..168df5ecf27b7 100644
---- a/drivers/leds/leds-st1202.c
-+++ b/drivers/leds/leds-st1202.c
-@@ -237,6 +237,12 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
- 	if (len > ST1202_MAX_PATTERNS)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
+index 7449907754a43..88fb4be92cf3e 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -43,6 +43,8 @@
+ #include <drm/drm_probe_helper.h>
+ #include <drm/virtgpu_drm.h>
  
-+	for (int patt = 0; patt < len; patt++) {
-+		if (pattern[patt].delta_t < ST1202_MILLIS_PATTERN_DUR_MIN ||
-+				pattern[patt].delta_t > ST1202_MILLIS_PATTERN_DUR_MAX)
-+			return -EINVAL;
-+	}
++#include <xen/xen.h>
 +
- 	guard(mutex)(&chip->lock);
+ #define DRIVER_NAME "virtio_gpu"
+ #define DRIVER_DESC "virtio GPU"
  
- 	ret = st1202_write_reg(chip, ST1202_CONFIG_REG, ST1202_CONFIG_REG_SHFT);
-@@ -244,10 +250,6 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
- 		return ret;
+@@ -60,6 +62,24 @@
+ /* See virtio_gpu_ctx_create. One additional character for NULL terminator. */
+ #define DEBUG_NAME_MAX_LEN 65
  
- 	for (int patt = 0; patt < len; patt++) {
--		if (pattern[patt].delta_t < ST1202_MILLIS_PATTERN_DUR_MIN ||
--				pattern[patt].delta_t > ST1202_MILLIS_PATTERN_DUR_MAX)
--			return -EINVAL;
--
- 		ret = st1202_pwm_pattern_write(chip, led->led_num, patt, pattern[patt].brightness);
- 		if (ret != 0)
- 			return ret;
++/*
++ * Whether the host must be told about resource backing pages by DMA address
++ * rather than guest-physical address.
++ *
++ * This mirrors vring_use_map_api() in drivers/virtio/virtio_ring.c, including
++ * its xen_domain() case.
++ */
++static inline bool virtio_gpu_use_dma_api(const struct virtio_device *vdev)
++{
++	if (!virtio_has_dma_quirk(vdev))
++		return true;
++
++	if (xen_domain())
++		return true;
++
++	return false;
++}
++
+ struct virtio_gpu_object_params {
+ 	unsigned long size;
+ 	bool dumb;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_object.c b/drivers/gpu/drm/virtio/virtgpu_object.c
+index ec9efacc69195..1527c62be88ba 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_object.c
++++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+@@ -163,7 +163,7 @@ static int virtio_gpu_object_shmem_init(struct virtio_gpu_device *vgdev,
+ 					struct virtio_gpu_mem_entry **ents,
+ 					unsigned int *nents)
+ {
+-	bool use_dma_api = !virtio_has_dma_quirk(vgdev->vdev);
++	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
+ 	struct scatterlist *sg;
+ 	struct sg_table *pages;
+ 	int si;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index e5e1af8b8e8a0..2b7af8e4e9e61 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -724,7 +724,7 @@ int virtio_gpu_panic_cmd_transfer_to_host_2d(struct virtio_gpu_device *vgdev,
+ 	struct virtio_gpu_object *bo = gem_to_virtio_gpu_obj(objs->objs[0]);
+ 	struct virtio_gpu_transfer_to_host_2d *cmd_p;
+ 	struct virtio_gpu_vbuffer *vbuf;
+-	bool use_dma_api = !virtio_has_dma_quirk(vgdev->vdev);
++	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
+ 
+ 	if (virtio_gpu_is_shmem(bo) && use_dma_api)
+ 		dma_sync_sgtable_for_device(vgdev->vdev->dev.parent,
+@@ -755,7 +755,7 @@ void virtio_gpu_cmd_transfer_to_host_2d(struct virtio_gpu_device *vgdev,
+ 	struct virtio_gpu_object *bo = gem_to_virtio_gpu_obj(objs->objs[0]);
+ 	struct virtio_gpu_transfer_to_host_2d *cmd_p;
+ 	struct virtio_gpu_vbuffer *vbuf;
+-	bool use_dma_api = !virtio_has_dma_quirk(vgdev->vdev);
++	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
+ 
+ 	if (virtio_gpu_is_shmem(bo) && use_dma_api)
+ 		dma_sync_sgtable_for_device(vgdev->vdev->dev.parent,
+@@ -1188,7 +1188,7 @@ void virtio_gpu_cmd_transfer_to_host_3d(struct virtio_gpu_device *vgdev,
+ 	struct virtio_gpu_object *bo = gem_to_virtio_gpu_obj(objs->objs[0]);
+ 	struct virtio_gpu_transfer_host_3d *cmd_p;
+ 	struct virtio_gpu_vbuffer *vbuf;
+-	bool use_dma_api = !virtio_has_dma_quirk(vgdev->vdev);
++	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
+ 
+ 	if (virtio_gpu_is_shmem(bo) && use_dma_api)
+ 		dma_sync_sgtable_for_device(vgdev->vdev->dev.parent,
 -- 
 2.53.0
 
