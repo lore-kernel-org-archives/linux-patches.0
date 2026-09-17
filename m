@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88574E77E4;
-	Thu, 17 Sep 2026 15:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83D64E7802;
+	Thu, 17 Sep 2026 15:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660177; cv=none; b=mTkDqC4vA2NSmrkArzQAXSxbdY72/e9bz0RKfMEFGQUqYUK+ererFbceECaw5IsNXv0CU/hDLQ1P/TZhCsE8x9/qtbATgcVm963u4aozaNfDlJsFAa9cvxn8ZyG7q4aeqAblXIqLBBcN/Ht/2r0YV0ANfw2SIOCrrCrK9OEFQuI=
+	t=1789660178; cv=none; b=o7+UjZnr1V0hirNXILpCuEm0HdZdzzwfZoZAOcBbdMn0Z2nb4njfnXk3SAQkWxrRW50rvWEImXRwlgm5kt7Jr/U8NZ62jLK8522+fdC+j66oVuI1XhWdfsYTfCIAb+94R2EyvQQaS0k9lRHbjzRtDbXmE3mwNIBf7YwFf423WbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660177; c=relaxed/simple;
-	bh=8Bxas/AlnzgWO4TozvSLFPHidm84QX7JBmySAjrES7E=;
+	s=arc-20240116; t=1789660178; c=relaxed/simple;
+	bh=Rv8dyN4aIxVilIBLeeWj+0lLbD8olbNXbTFWgTd9Y1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixrxFMlXC7gFHwfSXuvLUtc9LIUEt/8ypdIcOFfu0GzmPwNfw+ZH+kO9+ETXHK68QxCH0gN7N/r1usSf06IZSIGQBmki79B6s19zQV45Yg/8cnJQXo4KxwDu964ZYbn6TG+AS3i0uYXR48DwQR/rwZFotGK/FZuXD3Ll5uaOqHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAT4Dmd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PEp5bzLqtQJ7w9ohpC8e2uJFs3+dIhSrQSq6ee6YrYriRZ9vZkjBl1rQHdmpXKfk15yH5fKPaGKna72OXFz33WZEnq3jCH/rTpxhzW4FqL1kii6z/8P71uiazPnd8amHe1uX/k9z829f1OXf/qiHKjKdggQArafOpBx5rzUCFTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsIG8MIV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAT4Dmd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396CA1F000FF;
-	Thu, 17 Sep 2026 15:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsIG8MIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347481F00893;
+	Thu, 17 Sep 2026 15:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660165;
-	bh=Tm9a0jA4nz56/vkMN6ExzZq90J+LzZheGR4Ee1MLhpA=;
+	s=korg; t=1789660168;
+	bh=zyvc2cNFZErfM4HBMpGl2GstJWlppFClst8Vb0fZvjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAT4Dmd88m7toTQlDqsnIE3ZsGbopjw+Izt7nE+fNBtkWmaXGim7Xm1K0HEK58O2T
-	 /b/dns/hnpcYWkl7levQmefbxDGm+y98VyvlL6s7sIjz5WoiP1QfSlbFXco4S1UN+Q
-	 Bv4NgOOtbSzr6slTIuEM7XLnHhb6PwWPLZBp5RVQ=
+	b=VsIG8MIVlrmWVvQ30NqkHV6IxR0yGPuI5+0LF/5fLQePP3/lxK2LFpd8M4rLQjtjh
+	 rWFVEAJhb+gpYuZmSkJKJah3pcnWqEG6x82BQIDPtidOsdAXBxQ/sxNAeLEUu844Uc
+	 gStGiPc6GpK+IfOAfCY/zRGHskh27qBOM0QYux6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko AI <sashiko-bot@kernel.org>,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Tom Zanussi <zanussi@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 502/733] tracing: Take the reference before publishing the named histogram trigger
-Date: Thu, 17 Sep 2026 16:13:30 +0100
-Message-ID: <20260917151404.607129107@linuxfoundation.org>
+Subject: [PATCH 7.2 503/733] tracing: Undo the registration when enabling the histogram trigger fails
+Date: Thu, 17 Sep 2026 16:13:31 +0100
+Message-ID: <20260917151404.635580421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,80 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 0fe23b8eaba0d3372c66b7b31204408da0715edc upstream.
+commit 92383cef66791a0c63a2f27755cadbdb2fbf270b upstream.
 
-event_hist_trigger_named_init() puts the trigger on the global
-named_triggers list and only then takes the reference on the trigger it
-shares its histogram with:
+Commit 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers
+list") described how a trigger that is registered but not on file->triggers
+ends up freed while still on the global named_triggers list, and moved the
+registration down so that hist_trigger_enable() follows it immediately. One
+path still gets there. hist_trigger_enable() adds the trigger and takes it
+straight back out when the event cannot be enabled:
 
-	data->ref++;
+	list_add_tail_rcu(&data->list, &file->triggers);
 
-	save_named_trigger(data->named_data->name, data);
+	update_cond_flag(file);
 
-	ret = event_hist_trigger_init(data->named_data);
-	if (ret < 0) {
-		kfree(data->cmd_ops);
-		data->cmd_ops = &trigger_hist_cmd;
+	if (trace_event_trigger_enable_disable(file, 1) < 0) {
+		list_del_rcu(&data->list);
+		update_cond_flag(file);
+		ret--;
 	}
 
-	return ret;
-
-event_hist_trigger_init() fails when alloc_hist_pad() cannot allocate, and
-nothing takes the trigger back off the list on the way out.
-event_hist_trigger_parse() frees it, and the next lookup by name reads the
-freed object:
+so the list walk in hist_unregister_trigger() matches nothing, test stays
+NULL, and the ->free() that would call del_named_trigger() is skipped.
+out_unreg falls through to out_free, which frees the trigger anyway:
 
  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
- Read of size 8 at addr ffff888009346860 by task init/1
+ Read of size 8 at addr ffff8880091d3160 by task init/1
   find_named_trigger+0xac/0xc0
   hist_register_trigger+0xc1/0xa00
   event_hist_trigger_parse+0x3146/0x6af0
   event_trigger_write+0xce/0x160
- Freed by task 67:
+ Freed by task 69:
   kfree+0x154/0x420
   trigger_kthread_fn+0xfd/0x160
 
-Do the reference first and publish once it has succeeded, so that nothing
-which can fail runs after the trigger becomes findable.
+Leave the trigger where hist_unregister_trigger() can find it and let that
+undo the registration, which is the only code that knows all of what
+cmd_ops->init() took: the named list entry, the hist_pad reference, the
+reference on the trigger a named histogram is shared with, and the copied
+cmd_ops. It also pairs the failed trace_event_trigger_enable_disable(),
+whose sm_ref and buffered event reference are otherwise left behind.
+
+Since ->free() releases trigger_data and, for a trigger that does not share
+its histogram, hist_data with it, out_unreg can no longer fall through to
+out_free. For a trigger that does share, hist_register_trigger() has
+already destroyed the caller's hist_data, so the fall-through was reading
+freed memory there as well.
+
+Move the enable_timestamps check in hist_unregister_trigger() above the
+->free() call for the same reason: hist_data does not outlive it once the
+trigger being removed is the one that owns it.
 
 Cc: stable@vger.kernel.org
-Fixes: 7ab0fc61ce73 ("tracing: Move histogram trigger variables from stack to per CPU structure")
+Fixes: 067fe038e70f ("tracing: Add variable reference handling to hist triggers")
 Reported-by: Sashiko AI <sashiko-bot@kernel.org>
 Closes: https://lore.kernel.org/linux-trace-kernel/20260907092944.3950E1F00A3D@smtp.kernel.org/
-Link: https://patch.msgid.link/20260907124420.607097-2-donggeunyoo.kernel@gmail.com
+Link: https://patch.msgid.link/20260907124420.607097-3-donggeunyoo.kernel@gmail.com
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Acked-by: Tom Zanussi <zanussi@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_hist.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -6360,17 +6360,18 @@ static int event_hist_trigger_named_init
- {
- 	int ret;
+@@ -6659,11 +6659,12 @@ static int hist_trigger_enable(struct ev
  
--	data->ref++;
--
--	save_named_trigger(data->named_data->name, data);
--
- 	ret = event_hist_trigger_init(data->named_data);
- 	if (ret < 0) {
- 		kfree(data->cmd_ops);
- 		data->cmd_ops = &trigger_hist_cmd;
-+		return ret;
+ 	update_cond_flag(file);
+ 
+-	if (trace_event_trigger_enable_disable(file, 1) < 0) {
+-		list_del_rcu(&data->list);
+-		update_cond_flag(file);
++	/*
++	 * On failure the caller undoes the registration, and
++	 * hist_unregister_trigger() can only find the trigger here.
++	 */
++	if (trace_event_trigger_enable_disable(file, 1) < 0)
+ 		ret--;
+-	}
+ 
+ 	return ret;
+ }
+@@ -6741,13 +6742,13 @@ static void hist_unregister_trigger(char
+ 		}
  	}
  
--	return ret;
-+	data->ref++;
+-	if (test && test->cmd_ops->free)
+-		test->cmd_ops->free(test);
+-
+ 	if (hist_data->enable_timestamps) {
+ 		if (!hist_data->remove || test)
+ 			tracing_set_filter_buffering(file->tr, false);
+ 	}
 +
-+	save_named_trigger(data->named_data->name, data);
-+
-+	return 0;
++	if (test && test->cmd_ops->free)
++		test->cmd_ops->free(test);
  }
  
- static void event_hist_trigger_named_free(struct event_trigger_data *data)
+ static bool hist_file_check_refs(struct trace_event_file *file)
+@@ -6952,6 +6953,8 @@ static int event_hist_trigger_parse(stru
+ 	return ret;
+  out_unreg:
+ 	event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
++	/* The unregister frees trigger_data, skip out_free */
++	goto out;
+  out_free:
+ 	remove_hist_vars(hist_data);
+ 
 
 
