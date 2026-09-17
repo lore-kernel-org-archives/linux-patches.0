@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EDC547050;
-	Thu, 17 Sep 2026 18:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F6D547050;
+	Thu, 17 Sep 2026 18:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671508; cv=none; b=Pux3eWQ6MQy9PFPc5Ez5xqF2/F/DUqKWKkJ1KRpyxwTiYsx23QeZ9r/wsNX065psyRiJX1jkPlyqqEpD18+s20BydrcEi5aHmKVA0RTDEcrJBk8+ZSrZ05bKzHjgQOXjVLsYhSB1RcPjSkuF9XKBMjs5o7Sk3DIneZKOmLFDpNc=
+	t=1789671511; cv=none; b=UePQmfnbEZrXyTsMoHLRYohac2lvfTiuyUmVyNKCWRWXg3MBhPCqU2HOCXYNaogtAX+hyxAe3THkCYqfpxfaFRR2jlvCPD4nNuzw69cDXljOe4KyozhKDPdAQsI2d2Dv7N6L2pbXwhz7B6KpUWx/1v1ikgw5ihyPoJRukEMF4ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671508; c=relaxed/simple;
-	bh=DZX98xfhbdznq8zTYBLxVsvKsEsv0yTlKE9IoDDO9QM=;
+	s=arc-20240116; t=1789671511; c=relaxed/simple;
+	bh=KeHuPjxSGDWA1aeWhnswrmwufHSnFa0AmMS3FUPZYQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAr9xXZiPQ5rK8zh4/jYMqElSFLnV/LNlURk2CyqTtpxDm57qkFEuJARETkRgSYVL/8ZigQStv9RzujLglUHz/JTkXakihsvPyEbTmfYtnmc3BrSoIWEbC2FFROYtdGnfVrPJ8Tw2bQvtXJcGjQaLpWxQo98SsftEIYEY5ADGf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=023FqGsv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KgcJSKeqPTqF+u1kFcI+VFOg5hozs2T+098v8zjSLAWoYrs/wEyp0IwLdzV+Q3DzB9XfDrqrdnp+JFp9+pM0tXR2N/cDKF1urVzYeXqbq18pZlLIRxxn9zlDhNRg8l0GZ+22H68KVbXLJKgznQi9TRuSQiqF3HJZErZRPX6I0m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfX7OTKX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="023FqGsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B51C1F000FF;
-	Thu, 17 Sep 2026 18:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfX7OTKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706751F000FF;
+	Thu, 17 Sep 2026 18:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671507;
-	bh=Uc6A7hFuuum651yWOv9ctZWF42O4RuB6rM/8xPyvQeg=;
+	s=korg; t=1789671510;
+	bh=OpA1whJoKcsJpUejhw0/GGMbqqlHn7gZCcVPqMwohI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=023FqGsvGj0jNix0l+NQJ/NKMA9Vn0ZyrEM6mrXb8VFYZJBfFQT9rZsR6rU+RbSWJ
-	 zWsrtkFnO3FBNoT166NbKOVygIouFBxdmG3HJY3y7ryv76x0FW4rSxIcktoIZU0jvp
-	 VbYT6IBtNV33Ik2rLjX7Djw5jkq+yerlHLsFfoTA=
+	b=FfX7OTKXkJasOfCTcAt8GTGR6tC3G+N5yTfW4bJ6msHOUS6c9lupoLGSAOgJV8C9C
+	 V3yzAOBX8G/gfNkbGPqf8DaUgh+BE22jJ5YTtDGGDbBYToHRgbmntM0iequ+2po3rG
+	 vNTdj3yL8dtAaGc7AZ67MtLFicXyzjLa1l76+EpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0998/1102] mm/migrate_device: clear stale mapping after freeing swapcache
-Date: Thu, 17 Sep 2026 16:15:41 +0100
-Message-ID: <20260917151605.783099607@linuxfoundation.org>
+Subject: [PATCH 6.12 0999/1102] mm/slab: move and refactor __kmem_cache_alias()
+Date: Thu, 17 Sep 2026 16:15:42 +0100
+Message-ID: <20260917151605.809517074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -61,63 +53,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 34a00895d032a414830d41106a09329ae6c251b6 ]
+[ Upstream commit 8598351edc42f38d2a1eaed9abca39c98e7b0bbf ]
 
-__migrate_device_pages() reads the folio mapping before calling
-folio_free_swap().  When folio_free_swap() succeeds, the folio is removed
-from the swap cache, but the saved mapping still points to swap_space.
+Move __kmem_cache_alias() to slab_common.c since it's called by
+__kmem_cache_create_args() and calls find_mergeable() that both
+are in this file. We can remove two slab.h declarations and make
+them static. Instead declare sysfs_slab_alias() from slub.c so
+that __kmem_cache_alias() can keep calling it.
 
-Passing the stale mapping to folio_migrate_mapping() makes it use the
-mapped-folio path for a folio that is no longer in swapcache.  It can then
-operate on swap_space.i_pages with invalid reference accounting,
-eventually triggering a folio reference count BUG.
+Add args parameter to __kmem_cache_alias() and find_mergeable() instead
+of align and ctor. With that we can also move the checks for usersize
+and sheaf_capacity there from __kmem_cache_create_args() and make the
+result more symmetric with slab_unmergeable().
 
-After a successful split, nr still contains the number of pages in the
-original large folio, although each resulting page is now a separate
-order-0 folio.  Reset nr to 1 so each split folio is processed separately,
-including its own swapcache removal and mapping lookup.
+No functional changes intended.
 
-Refresh the saved mapping after folio_free_swap() so the current folio
-state is used during migration.
-
-Link: https://lore.kernel.org/20260728062832.1107127-1-arvind.yadav@intel.com
-Fixes: df263d9a7dff ("mm/migrate_device: try to handle swapcache pages")
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ refreshed folio_mapping() after folio_free_swap() instead of resetting the not-yet-present THP-split nr/batching loop ]
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Stable-dep-of: 7e98f8563956 ("mm/slub: fix missing debugfs entries for caches created before sysfs init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate_device.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/slab.h        |    8 +++-----
+ mm/slab_common.c |   41 +++++++++++++++++++++++++++++++++--------
+ mm/slub.c        |   29 +----------------------------
+ 3 files changed, 37 insertions(+), 41 deletions(-)
 
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -746,6 +746,12 @@ static void __migrate_device_pages(unsig
- 					src_pfns[i] &= ~MIGRATE_PFN_MIGRATE;
- 					continue;
- 				}
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -319,9 +319,12 @@ struct kmem_cache {
+ #define SLAB_SUPPORTS_SYSFS 1
+ void sysfs_slab_unlink(struct kmem_cache *s);
+ void sysfs_slab_release(struct kmem_cache *s);
++int sysfs_slab_alias(struct kmem_cache *s, const char *name);
+ #else
+ static inline void sysfs_slab_unlink(struct kmem_cache *s) { }
+ static inline void sysfs_slab_release(struct kmem_cache *s) { }
++static inline int sysfs_slab_alias(struct kmem_cache *s, const char *name)
++							{ return 0; }
+ #endif
+ 
+ void *fixup_red_left(struct kmem_cache *s, void *p);
+@@ -442,11 +445,6 @@ extern void create_boot_cache(struct kme
+ 			unsigned int useroffset, unsigned int usersize);
+ 
+ int slab_unmergeable(struct kmem_cache *s);
+-struct kmem_cache *find_mergeable(unsigned size, unsigned align,
+-		slab_flags_t flags, const char *name, void (*ctor)(void *));
+-struct kmem_cache *
+-__kmem_cache_alias(const char *name, unsigned int size, unsigned int align,
+-		   slab_flags_t flags, void (*ctor)(void *));
+ 
+ slab_flags_t kmem_cache_flags(slab_flags_t flags, const char *name);
+ 
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -170,15 +170,19 @@ int slab_unmergeable(struct kmem_cache *
+ 	return 0;
+ }
+ 
+-struct kmem_cache *find_mergeable(unsigned int size, unsigned int align,
+-		slab_flags_t flags, const char *name, void (*ctor)(void *))
++static struct kmem_cache *find_mergeable(unsigned int size, slab_flags_t flags,
++		const char *name, struct kmem_cache_args *args)
+ {
+ 	struct kmem_cache *s;
++	unsigned int align;
+ 
+ 	if (slab_nomerge)
+ 		return NULL;
+ 
+-	if (ctor)
++	if (args->ctor)
++		return NULL;
 +
-+				/*
-+				 * folio_free_swap() removed the folio from the swap
-+				 * cache. Refresh the saved mapping before migration.
-+				 */
-+				mapping = folio_mapping(folio);
- 			}
- 		} else if (folio_is_zone_device(newfolio)) {
- 			/*
++	if (IS_ENABLED(CONFIG_HARDENED_USERCOPY) && args->usersize)
+ 		return NULL;
+ 
+ 	flags = kmem_cache_flags(flags, name);
+@@ -187,7 +191,7 @@ struct kmem_cache *find_mergeable(unsign
+ 		return NULL;
+ 
+ 	size = ALIGN(size, sizeof(void *));
+-	align = calculate_alignment(flags, align, size);
++	align = calculate_alignment(flags, args->align, size);
+ 	size = ALIGN(size, align);
+ 
+ 	list_for_each_entry_reverse(s, &slab_caches, list) {
+@@ -251,6 +255,30 @@ out:
+ 	return ERR_PTR(err);
+ }
+ 
++static struct kmem_cache *
++__kmem_cache_alias(const char *name, unsigned int size, slab_flags_t flags,
++		   struct kmem_cache_args *args)
++{
++	struct kmem_cache *s;
++
++	s = find_mergeable(size, flags, name, args);
++	if (s) {
++		if (sysfs_slab_alias(s, name))
++			return NULL;
++
++		s->refcount++;
++
++		/*
++		 * Adjust the object sizes so that we clear
++		 * the complete object on kzalloc.
++		 */
++		s->object_size = max(s->object_size, size);
++		s->inuse = max(s->inuse, ALIGN(size, sizeof(void *)));
++	}
++
++	return s;
++}
++
+ /**
+  * __kmem_cache_create_args - Create a kmem cache.
+  * @name: A string which is used in /proc/slabinfo to identify this cache.
+@@ -317,9 +345,7 @@ struct kmem_cache *__kmem_cache_create_a
+ 		    object_size - args->usersize < args->useroffset))
+ 		args->usersize = args->useroffset = 0;
+ 
+-	if (!args->usersize)
+-		s = __kmem_cache_alias(name, object_size, args->align, flags,
+-				       args->ctor);
++	s = __kmem_cache_alias(name, object_size, flags, args);
+ 	if (s)
+ 		goto out_unlock;
+ 
+@@ -1350,4 +1376,3 @@ EXPORT_TRACEPOINT_SYMBOL(kmalloc);
+ EXPORT_TRACEPOINT_SYMBOL(kmem_cache_alloc);
+ EXPORT_TRACEPOINT_SYMBOL(kfree);
+ EXPORT_TRACEPOINT_SYMBOL(kmem_cache_free);
+-
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -333,11 +333,8 @@ enum track_item { TRACK_ALLOC, TRACK_FRE
+ 
+ #ifdef SLAB_SUPPORTS_SYSFS
+ static int sysfs_slab_add(struct kmem_cache *);
+-static int sysfs_slab_alias(struct kmem_cache *, const char *);
+ #else
+ static inline int sysfs_slab_add(struct kmem_cache *s) { return 0; }
+-static inline int sysfs_slab_alias(struct kmem_cache *s, const char *p)
+-							{ return 0; }
+ #endif
+ 
+ #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_SLUB_DEBUG)
+@@ -6061,30 +6058,6 @@ void __init kmem_cache_init_late(void)
+ #endif
+ }
+ 
+-struct kmem_cache *
+-__kmem_cache_alias(const char *name, unsigned int size, unsigned int align,
+-		   slab_flags_t flags, void (*ctor)(void *))
+-{
+-	struct kmem_cache *s;
+-
+-	s = find_mergeable(size, align, flags, name, ctor);
+-	if (s) {
+-		if (sysfs_slab_alias(s, name))
+-			return NULL;
+-
+-		s->refcount++;
+-
+-		/*
+-		 * Adjust the object sizes so that we clear
+-		 * the complete object on kzalloc.
+-		 */
+-		s->object_size = max(s->object_size, size);
+-		s->inuse = max(s->inuse, ALIGN(size, sizeof(void *)));
+-	}
+-
+-	return s;
+-}
+-
+ int do_kmem_cache_create(struct kmem_cache *s, const char *name,
+ 			 unsigned int size, struct kmem_cache_args *args,
+ 			 slab_flags_t flags)
+@@ -7250,7 +7223,7 @@ struct saved_alias {
+ 
+ static struct saved_alias *alias_list;
+ 
+-static int sysfs_slab_alias(struct kmem_cache *s, const char *name)
++int sysfs_slab_alias(struct kmem_cache *s, const char *name)
+ {
+ 	struct saved_alias *al;
+ 
 
 
