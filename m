@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98D64ABBC1;
-	Thu, 17 Sep 2026 15:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8783845AC;
+	Thu, 17 Sep 2026 15:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659886; cv=none; b=agPm5fc/SYkN1NF4TRiUjx2dQz61Jix6GqAU19Z1mNvEhhTWiapvPlDbYPEu1PddJHGLgZGQMn3XJ3aOb69mnSPj4kpcoyxrhKpAdCmJbJPcnkqD88LQTS1dDhJbvFrEVqWNKo1v26uNLdVRExPxCUECgF97Lpz9hyYjdaXFRIA=
+	t=1789659888; cv=none; b=q9/+MeXxZJ7GObWJlqrA4p+h7nBX66K3fSQXBkJFrbolmgH9leySQarvIxmkHJ3RRwOgieH2kGtKinH6VRfcEQaTo4S3FXs4rOexxYGZMKnv8/ILGVvGSlMSGkDaVOnFQGMeUcLwy3vNNzeBwoXhgpxN2dlcalNaoXxw7f6C0K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659886; c=relaxed/simple;
-	bh=RC1MQyOMqL99uNbwaQ+4dMzSLaQYIjM4fRpEkOnCwQo=;
+	s=arc-20240116; t=1789659888; c=relaxed/simple;
+	bh=4phtMhjpCbwBPI9Nn/sd4fM07vy72TxVyJSfkLcpEWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVW8T/yVDioSVT2M8Wf7GBEFqJCVAGlM6aqBCFejMbArMmJKCI0Ih+OzZaV2YOK12Pv7H2lhBUMpRZIg1eb7KvCwovnt3y4BjUK88OFZd4fpAiriOtUmUIOiDxcVJffiE9sfcBzvmhrRdsuOVng5hcZzlrLZ7b/J/FnPZybv8ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqdWg0tU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VTGW+iUi9ssbrds5UnKXs9LnGnE2DZr5tQnwOpdfesdjHhFDO4taxvxfRCm0igRQJBT1wxrvvtDWPhc3J/ttDsmUpuR3I4kD2BCUM4EAs1/YKoOUSdJYMwOSvN+f+7ndqlAuT5+m596q8q/GYZQHYpj5siK2zO+vs9IW+Dvr3dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZMiwc7K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqdWg0tU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593E51F00893;
-	Thu, 17 Sep 2026 15:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZMiwc7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5967F1F00898;
+	Thu, 17 Sep 2026 15:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659878;
-	bh=cCC+qbqqrGXZ2EX1/9nnzpOSHWdvkhLS5IyycP4BKbw=;
+	s=korg; t=1789659881;
+	bh=jASxq5pZm7ZjIU33ofkpIh/nu5bJSHHkDsjk6Ytntbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqdWg0tUn/VS+gHRjRbqjwZy8NmSqTIEUu24J0+0QCs1IeGeexVVKX1OgkA9jnned
-	 RIP7W5c4Kv9Jy2g6unI78rgju6On6fSbCBdednnzNTiQ4EQCWTh0B5rHd25UZ0H2G2
-	 C9j2eGgDjlCDWu6pEn2PhY7zMRthh9NWIh3RdpOc=
+	b=HZMiwc7K8I/K2QXmDJfPHEN6ORhXIwJbdtNW/85YyuHt3J2Xoh+bqqcH6ESd8Oozm
+	 TvO0BL9Wa6q7eKE5oZTu3uUeviOq1ev+PWoYW8fw0EMZPqXB7hQgmFFAxJ6L8SRsZq
+	 A6AamZFBMs0JX1k9+DuR4VaFTyXVBBLGi+j/W4zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yu <tmyu0@nuvoton.com>,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 403/733] hwmon: (nct6694) do not expose enable on DTIN temperature channels
-Date: Thu, 17 Sep 2026 16:11:51 +0100
-Message-ID: <20260917151401.786438276@linuxfoundation.org>
+Subject: [PATCH 7.2 404/733] octeontx2-pf: reset HTB scheduler topology before freeing queues
+Date: Thu, 17 Sep 2026 16:11:52 +0100
+Message-ID: <20260917151401.815113991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,94 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit c88a6338ae485e4d6210cc74cdb7664d6476c925 ]
+[ Upstream commit ef39fca8508597fa565cf2be72a884a712fb98af ]
 
-The driver registers 26 temperature channels, all advertising
-HWMON_T_ENABLE, and indexes the enable bitmap with the raw channel:
+HTB offload programs NIX_AF_TLxX_TOPOLOGY on QoS-allocated scheduler
+queues via otx2_qos_txschq_set_parent_topology(), but teardown freed
+those queues without clearing TOPOLOGY.  The AF only restores PARENT and
+SCHEDULE on free, so PRIO_ANCHOR/RR_PRIO settings can survive in the
+shared scheduler pool and affect later allocations.
 
-	data->hwmon_en.tin_en[channel / 8] |= BIT(channel % 8);
+Add otx2_qos_reset_schq_topology() and otx2_qos_free_hw_schq() to zero
+TL4 through TL2 TOPOLOGY before each schq is returned to the AF during
+hierarchy teardown and cfg rollback.  Skip the aggregation level (TL1):
+it is a per-tx-link queue shared by the PF, default Tx hierarchy and VFs,
+and is not freed back to the AF by nix_txschq_free_one().
 
-tin_en is two bytes and only covers the 5 THR and 5 TDP channels
-(index 0-9). The 16 DTIN channels (index 10-25) are enabled by the
-firmware and were never meant to carry an enable bit. Because the
-control structure is packed, writing temp17_enable and above indexes
-past tin_en into the fin_en bytes that follow it, so it toggles fan
-enable state instead; nct6694_hwmon_init() then sends the whole
-structure back to the device, and reads report fan state as temperature
-state. It stays within the structure, so this is not a memory safety
-problem, but on a board that uses the fan channels it is not harmless.
-
-Give the DTIN channels a temperature config without HWMON_T_ENABLE so
-the core never creates their enable attribute. The enable path is then
-reachable only for the first 10 channels, which stay within tin_en, and
-fin_en is left alone. The DTIN input and limit attributes are unchanged.
-
-Fixes: 197e779d29d8 ("hwmon: Add Nuvoton NCT6694 HWMON support")
-Suggested-by: Ming Yu <tmyu0@nuvoton.com>
-Link: https://lore.kernel.org/all/20260802124730.20387-1-ali@iusegentoo.com/
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260803102148.14196-1-ali@iusegentoo.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260903020533.3068041-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6694-hwmon.c | 35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ .../net/ethernet/marvell/octeontx2/nic/qos.c  | 60 +++++++++++++++++--
+ 1 file changed, 55 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/nct6694-hwmon.c b/drivers/hwmon/nct6694-hwmon.c
-index 6dcf22ca5018a..9a9a4db434c4f 100644
---- a/drivers/hwmon/nct6694-hwmon.c
-+++ b/drivers/hwmon/nct6694-hwmon.c
-@@ -159,6 +159,9 @@ static inline s8 temp_to_reg(long val)
- #define NCT6694_HWMON_TEMP_CONFIG (HWMON_T_INPUT | HWMON_T_ENABLE |	\
- 				   HWMON_T_MAX | HWMON_T_MAX_HYST |	\
- 				   HWMON_T_MAX_ALARM)
-+#define NCT6694_HWMON_DTIN_CONFIG (HWMON_T_INPUT |			\
-+				   HWMON_T_MAX | HWMON_T_MAX_HYST |	\
-+				   HWMON_T_MAX_ALARM)
- #define NCT6694_HWMON_FAN_CONFIG (HWMON_F_INPUT | HWMON_F_ENABLE |	\
- 				  HWMON_F_MIN | HWMON_F_MIN_ALARM)
- #define NCT6694_HWMON_PWM_CONFIG (HWMON_PWM_INPUT | HWMON_PWM_ENABLE |	\
-@@ -193,22 +196,22 @@ static const struct hwmon_channel_info *nct6694_info[] = {
- 			   NCT6694_HWMON_TEMP_CONFIG,	/* TDP2 */
- 			   NCT6694_HWMON_TEMP_CONFIG,	/* TDP3 */
- 			   NCT6694_HWMON_TEMP_CONFIG,	/* TDP4 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN0 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN1 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN2 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN3 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN4 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN5 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN6 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN7 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN8 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN9 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN10 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN11 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN12 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN13 */
--			   NCT6694_HWMON_TEMP_CONFIG,	/* DTIN14 */
--			   NCT6694_HWMON_TEMP_CONFIG),	/* DTIN15 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN0 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN1 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN2 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN3 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN4 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN5 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN6 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN7 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN8 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN9 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN10 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN11 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN12 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN13 */
-+			   NCT6694_HWMON_DTIN_CONFIG,	/* DTIN14 */
-+			   NCT6694_HWMON_DTIN_CONFIG),	/* DTIN15 */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index 69c0911e28e91..f160b1618efa2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -235,13 +235,63 @@ static int otx2_qos_txschq_set_parent_topology(struct otx2_nic *pfvf,
+ 	return rc;
+ }
  
- 	HWMON_CHANNEL_INFO(fan,
- 			   NCT6694_HWMON_FAN_CONFIG,	/* FIN0 */
++static int otx2_qos_reset_schq_topology(struct otx2_nic *pfvf, u16 lvl,
++					u16 schq)
++{
++	struct mbox *mbox = &pfvf->mbox;
++	struct nix_txschq_config *cfg;
++	int rc;
++
++	if (lvl < NIX_TXSCH_LVL_TL4 || lvl >= NIX_TXSCH_LVL_TL1)
++		return 0;
++
++	mutex_lock(&mbox->lock);
++
++	cfg = otx2_mbox_alloc_msg_nix_txschq_cfg(mbox);
++	if (!cfg) {
++		mutex_unlock(&mbox->lock);
++		return -ENOMEM;
++	}
++
++	cfg->lvl = lvl;
++	cfg->num_regs = 1;
++
++	if (lvl == NIX_TXSCH_LVL_TL4)
++		cfg->reg[0] = NIX_AF_TL4X_TOPOLOGY(schq);
++	else if (lvl == NIX_TXSCH_LVL_TL3)
++		cfg->reg[0] = NIX_AF_TL3X_TOPOLOGY(schq);
++	else if (lvl == NIX_TXSCH_LVL_TL2)
++		cfg->reg[0] = NIX_AF_TL2X_TOPOLOGY(schq);
++
++	cfg->regval[0] = 0;
++
++	rc = otx2_sync_mbox_msg(mbox);
++
++	mutex_unlock(&mbox->lock);
++
++	return rc;
++}
++
++static void otx2_qos_free_hw_schq(struct otx2_nic *pfvf, u16 lvl, u16 schq)
++{
++	int err;
++
++	err = otx2_qos_reset_schq_topology(pfvf, lvl, schq);
++	if (err)
++		netdev_warn(pfvf->netdev,
++			    "QoS: failed to reset topology for schq %u at level %u: %d\n",
++			    schq, lvl, err);
++
++	otx2_txschq_free_one(pfvf, lvl, schq);
++}
++
+ static void otx2_qos_free_hw_node_schq(struct otx2_nic *pfvf,
+ 				       struct otx2_qos_node *parent)
+ {
+ 	struct otx2_qos_node *node;
+ 
+ 	list_for_each_entry_reverse(node, &parent->child_schq_list, list)
+-		otx2_txschq_free_one(pfvf, node->level, node->schq);
++		otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ }
+ 
+ static void otx2_qos_free_hw_node(struct otx2_nic *pfvf,
+@@ -252,7 +302,7 @@ static void otx2_qos_free_hw_node(struct otx2_nic *pfvf,
+ 	list_for_each_entry_safe(node, tmp, &parent->child_list, list) {
+ 		otx2_qos_free_hw_node(pfvf, node);
+ 		otx2_qos_free_hw_node_schq(pfvf, node);
+-		otx2_txschq_free_one(pfvf, node->level, node->schq);
++		otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ 	}
+ }
+ 
+@@ -266,7 +316,7 @@ static void otx2_qos_free_hw_cfg(struct otx2_nic *pfvf,
+ 	otx2_qos_free_hw_node_schq(pfvf, node);
+ 
+ 	/* free node hw mappings */
+-	otx2_txschq_free_one(pfvf, node->level, node->schq);
++	otx2_qos_free_hw_schq(pfvf, node->level, node->schq);
+ 
+ 	mutex_unlock(&pfvf->qos.qos_lock);
+ }
+@@ -913,7 +963,7 @@ static void otx2_qos_free_cfg(struct otx2_nic *pfvf, struct otx2_qos_cfg *cfg)
+ 	for (lvl = 0; lvl < NIX_TXSCH_LVL_CNT; lvl++) {
+ 		for (idx = 0; idx < cfg->schq[lvl]; idx++) {
+ 			schq = cfg->schq_list[lvl][idx];
+-			otx2_txschq_free_one(pfvf, lvl, schq);
++			otx2_qos_free_hw_schq(pfvf, lvl, schq);
+ 		}
+ 	}
+ 
+@@ -921,7 +971,7 @@ static void otx2_qos_free_cfg(struct otx2_nic *pfvf, struct otx2_qos_cfg *cfg)
+ 		for (idx = 0; idx < cfg->schq_contig[lvl]; idx++) {
+ 			if (cfg->schq_index_used[lvl][idx]) {
+ 				schq = cfg->schq_contig_list[lvl][idx];
+-				otx2_txschq_free_one(pfvf, lvl, schq);
++				otx2_qos_free_hw_schq(pfvf, lvl, schq);
+ 			}
+ 		}
+ 	}
 -- 
 2.53.0
 
