@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BA049739E;
-	Thu, 17 Sep 2026 15:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4424CDDE7;
+	Thu, 17 Sep 2026 15:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658730; cv=none; b=jjO4ia1PiqkXvhPsDap2Zws2pJNHwFaVm1yo0Av7QoBnUT8xKCoX8Oh/WJhtgVXnc6MQUAeacwBYa41ml/+k2SesSUab3BkcQDKfGANnBS0abwIUSj1FT+yWAVkTCJTnhLxlv1zu0CqvwdHISXkL49+XNp5lZOnGEb32ym2vBCU=
+	t=1789658738; cv=none; b=G7ej/dWitQs9cKHlmOKUcT0lssiq5FQORiMAPorhQdxLn1MYt83gm3jIq5GR9AOrV5Gt//QaCNgd3d83ZA9rz3vbcu4aAYVQB1B1Kb7mbR8u5rY34mqmTbSRs71DRUPqtgXWO9XkgYlBli9KzODcm6GYeeN9CABkUmmL0vsQuLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658730; c=relaxed/simple;
-	bh=M9HDpUcCRPwgaYdCGcnyx8dioXd1hcKxw4bxbXMSss0=;
+	s=arc-20240116; t=1789658738; c=relaxed/simple;
+	bh=ApHb271DyTTS6UMljiYclmpBeXIpc/V9oOhAqef1H78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FL6oJJxVmZHbDRnhe0wklkkatiirl57jyHr0qHgPMmKWnAugug/8Ugjy7qLIzQmgPPYxIkzXlwUy2n5bbfsuLr9NiPvTDogDfYyFodgk7Gx179+6AYDBdSD9cBzRhgNys/kJ3GadU0gvof3Lm77/SdCY7usqsIsGWQk8iTh96bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8vgz24/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fHSq52rriuRCN86w5br2q8yjcssXC7WssB/PS4GJTYKIs7EOt9veQKYBW7dhiDVtgO1cpYMR/En/dFKpTiRllz32tJnao/fzMMKUvhUGjanFeY3g9vUH+EpfcZHPKVFRJfdZYSxWhX0bf6+Fb5TKXNXrpPHZ6nwQ0c/zlNnQJck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfDvE0bd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8vgz24/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4421F00A12;
-	Thu, 17 Sep 2026 15:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfDvE0bd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6F91F008BC;
+	Thu, 17 Sep 2026 15:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658719;
-	bh=cadLnEeXsd+svXXCp6GR8rfD6130K0JfS6OeKQYTjKo=;
+	s=korg; t=1789658725;
+	bh=OHPumBSotRKyCm2S5mdEM7F5E/EwhjPc8EmdofeKB2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8vgz24/toveoFHuSXU61UsTxnKv18bxjY9Hn9A+wtXoYBFxyF107lLY9PZ2FC/k7
-	 xEAgQTDssHxkin3qvg7L+800pWyZpP9tmmZPfU5NlAGsDnQfWjZcGvroDeYP1CV0MV
-	 63ZqcHoGMQ714uPV2tG1leua5ztv1DchXJF72pbw=
+	b=sfDvE0bdzwINPyjhDS0qCyViZGZ0ZSpL0A0BAv8bcILBmQUliTmxKmgqDID9zV/Ou
+	 LW6j9LHhuZ+gV8pysEVNbmSpmKwm4XXnAULHsFIeyAbXF8Z47nQU7ut2pTvkVDmqQ1
+	 nvPtygJ780+1aVhcdfO4Gj9p0TNhwNnGXMzNdToE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 017/733] nvme: set ns->head in nvme_alloc_ns_head
-Date: Thu, 17 Sep 2026 16:05:25 +0100
-Message-ID: <20260917151351.105124081@linuxfoundation.org>
+Subject: [PATCH 7.2 019/733] nvmet-rdma: fix queue leak when connect backlog is exceeded
+Date: Thu, 17 Sep 2026 16:05:27 +0100
+Message-ID: <20260917151351.161382005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,65 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanchan Joshi <joshi.k@samsung.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit c1888444dc28310222dcc6e5c301d60d0943787f ]
+[ Upstream commit fb1ed67788e21832b614c23767a088c08cfdd2f2 ]
 
-so that it becomes possible to submit non-admin commands.
-This is a prep patch with no functional changes.
+When pending disconnecting queues exceed the backlog limit, the
+connect path only drops the device reference and leaks the newly
+allocated queue and its IB resources.
 
+Fixes: badc53620fe8 ("nvme: target: rdma: fix ndev refcount leak on queue connect")
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Kanchan Joshi <joshi.k@samsung.com>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 56e1c6bbe4bb ("nvme: fix racy access to FDP placement id array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/nvme/target/rdma.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 0224b99317cdd..e5051a6b33578 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3987,10 +3987,11 @@ static void nvme_add_ns_cdev(struct nvme_ns *ns)
- 	set_bit(NVME_NS_CDEV_LIVE, &ns->flags);
- }
- 
--static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
-+static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ns *ns,
- 		struct nvme_ns_info *info)
--	__must_hold(&ctrl->subsys->lock)
-+	__must_hold(&ns->ctrl->subsys->lock)
- {
-+	struct nvme_ctrl *ctrl = ns->ctrl;
- 	struct nvme_ns_head *head;
- 	size_t size = sizeof(*head);
- 	int ret = -ENOMEM;
-@@ -4018,6 +4019,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
- 	ratelimit_state_init(&head->rs_nuse, 5 * HZ, 1);
- 	ratelimit_set_flags(&head->rs_nuse, RATELIMIT_MSG_ON_RELEASE);
- 	kref_init(&head->ref);
-+	ns->head = head;
- 
- 	if (head->ids.csi) {
- 		ret = nvme_get_effects_log(ctrl, head->ids.csi, &head->effects);
-@@ -4041,6 +4043,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
- 	ida_free(&ctrl->subsys->ns_ida, head->instance);
- out_free_head:
- 	kfree(head);
-+	ns->head = NULL;
- out:
- 	if (ret > 0)
- 		ret = blk_status_to_errno(nvme_error_status(ret));
-@@ -4127,7 +4130,7 @@ static int nvme_init_ns_head(struct nvme_ns *ns, struct nvme_ns_info *info)
- 				info->nsid);
- 			goto out_unlock;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index de5a88fbb2337..542138fd669f4 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1627,19 +1627,13 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
+ 		mutex_unlock(&nvmet_rdma_queue_mutex);
+ 		if (pending > NVMET_RDMA_BACKLOG) {
+ 			ret = NVME_SC_CONNECT_CTRL_BUSY;
+-			goto put_device;
++			goto free_queue;
  		}
--		head = nvme_alloc_ns_head(ctrl, info);
-+		head = nvme_alloc_ns_head(ns, info);
- 		if (IS_ERR(head)) {
- 			ret = PTR_ERR(head);
- 			goto out_unlock;
+ 	}
+ 
+ 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
+-	if (ret) {
+-		/*
+-		 * Don't destroy the cm_id in free path, as we implicitly
+-		 * destroy the cm_id here with non-zero ret code.
+-		 */
+-		queue->cm_id = NULL;
++	if (ret)
+ 		goto free_queue;
+-	}
+ 
+ 	mutex_lock(&nvmet_rdma_queue_mutex);
+ 	list_add_tail(&queue->queue_list, &nvmet_rdma_queue_list);
+@@ -1648,6 +1642,11 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
+ 	return 0;
+ 
+ free_queue:
++	/*
++	 * Don't destroy the cm_id in free path, as we implicitly
++	 * destroy the cm_id here with non-zero ret code.
++	 */
++	queue->cm_id = NULL;
+ 	nvmet_rdma_free_queue(queue);
+ put_device:
+ 	kref_put(&ndev->ref, nvmet_rdma_free_dev);
 -- 
 2.53.0
 
