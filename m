@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A83361967;
-	Thu, 17 Sep 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E2A4E4C5A;
+	Thu, 17 Sep 2026 16:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661052; cv=none; b=tG0tddT1sFHBTLiqFV7OQx+HcEqCxf1IR/geyncMNZK8T/DzdtRaNFwG6o6B+4IzQ9cgb+nFAla1dO1tZI6QHheeC1kXdUdfW9Rss3tK9iC82ptDvFl73W4Em9oj7TK0pRSO0dCu3nV3pQSBzr8gyTf/YA8y7Bo+WyeLc87k9wQ=
+	t=1789661055; cv=none; b=I3/cABjB83s5Zlnqy1HxNI+jb7E7pcEUpleLXNvOFJv+9vo196oFj6Ut89Gw8Gc6P4dWXZ+rTBIgQLO8q+LQV/7FWednZ4YRfMhyiAocuknHzdXvErKoImmLy2DvcsOx/E7gUavFamVeOyER+FkzmKZYrRe28mcoqUQVclM+oLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661052; c=relaxed/simple;
-	bh=KXhCyjs2AXCuKxLEiJXWMoxbo0g8AOmxwt36A93Kq1s=;
+	s=arc-20240116; t=1789661055; c=relaxed/simple;
+	bh=5dY/d7gsMgWjlNtOy9wQTtOei9wtcvgVCyXUJoBEcFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfigrCHOKqZTe5gY1QbcLS8Rmv//5JDmFrplgDFBw2+IUsmNRbkzMM+03JXHGapf9R9d79A34FyTMIHeySWM0ULsbM9oASOOWD9HGciG8HAg4ezzVKNo7wecEZR3685ePixBToWfXuTZB0tdGIQyqgUjUAGLbYOF2Z85xK547dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boptJ5AN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=F06sXtzxuF+a4NDdsKc9BIYSuwnyuYM94cKgzvhuXZdl9OFidh01K815AcNs8MYTi8wUIfUkqKcfFYLOz4tj8DuhpPNOmzqp2km3EPOaRnTwpfmti4DZN2EqPNPMgmcRH+0UxYZdlvvBIUc3NJnRS/k59I2Fhdz5n1QtePpuslo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19X46wJQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boptJ5AN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4961F000FF;
-	Thu, 17 Sep 2026 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19X46wJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFFD1F00893;
+	Thu, 17 Sep 2026 16:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661051;
-	bh=CSVyq3UDnwjQtdKYAnzgKDn1vEsH5sgLGtkscOnzMII=;
+	s=korg; t=1789661054;
+	bh=cT6bm0zBVM3mwwHqWYscRrqInRhTIPlnWIJdYnPul9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boptJ5ANNpqlEI/qOZ8XYLUyFNtpfn5eR4eq1I05aG9pw9DqvFFc8m+vHdcULmvzX
-	 IgXdjH0t72+gQb75H8HwId9bvE1PPdzdci0RzSMNo2CGajGfuNNycmrh7C8QuYtWLB
-	 fdvbhvv39ZS0XwMiln0OMzVBWpoJZQCCrCprM1AE=
+	b=19X46wJQe+CLJefh53BS57EH/GaENhJ7ozEfJo15fhFQYG5XcU7S/aUyOqVir3wRf
+	 p+Z7BaAS97mh/tvqu0Uuo1pr3PdjmF78QkP9A8Zn18c2PyrnppR/lRbGS9Ibt1sDtS
+	 i3J6e1Jdu/0rMalFj+QUyLpiYoWEP5XAlr2Ucv38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaoyang Yu <2426767509@qq.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0065/1250] media: dm1105: fix missing error check for dma_alloc_coherent
-Date: Thu, 17 Sep 2026 15:57:40 +0100
-Message-ID: <20260917151553.705656156@linuxfoundation.org>
+Subject: [PATCH 6.18 0066/1250] net: dsa: mv88e6xxx: fix number of g1 interrupts for 6320 family
+Date: Thu, 17 Sep 2026 15:57:41 +0100
+Message-ID: <20260917151553.731529838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,55 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhaoyang Yu <2426767509@qq.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 3eaac9e02d8591d3c790db572ef1c8fa5a841fdb ]
+[ Upstream commit d201c2612e5aada0c931cd55115175e0a5141023 ]
 
-The return value of dm1105_dma_map(), which handles DMA memory allocation,
-is ignored in dm1105_hw_init(). If dma_alloc_coherent() fails, the driver
-will proceed using a NULL pointer for DMA transfers, leading to a kernel
-oops or invalid hardware access.
+The 6320 family has 9 global1 interrupt, not 8. Fix it.
 
-Fix this by checking the return value and propagating -ENOMEM on failure.
-
-Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://patch.msgid.link/20260504153227.1390546-2-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/dm1105/dm1105.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
-index c1d55b9836744..abd86488064b5 100644
---- a/drivers/media/pci/dm1105/dm1105.c
-+++ b/drivers/media/pci/dm1105/dm1105.c
-@@ -768,6 +768,8 @@ static void dm1105_ir_exit(struct dm1105_dev *dm1105)
- 
- static int dm1105_hw_init(struct dm1105_dev *dev)
- {
-+	int ret;
-+
- 	dm1105_disable_irqs(dev);
- 
- 	dm_writeb(DM1105_HOST_CTR, 0);
-@@ -778,7 +780,10 @@ static int dm1105_hw_init(struct dm1105_dev *dev)
- 	dm_writew(DM1105_TSCTR, 0xc10a);
- 
- 	/* map DMA and set address */
--	dm1105_dma_map(dev);
-+	ret = dm1105_dma_map(dev);
-+	if (ret)
-+		return -ENOMEM;
-+
- 	dm1105_set_dma_addr(dev);
- 	/* big buffer */
- 	dm_writel(DM1105_RLEN, 5 * DM1105_DMA_BYTES);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 09002c853b78e..b115575f157fe 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -6261,7 +6261,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.global1_addr = 0x1b,
+ 		.global2_addr = 0x1c,
+ 		.age_time_coeff = 15000,
+-		.g1_irqs = 8,
++		.g1_irqs = 9,
+ 		.g2_irqs = 10,
+ 		.stats_type = STATS_TYPE_BANK0 | STATS_TYPE_BANK1,
+ 		.atu_move_port_mask = 0xf,
+@@ -6289,7 +6289,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.global1_addr = 0x1b,
+ 		.global2_addr = 0x1c,
+ 		.age_time_coeff = 15000,
+-		.g1_irqs = 8,
++		.g1_irqs = 9,
+ 		.g2_irqs = 10,
+ 		.stats_type = STATS_TYPE_BANK0 | STATS_TYPE_BANK1,
+ 		.atu_move_port_mask = 0xf,
 -- 
 2.53.0
 
