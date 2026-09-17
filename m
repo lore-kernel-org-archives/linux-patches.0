@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22438522EE7;
-	Thu, 17 Sep 2026 17:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B60A4ED18C;
+	Thu, 17 Sep 2026 17:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665915; cv=none; b=aHO1siuHKVQmotuN50J5f3LGqCyTjKXPdZgoap+pwcFIV7F4rkWT63GkgEqRx3XOGKe/vK+kpgPisqch0YdWcoH/j27a614o/Oecvyy0CamlriqbmHN7hgHzGy+syS8h12KeKsj9mfZnMnZ7/RSP05ZqNcyt18bVCwwPEBmRcZY=
+	t=1789665918; cv=none; b=rEJZqu+RTVtTULBrLcbwsxQGOE7sjnGNVXlILLdYuvmrUhL6dtiJlEDXlFmaV9AwYr+8f0ndIEtQQBzQDOkzQRODZwF2P7k7dtUyRM+CfDcsMo+VJnXHgBERaHogVo7vpkFyklzSpb7RYmmWFlDCFnkTYn+04TuTjMPf3V1sd0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665915; c=relaxed/simple;
-	bh=ftx9xrZUlhAxBj0837TZP9IXL0gEsmi4o3B4QaIshLk=;
+	s=arc-20240116; t=1789665918; c=relaxed/simple;
+	bh=lfwRGQgtmSmn1cR57CyCDkHc3rmDFBIA3B3Y3fBdXn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KaVt+USN+uZSxJHyBaDpvFEtExR96BZ2HfePvfxAZyJTKX0q8xEu5BS/zWtLnv1Li72KAGa0wgzJ6Sit+JG+hAfudvOzaiLHAGxyI3iU2mhgkvKbQZJBT43zRJPEZ9cfQXZy34Lar9t2KBr5DkxRRZN3L/HC3tBf2N6xFS068sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEVPWxPl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTBuN7D2opxThqRJDCCP1q0T49Y2959wZvryP1v+fhsvRh6UKMYCcUcjuJkjthiNfDO7yGfbaxTjHdvRNelbfX4Vt7r1Vb0MAzTq2kliGjBMpLU49fXLA281I6CeXSuLBvpiBIWJRPN7G8zGb845h4+RNDoC0tdeNqB4pFip71A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIjOF4J0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEVPWxPl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF021F000FF;
-	Thu, 17 Sep 2026 17:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIjOF4J0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BC31F000FF;
+	Thu, 17 Sep 2026 17:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665914;
-	bh=QuB9inJ7TWfpelGIafdLIWKdCoGzDqIoF7MWG0avoQg=;
+	s=korg; t=1789665916;
+	bh=qk/jpyjXrSX5CG1AXQebaNII0sMwT5OAgCInyHzz1/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CEVPWxPlISJh/4wtlWLRwBm5STaPJTe6JDBlyd8tYguuRlUvAHWS6ttSf3zONkx3A
-	 4pU3lgx4OVsawnBa/oDGRVV2DHrQvzfXWe6rPLGb7IiiAcE9o8VqCFxRHZqvFZi/bb
-	 THSKc1WjJxp7AsYBvGNErbnW3FCFKAduYpyS2p/Y=
+	b=yIjOF4J0mFg0QzZpAwCJBafv9Eep6gE3RE38kof8pDujx7j+/MDsVlzazRnadJEY0
+	 mjQgVom+eSqWNi9PO6Dq1VRWhd6WpDgWjR1hqX5ylOR8kIF+6OhUJExtTKQ6STSuYQ
+	 zIMvFI0dwKztzIP1XENxIC4JWgAGm8oQDZL5r6Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Zhang <yuz08559@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0814/1250] net/mlx5e: Fix ETS zero BW reporting when one TC holds 100%
-Date: Thu, 17 Sep 2026 16:10:09 +0100
-Message-ID: <20260917151613.990900720@linuxfoundation.org>
+Subject: [PATCH 6.18 0856/1250] vhost-vdpa: protect config_ctx from being freed under the config callback
+Date: Thu, 17 Sep 2026 16:10:51 +0100
+Message-ID: <20260917151615.169517464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,48 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit e7ee89740800a1cf253713e9249c3ee9203ebe91 ]
+[ Upstream commit 62be4e3e5f5f947fbf765b914cebdc478f715d12 ]
 
-When ETS TCs with zero bandwidth are configured, the driver programs the
-firmware using an alternate representation. On get, it needs
-to recognize that representation so those TCs can be translated back and
-reported as 0% bandwidth.
+vhost_vdpa_config_cb() loads v->config_ctx and signals it without taking
+a reference and without holding any lock:
 
-The existing detection relied on the programmed bandwidth because it was
-enough to identify this representation. However, when a single ETS TC
-owns 100% of the bandwidth, its firmware representation becomes the
-same as a strict-priority TC, causing zero-bandwidth ETS TCs to be
-reported with non-zero bandwidth values.
+	struct eventfd_ctx *config_ctx = v->config_ctx;
 
-Use the cached TSA instead to distinguish the ETS and strict-priority
-cases.
+	if (config_ctx)
+		eventfd_signal(config_ctx);
 
-Fixes: be0f161ef141 ("net/mlx5e: DCBNL, Implement tc with ets type and zero bandwidth")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193224.3668743-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+VHOST_VDPA_SET_CONFIG_CALL replaces that field and drops what is normally
+the last reference to the old context:
+
+	swap(ctx, v->config_ctx);
+
+	if (ctx)
+		eventfd_ctx_put(ctx);
+
+eventfd_ctx_put() drops the last kref and frees the context immediately,
+with no RCU grace period, so a callback that has already loaded the
+pointer goes on to dereference freed memory.  The two sides share no
+lock: the ioctl runs under vhost_dev.mutex, while the parent invokes the
+callback from its own interrupt or workqueue context.
+
+This is not the reopen refcount underflow fixed by commit f6bbf0010ba0
+("vhost-vdpa: fix use-after-free of v->config_ctx"), which was about
+vhost_vdpa_config_put() leaving a stale pointer behind.  Here the pointer
+is maintained correctly and it is the read side that is unprotected.
+
+With VDUSE as the parent this is reachable from userspace with access to
+/dev/vduse (root by default).  VDUSE_DEV_INJECT_CONFIG_IRQ queues
+dev->inject, and vduse_dev_irq_inject() runs the callback under VDUSE's
+own dev->irq_lock, which vhost does not hold.  vduse_dev_reset() does
+flush_work(&dev->inject), but VHOST_VDPA_SET_CONFIG_CALL never goes
+through reset, so an inject already in flight is not waited for.  A
+process that injects config interrupts on the VDUSE fd while another
+thread swaps the call fd on the vhost-vdpa fd hits it in seconds:
+
+  BUG: KASAN: slab-use-after-free in native_queued_spin_lock_slowpath
+  Read of size 4 at addr ffff888107d21808 by task kworker/u17:1/2993
+  Workqueue: vduse-irq vduse_dev_irq_inject
+  Call Trace:
+   native_queued_spin_lock_slowpath+0x97/0x5b0
+   _raw_spin_lock_irqsave+0xd4/0xe0
+   eventfd_signal_mask+0x69/0x120
+   vhost_vdpa_config_cb+0x34/0x50
+   vduse_dev_irq_inject+0x46/0x60
+   process_one_work+0x468/0x950
+
+  Allocated by task 2992:
+   do_eventfd+0x50/0x200
+   __x64_sys_eventfd2+0x2e/0x40
+
+  Freed by task 2992:
+   eventfd_ctx_put+0xb9/0xc0
+   vhost_vdpa_unlocked_ioctl+0x116c/0x2190
+
+Add a spinlock covering every access to config_ctx, so the callback
+either signals a context that is still alive or observes NULL, and the
+put happens only once no callback can reach the old value.
+
+Clearing the parent's callback before the put would not be enough: of the
+in-tree set_config_cb() implementations only VDUSE takes a lock, the rest
+store the pointer unlocked, so that would not order against an in-flight
+invocation.
+
+Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260807100025.19750-3-yuz08559@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vhost/vdpa.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 20db77552545e..bad8ef5716069 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -133,7 +133,7 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
- 		if (err)
- 			return err;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 0d0206862cced..2dd2a5ccd09ee 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -57,6 +57,8 @@ struct vhost_vdpa {
+ 	int virtio_id;
+ 	int minor;
+ 	struct eventfd_ctx *config_ctx;
++	/* Serialises vhost_vdpa_config_cb() against config_ctx being replaced. */
++	spinlock_t config_lock;
+ 	int in_batch;
+ 	struct vdpa_iova_range range;
+ 	u32 batch_asid;
+@@ -188,10 +190,12 @@ static irqreturn_t vhost_vdpa_virtqueue_cb(void *private)
+ static irqreturn_t vhost_vdpa_config_cb(void *private)
+ {
+ 	struct vhost_vdpa *v = private;
+-	struct eventfd_ctx *config_ctx = v->config_ctx;
++	unsigned long flags;
  
--		if (ets->tc_tx_bw[i] < MLX5E_MAX_BW_ALLOC &&
-+		if (priv->dcbx.tc_tsa[i] == IEEE_8021QAZ_TSA_ETS &&
- 		    tc_group[i] == (MLX5E_LOWEST_PRIO_GROUP + 1))
- 			is_zero_bw_ets_tc = true;
+-	if (config_ctx)
+-		eventfd_signal(config_ctx);
++	spin_lock_irqsave(&v->config_lock, flags);
++	if (v->config_ctx)
++		eventfd_signal(v->config_ctx);
++	spin_unlock_irqrestore(&v->config_lock, flags);
  
+ 	return IRQ_HANDLED;
+ }
+@@ -521,15 +525,22 @@ static long vhost_vdpa_get_vring_num(struct vhost_vdpa *v, u16 __user *argp)
+ 
+ static void vhost_vdpa_config_put(struct vhost_vdpa *v)
+ {
+-	if (v->config_ctx) {
+-		eventfd_ctx_put(v->config_ctx);
+-		v->config_ctx = NULL;
+-	}
++	struct eventfd_ctx *ctx;
++	unsigned long flags;
++
++	spin_lock_irqsave(&v->config_lock, flags);
++	ctx = v->config_ctx;
++	v->config_ctx = NULL;
++	spin_unlock_irqrestore(&v->config_lock, flags);
++
++	if (ctx)
++		eventfd_ctx_put(ctx);
+ }
+ 
+ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
+ {
+ 	struct vdpa_callback cb;
++	unsigned long flags;
+ 	int fd;
+ 	struct eventfd_ctx *ctx;
+ 
+@@ -542,8 +553,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
+ 	if (IS_ERR(ctx))
+ 		return PTR_ERR(ctx);
+ 
++	spin_lock_irqsave(&v->config_lock, flags);
+ 	swap(ctx, v->config_ctx);
++	spin_unlock_irqrestore(&v->config_lock, flags);
+ 
++	/*
++	 * The callback can no longer reach the old context, so this is the
++	 * last reference to it.
++	 */
+ 	if (ctx)
+ 		eventfd_ctx_put(ctx);
+ 
+@@ -1630,6 +1647,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
+ 	}
+ 
+ 	atomic_set(&v->opened, 0);
++	spin_lock_init(&v->config_lock);
+ 	v->minor = minor;
+ 	v->vdpa = vdpa;
+ 	v->nvqs = vdpa->nvqs;
 -- 
 2.53.0
 
