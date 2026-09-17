@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA424ED18C;
-	Thu, 17 Sep 2026 15:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771AF4CDDFE;
+	Thu, 17 Sep 2026 15:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660118; cv=none; b=dle6cvlzyPwiOqyb3j/6vjSV1+Oe9Lh95Qa8uFgxAHn0oWttDWpcJ+J6dEnLaDaC4wVtY9yT+fx+LkehoAkvXp0vSaROKqO/mjnbxCDuRBJgSrjIQKrufoAfeL2I+Kt8TIMUyK3G1EpW9v3TWKymZ4IrUhLIAeCXPnKGmt3+9F0=
+	t=1789660126; cv=none; b=jUS/kTehVD4cIS3knEGf+gYZqj/jozfNp9W4AKbuMhLbQhm931vyTKEr1buqbq3tF/jk+KXVB4qzuGBcfy9bjaWd6vR27s0Pvcilkn/0uQ/ayFI6MfGl7mnsfqmFRnWlvfBr+ZlZ8ueS64lY5X9+fAscb7kDxriwwoULWSJn0q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660118; c=relaxed/simple;
-	bh=25qO2iRSTcnE3AT8OER0jxvsU85FguSmrjc8XQlOZWM=;
+	s=arc-20240116; t=1789660126; c=relaxed/simple;
+	bh=Qh38uf6PzIIlaNojt40NTTWOHm1FKKZrBLd7EAr+5Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrqbbJZ5l7KzUVWPUCh1LwU7ik/TQZCZfxRct6n46ps14nbpH8A3oLURln6YCFL8QBX7Mt9HoGhctctGMtm3Ty7AyaMN+lr4APTi5oypXkXPz7ew5cxFz494wMebKMl/ceVl5nyXSsSaS/eUqNMvgvopI1jtnZPVo30jGSNuZQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8p/KVRD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lz0Dm6zaFGpJU/odvX5jBF6Az2Q3W8w41Y/Kg3WxTBCYAj4oEm44MBc2/iMmaiuQdlxFjqCdqOsbhb8RPP7zBfkqVHQOqvZrD+e8Y5HHUUlQotLHEcJuHSS/UBkSmN+UvQnsouqiWG57ZKrZfuMbt2Q4smZ7qG6Zuo8lxb+JPw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0b0V2oi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8p/KVRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD5A1F000FF;
-	Thu, 17 Sep 2026 15:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0b0V2oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88EC1F00898;
+	Thu, 17 Sep 2026 15:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660112;
-	bh=tsoXR+qFLHfZq/Z3BbdVJXLveaIgacEIga6NGQaGQEo=;
+	s=korg; t=1789660118;
+	bh=xoT6eGxSRLreUVb00rVph5IgeGSFx1OsNxcUuad9OSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8p/KVRDR2iwJWwzRDEbsMYQZqrDqfd+/mbnlSKs07oihxPRoEjV2Fcm+PyF8PFTn
-	 iUIDKQknu77DVauWjhGWo0P30yN7qI2aiysLCTVwrfLF5xJ1u2crNq1E4/LJMWVlM3
-	 mXQ3Kfq0XrvWIGrn5eI8qlk8mLzyzCNXCsrYTECc=
+	b=t0b0V2oiIff9tnXb6dPdo+TErONA8l1S2tvyVLG5NaluiZkt8J7OGfHIof4yDLy5Q
+	 j2VZv2kMyZy2qOJo/yx8MT57oeYIT/QSAM/VjHYhL6n9uW2oMTPtmDaYOxgW4HLo/0
+	 HWpP/i5EdhV0MuPRuRNGyrUghwHiOTABE9DRqmxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 482/733] ALSA: usbusx2y: fix in04_last array size mismatch with in04_buf
-Date: Thu, 17 Sep 2026 16:13:10 +0100
-Message-ID: <20260917151404.036136647@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 7.2 484/733] Revert "riscv: Reset pmm when PR_TAGGED_ADDR_ENABLE is not set"
+Date: Thu, 17 Sep 2026 16:13:12 +0100
+Message-ID: <20260917151404.092234285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,84 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit 861111a14740e12c36d363e9830f8daa734279c9 upstream.
+commit 2d2184ac90365a4af3274e23c98d469f09f91749 upstream.
 
-The in04_last array in struct usx2ydev is declared as char[24], but
-in04_buf is allocated as sizeof(struct us428_ctls) which is 21 bytes.
-In i_usx2y_in04_int(), when ctl_snapshot_last == -2 (initialization
-path):
+This reverts commit 3033b2b1e3949274f33a140e2a97571b5a307298.
 
-    memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
+The reverted patch is userspace-visible behavior change, not a bug fix.
+The two variables here (pmm and pmlen) control two independent features:
+pmm is the _hardware_ pointer masking mode that applies while executing
+in userspace. pmlen is the shift amount that the _kernel_ uses when
+untagging addresses; PMLEN_0 means no untagging occurs, so the kernel
+does not accept tagged addresses in syscall arguments.
 
-This copies 24 bytes from a 21-byte slab allocation, reading 3 bytes
-past the end of the source object.
+It is valid (as documented and tested by the self test) to enable
+pointer masking without enabling the tagged address ABI. This separation
+is necessary to allow userspace to create an execution environment
+similar to what the kernel supports on arm64 by default, where TBI is
+enabled but the tagged address ABI is not. (On arm64, there is no
+equivalent to PR_PMLEN_MASK because TBI is always enabled.)
 
-Introduce a USX2Y_IN04_SIZE constant defined as sizeof(struct
-us428_ctls) and use it consistently for the in04_last array, the
-in04_buf allocation, the URB transfer length, and the comparison loop,
-replacing the bare 24 and 21 literals throughout.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://patch.msgid.link/20260820014551.1979772-1-samuel.holland@sifive.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260904205826.4071119-1-tristmd@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3033b2b1e394 ("riscv: Reset pmm when PR_TAGGED_ADDR_ENABLE is not set")
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/usx2y/usbusx2y.c |    6 +++---
- sound/usb/usx2y/usbusx2y.h |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/process.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -196,7 +196,7 @@ static void i_usx2y_in04_int(struct urb
- 			memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
- 			us428ctls->ctl_snapshot_last = -1;
- 		} else {
--			for (i = 0; i < 21; i++) {
-+			for (i = 0; i < USX2Y_IN04_SIZE; i++) {
- 				if (usx2y->in04_last[i] != ((char *)usx2y->in04_buf)[i]) {
- 					if (diff < 0)
- 						diff = i;
-@@ -305,7 +305,7 @@ int usx2y_in04_init(struct usx2ydev *usx
- 		goto error;
- 	}
+--- a/arch/riscv/kernel/process.c
++++ b/arch/riscv/kernel/process.c
+@@ -349,10 +349,8 @@ long set_tagged_addr_ctrl(struct task_st
+ 	if (arg & PR_TAGGED_ADDR_ENABLE && (tagged_addr_disabled || !pmlen))
+ 		return -EINVAL;
  
--	usx2y->in04_buf = kmalloc(21, GFP_KERNEL);
-+	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
- 	if (!usx2y->in04_buf) {
- 		err = -ENOMEM;
- 		goto error;
-@@ -313,7 +313,7 @@ int usx2y_in04_init(struct usx2ydev *usx
+-	if (!(arg & PR_TAGGED_ADDR_ENABLE)) {
++	if (!(arg & PR_TAGGED_ADDR_ENABLE))
+ 		pmlen = PMLEN_0;
+-		pmm = ENVCFG_PMM_PMLEN_0;
+-	}
  
- 	init_waitqueue_head(&usx2y->in04_wait_queue);
- 	usb_fill_int_urb(usx2y->in04_urb, usx2y->dev, usb_rcvintpipe(usx2y->dev, 0x4),
--			 usx2y->in04_buf, 21,
-+			 usx2y->in04_buf, USX2Y_IN04_SIZE,
- 			 i_usx2y_in04_int, usx2y,
- 			 10);
- 	if (usb_urb_ep_type_check(usx2y->in04_urb)) {
---- a/sound/usb/usx2y/usbusx2y.h
-+++ b/sound/usb/usx2y/usbusx2y.h
-@@ -5,6 +5,8 @@
- #include "../midi.h"
- #include "usbus428ctldefs.h"
- 
-+#define USX2Y_IN04_SIZE	sizeof(struct us428_ctls)
-+
- #define NRURBS	        2
- 
- /* Default value used for nr of packs per urb.
-@@ -55,7 +57,7 @@ struct usx2ydev {
- 	int			stride;
- 	struct urb		*in04_urb;
- 	void			*in04_buf;
--	char			in04_last[24];
-+	char			in04_last[USX2Y_IN04_SIZE];
- 	unsigned int		in04_int_calls;
- 	struct snd_usx2y_urb_seq	*us04;
- 	wait_queue_head_t	in04_wait_queue;
+ 	if (mmap_write_lock_killable(mm))
+ 		return -EINTR;
 
 
