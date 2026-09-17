@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690604ED1B7;
-	Thu, 17 Sep 2026 16:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF04F390B;
+	Thu, 17 Sep 2026 16:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661139; cv=none; b=npxLJ+A1lwU9X9T5PJymg89d+UXfq4FWhvX0XRrRpKCWAztFrEEaMcQkbmb+7mndQcOitCgI3TapUm+H6Y2R4PECJ+2olwByCJfCgPmZ12fNZJzylDKwO/1H80kSnNoEsBIZKRE14cZdr8uYv5vja1Gpdz4XtQAWORzBS9URLtQ=
+	t=1789661142; cv=none; b=aWIBdPmfO+9b9UMwgjSIHcXfGg5iO9jkTG2H4jZCZS+bILVl8hOyuLMh+OfFBTu8SQuIQsgq/nh5GFecBYXIksE6DW8iS2R4TG0mvBPXuVrG1K9AA3fIlhoIOhP507yQdD/WEaciW5a/JA6xetN+/7DEFs4/NBoKtQBDAhm581E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661139; c=relaxed/simple;
-	bh=CxfSAckMZR6fumrHOHYwb5DnYAwX3MhBZcAPFB927V0=;
+	s=arc-20240116; t=1789661142; c=relaxed/simple;
+	bh=j8mwCm4e59vlfbItYASrvulltpW8BsChx0Lmj83ybZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=baawp1bIbGX2T1ervWXWPn/Ee35MdvcLoMl85+E2JL2FdU8/197B1qi1T+RWmLCezNarO75bFHlfrdKkM1loflwuBiEf8XO5zaBq3MJl8vFJK59gLDm0tacG1AJ8vmNOTaFADbtuoQ4pNJiJOUV0YuguXSDQ6kkx/liiwljxoyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcY+xcPm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CwjNiMahuWdu7AnJmMtzhIg/YyOgWYWro0jmG81WGq30TgXGtrz9lyQrJY9Gx1N0kGWAuyu4Hf5zTGMXQDs1bvN2re+WPyg33HVB5xn0QAgLufUS7q48oGgWFpbfW/J/JT5b1dLWahTIzDZcUy8Mz3OoAi/9CCDVZC8D2Q1VueQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GA8RHjMd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcY+xcPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848F51F000FF;
-	Thu, 17 Sep 2026 16:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GA8RHjMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763261F000FF;
+	Thu, 17 Sep 2026 16:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661138;
-	bh=SBaowkYSSkCAs5+XQggwvU3vQBo197dLhuCmX8PYWOU=;
+	s=korg; t=1789661141;
+	bh=adkehM31YHgMruSZDuU2LWzJ3zdk5JaUN2POMgUMqRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dcY+xcPmmD8QAYtDdyF8GBzR1y5Skyn+XirHXbmvbNbHSietmuCFbgtaiA8W/6afM
-	 B0bao6nHpB0WkDpeAFKW0ToBBeorOVOQu5UX9iSHVpKKXTSGiiu3rDWcuBfyB68Qg/
-	 Kavg5WDbf8fM7eH3m58XhMrzRyFpx+5BCljKYHXI=
+	b=GA8RHjMdmhL4hEV3CozBuXoXxtfiGysnUFfgyPRcYQyyYoaGl6VwdQE6oHr/ltEj8
+	 VFRLSpw3SHPK9P7jrnfE4hwFhs9KjeQ2B6dNUox9fm5Td/Cpr0dzyAQYJYYSEh0sGS
+	 7Wu6QGSW1rsFVgicEcc4mYdoOm5thmXkTcfCXBlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Lauss <manuel.lauss@gmail.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0095/1250] serial: 8250_port: recognize UPIO_AU
-Date: Thu, 17 Sep 2026 15:58:10 +0100
-Message-ID: <20260917151554.561405157@linuxfoundation.org>
+Subject: [PATCH 6.18 0096/1250] mmc: davinci: avoid NULL deref of host->data in IRQ handler
+Date: Thu, 17 Sep 2026 15:58:11 +0100
+Message-ID: <20260917151554.588999239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,49 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Lauss <manuel.lauss@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 49fa670efdfdd27e29145cbd2beef065c08717ef ]
+[ Upstream commit 4f28846aaf8db9668e338b8987973f8935edff34 ]
 
-My MIPS Alchemy systems generate the following warning during
-probe of the 8250 driver:
+mmc_davinci_irq() returns early only when both host->cmd and
+host->data are NULL:
 
-WARNING: drivers/tty/serial/8250/8250_port.c:462 at set_io_from_upio+0xfc/0x124, CPU#0: swapper/0/1
-Unsupported UART type 4
-[...]
-[<80521d40>] set_io_from_upio+0xfc/0x124
-[<80521dfc>] serial8250_set_defaults+0x94/0xe0
-[<80520fb4>] serial8250_register_8250_port+0x288/0x51c
-[<805214ec>] serial8250_probe+0x160/0x1e8
-[<8053b5f0>] platform_probe+0x64/0x90
+  if (host->cmd == NULL && host->data == NULL) {
+          ...
+          return IRQ_NONE;
+  }
 
-The least invasive fix is to recognize UPIO_AU (type 4) in set_io_from_upio()
-and do nothing, since all parameters have already been set up in
-8250_rt288x.c::au_platform_setup().
+So we may legitimately reach the rest of the handler with
+host->data == NULL (and therefore data == NULL). The DATDNE branch
+already guards against this with an explicit "if (data != NULL)"
+check, but the subsequent TOUTRD ("read data timeout") and
+CRCWR/CRCRD ("data CRC error") branches dereference data
+unconditionally:
 
-Run-tested on Alchemy Au1300 platform.
+  if (qstatus & MMCST0_TOUTRD) {
+          data->error = -ETIMEDOUT;        <-- NULL deref
+          ...
+          davinci_abort_data(host, data);
+  }
 
-Signed-off-by: Manuel Lauss <manuel.lauss@gmail.com>
-Link: https://patch.msgid.link/20260430135822.905035-1-manuel.lauss@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
+          data->error = -EILSEQ;           <-- NULL deref
+          ...
+  }
+
+If either bit is set in qstatus while host->data is NULL, the kernel
+will crash inside the IRQ handler. smatch flags this:
+
+  drivers/mmc/host/davinci_mmc.c:933 mmc_davinci_irq() error: we
+    previously assumed 'data' could be null (see line 914)
+
+Gate both branches on a non-NULL data, matching the existing pattern
+used by the DATDNE branch.
+
+No functional change for callers where data is non-NULL, which is
+the only case in which these branches did meaningful work before
+this change.
+
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/davinci_mmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index d3ffba16c0f96..9564a5d9b4d02 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -458,6 +458,8 @@ static void set_io_from_upio(struct uart_port *p)
- 		p->serial_out = io_serial_out;
- 		break;
- #endif
-+	case UPIO_AU:
-+		break;
- 	default:
- 		WARN(p->iotype != UPIO_PORT || p->iobase,
- 		     "Unsupported UART type %x\n", p->iotype);
+diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
+index 2b7d6d9bcde51..00adc15956fd2 100644
+--- a/drivers/mmc/host/davinci_mmc.c
++++ b/drivers/mmc/host/davinci_mmc.c
+@@ -928,7 +928,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
+ 		}
+ 	}
+ 
+-	if (qstatus & MMCST0_TOUTRD) {
++	if (data && (qstatus & MMCST0_TOUTRD)) {
+ 		/* Read data timeout */
+ 		data->error = -ETIMEDOUT;
+ 		end_transfer = 1;
+@@ -940,7 +940,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
+ 		davinci_abort_data(host, data);
+ 	}
+ 
+-	if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
++	if (data && (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD))) {
+ 		/* Data CRC error */
+ 		data->error = -EILSEQ;
+ 		end_transfer = 1;
 -- 
 2.53.0
 
