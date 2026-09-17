@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3574ED1B7;
-	Thu, 17 Sep 2026 16:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A74ED1B7;
+	Thu, 17 Sep 2026 16:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661124; cv=none; b=RY7Z9p1dl9nUjsTbS2SF4NhFCQOEh2JT9wA0XqMJAhY3k/H6jv0OtZC8e2JwB5Bjq4HX3f8N+jGM+rUWjW/r9cTUyphKq3NImzA+o6AbYcWhBlEhdQpyrF22zhT1fg0i4iRSdhDmkNB7LYdpKUsW0Xm/mSZu57KLgQtnVXkfYb4=
+	t=1789661127; cv=none; b=pTBkWhky5w+KYEsAq6YX2Et8sRSGf0zu21nFmCx4RjD3nOiHoLGTHYjLgae3urV6HrfDiYo6L7Zz0u01NMMn4R21UGP0/zCUIrv7BRziWDw7TSaHZLU/lceJVb0v5z05J21JT6JwxI/KEjkrxITdp6NT+H4h5JntEsBXpG6vq4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661124; c=relaxed/simple;
-	bh=jkhRVfDVfnzvncQHQI0KKmT0+zNvDh38XrtI23mmlrg=;
+	s=arc-20240116; t=1789661127; c=relaxed/simple;
+	bh=uzScEWWlllsItuzETzXbFpP+P86W8ZE63QcIS8nclus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLxVJH0iC6LbLCKCbqTgu6e95UtZcmYD3gIidL1PvuccwAkGNtmrDPxLQAaHlPuh45R41mttS+d38YpIM1kzr10754GjVHBPcuInSwipa42JQinX8LmfEKU1CdRy6mhJbMmSt/wjBVcM5fYAA/lm9PH+uGflr3sS8XZVLQnV6r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmY+Oo2+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jW1w+IVryPY3zqtS7vqKbdv1uQbejvQlCHsQVsbUXlsQTD9KehEeUgVT8hEIIJXHDzsvAqEYG3LXG3eBdl79g8P7crELizxqSpvwITim9+6JueyG0d/oaiFvvE0qLhYXWXYLexet7NkkcPxpuskIdCA4YMbmNvNM00y1CUSioVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKhfkiAD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmY+Oo2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68CD1F00893;
-	Thu, 17 Sep 2026 16:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKhfkiAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DD51F00893;
+	Thu, 17 Sep 2026 16:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661123;
-	bh=pBw+3cBYgAlshXOsGnzkEP/rIoXpUpRW+2qIufroE2U=;
+	s=korg; t=1789661126;
+	bh=Uh2mtH1+EUHZwcmtjLO+sNXwWMMJQT+JkSy1ykzlgpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmY+Oo2+Ag34QTw1whlB2S2O2az2M6xiajZWaCIcAd6JHXDSGoM/mJp+TEiAGUb0b
-	 2xyiKrUfC9Ws59Og7OARNEXROWriJVZcSQF3wMNDkUcWR3pVcuf4t80C5CNt7B77hi
-	 HkQSuGDpQjBGsGLoTWUalYskgg17jZitYQDv7J4o=
+	b=uKhfkiAD8efQMKMkY1hSDREWGy16zJA4f470/zc+sxJcjWVU8NFe2JvyEc9O8oiCZ
+	 uzsDLW3jpwrLvlujmUaEz71YnvPsIdGPdXbRBySJGtk4kWh7oGetUHYJOAfl7NL/B2
+	 Y0FRKtR/cKtEslm03LXpoCsHq6PJcr+ygBcXQ5CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Albert Esteve <aesteve@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0091/1250] platform/chrome: Resolve kb_wake_angle visibility race
-Date: Thu, 17 Sep 2026 15:58:06 +0100
-Message-ID: <20260917151554.451341087@linuxfoundation.org>
+Subject: [PATCH 6.18 0092/1250] drm/panel/tdo-tl070wsh30: Use refcounted allocation in place of devm_kzalloc()
+Date: Thu, 17 Sep 2026 15:58:07 +0100
+Message-ID: <20260917151554.479919443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,97 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Albert Esteve <aesteve@redhat.com>
 
-[ Upstream commit c40f5f9927b5bf6062daa1e293ae32d83afc963e ]
+[ Upstream commit 928decbed75bf215a8d0eecc88aa2edc77023db2 ]
 
-A race condition exists between the probe of cros-ec-sysfs and
-cros-ec-sensorhub.
+Move to using the new API devm_drm_panel_alloc() to allocate the
+panel. In the call to the new API, avoid using explicit type and use
+__typeof() for more type safety.
 
-The `kb_wake_angle` attribute should only be visible if the sensor hub
-detects two or more accelerometers.  If cros_ec_sysfs_probe() runs
-before cros_ec_sensorhub_register() completes sensor enumeration, the
-sysfs attributes are created while `has_kb_wake_angle` is still false,
-hiding `kb_wake_angle` incorrectly.
-
-Store the created attribute group pointer in `ec_dev->group`.  When
-the sensor hub completes sensor enumeration, it checks for this group
-and calls sysfs_update_group() to notify the sysfs core to re-evaluate
-attribute visibility.  This ensures the `kb_wake_angle` attribute
-visibility is correctly updated regardless of the driver probe order.
-
-Co-developed-by: Gwendal Grignou <gwendal@chromium.org>
-Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
-Link: https://lore.kernel.org/r/20260407102615.1605317-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260508-drm_panel_init_rm-v2-6-0bd4ac429971@redhat.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub.c | 6 +++++-
- drivers/platform/chrome/cros_ec_sysfs.c     | 5 +++--
- include/linux/platform_data/cros_ec_proto.h | 2 ++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
-index 9bad8f72680ea..f938c3fc84e4f 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub.c
-@@ -122,8 +122,12 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 		sensor_type[sensorhub->resp->info.type]++;
+diff --git a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
+index 227f97f9b136f..13cfe252a838d 100644
+--- a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
++++ b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
+@@ -162,9 +162,6 @@ static int tdo_tl070wsh30_panel_add(struct tdo_tl070wsh30_panel *tdo_tl070wsh30)
+ 		return err;
  	}
  
--	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2)
-+	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2) {
- 		ec->has_kb_wake_angle = true;
-+		if (ec->group && sysfs_update_group(&ec->class_dev.kobj,
-+						    ec->group))
-+			dev_warn(dev, "Unable to update sysfs");
-+	}
+-	drm_panel_init(&tdo_tl070wsh30->base, &tdo_tl070wsh30->link->dev,
+-		       &tdo_tl070wsh30_panel_funcs, DRM_MODE_CONNECTOR_DSI);
+-
+ 	err = drm_panel_of_backlight(&tdo_tl070wsh30->base);
+ 	if (err)
+ 		return err;
+@@ -183,10 +180,13 @@ static int tdo_tl070wsh30_panel_probe(struct mipi_dsi_device *dsi)
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST | MIPI_DSI_MODE_LPM;
  
- 	if (cros_ec_check_features(ec,
- 				   EC_FEATURE_REFINED_TABLET_MODE_HYSTERESIS)) {
-diff --git a/drivers/platform/chrome/cros_ec_sysfs.c b/drivers/platform/chrome/cros_ec_sysfs.c
-index f22e9523da3e8..9d3767ab15480 100644
---- a/drivers/platform/chrome/cros_ec_sysfs.c
-+++ b/drivers/platform/chrome/cros_ec_sysfs.c
-@@ -405,7 +405,8 @@ static int cros_ec_sysfs_probe(struct platform_device *pd)
- 	struct device *dev = &pd->dev;
- 	int ret;
+-	tdo_tl070wsh30 = devm_kzalloc(&dsi->dev, sizeof(*tdo_tl070wsh30),
+-				    GFP_KERNEL);
+-	if (!tdo_tl070wsh30)
+-		return -ENOMEM;
++	tdo_tl070wsh30 = devm_drm_panel_alloc(&dsi->dev,
++					      __typeof(*tdo_tl070wsh30), base,
++					      &tdo_tl070wsh30_panel_funcs,
++					      DRM_MODE_CONNECTOR_DSI);
++
++	if (IS_ERR(tdo_tl070wsh30))
++		return PTR_ERR(tdo_tl070wsh30);
  
--	ret = sysfs_create_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
-+	ec_dev->group = &cros_ec_attr_group;
-+	ret = sysfs_create_group(&ec_dev->class_dev.kobj, ec_dev->group);
- 	if (ret < 0)
- 		dev_err(dev, "failed to create attributes. err=%d\n", ret);
- 
-@@ -416,7 +417,7 @@ static void cros_ec_sysfs_remove(struct platform_device *pd)
- {
- 	struct cros_ec_dev *ec_dev = dev_get_drvdata(pd->dev.parent);
- 
--	sysfs_remove_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
-+	sysfs_remove_group(&ec_dev->class_dev.kobj, ec_dev->group);
- }
- 
- static const struct platform_device_id cros_ec_sysfs_id[] = {
-diff --git a/include/linux/platform_data/cros_ec_proto.h b/include/linux/platform_data/cros_ec_proto.h
-index de14923720a53..6ed1c4c5ce2ef 100644
---- a/include/linux/platform_data/cros_ec_proto.h
-+++ b/include/linux/platform_data/cros_ec_proto.h
-@@ -228,6 +228,7 @@ struct cros_ec_platform {
- /**
-  * struct cros_ec_dev - ChromeOS EC device entry point.
-  * @class_dev: Device structure used in sysfs.
-+ * @group: sysfs attributes groups for this EC.
-  * @ec_dev: cros_ec_device structure to talk to the physical device.
-  * @dev: Pointer to the platform device.
-  * @debug_info: cros_ec_debugfs structure for debugging information.
-@@ -237,6 +238,7 @@ struct cros_ec_platform {
-  */
- struct cros_ec_dev {
- 	struct device class_dev;
-+	const struct attribute_group *group;
- 	struct cros_ec_device *ec_dev;
- 	struct device *dev;
- 	struct cros_ec_debugfs *debug_info;
+ 	mipi_dsi_set_drvdata(dsi, tdo_tl070wsh30);
+ 	tdo_tl070wsh30->link = dsi;
 -- 
 2.53.0
 
