@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027FB4EB851;
-	Thu, 17 Sep 2026 15:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A652D4EB86C;
+	Thu, 17 Sep 2026 15:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659096; cv=none; b=ffiqUUEr8wDwGGbhNX92aFOkfxgDIU6eT+qPOcHmsYkn48E/qsChJdL48jr41iJZexE0TFwtfu6ywbAcfxR3PTGTKWDxha+r6zoOuNNqWFpjt4OekKbtvKPhJbBf2SXMqNWY2LVc9B1xHnzmeb4cgowrirCwPnZJizvz/BlEzWQ=
+	t=1789659100; cv=none; b=VX4QZ17Nb+w/1qBopYeWjfluVPxUYd/kr525vv1ruUc7x5vI/NUhHIWP9RbFNvlpp9Uoya+w9iIdmbQMcOsjXGkz9ClncesptuDKTSYQktoLyPucKbXFnlXF2eQs+QZXRFChu1M8PlAWR5uwdbXfUc8MH2PEgD6NJauxw5FgTFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659096; c=relaxed/simple;
-	bh=FYo7bArUqt9+BPITrfjoeyatpziYYEcfsOYoNbK6oqY=;
+	s=arc-20240116; t=1789659100; c=relaxed/simple;
+	bh=98Ib58MRJPlsW/ushh91XHSQh4D5EK4UlYLxRB6dBVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVut1ssvwughnhd04sOkB/+mKJ0WISN5vHcWQwfWb4cIdXI7Ig/lJA8O213wrmFBLm3yQqRDbWjWEV2Zo1hZPJEZIMToDprzKNLYl15W2X+GklO8XEWmtssgEpvW7mojjCOfqqE76bacqfNWThCX5SELNKDk+TghlHxwjZKRs/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBqE9PJl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b+boC7O1SNttaoSNfTR6rgJZUivpm9eilpjcs5sDeixgrqyRDyh55NatrRSSOaPWL8PgVQsX0g4nzUve2Cx6Ro56o7lG2xsbl5Q0aogUTd7i+ft57S6A+iiWRHhJn0uFr2tyIDdQ9a5WpHjswNQFOj25GXA9fmN0jpoBZd9QhJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw4SjVlo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBqE9PJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083291F00893;
-	Thu, 17 Sep 2026 15:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw4SjVlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA191F000FF;
+	Thu, 17 Sep 2026 15:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659087;
-	bh=mbFWzaSrh4OO0/Ql9V/pQGLJSMBvykjSxH89fi3PI3c=;
+	s=korg; t=1789659096;
+	bh=GSn9NordhRAFJxSc4fm9GL33M/BZaX4BNm973O19QXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBqE9PJlx7Ibbo+DM8uveq14WEs+iOrgd1K7iwAOGj9fH+6O6I4fj0yadluEXp3on
-	 DQScfF8/bEybMpRpfmqd44fSs9fDV//2NdFyUMlgRtppa/TBGX96BD+ZthT+Sg8Sdn
-	 cWDrdZrbkOtZIyZl13LG21zir3vqx3iWWC+mSN2c=
+	b=qw4SjVlo1vTWu+yAxpkutJAwWoNtI6PbuRYFEOleVrK0pH0TccCCXVHyw56Zj74fp
+	 IeZDTZ120eBbAfq/vRaLZnmwAyweN+ibke5HgOdUoucX4U6RoHLOhXj9ufbr7LbZia
+	 bgaxaHz2P0qJVYVfECL/9VveRmg7m1xXbets6nAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 139/733] objtool/klp: Fix checksums for constant pool references
-Date: Thu, 17 Sep 2026 16:07:27 +0100
-Message-ID: <20260917151354.497941245@linuxfoundation.org>
+Subject: [PATCH 7.2 142/733] ipv6: mcast: fix delay calculation in igmp6_join_group()
+Date: Thu, 17 Sep 2026 16:07:30 +0100
+Message-ID: <20260917151354.576411212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,73 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ac323c9467092479dc1e5bc138c9abbe015b0069 ]
+[ Upstream commit 75fa9caeb8aaba19c2463dee0b0a1e09d39c04af ]
 
-Adding a line of code to __link_shadow_page() with a literal string
-causes a false positive changed function with GCC:
+When joining a multicast group, if a report work is already pending
+(e.g. scheduled by a query or a previous join), igmp6_join_group()
+cancels the delayed work and recalculates the delay:
 
-  arch/x86/kvm/kvm.ko.o: changed function: kvm_tdp_mmu_map_private_pfn
+	if (cancel_delayed_work(&ma->mca_work)) {
+		refcount_dec(&ma->mca_refcnt);
+		delay = ma->mca_work.timer.expires - jiffies;
+	}
 
-While the patch only touched __link_shadow_page(), the string addition
-triggered a rename of .LC64 -> .LC65 in kvm_tdp_mmu_map_private_pfn()
-even though the underlying referenced constant data didn't change.
+Unlike igmp6_group_queried(), igmp6_join_group() did not check
+if delay >= interval. This leads to two issues:
 
-So for .LC* symbols, the suffix is arbitrary but the data isn't.  Add
-the underlying data to the checksum calculation rather than the symbol
-name.
+1. If the timer has already expired (timer.expires <= jiffies), the
+   stale expiry is reused by mod_delayed_work(), causing the second
+   unsolicited report to fire on the very next tick without a
+   randomized delay.
+2. If the timer was originally armed by a query with a large
+   maximum response delay, delay could exceed
+   unsolicited_report_interval(ma->idev).
 
-Clang also uses .LC* symbols, but also uses anonymous data.  Both
-compilers put this data in .rodata.cst<num> sections.
+Fix this by initializing delay to unsolicited_report_interval(ma->idev)
+and re-randomizing it with get_random_u32_below(interval) when
+delay >= interval, mirroring the logic in igmp6_group_queried().
 
-Fixes: 0d83da43b1e1 ("objtool/klp: Add --checksum option to generate per-function checksums")
-Link: https://patch.msgid.link/f3a9e74ceebc6475ce94bcfe985401140857814a.1787939301.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 2d9a93b4902b ("mld: convert from timer to delayed work")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://patch.msgid.link/20260828084531.1826790-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-checksum.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ net/ipv6/mcast.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/objtool/klp-checksum.c b/tools/objtool/klp-checksum.c
-index b8e47f28997e9..ebe25f9c5260a 100644
---- a/tools/objtool/klp-checksum.c
-+++ b/tools/objtool/klp-checksum.c
-@@ -54,6 +54,19 @@ static int checksum_debug_init(struct objtool_file *file)
- 	return 0;
- }
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 3ff7c1c1bf4f8..62c9a1c08b9a2 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -2638,7 +2638,7 @@ static void ip6_mc_clear_src(struct ifmcaddr6 *pmc)
  
-+/*
-+ * Detect a reference to anonymous constant pool data which the compiler places
-+ * in .rodata.cst<num> and which either has an .LC<num> symbol associated with
-+ * it or (with Clang) no symbol at all.  These are typically initializers for
-+ * local function stack data, so they're considered part of the function rather
-+ * than data per se.
-+ */
-+static bool is_anonymous_const_data(struct symbol *sym)
-+{
-+	return strstarts(sym->sec->name, ".rodata.cst") &&
-+	       (is_sec_sym(sym) || strstarts(sym->name, ".LC"));
-+}
-+
- static void checksum_update_insn(struct objtool_file *file, struct symbol *func,
- 				 struct instruction *insn)
+ static void igmp6_join_group(struct ifmcaddr6 *ma)
  {
-@@ -129,6 +142,14 @@ static void checksum_update_insn(struct objtool_file *file, struct symbol *func,
- 		goto alts;
+-	unsigned long delay;
++	unsigned long delay, interval;
+ 
+ 	mc_assert_locked(ma->idev);
+ 
+@@ -2647,13 +2647,17 @@ static void igmp6_join_group(struct ifmcaddr6 *ma)
+ 
+ 	igmp6_send(&ma->mca_addr, ma->idev->dev, ICMPV6_MGM_REPORT);
+ 
+-	delay = get_random_u32_below(unsolicited_report_interval(ma->idev));
++	interval = unsolicited_report_interval(ma->idev);
++	delay = interval;
+ 
+ 	if (cancel_delayed_work(&ma->mca_work)) {
+ 		refcount_dec(&ma->mca_refcnt);
+ 		delay = ma->mca_work.timer.expires - jiffies;
  	}
  
-+	if (is_anonymous_const_data(sym)) {
-+		void *cst;
++	if (delay >= interval)
++		delay = get_random_u32_below(interval);
 +
-+		cst = sym->sec->data->d_buf + sym->offset + offset;
-+		__checksum_update_insn(func, insn, cst, sym->sec->sh.sh_entsize);
-+		goto alts;
-+	}
-+
- 	if (is_sec_sym(sym)) {
- 		sym = find_symbol_containing(reloc->sym->sec, offset);
- 		if (!sym)
+ 	if (!mod_delayed_work(mld_wq, &ma->mca_work, delay))
+ 		refcount_inc(&ma->mca_refcnt);
+ 	WRITE_ONCE(ma->mca_flags, ma->mca_flags |
 -- 
 2.53.0
 
