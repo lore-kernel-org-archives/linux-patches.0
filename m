@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDF24B7A30;
-	Thu, 17 Sep 2026 16:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747314E5330;
+	Thu, 17 Sep 2026 16:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664116; cv=none; b=pDy/LRn0HeOPYF8eBA2pgXkB4TTquKLgYhbt4FJJgaRc/s+NVJWuPkNHvI6xnbIkZ7MN2xdJ2cDRSuoWH5MWQzebC8ThdvE37TvJJimNQyR3Umv3J7Fl36r1Ugadcv3zl7DGxdj2teZYnxR1Cl3+xwg7NTdBv1RItmMNURmo4hk=
+	t=1789664118; cv=none; b=ORxcYUkkAnzAuGXRy45OoXnD0dXgbZeu9b7Dg1yFQc3giMHMfU+3N9Xo9RYvUNzdRr6HRY/vnwm+l4ZUsxRQfHmtaMF49pZ5p5ZcPpNa1UfxxLI+UhM+UknnP3gckxm0+RbntDOf6N8Nwza8jM4yM9e8+NtoE7i/8qS0ijPKedw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664116; c=relaxed/simple;
-	bh=CvEQxHAXu+FSR6Mhuby8XbFKm40/iWwo7ciFMuvpmUo=;
+	s=arc-20240116; t=1789664118; c=relaxed/simple;
+	bh=EVT4n1zHyb7iLlyMj9OXZJQe0i+yjKyfvoxcFqOhURM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cn9xBRrrtuwHfVA9mDa0VVNrfXJUg+O6Bn2OAZ/ExU9qG9UEJR2P6XCZ69Lesg8ymEZq85fs0l78I8simSQFQ9x1DMO6GK1b3+9gOAg5Kp3TYYlVMxA9bKQaixvuoVdQMrquzHL6z9geGN5r60D1a8JB4KR2X9gogcsqHwlzexo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aH18XUee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tD4OhwsWAs4sG+OvDQMRJ2sdlC6s3YvCQg/qvD3BibvkNSEqqbczOPaOy8u2I368fttJ92wnw1IKubi4AC+cfqeckyKkgbmp/iJWDEolnN7nh82egePBKZ2iNIZ6aD768c8ryiETBmhhkaorU9vdrZHX/w+USvmkbvRYVplke/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJUq2JmC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aH18XUee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB161F000FF;
-	Thu, 17 Sep 2026 16:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJUq2JmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF061F000FF;
+	Thu, 17 Sep 2026 16:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664114;
-	bh=oJhtjkHVy5P+UDVzl7qnKMcIurDfvlBE4UcCW9aM7ss=;
+	s=korg; t=1789664117;
+	bh=cW0Xe6gs729gqW7899Yx/2cD+ODNwoKfjlfkc6oPyks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aH18XUeekEvipfv3MUovKwvQngb5mcDdTRIxNAb5Tg1xoj9Eei8KyJ/727M0brJZl
-	 acY/eqxIEQHPiJWP6d4qCx4xfmFH00pm6c8Yaga0LFQpZeum6F3tZWRLQt6qJqr5U1
-	 E5AiweKYzXIGn/MLVDuiuIMHiZ77A/+3ZZfe+3OI=
+	b=MJUq2JmCM4BO+aNMnuIW5ffPcutnAcL3eRqRpvCjzHbmJZNfQ0Id3TjJiafn9Qc9P
+	 F9u9+far+IgngzIQsUyEhz1aN0N7VnUZWJO8/g19YKVIpY/nwExw1bULNF+H39/mag
+	 ckaGd3RP8sXmZMF54D7qz+dmuVmrfUIo8ElBVlsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Ion Agorria <ion@agorria.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0265/1250] mmc: renesas_sdhi: Add OF entry for RZ/G2N SoC
-Date: Thu, 17 Sep 2026 16:01:00 +0100
-Message-ID: <20260917151559.329824315@linuxfoundation.org>
+Subject: [PATCH 6.18 0266/1250] ARM: tegra: p880: Lower CPU thermal limit
+Date: Thu, 17 Sep 2026 16:01:01 +0100
+Message-ID: <20260917151559.355598263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Ion Agorria <ion@agorria.com>
 
-[ Upstream commit 5ce500d31a1625d8fe7ede950201b8df076bdd48 ]
+[ Upstream commit ece4229e457de4ceeec80890c5c760f0c858eeea ]
 
-The RZ/G2N (R8A774B1) SoC was previously handled via the generic
-"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
-the SDHI IP on RZ/G2N is identical with the R-Car M3-N (R8A77965), it
-requires the specific quirks and configuration defined in
-`of_r8a77965_compatible` rather than the generic Gen3 data.
+Lower the CPU thermal limit for the LG P880, since its chassis has less
+thermal dissipation capability than the P895.
 
-Add the explicit "renesas,sdhi-r8a774b1" match entry to map it correctly.
-Note that the DT binding file renesas,sdhi.yaml does not need an update
-as the entry for this SoC is already present.
-
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Ion Agorria <ion@agorria.com>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-index 6816d491b0bf0..8bc1c3209edb0 100644
---- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-+++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-@@ -279,6 +279,7 @@ static const struct renesas_sdhi_of_data_with_quirks of_rza2_compatible = {
- static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
- 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
- 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
-+	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
+diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+index c6ef0a20c19f3..4f57e43af6428 100644
+--- a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
++++ b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+@@ -486,4 +486,17 @@ sound {
+ 
+ 		nvidia,int-mic-en-gpios = <&gpio TEGRA_GPIO(I, 6) GPIO_ACTIVE_HIGH>;
+ 	};
++
++	thermal-zones {
++		cpu-thermal {
++			trips {
++				cpu-alert {
++					/* throttle at 60C until temperature drops to 59.8C */
++					temperature = <60000>;
++					hysteresis = <200>;
++					type = "passive";
++				};
++			};
++		};
++	};
+ };
 -- 
 2.53.0
 
