@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29899528438;
-	Thu, 17 Sep 2026 17:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4652528451;
+	Thu, 17 Sep 2026 17:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665951; cv=none; b=SMFKFnvzU6X4GHHQ4xSS6g7JVNk41wMxGzdxJHv4bvO+yLoobY1BesMYbdboPYK+fgAhmh3cnNDNmBgtE1GhL+qlkrMgQuu5GEVysNL5A4PbjjxacYE6AIFKnOcK7TOrLw6sU8TiDgNPmFhtyppdwP/0Sz6j/p25ZHF3AYzfm90=
+	t=1789665954; cv=none; b=Yp4Z3ng/mnDakR7ZUKcAhHR1WhqeSMpVFWXM9Hjqx0ZJJNIlBdAa3kERE0EGH5HowJHe4wiCo5J7J5fgaIN5wysP32/qUHFnW9H8d0wynqlBPkB2mdMybZtBbAyMmoVGaqsd8Zc7vqyLNvLKwtZStPBqDH4N5JfZsH3+xGw+pDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665951; c=relaxed/simple;
-	bh=BMELmZ09FM7r5irO9yWBoNBtT06cYQc/IXu/1TWrlnA=;
+	s=arc-20240116; t=1789665954; c=relaxed/simple;
+	bh=B5CAy8VXn1iaKv2YBjZM25if+1scwI25V3HvdIJ9UyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdFlbpSAVj7amRyYBv3dD+WHp1+O3vZhn9gGMtqUQ3MK0T2/fYm4n9raWafvWKbVIDdjX0DE4ejJ93jVOytG8Gj7JskdjDdXBj54qdGC1ljeMaG10tOjbZ8v/dgt5HFywQ8OlRrdp5SovJvudQ684wrJ0FBmw4Gc2jfshAi8jiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUppCHI7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qk/EdPY5vduakiL+LENTXhwsmYyLmSrVdK5EoGZL7Xt5g+CD52byBP52YACHsl4zi4WZqdyAUqlhQLMhL71NoBxMMTArbxU0FW1PeX6kKoF8WytBlPABchQ7QB4TjHG4G9nqX1Gxzz638tA/Kz7fGyf0IP9rL+CiycKTfPEkLUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN9qO9X2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUppCHI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A471F00893;
-	Thu, 17 Sep 2026 17:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN9qO9X2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B6C1F000FF;
+	Thu, 17 Sep 2026 17:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665949;
-	bh=c3S2nIg+4DQPPXFGJsU25G26XEauAL0HK/UOaTH2SnU=;
+	s=korg; t=1789665952;
+	bh=G+Kdn6cozrEoxxYW7RFfUyQREmTlB4egCydMTqlKD7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CUppCHI7G2q9oA9X/tCkGYmkmY0JZQsNqtP6h8O5eeq2jPsrbMdiWtXVrUsVlDJTS
-	 04/HOJ5G9pFXHNIfYzo0MCo/39EEae6quBzlBce/e7RNl/rC2d/vB4qNOKj7Dvn0lR
-	 6OXK8qJmEHrSUpuWYr+vERJK0CeKHveYC6BrH6Fk=
+	b=jN9qO9X2som1uYzvqYPNnXBQHPyA9umGpUx4oHCdI6OHWETJk9DmSVfFsVoNCwGJy
+	 Tam3cpq2vdlceHvX48Nxdvnh3A3fen3qBBwJA4g9lMyh8bzdzU/D4GcZkGu4XxO7cS
+	 RIm1QAYMYzvAqo+CnbVIibjTVWLv/qiWg4MCQSOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0857/1250] vdpa_sim_blk: reject out-of-range sector starts
-Date: Thu, 17 Sep 2026 16:10:52 +0100
-Message-ID: <20260917151615.196963134@linuxfoundation.org>
+Subject: [PATCH 6.18 0875/1250] ALSA: hda: Report a change when only the channel status bytes move
+Date: Thu, 17 Sep 2026 16:11:10 +0100
+Message-ID: <20260917151615.695993228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,58 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 0a8693f00c408d85f086ad85d29e7030bf1e2055 ]
+[ Upstream commit 7284788743121ec8bed556b00f830dc52ad9955d ]
 
-vdpasim_blk_check_range() logs an invalid start sector but continues
-validating the request.  The subsequent unsigned capacity subtraction can
-underflow and let an out-of-range buffer offset reach the data path.
+The put() callback of "IEC958 Playback Default" returns whether the
+converted register value moved. The convert_from_spdif_status() helper
+reads part of the first two channel status bytes and none of the last
+two, while the get() callback returns all four. So a write that lands
+only in the bits it does not read changes what userspace reads back and
+reports no change. Of the 31 bits above the mode bit, 20 are such bits
+in consumer mode and 29 in professional mode. The core notifies only on
+a positive return.
 
-The invalid offset is used by three request paths.  VIRTIO_BLK_T_OUT
-copies guest data to blk->buffer + offset through
-vringh_iov_pull_iotlb(), causing an out-of-bounds write in
-_copy_from_iter() or memcpy().  VIRTIO_BLK_T_IN copies from
-blk->buffer + offset to the guest through vringh_iov_push_iotlb(),
-causing an out-of-bounds read in _copy_to_iter().
-VIRTIO_BLK_T_WRITE_ZEROES passes blk->buffer + offset to memset(),
-causing an out-of-bounds write.
+Toggling status[2] bit 0 on an HDA HDMI codec moves the read-back from
+04 00 00 00 to 04 00 01 00 with no event. Toggling the non-audio bit
+in status[0] gives one.
 
-Reject starts at or beyond the capacity before the subtraction.  Treat the
-capacity boundary as invalid because the IN and OUT paths round byte counts
-down to sectors for validation but later copy the original byte counts.  A
-sub-sector request at the capacity boundary would otherwise still access
-past the end of the buffer.
+Compare the stored status as well, the way the ac97 code does. The
+write to the codec stays gated on the converted value.
 
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 7d189f617f83 ("vdpa_sim_blk: implement ramdisk behaviour")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901094800.25475-1-linfeng.sun.dev@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Link: https://patch.msgid.link/20260908134153.1614273-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/hda/common/codec.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-index b137f36793439..770a40a20be9d 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-@@ -79,10 +79,11 @@ static void vdpasim_blk_buffer_unlock(struct vdpasim_blk *blk)
- static bool vdpasim_blk_check_range(struct vdpasim *vdpasim, u64 start_sector,
- 				    u64 num_sectors, u64 max_sectors)
- {
--	if (start_sector > VDPASIM_BLK_CAPACITY) {
-+	if (start_sector >= VDPASIM_BLK_CAPACITY) {
- 		dev_dbg(&vdpasim->vdpa.dev,
- 			"starting sector exceeds the capacity - start: 0x%llx capacity: 0x%x\n",
- 			start_sector, VDPASIM_BLK_CAPACITY);
-+		return false;
- 	}
+diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
+index c6d44168c7f9d..164906e2f00f4 100644
+--- a/sound/hda/common/codec.c
++++ b/sound/hda/common/codec.c
+@@ -2277,6 +2277,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	int idx = kcontrol->private_value;
+ 	struct hda_spdif_out *spdif;
+ 	hda_nid_t nid;
++	unsigned int old_status;
+ 	unsigned short val;
+ 	int change;
  
- 	if (num_sectors > max_sectors) {
+@@ -2285,6 +2286,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	nid = spdif->nid;
++	old_status = spdif->status;
+ 	spdif->status = ucontrol->value.iec958.status[0] |
+ 		((unsigned int)ucontrol->value.iec958.status[1] << 8) |
+ 		((unsigned int)ucontrol->value.iec958.status[2] << 16) |
+@@ -2295,7 +2297,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	spdif->ctls = val;
+ 	if (change && nid != (u16)-1)
+ 		set_dig_out_convert(codec, nid, val & 0xff, (val >> 8) & 0xff);
+-	return change;
++	return change || spdif->status != old_status;
+ }
+ 
+ #define snd_hda_spdif_out_switch_info	snd_ctl_boolean_mono_info
 -- 
 2.53.0
 
