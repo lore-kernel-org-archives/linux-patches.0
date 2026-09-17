@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222184E5327;
-	Thu, 17 Sep 2026 17:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC874E0B91;
+	Thu, 17 Sep 2026 17:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667695; cv=none; b=VRMFCTVwZ63ZHvog4xgEIlw4XCiBnljl++NdBnCp8JvvZPw/HA4ZmUHIdMn1BKhjl9WNJ8gjAJbxXqJitR+WdUsSWNmHEvD0nV67fy5XOTqh+najIy6B87HKydoNxUvBCQFK2VmLBqfju3D3vhXquyLSGD3NdMJz/8OSQpEftS8=
+	t=1789667698; cv=none; b=tdTDRgnRzr1k4SObYnjYxS8kuzzeyoOm8tdZOlPCkNyTNmGLdQKdN4ktlsgvyA9tMmN2scSUBFrjiKB9e2wB4IqBa7qHDlETp3v3hC1Zha1gBkxiXJAr0RDlfPAMweA4BF7WuFeCAkyOW6VE+uEMGDXOEeqOOk3XBs38zuyBU4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667695; c=relaxed/simple;
-	bh=2tazKB1EyevIoctPCEFA2kKCsqu2ce6YiEujMNL8XVo=;
+	s=arc-20240116; t=1789667698; c=relaxed/simple;
+	bh=0DeWBGRSW762fJJJlSu4t9X8yB6Pc6WQQ9sLzCbHzr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGcoWH+Dd7m/rIUh7fQbtQaQIx0yfQAQ+Lf+KQpZD1JMckC9yZILhfhpTcb06FbdA69MB+OvxoMOOYEi2/nJXu9XejrJZNenyxHcZCtzrjuHzW2F2iweHIG3v7RC33+utLQo/qFpFG9RZp9c8uX9iqhaFi1FDVjFFnddCHl+ODg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZNFQFPe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a1CKv5yZ17gZoRpg5CiJoj3Owzc5kn96KdIAT1kIeV6ndhBtGasygOB10hQhUqAXTwRyIqjwIplBbm9jWn+Y7+nuPU40GsSOrQ4SBYIcsd6UB5vUil4Qm++8nPik9iatw66zAx3yEBDpAddO0rmVQlCyjhEieXuVpz3crtFz/Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEPs6gfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZNFQFPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757551F000FF;
-	Thu, 17 Sep 2026 17:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEPs6gfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684251F000FF;
+	Thu, 17 Sep 2026 17:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667694;
-	bh=B74eQG3j4pdIg3ILmPezhIPuILUYW9Vz0KCFEECOL2s=;
+	s=korg; t=1789667696;
+	bh=BHdoLD97CkMSGztk5H+bC7htBDjTnXqYa/z7vcXiMC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ZNFQFPeWSB/Rpm+FXygaZMNBlyYvTdrLoHX4GBxc+s4TkSSElYolz/h5P9vYPfYq
-	 Q8S4JipjL6ioU0d2cgDipahQpZiNn2AJpgeaYlIBSqtb0hW5KCbv7zRebFHrzZvmGh
-	 eftuo2CvyBVf1bjQTM+dl70D4YTJmHNUWz149/l8=
+	b=nEPs6gfZgaVf8UPhOsnEiK2yr91bVmHEHPagxP/HRqNEFh6iDppo/LZmNQ1ieXmrs
+	 R5YRePTWnzQQ1NK1TzoWR8VInvp+NtixTZw2btqn/LfPUZOi1ME6oGefEwk3sT70Kr
+	 1GZ+ngXLlkJsyGBB711TXmPxykKkHDa58araZvCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0179/1102] scripts: modpost: detect and report truncated buf_printf() output
-Date: Thu, 17 Sep 2026 16:02:02 +0100
-Message-ID: <20260917151544.055051764@linuxfoundation.org>
+Subject: [PATCH 6.12 0180/1102] ASoC: Intel: catpt: Complete coredump handling
+Date: Thu, 17 Sep 2026 16:02:03 +0100
+Message-ID: <20260917151544.080177445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,54 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit d7231d8cb262b1e350c00271bf53d54414b4f3b1 ]
+[ Upstream commit 7e5d59f407bc39d43b350cc45f7880647429eb5d ]
 
-buf_printf() uses a fixed-size stack buffer. vsnprintf() returns the
-number of bytes that *would* have been written to that buffer, which can
-be larger than the size of said buffer if the formatted string is too
-long.
+An exception may occur during the firmware booting procedure.  In such
+case the firmware sends COREDUMP_REQUESTS and expects the driver to dump
+relevant information and finish with the COREDUMP_RELEASE write.
 
-The problem is that whenever this happens buf_printf() currently passes
-this length, unchecked, to buf_write(), which silently reads past the
-stack buffer and copies invalid data into the output buffer.
+To distinguish such situation from generic timeout, always signal
+fw_ready completion when a coredump request is received and translate
+it to -EREMOTEIO in catpt_boot_firmware().
 
-Fix this by detecting vsnprintf() failures and truncations before
-appending to the output buffer, and report a fatal error instead of
-producing corrupt symbol names.
+The "FW READY" print makes the success clearly visible even when
+the event-traces are not enabled.
 
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20260527-nova-exports-v2-1-06de4c556d55@nvidia.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260528083444.1439233-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/soc/intel/catpt/ipc.c       |  8 ++++++++
+ sound/soc/intel/catpt/loader.c    |  3 +++
+ sound/soc/intel/catpt/registers.h | 12 ++++++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index f17350bf3ddb4..86f80b55278f6 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1665,8 +1665,17 @@ void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer *buf,
+diff --git a/sound/soc/intel/catpt/ipc.c b/sound/soc/intel/catpt/ipc.c
+index d26863249097f..952c26e5d0e6c 100644
+--- a/sound/soc/intel/catpt/ipc.c
++++ b/sound/soc/intel/catpt/ipc.c
+@@ -205,6 +205,7 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
+ 		memcpy_fromio(&config, cdev->lpe_ba + off, sizeof(config));
+ 		trace_catpt_ipc_payload((u8 *)&config, sizeof(config));
  
- 	va_start(ap, fmt);
- 	len = vsnprintf(tmp, SZ, fmt, ap);
--	buf_write(buf, tmp, len);
- 	va_end(ap);
++		dev_dbg(cdev->dev, "FW READY 0x%08x\n", header);
+ 		catpt_ipc_arm(ipc, &config);
+ 		complete(&cdev->fw_ready);
+ 		return;
+@@ -215,6 +216,13 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
+ 		dev_err(cdev->dev, "ADSP device coredump received\n");
+ 		ipc->ready = false;
+ 		catpt_coredump(cdev);
 +
-+	if (len < 0) {
-+		perror("vsnprintf failed");
-+		exit(1);
-+	}
-+	if (len >= SZ)
-+		fatal("buf_printf output truncated for string %s: %d bytes needed, %d available\n",
-+		      tmp, len + 1, SZ);
++		if (catpt_readl_dram(cdev, COREDUMP) == CATPT_COREDUMP_REQUEST) {
++			dev_dbg(cdev->dev, "releasing firmware from the coredump state\n");
++			catpt_writel_dram(cdev, COREDUMP, CATPT_COREDUMP_RELEASE);
++		}
 +
-+	buf_write(buf, tmp, len);
- }
++		complete(&cdev->fw_ready);
+ 		/* TODO: attempt recovery */
+ 		break;
  
- void buf_write(struct buffer *buf, const char *s, int len)
+diff --git a/sound/soc/intel/catpt/loader.c b/sound/soc/intel/catpt/loader.c
+index 696d84314eeb5..680efad5f458d 100644
+--- a/sound/soc/intel/catpt/loader.c
++++ b/sound/soc/intel/catpt/loader.c
+@@ -626,6 +626,9 @@ int catpt_boot_firmware(struct catpt_dev *cdev, bool restore)
+ 	if (!ret) {
+ 		dev_err(cdev->dev, "firmware ready timeout\n");
+ 		return -ETIMEDOUT;
++	/* Wake up does not mean FW is ready, an exception could occur. */
++	} else if (!cdev->ipc.ready) {
++		return -EREMOTEIO;
+ 	}
+ 
+ 	/* update sram pg & clock once done booting */
+diff --git a/sound/soc/intel/catpt/registers.h b/sound/soc/intel/catpt/registers.h
+index 6c1ad28c6d692..64bd534a76ff4 100644
+--- a/sound/soc/intel/catpt/registers.h
++++ b/sound/soc/intel/catpt/registers.h
+@@ -124,6 +124,11 @@
+ #define CATPT_SSCR2_DEFAULT		0x0
+ #define CATPT_SSPSP2_DEFAULT		0x0
+ 
++/* Coredump register and its states */
++#define CATPT_DRAM_COREDUMP		0x1F4
++#define CATPT_COREDUMP_REQUEST		UINT_MAX
++#define CATPT_COREDUMP_RELEASE		0
++
+ /* Physically the same block, access address differs between host and dsp */
+ #define CATPT_DSP_DRAM_OFFSET		0x400000
+ #define catpt_to_host_offset(offset)	((offset) & ~(CATPT_DSP_DRAM_OFFSET))
+@@ -137,6 +142,8 @@
+ 
+ /* registry I/O helpers */
+ 
++#define catpt_dram_addr(cdev) \
++	((cdev)->lpe_ba + (cdev)->spec->host_dram_offset)
+ #define catpt_shim_addr(cdev) \
+ 	((cdev)->lpe_ba + (cdev)->spec->host_shim_offset)
+ #define catpt_dma_addr(cdev, dma) \
+@@ -151,6 +158,11 @@
+ #define catpt_writel_ssp(cdev, ssp, reg, val) \
+ 	writel(val, catpt_ssp_addr(cdev, ssp) + (reg))
+ 
++#define catpt_readl_dram(cdev, reg) \
++	readl(catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
++#define catpt_writel_dram(cdev, reg, val) \
++	writel(val, catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
++
+ #define catpt_readl_shim(cdev, reg) \
+ 	readl(catpt_shim_addr(cdev) + CATPT_SHIM_##reg)
+ #define catpt_writel_shim(cdev, reg, val) \
 -- 
 2.53.0
 
