@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272A44D179E;
-	Thu, 17 Sep 2026 17:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5087E4EFFCE;
+	Thu, 17 Sep 2026 17:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664658; cv=none; b=R7zNyuznm2G1UFAolDOvxxqB5ZzZoV6606qS/YRbKA/s+smMmlP1VFb57qycVtfuxf7bG0LvvASJmrHuZcuttZbA0uvHz2ujkl36iNhJlP9eivZVOWAjHbfQ2oW6HkBsjI77SyUKilFc/aOYtBOcPk+8nbojaEP+PR5L8NJW2mc=
+	t=1789664661; cv=none; b=WksTA2UqMUABfNhOSBpN5Ny8Tq5JW4q99Z+3hHrPXEmmp1ToWe0aVs/FiD4Q0CrD43Ru8OoWkxmn/WmI2UhqtInwEidtrXA0eCg8g5TqXH789hOUkul7+R4EjKPVNCAfP9Dsc18fawTx5OAtfUxp3rwa6d8LvgJ97BIN2VaWRdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664658; c=relaxed/simple;
-	bh=I9fTwN7ALVJoiEIuQjE9KlDOZjfBWe8ytlMLzBGozPU=;
+	s=arc-20240116; t=1789664661; c=relaxed/simple;
+	bh=6d5P4QzNj7LAFoWfsWNHOWL6EG7C8cOUyqDEgPeqNdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEFOqRIpWu6UOwcnlYU0f9e2XfuxcXtxRpVtLuR6ki2BCzKFQU6b1vUfHC0mSWbDr+i/1pt4sa3CFroQp8nPwdXpHSvNjKZEGtcqYiC3rxeGedGCe2Pygtr/jUh5aKwHFDfPO1N3v6T2A+ATBsEOZuBt1YJ4yjx8DA8UDrP4h4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyvmmcGE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MKajv37gpHxrMnK3cJbXx1+1Gu8zlsFKr5zyRD+KTvNNjKIvfci5ZPzIZUcoSZ/9XYkk+QK2JY49MEix7/D0ElMaMKBqcVL8hVkwDrKN2v4oiFneN8lK62R34ndOecNpPwX3MMnwjIWjI767EGtYzY+f7Dtdi/LrWxQw1M/7RcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5gURMZk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyvmmcGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1D11F000FF;
-	Thu, 17 Sep 2026 17:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5gURMZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744531F000FF;
+	Thu, 17 Sep 2026 17:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664657;
-	bh=olq62mTnec27Ic3zesQcIK/bTbAWbJoJ+enn8YiCEFw=;
+	s=korg; t=1789664660;
+	bh=DSfyDVdDnmB4usR5eFbiUQKt6Rkm+mhODnxlnRnxaZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NyvmmcGEO300G22w6BDGPTjF1qyWtXENnbFDnuhVTNs8cM15Blh4j3wozg5XyCOvh
-	 T3Sb/j/V0OY3vIz7voxonW/wlUpVpEZ4+1Nm7/nflZhM3Wok5iARkZPNrab9RP9ctv
-	 y/XVW8I22veNcT7v1xysOK6MAi3IFuG/dMVwq+Lk=
+	b=X5gURMZkuh3lfnprqMOFPg4ekQcOvbF4gX3nHyQbBq7V2Nu9tsYwxVJL+HPZxW+Td
+	 LNgLArLgZJn5vJseKIfWjJtq0Ubn9WxqeaZOCJgHJWfzI6s5ty2hnFLJyVRlbvjInl
+	 duHNSmSkH9M92acREbdSyqJocVX3RIOhyC/1n3dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0446/1250] md/raid5: account discard IO
-Date: Thu, 17 Sep 2026 16:04:01 +0100
-Message-ID: <20260917151604.088316442@linuxfoundation.org>
+Subject: [PATCH 6.18 0447/1250] mailbox: imx: Add a channel shutdown field
+Date: Thu, 17 Sep 2026 16:04:02 +0100
+Message-ID: <20260917151604.115021235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,84 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 74ddbf98e2db646ec58f7e7731c936b7a4a470fe ]
+[ Upstream commit 5ccea7eacb7786c358833634f45700365f6c1d99 ]
 
-Raid5 handles discard bios internally through make_discard_request() and
-never passes them through md_account_bio(). As a result, discard IO is
-missing the md-device iostat accounting that normal raid5 IO and discard
-IO in other raid levels get from md_account_bio().
+sashiko complained about possible teardown problem. The scenario
 
-Before accounting the bio, trim the request to the full data stripes that
-raid5 will actually discard. The first full stripe is the ceiling of the
-bio start divided by data-stripe sectors, and the last full stripe is the
-floor of the bio end divided by data-stripe sectors. Account that exact
-MD logical full-stripe range, then restore the original iterator so bio
-completion and iostat still cover the original request.
+ CPU 0                              CPU 1
+  imx_mu_isr()                   imx_mu_shutdown()
+                                   imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
+    imx_mu_specific_rx()
+      imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
+                                   free_irq()
 
-Link: https://patch.msgid.link/20260605072639.2434847-2-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+The RX event remains enabled because in this short window the RX event
+was disabled in ->shutdown() while the interrupt was active and then
+enabled again by the ISR while ->shutdown waited in free_irq().
+
+This race requires timing and if happens can be problematic on shared
+handlers if the "removed" channel triggers an interrupt. In this case
+the irq-core will shutdown the interrupt with the "nobody cared"
+message.
+
+Introduce imx_mu_con_priv::shutdown to signal that the channel is
+shutting down. This flag is set with the lock held (by
+imx_mu_xcr_clr_shut()). The unmask side uses imx_mu_xcr_set_act() which
+only enables the event if the channel has not been shutdown and
+serialises on the same lock.
+
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ drivers/mailbox/imx-mailbox.c | 40 +++++++++++++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 84168ce7a0ff6..bf30ad2a9e177 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5700,7 +5700,10 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- {
- 	struct r5conf *conf = mddev->private;
- 	sector_t logical_sector, last_sector;
-+	sector_t first_stripe, last_stripe;
- 	struct stripe_head *sh;
-+	struct bvec_iter bi_iter;
-+	struct bio *orig_bi = bi;
- 	int stripe_sectors;
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index a45c3e6d76575..3e52f70434c97 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -82,6 +82,7 @@ struct imx_mu_con_priv {
+ 	enum imx_mu_chan_type	type;
+ 	struct mbox_chan	*chan;
+ 	struct work_struct 	txdb_work;
++	bool			shutdown;
+ };
  
- 	/* We need to handle this when io_uring supports discard/trim */
-@@ -5711,19 +5714,29 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- 		/* Skip discard while reshape is happening */
- 		return;
+ struct imx_mu_priv {
+@@ -221,6 +222,36 @@ static u32 imx_mu_xcr_rmw(struct imx_mu_priv *priv, enum imx_mu_xcr type, u32 se
+ 	return val;
+ }
  
--	logical_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
--	last_sector = bio_end_sector(bi);
--
--	bi->bi_next = NULL;
--
- 	stripe_sectors = conf->chunk_sectors *
- 		(conf->raid_disks - conf->max_degraded);
--	logical_sector = DIV_ROUND_UP_SECTOR_T(logical_sector,
--					       stripe_sectors);
--	sector_div(last_sector, stripe_sectors);
-+	first_stripe = DIV_ROUND_UP_SECTOR_T(bi->bi_iter.bi_sector,
-+					     stripe_sectors);
-+	last_stripe = bio_end_sector(bi);
-+	sector_div(last_stripe, stripe_sectors);
++static void imx_mu_xcr_clr_shut(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
++				enum imx_mu_xcr type, u32 clr)
++{
++	unsigned long flags;
++	u32 val;
 +
-+	if (first_stripe >= last_stripe) {
-+		bio_endio(bi);
-+		return;
++	spin_lock_irqsave(&priv->xcr_lock, flags);
++	cp->shutdown = true;
++
++	val = imx_mu_read(priv, priv->dcfg->xCR[type]);
++	val &= ~clr;
++	imx_mu_write(priv, val, priv->dcfg->xCR[type]);
++	spin_unlock_irqrestore(&priv->xcr_lock, flags);
++}
++
++static void imx_mu_xcr_set_act(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
++			       enum imx_mu_xcr type, u32 set)
++{
++	unsigned long flags;
++	u32 val;
++
++	spin_lock_irqsave(&priv->xcr_lock, flags);
++	if (!cp->shutdown) {
++		val = imx_mu_read(priv, priv->dcfg->xCR[type]);
++		val |= set;
++		imx_mu_write(priv, val, priv->dcfg->xCR[type]);
 +	}
++	spin_unlock_irqrestore(&priv->xcr_lock, flags);
++}
 +
-+	bi_iter = bi->bi_iter;
-+	bi->bi_iter.bi_sector = first_stripe * stripe_sectors;
-+	bi->bi_iter.bi_size = ((last_stripe - first_stripe) *
-+			       stripe_sectors) << 9;
-+	md_account_bio(mddev, &bi);
-+	orig_bi->bi_iter = bi_iter;
-+	bi->bi_iter = bi_iter;
-+	bi->bi_next = NULL;
+ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ 			     struct imx_mu_con_priv *cp,
+ 			     void *data)
+@@ -379,7 +410,7 @@ static int imx_mu_specific_rx(struct imx_mu_priv *priv, struct imx_mu_con_priv *
+ 		*data++ = imx_mu_read(priv, priv->dcfg->xRR + (i % num_rr) * 4);
+ 	}
  
--	logical_sector *= conf->chunk_sectors;
--	last_sector *= conf->chunk_sectors;
-+	logical_sector = first_stripe * conf->chunk_sectors;
-+	last_sector = last_stripe * conf->chunk_sectors;
+-	imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
++	imx_mu_xcr_set_act(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0));
+ 	mbox_chan_received_data(cp->chan, (void *)priv->msg);
  
- 	for (; logical_sector < last_sector;
- 	     logical_sector += RAID5_STRIPE_SECTORS(conf)) {
+ 	return 0;
+@@ -607,6 +638,7 @@ static int imx_mu_startup(struct mbox_chan *chan)
+ 		return ret;
+ 	}
+ 
++	cp->shutdown = false;
+ 	switch (cp->type) {
+ 	case IMX_MU_TYPE_RX:
+ 		imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx), 0);
+@@ -641,13 +673,13 @@ static void imx_mu_shutdown(struct mbox_chan *chan)
+ 
+ 	switch (cp->type) {
+ 	case IMX_MU_TYPE_TX:
+-		imx_mu_xcr_rmw(priv, IMX_MU_TCR, 0, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
++		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_TCR, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
+ 		break;
+ 	case IMX_MU_TYPE_RX:
+-		imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
++		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
+ 		break;
+ 	case IMX_MU_TYPE_RXDB:
+-		imx_mu_xcr_rmw(priv, IMX_MU_GIER, 0, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
++		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_GIER, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
+ 		break;
+ 	case IMX_MU_TYPE_RST:
+ 		imx_mu_xcr_rmw(priv, IMX_MU_CR, IMX_MU_xCR_RST(priv->dcfg->type), 0);
 -- 
 2.53.0
 
