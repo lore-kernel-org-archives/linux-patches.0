@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167D1207E00;
-	Thu, 17 Sep 2026 15:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11D531E852;
+	Thu, 17 Sep 2026 15:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660254; cv=none; b=cpFvPsS0nC6Qeptk1dTH59Nt6ZsiMoQVVQ5T6S4D6T3g1neiHdV7QPyhRGrSB+cyeRc/OwTC8DHKunq9c+ZCMh7U5NVSEi3EDvfvp5rhou0P3IMilnHAFxtdePywwxXPH3NGHtoCx0XSkmL8Ioc8q7LyRSdrVoSTMf+7EVU1lbQ=
+	t=1789660254; cv=none; b=uKXetUOMeTgXQVGOQFM3ufTHNI4y74rnxnjyJPeBm2XEHbtfhyp3YX72hVRr0mwVh1j2XhqRmgAcQaPz+0RfGOSz0rrRHqd7JMj49FhSb+egvkr4jkJbrO7jTJckE3z6Le8CuLt3PN5EyCGhsQY9O/8eh4qBqnxA5sdcAdMi2cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789660254; c=relaxed/simple;
-	bh=f2E2T3buGi/UtDYuAZ7909MV0tMZWvePtNatgG7O5t4=;
+	bh=/yF97nxW8w2Pz4e3XRt1XYyjE+A090QhYQApZRb0qOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pIl44Yn9XwOjeEc56420cn+u+/4PL4qBkasb0BL5rd5hHRFUJpwqVGj/cRj20UjwJxKnUPTmlMjjzkFGKBRHjjPbGuH8aM5mP7IB1NBPLN4koZwPI59/auFsALectMuKyo2ccq1FkyU9rdvCKl8pzHzY8DX8o5VRC491oSts5EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbYThz6U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LRJWZZbU1rHbOSeH1omSXAwycM497VN57Ka7tYN9fnz1wUGLBEtoZwLEzvvsyzFliN/T6ObWP9ZiL5/5ii1Ph3MVtApIHues1/hM/pWyyPRgu+J+qyxbS0WzTFs+R4u+RqRbYfCTlBap9PdPi3GocFRA0qtSLRgBrvyAUHiV4E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF6ZBcn7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbYThz6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2818E1F000FF;
-	Thu, 17 Sep 2026 15:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF6ZBcn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1944B1F00893;
+	Thu, 17 Sep 2026 15:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660247;
-	bh=6AnzWlsvMJPtNLKGug5bF/Pxa7K76YLbJPn/tmUsa/4=;
+	s=korg; t=1789660250;
+	bh=WfweQyX/VDgMEUyAa4Ly/0jUXW5uzIQ0rDC7bdDsE9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CbYThz6UAAFRxYPAlBosNgGuKOWNU9XW1rCqH77Avx0ABNPm4FtUvYxyzGHg3TYmr
-	 IKiWdvbPycdTOMm79JREmHErepF9R5Ks0YhU19nv9Jt5+IF29+15JpqW+2RNPujgR7
-	 fpavu4i4Lnwqbzy64PBUO6FD1cNze0n6LrdOiVt0=
+	b=XF6ZBcn75B+ouoN5ZZ+uXbrGCSK8KtsOXvoaX1bEPG/1Ysr6tFP+u1rwt5BKeUHvy
+	 /VdNXOABtW39u/PDW7dJ/pgINB7G0NJGavHRw3C9cW++uQ9HjiAWQpHbHpefUe8POM
+	 jL2Ao79Bqy3P6tCFAgig2jRqBr3GoAW0mu0xkIVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 527/733] drm/amd/pm: fix gpu metrics energy accumulator for smu 13.0.0/13.0.7
-Date: Thu, 17 Sep 2026 16:13:55 +0100
-Message-ID: <20260917151405.316517033@linuxfoundation.org>
+	Leonardo Costa <leonardo.costa@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Swamil Jain <s-jain1@ti.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 7.2 528/733] drm/bridge: tc358768: Enforce input bus flags via atomic_check
+Date: Thu, 17 Sep 2026 16:13:56 +0100
+Message-ID: <20260917151405.346041668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -45,56 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Leonardo Costa <leonardo.costa@toradex.com>
 
-commit 13ddcc7acb9adbed7627e952a61d1d62cd9546fc upstream.
+commit ed761e0693950fcb4f6b0f60387a3961b972adf3 upstream.
 
-GPU metrics v1.3 defines energy_accumulator as a 64‑bit field.
-The unsupported‑firmware code path assigns UINT_MAX, which is neither the
-full‑width invalid value for this field nor its default value.
+The tc358768 declares static bridge timings requiring pixel data to be
+sampled on the positive clock edge.
 
-Fixes: 8de9edb35976 ("drm/amd/pm: remove invalid gpu_metrics.energy_accumulator on smu v13.0.x")
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c2b948c4fe16eb13d98ff5d1371956cb2f55cdc6)
+However, the DRM core default propagation simply copies the output-side
+bus flags, coming from the next bridge, connector or panel, to the
+input side. If the propagated flags are incompatible with the bridge
+ones, the data is wrongly sampled, typically resulting in visual
+artifacts on the panel.
+
+Implement the atomic_check hook, replacing the mutually exclusive
+mode_fixup, and set the bridge state input bus flags to the ones
+required by the tc358768. The sync polarity defaulting previously done
+in mode_fixup is carried over into atomic_check unchanged.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Cc: stable@vger.kernel.org
+Signed-off-by: Leonardo Costa <leonardo.costa@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Swamil Jain <s-jain1@ti.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260706132440.1594239-1-leoreis.costa@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    2 --
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    4 ++--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2094,8 +2094,6 @@ static ssize_t smu_v13_0_0_get_gpu_metri
- 	if ((mp1_ver == IP_VERSION(13, 0, 0) && smu->smc_fw_version <= 0x004e1e00) ||
- 	    (mp1_ver == IP_VERSION(13, 0, 10) && smu->smc_fw_version <= 0x00500800))
- 		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
--	else
--		gpu_metrics->energy_accumulator = UINT_MAX;
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -1262,10 +1262,13 @@ tc358768_atomic_get_input_bus_fmts(struc
+ 	return input_fmts;
+ }
  
- 	if (metrics->AverageGfxActivity <= SMU_13_0_0_BUSY_THRESHOLD)
- 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2096,8 +2096,8 @@ static ssize_t smu_v13_0_7_get_gpu_metri
- 					       metrics->Vcn1ActivityPercentage);
+-static bool tc358768_mode_fixup(struct drm_bridge *bridge,
+-				const struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++static int tc358768_bridge_atomic_check(struct drm_bridge *bridge,
++					struct drm_bridge_state *bridge_state,
++					struct drm_crtc_state *crtc_state,
++					struct drm_connector_state *conn_state)
+ {
++	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
++
+ 	/* Default to positive sync */
  
- 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
--	gpu_metrics->energy_accumulator = smu->smc_fw_version <= 0x00521400 ?
--		metrics->EnergyAccumulator : UINT_MAX;
-+	if (smu->smc_fw_version <= 0x00521400)
-+		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
+ 	if (!(adjusted_mode->flags &
+@@ -1276,13 +1279,15 @@ static bool tc358768_mode_fixup(struct d
+ 	      (DRM_MODE_FLAG_PVSYNC | DRM_MODE_FLAG_NVSYNC)))
+ 		adjusted_mode->flags |= DRM_MODE_FLAG_PVSYNC;
  
- 	if (metrics->AverageGfxActivity <= SMU_13_0_7_BUSY_THRESHOLD)
- 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
+-	return true;
++	bridge_state->input_bus_cfg.flags = bridge->timings->input_bus_flags;
++
++	return 0;
+ }
+ 
+ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
+ 	.attach = tc358768_bridge_attach,
+ 	.mode_valid = tc358768_bridge_mode_valid,
+-	.mode_fixup = tc358768_mode_fixup,
++	.atomic_check = tc358768_bridge_atomic_check,
+ 	.atomic_pre_enable = tc358768_bridge_atomic_pre_enable,
+ 	.atomic_enable = tc358768_bridge_atomic_enable,
+ 	.atomic_disable = tc358768_bridge_atomic_disable,
 
 
