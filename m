@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A084E3246;
-	Thu, 17 Sep 2026 15:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D9258FD29;
+	Thu, 17 Sep 2026 15:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658824; cv=none; b=YYgUK49zlHi+xsdX5wDN233kT0Mb6MG5TqpGlx+Qn7pW3ByMjg+FFTUJTTy3pi65ppXxNmgOwXmzUDHVCwYndUq7AOpLVmd2QCzPrJBrfr7t8jtBXnW0Z4o/pRab5i/4Vyq+KiaFCkz3VYMctGINwFp1o8hFShM8l+2cbBvxsKQ=
+	t=1789658826; cv=none; b=ZgpD9RXgKGbBpbK8syneXPvyQcAxUWBbqYt5JCUNbPlINQ3YbT1Or+wN5CI2RcNTs4TBu5W3QbbE+arXrvzom/TjMDWZSSk4enf9DrSW2fgqrEcE/rEKBK9DHBjuN4xgAUAi0CuPL/mL9nxPLk+hqpdGmztfPqZf25v1IUgd8hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658824; c=relaxed/simple;
-	bh=HfpmJJhlSmWAScOKYvbkaqF/uIz9g76LyrahsPEeQfI=;
+	s=arc-20240116; t=1789658826; c=relaxed/simple;
+	bh=FKfkyDu+uqjkbpcMoyvUVceUL3VHHfwISFwTi89Yn10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLsiLy6r5ly8qayrhwdmPjKeu3i5ao09lp6BSfaQHMI0oD/ODQdVEgiM2826RDLUWknO24fOJaCesxGEWXqz3DHO/VnqKiBszkQO/9VYr3LDdmgNonNwNQ074ijrrySkTWxxd+wUFDY7Tn315G3DhNPj4CHdoxAIcEq0W1DoHas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reM8GJBH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GwkdRIkxA73jnyjJzU241sBiscg02jeP3yBm/wDCxpB3E6cCJIqoajSW7aUxh3AJhbWbbwGNKSOQpSC7rhoboGowKpkZYqFt1hFM6aufU5QjQPyrkoVTI+7btERCogdJMCF1rMFbBvwz1G/6TYgDvdLuXtVnwD1Y7YEKe0jYFfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KD2mHP9i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reM8GJBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD4F1F00898;
-	Thu, 17 Sep 2026 15:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KD2mHP9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7511F00899;
+	Thu, 17 Sep 2026 15:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658811;
-	bh=x5nXIyl0tLhfxjt2OJYTSP6mZi4n0Yul6aEd/iJI8S8=;
+	s=korg; t=1789658817;
+	bh=bkOPYbReJ0A4GsNP4gz4HMYBPnYq7ge0HSRjg1O9imc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=reM8GJBHZfy528CnNU44qnkpANVHsMZeQrbBX2HsNoKNQO5/PigKgTFeD5LfQri6C
-	 M+9cs/SYgDmyUeO3qKaEs0hpxgUrF4iM3pqXfsPm+TXMVuCHYtO3425o+/XIr939jH
-	 q22/7zVZF2zwMQLKIcfDFblPKchI7JSk5kmsNELE=
+	b=KD2mHP9iTGwEee+g2gIT5/mA/F0I5UsJzHSqBf5AFwr7CsCHakMlxj/y3IspXApEf
+	 0vuH6IS5Nn2zO0dT1ro9iJBWusHU7L/IxAXLoNeK23t2zIBoTHiEJpzvUY21JfuZto
+	 9FHhBzeUVILlHazKq/Xg0SiHXP1QxaLpDkd8edLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Tighe <dennis.tighe@gmail.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 048/733] ntfs: reject invalid sectors_per_cluster in the boot sector
-Date: Thu, 17 Sep 2026 16:05:56 +0100
-Message-ID: <20260917151351.974034323@linuxfoundation.org>
+Subject: [PATCH 7.2 050/733] ntfs: leave HasEA flag untouched on setxattr failure
+Date: Thu, 17 Sep 2026 16:05:58 +0100
+Message-ID: <20260917151352.027227821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,52 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dennis Tighe <dennis.tighe@gmail.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit 323751a604e7533fa473874d999371592a614207 ]
+[ Upstream commit ac727d86fb84bdc9626ba9c756c26767459f3083 ]
 
-is_boot_sector_ntfs() checks the boot sector's sectors_per_cluster field
-with a range test that rejects 0x81..0xf3 but accepts 0 and other
-non-power-of-two counts. A zero value reaches parse_ntfs_boot_sector():
+In ntfs_set_ea(), the exit path unconditionally updates the HasEA
+flag based on ea_info_qsize. When an error occurs before
+ea_info_qsize is updated, NInoClearHasEA() hides existing on-disk
+EAs until the inode is evicted.
 
-	sectors_per_cluster_bits = ffs(sectors_per_cluster) - 1;
-	...
-	vol->cluster_size = vol->sector_size << sectors_per_cluster_bits;
+Only update the flag on success.
 
-ffs(0) is 0, so sectors_per_cluster_bits becomes (unsigned)-1 and the
-shift is undefined:
-
-  UBSAN: shift-out-of-bounds in fs/ntfs/super.c:673:39
-  shift exponent 4294967295 is too large for 32-bit type 'int'
-
-This change rejects any non-power-of-two value, since it feeds the
-aforementioned shift via ffs() - 1, which only yields the correct shift for a
-power of two.
-
-Fixes: 6251f0b0de7d ("ntfs: update super block operations")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Dennis Tighe <dennis.tighe@gmail.com>
+Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/super.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs/ea.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
-index 242f6f9b5598e..63aa83ff77f5d 100644
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -557,8 +557,8 @@ static bool is_boot_sector_ntfs(const struct super_block *sb,
- 	 * Check sectors per cluster value is valid and the cluster size
- 	 * is not above the maximum (2MB).
- 	 */
--	if (b->bpb.sectors_per_cluster > 0x80 &&
--	    b->bpb.sectors_per_cluster < 0xf4)
-+	if (b->bpb.sectors_per_cluster < 0xf4 &&
-+	    !is_power_of_2(b->bpb.sectors_per_cluster))
- 		goto not_ntfs;
+diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
+index 08c35f9751114..75a251ec4ebcb 100644
+--- a/fs/ntfs/ea.c
++++ b/fs/ntfs/ea.c
+@@ -390,10 +390,12 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
+ 		*packed_ea_size = p_ea_info->ea_length;
+ 	mark_mft_record_dirty(ni);
+ out:
+-	if (ea_info_qsize > 0)
+-		NInoSetHasEA(ni);
+-	else
+-		NInoClearHasEA(ni);
++	if (!err) {
++		if (ea_info_qsize > 0)
++			NInoSetHasEA(ni);
++		else
++			NInoClearHasEA(ni);
++	}
  
- 	/* Check reserved/unused fields are really zero. */
+ 	kvfree(ea_buf);
+ 	kvfree(old_ea_buf);
 -- 
 2.53.0
 
