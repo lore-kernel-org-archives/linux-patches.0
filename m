@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155D54F96C8;
-	Thu, 17 Sep 2026 17:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BA74ED1B9;
+	Thu, 17 Sep 2026 17:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666148; cv=none; b=M1XCvcAPfn0OPS6l4LAGPQ1RP3jEEm2JxQNx+qVtE38RUFHBZdeWWpFXuim0vEfiO9f6M5mmBDRo3qKiTZhmAoh0fLSBSkSw2S0MwQ7lNey8Y4x5RvVTPWbCrBz9lNHBE8Zov0UFFJfjtjXH6eiqIlvA1Qvbm1vm+D3d3PyxDfU=
+	t=1789666151; cv=none; b=ouztz61sjP2GQlKTBQjHw2VF8V6Ncpgk/71A0HGBB7t6+VTnv95xU1cDbyUctVWN/VxZumLTdBLT2RpAmmuHq5O8pkhEOum7DtskfoqI40rZLyCSUCBa0Gk3auosfyW0PySHSlCvINeM1RWTJOm5O9TLT2DLyxcXa3xDFjlTpS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666148; c=relaxed/simple;
-	bh=7FWvpLtbGzoRhnf2wMZsgaidKsBTa42tJJhXw6aW+E4=;
+	s=arc-20240116; t=1789666151; c=relaxed/simple;
+	bh=pMS4L/jhdSSjihfZnwLbUFlN/tkdAM8g7qr67j6XhCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OzvM99aNWbSJ+vfMxnIAl6fUlrI374g/nfHe+UTV7JYkmYugzf+JCkqXYTHHtLtQxDb5QRodAUz/5oQXFhZi8CBad0F5y10ZXlHI1LbIG240rJBmZeGlZ4qwZzBhR2seldI5iUudQRrSvq3skRSaAJ1A6Ar53MSG7EPMoWCzX+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt7c708i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BuqKjECPs+cxIvvNxNU/MRPM3mXuoyRWioK0zCby+F9dTdTiCoDtXJdhblzts2/enxEUgyWxchUFB7W66jeGeF9kh1n/Lug7H5hoUbpDn5YTKcSBs+9PHev8labeYFkegjs+hodqWBLCO9X+9V1amd7nQVvMuQtTEJ1P9LoW8+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POjDL6lw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt7c708i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F611F000FF;
-	Thu, 17 Sep 2026 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POjDL6lw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBD1F000FF;
+	Thu, 17 Sep 2026 17:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666146;
-	bh=YIA6a3Gst28qE3CDeL5DIIZ5LMoOAyrWnyF5TlGDwqE=;
+	s=korg; t=1789666149;
+	bh=gsFTTmtEx6A4zEqZIcLcXABV6KLF5K6MKADU9d9URRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bt7c708imJAuck7u1ewU/r1waQF1NbRL7OVuS1yGRqqTDaZGYW7Asu6cnwYuci598
-	 H/JHK85DRaCeEnj5vwm/joULvdIJ/PbaqYBp2P+VhoPdG70huXe98HqUXYKzzdzB26
-	 BNLLAXrMNqsiN7nLxIbiUhmX1K9xaNROUI+joJaA=
+	b=POjDL6lwAq2uSkO3avh69+TblvLE9lYbdvjUB+7t6sI7rKUw39I6S21UkUaU5BzSH
+	 loQ10+N40qJ1OQZBe/jp+0eYxNpxMCPMA6OPQUxCXzM2UltxDMSa8tKvCRq/1BvtcW
+	 SEDOJBPjvA+buOxauS6jGNj4nLHqFjpmeIEWpvyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Linmao Li <lilinmao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0901/1250] hwmon: (corsair-cpro) Create debugfs entries after hwmon registration
-Date: Thu, 17 Sep 2026 16:11:36 +0100
-Message-ID: <20260917151616.408940685@linuxfoundation.org>
+Subject: [PATCH 6.18 0902/1250] hwmon: (gpio-fan) take fan_data->lock in gpio_fan_shutdown()
+Date: Thu, 17 Sep 2026 16:11:37 +0100
+Message-ID: <20260917151616.439859212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,99 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 508baf1713f32f287bfb4f85d759403ec8ba35a3 ]
+[ Upstream commit bb2424c3502cc72292eedade46960c331d5f28fb ]
 
-ccp_debugfs_init() registers debugfs files whose private data is the devm
-allocated ccp.  It runs before hwmon_device_register_with_info(), so when
-that registration fails, ccp_probe() returns with the files still in
-place.  The HID core then frees ccp, and ccp_remove() is not called for a
-failed probe, so nothing removes them later either.  Reading one of the
-files dereferences the freed pointer.
+set_fan_speed() writes the control GPIOs one bit at a time. Every
+other caller locks around it; gpio_fan_shutdown() doesn't. If it races
+a locked caller, the GPIO writes can interleave and leave the fan at a
+speed neither caller asked for.
 
-Create the debugfs entries only after the hwmon device has been
-registered, so no failing path can leave them behind.
-
-The two version queries stay where they are.  They send USB commands
-without holding ccp->mutex, which is only safe as long as nothing else
-can call send_usb_cmd(); once the hwmon device is registered its
-callbacks can do so concurrently.  Only the debugfs creation moves, and
-it is told which queries succeeded.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hwmon/20260708031612.BD7E61F000E9@smtp.kernel.org/
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: 5997eb60f896 ("hwmon: (corsair-cpro) Add firmware and bootloader information")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260831014509.3352442-1-lilinmao@kylinos.cn
+Fixes: b95579cd8795 ("hwmon: (gpio-fan) Add a shutdown handler to poweroff the fans")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260830152150.27F5F1F000E9@smtp.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260901155404.1532092-1-congnt264@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/hwmon/gpio-fan.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 71e48b3bba60f..1eac947078826 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -566,21 +566,18 @@ static int bootloader_show(struct seq_file *seqf, void *unused)
- }
- DEFINE_SHOW_ATTRIBUTE(bootloader);
- 
--static void ccp_debugfs_init(struct ccp_device *ccp)
-+static void ccp_debugfs_init(struct ccp_device *ccp, bool fw_valid, bool bl_valid)
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index a8892ced1e549..0da51041959c5 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -604,8 +604,11 @@ static void gpio_fan_shutdown(struct platform_device *pdev)
  {
- 	char name[32];
--	int ret;
+ 	struct gpio_fan_data *fan_data = platform_get_drvdata(pdev);
  
- 	scnprintf(name, sizeof(name), "corsaircpro-%s", dev_name(&ccp->hdev->dev));
- 	ccp->debugfs = debugfs_create_dir(name, NULL);
- 
--	ret = get_fw_version(ccp);
--	if (!ret)
-+	if (fw_valid)
- 		debugfs_create_file("firmware_version", 0444,
- 				    ccp->debugfs, ccp, &firmware_fops);
- 
--	ret = get_bl_version(ccp);
--	if (!ret)
-+	if (bl_valid)
- 		debugfs_create_file("bootloader_version", 0444,
- 				    ccp->debugfs, ccp, &bootloader_fops);
+-	if (fan_data->gpios)
++	if (fan_data->gpios) {
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, 0);
++		mutex_unlock(&fan_data->lock);
++	}
  }
-@@ -588,6 +585,7 @@ static void ccp_debugfs_init(struct ccp_device *ccp)
- static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- {
- 	struct ccp_device *ccp;
-+	bool fw_valid, bl_valid;
- 	int ret;
  
- 	ccp = devm_kzalloc(&hdev->dev, sizeof(*ccp), GFP_KERNEL);
-@@ -632,7 +630,13 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	if (ret)
- 		goto out_hw_close;
- 
--	ccp_debugfs_init(ccp);
-+	/*
-+	 * Query the versions before registering the hwmon device: they send
-+	 * USB commands without holding ccp->mutex, which is only safe while
-+	 * nothing else can call send_usb_cmd().
-+	 */
-+	fw_valid = !get_fw_version(ccp);
-+	bl_valid = !get_bl_version(ccp);
- 
- 	ccp->hwmon_dev = hwmon_device_register_with_info(&hdev->dev, "corsaircpro",
- 							 ccp, &ccp_chip_info, NULL);
-@@ -641,6 +645,8 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		goto out_hw_close;
- 	}
- 
-+	ccp_debugfs_init(ccp, fw_valid, bl_valid);
-+
- 	return 0;
- 
- out_hw_close:
+ static int gpio_fan_runtime_suspend(struct device *dev)
 -- 
 2.53.0
 
