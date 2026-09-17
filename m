@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E5E4E3230;
-	Thu, 17 Sep 2026 15:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBDA4E4C3F;
+	Thu, 17 Sep 2026 15:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659587; cv=none; b=iCiI2rCK9So7u0e9SIBZDkD8K7+J9qm4GdcCi6zNYy6Zw38tbdBJRQuHhzv3NvjjTUIggAbFxnH4EQ/rOEX+gRI+guL7JxCwcsQN8ZgYGWlQd29lJZwfsJVZX7KHopsiH3EBDjfhd6Z8eQCiONNQditLmZil2qCSY/UFhRQGFR0=
+	t=1789659590; cv=none; b=sOGxsaxdWvWcIhBenm8XvDUdYZhZx4hivZlxUMapIjQWNNLk8JF9H1CAq6yGEUBx4xjxhNgt+K4KkSqHG3diKiIcFd0pHwLIPalIpWd+1lnhnBGncCIW695AzmTzkq6YTXc927upwlEAUbtUTiMFBStDvbQTw5LU7WkAvcyo7BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659587; c=relaxed/simple;
-	bh=w1jRA6fXTUcW8vssFrLdOf812VsTTMrjygBpNhk5GOY=;
+	s=arc-20240116; t=1789659590; c=relaxed/simple;
+	bh=WIg8GtMzjVapTIl+hfw/6kH4IrPXF5qzODVRpLLk6Wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k4QxxaN21u6A2N4z/DqrACV+kcH8b3yLyoJU0dLsi1bMi6tubnRdx9HRMj5YOU7G/NPxv23pAAuP+utsnE0zrcWCkgBafZ3XjCQnubpZzmLbavh3BGPi/duCvKNx5njMci2zZM4p8yxKWKTGA58S+quEwS69LPCFhyuRTAJ9fZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsORu6dI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUJESBotgoEO3Y+LnQdQQwVGHdnDA57u+WUqXbTIpjLc0u91PJZMMeWMsq+vSOf8VWZdMg0FldJtDTC8nsnSzyAUGF0aUcJMNttm4c4R8X5SDstzfzl3AUNPmg13rp+XPera7gUGbVSKC72/AhfauPiKL5B0kdvgkEQk6rRxMzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt2TduyK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsORu6dI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAC71F00899;
-	Thu, 17 Sep 2026 15:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt2TduyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA911F00893;
+	Thu, 17 Sep 2026 15:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659577;
-	bh=5bg2+ogBRd3RrihzCShmNsxACkNYTsxVOvtJ9hRKpCQ=;
+	s=korg; t=1789659580;
+	bh=RdIfd2qJWMXIpZ2y1oORP2Dn+ux+KL8dcMlJPb1nUAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsORu6dI0yv2HG1iPJNNgfCPQrr1fZvH31cdkj6LGa+dceVzn+7EXpxeCQxCGhjTw
-	 WS+YWgtO83VJBCtpwIu4S12lx1GtPr1pMccYktUAUVtsqL89RW3D1Cm9XfegmX0NSk
-	 Xr0U6T+GnM/E83kfIVvLa3ZoeKYPFdjU91DJ2nj4=
+	b=Bt2TduyK2I47aI0kJGtTzaJfw8rdVNH5wRqmpJM5EhEkgqGlxKmyntQGlv8gQ0+br
+	 DbD2rWRGjVzKv+XvS7199xTsFSQRT6A3fjsY4lMeDZXIqwhdHDcubj1P9auSv98/dw
+	 qqkM/FyDlmkpWun148ZuEY56/JaQua88O1SK69/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 304/733] net/mlx5e: Keep HW timestamp stats monotonic across reconfiguration
-Date: Thu, 17 Sep 2026 16:10:12 +0100
-Message-ID: <20260917151359.022818671@linuxfoundation.org>
+Subject: [PATCH 7.2 287/733] pds_core: fix cmd_regs access racing BAR unmap on reset
+Date: Thu, 17 Sep 2026 16:09:55 +0100
+Message-ID: <20260917151358.546775928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,116 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit df99553f840e4c529c1ba4c29bd39396466ca11a ]
+[ Upstream commit 7980325b2f71e3f65c1323c39792e2455da6fab6 ]
 
-`mlx5e_stats_ts_get()` currently selects either DMA or port timestamp
-counters based on `tx_ptp_opened`. This flag is intentionally kept set
-once the PTP TX queues have been opened so their statistics remain
-available after queue teardown. As a result, DMA timestamps are no
-longer reported after switching from port timestamping back to DMA
-timestamping.
+pdsc_reset_prepare() and pdsc_reset_done()'s pdsc_map_bars() error path
+clear/iounmap cmd_regs without devcmd_lock, and
+pdsc_legacy_firmware_update()'s download loop derefs cmd_regs after
+dropping and retaking the lock without re-checking. An FLR concurrent
+with a devlink flash can unmap cmd_regs under an in-flight devcmd,
+causing a NULL deref or a write to unmapped MMIO.
 
-The function also reads statistics only from the currently active
-channels and TCs. Reducing the number of channels or TCs can therefore
-drop previously accumulated timestamp counters from the reported value.
+Take devcmd_lock across the BAR unmap/remap, and re-check cmd_regs in
+the download loop. Only the PF maps cmd_regs and runs devcmd, so skip
+the unmap on a VF, as pdsc_remove() and pdsc_reset_done() already do.
 
-Read the persistent channel statistics instead and always include DMA
-timestamp counters. Once the PTP TX queues have been opened, also
-include the port timestamp counters.
+A reset that completes entirely within the unlocked window is not a
+correctness problem for the image: the device clears its update session,
+so a resumed download is rejected, and it verifies the staged image
+before writing a flash slot, reporting PDS_RC_BAD_FW rather than
+activating it.
 
-This also drops state_lock. It previously protected live channel/PTP
-pointers, the new code only reads persistent channel_stats and
-ptp_stats via mlx5e_stats_nch_read(), which is already safe for
-lockless stats access.
+pdsc_unmap_bars() also clears info_regs, intr_status and intr_ctrl. The
+interrupt and start/stop readers of those are quiesced before the unmap
+by pdsc_fw_down(), which frees the interrupts and tears down the queues.
+The debugfs readers are not, since those files outlive a reset; that is
+pre-existing and out of scope here.
 
-Fixes: 3579032c08c1 ("net/mlx5e: Implement ethtool hardware timestamping statistics")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193731.3668958-1-tariqt@nvidia.com
+Fixes: e96094c1d11c ("pds_core: Clear BARs on reset")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260708212222.296202-1-nikhil.rao%40amd.com?part=3
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Link: https://patch.msgid.link/20260901044219.1361466-2-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en_stats.c    | 51 ++++++++-----------
- 1 file changed, 20 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/amd/pds_core/fw.c   | 10 +++++++++-
+ drivers/net/ethernet/amd/pds_core/main.c |  8 +++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-index e7e6db7f6bf17..cd94bb44f6ab0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-@@ -1199,50 +1199,39 @@ void mlx5e_stats_rmon_get(struct mlx5e_priv *priv,
- void mlx5e_stats_ts_get(struct mlx5e_priv *priv,
- 			struct ethtool_ts_stats *ts_stats)
- {
--	int i, j;
-+	u16 nch = mlx5e_stats_nch_read(priv);
-+	int i, tc;
+diff --git a/drivers/net/ethernet/amd/pds_core/fw.c b/drivers/net/ethernet/amd/pds_core/fw.c
+index fa626719e68d1..59d262b0d29c5 100644
+--- a/drivers/net/ethernet/amd/pds_core/fw.c
++++ b/drivers/net/ethernet/amd/pds_core/fw.c
+@@ -107,8 +107,10 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
  
--	mutex_lock(&priv->state_lock);
-+	ts_stats->pkts = 0;
+ 	dev_info(pdsc->dev, "Installing firmware\n");
  
--	if (priv->tx_ptp_opened) {
--		struct mlx5e_ptp *ptp = priv->channels.ptp;
-+	for (i = 0; i < nch; i++) {
-+		struct mlx5e_channel_stats *channel_stats =
-+			priv->channel_stats[i];
- 
--		ts_stats->pkts = 0;
-+		for (tc = 0; tc < priv->max_opened_tc; tc++)
-+			ts_stats->pkts += channel_stats->sq[tc].timestamps;
+-	if (!pdsc->cmd_regs)
++	if (!pdsc->cmd_regs) {
++		NL_SET_ERR_MSG_MOD(extack, "BARs not mapped");
+ 		return -ENXIO;
 +	}
-+
-+	/* Accumulate DMA and port timestamp counters so values stay monotonic
-+	 * across channel teardown and mode switches.
-+	 */
-+	if (priv->tx_ptp_opened) {
-+		/* Err and Lost stats are only relevant for port timestamping,
-+		 * as the DMA layer will always successfully timestamp packets.
-+		 */
- 		ts_stats->err = 0;
- 		ts_stats->lost = 0;
  
--		if (!ptp)
--			goto out;
--
--		/* Aggregate stats across all TCs */
--		for (i = 0; i < ptp->num_tc; i++) {
-+		for (tc = 0; tc < priv->max_opened_tc; tc++) {
- 			struct mlx5e_ptp_cq_stats *stats =
--				ptp->ptpsq[i].cq_stats;
-+				&priv->ptp_stats.cq[tc];
+ 	dl = priv_to_devlink(pdsc);
+ 	devlink_flash_update_status_notify(dl, "Preparing to flash",
+@@ -134,6 +136,12 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
  
- 			ts_stats->pkts += stats->cqe;
- 			ts_stats->err += stats->abort + stats->err_cqe +
--				stats->late_cqe;
-+					stats->late_cqe;
- 			ts_stats->lost += stats->lost_cqe;
- 		}
--	} else {
--		/* DMA layer will always successfully timestamp packets. Other
--		 * counters do not make sense for this layer.
--		 */
--		ts_stats->pkts = 0;
--
--		/* Aggregate stats across all SQs */
--		for (j = 0; j < priv->channels.num; j++) {
--			struct mlx5e_channel *c = priv->channels.c[j];
--
--			for (i = 0; i < c->num_tc; i++) {
--				struct mlx5e_sq_stats *stats = c->sq[i].stats;
--
--				ts_stats->pkts += stats->timestamps;
--			}
--		}
+ 		copy_sz = min_t(unsigned int, buf_sz, fw->size - offset);
+ 		mutex_lock(&pdsc->devcmd_lock);
++		if (!pdsc->cmd_regs) {
++			mutex_unlock(&pdsc->devcmd_lock);
++			err = -ENXIO;
++			NL_SET_ERR_MSG_MOD(extack, "Device reset during flash");
++			goto err_out;
++		}
+ 		memcpy_toio(&pdsc->cmd_regs->data, fw->data + offset, copy_sz);
+ 		err = pdsc_devcmd_fw_download_locked(pdsc, data_addr,
+ 						     offset, copy_sz);
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 9a2c64198d03b..1b960139de4e4 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -507,7 +507,11 @@ static void pdsc_reset_prepare(struct pci_dev *pdev)
+ 		pdsc_auxbus_dev_del(pdsc, pdsc, &pdsc->padev);
  	}
--
--out:
--	mutex_unlock(&priv->state_lock);
- }
  
- #define PPORT_PHY_LAYER_OFF(c) \
+-	pdsc_unmap_bars(pdsc);
++	if (!pdev->is_virtfn) {
++		mutex_lock(&pdsc->devcmd_lock);
++		pdsc_unmap_bars(pdsc);
++		mutex_unlock(&pdsc->devcmd_lock);
++	}
+ 	pci_release_regions(pdev);
+ 	if (pci_is_enabled(pdev))
+ 		pci_disable_device(pdev);
+@@ -536,7 +540,9 @@ static void pdsc_reset_done(struct pci_dev *pdev)
+ 			return;
+ 		}
+ 
++		mutex_lock(&pdsc->devcmd_lock);
+ 		err = pdsc_map_bars(pdsc);
++		mutex_unlock(&pdsc->devcmd_lock);
+ 		if (err)
+ 			return;
+ 	}
 -- 
 2.53.0
 
