@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074334C10F0;
-	Thu, 17 Sep 2026 15:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480E74C10F0;
+	Thu, 17 Sep 2026 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660320; cv=none; b=jAnRTdSe4weWaOOBJffjk2U9DbkS98f41q+XktozuXCCri7Lyqb0VK2wiKkA5bXKE4jtbGyWd80AJeHYgwvv0qoAf2myWeJlT/DNNQCyVq6zr1jBcsknHR/OGuEem/KbW/liS9N4krYeEDnXtJluxjQh3Koqhr9HMs3ZcqjdEVI=
+	t=1789660323; cv=none; b=KwP5RGZVDtvo0A5VKqO1WxbV8gl5uiFHWS4217wutM+3iJ9NXwEiMJqKE6MZsoT02wiyTEJvlU7UATQhqjkcn5CdVUMzfDdrttkQ/OVHgP0lAO8LaHsRrByZaS9+q7mYASAYGKpFi87u88j1XkbDcHy3IkaiWldl/qVNyGHOm3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660320; c=relaxed/simple;
-	bh=voL6pqd7PWDbNqboq01Aq6nvWk/otd0yt/ZdoxBQto0=;
+	s=arc-20240116; t=1789660323; c=relaxed/simple;
+	bh=WnLBSKu0NFOu+Msq5f+fg+daRxDAJxHQiydOjRxfHBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1akaVvM4P+m3ocody1p5/lyQJaae9BR/bigGnFjEyv/kuMVvB5lC6b2VyHFh0Xt6kAuHH5G2mttZI3hw93ZGCjTgsdVB2vym+IuAXf5WNZ42WXi3FP2klQ/FeHLPQq0mWPslsk1QUGdEj1uDuFZneRlBAbPH3B2wT6pK796vcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRj82YiC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S92E0FiN6dKQ423qb8yyH8/8exhBv58Ax9hBV2gsoktfmegk0oIN+X3FOE5xvY0R5pcyT9G/oi7XmtqLMSCUG+Mg1X6WXOateaT5hrhN4q7wK79u9KOtkStLA2D+IL8FZtcwUVNg2D8jDbVosd2W+Kgva7EviGcRfgkmFwJCUbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elAOSgis; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRj82YiC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCC11F000FF;
-	Thu, 17 Sep 2026 15:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elAOSgis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1051F000FF;
+	Thu, 17 Sep 2026 15:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660318;
-	bh=qkcTKRy15oT2toWvdlRYsN2G9uKCghEpK1G4y/3beR4=;
+	s=korg; t=1789660321;
+	bh=PJIGoRPAk7kWvafmTihulapd8hp4erNYy7rIM34lWzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRj82YiCuuTg+/OBB6HAgXPDDsl4LSf2sVjDRC4mHAUq591pzwZQscvF026Cy6zXk
-	 rGrRH5XYPzB47yHDtMUG1coEYJoQ5qqRECqx1XMKhETrT4RnaZiHx51klYSLWL+rv6
-	 ucyhprbSQEex6xhqQESX7Y9cBv92cxb6kLZNcZRA=
+	b=elAOSgiss3d5xjPKhAXEhugUxivY167x0TW0TBDxYbns1wv9ChXKWtj+SbZNwDOJG
+	 uMOrYAWyCUnfSEsM4b4xenIINik4v5sqyOOubKXB0U3SNZjC8N4QQTwphg0XE6Xwup
+	 9/EVEgzSRGveHepMWsE5MU/tV65Eb6tRQoNY3Ayo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.2 553/733] netfilter: nf_log: unregister loggers before per-net teardown
-Date: Thu, 17 Sep 2026 16:14:21 +0100
-Message-ID: <20260917151406.052732044@linuxfoundation.org>
+	Satyajit Roy <sroy14@alum.utk.edu>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 536/733] drm/amd/display: Rebuild InfoFrames on output color space changes
+Date: Thu, 17 Sep 2026 16:14:04 +0100
+Message-ID: <20260917151405.571642081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,87 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Satyajit Roy <sroy14@alum.utk.edu>
 
-commit 2c018cc4842c33f0c732962e2ab58635e8ae5823 upstream.
+commit 8cfd9e22eb5c04b15b82985ff913944f84673d4f upstream.
 
-nf_log_syslog and nfnetlink_log unregister their per-network namespace
-operations before unregistering their global logger backends. This
-leaves a window where a sysctl or netlink writer can rebind the still-
-registered logger after the per-net pre-exit callback cleared the old
-selection.
+resource_build_info_frame() derives colorimetry and RGB quantization from
+stream->output_color_space. A Broadcast RGB-only atomic commit updates
+that field and reprograms the output CSC, but none of the InfoFrame update
+predicates include output_color_space. The sink can therefore retain the
+previous AVI InfoFrame range while the source starts transmitting a
+different pixel range.
 
-The race looks like this:
+Treat an output color space change as an InfoFrame change in update
+classification and in both stream programming paths.
 
-  CPU 0                                 CPU 1
-  ----                                  ----
-  unregister_pernet_subsys()
-    nf_log_unset(net, logger)
-      net->nf.nf_loggers[pf] = NULL
+Hardware testing on an HDMI 2.1 television confirmed that its automatic
+black-level selection follows Full to Limited and Limited to Full
+transitions in SDR, HDR, and HDR with VRR active, without a modeset or
+visible link blank.
 
-                                        lock nf_log_mutex
-                                        find logger in loggers[][]
-                                        net->nf.nf_loggers[pf] = logger
-                                        unlock nf_log_mutex
-
-  nf_log_unregister(logger)
-    lock nf_log_mutex
-    loggers[pf][type] = NULL
-    unlock nf_log_mutex
-    synchronize_rcu()
-  module exit returns
-  module core frees backend memory
-
-Later, a sysctl read or packet logging operation can dereference the
-stale per-net logger pointer.
-
-Fix this by unregistering the global logger backends before tearing down
-per-net state. Once the global registrations are gone, later writers can
-no longer rebind the logger. unregister_pernet_subsys() already waits
-for an RCU grace period after the pre-exit callback clears the per-net
-selection, while nf_log_unregister() continues to cover readers of the
-global logger table.
-
-Apply this ordering fix to both nf_log backends that combine per-net
-teardown with global logger registration.
-
-Fixes: 5b023fc8d8e0 ("netfilter: enable per netns support for nf_loggers")
+Fixes: 6eb4c13a3845 ("drm/amd/display: Support "Broadcast RGB" drm property")
+Signed-off-by: Satyajit Roy <sroy14@alum.utk.edu>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d6faca79f5720893843e649e70aeb19147ee0578)
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_log_syslog.c |    2 +-
- net/netfilter/nfnetlink_log.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -1073,12 +1073,12 @@ err1:
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3122,6 +3122,7 @@ static struct surface_update_descriptor
+ 		}
  
- static void __exit nf_log_syslog_exit(void)
- {
--	unregister_pernet_subsys(&nf_log_syslog_net_ops);
- 	nf_log_unregister(&nf_ip_logger);
- 	nf_log_unregister(&nf_arp_logger);
- 	nf_log_unregister(&nf_ip6_logger);
- 	nf_log_unregister(&nf_netdev_logger);
- 	nf_log_unregister(&nf_bridge_logger);
-+	unregister_pernet_subsys(&nf_log_syslog_net_ops);
- }
+ 		if ((stream_update->hdr_static_metadata && !stream_update->stream->use_dynamic_meta) ||
++				stream_update->output_color_space ||
+ 				stream_update->vrr_infopacket ||
+ 				stream_update->vsc_infopacket ||
+ 				stream_update->vsp_infopacket ||
+@@ -4090,6 +4091,7 @@ static void commit_planes_do_stream_upda
+ 				hwss_add_setup_periodic_interrupt(&seq_state, dc, pipe_ctx);
  
- module_init(nf_log_syslog_init);
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -1238,8 +1238,8 @@ static void __exit nfnetlink_log_fini(vo
- {
- 	nfnetlink_subsys_unregister(&nfulnl_subsys);
- 	netlink_unregister_notifier(&nfulnl_rtnl_notifier);
--	unregister_pernet_subsys(&nfnl_log_net_ops);
- 	nf_log_unregister(&nfulnl_logger);
-+	unregister_pernet_subsys(&nfnl_log_net_ops);
- }
+ 			if ((stream_update->hdr_static_metadata && !stream->use_dynamic_meta) ||
++					stream_update->output_color_space ||
+ 					stream_update->vrr_infopacket ||
+ 					stream_update->vsc_infopacket ||
+ 					stream_update->vsp_infopacket ||
+@@ -4272,6 +4274,7 @@ static void commit_planes_do_stream_upda
+ 				dc->hwss.setup_periodic_interrupt(dc, pipe_ctx);
  
- MODULE_DESCRIPTION("netfilter userspace logging");
+ 			if ((stream_update->hdr_static_metadata && !stream->use_dynamic_meta) ||
++					stream_update->output_color_space ||
+ 					stream_update->vrr_infopacket ||
+ 					stream_update->vsc_infopacket ||
+ 					stream_update->vsp_infopacket ||
 
 
