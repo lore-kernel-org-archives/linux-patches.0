@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EE5497394;
-	Thu, 17 Sep 2026 15:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CBD4B44AD;
+	Thu, 17 Sep 2026 15:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658929; cv=none; b=WJIWAsbsKeUo08qDEAp4m+lGgjmG5N6rvMlbunTV7hoF+HcClfIHm2PZt3qO0x9ekMor1/wDuoA2eGo6FyfBCWsngbL+puc4CzqwZDW2zytbXtLBTxdwZiyLZ4Z1Kj75PgSpCwgAOv1j9IYLQ/i4krEGlLfAAPYz8vyag6ssa3s=
+	t=1789658931; cv=none; b=N3+/++YMnuxFNRqOEfudBqdEZIM36y07xnrIZTEfsAY26+HK6H/An25oxYgOrE4wGmyG6xN7qzWa+UITP3SZ3nfUXGvtdIzQt2dDEuNa/s0qBcj+NYSUMwHLZ19re9gf4NBN1RMNHF9EPDvKrrx2U9wzpm+3IFo8oi8lYnamx3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658929; c=relaxed/simple;
-	bh=acxADpIfR11UfvVAgFcTLJfXtXZgh1gxHOqgrUhnyIM=;
+	s=arc-20240116; t=1789658931; c=relaxed/simple;
+	bh=JSLf55rCK7wEkPbuyljMIahRJeX40srF/ak01CZX7Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCaJOQ+i0FCToHvoyPEGO/ptWu65ibmPixQelGuDLiSka370DgXWQeMukamFKc/wXSduSd9BxlofWQ7jx+oB2ZYQ6hxehGKdBUOdK2ya9GTN6BcOty0cNx4uAaBcnmuCI0PiaYctbPdncU8K8lzb7rWzKRYGWhpfmpLg/KZts6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O04lfPB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/z3hJoVFL3ruVBa7dgT0DWL+U0JFf+FwHxczICHXASeTa2AfZ2oAEwJzfBeGc2QT3sa52jeJciGYwyZKWKAJG2MXZUQCQzVDq5TM6uNymAFlcUiNBG+CY9HwL6uT8TiETx0Z+ilIdx7SltDK5b4oboPBwXqmsE/CP7piZ87HL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E42vKzQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O04lfPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5D1F000FF;
-	Thu, 17 Sep 2026 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E42vKzQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C7F1F00899;
+	Thu, 17 Sep 2026 15:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658919;
-	bh=Mfw9K2z28DsBspuj/BZF8sHOQ3pQUqHpzNWVoznwECk=;
+	s=korg; t=1789658922;
+	bh=qh57qnLi0/K/rjuHMk5z+a/Wp/X7y73/x87r7XM9OIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1O04lfPBtHCzOmw28juCMAT5vEJRyHYfw2XOFBUu4VVP3SkulpTpNVSBC4uZpyMhq
-	 xy2/VjQGpyksdRPK+/pBE5EtlbKZxYWmcldRL4F2yr5c9c2ECHGUpOTCC+arNi33Dm
-	 Df3SwQUB360/HnczWLMsLS2Ea+Mn9RmTYK4CG15A=
+	b=E42vKzQg4xNq6ZUxD1hibzNYi8y7/+hndkFJGzzlR2XH9/RGXvwd5oQ/v3u0vJ3im
+	 05mMXjDcXaJF7V1eIQX3iHwmfHF3O18+6l/E+DO5D3mg1fu3UrG3ZTsTQ9ox0O7KU3
+	 /B+qlXkjiJzLpL/uK9XgDzAwZLTYXgJQiUbLAlj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Tighe <dennis.tighe@gmail.com>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	syzbot+2442951a6abb004df963@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 045/733] ntfs: do not mark the volume clean in sync_fs when errors were recorded
-Date: Thu, 17 Sep 2026 16:05:53 +0100
-Message-ID: <20260917151351.892530800@linuxfoundation.org>
+Subject: [PATCH 7.2 036/733] drm/cirrus-qemu: Validate BAR0 size during probe
+Date: Thu, 17 Sep 2026 16:05:44 +0100
+Message-ID: <20260917151351.641905625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,47 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dennis Tighe <dennis.tighe@gmail.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit 0e4c839905418d55bafe571a92533a1d1ac7b0a8 ]
+[ Upstream commit 92312d333bf700798f92f30406c721bce87506f3 ]
 
-ntfs_put_super() and the remount-read-only path both clear the dirty bit
-only when NVolErrors(vol) is false. ntfs_sync_fs() clears it
-unconditionally, so any sync() on a volume that recorded an error marks
-that volume clean. A volume without this set is then seen as not needing
-recovery and it does not run one, so whatever went wrong is never repaired.
+The `cirrus-qemu` driver relies on `CIRRUS_VRAM_SIZE` (4 MB) to validate
+framebuffer sizes. However, during PCI probe, the driver mapped BAR0
+without verifying that its size matches `CIRRUS_VRAM_SIZE`.
 
-This change skips resetting the dirty bit when there are volume errors.
+If a PCI device with a BAR0 smaller than 4 MB is bound to the driver, the
+mapped VRAM will be smaller than expected. Because validation checks assume
+4 MB VRAM, framebuffers larger than the mapped memory can be created.
 
-Reproduced on a volume whose $MFTMirr does not match $MFT, which sets the
-error flag while leaving the mount read-write: after a write and a sync,
-the on-disk volume flags read 0x0000 with this driver and 0x0001 with the
-guard in place.
+When the display plane is updated (e.g. during release),
+`cirrus_primary_plane_helper_atomic_update()` copies the framebuffer to
+VRAM using `drm_fb_memcpy()`. Writing past the end of the mapped I/O memory
+causes a supervisor write page fault:
 
-Fixes: 6251f0b0de7d ("ntfs: update super block operations")
-Assisted-by: claude:claude-opus-5
-Signed-off-by: Dennis Tighe <dennis.tighe@gmail.com>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+BUG: unable to handle page fault for address: ffffc9000389c000
+...
+RIP: 0010:memcpy_toio+0x7c/0xe0 arch/x86/lib/iomem.c:110
+...
+Call Trace:
+ <TASK>
+ iosys_map_memcpy_to include/linux/iosys-map.h:285 [inline]
+ drm_fb_memcpy+0x325/0x5d0 drivers/gpu/drm/drm_format_helper.c:442
+ cirrus_primary_plane_helper_atomic_update+0x98a/0xb00
+ drivers/gpu/drm/tiny/cirrus-qemu.c:358
+ drm_atomic_helper_commit_planes+0x626/0xea0
+ drivers/gpu/drm/drm_atomic_helper.c:3038
+ drm_atomic_helper_commit_tail+0x60/0x510
+ drivers/gpu/drm/drm_atomic_helper.c:1989
+ commit_tail+0x2b1/0x3c0 drivers/gpu/drm/drm_atomic_helper.c:2074
+ drm_atomic_helper_commit+0xa77/0xb10
+ drivers/gpu/drm/drm_atomic_helper.c:2312
+
+Fix this by validating in `cirrus_pci_probe()` that the PCI BAR0 resource
+is not less than `CIRRUS_VRAM_SIZE`, returning `-ENODEV` if it is less.
+
+Fixes: ab3e023b1b4c ("drm/cirrus: rewrite and modernize driver.")
+Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+2442951a6abb004df963@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2442951a6abb004df963
+Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260825120729.493611-1-sst@poczta.fm
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tiny/cirrus-qemu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
-index cd8fa2c133700..d287140b3fc61 100644
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -1862,7 +1862,8 @@ static int ntfs_sync_fs(struct super_block *sb, int wait)
- 		return 0;
+diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
+index 075221b431d37..3bf23fcf65749 100644
+--- a/drivers/gpu/drm/tiny/cirrus-qemu.c
++++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
+@@ -582,6 +582,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+ 	struct cirrus_device *cirrus;
+ 	int ret;
  
- 	/* If there are some dirty buffers in the bdev inode */
--	if (ntfs_clear_volume_flags(vol, VOLUME_IS_DIRTY)) {
-+	if (!NVolErrors(vol) &&
-+	    ntfs_clear_volume_flags(vol, VOLUME_IS_DIRTY)) {
- 		ntfs_warning(sb, "Failed to clear dirty bit in volume information flags.  Run chkdsk.");
- 		err = -EIO;
- 	}
++	if (pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE)
++		return -ENODEV;
++
+ 	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
