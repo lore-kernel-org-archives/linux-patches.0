@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B683CAE99;
-	Thu, 17 Sep 2026 18:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362FB340283;
+	Thu, 17 Sep 2026 18:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668926; cv=none; b=gK9gxffbfKcR2m/j+jocfqnaKumcWUIZkxrcZWP7oVVOO1uJ67X/iJyaI5MQ3EPYx/wJa5Vn2YSyWrE6dZmYweK9ETLbsNAsOH6iF2wuAYNzG34spYr4JMTdklteIGpY//qV3p/8DPwdOP6kIp85vEdTQzDLAzgzr9gka5pA2PE=
+	t=1789668929; cv=none; b=YUw5Qgena4R348mBz9cnnEdOVFT17R56EdNLcUR/ecvv8fC8ZxAUq+q2pWLPV6A/5jVx1wrILQiFsRf9O0YhkwDqyy5y+inh0ZzQK2nOqTioG/uCAVo0GMf8bMWS3U8T3tl7/uUIjrJHxFOaLMdG+Mima42liPx3EvvKkVJK+y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668926; c=relaxed/simple;
-	bh=RH3wsW0Gff528BzKztYG9l7H6Hg5yW7y8DLZ2CfXtfY=;
+	s=arc-20240116; t=1789668929; c=relaxed/simple;
+	bh=3AKcIimvZhpYhJXymyIKNPO7pk56HngRFAYGHpyzINM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+bCUsPCBT+VmEf6YuZEH8TZ0ZbJTthp6SjEUlK47eQXAkRy9zzHS9Z7n1zoqI/t/ry+mXihDK6s1RG1ts5PbvUSQYjXxZ1hRywLCurTC42AiGvnnWI/ehRFBkj9vuWDNDuSyf4nYZyeR9+Kss1nbpHoMstUq0z5vxkL6aFpZKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5wADnw9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Az99gjLc/lV7H+NwQB6PtZnCyUrNR9VwQKqRlvGqX8gqqwCj3kIJNxmTRnIANKLuOxLkQnbvwUpn48OSEkdF3kNffqXTCivr797xPWO8To6s2QHQbDSEp8NYy8uOIsftfBeAi9ich/iCElKp4a9Qztuw56N3J7MigWFi8UMRHJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOwctsF4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5wADnw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE711F000FF;
-	Thu, 17 Sep 2026 18:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOwctsF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9F01F000FF;
+	Thu, 17 Sep 2026 18:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668925;
-	bh=+Kf98NBYGOt4u+EHqemtSONfzgYqI6KM0Vcb9lRB+k4=;
+	s=korg; t=1789668928;
+	bh=kpd3rp7Q52q7HcvoNqrhF0QyZuUJORNs2KNaKx4xFug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5wADnw9lSJE8jLKOYzNEocjeMJoTszyFlZbr3CnitK0C7Dtk0C4/ePFMiso+60d4
-	 K4JrpGT0DXhT4C7yid6xAj1h2RYQ0OA9xQOVjqUgkgjKfwA9nYh28d5zihSOiAjnx1
-	 RliK8vWKB36kFnney728tOjT3B9M5UzYt0+Ha0FI=
+	b=IOwctsF4ZOXfuvzUkvm/to5DvOP6vxk2q2wJ3FB9GAVdn8NapJTRgULMQirMZ00ji
+	 Id2RwlP4mdsA/qQIQjVas8kifML55eSXqE5Y4VR1cEvf7JbZTZWSCsOhgt544d3+Xx
+	 mv0v0Qz1YB5lIhpLZ4K3no/B/tkgU3ItK7X0sDAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0585/1102] ALSA: hda: restore MFG widget enumeration after core split
-Date: Thu, 17 Sep 2026 16:08:48 +0100
-Message-ID: <20260917151554.641217962@linuxfoundation.org>
+Subject: [PATCH 6.12 0586/1102] s390/boot: Fix physical memory search range
+Date: Thu, 17 Sep 2026 16:08:49 +0100
+Message-ID: <20260917151554.668518781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,57 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 32d7226e6105c257ef7b3d0ec819f11a81f53b6d ]
+[ Upstream commit a0c798ed4103316c23938bdf625af364fbd38016 ]
 
-Before commit 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff
-into hdac_device"), widget enumeration selected the function group with
+search_mem_end() calculates the number of 1MB blocks with a signed int
+literal. CONFIG_MAX_PHYSMEM_BITS values of 51 and above either overflow
+the signed int or shift beyond its width. This produces an invalid search
+range when the binary-search memory detection fallback is used.
 
-	codec->afg ? codec->afg : codec->mfg
+Use an unsigned long literal so the full supported physical address range
+is represented.
 
-and read subordinate nodes from that group.
-
-The core split moved this logic into snd_hdac_refresh_widgets(), but
-hard-coded codec->afg there. For an MFG-only codec, codec->afg is zero,
-so the Root Node is queried and codec->start_nid/num_nodes are populated
-from the function-group range instead of the MFG's subordinate nodes.
-
-Restore the pre-split AFG-or-MFG selection.
-
-Fixes: 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff into hdac_device")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/44809B8FF80DCCA2+20260901034024.2407783-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 54c57795e848 ("s390/mem_detect: replace tprot loop with binary search")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/hdac_device.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/boot/physmem_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/hdac_device.c b/sound/hda/hdac_device.c
-index 0f2e768fd678c..c89b994977584 100644
---- a/sound/hda/hdac_device.c
-+++ b/sound/hda/hdac_device.c
-@@ -404,6 +404,7 @@ static void setup_fg_nodes(struct hdac_device *codec)
-  */
- int snd_hdac_refresh_widgets(struct hdac_device *codec)
- {
-+	hda_nid_t fg = codec->afg ? codec->afg : codec->mfg;
- 	hda_nid_t start_nid;
- 	int nums, err = 0;
+diff --git a/arch/s390/boot/physmem_info.c b/arch/s390/boot/physmem_info.c
+index 1d131a81cb8be..f5d00f8cf5d65 100644
+--- a/arch/s390/boot/physmem_info.c
++++ b/arch/s390/boot/physmem_info.c
+@@ -140,7 +140,7 @@ static int tprot(unsigned long addr)
  
-@@ -412,10 +413,10 @@ int snd_hdac_refresh_widgets(struct hdac_device *codec)
- 	 * widgets array.
- 	 */
- 	guard(mutex)(&codec->widget_lock);
--	nums = snd_hdac_get_sub_nodes(codec, codec->afg, &start_nid);
-+	nums = snd_hdac_get_sub_nodes(codec, fg, &start_nid);
- 	if (!start_nid || nums <= 0 || nums >= 0xff) {
- 		dev_err(&codec->dev, "cannot read sub nodes for FG 0x%02x\n",
--			codec->afg);
-+			fg);
- 		return -EINVAL;
- 	}
+ static unsigned long search_mem_end(void)
+ {
+-	unsigned long range = 1 << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
++	unsigned long range = 1UL << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
+ 	unsigned long offset = 0;
+ 	unsigned long pivot;
  
 -- 
 2.53.0
