@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B87A59D62B;
-	Thu, 17 Sep 2026 15:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E4652ED3C;
+	Thu, 17 Sep 2026 15:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659057; cv=none; b=X5epHqDibuiNDUF+0qDmwgLPZ7xcVKGScy1OM3qmMnY022X9cChRBHFiBkgjz5WULccCalv2GGmFAzrbbB70OVbEv3Q1E5Fn6bBfTeN0VgK/AXERRIggZyI0yhfECul1+EHp6o1DnzVgW++zrnP4W4Pn/FV8Mb7UC59jQuntadU=
+	t=1789659059; cv=none; b=m+yBsgMmGaQLLeJdSFzRflB+BpN+N8ROS8zov+ys4vwvJxx+Jap2x+A2/MDozSp5aBfwhinITCvoq3QyytPCUeJwu6dvyo9v8TXZMLsA8yfmbMHDSb1ijOlnab+u9pOL66hIWlBV9UuaX+pIrJCJ+tQAhMu5nDxPornH6WVoj9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659057; c=relaxed/simple;
-	bh=a/5hXz7EdqN0DVcGwgP8VpxoClQzE7q8eyj91b2vcWw=;
+	s=arc-20240116; t=1789659059; c=relaxed/simple;
+	bh=W585pMIAqc7YdwjlTlFdA1Ab//GcFfLEusjhGIJVSYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AH0Qth3Q+XnxwQ+1y/TQkrSKyqd6Btbx1WAOp0kq8Vne/AF+uUfnfCU/6kGbG2Q0L8ZldLBzQBZs26sJgA2lAWfeuJi/VvRay+iWGewjKDNqDeKrbOpDbnVNGl9LfTUwtmBMMD/flDnFRIAsgWuxZPZ9875/HB6AtsSZFNo/OLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6fg/Nyz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xdte4COF72164KypKDiZbbO+ZAupW8jVt7IN2ehvmdgHhwRANRmkoaMkYfXLC9cbbvczDo4jOcHDUNM5ni5Ltpataeof3456qL5o7TpC49xVQQE+6ntqNMBZyi1KCnwEm2xRP7J8oVmI/WW0meXSzGzxtIVryfDpopmaQbTpWCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYr52R3z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6fg/Nyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C251F00893;
-	Thu, 17 Sep 2026 15:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYr52R3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BA21F00898;
+	Thu, 17 Sep 2026 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659049;
-	bh=4GS/9tk5N2dtQeufzjRu/hC9+9fUnk/Xahri/JS1njs=;
+	s=korg; t=1789659055;
+	bh=bdDJ6zzAjEJQOAHEv1jt3rguB/QzmaUP3OERxns5gP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6fg/NyzYJaZLYHUPN2JI8vNynPDCRgNspw+PqXy74xFXfFCUPSP5BBpZWjvuntGi
-	 DwIpMUraV7zo5pHyHBtt/pQCGTP4CUTw1O7fuL6kjyOyum931Ub1DEUbI77+Rm7JKd
-	 bFszQzR0AdbUXP7Rf2vc1L92w3ZV+UmcegAqo7ZM=
+	b=TYr52R3zWAG/achWLL9gpmXtInC6LVVZg19uqBfSc5wkeIpQpXUl0EzB3lcnmE6Jl
+	 vD/USOWnoKR4KyNodffdaXRAA+cpVkSiS5wDtswVS2lHTayD1iXt1Z5mcPjY/NjTRE
+	 gnC2xnuFYyDsjgTo7eYCQL0hmwK3oJDmkKfjC/g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Lipcon <tlipcon@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 077/733] perf symbol: Do not use debug file as the binary type
-Date: Thu, 17 Sep 2026 16:06:25 +0100
-Message-ID: <20260917151352.799007272@linuxfoundation.org>
+Subject: [PATCH 7.2 129/733] net: ethernet: oa_tc6: Protect skb pointer used by two different kernel instances
+Date: Thu, 17 Sep 2026 16:07:17 +0100
+Message-ID: <20260917151354.236433262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,114 +51,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
 
-[ Upstream commit ae9464c65e9d1ad4df4fed516cee9bca3bc614cc ]
+[ Upstream commit 5443d9c4f55d46634b95432e1e8a40b824019bbb ]
 
-dso__load() sets the binary type of a DSO to the type of the first symbol
-source found. For a DSO with a separate debug file linked via
-.gnu-debuglink, that is DSO_BINARY_TYPE__DEBUGLINK, which makes
-dso__get_filename() return the name of the debug file instead of the file
-that was actually executed.
+Threaded IRQ uses waiting_tx_skb. Transmit path also uses this pointer
+without any mutual exclusion protection. As a result, it might leak skb
+buffer, particularly if threaded IRQ sets disable_traffic true after
+start_xmit already checked and found that disable_traffic being false,
+if they happen to run on different cores.
 
-Consumers that need to read instruction bytes, such as Intel PT decoding
-in 'perf script', then read from the debug file and produce wrong
-instructions.
+On fatal error, where disable_traffic is set, transmit function drops the
+packet and return NETDEV_TX_OK. Due to this change, skb_linearize call
+is moved up to the beginning of the transmit function.
 
-Prefer DSO_BINARY_TYPE__BUILD_ID_CACHE, and otherwise
-DSO_BINARY_TYPE__SYSTEM_PATH_DSO, over debug-only types, which restores
-the behaviour of using a file that contains the executed instructions.
+Since skb buffer may be freed from different contexts, dev_kfree_skb_any
+is used to free skb buffer now, replacing one of the kfree_skb call.
 
-This is a workaround. Properly separating the binary file used for
-instructions from the file used for debug symbols is left for later.
+oa_tc6_exit disables the irq before setting disable_traffic true.
 
-Example:
-
- Create a shared object with a separate .gnu_debuglink debug file. Note
- that 'objcopy --only-keep-debug' leaves .text as NOBITS, so instructions
- read from the debug file are zeros:
-
-  # cat > foo.c << EOF
-  unsigned long foo_work(unsigned long n)
-  {
-        unsigned long s = 0;
-
-        for (unsigned long i = 0; i < n; i++)
-                s = s * 31 + i;
-        return s;
-  }
-  EOF
-  # cat > main.c << EOF
-  #include <stdio.h>
-  unsigned long foo_work(unsigned long n);
-  int main(void)
-  {
-        printf("%lu\n", foo_work(1000));
-        return 0;
-  }
-  EOF
-  # gcc -g -O2 -shared -fPIC -o libfoo.so foo.c
-  # gcc -g -O2 -o main main.c -L. -lfoo -Wl,-rpath,'$ORIGIN'
-  # objcopy --only-keep-debug libfoo.so libfoo.so.debug
-  # objcopy --strip-debug libfoo.so
-  # objcopy --add-gnu-debuglink=libfoo.so.debug libfoo.so
-  # perf record -e intel_pt//u ./main
-
- Note that branch samples must be requested, because it is the resolving
- of the branch target symbol that causes dso__load() to be called, and
- hence the binary type to be set, before the decoder walks the code.
- With '--itrace=e' alone, nothing loads symbols for libfoo.so, the binary
- type is left as DSO_BINARY_TYPE__NOT_FOUND, the correct file is read
- anyway, and no errors are reported either way.
-
- Before:
-
-  # perf.before script --itrace=be 2>&1 | grep "instruction trace error"
-   instruction trace error type 1 time 2350.467489498 cpu 9 pid 75634 tid 75634 ip 0x77d48480718f code 6: Trace doesn't match instruction
-   instruction trace error type 1 time 2350.467489832 cpu 9 pid 75634 tid 75634 ip 0x77d484807341 code 6: Trace doesn't match instruction
-   instruction trace error type 1 time 2350.467496412 cpu 9 pid 75634 tid 75634 ip 0x5b4de37a8074 code 6: Trace doesn't match instruction
-   instruction trace error type 1 time 2350.467593393 cpu 9 pid 75634 tid 75634 ip 0x77d4848070d0 code 6: Trace doesn't match instruction
-   instruction trace error type 1 time 2350.467593954 cpu 9 pid 75634 tid 75634 ip 0x77d4848075a8 code 6: Trace doesn't match instruction
-   instruction trace error type 1 time 2350.467595728 cpu 9 pid 75634 tid 75634 ip 0x77d4848324de code 6: Trace doesn't match instruction
-  6 instruction trace errors
-
- After:
-
-  # perf script --itrace=be 2>&1 | grep "instruction trace error"
-  #
-
-Fixes: 5363c306787c8 ("perf symbol: Set binary_type of dso when loading")
-Reported-by: Todd Lipcon <tlipcon@google.com>
-Closes: https://lore.kernel.org/all/CAGH6UiG=RJLqBU3kLu9XJciPyPO1HZkbAPERguVUMRuWQgqf=A@mail.gmail.com/
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b542d13fab0f ("net: ethernet: oa_tc6: Interrupt is active low, level triggered.")
+Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+Link: https://patch.msgid.link/20260824-fix-race-condition-and-crash-v7-1-4323279b18f2@onsemi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/oa_tc6.c | 109 ++++++++++++++++++++++++----------
+ 1 file changed, 76 insertions(+), 33 deletions(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 35104a56d8e38..1de5796fc4ff6 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -1947,7 +1947,16 @@ int dso__load(struct dso *dso, struct map *map)
- 		if (next_slot) {
- 			ss_pos++;
+diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
+index fb219542e90d3..d283e81358e65 100644
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -639,6 +639,26 @@ static int oa_tc6_enable_data_transfer(struct oa_tc6 *tc6)
+ 	return oa_tc6_write_register(tc6, OA_TC6_REG_CONFIG0, value);
+ }
  
--			if (dso__binary_type(dso) == DSO_BINARY_TYPE__NOT_FOUND)
-+			/*
-+			 * The binary type is used to find the file containing
-+			 * the executed instructions, so prefer the types that
-+			 * refer to the actual object over debug-only files such
-+			 * as DSO_BINARY_TYPE__DEBUGLINK.
-+			 */
-+			if (dso__binary_type(dso) == DSO_BINARY_TYPE__NOT_FOUND ||
-+			    symtab_type == DSO_BINARY_TYPE__BUILD_ID_CACHE ||
-+			    (symtab_type == DSO_BINARY_TYPE__SYSTEM_PATH_DSO &&
-+			     dso__binary_type(dso) != DSO_BINARY_TYPE__BUILD_ID_CACHE))
- 				dso__set_binary_type(dso, symtab_type);
++/* Called when a frame that is meant to be transmitted, is dropped. */
++static void oa_tc6_drop_tx_skb(struct oa_tc6 *tc6, struct sk_buff *skb)
++{
++	if (skb) {
++		tc6->netdev->stats.tx_dropped++;
++		dev_kfree_skb_any(skb);
++	}
++}
++
++static struct sk_buff *oa_tc6_detach_waiting_tx_skb(struct oa_tc6 *tc6)
++{
++	struct sk_buff *skb;
++
++	lockdep_assert_held(&tc6->tx_skb_lock);
++	skb = tc6->waiting_tx_skb;
++	tc6->waiting_tx_skb = NULL;
++
++	return skb;
++}
++
+ static void oa_tc6_cleanup_ongoing_rx_skb(struct oa_tc6 *tc6)
+ {
+ 	if (tc6->rx_skb) {
+@@ -650,26 +670,30 @@ static void oa_tc6_cleanup_ongoing_rx_skb(struct oa_tc6 *tc6)
  
- 			if (syms_ss && runtime_ss)
+ static void oa_tc6_cleanup_ongoing_tx_skb(struct oa_tc6 *tc6)
+ {
+-	if (tc6->ongoing_tx_skb) {
+-		tc6->netdev->stats.tx_dropped++;
+-		kfree_skb(tc6->ongoing_tx_skb);
+-		tc6->ongoing_tx_skb = NULL;
+-	}
++	oa_tc6_drop_tx_skb(tc6, tc6->ongoing_tx_skb);
++	tc6->ongoing_tx_skb = NULL;
+ }
+ 
+ static void oa_tc6_cleanup_waiting_tx_skb(struct oa_tc6 *tc6)
+ {
+-	if (tc6->waiting_tx_skb) {
+-		tc6->netdev->stats.tx_dropped++;
+-		kfree_skb(tc6->waiting_tx_skb);
+-		tc6->waiting_tx_skb = NULL;
+-	}
++	struct sk_buff *skb;
++
++	spin_lock_bh(&tc6->tx_skb_lock);
++	skb = oa_tc6_detach_waiting_tx_skb(tc6);
++	spin_unlock_bh(&tc6->tx_skb_lock);
++
++	oa_tc6_drop_tx_skb(tc6, skb);
+ }
+ 
+-static void oa_tc6_free_pending_skbs(struct oa_tc6 *tc6)
++static void oa_tc6_free_ongoing_skbs(struct oa_tc6 *tc6)
+ {
+ 	oa_tc6_cleanup_ongoing_tx_skb(tc6);
+ 	oa_tc6_cleanup_ongoing_rx_skb(tc6);
++}
++
++static void oa_tc6_free_pending_skbs(struct oa_tc6 *tc6)
++{
++	oa_tc6_free_ongoing_skbs(tc6);
+ 	oa_tc6_cleanup_waiting_tx_skb(tc6);
+ }
+ 
+@@ -680,9 +704,15 @@ static void oa_tc6_free_pending_skbs(struct oa_tc6 *tc6)
+ static void oa_tc6_disable_traffic(struct oa_tc6 *tc6)
+ {
+ 	u32 regval = OA_TC6_INT_MASK0_ALL_INTERRUPTS;
++	struct sk_buff *skb;
+ 
++	spin_lock_bh(&tc6->tx_skb_lock);
+ 	tc6->disable_traffic = true;
+-	oa_tc6_free_pending_skbs(tc6);
++	skb = oa_tc6_detach_waiting_tx_skb(tc6);
++	spin_unlock_bh(&tc6->tx_skb_lock);
++
++	oa_tc6_drop_tx_skb(tc6, skb);
++	oa_tc6_free_ongoing_skbs(tc6);
+ 	oa_tc6_write_register(tc6, OA_TC6_REG_INT_MASK0, regval);
+ 	oa_tc6_read_register(tc6, OA_TC6_REG_STATUS0, &regval);
+ 	oa_tc6_write_register(tc6, OA_TC6_REG_STATUS0, regval);
+@@ -1123,8 +1153,7 @@ static int oa_tc6_try_spi_transfer(struct oa_tc6 *tc6)
+ 			if (ret == -EAGAIN)
+ 				continue;
+ 
+-			oa_tc6_cleanup_ongoing_tx_skb(tc6);
+-			oa_tc6_cleanup_ongoing_rx_skb(tc6);
++			oa_tc6_free_ongoing_skbs(tc6);
+ 			netdev_err(tc6->netdev, "Device error: %d\n", ret);
+ 			return ret;
+ 		}
+@@ -1146,15 +1175,20 @@ static irqreturn_t oa_tc6_macphy_threaded_irq(int irq, void *data)
+ 	 * no need to attempt spi transfer, once it fails. Pending skbs
+ 	 * are already freed.
+ 	 */
+-	if (!tc6->disable_traffic) {
+-		while (tc6->int_flag ||
+-		       (tc6->waiting_tx_skb && tc6->tx_credits)) {
+-			ret = oa_tc6_try_spi_transfer(tc6);
+-			if (ret) {
+-				disable_irq_nosync(tc6->spi->irq);
+-				oa_tc6_disable_traffic(tc6);
+-				break;
+-			}
++	spin_lock_bh(&tc6->tx_skb_lock);
++	if (tc6->disable_traffic) {
++		spin_unlock_bh(&tc6->tx_skb_lock);
++		return IRQ_HANDLED;
++	}
++	spin_unlock_bh(&tc6->tx_skb_lock);
++
++	while (tc6->int_flag ||
++	       (tc6->waiting_tx_skb && tc6->tx_credits)) {
++		ret = oa_tc6_try_spi_transfer(tc6);
++		if (ret) {
++			disable_irq_nosync(tc6->spi->irq);
++			oa_tc6_disable_traffic(tc6);
++			break;
+ 		}
+ 	}
+ 
+@@ -1233,23 +1267,30 @@ EXPORT_SYMBOL_GPL(oa_tc6_zero_align_receive_frame_enable);
+  * @tc6: oa_tc6 struct.
+  * @skb: socket buffer in which the ethernet frame is stored.
+  *
+- * Return: NETDEV_TX_OK if the transmit ethernet frame skb added in the tx_skb_q
+- * otherwise returns NETDEV_TX_BUSY.
++ * Return: NETDEV_TX_OK either on successful queueing of the packet for
++ * transmission, or on packet getting dropped. Packet can be dropped due to
++ * failure in linearizing the buffer or disable_traffic is set due to
++ * earlier fatal error. Returns NETDEV_TX_BUSY when there is no room
++ * to queue the packet.
+  */
+ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
+ {
+-	if (tc6->disable_traffic || tc6->waiting_tx_skb) {
+-		netif_stop_queue(tc6->netdev);
+-		return NETDEV_TX_BUSY;
+-	}
+-
+ 	if (skb_linearize(skb)) {
+-		dev_kfree_skb_any(skb);
+-		tc6->netdev->stats.tx_dropped++;
++		oa_tc6_drop_tx_skb(tc6, skb);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+ 	spin_lock_bh(&tc6->tx_skb_lock);
++	if (tc6->waiting_tx_skb) {
++		netif_stop_queue(tc6->netdev);
++		spin_unlock_bh(&tc6->tx_skb_lock);
++		return NETDEV_TX_BUSY;
++	}
++	if (tc6->disable_traffic) {
++		spin_unlock_bh(&tc6->tx_skb_lock);
++		oa_tc6_drop_tx_skb(tc6, skb);
++		return NETDEV_TX_OK;
++	}
+ 	tc6->waiting_tx_skb = skb;
+ 	spin_unlock_bh(&tc6->tx_skb_lock);
+ 
+@@ -1403,8 +1444,10 @@ EXPORT_SYMBOL_GPL(oa_tc6_init);
+  */
+ void oa_tc6_exit(struct oa_tc6 *tc6)
+ {
+-	tc6->disable_traffic = true;
+ 	disable_irq(tc6->spi->irq);
++	spin_lock_bh(&tc6->tx_skb_lock);
++	tc6->disable_traffic = true;
++	spin_unlock_bh(&tc6->tx_skb_lock);
+ 	oa_tc6_phy_exit(tc6);
+ 	oa_tc6_free_pending_skbs(tc6);
+ }
 -- 
 2.53.0
 
