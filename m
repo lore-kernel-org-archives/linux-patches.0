@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FB84F4CEA;
-	Thu, 17 Sep 2026 16:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93474DEC07;
+	Thu, 17 Sep 2026 16:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661286; cv=none; b=Ujay/VlLrNuELQZtNJAKEfogrGnu8E2glgfsQclt201hwSHQdnEdF1Cra3FFzngNyzIr9Jywsbibqjh+C6DlB8eIsS0iXb7SPOzQ09vXdo/FZqDxSEyFjNJPKogIRefl2J9KTjOLHuviq+VEVTpnXkWc9+sgUoSTPjMJAOacJMU=
+	t=1789661289; cv=none; b=PRUf9JIYWTYNo4Cw7A0OwvBan/Sse9zcCqNinrQWXD+ZqXEnbY4rHWMixSgrRGD4Qi4q3rNCBJDmw/mhZpdvpWMl3CICgt//p2PnGqBcMa1nVqh6SjsKqSwkjixetmFcOjtSKhlwA4DTqro4Xqy2ZXA/0Y+YSLyyI0bmKT4m+2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661286; c=relaxed/simple;
-	bh=6YQyYStRkp82QSoyCbVS2LSJCVzG9PyxaPTUx1/61Wg=;
+	s=arc-20240116; t=1789661289; c=relaxed/simple;
+	bh=OuXEXBp4Db/YSUUUc1+xicdknBWVxpVg7fC9ZeE5Cj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XR+nPjyBcfJnv+2PDW7qGWSI7sFlkstsEHPpUnJ376a2Rm8/1mYV1LQcNdHp2kpI31k+aYpGW874O4pIyoCpvSw46pZJm/eElnbJrou6eVMFpTbbWVfuGw/U2v7mp37lUs0b8LAG4cIIP2/6+ffeYBQYOufKWp/IWpnLZsARkIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6pQGIGZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+Wa2E0AshGhb3n1ckGxqbfkTj9WaW769CRjriQ67yMxSCpfqXSUEhB9ptfe2TIyN8nmcYsEPZZsKfiR9KagMVFSgTs8v0xrKhduF+JWU1CvSZBA+Y8cwk4HEV8PkCky2l9bIiwOR6eBRA4VYspmLJoNusP5Hb0nRiqKR1B+H0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+8oDqKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6pQGIGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41781F00893;
-	Thu, 17 Sep 2026 16:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+8oDqKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C791F00893;
+	Thu, 17 Sep 2026 16:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661285;
-	bh=MoDz3R++YPwMMiYKcfZdZhe3HKOqoHmhdDOSKWI7PbA=;
+	s=korg; t=1789661288;
+	bh=TMzELx8OezYOLo/txZ6rYcCRu0QpO7+YQas4YKeesvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s6pQGIGZ1VgR9Y7r5hZiyEGEPChgiMo/A/fVyIyIH5L3mYFe7Odc/7igtKQFaxReJ
-	 dzYbcBjWSPsa1FOP9FmJyFoK7Z0Iy7gAAmSYfJQjVw0BGXwOty6Hk3Ikd8XXkhgcZe
-	 HYXlU98+8Jt02BT1gpgAWtmz3OZAZFMeNG8y7SDo=
+	b=h+8oDqKxkavFAfRsVFVP0Z1SbRYuD4wYWexqXLl9BQk0RdS3jn+g6PemhztKYKfRw
+	 tG+3w0EoFBy9aTLsM9JonJrQWJC6uwb9gjyAg4oegSJDmzO5k1ZahajfhS76Ruf7ah
+	 rQ38CnZ2UpDukTGfW7dtg6m14fXI/pDH1dtngBJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Leonardo Bras <leo.bras@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0145/1250] arm64: panic from init_IRQ if IRQ handler stacks cannot be allocated
-Date: Thu, 17 Sep 2026 15:59:00 +0100
-Message-ID: <20260917151555.989373100@linuxfoundation.org>
+Subject: [PATCH 6.18 0146/1250] arm64/daifflags: Make local_daif_*() helpers __always_inline
+Date: Thu, 17 Sep 2026 15:59:01 +0100
+Message-ID: <20260917151556.016618115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,97 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Leonardo Bras <leo.bras@arm.com>
 
-[ Upstream commit 7dc6922f7fdd3496de4e7d8fb99284fc08f98003 ]
+[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
 
-init_irq_stacks() and init_irq_scs() may fail when arch_alloc_vmap_stack
-or scs_alloc return NULL. Return -ENOMEM from both and call panic() once
-from init_IRQ(), covering per-CPU IRQ stacks and shadow IRQ stacks
-consistently.
+Make sure those helpers are always inlined and instrumentation safe.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Leonardo Bras <leo.bras@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/irq.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ arch/arm64/include/asm/daifflags.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kernel/irq.c b/arch/arm64/kernel/irq.c
-index c0065a1d77cf3..00ebbf18b1c18 100644
---- a/arch/arm64/kernel/irq.c
-+++ b/arch/arm64/kernel/irq.c
-@@ -10,6 +10,7 @@
-  * Copyright (C) 2012 ARM Ltd.
+diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
+index 5fca480090434..795b351284673 100644
+--- a/arch/arm64/include/asm/daifflags.h
++++ b/arch/arm64/include/asm/daifflags.h
+@@ -19,7 +19,7 @@
+ 
+ 
+ /* mask/save/unmask/restore all exceptions, including interrupts. */
+-static inline void local_daif_mask(void)
++static __always_inline void local_daif_mask(void)
+ {
+ 	WARN_ON(system_has_prio_mask_debugging() &&
+ 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
+@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
+ 	trace_hardirqs_off();
+ }
+ 
+-static inline unsigned long local_daif_save_flags(void)
++static __always_inline unsigned long local_daif_save_flags(void)
+ {
+ 	unsigned long flags;
+ 
+@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
+ 	return flags;
+ }
+ 
+-static inline unsigned long local_daif_save(void)
++static __always_inline unsigned long local_daif_save(void)
+ {
+ 	unsigned long flags;
+ 
+@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
+ 	return flags;
+ }
+ 
+-static inline void local_daif_restore(unsigned long flags)
++static __always_inline void local_daif_restore(unsigned long flags)
+ {
+ 	bool irq_disabled = flags & PSR_I_BIT;
+ 
+@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
+  * Called by synchronous exception handlers to restore the DAIF bits that were
+  * modified by taking an exception.
   */
- 
-+#include <linux/errno.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
- #include <linux/irq.h>
-@@ -32,34 +33,43 @@ DEFINE_PER_CPU(struct nmi_ctx, nmi_contexts);
- 
- DEFINE_PER_CPU(unsigned long *, irq_stack_ptr);
- 
--
- DECLARE_PER_CPU(unsigned long *, irq_shadow_call_stack_ptr);
- 
- #ifdef CONFIG_SHADOW_CALL_STACK
- DEFINE_PER_CPU(unsigned long *, irq_shadow_call_stack_ptr);
- #endif
- 
--static void init_irq_scs(void)
-+static int __init init_irq_scs(void)
+-static inline void local_daif_inherit(struct pt_regs *regs)
++static __always_inline void local_daif_inherit(struct pt_regs *regs)
  {
- 	int cpu;
-+	void *s;
+ 	unsigned long flags = regs->pstate & DAIF_MASK;
  
- 	if (!scs_is_enabled())
--		return;
-+		return 0;
-+
-+	for_each_possible_cpu(cpu) {
-+		s = scs_alloc(early_cpu_to_node(cpu));
-+		if (!s)
-+			return -ENOMEM;
-+		per_cpu(irq_shadow_call_stack_ptr, cpu) = s;
-+	}
- 
--	for_each_possible_cpu(cpu)
--		per_cpu(irq_shadow_call_stack_ptr, cpu) =
--			scs_alloc(early_cpu_to_node(cpu));
-+	return 0;
- }
- 
--static void __init init_irq_stacks(void)
-+static int __init init_irq_stacks(void)
- {
- 	int cpu;
- 	unsigned long *p;
- 
- 	for_each_possible_cpu(cpu) {
- 		p = arch_alloc_vmap_stack(IRQ_STACK_SIZE, early_cpu_to_node(cpu));
-+		if (!p)
-+			return -ENOMEM;
- 		per_cpu(irq_stack_ptr, cpu) = p;
- 	}
-+
-+	return 0;
- }
- 
- #ifndef CONFIG_PREEMPT_RT
-@@ -109,8 +119,9 @@ int __init set_handle_fiq(void (*handle_fiq)(struct pt_regs *))
- 
- void __init init_IRQ(void)
- {
--	init_irq_stacks();
--	init_irq_scs();
-+	if (init_irq_stacks() || init_irq_scs())
-+		panic("Failed to allocate IRQ stack resources\n");
-+
- 	irqchip_init();
- 
- 	if (system_uses_irq_prio_masking()) {
 -- 
 2.53.0
 
