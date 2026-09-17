@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB763E40F5;
-	Thu, 17 Sep 2026 17:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873734F93AD;
+	Thu, 17 Sep 2026 17:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665751; cv=none; b=ROyDwdS9QpXBzRjNHRDbqcRtZKqbNmF9gAQni+OiTWi1k4IRkoWeAkM4PuJHC6j9ennS1qcFZFVlAGxwBvUeLmOeEE/SHiCp+kpZNI4K8wHLQu500kKV79fRRtixFmwTpDCopGR74y6DcRzz2ViL47wTa8bO1uxClke1vtdSCpw=
+	t=1789665754; cv=none; b=EClbp5vPVDEDgTYPmlAW2n1dbiev0PVTw8I2S+f1t5SlFKcSXF9O9zorRH9h+0WYm1P9CLuPzr2Q7rlNGSeBHtCZrbcWA4DuKR2fNr+qN994PxJfKsSCeMHDGQyFtEd0MG7dZSP9g2sdtZv6zP127L3Za8w5cKexs1VE+c1TTRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665751; c=relaxed/simple;
-	bh=jfZMcG/JAbB1r9Yo3YwHprOhuFup8RH24uJeto7L4A8=;
+	s=arc-20240116; t=1789665754; c=relaxed/simple;
+	bh=vSjKnR3E1zY0NcJMSjMKPvN0I7Z6aFoJqO+jP0FJ8QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGns0h9BTCgmib6DuI8PEY/O2BPcVhGxmv5533pK5H8X3hyNHmjMLw3gbBL6O3E5OupOqBsqU0YIH1ncAM97WVjp4GwKxdDU8Yx0haUff2KVHLKXbcsZS0j9t6WhF66MMfwKAHlzPsskm1rEpKWmKixYkY1imUcLokhs59o1A9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhmubZZf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OI2b48NeeyqwqDMmd4Jy+J+4wh7gtSPpxaKMX4/Hnm+GDtmbCSfXb6BRtpTOCsml0e3tKTQGJwDgIDxAJcJbNTAAjJIZonxwl+g9HcD7p4bkl5i3UtJbjIp1uiMLNWrC1L/8QX+Vj9jcPg4WmlgUDK3ypcif7VDoFCxN9JDfEWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rk9ts/V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhmubZZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA99F1F000FF;
-	Thu, 17 Sep 2026 17:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rk9ts/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC11A1F000FF;
+	Thu, 17 Sep 2026 17:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665750;
-	bh=ePxmcsq16/bFj+HPRxPAuykJyv39adzNderJ7w6js1k=;
+	s=korg; t=1789665753;
+	bh=gqkzBFysKa4g2lJjFvS3nMnozSSEw3rEZHzePAkm4lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YhmubZZf1zCrS+T9JM3+C4jhEcdQDon7XxC45c41MOAIsdr+1/wq+o4HSfUNfsx6n
-	 ctd+a5lxkDVLabUTteEGvRjhM4K15YHdCpapmEDqD2cWr4nSJLJvNP1vroeuq6JeOP
-	 kskCFJYOTTfCrlVzucPoVSHI3ZGGZBPXufFK9quU=
+	b=0rk9ts/VIpF3FXdujf/SKg82LBKuWo961xGXKHiHqnexI/liUgOO7XtcpZCyr5mMA
+	 4Wea/t00mshBsg2rRtTWVFKrsU0YAiI1Oomf4l/4WZ7vqyPven/Xgycv5Kd0KUAJO9
+	 sgydNYdZDS34z1YcOkqjxqSVyNIwoxn0aGkwTmJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sourabh Jain <sourabhjain@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0807/1250] powerpc/kexec_file: Use inclusive range checks in add_usable_mem()
-Date: Thu, 17 Sep 2026 16:10:02 +0100
-Message-ID: <20260917151613.787494541@linuxfoundation.org>
+Subject: [PATCH 6.18 0808/1250] powerpc/kexec_file: Use inclusive range checks for excluded memory
+Date: Thu, 17 Sep 2026 16:10:03 +0100
+Message-ID: <20260917151613.815992160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,37 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit c6755be4838d6ccd641effbcdc3d917b82631ff9 ]
+[ Upstream commit 449f60f99f8f3cbe80a9bd2242945e827c5ed003 ]
 
-add_usable_mem() adds usable memory ranges for the kdump kernel.
+arch_check_excluded_range() checks if a kexec segment overlaps an
+excluded memory range.
 
-The ranges are inclusive, but the partial overlap check uses exclusive
-comparisons. This skips ranges with base == loc_end or end == loc_base.
-Use inclusive comparisons instead.
+Both ranges use inclusive end addresses, but the overlap check uses
+exclusive comparisons. This skips ranges with start == ->ranges[i].end
+or end == ->ranges[i].start. Use inclusive comparisons instead.
 
-Fixes: 7c64e21a1c5a ("powerpc/kexec_file: Restrict memory usage of kdump kernel")
+Fixes: 6e5250eaa665 ("powerpc/crash: use generic APIs to locate memory hole for kdump")
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260809162403.18142-2-thorsten.blum@linux.dev
+Link: https://patch.msgid.link/20260810145827.157972-3-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  arch/powerpc/kexec/file_load_64.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 6075b1c88511a..c2ed0d1c92e75 100644
+index c2ed0d1c92e75..d990880b77dfd 100644
 --- a/arch/powerpc/kexec/file_load_64.c
 +++ b/arch/powerpc/kexec/file_load_64.c
-@@ -113,7 +113,7 @@ static int add_usable_mem(struct umem_info *um_info, u64 base, u64 end)
- 		loc_end = um_info->ranges[i].end;
- 		if (loc_base >= base && loc_end <= end)
- 			add = true;
--		else if (base < loc_end && end > loc_base) {
-+		else if (base <= loc_end && end >= loc_base) {
- 			if (loc_base < base)
- 				loc_base = base;
- 			if (loc_end > end)
+@@ -57,7 +57,7 @@ int arch_check_excluded_range(struct kimage *image, unsigned long start,
+ 
+ 	emem = image->arch.exclude_ranges;
+ 	for (i = 0; i < emem->nr_ranges; i++)
+-		if (start < emem->ranges[i].end && end > emem->ranges[i].start)
++		if (start <= emem->ranges[i].end && end >= emem->ranges[i].start)
+ 			return 1;
+ 
+ 	return 0;
 -- 
 2.53.0
 
