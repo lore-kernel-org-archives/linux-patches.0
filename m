@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E021484896;
-	Thu, 17 Sep 2026 15:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A164F390E;
+	Thu, 17 Sep 2026 15:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660189; cv=none; b=C85VRtAhoPI0b3XQR/0xdHhB/iys46YQyimRGXN9oGXam9P3W4ex2V0ZMzLmTKns6xzLh9dbX3E0bbfvmV85OcB5XtOHzLP8BvuskmqnFNtozqZIEkJuIbPxESYUROaIpcqnLc7MfK0uwk4Ixr76z4OtqTe4Smenkx8vDOv40V4=
+	t=1789660193; cv=none; b=VoKKwz57as8dibmNK7bj/fAxEafHPzrSht1TYE3IzW1xpqfhC9k9595ODJUhGmOQlj/MzUVk7/+72ylPk5Ld1N97rOE+p9HYbUVI+UGnh9moqCS1tu2vnA9/fbJUhriZLn7ZM0K88Bb7EyDut9Y+Y7Zddx+fzKOYWR+UL3drtAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660189; c=relaxed/simple;
-	bh=O3LDVX+4BqFRdIOe6YQQ1o4I9dViD67WteN48LbqGqI=;
+	s=arc-20240116; t=1789660193; c=relaxed/simple;
+	bh=GRsX7fNRwcO1XMkJMLycW3CVPXnJ6NgJptY98R+/1yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shHo7QaAbZSn2ZfOaiIBuvWpqq9q1uqbC51hLLT/DYblN9VrtzSW9FoWRA5FQQ47P+37G8r4nzt1A9G9/BUkCITQ2G+lA7SGf04FF8J69qZWXeR19MDNCr3AWliDBThy4AdnPdyXBJVBP3CZKMahGDzSg1BVMTaeSgGmDPJOEb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJJS1Ah6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BgZp7zYvITQHPvEyUuASSTyW8q1quhF34Kgp2o70eSAUFhQKhCc9JYTQ4bUy5vQGpsCQXiDzP+lUpSmTqNYhgXq+nzwGTOzcoaD335ZpdUQ+22p475giX/04Aj4no5NhRd2oWGdH2SQH84yiWMgGGduJWD0Aqn5HKKAmlY3LFAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhZ3FcBA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJJS1Ah6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12931F00893;
-	Thu, 17 Sep 2026 15:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhZ3FcBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AB31F000FF;
+	Thu, 17 Sep 2026 15:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660182;
-	bh=d+CAQrBf5QmYt2+Axm6BrZyvqoMJwyAIMFmx3Pldc3I=;
+	s=korg; t=1789660185;
+	bh=tQJC9jVPkxcmWhlxQG7S12NDOZW1b9tyliX4G8IR5fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJJS1Ah6qfP1zf86t+SNEBcLBnEkoRUHuLCGd3T69clY0jll8LoQlG5MYbn4Xa7WE
-	 TfjU+oX7uxn/Fwxa+nXpsN9luhRU8ghxtErvjFCvxOeB6Tgr1JfAQEqhjAjN9FIN7F
-	 TMt05v/EwOAni81Fcn9yyN0Q74eE5M3LDrOuXLSo=
+	b=WhZ3FcBAUTRzWyPh91X/OmObd7SHjwhUwQh0E0XkT5EZWmAMvzEkVMckuE4k9kbKc
+	 vUoLSsl9oiA1k52/pSb/w1mL9j7gxtPYFgI4jyvo7zKvk73u1Y0p7JxrAcuMa3bDAL
+	 CdeOwcmmOqEVx4e+LXOrJFNI9p+AhIxaMaNKkNLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank Li <Frank.Li@nxp.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.2 507/733] accel: ethosu: Fix ethosu_job_open() return value
-Date: Thu, 17 Sep 2026 16:13:35 +0100
-Message-ID: <20260917151404.749748993@linuxfoundation.org>
+Subject: [PATCH 7.2 508/733] accel: ethosu: Drop IRQF_SHARED flag
+Date: Thu, 17 Sep 2026 16:13:36 +0100
+Message-ID: <20260917151404.777484364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,39 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Herring (Arm) <robh@kernel.org>
 
-commit b3c8d4672f7a8735e2884cefcd89286268e88b2e upstream.
+commit 2cbd3691565f7c86c0eaca305f5beb3435b4ba70 upstream.
 
-A WARN_ON() returns a 0 or 1, not the original negative errno. Just drop
-the WARN_ON() as the FD open will pass the return code to userspace and
-there's only one possible source of the error (drm_sched_entity_init()).
+The IRQF_SHARED flag doesn't work with runtime-pm as the IRQ handler
+could run without resuming the device. This could also be fixed with
+runtime-pm calls in the IRQ handler, but there is no known need for a
+shared IRQ.
 
 Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260827-ethosu-fixes-v1-1-346f9ea8791c@kernel.org
+Link: https://patch.msgid.link/20260827-ethosu-fixes-v1-2-346f9ea8791c@kernel.org
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_job.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/accel/ethosu/ethosu_job.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/accel/ethosu/ethosu_job.c
 +++ b/drivers/accel/ethosu/ethosu_job.c
-@@ -356,12 +356,10 @@ int ethosu_job_open(struct ethosu_file_p
- {
- 	struct ethosu_device *dev = ethosu_priv->edev;
- 	struct drm_gpu_scheduler *sched = &dev->sched;
--	int ret;
- 
--	ret = drm_sched_entity_init(&ethosu_priv->sched_entity,
--				    DRM_SCHED_PRIORITY_NORMAL,
--				    &sched, 1, NULL);
--	return WARN_ON(ret);
-+	return drm_sched_entity_init(&ethosu_priv->sched_entity,
-+				     DRM_SCHED_PRIORITY_NORMAL,
-+				     &sched, 1, NULL);
- }
- 
- void ethosu_job_close(struct ethosu_file_priv *ethosu_priv)
+@@ -325,7 +325,7 @@ int ethosu_job_init(struct ethosu_device
+ 	ret = devm_request_threaded_irq(dev, edev->irq,
+ 					ethosu_job_irq_handler,
+ 					ethosu_job_irq_handler_thread,
+-					IRQF_SHARED, KBUILD_MODNAME,
++					0, KBUILD_MODNAME,
+ 					edev);
+ 	if (ret) {
+ 		dev_err(dev, "failed to request irq\n");
 
 
