@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5464D1797;
-	Thu, 17 Sep 2026 18:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF08A3B71AE;
+	Thu, 17 Sep 2026 18:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671578; cv=none; b=T6Jwg+4sW8l7uVaxydWTBrBgSOp9mCvYBFHfkpb+tu2DNWOpGfzotMVvViESj0nlbh8gBuF8Bj3wf7/l1oII89RTUQfM2qYtllwmUHTI2+LGyinVSO5oHvKqhmfaVHYvSP3GwQdQ3RcAfwG0GcMNh6++b9naBLuc5KyCpVEiyBE=
+	t=1789671581; cv=none; b=dhghkgARaGuKICG0+U6OBzwMksw5uJQ2ONikHPR2MftocFis0zvYmYBp0uLVDOPXx43+ieww5BlBit26ewATavpdeWzlOMEwCyA3bNYg1C4E0XX1bmPkpTc41Yh4QbGNveK2ZbfNAP5h973VOMYohICLkYIkD18V2rofW8cqFmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671578; c=relaxed/simple;
-	bh=UVydnKNAyGQvrCvGv8vLuTc8jKrE+HfTmfblT++/MeE=;
+	s=arc-20240116; t=1789671581; c=relaxed/simple;
+	bh=UudPzUKoimB00U4N3rx76utYxSV4Uu6+zrmPX624myU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+3qphZTK7JYL6Re073wmhGVt/okfZyLL1ELQZznavnxiMKHxPBI5saPtfqlSK50Wa6bb5A7Xz0iBtPUfEo53yUuiZlpTEPMbYQ/IE2JWFKEw49MgsSWU5KGSkKUvOfkkmg7sFeGdaX2a0cX4ZbgM5wND3sy1R4oFLFV1vMptl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTaoz8Q2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nQi+DTypglsVdsKsgFDLzqfs1wLRngn56f2YX6lV8TfJKIDvBLcsyCMOxe7DQ5DsT9nkpM0TMCTEyI9Nzr4psohqaawgg9vWt6fPJ4BUlzd0CnqdCFcdl8G2YBwGiJAzwr/PNadQz2ORWh8C3DdTUa/Qxf5GNSnZQ30xb7EZBzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZ0ESET8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTaoz8Q2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7DD1F000FF;
-	Thu, 17 Sep 2026 18:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZ0ESET8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E3E1F000FF;
+	Thu, 17 Sep 2026 18:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671576;
-	bh=RB5OPyp1cTZI8TvHbBk6qzPL7oB4Y7RwY3tx/gdj67E=;
+	s=korg; t=1789671579;
+	bh=PaIPwLgSU/k/qkWYiAT2BILELcORVATxpOZvJCGIJ5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTaoz8Q2D6w7jDO0iVEb7OfW1gmndyGtxAE/8X/3lUp/MytsFhKZuyVQ3ky7zLs9+
-	 zsfu3tsxXsKcyPTHqakLOYZ+GKvwJxuWS3KBXDA7BbgeOUpHdqDK9vm+84rwqzZVpR
-	 AjuzNfedl5Vde4hLM6FFCF1uq64H5qQFOPL03MvM=
+	b=TZ0ESET8wZHlrz//AYjYjlXrLR6bbmvVbqnFPFiNDOEiYVKQiWxT/m3g4Vfa0Gi8v
+	 F+UYnBe+frp2fTz3QenbD9RDDYPwuHwh+1rnS6VHapIEiNJWVlRmm4B1ZJskrGiFw2
+	 YPv41b5gvQMXfILT/eVYxNjrcjj3DDktrtRJhYlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	tianshuo han <hantianshuo233@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1005/1102] cxl/pci: Remove unnecessary CXL Endpoint handling helper functions
-Date: Thu, 17 Sep 2026 16:15:48 +0100
-Message-ID: <20260917151605.973688863@linuxfoundation.org>
+Subject: [PATCH 6.12 1023/1102] Revert "NFSD: Remove the cap on number of operations per NFSv4 COMPOUND"
+Date: Thu, 17 Sep 2026 16:16:06 +0100
+Message-ID: <20260917151606.442817947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,115 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Bowman <terry.bowman@amd.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ca3d1a53e62093d17436abd447463da9c0f4e56b ]
+[ Upstream commit 3e7f011c255582d7c914133785bbba1990441713 ]
 
-The CXL driver's cxl_handle_endpoint_cor_ras()/cxl_handle_endpoint_ras()
-are unnecessary helper functions used only for Endpoints. Remove these
-functions as they are not common for all CXL devices and do not provide
-value for EP handling.
+I've found that pynfs COMP6 now leaves the connection or lease in a
+strange state, which causes CLOSE9 to hang indefinitely. I've dug
+into it a little, but I haven't been able to root-cause it yet.
+However, I bisected to commit 48aab1606fa8 ("NFSD: Remove the cap on
+number of operations per NFSv4 COMPOUND").
 
-Rename __cxl_handle_ras to cxl_handle_ras() and __cxl_handle_cor_ras()
-to cxl_handle_cor_ras().
+Tianshuo Han also reports a potential vulnerability when decoding
+an NFSv4 COMPOUND. An attacker can place an arbitrarily large op
+count in the COMPOUND header, which results in:
 
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Tested-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260114182055.46029-5-terry.bowman@amd.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 29458e62d082 ("cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read")
+[   51.410584] nfsd: vmalloc error: size 1209533382144, exceeds total
+pages, mode:0xdc0(GFP_KERNEL|__GFP_ZERO),
+nodemask=(null),cpuset=/,mems_allowed=0
+
+when NFSD attempts to allocate the COMPOUND op array.
+
+Let's restore the operation-per-COMPOUND limit, but increased to 200
+for now.
+
+Reported-by: tianshuo han <hantianshuo233@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org
+Tested-by: Tianshuo Han <hantianshuo233@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+
+The 6.12 tree already contains the functional changes from this revert
+and enforces a stricter 50-operation cap. Retain that cap and use this
+dependency to relocate struct nfsd_genl_rqstp into its sole user so the
+follow-up address-width fix applies at the same location as upstream.
+
+[ sashal: Reduced backport -- upstream 3e7f011c25558 touches 5 file(s), this
+  backport carries 2. Not backported here:
+  fs/nfsd/nfs4proc.c
+  fs/nfsd/nfs4state.c
+  fs/nfsd/nfs4xdr.c
+  fs/nfsd/xdr4.h
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
+Stable-dep-of: a99d720ed2a5 ("nfsd: widen nfsd_genl_rqstp address fields to sockaddr_storage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/pci.c |   26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+ fs/nfsd/nfsctl.c |   15 +++++++++++++++
+ fs/nfsd/nfsd.h   |   15 ---------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -650,8 +650,8 @@ err:
- }
- EXPORT_SYMBOL_NS_GPL(read_cdat_data, CXL);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1492,6 +1492,21 @@ static int create_proc_exports_entry(voi
  
--static void __cxl_handle_cor_ras(struct cxl_dev_state *cxlds,
--				 void __iomem *ras_base)
-+static void cxl_handle_cor_ras(struct cxl_dev_state *cxlds,
-+			       void __iomem *ras_base)
- {
- 	void __iomem *addr;
- 	u32 status;
-@@ -667,11 +667,6 @@ static void __cxl_handle_cor_ras(struct
- 	}
- }
+ unsigned int nfsd_net_id;
  
--static void cxl_handle_endpoint_cor_ras(struct cxl_dev_state *cxlds)
--{
--	return __cxl_handle_cor_ras(cxlds, cxlds->regs.ras);
--}
++struct nfsd_genl_rqstp {
++	struct sockaddr		rq_daddr;
++	struct sockaddr		rq_saddr;
++	unsigned long		rq_flags;
++	ktime_t			rq_stime;
++	__be32			rq_xid;
++	u32			rq_vers;
++	u32			rq_prog;
++	u32			rq_proc;
++
++	/* NFSv4 compound */
++	u32			rq_opcnt;
++	u32			rq_opnum[16];
++};
++
+ static int nfsd_genl_rpc_status_compose_msg(struct sk_buff *skb,
+ 					    struct netlink_callback *cb,
+ 					    struct nfsd_genl_rqstp *genl_rqstp)
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -70,21 +70,6 @@ struct readdir_cd {
+ /* Maximum number of operations per session compound */
+ #define NFSD_MAX_OPS_PER_COMPOUND	50
+ 
+-struct nfsd_genl_rqstp {
+-	struct sockaddr		rq_daddr;
+-	struct sockaddr		rq_saddr;
+-	unsigned long		rq_flags;
+-	ktime_t			rq_stime;
+-	__be32			rq_xid;
+-	u32			rq_vers;
+-	u32			rq_prog;
+-	u32			rq_proc;
 -
- /* CXL spec rev3.0 8.2.4.16.1 */
- static void header_log_copy(void __iomem *ras_base, u32 *log)
- {
-@@ -693,8 +688,8 @@ static void header_log_copy(void __iomem
-  * Log the state of the RAS status registers and prepare them to log the
-  * next error status. Return 1 if reset needed.
-  */
--static bool __cxl_handle_ras(struct cxl_dev_state *cxlds,
--				  void __iomem *ras_base)
-+static bool cxl_handle_ras(struct cxl_dev_state *cxlds,
-+			   void __iomem *ras_base)
- {
- 	u32 hl[CXL_HEADERLOG_SIZE_U32];
- 	void __iomem *addr;
-@@ -727,11 +722,6 @@ static bool __cxl_handle_ras(struct cxl_
- 	return true;
- }
- 
--static bool cxl_handle_endpoint_ras(struct cxl_dev_state *cxlds)
--{
--	return __cxl_handle_ras(cxlds, cxlds->regs.ras);
--}
+-	/* NFSv4 compound */
+-	u32			rq_opcnt;
+-	u32			rq_opnum[16];
+-};
 -
- #ifdef CONFIG_PCIEAER_CXL
- 
- static void cxl_dport_map_rch_aer(struct cxl_dport *dport)
-@@ -810,13 +800,13 @@ EXPORT_SYMBOL_NS_GPL(cxl_dport_init_ras_
- static void cxl_handle_rdport_cor_ras(struct cxl_dev_state *cxlds,
- 					  struct cxl_dport *dport)
- {
--	return __cxl_handle_cor_ras(cxlds, dport->regs.ras);
-+	return cxl_handle_cor_ras(cxlds, dport->regs.ras);
- }
- 
- static bool cxl_handle_rdport_ras(struct cxl_dev_state *cxlds,
- 				       struct cxl_dport *dport)
- {
--	return __cxl_handle_ras(cxlds, dport->regs.ras);
-+	return cxl_handle_ras(cxlds, dport->regs.ras);
- }
- 
- /*
-@@ -913,7 +903,7 @@ void cxl_cor_error_detected(struct pci_d
- 		if (cxlds->rcd)
- 			cxl_handle_rdport_errors(cxlds);
- 
--		cxl_handle_endpoint_cor_ras(cxlds);
-+		cxl_handle_cor_ras(cxlds, cxlds->regs.ras);
- 	}
- }
- EXPORT_SYMBOL_NS_GPL(cxl_cor_error_detected, CXL);
-@@ -942,7 +932,7 @@ pci_ers_result_t cxl_error_detected(stru
- 		 * chance the situation is recoverable dump the status of the RAS
- 		 * capability registers and bounce the active state of the memdev.
- 		 */
--		ue = cxl_handle_endpoint_ras(cxlds);
-+		ue = cxl_handle_ras(cxlds, cxlds->regs.ras);
- 	}
- 
- 
+ extern struct svc_program	nfsd_programs[];
+ extern const struct svc_version	nfsd_version2, nfsd_version3, nfsd_version4;
+ extern struct mutex		nfsd_mutex;
 
 
