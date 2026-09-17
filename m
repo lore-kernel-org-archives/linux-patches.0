@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7C4EFFB6;
-	Thu, 17 Sep 2026 15:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201145505C4;
+	Thu, 17 Sep 2026 15:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659828; cv=none; b=YZ7KQbjW+PXy5BCtSCzIVRew+Ebf/pDr9aMhTzbx7ExO+A8GBIyWLrC8os+N38BPL8GXfLjhB29FF8W+X6EWS3Hxwd0MOohJboYXNlK7li4a+xTx9aLVNZpxQ7WgZbyTbV7U1ZS8q+Xs7Qm/02AeQZH6kzidJ0IZSKscbS2/SX8=
+	t=1789659835; cv=none; b=QH6d+0kig0oTjVuumUTPvpV3XqxxQxc0UNZiDaPO82nNkEYVcgoIqCqo3NgacG5KYDk78OzDy4VSgfaeEUMv4kQijZTzFclAxTUZ/jWOGIkv6esaYq5leSuXshUgPRbRZLiZU+ugT0B54B/KHZS10DBE/KLU2qIUnNthrFzggV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659828; c=relaxed/simple;
-	bh=QyXLDaQJKHqCl6yevn77V600i9Hf1Xt8t1oNiteMpc4=;
+	s=arc-20240116; t=1789659835; c=relaxed/simple;
+	bh=P/HIlpAbNpX3jR7+595SFJoFHuMsMpR0yC8jflbnot4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrKq7yN2q5uZfmymSJ3ywbgOwNJd1eVqbYR49kIeljS1g0jNmZFzlmHcvIVfuGHjUPHjL2v08Ckhk+NBBqDOzBssU9yNnGaHDAJmJN++cBwf29Zk97wvZ6EHT1JqUdJWphTgwa83y6LjQ+3CT0tLZAo6YolVOOorGEwZIE9ZBCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTMI5Ni3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cUZ9NCdbaNZwFCvSNrI2bf00AOLwwS8hALu/v2ZnJ5WYjn5rMMWGQcA1eviow6mQf8IbbQ6wLsOaB5RYaXuwA9tsoPsGnB0H65SSFeFpAJTBZhFlPPeSz6Uh7d58Nk4jzDh2Gr9PkgpgKYzN7MOlYTMHeviT5H6fL/t2Y8iGLN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqxeaFvS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTMI5Ni3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528521F00893;
-	Thu, 17 Sep 2026 15:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqxeaFvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7221F00893;
+	Thu, 17 Sep 2026 15:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659823;
-	bh=LjVVPyF4I/MwZKdoSElA9Fgqan7kZtO9KFfpTqgx7YY=;
+	s=korg; t=1789659829;
+	bh=piInThYONUQkH+/ASj8jLurL2WJeba93/Zh+Ac/ZCmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTMI5Ni367IDGnR6BQpyAyofI6CAnX1GRDK12i551GFb/jiOmMgssWWkCkVJU98sh
-	 WlRSDyLf7G1tzSg+tsAgbJgElrb/rVlfObV9z/uBXhaVFXQg4EhYJkoTNP9mOerb6A
-	 HQorjpxTkNNlzuuOhPzdcJ2Muvnezu4hzspj9B9o=
+	b=cqxeaFvSf0HWtzfzUpiXDduXmEDT0UCp0+qw7MFBOVKF5iivOlvw6Kn8e5gjyHtYO
+	 xMkD/U3kq3FkBGO5qImAqPLmY34fYx2F/651Rdauf6acNMUBWrJQaTr+R0m8wtHsm4
+	 Pkql4vGUpVkPG7+X407Y8VDTaEQh5lU6vQTxkxS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Varun Gupta <varun.gupta@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 387/733] nstree: check listing permission before taking a namespace reference
-Date: Thu, 17 Sep 2026 16:11:35 +0100
-Message-ID: <20260917151401.341179896@linuxfoundation.org>
+Subject: [PATCH 7.2 388/733] drm/xe: Guard page-fault worker with runtime PM check
+Date: Thu, 17 Sep 2026 16:11:36 +0100
+Message-ID: <20260917151401.367521375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -46,89 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Varun Gupta <varun.gupta@intel.com>
 
-[ Upstream commit 56ea4e86832d8abe8930394473566c194d189f85 ]
+[ Upstream commit 20fce5b34b21a995839743b4917a1edd2fd503ba ]
 
-legitimize_ns() takes a reference on the candidate namespace before
-may_list_ns() has decided whether the caller may see it. The
-__free(ns_put) cleanup on the denied path can drop the last reference to a
-mount namespace while we still hold the rcu read lock, and put_mnt_ns()
-may sleep there. This is the same problem commit 2ec2aff3c8e2 ("ns: make
-sure reference are dropped outside of rcu lock") fixed for the put_user()
-path. Neither ns_requested() nor may_list_ns() needs a reference, both
-only look at the namespace type and at the caller's own namespaces, so do
-the checks first and take the reference last.
+During VM teardown, the VM's runtime PM reference is dropped
+asynchronously, allowing the device to autosuspend while stale page
+faults belonging to the now-dead VM are still queued. When the
+page-fault worker later tries to ack one of these, it calls into
+guc_ct_send_locked() on an already-suspended device, tripping:
 
-Splat:
+  Assertion `!xe_pm_runtime_suspended(xe)` failed!
+  WARNING at xe_device.c:1267 xe_device_assert_mem_access+0x11c/0x140 [xe]
 
-  Voluntary context switch within RCU read-side critical section!
-  WARNING: kernel/rcu/tree_plugin.h:332 at rcu_note_context_switch+0x238/0x2a0, CPU#5: a/3442
-  CPU: 5 UID: 1000 PID: 3442 Comm: a Not tainted 7.0.0-30-generic #30-Ubuntu PREEMPT(lazy)
-  RIP: 0010:rcu_note_context_switch+0x238/0x2a0
-  Call Trace:
-   <TASK>
-   __schedule+0xcf/0x650
-   schedule+0x27/0x90
-   schedule_preempt_disabled+0x15/0x30
-   __mutex_lock.constprop.0+0x550/0xaf0
-   __mutex_lock_slowpath+0x13/0x20
-   mutex_lock+0x3b/0x50
-   exp_funnel_lock+0xb2/0x260
-   synchronize_rcu_expedited+0xe7/0x220
-   namespace_unlock+0x26a/0x320
-   put_mnt_ns+0xd3/0x120
-   mntns_put+0xe/0x20
-   do_listns+0x13e/0x560
-   __do_sys_listns+0x126/0x2d0
-   __x64_sys_listns+0x20/0x30
-   x64_sys_call+0x2366/0x2390
-   do_syscall_64+0x105/0x5a0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   </TASK>
+A live VM/exec queue always holds a PM reference while it has
+outstanding work, so if the device is suspended at ack time, the
+owning context is already gone and the fault is stale.
 
-Fixes: 76b6f5dfb3fd ("nstree: add listns()")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/ABA32239-733B-438C-B95A-B13ED69FF0F3@doyensec.com
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Take a runtime PM reference across the entire pagefault
+queue worker to safely deliver acks for torn-down VMs.
+
+v3:
+ - Move PM ref to the generic xe_pagefault_queue_work using
+   guard(xe_pm_runtime)(xe) instead of tracking it in the GuC
+   backend(Matt Brost).
+
+v2:
+ - Hold PM ref across the entire batch (begin/end) instead of per-ack.
+   This prevents the device from autosuspending mid-batch, which would
+   leave write_only acks written but the end flush skipped, and skip
+   counter++, desyncing the cadence check.(Himal)
+ - Add a comment explaining stale faults.(Himal)
+
+Fixes: f289f7807119 ("drm/xe: Add xe_guc_pagefault layer")
+Signed-off-by: Varun Gupta <varun.gupta@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patch.msgid.link/20260907050011.497181-2-varun.gupta@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit fcc2431d2213dc4d04250c4f1ae87d9c3ae0d455)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo: Added xe_device struct for compatibility while cherry-picking]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/nstree.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/xe_pagefault.c       | 10 ++++++++++
+ drivers/gpu/drm/xe/xe_pagefault_types.h |  3 +++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/kernel/nstree.c b/kernel/nstree.c
-index 6d12e5900ac01..831f279d174a3 100644
---- a/kernel/nstree.c
-+++ b/kernel/nstree.c
-@@ -533,19 +533,13 @@ DEFINE_FREE(ns_put, struct ns_common *, if (!IS_ERR_OR_NULL(_T)) ns_put(_T))
- static inline struct ns_common *__must_check legitimize_ns(const struct klistns *kls,
- 							   struct ns_common *candidate)
+diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
+index dbf8f71d3328a..a4986df8328d6 100644
+--- a/drivers/gpu/drm/xe/xe_pagefault.c
++++ b/drivers/gpu/drm/xe/xe_pagefault.c
+@@ -16,6 +16,7 @@
+ #include "xe_hw_engine.h"
+ #include "xe_pagefault.h"
+ #include "xe_pagefault_types.h"
++#include "xe_pm.h"
+ #include "xe_svm.h"
+ #include "xe_trace_bo.h"
+ #include "xe_vm.h"
+@@ -292,9 +293,17 @@ static void xe_pagefault_queue_work(struct work_struct *w)
  {
--	struct ns_common *ns __free(ns_put) = NULL;
--
- 	if (!ns_requested(kls, candidate))
- 		return NULL;
+ 	struct xe_pagefault_queue *pf_queue =
+ 		container_of(w, typeof(*pf_queue), worker);
++	struct xe_device *xe = pf_queue->xe;
+ 	struct xe_pagefault pf;
+ 	unsigned long threshold;
  
--	ns = ns_get_unless_inactive(candidate);
--	if (!ns)
--		return NULL;
--
--	if (!may_list_ns(kls, ns))
-+	if (!may_list_ns(kls, candidate))
- 		return NULL;
++	/*
++	 * A live VM holds a PM reference, but a torn-down VM does not.
++	 * Guard the entire worker loop to safely drain stale faults and
++	 * prevent autosuspends from desyncing batched CT flushes.
++	 */
++	guard(xe_pm_runtime)(xe);
++
+ #define USM_QUEUE_MAX_RUNTIME_MS      20
+ 	threshold = jiffies + msecs_to_jiffies(USM_QUEUE_MAX_RUNTIME_MS);
  
--	return no_free_ptr(ns);
-+	return ns_get_unless_inactive(candidate);
- }
+@@ -365,6 +374,7 @@ static int xe_pagefault_queue_init(struct xe_device *xe,
+ 	drm_dbg(&xe->drm, "xe_pagefault_entry_size=%d, total_num_eus=%d, pf_queue->size=%u",
+ 		xe_pagefault_entry_size(), total_num_eus, pf_queue->size);
  
- static ssize_t do_listns_userns(struct klistns *kls)
++	pf_queue->xe = xe;
+ 	spin_lock_init(&pf_queue->lock);
+ 	INIT_WORK(&pf_queue->worker, xe_pagefault_queue_work);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_pagefault_types.h b/drivers/gpu/drm/xe/xe_pagefault_types.h
+index c4ee625b93ddd..f63a12aa0d4f7 100644
+--- a/drivers/gpu/drm/xe/xe_pagefault_types.h
++++ b/drivers/gpu/drm/xe/xe_pagefault_types.h
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/workqueue.h>
+ 
++struct xe_device;
+ struct xe_gt;
+ struct xe_pagefault;
+ 
+@@ -118,6 +119,8 @@ struct xe_pagefault {
+  * queue to absorb the device’s worst-case number of outstanding faults.
+  */
+ struct xe_pagefault_queue {
++	/** @xe: Back-pointer to the Xe device */
++	struct xe_device *xe;
+ 	/**
+ 	 * @data: Data in queue containing struct xe_pagefault, protected by
+ 	 * @lock
 -- 
 2.53.0
 
