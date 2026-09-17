@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3854D488E;
-	Thu, 17 Sep 2026 18:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34AF4DA9DC;
+	Thu, 17 Sep 2026 18:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671157; cv=none; b=Xl4VPl0DIeAMB4I3JBqgLmPcdjlGb5COItseHoCiNsST/m4jE8MnDHjDEWbsAQGGjw50QLz1ZM2OKowIYUpn5h96g3g1BHg2lb5VBmy+h4i3t7SC9EYa7tZNIoSUggeIKl+ls0gPQOYppfvafngqpSebzSuN4exLViT9QqJ6iJ8=
+	t=1789671161; cv=none; b=grq89PysLBJUezsZO6pwtyDc4ZaNsWNJ6gV+ByNBMjNxs5sBVheLL4lKTwwMFBVGu4k5XY0xFMSe5KzlkfHXMEdTU2rxShrBsobH9a2TvFScVEvU8oNryguw9qGXQbAp5K+A0Y3daOsgXgQz8ZrYyWsUhoJFDLLl7i6RH3ER018=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671157; c=relaxed/simple;
-	bh=ClmaSSt2mVMV6U7pj4RcUMRRfhfsfE2w5Ln+pwtPJxM=;
+	s=arc-20240116; t=1789671161; c=relaxed/simple;
+	bh=Mt/As2bRkaS7r2IIyEotjxgIOg3MbXsL455xXjrI4Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aczj4PSo7emqb96kmz4t/SzbpENkR+M8C6c/q38eWfqREz9boB/OyDnjeHwbfp+S+JoJSubjAwRqah4RhGMlVc+5n6epRCRWtHjigVAnXpxJH9Bc0gPnvuXpukEgReBNiHomTDHsLwYePWL+bOmM8Er+/64t6yKPfM18nZR22pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPKR4Swm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=clt6WE4Ea/DLs/IIsAzilpw8HDsbglEUWebLIbQwCroaroPInOwPkgX9JLOuBJc1FclUujx9+o08+KOFTyJ+zPiUPbFAdpzToyKH4QaB7frTLlcNyB7YI30u/xZVUMJJmyt9EdvQN8l8vAfLZ5EnE8RIY2kPpf3jDdra6xlnNiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRdtkdr1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPKR4Swm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68761F000FF;
-	Thu, 17 Sep 2026 18:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRdtkdr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8631F000FF;
+	Thu, 17 Sep 2026 18:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671155;
-	bh=STzCj9PEyb5/vwpyLUB/nXj8SMVmcC1CiR3fqx8xKfU=;
+	s=korg; t=1789671159;
+	bh=R8usT+gfc8jhCwX98hrtHilfasZ3GaM/nkMedJv57io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPKR4SwmPUBbzGW0g3bHiieHg4wuqigZJhZWhFzqw0zbmWwEli209Ncl5cNm/1oMS
-	 gRVdGDJOfsqJoGEMtdnb3mZwJOVafHrVG/dg5azk3aioXGjw7xEXtNr2Z2ZDqu7sU1
-	 8nmPPvTaLzK4JcXwbkRPJp343XRWPhJO+Ary+W6I=
+	b=QRdtkdr1fACpHlnJUEYAaOrW9eXmA2jY9k2J279C6CNQGAxoHyPPMZKqADEfCyS+e
+	 +YZ1X50TUtm1gVoOhI6O0Rg8VSuW4qxT9c2bNW3YUCN5MjVh1kJVQ8yjzBhRVuN6IU
+	 r9JOHwD7rVNbk3s2mnRwtZorIb+0igPBkDStkYeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 0846/1102] netfilter: nf_log: unregister loggers before per-net teardown
-Date: Thu, 17 Sep 2026 16:13:09 +0100
-Message-ID: <20260917151601.768302493@linuxfoundation.org>
+Subject: [PATCH 6.12 0847/1102] netfilter: report NLM_F_DUMP_FILTERED when all is filtered out
+Date: Thu, 17 Sep 2026 16:13:10 +0100
+Message-ID: <20260917151601.795475084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,87 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 2c018cc4842c33f0c732962e2ab58635e8ae5823 upstream.
+commit 7a099b347fef536a84068076e2d384f044e5cfc5 upstream.
 
-nf_log_syslog and nfnetlink_log unregister their per-network namespace
-operations before unregistering their global logger backends. This
-leaves a window where a sysctl or netlink writer can rebind the still-
-registered logger after the per-net pre-exit callback cleared the old
-selection.
+NLM_F_DUMP_FILTERED is only set on data elements in the conntrack dump.
+But when everything is filtered out it is confusing for the user space,
+since the flag is not reported anymore and it looks like the table was
+empty, which may or may not be the case.
 
-The race looks like this:
+'answer_flags' were introduced precisely for this use case, and the
+conntrack dump should set the flag in there in case the filtering was
+applied.
 
-  CPU 0                                 CPU 1
-  ----                                  ----
-  unregister_pernet_subsys()
-    nf_log_unset(net, logger)
-      net->nf.nf_loggers[pf] = NULL
+This is important, for example, to be able to tell if the filters are
+supported or not by the kernel without modifying the kernel state.
 
-                                        lock nf_log_mutex
-                                        find logger in loggers[][]
-                                        net->nf.nf_loggers[pf] = logger
-                                        unlock nf_log_mutex
+With the proper reporting of NLM_F_DUMP_FILTERED on NLMSG_DONE, an
+application in user space can just try and dump with an arbitrary
+filter without worrying that there could be no matching entry.  The
+reported flag will signal that the filtering was applied and therefore
+supported.
 
-  nf_log_unregister(logger)
-    lock nf_log_mutex
-    loggers[pf][type] = NULL
-    unlock nf_log_mutex
-    synchronize_rcu()
-  module exit returns
-  module core frees backend memory
-
-Later, a sysctl read or packet logging operation can dereference the
-stale per-net logger pointer.
-
-Fix this by unregistering the global logger backends before tearing down
-per-net state. Once the global registrations are gone, later writers can
-no longer rebind the logger. unregister_pernet_subsys() already waits
-for an RCU grace period after the pre-exit callback clears the per-net
-selection, while nf_log_unregister() continues to cover readers of the
-global logger table.
-
-Apply this ordering fix to both nf_log backends that combine per-net
-teardown with global logger registration.
-
-Fixes: 5b023fc8d8e0 ("netfilter: enable per netns support for nf_loggers")
+Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_log_syslog.c |    2 +-
- net/netfilter/nfnetlink_log.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -1063,12 +1063,12 @@ err1:
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -1053,6 +1053,8 @@ static int ctnetlink_start(struct netlin
+ 	}
  
- static void __exit nf_log_syslog_exit(void)
- {
--	unregister_pernet_subsys(&nf_log_syslog_net_ops);
- 	nf_log_unregister(&nf_ip_logger);
- 	nf_log_unregister(&nf_arp_logger);
- 	nf_log_unregister(&nf_ip6_logger);
- 	nf_log_unregister(&nf_netdev_logger);
- 	nf_log_unregister(&nf_bridge_logger);
-+	unregister_pernet_subsys(&nf_log_syslog_net_ops);
+ 	cb->data = filter;
++	if (filter)
++		cb->answer_flags = NLM_F_DUMP_FILTERED;
+ 	return 0;
  }
  
- module_init(nf_log_syslog_init);
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -1228,8 +1228,8 @@ static void __exit nfnetlink_log_fini(vo
- {
- 	nfnetlink_subsys_unregister(&nfulnl_subsys);
- 	netlink_unregister_notifier(&nfulnl_rtnl_notifier);
--	unregister_pernet_subsys(&nfnl_log_net_ops);
- 	nf_log_unregister(&nfulnl_logger);
-+	unregister_pernet_subsys(&nfnl_log_net_ops);
- }
- 
- MODULE_DESCRIPTION("netfilter userspace logging");
 
 
