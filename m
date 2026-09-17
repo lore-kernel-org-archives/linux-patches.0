@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118CB4D1797;
-	Thu, 17 Sep 2026 17:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF2F4F649C;
+	Thu, 17 Sep 2026 17:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666136; cv=none; b=tIee3xvrBy5AVz6Afb9m5T0mF6Q3Nc+E8DIRe0aiw+4SxTZ4Fn2NcZT03ibuGVtcBFBnw8vNI/qDrD4QAxC5pkVbVE6XjvGZiyFARkOHkeXqtoZRU+iVWq4mxiiCO6fMF9DdjWZj0g92zUoTqLMyEOgPNvKyOXTk2mqHCs75sEo=
+	t=1789666139; cv=none; b=DyigLT184S8hATihFM6WtmqzqNok22zYrgsHw+N0mlz0Ah34BfWGcb6YQXlIvpER+I70Zmjewik/ehy4I8Uaj3poeSXrkvg3DKwC8TfItx+/DXtliup+OrN+sEu5ZqkB5BBxv8DJ/x0onBaKuFVfvm5VjeyXPN1wjVy/CovyOxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666136; c=relaxed/simple;
-	bh=xpLRadwEZbxvLUZKB1qr7xelH7i5EyssSVNG6um8oMw=;
+	s=arc-20240116; t=1789666139; c=relaxed/simple;
+	bh=rJ36x3NsC/vag+4hXMCHcy4SIF6B7l5eUhu0Ho9PmY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlN0S9JrWMxQBengtHv7DGcfQ7kAzc4pH5BWDrQsFMubNYhEpWb81Uz6aAN1YqEqLRhGXycQGh4tk+EnBfVOH6z4tQiJyYhR3afF5ZddA5oUE/Hu60N/L7ljZVChkBppzhvqqHnVjqyF4fBb1XNFwgewxyvWCg3jTY52+wbrRJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWCQxEXh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHkU6p232r9d6Sa0Tv7mzqMsNyj3xbKBd06uVAFUM4iBEBMlWCesZsyPIB9+cChjk63q/EL0JfV3FtxsDd++2CNlglVTDnLknyqHjRS1i0gTIg5bJyE5FNiUvFwIzvdQu6YnmgXkuKwx5AnrSZwy98Zk6QbTdvU1aviXs0zZVpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWCb0bV6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWCQxEXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CD51F000FF;
-	Thu, 17 Sep 2026 17:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWCb0bV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C9B1F000FF;
+	Thu, 17 Sep 2026 17:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666135;
-	bh=z20uhNXmznaCXXFMMHtJxlaumefpwKYybghF3E5U2X4=;
+	s=korg; t=1789666138;
+	bh=lqE933a7WJLrcEWvMbGZAhLtIybaFVrItYXqk32mJsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vWCQxEXhC4skoQAvsrIlvpnsht+N5iOxlNS4fxFRRtytFCtQIIdpg6D+F1l8bKsq2
-	 qx2PC0ulJ4RQ7UoZcrcvW0b5BTiTHwGfUskHlkldvGCHvr0PpkI6n5ZDHAxELKWAgd
-	 py24xC38HjU/vQuVvtsBQTXZFz13CutsPDKUP0OY=
+	b=OWCb0bV6pmdtgqHk1w9JbYdp6egWttrooHXsgzSk1+35GtUHfspQR/S3luNutNUZy
+	 a4Y90C1fDFmJB4dTpcsiNBgsggCUf3gdH/7XmK81GINOSJ/1UFzMzyj/hACm9FsF6z
+	 geQd4BglnaY4+1JW5zOzis59PIeqD7yYiH0nBZsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Vasut <marex@nabladev.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0935/1250] net: net_failover: Fix the deadlock in net_failover_slave_name_change()
-Date: Thu, 17 Sep 2026 16:12:10 +0100
-Message-ID: <20260917151617.358110157@linuxfoundation.org>
+Subject: [PATCH 6.18 0900/1250] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
+Date: Thu, 17 Sep 2026 16:11:35 +0100
+Message-ID: <20260917151616.383278342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,73 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faicker Mo <faicker.mo@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit 985a663bf00799c1daf1c5789efa6406958780c8 ]
+[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
 
-This is a sibling fix of commit
-b84c5632c7b3 ("net: net_failover: Fix the deadlock in slave register").
-There is netdev_lock_ops() in the upper callers, so using netif_open()
-instead of dev_open().
+KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
+when issuing a software power-down (PMECR[1:0] = 10) followed by a
+power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
+properly preventing communication. The Transmitter will still send
+data, but no data will be received.
 
-Call Trace:
- __schedule+0x2bb/0x650
- schedule+0x27/0xb0
- schedule_preempt_disabled+0x15/0x30
- __mutex_lock.constprop.0+0x550/0xaf0
- __mutex_lock_slowpath+0x13/0x20
- mutex_lock+0x3b/0x50
- dev_open+0x3b/0xe0
- net_failover_slave_name_change+0x22/0x40
- failover_event+0xd4/0x1e0
- notifier_call_chain+0x62/0xf0
- raw_notifier_call_chain+0x16/0x30
- call_netdevice_notifiers_info+0x50/0x80
- netif_change_name+0x200/0x330
- do_setlink.isra.0+0xb12/0xdf0
- ? security_capable+0x9a/0x1e0
- ? ns_capable+0x31/0x60
- rtnl_setlink+0x302/0x670
- ? netlink_recvmsg+0x296/0x340
- ? security_capable+0x9a/0x1e0
- ? __pfx_rtnl_setlink+0x10/0x10
- rtnetlink_rcv_msg+0x384/0x460
- ? __pfx_rtnetlink_rcv_msg+0x10/0x10
- netlink_rcv_skb+0x61/0x120
- rtnetlink_rcv+0x15/0x30
- netlink_unicast+0x28f/0x3c0
- netlink_sendmsg+0x216/0x450
- __sys_sendto+0x222/0x230
- __x64_sys_sendto+0x24/0x40
- x64_sys_call+0x1d5d/0x2390
- do_syscall_64+0x105/0x5a0
- ? do_syscall_64+0x140/0x5a0
- ? exc_page_fault+0x94/0x1e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+The errata sheet also includes a workaround, which states that,
+it is recommended that the software power-down feature not be used.
 
-Fixes: 7e4d784f5810 ("net: hold netdev instance lock during rtnetlink operations")
-Signed-off-by: Faicker Mo <faicker.mo@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260908040708.3972058-1-faicker.mo@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Implement that workaround and drop the entry into software power-down
+mode. The ks8851_write_mac_addr() calls entry into normal power-on
+mode at the very beginning of the function, therefore dropping the
+second call to enter software power-down mode is sufficient here.
+The ks8851_net_stop() can only be called after ks8851_net_start()
+was already called, and ks8851_net_start() also makes the MAC enter
+normal power-on mode, therefore it is also fine to drop the call to
+enter software power-down mode from ks8851_net_stop().
+
+This will lead to a slight increase in power consumption, but it also
+fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
+is where the problem was reported and this fix was tested.
+
+[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
+
+Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/net_failover.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/net/net_failover.c b/drivers/net/net_failover.c
-index cd16b3dd7720a..ee9bfc96f0b3e 100644
---- a/drivers/net/net_failover.c
-+++ b/drivers/net/net_failover.c
-@@ -675,7 +675,7 @@ static int net_failover_slave_name_change(struct net_device *slave_dev,
- 	/* We need to bring up the slave after the rename by udev in case
- 	 * open failed with EBUSY when it was registered.
- 	 */
--	dev_open(slave_dev, NULL);
-+	netif_open(slave_dev, NULL);
+diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
+index 4afbb40bc0e4a..d49f281c78676 100644
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
+ 		ks8851_wrreg16(ks, KS_MAR(i), val);
+ 	}
+ 
+-	if (!netif_running(dev))
+-		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+-
+ 	ks8851_unlock(ks);
  
  	return 0;
- }
+@@ -478,8 +475,7 @@ static int ks8851_net_open(struct net_device *dev)
+  * @dev: The device being closed.
+  *
+  * Called to close down a network device which has been active. Cancel any
+- * work, shutdown the RX and TX process and then place the chip into a low
+- * power state whilst it is not being used.
++ * work and shutdown the RX and TX process.
+  */
+ static int ks8851_net_stop(struct net_device *dev)
+ {
+@@ -506,8 +502,6 @@ static int ks8851_net_stop(struct net_device *dev)
+ 	/* shutdown TX process */
+ 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
+ 
+-	/* set powermode to soft power down to save power */
+-	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+ 	ks8851_unlock(ks);
+ 
+ 	/* ensure any queued tx buffers are dumped */
 -- 
 2.53.0
 
