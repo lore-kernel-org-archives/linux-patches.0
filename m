@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A664DEC09;
-	Thu, 17 Sep 2026 18:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549F649D58F;
+	Thu, 17 Sep 2026 18:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671196; cv=none; b=WcXR4W6l0NaBhpT/AATkXGTrFrqLNGV4aS+vU9e6PoSxhQNqOFKyYV04C/xpw0BF3TPDF3s++fbePou+mNXM/rP57QA+PSEc4kPkCfJTUjjfFq6SVfRQuiPBviF+KRD6lCVIOYblr9VoG/2TNC6sSlDH2sbQ0PFbAy2TPeDqvPU=
+	t=1789671199; cv=none; b=JD1cXB4GmEXh6Jhp3QccGDFM8iaAsOlRLx69ujxrkRLlVILaOoQr3Z3OTKcrnAwMKrK11l6YweSHJpyZ5oP/wbXj7DgF2Dhx6E5Z1Jb0gxAXSkLliaNoxgO1AaJQ0f/XHbitRpk7bbDcGeiMCcdP50IvFpbiFbH97pTXS4P5gS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671196; c=relaxed/simple;
-	bh=XUhMXOOSQ9c1J6cnu1Suh3GltgwDJxb/OW81dx57gQ8=;
+	s=arc-20240116; t=1789671199; c=relaxed/simple;
+	bh=ROeOiBi04EgGZNaM0nuVoN3Y3Qi0X51DgQ1biCINZAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULw1dMYOqMm+y8O1mf1WLWprJvbQ0hw4xc6U+qISlwKO63rTvYy38rGatusBESTjCfsLWPUS42Ri4zhvCQPpBY0og/KBGBuAQef2lVd9MX9GTR+Yb8Eo7GPIHs2Mq56R6qUhVvvOYggaEiDGzNZd5+wrYg5M2C+lTx/qA3pt7KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu35LWY6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GRaJoR/8QrAa/h9m7trE/9zY/oJDISq3Z7WGcCuyIMilT53S60QC7eqQgOv17R7rvjAYO9R43wPTmXWMt9onNFl8L8YXzBY+Sdoe6vbPsQqh20tj5Vq5xusITGIHKOT1jOrggInKiQzf353M5ab0MJsWskSklapjXQVjDrEaja8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taQpoRiU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu35LWY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD3B1F00898;
-	Thu, 17 Sep 2026 18:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taQpoRiU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB10A1F000FF;
+	Thu, 17 Sep 2026 18:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671195;
-	bh=Q//VgErUrYXEACySnDzErdbJHBoIk/c1a9LeotMXxHs=;
+	s=korg; t=1789671198;
+	bh=oT+wNZ2sBV1CwBbtvdbWw7ZK+cWZSY6c/SdEbeGKb4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gu35LWY6gL4T82B0Ps7sat/3XqHJeCimda+4xrz8UkiJwzbUZdC3Z23sM5dsjdSAW
-	 9/XV6FWJ7u24VWYvqwmZOJIBSMe6Os1pz2FcG5uMqaMEaNWm8NO9SU132UDXGH/x/J
-	 HMs+O/sK1ffDrHk7siHVIZgSkI3BwQVH8aaDnV50=
+	b=taQpoRiUTWSMx3ITjvV73Kd8fbOhKqEa7z3nC0K77ZSHUt7lZA0rjFAHM0DNrNjPU
+	 +BoHLl/7dDnjW9qbkxnJsPiH1ttDH2w69iPar8Lnb8POfDksKr1ou4jF14fODu+gBv
+	 yQ7oHksIL/4ownSTwWGc8a9Zu+RKs7DHY6uVPJEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0898/1102] xfs: snapshot scrub stats when rendering them
-Date: Thu, 17 Sep 2026 16:14:01 +0100
-Message-ID: <20260917151603.138683922@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0881/1102] media: v4l2-ctrls: validate AV1 tile counts
+Date: Thu, 17 Sep 2026 16:13:44 +0100
+Message-ID: <20260917151602.685875489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,78 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 568a1588b906780dc3e9be56a61217afb4f7800e upstream.
+commit 439058ced617fbb3febc017b9e93bb7387f309e0 upstream.
 
-LOLLM complains about concurrency problems in the scrub stats code
-because xchk_stats_format doesn't synchronize in any way with updates.
-These stats are only reported through debugfs so I don't think it really
-matters, but I guess I exist to make bots happy now.
+The stateless AV1 decoders use tile_info.tile_cols and tile_rows as loop
+bounds and as indices into the mi_*_starts[] and *_in_sbs_minus_1[]
+arrays, as the divisor for context_update_tile_id, and their product
+bounds the per-tile descriptor buffers, but std_validate_compound() does
+not bound these u8 fields. Reject a V4L2_CTRL_TYPE_AV1_FRAME whose
+tile_cols or tile_rows exceeds V4L2_AV1_MAX_TILE_COLS / _ROWS, or whose
+product exceeds V4L2_AV1_MAX_TILE_COUNT. A zero tile count is left to the
+consuming driver so the zero-initialised control that existing userspace
+submits is still accepted.
 
-Note: We snapshot the entire stats object with a spinlock so that we
-don't have to worry about users seeing slightly weird numbers (e.g.
-invocations has incremented but none of the outcomes have been yet) if
-we race with xchk_stats_merge_one.  This isn't a hot path.
-
-Cc: stable@vger.kernel.org # v6.6
-Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: 9de30f579980 ("media: Add AV1 uAPI")
+Assisted-by: Claude:claude-opus-4-8
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/stats.c |   32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/fs/xfs/scrub/stats.c
-+++ b/fs/xfs/scrub/stats.c
-@@ -95,25 +95,31 @@ xchk_stats_format(
- 	int			ret = 0;
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -708,10 +708,30 @@ static int validate_av1_film_grain(struc
+ 	return 0;
+ }
  
- 	for (i = 0; i < XFS_SCRUB_TYPE_NR; i++, css++) {
-+		struct xchk_scrub_stats	fss;
++static int validate_av1_tile_info(struct v4l2_av1_tile_info *t)
++{
++	/*
++	 * tile_cols and tile_rows index the per-tile descriptor arrays and
++	 * bound the tile loops in the stateless AV1 drivers; the product
++	 * bounds the total tile descriptor count.
++	 */
++	if (t->tile_cols > V4L2_AV1_MAX_TILE_COLS ||
++	    t->tile_rows > V4L2_AV1_MAX_TILE_ROWS)
++		return -EINVAL;
 +
- 		if (!name_map[i])
- 			continue;
- 
-+		spin_lock(&css->css_lock);
-+		memcpy(&fss, css, offsetof(struct xchk_scrub_stats, css_lock));
-+		spin_unlock(&css->css_lock);
++	if ((u32)t->tile_cols * t->tile_rows > V4L2_AV1_MAX_TILE_COUNT)
++		return -EINVAL;
 +
- 		ret = scnprintf(buf, remaining,
-  "%s %u %u %u %u %u %u %u %u %u %llu %u %u %llu\n",
- 				name_map[i],
--				(unsigned int)css->invocations,
--				(unsigned int)css->clean,
--				(unsigned int)css->corrupt,
--				(unsigned int)css->preen,
--				(unsigned int)css->xfail,
--				(unsigned int)css->xcorrupt,
--				(unsigned int)css->incomplete,
--				(unsigned int)css->warning,
--				(unsigned int)css->retries,
--				(unsigned long long)css->checktime_us,
--				(unsigned int)css->repair_invocations,
--				(unsigned int)css->repair_success,
--				(unsigned long long)css->repairtime_us);
-+				(unsigned int)fss.invocations,
-+				(unsigned int)fss.clean,
-+				(unsigned int)fss.corrupt,
-+				(unsigned int)fss.preen,
-+				(unsigned int)fss.xfail,
-+				(unsigned int)fss.xcorrupt,
-+				(unsigned int)fss.incomplete,
-+				(unsigned int)fss.warning,
-+				(unsigned int)fss.retries,
-+				(unsigned long long)fss.checktime_us,
-+				(unsigned int)fss.repair_invocations,
-+				(unsigned int)fss.repair_success,
-+				(unsigned long long)fss.repairtime_us);
- 		if (ret <= 0)
- 			break;
++	return 0;
++}
++
+ static int validate_av1_frame(struct v4l2_ctrl_av1_frame *f)
+ {
+ 	int ret = 0;
  
++	ret = validate_av1_tile_info(&f->tile_info);
++	if (ret)
++		return ret;
+ 	ret = validate_av1_quantization(&f->quantization);
+ 	if (ret)
+ 		return ret;
 
 
