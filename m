@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6A3384CD5;
-	Thu, 17 Sep 2026 18:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB81547054;
+	Thu, 17 Sep 2026 18:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670445; cv=none; b=RvHnf926Adzd6s3I6dFDh8b1K86u1tgIyGP42caftCgXXNa4lfGWL5oHfjfXAGTVv6yQoQeTRPEFObWlDFV5duZUTbqvlhfgDo8P9GRBCgbkMEu9+Q2ww0HuOLYiU5QgrqfjTL+l5NzNezupD2LqOJILewZKgmrVfQ4py8rtQtE=
+	t=1789670448; cv=none; b=mRf9uNYrhdbVAgxliyrbVrY2bnIsikb0/4SPSMBiE/HSD5Ux0MCe9VYnBLMcrjPqS1Mwiu7u+ltK8jo7iQ7tgXpHf8Um42W3XJyaCypp6onS5I1HItCXj9AfUQVt+iwUqMjwOKWx+1NOe71zkdLTDWfVZ0P2z0Zg4Gek39lKAzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670445; c=relaxed/simple;
-	bh=9kBD6eNpAWlWMOMfdOFPI1dLdlhToRHNzr5sJ5lmOec=;
+	s=arc-20240116; t=1789670448; c=relaxed/simple;
+	bh=zcxRi/Np8LnMOdDQ5EP7gaH4scnRqycFSsntzOQ5R/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqW6fM781bM9LZc4rOs+TSRD7INGOxlW8RG52BgQ8vprmo7oZNvxJmHI0FfzSR7ihJUZkDV182z/v/t+W0G/Qaig7W617l7A/XK9bien+TL5UKtT+IPd/oIP0un6QneYqaSbQAqcGoGdSg3HBqYnjUWDOqRWzZtDrunTOW2QdO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhflN8FO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6nWPUBPn8Oz71LsIP2Dc8c1Wo4l1iPrkqxFA49qfc3k7G7I7pot9kTjBZhPOA4rAzMfqi/jQPj3Zg9gZ7IxP9kTjme5y/+elinZIP0rKawsv+i6Jg3kX9+aM1BZl3ATdTBFXNLj3Kf8btaUqJV6eSYo3bSgNBoaKqLhIrU3znU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxbskcml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhflN8FO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4901F000FF;
-	Thu, 17 Sep 2026 18:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxbskcml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCFB1F000FF;
+	Thu, 17 Sep 2026 18:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670443;
-	bh=RgcxE65WwDKszCaXa/SXitqpzfwmSzoFZcDd/wBPavw=;
+	s=korg; t=1789670446;
+	bh=WAAhlO33Xjue5VMEUuzqfvmoJljhCBMOCw+kI71neCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OhflN8FO8mHzSccWrOELuhKywOJ6QOBYYRJ+UPcvQX07VJYHjElczCVEZVpHjON7m
-	 UHGohT2BRJsQC2gL0zPOlsx4gk3VcK5r8+LFSbj5cDBkcPgjWKYwb8WhoJnAKFse6z
-	 iRMR9KWUVb5Hc1Bum9tPOwBVp3XwLrZ9p9fH4TH0=
+	b=bxbskcmlcqR9uedVJqoDtecd4CeUa8dWuhxV3IPfJhAchPjjfirvSidmOKv9iP6LJ
+	 qT2Rv3kRMQaEq0sbclQJ07lHmglCRpJ/kx4zwdRWGoNE/DAoAB/wNlCIprIB7V12KR
+	 ye7P816Ywod+jfi37MpSZCaa86mEUDJWXzRr/qRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Joe Damato <joe@dama.to>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0663/1102] net: dsa: bcm_sf2: bound the CFP rule dump by the callers buffer size
-Date: Thu, 17 Sep 2026 16:10:06 +0100
-Message-ID: <20260917151556.843793509@linuxfoundation.org>
+Subject: [PATCH 6.12 0664/1102] ethtool: Symmetric OR-XOR RSS hash
+Date: Thu, 17 Sep 2026 16:10:07 +0100
+Message-ID: <20260917151556.870720328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,42 +54,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit cdb719f4b8596d9ccee2d56d204c2c4dce982f46 ]
+[ Upstream commit ecdff893384cf169a55a66ca68c9d8917f8417a9 ]
 
-bcm_sf2_cfp_rule_get_all() walks the whole cfp.unique bitmap into
-rule_locs[] without consulting nfc->rule_cnt, which is how many entries
-the caller had room for.  ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN
-and the ioctl sizes the buffer from the rule_cnt userspace passes in, so
-once an admin has installed CFP rules any user can ask for fewer slots
-than there are rules and run off the end of the allocation.  A rule_cnt
-of 0 leaves the buffer pointer NULL and the walk dereferences it.
+Add an additional type of symmetric RSS hash type: OR-XOR.
+The "Symmetric-OR-XOR" algorithm transforms the input as follows:
 
-Fixes: 7318166cacad ("net: dsa: bcm_sf2: Add support for ethtool::rxnfc")
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260903032611.3000029-2-kuba@kernel.org
+(SRC_IP | DST_IP, SRC_IP ^ DST_IP, SRC_PORT | DST_PORT, SRC_PORT ^ DST_PORT)
+
+Change 'cap_rss_sym_xor_supported' to 'supported_input_xfrm', a bitmap
+of supported RXH_XFRM_* types.
+
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://patch.msgid.link/20250224174416.499070-2-gal@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f1986bf87b07 ("eth: nfp: bound the ntuple rule dump by the caller's buffer size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/bcm_sf2_cfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/networking/ethtool-netlink.rst   |  2 +-
+ Documentation/networking/scaling.rst           | 15 +++++++++++----
+ drivers/net/ethernet/intel/iavf/iavf_ethtool.c |  2 +-
+ drivers/net/ethernet/intel/ice/ice_ethtool.c   |  2 +-
+ include/linux/ethtool.h                        |  5 ++---
+ include/uapi/linux/ethtool.h                   |  4 ++++
+ net/ethtool/ioctl.c                            |  8 ++++----
+ 7 files changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/dsa/bcm_sf2_cfp.c b/drivers/net/dsa/bcm_sf2_cfp.c
-index c88ee3dd42997..4829065b4d5d0 100644
---- a/drivers/net/dsa/bcm_sf2_cfp.c
-+++ b/drivers/net/dsa/bcm_sf2_cfp.c
-@@ -1088,6 +1088,8 @@ static int bcm_sf2_cfp_rule_get_all(struct bcm_sf2_priv *priv,
- 	unsigned int index = 1, rules_cnt = 0;
+diff --git a/Documentation/networking/ethtool-netlink.rst b/Documentation/networking/ethtool-netlink.rst
+index 295563e910824..d76013d490418 100644
+--- a/Documentation/networking/ethtool-netlink.rst
++++ b/Documentation/networking/ethtool-netlink.rst
+@@ -1909,7 +1909,7 @@ ETHTOOL_A_RSS_INDIR attribute returns RSS indirection table where each byte
+ indicates queue number.
+ ETHTOOL_A_RSS_INPUT_XFRM attribute is a bitmap indicating the type of
+ transformation applied to the input protocol fields before given to the RSS
+-hfunc. Current supported option is symmetric-xor.
++hfunc. Current supported options are symmetric-xor and symmetric-or-xor.
  
- 	for_each_set_bit_from(index, priv->cfp.unique, priv->num_cfp_rules) {
-+		if (rules_cnt == nfc->rule_cnt)
-+			return -EMSGSIZE;
- 		rule_locs[rules_cnt] = index;
- 		rules_cnt++;
- 	}
+ PLCA_GET_CFG
+ ============
+diff --git a/Documentation/networking/scaling.rst b/Documentation/networking/scaling.rst
+index 4eb50bcb9d429..6984700cec6ad 100644
+--- a/Documentation/networking/scaling.rst
++++ b/Documentation/networking/scaling.rst
+@@ -49,14 +49,21 @@ destination address) and TCP/UDP (source port, destination port) tuples
+ are swapped, the computed hash is the same. This is beneficial in some
+ applications that monitor TCP/IP flows (IDS, firewalls, ...etc) and need
+ both directions of the flow to land on the same Rx queue (and CPU). The
+-"Symmetric-XOR" is a type of RSS algorithms that achieves this hash
+-symmetry by XORing the input source and destination fields of the IP
+-and/or L4 protocols. This, however, results in reduced input entropy and
+-could potentially be exploited. Specifically, the algorithm XORs the input
++"Symmetric-XOR" and "Symmetric-OR-XOR" are types of RSS algorithms that
++achieve this hash symmetry by XOR/ORing the input source and destination
++fields of the IP and/or L4 protocols. This, however, results in reduced
++input entropy and could potentially be exploited.
++
++Specifically, the "Symmetric-XOR" algorithm XORs the input
+ as follows::
+ 
+     # (SRC_IP ^ DST_IP, SRC_IP ^ DST_IP, SRC_PORT ^ DST_PORT, SRC_PORT ^ DST_PORT)
+ 
++The "Symmetric-OR-XOR" algorithm, on the other hand, transforms the input as
++follows::
++
++    # (SRC_IP | DST_IP, SRC_IP ^ DST_IP, SRC_PORT | DST_PORT, SRC_PORT ^ DST_PORT)
++
+ The result is then fed to the underlying RSS algorithm.
+ 
+ Some advanced NICs allow steering packets to queues based on
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+index 53e5a3bd9b956..cf04ffb15a08a 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -1807,7 +1807,7 @@ static int iavf_set_rxfh(struct net_device *netdev,
+ static const struct ethtool_ops iavf_ethtool_ops = {
+ 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS |
+ 				     ETHTOOL_COALESCE_USE_ADAPTIVE,
+-	.cap_rss_sym_xor_supported = true,
++	.supported_input_xfrm	= RXH_XFRM_SYM_XOR,
+ 	.get_drvinfo		= iavf_get_drvinfo,
+ 	.get_link		= ethtool_op_get_link,
+ 	.get_ringparam		= iavf_get_ringparam,
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index 51b35c15827de..1c53b1db4a8e0 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -4705,7 +4705,7 @@ static const struct ethtool_ops ice_ethtool_ops = {
+ 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS |
+ 				     ETHTOOL_COALESCE_USE_ADAPTIVE |
+ 				     ETHTOOL_COALESCE_RX_USECS_HIGH,
+-	.cap_rss_sym_xor_supported = true,
++	.supported_input_xfrm	= RXH_XFRM_SYM_XOR,
+ 	.rxfh_per_ctx_key	= true,
+ 	.get_link_ksettings	= ice_get_link_ksettings,
+ 	.set_link_ksettings	= ice_set_link_ksettings,
+diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
+index b0ed740ca749b..b3a003dc2043e 100644
+--- a/include/linux/ethtool.h
++++ b/include/linux/ethtool.h
+@@ -747,13 +747,12 @@ struct kernel_ethtool_ts_info {
+ 
+ /**
+  * struct ethtool_ops - optional netdev operations
++ * @supported_input_xfrm: supported types of input xfrm from %RXH_XFRM_*.
+  * @cap_link_lanes_supported: indicates if the driver supports lanes
+  *	parameter.
+  * @cap_rss_ctx_supported: indicates if the driver supports RSS
+  *	contexts via legacy API, drivers implementing @create_rxfh_context
+  *	do not have to set this bit.
+- * @cap_rss_sym_xor_supported: indicates if the driver supports symmetric-xor
+- *	RSS.
+  * @rxfh_per_ctx_key: device supports setting different RSS key for each
+  *	additional context. Netlink API should report hfunc, key, and input_xfrm
+  *	for every context, not just context 0.
+@@ -978,9 +977,9 @@ struct kernel_ethtool_ts_info {
+  * of the generic netdev features interface.
+  */
+ struct ethtool_ops {
++	u32     supported_input_xfrm:8;
+ 	u32     cap_link_lanes_supported:1;
+ 	u32     cap_rss_ctx_supported:1;
+-	u32	cap_rss_sym_xor_supported:1;
+ 	u32	rxfh_per_ctx_key:1;
+ 	u32	cap_rss_rxnfc_adds:1;
+ 	u32	rxfh_indir_space;
+diff --git a/include/uapi/linux/ethtool.h b/include/uapi/linux/ethtool.h
+index c405ed63acfa2..1c2d1e353b033 100644
+--- a/include/uapi/linux/ethtool.h
++++ b/include/uapi/linux/ethtool.h
+@@ -2267,6 +2267,10 @@ static inline int ethtool_validate_duplex(__u8 duplex)
+  * be exploited to reduce the RSS queue spread.
+  */
+ #define	RXH_XFRM_SYM_XOR	(1 << 0)
++/* Similar to SYM_XOR, except that one copy of the XOR'ed fields is replaced by
++ * an OR of the same fields
++ */
++#define	RXH_XFRM_SYM_OR_XOR	(1 << 1)
+ #define	RXH_XFRM_NO_CHANGE	0xff
+ 
+ /* L2-L4 network traffic flow types */
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 67fba88f60984..46fd809283bcb 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -1005,11 +1005,11 @@ static noinline_for_stack int ethtool_set_rxnfc(struct net_device *dev,
+ 		if (rc)
+ 			return rc;
+ 
+-		/* Sanity check: if symmetric-xor is set, then:
++		/* Sanity check: if symmetric-xor/symmetric-or-xor is set, then:
+ 		 * 1 - no other fields besides IP src/dst and/or L4 src/dst
+ 		 * 2 - If src is set, dst must also be set
+ 		 */
+-		if ((rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
++		if ((rxfh.input_xfrm & (RXH_XFRM_SYM_XOR | RXH_XFRM_SYM_OR_XOR)) &&
+ 		    ((info.data & ~(RXH_IP_SRC | RXH_IP_DST |
+ 				    RXH_L4_B_0_1 | RXH_L4_B_2_3)) ||
+ 		     (!!(info.data & RXH_IP_SRC) ^ !!(info.data & RXH_IP_DST)) ||
+@@ -1382,11 +1382,11 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+ 		return -EOPNOTSUPP;
+ 	/* Check input data transformation capabilities */
+ 	if (rxfh.input_xfrm && rxfh.input_xfrm != RXH_XFRM_SYM_XOR &&
++	    rxfh.input_xfrm != RXH_XFRM_SYM_OR_XOR &&
+ 	    rxfh.input_xfrm != RXH_XFRM_NO_CHANGE)
+ 		return -EINVAL;
+ 	if (rxfh.input_xfrm != RXH_XFRM_NO_CHANGE &&
+-	    (rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
+-	    !ops->cap_rss_sym_xor_supported)
++	    rxfh.input_xfrm & ~ops->supported_input_xfrm)
+ 		return -EOPNOTSUPP;
+ 	create = rxfh.rss_context == ETH_RXFH_CONTEXT_ALLOC;
+ 
 -- 
 2.53.0
 
