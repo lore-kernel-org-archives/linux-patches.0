@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6049D4E73D1;
-	Thu, 17 Sep 2026 18:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13694E36C2;
+	Thu, 17 Sep 2026 18:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670393; cv=none; b=Hrbelxpb2ohbgZ2J6KP0A3A5Pu44YZm6Y2qXZRbT2x6QHUkS0sG3nB75WFR/+8xrbaLuXJpiKynbcrAr+1A0p44JMElfXVgKcllGaEGwTHrqYuVngyOagEOkuYB0krqgrDLSr9M+P844RSsNoSxezowGn1Gu6DHCXHbvL54OuAY=
+	t=1789670398; cv=none; b=B2gddIgaXblYdqzGQSB0vtVT7r5TutbKPH00BU8jB4NwZ86uquiPp300/3DJAHACBRBrqLEJGsLfllWAQ+PANLiuQoWosRwv+Qw3fgvyzMfp0Q/PgamKTfOJY4OEPKrydg2dklGJ+xJYgyHkY8hGAgz/JKoQrhSvhZm1TdE1QiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670393; c=relaxed/simple;
-	bh=SjLnRE0Gdd/CWqG4uEXOkhLIl0iRdpsUQWO+B+Sk/fU=;
+	s=arc-20240116; t=1789670398; c=relaxed/simple;
+	bh=LWymDk8WVgj9JWATrQZBG0eD7BpNEwE+o3QeuWd8JFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyFsqKwmguna/TITf2+gl1rFtSKC4YAPwhb1EOgeyolMk3P82B7BYFEbZ/+8wpyBxN5MK7H707EjZJzI69Ly4Fo8ZWWZW7vgFauVRS5SovthJqjMEQnjrqvpPbcwRQt6M4bWRe8vFTHsCsEBwSnQzgQ3K4YjhIUMyQ2xNTk+H24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9slLxjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r3XrAEra6h95T5Hq6X15Wlfj1dXBx9x3bCis3FPcp1klhCEtclgofaM4Xj1fKig2ClYw7V72MKNrMDkJ9rBZ1Zmq7J1NV2RSMOnoyYtQwc821yGTqRYSm+ArKrkZxBLejxg1yErbZ/2Ho4f2U168tZGLBZ+NlyTmWD7pPMYHIZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdRdXt+x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9slLxjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387411F00898;
-	Thu, 17 Sep 2026 18:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdRdXt+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD811F000FF;
+	Thu, 17 Sep 2026 18:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670392;
-	bh=K6fvXf3vYL+zdVRifwCO3yuWcJqxk/8wlc2raXklCnY=;
+	s=korg; t=1789670396;
+	bh=e/vRogdFobQi73Okh4ZCvzYnl4JuAGCOKmTwQTDJPro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9slLxjYGU7sB/5UBsGRwv3R1UcNXq0cKXh2qc61ZlgE87y3+zvIDi3WzbJso5TQC
-	 jUJ9EoJhiFhEu+kgcX8X1IoMNLuuI/21q5u627qYU0mPrRbNuBdBVZrrDrQDpHs10v
-	 tly5qJzedDKnYGHelmI4y5TEu5znKLJ2Tvl5onrI=
+	b=gdRdXt+xS8kYiD2JopVPUKOFLs7e4+2lvyMwuL/Hpf1g/qiLXQpleafx6ZMlpsb9u
+	 6+UrDX+dCy4Pyjh5BuH2w4ME9AS7VMCoiuOIKNF82ELZFk+rkXLcVyVQauos6X14Cv
+	 UTXmnFuZswlc+SvssUgQXp/xEFp1DZdnkIidMEZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0650/1102] ASoC: Intel: avs: Do not ignore -ENOENT when loading a topology
-Date: Thu, 17 Sep 2026 16:09:53 +0100
-Message-ID: <20260917151556.480147884@linuxfoundation.org>
+Subject: [PATCH 6.12 0651/1102] ASoC: Intel: avs: Fix unbalanced module reference count
+Date: Thu, 17 Sep 2026 16:09:54 +0100
+Message-ID: <20260917151556.506822995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,133 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit c6dceca9f78fbd478c41735457c4de9c25a6b1c8 ]
+[ Upstream commit d4fa6f94b91137e329ea3f5b360e140b227bb696 ]
 
-avs_load_topology() combines request_firmware() and
-snd_soc_tplg_component_load().  The fallback mechanism introduced for
-the HDAudio based boards honors -ENOENT and checks for a generic
-topology if no specific is found before giving up and failing the
-component probing.
+strace_open() invokes try_module_get() which on success takes
+the module reference.  If any follow up operation causes
+strace_open() to fail, the refcount shall be put down.
 
-However, if -ENOENT is returned by the latter function -
-snd_soc_tplg_component_load() - is shall not be ignored.  That means
-there is an actual problem with the topology file and no fallback shall
-be attempted.
-
-Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
+Fixes: 0a5fb3cc28fd ("ASoC: Intel: avs: Keep module refcount up when gathering traces")
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260902081814.1590883-7-cezary.rojewski@intel.com
+Link: https://patch.msgid.link/20260902081814.1590883-9-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c      | 34 ++++++++++++++++++++--------------
- sound/soc/intel/avs/topology.c |  2 +-
- sound/soc/intel/avs/topology.h |  1 +
- 3 files changed, 22 insertions(+), 15 deletions(-)
+ sound/soc/intel/avs/debugfs.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index dee871910d211..b63a537c3faeb 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -6,6 +6,7 @@
- //          Amadeusz Slawinski <amadeuszx.slawinski@linux.intel.com>
- //
+diff --git a/sound/soc/intel/avs/debugfs.c b/sound/soc/intel/avs/debugfs.c
+index c9978fb9c74e2..bea5e36ead3ea 100644
+--- a/sound/soc/intel/avs/debugfs.c
++++ b/sound/soc/intel/avs/debugfs.c
+@@ -8,6 +8,7 @@
  
-+#include <linux/cleanup.h>
  #include <linux/debugfs.h>
- #include <linux/device.h>
- #include <sound/hda_register.h>
-@@ -887,13 +888,25 @@ static int avs_component_load_libraries(struct avs_soc_component *acomp)
- 	return ret;
- }
+ #include <linux/kfifo.h>
++#include <linux/module.h>
+ #include <linux/wait.h>
+ #include <linux/sched/signal.h>
+ #include <sound/soc.h>
+@@ -236,15 +237,20 @@ static int strace_open(struct inode *inode, struct file *file)
+ 	if (!try_module_get(adev->dev->driver->owner))
+ 		return -ENODEV;
  
-+static int avs_request_topology(struct snd_soc_component *component, const char *name,
-+				const struct firmware **fw)
-+{
-+	char *fullname __free(kfree) = NULL;
-+
-+	fullname = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix, name);
-+	if (!fullname)
-+		return -ENOMEM;
-+
-+	return request_firmware(fw, fullname, component->dev);
-+}
-+
- static int avs_component_probe(struct snd_soc_component *component)
- {
- 	struct snd_soc_card *card = component->card;
- 	struct snd_soc_acpi_mach *mach;
- 	struct avs_soc_component *acomp;
-+	const struct firmware *fw;
- 	struct avs_dev *adev;
--	char *filename;
- 	int ret;
+-	if (kfifo_initialized(&adev->trace_fifo))
+-		return -EBUSY;
++	if (kfifo_initialized(&adev->trace_fifo)) {
++		ret = -EBUSY;
++		goto err;
++	}
  
- 	dev_dbg(card->dev, "probing %s card %s\n", component->name, card->name);
-@@ -909,13 +922,7 @@ static int avs_component_probe(struct snd_soc_component *component)
- 		goto finalize;
- 
- 	/* Load specified topology and create debugfs for it. */
--	filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
--			     mach->tplg_filename);
--	if (!filename)
--		return -ENOMEM;
--
--	ret = avs_load_topology(component, filename);
--	kfree(filename);
-+	ret = avs_request_topology(component, mach->tplg_filename, &fw);
- 	if (ret == -ENOENT && !strncmp(mach->tplg_filename, "hda-", 4)) {
- 		unsigned int vendor_id;
- 
-@@ -930,18 +937,17 @@ static int avs_component_probe(struct snd_soc_component *component)
- 							     "hda-generic-tplg.bin");
- 		if (!mach->tplg_filename)
- 			return -ENOMEM;
--		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
--				     mach->tplg_filename);
--		if (!filename)
--			return -ENOMEM;
- 
- 		dev_info(card->dev, "trying to load fallback topology %s\n", mach->tplg_filename);
--		ret = avs_load_topology(component, filename);
--		kfree(filename);
-+		ret = avs_request_topology(component, mach->tplg_filename, &fw);
- 	}
+ 	ret = kfifo_alloc(&adev->trace_fifo, PAGE_SIZE, GFP_KERNEL);
  	if (ret < 0)
- 		return ret;
+-		return ret;
++		goto err;
  
-+	ret = snd_soc_tplg_component_load(component, &avs_tplg_ops, fw);
-+	if (ret)
-+		return ret;
-+
- 	ret = avs_component_load_libraries(acomp);
- 	if (ret < 0) {
- 		dev_err(card->dev, "libraries loading failed: %d\n", ret);
-diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
-index d612f20ed9893..9d49e248cfb22 100644
---- a/sound/soc/intel/avs/topology.c
-+++ b/sound/soc/intel/avs/topology.c
-@@ -1900,7 +1900,7 @@ avs_control_load(struct snd_soc_component *comp, int index, struct snd_kcontrol_
+ 	file->private_data = adev;
  	return 0;
++err:
++	module_put(adev->dev->driver->owner);
++	return ret;
  }
  
--static const struct snd_soc_tplg_ops avs_tplg_ops = {
-+const struct snd_soc_tplg_ops avs_tplg_ops = {
- 	.io_ops			= avs_control_ops,
- 	.io_ops_count		= ARRAY_SIZE(avs_control_ops),
- 	.control_load		= avs_control_load,
-diff --git a/sound/soc/intel/avs/topology.h b/sound/soc/intel/avs/topology.h
-index 7892e3797f63c..409abdb239779 100644
---- a/sound/soc/intel/avs/topology.h
-+++ b/sound/soc/intel/avs/topology.h
-@@ -202,6 +202,7 @@ struct avs_tplg_module {
- 	struct list_head node;
- };
- 
-+extern const struct snd_soc_tplg_ops avs_tplg_ops;
- struct avs_tplg *avs_tplg_new(struct snd_soc_component *comp);
- 
- int avs_load_topology(struct snd_soc_component *comp, const char *filename);
+ static int strace_release(struct inode *inode, struct file *file)
 -- 
 2.53.0
 
