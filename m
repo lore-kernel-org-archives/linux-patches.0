@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC314ABBCA;
-	Thu, 17 Sep 2026 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B87A59D62B;
+	Thu, 17 Sep 2026 15:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659055; cv=none; b=cPNpWBqlMUR6/eNTsjHs19gI/PYt/S4xftFB/B8+nrt2x3oAGaHI0W1xbp6A7uPo+2WJikzggKzkKGl7FWCEuWxnHzP8uTfxxHSvobMErcxgfLPDIPtfj4Jsu5ynmkOWh518NjWg8cESVKyjd16fVhv/L0eYukj7of6MiSdc55M=
+	t=1789659057; cv=none; b=X5epHqDibuiNDUF+0qDmwgLPZ7xcVKGScy1OM3qmMnY022X9cChRBHFiBkgjz5WULccCalv2GGmFAzrbbB70OVbEv3Q1E5Fn6bBfTeN0VgK/AXERRIggZyI0yhfECul1+EHp6o1DnzVgW++zrnP4W4Pn/FV8Mb7UC59jQuntadU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659055; c=relaxed/simple;
-	bh=G52JqZLTlg4Jb0CF3T1l6gAnLcPwfCwFJU/IdHQZTdo=;
+	s=arc-20240116; t=1789659057; c=relaxed/simple;
+	bh=a/5hXz7EdqN0DVcGwgP8VpxoClQzE7q8eyj91b2vcWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eR2WDrzLIaHFVNmUg3XUw/VCBEDOyleypvH3A5pKePN2QT1+M5X6qxuEkVXskZrg3SFWsvfBgc3K+gFcUGCvGsqQlWMFgZfnfXjeJIWf7i6Ot5pisb1vKXGNqkvpi7VaTi3AUXYt8M6fZLKClN0TRj779ef8NuhISX4B52etsds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQDA90xp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AH0Qth3Q+XnxwQ+1y/TQkrSKyqd6Btbx1WAOp0kq8Vne/AF+uUfnfCU/6kGbG2Q0L8ZldLBzQBZs26sJgA2lAWfeuJi/VvRay+iWGewjKDNqDeKrbOpDbnVNGl9LfTUwtmBMMD/flDnFRIAsgWuxZPZ9875/HB6AtsSZFNo/OLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6fg/Nyz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQDA90xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945901F000FF;
-	Thu, 17 Sep 2026 15:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6fg/Nyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C251F00893;
+	Thu, 17 Sep 2026 15:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659046;
-	bh=0fLK7XjatI06hcjpyIEYmuQxh2KfI18xNUyIIl0+iuQ=;
+	s=korg; t=1789659049;
+	bh=4GS/9tk5N2dtQeufzjRu/hC9+9fUnk/Xahri/JS1njs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQDA90xphzTA0s0KCUFq76VSjKbgEwi1oyXMSxJpR+L0gzll4HRvCmL8I9BjI09+L
-	 jCvs9VjXgm+xAy1OJfPSVFkdJlisk8Wdtz7JidGRQmHdT+vFIDHF7OAUkjjZqDuUpt
-	 YSdU1Plqez0Ma5D1lmxeEPRBHqhJ1Mv29xlOAmck=
+	b=O6fg/NyzYJaZLYHUPN2JI8vNynPDCRgNspw+PqXy74xFXfFCUPSP5BBpZWjvuntGi
+	 DwIpMUraV7zo5pHyHBtt/pQCGTP4CUTw1O7fuL6kjyOyum931Ub1DEUbI77+Rm7JKd
+	 bFszQzR0AdbUXP7Rf2vc1L92w3ZV+UmcegAqo7ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Todd Lipcon <tlipcon@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 086/733] netfs: Mark folios with COPY_TO_CACHE whilst issuing subreqs
-Date: Thu, 17 Sep 2026 16:06:34 +0100
-Message-ID: <20260917151353.047219849@linuxfoundation.org>
+Subject: [PATCH 7.2 077/733] perf symbol: Do not use debug file as the binary type
+Date: Thu, 17 Sep 2026 16:06:25 +0100
+Message-ID: <20260917151352.799007272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -56,383 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 533203c4183123dad8ffecd694e7573a0ccd0da0 ]
+[ Upstream commit ae9464c65e9d1ad4df4fed516cee9bca3bc614cc ]
 
-Mark folios with NETFS_FOLIO_COPY_TO_CACHE whilst issuing subreqs rather than
-when collecting them.  This means that the collector thread doesn't have to
-try and keep track of which subreqs contribute to which folios - and thus
-which folios will need to be copied to the cache because at least one byte
-wasn't in the cache.  Instead, this is marked on the folios up front and the
-collector need only consider the folios.
+dso__load() sets the binary type of a DSO to the type of the first symbol
+source found. For a DSO with a separate debug file linked via
+.gnu-debuglink, that is DSO_BINARY_TYPE__DEBUGLINK, which makes
+dso__get_filename() return the name of the debug file instead of the file
+that was actually executed.
 
-For PG_private_2-using filesystems, PG_private_2 is set instead of
-NETFS_FOLIO_COPY_TO_CACHE, but otherwise it works the same.
+Consumers that need to read instruction bytes, such as Intel PT decoding
+in 'perf script', then read from the debug file and produce wrong
+instructions.
 
-The NETFS_RREQ_COPY_TO_CACHE is replaced with NETFS_RREQ_CANCEL_CACHING, which
-is now set if caching fails somewhere, thereby causing the collection thread
-to cancel the copy-to-cache marks on the remaining folios.
+Prefer DSO_BINARY_TYPE__BUILD_ID_CACHE, and otherwise
+DSO_BINARY_TYPE__SYSTEM_PATH_DSO, over debug-only types, which restores
+the behaviour of using a file that contains the executed instructions.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260827134304.2075713-9-dhowells@redhat.com
-Acked-by: Paulo Alcantara <pc@manguebit.org>
-cc: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-mm@kvack.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: e00827a4d0cf ("netfs: Fix read progress reporting")
+This is a workaround. Properly separating the binary file used for
+instructions from the file used for debug symbols is left for later.
+
+Example:
+
+ Create a shared object with a separate .gnu_debuglink debug file. Note
+ that 'objcopy --only-keep-debug' leaves .text as NOBITS, so instructions
+ read from the debug file are zeros:
+
+  # cat > foo.c << EOF
+  unsigned long foo_work(unsigned long n)
+  {
+        unsigned long s = 0;
+
+        for (unsigned long i = 0; i < n; i++)
+                s = s * 31 + i;
+        return s;
+  }
+  EOF
+  # cat > main.c << EOF
+  #include <stdio.h>
+  unsigned long foo_work(unsigned long n);
+  int main(void)
+  {
+        printf("%lu\n", foo_work(1000));
+        return 0;
+  }
+  EOF
+  # gcc -g -O2 -shared -fPIC -o libfoo.so foo.c
+  # gcc -g -O2 -o main main.c -L. -lfoo -Wl,-rpath,'$ORIGIN'
+  # objcopy --only-keep-debug libfoo.so libfoo.so.debug
+  # objcopy --strip-debug libfoo.so
+  # objcopy --add-gnu-debuglink=libfoo.so.debug libfoo.so
+  # perf record -e intel_pt//u ./main
+
+ Note that branch samples must be requested, because it is the resolving
+ of the branch target symbol that causes dso__load() to be called, and
+ hence the binary type to be set, before the decoder walks the code.
+ With '--itrace=e' alone, nothing loads symbols for libfoo.so, the binary
+ type is left as DSO_BINARY_TYPE__NOT_FOUND, the correct file is read
+ anyway, and no errors are reported either way.
+
+ Before:
+
+  # perf.before script --itrace=be 2>&1 | grep "instruction trace error"
+   instruction trace error type 1 time 2350.467489498 cpu 9 pid 75634 tid 75634 ip 0x77d48480718f code 6: Trace doesn't match instruction
+   instruction trace error type 1 time 2350.467489832 cpu 9 pid 75634 tid 75634 ip 0x77d484807341 code 6: Trace doesn't match instruction
+   instruction trace error type 1 time 2350.467496412 cpu 9 pid 75634 tid 75634 ip 0x5b4de37a8074 code 6: Trace doesn't match instruction
+   instruction trace error type 1 time 2350.467593393 cpu 9 pid 75634 tid 75634 ip 0x77d4848070d0 code 6: Trace doesn't match instruction
+   instruction trace error type 1 time 2350.467593954 cpu 9 pid 75634 tid 75634 ip 0x77d4848075a8 code 6: Trace doesn't match instruction
+   instruction trace error type 1 time 2350.467595728 cpu 9 pid 75634 tid 75634 ip 0x77d4848324de code 6: Trace doesn't match instruction
+  6 instruction trace errors
+
+ After:
+
+  # perf script --itrace=be 2>&1 | grep "instruction trace error"
+  #
+
+Fixes: 5363c306787c8 ("perf symbol: Set binary_type of dso when loading")
+Reported-by: Todd Lipcon <tlipcon@google.com>
+Closes: https://lore.kernel.org/all/CAGH6UiG=RJLqBU3kLu9XJciPyPO1HZkbAPERguVUMRuWQgqf=A@mail.gmail.com/
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c     | 61 +++++++++++++++++++++++++++++++-
- fs/netfs/internal.h          |  1 +
- fs/netfs/read_collect.c      | 67 ++++++++++++++++++++++--------------
- fs/netfs/read_pgpriv2.c      | 15 ++++----
- fs/netfs/read_retry.c        |  6 +++-
- include/linux/netfs.h        |  2 +-
- include/trace/events/netfs.h |  6 ++--
- 7 files changed, 121 insertions(+), 37 deletions(-)
+ tools/perf/util/symbol.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 303fdce54fbaf..16d4db776f6ae 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -211,6 +211,56 @@ static void netfs_issue_read(struct netfs_io_request *rreq,
- 	}
- }
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index 35104a56d8e38..1de5796fc4ff6 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -1947,7 +1947,16 @@ int dso__load(struct dso *dso, struct map *map)
+ 		if (next_slot) {
+ 			ss_pos++;
  
-+/*
-+ * Mark folios that we want to copy to the cache.  For filesystems that use
-+ * netfslib fully, we set folio->private to NETFS_FOLIO_COPY_TO_CACHE;
-+ * otherwise we set the deprecated PG_private_2.
-+ */
-+static void netfs_mark_copy_to_cache(struct netfs_io_request *rreq,
-+				     struct folio_queue **fq,
-+				     unsigned int *offset,
-+				     int *slot,
-+				     size_t len,
-+				     bool copy)
-+{
-+	while (len > 0) {
-+		struct folio *folio;
-+		size_t fsize, overlap;
-+
-+		if (!*fq)
-+			break;
-+		if (*slot >= folioq_count(*fq)) {
-+			*fq = (*fq)->next;
-+			*slot = 0;
-+			*offset = 0;
-+			continue;
-+		}
-+
-+		/* Determine how much the subreq overlaps the folio, if at all. */
-+		fsize = folioq_folio_size(*fq, *slot);
-+		overlap = min(len, fsize - *offset);
-+
-+		if (overlap > 0 && copy) {
-+			folio = folioq_folio(*fq, *slot);
-+			if (unlikely(test_bit(NETFS_RREQ_USE_PGPRIV2, &rreq->flags))) {
-+				if (!folio_test_private_2(folio))
-+					folio_start_private_2(folio);
-+			} else {
-+				if (!folio_get_private(folio))
-+					folio_attach_private(folio, NETFS_FOLIO_COPY_TO_CACHE);
-+			}
-+			trace_netfs_folio(folio, netfs_folio_trace_mark_copy);
-+		}
-+
-+		len -= overlap;
-+		*offset += overlap;
-+		if (*offset >= fsize) {
-+			*slot += 1;
-+			*offset = 0;
-+		}
-+	}
-+}
-+
- /*
-  * Perform a read to the pagecache from a series of sources of different types,
-  * slicing up the region to be read according to available cache blocks and
-@@ -218,9 +268,11 @@ static void netfs_issue_read(struct netfs_io_request *rreq,
-  */
- static void netfs_read_to_pagecache(struct netfs_io_request *rreq)
- {
-+	struct folio_queue *fq = rreq->buffer.tail;
- 	unsigned long long start = rreq->start;
-+	unsigned int offset = 0;
- 	ssize_t size = rreq->len;
--	int ret = 0;
-+	int ret = 0, slot = 0;
+-			if (dso__binary_type(dso) == DSO_BINARY_TYPE__NOT_FOUND)
++			/*
++			 * The binary type is used to find the file containing
++			 * the executed instructions, so prefer the types that
++			 * refer to the actual object over debug-only files such
++			 * as DSO_BINARY_TYPE__DEBUGLINK.
++			 */
++			if (dso__binary_type(dso) == DSO_BINARY_TYPE__NOT_FOUND ||
++			    symtab_type == DSO_BINARY_TYPE__BUILD_ID_CACHE ||
++			    (symtab_type == DSO_BINARY_TYPE__SYSTEM_PATH_DSO &&
++			     dso__binary_type(dso) != DSO_BINARY_TYPE__BUILD_ID_CACHE))
+ 				dso__set_binary_type(dso, symtab_type);
  
- 	do {
- 		struct netfs_io_subrequest *subreq;
-@@ -308,6 +360,13 @@ static void netfs_read_to_pagecache(struct netfs_io_request *rreq)
- 			set_bit(NETFS_RREQ_ALL_QUEUED, &rreq->flags);
- 		}
- 
-+		if (fq) {
-+			/* See if the cache indicated this should be cached. */
-+			bool copy = test_bit(NETFS_SREQ_COPY_TO_CACHE, &subreq->flags);
-+
-+			netfs_mark_copy_to_cache(rreq, &fq, &slot, &offset, slice, copy);
-+		}
-+
- 		netfs_issue_read(rreq, subreq);
- 		netfs_maybe_bulk_drop_ra_refs(rreq);
- 
-diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
-index bd8b2d633f968..dfe7939f35f37 100644
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -110,6 +110,7 @@ static inline void netfs_see_subrequest(struct netfs_io_subrequest *subreq,
- /*
-  * read_collect.c
-  */
-+void netfs_cancel_copy_to_cache(struct netfs_io_request *rreq, struct folio *folio);
- bool netfs_read_collection(struct netfs_io_request *rreq);
- void netfs_read_collection_worker(struct work_struct *work);
- void netfs_cancel_read(struct netfs_io_subrequest *subreq, int error);
-diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
-index edf7cea7e2f91..12a786be1ea26 100644
---- a/fs/netfs/read_collect.c
-+++ b/fs/netfs/read_collect.c
-@@ -19,7 +19,6 @@
- #define MADE_PROGRESS	0x04	/* Made progress cleaning up a stream or the folio set */
- #define BUFFERED	0x08	/* The pagecache needs cleaning up */
- #define NEED_RETRY	0x10	/* A front op requests retrying */
--#define COPY_TO_CACHE	0x40	/* Need to copy subrequest to cache */
- #define ABANDON_SREQ	0x80	/* Need to abandon untransferred part of subrequest */
- 
- /*
-@@ -34,6 +33,30 @@ static void netfs_clear_unread(struct netfs_io_subrequest *subreq)
- 		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
- }
- 
-+/*
-+ * Cancel the copy-to-cache mark on a folio.
-+ */
-+void netfs_cancel_copy_to_cache(struct netfs_io_request *rreq, struct folio *folio)
-+{
-+	if (!test_bit(NETFS_RREQ_USE_PGPRIV2, &rreq->flags)) {
-+		if (folio_get_private(folio) == NETFS_FOLIO_COPY_TO_CACHE) {
-+			folio_detach_private(folio);
-+			trace_netfs_folio(folio, netfs_folio_trace_cancel_copy);
-+		} else if (netfs_folio_group(folio) == NETFS_FOLIO_COPY_TO_CACHE)  {
-+			struct netfs_folio *finfo = netfs_folio_info(folio);
-+
-+			finfo->netfs_group = NULL;
-+			trace_netfs_folio(folio, netfs_folio_trace_cancel_copy);
-+		}
-+	} else {
-+		// TODO: Use of PG_private_2 is deprecated.
-+		if (folio_test_private_2(folio)) {
-+			folio_end_private_2(folio);
-+			trace_netfs_folio(folio, netfs_folio_trace_cancel_copy);
-+		}
-+	}
-+}
-+
- /*
-  * Flush, mark and unlock a folio that's now completely read.  If we want to
-  * cache the folio, we set the group to NETFS_FOLIO_COPY_TO_CACHE, mark it
-@@ -48,37 +71,37 @@ static void netfs_unlock_read_folio(struct netfs_io_request *rreq,
- 
- 	if (unlikely(folio_pos(folio) < rreq->abandon_to)) {
- 		trace_netfs_folio(folio, netfs_folio_trace_abandon);
-+		netfs_cancel_copy_to_cache(rreq, folio);
- 		goto just_unlock;
- 	}
- 
- 	flush_dcache_folio(folio);
- 	folio_mark_uptodate(folio);
- 
--	if (!test_bit(NETFS_RREQ_USE_PGPRIV2, &rreq->flags)) {
--		finfo = netfs_folio_info(folio);
--		if (finfo) {
--			trace_netfs_folio(folio, netfs_folio_trace_filled_gaps);
--			if (finfo->netfs_group)
--				folio_change_private(folio, finfo->netfs_group);
--			else
--				folio_detach_private(folio);
--			kfree(finfo);
--		}
-+	if (unlikely(test_bit(NETFS_RREQ_CANCEL_CACHING, &rreq->flags)))
-+		netfs_cancel_copy_to_cache(rreq, folio);
- 
--		if (test_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags)) {
--			if (!WARN_ON_ONCE(folio_get_private(folio) != NULL)) {
--				trace_netfs_folio(folio, netfs_folio_trace_copy_to_cache);
--				folio_attach_private(folio, NETFS_FOLIO_COPY_TO_CACHE);
--				folio_mark_dirty(folio);
--			}
-+	if (!test_bit(NETFS_RREQ_USE_PGPRIV2, &rreq->flags)) {
-+		if (netfs_folio_group(folio) == NETFS_FOLIO_COPY_TO_CACHE)  {
-+			trace_netfs_folio(folio, netfs_folio_trace_sched_copy);
-+			folio_mark_dirty(folio);
- 		} else {
-+			finfo = netfs_folio_info(folio);
-+			if (finfo) {
-+				trace_netfs_folio(folio, netfs_folio_trace_filled_gaps);
-+				if (finfo->netfs_group)
-+					folio_change_private(folio, finfo->netfs_group);
-+				else
-+					folio_detach_private(folio);
-+				kfree(finfo);
-+			}
- 			trace_netfs_folio(folio, netfs_folio_trace_read_done);
- 		}
- 
- 		folioq_clear(folioq, slot);
- 	} else {
- 		// TODO: Use of PG_private_2 is deprecated.
--		if (test_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags))
-+		if (folio_test_private_2(folio))
- 			netfs_pgpriv2_copy_to_cache(rreq, folio);
- 	}
- 
-@@ -131,9 +154,6 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 		unsigned int order;
- 		size_t fsize;
- 
--		if (*notes & COPY_TO_CACHE)
--			set_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags);
--
- 		folio = folioq_folio(folioq, slot);
- 		if (WARN_ONCE(!folio_test_locked(folio),
- 			      "R=%08x: folio %lx is not locked\n",
-@@ -156,8 +176,6 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 		WRITE_ONCE(rreq->cleaned_to, fpos + fsize);
- 		*notes |= MADE_PROGRESS;
- 
--		clear_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags);
--
- 		/* Clean up the head folioq.  If we clear an entire folioq, then
- 		 * we can get rid of it provided it's not also the tail folioq
- 		 * being filled by the issuer.
-@@ -255,9 +273,6 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
- 			stream->collected_to = front->start + transferred;
- 			rreq->collected_to = stream->collected_to;
- 
--			if (test_bit(NETFS_SREQ_COPY_TO_CACHE, &front->flags))
--				notes |= COPY_TO_CACHE;
--
- 			if (test_bit(NETFS_SREQ_FAILED, &front->flags)) {
- 				rreq->abandon_to = front->start + front->len;
- 				front->transferred = front->len;
-diff --git a/fs/netfs/read_pgpriv2.c b/fs/netfs/read_pgpriv2.c
-index c31190993b762..a4b7bb88cbdb6 100644
---- a/fs/netfs/read_pgpriv2.c
-+++ b/fs/netfs/read_pgpriv2.c
-@@ -54,8 +54,8 @@ static void netfs_pgpriv2_copy_folio(struct netfs_io_request *creq, struct folio
- 
- 	/* Attach the folio to the rolling buffer. */
- 	if (rolling_buffer_append(&creq->buffer, folio, 0, creq->gfp) < 0) {
-+		set_bit(NETFS_RREQ_CANCEL_CACHING, &creq->flags);
- 		folio_end_private_2(folio);
--		clear_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &creq->flags);
- 		return;
- 	}
- 
-@@ -122,13 +122,14 @@ static struct netfs_io_request *netfs_pgpriv2_begin_copy_to_cache(
- 	netfs_put_failed_request(creq);
- cancel:
- 	rreq->copy_to_cache = ERR_PTR(-ENOBUFS);
--	clear_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags);
-+	set_bit(NETFS_RREQ_CANCEL_CACHING, &rreq->flags);
- 	return ERR_PTR(-ENOBUFS);
- }
- 
- /*
-  * [DEPRECATED] Mark page as requiring copy-to-cache using PG_private_2 and add
-- * it to the copy write request.
-+ * it to the copy write request.  PG_private_2 should already be set on the
-+ * folio.
-  */
- void netfs_pgpriv2_copy_to_cache(struct netfs_io_request *rreq, struct folio *folio)
- {
-@@ -136,11 +137,13 @@ void netfs_pgpriv2_copy_to_cache(struct netfs_io_request *rreq, struct folio *fo
- 
- 	if (!creq)
- 		creq = netfs_pgpriv2_begin_copy_to_cache(rreq, folio);
--	if (IS_ERR(creq))
-+	if (IS_ERR(creq)) {
-+		set_bit(NETFS_RREQ_CANCEL_CACHING, &rreq->flags);
-+		netfs_cancel_copy_to_cache(rreq, folio);
- 		return;
-+	}
- 
--	trace_netfs_folio(folio, netfs_folio_trace_copy_to_cache);
--	folio_start_private_2(folio);
-+	trace_netfs_folio(folio, netfs_folio_trace_pgpriv2_copy);
- 	netfs_pgpriv2_copy_folio(creq, folio);
- }
- 
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index dd463a485139c..4f6a36c6e214f 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -303,7 +303,11 @@ void netfs_unlock_abandoned_read_pages(struct netfs_io_request *rreq)
- 		for (int slot = 0; slot < folioq_count(p); slot++) {
- 			struct folio *folio = folioq_folio(p, slot);
- 
--			if (folio && !folioq_is_marked2(p, slot)) {
-+			if (!folio)
-+				continue;
-+			netfs_cancel_copy_to_cache(rreq, folio);
-+
-+			if (!folioq_is_marked2(p, slot)) {
- 				if (folio == rreq->no_unlock_folio &&
- 				    test_bit(NETFS_RREQ_NO_UNLOCK_FOLIO,
- 					     &rreq->flags)) {
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index e60539f039f19..029456e034849 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -276,7 +276,7 @@ struct netfs_io_request {
- #define NETFS_RREQ_SHORT_TRANSFER	5	/* Set if we have a short transfer */
- #define NETFS_RREQ_OFFLOAD_COLLECTION	8	/* Offload collection to workqueue */
- #define NETFS_RREQ_NO_UNLOCK_FOLIO	9	/* Don't unlock no_unlock_folio on completion */
--#define NETFS_RREQ_FOLIO_COPY_TO_CACHE	10	/* Copy current folio to cache from read */
-+#define NETFS_RREQ_CANCEL_CACHING	10	/* Set to cancel caching */
- #define NETFS_RREQ_UPLOAD_TO_SERVER	11	/* Need to write to the server */
- #define NETFS_RREQ_USE_IO_ITER		12	/* Use ->io_iter rather than ->i_pages */
- #define NETFS_RREQ_NEED_PUT_RA_REFS	17	/* Need to put the folio refs RA gave us */
-diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
-index 9bda9302be90c..a22084813cb59 100644
---- a/include/trace/events/netfs.h
-+++ b/include/trace/events/netfs.h
-@@ -198,7 +198,6 @@
- 	EM(netfs_folio_trace_clear_cc,		"clear-cc")	\
- 	EM(netfs_folio_trace_clear_g,		"clear-g")	\
- 	EM(netfs_folio_trace_clear_s,		"clear-s")	\
--	EM(netfs_folio_trace_copy_to_cache,	"mark-copy")	\
- 	EM(netfs_folio_trace_end_copy,		"end-copy")	\
- 	EM(netfs_folio_trace_filled_gaps,	"filled-gaps")	\
- 	EM(netfs_folio_trace_invalidate_all,	"inval-all")	\
-@@ -209,16 +208,19 @@
- 	EM(netfs_folio_trace_kill_cc,		"kill-cc")	\
- 	EM(netfs_folio_trace_kill_g,		"kill-g")	\
- 	EM(netfs_folio_trace_kill_s,		"kill-s")	\
-+	EM(netfs_folio_trace_mark_copy,		"mark-copy")	\
- 	EM(netfs_folio_trace_mkwrite,		"mkwrite")	\
- 	EM(netfs_folio_trace_mkwrite_plus,	"mkwrite+")	\
--	EM(netfs_folio_trace_not_under_wback,	"!wback")	\
- 	EM(netfs_folio_trace_not_locked,	"!locked")	\
-+	EM(netfs_folio_trace_not_under_wback,	"!wback")	\
-+	EM(netfs_folio_trace_pgpriv2_copy,	"pgpriv2-copy")	\
- 	EM(netfs_folio_trace_put,		"put")		\
- 	EM(netfs_folio_trace_read,		"read")		\
- 	EM(netfs_folio_trace_read_done,		"read-done")	\
- 	EM(netfs_folio_trace_read_gaps,		"read-gaps")	\
- 	EM(netfs_folio_trace_read_unlock,	"read-unlock")	\
- 	EM(netfs_folio_trace_redirtied,		"redirtied")	\
-+	EM(netfs_folio_trace_sched_copy,	"sched-copy")	\
- 	EM(netfs_folio_trace_store,		"store")	\
- 	EM(netfs_folio_trace_store_copy,	"store-copy")	\
- 	EM(netfs_folio_trace_store_plus,	"store+")	\
+ 			if (syms_ss && runtime_ss)
 -- 
 2.53.0
 
