@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E33B51A13F;
-	Thu, 17 Sep 2026 17:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F65F372EE4;
+	Thu, 17 Sep 2026 17:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666510; cv=none; b=uRz23c2ctp50CzvzpDTVMbK4NKvWlKE+/tsbuNKt/GdUCMhJ1+FrDjvYWSRxJ+fQgIuRYxc2Y+hxGSGF7bXXEA4QBy4UuYNQHzG0K8HktA/t8ant8w5v79Oa4X8w5eVsaf/cFV85bl8Je2rXnFzmteBpgQGNosVhHkiMtYDzpC4=
+	t=1789666513; cv=none; b=NftQuOMcEns+XVVjWnM0fjqgBCM5MxQUWZmShBGjpjfmu1GfR5x0IRjW6GYaXueLbz/ebuQJ6GIuAlRl0hqpZa89OZzQDtvh93YRyRcBSYjo/G+twv30TMvQ9brSw7dup57er8alLwHriA4vdTivAw5CB5oqn/VvYoszMb+dRYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666510; c=relaxed/simple;
-	bh=/paDxeEiCJEA/vp1CH3hdxAA/6ezoFP0bPhLUNdAcmI=;
+	s=arc-20240116; t=1789666513; c=relaxed/simple;
+	bh=GSGvAWzdpq4ZD3+SFawNuVNki/itWeCBNWaW5bfkft0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqzyAeaplKVqnv8x1Xox7zN0rl8R1CA/GsD4TL9RnfhgrkLofjo08j+ZGOd8GLYKvCE51QmVFJVaUGl2DYGGjxmssQ+CGZSa3XATBTkE0rdGTiUltGYD5kzBeEPHU0yJU8WVWtrOvMv1EufbWnJZjxe6xUsy9upl+Dqd+8cEKjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEoTgzwZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SVMTZ912J85fvGi2DaECR4j3tbHdRcKSN6bPZCqZ0vZgzLwPIdFqjAnAQgrALjUGf+kVK/VFwXsDFWBtAije7mXCjt5P43xi3RVjw6ZI732qLCN5cGpO4nalmToUhoK75/+hSJMPbBmPJu2xJIbijFDVp6v9GsWg0P5YZA1fKbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1l157N54; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEoTgzwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3301F000FF;
-	Thu, 17 Sep 2026 17:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l157N54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E649B1F000FF;
+	Thu, 17 Sep 2026 17:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666509;
-	bh=JpNx6BQ2uic8hjKc+EjyJXEh9bb+HIlatFmOwHd0Ka8=;
+	s=korg; t=1789666512;
+	bh=d9E9fBNwWua3Sb9GPhUK7VN28xY1vmFT/n4hpl7qiL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEoTgzwZUgIGYTQLbsnnS6tctNjOG6McdxdkQworPJKyNpnvu2XPPHlhHax2RzWxU
-	 sDRoEEmAUerh1QN7elVf3jBv+nVYLdHRFNzJDvc5UGXtTgI/UujlrepZVnAtePIKlz
-	 /6aZYLX5YotYo4t5r6KX9EBeMPF84kN1iL59Ed/U=
+	b=1l157N54+lA14Hq3eXki4NarslBFAl4IQYtUw/RqxtcXJ3c1ddiBsVdJnDpEn7/UP
+	 kO3h+EJP38lVXxkg5gX7L/2+QQhockqniws7wzHEdzus64ufNO3UDXPNdrRnlMzVIP
+	 tMWPUnB3IvPjyxfxBiku/FDLYVurhJy7tjY/W+YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 1024/1250] netfilter: report NLM_F_DUMP_FILTERED when all is filtered out
-Date: Thu, 17 Sep 2026 16:13:39 +0100
-Message-ID: <20260917151619.812700022@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 1060/1250] media: hevc: add bounded tile-count helpers
+Date: Thu, 17 Sep 2026 16:14:15 +0100
+Message-ID: <20260917151620.852788321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,48 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 7a099b347fef536a84068076e2d384f044e5cfc5 upstream.
+commit 592dd4f8442a13bed6e946d73d3164ba38b33bbd upstream.
 
-NLM_F_DUMP_FILTERED is only set on data elements in the conntrack dump.
-But when everything is filtered out it is confusing for the user space,
-since the flag is not reported anymore and it looks like the table was
-empty, which may or may not be the case.
+The stateless HEVC decoders compute the number of tile columns and rows
+from num_tile_columns_minus1 / num_tile_rows_minus1 and clamp it to the
+column_width_minus1[] / row_height_minus1[] capacity before using it as a
+loop bound. Add shared helpers in a new <media/v4l2-hevc.h> so the rkvdec
+and hantro drivers do not each open-code the min_t() clamp.
 
-'answer_flags' were introduced precisely for this use case, and the
-conntrack dump should set the flag in there in case the filtering was
-applied.
-
-This is important, for example, to be able to tell if the filters are
-supported or not by the kernel without modifying the kernel state.
-
-With the proper reporting of NLM_F_DUMP_FILTERED on NLMSG_DONE, an
-application in user space can just try and dump with an arbitrary
-filter without worrying that there could be no matching entry.  The
-reported flag will signal that the filtering was applied and therefore
-supported.
-
-Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Fixes: 256fa3920874 ("media: v4l: Add definitions for HEVC stateless decoding")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_netlink.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/media/v4l2-hevc.h |   41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 include/media/v4l2-hevc.h
 
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -1077,6 +1077,8 @@ static int ctnetlink_start(struct netlin
- 	}
- 
- 	cb->data = filter;
-+	if (filter)
-+		cb->answer_flags = NLM_F_DUMP_FILTERED;
- 	return 0;
- }
- 
+--- /dev/null
++++ b/include/media/v4l2-hevc.h
+@@ -0,0 +1,41 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Helper functions for HEVC stateless codecs.
++ */
++
++#ifndef _MEDIA_V4L2_HEVC_H
++#define _MEDIA_V4L2_HEVC_H
++
++#include <linux/minmax.h>
++#include <media/v4l2-ctrls.h>
++
++/**
++ * v4l2_hevc_pps_num_tile_columns - number of HEVC tile columns, bounded
++ * @pps: the V4L2 HEVC PPS control
++ *
++ * Return the number of tile columns (num_tile_columns_minus1 + 1) clamped to
++ * the capacity of column_width_minus1[]. The control validation already
++ * rejects out-of-range counts; this keeps the consuming drivers bounded too.
++ */
++static inline unsigned int
++v4l2_hevc_pps_num_tile_columns(const struct v4l2_ctrl_hevc_pps *pps)
++{
++	return min_t(unsigned int, pps->num_tile_columns_minus1 + 1,
++		     ARRAY_SIZE(pps->column_width_minus1));
++}
++
++/**
++ * v4l2_hevc_pps_num_tile_rows - number of HEVC tile rows, bounded
++ * @pps: the V4L2 HEVC PPS control
++ *
++ * Return the number of tile rows (num_tile_rows_minus1 + 1) clamped to the
++ * capacity of row_height_minus1[].
++ */
++static inline unsigned int
++v4l2_hevc_pps_num_tile_rows(const struct v4l2_ctrl_hevc_pps *pps)
++{
++	return min_t(unsigned int, pps->num_tile_rows_minus1 + 1,
++		     ARRAY_SIZE(pps->row_height_minus1));
++}
++
++#endif /* _MEDIA_V4L2_HEVC_H */
 
 
