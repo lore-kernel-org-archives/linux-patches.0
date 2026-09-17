@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4311F51B177;
-	Thu, 17 Sep 2026 17:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E354DEC26;
+	Thu, 17 Sep 2026 17:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667356; cv=none; b=RXpqS66BbTZsBAlgbbnhRTiCdUKKJy2P5TMfpFtGGHB3h3fIn0QJSdhwIWdnN/G+ZsvI5Zn1GrbP6bRm0iAwnWEih4MVPBbMtZ7ZyjJkLrussbrGXhpvczBewo8awhvpa/f4qrQSEHmwFm0btI0jEwQYBk+jja6AX7+CP9ysxvI=
+	t=1789667359; cv=none; b=olfq257u0pKkQB+FNpfge4JB7YiXf/++pQJvihlt742VEBA8mP/iYcQ2CurJs2hJjeAX0bmSjGFR8V4x++2n8bnU13pSDSmPXlDNf5PQ66qyxQpSkFQJZJbdHkcRC1lZ3IQ70bDubyXM/pghRUopwP6RI/LtLv2n4mKGMC+0g3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667356; c=relaxed/simple;
-	bh=n9w2c6zXfV7zJt6cShfiY9Vn/D8Qito6tpslUYGw4ak=;
+	s=arc-20240116; t=1789667359; c=relaxed/simple;
+	bh=mu5rtiFrX7JN2DPnyE6iITQhvNCfAVSg976O+BID9aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHi/Ru5fLNzLJ8KoGR1Rx6TeRpIP2crf8d8H7ANBYVLKBZKU7IakgCZsxQgomBmMZHCPRUiyRZwsY+dJJAZhJfhcfeJDmHllPDGXceiYmaKbQyFccTwGhyujZCpN02pn01b4tPiUPgwM3vskGNi60eCvwo1VN0+6QhQJdU7X6wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgUZK6kP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HX+heB1a69JqDqYje3fe3XtaowPUo/LE21NzhulkLzvGmJdrYxIzU1QhZBtyx9CTdfBKDS6f/MPcNAbQSSeG4wSMiEKN/g7LhU9FNGyawFuwbfkuOLLIesLTlS/eVu2bMYbm+iYsbSzPGecfE3IGtJKYtVbbHGS52kxVbCpfqlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W29WuH+0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgUZK6kP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484D61F00893;
-	Thu, 17 Sep 2026 17:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W29WuH+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE1C1F000FF;
+	Thu, 17 Sep 2026 17:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667354;
-	bh=7FDZq2HxW+ftmYCUNjpn1F7IgTknAh2Ez3AHd2uj7FE=;
+	s=korg; t=1789667357;
+	bh=asCazMSvwK8IaeBxbw/vUHXeXNNBqzFG4NaRWpal6iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rgUZK6kP8GFbFlu+SMk03FXgGtpzGqFISsK3k5TZurJZ+9pz8soOiwNadGbncvcDm
-	 cYiEuaVt5ymq4C3WclFT7NUZYiPIgr63wrJJw54qmle9atS8+rpwH5UvPW/Mqm7PDo
-	 m6zahOvJsuUGJSGh0TlB2Z4hV91Hy/d3Yn15xLFI=
+	b=W29WuH+0xdeRtz9gqHs4r87vka+PU4pzIWNOg2sX/n9lkCFqSSBfuQLXmGOh6FazZ
+	 rnsY3oxK9Y/Bs6gDMw9RzqA3RVQxKT5qM/p0lnfX6VGhWiKiXSTNdEldG/4rAPHyyJ
+	 qgjHzhruBOFEnRlMVfAVYClQ1tckoKJGGqDgMoeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0065/1102] platform/chrome: Resolve kb_wake_angle visibility race
-Date: Thu, 17 Sep 2026 16:00:08 +0100
-Message-ID: <20260917151541.090627358@linuxfoundation.org>
+Subject: [PATCH 6.12 0066/1102] mmc: core: Add validation for host-provided max_segs
+Date: Thu, 17 Sep 2026 16:00:09 +0100
+Message-ID: <20260917151541.116243395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,97 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit c40f5f9927b5bf6062daa1e293ae32d83afc963e ]
+[ Upstream commit 3e0483e93a8be320f70a1ff68d835f7f015af311 ]
 
-A race condition exists between the probe of cros-ec-sysfs and
-cros-ec-sensorhub.
+The max_segs field is of type unsigned short, and if a host driver
+sets an excessively large value, it may be truncated to zero. This
+can cause mmc_alloc_sg() to call kmalloc_objs() with a zero size
+allocation request, which leads to undefined behavior.
 
-The `kb_wake_angle` attribute should only be visible if the sensor hub
-detects two or more accelerometers.  If cros_ec_sysfs_probe() runs
-before cros_ec_sensorhub_register() completes sensor enumeration, the
-sysfs attributes are created while `has_kb_wake_angle` is still false,
-hiding `kb_wake_angle` incorrectly.
+Under the SLUB allocator, kmalloc(0) returns a special pointer
+(ZERO_SIZE_PTR). The subsequent 'if (sg)' check will evaluate to
+true, and sg_init_table() will then attempt to access invalid memory,
+resulting in a crash:
 
-Store the created attribute group pointer in `ec_dev->group`.  When
-the sensor hub completes sensor enumeration, it checks for this group
-and calls sysfs_update_group() to notify the sysfs core to re-evaluate
-attribute visibility.  This ensures the `kb_wake_angle` attribute
-visibility is correctly updated regardless of the driver probe order.
+dwmmc_rockchip 2a310000.mmc: Successfully tuned phase to 133
+mmc1: new UHS-I speed SDR104 SDHC card at address aaaa
+Unable to handle kernel paging request at virtual address 0000001ffffffff0
+Mem abort info:
+ESR = 0x0000000096000004
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x04: level 0 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=0000000102c88000
+[0000001ffffffff0] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] SMP
+Modules linked in:
+CPU: 2 UID: 0 PID: 102 Comm: kworker/2:1 Not tainted 7.0.0-rc6-next-20260331-00013-g4d93c25963c5-dirty #80 PREEMPT
+Hardware name: Rockchip RK3576 EVB V10 Board (DT)
+Workqueue: events_freezable mmc_rescan
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : sg_init_table+0x2c/0x50
+lr : sg_init_table+0x24/0x50
+sp : ffff8000837db710
+x29: ffff8000837db710 x28: 000000000000c000 x27: 0000000000000300
+x26: 0000000000000000 x25: 0000000000000040 x24: ffff0000c46a0000
+x23: 0000000000000000 x22: ffff0000c0c73c00 x21: 0000000000000010
+x20: 0000000000000010 x19: 0000000000000000 x18: 000000000000002c
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
+x14: 0000000000000400 x13: ffff8000837dc000 x12: 0000000000000000
+x11: ffff0000c0c73ca0 x10: 0000000000000040 x9 : 459ec1f0abbdbb00
+x8 : 0000001fffffffe0 x7 : 0000000000000000 x6 : 000000000000003f
+x5 : 0000000000035579 x4 : 0000000000000901 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000010
+Call trace:
+sg_init_table+0x2c/0x50 (P)
+mmc_mq_init_request+0x64/0x90
+blk_mq_alloc_map_and_rqs+0x3ac/0x480
+blk_mq_alloc_set_map_and_rqs+0x98/0x1e0
+blk_mq_alloc_tag_set+0x1c0/0x290
+mmc_init_queue+0x120/0x370
+mmc_blk_alloc_req+0x150/0x420
 
-Co-developed-by: Gwendal Grignou <gwendal@chromium.org>
-Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
-Link: https://lore.kernel.org/r/20260407102615.1605317-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+To prevent this, add a validation check in mmc_mq_init_request() to
+detect when sg_len (derived from max_segs) is zero. If sg_len is zero,
+we return an error and print an error message, allowing host driver
+developers to identify and fix incorrect max_segs configuration.
+
+This is a defensive measure that ensures the MMC core fails gracefully
+when host drivers provide invalid max_segs values, rather than crashing
+with a page fault.
+
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub.c | 6 +++++-
- drivers/platform/chrome/cros_ec_sysfs.c     | 5 +++--
- include/linux/platform_data/cros_ec_proto.h | 2 ++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/mmc/core/queue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
-index 9bad8f72680ea..f938c3fc84e4f 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub.c
-@@ -122,8 +122,12 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 		sensor_type[sensorhub->resp->info.type]++;
- 	}
+diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+index 9baa6cc8e626a..73814b7529f6e 100644
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -214,8 +214,14 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+ 	struct mmc_queue *mq = set->driver_data;
+ 	struct mmc_card *card = mq->card;
+ 	struct mmc_host *host = card->host;
++	u16 sg_len = mmc_get_max_segments(host);
  
--	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2)
-+	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2) {
- 		ec->has_kb_wake_angle = true;
-+		if (ec->group && sysfs_update_group(&ec->class_dev.kobj,
-+						    ec->group))
-+			dev_warn(dev, "Unable to update sysfs");
+-	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
++	if (!sg_len) {
++		dev_err(mmc_dev(host), "Wrong max_segs assigned\n");
++		return -EINVAL;
 +	}
++
++	mq_rq->sg = mmc_alloc_sg(sg_len, GFP_KERNEL);
+ 	if (!mq_rq->sg)
+ 		return -ENOMEM;
  
- 	if (cros_ec_check_features(ec,
- 				   EC_FEATURE_REFINED_TABLET_MODE_HYSTERESIS)) {
-diff --git a/drivers/platform/chrome/cros_ec_sysfs.c b/drivers/platform/chrome/cros_ec_sysfs.c
-index 9c944146ee507..1134cfc496083 100644
---- a/drivers/platform/chrome/cros_ec_sysfs.c
-+++ b/drivers/platform/chrome/cros_ec_sysfs.c
-@@ -334,7 +334,8 @@ static int cros_ec_sysfs_probe(struct platform_device *pd)
- 	struct device *dev = &pd->dev;
- 	int ret;
- 
--	ret = sysfs_create_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
-+	ec_dev->group = &cros_ec_attr_group;
-+	ret = sysfs_create_group(&ec_dev->class_dev.kobj, ec_dev->group);
- 	if (ret < 0)
- 		dev_err(dev, "failed to create attributes. err=%d\n", ret);
- 
-@@ -345,7 +346,7 @@ static void cros_ec_sysfs_remove(struct platform_device *pd)
- {
- 	struct cros_ec_dev *ec_dev = dev_get_drvdata(pd->dev.parent);
- 
--	sysfs_remove_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
-+	sysfs_remove_group(&ec_dev->class_dev.kobj, ec_dev->group);
- }
- 
- static const struct platform_device_id cros_ec_sysfs_id[] = {
-diff --git a/include/linux/platform_data/cros_ec_proto.h b/include/linux/platform_data/cros_ec_proto.h
-index b34ed0cc1f8dc..25944537e78cd 100644
---- a/include/linux/platform_data/cros_ec_proto.h
-+++ b/include/linux/platform_data/cros_ec_proto.h
-@@ -215,6 +215,7 @@ struct cros_ec_platform {
- /**
-  * struct cros_ec_dev - ChromeOS EC device entry point.
-  * @class_dev: Device structure used in sysfs.
-+ * @group: sysfs attributes groups for this EC.
-  * @ec_dev: cros_ec_device structure to talk to the physical device.
-  * @dev: Pointer to the platform device.
-  * @debug_info: cros_ec_debugfs structure for debugging information.
-@@ -224,6 +225,7 @@ struct cros_ec_platform {
-  */
- struct cros_ec_dev {
- 	struct device class_dev;
-+	const struct attribute_group *group;
- 	struct cros_ec_device *ec_dev;
- 	struct device *dev;
- 	struct cros_ec_debugfs *debug_info;
 -- 
 2.53.0
 
