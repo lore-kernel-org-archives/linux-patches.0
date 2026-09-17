@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FB34D1789;
-	Thu, 17 Sep 2026 17:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592864D178D;
+	Thu, 17 Sep 2026 17:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666020; cv=none; b=mGg346/6BTfmFCLN9rNAs6pgMB9mimEgnGwbUirubeJHd+i0YlV38+dlWq7oYlsUVnn4UD3cGoKyl+luuco3+ct2Cfh+WkpwSEHCw1ZUh3Oz3OEOCMccN6VdYSxVlbNB7I8YeCR6Dr2BnKTePQ5DrQB/0Svs8C+SXAdOkpyblUg=
+	t=1789666023; cv=none; b=lJz2julHUxwDYt7/WcVsDWrRksSYaUH0KJDkDctJaZdAzDnU2eGa8B92i30uFHx4OS/fEO3wT+ttg843TiuXNWwjnn9CaUIsMkjJMeqXVltGfBhhx42O3gcVuFqRKfmdK2okrZAa4Ew/LFXodamx6ZxU1pAgH8abFEPIy0WhPUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666020; c=relaxed/simple;
-	bh=KsPORZuy1tk/gnYcU/m8aFlW82r2vtpwttluTXkX5MQ=;
+	s=arc-20240116; t=1789666023; c=relaxed/simple;
+	bh=MRyGsvdE04vAPTQeZmRQbriZK9HmyeUl+82BI8dHxMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqD/U8JLM9jVjq+WWmvO9nGQnb1TlCBhiQ9cgitVQ9EAYakVKwePc1eIp/bHOr4nCTrUHM65Q9lU0jqPwoH27fkvEq19/ptD6xxKUYECcL9Oq7NgcC0+XnbTP2ZvFnFe8kGySXZXYRspj4uLi3F2y5Tlu1sYbEeGfY/OCj0Csug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyBFpRYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vo3yphzbo53wl6taNRVK6o6C9DKfOuLIgD/e8DU8Xai9X7AztRT3oFTIqysQ4D06Hi+mWFFnjbxA81kF5XG9rr2LiBUfL2YRv6jOPnpB7WIZ6JiCJm8JShnvZmqOZC6OjXhahN/IkdYfL+3vid/MBcXLHf76PA/kZfZV9YmpXFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tN/buLxi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyBFpRYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6C51F00893;
-	Thu, 17 Sep 2026 17:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tN/buLxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F031F00893;
+	Thu, 17 Sep 2026 17:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666019;
-	bh=PJrK57OSYiqSY36g0MdaCRnU1/kdt/Kao2HDXdmg/8Q=;
+	s=korg; t=1789666022;
+	bh=C8IThsPDA+g6VNvIA+4FuwijDbg126i7GdzaPrSFu7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QyBFpRYNEXiC5bzRBO6dnDKFhlP2G7lf5Sfs37ljVaBQ1e+nXtpgKO7KQEeWf1Iwq
-	 zisLL9OBbMwepS4rUHeNTB11ePNPHtjIwTpGo0I1zwuDxtwaSbFxn1Z4OlX0Ivh5ra
-	 hY4mezpa7qN8KvPuAlVCiIla0Dctd0F9MKpGuFiQ=
+	b=tN/buLxi8Z8JsJOTUppKLxNU6eHJNTfZAo207MvhNywHAYNVEGg14PtF3yNamQWfR
+	 4Xb31AJbPHXJUo5FU+E/jKR0FGbWLj8yl5GyRwNexdHXnQ11u8n+V6CHTc8IB46oVm
+	 Ym/6EmSRXOfu5AnCv3BykaA1kpppFV8G/IN8WXfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Xiong Weimin <xiongweimin@kylinos.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0895/1250] watchdog: msc313e: Fix spurious reset on suspend
-Date: Thu, 17 Sep 2026 16:11:30 +0100
-Message-ID: <20260917151616.245742483@linuxfoundation.org>
+Subject: [PATCH 6.18 0860/1250] virtio_input: reset device if input_register_device() fails
+Date: Thu, 17 Sep 2026 16:10:55 +0100
+Message-ID: <20260917151615.278427476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-[ Upstream commit 4f6817c9eff4aa1078e16652d82e4b7ef4ffae3e ]
+[ Upstream commit 81489b32a21c9360f8750d1fb600155d27452e19 ]
 
-If the hardware watchdog was started by the bootloader and the device is
-suspended before userspace opens it, the ping worker (from watchdog
-core) is frozen and the active hardware timer continues running.  This
-leads to a spurious system reset.
+Probe marks the device DRIVER_OK with virtio_device_ready() before
+calling input_register_device(). If registration fails, the error path
+cleared vi->ready and called del_vqs() while the device was still live,
+so the device could keep DMA to queues that were already torn down.
 
-Check both watchdog_active() and watchdog_hw_running() when deciding
-whether to start or stop the watchdog during suspend and resume.
+Match remove/freeze: call virtio_reset_device() on that path before
+tearing down the virtqueues.
 
-Additionally, call watchdog_stop_ping_on_suspend() to ensure the ping
-worker be correctly paused and restarted during suspend and resume.
-
-Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-6-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 271c865161c5 ("Add virtio-input driver.")
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260805032931.1606652-1-xiongweimin@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/virtio/virtio_input.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 86e72aea96855..9cfe059fd31a7 100644
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -157,6 +157,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 	watchdog_init_timeout(&priv->wdev, timeout, dev);
- 	watchdog_stop_on_reboot(&priv->wdev);
- 	watchdog_stop_on_unregister(&priv->wdev);
-+	watchdog_stop_ping_on_suspend(&priv->wdev);
- 
- 	ret = devm_watchdog_register_device(dev, &priv->wdev);
- 
-@@ -171,7 +172,7 @@ static int __maybe_unused msc313e_wdt_suspend(struct device *dev)
- {
- 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
- 
--	if (watchdog_active(&priv->wdev))
-+	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
- 		msc313e_wdt_stop(&priv->wdev);
- 
- 	return 0;
-@@ -181,7 +182,7 @@ static int __maybe_unused msc313e_wdt_resume(struct device *dev)
- {
- 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
- 
--	if (watchdog_active(&priv->wdev))
-+	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
- 		msc313e_wdt_start(&priv->wdev);
- 
- 	return 0;
+diff --git a/drivers/virtio/virtio_input.c b/drivers/virtio/virtio_input.c
+index d0728285b6ce9..ee41a58c86bae 100644
+--- a/drivers/virtio/virtio_input.c
++++ b/drivers/virtio/virtio_input.c
+@@ -328,6 +328,7 @@ static int virtinput_probe(struct virtio_device *vdev)
+ 	spin_lock_irqsave(&vi->lock, flags);
+ 	vi->ready = false;
+ 	spin_unlock_irqrestore(&vi->lock, flags);
++	virtio_reset_device(vdev);
+ err_mt_init_slots:
+ 	input_free_device(vi->idev);
+ err_input_alloc:
 -- 
 2.53.0
 
