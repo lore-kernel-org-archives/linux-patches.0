@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFEA4EDCCF;
-	Thu, 17 Sep 2026 16:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4675E5218BE;
+	Thu, 17 Sep 2026 16:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664197; cv=none; b=tSktQFcfzGRIYK9k9XKYhLZEZjmCa4qlDJZa7tZ/yR8eQE4fLWT8TE9ZhMmS2a/GjQft6nOgXSNrv4eDkU3G0JCRxLXYcf7DzDDvyewTJs4SQ7IlRTbAY+84YrPWNQPnMwLKQFk9rglTw1VQ7K3TdzxunUJTTjaiq5qpn78TEQw=
+	t=1789664200; cv=none; b=eRgsmTGLLDOmK4bo4jUHrX/5CNk6OBdV6YEmSqheqC6MAV/jphqrBkFiCFISjnEGqzHi9SrxqTnVxVmSencDwTbu1fWG1rK7r+oCMRoAoYh8Vf/6mUHfxkKWUI0zoEWWFIpsYG7CjfhIx/I/8bxsTr3Sn+05HLTjm7nas2s8iFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664197; c=relaxed/simple;
-	bh=br75WcXHHgKlIBs1Uk71m5JgU+Qet6N2/Mhv+ZrUn3E=;
+	s=arc-20240116; t=1789664200; c=relaxed/simple;
+	bh=A5gyq/zmuJiY3bzTSsJGOtqvOzWzTnrn1ZyvVo9LFcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXPxgmMfMJ555NYPE9ybHxW5tMHb4HLDiWUvkmUTzxKCRrK7mqtWEPxWZviwE3SbadnctmMaOoDvgx7Mx6Vb1WEXWKJ9KSubBwwIJDGk+YXb/cQmuQVa57R1cMyQSQy06eHwJ16CjuT2FIgvWssKQ4LQqRUzP5w1FAkbfnq+0ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWdTjdiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OhYi64kf0lsADNsgfSZzTZOw2jIPQAPyczjhkcCmUPSngie0KtyND0PuZtbZolqFuLL5Nddvzh5juyUJ2axbsUp7AU34tH0K7CwHD9xrD4zp+j272GL3a41RzIdSIMEAQvEZgneT30dRTFRzvFPV+OvUitVnSom52mvxLJNxZWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwQI0zxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWdTjdiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D301F00893;
-	Thu, 17 Sep 2026 16:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwQI0zxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D38C1F000FF;
+	Thu, 17 Sep 2026 16:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664196;
-	bh=3+gAnkZ/trBMfMnf9cKvN+2eCSa10y1Wdsw4coCvOCM=;
+	s=korg; t=1789664199;
+	bh=lDj8Q2GccifCHzPysUjLFmk+2rCnQmos0llsYGBG9Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWdTjdiAb3tKzA0D+v847DlGUGl5infD5MrnVH4tQHI9ZPbQqT8hcky47slgNWqVz
-	 /CWf+1/GTpfjY0Zv0+3Qq2mseZpXDxhRy18FM3dBNwfbbXQEPGYyIPj1AZVMIdSYXD
-	 37kvfd+2C+9Dw30Ivra1Fgt9PiPsO609CeqtraEc=
+	b=EwQI0zxg1nUGNHpV/k8t1b3R4xIIqU6LJpIlPQ6xUBpx4GS65a/3w1TBJjDpx6Tk2
+	 EkaFWFpa/YBlJ9cU3HKSmxHabB63hf7hFja6D/kcJtFwU1MYovGGbETaPH+HLBC/ny
+	 4Ip7JehlKcLW0f/PKXzgA91RdMF6uGBtH3e8cHxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adriano Vero <adri.vero.dev@gmail.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Dexuan Cui <dexuan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0290/1250] powerpc/fadump: Add timeout to RTAS busy-wait loops
-Date: Thu, 17 Sep 2026 16:01:25 +0100
-Message-ID: <20260917151559.989598458@linuxfoundation.org>
+Subject: [PATCH 6.18 0255/1250] x86/topology: Add missing struct declaration and attribute dependency
+Date: Thu, 17 Sep 2026 16:00:50 +0100
+Message-ID: <20260917151559.068455246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,176 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adriano Vero <adri.vero.dev@gmail.com>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit b3580dd1c68cec23d44a39c439e18b4686c13480 ]
+[ Upstream commit bdf5eb306c4d07a3bfdd4e2ab8f2acc7ff824940 ]
 
-The ibm,configure-kernel-dump RTAS call sites in
-rtas_fadump_register(), rtas_fadump_unregister(), and
-rtas_fadump_invalidate() polled indefinitely while firmware returned
-a busy status. A misbehaving or hung firmware could stall these paths
-forever, blocking fadump registration at boot or preventing clean
-teardown.
+The prototypes for get_topology_cpu_type_name() and
+get_topology_cpu_type() take a pointer to struct cpuinfo_x86, but
+asm/topology.h neither includes nor forward-declares the structure.
+Including asm/topology.h, directly or indirectly, without including
+asm/processor.h triggers a warning:
 
-Introduce rtas_fadump_call(), a helper that wraps the common
-busy-wait pattern shared by all three sites. The helper accumulates
-the total delay and returns -ETIMEDOUT if firmware keeps returning a
-busy status beyond RTAS_FADUMP_MAX_WAIT_MS (60 seconds). A pr_debug()
-message is emitted on each busy iteration to aid diagnosis when the
-timeout is hit.
+    ./arch/x86/include/asm/topology.h:159:47: error: ‘struct cpuinfo_x86’
+    declared inside parameter list will not be visible outside of this
+    definition or declaration [-Werror]
+    159 | const char *get_topology_cpu_type_name(struct cpuinfo_x86 *c);
+        |                                               ^~~~~~~~~~~
 
-Signed-off-by: Adriano Vero <adri.vero.dev@gmail.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-[Maddy: Fixed newline after Signed-off-by]
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260506222024.30352-1-adri.vero.dev@gmail.com
+Since only a pointer is needed, add a forward declaration of struct
+cpuinfo_x86.
+
+Additionally, sysctl_sched_itmt_enabled is declared in asm/topology.h with
+the __read_mostly attribute, but the header does not include linux/cache.h.
+This causes a build failure when including asm/topology.h but not linux/
+cache.h:
+
+     ./arch/x86/include/asm/topology.h:264:27: error: expected ‘=’, ‘,’,
+     ‘;’, ‘asm’ or ‘__attribute__’ before ‘sysctl_sched_itmt_enabled’
+     264 | extern bool __read_mostly sysctl_sched_itmt_enabled;
+         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Include the required header.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511181954.UMxCeTV1-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511190008.AA0NTn3G-lkp@intel.com/
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Signed-off-by: Dexuan Cui <dexuan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/rtas-fadump.c | 80 ++++++++++++--------
- arch/powerpc/platforms/pseries/rtas-fadump.h |  6 ++
- 2 files changed, 53 insertions(+), 33 deletions(-)
+ arch/x86/include/asm/topology.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/rtas-fadump.c b/arch/powerpc/platforms/pseries/rtas-fadump.c
-index eceb3289383ec..3bb4ac2ab6cc3 100644
---- a/arch/powerpc/platforms/pseries/rtas-fadump.c
-+++ b/arch/powerpc/platforms/pseries/rtas-fadump.c
-@@ -179,9 +179,42 @@ static u64 rtas_fadump_get_bootmem_min(void)
- 	return RTAS_FADUMP_MIN_BOOT_MEM;
- }
+diff --git a/arch/x86/include/asm/topology.h b/arch/x86/include/asm/topology.h
+index 21041898157a1..63489ec410320 100644
+--- a/arch/x86/include/asm/topology.h
++++ b/arch/x86/include/asm/topology.h
+@@ -156,6 +156,8 @@ extern unsigned int __max_threads_per_core;
+ extern unsigned int __num_threads_per_package;
+ extern unsigned int __num_cores_per_package;
  
-+/*
-+ * Helper to make an ibm,configure-kernel-dump RTAS call with a bounded
-+ * busy-wait loop. Returns the RTAS return code on completion, or
-+ * -ETIMEDOUT if firmware keeps returning a busy status beyond
-+ * RTAS_FADUMP_MAX_WAIT_MS milliseconds.
-+ */
-+static int rtas_fadump_call(struct fw_dump *fadump_conf, int operation,
-+			    void *fdm_ptr, unsigned int fdm_size,
-+			    const char *op_name)
-+{
-+	unsigned int wait_time, total_wait = 0;
-+	int rc;
++struct cpuinfo_x86;
 +
-+	do {
-+		rc = rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
-+			       NULL, operation, fdm_ptr, fdm_size);
-+		wait_time = rtas_busy_delay_time(rc);
-+		if (wait_time) {
-+			pr_debug("Firmware busy during fadump %s, waiting %ums (total %ums)\n",
-+				 op_name, wait_time, total_wait);
-+			if (total_wait >= RTAS_FADUMP_MAX_WAIT_MS) {
-+				pr_err("Timed out waiting for firmware to complete fadump %s\n",
-+				       op_name);
-+				return -ETIMEDOUT;
-+			}
-+			total_wait += wait_time;
-+			mdelay(wait_time);
-+		}
-+	} while (wait_time);
-+
-+	return rc;
-+}
-+
- static int rtas_fadump_register(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time, fdm_size;
-+	unsigned int fdm_size;
- 	int rc, err = -EIO;
+ const char *get_topology_cpu_type_name(struct cpuinfo_x86 *c);
+ enum x86_topology_cpu_type get_topology_cpu_type(struct cpuinfo_x86 *c);
  
- 	/*
-@@ -192,16 +225,10 @@ static int rtas_fadump_register(struct fw_dump *fadump_conf)
- 	fdm_size = sizeof(struct rtas_fadump_section_header);
- 	fdm_size += be16_to_cpu(fdm.header.dump_num_sections) * sizeof(struct rtas_fadump_section);
+@@ -259,6 +261,7 @@ extern bool x86_topology_update;
  
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_REGISTER, &fdm, fdm_size);
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_REGISTER, &fdm, fdm_size,
-+			      "register");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
+ #ifdef CONFIG_SCHED_MC_PRIO
+ #include <asm/percpu.h>
++#include <linux/cache.h>
  
- 	switch (rc) {
- 	case 0:
-@@ -234,19 +261,12 @@ static int rtas_fadump_register(struct fw_dump *fadump_conf)
- 
- static int rtas_fadump_unregister(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time;
- 	int rc;
- 
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_UNREGISTER, &fdm,
--				sizeof(struct rtas_fadump_mem_struct));
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_UNREGISTER, &fdm,
-+			      sizeof(struct rtas_fadump_mem_struct), "unregister");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
- 
- 	if (rc) {
- 		pr_err("Failed to un-register - unexpected error(%d).\n", rc);
-@@ -259,19 +279,13 @@ static int rtas_fadump_unregister(struct fw_dump *fadump_conf)
- 
- static int rtas_fadump_invalidate(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time;
- 	int rc;
- 
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_INVALIDATE, fdm_active,
--				sizeof(struct rtas_fadump_mem_struct));
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_INVALIDATE,
-+			      (void *)fdm_active,
-+			      sizeof(struct rtas_fadump_mem_struct), "invalidate");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
- 
- 	if (rc) {
- 		pr_err("Failed to invalidate - unexpected error (%d).\n", rc);
-diff --git a/arch/powerpc/platforms/pseries/rtas-fadump.h b/arch/powerpc/platforms/pseries/rtas-fadump.h
-index c109abf6befd9..65fdab7b5b8d3 100644
---- a/arch/powerpc/platforms/pseries/rtas-fadump.h
-+++ b/arch/powerpc/platforms/pseries/rtas-fadump.h
-@@ -41,6 +41,12 @@
- #define MAX_SECTIONS				10
- #define RTAS_FADUMP_MAX_BOOT_MEM_REGS		7
- 
-+/*
-+ * Maximum time to wait for firmware to respond to an
-+ * ibm,configure-kernel-dump RTAS call before giving up.
-+ */
-+#define RTAS_FADUMP_MAX_WAIT_MS			60000U
-+
- /* Kernel Dump section info */
- struct rtas_fadump_section {
- 	__be32	request_flag;
+ DECLARE_PER_CPU_READ_MOSTLY(int, sched_core_priority);
+ extern bool __read_mostly sysctl_sched_itmt_enabled;
 -- 
 2.53.0
 
