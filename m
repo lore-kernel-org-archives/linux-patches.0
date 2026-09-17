@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256AD4E4C5D;
-	Thu, 17 Sep 2026 17:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1990951814A;
+	Thu, 17 Sep 2026 17:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666998; cv=none; b=Mcnq5y8TWfE4Xu24yMJWm9PucPYNuKaL8PCkxffHHZnXwxnSHpz4l4tNSqfBcVX9XSjKUPFoO1EQEzcX7Rifz0XJBgs7qkAV3hfJveW4jjBmETqJSALupgY6U5GA8M5aZi73JaxoucevwsWHImh7fteA+busj16HB73UvJUVepw=
+	t=1789667001; cv=none; b=XLuqN367x/omYO+4Nmm/HYx71PkPFgROzszx/lXswqb/LL2v8hEJGr+XbalmRvq16QGvE+YivZJ/QGdUq4zXR5+gVVfwTymijiP9SWqWp/DyJWUxzoxCvsEqsQsPJlHjNMvzP7x45vxHtATIggMeVJDcD9sIDOykJp2FMYEgTJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666998; c=relaxed/simple;
-	bh=SJ/UzHNkbPv+fTSM3Taf2/ccgZw/apWPIwxr07HoKR4=;
+	s=arc-20240116; t=1789667001; c=relaxed/simple;
+	bh=uldryTEtVyYfH8h3e14LK9EVGlpVCXT7M+zWJjlSLy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdocQEZAZW9aBw2Wnx89GG5wzO6jolocetLkDW7ARq+fs+R+doNEDCX+3ilj+ltgiVWw+1XfP+MauVLSeXTLT+mVl7qfL7cpe5XG/dk7Ht+dXs8HJVK/w4DDw9HRmd5IBQZ3S2DSae0boYy25mkoNDsJ/4Ju8QdgBHbcsNjIO1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mjf+2cKx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fzUZMP2wrr13fdcb1DTNzPqakWOmCN8CSP178pi+D3S9n+rFKfzO9uy43LsNW6fZRHvbF+2D1HuQDwUUVkHZtu4MgIdu13aIconJcvmsEsx4542SC79wEFEVD4pFqmndgWyjCYfgzA7MvL+YAQ51R2kShkLph5LHoMHOFxVo35w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJUAt9mt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mjf+2cKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833111F000FF;
-	Thu, 17 Sep 2026 17:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJUAt9mt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7215D1F000FF;
+	Thu, 17 Sep 2026 17:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666997;
-	bh=OHF79cafseEiEyqGVNOm4dBkrWrucrXYrBodavvQFao=;
+	s=korg; t=1789667000;
+	bh=Tq6ptWUeTCMUxrWTHZvkHlJPWQAMr79iBiHdEiLwXhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mjf+2cKxg44Qjqr3lGC20cjpB0vUBRbfTaqR964H9HeBWB+5IEczNh4WSTtRxvwk3
-	 atHGLAPZC08uHSG5gg59nwPliamp1lss7W7/baH5pL6tYB/8Mzp9HyjZQe997nDHa9
-	 z1yW8FNI591D6b/OiOapWITHNrvGhUz765ehlzKE=
+	b=rJUAt9mtKwIa/DBiyhlF0V/fZJ5Coe3LjQSxxUgBMCPqofzhvJqv6HVUJ1CuRyzAK
+	 0jg03URMx9Q4uDrayyHbjf2IUfSXEejIrfbi8j5y7ZtFPbm41TprwUb1idBIiPO0yz
+	 SVAPBP1I5mCwAMmXAmkp6VzNF9WZWRJ+Ht7BVU+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Vishal Moola <vishal.moola@gmail.com>,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1195/1250] x86/mm/pat: Allocate split page tables as kernel page tables
-Date: Thu, 17 Sep 2026 16:16:30 +0100
-Message-ID: <20260917151624.676813335@linuxfoundation.org>
+Subject: [PATCH 6.18 1196/1250] init/main: read bootconfig header with get_unaligned_le32()
+Date: Thu, 17 Sep 2026 16:16:31 +0100
+Message-ID: <20260917151624.704183017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -56,140 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit 9e4a3ec3411bb6bb59e3c1f29b75609f1e87aac4 ]
+[ Upstream commit 499f86de4f8c34e19a57daf2b6f0cba848e91994 ]
 
-A PTE is allocated directly without going through the standard page table
-allocation routines (such as pte_alloc_one_kernel()) when the CPA code
-splits a large page (__split_large_page()).
+get_boot_config_from_initrd() scans up to 3 bytes before initrd_end to
+handle GRUB 4-byte alignment.  As a result, the bootconfig header
+immediately preceding the magic may be unaligned.
 
-This means the page table constructor is never called nor is the page table
-marked as a kernel page table.
+Read the size and checksum fields with get_unaligned_le32() instead of
+casting to u32 * and using le32_to_cpu(), avoiding potential unaligned
+access and silencing sparse "cast to restricted __le32" warnings.
 
-The former results in the folio associated with the page table not being
-marked as a page table (__pagetable_ctor() is never called thus neither is
-__folio_set_pgtable()) nor are statistics updated to reflect
-it (lruvec_stat_add_folio() is never called).
+Sparse warnings (gcc + C=1):
+  init/main.c:292:16: warning: cast to restricted __le32
+  init/main.c:293:16: warning: cast to restricted __le32
 
-The latter issue of failing to mark the page table as a kernel page
-table (ptdesc_set_kernel() is never called) is far more problematic.
+No functional change intended.
 
-Since commit:
-
-  5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
-
-kernel page table freeing has been batched and since the
-subsequent commit:
-
-  e37d5a2d60a3 ("iommu/sva: invalidate stale IOTLB entries for kernel address space")
-
-IOTLB cache entries for kernel page tables have been invalidated upon
-being freed.
-
-Since split page tables are freed without this invalidation, the IOTLB
-can contain stale entries for them.
-
-Resolve the issue by using the ordinary PTE allocation API at split time.
-
-This results in these kernel page tables invoking a page table constructor,
-and thus requires a page table destructor.
-
-Destructors are not always present, like for early allocated direct map
-page tables). Conditionally call pagetable_dtor_free() if the PG_table
-folio flag for the ptdesc is set, otherwise we free the page table via
-pagetable_free().
-
-Regardless of which path is taken page tables marked as kernel page tables,
-which now includes split page tables, take the correct route through
-pagetable_free_kernel().
-
-There is a user-visible side effect in that split page tables will appear
-in nr_page_table_pages in /proc/vmstat (as do other kernel page tables
-allocated after early boot), however this is a positive change.
-
-This issue started being markedly problematic after commit:
-
-  5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
-
-so choose this as the Fixes target.
-
-[ dhansen: rephrase in imperative mood ]
-
-Fixes: 5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Vishal Moola <vishal.moola@gmail.com>
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-4-39b4ff90f91d@kernel.org
+Link: https://lkml.kernel.org/r/20260113101532.1630770-1-sun.jian.kdev@gmail.com
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 7812d6dab069 ("bootconfig: Fix integer overflow in initrd size check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/set_memory.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ init/main.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -434,7 +434,15 @@ static void __cpa_collapse_large_pages(s
+--- a/init/main.c
++++ b/init/main.c
+@@ -104,6 +104,7 @@
+ #include <linux/pidfs.h>
+ #include <linux/ptdump.h>
+ #include <linux/time_namespace.h>
++#include <linux/unaligned.h>
+ #include <net/net_namespace.h>
  
- 	list_for_each_entry_safe(ptdesc, tmp, &pgtables, pt_list) {
- 		list_del(&ptdesc->pt_list);
--		pagetable_free(ptdesc);
-+		/*
-+		 * Only early alloc'd direct map should not be flagged PG_table
-+		 * here and those shouldn't be collapsed. However be abundantly
-+		 * cautious and handle the !PG_table case too.
-+		 */
-+		if (PageTable((ptdesc_page(ptdesc))))
-+			pagetable_dtor_free(ptdesc);
-+		else
-+			pagetable_free(ptdesc);
- 	}
- 
- 	spin_unlock(&cpa_lock);
-@@ -1138,11 +1146,10 @@ set:
- 
- static int
- __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
--		   struct ptdesc *ptdesc)
-+		   pte_t *pbase)
+ #include <asm/io.h>
+@@ -269,7 +270,7 @@ static void * __init get_boot_config_fro
  {
- 	unsigned long lpaddr, lpinc, ref_pfn, pfn, pfninc = 1;
--	struct page *base = ptdesc_page(ptdesc);
--	pte_t *pbase = (pte_t *)page_address(base);
-+	struct page *base = virt_to_page(pbase);
- 	unsigned int i, level;
- 	pgprot_t ref_prot;
- 	bool nx, rw;
-@@ -1246,20 +1253,20 @@ __split_large_page(struct cpa_data *cpa,
- static int split_large_page(struct cpa_data *cpa, pte_t *kpte,
- 			    unsigned long address)
- {
--	struct ptdesc *ptdesc;
-+	pte_t *pte;
+ 	u32 size, csum;
+ 	char *data;
+-	u32 *hdr;
++	u8 *hdr;
+ 	int i;
  
- 	spin_unlock(&cpa_lock);
- 	if (cpa->init_mm_read_locked)
- 		mmap_read_unlock(&init_mm);
--	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
-+	pte = pte_alloc_one_kernel(&init_mm);
- 	if (cpa->init_mm_read_locked)
- 		mmap_read_lock(&init_mm);
- 	spin_lock(&cpa_lock);
--	if (!ptdesc)
-+	if (!pte)
- 		return -ENOMEM;
+ 	if (!initrd_end)
+@@ -288,9 +289,9 @@ static void * __init get_boot_config_fro
+ 	return NULL;
  
--	if (__split_large_page(cpa, kpte, address, ptdesc))
--		pagetable_free(ptdesc);
-+	if (__split_large_page(cpa, kpte, address, pte))
-+		pte_free_kernel(&init_mm, pte);
+ found:
+-	hdr = (u32 *)(data - 8);
+-	size = le32_to_cpu(hdr[0]);
+-	csum = le32_to_cpu(hdr[1]);
++	hdr = (u8 *)(data - 8);
++	size = get_unaligned_le32(hdr);
++	csum = get_unaligned_le32(hdr + 4);
  
- 	return 0;
- }
+ 	data = ((void *)hdr) - size;
+ 	if ((unsigned long)data < initrd_start) {
 
 
