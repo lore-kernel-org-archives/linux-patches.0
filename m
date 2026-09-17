@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72134F3EDA;
-	Thu, 17 Sep 2026 17:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89B839CD06;
+	Thu, 17 Sep 2026 17:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666196; cv=none; b=sSUjVlUykNXc3EcWhmS/f4enU5UbamAziVFL/pO3vl2lfgLIqBPlpYEiWWnA8mbyKUZK6wlAy6MgaA4cBwFRRZQLRR+4qI30lMUEzwwId9lZsr3spR4GpI+rI8pq1y41sr6NmijebOqGNM2wDUV1Hvdr+rxUHmn607z23m9Nk0U=
+	t=1789666199; cv=none; b=rH6b7t9AN4sg4q8VIvMK4Ln5cRTj9tzR6ePFXCenIHmBP5L0vdwPC97MjHvV/1D6mPBL4pdd7ewuV0yCSbt1an6z0mD1oDpxMjxMH4yLpKquDMuK3SCK1R/LG1uk/hkfeW6mmSVrvLsz8bd4d90tksD0TZRhGeLkdS1b4APpTQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666196; c=relaxed/simple;
-	bh=jy/OGEdCegUWmzUgAllK8/w8jEeUB6lSgONbA7oafRg=;
+	s=arc-20240116; t=1789666199; c=relaxed/simple;
+	bh=8s0k7HkFQb/fjvds4X1Uip559NYANo6hVXa+4SZnp3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOGRIo2YqC0r8Sz9SDuWdcH6gfVYQDEPrOvcfUU6P6ukHb9UyPTDmqxENa7nphWL4uJmxnn1Zj1bKbDqS/At3XsrjwfFTkf25xpSQypnLRsiWit3hDYhm6yMBvTaGxasTQ15X20mhpMY9G9i0hW6rTv7wsx9W3So9F9x93ZUbU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrGOHOKY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uH6W9eMvYVTHg+Qti3wMbMD5D3VKv6091saPP/k/ol5tSVKqxkhXQuak3JB12JtpbXB5DxebzgOE98Ehk+G//xoakcpV3rrOBOrDCYLTz6mZcO6Vr/zjZwK5RM86CTzsgiQwe2200ra0nLHynKuqhJyzU/ugPXpUsXNioj2TMPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj+SZY+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrGOHOKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3286D1F000FF;
-	Thu, 17 Sep 2026 17:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj+SZY+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA5B1F000FF;
+	Thu, 17 Sep 2026 17:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666194;
-	bh=EkhqP2gnca0KOX1o6+9UHQEKmfUKgqfoF9kuvOadj9M=;
+	s=korg; t=1789666197;
+	bh=GEyn8vPDZSK/mUzY68Ppc+9JU7M1TiZB+RUc23wF/qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrGOHOKYgApxj3hMFTgDIwQrpNjlIFWN6YolueccamBf2KVsHw9e7q0hnhhDa5cur
-	 Eo0KKdM8C1IW0NzHltIuNkL0FFW8gW83NRL4WqFZ180+mXRBbn49wGcbEK/a1NPnyR
-	 tB+QildmMz6VcLeuujVgP/2jHRPhUeggSfeMpYQw=
+	b=rj+SZY+DhaB5eEcPaYso2PdrJSwX9YVGbvnrWhSU+ccNzCX2aUvRdKMg10ER0fnc2
+	 b+/78IDW+fGMmkfBcZDy6bjBaI0Hxyaa80kiL0gxwlBR0mIh5fhtge9jqBf3fd+Vut
+	 V8CTUA6pGs0uO1nlRjIxxHMymNYMiXAvwFSj9UDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH 6.18 0957/1250] x86/amd_node: Fix potential NULL pointer dereference
-Date: Thu, 17 Sep 2026 16:12:32 +0100
-Message-ID: <20260917151617.956638522@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0940/1250] net: stmmac: fix TSO support when some channels have TBS available
+Date: Thu, 17 Sep 2026 16:12:15 +0100
+Message-ID: <20260917151617.496563801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,89 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit aefdbd574a362dcf7569bada6d72f64a006b9fb9 upstream.
+[ Upstream commit e32820264c2949a3e75bc5083e49c885e3bbaf62 ]
 
-amd_smn_read/write() are exported functions around __amd_smn_rw(), so
-they are always available even if amd_smn_init() fails. In that case,
-'amd_roots' is NULL and __amd_smn_rw() will access uninitialized memory.
+According to the STM32MP25xx manual, which is dwmac v5.3, TBS (time
+based scheduling) is not permitted for channels which have hardware
+TSO enabled. Intel's commit 5e6038b88a57 ("net: stmmac: fix TSO and
+TBS feature enabling during driver open") concurs with this, but it
+is incomplete.
 
-Then, commit:
+This commit avoids enabling TSO support on the channels which have
+TBS available, which, as far as the hardware is concerned, means we
+do not set the TSE bit in the DMA channel's transmit control register.
 
-  83518453074d ("x86/amd_node: Add SMN offsets to exclusive region access")
+However, the net device's features apply to all queues(channels), which
+means these channels may still be handed TSO skbs to transmit, and the
+driver will pass them to stmmac_tso_xmit(). This will generate the
+descriptors for TSO, even though the channel has the TSE bit clear.
 
-added the 'smn_exclusive' flag, which indicated the calls to
-pci_request_config_region_exclusive() succeeded, to prevent
-concurrent userspace access.
+Fix this by checking whether the queue(channel) has TBS available,
+and if it does, fall back to software GSO support.
 
-Commit:
-
-  0a4b61d9c2e4 ("x86/amd_node: Fix AMD root device caching")
-
-re-ordered initialization so pci_request_config_region_exclusive() is
-called earlier and a failure exits amd_smn_init() before allocating
-'amd_roots'. The setting of 'smn_exclusive' moved to the end of
-amd_smn_init(), after 'amd_roots' is allocated. It became redundant
-and can be removed.
-
-Replace 'smn_exclusive' with directly checking 'amd_roots', to fix a
-potential NULL pointer dereference and to simplify the logic.
-
-  [ bp: Reorg commit message, touchup comment. ]
-  [ mingo: Rebase & further touchups. ]
-
-Fixes: 77466b798d59 ("x86/amd_node: Remove dependency on AMD_NB")
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260825214805.39148-3-jason.andryuk@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5e6038b88a57 ("net: stmmac: fix TSO and TBS feature enabling during driver open")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/E1w7ptE-0000000Easz-28tv@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/amd_node.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 32 ++++++++++++++++---
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/amd_node.c
-+++ b/arch/x86/kernel/amd_node.c
-@@ -38,7 +38,6 @@ static struct pci_dev **amd_roots;
- 
- /* Protect the PCI config register pairs used for SMN. */
- static DEFINE_MUTEX(smn_mutex);
--static bool smn_exclusive;
- 
- #define SMN_INDEX_OFFSET	0x60
- #define SMN_DATA_OFFSET		0x64
-@@ -91,11 +90,16 @@ static int __amd_smn_rw(u8 i_off, u8 d_o
- 	if (node >= amd_num_nodes())
- 		return err;
- 
--	root = amd_roots[node];
--	if (!root)
-+	/*
-+	 * Uninitialized amd_roots indicates pci_request_config_region_exclusive()
-+	 * didn't run or failed and thus the kernel cannot rely on having
-+	 * exclusive access to SMN registers so prevent that.
-+	 */
-+	if (!amd_roots)
- 		return err;
- 
--	if (!smn_exclusive)
-+	root = amd_roots[node];
-+	if (!root)
- 		return err;
- 
- 	guard(mutex)(&smn_mutex);
-@@ -313,8 +317,6 @@ static int __init amd_smn_init(void)
- 		debugfs_create_file("value",	0600, debugfs_dir, NULL, &smn_value_fops);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 253f044fa70c6..007eee6798a5f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3390,6 +3390,17 @@ static void stmmac_safety_feat_configuration(struct stmmac_priv *priv)
  	}
- 
--	smn_exclusive = true;
--
- 	return 0;
  }
  
++/* STM32MP25xx (dwmac v5.3) states "Do not enable time-based scheduling for
++ * channels on which the TSO feature is enabled." If we have a skb for a
++ * channel which has TBS enabled, fall back to software GSO.
++ */
++static bool stmmac_tso_channel_permitted(struct stmmac_priv *priv,
++					 unsigned int chan)
++{
++	/* TSO and TBS cannot co-exist */
++	return !(priv->dma_conf.tx_queue[chan].tbs & STMMAC_TBS_AVAIL);
++}
++
+ /**
+  * stmmac_hw_setup - setup mac in a usable state.
+  *  @dev : pointer to the device structure.
+@@ -3502,10 +3513,7 @@ static int stmmac_hw_setup(struct net_device *dev)
+ 	/* Enable TSO */
+ 	if (priv->tso) {
+ 		for (chan = 0; chan < tx_cnt; chan++) {
+-			struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+-
+-			/* TSO and TBS cannot co-exist */
+-			if (tx_q->tbs & STMMAC_TBS_AVAIL)
++			if (!stmmac_tso_channel_permitted(priv, chan))
+ 				continue;
+ 
+ 			stmmac_enable_tso(priv, priv->ioaddr, 1, chan);
+@@ -4728,6 +4736,21 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return NETDEV_TX_OK;
+ }
+ 
++static netdev_features_t stmmac_features_check(struct sk_buff *skb,
++					       struct net_device *dev,
++					       netdev_features_t features)
++{
++	u16 queue;
++
++	if (skb_is_gso(skb)) {
++		queue = skb_get_queue_mapping(skb);
++		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue))
++			features &= ~NETIF_F_GSO_MASK;
++	}
++
++	return vlan_features_check(skb, features);
++}
++
+ static void stmmac_rx_vlan(struct net_device *dev, struct sk_buff *skb)
+ {
+ 	struct vlan_ethhdr *veth = skb_vlan_eth_hdr(skb);
+@@ -7097,6 +7120,7 @@ static void stmmac_get_stats64(struct net_device *dev, struct rtnl_link_stats64
+ static const struct net_device_ops stmmac_netdev_ops = {
+ 	.ndo_open = stmmac_open,
+ 	.ndo_start_xmit = stmmac_xmit,
++	.ndo_features_check = stmmac_features_check,
+ 	.ndo_stop = stmmac_release,
+ 	.ndo_change_mtu = stmmac_change_mtu,
+ 	.ndo_fix_features = stmmac_fix_features,
+-- 
+2.53.0
+
 
 
