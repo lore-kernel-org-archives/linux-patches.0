@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D3535FA7;
-	Thu, 17 Sep 2026 17:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A5E535FAA;
+	Thu, 17 Sep 2026 17:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664523; cv=none; b=QFv4M+UgFI0aQ2ITGn0/mk0Qavi2dOts0yUzdO3P1/9p0F8p+QpBGARPMBWfo7MBY8zrHF/snFRj0l3gR2vThZo8lBv/SAmc6O5biVinvihu8mVaJuUOuRGMFfKjGdv+HZQQgKyAPPBxWflh0UtlO4W4sIaw0wKiIr5SFJmrQhQ=
+	t=1789664526; cv=none; b=E/oJvSgc/mNJbMppOkLkDnbhFoOR7MWBUkQBa22VJcGP11mSP3ZIaN9KCqoUlKRRLtLSNJyLn07ca0oWUgsdbLaEmuqQtUdCdmLV/XAtz66kzcGvoGPOeWfd07/RNzhVDnnEYPiZwm6r6sQpUftRyV/RenWmA+HvmWzWqEJzm5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664523; c=relaxed/simple;
-	bh=8iv+qtLGcbrrdr40tJK0vafnEOkRM+L5gbSVujYcN40=;
+	s=arc-20240116; t=1789664526; c=relaxed/simple;
+	bh=z3YkIlR+TDHiLHgRcWrVzditycePY7OkggnwumIycYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQ/Om1i4vW+Ap/zyWOykGBpZKzdgjNzrkrvn244PKJbNtCLq+5M1nrfPreeYTsHJbup2w0yd8JQYSjPO0m1f3FYTKIunholXssg4SNe7VvdcDyPZzO/LpKVJTsgnuAFjA5795VZJKxPsCl7uUXdjEpI62ncmrItRG85sCVnctjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+HQBCpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ov6lipEvF3cL4wz7BLZC1bLno13RXwd6q4K7d6wuPsd0Obl6ZRPru8s4cGEDLeQQXm3Z4JWl6my7w0Gfyke6aOH0ldZiBmiFJqF5BmSPcY0GxhCCydPK69HIw6vV4wHtuOE10Lzy+bR+lo9F3bhu2+dPmSIbWBczpO15WpQXcUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoyLvtP3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+HQBCpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0051F00899;
-	Thu, 17 Sep 2026 17:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoyLvtP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B721F000FF;
+	Thu, 17 Sep 2026 17:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664522;
-	bh=5RJJhuxWRnijQDGLcLQwJUtrk2FAXphLmvgdxWGLggI=;
+	s=korg; t=1789664525;
+	bh=yDOjpJs7fIZV499xay8BHdPxdULj5wGr9fGlMYSebcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+HQBCpMj7y1mQZ0dvkXgdg3Hj0fzJ2Lr6rBAoBEDrm0l88QoOEKbPbKdzA92tweJ
-	 H6ZE1EHI7ocR6EZcxo4z5NlGZQyIepEpxoNwaV+C3uAa7n01Q2hk8T+uGB4oi76TnA
-	 vlaU9mJh4oiMYJz5hmDDvcx1Mfc+7hzWY8Butkk8=
+	b=CoyLvtP3An4HT9pyuMxNo8FTvazDzbO8XdvHdJpLMh9Fkv3c/2GCEjURQ2/JarC/V
+	 X/DxUZLkiYjE3DTowGCpbBBYYVJtVlw2JWkucxpffHgPqnhMuXr+AJ5vBIdHOzJQLZ
+	 HeJyL6yYV70ld9B0guaXybX9dycz69jqLD6GvGMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0401/1250] ASoC: rockchip: rockchip_pdm: Handle runtime PM resume failures in set_fmt
-Date: Thu, 17 Sep 2026 16:03:16 +0100
-Message-ID: <20260917151602.897769689@linuxfoundation.org>
+Subject: [PATCH 6.18 0402/1250] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
+Date: Thu, 17 Sep 2026 16:03:17 +0100
+Message-ID: <20260917151602.924042305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit ee7b5f7b39332febf917f9ebf212842cc9379815 ]
+[ Upstream commit 3168721d6ec3b610edf6a3c22ad190722a27d276 ]
 
-rockchip_pdm_set_fmt() calls pm_runtime_get_sync() before accessing
-hardware registers, but ignores its return value.
-If the runtime resume fails, the function continues to perform register
-accesses while the device state is undefined.
-Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
-return early on failure to avoid unpowered register accesses.
+Enable the 'hclk' bus clock before the 'clk' controller clock during
+runtime resume.
+The bus clock provides the register access interface, so enable it before
+the controller clock. This also makes the resume sequence the reverse of
+the suspend sequence, which keeps the clock ordering consistent.
 
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260522110302.349421F000E9@smtp.kernel.org/
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260602101608.45137-6-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_pdm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/rockchip/rockchip_pdm.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
-index c69cdd6f24994..01292b63bf9d6 100644
+index 01292b63bf9d6..115e90d3bbfe0 100644
 --- a/sound/soc/rockchip/rockchip_pdm.c
 +++ b/sound/soc/rockchip/rockchip_pdm.c
-@@ -321,6 +321,7 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
- {
- 	struct rk_pdm_dev *pdm = to_info(cpu_dai);
- 	unsigned int mask = 0, val = 0;
-+	int ret;
+@@ -426,16 +426,16 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
+ 	struct rk_pdm_dev *pdm = dev_get_drvdata(dev);
+ 	int ret;
  
- 	mask = PDM_CKP_MSK;
- 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-@@ -334,7 +335,10 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
- 		return -EINVAL;
+-	ret = clk_prepare_enable(pdm->clk);
++	ret = clk_prepare_enable(pdm->hclk);
+ 	if (ret) {
+-		dev_err(pdm->dev, "clock enable failed %d\n", ret);
++		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
+ 		return ret;
  	}
  
--	pm_runtime_get_sync(cpu_dai->dev);
-+	ret = pm_runtime_resume_and_get(cpu_dai->dev);
-+	if (ret)
-+		return ret;
-+
- 	regmap_update_bits(pdm->regmap, PDM_CLK_CTRL, mask, val);
- 	pm_runtime_put(cpu_dai->dev);
+-	ret = clk_prepare_enable(pdm->hclk);
++	ret = clk_prepare_enable(pdm->clk);
+ 	if (ret) {
+-		clk_disable_unprepare(pdm->clk);
+-		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
++		clk_disable_unprepare(pdm->hclk);
++		dev_err(pdm->dev, "clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
  
 -- 
 2.53.0
