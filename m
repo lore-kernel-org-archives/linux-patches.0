@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DD74ABBD2;
-	Thu, 17 Sep 2026 15:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE40579821;
+	Thu, 17 Sep 2026 15:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659380; cv=none; b=W/2Mj0tk7kH0b3l4E5LMSdeJh32+CSlHlCijmtuMzCFdJWdBdN/yjLfHpf4QfK0AdXYTBcEolpmiEZBMnMpIclvf80otUSBI7guP3oz2uSCePghygOdw/EfkxmIdUA3SG4yrTAxqY+ikdEk0Vzmj0ZlsXi6ot3WXFReSxq/5ecI=
+	t=1789659378; cv=none; b=qpoEv19a7FdHya1woIpQyqmR7XPqKIO6SjzyUwM5BbnsrdXxJZvz1afeElUDUUwfhwqqke9B3bWxlEGLiEIyYKAHXP2DEoM2RmXqV3EKcz/qeL4PFLTfzir/V47hplLbhX9mM/2Q23VYqFH1UqOE3cTqX7AD89j+cPR6Sj8uaqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659380; c=relaxed/simple;
-	bh=H+3frkQNa9g7VluPF6dQwZtDMqpssP9spglN/K4DbNw=;
+	s=arc-20240116; t=1789659378; c=relaxed/simple;
+	bh=H+kp96HBcfgfMAb898ec3UniWNyn3W9zFkKl34SMy8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klVx0WDT212NGkpnb5s6m/APPkFFUcEk+1SLBfDzSaJZUyH/F4548kOGvAGyYbtUk/bU/HGhItCbgxOfgXEwwKtrw/ojfMufnmfFJcg9yETCSWJvu8oGJ0/i7DQ3nWQKDtUpUfKQrhTy+aEg9YYie3yWr6LedF/fvPjNxjG8aS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmwwxA2O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ErRJOQ/16SmJIh1C5+hW/SGM9+rNkIEBr4/CufYahUE1T3tNaDpbZunx0nPIeTZujtcrR+Z7Hrw0iwCTCOdGEIoctokCqQc1RD3IvWRWkw7jhKp1NxUAjZBHQ+cU5IRgWHATJGxKKNjvNQdZGvsl8y/5L9lIT59eCuzxRl/JxuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPdlBV0u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmwwxA2O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CC51F00899;
-	Thu, 17 Sep 2026 15:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPdlBV0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B2D1F00898;
+	Thu, 17 Sep 2026 15:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659371;
-	bh=i46zJ2tebZgUP/gFCVRSL56tI/zz9HjKji+C4YY4MJg=;
+	s=korg; t=1789659368;
+	bh=MuLchGl7QMuqwmnn4DWw9/DaAMDAAsRZfBFqA5SYgbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmwwxA2OPqXgfgqJhA2IVEDwiN8OEru9gs9gtvle+YUbFzmeUYWia6pYXv/DwugD+
-	 s7L/5CbSH7b8sqASz8dlLkPXVxfwl4om0ybiIdguw5/i3ztIKk8asqQXYpoM2JbRZZ
-	 KL0cg4A5/9Y3CIaCovf0HWeQqS2RyqqWSfKxNCd0=
+	b=YPdlBV0utjkxQ85HKFwg0lfULGGH5QbRj7+YUyyB3Coh0IZIouMVLDR0aFUG0cu0J
+	 HpPYvt++FyRJiQxxuMxeKZdb4ng/g7bjB6UlRA6mENPaWl6TeIr9paKneQPHXw/PJy
+	 5gIvXzfgb4qR0t1hjimRtYY5rfM/AOd/1mXqlATk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 233/733] bpf: Mark syscall helpers as sleepable
-Date: Thu, 17 Sep 2026 16:09:01 +0100
-Message-ID: <20260917151357.041715289@linuxfoundation.org>
+Subject: [PATCH 7.2 232/733] bpf: Mark sched_process_wait argument as nullable
+Date: Thu, 17 Sep 2026 16:09:00 +0100
+Message-ID: <20260917151357.013364895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,59 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d05524794240b52fdc3b6c1220dd05505715824d ]
+[ Upstream commit a453d6e3b8e8e1a321c8744d6189d763af9287d0 ]
 
-bpf_sys_bpf() executes the bpf(2) syscall body, which can take mutexes,
-allocate with GFP_KERNEL, and wait for an RCU grace period.
-bpf_sys_close() reaches close_fd() and filp_close(), which can sleep as
-well.
+do_wait() passes wo->wo_pid to the sched_process_wait tracepoint.
+kernel_wait4() leaves wo_pid NULL for wait4(-1), and
+kernel_waitid_prepare() does likewise for waitid(P_ALL).
 
-Both helpers are limited to BPF_PROG_TYPE_SYSCALL, whose main program is
-sleepable. That does not make every callback sleepable: a syscall program
-can register a bpf_timer callback, and the verifier checks that callback
-in a non-sleepable context while retaining the syscall helper set.
+btf_ctx_access() currently types argument 0 as PTR_TO_BTF_ID |
+PTR_TRUSTED. Without PTR_MAYBE_NULL, the verifier accepts an unchecked
+dereference. Trusted pointer loads have no fault protection, so a wait for
+any child can then cause a NULL pointer dereference in JITed BPF code.
 
-Without .might_sleep on the prototypes, such a callback can invoke
-bpf_sys_bpf() from hrtimer softirq context and trigger a
-scheduling-while-atomic failure. bpf_sys_close() is exposed through the
-same missing context check.
+Add sched_process_wait to raw_tp_null_args[] with argument 0 marked
+nullable. The verifier rejects an unchecked dereference while preserving
+access after the program checks the pointer for NULL.
 
-Set .might_sleep on both prototypes so the existing helper-context check
-rejects them from timer callbacks and other atomic regions. Calls from the
-sleepable main body remain valid.
-
-Fixes: 79a7f8bdb159 ("bpf: Introduce bpf_sys_bpf() helper and program type.")
-Fixes: 3abea089246f ("bpf: Add bpf_sys_close() helper.")
+Fixes: 838a10bd2ebf ("bpf: Augment raw_tp arguments with PTR_MAYBE_NULL")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
 Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260903144433.1716731-10-memxor@gmail.com
+Link: https://lore.kernel.org/r/20260903144433.1716731-8-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/btf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index fb678b9dcd3e6..c7cb336fb0648 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -6633,6 +6633,7 @@ EXPORT_SYMBOL_NS(kern_sys_bpf, "BPF_INTERNAL");
- static const struct bpf_func_proto bpf_sys_bpf_proto = {
- 	.func		= bpf_sys_bpf,
- 	.gpl_only	= false,
-+	.might_sleep	= true,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_ANYTHING,
- 	.arg2_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
-@@ -6658,6 +6659,7 @@ BPF_CALL_1(bpf_sys_close, u32, fd)
- static const struct bpf_func_proto bpf_sys_close_proto = {
- 	.func		= bpf_sys_close,
- 	.gpl_only	= false,
-+	.might_sleep	= true,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_ANYTHING,
- };
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 0f7b4006a08f4..96b38fce885d3 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6673,6 +6673,10 @@ struct bpf_raw_tp_null_args {
+ static const struct bpf_raw_tp_null_args raw_tp_null_args[] = {
+ 	/* sched */
+ 	{ "sched_pi_setprio", 0x10 },
++	/*
++	 * do_wait() passes NULL for wait4(-1) and waitid(P_ALL).
++	 */
++	{ "sched_process_wait", 0x1 },
+ 	/* ... from sched_numa_pair_template event class */
+ 	{ "sched_stick_numa", 0x100 },
+ 	{ "sched_swap_numa", 0x100 },
 -- 
 2.53.0
 
