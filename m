@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0F14B7A29;
-	Thu, 17 Sep 2026 17:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53974E9C23;
+	Thu, 17 Sep 2026 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666628; cv=none; b=kEfV9+8XDbE49oQY8fsRD0v6S2kDHBABo6l41G4Cx9+SPLAIH7E1AYl6ykz8arEnAO9LbflNhhrs5WMSM/TO+qtFlLx5uUClFtj3WrQ+foxKpLxDYA4E1Wg/ej/svH3EdffiikKRO+HRiqIkDe2eBzflqWyAcxvvCTtgOdYi/1U=
+	t=1789666632; cv=none; b=hj4eDR5Ie/ggqyruBJU3mYQIHt2fPDr0WG9RqYggGdLs8Hxv3NLg9v6K9qq6OdPrWl4bxhShaSRjJpy6U2FnnIr1r2njPerCfbL6QBZN9ullZ34idnEStzkdW3c6GqyYAPIDSJoY4orr2pXzE2qZg40vhU6JgY6q5JPz5n7jwRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666628; c=relaxed/simple;
-	bh=DaE2kfjS++taM139r1csZ3gj5bUYj1nTW7FEgKGt9Kc=;
+	s=arc-20240116; t=1789666632; c=relaxed/simple;
+	bh=ykiZsv2bXLusM9s0haZSzufveut7mQvhAvT2+GZhcPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPX14vU9afP1Scc5kxhcSkArmJCHWAEJne3qM6lBzzbAZCBEKIsvFjwcvfZRZJ1r4GH8KbyjOp1OCNXCgHBc5h58oiSlwRv0jBlLWGCLqS16ZnMY6fX4En7zwA4rTLQX90cT/j6S/Nt8tLJMurmjwljXOEaaVC+07w8j3oDACPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znba4xtt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cZ+b9i9EqkXX5Dw0fdJ1LcVZNnsqULGbDwnf+ht7PaeQUh048GBu30+Y7LiAVNORDGZulouyOlP1vA9nMAmNGSX8Lge8KGKxCePpB7tDm8KIDydtGNQJsNuKgFppTfnLyGVipf5AyjmIpbUlocjiBJ1GVFgOhe4VfXRT/Deao+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5VcVTs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znba4xtt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AD81F000FF;
-	Thu, 17 Sep 2026 17:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5VcVTs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC69C1F000FF;
+	Thu, 17 Sep 2026 17:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666626;
-	bh=w3M+f5zNJQIrxXeIeEIYMlOPDn5hotglj86XYM3bJ50=;
+	s=korg; t=1789666630;
+	bh=IDD0BbN3Jdc8785pOmNqyYqp4u820cMNH+tFpBHmpOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znba4xttGScgAR1ZDRxttww5npk2YSHl5hYmRr1yg1e/IAH490S7qBAaXpMbAfI4U
-	 z+ZVMITngYwleYLLKdLdsAxRFOeVX5kc41o5rxlZ8qsRfLySkNzy1UM8yIf9vgzePz
-	 NJX/OLebWwIU0uDmol3p+yIuFPPVdvevrYekwJ+w=
+	b=X5VcVTs7xpK99rDR5DVvvX8CPtYeZhhsCjGbBw2vnvaadDJA0ieSHL5ol/iXJtcBO
+	 hVHhfNPsMU7AxRZ2bnESauixb49UD2BZtyC4Tx9tMtOWpU4Vqrp+4xj3NFYE2bwgYK
+	 YWYmvjsn+7ilIkw9K168ag6rbhk4D1Zo3bYCExrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1099/1250] xfs: make the rtsummary repair fix the file size too
-Date: Thu, 17 Sep 2026 16:14:54 +0100
-Message-ID: <20260917151621.967470047@linuxfoundation.org>
+Subject: [PATCH 6.18 1100/1250] xfs: log the tempip after we convert it to extents format
+Date: Thu, 17 Sep 2026 16:14:55 +0100
+Message-ID: <20260917151621.994661634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,38 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 6b760b3232b3efc8bcc7c165e76300bc1c9140c5 upstream.
+commit ed799148e0d63ef41ab60ce98963a1dc423090d3 upstream.
 
-LOLLM noticed that the rtsummary repair code will create a new rtsummary
-with the correct file size, but it won't force the new file size to be
-set on the existing rtsummary file, leaving the rtsummary corrupt.  Fix
-this by setting up the tempfile mapping-exchange to run to the end of
-both files, which is the magic offset needed to reset the file size.
+LOLLM points out that xrep_symlink_swap_prep converts sc->tempip to an
+extents format file prior to the atomic swap, but incorrectly logs
+sc->ip immediately afterwards.  Fix that, and the other problem that
+we're supposed to tell xfs_trans_log_inode what to log and don't.
 
 Cc: stable@vger.kernel.org # v6.10
-Fixes: abf039e2e4afde ("xfs: online repair of realtime summaries")
+Fixes: 2651923d8d8db0 ("xfs: online repair of symbolic links")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/rtsummary_repair.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/symlink_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/rtsummary_repair.c
-+++ b/fs/xfs/scrub/rtsummary_repair.c
-@@ -164,9 +164,10 @@ xrep_rtsummary(
- 	/*
- 	 * Now exchange the contents.  Nothing in repair uses the temporary
- 	 * buffer, so we can reuse it for the tempfile exchrange information.
-+	 * Use XFS_MAX_FILEOFF here so that we correct the rtsummary file size.
- 	 */
- 	error = xrep_tempexch_trans_reserve(sc, XFS_DATA_FORK, 0,
--			rts->rsumblocks, &rts->tempexch);
-+			XFS_MAX_FILEOFF, &rts->tempexch);
- 	if (error)
- 		return error;
+--- a/fs/xfs/scrub/symlink_repair.c
++++ b/fs/xfs/scrub/symlink_repair.c
+@@ -291,7 +291,7 @@ xrep_symlink_swap_prep(
+ 		if (error)
+ 			return error;
  
+-		xfs_trans_log_inode(sc->tp, sc->ip, 0);
++		xfs_trans_log_inode(sc->tp, sc->tempip, logflags);
+ 
+ 		error = xfs_defer_finish(&sc->tp);
+ 		if (error)
 
 
