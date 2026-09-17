@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C684E01F9;
-	Thu, 17 Sep 2026 15:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FEC4E01F9;
+	Thu, 17 Sep 2026 15:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660362; cv=none; b=qI327OehF58MQYTOgg4drHZZt6uZkKW7NlvXKTRlfJVMQ4qSp/4yZpsyiJ4RpLcpaZCoxCx4KNvm5JadvTDogWD+ehRBcQbosDsg0lkgQlLYUwLhsfpUhQDvZcQIa12NOs6jW4rltst8vr/nqP/KWJbWmZsD8pg3z7okMrwo4Ew=
+	t=1789660364; cv=none; b=XQKkFL7gVut2otRv1EiuHUyuTBTatQd+xTH1I2am67z69hmkt12LeYClE1gsl7vWu8PuudGqVBbso6iklJ9vjw/VheWSEWvfgqERRNn0fZ+B+k/4ndY1Ntf0YPIap5o9ACZb9g8KHQg2vgWn2l2imwYc/kDFErm7J4Zk8hnozEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660362; c=relaxed/simple;
-	bh=ix8XAZxvzrF5Hz5jbRAL8HQD8rneSwvxDcxrTzprXRE=;
+	s=arc-20240116; t=1789660364; c=relaxed/simple;
+	bh=1nvXABA+A1vfBOoi5LzgcbHOhu2yNf1/SwS81jiTqMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5iEdmt1GIFZX8eC8VfSm6D2GOAVsmg1nf/JDThaP+oAOXgvsgchTlPoZdVrDSbE05agQzNzXSCGV3scq/PSqSr5c5yA8VaEGmKjOWzVYayxaXdvQiclLvTX9sDpC4hDk2Euhm4TRbNSvNYO8evUq/ZstxKGAy/VT/xDXLSv1Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlX4L9nA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VNlt3AINGtBcjhHn4B/DxcRwpzN6o1cAWXcHojINacrxbQNHqVL1niyKl+WWRn3Q4lQ6GF1EI2XB5NyMsIVc74SawCa8SYSf9Demk1jdluWppegM5gpgD7RZwCacOa1/tR21WaYG/bFBXwKlzftkuSoReqhZkE8fL4QyrfRVTmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQvb7FFx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlX4L9nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFBA1F000FF;
-	Thu, 17 Sep 2026 15:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQvb7FFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A835B1F00898;
+	Thu, 17 Sep 2026 15:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660360;
-	bh=7hNAALEoGksf1AHsD60xOTPCRCusmXzyexMtGgGiNTs=;
+	s=korg; t=1789660363;
+	bh=aZi5nTbJ2HOmw0w8TEqkTOXM70XG48l+eBlsckY1S/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlX4L9nA2EAtBWEx9fviSScVRgNSon5cHI6aVlYicEuXSMkkdkg0hUuup/avrJq1p
-	 sBKBnEFQORxwVhbN/YmvC/b/SMT7OH6LQTmiKMbicUGyIYy3lCnUB4eiQnRoHOf4At
-	 9lOTAYZXZl6ZhhLqGeoM0/twJP4qickQN0e4BbYM=
+	b=iQvb7FFxTzXGTZOGb1ITOHEQdHZzQynbmmwanlG/408NQSE+nY29heuwf3JrfBo09
+	 OsVlH2k1vSScm3rv3rF3JnYOyWaPA1wC7TK7j12Xt1W4kEOzNRsJx4cybNnLIKzopB
+	 jgsu4XB58fXGOR/drWx0tCGyoPMdyg90xiQlziHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com,
+	David Carlier <devnexen@gmail.com>,
 	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 7.2 565/733] ieee802154: cc2520: fix FIFOP work use-after-free
-Date: Thu, 17 Sep 2026 16:14:33 +0100
-Message-ID: <20260917151406.407177267@linuxfoundation.org>
+Subject: [PATCH 7.2 566/733] ieee802154: hwsim: serialize pib updates to fix double-free
+Date: Thu, 17 Sep 2026 16:14:34 +0100
+Message-ID: <20260917151406.438402119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,51 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: David Carlier <devnexen@gmail.com>
 
-commit ff5891b266a7fc6a062710836be84f1cc19338b5 upstream.
+commit 979d5b8de8ed4e1f997aef12da5694b99be7b871 upstream.
 
-The FIFOP interrupt handler queues cc2520_fifop_irqwork.  On removal,
-cc2520_remove() only flushes the work.  The devm-managed FIFOP IRQ
-remains active until after ->remove() returns and can queue the work
-again after that flush, allowing it to run after the private data is
-released.
+hwsim_update_pib() does an unserialized read-swap-free of phy->pib:
 
-Disable the work with disable_work_sync() instead of flushing it, so
-the handler can no longer queue it once removal begins.  Destroy the
-buffer mutex last, since the worker and the stop callback invoked
-through ieee802154_unregister_hw() both take it.
+	pib_old = rtnl_dereference(phy->pib);
+	...
+	rcu_assign_pointer(phy->pib, pib);
+	kfree_rcu(pib_old, rcu);
 
-Found by an in-house static analysis tool.
+It assumes the RTNL is held, but ->set_channel is not always called
+under it: the mac802154 scan worker changes channels via
+drv_set_channel() without the RTNL. Such an update can race an
+RTNL-held one on the same phy; both read the same pib_old and both
+kfree_rcu() it, double-freeing the object. With SLUB percpu sheaves
+batching kfree_rcu(), this surfaces as a KASAN invalid-free in
+rcu_free_sheaf().
 
-Fixes: 0da6bc8cc341 ("ieee802154: cc2520: adds driver for TI CC2520 radio")
-Cc: stable@vger.kernel.org # v6.10+
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://lore.kernel.org/20260812061714.175966-1-fanwu01@zju.edu.cn
+struct hwsim_phy has no lock for pib. Add one and make the swap atomic
+with rcu_replace_pointer() under it, dropping the misleading
+rtnl_dereference().
+
+Reported-by: syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=60332fd095f8bb2946ad
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20260709221858.158063-1-devnexen@gmail.com
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ieee802154/cc2520.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ieee802154/mac802154_hwsim.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ieee802154/cc2520.c
-+++ b/drivers/net/ieee802154/cc2520.c
-@@ -1156,11 +1156,10 @@ static void cc2520_remove(struct spi_dev
- {
- 	struct cc2520_private *priv = spi_get_drvdata(spi);
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -72,6 +72,8 @@ struct hwsim_phy {
+ 	struct ieee802154_hw *hw;
+ 	u32 idx;
  
--	mutex_destroy(&priv->buffer_mutex);
--	flush_work(&priv->fifop_irqwork);
++	/* Serializes phy->pib_updates. */
++	spinlock_t pib_lock;
+ 	struct hwsim_pib __rcu *pib;
+ 
+ 	bool suspended;
+@@ -102,8 +104,6 @@ static int hwsim_update_pib(struct ieee8
+ 	if (!pib)
+ 		return -ENOMEM;
+ 
+-	pib_old = rtnl_dereference(phy->pib);
 -
-+	disable_work_sync(&priv->fifop_irqwork);
- 	ieee802154_unregister_hw(priv->hw);
- 	ieee802154_free_hw(priv->hw);
-+	mutex_destroy(&priv->buffer_mutex);
- }
+ 	pib->page = page;
+ 	pib->channel = channel;
+ 	pib->filt.short_addr = filt->short_addr;
+@@ -112,7 +112,10 @@ static int hwsim_update_pib(struct ieee8
+ 	pib->filt.pan_coord = filt->pan_coord;
+ 	pib->filt_level = filt_level;
  
- static const struct spi_device_id cc2520_ids[] = {
+-	rcu_assign_pointer(phy->pib, pib);
++	spin_lock_bh(&phy->pib_lock);
++	pib_old = rcu_replace_pointer(phy->pib, pib,
++				      lockdep_is_held(&phy->pib_lock));
++	spin_unlock_bh(&phy->pib_lock);
+ 	kfree_rcu(pib_old, rcu);
+ 	return 0;
+ }
+@@ -952,6 +955,7 @@ static int hwsim_add_one(struct genl_inf
+ 		goto err_pib;
+ 	}
+ 
++	spin_lock_init(&phy->pib_lock);
+ 	pib->channel = 13;
+ 	pib->filt.short_addr = cpu_to_le16(IEEE802154_ADDR_BROADCAST);
+ 	pib->filt.pan_id = cpu_to_le16(IEEE802154_PANID_BROADCAST);
 
 
