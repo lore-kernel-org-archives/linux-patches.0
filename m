@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2FB501284;
-	Thu, 17 Sep 2026 16:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49B7501292;
+	Thu, 17 Sep 2026 16:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661354; cv=none; b=gTiyde2unq730MJmPSVWqhmsdnSHEKlLAA1n6AQhIspeac82sRH4Zy5Dzxe0BNJRWN/Pl7Gc1womeONidt0T71dd8ZQr26RIL9uptyEVlwmty6KrZCqMZQ3iRpRlPt3xi+V3W/hLYN8GaVIKQcM7CP3ZsWMf6AlXpxotbXlCDOc=
+	t=1789661357; cv=none; b=hR8qCxet9LlgUY+mIyAlCDUpUTGubQstVf6w0eAjU9aC/k7vgENKV7Lo4nVeNfApBOknCHu2NhPdF5Mo0ueYGgeefUOpSFSMzWk+Gfr6oV8JO6Jx55n1YTQ/sX2QFDwXSs9OaKUzBbb84fmUbPjDD3NZsoahq/Q00utMda7lzIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661354; c=relaxed/simple;
-	bh=gT1cHa1ztvBpc+7Q0n386EBpTh7sXf/nvKFpqea1Mms=;
+	s=arc-20240116; t=1789661357; c=relaxed/simple;
+	bh=DCdFvx8kdagXsna5GhssK9+zXi6O9WkJYJMAjjZtV2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7vjbzIj9mmewJ3rKXsTSXDrDMwKT3VZlbwlxsyvpfHqQKrVlpnpIsHMjq8lpZ7/P+fYVw2AwtXA3qWURY3fZVUTNT1yAbwaTGptGmDC44kTOJgXfj++FgoiBoSjGPsOgoyB/bSi08fVgWMff+0XQey1QlNQB/bYYGa7h5bc3+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSs2aFB5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k5Wie+YfPcPFbH3hADBwFjJwFF7m9VKyLjh4Od0MN88R917AaXN9TjIwzN2WWe4hJKERdQ49NCt/AllEH1HsD/m/Rii35kdF8iSfQUoEY7KjycLj/ohBlz/2uargIjk8oNdNa9cyuygfzjgKkp7IWEkkAY4PPQBpUbcXBH0VpPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNl/fTy6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSs2aFB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87D81F00899;
-	Thu, 17 Sep 2026 16:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNl/fTy6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54BB1F00893;
+	Thu, 17 Sep 2026 16:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661353;
-	bh=Cr6uDzyv39nenjp+n7kP+MKREQIlHqQmMZE/d7GWd9Q=;
+	s=korg; t=1789661356;
+	bh=8PMRJiwj/6xUFQNir6Cjiz4qKDma9TRRw4jDEx6Knuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSs2aFB55/jWu8A3bAruR3VUvlaNB0CFBST0qRwogqELm6E3TsvGmI+J2VHi7IP4x
-	 r4WRR5dwbkRo8f/jOsBuSY5pxcFyngzkq0Fs2dbNxe4blGlOCPjBekP0l+HBRncyoK
-	 Pnhl9F515Dls1Ah69W4kWfhz5LNEOi4QLMLQ1pYk=
+	b=dNl/fTy6fecAQKaYr+J0R7NTn+70yXBF2lsax8vj9YMQFgk10sj8AwUBEq5M74ITi
+	 tcM06yrZ/sLEBF0sX4eFoeYahUoMBhs3axiSwXMhqnSpxxdsqDnum52BOGUOLyw75f
+	 uN7gFKrW49F1q1RLl0rmTSBi+PSFG5uvtz/1qTSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Daniel Wagner <dwagner@suse.de>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0166/1250] nvme-core: align fabrics_q teardown with admin_q in nvme_free_ctrl
-Date: Thu, 17 Sep 2026 15:59:21 +0100
-Message-ID: <20260917151556.589737033@linuxfoundation.org>
+Subject: [PATCH 6.18 0122/1250] crypto: atmel-ecc - add support for atecc608b
+Date: Thu, 17 Sep 2026 15:58:37 +0100
+Message-ID: <20260917151555.327654156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit f702badaf7d31dc3dea6c66da92b5f35fadd89dc ]
+[ Upstream commit b668edaf8dcc8d09f6f1e71797422b44d4bd22a3 ]
 
-Currently, the final reference for the fabrics admin queue (fabrics_q)
-is dropped inside nvme_remove_admin_tag_set(). However, the primary admin
-queue (admin_q) defers dropping its final reference until
-nvme_free_ctrl().
+Tested on hardware with an ATECC608B at 0x60. The device binds
+successfully, passes the driver's sanity check, and registers the
+ecdh-nist-p256 KPP algorithm.
 
-Move the blk_put_queue() call for fabrics_q from
-nvme_remove_admin_tag_set() to nvme_free_ctrl(). This aligns the
-lifecycle management of both admin queues, ensuring they are freed
-symmetrically when the controller is finally torn down.
+The hardware ECDH path was also exercised using a minimal KPP test
+module, covering private key generation, public key derivation, and
+shared secret computation.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/atmel-ecc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index dcf729aacb1f7..f370dce6f91dd 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4926,10 +4926,8 @@ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
- 	 */
- 	nvme_stop_keep_alive(ctrl);
- 	blk_mq_destroy_queue(ctrl->admin_q);
--	if (ctrl->ops->flags & NVME_F_FABRICS) {
-+	if (ctrl->fabrics_q)
- 		blk_mq_destroy_queue(ctrl->fabrics_q);
--		blk_put_queue(ctrl->fabrics_q);
--	}
- 	blk_mq_free_tag_set(ctrl->admin_tagset);
- }
- EXPORT_SYMBOL_GPL(nvme_remove_admin_tag_set);
-@@ -5071,6 +5069,8 @@ static void nvme_free_ctrl(struct device *dev)
+diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
+index 93e3513541c7d..3f384eb694f58 100644
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -365,6 +365,8 @@ static void atmel_ecc_remove(struct i2c_client *client)
+ static const struct of_device_id atmel_ecc_dt_ids[] = {
+ 	{
+ 		.compatible = "atmel,atecc508a",
++	}, {
++		.compatible = "atmel,atecc608b",
+ 	}, {
+ 		/* sentinel */
+ 	}
+@@ -374,6 +376,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids);
  
- 	if (ctrl->admin_q)
- 		blk_put_queue(ctrl->admin_q);
-+	if (ctrl->fabrics_q)
-+		blk_put_queue(ctrl->fabrics_q);
- 	if (!subsys || ctrl->instance != subsys->instance)
- 		ida_free(&nvme_instance_ida, ctrl->instance);
- 	nvme_free_cels(ctrl);
+ static const struct i2c_device_id atmel_ecc_id[] = {
+ 	{ "atecc508a" },
++	{ "atecc608b" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
 -- 
 2.53.0
 
