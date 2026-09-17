@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A098E3DFC99;
-	Thu, 17 Sep 2026 17:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E33B51A13F;
+	Thu, 17 Sep 2026 17:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666508; cv=none; b=JJE31U/ZWeh+3kt3tYAbqE/r2bsbYRwLqp9KhmyQ3Br0zo4gVzX6aW8rTRJ4NjtQdlnX5rT5qj9TsSCbmimnhBpIukGRFW8IeKy6mdXCmF3FxOZBKuIpd0ishpn11Fh1lp+qweKg9iZf0lBsjMOgH28AP4izG85ot+xHjZJa1m0=
+	t=1789666510; cv=none; b=uRz23c2ctp50CzvzpDTVMbK4NKvWlKE+/tsbuNKt/GdUCMhJ1+FrDjvYWSRxJ+fQgIuRYxc2Y+hxGSGF7bXXEA4QBy4UuYNQHzG0K8HktA/t8ant8w5v79Oa4X8w5eVsaf/cFV85bl8Je2rXnFzmteBpgQGNosVhHkiMtYDzpC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666508; c=relaxed/simple;
-	bh=l81lU3bYoeGOituxT1dIO46Xtcv5IRAuLb93dr1HpBk=;
+	s=arc-20240116; t=1789666510; c=relaxed/simple;
+	bh=/paDxeEiCJEA/vp1CH3hdxAA/6ezoFP0bPhLUNdAcmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3AeeKzgEFV6TY6LrjuLthI6dxkRe1gcl8czhwZKKSfEiW90ge2lyGGpGeHlBzMdNR3gJkEwLf2C3pDLZTcRxro6ELoZKpId2ZV7XJh7BYzxl5/03uO6e4VXsiTUHGYz36UPQvp0sFx/PcYF41s1vBfCd5mU9ZqFz8jThW1vU5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwO2ERQJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jqzyAeaplKVqnv8x1Xox7zN0rl8R1CA/GsD4TL9RnfhgrkLofjo08j+ZGOd8GLYKvCE51QmVFJVaUGl2DYGGjxmssQ+CGZSa3XATBTkE0rdGTiUltGYD5kzBeEPHU0yJU8WVWtrOvMv1EufbWnJZjxe6xUsy9upl+Dqd+8cEKjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEoTgzwZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwO2ERQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DD01F000FF;
-	Thu, 17 Sep 2026 17:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEoTgzwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3301F000FF;
+	Thu, 17 Sep 2026 17:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666506;
-	bh=ECLayZsnCbp/HfFYUjZeQkw2HFhNm1p8WSPj98Eu/PQ=;
+	s=korg; t=1789666509;
+	bh=JpNx6BQ2uic8hjKc+EjyJXEh9bb+HIlatFmOwHd0Ka8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwO2ERQJUlfh6YqArQefFHbP2Uw9w/0m8ux0Acv0gHwxUGyZ84F6LBFRLuYsiLvCG
-	 6HAxMQHa3NKEaN4VLL1p9M+IlI87hdhoL3QSz9OeVDjEwcjFxOef27VTVty98DLXPT
-	 nI4L/b8f63h43kSkykpAKQFTcCz3ArVKidYbvtqA=
+	b=cEoTgzwZUgIGYTQLbsnnS6tctNjOG6McdxdkQworPJKyNpnvu2XPPHlhHax2RzWxU
+	 sDRoEEmAUerh1QN7elVf3jBv+nVYLdHRFNzJDvc5UGXtTgI/UujlrepZVnAtePIKlz
+	 /6aZYLX5YotYo4t5r6KX9EBeMPF84kN1iL59Ed/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishnu Razdan <vrazdan@openai.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 1059/1250] hwmon: (pmbus) Clear generic status alarms with CLEAR_FAULTS
-Date: Thu, 17 Sep 2026 16:14:14 +0100
-Message-ID: <20260917151620.827961840@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 1024/1250] netfilter: report NLM_F_DUMP_FILTERED when all is filtered out
+Date: Thu, 17 Sep 2026 16:13:39 +0100
+Message-ID: <20260917151619.812700022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Razdan <vrazdan@openai.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 6d760f8b41aed74de4402440e4db663d261478bd upstream.
+commit 7a099b347fef536a84068076e2d384f044e5cfc5 upstream.
 
-Some hwmon alarms fall back to STATUS_WORD summary bits when no
-individual limit alarm is available. On PMBus 1.2 and newer devices,
-pmbus_get_boolean() acknowledges these alarms with the same byte-data
-write used for detailed status registers. For example, PB_STATUS_INPUT
-is 0x2000, so it is truncated to zero when passed to
-_pmbus_write_byte_data(). The resulting write cannot acknowledge the
-input alarm.
+NLM_F_DUMP_FILTERED is only set on data elements in the conntrack dump.
+But when everything is filtered out it is confusing for the user space,
+since the flag is not reported anymore and it looks like the table was
+empty, which may or may not be the case.
 
-PMBus 1.3 Part II, sections 10.2.4 and 10.2.5, excludes ordinary
-STATUS_BYTE and STATUS_WORD summary bits from individual clearing.
-Their summary bits clear when the underlying status bits clear, so
-changing this to a word-data write would not fix the generic input
-alarm either.
+'answer_flags' were introduced precisely for this use case, and the
+conntrack dump should set the flag in there in case the filtering was
+applied.
 
-Use the existing page CLEAR_FAULTS path for generic STATUS_WORD
-alarms, including devices whose status accessor uses STATUS_BYTE.
-Keep individual byte writes for detailed status registers on PMBus
-1.2 and newer devices. As with the existing older-device fallback,
-CLEAR_FAULTS can clear other latched status; an active condition can
-reassert its status.
+This is important, for example, to be able to tell if the filters are
+supported or not by the kernel without modifying the kernel state.
 
-Fixes: 35f165f08950 ("hwmon: (pmbus) Clear pmbus fault/warning bits after read")
+With the proper reporting of NLM_F_DUMP_FILTERED on NLMSG_DONE, an
+application in user space can just try and dump with an arbitrary
+filter without worrying that there could be no matching entry.  The
+reported flag will signal that the filtering was applied and therefore
+supported.
+
+Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
-Link: https://patch.msgid.link/20260824-vrazdan-pmbus-status-word-b4-v1-1-2606ecd0c029@openai.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1169,7 +1169,9 @@ static int pmbus_get_boolean(struct i2c_
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -1077,6 +1077,8 @@ static int ctnetlink_start(struct netlin
+ 	}
  
- 	regval = status & mask;
- 	if (regval) {
--		if (data->revision >= PMBUS_REV_12) {
-+		/* Generic STATUS_WORD alarms are not individually clearable. */
-+		if (data->revision >= PMBUS_REV_12 &&
-+		    reg != PMBUS_STATUS_WORD) {
- 			ret = _pmbus_write_byte_data(client, page, reg, regval);
- 			if (ret)
- 				return ret;
+ 	cb->data = filter;
++	if (filter)
++		cb->answer_flags = NLM_F_DUMP_FILTERED;
+ 	return 0;
+ }
+ 
 
 
