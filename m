@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E572F768EA;
-	Thu, 17 Sep 2026 18:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CFC4398F5;
+	Thu, 17 Sep 2026 18:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670439; cv=none; b=J/dUqgczxXujQXSzKSOiBEFIQXRmbBQgttotzy92fUeND2ypEm+y2Ybt/T1uyGlmOwWhMMXN7NlAbK5YBU/WVejqOpgFxw9zrsvZAlmWPmP4dVuTgrekAeLhVp5QBEwL2T9luJeqE3NitEk2yzxz8woxH6laJGQB578oOfVw1Dc=
+	t=1789670442; cv=none; b=XLVAh2g5cf0Ri+OhRu5plwZBa2TDCBDYKVqEEUO01MnM8CvKjLLXub4y7M9Zfo1foh/SHojRO5yxSUl6ZwSwoC5p4mrSAWQ0I7EVBwz1K+X0CctSNRZaI1adVW8544D2B+uA8gXsUhSZcpu0PovDVtDYBREAQwmGPjKXDbrCF28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670439; c=relaxed/simple;
-	bh=+6PAnsLzzWWv/qP571r+g8dU2C1y5miGC6DCKOQqTW8=;
+	s=arc-20240116; t=1789670442; c=relaxed/simple;
+	bh=NxNl+xC6yjSHaCNdewDg2aRuDtzESsRBOrKuvhNftME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fh6wxbcDrClBsRj3yh3hoeOwDDDwgPDzC4ZjwUEucEsKtzwHexBjkfGD/DbEqDG/cnQ9kXwjfytYleZL4IAUB25tZV+TfubwNyWV5FGsODzwGa0Xn63r59qLItAGD353quz7CN0HJ13uF/4UFm0v1hG/RYXLBA315VyXb9TcEyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o90LMBmO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G6AXKzSh2poO4vvRv+BpZGxBBS+hVmFvMXBT2nnog4JWioqamkZyyJhOW4ykt2t9+m9UPLVm8voqmAqUrkzWzMlyDaSqyghVKLzg806HNi0Y9mJcQLVIGE2igXmBUlOeE5Sj+0dtXMShi/1EpoV6tAKbhBERhTxRccYRRBa6Zno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxvn0n7x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o90LMBmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423CA1F000FF;
-	Thu, 17 Sep 2026 18:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxvn0n7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3701F000FF;
+	Thu, 17 Sep 2026 18:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670437;
-	bh=dhVSPC+XGftyGsPPhgZ4oWgkbLw3jQZrSLcpwVuJgk0=;
+	s=korg; t=1789670440;
+	bh=YpHteAAN8nCyQaWzZgTn9kO7nlfcZjyhs4o5334lFRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o90LMBmOVy4H/7WO8GtqmUIcC621RPFfH+qRDRpZsjJ8bjwS2Da15+lW0Ei3pO4Bw
-	 FjLcqji6qT5U2g/UwHdYN0q27AwgSWM6e+yP4NEXYZG2pwbEk3ewxWTd1V/HibwUCI
-	 slkKymU+F2VJaWjSTbaitlig/h7fmE7bUxufubRk=
+	b=pxvn0n7xLYD9nLRVQ0Zuc9NHa/g4kFsmdIDFSGCl4+h42STmNwY0eNEYmMeDGPrdI
+	 0t0hLDf+vVHR81rY/2nIHLuVrPZx0dkRu2+Pe4lISIaTRB0LCEJBZLcJsbB4LKy1vn
+	 vvf7cKd1Fhx762+bsyjh9LgAvZYOnzAm07g2j0zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0661/1102] nexthop: Initialize extack in remove_nh_grp_entry()
-Date: Thu, 17 Sep 2026 16:10:04 +0100
-Message-ID: <20260917151556.786678354@linuxfoundation.org>
+Subject: [PATCH 6.12 0662/1102] bonding: use skb_cow_head() in bond_do_alb_xmit() and rlb_arp_xmit()
+Date: Thu, 17 Sep 2026 16:10:05 +0100
+Message-ID: <20260917151556.815871732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,43 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5bd9e4e7cdaa03879e9b73b12ab52cceb1edd55b ]
+[ Upstream commit 1746ef2e2df2ad71c66eca56364d56bde284523b ]
 
-remove_nh_grp_entry() prints the extack message when a listener fails
-to replace the reduced nexthop group. However, extack is not
-initialized and listeners are not required to set a message when
-returning an error. Neither netdevsim nor mlxsw do so when an
-allocation fails, resulting in the dereference of an uninitialized
-stack pointer.
+In bond_do_alb_xmit() and rlb_arp_xmit(), make sure to unclone
+skb head via skb_cow_head() before modifying the source MAC address
+(Ethernet header and ARP payload) to avoid silent corruption if
+the skb is shared or cloned. Avoid caching the header pointers
+across skb_cow_head().
 
-Fix by zero-initializing extack, as was done in commit 6347c5314cee
-("nexthop: initialize extack in nh_res_bucket_migrate()").
+In rlb_arp_xmit(), only modify arp->mac_src if it differs from
+tx_slave->dev->dev_addr to avoid an unnecessary copy and head
+reallocation.
 
-Fixes: 833a1065eeb1 ("nexthop: Emit a notification when a nexthop group is reduced")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260903080259.10378-1-idosch@nvidia.com
+Also, we should not assume mac header is set in output path.
+
+Use skb_eth_hdr() instead of eth_hdr() to fix the issue,
+and remove now redundant skb_reset_mac_header() calls.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260903143940.1180513-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_alb.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index ef323775f09ac..fbb22a63b8807 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2012,7 +2012,7 @@ static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 5a7148c515c21..87a46276f87aa 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -678,9 +678,15 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
+ 	if (arp->op_code == htons(ARPOP_REPLY)) {
+ 		/* the arp must be sent on the selected rx channel */
+ 		tx_slave = rlb_choose_channel(skb, bond, arp);
+-		if (tx_slave)
++		if (tx_slave &&
++		    !ether_addr_equal_64bits(arp->mac_src,
++					     tx_slave->dev->dev_addr)) {
++			if (unlikely(skb_cow_head(skb, 0)))
++				return NULL;
++			arp = (struct arp_pkt *)skb_network_header(skb);
+ 			bond_hw_addr_copy(arp->mac_src, tx_slave->dev->dev_addr,
+ 					  tx_slave->dev->addr_len);
++		}
+ 		netdev_dbg(bond->dev, "(slave %s): Server sent ARP Reply packet\n",
+ 			   tx_slave ? tx_slave->dev->name : "NULL");
+ 	} else if (arp->op_code == htons(ARPOP_REQUEST)) {
+@@ -1341,7 +1347,6 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 				    struct slave *tx_slave)
  {
- 	struct nh_grp_entry *nhges, *new_nhges;
- 	struct nexthop *nhp = nhge->nh_parent;
--	struct netlink_ext_ack extack;
-+	struct netlink_ext_ack extack = {};
- 	struct nexthop *nh = nhge->nh;
- 	struct nh_group *nhg, *newg;
- 	int i, j, err;
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
+-	struct ethhdr *eth_data = eth_hdr(skb);
+ 
+ 	if (!tx_slave) {
+ 		/* unbalanced or unassigned, send through primary */
+@@ -1352,7 +1357,9 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 
+ 	if (tx_slave && bond_slave_can_tx(tx_slave)) {
+ 		if (tx_slave != rcu_access_pointer(bond->curr_active_slave)) {
+-			ether_addr_copy(eth_data->h_source,
++			if (unlikely(skb_cow_head(skb, 0)))
++				return bond_tx_drop(bond->dev, skb);
++			ether_addr_copy(skb_eth_hdr(skb)->h_source,
+ 					tx_slave->dev->dev_addr);
+ 		}
+ 
+@@ -1376,8 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
+ 	struct ethhdr *eth_data;
+ 	u32 hash_index;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	/* Do not TX balance any multicast or broadcast */
+ 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
+@@ -1429,8 +1435,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
+ 	u32 hash_index = 0;
+ 	int hash_size = 0;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	switch (ntohs(skb->protocol)) {
+ 	case ETH_P_IP: {
 -- 
 2.53.0
 
