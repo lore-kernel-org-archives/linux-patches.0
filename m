@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548244F93B1;
-	Thu, 17 Sep 2026 17:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511D5515965;
+	Thu, 17 Sep 2026 17:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665651; cv=none; b=EalWAbXFgv8v51ff/wWtMibEW103zMEmO5u0McCzW4oQ89mbiXlyZMvy1HHWj2MhspM271cFzl5fLJywksxBJ1l5DuWUiVVqKBug6Hpt4KO3B2i6qqDrYlxhQYxqahDymnbrUi3VXMmtiNWkuxE7pVCvMyQyu2XGosd+wPfiGsA=
+	t=1789665654; cv=none; b=Su5oiqOd2pUxQhrIzqMVX2HQ+1A9hmKXUf84oYkMYJOEJLzQ09OIHIHZvuWA/XdlmkcipsN/UFTYKe5oLIwuuu6yMOFgUJrO193+r0ecvlxef3oTXV+BtCqmPwRN8uZhNeOXl0sRQuFmFKRRViotXRKb7eRUBGoRVq0p2B4niXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665651; c=relaxed/simple;
-	bh=OujQQ1OjW3i+kRlHjWU/YJx3ZgGRUOwu0OFX1iZlJ4w=;
+	s=arc-20240116; t=1789665654; c=relaxed/simple;
+	bh=AFWHIDz5zQwIjvKLgzqhE5UWmake/vGOPw8+ORq8qnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+byiJF/dK3FI0EhwTqP2lDjRNErEC+dfdi0RvpTtDawmLIkCPJwvEiQnB7DYfiFtA+4iZilxnssbu/ByhzdaSgGnca9/qXL/plR6nPtl++knbKC0PZFbriDKCYbFQzBGRneSuH2bjkU3Fa/S2fuHI5uGCdvoya0B90Nre4XpZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GbaK1dJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OpEDxzvJ+P9gJTwjucvjzbUWnETIOrtn6RKgG2bKPsZDbJHCoYf4rvbucJWbWOwGdSjyL8SpyAOnL/2nm1g4YDTNOtf2i5NAOZuRsGLngLxEppDqPXNnAxQbtBPhMZ0/h1/NmXQ4Mqn6RhCBW5ZaoF7rKZtqwhGLOaPvYVeTpLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enyBwApa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GbaK1dJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FC11F00893;
-	Thu, 17 Sep 2026 17:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enyBwApa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A679C1F000FF;
+	Thu, 17 Sep 2026 17:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665650;
-	bh=unfpCsU3TTL3vOUiphJ3HJl7QhOdAv/Cz+VxmP9c8sY=;
+	s=korg; t=1789665653;
+	bh=SGlruRUpG1DGiWHBvTRWF2UrYLnboY0/08q2GgRXfzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0GbaK1dJNzFmx5WbRTb39lVtNAcqPAmCUQDDBoRWAAhIpZUv8vkKyAzvPSvnkaY97
-	 t34jFr5+28zp5ST76UzLP4GY8Ls9RFFpDhSkcmLQ+WuI2+Vb9beoP57k3ornvSnnt+
-	 uaBW9W7biJgLGFdpJSD2OrwS11JT/0Q6CwzuslOo=
+	b=enyBwApaIovBBJ7yXgSquusGehRtA8JI8PkEsuhKIMP27M/UF9AJGQ3y2o9Cpx/Dn
+	 j7ZA4sqpZ2lb0/PC2TPtWet+EAAcuLC36Y+/eaLr++WE3MGhtHWPl8CL5KGAOLvVO+
+	 JoDLoRFCnPTmUiVpQQyHXY8PMhUryWwDpSzhs6gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0737/1250] net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().
-Date: Thu, 17 Sep 2026 16:08:52 +0100
-Message-ID: <20260917151611.865983025@linuxfoundation.org>
+Subject: [PATCH 6.18 0738/1250] net/rds: use wq_has_sleeper() in release_in_xmit()
+Date: Thu, 17 Sep 2026 16:08:53 +0100
+Message-ID: <20260917151611.893144930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,131 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit debac3a20dec524a59625cf10fa2f18571127824 ]
+[ Upstream commit 6d0c8b7073913011459cf968cbbadd341e166bc3 ]
 
-syzbot reported the warning in cfg80211_pernet_exit(). [0]
+release_in_xmit() clears RDS_IN_XMIT with clear_bit_unlock() and then
+checks waitqueue_active() to decide whether anyone needs waking.
+clear_bit_unlock() is only a release operation: it orders the
+critical section before the bit clear, but does not order the
+subsequent plain load of the wait queue head after it.  The waiter
+side does the mirror image - it adds itself to the wait queue and
+then tests the bit.  That is the classic store-buffering pattern: the
+releasing CPU can read the wait queue as empty while the waiting CPU
+still reads the bit as set, so the sleeper is never woken.
 
-The repro does the following:
+The waiters are rds_conn_shutdown() and rds_tcp_reset_callbacks(),
+both in uninterruptible wait_event() with no timeout.  A lost wake-up
+strands the shutdown worker on its single-threaded workqueue until
+some other sender releases the bit again - and on a connection that
+is being torn down precisely because it failed, there may never be
+another sender.
 
-  1. create two device in root netns and non-root netns
-  2. assign the same altname for the two devices
-  3. remove the non-root netns
+The barrier used to be there: release_in_xmit() did clear_bit()
+followed by smp_mb__after_atomic() until commit 1422f28826d2 ("rds:
+introduce acquire/release ordering in acquire/release_in_xmit()")
+folded both into clear_bit_unlock(), which strengthened the lock
+hand-off but silently dropped the full barrier the wake-up check
+depends on.  The refill counterpart, release_refill() in
+net/rds/ib_recv.c, still carries its smp_mb__after_atomic() for
+exactly this reason.
 
-Since commit 7663d522099e ("net: check for altname conflicts
-when changing netdev's netns"), cfg80211_switch_netns() and
-cfg802154_switch_netns() fail if init_net has a device with the
-conflicting altname.
+Use wq_has_sleeper(), which is waitqueue_active() preceded by the
+required full barrier.
 
-default_device_exit_net() had the same issue and commit d09486a04f5d
-("net: fix removing a namespace with conflicting altnames") fixed it.
-
-cfg80211_pernet_exit() and cfg802154_pernet_exit() need the same fix.
-
-Let's generalise the fix by removing conflicting altnames for dying
-netns in __dev_change_net_namespace().
-
-[0]:
-cfg80211_switch_netns(rdev, &init_net)
-WARNING: net/wireless/core.c:1871 at cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871, CPU#1: kworker/u8:9/1160
-Modules linked in:
-CPU: 1 UID: 0 PID: 1160 Comm: kworker/u8:9 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
-Workqueue: netns cleanup_net
-RIP: 0010:cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871
-Code: e8 03 42 80 3c 20 00 74 08 4c 89 f7 e8 b4 ef 0e f7 4d 8b 36 49 81 fe 20 10 4a 90 74 12 e8 03 3d 9f f6 eb 85 e8 fc 3c 9f f6 90 <0f> 0b 90 eb cc e8 f1 3c 9f f6 eb 05 e8 ea 3c 9f f6 5b 41 5c 41 5e
-RSP: 0018:ffffc900057a78f0 EFLAGS: 00010293
-RAX: ffffffff8b287154 RBX: ffff88807ba72780 RCX: ffff8880213e8000
-RDX: 0000000000000000 RSI: 00000000ffffffef RDI: 0000000000000000
-RBP: 00000000ffffffef R08: ffffffff9024cc67 R09: 0000000000000000
-R10: fffff52000af4eb0 R11: fffffbfff204998d R12: dffffc0000000000
-R13: ffffffff904a1080 R14: ffff888144ed0008 R15: ffff888144ed0e20
-FS:  0000000000000000(0000) GS:ffff888124de6000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005642de0a8a70 CR3: 000000007a40c000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- ops_exit_list net/core/net_namespace.c:200 [inline]
- ops_undo_list+0x43d/0x8d0 net/core/net_namespace.c:253
- cleanup_net+0x572/0x810 net/core/net_namespace.c:706
- process_one_work kernel/workqueue.c:3387 [inline]
- process_scheduled_works+0xc3d/0x1630 kernel/workqueue.c:3470
- worker_thread+0xa47/0xfb0 kernel/workqueue.c:3551
- kthread+0x38b/0x480 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
-Reported-by: syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a96219e.04428c52.29b18.0001.GAE@google.com/T/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260901005550.2042357-1-kuniyu@google.com
+Fixes: 1422f28826d2 ("rds: introduce acquire/release ordering in acquire/release_in_xmit()")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260828223921.202913-2-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ net/rds/send.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index c7e35768238cc..ca8d0773040b9 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -12443,7 +12443,7 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 			       const char *pat, int new_ifindex,
- 			       struct netlink_ext_ack *extack)
- {
--	struct netdev_name_node *name_node;
-+	struct netdev_name_node *name_node, *tmp;
- 	struct net *net_old = dev_net(dev);
- 	char new_name[IFNAMSIZ] = {};
- 	int err, new_nsid;
-@@ -12489,13 +12489,19 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 	}
- 	/* Check that none of the altnames conflicts. */
- 	err = -EEXIST;
--	netdev_for_each_altname(dev, name_node) {
--		if (netdev_name_in_use(net, name_node->name)) {
--			NL_SET_ERR_MSG_FMT(extack,
--					   "An interface with the altname %s exists in the target netns",
--					   name_node->name);
--			goto out;
-+	netdev_for_each_altname_safe(dev, name_node, tmp) {
-+		if (!netdev_name_in_use(net, name_node->name))
-+			continue;
-+
-+		if (!check_net(net_old)) {
-+			__netdev_name_node_alt_destroy(name_node);
-+			continue;
- 		}
-+
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "An interface with the altname %s exists in the target netns",
-+				   name_node->name);
-+		goto out;
- 	}
+diff --git a/net/rds/send.c b/net/rds/send.c
+index d474c9cda65ae..54f138bc92376 100644
+--- a/net/rds/send.c
++++ b/net/rds/send.c
+@@ -114,8 +114,13 @@ static void release_in_xmit(struct rds_conn_path *cp)
+ 	 * hot path and finding waiters is very rare.  We don't want to walk
+ 	 * the system-wide hashed waitqueue buckets in the fast path only to
+ 	 * almost never find waiters.
++	 *
++	 * wq_has_sleeper() supplies the full barrier that orders the wait
++	 * queue read after the bit clear; clear_bit_unlock() alone is only
++	 * a release and would let this check read a stale empty queue,
++	 * losing the wake-up.
+ 	 */
+-	if (waitqueue_active(&cp->cp_waitq))
++	if (wq_has_sleeper(&cp->cp_waitq))
+ 		wake_up_all(&cp->cp_waitq);
+ }
  
- 	/* Check that new_ifindex isn't used yet. */
-@@ -12946,7 +12952,6 @@ static struct pernet_operations __net_initdata netdev_net_ops = {
- 
- static void __net_exit default_device_exit_net(struct net *net)
- {
--	struct netdev_name_node *name_node, *tmp;
- 	struct net_device *dev, *aux;
- 	/*
- 	 * Push all migratable network devices back to the
-@@ -12970,10 +12975,6 @@ static void __net_exit default_device_exit_net(struct net *net)
- 		if (netdev_name_in_use(&init_net, fb_name))
- 			snprintf(fb_name, IFNAMSIZ, "dev%%d");
- 
--		netdev_for_each_altname_safe(dev, name_node, tmp)
--			if (netdev_name_in_use(&init_net, name_node->name))
--				__netdev_name_node_alt_destroy(name_node);
--
- 		err = dev_change_net_namespace(dev, &init_net, fb_name);
- 		if (err) {
- 			pr_emerg("%s: failed to move %s to init_net: %d\n",
 -- 
 2.53.0
 
