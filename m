@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942414B7A44;
-	Thu, 17 Sep 2026 17:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ECD4F96D8;
+	Thu, 17 Sep 2026 17:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666243; cv=none; b=SVgujMfQO5w7nTywfaVo1BOJ9T93Idy+7RaMMgt+3ZkACc6KBobx7oGItLAKextL5jkKeHEHaYlJfIrDeJ65PULhpCZQNYZlfkmooA7TW1q8tNk++hCJrnX3fmr1m5PwkzbleD8yGPg37WWeZHxEDVkHovxaNc1vcbxFTaC0hzM=
+	t=1789666247; cv=none; b=uAcfwMMgcGyKHEu5DpLRKluoUysH2fOlAGpsrTslvLWai93Z/og5w85cvsgd+0HlFhnC31OcKgyn3ETZZIqPCg3JBo+xMtYdpMuwp689wlXLzjM6fmSvtzCXGke29mbnhkh26TbDAvtHihkBQRNgbPCoz8SZfzDo+0+1z0hzaxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666243; c=relaxed/simple;
-	bh=5YGqDnzdjNxVRU+G0ug8WCsD7jPHJctLrWZ9Z4f/Wrs=;
+	s=arc-20240116; t=1789666247; c=relaxed/simple;
+	bh=zWX9a3XaiwW6MVbtsUtq7G6PlElRSsomAQNeKCCEvF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tHnQdJgx7vmeXHA7ECGoXfsNX9fhc0XKu080O3/E46bq/e/okVprfJK+bJ4KTtbXExAg3hxnv5iATn1GpBq0UYTW5ooMVNQbOUT09RXFWBP68qNo11mw90FKmTS5diiFp5Z4cJaJnNmFdHC4Fe7auT+6qb2c1ZxpY010peRPnKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9/9Dpol; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9DnUjJcdng47nO023EhZ1RUcUjusskdNny8VIVjPJ5iQHutoVAGoewPcm7xOldcMN6OKzAql2dZrDewdKKTZUBsLfTW3XcRUn4Jhe/I6G1g9jJOLuFIB7wbgmV8pWx8nNFtH83EfYl1i4MrDd1AU2+Pvt7wcxJYyzM8ExzhgbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RU0UY7gV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9/9Dpol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D001F000FF;
-	Thu, 17 Sep 2026 17:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RU0UY7gV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5341F000FF;
+	Thu, 17 Sep 2026 17:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666242;
-	bh=yxMUp8m+qawXKlga/NJXtMbb/3AGBkkl8KYPJPCJsBE=;
+	s=korg; t=1789666245;
+	bh=OiPJiAGU5KcwL+RvcBiWYqHqhZv2mwRgLMtHHtR9Yl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9/9DpolibnA29sPeFLG1rYN2/DRDxiFi0dd/t3QVjnDkvqDr86c8Am7fCdR+cBhK
-	 GWPL9sQHUirJmWm/3sWdR3BR6r38Rj4477shSzJbdybeYvjxSXhFVD0GMle7rKNcL9
-	 jbEMUj5sMHIekFGKqi5yQ11jGGDC/bgKo1MovdCM=
+	b=RU0UY7gVwYDNKjb3xgKwKjlJQhjNF0K/o6Cp24XBkjj99xy7WeON8DQdDil1X7F7b
+	 vTc0JQg/Yu57YWKTm/c/spKjTdegFJppYn1GBlTowAv8fFbWWjY9yJN+5DOEc31640
+	 UPAN22aOXRVg9zUYGfNbxr5+hssXk1sQcautPBRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Emilio=20Cobos=20=C3=81lvarez?= <emilio@crisal.io>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 0971/1250] rust: allow `unknown_lints` in generated bindings for Rust < 1.88
-Date: Thu, 17 Sep 2026 16:12:46 +0100
-Message-ID: <20260917151618.332978778@linuxfoundation.org>
+Subject: [PATCH 6.18 0972/1250] drm/panic: clean new `clippy::needless_range_loop` lint for Rust 1.100.0
+Date: Thu, 17 Sep 2026 16:12:47 +0100
+Message-ID: <20260917151618.359080422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -44,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -53,70 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit f4c3e38111fd84c2c7ae5785755f4a4d476e1cba upstream.
+commit 97f8cb91a8c5658fe2ae6f5c2ff6e95474a5eb2f upstream.
 
-Starting with bindgen 0.73.2 [1], `#[allow(unnecessary_transmutes)]`
-are used, even when `--rust-target 1.85` is passed.
+Starting with Rust 1.100.0 (expected 2026-11-12), Clippy warns:
 
-However, the lint was introduced in Rust 1.88.0. Thus building with
-older Rust versions warns like:
+    warning: the loop variable `i` is only used to index `self.decimals`
+       --> drivers/gpu/drm/drm_panic_qr.rs:410:18
+        |
+    410 |         for i in 0..len {
+        |                  ^^^^^^
+        |
+    note: for this index operation
+       --> drivers/gpu/drm/drm_panic_qr.rs:411:13
+        |
+    411 |             self.decimals[i] = (chunk % 10) as u8;
+        |             ^^^^^^^^^^^^^^^^
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/main/index.html#needless_range_loop
+        = note: `-W clippy::needless-range-loop` implied by `-W clippy::all`
+        = help: to override `-W clippy::all` add `#[allow(clippy::needless_range_loop)]`
+    help: consider using an iterator
+        |
+    410 -         for i in 0..len {
+    410 +         for <item> in self.decimals.iter_mut().take(len) {
+        |
 
-    error: unknown lint: `unnecessary_transmutes`
-         --> rust/uapi/uapi_generated.rs:26294:13
-          |
-    26294 |     #[allow(unnecessary_transmutes)]
-          |             ^^^^^^^^^^^^^^^^^^^^^^
-          |
-          = note: `-D unknown-lints` implied by `-D warnings`
-          = help: to override `-D warnings` add `#[allow(unknown_lints)]`
+The lint did not trigger here before because it could not handle arrays
+behind a field access such as `self.decimals` -- Clippy was improved to
+catch those cases [1][2].
 
-Thus allow `unknown_lints` in the generated bindings -- only when building
-with older Rust versions.
+Thus clean the warning by iterating over a slice rather than using
+`take()` so that an out-of-range `len` still triggers the same bounds
+check as the indexed loop.
 
-I have asked upstream if this is intentional [1], i.e. if we are supposed
-to always allow unknown lints in case `bindgen` uses such attributes,
-or whether it is an oversight.
-
-[ Emilio said it wasn't intentional -- we will work around it for now
-  on the kernel side. - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Emilio Cobos Álvarez <emilio@crisal.io>
-Link: https://github.com/rust-lang/rust-bindgen/pull/3455#issuecomment-5588526559 [1]
+Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
+Link: https://github.com/rust-lang/rust-clippy/issues/16631 [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/16634 [2]
 Assisted-by: LLM
-Link: https://patch.msgid.link/20260908170539.345207-1-ojeda@kernel.org
-[ Removed the `cfg` for `allow(unnecessary_transmutes)` as suggested by
-  Gary. - Miguel ]
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patch.msgid.link/20260826145642.43807-1-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindings/lib.rs |    3 ++-
- rust/uapi/lib.rs     |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_panic_qr.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -30,7 +30,8 @@
- #[allow(clippy::ptr_as_ptr)]
- #[allow(clippy::ref_as_ptr)]
- #[allow(clippy::undocumented_unsafe_blocks)]
--#[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
-+#[cfg_attr(not(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES), allow(unknown_lints))]
-+#[allow(unnecessary_transmutes)]
- #[cfg_attr(
-     CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
-     allow(suspicious_runtime_symbol_definitions)
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -28,7 +28,8 @@
-     unreachable_pub,
-     unsafe_op_in_unsafe_fn
- )]
--#![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
-+#![cfg_attr(not(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES), allow(unknown_lints))]
-+#![allow(unnecessary_transmutes)]
- #![cfg_attr(
-     CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
-     allow(suspicious_runtime_symbol_definitions)
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index ac27e86c601c..4d7eb75a3afc 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -407,8 +407,8 @@ fn push(&mut self, data: u64, len: usize) {
+         for i in (0..self.len).rev() {
+             self.decimals[i + len] = self.decimals[i];
+         }
+-        for i in 0..len {
+-            self.decimals[i] = (chunk % 10) as u8;
++        for decimal in &mut self.decimals[..len] {
++            *decimal = (chunk % 10) as u8;
+             chunk = div10(chunk);
+         }
+         self.len += len;
+-- 
+2.55.0
+
 
 
