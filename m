@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAD852CCCC;
-	Thu, 17 Sep 2026 17:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B786052CCC4;
+	Thu, 17 Sep 2026 17:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665966; cv=none; b=a40Ek/AHNTvSTS0IzNhkpbNSkVsSCCzYkILUunv1vWSsBrCIJgYrFqybijEq2/EOzTxPGgKeLyAAgGUjVR6dHoRo0U1BVcbWzTR99KoEgnb6h8kOOILzjnirnGPnuWd3PaGr8atc86tk3JDi9C9u6CXiIn9e1lc53ZGe0ffHViQ=
+	t=1789665969; cv=none; b=df1mIs7qj2AiCEPLqnDhFUXMxrfyY7blzqyysWvLEigJnAN0UPYzZcODOljiShk7eY4I6keSTq9a86SoIf/CpZljXw6svrev1RK8ooVl8NRvxWtRoOOhGBFBOBfUisD+9Uq6GKD1c9mzkq+wstoM+pcXuLlSMHNOp187iJGZsj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665966; c=relaxed/simple;
-	bh=/fAMv5SBwiPT/pP7Xn1eqmeue6uBunIG1QnaDoqR5qo=;
+	s=arc-20240116; t=1789665969; c=relaxed/simple;
+	bh=zwtEVGSlYiw84bPM5OGOQXpKA0Qr39nK63zJLSq3s80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAk3poBfHLx7u1vM5w+HdkmXsd2JEnJfzbtdsnSWXxvYzSNPbzj7aDgpPWCfdwhfDs7YzPwaODFvxOW9icBmrp7xh633oWDO5hZSRIGcXqRZAkFQ1Uu1yjW5AZgmKFUk0c1rNo9mYsAGvht5J8wt/IQ6562DUfeWpOReZYHXuvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmgzRIrV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcSOtVTwW0JToWsiINa92LKa+p2cMmaWUu5cf5HSYIrPMlChwkMhSfckueAk2m4n1Vr0m0lKuOVlwdyVhlLzwmaqirk5cll9i6DUi95g5lSzEPc4oEjAe4c8aTssHMvsgcOsUSOMpzgn7LprZGpqcJNYlQRKtWT7NKHb0/W5Ad0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3EL7zHo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmgzRIrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E327B1F000FF;
-	Thu, 17 Sep 2026 17:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3EL7zHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C651F00893;
+	Thu, 17 Sep 2026 17:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665964;
-	bh=pjFDfu+6mPFRykmlbQRzPSPBKM+YXEBNUIhCWD+XnAA=;
+	s=korg; t=1789665967;
+	bh=Fzysj+9o+3g23OGrbvorTGHAs/RzR1JW3Ytfr0B/BpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZmgzRIrVPtuq3TyJuCcEt2V3WeGTJkqL0neGT6Ag21ey0Flh1ayQa97RgOgo9UCz/
-	 oSAEyIFcqmZNConN3q40u+SteftCOIGYGD67dQkJHxYr3h6ffKeVd/GxEEMQQzgZ9G
-	 3OG2qsHa4DJkZdibXzAGS7lYP68h4k1Un3a2gwsI=
+	b=V3EL7zHo+R+GKKKERZSf9TMBbpPzrcy0AgpgVziakDAXV6y3gR2wzUMTunUZzXHdk
+	 GPdj8HXzhKyLhtN51rOpWbXqnmknY+BR5QhaXfp4VuE8VfssWPmT+5teiKBE7PfaXF
+	 lbVpeAK3qqsBm5C3oylEaQ7DrNnmIBCXgBSmiUEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0879/1250] Bluetooth: btusb: Fix UAF of btusb_data by rx_work
-Date: Thu, 17 Sep 2026 16:11:14 +0100
-Message-ID: <20260917151615.809632263@linuxfoundation.org>
+Subject: [PATCH 6.18 0880/1250] Bluetooth: btintel_pcie: validate packet_len before skb_put_data
+Date: Thu, 17 Sep 2026 16:11:15 +0100
+Message-ID: <20260917151615.836578079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,74 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 1c12c3117639e78940959d956519c758c57d0849 ]
+[ Upstream commit 6436e1b5331b1aebf905c13e0880a37032719b75 ]
 
-btusb_close() and btusb_flush() cancel data->rx_work with the
-asynchronous cancel_delayed_work(), so if btusb_rx_work() is already
-running on another CPU it keeps running after the cancel returns.
+btintel_pcie_submit_rx_work() reads packet_len from rfh_hdr without
+checking if it exceeds the RX buffer size. An oversized packet_len
+can lead to an out-of-bounds read in skb_put_data().
 
-btusb_disconnect() calls hci_unregister_dev(), which invokes
-btusb_close(), and then frees the btusb_data. A still running
-btusb_rx_work() then dereferences the freed data:
+Validate packet_len to ensure it is non-zero and does not exceed
+BTINTEL_PCIE_BUFFER_SIZE - sizeof(*rfh_hdr), logging an error when
+invalid.
 
-	while ((skb = skb_dequeue(&data->acl_q)))
-		data->recv_acl(data->hdev, skb);
+This issue was reported by Claude Mythos. It can be simulated either by
+using customized firmware configured to return an invalid packet_len or
+by modifying rfh_hdr->packet_len in the driver before calling
+btintel_pcie_submit_rx_work().
 
-Use cancel_delayed_work_sync() instead. In btusb_close() the cancel also
-has to happen after btusb_stop_traffic(), otherwise an URB completion
-racing with the cancel can requeue the work right after it has been
-waited for.
-
-Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index befda7caca40a..98d6b27fe07f6 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2022,18 +2022,24 @@ static int btusb_close(struct hci_dev *hdev)
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 6b7a8c044119a..e599e89725cd5 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1365,7 +1365,9 @@ static int btintel_pcie_submit_rx_work(struct btintel_pcie_data *data, u8 status
+ 	rfh_hdr = buf;
  
- 	BT_DBG("%s", hdev->name);
- 
--	cancel_delayed_work(&data->rx_work);
- 	cancel_work_sync(&data->work);
- 	cancel_work_sync(&data->waker);
- 
--	skb_queue_purge(&data->acl_q);
--
- 	clear_bit(BTUSB_ISOC_RUNNING, &data->flags);
- 	clear_bit(BTUSB_BULK_RUNNING, &data->flags);
- 	clear_bit(BTUSB_INTR_RUNNING, &data->flags);
- 	clear_bit(BTUSB_DIAG_RUNNING, &data->flags);
- 
- 	btusb_stop_traffic(data);
-+
-+	/* rx_work must only be canceled once the URBs that can rearm it are
-+	 * gone, and it must be canceled synchronously since btusb_disconnect()
-+	 * frees the btusb_data it dereferences right after hci_unregister_dev().
-+	 */
-+	cancel_delayed_work_sync(&data->rx_work);
-+
-+	skb_queue_purge(&data->acl_q);
-+
- 	btusb_free_frags(data);
- 
- 	err = usb_autopm_get_interface(data->intf);
-@@ -2059,7 +2065,7 @@ static int btusb_flush(struct hci_dev *hdev)
- 
- 	BT_DBG("%s", hdev->name);
- 
--	cancel_delayed_work(&data->rx_work);
-+	cancel_delayed_work_sync(&data->rx_work);
- 
- 	skb_queue_purge(&data->acl_q);
- 
+ 	len = rfh_hdr->packet_len;
+-	if (len <= 0) {
++	if (len == 0 || len > BTINTEL_PCIE_BUFFER_SIZE - sizeof(*rfh_hdr)) {
++		bt_dev_err(data->hdev, "Invalid packet_len %d (max %zu)", len,
++			   BTINTEL_PCIE_BUFFER_SIZE - sizeof(*rfh_hdr));
+ 		ret = -EINVAL;
+ 		goto resubmit;
+ 	}
 -- 
 2.53.0
 
