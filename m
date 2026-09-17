@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D9258FD29;
-	Thu, 17 Sep 2026 15:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9392C4E73D9;
+	Thu, 17 Sep 2026 15:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658826; cv=none; b=ZgpD9RXgKGbBpbK8syneXPvyQcAxUWBbqYt5JCUNbPlINQ3YbT1Or+wN5CI2RcNTs4TBu5W3QbbE+arXrvzom/TjMDWZSSk4enf9DrSW2fgqrEcE/rEKBK9DHBjuN4xgAUAi0CuPL/mL9nxPLk+hqpdGmztfPqZf25v1IUgd8hA=
+	t=1789658833; cv=none; b=qKpC0jjsdorgidBLvKHp1fXWwSESgryXEXK+6VDrpDhpRrJ3n7cEOItsD3cd8EXamrAugb2SybjzvOC9L4jTIPhaKbmA9kwPBfTysc/ftMhRfojsFX0GMGLEpmgmSCAEkzqHMs0FOupTd8zr9JQrGAO6U851CrGNFrGVnY7S9VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658826; c=relaxed/simple;
-	bh=FKfkyDu+uqjkbpcMoyvUVceUL3VHHfwISFwTi89Yn10=;
+	s=arc-20240116; t=1789658833; c=relaxed/simple;
+	bh=SIdf4A5cja4MyobNlw02dl/6EYV896QEekt9dwlkzJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwkdRIkxA73jnyjJzU241sBiscg02jeP3yBm/wDCxpB3E6cCJIqoajSW7aUxh3AJhbWbbwGNKSOQpSC7rhoboGowKpkZYqFt1hFM6aufU5QjQPyrkoVTI+7btERCogdJMCF1rMFbBvwz1G/6TYgDvdLuXtVnwD1Y7YEKe0jYFfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KD2mHP9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wbf+rY45gabpbYnGvixhjGKBGSfAAZs332dIcmDW2TuJYwiUoDNlWp66KaUBDMwLd5C/3Xc0U9r4T/kULC26uXR2pp47mmwf3iDLKZ02pecPfr7kI43ZL/27freEAh7guLRn7AQjZgvHS95ZL7AdYu4m/FXglFiA7IZVf5L3PjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQObbYHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KD2mHP9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7511F00899;
-	Thu, 17 Sep 2026 15:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQObbYHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352441F0089A;
+	Thu, 17 Sep 2026 15:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658817;
-	bh=bkOPYbReJ0A4GsNP4gz4HMYBPnYq7ge0HSRjg1O9imc=;
+	s=korg; t=1789658820;
+	bh=ZJ1qnNq3UvmTyOeDnpyXxtpB5ZqehbNGrPikrWx6GQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KD2mHP9iTGwEee+g2gIT5/mA/F0I5UsJzHSqBf5AFwr7CsCHakMlxj/y3IspXApEf
-	 0vuH6IS5Nn2zO0dT1ro9iJBWusHU7L/IxAXLoNeK23t2zIBoTHiEJpzvUY21JfuZto
-	 9FHhBzeUVILlHazKq/Xg0SiHXP1QxaLpDkd8edLs=
+	b=nQObbYHy6upNxI6qvI+X0QLtJUVpoQeJOnysnWoZsh0w2kubdTTfdq/zz/WbtSjCj
+	 3+Yz4K0DoceOA2dpthc4SIjDtTsFOJJKApFEVlTtNZTrJwZPn/ex1HQkWrF65zqAkh
+	 R2xYwKcwZ6gKgHlbzXyLmK5+jmLDqV7+REIGIAys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 050/733] ntfs: leave HasEA flag untouched on setxattr failure
-Date: Thu, 17 Sep 2026 16:05:58 +0100
-Message-ID: <20260917151352.027227821@linuxfoundation.org>
+Subject: [PATCH 7.2 051/733] bpf: dont downgrade half-dead scalar zero spills to STACK_ZERO
+Date: Thu, 17 Sep 2026 16:05:59 +0100
+Message-ID: <20260917151352.056245478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,46 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit ac727d86fb84bdc9626ba9c756c26767459f3083 ]
+[ Upstream commit 2f3536bff8823d3c5fdbbe15e17bfca696cc2b2e ]
 
-In ntfs_set_ea(), the exit path unconditionally updates the HasEA
-flag based on ea_info_qsize. When an error occurs before
-ea_info_qsize is updated, NInoClearHasEA() hides existing on-disk
-EAs until the inode is evicted.
+states.c:__clean_func_state() can downgrade scalar zero spill to
+STACK_ZERO in the following case:
 
-Only update the flag on success.
+  *(u64 *)(r10 - 8) = 0;
+  ... checkpoint ...
+  r1 = *(u32 *)(r10 - 4);
+  ... no reads from r10-8 ...
 
-Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Here 4 bytes at r10-8 are dead and verifier changes scalar spill to a
+combination: 0000pppp (p stands for poison). Such a change breaks
+precision propagation chains. All places that produce STACK_ZERO
+should call bpf_mark_chain_precision() for the zero source.
+
+This patch fixes the bug in a simplest way possible:
+avoids converting stack spills of zero to STACK_ZERO.
+Two smarter approaches are possible:
+- do bpf_mark_chain_precision() from __clean_func_state()
+- check slot liveness information in check_stack_write_fixed_off()
+
+I investigated both and the changes required are a bit tricky,
+hence go with a simple fix for the time being.
+
+Fixes: be23266b4a08 ("bpf: 4-byte precise clean_verifier_state")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260827-bug-011-cleanfunc-stack-zero-simple-v1-v1-1-c0e996589a52@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/ea.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/bpf/states.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
-index 08c35f9751114..75a251ec4ebcb 100644
---- a/fs/ntfs/ea.c
-+++ b/fs/ntfs/ea.c
-@@ -390,10 +390,12 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
- 		*packed_ea_size = p_ea_info->ea_length;
- 	mark_mft_record_dirty(ni);
- out:
--	if (ea_info_qsize > 0)
--		NInoSetHasEA(ni);
--	else
--		NInoClearHasEA(ni);
-+	if (!err) {
-+		if (ea_info_qsize > 0)
-+			NInoSetHasEA(ni);
-+		else
-+			NInoClearHasEA(ni);
-+	}
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index 4e6aafad33bd2..66fb11b6c6a76 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -445,22 +445,19 @@ static void __clean_func_state(struct bpf_verifier_env *env,
+ 				struct bpf_reg_state *spill = &st->stack[i].spilled_ptr;
  
- 	kvfree(ea_buf);
- 	kvfree(old_ea_buf);
+ 				if (lo_live && stype == STACK_SPILL) {
+-					u8 val = STACK_MISC;
+-
+ 					if (spill->type != SCALAR_VALUE)
+ 						continue;
+-
+ 					/*
+-					 * 8 byte spill of scalar 0 where half slot is dead
+-					 * should become STACK_ZERO in lo 4 bytes.
++					 * Can't replace with STACK_ZERO, because
++					 * that requires bpf_mark_chain_precision().
+ 					 */
+ 					if (bpf_register_is_null(spill))
+-						val = STACK_ZERO;
++						continue;
+ 					for (j = 0; j < 4; j++) {
+ 						u8 *t = &st->stack[i].slot_type[j];
+ 
+ 						if (*t == STACK_SPILL)
+-							*t = val;
++							*t = STACK_MISC;
+ 					}
+ 				}
+ 				bpf_mark_reg_not_init(env, spill);
 -- 
 2.53.0
 
