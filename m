@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17E44D17AE;
-	Thu, 17 Sep 2026 17:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94B65304C6;
+	Thu, 17 Sep 2026 17:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666062; cv=none; b=ZDSA+BdOeMnyIqVfccM9cvzr0d0b+gSe1sWU1H26i+YSxRgOuRY0GK0wNsNXgi/pCeuwaCMTU/Ua9/v+MOnzSYUpONO4BBV4JjOTnaXiDTQ9bJ5H5HvN8XYfD/cWUCtZbCwYFIxMChUBkW1jigmyPkOzDxNwoWTyYwOAFJyBmhk=
+	t=1789666065; cv=none; b=CgsWfCg35OZtUnThPFlzJgZfi9E85GnfeIEWx3APScMhIXFrL9xsGYMFI8MEOw1xMrqiyAjLxZrHEMU6w8B8oK5LrOUOY/cgOR6KbtSfzYIGmXd1GbydvzNGGG2CUL4YBb2J4QQ19idCP/i50chQMwXpNN7PJLcpVIxeeHE+AL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666062; c=relaxed/simple;
-	bh=i5E9PvfUr0ZmQBlrwb89iGf3ZLBVrar+8P9qkl222Zw=;
+	s=arc-20240116; t=1789666065; c=relaxed/simple;
+	bh=AWdXC+3+27s/b10DVByTUDGIOUmNmNhx9TVnajMxa9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwCd0iV1QfX4D24mufOQnqCKh48mKg7xQlq9DSIw8fqhiesm5arneeOW0xFtJXQ1uYOAqHDrqjCQ1Xxbuxcop3NMm1jJAATHp9xYFsL8h+Xyg6MVUuXmgY+aaGLm+wz6aw9cv1XkgKAgMoaSQlrTDCndEIOw5Vk3hf048T5SK1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTBByelL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DqAokqWF38BUvGdHCuqJzIOdJCnWJ98C3jmW5u9pH1cak07/zkSR5x4J/vBqANLX0XBZu5sWu2omDGf7WXiDkYyniWOoayYoC9NaGEq+DvJtJRvk/odWFzRd1IqGChVsd+f+EvdDS+uI2wShja8cRqFgieX2mepqrLojiXqmSCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0BHT/k0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTBByelL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DE11F000FF;
-	Thu, 17 Sep 2026 17:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0BHT/k0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD751F000FF;
+	Thu, 17 Sep 2026 17:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666060;
-	bh=hglie5WwrHzeYMi7qMdVcKdj+INyX2d6fAacQc+I/Ws=;
+	s=korg; t=1789666063;
+	bh=n1UGwPCemXjgp3V3JzCVT/ZqOyqN/7WCG6iHEB61dHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WTBByelL6759g2OJ9ORc5HP2GorVXwRFbm940uOz/GuTywoP70yXExNjCOfI690QA
-	 60SNAE7PNFYbHxVktHQl0coW0F8zyU7F4UtK+8rv/PASXsiF2tp1ihHxDNm9DqBW4W
-	 Zkn4443ZTIS8w5uHdzYVkUxgrCnHmF/Lka4J+QW0=
+	b=E0BHT/k0ZjWBrsRr5UTuZCzTLSzZ/pOAuTQw8qJsDC5xIsNTow8FViaCgoT2w21Hf
+	 fAHOQ3MBQU3sTXgvezYpAmLY1LrJv8PMHKNbIELBfbEBqkg8F7DZbBOMrp3Hv1JDN/
+	 5/j7icEVfWe/+xjtqNFJF1w65Fm+9slbIVnboyr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0912/1250] net/mlx5: Register SF resource on PF port representor
-Date: Thu, 17 Sep 2026 16:11:47 +0100
-Message-ID: <20260917151616.717467009@linuxfoundation.org>
+Subject: [PATCH 6.18 0913/1250] net/mlx5e: Move representor vnic reporter to eswitch devlink port
+Date: Thu, 17 Sep 2026 16:11:48 +0100
+Message-ID: <20260917151616.742481084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,135 +54,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 4be8326d817e6d47f8446938408bb2001b799340 ]
+[ Upstream commit 7f26a5e8040b4957ef4dbdfcde6cc7ba2db53937 ]
 
-The device-level "resource show" displays max_local_SFs and
-max_external_SFs without indicating which port each resource belongs
-to. Users cannot determine the controller number and pfnum associated
-with each SF pool.
+The representor vnic devlink health reporter is created and destroyed
+along the representor netdev (un)load path, which is not serialized by
+the devlink instance lock. Destroying the reporter from there triggers
+a devl_assert_locked() splat on driver unbind:
+  WARNING: net/devlink/core.c:259 at devl_assert_locked+0x54/0x70, CPU#2: bash/3758
+  Modules linked in: mlx5_vdpa vringh vdpa mlx5_ib mlx5_fwctl mlx5_core ...
+  CPU: 2 UID: 0 PID: 3758 Comm: bash Tainted: G        W           6.19.0+ #1 PREEMPT
+  Tainted: [W]=WARN
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), ...
+  RIP: 0010:devl_assert_locked+0x54/0x70
+  Call Trace:
+   <TASK>
+   devl_health_reporter_destroy+0x3a/0x1b0
+   mlx5e_vport_rep_unload+0x12d/0x2b0 [mlx5_core]
+   mlx5_eswitch_unregister_vport_reps+0x1b8/0x220 [mlx5_core]
+   ? __esw_offloads_unload_rep+0x190/0x190 [mlx5_core]
+   ? kernfs_remove_by_name_ns+0xc3/0xf0
+   device_release_driver_internal+0x3b2/0x560
+   unbind_store+0xce/0xf0
 
-Register max_SFs resource on the host PF representor port to expose
-per-port SF limits. Users can correlate the port resource with the
-controller number and pfnum shown in 'devlink port show'.
+Move the reporter's lifecycle to the eswitch devlink port (un)register
+paths, which are already serialized by the devlink instance lock, and
+store the handle on mlx5_devlink_port. Use the port's mlx5_vport as the
+reporter priv since the diagnose callback only needs a device handle and
+a vport number, and mlx5_vport carries both and is initialized before
+any representor driver probes.
 
-Future patches will introduce an ECPF that manages multiple PFs,
-where each PF has its own SF pool.
-
-Example usage:
-
-  $ devlink resource show pci/0000:03:00.0/196608
-  pci/0000:03:00.0/196608:
-    name max_SFs size 20 unit entry
-
-  $ devlink port show pci/0000:03:00.0/196608
-  pci/0000:03:00.0/196608: type eth netdev pf0hpf flavour pcipf
-    controller 1 pfnum 0 external true splittable false
-    function:
-      hw_addr b8:3f:d2:e1:8f:dc roce enable max_io_eqs 120
-
-We can create up to 20 SFs over devlink port pci/0000:03:00.0/196608,
-with pfnum 0 and controller 1.
-
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: cf14af140a5a ("net/mlx5e: Add vnic devlink health reporter to representors")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260407194107.148063-4-tariqt@nvidia.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260906090700.3761260-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 7f26a5e8040b ("net/mlx5e: Move representor vnic reporter to eswitch devlink port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/devlink.h |  4 ++
- .../mellanox/mlx5/core/esw/devlink_port.c     | 37 +++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 52 +------------------
+ .../net/ethernet/mellanox/mlx5/core/en_rep.h  |  1 -
+ .../mellanox/mlx5/core/esw/devlink_port.c     | 37 +++++++++++++
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
+ 4 files changed, 39 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.h b/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
-index c9555119a6617..e49c7df79f124 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
-@@ -14,6 +14,10 @@ enum mlx5_devlink_resource_id {
- 	MLX5_ID_RES_MAX = __MLX5_ID_RES_MAX - 1,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index b716f7cfe8af8..a47fef49ada97 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -57,7 +57,6 @@
+ #include "lib/vxlan.h"
+ #define CREATE_TRACE_POINTS
+ #include "diag/en_rep_tracepoint.h"
+-#include "diag/reporter_vnic.h"
+ #include "en_accel/ipsec.h"
+ #include "en/tc/int_port.h"
+ #include "en/ptp.h"
+@@ -1431,51 +1430,6 @@ static unsigned int mlx5e_ul_rep_stats_grps_num(struct mlx5e_priv *priv)
+ 	return ARRAY_SIZE(mlx5e_ul_rep_stats_grps);
+ }
+ 
+-static int
+-mlx5e_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
+-				 struct devlink_fmsg *fmsg,
+-				 struct netlink_ext_ack *extack)
+-{
+-	struct mlx5e_rep_priv *rpriv = devlink_health_reporter_priv(reporter);
+-	struct mlx5_eswitch_rep *rep = rpriv->rep;
+-
+-	mlx5_reporter_vnic_diagnose_counters(rep->esw->dev, fmsg, rep->vport,
+-					     true);
+-	return 0;
+-}
+-
+-static const struct devlink_health_reporter_ops mlx5_rep_vnic_reporter_ops = {
+-	.name = "vnic",
+-	.diagnose = mlx5e_rep_vnic_reporter_diagnose,
+-};
+-
+-static void mlx5e_rep_vnic_reporter_create(struct mlx5e_priv *priv,
+-					   struct devlink_port *dl_port)
+-{
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+-	struct devlink_health_reporter *reporter;
+-
+-	reporter = devl_port_health_reporter_create(dl_port,
+-						    &mlx5_rep_vnic_reporter_ops,
+-						    rpriv);
+-	if (IS_ERR(reporter)) {
+-		mlx5_core_err(priv->mdev,
+-			      "Failed to create representor vnic reporter, err = %pe\n",
+-			      reporter);
+-		return;
+-	}
+-
+-	rpriv->rep_vnic_reporter = reporter;
+-}
+-
+-static void mlx5e_rep_vnic_reporter_destroy(struct mlx5e_priv *priv)
+-{
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+-
+-	if (!IS_ERR_OR_NULL(rpriv->rep_vnic_reporter))
+-		devl_health_reporter_destroy(rpriv->rep_vnic_reporter);
+-}
+-
+ static const struct mlx5e_profile mlx5e_rep_profile = {
+ 	.init			= mlx5e_init_rep,
+ 	.cleanup		= mlx5e_cleanup_rep,
+@@ -1599,10 +1553,8 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
+ 
+ 	dl_port = mlx5_esw_offloads_devlink_port(dev->priv.eswitch,
+ 						 rpriv->rep->vport);
+-	if (!IS_ERR(dl_port)) {
++	if (!IS_ERR(dl_port))
+ 		SET_NETDEV_DEVLINK_PORT(netdev, dl_port);
+-		mlx5e_rep_vnic_reporter_create(priv, dl_port);
+-	}
+ 
+ 	err = register_netdev(netdev);
+ 	if (err) {
+@@ -1615,7 +1567,6 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
+ 	return 0;
+ 
+ err_detach_netdev:
+-	mlx5e_rep_vnic_reporter_destroy(priv);
+ 	mlx5e_detach_netdev(netdev_priv(netdev));
+ err_cleanup_profile:
+ 	priv->profile->cleanup(priv);
+@@ -1673,7 +1624,6 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
+ 	}
+ 
+ 	unregister_netdev(netdev);
+-	mlx5e_rep_vnic_reporter_destroy(priv);
+ 	mlx5e_detach_netdev(priv);
+ 	priv->profile->cleanup(priv);
+ 	mlx5e_destroy_netdev(netdev);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
+index 70640fa1ad7bc..bcd7b4e814d06 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
+@@ -118,7 +118,6 @@ struct mlx5e_rep_priv {
+ 	struct rtnl_link_stats64 prev_vf_vport_stats;
+ 	struct mlx5_flow_handle *send_to_vport_meta_rule;
+ 	struct rhashtable tc_ht;
+-	struct devlink_health_reporter *rep_vnic_reporter;
  };
  
-+enum mlx5_devlink_port_resource_id {
-+	MLX5_DL_PORT_RES_MAX_SFS = 1,
-+};
-+
- enum mlx5_devlink_param_id {
- 	MLX5_DEVLINK_PARAM_ID_BASE = DEVLINK_PARAM_GENERIC_ID_MAX,
- 	MLX5_DEVLINK_PARAM_ID_FLOW_STEERING_MODE,
+ static inline
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-index cf88a106d80d7..37e52f29a8149 100644
+index 37e52f29a8149..bac24f158978b 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-@@ -3,6 +3,7 @@
- 
+@@ -4,6 +4,26 @@
  #include <linux/mlx5/driver.h>
  #include "eswitch.h"
-+#include "devlink.h"
+ #include "devlink.h"
++#include "diag/reporter_vnic.h"
++
++static int
++mlx5_esw_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
++				    struct devlink_fmsg *fmsg,
++				    struct netlink_ext_ack *extack)
++{
++	struct mlx5_vport *vport = devlink_health_reporter_priv(reporter);
++
++	mlx5_reporter_vnic_diagnose_counters(vport->dev, fmsg, vport->vport,
++					     true);
++
++	return 0;
++}
++
++static const
++struct devlink_health_reporter_ops mlx5_esw_rep_vnic_reporter_ops = {
++	.name = "vnic",
++	.diagnose = mlx5_esw_rep_vnic_reporter_diagnose,
++};
  
  static void
  mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
-@@ -160,6 +161,32 @@ static const struct devlink_port_ops mlx5_esw_dl_sf_port_ops = {
- 	.port_fn_max_io_eqs_set = mlx5_devlink_port_fn_max_io_eqs_set,
- };
+@@ -189,6 +209,7 @@ static void mlx5_esw_devlink_port_res_unregister(struct devlink_port *dl_port)
  
-+static int mlx5_esw_devlink_port_res_register(struct mlx5_eswitch *esw,
-+					      struct devlink_port *dl_port)
-+{
-+	struct devlink_resource_size_params size_params;
-+	struct mlx5_core_dev *dev = esw->dev;
-+	u16 max_sfs, sf_base_id;
-+	int err;
-+
-+	err = mlx5_esw_sf_max_hpf_functions(dev, &max_sfs, &sf_base_id);
-+	if (err)
-+		return err;
-+
-+	devlink_resource_size_params_init(&size_params, max_sfs, max_sfs, 1,
-+					  DEVLINK_RESOURCE_UNIT_ENTRY);
-+
-+	return devl_port_resource_register(dl_port, "max_SFs", max_sfs,
-+					   MLX5_DL_PORT_RES_MAX_SFS,
-+					   DEVLINK_RESOURCE_ID_PARENT_TOP,
-+					   &size_params);
-+}
-+
-+static void mlx5_esw_devlink_port_res_unregister(struct devlink_port *dl_port)
-+{
-+	devl_port_resources_unregister(dl_port);
-+}
-+
  int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
  {
++	struct devlink_health_reporter *reporter;
  	struct mlx5_core_dev *dev = esw->dev;
-@@ -191,6 +218,15 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
- 	if (err)
- 		goto rate_err;
+ 	const struct devlink_port_ops *ops;
+ 	struct mlx5_devlink_port *dl_port;
+@@ -227,6 +248,16 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
+ 				       err);
+ 	}
  
-+	if (vport_num == MLX5_VPORT_PF) {
-+		err = mlx5_esw_devlink_port_res_register(esw,
-+							 &dl_port->dl_port);
-+		if (err)
-+			mlx5_core_dbg(dev,
-+				      "Failed to register port resources: %d\n",
-+				       err);
-+	}
++	reporter = devl_port_health_reporter_create(
++		&dl_port->dl_port, &mlx5_esw_rep_vnic_reporter_ops,
++		vport);
++	if (IS_ERR(reporter))
++		mlx5_core_err(dev,
++			      "Failed to create vnic health reporter for vport %d: %pe\n",
++			      vport_num, reporter);
++	else
++		dl_port->vnic_reporter = reporter;
 +
  	return 0;
  
  rate_err:
-@@ -205,6 +241,7 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_vport *vport)
+@@ -241,6 +272,12 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_vport *vport)
  	if (!vport->dl_port)
  		return;
  	dl_port = vport->dl_port;
-+	mlx5_esw_devlink_port_res_unregister(&dl_port->dl_port);
++
++	if (dl_port->vnic_reporter) {
++		devl_health_reporter_destroy(dl_port->vnic_reporter);
++		dl_port->vnic_reporter = NULL;
++	}
++
+ 	mlx5_esw_devlink_port_res_unregister(&dl_port->dl_port);
  
  	mlx5_esw_qos_vport_update_parent(vport, NULL, NULL);
- 	devl_rate_leaf_destroy(&dl_port->dl_port);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index eca24c1929eb4..01f56519334cc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -179,6 +179,7 @@ struct mlx5_vport;
+ struct mlx5_devlink_port {
+ 	struct devlink_port dl_port;
+ 	struct mlx5_vport *vport;
++	struct devlink_health_reporter *vnic_reporter;
+ };
+ 
+ static inline void mlx5_devlink_port_init(struct mlx5_devlink_port *dl_port,
 -- 
 2.53.0
 
