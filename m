@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC1F4B7A55;
-	Thu, 17 Sep 2026 18:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1944E77FF;
+	Thu, 17 Sep 2026 18:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669040; cv=none; b=WCYQJuu0mrfBBfVkjBGNZFuAdB5409eFFh7jiZuUbeRFcJ6r7+qfjtG+ptUEqLdvy4RrnCnIGy4IG7imofkeqKXKm2b3Z32J8+oTYRVHQhn/ejSBGzlrjqwXpQKuQ0gi81uOyAtH6SU7jz9WqIIFrK5v4p0GnnoohnFgjH3VtiU=
+	t=1789669043; cv=none; b=kbGnpPy785fJLxfAsMmnZTIv1MSAsdBzklStpUVvCKn89RQJuGvL9Qnrki6oNuvB9EcLpazMI+O1BjDEYAGUwBy/8j7mWBKkl+pv1uAI7ZpsmHfi58J2VkP9OqsOlJw/YweHerrW9lRb5bJUMsBc3C9zqxKuEY0yKlm5qWynubU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669040; c=relaxed/simple;
-	bh=UsMb5ftkFevtMsloyMzTaXv9m1Y8Rj3aPgh20r5vCNw=;
+	s=arc-20240116; t=1789669043; c=relaxed/simple;
+	bh=Eagk8jKS6YGGxD9BQ1NJj20iW8y3TsqaNmEzeEU/gTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mN/a6OOfE3TWY8ap9OxFLMP+eJqVR0pgMnmhKuz44pZMmym+HB00tU3uPMTkYv/ia8J2qd64Y5R6hDNNI0vBCByNY2F02ApD8bCTS8jeCnG9HJYxgega5124pXjBxoLJTEcJ3lnwIBbkJc0/8U5ZgRJfWrNJsVt9KMeT9AdyMhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlgXzXxJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYoOmhF+m/3eLSagbs1bBPM912njDQ1NUyiumVmwr4mIBVw+GnSEvDizv7naroM8Cc3+XA0+NBgKS4PGHQ41MLs9y+SY7FziCXQ9eLCQt7Nr69cEK/NkH8q5A4omgUx7c/IcjmYa3w3TVHFIRftEkeIyErWSI6NV71O+xvGN9IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFd/gg0L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlgXzXxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3A91F000FF;
-	Thu, 17 Sep 2026 18:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFd/gg0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F7E1F00893;
+	Thu, 17 Sep 2026 18:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669039;
-	bh=Qbu/UpGnWp4DiOy/ZJXkWy+zNuMEtxpOup8oWmG3GKQ=;
+	s=korg; t=1789669042;
+	bh=A7vuCsFkoMeEfctO5/M7SvGQjRA18YD+gXtXNTstK0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XlgXzXxJjZ+GFKj3GpL4jlsSggiu3z5Ukg8u/9tGmRVY6ZFRnhSLdWo4N6MHhk5P8
-	 CFtkDOs5k82Zn/K2OXlmSlm4klUDVKi25E1C65fZRodSw0LvDG8Hsx/OlZpSIM0yUs
-	 6H1lkSciJuHtfsa0H7kcpyEeezBZmOVa0HKiNLjs=
+	b=KFd/gg0LJgtnZ6bx7xrOMKaDcmc1vgot3EqsYJptRbVp2yI0u2sd6zNL4Dp5xGrzK
+	 Fxd69wmwFO1A7fgPIwZ1VtSUgI0q3rHvD44/Pb1wBFKfTUE4fUUbKfLsA2lPwe3Ye/
+	 kueLh6U4P8BTzhX7Kq85QAFC3h/J4kbsmGymuRP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2d770620059281e225a4@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0597/1102] locking/lockdep: Invalidate stale class_cache entries for zapped classes
-Date: Thu, 17 Sep 2026 16:09:00 +0100
-Message-ID: <20260917151554.976431270@linuxfoundation.org>
+Subject: [PATCH 6.12 0624/1102] ipvs: fix reversed sequence option serialization
+Date: Thu, 17 Sep 2026 16:09:27 +0100
+Message-ID: <20260917151555.749621236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,166 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 02c6be7d675b21d81f0ba3a524346850a8c0e3bf ]
+[ Upstream commit b04578b74f2d3755548fe9e829e3b2a6c6f966a1 ]
 
-syzbot reported a lockdep splat hitting DEBUG_LOCKS_WARN_ON(1) in
-hlock_class() due to an invalid class_idx:
+hton_seq() expects the host-order source first and the unaligned
+network-order destination second. The version 1 sync sender passes these
+arguments in reverse for both sequence blocks. This leaves 24 bytes of the
+kmalloc-backed message unwritten. It may disclose stale heap data and
+replace the live connection sequence state with values read from the
+buffer.
 
-  WARNING: kernel/locking/lockdep.c:238 at __lock_acquire+0x382/0x2cf0 kernel/locking/lockdep.c:5203
-  Workqueue: wg-crypt-wg0 wg_packet_tx_worker
-  RIP: 0010:hlock_class kernel/locking/lockdep.c:238 [inline]
-  RIP: 0010:check_wait_context kernel/locking/lockdep.c:4870 [inline]
-  RIP: 0010:__lock_acquire+0x389/0x2cf0 kernel/locking/lockdep.c:5203
-  Call Trace:
-   <IRQ>
-   lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5886
-   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:173
-   tcp_tsq_handler+0x29/0x200 net/ipv4/tcp_output.c:1291
-   tcp_tsq_workfn+0x384/0x410 net/ipv4/tcp_output.c:1325
-   ...
+Pass the connection sequence state as the source and the message payload as
+the destination for both blocks.
 
-When a lock class is zapped (e.g. during module unload or key
-unregistration), zap_class() clears the class's bit in
-lock_classes_in_use and removes it from the class hash table.
-However, existing lockdep_map instances embedded in data structures
-may still retain a pointer to the zapped class in their class_cache[]
-array.
-
-When __lock_acquire() subsequently runs on such a lock, it finds
-lock->class_cache[subclass] != NULL, skipping register_lock_class()
-and assigning hlock->class_idx to the index of the zapped class. When
-check_wait_context() or hlock_class() inspects the held_lock, it finds
-!test_bit(class_idx, lock_classes_in_use) and warns. Furthermore, if
-the zapped slot is subsequently re-allocated to an unrelated lock key,
-the stale class_cache entry would erroneously match the unrelated
-class (ABA issue).
-
-Add lock_class_cache_is_valid() to validate that the cached class is
-within lock_classes bounds, still allocated in lock_classes_in_use
-(using uninstrumented arch_test_bit() in __always_inline context so it
-is safe in noinstr contexts like match_held_lock()), and that
-class->key matches the expected subkey (taking lockdep_set_subclass()
-overrides into account). Also use READ_ONCE()/WRITE_ONCE() when
-accessing class_cache[].  If the entry is invalid or stale, fall back
-to register_lock_class() / look_up_lock_class().
-
-Fixes: a0b0fd53e1e6 ("locking/lockdep: Free lock classes that are no longer in use")
-Closes: https://lore.kernel.org/netdev/6a8c66dc.4d75e56a.c9a88.0050.GAE@google.com/T/#u
-Reported-by: syzbot+2d770620059281e225a4@syzkaller.appspotmail.com
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260824155129.676096-1-edumazet@google.com
+Fixes: 986a07579533 ("IPVS: Backup, Change sending to Version 1 format")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 50 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 8 deletions(-)
+ net/netfilter/ipvs/ip_vs_sync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 1422a04f950d0..9b7b29f19908c 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -944,6 +944,34 @@ look_up_lock_class(const struct lockdep_map *lock, unsigned int subclass)
- 	return NULL;
- }
- 
-+static __always_inline bool lock_class_cache_is_valid(const struct lockdep_map *lock,
-+						      const struct lock_class *class,
-+						      unsigned int subclass)
-+{
-+	unsigned int class_subclass;
-+
-+	if (!class)
-+		return false;
-+
-+	if (unlikely(class < lock_classes || class >= lock_classes + MAX_LOCKDEP_KEYS))
-+		return false;
-+
-+	if (unlikely(!arch_test_bit(class - lock_classes, lock_classes_in_use)))
-+		return false;
-+
-+	if (unlikely(!lock->key))
-+		return false;
-+
-+	class_subclass = subclass ? subclass : class->subclass;
-+	if (unlikely(class_subclass >= MAX_LOCKDEP_SUBCLASSES))
-+		return false;
-+
-+	if (unlikely(READ_ONCE(class->key) != lock->key->subkeys + class_subclass))
-+		return false;
-+
-+	return true;
-+}
-+
- /*
-  * Static locks do not have their class-keys yet - for them the key is
-  * the lock object itself. If the lock is in the per cpu area, the
-@@ -1375,9 +1403,9 @@ register_lock_class(struct lockdep_map *lock, unsigned int subclass, int force)
- 
- out_set_class_cache:
- 	if (!subclass || force)
--		lock->class_cache[0] = class;
-+		WRITE_ONCE(lock->class_cache[0], class);
- 	else if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		lock->class_cache[subclass] = class;
-+		WRITE_ONCE(lock->class_cache[subclass], class);
- 
- 	/*
- 	 * Hash collision, did we smoke some? We found a class with a matching
-@@ -4913,7 +4941,7 @@ void lockdep_init_map_type(struct lockdep_map *lock, const char *name,
- 	int i;
- 
- 	for (i = 0; i < NR_LOCKDEP_CACHING_CLASSES; i++)
--		lock->class_cache[i] = NULL;
-+		WRITE_ONCE(lock->class_cache[i], NULL);
- 
- #ifdef CONFIG_LOCK_STAT
- 	lock->cpu = raw_smp_processor_id();
-@@ -4978,12 +5006,15 @@ EXPORT_SYMBOL_GPL(__lockdep_no_track__);
- void lockdep_set_lock_cmp_fn(struct lockdep_map *lock, lock_cmp_fn cmp_fn,
- 			     lock_print_fn print_fn)
- {
--	struct lock_class *class = lock->class_cache[0];
-+	struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 	unsigned long flags;
- 
- 	raw_local_irq_save(flags);
- 	lockdep_recursion_inc();
- 
-+	if (!lock_class_cache_is_valid(lock, class, 0))
-+		class = NULL;
-+
- 	if (!class)
- 		class = register_lock_class(lock, 0, 0);
- 
-@@ -5068,8 +5099,11 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 	if (!prove_locking || lock->key == &__lockdep_no_validate__)
- 		check = 0;
- 
--	if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		class = lock->class_cache[subclass];
-+	if (subclass < NR_LOCKDEP_CACHING_CLASSES) {
-+		class = READ_ONCE(lock->class_cache[subclass]);
-+		if (!lock_class_cache_is_valid(lock, class, subclass))
-+			class = NULL;
-+	}
- 	/*
- 	 * Not cached?
- 	 */
-@@ -5272,9 +5306,9 @@ static noinstr int match_held_lock(const struct held_lock *hlock,
- 		return 1;
- 
- 	if (hlock->references) {
--		const struct lock_class *class = lock->class_cache[0];
-+		const struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 
--		if (!class)
-+		if (!lock_class_cache_is_valid(lock, class, 0))
- 			class = look_up_lock_class(lock, 0);
- 
- 		/*
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index 4c6e253985365..ca25bb2dd3bde 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -748,9 +748,9 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
+ 		*(p++) = IPVS_OPT_SEQ_DATA;
+ 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
+-		hton_seq((struct ip_vs_seq *)p, &cp->in_seq);
++		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
+-		hton_seq((struct ip_vs_seq *)p, &cp->out_seq);
++		hton_seq(&cp->out_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
+ 	}
+ 	/* Handle pe data */
 -- 
 2.53.0
 
