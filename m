@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65CC4ED1B7;
-	Thu, 17 Sep 2026 16:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3574ED1B7;
+	Thu, 17 Sep 2026 16:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661121; cv=none; b=Wnb8E+YTv4fNl2TWR/enklv23AWWKnQjaXh5Luzo0ExhfsLMQaRr7ssx4Tm1NTguN2mAwQ3Kt5n4DRP3jYzB6smwYjnSvgUSEuiWBReef9dc6D4w2O3r5l01MW7r7P/7MfIwd6qBrwal8DMe7DG78PYoT/DkJ4kaOXZYasFxpO4=
+	t=1789661124; cv=none; b=RY7Z9p1dl9nUjsTbS2SF4NhFCQOEh2JT9wA0XqMJAhY3k/H6jv0OtZC8e2JwB5Bjq4HX3f8N+jGM+rUWjW/r9cTUyphKq3NImzA+o6AbYcWhBlEhdQpyrF22zhT1fg0i4iRSdhDmkNB7LYdpKUsW0Xm/mSZu57KLgQtnVXkfYb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661121; c=relaxed/simple;
-	bh=E5Q0EH6rM81/dY8taEV4lZ9XVqSKha6CKOgXphbY03Q=;
+	s=arc-20240116; t=1789661124; c=relaxed/simple;
+	bh=jkhRVfDVfnzvncQHQI0KKmT0+zNvDh38XrtI23mmlrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGhJoAPb3DBEhQUDnKIhR3HwcW1+8DusPeTt7TidQ1yG30v7jlegwt/3I9Kk7muNngEoiIf7OlEFxx/CxJ1UgyQwW445MsysaQfNMwccPAt5hlijfcKob9Kmu4emgqvuhPDiPyBb7+Wgjj35+CsK/KeP75OKuSnMR9dhY9npTCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAtz8lz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kLxVJH0iC6LbLCKCbqTgu6e95UtZcmYD3gIidL1PvuccwAkGNtmrDPxLQAaHlPuh45R41mttS+d38YpIM1kzr10754GjVHBPcuInSwipa42JQinX8LmfEKU1CdRy6mhJbMmSt/wjBVcM5fYAA/lm9PH+uGflr3sS8XZVLQnV6r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmY+Oo2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAtz8lz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA0D1F00893;
-	Thu, 17 Sep 2026 16:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmY+Oo2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68CD1F00893;
+	Thu, 17 Sep 2026 16:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661120;
-	bh=QTJS/LaXuCbpQLVLNUD76PP9lL7q7IsEvjXSkg45X4E=;
+	s=korg; t=1789661123;
+	bh=pBw+3cBYgAlshXOsGnzkEP/rIoXpUpRW+2qIufroE2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JAtz8lz9k5pbDVn7NWSMhVstbDuxqmeqxdwzufPgIOe4kyBud3v9qP/Tzyz/hd839
-	 9SVV1Rl+d8wM+wMc85eihjd99g/FSQBg4yVcAjEc7ugDJxXwVpxnAezkey8Tx6eKJj
-	 5EbbviLGmo24qlRZHTZakVsgurLoYpp2fBZTLztE=
+	b=BmY+Oo2+Ag34QTw1whlB2S2O2az2M6xiajZWaCIcAd6JHXDSGoM/mJp+TEiAGUb0b
+	 2xyiKrUfC9Ws59Og7OARNEXROWriJVZcSQF3wMNDkUcWR3pVcuf4t80C5CNt7B77hi
+	 HkQSuGDpQjBGsGLoTWUalYskgg17jZitYQDv7J4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erez Shitrit <erezsh@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gwendal Grignou <gwendal@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0090/1250] net/mlx5: HWS, Handle destroying table that has a miss table
-Date: Thu, 17 Sep 2026 15:58:05 +0100
-Message-ID: <20260917151554.424713469@linuxfoundation.org>
+Subject: [PATCH 6.18 0091/1250] platform/chrome: Resolve kb_wake_angle visibility race
+Date: Thu, 17 Sep 2026 15:58:06 +0100
+Message-ID: <20260917151554.451341087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,42 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 60e9e82f162ab7399373ff2185119289e4f6dc06 ]
+[ Upstream commit c40f5f9927b5bf6062daa1e293ae32d83afc963e ]
 
-If a table has a miss table that was created by
-'mlx5hws_table_set_default_miss' API function, its miss_tbl
-keeps the table that points to it in a list.
-If such table is deleted, we need to also remove it from the
-miss_tbl list, otherwise the node in miss_tbl list will contain
-garbage.
+A race condition exists between the probe of cros-ec-sysfs and
+cros-ec-sensorhub.
 
-Signed-off-by: Erez Shitrit <erezsh@nvidia.com>
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260507173443.320465-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The `kb_wake_angle` attribute should only be visible if the sensor hub
+detects two or more accelerometers.  If cros_ec_sysfs_probe() runs
+before cros_ec_sensorhub_register() completes sensor enumeration, the
+sysfs attributes are created while `has_kb_wake_angle` is still false,
+hiding `kb_wake_angle` incorrectly.
+
+Store the created attribute group pointer in `ec_dev->group`.  When
+the sensor hub completes sensor enumeration, it checks for this group
+and calls sysfs_update_group() to notify the sysfs core to re-evaluate
+attribute visibility.  This ensures the `kb_wake_angle` attribute
+visibility is correctly updated regardless of the driver probe order.
+
+Co-developed-by: Gwendal Grignou <gwendal@chromium.org>
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Link: https://lore.kernel.org/r/20260407102615.1605317-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/chrome/cros_ec_sensorhub.c | 6 +++++-
+ drivers/platform/chrome/cros_ec_sysfs.c     | 5 +++--
+ include/linux/platform_data/cros_ec_proto.h | 2 ++
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-index 6113383ae47bb..07a3dd1248c77 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-@@ -282,6 +282,9 @@ int mlx5hws_table_destroy(struct mlx5hws_table *tbl)
- 		goto unlock_err;
+diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
+index 9bad8f72680ea..f938c3fc84e4f 100644
+--- a/drivers/platform/chrome/cros_ec_sensorhub.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub.c
+@@ -122,8 +122,12 @@ static int cros_ec_sensorhub_register(struct device *dev,
+ 		sensor_type[sensorhub->resp->info.type]++;
  	}
  
-+	if (tbl->default_miss.miss_tbl)
-+		list_del_init(&tbl->default_miss.next);
-+
- 	list_del_init(&tbl->tbl_list_node);
- 	mutex_unlock(&ctx->ctrl_lock);
+-	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2)
++	if (sensor_type[MOTIONSENSE_TYPE_ACCEL] >= 2) {
+ 		ec->has_kb_wake_angle = true;
++		if (ec->group && sysfs_update_group(&ec->class_dev.kobj,
++						    ec->group))
++			dev_warn(dev, "Unable to update sysfs");
++	}
  
+ 	if (cros_ec_check_features(ec,
+ 				   EC_FEATURE_REFINED_TABLET_MODE_HYSTERESIS)) {
+diff --git a/drivers/platform/chrome/cros_ec_sysfs.c b/drivers/platform/chrome/cros_ec_sysfs.c
+index f22e9523da3e8..9d3767ab15480 100644
+--- a/drivers/platform/chrome/cros_ec_sysfs.c
++++ b/drivers/platform/chrome/cros_ec_sysfs.c
+@@ -405,7 +405,8 @@ static int cros_ec_sysfs_probe(struct platform_device *pd)
+ 	struct device *dev = &pd->dev;
+ 	int ret;
+ 
+-	ret = sysfs_create_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
++	ec_dev->group = &cros_ec_attr_group;
++	ret = sysfs_create_group(&ec_dev->class_dev.kobj, ec_dev->group);
+ 	if (ret < 0)
+ 		dev_err(dev, "failed to create attributes. err=%d\n", ret);
+ 
+@@ -416,7 +417,7 @@ static void cros_ec_sysfs_remove(struct platform_device *pd)
+ {
+ 	struct cros_ec_dev *ec_dev = dev_get_drvdata(pd->dev.parent);
+ 
+-	sysfs_remove_group(&ec_dev->class_dev.kobj, &cros_ec_attr_group);
++	sysfs_remove_group(&ec_dev->class_dev.kobj, ec_dev->group);
+ }
+ 
+ static const struct platform_device_id cros_ec_sysfs_id[] = {
+diff --git a/include/linux/platform_data/cros_ec_proto.h b/include/linux/platform_data/cros_ec_proto.h
+index de14923720a53..6ed1c4c5ce2ef 100644
+--- a/include/linux/platform_data/cros_ec_proto.h
++++ b/include/linux/platform_data/cros_ec_proto.h
+@@ -228,6 +228,7 @@ struct cros_ec_platform {
+ /**
+  * struct cros_ec_dev - ChromeOS EC device entry point.
+  * @class_dev: Device structure used in sysfs.
++ * @group: sysfs attributes groups for this EC.
+  * @ec_dev: cros_ec_device structure to talk to the physical device.
+  * @dev: Pointer to the platform device.
+  * @debug_info: cros_ec_debugfs structure for debugging information.
+@@ -237,6 +238,7 @@ struct cros_ec_platform {
+  */
+ struct cros_ec_dev {
+ 	struct device class_dev;
++	const struct attribute_group *group;
+ 	struct cros_ec_device *ec_dev;
+ 	struct device *dev;
+ 	struct cros_ec_debugfs *debug_info;
 -- 
 2.53.0
 
