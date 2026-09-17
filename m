@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9670C39CD06;
-	Thu, 17 Sep 2026 17:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD9F4ABBCC;
+	Thu, 17 Sep 2026 17:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667217; cv=none; b=NFwkMgMcCdqCgXKoSjs0Dxpc8If0Mn6pJ1TdqX8UgVyLMIaErku/0KD+ThhmrVJS69gt94zRvfPZ6iSEokt0VXVdwXXAN05cQ8Ls6wm9JhfiTWSoGJjpWHnL7qsR6R1r+5MTYys0tmPc845AGA2eGXR9L8nx8KT9jHJ/N5drcmA=
+	t=1789667221; cv=none; b=RO6a3+fA4bIhA/O4+v+XwcC2ycjWdaU5wMRt2TT9yOYp18931JwD/Mf0KsYMEnmvhVKDO3b6ot47wSL314qF4WV1dISGuvxKlbAxWEOUMRy2OlqRDuJWdvkYFnZwF1wqbIU4VsJXWRbdYe1t82sWlBX6i9ZccbcR2nLdH0SKowg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667217; c=relaxed/simple;
-	bh=K8kBXAEJjclc06niDcW2MUB9HQ2JGX92+E72EKxHaW8=;
+	s=arc-20240116; t=1789667221; c=relaxed/simple;
+	bh=Xzvs26eCBkSLcndqZDDMMjKa11ayJKvNFF7JSR5U+Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtumYgWJuRHkT0WVdxSXpnxfacoXmHXS0gn7p8XZro/AExqFNNiLnt+oR+E4VTvt4hevZqccHmnuAMvEq7EMGCuaKgYD/dJ79iWankHgYbH1VKszOC8IO+cn6HEQr3b2nu0E8Khd5KVmzluKjQbF38pgSbq35wqYjo/PTfwVcyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ostXSvwn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gk9hTJioGwEkWqZ5mZesY2siyZ+mmeTHkOumFZ+uyXI/yqrqHVRoDoCm6gU0H/EmXWA5WVhDfDNm+xNzyXZBZq3TDT9b/J737WgZaIdmhZ557FaLnGwjDM3EydkQ7bqhBb28Jf/mLr8WZX4T9IVQPkzyLdhq8XMsfH6Rbj1t1ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TufQ0cKD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ostXSvwn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE421F000FF;
-	Thu, 17 Sep 2026 17:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TufQ0cKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B981F000FF;
+	Thu, 17 Sep 2026 17:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667216;
-	bh=oUW8Iw1LyNx4XVAuxhHbCH00DnLhRLBNuMBWZ/x83X4=;
+	s=korg; t=1789667219;
+	bh=4WtQ5jcqG8Nfw4O1gq4Mu+RuB+EHrmdEZ05I37/1Qig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ostXSvwnQx9xVL0jmVUt2bgZaCsrBKaBLyI4RHGm1qXuol6XqnoslLNbOUOTf4kbM
-	 YXm0v665AuJjITuyvrFR7Bp2vMaFzgKoqYz2idkSiprkWTR1zMXfEf3VpHjiZ2s+vL
-	 6v2PUGvBtpgKEM0E0OoMcBhoGDNk86sPw9ofHVzI=
+	b=TufQ0cKD+kfJ3xgqSyYZwSbBSYd+HmgYATvQYoEIz7guJXVNIFrio3cMP93gN9K/j
+	 DLtg2skQytISbZiQceOxxqW1l0uwuCPrO5iDbhY46JJGaSfIgGRY59HOlJWL7D1Lzd
+	 2nwF10tx0djEUS2cvO/CcoPFJxlOUKY5dAPerIjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Jouni Malinen <j@w1.fi>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0020/1102] wifi: nl80211: reject beacons with bad HE operation
-Date: Thu, 17 Sep 2026 15:59:23 +0100
-Message-ID: <20260917151539.938474385@linuxfoundation.org>
+Subject: [PATCH 6.12 0021/1102] wifi: mac80211: always allow transmitting null-data on TXQs
+Date: Thu, 17 Sep 2026 15:59:24 +0100
+Message-ID: <20260917151539.962905496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,38 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8b9a100e1a76c52988b31099b349fd95a58c8768 ]
+[ Upstream commit 51129a2ca0482b006d0e12a0aa025ff1e1cad2cb ]
 
-The HE operation element not only needs to be longer than
-the fixed part, but also have an appropriate size for the
-variable part inside of it. Check this.
+Jouni reported that certain sequences of tests caused some
+WDS tests to fail after applying the upcoming hwsim changes
+for NAN. I bisected that down to converting hwsim to TXQs,
+and after a long debug session found that the 4-addr NDP was
+getting dropped, because it goes out via a (management) TXQ
+and is a data frame.
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260415144514.6217f5974fb5.Iff7ff6bcb159584e756d0f825c65860cdd53c6ea@changeid
+It's unclear to me now why this only happens in some test
+sequences (e.g. "sigma_dut_sae_h2e_ap_loop ap_wds_sta" and
+"sigma_dut_eap_ttls_all_akm_suites ap_wds_sta_open"), maybe
+that affects timing and the frame is otherwise delayed in
+some way.
+
+Correct the check to only drop frames that actually carry
+data, not NDPs.
+
+Reported-by: Jouni Malinen <j@w1.fi>
+Link: https://patch.msgid.link/20260417141601.851ddf4adb59.I3d668c0e1bdca9cd98f2fc46f84a066e68cc7a62@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 47e3bcba268af..d9fa7e8447877 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -5896,8 +5896,12 @@ static int nl80211_calculate_ap_params(struct cfg80211_ap_settings *params)
- 	if (cap && cap->datalen >= sizeof(*params->he_cap) + 1)
- 		params->he_cap = (void *)(cap->data + 1);
- 	cap = cfg80211_find_ext_elem(WLAN_EID_EXT_HE_OPERATION, ies, ies_len);
--	if (cap && cap->datalen >= sizeof(*params->he_oper) + 1)
-+	if (cap && cap->datalen >= sizeof(*params->he_oper) + 1) {
- 		params->he_oper = (void *)(cap->data + 1);
-+		/* takes extension ID into account */
-+		if (cap->datalen < ieee80211_he_oper_size((void *)params->he_oper))
-+			return -EINVAL;
-+	}
- 	cap = cfg80211_find_ext_elem(WLAN_EID_EXT_EHT_CAPABILITY, ies, ies_len);
- 	if (cap) {
- 		if (!cap->datalen)
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 8fc30a773c583..9bc1a80e80570 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3894,7 +3894,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 		 * injected frames or EAPOL frames from the local station.
+ 		 */
+ 		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data(hdr->frame_control) &&
++			     ieee80211_is_data_present(hdr->frame_control) &&
+ 			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+ 			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+ 			     !is_multicast_ether_addr(hdr->addr1) &&
 -- 
 2.53.0
 
