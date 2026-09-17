@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF1A49D584;
-	Thu, 17 Sep 2026 16:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9973B4F85A2;
+	Thu, 17 Sep 2026 16:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664326; cv=none; b=PXWf0VU4dT2h8Px62ZwfINzFwuv7syBRcSh4BUieonxSjlnbGjTCBfOYbeQRDg1Q+g6e+17izYkQzRuLTsEkK+HZZHTNf2e7HM2CC+54posZSv/X/ec0vKKPVYiKV2GLOW5j+QwxkvL2SuUQ7mqUrM7Xx/RVR25MltA239bVXgE=
+	t=1789664329; cv=none; b=d5PK+mFXW2unGhJfNtpZ3uQC9wjfZPzvqpF5rYsX68SUqcZvOTKfsax85n0nsOZKRNMM2E7DnAJ1CB1RBpD9PeMJ03hchGX0c7Bmwp7VR5txQ+UItuKpjG3lz+e6DeuT83LUAMDeAancJE/FQpf7hAzpXbDXJbtS9XRdEHDxlhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664326; c=relaxed/simple;
-	bh=2bQJ36E1YUxnJSZSzMbeuVtKwQq5ZveAiX8HVHnSUOw=;
+	s=arc-20240116; t=1789664329; c=relaxed/simple;
+	bh=hAYLsLj+v84mS2wHyBcUJSHG19aPogUHpfSj/j4WJjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZZ89LLWxXuw1mZOB5fzqb1vD5FSGctxO0S88rs1uAlyIMcIyyIKEqfl9d2hLnvc7lgQhtAqr01bYWwDKlSTWz6MyZAqY39c1o4PJHYHFx7EcUKMIAcVE+Jw/tamQvsbouAmtYRpNyMuB22nFoZH2l9GaXbZq35y9khbAmEBG1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHmBdWC3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O8BCfuwwUPT9JL5/2mK6SQL+hcqWvS1uDXfvU+AhfUMmhthTXkxMkSQbS3STSqh5zFD4WXuhEFzFNw0l7bMECSBtgKspEGmM8pYsHxFgX6QqA/5Np9XQab5MXDHrRA5K2LbrQP1ZURRZoRRElTFLDD+Ug2QlBa4dw3PvGDJJ5zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhjISxeA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHmBdWC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A491F000FF;
-	Thu, 17 Sep 2026 16:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhjISxeA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBFA1F000FF;
+	Thu, 17 Sep 2026 16:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664324;
-	bh=7ZUZXC13lrG/GuKN48x1X35LFVlSZUzYWE9oYBaXoAM=;
+	s=korg; t=1789664327;
+	bh=zD4Np/vVJlNWAbevMZlIbYzVOPeEVMIAcR10Wh5lKIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHmBdWC3/t+NanmX3zKs8u38PfFkHvySMxUNd/JH0Iku2bqNVReK//C/R93rQmVv3
-	 /+dXfD8+H2slusqTj6H9irQ4sp1qu/j/jZ52Af7GrF7GtXcdIm6zpEtesnsrhWUHHr
-	 1jWXxvhhjsne5sjcSezyWHkCeV+L+CGGcH1bwq60=
+	b=JhjISxeA37RM5ZcVFeRE9UjTAWKHiKl+HrgSPWuGkRyoEHsd19lqEs0uC339/AK22
+	 zFyr60NsP5hwPXhRW1kxpnbCbYdyb2nvWtzuhcQZyQlzZcV9bunaRd7VviB1mLJHn7
+	 ROoJfHjMMvclJJKS0+wn/Bs+HY9FrpViv/8abiTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0332/1250] x86/microcode/AMD: Move the no-revision fixup to get_patch_level()
-Date: Thu, 17 Sep 2026 16:02:07 +0100
-Message-ID: <20260917151601.088598301@linuxfoundation.org>
+Subject: [PATCH 6.18 0333/1250] net: ethtool: cmis_cdb: hold instance lock for ops locked devices
+Date: Thu, 17 Sep 2026 16:02:08 +0100
+Message-ID: <20260917151601.113778599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,56 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 098bcea71b8d257d80b0037b97b66070806600a5 ]
+[ Upstream commit 1d3964e29e53b02a7c61ed6d6e4aeccba3275ebc ]
 
-On machines which don't have microcode applied yet, the revision is 0.
-However, this doesn't work with the Zen family/model/stepping patch
-arithmetic. So move the fixup to the patch level getter function and
-this way make sure the patch level is always proper and thus the
-arithmetic always works.
+FW module flashing was written so that the flashing happens
+without holding rtnl_lock. This allows flashing multiple modules
+at once. Current drivers can handle that well, but we should
+let drivers depend on the netdev instance lock. Instance lock
+is per netdev, and so is the module so we won't break parallel
+updates.
 
-And now that it can be called on any family, make this Zen-only.
-
-Assisted-by: claude/claude-opus-4-6
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260603012840.2254293-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/net/netdev_lock.h    | 6 ++++++
+ net/ethtool/cmis_cdb.c       | 3 +++
+ net/ethtool/cmis_fw_update.c | 8 ++------
+ net/ethtool/module.c         | 2 ++
+ 4 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
-index 46673530bc6f0..4a33d10685587 100644
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -233,11 +233,6 @@ static bool need_sha_check(u32 cur_rev)
- {
- 	u32 cutoff;
- 
--	if (!cur_rev) {
--		cur_rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
--		pr_info_once("No current revision, generating the lowest one: 0x%x\n", cur_rev);
--	}
--
- 	cutoff = get_cutoff_revision(cur_rev);
- 	if (cutoff)
- 		return cur_rev <= cutoff;
-@@ -338,6 +333,13 @@ static u32 get_patch_level(void)
- 	}
- 
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
-+	if (!rev) {
-+		if (x86_family(bsp_cpuid_1_eax) < 0x17)
-+			return rev;
-+
-+		rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
-+		pr_info_once("No current revision, generating the lowest one: 0x%x\n", rev);
-+	}
- 
- 	return rev;
+diff --git a/include/net/netdev_lock.h b/include/net/netdev_lock.h
+index 3d3aef80beac1..849b91ab4e28b 100644
+--- a/include/net/netdev_lock.h
++++ b/include/net/netdev_lock.h
+@@ -80,6 +80,12 @@ netdev_ops_assert_locked_or_invisible(const struct net_device *dev)
+ 		netdev_ops_assert_locked(dev);
  }
+ 
++static inline void netdev_assert_locked_ops(const struct net_device *dev)
++{
++	if (netdev_need_ops_lock(dev))
++		netdev_assert_locked(dev);
++}
++
+ static inline void netdev_lock_ops_compat(struct net_device *dev)
+ {
+ 	if (netdev_need_ops_lock(dev))
+diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
+index fe156991d0bec..b39c7d47580da 100644
+--- a/net/ethtool/cmis_cdb.c
++++ b/net/ethtool/cmis_cdb.c
+@@ -2,6 +2,7 @@
+ 
+ #include <linux/ethtool.h>
+ #include <linux/jiffies.h>
++#include <net/netdev_lock.h>
+ 
+ #include "common.h"
+ #include "module_fw.h"
+@@ -179,6 +180,7 @@ cmis_cdb_validate_password(struct ethtool_cmis_cdb *cdb,
+ 
+ 	pe_pl = *((struct cmis_password_entry_pl *)page_data.data);
+ 	pe_pl.password = params->password;
++	netdev_assert_locked_ops(dev);
+ 	err = ops->set_module_eeprom_by_page(dev, &page_data, &extack);
+ 	if (err < 0) {
+ 		if (extack._msg)
+@@ -546,6 +548,7 @@ __ethtool_cmis_cdb_execute_cmd(struct net_device *dev,
+ 	if (!page_data->data)
+ 		return -ENOMEM;
+ 
++	netdev_assert_locked_ops(dev);
+ 	err = ops->set_module_eeprom_by_page(dev, page_data, &extack);
+ 	if (err < 0) {
+ 		if (extack._msg)
+diff --git a/net/ethtool/cmis_fw_update.c b/net/ethtool/cmis_fw_update.c
+index 291d04d2776a5..dff83807e975c 100644
+--- a/net/ethtool/cmis_fw_update.c
++++ b/net/ethtool/cmis_fw_update.c
+@@ -435,13 +435,9 @@ cmis_fw_update_commit_image(struct ethtool_cmis_cdb *cdb,
+ static int cmis_fw_update_reset(struct net_device *dev)
+ {
+ 	__u32 reset_data = ETH_RESET_PHY;
+-	int ret;
+ 
+-	netdev_lock_ops(dev);
+-	ret = dev->ethtool_ops->reset(dev, &reset_data);
+-	netdev_unlock_ops(dev);
+-
+-	return ret;
++	netdev_assert_locked_ops(dev);
++	return dev->ethtool_ops->reset(dev, &reset_data);
+ }
+ 
+ void
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index 9a11e7def0029..8a313c975e2f5 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -226,7 +226,9 @@ static void module_flash_fw_work(struct work_struct *work)
+ 	module_fw = container_of(work, struct ethtool_module_fw_flash, work);
+ 	dev = module_fw->fw_update.dev;
+ 
++	netdev_lock_ops(dev);
+ 	ethtool_cmis_fw_update(&module_fw->fw_update);
++	netdev_unlock_ops(dev);
+ 
+ 	module_flash_fw_work_list_del(&module_fw->list);
+ 
 -- 
 2.53.0
 
