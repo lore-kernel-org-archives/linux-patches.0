@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C94155931E;
-	Thu, 17 Sep 2026 15:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D91E45000;
+	Thu, 17 Sep 2026 15:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660074; cv=none; b=Aeegnw7c503bnh+Hreu7bUq3zuQFErCCVL5I5LDEW3tKKgEwtbQAJPhCuuFjN86xym0kDqTUyfwotUPSmikDOtegT7Ilesvg7Wy3k8hxzdWxK5TwfXziwAP+niRYJILQ9AO0IM+TGHKQOjNoTy4iJbSC3Wwc6hba2MZMKUtZ9aQ=
+	t=1789660077; cv=none; b=oSg3kaOTDCeCd/SbBL4QhkBqFayUbRryVzPOasVrmV1QQ6nqkGHG6oEHQorSh1RBGGiIuJibXU16qmL/p3HeTK94TOSo85lxrfKgL2ocEPgewHpO4QCHO9VS3hCg1LWPrpGNAIaj1jRyVKrjykCwfCW+C+gZPjio9yGs7ZvS0tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660074; c=relaxed/simple;
-	bh=KN5fRzYzhZ2nPreBmrAvlMNKGdZukKcQpfjhFfVRsdk=;
+	s=arc-20240116; t=1789660077; c=relaxed/simple;
+	bh=wDgsJSLyxV5imsFjpRbXviEmcut8dun1TLX4b3W+yfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tZf18BciLILoVNucZVsofDq9eKhoA/YFU7pRiaGVkoPAOnAAsRcuOmFy+/i+D407QhEjlNMC3jFc5Hl7m50h87SyH6i098GXD6Zq4A43rMDe/aCmtkMeiLG0igpokEuzU8RInEBOXAlglbWLLrXfX0PdkOk0lNtdO1Md7KjWopA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kmg6LhyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=faQHe0FNYCnRVPxE9j0L/HdbjvBcpLXVmhw3wzuuq1X+ztBp5RAbsdH16m7BG52JTpd6WgV5hCAtb1PKTtAkSAoI3ArC0ztd7Wino6YURjSIT4ArZRSzoMRI6F40avb/5rxYwf67KYdm08B9FV3rxqCWs/kuKpHb/5jArSbCx1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6E3rVmY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kmg6LhyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B91F000FF;
-	Thu, 17 Sep 2026 15:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6E3rVmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D861F00898;
+	Thu, 17 Sep 2026 15:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660064;
-	bh=QYvITrfhbFd8o0sQQkwKgjuc4rnVu2Vu90IgcIyaX4c=;
+	s=korg; t=1789660067;
+	bh=34NHQjG9L9c8cSQP6rW0gMH4XAdw+p6WtT0FeSE1l14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kmg6LhyUqQ4p/b3v6WNLBhNpXG8Hj60E7mlSobL4a1GY4yDwR3if1R8JYdKBhGPDh
-	 I69tHszWbjLKrx8sgrE37uwpNtwgiyS4pxfBjRXAzmb9x+wUakbz7w+3F8xBw/L7OG
-	 5cetCifXvUviLXNO9nWmuThNu766NXFwhc1Y41lo=
+	b=e6E3rVmYiiKirb7XdCpG614xEbAsRbVns9PymfU6SE0ckW6tnWXkai0WQi2WMAEhL
+	 K+5cSGO8gCRJGAVAOEtHTbrz6A7k98T7HIj8rQfWQ9azBSGDIvygVuKOn0RIp/Fe1V
+	 0byGabkbtAp7w4nkCXHUjuym4soFBn1heA0Tz01w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 468/733] ftrace: fork: Initialize function graph state before copy_exec_state()
-Date: Thu, 17 Sep 2026 16:12:56 +0100
-Message-ID: <20260917151403.641082138@linuxfoundation.org>
+Subject: [PATCH 7.2 469/733] tracing: Fix memory corruption from the histogram stacktrace modifier
+Date: Thu, 17 Sep 2026 16:12:57 +0100
+Message-ID: <20260917151403.668880437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -45,106 +44,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 08cacffeef8f64f1a222c93467ca84f24a46c953 upstream.
+commit a5e70ba87ca8ebc79b4e63de302d03b0625fe153 upstream.
 
-dup_task_struct() copies the parent's task_struct, including ret_stack.
-ftrace_graph_init_task() clears the copied function graph state, but it
-currently runs after copy_exec_state().
+parse_field() sets HIST_FIELD_FL_STACKTRACE from the ".stacktrace"
+modifier before it looks the field name up, and nothing afterwards
+checks that the name resolved to a field which holds a stacktrace.
+create_hist_field() picks HIST_FIELD_FN_STACK on the strength of the
+field pointer alone, which reads a __data_loc word from the record and
+follows its low 16 bits as an offset into the same record.
+event_hist_trigger() takes the first word there as an entry count and
+copies that many longs into a 31 entry array:
 
-For non-CLONE_VM forks, copy_exec_state() allocates a new task_exec_state.
-If that allocation fails, copy_process() reaches bad_fork_free and
-free_task() calls ftrace_graph_exit_task(). Since the child still carries
-the parent's ret_stack pointer, the unwind frees the parent's active
-function graph return stack. The parent subsequently accesses freed memory
-from function_graph_enter_regs().
+	n_entries = *stack;
+	memcpy(entries, ++stack, n_entries * sizeof(unsigned long));
 
-KASAN reports:
+Neither end of that copy is bounded, and the count is whatever the event
+holds at the offset, so any field will do:
 
-[   22.190920] ==================================================================
-[   22.195899] BUG: KASAN: slab-use-after-free in function_graph_enter_regs+0xa76/0xb90
-[   22.200747] Write of size 8 at addr ff110000054dc0a8 by task repro/1
-[   22.205134]
-[   22.210770] CPU: 0 UID: 0 PID: 1 Comm: repro Not tainted 7.2.0-07732-g9328b3b03bdc-dirty #3 PREEMPT(lazy)
-[   22.212576] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   22.213750] Call Trace:
-[   22.215271]  <TASK>
-[   22.216242]  ? ftrace_stub_direct_tramp+0x10/0x10
-[   22.217774]  dump_stack_lvl+0x4e/0x70
-[   22.220531]  print_report+0x157/0x4b4
-[   22.223202]  ? fixup_red_left+0x9/0x30
-[   22.224407]  ? complete_report_info+0x83/0x110
-[   22.226679]  ? function_graph_enter_regs+0xa76/0xb90
-[   22.228084]  kasan_report+0xce/0x100
-[   22.230109]  ? function_graph_enter_regs+0xa76/0xb90
-[   22.232860]  ? stack_trace_save+0x4/0xd0
-[   22.234156]  function_graph_enter_regs+0xa76/0xb90
-[   22.236090]  ? kasan_save_stack+0x30/0x50
-[   22.237752]  ? __pfx_function_graph_enter_regs+0x10/0x10
-[   22.238694]  ? ring_buffer_lock_reserve+0x345/0xf80
-[   22.239628]  ? stack_trace_save+0x4/0xd0
-[   22.242121]  ? stack_trace_save+0x4/0xd0
-[   22.243588]  ftrace_graph_func+0xda/0x160
-[   22.245362]  ? ftrace_stub_direct_tramp+0x10/0x10
-[   22.246520]  0xffffffffa0000095
-[   22.250528]  ? stack_trace_save+0x9/0xd0
-[   22.251757]  ? ring_buffer_unlock_commit+0x11d/0x5c0
-[   22.253152]  stack_trace_save+0x9/0xd0
-[   22.254264]  kasan_save_stack+0x30/0x50
-[   22.273631]  kasan_save_track+0x14/0x30
-[   22.276763]  kasan_save_free_info+0x3b/0x70
-[   22.278296]  __kasan_slab_free+0x43/0x70
-[   22.280157]  kmem_cache_free+0xbf/0x3b0
-[   22.282963]  ? ftrace_stub_direct_tramp+0x10/0x10
-[   22.284001]  free_task+0xa2/0x160
-[   22.285699]  ? ftrace_stub_direct_tramp+0x10/0x10
-[   22.286752]  copy_process+0x2aae/0x7bc0
+  # cd /sys/kernel/tracing/events/sched/sched_process_fork
+  # echo 'hist:keys=parent_pid.stacktrace' > trigger
+  # (true)
 
-Initialize the child function graph state immediately after
-dup_task_struct(), before the first fallible operation.
+  BUG: kernel NULL pointer dereference, address: 0000000000000008
+  RIP: 0010:rb_insert_color+0x18/0x130
+   timerqueue_linked_add+0x7e/0xd0
+   enqueue_hrtimer+0x39/0xb0
+   __hrtimer_run_queues+0x10f/0x1f0
+   </IRQ>
+  RIP: 0010:memcpy+0xc/0x30
+   event_hist_trigger+0x165/0x690
+
+The timer interrupt landed on the rbtree the copy had already run over.
+No debug options are needed for this; KASAN reports the same write as an
+out-of-bounds read of 13835058055416381440 bytes.
+
+Documentation/trace/histogram.rst already states the rule, "must be a
+long[] type", so enforce it once the name has been resolved. Names which
+resolve to no field at all, "hitcount.stacktrace" and the common_*
+pseudo-fields, are refused for the same reason: they hold no stacktrace
+to read.
 
 Cc: stable@vger.kernel.org
-Fixes: 6b1c66c9cca9 ("exec_state: relocate dumpable information")
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Link: https://patch.msgid.link/20260822195321.962383-2-Jeremy.Jean@oss.cyber.gouv.fr
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Fixes: cc5fc8bfc961 ("tracing/histogram: Add stacktrace type")
+Link: https://patch.msgid.link/20260907155045.692664-2-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_hist.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -2114,6 +2114,11 @@ __latent_entropy struct task_struct *cop
- 	p = dup_task_struct(current, node);
- 	if (!p)
- 		goto fork_out;
-+	/*
-+	 * Must run before the first fallible op, so error paths never
-+	 * free the parent's ret_stack.
-+	 */
-+	ftrace_graph_init_task(p);
- 	retval = copy_exec_state(clone_flags, p);
- 	if (retval)
- 		goto bad_fork_free;
-@@ -2140,8 +2145,6 @@ __latent_entropy struct task_struct *cop
- 	 */
- 	p->clear_child_tid = (clone_flags & CLONE_CHILD_CLEARTID) ? args->child_tid : NULL;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2325,6 +2325,7 @@ parse_field(struct hist_trigger_data *hi
+ 	struct ftrace_event_field *field = NULL;
+ 	char *field_name, *modifier, *str;
+ 	struct trace_array *tr = file->tr;
++	bool stack_modifier = false;
  
--	ftrace_graph_init_task(p);
--
- 	rt_mutex_init_task(p);
- 	raw_spin_lock_init(&p->blocked_lock);
+ 	modifier = str = kstrdup(field_str, GFP_KERNEL);
+ 	if (!modifier)
+@@ -2347,9 +2348,10 @@ parse_field(struct hist_trigger_data *hi
+ 			*flags |= HIST_FIELD_FL_EXECNAME;
+ 		else if (strcmp(modifier, "syscall") == 0)
+ 			*flags |= HIST_FIELD_FL_SYSCALL;
+-		else if (strcmp(modifier, "stacktrace") == 0)
++		else if (strcmp(modifier, "stacktrace") == 0) {
+ 			*flags |= HIST_FIELD_FL_STACKTRACE;
+-		else if (strcmp(modifier, "log2") == 0)
++			stack_modifier = true;
++		} else if (strcmp(modifier, "log2") == 0)
+ 			*flags |= HIST_FIELD_FL_LOG2;
+ 		else if (strcmp(modifier, "usecs") == 0)
+ 			*flags |= HIST_FIELD_FL_TIMESTAMP_USECS;
+@@ -2420,6 +2422,12 @@ parse_field(struct hist_trigger_data *hi
+ 			}
+ 		}
+ 	}
++
++	if (stack_modifier &&
++	    (!field || field->filter_type != FILTER_STACKTRACE)) {
++		hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
++		field = ERR_PTR(-EINVAL);
++	}
+  out:
+ 	kfree(str);
  
 
 
