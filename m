@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FDB50B419;
-	Thu, 17 Sep 2026 17:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C87939E6EB;
+	Thu, 17 Sep 2026 17:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667612; cv=none; b=J9qvetgy4xjdQw/3ZV1jQqFZerhf5hztDmgoG5EUzZKBRXxwzkx32+69JTRGQt83vO7PWwEDrNaayecqITBazLhep7q1jwpr0BhMWGoFb8/yb+aZShuAVURstIu6xsaJnO4rM3y4ogpBnNaQF0XRkN2HTbV0QHsxmrKzz31XPz0=
+	t=1789667615; cv=none; b=PVxiBRpRbEGlpLhdVHE0Z6NwAG9Oz3Ow+/G52kFv9FghXpKmmfBZJAmrJ5JR4ggeWQuGkJUbNJoT4rdXq50rFAqvCbt/GiFZ0JWebw1ZmM5AreUri3yXNabyJ5iK/1iquzoFGuKCoF4Eu7Q58jtelJosRhdDleU1adpnYhPS5GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667612; c=relaxed/simple;
-	bh=Ii44vrC4wg9hKwLt+9BHtqRzzjSvQItyohirssuahsM=;
+	s=arc-20240116; t=1789667615; c=relaxed/simple;
+	bh=aN6+9qlui3ZE5pwD7hUKLcXkqQNO/MvfFDGX6yXBlnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcKmfUHErdR7zeXsYReXuSXzwwD/VJvdoQi4aoJcfxVyBKL3v3BT0r2zOb9qlgw6fDa3FkQSczaqpxRAlkPzwpcLT15ZCm+qHNaUKs6QJDgWJf2u+K2NexJq5243s+RiTg/hixFoskuvD+DH0n3bWlOaQ4kUHf1W9XF3wOLRbHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPOp+H2A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bRLyuJY1DAXq1H2RNH1ypOQx5v+39q95wCrf27unTiKnObGcuKzRR21NlS3PSIz0nH7J6h7SFk0J1o3++XzBSg0o6EVDynfwPPw3coea3PtiEySW/ffeuzEN7GLz6HHPgkEpyzE6gOB79f60ms7o/7Sd0+2D3cVrgHho0ZCJf9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNAq4bg0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPOp+H2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A651F000FF;
-	Thu, 17 Sep 2026 17:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNAq4bg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AA91F000FF;
+	Thu, 17 Sep 2026 17:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667610;
-	bh=pQ5zdcCSw3mSGU/K/rUcSUOHsgnZVc2bFSyrlQpfvr8=;
+	s=korg; t=1789667613;
+	bh=W3hc2sva8L/Ibs7UVOKa6VE/ja+rk1ukKVDXQwj1968=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPOp+H2A07Vw1PH2tTtO1IyT28xl4wpyO6CIC8GtkmxNIxldReWibws3yzPSg05k/
-	 ywg5I2WomoDVQmK3PPm8Px6IKbhGtc5uMr7etXOdJPhYfkcafOoo2uP9K8EvFNJ9nl
-	 D4097h6ye4x3o4fQC6hSgb00+RmuRFJqCxbXJzcM=
+	b=oNAq4bg08hKeGNk/Wb2TmJXcJGMt6Gy1ClIWvoeeHk2TuQvqSmFHWheXpv6IQuw5t
+	 d+nHLa3CBrtNFD69gOz1vzGZmyLSHSryyLchxjk5eGLw8aquZcEump2UubWrt8xw0T
+	 +z5Mc5KVhkMxuwNs6G24G2w4gLwRZ/85qKeQ564I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Trimarchi <michael@amarulasolutions.com>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0150/1102] drm/panel: simple: Add AM-1280800W8TZQW-T00H
-Date: Thu, 17 Sep 2026 16:01:33 +0100
-Message-ID: <20260917151543.294672785@linuxfoundation.org>
+Subject: [PATCH 6.12 0151/1102] mips: cps: Assemble jr.hb with an R2 ISA level
+Date: Thu, 17 Sep 2026 16:01:34 +0100
+Message-ID: <20260917151543.319824587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,69 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 6acb810ebc5d8dea5c250326c14dc44e32dc8e92 ]
+[ Upstream commit e5d64f868e484da06f5c141c18c32c01c269625e ]
 
-Add Ampire, AM-1280800W8TZQW-T00H 10.1" TFT LCD panel timings.
+A MIPS allmodconfig built with LLVM can select CPU_MIPS32_R1 together
+with MIPS_MT_SMP. In that configuration clang invokes the integrated
+assembler with -march=mips32, and the MIPS MT path in cps-vec.S fails
+to assemble two jr.hb instructions:
 
-Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
-Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260515082232.1766586-2-dario.binacchi@amarulasolutions.com
+  arch/mips/kernel/cps-vec.S:376:2: error: instruction requires
+  a CPU feature not currently enabled
+
+  arch/mips/kernel/cps-vec.S:490:4: error: instruction requires
+  a CPU feature not currently enabled
+
+The earlier jr.hb in the same file is already assembled inside a .set
+MIPS_ISA_LEVEL_RAW scope. The two failing sites are reached after
+popping back to the file's base ISA level, so LLVM correctly rejects
+them for an R1 target.
+
+Wrap those jr.hb instructions in the same ISA-level push/pop used by
+the working site. This keeps the MT code unchanged while making the
+required R2 hazard-branch encoding explicit to the assembler.
+
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/mips/kernel/cps-vec.S | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index a0e2da2953768..e54b8f164adb8 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -785,6 +785,31 @@ static const struct panel_desc ampire_am_1280800n3tzqw_t00h = {
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/arch/mips/kernel/cps-vec.S b/arch/mips/kernel/cps-vec.S
+index f876309130ad1..6e80d4fdde7f7 100644
+--- a/arch/mips/kernel/cps-vec.S
++++ b/arch/mips/kernel/cps-vec.S
+@@ -360,8 +360,11 @@ LEAF(mips_cps_boot_vpes)
+ 	.set	pop
  
-+static const struct drm_display_mode ampire_am_1280800w8tzqw_t00h_mode = {
-+	.clock = 72400,
-+	.hdisplay = 1280,
-+	.hsync_start = 1280 + 40,
-+	.hsync_end = 1280 + 40 + 80,
-+	.htotal = 1280 + 40 + 80 + 40,
-+	.vdisplay = 800,
-+	.vsync_start = 800 + 10,
-+	.vsync_end = 800 + 10 + 18,
-+	.vtotal = 800 + 10 + 18 + 10,
-+};
-+
-+static const struct panel_desc ampire_am_1280800w8tzqw_t00h = {
-+	.modes = &ampire_am_1280800w8tzqw_t00h_mode,
-+	.num_modes = 1,
-+	.bpc = 8,
-+	.size = {
-+		.width = 217,
-+		.height = 136,
-+	},
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
-+};
-+
- static const struct drm_display_mode ampire_am_480272h3tmqw_t01h_mode = {
- 	.clock = 9000,
- 	.hdisplay = 480,
-@@ -4623,6 +4648,9 @@ static const struct of_device_id platform_of_match[] = {
- 	{
- 		.compatible = "ampire,am-1280800n3tzqw-t00h",
- 		.data = &ampire_am_1280800n3tzqw_t00h,
-+	}, {
-+		.compatible = "ampire,am-1280800w8tzqw-t00h",
-+		.data = &ampire_am_1280800w8tzqw_t00h,
- 	}, {
- 		.compatible = "ampire,am-480272h3tmqw-t01h",
- 		.data = &ampire_am_480272h3tmqw_t01h,
+ 	PTR_LA	t1, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 	jr.hb	t1
+ 	 nop
++	.set	pop
+ 1:	mfc0	t1, CP0_MVPCONTROL
+ 	ori	t1, t1, MVPCONTROL_VPC
+ 	mtc0	t1, CP0_MVPCONTROL
+@@ -474,8 +477,11 @@ LEAF(mips_cps_boot_vpes)
+ 	li	t0, TCHALT_H
+ 	mtc0	t0, CP0_TCHALT
+ 	PTR_LA	t0, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 1:	jr.hb	t0
+ 	 nop
++	.set	pop
+ 
+ 2:
+ 
 -- 
 2.53.0
 
