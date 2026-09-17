@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08D21D54FA;
-	Thu, 17 Sep 2026 18:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3BA4E0215;
+	Thu, 17 Sep 2026 18:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668385; cv=none; b=YqCWg2AzIA6G/DGuEhNlaJwiRPG0lRdf84NceMgHTcAdGTgUf15pWoXs4pGb5294ZezixdubfwXph2QjbXctwSfAJLUynzhLy9sPa9RH7Qzf5NerGf3sNQ463nNm+LnEm//2YgDwYhnjlWGdyI9eyyx9xrSy8agCkeJxxi5w5wI=
+	t=1789668387; cv=none; b=aq5pEokSuHtPfBQy0ULZsGwdKulxYwocTZyv6FwcQl1/9ynybetTDjUlULhocjiE/s70HBqpk2yo6dOBZ1+TfUyfAhQczIYjhc0/OnH5BTbe/Xk1I/nF6yxSSoRLKFeOmP6z1zKkuJIiHT03j7cR+Q6LOTfamQ4T+EJQUribSr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668385; c=relaxed/simple;
-	bh=dNVCUQpRBs9j8ow+ETdY4aGoIHOqghApNKILit9oVY8=;
+	s=arc-20240116; t=1789668387; c=relaxed/simple;
+	bh=tLV10EpKEZHFZ6IP1zurz6CJEqcJw7JBBWWMbib8VSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nz/aPu9NypLpQu55+jxdNbo03+WfM+uFjt5Ue72EYabx8TT8cuuCHK2zTVy/0SRmC3ZsuqiNYtiDZTu9BmO91NydaK/FYHniWXCVFrWRkBNc1/Oo1OfvywIsml4MB1vnItSN8qiEiUp3xukXOw5Sw6sEJExCpcTrw4MMP2an2Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8h6C9BM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OOsKwJAzs/TilYgo6kNS8wgsB96hOfUZQxiNoLY2XE0DD4gq+6FVlkJ3jxtS71df8LGXrpSHDCbD7/h8nsSO2d9BG2dptX5sbiEAXDlQw72gUlSd0i1D2hE210SHpHq8sO9+P9qzVHIUl5lbtLRRh3R514PFzDA/ZSrxAipKUcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA6NxPTp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8h6C9BM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5C41F000FF;
-	Thu, 17 Sep 2026 18:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA6NxPTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA911F000FF;
+	Thu, 17 Sep 2026 18:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668383;
-	bh=qOGTtCX5k8qUj8PqDwr0KmKJ+QfQVHlVBxU5bOV0rVs=;
+	s=korg; t=1789668386;
+	bh=3zFpHlgLOyN9QuPruSshYuEK/BcRENc+0PKguU8RE8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8h6C9BMQqLQRsm+fHHxZwlcTgbmdKtG+d1W1SyPMbx7lPNjn8ZBN4SaU+aNz7PdU
-	 P4/FcruI0SmdTQv93oVFiyEDGvbkcbXxdQKZA+g1DizA+dzKfe4deeYKhlM50xqoot
-	 M/Ztz3rVD4Kr6aSHFchz1q4sfCQiegvY7XHlisqA=
+	b=oA6NxPTpn67Fwb4RIr40QXR3Ql9hIm04F6lilSm7Zsbxz0Vlnq/VL/RjiEuWuW7qt
+	 Wg+S06COL0B4NDOtxmrf5oWOa5ifip5kMt4zJbwpujxjKh1IbE/tGiBLDreyAh26QA
+	 jqU+fQX5kz1NGozqJE9uKTGeCmjcL26IG4kiqxuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Chen Bowen <hicbowen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0405/1102] smb/client: zero-initialize stack-allocated cifs_open_info_data
-Date: Thu, 17 Sep 2026 16:05:48 +0100
-Message-ID: <20260917151549.831024776@linuxfoundation.org>
+Subject: [PATCH 6.12 0406/1102] ALSA: hda/realtek: Fix speakers on MECHREVO WUJIE Series
+Date: Thu, 17 Sep 2026 16:05:49 +0100
+Message-ID: <20260917151549.855517626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,61 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Chen Bowen <hicbowen@gmail.com>
 
-[ Upstream commit 8fce4cf4369c766a3293a05419500cbfde72e60d ]
+[ Upstream commit 9064637fb2a80b43105900a47d414997630e5b6b ]
 
-Stack-allocated cifs_open_info_data may contain random data.
-This can make some fields have wrong value if they are not set later.
+The internal speakers on the MECHREVO WUJIE Series are silent,
+while the headphone output works correctly.
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The BIOS reports NID 0x1b on the Realtek ALC233 codec as
+unconnected with pin configuration 0x411111f0. However, the pin
+is connected to an internal speaker.
+
+Overriding NID 0x1b with 0x90170150 makes the HDA generic parser
+detect both 0x14 and 0x1b as speaker outputs and restores internal
+speaker playback.
+
+Add a pin configuration fixup for the affected PCI SSID c011:1d05.
+
+Tested on a MECHREVO WUJIE Series laptop with board
+WUJIE Series-Lark4-LNL and firmware EM_LNL326_V1.0.23.
+
+Signed-off-by: Chen Bowen <hicbowen@gmail.com>
+Link: https://patch.msgid.link/20260710133409.16641-1-hicbowen@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/link.c    | 2 +-
- fs/smb/client/smb1ops.c | 2 +-
- fs/smb/client/smb2ops.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
-index aa45ef6ae99a6..82156543f1f91 100644
---- a/fs/smb/client/link.c
-+++ b/fs/smb/client/link.c
-@@ -257,7 +257,7 @@ cifs_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 	struct cifs_open_parms oparms;
- 	struct cifs_io_parms io_parms = {0};
- 	int buf_type = CIFS_NO_BUFFER;
--	struct cifs_open_info_data query_data;
-+	struct cifs_open_info_data query_data = {};
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index a03f94a1bcd18..632d52a9aec98 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8046,6 +8046,7 @@ enum {
+ 	ALC275_FIXUP_DELL_XPS,
+ 	ALC293_FIXUP_LENOVO_SPK_NOISE,
+ 	ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY,
++	ALC233_FIXUP_WUJIE_SPEAKERS,
+ 	ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED,
+ 	ALC255_FIXUP_DELL_SPK_NOISE,
+ 	ALC225_FIXUP_DISABLE_MIC_VREF,
+@@ -8282,6 +8283,13 @@ static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
+ }
  
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 1bad3fb4e0a8c..eafdf6c38796a 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -971,7 +971,7 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 	struct cifs_open_parms oparms;
- 	struct cifsFileInfo *open_file;
- 	FILE_BASIC_INFO new_buf;
--	struct cifs_open_info_data query_data;
-+	struct cifs_open_info_data query_data = {};
- 	__le64 write_time = buf->LastWriteTime;
- 	struct cifsInodeInfo *cinode = CIFS_I(inode);
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 0c5ea91077b90..7d91bde2fcaa3 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5167,7 +5167,7 @@ int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
- {
- 	struct TCP_Server_Info *server = tcon->ses->server;
- 	struct cifs_open_parms oparms;
--	struct cifs_open_info_data idata;
-+	struct cifs_open_info_data idata = {};
- 	struct cifs_io_parms io_parms = {};
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct cifs_fid fid;
+ static const struct hda_fixup alc269_fixups[] = {
++	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1b, 0x90170150 }, /* internal speaker */
++			{ }
++		},
++	},
+ 	[ALC269_FIXUP_GPIO2] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_gpio2,
+@@ -11676,6 +11684,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+ 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
++	SND_PCI_QUIRK(0xc011, 0x1d05, "MECHREVO WUJIE Series", ALC233_FIXUP_WUJIE_SPEAKERS),
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
 -- 
 2.53.0
 
