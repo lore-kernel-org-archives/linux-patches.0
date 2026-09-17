@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D95547060;
-	Thu, 17 Sep 2026 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E83547067;
+	Thu, 17 Sep 2026 18:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668209; cv=none; b=K8xNgytCBf9u3c0YM5scFtkxZ0R7iRcM/Zfy63CQiD6nJ6IGCRVYtz3+yMlGGmo+DpCLR6gUTVNFbI3iijmUdVinJXv3KHXlkLh67qzm/qfAMBA7O4Yf9Y+2kRZqifEymc9wbGqStNNcGm2lH4zs9sTLRArMMA2hxD2esdC9vMY=
+	t=1789668212; cv=none; b=Re/Jf1wuU2AJ98FvyyL2Xxp/3wuV0mxWVvKxikdoSIBG450CaLmvP1bAivHuLBTgMGpxFx4BfCp7nzOTDs8PI2cqVezkAkf8oydSVDsYiNeusaR94RzDNAUBBlNRg9RJU1S9DaX6FSOhpTNAmP04fv+hA3WXvX6eon+dxpL3EGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668209; c=relaxed/simple;
-	bh=Ka1q5BUiGfwejnu429kAE5tUVOGtsDVKky5HuoAvbHQ=;
+	s=arc-20240116; t=1789668212; c=relaxed/simple;
+	bh=LH3brjBYyQQ6/5SMuQmW762uOzLMAWcUMrHVmvgQFUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8147yUDg6DR3qmxxOxnrM4GM3FKXILbiQdkMngYdx6ydkx9PZAzwuGuyl1nnWbNyqDGN+B3Fb3NXxIINWiKaHbJEGpoMQWeBVKTKPW45wN9s9vilnZx3xkrS8/4fcHLGA1LQK7+wlclhgE1KJiAmD3tLucjVMSov/Vwbv3Woy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFy4Ilt3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5aSQ2v8zmY7zptIt9JoDT75AWMuyWcVRrj4YH6axm+15mdndQ6/TlDm/lD50mjZ7ErHAPMvK0PL+WoX/09NKCZMyHl8U6WR48dvVealKnXaha3Ygnl8YF1I6XSQnB7PdWmX6+RDJJ1/jcAhSFbXrGMBGzP32XYQ8HBB3Ya8nTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIuQv+iL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFy4Ilt3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5677E1F000FF;
-	Thu, 17 Sep 2026 18:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIuQv+iL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6371F00893;
+	Thu, 17 Sep 2026 18:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668207;
-	bh=GVXk2DPYjIqsG3JhUWxhJ0BFSIYTqRisgozjzAwckkc=;
+	s=korg; t=1789668210;
+	bh=YL6x3fFUQS9+0t8Cd8+ZZ8miqQcKgjqcofjSw3KNteM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fFy4Ilt38mbiaxF/m1ooth9s4FPz1JYUamqxx/fRQtOStwLYy1o6/Qayy0KQShBOW
-	 e5Al8JYZKmC4dab4oJ2bFj/sFCqrwmytctJVkT+crgkD72VHKxfYe/WXvytv2gK8GE
-	 k+Pzu4eebOwuPZQg4iqS8mSzFk8JQHbyYRSVlQOw=
+	b=rIuQv+iL4432gEYiWNfihv9t+DMLGb2m79o39Q4JbBLJrVBfyrXesa1tLHfX0tCsb
+	 a0Yldl6gL8srCYBgLF+0NqtKEr65B5YVKrw364AJKzp5KkHM+lpKwPGqBKX/mh0mQb
+	 ftL9w0OKag94vqeVD6w+hDD6qlDf5aCyW9Iw4rZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Markuze <amarkuze@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0349/1102] ceph: harden send_mds_reconnect and handle active-MDS peer reset
-Date: Thu, 17 Sep 2026 16:04:52 +0100
-Message-ID: <20260917151548.404206141@linuxfoundation.org>
+Subject: [PATCH 6.12 0350/1102] ksmbd: fix lease break and ack state handling
+Date: Thu, 17 Sep 2026 16:04:53 +0100
+Message-ID: <20260917151548.430991671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,339 +51,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 39fe3031589386ae7ce3fd7132beb6bb229e22ce ]
+[ Upstream commit 5015191096db311759fef98769270336cd8b1324 ]
 
-Change send_mds_reconnect() to return an error code so callers can detect
-and report reconnect failures instead of silently ignoring them. Add early
-bailout checks for sessions that are already closed, rejected, or
-unregistered, which avoids sending reconnect messages for sessions that
-can no longer be recovered.
+Do not skip valid lease states containing WRITE_CACHING when breaking
+level-II/read leases for writes and truncates.
 
-The early -ESTALE and -ENOENT bailouts use a separate fail_return label
-that skips the pr_err_client diagnostic, since these codes indicate
-expected concurrent-teardown races rather than genuine reconnect build
-failures.
+Handle lease break acknowledgments according to the SMB2 rule that the
+acknowledged state must be a subset of the server's break target. Apply
+the acknowledged state directly and keep the break pending on failed ACKs.
 
-Move the "reconnect start" log after the early-bailout checks so it
-only appears for sessions that actually proceed with reconnect.
-
-Save the prior session state before transitioning to RECONNECTING,
-and restore it in the failure path.  Without this, a transient
-build or encoding failure (-ENOMEM, -ENOSPC) strands the session
-in RECONNECTING indefinitely because check_new_map() only retries
-sessions in RESTARTING state.
-
-Rewrite mds_peer_reset() to handle the case where the MDS is past its
-RECONNECT phase (i.e. active). An active MDS rejects CLIENT_RECONNECT
-messages because it only accepts them during its own RECONNECT window
-after restart. Previously, the client would send a doomed reconnect
-that the MDS would reject or ignore. Now, the client tears the session
-down locally and lets new requests re-open a fresh session, which is
-the correct recovery for this scenario. The RECONNECTING state is
-handled on the same teardown path, since the MDS will reject reconnect
-attempts from an active client regardless of the session's local state.
-
-Add explicit cases for CLOSED and REJECTED session states in
-mds_peer_reset() since these are terminal states where a connection
-drop is expected behavior.
-
-The session teardown path in mds_peer_reset() follows the established
-drop-and-reacquire locking pattern from check_new_map(): take
-mdsc->mutex for session unregistration, release it, then take s->s_mutex
-separately for cleanup. This avoids introducing a new simultaneous lock
-nesting pattern.
-
-Log reconnect failures from check_new_map() and mds_peer_reset() at
-pr_warn level rather than pr_err, since return codes like -ESTALE
-(closed/rejected session) and -ENOENT (unregistered session) are
-expected during concurrent teardown. Log dropped messages for
-unregistered sessions via doutc() (dynamic debug) rather than
-pr_info, as post-reset message arrival is routine and does not
-warrant unconditional logging.
-
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 178 +++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 163 insertions(+), 15 deletions(-)
+ fs/smb/server/oplock.c  |  24 +++------
+ fs/smb/server/smb2pdu.c | 106 ++++++++++------------------------------
+ 2 files changed, 34 insertions(+), 96 deletions(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index b1f2ef990ff45..1e453828f3bcb 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -4414,9 +4414,14 @@ static void handle_session(struct ceph_mds_session *session,
- 		break;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 935e337a95b8e..e2d7763ebcff4 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1485,14 +1485,8 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 			continue;
+ 		}
  
- 	case CEPH_SESSION_REJECT:
--		WARN_ON(session->s_state != CEPH_MDS_SESSION_OPENING);
--		pr_info_client(cl, "mds%d rejected session\n",
--			       session->s_mds);
-+		WARN_ON(session->s_state != CEPH_MDS_SESSION_OPENING &&
-+			session->s_state != CEPH_MDS_SESSION_RECONNECTING);
-+		if (session->s_state == CEPH_MDS_SESSION_RECONNECTING)
-+			pr_info_client(cl, "mds%d reconnect rejected\n",
-+				       session->s_mds);
-+		else
-+			pr_info_client(cl, "mds%d rejected session\n",
-+				       session->s_mds);
- 		session->s_state = CEPH_MDS_SESSION_REJECTED;
- 		cleanup_session_requests(mdsc, session);
- 		remove_session_caps(session);
-@@ -4676,6 +4681,14 @@ static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
- 	cap->mseq = 0;       /* and migrate_seq */
- 	cap->cap_gen = atomic_read(&cap->session->s_cap_gen);
- 
-+	/*
-+	 * Note: CEPH_I_ERROR_FILELOCK is not set during reconnect.
-+	 * Instead, locks are submitted for best-effort MDS reclaim
-+	 * via the flock_len field below.  If reclaim fails (e.g.,
-+	 * another client grabbed a conflicting lock), future lock
-+	 * operations will fail and set the error flag at that point.
-+	 */
-+
- 	/* These are lost when the session goes away */
- 	if (S_ISDIR(inode->i_mode)) {
- 		if (cap->issued & CEPH_CAP_DIR_CREATE) {
-@@ -4889,20 +4902,19 @@ static int encode_snap_realms(struct ceph_mds_client *mdsc,
-  *
-  * This is a relatively heavyweight operation, but it's rare.
+-		if (brk_op->is_lease && (brk_op->o_lease->state &
+-		    (~(SMB2_LEASE_READ_CACHING_LE |
+-				SMB2_LEASE_HANDLE_CACHING_LE)))) {
+-			ksmbd_debug(OPLOCK, "unexpected lease state(0x%x)\n",
+-				    brk_op->o_lease->state);
+-			goto next;
+-		} else if (brk_op->level !=
+-				SMB2_OPLOCK_LEVEL_II) {
++		if (!brk_op->is_lease &&
++		    brk_op->level != SMB2_OPLOCK_LEVEL_II) {
+ 			ksmbd_debug(OPLOCK, "unexpected oplock(0x%x)\n",
+ 				    brk_op->level);
+ 			goto next;
+@@ -1553,15 +1547,13 @@ void smb_break_all_oplock(struct ksmbd_work *work, struct ksmbd_file *fp)
   */
--static void send_mds_reconnect(struct ceph_mds_client *mdsc,
--			       struct ceph_mds_session *session)
-+static int send_mds_reconnect(struct ceph_mds_client *mdsc,
-+			      struct ceph_mds_session *session)
+ __u8 smb2_map_lease_to_oplock(__le32 lease_state)
  {
- 	struct ceph_client *cl = mdsc->fsc->client;
- 	struct ceph_msg *reply;
- 	int mds = session->s_mds;
- 	int err = -ENOMEM;
-+	int old_state;
- 	struct ceph_reconnect_state recon_state = {
- 		.session = session,
- 	};
- 	LIST_HEAD(dispose);
+-	if (lease_state == (SMB2_LEASE_HANDLE_CACHING_LE |
+-			    SMB2_LEASE_READ_CACHING_LE |
+-			    SMB2_LEASE_WRITE_CACHING_LE)) {
++	if ((lease_state & SMB2_LEASE_WRITE_CACHING_LE) &&
++	    (lease_state & SMB2_LEASE_HANDLE_CACHING_LE)) {
+ 		return SMB2_OPLOCK_LEVEL_BATCH;
+-	} else if (lease_state != SMB2_LEASE_WRITE_CACHING_LE &&
+-		 lease_state & SMB2_LEASE_WRITE_CACHING_LE) {
+-		if (!(lease_state & SMB2_LEASE_HANDLE_CACHING_LE))
+-			return SMB2_OPLOCK_LEVEL_EXCLUSIVE;
+-	} else if (lease_state & SMB2_LEASE_READ_CACHING_LE) {
++	} else if (lease_state & SMB2_LEASE_WRITE_CACHING_LE) {
++		return SMB2_OPLOCK_LEVEL_EXCLUSIVE;
++	} else if (lease_state & (SMB2_LEASE_READ_CACHING_LE |
++				  SMB2_LEASE_HANDLE_CACHING_LE)) {
+ 		return SMB2_OPLOCK_LEVEL_II;
+ 	}
+ 	return 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index ebb35e95aef54..ba8f9a4b687ce 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8769,16 +8769,17 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
+ 	ksmbd_fd_put(work, fp);
+ }
  
--	pr_info_client(cl, "mds%d reconnect start\n", mds);
+-static int check_lease_state(struct lease *lease, __le32 req_state)
++static bool smb2_lease_state_valid(__le32 state)
+ {
+-	if ((lease->new_state ==
+-	     (SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE)) &&
+-	    !(req_state & SMB2_LEASE_WRITE_CACHING_LE)) {
+-		lease->new_state = req_state;
+-		return 0;
+-	}
++	return !(state & ~(SMB2_LEASE_READ_CACHING_LE |
++			   SMB2_LEASE_HANDLE_CACHING_LE |
++			   SMB2_LEASE_WRITE_CACHING_LE));
++}
+ 
+-	if (lease->new_state == req_state)
++static int check_lease_state(struct lease *lease, __le32 req_state)
++{
++	if (smb2_lease_state_valid(req_state) &&
++	    !(req_state & ~lease->new_state))
+ 		return 0;
+ 
+ 	return 1;
+@@ -8796,9 +8797,7 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
+ 	struct smb2_lease_ack *req;
+ 	struct smb2_lease_ack *rsp;
+ 	struct oplock_info *opinfo;
+-	__le32 err = 0;
+ 	int ret = 0;
+-	unsigned int lease_change_type;
+ 	__le32 lease_state;
+ 	struct lease *lease;
+ 
+@@ -8822,80 +8821,23 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
+ 		goto err_out;
+ 	}
+ 
+-	if (check_lease_state(lease, req->LeaseState)) {
+-		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
+-		ksmbd_debug(OPLOCK,
+-			    "req lease state: 0x%x, expected state: 0x%x\n",
+-			    req->LeaseState, lease->new_state);
+-		goto err_out;
+-	}
 -
- 	recon_state.pagelist = ceph_pagelist_alloc(GFP_NOFS);
- 	if (!recon_state.pagelist)
- 		goto fail_nopagelist;
-@@ -4911,9 +4923,37 @@ static void send_mds_reconnect(struct ceph_mds_client *mdsc,
- 	if (!reply)
- 		goto fail_nomsg;
+ 	if (!atomic_read(&opinfo->breaking_cnt)) {
+ 		rsp->hdr.Status = STATUS_UNSUCCESSFUL;
+ 		goto err_out;
+ 	}
  
-+	mutex_lock(&session->s_mutex);
+-	/* check for bad lease state */
+-	if (req->LeaseState &
+-	    (~(SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE))) {
+-		err = STATUS_INVALID_OPLOCK_PROTOCOL;
+-		if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
+-			lease_change_type = OPLOCK_WRITE_TO_NONE;
+-		else
+-			lease_change_type = OPLOCK_READ_TO_NONE;
+-		ksmbd_debug(OPLOCK, "handle bad lease state 0x%x -> 0x%x\n",
+-			    le32_to_cpu(lease->state),
+-			    le32_to_cpu(req->LeaseState));
+-	} else if (lease->state == SMB2_LEASE_READ_CACHING_LE &&
+-		   req->LeaseState != SMB2_LEASE_NONE_LE) {
+-		err = STATUS_INVALID_OPLOCK_PROTOCOL;
+-		lease_change_type = OPLOCK_READ_TO_NONE;
+-		ksmbd_debug(OPLOCK, "handle bad lease state 0x%x -> 0x%x\n",
+-			    le32_to_cpu(lease->state),
+-			    le32_to_cpu(req->LeaseState));
+-	} else {
+-		/* valid lease state changes */
+-		err = STATUS_INVALID_DEVICE_STATE;
+-		if (req->LeaseState == SMB2_LEASE_NONE_LE) {
+-			if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
+-				lease_change_type = OPLOCK_WRITE_TO_NONE;
+-			else
+-				lease_change_type = OPLOCK_READ_TO_NONE;
+-		} else if (req->LeaseState & SMB2_LEASE_READ_CACHING_LE) {
+-			if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
+-				lease_change_type = OPLOCK_WRITE_TO_READ;
+-			else
+-				lease_change_type = OPLOCK_READ_HANDLE_TO_READ;
+-		} else {
+-			lease_change_type = 0;
+-		}
+-	}
+-
+-	switch (lease_change_type) {
+-	case OPLOCK_WRITE_TO_READ:
+-		ret = opinfo_write_to_read(opinfo);
+-		break;
+-	case OPLOCK_READ_HANDLE_TO_READ:
+-		ret = opinfo_read_handle_to_read(opinfo);
+-		break;
+-	case OPLOCK_WRITE_TO_NONE:
+-		ret = opinfo_write_to_none(opinfo);
+-		break;
+-	case OPLOCK_READ_TO_NONE:
+-		ret = opinfo_read_to_none(opinfo);
+-		break;
+-	default:
+-		ksmbd_debug(OPLOCK, "unknown lease change 0x%x -> 0x%x\n",
+-			    le32_to_cpu(lease->state),
+-			    le32_to_cpu(req->LeaseState));
+-	}
+-
+-	if (ret < 0) {
+-		rsp->hdr.Status = err;
++	if (check_lease_state(lease, req->LeaseState)) {
++		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
++		ksmbd_debug(OPLOCK,
++			    "req lease state: 0x%x, expected state: 0x%x\n",
++			    req->LeaseState, lease->new_state);
+ 		goto err_out;
+ 	}
+ 
+-	lease_state = lease->state;
++	lease_state = req->LeaseState;
++	lease->state = lease_state;
++	lease->new_state = SMB2_LEASE_NONE_LE;
++	opinfo->level = smb2_map_lease_to_oplock(lease_state);
+ 
+ 	rsp->StructureSize = cpu_to_le16(36);
+ 	rsp->Reserved = 0;
+@@ -8904,16 +8846,20 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
+ 	rsp->LeaseState = lease_state;
+ 	rsp->LeaseDuration = 0;
+ 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
+-	if (ret) {
+-err_out:
+-		smb2_set_err_rsp(work);
+-	}
++	if (ret)
++		goto err_out;
+ 
+ 	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+ 	atomic_dec(&opinfo->breaking_cnt);
+ 	wake_up_interruptible_all(&opinfo->oplock_brk);
+ 	opinfo_put(opinfo);
++	return;
 +
-+	/* Serialized by s_mutex against concurrent ceph_get_deleg_ino(). */
- 	xa_destroy(&session->s_delegated_inos);
-+	if (session->s_state == CEPH_MDS_SESSION_CLOSED ||
-+	    session->s_state == CEPH_MDS_SESSION_REJECTED) {
-+		pr_info_client(cl, "mds%d skipping reconnect, session %s\n",
-+			       mds,
-+			       ceph_session_state_name(session->s_state));
-+		mutex_unlock(&session->s_mutex);
-+		ceph_msg_put(reply);
-+		err = -ESTALE;
-+		goto fail_return;
-+	}
- 
--	mutex_lock(&session->s_mutex);
-+	/* s_mutex -> mdsc->mutex matches cleanup_session_requests() order. */
-+	mutex_lock(&mdsc->mutex);
-+	if (mds >= mdsc->max_sessions || mdsc->sessions[mds] != session) {
-+		mutex_unlock(&mdsc->mutex);
-+		pr_info_client(cl,
-+			       "mds%d skipping reconnect, session unregistered\n",
-+			       mds);
-+		mutex_unlock(&session->s_mutex);
-+		ceph_msg_put(reply);
-+		err = -ENOENT;
-+		goto fail_return;
-+	}
-+	mutex_unlock(&mdsc->mutex);
-+
-+	pr_info_client(cl, "mds%d reconnect start\n", mds);
-+	old_state = session->s_state;
- 	session->s_state = CEPH_MDS_SESSION_RECONNECTING;
- 	session->s_seq = 0;
- 
-@@ -5043,18 +5083,34 @@ static void send_mds_reconnect(struct ceph_mds_client *mdsc,
- 
- 	up_read(&mdsc->snap_rwsem);
- 	ceph_pagelist_release(recon_state.pagelist);
--	return;
-+	return 0;
- 
- fail:
- 	ceph_msg_put(reply);
- 	up_read(&mdsc->snap_rwsem);
-+	/*
-+	 * Restore prior session state so map-driven reconnect logic
-+	 * (check_new_map) can retry.  Without this, a transient build
-+	 * failure strands the session in RECONNECTING indefinitely.
-+	 */
-+	session->s_state = old_state;
- 	mutex_unlock(&session->s_mutex);
- fail_nomsg:
- 	ceph_pagelist_release(recon_state.pagelist);
- fail_nopagelist:
- 	pr_err_client(cl, "error %d preparing reconnect for mds%d\n",
- 		      err, mds);
--	return;
-+	return err;
-+
-+fail_return:
-+	/*
-+	 * Early-exit path for expected concurrent-teardown races
-+	 * (-ESTALE for closed/rejected sessions, -ENOENT for
-+	 * unregistered sessions).  Skip the pr_err_client diagnostic
-+	 * since these are not genuine reconnect build failures.
-+	 */
-+	ceph_pagelist_release(recon_state.pagelist);
-+	return err;
++err_out:
++	smb2_set_err_rsp(work);
++	opinfo_put(opinfo);
++	return;
  }
  
- 
-@@ -5135,9 +5191,15 @@ static void check_new_map(struct ceph_mds_client *mdsc,
- 		 */
- 		if (s->s_state == CEPH_MDS_SESSION_RESTARTING &&
- 		    newstate >= CEPH_MDS_STATE_RECONNECT) {
-+			int rc;
-+
- 			mutex_unlock(&mdsc->mutex);
- 			clear_bit(i, targets);
--			send_mds_reconnect(mdsc, s);
-+			rc = send_mds_reconnect(mdsc, s);
-+			if (rc)
-+				pr_warn_client(cl,
-+					       "mds%d reconnect failed: %d\n",
-+					       i, rc);
- 			mutex_lock(&mdsc->mutex);
- 		}
- 
-@@ -5201,7 +5263,11 @@ static void check_new_map(struct ceph_mds_client *mdsc,
- 		}
- 		doutc(cl, "send reconnect to export target mds.%d\n", i);
- 		mutex_unlock(&mdsc->mutex);
--		send_mds_reconnect(mdsc, s);
-+		err = send_mds_reconnect(mdsc, s);
-+		if (err)
-+			pr_warn_client(cl,
-+				       "mds%d export target reconnect failed: %d\n",
-+				       i, err);
- 		ceph_put_mds_session(s);
- 		mutex_lock(&mdsc->mutex);
- 	}
-@@ -6283,12 +6349,92 @@ static void mds_peer_reset(struct ceph_connection *con)
- {
- 	struct ceph_mds_session *s = con->private;
- 	struct ceph_mds_client *mdsc = s->s_mdsc;
-+	int session_state;
- 
- 	pr_warn_client(mdsc->fsc->client, "mds%d closed our session\n",
- 		       s->s_mds);
--	if (READ_ONCE(mdsc->fsc->mount_state) != CEPH_MOUNT_FENCE_IO &&
--	    ceph_mdsmap_get_state(mdsc->mdsmap, s->s_mds) >= CEPH_MDS_STATE_RECONNECT)
--		send_mds_reconnect(mdsc, s);
-+
-+	if (READ_ONCE(mdsc->fsc->mount_state) == CEPH_MOUNT_FENCE_IO ||
-+	    ceph_mdsmap_get_state(mdsc->mdsmap, s->s_mds) < CEPH_MDS_STATE_RECONNECT)
-+		return;
-+
-+	/*
-+	 * Only reconnect if MDS is in its RECONNECT phase.  An MDS past
-+	 * RECONNECT (REJOIN, CLIENTREPLAY, ACTIVE) will reject reconnect
-+	 * attempts, so those states fall through to session teardown below.
-+	 */
-+	if (ceph_mdsmap_get_state(mdsc->mdsmap, s->s_mds) == CEPH_MDS_STATE_RECONNECT) {
-+		int rc = send_mds_reconnect(mdsc, s);
-+
-+		if (rc)
-+			pr_warn_client(mdsc->fsc->client,
-+				       "mds%d reconnect failed: %d\n",
-+				       s->s_mds, rc);
-+		return;
-+	}
-+
-+	/*
-+	 * MDS is active (past RECONNECT).  It will not accept a
-+	 * CLIENT_RECONNECT from us, so tear the session down locally
-+	 * and let new requests re-open a fresh session.
-+	 *
-+	 * Snapshot session state with READ_ONCE, then revalidate under
-+	 * mdsc->mutex before acting.  The subsequent mdsc->mutex
-+	 * section rechecks s_state to catch concurrent transitions, so
-+	 * the lockless snapshot here is safe.  s->s_mutex is taken
-+	 * separately for cleanup after unregistration, which avoids
-+	 * introducing a new s->s_mutex + mdsc->mutex nesting.
-+	 */
-+	session_state = READ_ONCE(s->s_state);
-+
-+	switch (session_state) {
-+	case CEPH_MDS_SESSION_RESTARTING:
-+	case CEPH_MDS_SESSION_RECONNECTING:
-+	case CEPH_MDS_SESSION_CLOSING:
-+	case CEPH_MDS_SESSION_OPEN:
-+	case CEPH_MDS_SESSION_HUNG:
-+	case CEPH_MDS_SESSION_OPENING:
-+		mutex_lock(&mdsc->mutex);
-+		if (s->s_mds >= mdsc->max_sessions ||
-+		    mdsc->sessions[s->s_mds] != s ||
-+		    s->s_state != session_state) {
-+			pr_info_client(mdsc->fsc->client,
-+				       "mds%d state changed to %s during peer reset\n",
-+				       s->s_mds,
-+				       ceph_session_state_name(s->s_state));
-+			mutex_unlock(&mdsc->mutex);
-+			return;
-+		}
-+
-+		ceph_get_mds_session(s);
-+		s->s_state = CEPH_MDS_SESSION_CLOSED;
-+		__unregister_session(mdsc, s);
-+		__wake_requests(mdsc, &s->s_waiting);
-+		mutex_unlock(&mdsc->mutex);
-+
-+		mutex_lock(&s->s_mutex);
-+		cleanup_session_requests(mdsc, s);
-+		remove_session_caps(s);
-+		mutex_unlock(&s->s_mutex);
-+
-+		wake_up_all(&mdsc->session_close_wq);
-+
-+		mutex_lock(&mdsc->mutex);
-+		kick_requests(mdsc, s->s_mds);
-+		mutex_unlock(&mdsc->mutex);
-+
-+		ceph_put_mds_session(s);
-+		break;
-+	case CEPH_MDS_SESSION_CLOSED:
-+	case CEPH_MDS_SESSION_REJECTED:
-+		break;
-+	default:
-+		pr_warn_client(mdsc->fsc->client,
-+			       "mds%d peer reset in unexpected state %s\n",
-+			       s->s_mds,
-+			       ceph_session_state_name(session_state));
-+		break;
-+	}
- }
- 
- static void mds_dispatch(struct ceph_connection *con, struct ceph_msg *msg)
-@@ -6300,6 +6446,8 @@ static void mds_dispatch(struct ceph_connection *con, struct ceph_msg *msg)
- 
- 	mutex_lock(&mdsc->mutex);
- 	if (__verify_registered_session(mdsc, s) < 0) {
-+		doutc(cl, "dropping tid %llu from unregistered session %d\n",
-+		      le64_to_cpu(msg->hdr.tid), s->s_mds);
- 		mutex_unlock(&mdsc->mutex);
- 		goto out;
- 	}
+ /**
 -- 
 2.53.0
 
