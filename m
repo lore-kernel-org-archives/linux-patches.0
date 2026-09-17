@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7E43D890F;
-	Thu, 17 Sep 2026 18:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD8C3D7A18;
+	Thu, 17 Sep 2026 18:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668754; cv=none; b=C+p87rX+eiYb3Msx7HoXZFRDlMR+DMUj4ZtwY91EomlBy8U7ELdKfFexuPQIC1ooCCci56azAG2HXTle8gmjNeyWN5JCyLdZNl4p/6G43OeQOKrXFgIjVmxHOJ3kWLDu6xJB3Ma7KX6W9B6vufVjcZYM2bemttKN1DMqOUbtuVE=
+	t=1789668757; cv=none; b=ibV12IqsvPoI4k1AftEwXNRwVwgv6nePIegsXDSgSlTaZkGgnN6JifMDqZUubxYwMHOZJVIqnoL5OxRIkzRgpzZ9nKe+YqzmLnmy0LUFNRMPGFzwGi75Bjphx2yvZE4/vgTuy4AVMTVdLxG4wYWYZqopVChe8rkvwaTIB5LtTeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668754; c=relaxed/simple;
-	bh=gfbzEGIqFSZfy0d89y9YiQIsiwpS6P7QyLAx1MYjhxE=;
+	s=arc-20240116; t=1789668757; c=relaxed/simple;
+	bh=eNTNlNLVFJXMl9f3hr1WwMWLjUf7o1W0QEXCxQT/Ch0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifYZYRY3RyPCP+PBg8BJGs3PW/JPa1PoESksmWSoZX1wBQRXkF0JdXaTQIS2DD5CfzOssNfVOreSe2Lirwvxunk5CLcw6d+AA/TxXV2UndrYPec1ipLmLCyBC3T6aFxoZCav8Xf8MrEjs1ymbEkhfiZgqAUu8dKGgdNAcVHo0C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V83uoPmK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WDV6oP/01pHkpcFl6augNENAbz9g+OtJFVNUYrYb4YbfN0T6nkGDKHJyiTDBaYNfgKfn+YIJIuCepfQyEE7ioT0DVuZYzLBs0wGe1oTt0sp+OmMfZELI+uS11+ozb2HwhLz+nUNcUYPUfucrNoOmZ6cSGnxj5LmRkgFbbopiNLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPmKFDJY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V83uoPmK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD631F000FF;
-	Thu, 17 Sep 2026 18:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPmKFDJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02721F000FF;
+	Thu, 17 Sep 2026 18:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668753;
-	bh=DJfzQmv7Ey57CEmNeDXIWGzBnZkCHTw6YC3F/DRryZQ=;
+	s=korg; t=1789668756;
+	bh=nG86l9FUQtbAmvvwM4FO2ABdg4YeFKKCiMMgvAjvXq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V83uoPmKD9xeyhW8w3Gi6hlTvOjvRCSrFKqZWFrI3uULuFyNfy5lOznSEx6Vx3J72
-	 /yqsVzdnDaUbEqQRRbSZ+S/TVtEiN6Mrr7Ty82+eM5vqak4vlWIDyJUUF4J7UU3YJl
-	 HYJB3IiavS+kdRbKbCNJ7wvde8ZbSlp60Jl0POqE=
+	b=WPmKFDJYjyJBy8lt0laH+iNKe3GokZmli8zxOcSHZKg1Y0rHU5L9sGLE69yoTFVh1
+	 e/fpxKJRQiPWm02SdpKXjTC6C2ExBxx59a++pDJrd03477FUG8Dgxjh0HsBlLAt73V
+	 5ydMUdX26ACUkp81ZW3I6/bWgYtCMYJQNVwoJGak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	syzbot+2442951a6abb004df963@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0531/1102] smb: client: transport: Fix debug printing in __release_mid()
-Date: Thu, 17 Sep 2026 16:07:54 +0100
-Message-ID: <20260917151553.130947442@linuxfoundation.org>
+Subject: [PATCH 6.12 0514/1102] drm/cirrus-qemu: Validate BAR0 size during probe
+Date: Thu, 17 Sep 2026 16:07:37 +0100
+Message-ID: <20260917151552.658136534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,49 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit d83a21bb26015bfdd79b0440fe816b271b8bbab3 ]
+[ Upstream commit 92312d333bf700798f92f30406c721bce87506f3 ]
 
-Long time ago during upgrading printk():s to the respective pr_<level>()
-calls one misconversion happened and nobody has noticed that. So,
-previously printk(KERN_DEBUG) + printk() worked as one long debug print
-since the trailing '\n' is only present in the followup printk() format
-string. The culprit change missed that and split the message to two on
-the different levels. Restore the original behaviour to make users be
-less confused in the most likely never happen cases of partially getting
-that message.
+The `cirrus-qemu` driver relies on `CIRRUS_VRAM_SIZE` (4 MB) to validate
+framebuffer sizes. However, during PCI probe, the driver mapped BAR0
+without verifying that its size matches `CIRRUS_VRAM_SIZE`.
 
-Fixes: 0b456f04bcdf ("cifs: convert printk(LEVEL...) to pr_<level>")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+If a PCI device with a BAR0 smaller than 4 MB is bound to the driver, the
+mapped VRAM will be smaller than expected. Because validation checks assume
+4 MB VRAM, framebuffers larger than the mapped memory can be created.
+
+When the display plane is updated (e.g. during release),
+`cirrus_primary_plane_helper_atomic_update()` copies the framebuffer to
+VRAM using `drm_fb_memcpy()`. Writing past the end of the mapped I/O memory
+causes a supervisor write page fault:
+
+BUG: unable to handle page fault for address: ffffc9000389c000
+...
+RIP: 0010:memcpy_toio+0x7c/0xe0 arch/x86/lib/iomem.c:110
+...
+Call Trace:
+ <TASK>
+ iosys_map_memcpy_to include/linux/iosys-map.h:285 [inline]
+ drm_fb_memcpy+0x325/0x5d0 drivers/gpu/drm/drm_format_helper.c:442
+ cirrus_primary_plane_helper_atomic_update+0x98a/0xb00
+ drivers/gpu/drm/tiny/cirrus-qemu.c:358
+ drm_atomic_helper_commit_planes+0x626/0xea0
+ drivers/gpu/drm/drm_atomic_helper.c:3038
+ drm_atomic_helper_commit_tail+0x60/0x510
+ drivers/gpu/drm/drm_atomic_helper.c:1989
+ commit_tail+0x2b1/0x3c0 drivers/gpu/drm/drm_atomic_helper.c:2074
+ drm_atomic_helper_commit+0xa77/0xb10
+ drivers/gpu/drm/drm_atomic_helper.c:2312
+
+Fix this by validating in `cirrus_pci_probe()` that the PCI BAR0 resource
+is not less than `CIRRUS_VRAM_SIZE`, returning `-ENODEV` if it is less.
+
+Fixes: ab3e023b1b4c ("drm/cirrus: rewrite and modernize driver.")
+Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+2442951a6abb004df963@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2442951a6abb004df963
+Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260825120729.493611-1-sst@poczta.fm
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/tiny/cirrus.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index d7dbbd908cd90..c3940d3ecd5f3 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -144,12 +144,11 @@ void __release_mid(struct kref *refcount)
- 		trace_smb3_slow_rsp(smb_cmd, midEntry->mid, midEntry->pid,
- 			       midEntry->when_sent, midEntry->when_received);
- 		if (cifsFYI & CIFS_TIMER) {
--			pr_debug("slow rsp: cmd %d mid %llu",
--				 midEntry->command, midEntry->mid);
--			cifs_info("A: 0x%lx S: 0x%lx R: 0x%lx\n",
--				  now - midEntry->when_alloc,
--				  now - midEntry->when_sent,
--				  now - midEntry->when_received);
-+			pr_debug("slow rsp: cmd %d mid %llu A: 0x%lx S: 0x%lx R: 0x%lx\n",
-+				 midEntry->command, midEntry->mid,
-+				 now - midEntry->when_alloc,
-+				 now - midEntry->when_sent,
-+				 now - midEntry->when_received);
- 		}
- 	}
- #endif
+diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
+index bf0e6e297e33a..6c30425f8f70d 100644
+--- a/drivers/gpu/drm/tiny/cirrus.c
++++ b/drivers/gpu/drm/tiny/cirrus.c
+@@ -670,6 +670,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
+ 	struct cirrus_device *cirrus;
+ 	int ret;
+ 
++	if (pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE)
++		return -ENODEV;
++
+ 	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
