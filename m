@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2C951813D;
-	Thu, 17 Sep 2026 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718B749D584;
+	Thu, 17 Sep 2026 16:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664317; cv=none; b=i7L/r+4NWF/X+3DTbOqiD8qwe/h3/sNaP4psfUxXKUDwBJJ/NZJFp4nhman2McZ7oAM+hMWoqa4ZIrBGKbVoscu5BB3p6GLfSvjX/p2y4/DOH5ie/gB/RZs+OuBxOO2njYpGwi45RG/D6eKuhNNy5C00sPaPadN/O+XwNBq4NPI=
+	t=1789664319; cv=none; b=LYoi200HGskFfmvBYJsHNcI6C+bc9yie3EFpC7W8yVl2/en5bRsEDbKoi1olDwfLxOEaPIZgTSaeIibPCR5uYiZ4boTlnvBvS8A9eZkE04yrW3m5JrGNU9OQRRLdoqrW61StJguaO6eDaRdjv1Mnm70BPDr+/OfUzgX0hnLN3S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664317; c=relaxed/simple;
-	bh=4Xf9X9QhRhx9aqYI7GpmM7vcxT61pksEO3IxEPTZlxc=;
+	s=arc-20240116; t=1789664319; c=relaxed/simple;
+	bh=V9uCXuXb1b4UiqwWt4Cl/kUYWlk3wJq21vo6H01hs5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4+VsYj97VhCRtd2Q8vItiKWNkivbEJ5AMVOrDTEamp6UL3cECA8xbH3jYP24RUrxGsZHe8ZwQy1GVhtwa2xJCdLmngqYKIoo54ZnBgChWg8gIUT1iNT6vu0WB+MPAXGwrnmZuSt01f6tGerCEZ3xDV4vgJXzPmqsAOqSzhaEd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzH5reA0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SJMM+Kal97/YneiBuxUhSM9gk+FfNYHNtu76aKAFz54BqYxWAMz30i7E8tUe+0jyrUC7Cz7APi0YxwF6FrCJiygZ62gYeYhgPBaNFFAbErqIScFI+ajfOe2Q/cWiK9A9pWhSMCgfNt/MI4w6NA4U32rLVMmp9I4XqYmVuzP6ZnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLouTdXc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzH5reA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5141F00893;
-	Thu, 17 Sep 2026 16:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLouTdXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11671F000FF;
+	Thu, 17 Sep 2026 16:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664315;
-	bh=Amzeckqg+K5CvKNVsdFAeAsrg1I+KvPRMGfienaSc60=;
+	s=korg; t=1789664318;
+	bh=QRpRAbBIgAiIjosoFc8Mkg9XiPPj+4k6cF2Duv+X9W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HzH5reA0Ib9SbDjoSC54t9luRXPFD4hGb+6y3ZJqkH8h7UG/wWmeLwZzNFk3hjf0M
-	 2BJFQb1aw0shuKlQa3Q2Gqt8q+GMqvSea3RhePZGx2Ycfa9RzmbABHVmVqJLrZ2gYU
-	 BSTYGYKnupCcUDSonf6U4dB0+S6QhFvgSGH8Cy3c=
+	b=xLouTdXc7a0+ww9rUHIjD9wyJ/pz8B9YkXgwZg8H2Puxd4ckq8tEmrPzHadv45TNA
+	 G5LucyXrPt2PDVozjCwLl+heMiY7MV/rwnfF1iqGMDAc6sLo41P0pHPydtKddUGuLh
+	 C0GLm87+jrR18vgtN+Tiv66ttRcB3vbdCBvvBJjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Corey Minyard <corey@minyard.net>,
+	Koba Ko <kobak@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0330/1250] ipmi: si: Use platform_get_irq_optional() to retrieve interrupt
-Date: Thu, 17 Sep 2026 16:02:05 +0100
-Message-ID: <20260917151601.036758327@linuxfoundation.org>
+Subject: [PATCH 6.18 0331/1250] cxl/region: Validate partition index before array access
+Date: Thu, 17 Sep 2026 16:02:06 +0100
+Message-ID: <20260917151601.062906276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Koba Ko <kobak@nvidia.com>
 
-[ Upstream commit 39851b7e580a65bee732e5364f0efb974b242370 ]
+[ Upstream commit 16329b510f76e5b824e05bf8add8b29850f1f16f ]
 
-Use platform_get_irq_optional() to retrieve the interrupt resource
-instead of directly parsing and mapping the OF node via
-irq_of_parse_and_map().  This is the standard pattern for platform
-devices.  irq_of_parse_and_map() requires ire_dispose_mapping(), which
-is missing.
+construct_region() reads cxled->part and uses it to index
+cxlds->part[] without checking for a negative value. If the
+partition was never resolved, part remains at its initial value
+of -1, causing an out-of-bounds array access.
 
-Assisted-by: Antigravity:Gemini-3.5-Flash
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Message-ID: <20260603192511.6869-1-rosenp@gmail.com>
-[Handle a negative return from platform_get_irq_optional() to mean
- no interrupt is assigned.]
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Add a guard to return -EBUSY when part is negative.
+
+The check was dropped during a merge.
+
+Signed-off-by: Koba Ko <kobak@nvidia.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260414024527.3399590-1-kobak@nvidia.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_si_platform.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cxl/core/region.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/char/ipmi/ipmi_si_platform.c b/drivers/char/ipmi/ipmi_si_platform.c
-index fb6e359ae4946..704b06c919f03 100644
---- a/drivers/char/ipmi/ipmi_si_platform.c
-+++ b/drivers/char/ipmi/ipmi_si_platform.c
-@@ -276,7 +276,10 @@ static int of_ipmi_probe(struct platform_device *pdev)
- 	io.regspacing	= regspacing ? be32_to_cpup(regspacing) : DEFAULT_REGSPACING;
- 	io.regshift	= regshift ? be32_to_cpup(regshift) : 0;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index d518d463b28c4..e840ac002f9b1 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -3521,6 +3521,9 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
+ 	int rc, part = READ_ONCE(cxled->part);
+ 	struct cxl_region *cxlr;
  
--	io.irq		= irq_of_parse_and_map(pdev->dev.of_node, 0);
-+	io.irq = platform_get_irq_optional(pdev, 0);
-+	if (io.irq < 0)
-+		io.irq = 0;
++	if (part < 0)
++		return ERR_PTR(-EBUSY);
 +
- 	io.dev		= &pdev->dev;
- 
- 	dev_dbg(&pdev->dev, "addr 0x%lx regsize %d spacing %d irq %d\n",
+ 	do {
+ 		cxlr = __create_region(cxlrd, cxlds->part[part].mode,
+ 				       atomic_read(&cxlrd->region_id));
 -- 
 2.53.0
 
