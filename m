@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27B34ABBA1;
-	Thu, 17 Sep 2026 17:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3A04ED18D;
+	Thu, 17 Sep 2026 17:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665791; cv=none; b=IqJ37p+S2aVPoMnmyQKo3+4cJBtmlQC2AGVID+9HFeocUucSB/8gkhc/qBT1+EVje/v12FxH5UovNhvgTfvJN58ylan1jLDrQKFmKUMOEAs3GUWyzz/yB+haX5UNsUeEVQ5sW3w176avngok5ZJ/yV8E+RcaGhE/svBOo2otBKU=
+	t=1789665794; cv=none; b=fERhzi1UME9zdG0hGTqajRiG/r75KM5IDqMYZntlYhaelse/1iQPkrqINPH3LL1DIVAmObxTGIHeleukWODQH1UEmOkYmI/Fqzm+D+TsGNT4JJ9JsePjM3HB6SkXTV7EDBNW1rVABhZ1dQUCs4cND6SCa7ffl/PBktlxVn/zaKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665791; c=relaxed/simple;
-	bh=wwMjGFS7Kn0DWp4bA2hY6ftuRpcb8hWa+oRDR1fpm70=;
+	s=arc-20240116; t=1789665794; c=relaxed/simple;
+	bh=325fHv0XpKTm9FdS302C3EhvQXjjyZ5MoTADTgY7R0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAjhX1t12YdJwdlYdPLf/J5bvndAujlJ+eOBcup9x3j5HgDf9MukScdE/ucm/c71/yrzA00cMJ+wTBY3tHsO+XurVBZN0323us1KUn65qJmfB/T7VhTEHw04YML8cCaCmiPfIjnxGIJSq2dX+V9js25MvYP5se0A8/JJQqRNhho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVKAF+sG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QE8uGzP9TorxJ/WC6uS3+a9yM21sWgt6CxvYoXgZmjTE1qcggvzTxBwirMSLkSAUg4ATTvzDXE4kP+AUb//JZRntIeCZvg4LIvvivl6sVfFs66hG8rA1+7hWF8xaEn4ErtFBHDFYwNA/F/mnGi2CTsWMbgC52s1pHs+WsIzNpoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qt1E9SlS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVKAF+sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E038F1F000FF;
-	Thu, 17 Sep 2026 17:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt1E9SlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE4D1F000FF;
+	Thu, 17 Sep 2026 17:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665789;
-	bh=js3OGIUxua1dikgL2T29I7WRmGzNJAqlbnG/eHj7j10=;
+	s=korg; t=1789665792;
+	bh=CV1+bp5vOpwV64ofX9SkM1aOUqmIoIB7fckCIMcNJgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVKAF+sGzkEuACNXif5cfAnHRkA7iEWyJo55CerPEFaXzAlUU5o2KeodlxEkLFlSZ
-	 AlZDxHR47+ZxYL5lE3aO96QEY+XgNeynM0TAiVdfJ7pRABDM5qCKNv2qZURMWVjM7g
-	 w2ZfOvgOwZLWyhasGb8KY5uuLCoNN7TPf4veu/P8=
+	b=Qt1E9SlSgiWBw3u6uBvQyTI9LNP9jhz4UQDXE+XJW2ZEP1sT3qFFgQe3I6x2/9KZ5
+	 ceCMQdrSCuIWNepBkYCnNoB6TaJTAwx0TlOK++UsGjqfKll5YuNhzS7MYjXTXYyueY
+	 qVxESbFXjxkQyPiwM1QNhDe2ZprTB8uuwXt+TAV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0772/1250] bpf: Only enforce 8 frame call stack limit for all-static stacks
-Date: Thu, 17 Sep 2026 16:09:27 +0100
-Message-ID: <20260917151612.804851467@linuxfoundation.org>
+Subject: [PATCH 6.18 0815/1250] net/mlx5e: Fix use-after-free race in sample_restore_put()
+Date: Thu, 17 Sep 2026 16:10:10 +0100
+Message-ID: <20260917151614.019710600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,292 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tsalapatis <emil@etsalapatis.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit ad95d3c758d8752c41781b73fa060ab3215b1584 ]
+[ Upstream commit af3aef0245abbab5e9f6302e7a7d6407187afb71 ]
 
-The BPF verifier currently enforces a call stack depth of 8 frames,
-regardless of the actual stack space consumption of those frames. The
-limit is necessary for static call stacks, because the bookkeeping data
-structures used by the verifier when stepping into static functions
-during verification only support 8 stack frames. However, this
-limitation only matters for static stack frames: Global subprogs are
-verified by themselves and do not require limiting the call depth.
+Concurrent teardown of TC sample rules sharing the same restore
+context may re-read restore->count after dropping restore_lock.
+At that point another thread may already have completed cleanup and
+freed the restore object.
 
-Relax this limitation to only apply to static stack frames. Verification
-now only fails when there is a sequence of 8 calls to non-global
-subprogs. Calling into a global subprog resets the counter. This allows
-deeper call stacks, provided all frames still fit in the stack.
+Use the result of the refcount decrement while holding restore_lock to
+determine whether cleanup is needed.
 
-The change does not increase the maximum size of the call stack, only
-the maximum number of frames we can place in it.
-
-Also change the progs/test_global_func3.c selftest to use static
-functions, since with the new patch it would otherwise unexpectedly
-pass verification.
-
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260316161225.128011-2-emil@etsalapatis.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 369f4ce73457 ("bpf: Check ancestor frames for rbtree callbacks")
+Fixes: 36a3196256bf ("net/mlx5e: TC, Add sampler restore handle API")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260902193341.3668809-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         | 76 +++++++++++++------
- .../selftests/bpf/progs/test_global_func3.c   | 18 ++---
- 2 files changed, 63 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 52c17bed9e2eb..7411afcba2c21 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6626,22 +6626,30 @@ static int round_up_stack_depth(struct bpf_verifier_env *env, int stack_depth)
- 	return round_up(max_t(u32, stack_depth, 1), 32);
- }
- 
-+/* temporary state used for call frame depth calculation */
-+struct bpf_subprog_call_depth_info {
-+	int ret_insn; /* caller instruction where we return to. */
-+	int caller; /* caller subprogram idx */
-+	int frame; /* # of consecutive static call stack frames on top of stack */
-+};
-+
- /* starting from main bpf function walk all instructions of the function
-  * and recursively walk all callees that given function can call.
-  * Ignore jump and exit insns.
-- * Since recursion is prevented by check_cfg() this algorithm
-- * only needs a local stack of MAX_CALL_FRAMES to remember callsites
-  */
- static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
-+					 struct bpf_subprog_call_depth_info *dinfo,
- 					 bool priv_stack_supported)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+index 5db239cae8145..5ae13af900308 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+@@ -311,12 +311,15 @@ sample_restore_get(struct mlx5e_tc_psample *tc_psample, u32 obj_id,
+ static void
+ sample_restore_put(struct mlx5e_tc_psample *tc_psample, struct mlx5e_sample_restore *restore)
  {
- 	struct bpf_subprog_info *subprog = env->subprog_info;
- 	struct bpf_insn *insn = env->prog->insnsi;
- 	int depth = 0, frame = 0, i, subprog_end, subprog_depth;
- 	bool tail_call_reachable = false;
--	int ret_insn[MAX_CALL_FRAMES];
--	int ret_prog[MAX_CALL_FRAMES];
--	int j;
-+	int total;
-+	int tmp;
++	bool last;
 +
-+	/* no caller idx */
-+	dinfo[idx].caller = -1;
+ 	mutex_lock(&tc_psample->restore_lock);
+-	if (--restore->count == 0)
++	last = --restore->count == 0;
++	if (last)
+ 		hash_del(&restore->hlist);
+ 	mutex_unlock(&tc_psample->restore_lock);
  
- 	i = subprog[idx].start;
- 	if (!priv_stack_supported)
-@@ -6693,8 +6701,12 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 	} else {
- 		depth += subprog_depth;
- 		if (depth > MAX_BPF_STACK) {
-+			total = 0;
-+			for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller)
-+				total++;
-+
- 			verbose(env, "combined stack size of %d calls is %d. Too large\n",
--				frame + 1, depth);
-+				total, depth);
- 			return -EACCES;
- 		}
- 	}
-@@ -6708,10 +6720,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 
- 			if (!is_bpf_throw_kfunc(insn + i))
- 				continue;
--			if (subprog[idx].is_cb)
--				err = true;
--			for (int c = 0; c < frame && !err; c++) {
--				if (subprog[ret_prog[c]].is_cb) {
-+			for (tmp = idx; tmp >= 0 && !err; tmp = dinfo[tmp].caller) {
-+				if (subprog[tmp].is_cb) {
- 					err = true;
- 					break;
- 				}
-@@ -6727,8 +6737,6 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 		if (!bpf_pseudo_call(insn + i) && !bpf_pseudo_func(insn + i))
- 			continue;
- 		/* remember insn and function to return to */
--		ret_insn[frame] = i + 1;
--		ret_prog[frame] = idx;
- 
- 		/* find the callee */
- 		next_insn = i + insn[i].imm + 1;
-@@ -6748,7 +6756,16 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 				return -EINVAL;
- 			}
- 		}
-+
-+		/* store caller info for after we return from callee */
-+		dinfo[idx].frame = frame;
-+		dinfo[idx].ret_insn = i + 1;
-+
-+		/* push caller idx into callee's dinfo */
-+		dinfo[sidx].caller = idx;
-+
- 		i = next_insn;
-+
- 		idx = sidx;
- 		if (!priv_stack_supported)
- 			subprog[idx].priv_stack_mode = NO_PRIV_STACK;
-@@ -6756,7 +6773,7 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 		if (subprog[idx].has_tail_call)
- 			tail_call_reachable = true;
- 
--		frame++;
-+		frame = subprog_is_global(env, idx) ? 0 : frame + 1;
- 		if (frame >= MAX_CALL_FRAMES) {
- 			verbose(env, "the call stack of %d frames is too deep !\n",
- 				frame);
-@@ -6770,12 +6787,12 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 	 * tail call counter throughout bpf2bpf calls combined with tailcalls
- 	 */
- 	if (tail_call_reachable)
--		for (j = 0; j < frame; j++) {
--			if (subprog[ret_prog[j]].is_exception_cb) {
-+		for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
-+			if (subprog[tmp].is_exception_cb) {
- 				verbose(env, "cannot tail call within exception cb\n");
- 				return -EINVAL;
- 			}
--			subprog[ret_prog[j]].tail_call_reachable = true;
-+			subprog[tmp].tail_call_reachable = true;
- 		}
- 	if (subprog[0].tail_call_reachable)
- 		env->prog->aux->tail_call_reachable = true;
-@@ -6783,23 +6800,33 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 	/* end of for() loop means the last insn of the 'subprog'
- 	 * was reached. Doesn't matter whether it was JA or EXIT
- 	 */
--	if (frame == 0)
-+	if (frame == 0 && dinfo[idx].caller < 0)
- 		return 0;
- 	if (subprog[idx].priv_stack_mode != PRIV_STACK_ADAPTIVE)
- 		depth -= round_up_stack_depth(env, subprog[idx].stack_depth);
--	frame--;
--	i = ret_insn[frame];
--	idx = ret_prog[frame];
-+
-+	/* pop caller idx from callee */
-+	idx = dinfo[idx].caller;
-+
-+	/* retrieve caller state from its frame */
-+	frame = dinfo[idx].frame;
-+	i = dinfo[idx].ret_insn;
-+
- 	goto continue_func;
- }
- 
- static int check_max_stack_depth(struct bpf_verifier_env *env)
- {
- 	enum priv_stack_mode priv_stack_mode = PRIV_STACK_UNKNOWN;
-+	struct bpf_subprog_call_depth_info *dinfo;
- 	struct bpf_subprog_info *si = env->subprog_info;
- 	bool priv_stack_supported;
- 	int ret;
- 
-+	dinfo = kvcalloc(env->subprog_cnt, sizeof(*dinfo), GFP_KERNEL_ACCOUNT);
-+	if (!dinfo)
-+		return -ENOMEM;
-+
- 	for (int i = 0; i < env->subprog_cnt; i++) {
- 		if (si[i].has_tail_call) {
- 			priv_stack_mode = NO_PRIV_STACK;
-@@ -6821,9 +6848,12 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
- 	for (int i = env->subprog_cnt - 1; i >= 0; i--) {
- 		if (!i || si[i].is_async_cb) {
- 			priv_stack_supported = !i && priv_stack_mode == PRIV_STACK_ADAPTIVE;
--			ret = check_max_stack_depth_subprog(env, i, priv_stack_supported);
--			if (ret < 0)
-+			ret = check_max_stack_depth_subprog(env, i, dinfo,
-+					priv_stack_supported);
-+			if (ret < 0) {
-+				kvfree(dinfo);
- 				return ret;
-+			}
- 		}
- 	}
- 
-@@ -6834,6 +6864,8 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
- 		}
- 	}
- 
-+	kvfree(dinfo);
-+
- 	return 0;
- }
- 
-diff --git a/tools/testing/selftests/bpf/progs/test_global_func3.c b/tools/testing/selftests/bpf/progs/test_global_func3.c
-index 142b682d3c2f0..974fd8c195618 100644
---- a/tools/testing/selftests/bpf/progs/test_global_func3.c
-+++ b/tools/testing/selftests/bpf/progs/test_global_func3.c
-@@ -5,56 +5,56 @@
- #include <bpf/bpf_helpers.h>
- #include "bpf_misc.h"
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f1(struct __sk_buff *skb)
- {
- 	return skb->len;
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f2(int val, struct __sk_buff *skb)
- {
- 	return f1(skb) + val;
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f3(int val, struct __sk_buff *skb, int var)
- {
- 	return f2(var, skb) + val;
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f4(struct __sk_buff *skb)
- {
- 	return f3(1, skb, 2);
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f5(struct __sk_buff *skb)
- {
- 	return f4(skb);
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f6(struct __sk_buff *skb)
- {
- 	return f5(skb);
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f7(struct __sk_buff *skb)
- {
- 	return f6(skb);
- }
- 
--__attribute__ ((noinline))
-+static __attribute__ ((noinline))
- int f8(struct __sk_buff *skb)
- {
- 	return f7(skb);
- }
- 
- SEC("tc")
--__failure __msg("the call stack of 8 frames")
-+__failure __msg("the call stack of 9 frames")
- int global_func3(struct __sk_buff *skb)
- {
- 	return f8(skb);
+-	if (!restore->count) {
++	if (last) {
+ 		mlx5_del_flow_rules(restore->rule);
+ 		mlx5_modify_header_dealloc(tc_psample->esw->dev, restore->modify_hdr);
+ 		kfree(restore);
 -- 
 2.53.0
 
