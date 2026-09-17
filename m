@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03824E532F;
-	Thu, 17 Sep 2026 16:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A8C4E3231;
+	Thu, 17 Sep 2026 16:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664035; cv=none; b=LgozvdXX7mebOmFxKM/EbkzFjjz1woUGQfLgT5gmrNVvcTp7RNph2wtQXTMLNzCYM+u9HUaNMelZc1+/PTqRQZ8dk0MbHTTBDWMHlfZig85drPicemHavlRIDqw0BLpdW4E3NSdDEYSqHSe9JkCACcVEYgCWwYdVERwu4LzzIdA=
+	t=1789664039; cv=none; b=PymZsVnpHryXoPfnDSRX0j4YXjyK8TzaPIEGQVJ0h8mU9XK2E81vRWSw0qiLee42/wcZR8VOAbJEnqv5PO0h/QK9GlWH75X2hRaXKbSP4yAYRsOuezZILv11gBY1jmyUp+i8UDxv4qRwpf/0jP+PgwlCN4wUHIl9npUGWb5fayc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664035; c=relaxed/simple;
-	bh=So2OTtBl7p/Iguk/AvWgtzxwo2zUD561StcUwqb2tV4=;
+	s=arc-20240116; t=1789664039; c=relaxed/simple;
+	bh=Yza/pM14tzUVMIO8/zy2441HlYxbs8FsHNNjxGUvt+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpb9qtc4P9FgLmA1oYPVwuDiZ6mQ2Q9Jozp3K53Gt4T7rJE8DM6sh1RheoXIfLSNmi+h+Gsg1BXA1qMdURYnOjjS1QUu479P6sZT785yw7g2G7xINll7IrAuUH4vbQmRXR5Qr2JyibOycsOla8psVTGPIJfImArhMN5dGvw7rbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml9/Gz1F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U1iuTOASF21bNtkmnmN9kfQMaZl31vr1zN9MqrDakhELQnHfnt46si5gZ4bOrUpPWMTNWXv6e0hip4ICh8Bapp8+2ODJ/UigPOLI21sAhu8kp/fYJgeh/7PeCACy5rSpEnxlRavt8mN4hYNwT6jNx/WCVcot1BEV30/kWn82qDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFBGppeW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml9/Gz1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB73A1F000FF;
-	Thu, 17 Sep 2026 16:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFBGppeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F241F000FF;
+	Thu, 17 Sep 2026 16:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664034;
-	bh=mv+NbiRdutuLCDD4YXoLoGzXBks398k8Wkkbjk2Yr5U=;
+	s=korg; t=1789664037;
+	bh=PtFgZjrtRFRC3eqZYo8HqwUMYnDDmXvFYL+/MPoQjts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ml9/Gz1Fb8PuJO9sMy9zu76qWNo/tT0WT8o8emUUCFS4cgUesomr19ET5/CGbTaJ1
-	 vItan4Po/m/iDGLLTQeRQ/L/T2q2YxPBmUv/C0H/WXGjDri1yahtx+eJnX0i948BIs
-	 VLgsMxQ5ZWRgRcwlBnCfHuHmcz1Cm5QP6ZvR3QZw=
+	b=xFBGppeWPg8iejuzWqDtDulL2K6LPQeMOACpCxUfTmwXfdvzz5TiDCtifjfqmx6oE
+	 d0l/Hu+gZfSC5PE7aaM6xMB9w7ISU3L7CAZhjeOSbGDKPEZxqIMr4RvIDb3i2Ktfsa
+	 p5BbM1OGGTC+EVZcmHiEa4k3KdKAOqQU9/ALqYiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0237/1250] ACPICA: add boundary checks in acpi_ps_get_next_field()
-Date: Thu, 17 Sep 2026 16:00:32 +0100
-Message-ID: <20260917151558.567050548@linuxfoundation.org>
+Subject: [PATCH 6.18 0238/1250] ACPICA: validate byte_count in acpi_ps_get_next_package_length()
+Date: Thu, 17 Sep 2026 16:00:33 +0100
+Message-ID: <20260917151558.593124884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,69 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit e15aa60de0256d63df2331bf5a4bc4dd287504cd ]
+[ Upstream commit d49c6ee08365a8596f639da46eb7e71752b0cd42 ]
 
-Add boundary checks in acpi_ps_get_next_field() to prevent out-of-bounds
-access.
+Validate package length reading in acpi_ps_get_next_package_length().
 
-Link: https://github.com/acpica/acpica/commit/c39183ea84bc
+Link: https://github.com/acpica/acpica/commit/40e03f9941e2
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/24388159.6Emhk5qWAg@rafael.j.wysocki
+Link: https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
  1 file changed, 17 insertions(+)
 
 diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 6f6ae38ec044c..55273cbbfc67e 100644
+index 55273cbbfc67e..3526ea1094146 100644
 --- a/drivers/acpi/acpica/psargs.c
 +++ b/drivers/acpi/acpica/psargs.c
-@@ -474,6 +474,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 	ASL_CV_CAPTURE_COMMENTS_ONLY(parser_state);
- 	aml = parser_state->aml;
+@@ -48,6 +48,7 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	u32 package_length = 0;
+ 	u32 byte_count;
+ 	u8 byte_zero_mask = 0x3F;	/* Default [0:5] */
++	u32 remaining;
  
-+	if (aml >= parser_state->aml_end) {
-+		return_PTR(NULL);
+ 	ACPI_FUNCTION_TRACE(ps_get_next_package_length);
+ 
+@@ -55,7 +56,23 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	 * Byte 0 bits [6:7] contain the number of additional bytes
+ 	 * used to encode the package length, either 0,1,2, or 3
+ 	 */
++
++	/* Check if we have at least one byte to read */
++	remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
++	if (remaining == 0) {
++		return_UINT32(0);
 +	}
 +
- 	/* Determine field type */
+ 	byte_count = (aml[0] >> 6);
++
++	/* Validate byte_count and ensure we have enough bytes to read */
++	if (byte_count >= remaining) {
++
++		/* Clamp to available bytes and advance to end */
++		parser_state->aml = parser_state->aml_end;
++		return_UINT32(0);
++	}
++
+ 	parser_state->aml += ((acpi_size)byte_count + 1);
  
- 	switch (ACPI_GET8(parser_state->aml)) {
-@@ -522,6 +526,11 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 
- 		/* Get the 4-character name */
- 
-+		if ((parser_state->aml + ACPI_NAMESEG_SIZE) >
-+		    parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		ACPI_MOVE_32_TO_32(&name, parser_state->aml);
- 		acpi_ps_set_name(field, name);
- 		parser_state->aml += ACPI_NAMESEG_SIZE;
-@@ -567,6 +576,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 
- 		/* Get the two bytes (Type/Attribute) */
- 
-+		if ((parser_state->aml + 2) > parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		access_type = ACPI_GET8(parser_state->aml);
- 		parser_state->aml++;
- 		access_attribute = ACPI_GET8(parser_state->aml);
-@@ -578,6 +591,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 		/* This opcode has a third byte, access_length */
- 
- 		if (opcode == AML_INT_EXTACCESSFIELD_OP) {
-+			if (parser_state->aml >= parser_state->aml_end) {
-+				acpi_ps_free_op(field);
-+				return_PTR(NULL);
-+			}
- 			access_length = ACPI_GET8(parser_state->aml);
- 			parser_state->aml++;
- 
+ 	/* Get bytes 3, 2, 1 as needed */
 -- 
 2.53.0
 
