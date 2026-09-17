@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F264F4023;
-	Thu, 17 Sep 2026 17:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5A13B776C;
+	Thu, 17 Sep 2026 17:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667212; cv=none; b=UlPbrO/JYwsMeWgbA1xcIX/43zIEmJ63z5xnIRulbbeCp8fWOxSb6IqVgSHZdPZBM/q2JBO0ld3cVo8tMPFzht7Rh+rj9ixWSpkzgCZ4JDTcjKst4YkNjPGtl9TAQoVeUxYtp0/99Cb5hfZ1ZsiMEKyeltBLD63KiwmSLyrL2Ug=
+	t=1789667214; cv=none; b=d1+gWW9gwxZY1EWpjZodfGcNZpoCTb+coICL2KjUN+shF7No2bWJJMo7iHiMegskyJtVrT/Q4ElgLucfdCKUeulmWKA+YmCtyfpDtpodXPQqrnAdfhnXPIV1ndYLx5MA7GCScGT3oHiMkfEsMxSUzUqVD6n1KHlj12R4lS6Ngeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667212; c=relaxed/simple;
-	bh=03Z8NH5vmY/Y8kjAgsr7fI6Ik8acO27zw1s1vCuJfEE=;
+	s=arc-20240116; t=1789667214; c=relaxed/simple;
+	bh=oV1pUY0Vpa1WCsM7JXAlvpJQGsDjjcaD2XQ0bKwLgqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHT88GsM0yV1wqvhK/3l/vh0BawcEMZz+/Cl+M4PudDb70FrVzz7jokoE0N9QxLAvvhz7oafXrLOxxANRG+jSorozGtPssaVm9kZNELZq7vi+PQyouPElOhkZPbwoZ9LWu9y0rfQeNlyxHpkf2oXkbRu+WnihBqnXguSm1RFhoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTBz/+dl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DIWMDWzUsYqbIDbjJXyCqx1r41MYgUSKKIxtQE37AMWsjXAa0OUAqsU8/5fTWaZp6362ZpXEkUrzZt2GUpX2H//1gJ/YtfeZDS/S7kyqxhkFpk2tmfpGfs9PjP3ssx0Ix34gm1qOZsKqBtpyzgFyR2C6D88xwV53Be2ZoDoOs60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egJNCssf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTBz/+dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1495E1F00893;
-	Thu, 17 Sep 2026 17:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egJNCssf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC681F00893;
+	Thu, 17 Sep 2026 17:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667210;
-	bh=a1SA8kijuWDXOdEVtWNF+FbOlnxE2Dp6iINDnQGHPnw=;
+	s=korg; t=1789667213;
+	bh=f9rheOJdMxr+dHoNWjdrjHBdA77jcI6t3cEI22P+sRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTBz/+dlszD2A4tvayGcvX7PKJuBMQQZsY+gpefNMjhhq5FbZhpYvyW2RmFby62m9
-	 94WRgm4pqGLdYcfjER57GwmNoYQVaseRoD5SduIuxajpeGR6nlPSMH1VmRPks7Lqhs
-	 9lFOM6JrltjdI/mrJqhJd3POYqG4WKrnYme8dpvo=
+	b=egJNCssflJA3ckjIbC6Ahb3n5I2ZJK08oWz0f0euk9Jhj0jrefliyuFZGKA+ifvub
+	 BFTb7yA4sqzBGoRl/ZZ/xFs28MgGp3ni5bx2233T8+yUct5jf/lpOeps+gCC2NRqFv
+	 +x6EOIKNlZIGVxHik5EpBSd6bxhbtqPV7ZxFhZXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0018/1102] wifi: cfg80211: reject duplicate wiphy cipher suite entries
-Date: Thu, 17 Sep 2026 15:59:21 +0100
-Message-ID: <20260917151539.885491040@linuxfoundation.org>
+Subject: [PATCH 6.12 0019/1102] hfsplus: fix issue of direct writes beyond end-of-file
+Date: Thu, 17 Sep 2026 15:59:22 +0100
+Message-ID: <20260917151539.912379865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -56,77 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 7187d145d9042b037e4f10538f70cf95e380219f ]
+[ Upstream commit 5f63ac80aef2ee6bb58eab62e98c264774872da6 ]
 
-Duplicate entries in wiphy->cipher_suites do not describe any
-additional capability, but cfg80211 currently accepts them and leaves
-individual consumers to deal with them.
+The xfstests' test-case generic/729 fails with error:
 
-One such consumer is the WEXT compatibility code, which appends a WEP
-key length for each WEP cipher entry it sees. Repeated WEP entries can
-therefore overflow the fixed iw_range::encoding_size array returned by
-SIOCGIWRANGE.
+sudo ./check generic/729
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #36 SMP PREEMPT_DYNAMIC Fri Apr 17 12:40:51 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Reject duplicate cipher suite entries in wiphy_register() instead.
-This keeps the cipher suite invariant in one place and makes malformed
-wiphy descriptions fail early with -EINVAL, rather than relying on a
-single cfg80211 user to handle duplicates correctly.
+generic/729  23s ... [failed, exit status 1]- output mismatch
 
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20260413123000.1480661-1-n05ec@lzu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+mmap-rw-fault: /mnt/test/mmap-rw-fault.tmp: Input/output error
+
+The hfsplus_get_block() only allows creating the next
+sequential block. It returns -EIO for direct writes
+beyond EOF. This patch waits for any in-flight DIO on the inode
+to finish. Then, it extends the file by calling
+generic_cont_expand_simple() with the goal to guarantee
+that blockdev_direct_IO() finds all needed blocks
+already reachable sequentially. And, finally, it flushes and
+invalidates the DIO range again so the page cache is clean
+before the direct write begins.
+
+sudo ./check generic/729
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #40 SMP PREEMPT_DYNAMIC Thu Apr 16 15:41:03 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/729  23s ...  32s
+Ran: generic/729
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/210
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260417214940.2735557-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fs/hfsplus/inode.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 5bc3e12e7b2de..8f7f84c5f440b 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -729,6 +729,24 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
- 	return ret;
- }
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 3f64f68d625c1..8184518f5cf4e 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -123,9 +123,44 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 	struct file *file = iocb->ki_filp;
+ 	struct address_space *mapping = file->f_mapping;
+ 	struct inode *inode = mapping->host;
++	loff_t isize;
+ 	size_t count = iov_iter_count(iter);
++	loff_t end = iocb->ki_pos + count;
+ 	ssize_t ret;
  
-+static bool wiphy_cipher_suites_valid(const struct wiphy *wiphy)
-+{
-+	int i, j;
++	/*
++	 * The hfsplus_get_block() only allows creating the next sequential block.
++	 * For direct writes beyond EOF, expand the file first.
++	 */
++	if (iov_iter_rw(iter) == WRITE && iocb->ki_pos > i_size_read(inode)) {
++		loff_t start_off, end_off;
++		loff_t start_page, end_page;
 +
-+	if (wiphy->n_cipher_suites && !wiphy->cipher_suites)
-+		return false;
++		isize = i_size_read(inode);
 +
-+	for (i = 0; i < wiphy->n_cipher_suites; i++) {
-+		for (j = 0; j < i; j++) {
-+			if (wiphy->cipher_suites[i] ==
-+			    wiphy->cipher_suites[j])
-+				return false;
-+		}
++		/*
++		 * Wait for any in-flight DIO on this inode to finish before
++		 * calling generic_cont_expand_simple().
++		 */
++		inode_dio_wait(inode);
++
++		ret = generic_cont_expand_simple(inode, iocb->ki_pos);
++		if (ret)
++			return ret;
++
++		start_off = isize;
++		end_off = (end > 0) ? end - 1 : end;
++
++		ret = filemap_write_and_wait_range(mapping, start_off, end_off);
++		if (ret)
++			return ret;
++
++		start_page = start_off >> PAGE_SHIFT;
++		end_page = end_off >> PAGE_SHIFT;
++
++		invalidate_inode_pages2_range(mapping, start_page, end_page);
 +	}
 +
-+	return true;
-+}
-+
- int wiphy_register(struct wiphy *wiphy)
- {
- 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-@@ -860,6 +878,9 @@ int wiphy_register(struct wiphy *wiphy)
- 	if (res)
- 		return res;
+ 	ret = blockdev_direct_IO(iocb, inode, iter, hfsplus_get_block);
  
-+	if (!wiphy_cipher_suites_valid(wiphy))
-+		return -EINVAL;
-+
- 	/* sanity check supported bands/channels */
- 	for (band = 0; band < NUM_NL80211_BANDS; band++) {
- 		const struct ieee80211_sband_iftype_data *iftd;
+ 	/*
+@@ -133,8 +168,7 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 	 * blocks outside i_size. Trim these off again.
+ 	 */
+ 	if (unlikely(iov_iter_rw(iter) == WRITE && ret < 0)) {
+-		loff_t isize = i_size_read(inode);
+-		loff_t end = iocb->ki_pos + count;
++		isize = i_size_read(inode);
+ 
+ 		if (end > isize)
+ 			hfsplus_write_failed(mapping, end);
 -- 
 2.53.0
 
