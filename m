@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10774EB852;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB3D377563;
 	Thu, 17 Sep 2026 15:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659069; cv=none; b=qt2fgsY+sC9iS5ZzUQY9eih+9BU68WBrknj+zidClafxquyttd4N3yTYhBsNkIFlgNrDZ3tl2Lh6BPGc+CAX8QYSxLtqxLEcJR6pere+F7bq+VZ6tPNRopuMZvG1p3aTmz3emnFFhIHYYZQ4I/JcHcmiuw8h+UTOulIu0sqvKOI=
+	t=1789659072; cv=none; b=axWYY5G+YzZatI6oLOiGuEoAmdQ/X+ZtK5lk9Hok9vrNvSOgUZjDwEoBbq2k/fPrUVi6y/23EO6cpwG3SDPqou5xwRzj29vxRjnVVjRta9HPlAeUy5XkWTibi+5HGd5Ov+iBnQORo19ogLkRahSSJUig414rpuadjORe6Y4XQ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659069; c=relaxed/simple;
-	bh=9l04J4bv6qp1hIJHGx6DNwBN1rX0fE1E9yfWVFXawmI=;
+	s=arc-20240116; t=1789659072; c=relaxed/simple;
+	bh=hbSADkeQcUvihcU9hVYkbRyrwHyr1Rgo4+ryIaYXxV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BB2d0eq2uLUJWvwU1+kJ0nJM4HRqEi6exKnEHQk9HzZKbPfMItD4rSz/m07qdlS9dRG4I2n0VW8L3vGteWuL52trs+WvfTHEF/AJrY+M1FaYLEefjQvs1LY5jttCCuew8yoqfj4H3CIxkjYHiJCHNOey09x4l59cm4E2Pnwimns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRHr6Lw3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qY2m/DgAa6t1kthNYtGt5vmi65whp4W36KpMOhEUIbdrjIedy2lW8OpLcBqb/z5rBnjW2b6lKGXYi8ZBt5vcMPEdNZv/UhfLSV+ycQBJv1V5Xl0TeZ4wZZAKTqHwj3eZv9mGyV2golim5b60C1SSJYolwfYge5yilsD6Y6JtaH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpP4dvYr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRHr6Lw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1951F00898;
-	Thu, 17 Sep 2026 15:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpP4dvYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F3B1F000FF;
+	Thu, 17 Sep 2026 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659063;
-	bh=MSEf9WIGMx+aF/+tSB0yldSorCv+0Y403mx+Pfwn/ps=;
+	s=korg; t=1789659061;
+	bh=1tl0rujdYwVEWB6EnCWHe/HpR1Lc11hF0xqgOZYUZzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sRHr6Lw3tXs8RMqPA8j28vX70FMCHAUvl5EDc1mIQRb7+W8lX3sYQpONxqg+5OPTW
-	 X/Yz7FuNUSkGXwPYqv4bDoFA1uKgHMULltGd0fnOhPBLpjTmAJ1GT4xckP+jlwxQsk
-	 hpShfo7V1q23iDdTpOmFxVpIBCHSe9bGV5erLTII=
+	b=VpP4dvYrSZwJYK7UxgCp63bLkyJQysP7eUVjL6bikAMOhYeC8g9lUgAQc3RKlO7ui
+	 n8xL3VWE+8KRZtRQv634MFqVcDB+j4SC6anbv7/EtMeY10D1RgFenviBiZqZM9Zq3T
+	 HAu4O/EwPEJwWGUMGgug11OpwF7Cf8uR9MmnMOdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 132/733] net: ethernet: oa_tc6: Fix for the wrong data type
-Date: Thu, 17 Sep 2026 16:07:20 +0100
-Message-ID: <20260917151354.314168289@linuxfoundation.org>
+Subject: [PATCH 7.2 131/733] net: ethernet: oa_tc6: Disable tx queues on fatal error
+Date: Thu, 17 Sep 2026 16:07:19 +0100
+Message-ID: <20260917151354.286571832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,34 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
 
-[ Upstream commit 3cc2aa96b97184abd6fc106aac626ddf14389813 ]
+[ Upstream commit 349c366365876b7f67120827a0deb44899f59303 ]
 
-Inadvertently bool data type is used where int is supposed to
-be used. This might turn a negative error code into true or
-false and sign of the return code would be lost.
+Previously, TX queue interface was stopped when
+disable_traffic flag was set, which would indicate fatal
+error. It is more appropriate to disable the queue as,
+unless driver is unloaded and reloaded, there is no recovery
+after disable_traffic is set.
 
-Fixes: 8f9bf857e43b ("net: ethernet: oa_tc6: implement internal PHY initialization")
+Queues may be re-enabled inadvertently by other layers.
+Intention of disable_traffic is only to stop the traffic
+from flowing on fatal error.
+
+Fixes: b542d13fab0f ("net: ethernet: oa_tc6: Interrupt is active low, level triggered.")
 Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Link: https://patch.msgid.link/20260824-fix-race-condition-and-crash-v7-4-4323279b18f2@onsemi.com
+Link: https://patch.msgid.link/20260824-fix-race-condition-and-crash-v7-3-4323279b18f2@onsemi.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/oa_tc6.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
-index bc468cd86a140..f552165e503e1 100644
+index c60e0f37b7c5e..bc468cd86a140 100644
 --- a/drivers/net/ethernet/oa_tc6.c
 +++ b/drivers/net/ethernet/oa_tc6.c
-@@ -410,7 +410,7 @@ static int oa_tc6_mdiobus_read(struct mii_bus *bus, int addr, int regnum)
- {
- 	struct oa_tc6 *tc6 = bus->priv;
- 	u32 regval;
--	bool ret;
-+	int ret;
+@@ -717,6 +717,10 @@ static void oa_tc6_disable_traffic(struct oa_tc6 *tc6)
+ 	skb = oa_tc6_detach_waiting_tx_skb(tc6);
+ 	spin_unlock_bh(&tc6->tx_skb_lock);
  
- 	ret = oa_tc6_read_register(tc6, OA_TC6_PHY_STD_REG_ADDR_BASE |
- 				   (regnum & OA_TC6_PHY_STD_REG_ADDR_MASK),
++	/* disable_traffic, when set, is a point of no return to
++	 * working state. Keeping the TX queues disabled.
++	 */
++	netif_tx_disable(tc6->netdev);
+ 	oa_tc6_drop_tx_skb(tc6, skb);
+ 	oa_tc6_free_ongoing_skbs(tc6);
+ 	oa_tc6_write_register(tc6, OA_TC6_REG_INT_MASK0, regval);
 -- 
 2.53.0
 
