@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5811A2C04;
-	Thu, 17 Sep 2026 18:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1074D1787;
+	Thu, 17 Sep 2026 18:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668034; cv=none; b=oBjNSMCa/FllD1K5oceGPD4yNCE+7NIs4M8xKxGx33o+usN4tHudADtBoA1Ockoo34Zjt5G4+IuG2uOd8MUOI61gIHL9+tW4FmnewoQCj9WCbQ14vW5OA64dP4g6bSEe2zCBZlxeqtGHhUmdrTIAjxagEa+AD1PIrT7tg11VTA0=
+	t=1789668037; cv=none; b=iM45o9z2ujzLDWn8CAgAuLjjUpyY/go7RSY+AWha8jGg4Z8KQxG6WV1UYC3qr8LKstHGDQ+K4MJOCyXawqjCTdsIf+maEF0JAQ5j08UV5pvLoXjKdM99czn7dGmm4ANYFY4dx75LKrtUg0+ywMLJraF8wHBGxWyX9Wjxx4owgDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668034; c=relaxed/simple;
-	bh=yq0oTbA8sVnqXFFZdiHHCDIMbUbU8vaa+XeccbrS4GE=;
+	s=arc-20240116; t=1789668037; c=relaxed/simple;
+	bh=OWCl3CD4w67RcX/t6+g/OJMiclTxKeahd0rdO1Adu7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnumgYDLc4NjI44Lo/CN4LycNRmb2UXy+E1oPqqLu/49/fiIUN8Hk9rm2fd3pSVctJ78vurk0FBAxk6r90hxvq9cLT2Yu8Y790e/mKY1J1pKRTdk/cV/IwePdtxSpgXGc8apHNrHjbrrTW3M4MK/N2t5E+cfhohMXzgeA11T558=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hl0ko8jK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aILblS8zWrVCE9pI+Wxey/CyLdz4LGI9i7mQESyvuCXCz/beVW/6g4KT09pkxgc2Gef0lGB8LBIX/yVfYuuFomEHQUMUbvliZzmdEBjLEaAD3aXyx5yNrubbyBMarrjIg7P/vJZDWLAZs5zlCJVED/VMfrGAvlEq0R/1UWhowQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7waGAoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hl0ko8jK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35EB1F000FF;
-	Thu, 17 Sep 2026 18:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7waGAoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7ED31F000FF;
+	Thu, 17 Sep 2026 18:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668033;
-	bh=qIEViAM9RipjXyES4uUVcG2DyWlcVSmmvNdLOxA/hUE=;
+	s=korg; t=1789668036;
+	bh=AhsSzwGLRoG79BEOneSxgdWDjnL1vedyavY6LRUlsWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hl0ko8jK/Oa+QnLT2uMo/iqjMGRrTHeH6YGMZU4pJ4ogAkusctG+vE3IA8VRwzbZA
-	 0H/imJxnxHQcjXC6WR+2UOwpRIqibRxLOPI1XvqX75+3eVUH8ueBalvw1sAPb2+tlK
-	 uPHr2fsDiiPNwb/qIATqXHpfzQV6DzPFBwTvqgj4=
+	b=g7waGAoKDiV0OKiOlxruE0alLBe2+CwJjwMpOXZJkuA2/bPJ+RIRO3U9Uh82jH0UX
+	 8HKUolftB/stsYhD941krhItgOx0vlHcEVKISo1hE7CkfRKRsH+8jUb8YP59EzMyPg
+	 UC+7nkgbUf+P/v/gw5TM7aSA2QsRDdsWc+AmqQxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Cris <cxs1494089474@gmail.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0292/1102] Bluetooth: btusb: Add support for TP-Link TL-UB250
-Date: Thu, 17 Sep 2026 16:03:55 +0100
-Message-ID: <20260917151546.946027302@linuxfoundation.org>
+Subject: [PATCH 6.12 0293/1102] Bluetooth: L2CAP: validate connectionless PSM length
+Date: Thu, 17 Sep 2026 16:03:56 +0100
+Message-ID: <20260917151546.971953225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,56 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cris <cxs1494089474@gmail.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit ea77debfe443f505a4edbb7f21340a583a8a143f ]
+[ Upstream commit a40a5f922546b3bd7c094d882b29177db4f2abe0 ]
 
-Add USB ID 2357:0607 for TP-Link TL-UB250.
+Connectionless L2CAP frames carry a two-byte PSM at the start of the
+payload.  l2cap_recv_frame() currently reads that PSM unconditionally
+after validating only the outer L2CAP length.
 
-This is a Realtek RTL8761BUV based Bluetooth adapter.
+A malformed connectionless frame with a zero- or one-byte payload can
+therefore make the parser read beyond the advertised skb payload and use
+tailroom bytes as part of the PSM.  A VHCI-backed QEMU reproducer
+injected a one-byte connectionless payload and reached the unchecked
+read.
 
-Without this entry the device is picked up by the generic Bluetooth USB
-class match and exposes hci0, but the Realtek setup path is not used and
-rtl8761bu firmware/config are not loaded.
+Reject connectionless frames that cannot contain the PSM before reading
+or pulling it.  This preserves all valid connectionless frames while
+dropping only structurally incomplete packets.
 
-The controller reports Realtek Semiconductor Corporation as the
-manufacturer and LMP subversion 0x8761. With this entry added, btusb
-loads rtl_bt/rtl8761bu_fw.bin and rtl_bt/rtl8761bu_config.bin
-successfully.
-
-Relevant part of /sys/kernel/debug/usb/devices:
-
-T:  Bus=01 Lev=02 Prnt=06 Port=00 Cnt=01 Dev#=  9 Spd=12   MxCh= 0
-D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2357 ProdID=0607 Rev= 2.00
-S:  Product=TP-Link TL-UB250 Adapter
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-
-Use the same flags as the existing TP-Link 2357:0604 entry.
-
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Cris <cxs1494089474@gmail.com>
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3dbe00521a81f..9569739ebbcb1 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -777,6 +777,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2357, 0x0604), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2357, 0x0607), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
- 	  					     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c876f986b27f5..c88caeefb6786 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7089,6 +7089,11 @@ static void l2cap_recv_frame(struct l2cap_conn *conn, struct sk_buff *skb)
+ 		break;
+ 
+ 	case L2CAP_CID_CONN_LESS:
++		if (skb->len < L2CAP_PSMLEN_SIZE) {
++			kfree_skb(skb);
++			break;
++		}
++
+ 		psm = get_unaligned((__le16 *) skb->data);
+ 		skb_pull(skb, L2CAP_PSMLEN_SIZE);
+ 		l2cap_conless_channel(conn, psm, skb);
 -- 
 2.53.0
 
