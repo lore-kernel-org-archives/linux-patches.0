@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292DD4C10DD;
-	Thu, 17 Sep 2026 15:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCEB4E4C28;
+	Thu, 17 Sep 2026 15:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659347; cv=none; b=DUJRYz05si2Gt0GUw4egmA8HAwGYSxjeQ2pFri+raY58q8PuImbotB+JX1Sqcnlaf+SJO38bB7d3K1B4KTzWK4qSF1n2oPClu7trzDj3NitjHs7UpJKzy1Oo37Jg9miVOgqeX69E78RJAn2ZzcTuU+aKjAmiu9Z6v1QTzg5NNRU=
+	t=1789659350; cv=none; b=cqUJE6Jn/0Ujww8rIo9+4+0CmTVdhQciEWXpvgQOMtsClZPL+dYhY+C9Oi/riE3fwxD95mWiyhgxYZzGGknieMS1+dqbZM0D5FQmXglorZ8ZzBV7PYlHoG68WihROWmZIs9025jwzcU37QNh0huPG5X6Yts8iua1IyDhR2lypjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659347; c=relaxed/simple;
-	bh=Dn0PSUHnT+ShRVqnCtejAvLusqAY9rlOqLJqPOP/gys=;
+	s=arc-20240116; t=1789659350; c=relaxed/simple;
+	bh=30A9Saeiv34kf+OBS6NBo9rClLqvcyPLPfK1+jwIexM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/DsyPYVP9lxbX6IpDX16hxZuyjCdyB28tN6qspfxG51ViDgmJzfwbKgLLIqjjReoh8xcz75G6bJfKcd+b8tyokqMc9ogWHirhhmUqos2lei9Ek5BaddwNap3vbZ61YxxbW4YRJccO75HndCbQkSfTYZwE69IsS2uY5Oab8iQ+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWJxOqP3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PMHntUmiNm0tm5PFhzh/dZ+zJkPoiuTQuHLw4xButJwdfYZOZWqyFLoueO1WBSD9mvlTi6EkbU7X+rPshkglTMMEx89NRJf4xrBz4BobN4hBHT3JeWbz75NWd6yxH9u0DGunj8jw5T/pEYHKlqcd+xvPPRZPIzHBdMHl+JVxB2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa2GVr0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWJxOqP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281C61F0089A;
-	Thu, 17 Sep 2026 15:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa2GVr0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D471F00898;
+	Thu, 17 Sep 2026 15:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659341;
-	bh=9z38mQkoO2exhC9MLRv1IZmL+c+6XylOt+vTpWu7qKU=;
+	s=korg; t=1789659347;
+	bh=Ec7gG/MB+/hunVsVS05ViMEeASwyTtygJtKZSkKaKdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWJxOqP3imgBwSqMyt1TBmVlCdnDnPrLaDrLvXMpU//1AqQFg+a+BQUs+swh8h0dC
-	 bmIyErgf4SaH4Nz5p/Nt0qHRONC411g3bbpmm5k2O2+4B7uzZFDs3vREJBzA+msrNO
-	 PA0d/o9aHZaiUEeUH3e/j6XAjVgDPVEq3KrUU8kU=
+	b=Qa2GVr0jAnD3dP1rl5S67+wIRrFtx8/woCo4YQc7k7JgZKXidOu+vjNliqV3gJlLI
+	 trThsg2m5eFuWaDBI2s0D6oecISvG8I+CZqhmrFFkQ09sLrY87L3P0ZPhi4e+hEaHk
+	 LIM+YMW1PMTjm4uemlbMX3BqoXeFrhXHGxv7u9EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Paunovic <royalnet026@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 224/733] drm/rockchip: dw_dp: Select DRM_BRIDGE_CONNECTOR
-Date: Thu, 17 Sep 2026 16:08:52 +0100
-Message-ID: <20260917151356.793553766@linuxfoundation.org>
+Subject: [PATCH 7.2 226/733] bpf: Reject key-less BTF for hash maps
+Date: Thu, 17 Sep 2026 16:08:54 +0100
+Message-ID: <20260917151356.847608057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,55 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Paunovic <royalnet026@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit c83e3e806d4c115f1dad9ef756db4cd91448a262 ]
+[ Upstream commit 0895a0c0734703be5532f3883c42db95615fd98b ]
 
-dw_dp-rockchip.c calls drm_bridge_connector_init(), but ROCKCHIP_DW_DP
-does not select DRM_BRIDGE_CONNECTOR. A configuration with
-ROCKCHIP_DW_DP as the only enabled Rockchip output option fails to
-link:
+map_check_btf() allows a key-less BTF (btf_key_type_id == 0) only for
+maps that have a ->map_check_btf callback, and leaves the actual
+decision to that callback. Hash maps used to have no ->map_check_btf,
+so a key-less BTF was rejected outright.
 
-  aarch64-linux-gnu-ld: drivers/gpu/drm/rockchip/dw_dp-rockchip.o: in function `dw_dp_rockchip_bind':
-  dw_dp-rockchip.c:(.text+0x1d4): undefined reference to `drm_bridge_connector_init'
+That changed when htab and rhtab gained a ->map_check_btf to register a
+dtor - htab in commit 1df97a7453ee ("bpf: Register dtor for freeing
+special fields") and rhtab in commit 6905f8601298 ("bpf: Allow special
+fields in resizable hashtab"). Neither looks at the key, so a key-less
+hash map now passes map_check_btf() and gets created. Reading it back
+through bpffs feeds the key type_id 0 into btf_type_seq_show();
+btf_type_by_id() returns the void type, kind_ops[BTF_KIND_UNKN] is NULL,
+and btf_type_show() dereferences it:
 
-Five other Rockchip encoder options that call
-drm_bridge_connector_init() (ROCKCHIP_ANALOGIX_DP, ROCKCHIP_CDN_DP,
-ROCKCHIP_DW_HDMI_QP, ROCKCHIP_LVDS, ROCKCHIP_RGB) already select it,
-which masks the gap in any configuration that enables one of them.
-ROCKCHIP_INNO_HDMI is covered through its DRM_INNO_HDMI core option.
+RIP: 0010:btf_type_show+0x223/0x2e0 kernel/bpf/btf.c:8232
+RSP: 0018:ffffc9000399f868 EFLAGS: 00010206
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000028
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: ffffc9000399f970 R11: 0000000000000001 R12: ffffffff9b96b140
+R13: ffffc9000399f8e0 R14: ffff88803d393c00 R15: 0000000000000003
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000000 CR3: 000000003d213000 CR4: 0000000000352ef0
+DR0: 0000000039ae8f55 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ btf_type_seq_show_flags+0xca/0x120 kernel/bpf/btf.c:8250
+ htab_map_seq_show_elem+0x12e/0x350 kernel/bpf/hashtab.c:1669
+ map_seq_show+0x13d/0x1e0 kernel/bpf/inode.c:293
+ traverse.part.0.constprop.0+0x107/0x650 fs/seq_file.c:112
+ traverse fs/seq_file.c:99 [inline]
+ seq_read_iter+0x93f/0x1270 fs/seq_file.c:196
+ seq_read+0x344/0x4d0 fs/seq_file.c:163
+ vfs_read+0x1e4/0xb40 fs/read_write.c:572
+ ksys_pread64 fs/read_write.c:764 [inline]
+ __do_sys_pread64 fs/read_write.c:772 [inline]
+ __se_sys_pread64 fs/read_write.c:769 [inline]
+ __x64_sys_pread64+0x1eb/0x250 fs/read_write.c:769
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x123/0x790 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The same change was posted by Marius Dinu in March and dropped when
-the failure stopped reproducing in his build. The failure is
-configuration-dependent - any other enabled option that selects
-DRM_BRIDGE_CONNECTOR hides it - and it still reproduces on current
-drm-misc-next with the configuration described above.
+Reject a key-less BTF in htab_map_check_btf() and rhtab_map_check_btf(),
+restoring the previous behavior.
 
-Select DRM_BRIDGE_CONNECTOR like the other users do.
-
-Fixes: d68ba7bac955 ("drm/rockchip: Add RK3588 DPTX output support")
-Link: https://lore.kernel.org/r/aneNCDU12OzG99UX@venus # ack to handle this apart from the dw-dp series
-Link: https://lore.kernel.org/r/20260319155051.1944-1-m95d+git@psihoexpert.ro # earlier submission by Marius Dinu
-Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260813144019.12089-2-royalnet026@gmail.com
+Fixes: 1df97a7453ee ("bpf: Register dtor for freeing special fields")
+Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
+Reported-by: syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a8f4e88.27659fcc.2ceef7.0008.GAE@google.com/T/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/r/20260901104924.346187-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/hashtab.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/Kconfig b/drivers/gpu/drm/rockchip/Kconfig
-index e7f49fe845eae..697c0748eecae 100644
---- a/drivers/gpu/drm/rockchip/Kconfig
-+++ b/drivers/gpu/drm/rockchip/Kconfig
-@@ -68,6 +68,7 @@ config ROCKCHIP_CDN_DP
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index dd4da18312ac1..7f70db4d5dcf0 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -530,6 +530,9 @@ static int htab_map_check_btf(struct bpf_map *map, const struct btf *btf,
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
  
- config ROCKCHIP_DW_DP
- 	bool "Rockchip specific extensions for Synopsys DW DP"
-+	select DRM_BRIDGE_CONNECTOR
- 	help
- 	  This selects support for Rockchip SoC specific extensions
- 	  to enable Synopsys DesignWare Cores based DisplayPort transmit
++	if (btf_type_is_void(key_type))
++		return -EINVAL;
++
+ 	if (htab_is_prealloc(htab))
+ 		return 0;
+ 	/*
+@@ -3113,6 +3116,9 @@ static int rhtab_map_check_btf(struct bpf_map *map, const struct btf *btf,
+ {
+ 	struct bpf_rhtab *rhtab = container_of(map, struct bpf_rhtab, map);
+ 
++	if (btf_type_is_void(key_type))
++		return -EINVAL;
++
+ 	return bpf_ma_set_dtor(map, &rhtab->ma, rhtab_mem_dtor);
+ }
+ 
 -- 
 2.53.0
 
