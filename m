@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9EA2D7D47;
-	Thu, 17 Sep 2026 18:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F6049D5A5;
+	Thu, 17 Sep 2026 18:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671173; cv=none; b=DKwyxvGGU+dJ6AUefo2MIPh+2KDMo7oHQIliuLduJJh32kAAiWW6pghqPvCcHS1252AwOhy+kL6IJudgOzWkYU+IhnpKlq/rA3Yp9uGJYRbHOQXqYJuVJS7yVSH4xbsPlrmH7FBDLNTEF3GCilxi+PoWt1838Sm+ijJFwUHfKo4=
+	t=1789671176; cv=none; b=ITZnlu/BbcjQbVspsuCE8sUpz48haeL+b0KymnoQZTBZddmFyFSQ0pz7raRHwOKT4z66wh5V7GAEgNDgciln8U66dQ56Y13FApnoJxQHR0UqMgNMRE/72eo4xkDGfyPoXfDJaHFzAZ7whY7V6obWNGHv3ujvVRXBUJRB4PMAujw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671173; c=relaxed/simple;
-	bh=C4BiTr7JwJDJemEubPe4s+KltF9Q0pOBJsOufqL6tp4=;
+	s=arc-20240116; t=1789671176; c=relaxed/simple;
+	bh=aOSy31cjObKho5lWQwqNtAStUq6al4+X+YUSuyZNvwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ea0FT7sPuw4D2haH2CFtSmbY0LQKLSfvklA/NdDEeW6LGxAVkC9VaU7IaNJF2tHTgL8kpXHJ+nGDdO4cUtnS+WWWKxS8MkS2IKdSWcpeoBsnTY0cqzK1YdUVqj/BLVc9ggFKbgN6hHWYkwg/TKzMTX3vDt/z9+71OvwPYlSyBMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVOU0Iw2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrvjj9C/AEjcyjHux04+3J741gOei//V62MTMmJ3Mw6Xm7fg2CqrPO7acIVLT3yyf+5y7tZ0cTIXaGHYt0+DN70WmZ4gJtd/1V472wzsyu18iMPtD9okOkOiW+KJYefysqMriPWGal1kpeIDXDWbMp8/Tlu2xmqfbxhPK/e0wBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny9fovPv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVOU0Iw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A32D1F000FF;
-	Thu, 17 Sep 2026 18:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny9fovPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238A01F000FF;
+	Thu, 17 Sep 2026 18:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671171;
-	bh=tdBURXRsvpv4egY0JXtl+ljmB9dobYvicXEtiUTRk6o=;
+	s=korg; t=1789671174;
+	bh=iuLGUkC4k5wqdDtmaRUOIfRY9QxOFOJiTcW/3jLbPjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DVOU0Iw2xxb7e8tO4sR7leg/AHtbZNlte4V5TaikDN3pivgcLlz5ZOpQDP7BeHirT
-	 +fUbP/rQ2SrrSAz4dVGLoZOfS/2516nKFj1xe9iVMFgip319jq43zjZTX/XZKCN2VW
-	 NQP4OUVoYQGXXufVNVlKjt0D9Q6qOtE2du6Jv60c=
+	b=ny9fovPvHb4dQHck+uSG3aFMmZP4azBoshNCx5ZIfCqvIYG8rwayoBpInfkVCb1r9
+	 +Jj/Jcek2suc2of+rJ5nsFSxKJ0ITvrfbiZu8jhGivWfFhDOPrgfCtOZ67K/0oU38d
+	 eOO5vM8uzU0zMngh64SJSyWU2nP8qQTBKbOuNCLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 0890/1102] smb: client: pin DFS superblock in iterator callback
-Date: Thu, 17 Sep 2026 16:13:53 +0100
-Message-ID: <20260917151602.924589651@linuxfoundation.org>
+	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
+	Pali Rohar <pali@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.12 0891/1102] smb: client: fix one-byte OOB read in smb2_parse_native_symlink()
+Date: Thu, 17 Sep 2026 16:13:54 +0100
+Message-ID: <20260917151602.950736412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,69 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818 upstream.
+commit cb26524ef4ac28fcfa554c0656e8dc412c38a8ff upstream.
 
-tcon_super_cb() stores a raw superblock pointer, but __cifs_get_super()
-takes its active reference only after iterate_supers_type() has dropped
-s_umount and its passive reference. Concurrent DFS automount expiry can
-therefore free the superblock before cifs_sb_active() uses it.
+When parsing a share-root relative native symlink, memcpy copies
+smb_target+1 (skipping the leading separator) but uses
+strlen(smb_target)+1 as the length, reading one byte past the
+allocated buffer.
 
-A deterministic KASAN test reproduces the race as:
+This fixes the following KASAN splat when accessing an SMB symlink
+with a target of '\a\b':
 
-  BUG: KASAN: slab-use-after-free in cifs_sb_active+0x77/0x80
+  BUG: KASAN: slab-out-of-bounds in smb2_parse_native_symlink+0x4f5/0xca0
+  Read of size 5 at addr ffff88800878fe21 by task netfsfuzz-execu/1
+  CPU: 1 UID: 0 PID: 1 Comm: netfsfuzz-execu Tainted: G N
+  7.2.0-11943-g2709dd5ae32f-dirty #1 PREEMPT(lazy)
+  Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix,
+  1996)
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x7b/0xa0
+   print_report+0xd0/0x630
+   kasan_report+0xe5/0x120
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x23/0x60
+   smb2_parse_native_symlink+0x4f5/0xca0
+   parse_reparse_point+0x68a/0x1530
+   reparse_info_to_fattr+0x752/0xa20
+   cifs_get_fattr+0x873/0x15b0
+   cifs_get_inode_info+0xc0/0x310
+   cifs_lookup+0x308/0xa70
+   __lookup_slow+0x122/0x2b0
+   lookup_slow+0x50/0x70
+   path_lookupat+0x525/0xaf0
+   filename_lookup+0x1f2/0x550
+   vfs_statx+0xd1/0x1a0
+   vfs_fstatat+0x65/0xc0
+   __do_sys_newfstatat+0x9a/0x120
+   do_syscall_64+0xdd/0x4a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The same test passes with this change applied.
-
-Take the active reference in the callback while iterate_supers_type()
-still holds s_umount shared. cifs_put_tcp_super() remains the matching
-release.
-
-Fixes: bacd704a95ad ("cifs: handle prefix paths in reconnect")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reported-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+Fixes: 723f4ef90452 ("cifs: Fix parsing native symlinks relative to the export")
+Suggested-by: Pali Rohar <pali@kernel.org>
+Reviewed-by: Pali Rohar <pali@kernel.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/misc.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ fs/smb/client/reparse.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -1206,8 +1206,14 @@ static void tcon_super_cb(struct super_b
- 	     t1->ses->dfs_root_ses == t2->ses->dfs_root_ses) &&
- 	    t1->ses->server == t2->ses->server &&
- 	    t2->origin_fullpath &&
--	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath))
-+	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath)) {
-+		/*
-+		 * Take the active reference while iterate_supers_type() still
-+		 * holds s_umount shared.
-+		 */
-+		cifs_sb_active(sb);
- 		sd->sb = sb;
-+	}
- 	spin_unlock(&t2->tc_lock);
- }
- 
-@@ -1224,15 +1230,8 @@ static struct super_block *__cifs_get_su
- 
- 	for (; *fs_type; fs_type++) {
- 		iterate_supers_type(*fs_type, f, &sd);
--		if (sd.sb) {
--			/*
--			 * Grab an active reference in order to prevent automounts (DFS links)
--			 * of expiring and then freeing up our cifs superblock pointer while
--			 * we're doing failover.
--			 */
--			cifs_sb_active(sd.sb);
-+		if (sd.sb)
- 			return sd.sb;
--		}
- 	}
- 	pr_warn_once("%s: could not find dfs superblock\n", __func__);
- 	return ERR_PTR(-EINVAL);
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -580,7 +580,8 @@ int smb2_parse_native_symlink(char **tar
+ 			linux_target[i*3 + 1] = '.';
+ 			linux_target[i*3 + 2] = sep;
+ 		}
+-		memcpy(linux_target + levels*3, smb_target+1, smb_target_len); /* +1 to skip leading sep */
++		/* +1 to skip leading sep */
++		memcpy(linux_target + levels*3, smb_target+1, smb_target_len-1);
+ 	} else {
+ 		linux_target = smb_target;
+ 		smb_target = NULL;
 
 
