@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010CB502761;
-	Thu, 17 Sep 2026 17:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B62B51DB1C;
+	Thu, 17 Sep 2026 17:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665232; cv=none; b=Bi0lFk083PCX2dZA7AD9Wbvqsoby6VKecpVwr8r3JbalW8+Ag5xZvtV5h/VIHJ8boNKoAr5hfornMunusEWy53GTGTFpr0EV0sHcDgEZUqw0RrAHJ4cCsDmzYBSEn9zUNyDICGPYxNMadAAS946FCF6Ca8cYzQMfnrxwdQDI71I=
+	t=1789665235; cv=none; b=Hn+0SoWzh354CVkSmBa+QXCid7okHA2Mkrh/KRwtfyiCdbPgo+9z3aEJm+9oEg8J4n5WQJvSR+7pDmuHg7MyQT8Qxxrj6vTPL8og9crb+8J6BuE6Gi5sWk/Ju0stsZs9GnkxAkv8w5J18MnJFOLRhxRT9b0Pb5kU7m2G8Pe3N9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665232; c=relaxed/simple;
-	bh=FpU2RZJFTeRlxMXcfeOhqieHRpJdCslekejzuHZ0xQY=;
+	s=arc-20240116; t=1789665235; c=relaxed/simple;
+	bh=eHGzkNsjs6S31F3MWn8/sFa6B3t0p9WspO9gUNncRA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvRJUZHYcE4GJWlQnlOvQVImjYRRyVik9GumxMrjRcKjeqPFvT8m1syAbmnqyK/szJG108y5fFNQOp/4Tv2HmKZxMfpW7Y9vGag/FkMaAM+p6rDnDmYSJbXRvBi639rmZRYz2YZxolR2mfhpxgaCVQG3LZ/R/8ogFqbK4njAt/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1VZbEZl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WAUoHwigBNJcLc0AmJlDZwzvItV/fczCCCHQMQaCm/Jj98sJn3v/JnCdloR8xpzvg5CuC+P9oYEeorxI+dm02LnfP0Eo7io0rRP/9FgVUL3oe/JREWPTxI1AmRMNSDOqpj/sHngVYaRlHx4Y/2KK06+r85J4Sow6KFBtyN/CU8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw1dPJC2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1VZbEZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE6B1F000FF;
-	Thu, 17 Sep 2026 17:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw1dPJC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599261F00893;
+	Thu, 17 Sep 2026 17:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665230;
-	bh=IYG8oVFdryAovOzOikAqducdYWYIRQVoY/fATIqp6VQ=;
+	s=korg; t=1789665233;
+	bh=LjUSs8OMPMoRVh7Wrd1jGr3rwc7WrpkjW/YbaPnAPPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V1VZbEZlOtxCwNgoMYNEQlU8OPBhcxDYX8h5Ue1/XIyI5k//rFziCMm/finlN2Nc/
-	 7M3tsUPmIO6QyDRQBk4QR9fFdYpmtcR33oO9Wp0n2MUjHRJhYcrza6I7CCcriutrE4
-	 0+Dn9fNTbCdVCHooK35waYQmImV4we9dgzTQfR08=
+	b=qw1dPJC2bjINC5j4Mq/sFEhyaaw5gBMFb2la5OgxUrbDRKNa9exjekUk+OKIhbJwD
+	 h8l6ZxR0Xm+36nXBJTtO/IlhLuXNul7FGD0qqTUDrsmu/8+jPAtBEpXFWpSN69BgjW
+	 7HJJVQ2E8djVj1friYvbKPFlgrtA+lkLNedD7rMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jackie Liu <liuyun01@kylinos.cn>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Eric Dumazet <edumazet@google.com>,
+	James Nugraha <aslan.jnn@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0635/1250] raw: annotate disconnect-side IPv4 match writers
-Date: Thu, 17 Sep 2026 16:07:10 +0100
-Message-ID: <20260917151609.097596404@linuxfoundation.org>
+Subject: [PATCH 6.18 0636/1250] net: amd-xgbe: discard rx packets with bad FCS
+Date: Thu, 17 Sep 2026 16:07:11 +0100
+Message-ID: <20260917151609.127903471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,69 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: James Nugraha <aslan.jnn@gmail.com>
 
-[ Upstream commit ac08d183dac0441e41f77bbad50798fe609d90f1 ]
+[ Upstream commit ac8d6b28d48c5d951dcd923d33e461588e762a6d ]
 
-raw_v4_match() reads inet_daddr, inet_rcv_saddr and
-sk_bound_dev_if locklessly under RCU. Bind and connect writers are
-annotated, but __udp_disconnect() still clears the same fields using
-plain stores.
+amd-xgbe driver currently sets the MAC_RCR.DCRCC bit whenever
+RX is enabled. This disables hardware FCS validation, causing packets
+with bad FCS to be accepted unconditionally.
 
-Commit 18f116931f52e ("raw: annotate lockless match fields in
-raw_v4_match()") added the lockless readers and annotated the raw bind
-and datagram connect writers. Its v4 revision intentionally left the
-shared disconnect-side IPv4 writers for follow-up cleanup.
+This change unsets DCRCC so that packets with bad FCS will be dropped,
+in-line with typical behaviours of many other network controllers.
 
-Complete that follow-up by using WRITE_ONCE() for the disconnect-side
-stores, including the inet_rcv_saddr reset in inet_reset_saddr(), to
-pair with the lockless raw socket matcher.
+Tests:
+- Verified that packets with bad FCS are now dropped.
+- Verified that receiving packets with bad FCS will increment the
+  `rx_crc_errors` counter.
 
-Fixes: 0daf07e52709 ("raw: convert raw sockets to RCU")
-Link: https://lore.kernel.org/netdev/20260716142958.3064224-1-runyu.xiao@seu.edu.cn/
-Suggested-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828012918.1461-1-xuanqiang.luo@linux.dev
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Signed-off-by: James Nugraha <aslan.jnn@gmail.com>
+Link: https://patch.msgid.link/20260827232220.69907-1-aslan.jnn@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h | 3 ++-
- net/ipv4/udp.c   | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-dev.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index bb900da108af4..25a71c46792bb 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -704,7 +704,8 @@ static inline void ip_ipgre_mc_map(__be32 naddr, const unsigned char *broadcast,
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
+index e5391a2eca51d..bf10ad7cc9666 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
+@@ -3299,7 +3299,7 @@ static void xgbe_enable_rx(struct xgbe_prv_data *pdata)
+ 	XGMAC_IOWRITE(pdata, MAC_RQC0R, reg_val);
  
- static __inline__ void inet_reset_saddr(struct sock *sk)
- {
--	inet_sk(sk)->inet_rcv_saddr = inet_sk(sk)->inet_saddr = 0;
-+	inet_sk(sk)->inet_saddr = 0;
-+	WRITE_ONCE(inet_sk(sk)->inet_rcv_saddr, 0);
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family == PF_INET6) {
- 		struct ipv6_pinfo *np = inet6_sk(sk);
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 2f5c91ba0ce92..ea7585f6ec32a 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2200,10 +2200,10 @@ int __udp_disconnect(struct sock *sk, int flags)
- 	 */
+ 	/* Enable MAC Rx */
+-	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 1);
++	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 0);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, CST, 1);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, ACS, 1);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, RE, 1);
+@@ -3310,7 +3310,6 @@ static void xgbe_disable_rx(struct xgbe_prv_data *pdata)
+ 	unsigned int i;
  
- 	sk->sk_state = TCP_CLOSE;
--	inet->inet_daddr = 0;
-+	WRITE_ONCE(inet->inet_daddr, 0);
- 	inet->inet_dport = 0;
- 	sock_rps_reset_rxhash(sk);
--	sk->sk_bound_dev_if = 0;
-+	WRITE_ONCE(sk->sk_bound_dev_if, 0);
- 	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK)) {
- 		inet_reset_saddr(sk);
- 		if (sk->sk_prot->rehash &&
+ 	/* Disable MAC Rx */
+-	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 0);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, CST, 0);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, ACS, 0);
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, RE, 0);
 -- 
 2.53.0
 
