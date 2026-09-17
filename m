@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568434D957E;
-	Thu, 17 Sep 2026 17:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609C14F5DED;
+	Thu, 17 Sep 2026 17:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665579; cv=none; b=NBihH1KHQZhKB4vbcBtabW2axXC+iudmhB6Bkqwu2W0RAnerw4FRfPCLaOCTG5dxWvor9mLCR/EFrQPiKQ4h6d/9GpRXDwAza02QcTME1HmRAIkZJdCyCZxNe+k67om/cuXOMtBkx94U2LyRBc1cMvnJ599wDroEUN4sDPlRrMQ=
+	t=1789665583; cv=none; b=qVGIO8Iww6EAcsuiqlWEIXg11ty8xsqEpqw6+4kj4eDXNiugnMGhrIyYpGZyMnFIhDWq1JJVj0Az+Uk3FO2xn4W3p0sOoH75JNGbmHmpGNGw2pdTD+i2KinC/SZOTfTGfj23wSyPp749j15sh95/coipwEQhklXKbHFuV4PepWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665579; c=relaxed/simple;
-	bh=OlzejxeieVxiqK2uflrecYOT0/LJ+84YsoZeDfQFUR0=;
+	s=arc-20240116; t=1789665583; c=relaxed/simple;
+	bh=DZpPihwYJmS/Nxuyc8k7Ior0RYCx4mtDS3NKAC8lPD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBlq7ZXeP97B9K+ynlfwHtAB0bWeqecpmBxeqbmrEMUBmXML57efk9flG+FB3+DNi/4z21LVpzowAOXEjsxw6d27zkI/zHJw3tk4g9atsLYThf9oDcnAY7+5gX8F80AFs1IiIwKewK5QmFInDCqSwgwCmO4PD6untzwcP0dRv9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRG7Hxd9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rL26YAYDrEbzIzjrJB91EgwglWpFvsejss+kAOvhF1f5iG+8FvCcAOcchaEsom/nSfqlokVAqGWw5ldpFkHaKxNYZk+1BolA/so//gZm7CiRlWkRtMjaZne8fYpvGMtQU4Uw7WQVACDOeLg2h1meG7iBSEm9Its9GSnj7MOVBCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LheFmQLi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRG7Hxd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71061F00898;
-	Thu, 17 Sep 2026 17:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LheFmQLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27071F000FF;
+	Thu, 17 Sep 2026 17:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665578;
-	bh=E5ydvOWCGh2SFnLmSHJZYFHoRDmTN3RWl34cUqapG/4=;
+	s=korg; t=1789665581;
+	bh=NvkckaVDH9eJpNDTvdPFpjTmODzjU7Xy+VAgZVAzYzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YRG7Hxd9FKf6fR/7QH+rI5ctp8IJsWUeAzM99u6uzlvIZgNG/KiUXcfvufhqyavmA
-	 2h//yyW6iMvw5tMY+Haeildv0zGtZwiGecgoIHbOdVQge6ThYs34lRlWkYJMdxnxBj
-	 Zcle0zmNeGizvSQsxnoNU683zvRMuHua5+v/5LAA=
+	b=LheFmQLi16ydT/40oWLwEifYNjwSXsw7Bk49bUZG5hdaXtf4Kg+52BSJQ4RfiQY/a
+	 bA6Aaa3dDkfzPzRbpQ3i0uPb5zaYSa7CJiYI9mrMCB+MDEOwUWQiDcSVk+n7eGr3AR
+	 NX+2UZe/9WnnPAa0bLLTYy4opGq5/km9Gx7VZi4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Igor Paunovic <royalnet026@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0751/1250] ALSA: caiaq: Fix potential double-free at error path
-Date: Thu, 17 Sep 2026 16:09:06 +0100
-Message-ID: <20260917151612.236490068@linuxfoundation.org>
+Subject: [PATCH 6.18 0752/1250] drm/rockchip: dw_dp: Select DRM_BRIDGE_CONNECTOR
+Date: Thu, 17 Sep 2026 16:09:07 +0100
+Message-ID: <20260917151612.261253623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,61 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Igor Paunovic <royalnet026@gmail.com>
 
-[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
+[ Upstream commit c83e3e806d4c115f1dad9ef756db4cd91448a262 ]
 
-The fix for caiaq driver's resource management to handle the errors
-tries to release the resources in a common destructor call, but as a
-sashiko review for another patch suggested, some of the audio
-resources such as URBs have been already freed, and this may lead to a
-double-free.
+dw_dp-rockchip.c calls drm_bridge_connector_init(), but ROCKCHIP_DW_DP
+does not select DRM_BRIDGE_CONNECTOR. A configuration with
+ROCKCHIP_DW_DP as the only enabled Rockchip output option fails to
+link:
 
-For addressing the double-free, call the common destructor function
-from each place, and assure that the resource pointers get cleared.
+  aarch64-linux-gnu-ld: drivers/gpu/drm/rockchip/dw_dp-rockchip.o: in function `dw_dp_rockchip_bind':
+  dw_dp-rockchip.c:(.text+0x1d4): undefined reference to `drm_bridge_connector_init'
 
-Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Five other Rockchip encoder options that call
+drm_bridge_connector_init() (ROCKCHIP_ANALOGIX_DP, ROCKCHIP_CDN_DP,
+ROCKCHIP_DW_HDMI_QP, ROCKCHIP_LVDS, ROCKCHIP_RGB) already select it,
+which masks the gap in any configuration that enables one of them.
+ROCKCHIP_INNO_HDMI is covered through its DRM_INNO_HDMI core option.
+
+The same change was posted by Marius Dinu in March and dropped when
+the failure stopped reproducing in his build. The failure is
+configuration-dependent - any other enabled option that selects
+DRM_BRIDGE_CONNECTOR hides it - and it still reproduces on current
+drm-misc-next with the configuration described above.
+
+Select DRM_BRIDGE_CONNECTOR like the other users do.
+
+Fixes: d68ba7bac955 ("drm/rockchip: Add RK3588 DPTX output support")
+Link: https://lore.kernel.org/r/aneNCDU12OzG99UX@venus # ack to handle this apart from the dw-dp series
+Link: https://lore.kernel.org/r/20260319155051.1944-1-m95d+git@psihoexpert.ro # earlier submission by Marius Dinu
+Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260813144019.12089-2-royalnet026@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/audio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/rockchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
-index 95d425dd9d703..29f6cd9ee9415 100644
---- a/sound/usb/caiaq/audio.c
-+++ b/sound/usb/caiaq/audio.c
-@@ -829,16 +829,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
+diff --git a/drivers/gpu/drm/rockchip/Kconfig b/drivers/gpu/drm/rockchip/Kconfig
+index b7b025814e72b..10d8a569a8d16 100644
+--- a/drivers/gpu/drm/rockchip/Kconfig
++++ b/drivers/gpu/drm/rockchip/Kconfig
+@@ -64,6 +64,7 @@ config ROCKCHIP_CDN_DP
  
- 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
- 
- 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
--		free_urbs(cdev->data_urbs_out);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
- 
-@@ -859,6 +856,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
- 
- 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
- 	free_urbs(cdev->data_urbs_in);
-+	cdev->data_urbs_in = NULL;
- 	free_urbs(cdev->data_urbs_out);
-+	cdev->data_urbs_out = NULL;
- 	kfree(cdev->data_cb_info);
-+	cdev->data_cb_info = NULL;
- }
+ config ROCKCHIP_DW_DP
+ 	bool "Rockchip specific extensions for Synopsys DW DP"
++	select DRM_BRIDGE_CONNECTOR
+ 	help
+ 	  This selects support for Rockchip SoC specific extensions
+ 	  to enable Synopsys DesignWare Cores based DisplayPort transmit
 -- 
 2.53.0
 
