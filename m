@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF854E780C;
-	Thu, 17 Sep 2026 18:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67724ABBAF;
+	Thu, 17 Sep 2026 18:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668127; cv=none; b=Jigid6lY3Hvb84+XPpHau5vgtolJRaiyPhX9IzN/33j3JZ3u8vRgHkTsbVHqm9lXSumsAavXUqULQycv6Lv/0/w8fk4KE0FWGSYNMpJ/A6MRGVtKnjaOpmDPGkMVukD5u8lsWc/JZccZg1x7quv6rZ4sGTK+/vfeOUDGr9torQE=
+	t=1789668130; cv=none; b=ETE18sc6s0EpudsqIe07MLHOwFk5PHBnIWMh5F13VilTz6p1SRiCBmnZGd9mrv/yMTEPToMsM1PFigmC4xxV3XXCMC8FWIYGPQpjAbjmFzcnHON1zdw0cAgTkhkBV6VHOhWTjL67Flqz47NqG7g8kwnvtW3lXoS+j/ycmyhTnyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668127; c=relaxed/simple;
-	bh=Usqtm6m9fQhqxIuiB3AvY+rupy5QUP6YEx/BpG32pTo=;
+	s=arc-20240116; t=1789668130; c=relaxed/simple;
+	bh=ZTcGHcabL/Uu3hVeVtBv+09r7huZqb9aL/FkAB85C9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7yhJMYhuBntPrtMQ41vp+rhe8XYrkaq1n2jfZ/JAIU+I4SW9XWpS/nKTAUDjtqIehUa1Dr1yOWJJ297imxtZBpMwhxFxERFHF9FRdpGTMwDTiU3mj6eqjJr93TS6IWupjVnrEen8TS9kRER9EiEkNw3uJ4biuLi9ziXookPNl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZpL5bTy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n/vDveCuhl/ojBEKvcdPcjmB8XAlWb+Yqp3XpsCMcgq+l52zyTPffbOaLjB7taKzg2YkhIyxnDvsgjsGI6l+ipaI56TY2YMuHBVmQIZ0TV7yQlYvQBSE7kjnon7QULogkbFrjeoWfSFrmmmmnWKO9mVTz1ZikPIw6ehLwpohflE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2qUTgjN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZpL5bTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A1E1F000FF;
-	Thu, 17 Sep 2026 18:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2qUTgjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8A01F000FF;
+	Thu, 17 Sep 2026 18:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668125;
-	bh=qdERy2ApAej1pHtlTepIbFfNCBVikcL1hWo0UzjGTHA=;
+	s=korg; t=1789668128;
+	bh=k6l8PGv9G23HzifDvsywf7wVpUQxKN/Cnhwf1P1bFs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZpL5bTy32Wy8tsgpbUi895drEp4fj4X3/q/V+H88CEc63qsTpnZQWChjrXn+5ecU
-	 4LgpvZmyR5LTLJkrLDI2To5B+9LgVUYDlFEPQP65liuj2JqyGikUIIBzyy0KSZ8l/5
-	 o/128lMww1YJpSrIFz79fBe9rDVmpFtZttA0Ojjc=
+	b=O2qUTgjNv/Hu1U5ZitxUNBLrmqIPMXXxus+3ZUdMKTDm4r36QOXNbpHEn+seANnfs
+	 9DB25Vktj8nRM5ibJQvO9ET8Afh3uyTxS3RY69JVAG04gz6WnzJ6TE1MsbkK8gCWW+
+	 wwJPBpxV2Wh+WMqoha5mCBpb3Lh/WqOSmwYV/JMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0321/1102] ALSA: usb-audio: Add quirk flags for SC13A
-Date: Thu, 17 Sep 2026 16:04:24 +0100
-Message-ID: <20260917151547.688590817@linuxfoundation.org>
+Subject: [PATCH 6.12 0286/1102] Bluetooth: btusb: MT7922: Add VID/PID 0e8d/223c
+Date: Thu, 17 Sep 2026 16:03:49 +0100
+Message-ID: <20260917151546.794994195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,51 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 8956950dab22fbaefe92ca1980728165c5da793d ]
+[ Upstream commit fd5dc066b43eb8ae63f713aef704385c686b16e3 ]
 
-The SC13A ( VID 0x1ff7, PID 0x0f81) not support reading the current
-sample rate and results in an error message printed to kmsg. Set
-QUIRK_FLAG_GET_SAMPLE_RATE to skip the sample rate check.
+Add VID 0e8d & PID 223c for MediaTek MT7922 USB Bluetooth chip.
 
-Quirky device sample:
-  usb 3-5.2.4.1: new high-speed USB device number 11 using xhci_hcd
-  usb 3-5.2.4.1: New USB device found, idVendor=1ff7, idProduct=0f81
-  usb 3-5.2.4.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-  usb 3-5.2.4.1: Product: SC13A
-  usb 3-5.2.4.1: Manufacturer: Linux Foundation
-  usb 3-5.2.4.1: SerialNumber: 000002
-  usb 3-5.2.4.1: Found UVC 1.50 device SC13A (1ff7:0f81)
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
-  usb 3-5.2.4.1: Warning! Unlikely big volume range (=4096),
-    cval->res is probably wrong.
-  usb 3-5.2.4.1: [5] FU [Mic Capture Volume] ch = 1, val = 0/4096/1
-  usbcore: registered new interface driver snd-usb-audio
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Link: https://patch.msgid.link/20260617025234.3344935-1-aichao@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=223c Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
+ drivers/bluetooth/btusb.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index ea2ec3507521e..22c2f59d953a2 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2325,6 +2325,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
- 	DEVICE_FLG(0x1bcf, 0x2283, /* NexiGo N930AF FHD Webcam */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
-+	DEVICE_FLG(0x1ff7, 0x0f81, /* SC13A Webcam */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x2040, 0x7200, /* Hauppauge HVR-950Q */
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x2040, 0x7201, /* Hauppauge HVR-950Q-MXL */
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 941f2968bced1..a60480c966f38 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -693,6 +693,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0e8d, 0x223c), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
