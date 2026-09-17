@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148044F96B6;
-	Thu, 17 Sep 2026 17:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770AB433AD;
+	Thu, 17 Sep 2026 17:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664785; cv=none; b=gwDrNWztM9CKCBvqxakvn4AqjRUPelZvOqDE19Nh/f+wwzHpnu8H4n/s43Gc+I/MJ/9VyC8kztznzNJdAQ4O0FNZ21PWrdzD+DxlqHDeZlhmQf3ugiXGFClUxRw5BAeA6Byc5XmJnDbdLZj9gPQkMKt4OKsTlgeWUJiuDj9IA68=
+	t=1789664788; cv=none; b=HydHGAtgzERKmBmkMApNvATEFrY5R/z1ySEQxtO0xwUERGQUQBbxN7IXFBk+bxNxBbk/Z2mtCdDF+tjjrqHXZcMFGhU3yInm48NN5TQRH7OHBa2J48hMVBBNkdRXP+QpL9tWJuEbIdss2kXumrK9gNZbQtyWTdLoS3EWvg33dBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664785; c=relaxed/simple;
-	bh=ZKL13A4hyLzZ5A+kir4Rb5X45gsNLI8zi/12RjVOxsk=;
+	s=arc-20240116; t=1789664788; c=relaxed/simple;
+	bh=nQQyF+W1P6guDd5P0P52YBKOsvFFykBA/bYp7pKXXtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUoM9OAKsok8i5813UvBg9NTYkGzdDnMQnviJnvuplFuj0NYRnoap+VzlXQJ/BtoTulyyXViX5b2Hd8H4OmDWM5WLXZ2PNbby2kH1kNsqS0mQhUJAbwA7+9+OtydxhL5NZADKfPZa8kCtrHSBUyOAGb7T2wiV+CqxVv15e04qgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1SbBdw8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EdnddDDRtoN4teawW0Mf7A4QZ6kGH0iCBOLGEWsmXixBaZzDNpepBavngz9wysYkRCNr6ArzbVWHRbplZM2RAQWgNh4cSAVwdtCQd2C5XhLg6RSqzJsICVdVGINNb4Rt2WvhCj9az83XXrEUcpt8TpWt/fZ5Lb0nPgMLdi3y5so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8bDMB8q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1SbBdw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FD1F000FF;
-	Thu, 17 Sep 2026 17:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8bDMB8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7671F00893;
+	Thu, 17 Sep 2026 17:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664783;
-	bh=h+2DWpdDxPFwGO13hDCT9GgT7RxmmYrty48QSEa827g=;
+	s=korg; t=1789664787;
+	bh=VsE7irDojpDHkeyOCv+FvjAF2u9kcH2PtWmbc7czOs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E1SbBdw8NO1LFwCf+nTA4//VaYx3WxdMAcRGKWTLezmtgXXIoK4S5dH7zvQ0cRSUo
-	 /6sHJACEhk3vCYR59FygHmZL0N8tvO8FUzLRYBkghIuDtt45UUH3tmZ2YnZg2rZGFe
-	 LDgio/2BHA6N9ipY4Nkj9w9Uht5DzXnME+Rnmb/M=
+	b=o8bDMB8q6FfzksjY/+EPHExhrhNmOuIMgl69EMWkMLhzhOG2vL1R9V8EjoVA48alC
+	 EOWOkpVLItYUJqGTFdHQrg5DgdafTV/Kz4j8pn9a6cj0RQFtjqpbO7/yeYJNmbpMFy
+	 Znq3Gp73aBfgwvDlPPOZ2k/N9GfeUUJYCgbawrLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jetha Chan <jethachan@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0488/1250] ASoC: amd: yc: Add Alienware m15 R7 AMD to DMIC quirk table
-Date: Thu, 17 Sep 2026 16:04:43 +0100
-Message-ID: <20260917151605.196110630@linuxfoundation.org>
+Subject: [PATCH 6.18 0489/1250] drm/amdgpu: flush pending RCU callbacks on module unload
+Date: Thu, 17 Sep 2026 16:04:44 +0100
+Message-ID: <20260917151605.222148159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,61 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jetha Chan <jethachan@gmail.com>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit e782d687d2f5bf8b8113dc48ba22cca4b472c252 ]
+[ Upstream commit 67a654b41cfa73c3b83402c4a01b2689cad5b9bc ]
 
-The Alienware m15 R7 AMD exposes an ACP6x DMIC path, but its DMI
-product name is not present in the Yellow Carp ACP quirk table. As a
-result, the ACP machine driver does not enable the DMIC card on this
-system.
+Call rcu_barrier() in module exit to wait for outstanding call_rcu() callbacks
+before freeing module text, preventing late callback execution in freed memory.
 
-Add the DMI product name for this machine. With this quirk applied, the
-kernel reports:
+BUG: unable to handle page fault for address: ffffffffc1d59c40
+PGD 6a12067 P4D 6a12067 PUD 6a14067 PMD 13698b067 PTE 0
+Oops: 0010 [#1] SMP NOPTI
+RIP: 0010:0xffffffffc1d59c40
+Code: Unable to access opcode bytes at RIP 0xffffffffc1d59c16.
+RSP: 0018:ffffc900198c0f28 EFLAGS: 00010286
+RAX: ffffffffc1d59c40 RBX: ffff897c7d6b61c0 RCX: ffff88826aff4590
+RDX: ffff8884d8b35490 RSI: ffffc900198c0f30 RDI: ffff88812af67290
+RBP: 000000000000000a (DONE segment entries) R08: 0000000000000000 R09: 0000000000000100
+R10: 0000000000000000 R11: ffffffff82a06100 R12: ffff88811a4e3700
+R13: 0000000000000000 R14: ffff897c7d6b6270 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff897c7d680000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffc1d59c16 CR3: 00000104a980a001 CR4: 0000000002770ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ ? rcu_do_batch+0x163/0x450
+ ? rcu_core+0x177/0x1c0
+ ? __do_softirq+0xc1/0x280
+ ? asm_call_irq_on_stack+0xf/0x20
+ </IRQ>
+ ? do_softirq_own_stack+0x37/0x50
+ ? irq_exit_rcu+0xc4/0x100
+ ? sysvec_apic_timer_interrupt+0x36/0x80
+ ? asm_sysvec_apic_timer_interrupt+0x12/0x20
+ ? cpuidle_enter_state+0xd4/0x360
+ ? cpuidle_enter+0x29/0x40
+ ? cpuidle_idle_call+0x108/0x1a0
+ ? do_idle+0x77/0xf0
+ ? cpu_startup_entry+0x19/0x20
+ ? secondary_startup_64_no_verify+0xbf/0xcb
 
-  acp_yc_mach acp_yc_mach.0: Enabling ACP DMIC support via DMI
-
-and ALSA exposes the ACP DMIC capture device:
-
-  card 3: acp6x
-  device 0: DMIC capture dmic-hifi-0
-
-Tested on an Alienware m15 R7 AMD with product SKU 0B59.
-
-Link: https://jethachan.net/dev/2026/03/21/fixing-internal-microphone-alienware-linux.html
-Assisted-by: OpenAI-Codex:gpt-5.5
-Signed-off-by: Jetha Chan <jethachan@gmail.com>
-Link: https://patch.msgid.link/20260630003328.15675-1-jethachan@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit feaa5039f6c12acc9aa934c2d45dcd251a12c69f)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index df845260f5701..03735eec3af0f 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -500,6 +500,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m15 R7 AMD"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 9b17a47304615..fb753613e00d7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -3218,6 +3218,14 @@ static void __exit amdgpu_exit(void)
+ 	amdgpu_userq_fence_slab_fini();
+ 	mmu_notifier_synchronize();
+ 	amdgpu_xcp_drv_release();
++
++	/*
++	 * Flush outstanding call_rcu() callbacks before the
++	 * module text is freed.  Otherwise a grace period elapsing after
++	 * unload invokes a callback in already-freed module memory and
++	 * faults in rcu_do_batch().
++	 */
++	rcu_barrier();
+ }
+ 
+ module_init(amdgpu_init);
 -- 
 2.53.0
 
