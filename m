@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906E548489A;
-	Thu, 17 Sep 2026 15:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67274CDDF6;
+	Thu, 17 Sep 2026 15:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658967; cv=none; b=C45ciXMbRRK1m3k5f8k4N+muiH9mfk2Xm46ot3+hMOXdgycqIySuN68HIS2TAQ8FU3ItBnqoevUckiSwsznXMmNyg/gpuYObi8bJxMi7rRXRtcjLFTtlS/OL1yduboXWXO3g9Wkgxe7FSFyQHMJgvVMezZRaiV4wBIyV69YLpnY=
+	t=1789658973; cv=none; b=u3Ypsq/2M89pyGyaUR5J82TOnlgMmWiOrgOz3Kp3tROKM18/O4YUsgdL99+9CP5/ZBQo/EF1uvehVmnYFfVjT/PwnZNOqd//3ksc3przwmEwaBAixiA04r9wLMn0Cqy+XFxPXwWUigzEFcXu520I/ojVX2VcvxsVxyuNexb4a9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658967; c=relaxed/simple;
-	bh=lD/FsFNGPlb0jrhk0TzIJYpC2G8nOuc3h3XYERafV14=;
+	s=arc-20240116; t=1789658973; c=relaxed/simple;
+	bh=IMXJ85yWtZUjJXaQkZW85OKWyDNG+Hg/Gtw4RCbKzpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJMqNSjNO+n3F2Q0TVVxipkG3ce52dG32Cz8Mx2HfMMBLIk7sUuwre5nlWAOWkw9S2xw1nVlOXFTT9GXgeEZ/lSP4pNI1M58SVN3w0VVlZ6OAQV7HUtYUEVPwfCLzR7WHujYRAaIXzgHISMUV14IPSSqaVww6Tz98WUQzUGB81o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baR/gAN3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=poBqRcifKhztpvAVSgJtvgtfQhSrkblu4UpX8OkI/fZEbx3SGwo83JVXSTGbK3sd25+gGjhisr16wmrfY3HW0Xrh02+OnSKkXT4OjS0UTCbmYTo9c6sKdTL8O8Bp7hKpMjGGOIyvG8hlvOK8g9kbHso6VmyEFD5Rsk28ygzSH/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PE1Dvgm6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baR/gAN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E111F00899;
-	Thu, 17 Sep 2026 15:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PE1Dvgm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E371F0089A;
+	Thu, 17 Sep 2026 15:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658956;
-	bh=iko+b+61NVrigoskuxbssasl0M7C+Y+auaZBlx2ykNI=;
+	s=korg; t=1789658962;
+	bh=Pg/V1GkvuFW6X8P0O9x0m5LffmQ/XA0tZVRT9lrp2wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=baR/gAN3Q1h3TAilU5qmwLBaG8iZV2XpVvadkwqinD0kt9ny4UIJV+s/5evT2Rkfa
-	 QOeIWfvDQlUjob7d1G2TKrDCxkNHC9wyLDsvILpOfscTgrML76jsVWdC5iej6HT5lV
-	 c1S7R+nzfeNjS0rlbKSk+GiHfPsYsqK96MSslWGE=
+	b=PE1Dvgm69cymlpKAUWcu+/+q9meq873+1tpYoPgKxFx+TLoLmKEmskcOs+zFILFt2
+	 kKqy+MNMrVc54isJHrEzlINHXzKXYjaQCGNIUkwbT85Z/x9IQ5f0/T/6cIre3BYOEp
+	 E/nNK4nqdqn21JauJBBROzDzEclvHG7wIUc38M84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cheryl Babcock <cheryl@renat.io>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 096/733] ksmbd: safely drain sessions during logoff
-Date: Thu, 17 Sep 2026 16:06:44 +0100
-Message-ID: <20260917151353.330753469@linuxfoundation.org>
+Subject: [PATCH 7.2 097/733] ksmbd: propagate DACL parsing errors
+Date: Thu, 17 Sep 2026 16:06:45 +0100
+Message-ID: <20260917151353.360927558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,260 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d12168084c8c1b6d883c8eca5853929ac5136a9e ]
+[ Upstream commit c61dc7b1b4a3234b4aa3965502908a292238805c ]
 
-SMB3 multichannel allows requests for one session to run on multiple
-connections. Wait for all channels bound to a session before freeing
-shared session objects.
+parse_dacl() silently accepts truncated ACEs and allocation failures,
+allowing set_info_sec() to continue with an incomplete ACL conversion.
 
-A deferred byte-range lock remains counted as a running request and only
-wakes when its file closes. Wake blocked locks during the drain without
-unpublishing or modifying their file objects. Synchronous CANCEL requests
-must invoke their cancellation callback to wake pending operations, while
-CHANGE_NOTIFY completion remains specific to the asynchronous path.
+Return parsing and allocation errors to parse_sec_desc() so malformed
+security descriptors are rejected before inode attributes or ACL xattrs
+are updated.
 
-Serialize session teardown with channel registration and previous-session
-cleanup, and use atomic work-state transitions so LOGOFF, CANCEL, and
-connection teardown invoke cancellation callbacks only once.
-
-Fixes: 76e98a158b20 ("ksmbd: fix race condition between destroy_previous_session() and smb2 operations()")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Reported-by: Cheryl Babcock <cheryl@renat.io>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c        |  8 ++++--
- fs/smb/server/mgmt/user_session.c | 13 ++++++++-
- fs/smb/server/mgmt/user_session.h |  1 +
- fs/smb/server/smb2pdu.c           | 47 +++++++++++++++++++++++++++----
- fs/smb/server/vfs_cache.c         | 17 +++++++++--
- fs/smb/server/vfs_cache.h         |  1 +
- 6 files changed, 77 insertions(+), 10 deletions(-)
+ fs/smb/server/smbacl.c | 63 +++++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 17f4ac5597789..39ac777fd4527 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -13,6 +13,7 @@
- #include "mgmt/ksmbd_ida.h"
- #include "mgmt/user_session.h"
- #include "connection.h"
-+#include "vfs_cache.h"
- #include "compress.h"
- #include "transport_tcp.h"
- #include "transport_rdma.h"
-@@ -302,12 +303,12 @@ static void ksmbd_conn_cancel_async_requests(struct ksmbd_conn *conn)
- 	spin_lock(&conn->request_lock);
- 	list_for_each_entry_safe(work, tmp, &conn->async_requests,
- 				 async_request_entry) {
--		if (work->state != KSMBD_WORK_ACTIVE)
-+		if (cmpxchg(&work->state, KSMBD_WORK_ACTIVE,
-+			    KSMBD_WORK_CANCELLED) != KSMBD_WORK_ACTIVE)
- 			continue;
- 
- 		ksmbd_debug(CONN, "Cancel async request id %d\n",
- 			    work->async_id);
--		work->state = KSMBD_WORK_CANCELLED;
- 		if (work->cancel_fn)
- 			work->cancel_fn(work->cancel_argv);
- 	}
-@@ -391,6 +392,9 @@ int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
- 	if (retry_count >= max_timeout)
- 		return -EIO;
- 
-+	/* A blocked byte-range lock cannot drain until teardown wakes it. */
-+	ksmbd_wake_session_blocked_works(sess);
-+
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
- 		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index d91dde3f9e619..10b31df185a60 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -650,10 +650,21 @@ void destroy_previous_session(struct ksmbd_conn *conn,
- 	    memcmp(user->passkey, prev_user->passkey, user->passkey_sz))
- 		goto out;
- 
-+	down_write(&prev_sess->chann_lock);
-+	if (prev_sess->tearing_down) {
-+		up_write(&prev_sess->chann_lock);
-+		goto out;
-+	}
-+	prev_sess->tearing_down = true;
-+	up_write(&prev_sess->chann_lock);
-+
- 	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
- 	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
- 	if (err) {
--		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
-+		down_write(&prev_sess->chann_lock);
-+		prev_sess->tearing_down = false;
-+		up_write(&prev_sess->chann_lock);
-+		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_GOOD);
- 		goto out;
- 	}
- 
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index f8a24c33f7fe4..3e52d4cc13247 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -42,6 +42,7 @@ struct ksmbd_session {
- 
- 	bool				sign;
- 	bool				enc;
-+	bool				tearing_down;
- 
- 	int				state;
- 	__u8				*Preauth_HashValue;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 4cf7083f35ccd..184b28072a6f0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -95,6 +95,11 @@ static int register_session_channel(struct ksmbd_session *sess,
- 	int rc = 0;
- 
- 	down_write(&sess->chann_lock);
-+	if (sess->tearing_down) {
-+		rc = -ESHUTDOWN;
-+		goto out;
-+	}
-+
- 	if (xa_load(&sess->ksmbd_chann_list, (long)conn))
- 		goto out;
- 
-@@ -2812,17 +2817,41 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 		smb2_set_err_rsp(work);
- 		return -ENOENT;
- 	}
-+
-+	down_write(&sess->chann_lock);
-+	if (sess->tearing_down) {
-+		up_write(&sess->chann_lock);
-+		ksmbd_conn_unlock(conn);
-+		rsp->hdr.Status = STATUS_USER_SESSION_DELETED;
-+		smb2_set_err_rsp(work);
-+		return -ENOENT;
-+	}
-+	sess->tearing_down = true;
-+	up_write(&sess->chann_lock);
-+
- 	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
- 	ksmbd_conn_unlock(conn);
- 
-+	err = ksmbd_conn_wait_idle_sess(conn, sess);
-+	if (err) {
-+		down_write(&sess->chann_lock);
-+		sess->tearing_down = false;
-+		up_write(&sess->chann_lock);
-+		ksmbd_all_conn_set_status(sess, KSMBD_SESS_GOOD);
-+		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
-+		smb2_set_err_rsp(work);
-+		return err;
-+	}
-+
- 	ksmbd_close_session_fds(work);
--	ksmbd_conn_wait_idle(conn);
- 
- 	if (ksmbd_tree_conn_session_logoff(sess)) {
- 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
- 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
- 		smb2_set_err_rsp(work);
--		return -ENOENT;
-+		err = -ENOENT;
-+	} else {
-+		err = 0;
- 	}
- 
- 	down_write(&conn->session_lock);
-@@ -2832,6 +2861,9 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 
- 	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
- 
-+	if (err)
-+		return err;
-+
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
- 	if (err) {
-@@ -8488,14 +8520,14 @@ int smb2_cancel(struct ksmbd_work *work)
- 			 * still on conn->async_requests with a live cancel_fn
- 			 * pointing at the freed file_lock.
- 			 */
--			if (iter->state != KSMBD_WORK_ACTIVE)
-+			if (cmpxchg(&iter->state, KSMBD_WORK_ACTIVE,
-+				    KSMBD_WORK_CANCELLED) != KSMBD_WORK_ACTIVE)
- 				break;
- 
- 			ksmbd_debug(SMB,
- 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->Id.AsyncId),
- 				    le16_to_cpu(chdr->Command));
--			iter->state = KSMBD_WORK_CANCELLED;
- 			if (iter->cancel_fn == smb2_notify_cancel_fn)
- 				cancelled_notify =
- 					smb2_notify_cancel_claim(iter->cancel_argv);
-@@ -8524,11 +8556,16 @@ int smb2_cancel(struct ksmbd_work *work)
- 			    iter == work)
- 				continue;
- 
-+			if (cmpxchg(&iter->state, KSMBD_WORK_ACTIVE,
-+				    KSMBD_WORK_CANCELLED) != KSMBD_WORK_ACTIVE)
-+				break;
-+
- 			ksmbd_debug(SMB,
- 				    "smb2 with mid %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->MessageId),
- 				    le16_to_cpu(chdr->Command));
--			iter->state = KSMBD_WORK_CANCELLED;
-+			if (iter->cancel_fn)
-+				iter->cancel_fn(iter->cancel_argv);
- 			break;
- 		}
- 		spin_unlock(&conn->request_lock);
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 293dab9b43be1..a23bd9b1a68bc 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -727,12 +727,25 @@ static void set_close_state_blocked_works(struct ksmbd_file *fp)
- 	spin_lock(&fp->f_lock);
- 	list_for_each_entry(cancel_work, &fp->blocked_works,
- 				 fp_entry) {
--		cancel_work->state = KSMBD_WORK_CLOSED;
--		cancel_work->cancel_fn(cancel_work->cancel_argv);
-+		if (xchg(&cancel_work->state, KSMBD_WORK_CLOSED) ==
-+		    KSMBD_WORK_ACTIVE)
-+			cancel_work->cancel_fn(cancel_work->cancel_argv);
- 	}
- 	spin_unlock(&fp->f_lock);
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 33825c1356b47..7830f4fa836bb 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -380,10 +380,10 @@ void free_acl_state(struct posix_acl_state *state)
+ 	kfree(state->groups);
  }
  
-+void ksmbd_wake_session_blocked_works(struct ksmbd_session *sess)
-+{
-+	struct ksmbd_file_table *ft = &sess->file_table;
-+	struct ksmbd_file *fp;
-+	unsigned int id;
-+
-+	read_lock(&ft->lock);
-+	idr_for_each_entry(ft->idr, fp, id)
-+		set_close_state_blocked_works(fp);
-+	read_unlock(&ft->lock);
-+}
-+
- int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+-static void parse_dacl(struct mnt_idmap *idmap,
+-		       struct smb_acl *pdacl, char *end_of_acl,
+-		       struct smb_sid *pownersid, struct smb_sid *pgrpsid,
+-		       struct smb_fattr *fattr)
++static int parse_dacl(struct mnt_idmap *idmap,
++		      struct smb_acl *pdacl, char *end_of_acl,
++		      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
++		      struct smb_fattr *fattr)
  {
- 	struct ksmbd_file	*fp;
-diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index 8bb4396f95238..d6a9cd4b6d563 100644
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -211,6 +211,7 @@ void ksmbd_launch_ksmbd_durable_scavenger(void);
- void ksmbd_stop_durable_scavenger(void);
- void ksmbd_close_tree_conn_fds(struct ksmbd_work *work);
- void ksmbd_close_session_fds(struct ksmbd_work *work);
-+void ksmbd_wake_session_blocked_works(struct ksmbd_session *sess);
- int ksmbd_close_inode_fds(struct ksmbd_work *work, struct inode *inode);
- int ksmbd_init_global_file_table(void);
- void ksmbd_free_global_file_table(void);
+ 	int i, ret;
+ 	u16 num_aces = 0;
+@@ -397,13 +397,13 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	bool owner_found = false, group_found = false, others_found = false;
+ 
+ 	if (!pdacl)
+-		return;
++		return 0;
+ 
+ 	/* validate that we do not go past end of acl */
+ 	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
+ 	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
+ 		pr_err("ACL too small to parse DACL\n");
+-		return;
++		return -EINVAL;
+ 	}
+ 
+ 	ksmbd_debug(SMB, "DACL revision %d size %d num aces %d\n",
+@@ -415,31 +415,31 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 
+ 	num_aces = le16_to_cpu(pdacl->num_aces);
+ 	if (num_aces <= 0)
+-		return;
++		return 0;
+ 
+ 	dacl_size = le16_to_cpu(pdacl->size);
+ 	if (dacl_size < sizeof(struct smb_acl))
+-		return;
++		return -EINVAL;
+ 
+ 	if (num_aces > (dacl_size - sizeof(struct smb_acl)) /
+ 			(offsetof(struct smb_ace, sid) +
+ 			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
+-		return;
++		return -EINVAL;
+ 
+ 	ret = init_acl_state(&acl_state, num_aces);
+ 	if (ret)
+-		return;
++		return ret;
+ 	ret = init_acl_state(&default_acl_state, num_aces);
+ 	if (ret) {
+ 		free_acl_state(&acl_state);
+-		return;
++		return ret;
+ 	}
+ 
+ 	ppace = kmalloc_objs(struct smb_ace *, num_aces, KSMBD_DEFAULT_GFP);
+ 	if (!ppace) {
+ 		free_acl_state(&default_acl_state);
+ 		free_acl_state(&acl_state);
+-		return;
++		return -ENOMEM;
+ 	}
+ 
+ 	/*
+@@ -448,8 +448,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	 * user/group/other have no permissions
+ 	 */
+ 	for (i = 0; i < num_aces; ++i) {
+-		if (end_of_acl - acl_base < acl_size)
+-			break;
++		if (end_of_acl - acl_base < acl_size) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		ppace[i] = (struct smb_ace *)(acl_base + acl_size);
+ 		acl_base = (char *)ppace[i];
+@@ -462,8 +464,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 		    (end_of_acl - acl_base <
+ 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
+ 		    (le16_to_cpu(ppace[i]->size) <
+-		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth))
+-			break;
++		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		acl_size = le16_to_cpu(ppace[i]->size);
+ 		ppace[i]->access_req =
+@@ -538,7 +542,6 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 				((acl_mode & 0700) >> 6) | 0004;
+ 		}
+ 	}
+-	kfree(ppace);
+ 
+ 	if (owner_found) {
+ 		/* The owner must be set to at least read-only. */
+@@ -581,10 +584,12 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_acls =
+ 				posix_acl_alloc(acl_state.users->n +
+ 					acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
+-			if (fattr->cf_acls) {
+-				cf_pace = fattr->cf_acls->a_entries;
+-				posix_state_to_acl(&acl_state, cf_pace);
++			if (!fattr->cf_acls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pace = fattr->cf_acls->a_entries;
++			posix_state_to_acl(&acl_state, cf_pace);
+ 		}
+ 	}
+ 
+@@ -595,14 +600,20 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_dacls =
+ 				posix_acl_alloc(default_acl_state.users->n +
+ 				default_acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
+-			if (fattr->cf_dacls) {
+-				cf_pdace = fattr->cf_dacls->a_entries;
+-				posix_state_to_acl(&default_acl_state, cf_pdace);
++			if (!fattr->cf_dacls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pdace = fattr->cf_dacls->a_entries;
++			posix_state_to_acl(&default_acl_state, cf_pdace);
+ 		}
+ 	}
++	ret = 0;
++out:
++	kfree(ppace);
+ 	free_acl_state(&acl_state);
+ 	free_acl_state(&default_acl_state);
++	return ret;
+ }
+ 
+ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+@@ -963,8 +974,10 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
+ 		if (dacloffset < sizeof(struct smb_ntsd))
+ 			return -EINVAL;
+ 
+-		parse_dacl(idmap, dacl_ptr, end_of_acl,
+-			   owner_sid_ptr, group_sid_ptr, fattr);
++		rc = parse_dacl(idmap, dacl_ptr, end_of_acl,
++				owner_sid_ptr, group_sid_ptr, fattr);
++		if (rc)
++			return rc;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
