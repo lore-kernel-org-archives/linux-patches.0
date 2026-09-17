@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A4A4D4861;
-	Thu, 17 Sep 2026 15:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A24DDB45;
+	Thu, 17 Sep 2026 15:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660539; cv=none; b=XmsW68m+HNc9kPJclauxKAe9/RI964UwPV+LqFDp59w+eAMSUPEJ4wgSLcVgG8yvy/c0TalYywlyVopUZ8G4BaA5edYdBLm2Sc3LfRpl/8kmvJwFpG6GgKa3UNWXh/anP5yN9KS6IWhujP0oHjiQxr0os/KrqTk7G+5fgn8xM/E=
+	t=1789660542; cv=none; b=cNzefpq4cPZQmCt+NuWsAOaSAtANW1+/RHuPEKAAV9/10h8Zpu1rjPNp/MtWu86q1dmtwtXEyWJnU/DpC4rW+uy2fsgDijrS9fGF7QoLCiUBHnWTXK5DT9NuhHNKLXsYy2hGxHMhO+o30E2Iu9/6AIEz1m0NZeZu/S4xLX4WTWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660539; c=relaxed/simple;
-	bh=xMIt82w9YijONcfaFIyl38IIDKaeGWRqmn5TKQQOskA=;
+	s=arc-20240116; t=1789660542; c=relaxed/simple;
+	bh=SO06ZAaaZLCT99E5ZzAS91W8omnAG44NxUJtwzDXP9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgK9d+u2kG03XTEYJPvIBewg9wYbKtTlYAIyHQn1HeSFY4Ml6OFAaM5B+XS/2/wDk9+uWLla0tcJrWKnZDyexSElEyooj5AzJynjPmKe2dVw+mUrfHoOfOg7u1DEVySV+35ccnyTsd00MYjmlAPHpkC6lkd/Hjvgj0AAIZiljrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqASn8fV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NB0Ak6LJGGlSzdnRBRIfsXLWu949KXLyMECKfYgtpWFBnc87HzkLeFjrxFReoek8PrvV9l/cQ1UOtpTRqFfkFISiBzZnU8OVMgnm8PTFrdtRuPCJPhba8pUy2fB2L4peOaMVASXtNd4M5AyhCpXB73G9qD9YV2otLgLnm0DNR5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgXqHBTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqASn8fV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AB01F00898;
-	Thu, 17 Sep 2026 15:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgXqHBTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399DA1F00893;
+	Thu, 17 Sep 2026 15:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660537;
-	bh=wEOkFlJQBR1A9KCNPNI1kvpoBGzBblkEakIt5BxlM18=;
+	s=korg; t=1789660540;
+	bh=XvAKun2s2/SCrJfctFVXMsWhIUgA3MivUbdMy9cBxuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqASn8fVgmAKCm/VNxvpMGESkZVWkvykWEX+dQo9sqsA5s3XAoO9lw2E8k06+LUBp
-	 7VbsGuutDHDh0mNNnMMQKNUoEUOD/SDKIA5IzHT/jflQx5NcEBIrSbiGwV5UzMukXN
-	 v3+eMPAJgPIEb0BUiSoKQ1AhvXBt4B1CMUdKIOBg=
+	b=bgXqHBTXREjXWvVHDj+yO+zRv67IwyFOQgd/8HzfmTmSbA2uZwcthU569nFTURV82
+	 HJYm0PVzhD1fjq5sgwA332qZTdpGjIivZqGZKqqGtxtxJzLBBO9i6sX2cNqcSvfqoq
+	 VPrw71lWs63B5GUuCiFZmLF0Bgyfia5okyZCn7GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 618/733] selftests: mptcp: lib: dump nstat for the right test
-Date: Thu, 17 Sep 2026 16:15:26 +0100
-Message-ID: <20260917151407.927007942@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 627/733] smb: client: pin DFS superblock in iterator callback
+Date: Thu, 17 Sep 2026 16:15:35 +0100
+Message-ID: <20260917151408.180899384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,57 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit e1a56368eac18b3b4b956b794526e8713c48a0ec upstream.
+commit d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818 upstream.
 
-In case of errors, mptcp_lib_pr_nstat is called to dump the nstat
-counters, but for some tests, it was dumping the counters for all
-subtests, not just the current one.
+tcon_super_cb() stores a raw superblock pointer, but __cifs_get_super()
+takes its active reference only after iterate_supers_type() has dropped
+s_umount and its passive reference. Concurrent DFS automount expiry can
+therefore free the superblock before cifs_sb_active() uses it.
 
-That's an issue for tests that don't recreate the netns for each
-subtest, e.g. mptcp_connect.sh. In this case, 'nstat -a' will look at
-the absolute counters since the creation of the netns, making
-debugging harder.
+A deterministic KASAN test reproduces the race as:
 
-Instead, it should dump the counters for the current test, by using the
-history recorded in /tmp/<ns>.nstat if available, and not using '-a'
-which was dumping the absolute values instead of calculating increments.
+  BUG: KASAN: slab-use-after-free in cifs_sb_active+0x77/0x80
 
-While at it, rename the previous 'hist' variable to 'cache' as it was
-used to look at the cache, not the nstat history.
+The same test passes with this change applied.
 
-Fixes: 658e53141780 ("selftests: mptcp: join: dump stats from history")
+Take the active reference in the callback while iterate_supers_type()
+still holds s_umount shared. cifs_put_tcp_super() remains the matching
+release.
+
+Fixes: bacd704a95ad ("cifs: handle prefix paths in reconnect")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-11-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_lib.sh |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/smb/client/misc.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -108,12 +108,14 @@ mptcp_lib_pr_info() {
- 
- mptcp_lib_pr_nstat() {
- 	local ns="${1}"
--	local hist="/tmp/${ns}.out"
-+	local cache="/tmp/${ns}.out"
-+	local hist="/tmp/${ns}.nstat"
- 
--	if [ -f "${hist}" ]; then
--		awk '$2 != 0 { print "  "$0 }' "${hist}"
-+	if [ -f "${cache}" ]; then
-+		awk '$2 != 0 { print "  "$0 }' "${cache}"
- 	else
--		ip netns exec "${ns}" nstat -as | grep Tcp
-+		NSTAT_HISTORY="${hist}" ip netns exec "${ns}" nstat -s |
-+			grep Tcp
- 	fi
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -891,8 +891,14 @@ static void tcon_super_cb(struct super_b
+ 	     t1->ses->dfs_root_ses == t2->ses->dfs_root_ses) &&
+ 	    t1->ses->server == t2->ses->server &&
+ 	    t2->origin_fullpath &&
+-	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath))
++	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath)) {
++		/*
++		 * Take the active reference while iterate_supers_type() still
++		 * holds s_umount shared.
++		 */
++		cifs_sb_active(sb);
+ 		sd->sb = sb;
++	}
+ 	spin_unlock(&t2->tc_lock);
  }
  
+@@ -909,15 +915,8 @@ static struct super_block *__cifs_get_su
+ 
+ 	for (; *fs_type; fs_type++) {
+ 		iterate_supers_type(*fs_type, f, &sd);
+-		if (sd.sb) {
+-			/*
+-			 * Grab an active reference in order to prevent automounts (DFS links)
+-			 * of expiring and then freeing up our cifs superblock pointer while
+-			 * we're doing failover.
+-			 */
+-			cifs_sb_active(sd.sb);
++		if (sd.sb)
+ 			return sd.sb;
+-		}
+ 	}
+ 	pr_warn_once("%s: could not find dfs superblock\n", __func__);
+ 	return ERR_PTR(-EINVAL);
 
 
