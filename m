@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DAC4E7808;
-	Thu, 17 Sep 2026 16:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC204FE2DC;
+	Thu, 17 Sep 2026 16:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664215; cv=none; b=uoWxWawRBJb4TFrZcsUi3b9HxSpqMVOmMg414tKhzAr5EFyVbONaSQ1SG5H1cYCAjNillkAfDH8uwvyzZqq/XFgGo4ApY+bJkPvLj+4HMcHhcsZrmT1avXKmorCeGSpye0cl0YfWqHihIeJOKiSk1vcLeDBUiH0wuUo6ZmplZ/A=
+	t=1789664218; cv=none; b=jIgUb0Irhynllt9jvQINtt3fxiNNaQoXIC+d+nQSF+JlAqep3zGOj8lEwDO7nB8108t4UzWsWTdSVKAckhlwspWpL/IpPOZwQ3wT/uSmzGZenMM7hOTnlMX9+WyLQUIq5KAEdX0Xg75GmM+zyrpnUQJQIcPc1FyXsnmpph3EdT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664215; c=relaxed/simple;
-	bh=Qa+sxh3uQ727l+CmOFEofUVFmrIBY2EhH2lx3ZHagbk=;
+	s=arc-20240116; t=1789664218; c=relaxed/simple;
+	bh=Qiqxh98ToBlQeKGVE62BOMvHXy1L9chh7PlpWGETqaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTAC93xLSEzQjn+e+QEtarclhFN2GA2703K6NYIVrnKf4bhVR5aYAvXdpE+I9HTZEb3mIyXDElG++jP+ylbRM0ZPUn+QiAXQJJj28j4hicwkqsuTYg1RriNNCbCOr0GtwcChJrLaHZXqBBYj6UP28vM++xS1sNkqGYOM+Ou9ABM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu1AuJ+C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h7Q585b251TCfRB9jO7nnVWMys7rlKhW5dzvIy5JY4RCtEzQ/4xWNgHX6ceiSN6LCyv3vK4svALA9idr1s71jy7AthbN+SKZvL0eHDluNb7TrNqt+o/JvFkqdT9XxqrTiJS7jMk2uJtgAU117ClETfrIG4OUZrxyk26Ec3CL0Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLWct/Pz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu1AuJ+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B31F00899;
-	Thu, 17 Sep 2026 16:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLWct/Pz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932811F000FF;
+	Thu, 17 Sep 2026 16:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664214;
-	bh=39lq2Hj0xoYroqvSt9SIbX850PzLEnJa44GmQaFFF9M=;
+	s=korg; t=1789664217;
+	bh=Cff7ZKV3ruKuhwAV1nzkQ1zRyxRY9s/aOlkp0h7+QBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pu1AuJ+CT9LGDq+2QZ7IKsvEluW3HhOOeB6r3MVC01JaC7tVOAHIdZTPoU0bMgn7z
-	 hloJtuDtfuFNjphyCjoT7dMUPOFk/Yy3A+wDBG3cAH/Wf3pfw2yVMm8AMWfoWtOtGd
-	 rQWu5g1F/rPLFnvpQAY23DubjFhAyrLXQt2UGqwI=
+	b=kLWct/Pz3q2wggSEyfOj0KcOj/spxvdV+QDOy2yFtp7FK4d9pWPjCx3b4cLIPh660
+	 4oo7coGPC7TA22ly/kamW6sLAh7e617JSr++PbL4DzS1kvzx/Prx/mKDmOrLRQzDfo
+	 0lguR6Qnvp4gZqXWXtK8t52MdY5fJBRHHQ9Eufdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0259/1250] soc/tegra: fuse: Register nvmem lookups at probe
-Date: Thu, 17 Sep 2026 16:00:54 +0100
-Message-ID: <20260917151559.174671270@linuxfoundation.org>
+Subject: [PATCH 6.18 0260/1250] soundwire: dmi-quirks: Disable ghost Realtek devices
+Date: Thu, 17 Sep 2026 16:00:55 +0100
+Message-ID: <20260917151559.199661599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,67 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 8a3571618c2e3f339b5b6fee5841143face58a2b ]
+[ Upstream commit 4dab2b904414fac53535c4e4cdad808132f4cdc2 ]
 
-Register nvmem lookups in tegra_fuse_probe(), after the nvmem device has
-been registered, since they can only be used after the nvmem device is
-registered.
+Many systems ship with a Realtek audio codec in the ACPI that doesn't
+physically exist in the system. This confuses the newer function
+topology system that creates the soundcard, as it builds the card based
+on the ACPI information.
 
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Whilst we are working with the laptop vendors to try and stop this
+happening there are quite a few systems where this has shipped. Add a
+quirk to disable this "ghost" device.
+
+Currently this patch should cover:
+ - Asus UX5406AA
+ - Lenovo Yoga Pro 9i (83SF)
+ - Lenovo Yoga Slim 7 Ultra (83QK)
+
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260520163631.3300102-4-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/fuse/fuse-tegra.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/soundwire/dmi-quirks.c | 35 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/drivers/soc/tegra/fuse/fuse-tegra.c b/drivers/soc/tegra/fuse/fuse-tegra.c
-index 74d2fedea71ca..972a63993e1db 100644
---- a/drivers/soc/tegra/fuse/fuse-tegra.c
-+++ b/drivers/soc/tegra/fuse/fuse-tegra.c
-@@ -182,10 +182,6 @@ static int tegra_fuse_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 5854218e1a274..32a46a2d90f7c 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -90,6 +90,19 @@ static const struct adr_remap intel_rooks_county[] = {
+ 	{}
+ };
  
- 		fuse->soc->init(fuse);
--
--		err = tegra_fuse_add_lookups(fuse);
--		if (err)
--			return dev_err_probe(&pdev->dev, err, "failed to add FUSE lookups\n");
- 	}
- 
- 	fuse->clk = devm_clk_get_optional(&pdev->dev, "fuse");
-@@ -231,6 +227,10 @@ static int tegra_fuse_probe(struct platform_device *pdev)
- 		return err;
- 	}
- 
-+	err = tegra_fuse_add_lookups(fuse);
-+	if (err)
-+		return dev_err_probe(&pdev->dev, err, "failed to add FUSE lookups\n");
++/*
++ * Many platforms have ghost realtek devices in the ACPI that don't physically
++ * exist, remove those devices.
++ */
++static const struct adr_remap ghost_realtek[] = {
++	/* rt722 on link3 */
++	{
++		0x000330025d072201ull,
++		0x0000000000000000ull
++	},
++	{}
++};
 +
- 	fuse->rst = devm_reset_control_get_optional(&pdev->dev, "fuse");
- 	if (IS_ERR(fuse->rst))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(fuse->rst), "failed to get FUSE reset\n");
-@@ -473,7 +473,7 @@ static int __init tegra_init_fuse(void)
- 	const struct of_device_id *match;
- 	struct device_node *np;
- 	struct resource regs;
--	int err;
-+	int err = 0;
+ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 	/* TGL devices */
+ 	{
+@@ -164,6 +177,28 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)hp_omen_16,
+ 	},
++	/* PTL devices */
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "UX5406AA"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83SF"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{}
+ };
  
- 	tegra_init_apbmisc();
- 
-@@ -566,10 +566,6 @@ static int __init tegra_init_fuse(void)
- 
- 	tegra_fuse_print_sku_info(&tegra_sku_info);
- 
--	err = tegra_fuse_add_lookups(fuse);
--	if (err)
--		pr_err("failed to add FUSE lookups\n");
--
- 	return err;
- }
- early_initcall(tegra_init_fuse);
 -- 
 2.53.0
 
