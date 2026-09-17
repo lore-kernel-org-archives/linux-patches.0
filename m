@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D905437C9;
-	Thu, 17 Sep 2026 15:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B514C10F4;
+	Thu, 17 Sep 2026 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658796; cv=none; b=HRCCF1wHaGC/M70SMu9Vf7NhdfgR6fxokt+AbHhHhhdR1ELRDo3wxrUA6791jxPW8uHUrX08eu4JCgMlfHok9BSdnzop0G2lVEwv2H+hIDtIQ5jlobKYdPAwKpveuHj3NdF0NkxF+GOjRX4fzmm1T6k0iBr/+HMz7r6yYFtm1Cw=
+	t=1789658796; cv=none; b=qGDmgxrZWKZenhftR/Ezof7R0z3xNcN/Ijik9M5XoeJoyN7tgjRsSCPFn7U9tLa842z6npyLqTraQsc18p4YJwr97WSrrNechBbUsOlPE5Ae6zQSB8gia5Hl7PcmvzRq3OJMfzWe7sXR5ZqLHJ6rn4urmR9bvKq0dz6a0zVrNY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789658796; c=relaxed/simple;
-	bh=2bIRECT9fCaguuJCkYNC12R1Z0c8w3ZNwXOUWMsXUn4=;
+	bh=a+CMFd99yS0TVrKmIcEaUhJWCBuuWHVLojJ+5iV/d0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENhydAY5FGhPLxtmLrjOay+bE6pM4qx2xpr8icz0B4EpVpr4TRMmaYzJu6mpP+vkp/MC0xT6ki8k1FK4yMrUtb6CaTdYf2v8ngjaIuOk0cqn5Mmhl2+k4YKbqq/3mmAo6UDTCm/HEO4/GBmtcF1z581k0XSHY6JgkKka/I1miXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/d8xCJN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CP4uo2+5hT6vCEvxq+W7OV5pQMoZFfmd17x00561NSoxz5vagqYQ1n55UbH1Cp1auY7BkgRTiHICrXoIgHVHv2onrhg+Z/4CIJY8ws1En3DBCv0yDcqUZk0zkxImjPkpatwFa8hbpmZqc2hlpeKq09y+jGt9BWpoKUfwnI8CokM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RE4wf10; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/d8xCJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694BC1F00899;
-	Thu, 17 Sep 2026 15:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RE4wf10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7531F0089A;
+	Thu, 17 Sep 2026 15:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658773;
-	bh=tGGMhYSLyFM4p+kz9GcdjwsLRZNWf9ww16pft7mOLGk=;
+	s=korg; t=1789658784;
+	bh=8aVy6v+MAbw0swqlYbkwCkqzBkq6tCp2zHuu7YZr6NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/d8xCJNITJQGrtyEKJFCf4d/ay7xTJcRBqsRWbPf+fLPjoWEecJcX5Ls4bGLAnN8
-	 x92pwosq0B9jEfs+Z4n9BenVf5J/u8ZeJHQNm/6/QvL452f20T4fZAn64tIfgQPPZZ
-	 f04WUnlpRDy6MBc8ZX++qckZcVMtaA5iAHdm+sOo=
+	b=0RE4wf106ELmiTOycyN9Jw3uvwd4lIgBvBpQrHR12/X/qGBlR1gWkqp0qqiYUH2Fy
+	 2y2yytbCJ/kBdo4mGqWYMbKkq/gzL38HMeFSJx9cXOgJYOWWGmHi/Ve9MaLaMsBgo9
+	 I/uAt7I2fZPiVtonPaKgAe+nOjFexRqO+jaDilj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 033/733] cgroup/cpuset: Preserve boot-isolated CPUs on partition release
-Date: Thu, 17 Sep 2026 16:05:41 +0100
-Message-ID: <20260917151351.560072032@linuxfoundation.org>
+Subject: [PATCH 7.2 008/733] EDAC/igen6: Fix channel selection hash
+Date: Thu, 17 Sep 2026 16:05:16 +0100
+Message-ID: <20260917151350.845462353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,101 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 6c37d7e074a4be1ba8da59f4ed5df8977b3daa43 ]
+[ Upstream commit 540b79536f3a89a66c5b6c490110298d43025618 ]
 
-isolated_cpus tracks CPUs isolated with isolcpus= as well as CPUs in
-isolated cpuset partitions. When an isolated partition is released,
-isolated_cpus_update() removes its whole CPU mask. This also clears CPUs
-which were already isolated at boot.
+In channel selection hash mode, the hardware decoding logic always
+includes the channel interleave bit in XOR operations. However, the
+hash mask may or may not include this channel interleave bit. When
+the mask does include this bit, the current igen6_edac code performs
+XOR on the interleave bit twice, effectively ignoring it - which is
+incorrect.
 
-This can be reproduced on a cgroup v2 system booted with
-isolcpus=domain,15:
+Fix this issue by ensuring the hash mask always includes the interleave
+bit, so XOR is performed on the interleave bit exactly once.
 
-    cd /sys/fs/cgroup
-    echo +cpuset > cgroup.subtree_control
-    mkdir cpuset-repro
-    echo 15 > cpuset-repro/cpuset.cpus
-    echo isolated > cpuset-repro/cpuset.cpus.partition
-    echo member > cpuset-repro/cpuset.cpus.partition
-    cat cpuset.cpus.isolated
-
-CPU 15 is absent before the change. It must remain in
-cpuset.cpus.isolated after the partition is released.
-
-Update isolated_cpus one CPU at a time and keep CPUs outside the
-boot-time domain housekeeping mask isolated.
-
-Fixes: c188f33c864e ("cgroup/cpuset: Account for boot time isolated CPUs")
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260730024238.4096623-4-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ drivers/edac/igen6_edac.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 1c6d568006688..69ff86e03c630 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1220,6 +1220,28 @@ static void reset_partition_data(struct cpuset *cs)
- 		cpumask_copy(cs->effective_cpus, parent->effective_cpus);
- }
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 43b56a2eb5479..f1fb644154ae3 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -1009,14 +1009,22 @@ static void set_dimm_params(struct igen6_imc *imc, int chan)
  
-+/* Return true if isolated_cpus changes. */
-+static bool isolated_cpu_update(int new_prs, int cpu)
-+{
-+	lockdep_assert_held(&callback_lock);
-+	lockdep_assert_held(&cpuset_mutex);
-+
-+	if (new_prs == PRS_ISOLATED) {
-+		if (cpumask_test_cpu(cpu, isolated_cpus))
-+			return false;
-+		cpumask_set_cpu(cpu, isolated_cpus);
-+		return true;
-+	}
-+
-+	/* CPUs isolated at boot must remain isolated. */
-+	if (!cpumask_test_cpu(cpu,
-+			      housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)) ||
-+	    !cpumask_test_cpu(cpu, isolated_cpus))
-+		return false;
-+	cpumask_clear_cpu(cpu, isolated_cpus);
-+	return true;
-+}
-+
- /*
-  * isolated_cpus_update - Update the isolated_cpus mask
-  * @old_prs: old partition_root_state
-@@ -1228,19 +1250,16 @@ static void reset_partition_data(struct cpuset *cs)
-  */
- static void isolated_cpus_update(int old_prs, int new_prs, struct cpumask *xcpus)
+ static int decode_chan_idx(u64 addr, u64 mask, int intlv_bit)
  {
-+	bool updated = false;
-+	int cpu;
+-	u64 hash_addr = addr & mask, hash = 0;
+-	u64 intlv = (addr >> intlv_bit) & 1;
++	u64 hash_addr, hash = 0;
+ 	int i;
+ 
++	/*
++	 * In hash mode, the @intlv_bit is the lowest selected bit of @addr
++	 * to be XORed. While @mask may or may not include this @intlv_bit,
++	 * we enforce that @mask includes @intlv_bit to ensure @intlv_bit is
++	 * XORed exactly once.
++	 */
++	mask |= 1 << intlv_bit;
++	hash_addr = addr & mask;
 +
- 	WARN_ON_ONCE(old_prs == new_prs);
- 	lockdep_assert_held(&callback_lock);
- 	lockdep_assert_held(&cpuset_mutex);
--	if (new_prs == PRS_ISOLATED) {
--		if (cpumask_subset(xcpus, isolated_cpus))
--			return;
--		cpumask_or(isolated_cpus, isolated_cpus, xcpus);
--	} else {
--		if (!cpumask_intersects(xcpus, isolated_cpus))
--			return;
--		cpumask_andnot(isolated_cpus, isolated_cpus, xcpus);
--	}
--	update_housekeeping = true;
-+	for_each_cpu(cpu, xcpus)
-+		updated |= isolated_cpu_update(new_prs, cpu);
-+	if (updated)
-+		update_housekeeping = true;
+ 	for (i = 6; i < 20; i++)
+ 		hash ^= (hash_addr >> i) & 1;
+ 
+-	return (int)hash ^ intlv;
++	return (int)hash;
  }
  
- /*
+ static u64 decode_channel_addr(u64 addr, int intlv_bit)
 -- 
 2.53.0
 
