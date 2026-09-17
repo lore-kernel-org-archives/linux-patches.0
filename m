@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DBC4ABBBD;
-	Thu, 17 Sep 2026 16:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554CD4B44CE;
+	Thu, 17 Sep 2026 16:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660996; cv=none; b=BJYQILGX7Dj7AfwFrhNLxbfUAs0exC7+4fWznh0gF8bHFqdydpHT0/oKnHpoCXO8EsnXoSxznEAjh0e+/06U91GLlXeagVccH6ZB01Fn3J7ephxuhBX0ccB/aweFAfXwpniVwnG0niQIJdm82X+ckJwD6k3571F+sW5biJl1Fwo=
+	t=1789660999; cv=none; b=YN/wEemXpOxcxPM4W7tjF4lrA+qmKJxw5DmyO7I3VJ+T/E3EJ/jgwwgbzHkpOyCG5bYNfGs2eXWHdgmZPYt7Xn4zuriL8Jllw4VFf+saIRkcJK11Ss5gwbk/AkspL4yu6qjE8IHvrGOcX4t+z+/U0+jyjh/SROZC3fseVDwwXWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660996; c=relaxed/simple;
-	bh=cJ1h6f6ylLSe8WSFapGY7hft8hLJJz8bxd5Sgvp34AU=;
+	s=arc-20240116; t=1789660999; c=relaxed/simple;
+	bh=khegxiKlp7gaKzt10eE8RWOwLYBKsWF54Sr3kLxizr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZYI6hSC9zg6c0DESQlC5aL4kb960mT33h4aJQf1DYd4YyBaOTDCKNWeOV1QvQizmt4/xV96W1YpMriDUNUUyKvCboQBEKxZJuvEZ8QwonmHqp4NtfDYbuXSMLeWeeVbBlQRqi0dlXKAbOesfPkfZIxW7ScHfM+XyW3D1pKBk5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1wd8HOf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DNLxHN4qi95cLNCOT7D/Xt5JEqsUd/ruBPnjk3ydffpuQkx/CNZejVZCP1x9sFzZJQpfFxs12GDjgOYLePxruajHVja5ZPIeny+CiGRlauzpX4IVLOPC1es2XX8KJ1S1Kb+T57vCyg3HQl9eFnwz8ngoFtq5WhYaKzsr3gbyHNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1P7sxj4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1wd8HOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606931F000FF;
-	Thu, 17 Sep 2026 16:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1P7sxj4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514711F000FF;
+	Thu, 17 Sep 2026 16:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660994;
-	bh=6dNwHPfr4nEpPvYkXm2/fd+PxCbk8m5OLP+VpAytdP0=;
+	s=korg; t=1789660997;
+	bh=LcA0QS+dqM8s2g2MnAYTgHpi7vG+910HiDc0cO06quI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1wd8HOfrVQL1Xmlf6+K83g9wasYBNiwJAKPWw+GQpAw9Oyg0J0SqXi31Ad75sRPW
-	 bB9FDkDH83JZu9Fr61NjAzRxbFrqXMSaJbgrjtnA7g+ksXapiIkyuPSO0gLrHAIOoZ
-	 odQXOsXZw8QlIfKUpSOJWbL48iuB5XuiqQ9HyB9c=
+	b=1P7sxj4a3mwj8CH7lekoGhEdHMJlQvSccmp/1ldcnjEGnUgcupDujNMF1EGSHTBg2
+	 wtUAv6WgmlNnVnvx8kFRTeQzQ0Vrf1nsXJGxZ9vZR3hYE+zRcqSB1Up+eyUukwvd4j
+	 vArB9Wu7kJU2eohtaJ2QwTErBcUrdabWfywBUFOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0048/1250] dm-raid: only requeue bios when dm is suspending
-Date: Thu, 17 Sep 2026 15:57:23 +0100
-Message-ID: <20260917151553.241373638@linuxfoundation.org>
+Subject: [PATCH 6.18 0049/1250] spi: spi-qcom-qspi: Fix incomplete error handling in runtime PM
+Date: Thu, 17 Sep 2026 15:57:24 +0100
+Message-ID: <20260917151553.267748362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,103 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 97cb8be0fd4c50d310988e0822f7e91d1711e6f8 ]
+[ Upstream commit d283d5d4d9f6d081ddb65e371be26fffeb611c42 ]
 
-returning DM_MAPIO_REQUEUE from the target map() function only requeues
-the bio during noflush suspends. During regular operations or during
-flushing suspends, it fails the bio. Failing the bio during flushing
-suspends is the correct behavior here. We cannot handle the bio, and we
-cannot suspends while it is outstanding. But during normal operations,
-we should not push the bio back to dm. Instead, wait for the reshape
-to be resumed.
+The runtime PM functions had incomplete error handling that could leave the
+system in an inconsistent state. If any operation failed midway through
+suspend or resume, some resources would be left in the wrong state while
+others were already changed, leading to potential clock/power imbalances.
 
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reorder the suspend/resume sequences to avoid brownout risk by ensuring the
+performance state is set appropriately before clocks are enabled and clocks
+are disabled before dropping the performance state.
+
+Fix by adding proper error checking for all operations and using goto-based
+cleanup to ensure all successfully acquired resources are properly released
+on any error.
+
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260429-spi-nor-v5-2-993016c9711e@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 6 ++++++
- drivers/md/md.h      | 2 ++
- drivers/md/raid5.c   | 7 +++++--
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/spi/spi-qcom-qspi.c | 44 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index 4bacdc499984b..9eee490c029e7 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -3831,6 +3831,7 @@ static void raid_presuspend(struct dm_target *ti)
- 	 * resume, raid_postsuspend() is too late.
- 	 */
- 	set_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
-+	set_bit(MD_DM_SUSPENDING, &mddev->flags);
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index 3c08dad8bd3f9..44175367bbd00 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -820,20 +820,34 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
+ 	struct qcom_qspi *ctrl = spi_controller_get_devdata(host);
+ 	int ret;
  
- 	if (!reshape_interrupted(mddev))
- 		return;
-@@ -3847,13 +3848,16 @@ static void raid_presuspend(struct dm_target *ti)
- static void raid_presuspend_undo(struct dm_target *ti)
- {
- 	struct raid_set *rs = ti->private;
-+	struct mddev *mddev = &rs->md;
+-	/* Drop the performance state vote */
+-	dev_pm_opp_set_rate(dev, 0);
+ 	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
  
-+	clear_bit(MD_DM_SUSPENDING, &mddev->flags);
- 	clear_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
- }
- 
- static void raid_postsuspend(struct dm_target *ti)
- {
- 	struct raid_set *rs = ti->private;
-+	struct mddev *mddev = &rs->md;
- 
- 	if (!test_and_set_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
- 		/*
-@@ -3864,6 +3868,8 @@ static void raid_postsuspend(struct dm_target *ti)
- 		mddev_suspend(&rs->md, false);
- 		rs->md.ro = MD_RDONLY;
+ 	ret = icc_disable(ctrl->icc_path_cpu_to_qspi);
+ 	if (ret) {
+ 		dev_err_ratelimited(ctrl->dev, "%s: ICC disable failed for cpu: %d\n",
+ 			__func__, ret);
+-		return ret;
++		goto err_enable_clk;
  	}
-+	clear_bit(MD_DM_SUSPENDING, &mddev->flags);
+ 
+-	pinctrl_pm_select_sleep_state(dev);
++	ret = pinctrl_pm_select_sleep_state(dev);
++	if (ret)
++		goto err_enable_icc;
 +
++	/* Drop the performance state vote */
++	ret = dev_pm_opp_set_rate(dev, 0);
++	if (ret)
++		goto err_select_default_state;
+ 
+ 	return 0;
++
++err_select_default_state:
++	pinctrl_pm_select_default_state(dev);
++err_enable_icc:
++	icc_enable(ctrl->icc_path_cpu_to_qspi);
++err_enable_clk:
++	if (clk_bulk_prepare_enable(QSPI_NUM_CLKS, ctrl->clks))
++		dev_err_ratelimited(ctrl->dev, "Failed to re-enable clocks\n");
++	return ret;
  }
  
- static void attempt_restore_of_faulty_devices(struct raid_set *rs)
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index 7400f7739d2e6..bba0f6790c035 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -343,6 +343,7 @@ struct md_cluster_operations;
-  * @MD_HAS_SUPERBLOCK: There is persistence sb in member disks.
-  * @MD_FAILLAST_DEV: Allow last rdev to be removed.
-  * @MD_SERIALIZE_POLICY: Enforce write IO is not reordered, just used by raid1.
-+ * @MD_DM_SUSPENDING: This DM raid device is suspending.
-  *
-  * change UNSUPPORTED_MDDEV_FLAGS for each array type if new flag is added
-  */
-@@ -362,6 +363,7 @@ enum mddev_flags {
- 	MD_HAS_SUPERBLOCK,
- 	MD_FAILLAST_DEV,
- 	MD_SERIALIZE_POLICY,
-+	MD_DM_SUSPENDING,
- };
+ static int __maybe_unused qcom_qspi_runtime_resume(struct device *dev)
+@@ -842,20 +856,34 @@ static int __maybe_unused qcom_qspi_runtime_resume(struct device *dev)
+ 	struct qcom_qspi *ctrl = spi_controller_get_devdata(host);
+ 	int ret;
  
- enum mddev_sb_flags {
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 8ff8cce3da7bf..84168ce7a0ff6 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -6057,8 +6057,11 @@ static enum stripe_result make_stripe_request(struct mddev *mddev,
- 	raid5_release_stripe(sh);
- out:
- 	if (ret == STRIPE_SCHEDULE_AND_RETRY && reshape_interrupted(mddev)) {
--		bi->bi_status = BLK_STS_RESOURCE;
--		ret = STRIPE_WAIT_RESHAPE;
-+		if (!mddev_is_dm(mddev) ||
-+		    test_bit(MD_DM_SUSPENDING, &mddev->flags)) {
-+			bi->bi_status = BLK_STS_RESOURCE;
-+			ret = STRIPE_WAIT_RESHAPE;
-+		}
- 		pr_err_ratelimited("dm-raid456: io across reshape position while reshape can't make progress");
+-	pinctrl_pm_select_default_state(dev);
++	ret = dev_pm_opp_set_rate(dev, ctrl->last_speed * 4);
++	if (ret)
++		return ret;
++
++	ret = pinctrl_pm_select_default_state(dev);
++	if (ret)
++		goto err_opp_set_rate_zero;
+ 
+ 	ret = icc_enable(ctrl->icc_path_cpu_to_qspi);
+ 	if (ret) {
+ 		dev_err_ratelimited(ctrl->dev, "%s: ICC enable failed for cpu: %d\n",
+ 			__func__, ret);
+-		return ret;
++		goto err_select_sleep_state;
  	}
- 	return ret;
+ 
+ 	ret = clk_bulk_prepare_enable(QSPI_NUM_CLKS, ctrl->clks);
+ 	if (ret)
+-		return ret;
++		goto err_disable_icc;
+ 
+-	return dev_pm_opp_set_rate(dev, ctrl->last_speed * 4);
++	return 0;
++
++err_disable_icc:
++	icc_disable(ctrl->icc_path_cpu_to_qspi);
++err_select_sleep_state:
++	pinctrl_pm_select_sleep_state(dev);
++err_opp_set_rate_zero:
++	dev_pm_opp_set_rate(dev, 0);
++	return ret;
+ }
+ 
+ static int __maybe_unused qcom_qspi_suspend(struct device *dev)
 -- 
 2.53.0
 
