@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CC14F85D6;
-	Thu, 17 Sep 2026 17:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7739849D588;
+	Thu, 17 Sep 2026 17:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665740; cv=none; b=SYcr2IU5jX4Dm7s1B3E5AH58R/kHmz1FYjBS3jlwf7mGN1IERJ6rzHGoiOLTuTZ8PxsTXoHtdMs1RcWucsp4blkWOkvB+mlDuQ1X3qwmzNcGq5xdlIsxPs0sGLkQSWF+OfQSSlV4/twpaUDLIWVCgL9f5cJTyHoWi1rGxIg/5XY=
+	t=1789665743; cv=none; b=Zu/JMCM1Ud1cURBThEYpewzF7kGDnFin63vPQyqTQtAsbRQc1437qeF1qNT2Y7ytV3zSnX8FnVBB8V0Zjt5Jyp5ZIexff2ZeY3NOIvSCxQg+rKLD/K074vdGKPgrb9QCGvg0/d933AoUYImBeudc4PTaFQZH8sEXcicYEbJa/j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665740; c=relaxed/simple;
-	bh=ZRfSVOG72R5/8YupOH0I3Mff3+Cv1npyyPWdXAsvK/w=;
+	s=arc-20240116; t=1789665743; c=relaxed/simple;
+	bh=eYl0IzNH3r1Lj2tQcl9y/cODrEKtTe470ioiSAjCNZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFoSzJQEQBnXqwUTOlTBiZKIUPnMDU7HRnmJ79Y5qA/NgTaPjQ68MmexarkOayHKDa1QeMrkyAm1N5lC/XWVKuRINZVgKJWOVKt9B7+ujyvlwVVhLNVqlxek3x7O5cj8F/vYQ0Opr1NzqDltSQHqN22F2ab9oOjuRecLsAw/Ao8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnccYR/h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MFEAt002c+bFh632AQ3WqQG3xDgsXIArhGIj5DNzN/lJ4ZFE7PZvlcBUj+/CfNae4hE9AzqjwYsTv6BVih9I30ZLaYnsE35YO79Gccd93SmIaICkrlGQaEathffnPOa3Kgq+BI/BkfNitDF2b/isaxeKiON9TY4zYCVDtlxqa9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anK5YiTh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnccYR/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94961F008A0;
-	Thu, 17 Sep 2026 17:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anK5YiTh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B314C1F000FF;
+	Thu, 17 Sep 2026 17:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665738;
-	bh=wr13hgj/QXZ66Kd4Yycnku0M+MCmvvJ4W4IVgMAWylI=;
+	s=korg; t=1789665741;
+	bh=DD/6DXH4Ts/f4zhcS8lEUvBGecNIqfaBqPrwpR/rtUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnccYR/h5cFEPj9dIyHFNQhhqImbBa7A7TP0SbgbQ4hleVgNa/P9qqwbHhvkVemEK
-	 xMhfNysu+U6r3z3sqRKIxroNm6Vu//LrGE6jtyln4fuw96schLNyImtwTInGX58sq/
-	 x1p4ji0q4gpa3Lil2X+C51c7v3j7/YgUSG2XMUFw=
+	b=anK5YiThYIGRRjWX/aZ91i9Y6wRuC1gERmmWE6NOomZx4axak3da35dpYvX4FXuTF
+	 76Mk54LD5zC7o1oUlUUvzFkxE6bfk4Cwtb8kA854uEH85WqGVzS9apPPE5sSud7mTj
+	 WKQoExzHBghsvuinxPM9H1IWgW8T6P0cgMa/Go7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0803/1250] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
-Date: Thu, 17 Sep 2026 16:09:58 +0100
-Message-ID: <20260917151613.677663182@linuxfoundation.org>
+Subject: [PATCH 6.18 0804/1250] net: reject oversized tx_queue_len at netlink parse time
+Date: Thu, 17 Sep 2026 16:09:59 +0100
+Message-ID: <20260917151613.706359081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,77 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
+[ Upstream commit 1aa9e143bf51405665a793d4cc925e1c4f0c5922 ]
 
-Several subsystems allocate ring buffers sized by dev->tx_queue_len
-with no upper bound. An unprivileged user (via unshare -Urn) can set a
-huge tx_queue_len and exhaust global memory with ring allocations:
+rtnl_create_link() assigns IFLA_TXQLEN directly to dev->tx_queue_len
+without going through netif_change_tx_queue_len(), so a device created
+with "ip link add ... txqueuelen 500000" bypasses the S16_MAX cap and
+still triggers the oversized ring allocations in pfifo_fast, tun and
+tap. The veth peer nest (rtnl_nla_parse_ifinfomsg()) and the
+RTM_NEWLINK-on-existing-device path reach the same sinks.
 
-- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
-  allocate 3 skb_array rings of tx_queue_len entries each.
-- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
-  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
-- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
-  ptr_rings to tx_queue_len on the same notifier.
+Enforce the cap in ifla_policy instead: IFLA_TXQLEN becomes
+NLA_POLICY_FULL_RANGE(NLA_U32, &txqlen_range) with
+txqlen_range = { .min = 0, .max = S16_MAX }. All netlink consumers
+parse against this policy - rtnl_setlink(), rtnl_newlink() (create
+and change), and the veth peer nest - so every netlink path is capped
+at parse time and rejects the attribute with -ERANGE plus a proper
+"integer out of range" extack message before any device state is
+modified (the RTM_SETLINK half-application wart is gone with it).
 
-netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
-sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
-there so the oversized value is rejected at set time. This takes
-effect whether the device is up or down, before dev->tx_queue_len is
-written, before any notifier fires, and before any ring is allocated.
-The "> S16_MAX" check also subsumes the previous unsigned-long
-truncation test, and a negative ifr_qlen from the ioctl lands far
-above the cap after conversion, so both old failure modes are covered
-by the one comparison.
-
-tx_queue_len is ambigious: both a per-ring sizing multiplier and a
-default queue-length/limit knob for consumers that allocate
-nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
-direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
-value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
-policy in patch 2/3 while staying a legitimate queue length on
-high-BDP paths; the ring-memory trade-off of a shared knob is
-disclosed below.
+Document the bound in the rt-link.yaml netlink spec.
 
 Conditions to recreate the bug:
 - CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
-- Unprivileged user in a fresh user+net namespace (unshare -Urn).
-- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
-  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
-- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
-  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
-  512MB guest.
-- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
-- On the fixed kernel the oversized tx_queue_len is rejected with
-  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
-  create, sysfs, ioctl - the latter two via this check, the former
-  two via this check and the 2/3 parse policy respectively).
+- Unprivileged user in a fresh user+net namespace (unshare -Urn):
+  ip link add v0 txqueuelen 500000 type veth peer name v1
+  -> on the fixed kernel this is rejected with -ERANGE ("integer out
+  of range" extack) instead of installing an oversized tx_queue_len
+  that later inflates pfifo_fast/tun/tap ring allocations.
+- ip link set v0 txqueuelen 500000 is likewise rejected at parse time.
 
-Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
 Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com.2
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/netlink/specs/rt-link.yaml | 2 ++
+ net/core/rtnetlink.c                     | 7 ++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index ca8d0773040b9..48983bac5b539 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9851,7 +9851,7 @@ int netif_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
- 	unsigned int orig_len = dev->tx_queue_len;
- 	int res;
+diff --git a/Documentation/netlink/specs/rt-link.yaml b/Documentation/netlink/specs/rt-link.yaml
+index 692b3cd47c310..64db9c0b446e4 100644
+--- a/Documentation/netlink/specs/rt-link.yaml
++++ b/Documentation/netlink/specs/rt-link.yaml
+@@ -881,6 +881,8 @@ attribute-sets:
+       -
+         name: txqlen
+         type: u32
++        checks:
++          max: 32767
+       -
+         name: map
+         type: binary
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 4909f20ff4d63..b0e6a6eff23ba 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2214,6 +2214,11 @@ static int rtnl_fill_ifinfo(struct sk_buff *skb,
+ 	return -EMSGSIZE;
+ }
  
--	if (new_len != (unsigned int)new_len)
-+	if (new_len > S16_MAX)
- 		return -ERANGE;
- 
- 	if (new_len != orig_len) {
++static const struct netlink_range_validation txqlen_range = {
++	.min = 0,
++	.max = S16_MAX,
++};
++
+ static const struct nla_policy ifla_policy[IFLA_MAX+1] = {
+ 	[IFLA_UNSPEC]		= { .strict_start_type = IFLA_DPLL_PIN },
+ 	[IFLA_IFNAME]		= { .type = NLA_STRING, .len = IFNAMSIZ-1 },
+@@ -2224,7 +2229,7 @@ static const struct nla_policy ifla_policy[IFLA_MAX+1] = {
+ 	[IFLA_LINK]		= { .type = NLA_U32 },
+ 	[IFLA_MASTER]		= { .type = NLA_U32 },
+ 	[IFLA_CARRIER]		= { .type = NLA_U8 },
+-	[IFLA_TXQLEN]		= { .type = NLA_U32 },
++	[IFLA_TXQLEN]		= NLA_POLICY_FULL_RANGE(NLA_U32, &txqlen_range),
+ 	[IFLA_WEIGHT]		= { .type = NLA_U32 },
+ 	[IFLA_OPERSTATE]	= { .type = NLA_U8 },
+ 	[IFLA_LINKMODE]		= { .type = NLA_U8 },
 -- 
 2.53.0
 
