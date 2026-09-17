@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A9C2931F8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F1D4B44D0;
 	Thu, 17 Sep 2026 15:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659299; cv=none; b=MhV/scw+b9B6GivgYfzm26u8CIaRtR8IXuLZbagYWfT57OAEfR5JnkSZVho76bONiDpUtviGqUlPk6mxX0Y7pQTmx0nomngmnfjAc42ei36WfJ4OECrCHO8kwXC1Utcoh/QX5CKx9+LxmJYAxIQbSD6DQEHGMTYiZQ08abgse40=
+	t=1789659300; cv=none; b=eyc5xLgakTev+BIrcH31LS25Wm6vmzgnc5wqEl7CFDDuAGzC4kml/p9+ROC0WJdoZnClNlyxsnjWGxh99Sf9PR3w+ScETzpOsQvVGmzPcotCDHgcs7QWb6Rv3ZLGy6RZF5/YMcgQ0Nafo5F9Coh7yU65/1+uDX/ep0Jx54tMZpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659299; c=relaxed/simple;
-	bh=xwqwzdeCIZinAsGjskzL1hb+fmIFMJe5noRpWSv5cug=;
+	s=arc-20240116; t=1789659300; c=relaxed/simple;
+	bh=Eqeu3+YugKY207xFGnWxp9Y94l3C05MYAELkcmiJfgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpFkAGGTYsUVEUGpXjw40clShsAc5nxuxqY3ubX3G13crZyavxM/2fHEMyE2Oi4OJRFXMuvaSKlMnkyGkAXCRUkfhSRawZ9IYTAw4fkMSGv+hFhF8zkNsCW+WmlIlWT6gVFXLRGtuBTDXSlUfr3mHPp6zw+icjH/hJrpyr4tXZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTlE8bgk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g00Q6maiapJk/MxuQjmVeDEkCs4ilLnnErrQvwN8P1fTm3hdRIUhvFtTaXxBz0U8Lt3lk/93I1Qd/+9CnpVtoRzTy0cB8hdUJTPbc5u/ezSI5FuPbKb2nOuQyvwcXEZSrgUwOA/cVTst8aHjw4UzFZ6R0UYBjI1oTa77PAONxq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLV9sji6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTlE8bgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDB71F0089A;
-	Thu, 17 Sep 2026 15:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLV9sji6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D800B1F000FF;
+	Thu, 17 Sep 2026 15:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659291;
-	bh=D9l9nJfCTxRHU84CJxYgXo6QTRNIGnV/jH/LKeGiboY=;
+	s=korg; t=1789659294;
+	bh=Cqg/925vx6G+bHocNaqDzY/mCOLtl7TodVJdemUu2kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTlE8bgkBTv2KbNPuZt1vw2lO1tEfWV0vFQHyDoAytclj5ngxOKXkD59ARfagVGX9
-	 u97sIyPMlZj1QNqZXiXhKatFTIH3IBknu7Kq42JzLTHxLevr32WasWl5ry9iOPovc7
-	 S/C9oLU/8ZJiwoEirUH63ZUsydL9RavQs80wFggk=
+	b=BLV9sji6JIsYzgYh6QGUabK8R3Ij/+z3tBMXkTnxK+3OyLi7uNye56jeU9I9InIvc
+	 Gqq0WNNevP4wIB0odXgIJTHGLFdMIpXUvcZhL/GliBR6YJJXSPkWRTZmRQnl2/bh3W
+	 1tP3dAlxr+LSUmxdQeU3KHc7PT9iwOrEtHeF2WJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
+	"Shubhang Kaushik (Ampere)" <sh@gentwo.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 169/733] sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate
-Date: Thu, 17 Sep 2026 16:07:57 +0100
-Message-ID: <20260917151355.311082731@linuxfoundation.org>
+Subject: [PATCH 7.2 170/733] sched/core: Skip rq->avg_idle update without a valid idle_stamp
+Date: Thu, 17 Sep 2026 16:07:58 +0100
+Message-ID: <20260917151355.337887258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,155 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Shubhang Kaushik (Ampere) <sh@gentwo.org>
 
-[ Upstream commit dae5c0292080dd7b9c7d784268dcf443f1f3d15e ]
+[ Upstream commit c6dcd97c8be75f052a1ca52cf79b03e7292962f1 ]
 
-A migrate_disable()'d RT task cannot be moved to another CPU, but the
-scheduler still keeps such a task on that CPU's pushable list
-(rq->rt.pushable_tasks) and still marks the runqueue RT-overloaded
-(rq->rt.overloaded = 1). So the RT balancer keeps treating this CPU as
-having a task to move away, and keeps trying to move the task, but the
-push can never succeed. When the head is pinned, push_rt_task() does not
-give up either. It falls back to pushing rq->curr instead, using the
-per-CPU stopper, as added by commit a7c81556ec4d ("sched: Fix
-migrate_disable() vs rt/dl balancing").
+Commit 4b603f1551a73 ("sched: Update rq->avg_idle when a task is moved
+to an idle CPU") moved rq->avg_idle accounting out of the wakeup path and
+into put_prev_task_idle(), so that the idle interval is consumed whenever
+the idle task is switched out.
 
-The CPU spends tens of milliseconds in this retry loop. The core is
-isolated for real-time work, but during the loop nearly half of its time
-is consumed by pushes that cannot succeed.
+The wakeup-side accounting that it replaced only updated rq->avg_idle
+when rq->idle_stamp was non-zero. The new helper lost that validity
+check and unconditionally computes:
 
-An ftrace capture of the affected CPU, with sched_switch enabled and
-commit 94894c9c477e ("sched/rt: Skip currently executing CPU in
-rto_next_cpu()") applied, shows where the CPU time went. Two SCHED_FIFO
-tasks at equal priority shared the CPU, taskA migrate_disable()'d and
-queued, taskB as rq->curr. In one 89 ms window, taskB got only 52 ms of
-CPU. The other 37 ms went to the stopper thread.
+	rq_clock(rq) - rq->idle_stamp
 
-The scheduler kept trying to push taskA, the pinned head of the pushable
-list, fell back to pushing taskB instead, and woke the stopper 5204
-times. Every one of those pushes failed and no task was moved. taskA
-stayed runnable and queued the whole time, and never ran.
+If rq->idle_stamp is zero, this uses rq_clock(rq) as the sample. That is
+not a valid idle duration and can immediately drive rq->avg_idle to its
+clamp.
 
-Pushing taskB fails on a re-check. find_lock_lowest_rq() drops the rq
-lock to take the target rq lock, then checks again with
-"task != pick_next_pushable_task(rq)".
+This can happen when sched_balance_newidle() returns before setting
+rq->idle_stamp, for example when this_rq->ttwu_pending is set. In that
+case the rq can switch to the idle task with idle_stamp still zero and
+leave idle again when the pending wakeup is processed.
 
-The task being pushed is taskB, but the pick returns taskA, the head of
-the pushable list. taskB is rq->curr, and set_next_task_rt() removes the
-running task from that list, so taskB can never be the head. The check
-expects a candidate taken from the pushable list, but the fallback
-pushes rq->curr, which is never on that list. So the check fails every
-time.
+Other paths can also switch to the idle task without setting
+rq->idle_stamp via newidle_balance(), for example find_proxy_task() or
+force-idling.
 
-   .--> push-IPI arrives
-   |          |
-   |          v
-   |     pushable head = taskA   ->  pinned, cannot be pushed
-   |          |
-   |          v
-   |     so push taskB instead   ->  wake migration/N, a stop-class
-   |          |                      thread, so it preempts taskB
-   |          v
-   |     re-check compares taskB against the pushable head,
-   |     which is still taskA                        ->  give up
-   |          |
-   |          v
-   |     nothing moved, taskA still queued, rq still overloaded
-   |          |
-   '----------'
-         repeats every ~17 us, 5204 times, for 89 ms
+Restore the idle_stamp validity check in update_rq_avg_idle() and skip
+the rq->avg_idle update when there is no measured idle interval.
 
-   The loop cannot stop itself. Every round leaves the runqueue
-   exactly as it was, so the next push-IPI does the same thing. In
-   the capture it ended only when taskB went to sleep on its own.
-   taskA was then picked locally and left the pushable list.
-
-   CPU time per task in the window, from sched_switch:
-
-     taskB         51.95 ms   real work
-     migration/N   37.18 ms   nothing moved
-     taskA          0.00 ms   queued the whole time, never picked
-     idle           0.01 ms
-
-   Counts over the same window:
-
-      7667  push-IPIs handled on this CPU
-     17481  pick_next_pushable_task() returned taskA, still pinned
-      5204  find_lock_lowest_rq() gave up on the re-check
-         1  push that actually completed
-         0  migrations of taskA
-
-   The CPU times and the window length come from the standard
-   sched_switch tracepoint. The counts needed tracepoints added inside
-   the RT balancer for this investigation.
-
-The self-IPI path is closed by the rto_next_cpu() fix above, and that
-part works. But the runqueue is still marked overloaded, because the
-pinned task is still advertised as pushable. Other CPUs now send the
-push-IPIs during their own RT balancing, and the same loop runs again.
-Closing the self-IPI path did not stop a pinned task from triggering
-push balancing.
-
-A pinned task should never have been returned as a push candidate in the
-first place. A migrate_disable()'d task cannot be migrated, so it
-belongs in the same skip that was added for on_cpu tasks by
-commit e0ca8991b2de ("sched: Make class_schedulers avoid pushing
-current, and get rid of proxy_tag_curr()"). Add is_migration_disabled()
-to the skip condition in pick_next_pushable_task() and
-pick_next_pushable_dl_task().
-
-With the skip in place, if the pinned task is the only extra runnable
-task the helpers return NULL, push_rt_task() and push_dl_task() give up
-early, and no stopper is woken. The pinned task then runs locally once
-curr yields. If a task that really can be migrated is queued behind the
-pinned head, it is now picked and pushed for real.
-
-This makes the fallback that pushes rq->curr unreachable when the
-pushable head is migrate-disabled. Nothing is lost, because that path
-was always stopped by the re-check described above. In the capture it
-ran 5204 times and moved nothing.
-
-Fixes: a7c81556ec4d ("sched: Fix migrate_disable() vs rt/dl balancing")
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Fixes: 4b603f1551a73 ("sched: Update rq->avg_idle when a task is moved to an idle CPU")
+Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260830073746.2189355-1-snishika@redhat.com
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260807-master-v3-1-c328354efed3@gentwo.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 4 ++--
- kernel/sched/rt.c       | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ kernel/sched/core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 857dbe3519a86..0663c00c41c04 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -3028,8 +3028,8 @@ static struct task_struct *pick_next_pushable_dl_task(struct rq *rq)
- 	next_node = rb_first_cached(&rq->dl.pushable_dl_tasks_root);
- 	while (next_node) {
- 		i = __node_2_pdl(next_node);
--		/* make sure task isn't on_cpu (possible with proxy-exec) */
--		if (!task_on_cpu(rq, i)) {
-+		/* skip tasks that cannot be migrated */
-+		if (!task_on_cpu(rq, i) && !is_migration_disabled(i)) {
- 			p = i;
- 			break;
- 		}
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e6e5f8a2caafb..85303add726df 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1872,8 +1872,8 @@ static struct task_struct *pick_next_pushable_task(struct rq *rq)
- 		return NULL;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 87caa1290fad6..d0992ecda4c72 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -3743,11 +3743,17 @@ static inline void ttwu_do_wakeup(struct task_struct *p)
  
- 	plist_for_each_entry(i, head, pushable_tasks) {
--		/* make sure task isn't on_cpu (possible with proxy-exec) */
--		if (!task_on_cpu(rq, i)) {
-+		/* skip tasks that cannot be migrated */
-+		if (!task_on_cpu(rq, i) && !is_migration_disabled(i)) {
- 			p = i;
- 			break;
- 		}
+ void update_rq_avg_idle(struct rq *rq)
+ {
+-	u64 delta = rq_clock(rq) - rq->idle_stamp;
+-	u64 max = 2*rq->max_idle_balance_cost;
++	u64 idle_stamp = rq->idle_stamp;
++	u64 delta, max;
++
++	if (!idle_stamp)
++		return;
++
++	delta = rq_clock(rq) - idle_stamp;
+ 
+ 	update_avg(&rq->avg_idle, delta);
+ 
++	max = 2 * rq->max_idle_balance_cost;
+ 	if (rq->avg_idle > max)
+ 		rq->avg_idle = max;
+ 	rq->idle_stamp = 0;
 -- 
 2.53.0
 
