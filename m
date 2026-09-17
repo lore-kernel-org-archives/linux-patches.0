@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD9D4E5358;
-	Thu, 17 Sep 2026 18:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F5D4E77FE;
+	Thu, 17 Sep 2026 18:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668965; cv=none; b=d/YuRg2VKu1RDs705XifJ/WlEHauD7GMtpiqnu60hq9m7wyYdlUz4R56gU8PK3IqqbYDzyFQrgxW4LUzWF5g/PodnVfo2aQbF8GwvAn2I2pJjzuJ8XNpZy4I1td5dvsdcV805goYlrjGwCpxMwCcf1IQC7QQUZhOg0te3bENskc=
+	t=1789668968; cv=none; b=D0J+ahmdQfFA3sR1NsH7EjzvWH+RrjYUJrjTGJr20ZUEXUiD0voK+8Scuw9OL6lleKF0jtH0A205zfIInL7L+Y35D4QapzrkT+2ZUFkrXx084btGaYU+SzO24iGF9xVbk6g6vXj5X81tB7++zXWKZT1RXvQlPALqdsf5G4QPtv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668965; c=relaxed/simple;
-	bh=fPbQ29Ni1/j4Af12VL7ai1Nja5BScPYDHf4/k/nstsU=;
+	s=arc-20240116; t=1789668968; c=relaxed/simple;
+	bh=vAObw3jz34nhnZSmS+8xomG4E3RLV7cveYflsLO2eMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O70vDHBg5nukayi37ZyV++QvL2yrec7knLr8hWg0AcTV1kEJcns2bJxKwVtpufluM1xsCboaEuORk7bpW91IonZ0mahhp0OqiV+cSsp6jbn4pro4OLAlVwFLfyWV7rGN2h0u15Lt9f7XWFcc6IwcQLCL9D7K9iXVVLh4t99s2WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=armLKBG8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1lRw2+Mo6HCfoO4/BAd2QOoLHfhfqbfe8H9C9tfxltEjw4R/Uvi11Y6ikcRP0Rclxg8jOO/TXFj3yZtE+pART2hwOcJk0bdP/N8ahdymnMTTSbJ6110mNov1j5XOLsRQVOinDBFiQwNpzWwnyNUjn9W91Sqr8qu1aCparQ1VuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/Dtaal+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="armLKBG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAEA1F000FF;
-	Thu, 17 Sep 2026 18:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/Dtaal+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885E21F000FF;
+	Thu, 17 Sep 2026 18:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668964;
-	bh=/arXvkOp4ko/z5b90venVxR5zbs4uSSTaakRSZvBJA8=;
+	s=korg; t=1789668967;
+	bh=ZTpfsS5PyGE5ZOzt9F1Mv6da7eHjKvUEpmHsZ6lIDow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=armLKBG8WCyx9MEYSVDTE2i/9cj+xjKHdGp8bzTw4TWFz4u52iN2GY0bLU0+bN1Qm
-	 Drcxv8GtC6cH+uBjiNSYAEVCsmMIf/9VPjIhtUFGUR+fOyWHHmwjX8Ryuew4nqXZ0N
-	 Ag1avyYjeHP0diyzPN9WF3AGibTsD9y8I5PvVcsU=
+	b=K/Dtaal+ZEq/USTHjNIpKns9KXHCdus6VVFEncCMiE4kS7MrBpUNCJQ0I+nxGFk1U
+	 qKSnVpsMK3VTSKNMbaTeu4Oc4uRk+KArD8GTS2/BD2XEZOW1POAU+ZJaZ5uXjaIqZt
+	 bK12lP9vRqLqfd/Zjork41klF5rTkSAh5TBEizEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0561/1102] net: ethernet: oa_tc6: Interrupt is active low, level triggered.
-Date: Thu, 17 Sep 2026 16:08:24 +0100
-Message-ID: <20260917151553.960002335@linuxfoundation.org>
+Subject: [PATCH 6.12 0562/1102] net: ethernet: oa_tc6: Handle the OA TC6 SPI protected mode
+Date: Thu, 17 Sep 2026 16:08:25 +0100
+Message-ID: <20260917151553.989274075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,270 +46,263 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260917150825.SmszJzqPI5xCsg99m7IoaMq3s5ozvwoTqMxiiDtM48E@z>
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+From: Ciprian Regus <ciprian.regus@analog.com>
 
-[ Upstream commit b542d13fab0f556660ce5f10179fb3ae66bdb9a4 ]
+[ Upstream commit 7d0e4c4b8c85d8ea2c77a90e1f7a7f74ce531e52 ]
 
-According OPEN Alliance 10BASET1x MAC-PHY Serial Interface
-specification, interrupt is active low, level triggered.
+Implement the OA TC6 standard defined protected mode for control (register
+access) transactions. In addition to the current register access formats
+the oa_tc6 driver handles, 1's complement values of the data field
+are included (by both the host and the MACPHY) in the SPI transfer frames.
+This feature acts as an integrity check.
 
-Code used edge triggered interrupt which has the risk of losing an
-interrupt on instances like when interrupt is disabled. Level
-triggered interrupt won't be deasserted unless handler runs and
-clear the interrupting conditions.
+Control write transactions look like this:
 
-Interrupt handler mechanism is changed to threaded irq from
-interrupt handler and kernel thread waiting on work queue.
-Threaded irq mechanism is best suited for level triggered interrupt
-as it disables the interrupt until handler is run in thread level,
-while giving us an ability to have interrupt context handler to
-signal the threaded irq handler.
+          |<- 32 bits ->|<--- data_size --->|<- 32 bits ->|
+    MOSI: | ctrl header | reg write data    | ignored     |
+    MISO: | (discard)   | echoed ctrl hdr   | echoed data |
 
-Introduced a logic to disable the device interrupt on error. Error
-could be due in data chunk's header and footer or SPI interface itself.
-This will avoid having repeated interrupts, in case the driver couldn't
-recover from the error condition with the available recovery mechanism.
+    data_size (LEN = number of registers to read in a sequence):
+      Unprotected: 32 x (LEN + 1) bits
+      Protected:   2 x 32 x (LEN + 1) bits
 
-Fixes: 2c6ce5354453 ("net: ethernet: oa_tc6: implement mac-phy interrupt")
-Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Link: https://patch.msgid.link/20260611-level-trigger-v5-1-4533a9e85ce2@onsemi.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Control read transaction:
+
+          |<- 32 bits ->|<--- 32 bits --> |<- data_size ->|
+    MOSI: | ctrl header | ignored ...                     |
+    MISO: | (discard)   | echoed ctrl hdr | reg read data |
+
+    data_size (LEN = number of registers to read in a sequence):
+      Unprotected: 32 x (LEN + 1) bits
+      Protected:   2 x 32 x (LEN + 1) bits
+
+Register data format ("reg write data" and "reg read data"):
+
+    Unprotected:
+      | W1 (normal) | W2 (normal) | ... | Wx (normal) |
+
+    Protected:
+    | W1 (normal) | W1 (complement) | ... | Wx (normal) | Wx (complement)|
+
+The protected mode state can be read from the bit 5 of CONFIG0 (0x4)
+register, and this setting is usually only configured during the
+MACPHY's reset (depending on the device it can be done by setting the
+state of a pin). We can read the protected mode configuration before any
+other register access and since the SPI transfer is initially sized for an
+unprotected read, the MACPHY's complement words are never clocked out
+and no checking is required. The data transactions (Ethernet frames)
+remain unchanged.
+
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Link: https://patch.msgid.link/20260708-adin1140-driver-v5-2-4aca7b51a58b@analog.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 172c974113bf ("net: ethernet: oa_tc6: Improve the error recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c | 126 ++++++++++++++++++++--------------
- 1 file changed, 76 insertions(+), 50 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 93 ++++++++++++++++++++++++++++-------
+ 1 file changed, 76 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
-index cfe1f6e3cd12c..cf5249f81651f 100644
+index cf5249f81651f..3321ed4201963 100644
 --- a/drivers/net/ethernet/oa_tc6.c
 +++ b/drivers/net/ethernet/oa_tc6.c
-@@ -7,6 +7,7 @@
+@@ -25,6 +25,7 @@
+ #define OA_TC6_REG_CONFIG0			0x0004
+ #define CONFIG0_SYNC				BIT(15)
+ #define CONFIG0_ZARFE_ENABLE			BIT(12)
++#define CONFIG0_PROTE				BIT(5)
  
- #include <linux/bitfield.h>
- #include <linux/iopoll.h>
-+#include <linux/interrupt.h>
- #include <linux/mdio.h>
- #include <linux/phy.h>
- #include <linux/oa_tc6.h>
-@@ -44,6 +45,8 @@
- #define INT_MASK0_LOSS_OF_FRAME_ERR_MASK	BIT(4)
- #define INT_MASK0_RX_BUFFER_OVERFLOW_ERR_MASK	BIT(3)
- #define INT_MASK0_TX_PROTOCOL_ERR_MASK		BIT(0)
-+#define INT_MASK0_ALL_INTERRUPTS                (GENMASK(5, 0) | \
-+						 GENMASK(12, 7))
+ /* Status Register #0 */
+ #define OA_TC6_REG_STATUS0			0x0008
+@@ -90,14 +91,17 @@
+ #define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
+ #define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
  
- /* PHY Clause 22 registers base address and mask */
- #define OA_TC6_PHY_STD_REG_ADDR_BASE		0xFF00
-@@ -121,14 +124,13 @@ struct oa_tc6 {
- 	struct sk_buff *ongoing_tx_skb;
- 	struct sk_buff *waiting_tx_skb;
- 	struct sk_buff *rx_skb;
--	struct task_struct *spi_thread;
--	wait_queue_head_t spi_wq;
- 	u16 tx_skb_offset;
- 	u16 spi_data_tx_buf_offset;
- 	u16 tx_credits;
- 	u8 rx_chunks_available;
++#define OA_TC6_CTRL_PROT_REPLY_SIZE		4
+ #define OA_TC6_CTRL_HEADER_SIZE			4
+ #define OA_TC6_CTRL_REG_VALUE_SIZE		4
+ #define OA_TC6_CTRL_IGNORED_SIZE		4
+ #define OA_TC6_CTRL_MAX_REGISTERS		128
+-#define OA_TC6_CTRL_SPI_BUF_SIZE		(OA_TC6_CTRL_HEADER_SIZE +\
+-						(OA_TC6_CTRL_MAX_REGISTERS *\
+-						OA_TC6_CTRL_REG_VALUE_SIZE) +\
+-						OA_TC6_CTRL_IGNORED_SIZE)
++#define OA_TC6_CTRL_SPI_BUF_SIZE	(OA_TC6_CTRL_HEADER_SIZE +\
++					(OA_TC6_CTRL_MAX_REGISTERS *\
++					(OA_TC6_CTRL_REG_VALUE_SIZE +\
++					OA_TC6_CTRL_PROT_REPLY_SIZE)) +\
++					OA_TC6_CTRL_IGNORED_SIZE)
++
+ #define OA_TC6_CHUNK_PAYLOAD_SIZE		64
+ #define OA_TC6_DATA_HEADER_SIZE			4
+ #define OA_TC6_CHUNK_SIZE			(OA_TC6_DATA_HEADER_SIZE +\
+@@ -131,6 +135,7 @@ struct oa_tc6 {
  	bool rx_buf_overflow;
  	bool int_flag;
-+	bool disable_traffic;
+ 	bool disable_traffic;
++	bool prot_ctrl;
  };
  
  enum oa_tc6_header_type {
-@@ -669,6 +671,38 @@ static void oa_tc6_cleanup_ongoing_tx_skb(struct oa_tc6 *tc6)
- 	}
+@@ -214,25 +219,36 @@ static void oa_tc6_update_ctrl_write_data(struct oa_tc6 *tc6, u32 value[],
+ {
+ 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf + OA_TC6_CTRL_HEADER_SIZE;
+ 
+-	for (int i = 0; i < length; i++)
++	for (int i = 0; i < length; i++) {
+ 		*tx_buf++ = cpu_to_be32(value[i]);
++		if (tc6->prot_ctrl)
++			*tx_buf++ = cpu_to_be32(~value[i]);
++	}
  }
  
-+static void oa_tc6_cleanup_waiting_tx_skb(struct oa_tc6 *tc6)
-+{
-+	if (tc6->waiting_tx_skb) {
-+		tc6->netdev->stats.tx_dropped++;
-+		kfree_skb(tc6->waiting_tx_skb);
-+		tc6->waiting_tx_skb = NULL;
-+	}
-+}
-+
-+static void oa_tc6_free_pending_skbs(struct oa_tc6 *tc6)
-+{
-+	oa_tc6_cleanup_ongoing_tx_skb(tc6);
-+	oa_tc6_cleanup_ongoing_rx_skb(tc6);
-+	oa_tc6_cleanup_waiting_tx_skb(tc6);
-+}
-+
-+/* If the failure is at SPI interface level, masking and clearing
-+ * the interrupt of the device won't work. Since SPI interrupt is
-+ * disabled, it should stop the repeated interrupts.
-+ */
-+static void oa_tc6_disable_traffic(struct oa_tc6 *tc6)
-+{
-+	u32 regval = INT_MASK0_ALL_INTERRUPTS;
-+
-+	tc6->disable_traffic = true;
-+	oa_tc6_free_pending_skbs(tc6);
-+	oa_tc6_write_register(tc6, OA_TC6_REG_INT_MASK0, regval);
-+	oa_tc6_read_register(tc6, OA_TC6_REG_STATUS0, &regval);
-+	oa_tc6_write_register(tc6, OA_TC6_REG_STATUS0, regval);
-+	dev_err(&tc6->spi->dev, "Device interrupt disabled to avoid interrupt storm");
-+}
-+
- static int oa_tc6_process_extended_status(struct oa_tc6 *tc6)
+-static u16 oa_tc6_calculate_ctrl_buf_size(u8 length)
++static u16 oa_tc6_calculate_ctrl_buf_size(u8 length, bool ctrl_prot)
  {
- 	u32 value;
-@@ -1116,29 +1150,29 @@ static int oa_tc6_try_spi_transfer(struct oa_tc6 *tc6)
++	u32 reply_size = OA_TC6_CTRL_REG_VALUE_SIZE;
++
++	if (ctrl_prot)
++		reply_size += OA_TC6_CTRL_PROT_REPLY_SIZE;
++
+ 	/* Control command consists 4 bytes header + 4 bytes register value for
+-	 * each register + 4 bytes ignored value.
++	 * each register (+ 4 bytes for the register value complement in case
++	 * protected mode is used) + 4 bytes ignored value.
+ 	 */
+-	return OA_TC6_CTRL_HEADER_SIZE + OA_TC6_CTRL_REG_VALUE_SIZE * length +
++	return OA_TC6_CTRL_HEADER_SIZE + reply_size * length +
+ 	       OA_TC6_CTRL_IGNORED_SIZE;
+ }
+ 
+ static void oa_tc6_prepare_ctrl_spi_buf(struct oa_tc6 *tc6, u32 address,
+ 					u32 value[], u8 length,
+-					enum oa_tc6_register_op reg_op)
++					enum oa_tc6_register_op reg_op,
++					u16 buf_size)
+ {
+ 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
+ 
++	memset(tx_buf, 0, buf_size);
+ 	*tx_buf = oa_tc6_prepare_ctrl_header(address, length, reg_op);
+ 
+ 	if (reg_op == OA_TC6_CTRL_REG_WRITE)
+@@ -255,10 +271,12 @@ static int oa_tc6_check_ctrl_write_reply(struct oa_tc6 *tc6, u8 size)
  	return 0;
  }
  
--static int oa_tc6_spi_thread_handler(void *data)
-+static irqreturn_t oa_tc6_macphy_threaded_irq(int irq, void *data)
+-static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
++static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 length)
  {
- 	struct oa_tc6 *tc6 = data;
--	int ret;
--
--	while (likely(!kthread_should_stop())) {
--		/* This kthread will be waken up if there is a tx skb or mac-phy
--		 * interrupt to perform spi transfer with tx chunks.
--		 */
--		wait_event_interruptible(tc6->spi_wq, tc6->int_flag ||
--					 (tc6->waiting_tx_skb &&
--					 tc6->tx_credits) ||
--					 kthread_should_stop());
--
--		if (kthread_should_stop())
--			break;
-+	int ret = 0;
+-	u32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
+-	u32 *tx_buf = tc6->spi_ctrl_tx_buf;
++	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
++	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
++	u32 complement;
++	u32 reply;
  
--		ret = oa_tc6_try_spi_transfer(tc6);
--		if (ret)
--			return ret;
-+	/* It is possible that interrupt woke the thread before it is
-+	 * disabled. Until we come up with good recovery mechanism,
-+	 * no need to attempt spi transfer, once it fails. Pending skbs
-+	 * are already freed.
-+	 */
-+	if (!tc6->disable_traffic) {
-+		while (tc6->int_flag ||
-+		       (tc6->waiting_tx_skb && tc6->tx_credits)) {
-+			ret = oa_tc6_try_spi_transfer(tc6);
-+			if (ret) {
-+				disable_irq_nosync(tc6->spi->irq);
-+				oa_tc6_disable_traffic(tc6);
-+				break;
-+			}
+ 	/* The echoed control read header must match with the one that was
+ 	 * transmitted.
+@@ -266,6 +284,20 @@ static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
+ 	if (*tx_buf != *rx_buf)
+ 		return -EPROTO;
+ 
++	if (tc6->prot_ctrl) {
++		/* Skip past the echoed header to the value/complement pairs */
++		rx_buf += 1;
++		for (int i = 0; i < length; i++) {
++			reply = be32_to_cpu(rx_buf[0]);
++			complement = be32_to_cpu(rx_buf[1]);
++
++			if (complement != ~reply)
++				return -EPROTO;
++
++			rx_buf += 2;
 +		}
- 	}
- 
--	return 0;
-+	return IRQ_HANDLED;
++	}
++
+ 	return 0;
  }
  
- static int oa_tc6_update_buffer_status_from_register(struct oa_tc6 *tc6)
-@@ -1172,11 +1206,15 @@ static irqreturn_t oa_tc6_macphy_isr(int irq, void *data)
- 	 *   the previous rx footer.
- 	 * - extended status event not reported in the previous rx footer.
- 	 */
--	tc6->int_flag = true;
--	/* Wake spi kthread to perform spi transfer */
--	wake_up_interruptible(&tc6->spi_wq);
--
--	return IRQ_HANDLED;
-+	if (tc6->disable_traffic)
-+		disable_irq_nosync(tc6->spi->irq);
-+	else
-+		tc6->int_flag = true;
-+	/* Wake IRQ thread to perform spi transfer . In case
-+	 * disable_traffic is set, threaded irq may run again
-+	 * one more time.
-+	 */
-+	return IRQ_WAKE_THREAD;
+@@ -275,8 +307,13 @@ static void oa_tc6_copy_ctrl_read_data(struct oa_tc6 *tc6, u32 value[],
+ 	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE +
+ 			 OA_TC6_CTRL_HEADER_SIZE;
+ 
+-	for (int i = 0; i < length; i++)
++	for (int i = 0; i < length; i++) {
+ 		value[i] = be32_to_cpu(*rx_buf++);
++
++		/* skip complement word */
++		if (tc6->prot_ctrl)
++			rx_buf++;
++	}
  }
  
+ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+@@ -285,10 +322,10 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+ 	u16 size;
+ 	int ret;
+ 
+-	/* Prepare control command and copy to SPI control buffer */
+-	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op);
++	size = oa_tc6_calculate_ctrl_buf_size(length, tc6->prot_ctrl);
+ 
+-	size = oa_tc6_calculate_ctrl_buf_size(length);
++	/* Prepare control command and copy to SPI control buffer */
++	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op, size);
+ 
+ 	/* Perform SPI transfer */
+ 	ret = oa_tc6_spi_transfer(tc6, OA_TC6_CTRL_HEADER, size);
+@@ -303,7 +340,7 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
+ 		return oa_tc6_check_ctrl_write_reply(tc6, size);
+ 
+ 	/* Check echoed/received control read command reply for errors */
+-	ret = oa_tc6_check_ctrl_read_reply(tc6, size);
++	ret = oa_tc6_check_ctrl_read_reply(tc6, length);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1273,6 +1310,20 @@ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
+ }
+ EXPORT_SYMBOL_GPL(oa_tc6_start_xmit);
+ 
++static int oa_tc6_check_ctrl_protection(struct oa_tc6 *tc6)
++{
++	u32 regval;
++	int ret;
++
++	ret = oa_tc6_read_register(tc6, OA_TC6_REG_CONFIG0, &regval);
++	if (ret)
++		return ret;
++
++	tc6->prot_ctrl = FIELD_GET(CONFIG0_PROTE, regval);
++
++	return 0;
++}
++
  /**
-@@ -1213,7 +1251,7 @@ EXPORT_SYMBOL_GPL(oa_tc6_zero_align_receive_frame_enable);
-  */
- netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
- {
--	if (tc6->waiting_tx_skb) {
-+	if (tc6->disable_traffic || tc6->waiting_tx_skb) {
- 		netif_stop_queue(tc6->netdev);
- 		return NETDEV_TX_BUSY;
- 	}
-@@ -1228,8 +1266,8 @@ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
- 	tc6->waiting_tx_skb = skb;
- 	spin_unlock_bh(&tc6->tx_skb_lock);
+  * oa_tc6_init - allocates and initializes oa_tc6 structure.
+  * @spi: device with which data will be exchanged.
+@@ -1325,6 +1376,14 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
+ 	if (!tc6->spi_data_rx_buf)
+ 		return NULL;
  
--	/* Wake spi kthread to perform spi transfer */
--	wake_up_interruptible(&tc6->spi_wq);
-+	/* Wake the threaded IRQ to perform spi transfer. */
-+	irq_wake_thread(tc6->spi->irq, tc6);
- 
- 	return NETDEV_TX_OK;
- }
-@@ -1322,24 +1360,15 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
- 		goto phy_exit;
- 	}
- 
--	init_waitqueue_head(&tc6->spi_wq);
--
--	tc6->spi_thread = kthread_run(oa_tc6_spi_thread_handler, tc6,
--				      "oa-tc6-spi-thread");
--	if (IS_ERR(tc6->spi_thread)) {
--		dev_err(&tc6->spi->dev, "Failed to create SPI thread\n");
--		goto phy_exit;
--	}
--
--	sched_set_fifo(tc6->spi_thread);
--
--	ret = devm_request_irq(&tc6->spi->dev, tc6->spi->irq, oa_tc6_macphy_isr,
--			       IRQF_TRIGGER_FALLING, dev_name(&tc6->spi->dev),
--			       tc6);
-+	ret = devm_request_threaded_irq(&tc6->spi->dev, tc6->spi->irq,
-+					oa_tc6_macphy_isr,
-+					oa_tc6_macphy_threaded_irq,
-+					IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-+					dev_name(&tc6->spi->dev), tc6);
++	/* Check the PROTE bit status so that we can reset the device */
++	ret = oa_tc6_check_ctrl_protection(tc6);
++	if (ret) {
++		dev_err(&tc6->spi->dev,
++			"Failed to check the protection mode: %d\n", ret);
++		return NULL;
++	}
++
+ 	ret = oa_tc6_sw_reset_macphy(tc6);
  	if (ret) {
- 		dev_err(&tc6->spi->dev, "Failed to request macphy isr %d\n",
- 			ret);
--		goto kthread_stop;
-+		goto phy_exit;
- 	}
- 
- 	/* oa_tc6_sw_reset_macphy() function resets and clears the MAC-PHY reset
-@@ -1349,12 +1378,10 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
- 	 * 7.7 and 9.2.8.8 in the OPEN Alliance specification for more details.
- 	 */
- 	tc6->int_flag = true;
--	wake_up_interruptible(&tc6->spi_wq);
-+	irq_wake_thread(tc6->spi->irq, tc6);
- 
- 	return tc6;
- 
--kthread_stop:
--	kthread_stop(tc6->spi_thread);
- phy_exit:
- 	oa_tc6_phy_exit(tc6);
- 	return NULL;
-@@ -1367,11 +1394,10 @@ EXPORT_SYMBOL_GPL(oa_tc6_init);
-  */
- void oa_tc6_exit(struct oa_tc6 *tc6)
- {
-+	tc6->disable_traffic = true;
-+	disable_irq(tc6->spi->irq);
- 	oa_tc6_phy_exit(tc6);
--	kthread_stop(tc6->spi_thread);
--	dev_kfree_skb_any(tc6->ongoing_tx_skb);
--	dev_kfree_skb_any(tc6->waiting_tx_skb);
--	dev_kfree_skb_any(tc6->rx_skb);
-+	oa_tc6_free_pending_skbs(tc6);
- }
- EXPORT_SYMBOL_GPL(oa_tc6_exit);
- 
+ 		dev_err(&tc6->spi->dev,
 -- 
 2.53.0
 
