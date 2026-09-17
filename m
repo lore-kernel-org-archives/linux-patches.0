@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EE53CFF6F;
-	Thu, 17 Sep 2026 19:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FE254706C;
+	Thu, 17 Sep 2026 19:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671727; cv=none; b=hGowhqh20Fz7GFj8eLTZsprSxqi8HUwG8lewGpgfPvZ8r4eDOipoNZ8HIucIt1UUP1GtDXMVDi8ZAhtfhc/zR26w5tLS7vUKzwVDP1Ncd+azAvdbBUJw6bi0pMC35i1efMnAJ2HzzvIDGBI5NNDSnb9w7TCItxmDjpLBwLyQZGU=
+	t=1789671730; cv=none; b=YfhwC5wMLopas1JWfxffcpYMY0P920bkS4/J+2+dLWZud6KvlLUlqcsB4euFFiOfy2k/N/04u+lLD68cWp/ftN3Im333m5gKk7n6DfR8L93ctfDa7UsvZiJ28+sx2JrnDMxRCK/UT5Nizn8Sn2NR91ba37oZNxE5BcbissnPF8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671727; c=relaxed/simple;
-	bh=2Ajhfzge9g6gZIQZ3hUOQWQNqwuGdyqrP56kCGlHKKI=;
+	s=arc-20240116; t=1789671730; c=relaxed/simple;
+	bh=VJqtP1XEDBrOu+0zKLD6BgPVMyJL1Br9gvgUGm55GGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbbpI4BYVq9j3frsBktwFE4yOFUGmH70dRPLplO1FtBGsN9JQzdrQZdgSq4yKPmLVq/pfbdV8BKeHtDK+L27ABdiu3bIl4KrgjWaKrTTiFNB2u5FJgqAUBaXnAIpTjgYM6SXXSASxqcbUQDoSqQ0ZGYuAd6qVzuc+bO629vXXas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+pwD0KV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=soj2zay5T4mZUcW1Z1JeuuLXOiOzuqtN54dWOYo4eReJoHO1E9a2bd8jYrA0K6cdGZSE9Px51eRh3jDrfDnDkjou/4IIIET/iHe02KFhVVJiPvWa3SF7QRAsXeyk9A3WtJAz9mXu8/HZJE+ZLQ1bZ1FL5gm8xSVrxcZIikewUYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9l3+n7p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+pwD0KV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4952E1F000FF;
-	Thu, 17 Sep 2026 19:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9l3+n7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4171F000FF;
+	Thu, 17 Sep 2026 19:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671725;
-	bh=dA6oFiCllOucJ4Tm6Gj8ZNidrU06lC8+JmbmqShX31M=;
+	s=korg; t=1789671729;
+	bh=YgwsuB+ovVir0vW3HrOZ6c92MKPSkbOA01eDNtda/8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+pwD0KViWuZPKEk4HkTSnVssawHkqMssO9s8T5HFOttzur4xeSYL0GG+E44iuJYk
-	 /QUu1v2YPgMOjYKbMrQhsfkhhntjBYt6EorvhFCV3e4KR9ARSNNM4Ke7tzSTi+jNHP
-	 UKZN6L3cgNQqVAE0CvrhfswQC1NdtiJXAIR41wZc=
+	b=r9l3+n7pVWm+3XHOzec9RZimA66B7GljwlMc8i8LawUCqhFUpbWb10OqAReNHZpV3
+	 0Rea6X8zkDZQPvrdaNP9d+6TVFEFsEwB3XBdEBLMEFd5G5hHYi1oXre0u+ybpkQbTB
+	 5VCxK7QCB9y9ABqdnz9rmRhQ6A77ZbTWoXVWjEHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tao Chen <chen.dylane@linux.dev>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1070/1102] bpf: Use stack id functions instead of __bpf_get_stackid
-Date: Thu, 17 Sep 2026 16:16:53 +0100
-Message-ID: <20260917151607.689553760@linuxfoundation.org>
+Subject: [PATCH 6.12 1071/1102] bpf: Disable preemption in bpf_get_stackid
+Date: Thu, 17 Sep 2026 16:16:54 +0100
+Message-ID: <20260917151607.715617411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,125 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 09b3fd6caa0b57f8a39254ee5db3af30bdd53c18 ]
+[ Upstream commit 15f1bd8574662f1b7b26aaa2e23ebf4066f0117d ]
 
-Replacing __bpf_get_stackid calls with sequence of following functions:
+The get_perf_callchain call needs disabled preemption plus we need
+it disabled as long as we access its returned trace entries buffer.
 
-  stackid_fastpath
-  stackid_new_bucket
-  stackid_install
+Note the bpf_get_stackid_pe function is executed already with
+preemption disabled.
 
-This makes code more structured and allows us to easily disable
-preemption only in bpf_get_stackid in following changes.
-
+Fixes: d5a3b1f69186 ("bpf: introduce BPF_MAP_TYPE_STACK_TRACE")
+Reported-by: Tao Chen <chen.dylane@linux.dev>
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260803210149.296496-5-jolsa@kernel.org
-Stable-dep-of: 15f1bd857466 ("bpf: Disable preemption in bpf_get_stackid")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260803210149.296496-6-jolsa@kernel.org
+
+Closes: https://lore.kernel.org/bpf/20260206090653.1336687-2-chen.dylane@linux.dev/
+[ adapted get_perf_callchain() to the older six-argument form ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/stackmap.c |   43 +++++++++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 16 deletions(-)
+ kernel/bpf/stackmap.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
 --- a/kernel/bpf/stackmap.c
 +++ b/kernel/bpf/stackmap.c
-@@ -326,22 +326,13 @@ stackid_new_bucket(struct stackid *stack
- 	return bucket;
- }
+@@ -374,20 +374,22 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 		return -EINVAL;
  
--static long __bpf_get_stackid(struct stackid *stackid, struct bpf_map *map,
--			      struct perf_callchain_entry *trace, u64 flags)
-+static long stackid_install(struct stackid *stackid, struct bpf_map *map,
-+			    struct stack_map_bucket *new_bucket, u64 flags)
- {
- 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
--	struct stack_map_bucket *new_bucket, *old_bucket;
- 	bool user = flags & BPF_F_USER_STACK;
-+	struct stack_map_bucket *old_bucket;
- 	u32 trace_len;
--	int err;
--
--	err = stackid_fastpath(stackid, map, trace, flags);
+ 	max_depth = stack_map_calculate_max_depth(map->value_size, elem_size, flags);
+-	trace = get_perf_callchain(regs, kernel, user, max_depth,
+-				   false, false);
+ 
+-	if (unlikely(!trace))
+-		/* couldn't fetch the stack trace */
+-		return -EFAULT;
++	scoped_guard(preempt) {
++		trace = get_perf_callchain(regs, kernel, user, max_depth,
++					   false, false);
++		if (unlikely(!trace))
++			/* couldn't fetch the stack trace */
++			return -EFAULT;
+ 
+-	err = stackid_fastpath(&stackid, map, trace, flags);
 -	if (err != -ENOENT)
 -		return err;
--
--	new_bucket = stackid_new_bucket(stackid, map);
++		err = stackid_fastpath(&stackid, map, trace, flags);
++		if (err != -ENOENT)
++			return err;
+ 
+-	new_bucket = stackid_new_bucket(&stackid, map);
 -	if (!new_bucket)
 -		return -ENOMEM;
- 
- 	if (stack_map_use_build_id(map)) {
- 		struct bpf_stack_build_id *id_offs;
-@@ -371,10 +362,12 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- {
- 	u32 elem_size = stack_map_data_size(map);
- 	bool user = flags & BPF_F_USER_STACK;
-+	struct stack_map_bucket *new_bucket;
- 	struct perf_callchain_entry *trace;
- 	struct stackid stackid;
- 	bool kernel = !user;
- 	u32 max_depth;
-+	int err;
- 
- 	if (unlikely(flags & ~(BPF_F_SKIP_FIELD_MASK | BPF_F_USER_STACK |
- 			       BPF_F_FAST_STACK_CMP | BPF_F_REUSE_STACKID)))
-@@ -388,7 +381,15 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- 		/* couldn't fetch the stack trace */
- 		return -EFAULT;
- 
--	return __bpf_get_stackid(&stackid, map, trace, flags);
-+	err = stackid_fastpath(&stackid, map, trace, flags);
-+	if (err != -ENOENT)
-+		return err;
-+
-+	new_bucket = stackid_new_bucket(&stackid, map);
-+	if (!new_bucket)
-+		return -ENOMEM;
-+
-+	return stackid_install(&stackid, map, new_bucket, flags);
- }
- 
- const struct bpf_func_proto bpf_get_stackid_proto = {
-@@ -416,6 +417,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
- 	   struct bpf_map *, map, u64, flags)
- {
- 	struct perf_event *event = ctx->event;
-+	struct stack_map_bucket *new_bucket;
- 	struct perf_callchain_entry *trace;
- 	struct stackid stackid;
- 	bool kernel, user;
-@@ -443,7 +445,6 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
- 
- 	if (kernel) {
- 		trace->nr = nr_kernel;
--		ret = __bpf_get_stackid(&stackid, map, trace, flags);
- 	} else { /* user */
- 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 
-@@ -452,12 +453,22 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
- 			return -EFAULT;
- 
- 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
--		ret = __bpf_get_stackid(&stackid, map, trace, flags);
- 	}
- 
-+	ret = stackid_fastpath(&stackid, map, trace, flags);
-+	if (ret != -ENOENT)
-+		goto out;
-+
-+	new_bucket = stackid_new_bucket(&stackid, map);
-+	if (new_bucket) {
-+		trace->nr = nr;
-+		return stackid_install(&stackid, map, new_bucket, flags);
++		new_bucket = stackid_new_bucket(&stackid, map);
++		if (!new_bucket)
++			return -ENOMEM;
 +	}
-+	ret = -ENOMEM;
-+
-+out:
- 	/* restore nr */
- 	trace->nr = nr;
--
- 	return ret;
- }
  
+ 	return stackid_install(&stackid, map, new_bucket, flags);
+ }
 
 
