@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207A04B44D2;
-	Thu, 17 Sep 2026 18:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AC04CDDC2;
+	Thu, 17 Sep 2026 18:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670488; cv=none; b=scFW6NcrI8gRGx5Zrb3Ki0hxrJT0CjsjlkQ6OZ7gWQedZUmvE5d7iB92WjrcZEPs3I+XXreEhwYeFzgCV28aRUssl1syrkjjcevNuK9q0eEQnZsrvNBePaA788rAjooA9/qTZUvexCSURPVcWGQzpV/DAEaC4QkpLwSYT3cZTVw=
+	t=1789670491; cv=none; b=Li/KnavdSK8ehnSwLNwbLlVHTp0yB1oZFVealag0BGVR/whgmHfGPIcgOTnJaIxVi68Qr+TpdZYsX87VNaMNAaFfjAXB5qKKMq/EboOAjA5xLmS13aQakTIaOXc6nI0xGyw59BLj9KGVksvrGYrmP2Ae1PwJ0VucnISv8xxsuQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670488; c=relaxed/simple;
-	bh=a3hJT72HP28sT2p3M8+NZ2hT1H8q3bEiBBIiJdxcwuQ=;
+	s=arc-20240116; t=1789670491; c=relaxed/simple;
+	bh=uscAb+Haq2ls352f3NQMTWwtyrMo46lRIIAKb2oQSWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgBvzmP+asoPSkati4usSuxyC7EA/Mtnov+eCXosIWb2dJC0akXOwT1UmH0d+ul+JfWufoZmjfqaJDjyvJ5KWQpWLy1PKRiL3ZM7Z9cWAFdXBYGp+lcENBEtRlz2VCU+o1W5svCcguisKScRcscXvxYl5PR/oEGEWW0S55CDREw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asQDwb8J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X5AEsJHzTPzxas9W4MeI8O0l69zFCX5cfmtl17JsS2+m1Zq486Mma02ks5hZM5U27hZ+O2nl1PDvOTwA4RLTJD5/YqZdFQMeRtwMJf8ZMdhTU4xnXwy/+fIYsZJDLE0yEI3UGPyLMMM8js732RaC3rPnSJ0SpK2HiGLNa3BJD94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC+mNgm+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asQDwb8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBF01F000FF;
-	Thu, 17 Sep 2026 18:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC+mNgm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE441F000FF;
+	Thu, 17 Sep 2026 18:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670487;
-	bh=xn4114QD0lN6NNwzUUDiaVAeD0DYQuNPJ9UkRIU0ikk=;
+	s=korg; t=1789670490;
+	bh=ClNeLQ/XjnGatqL5vCghVIEq0FQExVydKUI2Bd2gnJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=asQDwb8JQKv6UuHspPaBPRq49vc4BP+lBRR4n5hbmsoYyTMPbGH89OiIjMwfPTeFT
-	 fKpO5sXC53OLufRIaQCi9Dd6bwU9SeresZyYG6BQ/hksjjLymIiFzUk2i+9NErnP6T
-	 g/w+4SOzmpVVPKpJ6CubbTkUqaNYD4+0eCBNP4t4=
+	b=GC+mNgm+x/ED5SeppHfLCjwtjYEbNpVQbcgBvU+Q5grg7vT1blJ+G/uGkv5b8nkM9
+	 OibqQIXJAqmvM5gEJqiGfJ8QoB893AkSStrNlYRYU8lFx5cMEeSZ6iEVIbVlC+DX4t
+	 zVkcDKnxaoolUNWt63wEez6uYTU96qMNjiKD6574=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Shetty J <nshettyj@marvell.com>,
-	Viswajith Murali <viswajithm@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0675/1102] octeontx2-af: mcs: Clear stale X2P calibration state before calibration
-Date: Thu, 17 Sep 2026 16:10:18 +0100
-Message-ID: <20260917151557.179491236@linuxfoundation.org>
+Subject: [PATCH 6.12 0640/1102] ALSA: caiaq: Fix potential double-free at error path
+Date: Thu, 17 Sep 2026 16:09:43 +0100
+Message-ID: <20260917151556.203213288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,47 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viswajith Murali <viswajithm@marvell.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1f29543126dde307e8b5fb6a740c54e59deaa2ff ]
+[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
 
-Some firmware versions leave MCSX_MIL_GLOBAL bit 5 set on boot.
-If the bit is already set when the driver attempts X2P calibration,
-the hardware sees no rising edge and calibration never triggers.
-Clear the bit and wait briefly before starting calibration to ensure
-a clean rising edge.
+The fix for caiaq driver's resource management to handle the errors
+tries to release the resources in a common destructor call, but as a
+sashiko review for another patch suggested, some of the audio
+resources such as URBs have been already freed, and this may lead to a
+double-free.
 
-Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Signed-off-by: Viswajith Murali <viswajithm@marvell.com>
-Link: https://patch.msgid.link/20260901094318.1395356-1-nshettyj@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For addressing the double-free, call the common destructor function
+from each place, and assure that the resource pointers get cleared.
+
+Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
+Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
+Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/usb/caiaq/audio.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-index a07e0b3d8d000..211c10aa5880f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-@@ -1417,6 +1417,16 @@ static int mcs_x2p_calibration(struct mcs *mcs)
- 	int i, err = 0;
- 	u64 val;
+diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
+index 05f964347ed6c..25ba563302fde 100644
+--- a/sound/usb/caiaq/audio.c
++++ b/sound/usb/caiaq/audio.c
+@@ -842,16 +842,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
  
-+	/* Clear any stale calibration state left by firmware/bootloader.
-+	 * Some firmware versions may leave MCSX_MIL_GLOBAL bit 5 set,
-+	 * preventing the hardware from detecting the rising edge needed to
-+	 * trigger X2P calibration.
-+	 */
-+	val = mcs_reg_read(mcs, MCSX_MIL_GLOBAL);
-+	val &= ~BIT_ULL(5);
-+	mcs_reg_write(mcs, MCSX_MIL_GLOBAL, val);
-+	usleep_range(100, 200);
-+
- 	/* set X2P calibration */
- 	val = mcs_reg_read(mcs, MCSX_MIL_GLOBAL);
- 	val |= BIT_ULL(5);
+ 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+ 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
+-		free_urbs(cdev->data_urbs_out);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+@@ -872,6 +869,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
+ 
+ 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
+ 	free_urbs(cdev->data_urbs_in);
++	cdev->data_urbs_in = NULL;
+ 	free_urbs(cdev->data_urbs_out);
++	cdev->data_urbs_out = NULL;
+ 	kfree(cdev->data_cb_info);
++	cdev->data_cb_info = NULL;
+ }
 -- 
 2.53.0
 
