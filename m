@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CED84F3932;
-	Thu, 17 Sep 2026 15:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F259C80;
+	Thu, 17 Sep 2026 15:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660204; cv=none; b=ng/BHBwVm+8fzZzuBeKyzDeFP1oV/ScOW99QHUlVQA/f0e9mPL2VMoVtuDjd0evLQNEufXkSkHuQqwpD4Wv9M4qy3m0ErX6ChLEfbJheQCi1x58XYFxNXkgDRTJl96W3s74gTUVKoBwjDj7J3s1KG9njCp8emQY0QQDY+X1s4Rs=
+	t=1789660208; cv=none; b=oSIf+806BVE0IIVzpRH95oYTUPE+dtd1VWJxA/glfrdC/l1BR/8X9B+mj2IdBxzexo4P4Die4ovbBEH2JSINmndhmg1c/AdcWKIkiagqm7Q6p/Hn4ktq4PZdGkLOLLS6sbJGRnCSEsavcCXlBINZ9rMGZI++rVLJfeIQy0kt+0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660204; c=relaxed/simple;
-	bh=209/KAG8hMXjbSQeiAdCkaBL1y9y7me6A1/ojpD/qYc=;
+	s=arc-20240116; t=1789660208; c=relaxed/simple;
+	bh=Dj9FA4i6uNtego8cKOwGaeVeQEoa/YTAGpdqqg4uzDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HlX7RQuIOMewwVbrrqgBYs62gTEvDbrCPznIU4aFqNWnGjTbiRBJBKz6KO8Lxar155TvkPDghL5Ghbo+Bmc/1rvnltW2y2UEe5+sbl8W7TBc7vNssLbU2FAD9itP5cEiWk+lgSFap23yqpH5nr3CGTQRAV8QvPvxrT9Hg7x0eDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRgAGIhg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kx4Kg+T8NgbZ9J0sQ6FhiOG/aU0TrK047/D71L90oMPvHDBhcTjUlZH85A3YTm/rQ7TA6kEhMeOHcipMugRdAF80ClxrS9Ukhn5+5vKjgb2zfQQ1lY6avgwC0BTxEp6neGkn3F637peHiaUallv+Ug7GuGI58x0dh7zTCChlsy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw6LrrvL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRgAGIhg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43AE1F00898;
-	Thu, 17 Sep 2026 15:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw6LrrvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EA41F00893;
+	Thu, 17 Sep 2026 15:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660197;
-	bh=4rYLPZnNxwMxCBeiFqIg5Zy0R9SPunP4Uh/3EBfOxuc=;
+	s=korg; t=1789660200;
+	bh=p/cbF3VR5hLlGgTJqKV8FKT0VsWdgE+QCs0CFvbgtgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hRgAGIhgWMBhHp59M2OONjxp4stRenPDMoQkXmE6v9EtRm3fL1NHmuGYQBH4q/JPX
-	 5TR06LPkrpI6BHydr0JrCNl+XHpUIdUYSF6MfIRIn+OSItsW0TOeRP9sXuUw0TTAQn
-	 TeRXHfW95D8MQED00jAWTOVXtFDh/ki4ukq3yeK4=
+	b=zw6LrrvL7MH932C5VStBPpQRFBykjqRruBqw3z/PyEsFmu6J4rqSNpHJSdKJZZEG4
+	 CwmWW+aqZKlJCUPGcurDOX7TFBhZKTegvUc389hfOjGCqHZCYCI7SHHCz05lmzdIRf
+	 fvXjOInVbb1ntY+1MBOtg+ZscQqOVZiOXpjevAyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>
-Subject: [PATCH 7.2 494/733] tick/broadcast: Plug clockevents replacement race
-Date: Thu, 17 Sep 2026 16:13:22 +0100
-Message-ID: <20260917151404.380183480@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 7.2 512/733] ata: pata_legacy: remove documentation for removed module parameters
+Date: Thu, 17 Sep 2026 16:13:40 +0100
+Message-ID: <20260917151404.887706345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -47,207 +47,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 upstream.
+commit a19d4f9b8befdcfcd5a87bab91312fe64af3bbb8 upstream.
 
-朱恺乾 reported and decoded the following race condition when a broadcast
-device is replaced:
+Commit 3c4d783f6922 ("ata: pata_legacy: remove VLB support") removed
+several module parameters from the pata_legacy driver, but neglected to
+remove their documentation. Remove it.
 
-CPUA					CPUB
- __tick_broadcast_oneshot_control()
-   bc = tick_broadcast_device.evtdev;
-					tick_install_broadcast_device(dev)
-        				clockevents_exchange_device(cur, dev)
-					   shutdown(cur);
-					   detach(cur);
-					   cur->handler = noop;
-					   tick_broadcast_device.evtdev = dev;
-
-  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
-
-If the original broadcast device has a restricted interrupt affinity mask
-and the last CPU in that mask goes offline then the BUG() in
-tick_cleanup_dead_cpu() triggers because the clockevent device is not in
-detached state.
-
-The reason for this is that tick_install_broadcast_device() is not
-serialized vs. tick broadcast operations.
-
-The obvious cure is to serialize tick_install_broadcast_device() with
-tick_broadcast_lock against a concurrent tick broadcast operation.
-
-That requires to split clockevents_exchange_device() into two parts, one
-which does the exchange, shutdown and detach operation and the other which
-drops the module reference count. This is required because the module
-reference cannot be dropped while holding tick_broadcast_lock.
-
-Let clockevents_exchange_device() do both operations as before, but let the
-broadcast device code take the two step approach and do the device
-exchange under tick_broadcast_lock and drop the module reference count
-after releasing it.
-
-Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
-Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Tested-by: 刘术高 <liushugao@xiaomi.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
+Fixes: 3c4d783f6922 ("ata: pata_legacy: remove VLB support")
+Cc: stable@vger.kernel.org # 7.0+
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Reviewed-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20260607064053.195166-1-enelsonmoore@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/clockevents.c    |   33 ++++++++++++++++++++-------------
- kernel/time/tick-broadcast.c |   36 ++++++++++++++++++++++--------------
- kernel/time/tick-internal.h  |    2 ++
- 3 files changed, 44 insertions(+), 27 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |   37 ------------------------
+ 1 file changed, 37 deletions(-)
 
---- a/kernel/time/clockevents.c
-+++ b/kernel/time/clockevents.c
-@@ -615,34 +615,41 @@ void clockevents_handle_noop(struct cloc
- {
- }
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4922,18 +4922,6 @@ Kernel parameters
+ 			Set to non-zero if a chip is present that snoops speed
+ 			changes.  Disabled by default.
  
--/**
-- * clockevents_exchange_device - release and request clock devices
-- * @old:	device to release (can be NULL)
-- * @new:	device to request (can be NULL)
-- *
-- * Called from various tick functions with clockevents_lock held and
-- * interrupts disabled.
-- */
--void clockevents_exchange_device(struct clock_event_device *old,
--				 struct clock_event_device *new)
-+void __clockevents_exchange_device(struct clock_event_device *old,
-+				   struct clock_event_device *new)
- {
- 	/*
- 	 * Caller releases a clock event device. We queue it into the
- 	 * released list and do a notify add later.
- 	 */
- 	if (old) {
--		module_put(old->owner);
- 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
- 		list_move(&old->list, &clockevents_released);
- 	}
+-	pata_legacy.ht6560a=	[HW,LIBATA]
+-			Format: <int>
+-			Set to 1, 2, or 3 for HT 6560A on the primary channel,
+-			the secondary channel, or both channels respectively.
+-			Disabled by default.
+-
+-	pata_legacy.ht6560b=	[HW,LIBATA]
+-			Format: <int>
+-			Set to 1, 2, or 3 for HT 6560B on the primary channel,
+-			the secondary channel, or both channels respectively.
+-			Disabled by default.
+-
+ 	pata_legacy.iordy_mask=	[HW,LIBATA]
+ 			Format: <int>
+ 			IORDY enable mask.  Set individual bits to allow IORDY
+@@ -4946,18 +4934,6 @@ Kernel parameters
+ 			with the sequence.  By default IORDY is allowed across
+ 			all channels.
  
- 	if (new) {
--		BUG_ON(!clockevent_state_detached(new));
-+		WARN_ON(!clockevent_state_detached(new));
- 		clockevents_shutdown(new);
- 	}
- }
+-	pata_legacy.opti82c46x=	[HW,LIBATA]
+-			Format: <int>
+-			Set to 1, 2, or 3 for Opti 82c611A on the primary
+-			channel, the secondary channel, or both channels
+-			respectively.  Disabled by default.
+-
+-	pata_legacy.opti82c611a=	[HW,LIBATA]
+-			Format: <int>
+-			Set to 1, 2, or 3 for Opti 82c465MV on the primary
+-			channel, the secondary channel, or both channels
+-			respectively.  Disabled by default.
+-
+ 	pata_legacy.pio_mask=	[HW,LIBATA]
+ 			Format: <int>
+ 			PIO mode mask for autospeed devices.  Set individual
+@@ -4981,19 +4957,6 @@ Kernel parameters
+ 			the first port in the list above (0x1f0), and so on.
+ 			By default all supported ports are probed.
  
- /**
-+ * clockevents_exchange_device - release and request clock devices
-+ * @old:	device to release (can be NULL)
-+ * @new:	device to request (can be NULL)
-+ *
-+ * Called from various tick functions with clockevents_lock held and
-+ * interrupts disabled.
-+ */
-+void clockevents_exchange_device(struct clock_event_device *old,
-+				 struct clock_event_device *new)
-+{
-+	__clockevents_exchange_device(old, new);
-+	if (old)
-+		module_put(old->owner);
-+}
-+
-+/**
-  * clockevents_suspend - suspend clock devices
-  */
- void clockevents_suspend(void)
-@@ -699,7 +706,7 @@ void tick_offline_cpu(unsigned int cpu)
- 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
- 		    cpumask_weight(dev->cpumask) == 1 &&
- 		    !tick_is_broadcast_device(dev)) {
--			BUG_ON(!clockevent_state_detached(dev));
-+			WARN_ON(!clockevent_state_detached(dev));
- 			list_del(&dev->list);
- 		}
- 	}
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -165,23 +165,31 @@ static bool tick_set_oneshot_wakeup_devi
-  */
- void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
- {
--	struct clock_event_device *cur = tick_broadcast_device.evtdev;
-+	struct clock_event_device *cur;
- 
--	if (tick_set_oneshot_wakeup_device(dev, cpu))
--		return;
-+	scoped_guard(raw_spinlock_irqsave, &tick_broadcast_lock) {
- 
--	if (!tick_check_broadcast_device(cur, dev))
--		return;
-+		if (tick_set_oneshot_wakeup_device(dev, cpu))
-+			return;
- 
--	if (!try_module_get(dev->owner))
--		return;
-+		cur = tick_broadcast_device.evtdev;
-+		if (!tick_check_broadcast_device(cur, dev))
-+			return;
- 
--	clockevents_exchange_device(cur, dev);
-+		if (!try_module_get(dev->owner))
-+			return;
-+
-+		__clockevents_exchange_device(cur, dev);
-+		if (cur)
-+			cur->event_handler = clockevents_handle_noop;
-+		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
-+		if (!cpumask_empty(tick_broadcast_mask))
-+			tick_broadcast_start_periodic(dev);
-+	}
-+
-+	/* Module release must be outside of the lock */
- 	if (cur)
--		cur->event_handler = clockevents_handle_noop;
--	tick_broadcast_device.evtdev = dev;
--	if (!cpumask_empty(tick_broadcast_mask))
--		tick_broadcast_start_periodic(dev);
-+		module_put(cur->owner);
- 
- 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
- 		return;
-@@ -1218,7 +1226,7 @@ int tick_broadcast_oneshot_active(void)
-  */
- bool tick_broadcast_oneshot_available(void)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
- }
-@@ -1226,7 +1234,7 @@ bool tick_broadcast_oneshot_available(vo
- #else
- int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
- 		return -EBUSY;
---- a/kernel/time/tick-internal.h
-+++ b/kernel/time/tick-internal.h
-@@ -54,6 +54,8 @@ static inline void clockevent_set_state(
- }
- 
- extern void clockevents_shutdown(struct clock_event_device *dev);
-+extern void __clockevents_exchange_device(struct clock_event_device *old,
-+					  struct clock_event_device *new);
- extern void clockevents_exchange_device(struct clock_event_device *old,
- 					struct clock_event_device *new);
- extern void clockevents_switch_state(struct clock_event_device *dev,
+-	pata_legacy.qdi=	[HW,LIBATA]
+-			Format: <int>
+-			Set to non-zero to probe QDI controllers.  By default
+-			set to 1 if CONFIG_PATA_QDI_MODULE, 0 otherwise.
+-
+-	pata_legacy.winbond=	[HW,LIBATA]
+-			Format: <int>
+-			Set to non-zero to probe Winbond controllers.  Use
+-			the standard I/O port (0x130) if 1, otherwise the
+-			value given is the I/O port to use (typically 0x1b0).
+-			By default set to 1 if CONFIG_PATA_WINBOND_VLB_MODULE,
+-			0 otherwise.
+-
+ 	pata_platform.pio_mask=	[HW,LIBATA]
+ 			Format: <int>
+ 			Supported PIO mode mask.  Set individual bits to allow
 
 
