@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC314E77F9;
-	Thu, 17 Sep 2026 18:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2484F3CEB9E;
+	Thu, 17 Sep 2026 18:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669052; cv=none; b=YXsYEYBZL8Z2vlGhQoCIBZjKFErJXwQ7udqFCV+OOfNZ0pawOieoWChTEzjZsf1vnmsvUJlP+U9fmS98BxtwGYiG7MO76lJg2wunOZLzk8I6EJkTUyDQ40bn0N7/QUshP7vbjbgtpakgs9FNQ2rHlje+yj5+v0VYASoq4l+fzDY=
+	t=1789669055; cv=none; b=Hst54pRLAmUCREhZwOzgAxwk9sPAxKdIjq8PPjnMkobOYW4ZK5sUigidUUp4TWq2TiXJgdTyGwCs8V2frLf9ms/uYzmFAf3zI0phNat+UXXfxMONmKNmpK82TlEL1mDCkcj9W40/PG8IekRhYeBshw1vciIC5/Z0jOh/Rb59dOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669052; c=relaxed/simple;
-	bh=0/VoU2v+6G/OAnSCiArGwYRD/GWCyT5zJ+OCya2+RPA=;
+	s=arc-20240116; t=1789669055; c=relaxed/simple;
+	bh=TTJS1XIyUxXHY8YDr+eUom0+6JmlA+PmnxLSVvLGaBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdUlSftFvYztq7dvggbX/iyggpKGTla/YJJeGptbeSxW27P1m03LPGYN7U80XsT1t38AW0okE4NmKYXzt1EKE+shIM4XJlBzQ/Q4X1bDdm/mMkm+yaOX7Rs/bHoLFmU0Nxug6YG6qERIuxdVEyyaYiKdA2HQwudDkMNcrbcDEjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYNkbglY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lNWCPs9FicAlbXkdk0pocc30trgPPHBtzz3U/xkszzq2hKNXEZRkfmNb5kc3rb4ghqjlrboptuNxZlQsWePOvuQge8mrlvOxmnKDuLjlsdg0gF18MPlLqE7mJPYZhgtbaB6PKknRvgN8zjq8imCHLpoLUOwLzhOrf+5xmu8qOlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svGjhnai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYNkbglY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2551F000FF;
-	Thu, 17 Sep 2026 18:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svGjhnai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791CB1F000FF;
+	Thu, 17 Sep 2026 18:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669051;
-	bh=EJgL9hT2ACxB9gqX58vQ2udlzu9zWygmtujmtk2pCGw=;
+	s=korg; t=1789669054;
+	bh=/SaYqYjQtJeKixQWKmQRzA4qox8LFo84v/XkHIu2USM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gYNkbglYECVq/1xTGB0JlnF1wegzyNwM5zwgefuww9h1SPerWXMCx0zlYeh/C/CyP
-	 tyLfOxzE+Wa++pGDjh+sxBboKDWiUcwlVVm91xUUwgT3sU/M1e4RwdNbOfTi2U09DW
-	 9dqcXkn4qLsE4KVOQuxYZS7DXhq/0zDImKs2JFiI=
+	b=svGjhnaiZ6s6ZACPLGIwNXDOZx4lERzz6vck69+YrfaLcWSF+Vt8Q0HziDAJZFRfl
+	 27ZXREF66NKbd+mLGBDVy32K/fiHHpbsXJ9oK9ZreQochh+G1WRmXJyhFKTyy18VZV
+	 I63PNgyRJgW22ngPv5n/YZ+I6LA+DJ6SkUUVJwac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0627/1102] bpf: reject BPF_PSEUDO_FUNC reference to the main program
-Date: Thu, 17 Sep 2026 16:09:30 +0100
-Message-ID: <20260917151555.838129840@linuxfoundation.org>
+Subject: [PATCH 6.12 0628/1102] bonding: do not clear curr_active_slave prematurely when releasing all slaves
+Date: Thu, 17 Sep 2026 16:09:31 +0100
+Message-ID: <20260917151555.866544348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,61 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 374b2c5561db80fcdd7cdce44af37a49416f61c7 ]
+[ Upstream commit af602c7aa5fedc9be3043244017aef4f26c96b70 ]
 
-fixups.c:jit_subprogs() rewrites BPF_PSEUDO_FUNC loads to contain real
-function addresses. This function is invoked from bpf_jit_subprogs()
-only when env->subprog_cnt > 1. Meaning that for any program like
-below:
+When releasing all slaves during bond destruction (all == true),
+__bond_release_one() unconditionally clears bond->curr_active_slave to
+NULL in every iteration.
 
-  int main(void *ctx) {
-    void *ptr = main;
-    ...
-    bpf_timer_set_callback(..., ptr);
-    ...
-  }
+If a backup slave is released before the active slave,
+bond_alb_deinit_slave() triggers rlb_teach_disabled_mac_on_primary(),
+which increments the active slave dev promiscuity counter and sets
+bond_info->primary_is_promisc = 1.
 
-The 'ptr' won't be ever converted to contain an address.
-In combination with e.g. bpf_timer_set_callback() this would lead to a
-function call at a bogus address.
+Because bond->curr_active_slave was prematurely cleared to NULL when
+releasing the backup slave, the subsequent iteration releasing the active
+slave evaluates oldcurrent as NULL, so bond_change_active_slave(bond, NULL)
+is skipped. Consequently, bond_alb_handle_active_change() is never called
+to decrement the promiscuity counter, permanently leaking promiscuous
+mode on the physical device after bond teardown.
 
-Instead of complicating the implementation, just assume that no useful
-program needs main to be a sync or async callback and reject
-BPF_PSEUDO_FUNC loads for the main subprogram.
+When oldcurrent == slave, bond_change_active_slave(bond, NULL) already sets
+bond->curr_active_slave to NULL. We only need to avoid selecting a new
+active slave when all == true. Replace the if (all) branch with
+if (!all && oldcurrent == slave).
 
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260902233658.1186477-1-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0896341a44bf ("bonding: fix bond_release_all inconsistencies")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260831203042.164466-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/bonding/bond_main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 84a7b8d4f04dd..97742b0f3f8c6 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15969,6 +15969,15 @@ static int check_ld_imm(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 			verbose(env, "callback function not static\n");
- 			return -EINVAL;
- 		}
-+		/*
-+		 * When env->subprog_cnt == 1 this instruction won't be rewritten
-+		 * to hold a real function address. Assume that no usable program
-+		 * combines e.g. main and timer callback and just reject here.
-+		 */
-+		if (subprogno == 0) {
-+			verbose(env, "callback function cannot be the main program\n");
-+			return -EINVAL;
-+		}
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 2919329a8c200..5911dcaedf0fc 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2575,9 +2575,7 @@ static int __bond_release_one(struct net_device *bond_dev,
+ 		bond_alb_deinit_slave(bond, slave);
+ 	}
  
- 		dst_reg->type = PTR_TO_FUNC;
- 		dst_reg->subprogno = subprogno;
+-	if (all) {
+-		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
+-	} else if (oldcurrent == slave) {
++	if (!all && oldcurrent == slave) {
+ 		/* Note that we hold RTNL over this sequence, so there
+ 		 * is no concern that another slave add/remove event
+ 		 * will interfere.
 -- 
 2.53.0
 
