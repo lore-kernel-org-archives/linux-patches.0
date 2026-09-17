@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE47C3DB339;
-	Thu, 17 Sep 2026 19:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B956C43F09B;
+	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671682; cv=none; b=Uc5SZ7grpa2FgoLAmHUtetu3OzZlOxm7MKvHN6vKE8P/IN6uZ1q9bUwYNT37QRTw3NEb+EdoGvzgtLcvAKYI1hNG1WrVpXqzK3aEnS1P8B3ztYRfFVii/V+STlaU7VokSrHjrn7loR5Tz9EPqKbRlTXejxTPLCH4OFwD35+Kipw=
+	t=1789671683; cv=none; b=o3i3Bb6ClIiR6Bq4p1Ud6easjy157CoyZZkIJrmwIEjp8Egjz6BMtQAXWn4YaOPheZIOBxSj4UvYul1wbMZz2F2UYgU5DjOYi7Qyl+511xu1fs/BIfHMoMQU+ZTAAsB/1RlPIzxOzlx6GDc6XuWiQc9EgQoqrAR6jnxlV4uhkX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671682; c=relaxed/simple;
-	bh=VxqOLdwKtDqmb2klTP3uCpRaxOxNhtnmTyWKOdmeVyQ=;
+	s=arc-20240116; t=1789671683; c=relaxed/simple;
+	bh=KQd+sWNMz0lrhsayC8t16eZ97BRCXf+nhptUNwCZGho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHFowsTi3n/AUM/TNuceDAWV+WblqhCkt20Lpr3zQQPQVHvR9p879GptnvrOMW98+AENQ8NuZGjhRWIhtkDVqwtkMSnW9xzVNWZf49sHZEW064In8Disk2yg5U0coSOXBX4S7WoZYovJOCUSMA2x72phlblTnqtAkTAYgIXmMmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/5aNDyk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F2F7HgxcspmrnlI1ocYGvVk9F7NGq6PQXtEDdYdzXBM0vB+4NlW3PXtaPYytbw0ZSrrVeCwpd5Z6YbaDxrKOIGCZbm14qPLlUanofXqHGUi9Pe+AdbGag8VgAYcz+jKmNHGUDFNqz+ocal52vDiSK5aKofGOPLWcOYyOlEZ1xxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIir7BaC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/5aNDyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109611F0089C;
-	Thu, 17 Sep 2026 19:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIir7BaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4775C1F008A2;
+	Thu, 17 Sep 2026 19:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671648;
-	bh=MTqT+08ogNyGYL8OU5IHdMYktRzwJ3d9TQCsNKqYmMM=;
+	s=korg; t=1789671669;
+	bh=a9s3GVhON+qMC6d457Bw7UKoGpLYlb4poJGYOHmp2u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M/5aNDykv88M5xDO4onyP1Gtx+xOlUN2TLUcA5vDxsTp+EHEmnEQ1Py5qHpuiJH5J
-	 /zgfpHaMtkG7ZoOUSbqYnilZxI2nprR2xcYF+15oyczDz/6m+GSziHcuAgSuB4keWR
-	 A/yU1uRUWu++FJNQU1d8uK2wg/+FE2HbJRHij7J0=
+	b=BIir7BaCom0wkjcUW+2pCHNRSmYvEVNa8Mt+luGnXKnUaaYCtVrLg6q5WavNsT9cO
+	 2cvgh9wmQLMzvc43r+TbKT5c3SMYBRwkPLJDBaRoYa26dPajy+WLg+0OqL7JuojbqZ
+	 knuYfd6mQUHgCZbcMU7lnod7iwmPtQoguW/B+1II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1043/1102] btrfs: expose per-inode stable writes flag
-Date: Thu, 17 Sep 2026 16:16:26 +0100
-Message-ID: <20260917151606.977888589@linuxfoundation.org>
+Subject: [PATCH 6.12 1045/1102] btrfs: parameter constification in ioctl.c
+Date: Thu, 17 Sep 2026 16:16:28 +0100
+Message-ID: <20260917151607.028911699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,111 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit ecde48a1a6b3256bd49db8780bf37556b157783c ]
+[ Upstream commit 5e54f9420fc9b8096d0a4b579a84806a3ef0bf88 ]
 
-The address space flag AS_STABLE_WRITES determine if FGP_STABLE for will
-wait for the folio to finish its writeback.
+Add const to function parameters that are not changed.
 
-For btrfs, due to the default data checksum behavior, if we modify the
-folio while it's still under writeback, it will cause data checksum
-mismatch.  Thus for quite some call sites we manually call
-folio_wait_writeback() to prevent such problem from happening.
-
-Currently there is only one call site inside btrfs really utilizing
-FGP_STABLE, and in that case we also manually call folio_wait_writeback()
-to do the waiting.
-
-But it's better to properly expose the stable writes flag to a per-inode
-basis, to allow call sites to fully benefit from FGP_STABLE flag.
-E.g. for inodes with NODATASUM allowing beginning dirtying the page
-without waiting for writeback.
-
-This involves:
-
-- Update the mapping's stable write flag when setting/clearing NODATASUM
-  inode flag using ioctl
-  This only works for empty files, so it should be fine.
-
-- Update the mapping's stable write flag when reading an inode from disk
-
-- Remove the explicit folio_wait_writeback() for FGP_BEGINWRITE call
-  site
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-
-[ sashal: Reduced backport -- upstream ecde48a1a6b32 touches 4 file(s), this
-  backport carries 3. Not backported here:
-  fs/btrfs/btrfs_inode.h
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
 Stable-dep-of: 15f7c86215e8 ("btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file.c  |    3 +--
- fs/btrfs/inode.c |    8 ++++++++
- fs/btrfs/ioctl.c |    4 ++++
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -884,7 +884,7 @@ static int prepare_uptodate_page(struct
- 
- static fgf_t get_prepare_fgp_flags(bool nowait)
- {
--	fgf_t fgp_flags = FGP_LOCK | FGP_ACCESSED | FGP_CREAT;
-+	fgf_t fgp_flags = FGP_LOCK | FGP_ACCESSED | FGP_CREAT | FGP_STABLE;
- 
- 	if (nowait)
- 		fgp_flags |= FGP_NOWAIT;
-@@ -954,7 +954,6 @@ again:
- 			faili = i - 1;
- 			goto fail;
- 		}
--		wait_on_page_writeback(pages[i]);
- 	}
- 
- 	return 0;
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3854,6 +3854,10 @@ static int btrfs_read_locked_inode(struc
- 
- 	btrfs_inode_split_flags(btrfs_inode_flags(leaf, inode_item),
- 				&BTRFS_I(inode)->flags, &BTRFS_I(inode)->ro_flags);
-+	if (BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)
-+		mapping_clear_stable_writes(inode->i_mapping);
-+	else
-+		mapping_set_stable_writes(inode->i_mapping);
- 
- cache_index:
- 	/*
-@@ -6313,6 +6317,10 @@ int btrfs_create_new_inode(struct btrfs_
- 		if (btrfs_test_opt(fs_info, NODATACOW))
- 			BTRFS_I(inode)->flags |= BTRFS_INODE_NODATACOW |
- 				BTRFS_INODE_NODATASUM;
-+		if (BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)
-+			mapping_clear_stable_writes(inode->i_mapping);
-+		else
-+			mapping_set_stable_writes(inode->i_mapping);
- 	}
- 
- 	ret = btrfs_insert_inode_locked(inode);
 --- a/fs/btrfs/ioctl.c
 +++ b/fs/btrfs/ioctl.c
-@@ -391,6 +391,10 @@ int btrfs_fileattr_set(struct mnt_idmap
+@@ -117,8 +117,8 @@ struct btrfs_ioctl_encoded_io_args_32 {
+ #endif
  
- update_flags:
- 	inode->flags = inode_flags;
-+	if (inode->flags & BTRFS_INODE_NODATASUM)
-+		mapping_clear_stable_writes(inode->vfs_inode.i_mapping);
-+	else
-+		mapping_set_stable_writes(inode->vfs_inode.i_mapping);
- 	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
- 	inode_inc_iversion(&inode->vfs_inode);
- 	inode_set_ctime_current(&inode->vfs_inode);
+ /* Mask out flags that are inappropriate for the given type of inode. */
+-static unsigned int btrfs_mask_fsflags_for_type(struct inode *inode,
+-		unsigned int flags)
++static unsigned int btrfs_mask_fsflags_for_type(const struct inode *inode,
++						unsigned int flags)
+ {
+ 	if (S_ISDIR(inode->i_mode))
+ 		return flags;
+@@ -132,7 +132,7 @@ static unsigned int btrfs_mask_fsflags_f
+  * Export internal inode flags to the format expected by the FS_IOC_GETFLAGS
+  * ioctl.
+  */
+-static unsigned int btrfs_inode_flags_to_fsflags(struct btrfs_inode *binode)
++static unsigned int btrfs_inode_flags_to_fsflags(const struct btrfs_inode *binode)
+ {
+ 	unsigned int iflags = 0;
+ 	u32 flags = binode->flags;
+@@ -218,7 +218,7 @@ static int check_fsflags(unsigned int ol
+ 	return 0;
+ }
+ 
+-static int check_fsflags_compatible(struct btrfs_fs_info *fs_info,
++static int check_fsflags_compatible(const struct btrfs_fs_info *fs_info,
+ 				    unsigned int flags)
+ {
+ 	if (btrfs_is_zoned(fs_info) && (flags & FS_NOCOW_FL))
+@@ -247,7 +247,7 @@ static int btrfs_check_ioctl_vol_args2_s
+  */
+ int btrfs_fileattr_get(struct dentry *dentry, struct fileattr *fa)
+ {
+-	struct btrfs_inode *binode = BTRFS_I(d_inode(dentry));
++	const struct btrfs_inode *binode = BTRFS_I(d_inode(dentry));
+ 
+ 	fileattr_fill_flags(fa, btrfs_inode_flags_to_fsflags(binode));
+ 	return 0;
+@@ -485,7 +485,7 @@ void btrfs_exclop_balance(struct btrfs_f
+ 	}
+ }
+ 
+-static int btrfs_ioctl_getversion(struct inode *inode, int __user *arg)
++static int btrfs_ioctl_getversion(const struct inode *inode, int __user *arg)
+ {
+ 	return put_user(inode->i_generation, arg);
+ }
+@@ -557,7 +557,7 @@ static noinline int btrfs_ioctl_fitrim(s
+  * Calculate the number of transaction items to reserve for creating a subvolume
+  * or snapshot, not including the inode, directory entries, or parent directory.
+  */
+-static unsigned int create_subvol_num_items(struct btrfs_qgroup_inherit *inherit)
++static unsigned int create_subvol_num_items(const struct btrfs_qgroup_inherit *inherit)
+ {
+ 	/*
+ 	 * 1 to add root block
+@@ -967,7 +967,7 @@ static int btrfs_may_delete(struct mnt_i
+ 
+ /* copy of may_create in fs/namei.c() */
+ static inline int btrfs_may_create(struct mnt_idmap *idmap,
+-				   struct inode *dir, struct dentry *child)
++				   struct inode *dir, const struct dentry *child)
+ {
+ 	if (d_really_is_positive(child))
+ 		return -EEXIST;
+@@ -1539,8 +1539,8 @@ out:
+ 	return ret;
+ }
+ 
+-static noinline int key_in_sk(struct btrfs_key *key,
+-			      struct btrfs_ioctl_search_key *sk)
++static noinline int key_in_sk(const struct btrfs_key *key,
++			      const struct btrfs_ioctl_search_key *sk)
+ {
+ 	struct btrfs_key test;
+ 	int ret;
+@@ -1565,7 +1565,7 @@ static noinline int key_in_sk(struct btr
+ 
+ static noinline int copy_to_sk(struct btrfs_path *path,
+ 			       struct btrfs_key *key,
+-			       struct btrfs_ioctl_search_key *sk,
++			       const struct btrfs_ioctl_search_key *sk,
+ 			       u64 *buf_size,
+ 			       char __user *ubuf,
+ 			       unsigned long *sk_offset,
+@@ -2843,7 +2843,7 @@ out_free:
+ 	return ret;
+ }
+ 
+-static long btrfs_ioctl_fs_info(struct btrfs_fs_info *fs_info,
++static long btrfs_ioctl_fs_info(const struct btrfs_fs_info *fs_info,
+ 				void __user *arg)
+ {
+ 	struct btrfs_ioctl_fs_info_args *fi_args;
+@@ -2897,7 +2897,7 @@ static long btrfs_ioctl_fs_info(struct b
+ 	return ret;
+ }
+ 
+-static long btrfs_ioctl_dev_info(struct btrfs_fs_info *fs_info,
++static long btrfs_ioctl_dev_info(const struct btrfs_fs_info *fs_info,
+ 				 void __user *arg)
+ {
+ 	BTRFS_DEV_LOOKUP_ARGS(args);
+@@ -4355,7 +4355,7 @@ static int btrfs_ioctl_get_features(stru
+ 	return 0;
+ }
+ 
+-static int check_feature_bits(struct btrfs_fs_info *fs_info,
++static int check_feature_bits(const struct btrfs_fs_info *fs_info,
+ 			      enum btrfs_feature_set set,
+ 			      u64 change_mask, u64 flags, u64 supported_flags,
+ 			      u64 safe_set, u64 safe_clear)
 
 
