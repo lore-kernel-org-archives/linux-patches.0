@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A3E5208BA;
-	Thu, 17 Sep 2026 17:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAAB51EE1A;
+	Thu, 17 Sep 2026 17:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665836; cv=none; b=kNWN+4IHiIXY2vtC6E1cMBnujx3QXyEsSK7GdUZtrQqpXPCYg/5lX4R24izohVECWvIMwa+GHUB0d3TXTgqLyvfWlh1e0ZfZv3SZ9xiucARdiskray9cKCbLW/h0gX4IpLOOSqx26qqRzsXejqCNiqTkVF6MTI5/6XLrJvrDr2g=
+	t=1789665839; cv=none; b=J3woSgRAC4vWESkdPdHanBV4toFDP0EiVndRxZBVvjsAdZT8UupvpvS1ettkC+FkG71EDiuCUWI0M6BEwvfJL/NJIhFlf3eF9N6B+orpcNKVCYhA5rsVSpsARZB54/uFcYs4TZVzjSDbocfiRfkNDAaJmLIksJ7hRkRlVq5MRLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665836; c=relaxed/simple;
-	bh=CcYo3kt5AV0/AOwtXgnas5+omxuLEo6WWdn7qVYvzo4=;
+	s=arc-20240116; t=1789665839; c=relaxed/simple;
+	bh=wOfYeaN1rkpcE9HJ1dhg8rkiG5F8bigna2Za1Oj6w5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUWuNa5YiytFoH08lfM5hrti/OPQQVCUmJ5zA9SvlXJeH3n8n4uOYtXmLZixK8wOv1jt/fB1MoFeBcJrg4xtR2NEQnoC539dtgLDd5cb9rluz7PFWOzTH6Zs8zz04OFt+FwGTgxLCzcSR2ITaddDrc4tuztmw+rQhwofnej7lBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghwXSM8V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lj8wUc/3GWrCQITINS/HKBrXvXvJlc/2E2S5AmElk+rEV9JAFhcLfXXvUspilDrWu1KNQ6WKtzwGcSCAAYEcVNdK64b1nWnto7mnuc4jVLJol0IpNXPj5oc+NolOqbJR36TVsScM9s8WoQFN83QISR2i1EzF8h5XfRmoLC3/CSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVtkVUdL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghwXSM8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8977D1F000FF;
-	Thu, 17 Sep 2026 17:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVtkVUdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A823E1F000FF;
+	Thu, 17 Sep 2026 17:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665835;
-	bh=n5H6lEvUu6YdVQqsYrvgXWHDvFxSa5GP+3beaFdqHlE=;
+	s=korg; t=1789665838;
+	bh=e3nD+b8yiGQ8PV7+nbcg54NIm+gkeAckjh8az7SPyso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ghwXSM8VjqpTBerUivk931pg1tRjGR5d4NpgeVndaLMiQ424mqBek1Eav3R2JEh71
-	 KIVHxRE/6QyKCUlRkyQ2ZC+Qch7agy34guz02TL/TtobgmpFaON4JWSD+c5Yzs7jso
-	 l2Xqqz5ZUrMbJSv8yOvWYSOB54gGCY92vbMLdtwo=
+	b=ZVtkVUdLxwzsab4ysc6HNmU9dUYw+jDjyIEbLlkMolzjguJpVIq/OSl/pRdrSxPJ3
+	 xgroAYLA2HWh29fwqb02ZtTZBW8tWM+5/RVi7pVye1AL+7ChCAxqPBHT2YjeBQfUpn
+	 Rjs42iTguTCOOWLu0qT3FXsLuuT1N+CKUiPrhVIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0836/1250] Documentation/hwmon: Document hwmon_notify_event()
-Date: Thu, 17 Sep 2026 16:10:31 +0100
-Message-ID: <20260917151614.607191120@linuxfoundation.org>
+Subject: [PATCH 6.18 0837/1250] hwmon: Fix potential UAF in pec_store
+Date: Thu, 17 Sep 2026 16:10:32 +0100
+Message-ID: <20260917151614.636712194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,58 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit b4fffa75c1d6f87e6dc6191dec900f2b5bd23a1c ]
+[ Upstream commit 354ccc99b2dc8ba0cf6d4de34e520bcf6ecca5c2 ]
 
-The hwmon core provides hwmon_notify_event() for drivers to report events
-such as alarm or fault conditions to userspace via sysfs notifications
-and uevents, as well as to the thermal subsystem for temperature sensors.
-However, this function is not documented in the hwmon kernel API guide.
+Sashiko reports:
 
-Add the function prototype and description of hwmon_notify_event() to
-Documentation/hwmon/hwmon-kernel-api.rst.
+In pec_store(), a guard(mutex)(&hwdev->lock) is taken. If the chip write
+operation returns an error other than -EOPNOTSUPP, the code jumps to the
+put label, which calls put_device(hdev). If this drops the final reference,
+the device is freed. When the function then returns, the guard cleanup
+function runs and attempts to unlock the freed mutex.
 
-Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Fixes: 1597b374af222 ("hwmon: Add notification support")
+Use scoped_guard() instead of guard() to avoid the problem.
+
+Fixes: 3ad2a7b9b15d5 ("hwmon: Serialize accesses in hwmon core")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/hwmon-kernel-api.rst | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/hwmon/hwmon.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/hwmon/hwmon-kernel-api.rst b/Documentation/hwmon/hwmon-kernel-api.rst
-index 9fcde32a140df..c3eb433a78f61 100644
---- a/Documentation/hwmon/hwmon-kernel-api.rst
-+++ b/Documentation/hwmon/hwmon-kernel-api.rst
-@@ -42,6 +42,9 @@ register/unregister functions::
- 
-   char *devm_hwmon_sanitize_name(struct device *dev, const char *name);
- 
-+  int hwmon_notify_event(struct device *dev, enum hwmon_sensor_types type,
-+			 u32 attr, int channel);
-+
-   void hwmon_lock(struct device *dev);
-   void hwmon_unlock(struct device *dev);
- 
-@@ -90,6 +93,18 @@ implemented in the driver, or debugfs functions, hwmon_lock() and hwmon_unlock()
- can be used to ensure that calls to those functions are serialized. Those
- functions also support guard() and scoped_guard() variants.
- 
-+Drivers can call hwmon_notify_event() to notify userspace and the thermal
-+subsystem when a hardware monitoring event (such as an alarm or a fault
-+condition) occurs or clears. The parameters are the hwmon device, the sensor
-+type, the attribute identifier associated with the event (such as
-+hwmon_temp_max_alarm or hwmon_fan_fault), and the sensor channel number.
-+hwmon_notify_event() generates a sysfs event (calling sysfs_notify()) and a
-+udev event with the attribute name passed in the NAME environment property
-+(e.g., "NAME=temp1_max_alarm"). If the event is for a temperature sensor and
-+the sensor is attached to a thermal zone, it also notifies the thermal
-+subsystem to update the thermal zone. hwmon_notify_event() returns 0 on
-+success or a negative error code on failure.
-+
- Using devm_hwmon_device_register_with_info()
- --------------------------------------------
- 
+diff --git a/drivers/hwmon/hwmon.c b/drivers/hwmon/hwmon.c
+index 0b4bdcd33c7b8..0f6200410c868 100644
+--- a/drivers/hwmon/hwmon.c
++++ b/drivers/hwmon/hwmon.c
+@@ -371,18 +371,17 @@ static ssize_t pec_store(struct device *dev, struct device_attribute *devattr,
+ 	 * handling is not required.
+ 	 */
+ 	hwdev = to_hwmon_device(hdev);
+-	guard(mutex)(&hwdev->lock);
+-	if (hwdev->chip->ops->write) {
+-		err = hwdev->chip->ops->write(hdev, hwmon_chip, hwmon_chip_pec, 0, val);
+-		if (err && err != -EOPNOTSUPP)
+-			goto put;
++	scoped_guard(mutex, &hwdev->lock) {
++		if (hwdev->chip->ops->write) {
++			err = hwdev->chip->ops->write(hdev, hwmon_chip, hwmon_chip_pec, 0, val);
++			if (err && err != -EOPNOTSUPP)
++				goto put;
++		}
++		if (!val)
++			client->flags &= ~I2C_CLIENT_PEC;
++		else
++			client->flags |= I2C_CLIENT_PEC;
+ 	}
+-
+-	if (!val)
+-		client->flags &= ~I2C_CLIENT_PEC;
+-	else
+-		client->flags |= I2C_CLIENT_PEC;
+-
+ 	err = count;
+ put:
+ 	put_device(hdev);
 -- 
 2.53.0
 
