@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A933F5187C1;
-	Thu, 17 Sep 2026 16:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBFD4FC331;
+	Thu, 17 Sep 2026 17:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664399; cv=none; b=TmkbDk2J0sdOkmEP3nOlpq/vQbjOqk/5mHyIs4oiOfaxalOKZ4l68UlKEqYZLkp+eNBaGaCQMD59auXJ8seWXKZ/lkIGS1gPdXx9K7HfhkblQuSJK+0dgYCMhS30TZrw18MoGqMi7tETM5iXpZxsJZ4QAChZbB9+PRhWuktvnsk=
+	t=1789664403; cv=none; b=k+mW+hy9D8A/5+SnMjbbBWNRNKySs/k3UGTgYqUnx6cJZU4pa/hOTidWasdAlxjZLCpAb7dFsVW5+hO1pFLKUmEkkV6vzhMPuCU7XkcWHMXEn3nUmbnhneZ5Cy7WjxMmRIy2+UzuDKdwHub/bonKJ5vaN+WzFlbfyWgEGCtdVCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664399; c=relaxed/simple;
-	bh=DjteYOCDFI3iXOr47xjBZ0+jvuTfjBe04N4IvzUZK9Y=;
+	s=arc-20240116; t=1789664403; c=relaxed/simple;
+	bh=J0E/nb6Ez22H1iQqIhFzGJb6UUxLgkwuXN9aJPMZg4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7Dlf8xkHailERvVCegSa4/AIMrAVmX4A0aiXmbS0ic3uVMFv9a4kF9Vy7Faeuueu5HyqqdduWWHef6B7TEyGCsXA2RP3EjQMcXBF0gBEO4Z4eP4bJqtbYFKeQAoW0FGRLM3bQxfEXeU7mfyhztf5Utykg2S5T+/R79bg8P+Z+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQad4umN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N00rHMDrEcWftbyBiTqjZxIyRn808tFAdxIJBAnZ07vU1iGThXYBO3qlN/FF/B67I9eCXCLtU5Gsnob5MFNXyGTpS1u+/85C2lFSpdB3nYh1VFF9SQ3NWLiPAQwUU8Ge/xL3mTAWIMbguN/jvzl8LUbVEL4WQ/yyvZi58UlZPio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TARV3Aaz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQad4umN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC66E1F0089D;
-	Thu, 17 Sep 2026 16:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TARV3Aaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FD31F000FF;
+	Thu, 17 Sep 2026 17:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664398;
-	bh=X7WUZhLOA6B6xABZhJSPV2cSPjTjWKSU3jd+kHo4nHM=;
+	s=korg; t=1789664402;
+	bh=ytJ15U9FpTulmYKtty2QsH2rrZ/AHMyfd/WTUukgkNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQad4umNrVKnWcAN/p1JbnzsTsDy3EVoKRDHGAdrrNEitnTMFj6hlZnKQkYJWPA5J
-	 g9yVoyu6kE/qr023h0I6/Ue8XdaTpFy/XGn6tx7Lo0G+Tmjr/OEyXY1xtXYXHJUOdV
-	 dKibhCqGzLby2YPT/9aa9ketN4mL89cFyUBAGtpo=
+	b=TARV3AazU2IeZCf5vQqtOYK13elnbmhpd27ZtnMWqhS7sP5+yDaxRyZIidndXcGGa
+	 rpT5/mTtrPuvrdMmW6G4+iKh5SDid5lRO18dmvJmIOt5qjxbtCR7BjiSw2Cgw67BFW
+	 vh+CrfDAsaCE+0b1p+bD3gF3TBGFCAbt1M5w7Ve8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0343/1250] net: cpsw_new: unregister devlink on port registration failure
-Date: Thu, 17 Sep 2026 16:02:18 +0100
-Message-ID: <20260917151601.374607445@linuxfoundation.org>
+Subject: [PATCH 6.18 0334/1250] drm/amdkfd: fix SMI event cross-process information leak
+Date: Thu, 17 Sep 2026 16:02:09 +0100
+Message-ID: <20260917151601.140405030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,52 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yongqiang Sun <Yongqiang.Sun@amd.com>
 
-[ Upstream commit b64f763b607426ac97e44b114f0b8844ac3b86dd ]
+[ Upstream commit 92a8dba246d371fe268280e5fd74b0955688e6df ]
 
-cpsw_probe() registers devlink before registering the CPSW ports.
+kfd_smi_ev_enabled() skips the suser privilege check when pid=0.
+PROCESS_START, PROCESS_END, and VMFAULT events are emitted with
+pid=0 while carrying another process's PID and command name, so any
+/dev/kfd user in the render group can monitor all GPU workloads.
 
-If cpsw_register_ports() fails, the error path only unregisters the
-notifiers and then releases the lower level resources. It does not undo
-the successful cpsw_register_devlink() call, leaving the devlink instance
-and its parameters registered after probe has failed.
+Pass the target process PID into kfd_smi_event_add() for these events
+so the existing per-client filter restricts delivery to the owning
+process or CAP_SYS_ADMIN subscribers.
 
-Add a devlink cleanup label for the path where devlink registration has
-already succeeded, and use it when port registration fails.
-
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260604043115.1409134-1-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index c6cf7a0375e08..34c0e651e2da3 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -2048,7 +2048,7 @@ static int cpsw_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+index d2bc169e84b0b..fe4b936923854 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+@@ -254,8 +254,10 @@ void kfd_smi_event_update_vmfault(struct kfd_node *dev, uint16_t pasid)
+ 	if (task_info) {
+ 		/* Report VM faults from user applications, not retry from kernel */
+ 		if (task_info->task.pid)
+-			kfd_smi_event_add(0, dev, KFD_SMI_EVENT_VMFAULT, KFD_EVENT_FMT_VMFAULT(
+-					  task_info->task.pid, task_info->task.comm));
++			kfd_smi_event_add(task_info->tgid, dev,
++					  KFD_SMI_EVENT_VMFAULT,
++					  KFD_EVENT_FMT_VMFAULT(task_info->task.pid,
++								task_info->task.comm));
+ 		amdgpu_vm_put_task_info(task_info);
+ 	}
+ }
+@@ -356,7 +358,7 @@ void kfd_smi_event_process(struct kfd_process_device *pdd, bool start)
+ 	task_info = amdgpu_vm_get_task_info_vm(avm);
  
- 	ret = cpsw_register_ports(cpsw);
- 	if (ret)
--		goto clean_unregister_notifiers;
-+		goto clean_unregister_devlink;
- 
- 	dev_notice(dev, "initialized (regs %pa, pool size %d) hw_ver:%08X %d.%d (%d)\n",
- 		   &ss_res->start, descs_pool_size,
-@@ -2060,6 +2060,8 @@ static int cpsw_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+clean_unregister_devlink:
-+	cpsw_unregister_devlink(cpsw);
- clean_unregister_notifiers:
- 	cpsw_unregister_notifiers(cpsw);
- clean_cpts:
+ 	if (task_info) {
+-		kfd_smi_event_add(0, pdd->dev,
++		kfd_smi_event_add(task_info->tgid, pdd->dev,
+ 				  start ? KFD_SMI_EVENT_PROCESS_START :
+ 				  KFD_SMI_EVENT_PROCESS_END,
+ 				  KFD_EVENT_FMT_PROCESS(task_info->task.pid,
 -- 
 2.53.0
 
