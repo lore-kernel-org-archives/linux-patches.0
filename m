@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC5B5218BC;
-	Thu, 17 Sep 2026 17:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC7C4EF15B;
+	Thu, 17 Sep 2026 17:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667379; cv=none; b=OVBdpJ/+dvBRD93cG9ezhwrHOrZgCK+vp8AFox37eMwg7IPFuJZ4jJRD9/lMxmsNe+2s/Chtp24HQsLLXKzqBMrekJGjxRkV93/zfO/8bFVDlPBrah0K4XCxD08vBodgT/nDJ5+NqT3hOxux1Cdb+IEYTZ5vwUHzR8mEXOEMRcM=
+	t=1789667382; cv=none; b=kheUcunyw9WYx0M3SKP4HxNAYgIN6v0C+5C+ECkxTGZykAbvR3yCVrTvbwY4nGmT931djNafGrem0yhRudG7+nSPAKA+4dmeV2Bv9ZW4sywjGZJqZoGLJhICaIaXnGy8WfpGIjdEy3sxlj7nO0nZJuETG/57wmc4lTGCAK7N4Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667379; c=relaxed/simple;
-	bh=1vbUIfyWGuqftBKGB8Qt7NzGH5TSsauEmlVt4qRou7g=;
+	s=arc-20240116; t=1789667382; c=relaxed/simple;
+	bh=Md+fMDefiFnECOhoOKhCGo5AfsZ3pSwseBPoEeh8fEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nhm0vk8K/G1lqPi5MsFWAK2VS6fsk4R+3427HdB6dgRvNRedJ1/KmJwwJNhTi/EvbgAmCCE6Lo6n3EjhqOsw4vABzmniXophpjGRFY5xPGI84TtMFEWNYmWWiWCAcfcv1CdI6lhRq/Fq9GEfYr/SnYaHEOsAns2tMpa5tuna1iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5RgrLxV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFAzjnrHueKZJlZCoObwl8i7RL6tGAaXe6LITeU5ivmtn2FEOXg0V1CGQZOzgo9T8WGPAUYs3NCEhVxWr5zkEpLxJW9XoWnnuL+qRbVHLId+IfpSTyeccitF2Up+utsFlMOaL3Jhcx9koeBOqf8jodDtWD01M6B7KdMTxnKtAYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROTKfL+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5RgrLxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FECA1F000FF;
-	Thu, 17 Sep 2026 17:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROTKfL+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B701F000FF;
+	Thu, 17 Sep 2026 17:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667378;
-	bh=lZitca80e71rt3UUYuuLz4lNiMBKEtkXzLmGd53TWl8=;
+	s=korg; t=1789667381;
+	bh=uw1Y94vcjivTQdzTNukHWsrJ9yqZNgXXR1dO+FtqqY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a5RgrLxVcBzswXBQtKuabK8++Ecu+0x+wEACGiziR2Y9/63GXHUWtQDKpwT6ruidE
-	 4103wPlBiLSzFfZJ28BkKptepgvGX/kS+6Tmj6Xo9woS4n0ybUUZKkPKmMQZBqzzg5
-	 rFMU4c2gwnxWu0HfeEepBrhp3BcUnXlglmKPIcEo=
+	b=ROTKfL+GsLrCk8QLO6b46ZJrL5hUw1JUBwS4X1VjMwLHoGuckTYsEBux1nbRZJzx0
+	 InnDaC3kZaotG2x9sv/vfy3goiRBkkReDJwJgBSTPNHQ1HkHWEDEh0gGzGGI/ayODD
+	 8swcTuUBl1GOMjDG4NEp85wAF2UNs9RT832OM4pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sophie D <patches@scd31.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ben Reed <Ben.Reed@microchip.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0073/1102] drm/gud: Add RCade Display Adapter VID/PID pair
-Date: Thu, 17 Sep 2026 16:00:16 +0100
-Message-ID: <20260917151541.301064739@linuxfoundation.org>
+Subject: [PATCH 6.12 0047/1102] PCI: switchtec: Add Gen6 Device IDs
+Date: Thu, 17 Sep 2026 15:59:50 +0100
+Message-ID: <20260917151540.629433012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,41 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sophie D <patches@scd31.com>
+From: Ben Reed <Ben.Reed@microchip.com>
 
-[ Upstream commit ac5ac0acf11df04295eb1811066097b7022d6c7f ]
+[ Upstream commit 5e6c21c56998e1e58d2f314e70779989ea0fee5d ]
 
-The RCade Display Adapter is a hardware device that allows driving an
-Arcade CRT display via the GUD protocol. Currently it spoofs an
-existing GUD VID/PID pair. However, now that it has its own pair
-assigned, it makes sense to add this to the list of pairs that GUD
-supports natively.
+Add device IDs for the next generation of switchtec products.
 
-More information can be found in the project repositories:
-https://gitlab.scd31.com/stephen/stm32-usb-vga-adapter-hardware
-https://gitlab.scd31.com/stephen/stm32-usb-vga-rcade-adapter
+No changes to the driver were required with the new version of the
+hardware.
 
-Link: https://pid.codes/1209/4FB3/
-Signed-off-by: Sophie D <patches@scd31.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509025405.4143956-1-patches@scd31.com
+[logang: rewrote commit message]
+
+Signed-off-by: Ben Reed <Ben.Reed@microchip.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260505161633.67454-1-logang@deltatee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gud/gud_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/switch/switchtec.c | 16 ++++++++++++++++
+ include/linux/switchtec.h      |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/gpu/drm/gud/gud_drv.c b/drivers/gpu/drm/gud/gud_drv.c
-index ac6bbf920c726..f1200a2ef8801 100644
---- a/drivers/gpu/drm/gud/gud_drv.c
-+++ b/drivers/gpu/drm/gud/gud_drv.c
-@@ -660,6 +660,7 @@ static int gud_resume(struct usb_interface *intf)
- static const struct usb_device_id gud_id_table[] = {
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1d50, 0x614d, USB_CLASS_VENDOR_SPEC) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x16d0, 0x10a9, USB_CLASS_VENDOR_SPEC) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1209, 0x4fb3, USB_CLASS_VENDOR_SPEC) },
- 	{ }
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index b14dfab04d846..b093bb70b9d15 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1853,6 +1853,22 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x5552, SWITCHTEC_GEN5),  /* PAXA 52XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5536, SWITCHTEC_GEN5),  /* PAXA 36XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5528, SWITCHTEC_GEN5),  /* PAXA 28XG5 */
++	SWITCHTEC_PCI_DEVICE(0x6048, SWITCHTEC_GEN6),  /* PFXs 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6064, SWITCHTEC_GEN6),  /* PFXs 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6044, SWITCHTEC_GEN6),  /* PFXs 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6060, SWITCHTEC_GEN6),  /* PFXs 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6148, SWITCHTEC_GEN6),  /* PSXs 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6164, SWITCHTEC_GEN6),  /* PSXs 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6144, SWITCHTEC_GEN6),  /* PSXs 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6160, SWITCHTEC_GEN6),  /* PSXs 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6248, SWITCHTEC_GEN6),  /* PFX 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6264, SWITCHTEC_GEN6),  /* PFX 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6244, SWITCHTEC_GEN6),  /* PFX 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6260, SWITCHTEC_GEN6),  /* PFX 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6348, SWITCHTEC_GEN6),  /* PSX 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6364, SWITCHTEC_GEN6),  /* PSX 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6344, SWITCHTEC_GEN6),  /* PSX 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6360, SWITCHTEC_GEN6),  /* PSX 160XG6 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1001, SWITCHTEC_GEN4),  /* PCI1001 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1002, SWITCHTEC_GEN4),  /* PCI1002 12XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1003, SWITCHTEC_GEN4),  /* PCI1003 16XG4 */
+diff --git a/include/linux/switchtec.h b/include/linux/switchtec.h
+index cdb58d61c1526..724da6c08bf7d 100644
+--- a/include/linux/switchtec.h
++++ b/include/linux/switchtec.h
+@@ -42,6 +42,7 @@ enum switchtec_gen {
+ 	SWITCHTEC_GEN3,
+ 	SWITCHTEC_GEN4,
+ 	SWITCHTEC_GEN5,
++	SWITCHTEC_GEN6,
  };
  
+ struct mrpc_regs {
 -- 
 2.53.0
 
