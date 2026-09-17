@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD1F51AFDA;
-	Thu, 17 Sep 2026 17:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2178502D4C;
+	Thu, 17 Sep 2026 17:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666319; cv=none; b=cdYDDHoQCkLJrK4JMcntlqXMr5nEYMpO/+FFS6KA422FjbHEpzDzeV1ZWack3p23crT1FVfwqGlmGWz/JG+dZ1bYX9+M4u3rJl+NnPBrzysuKUbLaOtpRF5FZ5knoefX8/tiTt+H1pD3ytqATpb3vbwCbteOk4JJJ29IFXp0MjQ=
+	t=1789666322; cv=none; b=oMdHKmMgq0sm5vRqcmXKnsWM05oBPlX0IcKXfZK2GE091tuoiJ042mZWpWN+1TOLIO5LnCEfWI8O3tksAxxrWeP3rFmQYv6F65RmhBWG8ZTwG0PLJUoZjhcgLUQd1EM85w6ETwS1GMGo9jG2dcTyNTiJ/Qd2Kdh0Aiaa2UZ4Mzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666319; c=relaxed/simple;
-	bh=Inok5q8H3XjQkcrZf93RTTRANeXMAZ2VLB4J0krUUGA=;
+	s=arc-20240116; t=1789666322; c=relaxed/simple;
+	bh=xf/77fsiYRGIRORzAUUP0LSdXhDRcQNbgGlQGlTojlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4lH6uCwkDVgMV/f4IXqzQIFnj300DA+S9eC8rZIrkLVNih1MDS76Vp/NbtqEXB1hcUmVU7HwyZpKzoQJ2sYUQExQ259Xc/uOv5vEnPextxJ0kn1TccHAjpxT8Xt3Qxo9zdBsL+Zm5/Gi340knXM5MYmpdnr35atCvb7nW63A9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqilU7b9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dzTZcu+6miH4uA0qny+ZS8oa8oAh1KkNU8Qe9xRKW1S0plF14bZ52J4GzYfqMGpveA2lG0qzrgJOmceQYM31+ggyaHC03QqjYZ9nPYrfklvoCZPspiR6U8NQBpj9TEIS5vpTBJnXU07gitGbHXViqOaSBckfaWs+LSmPKFf8NM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdaMDXNY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqilU7b9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD6C1F000FF;
-	Thu, 17 Sep 2026 17:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdaMDXNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D431F000FF;
+	Thu, 17 Sep 2026 17:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666317;
-	bh=rdlJd0pMr08KAs0eh6yEX56W0B2ji+FLkx/l2RF5P6A=;
+	s=korg; t=1789666321;
+	bh=TOFzAaaUsWjT2naZdrSaimG4B25/H3Wqw4lURKHY3hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqilU7b9ZoxAPbaCnwu7pbEP0QuOFn5zeDer/esUS+gHosB/2bIaRmiHLl5/3KoFy
-	 cuZiM1SXnQmhjcYWkPqZi/nx+RhYBsiMsvZUR75QQ1jGaOiuhVKimsSLlTC5gJfwhi
-	 WYymnUeyd2z7CQQcEBvE8KyuptKK/RpX/BKxBohU=
+	b=GdaMDXNYmETPkbm37Gp5NCS2kacgut9x9Sg2lFkaCk/YhRQofezVZUT00Ccy9TBS6
+	 ui3iY34JN7buyT0gvF5kls29qg4JCxstAW3jKiOcetzSh5IlQaXR0vwelD7DXudYSt
+	 Lf3tcHfFbG1esqbRRNFf/tEPjRsWYqzNBIJ9cFnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Xu Rao <raoxu@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 0998/1250] Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev
-Date: Thu, 17 Sep 2026 16:13:13 +0100
-Message-ID: <20260917151619.085533438@linuxfoundation.org>
+	Xiong Weimin <xiongweimin@kylinos.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.18 0981/1250] virtio_mmio: disable IRQ wake before free_irq
+Date: Thu, 17 Sep 2026 16:12:56 +0100
+Message-ID: <20260917151618.610540270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,68 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-commit f5a427b16e45210dee656b0860728f3d496dee85 upstream.
+commit d14d693adb055e98ca705822ba6daebc18602d9a upstream.
 
-The command and ACL RPMsg endpoints store struct btqcomsmd as their
-callback private data. The receive callbacks dereference btq->hdev
-without taking an hci_dev reference.
+When the DT node has "wakeup-source", vm_find_vqs() calls
+enable_irq_wake() on the shared IRQ, but vm_del_vqs() freed that IRQ
+without a matching disable_irq_wake(). That leaves a wake reference
+behind and can warn on later free_irq()/request_irq() cycles.
 
-The current teardown order frees the hci_dev before destroying the RPMsg
-endpoints in both the hci_register_dev() error path and the driver remove
-path. If WCNSS delivers data in that window, the endpoint callback can
-run with an already freed hci_dev and pass it to the Bluetooth core.
+Record whether enable_irq_wake() succeeded, and disable it in
+vm_del_vqs() before free_irq().
 
-For qcom_smd endpoints, rpmsg_destroy_ept() closes the channel and clears
-the callback under the channel recv_lock. The receive path holds the same
-lock while invoking the callback, so destroying the endpoints first both
-prevents new callbacks and serializes with any callback already running.
-
-Destroy the command and ACL endpoints before hci_free_dev(). Keep
-hci_unregister_dev() first during remove so the HCI core stops issuing
-operations before the transport endpoints are shut down. In the full
-registration-error cleanup path, return directly after freeing the hci_dev
-to avoid falling through to the partial-construction labels and destroying
-the endpoints twice.
-
-Fixes: 5052de8deff5 ("soc: qcom: smd: Transition client drivers from smd to rpmsg")
-Fixes: 9a39a927be01 ("Bluetooth: btqcomsmd: Fix a resource leak in error handling paths in the probe function")
+Fixes: 02213273f72a ("virtio_mmio: add support to set IRQ of a virtio device as wakeup source")
 Cc: stable@vger.kernel.org
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260805032937.1606737-1-xiongweimin@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqcomsmd.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -188,7 +188,10 @@ static int btqcomsmd_probe(struct platfo
- 	return 0;
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -87,6 +87,9 @@ struct virtio_mmio_device {
  
- hci_free_dev:
-+	rpmsg_destroy_ept(btq->cmd_channel);
-+	rpmsg_destroy_ept(btq->acl_channel);
- 	hci_free_dev(hdev);
-+	return ret;
- destroy_cmd_channel:
- 	rpmsg_destroy_ept(btq->cmd_channel);
- destroy_acl_channel:
-@@ -202,10 +205,11 @@ static void btqcomsmd_remove(struct plat
- 	struct btqcomsmd *btq = platform_get_drvdata(pdev);
- 
- 	hci_unregister_dev(btq->hdev);
--	hci_free_dev(btq->hdev);
- 
- 	rpmsg_destroy_ept(btq->cmd_channel);
- 	rpmsg_destroy_ept(btq->acl_channel);
+ 	void __iomem *base;
+ 	unsigned long version;
 +
-+	hci_free_dev(btq->hdev);
++	/* True if enable_irq_wake() succeeded for the shared IRQ. */
++	bool wake_irq_enabled;
+ };
+ 
+ /* Configuration interface */
+@@ -329,11 +332,17 @@ static void vm_del_vqs(struct virtio_dev
+ {
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+ 	struct virtqueue *vq, *n;
++	int irq = platform_get_irq(vm_dev->pdev, 0);
+ 
+ 	list_for_each_entry_safe(vq, n, &vdev->vqs, list)
+ 		vm_del_vq(vq);
+ 
+-	free_irq(platform_get_irq(vm_dev->pdev, 0), vm_dev);
++	if (vm_dev->wake_irq_enabled) {
++		disable_irq_wake(irq);
++		vm_dev->wake_irq_enabled = false;
++	}
++
++	free_irq(irq, vm_dev);
  }
  
- static const struct of_device_id btqcomsmd_of_match[] = {
+ static void vm_synchronize_cbs(struct virtio_device *vdev)
+@@ -460,8 +469,9 @@ static int vm_find_vqs(struct virtio_dev
+ 	if (err)
+ 		return err;
+ 
+-	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source"))
+-		enable_irq_wake(irq);
++	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source") &&
++	    !enable_irq_wake(irq))
++		vm_dev->wake_irq_enabled = true;
+ 
+ 	for (i = 0; i < nvqs; ++i) {
+ 		struct virtqueue_info *vqi = &vqs_info[i];
 
 
