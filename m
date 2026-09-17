@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3304D1798;
-	Thu, 17 Sep 2026 18:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE064CDDE8;
+	Thu, 17 Sep 2026 18:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671178; cv=none; b=eJCwK999nr7PgVNrgkLjtMbFtVxQ4IZcQogWe0mf6MLWDf1g2gq/699aAOFy0dtnaAptqJbjNLLV2kCmt0rCWCZv8pf7r08yl+xRVttzCJWm662QM+YBUQ/p148nXxRwIW/tnCZuLQWp0PuVonfQOSrIHsbdbJ/Q1+p908StfKE=
+	t=1789671182; cv=none; b=RH4gg80VayoL3tJCwcx6Nrr6xnXyAp9mPWhnRb7mxHxciRbv0O1RfYNsvXUlsbmJTCoVv9bKGJCmSabspitGudoz1Li3JzQymoaWAd4UVHVbjBJAlGV4ao2Q9x8P5ngbe7ZdQ5mA6n/c5m4UUpNFlwDLiXwEJ2Y6SKXoVj9+bKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671178; c=relaxed/simple;
-	bh=Y631aeT12PFKVBcnexxP6wM0NlYgSukcHbf8eIqCxdI=;
+	s=arc-20240116; t=1789671182; c=relaxed/simple;
+	bh=HMZYDNWxAAZlKDC6L2Mn7YbrrVLB5KXdJQL6RUZad3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dc66RITgGvNK+/G/DuVjGoqWO8NXviWJ0Ep0+6vijUdKe6qmd3KCEAXvtSMvyl1sOLg+KaJ7yRHJ8d4Q4jF/Sgtd0KqiYT4wWCK6+XUeLZ5/nBrDk5H7M/5iyl0duVy61hrejnqSduT5Rc1Hu9NsBN+BEmLcivKVvWTgd43TLn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wssz5SRb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pStd3mQRWmHOXM02LKlKOnLIO8amxboDhrSz0WdbRBmsPaQxL6YFh8GpHSlXWbZ28/XuDZa67nH58kmkxmXcJd8mI/nbZB6nwTEfRLSXhoAWLEfft8gpCtrS0pZwlwiStKXyNO719u269ZQe/laH9zR8tambfHXdPpbeqjGOSDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqVdh12N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wssz5SRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0943C1F000FF;
-	Thu, 17 Sep 2026 18:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqVdh12N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A0F1F000FF;
+	Thu, 17 Sep 2026 18:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671177;
-	bh=y5U24j/2FLyT8snMXQo2UcZ250biiC5MDEfn2ety7cA=;
+	s=korg; t=1789671180;
+	bh=DuA51amfJXlFkfmTDoReOZYD/TzUkwF8qIura98IcRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wssz5SRbvoJRMsH294O8q815ASzLawJU9h66hLxWthEm5T6HnpUjvTm6ZBXE4/FCR
-	 uDMXVmnGjWlWMqwR/DnR2ComgIts0UwIV6s1HYh07FJnP16wx6aBVjyddhIXsP30CT
-	 nUTt8yaeQofCqqXOLzHqZLxo3ijjHwQkNHEIhSJ8=
+	b=FqVdh12N7is+f6GKROQ8GQsogHkJhAze84J6O3qlP9GeVrMw7Eb5RgRa0VdD+NxpS
+	 T2H5NgPUtrjwbQfgLfWo1CLF0qI3qFFcLv0breNK8uZRGwIxKIQHEIL2B2uht0679a
+	 KPiY192opvf/n9x/Xx93qEHc/Ktatmljxm81f5LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.12 0892/1102] smb: client: fix file type corruption in cifs_reparse_point_to_fattr()
-Date: Thu, 17 Sep 2026 16:13:55 +0100
-Message-ID: <20260917151602.977082641@linuxfoundation.org>
+Subject: [PATCH 6.12 0893/1102] smb: client: fix file type corruption in wsl_to_fattr()
+Date: Thu, 17 Sep 2026 16:13:56 +0100
+Message-ID: <20260917151603.006189346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -56,15 +56,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit 6bd360447941357e959414a525aa62576a448116 upstream.
+commit fa7a2cfcf1e6117fc478cae6809c66c518740969 upstream.
 
 Setting the file type in cf_mode without clearing the existing S_IFMT
 bits first is wrong as it corrupts the file type when cf_mode already
-has type bits set (e.g. S_IFREG | S_IFLNK == S_IFDIR | S_IFREG).
+has type bits set (e.g. S_IFREG | S_IFCHR == S_IFLNK).
 
-Clear S_IFMT before setting S_IFLNK for native and SMB1 symlinks.
+Clear S_IFMT before the switch statement.
 
-Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
@@ -79,13 +79,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -824,6 +824,7 @@ bool cifs_reparse_point_to_fattr(struct
- 		break;
- 	case 0: /* SMB1 symlink */
- 	case IO_REPARSE_TAG_SYMLINK:
-+		fattr->cf_mode &= ~S_IFMT;
+@@ -683,6 +683,7 @@ static bool wsl_to_fattr(struct cifs_ope
+ 	bool have_xattr_dev = false;
+ 	u32 next = 0;
+ 
++	fattr->cf_mode &= ~S_IFMT;
+ 	switch (tag) {
+ 	case IO_REPARSE_TAG_LX_SYMLINK:
  		fattr->cf_mode |= S_IFLNK;
- 		break;
- 	default:
 
 
