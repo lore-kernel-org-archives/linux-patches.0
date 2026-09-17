@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1732B51A123;
-	Thu, 17 Sep 2026 17:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107F351A127;
+	Thu, 17 Sep 2026 17:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666496; cv=none; b=cdYI9+I184xG3D51A0e6zis4ok3CernCOtkFB+LpE9+6JrWZaBP8RVCeDTnlPk32/hlXokAKaahpsM3/qIOJVwSn4MoIngFqBtynI0Ychl373sr7epS4GYhL+fh4kSN73R3qR1i0nRBK/qlxiUAmOJCltK9dodFbWD7ThkClBvA=
+	t=1789666499; cv=none; b=EUO7MML6MgdySuRNArdgfoo0qGG3Ez/38PnuedrE2jKwTTCWbFITN+7quCB624Va13VrnVZBwaAKBfGK/CTv+VJ/10rTatn+iN/2IF54IxzMOW+TfgEyPPweyLUc4XHudLILq1D7UpjOgofBu2JpOcQrzru0ZTYWegsBe3MqN5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666496; c=relaxed/simple;
-	bh=/OT54QYqE46YPvtZiphl5VOPz+wt3sP4li3pJtkjwYM=;
+	s=arc-20240116; t=1789666499; c=relaxed/simple;
+	bh=O7Yo1EfXbPFNgD7dpJdbvFKpe/qIYktSPN5iwYq9Ljo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1K3pNJpeu2n1W7dTeMA5jB4X21oBxJ8zcprxMQi3Dl5JyS6cBZa1i3fyQyewjEagLAvidIzwOyes8f1dbbVbISh0gakAA4TjikWGN1AHlpjtQpi91EJR00j4jFud5zZ/GD8gaxQ/vVyBSwAUPVknMoEMdKmFmg+jJMNEPL87wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzPHTnEf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o4EeRW1O1bcIruSuY/UAzCwR6rm/CMSaMpkNxeeMw0dushfQmXUQWdqrRz5qjniyMBhSNDOslPhH2hb/Qb+hjeoaib2FYKOg/xPNAmoicLfbGasv1HT7fo7H3tA10VFXBxeeNUtF5D1Bo+MiZ/gNiOzcJFKnd2IBMWKSR4Ba/mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYWf0S13; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzPHTnEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341091F000FF;
-	Thu, 17 Sep 2026 17:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYWf0S13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E931F000FF;
+	Thu, 17 Sep 2026 17:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666494;
-	bh=mj9iP6rEIhvbvL/ZJxMkiJkBPsqCgcyKCQQb3PO9slk=;
+	s=korg; t=1789666497;
+	bh=KUckSMOlUFiPf6zKs9bIMHU6zFK5AMrRNPkHWWylV/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzPHTnEf0tAXYNXSZFSk5FtK4s2/IWGUHIOlnbF5WRLESi1IlfWz1ftqsSrHWFQ8E
-	 kKuJcryfuRAeAcpSVemq/LAhvBzrEa8RQ4plv+JdI4FKhqqXWH0Bjb9d6QzQO1IuMK
-	 JPkSOo9XroOpNywiX6AbreEnK2SjLJJA4EBT9Gn0=
+	b=ZYWf0S13b5DswBy93LL08fF/tJzAEuOzDLiTECsmcazIRfIvcdez+iamCtCPE8l1k
+	 gxj9pY8jfCcmSxxcewzYvOo5dHlGXbudgsfSjef5id6EIiPF9paPb5aOr59s12NGrd
+	 7TpYO8mhGeQBeQZSQoYD/doVDzXXNv9dtfVIUiYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Qi Zhang <marsy12010123@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 1055/1250] afs: Clear stale peer app data after address list changes
-Date: Thu, 17 Sep 2026 16:14:10 +0100
-Message-ID: <20260917151620.719669225@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 1056/1250] hwmon: (applesmc) fix key backlight workqueue leak on register failure
+Date: Thu, 17 Sep 2026 16:14:11 +0100
+Message-ID: <20260917151620.748597834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,91 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit ba0623fc19a424f4745394c499f9f28a8d88d397 upstream.
+commit 5a0aacaa2d593d7582ecfe289529b937b6dc5d3c upstream.
 
-afs_fs_probe_fileserver() fetches the current endpoint state under
-server->fs_lock, but leaves old_alist as NULL.  Consequently,
-afs_set_peer_appdata() treats every address list replacement as initial
-setup and only binds the new peers; it never unbinds peers removed from
-the old list.
+applesmc_create_key_backlight() allocates applesmc_led_wq before calling
+led_classdev_register(). When register fails, the error is returned to
+applesmc_init(), which jumps to out_light_sysfs and skips
+applesmc_release_key_backlight(), leaking the workqueue.
 
-An address refresh can therefore proceed as follows.  CPU 0 replaces
-server S's list and drops Pold without clearing Pold->app_data.  The
-server destroyer then clears only S's current peers and lets S reach its
-RCU callback.  After the callback frees S, CPU 1 handles a callback
-through an RxRPC connection that still pins Pold, reads Pold->app_data,
-and calls afs_use_server() on the freed object.
+Destroy the workqueue on the register failure path. The bug was introduced
+when the inline init block was refactored into a helper that returns errors
+directly, dropping the old out_light_wq unwind label.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in afs_find_server+0x3c/0xa0
-  Read of size 4 at addr ffff8881013e1af0 by task krxrpcio/7001/74
-  Call Trace:
-   afs_find_server+0x3c/0xa0
-   afs_rx_new_call+0x15c/0x390
-   rxrpc_new_incoming_call+0x97c/0x1730
-   rxrpc_input_packet.constprop.0+0xd03/0xec0
-   rxrpc_io_thread+0x967/0x1640
-  Allocated by task 93:
-   afs_lookup_server+0x1a7/0x14c0
-   afs_alloc_server_list+0x43f/0xb60
-   afs_create_volume+0x923/0x1490
-   afs_get_tree+0x1c6/0x10a0
-  Freed by task 0:
-   kfree+0x131/0x3c0
-   rcu_core+0x50a/0x1850
-  Last potentially related work creation:
-   __call_rcu_common.constprop.0+0x71/0xa10
-   afs_put_server+0x213/0x2b0
-
-Preserve old->addresses for the peer app-data update so that removed
-peers are cleared before the endpoint state is replaced.  Also advance
-both cursors when the old and new lists share a peer; activating the
-old/new comparison without this would otherwise loop forever on the
-shared entry.
-
-Fixes: 40e8b52fe8c8 ("afs: Use the per-peer app data provided by rxrpc")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Qi Zhang <marsy12010123@gmail.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260902121024.3328255-5-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 0b0b5dff8967 ("hwmon: (applesmc) Simplify feature sysfs handling")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260828105413.2401385-1-congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/addr_list.c |    5 ++++-
- fs/afs/fs_probe.c  |    1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/hwmon/applesmc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/afs/addr_list.c
-+++ b/fs/afs/addr_list.c
-@@ -394,8 +394,11 @@ void afs_set_peer_appdata(struct afs_ser
- 		struct rxrpc_peer *pn = new_alist->addrs[n].peer;
- 		struct rxrpc_peer *po = old_alist->addrs[o].peer;
+--- a/drivers/hwmon/applesmc.c
++++ b/drivers/hwmon/applesmc.c
+@@ -1249,12 +1249,17 @@ static void applesmc_release_light_senso
  
--		if (pn == po)
-+		if (pn == po) {
-+			n++;
-+			o++;
- 			continue;
-+		}
- 		if (pn < po) {
- 			rxrpc_kernel_set_peer_data(pn, data);
- 			n++;
---- a/fs/afs/fs_probe.c
-+++ b/fs/afs/fs_probe.c
-@@ -258,6 +258,7 @@ int afs_fs_probe_fileserver(struct afs_n
- 					lockdep_is_held(&server->fs_lock));
- 	if (old) {
- 		estate->responsive_set = old->responsive_set;
-+		old_alist = old->addresses;
- 		if (!new_alist)
- 			new_alist = old->addresses;
- 	}
+ static int applesmc_create_key_backlight(void)
+ {
++	int ret;
++
+ 	if (!smcreg.has_key_backlight)
+ 		return 0;
+ 	applesmc_led_wq = create_singlethread_workqueue("applesmc-led");
+ 	if (!applesmc_led_wq)
+ 		return -ENOMEM;
+-	return led_classdev_register(&pdev->dev, &applesmc_backlight);
++	ret = led_classdev_register(&pdev->dev, &applesmc_backlight);
++	if (ret)
++		destroy_workqueue(applesmc_led_wq);
++	return ret;
+ }
+ 
+ static void applesmc_release_key_backlight(void)
 
 
