@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC28C4ABBDB;
-	Thu, 17 Sep 2026 18:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B24B7A30;
+	Thu, 17 Sep 2026 18:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671563; cv=none; b=q4xi6JSWOd+T496gbUiqhZhxDdLi5b740RhhJKyaVdc6/eqgmGOabk2PCZzuCTAdcmzkztH2jGeASye2Uj5/DFXEaEm7M9Wo7KR4KG6qhxrMq9wc9uu6I4dz4DuuEVOudDcdnd2UbOZ8nkBLfOjZ6AaJ7zK2fVXetCDDkCQ8YWE=
+	t=1789671566; cv=none; b=TgtXlOn20uDURuD1Xw+PiIlKqsPPSrS4cy0mzT6dO0no/22SISrFItaFrKbJ9q0ORyTq1id/7J9ZDeTG9BnjWBuDhqKUR+7sAZsYXU7mQgxkUygpHU4v35unmCVAkAcw3L+fyLFZ8SjnsERNlHYA9sCtFnPlrZ+JQkAnqSNYOIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671563; c=relaxed/simple;
-	bh=GoWqbwTK3mw0Lm7JsmgAwO76LxdlI1hfs5qbjkR3/w8=;
+	s=arc-20240116; t=1789671566; c=relaxed/simple;
+	bh=f52Vj8cfEIrP6SUWkg5nd+ar++1MMomyUB4DWyhaUgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMEDuOxZoFizdkGD/ElsOGnOAvmd9ZckJRHwDSV6E08JnhX7njzkOKaXXH5/7i7zF5YKz8o7dTgb9hY8DilyP4z02JEtWbde/mpQxPSDaYIlJt+BgquIZgLe4P64f+lKDYjY/ix8q/vcUg3da85VjjAezM5XPzgs59VVOy1HNjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBNZotox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VwPfzbyOIvHj4sa6ma79BsGZKJTHoFWWDkTlmzDJsAiKlWHlSgiQgGxH65afPut4Ydjx0ctEF86Ewt2InJjSKbwvX27JkitU5wGEYq4TXjP8nOhZmnE9PVgDlGxj0JHggixNbPWOfTsR+N6rOI7hayddOqywbSnClXlsw1AC8G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPxb6GUp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBNZotox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD411F0089C;
-	Thu, 17 Sep 2026 18:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPxb6GUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5591F0089F;
+	Thu, 17 Sep 2026 18:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671561;
-	bh=TV/pvBh5hF83RUlzV8xiYu3D9GtWvwfHb/Vb7ph0YU0=;
+	s=korg; t=1789671564;
+	bh=azYXjfCSxP4sVyRgIY/Id5QCkywA0a6b61ZZksQ2HGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBNZotoxXjl9Vm/ODf5K+6T/4pBni/sQM82vfHWWiEOKHoeiGAMYFt7Z19c6WY9i5
-	 3OUQe0LqrIpOEnNZlVe6K8/7dxLzcsKVOFyPDz5IV1CPKY4SXiaaUsqfnE8auy7umj
-	 02aQpcFSEtSnUuhMS4qO8l62WP/0Mbng/CYAw3F4=
+	b=wPxb6GUpmtPEdtUzXCb6HK5Y+OdfyZcLXvjJV5BFNd9jqNAf8HcYiQpSlgpHPBRmC
+	 Bc91jfBimZySgDd0Bq8nNDJi6KU6D091jw7/+BhgU+fxkj0eh++Mpe0BRYhRTlfyKv
+	 UYbozTFZDD55h2SHKs5ovKefcTX0cGIU//t0KMC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1018/1102] netlink: introduce type-checking attribute iteration for nlmsg
-Date: Thu, 17 Sep 2026 16:16:01 +0100
-Message-ID: <20260917151606.311948788@linuxfoundation.org>
+Subject: [PATCH 6.12 1019/1102] nfsd: validate sockaddr length per family in listener_set
+Date: Thu, 17 Sep 2026 16:16:02 +0100
+Message-ID: <20260917151606.338348444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,166 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 42401c42389622424f2973ec57414f033ae6be8f ]
+[ Upstream commit bdcc85c2b05a9378d8bd2d65f9fc41440a3cf464 ]
 
-Add the nlmsg_for_each_attr_type() macro to simplify iteration over
-attributes of a specific type in a Netlink message.
+nfsd_sock_nl_policy declares NFSD_A_SOCK_ADDR as a bare NLA_BINARY
+attribute with no minimum length. A CAP_NET_ADMIN caller can send a
+16-byte NFSD_A_SOCK_ADDR with sa_family=AF_INET6, causing a 12-byte
+OOB read across three consumers (rpc_cmp_addr_port, svc_find_listener,
+kernel_bind).
 
-Convert existing users in vxlan and nfsd to use the new macro.
+nfsd_nl_listener_set_doit() also parsed and validated each listener
+entry inline in two separate loops, interleaved with mutating the
+running listener configuration. The validation was duplicated, used an
+open-coded "nla_len < sizeof(struct sockaddr)" check that was too short
+for AF_INET6, and handled a malformed entry inconsistently depending on
+which loop noticed it.
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250629142138.361537-2-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: bdcc85c2b05a ("nfsd: validate sockaddr length per family in listener_set")
+Add an nfsd_nl_validate_listeners() helper that walks the entire list
+once and confirms each entry parses, carries both an address and a
+transport name, and is long enough for its address family
+(sizeof(struct sockaddr_in) for AF_INET, sizeof(struct sockaddr_in6)
+for AF_INET6, -EAFNOSUPPORT otherwise). Call it before taking
+nfsd_mutex or creating the serv, so a malformed request fails cleanly
+with no side effects.
+
+Since every entry is known valid by the time the two existing loops
+run, drop the redundant presence and per-family length checks from
+both, leaving only the nla_parse_nested() call needed to extract the
+data.
+
+Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260615-nfsd-testing-v5-1-188d75aedda0@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_vnifilter.c |   13 ++++---------
- fs/nfsd/nfsctl.c                    |   36 ++++++++++++++----------------------
- include/net/netlink.h               |   14 ++++++++++++++
- 3 files changed, 32 insertions(+), 31 deletions(-)
+ fs/nfsd/nfsctl.c |   77 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 65 insertions(+), 12 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_vnifilter.c
-+++ b/drivers/net/vxlan/vxlan_vnifilter.c
-@@ -978,15 +978,10 @@ static int vxlan_vnifilter_process(struc
- 	if (!(vxlan->cfg.flags & VXLAN_F_VNIFILTER))
- 		return -EOPNOTSUPP;
- 
--	nlmsg_for_each_attr(attr, nlh, sizeof(*tmsg), rem) {
--		switch (nla_type(attr)) {
--		case VXLAN_VNIFILTER_ENTRY:
--			err = vxlan_process_vni_filter(vxlan, attr,
--						       nlh->nlmsg_type, extack);
--			break;
--		default:
--			continue;
--		}
-+	nlmsg_for_each_attr_type(attr, VXLAN_VNIFILTER_ENTRY, nlh,
-+				 sizeof(*tmsg), rem) {
-+		err = vxlan_process_vni_filter(vxlan, attr, nlh->nlmsg_type,
-+					       extack);
- 		vnis++;
- 		if (err)
- 			break;
 --- a/fs/nfsd/nfsctl.c
 +++ b/fs/nfsd/nfsctl.c
-@@ -1682,10 +1682,9 @@ int nfsd_nl_threads_set_doit(struct sk_b
- 		return -EINVAL;
+@@ -1959,6 +1959,60 @@ err_free_msg:
+ }
  
- 	/* count number of SERVER_THREADS values */
--	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
--		if (nla_type(attr) == NFSD_A_SERVER_THREADS)
--			nrpools++;
--	}
-+	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_THREADS, info->nlhdr,
-+				 GENL_HDRLEN, rem)
-+		nrpools++;
- 
- 	mutex_lock(&nfsd_mutex);
- 
-@@ -1696,12 +1695,11 @@ int nfsd_nl_threads_set_doit(struct sk_b
- 	}
- 
- 	i = 0;
--	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
--		if (nla_type(attr) == NFSD_A_SERVER_THREADS) {
--			nthreads[i++] = nla_get_u32(attr);
--			if (i >= nrpools)
--				break;
--		}
-+	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_THREADS, info->nlhdr,
-+				 GENL_HDRLEN, rem) {
-+		nthreads[i++] = nla_get_u32(attr);
-+		if (i >= nrpools)
-+			break;
- 	}
- 
- 	if (info->attrs[NFSD_A_SERVER_GRACETIME] ||
-@@ -1842,14 +1840,12 @@ int nfsd_nl_version_set_doit(struct sk_b
- 	for (i = 0; i <= NFSD_SUPPORTED_MINOR_VERSION; i++)
- 		nfsd_minorversion(nn, i, NFSD_CLEAR);
- 
--	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
-+	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_PROTO_VERSION, info->nlhdr,
-+				 GENL_HDRLEN, rem) {
- 		struct nlattr *tb[NFSD_A_VERSION_MAX + 1];
- 		u32 major, minor = 0;
- 		bool enabled;
- 
--		if (nla_type(attr) != NFSD_A_SERVER_PROTO_VERSION)
--			continue;
--
- 		if (nla_parse_nested(tb, NFSD_A_VERSION_MAX, attr,
- 				     nfsd_version_nl_policy, info->extack) < 0)
- 			continue;
-@@ -2000,14 +1996,12 @@ int nfsd_nl_listener_set_doit(struct sk_
- 	 * Walk the list of server_socks from userland and move any that match
- 	 * back to sv_permsocks
- 	 */
--	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
+ /**
++ * nfsd_nl_validate_listeners - sanity-check the listener list from userland
++ * @info: netlink metadata and command arguments
++ *
++ * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that each entry
++ * is well-formed: it parses against the policy, carries both an address and
++ * a transport name, and the address is long enough for its family. Doing
++ * this up front lets the callers below assume every entry is valid and
++ * guarantees we make no changes when the request is malformed.
++ *
++ * Return: 0 if every entry is valid, or a negative errno otherwise.
++ */
++static int nfsd_nl_validate_listeners(struct genl_info *info)
++{
++	const struct nlattr *attr;
++	int rem;
++
 +	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
 +				 GENL_HDRLEN, rem) {
- 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
++		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
++		struct sockaddr *sa;
++		int err;
++
++		err = nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
++				       nfsd_sock_nl_policy, info->extack);
++		if (err < 0)
++			return err;
++
++		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
++			return -EINVAL;
++
++		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
++		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(sa->sa_family))
++			return -EINVAL;
++
++		switch (sa->sa_family) {
++		case AF_INET:
++			if (nla_len(tb[NFSD_A_SOCK_ADDR]) <
++			    sizeof(struct sockaddr_in))
++				return -EINVAL;
++			break;
++		case AF_INET6:
++			if (nla_len(tb[NFSD_A_SOCK_ADDR]) <
++			    sizeof(struct sockaddr_in6))
++				return -EINVAL;
++			break;
++		default:
++			return -EAFNOSUPPORT;
++		}
++	}
++
++	return 0;
++}
++
++/**
+  * nfsd_nl_listener_set_doit - set the nfs running sockets
+  * @skb: reply buffer
+  * @info: netlink metadata and command arguments
+@@ -1976,6 +2030,15 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 	bool delete = false;
+ 	int err, rem;
+ 
++	/*
++	 * Validate the entire listener list before making any changes, so a
++	 * malformed request fails cleanly without creating a serv or touching
++	 * the existing listeners.
++	 */
++	err = nfsd_nl_validate_listeners(info);
++	if (err)
++		return err;
++
+ 	mutex_lock(&nfsd_mutex);
+ 
+ 	err = nfsd_create_serv(net);
+@@ -2002,16 +2065,11 @@ int nfsd_nl_listener_set_doit(struct sk_
  		const char *xcl_name;
  		struct sockaddr *sa;
  
--		if (nla_type(attr) != NFSD_A_SERVER_SOCK_ADDR)
--			continue;
--
++		/* validated up front in nfsd_nl_validate_listeners() */
  		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
  				     nfsd_sock_nl_policy, info->extack) < 0)
  			continue;
-@@ -2062,15 +2056,13 @@ int nfsd_nl_listener_set_doit(struct sk_
- 		svc_xprt_destroy_all(serv, net);
  
- 	/* walk list of addrs again, open any that still don't exist */
--	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
-+	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
-+				 GENL_HDRLEN, rem) {
- 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
- 		const char *xcl_name;
+-		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
+-			continue;
+-
+-		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(*sa))
+-			continue;
+-
+ 		xcl_name = nla_data(tb[NFSD_A_SOCK_TRANSPORT_NAME]);
+ 		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
+ 
+@@ -2063,16 +2121,11 @@ int nfsd_nl_listener_set_doit(struct sk_
  		struct sockaddr *sa;
  		int ret;
  
--		if (nla_type(attr) != NFSD_A_SERVER_SOCK_ADDR)
--			continue;
--
++		/* validated up front in nfsd_nl_validate_listeners() */
  		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
  				     nfsd_sock_nl_policy, info->extack) < 0)
  			continue;
---- a/include/net/netlink.h
-+++ b/include/net/netlink.h
-@@ -68,6 +68,8 @@
-  *   nlmsg_for_each_msg()		loop over all messages
-  *   nlmsg_validate()			validate netlink message incl. attrs
-  *   nlmsg_for_each_attr()		loop over all attributes
-+ *   nlmsg_for_each_attr_type()		loop over all attributes with the
-+ *					given type
-  *
-  * Misc:
-  *   nlmsg_report()			report back to application?
-@@ -941,6 +943,18 @@ static inline u32 nlmsg_seq(const struct
- 			  nlmsg_attrlen(nlh, hdrlen), rem)
  
- /**
-+ * nlmsg_for_each_attr_type - iterate over a stream of attributes
-+ * @pos: loop counter, set to the current attribute
-+ * @type: required attribute type for @pos
-+ * @nlh: netlink message header
-+ * @hdrlen: length of the family specific header
-+ * @rem: initialized to len, holds bytes currently remaining in stream
-+ */
-+#define nlmsg_for_each_attr_type(pos, type, nlh, hdrlen, rem) \
-+	nlmsg_for_each_attr(pos, nlh, hdrlen, rem) \
-+		if (nla_type(pos) == type)
-+
-+/**
-  * nlmsg_put - Add a new netlink message to an skb
-  * @skb: socket buffer to store message in
-  * @portid: netlink PORTID of requesting application
+-		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
+-			continue;
+-
+-		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(*sa))
+-			continue;
+-
+ 		xcl_name = nla_data(tb[NFSD_A_SOCK_TRANSPORT_NAME]);
+ 		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
+ 
 
 
