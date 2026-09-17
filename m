@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE76C3A5E6F;
-	Thu, 17 Sep 2026 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8874B4E73B5;
+	Thu, 17 Sep 2026 15:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660096; cv=none; b=Pg25uHQ1Hc5VXAsUMeM7wbQE2q2tYM1mChvS4pTmS7FCLqvMP1oOTSWwm+5oOIX5iJco7/bTxH37jni1MC+tXJkU4od9r0esa5Sy2XG8b61S848uM68hYQid6Zp0H02SLrry1WG07S4ZvGq02XfpM27jR9FCfc6i4HU7cKElLes=
+	t=1789660103; cv=none; b=e/41LX7UG0V3rJLLx51yVATysNN9IWmuL1XwhoKMSsdTcLxtu6RpDJ/IgUfrhkxdXDWXnheM6/0XqAySaVXE3fmwfSIS1cJlPHSB+y+D9eSPGB6fTFGljqC1qIPs6GugyRhOfHdJcsKba3N67x1+cZTGjR0ZsPAUdXYs7Xx2AeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660096; c=relaxed/simple;
-	bh=i9c5DDy511syHsrjS4JyxlZa78iYIsWyaRPfk9mTPN0=;
+	s=arc-20240116; t=1789660103; c=relaxed/simple;
+	bh=6sn82qU6iEvCHkh7wdT3mE4KncfjkdacloZIiFoampE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1IgZVGRWT4ofBa+l5p37CQl1PrjzjqLwRgz8VfDneH5CUah+fODEjv7Qr3ykXgLsYWASXk/FYxH19sNc5bnNsAMrieenIqkIxoxV+BrqnnluieQAXW4Bxp/UzCdHnQ/Cs4quevn9oKftBa9ZvgJKuyicIcW+SO5y2n0p5ciYDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Td56ZqSo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L+tSA2Ys7O2Co5dNn9fYmSIEhD4SZFGJybsNdGBsukf8ZnqC8rTW2WAKhSyXGt/n9xDndpuMC4pB/kky4klklH3orNu9+fwI/LWTy67R+2/YCXSeuyZaQENLaCejeamyDdocBFBxkGm1uSMYUMFjHJaSlNGe/x2UR4TkHFtjWh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojz9WxZm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Td56ZqSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5911F00893;
-	Thu, 17 Sep 2026 15:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojz9WxZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C901F00898;
+	Thu, 17 Sep 2026 15:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660088;
-	bh=KXUJLOQXqp9sje6NvqkuS2aB26VtOK/huwUCGJFA1n8=;
+	s=korg; t=1789660091;
+	bh=bJXe3HqyzdvBRD9b3Eq8moaLI3G5UkB69Vvm7X3ZSms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Td56ZqSowgHs2hvWfTTMREX/7TuQzpDDAsdiJUzxk3gEk4OfE0GdkmK0prlBFQ+s5
-	 64gpJIyKTfNKjiGzJe9KrFYaYo4VJMmAHzIrrWM3YyzIxCl9l4/Ld+5bQtybgV6CAQ
-	 h/ooQ5sN41onwHuvCgeB33/mn1k7Up/m/GQruVfg=
+	b=ojz9WxZm7XcsbZkdJ7pvuWcWelHFDxTZWGaxdqbkrrB+7Cm7eMjh9h4Gsve276ea5
+	 f/FPUgAEqZhDvknuAH58Vmnafli5AELdbTJFb/dvrY621fr2RZ8NiBZLSJmJRBQcMS
+	 hJ9zmQtde8irPofPyBoEupms+K0oSp0QJTLqO2tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Younes Akhouayri <git@younes.io>,
-	Alexandre Courbot <acourbot@nvidia.com>
-Subject: [PATCH 7.2 475/733] rust: num: seal Integer
-Date: Thu, 17 Sep 2026 16:13:03 +0100
-Message-ID: <20260917151403.836358862@linuxfoundation.org>
+	Mohamad Alsadhan <mo@sdhn.cc>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 476/733] rust: pin-init: use irrefutable pattern for `stack_pin_init`
+Date: Thu, 17 Sep 2026 16:13:04 +0100
+Message-ID: <20260917151403.864121541@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,67 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Younes Akhouayri <git@younes.io>
+From: Gary Guo <gary@garyguo.net>
 
-commit c6709d5e14072d0e3d02f291daee46a199e5dad3 upstream.
+commit b6b9e6d4abe87b16ab55990b887c6fad8e7a01af upstream.
 
-Bounded relies on Integer implementations to describe primitive integer
-semantics correctly. In particular, it uses Integer::BITS and Signedness
-to justify unchecked operations.
+In Rust 1.100.0, `Infallible` will become an alias of `!`. The let
+binding in `stack_pin_init` will thus become unreachable and produce
+an "unreachable expression" warning for the subsequent match, and thus
+will fail a `-Dwarnings` build. For this macro, all we need to know is
+that the error type is uninhabited, so replace this with an irrefutable
+pattern instead.
 
-Integer is currently safe and externally implementable, so an
-implementation can violate those assumptions and make safe Bounded
-operations reach undefined behavior.
+[ The error looks like (dummy reproducer):
 
-For example, an Integer implementation for a u8 wrapper can report
-BITS = 16. Safe code can then cast a Bounded<u16, 9> containing 256
-to that wrapper. Its TryFrom<u16> implementation returns Err, and
-Bounded::cast() calls unwrap_unchecked() on it, causing undefined
-behavior.
+      error: unreachable expression
+         --> rust/kernel/sync.rs:177:5
+          |
+      177 |     pin_init::stack_pin_init!(let num = 42u32);
+          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          |     |
+          |     unreachable expression
+          |     any code following this expression is unreachable
+          |
+          = note: `-D unreachable-code` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(unreachable_code)]`
+          = note: this error originates in the macro `pin_init::stack_pin_init` (in Nightly builds, run with -Z macro-backtrace for more info)
 
-Seal Integer so only the primitive implementations provided by the
-kernel crate can satisfy it.
+    - Miguel ]
 
-Fixes: 01e345e82ec3 ("rust: num: add Bounded integer wrapping type")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/rust-for-linux/CANiq72mOfR33s4y+Ueivd5NrC5yre+Pcp57ZOBz0msw9A4AP1Q@mail.gmail.com/
-Cc: stable@vger.kernel.org
-Suggested-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Younes Akhouayri <git@younes.io>
-Acked-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20260905-feature-rust-num-seal-integer-v2-1-f1311ffbe6e7@younes.io
+Reported-by: Mohamad Alsadhan <mo@sdhn.cc>
+Closes: https://github.com/Rust-for-Linux/pin-init/pull/171
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Cc: stable@vger.kernel.org # Needed in 7.1.y and later (for 6.12.y and 6.18.y a custom one is needed).
+Link: https://patch.msgid.link/20260828155033.2101924-1-gary@kernel.org
+[ Reworded for typos. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/num.rs |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ rust/pin-init/src/lib.rs |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/rust/kernel/num.rs
-+++ b/rust/kernel/num.rs
-@@ -13,9 +13,14 @@ pub enum Unsigned {}
- /// Designates signed primitive types.
- pub enum Signed {}
- 
-+mod private {
-+    pub trait Sealed {}
-+}
-+
- /// Describes core properties of integer types.
- pub trait Integer:
--    Sized
-+    private::Sealed
-+    + Sized
-     + Copy
-     + Clone
-     + PartialEq
-@@ -54,6 +59,8 @@ pub trait Integer:
- macro_rules! impl_integer {
-     ($($type:ty: $signedness:ty), *) => {
-         $(
-+        impl private::Sealed for $type {}
-+
-         impl Integer for $type {
-             type Signedness = $signedness;
+--- a/rust/pin-init/src/lib.rs
++++ b/rust/pin-init/src/lib.rs
+@@ -493,13 +493,7 @@ macro_rules! stack_pin_init {
+     (let $var:ident $(: $t:ty)? = $val:expr) => {
+         let val = $val;
+         let mut $var = ::core::pin::pin!($crate::__internal::StackInit$(::<$t>)?::uninit());
+-        let mut $var = match $crate::__internal::StackInit::init($var, val) {
+-            Ok(res) => res,
+-            Err(x) => {
+-                let x: ::core::convert::Infallible = x;
+-                match x {}
+-            }
+-        };
++        let Ok(mut $var) = $crate::__internal::StackInit::init($var, val);
+     };
+ }
  
 
 
