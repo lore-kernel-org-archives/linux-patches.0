@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CACE49D59C;
-	Thu, 17 Sep 2026 18:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7403DCD9C;
+	Thu, 17 Sep 2026 18:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671532; cv=none; b=TpCzQs/ccu3P4R+NyGmeVtSoy2VwCJr5K7f/hOyhWbtOls2t7RHFXswiOlWrrl0c6+ZY22iqz3aW1PUa4Vy8+BLng7G9mc1ulZH0QrebMqCO2skyoiYUwDJykS3EPymdBacAJEKoTQbXo+kMXLkoDdUO026cUM909qfFReoBpro=
+	t=1789671535; cv=none; b=DNZYZMIDygh2udFA49D0Tn+ka7msXqRPdf92kzEAWv9XAmCbEltG1I/pS6918DdhNSK87kdprRMMr2vsAMgzufVoWNfQZpA2kX8VpDmNUPOV8Jw+uYGx8E8nurZ7T1tfjbHlvxj/IwvewYtXJW5XwjpTjw6vmfXQX+wepwUP0WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671532; c=relaxed/simple;
-	bh=Wuezl2kaYoD2IRCYfH93NDlhJxk2bWTrgFlPmhTq+tg=;
+	s=arc-20240116; t=1789671535; c=relaxed/simple;
+	bh=tv5e524ricbvdGxqvt4fCmSD6aNXnWGAtBTkk5sNx20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpniPPwjrO2UuRcu0ir+0TZ5aZMg9i1TWmAB90R506pJAAtzXxrqiknHv1SWArjrTW5ftl0KyNbb5HTv6dqUxs7ZQaG0fDAkEmLakeWCY5Ax4ElscGA9ttEcRUMuKneQkNHmuXRSP40btUFcc+E//1JFGumlbH79vhvOcFP3MFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgSZEv0o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BlNPk3dk2nUE6mqiIPPw6Mfkye3xjN2w0i2QibHDwImrl0dEzEe50CmRjFnI+RBAo7NioVZ5bRwZt0qsUxzdEGUCutGJhxvhQLbXk6Gbkcd1KWxxBKMUIMucS5PLf1M2hayckSdoFYTjreSvM8WgEtYJGvnfX8pIqGoCgZ2WzM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1kveJej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgSZEv0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5538E1F000FF;
-	Thu, 17 Sep 2026 18:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1kveJej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CAF1F000FF;
+	Thu, 17 Sep 2026 18:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671531;
-	bh=lsSrkMBAiz6T9D2YJ/qWeW5qR1A7EE1s7V6eQhX6okY=;
+	s=korg; t=1789671534;
+	bh=73ip4HNIEEkYHXhmWomPcJYAHrWnvVGG+HikbKhd2CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgSZEv0oH0SpTUKMOl8Q66xcSTaF5BN6lPtjF847Tvj40Z+AAZk2Fz1NC5Puhx5sw
-	 B0pC1NJfItAaTS6M5zpWv2QOlZQ/X6H4PGHeMoBGd78zwjCqC+V7i4epIdxEVU8QDg
-	 4+tXOHerCk18fYI2UoWmDi3Em6wGNo2p8NUkzV7k=
+	b=d1kveJejOoqFf+HAS0Ws9No5qqntWCad91d+XK5O7j0PIqe3Rrlilsc29Xn8xMbjF
+	 ANuq2WOO/dN+cDkwex5b6aLedpk87+4IT/gV4mFHMEVngFLmbifAnAvQJVRkR5cDvV
+	 Q4An0Zz5Qy59LhqbCmJ2OwhcScYyomWjqUXNfJSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yong Wang <edragain@163.com>,
-	Ren Wei <weir@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Kyle Zeng <kylebot@openai.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0969/1102] tcp: clamp route advmss to TCP_MIN_MSS
-Date: Thu, 17 Sep 2026 16:15:12 +0100
-Message-ID: <20260917151605.009375356@linuxfoundation.org>
+Subject: [PATCH 6.12 0970/1102] net/packet: defer vmalloc TX_RING free until skbs finish
+Date: Thu, 17 Sep 2026 16:15:13 +0100
+Message-ID: <20260917151605.034281387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,117 +54,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yong Wang <edragain@163.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 870a9e42ecc6fe1b8c25d87af043cb0d9c178fe1 ]
+[ Upstream commit 992cc9f94ca924089a506ba9b327caa9af797529 ]
 
-tcp_select_initial_window() assumes that callers never pass an MSS
-smaller than 1, but route-derived advmss values can violate that
-assumption.
+AF_PACKET TX_RING skbs keep a raw pointer to their ring frame. The skb
+page references preserve page-backed ring blocks after pg_vec is freed,
+but they do not preserve a vmalloc mapping.
 
-A too-small explicit RTAX_ADVMSS is one way to get there, but it is not
-the only one. The same divide-by-zero can also be reached through the
-"default advmss" path when RTAX_ADVMSS is left at 0 and the effective
-advmss is later driven down by route MTU and min_adv_mss.
+tpacket_destruct_skb() currently drops the pending reference before
+writing the timestamp and TP_STATUS_AVAILABLE to the frame. Move the
+decrement after those stores. The smp_wmb() in __packet_set_status()
+orders the frame stores before the decrement.
 
-Introduce a tcp_dst_advmss() helper that clamps route advmss to
-TCP_MIN_MSS before TCP consumes it, and use it in the TCP paths that
-derive advmss from dst metrics. This keeps the effective MSS from
-dropping to zero before tcp_select_initial_window() rounds the receive
-window.
+Also recheck pending TX frames under pg_vec_lock before non-closing
+ring replacement, so a racing send cannot add a pending skb between
+the initial check and the ring swap.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Ring allocation can produce a mixture of page-backed and vmalloc-backed
+blocks. Allocate deferred-work storage during TX ring setup when the
+first vmalloc-backed block is encountered, and keep its pointer in the
+pg_vec allocation header. If allocation fails, return -ENOMEM from ring
+setup. On socket close, a non-NULL pointer identifies a vmalloc-backed
+vector without a scan. If TX skbs remain, defer the whole vector to
+system_long_wq.
+
+After pg_vec is detached, a late destructor can skip the pending
+decrement. Use socket write-memory accounting as the deferred lifetime
+gate instead: an skb remains charged through its final sock_wfree(),
+after all ring-frame accesses. The delayed work retains a socket
+reference and reschedules itself until no TX skbs remain.
+
+Move pending_refcnt release to packet_sock_destruct() so late skb
+destructors and deferred cleanup can safely use it after
+packet_release(). Page-backed teardown remains synchronous, and no lock
+is added to the TX completion hot path.
+
+Fixes: b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Yong Wang <edragain@163.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/251eaf8277fa7c66364c9815c5da01662d269181.1787074852.git.edragain@163.com
+Link: https://lore.kernel.org/netdev/20260721015824.45829-1-kylebot@openai.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20260816235646.76500-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted the kzalloc_objs() allocation context to the older kcalloc() form ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h        |    5 +++++
- net/ipv4/tcp_ipv4.c      |    2 +-
- net/ipv4/tcp_minisocks.c |    2 +-
- net/ipv4/tcp_output.c    |    6 +++---
- net/ipv6/tcp_ipv6.c      |    2 +-
- 5 files changed, 11 insertions(+), 6 deletions(-)
+ net/packet/af_packet.c |   96 ++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 87 insertions(+), 9 deletions(-)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1561,6 +1561,11 @@ static inline int tcp_full_space(const s
- 	return tcp_win_from_space(sk, READ_ONCE(sk->sk_rcvbuf));
- }
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -87,6 +87,7 @@
+ #include <linux/errqueue.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/percpu.h>
++#include <linux/workqueue.h>
+ #ifdef CONFIG_INET
+ #include <net/inet_common.h>
+ #endif
+@@ -1393,6 +1394,8 @@ static void packet_sock_destruct(struct
+ 	WARN_ON(atomic_read(&sk->sk_rmem_alloc));
+ 	WARN_ON(refcount_read(&sk->sk_wmem_alloc));
  
-+static inline u32 tcp_dst_advmss(const struct dst_entry *dst)
-+{
-+	return max_t(u32, dst_metric_advmss(dst), TCP_MIN_MSS);
++	packet_free_pending(pkt_sk(sk));
++
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+ 		pr_err("Attempt to release alive packet socket: %p\n", sk);
+ 		return;
+@@ -2586,11 +2589,11 @@ static void tpacket_destruct_skb(struct
+ 		__u32 ts;
+ 
+ 		ph = skb_zcopy_get_nouarg(skb);
+-		packet_dec_pending(&po->tx_ring);
+ 
+ 		ts = __packet_set_timestamp(po, ph, skb);
+ 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+ 
++		packet_dec_pending(&po->tx_ring);
+ 		complete(&po->skb_completion);
+ 	}
+ 
+@@ -3261,7 +3264,6 @@ static int packet_release(struct socket
+ 	/* Purge queues */
+ 
+ 	skb_queue_purge(&sk->sk_receive_queue);
+-	packet_free_pending(po);
+ 
+ 	sock_put(sk);
+ 	return 0;
+@@ -4414,11 +4416,26 @@ static const struct vm_operations_struct
+ 	.close	=	packet_mm_close,
+ };
+ 
++struct packet_pg_vec {
++	struct packet_pg_vec_free *deferred;
++	unsigned int order;
++	unsigned int len;
++	struct pgv pg_vec[] __counted_by(len);
++};
++
++struct packet_pg_vec_free {
++	struct delayed_work work;
++	struct sock *sk;
++	struct packet_pg_vec *vec;
++};
++
+ static void free_pg_vec(struct pgv *pg_vec, unsigned int order,
+ 			unsigned int len)
+ {
++	struct packet_pg_vec *vec;
+ 	int i;
+ 
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
+ 	for (i = 0; i < len; i++) {
+ 		if (likely(pg_vec[i].buffer)) {
+ 			if (is_vmalloc_addr(pg_vec[i].buffer))
+@@ -4429,7 +4446,46 @@ static void free_pg_vec(struct pgv *pg_v
+ 			pg_vec[i].buffer = NULL;
+ 		}
+ 	}
+-	kfree(pg_vec);
++	kfree(vec->deferred);
++	kfree(vec);
 +}
 +
- static inline void __tcp_adjust_rcv_ssthresh(struct sock *sk, u32 new_ssthresh)
++static void packet_free_pg_vec_work(struct work_struct *work)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++	struct sock *sk;
++
++	deferred = container_of_const(to_delayed_work(work),
++				      struct packet_pg_vec_free, work);
++	vec = deferred->vec;
++	sk = deferred->sk;
++	if (sk_wmem_alloc_get(sk)) {
++		queue_delayed_work(system_long_wq, &deferred->work, 1);
++		return;
++	}
++
++	free_pg_vec(vec->pg_vec, vec->order, vec->len);
++	sock_put(sk);
++}
++
++static void packet_free_tx_ring(struct sock *sk, struct pgv *pg_vec,
++				unsigned int order, unsigned int len)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
++	deferred = vec->deferred;
++	if (!deferred || !sk_wmem_alloc_get(sk)) {
++		free_pg_vec(pg_vec, order, len);
++		return;
++	}
++
++	/* A detached ring's pending count can miss late skb destructors. */
++	deferred->sk = sk;
++	sock_hold(sk);
++	queue_delayed_work(system_long_wq, &deferred->work, 0);
+ }
+ 
+ static char *alloc_one_pg_vec_page(unsigned long order)
+@@ -4457,20 +4513,35 @@ static char *alloc_one_pg_vec_page(unsig
+ 	return NULL;
+ }
+ 
+-static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order)
++static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring)
  {
- 	int unused_mem = sk_unused_reserved_mem(sk);
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1806,7 +1806,7 @@ struct sock *tcp_v4_syn_recv_sock(const
- 	tcp_ca_openreq_child(newsk, dst);
+ 	unsigned int block_nr = req->tp_block_nr;
++	struct packet_pg_vec *vec;
+ 	struct pgv *pg_vec;
+ 	int i;
  
- 	tcp_sync_mss(newsk, dst4_mtu(dst));
--	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
-+	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
+-	pg_vec = kcalloc(block_nr, sizeof(struct pgv), GFP_KERNEL | __GFP_NOWARN);
+-	if (unlikely(!pg_vec))
+-		goto out;
++	vec = kzalloc_flex(*vec, pg_vec, block_nr, GFP_KERNEL | __GFP_NOWARN);
++	if (unlikely(!vec))
++		return NULL;
++	vec->order = order;
++	vec->len = block_nr;
++	pg_vec = vec->pg_vec;
  
- 	tcp_initialize_rcv_mss(newsk);
- 
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -422,7 +422,7 @@ void tcp_openreq_init_rwin(struct reques
- 	u32 rcv_wnd;
- 	int mss;
- 
--	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
- 	window_clamp = READ_ONCE(tp->window_clamp);
- 	/* Set this up on the first call only */
- 	req->rsk_window_clamp = window_clamp ? : dst_metric(dst, RTAX_WINDOW);
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -127,7 +127,7 @@ static __u16 tcp_advertise_mss(struct so
- 	int mss = tp->advmss;
- 
- 	if (dst) {
--		unsigned int metric = dst_metric_advmss(dst);
-+		unsigned int metric = tcp_dst_advmss(dst);
- 
- 		if (metric < mss) {
- 			mss = metric;
-@@ -3764,7 +3764,7 @@ struct sk_buff *tcp_make_synack(const st
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
++
++		if (tx_ring && !vec->deferred &&
++		    is_vmalloc_addr(pg_vec[i].buffer)) {
++			vec->deferred = kzalloc_obj(*vec->deferred,
++						    GFP_KERNEL | __GFP_NOWARN);
++			if (!vec->deferred)
++				goto out_free_pgvec;
++			vec->deferred->vec = vec;
++			INIT_DELAYED_WORK(&vec->deferred->work,
++					  packet_free_pg_vec_work);
++		}
  	}
- 	skb_dst_set(skb, dst);
  
--	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
+ out:
+@@ -4553,7 +4624,7 @@ static int packet_set_ring(struct sock *
  
- 	memset(&opts, 0, sizeof(opts));
- 	now = tcp_clock_ns();
-@@ -3918,7 +3918,7 @@ static void tcp_connect_init(struct sock
+ 		err = -ENOMEM;
+ 		order = get_order(req->tp_block_size);
+-		pg_vec = alloc_pg_vec(req, order);
++		pg_vec = alloc_pg_vec(req, order, tx_ring);
+ 		if (unlikely(!pg_vec))
+ 			goto out;
+ 		switch (po->tp_version) {
+@@ -4605,6 +4676,9 @@ static int packet_set_ring(struct sock *
+ 	err = -EBUSY;
+ 	mutex_lock(&po->pg_vec_lock);
+ 	if (closing || atomic_long_read(&po->mapped) == 0) {
++		if (tx_ring && !closing && packet_read_pending(rb))
++			goto out_unlock;
++
+ 		err = 0;
+ 		spin_lock_bh(&rb_queue->lock);
+ 		swap(rb->pg_vec, pg_vec);
+@@ -4626,6 +4700,7 @@ static int packet_set_ring(struct sock *
+ 			pr_err("packet_mmap: vma is busy: %ld\n",
+ 			       atomic_long_read(&po->mapped));
+ 	}
++out_unlock:
+ 	mutex_unlock(&po->pg_vec_lock);
  
- 	if (!tp->window_clamp)
- 		WRITE_ONCE(tp->window_clamp, dst_metric(dst, RTAX_WINDOW));
--	tp->advmss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	tp->advmss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
- 
- 	tcp_initialize_rcv_mss(sk);
- 
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1489,7 +1489,7 @@ static struct sock *tcp_v6_syn_recv_sock
- 	tcp_ca_openreq_child(newsk, dst);
- 
- 	tcp_sync_mss(newsk, dst6_mtu(dst));
--	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
-+	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
- 
- 	tcp_initialize_rcv_mss(newsk);
- 
+ 	spin_lock(&po->bind_lock);
+@@ -4647,7 +4722,10 @@ static int packet_set_ring(struct sock *
+ out_free_pg_vec:
+ 	if (pg_vec) {
+ 		bitmap_free(rx_owner_map);
+-		free_pg_vec(pg_vec, order, req->tp_block_nr);
++		if (tx_ring && closing)
++			packet_free_tx_ring(sk, pg_vec, order, req->tp_block_nr);
++		else
++			free_pg_vec(pg_vec, order, req->tp_block_nr);
+ 	}
+ out:
+ 	return err;
 
 
