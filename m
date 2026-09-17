@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA615448BE;
-	Thu, 17 Sep 2026 15:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ED0501F26;
+	Thu, 17 Sep 2026 15:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659780; cv=none; b=Qm7UXpw0mHsltPuMXdCI8D61r4OCCBLZ7gptiT2MnADY+xtHguCkwIne6HWMaUfzq0VrmZ1LRVxsSqLqMV9Psfe/Ajo4/QDVF2pNueONOBt4UXXrKNmIRrEDX6zXZK6cHnwT3ZAFV5XXbHypqqddO/u98P04MnbAliYjo1Xl/4A=
+	t=1789659784; cv=none; b=Yuqs1jueoosMkQG6nsQBII5AVkPOJ+J8dIvKBOXhl1Yb4ETYLs5BsRjURl6Vtj5A6xgt1XDoVl8lUpqPLDblmt42EAMwtDiaHRdxnTNPFG8yYFzqxNnuSgPfkSpYgdju2fx/EmnULo6dsIUKv2M77YGm+7hOp8zq+XRBglarObQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659780; c=relaxed/simple;
-	bh=LwUU1dxEyap28JMJMPNqfFsvo4Hrk2dUeLxM+fcLBlY=;
+	s=arc-20240116; t=1789659784; c=relaxed/simple;
+	bh=7xxDs9ggV58IkEdEOT28K4Yg/aQn2bgjkZWxvXCgDhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3794RieunmQqdBH09DIn5tb6c01WwhUHGPVyOkdaAztXgTc+Z8T772MpEoVL/kW/K4i0bEPfgJIja49RN8vmHNO95BvEXXg/Q2SpeYZJbWXb+iCxwRYVlNUInOaCsayJ+s7G1ucgnt+zbHLFXxNy29XVA63Sb3MRUFX+5Y1gHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9iCAjzs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OKx/MUnREPPb60j7ZDfxgxssyONaelDBLFHNt/rgxFipWI3USD4Q+nIpyhj0K5PtsPYVnUU5olujPguetK9koENpK+ac0c+ddxL3ZIQlmsa04W00jza0ERJJ6bJORV0AmZ/+khDOXDLzcwRu9ScHxM0mbOgFMsD2OxtpEZ2L3ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbWzj7fk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9iCAjzs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB99E1F000FF;
-	Thu, 17 Sep 2026 15:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbWzj7fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16731F00893;
+	Thu, 17 Sep 2026 15:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659770;
-	bh=LYUlqJfmDSnQEKFN4WGttcRW1g9vqDOC3RX+Yi8O6ps=;
+	s=korg; t=1789659773;
+	bh=0pvwWshktyH1RBIIpOaTQlI3zwWKJ9AdhYiYClhVdow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U9iCAjzsAFVO4Sw6+tR3liLjcZa1Y9jGAue1Mg8YK8qLV153/wOnv6JicZtfEp+fL
-	 Mpr1csiXyqSIUxuFTpyV4o7E/O25epe/N2qtY7qImYpQbMLrbNRu7hCxX8sC4KcoQ1
-	 en/PqSOiT0iD3YaTCIBTzEoNIqVuvQPvDAXIaWf8=
+	b=hbWzj7fkkcU8O/PZ4VfpoK4VC/GvoS/ATigAUvEdrba5p9Vn5bWc6JBE6tE8Z2TCl
+	 QxhY8q4wAiT9496GC0R+ifyF00+lA2Giq/wJQZKdXeJnvLtsJxFiLBTXZ8HyQP5rty
+	 f8d0LL0LCdhAS0COD5dk+rAuZsH75BkFfMHEnCBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Zini <alessandro.zini@siemens.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 331/733] hwmon: (sht4x) Add missing locks
-Date: Thu, 17 Sep 2026 16:10:39 +0100
-Message-ID: <20260917151359.773321673@linuxfoundation.org>
+Subject: [PATCH 7.2 367/733] drm/adp: Drop the select of the nonexistent CONFIG_DRM_KMS_DMA_HELPER
+Date: Thu, 17 Sep 2026 16:11:15 +0100
+Message-ID: <20260917151400.772058624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,61 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 06b7cf395b1fb652a50db39674a759658fbfba0d ]
+[ Upstream commit fedf002d7d08bee36693aacd1ade2ba39351ea91 ]
 
-Sashiko reports:
+There is no Kconfig symbol CONFIG_DRM_KMS_DMA_HELPER. The former
+CONFIG_DRM_KMS_CMA_HELPER was removed by commit 09717af7d13d ("drm:
+Remove CONFIG_DRM_KMS_CMA_HELPER option") before this driver was added,
+so the select does nothing. The driver already selects
+CONFIG_DRM_GEM_DMA_HELPER, which is what it needs.
 
-Heater sysfs callbacks (heater_enable_store, heater_power_store, and
-heater_time_store) are exposed to data races without the hwmon lock.
+Remove the dead line.
 
-If a user-space process reads hwmon data while another process enables
-the heater, heater_enable_store() executes without holding
-hwmon_lock(dev). This can interleave I2C commands and mutate shared
-state (data->heating_complete and data->data_pending) concurrently
-with sht4x_read_values(), leading to corrupted I2C sequences.
-
-Fixes: 53dfa12299c1 ("hwmon: (sht4x) Rely on subsystem locking")
-Cc: Alessandro Zini <alessandro.zini@siemens.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20260821144916.2889031-1-linux@roeck-us.net
+Fixes: 332122eba628 ("drm: adp: Add Apple Display Pipe driver")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht4x.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/adp/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
-index 9cace0e8acdab..7a0dc2ed723d8 100644
---- a/drivers/hwmon/sht4x.c
-+++ b/drivers/hwmon/sht4x.c
-@@ -277,6 +277,8 @@ static ssize_t heater_enable_store(struct device *dev,
- 		heating_time_bound = 1100;
- 	}
- 
-+	guard(hwmon_lock)(dev);
-+
- 	if (time_before(jiffies, data->heating_complete))
- 		return -EBUSY;
- 
-@@ -314,6 +316,8 @@ static ssize_t heater_power_store(struct device *dev,
- 	if (power != 20 && power != 110 && power != 200)
- 		return -EINVAL;
- 
-+	guard(hwmon_lock)(dev);
-+
- 	data->heater_power = power;
- 
- 	return count;
-@@ -344,6 +348,8 @@ static ssize_t heater_time_store(struct device *dev,
- 	if (time != 100 && time != 1000)
- 		return -EINVAL;
- 
-+	guard(hwmon_lock)(dev);
-+
- 	data->heater_time = time;
- 
- 	return count;
+diff --git a/drivers/gpu/drm/adp/Kconfig b/drivers/gpu/drm/adp/Kconfig
+index 9fcc27eb200db..acfa21ee06d22 100644
+--- a/drivers/gpu/drm/adp/Kconfig
++++ b/drivers/gpu/drm/adp/Kconfig
+@@ -6,7 +6,6 @@ config DRM_ADP
+ 	select DRM_KMS_HELPER
+ 	select DRM_BRIDGE_CONNECTOR
+ 	select DRM_DISPLAY_HELPER
+-	select DRM_KMS_DMA_HELPER
+ 	select DRM_GEM_DMA_HELPER
+ 	select DRM_PANEL_BRIDGE
+ 	select VIDEOMODE_HELPERS
 -- 
 2.53.0
 
