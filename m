@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFE14FD294;
-	Thu, 17 Sep 2026 17:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CA850E590;
+	Thu, 17 Sep 2026 17:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667145; cv=none; b=UY7iU6TdqgruBL1UZDlrhcwvDCh2OdvLH6uN3f9xuCoIKunnz63KyZZA3x2tPUWifOVdUXB05g1sDWKSyf6EQc54raJwx5KQazRoKlI6Lq+rchKVU7Zg2tYGn1nB82c8ADx8jseapQfAe/Qj/hldFDN0QTQy//NhaNEi1Lao/p0=
+	t=1789667148; cv=none; b=jSbN+f09YvgxXyWyfWrns4HsXDPbN9REUrlnPqml/c9/KYsPnoQ+rw/tiACQTh0HVKR3rciu1dzii2Wfb8JkMZ+xxDRRr679GJokn4U/QeVLTSYue1p9oMCMLlE/CnY8H4CNjeiT3tAVhWH62OpoYLdI5K1aC9f9hLD5p32xFjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667145; c=relaxed/simple;
-	bh=2GxI0ebK6NPhrHREXjuSNtMNv5wIiWj0QSKXePVwrfc=;
+	s=arc-20240116; t=1789667148; c=relaxed/simple;
+	bh=XLQxpC2wcY0UfP8zKHMJEH4iMnbry40nr+PIalQHUro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNZttvRmBGVfEMMuEmb58WiQJGpeMy5TN2leby31AJ+OyFCkChDdTfdE8NmJY5FGEB0sc50D0NGeSYqLvuKzgtIQa2ZihDpMR0f7rKTNyDYTHQHYk+fStTgJyDwFURV++9WmTuaG2qnchv3Z4RF0W4JziCNxZTbJYB2Ho0/XKqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR/zBvqX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NE5ZXOzBJKiit5oUCJ5jma3dbbYxuZ57IPNx6o6atEDetuKBdxTf5xvkH2rwa7XbSvW9VZwk61Eoo1vPioCB6Pg9W9g59xqoVcxkOCYkdQUE8oD4/MWN2b4dFNYxu96ili6aJRoIsXQmcQpdCmblir8kVmwzFITDJDcgW0T6r/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfOHPheW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR/zBvqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F1E1F000FF;
-	Thu, 17 Sep 2026 17:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfOHPheW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6500D1F000FF;
+	Thu, 17 Sep 2026 17:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667143;
-	bh=hMobYJvddNuLRj8jb8sUVv9T8/EE4uTU0DTm/c+Q2No=;
+	s=korg; t=1789667147;
+	bh=g2RXHNxObfxN9PXbhLafqe2RPpMZNmbF5/HEbwIvBuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NR/zBvqXsaSfFcu0q0oJ/1ai8GGpdW/eulpZjth/Lo5tZcDXsgKhSW5bSAYJdu/az
-	 l/jjPEp8VOCP684JZjdYivju5LK9vRY1Gjwcx0h8El5e6IV4xD2CDObDL7nUUUTjxD
-	 IsdkIo8/UortE4cfLOxEUcSHIJ+Ax0ODgatJgz7U=
+	b=HfOHPheWN2a5OTvUEAvXEQbO521LWipjGGDZNuzC4fRzZ0wPMBpRzijK0ldY+EVoK
+	 v/Ej2NTOEtp7i/BDlElDnHhJ/sU+LOIxoyHaNt/qsQH/3aP0DXPlcg6JzvSkJL8XYi
+	 umuBH5zp1kG0pAWX7jHXBs3VqK0/+wRMV+iHCEJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1244/1250] smb: client: fail DACL rewrite when the new DACL exceeds 64K
-Date: Thu, 17 Sep 2026 16:17:19 +0100
-Message-ID: <20260917151626.016203810@linuxfoundation.org>
+Subject: [PATCH 6.18 1227/1250] idpf: disable DIM work before freeing q_vectors
+Date: Thu, 17 Sep 2026 16:17:02 +0100
+Message-ID: <20260917151625.546741094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,156 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit d05045177a855386bca5e1909e08d06290e6e3b3 ]
+[ Upstream commit 7dd4c829bac2916be98a3e34b41daaba7f42b4c4 ]
 
-replace_sids_and_copy_aces() and set_chmod_dacl() accumulate the size of
-the DACL they build in a u16. That accumulator can wrap.
+idpf never drains the Tx/Rx DIM works before freeing the memory they
+live in.  tx_dim and rx_dim are embedded in struct idpf_q_vector, they
+are queued from the NAPI poll via net_dim(), and idpf_vport_intr_rel()
+ends with kfree(rsrc->q_vectors).  Nothing in the driver cancels them.
 
-validate_dacl() caps num_aces at (dacl_size - sizeof(struct smb_acl)) /
-20, i.e. 3276 for a maximally sized DACL, while each rewritten ACE can
-grow to sizeof(struct smb_ace) (76 bytes) once its SID is replaced with
-one carrying SID_MAX_SUB_AUTHORITIES sub-authorities. The worst case is
-therefore sizeof(struct smb_acl) + 3276 * 76 = 248984 bytes, far beyond
-what a u16 can hold. A wraparound is reached with 863 ACEs.
+idpf_tx_dim_work() and idpf_rx_dim_work() then run on freed memory:
+idpf_vport_intr_write_itr() writes the ITR register through
+q_vector->intr_reg.tx_itr / rx_itr, void __iomem pointers loaded out of
+the freed q_vector.  No configuration is needed to get there --
+IDPF_ITR_IS_DYNAMIC() is defined as (itr_mode) and idpf_vport_alloc()
+initialises both modes to IDPF_ITR_DYNAMIC.
 
-After the wraparound, ndacl_ptr->size becomes meaningless and the offset
-will point anywhere in the ACE array. As a result, we will see
-corruption of the DACL, which then gets sent to the server. This is not
-an out-of-bounds write as the allocation now covers the worst-case
-expansion, so writes will always go into the buffer.
+Draining after idpf_vport_intr_napi_dis_all() is not enough on its own.
+idpf_net_dim() is called from inside the
+"if (napi_complete_done(napi, work_done))" branch of the poll, and
+napi_complete_done() has already cleared NAPIF_STATE_SCHED by then.
+napi_disable_locked() waits only while (val & (NAPIF_STATE_SCHED |
+NAPIF_STATE_NPSVC)), so napi_disable() can return while the poll tail is
+still queueing the work, and a plain cancel_work_sync() would be
+re-armed behind the drain.
 
-Adjust the code to use a u32 internally and return -EOVERFLOW in the
-overflow case. The operation must be refused, because a DACL can only
-hold 2^16-1 bytes on the wire and larger DACLs cannot be represented.
+Use disable_work_sync(): schedule_work() on a work with a non-zero
+disable count is dropped by clear_pending_if_disabled() before
+__queue_work() is reached.
 
-set_chmod_dacl() carries the same pattern and is fixed the same way. It
-only wraps once the source DACL comes within roughly 380 bytes of the
-64K ceiling, but the failure mode is identical.
+Move idpf_init_dim() to idpf_vport_intr_alloc() so the works are
+initialised on every path that can reach the drain -- the three
+"goto intr_deinit" sites between idpf_vport_intr_init() and
+idpf_vport_intr_ena() get there without the enable side having run.
+Nothing re-enables them: rsrc->q_vectors is freed on every exit from
+idpf_vport_open() and on every idpf_vport_stop(), so the count dies with
+the object.
 
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+It is a race, not a deterministic failure -- net_dim() only schedules
+once DIM_NEVENTS events have accumulated and the profile index changes.
+A KASAN ifup/ifdown loop under load is the way to see it.
+
+Fixes: c2d548cad150 ("idpf: add TX splitq napi poll support")
+Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
+Cc: <stable@vger.kernel.org> # see patch description, needs adjustments for <= 6.9
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |   39 ++++++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c |   24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1023,13 +1023,13 @@ unsigned int setup_special_user_owner_AC
- static void populate_new_aces(char *nacl_base,
- 		struct smb_sid *pownersid,
- 		struct smb_sid *pgrpsid,
--		__u64 *pnmode, u16 *pnum_aces, u16 *pnsize,
-+		__u64 *pnmode, u16 *pnum_aces, u32 *pnsize,
- 		bool modefromsid,
- 		bool posix)
- {
- 	__u64 nmode;
- 	u16 num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	__u64 user_mode;
- 	__u64 group_mode;
- 	__u64 other_mode;
-@@ -1128,17 +1128,17 @@ set_size:
- 	*pnsize = nsize;
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -4137,6 +4137,26 @@ static void idpf_vport_intr_ena_irq_all(
  }
  
--static __u16 replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
--		struct smb_sid *pownersid, struct smb_sid *pgrpsid,
--		struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
--		int *aclflag)
-+static int replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
-+				      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
-+				      struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
-+				      int *aclflag, u16 *pnsize)
- {
- 	int i;
- 	u16 size = 0;
- 	struct smb_ace *pntace = NULL;
- 	char *acl_base = NULL;
- 	u16 src_num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	struct smb_ace *pnntace = NULL;
- 	char *nacl_base = NULL;
- 	u16 ace_size = 0;
-@@ -1167,9 +1167,12 @@ static __u16 replace_sids_and_copy_aces(
- 
- 		size += le16_to_cpu(pntace->size);
- 		nsize += ace_size;
-+		if (nsize > U16_MAX)
-+			return -EOVERFLOW;
- 	}
- 
--	return nsize;
-+	*pnsize = nsize;
-+	return 0;
- }
- 
- static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
-@@ -1181,7 +1184,7 @@ static int set_chmod_dacl(struct smb_acl
- 	struct smb_ace *pntace = NULL;
- 	char *acl_base = NULL;
- 	u16 src_num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	struct smb_ace *pnntace = NULL;
- 	char *nacl_base = NULL;
- 	u16 num_aces = 0;
-@@ -1232,6 +1235,8 @@ static int set_chmod_dacl(struct smb_acl
- 
- 		nsize += cifs_copy_ace(pnntace, pntace, NULL);
- 		num_aces++;
-+		if (nsize > U16_MAX)
-+			return -EOVERFLOW;
- 
- next_ace:
- 		size += le16_to_cpu(pntace->size);
-@@ -1248,6 +1253,10 @@ next_ace:
- 	}
- 
- finalize_dacl:
-+	/* The DACL size field is 16-bit on the wire, see MS-DTYP 2.4.5 */
-+	if (nsize > U16_MAX)
-+		return -EOVERFLOW;
+ /**
++ * idpf_vport_intr_dis_dim_all - Disable DIM work for all q_vectors
++ * @rsrc: pointer to queue and vector resources
++ *
++ * The DIM works are embedded in the q_vector array that
++ * idpf_vport_intr_rel() frees, and the poll arms them after
++ * napi_complete_done() has already cleared NAPI_STATE_SCHED.  Disable
++ * rather than just cancel, so that a poll tail still running past
++ * napi_disable() cannot queue them again behind the drain.
++ */
++static void idpf_vport_intr_dis_dim_all(struct idpf_q_vec_rsrc *rsrc)
++{
++	for (u16 v_idx = 0; v_idx < rsrc->num_q_vectors; v_idx++) {
++		struct idpf_q_vector *q_vector = &rsrc->q_vectors[v_idx];
 +
- 	pndacl->num_aces = cpu_to_le16(num_aces);
- 	pndacl->size = cpu_to_le16(nsize);
++		disable_work_sync(&q_vector->tx_dim.work);
++		disable_work_sync(&q_vector->rx_dim.work);
++	}
++}
++
++/**
+  * idpf_vport_intr_deinit - Release all vector associations for the vport
+  * @vport: main vport structure
+  * @rsrc: pointer to queue and vector resources
+@@ -4146,6 +4166,7 @@ void idpf_vport_intr_deinit(struct idpf_
+ {
+ 	idpf_vport_intr_dis_irq_all(rsrc);
+ 	idpf_vport_intr_napi_dis_all(rsrc);
++	idpf_vport_intr_dis_dim_all(rsrc);
+ 	idpf_vport_intr_napi_del_all(rsrc);
+ 	idpf_vport_intr_rel_irq(vport, rsrc);
+ }
+@@ -4226,7 +4247,6 @@ static void idpf_vport_intr_napi_ena_all
+ 	for (u16 q_idx = 0; q_idx < rsrc->num_q_vectors; q_idx++) {
+ 		struct idpf_q_vector *q_vector = &rsrc->q_vectors[q_idx];
  
-@@ -1408,6 +1417,8 @@ static int build_sec_desc(struct smb_nts
+-		idpf_init_dim(q_vector);
+ 		napi_enable(&q_vector->napi);
+ 	}
+ }
+@@ -4569,6 +4589,8 @@ int idpf_vport_intr_alloc(struct idpf_vp
+ 		q_coal = &user_config->q_coalesce[v_idx];
+ 		q_vector->vport = vport;
  
- 		rc = set_chmod_dacl(dacl_ptr, ndacl_ptr, owner_sid_ptr, group_sid_ptr,
- 				    pnmode, mode_from_sid, posix);
-+		if (rc)
-+			return rc;
- 
- 		sidsoffset = ndacloffset + le16_to_cpu(ndacl_ptr->size);
- 		/* copy the non-dacl portion of secdesc */
-@@ -1483,10 +1494,12 @@ static int build_sec_desc(struct smb_nts
- 
- 		if (dacloffset) {
- 			/* Replace ACEs for old owner with new one */
--			size = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
--					owner_sid_ptr, group_sid_ptr,
--					nowner_sid_ptr, ngroup_sid_ptr,
--					aclflag);
-+			rc = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
-+							owner_sid_ptr, group_sid_ptr,
-+							nowner_sid_ptr, ngroup_sid_ptr,
-+							aclflag, &size);
-+			if (rc)
-+				goto chown_chgrp_exit;
- 			ndacl_ptr->size = cpu_to_le16(size);
- 		}
- 
++		idpf_init_dim(q_vector);
++
+ 		q_vector->tx_itr_value = q_coal->tx_coalesce_usecs;
+ 		q_vector->tx_intr_mode = q_coal->tx_intr_mode;
+ 		q_vector->tx_itr_idx = VIRTCHNL2_ITR_IDX_1;
 
 
