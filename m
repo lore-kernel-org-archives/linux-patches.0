@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446C537B3FD;
-	Thu, 17 Sep 2026 17:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CB74F5E0F;
+	Thu, 17 Sep 2026 17:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665612; cv=none; b=c27y1gcxcryfijxPfzmiAanr7QfKZZrlmNDFHfUMxvkRIFNheEM0AOGOKQHoShoBgqCt8DBkSvpdJWU7xvLWmYyHR83OFJvYc18SI82cS1K8OpKN0TZwR4oN5zIL6fu1QuKeLIO7s1WTd5CEKsu8/dTls5mQUTiyL1IXcaHMD9Y=
+	t=1789665615; cv=none; b=gKeveTgOCVLIvrTrMcO0BWWW6obxi+L6nwyiGs7bXqjuiNQ3VwAFNT1YGovTqEO8rFnrcvUFQB/c8/nC78QNUr5Yrt6Mm+YkvJQ4KrwWenXEWPc3/Xp8AM2uYNTN88Z4mYUtRgD/7TeqeIN2pi3ofQqxVwlB3x4vB4bkfGsjYn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665612; c=relaxed/simple;
-	bh=tLoUmS04AIBL5dUtIgNuGcsQ9JVQyj84WPWCBe+Ilx8=;
+	s=arc-20240116; t=1789665615; c=relaxed/simple;
+	bh=zjxsyCBr3AusmE5fR7EApUTtqXvuuGvB5mMwF/RN2Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMrjrvjhQK4t4iUbOh+bgFS7WZtpPK3cSXp+pA3/Bqz9xuv7zmsVNKJnAI7BtAR1OrMDw3KTd5J39ZqTZijcIycmjhLm236mSifJXll+KAxrS5/Jl8518Kqe8BNDdWeHELcxKtOqSkkAQ0SJGHnSqIi1FWXq0XtPAihiN7W1w6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1mABxHs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uLqLkg3alU0nknX654oFZjNgYT2wvXLTrBjYivuAIZffg3F6/Sn/E9GLCyaeZ181bv+FX1QT+zk1BQIrt1MqF71Oy1y2oABbCPm0jvzdGtyFqrECkh3sfu0Hdp5fgsJ7XL2CjSUXhcZb0Cw47yfALBCraNMPl9xr8nfq3N5AeGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4mx3XNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1mABxHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8301F000FF;
-	Thu, 17 Sep 2026 17:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4mx3XNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8014A1F00893;
+	Thu, 17 Sep 2026 17:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665611;
-	bh=PkH0tc2BjIfSnBUOXvZvgaLgzk3gKpwfYhA3Y+HXbtE=;
+	s=korg; t=1789665614;
+	bh=cUBdg3S+vC/K7JFlNIQhQ2qbH4PT+OBQhqqC73XeACE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1mABxHsyXiXjj2b5eZpx1Hut0Ya6gsd9/7qmhVSpJD6m+hniAjI7vbVsqcP9jiwQ
-	 dZbqFT0dUmZhAiQ8Hsxw9x2sasqPNHHhFj/06J0cHzXQft6rbZGNslRbNeEbhByet4
-	 2MgorNc21E6Kd/6B0RYWQmbpytZA7Rn1JTLlVg6k=
+	b=s4mx3XNV78HvPplYAhQYAR/PkBmFmCkvyQtG6cio1GWDwp7Rtn3eWYnjw1zuL2vQI
+	 /JvlU9S9U1GzBi22rzX5tf0yiareYH4MT/WngMgPBFOo45nmjfureVXykkzfO/RBK7
+	 4vZJh5bTsGZFoQLXQ9WaKYElB5u1TcO11ZTcMebQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0761/1250] nvme-tcp: defer TLS inline send to io_work
-Date: Thu, 17 Sep 2026 16:09:16 +0100
-Message-ID: <20260917151612.504372675@linuxfoundation.org>
+Subject: [PATCH 6.18 0762/1250] ASoC: Intel: avs: Clean up the bus when fetching ML caps fails
+Date: Thu, 17 Sep 2026 16:09:17 +0100
+Message-ID: <20260917151612.531731672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,52 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 08acb54b063a33730eb1ae1e0f89bf36542bac9f ]
+[ Upstream commit 559ea14b7ae7c7562b48759fa545b64958f35b73 ]
 
-blk_mq holds set->srcu while queuing and running requests.  The kTLS
-software send path takes ctx->tx_lock.  lockdep knows that tx_lock
-nests under elevator_lock which then waits on srcu, so an inline
-send from that path under TLS triggers circular locking.
+snd_hdac_ext_bus_get_ml_capabilities() may fail and its return code
+shall be checked and accounted for. Address the issue by updating the
+error-path for avs_pci_probe().
 
-Skip the inline send optimization for TLS queues so the send runs
-from the workqueue instead.  The same workqueue already retries TLS
-sends on write-space notifications.  Plain TCP keeps the inline path.
+At the same time, if the function in question succeeds but the next part
+of avs_pci_probe() fails, the hlink list shall be cleaned up before
+leaving the scope.
 
-Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 1affc44ea5dd ("ASoC: Intel: avs: PCI driver implementation")
+Co-developed-by: Amadeusz Sławiński <amade@asmblr.net>
+Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260902081814.1590883-5-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/intel/avs/core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 8aaec6096d6de..86e064d058d35 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -417,8 +417,13 @@ static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
- 	 * if we're the first on the send_list and we can try to send
- 	 * directly, otherwise queue io_work. Also, only do that if we
- 	 * are on the same cpu, so we don't introduce contention.
-+	 *
-+	 * TLS kTLS send takes ctx->tx_lock while blk_mq holds set->srcu.
-+	 * lockdep reports circular locking via elevator_lock.  Defer TLS
-+	 * sends to the io workqueue instead of inline from this path.
- 	 */
- 	if (queue->io_cpu == raw_smp_processor_id() &&
-+	    !nvme_tcp_queue_tls(queue) &&
- 	    empty && mutex_trylock(&queue->send_mutex)) {
- 		nvme_tcp_send_all(queue);
- 		mutex_unlock(&queue->send_mutex);
+diff --git a/sound/soc/intel/avs/core.c b/sound/soc/intel/avs/core.c
+index 6e0e65584c7f8..061d97603abbf 100644
+--- a/sound/soc/intel/avs/core.c
++++ b/sound/soc/intel/avs/core.c
+@@ -473,8 +473,13 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
+ 	}
+ 
+ 	snd_hdac_bus_parse_capabilities(bus);
+-	if (bus->mlcap)
+-		snd_hdac_ext_bus_get_ml_capabilities(bus);
++	if (bus->mlcap) {
++		ret = snd_hdac_ext_bus_get_ml_capabilities(bus);
++		if (ret < 0) {
++			dev_err(dev, "failed to get ml capabilities: %d\n", ret);
++			goto err_ml_cap;
++		}
++	}
+ 
+ 	if (dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
+ 		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+@@ -516,6 +521,8 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
+ 	snd_hdac_bus_free_stream_pages(bus);
+ 	snd_hdac_ext_stream_free_all(bus);
+ err_init_streams:
++	snd_hdac_ext_link_free_all(bus);
++err_ml_cap:
+ 	iounmap(adev->dsp_ba);
+ err_remap_bar4:
+ 	iounmap(bus->remap_addr);
 -- 
 2.53.0
 
