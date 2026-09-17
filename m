@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1A4D6C52;
-	Thu, 17 Sep 2026 15:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E1D4DC557;
+	Thu, 17 Sep 2026 15:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660350; cv=none; b=vCxQSv5HH7bbVBQ1lzdCxD0IQfoJKZCWiyQMlm1091X9LBoU/pNNJr64+0dfX5O/pTjvRjiCHtcD6CpYNJvgFX8sQU/VdQ9eM6fbMFxS5c1DHRtB+sRSPFFnLydQcSfTRD2wd6+eaWIxy0KnipJKuPZXVTSmW1VoqvyPITgANB0=
+	t=1789660353; cv=none; b=bQzg+ziK5MnYjNSbNTyd5X69JpQRZbVvjFlNoMALVJWe6zp25pQikiYk1FecSelDCuIBrbwXhK8lRRsIa38eI3lYzXSgKWNn9C0la+IwEYi6NFbOL1iMRNh7mxeiee6V54b6nFezw44P2vUwtH3ufKb/ZCk08qrxJUlhCSm7W3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660350; c=relaxed/simple;
-	bh=V5hxVhbSmSh2YGANmBLTcQDfOo8+coK+L/9LqivuX1M=;
+	s=arc-20240116; t=1789660353; c=relaxed/simple;
+	bh=gokXANcuOz9qJHUCX+anXonXv+o64yBw47pG0Cx5Jjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFlDusnbZQ6Ax+iSUHPpoIDkSREXkSIxyl3jGUUA4ciIWHtJ69s0KDskku+fqtHpPrPoTyXA3t8HBFyIGlKwUPc/wsCWC9/aHSdda63VyhdspuHkuvF0RSXdHG8yJ3RuSF3ZXYE3lxvmxv5SODF6iH8+LRDQ06B7SzzUNuCaql0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4oXbvqT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PO5Zn++8fWN6hSfdkLsfgIWGeAXJiS3PfLOt1NxOzbi3OE8DMnvuesurq2kDsfFhgpwwOP02AgN86rEpJMqeV1eU+Q8mfLHHNjpxQOyoVtrUJwWnKgzGRSLNDF00wM/OB8Dkn6FRS6vmRgHBfMHlpk3O5nggyZH08ISdIHJ0LsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yev4xxzo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4oXbvqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6EE1F000FF;
-	Thu, 17 Sep 2026 15:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yev4xxzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2261F000FF;
+	Thu, 17 Sep 2026 15:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660348;
-	bh=KukFmNHBGxS85dYjSZi68A/g4Ky2wMhhqz8pF/keXIs=;
+	s=korg; t=1789660351;
+	bh=KgmULTd+lQxyuCSREIgQS3jtL0O1r8Y4k5Vwwt+21uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4oXbvqTAi7S8FaOaHww8Z9k/LTU7xGlq+HLGCJHyWbPNe4FCivJ+9qzjXrf66duJ
-	 nR2FxoCAykAtPu53i7YGsnSBVWNvA5BFZDLRaXizSB9cajPHlB6NuWrk+isKqgApWs
-	 o8vSriPkzbEza3BXTK2r6HUGBQqWa1gaf7DVGxI4=
+	b=Yev4xxzoP1Dy+MwQoxv37CdYYkpA0qjBWyC/c1dkPIMaA/EBpz2wRCxWReSD5cIC5
+	 yAulphTZG74RF1BBs8CZgBzhd+yFikAiP+rk7h5kzCvA0JQeG8q152O0VPwaaXqTFZ
+	 UwrVK0iJqnnv7GpGqs8U8FvRQRrChG9psdouFrSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 7.2 562/733] idpf: disable DIM work before freeing q_vectors
-Date: Thu, 17 Sep 2026 16:14:30 +0100
-Message-ID: <20260917151406.318970238@linuxfoundation.org>
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Weiming Shi <shiweiming@moonshot.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 563/733] inet: frags: invalidate queues before flushing them
+Date: Thu, 17 Sep 2026 16:14:31 +0100
+Message-ID: <20260917151406.349939819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,113 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Yilin Zhang <yilinzhang@moonshot.ai>
 
-commit 7dd4c829bac2916be98a3e34b41daaba7f42b4c4 upstream.
+commit b824476c56a153934c67c9e0f873e1fd967743d6 upstream.
 
-idpf never drains the Tx/Rx DIM works before freeing the memory they
-live in.  tx_dim and rx_dim are embedded in struct idpf_q_vector, they
-are queued from the NAPI poll via net_dim(), and idpf_vport_intr_rel()
-ends with kfree(rsrc->q_vectors).  Nothing in the driver cancels them.
+fqdir_pre_exit() flushes the skbs from incomplete queues without
+changing their completion state. A fragment which found a queue before
+high_thresh was cleared can then acquire the queue lock and reuse stale
+reassembly metadata. A queue concurrently killed after fqdir->dead is
+set can instead become INET_FRAG_COMPLETE|INET_FRAG_HASH_DEAD while
+still holding its old skbs; skipping it because it is complete leaves
+those references behind until asynchronous fqdir teardown.
 
-idpf_tx_dim_work() and idpf_rx_dim_work() then run on freed memory:
-idpf_vport_intr_write_itr() writes the ITR register through
-q_vector->intr_reg.tx_itr / rx_itr, void __iomem pointers loaded out of
-the freed q_vector.  No configuration is needed to get there --
-IDPF_ITR_IS_DYNAMIC() is defined as (itr_mode) and idpf_vport_alloc()
-initialises both modes to IDPF_ITR_DYNAMIC.
+For IPv6, stale metadata can make ip6_frag_reasm() use the old
+nhoffset with a new skb and access memory out of bounds. The resulting
+heap corruption can be leveraged for local privilege escalation when
+unprivileged network namespaces are available. Unflushed fragments can
+also keep conntrack references alive after the conntrack per-net
+cleanup point.
 
-Draining after idpf_vport_intr_napi_dis_all() is not enough on its own.
-idpf_net_dim() is called from inside the
-"if (napi_complete_done(napi, work_done))" branch of the poll, and
-napi_complete_done() has already cleared NAPIF_STATE_SCHED by then.
-napi_disable_locked() waits only while (val & (NAPIF_STATE_SCHED |
-NAPIF_STATE_NPSVC)), so napi_disable() can return while the poll tail is
-still queueing the work, and a plain cancel_work_sync() would be
-re-armed behind the drain.
+Kill each incomplete queue, then flush every queue still owned by the
+dying rhashtable. HASH_DEAD identifies that ownership, while complete
+queues without it are already owned by another destroy path and must be
+left alone. Releasing a timer reference removed by inet_frag_kill() is
+deferred to inet_frag_putn(), after the queue lock is dropped.
 
-Use disable_work_sync(): schedule_work() on a work with a non-zero
-disable count is dropped by clear_pending_if_disabled() before
-__queue_work() is reached.
+KASAN report:
 
-Move idpf_init_dim() to idpf_vport_intr_alloc() so the works are
-initialised on every path that can reach the drain -- the three
-"goto intr_deinit" sites between idpf_vport_intr_init() and
-idpf_vport_intr_ena() get there without the enable side having run.
-Nothing re-enables them: rsrc->q_vectors is freed on every exit from
-idpf_vport_open() and on every idpf_vport_stop(), so the count dies with
-the object.
+  BUG: KASAN: slab-out-of-bounds in ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  Write of size 1 at addr ff110001039c6e00 by task poc/771
+  Call Trace:
+  ? ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479 (discriminator 5))
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
+  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  The buggy address belongs to the object at ff110001039c6b40
+  which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 0 bytes to the right of
+  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
 
-It is a race, not a deterministic failure -- net_dim() only schedules
-once DIM_NEVENTS events have accumulated and the profile index changes.
-A KASAN ifup/ifdown loop under load is the way to see it.
+  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  Read of size 1 at addr ff110001039c6e08 by task poc/771
+  Call Trace:
+  ? ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
+  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  packet_sendmsg (net/packet/af_packet.c:2959 net/packet/af_packet.c:3053 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  The buggy address belongs to the object at ff110001039c6b40
+  which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 8 bytes to the right of
+  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
 
-Fixes: c2d548cad150 ("idpf: add TX splitq napi poll support")
-Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
-Cc: <stable@vger.kernel.org> # see patch description, needs adjustments for <= 6.9
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Cc: stable@vger.kernel.org
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Tested-by: Weiming Shi <shiweiming@moonshot.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Link: https://patch.msgid.link/20260904162800.1095662-1-yilinzhang@moonshot.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c |   24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ net/ipv4/inet_fragment.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -4150,6 +4150,26 @@ static void idpf_vport_intr_ena_irq_all(
- }
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -235,6 +235,8 @@ void fqdir_pre_exit(struct fqdir *fqdir)
+ 	rhashtable_walk_start(&hti);
  
- /**
-+ * idpf_vport_intr_dis_dim_all - Disable DIM work for all q_vectors
-+ * @rsrc: pointer to queue and vector resources
-+ *
-+ * The DIM works are embedded in the q_vector array that
-+ * idpf_vport_intr_rel() frees, and the poll arms them after
-+ * napi_complete_done() has already cleared NAPI_STATE_SCHED.  Disable
-+ * rather than just cancel, so that a poll tail still running past
-+ * napi_disable() cannot queue them again behind the drain.
-+ */
-+static void idpf_vport_intr_dis_dim_all(struct idpf_q_vec_rsrc *rsrc)
-+{
-+	for (u16 v_idx = 0; v_idx < rsrc->num_q_vectors; v_idx++) {
-+		struct idpf_q_vector *q_vector = &rsrc->q_vectors[v_idx];
+ 	while ((fq = rhashtable_walk_next(&hti))) {
++		int refs = 0;
 +
-+		disable_work_sync(&q_vector->tx_dim.work);
-+		disable_work_sync(&q_vector->rx_dim.work);
-+	}
-+}
+ 		if (IS_ERR(fq)) {
+ 			if (PTR_ERR(fq) != -EAGAIN)
+ 				break;
+@@ -242,8 +244,12 @@ void fqdir_pre_exit(struct fqdir *fqdir)
+ 		}
+ 		spin_lock_bh(&fq->lock);
+ 		if (!(fq->flags & INET_FRAG_COMPLETE))
++			inet_frag_kill(fq, &refs);
 +
-+/**
-  * idpf_vport_intr_deinit - Release all vector associations for the vport
-  * @vport: main vport structure
-  * @rsrc: pointer to queue and vector resources
-@@ -4159,6 +4179,7 @@ void idpf_vport_intr_deinit(struct idpf_
- {
- 	idpf_vport_intr_dis_irq_all(rsrc);
- 	idpf_vport_intr_napi_dis_all(rsrc);
-+	idpf_vport_intr_dis_dim_all(rsrc);
- 	idpf_vport_intr_napi_del_all(rsrc);
- 	idpf_vport_intr_rel_irq(vport, rsrc);
- }
-@@ -4239,7 +4260,6 @@ static void idpf_vport_intr_napi_ena_all
- 	for (u16 q_idx = 0; q_idx < rsrc->num_q_vectors; q_idx++) {
- 		struct idpf_q_vector *q_vector = &rsrc->q_vectors[q_idx];
- 
--		idpf_init_dim(q_vector);
- 		napi_enable(&q_vector->napi);
++		if (fq->flags & INET_FRAG_HASH_DEAD)
+ 			inet_frag_queue_flush(fq, 0);
+ 		spin_unlock_bh(&fq->lock);
++		inet_frag_putn(fq, refs);
  	}
- }
-@@ -4582,6 +4602,8 @@ int idpf_vport_intr_alloc(struct idpf_vp
- 		q_coal = &user_config->q_coalesce[v_idx];
- 		q_vector->vport = vport;
  
-+		idpf_init_dim(q_vector);
-+
- 		q_vector->tx_itr_value = q_coal->tx_coalesce_usecs;
- 		q_vector->tx_intr_mode = q_coal->tx_intr_mode;
- 		q_vector->tx_itr_idx = VIRTCHNL2_ITR_IDX_1;
+ 	rhashtable_walk_stop(&hti);
 
 
