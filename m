@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC513D75AA;
-	Thu, 17 Sep 2026 17:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5101D3B7B7F;
+	Thu, 17 Sep 2026 17:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667544; cv=none; b=i3hZHX0PY2/EsivuVk+CfG1zHn86kAX2ZYdP3nmUzebz5OCt8gqS2xcvt5wRY8yTui2MRbSOoI2wh8g9wJSmKpUGKGwFhfQKuQ9Sl6zWicylVYuoC6HvXS/MxAE5whqh5mgvYY5YbJut43HxiLgR86ufd0KtCKhPfF0bNlv0Mck=
+	t=1789667549; cv=none; b=lkN21Ob7h6EcMoH0WMz+FGurRM7foalxNfxDKNB8IMQb0tnzd0UO/yQrVzsK/OFtoKLZBzcMqoLvFJhlaW9YecFfNMDHIH8w8gnhg5WYh//X3Bng2EsbR5SjY04+0NzcxfaIdvCWzujuZLGOB/SK1q3SMSg0ToIfiQWoV0Bto6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667544; c=relaxed/simple;
-	bh=zMA5q8Jnk+pIB5DvTwchSmOtJqymoqlbJPBI6mZFtlI=;
+	s=arc-20240116; t=1789667549; c=relaxed/simple;
+	bh=WjBB0yH3oF/SPUn9NXdfPR5QPCr9rARjvydsW4O8i5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AMg+wIRO8C2DK8cD0A21Xi1Ft9M46ujjpIGyNHW+8XgtRikSJbj9TWXEKNcsAoNz9LURLS8p+9jK0bZ2Nl68ul+KDx2kMiGgdEqaWP2Jr9olBNM0flh49ouX6NzzfC1W4mLNyXm/4VpvXPkupcUNExC5063AzYsr+vNXFAx8cag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtngCUxc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rucvtb3em6Bv3Arc61lz1LysSOYawczG3pFCdT1WxVO7qQTGmHOZ91qvgMzHj+cYuSpcrXEkCyXxDdUJdgdU34Od1kHEjdjnVLRbMgPFORDPZbFdzBLzZNf1dSRVg5qIVo0j39Owr0w0QW1i2wRWTx+ORpeSSe1WV3RiYm90qzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijrcsNOD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtngCUxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D06C1F00893;
-	Thu, 17 Sep 2026 17:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijrcsNOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012EA1F000FF;
+	Thu, 17 Sep 2026 17:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667542;
-	bh=CtvFH4Say14HUEQ3/x/j+ajcashHZoYKXv0HSRdMYwo=;
+	s=korg; t=1789667546;
+	bh=7i/T0VitiZwHgMvcBQCv1NFIzeK1KEHN1mFTZw2hn+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vtngCUxcCtahzEyffaa4qv0wRSq+MANnaV77aVTAjDNZnrmSA3M8qgHE4D/MrlaGt
-	 ghDzxx7O6dolXPpvjgdlTCifuJTcpMFXFO/7bBOZL9sIoqm8k13yOR7UPowGWk/5qy
-	 h2HvQ5sHISDXmHoOJ3YB9d7dVXpDkrPXfyDnAiog=
+	b=ijrcsNODsGQ9AwtqzET48kMD8F1YyJBzvcDnvLVyffjrNavScLH4nR7/1xlKM7GFx
+	 6uGGngKIjNBlmsJ1A2O5wybzlFD1J2QcQIZFjoK/xsWiZCuKnisz0JFfhGLPiNY9vp
+	 XEUyiMyTn5ztaKhfcp/zvW/G77eaaf8+yh98lfgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0090/1102] drm/mediatek: dsi: Add compatible for mt8167-dsi
-Date: Thu, 17 Sep 2026 16:00:33 +0100
-Message-ID: <20260917151541.743716992@linuxfoundation.org>
+Subject: [PATCH 6.12 0091/1102] iomap: dont make REQ_POLLED imply REQ_NOWAIT
+Date: Thu, 17 Sep 2026 16:00:34 +0100
+Message-ID: <20260917151541.770349360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,38 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 6428eaf0c1f39815b08d57054895c1934d5782f3 ]
+[ Upstream commit 47f28b493daf9049307494689e515205f1c377af ]
 
-The mt8167 DSI controller is fully compatible with the one found in
-mt2701. Unfortunately the device tree has a dedicated compatible for
-mt8167 since 2022 and it cannot be changed with a fallback nor removed at
-this point. The only way to get the device to work is to add the
-compatible to the driver.
+As described in commit 2bc057692599 ("block: don't make REQ_POLLED imply
+REQ_NOWAIT"), which fixed the same issue for the block device node, there
+are valid cases to poll for I/O completion without REQ_NOWAIT.
 
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20260505214541.333657-3-l.scorcia@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Additionally, sing REQ_NOWAIT for file system writes is currently not
+supported as file systems writes are not idempotent and would need a
+retry of just the bio and not the entire operation to be fully supported.
+
+Switch iomap to set REQ_POLLED and remove the now unused bio_set_polled
+helper.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260518062917.506483-1-hch@lst.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dsi.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/iomap/direct-io.c |  2 +-
+ include/linux/bio.h  | 14 --------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-index 88f3dfeb4731d..96dcfbf6ba5a9 100644
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -1294,6 +1294,7 @@ static const struct mtk_dsi_driver_data mt8188_dsi_driver_data = {
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 5ccf215f932db..c81cfcbb1bb6d 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -77,7 +77,7 @@ static void iomap_dio_submit_bio(const struct iomap_iter *iter,
  
- static const struct of_device_id mtk_dsi_of_match[] = {
- 	{ .compatible = "mediatek,mt2701-dsi", .data = &mt2701_dsi_driver_data },
-+	{ .compatible = "mediatek,mt8167-dsi", .data = &mt2701_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8173-dsi", .data = &mt8173_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8183-dsi", .data = &mt8183_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8186-dsi", .data = &mt8186_dsi_driver_data },
+ 	/* Sync dio can't be polled reliably */
+ 	if ((iocb->ki_flags & IOCB_HIPRI) && !is_sync_kiocb(iocb)) {
+-		bio_set_polled(bio, iocb);
++		bio->bi_opf |= REQ_POLLED;
+ 		WRITE_ONCE(iocb->private, bio);
+ 	}
+ 
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index 80ca2fb879504..d4f58a2d15b69 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -661,20 +661,6 @@ static inline bool bioset_initialized(struct bio_set *bs)
+ 	return bs->bio_slab != NULL;
+ }
+ 
+-/*
+- * Mark a bio as polled. Note that for async polled IO, the caller must
+- * expect -EWOULDBLOCK if we cannot allocate a request (or other resources).
+- * We cannot block waiting for requests on polled IO, as those completions
+- * must be found by the caller. This is different than IRQ driven IO, where
+- * it's safe to wait for IO to complete.
+- */
+-static inline void bio_set_polled(struct bio *bio, struct kiocb *kiocb)
+-{
+-	bio->bi_opf |= REQ_POLLED;
+-	if (kiocb->ki_flags & IOCB_NOWAIT)
+-		bio->bi_opf |= REQ_NOWAIT;
+-}
+-
+ static inline void bio_clear_polled(struct bio *bio)
+ {
+ 	bio->bi_opf &= ~REQ_POLLED;
 -- 
 2.53.0
 
