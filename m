@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151E519E18;
-	Thu, 17 Sep 2026 17:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ABD4F392F;
+	Thu, 17 Sep 2026 17:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667170; cv=none; b=HCtuq4w+CKH++kjp9HYDhRwN/B1jVHf5zKWTVTIB7iS5GEPBdqX8b+4hov7RU0zpJkyHRTr9J3qCca0Uwuof6cBLyItOUgLzcUag7MhVKnHzFyIPZzuflR9jWYz5J3F4foEKNLvL1ZOcixD3Ecve2dLCaDfM7XJBnS+9X9S7/hA=
+	t=1789667172; cv=none; b=J7Qmp4CZ0S1t+Hkeh0fY2YZR1CvYkHwQr7GXRRTBAYwB9MQhK17VmubT8ykhu3j97LPKjjdpSfTeZKHe7xwV6djv6sLi+h6G3oo5pdWwg3zhHWjSrArvpiuKOn+XrHa29gK6dKSJrnquJd3hhTgajZ8SlwGr94+8m4ULz27OkEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667170; c=relaxed/simple;
-	bh=LmM1CSEAvkAHy6u/+syi85Xyh/nF9HkOWVIIwAjxjDI=;
+	s=arc-20240116; t=1789667172; c=relaxed/simple;
+	bh=q3VpIYjx/gUhJ78h/fcmhL72c+/CNG8pmY860l2CvCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CbaA7AhnVFtsjWY+YQ2/lhj1Cqlf75FViuN+xGL3S84NYNPlCbG/ouTlf1d9FGkEpWNTYYofPB4lWxRfmtvSRvPm9SBQXm37jHfRsiMhH4iG83X3p7OFAbbWpmRTJbWZqWK5jsu54k5uZdV9xUVX+pqBPMX+dpIM95vs4V5c4Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW57ANHr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=W3DqQmLpI1mYWuCPkhVrdw3LtcOjEc4XfeZColv65POa1aHSgU1p4JnZFxMeJWXhCsSLWbqiVKM6DnwQkO20eltgiLYfmd/vafwdMsG7IJmgewAR+3lXw85KYln6hyGSbayDSZ2VhZFBdLdwUbj0/JtArtNvBGLTOVWzZRaBMQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5mNNI1c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW57ANHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1AA1F000FF;
-	Thu, 17 Sep 2026 17:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5mNNI1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424071F000FF;
+	Thu, 17 Sep 2026 17:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667167;
-	bh=w2Prl19yFN0pmm0VYU3dwVOil9PzytnjxcwYjf/J+V4=;
+	s=korg; t=1789667170;
+	bh=62rE3Fq1tshPLvHp23RW9OtT+GxeExIOD245WIdKafo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wW57ANHrqebHUyWW51K5KqnzmYETx65T8+uDMEqWaiT3VEu/ERZKFSCLwAN0odeaZ
-	 bSlPJhDa5NU+C8lyxxgt2tUeW5SiOOa3BmIsKbGZDoIIiy6S2SfBbDlMLbckv/7XfK
-	 fLKGCVnW3sIvQR9BhwmgrwBLZEoo9HkuqmyQ+91E=
+	b=e5mNNI1csQyo2rTTVC/gEprNVloC+I64GgEIQr+wY7eZpfjsSu1IpRCVzGPxUp4UD
+	 aNTCqzwm1XNUAtRhCkWggCHiRSeW48tY5RRF1y76UT9L2PzMeGZtwu8ALtIHxTR0F0
+	 ZSRJqtFwLKVQ23pcU9YCnvgwusNkJGd7fOr/OEA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1228/1250] landlock: Clarify documentation for the IOCTL access right
-Date: Thu, 17 Sep 2026 16:17:03 +0100
-Message-ID: <20260917151625.574138085@linuxfoundation.org>
+Subject: [PATCH 6.18 1229/1250] landlock: Add access_mask_subset() helper
+Date: Thu, 17 Sep 2026 16:17:04 +0100
+Message-ID: <20260917151625.601328484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,84 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Günther Noack <gnoack3000@gmail.com>
 
-[ Upstream commit 6abbb8703aeeb645a681ab6ad155e0b450413787 ]
+[ Upstream commit 45f2a2926b2187d1b08132d2728af50785b007a7 ]
 
-Move the description of the LANDLOCK_ACCESS_FS_IOCTL_DEV access right
-together with the file access rights.
+This helper function checks whether an access_mask_t has a subset of the
+bits enabled than another one.  This expresses the intent a bit smoother
+in the code and does not cost us anything when it gets inlined.
 
-This group of access rights applies to files (in this case device
-files), and they can be added to file or directory inodes using
-landlock_add_rule(2).  The check for that works the same for all file
-access rights, including LANDLOCK_ACCESS_FS_IOCTL_DEV.
-
-Invoking ioctl(2) on directory FDs can not currently be restricted
-with Landlock.  Having it grouped separately in the documentation is a
-remnant from earlier revisions of the LANDLOCK_ACCESS_FS_IOCTL_DEV
-patch set.
-
-Link: https://lore.kernel.org/all/20260108.Thaex5ruach2@digikod.net/
 Signed-off-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20260111175203.6545-2-gnoack3000@gmail.com
+Link: https://lore.kernel.org/r/20260206151154.97915-4-gnoack3000@gmail.com
+[mic: Improve subject]
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Stable-dep-of: 2c6dc7925382 ("landlock: Fix use-after-free of the source's parent directory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/landlock.h |   37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ security/landlock/access.h |    7 +++++++
+ security/landlock/fs.c     |    4 ++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/include/uapi/linux/landlock.h
-+++ b/include/uapi/linux/landlock.h
-@@ -216,6 +216,23 @@ struct landlock_net_port_attr {
-  *   :manpage:`ftruncate(2)`, :manpage:`creat(2)`, or :manpage:`open(2)` with
-  *   ``O_TRUNC``.  This access right is available since the third version of the
-  *   Landlock ABI.
-+ * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
-+ *   character or block device.
-+ *
-+ *   This access right applies to all `ioctl(2)` commands implemented by device
-+ *   drivers.  However, the following common IOCTL commands continue to be
-+ *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
-+ *
-+ *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
-+ *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
-+ *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
-+ *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
-+ *   * Some IOCTL commands which do not make sense when used with devices, but
-+ *     whose implementations are safe and return the right error codes
-+ *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
-+ *
-+ *   This access right is available since the fifth version of the Landlock
-+ *   ABI.
-  *
-  * Whether an opened file can be truncated with :manpage:`ftruncate(2)` or used
-  * with `ioctl(2)` is determined during :manpage:`open(2)`, in the same way as
-@@ -276,26 +293,6 @@ struct landlock_net_port_attr {
-  *   If multiple requirements are not met, the ``EACCES`` error code takes
-  *   precedence over ``EXDEV``.
-  *
-- * The following access right applies both to files and directories:
-- *
-- * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
-- *   character or block device.
-- *
-- *   This access right applies to all `ioctl(2)` commands implemented by device
-- *   drivers.  However, the following common IOCTL commands continue to be
-- *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
-- *
-- *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
-- *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
-- *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
-- *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
-- *   * Some IOCTL commands which do not make sense when used with devices, but
-- *     whose implementations are safe and return the right error codes
-- *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
-- *
-- *   This access right is available since the fifth version of the Landlock
-- *   ABI.
-- *
-  * .. warning::
-  *
-  *   It is currently not possible to restrict some file-related actions
+--- a/security/landlock/access.h
++++ b/security/landlock/access.h
+@@ -97,4 +97,11 @@ landlock_upgrade_handled_access_masks(st
+ 	return access_masks;
+ }
+ 
++/* Checks the subset relation between access masks. */
++static inline bool access_mask_subset(access_mask_t subset,
++				      access_mask_t superset)
++{
++	return (subset | superset) == superset;
++}
++
+ #endif /* _SECURITY_LANDLOCK_ACCESS_H */
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -332,7 +332,7 @@ int landlock_append_fs_rule(struct landl
+ 
+ 	/* Files only get access rights that make sense. */
+ 	if (!d_is_dir(path->dentry) &&
+-	    (access_rights | ACCESS_FILE) != ACCESS_FILE)
++	    !access_mask_subset(access_rights, ACCESS_FILE))
+ 		return -EINVAL;
+ 	if (WARN_ON_ONCE(ruleset->num_layers != 1))
+ 		return -EINVAL;
+@@ -1717,7 +1717,7 @@ static int hook_file_open(struct file *c
+ 		ARRAY_SIZE(layer_masks));
+ #endif /* CONFIG_AUDIT */
+ 
+-	if ((open_access_request & allowed_access) == open_access_request)
++	if (access_mask_subset(open_access_request, allowed_access))
+ 		return 0;
+ 
+ 	/* Sets access to reflect the actual request. */
 
 
