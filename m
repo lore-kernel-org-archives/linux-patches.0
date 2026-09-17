@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A904B44C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DDE55C31F;
 	Thu, 17 Sep 2026 15:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659966; cv=none; b=Dkd3HXzB4sUDCay5lCuSDRH0Zub4unbahv2ueN9neV2sw5hhRqxJZGj7o1jCKHwcCdeqKNwV1c8h7rvR2GhWy9Or004pg7x9wX2hv6AMbYs9JI8c0GJ84vrfKyaX5fgClELU63x1x6V9Ok4jytjl/SecTC3VQb5QCdm4Dq5L7Hs=
+	t=1789659966; cv=none; b=Kw+WPnhkERR21BQPJ8mJW6BsOmyM1qG6Sm69lco9cSCesqHJTlBk4giS6NyA3lj1aM+1F2dz42DtxRkp8TP0h9yi+MbIADqVR2HWuv5GvYT2yhWGVcNFrVB7+A69pOMn18cTOmy0Nt6TxROMDnVEwQIifYUH5tpdWdSZW143WzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659966; c=relaxed/simple;
-	bh=M9jBDxA/leyu1vpcxazMS9kKu5wF4BCKV0phHF/Kgs8=;
+	bh=bKxGI6rsEGGJvdugeUA0UTmHfJYPhbsoUmWxjbt+ne4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4EfEmBurYLiFYFyyZrraNaofHzB2mQorEYpnVq4NBhn7C75yKqkOiDMLXBT1EwubewUrO9fi+ZM0uvSNIS6aV9596Eb2nLV+sFYKsKUw+w4wbsYMe3LZKRbwB/07hbRgk2AFeHNnXYAJ+UEkoz0SHpdIGsZ0OSbCKbLnSE/D7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNc0WjNw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0D37zBM4KarWgC8Gkd+zthCX74X/KPYApsSl7We0J2tgfraHSH2gYiJcLCabYXHw+i0w1TwOSkGMfnf8rmWhiVCLyYqlDcvtyk2qZAAu2Hg/MeNaAgbfLJcowi6DnLhdvY9hCgK5MHcvDpcyjyBLFhfQqPv14daJmzAfBwoIJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlKEYvA7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNc0WjNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6131F000FF;
-	Thu, 17 Sep 2026 15:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlKEYvA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0FA1F00898;
+	Thu, 17 Sep 2026 15:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659958;
-	bh=RpeDQfEgdZQ/oAVsg573R8qZsXzySHgEUekKjdPOgj4=;
+	s=korg; t=1789659961;
+	bh=+WMmmGN45JcQKQusNKBYCHYN0oWIAl571ZtDssX88FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNc0WjNwGsMtUC+GjfLXN5ccGwTgk6IB0PWTGCw61vqitofEljMbDhSFO63f7GzW9
-	 /HMEU01mdaFkBPLSIm2ZzcVhU2BP3mdiC1xO3CB8T9IUFWyznYDAjr8DlXkPLfg/ZF
-	 BZOi+FW5zgJBltTB0Kf0zXd2tPjwOjFxEPmI1BgI=
+	b=RlKEYvA7c099yLBoas14zhOd+tTddCa3ZtG7XQOVjlJPAxJIGGDZ7+YAmrwW3H+Xn
+	 zzWL+ymXoFXIMI+i08wWJCrOAZvU7rVzP53y7TLMiG4dm4w9KtnQSpWwrQQaykSvcn
+	 2mhB2VRmuYC5VBV5zGdEqp6S9jbjvltz5BQh1pxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 431/733] octeontx2-af: fix PF/CGX debugfs PCI bus lookup
-Date: Thu, 17 Sep 2026 16:12:19 +0100
-Message-ID: <20260917151402.577392652@linuxfoundation.org>
+Subject: [PATCH 7.2 432/733] net: phy: dp83867: handle the active-high LED polarity mode
+Date: Thu, 17 Sep 2026 16:12:20 +0100
+Message-ID: <20260917151402.604308786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,62 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 4f4b743c2d2bbc336cb164d9d3d2ed6956ad8437 ]
+[ Upstream commit 36a45facedd5c8e73bfb2403f8b0dbff05124c9c ]
 
-rvu_dbg_rvu_pf_cgx_map_display() locates each RVU PF PCI device via
-pci_get_domain_bus_and_slot() when printing the PF-to-CGX map. It
-assumed PF0 always sits on PCI bus 1 and derived other PF bus numbers
-as pf + 1, but the AF device can be enumerated on a different bus.
+Commit a274465cc3be ("net: phy: support 'active-high' property for PHY
+LEDs") added PHY_LED_ACTIVE_HIGH and made of_phy_led() set the matching
+bit in the modes mask when a LED node carries the 'active-high'
+property. dp83867 was not part of that series.
 
-Use rvu->pdev->bus->number as the base bus instead, so each PF lookup
-uses pf + start on systems where RVU functions are on contiguous buses
-but do not start at bus 1.
+dp83867_led_polarity_set() only recognizes PHY_LED_ACTIVE_LOW, so
+PHY_LED_ACTIVE_HIGH falls through to the default case and returns -EINVAL.
+of_phy_led() propagates the error, of_phy_leds() drops the LEDs registered
+so far and passes it on, and phy_probe() fails. A device tree marking a
+DP83867 LED as 'active-high', which leds/common.yaml allows and
+ethernet-phy.yaml references for led@N nodes, thus stops the PHY from
+probing.
 
-Fixes: e2fb373038654 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904085114.3385530-1-rkannoth@marvell.com
+Active high is what the function programs when no polarity mode is
+requested at all, so the initial value of polarity already satisfies the
+request and only the case label is missing.
+
+The same series updated mxl-gpy in commit eb89c79c1b8f ("net: phy:
+mxl-gpy: correctly describe LED polarity") and aquantia in
+commit 9d55e68b19f2 ("net: phy: aquantia: correctly describe LED
+polarity override").
+
+Fixes: a274465cc3be ("net: phy: support 'active-high' property for PHY LEDs")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://patch.msgid.link/20260903022839.4006614-1-donggeunyoo.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c    | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83867.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index 22ee996768796..904374baae6f3 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -829,19 +829,25 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
- 	int pf, domain, blkid;
- 	u8 cgx_id, lmac_id;
- 	u16 pcifunc;
-+	u8 start;
- 
--	domain = 2;
-+	domain = pci_domain_nr(rvu->pdev->bus);
- 	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
- 	/* There can be no CGX devices at all */
- 	if (!mac_ops)
- 		return 0;
- 	seq_printf(filp, "PCI dev\t\tRVU PF Func\tNIX block\t%s\tLMAC\tCHAN\n",
- 		   mac_ops->name);
-+
-+	/* All the PF devices are on contiguous PCI bus numbers, but the PF0(AF)
-+	 * may not start from 1 always. Hence get domain and bus from PCI device.
-+	 */
-+	start = rvu->pdev->bus->number;
- 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
- 		if (!is_pf_cgxmapped(rvu, pf))
- 			continue;
- 
--		pdev =  pci_get_domain_bus_and_slot(domain, pf + 1, 0);
-+		pdev =  pci_get_domain_bus_and_slot(domain, pf + start, 0);
- 		if (!pdev)
- 			continue;
- 
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 88255e92b4cdb..61a941aa02d94 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -1150,6 +1150,9 @@ static int dp83867_led_polarity_set(struct phy_device *phydev, int index,
+ 		case PHY_LED_ACTIVE_LOW:
+ 			polarity = 0;
+ 			break;
++		case PHY_LED_ACTIVE_HIGH:
++			polarity = DP83867_LED_POLARITY(index);
++			break;
+ 		default:
+ 			return -EINVAL;
+ 		}
 -- 
 2.53.0
 
