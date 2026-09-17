@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BAA3370EC;
-	Thu, 17 Sep 2026 15:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF45C58FD22;
+	Thu, 17 Sep 2026 15:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660625; cv=none; b=NBC3fq0RqnedQNf/3YF9Lqd50gY9/fXicqRonU2JP109SWJsprlhb5kin6FeEZr7/38ZLV20o4PtYRLi97izrX4JWQCSggaSGaUmeHV7TadZ4qPl2NByMgFaqUzwNa9wP5CN9nXimbyeqPFVTBUroDa3D6v7+sMadu1VeFi+W0s=
+	t=1789660628; cv=none; b=MY3sFeXXDK3cXZhnIAzxPH7FhzLry9LBnRVp73Z1ANbF2q3AL6MoYjURb85XEVpayGLX2q7tQDy8pUZQv4Y7vysgApCCha6vtLTzDCsWwon9GGLBUpzlN4V6oaMIMlhBmrj9XP8FHiogc2amGNCV1CARLRRMXRPWLnBcoEokAnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660625; c=relaxed/simple;
-	bh=NpuEetm6/w/uefQAKbOVCTh2UV7H3vQ+oDWD5zm2WsE=;
+	s=arc-20240116; t=1789660628; c=relaxed/simple;
+	bh=MomMuOmhL4ytXLLOl6cnvdwXQxXArDmyFGzChxqBJl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ox80bo5LnKkAEMgZUnQt4RtIgQSZaL4rnNDAaTA+Q1iBihLE5x2ojfDB1m9sKWVAVUuwk4UNl4lpDb5Xfkwh/d+nqI6c7hwt6cwNjJ7NT+DBgitrB/brVknTlKeHuUFmA7FbdAKlO522OuxRX5fmx3SWFWj2atseOBJsPRODeCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtmB2/hG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFR5lY/DLaT2l5hz7OUVp5Yb/zg78pp5rk6rxAefoQZk54qfnq12mqbWO/HpAixxZB9IPSnkd8zT4ENAnLROc+gSx0aADE96C0vFrp9dyUecee1SzcaXVUOwg/aGPR15XOafnm889ayvoM6zy0TCRHSymzKGv0x4FwOHskQqbas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jShymczD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtmB2/hG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D151F00893;
-	Thu, 17 Sep 2026 15:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jShymczD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451A61F00893;
+	Thu, 17 Sep 2026 15:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660623;
-	bh=Xp27P+yai94Zenx1KCWC43o1gZ7gWqd/71L1A8uYlmE=;
+	s=korg; t=1789660626;
+	bh=YiJ77G/v0fOsuIAtzxMVhaUmhKDCveADzEaRNJKYIC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtmB2/hG35ugMBfRUnj5m7aFgup8dLKx6RygGhcjdsBPKKDPYj+nBeHrvOcbeehYk
-	 0X4i/2nv5sXVLuFKXZVtbQz/4nyN2VrfxARtTSByEdQ8EKjUi1vAkr3BohMVv5mNeX
-	 DK8OsKBoqHYAOSUIB+RBJGvDT1YF87+t8uUgz0xg=
+	b=jShymczDqUIBvuU+BYmSukx1i6spdTuFNgE2bs8a+clTI6x+G/SFMDer+Y0xdNkIn
+	 TpTKfZf9bOkVfijmRA7KcAR6MNkY9L0toaA8TJW1SQTamLiPCeMXAmYj0BMF5MUT1B
+	 0gv7/ptunkOS3tvQ2iHR+MkQ7jFJ0WU0c+W9shzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 653/733] xfs: log the tempip after we convert it to extents format
-Date: Thu, 17 Sep 2026 16:16:01 +0100
-Message-ID: <20260917151408.910176991@linuxfoundation.org>
+Subject: [PATCH 7.2 654/733] xfs: lock the healthmon when inserting unmount event
+Date: Thu, 17 Sep 2026 16:16:02 +0100
+Message-ID: <20260917151408.943471309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit ed799148e0d63ef41ab60ce98963a1dc423090d3 upstream.
+commit 7538ba528cfd6f176076186c1b1678fdca1c197b upstream.
 
-LOLLM points out that xrep_symlink_swap_prep converts sc->tempip to an
-extents format file prior to the atomic swap, but incorrectly logs
-sc->ip immediately afterwards.  Fix that, and the other problem that
-we're supposed to tell xfs_trans_log_inode what to log and don't.
+LOLLM complains that xfs_healthmon_unmount does an unlocked insert of
+the unmount event into the health monitor's event list.  Fix that.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 2651923d8d8db0 ("xfs: online repair of symbolic links")
+Cc: stable@vger.kernel.org # v7.0
+Fixes: 25ca57fa3624ca ("xfs: convey filesystem unmount events to the health monitor")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/symlink_repair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_healthmon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/xfs/scrub/symlink_repair.c
-+++ b/fs/xfs/scrub/symlink_repair.c
-@@ -291,7 +291,7 @@ xrep_symlink_swap_prep(
- 		if (error)
- 			return error;
+diff --git a/fs/xfs/xfs_healthmon.c b/fs/xfs/xfs_healthmon.c
+index 4521ffdab9f1..3ae5f4496ad1 100644
+--- a/fs/xfs/xfs_healthmon.c
++++ b/fs/xfs/xfs_healthmon.c
+@@ -272,6 +272,8 @@ __xfs_healthmon_insert(
+ {
+ 	struct timespec64		now;
  
--		xfs_trans_log_inode(sc->tp, sc->ip, 0);
-+		xfs_trans_log_inode(sc->tp, sc->tempip, logflags);
++	lockdep_assert_held(&hm->lock);
++
+ 	ktime_get_coarse_real_ts64(&now);
+ 	event->time_ns = (now.tv_sec * NSEC_PER_SEC) + now.tv_nsec;
  
- 		error = xfs_defer_finish(&sc->tp);
- 		if (error)
+@@ -294,6 +296,8 @@ __xfs_healthmon_push(
+ {
+ 	struct timespec64		now;
+ 
++	lockdep_assert_held(&hm->lock);
++
+ 	ktime_get_coarse_real_ts64(&now);
+ 	event->time_ns = (now.tv_sec * NSEC_PER_SEC) + now.tv_nsec;
+ 
+@@ -415,8 +419,10 @@ xfs_healthmon_unmount(
+ 	 * There's nothing actionable for userspace after an unmount.  Once
+ 	 * we've inserted the unmount event, hm no longer owns that event.
+ 	 */
++	mutex_lock(&hm->lock);
+ 	__xfs_healthmon_insert(hm, hm->unmount_event);
+ 	hm->unmount_event = NULL;
++	mutex_unlock(&hm->lock);
+ 
+ 	xfs_healthmon_detach(hm);
+ 	xfs_healthmon_put(hm);
+-- 
+2.55.0
+
 
 
