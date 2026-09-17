@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272FA4848B7;
-	Thu, 17 Sep 2026 15:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE154D4881;
+	Thu, 17 Sep 2026 15:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659694; cv=none; b=G6knYdhm4tAaJHHh7yrYoxV8USFFe/NkexW/oQrM8bO7SnKB3dv6t8wZtinSu/p2wDWjePdh/WZzEBISkkfuYR9i40uEmRr6yWApk0IgHhprJKO3pyL5oXfj7KDquzvNlEFmpGfuzBO+mqdQR6gQfoU2FP6JcjroI0ucgh2cTfo=
+	t=1789659696; cv=none; b=FtSBOgZIcV4o1G+r0jVxwJRVv2EdhX1bbg3SxP88yXJ2k25d8liffHKLzB1Ty4deZyzcs5mcTbZkhGmAni954zAjjHnSdVZlSCnn71Zg7/DyBOCEJHfqSMwZO28mg4Knui5l1WMJhOFmqCeXH/STLd65EfqxfPT3PZJme3l1KqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659694; c=relaxed/simple;
-	bh=OISFBBld0QQhixhSp+XL/aQbuKMyFEtyhohgyj1KSPw=;
+	s=arc-20240116; t=1789659696; c=relaxed/simple;
+	bh=FAm0jqkG2WjJmEbffgQ5exbxEtW2V6+B9DbRSKwLXrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWbWqFPomrZfE4iuxoTUJrSACxIZsYTmY9mMWJ3BhZBJmB7XLzabxLKGYhOHJR5q5qk80vkRt93Hk3ZzufMtzW7jPpOP1WUjRpHIZTjW4JHRA1sOwYi1RscxTVyiEiSPv5yzDZSHbjyUZv/iZPI13d1Ra9kKVnMrsQvQ4JRBF6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+NtlKNS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dedU9YtMeOPWTVFtHiGE/CFSeiDmSr4PXAmbzCyePqpPIwR9Yg3CEyik4ZBHX1LxB0PCOtMlea1S+8Zn1Oeve/Dg5aUL38Vht5TAD48zGkolDt6xY8smlPy5E4oYKLqZUa13dC5L5ODxQdrqNAXP2ow5Bse9v4FZbBlGJuSV+0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq4Q1Iri; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+NtlKNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AE81F00893;
-	Thu, 17 Sep 2026 15:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq4Q1Iri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB101F00899;
+	Thu, 17 Sep 2026 15:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659682;
-	bh=dWASDiOAqg++JNHURGwilICiD3N7wFB+topk6u0zRoE=;
+	s=korg; t=1789659687;
+	bh=VJXJxNy4e4XpIXexgaW8tKAkGUK5Te7qguoXxbcOsw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+NtlKNS7pfR+Nfizv/kjOY1MdkdZ39nguSUYTr8ABeZabua0qCS034Fv3HgCru0f
-	 PC6lctXudW6+Iax32lClp6xf/Y9GFyME1mxvwZ7G7i4Wydfernxln4QsRDbEr4cI7F
-	 PvY38ntwUAeT8Z1JOInnote1Z4m+sMnfJxYP0/g8=
+	b=rq4Q1IrigOxNjAE02c6qvbHdJe4TTkrObBDTdtfe/jX4/stfs/gir0yCM9J9/glpP
+	 n4n0rY0kFuvpUA495J2+FTaekq87GiUVXJduHvIydbjMrpTrChbk/u/TqKgPMbeO+B
+	 lDv/kHWNlqkHXjxd3WiGwrC7PDpkrELWbuSr/cEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Graf <graf@amazon.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 339/733] ASoC: mt6351: Publish the OF module alias
-Date: Thu, 17 Sep 2026 16:10:47 +0100
-Message-ID: <20260917151359.988282675@linuxfoundation.org>
+Subject: [PATCH 7.2 341/733] virtio_ring: fix stale descriptor flags after a failed packed add
+Date: Thu, 17 Sep 2026 16:10:49 +0100
+Message-ID: <20260917151400.045313532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,38 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Alexander Graf <graf@amazon.com>
 
-[ Upstream commit 9c3882ec10399c14c59b7e4599d33c4395367c37 ]
+[ Upstream commit 75d276e5bb68778b2916f98a2bc30f142ebadc64 ]
 
-The MT6351 codec platform driver uses mt6351_of_match to bind devices
-with compatible mediatek,mt6351-sound. The codec can be a separate
-module, but the OF table is not exported to module alias metadata.
+In a packed ring the AVAIL and USED bits sit in the descriptor itself,
+so writing them makes that descriptor available. Those bit combinations
+flip meaning on every round of the ring, tracked by a wrap counter, so
+invalidating or validating a descriptor means inverting both bits.
 
-Publish the existing table without changing codec matching, register
-access or the machine-driver configuration.
+Commit 1ce9e6055fa0 ("virtio_ring: introduce packed ring support") has
+virtqueue_add_packed() make every descriptor of a chain available as it
+maps the chain, and write the head last. The device consumes the ring in
+order and stops at a head that is not available yet, so it never reaches
+the rest.
 
-Fixes: a74d51ba0e17 ("ASoC: add mt6351 codec driver")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905133210.63803-1-hppiscas@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+When vring_map_one_sg() fails partway, unmap_release unmaps the segments
+and restores avail_used_flags, but the descriptors it wrote to in the
+ring stay marked with AVAIL and USED bits. The head is now the only
+entry that keeps the device from consuming these stale entries.
+
+For example, the ring would look like this now.
+
+  Z - pre-previous command
+  A - previous command
+  B - aborted command
+  C - current command
+
+  [A1 DONE] [A2 DONE] <C1 EMPTY> [B2] [B3] [Z1 DONE]
+
+When the driver now attempts to issue the C command, the next add starts
+at the same head as B. If C spans less descriptors than B, there is no
+end marker because AVAIL and USED bits were still in place. And that
+means the device will start interpreting these stale entries (B2/B3) as
+another command entry, which then blocks the queue.
+
+This effect typically happens in swiotlb configurations under memory
+pressure, because vring_map_one_sg() can then fail with larger I/O
+requests which then leads to command abortions.
+
+There are broadly 2 ways to avoid leaving those flags behind:
+
+  1) Defer those flags too until the chain is complete.
+  2) Rewrite those flags for the previous wrap counter.
+
+Implement the second option in both packed add paths. The first option
+traverses the chain a second time on every successful add. The second
+option invalidates all added descriptors when any add fails.
+
+With this patch applied, a packed virtqueue keeps completing requests
+after a failed add.
+
+Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
+Fixes: f6a15d854986 ("virtio_ring: add in order support")
+Assisted-by: Kiro:claude-opus-5 checkpatch sparse
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260817223229.28954-1-graf@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6351.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/virtio/virtio_ring.c | 38 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6351.c b/sound/soc/codecs/mt6351.c
-index 1768c249650d8..3be0491a2588c 100644
---- a/sound/soc/codecs/mt6351.c
-+++ b/sound/soc/codecs/mt6351.c
-@@ -1478,6 +1478,7 @@ static const struct of_device_id mt6351_of_match[] = {
- 	{.compatible = "mediatek,mt6351-sound",},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, mt6351_of_match);
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index b438dc2ce1b80..a9e1ee9536b5b 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -1670,7 +1670,7 @@ static inline int virtqueue_add_packed(struct vring_virtqueue *vq,
+ 	struct scatterlist *sg;
+ 	unsigned int i, n, c, descs_used, err_idx, len;
+ 	__le16 head_flags, flags;
+-	u16 head, id, prev, curr, avail_used_flags;
++	u16 head, id, prev, curr, avail_used_flags, unpub_flags;
+ 	int err;
  
- static struct platform_driver mt6351_codec_driver = {
- 	.driver = {
+ 	START_USE(vq);
+@@ -1798,15 +1798,30 @@ static inline int virtqueue_add_packed(struct vring_virtqueue *vq,
+ 	curr = vq->free_head;
+ 
+ 	vq->packed.avail_used_flags = avail_used_flags;
++	unpub_flags = avail_used_flags ^ (1 << VRING_PACKED_DESC_F_AVAIL |
++					  1 << VRING_PACKED_DESC_F_USED);
+ 
+ 	for (n = 0; n < total_sg; n++) {
+ 		if (i == err_idx)
+ 			break;
++		/*
++		 * The mapping loop made every descriptor but the head
++		 * available. Stamp the previous wrap counter's AVAIL and USED
++		 * bits on those, so that a later and shorter chain at this head
++		 * does not leave one of them available beyond its own last
++		 * descriptor. Marking them used instead would hand
++		 * is_used_desc_packed() a completion we never made.
++		 */
++		if (i != head)
++			desc[i].flags = cpu_to_le16(unpub_flags);
+ 		vring_unmap_extra_packed(vq, &vq->packed.desc_extra[curr]);
+ 		curr = vq->packed.desc_extra[curr].next;
+ 		i++;
+-		if (i >= vq->packed.vring.num)
++		if (i >= vq->packed.vring.num) {
+ 			i = 0;
++			unpub_flags ^= 1 << VRING_PACKED_DESC_F_AVAIL |
++				       1 << VRING_PACKED_DESC_F_USED;
++		}
+ 	}
+ 
+ 	END_USE(vq);
+@@ -1828,7 +1843,7 @@ static inline int virtqueue_add_packed_in_order(struct vring_virtqueue *vq,
+ 	struct scatterlist *sg;
+ 	unsigned int i, n, sg_count, err_idx, total_in_len = 0;
+ 	__le16 head_flags, flags;
+-	u16 head, avail_used_flags;
++	u16 head, avail_used_flags, unpub_flags;
+ 	bool avail_wrap_counter;
+ 	int err;
+ 
+@@ -1955,14 +1970,29 @@ static inline int virtqueue_add_packed_in_order(struct vring_virtqueue *vq,
+ 	i = head;
+ 	vq->packed.avail_used_flags = avail_used_flags;
+ 	vq->packed.avail_wrap_counter = avail_wrap_counter;
++	unpub_flags = avail_used_flags ^ (1 << VRING_PACKED_DESC_F_AVAIL |
++					  1 << VRING_PACKED_DESC_F_USED);
+ 
+ 	for (n = 0; n < total_sg; n++) {
+ 		if (i == err_idx)
+ 			break;
++		/*
++		 * The mapping loop made every descriptor but the head
++		 * available. Stamp the previous wrap counter's AVAIL and USED
++		 * bits on those, so that a later and shorter chain at this head
++		 * does not leave one of them available beyond its own last
++		 * descriptor. Marking them used instead would hand
++		 * is_used_desc_packed() a completion we never made.
++		 */
++		if (i != head)
++			desc[i].flags = cpu_to_le16(unpub_flags);
+ 		vring_unmap_extra_packed(vq, &vq->packed.desc_extra[i]);
+ 		i++;
+-		if (i >= vq->packed.vring.num)
++		if (i >= vq->packed.vring.num) {
+ 			i = 0;
++			unpub_flags ^= 1 << VRING_PACKED_DESC_F_AVAIL |
++				       1 << VRING_PACKED_DESC_F_USED;
++		}
+ 	}
+ 
+ 	END_USE(vq);
 -- 
 2.53.0
 
