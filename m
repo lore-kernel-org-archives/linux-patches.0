@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0CE3A6B66;
-	Thu, 17 Sep 2026 15:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027FB4EB851;
+	Thu, 17 Sep 2026 15:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659094; cv=none; b=mKyrm6SoPyW1zUDqhHxRJBD5KGbzndox41FJDjCRpgSh0NKA5fO92pO/8rKlzBh2/4zQrvAaZZClIjN/YaYbO7MtUHiTXlNXBGU598bpvMH10f5FKNwfItX6jgciJ3WNXRjKfbZ2YAtSQ5ObpV5PFXomXaUcEtoln4JDz2wSEa4=
+	t=1789659096; cv=none; b=ffiqUUEr8wDwGGbhNX92aFOkfxgDIU6eT+qPOcHmsYkn48E/qsChJdL48jr41iJZexE0TFwtfu6ywbAcfxR3PTGTKWDxha+r6zoOuNNqWFpjt4OekKbtvKPhJbBf2SXMqNWY2LVc9B1xHnzmeb4cgowrirCwPnZJizvz/BlEzWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659094; c=relaxed/simple;
-	bh=kRjzSKlPzGcWtz2S+9yHuJdfq2RZP6pUaro/5mcR1s8=;
+	s=arc-20240116; t=1789659096; c=relaxed/simple;
+	bh=FYo7bArUqt9+BPITrfjoeyatpziYYEcfsOYoNbK6oqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzgZSC6T6SIK5dvj2lCZG7AvOwVgDRMn7l/LaValWh9VGpRGznW8D5QxJmjDdSAkXvJj9A065vwx9ZLiRIS6n6FFbq6Y0KLWkUHXLy7FCevVZPagBjWCd1OFNRUXPFPUzy+jAMQ9UGAztnIOYgV4P2Ajc+tJa40zMhHj/GIlI+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQofM1KF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NVut1ssvwughnhd04sOkB/+mKJ0WISN5vHcWQwfWb4cIdXI7Ig/lJA8O213wrmFBLm3yQqRDbWjWEV2Zo1hZPJEZIMToDprzKNLYl15W2X+GklO8XEWmtssgEpvW7mojjCOfqqE76bacqfNWThCX5SELNKDk+TghlHxwjZKRs/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBqE9PJl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQofM1KF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6FB1F000FF;
-	Thu, 17 Sep 2026 15:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBqE9PJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083291F00893;
+	Thu, 17 Sep 2026 15:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659090;
-	bh=Ll/9doTKkJd59A4KRTQQAVv0fp4mmjifi9GCY2NtwkE=;
+	s=korg; t=1789659087;
+	bh=mbFWzaSrh4OO0/Ql9V/pQGLJSMBvykjSxH89fi3PI3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQofM1KFwq1zjlUVadqRrjeDnhFasJrvWSI7IwNlLP/YQBG2eirMzUpbSoA9fSv1L
-	 IR0cs46WxGeIpxD62Hu02u2Xj7ibxhGkcidsHXflNijkszddY5lEY5ZwAj8a1qhVFv
-	 IuRj6f0rY7SIL6xCW3z2Vrty8LrJDVn05b4fshwc=
+	b=GBqE9PJlx7Ibbo+DM8uveq14WEs+iOrgd1K7iwAOGj9fH+6O6I4fj0yadluEXp3on
+	 DQScfF8/bEybMpRpfmqd44fSs9fDV//2NdFyUMlgRtppa/TBGX96BD+ZthT+Sg8Sdn
+	 cWDrdZrbkOtZIyZl13LG21zir3vqx3iWWC+mSN2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 140/733] ipv6: mcast: fix RCU list diversion in ip6_mc_del1_src()
-Date: Thu, 17 Sep 2026 16:07:28 +0100
-Message-ID: <20260917151354.523613086@linuxfoundation.org>
+Subject: [PATCH 7.2 139/733] objtool/klp: Fix checksums for constant pool references
+Date: Thu, 17 Sep 2026 16:07:27 +0100
+Message-ID: <20260917151354.497941245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,64 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 93b49239840b91313adbd77b8b52993eff2d08c1 ]
+[ Upstream commit ac323c9467092479dc1e5bc138c9abbe015b0069 ]
 
-When removing a source filter whose count reaches zero, ip6_mc_del1_src()
-unlinks psf from pmc->mca_sources. If the filter was previously active,
-the code moved psf directly into pmc->mca_tomb by updating psf->sf_next.
+Adding a line of code to __link_shadow_page() with a literal string
+causes a false positive changed function with GCC:
 
-Because pmc->mca_sources is traversed locklessly under RCU (e.g. by
-ipv6_chk_mcast_addr()), mutating psf->sf_next before a grace period
-elapses diverts concurrent readers to the tombstone list. Consequently,
-readers miss remaining active sources in pmc->mca_sources and improperly
-examine deleted tombstone entries.
+  arch/x86/kvm/kvm.ko.o: changed function: kvm_tdp_mmu_map_private_pfn
 
-Fix this by allocating a new tombstone node for pmc->mca_tomb (as done
-in sf_setstate()) and retiring the original psf via kfree_rcu().
+While the patch only touched __link_shadow_page(), the string addition
+triggered a rename of .LC64 -> .LC65 in kvm_tdp_mmu_map_private_pfn()
+even though the underlying referenced constant data didn't change.
 
-Fixes: 4b200e398953 ("mld: convert ip6_sf_list to RCU")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828084531.1826790-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So for .LC* symbols, the suffix is arbitrary but the data isn't.  Add
+the underlying data to the checksum calculation rather than the symbol
+name.
+
+Clang also uses .LC* symbols, but also uses anonymous data.  Both
+compilers put this data in .rodata.cst<num> sections.
+
+Fixes: 0d83da43b1e1 ("objtool/klp: Add --checksum option to generate per-function checksums")
+Link: https://patch.msgid.link/f3a9e74ceebc6475ce94bcfe985401140857814a.1787939301.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tools/objtool/klp-checksum.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 4d2b9377ba2de..54acc9d4cae03 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -2350,14 +2350,18 @@ static int ip6_mc_del1_src(struct ifmcaddr6 *pmc, int sfmode,
- 
- 		if (psf->sf_oldin && !(pmc->mca_flags & MAF_NOREPORT) &&
- 		    !mld_in_v1_mode(idev)) {
--			psf->sf_crcount = idev->mc_qrv;
--			rcu_assign_pointer(psf->sf_next,
--					   mc_dereference(pmc->mca_tomb, idev));
--			rcu_assign_pointer(pmc->mca_tomb, psf);
--			rv = 1;
--		} else {
--			kfree_rcu(psf, rcu);
-+			struct ip6_sf_list *dpsf = kmalloc_obj(*dpsf);
-+
-+			if (dpsf) {
-+				*dpsf = *psf;
-+				dpsf->sf_crcount = idev->mc_qrv;
-+				rcu_assign_pointer(dpsf->sf_next,
-+						   mc_dereference(pmc->mca_tomb, idev));
-+				rcu_assign_pointer(pmc->mca_tomb, dpsf);
-+				rv = 1;
-+			}
- 		}
-+		kfree_rcu(psf, rcu);
- 	}
- 	return rv;
+diff --git a/tools/objtool/klp-checksum.c b/tools/objtool/klp-checksum.c
+index b8e47f28997e9..ebe25f9c5260a 100644
+--- a/tools/objtool/klp-checksum.c
++++ b/tools/objtool/klp-checksum.c
+@@ -54,6 +54,19 @@ static int checksum_debug_init(struct objtool_file *file)
+ 	return 0;
  }
+ 
++/*
++ * Detect a reference to anonymous constant pool data which the compiler places
++ * in .rodata.cst<num> and which either has an .LC<num> symbol associated with
++ * it or (with Clang) no symbol at all.  These are typically initializers for
++ * local function stack data, so they're considered part of the function rather
++ * than data per se.
++ */
++static bool is_anonymous_const_data(struct symbol *sym)
++{
++	return strstarts(sym->sec->name, ".rodata.cst") &&
++	       (is_sec_sym(sym) || strstarts(sym->name, ".LC"));
++}
++
+ static void checksum_update_insn(struct objtool_file *file, struct symbol *func,
+ 				 struct instruction *insn)
+ {
+@@ -129,6 +142,14 @@ static void checksum_update_insn(struct objtool_file *file, struct symbol *func,
+ 		goto alts;
+ 	}
+ 
++	if (is_anonymous_const_data(sym)) {
++		void *cst;
++
++		cst = sym->sec->data->d_buf + sym->offset + offset;
++		__checksum_update_insn(func, insn, cst, sym->sec->sh.sh_entsize);
++		goto alts;
++	}
++
+ 	if (is_sec_sym(sym)) {
+ 		sym = find_symbol_containing(reloc->sym->sec, offset);
+ 		if (!sym)
 -- 
 2.53.0
 
