@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79B04DE702;
-	Thu, 17 Sep 2026 19:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAA44DEC22;
+	Thu, 17 Sep 2026 19:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671837; cv=none; b=U8il72otakkYnxQYv2M7wfVDsfRUIzDc9ckW0cV9SvxXpDFQRQZAsaQsz6NVOvG8B5R6cQYp5LOJz4wilk+L5dtJ1MhclevcJmIpD56oNkQZNRDq+G30dwIom+GSj1xWSqZWyjhRQ9q6/GUxI1iGezeYeQSTNAx6KUd/rtwb+7Q=
+	t=1789671840; cv=none; b=JWYIQML6Y48Dk+pfFTVKOtkXPBB2hLgF6lCJI5g85jtneY6jYOmY0ytA0hZ+yE+zC2hdN/ZX9PrucDMBjFv0w99Xe7CRX88/muUrJSKeRKyu7BOmeeMzsxHa56FcKcK5DsZ6akBuJXyHSPy8FyZ2eQo1ZHya9iha+cT2QKsEs2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671837; c=relaxed/simple;
-	bh=epAIIFUKZdd/jWtoBdrWYliaX2bsqfdY9bvYFlrYzdI=;
+	s=arc-20240116; t=1789671840; c=relaxed/simple;
+	bh=+8oyUbfpOmmlfh7vlrbC4TmVhiSyiIY8Vc6lTJCZ0UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJKvAVKbO9BJlQU9WICmjSdeEgnJg3rQfX1SMH7uH4sUOQJhlpn+W4PWOMoteW845lLV+mY9sv/zFR41bDQ58opeEDsx9Y0wffxvdvqNByTAqtZz8Gicru7Sy0ITkhZ1jECZXKYbrN0BrslnKhiXqRDQwzyOFUfM1/GoAApn3mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ry4Jdsce; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M2xqvaCtxROUgqQTZzBf46ghaT7EcoOs/EKTPGI5mfRPIyBoCKf7yvWShypHn2nRxj5V5vGo1IKjCJSyP9BC7JTPyiKhhsupyyAP4y03QQnBlHxz4GhzS5CM/sZ4J1F+KC6KcoelMHnffID2Z4CFAE8voX2NH/yt5ogx2ZEEzug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBjd6SNv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry4Jdsce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146261F000FF;
-	Thu, 17 Sep 2026 19:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBjd6SNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE6C1F00893;
+	Thu, 17 Sep 2026 19:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671835;
-	bh=uQM2awrCemhseVd3RfnsLQsCBpm5kZ+cYTvNoEihGFk=;
+	s=korg; t=1789671838;
+	bh=XuVxYkSom/vDnEzkd8a7slMN/bgwMHEQ5F9l2kZGwb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ry4Jdsce0UCkRjZm7Zg305dw4N/QM4y561aG3ZEO4jQVVIMthP+unpYCkgnEe6S62
-	 R4iNRRT+GFRCpUM4XgPiRcBdbOmgH7OsC+0YQJpywTFQ3vysV+vMWFei/p8Xdclhu4
-	 pKsLTdSPtnEagmdhTw7lv9DFITJ7NYrq4JxZpn/w=
+	b=rBjd6SNvchYSGrxFGQWseGy9lIr2XRPVVvl5uW2ukTneQwRKxMXGGam2D3tVJbV7B
+	 tGdgPnYT09OpUHciXfmrgGelctQ+YqmUzcgpyKgmIBV8caeIjf8pBWnFerXMXuIrIo
+	 Txg3LNJMp/80RIOqntUKu5GH5234wP8MgKDU6FLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1088/1102] sunrpc: fix use-after-free in __rpc_clnt_handle_event and __rpc_clnt_remove_pipedir
-Date: Thu, 17 Sep 2026 16:17:11 +0100
-Message-ID: <20260917151608.172222835@linuxfoundation.org>
+Subject: [PATCH 6.12 1089/1102] rpcrdma: arm rn_done before publishing the notification
+Date: Thu, 17 Sep 2026 16:17:12 +0100
+Message-ID: <20260917151608.198423025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,85 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 932a8cf6abb2b2f8677b79153a823108d8861fe2 ]
+[ Upstream commit 5b06f706374c37375bdff9d21cc10e61df925a92 ]
 
-Normal client creation goes through rpc_setup_pipedir(), which records
-clnt->pipefs_sb, but the mount-event path in __rpc_clnt_handle_event()
-calls rpc_setup_pipedir_sb() directly and never refreshes that field.
-The umount path also removes the directory without clearing
-clnt->pipefs_sb.
+rpcrdma_rn_register() inserts @rn into rd_xa with xa_alloc() before
+storing the caller's callback in rn->rn_done. The xarray makes @rn
+reachable to rpcrdma_remove_one(), which walks rd_xa and invokes
+rn->rn_done(rn) for every registered notification. A device removal
+that races a fresh registration can therefore observe @rn with
+rn_done still NULL, because the notification objects are zero
+allocated by their owners, and call through a NULL function pointer.
 
-After a late pipefs mount or any remount, rpc_clnt_remove_pipedir()
-compares the current superblock against a stale pipefs_sb pointer and
-skips cleanup, leaving pipefs dentries whose inode private data still
-points at a freed rpc_clnt, leading to a potential use-after-free during
-subsequent rpc_info_open() or rpc_show_info() calls.
+Store rn->rn_done before xa_alloc() publishes @rn. The xarray's
+store-side and load-side ordering then guarantees that any CPU which
+finds @rn in rd_xa also observes the armed callback.
 
-Fix this by properly updating clnt->pipefs_sb upon mount events and
-clearing it during unmount or failure paths.
+rpcrdma_rn_unregister() treats a non-NULL rn_done as the sentinel
+for a completed registration, so the early store must not survive a
+failed registration. Clear rn_done again when xa_alloc() fails.
+Were it left set, the failed-accept cleanup path would call
+rpcrdma_rn_unregister() on an @rn that was never inserted, erasing
+an unrelated rd_xa slot and underflowing rd_kref.
 
-Fixes: bfca5fb4e97c ("SUNRPC: Fix RPC client cleaned up the freed pipefs dentries")
+Fixes: 7e86845a0346 ("rpcrdma: Implement generic device removal")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Link: https://patch.msgid.link/20260601201703.46078-1-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ net/sunrpc/xprtrdma/ib_client.c |   24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -96,7 +96,10 @@ static void rpc_unregister_client(struct
+--- a/net/sunrpc/xprtrdma/ib_client.c
++++ b/net/sunrpc/xprtrdma/ib_client.c
+@@ -52,8 +52,8 @@ static struct rpcrdma_device *rpcrdma_ge
+  * is unregistered first.
+  *
+  * On failure, a negative errno is returned. rn->rn_done is left
+- * NULL on every failure path (it is assigned only after xa_alloc
+- * and kref_get have both succeeded), so the @rn may safely be
++ * NULL on every failure path (it is armed before xa_alloc but
++ * cleared again if xa_alloc fails), so the @rn may safely be
+  * passed to rpcrdma_rn_unregister() without a separate
+  * registered/unregistered flag in the caller.
+  */
+@@ -66,10 +66,21 @@ int rpcrdma_rn_register(struct ib_device
+ 	if (!rd || test_bit(RPCRDMA_RD_F_REMOVING, &rd->rd_flags))
+ 		return -ENETUNREACH;
  
- static void __rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
- {
--	rpc_remove_client_dir(clnt);
-+	if (clnt->pipefs_sb) {
-+		rpc_remove_client_dir(clnt);
-+		clnt->pipefs_sb = NULL;
+-	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0)
++	/*
++	 * Arm rn_done before xa_alloc() publishes @rn: once @rn is
++	 * visible in rd_xa, a concurrent rpcrdma_remove_one() can
++	 * call rn->rn_done(), so the pointer must already be set.
++	 *
++	 * Restore NULL if xa_alloc() fails. rn_done doubles as the
++	 * registration sentinel for rpcrdma_rn_unregister(); a stale
++	 * value would unregister an @rn that was never inserted.
++	 */
++	rn->rn_done = done;
++	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0) {
++		rn->rn_done = NULL;
+ 		return -ENOMEM;
 +	}
+ 	kref_get(&rd->rd_kref);
+-	rn->rn_done = done;
+ 	trace_rpcrdma_client_register(device, rn);
+ 	return 0;
  }
+@@ -102,8 +113,9 @@ void rpcrdma_rn_unregister(struct ib_dev
  
- static void rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
-@@ -177,19 +180,28 @@ static int rpc_clnt_skip_event(struct rp
- }
- 
- static int __rpc_clnt_handle_event(struct rpc_clnt *clnt, unsigned long event,
--				   struct super_block *sb)
-+				    struct super_block *sb)
- {
-+	int err = 0;
-+
- 	switch (event) {
- 	case RPC_PIPEFS_MOUNT:
--		return rpc_setup_pipedir_sb(sb, clnt);
-+		clnt->pipefs_sb = sb;
-+		err = rpc_setup_pipedir_sb(sb, clnt);
-+		if (err)
-+			clnt->pipefs_sb = NULL;
-+		break;
- 	case RPC_PIPEFS_UMOUNT:
--		__rpc_clnt_remove_pipedir(clnt);
-+		if (clnt->pipefs_sb == sb) {
-+			__rpc_clnt_remove_pipedir(clnt);
-+			clnt->pipefs_sb = NULL;
-+		}
- 		break;
- 	default:
- 		printk(KERN_ERR "%s: unknown event: %ld\n", __func__, event);
- 		return -ENOTSUPP;
- 	}
--	return 0;
-+	return err;
- }
- 
- static int __rpc_pipefs_event(struct rpc_clnt *clnt, unsigned long event,
+ 	/*
+ 	 * rn_done is the registration sentinel: rpcrdma_rn_register
+-	 * assigns it last, after xa_alloc and kref_get have both
+-	 * succeeded. A NULL rn_done means this notification was
++	 * leaves it NULL on every failure path, clearing it again if
++	 * xa_alloc fails, so a non-NULL rn_done marks a completed
++	 * registration. A NULL rn_done means this notification was
+ 	 * never registered (or its registration failed) or has
+ 	 * already been unregistered, and the call is a no-op.
+ 	 * Without this guard, rn_index == 0 from a kzalloc'd
 
 
