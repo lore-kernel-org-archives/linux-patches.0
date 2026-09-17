@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F924F3931;
-	Thu, 17 Sep 2026 15:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9F94F3939;
+	Thu, 17 Sep 2026 15:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660196; cv=none; b=YFrQFTCrzFGbn/OJvnoSRvCknukx1iBGa6rH13fBu2/LYFDyMPEwWO7h9IkQH1lX1nmUX4AB04qiFHaSG52L5XdVxjo8Jp8wuATpIICz7GW9/M1Rky2QLoSSHTbF08LI02ngTCYfsl6plSNOxU2cKV2wOV6cRJJoSdJ7lzVJPRQ=
+	t=1789660197; cv=none; b=sjMMmR+VZRyYJRS+BWDE0Z1pQLEY+ceu0P6y9u90BLhoMYix2+BzSleZdqZ85hNQ8ISPFOcLXho7zIB9dCIK34qhhc3o03KG2V25ID7f4a1Kq2BinvmAo1znvsZxiKmlbT4dSFENjqpOicZq5YAlx0F+NHjhEeN9vkCxsLPR/lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660196; c=relaxed/simple;
-	bh=+bWGR56JXb5fHATVDlACzEWGHDUVhMy/JokZzUE0WDM=;
+	s=arc-20240116; t=1789660197; c=relaxed/simple;
+	bh=uGpeiYydOKuXmk5yu9vw5c1/PARTUtl5EFOrjZaw0Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HF2mZj4M1unjJrLeTx6MCr3cjbQDLDVinBHnQqilMvrmZTo1w3enTcS1jFAWj7WRl9Ep6Qxxg65ii2le+OGg3Zs08K3241uLffXitZckWyMraQThuUTWdTozrmBt2T9wKuy5ku7Bc+PjxLLBLgfQmQsrPJd71eClWCH9Jv0lE4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIJUJyKj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jOkrI8LYwAvwcMiUkF10oYGW+3GZ5kvxbSXtRfjMXtRaLo/3omcQfbUDEVhUwdJOeblFHJ0RTIbDc+FZpYlIOsXLmjF39IblLJQH6tRgo97n3RCpAqx4WWOlZVyC40p/VU4LNVDtcLAT7TlPR35Nb6r60cjKLxBXanYAitA56ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLg+2K2y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIJUJyKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7511F00898;
-	Thu, 17 Sep 2026 15:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLg+2K2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B283A1F0089B;
+	Thu, 17 Sep 2026 15:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660188;
-	bh=qIbU6AjefLTiM7wKwIm+eV1dcdQM/z49eIjMNnQ8Fx0=;
+	s=korg; t=1789660191;
+	bh=VGwxxlY/+njpBi/Jg9LkAmuqCYOGbd3J0ovEHGMo+9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rIJUJyKjVOiLCt0sJNA2KZkpQInThtESKNY0/5iyM+BSqePKBTenb2El/tig7RQLA
-	 RtZeFzgEDmFy4ioDQGIXauIMSSyu6d5AW4uqrFJEjg8MWczzfC0U6j1ZLrEkoOtNqv
-	 xBy3QoJZh0GmvlV6D9hU35SOP2glR3Miop0Y7Los=
+	b=dLg+2K2yvmoDXbYpaGtn8MejRoyt2okXLp2rKUYetIUM23LyJSndcVtmJD0fnx77P
+	 I6rhwv1ubx06/Si57jF0PWk0PYzvP5q8D73+TK9ljDKdFud3WQ1sMfHwvD4ErinEM7
+	 jpvQe5USV4Ujgdyt1U+MEfwT0eGSxx1gdhGzyMhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank Li <Frank.Li@nxp.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.2 509/733] accel: ethosu: Ensure cmd stream ends with a stop op
-Date: Thu, 17 Sep 2026 16:13:37 +0100
-Message-ID: <20260917151404.805539120@linuxfoundation.org>
+Subject: [PATCH 7.2 510/733] accel: ethosu: Ensure SRAM size is 0 on mapping failure
+Date: Thu, 17 Sep 2026 16:13:38 +0100
+Message-ID: <20260917151404.834300320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Herring (Arm) <robh@kernel.org>
 
-commit eb3a41fd35e352fba387c4320a1fa0352f3e551c upstream.
+commit f5376d7e0fb703876199d3b6f9f97e128fa2f8a4 upstream.
 
-While the QSIZE register setting should prevent an out of bounds access
-of the command stream, it is not clear whether the h/w generates an
-interrupt in this case as is required (to prevent a timeout). As a stop op
-is expected end of the command stream, let's just ensure it is present. A
-stop op in the middle of the command stream also makes no sense.
+On a mapping failure of the SRAM, the SRAM size is left as non-zero. The
+probe will succeed as the error return is not checked since having SRAM is
+not a hard requirement. The non-zero size allows jobs to access SRAM which
+is left pointing to physical base address 0x0.
 
 Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260827-ethosu-fixes-v1-3-346f9ea8791c@kernel.org
+Link: https://patch.msgid.link/20260827-ethosu-fixes-v1-4-346f9ea8791c@kernel.org
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_device.h |    1 +
- drivers/accel/ethosu/ethosu_gem.c    |    9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/accel/ethosu/ethosu_drv.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/accel/ethosu/ethosu_device.h
-+++ b/drivers/accel/ethosu/ethosu_device.h
-@@ -68,6 +68,7 @@ struct gen_pool;
- #define PROT_ACTIVE_CSL		BIT(1)
+--- a/drivers/accel/ethosu/ethosu_drv.c
++++ b/drivers/accel/ethosu/ethosu_drv.c
+@@ -274,8 +274,6 @@ static int ethosu_device_suspend(struct
  
- enum ethosu_cmds {
-+	NPU_OP_STOP = 0x0,
- 	NPU_OP_CONV = 0x2,
- 	NPU_OP_DEPTHWISE = 0x3,
- 	NPU_OP_POOL = 0x5,
---- a/drivers/accel/ethosu/ethosu_gem.c
-+++ b/drivers/accel/ethosu/ethosu_gem.c
-@@ -390,6 +390,7 @@ static int ethosu_gem_cmdstream_copy_and
- 	struct ethosu_validated_cmdstream_info __free(kfree) *info = kzalloc_obj(*info);
- 	struct ethosu_device *edev = to_ethosu_device(ddev);
- 	u32 *bocmds = bo->base.vaddr;
-+	bool ends_with_stop = false;
- 	struct cmd_state st;
- 	int i, ret;
- 
-@@ -426,6 +427,11 @@ static int ethosu_gem_cmdstream_copy_and
- 		}
- 
- 		switch (cmd) {
-+		case NPU_OP_STOP:
-+			if (i != size / 4 - 1)
-+				return -EINVAL;
-+			ends_with_stop = true;
-+			break;
- 		case NPU_OP_DMA_START:
- 			srclen = dma_length(info, &st.dma, &st.dma.src);
- 			dstlen = dma_length(info, &st.dma, &st.dma.dst);
-@@ -688,6 +694,9 @@ static int ethosu_gem_cmdstream_copy_and
- 		}
+ static int ethosu_sram_init(struct ethosu_device *ethosudev)
+ {
+-	ethosudev->npu_info.sram_size = 0;
+-
+ 	ethosudev->srampool = of_gen_pool_get(ethosudev->base.dev->of_node, "sram", 0);
+ 	if (!ethosudev->srampool)
+ 		return 0;
+@@ -286,6 +284,7 @@ static int ethosu_sram_init(struct ethos
+ 							     ethosudev->npu_info.sram_size,
+ 							     &ethosudev->sramphys);
+ 	if (!ethosudev->sram) {
++		ethosudev->npu_info.sram_size = 0;
+ 		dev_err(ethosudev->base.dev, "failed to allocate from SRAM pool\n");
+ 		return -ENOMEM;
  	}
- 
-+	if (!ends_with_stop)
-+		return -EINVAL;
-+
- 	for (i = 0; i < NPU_BASEP_REGION_MAX; i++) {
- 		if (!info->region_size[i])
- 			continue;
 
 
