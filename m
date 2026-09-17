@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8550E59C;
-	Thu, 17 Sep 2026 17:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A3E5208BA;
+	Thu, 17 Sep 2026 17:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665833; cv=none; b=Yf8P8ymHhdYgN1cpGDzCqLUErLXLYDz/+rlNdPqCMWEntq1SFKBkDbBgNYdgpB/HfqP0tETu3wwH0qkrCm2gES1ey0s40anQxL2njN4cY41EydK4AgvpCluy2o/eEPkm1BlF3bxgIUf4+AXUY93RoKVoz7Tlfvfl4BIHMO6Bc44=
+	t=1789665836; cv=none; b=kNWN+4IHiIXY2vtC6E1cMBnujx3QXyEsSK7GdUZtrQqpXPCYg/5lX4R24izohVECWvIMwa+GHUB0d3TXTgqLyvfWlh1e0ZfZv3SZ9xiucARdiskray9cKCbLW/h0gX4IpLOOSqx26qqRzsXejqCNiqTkVF6MTI5/6XLrJvrDr2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665833; c=relaxed/simple;
-	bh=D9Rqxvx9GTR1ZVegDwEypYAxuzBmcYwv6MpRPR9VS+M=;
+	s=arc-20240116; t=1789665836; c=relaxed/simple;
+	bh=CcYo3kt5AV0/AOwtXgnas5+omxuLEo6WWdn7qVYvzo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZryuTbMqEn8sv2dhk/FHr+W73yMQqR7PCbk9YfEjFy1aV/4KOFk1YKAH/NcCO9Z6Waja2E0OTWKo434mlCCVRLzdnhA8SYuQJsgUf/vRorSRqUnIan/cNBpoGUrxS1W0rb3appjJz757gAM1xS5ve+7h/fTzwffCHxiDh4ieME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofLXmHLf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bUWuNa5YiytFoH08lfM5hrti/OPQQVCUmJ5zA9SvlXJeH3n8n4uOYtXmLZixK8wOv1jt/fB1MoFeBcJrg4xtR2NEQnoC539dtgLDd5cb9rluz7PFWOzTH6Zs8zz04OFt+FwGTgxLCzcSR2ITaddDrc4tuztmw+rQhwofnej7lBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghwXSM8V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofLXmHLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777371F000FF;
-	Thu, 17 Sep 2026 17:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghwXSM8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8977D1F000FF;
+	Thu, 17 Sep 2026 17:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665832;
-	bh=Sd/fwfw8LvSS01budw7/XBgB7jL/AL7R8yN6ya4wiSU=;
+	s=korg; t=1789665835;
+	bh=n5H6lEvUu6YdVQqsYrvgXWHDvFxSa5GP+3beaFdqHlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ofLXmHLfWkFz2otm2ULUquzrRGctY8GocmrWLQU+nQLpNG4kF8ePUNvptEY5N5vM9
-	 3GyAhOXAWjvhZBlWMZJ3w8O5aACcHvwFDzLM/kkmmXhR47z6bP+uWAtThm4VefD1Ye
-	 Cs+QaZ+e4fnkXfe6BpvXI9rgwKbU0sETQJlsvqPU=
+	b=ghwXSM8VjqpTBerUivk931pg1tRjGR5d4NpgeVndaLMiQ424mqBek1Eav3R2JEh71
+	 KIVHxRE/6QyKCUlRkyQ2ZC+Qch7agy34guz02TL/TtobgmpFaON4JWSD+c5Yzs7jso
+	 l2Xqqz5ZUrMbJSv8yOvWYSOB54gGCY92vbMLdtwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0835/1250] hwmon: (ltc4282) Make sure clk_init_data is fully initialized
-Date: Thu, 17 Sep 2026 16:10:30 +0100
-Message-ID: <20260917151614.580524321@linuxfoundation.org>
+Subject: [PATCH 6.18 0836/1250] Documentation/hwmon: Document hwmon_notify_event()
+Date: Thu, 17 Sep 2026 16:10:31 +0100
+Message-ID: <20260917151614.607191120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,48 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e317326d1755ea054b98e7a4833b929157461c35 ]
+[ Upstream commit b4fffa75c1d6f87e6dc6191dec900f2b5bd23a1c ]
 
-The clk_init_data structure contains several mutually-exclusive members
-for different methods to specify the possible parents of a clock,
-prompting drivers to initialize only the members they need.  However,
-not initializing all members may cause subtle issues, which are only
-exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
-enabled.
+The hwmon core provides hwmon_notify_event() for drivers to report events
+such as alarm or fault conditions to userspace via sysfs notifications
+and uevents, as well as to the thermal subsystem for temperature sensors.
+However, this function is not documented in the hwmon kernel API guide.
 
-ltc428_clk_provider_setup() does not fill in any parent clocks, and
-assumes that init.num_parents is NULL.  However, the latter in
-uninitialized, and thus may cause a crash.
+Add the function prototype and description of hwmon_notify_event() to
+Documentation/hwmon/hwmon-kernel-api.rst.
 
-Make sure all members are fully initialized, to fix such bugs, and to
-avoid future breakage when converting drivers to a different method for
-specifying the parents.
-
-Fixes: cbc29538dbf7d740 ("hwmon: Add driver for LTC4282")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/8ec3c5cbd2df675a938f090470f5da5f22008517.1787165329.git.geert+renesas@glider.be
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 1597b374af222 ("hwmon: Add notification support")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc4282.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/hwmon/hwmon-kernel-api.rst | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index 269f96738f5b3..a82374ba7fc58 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -1140,7 +1140,7 @@ static const struct clk_ops ltc4282_ops = {
- static int ltc428_clk_provider_setup(struct ltc4282_state *st,
- 				     struct device *dev)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	int ret;
+diff --git a/Documentation/hwmon/hwmon-kernel-api.rst b/Documentation/hwmon/hwmon-kernel-api.rst
+index 9fcde32a140df..c3eb433a78f61 100644
+--- a/Documentation/hwmon/hwmon-kernel-api.rst
++++ b/Documentation/hwmon/hwmon-kernel-api.rst
+@@ -42,6 +42,9 @@ register/unregister functions::
  
- 	if (!IS_ENABLED(CONFIG_COMMON_CLK))
+   char *devm_hwmon_sanitize_name(struct device *dev, const char *name);
+ 
++  int hwmon_notify_event(struct device *dev, enum hwmon_sensor_types type,
++			 u32 attr, int channel);
++
+   void hwmon_lock(struct device *dev);
+   void hwmon_unlock(struct device *dev);
+ 
+@@ -90,6 +93,18 @@ implemented in the driver, or debugfs functions, hwmon_lock() and hwmon_unlock()
+ can be used to ensure that calls to those functions are serialized. Those
+ functions also support guard() and scoped_guard() variants.
+ 
++Drivers can call hwmon_notify_event() to notify userspace and the thermal
++subsystem when a hardware monitoring event (such as an alarm or a fault
++condition) occurs or clears. The parameters are the hwmon device, the sensor
++type, the attribute identifier associated with the event (such as
++hwmon_temp_max_alarm or hwmon_fan_fault), and the sensor channel number.
++hwmon_notify_event() generates a sysfs event (calling sysfs_notify()) and a
++udev event with the attribute name passed in the NAME environment property
++(e.g., "NAME=temp1_max_alarm"). If the event is for a temperature sensor and
++the sensor is attached to a thermal zone, it also notifies the thermal
++subsystem to update the thermal zone. hwmon_notify_event() returns 0 on
++success or a negative error code on failure.
++
+ Using devm_hwmon_device_register_with_info()
+ --------------------------------------------
+ 
 -- 
 2.53.0
 
