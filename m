@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FB554705B;
-	Thu, 17 Sep 2026 17:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A30054706F;
+	Thu, 17 Sep 2026 17:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667433; cv=none; b=QvIfStwydwlXuIm7JzB9HSeg8CpDmTEQ+e9O+0xlu2SeuEfJKG90o8itA/UApqryJFyeveDAo3DkgZ2vffGRNSblYRGrhpMiDPu3oz63b+L8+oyVRXXKV4dUZGjI8QlhnDVibbo8MJvIY6m42ec/Txg6z1jIB4dMcf5vJ/BValA=
+	t=1789667436; cv=none; b=juxISj5qFqvsuW/fnG+hXDn4eipk4ygbgyXS5PCLdI4thXMQ3ZksyYNHbEAFXHL7+8Jp+gomeEGnLSN+1ZyZ6XmEs+m4SkPxXvuuJmX89ueM5uDsnB2Tl0FB3WLgwhxiArM+gpb7w3OsJJsKMpoUhngZNGRs29bi8Cm2ePv945w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667433; c=relaxed/simple;
-	bh=WNC/IvFZGvjxG5SB3uGoM1Qcetq2ZlQiOihHQ2Ha4UE=;
+	s=arc-20240116; t=1789667436; c=relaxed/simple;
+	bh=ZUgYq+Z3SWkGzeO+uRPPcSXYNWom6YWRaqn/BwRLTog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haz+ewPomsVP5v9jOqkAwF2j8KRJrRuU497l6iX5+ZLQXiLPEeD6+aDiIu/FxyXJrwrAvmHjED6rZ4T0d7Q4VO/WRotZte23rwNKfkoS7SKmKtQJY+wRQwF87iazkS8liCMbx0eLmNYupyPPKcGV6RHyX5JJsWs5vbelCFlFRCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddp/lEdy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MCxOq+nlEAfqR36wRHOjdr3aZKVu25EsKUMXLNK7+2VLnDIbbL+jzozORp2UhqkCTqNZmli4mlbQTGP3YUuGvEvRlz4FHhzVziDWIGlYKfM7PGc8Wte6nzyOwfqfpQGeMOX78MaGX2Nj0Qi+wDWkbtXZQECpBsQNm7JlEnyK9LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQOmnnsi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddp/lEdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998461F000FF;
-	Thu, 17 Sep 2026 17:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQOmnnsi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AF71F000FF;
+	Thu, 17 Sep 2026 17:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667432;
-	bh=yPuWRWZGSMtainYGGek1fVdbDEi1yOdAFGbGkMfF5qw=;
+	s=korg; t=1789667435;
+	bh=DcjRwUitzJ3gjNz5qJ/UQrH69GMpP1X5/uej2Fjvur4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ddp/lEdycuEtZuS6HMF6WCmbgyYD07NQS6vqA0iDRvYQ92chkrtWRcilqcSwULWCL
-	 31H8oUAfHKh8xJ9GZvUcAQLeB7RFUDm3mM903JWRqwkIvLzlKfvdmKn7czmK2xVUa9
-	 tHEjGAC3c730AfmqMdOj8qm6lMJN6zUL0HnwcjMQ=
+	b=kQOmnnsiE+mmtEwCUKzwgQ4Sv8hYnjdfHErLwgxG46anwWCyr943UoMdoAMzLGJeM
+	 GxOtD7T7E84H99j+JzuAIKoKc4KsjbmnG4/KimkyqdPeAXfSVXaDCcys5VZZTsBY8M
+	 aCQZ9zGM9+jOyOwqD5K6nmDwG6O98D3wJVYzRO00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Heidelberg <david@ixit.cz>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0053/1102] crypto: ixp4xx - fix buffer chain unwind on allocation failure
-Date: Thu, 17 Sep 2026 15:59:56 +0100
-Message-ID: <20260917151540.781603554@linuxfoundation.org>
+Subject: [PATCH 6.12 0044/1102] drm/panel: Enable GPIOLIB for panels which uses functions from it
+Date: Thu, 17 Sep 2026 15:59:47 +0100
+Message-ID: <20260917151540.554129579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,95 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 25056329384010a8672552b134f609601dc4f80e ]
+[ Upstream commit ae3aa8cf5fd5ccb428a814e7eb38ae33ad1cfa34 ]
 
-chainup_buffers() builds a linked list of buffer descriptors for a
-scatterlist. If dma_pool_alloc() fails while constructing the list, the
-current code sets buf to NULL and later dereferences it unconditionally
-at the end of the function:
+These panels used on sdm845 devices are using GPIOLIB functions,
+ensure it's enabled.
 
-  buf->next = NULL;
-  buf->phys_next = 0;
-
-This can lead to a null-pointer dereference on allocation failure.
-
-If the failure happens after part of the descriptor chain has already
-been allocated and DMA-mapped, the partially constructed chain also
-needs to be released.
-
-Fix this by terminating the partially constructed chain on allocation
-failure and letting the callers unwind it via their existing cleanup
-paths. Also fix ablk_perform() to preserve the hook pointers before
-checking for failure, so partially built chains can be freed correctly.
-
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260505-panel-clean-up-kconfig-dep-v2-4-9cc31d6e6919@ixit.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 25 ++++++++++++---------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/panel/Kconfig | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-index e43361392c83f..91e6bf165015c 100644
---- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-+++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-@@ -884,8 +884,9 @@ static struct buffer_desc *chainup_buffers(struct device *dev,
- 		ptr = sg_virt(sg);
- 		next_buf = dma_pool_alloc(buffer_pool, flags, &next_buf_phys);
- 		if (!next_buf) {
--			buf = NULL;
--			break;
-+			buf->next = NULL;
-+			buf->phys_next = 0;
-+			return NULL;
- 		}
- 		sg_dma_address(sg) = dma_map_single(dev, ptr, len, dir);
- 		buf->next = next_buf;
-@@ -983,7 +984,7 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 	unsigned int nbytes = req->cryptlen;
- 	enum dma_data_direction src_direction = DMA_BIDIRECTIONAL;
- 	struct ablk_ctx *req_ctx = skcipher_request_ctx(req);
--	struct buffer_desc src_hook;
-+	struct buffer_desc *buf, src_hook;
- 	struct device *dev = &pdev->dev;
- 	unsigned int offset;
- 	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
-@@ -1025,22 +1026,24 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 		/* This was never tested by Intel
- 		 * for more than one dst buffer, I think. */
- 		req_ctx->dst = NULL;
--		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
--				     flags, DMA_FROM_DEVICE))
--			goto free_buf_dest;
--		src_direction = DMA_TO_DEVICE;
-+		buf = chainup_buffers(dev, req->dst, nbytes, &dst_hook,
-+				      flags, DMA_FROM_DEVICE);
- 		req_ctx->dst = dst_hook.next;
- 		crypt->dst_buf = dst_hook.phys_next;
-+		if (!buf)
-+			goto free_buf_dest;
-+		src_direction = DMA_TO_DEVICE;
- 	} else {
- 		req_ctx->dst = NULL;
- 	}
- 	req_ctx->src = NULL;
--	if (!chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
--			     src_direction))
--		goto free_buf_src;
--
-+	buf = chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
-+			      src_direction);
- 	req_ctx->src = src_hook.next;
- 	crypt->src_buf = src_hook.phys_next;
-+	if (!buf)
-+		goto free_buf_src;
-+
- 	crypt->ctl_flags |= CTL_FLAG_PERFORM_ABLK;
- 	qmgr_put_entry(send_qid, crypt_virt2phys(crypt));
- 	BUG_ON(qmgr_stat_overflow(send_qid));
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index d3a9a9fafe4ec..a8cf1b0a512f2 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -98,6 +98,7 @@ config DRM_PANEL_BOE_TV101WUM_LL2
+ 
+ config DRM_PANEL_EBBG_FT8719
+ 	tristate "EBBG FT8719 panel driver"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+@@ -273,7 +274,8 @@ config DRM_PANEL_JADARD_JD9365DA_H3
+ 
+ config DRM_PANEL_JDI_LPM102A188A
+ 	tristate "JDI LPM102A188A DSI panel"
+-	depends on OF && GPIOLIB
++	depends on GPIOLIB
++	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+ 	help
+@@ -375,6 +377,7 @@ config DRM_PANEL_LG_LG4573
+ 
+ config DRM_PANEL_LG_SW43408
+ 	tristate "LG SW43408 panel"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+@@ -479,6 +482,7 @@ config DRM_PANEL_NOVATEK_NT36523
+ 
+ config DRM_PANEL_NOVATEK_NT36672A
+ 	tristate "Novatek NT36672A DSI panel"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+@@ -489,6 +493,7 @@ config DRM_PANEL_NOVATEK_NT36672A
+ 
+ config DRM_PANEL_NOVATEK_NT36672E
+ 	tristate "Novatek NT36672E DSI panel"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+@@ -595,7 +600,8 @@ config DRM_PANEL_RAYDIUM_RM692E5
+ 
+ config DRM_PANEL_RAYDIUM_RM69380
+ 	tristate "Raydium RM69380-based DSI panel"
+-	depends on OF && GPIOLIB
++	depends on GPIOLIB
++	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+ 	help
+@@ -954,6 +960,7 @@ config DRM_PANEL_VISIONOX_R66451
+ 
+ config DRM_PANEL_VISIONOX_RM69299
+ 	tristate "Visionox RM69299"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	help
 -- 
 2.53.0
 
