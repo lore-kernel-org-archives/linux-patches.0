@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8833DB62F;
-	Thu, 17 Sep 2026 18:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8308E3AEF28;
+	Thu, 17 Sep 2026 18:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670600; cv=none; b=kAPB37Yh6zpZTDDRhpcbdyUkX5+ChSVq/hJr8aNEt1MVdaaavTwPec4LZ5MedQLkKhmBN70ivQaVtBVVUsLXptVlRoM8mvyPVJXRVRQTcD6JtMFAVsBOEe5/uCdq2fg3PCMkhWzpjD9jNPJlZrh66HpxaWI4hytXnuT42i02aGI=
+	t=1789670602; cv=none; b=N3wREAgc124vmM06KzfHRfHjXsg69TQTbfo/hAJzPC7cRzXRZo3F18JbLDLUJVGyW2tXjw8b833rnh39mUR5uk2rSFFUir7aQVwnrPEwh1yQ/jBmjkejlWqUscAoF3KI/zkVd3+BAxdYzm2z+yKDTRfXtb/NdDJ8MD2sy5Kcihs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670600; c=relaxed/simple;
-	bh=cW/ERb4v5m21Y2Z9DXTPZqdUt7RVOrYkT0O1SE32/cI=;
+	s=arc-20240116; t=1789670602; c=relaxed/simple;
+	bh=Q0ToCUXcPbw0KQ1dgm4D/tJDvDplxfRKvLDzHnDvuW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L50fISsNlQUtCljd3FO2kIDGX32w13Eey9gnA6LRtsauWWNd+XCkh1MIMz74XI1WKr0whPuCNcFTPVOrmede2JxWqa6Lz/5eZ7P8zkERItb8l6zIu8AaQnivqpVMaLjqmilp7Qa6ab/LGWf+H9/rTy8l5QgCZfD7pHsK552d0fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TM86tNHB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnL0WlRw6aNlFm25pmKiW3FwwLS9zaqM8daZHfiMaV7ucVyu3O00DhCqaAYeHZqB5jxsRG+bY5klSEM9zsbX4uF+Onq00VlYYxXB23qhD/dEfhpURZX7Zu6EsTkj7Pf0iRJLzO+sePnrN+V90rY+PdxMB/sd8coRW4w7AlMHtsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvGFWKLK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TM86tNHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE501F000FF;
-	Thu, 17 Sep 2026 18:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvGFWKLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F321F000FF;
+	Thu, 17 Sep 2026 18:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670598;
-	bh=rrm1bFGQvFmgERa+XPXuFYj6NKxdkAb9teJrD4EP0vU=;
+	s=korg; t=1789670601;
+	bh=LEPSSzZEDv2fMQRzEXd8LDZP56GRXbdI60tSfNFH+ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TM86tNHBP4r5hk8zLawJap/CSfcjyqc1BuNunXPjS1X3DzF7UxqZfWi2hBlmzYX+p
-	 Kn1wjfW+ppX6nzHhlFWtfvjehFFJQcltKzXhFUFjimGKKbgo2nCg4PmFajWk7vG+MY
-	 iPhTP3uGuoS6TnscFnH601KFREQubbn0agmxciJ8=
+	b=tvGFWKLKRejir90dv2dDa3VmdEkHiLAafPFNPRZTDRLHzNhz34dRIjKR6rLFWcUe4
+	 hqvjjrCy81qcvrTSTJzwCSXol9u5HaAbv7joYB7Wdbx9SEzpLwTca+dfsib72BiGHh
+	 9E31LW6g2m7+6CRDRcOpBIWaH6NlNb5R+jUG3h5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jia Jia <physicalmtea@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0712/1102] virtio_console: do not free control-out buffers on remove
-Date: Thu, 17 Sep 2026 16:10:55 +0100
-Message-ID: <20260917151558.206539400@linuxfoundation.org>
+Subject: [PATCH 6.12 0713/1102] vhost/vdpa: reject VRING_NUM larger than device max
+Date: Thu, 17 Sep 2026 16:10:56 +0100
+Message-ID: <20260917151558.232276542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,73 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 894f98e73983f37354214a89a3a7fd35bf9e3072 ]
+[ Upstream commit ccb1dc7c527f8c925925cf92afc76ae590dac311 ]
 
-__send_control_msg() publishes &portdev->cpkt as the control-out
-virtqueue cookie. remove_vqs() walks every virtqueue and passes leftover
-cookies to free_buf(), which treats them as struct port_buffer and
-reads sgpages.
+vhost_vring_set_num() accepts any non-zero power-of-two queue size that
+fits in 16 bits. vhost-vdpa then passes that value to set_vq_num()
+without comparing it with get_vq_num_max().
 
-If a control message is still on c_ovq when the device is unbound,
-free_buf() reads past the ports_device object.
+A process with access to /dev/vhost-vdpa-* can therefore configure a
+queue larger than the device advertises. With vdpa_sim, the worker can
+walk descriptors beyond the mapped descriptor ring. KASAN reports a
+16-byte out-of-bounds read, corresponding to one vring_desc, in the
+vringh IOTLB path:
 
-KASAN reported slab-out-of-bounds in free_buf():
+  BUG: KASAN: out-of-bounds in _copy_from_iter
+  Read of size 16
+  copy_from_iotlb
+  copydesc_iotlb
+  vringh_getdesc_iotlb
+  vdpasim_net_work
 
-	free_buf
-	remove_vqs
-	virtcons_remove
-	unbind_store
+Cache get_vq_num_max() immediately after reset. Some backends derive
+it from writable queue-size state, so querying it after SET_NUM may
+return the current size instead of the device capability. Invalidate
+the cached value before reset so a failed reset leaves SET_NUM
+disabled.
 
-The object was the ports_device allocated in virtcons_probe().
+For VHOST_SET_VRING_NUM, copy the complete vring state once and use
+the same index and size for validation, vq->num, and set_vq_num().
+This ensures that validation and use operate on the same copied values.
 
-Drain c_ovq without freeing. The packet lives in portdev and is released
-with it.
-
-Fixes: a7a69ec0d8e4 ("virtio_console: free buffers after reset")
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
 Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819021230.292696-1-physicalmtea@gmail.com>
+Message-ID: <20260810010300.132959-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/vhost/vdpa.c | 44 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 37 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
-index 8765e8fcb68a7..75ba23fa2187b 100644
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1896,13 +1896,28 @@ static const struct file_operations portdev_fops = {
- static void remove_vqs(struct ports_device *portdev)
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index a47fdcb61bf36..6c084dd770a7f 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -53,6 +53,7 @@ struct vhost_vdpa {
+ 	struct cdev cdev;
+ 	atomic_t opened;
+ 	u32 nvqs;
++	u16 vq_num_max;
+ 	int virtio_id;
+ 	int minor;
+ 	struct eventfd_ctx *config_ctx;
+@@ -229,7 +230,9 @@ static void vhost_vdpa_unsetup_vq_irq(struct vhost_vdpa *v, u16 qid)
+ static int _compat_vdpa_reset(struct vhost_vdpa *v)
  {
- 	struct virtqueue *vq;
-+	bool multiport = use_multiport(portdev);
+ 	struct vdpa_device *vdpa = v->vdpa;
++	const struct vdpa_config_ops *ops = vdpa->config;
+ 	u32 flags = 0;
++	int ret;
  
- 	virtio_device_for_each_vq(portdev->vdev, vq) {
- 		struct port_buffer *buf;
-+		unsigned int len;
+ 	v->suspended = false;
  
--		flush_bufs(vq, true);
--		while ((buf = virtqueue_detach_unused_buf(vq)))
--			free_buf(buf, true);
-+		/*
-+		 * c_ovq cookies are &portdev->cpkt, not port_buffer.
-+		 * Detach them but do not free_buf().
-+		 */
-+		if (multiport && vq == portdev->c_ovq) {
-+			spin_lock(&portdev->c_ovq_lock);
-+			while (virtqueue_get_buf(vq, &len))
-+				;
-+			while (virtqueue_detach_unused_buf(vq))
-+				;
-+			spin_unlock(&portdev->c_ovq_lock);
-+		} else {
-+			flush_bufs(vq, true);
-+			while ((buf = virtqueue_detach_unused_buf(vq)))
-+				free_buf(buf, true);
-+		}
- 		cond_resched();
+@@ -239,7 +242,14 @@ static int _compat_vdpa_reset(struct vhost_vdpa *v)
+ 			 VDPA_RESET_F_CLEAN_MAP : 0;
  	}
- 	portdev->vdev->config->del_vqs(portdev->vdev);
+ 
+-	return vdpa_reset(vdpa, flags);
++	v->vq_num_max = 0;
++	ret = vdpa_reset(vdpa, flags);
++	if (!ret) {
++		/* Some backends derive the max from mutable queue state. */
++		v->vq_num_max = ops->get_vq_num_max(vdpa);
++	}
++
++	return ret;
+ }
+ 
+ static int vhost_vdpa_reset(struct vhost_vdpa *v)
+@@ -641,9 +651,15 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 	u32 idx;
+ 	long r;
+ 
+-	r = get_user(idx, (u32 __user *)argp);
+-	if (r < 0)
+-		return r;
++	if (cmd == VHOST_SET_VRING_NUM) {
++		if (copy_from_user(&s, argp, sizeof(s)))
++			return -EFAULT;
++		idx = s.index;
++	} else {
++		r = get_user(idx, (u32 __user *)argp);
++		if (r < 0)
++			return r;
++	}
+ 
+ 	if (idx >= v->nvqs)
+ 		return -ENOBUFS;
+@@ -652,6 +668,23 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 	vq = &v->vqs[idx];
+ 
+ 	switch (cmd) {
++	case VHOST_SET_VRING_NUM:
++		mutex_lock(&vq->mutex);
++		if (vq->private_data) {
++			r = -EBUSY;
++		} else if (!s.num || s.num > 0xffff ||
++			   s.num > v->vq_num_max ||
++			   (s.num & (s.num - 1))) {
++			r = -EINVAL;
++		} else {
++			vq->num = s.num;
++			r = 0;
++		}
++		mutex_unlock(&vq->mutex);
++		if (r)
++			return r;
++		ops->set_vq_num(vdpa, idx, s.num);
++		return 0;
+ 	case VHOST_VDPA_SET_VRING_ENABLE:
+ 		if (copy_from_user(&s, argp, sizeof(s)))
+ 			return -EFAULT;
+@@ -765,9 +798,6 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 		ops->set_vq_cb(vdpa, idx, &cb);
+ 		break;
+ 
+-	case VHOST_SET_VRING_NUM:
+-		ops->set_vq_num(vdpa, idx, vq->num);
+-		break;
+ 	}
+ 
+ 	return r;
 -- 
 2.53.0
 
