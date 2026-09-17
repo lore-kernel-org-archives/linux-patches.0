@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE1B4848B5;
-	Thu, 17 Sep 2026 15:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D1B342539;
+	Thu, 17 Sep 2026 15:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659157; cv=none; b=FTw6/ptdAHY6YnLhDYHs5ZlppeBGv8mwhvAn7Qvty+JWN++N4uPpSH6/hdhWiCewcm021MIpv1pPDgqHNufG1aMMeZT6uzasS4wJM+JV7YQxSgF9bu5iT1+FbfthP9QvAfrI/k5qQNChsyTa8EcED12SwnJHMIe4ghxX8+G97xM=
+	t=1789659160; cv=none; b=h329TZT1u/zuAOpJxWvf2txTiHfP+v6jrdCxQeYl3pcS9pV8SKu2C4DgRh3YnYdqT2ODW9EEkSL6K60dJ8ic4goYSqlm0A0lApL6f4JC0Z3jO9seXGPeNTqeIusWXpAxeyh7Mj2/EJ31GdhiHzq1+d+s2nr9ZTEspzrdZt4STpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659157; c=relaxed/simple;
-	bh=VvmDxbXA7CRWLWJQQnO2FrBliKXMWGSUyCpeAYjgMys=;
+	s=arc-20240116; t=1789659160; c=relaxed/simple;
+	bh=Fogme+bCWMnU4xwFp5XR1+Bph/g3nchK3yE8YRM4kBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3lijdQy4oaVgN5+piJqGbCrpFqJixWcmGA7P4yL2mL7Jr5dyh2q2X0AXJke75Md0rQG134aILDcG6tjEGQx9OxYhAX0WvgLGrC6LFNrgu4mF2wqeuTr+mz8TGsgu1EtSdDgOHbYrKmRklr2s7E0/MfVqdmP71N9i6q5QOv3yIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOTeBP0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OaKZsvy8KkT27Gidtuqfq+hLAXxAafYkfpN3NvCSyDuWviAx0W511OTk18ZCowxjpTZFn6Lsk237eZH4W3hN/44qcHGXUIG7r5h3UZV+7+iS2u+sQ84YCib2UjcgIYN/iV3eLM6xt8hVab2jZB471dbYdl+pxdEprFdslpJLp60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZMyp7eF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOTeBP0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B0F1F0089A;
-	Thu, 17 Sep 2026 15:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZMyp7eF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D431F000FF;
+	Thu, 17 Sep 2026 15:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659147;
-	bh=1HuOlMj0EwhfggARsl3jh8EuniPnEfj69PfY6TbUOO0=;
+	s=korg; t=1789659152;
+	bh=xuaUNATa+lnwx0HBvYTgigjbmVgx0NbRhVCUuQIQRFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOTeBP0VX8dy+4VAvhZzFyjIGjSVcfBj1vXh1NeWH58vg/D2c5QzjmsBnrCtPTHmN
-	 9S4kQ6BjLuSCSsMAevyuvxDJa6D4N2gXfH6phd+alqNV95kd8QdOo5FQKAVHpRwQYp
-	 jrq/0iXbTByQf1aJTLSzBZDAs8snff0L745Cgp3E=
+	b=LZMyp7eFTmUxwwv8hpCpTlIXGkhNGgEojqr7jgtLPeN0ahVNf1+bhcxlvJuvZ6gm+
+	 GlAI4/t8xSaOIIPtidhnXoUN+lOkRZGNZGwzVZTn4YTfMKXpgWGOnZc/OM07Ax5ax3
+	 QRGpdvqBuNHAG261jfWJqNrndAQ48dovZrjsxjVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eauger@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 158/733] block: save page offset gaps in cloned bio
-Date: Thu, 17 Sep 2026 16:07:46 +0100
-Message-ID: <20260917151355.002906661@linuxfoundation.org>
+Subject: [PATCH 7.2 159/733] ASoC: cs35l56: Request IRQ in cs35l56_common_probe()
+Date: Thu, 17 Sep 2026 16:07:47 +0100
+Message-ID: <20260917151355.031425652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,57 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 96c8ea3c5add7920b3c43840d1ea76b3354c8d2d ]
+[ Upstream commit 888162dabf64128603b12ac2d23236cf2086b7ef ]
 
-The cloned bio needs to inherit the accumulated gaps between vectors so
-that we can know if this bio can subscribe to the iova coalescing
-optimization.
+Call cs35l56_irq_request() in cs35l56_common_probe() instead of calling
+it afterwards in the probe() for each bus type.
 
-When cloning for a split, the gap only applies to the front bio since
-that's as far as has been processed. The remaining bio can reset its
-gaps to 0 since it advanced past the checked vectors, and will start its
-accounting from there on the next split check.
+Calling cs35l56_irq_request() in each bus probe() is a legacy of dealing
+with the oddities of the SoundWire framework. It's no longer serving any
+useful purpose to do it outside of the main cs35l56_common_probe().
 
-Fixes: 2f6b2565d43c ("block: accumulate memory segment gaps per bio")
-Reported-by: Eric Auger <eauger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260819154937.3903312-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260810104045.60701-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1d80a4792f1d ("ASoC: cs35l56: Fix probe deadlock waiting for SoundWire enumeration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/codecs/cs35l56-i2c.c | 10 +---------
+ sound/soc/codecs/cs35l56-sdw.c |  6 +-----
+ sound/soc/codecs/cs35l56-spi.c | 10 +---------
+ sound/soc/codecs/cs35l56.c     | 12 ++++++++++--
+ sound/soc/codecs/cs35l56.h     |  2 +-
+ 5 files changed, 14 insertions(+), 26 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index 5018a6fc2f36b..bdcb60cb8d88f 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -859,6 +859,7 @@ static int __bio_clone(struct bio *bio, struct bio *bio_src, gfp_t gfp)
- 	bio->bi_ioprio = bio_src->bi_ioprio;
- 	bio->bi_write_hint = bio_src->bi_write_hint;
- 	bio->bi_write_stream = bio_src->bi_write_stream;
-+	bio->bi_bvec_gap_bit = bio_src->bi_bvec_gap_bit;
- 	bio->bi_iter = bio_src->bi_iter;
+diff --git a/sound/soc/codecs/cs35l56-i2c.c b/sound/soc/codecs/cs35l56-i2c.c
+index 4f6ddf1c5a3f6..5e69ddbe342a1 100644
+--- a/sound/soc/codecs/cs35l56-i2c.c
++++ b/sound/soc/codecs/cs35l56-i2c.c
+@@ -51,15 +51,7 @@ static int cs35l56_i2c_probe(struct i2c_client *client)
+ 		return dev_err_probe(cs35l56->base.dev, ret, "Failed to allocate register map\n");
+ 	}
  
- 	if (bio->bi_bdev) {
-@@ -1913,6 +1914,14 @@ struct bio *bio_split(struct bio *bio, int sectors,
+-	ret = cs35l56_common_probe(cs35l56);
+-	if (ret != 0)
+-		return ret;
+-
+-	ret = cs35l56_irq_request(&cs35l56->base, client->irq);
+-	if (ret < 0)
+-		cs35l56_remove(cs35l56);
+-
+-	return ret;
++	return cs35l56_common_probe(cs35l56, client->irq);
+ }
  
- 	bio_advance(bio, split->bi_iter.bi_size);
+ static void cs35l56_i2c_remove(struct i2c_client *client)
+diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
+index 0a55b93b96f96..a3812ab4c0227 100644
+--- a/sound/soc/codecs/cs35l56-sdw.c
++++ b/sound/soc/codecs/cs35l56-sdw.c
+@@ -483,11 +483,7 @@ static int cs35l56_sdw_probe(struct sdw_slave *peripheral, const struct sdw_devi
+ 	/* Start in cache-only until device is enumerated */
+ 	regcache_cache_only(cs35l56->base.regmap, true);
  
-+	/*
-+	 * The gap bit is set when splitting to limits and only applies to the
-+	 * front bio that was split off. The remaining bio will calcualte its
-+	 * gap value when it is subsequently split to limits, so it is safe to
-+	 * re-initialize the value back to 0.
-+	 */
-+	bio->bi_bvec_gap_bit = 0;
+-	ret = cs35l56_common_probe(cs35l56);
+-	if (ret != 0)
+-		return ret;
+-
+-	return 0;
++	return cs35l56_common_probe(cs35l56, -EINVAL);
+ }
+ 
+ static void cs35l56_sdw_remove(struct sdw_slave *peripheral)
+diff --git a/sound/soc/codecs/cs35l56-spi.c b/sound/soc/codecs/cs35l56-spi.c
+index b1eb924a5b6cc..21b18da9e73d1 100644
+--- a/sound/soc/codecs/cs35l56-spi.c
++++ b/sound/soc/codecs/cs35l56-spi.c
+@@ -40,15 +40,7 @@ static int cs35l56_spi_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = cs35l56_common_probe(cs35l56);
+-	if (ret != 0)
+-		return ret;
+-
+-	ret = cs35l56_irq_request(&cs35l56->base, spi->irq);
+-	if (ret < 0)
+-		cs35l56_remove(cs35l56);
+-
+-	return ret;
++	return cs35l56_common_probe(cs35l56, spi->irq);
+ }
+ 
+ static void cs35l56_spi_remove(struct spi_device *spi)
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 063ef7a70de03..a6364cdb15926 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -1941,7 +1941,7 @@ static int cs35l56_try_get_broken_sdca_spkid_gpio(struct cs35l56_private *cs35l5
+ 	return ret;
+ }
+ 
+-int cs35l56_common_probe(struct cs35l56_private *cs35l56)
++int cs35l56_common_probe(struct cs35l56_private *cs35l56, int irq)
+ {
+ 	int ret;
+ 
+@@ -2018,16 +2018,24 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 			goto err_remove_wm_adsp;
+ 	}
+ 
++	ret = cs35l56_irq_request(&cs35l56->base, irq);
++	if (ret)
++		goto err_remove_wm_adsp;
 +
- 	if (bio_flagged(bio, BIO_TRACE_COMPLETION))
- 		bio_set_flag(split, BIO_TRACE_COMPLETION);
+ 	ret = snd_soc_register_component(cs35l56->base.dev,
+ 					 &soc_component_dev_cs35l56,
+ 					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
+ 	if (ret < 0) {
+ 		dev_err_probe(cs35l56->base.dev, ret, "Register codec failed\n");
+-		goto err_remove_wm_adsp;
++		goto err_free_irq;
+ 	}
+ 
+ 	return 0;
+ 
++err_free_irq:
++	if (cs35l56->base.irq)
++		devm_free_irq(cs35l56->base.dev, cs35l56->base.irq, &cs35l56->base);
++
+ err_remove_wm_adsp:
+ 	wm_adsp2_remove(&cs35l56->dsp);
+ 
+diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
+index 9acd2e7e17c93..1ddee9ab6a876 100644
+--- a/sound/soc/codecs/cs35l56.h
++++ b/sound/soc/codecs/cs35l56.h
+@@ -78,7 +78,7 @@ int cs35l56_system_resume_early(struct device *dev);
+ int cs35l56_system_resume(struct device *dev);
+ irqreturn_t cs35l56_irq(int irq, void *data);
+ int cs35l56_irq_request(struct cs35l56_base *cs35l56_base, int irq);
+-int cs35l56_common_probe(struct cs35l56_private *cs35l56);
++int cs35l56_common_probe(struct cs35l56_private *cs35l56, int irq);
+ int cs35l56_init(struct cs35l56_private *cs35l56);
+ void cs35l56_remove(struct cs35l56_private *cs35l56);
  
 -- 
 2.53.0
