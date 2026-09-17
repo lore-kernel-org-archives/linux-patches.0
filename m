@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925FA4EB847;
-	Thu, 17 Sep 2026 17:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17961515979;
+	Thu, 17 Sep 2026 17:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666934; cv=none; b=DAM6gD5wLga+TZn5v0x/dSE7twCPNrA2SECtwqgzIVU99Er3eZbzTNd1fVYU93FJyx0VmJorsngbwxyDr+h1hARiUMFuZq//DFSPTojzUytwz2oURfpqaJmjmHCB5V1D0ExPnKN6L4j5qhMKhfvuHXYgQz+nE6867vA0f+C3sCg=
+	t=1789666938; cv=none; b=V9PBjrGH/fD/OBwqUPQ/xjzNUUcdSaHLnTMNpqV0D4DpvSRMxtrztr4j7bJEFYYtDCpOdZQuqLBE8N19VHDVye+ZGG7FzR711lWWZ8YE9trfzHrQkIKUFgNpMDNw6KOJ+OH7cc9NgvRsxQOFilyQAjpazKZLRah6HFlUdKHvNRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666934; c=relaxed/simple;
-	bh=1WWtO9BbpMaPi5TMbasgzGYx69Wo5qaDE3l6BXKx19U=;
+	s=arc-20240116; t=1789666938; c=relaxed/simple;
+	bh=eiY9LD2wxO6w7ur7ebCVgIdVu7Lp7lcQDBgWTgE/8kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJVYUdRbSHSqYOIbkCGAj4gw69wiKWeD+5wQ64E/As7FzLxmwv/f362nW0j9JUMHyq96hFyhv4pHqXZQsAHL0sxASDNfxKKqO6Ftwf+X61xaRxasC4SaXVg0dQLT+HnP8mvj3V0pjdGgR84qrbGYn6DxRRMLofjQF+usRb9gUv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ4v/59q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjhTgWjyj1KQ6Xzhd4r5AiopG0KhCM3Y5Xxhy6wvPIeNIvbbRQ8UB8KFUaPEJh6LLEs7HDZrdkzTsNrWSASbSrjlSiKyMSheTHOT/WI2aHPDIUxeyW2sTlLyzzFP6HACuWfYVUA1Z5flRapuI/9WOfpgbMEPo8pb7v/IzuWoj6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAwZXlvO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ4v/59q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B8D1F000FF;
-	Thu, 17 Sep 2026 17:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAwZXlvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699D41F000FF;
+	Thu, 17 Sep 2026 17:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666933;
-	bh=ln7xfepYlGPuI8BYitmPJ6jsI/QTAJBgtmel+P6yubQ=;
+	s=korg; t=1789666937;
+	bh=La4fVvOB4ivDsBNuENW6vPCF6NtxvAVG7Bu3HS30FD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJ4v/59q32uer+h8yNECIexxQ87NCldLPT0NMVwc8ypC23LFCHOshJgEqZ9RIGadg
-	 /OSR0G/eernPphiY07aKqGnz7h3Nf5tzWSi+Nh6gQhdcbK9r7yA1zQBJKdUopvEMsX
-	 vU3r4Vm4mHrKHM7p98Hl7UGp9tJZB3szVOtv1Jpg=
+	b=kAwZXlvOkIDnakId5hYwS8plLuWQ9YD3+Z8wmWq6t6ew1065xTIOMC8dGjz2CSNPO
+	 mO/Kxui+JBpa7xy5298QGISVoeJ9GuGSE/gEAyyAxPk53M8+m4gIpqLDNRVMA8DIzI
+	 RILrlcIBxcgoTuR0axWFeUNTBXV1+dghiLs5eIfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1173/1250] f2fs: validate MOVE_RANGE destination size
-Date: Thu, 17 Sep 2026 16:16:08 +0100
-Message-ID: <20260917151624.080476730@linuxfoundation.org>
+Subject: [PATCH 6.18 1147/1250] usb: xusbatm: dont rely on id table pointer arithmetic
+Date: Thu, 17 Sep 2026 16:15:42 +0100
+Message-ID: <20260917151623.355347556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,62 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit e533889fc26aea0cd83c90327063f272061dd820 ]
+[ Upstream commit eb6cd6d3d8abeac5d7e8251b898067184afdad8a ]
 
-F2FS_IOC_MOVE_RANGE checks the source range, but not the destination end
-before updating i_size. A source hole can expose this: __clone_blkaddrs()
-skips NULL_ADDR entries and returns success, so the caller can still extend
-the destination inode with unchecked pos_out + len.
+The current code is broken when dynamic ID is involved; in such cases
+usb_device_id parameter of probe lives on the heap and the pointer
+arithmetic will get an index that is wildly out of bound. xusbatm
+initialize the USB device IDs dynamically so it can just use driver_info
+too.
 
-Reject destination overflow and use inode_newsize_ok() before extending
-the destination inode.
+Even with conversion, xusbatm still cannot support dynamic IDs, so also set
+no_dynamic_id.
 
-Fixes: 4dd6f977fc77 ("f2fs: support an ioctl to move a range of data blocks")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ adjusted declaration context due to missing struct f2fs_lock_context. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-6-632dcf3adfba@garyguo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/usb/atm/xusbatm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -3175,8 +3175,9 @@ static int f2fs_move_file_range(struct f
- 	struct inode *src = file_inode(file_in);
- 	struct inode *dst = file_inode(file_out);
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(src);
--	size_t olen = len, dst_max_i_size = 0;
--	size_t dst_osize;
-+	size_t olen = len;
-+	loff_t dst_max_i_size = 0;
-+	loff_t dst_osize, dst_end;
- 	int ret;
+diff --git a/drivers/usb/atm/xusbatm.c b/drivers/usb/atm/xusbatm.c
+index 0befbf63d1cc8..5c1e1f5215555 100644
+--- a/drivers/usb/atm/xusbatm.c
++++ b/drivers/usb/atm/xusbatm.c
+@@ -79,7 +79,7 @@ static int xusbatm_bind(struct usbatm_data *usbatm,
+ 			struct usb_interface *intf, const struct usb_device_id *id)
+ {
+ 	struct usb_device *usb_dev = interface_to_usbdev(intf);
+-	int drv_ix = id - xusbatm_usb_ids;
++	int drv_ix = id->driver_info;
+ 	int rx_alt = rx_altsetting[drv_ix];
+ 	int tx_alt = tx_altsetting[drv_ix];
+ 	struct usb_interface *rx_intf = xusbatm_find_intf(usb_dev, rx_alt, rx_endpoint[drv_ix]);
+@@ -168,7 +168,8 @@ static struct usb_driver xusbatm_usb_driver = {
+ 	.name		= xusbatm_driver_name,
+ 	.probe		= xusbatm_usb_probe,
+ 	.disconnect	= usbatm_usb_disconnect,
+-	.id_table	= xusbatm_usb_ids
++	.id_table	= xusbatm_usb_ids,
++	.no_dynamic_id	= 1,
+ };
  
- 	if (file_in->f_path.mnt != file_out->f_path.mnt ||
-@@ -3234,8 +3235,15 @@ static int f2fs_move_file_range(struct f
- 	}
+ static int __init xusbatm_init(void)
+@@ -190,6 +191,7 @@ static int __init xusbatm_init(void)
+ 		xusbatm_usb_ids[i].match_flags	= USB_DEVICE_ID_MATCH_DEVICE;
+ 		xusbatm_usb_ids[i].idVendor	= vendor[i];
+ 		xusbatm_usb_ids[i].idProduct	= product[i];
++		xusbatm_usb_ids[i].driver_info	= i;
  
- 	dst_osize = dst->i_size;
--	if (pos_out + olen > dst->i_size)
--		dst_max_i_size = pos_out + olen;
-+	if (olen > LLONG_MAX - pos_out)
-+		goto out_unlock;
-+	dst_end = pos_out + olen;
-+	if (dst_end > dst->i_size) {
-+		ret = inode_newsize_ok(dst, dst_end);
-+		if (ret)
-+			goto out_unlock;
-+		dst_max_i_size = dst_end;
-+	}
- 
- 	/* verify the end result is block aligned */
- 	if (!IS_ALIGNED(pos_in, F2FS_BLKSIZE) ||
+ 		xusbatm_drivers[i].driver_name	= xusbatm_driver_name;
+ 		xusbatm_drivers[i].bind		= xusbatm_bind;
+-- 
+2.53.0
+
 
 
