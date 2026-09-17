@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE584E0B63;
-	Thu, 17 Sep 2026 17:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736FA4DEC1D;
+	Thu, 17 Sep 2026 17:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667538; cv=none; b=Fr3GRFUUYa+I8klyed9Bt3T+sCWfe/up9/vmqXAFahe4+UTWUtkHr/D37ikj+Wdno8zJse/qCpDdoXUpAaMlolIugCj2tevukcFIwzsrPqCjYfq2ogsxMNR0Ae8JVO3hiGo0B8WcyKEWCa3uLDIQGFbjmslVTG2jgypei/gLv5E=
+	t=1789667542; cv=none; b=fzHrke8huqEqj493it3asK4QumgNd8z08Z6iLCGF+uGKjPZ2ymKlP0fnEtZKzz1UAlS9y/NcQiaGEjXxpFCDngRsRlqmAfWdOcmFEyAFJUZBTYFLWmlZIqZeG3X3dQdt9Nc+LKiQ6WSHRj8YNsYye6+l6bnuX6EnagwkoxrQJNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667538; c=relaxed/simple;
-	bh=GC1JcjAuO100DZpPN1qHAHfW5EIZ1e8Eu8ra2UeHRek=;
+	s=arc-20240116; t=1789667542; c=relaxed/simple;
+	bh=ibWtNttQj74b6ppGh3Ssi+Tv+V0E6x5FhvIgfqM3rtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmrrnHau8xmAF9JYoffh1ZE9vmYgX4CXqFyjfa4Y8LnlQ3PngHzh4SuQoIuzvpT9npxNaoFWAkXohcw5veieL+6jpioy10W6ztcywtUL+pmGa5SeKyve0hdVyMXGytkqj4vN8VUnyaTEYTr4BiAUXPPXQuBRujWpusrNg4G7RQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFAyOUMy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RfOPm573RO2HKp2FnfF76yE+7hIZA3ziP2aWRh8r4AZxSpHDlZawDLYzO3/04glkdHjjNuix4d2XtmPNGkZH9z+g9ROhe7/6vkDXXOuPH1Bk3zNsywnnCbPTpIXOf0PSyPxUeEy2zBi5zXx5h+Bpc8soCFtqYMHty19rbQTQpLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiCehGXK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFAyOUMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E661F000FF;
-	Thu, 17 Sep 2026 17:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiCehGXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF1A1F000FF;
+	Thu, 17 Sep 2026 17:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667536;
-	bh=+3VhcD+48WY3cd1qxKIMJqFYdLvnn3Z7PNiNqTfIihI=;
+	s=korg; t=1789667539;
+	bh=JuPo1XNBePF/ZWka51Wd7JtPQM8f+2BN/MlD3ZtJXms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFAyOUMySfcEHdnn0aSUQhnj2OUwfJayi+Zhc4aQpyIdylpUHJPd6FdMmDF+bArzz
-	 MOzQeYxGJhMWPLasq3ZXmq03K5g4Q7+eRpB9BMNrYluoff0Fuxju6BDbQnDYjFfqVa
-	 ONpy+sjAokkUppx1maXgW2Ky93nIQ1RXDYFD9Nlo=
+	b=wiCehGXKaWtqH0D+qwAg2JfI3VgO1oa7KxW9K6FGE9po80zbOvjxDmwDD3PTBg+GE
+	 A5vbF7q1+JLbLtZKhiobCHpnxsL3sELb8EB8iCXdJouP4FEr2YmtNUUcPRzcMU/3WY
+	 Jjm2lsbyT8QDu0SuZInWChDJx3fgLnd0UNveUJU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Anders Larsen <al@alarsen.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0089/1102] RDMA/mlx5: Use QP port when decoding responder CQEs
-Date: Thu, 17 Sep 2026 16:00:32 +0100
-Message-ID: <20260917151541.713219956@linuxfoundation.org>
+Subject: [PATCH 6.12 0125/1102] qnx4: handle set_blocksize failures
+Date: Thu, 17 Sep 2026 16:01:08 +0100
+Message-ID: <20260917151542.650606645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,37 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 194762e6e436acde0f8f6aef44200b0058c36791 ]
+[ Upstream commit c7d911ea1cc9a63b07e52f5e75b263be0615b289 ]
 
-The responder CQE path determines the link layer via
-rdma_port_get_link_layer(). Use qp->port instead of
-hardcoding port 1, which can mis-decode completions on
-multi-port devices.
+qnx4 uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting will hit the
 
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260410074046.2044595-1-zhaochenguang@kylinos.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+        BUG_ON(offset >= folio_size(folio));
+
+in folio_set_bh on the first __bread_gfp call.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-4-hch@lst.de
+Acked-by: Anders Larsen <al@alarsen.net>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 3 ++-
+ fs/qnx4/inode.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 1aa5311b03e9f..9e04b595c77fd 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -169,7 +169,8 @@ enum {
- static void handle_responder(struct ib_wc *wc, struct mlx5_cqe64 *cqe,
- 			     struct mlx5_ib_qp *qp)
- {
--	enum rdma_link_layer ll = rdma_port_get_link_layer(qp->ibqp.device, 1);
-+	enum rdma_link_layer ll =
-+		rdma_port_get_link_layer(qp->ibqp.device, qp->port);
- 	struct mlx5_ib_dev *dev = to_mdev(qp->ibqp.device);
- 	struct mlx5_ib_srq *srq = NULL;
- 	struct mlx5_ib_wq *wq;
+diff --git a/fs/qnx4/inode.c b/fs/qnx4/inode.c
+index e399e2dd3a124..7a15ad20d98a2 100644
+--- a/fs/qnx4/inode.c
++++ b/fs/qnx4/inode.c
+@@ -202,7 +202,8 @@ static int qnx4_fill_super(struct super_block *s, struct fs_context *fc)
+ 		return -ENOMEM;
+ 	s->s_fs_info = qs;
+ 
+-	sb_set_blocksize(s, QNX4_BLOCK_SIZE);
++	if (!sb_set_blocksize(s, QNX4_BLOCK_SIZE))
++		return -EINVAL;
+ 
+ 	s->s_op = &qnx4_sops;
+ 	s->s_magic = QNX4_SUPER_MAGIC;
 -- 
 2.53.0
 
