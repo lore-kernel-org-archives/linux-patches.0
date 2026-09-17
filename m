@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F978381EBB;
-	Thu, 17 Sep 2026 18:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08774E0B79;
+	Thu, 17 Sep 2026 18:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668414; cv=none; b=JW0PMTlTip+xwQdCuTdUP7viPrb38vbTF6VT1T7mpD4jN19gq4qHh1CL+9Hiw4T2fOVSLhLLAFwFkyCs4WYMPpr0ECHGeeHK2voR+MOfAkgOl0meQHJRcKmNjsep4EPuF6AFwuyjz2Q3sWJ9IzAfwlVSjUESvLQPhqOVoOpb3Hc=
+	t=1789668417; cv=none; b=mhCkfM7C2mTokqTvg/dY9TruPe6PyR9Zah6e5Bn40B4T9Iq7vFS1TKtPhhh4iMnBk04d8a2QHT5XS+XydlXWnC9ldZeP/waltUjLSj5BN3rozDh5KdrMs16w2d5cx+emt3zBHhyOFvboX6r9mQscymNE6FiJFXr4KA4n5CmTVZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668414; c=relaxed/simple;
-	bh=RtFQvZHg0fncd6adJ6wsPS3zzyvbzfabvbwYf4NWLQ0=;
+	s=arc-20240116; t=1789668417; c=relaxed/simple;
+	bh=t9ggi4X/Riy14SVN9gBFSvG9481YDu/gu1tLXlR7nVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4CBqvracARm3BTflHWSszdH4k6nzGfKECf2HggvF8KoDq2pIMyU+uhxaYJqRZEOclFjQajU8+WJfclaoXzeRuqYbdwC+OetAOuKSdWk1jzCWpUZbO1NW8ehWHj73TFLTBZeutxjBSu2fA5pgGd0kkRq/Qh1frGYqwJHMl9nnFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1+TRLVR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+0rEeOtzDB89z0+zYyrnDTyu35crqhGodut/IoRb5RBQTHLB5fVMyllPAZIYSe8dT+4wYAapd0PYsIz/YBQJ87rRLT+50QXDkXV2xk3KlV7EgPnML5eZAGXlj4+XV64Pls599A2Z2kiqZKmAc8MUW1d+DMfDESunl9wMtCRhlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewkWpINI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1+TRLVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FE71F000FF;
-	Thu, 17 Sep 2026 18:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewkWpINI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155A11F000FF;
+	Thu, 17 Sep 2026 18:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668413;
-	bh=ksbpZjhlr9qp9zGD9y4JlQ4eG5rk34zkuD8i7i/gNn4=;
+	s=korg; t=1789668416;
+	bh=jGNBVGDtt67Lww+YFcnYExbcIC6UZ3Jzrsm+tsuZ0FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1+TRLVRSbnpMy8G9eQrfyJ7Of2IeFSAuuyZ2IEXcWheQQNE83jdbu6mwNfZTqfEm
-	 sGTPI8Eo0yKZvCHEGA6ZP1dE3jR1vtKOfv11C+Hfi5x3HjrG6FUSZvG+VsgUmitMxc
-	 c6eCO1s4adfBnktsVX3UQjTDYSUTWrYM9h0BZLEA=
+	b=ewkWpINIvT6JxBFgj6cpFwc+dcu5Pvw4XjjX/MbBk1fsFHCJvxCQ+xIWDZRUCc1/S
+	 GZYsDWRSyTNwCd11/CeQ4pyJW/hWlv5jWAplOWMqDkN1WdiQcxAC8mk4o5j6U1P61q
+	 HlQQgD7seCPNt9HOynGq7N4ndtLJGggroqyrc+0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0418/1102] wifi: iwlwifi: mvm: fix sched scan IE sizing
-Date: Thu, 17 Sep 2026 16:06:01 +0100
-Message-ID: <20260917151550.160284952@linuxfoundation.org>
+Subject: [PATCH 6.12 0419/1102] wifi: iwlwifi: pcie: null RX pointers after free
+Date: Thu, 17 Sep 2026 16:06:02 +0100
+Message-ID: <20260917151550.185949669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,64 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 4f155d262b31b9b17e0f9856bdabe0968eb4930f ]
+[ Upstream commit 2c79d7a7b583050c9f58041465cb46fe3483ab5d ]
 
-Scheduled scan built the probe request before iwl_mvm_scan_fits(),
-so oversized IEs could be copied into the fixed preq buffer before
-length validation. Move iwl_mvm_build_scan_probe() after the fits
-check.
+When iwl_pcie_tx_init() fails after RX init, nic init unwinds via
+iwl_pcie_rx_free().
 
-Also advertise max_sched_scan_ie_len using iwl_mvm_max_scan_ie_len()
-so userspace limits account for driver-inserted DS/TPC bytes.
+The freed RX members stayed non-NULL on the live transport object,
+so later teardown or retry could touch stale RX state.
+Set rx_pool, global_table, rxq, and alloc_page to NULL after free
+to make repeated cleanup and retry paths safe.
 
 Assisted-by: GitHubCopilot:gpt-5.3-codex
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb922efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid
+Link: https://patch.msgid.link/20260714141909.33e8978d8b36.Ibaedd4b0ce01405b940de7b90223b6d2c5136ffd@changeid
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 4 +---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c     | 4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 9256bf81d1287..6ac4215677057 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -619,9 +619,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 	hw->wiphy->max_sched_scan_reqs = 1;
- 	hw->wiphy->max_sched_scan_ssids = PROBE_OPTION_MAX;
- 	hw->wiphy->max_match_sets = iwl_umac_scan_get_max_profiles(mvm->fw);
--	/* we create the 802.11 header and zero length SSID IE. */
--	hw->wiphy->max_sched_scan_ie_len =
--		SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2;
-+	hw->wiphy->max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm);
- 	hw->wiphy->max_sched_scan_plans = IWL_MAX_SCHED_SCAN_PLANS;
- 	hw->wiphy->max_sched_scan_plan_interval = U16_MAX;
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 853b95709a792..564b83f5356f2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3149,8 +3149,6 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 	if (ret)
- 		return ret;
- 
--	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
--
- 	/* for 6 GHZ band only PSC channels need to be added */
- 	for (i = 0; i < params.n_channels; i++) {
- 		struct ieee80211_channel *channel = params.channels[i];
-@@ -3184,6 +3182,8 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 		goto out;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index afb88eab8174b..4bd5d2a4cfc8e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2003-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2003-2014, 2018-2024, 2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -1241,11 +1241,16 @@ void iwl_pcie_rx_free(struct iwl_trans *trans)
+ 		}
  	}
+ 	kfree(trans_pcie->rx_pool);
++	trans_pcie->rx_pool = NULL;
+ 	kfree(trans_pcie->global_table);
++	trans_pcie->global_table = NULL;
+ 	kfree(trans_pcie->rxq);
++	trans_pcie->rxq = NULL;
  
-+	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
-+
- 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
- 	if (uid < 0) {
- 		ret = uid;
+-	if (trans_pcie->alloc_page)
++	if (trans_pcie->alloc_page) {
+ 		__free_pages(trans_pcie->alloc_page, trans_pcie->rx_page_order);
++		trans_pcie->alloc_page = NULL;
++	}
+ }
+ 
+ static void iwl_pcie_rx_move_to_allocator(struct iwl_rxq *rxq,
 -- 
 2.53.0
 
