@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16D54B7A59;
-	Thu, 17 Sep 2026 17:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6E85349C4;
+	Thu, 17 Sep 2026 17:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664509; cv=none; b=Bzsd+6+sgH6WdcOCwGv7h6Lfuv1x078yMxNQfXVSn2R3//2AsdTeBsfEFlJskPMFWH2MzJB+wXRo+4F2HrEx7HGSg8JjjhuDzNBfddJb1+stQAf3RteXtcGonU+QlVlzo4xYEmIPe/d9d5MhQWWhgvVBCmmLlPWn4EzLDwLh5JQ=
+	t=1789664512; cv=none; b=Gy/wG7fz7lm5IwIsdWr3kdP4KwXWzUqY2H9XYPPK57XTAe1KmRWr9gwxgwv7Q1nu562eOoMZxJOpftgC98PUiXdsGVfhMqeFNOjAG4ORaTD6ND03VqlBfb4G/2fhYPsj99cDQOhvHEyAv+ZPQ3O+4D3mel+yFBnEozNpy4U9zT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664509; c=relaxed/simple;
-	bh=52RLECVWT2b3ivfFRpEI4LqUMQ94vtzhC+5dAnUPPSk=;
+	s=arc-20240116; t=1789664512; c=relaxed/simple;
+	bh=VpdSrLV9dGLJHkKIazXlPm5ZjA+y0/o6CtvYPVl23A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VERx77XC7xSnpgiTsy0hCYDLeFKF2gzGJ49NcUvg7tLbpV8GbBKj/PzNp0Jef6C++sm+rE/uTHDSN2UpAQuIaIxdMuUpZh5P1r+rIz/kIvV7ynfA2EByZdN6Y/o4R9m0+TYCrmG/m7PNQG4OgXP6DrPYvYXgyQjdae4LgUSCmTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1nMyFb4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZQUgLkgWcy3kv/vH4QxA0tXxOg91yOOL+11SndW0NbD4eQiqBk0bEonU3XRD07NVo2ORG2PY+MSN7VDYJ8TOWdGo3n7EjufgWcpFmop7LqDKqr9WOSZvuEWI5jyz1wXCq3xKzIwDrtaYS9lLBWGyZAM5UfV+Wj/gOn1Zqd3dzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYYoVgDM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1nMyFb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304551F000FF;
-	Thu, 17 Sep 2026 17:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYYoVgDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440FC1F000FF;
+	Thu, 17 Sep 2026 17:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664507;
-	bh=xsfgLiuvSgshbuRP5FtyTheEAUBm6peBRNSJEwkkgsk=;
+	s=korg; t=1789664510;
+	bh=KDQr+wn194ABy13vOxq4y5DN2eP6Xjrcg570Ob46sLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P1nMyFb4KEMtiI2oFJNHHOIKmwlq9mwgSk4p59u9Fr5sa4/8J5BJQU4gej6EZjr0F
-	 QM9ahnfj2IxGfY/dy6zH3To6gdZPNfkbk/cnRFMwyiXuhXuv5uE3p1zKWHlw0a9dwn
-	 ykblYc1jDoVA8n/GWwNRM5E633T1HuCmZkGqxxkI=
+	b=bYYoVgDMj1humIwj1Kenrjw7yHsa2uqSABIylhHYgKoRo+FzmSAgXizBDf2oVeJKj
+	 /tR6G3QWrO6LYJ0VbXwaCtw2WgqJn0hkbd2gYNfj+/FDcLjPr+ArNxzWNrP/RjiVN4
+	 Vp7dP3l0lSbSL0CgY3KL9z7nh4t1lsTuxJI+1YI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>,
-	Tze Yee Ng <tze.yee.ng@altera.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0388/1250] dmaengine: altera-msgdma: Use memcpy_toio for descriptor FIFO writes
-Date: Thu, 17 Sep 2026 16:03:03 +0100
-Message-ID: <20260917151602.554660824@linuxfoundation.org>
+Subject: [PATCH 6.18 0397/1250] Bluetooth: btusb: MT7925: Add VID/PID 0e8d/8c38
+Date: Thu, 17 Sep 2026 16:03:12 +0100
+Message-ID: <20260917151602.789891443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,85 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 94963138cce29f85605d76c94fa1d43a0335ead9 ]
+[ Upstream commit 69b2f05df3ee63e1273608cdb81a7d664e9de2b8 ]
 
-The descriptor FIFO requires that all words of a descriptor are written
-in order, with the control word written last to flush it into the DMA
-engine. Using memcpy() with __force to __iomem is not the correct API
-and does not guarantee appropriate MMIO access on all architectures.
+Add VID 0e8d & PID 8c38 for MediaTek MT7925 USB Bluetooth chip.
 
-Replace the descriptor body copy with memcpy_toio(), using
-offsetof(struct msgdma_extended_desc, control) to exclude the control
-word. This matches the previous sizeof(desc->hw_desc) - sizeof(u32)
-length only when control is the last struct member; add a static_assert
-to enforce that layout so a future field after control cannot silently
-break FIFO ordering.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Keep writing the control word separately with write barriers, so it
-remains the final word pushed into the FIFO.
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=8c38 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Signed-off-by: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
-Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
-Link: https://patch.msgid.link/f6f3b4a2e2eb0eb1a51976de3f5d1ef5bab9bd76.1779697226.git.tze.yee.ng@altera.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/altera-msgdma.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-index a203fdd84950e..e1811a9be0bbe 100644
---- a/drivers/dma/altera-msgdma.c
-+++ b/drivers/dma/altera-msgdma.c
-@@ -498,6 +498,11 @@ static void msgdma_copy_one(struct msgdma_device *mdev,
- {
- 	void __iomem *hw_desc = mdev->desc;
- 
-+	/* Ensure control is the last field — required for correct FIFO flush ordering */
-+	static_assert(offsetof(struct msgdma_extended_desc, control) ==
-+		      sizeof(struct msgdma_extended_desc) - sizeof(u32),
-+		      "control must be the last field in msgdma_extended_desc");
-+
- 	/*
- 	 * Check if the DESC FIFO it not full. If its full, we need to wait
- 	 * for at least one entry to become free again
-@@ -506,17 +511,18 @@ static void msgdma_copy_one(struct msgdma_device *mdev,
- 	       MSGDMA_CSR_STAT_DESC_BUF_FULL)
- 		mdelay(1);
- 
-+	/* Ensure control is the last field — required for correct FIFO flush ordering */
-+	static_assert(offsetof(struct msgdma_extended_desc, control) ==
-+			sizeof(struct msgdma_extended_desc) - sizeof(u32),
-+			"control must be the last field in msgdma_extended_desc");
-+
- 	/*
--	 * The descriptor needs to get copied into the descriptor FIFO
--	 * of the DMA controller. The descriptor will get flushed to the
--	 * FIFO, once the last word (control word) is written. Since we
--	 * are not 100% sure that memcpy() writes all word in the "correct"
--	 * order (address from low to high) on all architectures, we make
--	 * sure this control word is written last by single coding it and
--	 * adding some write-barriers here.
-+	 * Copy the descriptor into the descriptor FIFO of the DMA controller,
-+	 * excluding the control word. The FIFO is flushed and the descriptor
-+	 * becomes valid once the control word is written last.
- 	 */
--	memcpy((void __force *)hw_desc, &desc->hw_desc,
--	       sizeof(desc->hw_desc) - sizeof(u32));
-+	memcpy_toio(hw_desc, &desc->hw_desc,
-+		    offsetof(struct msgdma_extended_desc, control));
- 
- 	/* Write control word last to flush this descriptor into the FIFO */
- 	mdev->idle = false;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 0d2a205528b9d..c022f145d1174 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -755,6 +755,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe151), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0e8d, 0x8c38), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3602), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3603), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
