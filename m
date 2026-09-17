@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D75E4848B5;
-	Thu, 17 Sep 2026 15:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F204973B9;
+	Thu, 17 Sep 2026 15:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660657; cv=none; b=Ui8tbNPZp4LnuCSTbxh9cx1/7Jfc+2Jd9NjGzgo0oCk9RcriYEucOfSBM/TzyACMTbFVoSp+S/jgVcEDVjlA30H+4bKxpmUtozgM9PO5tYewEki0X4qSJ4JLAXeOL2xDSb0154MONhVTtalwOpRAHqa3e6NXWu3VHhPOTLIZyyg=
+	t=1789660660; cv=none; b=kiPwhjQ1Gmm6QMwLLqXWOe9MrSC3hMNjDPVpKiC8aTx7SZ1iE/E4qpqso5lLoDg/zLb6gM2PRFuqva2lac6ZQo8NLNrJkbjD7MyZEx+u8khbfmhtxujrTzdOtlABjLyS0MSmSoZNoIMPcOQQn4eq5QNEzcSHvmhcJYortpDqo5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660657; c=relaxed/simple;
-	bh=j+W16nc4Xgj/STxbQEPfT2xwbgO10jZUoV2ZHmFFJFI=;
+	s=arc-20240116; t=1789660660; c=relaxed/simple;
+	bh=Z1ihOWX6aRbcg2NS6Tn4swGEWVzI7RF5Gf4eFuG+8BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPfEwA45thLBWcCeKcl2GvUbuKw+juG/HiWUff2GIvIa+FYSX/6DvZC3EEi82IWJ/pWgNK6F16nimCYOiuu8yirHbqk2W5OxWavLQeV6cnubEiFENY7Bke0AfQeN6ta/7C8mqVsXN78QAJxXsNWMVqp/PzRSwQguehb2/hNo2lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsVu8FS4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EbR2Hb0KgF+z47RqtJzcetrJj+vwQ5tquuloprPNbV+987JuWpp+rQrhNlYN0Lw1ci3NZx/R/YwGbsoDuIVEUhh596y2BYoAX7OWPmK61pBQkm0U73wBNfoHIDXdsqV1Aqaj5In0iVS5F4a5XwmVZ0POrV86W+GyVxNTOmmytVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCR0PVlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsVu8FS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C392F1F000FF;
-	Thu, 17 Sep 2026 15:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCR0PVlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A6F1F00893;
+	Thu, 17 Sep 2026 15:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660656;
-	bh=U6H6U2T5Qc2jH8K3Ne78Zc9Y47oCUy14GVo+ECS8VLA=;
+	s=korg; t=1789660659;
+	bh=xyTCjh/stc5i1OEaBPhxzPF5PDmN/QQQYzwnKmRzC00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WsVu8FS4eZ+bQTsGmkObukcjim/jBLB6/Sv3aD0udocLnlYjmuGL8RLrvEgC6PGfR
-	 2baZ4RkQVO0+AHv5YOvTJ9W8VX4cXvswAyH3gXgLPIZxf89fnwNJINJmm7uOSM8D82
-	 3Nqfm9GmvxY7ih+6b6k+WGjMHQhRMNYFP3mNjeVk=
+	b=VCR0PVltWFXtMXYlp1YnHQIHt1rXD9p+KXIHVvVCRwPjKNyBJaWNxReniEIPv9huQ
+	 XSb5bhbcir8njFODvEs42cYUpzlTrGSThz6CGK0QGyLUfSkccCG/jcGIljT+3L9t5C
+	 6ReNxrSa4zRbYRs8bnVIPDsMmfQwv0fkrlVK4uUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 658/733] xfs: fix unit conversions in per_binval computation
-Date: Thu, 17 Sep 2026 16:16:06 +0100
-Message-ID: <20260917151409.059914752@linuxfoundation.org>
+Subject: [PATCH 7.2 667/733] xfs: fix name string recording in slowpath pptr tracepoints
+Date: Thu, 17 Sep 2026 16:16:15 +0100
+Message-ID: <20260917151409.322664653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,43 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 05cff7c2b79f76c7cfe90613a60e16aaaa051ef7 upstream.
+commit 72d0a3e4405c1353869bfbbc67c7b8a29df7afd0 upstream.
 
-LOLLM noticed that we're doing the unit conversion in the per_binval
-computation backwards -- xfs_buf_inval_log_space's second parameter is
-supposed to be in bytes, but max_binval is in units of fsblocks.  Hence
-the conversion should be FSB -> B, not the other way around.
+LOLLM observes that we memcpy from the xfs_name object, not the name
+string pointed to by the xfs_name.  Fix that.
 
-Cc: stable@vger.kernel.org # v6.18
-Fixes: b2311ec6778fcd ("xfs: compute per-AG extent reap limits dynamically")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: b961c8bf1fc3d0 ("xfs: deferred scrub of dirents")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/reap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/trace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -601,7 +601,7 @@ xreap_configure_agextent_limits(
- 
- 	/* Maximum overhead of invalidating one buffer. */
- 	const unsigned int	per_binval =
--		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
-+		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
- 
- 	/*
- 	 * For each transaction in a reap chain, we can delete some number of
-@@ -680,7 +680,7 @@ xreap_configure_agcow_limits(
- 
- 	/* Overhead of invalidating one buffer */
- 	const unsigned int	per_binval =
--		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
-+		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
- 
- 	/*
- 	 * For each transaction in a reap chain, we can delete some number of
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -1640,7 +1640,7 @@ DECLARE_EVENT_CLASS(xchk_pptr_class,
+ 		__entry->dev = ip->i_mount->m_super->s_dev;
+ 		__entry->ino = I_INO(ip);
+ 		__entry->namelen = name->len;
+-		memcpy(__get_str(name), name, name->len);
++		memcpy(__get_str(name), name->name, name->len);
+ 		__entry->far_ino = far_ino;
+ 	),
+ 	TP_printk("dev %d:%d ino 0x%llx name '%.*s' far_ino 0x%llx",
 
 
