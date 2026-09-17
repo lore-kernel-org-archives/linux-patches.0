@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEACB4848B1;
-	Thu, 17 Sep 2026 18:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4C4848B1;
+	Thu, 17 Sep 2026 18:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671041; cv=none; b=UaU0O72uspoz1MXq/VFWm5vPN9VCWgtFVn96GK0EuZmJJ1wO85dWQpoaCuxwcsC5kjmayJvM0yGp+DcLH6v4XpXa03pz99w/RhjbYUq3H10ItsONhu0ik2WFw/Ocz1xC+vJT8B/fBldmXggGDIPltUDTRBnmx04cdLN3EYjqrIY=
+	t=1789671044; cv=none; b=a47BwdoBvFeS/AfwGZlCPK+fk/JW0+4h4EHdpznAasIsUifbxVJ5fHYu+eoX1fCGOcRtR8BPY7ef+oJIVYamZP/FoMHyEBBqxjJBknMK0TSoQjvh0Qh9TExtjJUj+JhKTDYOrHFtlhCIKOzzUDuaJ+MzUJhUnqXe76ielEjBF+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671041; c=relaxed/simple;
-	bh=3Uv1KHdj2kKanfErcjvQyO6K4K0YSNLrkfHarT8zYOc=;
+	s=arc-20240116; t=1789671044; c=relaxed/simple;
+	bh=Cl03GqdC50K+9u/uZMfILOgnGZHkt99D3WvAVbPDXSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1/anaXP/aXk9wHeuFVe2BrH7ynwStrsOoUkIBWBh6ahpVmiqfkciS25U+xdfMelwoY9sGajLcEebpNk47vUPnRO20QIyBjfsqBO8XlpyqWTAaUAuTgjGrkRk2cU4NTIXa1ztDZYi9sr3SiCMWH1at0eOucX9zcJhyUtAcn5trg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLbagi9V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T66D26N+bL+QoAZvixSdvGuJWbPrRXG/HYRO0tRYVK8UMR8VydPXg1Z9chI72SDvroqs62uTvfYMYPmGmYlicEE3rfwLIlWcsUA765ZjkQffmExGU0c27ID/7BMDvA+Jhg5kRP9iNlUO+SosTTbNbC1SAv/p94EXwpfiJoZ1fjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6HBBZlL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLbagi9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A8D1F000FF;
-	Thu, 17 Sep 2026 18:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6HBBZlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176751F000FF;
+	Thu, 17 Sep 2026 18:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671039;
-	bh=0988Ekr+GwqHNW35iEbvryguOF2p1cxn1CiZ6c7wUfY=;
+	s=korg; t=1789671042;
+	bh=rHZ0hcYcaaWz3amPpBvxexdXp7XsVY3iGagk2v6eWjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLbagi9VDdVCxepTd8UhvEEDzwdM+zDVWJJfdaUviTmd0cLtBjGlkNlwqr5aE89Jj
-	 cWCGDNjFdoQ6l0JdQ6u0ieYuVTmURXRwF0nDoqPcrn++h1kbCRClQW1bAGHGQw4h04
-	 bUixDxfUaw3hRke5LNQ3Xrg+vyCE4m6/SflMam3E=
+	b=w6HBBZlLSmdtCd3EYAU/g7nVWjiIV419t0oP3H08q23DWpUPURYm91v1yQ/WyjLSh
+	 3FTcsUSsLKgt6D7V+44Q8SkTO+PsIpo+DxwzclxyTmUOgLu4th9lkjbSzNNc+RWqwg
+	 mNj3dspU4+hQBdegXVpRd/bZcp6rRptC4NiqvxXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nicolas Schier <nsc@kernel.org>
-Subject: [PATCH 6.12 0850/1102] scripts/sorttable: Mark long_size as __maybe_unused
-Date: Thu, 17 Sep 2026 16:13:13 +0100
-Message-ID: <20260917151601.877650620@linuxfoundation.org>
+	syzbot+df1db6e034b3953e19f5@syzkaller.appspotmail.com,
+	Jeffin Philip <jeffinphilip14@gmail.com>,
+	Ian Kent <raven@themaw.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 0851/1102] fs: autofs: fix memory leak in autofs_fill_super()
+Date: Thu, 17 Sep 2026 16:13:14 +0100
+Message-ID: <20260917151601.902976956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jeffin Philip <jeffinphilip14@gmail.com>
 
-commit 4f73462856576797b8f3c55564a9be99f76dc67b upstream.
+commit 5ab54837fce04a1c9923d0bfd3d5de51fdc768b3 upstream.
 
-When building in a kernel tree prior to commit b055f4c431e3 ("sorttable:
-Move ELF parsing into scripts/elf-parse.[ch]") with clang-23 or newer,
-which implements a new warning under -Wunused-but-set-variable for
-static global variable, there is a warning from sorttable because
-long_size is unused when MCOUNT_SORT_ENABLED is not set:
+In autofs_fill_super(), we create a new inode using
+autofs_new_ino(), however, if we fail to create root_inode,
+(that is, root_inode failure path), we return -ENOMEM without
+freeing the new inode(ino) that we created causing a memory leak.
+Fix this by adding autofs_free_ino() to free the inode we created
+in root_inode failure path before returning ENOMEM.
 
-  scripts/sorttable.c:452:12: error: variable 'long_size' set but not used [-Werror,-Wunused-but-set-global]
-    452 | static int long_size;
-        |            ^
-
-Mark long_size as __maybe_unused to avoid inserting more ugly #ifdef
-directives while insuring the warning does not reappear, as the
-aforementioned change does not alter the uses of long_size, so it
-appears to be coincidence that the warning disappears after this
-refactoring.
-
+Reported-by: syzbot+df1db6e034b3953e19f5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=df1db6e034b3953e19f5
+Fixes: 66917f85db60 ("autofs: add: new_inode check in autofs_fill_super()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260831-sorttable-long_size-unused-but-set-global-v1-1-8a96b88697e5@kernel.org
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
+Link: https://patch.msgid.link/20260903081048.132524-1-jeffinphilip14@gmail.com
+Signed-off-by: Ian Kent <raven@themaw.net>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/autofs/inode.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/scripts/sorttable.c
-+++ b/scripts/sorttable.c
-@@ -449,7 +449,7 @@ static inline void *get_index(void *star
- }
+--- a/fs/autofs/inode.c
++++ b/fs/autofs/inode.c
+@@ -322,8 +322,10 @@ static int autofs_fill_super(struct supe
+ 		return -ENOMEM;
  
- static int extable_ent_size;
--static int long_size;
-+static int long_size __maybe_unused;
+ 	root_inode = autofs_get_inode(s, S_IFDIR | 0755);
+-	if (!root_inode)
++	if (!root_inode) {
++		autofs_free_ino(ino);
+ 		return -ENOMEM;
++	}
  
- #define ERRSTR_MAXSZ	256
- 
+ 	root_inode->i_uid = ctx->uid;
+ 	root_inode->i_gid = ctx->gid;
 
 
