@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416734C10C4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE1B4848B5;
 	Thu, 17 Sep 2026 15:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659157; cv=none; b=lMVSRLmiTyNydifSb5RFS4gGxJ+/AS1mLLS8XHoS7WKFO3kNoFP5xI5aTBDB2M6h75TM4TaZy8HJ2kOik1pvEHTytxqwA0DAs7Go2kXy5TOVCKWA6PuUXeJ6ZybbtaWdIxDNqmTHUV9G/+BhR2ItrMVoUmoue2MV1LpDExR6EyQ=
+	t=1789659157; cv=none; b=FTw6/ptdAHY6YnLhDYHs5ZlppeBGv8mwhvAn7Qvty+JWN++N4uPpSH6/hdhWiCewcm021MIpv1pPDgqHNufG1aMMeZT6uzasS4wJM+JV7YQxSgF9bu5iT1+FbfthP9QvAfrI/k5qQNChsyTa8EcED12SwnJHMIe4ghxX8+G97xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659157; c=relaxed/simple;
-	bh=W5dobtXqN/SOadVbskOeu21Eex1OOMDbYzqswbP9rAY=;
+	bh=VvmDxbXA7CRWLWJQQnO2FrBliKXMWGSUyCpeAYjgMys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTFfoUc/HAG2fNoA1+d0rAREjuNlZ7xhfednJutEwn3ayMEolt89VXjkEQfxmxvm6wDanj9cbLJlqwfmTGa2FG0Q/AcZBkAEPSmgNsJAGR735TZYVRgKI9l9wenKgyKvm3YD0HixcQbKCv0vN8TF9da6GZ45/BYYLFbzAvEyc5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLHo9s5K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T3lijdQy4oaVgN5+piJqGbCrpFqJixWcmGA7P4yL2mL7Jr5dyh2q2X0AXJke75Md0rQG134aILDcG6tjEGQx9OxYhAX0WvgLGrC6LFNrgu4mF2wqeuTr+mz8TGsgu1EtSdDgOHbYrKmRklr2s7E0/MfVqdmP71N9i6q5QOv3yIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOTeBP0V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLHo9s5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF331F00899;
-	Thu, 17 Sep 2026 15:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOTeBP0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B0F1F0089A;
+	Thu, 17 Sep 2026 15:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659150;
-	bh=FvFRPjxW72fGstZqAdIiQVyGlCokUZAaOjDGSjPTE0E=;
+	s=korg; t=1789659147;
+	bh=1HuOlMj0EwhfggARsl3jh8EuniPnEfj69PfY6TbUOO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tLHo9s5Klu3HwVhbegCDYrEP67CHXj5N6UWFoABUUn+7hbZjtDuGIJrWxZM29utTd
-	 Kgs8uAjFAzhNk1HjicWt5NEbGBj4P7MvjDnBbcBSFkSkx4DvF0GJvubH4mDiufRanT
-	 Dg8lPM4Zs+sfr1VLq9mehKWf+MVu3njnnh5P1hpc=
+	b=hOTeBP0VX8dy+4VAvhZzFyjIGjSVcfBj1vXh1NeWH58vg/D2c5QzjmsBnrCtPTHmN
+	 9S4kQ6BjLuSCSsMAevyuvxDJa6D4N2gXfH6phd+alqNV95kd8QdOo5FQKAVHpRwQYp
+	 jrq/0iXbTByQf1aJTLSzBZDAs8snff0L745Cgp3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Auger <eauger@redhat.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 123/733] ASoC: ab8500: Skip missing DMIC GPIOs on AB8505
-Date: Thu, 17 Sep 2026 16:07:11 +0100
-Message-ID: <20260917151354.073333606@linuxfoundation.org>
+Subject: [PATCH 7.2 158/733] block: save page offset gaps in cloned bio
+Date: Thu, 17 Sep 2026 16:07:46 +0100
+Message-ID: <20260917151355.002906661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,77 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 711178754287db3fd0f7accff3c2a7575f8873b7 ]
+[ Upstream commit 96c8ea3c5add7920b3c43840d1ea76b3354c8d2d ]
 
-GPIO27, GPIO29 and GPIO31 provide the digital microphone clock
-outputs on AB8500, but these GPIOs do not exist on AB8505. The shared
-codec driver nevertheless accesses their direction register while
-setting up every AB8505 codec.
+The cloned bio needs to inherit the accumulated gaps between vectors so
+that we can know if this bio can subscribe to the iova coalescing
+optimization.
 
-Identify the parent MFD device and leave the nonexistent GPIOs
-untouched on AB8505.
+When cloning for a split, the gap only applies to the front bio since
+that's as far as has been processed. The remaining bio can reset its
+gaps to 0 since it advanced past the checked vectors, and will start its
+accounting from there on the next split check.
 
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-6-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2f6b2565d43c ("block: accumulate memory segment gaps per bio")
+Reported-by: Eric Auger <eauger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260819154937.3903312-1-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ block/bio.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 11142d15df450..e1a0e35836e6c 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -1540,6 +1540,8 @@ static int ab8500_audio_init_audioblock(struct snd_soc_component *component)
- static int ab8500_audio_setup_mics(struct snd_soc_component *component,
- 			struct amic_settings *amics)
- {
-+	struct device *dev = component->dev;
-+	struct ab8500 *ab8500 = dev_get_drvdata(dev->parent);
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	u8 value8;
- 	unsigned int value;
-@@ -1548,20 +1550,21 @@ static int ab8500_audio_setup_mics(struct snd_soc_component *component,
+diff --git a/block/bio.c b/block/bio.c
+index 5018a6fc2f36b..bdcb60cb8d88f 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -859,6 +859,7 @@ static int __bio_clone(struct bio *bio, struct bio *bio_src, gfp_t gfp)
+ 	bio->bi_ioprio = bio_src->bi_ioprio;
+ 	bio->bi_write_hint = bio_src->bi_write_hint;
+ 	bio->bi_write_stream = bio_src->bi_write_stream;
++	bio->bi_bvec_gap_bit = bio_src->bi_bvec_gap_bit;
+ 	bio->bi_iter = bio_src->bi_iter;
  
- 	dev_dbg(component->dev, "%s: Enter.\n", __func__);
+ 	if (bio->bi_bdev) {
+@@ -1913,6 +1914,14 @@ struct bio *bio_split(struct bio *bio, int sectors,
  
--	/* Set DMic-clocks to outputs */
--	status = abx500_get_register_interruptible(component->dev, AB8500_MISC,
--						AB8500_GPIO_DIR4_REG,
--						&value8);
--	if (status < 0)
--		return status;
--	value = value8 | GPIO27_DIR_OUTPUT | GPIO29_DIR_OUTPUT |
--		GPIO31_DIR_OUTPUT;
--	status = abx500_set_register_interruptible(component->dev,
--						AB8500_MISC,
--						AB8500_GPIO_DIR4_REG,
--						value);
--	if (status < 0)
--		return status;
-+	/* Set DMic-clocks to outputs; these GPIOs do not exist on AB8505. */
-+	if (!is_ab8505(ab8500)) {
-+		status = abx500_get_register_interruptible(dev, AB8500_MISC,
-+							   AB8500_GPIO_DIR4_REG,
-+							   &value8);
-+		if (status < 0)
-+			return status;
-+		value = value8 | GPIO27_DIR_OUTPUT | GPIO29_DIR_OUTPUT |
-+			GPIO31_DIR_OUTPUT;
-+		status = abx500_set_register_interruptible(dev, AB8500_MISC,
-+							   AB8500_GPIO_DIR4_REG,
-+							   value);
-+		if (status < 0)
-+			return status;
-+	}
+ 	bio_advance(bio, split->bi_iter.bi_size);
  
- 	/* Attach regulators to AMic DAPM-paths */
- 	dev_dbg(component->dev, "%s: Mic 1a regulator: %s\n", __func__,
++	/*
++	 * The gap bit is set when splitting to limits and only applies to the
++	 * front bio that was split off. The remaining bio will calcualte its
++	 * gap value when it is subsequently split to limits, so it is safe to
++	 * re-initialize the value back to 0.
++	 */
++	bio->bi_bvec_gap_bit = 0;
++
+ 	if (bio_flagged(bio, BIO_TRACE_COMPLETION))
+ 		bio_set_flag(split, BIO_TRACE_COMPLETION);
+ 
 -- 
 2.53.0
 
