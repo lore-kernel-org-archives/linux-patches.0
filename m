@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5660515964;
-	Thu, 17 Sep 2026 16:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99EB5158BC;
+	Thu, 17 Sep 2026 16:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664094; cv=none; b=MeDhEUcKuS+y5kGDZF9G+aB9rf6hnTaqDAvg0ScRIWhKHsLqTlpH33ILXTgOi4bXn7D2WK6qmLqmvXUoMMugRjgY45662Pv3erh5oEWv+K+UCsVEQxmJeH34vuF+YJC2M71bI+lpJ4KT1ajev2h/hH+9HyAM7kCy8GyErMnBTxs=
+	t=1789664098; cv=none; b=uTKyCVdOKGKVJ5Bg6+b7APLxHUJFUElksIcJSLU1bwiAT0w6cx0KUkdsy33Eq3HPzd3fH28+YZ7OLX26rX/czdVItRtx+Y+njilnj99rpx2Nw/WXtzhbwS0+1Q6x8gjql6Mvy4XGQe52b1jXf7j7MltxuEWA40kj2uUXUVY5V7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664094; c=relaxed/simple;
-	bh=7r73sb0ozwCGBJiuOSkVNGpOOaKv1QHXnFTxLGIdBts=;
+	s=arc-20240116; t=1789664098; c=relaxed/simple;
+	bh=HGjql4KwmuTaY9WCj76AWp7iedGLenwCcjQFLdqYgo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYklD4ewLrgHLjRX0orVuA03p0RwQXtOIAVLtmwsAwoJfP3Ri5/3OKIVUjkCoomTIQHbiUM8+aD/9Sger0PA8fhyED1R8tZ2VIbzJgJ29HbEW8tRYcwsrhtj6Pij3NlkIFcoZ83pBgefqfpHLE6n1WtyB1YfOWjKt4wt1lSFV+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/IZ8Iuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyQIX8jVat4I7R/sPXwk4882ulyQP1oCoHwP35NIT8DToP4H5pp6YLuK1fC5w8oUhqKxpxaEnYq7/2URp2atlEM9ddXW2DWmTUTFmQsD3tZRWJk8GeaA0RpUbviOVvIbjRYtN+0oAtnAM1T+3xX7P60j/uQZuFvSsgTdhphNZcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kygeI2zg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/IZ8Iuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096201F000FF;
-	Thu, 17 Sep 2026 16:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kygeI2zg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB4C1F000FF;
+	Thu, 17 Sep 2026 16:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664093;
-	bh=IyYRu20TQA8/ujyS+z0rvuZ9O1QM1SRmzaw9ghhpM5A=;
+	s=korg; t=1789664096;
+	bh=ZMmHAb38irvKOAS4bjd9JvhtMiUXSktfR6AhBScGL3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T/IZ8IukmlGx6ntJk/eRxQlbuGuppfQNs33+0h1Tm/jIS3qOy05yZD5NV3Om0SxKP
-	 CgFsvb4PzHz3uI2PUEYKc2JPjF0vsGSPDcB2U0FAjDoYTb9+/EW+F1SNkcvysZUzfl
-	 vA7fRFGFka2fTOCHfC+STvUHl0QVp4Co3nhGe1RQ=
+	b=kygeI2zghJF0Aa/ml2XPulWlwjrcZBwADK4ZRtt8bcZQAawTltxDTyrxGBPJMMDrh
+	 wXpv4ZHWXX2pDdEXZAiItrn/64TB9pvEcOMeK1eZ1kQ+sd8SK2Tdx3vSKxkNQldS7w
+	 oGemhbIVvRGGPmnZhYNsUDMdZBbxk0/QaidgEMjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avinash Bhatt <avinash.bhatt@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0219/1250] wifi: iwlwifi: mld: keep healthy link on EMLSR missed beacon exit
-Date: Thu, 17 Sep 2026 16:00:14 +0100
-Message-ID: <20260917151558.073061738@linuxfoundation.org>
+Subject: [PATCH 6.18 0210/1250] thermal/drivers/tegra/soctherma: Switch to devm cooling device registration
+Date: Thu, 17 Sep 2026 16:00:05 +0100
+Message-ID: <20260917151557.816400321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avinash Bhatt <avinash.bhatt@intel.com>
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
 
-[ Upstream commit 4b6d725ff01cb92becda6e805143e331fdf1d73e ]
+[ Upstream commit ee126267bc04bfb03816ae9d71ca24c5bf99e739 ]
 
-When EMLSR exits due to beacon loss on the current link, the driver
-should keep the link that is still receiving beacons. The previous
-code always called get_primary_link(), keeping the primary link
-regardless of which link is actually losing beacons. If the primary
-link is the one losing beacons, the driver exits EMLSR onto the
-degraded link and the connection is lost eventually.
+Use devm_thermal_of_cooling_device_register() to simplify resource
+management and avoid manual cleanup in error paths.
 
-When both links lose beacons, keep the primary link. When only the
-current link loses beacons -- whether due to signal loss or a BSS
-parameter change -- keep the other link.
+As a side effect this change has the benefit of solving an existing
+issue. Before, the function tegra_soctherm_remove() only called
+debugfs_remove_recursive() and never called thermal_cooling_device_unregister()
+for any of the cooling devices registered here.
 
-Signed-off-by: Avinash Bhatt <avinash.bhatt@intel.com>
-Link: https://patch.msgid.link/20260517100550.b2d700f7775e.I8e9189ce6cf4388878beab14e56341becd5f427c@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+After the driver removal, the thermal framework's cdev list would
+still hold references to thermal_cooling_device objects whose devdata
+pointer (ts) pointed to memory already freed by the platform device's
+devm cleanup.
+
+With this change, the cooling device is unregistered when the driver
+is removed, thus fixing the issue above.
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260424160019.41710-2-daniel.lezcano@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/link.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/thermal/tegra/soctherm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-index e67ba3a24d025..49e3d97f286f9 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-@@ -600,15 +600,20 @@ void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
- 	 * OR more than IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_BSS_PARAM_CHANGED
- 	 * on current link and the link's bss_param_ch_count has changed on
- 	 * the other link's beacon.
-+	 *
-+	 * When both links lose beacons, keep the primary (symmetric failure).
-+	 * When only the current link is sick, keep the other link.
- 	 */
--	if ((missed_bcon >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_2_LINKS &&
--	     scnd_lnk_bcn_lost >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_2_LINKS) ||
--	    missed_bcon >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH ||
--	    (bss_param_ch_cnt_link_id != link_id &&
--	     missed_bcon >=
--	     IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_BSS_PARAM_CHANGED)) {
-+	if (missed_bcon >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_2_LINKS &&
-+	    scnd_lnk_bcn_lost >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_2_LINKS) {
- 		iwl_mld_exit_emlsr(mld, vif, IWL_MLD_EMLSR_EXIT_MISSED_BEACON,
- 				   iwl_mld_get_primary_link(vif));
-+	} else if (missed_bcon >= IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH ||
-+		   (bss_param_ch_cnt_link_id != link_id &&
-+		    missed_bcon >=
-+		    IWL_MLD_BCN_LOSS_EXIT_ESR_THRESH_BSS_PARAM_CHANGED)) {
-+		iwl_mld_exit_emlsr(mld, vif, IWL_MLD_EMLSR_EXIT_MISSED_BEACON,
-+				   iwl_mld_get_other_link(vif, link_id));
- 	}
- }
- EXPORT_SYMBOL_IF_IWLWIFI_KUNIT(iwl_mld_handle_missed_beacon_notif);
+diff --git a/drivers/thermal/tegra/soctherm.c b/drivers/thermal/tegra/soctherm.c
+index 5d26b52beaba7..9d3eb3be2db02 100644
+--- a/drivers/thermal/tegra/soctherm.c
++++ b/drivers/thermal/tegra/soctherm.c
+@@ -1700,9 +1700,9 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
+ 			stc->init = true;
+ 		} else {
+ 
+-			tcd = thermal_of_cooling_device_register(np_stcc,
+-							 (char *)name, ts,
+-							 &throt_cooling_ops);
++			tcd = devm_thermal_of_cooling_device_register(dev, np_stcc,
++								      (char *)name, ts,
++								      &throt_cooling_ops);
+ 			if (IS_ERR_OR_NULL(tcd)) {
+ 				dev_err(dev,
+ 					"throttle-cfg: %s: failed to register cooling device\n",
 -- 
 2.53.0
 
