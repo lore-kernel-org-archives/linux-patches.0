@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A681E49D584;
-	Thu, 17 Sep 2026 18:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4654B7A44;
+	Thu, 17 Sep 2026 18:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670371; cv=none; b=RfjFvA5g3YNoj5CXvF6+UU0/TWfJPyE1u6//T0rbpbdKXff0ZYpFKyNLqZBntaSdnHlgsbw1myxPR6jSyu2dfYOgj8TFVT5VUxV2n7ml3GZMNf8r1+1RguyQxMhBf5v4GoHwaMoG79eVXiBNDo0a68Kn9xbQCjZoVi/0f4N8tz8=
+	t=1789670374; cv=none; b=H8P5nRd0YeimXeMobor6EVbpDh2MJT30wyyOBhjOPd3eVoJdNA3dF1bkiV4nsFMsCTH23g1W2DzwGQHmSxqvD2zD8LVMhWCVSWhIxvRpv31UBHLcce2m8KxEGLOsTyfW9u1+7JjjednBg2FJi17sf4vQNzNBBrS4TXYXjkRJzt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670371; c=relaxed/simple;
-	bh=yM3V/ZAYBZT8EoeIYL3xJzw1coZBSgkKMxhgYB/K27A=;
+	s=arc-20240116; t=1789670374; c=relaxed/simple;
+	bh=3HEkHjqQbdKoZhBvwiSWnCIACM1Ezz7dmwaEjr5dyPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0be0vRjY93fkud6hYwf9K70Kdflj1dU0Lp9pWPnjIxxUeazSs6MmGNN9gGXGiO+qucTxdT7BN5kwnnlP6DlyNJRObeRmu3kRIjNRoy9CgEcGjuYaeNfyfsHvu+d++wY+yZyzOh2NklBKrj/dK39Xgv6LfPNTTnH30nFWBxN45U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjQ5b5zc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X8ZJ+vAN6UIq1wRGZuXmhvHWv0OEVDq/1lJT1cjNqpCWiLEDvUZkH/k6UGri2sc5fZMvSHinJi+UHfPHwZMIVR1/QtQvLVvuKq0WkzlEHAJHIHx7DXO7PA6IG6OO8Yz7CyayH2kbWefaOXwO4WxPlUtfuRtDl4Fw5MviVqsneGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBthYwlm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjQ5b5zc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCE31F000FF;
-	Thu, 17 Sep 2026 18:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBthYwlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA571F000FF;
+	Thu, 17 Sep 2026 18:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670370;
-	bh=C9Rt0c+R7ASi0Cyzj3nY3TCDmR7VetTbUybRutoKlPQ=;
+	s=korg; t=1789670373;
+	bh=c3uRPPohJkTvbEXOrexCsxKrhMznHWQG1CaBQ2Pe5EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjQ5b5zclhn+MH4NCFQt6gP/Yu3uQUCUcCnLEsY+Bfm/kA0pm3nTsnnB71zqslNr6
-	 n3ok0VBK7CfEH4l4g1KfdPsEbxlf6DR3bDUqp9JMZ4boWoTrua9OMdOrDb5jfYxTSi
-	 nhrE/PL8qcMMnavyGTRIo4WYIJQn1qZsuyfwkpkk=
+	b=QBthYwlm45z1RjbYwY7SmhkTomQxFCh3k0rqsUCvq9BCi0Vrc0brcEPSCBjjrlk1r
+	 tRoQNuLsXxsQDGW5o+bGbKz+ufM1I1XO5YUp3P6o92FZo2dRyQQ/lyqbbuL09+Vqgi
+	 8QZbPmpWF1iuQj1Pe542D5hmxCn3QB0iFMzeJiPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Paul Walmsley <pjw@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0594/1102] perf: RISC-V: check cpu_hw_evt before dereference in overflow IRQ
-Date: Thu, 17 Sep 2026 16:08:57 +0100
-Message-ID: <20260917151554.892906959@linuxfoundation.org>
+Subject: [PATCH 6.12 0636/1102] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
+Date: Thu, 17 Sep 2026 16:09:39 +0100
+Message-ID: <20260917151556.090594145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit f643f520c4c6998fa27dce90dd3b3ff6414e0bae ]
+[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
 
-The overflow IRQ handler dereferences cpu_hw_evt before the null check.
-Move the check first. Defensive only; the cookie is valid on the normal
-path today.
+The core software reset issued in stmmac_init_dma_engine() during
+ndo_open() callback clears the MTL RX packet parser registers, but
+stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
+After an ifdown/ifup cycle the hardware therefore runs with the default
+all-pass table while priv->tc_entries still reports the filters as
+installed. Re-apply the RX packet parser table from priv->tc_entries in
+stmmac_hw_setup(), right after the software reset, so the filters are
+restored when the interface is brought up again.
 
-Fixes: a8625217a054 ("drivers/perf: riscv: Implement SBI PMU snapshot function")
-Assisted-by: DeepSeek:deepseek-v3
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/fdd42c791752.v2.1786420235.git.liuxixin@kylinos.cn
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_sbi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 6df8b260f0702..d6106f80e956e 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -958,11 +958,13 @@ static irqreturn_t pmu_sbi_ovf_handler(int irq, void *dev)
- 	u64 overflowed_ctrs = 0;
- 	struct cpu_hw_events *cpu_hw_evt = dev;
- 	u64 start_clock = sched_clock();
--	struct riscv_pmu_snapshot_data *sdata = cpu_hw_evt->snapshot_addr;
-+	struct riscv_pmu_snapshot_data *sdata;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 3074e322a2cc2..4dcd29e814083 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3423,6 +3423,14 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
+ 	/* Initialize MTL*/
+ 	stmmac_mtl_configuration(priv);
  
- 	if (WARN_ON_ONCE(!cpu_hw_evt))
- 		return IRQ_NONE;
- 
-+	sdata = cpu_hw_evt->snapshot_addr;
++	/* Apply the RX packet parser table */
++	if (priv->tc_entries) {
++		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
++					priv->tc_entries_max);
++		if (ret)
++			return ret;
++	}
 +
- 	/* Firmware counter don't support overflow yet */
- 	fidx = find_first_bit(cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS);
- 	if (fidx == RISCV_MAX_COUNTERS) {
+ 	/* Initialize Safety Features */
+ 	stmmac_safety_feat_configuration(priv);
+ 
 -- 
 2.53.0
 
