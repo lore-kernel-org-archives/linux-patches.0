@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE6C502771;
-	Thu, 17 Sep 2026 17:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827250278A;
+	Thu, 17 Sep 2026 17:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665210; cv=none; b=ZpJKczf7aAOxzoo5PE7eXNTODbDz+GMttlgMx5XlRBTfDz8KOZ7mQd6X3dV9JRN4sqiN0ogpwqBfcnVWsCOEuqkPGnvmXOZxEPoK/yxUQ8H3D35uS3eRLQ240WIeVVDQ64WUF1L2EXO4vlFnd4Na9KuVqM0Ek4bK42VRpLjgJf0=
+	t=1789665217; cv=none; b=nALn8NC6/C21EZEyYoue34XBYOWEp7+deekqxjvW/luy0LiNdx6pYC/+ABkC2a2wjvqR946tUHOl4Qdc0rlfuGUuRH+4sQzyAEpY0/CDwUWZrv/YMGjWsqUDW7VuQPBWWTKU5HlJF3wxcmiNsaTB3rR87ByEV7t7IRGfrj8zbV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665210; c=relaxed/simple;
-	bh=QKV6q0xOTzPithj9z3mR7Po2iSQsNcue0uhIOb5yY8U=;
+	s=arc-20240116; t=1789665217; c=relaxed/simple;
+	bh=wrB1fkg4wogyQddZ7DuIIE25m21e/R0QsfsOCWZC6TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBt/JlhqvJqm9Y25sf5wlNNp5mRZJMOEc70AKSCXHjHWThEQHg965q3HgaNUyvhv7hVf9Pe22iA4jTkfSxMzN98DHbdIP/UK8+3Nf9dnXPOZXbE8ngict8O5cjKF6N0XERanQH0LoFFHwEu8nZ4mMIrE9GAeFF3/b4G+EaUA+fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLISvT3R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LuCmlhx0ZjpMD9AgyFcnSv8YvB+uU0OfgASa0PCRudP2jOOs15i6tO3JkW/SDBmTx3XVqBgCnqSTHtI64+3XYQQSJwIPsLcrFXgn9tmNn6Tq1KoM+bT8R4c/b/S8GIENK4EM30pDUAFeDfKF/anEDdy3Uah04gNw+skvRHfScmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFVBf+N7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLISvT3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BEF1F0089D;
-	Thu, 17 Sep 2026 17:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFVBf+N7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AF01F0089C;
+	Thu, 17 Sep 2026 17:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665207;
-	bh=RAtLjzkHg310i8FR/L5cztlKMsoTdAlgaGo6gQ4c4us=;
+	s=korg; t=1789665209;
+	bh=BAKbfJOvBdMNxRO6hjvGm9ypTLSDMPxNBiwpPP1Gd04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLISvT3RBTo1GYCk8NEM7X9Bd0/+kDXuzYbCcqlS8ok5VBJghzSBb6TvIGieMvYqP
-	 EfKgU2OWam2Y4mvBfX0gE3QYC/2X7H5eD2OfKui8xw3qId9l+SJgGZcEKg1CkV01mJ
-	 Q8ruDelqgjMuXW6IC+AVq9r4hqJn7ZDkyIMzzWQY=
+	b=sFVBf+N78uVrfd8QkWZes066DmAXzp1naTIPgN16q1grC8Wl3LmVOwnyzdaEaWQnN
+	 7hS3/vDEcRG6V2ygCfRvoh47iPOE3TwWZV4g5uUuPTq0tjdhjXFflIW0vMXmrkSnZO
+	 EHa97GWP7Cwo0zoZHJbmz1aVeVqXq/HS39LS8r88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0628/1250] smb/client: validate new EOF for zero range
-Date: Thu, 17 Sep 2026 16:07:03 +0100
-Message-ID: <20260917151608.901455324@linuxfoundation.org>
+Subject: [PATCH 6.18 0629/1250] smb/client: mark file sparse before emulating insert range
+Date: Thu, 17 Sep 2026 16:07:04 +0100
+Message-ID: <20260917151608.929440029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,80 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 88972e35750792e717af287dc71f42a03b5cbce4 ]
+[ Upstream commit cd03ce4950d80147ac8f20bc03c42b75b0352407 ]
 
-When FALLOC_FL_ZERO_RANGE is used without FALLOC_FL_KEEP_SIZE,
-smb3_zero_range() may extend EOF without checking RLIMIT_FSIZE, allowing
-the file to grow beyond the caller's file-size limit.
+The SMB client emulates FALLOC_FL_INSERT_RANGE with SET_EOF, COPYCHUNK
+and SET_ZERO_DATA.
 
-Fix this by calling inode_newsize_ok() before sending the zero-range
-request when the operation would extend EOF.
+SET_ZERO_DATA creates a hole only when the file is sparse. On a
+non-sparse file, it clears the inserted range but leaves its blocks
+allocated, causing the extent count check in xfstests generic/064 to
+fail.
 
-Reproducer, using a file on a CIFS mount:
+Fix this by marking the file sparse before modifying it.
 
-	bash -c '
-	        FILE=/mnt/cifs/repro
+This patch produces the expected sparse extents in xfstests generic/064
+only when the server-reported block size is compatible with the server's
+deallocation granularity.
 
-	        trap "" SIGXFSZ
-	        ulimit -f 3072
+For ksmbd, the reported block size follows the backing filesystem,
+and the test passes. For Samba, the test passes with a block size
+matching the backend granularity, for example, 4 KiB on Btrfs, but not
+with the default 1 KiB value. For Windows Server 2022, 4 KiB inserts do
+not generate holes, while aligned inserts of 64 KiB or larger do.
 
-	        truncate -s 2M "$FILE"
-	        fallocate --zero-range -o 0 -l 4M "$FILE"
-	        echo "fallocate rc=$?"
-	        stat -c "file size=%s" "$FILE"
-	'
-
-Before this change, the operation succeeds despite the 3 MiB limit:
-
-	fallocate rc=0
-	file size=4194304
-
-After this change, fallocate fails and leaves the file at 2 MiB.
-
-Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
 Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 542823110c58e..0a9d29b1c437f 100644
+index 0a9d29b1c437f..caf57eaeced0a 100644
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3380,6 +3380,13 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	trace_smb3_zero_enter(xid, cfile->fid.persistent_fid, tcon->tid,
- 			      ses->Suid, offset, len);
+@@ -3919,6 +3919,11 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
  
-+	new_size = offset + len;
-+	if (!keep_size && i_size_read(inode) < new_size) {
-+		rc = inode_newsize_ok(inode, new_size);
-+		if (rc)
-+			goto out;
-+	}
+ 	count = old_eof - off;
+ 
++	/* SET_ZERO_DATA creates a hole only in a sparse file. */
++	rc = smb2_set_sparse(xid, tcon, cfile, inode, true);
++	if (rc)
++		goto out;
 +
  	filemap_invalidate_lock(inode->i_mapping);
- 
- 	i_size = i_size_read(inode);
-@@ -3411,7 +3418,6 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * do we also need to change the size of the file?
- 	 */
--	new_size = offset + len;
- 	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
- 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 				  cfile->fid.volatile_fid, cfile->pid, new_size);
-@@ -3426,6 +3432,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 
-  zero_range_exit:
- 	filemap_invalidate_unlock(inode->i_mapping);
-+ out:
- 	free_xid(xid);
- 	if (rc)
- 		trace_smb3_zero_err(xid, cfile->fid.persistent_fid, tcon->tid,
+ 	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
+ 	if (rc < 0)
 -- 
 2.53.0
 
