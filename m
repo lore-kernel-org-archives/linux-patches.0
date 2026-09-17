@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8874B4E73B5;
-	Thu, 17 Sep 2026 15:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BE14B44CD;
+	Thu, 17 Sep 2026 15:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660103; cv=none; b=e/41LX7UG0V3rJLLx51yVATysNN9IWmuL1XwhoKMSsdTcLxtu6RpDJ/IgUfrhkxdXDWXnheM6/0XqAySaVXE3fmwfSIS1cJlPHSB+y+D9eSPGB6fTFGljqC1qIPs6GugyRhOfHdJcsKba3N67x1+cZTGjR0ZsPAUdXYs7Xx2AeQ=
+	t=1789660106; cv=none; b=YWKmuZPBknlrahA0vbyyL/3a57doddAwXPvk9OMtaiAigXNy6MzisTI6GrCKNfRmylJu+y7pFpm8nTLly7BH24BFsji4ysS8NbHJ1lUrAcFqCZGZWbZwUXGCI6T9atBosssuinCnsy8sc1CnHV+hQRcsiQ7TcdtRb5erwHUin4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660103; c=relaxed/simple;
-	bh=6sn82qU6iEvCHkh7wdT3mE4KncfjkdacloZIiFoampE=;
+	s=arc-20240116; t=1789660106; c=relaxed/simple;
+	bh=nU0wYM1MVqZc7E1TppnIpKK47KxeqelQQSDpAES091M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+tSA2Ys7O2Co5dNn9fYmSIEhD4SZFGJybsNdGBsukf8ZnqC8rTW2WAKhSyXGt/n9xDndpuMC4pB/kky4klklH3orNu9+fwI/LWTy67R+2/YCXSeuyZaQENLaCejeamyDdocBFBxkGm1uSMYUMFjHJaSlNGe/x2UR4TkHFtjWh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojz9WxZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qqMqQrzUaKdHTJqox8rI0n5cAfK1FNAx1GbHrTae9wtZE+Xr5DejNALlTGolXZ4zlXH6dBrulACUSvdpnB//cYAGkrSnGZJMlgwWHq4U7QPhkMGDcfUKrs0HUTBkAMeuZB9RTs2Ajl/UbTkJjJM+QnCs2PPCUTUTnsGj01Lyb80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g8xJtf4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojz9WxZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C901F00898;
-	Thu, 17 Sep 2026 15:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g8xJtf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163401F00899;
+	Thu, 17 Sep 2026 15:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660091;
-	bh=bJXe3HqyzdvBRD9b3Eq8moaLI3G5UkB69Vvm7X3ZSms=;
+	s=korg; t=1789660094;
+	bh=L2Q0GhBRDyRpsMihJwW5PF/6ACGtsHZUp7z5saD9TNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojz9WxZm7XcsbZkdJ7pvuWcWelHFDxTZWGaxdqbkrrB+7Cm7eMjh9h4Gsve276ea5
-	 f/FPUgAEqZhDvknuAH58Vmnafli5AELdbTJFb/dvrY621fr2RZ8NiBZLSJmJRBQcMS
-	 hJ9zmQtde8irPofPyBoEupms+K0oSp0QJTLqO2tA=
+	b=2g8xJtf4/mmCWbVXe49Ig2FeUbGwXfKIgFboSEF1RNvnhkxwJvTPFUAsJFXWwzHfb
+	 PQcy62DpmoMniedbNvzFJ1b+hOWoZxhKA328ESLU1eKonJO2v0BKHmxvQDD3asgagl
+	 FsQRZ/0g/X/+LmUteRInY2CFa0X1RU3XovV4rKNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Alsadhan <mo@sdhn.cc>,
-	Gary Guo <gary@garyguo.net>,
+	John Hubbard <jhubbard@nvidia.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.2 476/733] rust: pin-init: use irrefutable pattern for `stack_pin_init`
-Date: Thu, 17 Sep 2026 16:13:04 +0100
-Message-ID: <20260917151403.864121541@linuxfoundation.org>
+Subject: [PATCH 7.2 477/733] rust: allow `clippy::as_underscore` in the generated bindings
+Date: Thu, 17 Sep 2026 16:13:05 +0100
+Message-ID: <20260917151403.893487078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,62 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: John Hubbard <jhubbard@nvidia.com>
 
-commit b6b9e6d4abe87b16ab55990b887c6fad8e7a01af upstream.
+commit 2ac74c6db40adaa29c50cbb281ae9a6f63de18e1 upstream.
 
-In Rust 1.100.0, `Infallible` will become an alias of `!`. The let
-binding in `stack_pin_init` will thus become unreachable and produce
-an "unreachable expression" warning for the subsequent match, and thus
-will fail a `-Dwarnings` build. For this macro, all we need to know is
-that the error type is uninhabited, so replace this with an irrefutable
-pattern instead.
+A CLIPPY=1 build emitted about 15000 `as _` conversion warnings, all of
+them in bindgen's generated output and none in hand-written code.
 
-[ The error looks like (dummy reproducer):
+[ The lint messages look like:
 
-      error: unreachable expression
-         --> rust/kernel/sync.rs:177:5
+    error: using `as _` conversion
+         --> rust/bindings/bindings_generated.rs:18947:9
           |
-      177 |     pin_init::stack_pin_init!(let num = 42u32);
-          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-          |     |
-          |     unreachable expression
-          |     any code following this expression is unreachable
+    18947 |         self._bitfield_1.get_const::<0usize, 16u8>() as u32 as _
+          |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-
+          |                                                                |
+          |                                                                help: consider giving the type explicitly: `u32`
           |
-          = note: `-D unreachable-code` implied by `-D warnings`
-          = help: to override `-D warnings` add `#[allow(unreachable_code)]`
-          = note: this error originates in the macro `pin_init::stack_pin_init` (in Nightly builds, run with -Z macro-backtrace for more info)
+          = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#as_underscore
+          = note: `-D clippy::as-underscore` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(clippy::as_underscore)]`
 
     - Miguel ]
 
-Reported-by: Mohamad Alsadhan <mo@sdhn.cc>
-Closes: https://github.com/Rust-for-Linux/pin-init/pull/171
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Cc: stable@vger.kernel.org # Needed in 7.1.y and later (for 6.12.y and 6.18.y a custom one is needed).
-Link: https://patch.msgid.link/20260828155033.2101924-1-gary@kernel.org
-[ Reworded for typos. - Miguel ]
+bindgen 0.73 returns each bitfield read through a trailing `as _`, and
+0.72 returns it through a transmute, which the lint ignores. The
+bindings and uapi crates allow `clippy::all` over the generated code.
+That group does not cover `clippy::as_underscore`, a restriction lint.
+
+Allow `clippy::as_underscore` by name in the bindings and uapi crates.
+
+Assisted-by: LLM
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Link: https://patch.msgid.link/20260906215822.1201022-1-jhubbard@nvidia.com
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+[ Removed CI sentence. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/pin-init/src/lib.rs |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ rust/bindings/lib.rs |    1 +
+ rust/uapi/lib.rs     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/rust/pin-init/src/lib.rs
-+++ b/rust/pin-init/src/lib.rs
-@@ -493,13 +493,7 @@ macro_rules! stack_pin_init {
-     (let $var:ident $(: $t:ty)? = $val:expr) => {
-         let val = $val;
-         let mut $var = ::core::pin::pin!($crate::__internal::StackInit$(::<$t>)?::uninit());
--        let mut $var = match $crate::__internal::StackInit::init($var, val) {
--            Ok(res) => res,
--            Err(x) => {
--                let x: ::core::convert::Infallible = x;
--                match x {}
--            }
--        };
-+        let Ok(mut $var) = $crate::__internal::StackInit::init($var, val);
-     };
- }
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -22,6 +22,7 @@
+ #![feature(cfi_encoding)]
  
+ #[allow(dead_code)]
++#[allow(clippy::as_underscore)]
+ #[allow(clippy::cast_lossless)]
+ #[allow(clippy::ptr_as_ptr)]
+ #[allow(clippy::ref_as_ptr)]
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -10,6 +10,7 @@
+ #![no_std]
+ #![allow(
+     clippy::all,
++    clippy::as_underscore,
+     clippy::cast_lossless,
+     clippy::ptr_as_ptr,
+     clippy::ref_as_ptr,
 
 
