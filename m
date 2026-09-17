@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC8D531633;
-	Thu, 17 Sep 2026 17:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A36E5326B1;
+	Thu, 17 Sep 2026 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666106; cv=none; b=Da8ik5zSsy+7Be308m21u+Atxb2zsdwyja72eVLGQt/ZTdBkETBunJNKLfAmQy0zgoQCRdw/ucAv9JnYZiS7ZzjMV6h79mvEy8YdxmdiFnjBUF5RIPd0MT84phuwwnGOZxBhtdt+R00WStRj77j2G3AS42YfweZl/ukSJgxXGw8=
+	t=1789666109; cv=none; b=JkE98cbJybFELy51zg3k13ckhpQ4WoHC8qXCnoEVbOn8Q/ZRHguUnuhlwkZNiq919LjfX5oktWhhMzXMq0oV772NLKvfpUPXzUlv3AhWKLp1NOlKf4jyS3lat7fTc7klNc82zaOi8IlZc9qH+74pTxsE+WJ5TM9Q+LDxOoDZklk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666106; c=relaxed/simple;
-	bh=jyBT4EcTaXtkFRwqSBXHBpzhf6wvUzWEapqDErTbGL0=;
+	s=arc-20240116; t=1789666109; c=relaxed/simple;
+	bh=CbDkFkuLWrhiRd1HcqJIMM8+lk8Drsz8/Pm5yW0cJeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8SGUtLFHEmEsU+EOq441Oa1hEEW49OXQN2cPZnZDZsKmP3U2L8HJ5pQHC32txdHjbzsQzvnPbvPYtiQm0Xh3HCUBXEaS9da7aaXwqMyhXE8Nx229oZr6ZGz+hZUVeiTo7L2vvNeSKvVEFaQUh/NIhzW4H8+KFjlAC0lGi8tT4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnbAACFx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PTk8paOF3/hVqsuxcORvXCiiz/KOlxcr8M5uIMByoe+gl0rAHJ8xEtaYuicigJLt8WH0qLl+ZOGb0obxAjuJnDJxCdJg6aDY5RYCkgK72VSWC5UcCxPnsQ01EJaoRpcw/UrOUuoGE4GEsdtQngvD8i+mcWSXyuxZPja8yf8P6S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOpIaE7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnbAACFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8761F000FF;
-	Thu, 17 Sep 2026 17:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOpIaE7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780C11F000FF;
+	Thu, 17 Sep 2026 17:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666104;
-	bh=/L1e6ZtraohZS8FAkwbDFDG3Dd5w8ObeAninO9idXwo=;
+	s=korg; t=1789666108;
+	bh=eqHz8f784Sc3TvndEhPO9TElj6pKr0mEUw2gouw7PvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnbAACFxF4lHzymLmFXRQl9QAGVEFn4TXcMJ5HueknrCVSa9XzXKdNDVhPCiiIf0S
-	 Kp+Wpl1tc81DNokxtMwsGU1VASktvPNnDS7SbTpTeza3D84WlomJaPpKrmTL8kJRoE
-	 X7XPkR7QepWN9GeOK8I+cZPxoXwZBy+zPfzhEwl8=
+	b=eOpIaE7YQH9E24ZP4+3htszrfUqlDn7FtqiPK7HoMReac7zkoXFOIYbLXSPIL0v6v
+	 yYuvj8tniV7Gdpa6m2i2hnrl57MBMNUlhgSyjZrefPCFurc5YK4qyM7hYsnLFn+lGP
+	 OwG//2nMJzPDH2FMsZCrhryGnoVBbO+S6Ycq1xVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	hybris@mojatatu.ai,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0899/1250] net/micrel: Fix typos in micrel driver code comments
-Date: Thu, 17 Sep 2026 16:11:34 +0100
-Message-ID: <20260917151616.356264851@linuxfoundation.org>
+Subject: [PATCH 6.18 0926/1250] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
+Date: Thu, 17 Sep 2026 16:12:01 +0100
+Message-ID: <20260917151617.106209821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,104 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit c2b733da93bf607d6c6f925b4d40598e6bb516be ]
+[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
 
-Fix various typos and misspellings in code comments in the
-drivers/net/ethernet/micrel directory
+If a netlink socket sends RTM_GETCHAIN requests repeatedly
+without recv()ing the responses, tc_ctl_chain() hogs CPU and
+triggers Hung Task splat. [0]
 
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Link: https://patch.msgid.link/20260118121001.136806-3-yiconghui@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 66ef5adb7544 ("net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down")
+As caught in the stack trace, netlink_attachskb() could confuse
+tc_ctl_chain() by returning -EAGAIN when the userspace netlink
+socket's receive buffer is full.
+
+The replay: label exists since commit 32a4f5ecd738 ("net: sched:
+introduce chain object to uapi") but was not used initially.
+
+Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
+the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
+may release RTNL to call request_module().
+
+However, the replay logic is unnecessary for RTM_GETCHAIN.
+
+Let's apply the replay logic only for RTM_NEWCHAIN.
+
+[0]:
+INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
+task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
+Call Trace:
+ <TASK>
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? pskb_expand_head (net/core/skbuff.c:615)
+ ? skb_release_data (net/core/skbuff.c:1122)
+ ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
+ ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
+ ? tc_chain_notify (net/sched/cls_api.c:3045)
+ ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
+ ? netlink_unicast (net/netlink/af_netlink.c:1335)
+ ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
+ ? tc_ctl_chain (net/sched/cls_api.c:3242)
+ ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
+ ? netlink_unicast (net/netlink/af_netlink.c:1354)
+ ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
+ ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ ? netlink_unicast (net/netlink/af_netlink.c:1319)
+ ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ? __sock_sendmsg (net/socket.c:800)
+ ? __sys_sendto (net/socket.c:2281)
+ ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
+ ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: hybris@mojatatu.ai
+Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ks8842.c        | 4 ++--
- drivers/net/ethernet/micrel/ks8851_common.c | 2 +-
- drivers/net/ethernet/micrel/ks8851_spi.c    | 4 ++--
- drivers/net/ethernet/micrel/ksz884x.c       | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8842.c b/drivers/net/ethernet/micrel/ks8842.c
-index 541c41a9077a4..b7cf2ee9115fd 100644
---- a/drivers/net/ethernet/micrel/ks8842.c
-+++ b/drivers/net/ethernet/micrel/ks8842.c
-@@ -242,7 +242,7 @@ static void ks8842_reset(struct ks8842_adapter *adapter)
- 		msleep(10);
- 		iowrite16(0, adapter->hw_addr + REG_GRR);
- 	} else {
--		/* The KS8842 goes haywire when doing softare reset
-+		/* The KS8842 goes haywire when doing software reset
- 		* a work around in the timberdale IP is implemented to
- 		* do a hardware reset instead
- 		ks8842_write16(adapter, 3, 1, REG_GRR);
-@@ -312,7 +312,7 @@ static void ks8842_reset_hw(struct ks8842_adapter *adapter)
- 	/* aggressive back off in half duplex */
- 	ks8842_enable_bits(adapter, 32, 1 << 8, REG_SGCR1);
- 
--	/* enable no excessive collison drop */
-+	/* enable no excessive collision drop */
- 	ks8842_enable_bits(adapter, 32, 1 << 3, REG_SGCR2);
- 
- 	/* Enable port 1 force flow control / back pressure / transmit / recv */
-diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index 0369e80b01bec..4afbb40bc0e4a 100644
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -477,7 +477,7 @@ static int ks8851_net_open(struct net_device *dev)
-  * ks8851_net_stop - close network device
-  * @dev: The device being closed.
-  *
-- * Called to close down a network device which has been active. Cancell any
-+ * Called to close down a network device which has been active. Cancel any
-  * work, shutdown the RX and TX process and then place the chip into a low
-  * power state whilst it is not being used.
-  */
-diff --git a/drivers/net/ethernet/micrel/ks8851_spi.c b/drivers/net/ethernet/micrel/ks8851_spi.c
-index 28a7ff7644bb5..b9e68520278d0 100644
---- a/drivers/net/ethernet/micrel/ks8851_spi.c
-+++ b/drivers/net/ethernet/micrel/ks8851_spi.c
-@@ -39,7 +39,7 @@ static int msg_enable;
-  *
-  * The @lock ensures that the chip is protected when certain operations are
-  * in progress. When the read or write packet transfer is in progress, most
-- * of the chip registers are not ccessible until the transfer is finished and
-+ * of the chip registers are not accessible until the transfer is finished and
-  * the DMA has been de-asserted.
-  */
- struct ks8851_net_spi {
-@@ -296,7 +296,7 @@ static unsigned int calc_txlen(unsigned int len)
- 
- /**
-  * ks8851_tx_work - process tx packet(s)
-- * @work: The work strucutre what was scheduled.
-+ * @work: The work structure what was scheduled.
-  *
-  * This is called when a number of packets have been scheduled for
-  * transmission and need to be sent to the device.
-diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
-index cdde19b8edc46..60223f03482da 100644
---- a/drivers/net/ethernet/micrel/ksz884x.c
-+++ b/drivers/net/ethernet/micrel/ksz884x.c
-@@ -1166,7 +1166,7 @@ struct ksz_port_info {
-  * @tx_cfg:		Cached transmit control settings.
-  * @rx_cfg:		Cached receive control settings.
-  * @intr_mask:		Current interrupt mask.
-- * @intr_set:		Current interrup set.
-+ * @intr_set:		Current interrupt set.
-  * @intr_blocked:	Interrupt blocked.
-  * @rx_desc_info:	Receive descriptor information.
-  * @tx_desc_info:	Transmit descriptor information.
-@@ -2096,7 +2096,7 @@ static void sw_dis_prio_rate(struct ksz_hw *hw, int port)
- }
- 
- /**
-- * sw_init_prio_rate - initialize switch prioirty rate
-+ * sw_init_prio_rate - initialize switch priority rate
-  * @hw: 	The hardware instance.
-  *
-  * This routine initializes the priority rate function of the switch.
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 992f067ef4267..8a881048e71ec 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3254,7 +3254,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
+ 	tcf_chain_put(chain);
+ errout_block:
+ 	tcf_block_release(q, block, true);
+-	if (err == -EAGAIN)
++	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
+ 		/* Replay the request. */
+ 		goto replay;
+ 	return err;
 -- 
 2.53.0
 
