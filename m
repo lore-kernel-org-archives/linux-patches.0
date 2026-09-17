@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DB04FDA76;
-	Thu, 17 Sep 2026 17:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669B44FDA7B;
+	Thu, 17 Sep 2026 17:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664934; cv=none; b=KUZ03Vgh0n7h43V3RGLC5wCe84wjoNCR1lZYn4MPOzSkizUAoFFbl2U0ZYxxudhsw9JPDJPZsQL298/PaBxSRXiPESuO/L1QWLVZC3RH6kOBvPwfswkGKGORla+v3s3iwOwQ8ZbPHOjP2BfAT55DxSYwp4m2bOtvRdcbX1iLOsg=
+	t=1789664937; cv=none; b=fxpUdEeX4z3ODyBkpjiGthahCc8BanReGsu5LXargjrZ3qLP3uueummTOmy8FgKsOxp7xMcWWRP2tL70p+De7DVxnuBvhG/7g7vUTcWPCHGiSl2KmsFzoW6ECVvRilMytwelD3j0mQsLEaxmb8Stnwo70khd9OowGMJx5g04nsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664934; c=relaxed/simple;
-	bh=K9x3HwhvFTAsPYJ38YKDCFfiwxVupSQgCS2EJSr5LRc=;
+	s=arc-20240116; t=1789664937; c=relaxed/simple;
+	bh=blmltATNZ1P0nwt7j5Ab14iGFWkXZ71WI3q3KREfcuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvdI8rciEDQ2b8MqD2xYux1pfcx8juH64YDir0XEi76YWqOWtwaxdjjsIg9e2sxUeDReChMvn3kcJYb9pUCwatPly/5Ek8Qh64p8UFqim3dWrv4HL9Sp7+GPMxSN9rZ+BP+B1T8lfkMMFjBSkjPpVsmPhAxw6iWDZyi7mgOZi9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UwILGUS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XYfaXAeQj9bIG9NnmcfpkqPS5tHPc4qw4YPmfJgPFOobbnAEdpYt3BhDJxRZPwt10yqBPhGzGfjG2A0DpxNhlaLJXB8A04gd3WrtPnPOVSs8+1xLF4EulZPjnudVvgroYkSdPovixcJXRl24eGq7BHo7L4GV1yrEne0HX7pK/JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cga7JVmZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UwILGUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6441F000FF;
-	Thu, 17 Sep 2026 17:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cga7JVmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7CC1F00893;
+	Thu, 17 Sep 2026 17:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664933;
-	bh=1UcGZHis3kYhpBpAE2Duc2UMcO4SRZL9Xz/UBgPTGRo=;
+	s=korg; t=1789664936;
+	bh=ED1oVriaf5E02+Q2ACRpkmxIkXSaB8SFQCqZ2l8O6ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UwILGUSwx5Dve75XG7Q0qZ0armSYjwNLORrYZnXrRp+IRuB5K+rbgnrXTGw0pS53
-	 D8p4t5/dpwwJDnCzLOnG+dSuxlBD+Kbfbu1RFyJyE7jc0SLZai+GU2lf+Y6YLfCqrn
-	 GJeGmuFupXwFAe1Bv4oehHgvsr2c+jnBOzHFUMSo=
+	b=Cga7JVmZAlU0yHNlrFwti6aQtTKCe52XF+ysHvNN8cKu5UmcR8WzFg7Y/VY0F9IeL
+	 Hw7pXdvIy8lzdIRvAzrJ/Lqy8Tq+FyIXqQv4+q2u+iBu+9Z4x+HvzOMaSUcaTF1Cok
+	 N+7ssvURGoplqnm1zDicfGEFIy2aTFP3p/BrvTj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Caio Ramos <caioramos97@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0537/1250] wifi: iwlwifi: acpi: validate WGDS table revision index
-Date: Thu, 17 Sep 2026 16:05:32 +0100
-Message-ID: <20260917151606.491928314@linuxfoundation.org>
+Subject: [PATCH 6.18 0538/1250] ALSA: hda/realtek: Add HDA_CODEC_QUIRK for Samsung 750XBE/730XBE
+Date: Thu, 17 Sep 2026 16:05:33 +0100
+Message-ID: <20260917151606.521642918@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 954e821f42aaca56073ca830c5fd4bcf1a89048c ]
+[ Upstream commit 740b3c6780ec1f65aba2bc99a3f41d70bdb13477 ]
 
-Check tbl_rev bounds before BIT(tbl_rev) to avoid undefined shifts when
-firmware reports an invalid revision value.
+Add a codec SSID quirk for Samsung ELECTRONICS 750XBE/730XBE using
+HDA_CODEC_QUIRK() instead of SND_PCI_QUIRK(), because the alsa-info
+report from this device does not expose a PCI subsystem ID, only the
+HDA codec subsystem ID (0x144d:0xc824) is available.
 
-Assisted-by: GitHubCopilot:GPT-5.3-Codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260717173215.52a01f841f2a.Ic0131eaac31d9ff71b169138d9b0865cb39b44a9@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+This applies ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET to fix sound
+being very low and distorted on the headphone jack of this system.
+
+Reported-by: Caio Ramos <caioramos97@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=208663
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260720123702.799474-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 52edc19d8cdd5..852c5ac36c221 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -761,6 +761,11 @@ int iwl_acpi_get_wgds_table(struct iwl_fw_runtime *fwrt)
- 						       min_size, max_size,
- 						       &tbl_rev);
- 		if (!IS_ERR(wifi_pkg)) {
-+			if (tbl_rev < 0 ||
-+			    tbl_rev >= BITS_PER_BYTE *
-+			    sizeof(rev_data[idx].revisions))
-+				continue;
-+
- 			if (!(BIT(tbl_rev) & rev_data[idx].revisions))
- 				continue;
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index a2cda3a964fee..e454e164223ed 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7271,6 +7271,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
+ 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
++	HDA_CODEC_QUIRK(0x144d, 0xc824, "Samsung ELECTRONICS (750XBE/730XBE)", ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xc876, "Samsung 730QED (NP730QED-KA2US)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
 -- 
 2.53.0
 
