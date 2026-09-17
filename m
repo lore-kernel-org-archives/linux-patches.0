@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9B83CB54B;
-	Thu, 17 Sep 2026 17:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FE03783BE;
+	Thu, 17 Sep 2026 17:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665122; cv=none; b=ry/nq0rBqcmYK9Aa00ig48smdPecPJwuZOuGG/Wf03WUrO88sXGR2gx5JEl33lnxWj3RZE4rAPLdcny6O7Tc4ira6jiefWz88ouxQgslHkAh4Di+JdpZ6bf7S+17EDxmxZkwYh9ZTX0+m5GunPFPqtkfxwa9u6Hv6H/OSgVo8gY=
+	t=1789665125; cv=none; b=Xo/oR0ICP87X2qwkYPUhmlrLTqDUT55yB44OxQUz7MR9AMBiftk1yyRIHb75+H8LXrdaCG9UftKJJRvJlxcj6Fp2mE1wgAksli/HCMcRbWJsCX28+zXYgSd3yQlsqHNaQYLOMYgZc6sg4kT4ZdFUQ7Hox1jEqj7qXXMUuECEKS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665122; c=relaxed/simple;
-	bh=o8uBQzk9wPZWIvDC7UQnH1Wh7Su1IOj9NCRc47PPyK4=;
+	s=arc-20240116; t=1789665125; c=relaxed/simple;
+	bh=IXQT2ug6bJQLTATJv4MrFIsAnSVItx6vQ1iW332FEAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeUoPlaA5xEBQPGhvoBWN62X1IlWSLtomuhy7hJys4hYatxztle9xF1f+eA2jAhztegdqri187zhrx6kZZuUOusKfpyLk6dGDceB/QaZ4l/0jelYTgHdfcnrTQrZueRsbrFGv9CcSX/Q7bArHTCBYShXzKErp8IfMe8nrUK4IyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuvBaUHA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LlC7tKagS5u8w/NG2kPdmFNKJYQSDQjjjPPG+N/Z2LBGb7BomoYd5jcv1VGv3w4SYMtyDQ3YP4bs8acZaZEzMyhI52vROkSwjcnDvkogloNSib69L5eHoARe/OO1Zj25Kc6TSuq+4PcQ8vbYv/DA9Q6ZDPo6VJR98RqcXQIzAY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iSKGfLi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuvBaUHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0501F000FF;
-	Thu, 17 Sep 2026 17:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iSKGfLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CE1F000FF;
+	Thu, 17 Sep 2026 17:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665120;
-	bh=qhr93lpOSxgqTi3I8J/dNVKCKBzaRcVw3JypnRM2fnY=;
+	s=korg; t=1789665123;
+	bh=ZNdYC3GckW908RgmpimUYCTkDSvPzHKTjB/loN7mazg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuvBaUHA4qeOvA4rUfVbtBgEfFFfX1R0xuD2FsMBdQR0fZwr2rkHo5+z/M3o8DR6H
-	 kM6aMZxZXzkdOq4t46kC80ONxVQEYoqe78buVsWmwSOlUENJGtBtBa+xHjqBo44n+6
-	 Hx/NhrA4j1IMvC7X4zJmg8Q+YJScnhj2KWpLP70w=
+	b=2iSKGfLiPhRyooCIL3wiCl7YsxCZIbE56oYc6GiPBAEcP6FMNq7ZRk76sSGWjHz41
+	 pxH2dCT7QIbaCZScJ8ztLTAnCxXufoKo3kbP/eI2P381ugf2r1Do/AgMpuy+9g8USE
+	 YTMMyNEULMyHbyEHaz8OCEjbjl4jHg/GEh5EkuwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0597/1250] af_unix: Unlink scc_entry in unix_del_edge().
-Date: Thu, 17 Sep 2026 16:06:32 +0100
-Message-ID: <20260917151608.062276309@linuxfoundation.org>
+Subject: [PATCH 6.18 0598/1250] rtc: cmos: Use platform_get_irq_optional() in cmos_platform_probe()
+Date: Thu, 17 Sep 2026 16:06:33 +0100
+Message-ID: <20260917151608.089025032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,70 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 594d905195024b228c962627ae5ae7c17bd582a4 ]
+[ Upstream commit e9f850ba66cdf6b77fb4f005e46c4b605c4de434 ]
 
-Kyle Zeng reported that GC could free a dead SCC partially.
+The rtc-cmos driver can live without an IRQ and returning an error
+code from platform_get_irq() is not a problem for it in general, so
+make it call platform_get_irq_optional() in cmos_platform_probe()
+instead of platform_get_irq() to avoid a confusing error message
+printed by the latter if an IRQ cannot be found for index 0, which
+is possible on x86 platforms.
 
-The scenario is as follows:
+Additionally, on x86, if the IRQ is not defined and the system has
+a legacy PIC, hardcode it to RTC_IRQ, which should be safe then (and
+which is what the dropped PNP code did).
 
-   1) Create two SCCs:
-
-       X -.   A <-> B
-       ^--'
-
-   2) Run the following concurrently:
-
-      2-1) send() sk-B to sk-B from sk-X
-      2-2) close() both A and B
-
-At 2-1), there is a small window where unix_add_edges()
-publishes a new edge (B <-> B) to GC but its skb is not queued
-by skb_queue_tail().
-
-If 2-2) completes before skb_queue_tail() and GC is triggered,
-it judges A <-> B as dead, but B is not freed because GC cannot
-collect the not-yet-queued skb holding the B <-> B edge.
-
-       X -.   A <-> B -. This edge is visible
-       ^--'         ^..'  but skb is not
-
-This itself is not a problem since the next GC run will judge
-B as dead as well and free it finally.
-
-       X -.   A <.> B -.
-       ^--'         ^--'
-
-However, X's SCC forces the next GC to call unix_walk_scc_fast(),
-and it iterates over A through B's scc_entry.
-
-Let's unlink scc_entry before freeing the vertex in unix_del_edge().
-
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.").
-Link: https://patch.msgid.link/20260804002155.2233594-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d15f1c2e413e ("ACPI: PNP: Drop CMOS RTC PNP device support")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-acpi/20260303060752.GA2749263@ax162/
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/12857714.O9o76ZdvQC@rafael.j.wysocki
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-cmos.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 3986717090266..cad17f639b01b 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -186,6 +186,7 @@ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- 	if (!vertex->out_degree) {
- 		edge->predecessor->vertex = NULL;
- 		list_move_tail(&vertex->entry, &fpl->vertices);
-+		list_del(&vertex->scc_entry);
- 	}
- }
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 7ac39c435f630..b537f40654b72 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1508,9 +1508,18 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	else
+ 		resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
++	irq = platform_get_irq_optional(pdev, 0);
++	if (irq < 0) {
+ 		irq = -1;
++#ifdef CONFIG_X86
++		/*
++		 * On some x86 systems, the IRQ is not defined, but it should
++		 * always be safe to hardcode it on systems with a legacy PIC.
++		 */
++		if (nr_legacy_irqs())
++			irq = RTC_IRQ;
++#endif
++	}
  
+ 	return cmos_do_probe(&pdev->dev, resource, irq);
+ }
 -- 
 2.53.0
 
