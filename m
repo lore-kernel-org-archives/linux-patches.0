@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549FA51AFD1;
-	Thu, 17 Sep 2026 17:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899014C10D4;
+	Thu, 17 Sep 2026 17:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666355; cv=none; b=rzRwvngjFQErxTQbshCB5eVLnuhGiXJBmp612NsrAAnyEausXwRi8IAHR1NLADWfYk4UaRY3t5XynK0M9HPhr1cTjmyz5gUso7tfqfht1c/333eEst1Fev+HBrRcj/aofBnm4UD8fjtSFOZe6fXyUBLQSxKc0x/Tpe+byj4DgNY=
+	t=1789666359; cv=none; b=rxgww7teJHDyxeN2OoSGwE5AU4IW6GnkEum/ljpEt8pXhOTVgBZwRyb2zAWgpE4r55nMfVclIH+Mt3zA1Vl7k9CE/4fFL0ODUXwG1SveCfnXGh6NJkyeLZwsjAtrHQaeyDdg570TH+ovNRA4mdFSiAIZyhiSkQIgkSGLb3dr5No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666355; c=relaxed/simple;
-	bh=CEyj+JA1u0YYpUpR4a+iUhnHEcCl/YJC9Ayu7fPYQZ4=;
+	s=arc-20240116; t=1789666359; c=relaxed/simple;
+	bh=swEVDNRwZ+KzIREQLog0EtsJzindt0wluhDMFKdGXlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IVuIyvXdx+IsBteKvZpjwsrjBoMwkLUllr1au7/HhpyDeK69HFIlTRe31VCEIWQhvU4flpwAQB0Bh1tqOQPhZoOyr5ZWZwobHORrOtQRb3GonMM/wgjzlXj9YLivjp+aM5Bt351j1WMW7Q+oNMdnWi9d/LojD1wSnxwLlTdxyNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xz2WWbef; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FaUbZ53MKW4TQZvxSZxde8SG1Ge7G7SfGizPnKd+AOy8EidVi8VMPFoPxCWmjw5MjmT0Ii5yR31c362AVIxEXyg3m4wxDj9hUUsC4Ztm3uQKwrOujn+S9YNeWpCG2mDteP3sghnfkzvh+EGsoGO2Z8lJp8AHQhu5AQ/pQUprLGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPzFjePx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xz2WWbef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CBD1F000FF;
-	Thu, 17 Sep 2026 17:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPzFjePx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999071F000FF;
+	Thu, 17 Sep 2026 17:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666354;
-	bh=efy6ZOW7mJjinJiao8Ie6k2dIwEKmEveANCRIMZ9aqw=;
+	s=korg; t=1789666357;
+	bh=NZDrz+Q3H5R1Ub9Spi3E5evoF+4xxDPF5wjrjTEe/CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xz2WWbefLjKmSyks/VMOpOrxv0wfciR05IUTngjsdefOx/HVNpJcAeBO88h8q1P7B
-	 AvF0hs4MPbK77R433B/QqP4LvrN1F507ziJSJYjLmObhggxnUnt69Bt8NOGwyAqytK
-	 PVRoEtgAgoEGvtE10QMJeE4cvzvzsNr9b/WhopGY=
+	b=pPzFjePx9BNeVq8u8daScH3yWuIoHIQtDT74IDJAlpbvKoUJJKaUwAKdD4+srquiU
+	 D3+36o62l2p3dEjtHj1ls+xAXXh8+XReZOYaq1I4cRxxeOSlrPBYYnjFjl+rRmgeKf
+	 rUkTKpis0nS92nqlPPvNNYPnOIIxDHqkp/lukejw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 0982/1250] ufs: create the root dentry after loading cylinder metadata
-Date: Thu, 17 Sep 2026 16:12:57 +0100
-Message-ID: <20260917151618.637750854@linuxfoundation.org>
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Maxime Ripard <mripard@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.18 1009/1250] drm/sched: Create a fake device for KUnit tests
+Date: Thu, 17 Sep 2026 16:13:24 +0100
+Message-ID: <20260917151619.395382416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,77 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-commit 55a4c98abb9694b067c6a031d11501f06b6b523c upstream.
+commit 28cc4d5a75bb07d0eb2fa178db355b04483f5aca upstream.
 
-ufs_fill_super() installed sb->s_root before it loaded the cylinder
-group structures for a writable mount:
+The DRM scheduler KUnit tests pass NULL for the dev field in
+drm_sched_init_args, which NULL-pointer dereferences in the drm_sched_job
+trace event via dev_name() on sched->dev.
 
-	sb->s_root = d_make_root(inode);
-	...
-	if (!sb_rdonly(sb))
-		if (!ufs_read_cylinder_structures(sb))
-			goto failed;
+Give the mock scheduler a device with kunit_device_register(), which is
+also cleaned up at test exit. A per-function counter keeps the device
+names unique, since some tests create several mock schedulers.
 
-When ufs_read_cylinder_structures() failed, the error path freed the
-in-core superblock information and set sb->s_fs_info to NULL while
-sb->s_root stayed installed. get_tree_bdev() then reached
-deactivate_locked_super(), and because s_root was present,
-generic_shutdown_super() called sync_filesystem() and the put_super
-operation. Both dereference UFS_SB(sb), which is now NULL, so a mount
-that fails only while reading the cylinder groups oopses during
-teardown. A crafted image whose first cylinder group cannot be read
-reaches this path.
-
-Load the cylinder group metadata first and create the root dentry last,
-so the superblock is published to the VFS only once it is fully set up.
-ufs_setup_cstotal() and ufs_read_cylinder_structures() take only the
-super_block and do not use the root inode, so the reordering is safe.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 5a99350794fe ("drm/sched: Add scheduler unit testing infrastructure and some basic tests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801071306.59484-2-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+[phasta: removed static variable init to 0 again]
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20260908055941.351486-1-oushixiong1025@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/super.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/scheduler/tests/mock_scheduler.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/ufs/super.c
-+++ b/fs/ufs/super.c
-@@ -1200,6 +1200,15 @@ magic_found:
- 	sb->s_maxbytes = ufs_max_bytes(sb);
- 	sb->s_max_links = UFS_LINK_MAX;
+--- a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
++++ b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
+@@ -1,6 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2025 Valve Corporation */
  
-+	ufs_setup_cstotal(sb);
-+	/*
-+	 * Read cylinder group structures
-+	 */
-+	if (!sb_rdonly(sb))
-+		if (!ufs_read_cylinder_structures(sb))
-+			goto failed;
++#include <kunit/device.h>
 +
-+	/* create the root dentry last, once UFS_SB(sb) is fully set up */
- 	inode = ufs_iget(sb, UFS_ROOTINO);
- 	if (IS_ERR(inode)) {
- 		ret = PTR_ERR(inode);
-@@ -1211,14 +1220,6 @@ magic_found:
- 		goto failed;
- 	}
+ #include "sched_tests.h"
  
--	ufs_setup_cstotal(sb);
--	/*
--	 * Read cylinder group structures
--	 */
--	if (!sb_rdonly(sb))
--		if (!ufs_read_cylinder_structures(sb))
--			goto failed;
--
- 	UFSD("EXIT\n");
- 	return 0;
+ /*
+@@ -288,6 +290,7 @@ static const struct drm_sched_backend_op
+  */
+ struct drm_mock_scheduler *drm_mock_sched_new(struct kunit *test, long timeout)
+ {
++	static unsigned int instance;
+ 	struct drm_sched_init_args args = {
+ 		.ops		= &drm_mock_scheduler_ops,
+ 		.num_rqs	= DRM_SCHED_PRIORITY_COUNT,
+@@ -297,11 +300,19 @@ struct drm_mock_scheduler *drm_mock_sche
+ 		.name		= "drm-mock-scheduler",
+ 	};
+ 	struct drm_mock_scheduler *sched;
++	struct device *dev;
++	char name[64];
+ 	int ret;
+ 
+ 	sched = kunit_kzalloc(test, sizeof(*sched), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, sched);
+ 
++	snprintf(name, sizeof(name), "%s-%u", args.name, instance++);
++	dev = kunit_device_register(test, name);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
++
++	args.dev = dev;
++
+ 	ret = drm_sched_init(&sched->base, &args);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
  
 
 
