@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5456E51CF64;
-	Thu, 17 Sep 2026 17:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F274EF14B;
+	Thu, 17 Sep 2026 17:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666608; cv=none; b=KTxa+9p/mSkcXxpbJPajZp422DeqMMqCu/rkmd+CeBpVwFWRqdiIFqKSS48tCdqfWqPKtARc2qBuOPdeCNCxlMp/JQGuP167rTax3uGMK03liMg7omD2woyvOoZx5cKA110dnty6rkRzOne+CbZzPo7WSDjTm7eM7YsZPZXIpms=
+	t=1789666611; cv=none; b=pI+YzwqrUfQeiOf/cRtnbkX6+GLFdJniYIzdcUEIc36Sfag9p+J/CZjytOckQ7uJ4NLiBE0R555/Nj1NnOcrowCAGM6acdsKEOH6QsZWqgCXVuiXQE5zhsCyjLlmCbwWT6ziOjwjZC+VlgIwO9clo+hoW3CdmGaG9u12PKVVptk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666608; c=relaxed/simple;
-	bh=DeOTFYlYMsSOHUUubNNTrdPBx7lsMi2ltMgM3tVBYlw=;
+	s=arc-20240116; t=1789666611; c=relaxed/simple;
+	bh=aUKn6vRBUgHpal7fhIL+1Uk72weoEPAb4n55GzA3Hog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRaHTgSCsTvAsLGQc9+aIy2CMErAbKzHgCbBiafcAj9s19VxLI6M7sXVam4vNqkOpZ9+4hflWi/dPoVPwL+Ou1oIn7wLDdWQ8bBHFzEPy47Obrw3+VcpHglynmIsyareGs6S+lxTqu2a4Q0gl1yDdjUrWcMELol9vjveBiOvU90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7dt9kCE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ibOxNExVzO0RDN0o9Np2v616Ts12cL2Dh93NUUNQQ/Pymh22+dh0StHRhbC8Od0OI557hJR+s2G8ar/B+LrtClGNjvE4ZLQAwRduGRudgZaGb5dr+ke9IIfFamNAoweXJV9ple/AlVkbgLRxlRy69b+NMbyPFQI/3DNG9nRWOBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPmmfcAo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7dt9kCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDC61F000FF;
-	Thu, 17 Sep 2026 17:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPmmfcAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E4B1F000FF;
+	Thu, 17 Sep 2026 17:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666607;
-	bh=utZgP+o6hy4i2+5fSxBiIPGVcyKZpzUuvz/tSPKfWjs=;
+	s=korg; t=1789666610;
+	bh=Kqhbd3Xx+GwzMcN/HhBxXVVdYgxAl69kY1VanefVfK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7dt9kCENm4ZhB96eJsAjxLt5aSRvcKIClXFak2kSqMSmIciD8WEs0GvZCmBR0toH
-	 gzI8W/SbDdqhx1D/C/xQsc9gUwSpGOffNznEzB/2oXo7bKduMB96BkWG2z2R1aDi7I
-	 1Wq6/EqR3/mf667m4+ZoMmGPmx7eJ06wkZv+oUY4=
+	b=qPmmfcAoZaGnddtshr+YSIPMLh/NIgW3UQ+p3wotGugGV3NYP/7JoDZlal6iZdJq9
+	 m27ACr5HZd8f/pOB1eNBOhf/jiLjGYqmZ5almiZlxOR2zrhcL3q56i2YJYxTgwnf5w
+	 TcuzRNCviVSfRTCOcKcLDAdvcnIz9Cry+EJbav2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1093/1250] xfs: signal inode btree xref error if get_rec returns an error
-Date: Thu, 17 Sep 2026 16:14:48 +0100
-Message-ID: <20260917151621.793467398@linuxfoundation.org>
+Subject: [PATCH 6.18 1094/1250] xfs: reset parent pointer args before each dir tree unlink repair
+Date: Thu, 17 Sep 2026 16:14:49 +0100
+Message-ID: <20260917151621.821110160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,46 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 8c71ad4d4f3e20c30b663bd292526fcbc4d3913f upstream.
+commit 69e10c2b4a51b4ff3c88a70e90f5180ad58c758f upstream.
 
-LOLLM points out that xchk_finobt_xref_inobt and xchk_inobt_xref_finobt
-both ignore errors being returned from the xfs_btree_get_rec function
-and proceed with a (possibly stale) "true" value for has_record.  If the
-*simple* btree record checks fail during cross-referencing, we can
-immediately conclude that there's a cross-referncing error in the other
-btree.  On those grounds, we can bubble up the returned error instead of
-wasting time cross-referencing with garbage.
+LOLLM noticed that xfs_parent_removename only partially initializes the
+passed-in parent pointer arguments object.  In the directory tree repair
+code, we could decide to remove multiple links to a file, so we don't
+want state from one call to bleed into the next one.  Zero the whole
+thing explicitly.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: bc0f3b55467e1b ("xfs: directly cross-reference the inode btrees with each other")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 3f31406aef493b ("xfs: fix corruptions in the directory tree")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/ialloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/xfs/scrub/dirtree_repair.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/scrub/ialloc.c
-+++ b/fs/xfs/scrub/ialloc.c
-@@ -85,6 +85,8 @@ xchk_inobt_xref_finobt(
- 		goto no_record;
+--- a/fs/xfs/scrub/dirtree_repair.c
++++ b/fs/xfs/scrub/dirtree_repair.c
+@@ -479,6 +479,7 @@ again:
+ 	}
  
- 	error = xfs_inobt_get_rec(cur, &frec, &has_record);
-+	if (error)
-+		return error;
- 	if (!has_record)
- 		return -EFSCORRUPTED;
- 
-@@ -188,6 +190,8 @@ xchk_finobt_xref_inobt(
- 		goto no_record;
- 
- 	error = xfs_inobt_get_rec(cur, &irec, &has_record);
-+	if (error)
-+		return error;
- 	if (!has_record)
- 		return -EFSCORRUPTED;
- 
+ 	if (xfs_has_parent(sc->mp)) {
++		memset(&dl->ppargs, 0, sizeof(dl->ppargs));
+ 		error = xfs_parent_removename(sc->tp, &dl->ppargs, dp,
+ 				&dl->xname, sc->ip);
+ 		if (error)
 
 
