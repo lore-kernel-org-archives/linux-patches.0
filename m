@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AA25187F4;
-	Thu, 17 Sep 2026 17:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272A44D179E;
+	Thu, 17 Sep 2026 17:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664655; cv=none; b=tZHPbNfzvlNDj1mLN5+uNliiN+wy6i4ECnrx5AKl+PbBrBJqQtGGWvMqQjZup5ng36/V7VSz3WiiMrvMUA6dOGm7d0tr4rzEr7IEPvlcxJl7ds2B1wfs+8SjSMPWsSvujTuhRM3OrhL7+m0z4UUPKqG5lzm7T09YDpf8X9gaO84=
+	t=1789664658; cv=none; b=R7zNyuznm2G1UFAolDOvxxqB5ZzZoV6606qS/YRbKA/s+smMmlP1VFb57qycVtfuxf7bG0LvvASJmrHuZcuttZbA0uvHz2ujkl36iNhJlP9eivZVOWAjHbfQ2oW6HkBsjI77SyUKilFc/aOYtBOcPk+8nbojaEP+PR5L8NJW2mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664655; c=relaxed/simple;
-	bh=WaSEW6IvKPGHmoG07uvumllzovSRVQdsFn6W2ui3T8Y=;
+	s=arc-20240116; t=1789664658; c=relaxed/simple;
+	bh=I9fTwN7ALVJoiEIuQjE9KlDOZjfBWe8ytlMLzBGozPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVNxIKOw6aSn3tC+heHBtEDMSUpxv0uRNcolmF2Zalg9LcMqslS7zNinZ0dQ5eQ8U40c9ik4AsofgEdgFu4XmhRfup2Xn8QfrnGPdog5G7CJ55BYxkSY4vY5JW3slqpq41xnwn/MJQmp4NJkjy4NvJ9YRrY1OshohyQKDWJFLBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVIgTftO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MEFOqRIpWu6UOwcnlYU0f9e2XfuxcXtxRpVtLuR6ki2BCzKFQU6b1vUfHC0mSWbDr+i/1pt4sa3CFroQp8nPwdXpHSvNjKZEGtcqYiC3rxeGedGCe2Pygtr/jUh5aKwHFDfPO1N3v6T2A+ATBsEOZuBt1YJ4yjx8DA8UDrP4h4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyvmmcGE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVIgTftO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0671F000FF;
-	Thu, 17 Sep 2026 17:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyvmmcGE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1D11F000FF;
+	Thu, 17 Sep 2026 17:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664654;
-	bh=W8zEj13UqK4CZZ0WIAUcSfW0F04W+bRfDl8NMzF9sps=;
+	s=korg; t=1789664657;
+	bh=olq62mTnec27Ic3zesQcIK/bTbAWbJoJ+enn8YiCEFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVIgTftOlnqeLOxp5jgbf7J6kz3BAJvOU+kNsjJCBpnVcHps5OQ0jk4Um9KWrYDuZ
-	 kCERQYgunLPr+4M6hG8TUPLD5/D5sZm1MwK+wBGXzIQO0cJnamiJAMJJkUyit50ZOB
-	 gbblYTSH+X1Vk2rWgj2UMgAJ4IH01H7fuaQ2Voq4=
+	b=NyvmmcGEO300G22w6BDGPTjF1qyWtXENnbFDnuhVTNs8cM15Blh4j3wozg5XyCOvh
+	 T3Sb/j/V0OY3vIz7voxonW/wlUpVpEZ4+1Nm7/nflZhM3Wok5iARkZPNrab9RP9ctv
+	 y/XVW8I22veNcT7v1xysOK6MAi3IFuG/dMVwq+Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0445/1250] mailbox: imx: Use devm_pm_runtime_enable()
-Date: Thu, 17 Sep 2026 16:04:00 +0100
-Message-ID: <20260917151604.062369147@linuxfoundation.org>
+Subject: [PATCH 6.18 0446/1250] md/raid5: account discard IO
+Date: Thu, 17 Sep 2026 16:04:01 +0100
+Message-ID: <20260917151604.088316442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,87 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 1f602619e408b6e9655ee76656a2a5ab6e89c5e4 ]
+[ Upstream commit 74ddbf98e2db646ec58f7e7731c936b7a4a470fe ]
 
-sashiko complained about early usage of the device while probe isn't
-completed. This can be mitigated by delaying the pm_runtime_enable()
-into the removal path instead doing it early. This ensures that in an
-error case the device is removed (and imx_mu_shutdown()) before
-pm_runtime_disable() so we don't have to do this manually.
+Raid5 handles discard bios internally through make_discard_request() and
+never passes them through md_account_bio(). As a result, discard IO is
+missing the md-device iostat accounting that normal raid5 IO and discard
+IO in other raid levels get from md_account_bio().
 
-For the order to work, lets move devm_mbox_controller_register() until
-after the pm-runtime part. So the reverse order will be mbox-controller
-removal followed by disabling pm runtime.
+Before accounting the bio, trim the request to the full data stripes that
+raid5 will actually discard. The first full stripe is the ceiling of the
+bio start divided by data-stripe sectors, and the last full stripe is the
+floor of the bio end divided by data-stripe sectors. Account that exact
+MD logical full-stripe range, then restore the original iterator so bio
+completion and iostat still cover the original request.
 
-Use devm_pm_runtime_enable(), remove manual pm_runtime_disable()
-invocations and move the pm_runtime handling in probe before
-devm_mbox_controller_register().
-
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://patch.msgid.link/20260605072639.2434847-2-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/md/raid5.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index a80cb2c9df6ee..a45c3e6d76575 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -936,38 +936,36 @@ static int imx_mu_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, priv);
- 
--	ret = devm_mbox_controller_register(dev, &priv->mbox);
--	if (ret)
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret < 0)
- 		goto disable_clk;
- 
--	of_platform_populate(dev->of_node, NULL, NULL, dev);
--
--	pm_runtime_enable(dev);
--
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
--		goto disable_runtime_pm;
-+		goto disable_clk;
- 
- 	ret = pm_runtime_put_sync(dev);
- 	if (ret < 0)
--		goto disable_runtime_pm;
-+		goto disable_clk;
- 
- 	clk_disable_unprepare(priv->clk);
- 
-+	ret = devm_mbox_controller_register(dev, &priv->mbox);
-+	if (ret)
-+		goto err_out;
-+
-+	of_platform_populate(dev->of_node, NULL, NULL, dev);
-+
- 	return 0;
- 
--disable_runtime_pm:
--	pm_runtime_disable(dev);
- disable_clk:
- 	clk_disable_unprepare(priv->clk);
-+err_out:
- 	return ret;
- }
- 
- static void imx_mu_remove(struct platform_device *pdev)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 84168ce7a0ff6..bf30ad2a9e177 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5700,7 +5700,10 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
  {
--	struct imx_mu_priv *priv = platform_get_drvdata(pdev);
--
--	pm_runtime_disable(priv->dev);
- }
+ 	struct r5conf *conf = mddev->private;
+ 	sector_t logical_sector, last_sector;
++	sector_t first_stripe, last_stripe;
+ 	struct stripe_head *sh;
++	struct bvec_iter bi_iter;
++	struct bio *orig_bi = bi;
+ 	int stripe_sectors;
  
- static const struct imx_mu_dcfg imx_mu_cfg_imx6sx = {
+ 	/* We need to handle this when io_uring supports discard/trim */
+@@ -5711,19 +5714,29 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
+ 		/* Skip discard while reshape is happening */
+ 		return;
+ 
+-	logical_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
+-	last_sector = bio_end_sector(bi);
+-
+-	bi->bi_next = NULL;
+-
+ 	stripe_sectors = conf->chunk_sectors *
+ 		(conf->raid_disks - conf->max_degraded);
+-	logical_sector = DIV_ROUND_UP_SECTOR_T(logical_sector,
+-					       stripe_sectors);
+-	sector_div(last_sector, stripe_sectors);
++	first_stripe = DIV_ROUND_UP_SECTOR_T(bi->bi_iter.bi_sector,
++					     stripe_sectors);
++	last_stripe = bio_end_sector(bi);
++	sector_div(last_stripe, stripe_sectors);
++
++	if (first_stripe >= last_stripe) {
++		bio_endio(bi);
++		return;
++	}
++
++	bi_iter = bi->bi_iter;
++	bi->bi_iter.bi_sector = first_stripe * stripe_sectors;
++	bi->bi_iter.bi_size = ((last_stripe - first_stripe) *
++			       stripe_sectors) << 9;
++	md_account_bio(mddev, &bi);
++	orig_bi->bi_iter = bi_iter;
++	bi->bi_iter = bi_iter;
++	bi->bi_next = NULL;
+ 
+-	logical_sector *= conf->chunk_sectors;
+-	last_sector *= conf->chunk_sectors;
++	logical_sector = first_stripe * conf->chunk_sectors;
++	last_sector = last_stripe * conf->chunk_sectors;
+ 
+ 	for (; logical_sector < last_sector;
+ 	     logical_sector += RAID5_STRIPE_SECTORS(conf)) {
 -- 
 2.53.0
 
