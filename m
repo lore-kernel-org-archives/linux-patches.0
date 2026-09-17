@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F14C5326A7;
-	Thu, 17 Sep 2026 17:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6D44FC35A;
+	Thu, 17 Sep 2026 17:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664492; cv=none; b=XOgKYg7LLw+n+mEpA4PnW134JjfzSwOE4OwDroHfTqUAUY5tiWiwy3oxTW0Hee9sLQnDCPBLiYjqCEEpIU8ZtlxBHSavCulr37PBoB6l0kvj+4oUYOq1kcdYTy2eGxauwtlBo5mlPcnOxhshCcyFxz2+i+raJrg266yWPdeIjyw=
+	t=1789664494; cv=none; b=LyGV5rg68onbXqIiE7t5GJBUUVVYEE33HAa2NI43d18lM7WoxqkVwUnnO2B0XcUCtg23n+HJIOUMrx4pZ9L8hcwtgoUoGdRAyeJs8N+PPo7U4Dypoj57B0hckHo/mrIKHrnkzQiM0IMvqm+boagXLQVLtBQOq8+VZz6FFPKxWos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664492; c=relaxed/simple;
-	bh=U3DaV18rbL+nvl3J7Mz1a/6jU3BipsasZYhKUHjkx2A=;
+	s=arc-20240116; t=1789664494; c=relaxed/simple;
+	bh=vteIWzkiqrB8IwLihjMnqMhTyOlZlwNDIot4pwoAlxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVFV0wTSvG744Ksru7tTFC+ZyWPFUmYebS3RI8I9PMkEVS2deB2pFAj0E7bmJFbCOha9uAc6MK13vIz1KZPJSqk9T5UHP7zX/3lnk9JoP0SVnhpYxsZucLO3kZFATuylfLbnhbE4b0/amtdLS0WnC+xHKuGPqbRyCk/pjMSdWMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSiqtEGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PK8rmz88XMSSfU3DkbMIH3dzjBuCaJaE8akY2rSQMEfBUVLDkV9Mruv4tro1evQvP+9XsfN1lyrMrxutghCFz5y5d8izPvvyBgOM+bWM9rwr9HQI75s1t7nav6FHw4Gy4pH0giKDzutABSfXieN6G/VZQ8isleh3wZML8w8pqpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta5CVq8i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSiqtEGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4E61F000FF;
-	Thu, 17 Sep 2026 17:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta5CVq8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DAD1F000FF;
+	Thu, 17 Sep 2026 17:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664490;
-	bh=BcLetqsgg2W1E2rlj9nOtsz9TWrluYBWf3WS3ewPCnc=;
+	s=korg; t=1789664493;
+	bh=KKlm+fDpKTV9CrN77zG7ki+UtBbquJP7tJl2cmGZBHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SSiqtEGI/tZsShFJxi7Z1hEeIcq/wjfDzPPSo15c9P5UApnVbnm37HlGwVDgKX/39
-	 7XB3qkNIX7XLqEPWADXP8nye/iUX/+S+BxPaXiB73vYvZTqlhEehh69E5Sc2YTQAe/
-	 uogazM271qgLqmtA0X3AEIoXfelLw6YRbmGYp83s=
+	b=Ta5CVq8iXZACgoLlwsOuqXRod+lJek8Xcq9aBniLMblgky44MEr6F7P3kVFmCNSu8
+	 /WKMvi48SnlGI4UV2qiM/YKXmWKV+BxhqqtCslDUEBcASCXecBAxGOmd3ok5rZyqXH
+	 tFJCEFkloQ2pl6Nwq09dzVAjpf+U5SWL2glJh2ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Hannes Reinecke <hare@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0358/1250] net: ibm: emac: mal: fix potential system hang in mal_remove()
-Date: Thu, 17 Sep 2026 16:02:33 +0100
-Message-ID: <20260917151601.769070678@linuxfoundation.org>
+Subject: [PATCH 6.18 0359/1250] tls: Flush backlog before waiting for a new record
+Date: Thu, 17 Sep 2026 16:02:34 +0100
+Message-ID: <20260917151601.797358144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,51 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 7c5d41f87f079990bf241359e3c1332d8d10fe87 ]
+[ Upstream commit edcf32b8a48f5882b5b7a91b21c89d233d4aecf2 ]
 
-napi_disable() is not idempotent and calling it on an already-disabled
-or unenabled NAPI context will cause the kernel to spin indefinitely
-waiting for the NAPI_STATE_SCHED bit to clear.
+While lock_sock is held, incoming TCP segments land on
+sk->sk_backlog rather than sk->sk_receive_queue.
+tls_rx_rec_wait() inspects only sk_receive_queue, so backlog
+data remains invisible. For non-blocking callers (read_sock,
+and recvmsg or splice_read with MSG_DONTWAIT) this causes a
+spurious -EAGAIN. For blocking callers it forces an
+unnecessary sleep/wakeup cycle.
 
-In mal_remove(), napi_disable() is called unconditionally. If no MACs were
-registered, NAPI was never enabled. Also, if they were registered but
-subsequently unregistered, NAPI was already disabled in
-mal_unregister_commac(). In either case, calling napi_disable() causes
-the kernel to hang upon module removal.
+Flush the backlog inside tls_rx_rec_wait() before checking
+sk_receive_queue so the strparser can parse newly-arrived
+segments immediately. On the next loop iteration
+tls_read_flush_backlog() may redundantly flush, but this
+path is cold and the cost is negligible.
 
-Fix this by only calling napi_disable() in mal_remove() if the commac list
-is not empty (which implies NAPI is enabled).
+Backlog processing can run tcp_reset(), which calls
+tcp_done_with_error() to set sk->sk_err = ECONNRESET and then
+tcp_done() to set sk->sk_shutdown = SHUTDOWN_MASK. The pre-existing
+top-of-loop sk_err check already ran before the flush, so the
+freshly-set error would be masked by the next-line sk_shutdown test
+returning 0 (EOF). Re-check sk_err immediately before the sk_shutdown
+test so a connection abort surfaces as -ECONNRESET rather than a clean
+EOF.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
+Commit f508262ae9f2 ("tls: Preserve sk_err across recvmsg() when
+data has been copied") gave the top-of-loop sk_err check a
+has_copied split. The recheck applies the same handling: when the
+caller has already copied bytes, sk_err is reported but preserved
+so the error surfaces on the next call; otherwise sock_error()
+consumes it so the error is reported exactly once.
+
+Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/netdev/ahgHgQ84RCc8uYrG@krikkit/
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260604-tls-read-sock-v12-6-b114efa6e3e2@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index a423496421e9a..a089e7b64bb2b 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -710,13 +710,13 @@ static void mal_remove(struct platform_device *ofdev)
- 	MAL_DBG(mal, "remove" NL);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 4c77036da0711..ea78e2ce754fb 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1418,12 +1418,24 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
+ 		if (ret < 0)
+ 			return ret;
  
- 	/* Synchronize with scheduled polling */
--	napi_disable(&mal->napi);
--
--	if (!list_empty(&mal->list))
-+	if (!list_empty(&mal->list)) {
-+		napi_disable(&mal->napi);
- 		/* This is *very* bad */
- 		WARN(1, KERN_EMERG
- 		       "mal%d: commac list is not empty on remove!\n",
- 		       mal->index);
-+	}
++		if (sk_flush_backlog(sk))
++			released = true;
+ 		if (!skb_queue_empty(&sk->sk_receive_queue)) {
+ 			tls_strp_check_rcv(&ctx->strp);
+ 			if (tls_strp_msg_ready(ctx))
+ 				break;
+ 		}
  
- 	mal_reset(mal);
++		/* sk_flush_backlog() can run tcp_reset(), which sets
++		 * sk_err and then sk_shutdown via tcp_done(). Recheck
++		 * sk_err here so a connection abort surfaces as the
++		 * actual error rather than a clean EOF.
++		 */
++		if (sk->sk_err) {
++			if (has_copied)
++				return -READ_ONCE(sk->sk_err);
++			return sock_error(sk);
++		}
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+ 			return 0;
  
 -- 
 2.53.0
