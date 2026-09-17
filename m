@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE854C10EC;
-	Thu, 17 Sep 2026 15:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC26F4C10DD;
+	Thu, 17 Sep 2026 15:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660664; cv=none; b=rg8rN69nLYafoSCUS4XuLPtq2A4dhs2Vo++JoOvZL80vqr6ujnpJ/V78GtMOXdEqi0eNz/13k9vKZxzzfeh2ptfP/Xc5+lQGYJgfNO1tQalOTJTAtKSD5Xrji4itGrAX+WM0OORdY1/OOz8Frw1P5lChI0yPiHlMoFCDrywKuAE=
+	t=1789660667; cv=none; b=lUuHyouAUHcpmex8PLFn38bK16czDYT6loZV03216XUveap837OYcreNmIne9ydME2xvyXOJ65oy+MAfL+wqhY8iETgG9njx4eanaCl0sc4K8w9Ae3givQQ0xoSexN3qi+gNCWe/4c8c6skRVje21RoHWTJf49KR0e39ahka7Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660664; c=relaxed/simple;
-	bh=rDMwFa+ghIsrdiEMo8A6bmAPelBHRsAB2fyZrPj+fCI=;
+	s=arc-20240116; t=1789660667; c=relaxed/simple;
+	bh=vkgMtXxpWsfs6vSI5jk/pxziJ+hrEnJKEkbqr5pPwEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9rpNngNTlNDyI/6l4pTxgAG9lopGeEXrYDXLJUEVLOF14B2z/NV0D5ajDqHSUXCCk/hiYgwxGkRj4Mjpc55IfR/V7E0nvf3x6s4K4wmYxiG2Ex39T1p5sTz+D1exJxpO55zDNBjzCjzwQCaniGIbqjcd+pFC89rwKqI21iTV0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqYmjVHq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4TBgT7Txh6qZxXaeCRqk+7gGyW1mw1r+zX5FMWKZ15wRG3BJoBO7FiS/KYttuvTUE5ZEYI/HqYOEpYzy8ov+fZJHnudT1N9jmNb22ACD4Xsp9s4SVWBx5lrfXK25+0xV+2RVtFql25K2oO9OTMVQcZVQK9T2+Ib9gPwIQgdyOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBlx/ICc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqYmjVHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A11F000FF;
-	Thu, 17 Sep 2026 15:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBlx/ICc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F1C1F000FF;
+	Thu, 17 Sep 2026 15:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660662;
-	bh=6PIp600wdLXFEYZYFm/YA/EFofs2zaUJCnPNT5ogjAI=;
+	s=korg; t=1789660665;
+	bh=vbgnn3MjoU0kCIZPckgO/dMKPpf8FoczGQQgimTwPho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqYmjVHq3SonsR+iIvgl+f4L2H9nnxIv5XT+KxR0YP6Td2SQkogHji6lrWpXiR9W3
-	 kHyJ23K5OG9QAiyRrFtCnbpSYMYEBphFqculJpJL6fycf83KXHBnHFbhuGQXiM8NcP
-	 GgX5q+ztefMco/LCjBKLkjxfrOznHMupRMlWRUos=
+	b=gBlx/ICcP4GnFl406PaImxPZ24YJFlEe0IXMF7z7ZWOHHjdJCX/jh91ZxdRfl+iF5
+	 GtCZvLlXxRB+7MuGqpvO7WdcCnEHDoPrQAMc7uw7oPVQAJshAn2TCnvX26QW74GIFh
+	 3AdmSAX9W3kHbq8r/0Ws2OanCfgbAaz3UHD7ZN0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Lin Jiapeng (TencentOS Red Team)" <jiapenglin@tencent.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 668/733] xfs: fix media verification ioctl for internal rt volumes
-Date: Thu, 17 Sep 2026 16:16:16 +0100
-Message-ID: <20260917151409.351150399@linuxfoundation.org>
+Subject: [PATCH 7.2 669/733] xfs: fix exchange-range reflink flag clearing issue with INO1_WRITTEN
+Date: Thu, 17 Sep 2026 16:16:17 +0100
+Message-ID: <20260917151409.380647726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,146 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Lin Jiapeng <ljp1205831794@gmail.com>
 
-commit f789d291bbdac6bc02d9d77e0141e138626c17a8 upstream.
+commit a23eca88448e52eb1a81549862df7adce794fafb upstream.
 
-A media scan of a filesystem containing an internal rt volume produced
-an error in xfs_scrub phase 6 complaining about a truncated realtime
-device.  The rt device wasn't truncated, but the media scan code thought
-we were trying to start a scan past the end of m_rtdev_targp.  That in
-turn is an alias for m_ddev_targp, but in xfs_configure_buftarg we set
-nr_sectors to the size of the data section.  We don't account for an
-internal realtime section, so the kernel doesn't scan any part of it.
-Oops.
+When exchanging two full-file ranges, xmi_can_exchange_reflink_flags()
+can move the reflink inode flag from the file that currently has it to
+the other file, as long as exactly one side is marked.  This assumes
+that the file contents, and therefore all shared extents, are exchanged.
 
-Reproducer:
+That assumption is not true when XFS_EXCHMAPS_INO1_WRITTEN is set.
+xfs_exchmaps_can_skip_mapping() can skip hole and unwritten mappings
+from file1, so an exchange can complete without moving every mapping
+that the earlier flag-swap decision accounted for.  In that case the
+post-operation cleanup can clear the reflink flag from an inode that
+still owns shared written extents.  Later writes then take the
+non-reflink write path and may update blocks that should still have
+been protected by CoW, which shows up as data corruption between
+reflink-related files.
 
- # mkfs.xfs -f /dev/sda -r zoned=1 -d rtinherit=1
- # mount /dev/sda /mnt
- # dd if=/dev/zero of=/mnt/a bs=1024k count=100
- # sync
- # xfs_info /mnt
- meta-data=/dev/sda               isize=512    agcount=4, agsize=32768 blks
-          =                       sectsz=512   attr=2, projid32bit=1
-          =                       crc=1        finobt=1, sparse=1, rmapbt=1
-          =                       reflink=0    bigtime=1 inobtcount=1 nrext64=1
-          =                       exchange=1   metadir=1
- data     =                       bsize=4096   blocks=131072, imaxpct=25
-          =                       sunit=0      swidth=0 blks
- naming   =version 2              bsize=4096   ascii-ci=0, ftype=1, parent=1
- log      =internal log           bsize=4096   blocks=16384, version=2
-          =                       sectsz=512   sunit=0 blks, lazy-count=1
- realtime =internal               extsz=4096   blocks=1114112, rtextents=1114112
-          =                       rgcount=17   rgsize=65536 extents
-          =                       zoned=1      start=131072 reserved=53248
+Fix this by disabling the reflink flag exchange whenever
+XFS_EXCHMAPS_INO1_WRITTEN is requested.  The contents exchange can still
+proceed; the conservative outcome is that both inodes keep the reflink
+flag.  The regular reflink flag cleanup path can drop the extra flag
+later once the inode no longer has shared extents.
 
-IOWS: 512M data volume, 3.1G internal rt section.  Now let's try some
-media verification:
-
- # xfs_io -c 'verifymedia -d' -c 'verifymedia -r' /mnt
- verified 536870912/536870912 bytes at offset 0
- 512 MiB, 1 ops; 0.0496 sec (10.067 GiB/sec and 20.1345 ops/sec)
- verified 536870912/536870912 bytes at offset 0
- 512 MiB, 1 ops; 0.0409 sec (12.222 GiB/sec and 24.4439 ops/sec)
-
-Notice how xfs_io says we only verified 512M of the rt volume?  If you
-run btrace in the background you'll see that we read the first 512M of
-the volume (aka the data section) twice and never read anything from the
-rt section.
-
-An earlier fix tried messing with the buftarg geometry, but I've decided
-on a more targetted fix for the media verification code.  All we have to
-do is calculate the starting and ending daddr for the device that we're
-verifying, and clamp the user's input values to that range.  This leads
-to some bogosity in the output reporting:
-
- # xfs_io -c 'verifymedia -d' -c 'verifymedia -r' /mnt/t
- verified 536870912/536870912 bytes at offset 0
- 512 MiB, 1 ops; 0.0606 sec (8.248 GiB/sec and 16.4968 ops/sec)
- verified 5100273664/5100273664 bytes at offset 0
- 4.750 GiB, 1 ops; 0.3329 sec (14.267 GiB/sec and 3.0035 ops/sec)
-
-Because we don't have a way to report that we didn't really do anything
-at all for that first 512M of address space of the rt "device".  But at
-least we're no longer ignoring real media.
-
-(Note that the fsmap/bmap/fiemap calls all report physical addresses for
-the internal rt volume as offsets from the start of the data device, and
-the media verifier call consumes the same.  We baked that into the
-user-visible behavior in 6.15, so we're stuck with that sparse hole at
-the beginning.)
-
-Cc: stable@vger.kernel.org # v6.15
-Fixes: bdc03eb5f98f6f ("xfs: allow internal RT devices for zoned mode")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reported-by: Lin Jiapeng (TencentOS Red Team) <jiapenglin@tencent.com>
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Cc: stable@vger.kernel.org # v6.10
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Lin Jiapeng <jiapenglin@tencent.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_verify_media.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ fs/xfs/libxfs/xfs_exchmaps.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/xfs/xfs_verify_media.c
-+++ b/fs/xfs/xfs_verify_media.c
-@@ -268,6 +268,8 @@ xfs_verify_media(
- 	struct xfs_buftarg	*btp = NULL;
- 	struct bio		*bio;
- 	struct folio		*folio;
-+	xfs_daddr_t		dev_start = 0;
-+	xfs_daddr_t		dev_end = 0;
- 	xfs_daddr_t		daddr;
- 	uint64_t		bbcount;
- 	int			error = 0;
-@@ -277,24 +279,33 @@ xfs_verify_media(
- 	switch (me->me_dev) {
- 	case XFS_DEV_DATA:
- 		btp = mp->m_ddev_targp;
-+		dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_dblocks);
- 		break;
- 	case XFS_DEV_LOG:
--		if (mp->m_logdev_targp != mp->m_ddev_targp)
-+		if (mp->m_logdev_targp != mp->m_ddev_targp) {
- 			btp = mp->m_logdev_targp;
-+			dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_logblocks);
-+		}
- 		break;
- 	case XFS_DEV_RT:
- 		btp = mp->m_rtdev_targp;
-+		dev_start = XFS_FSB_TO_BB(mp, mp->m_sb.sb_rtstart);
-+		dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_rtstart +
-+					    mp->m_sb.sb_rblocks);
- 		break;
- 	}
- 	if (!btp)
- 		return -ENODEV;
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -969,6 +969,16 @@ xmi_can_exchange_reflink_flags(
+ 	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
+ 		return false;
  
- 	/*
--	 * If the caller told us to verify beyond the end of the disk, tell the
--	 * user exactly where that was.
-+	 * If the caller told us to verify before the start or beyond the end
-+	 * of the disk volume, tell the user exactly where the volume starts
-+	 * and ends.
- 	 */
--	if (me->me_end_daddr > btp->bt_nr_sectors)
--		me->me_end_daddr = btp->bt_nr_sectors;
-+	if (me->me_end_daddr > dev_end)
-+		me->me_end_daddr = dev_end;
-+	if (me->me_start_daddr < dev_start)
-+		me->me_start_daddr = dev_start;
- 
- 	/* start and end have to be aligned to the lba size */
- 	if (!IS_ALIGNED(BBTOB(me->me_start_daddr | me->me_end_daddr),
-@@ -323,8 +334,7 @@ xfs_verify_media(
- 	 *    verifying.
- 	 */
- 	daddr = me->me_start_daddr;
--	bbcount = min_t(sector_t, me->me_end_daddr, btp->bt_nr_sectors) -
--			  me->me_start_daddr;
-+	bbcount = me->me_end_daddr - me->me_start_daddr;
- 
- 	folio = xfs_verify_alloc_folio(xfs_verify_iosize(me, btp, bbcount));
- 	if (!folio)
++	/*
++	 * The INO1_WRITTEN optimization can skip exchanging hole and
++	 * unwritten mappings, which means we cannot guarantee that all
++	 * shared extents actually moved to the other file.  Clearing the
++	 * reflink flag of an inode that still holds shared extents breaks
++	 * the CoW write path, so refuse to exchange the flags in that case.
++	 */
++	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
++		return false;
++
+ 	if (hweight32(reflink_state) != 1)
+ 		return false;
+ 	if (req->startoff1 != 0 || req->startoff2 != 0)
 
 
