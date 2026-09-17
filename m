@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A70451DAFC;
-	Thu, 17 Sep 2026 17:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788EB547052;
+	Thu, 17 Sep 2026 17:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665084; cv=none; b=rsz0lk79mfa1+4FAfp7qk6vChTThK8s77vIgiCPHdCVzmuCka++wRQYqK5CwLz4ahHRyPXKUEot0pVv2GiRdAG89UDuyRZOtu4K1oPmwMoVwYo/GeNvBskaHMXtOO0UhLjfeuBTyvGKoHAi2kaRwBJuWzdlotyr9BopZi7SoZMA=
+	t=1789665087; cv=none; b=ZHcKpUQXkpfSWVZe5iCPiJJv0oMRheA/A99iqArjIBc3AauN692+T9fIs/dRe95uL9aWGjWnKWeUG3DS5EzBv0e02LP2FWdYIjbQNwB7v8xQse1JKPGRmJ6Or1SiGOoyEyWkM8NiUy91ak/J0koSKmpLws06QHScb6z7JpVGztY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665084; c=relaxed/simple;
-	bh=zLwHU4enDD4RMTZpBw/P4tb/gtOe2PuPbm7JNmrAiIQ=;
+	s=arc-20240116; t=1789665087; c=relaxed/simple;
+	bh=t/KgLQMxEmcfvMG9p13SG4M/7YykohSmH5S7RDftoNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oakOzMNsyCjVV9AacdOflAKraezxZnNGdqZsSO896lyfvgtXzJoQ+myYoaqgDNRj6rP/y9e3WEciCFZHpzlwMBMbHRVkmrqG308Vpqu7l57BRv2yu+GwPKJsRWHgkF2Ks628iO4IL9IpxLKXIcqKHAlqsO2YmL/qQIosncMYo7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2S+YP3N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvhrv13+jogrUyQjsC+Gkx/D4UJ0O2D22Fp39AYpo4UEGxcAxGaHPyuaYiEqD5AcyHYC8GxZ07yUpYzrxUTEe5YKgOByWpueY9sUmGBZq0cgTn51F6SDMH9LG7GCapzegYc7TdNjnRHD9kLt5ytdKCGO6z3qSIuyA/E4avd31p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXhnQx83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2S+YP3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A831F000FF;
-	Thu, 17 Sep 2026 17:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXhnQx83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ED71F000FF;
+	Thu, 17 Sep 2026 17:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665083;
-	bh=WXX/+6MArksZgq7nH89a6XLs3QnLP3HIMrWaMbGm7Ak=;
+	s=korg; t=1789665086;
+	bh=J4QCDCQYGVSU5U1ttNoIvRLxNUkPrFCaUQZY+dHEokk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V2S+YP3Ny6JUFFdwKcMqHWC7g7rHok2f/DjbdjaB5BNIgPhrb3/HvOscI741PYqzJ
-	 +H3uNUbN5ShdU4uXYWtdlGeomF8Bb3UoYqzj9EblAaXM4wBbioLcd1A7sRgd7fU03S
-	 UjE5KcvMVm84EjHWHJe8nS3K4i84meGP9K5QPFq4=
+	b=oXhnQx83D5hXOFDwGtI81csKBoOiZIP7G1nxpDj5YRbzX3tMEKiZQmVevn6CO2DgT
+	 /Ch60Ac0jzXhCFNEApGSzUzFfSczYJN6X5LTRhbXfoRCWFW0N5EIhGOlbj/2VfCkBu
+	 bCmHfs/evJlCl8+UvOrc9uox7fkyvcv0D2FIxnVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0586/1250] coresight: platform: defer connection counter increment until alloc succeeds
-Date: Thu, 17 Sep 2026 16:06:21 +0100
-Message-ID: <20260917151607.769967341@linuxfoundation.org>
+Subject: [PATCH 6.18 0587/1250] RDMA/irdma: Replace waitqueue and flag with completion
+Date: Thu, 17 Sep 2026 16:06:22 +0100
+Message-ID: <20260917151607.796232832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,80 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Gan <jie.gan@oss.qualcomm.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 1563ae33dc4f5ebac96b93af2ef72e72aaaa31ae ]
+[ Upstream commit d9c8c45e6d2f438a3c8e643ae78b59454fa0fadd ]
 
-coresight_add_out_conn() increments nr_outconns before calling
-devm_krealloc_array() and again before devm_kmalloc(). If either
-allocation fails, the counter is already bumped while the corresponding
-array entry is NULL or uninitialized garbage.
+The driver previously used a waitqueue along with an explicit
+request_done flag, but without proper barriers around request_done.
 
-coresight_add_in_conn() has the same problem with nr_inconns and
-devm_krealloc_array().
+An earlier patch by Gui-Dong Han <hanguidong02@gmail.com> attempted
+to fix this by adding the missing memory barriers. Rather than
+adding the barriers, this patch replaces the waitqueue+flag with
+a completion, which is designed for this exact purpose.
 
-In both cases the probe returns -ENOMEM, which causes
-coresight_get_platform_data() to call coresight_release_platform_data()
-for cleanup. That function iterates up to nr_outconns (or nr_inconns)
-entries and dereferences each pointer unconditionally, hitting the NULL
-or garbage entry and panicking instead of failing gracefully.
-
-Fix by moving the counter increments to after all allocations succeed,
-so the struct is always consistent on any error path.
-
-Fixes: 3d4ff657e454 ("coresight: Dynamically add connections")
-Fixes: e3f4e68797a9 ("coresight: Store in-connections as well as out-connections")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260511-fix-ref-count-issue-v1-1-99d647810d3c@oss.qualcomm.com
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
+Link: https://patch.msgid.link/r/20260616155601.1081448-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-platform.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c    |  7 +++----
+ drivers/infiniband/hw/irdma/main.h  |  3 +--
+ drivers/infiniband/hw/irdma/utils.c | 12 +++++-------
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 0db64c5f49959..6e57fc5018f47 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -45,9 +45,8 @@ coresight_add_out_conn(struct device *dev,
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 7bad0e38786a2..cbf7f4d75e5ea 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -167,8 +167,7 @@ static void irdma_complete_cqp_request(struct irdma_cqp *cqp,
+ 				       struct irdma_cqp_request *cqp_request)
+ {
+ 	if (cqp_request->waiting) {
+-		WRITE_ONCE(cqp_request->request_done, true);
+-		wake_up(&cqp_request->waitq);
++		complete_all(&cqp_request->comp);
+ 	} else if (cqp_request->callback_fcn) {
+ 		cqp_request->callback_fcn(cqp_request);
+ 	}
+@@ -1039,9 +1038,9 @@ static int irdma_create_cqp(struct irdma_pci_f *rf)
+ 	INIT_LIST_HEAD(&cqp->cqp_avail_reqs);
+ 	INIT_LIST_HEAD(&cqp->cqp_pending_reqs);
+ 
+-	/* init the waitqueue of the cqp_requests and add them to the list */
++	/* init the completion of the cqp_requests and add them to the list */
+ 	for (i = 0; i < sqsize; i++) {
+-		init_waitqueue_head(&cqp->cqp_requests[i].waitq);
++		init_completion(&cqp->cqp_requests[i].comp);
+ 		list_add_tail(&cqp->cqp_requests[i].list, &cqp->cqp_avail_reqs);
+ 	}
+ 	init_waitqueue_head(&cqp->remove_wq);
+diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
+index 0c16045a34be6..777d2ed406f8a 100644
+--- a/drivers/infiniband/hw/irdma/main.h
++++ b/drivers/infiniband/hw/irdma/main.h
+@@ -160,13 +160,12 @@ struct irdma_cqp_compl_info {
+ 
+ struct irdma_cqp_request {
+ 	struct cqp_cmds_info info;
+-	wait_queue_head_t waitq;
++	struct completion comp;
+ 	struct list_head list;
+ 	refcount_t refcnt;
+ 	void (*callback_fcn)(struct irdma_cqp_request *cqp_request);
+ 	void *param;
+ 	struct irdma_cqp_compl_info compl_info;
+-	bool request_done; /* READ/WRITE_ONCE macros operate on it */
+ 	bool waiting:1;
+ 	bool dynamic:1;
+ 	bool pending:1;
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index f78d5dd4b24a9..43734ab827c07 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -442,7 +442,7 @@ struct irdma_cqp_request *irdma_alloc_and_get_cqp_request(struct irdma_cqp *cqp,
+ 		if (cqp_request) {
+ 			cqp_request->dynamic = true;
+ 			if (wait)
+-				init_waitqueue_head(&cqp_request->waitq);
++				init_completion(&cqp_request->comp);
  		}
  	}
+ 	if (!cqp_request) {
+@@ -479,7 +479,7 @@ void irdma_free_cqp_request(struct irdma_cqp *cqp,
+ 	if (cqp_request->dynamic) {
+ 		kfree(cqp_request);
+ 	} else {
+-		WRITE_ONCE(cqp_request->request_done, false);
++		reinit_completion(&cqp_request->comp);
+ 		cqp_request->callback_fcn = NULL;
+ 		cqp_request->waiting = false;
+ 		cqp_request->pending = false;
+@@ -514,8 +514,7 @@ irdma_free_pending_cqp_request(struct irdma_cqp *cqp,
+ {
+ 	if (cqp_request->waiting) {
+ 		cqp_request->compl_info.error = true;
+-		WRITE_ONCE(cqp_request->request_done, true);
+-		wake_up(&cqp_request->waitq);
++		complete_all(&cqp_request->comp);
+ 	}
+ 	wait_event_timeout(cqp->remove_wq,
+ 			   refcount_read(&cqp_request->refcnt) == 1, 1000);
+@@ -608,9 +607,8 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
+ 	cqp_timeout.compl_cqp_cmds = atomic64_read(&rf->sc_dev.cqp->completed_ops);
+ 	do {
+ 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
+-		if (wait_event_timeout(cqp_request->waitq,
+-				       READ_ONCE(cqp_request->request_done),
+-				       msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
++		if (wait_for_completion_timeout(&cqp_request->comp,
++					msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
+ 			break;
  
--	pdata->nr_outconns++;
- 	pdata->out_conns =
--		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns,
-+		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns + 1,
- 				    sizeof(*pdata->out_conns), GFP_KERNEL);
- 	if (!pdata->out_conns)
- 		return ERR_PTR(-ENOMEM);
-@@ -63,7 +62,8 @@ coresight_add_out_conn(struct device *dev,
- 	 * used right away.
- 	 */
- 	*conn = *new_conn;
--	pdata->out_conns[pdata->nr_outconns - 1] = conn;
-+	pdata->out_conns[pdata->nr_outconns] = conn;
-+	pdata->nr_outconns++;
- 	return conn;
- }
- EXPORT_SYMBOL_GPL(coresight_add_out_conn);
-@@ -86,13 +86,13 @@ int coresight_add_in_conn(struct coresight_connection *out_conn)
- 			return 0;
- 		}
- 
--	pdata->nr_inconns++;
- 	pdata->in_conns =
--		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns,
-+		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns + 1,
- 				    sizeof(*pdata->in_conns), GFP_KERNEL);
- 	if (!pdata->in_conns)
- 		return -ENOMEM;
--	pdata->in_conns[pdata->nr_inconns - 1] = out_conn;
-+	pdata->in_conns[pdata->nr_inconns] = out_conn;
-+	pdata->nr_inconns++;
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(coresight_add_in_conn);
+ 		if (cqp_request->pending)
 -- 
 2.53.0
 
