@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B55C3E9F9E;
-	Thu, 17 Sep 2026 17:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FA94F96D9;
+	Thu, 17 Sep 2026 17:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667941; cv=none; b=PDrGhNEm1ArgVGaThPH2XAU3L8pBtXyv+wBzbAAdSDKEuE5h0SH0Ves6ldn8b8tHGw5/F6pA+O+EOQkM5L4twNucUKeVMAB8zM5dZp7tkK7jcDntAE4SnnwajA5wyVSlzBLm6OBBTwLPkpct5WPGGuDelfiJieN0oStmY4kMsYQ=
+	t=1789667944; cv=none; b=a4Hm3MgmZKPiGJuH5NdAfsVgoy/X7XQ1seR3aCs+cZzpNuVGUTzqxth4t/nhBuO9uzI3tkLNmwsFCS5tDgDSBRY3IRbT78sL5C5fHGW9fqHrGE/sgYOkpJR3TZVif7pBRT5kQ+x+ENZfT7YPzzHKO6/k7xQO8RoQaVvR3kDAxEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667941; c=relaxed/simple;
-	bh=3tJxYkeOIg8aAkCa13GzSr3iLGi3xQqR4WWpAGKu7LQ=;
+	s=arc-20240116; t=1789667944; c=relaxed/simple;
+	bh=n6/GK5Cp6VDVaZy92+QfYhFz2K38VuT/CAi/QeE951U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQWC465VLkeMAn4DD/eGQm2ClPQvs3AYBfvpTf+yFZEkoEbq87DPPt4TGRj+CRvt+1/XAzs4ruqNqSPRYmUMESnkQkhej0WbkMeqptZ5XhZinjOli7MTrApyKs4zUtwZ22xM/PoRZRgQjIz+QXzkoxI47TVenTccLlcDGqeWUus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPSmni+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tcLILPyf/N3Zbse8hL3yXdcplf7hK6wUJkUYRMIKcAY1Pf5koxH9Sp8cRUCTOGpNxl4YFfPb5LWJl8suawi7j2J+XpxEyJvksgHWXv4U5I/L8Cv32cbuNKVuhCIr++Dgd/XdBjIcH9ZC9c5lYJVgrHoho2N29aXxrZfTyTcFKMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccWzASTE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPSmni+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E791F000FF;
-	Thu, 17 Sep 2026 17:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccWzASTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB251F000FF;
+	Thu, 17 Sep 2026 17:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667940;
-	bh=0nQOs0quxnbcnWm3bmZHyDB2bi6w4GdiV1wuzUgHjRc=;
+	s=korg; t=1789667943;
+	bh=wBk0FeZb0LTGtoXSqfJ7scfV8h66k8bsuSw1Y8vD2eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JPSmni+DJZgK74ZkEDdYy9DHshZBYdp5OeBsvYyKx+t8zl3ACsMXRQAJsJOeK2DBY
-	 Xo8YzMF7kqV5VqvxP8UtRvFFVWERkePr5RVvjOfBvBxzBod7jFHDwABXYvcKEylQ9x
-	 0JB2oDNwSKhoaTRVHdYnO8LAo8cejiQsLMd6xYCg=
+	b=ccWzASTE8DFYEjYjswtVflWHpCe6N438o/RNABgwEkOn+mAw54c3RHwB3Vi568pBR
+	 ubgN8bifwO1CxWM4vp8OlCryL0Bs5cpLyCjbOMVlFu5biL9/epPF7AVN+P4+G5oja9
+	 g8h0mAhgOTYrCzNFDxLqSUA0nRc/tyoIy9G9WzC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	KangNing Liao <lkangn.kernel@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0261/1102] netconsole: take target_cleanup_list_lock in drop_netconsole_target()
-Date: Thu, 17 Sep 2026 16:03:24 +0100
-Message-ID: <20260917151546.151363795@linuxfoundation.org>
+Subject: [PATCH 6.12 0262/1102] btrfs: protect sb_write_pointer() with invalidate lock
+Date: Thu, 17 Sep 2026 16:03:25 +0100
+Message-ID: <20260917151546.177092626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,52 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: KangNing Liao <lkangn.kernel@gmail.com>
 
-[ Upstream commit 91aeb87f052367a5a2743cc93777dfb4386f2f14 ]
+[ Upstream commit 123b9a545f4d0348e81f558a032bf2a93ee5722f ]
 
-drop_netconsole_target() unlinks the target while only holding
-target_list_lock. However, when the underlying interface has been
-unregistered, netconsole_netdev_event() moves the target from
-target_list to target_cleanup_list, and netconsole_process_cleanups_core()
-walks that list under target_cleanup_list_lock only.
+sb_write_pointer() reads the super block from the block device page cache
+using read_cache_page_gfp(). This has the same race with BLKBSZSET as the
+one fixed by commit 3f29d661e568 ("btrfs: sync read disk super and set
+block size").
 
-If a user removes the configfs target at the same time the cleanup
-worker is iterating target_cleanup_list, list_del() can corrupt the list
-because the two paths take disjoint locks while operating on the same
-list node.
+Take the mapping invalidate lock around read_cache_page_gfp() to
+serialize the read against block size changes.
 
-Acquire target_cleanup_list_lock around the list_del() so the unlink is
-serialised against netconsole_process_cleanups_core() regardless of
-which list the target currently belongs to. The state transition that
-downgrades STATE_DEACTIVATED to STATE_DISABLED is left intact and is
-performed under the same combined locking, preserving the existing
-ordering with resume_target().
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260604-netcons_fix_before_move-v3-3-ab055b3a6aa5@debian.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: KangNing Liao <lkangn.kernel@gmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netconsole.c | 2 ++
+ fs/btrfs/zoned.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
-index 3b76ec3cd49b8..0c47713b6adbc 100644
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -955,9 +955,11 @@ static void drop_netconsole_target(struct config_group *group,
- 	unsigned long flags;
- 	struct netconsole_target *nt = to_target(item);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 46a792e113ee4..df7d75ef7ae3e 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -126,8 +126,10 @@ static int sb_write_pointer(struct block_device *bdev, struct blk_zone *zones,
+ 			u64 bytenr = ALIGN_DOWN(zone_end, BTRFS_SUPER_INFO_SIZE) -
+ 						BTRFS_SUPER_INFO_SIZE;
  
-+	mutex_lock(&target_cleanup_list_lock);
- 	spin_lock_irqsave(&target_list_lock, flags);
- 	list_del(&nt->list);
- 	spin_unlock_irqrestore(&target_list_lock, flags);
-+	mutex_unlock(&target_cleanup_list_lock);
- 
- 	/*
- 	 * The target may have never been enabled, or was manually disabled
++			filemap_invalidate_lock(mapping);
+ 			page[i] = read_cache_page_gfp(mapping,
+ 					bytenr >> PAGE_SHIFT, GFP_NOFS);
++			filemap_invalidate_unlock(mapping);
+ 			if (IS_ERR(page[i])) {
+ 				if (i == 1)
+ 					btrfs_release_disk_super(super[0]);
 -- 
 2.53.0
 
