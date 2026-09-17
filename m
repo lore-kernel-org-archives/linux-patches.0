@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A8C4E3231;
-	Thu, 17 Sep 2026 16:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFB74E9C3B;
+	Thu, 17 Sep 2026 16:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664039; cv=none; b=PymZsVnpHryXoPfnDSRX0j4YXjyK8TzaPIEGQVJ0h8mU9XK2E81vRWSw0qiLee42/wcZR8VOAbJEnqv5PO0h/QK9GlWH75X2hRaXKbSP4yAYRsOuezZILv11gBY1jmyUp+i8UDxv4qRwpf/0jP+PgwlCN4wUHIl9npUGWb5fayc=
+	t=1789664041; cv=none; b=XPFC+t81lsVw8zpqKbGD8eVmz1E+Qbbs1RDRkKEM9Ka9IDkpgtMAPxo1DK4GYWopiI9g/ToacV8g0vClKiFNY76Dg2o/tQpCPWa68vc3MRqHZqHEcWTN6DyQ6S39KIcdfSxDFRHd9ZgI+ogpJLMENiLUhnPfH+YrR6xnYYpT96E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664039; c=relaxed/simple;
-	bh=Yza/pM14tzUVMIO8/zy2441HlYxbs8FsHNNjxGUvt+w=;
+	s=arc-20240116; t=1789664041; c=relaxed/simple;
+	bh=6YTGiyYLU/JH3wEkuoIG5g65x4cjuTT9HwjLuX3MTZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1iuTOASF21bNtkmnmN9kfQMaZl31vr1zN9MqrDakhELQnHfnt46si5gZ4bOrUpPWMTNWXv6e0hip4ICh8Bapp8+2ODJ/UigPOLI21sAhu8kp/fYJgeh/7PeCACy5rSpEnxlRavt8mN4hYNwT6jNx/WCVcot1BEV30/kWn82qDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFBGppeW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NDVCl9D7lnf8DIHTJqblolQ2NDjL8cQGho9Mj+A3c8GX1O+1gaEKnCZ3NhexKzXkNtV18B1BrtJqGKZl01Rwcw7M0Qyndp0QLK8RRozsTZoyW7F6siJwJBayyPZeBw/ckbz9r7x29rfLSUOgl+chaFnAlAKCYypWRIauMzp6WZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uu3ZA/so; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFBGppeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F241F000FF;
-	Thu, 17 Sep 2026 16:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uu3ZA/so"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B368E1F00893;
+	Thu, 17 Sep 2026 16:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664037;
-	bh=PtFgZjrtRFRC3eqZYo8HqwUMYnDDmXvFYL+/MPoQjts=;
+	s=korg; t=1789664040;
+	bh=dQlHvdRRFRno4q6GG9c1PLUFRx1ang2t9ZDycdO8gtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFBGppeWPg8iejuzWqDtDulL2K6LPQeMOACpCxUfTmwXfdvzz5TiDCtifjfqmx6oE
-	 d0l/Hu+gZfSC5PE7aaM6xMB9w7ISU3L7CAZhjeOSbGDKPEZxqIMr4RvIDb3i2Ktfsa
-	 p5BbM1OGGTC+EVZcmHiEa4k3KdKAOqQU9/ALqYiY=
+	b=uu3ZA/soK3N1ZTkUWcw0+W5TU4FzqsEudHs07wQ+7Z4D51CSkSEMWXezPfK1yk5uw
+	 X4zSO8fh7EYT91cXukKzXfjvI4ICa570P3s53hGmvuZ+h1BJH0fTQsIVc9eX10Whnl
+	 hA+230m+Cw+iuQkrYd8kP84B2vS+X3KfK18ngw7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0238/1250] ACPICA: validate byte_count in acpi_ps_get_next_package_length()
-Date: Thu, 17 Sep 2026 16:00:33 +0100
-Message-ID: <20260917151558.593124884@linuxfoundation.org>
+Subject: [PATCH 6.18 0239/1250] ACPICA: Prevent adding invalid references
+Date: Thu, 17 Sep 2026 16:00:34 +0100
+Message-ID: <20260917151558.621488338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,55 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit d49c6ee08365a8596f639da46eb7e71752b0cd42 ]
+[ Upstream commit 6e8c55e13a5e3a9f38921d62924f18ceba3330eb ]
 
-Validate package length reading in acpi_ps_get_next_package_length().
+Prevent adding references for local, argument, and debug objects
+in acpi_ut_copy_simple_object().
 
-Link: https://github.com/acpica/acpica/commit/40e03f9941e2
+Link: https://github.com/acpica/acpica/commit/f576898d7814
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
+Link: https://patch.msgid.link/4511989.ejJDZkT8p0@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/acpi/acpica/utcopy.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 55273cbbfc67e..3526ea1094146 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -48,6 +48,7 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
- 	u32 package_length = 0;
- 	u32 byte_count;
- 	u8 byte_zero_mask = 0x3F;	/* Default [0:5] */
-+	u32 remaining;
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index 80458e70ac2bf..9ecf5c3f49ba6 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -731,7 +731,15 @@ acpi_ut_copy_simple_object(union acpi_operand_object *source_desc,
+ 			break;
+ 		}
  
- 	ACPI_FUNCTION_TRACE(ps_get_next_package_length);
+-		acpi_ut_add_reference(source_desc->reference.object);
++		/*
++		 * Local/Arg/Debug references do not have a valid Object pointer
++		 * that can be referenced
++		 */
++		if ((source_desc->reference.class != ACPI_REFCLASS_LOCAL) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_ARG) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_DEBUG)) {
++			acpi_ut_add_reference(source_desc->reference.object);
++		}
+ 		break;
  
-@@ -55,7 +56,23 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
- 	 * Byte 0 bits [6:7] contain the number of additional bytes
- 	 * used to encode the package length, either 0,1,2, or 3
- 	 */
-+
-+	/* Check if we have at least one byte to read */
-+	remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
-+	if (remaining == 0) {
-+		return_UINT32(0);
-+	}
-+
- 	byte_count = (aml[0] >> 6);
-+
-+	/* Validate byte_count and ensure we have enough bytes to read */
-+	if (byte_count >= remaining) {
-+
-+		/* Clamp to available bytes and advance to end */
-+		parser_state->aml = parser_state->aml_end;
-+		return_UINT32(0);
-+	}
-+
- 	parser_state->aml += ((acpi_size)byte_count + 1);
- 
- 	/* Get bytes 3, 2, 1 as needed */
+ 	case ACPI_TYPE_REGION:
 -- 
 2.53.0
 
