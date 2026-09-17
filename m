@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631B53438A8;
-	Thu, 17 Sep 2026 16:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DBC4ABBBD;
+	Thu, 17 Sep 2026 16:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660993; cv=none; b=Si1KJRhG3op/l7hnsgeKcaCvGTtTaWPTTMQROjkPvbYsne+BqKFRf4CIiy6wwEBrr0gvchCNiZuFWowNIMWpfof+r9O1faIODJk3+SvPNk3uuJ7pfPCg7i/KCszzwIAg0M0Vkma0vqqFbb6J5Op7HWXr/AafqxyQGoYHOVE9LvA=
+	t=1789660996; cv=none; b=BJYQILGX7Dj7AfwFrhNLxbfUAs0exC7+4fWznh0gF8bHFqdydpHT0/oKnHpoCXO8EsnXoSxznEAjh0e+/06U91GLlXeagVccH6ZB01Fn3J7ephxuhBX0ccB/aweFAfXwpniVwnG0niQIJdm82X+ckJwD6k3571F+sW5biJl1Fwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660993; c=relaxed/simple;
-	bh=pEyMvqGb6pbUHFA/30A+LSQlj3vAxbPN+DyhNPePG2w=;
+	s=arc-20240116; t=1789660996; c=relaxed/simple;
+	bh=cJ1h6f6ylLSe8WSFapGY7hft8hLJJz8bxd5Sgvp34AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUO8Y6WPv+TAveubfY1qbB+mVVbiaOp/CtwiDKWP0BL/AqMiztCNq9AG8X5t+NmMjXOxMcx6YQ1dXtuVczYzlSvYnJdGLaRPadZlXxNHf2cDB6pmWOG3iUrm82LefUPudPg4VsA1etKtvF1yUo6UrJ3O0KLGc8pQk3raTvf3Q+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIp0X5w3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XZYI6hSC9zg6c0DESQlC5aL4kb960mT33h4aJQf1DYd4YyBaOTDCKNWeOV1QvQizmt4/xV96W1YpMriDUNUUyKvCboQBEKxZJuvEZ8QwonmHqp4NtfDYbuXSMLeWeeVbBlQRqi0dlXKAbOesfPkfZIxW7ScHfM+XyW3D1pKBk5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1wd8HOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIp0X5w3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD481F000FF;
-	Thu, 17 Sep 2026 16:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1wd8HOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606931F000FF;
+	Thu, 17 Sep 2026 16:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660992;
-	bh=zj5cUPEgdnclXcSRSgIhl649tXj9u7tUNan/STOe2ZY=;
+	s=korg; t=1789660994;
+	bh=6dNwHPfr4nEpPvYkXm2/fd+PxCbk8m5OLP+VpAytdP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIp0X5w3M/Ul4nGgyuCZmXiBLI+rU/b3hW4WV6W+MgY92+z4M19G7btGq0Scp7n3M
-	 fjE7JJKVE1nVjf6uuynZzYdat8kQzmkqR+Av8EjKI7zq3SBk7F+9uQpfz7koC05PoA
-	 uEyWm9KeY2HRbn6h8k7He8k1vI1hl5h8oQjgYOdM=
+	b=n1wd8HOfrVQL1Xmlf6+K83g9wasYBNiwJAKPWw+GQpAw9Oyg0J0SqXi31Ad75sRPW
+	 bB9FDkDH83JZu9Fr61NjAzRxbFrqXMSaJbgrjtnA7g+ksXapiIkyuPSO0gLrHAIOoZ
+	 odQXOsXZw8QlIfKUpSOJWbL48iuB5XuiqQ9HyB9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Brnich <b-brnich@ti.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0047/1250] media: chips-media: wave5: Release m2m_ctx after Instance Removed from List
-Date: Thu, 17 Sep 2026 15:57:22 +0100
-Message-ID: <20260917151553.214773327@linuxfoundation.org>
+Subject: [PATCH 6.18 0048/1250] dm-raid: only requeue bios when dm is suspending
+Date: Thu, 17 Sep 2026 15:57:23 +0100
+Message-ID: <20260917151553.241373638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,47 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brandon Brnich <b-brnich@ti.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 7cdbd7bb21949a8fda10c7104a2b12ee363cbf5c ]
+[ Upstream commit 97cb8be0fd4c50d310988e0822f7e91d1711e6f8 ]
 
-Possible use after free if IRQ thread manages to obtain spinlock between
-m2m_ctx release and wave5_release function removing stream instance from
-list of active instances. The IRQ thread looks for the m2m_ctx which is
-freed so null pointer dereference occurs.
+returning DM_MAPIO_REQUEUE from the target map() function only requeues
+the bio during noflush suspends. During regular operations or during
+flushing suspends, it fails the bio. Failing the bio during flushing
+suspends is the correct behavior here. We cannot handle the bio, and we
+cannot suspends while it is outstanding. But during normal operations,
+we should not push the bio back to dm. Instead, wait for the reshape
+to be resumed.
 
-Signed-off-by: Brandon Brnich <b-brnich@ti.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Tested-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid.c | 6 ++++++
+ drivers/md/md.h      | 2 ++
+ drivers/md/raid5.c   | 7 +++++--
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.c b/drivers/media/platform/chips-media/wave5/wave5-helper.c
-index 53a0ac068c2e2..c3d34be833ff0 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-helper.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-helper.c
-@@ -68,7 +68,6 @@ int wave5_vpu_release_device(struct file *filp,
- 	int ret = 0;
- 	unsigned long flags;
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index 4bacdc499984b..9eee490c029e7 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3831,6 +3831,7 @@ static void raid_presuspend(struct dm_target *ti)
+ 	 * resume, raid_postsuspend() is too late.
+ 	 */
+ 	set_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
++	set_bit(MD_DM_SUSPENDING, &mddev->flags);
  
--	v4l2_m2m_ctx_release(inst->v4l2_fh.m2m_ctx);
- 	/*
- 	 * To prevent Null reference exception, the existing irq handler were
- 	 * separated to two modules.
-@@ -89,6 +88,9 @@ int wave5_vpu_release_device(struct file *filp,
- 	list_del_init(&inst->list);
- 	spin_unlock_irqrestore(&inst->dev->irq_spinlock, flags);
- 	mutex_unlock(&inst->dev->irq_lock);
-+
-+	v4l2_m2m_ctx_release(inst->v4l2_fh.m2m_ctx);
-+
- 	if (inst->state != VPU_INST_STATE_NONE) {
- 		u32 fail_res;
+ 	if (!reshape_interrupted(mddev))
+ 		return;
+@@ -3847,13 +3848,16 @@ static void raid_presuspend(struct dm_target *ti)
+ static void raid_presuspend_undo(struct dm_target *ti)
+ {
+ 	struct raid_set *rs = ti->private;
++	struct mddev *mddev = &rs->md;
  
++	clear_bit(MD_DM_SUSPENDING, &mddev->flags);
+ 	clear_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
+ }
+ 
+ static void raid_postsuspend(struct dm_target *ti)
+ {
+ 	struct raid_set *rs = ti->private;
++	struct mddev *mddev = &rs->md;
+ 
+ 	if (!test_and_set_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
+ 		/*
+@@ -3864,6 +3868,8 @@ static void raid_postsuspend(struct dm_target *ti)
+ 		mddev_suspend(&rs->md, false);
+ 		rs->md.ro = MD_RDONLY;
+ 	}
++	clear_bit(MD_DM_SUSPENDING, &mddev->flags);
++
+ }
+ 
+ static void attempt_restore_of_faulty_devices(struct raid_set *rs)
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 7400f7739d2e6..bba0f6790c035 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -343,6 +343,7 @@ struct md_cluster_operations;
+  * @MD_HAS_SUPERBLOCK: There is persistence sb in member disks.
+  * @MD_FAILLAST_DEV: Allow last rdev to be removed.
+  * @MD_SERIALIZE_POLICY: Enforce write IO is not reordered, just used by raid1.
++ * @MD_DM_SUSPENDING: This DM raid device is suspending.
+  *
+  * change UNSUPPORTED_MDDEV_FLAGS for each array type if new flag is added
+  */
+@@ -362,6 +363,7 @@ enum mddev_flags {
+ 	MD_HAS_SUPERBLOCK,
+ 	MD_FAILLAST_DEV,
+ 	MD_SERIALIZE_POLICY,
++	MD_DM_SUSPENDING,
+ };
+ 
+ enum mddev_sb_flags {
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 8ff8cce3da7bf..84168ce7a0ff6 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6057,8 +6057,11 @@ static enum stripe_result make_stripe_request(struct mddev *mddev,
+ 	raid5_release_stripe(sh);
+ out:
+ 	if (ret == STRIPE_SCHEDULE_AND_RETRY && reshape_interrupted(mddev)) {
+-		bi->bi_status = BLK_STS_RESOURCE;
+-		ret = STRIPE_WAIT_RESHAPE;
++		if (!mddev_is_dm(mddev) ||
++		    test_bit(MD_DM_SUSPENDING, &mddev->flags)) {
++			bi->bi_status = BLK_STS_RESOURCE;
++			ret = STRIPE_WAIT_RESHAPE;
++		}
+ 		pr_err_ratelimited("dm-raid456: io across reshape position while reshape can't make progress");
+ 	}
+ 	return ret;
 -- 
 2.53.0
 
