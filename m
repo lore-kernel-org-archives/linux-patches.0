@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AB0547071;
-	Thu, 17 Sep 2026 18:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7CF3CEB9E;
+	Thu, 17 Sep 2026 18:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671091; cv=none; b=PLhi6EABw2N99VUbNV48U+RkzK+HA9nHtGzkl/XRPE+2HMQ5x8Uh50I4ZRT0V3PeOHEqKJIVgOYjQWJFlCKPnGUbo90Xqoyd5mteYxG3bqkHwF2Xry0JM8nrrgGkkBzvtQxHWIemWtmuiP8YOoVQqSI2mqZbEg4bW3S9nNcGDWo=
+	t=1789671094; cv=none; b=EVK7uaSs0iGCK2PRk4UU5hFfs6aUuRGLyEye8+QiYJ2AHRCPuTaDIgAb11gO3XpqCirzxEcr/B+mT2+e0xd7m3MQJy3dLEMtNrHdSaLSw/w2KGyLZVNX9VBY8m7FmWV9x9hEp6YyChhmvvFkRMCjLe3QycOJy+TOkD287UjTx+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671091; c=relaxed/simple;
-	bh=tpa04zTjm/CcyrI0s6WCsuWS9Xh15E59FeuZjH1LJL8=;
+	s=arc-20240116; t=1789671094; c=relaxed/simple;
+	bh=TO6bK2JMnBfKl6BzPYqS+3IOVNQmD4XWiIOQKFi7k+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aD2Wt5F/ssUT+sx2FqpVRtk53qNRl+omfh3YgjGzRcmYIVs6Zbxd8vMNHlhgvN7q83ygXTPWGtgDDt0TxoQXG3rMzAeu4/ZSy+rIuGSGhR4PGdUXe4rmvphSC69bJpqJGhEzyWHr0GA5D7bdditqb2FvHV5MQUoqnrslHTNp9Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdK0MLaz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+Wj3NM4oGAfVbIEHp7ku15eEjELuV63EmQ8ZXXhDfFfi/22myO4LYgnCMkZVwXOhcMn9fSh3wIafQamRk/vzELLM54U8PxADeSikqvYCdCn7gDBu5YZBbk0ZyQKkQFTONXwmfVo1sOUZ2nn+fJR+0o9KdpCCwYK1O91scqGsRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6xDcNGs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdK0MLaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD991F000FF;
-	Thu, 17 Sep 2026 18:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6xDcNGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD121F000FF;
+	Thu, 17 Sep 2026 18:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671090;
-	bh=VAujKAdXX/x0q4nFMH9Kghl5k4/7j3b5e4n/5R6kNYI=;
+	s=korg; t=1789671093;
+	bh=bnqMP4drx8xKac6XVaQ5spofM7aAMQQF608GCI3GBug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdK0MLazGYqAm/w0Ocw40JvkPvJG1eolDEppVDnhS/Gsq2chve6HD6yRLv9MXub/a
-	 YRq8G4Dws7MqdXI4ll8p6Bw1EYQEsxKoYZuqor4ZhOOhqWuca3ebhicnx4jpnYmcVA
-	 eTXUCSEgHHcsx0Ul7MopIimDCZ2X1BgHhT9seJ5Q=
+	b=E6xDcNGs9qrBf34FTfXJs6LJ/VzfivMyG2z79O/lE1z9nBZRhWbWVHlh0qtnxCnBS
+	 IvsTbQw4PD0c+0AWU5w8YIDicvnfE65ru8ybPUfPwJIHwCBo7oiWiWHXRmpLhiHUjK
+	 nu4ojPYLcbOLw5eetuwSIxN7ri3C/iLbVP3vI7BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.12 0864/1102] s390/crypto: Fix use of mutex in atomic context
-Date: Thu, 17 Sep 2026 16:13:27 +0100
-Message-ID: <20260917151602.244948386@linuxfoundation.org>
+Subject: [PATCH 6.12 0865/1102] s390/crypto: Fix missing scrub of temp buffers with AES ctr and gcm algorithm
+Date: Thu, 17 Sep 2026 16:13:28 +0100
+Message-ID: <20260917151602.270028950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,132 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit d1c44a7d085473173bb360b7218a43699c3f56c7 upstream.
+commit 8b7c3b6914f19caf648d05726a86af6326d3c2c6 upstream.
 
-The AES CTR implementation used a mutex to lock one page of exclusive
-memory for fast CTR processing. Unfortunately a mutex is not save to
-use in atomic or interrupt context. So use a binary semaphore instead
-which is save to use in such environments.
+In function ctr_aes_crypt() there is a buffer used to process
+remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
+thus could lead to expose of unwanted data. When the buffer is used
+explicitly scrub it at the end of the code block to avoid exposure of
+maybe sensitive data.
 
-Furthermore rework the code to get rid of conditional locking. So
-restructure the AES CRT code by extracting the main loop into a
-separate function and just give in information about the (locked) page
-can be used or not (is not locked).
+In a similar way the function gcm_aes_crypt() hat an error path where
+the CPACF param block was not scrubbed. Instead of return early now
+these error paths go to end of function where explicit scrubbing is
+done. Similar with the buffers which are part of the gcm_sg_walk
+structs from the variables gw_in and gw_out.
 
-Fixes: 7988fb2c03c8 ("crypto: s390/aes - convert to skcipher API")
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: d07f951903fa ("crypto: s390/aes - Fix buffer overread in CTR mode")
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 5.5+
+Cc: stable@vger.kernel.org # 6.8+
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/aes_s390.c |   63 +++++++++++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ arch/s390/crypto/aes_s390.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 --- a/arch/s390/crypto/aes_s390.c
 +++ b/arch/s390/crypto/aes_s390.c
-@@ -28,14 +28,14 @@
- #include <linux/module.h>
- #include <linux/cpufeature.h>
- #include <linux/init.h>
--#include <linux/mutex.h>
- #include <linux/fips.h>
-+#include <linux/semaphore.h>
- #include <linux/string.h>
- #include <crypto/xts.h>
- #include <asm/cpacf.h>
- 
- static u8 *ctrblk;
--static DEFINE_MUTEX(ctrblk_lock);
-+static DEFINE_SEMAPHORE(ctrblk_sem, 1);
- 
- static cpacf_mask_t km_functions, kmc_functions, kmctr_functions,
- 		    kma_functions;
-@@ -669,46 +669,61 @@ static unsigned int __ctrblk_init(u8 *ct
- 	return n;
- }
- 
-+static int __ctr_aes_crypt(struct s390_aes_ctx *sctx,
-+			   struct skcipher_walk *walk, bool locked)
-+{
-+	unsigned int n, nbytes;
-+	int ret = 0;
-+	u8 *ctrptr;
-+
-+	while (!ret && ((nbytes = walk->nbytes) >= AES_BLOCK_SIZE)) {
-+		n = AES_BLOCK_SIZE;
-+		if (nbytes >= 2 * AES_BLOCK_SIZE && locked)
-+			n = __ctrblk_init(ctrblk, walk->iv, nbytes);
-+		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk->iv;
-+		cpacf_kmctr(sctx->fc, sctx->key, walk->dst.virt.addr,
-+			    walk->src.virt.addr, n, ctrptr);
-+		if (ctrptr == ctrblk)
-+			memcpy(walk->iv, ctrptr + n - AES_BLOCK_SIZE,
-+			       AES_BLOCK_SIZE);
-+		crypto_inc(walk->iv, AES_BLOCK_SIZE);
-+		ret = skcipher_walk_done(walk, nbytes - n);
-+	}
-+
-+	return ret;
-+}
-+
- static int ctr_aes_crypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct s390_aes_ctx *sctx = crypto_skcipher_ctx(tfm);
--	u8 buf[AES_BLOCK_SIZE], *ctrptr;
- 	struct skcipher_walk walk;
--	unsigned int n, nbytes;
--	int ret, locked;
-+	u8 buf[AES_BLOCK_SIZE];
-+	int ret;
- 
- 	if (unlikely(!sctx->fc))
- 		return fallback_skcipher_crypt(sctx, req, 0);
- 
--	locked = mutex_trylock(&ctrblk_lock);
--
- 	ret = skcipher_walk_virt(&walk, req, false);
--	while (!ret && ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE)) {
--		n = AES_BLOCK_SIZE;
-+	if (ret)
-+		return ret;
- 
--		if (nbytes >= 2*AES_BLOCK_SIZE && locked)
--			n = __ctrblk_init(ctrblk, walk.iv, nbytes);
--		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk.iv;
--		cpacf_kmctr(sctx->fc, sctx->key, walk.dst.virt.addr,
--			    walk.src.virt.addr, n, ctrptr);
--		if (ctrptr == ctrblk)
--			memcpy(walk.iv, ctrptr + n - AES_BLOCK_SIZE,
--			       AES_BLOCK_SIZE);
--		crypto_inc(walk.iv, AES_BLOCK_SIZE);
--		ret = skcipher_walk_done(&walk, nbytes - n);
-+	if (down_trylock(&ctrblk_sem) == 0) {
-+		ret = __ctr_aes_crypt(sctx, &walk, true);
-+		up(&ctrblk_sem);
-+	} else {
-+		ret = __ctr_aes_crypt(sctx, &walk, false);
- 	}
--	if (locked)
--		mutex_unlock(&ctrblk_lock);
-+
- 	/*
- 	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
- 	 */
--	if (!ret && nbytes) {
-+	if (!ret && walk.nbytes > 0) {
- 		memset(buf, 0, AES_BLOCK_SIZE);
--		memcpy(buf, walk.src.virt.addr, nbytes);
-+		memcpy(buf, walk.src.virt.addr, walk.nbytes);
- 		cpacf_kmctr(sctx->fc, sctx->key, buf, buf,
- 			    AES_BLOCK_SIZE, walk.iv);
--		memcpy(walk.dst.virt.addr, buf, nbytes);
-+		memcpy(walk.dst.virt.addr, buf, walk.nbytes);
+@@ -726,6 +726,7 @@ static int ctr_aes_crypt(struct skcipher
+ 		memcpy(walk.dst.virt.addr, buf, walk.nbytes);
  		crypto_inc(walk.iv, AES_BLOCK_SIZE);
  		ret = skcipher_walk_done(&walk, 0);
++		memzero_explicit(buf, sizeof(buf));
  	}
+ 
+ 	return ret;
+@@ -1027,10 +1028,14 @@ static int gcm_aes_crypt(struct aead_req
+ 			  gw_in.ptr, aad_bytes);
+ 
+ 		n = aad_bytes + pc_bytes;
+-		if (gcm_in_walk_done(&gw_in, n) != n)
+-			return -ENOMEM;
+-		if (gcm_out_walk_done(&gw_out, n) != n)
+-			return -ENOMEM;
++		if (gcm_in_walk_done(&gw_in, n) != n) {
++			ret = -ENOMEM;
++			goto out;
++		}
++		if (gcm_out_walk_done(&gw_out, n) != n) {
++			ret = -ENOMEM;
++			goto out;
++		}
+ 		aadlen -= aad_bytes;
+ 		pclen -= pc_bytes;
+ 	} while (aadlen + pclen > 0);
+@@ -1042,7 +1047,10 @@ static int gcm_aes_crypt(struct aead_req
+ 	} else
+ 		scatterwalk_map_and_copy(param.t, req->dst, len, taglen, 1);
+ 
++out:
+ 	memzero_explicit(&param, sizeof(param));
++	memzero_explicit(gw_in.buf, sizeof(gw_in.buf));
++	memzero_explicit(gw_out.buf, sizeof(gw_out.buf));
+ 	return ret;
+ }
+ 
 
 
