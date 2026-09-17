@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2744F93B3;
-	Thu, 17 Sep 2026 17:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7AE4ED185;
+	Thu, 17 Sep 2026 17:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667903; cv=none; b=n6ko9VUj3+6kitAVVuBAzd8SprCNRZTLgmyj0i4tlbU1qW9xUOayANyyuvL8nVLHgdgv8U9w6ifYmynvMVhGSuA4n1EYQQpNaQ0ydNwbU4m5omNIlJ8wajJUrmWg8jR/ux6JozOaxG1mvCA9sAvpyFlgRJFu/D39d1f+Aej0sfk=
+	t=1789667906; cv=none; b=rE5075hPB+QKi8FuzSh9+ptUxqM5KoR3OhvcMOEfzDmEVeF8Q6HSI/Ia0GGv1mJxMs0b+3BEr54YIQLCk08ypexWgce9VIJKOKZXNqXyNdlYz6GGFPOcnjNa5EK2SF9rK08sfTFiHmb2qdL/bZn/rTEvdxlkrqYe4sPBmUx2Q80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667903; c=relaxed/simple;
-	bh=e29NB1pL/EysM6ni+YTtRgtadXIrVkEb/Yn5oHxnSP0=;
+	s=arc-20240116; t=1789667906; c=relaxed/simple;
+	bh=veV2rt6cdYfNE18TFwTc9PmkuK8pYAtgUCOc4y+jcAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI2VMFZ30XxK6MMyLlHxf1+3gMmXmb+Vu2hRomJCyeHV6VGrqRAPISHADcKFq/q274HI0e4Nc8o8fXrZfTHsNUq6c2KoFzq/P2LySEoVbOGJhn4tpjJWHPy6dtbkccwnQnwc1M42ND5ttq+13o3q3Kg5xyIYzEfKaDFNecl6HNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIrLymzT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UgoIhC1nXB1cJCSbSz9Co3cihyb36rGduoBNLBOv76Hapj230UVgZOzv1C4kmYfbDC5xPvBQhmak29v0iEMaEMhqSI7ALSYEFZ/+KC0IZOrZtrI0f9iDZF145O0dDHV14Uyf6WdASaGM+wKMDPzkeMVHXNgKcXRnPYvVTwkUwDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gy3uG+o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIrLymzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B5D1F000FF;
-	Thu, 17 Sep 2026 17:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gy3uG+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719551F00898;
+	Thu, 17 Sep 2026 17:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667902;
-	bh=Bc8phNn1Y8kCATMSwvb7hMBV3o7L5MZbgwdw9RCq5lQ=;
+	s=korg; t=1789667905;
+	bh=XcyIJmIwVr6AOZSzyhhoFCSCMA8rxa+781zPRCp8bBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WIrLymzTehfscLWVm/zQoBjRSmhmwZzTRgrtf5E8jzLLVxjrIN44kKkCZiqfNpX/l
-	 Ts8WB+BPi3/pDvyTW8apLq5hjQeoC7KxNzBl0voc1kk7rxM+3Im4GSa5PALpVSmhzX
-	 wrf1jgpMN5lnqtJO7gS4c78Q7SUJoTjyxIFX8rp4=
+	b=0Gy3uG+oL0g7eyMTFcvjM1a4BIPrlxH6KZq05qN0vhbS4jZMQ6oefLYsj4931M8H1
+	 dcAjbGbtaKCVExeoP1zRmf5ak0WLRSe5SlFYPYxgi/jp3/ZzSCnj/katFBaMhoT3CV
+	 8t/t5CIEBU+KD/n15U86ut5NFpgY4vMbXOMu3PUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuo Li <islituo@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0246/1102] ASoC: mediatek: mt8365-afe-pcm: fix possible NULL-pointer dereferences in mt8365_afe_suspend()
-Date: Thu, 17 Sep 2026 16:03:09 +0100
-Message-ID: <20260917151545.770312324@linuxfoundation.org>
+Subject: [PATCH 6.12 0212/1102] ALSA: seq: oss: Reject reads that cannot fit the next event
+Date: Thu, 17 Sep 2026 16:02:35 +0100
+Message-ID: <20260917151544.899148584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,74 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit b8948ac26efc395264a47f9a743889065adb5cff ]
+[ Upstream commit 611f538253d970f4d152003841544e875828d015 ]
 
-mt8365_afe_suspend() allocates the register backup buffer with
-devm_kcalloc(), but does not check for allocation failure before using the
-returned pointer. This may lead to a NULL pointer dereference when
-accessing afe->reg_back_up[i].
+snd_seq_oss_read() checks whether the next queued OSS sequencer event
+fits in the remaining userspace buffer before removing it from the read
+queue.
 
-Add the missing NULL check and return -ENOMEM on allocation failure after
-disabling the main clock.
+The check is inverted. It currently stops when the event is smaller than
+the remaining buffer, so a normal 4-byte event is not copied for an
+8-byte read buffer. Conversely, an 8-byte event can be copied for a
+smaller read count.
 
-Also propagate the return value of mt8365_afe_suspend() in
-mt8365_afe_dev_runtime_suspend() so that the suspended state is not updated
-when suspend fails.
+Break only when the remaining userspace buffer is smaller than the next
+event, and report -EINVAL if no complete event has been copied. This
+prevents an undersized read from looking like end-of-file while leaving
+the event queued for a later read with a large enough buffer.
 
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Link: https://patch.msgid.link/20260528064107.470824-1-islituo@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260602-alsa-seq-oss-read-size-check-v1-1-10e59b1742e0@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8365/mt8365-afe-pcm.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ sound/core/seq/oss/seq_oss_rw.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-index 743b465721441..23cfcf7160e3d 100644
---- a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-@@ -1975,10 +1975,15 @@ static int __maybe_unused mt8365_afe_suspend(struct device *dev)
- 
- 	mt8365_afe_enable_main_clk(afe);
- 
--	if (!afe->reg_back_up)
-+	if (!afe->reg_back_up) {
- 		afe->reg_back_up =
- 			devm_kcalloc(dev, afe->reg_back_up_list_num,
- 				     sizeof(unsigned int), GFP_KERNEL);
-+		if (!afe->reg_back_up) {
-+			mt8365_afe_disable_main_clk(afe);
-+			return -ENOMEM;
-+		}
-+	}
- 
- 	for (i = 0; i < afe->reg_back_up_list_num; i++)
- 		regmap_read(regmap, afe->reg_back_up_list[i],
-@@ -2012,11 +2017,15 @@ static int __maybe_unused mt8365_afe_resume(struct device *dev)
- static int __maybe_unused mt8365_afe_dev_runtime_suspend(struct device *dev)
- {
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
-+	int ret;
- 
- 	if (pm_runtime_status_suspended(dev) || afe->suspended)
- 		return 0;
- 
--	mt8365_afe_suspend(dev);
-+	ret = mt8365_afe_suspend(dev);
-+	if (ret)
-+		return ret;
-+
- 	afe->suspended = true;
- 	return 0;
- }
+diff --git a/sound/core/seq/oss/seq_oss_rw.c b/sound/core/seq/oss/seq_oss_rw.c
+index 307ef98c44c7b..45bb458597708 100644
+--- a/sound/core/seq/oss/seq_oss_rw.c
++++ b/sound/core/seq/oss/seq_oss_rw.c
+@@ -57,7 +57,8 @@ snd_seq_oss_read(struct seq_oss_devinfo *dp, char __user *buf, int count)
+ 			break;
+ 		}
+ 		ev_len = ev_length(&rec);
+-		if (ev_len < count) {
++		if (count < ev_len) {
++			err = -EINVAL;
+ 			snd_seq_oss_readq_unlock(readq, flags);
+ 			break;
+ 		}
 -- 
 2.53.0
 
