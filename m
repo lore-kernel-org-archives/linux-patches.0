@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96386395AD4;
-	Thu, 17 Sep 2026 17:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C566395AD4;
+	Thu, 17 Sep 2026 17:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665006; cv=none; b=PuLek35oPRUImVYgH4CKXSDG00LKKq8jAl5O9GkS8aQqvWk3/6a0/thbBskEGIABccWNfwn9EH8Yb/Oucsw4J1LRmoDAN9Z0NRPvKeFN1lMLlWn37Sb7JAox05iCXmM9icVhAJl/AcP9ifFDrLf0DsHYqCN2vBsopWRcT6ziVV8=
+	t=1789665009; cv=none; b=Bu/NoHAB6krvXecUcbQvHdNJACgkSZnVBabu7c58dX0NORAwI4ULyOZ5y1Sh4UVhXHM2kdeFAHLpKyIIHVwjHgEI9LtqzEmL3q5Gj0HxOFZK8B+kxs4StZzSOc5a7IZIpxB1pzJJFbVTdnzyvy8EmQjP6EvGI5Np0h0aqMjnL74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665006; c=relaxed/simple;
-	bh=4kf65R4HTRu/DAQ214zqtRSrBRgr5FO6WQt//0+gOSg=;
+	s=arc-20240116; t=1789665009; c=relaxed/simple;
+	bh=eCq9RFV6fbJ+3IGom1a+Pm6m/0Ccfzycami8qSfVDr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7sdTb/2LMDyZSIyjUyvf6HWjZecQIlqqCig6DEalFydxqiH4OEdDIO5viyZp5oSFfIH0lvmF01pKLNlCc3PVyg10zY0NYymExo8nBS1/lQOtbrC+0Pn7/OnsEBXVb8Ny629xQLSjNOLZc/Ex/vK3xfZhr4sxkLhjNeGGgCFN3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze2IcmC8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xi1O0I171ubGUCXZlZ0MyApRy5ApJfvKa/gcYp6fzziAWdI3OGNXpEQOmLFPkZtjW7FwdG07yJ7yA6ds94AZ3X3VtOB0VygjkRaFljeKKVwCAAM3qvIxwqfk6qkRHXIcPkRYL/iqtYs26pnLsWlQGuznCe30Fu9stLOJbnUYvUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5xkYjh/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze2IcmC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC12D1F000FF;
-	Thu, 17 Sep 2026 17:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5xkYjh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E061F000FF;
+	Thu, 17 Sep 2026 17:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665005;
-	bh=zfY9wRvNhLe0V8EXcpEuTKC7aNQyaLf07C3Mr+zkmcw=;
+	s=korg; t=1789665008;
+	bh=bCpLM/3NGUDW6dPvixcrOaGYmuMLvrxR3S051jJvkzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ze2IcmC8+cTGwUON8HokVisttBXsd3gYH8AV+2/kSp3G89kH5LTvDrfS7K35Ewvjt
-	 YCjYEoNq6V+oAVAv6+5mZNyCgwOLSlYluUQnq62cNiaLCDId38zECS2dGWhSTBpXvX
-	 JaLwkoJ9Syr8b23gcZbEmpX2KsxksFWGZfuFY6RY=
+	b=h5xkYjh/ukKuDaQU6iqxbP4LqklGIKwDK6PA+3qUX3r5xOZ0JZxtGUqWu9Gud7mkE
+	 FBmL5Q1KqY8TaiUl+3o7dfQh7vjrURfvwbT0cwLUv+QfO0To/NrJBtI58RvpUaJsCU
+	 u1kFgICFq3dOn658bnouCJd6blsMbq6KR0qPPhMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0521/1250] wifi: iwlwifi: mvm: fix sched scan IE sizing
-Date: Thu, 17 Sep 2026 16:05:16 +0100
-Message-ID: <20260917151606.070259247@linuxfoundation.org>
+Subject: [PATCH 6.18 0512/1250] cifs: Fix support for creating SFU fifo
+Date: Thu, 17 Sep 2026 16:05:07 +0100
+Message-ID: <20260917151605.837612197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,72 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 4f155d262b31b9b17e0f9856bdabe0968eb4930f ]
+[ Upstream commit 608362facd2d0f2667f68b7f42207707d59a0071 ]
 
-Scheduled scan built the probe request before iwl_mvm_scan_fits(),
-so oversized IEs could be copied into the fixed preq buffer before
-length validation. Move iwl_mvm_build_scan_probe() after the fits
-check.
+SFU fifos are natively supported (created and recognized) at least by:
+- Microsoft POSIX subsystem
+- OpenNT/Interix subsystem
+- Microsoft SFU (Windows Services for UNIX)
+- Microsoft SUA (Subsystem for UNIX-based Applications)
+- Windows NFS server (up to the Windows Server 2008 R2)
 
-Also advertise max_sched_scan_ie_len using iwl_mvm_max_scan_ie_len()
-so userspace limits account for driver-inserted DS/TPC bytes.
+Windows NFS server since Windows Server 2012 uses new reparse point format
+for storing new fifos, but still can recognize this old format (also in the
+latest Windows Server 2022 version).
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb922efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+SFU-style fifo is empty regular file which has system attribute set.
+
+These SFU-style fifos are already recognized by Linux SMB client.
+
+But Linux SMB client is currently creating new SFU fifos in different
+format which is not compatible with all those SFU-style consumers. Fix this
+by creating new fifos in correct SFU format which would be recognized by
+all those applications and also by existing Linux SMB clients.
+
+This change affects only creating new fifos when mount option -o sfu is used.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 4 +---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c     | 4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ fs/smb/client/smb2ops.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 83fb3f9af4745..a0bf9815aef6b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -625,9 +625,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 	hw->wiphy->max_sched_scan_reqs = 1;
- 	hw->wiphy->max_sched_scan_ssids = PROBE_OPTION_MAX;
- 	hw->wiphy->max_match_sets = iwl_umac_scan_get_max_profiles(mvm->fw);
--	/* we create the 802.11 header and zero length SSID IE. */
--	hw->wiphy->max_sched_scan_ie_len =
--		SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2;
-+	hw->wiphy->max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm);
- 	hw->wiphy->max_sched_scan_plans = IWL_MAX_SCHED_SCAN_PLANS;
- 	hw->wiphy->max_sched_scan_plan_interval = U16_MAX;
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index b588f1dcf20d5..bc2c240160b2c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3148,8 +3148,6 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 	if (ret)
- 		return ret;
- 
--	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
--
- 	/* for 6 GHZ band only PSC channels need to be added */
- 	for (i = 0; i < params.n_channels; i++) {
- 		struct ieee80211_channel *channel = params.channels[i];
-@@ -3183,6 +3181,8 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 		goto out;
- 	}
- 
-+	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
-+
- 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
- 	if (uid < 0) {
- 		ret = uid;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 248ad60586e2e..1af1789bec5a5 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5350,10 +5350,8 @@ int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
+ 		type[0] = '\0';
+ 		break;
+ 	case S_IFIFO:
+-		type_len = 8;
+-		strscpy(type, "LnxFIFO");
+-		data = (u8 *)&pdev;
+-		data_len = sizeof(pdev);
++		/* SFU fifo is system file which is empty */
++		type_len = 0;
+ 		break;
+ 	default:
+ 		rc = -EPERM;
 -- 
 2.53.0
 
