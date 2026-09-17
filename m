@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1444FE2C8;
-	Thu, 17 Sep 2026 16:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5084FE2D4;
+	Thu, 17 Sep 2026 16:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661337; cv=none; b=koq8ElbyY9x3AB6s6knZ8Mv4yrmlO45qZbJfkNNbiKLymCQJZMX1BR761vasPhDjFKGjpefekIIHpwPUmEkK7OjJ15uwUXh3/yGsD4Pe4yxEYGaIILDdqh17tX0ZI++s6p3rQ0kdPBqpJwHzwPM4FOUb4hZCH/zTPFWEZYBNTFs=
+	t=1789661340; cv=none; b=bdVnDp24/K6aqnjifemQwstz6I06wv5Mlc8dS5N8PjNy5ZjcnIYxjr0fw7z9iXs613m6PcaYeHVlnHyS/Q9joD3ns7froMSHwEsTFu9rkxjGLirD1zvamOWSMz4BI7Kh86w8g5wqVg8HH++tghKkP8F0P438amq+PRCOWnw0bzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661337; c=relaxed/simple;
-	bh=ge4Npb9/kW2yYxs3Gapo8KBjkRF/TfjvRL4Nuehwg6I=;
+	s=arc-20240116; t=1789661340; c=relaxed/simple;
+	bh=FBbB6dMXM2Nj4XqfMZgiW6WT1V+iW6/sWlfggkeDZLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwR4P2EG5UTlU0C5nj/I9RCnz2HwGIF4/qbL/a150mCdMGCRZtOmz5m2CbDEKYhYWsqXvYpu4HWO2fbCJNLgieK1E+ByNPYqCnsesLAlvS99a/poaS8QKJFJQBYuCz4jDP0AQ3rh+Cn+mhMKjE8LaRZO8RSKRSq5OyjwftVYGs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/kqY6TK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kXkvHhZIQbSjfAcUbibQXaYsLcqYYqK/R1jFvXTUD1IWYsBtHPt0PwcDv8AY5+qjnl8FfDYLCzvkRcQ03Pclz/7NVoN5FJWFnsPLRNFejWsD4Gz+fdlHl2TUbc49qPDGHvl9eg+xWlKtRleA8/jL5S3KmL73dxvJ6T8UlE9AcNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVU/wI8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/kqY6TK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317521F000FF;
-	Thu, 17 Sep 2026 16:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVU/wI8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAF21F000FF;
+	Thu, 17 Sep 2026 16:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661335;
-	bh=rAlIdaErD52Cu0FEgx9uYVE/KNOEen9tJ909j7AhanA=;
+	s=korg; t=1789661338;
+	bh=wjlOowUmPxl0OqK9JfsjbTcS9gdLwE9WrFfX/rwV0Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/kqY6TKC5A5QQECFSZwCLGo3hayVrCIoTxTOI7swMXcN5JFVKyYNPp7oPFOw6Vzz
-	 Q36piau3woSUMlx6HhryRLSUe36aMd+1mLxdYZlYC4/NyijVQyibqM3wA1/u22aRhB
-	 lP1Sq9WQGWUni0mgI4xAKJ+tbvIkBG0Jc9EWReoQ=
+	b=xVU/wI8sIiE/dGQLdEI/u0F+XUMKdF4DqS3xxdINMW+JDQcOqnZLPL69aIfnfMPgr
+	 kfVdp2SMIypb3Lba32nttsmIAgI7pXtA9FY/vjrpgQpPq5V+KvB3f/g1x2uoK0O1x/
+	 qGIRPB3W4uA1UCTKoDHu7whnR/tsxq9VsLwJFwIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0160/1250] firmware: arm_scmi: Validate SENSOR_UPDATE payload size
-Date: Thu, 17 Sep 2026 15:59:15 +0100
-Message-ID: <20260917151556.419233362@linuxfoundation.org>
+Subject: [PATCH 6.18 0161/1250] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
+Date: Thu, 17 Sep 2026 15:59:16 +0100
+Message-ID: <20260917151556.450757414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,57 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 32bc5496b48174dbca1f187f710955ee4d9527a1 ]
+[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
 
-SENSOR_UPDATE carries one or more sensor readings after the fixed
-notification header. The parser derives the expected reading count
-from the sensor description, but it did not verify that the received
-payload contains those entries before parsing them.
+BASE_ERROR_EVENT carries a variable number of message reports,
+with the count encoded in error_status. The notification parser used
+that count without checking whether the received payload contained all
+reported entries.
 
-Reject truncated update notifications before reading the variable
-array.
+Reject truncated payloads before copying the report array.
 
-Link: https://patch.msgid.link/20260517-scmi_fixes-v1-3-d86daec4defd@kernel.org
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/sensors.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
-index 1be0f89fc2c4b..99233742714c9 100644
---- a/drivers/firmware/arm_scmi/sensors.c
-+++ b/drivers/firmware/arm_scmi/sensors.c
-@@ -1074,12 +1074,15 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
- 	case SCMI_EVENT_SENSOR_UPDATE:
- 	{
- 		int i;
-+		size_t expected_sz;
- 		struct scmi_sensor_info *s;
- 		const struct scmi_sensor_update_notify_payld *p = payld;
- 		struct scmi_sensor_update_report *r = report;
- 		struct sensors_info *sinfo = ph->get_priv(ph);
+diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
+index 86b376c50a13f..25aa52746bd10 100644
+--- a/drivers/firmware/arm_scmi/base.c
++++ b/drivers/firmware/arm_scmi/base.c
+@@ -325,6 +325,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 					  void *report, u32 *src_id)
+ {
+ 	int i;
++	u32 error_status;
++	size_t expected_sz;
+ 	const struct scmi_base_error_notify_payld *p = payld;
+ 	struct scmi_base_error_report *r = report;
  
--		/* payld_sz is variable for this event */
-+		if (payld_sz < sizeof(*p))
-+			break;
+@@ -338,10 +340,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
+ 		return NULL;
+ 
++	expected_sz = offsetof(typeof(*p), msg_reports);
++	if (payld_sz < expected_sz)
++		return NULL;
 +
- 		r->sensor_id = le32_to_cpu(p->sensor_id);
- 		if (r->sensor_id >= sinfo->num_sensors)
- 			break;
-@@ -1093,6 +1096,11 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
- 		 * readings defined for this sensor or 1 for scalar sensors.
- 		 */
- 		r->readings_count = s->num_axis ?: 1;
-+		expected_sz = sizeof(*p) + r->readings_count *
-+			      sizeof(p->readings[0]);
-+		if (payld_sz < expected_sz)
-+			break;
+ 	r->timestamp = timestamp;
+ 	r->agent_id = le32_to_cpu(p->agent_id);
+-	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
+-	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
++	error_status = le32_to_cpu(p->error_status);
++	r->fatal = IS_FATAL_ERROR(error_status);
++	r->cmd_count = ERROR_CMD_COUNT(error_status);
++	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
++	if (payld_sz < expected_sz)
++		return NULL;
 +
- 		for (i = 0; i < r->readings_count; i++)
- 			scmi_parse_sensor_readings(&r->readings[i],
- 						   &p->readings[i]);
+ 	for (i = 0; i < r->cmd_count; i++)
+ 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
+ 	*src_id = 0;
 -- 
 2.53.0
 
