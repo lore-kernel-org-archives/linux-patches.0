@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7594D599C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DA5476C2;
 	Thu, 17 Sep 2026 15:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659256; cv=none; b=SN3bkwUpRiVwPIKnoMZxQBVY+GR3vkW30ATdMCMztpRi1+mUQneTNDA0xcFq09Uba1ih1oQBGMga6hyl7VrU/gFsmIcH+NhymDe4JczbWjJkhu3my66wrHs5JNj+FFIBkwZxbtOjoVD/1c90XIGQQaP96V8CZMy3uY1soA3+5iM=
+	t=1789659258; cv=none; b=bi3xW7GXlHAaSYWICRfvyvEqI/N26EFIsG9ZmdcaPMEcR0F6xJ1ro6I6g43YKDmySUdN/rN/ATGDWHe95dfL7B31zyisqCnasLaN966xsqifYNJvWbQUOU5l5zjrKbg4z1MFJQN7Xss8XWDx72OAZVImOdBNWO5SklsJF0qS/fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659256; c=relaxed/simple;
-	bh=3QlDIgl/Iz6FgJJ73WS2zdCRW5L4ElXGm5NXY806D9w=;
+	s=arc-20240116; t=1789659258; c=relaxed/simple;
+	bh=Zu2OHyGPuZymDK0BpGJBwdth12auDsDHjWyy76VIVyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONyuocGXs/rpYwyMa9P/TfoqIewRkaMgDcB4lhuai9xl4Q3viNgeWG7L8a0br1df74abDmpvKPfojhKHpcDuQybeB//3wlX3XHlCEBj1zwh5QrJ3nBcl0qRvYLwn/XCG34KSQeAhWHA463mmX49BDOhpIuQcxphLVgaZLITpPqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/blhtG5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rJQ8HYV2v9xo58RAnbocPsM4nEShzWZ3+9o5WfKmR9LWd7rwdlpKycn/udu3V20OvyYOhaeycyy8L1DvJQjA+wEkI6alhT9P4ISUp+84WD87JxhGJaXStwx3nGzb0Hdiox/zEE9pMXPM06K3JiOhHK3hWHJA9t7n3qstAPX3FtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrq77zmN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/blhtG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2011F00893;
-	Thu, 17 Sep 2026 15:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrq77zmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2771F000FF;
+	Thu, 17 Sep 2026 15:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659251;
-	bh=gIWGd7h1pq12Q22jsmJQDNcswNur0eyQKhJFvldOx9c=;
+	s=korg; t=1789659248;
+	bh=/YeL4zvtiBTPc6kOQUIC5n25yb0uRNUQcnBAHR6+DP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E/blhtG5vDyB8lELvfuAXciaEdVFsJ0IddYLvZ7BlJN2rI9wl3yBe3pVknxmQbyLf
-	 5ADISdyZi/sZswpbIgcT/erU1jH3sn750zLWggcgoONdvA1rMdxsWvWk8ZFQHvPRSs
-	 z24zUu36aNTacoHShHHAsyrHulmsp95mA59z3npc=
+	b=jrq77zmN3j5nLtnKHWGUzj46kakLzzhyBc5XVLPZerriC+iOwSXcRocHGK+dtRSTL
+	 O9egBLTRP0QNJPcpm1em5Jkwb/xAVJ+GnYrwr7EWzKreSEgFs9icHHg4qG+Lw+Fh76
+	 tfYo1Dyo8+X9d94iHB4gQjNonTP3lGiMwpr2nUQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Qu Wenruo <wqu@suse.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 193/733] btrfs: fix the possible bioc_list memory leak during error
-Date: Thu, 17 Sep 2026 16:08:21 +0100
-Message-ID: <20260917151355.959727107@linuxfoundation.org>
+Subject: [PATCH 7.2 192/733] btrfs: fix transaction use-after-free in raid stripe insertion
+Date: Thu, 17 Sep 2026 16:08:20 +0100
+Message-ID: <20260917151355.932414415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,114 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit afbe73778338e6d1ac8c4486fbdf33f0cc1f2624 ]
+[ Upstream commit a8813a923f9e43f788b357fb55c35f7f6ed6f98c ]
 
-There are two possible ways to leak bioc memory on
-btrfs_ordered_extent::bioc_list:
+If allocation of a RAID stripe extent fails,
+btrfs_insert_one_raid_extent() aborts and ends the transaction before
+returning -ENOMEM.
 
-- An error occurred for btrfs_insert_one_raid_extent()
-  Then the function btrfs_insert_raid_extent() immediately return
-  without freeing any bioc in the bioc_list.
+btrfs_finish_one_ordered(), the production caller through
+btrfs_insert_raid_extent(), still owns the transaction handle. It handles
+the error by aborting the transaction and then reaches the common exit
+path, which ends the transaction again.
 
-- An ordered extent hit an IO error
-  In that case the ordered extent will have BTRFS_ORDERED_IOERR set, and
-  skip the call on btrfs_insert_raid_extent() completely.
+The premature end can free the handle and drop its transaction reference.
+Transaction cleanup can then free the transaction before the caller's
+second abort accesses the handle and transaction, resulting in
+use-after-free.
 
-Fix the problem by:
+Keep the abort at the failure site, but let the caller's common exit path
+end the transaction once, after it has finished using both objects.
 
-- Introduce a new helper, btrfs_cleanup_ordered_bioc_list()
-  Which will remove all bioc from the bioc_list, and release the bioc.
-
-- Call the above helper for btrfs_insert_raid_extent()
-  So that the cleanup helper is always called no matter what.
-
-- Call the above helper for btrfs_finish_one_ordered()
-  This is called just before the final release on the ordered extent.
-
-This was reported by Sashiko when reviewing another patch.
-
-Link: https://sashiko.dev/#/patchset/20260817021512.3010812-1-shuangpeng.kernel%40gmail.com
 Fixes: 02c372e1f016 ("btrfs: add support for inserting raid stripe extents")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Assisted-by: Codex:GPT-5
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c            |  3 +++
- fs/btrfs/raid-stripe-tree.c | 18 ++++++++++++------
- fs/btrfs/raid-stripe-tree.h |  1 +
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ fs/btrfs/raid-stripe-tree.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 39a01f9cf6b51..188b4ac9889fc 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3435,6 +3435,9 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
- 	 */
- 	btrfs_remove_ordered_extent(ordered_extent);
- 
-+	/* Cleanup any remaining biocs attached to the OE. */
-+	btrfs_cleanup_ordered_bioc_list(ordered_extent);
-+
- 	/* once for us */
- 	btrfs_put_ordered_extent(ordered_extent);
- 	/* once for the tree */
 diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
-index 89e259a47d8de..6291775dbe0e7 100644
+index b210371ce91e3..89e259a47d8de 100644
 --- a/fs/btrfs/raid-stripe-tree.c
 +++ b/fs/btrfs/raid-stripe-tree.c
-@@ -373,7 +373,7 @@ int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
- 			     struct btrfs_ordered_extent *ordered_extent)
- {
- 	struct btrfs_io_context *bioc;
--	int ret;
-+	int ret = 0;
- 
- 	if (!btrfs_fs_incompat(trans->fs_info, RAID_STRIPE_TREE))
- 		return 0;
-@@ -381,17 +381,23 @@ int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
- 	list_for_each_entry(bioc, &ordered_extent->bioc_list, rst_ordered_entry) {
- 		ret = btrfs_insert_one_raid_extent(trans, bioc);
- 		if (ret)
--			return ret;
-+			break;
+@@ -337,7 +337,6 @@ int btrfs_insert_one_raid_extent(struct btrfs_trans_handle *trans,
+ 	stripe_extent = kzalloc(item_size, GFP_NOFS);
+ 	if (unlikely(!stripe_extent)) {
+ 		btrfs_abort_transaction(trans, -ENOMEM);
+-		btrfs_end_transaction(trans);
+ 		return -ENOMEM;
  	}
  
--	while (!list_empty(&ordered_extent->bioc_list)) {
--		bioc = list_first_entry(&ordered_extent->bioc_list,
-+	btrfs_cleanup_ordered_bioc_list(ordered_extent);
-+	return ret;
-+}
-+
-+void btrfs_cleanup_ordered_bioc_list(struct btrfs_ordered_extent *ordered)
-+{
-+	while (!list_empty(&ordered->bioc_list)) {
-+		struct btrfs_io_context *bioc;
-+
-+		bioc = list_first_entry(&ordered->bioc_list,
- 					typeof(*bioc), rst_ordered_entry);
- 		list_del(&bioc->rst_ordered_entry);
- 		btrfs_put_bioc(bioc);
- 	}
--
--	return 0;
- }
- 
- int btrfs_get_raid_extent_offset(struct btrfs_fs_info *fs_info,
-diff --git a/fs/btrfs/raid-stripe-tree.h b/fs/btrfs/raid-stripe-tree.h
-index 69942ad431408..eb02cf48511bc 100644
---- a/fs/btrfs/raid-stripe-tree.h
-+++ b/fs/btrfs/raid-stripe-tree.h
-@@ -28,6 +28,7 @@ int btrfs_get_raid_extent_offset(struct btrfs_fs_info *fs_info,
- 				 u32 stripe_index, struct btrfs_io_stripe *stripe);
- int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
- 			     struct btrfs_ordered_extent *ordered_extent);
-+void btrfs_cleanup_ordered_bioc_list(struct btrfs_ordered_extent *ordered);
- 
- #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- int btrfs_insert_one_raid_extent(struct btrfs_trans_handle *trans,
 -- 
 2.53.0
 
