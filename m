@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC5251A147;
-	Thu, 17 Sep 2026 17:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE2F50E5A3;
+	Thu, 17 Sep 2026 17:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666519; cv=none; b=a0XT8rvNSxO88B6BCC09JAKBig6g39oQBWEPkuD4/wspe8bdYlQv+HeZUq5fOrZ6ccDxip7vsJE+bDJqHhqI+2BGfvvC/sUYGjYbqWkGjdNIIx+ZNpZ5f6PTAagAgW3mCHHV4dbeyvwI4RGQ6F9FvkP0y+Ogahp5ZuoWyL7kqZQ=
+	t=1789666522; cv=none; b=EjNtZyqB8w92K2wss5j9QW95pR72vUDxwxIJoKaIKi+8qoqk86a/yB+Tgfy/+0wEViYtJhVBA5wnYkaxLefHBpaQZqoS8Z3d190fkO3HEwqAndaxeObvw+d2yDZg8wN8zgkQB+RLZkZ2ACAmQcucCjyozJRMjMVtXjGIGmjPpSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666519; c=relaxed/simple;
-	bh=LAwIk14gnGkl6qUAxN1GDD2TW8vtZTA21A7BfqhBVxU=;
+	s=arc-20240116; t=1789666522; c=relaxed/simple;
+	bh=J2pY80pMRg9v8lJ2LXBPU0hvLG59/x89e2edAcH0H6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLc3e6QG3REk/QL63EAYOzpg7glPDmunUKAGUw5fw8BkSo6N3CFY+2Ao78aS0smnxLXcch4a5y5aDI+C7E0LKfzQY+vIUlL0kKd2eQpBNlxK47mfwdiQHvQ5D/eD7PWqiTjutR26//Uw//esBcAilzRJLIsUeaF+BUypKJXsOzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF0YGuu5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZTxIilaq2VEQeAauvonUONaso5+Y1gvbc18bSOPK2ZNTsRsOvUJZGOfZ6eQMTCJ5q3WBlseywkT+aqHPIkpfcDus8F2Ft+6qPmppo6IHYZMhDGYI1k9qVhZSj8J47dHzYI4bUVRkrX4qt8NSuywmqYRAF9Ua7Vq7RwgqE9Kd/yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iux8EtEz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF0YGuu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB6A1F000FF;
-	Thu, 17 Sep 2026 17:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iux8EtEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27BC1F00893;
+	Thu, 17 Sep 2026 17:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666518;
-	bh=L3CirzjychxmmR94Ih+xbvzL0As6dPVONL9GUzCBto8=;
+	s=korg; t=1789666521;
+	bh=Rv46S0/GGRfrtS/nw9gWauSRPIbTeYWIAP/7vQZfWiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zF0YGuu5HntMaPj6FBcry7FS+VlOfYJSiqE1Tj3cIEWKjKC3Xp5DPQKNl966HBXVB
-	 R8xI/0d7JVz0BQr5UcM9j4hvtt62d1zASjbjE1TNfQ4hPKvYgb8+B03wGJNVkER9co
-	 E7891Ns1W1IciOFsLf89lmG5sUcDe3JiRqQ2TN9A=
+	b=iux8EtEzo3kwYs8vPGCMT/FZr5IQWcElNJJo3SgtYnKUU4hH4/Ed6miXPFyNCtDHC
+	 ELpexGt6jcRQdNzkVFEgKELZLucI0pKlcc6WKnfGHQ+jp4Vo9jhtdI3LewRrvAJu4A
+	 qa13sU12gR724KVVK5ShsuuWU67S/cSKEMcnIbPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiong Weimin <xiongweimin@kylinos.cn>,
 	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.18 1025/1250] vdpa: ifcvf: Put device on unsupported feature error
-Date: Thu, 17 Sep 2026 16:13:40 +0100
-Message-ID: <20260917151619.840606365@linuxfoundation.org>
+Subject: [PATCH 6.18 1026/1250] vdpa: solidrun: Free IRQs after request failure
+Date: Thu, 17 Sep 2026 16:13:41 +0100
+Message-ID: <20260917151619.869139603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,33 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-commit 4d470be71196ca0ce302e6623454533dc31b465b upstream.
+commit e847542ab0545c73354849126150206c29d83929 upstream.
 
-Route unsupported provisioned features through the common error path after
-vdpa_alloc_device() so the allocated device and adapter pointer are
-released consistently.
+Unwind IRQs already requested by snet_request_irqs() before returning a
+VQ IRQ request error so a later DRIVER_OK retry starts from a clean
+state. The IRQs are requested and freed while the PCI device remains
+bound, so the driver cannot wait for devres cleanup at detach time.
 
-Fixes: 46fc0917bbab ("vDPA/ifcvf: implement features provisioning")
+Fixes: 51a8f9d7f587 ("virtio: vdpa: new SolidNET DPU driver.")
 Cc: stable@vger.kernel.org # v6.3+
 Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <178589471294.1556376.4816776800128323034@kylinos.cn>
+Message-ID: <178589471328.1556376.15570536900532373521@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vdpa/solidrun/snet_main.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/vdpa/ifcvf/ifcvf_main.c
-+++ b/drivers/vdpa/ifcvf/ifcvf_main.c
-@@ -724,7 +724,8 @@ static int ifcvf_vdpa_dev_add(struct vdp
- 		if (config->device_features & ~device_features) {
- 			IFCVF_ERR(pdev, "The provisioned features 0x%llx are not supported by this device with features 0x%llx\n",
- 				  config->device_features, device_features);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto err;
+--- a/drivers/vdpa/solidrun/snet_main.c
++++ b/drivers/vdpa/solidrun/snet_main.c
+@@ -418,11 +418,15 @@ static int snet_request_irqs(struct pci_
+ 				       snet->vqs[i]->irq_name, snet->vqs[i]);
+ 		if (ret) {
+ 			SNET_ERR(pdev, "Failed to request IRQ\n");
+-			return ret;
++			goto err_free_irqs;
  		}
- 		device_features &= config->device_features;
+ 		snet->vqs[i]->irq = irq;
  	}
+ 	return 0;
++
++err_free_irqs:
++	snet_free_irqs(snet);
++	return ret;
+ }
+ 
+ static void snet_set_status(struct vdpa_device *vdev, u8 status)
 
 
