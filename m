@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A8F4E5323;
-	Thu, 17 Sep 2026 16:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D534E9C36;
+	Thu, 17 Sep 2026 16:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664053; cv=none; b=u51b87hiQpYSPvbHPX/u/EWrMSREz1UaZzdaocb40jfYVNN2x9eKoEIMO2t7hQ7eYrNafQbPWJhz0EqcoOabnmjhthRwVtmhn6Hi40OZ2EX0iDtFUl3rIW/3UFvDTDGKnbHVKWdXJ3ULCx1+nSsk/Qk/X57cluznTEQ8qSPdZe8=
+	t=1789664056; cv=none; b=t5ELCcfYjeagfGcs4zpIUpdNOHYLw/m3d+KoDiRxJ3p+H/kYn1G6H2vT9KXtylgZJYzOzZe+Qgvgl+CRKoM+oIG4aOMkO0SU8F4ZRS02brONGOkw8Sy3zDqhUcRkL3qjlecaB5VyHO9iQGKQ8ihejoM8frzB0pzFyJcFMzsFaJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664053; c=relaxed/simple;
-	bh=04cxh8Vo2qW62f3avFEpVIMYN5vGU3Qzd8fghz2ScCs=;
+	s=arc-20240116; t=1789664056; c=relaxed/simple;
+	bh=gEilLrmRitm83j4Uzbjg2drRXfPdtSHvU7y4LIaYKlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l24DKkeH4RiheUmcQfiZCDRRbesQULAFV0aRnz+YFzxMy0Qny5wGVAUEsoYkHlktMUDSIqmf9nmXQ5N/p9b2M4VwFzDChfWkna9CAtiEse17BXwSqseNY34CggjrvodbLIgyaf0EXPCw/BrQipx99KIWxQkgzRv0e9OHCntaSv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Imh52FMw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hZubQ5snsXQ/JDgWSHGKPzX7bcucaZE+jylVqEJAb0tpw5Hl0MDpa2NOFXGSlHVimhhaFBO0ONoSpU0+Q1IQrsS9roP98h7ppUVdh9Rv8U5oxuSnXCbR7Zp1I76FSR3Jyel3xyizB0+LClmKXgEPxpVdBBV2obn4uUlRad/FVpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1H/+qc7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Imh52FMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D62E1F000FF;
-	Thu, 17 Sep 2026 16:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1H/+qc7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE5D1F000FF;
+	Thu, 17 Sep 2026 16:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664052;
-	bh=ga7QVfEeOZxaj+8+N+VaJTp9PQuC/7BmH/Xb6hKNDV0=;
+	s=korg; t=1789664055;
+	bh=Lj0pWclodmdo1QUTdefePqLIQTE1xyoo92T0QQIaVYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Imh52FMwKoWjTqD9tKITxzkT8q+Ik8d5XDxTpxqbtChQhkYIOVwzyIXoaNQD+Y9Ty
-	 YbxwJMxIhVlXKcgiamuSa+6naHAyinn8m+vscXCwjKknQn7KK9333giIUOHXSPwe/4
-	 yr9VBjAMiJRUcnmHkKYIbZTV2p/m/7MJzzp2fg3s=
+	b=1H/+qc7v8FAsDzb10YxeuV6cq3k/12kR6T1poZUFTpemeBZlrESMJ3qoDVspopsJW
+	 oHDSCPFu45LOkAn0cMap2uz+TldK0Jxw9Yz4GIDHFgfNnbN2LeYYd/hEYu5zM9cLU3
+	 qMa4s2YSSwquV1DnV8Lg8HH7dqxyClE+VpxY07uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0242/1250] ACPICA: validate handler object type in two places
-Date: Thu, 17 Sep 2026 16:00:37 +0100
-Message-ID: <20260917151558.702874318@linuxfoundation.org>
+Subject: [PATCH 6.18 0243/1250] ACPICA: Add package limit checks in parser functions
+Date: Thu, 17 Sep 2026 16:00:38 +0100
+Message-ID: <20260917151558.731250833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,48 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit c5296da2d516707862f8a2dbb4b515f777e5294f ]
+[ Upstream commit d27d48a528e437aed690f977e69a6fe73fe82ab5 ]
 
-ACPICA: validate handler object type in acpi_ev_has_default_handler()
-and acpi_ev_find_region_handler().
+Add package limit checks in parser functions to prevent out-of-bounds
+access.
 
-Link: https://github.com/acpica/acpica/commit/f6fc648a1389
+Link: https://github.com/acpica/acpica/commit/b31b45af2122
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/48111441.fMDQidcC6G@rafael.j.wysocki
+Link: https://patch.msgid.link/3212937.CbtlEUcBR6@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/evhandler.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/acpi/acpica/nsxfname.c |  4 ++++
+ drivers/acpi/acpica/psargs.c   |  4 ++++
+ drivers/acpi/acpica/psloop.c   | 25 +++++++++++++++++++++++++
+ drivers/acpi/acpica/psparse.c  |  8 ++++++++
+ 4 files changed, 41 insertions(+)
 
-diff --git a/drivers/acpi/acpica/evhandler.c b/drivers/acpi/acpica/evhandler.c
-index 5a35dae945e20..f16c1148e602e 100644
---- a/drivers/acpi/acpica/evhandler.c
-+++ b/drivers/acpi/acpica/evhandler.c
-@@ -130,6 +130,14 @@ acpi_ev_has_default_handler(struct acpi_namespace_node *node,
- 		/* Walk the linked list of handlers for this object */
+diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
+index 1db831545ec8c..821fb4930e9d8 100644
+--- a/drivers/acpi/acpica/nsxfname.c
++++ b/drivers/acpi/acpica/nsxfname.c
+@@ -512,6 +512,10 @@ acpi_status acpi_install_method(u8 *buffer)
  
- 		while (handler_obj) {
-+
-+			/* Validate handler object type before accessing fields */
-+
-+			if (handler_obj->common.type !=
-+			    ACPI_TYPE_LOCAL_ADDRESS_HANDLER) {
-+				break;
-+			}
-+
- 			if (handler_obj->address_space.space_id == space_id) {
- 				if (handler_obj->address_space.handler_flags &
- 				    ACPI_ADDR_HANDLER_DEFAULT_INSTALLED) {
-@@ -292,6 +300,9 @@ union acpi_operand_object *acpi_ev_find_region_handler(acpi_adr_space_type
- 	/* Walk the handler list for this device */
+ 	parser_state.aml += acpi_ps_get_opcode_size(opcode);
+ 	parser_state.pkg_end = acpi_ps_get_next_package_end(&parser_state);
++	if ((parser_state.pkg_end > parser_state.aml_end) ||
++	    (parser_state.pkg_end < parser_state.aml)) {
++		return (AE_AML_PACKAGE_LIMIT);
++	}
+ 	path = acpi_ps_get_next_namestring(&parser_state);
  
- 	while (handler_obj) {
-+		if (handler_obj->common.type != ACPI_TYPE_LOCAL_ADDRESS_HANDLER) {
+ 	method_flags = *parser_state.aml++;
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 064652d11d9aa..34d887e2211ac 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -867,6 +867,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 
+ 		parser_state->pkg_end =
+ 		    acpi_ps_get_next_package_end(parser_state);
++		if ((parser_state->pkg_end > parser_state->aml_end)
++		    || (parser_state->pkg_end < parser_state->aml)) {
++			return_ACPI_STATUS(AE_AML_PACKAGE_LIMIT);
++		}
+ 		break;
+ 
+ 	case ARGP_FIELDLIST:
+diff --git a/drivers/acpi/acpica/psloop.c b/drivers/acpi/acpica/psloop.c
+index 35111ff2526b1..7c3caf0ccab62 100644
+--- a/drivers/acpi/acpica/psloop.c
++++ b/drivers/acpi/acpica/psloop.c
+@@ -361,6 +361,13 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
+ 					walk_state->parser_state.aml =
+ 					    acpi_ps_get_next_package_end
+ 					    (&walk_state->parser_state);
++					if ((walk_state->parser_state.aml >
++					     walk_state->parser_state.aml_end)
++					    || (walk_state->parser_state.aml <
++						walk_state->aml)) {
++						return_ACPI_STATUS
++						    (AE_AML_PACKAGE_LIMIT);
++					}
+ 					walk_state->aml =
+ 					    walk_state->parser_state.aml;
+ 				}
+@@ -421,6 +428,14 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
+ 					parser_state->aml =
+ 					    acpi_ps_get_next_package_end
+ 					    (parser_state);
++					if ((parser_state->aml >
++					     parser_state->aml_end)
++					    || (parser_state->aml <
++						walk_state->control_state->
++						control.aml_predicate_start)) {
++						return_ACPI_STATUS
++						    (AE_AML_PACKAGE_LIMIT);
++					}
+ 					walk_state->aml = parser_state->aml;
+ 
+ 					ACPI_ERROR((AE_INFO,
+@@ -436,6 +451,16 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
+ 						walk_state->parser_state.aml =
+ 						    acpi_ps_get_next_package_end
+ 						    (parser_state);
++						if ((walk_state->parser_state.
++						     aml >
++						     walk_state->parser_state.
++						     aml_end)
++						    || (walk_state->
++							parser_state.aml <
++							walk_state->aml)) {
++							return_ACPI_STATUS
++							    (AE_AML_PACKAGE_LIMIT);
++						}
+ 						walk_state->aml =
+ 						    parser_state->aml;
+ 					}
+diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
+index 55a416e56fd83..b4f21a8988795 100644
+--- a/drivers/acpi/acpica/psparse.c
++++ b/drivers/acpi/acpica/psparse.c
+@@ -300,6 +300,7 @@ acpi_ps_next_parse_state(struct acpi_walk_state *walk_state,
+ {
+ 	struct acpi_parse_state *parser_state = &walk_state->parser_state;
+ 	acpi_status status = AE_CTRL_PENDING;
++	u8 *aml;
+ 
+ 	ACPI_FUNCTION_TRACE_PTR(ps_next_parse_state, op);
+ 
+@@ -344,7 +345,14 @@ acpi_ps_next_parse_state(struct acpi_walk_state *walk_state,
+ 		 * Predicate of an IF was true, and we are at the matching ELSE.
+ 		 * Just close out this package
+ 		 */
++		aml = parser_state->aml;
++
+ 		parser_state->aml = acpi_ps_get_next_package_end(parser_state);
++		if ((parser_state->aml > parser_state->aml_end) ||
++		    (parser_state->aml < aml)) {
++			status = AE_AML_PACKAGE_LIMIT;
 +			break;
 +		}
- 
- 		/* Same space_id indicates a handler is installed */
+ 		status = AE_CTRL_PENDING;
+ 		break;
  
 -- 
 2.53.0
