@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61BB4E4C54;
-	Thu, 17 Sep 2026 17:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D8F4FD27A;
+	Thu, 17 Sep 2026 17:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666163; cv=none; b=A5Kg4ti/9jOiGxs2NpVhVP2OIfe+0ulkMLy8/JU8JsTrKYXfjjBhNorRM/fGq+TdHJuZg29jQrChjkMd6ujD+KVkwO5nGRLe6kJY4xnftXfqSkhhnaBiiwPGerRUX8OUFnSOY5vmRny6CjNXcaIWLVUAZOmzXDNG16sDK9kJZxI=
+	t=1789666166; cv=none; b=dxg8HkV6r7f4Gt2GKIrf2z+tkzhqnF/NBBDzTDYZO1ABBuPf9SYmP9dGCHZqNVwCUE/OLcA/JM43c2RjU9orM7DAgU2Kswroyn9uBfsgs06k5fFycpDo1h/L6YXmctGJasJlPbcYWafwMnl324Mr5FUrTJFldXrfRxdzsVVGQog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666163; c=relaxed/simple;
-	bh=IhlPzyxY3G69v4K5Z1+be4Rr9IBDhLKS60UWGqRHmv4=;
+	s=arc-20240116; t=1789666166; c=relaxed/simple;
+	bh=C0q2pQXfpfznYDJ4e9dqPdY2oUCvyQpXUmePYPPFyuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CI6Kf/MLxwcTdIGM51mE22zNumpscEjCUe3IVu36ptvpPrKCRBYvJmq6T1IBbfUS2aq09XepFiFWrofomuzc9X29FynxE/g3n+T6+fgIkSRJec0nEi6B06F7NIMGjOM/Nl3Ab+nOVRC8aOFPg0/dZuRFBliaWWUyUP+07eREMlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mU1DL0FR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJ3MUkgYEboIPNGemU5VN1thwAncc8/XUL9rcJelsftfRhPpUX3vlTxu/EgcCs3cE+V9VVayay3p9mU0Frhj6YljW/IMZMVLkM2P+dsXPx0WpP/p05Ci+5aw09VAZQeJtqxmIjd/alo6xPve5ECBlCic1MIK3Q81tI5OyVvJ1iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDulx0xa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mU1DL0FR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3631F000FF;
-	Thu, 17 Sep 2026 17:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDulx0xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432E41F000FF;
+	Thu, 17 Sep 2026 17:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666161;
-	bh=Pygu9ypO+Tba77S+0pR9eSX/4TRqEMeQFWs5yx1T16I=;
+	s=korg; t=1789666164;
+	bh=N5EIE+OvdEloOQAZmmn2z6zawp/zFsqFaGpQNzTeMAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mU1DL0FRwswQcYhhoYmIZ+LToMrcDoAZVKPqXuf9O5qkLG2czskuXLBdgoMNZQyuY
-	 hdTFemtdfelg3gfjUYmvJ+8J3BgYIj3nmj7vLwB7LcrpoySc36VJfoiTY82WZVx3jv
-	 LvD9tL2qGqOwBnujvMdei9hn6hNQKai15DPqXQ6M=
+	b=KDulx0xaXt2a0BvDb5uczyDVHEmfvjcLIW357iWPCWC6t/ks0Lgb8FDBEuf8oe9aE
+	 /72JagJ+mj5kvqyRqKSMWgdabnS33MHslS1Xl+trvvdB3rWjVPWRwhY1F6eUaSeaiA
+	 hKUm/kC0Ng/AH4Q2pg246ZyuqeXb4Wcy7SE5QXRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Greg Marsden <greg.marsden@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0896/1250] watchdog: msc313e: Fix undefined behavior
-Date: Thu, 17 Sep 2026 16:11:31 +0100
-Message-ID: <20260917151616.272833149@linuxfoundation.org>
+Subject: [PATCH 6.18 0939/1250] net/rds: fix tcp stream corruption with large pages
+Date: Thu, 17 Sep 2026 16:12:14 +0100
+Message-ID: <20260917151617.468625401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,54 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Greg Marsden <greg.marsden@oracle.com>
 
-[ Upstream commit ab390021b2a3bb4cc875f28a6f76d13de90d7457 ]
+[ Upstream commit 2ac09b5353fe6858411fdc8c6efa60d832e20f13 ]
 
-readw() returns a u16.  Left shifting a u16 by 16 bits yields undefined
-behavior.
+rds_message_map_pages() assigns PAGE_SIZE bytes to every
+scatterlist entry, even when total_len ends in a partial page. The RDS
+congestion map is defined as 8192 bytes, so on systems with PAGE_SIZE
+greater than 8192 the scatterlist maps bytes beyond the end of the
+congestion map.  RDS-TCP transmits the SG contents according to those
+lengths, so the extra bytes become part of the TCP RDS stream and are
+interpreted as subsequent RDS message headers, corrupting the stream.
 
-Cast to u32 explicitly before the shift.
+Limit the final scatterlist mapping to the number of bytes remaining.
+This has no effect on systems with a 4K page size and allows RDS-TCP to
+be used on systems with 16K and larger page sizes.
 
-Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-7-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+The RDS selftest, which previously hung on 16K pages, now passes.
+
+Fixes: 7875e18e0996 ("RDS: Message parsing")
+Signed-off-by: Greg Marsden <greg.marsden@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/apxJjxvStibPI0AS@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/rds/message.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 9cfe059fd31a7..72620adec641a 100644
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -32,6 +32,16 @@ struct msc313e_wdt_priv {
- 	struct clk *clk;
- };
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 064e507f0ccf2..19202aa33f6f4 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -365,7 +365,9 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
+ 	for (i = 0; i < rm->data.op_nents; ++i) {
+ 		sg_set_page(&rm->data.op_sg[i],
+ 				virt_to_page((void *)page_addrs[i]),
+-				PAGE_SIZE, 0);
++				i == rm->data.op_nents - 1
++					? total_len - (i * PAGE_SIZE)
++					: PAGE_SIZE, 0);
+ 	}
  
-+static u32 msc313e_wdt_get_hw_timeout(struct msc313e_wdt_priv *priv)
-+{
-+	u16 low, high;
-+
-+	low = readw(priv->base + REG_WDT_MAX_PRD_L);
-+	high = readw(priv->base + REG_WDT_MAX_PRD_H);
-+
-+	return ((u32)high << 16) | low;
-+}
-+
- static void msc313e_wdt_set_hw_timeout(struct msc313e_wdt_priv *priv,
- 				       unsigned int timeout)
- {
-@@ -140,7 +150,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 		return ret;
- 
- 	/* If the period is non-zero the WDT is running */
--	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16)) {
-+	if (msc313e_wdt_get_hw_timeout(priv)) {
- 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
- 		/*
- 		 * Keep the clock enabled. The watchdog core will skip the next
+ 	return rm;
 -- 
 2.53.0
 
