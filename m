@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E369B4F96B5;
-	Thu, 17 Sep 2026 16:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41014F96BB;
+	Thu, 17 Sep 2026 16:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661313; cv=none; b=h+Z2Er+tWqzmfZm5iSiIvKddn9RgIzcK/zZcPX4qbTv5aTw8ovoRxRwyPHn9sftgmbBpVOi4OeOT887q7sjzuQKnBqGw/3u13R/RfOmubXuOY3Yf4T30H0kFzO4lGgNYKDbh+137l6AaTf2F9W24Flhp1JCVF6f7+vVN/+UBSiM=
+	t=1789661315; cv=none; b=bFsPAfgnal8mSm01HRT/Fpoclcumxe1af+5lyImd5Optp+DIg92SeKMGulNZ0wCbh5DgvcnmBgyq9a5CuidUqZzxq0871XmCdROgwgJfTY2tFhSrVVd8kpBWIk1dBQ9uwQS/rYIgBoGmQahZPYA2Ed2JlRH8COdV26FpLnmm0tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661313; c=relaxed/simple;
-	bh=9RBDWb1pLFbpUYWtXNGeLXWHr3UABS4FSFTjk+J8XLs=;
+	s=arc-20240116; t=1789661315; c=relaxed/simple;
+	bh=xV2CqzMUNYHCYJ0o5FvnlsqiVh+RdfdCmchOD1pjKgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEdLxPZAjyLqZ4z7Gbu9BDsm+YY/svf4KK+sNMBlbDqUQdOdQjzhee1X7jFMCfmq5LtJRX6qd2WDN75U+qronDcXg3S6TJAnfRGRbBEay+scJSr7ggScWAiAgIKZQxNnvLtjJbUtYOh/B3+McUWjEr1ijjcDP6SjoNLc0O0CEpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVNNLu2U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gMqvCUhgPRzUvl9xYs1Whw8c1oCKV7sZynZyjOxYaA/pC4U0q3QRpEUr3s8Ww3M3LfrXF0D6lbY/ne/efCY5A9Hx4i6iBKRvTP+rIEIzvs7pPtXzf+716MkpvrVVpZ6JqMri3iiYfAWUJOA/WD2s4S10komQ3SvJaCVLSjxpSvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeQdOuGp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVNNLu2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CB31F000FF;
-	Thu, 17 Sep 2026 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeQdOuGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381B51F000FF;
+	Thu, 17 Sep 2026 16:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661311;
-	bh=LxPUI3oB/IK3jkhtJf8yvxnkt02yraee/QFxatLR5C4=;
+	s=korg; t=1789661314;
+	bh=8jqcthXwnNV9nRqxZ5sWcv2BzdtI2K8fg+ZGBrxZMHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVNNLu2U0yswjayeXUpD7VU4a+m6wohzdBDT/4JCUVaOuXz+Sod2nFiEjp8tt7kXK
-	 jmc6u54RdJBKdm3OqgFPeUBHVx3sL0nWngBYBQWmPVPwnT8Learh38JbbI5NxXDZoN
-	 /dvu50QJSruEZRPfUJWSW3CyJPuMBizTfc7XRNdQ=
+	b=GeQdOuGpjTHGGhro/FVhsnRcqe7Lojyx+7ba0omoLwHhnbIyF1blEgx5AWgTOv0iz
+	 jkwFqGCE489v5GRYPdnC8dOG0GBUN2awdmGX5BbqcOvRzyqVN+G+m4I2fmF8uDkxsn
+	 meV1fJH+UrC8VQ55HUbl0Gu5qhh1O4/x1BIOconU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
+	Ce Sun <cesun102@amd.com>,
 	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0153/1250] drm/amdgpu: Bound GPIO I2C table entry count from VBIOS
-Date: Thu, 17 Sep 2026 15:59:08 +0100
-Message-ID: <20260917151556.220392358@linuxfoundation.org>
+Subject: [PATCH 6.18 0154/1250] drm/amdgpu: avoid integer overflow in VA range check
+Date: Thu, 17 Sep 2026 15:59:09 +0100
+Message-ID: <20260917151556.248214403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,78 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Ce Sun <cesun102@amd.com>
 
-[ Upstream commit a99cd231cd924b7160fecb9fb3a94b801522323b ]
+[ Upstream commit cc768f4dd0bb9083c813683eeec44fc23921f771 ]
 
-Reject undersized tables and cap the derived entry count
-to AMDGPU_MAX_I2C_BUS so we do not overrun adev->i2c_bus[]
-or walk an absurd number of entries on corrupt size fields.
+The original addition operation in 64-bit unsigned type may encounter
+overflow situations. To prevent such issues and safely reject invalid
+inputs, the check_add_overflow() function is used.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
+Signed-off-by: Ce Sun <cesun102@amd.com>
 Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 24 +++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-index 763f2b8dcf13a..b8f7e3a18d324 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-@@ -36,6 +36,21 @@
- #include "atombios_encoders.h"
- #include "bif/bif_4_1_d.h"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+index d3f2aa8cbdbc0..81c6003b3e794 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -839,7 +839,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
+ 	struct dma_fence_chain *timeline_chain = NULL;
+ 	struct dma_fence *fence;
+ 	struct drm_exec exec;
+-	uint64_t vm_size;
++	uint64_t vm_size, tmp;
+ 	int r = 0;
  
-+/* VBIOS-reported table size is unchecked against the image; cap iterations and
-+ * adev->i2c_bus[] indexing to AMDGPU_MAX_I2C_BUS.
-+ */
-+static int amdgpu_atombios_gpio_i2c_num_entries(uint16_t size)
-+{
-+	u32 bytes;
-+
-+	if (size < sizeof(ATOM_COMMON_TABLE_HEADER))
-+		return 0;
-+
-+	bytes = size - sizeof(ATOM_COMMON_TABLE_HEADER);
-+	return (int)min_t(u32, bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT),
-+			  AMDGPU_MAX_I2C_BUS);
-+}
-+
- static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
- {
- 	struct amdgpu_i2c_bus_rec i2c;
-@@ -96,8 +111,7 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	/* Validate virtual address range against reserved regions. */
+@@ -863,7 +863,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -127,8 +141,7 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
- 
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -158,8 +171,7 @@ void amdgpu_atombios_oem_i2c_init(struct amdgpu_device *adev, u8 i2c_id)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
- 
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
+ 	vm_size = adev->vm_manager.max_pfn * AMDGPU_GPU_PAGE_SIZE;
+ 	vm_size -= AMDGPU_VA_RESERVED_TOP;
+-	if (args->va_address + args->map_size > vm_size) {
++	if (check_add_overflow(args->va_address, args->map_size, &tmp) || tmp > vm_size) {
+ 		dev_dbg(dev->dev,
+ 			"va_address 0x%llx is in top reserved area 0x%llx\n",
+ 			args->va_address + args->map_size, vm_size);
 -- 
 2.53.0
 
