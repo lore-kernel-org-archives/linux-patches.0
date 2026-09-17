@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B507C57266F;
-	Thu, 17 Sep 2026 16:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF28369D5E;
+	Thu, 17 Sep 2026 16:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660895; cv=none; b=nULQPsqYhxPAugb62hXuf/40Mgz8lLVKQuf7LvhEzfz493DSVXpvTNwHsnajil6TzM8BJDBeWcd2e5Of2mYpcojXhWLFtP1z4X1XIQ1wauFVw3AF8U4y3UJdhaUF4bf7xHRFzsvoPZgw5BCq3dtMptQ3983Gu2DHAyXEQJAZ4jc=
+	t=1789660898; cv=none; b=gX0/UnMjPjL3LNvpAx5NbXch4xb7smEWoysmOLqNuZl6DcPq9epNIPVDb2skPG1k5YODSkNauszqQV0+O5C48C4EmQ2CjXt9HBiMfpTR2OE4A5maE81wiFQ8XmSH+JOQ3y/KP+KZ74UluTJe1x8KkobR9CCQkRTlnqawBjrYlys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660895; c=relaxed/simple;
-	bh=56xKN3kQQm+skV2c1O1sGlJxUjp54MJWCuCItQ3ZwKI=;
+	s=arc-20240116; t=1789660898; c=relaxed/simple;
+	bh=Yt5ZQMoHs8yC8Ja/WHTi4rfsasLvne0L4BV/DU6QgPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+LntXQQO8TYYYbHPC8CDrpIUujZwT73POw0kjA5qagD2Zv/7S6meqYLIfdOjwJGS0f52DdftCusnjCzTRcUsULlKq2tf/9LdzYwe1yDFBDNO9iign0n4KLjt7sHx7yhJxSpIDaXVNhnLmxVBCbdZHLHGVmDksXvD5JeSNcZMng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1/bs+2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRkdG37uBJhTBc5Jq1kkeI5pCn+xLxno2Zc3arHv6JyD3aqKFUMO2pZeOZLjKZ88xmUg4XesRvAiK8RZ+e8feyduZdxifWHZm3Ofu4H4ef1IRLnNsbu35JPbYSA2L6Bbdou3ccGQYk4yQIsxfR4CK34kxBHQ6nYOgbtIUxZwkcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7cQwaHf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1/bs+2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3FD1F000FF;
-	Thu, 17 Sep 2026 16:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7cQwaHf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015531F000FF;
+	Thu, 17 Sep 2026 16:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660894;
-	bh=p0N5UUmMSGj9i8p88QAJNtHBj66AZMkw1/9jKtZhXFg=;
+	s=korg; t=1789660897;
+	bh=og2T5n0RrJmMgJaP57fRJ1MFGooe+e7SF+l/tlyz/Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q1/bs+2gsbbc7H/GGj02etRAkyXcSq6iXrzAb2D7mwq/U4R5Ov6otM00pzxz844av
-	 06tByhAAtiU/GUF6MxUMklSK+mKOLjkwOAywXj7qrQLMzW9QvkA8QzpcmA/nEvp10o
-	 anRQV2LK0YxMlGZH5NSK0QK31Q7UDA+ijr2AHApA=
+	b=G7cQwaHfkEsqIf1dziZFZZr4lW2xWgxxc7xn+778po6fy/vHTeuHTsDrY3xwHaZUh
+	 EPHMZIZgNfkaO6hi8m7sO/Wwox2JWqGa92QmSp2QOcepHZepb6VhNBAhRGMpW0SGxx
+	 F4fPMlCp7vhsKfQD0ipAIepMShFo5Leu32dk0pRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun T <arun.t@intel.com>,
-	Vadillo Miguel <miguel.vadillo@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jie Wang <jie.wang@intel.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0014/1250] gpio: usbio: Add ACPI device-id for NVL platforms
-Date: Thu, 17 Sep 2026 15:56:49 +0100
-Message-ID: <20260917151552.311030024@linuxfoundation.org>
+Subject: [PATCH 6.18 0015/1250] gfs2: move quota_init qc iterator increment
+Date: Thu, 17 Sep 2026 15:56:50 +0100
+Message-ID: <20260917151552.339148894@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,33 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun T <arun.t@intel.com>
+From: Jie Wang <jie.wang@intel.com>
 
-[ Upstream commit 5ccb19ae1cb3620a76254db5c60121d092d9a0f6 ]
+[ Upstream commit 942202677f8f2ee448a6a2feb06aeeaf520342e3 ]
 
-Add device IDs of Nova Lake into gpio-usbio support list.
+Move qc++ from the loop body into the for-loop increment
+expression in gfs2_quota_init().
 
-Signed-off-by: Arun T <arun.t@intel.com>
-Reviewed-by: Vadillo Miguel <miguel.vadillo@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/20260410140858.585609-2-arun.t@intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+This keeps iterator progression explicit and avoids mixing pointer
+advance with duplicate-slot handling in the loop body.
+
+Signed-off-by: Jie Wang <jie.wang@intel.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-usbio.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/gfs2/quota.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-usbio.c b/drivers/gpio/gpio-usbio.c
-index 34d42c743d5bc..489c8ac6299e1 100644
---- a/drivers/gpio/gpio-usbio.c
-+++ b/drivers/gpio/gpio-usbio.c
-@@ -31,6 +31,7 @@ static const struct acpi_device_id usbio_gpio_acpi_hids[] = {
- 	{ "INTC10B5" }, /* LNL */
- 	{ "INTC10D1" }, /* MTL-CVF */
- 	{ "INTC10E2" }, /* PTL */
-+	{ "INTC1116" }, /* NVL */
- 	{ }
- };
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index 7a36a3fe5e6e6..4620f586411a6 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -1447,7 +1447,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 
+ 		qc = (struct gfs2_quota_change *)(bh->b_data + sizeof(struct gfs2_meta_header));
+ 		for (y = 0; y < sdp->sd_qc_per_block && slot < sdp->sd_quota_slots;
+-		     y++, slot++) {
++		     y++, slot++, qc++) {
+ 			struct gfs2_quota_data *old_qd, *qd;
+ 			s64 qc_change = be64_to_cpu(qc->qc_change);
+ 			u32 qc_flags = be32_to_cpu(qc->qc_flags);
+@@ -1455,7 +1455,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 						USRQUOTA : GRPQUOTA;
+ 			struct kqid qc_id = make_kqid(&init_user_ns, qtype,
+ 						      be32_to_cpu(qc->qc_id));
+-			qc++;
+ 			if (!qc_change)
+ 				continue;
  
 -- 
 2.53.0
