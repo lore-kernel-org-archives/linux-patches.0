@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6543F547065;
-	Thu, 17 Sep 2026 17:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDBC3D9DA2;
+	Thu, 17 Sep 2026 17:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665166; cv=none; b=sMKTZ1Nc3hLOZmUJL9cyioA8tfb09debbC80XQ614itFo0yCekbGBnISLBMpncQQCGA+8FvNZMqmFQG+Belba2w3msZHKioplzic0j+Ur6gKKwI84Win6t1MphiQ4dYMBJMlQPvmlBKOokx9wC4rnHW3Wqm4VWXtRu5z2v3k7VA=
+	t=1789665169; cv=none; b=EpZD9PEr8TtqUVAkNjggfDV3jcZ1ADyJvVe+/8iVD8GW18d1duVjCA811Wu3w1vQmPzp2cJRYUA2aWiLGg3bPl4m+YTMbvhyFUHbGeYtbDvrLcys93PgizmfWmQDJJbS187nYU5XKFdV95JoJH6f1dmh4LLMRf50D38ZsTsAeLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665166; c=relaxed/simple;
-	bh=hDfUv+0QOlLIapBwFlgpdXHLadfXKBL3OJyvVYV73ZA=;
+	s=arc-20240116; t=1789665169; c=relaxed/simple;
+	bh=jMzXtSHuAm7wXKhEcRVuO3BcBXEDYyhD06dyD0DFKVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjt3v2mWDCZYCPMtS0ZTWHNJqJKFq+2g5v6M2hnddNqOdqsoSbGHJv9GBUxqkJKdxznue0RIdrcDXRKY5KpZMxtx570P/1OKzfh9luh9ffM/CF2zxXcYcgFYg8USf+oL7WlOXur+e3Cg+oeQZE/qsESqmcLvDDePfUdX476A2CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kct2NGsB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DvImsC1riEFhsghaoWruCUJxZoFv7S8pEAn90hmnZQnvnZ0ipAFI5FIExghIGXlBF1bWO44865oTlrgz7oiWlKOksfKY09EvgT+MxQO3Ra1cABcJED3UEtw4Wj1cmz2USRBz5xjIEBYzTzL0FiE0MG5LbTYIGzsjJMKKOxHz2uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahUh0MbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kct2NGsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71951F000FF;
-	Thu, 17 Sep 2026 17:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahUh0MbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B221F000FF;
+	Thu, 17 Sep 2026 17:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665165;
-	bh=Y8U3wLnQFHTk/bNuuEagCbOCWFM92PuO+4GA9dAcARw=;
+	s=korg; t=1789665168;
+	bh=xOYe7rHkDufiLTXoIcG42H/ZRFgbx20zL0TzfP8XGHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kct2NGsBGtaG+ZEQtsIh2nLFE67tLH2smG/RAoiIx5CnZtaChXxkItVfcbIOe7lj+
-	 9mRdBTGdXlOQP8v3alDHAWnKLVw9/3X42ngTTqcvEXRiBEdj2soSKqQ6Zl7Z5eERnb
-	 3k33/eYjaoDly652M0kjltyNEHIpJP7wNxdMkMb8=
+	b=ahUh0MbYGLYWFSXPzGsUPnwLCX7ByKGwq7ksoudXlHhR3GsgFAsV2flYJpMhCkSKt
+	 IyN3ppE5xr/5xRq/PKbGysirBnNee8sMTH6bbnTM3dj5cn/1Y4o5A6LXUTPYpJbiHf
+	 1YKzcLL86XUsaaMaxL8wC9OvBaqCtctZxncddtWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0615/1250] accel/amdxdna: Remove __counted_by from struct amdxdna_cmd_chain
-Date: Thu, 17 Sep 2026 16:06:50 +0100
-Message-ID: <20260917151608.541840589@linuxfoundation.org>
+Subject: [PATCH 6.18 0616/1250] ufs: do not treat unreadable directory blocks as empty
+Date: Thu, 17 Sep 2026 16:06:51 +0100
+Message-ID: <20260917151608.568236684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,41 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit b3709d354545e70388177500761f92d906c4dfd6 ]
+[ Upstream commit 08edfb34ee9ca54383970c65ed3a6013e84f5e16 ]
 
-struct amdxdna_cmd_chain contains a flexible array annotated with
-__counted_by(command_count). Since the structure is stored in shared
-AMDXDNA_BO_SHARE memory, userspace can modify command_count concurrently.
-If command_count is changed to zero, the bounds check generated from
-__counted_by may fail and trigger a kernel panic.
+ufs_empty_dir() scans every directory block to decide whether a
+directory is empty before rmdir() removes it. When ufs_get_folio()
+cannot read or validate a block it returns an error pointer, and the
+loop currently skips that block with continue and keeps scanning the
+remaining blocks.
 
-Remove __counted_by to avoid relying on the userspace-controlled
-command_count for the flexible array bounds check.
+If none of the readable blocks hold an entry, the function returns 1
+and the caller unlinks the directory. A directory whose contents live
+in a block that cannot be read, for example because of an I/O error or
+corrupted directory metadata, is therefore seen as empty and removed,
+losing the entries it still holds.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260821033543.1839719-1-lizhi.hou@amd.com
+Follow the ext2 behaviour and treat an unreadable block as a reason to
+consider the directory not empty, so rmdir() fails instead of
+discarding data that could not be verified.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260801013942.279992-1-ali@iusegentoo.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.h | 2 +-
+ fs/ufs/dir.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
-index 8c1d181df6e79..383f3f15fac8c 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.h
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.h
-@@ -51,7 +51,7 @@ struct amdxdna_cmd_chain {
- 	u32 submit_index;
- 	u32 error_index;
- 	u32 reserved[3];
--	u64 data[] __counted_by(command_count);
-+	u64 data[];
- };
+diff --git a/fs/ufs/dir.c b/fs/ufs/dir.c
+index 0388a1bae326b..ec58edaf57c9e 100644
+--- a/fs/ufs/dir.c
++++ b/fs/ufs/dir.c
+@@ -589,7 +589,7 @@ int ufs_empty_dir(struct inode * inode)
  
- /* Exec buffer command header format */
+ 		kaddr = ufs_get_folio(inode, i, &folio);
+ 		if (IS_ERR(kaddr))
+-			continue;
++			return 0;
+ 
+ 		de = (struct ufs_dir_entry *)kaddr;
+ 		kaddr += ufs_last_byte(inode, i) - UFS_DIR_REC_LEN(1);
 -- 
 2.53.0
 
