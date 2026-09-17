@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2A3515982;
-	Thu, 17 Sep 2026 17:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25830515985;
+	Thu, 17 Sep 2026 17:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665606; cv=none; b=e/gBWIOcWMbq5EEBOKn4UDpUb2AYGWWUidteBPb1WfDqhfnzZg9ESMCk7niPTfEq3ggyYs8CpUsdbRmVr777rXOURes/WxZoVG0wrk7CE3nRgHV+yXSjg++iQ/nvE6ZkEc+sPympeJIhrdr5G96y15HBOF4tW5RjLuLXSxdQKm4=
+	t=1789665609; cv=none; b=AA4AmISrJ+hndRPgf2Rcd+FD6a55+RP1ospfRHU+E0PEvEGm1MMPgjKjS5MvaZi8PLKavmgccegjbR7rCdO5fgt0m1Q9pj3O2Q6oqUnU1hDYIaP08I7ZIYZDHb58f1X3mIwWlX196F5EsUvv3y29xv+ntAEpr1PJALGPvco0aCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665606; c=relaxed/simple;
-	bh=Ux4NCIB6VdQP0f39cwY02nIWvR7KLKd+OBZzjF9xy3A=;
+	s=arc-20240116; t=1789665609; c=relaxed/simple;
+	bh=Q3mm4BfFZeCaq2c5XKNA0iCBCIC0du+oCG2zcz1dbu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4wLJ9jW9+pczySL8k+i0ghxb86rnSoK67LhEalVTw45+1RbP5mq7x7CnY3+Tz8geOsFAUbjM5vSS4zGFQc1XrMg8xMHgV0evv65iQz9HKZ4dfMlVCl0xrZvRbOexSjjAhjvutwqo9bSYSY5XvHqAx7NlUFDMa+aOdNzbP0XO8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOHPfm3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hU9geWmAgr2dQNZk7zhpg6nOmpWRDuWTO3eHvxJnxAkJ8PcDrBbU1p4F4CBlo2dITWcyeAnUTmocBkXvf92PGjS8eH3qLt88+/JTZBbjKhIafoKf/iRdLQYwFyKVNRiJgJgC1kVSRQg9vs/SAX6x+eTKXI/OagHH173tEF16UNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZte+DE0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOHPfm3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716ED1F00893;
-	Thu, 17 Sep 2026 17:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZte+DE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784C41F000FF;
+	Thu, 17 Sep 2026 17:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665605;
-	bh=M1JhsZ247A4qolteYtsTVmZdrqbzowSSsMVXKptft94=;
+	s=korg; t=1789665608;
+	bh=U8EpFKVnrX9cSJW3hwwMtdep4OgmJuXFloGhSvFUuPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOHPfm3GMnL8WSpsypZX2q4A7D+1fexyOnu4xmW6wIgtZkRci23A8DNqOv3z2BTYa
-	 67Cud8zVv77IXRPhECfGqw+t/2cTBsrpbvgiuC81QQhGx3A1IPrnMht9mUqihI5Uej
-	 meFP89xJThO13iSG2Nhc3zC4FFmKHOSl4aHa1Z1g=
+	b=mZte+DE0wf4vHIghNarajWJRoJ9lDpEqcfCuqFsDmHz8PXLmeypuIL/3f1pPJBKNT
+	 ALqfy8M2rYsjussjmu3EmX7rq/eW0Z/3d2XN9UL95G8sJ66Ye5kO7zOkQugTlVNR0U
+	 TUydCmjEVGPWcORi9tFFX+Zs4hqJyLZO1rBO7apo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Randy Jennings <randyj@purestorage.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0760/1250] nvme: remove stale namespaces by NSID range during scan
-Date: Thu, 17 Sep 2026 16:09:15 +0100
-Message-ID: <20260917151612.476302485@linuxfoundation.org>
+Subject: [PATCH 6.18 0734/1250] tracing/probes: Fix use-after-free on field name/type of events with multiple probes
+Date: Thu, 17 Sep 2026 16:08:49 +0100
+Message-ID: <20260917151611.785766537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,106 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 4ed7f3d7d435bf5b63da2814dc9270f5ba896011 ]
+[ Upstream commit 86b7a239ec6b14a7544200ede85474c6f5526049 ]
 
-nvme_scan_ns_list() drops the stale namespaces in each gap in the
-reported NSID list one NSID at a time. Every iteration calls
-nvme_find_get_ns() to look the namespace up and removes it if it is
-present. The loop runs once per NSID in the gap rather than once per
-namespace actually present.
+The fields of a probe-based dynamic event (kprobe, uprobe, eprobe and
+fprobe events) are created in traceprobe_define_arg_fields() by handing
+the probe_arg name/type strings to trace_define_field(), which only
+stores the pointers without copying. Those strings are owned by the
+trace_probe and are freed when that probe is removed.
 
-NSIDs are 32-bit, so a target with a sparse NSID space can make a
-single gap spin the loop billions of times with nothing to remove.
+An event can have several probes attached. The field list is defined
+only once, by the first probe that registers the event, but it is kept
+alive by any surviving sibling probe. Deleting just that first probe by
+symbol -
 
-  watchdog: BUG: soft lockup - CPU#4 stuck for 26s!
-  Workqueue: nvme-wq nvme_scan_work [nvme_core]
-  RIP: 0010:__srcu_read_unlock+0xb/0x20
+  # primary A: fields are defined from A's args
+  echo 'p:kprobes/ev vfs_read  a1=$arg1' >  kprobe_events
+  # append B: shares A's event call
+  echo 'p:kprobes/ev vfs_write a1=$arg1' >> kprobe_events
+  # delete only A (matched by symbol), B survives
+  echo '-:kprobes/ev vfs_read'           >> kprobe_events
+
+frees A's args (trace_probe_cleanup() -> traceprobe_free_probe_arg()),
+but trace_probe_unlink() keeps the trace_probe_event because the probe
+list is not empty. The event call stays registered via B while its
+fields now reference freed memory. Any field lookup then reads it, e.g.
+
+  echo 'a1 == 1' > events/kprobes/ev/filter
+
+  BUG: KASAN: slab-use-after-free in strcmp+0xa7/0xb0
   Call Trace:
-   nvme_find_get_ns+0x7d/0xb0 [nvme_core]
-   nvme_scan_ns_list+0xe8/0x280 [nvme_core]
-   nvme_scan_work+0x18a/0x280 [nvme_core]
-   process_one_work+0x197/0x380
-   worker_thread+0x2fe/0x410
-   kthread+0xe0/0x100
+   strcmp
+   trace_find_event_field
+   parse_pred
+   process_preds
+   create_filter
+   apply_event_filter
+   event_filter_write
 
-Rename nvme_remove_invalid_namespaces() to nvme_remove_nsid_range()
-and give it an open (start, end) NSID range. ctrl->namespaces is
-sorted by NSID, so the whole gap is dropped in a single walk that
-stops once end is reached. This bounds the work by the namespaces
-that are present instead of by the size of the gap.
+field->name references parg->name (kstrdup'd, freed with the probe) and,
+for array arguments, field->type references parg->fmt (kmalloc'd, freed
+with the probe) - the scalar type otherwise points at the static
+fmttype rodata, which is safe.
 
-Fixes: 540c801c65eb ("NVMe: Implement namespace list scanning")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Have traceprobe_define_arg_fields() duplicate the name and type strings
+and anchor the copies on the trace_probe_event, which embeds the event
+call and outlives every individual probe; trace_probe_event_free()
+releases them.
+
+The reproducer above triggers reliably; the field lookup and the delete
+both run under event_mutex, so this is a dangling reference after
+removal rather than a race.
+
+The issue was found by the autokbug dynamic kernel fuzzer at Tencent
+Yunding Lab.
+
+Link: https://lore.kernel.org/all/20260826030009.1855331-1-bsdhenrymartin@gmail.com/
+
+Fixes: ca89bc071d5e4 ("tracing/kprobe: Add multi-probe per event support")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ kernel/trace/trace_probe.c | 48 +++++++++++++++++++++++++++++++++++++-
+ kernel/trace/trace_probe.h |  2 ++
+ 2 files changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index b34c6b4d65877..d5fb6612fa229 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -148,8 +148,6 @@ static const struct class nvme_ns_chr_class = {
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index 95dcfeede94a0..a0fe68cff4d33 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -2113,19 +2113,60 @@ int traceprobe_set_print_fmt(struct trace_probe *tp, enum probe_print_type ptype
+ int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 				 size_t offset, struct trace_probe *tp)
+ {
++	struct trace_probe_event *tpe = trace_probe_event_from_call(event_call);
+ 	int ret, i;
+ 
++	/*
++	 * A field created by trace_define_field() only stores the name and
++	 * type pointers, it does not copy the strings. Here they point into
++	 * the probe_arg of @tp, which is freed when @tp is removed. For an
++	 * event with multiple probes attached, the field list is defined
++	 * once by the first probe but kept alive by the surviving siblings,
++	 * so removing that first probe would leave the fields referencing
++	 * freed memory. Duplicate the strings and anchor the copies on the
++	 * trace_probe_event, which lives as long as the field list itself.
++	 *
++	 * event_define_fields() ignores the return value of this hook, so
++	 * if a previous attempt failed before creating any field, it may
++	 * call here again. Release duplicates left behind by such an
++	 * attempt before starting over.
++	 */
++	for (i = 0; i < tpe->nr_field_strings; i++)
++		kfree(tpe->field_strings[i]);
++	kfree(tpe->field_strings);
++	tpe->field_strings = NULL;
++	tpe->nr_field_strings = 0;
++
++	if (tp->nr_args) {
++		tpe->field_strings = kcalloc(tp->nr_args * 2, sizeof(char *),
++					     GFP_KERNEL);
++		if (!tpe->field_strings)
++			return -ENOMEM;
++	}
++
+ 	/* Set argument names as fields */
+ 	for (i = 0; i < tp->nr_args; i++) {
+ 		struct probe_arg *parg = &tp->args[i];
+ 		const char *fmt = parg->type->fmttype;
+ 		int size = parg->type->size;
++		char *name, *type;
+ 
+ 		if (parg->fmt)
+ 			fmt = parg->fmt;
+ 		if (parg->count)
+ 			size *= parg->count;
+-		ret = trace_define_field(event_call, fmt, parg->name,
++
++		name = kstrdup(parg->name, GFP_KERNEL);
++		type = kstrdup(fmt, GFP_KERNEL);
++		if (!name || !type) {
++			kfree(name);
++			kfree(type);
++			return -ENOMEM;
++		}
++		tpe->field_strings[tpe->nr_field_strings++] = name;
++		tpe->field_strings[tpe->nr_field_strings++] = type;
++
++		ret = trace_define_field(event_call, type, name,
+ 					 offset + parg->offset, size,
+ 					 parg->type->is_signed,
+ 					 FILTER_OTHER);
+@@ -2137,6 +2178,11 @@ int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 
+ static void trace_probe_event_free(struct trace_probe_event *tpe)
+ {
++	int i;
++
++	for (i = 0; i < tpe->nr_field_strings; i++)
++		kfree(tpe->field_strings[i]);
++	kfree(tpe->field_strings);
+ 	kfree(tpe->class.system);
+ 	kfree(tpe->call.name);
+ 	kfree(tpe->call.print_fmt);
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index d5ea914e01b34..6ebf1f721f8f5 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -255,6 +255,8 @@ struct trace_probe_event {
+ 	struct trace_event_call		call;
+ 	struct list_head 		files;
+ 	struct list_head		probes;
++	char				**field_strings;
++	int				nr_field_strings;
+ 	struct trace_uprobe_filter	filter[];
  };
  
- static void nvme_put_subsystem(struct nvme_subsystem *subsys);
--static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
--					   unsigned nsid);
- static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
- 				   struct nvme_command *cmd);
- static int nvme_get_log_lsi(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page,
-@@ -4414,15 +4412,16 @@ static void nvme_scan_ns_async(void *data, async_cookie_t cookie)
- 	nvme_scan_ns(scan_info->ctrl, nsid);
- }
- 
--static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
--					unsigned nsid)
-+static void nvme_remove_nsid_range(struct nvme_ctrl *ctrl, u32 start, u32 end)
- {
- 	struct nvme_ns *ns, *next;
- 	LIST_HEAD(rm_list);
- 
- 	mutex_lock(&ctrl->namespaces_lock);
- 	list_for_each_entry_safe(ns, next, &ctrl->namespaces, list) {
--		if (ns->head->ns_id > nsid) {
-+		if (ns->head->ns_id >= end)
-+			break;
-+		if (ns->head->ns_id > start) {
- 			list_del_rcu(&ns->list);
- 			synchronize_srcu(&ctrl->srcu);
- 			list_add_tail_rcu(&ns->list, &rm_list);
-@@ -4472,13 +4471,14 @@ static int nvme_scan_ns_list(struct nvme_ctrl *ctrl)
- 				goto out;
- 			async_schedule_domain(nvme_scan_ns_async, &scan_info,
- 						&domain);
--			while (++prev < nsid)
--				nvme_ns_remove_by_nsid(ctrl, prev);
-+			if (prev + 1 < nsid)
-+				nvme_remove_nsid_range(ctrl, prev, nsid);
-+			prev = max(prev + 1, nsid);
- 		}
- 		async_synchronize_full_domain(&domain);
- 	}
-  out:
--	nvme_remove_invalid_namespaces(ctrl, prev);
-+	nvme_remove_nsid_range(ctrl, prev, UINT_MAX);
-  free:
- 	async_synchronize_full_domain(&domain);
- 	kfree(ns_list);
-@@ -4498,7 +4498,7 @@ static void nvme_scan_ns_sequential(struct nvme_ctrl *ctrl)
- 	for (i = 1; i <= nn; i++)
- 		nvme_scan_ns(ctrl, i);
- 
--	nvme_remove_invalid_namespaces(ctrl, nn);
-+	nvme_remove_nsid_range(ctrl, nn, UINT_MAX);
- }
- 
- static void nvme_clear_changed_ns_log(struct nvme_ctrl *ctrl)
 -- 
 2.53.0
 
