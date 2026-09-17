@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F204973B9;
-	Thu, 17 Sep 2026 15:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE854C10EC;
+	Thu, 17 Sep 2026 15:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660660; cv=none; b=kiPwhjQ1Gmm6QMwLLqXWOe9MrSC3hMNjDPVpKiC8aTx7SZ1iE/E4qpqso5lLoDg/zLb6gM2PRFuqva2lac6ZQo8NLNrJkbjD7MyZEx+u8khbfmhtxujrTzdOtlABjLyS0MSmSoZNoIMPcOQQn4eq5QNEzcSHvmhcJYortpDqo5Q=
+	t=1789660664; cv=none; b=rg8rN69nLYafoSCUS4XuLPtq2A4dhs2Vo++JoOvZL80vqr6ujnpJ/V78GtMOXdEqi0eNz/13k9vKZxzzfeh2ptfP/Xc5+lQGYJgfNO1tQalOTJTAtKSD5Xrji4itGrAX+WM0OORdY1/OOz8Frw1P5lChI0yPiHlMoFCDrywKuAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660660; c=relaxed/simple;
-	bh=Z1ihOWX6aRbcg2NS6Tn4swGEWVzI7RF5Gf4eFuG+8BQ=;
+	s=arc-20240116; t=1789660664; c=relaxed/simple;
+	bh=rDMwFa+ghIsrdiEMo8A6bmAPelBHRsAB2fyZrPj+fCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbR2Hb0KgF+z47RqtJzcetrJj+vwQ5tquuloprPNbV+987JuWpp+rQrhNlYN0Lw1ci3NZx/R/YwGbsoDuIVEUhh596y2BYoAX7OWPmK61pBQkm0U73wBNfoHIDXdsqV1Aqaj5In0iVS5F4a5XwmVZ0POrV86W+GyVxNTOmmytVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCR0PVlt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g9rpNngNTlNDyI/6l4pTxgAG9lopGeEXrYDXLJUEVLOF14B2z/NV0D5ajDqHSUXCCk/hiYgwxGkRj4Mjpc55IfR/V7E0nvf3x6s4K4wmYxiG2Ex39T1p5sTz+D1exJxpO55zDNBjzCjzwQCaniGIbqjcd+pFC89rwKqI21iTV0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqYmjVHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCR0PVlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A6F1F00893;
-	Thu, 17 Sep 2026 15:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqYmjVHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A11F000FF;
+	Thu, 17 Sep 2026 15:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660659;
-	bh=xyTCjh/stc5i1OEaBPhxzPF5PDmN/QQQYzwnKmRzC00=;
+	s=korg; t=1789660662;
+	bh=6PIp600wdLXFEYZYFm/YA/EFofs2zaUJCnPNT5ogjAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VCR0PVltWFXtMXYlp1YnHQIHt1rXD9p+KXIHVvVCRwPjKNyBJaWNxReniEIPv9huQ
-	 XSb5bhbcir8njFODvEs42cYUpzlTrGSThz6CGK0QGyLUfSkccCG/jcGIljT+3L9t5C
-	 6ReNxrSa4zRbYRs8bnVIPDsMmfQwv0fkrlVK4uUA=
+	b=gqYmjVHq3SonsR+iIvgl+f4L2H9nnxIv5XT+KxR0YP6Td2SQkogHji6lrWpXiR9W3
+	 kHyJ23K5OG9QAiyRrFtCnbpSYMYEBphFqculJpJL6fycf83KXHBnHFbhuGQXiM8NcP
+	 GgX5q+ztefMco/LCjBKLkjxfrOznHMupRMlWRUos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 667/733] xfs: fix name string recording in slowpath pptr tracepoints
-Date: Thu, 17 Sep 2026 16:16:15 +0100
-Message-ID: <20260917151409.322664653@linuxfoundation.org>
+Subject: [PATCH 7.2 668/733] xfs: fix media verification ioctl for internal rt volumes
+Date: Thu, 17 Sep 2026 16:16:16 +0100
+Message-ID: <20260917151409.351150399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,32 +54,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 72d0a3e4405c1353869bfbbc67c7b8a29df7afd0 upstream.
+commit f789d291bbdac6bc02d9d77e0141e138626c17a8 upstream.
 
-LOLLM observes that we memcpy from the xfs_name object, not the name
-string pointed to by the xfs_name.  Fix that.
+A media scan of a filesystem containing an internal rt volume produced
+an error in xfs_scrub phase 6 complaining about a truncated realtime
+device.  The rt device wasn't truncated, but the media scan code thought
+we were trying to start a scan past the end of m_rtdev_targp.  That in
+turn is an alias for m_ddev_targp, but in xfs_configure_buftarg we set
+nr_sectors to the size of the data section.  We don't account for an
+internal realtime section, so the kernel doesn't scan any part of it.
+Oops.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: b961c8bf1fc3d0 ("xfs: deferred scrub of dirents")
+Reproducer:
+
+ # mkfs.xfs -f /dev/sda -r zoned=1 -d rtinherit=1
+ # mount /dev/sda /mnt
+ # dd if=/dev/zero of=/mnt/a bs=1024k count=100
+ # sync
+ # xfs_info /mnt
+ meta-data=/dev/sda               isize=512    agcount=4, agsize=32768 blks
+          =                       sectsz=512   attr=2, projid32bit=1
+          =                       crc=1        finobt=1, sparse=1, rmapbt=1
+          =                       reflink=0    bigtime=1 inobtcount=1 nrext64=1
+          =                       exchange=1   metadir=1
+ data     =                       bsize=4096   blocks=131072, imaxpct=25
+          =                       sunit=0      swidth=0 blks
+ naming   =version 2              bsize=4096   ascii-ci=0, ftype=1, parent=1
+ log      =internal log           bsize=4096   blocks=16384, version=2
+          =                       sectsz=512   sunit=0 blks, lazy-count=1
+ realtime =internal               extsz=4096   blocks=1114112, rtextents=1114112
+          =                       rgcount=17   rgsize=65536 extents
+          =                       zoned=1      start=131072 reserved=53248
+
+IOWS: 512M data volume, 3.1G internal rt section.  Now let's try some
+media verification:
+
+ # xfs_io -c 'verifymedia -d' -c 'verifymedia -r' /mnt
+ verified 536870912/536870912 bytes at offset 0
+ 512 MiB, 1 ops; 0.0496 sec (10.067 GiB/sec and 20.1345 ops/sec)
+ verified 536870912/536870912 bytes at offset 0
+ 512 MiB, 1 ops; 0.0409 sec (12.222 GiB/sec and 24.4439 ops/sec)
+
+Notice how xfs_io says we only verified 512M of the rt volume?  If you
+run btrace in the background you'll see that we read the first 512M of
+the volume (aka the data section) twice and never read anything from the
+rt section.
+
+An earlier fix tried messing with the buftarg geometry, but I've decided
+on a more targetted fix for the media verification code.  All we have to
+do is calculate the starting and ending daddr for the device that we're
+verifying, and clamp the user's input values to that range.  This leads
+to some bogosity in the output reporting:
+
+ # xfs_io -c 'verifymedia -d' -c 'verifymedia -r' /mnt/t
+ verified 536870912/536870912 bytes at offset 0
+ 512 MiB, 1 ops; 0.0606 sec (8.248 GiB/sec and 16.4968 ops/sec)
+ verified 5100273664/5100273664 bytes at offset 0
+ 4.750 GiB, 1 ops; 0.3329 sec (14.267 GiB/sec and 3.0035 ops/sec)
+
+Because we don't have a way to report that we didn't really do anything
+at all for that first 512M of address space of the rt "device".  But at
+least we're no longer ignoring real media.
+
+(Note that the fsmap/bmap/fiemap calls all report physical addresses for
+the internal rt volume as offsets from the start of the data device, and
+the media verifier call consumes the same.  We baked that into the
+user-visible behavior in 6.15, so we're stuck with that sparse hole at
+the beginning.)
+
+Cc: stable@vger.kernel.org # v6.15
+Fixes: bdc03eb5f98f6f ("xfs: allow internal RT devices for zoned mode")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/trace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_verify_media.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -1640,7 +1640,7 @@ DECLARE_EVENT_CLASS(xchk_pptr_class,
- 		__entry->dev = ip->i_mount->m_super->s_dev;
- 		__entry->ino = I_INO(ip);
- 		__entry->namelen = name->len;
--		memcpy(__get_str(name), name, name->len);
-+		memcpy(__get_str(name), name->name, name->len);
- 		__entry->far_ino = far_ino;
- 	),
- 	TP_printk("dev %d:%d ino 0x%llx name '%.*s' far_ino 0x%llx",
+--- a/fs/xfs/xfs_verify_media.c
++++ b/fs/xfs/xfs_verify_media.c
+@@ -268,6 +268,8 @@ xfs_verify_media(
+ 	struct xfs_buftarg	*btp = NULL;
+ 	struct bio		*bio;
+ 	struct folio		*folio;
++	xfs_daddr_t		dev_start = 0;
++	xfs_daddr_t		dev_end = 0;
+ 	xfs_daddr_t		daddr;
+ 	uint64_t		bbcount;
+ 	int			error = 0;
+@@ -277,24 +279,33 @@ xfs_verify_media(
+ 	switch (me->me_dev) {
+ 	case XFS_DEV_DATA:
+ 		btp = mp->m_ddev_targp;
++		dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_dblocks);
+ 		break;
+ 	case XFS_DEV_LOG:
+-		if (mp->m_logdev_targp != mp->m_ddev_targp)
++		if (mp->m_logdev_targp != mp->m_ddev_targp) {
+ 			btp = mp->m_logdev_targp;
++			dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_logblocks);
++		}
+ 		break;
+ 	case XFS_DEV_RT:
+ 		btp = mp->m_rtdev_targp;
++		dev_start = XFS_FSB_TO_BB(mp, mp->m_sb.sb_rtstart);
++		dev_end = XFS_FSB_TO_BB(mp, mp->m_sb.sb_rtstart +
++					    mp->m_sb.sb_rblocks);
+ 		break;
+ 	}
+ 	if (!btp)
+ 		return -ENODEV;
+ 
+ 	/*
+-	 * If the caller told us to verify beyond the end of the disk, tell the
+-	 * user exactly where that was.
++	 * If the caller told us to verify before the start or beyond the end
++	 * of the disk volume, tell the user exactly where the volume starts
++	 * and ends.
+ 	 */
+-	if (me->me_end_daddr > btp->bt_nr_sectors)
+-		me->me_end_daddr = btp->bt_nr_sectors;
++	if (me->me_end_daddr > dev_end)
++		me->me_end_daddr = dev_end;
++	if (me->me_start_daddr < dev_start)
++		me->me_start_daddr = dev_start;
+ 
+ 	/* start and end have to be aligned to the lba size */
+ 	if (!IS_ALIGNED(BBTOB(me->me_start_daddr | me->me_end_daddr),
+@@ -323,8 +334,7 @@ xfs_verify_media(
+ 	 *    verifying.
+ 	 */
+ 	daddr = me->me_start_daddr;
+-	bbcount = min_t(sector_t, me->me_end_daddr, btp->bt_nr_sectors) -
+-			  me->me_start_daddr;
++	bbcount = me->me_end_daddr - me->me_start_daddr;
+ 
+ 	folio = xfs_verify_alloc_folio(xfs_verify_iosize(me, btp, bbcount));
+ 	if (!folio)
 
 
