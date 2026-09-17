@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64514F55D3;
-	Thu, 17 Sep 2026 15:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CCE58F063;
+	Thu, 17 Sep 2026 15:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659735; cv=none; b=QNFywCWmWHuVuALVLK5J3i3yX5NW58U9IhekrYOOCmfyR8nrUQptk2tSfTpsublyG7QYM3juzfB5gbByQg6TT7rC0WjZ6/9B6hUVxlnjcHdstLk9Sh8u2r7DEqdl99jDhgrSqhXQXPnguySupvkEMkPqErPUbfzJm71lheC/H+M=
+	t=1789659740; cv=none; b=rFtyRxKDEydxvKwogEE2znfZw/7JKZGq3gkC5TUdgSvVNxt4vgMDwq7f8ZnkLXcI8T/JeAKUa+j09C9Hmw503fqbVumqauHc17FlAfW0EH5i7VOckc1VNHgMD6tdiIZrDkUAuTdpX3fU4Buy5OoWNzZ0JHYvZ3353yAK4/VyZDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659735; c=relaxed/simple;
-	bh=Ro7T9vfF6RXOj4ZV6f8V0Al+aisdB/4+pZdrW0UlViE=;
+	s=arc-20240116; t=1789659740; c=relaxed/simple;
+	bh=S5u3LhmUiwGcw4UuMcT8Uxl0mcgVTxW4TIE/vDzavew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8hvgjDAm3ap9vxIqew15Oi5L8aRV4/vdEyte9OIKKHiyPfXkvrM710AsxGRW7BTwY8MrkB4r4HisHYrBHKPWJe662t9g20lQf9222D96Co1Fh0pTCGNYWqBKJObO6K51XDW1oixvrCd5Kg710J1eXTZE3ICl0FgJaRbNlp9weE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQhHEW4H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OI5CIfW8rHGLSQlhVzNzSvsV5/LmPcLpJywVOIASofyScHRBu5DG5iuR/jP8pJM9H9X8w2b5ywhQ5WCfoblUQ9c7AvE44jMxqsDo+v2g3ajBdpiCY8kfGdFW1li6sD9q8Wyc0rC+HO/44deiRbVZIO5xwSbnx/yIUQi0xdCH7DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMKXSjKi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQhHEW4H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8722E1F0089A;
-	Thu, 17 Sep 2026 15:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMKXSjKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C431F000FF;
+	Thu, 17 Sep 2026 15:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659729;
-	bh=mGno5CnBAiZZPOHnbiRWHSvF+1/7oSfkrzTSEcKE+ng=;
+	s=korg; t=1789659732;
+	bh=EugBY58bszN3asSPxiVmeCKMIaXkITyWGmSItconrp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQhHEW4H/Hbk9FqLhF5umKzgPZjLPWISB0C+N/+4KaLo3WV7jMHcwAgWb+58N95R3
-	 OR1FaQywSJqloeACSIOYJEMXcc3NZxn62fQPl+RMQl2fv1HNsth3kPKkbYuW21CmFe
-	 KwpGC4h60rQ3i/m5X36gTmlD4RurFuuEHkxkgzJk=
+	b=FMKXSjKi80UcXxaAd4fN9g8F3y9nyyvLiNVMyDfbwmJdYHNNKTHzcLVu8FY6Ms5OR
+	 anMgRx1YuGoM5/OL8qligOlXLAF3dKneU+/QQoBFa2tvhapcD5EVhENxgY6wZT7Zls
+	 Jtw3M6D48orq10tsnw7LUm1VTrhY7KDcPIjg6v/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 354/733] af_unix: Update last skb marker in manage_oob().
-Date: Thu, 17 Sep 2026 16:11:02 +0100
-Message-ID: <20260917151400.405303455@linuxfoundation.org>
+Subject: [PATCH 7.2 355/733] af_unix: Return immediately when manage_oob() returns NULL for 0-length buffer.
+Date: Thu, 17 Sep 2026 16:11:03 +0100
+Message-ID: <20260917151400.433853315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,105 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 94fd4debd2e3a69cf93e766c8b328a810c228119 ]
+[ Upstream commit 6e5ee08eb5858d175da6768d75d163817b6a9d4a ]
 
-Fahad Alharbi reported that blocking recv(MSG_PEEK) could hog CPU
-due to OOB skb.
+Fahad Alharbi reported that recv(0, MSG_PEEK) triggers busy-wait
+in unix_stream_read_generic() if recv() is blocking and the last
+skb in the queue is MSG_OOB skb.
 
-In the following cases, manage_oob() skips OOB skb(s) and returns
-NULL for the last recv(MSG_PEEK):
+In such a situation, TCP returns 0 immediately regardless of
+blocking or non-blocking.
 
-  socketpair(AF_UNIX, SOCK_STREAM, 0, sk);
+Let's follow the behaviour.
 
-  1) skb -> OOB skb -> NULL
-     send(sk[0], "ab", 2, MSG_OOB);
-     recv(sk[1], buf, 0, MSG_PEEK);
-
-  2) skb -> consumed OOB skb -> NULL
-     send(sk[0], "ab", 2, MSG_OOB);
-     recv(sk[1], buf, 1, MSG_OOB);
-     recv(sk[1], buf, 0, MSG_PEEK);
-
-  3) consumed OOB skb -> OOB skb -> NULL
-     send(sk[0], "a", 1, MSG_OOB);
-     recv(sk[1], buf, 0, MSG_OOB);
-     send(sk[0], "b", 1, MSG_OOB);
-     recv(sk[1], buf, 1, MSG_PEEK);
-
-Then, @copied is 0 in unix_stream_read_generic() (zero-length buffer,
-or non-OOB skb is not yet consumed), and unix_stream_data_wait() is
-called.
-
-However, it returns immediately because @last is not updated in
-unix_stream_read_generic(), and the thread busy-waits for a new skb.
-
-Let's update @last in manage_oob().
-
-For MSG_PEEK, @last is updated with the skipped OOB, and for the
-non-peek case, @last matches the returned value (when !copied)
-because OOB is unlinked.
-
-Note that manage_oob() is inlined and no stack canary is added.
-
-Fixes: 22dd70eb2c3d ("af_unix: Don't peek OOB data without MSG_OOB.")
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
 Reported-by: Fahad Alharbi <fahad@codepure.com>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260902202202.892676-2-kuniyu@google.com
+Link: https://patch.msgid.link/20260902202202.892676-3-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 10ed9421e43aa..4eb086992ae5e 100644
+index 4eb086992ae5e..c7a03b01119d7 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -2805,8 +2805,8 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
- 	return 1;
- }
- 
--static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
--				  int flags, int copied)
-+static struct sk_buff *manage_oob(struct sk_buff *skb, struct sk_buff **last,
-+				  struct sock *sk, int flags, int copied)
- {
- 	struct sk_buff *read_skb = NULL, *unread_skb = NULL;
- 	struct unix_sock *u = unix_sk(sk);
-@@ -2820,11 +2820,13 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 		if (copied && (!u->oob_skb || skb == u->oob_skb)) {
- 			skb = NULL;
- 		} else if (flags & MSG_PEEK) {
-+			*last = skb;
- 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 		} else {
- 			read_skb = skb;
- 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 			__skb_unlink(read_skb, &sk->sk_receive_queue);
-+			*last = skb;
- 		}
- 
- 		if (!skb)
-@@ -2843,8 +2845,10 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 			__skb_unlink(skb, &sk->sk_receive_queue);
- 			unread_skb = skb;
- 			skb = skb_peek(&sk->sk_receive_queue);
-+			*last = skb;
- 		}
- 	} else if (!sock_flag(sk, SOCK_URGINLINE)) {
-+		*last = skb;
- 		skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 	}
- 
-@@ -2964,7 +2968,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- again:
+@@ -2969,7 +2969,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
  #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
  		if (skb) {
--			skb = manage_oob(skb, sk, flags, copied);
-+			skb = manage_oob(skb, &last, sk, flags, copied);
- 			if (!skb && copied) {
+ 			skb = manage_oob(skb, &last, sk, flags, copied);
+-			if (!skb && copied) {
++			if (!skb && (copied || !state->size)) {
  				unix_state_unlock(sk);
  				break;
+ 			}
 -- 
 2.53.0
 
