@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20A35304B6;
-	Thu, 17 Sep 2026 17:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA64F5304C5;
+	Thu, 17 Sep 2026 17:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664469; cv=none; b=t7i0K8t5e7PJVFzU+I7TW5joFkhkckSOi60TLWXXb56oFCd/KpRG5I3Pc+S3pN0p+pu0Y9PP7QSNwBjyucB14hrj+fdh8cnl/D7a2GQELSRkdXfudzNeDeF7/Ny5QysvUmmAczG4gR3Jo3PXMcrQnh0Z4oN08BTmGPtfjW9TO+Q=
+	t=1789664471; cv=none; b=oqXybLZJrbznq9tBQjalRrwx6b/hHxNhI0lrpD7ug0MLhWcxHTpK/K7ITzgynGIYP6jNZBXtssXsxwxrAbx3s/buwaa2ha9vT69HjO/h8ljEUQdavHhkLISSGItNH2bIFZof2+KidoU60RK00/Cq2HdMzRNQTy4D2h90qt1P3EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664469; c=relaxed/simple;
-	bh=wmoY5MRMWxqLM6WaDxSNMK8OPJXmxwifjIL6lPdSKMU=;
+	s=arc-20240116; t=1789664471; c=relaxed/simple;
+	bh=FVpqpfqbnd1irbKH0Js1agN1RJFWX7Coy+bouY0C6HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pxOy1xYeYZLpmUlAd3tq1qYujz+hxA53NlQ38gn6Rq93ZbjkhHm3dGRxwwGOwG+OP4wJq0BLWN3fWwwldOws125KU6MUu71sgHiSZJxFC7yQUuLTA9l0p9/JexPsN4Y/e7OOv5xnXz9BXEolSpEtHZNr14cSOAswVzPn7DQAmKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQKr/XkL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKeK0U5IHid9xboPWFZYCZn9UjbDRGlePj/fQ5PDLPAyKP1nfnOIwDDgZk4a9dT1p6CAxYByqmFjpHiUAFoq4LHIfwb1F6eQidq9Dd4GHYbc6tOXOGzkx+kGqrEIUqdOTtmV9rAsBjmqc3BLNK1OtHm40VxNPKd2WYRrPzZ2Qjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dra50UlI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQKr/XkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254041F000FF;
-	Thu, 17 Sep 2026 17:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dra50UlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA611F000FF;
+	Thu, 17 Sep 2026 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664467;
-	bh=15aRrWgrzQAZ6A/P/SL/jcp1RGWExqKZG9uTeRbBYLc=;
+	s=korg; t=1789664470;
+	bh=n6ErRYx30kZTEHjaVPi9SajQHs4Gp4CjubLi3FugnDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQKr/XkLMnNeSkP2A0wpaLYpJ0Q8LlOQr59U915k7gPcWpaDzICDP15ys0XJyRBGJ
-	 jfFHWhoPredn7hk6/jXWum7nPd0W/NjMqqvUHotRiIZ5O9ziteKxeFANTcab/Bc3Z5
-	 SUbHAD2Agc1c87vBS4dsLr3Yr9QBn3BBHDst+N7s=
+	b=dra50UlIQ/eKc9CbhdS1XezmUDpsBvRAgv7wBxjBNH42LTMGvArCciyshoAKkaySz
+	 oV5vW35VbBUl8epmE+sWy3FZzSRjtQlDFq+yetuphCmT5cvr7gEPVrWyf4guV3SWiz
+	 VxivnO9Vy3kpxYTAls3JiC69RXZO5O6kQKFfyYyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Metchev <nikolaymetchev@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Breno Leitao <leitao@debian.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0382/1250] platform/x86: intel-hid: Add HP ProBook x360 440 G1 to button_array_table
-Date: Thu, 17 Sep 2026 16:02:57 +0100
-Message-ID: <20260917151602.401016840@linuxfoundation.org>
+Subject: [PATCH 6.18 0356/1250] configfs_depend_prep(): pass configfs_dirent instead of dentry
+Date: Thu, 17 Sep 2026 16:02:31 +0100
+Message-ID: <20260917151601.717840977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,58 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Metchev <nikolaymetchev@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit c39023ca9a447f09c072080efc84d6874c2275c9 ]
+[ Upstream commit 764682e0118432260191d194edbdaff208260483 ]
 
-The volume rocker buttons on the HP ProBook x360 440 G1 convertible emit
-events 0xc4-0xc7 via the intel-hid ACPI device (INT33D5). These codes are
-only present in intel_array_keymap, which is used when the "5 button
-array" input device exists. On this machine button_array_present()
-returns false because the firmware does not advertise the array through
-the HEBC method, so notify_handler() routes the events to a NULL
-priv->array and they are dropped as "unknown event 0xc4". As a result
-the side volume keys do nothing.
+Again, the only thing it uses dentry for is dentry->d_fsdata; for the
+recursive call the situation is the same as with configfs_detach_prep()
+and the same observation about ->s_dentry->d_fsdata applies.
 
-Add the machine to button_array_table so the array device is created and
-the volume rocker emits KEY_VOLUMEUP / KEY_VOLUMEDOWN. This is equivalent
-to booting with the enable_5_button_array=1 module parameter, which was
-used to confirm the fix on the affected hardware.
-
-Signed-off-by: Nikolay Metchev <nikolaymetchev@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260609213309.445019-1-nikolaymetchev@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/configfs/dir.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 0dcf3a68a3355..f97f7f111319e 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -158,6 +158,13 @@ static const struct dmi_system_id button_array_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 4"),
- 		},
- 	},
-+	{
-+		.ident = "HP ProBook x360 440 G1",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook x360 440 G1"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 68203952766e6..bfecb68a83797 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -1088,15 +1088,12 @@ static int configfs_dump(struct configfs_dirent *sd, int level)
+  * much on the stack, though, so folks that need this function - be careful
+  * about your stack!  Patches will be accepted to make it iterative.
+  */
+-static int configfs_depend_prep(struct dentry *origin,
++static int configfs_depend_prep(struct configfs_dirent *sd,
+ 				struct config_item *target)
+ {
+-	struct configfs_dirent *child_sd, *sd;
++	struct configfs_dirent *child_sd;
+ 	int ret = 0;
+ 
+-	BUG_ON(!origin || !origin->d_fsdata);
+-	sd = origin->d_fsdata;
+-
+ 	if (sd->s_element == target)  /* Boo-yah */
+ 		goto out;
+ 
+@@ -1104,8 +1101,7 @@ static int configfs_depend_prep(struct dentry *origin,
+ 		if ((child_sd->s_type & CONFIGFS_DIR) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_DROPPING) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_CREATING)) {
+-			ret = configfs_depend_prep(child_sd->s_dentry,
+-						   target);
++			ret = configfs_depend_prep(child_sd, target);
+ 			if (!ret)
+ 				goto out;  /* Child path boo-yah */
+ 		}
+@@ -1126,7 +1122,7 @@ static int configfs_do_depend_item(struct dentry *subsys_dentry,
+ 
+ 	spin_lock(&configfs_dirent_lock);
+ 	/* Scan the tree, return 0 if found */
+-	ret = configfs_depend_prep(subsys_dentry, target);
++	ret = configfs_depend_prep(subsys_dentry->d_fsdata, target);
+ 	if (ret)
+ 		goto out_unlock_dirent_lock;
  
 -- 
 2.53.0
