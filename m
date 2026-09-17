@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080784E73A9;
-	Thu, 17 Sep 2026 16:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20DC4D599C;
+	Thu, 17 Sep 2026 16:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660845; cv=none; b=pkNrVIqQS4h3yMb8BHbBFUG6qLxf9Wh+0vc8SpFDn/WzaLrlwoR8BYXfuu80wo8w5pUrIuoAErNCZKTwjen8DDls4WYsx+ympBr5nFN2lb5g62tEPcCSTJAWgil3lnWyROvi3D43DtF7LtkCO5L6+R46CJJokNDDql4DmouLv1I=
+	t=1789660848; cv=none; b=uIv5AVZixpTXTYemm1p07Bm8/s4y+depMJLBtMHsvfvFQ2WWGVpOQCL+UiglISqILLwrVpA8R5hW1aNnm7mI1CP6eKTAqkV9yaNHugC/8JcY8h+tLc0JBI6q6Xb/xPqYUYZZc6573EozKcJnwlybu05Vgo3/0EHXBM2XoWp82xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660845; c=relaxed/simple;
-	bh=6mQPBoDds7F4HLZQrDe4/ndTy4w3AI11xQ9G6B4giQQ=;
+	s=arc-20240116; t=1789660848; c=relaxed/simple;
+	bh=crzGhkjXkviitOLu7teENyknyCh2vk3DgDqthw3te48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNkpZo3wat05nQnkBT/cy/ofCswxgocnQ61VGBC8aSewNDkBrmEkHhohzoJKDiV5VOue+hl/AtwlNp+dWJtzEAv07BtNZ0hNV4+Us56A8eKtBguAbIiqSEvsPmPHINJB812BBxgPk5WqQ2qmgN80ZKMAfnsaZponIhHU8PGlVrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceVy/lL8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PVoyVgti+NcBTxoMXLJeOELMGZI5DWYLLdR1iVHZX+Wly76NeQ3qOpiGz7Yi5qjIMY8hkKgGg1ZRsJW718ZmSOAJaEHqWuf1EjuJje7VIezZ7nqEQO7JJRK+Rq4WNCKfP1C6Z+kQYc8Aw1VXOhEVf1TKz4FQXrfOUm/RaLeh9II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0MugeqX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceVy/lL8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3A51F000FF;
-	Thu, 17 Sep 2026 16:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0MugeqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E3B1F000FF;
+	Thu, 17 Sep 2026 16:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660843;
-	bh=uAu2lV30iBo2jU0YsqI44Vn54D39P6AGn0WLkvefEKA=;
+	s=korg; t=1789660846;
+	bh=svu/ervqQoY2TDCEgQtvjuc8mpkLURD600+4KyIoph0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ceVy/lL8fgCSii+NMKw6zhkHYC/Zyi0xc59Mf2kW/Udd9cjcybtNghjCPJmoOM1uG
-	 a5Lw+nJY5g81WDjq9r7B6KBk6APrxqIaOu5CpFdulTZ4zRZitNmmvkuY/utKwPBi//
-	 TRjofQR0t9p7QyjAoXd2VaZ4e4sPVk6KDd0VYy8c=
+	b=C0MugeqXA+4VAQFwK0trEEQncw0LTvGDb9jvq7AvRYEBXFduL4pyqCFH32nAdEoIf
+	 soBz0+EWHIBHBEf8zgNtaUu3y8wnS95hXB7kbCZM22z+io3JZDWptwFaHeUcsu2r9K
+	 2kJIihBduZJsYPuWI8AFYUn1Z9eifq5VusRscD88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satyajit Roy <sroy14@alum.utk.edu>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 727/733] drm/amd/display: Honor Broadcast RGB for BT.2020 RGB output
-Date: Thu, 17 Sep 2026 16:17:15 +0100
-Message-ID: <20260917151411.093474318@linuxfoundation.org>
+Subject: [PATCH 7.2 728/733] s390/pai: Use PAI PMU index as parameter replacing event
+Date: Thu, 17 Sep 2026 16:17:16 +0100
+Message-ID: <20260917151411.121792654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,55 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satyajit Roy <sroy14@alum.utk.edu>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 7fca7acd60a228b62b4e9efa5f184738041e9564 ]
+[ Upstream commit 4eef4ab3aa3a32725e5bc79032c722f9f4a90172 ]
 
-amdgpu_dm_get_output_color_space() applies the Broadcast RGB connector
-property to default RGB output, but always selects full-range output for
-BT.2020 RGB. Consequently, explicitly selecting Limited has no effect on
-the output CSC or AVI InfoFrame when HDR uses BT.2020 RGB.
+Use PAI PMU index value as function argument instead of pointer
+to struct perf_event. Only that index value is used inside
+functions pai_alloc_cpu() and pai_event_destroy_cpu().
+No functional change.
 
-Select COLOR_SPACE_2020_RGB_LIMITEDRANGE when the output encoding is RGB
-and Broadcast RGB is Limited. Keep Automatic and Full at full range, and
-leave YCbCr output unchanged.
-
-Add KUnit coverage for limited-range RGB output through both BT.2020
-connector colorspace values.
-
-Fixes: 6eb4c13a3845 ("drm/amd/display: Support "Broadcast RGB" drm property")
-Signed-off-by: Satyajit Roy <sroy14@alum.utk.edu>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 022236eaa63bbf65761aa8aec43f661451a94654)
-Cc: stable@vger.kernel.org
-[ adapted the hunk to the older get_output_color_space() function in amdgpu_dm.c. ]
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 9ecc4d033879 ("s390/pai: Support CPU hotplug for PMU PAI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/s390/kernel/perf_pai.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6895,10 +6895,14 @@ get_output_color_space(const struct dc_c
- 		break;
- 	case DRM_MODE_COLORIMETRY_BT2020_RGB:
- 	case DRM_MODE_COLORIMETRY_BT2020_YCC:
--		if (dc_crtc_timing->pixel_encoding == PIXEL_ENCODING_RGB)
--			color_space = COLOR_SPACE_2020_RGB_FULLRANGE;
--		else
-+		if (dc_crtc_timing->pixel_encoding == PIXEL_ENCODING_RGB) {
-+			if (connector_state->hdmi.broadcast_rgb == DRM_HDMI_BROADCAST_RGB_LIMITED)
-+				color_space = COLOR_SPACE_2020_RGB_LIMITEDRANGE;
-+			else
-+				color_space = COLOR_SPACE_2020_RGB_FULLRANGE;
-+		} else {
- 			color_space = COLOR_SPACE_2020_YCBCR_LIMITED;
-+		}
- 		break;
- 	case DRM_MODE_COLORIMETRY_DEFAULT: // ITU601
- 	default:
+--- a/arch/s390/kernel/perf_pai.c
++++ b/arch/s390/kernel/perf_pai.c
+@@ -140,16 +140,14 @@ static void pai_free(struct pai_mapptr *
+ /* Adjust usage counters and remove allocated memory when all users are
+  * gone.
+  */
+-static void pai_event_destroy_cpu(struct perf_event *event, int cpu)
++static void pai_event_destroy_cpu(int idx, int cpu)
+ {
+-	int idx = PAI_PMU_IDX(event);
+ 	struct pai_mapptr *mp = per_cpu_ptr(pai_root[idx].mapptr, cpu);
+ 	struct pai_map *cpump = mp->mapptr;
+ 
+ 	mutex_lock(&pai_reserve_mutex);
+-	debug_sprintf_event(paidbg, 5, "%s event %#llx idx %d cpu %d users %d "
+-			    "refcnt %u\n", __func__, event->attr.config, idx,
+-			    event->cpu, cpump->active_events,
++	debug_sprintf_event(paidbg, 5, "%s users %d refcnt %u\n",
++			    __func__, cpump->active_events,
+ 			    refcount_read(&cpump->refcnt));
+ 	if (refcount_dec_and_test(&cpump->refcnt))
+ 		pai_free(mp);
+@@ -159,17 +157,17 @@ static void pai_event_destroy_cpu(struct
+ 
+ static void pai_event_destroy(struct perf_event *event)
+ {
+-	int cpu;
++	int cpu = 0, idx = PAI_PMU_IDX(event);
+ 
+ 	free_page(PAI_SAVE_AREA(event));
+ 	if (event->cpu == -1) {
+ 		struct cpumask *mask = PAI_CPU_MASK(event);
+ 
+ 		for_each_cpu(cpu, mask)
+-			pai_event_destroy_cpu(event, cpu);
++			pai_event_destroy_cpu(idx, cpu);
+ 		kfree(mask);
+ 	} else {
+-		pai_event_destroy_cpu(event, event->cpu);
++		pai_event_destroy_cpu(idx, event->cpu);
+ 	}
+ }
+ 
+@@ -241,12 +239,12 @@ static u64 paicrypt_getall(struct perf_e
+  *
+  * Allocate the memory for the event.
+  */
+-static int pai_alloc_cpu(struct perf_event *event, int cpu)
++static int pai_alloc_cpu(int idx, int cpu)
+ {
+-	int rc, idx = PAI_PMU_IDX(event);
+ 	struct pai_map *cpump = NULL;
+ 	bool need_paiext_cb = false;
+ 	struct pai_mapptr *mp;
++	int rc;
+ 
+ 	mutex_lock(&pai_reserve_mutex);
+ 	/* Allocate root node */
+@@ -318,6 +316,7 @@ unlock:
+ 
+ static int pai_alloc(struct perf_event *event)
+ {
++	int idx = PAI_PMU_IDX(event);
+ 	struct cpumask *maskptr;
+ 	int cpu, rc = -ENOMEM;
+ 
+@@ -326,10 +325,10 @@ static int pai_alloc(struct perf_event *
+ 		goto out;
+ 
+ 	for_each_online_cpu(cpu) {
+-		rc = pai_alloc_cpu(event, cpu);
++		rc = pai_alloc_cpu(idx, cpu);
+ 		if (rc) {
+ 			for_each_cpu(cpu, maskptr)
+-				pai_event_destroy_cpu(event, cpu);
++				pai_event_destroy_cpu(idx, cpu);
+ 			kfree(maskptr);
+ 			goto out;
+ 		}
+@@ -392,7 +391,7 @@ static int pai_event_init(struct perf_ev
+ 	}
+ 
+ 	if (event->cpu >= 0)
+-		rc = pai_alloc_cpu(event, event->cpu);
++		rc = pai_alloc_cpu(idx, event->cpu);
+ 	else
+ 		rc = pai_alloc(event);
+ 	if (rc) {
 
 
