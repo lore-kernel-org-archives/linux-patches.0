@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75D254704F;
-	Thu, 17 Sep 2026 17:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79919547071;
+	Thu, 17 Sep 2026 17:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667407; cv=none; b=o6dNGMFIifKmRnkuXoZ+bASds0MPgptL5VoBRSvgv6CvHwsgMvdSGxN3ns+eYjd3S/ggi9JKUhmuoSapfO6jiXNJfPXrls6gStFlpRPsREpuAUuZJEd8Up4JcCskffFI3kb/xGm1KKmCvWaxKGY+V+FSX/biIklWkJu89khkhHQ=
+	t=1789667409; cv=none; b=AnXqQMdhnooGzyroYXS3SzQ9pbF3uM1k42NYrpkb9SiKeq648889LpzK6htC2GH5PuQtXgZgdNmLR3t2IWx+EyxbRHaMAqv3uAcQO9IB/7eXdxRteRcLXHPHsX4SH+3rLuZ+ryzoP25ZeSWkwoT6GQvvzvNlnnl3dacU76jldfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667407; c=relaxed/simple;
-	bh=moGswaEW5mlaNZcfy72/q0tlvXaBGeC/bNLUtgmZq2I=;
+	s=arc-20240116; t=1789667409; c=relaxed/simple;
+	bh=p5U1oSmZLRsfFOe+ZWyCAqyOPSdEYsZZPaSYV4Ls3iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4C4pAeGjJsYh4sgn7qHUVs4BqQVRJxmp0R+ifmwYp1XjdROXi6ylBIIr+009kYMmnbf6NlJu1kgcFhHCz+3AlH+G5lGQOa1K8PEWHJmmwv8KQ7N+CSx05omsaNwr+IedRw14W9pD8lewy7H26adWh6EWE0Ke08vzukRKd8BAJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AV8Ntg6/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gmwDDOs9oIfimWJkax12Mo++XatJLXwwlykb6jyrYi2FA/aJ0BJnfqWcbDaUaZmnnLjlnbs/a9DawPoYctD8qjWWpI8PjVH/5F8Qxt8jWA0n9tdZzu3JK0DBBH80pfWbm7d0Nj/zNblaT+2A6cyEMyv30lDj35l49bJV6GZ/yVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Idjqoy3a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AV8Ntg6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5391F000FF;
-	Thu, 17 Sep 2026 17:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Idjqoy3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4281F000FF;
+	Thu, 17 Sep 2026 17:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667405;
-	bh=+BjLF/R7CCF5wQj7GbypH2JTF3sDq3VXPz1DOa99tK4=;
+	s=korg; t=1789667408;
+	bh=iei2vDMo8J+zI6f2zd2ArAonoyvgtvmDlOxgVuXupRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AV8Ntg6/bBinpbXvk7V+hiH/qtICCWzRgFKAWxD/dQMQm/C69nXxAa2mZrhOINRp3
-	 rOoEymoPPgyMLVf+kKa17LroEAnTW6y5SJFDW5FveMfPBngrgLmSwiTzvmEcMREXin
-	 E/IBRp5uyxCViSdZIfL/uVa7ALAXtm18tWLVyMy8=
+	b=Idjqoy3aUNTU9KdT7yxoXHgNHLmjNnpj/IGqv6kc/lYiI+kF0I8BG2R43rDhNJUDZ
+	 aapEE+zfBZKLWICRdUdWzlzJNVpz8Sx3uSBgB1SntUEA2Hz8lqF7HWOXzGKVQzoM5C
+	 rKElXSefwNHjCS+WPEs+3Zbzc4UEnRBlM+ba+VNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0081/1102] soundwire: intel: Move suspend tracking from trigger to pm suspend
-Date: Thu, 17 Sep 2026 16:00:24 +0100
-Message-ID: <20260917151541.508755891@linuxfoundation.org>
+Subject: [PATCH 6.12 0082/1102] clk: samsung: exynos850: mark APM I3C clocks as critical
+Date: Thu, 17 Sep 2026 16:00:25 +0100
+Message-ID: <20260917151541.534164150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,143 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit acf676b9de0c86bc735a7f04962d3d688e156ffc ]
+[ Upstream commit 44984aaf1aa727ff944dd4b72fcf069d08b0056d ]
 
-Mark all open DAI runtimes as suspended in the component .suspend
-callback instead of relying on SNDRV_PCM_TRIGGER_SUSPEND, which is
-not delivered during PAUSE or xrun states.
+The Exynos850 APM co-processor relies on the I3C bus to communicate with
+the PMIC. Currently, there is no dedicated PMIC consumer driver managing
+these clocks, so the clock subsystem automatically gates them during the
+initialisation. Once gated, any subsequent ACPM communication with APM
+results in timeouts.
 
-If during system suspend a dai is open it means that it is in either in
-SUSPENDED, PAUSED or STOPPED  (due to xrun) state and they will need to be
-re-initialized during resume (which is done in .prepare callback).
+As a temporary workaround (and let's hope it doesn't become permanent),
+mark both `gout_i3c_pclk` and `gout_i3c_sclk` as CLK_IS_CRITICAL ones to
+prevent the clock subsystem from disabling them. This makes the ACPM
+communication functional. This workaround should be reverted once a
+proper ACPM PMIC driver is implemented to manage these clocks.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260508101755.1247039-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: Sam Protsenko <semen.protsenko@linaro.org>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260430-exynos850-i3c-criticalclocks-v1-1-6e1fd8dfa21b@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel.c       | 31 ++++++--------------------
- drivers/soundwire/intel_ace2x.c | 39 ++++++++++++++++++++++-----------
- 2 files changed, 33 insertions(+), 37 deletions(-)
+ drivers/clk/samsung/clk-exynos850.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
-index 421da0f86fad6..75a7bc40a68e7 100644
---- a/drivers/soundwire/intel.c
-+++ b/drivers/soundwire/intel.c
-@@ -907,19 +907,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
- 
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -956,10 +943,12 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 	struct snd_soc_dai *dai;
- 
- 	/*
--	 * In the corner case where a SUSPEND happens during a PAUSE, the ALSA core
--	 * does not throw the TRIGGER_SUSPEND. This leaves the DAIs in an unbalanced state.
--	 * Since the component suspend is called last, we can trap this corner case
--	 * and force the DAIs to release their resources.
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
- 	 */
- 	for_each_component_dais(component, dai) {
- 		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-@@ -967,13 +956,7 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 
- 		dai_runtime = cdns->dai_runtime_array[dai->id];
- 
--		if (!dai_runtime)
--			continue;
--
--		if (dai_runtime->suspended)
--			continue;
--
--		if (dai_runtime->paused)
-+		if (dai_runtime)
- 			dai_runtime->suspended = true;
- 	}
- 
-diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
-index 4f3dd70d6a1a7..eca38648d5d15 100644
---- a/drivers/soundwire/intel_ace2x.c
-+++ b/drivers/soundwire/intel_ace2x.c
-@@ -500,19 +500,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
- 
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -536,8 +523,34 @@ static const struct snd_soc_dai_ops intel_pcm_dai_ops = {
- 	.get_stream = intel_get_sdw_stream,
- };
- 
-+static int intel_component_dais_suspend(struct snd_soc_component *component)
-+{
-+	struct snd_soc_dai *dai;
-+
-+	/*
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
-+	 */
-+	for_each_component_dais(component, dai) {
-+		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-+		struct sdw_cdns_dai_runtime *dai_runtime;
-+
-+		dai_runtime = cdns->dai_runtime_array[dai->id];
-+
-+		if (dai_runtime)
-+			dai_runtime->suspended = true;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct snd_soc_component_driver dai_component = {
- 	.name			= "soundwire",
-+	.suspend		= intel_component_dais_suspend,
- };
- 
- /*
+diff --git a/drivers/clk/samsung/clk-exynos850.c b/drivers/clk/samsung/clk-exynos850.c
+index e2a63ea7d4cba..086cc90784843 100644
+--- a/drivers/clk/samsung/clk-exynos850.c
++++ b/drivers/clk/samsung/clk-exynos850.c
+@@ -684,10 +684,11 @@ static const struct samsung_gate_clock apm_gate_clks[] __initconst = {
+ 	     CLK_CON_GAT_GOUT_APM_APBIF_RTC_PCLK, 21, 0, 0),
+ 	GATE(CLK_GOUT_TOP_RTC_PCLK, "gout_top_rtc_pclk", "dout_apm_bus",
+ 	     CLK_CON_GAT_GOUT_APM_APBIF_TOP_RTC_PCLK, 21, 0, 0),
++	/* TODO: Should be dealt with or enabled in PMIC ACPM driver */
+ 	GATE(CLK_GOUT_I3C_PCLK, "gout_i3c_pclk", "dout_apm_bus",
+-	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_PCLK, 21, 0, 0),
++	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_PCLK, 21, CLK_IS_CRITICAL, 0),
+ 	GATE(CLK_GOUT_I3C_SCLK, "gout_i3c_sclk", "mout_apm_i3c",
+-	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_SCLK, 21, 0, 0),
++	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_SCLK, 21, CLK_IS_CRITICAL, 0),
+ 	GATE(CLK_GOUT_SPEEDY_PCLK, "gout_speedy_pclk", "dout_apm_bus",
+ 	     CLK_CON_GAT_GOUT_APM_SPEEDY_APM_PCLK, 21, 0, 0),
+ 	/* TODO: Should be enabled in GPIO driver (or made CLK_IS_CRITICAL) */
 -- 
 2.53.0
 
