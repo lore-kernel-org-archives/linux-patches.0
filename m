@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A194B4ABBAC;
-	Thu, 17 Sep 2026 16:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980FF4F391B;
+	Thu, 17 Sep 2026 16:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661084; cv=none; b=ekIwhb8A5HIXUJfXwzWxEMwWKohGwxeTseSwvdzodsUcJBmASNgdyFuwHGIGVLSm/OBUxjtdpInd4JJHnU74E/on/GgPPqMszsgjXa5q/bFXHInK53xiKd3i1FWrId6myG6kBBnKYhGfdJpmzER/s8mlNOQA3HIFkwnMsgUWG+8=
+	t=1789661087; cv=none; b=oZvLgK3UOpi5FW/ErEOkieTCBwasAHY9UjzBbnFCzNHZrcexfB++HpeYAbgsGUz+Een3pyL/Y2rtMHsT9bjXRtInHxt4mkUySDQQUs/1wRh3smDgWEBb+6YEbdrEbvLi1nthzjL9yTBGDjBECaUE7x2Ei8Upzc+LvmStIVf72xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661084; c=relaxed/simple;
-	bh=BFd+lP5v7/h/qsGB/HRXMURthRNvsJjnGVr+JxgM0NU=;
+	s=arc-20240116; t=1789661087; c=relaxed/simple;
+	bh=WWrVte9Eh+GIMmJMItnEcVyLs1yKcR4Fy/oHRt0oGZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/WCBpSpcikBvr+yTISYtsk+W3UX+8bHttlXaNO9++9/R9N7cEx+85we8DV475YYiKaftpOHr8LsosTx4iJVpWcEPZkmvWEijU6STxpmva28ng/204w73+f2kCs/q70WxQyZTQXDjKhqdcjH2OGGSExg7RHiS+Z1VNnhlG6b22U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMUgYUlb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mN6qVMaBPBu5ETFCY+hKhQTMZwSGJKZXYYx4zPV+wy8ZSsD9QD9f6f10WvO8amWZDVP5Hjmx/+ikmZKU5yUpfWF9tQBLT8wslVxcFz7glGY3MILWak5mXcMblb/YxvjHnmTfkvUeYRZ56h/8zmnxdFjku8ils5W7eNtUttABWJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTlBqnna; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMUgYUlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92C21F00898;
-	Thu, 17 Sep 2026 16:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTlBqnna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B221F00893;
+	Thu, 17 Sep 2026 16:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661083;
-	bh=LqNA+jmgY6Y2A9Roxx/lKDLP9yrtJup0rPZrg9HNNEQ=;
+	s=korg; t=1789661086;
+	bh=zQNjpT8bmJiPVndwWP2bI+c5cO4oxMUucsvIA6suGBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MMUgYUlbIJNF9OJsUXsP6MSCWnJ70txHVIoT07+jdgHyWzo6XrCHV+QGUG4BJ77rO
-	 OGHX6A7SZf92W6lLzk40cE/eLZtH57NInH32cCN5G+I5U73aNmj8vFyDiwsqufF6UY
-	 OUr/GUsrNUgIMMt8Ar9Aq17g7aeQcCPm6Gs40cAM=
+	b=PTlBqnnazmG+0TzANuY/T5EtiRe+e8swRNcfAiLagUTSayMiE3mRnneiWgSvQ+U+q
+	 F2dV1vGAauuBkLC3ba4+IYRe+bUINx5Psy0EqehfX64KdKApfjKG8GdqNL3loXKu4r
+	 wBG84frPWUDWWduh1GdVMsFvON68Q9736dA1GD8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0036/1250] wifi: rtw89: disable HTC field in AP mode
-Date: Thu, 17 Sep 2026 15:57:11 +0100
-Message-ID: <20260917151552.914330154@linuxfoundation.org>
+Subject: [PATCH 6.18 0037/1250] wifi: rtw89: disable CSI STBC for VHT 160MHz
+Date: Thu, 17 Sep 2026 15:57:12 +0100
+Message-ID: <20260917151552.941246288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,40 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 1e53b826d5f8a3ca6d88fa6ed263acf54503214b ]
+[ Upstream commit d1fba55228685a7a237681be739683eaf698b9bc ]
 
-Disable HE QoS HTC field when operating in AP mode to resolve
-interoperability issues with some stations.
+Fix interoperability problem where CSI feedback with STBC enabled at
+VHT 160MHz BW cannot be properly decoded by certain APs, causing CSI
+reports to be rejected. This problem is specific to Wi-Fi 7 chips,
+as Wi-Fi 6 defaults to 20MHz CSI BW. Therefore, disable STBC encoding
+for CSI transmission in VHT 160MHz mode to ensure CSI feedback is
+accepted by these APs and maintain smooth throughput.
 
 Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com
+Link: https://patch.msgid.link/20260424072552.59220-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
+ drivers/net/wireless/realtek/rtw89/mac_be.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 3842b0e3bcb44..fa277c8e899fd 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -847,6 +847,7 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
- 				 enum btc_pkt_type pkt_type)
- {
- 	struct rtw89_sta_link *rtwsta_link = tx_req->rtwsta_link;
-+	struct ieee80211_vif *vif = tx_req->vif;
- 	struct sk_buff *skb = tx_req->skb;
- 	struct ieee80211_hdr *hdr = (void *)skb->data;
- 	struct ieee80211_link_sta *link_sta;
-@@ -878,6 +879,9 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
- 	if (rtwsta_link && rtwsta_link->ra_report.might_fallback_legacy)
- 		return false;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
+index e5a61c628b731..b03392612f252 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac_be.c
++++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
+@@ -2147,6 +2147,10 @@ static int rtw89_mac_set_csi_para_reg_be(struct rtw89_dev *rtwdev,
+ 		sound_dim = min(sound_dim, t);
+ 	}
  
-+	if (vif->type == NL80211_IFTYPE_AP)
-+		return false;
++	/* Disable stbc_en in VHT 160MHz to avoid IOT issues with certain APs */
++	if (link_sta->vht_cap.cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ)
++		stbc_en = 0;
 +
- 	return true;
- }
+ 	nc = min(nc, sound_dim);
+ 	nr = min(nr, sound_dim);
  
 -- 
 2.53.0
