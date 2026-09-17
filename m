@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B02A4398F5;
-	Thu, 17 Sep 2026 18:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401FC768EA;
+	Thu, 17 Sep 2026 18:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671118; cv=none; b=HMMT1XfO3zZ5O6erB9WuJJ9VFggIYPjQ8B4u7ODyw/hKVViFf1bM6YdSCYFmVbMTV1+D906fVTA3bT5RzyZKrmD3Zya5bSJYrFjyF1LqddFItg903GCq2jZTR+9PMYm+1a2wKrV8XhMYoyC/bl2vgFD94jybKLSza1YVZCvV5EQ=
+	t=1789671121; cv=none; b=aE4ZZNxTUHCYYnG16sLqx672BH8mOf4D9dyx9wOLwors9EyuaLv3wQ+pkDlMjDoJT2l+o/nSVo1GtcxdHCg8aNYJ6jmkzB3ox/yRS7Hj2RiZIdCiOQ6jXGDCR73kWJGu82yOvE/TKAZ77yBDXDejQ/jlDEHbu86yhyS0RTYNIJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671118; c=relaxed/simple;
-	bh=xFawTjfr+nLjKAuxCr1ftBQYnWxI9FkblIir4XVRspM=;
+	s=arc-20240116; t=1789671121; c=relaxed/simple;
+	bh=9NHu6ZR7OFZyBgaC0nNzn1oRnAC0IHhimQuWyDFdGV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXM+ZldaqurnFc+Asz7S2H6TC1XlIh06ZY9hf/+nrkGmnA+Y+OXGTgx6IJecquKEO+kfy6KeoPEq1jZ/Re+435G8C1zX7HqhplcwPgyCml6oVUd6zzu3P3PPSckLLSsafRMSHj6q3srVo4M6JDPo/m9YE4z0a3N6aBigEafjEG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrSg8GZa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ISEGDt8bsJjo6DwuVbglm+ChKYO7IUFZNZA3YV18EakaCthJWhd+b24mViBcYujNP0VA/pStkq8Cby/tanjuuFf3zwwYfsNLQOMYVOmq+VYPecvL4QY/bYc8KQtReHr9cg8dDAZwCseI7+KcA4bRO5mL1SVUedsd1jtyKI0fKkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqB5cRrL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrSg8GZa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C7C1F000FF;
-	Thu, 17 Sep 2026 18:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqB5cRrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887251F000FF;
+	Thu, 17 Sep 2026 18:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671117;
-	bh=BEoVL/xmf/F/8m6eMwfXsSJMJKA71+LUkQBn/fFkSrE=;
+	s=korg; t=1789671120;
+	bh=RmpdvjdYp0XEGBFVWco9v/yvc+GbCLKrdEMXQQfTaRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrSg8GZaqZNfZt6FwMVPwdEuXwr2NIzFBbp8G3eGQIB8azF3UxOz3zz2fiqcrarYp
-	 00+9qN9oeuXbGZT8tGAqToYrQeHHFFfBbasGr9qu4E99uyDgfYiZZ2K0PtR+9Sxuff
-	 qKu39MNXRDd8tjOh1r5AqfUwAuObJssW7pHmV7Ec=
+	b=mqB5cRrL+w+V9oiijkiTFPRC0viYKVQdbDJfpXkPxDC4SDdxeYbn+1FpiTw8X2SVy
+	 0LQZJC2PpD3zTtVijsw0zzUGq4dS9iScRCcWA+JD5CjxSZnsATLFsK2eDM43lO3i1Q
+	 fXg0aFbv2UYdckC6TsmPLCmWpxz14GLD8PRyXv84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Vishnu Razdan <vrazdan@openai.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 0872/1102] hwmon: (gpio-fan) Fix use-after-free in alarm work
-Date: Thu, 17 Sep 2026 16:13:35 +0100
-Message-ID: <20260917151602.452019766@linuxfoundation.org>
+Subject: [PATCH 6.12 0873/1102] hwmon: (pmbus) Clear generic status alarms with CLEAR_FAULTS
+Date: Thu, 17 Sep 2026 16:13:36 +0100
+Message-ID: <20260917151602.478079854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,64 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Vishnu Razdan <vrazdan@openai.com>
 
-commit a2471ed17b0e6ff7bfb6b2ea8e6e5b04c309d293 upstream.
+commit 6d760f8b41aed74de4402440e4db663d261478bd upstream.
 
-fan_alarm_irq_handler() queues fan_data->alarm_work, but nothing
-cancels it.  fan_alarm_notify() dereferences fan_data and its hwmon
-device.  On unbind, devres frees the interrupt, which only waits for
-the handler itself, and then releases the hwmon device and fan_data,
-so a pending fan_alarm_notify() can run after those frees.
+Some hwmon alarms fall back to STATUS_WORD summary bits when no
+individual limit alarm is available. On PMBus 1.2 and newer devices,
+pmbus_get_boolean() acknowledges these alarms with the same byte-data
+write used for detailed status registers. For example, PB_STATUS_INPUT
+is 0x2000, so it is truncated to zero when passed to
+_pmbus_write_byte_data(). The resulting write cannot acknowledge the
+input alarm.
 
-Replace INIT_WORK() with devm_work_autocancel(), registered before
-devm_request_irq().  The devres cleanup then frees the interrupt
-first, so no new work can be queued, and cancels the work while
-fan_data and the hwmon device are still alive.
+PMBus 1.3 Part II, sections 10.2.4 and 10.2.5, excludes ordinary
+STATUS_BYTE and STATUS_WORD summary bits from individual clearing.
+Their summary bits clear when the underlying status bits clear, so
+changing this to a word-data write would not fix the generic input
+alarm either.
 
-This issue was found by an in-house static analysis tool.
+Use the existing page CLEAR_FAULTS path for generic STATUS_WORD
+alarms, including devices whose status accessor uses STATUS_BYTE.
+Keep individual byte writes for detailed status registers on PMBus
+1.2 and newer devices. As with the existing older-device fallback,
+CLEAR_FAULTS can clear other latched status; an active condition can
+reassert its status.
 
-Fixes: d6fe1360f42e ("hwmon: add generic GPIO fan driver")
+Fixes: 35f165f08950 ("hwmon: (pmbus) Clear pmbus fault/warning bits after read")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260819033317.446191-1-fanwu01@zju.edu.cn
+Assisted-by: LLM
+Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
+Link: https://patch.msgid.link/20260824-vrazdan-pmbus-status-word-b4-v1-1-2606ecd0c029@openai.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/gpio-fan.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus_core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/gpio-fan.c
-+++ b/drivers/hwmon/gpio-fan.c
-@@ -12,6 +12,7 @@
- #include <linux/slab.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/devm-helpers.h>
- #include <linux/platform_device.h>
- #include <linux/err.h>
- #include <linux/kstrtox.h>
-@@ -80,6 +81,7 @@ static DEVICE_ATTR_RO(fan1_alarm);
- static int fan_alarm_init(struct gpio_fan_data *fan_data)
- {
- 	int alarm_irq;
-+	int err;
- 	struct device *dev = fan_data->dev;
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -1166,7 +1166,9 @@ static int pmbus_get_boolean(struct i2c_
  
- 	/*
-@@ -90,7 +92,11 @@ static int fan_alarm_init(struct gpio_fa
- 	if (alarm_irq <= 0)
- 		return 0;
- 
--	INIT_WORK(&fan_data->alarm_work, fan_alarm_notify);
-+	err = devm_work_autocancel(dev, &fan_data->alarm_work,
-+				   fan_alarm_notify);
-+	if (err)
-+		return err;
-+
- 	irq_set_irq_type(alarm_irq, IRQ_TYPE_EDGE_BOTH);
- 	return devm_request_irq(dev, alarm_irq, fan_alarm_irq_handler,
- 				IRQF_SHARED, "GPIO fan alarm", fan_data);
+ 	regval = status & mask;
+ 	if (regval) {
+-		if (data->revision >= PMBUS_REV_12) {
++		/* Generic STATUS_WORD alarms are not individually clearable. */
++		if (data->revision >= PMBUS_REV_12 &&
++		    reg != PMBUS_STATUS_WORD) {
+ 			ret = _pmbus_write_byte_data(client, page, reg, regval);
+ 			if (ret)
+ 				goto unlock;
 
 
