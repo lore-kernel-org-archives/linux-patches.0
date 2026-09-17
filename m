@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DAB392C27;
-	Thu, 17 Sep 2026 17:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA49535FD3;
+	Thu, 17 Sep 2026 17:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666328; cv=none; b=tOW1Zv9rnYEa2xFeRl+VyKfmHc2foPRW11bWhLUNSFceFx9Gf8CJXBm2Qc4AVnjJJDoSWeIviOv6PLGDnXDRp5Om1i4dDiF4VXLPamx2z96CwX7WR4qJe5qWvFzpoV7EXVNtReXdYh9K1jJeYEJ2IUXncKV6qVm663Jh6Zwf4vM=
+	t=1789666332; cv=none; b=P7Haq3PEoe6AKoxWMiw4yGIw3pA+IuPwNRb/flEiFXeLozbRtQ7JcHFepawcX/NkQ6CIsGR7sZSk5uWoZr5LRwxI54pXTqWBUjNlw0x+38riQLh4hqExak0uhQOM1AP7wak50B6qfxl31hhLtgeUtKaa8z0R4wJ0OkIvnkjRBn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666328; c=relaxed/simple;
-	bh=eizsrmNJeqpSrSDCIpgoIM/DXw2ObaOiijBckRBziOI=;
+	s=arc-20240116; t=1789666332; c=relaxed/simple;
+	bh=F6peWQFCy+uLukuKc5Qw+a8cfZBGLP9UQIp28GIGbds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AL4FeckBwvflFSqmGPVYXTscMsK5sEW7BRl+nVKLdYKCC8B5EjS4/U02Jl56Gv6mGbC/4BKQPuXAV/Rca5l+mrb4Qg6q+mAePqo1yg9b/l8IcLWwBQ2fiMtDlJr2YRpDILJCZk+OcaZQbDQTLlkEdqzoszFcdCcUqqlUeGyWSC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngFifRqv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YK7HFcj5Riua/T3zsaIgfsav+LeRE+daSdJBTelPJglctfss7SLjroRo+ItcBOEfJOHwlkxBCF58KY9+rrdSxZhOtOxcfNSBkf2F4OurippeymW5QUREKvz7tdFLcITDrsvcQPKX6OX+y8mEn1MLSLZlnrnzQHHlZQx+JHhnZ8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRbUA2qH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngFifRqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D531F000FF;
-	Thu, 17 Sep 2026 17:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRbUA2qH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9061F000FF;
+	Thu, 17 Sep 2026 17:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666327;
-	bh=C+TmStfUZaG+wL1iH8rCsqbWRbj8cLqzNX2nPOKz/8U=;
+	s=korg; t=1789666330;
+	bh=19nK8xig1Wyp6cVMCuvsOvQXgNlJPo5e2FXXa810OS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngFifRqvxplNfBZBUcjxOsek9wf0QZC/yu6RyD/3Vvoofx1nuN5BsE/E2k68k9Dny
-	 wN3uMgiTm7PdPqur/crhmUCoVgwiyD8Mc+XWlCwbkwRTHeAESVSoZCi1057B6IOCx6
-	 9XiFzHYD+fxK0+dPfDRBEu4BCDLPvC1irCUPbCn0=
+	b=bRbUA2qHGoAGxOTtIm4bs99jXbGjrc7G6IJK8onDgLdJLVWu3+quT0rMJd+jSWVvR
+	 r2H/HG1QhThyPffqS+DMeROsUGL8GUWMDRto/jGtdBrk7Gf4A2ZTNYIlaNUyBk4jgG
+	 TiWzEJnBoPWIyTkDojHB6juil/46GmOFI7uY+vG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 1000/1250] cpufreq: zero-initialize policy cpumask before sysfs publication
-Date: Thu, 17 Sep 2026 16:13:15 +0100
-Message-ID: <20260917151619.140866454@linuxfoundation.org>
+Subject: [PATCH 6.18 1001/1250] cpufreq: initialize policy rwsem before sysfs publication
+Date: Thu, 17 Sep 2026 16:13:16 +0100
+Message-ID: <20260917151619.168179146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,52 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 54d37bcf2f497140b9207968557ddb484058e749 upstream.
+commit 3e5d1bf4bd687beb2cb4e32a07af695455925588 upstream.
 
-cpufreq_policy_alloc() allocates policy->cpus with alloc_cpumask_var(),
-i.e. without __GFP_ZERO, unlike the sibling related_cpus and real_cpus
-masks. With CONFIG_CPUMASK_OFFSTACK=y the mask is a separate
-kmalloc_node() allocation, so its bitmap holds whatever the slab allocator
-left behind:
+cpufreq_policy_alloc() initializes policy->rwsem after
+kobject_init_and_add() has created the policy sysfs directory and its
+default attributes. A sysfs access can therefore reach a policy callback
+before the semaphore has been initialized.
 
-  cpufreq_online()
-    cpufreq_policy_alloc()
-      alloc_cpumask_var(&policy->cpus)    /* bitmap is uninitialized */
-      kobject_init_and_add()              /* policy%u/ appears in sysfs */
-    cpufreq_policy_online()
-      cpumask_copy(policy->cpus, cpumask_of(cpu))  /* first valid value */
-
-This leaves a window in which the sysfs attributes are already reachable
-while policy->cpus is still garbage. show()/store() gate on
-policy_is_inactive(), i.e. cpumask_empty(policy->cpus), so a non-zero
-bitmap makes them run the attribute callbacks on a policy that is not
-initialized yet.
-
-Fix this by using zalloc_cpumask_var() for policy->cpus.
+Initialize policy->rwsem before publishing the policy kobject so sysfs
+callbacks always see an initialized semaphore.
 
 Fixes: 2fc3384dc75b ("cpufreq: Initialize policy->kobj while allocating policy")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All Applicable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/all/20260830155301.2713780-1-runyu.xiao@seu.edu.cn/
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20260901143635.4106960-1-zhongqiu.han@oss.qualcomm.com
+Link: https://patch.msgid.link/20260902041915.3453421-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/cpufreq/cpufreq.c
 +++ b/drivers/cpufreq/cpufreq.c
-@@ -1261,7 +1261,7 @@ static struct cpufreq_policy *cpufreq_po
- 	if (!policy)
- 		return NULL;
+@@ -1270,6 +1270,8 @@ static struct cpufreq_policy *cpufreq_po
+ 	if (!zalloc_cpumask_var(&policy->real_cpus, GFP_KERNEL))
+ 		goto err_free_rcpumask;
  
--	if (!alloc_cpumask_var(&policy->cpus, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&policy->cpus, GFP_KERNEL))
- 		goto err_free_policy;
++	init_rwsem(&policy->rwsem);
++
+ 	init_completion(&policy->kobj_unregister);
+ 	ret = kobject_init_and_add(&policy->kobj, &ktype_cpufreq,
+ 				   cpufreq_global_kobject, "policy%u", cpu);
+@@ -1284,8 +1286,6 @@ static struct cpufreq_policy *cpufreq_po
+ 		goto err_free_real_cpus;
+ 	}
  
- 	if (!zalloc_cpumask_var(&policy->related_cpus, GFP_KERNEL))
+-	init_rwsem(&policy->rwsem);
+-
+ 	freq_constraints_init(&policy->constraints);
+ 
+ 	policy->nb_min.notifier_call = cpufreq_notifier_min;
 
 
