@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8189E4F93A1;
-	Thu, 17 Sep 2026 17:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CD0361967;
+	Thu, 17 Sep 2026 17:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665628; cv=none; b=sp/GfC8HuFb+QdIx6KiCGv7TGjbCB4wDguZs0jcndJY3brmYPaAGUAs2xOytFjwj8PwgXSN3SFqU1nWKoj2GpBaVsP3ebVvjBk+6XCI2lMQXkTO5JhzLjVCjMAGBsHvhAIqPW3MVEIhkoBJXl3ifo7Hw2lztnOj7PMSOTvLzFwk=
+	t=1789665630; cv=none; b=mzZ7dQp064kxtqzqdtMmxnxBhZKhlgXk54wa3B/Tj+9XJ3cYg9YpgAoF39qqkzqjhF3NlEMN+5U0+6MrNMcCHv2pMFWkxLI/FaUEJh81DxV5m0zRfwpLZN+6cKSyjxUfLhWJ4+l1Zf2/vfh/nvPV5f/0iu3h5T9vwXfts4ucUPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665628; c=relaxed/simple;
-	bh=Gk/MO4VdR4rzUH60zDNZpZIUD00i1GKLSR5+kdt5V9o=;
+	s=arc-20240116; t=1789665630; c=relaxed/simple;
+	bh=ysqEpd1k0kHScMs9o2XgWpgFONcfnJEHwAdyVOsA/is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gxgiXnqHhVvXYDzaJk9eTwEN3tXow+d/LV1eJWGsM5fIhFBaJlPKvRrfBu8SVkT1cuLsVrV8mIe5aGqm+NRDy8FOtQyoe29cnMxQy36Jk9Otb/C/EFSRx1xzNjlhXHHDZqGqxegHqItnJSkYID4yCjEHn4nxXUPyWTXL7OtiPg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDXLiPBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Sv9ew+kHmYR8Vr+4QzBi8IuVgwSaG+4BQbbh49A0JwVBBiRGDL5H2gBEL9Wm0jU4E/2OX8aAPXG3IqJ6oP5V0Ncjf2cgJh6ifOZG4U565/TMvN595sDuLroYgn/LWijE3cNL1AqKQwMmBfFwW2ML3PoIHnPLIM1Wx030BuyVNj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2dwQQmP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDXLiPBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C151F000FF;
-	Thu, 17 Sep 2026 17:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2dwQQmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3781F00893;
+	Thu, 17 Sep 2026 17:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665626;
-	bh=6g9aGU9gEF4gBsLwgFfCan0h8OHpqSKWYywbW3YkBhE=;
+	s=korg; t=1789665629;
+	bh=5Qi1TGoALrz41Jc+4YtXkjmxZJZoUbPnADY4wKb3rB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDXLiPBSLG7MkKUd0jGhXbJGcrsogwVdd8iRqhdWCbjzkzqq4IKGgOIqMLC9t1RyO
-	 pkLG6+h/J//wtx2544lsmURnLauTjZ813609WoVi82j7Z/2nlGNdrmDb1PvhICOaAC
-	 6jrl3V1iwYZlmrOOXFWtBv2ji7jbG6D40VkZHc0s=
+	b=S2dwQQmPcHX+mVF5SBx71J1O1Ft+DtWIneCYhy5+XjEYN16JauxWB8wTTjjJo3SYw
+	 5K54LAUW27bSmBfO3zu5apRHFyRjlKpFkA5K6CdN/g2m1Yye2Z1kx2Uzw3/KvQ/rXf
+	 nCZ/toyQM50TKtFfmtCgPCvesNfxt1IuK1eMFyaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0766/1250] ASoC: Intel: avs: Allow the topology to carry NHLT data
-Date: Thu, 17 Sep 2026 16:09:21 +0100
-Message-ID: <20260917151612.639587360@linuxfoundation.org>
+Subject: [PATCH 6.18 0767/1250] ASoC: Intel: avs: Honor NHLT override when setting up a path
+Date: Thu, 17 Sep 2026 16:09:22 +0100
+Message-ID: <20260917151612.666466686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,253 +55,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit dd9896d41fdf1050934d6a46a1c5ca2164284e72 ]
+[ Upstream commit d5c8b7902a41625ea328b52c78ebe750fbf6fef7 ]
 
-Typically the hardware configuration for I2S and DMIC devices resides
-in the Non-HDAudio Link Table (NHLT) that is part of the ACPI tree. As
-the NHLTs existing in the field are not always perfect, workaround
-mechanisms are provided to patch them.
+In case topology provides NHLT configuration, use it instead of relying
+on the table in ACPI tree. Only gateway-related modules e.g.: Copier
+care about the process. For those the order of fetching for hardware
+configuration becomes:
 
-Currently the avs-driver is utilizing the ->blob_fmt override (see
-topology.h and struct avs_tplg_modcfg_ext) when there is a valid entry
-within a NHLT to configure the hardware for specific format but its
-descriptor (header) is invalid.
+1) check if NHLT override is set,
+2) check if NHLT descriptor override is set,
+3) use NHLT from ACPI directly
 
-A separate case is when there is no correct hardware configuration at
-all within the NHLT available in the system. Patching the header won't
-help and forcing ad-hoc BIOS updates for dated system is not feasible.
-Allowing the topology to carry the data is the solution of choice as
-replacing a userspace file that is part of /lib/firmware/intel/ is less
-invasive than BIOS update and solves the problem.
+Such approach ensures no conflicts exist between 1) and 2) and that 1)
+always takes precedence.
 
 Co-developed-by: Amadeusz Sławiński <amade@asmblr.net>
 Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20251115180627.3589520-2-cezary.rojewski@intel.com
+Link: https://patch.msgid.link/20251115180627.3589520-3-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 681e91035dc7 ("ASoC: Intel: avs: Refactor and fix init_config access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/intel/avs/tokens.h |   5 ++
- sound/soc/intel/avs/topology.c        | 106 +++++++++++++++++++++++++-
- sound/soc/intel/avs/topology.h        |   7 ++
- 3 files changed, 115 insertions(+), 3 deletions(-)
+ include/uapi/sound/intel/avs/tokens.h |  1 +
+ sound/soc/intel/avs/path.c            | 13 +++++++++----
+ sound/soc/intel/avs/topology.c        |  7 +++++++
+ sound/soc/intel/avs/topology.h        |  1 +
+ 4 files changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/include/uapi/sound/intel/avs/tokens.h b/include/uapi/sound/intel/avs/tokens.h
-index f3ff6aae09a9e..f7cbbfb00227a 100644
+index f7cbbfb00227a..3ff6d9150822f 100644
 --- a/include/uapi/sound/intel/avs/tokens.h
 +++ b/include/uapi/sound/intel/avs/tokens.h
-@@ -21,6 +21,7 @@ enum avs_tplg_token {
- 	AVS_TKN_MANIFEST_NUM_BINDINGS_U32		= 8,
- 	AVS_TKN_MANIFEST_NUM_CONDPATH_TMPLS_U32		= 9,
- 	AVS_TKN_MANIFEST_NUM_INIT_CONFIGS_U32		= 10,
-+	AVS_TKN_MANIFEST_NUM_NHLT_CONFIGS_U32		= 11,
+@@ -125,6 +125,7 @@ enum avs_tplg_token {
+ 	AVS_TKN_MOD_KCONTROL_ID_U32			= 1707,
+ 	AVS_TKN_MOD_INIT_CONFIG_NUM_IDS_U32		= 1708,
+ 	AVS_TKN_MOD_INIT_CONFIG_ID_U32			= 1709,
++	AVS_TKN_MOD_NHLT_CONFIG_ID_U32			= 1710,
  
- 	/* struct avs_tplg_library */
- 	AVS_TKN_LIBRARY_ID_U32				= 101,
-@@ -160,6 +161,10 @@ enum avs_tplg_token {
- 	AVS_TKN_INIT_CONFIG_ID_U32			= 2401,
- 	AVS_TKN_INIT_CONFIG_PARAM_U8			= 2402,
- 	AVS_TKN_INIT_CONFIG_LENGTH_U32			= 2403,
-+
-+	/* struct avs_tplg_nhlt_config */
-+	AVS_TKN_NHLT_CONFIG_ID_U32			= 2501,
-+	AVS_TKN_NHLT_CONFIG_SIZE_U32			= 2502,
- };
+ 	/* struct avs_tplg_path_template */
+ 	AVS_TKN_PATH_TMPL_ID_U32			= 1801,
+diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
+index 0c66c8bb2f89d..899906e0bcb46 100644
+--- a/sound/soc/intel/avs/path.c
++++ b/sound/soc/intel/avs/path.c
+@@ -210,9 +210,11 @@ int avs_path_set_constraint(struct avs_dev *adev, struct avs_tplg_path_template
+ 					continue;
+ 				}
  
- #endif
+-				blob = avs_nhlt_config_or_default(adev, module_template);
+-				if (IS_ERR(blob))
+-					continue;
++				if (!module_template->nhlt_config) {
++					blob = avs_nhlt_config_or_default(adev, module_template);
++					if (IS_ERR(blob))
++						continue;
++				}
+ 
+ 				rlist[i] = path_template->fe_fmt->sampling_freq;
+ 				clist[i] = path_template->fe_fmt->num_channels;
+@@ -382,7 +384,10 @@ static int avs_fill_gtw_config(struct avs_dev *adev, struct avs_copier_gtw_cfg *
+ 	struct acpi_nhlt_config *blob;
+ 	size_t gtw_size;
+ 
+-	blob = avs_nhlt_config_or_default(adev, t);
++	if (t->nhlt_config)
++		blob = t->nhlt_config->blob;
++	else
++		blob = avs_nhlt_config_or_default(adev, t);
+ 	if (IS_ERR(blob))
+ 		return PTR_ERR(blob);
+ 
 diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
-index 2312afd8d010c..67461d27766d9 100644
+index 67461d27766d9..0a267937044de 100644
 --- a/sound/soc/intel/avs/topology.c
 +++ b/sound/soc/intel/avs/topology.c
-@@ -420,6 +420,22 @@ static int parse_link_formatted_string(struct snd_soc_component *comp, void *ele
- 	return 0;
- }
+@@ -350,6 +350,7 @@ AVS_DEFINE_PTR_PARSER(modcfg_base, struct avs_tplg_modcfg_base, modcfgs_base);
+ AVS_DEFINE_PTR_PARSER(modcfg_ext, struct avs_tplg_modcfg_ext, modcfgs_ext);
+ AVS_DEFINE_PTR_PARSER(pplcfg, struct avs_tplg_pplcfg, pplcfgs);
+ AVS_DEFINE_PTR_PARSER(binding, struct avs_tplg_binding, bindings);
++AVS_DEFINE_PTR_PARSER(nhlt_config, struct avs_tplg_nhlt_config, nhlt_configs);
  
-+static int avs_parse_nhlt_config_size(struct snd_soc_component *comp, void *elem, void *object,
-+				      u32 offset)
-+{
-+	struct snd_soc_tplg_vendor_value_elem *tuple = elem;
-+	struct acpi_nhlt_config **blob = (struct acpi_nhlt_config **)((u8 *)object + offset);
-+	u32 size;
-+
-+	size = le32_to_cpu(tuple->value);
-+	*blob = devm_kzalloc(comp->card->dev, struct_size(*blob, capabilities, size), GFP_KERNEL);
-+	if (!*blob)
-+		return -ENOMEM;
-+
-+	(*blob)->capabilities_size = size;
-+	return 0;
-+}
-+
  static int
- parse_dictionary_header(struct snd_soc_component *comp,
- 			struct snd_soc_tplg_vendor_array *tuples,
-@@ -1651,12 +1667,14 @@ static const struct avs_tplg_token_parser mod_init_config_parsers[] = {
- 
- static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
- 					   struct snd_soc_tplg_vendor_array *tuples,
--					   u32 block_size)
-+					   u32 block_size, u32 *offset)
- {
- 	struct avs_soc_component *acomp = to_avs_soc_component(comp);
- 	struct avs_tplg *tplg = acomp->tplg;
- 	int ret, i;
- 
-+	*offset = 0;
-+
- 	/* Parse tuple section telling how many init configs there are. */
- 	ret = parse_dictionary_header(comp, tuples, (void **)&tplg->init_configs,
- 				      &tplg->num_init_configs,
-@@ -1666,6 +1684,7 @@ static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
- 		return ret;
- 
- 	block_size -= le32_to_cpu(tuples->size);
-+	*offset += le32_to_cpu(tuples->size);
- 	/* With header parsed, move on to parsing entries. */
- 	tuples = avs_tplg_vendor_array_next(tuples);
- 
-@@ -1681,6 +1700,7 @@ static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
- 		 */
- 		tmp = avs_tplg_vendor_array_next(tuples);
- 		esize = le32_to_cpu(tuples->size) + le32_to_cpu(tmp->size);
-+		*offset += esize;
- 
- 		ret = parse_dictionary_entries(comp, tuples, esize, config, 1, sizeof(*config),
- 					       AVS_TKN_INIT_CONFIG_ID_U32,
-@@ -1692,6 +1712,7 @@ static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
- 		/* handle raw data section */
- 		init_config_data = (void *)tuples + esize;
- 		esize = config->length;
-+		*offset += esize;
- 
- 		config->data = devm_kmemdup(comp->card->dev, init_config_data, esize, GFP_KERNEL);
- 		if (!config->data)
-@@ -1704,6 +1725,70 @@ static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
- 	return 0;
- }
- 
-+static const struct avs_tplg_token_parser mod_nhlt_config_parsers[] = {
+ parse_audio_format_bitfield(struct snd_soc_component *comp, void *elem, void *object, u32 offset)
+@@ -1200,6 +1201,12 @@ static const struct avs_tplg_token_parser module_parsers[] = {
+ 		.offset = offsetof(struct avs_tplg_module, num_config_ids),
+ 		.parse = avs_parse_byte_token,
+ 	},
 +	{
-+		.token = AVS_TKN_NHLT_CONFIG_ID_U32,
++		.token = AVS_TKN_MOD_NHLT_CONFIG_ID_U32,
 +		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
-+		.offset = offsetof(struct avs_tplg_nhlt_config, id),
-+		.parse = avs_parse_word_token,
++		.offset = offsetof(struct avs_tplg_module, nhlt_config),
++		.parse = avs_parse_nhlt_config_ptr,
 +	},
-+	{
-+		.token = AVS_TKN_NHLT_CONFIG_SIZE_U32,
-+		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
-+		.offset = offsetof(struct avs_tplg_nhlt_config, blob),
-+		.parse = avs_parse_nhlt_config_size,
-+	},
-+};
-+
-+static int avs_tplg_parse_nhlt_configs(struct snd_soc_component *comp,
-+				       struct snd_soc_tplg_vendor_array *tuples,
-+				       u32 block_size)
-+{
-+	struct avs_soc_component *acomp = to_avs_soc_component(comp);
-+	struct avs_tplg *tplg = acomp->tplg;
-+	int ret, i;
-+
-+	/* Parse the header section to know how many entries there are. */
-+	ret = parse_dictionary_header(comp, tuples, (void **)&tplg->nhlt_configs,
-+				      &tplg->num_nhlt_configs,
-+				      sizeof(*tplg->nhlt_configs),
-+				      AVS_TKN_MANIFEST_NUM_NHLT_CONFIGS_U32);
-+	if (ret)
-+		return ret;
-+
-+	block_size -= le32_to_cpu(tuples->size);
-+	/* With the header parsed, move on to parsing entries. */
-+	tuples = avs_tplg_vendor_array_next(tuples);
-+
-+	for (i = 0; i < tplg->num_nhlt_configs && block_size > 0; i++) {
-+		struct avs_tplg_nhlt_config *config;
-+		u32 esize;
-+
-+		config = &tplg->nhlt_configs[i];
-+		esize = le32_to_cpu(tuples->size);
-+
-+		ret = parse_dictionary_entries(comp, tuples, esize, config, 1, sizeof(*config),
-+					       AVS_TKN_NHLT_CONFIG_ID_U32,
-+					       mod_nhlt_config_parsers,
-+					       ARRAY_SIZE(mod_nhlt_config_parsers));
-+		if (ret)
-+			return ret;
-+		/* With tuples parsed, the blob shall be allocated. */
-+		if (!config->blob)
-+			return -EINVAL;
-+
-+		/* Consume the raw data and move to the next entry. */
-+		memcpy(config->blob->capabilities, (u8 *)tuples + esize,
-+		       config->blob->capabilities_size);
-+		esize += config->blob->capabilities_size;
-+
-+		block_size -= esize;
-+		tuples = avs_tplg_vendor_array_at(tuples, esize);
-+	}
-+
-+	return 0;
-+}
-+
- static int avs_route_load(struct snd_soc_component *comp, int index,
- 			  struct snd_soc_dapm_route *route)
- {
-@@ -2008,11 +2093,26 @@ static int avs_manifest(struct snd_soc_component *comp, int index,
- 	tuples = avs_tplg_vendor_array_at(tuples, offset);
+ };
  
- 	/* Initial configs dictionary. */
--	ret = avs_tplg_parse_initial_configs(comp, tuples, remaining);
-+	ret = avs_tplg_parse_initial_configs(comp, tuples, remaining, &offset);
- 	if (ret < 0)
- 		return ret;
- 
--	return 0;
-+	remaining -= offset;
-+	tuples = avs_tplg_vendor_array_at(tuples, offset);
-+
-+	ret = avs_tplg_vendor_array_lookup(tuples, remaining,
-+					   AVS_TKN_MANIFEST_NUM_NHLT_CONFIGS_U32, &offset);
-+	if (ret == -ENOENT)
-+		return 0;
-+	if (ret) {
-+		dev_err(comp->dev, "NHLT config lookup failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	tuples = avs_tplg_vendor_array_at(tuples, offset);
-+
-+	/* NHLT configs dictionary. */
-+	return avs_tplg_parse_nhlt_configs(comp, tuples, remaining);
- }
- 
- enum {
+ static const struct avs_tplg_token_parser init_config_parsers[] = {
 diff --git a/sound/soc/intel/avs/topology.h b/sound/soc/intel/avs/topology.h
-index 2d3964d338faf..2d8674bad89a5 100644
+index 2d8674bad89a5..b5799c994b887 100644
 --- a/sound/soc/intel/avs/topology.h
 +++ b/sound/soc/intel/avs/topology.h
-@@ -37,6 +37,8 @@ struct avs_tplg {
- 	u32 num_condpath_tmpls;
- 	struct avs_tplg_init_config *init_configs;
- 	u32 num_init_configs;
-+	struct avs_tplg_nhlt_config *nhlt_configs;
-+	u32 num_nhlt_configs;
+@@ -223,6 +223,7 @@ struct avs_tplg_module {
+ 	u32 ctl_id;
+ 	u32 num_config_ids;
+ 	u32 *config_ids;
++	struct avs_tplg_nhlt_config *nhlt_config;
  
- 	struct list_head path_tmpl_list;
- };
-@@ -175,6 +177,11 @@ struct avs_tplg_init_config {
- 	void *data;
- };
- 
-+struct avs_tplg_nhlt_config {
-+	u32 id;
-+	struct acpi_nhlt_config *blob;
-+};
-+
- struct avs_tplg_path {
- 	u32 id;
- 
+ 	struct avs_tplg_pipeline *owner;
+ 	/* Pipeline modules management. */
 -- 
 2.53.0
 
