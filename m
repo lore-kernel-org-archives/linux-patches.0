@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C234D6C36;
-	Thu, 17 Sep 2026 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37634E4C20;
+	Thu, 17 Sep 2026 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661034; cv=none; b=q23V2fkMLdSHx5pLwCqW13wCgJqKld/YEYhPmSf/NpE+28LrI7+mHwaNvpamSCwsR9TUy9s3FbFemV+hgxJtKuTsLBEcItzmM6XAoX0BcA30GgKwkV2UKXZy4fr/7gN2wAGIJDTRXvj0lpp7j6gkPnyrHiVN3227j93drCjldYA=
+	t=1789661038; cv=none; b=AnhKUAiD9qXAWiKw8/arkwED+0yP2TAg1gGNnbcCKPSuzjOQ4boMEKKxQ6HMCxMOoAClY3ylO2ktpXAWjVB3ONMNSyTzNSbaAaD6AsSxOXIRuqWcJw31sYQ4nx7fBqRfVhzHfUr/VpJ2J2jI/3ldlFgTA2lAOR+SJ4ln9yF/ASY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661034; c=relaxed/simple;
-	bh=vTUyg2YyatHTrahK+sXpQi/yDnCXZ29dWNBtmDFhIqs=;
+	s=arc-20240116; t=1789661038; c=relaxed/simple;
+	bh=MBeopyYRrGwwR42ikcPE7uPI8ZaOX1kL7wO+cDP0h1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBnobI38WKe0b1h5k/N4N5k4X9id5oQP2xs1zsJzXlIwD2eUFX4WtwWJNx2ZjufTPMaN4NdFo8h5ffXv+rDmj5zdTWXCknT7OhVrk/+O7jpL0hfaNSRDZrEO2fP++9TCWdYCDUTtCOmZh7B8gd52C/OhMJQBuE6lMfNReZGLHzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJzaHfrO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fQVxOSQSrVk0R4H06hVX7qaoV7V0VqoR6FiWe+dpvdAZpcTR1Xkn7nzH+k+vPujmJoX6Eni07zDhL8KHia+vZfgX6/6cqLjR+vJgQToHbl+u1yMKDqjWHL3FKCY66uG6rRSAZO18D544GJDh+83az9UYVdFu0+EUgO2NZiw2dxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=go/LgdcE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJzaHfrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB861F000FF;
-	Thu, 17 Sep 2026 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="go/LgdcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5E61F00893;
+	Thu, 17 Sep 2026 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661033;
-	bh=BByRtWPiq3vL45T17CnF1+3QYWcceo4ywj/DWws0mEk=;
+	s=korg; t=1789661036;
+	bh=NHloUzipSpSJSstPSMrHEDNWnpRKo+x6bdibF/qKcxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJzaHfrORejWMcGqzQrqTXd2LHV1+9uAwHQ1f8LOpy+3moMCmGIHSYoXJVVeMIQVr
-	 I1VSNCESLadBiw2diaeOYuL10Tn/7bIFYPUiKz5B2UGmNPf4Dz79Mc7/kD6tmJ5MC8
-	 4wE99cBCa0U4Gmci7nFdbZaiuYj3L2UA/0tXCxMw=
+	b=go/LgdcE6AUbmcpHzS8OWvIoe2GdAYbTadqM1p1SOlXXZb5VuzQq9rCYIlx1GRkIC
+	 mh5n3B2Hugu2DCb3HaACY5nmr2qT8TVQPrQqTQMqAhBQYhsnQSftIgtUdQ7TqG1nfJ
+	 wiKH7zC3zxs9JnqytjtjllX4PwRJ3nhS7XQDooyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Oleksandr Havrylov <goainwo@gmail.com>,
+	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0060/1250] thunderbolt: Set tb->root_switch to NULL when domain is stopped
-Date: Thu, 17 Sep 2026 15:57:35 +0100
-Message-ID: <20260917151553.570301370@linuxfoundation.org>
+Subject: [PATCH 6.18 0034/1250] wifi: rtw88: Add NULL check for chip->edcca_th in rtw_fw_adaptivity_result()
+Date: Thu, 17 Sep 2026 15:57:09 +0100
+Message-ID: <20260917151552.861313565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,65 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
 
-[ Upstream commit e56249d8a68e712f3b60e1f3fdbb5b4fea146468 ]
+[ Upstream commit d5e6f353ce1e1c25b8458ea390ed09d2377412c5 ]
 
-Similarly what we do with the firmware connection manager. This makes
-tb_xdp_handle_request() return error to the remote host. However, we
-need to make sure we keep the uuid alive so that we can reply until the
-whole domain is released.
+It was recently reported that rtw_fw_adaptivity_result()
+in fw.c dereferences rtwdev->chip->edcca_th without
+a NULL check. The issue is that devices with the
+8821CE chip don't define edcca_th in their chip
+info. As a result, when rtw_fw_adaptivity_result()
+tries to dereference it, the kernel triggers an oops.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Add a NULL check for edcca_th before dereferencing
+it in rtw_fw_adaptivity_result() in fw.c. Placing
+the check at the function entry avoids logging any
+garbage values.
+
+This change does not address the root cause for
+this behavior, but it prevents the NULL dereference
+and the resulting oops while a more permanent solution
+is developed.
+
+Tested on a 8822CE chip which defines edcca_th, so
+this issue is not present on it, but it still uses
+this driver and I can verify there are no regressions.
+
+Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
+Reported-by: Oleksandr Havrylov <goainwo@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221286
+Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Oleksandr Havrylov <goainwo@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260415052959.14844-1-npetrakopoulos2003@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb.c      | 1 +
- drivers/thunderbolt/xdomain.c | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/fw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-index 59a503946c5ef..75367c060695f 100644
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2952,6 +2952,7 @@ static void tb_stop(struct tb *tb)
- 		tb_tunnel_put(tunnel);
- 	}
- 	tb_switch_remove(tb->root_switch);
-+	tb->root_switch = NULL;
- 	tcm->hotplug_active = false; /* signal tb_handle_hotplug to quit */
- }
+diff --git a/drivers/net/wireless/realtek/rtw88/fw.c b/drivers/net/wireless/realtek/rtw88/fw.c
+index c68a9fff68082..7ea8390f4d5a8 100644
+--- a/drivers/net/wireless/realtek/rtw88/fw.c
++++ b/drivers/net/wireless/realtek/rtw88/fw.c
+@@ -279,6 +279,9 @@ static void rtw_fw_adaptivity_result(struct rtw_dev *rtwdev, u8 *payload,
+ 	const struct rtw_hw_reg_offset *edcca_th = rtwdev->chip->edcca_th;
+ 	struct rtw_c2h_adaptivity *result = (struct rtw_c2h_adaptivity *)payload;
  
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index fed0fae2a6299..1eb149445fa05 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -756,7 +756,7 @@ static void tb_xdp_handle_request(struct work_struct *work)
- 
- 	mutex_lock(&tb->lock);
- 	if (tb->root_switch)
--		uuid = tb->root_switch->uuid;
-+		uuid = kmemdup(tb->root_switch->uuid, sizeof(*uuid), GFP_KERNEL);
- 	else
- 		uuid = NULL;
- 	mutex_unlock(&tb->lock);
-@@ -870,6 +870,7 @@ static void tb_xdp_handle_request(struct work_struct *work)
- 	}
- 
- out:
-+	kfree(uuid);
- 	kfree(xw->pkg);
- 	kfree(xw);
- 
-@@ -2344,6 +2345,9 @@ static struct tb_xdomain *switch_find_xdomain(struct tb_switch *sw,
- {
- 	struct tb_port *port;
- 
-+	if (!sw)
-+		return NULL;
++	if (!edcca_th)
++		return;
 +
- 	tb_switch_for_each_port(sw, port) {
- 		struct tb_xdomain *xd;
- 
+ 	rtw_dbg(rtwdev, RTW_DBG_ADAPTIVITY,
+ 		"Adaptivity: density %x igi %x l2h_th_init %x l2h %x h2l %x option %x\n",
+ 		result->density, result->igi, result->l2h_th_init, result->l2h,
 -- 
 2.53.0
 
