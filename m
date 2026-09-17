@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08AD51815D;
-	Thu, 17 Sep 2026 17:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEAF4D1781;
+	Thu, 17 Sep 2026 17:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667025; cv=none; b=oACQcbvAHO5xaUB7ijuOe9stC8tb65U/PAtOdq9uSG3cznOC4jHCpiMbYcPEDlEae2w2rhnHXytArn1ti4WZFMk0cnbHPfhNEXXsUNEVRp5l3VHQgFEZSZ3l9GgEOqpfQGkl4cQ3ziQAkE3TZqdIjJUVz6u2cJJDDQB2Rgmh7oE=
+	t=1789667028; cv=none; b=cf+CC7cNLG8R3op5zPokl4IS7P8kKeWFKrt4tLYvaw05jhuPEB2tcLwkou/ZSgpKw/UdORKla35HyFLmwoG4Ia0cE0EF7VKtJIjxUrYccl4kQ8lXP9BBIq9HHqE/sfe0Dsl3BzMUM6zM7T9Zbrl0dyxtZZ4PeMymvE17SvnywQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667025; c=relaxed/simple;
-	bh=YcHQms2ZhDit6UerhPu5ELWjz/anI8/Z4tZfv+vFBTw=;
+	s=arc-20240116; t=1789667028; c=relaxed/simple;
+	bh=mKUN0NZPfomznatgqOtbG6YnTsuYwpFbusF4jhSvH0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9lwp7p+CMUaK+l+Sfl0X3oUxRser6hpgJuV4oV6jOiqwsEoaN7zUUkCmXsJ8uHU/sk/U0aquOTs3ZmRikyQEPd7LYzYggHlVdE3I+IK8hpXTliEvr51HMa5oY6mqt/vPpsWrykK/Qkcvmhek5t8oQPA+HSUzwGWOt6oDtil6ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKJo+EFH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AA2qvNop1nIotJ7eE9F7EUg1erRL3S5kZz2dgMs9uf/4aYpDtWHFE8w8iKZ8qHp7nvVJO28W4P534NkSh+U1hHthPZuj/USGl5621dZWbxfmqwaHipSYI5+Fk8ZGAOGWkTlVw+jlXaIKLwRDuzMJ42s7/uV8dVqXYM4m+px/xOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCrOwyNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKJo+EFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2707D1F000FF;
-	Thu, 17 Sep 2026 17:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCrOwyNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1996F1F000FF;
+	Thu, 17 Sep 2026 17:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667023;
-	bh=Yu2HSZs1b/b4jqb6cSxKn/DAZhtHIt9yidz3DT4Ipa4=;
+	s=korg; t=1789667026;
+	bh=Qj32+LyJX2fzX3m8AvhnZ4I1hcdpjSu/PYj8vbh5v8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKJo+EFH1OyO9xrYhIv3iEEXGqC95aU7i6cOXfN3mkr9t4ADV7bH4QhzC/J8ib5U8
-	 wxaCyTXaxfTIUZmQlgtG5DaqKFoEdeu+9KnJTJBY6u+F9iDY+MARiAKnHVJ2JDWoAj
-	 OlVGUT7C67nwv/c+AVxChmLTS9WTv8aLS9+EgNZc=
+	b=CCrOwyNLNAx5Uum7tQHCh+GUIyBt1j2ReoxrpwAy4syFpHkzhQizqeb4q00R6nf4j
+	 OkSK2VLnYTciEGvp4U6j4AtVhlf0jNd3cNaNDuw1ZV5+MBIX1hHXbmnHgyrYCOcino
+	 dKCZxS2a8yZ1uUnAMA82tshg1puLkJ2xVWXuBdjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esben Haabendal <esben@geanix.com>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.18 1204/1250] drm/bridge: ti-sn65dsi83: Fix error handling in sn65dsi83_reset_work()
-Date: Thu, 17 Sep 2026 16:16:39 +0100
-Message-ID: <20260917151624.915721027@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1187/1250] i2c: designware: Global register definitions
+Date: Thu, 17 Sep 2026 16:16:22 +0100
+Message-ID: <20260917151624.457974606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,66 +54,364 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 4600b4d1a9ee730d03ddac5ce409cd2730ce8c0c upstream.
+[ Upstream commit 874ef9a6f2fc45d3f6021842d92fa5420fa4c825 ]
 
-The error handling of sn65dsi83_reset_pipe() in sn65dsi83_reset_work() has
-seen a couple of changes that seems to cause a bit of confusion.
+Moving the register definitions to a global header file
+include/linux/designware_i2c.h. That removes the need to
+duplicate them in the adaptation layers for this driver
+outside of drivers/i2c/busses/. There is at least one of
+those in drivers/gpu/drm/xe/xe_i2c.c.
 
-While sn65dsi83_reset_work() has implemented an early exit if
-sn65dsi83_reset_pipe() fails since it was added, when a commit from Maxime
-Ripard switched to use drm_bridge_helper_reset_crtc() [1] the
-sn65dsi83_reset_pipe() function would no longer return an error code, so
-the early exit was then a no-op, and even on sn65dsi83_reset_pipe()
-failure, enable_irq() has been called.
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Suggested-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260811121008.1493015-2-heikki.krogerus@linux.intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 2ab2fb31411a494e4579dfacda986a2672f80e65)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-When drm_bridge_enter()/drm_bridge_exit() resource protection was added,
-the drm_bridge_exit() incidentally was always called, which is the correct
-approach. But only because the early exit in sn65dsi83_reset_pipe() was
-never hit because sn65dsi83_reset_pipe() always returns 0.
+Backport notes for 6.18:
+Move the register definitions already present in this tree to the shared
+header. Omit the surrounding register-access and FIFO-depth constants
+from 518edab3ad4f6, since that independent cleanup is absent here.
 
-In order get back to a situation where enable_irq() is not called on
-sn65dsi83_reset_pipe() failure, which should help protect against irq
-storms, we need to reintroduce a non-zero return value from
-sn65dsi83_reset_pipe() on error, and fix sn65dsi83_reset_work() so that we
-always exit the DRM bridge critical section with drm_bridge_exit().
+Prepare the existing Xe register-write callback for 244abef7f280 by
+including the shared definitions, providing I2C_REG(), and adding a
+pass-through DW_IC_SMBUS_INTR_MASK case. Keep the adapter driver's mask
+unchanged: the newer SMBus alert handler from f43fa4b8522ba is absent.
+Include bitfield.h explicitly for the target's FIELD_MODIFY() use.
+This lets the target cherry-pick cleanly without importing the newer
+interrupt implementation or adding any functions to this dependency.
 
-[1] commit e17fadff7ab9 ("drm/bridge: ti-sn65dsi83: Switch to drm_bridge_helper_reset_crtc")
-[2] commit d2e8d1bc840b ("drm/bridge: ti-sn65dsi83: protect device resources on unplug")
-
-Fixes: e17fadff7ab9 ("drm/bridge: ti-sn65dsi83: Switch to drm_bridge_helper_reset_crtc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260831-ti-sn65dsi83-fixes-v5-1-e712765d6c4f@geanix.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
+Stable-dep-of: 244abef7f280 ("drm/xe/i2c: Keep the i2c controller always enabled")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS                                |    1 
+ drivers/gpu/drm/xe/regs/xe_i2c_regs.h      |    2 
+ drivers/gpu/drm/xe/xe_i2c.c                |   12 ++-
+ drivers/i2c/busses/i2c-designware-common.c |    2 
+ drivers/i2c/busses/i2c-designware-core.h   |   85 -----------------------
+ drivers/i2c/busses/i2c-designware-master.c |    2 
+ drivers/i2c/busses/i2c-designware-slave.c  |    2 
+ include/linux/designware_i2c.h             |  107 +++++++++++++++++++++++++++++
+ 8 files changed, 129 insertions(+), 84 deletions(-)
+ create mode 100644 include/linux/designware_i2c.h
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -399,7 +399,7 @@ retry:
- 	drm_modeset_drop_locks(&ctx);
- 	drm_modeset_acquire_fini(&ctx);
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -24964,6 +24964,7 @@ R:	Jan Dabros <jsd@semihalf.com>
+ L:	linux-i2c@vger.kernel.org
+ S:	Supported
+ F:	drivers/i2c/busses/i2c-designware-*
++F:	include/linux/designware_i2c.h
  
--	return 0;
-+	return err;
- }
+ SYNOPSYS DESIGNWARE I2C DRIVER - AMDISP
+ M:	Nirujogi Pratap <pratap.nirujogi@amd.com>
+--- a/drivers/gpu/drm/xe/regs/xe_i2c_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_i2c_regs.h
+@@ -17,4 +17,6 @@
+ #define I2C_CONFIG_CMD			XE_REG(I2C_CONFIG_SPACE_OFFSET + PCI_COMMAND)
+ #define I2C_CONFIG_PMCSR		XE_REG(I2C_CONFIG_SPACE_OFFSET + 0x84)
  
- static void sn65dsi83_reset_work(struct work_struct *ws)
-@@ -413,6 +413,7 @@ static void sn65dsi83_reset_work(struct
- 		dev_err(ctx->dev, "reset pipe failed %pe\n", ERR_PTR(ret));
- 		return;
- 	}
++#define I2C_REG(reg)			XE_REG((reg) + I2C_MEM_SPACE_OFFSET)
 +
- 	if (ctx->irq)
- 		enable_irq(ctx->irq);
+ #endif /* _XE_I2C_REGS_H_ */
+--- a/drivers/gpu/drm/xe/xe_i2c.c
++++ b/drivers/gpu/drm/xe/xe_i2c.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/array_size.h>
++#include <linux/bitfield.h>
+ #include <linux/container_of.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+@@ -23,6 +24,8 @@
+ #include <linux/types.h>
+ #include <linux/workqueue.h>
+ 
++#include <linux/designware_i2c.h>
++
+ #include "regs/xe_i2c_regs.h"
+ #include "regs/xe_irq_regs.h"
+ 
+@@ -230,8 +233,15 @@ static int xe_i2c_write(void *context, u
+ {
+ 	struct xe_i2c *i2c = context;
+ 
+-	xe_mmio_write32(i2c->mmio, XE_REG(reg + I2C_MEM_SPACE_OFFSET), val);
++	switch (reg) {
++	case DW_IC_SMBUS_INTR_MASK:
++		/* Preserve the interrupt mask requested by the adapter driver. */
++		break;
++	default:
++		break;
++	}
+ 
++	xe_mmio_write32(i2c->mmio, I2C_REG(reg), val);
+ 	return 0;
  }
+ 
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -32,6 +32,8 @@
+ #include <linux/types.h>
+ #include <linux/units.h>
+ 
++#include <linux/designware_i2c.h>
++
+ #include "i2c-designware-core.h"
+ 
+ static const char *const abort_sources[] = {
+--- a/drivers/i2c/busses/i2c-designware-core.h
++++ b/drivers/i2c/busses/i2c-designware-core.h
+@@ -17,6 +17,8 @@
+ #include <linux/regmap.h>
+ #include <linux/types.h>
+ 
++#include <linux/designware_i2c.h>
++
+ #define DW_IC_DEFAULT_FUNCTIONALITY		(I2C_FUNC_I2C | \
+ 						 I2C_FUNC_SMBUS_BYTE | \
+ 						 I2C_FUNC_SMBUS_BYTE_DATA | \
+@@ -24,82 +26,9 @@
+ 						 I2C_FUNC_SMBUS_BLOCK_DATA | \
+ 						 I2C_FUNC_SMBUS_I2C_BLOCK)
+ 
+-#define DW_IC_CON_MASTER			BIT(0)
+-#define DW_IC_CON_SPEED_STD			(1 << 1)
+-#define DW_IC_CON_SPEED_FAST			(2 << 1)
+-#define DW_IC_CON_SPEED_HIGH			(3 << 1)
+-#define DW_IC_CON_SPEED_MASK			GENMASK(2, 1)
+-#define DW_IC_CON_10BITADDR_SLAVE		BIT(3)
+-#define DW_IC_CON_10BITADDR_MASTER		BIT(4)
+-#define DW_IC_CON_RESTART_EN			BIT(5)
+-#define DW_IC_CON_SLAVE_DISABLE			BIT(6)
+-#define DW_IC_CON_STOP_DET_IFADDRESSED		BIT(7)
+-#define DW_IC_CON_TX_EMPTY_CTRL			BIT(8)
+-#define DW_IC_CON_RX_FIFO_FULL_HLD_CTRL		BIT(9)
+-#define DW_IC_CON_BUS_CLEAR_CTRL		BIT(11)
+-
+-#define DW_IC_DATA_CMD_DAT			GENMASK(7, 0)
+-#define DW_IC_DATA_CMD_FIRST_DATA_BYTE		BIT(11)
+-
+-/*
+- * Registers offset
+- */
+-#define DW_IC_CON				0x00
+-#define DW_IC_TAR				0x04
+-#define DW_IC_SAR				0x08
+-#define DW_IC_DATA_CMD				0x10
+-#define DW_IC_SS_SCL_HCNT			0x14
+-#define DW_IC_SS_SCL_LCNT			0x18
+-#define DW_IC_FS_SCL_HCNT			0x1c
+-#define DW_IC_FS_SCL_LCNT			0x20
+-#define DW_IC_HS_SCL_HCNT			0x24
+-#define DW_IC_HS_SCL_LCNT			0x28
+-#define DW_IC_INTR_STAT				0x2c
+-#define DW_IC_INTR_MASK				0x30
+-#define DW_IC_RAW_INTR_STAT			0x34
+-#define DW_IC_RX_TL				0x38
+-#define DW_IC_TX_TL				0x3c
+-#define DW_IC_CLR_INTR				0x40
+-#define DW_IC_CLR_RX_UNDER			0x44
+-#define DW_IC_CLR_RX_OVER			0x48
+-#define DW_IC_CLR_TX_OVER			0x4c
+-#define DW_IC_CLR_RD_REQ			0x50
+-#define DW_IC_CLR_TX_ABRT			0x54
+-#define DW_IC_CLR_RX_DONE			0x58
+-#define DW_IC_CLR_ACTIVITY			0x5c
+-#define DW_IC_CLR_STOP_DET			0x60
+-#define DW_IC_CLR_START_DET			0x64
+-#define DW_IC_CLR_GEN_CALL			0x68
+-#define DW_IC_ENABLE				0x6c
+-#define DW_IC_STATUS				0x70
+-#define DW_IC_TXFLR				0x74
+-#define DW_IC_RXFLR				0x78
+-#define DW_IC_SDA_HOLD				0x7c
+-#define DW_IC_TX_ABRT_SOURCE			0x80
+-#define DW_IC_ENABLE_STATUS			0x9c
+-#define DW_IC_CLR_RESTART_DET			0xa8
+-#define DW_IC_SMBUS_INTR_MASK			0xcc
+-#define DW_IC_COMP_PARAM_1			0xf4
+-#define DW_IC_COMP_VERSION			0xf8
+ #define DW_IC_SDA_HOLD_MIN_VERS			0x3131312A /* "111*" == v1.11* */
+-#define DW_IC_COMP_TYPE				0xfc
+ #define DW_IC_COMP_TYPE_VALUE			0x44570140 /* "DW" + 0x0140 */
+ 
+-#define DW_IC_INTR_RX_UNDER			BIT(0)
+-#define DW_IC_INTR_RX_OVER			BIT(1)
+-#define DW_IC_INTR_RX_FULL			BIT(2)
+-#define DW_IC_INTR_TX_OVER			BIT(3)
+-#define DW_IC_INTR_TX_EMPTY			BIT(4)
+-#define DW_IC_INTR_RD_REQ			BIT(5)
+-#define DW_IC_INTR_TX_ABRT			BIT(6)
+-#define DW_IC_INTR_RX_DONE			BIT(7)
+-#define DW_IC_INTR_ACTIVITY			BIT(8)
+-#define DW_IC_INTR_STOP_DET			BIT(9)
+-#define DW_IC_INTR_START_DET			BIT(10)
+-#define DW_IC_INTR_GEN_CALL			BIT(11)
+-#define DW_IC_INTR_RESTART_DET			BIT(12)
+-#define DW_IC_INTR_MST_ON_HOLD			BIT(13)
+-
+ #define DW_IC_INTR_DEFAULT_MASK			(DW_IC_INTR_RX_FULL | \
+ 						 DW_IC_INTR_TX_ABRT | \
+ 						 DW_IC_INTR_STOP_DET)
+@@ -109,16 +38,6 @@
+ 						 DW_IC_INTR_RX_UNDER | \
+ 						 DW_IC_INTR_RD_REQ)
+ 
+-#define DW_IC_ENABLE_ENABLE			BIT(0)
+-#define DW_IC_ENABLE_ABORT			BIT(1)
+-
+-#define DW_IC_STATUS_ACTIVITY			BIT(0)
+-#define DW_IC_STATUS_TFE			BIT(2)
+-#define DW_IC_STATUS_RFNE			BIT(3)
+-#define DW_IC_STATUS_MASTER_ACTIVITY		BIT(5)
+-#define DW_IC_STATUS_SLAVE_ACTIVITY		BIT(6)
+-#define DW_IC_STATUS_MASTER_HOLD_TX_FIFO_EMPTY	BIT(7)
+-
+ #define DW_IC_SDA_HOLD_RX_SHIFT			16
+ #define DW_IC_SDA_HOLD_RX_MASK			GENMASK(23, 16)
+ 
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -25,6 +25,8 @@
+ #include <linux/regmap.h>
+ #include <linux/reset.h>
+ 
++#include <linux/designware_i2c.h>
++
+ #include "i2c-designware-core.h"
+ 
+ #define AMD_TIMEOUT_MIN_US	25
+--- a/drivers/i2c/busses/i2c-designware-slave.c
++++ b/drivers/i2c/busses/i2c-designware-slave.c
+@@ -19,6 +19,8 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ 
++#include <linux/designware_i2c.h>
++
+ #include "i2c-designware-core.h"
+ 
+ static void i2c_dw_configure_fifo_slave(struct dw_i2c_dev *dev)
+--- /dev/null
++++ b/include/linux/designware_i2c.h
+@@ -0,0 +1,107 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Synopsys DesignWare I2C register definitions
++ *
++ * Copyright (C) 2026, Intel Corporation
++ */
++
++#ifndef __LINUX_DESIGNWARE_I2C_H
++#define __LINUX_DESIGNWARE_I2C_H
++
++#include <linux/bits.h>
++
++/*
++ * Registers offset
++ */
++#define DW_IC_CON				0x00
++#define DW_IC_TAR				0x04
++#define DW_IC_SAR				0x08
++#define DW_IC_DATA_CMD				0x10
++#define DW_IC_SS_SCL_HCNT			0x14
++#define DW_IC_SS_SCL_LCNT			0x18
++#define DW_IC_FS_SCL_HCNT			0x1c
++#define DW_IC_FS_SCL_LCNT			0x20
++#define DW_IC_HS_SCL_HCNT			0x24
++#define DW_IC_HS_SCL_LCNT			0x28
++#define DW_IC_INTR_STAT				0x2c
++#define DW_IC_INTR_MASK				0x30
++#define DW_IC_RAW_INTR_STAT			0x34
++#define DW_IC_RX_TL				0x38
++#define DW_IC_TX_TL				0x3c
++#define DW_IC_CLR_INTR				0x40
++#define DW_IC_CLR_RX_UNDER			0x44
++#define DW_IC_CLR_RX_OVER			0x48
++#define DW_IC_CLR_TX_OVER			0x4c
++#define DW_IC_CLR_RD_REQ			0x50
++#define DW_IC_CLR_TX_ABRT			0x54
++#define DW_IC_CLR_RX_DONE			0x58
++#define DW_IC_CLR_ACTIVITY			0x5c
++#define DW_IC_CLR_STOP_DET			0x60
++#define DW_IC_CLR_START_DET			0x64
++#define DW_IC_CLR_GEN_CALL			0x68
++#define DW_IC_ENABLE				0x6c
++#define DW_IC_STATUS				0x70
++#define DW_IC_TXFLR				0x74
++#define DW_IC_RXFLR				0x78
++#define DW_IC_SDA_HOLD				0x7c
++#define DW_IC_TX_ABRT_SOURCE			0x80
++#define DW_IC_ENABLE_STATUS			0x9c
++#define DW_IC_CLR_RESTART_DET			0xa8
++#define DW_IC_SMBUS_INTR_STAT			0xc8
++#define DW_IC_SMBUS_INTR_MASK			0xcc
++#define DW_IC_CLR_SMBUS_INTR			0xd4
++#define DW_IC_COMP_PARAM_1			0xf4
++#define DW_IC_COMP_VERSION			0xf8
++#define DW_IC_COMP_TYPE				0xfc
++
++/* DW_IC_CON bits */
++#define DW_IC_CON_MASTER			BIT(0)
++#define DW_IC_CON_SPEED_STD			(1 << 1)
++#define DW_IC_CON_SPEED_FAST			(2 << 1)
++#define DW_IC_CON_SPEED_HIGH			(3 << 1)
++#define DW_IC_CON_SPEED_MASK			GENMASK(2, 1)
++#define DW_IC_CON_10BITADDR_SLAVE		BIT(3)
++#define DW_IC_CON_10BITADDR_MASTER		BIT(4)
++#define DW_IC_CON_RESTART_EN			BIT(5)
++#define DW_IC_CON_SLAVE_DISABLE			BIT(6)
++#define DW_IC_CON_STOP_DET_IFADDRESSED		BIT(7)
++#define DW_IC_CON_TX_EMPTY_CTRL			BIT(8)
++#define DW_IC_CON_RX_FIFO_FULL_HLD_CTRL		BIT(9)
++#define DW_IC_CON_BUS_CLEAR_CTRL		BIT(11)
++
++/* DW_IC_DATA_CMD bits */
++#define DW_IC_DATA_CMD_DAT			GENMASK(7, 0)
++#define DW_IC_DATA_CMD_FIRST_DATA_BYTE		BIT(11)
++
++/* DW_IC_INTR_* bits */
++#define DW_IC_INTR_RX_UNDER			BIT(0)
++#define DW_IC_INTR_RX_OVER			BIT(1)
++#define DW_IC_INTR_RX_FULL			BIT(2)
++#define DW_IC_INTR_TX_OVER			BIT(3)
++#define DW_IC_INTR_TX_EMPTY			BIT(4)
++#define DW_IC_INTR_RD_REQ			BIT(5)
++#define DW_IC_INTR_TX_ABRT			BIT(6)
++#define DW_IC_INTR_RX_DONE			BIT(7)
++#define DW_IC_INTR_ACTIVITY			BIT(8)
++#define DW_IC_INTR_STOP_DET			BIT(9)
++#define DW_IC_INTR_START_DET			BIT(10)
++#define DW_IC_INTR_GEN_CALL			BIT(11)
++#define DW_IC_INTR_RESTART_DET			BIT(12)
++#define DW_IC_INTR_MST_ON_HOLD			BIT(13)
++
++/* DW_IC_ENABLE bits */
++#define DW_IC_ENABLE_ENABLE			BIT(0)
++#define DW_IC_ENABLE_ABORT			BIT(1)
++
++/* DW_IC_STATUS bits */
++#define DW_IC_STATUS_ACTIVITY			BIT(0)
++#define DW_IC_STATUS_TFE			BIT(2)
++#define DW_IC_STATUS_RFNE			BIT(3)
++#define DW_IC_STATUS_MASTER_ACTIVITY		BIT(5)
++#define DW_IC_STATUS_SLAVE_ACTIVITY		BIT(6)
++#define DW_IC_STATUS_MASTER_HOLD_TX_FIFO_EMPTY	BIT(7)
++
++/* DW_IC_SMBUS_INTR_* bits */
++#define DW_IC_SMBUS_INTR_ALERT			BIT(10)
++
++#endif /* __LINUX_DESIGNWARE_I2C_H */
 
 
