@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FC84ABBB7;
-	Thu, 17 Sep 2026 15:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0164C10C0;
+	Thu, 17 Sep 2026 15:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659430; cv=none; b=npsSeAG3+lV59lQ269GGcS9vvfX1mQbckQ7d2iVgYu1Uya93ZezJBUUM/5fjPRVyHaPpomY8xqzzRgJfgUAxuViwbnHTu3F2aacK3MXFbVdr+EGkcEyeUSnNgvd5SyIX+jLruqWvoazCf7Kerw/whXBK+Q0a4/yrOx6F9aTjFJ8=
+	t=1789659438; cv=none; b=mbmlAGJIi41cxfJsvYb9B5uk163njIF6hylovxNt8gh4NokmJu7ySCUDgUzLAV70C/oUz/bvckbYA4Cfj6oYopOodgxNJ2+6XhvsfgztP7h35oVCWuJADKCml7oD0/xo8Q5L7hGNA7etX02Kn/B65dbXEuRiCk1ChRqRl5Buz4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659430; c=relaxed/simple;
-	bh=jEDu0CBvr+XWrQiQEcehjPhOP15v9Z6kBnw0wQhPcQI=;
+	s=arc-20240116; t=1789659438; c=relaxed/simple;
+	bh=+EfShaMvnYsXvkNgd5ZrysbTaHlvrSpZ+7GYiHf1bP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T50HY5JpaV5MT8cgHsai4ePSGh8FKjHbPGeoqS/I5RHpi84Eyfa5KheRzmAsaimrATR4jCHM6ldLEDHm3fXAjd9YgpAhQ+Q2kY750krem4xW+2X2hRa3RX/vN5udZK0rQkPsJfYCfISeYeuKXNVpnJJjYbg4CrKvVaA1Ehlr7ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4tJogUl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oCTUwcJaTogA3nYlpLe2qk9ewZh/9+kWf7c/pArwEqNFNJE8M+tmOSmRDkeQRm7bzDN3V3QLHuuBeqLU63w15f0No7MaBvq0WEsNbx8o7acBMIluMtqti5PAX+6rRFXbcKB93G1AZmKJ37lSWYvR1eCzaBoPcZVtTkerCItl9sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIxcD8vZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4tJogUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5FA1F000FF;
-	Thu, 17 Sep 2026 15:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIxcD8vZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A5D1F000FF;
+	Thu, 17 Sep 2026 15:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659421;
-	bh=z7UwvMkYAa+v7XARO4cPuuk4luTFcyHZGFY5VHA0H+c=;
+	s=korg; t=1789659430;
+	bh=iq8awfH4wGyfFLqryo6JZzQBNT0c6dF4kZbxJslHjPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4tJogUl0lCzUHKf27W5fFBnwycuNsA6kf9ioQFS/3S6Y+WZXi+wYPaw80Veg5Ky4
-	 aH4vYKevmqWuEoO+sPNxeBt/q5Mo2tHfQdJvU2XrO2oX83gTWeTbyJGScnDT1hdABE
-	 E9T/UxT4YnejH/BMqZaOFIbQTNtGEjSyLg0YYGSQ=
+	b=TIxcD8vZ8/7aduACmp8czxA8zrbVXDW8LSd2G4x1t53/TJ0851sHBsqj/wZxNPVh3
+	 UAN6Vvjtl7N9dAzkpcUgtQxWBPNI1fo45P9oB0CE9mEYqwhnZBi3ykHqEQBYFWskup
+	 Qdc1qdAXueG8s6cCXPe7Vw1ED4G7+8y9CAvmXJlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 202/733] tracing/probes: Fix use-after-free on field name/type of events with multiple probes
-Date: Thu, 17 Sep 2026 16:08:30 +0100
-Message-ID: <20260917151356.206696579@linuxfoundation.org>
+Subject: [PATCH 7.2 255/733] bpf: Dont resurrect a scalar id dropped by collect_linked_regs()
+Date: Thu, 17 Sep 2026 16:09:23 +0100
+Message-ID: <20260917151357.654463967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,164 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 86b7a239ec6b14a7544200ede85474c6f5526049 ]
+[ Upstream commit 73a98f96811e2cb0f4210b1caa8cb322f92f2a2b ]
 
-The fields of a probe-based dynamic event (kprobe, uprobe, eprobe and
-fprobe events) are created in traceprobe_define_arg_fields() by handing
-the probe_arg name/type strings to trace_define_field(), which only
-stores the pointers without copying. Those strings are owned by the
-trace_probe and are freed when that probe is removed.
+check_cond_jmp_op() copies the compared registers into
+env->{false,true}_reg{1,2} before collect_linked_regs() runs and copies
+those snapshots back into both branch states afterwards.
 
-An event can have several probes attached. The field list is defined
-only once, by the first probe that registers the event, but it is kept
-alive by any surviving sibling probe. Deleting just that first probe by
-symbol -
+collect_linked_regs() records at most LINKED_REGS_MAX members of a
+linked registers group in the jump history and calls clear_scalar_id()
+for every member that does not fit. The compared register is not exempt
+from that.
 
-  # primary A: fields are defined from A's args
-  echo 'p:kprobes/ev vfs_read  a1=$arg1' >  kprobe_events
-  # append B: shares A's event call
-  echo 'p:kprobes/ev vfs_write a1=$arg1' >> kprobe_events
-  # delete only A (matched by symbol), B survives
-  echo '-:kprobes/ev vfs_read'           >> kprobe_events
+As a consequence, sync_linked_regs() might adjust ranges for more
+registers than bpf_bt_sync_linked_regs() can propagate precision to.
 
-frees A's args (trace_probe_cleanup() -> traceprobe_free_probe_arg()),
-but trace_probe_unlink() keeps the trace_probe_event because the probe
-list is not empty. The event call stays registered via B while its
-fields now reference freed memory. Any field lookup then reads it, e.g.
+Collect the linked registers before the snapshots are taken instead.
+This might lead to some unnecessary clear_scalar_id's, but from
+previous testing situations with many linked registers are
+extremely rare.
 
-  echo 'a1 == 1' > events/kprobes/ev/filter
-
-  BUG: KASAN: slab-use-after-free in strcmp+0xa7/0xb0
-  Call Trace:
-   strcmp
-   trace_find_event_field
-   parse_pred
-   process_preds
-   create_filter
-   apply_event_filter
-   event_filter_write
-
-field->name references parg->name (kstrdup'd, freed with the probe) and,
-for array arguments, field->type references parg->fmt (kmalloc'd, freed
-with the probe) - the scalar type otherwise points at the static
-fmttype rodata, which is safe.
-
-Have traceprobe_define_arg_fields() duplicate the name and type strings
-and anchor the copies on the trace_probe_event, which embeds the event
-call and outlives every individual probe; trace_probe_event_free()
-releases them.
-
-The reproducer above triggers reliably; the field lookup and the delete
-both run under event_mutex, so this is a dangling reference after
-removal rather than a race.
-
-The issue was found by the autokbug dynamic kernel fuzzer at Tencent
-Yunding Lab.
-
-Link: https://lore.kernel.org/all/20260826030009.1855331-1-bsdhenrymartin@gmail.com/
-
-Fixes: ca89bc071d5e4 ("tracing/kprobe: Add multi-probe per event support")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: ec1d77cb0ee9 ("bpf: Use bpf_verifier_env buffers for reg_set_min_max")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260904083325.2083493-3-eddyz87@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 48 +++++++++++++++++++++++++++++++++++++-
- kernel/trace/trace_probe.h |  2 ++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index aae60fbebeafb..f3c20a093f5dd 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -2108,19 +2108,60 @@ int traceprobe_set_print_fmt(struct trace_probe *tp, enum probe_print_type ptype
- int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 				 size_t offset, struct trace_probe *tp)
- {
-+	struct trace_probe_event *tpe = trace_probe_event_from_call(event_call);
- 	int ret, i;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 84b05958c3250..2c1da0d38450c 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16142,6 +16142,16 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 			return err;
+ 	}
  
 +	/*
-+	 * A field created by trace_define_field() only stores the name and
-+	 * type pointers, it does not copy the strings. Here they point into
-+	 * the probe_arg of @tp, which is freed when @tp is removed. For an
-+	 * event with multiple probes attached, the field list is defined
-+	 * once by the first probe but kept alive by the surviving siblings,
-+	 * so removing that first probe would leave the fields referencing
-+	 * freed memory. Duplicate the strings and anchor the copies on the
-+	 * trace_probe_event, which lives as long as the field list itself.
-+	 *
-+	 * event_define_fields() ignores the return value of this hook, so
-+	 * if a previous attempt failed before creating any field, it may
-+	 * call here again. Release duplicates left behind by such an
-+	 * attempt before starting over.
++	 * Collect the linked registers before env->{true,false}_reg{1,2} setup,
++	 * otherwise ids dropped by collect_linked_regs() would be resurrected
++	 * when env->{true,false}_reg{1,2} are copied back.
 +	 */
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
-+	tpe->field_strings = NULL;
-+	tpe->nr_field_strings = 0;
++	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
++		collect_linked_regs(env, this_branch, src_reg->id, &linked_regs);
++	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
++		collect_linked_regs(env, this_branch, dst_reg->id, &linked_regs);
 +
-+	if (tp->nr_args) {
-+		tpe->field_strings = kcalloc(tp->nr_args * 2, sizeof(char *),
-+					     GFP_KERNEL);
-+		if (!tpe->field_strings)
-+			return -ENOMEM;
-+	}
-+
- 	/* Set argument names as fields */
- 	for (i = 0; i < tp->nr_args; i++) {
- 		struct probe_arg *parg = &tp->args[i];
- 		const char *fmt = parg->type->fmttype;
- 		int size = parg->type->size;
-+		char *name, *type;
- 
- 		if (parg->fmt)
- 			fmt = parg->fmt;
- 		if (parg->count)
- 			size *= parg->count;
--		ret = trace_define_field(event_call, fmt, parg->name,
-+
-+		name = kstrdup(parg->name, GFP_KERNEL);
-+		type = kstrdup(fmt, GFP_KERNEL);
-+		if (!name || !type) {
-+			kfree(name);
-+			kfree(type);
-+			return -ENOMEM;
-+		}
-+		tpe->field_strings[tpe->nr_field_strings++] = name;
-+		tpe->field_strings[tpe->nr_field_strings++] = type;
-+
-+		ret = trace_define_field(event_call, type, name,
- 					 offset + parg->offset, size,
- 					 parg->type->is_signed,
- 					 FILTER_OTHER);
-@@ -2132,6 +2173,11 @@ int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 
- static void trace_probe_event_free(struct trace_probe_event *tpe)
- {
-+	int i;
-+
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
- 	kfree(tpe->class.system);
- 	kfree(tpe->call.name);
- 	kfree(tpe->call.print_fmt);
-diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
-index 0f09f7aaf93fb..480eb6acd883f 100644
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -255,6 +255,8 @@ struct trace_probe_event {
- 	struct trace_event_call		call;
- 	struct list_head 		files;
- 	struct list_head		probes;
-+	char				**field_strings;
-+	int				nr_field_strings;
- 	struct trace_uprobe_filter	filter[];
- };
- 
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 	env->false_reg1 = *dst_reg;
+ 	env->false_reg2 = *src_reg;
+@@ -16196,10 +16206,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	 * 'this_branch' and 'other_branch' share this history
+ 	 * if parent state is created.
+ 	 */
+-	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
+-		collect_linked_regs(env, this_branch, src_reg->id, &linked_regs);
+-	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
+-		collect_linked_regs(env, this_branch, dst_reg->id, &linked_regs);
+ 	if (linked_regs.cnt > 1) {
+ 		err = bpf_push_jmp_history(env, this_branch, 0, 0, 0, linked_regs_pack(&linked_regs));
+ 		if (err)
 -- 
 2.53.0
 
