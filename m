@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6419E26B2AD;
-	Thu, 17 Sep 2026 15:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC432F360A;
+	Thu, 17 Sep 2026 15:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660290; cv=none; b=f62WJXGmchjLbZIKUN+MrBu1ilMu5+/WYm38UgBTn0+9Jon7kAHdsX0DPMRod6ynHHjJ59kVew3rs6cdoQ8/DrSSwKLbpL2P94+Wq4ZkExSsKT83x4+b7jjJrIU6yHXeNwqFamjXl4FRgB/w7uKGvWQ6VrH4LgnAfgvIWB1cM6o=
+	t=1789660293; cv=none; b=jUdZF6rYZDLy7rq4TnfJ6wamMdWWDQedmQ1t5neYR/VkwlcT2bXBwn61Yc4aizuIchlObjsJwcctJvWAgI5ZAVX/epMrPfmKrfDz9OYfJ04L8Agb8mlEvfTPi89ljaO2aMU3lP4dnoevwUtjK+DxEQ45+1GFs51kyyvh0MJNJWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660290; c=relaxed/simple;
-	bh=77G6SsZUhUKlMJbBlxLZbRXzicLFujweQZTuSgR1lsk=;
+	s=arc-20240116; t=1789660293; c=relaxed/simple;
+	bh=Rc9GmVAY2/QdwsbtHjbhgSwtUx1kaq5oM1eNGEamaOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASQ0xbZwSnZ9Up3ZZszo1YdkdY7OXTTIhcHHmoNmmgUwKQfe2Tb5341k1CGm//kVjR2Q1ZBxcpInB+VMW3ci2dFIsjz1AeWRPFTW9FtD7Ihry9XbEdPFKokxkU0mrBwZaXraG4K6M36pB9W+T5l22odTv2OQ3na0wp7EuOQO6sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8O+xC4/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+ZQQClZ4Mj36qYyVo15Rv1EIM+emG0C7Kd5/jGTkf8XFqXjBY1KtWntbM8C1jPE8IiWKcQ9s59wuAZtawl9lkEg4q7R86xAvAEbNQRFT78NLuA3PXfFEPEZiPNu7xTjPhob/eubBgMfL22DSWDukhvyIbi1HRK4CCBXXOdiZ18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxnfDewN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8O+xC4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDC11F000FF;
-	Thu, 17 Sep 2026 15:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxnfDewN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED021F000FF;
+	Thu, 17 Sep 2026 15:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660289;
-	bh=/rgIhTCWrD/Z2/pRqS72m4PvCSJx5ekMPHaIGg3HHl0=;
+	s=korg; t=1789660292;
+	bh=oD3sySEUWM3lRUbNTHSwkUC8PRC9QqL8k7jIr6OS2w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8O+xC4/DsZ6HFKsmHx/zTEXJ0RfOEvVttDbD2ZIYoSK/wkPrj+U56YGUmBSIBEnj
-	 u+McENsHLNaMUIYRXQogRz/3jN5ijgeU39HpUrHUEnvhcUz11dzgPuLcu6kzTq/yW9
-	 AX59J4pholJLyaXqFfjA4kry3Uw01TOoay16nTl8=
+	b=yxnfDewNhSK1FzE08zbF4ts2X71KBrrb1sAWNuFkxiNvt13LnKUmsS/0kyl4BpFFp
+	 ZOuv4yXhNYySNRb1WGR9TBfXB9jdzgre0yqlCl0sy79yDH6CqSAtJfEYJi/JQdwU+D
+	 V53uU+7a2HXZVHMU4DgEu/nx9uV/dWHa+jue7BBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 535/733] drm/amd/display: Exit IPS before connector detection on resume
-Date: Thu, 17 Sep 2026 16:14:03 +0100
-Message-ID: <20260917151405.541902544@linuxfoundation.org>
+	co+28eef7d8af9428e6@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 544/733] net: dsa: tag_brcm: legacy FCS: request needed tailroom
+Date: Thu, 17 Sep 2026 16:14:12 +0100
+Message-ID: <20260917151405.789526219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,59 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <jerry.zuo@amd.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 3001d2073d6542a9e51fa5bca3a39a078094d3c6 upstream.
+commit 5be081b83abd3f17d908953b4bb77279f5a149e3 upstream.
 
-[Why & How]
-On resume, dm_resume() walks the connector list and, for each connector,
-calls dc_link_detect_connection_type() at the top of the loop iteration
-before the per-connector dc_exit_ips_for_hw_access() that sits in the
-detection branch. There is no dc_exit_ips_for_hw_access() before the loop,
-so the very first HW access relies on an earlier connector having already
-taken the display out of IPS.
+The legacy FCS tagger calculates the CRC over skb->len bytes starting at
+skb->data. When a nonlinear skb reaches the tagger, this reads past the
+linear head into unrelated slab memory.
 
-Commit d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
-skips the eDP connector when no panel is present. On a DCN3.5 APU whose
-eDP link has no sink, the eDP iteration - which used to bring the HW out
-of IPS first - is now skipped, so a downstream DP connector becomes the
-first one processed. Its initial DDC/AUX access then runs while the HW is
-still idle, the AUX transfers time out (-ETIMEDOUT), and the EDID read
-fails:
+The tagger appends an Ethernet FCS but does not declare that tailroom. As a
+result, DSA leaves NETIF_F_SG and NETIF_F_FRAGLIST enabled on the user
+port, and nonlinear skbs can reach the CRC calculation.
 
-  [drm:dm_helpers_read_local_edid [amdgpu]] *ERROR* EDID err: 2, on connector: DP-1
-  amdgpu: [drm] *ERROR* No EDID read.
+Declare the required tailroom. DSA will then clear those features and the
+networking core will linearize skbs before the tagger runs.
 
-Take the display out of IPS once before the detection loop so the first
-connector processed no longer touches the AUX/DDC engine while the HW is
-still in idle power state. This keeps the eDP-skip boot/resume
-optimization while fixing the DP EDID read failure.
+A KASAN-enabled dsa_loop test using this tagger reports:
 
-Fixes: d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 86420fe3093161971b4064e05be11ffff1df76aa)
+  BUG: KASAN: slab-out-of-bounds in crc32_le
+  Read of size 1 at addr ffff8880397086c0 by task exp/135
+
+  Call Trace:
+   crc32_le (lib/crc/crc32-main.c:38)
+   brcm_leg_fcs_tag_xmit (net/dsa/tag_brcm.c:343)
+   dsa_user_xmit (net/dsa/user.c:942)
+   dev_hard_start_xmit (net/core/dev.c:3937)
+   __dev_queue_xmit (net/core/dev.c:4926)
+   packet_sendmsg (net/packet/af_packet.c:3110)
+   __sys_sendto (net/socket.c:2281)
+
+  The buggy address belongs to the object at ffff888039708400
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 0 bytes to the right of
+   allocated 704-byte region [ffff888039708400, ffff8880397086c0)
+
+Fixes: ef07df397a62 ("net: dsa: tag_brcm: add support for legacy FCS tags")
 Cc: stable@vger.kernel.org
+Reported-by: co+28eef7d8af9428e6@bugs.sh
+Closes: https://lore.kernel.org/all/jH6u350kaBRuqklDjd3k3BW4nWzp0tYRjq3p%40bugs.sh/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260908165047.2786340-1-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/dsa/tag_brcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3925,6 +3925,10 @@ static int dm_resume(struct amdgpu_ip_bl
- 	/* On resume we need to rewrite the MSTM control bits to enable MST*/
- 	s3_handle_mst(ddev, false);
+--- a/net/dsa/tag_brcm.c
++++ b/net/dsa/tag_brcm.c
+@@ -373,6 +373,7 @@ static const struct dsa_device_ops brcm_
+ 	.xmit = brcm_leg_fcs_tag_xmit,
+ 	.rcv = brcm_leg_tag_rcv,
+ 	.needed_headroom = BRCM_LEG_TAG_LEN,
++	.needed_tailroom = ETH_FCS_LEN,
+ };
  
-+	/* Exit IPS before the detection loop's first AUX/DDC access. */
-+	scoped_guard(mutex, &dm->dc_lock)
-+		dc_exit_ips_for_hw_access(dm->dc);
-+
- 	/* Do detection*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
+ DSA_TAG_DRIVER(brcm_legacy_fcs_netdev_ops);
 
 
