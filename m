@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25CD3ACEF4;
-	Thu, 17 Sep 2026 18:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9129BD9A;
+	Thu, 17 Sep 2026 18:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668784; cv=none; b=Wl3NLIf5Qg5OnMk5iHcQRLVQDYKZVF5v2ca4FbaZ5r/EOjRiRidca2iolcUzDI3hTC94DehYn4ABNl1QQSs3JnUsx7Z5SwTwirtjxxiSlX/BP9QpwKu8QeOqD5BA7NKDoAXx6oGQjXa331dGhSQwSJJUkMkuL25NHW5cv3lBwd4=
+	t=1789668787; cv=none; b=mW+M3+L1lo3aeMipNCm3O32EYNyWOas67BalF8YETKTpglQ08PdA/eIzm83J+LfE6AjFNIh3J3bsuXtoIQcLoaD6fbSLRxBu2/6S2R0IvFHuH3RiJcI9OKXXyUPFBxbu+Iv4uYPlQ3uAkKUJbXqMNNisU32uagFMYvaXnSwjY9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668784; c=relaxed/simple;
-	bh=MwmBJljzRZtAW1DQm4cgp4CvsQmNLw2UJKqBU9YDD98=;
+	s=arc-20240116; t=1789668787; c=relaxed/simple;
+	bh=CatjZtME4W0NdXXAxrQEm3hCopOw1JdhvywfU8qLock=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0xza2qleuu8+e8Iy9kmuJq/t6vA44Bk5c64a/JT3ShIz4ai177TMiiznGShWgGMxyM2VdG45IthJfGfIGX88MX5kv7P2evZ8QM25rYRCDqXc9N+VTdKRfDVZWmmf5UY0BzxxOnHuBB+CbEFd8ppWRMLzEVeatDL/YeXd71vwRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0O6Cjm9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M8gnFfGfy6589oWkd22w9Legld2gSn2vd+wal8n3g1zZH0gwql5eIZ6Kb//qWXco4pabidJtIyjPneyQTE8oPNIRcy1NNhhlISz4Ur9uZleknC0IYZUxbTR2o0BatW2K+ds5Wu0sl0/v7smjL+4SZbzCV3T7h01DpfXipssxLOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1pkZqJL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0O6Cjm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13ECB1F000FF;
-	Thu, 17 Sep 2026 18:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1pkZqJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CBF1F000FF;
+	Thu, 17 Sep 2026 18:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668782;
-	bh=FeP0faURPXtRhLLh2fHjfmUEFlQsiCilKvbnS2NYgcs=;
+	s=korg; t=1789668785;
+	bh=GpWWEUKv8XQnnhWP8zYRAt5WXmpWpNiOd/M+RqCGu7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0O6Cjm9FQFUkoP3luxyC8iDS9Z9LmVLsV8e+jGdhY4t1C0TUtbVI/Qg23gAO4xe/
-	 wWLHFdDrwjfj/yqD0UGtvN30NPS/Kh7be3YRQiNy6VQKqAMi0VsOi83KcS8YzpRG0f
-	 oWZnw7K7TXCbJ+s9JGkM3Vre7znGCE5eoaUFdtgA=
+	b=l1pkZqJLQC9GdSHMIs0jn+/+JIIsPH9Yu1B3QN9nQ/AWcZ3jTvO8sVicFeb9yO1Bs
+	 IeZvbYq590u8Kgtw4P6Hf4bYmYfbPfr1C0WK81nCAwEwEdxEY/GnCM119Sg/lwHbzm
+	 UIN3rsOlpeg8Lh9HivjOT5IhCoBPc5ZeQQ1N260U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cheryl Babcock <cheryl@renat.io>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0539/1102] ALSA: pcm: Serialize PCM mmap with buffer reallocation to fix page UAF
-Date: Thu, 17 Sep 2026 16:08:02 +0100
-Message-ID: <20260917151553.347450748@linuxfoundation.org>
+Subject: [PATCH 6.12 0540/1102] ksmbd: propagate DACL parsing errors
+Date: Thu, 17 Sep 2026 16:08:03 +0100
+Message-ID: <20260917151553.373501338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,105 +51,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9b110a9dcecc59516c77cb3c0caf1f492f75df2d ]
+[ Upstream commit c61dc7b1b4a3234b4aa3965502908a292238805c ]
 
-snd_pcm_hw_params() and snd_pcm_hw_free() guard buffer reallocation
-with an mmap_count check performed under the PCM stream lock, but the
-lock is released long before the buffer is actually freed:
-snd_pcm_sync_stop(), constraint refinement and do_free_pages() all
-happen in between.  snd_pcm_mmap_data(), on the other hand, takes no
-lock at all: it validates against the old buffer's state and
-dma_bytes, remaps its pages into the VMA, and only then increments
-mmap_count.
+parse_dacl() silently accepts truncated ACEs and allocation failures,
+allowing set_info_sec() to continue with an incomplete ACL conversion.
 
-A concurrent mmap() can therefore slip in between the check and the
-free.  remap_pfn_range() installs writable PTEs for the old buffer's
-pages without taking page references, and the subsequent
-do_free_pages() returns those pages to the page allocator while the
-VMA still maps them.  This leaves a stale, writable mapping of freed
-pages: a page-level use-after-free that can be leveraged for local
-privilege escalation.
+Return parsing and allocation errors to parse_sec_desc() so malformed
+security descriptors are rejected before inode attributes or ACL xattrs
+are updated.
 
-Make snd_pcm_mmap_data() participate in the buffer-access scheme
-introduced for hw_params/hw_free: acquire runtime->buffer_accessing
-before validating and remapping, and release it afterwards.  Buffer
-reallocation already fails with -EBUSY while accessors are active,
-and the mmap side now fails with -EBUSY while a reallocation is in
-progress, so the validate/remap sequence and the check/free sequence
-can no longer interleave.
-
-A reproducer that turns this race into a stale writable mapping of
-the freed DMA buffer pages is available on request.
-
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Fixes: 92ee3c60ec9f ("ALSA: pcm: Fix races among concurrent hw_params and hw_free calls")
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260831045506.889070-1-yilinzhang@moonshot.ai
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Cheryl Babcock <cheryl@renat.io>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ fs/smb/server/smbacl.c | 63 +++++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 7bfc9aafad3ca..45b34e34412c5 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3945,20 +3945,33 @@ int snd_pcm_mmap_data(struct snd_pcm_substream *substream, struct file *file,
- 			return -EINVAL;
- 	}
- 	runtime = substream->runtime;
--	if (runtime->state == SNDRV_PCM_STATE_OPEN)
--		return -EBADFD;
--	if (!(runtime->info & SNDRV_PCM_INFO_MMAP))
--		return -ENXIO;
-+	/* don't race with buffer reallocation in hw_params/hw_free */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
-+	if (runtime->state == SNDRV_PCM_STATE_OPEN) {
-+		err = -EBADFD;
-+		goto out;
-+	}
-+	if (!(runtime->info & SNDRV_PCM_INFO_MMAP)) {
-+		err = -ENXIO;
-+		goto out;
-+	}
- 	if (runtime->access == SNDRV_PCM_ACCESS_RW_INTERLEAVED ||
--	    runtime->access == SNDRV_PCM_ACCESS_RW_NONINTERLEAVED)
--		return -EINVAL;
-+	    runtime->access == SNDRV_PCM_ACCESS_RW_NONINTERLEAVED) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 	size = area->vm_end - area->vm_start;
- 	offset = area->vm_pgoff << PAGE_SHIFT;
- 	dma_bytes = PAGE_ALIGN(runtime->dma_bytes);
--	if ((size_t)size > dma_bytes)
--		return -EINVAL;
--	if (offset > dma_bytes - size)
--		return -EINVAL;
-+	if ((size_t)size > dma_bytes) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+	if (offset > dma_bytes - size) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 
- 	area->vm_ops = &snd_pcm_vm_ops_data;
- 	area->vm_private_data = substream;
-@@ -3968,6 +3981,8 @@ int snd_pcm_mmap_data(struct snd_pcm_substream *substream, struct file *file,
- 		err = snd_pcm_lib_default_mmap(substream, area);
- 	if (!err)
- 		atomic_inc(&substream->mmap_count);
-+out:
-+	atomic_dec(&runtime->buffer_accessing);
- 	return err;
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 3586a6025127e..0b35b275eaf65 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -380,10 +380,10 @@ void free_acl_state(struct posix_acl_state *state)
+ 	kfree(state->groups);
  }
- EXPORT_SYMBOL(snd_pcm_mmap_data);
+ 
+-static void parse_dacl(struct mnt_idmap *idmap,
+-		       struct smb_acl *pdacl, char *end_of_acl,
+-		       struct smb_sid *pownersid, struct smb_sid *pgrpsid,
+-		       struct smb_fattr *fattr)
++static int parse_dacl(struct mnt_idmap *idmap,
++		      struct smb_acl *pdacl, char *end_of_acl,
++		      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
++		      struct smb_fattr *fattr)
+ {
+ 	int i, ret;
+ 	u16 num_aces = 0;
+@@ -397,13 +397,13 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	bool owner_found = false, group_found = false, others_found = false;
+ 
+ 	if (!pdacl)
+-		return;
++		return 0;
+ 
+ 	/* validate that we do not go past end of acl */
+ 	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
+ 	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
+ 		pr_err("ACL too small to parse DACL\n");
+-		return;
++		return -EINVAL;
+ 	}
+ 
+ 	ksmbd_debug(SMB, "DACL revision %d size %d num aces %d\n",
+@@ -415,31 +415,31 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 
+ 	num_aces = le16_to_cpu(pdacl->num_aces);
+ 	if (num_aces <= 0)
+-		return;
++		return 0;
+ 
+ 	dacl_size = le16_to_cpu(pdacl->size);
+ 	if (dacl_size < sizeof(struct smb_acl))
+-		return;
++		return -EINVAL;
+ 
+ 	if (num_aces > (dacl_size - sizeof(struct smb_acl)) /
+ 			(offsetof(struct smb_ace, sid) +
+ 			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
+-		return;
++		return -EINVAL;
+ 
+ 	ret = init_acl_state(&acl_state, num_aces);
+ 	if (ret)
+-		return;
++		return ret;
+ 	ret = init_acl_state(&default_acl_state, num_aces);
+ 	if (ret) {
+ 		free_acl_state(&acl_state);
+-		return;
++		return ret;
+ 	}
+ 
+ 	ppace = kmalloc_array(num_aces, sizeof(struct smb_ace *), KSMBD_DEFAULT_GFP);
+ 	if (!ppace) {
+ 		free_acl_state(&default_acl_state);
+ 		free_acl_state(&acl_state);
+-		return;
++		return -ENOMEM;
+ 	}
+ 
+ 	/*
+@@ -448,8 +448,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	 * user/group/other have no permissions
+ 	 */
+ 	for (i = 0; i < num_aces; ++i) {
+-		if (end_of_acl - acl_base < acl_size)
+-			break;
++		if (end_of_acl - acl_base < acl_size) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		ppace[i] = (struct smb_ace *)(acl_base + acl_size);
+ 		acl_base = (char *)ppace[i];
+@@ -462,8 +464,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 		    (end_of_acl - acl_base <
+ 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
+ 		    (le16_to_cpu(ppace[i]->size) <
+-		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth))
+-			break;
++		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		acl_size = le16_to_cpu(ppace[i]->size);
+ 		ppace[i]->access_req =
+@@ -538,7 +542,6 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 				((acl_mode & 0700) >> 6) | 0004;
+ 		}
+ 	}
+-	kfree(ppace);
+ 
+ 	if (owner_found) {
+ 		/* The owner must be set to at least read-only. */
+@@ -581,10 +584,12 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_acls =
+ 				posix_acl_alloc(acl_state.users->n +
+ 					acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
+-			if (fattr->cf_acls) {
+-				cf_pace = fattr->cf_acls->a_entries;
+-				posix_state_to_acl(&acl_state, cf_pace);
++			if (!fattr->cf_acls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pace = fattr->cf_acls->a_entries;
++			posix_state_to_acl(&acl_state, cf_pace);
+ 		}
+ 	}
+ 
+@@ -595,14 +600,20 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_dacls =
+ 				posix_acl_alloc(default_acl_state.users->n +
+ 				default_acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
+-			if (fattr->cf_dacls) {
+-				cf_pdace = fattr->cf_dacls->a_entries;
+-				posix_state_to_acl(&default_acl_state, cf_pdace);
++			if (!fattr->cf_dacls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pdace = fattr->cf_dacls->a_entries;
++			posix_state_to_acl(&default_acl_state, cf_pdace);
+ 		}
+ 	}
++	ret = 0;
++out:
++	kfree(ppace);
+ 	free_acl_state(&acl_state);
+ 	free_acl_state(&default_acl_state);
++	return ret;
+ }
+ 
+ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+@@ -963,8 +974,10 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
+ 		if (dacloffset < sizeof(struct smb_ntsd))
+ 			return -EINVAL;
+ 
+-		parse_dacl(idmap, dacl_ptr, end_of_acl,
+-			   owner_sid_ptr, group_sid_ptr, fattr);
++		rc = parse_dacl(idmap, dacl_ptr, end_of_acl,
++				owner_sid_ptr, group_sid_ptr, fattr);
++		if (rc)
++			return rc;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
