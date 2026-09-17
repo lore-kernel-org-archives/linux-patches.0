@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08774E0B79;
-	Thu, 17 Sep 2026 18:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EF04E4C3F;
+	Thu, 17 Sep 2026 18:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668417; cv=none; b=mhCkfM7C2mTokqTvg/dY9TruPe6PyR9Zah6e5Bn40B4T9Iq7vFS1TKtPhhh4iMnBk04d8a2QHT5XS+XydlXWnC9ldZeP/waltUjLSj5BN3rozDh5KdrMs16w2d5cx+emt3zBHhyOFvboX6r9mQscymNE6FiJFXr4KA4n5CmTVZw=
+	t=1789668421; cv=none; b=T6PBgHyTMteLVnsBPIlziZ202GWxozXo+ACu/MOHfkoQ9LLorcu0i9J3lykoASEHbSW5CoKMg18P3M2PZX0xJBOsgjg4FcMbDCEdxQGE+qIXGw3/byiluEX+HORTRluFFoN8zrBXs6cQcw2J750IQ9zz26a7wjWcqWhn5fanGu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668417; c=relaxed/simple;
-	bh=t9ggi4X/Riy14SVN9gBFSvG9481YDu/gu1tLXlR7nVk=;
+	s=arc-20240116; t=1789668421; c=relaxed/simple;
+	bh=jk/riGQlyXdu8BZWrC2urvEx8vqp/TSDt/iBlEu/49M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+0rEeOtzDB89z0+zYyrnDTyu35crqhGodut/IoRb5RBQTHLB5fVMyllPAZIYSe8dT+4wYAapd0PYsIz/YBQJ87rRLT+50QXDkXV2xk3KlV7EgPnML5eZAGXlj4+XV64Pls599A2Z2kiqZKmAc8MUW1d+DMfDESunl9wMtCRhlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewkWpINI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MXlseTkS5yC9PGDTygy12hd/MG26GHUoTPq9TZQV7x7cqQ2jroT7L6Jn5wxczDZiDvS+3sm4XlHQdlo1LBECWe79mz1Sca4qXG6ITA5+K65py3hNYRKowNH3J9Ux7+D0WMD98mSKjBbWDhavavCf70y+hKjsrbrFEMnUmLBmfDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhLlC8kU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewkWpINI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155A11F000FF;
-	Thu, 17 Sep 2026 18:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhLlC8kU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F9F1F000FF;
+	Thu, 17 Sep 2026 18:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668416;
-	bh=jGNBVGDtt67Lww+YFcnYExbcIC6UZ3Jzrsm+tsuZ0FU=;
+	s=korg; t=1789668419;
+	bh=7mXABrSfMbxArxYl2HDWBKE8j4vdUnokQBsIqob7g9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewkWpINIvT6JxBFgj6cpFwc+dcu5Pvw4XjjX/MbBk1fsFHCJvxCQ+xIWDZRUCc1/S
-	 GZYsDWRSyTNwCd11/CeQ4pyJW/hWlv5jWAplOWMqDkN1WdiQcxAC8mk4o5j6U1P61q
-	 HlQQgD7seCPNt9HOynGq7N4ndtLJGggroqyrc+0w=
+	b=DhLlC8kUAgH2B2AYwQ0SdAgxBh+G8odPUJmXU+COPvprgC1BYDnsROBjLlMusua6O
+	 NuGIR5CLS9vjsqzJ9S51S7yZVAp9gRbwgZ53HoVgRhF7lBrlzPx/6VPUpyUBS47fSB
+	 QJDCXAHMbxf4tLWkE/oEi4k9g/o8TveKd07+U3Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	=?UTF-8?q?Marcel=20K=C5=82os?= <marcel@marmak.net.pl>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0419/1102] wifi: iwlwifi: pcie: null RX pointers after free
-Date: Thu, 17 Sep 2026 16:06:02 +0100
-Message-ID: <20260917151550.185949669@linuxfoundation.org>
+Subject: [PATCH 6.12 0420/1102] ALSA: hda/realtek: Add quirk for HP EliteBook 830 G8 (8AB8) to enable mute LEDs
+Date: Thu, 17 Sep 2026 16:06:03 +0100
+Message-ID: <20260917151550.211822164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,63 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Marcel Kłos <marcel@marmak.net.pl>
 
-[ Upstream commit 2c79d7a7b583050c9f58041465cb46fe3483ab5d ]
+[ Upstream commit 728d34ebf91c0e80b63a66b237dd0dfc5a8e5b4d ]
 
-When iwl_pcie_tx_init() fails after RX init, nic init unwinds via
-iwl_pcie_rx_free().
+The sound and microphone mute LEDs do not function on this newer
+revision of the board (8AB8) while they do on the older 880D models.
+I have verified this on another laptop which was manufactured before
+the one with the issue.
+Added the ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED from a G9 model, which
+uses the same codec, to make it work. Tested on kernel version 7.1.3 on
+the aforementioned newer revision notebook.
 
-The freed RX members stayed non-NULL on the live transport object,
-so later teardown or retry could touch stale RX state.
-Set rx_pool, global_table, rxq, and alloc_page to NULL after free
-to make repeated cleanup and retry paths safe.
-
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.33e8978d8b36.Ibaedd4b0ce01405b940de7b90223b6d2c5136ffd@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Marcel Kłos <marcel@marmak.net.pl>
+Link: https://patch.msgid.link/4dab5622-9100-4730-8c99-b58da939549b@marmak.net.pl
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-index afb88eab8174b..4bd5d2a4cfc8e 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2003-2014, 2018-2024 Intel Corporation
-+ * Copyright (C) 2003-2014, 2018-2024, 2026 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -1241,11 +1241,16 @@ void iwl_pcie_rx_free(struct iwl_trans *trans)
- 		}
- 	}
- 	kfree(trans_pcie->rx_pool);
-+	trans_pcie->rx_pool = NULL;
- 	kfree(trans_pcie->global_table);
-+	trans_pcie->global_table = NULL;
- 	kfree(trans_pcie->rxq);
-+	trans_pcie->rxq = NULL;
- 
--	if (trans_pcie->alloc_page)
-+	if (trans_pcie->alloc_page) {
- 		__free_pages(trans_pcie->alloc_page, trans_pcie->rx_page_order);
-+		trans_pcie->alloc_page = NULL;
-+	}
- }
- 
- static void iwl_pcie_rx_move_to_allocator(struct iwl_rxq *rxq,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 74768dd0a0e7c..f05ed4703a3a4 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11007,6 +11007,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa8, "HP EliteBook 640 G9 (MB 8AA6)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aab, "HP EliteBook 650 G9 (MB 8AA9)", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8ab8, "HP EliteBook 830 G8 Notebook PC (MB 8AB8)", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ab9, "HP EliteBook 840 G8 (MB 8AB8)", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 -- 
 2.53.0
 
