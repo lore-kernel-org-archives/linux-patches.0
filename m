@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC444DDB26;
-	Thu, 17 Sep 2026 18:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D583DB62F;
+	Thu, 17 Sep 2026 18:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670574; cv=none; b=Nbipsj3MVeQGbFNU7IM/BakHPSIjd6ZbeRzasztk0AlO90UhFiptqW70wDRtY6jUsOSoJ/1+paaq2PYPBitKQMB3WwEuFlaHDMNAVJZB4hkdq5DOLd1fVh6tUrxgPkJ9Dh6MSnnToV8suovrjaXt86V8Czoq3d3EfGS7hSdepwA=
+	t=1789670578; cv=none; b=vDEDs0tzc7Rfs2nqDfHEwaV1ZVbGutY+ytqPqLGxRYDllMCAFWtm66CQLonCkofj3IXaFt8ZHCjs3KLD9sR+mz3P6+wJ0+U/8tynloMnEstns+9uuH/PMMwtM3OVp2FDlN1f0a0I5rhwzsGLYWk4FP5Wnnfvv7l/sCM9RVK50nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670574; c=relaxed/simple;
-	bh=ZC/kj7jXR9bw+lmigc0cBxhJ59VJQkemfmjGd+7R3/Q=;
+	s=arc-20240116; t=1789670578; c=relaxed/simple;
+	bh=rpUik5VgaLtlSKIve6IAQnhdP8+2jjr7rsAZxxYKLlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqY3adxEsaKhy4L1HurbwD3EDYdYbGj+1H5YAuaVeK1+QAb5vcubaEEpjEwyFDKlsdhQkD4rm7CyWarrnbpVNxxtVh9YgWYX8gMNiSTWRPGfPEVLlG3uufEQIX6zA4L6okiyhKhFbRlta+gp+fd6ngLh9m9bhLiE+JVYEG1IUxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXGJepto; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o70uEMGx7ifUbE7ngi7krMIEhJDbYLIhp2+An37stVPBFnes/XTmnF7jnGAHUxg+nFGb3ueqf3lS6AabFcjle1omX2D+e0fOEQbd0neZAQqHRwhrv6Sk2E37rOsVqBbFu5blE7C33DZVzVi6aXKKsfbDJG4CdQLr71iv6ji/UF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toSYKp4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXGJepto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2841F000FF;
-	Thu, 17 Sep 2026 18:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toSYKp4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690261F000FF;
+	Thu, 17 Sep 2026 18:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670573;
-	bh=0eZkdikCHVusf7C5byTIuzN+8Y0x4WVe/B1fgAgKOvo=;
+	s=korg; t=1789670577;
+	bh=rFK8Na/5ygmoNEB60muHKdqTMEWno9uBgIa7eAk3ew0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXGJeptoE6Wc2t0s32J+gu0M1DgMRCKlCjb52uQzo6GTDn/Ac9UIt9rVOQIW9koUh
-	 I/QZdQ6q835mgMf8AJST9hwyxa6zfsOAwr9NCJQUcBn4giDUGZvHs8v+BGHCCDVKgu
-	 ynVUn/8ObDqeygvHADBMaoNfGwD9IbMpXiWiwhMQ=
+	b=toSYKp4IJMqSgrx0YuOsVztdW2fxzf3thFoey0ngOe7wmN1qhCeaFL3FM06GSNHSA
+	 mKctxFKj6xAMnrO7WAD+pP6B6/NcZ/YiA0I89MDChYrrcDfeJexeusgHuuXiYgUupC
+	 unjMeCSYe8GrsqRvjeN+UlnI37AOG56UCEm64k8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Kangas <jkangas@redhat.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Seungwon Bae <qotmddnjs@ajou.ac.kr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0705/1102] hwmon: (ina2xx) Parameterize ina2xx_data in ina226_alert_read()
-Date: Thu, 17 Sep 2026 16:10:48 +0100
-Message-ID: <20260917151558.016203039@linuxfoundation.org>
+Subject: [PATCH 6.12 0679/1102] vxlan: reject dynamic fdb entries that reference a nexthop id
+Date: Thu, 17 Sep 2026 16:10:22 +0100
+Message-ID: <20260917151557.286996670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,74 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Kangas <jkangas@redhat.com>
+From: Seungwon Bae <qotmddnjs@ajou.ac.kr>
 
-[ Upstream commit 3d44ab826e0244a8b9eaf0f1f604f4cb8b890325 ]
+[ Upstream commit 98fc57d167446b95b4e719815fe79edef93f8e7a ]
 
-Mirror ina226_alert_limit_read/write and use struct ina2xx_data instead
-of struct regmap in ina226_alert_read's parameters.
+The commit cited in the Fixes tag allowed VXLAN FDB entries to point to
+FDB nexthops so that overlay traffic could be load balanced across
+multiple VTEPs. Such entries can only be configured from user space,
+cannot be learned and cannot roam. They only make sense with a user space
+control plane such as E-VPN where data plane learning is disabled.
 
-Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Link: https://patch.msgid.link/20260820-upstream-ina2xx-in0-curr1-alarms-v2-2-fdce35abc41e@redhat.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 35760f5efd7b ("hwmon: (ina2xx) Decouple in0 and curr1 alarms")
+Despite that, the VXLAN driver does not currently prevent such entries
+from being configured with the "dynamic" flag. The per-nexthop FDB list
+is only protected by the per-device hash lock, which is not sufficient
+when two VXLAN devices point to the same FDB nexthop and therefore share
+the list. Aging runs in softirq context without RTNL, so an entry deleted
+by one device can race with an addition or deletion from the other,
+leading to list corruption:
+
+  list_del corruption. next->prev should be ffff8881069d9548, but was
+  dead000000000122. (next=ffff8881069d9448)
+  WARNING: CPU: 0 PID: 90 at lib/list_debug.c:65
+  __list_del_entry_valid_or_report+0x1aa/0x210
+  ...
+   vxlan_fdb_destroy+0x5b8/0xad0
+   vxlan_cleanup+0x328/0x450
+   call_timer_fn+0x2a/0x1c0
+   run_timer_softirq+0x18c/0x210
+  BUG: KASAN: slab-use-after-free in vxlan_fdb_destroy
+
+Fix this by rejecting the bogus configuration of dynamic FDB entries that
+point to FDB nexthops, both when created and when an existing entry is
+updated. As such, the per-nexthop FDB list is only ever mutated under the
+RTNL lock. Add test cases to make sure that this does not regress in the
+future.
+
+Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Seungwon Bae <qotmddnjs@ajou.ac.kr>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260902155956.296699-1-qotmddnjs@ajou.ac.kr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ina2xx.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/vxlan/vxlan_core.c              | 11 ++++++++
+ tools/testing/selftests/net/fib_nexthops.sh | 28 +++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
-index c504bb43a2ca3..ad21b67e69ea1 100644
---- a/drivers/hwmon/ina2xx.c
-+++ b/drivers/hwmon/ina2xx.c
-@@ -506,12 +506,12 @@ static int ina2xx_chip_read(struct device *dev, u32 attr, long *val)
- 	return 0;
- }
- 
--static int ina226_alert_read(struct regmap *regmap, u32 mask, long *val)
-+static int ina226_alert_read(struct ina2xx_data *data, u32 mask, long *val)
- {
- 	unsigned int regval;
- 	int ret;
- 
--	ret = regmap_read_bypassed(regmap, INA226_MASK_ENABLE, &regval);
-+	ret = regmap_read_bypassed(data->regmap, INA226_MASK_ENABLE, &regval);
- 	if (ret)
- 		return ret;
- 
-@@ -546,9 +546,9 @@ static int ina2xx_in_read(struct device *dev, u32 attr, int channel, long *val)
- 		return ina226_alert_limit_read(data, over_voltage_mask,
- 					       voltage_reg, val);
- 	case hwmon_in_lcrit_alarm:
--		return ina226_alert_read(regmap, under_voltage_mask, val);
-+		return ina226_alert_read(data, under_voltage_mask, val);
- 	case hwmon_in_crit_alarm:
--		return ina226_alert_read(regmap, over_voltage_mask, val);
-+		return ina226_alert_read(data, over_voltage_mask, val);
- 	default:
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 5d3981ab49024..bf50dc239b1d0 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1006,6 +1006,12 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
  		return -EOPNOTSUPP;
  	}
-@@ -605,7 +605,7 @@ static int ina2xx_power_read(struct device *dev, u32 attr, long *val)
- 		return ina226_alert_limit_read(data, INA226_POWER_OVER_LIMIT_MASK,
- 					       INA2XX_POWER, val);
- 	case hwmon_power_crit_alarm:
--		return ina226_alert_read(data->regmap, INA226_POWER_OVER_LIMIT_MASK, val);
-+		return ina226_alert_read(data, INA226_POWER_OVER_LIMIT_MASK, val);
- 	default:
- 		return -EOPNOTSUPP;
- 	}
-@@ -647,9 +647,9 @@ static int ina2xx_curr_read(struct device *dev, u32 attr, long *val)
- 		return ina226_alert_limit_read(data, INA226_SHUNT_OVER_VOLTAGE_MASK,
- 					       INA2XX_CURRENT, val);
- 	case hwmon_curr_lcrit_alarm:
--		return ina226_alert_read(regmap, INA226_SHUNT_UNDER_VOLTAGE_MASK, val);
-+		return ina226_alert_read(data, INA226_SHUNT_UNDER_VOLTAGE_MASK, val);
- 	case hwmon_curr_crit_alarm:
--		return ina226_alert_read(regmap, INA226_SHUNT_OVER_VOLTAGE_MASK, val);
-+		return ina226_alert_read(data, INA226_SHUNT_OVER_VOLTAGE_MASK, val);
- 	default:
- 		return -EOPNOTSUPP;
- 	}
+ 
++	if (rcu_access_pointer(f->nh) &&
++	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
++		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
++		return -EOPNOTSUPP;
++	}
++
+ 	/* Do not allow an externally learned entry to take over an entry added
+ 	 * by the user.
+ 	 */
+@@ -1273,6 +1279,11 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
+ 	if (err)
+ 		return err;
+ 
++	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
++		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
++		return -EINVAL;
++	}
++
+ 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
+ 		return -EAFNOSUPPORT;
+ 
+diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
+index 6845da9902818..25a4ad02ac16f 100755
+--- a/tools/testing/selftests/net/fib_nexthops.sh
++++ b/tools/testing/selftests/net/fib_nexthops.sh
+@@ -500,6 +500,20 @@ ipv6_fdb_grp_fcnal()
+ 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 61 self"
+ 	log_test $? 255 "Fdb mac add with nexthop"
+ 
++	# fdb entries with a nexthop group cannot be aged out
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
++	log_test $? 0 "Fdb mac add with nexthop group and static state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
++	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
++	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
++	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
++	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
++
+ 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
+ 	log_test $? 2 "Route add with fdb nexthop"
+ 
+@@ -580,6 +594,20 @@ ipv4_fdb_grp_fcnal()
+ 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 12 self"
+ 	log_test $? 255 "Fdb mac add with nexthop"
+ 
++	# fdb entries with a nexthop group cannot be aged out
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
++	log_test $? 0 "Fdb mac add with nexthop group and static state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
++	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
++	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
++	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
++	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
++
+ 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
+ 	log_test $? 2 "Route add with fdb nexthop"
+ 
 -- 
 2.53.0
 
