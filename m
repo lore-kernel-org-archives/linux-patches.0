@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45287547078;
-	Thu, 17 Sep 2026 18:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5A83AAF7D;
+	Thu, 17 Sep 2026 18:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668261; cv=none; b=urzHefC+x8XJK3ZSRQpl51U6ovwh5V/2TR4SSvSFVCoFtgF7oQ5N1Up44vUA3olJaXtUlQNAqOAEwqwfvf3O5jBSABX0zcHMtGFipvuSI5jfVWEmEJEnbbMpAsjNQuqCr3bmeRuY8die/bm/rdPGBnsjISDH0NjE2YscQWj5IHM=
+	t=1789668264; cv=none; b=nuo44KFvn0BoawvFd+aKjf2I8leX9E7QdjK7GW0v1l8pyELjmpqzbiXDWU27lzduNHJKSOi8AYDbEjTwlXCqL3pnZRN7/zqEPhuu2vsKzzST6xpN5DRKlSyqIpJuWiQAjTUuYczYOc19dbtdDeyTsXX8gtkiuIB6K+6tEJIvr8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668261; c=relaxed/simple;
-	bh=iC6iqjD3T37ezGIkZIjMLbc9kKU8VqtCLwa7GbV9QRg=;
+	s=arc-20240116; t=1789668264; c=relaxed/simple;
+	bh=AUUB1o4+IuL8c0kWd80dguZtC1820CR63Ed3WXS/4ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roAFQgJv6V0uFMkGykJ5KZpL5CMxv2QZGyGY8mlArnnLnS4Gn68hl5uXUJX1IIG9D/25uq6cH1oC5hzmvJ8OGgcKwXgtVERo9GGm0X+Jak08BP2ph0PcVGk+77E+fAurrmlBdh8x2cKF4QkDVXmIN8LN8aTZt1sVf4RbcmS+QNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZW9l/WS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T/GT8If82CS+/H5ZWyejfmvBhkKKLNqHdt0PtOrIeQA7BnQgC8FV3BgAkQzfWl1Da7PIMWvUCazcJ+zN3eiaHSHzpdjQgRLZseBo/KsypyQXfM8qVb+oPdhP7Cq2aqdSMmosiXLR0mub8HgQK7Av7dH8RGhS+5qGUXENqvsdJv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYkbSHQF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZW9l/WS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421821F000FF;
-	Thu, 17 Sep 2026 18:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYkbSHQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879541F000FF;
+	Thu, 17 Sep 2026 18:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668259;
-	bh=KppIBjtOuaoZf3ISy5JtkrYmcsBJ8mPFmfHEwsQk2ZQ=;
+	s=korg; t=1789668263;
+	bh=W4vtvIktGNvYcrov7oeZTN8Mzlq3jXGS+QH+XmcGz1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZW9l/WSybGqmbgXJeoSO9GCc69OH7dsKdU7vYh4yj0DotjKmOROzbuGw98gw9wbh
-	 4SX5mVHerIlCTngThO23RLsFkcXW/t3mV0bTo2ikVidBX8njWJzoTW1v8c/IRV1HBH
-	 vi4oe0mQLZI2NpcQsSRwxbU2CqJe6EHy4/nUxf5U=
+	b=eYkbSHQFo3zxuWISX0wd9uZPtLPkBjycu62ZGOXh2SQCZDolJdl7zG+UXAxj2nn/B
+	 9bUsZHkURTgC3fOSA83oZcJib+8v3Jv+hmTZ2oDiYoUbr/xTRcyzcGU0TVBHU08oOt
+	 Th3VMFP+41v7670F0wuI3f/ghpvbHzOJHJE8ghew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bystrin <dev.mbstr@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Xiaogang Chen <xiaogang.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0328/1102] mfd: rsmu: Add 8a34002 support
-Date: Thu, 17 Sep 2026 16:04:31 +0100
-Message-ID: <20260917151547.866283600@linuxfoundation.org>
+Subject: [PATCH 6.12 0329/1102] drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl
+Date: Thu, 17 Sep 2026 16:04:32 +0100
+Message-ID: <20260917151547.891509015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,62 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Bystrin <dev.mbstr@gmail.com>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
+[ Upstream commit 8242a8d9d7194d5ef8a8b38a5621ca0966a3ec15 ]
 
-Add compatible string, i2c_devcie_id and spi_devcie_id to support
-8a34002.
+amdkfd driver needs allocate buffer to return bo metadata to user space. The
+buffer size is controlled by user currently. It is a potential security issue
+that hostile value (e.g. 2 GiB) lets any render-group user trigger order-MAX
+allocation/OOM in kernel context.
 
-Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
-Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+This patch first finds bo metadata size. If the size is smaller than user
+provided value drive can safely allocate buffer in kernel space and copy to
+user space buffer. If not, driver will let user know, not allocate and copy.
+User will redo with new buffer in user space.
+
+This patch lets driver decide buffer allocation size to avoid potential hostile
+size from user space.
+
+Signed-off-by: Xiaogang Chen <xiaogang.chen@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f54ce9e8cbd3abe0eda3a285f54dc4f572fe589a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rsmu_i2c.c | 2 ++
- drivers/mfd/rsmu_spi.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 23 ++++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h |  2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c   | 10 ++--------
+ 3 files changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
-index 9e5fc8259eec2..c57795ed20f4e 100644
---- a/drivers/mfd/rsmu_i2c.c
-+++ b/drivers/mfd/rsmu_i2c.c
-@@ -330,6 +330,7 @@ static void rsmu_i2c_remove(struct i2c_client *client)
- static const struct i2c_device_id rsmu_i2c_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{ "8v19n850", RSMU_SL },
-@@ -341,6 +342,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
- static const struct of_device_id rsmu_i2c_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
-diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
-index c931d8cea0a1a..e07f21482439e 100644
---- a/drivers/mfd/rsmu_spi.c
-+++ b/drivers/mfd/rsmu_spi.c
-@@ -241,6 +241,7 @@ static void rsmu_spi_remove(struct spi_device *client)
- static const struct spi_device_id rsmu_spi_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{}
-@@ -250,6 +251,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
- static const struct of_device_id rsmu_spi_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index 0863550cd82e4..b6a928a0e6ca5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -501,7 +501,7 @@ uint32_t amdgpu_amdkfd_get_max_engine_clock_in_mhz(struct amdgpu_device *adev)
+ 
+ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
+ 				  struct amdgpu_device **dmabuf_adev,
+-				  uint64_t *bo_size, void *metadata_buffer,
++				  uint64_t *bo_size, void **metadata_buffer,
+ 				  size_t buffer_size, uint32_t *metadata_size,
+ 				  uint32_t *flags, int8_t *xcp_id)
+ {
+@@ -536,9 +536,24 @@ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
+ 		*dmabuf_adev = adev;
+ 	if (bo_size)
+ 		*bo_size = amdgpu_bo_size(bo);
+-	if (metadata_buffer)
+-		r = amdgpu_bo_get_metadata(bo, metadata_buffer, buffer_size,
+-					   metadata_size, &metadata_flags);
++	if (metadata_buffer) {
++		/* first get metadata_size by buffer = NULL */
++		r = amdgpu_bo_get_metadata(bo, NULL, 0,
++					   metadata_size, NULL);
++
++		/* user buf_size is bigger than bo metadata_size
++		 * allocate a buf at kernel space and copy */
++		if (*metadata_size <= buffer_size) {
++			*metadata_buffer = kzalloc(*metadata_size, GFP_KERNEL);
++
++			if (!*metadata_buffer)
++				return -ENOMEM;
++
++			r = amdgpu_bo_get_metadata(bo, *metadata_buffer, *metadata_size,
++						   NULL, &metadata_flags);
++		} else
++			r = -EINVAL;
++	}
+ 	if (flags) {
+ 		*flags = (bo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM) ?
+ 				KFD_IOC_ALLOC_MEM_FLAGS_VRAM
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index 581fe1a48f376..d7de6fe404940 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -250,7 +250,7 @@ uint64_t amdgpu_amdkfd_get_gpu_clock_counter(struct amdgpu_device *adev);
+ uint32_t amdgpu_amdkfd_get_max_engine_clock_in_mhz(struct amdgpu_device *adev);
+ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
+ 				  struct amdgpu_device **dmabuf_adev,
+-				  uint64_t *bo_size, void *metadata_buffer,
++				  uint64_t *bo_size, void **metadata_buffer,
+ 				  size_t buffer_size, uint32_t *metadata_size,
+ 				  uint32_t *flags, int8_t *xcp_id);
+ uint8_t amdgpu_amdkfd_get_xgmi_hops_count(struct amdgpu_device *dst,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 45bb957421aa6..6aeda30797074 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1530,16 +1530,10 @@ static int kfd_ioctl_get_dmabuf_info(struct file *filep,
+ 	if (!dev)
+ 		return -EINVAL;
+ 
+-	if (args->metadata_ptr) {
+-		metadata_buffer = kzalloc(args->metadata_size, GFP_KERNEL);
+-		if (!metadata_buffer)
+-			return -ENOMEM;
+-	}
+-
+ 	/* Get dmabuf info from KGD */
+ 	r = amdgpu_amdkfd_get_dmabuf_info(dev->adev, args->dmabuf_fd,
+ 					  &dmabuf_adev, &args->size,
+-					  metadata_buffer, args->metadata_size,
++					  &metadata_buffer, args->metadata_size,
+ 					  &args->metadata_size, &flags, &xcp_id);
+ 	if (r)
+ 		goto exit;
+@@ -1551,7 +1545,7 @@ static int kfd_ioctl_get_dmabuf_info(struct file *filep,
+ 	args->flags = flags;
+ 
+ 	/* Copy metadata buffer to user mode */
+-	if (metadata_buffer) {
++	if (metadata_buffer && args->metadata_ptr) {
+ 		r = copy_to_user((void __user *)args->metadata_ptr,
+ 				 metadata_buffer, args->metadata_size);
+ 		if (r != 0)
 -- 
 2.53.0
 
