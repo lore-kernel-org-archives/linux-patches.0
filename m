@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565E74FDA76;
-	Thu, 17 Sep 2026 18:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78459502D51;
+	Thu, 17 Sep 2026 18:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668712; cv=none; b=EBrahogZ12tXF1q21XQGV9O4Gp1Mbvn9YNNznZIApI7OQlNC/DvgUqlvJ450bVkIyZ+2lv8kaAOo9viPfHKGdLDW4863UAy7q3Sa9CzpFo3Gmc32+GUmM4yfRnAwfyUq9O1cfKrFmXrnqXN4y5wswa82840btjzvlq/i7YgvprU=
+	t=1789668715; cv=none; b=n5nu9ViZHXk6KQceqNCR93ljUjyLO1Lj9WUQ5WL0iSQBmzACzUHSi7iF9VaTYvE0w7bW3EXsGtRzmKtcC7k+e2Ryb4a5rUwPgvdOctOlioflY4MVTygf/mM5Yu2cFOH2nCAv1mkzd4v5Ui6LRwAzHBCrwEVSTqwfGOxTeIyuEFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668712; c=relaxed/simple;
-	bh=V03fNtAZYMWZnuGp1ReE6fZxR4QUN8v50IvJvHgdGJ0=;
+	s=arc-20240116; t=1789668715; c=relaxed/simple;
+	bh=aXUkUBmCcor/wUlhyIo/V6fx7YWqbekGf731lHVMnUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1dlifxBATn3XyZshfv7VNTfOSWaHH+K4lmMrYLWcdIOnmCDkqIRG+OC5b5KTNns3CEZqW9CDOMKkSDqxu/OGrzqCvmh50WQQ9f9HhvSCxagkB4/irgmB15oIdMLh9afyzdX6Es22HZ1dYfVy6rS4yo+PI3fLRDADglNqfBKRY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ67/1b2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eeUq1U5KSufSRINuRcBlk7zdWn7lFtNgvj4SC5TzzCgkzqkct+jYbG4BiHuAbAR84o9iWBFcec+quRD3LCLZhEGABJE5kQGSu5B4cI/7LjsD1WEvEKeKcH+m+ivlVq0bRFct80eNBSlED+9pJnKN5ATvDmHtCzaf0iVVbiZj4ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZpc2GPH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ67/1b2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2DF1F000FF;
-	Thu, 17 Sep 2026 18:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZpc2GPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB221F000FF;
+	Thu, 17 Sep 2026 18:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668711;
-	bh=TEZqW1n7N1XnWQIagKnguUJ+P2PgnHfblpUaU0D0G5M=;
+	s=korg; t=1789668714;
+	bh=XrAzknWVK7uO2nqDEgtUK8nQ76oFcF6c45zaGlm78lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pJ67/1b23GzQxtbRW93ijsg0JbxZeEFLzqxGTEkvL1Nq8goMwDM6wVZdYsmNLlBTC
-	 6EIJVZswOsc3pUE8BtxwFIpzxRJh9Ok2LBcc3q9O1evnUAYYYgMBjJ9YS3ONeWuAhb
-	 NJslP5jo7IN8kDvWb9+lT+sgxhBjtF4A1aC2Dc0I=
+	b=fZpc2GPHaYabsAquzFX3FF9jUQPXDGGqRSRlMKeesP/C+ctLWbZzfBSMBCysCMdC4
+	 zXa2lOQPi/vUJYHs7+mTXQJpeZh4KLK25QoCehrkcIByFl3ocuqy6/jJj2ns8GHTQK
+	 L4yMO19lJdkm/cTO0n7NI0+CuFTkm4CGf5f+3kqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0467/1102] ksmbd: remove stale channels from all sessions on teardown
-Date: Thu, 17 Sep 2026 16:06:50 +0100
-Message-ID: <20260917151551.415538468@linuxfoundation.org>
+Subject: [PATCH 6.12 0468/1102] Revert "bpf, s390: Clear fetch destination on faulting arena atomic"
+Date: Thu, 17 Sep 2026 16:06:51 +0100
+Message-ID: <20260917151551.441608055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,88 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+This reverts commit 1a26541b3f60ce447433a4c4dd56edb10d2cd580.
 
-[ Upstream commit b10665730fbf6b5e45fe422badcbbc3f0df96ef5 ]
-
-ksmbd_sessions_deregister() removes a connection's channels from other
-sessions' channel lists only while conn->binding is still set:
-
-	if (conn->binding) {
-		hash_for_each_safe(sessions_table, ...)
-			ksmbd_chann_del(conn, sess);
-	}
-
-conn->binding is a transient flag: it is cleared once a binding
-SESSION_SETUP completes, and also by a subsequent non-binding
-SESSION_SETUP on the same connection (a reauthentication on a bound
-channel, or a new SessionId==0 setup). A connection that has bound a
-channel into another session's ksmbd_chann_list and then clears
-conn->binding leaves that channel behind when it disconnects: the
-channel, whose chann->conn points at the now freed struct ksmbd_conn,
-stays on the owner session's list.
-
-When the owning connection later tears down, the second loop
-dereferences the stale channel:
-
-	xa_for_each(&sess->ksmbd_chann_list, chann_id, chann)
-		if (chann->conn != conn)
-			ksmbd_conn_set_exiting(chann->conn);   /* freed */
-
-which is a use-after-free write into the freed ksmbd_conn (the same
-stale channel is also walked by show_proc_session() through /proc). The
-session is leaked as well, because its channel list never empties.
-
-Remove the conn->binding gate so a connection always removes its
-channels from every session on teardown.
-
-Fixes: faf8578c77f3 ("ksmbd: find bound sessions during reauthentication")
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 05fdee54209f3..2b605664ea3d8 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -247,22 +247,19 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index 55419813c570b..c3ad3cf86ca64 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -782,8 +782,6 @@ static void bpf_jit_probe_atomic_pre(struct bpf_jit *jit,
+ 				     struct bpf_insn *insn,
+ 				     struct bpf_jit_probe *probe)
  {
- 	struct ksmbd_session *sess;
- 	unsigned long id;
-+	struct hlist_node *tmp;
-+	int bkt;
- 
- 	down_write(&sessions_table_lock);
--	if (conn->binding) {
--		int bkt;
--		struct hlist_node *tmp;
+-	int load_reg;
 -
--		hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
--			if (!ksmbd_chann_del(conn, sess) &&
--			    xa_empty(&sess->ksmbd_chann_list)) {
--				hash_del(&sess->hlist);
--				down_write(&conn->session_lock);
--				xa_erase(&conn->sessions, sess->id);
--				up_write(&conn->session_lock);
--				if (atomic_dec_and_test(&sess->refcnt))
--					ksmbd_session_destroy(sess);
--			}
-+	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
-+		if (!ksmbd_chann_del(conn, sess) &&
-+		    xa_empty(&sess->ksmbd_chann_list)) {
-+			hash_del(&sess->hlist);
-+			down_write(&conn->session_lock);
-+			xa_erase(&conn->sessions, sess->id);
-+			up_write(&conn->session_lock);
-+			if (atomic_dec_and_test(&sess->refcnt))
-+				ksmbd_session_destroy(sess);
- 		}
- 	}
+ 	if (BPF_MODE(insn->code) != BPF_PROBE_ATOMIC)
+ 		return;
  
+@@ -793,14 +791,6 @@ static void bpf_jit_probe_atomic_pre(struct bpf_jit *jit,
+ 	EMIT4(0xb9080000, REG_W1, insn->dst_reg);
+ 	probe->arena_reg = REG_W1;
+ 	probe->prg = jit->prg;
+-	/*
+-	 * A read-modify-write carrying BPF_FETCH reads the old value into
+-	 * src_reg, or into r0 for a BPF_CMPXCHG. Clear that register on
+-	 * fault, the remaining atomics only write memory.
+-	 */
+-	load_reg = bpf_atomic_load_reg(insn);
+-	if (load_reg >= 0)
+-		probe->reg = reg2hex[load_reg];
+ }
+ 
+ static int bpf_jit_probe_post(struct bpf_jit *jit, struct bpf_prog *fp,
+@@ -1663,7 +1653,6 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+ 			if (load_probe.prg != -1) {
+ 				probe.prg = jit->prg;
+ 				probe.arena_reg = load_probe.arena_reg;
+-				probe.reg = load_probe.reg;
+ 			}
+ 			loop_start = jit->prg;
+ 			/* 0: {csy|csg} %w0,%src,off(%arena) */
 -- 
 2.53.0
 
