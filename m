@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C02E3E022C;
-	Thu, 17 Sep 2026 17:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300254F4CF9;
+	Thu, 17 Sep 2026 17:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665187; cv=none; b=ou9rVThw/p6+B1xVLFYXKdwot1xi1qjIn1zl1Y3bdx4GPuGVrf0sZEpM29826nkC+JYi47nTzmX3IDdPPpFeu3vb3pKPtX1AUnGd7k1kgl4m2LAKWONEE2AxExVdB6OxemXgldYQaw25Anokt/sJ0vssK+cV5BBF+tDFuij+YPg=
+	t=1789665190; cv=none; b=Mo7pOUIsRs1OSYmpgXD1LBE1+49M10+V6xUySisR8+gUUVxFvYhSDsAgFdZ7nKghNtWBkjqlEVUIVa8wd1Ca+i1fin5vQDyBmqlNDfrP+9oMGHJXftQreJrTws2JtvmGkuaJtq9cBYPqCcBHzM2weJEmulYvwX4b2a/HBjHWtLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665187; c=relaxed/simple;
-	bh=GCBXAjXroTtCCKqi6fdfKb3fOLt68mLzvEZjgF0c0tg=;
+	s=arc-20240116; t=1789665190; c=relaxed/simple;
+	bh=XsfeQikLziCGIXJtJTxcD+6J8+GKQihdJAFT46KJ9HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YItmR+dIIOVa65AGp9ueUy9Mrd8RaBdIp1txwCy1urXaH6X5JrQTwvjcydSJ6oovwNkMrhUyXTSf15aYh5myvvLxiHS+QqjfwrSg2csdJ8EhHDqoFT5x1W3UF4mWx5raJqxUDAlzn/OpbqnWcGYv/ry23HyxrNT+CwYOZB3gMpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYhYL0mR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6rSMrMZPfHINsxb8hgeJQ2JsYw2eKikCMh3CMnZ+4GRk9tJGkcB5qyc2CqMaCsFhJnAjY3G9LzlD2W7AHoK4u6W/iezJSWq//tZeHFOGX5DUi4s9bCuAnW/bJutKyd/uxEygsO/ESo0/tzoSQrAAqdFcygPIXUV94o1J/Cr+WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ak5fNRHG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYhYL0mR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7AF1F00893;
-	Thu, 17 Sep 2026 17:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ak5fNRHG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833641F000FF;
+	Thu, 17 Sep 2026 17:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665186;
-	bh=aEV+EIrQXXvXbA0plMrV0ksVCU+nPmtmaKTzVoMI5qM=;
+	s=korg; t=1789665189;
+	bh=kniASBeCWELTnT5G0ywzOPWHwIAMHYagKI7rDuPheTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PYhYL0mRgI+8KoeKCVUZz9hqGS+IdYOSPn0v24tSIU6ZFhTAS5j9BlLQVZxveY8Re
-	 yr3mrnEYA/Y7Yd/j0u8dkExqqA9c8AEYE+LJg6SwOQjvwwsmdMYMAdkT9oERbbmlEo
-	 k3iEOUsu98sQcMVNYhfQjYWsfCPeDbO2q3I1Mwa0=
+	b=ak5fNRHG9dvKTupAPPUzXL50I0hpAJGK/BletAYfJbGkaaqKJJLAExGbSBuOT3ukp
+	 igmlyuw65bmLCaddke3BRbX4iOiDVHtZ2R37c2nTOxHQm7GvsagevCgaa2Fr73tP/R
+	 MYqV4o1ZZMD+zEquu9ZcRSPWlFYxp4ifAX3mny50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0621/1250] net/sched: act_api: budget all shared attributes in notify skbs
-Date: Thu, 17 Sep 2026 16:06:56 +0100
-Message-ID: <20260917151608.706788874@linuxfoundation.org>
+Subject: [PATCH 6.18 0622/1250] net/sched: act_api: size the RTM_GETACTION reply from the actions
+Date: Thu, 17 Sep 2026 16:06:57 +0100
+Message-ID: <20260917151608.736283827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,64 +55,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 13eb543cebef6d6c3ec42e31afe3856f51b7126b ]
+[ Upstream commit e9ca46ebc3262b498626c4095826b8fa034bbf21 ]
 
-tcf_action_shared_attrs_size() is supposed to return an upper bound on the
-netlink attributes every action dump emits outside of TCA_ACT_OPTIONS, so
-that tcf_add_notify_msg(), tcf_del_notify_msg() and friends can allocate
-an skb large enough for the reply.  It has fallen behind the dump path and
-is now an underestimate for every single action.
+tca_action_gd() already walks every requested action and accumulates
+attr_size += tcf_action_fill_size(act), then wraps the result in
+tcf_action_full_attrs_size().  For RTM_DELACTION that value is handed to
+tcf_del_notify_msg(), which allocates max(attr_size, NLMSG_GOODSIZE).  For
+RTM_GETACTION it is silently discarded and tcf_get_notify() allocates a
+fixed NLMSG_GOODSIZE skb instead.
 
-Attributes, such as, TCA_ACT_IN_HW_COUNT and TCA_STATS_BASIC_HW are
-emitted unconditionally and never accounted for. TCA_STATS_PKT64,
-TCA_ACT_USED_HW_STATS, TCA_STATS_RATE_EST, TCA_STATS_RATE_EST64 require
-specific conditions, but are also not accounted for.
+Any action whose dump exceeds that fixed budget therefore cannot be read
+back. For example, act_pedit overruns the budget with 32 actions of four
+munge keys each, act_police with 32 policers once the optional
+rate/peakrate/result/avrate attributes are present
 
-Fix the issue by budgeting all of them so that we have a legitimate
-upper bound. Even tough for of them require specific conditions, they
-are cheap so, to avoid overcomplicating, we opted to account for them
-unconditionally as well to account for a real worst case scenario.
+Fix this by passing attr_size through and allocate the reply the way the
+add and delete paths do.
+
+Note on exposure: RTM_GETACTION is the only one of the three action
+commands that is not capability checked - tc_ctl_action() requires
+CAP_NET_ADMIN for RTM_NEWACTION and RTM_DELACTION only - so this turns a
+fixed NLMSG_GOODSIZE reply into a user sized allocation on an
+unprivileged path.  It is bounded by TCA_ACT_MAX_PRIO actions per
+request, and tca_action_gd() does not reject duplicate indices, so a
+single large action can be requested 32 times; an act_bpf program near
+BPF_MAXINSNS is about 32KB of dump, or roughly 1MB for one request.
+Creating such an action still requires CAP_NET_ADMIN, and the add and
+delete paths have sized their skbs this way since the Fixes commit.
+Should this ever need bounding, GFP_KERNEL_ACCOUNT would charge the
+reply to the caller's memcg.
 
 Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260824153903.4143642-2-victor@mojatatu.com
+Link: https://patch.msgid.link/20260824153903.4143642-3-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ net/sched/act_api.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 6fc6a986a7991..c1b1316c96eb2 100644
+index c1b1316c96eb2..9291e622f7251 100644
 --- a/net/sched/act_api.c
 +++ b/net/sched/act_api.c
-@@ -443,12 +443,21 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
- 		+ nla_total_size(IFNAMSIZ) /* TCA_ACT_KIND */
- 		+ cookie_len /* TCA_ACT_COOKIE */
- 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_HW_STATS */
-+		/* TCA_ACT_USED_HW_STATS */
-+		+ nla_total_size(sizeof(struct nla_bitfield32))
-+		+ nla_total_size(sizeof(u32)) /* TCA_ACT_IN_HW_COUNT */
- 		+ nla_total_size(0) /* TCA_ACT_STATS nested */
- 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_FLAGS */
- 		/* TCA_STATS_BASIC */
- 		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
--		/* TCA_STATS_PKT64 */
--		+ nla_total_size_64bit(sizeof(u64))
-+		/* TCA_STATS_BASIC_HW */
-+		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
-+		/* TCA_STATS_PKT64, emitted by both of the basic copies above */
-+		+ 2 * nla_total_size_64bit(sizeof(u64))
-+		/* TCA_STATS_RATE_EST */
-+		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est))
-+		/* TCA_STATS_RATE_EST64 */
-+		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est64))
- 		/* TCA_STATS_QUEUE */
- 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
- 		+ nla_total_size(0) /* TCA_ACT_OPTIONS nested */
+@@ -1697,12 +1697,12 @@ static int tca_get_fill(struct sk_buff *skb, struct tc_action *actions[],
+ 
+ static int
+ tcf_get_notify(struct net *net, u32 portid, struct nlmsghdr *n,
+-	       struct tc_action *actions[], int event,
++	       struct tc_action *actions[], size_t attr_size, int event,
+ 	       struct netlink_ext_ack *extack)
+ {
+ 	struct sk_buff *skb;
+ 
+-	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
++	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
+ 	if (!skb)
+ 		return -ENOBUFS;
+ 	if (tca_get_fill(skb, actions, portid, n->nlmsg_seq, 0, event,
+@@ -2053,7 +2053,8 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
+ 	attr_size = tcf_action_full_attrs_size(attr_size);
+ 
+ 	if (event == RTM_GETACTION)
+-		ret = tcf_get_notify(net, portid, n, actions, event, extack);
++		ret = tcf_get_notify(net, portid, n, actions, attr_size, event,
++				     extack);
+ 	else { /* delete */
+ 		ret = tcf_del_notify(net, n, actions, portid, attr_size, extack);
+ 		if (ret)
 -- 
 2.53.0
 
