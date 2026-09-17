@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7FA4F85C6;
-	Thu, 17 Sep 2026 17:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926E4F85D2;
+	Thu, 17 Sep 2026 17:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667876; cv=none; b=KlS83/QciGVyY6pP4e8B0hI+pdAHFYXTy5LY4YpbYF8ImNbdFY98iIDIbWCLXGnNq6SOQ1Mjbzs0tv834ksxZPGnfaa/BMlSBJl/Phtt0r918qDs4kWjguPUVt8HBgiBKxi3fkGf7vkBFk0WClLbxLtsNas1RWDjNeEIZaS4etM=
+	t=1789667880; cv=none; b=WIjhfJv8k1LPST7wCjIhERGIloTqFW9YWdYrPJ1B+lYIWjA4zVjr+isIfDyAryA7zzXrtuTGywCOLKG9rAlQVt/a758YFRjoIqVs7DFoI+Qg9PZB8XzHbqLetIPqylCqHEm/3J2YMPsDA0na2tU7AYZ36FgKKBrJ4Yi45/1UWp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667876; c=relaxed/simple;
-	bh=IpKOtC7Cu/7uCM7iiePF1Uq+Z4M71+SDnfgKAiXmAmk=;
+	s=arc-20240116; t=1789667880; c=relaxed/simple;
+	bh=lvth+QtWK8sqZijsh9/V3tQaeor3LwSoboIItk0QbpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bwOMuFTaMs2JmXe7tKUjVO8mHjodKi7XcmX2fLnOiv4qam05qKcHJnFSMQ7WqMyOR1f/Lx7pSN3GbrB88QI9PIAwsCLE40UUh7bSJTH6frLEo8yA1M9FSNvxlRiFydkJQ5/3hmVyMMvD+qnxYTJJy7WWl+pqzz/SvTSPfAylVIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHSPtVyn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YUF+ZjW8VpI9lQjnc9O/OU+MxQGwR19anb2KHYG7hMkmyJTlZZwT/KJQFTQl/AuRoq3f46YIkUPVT2yHFv5QWei8WyQncVIUI/X30g3Y9Py/S78yGuJJM6X1sz6o9Vvuyyx2K9LHjeU9hElyFvUkNv9JCdem2jMmNvgLbEQBmJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryJv7Gq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHSPtVyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C329C1F000FF;
-	Thu, 17 Sep 2026 17:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryJv7Gq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4231F000FF;
+	Thu, 17 Sep 2026 17:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667875;
-	bh=46yaeV7HgGzLloI4ZaiUo6fwXA3OPjP5Lez64K2RQnc=;
+	s=korg; t=1789667878;
+	bh=apcnighj30KBlm4sTjSv99UwkWEC57yXejEa2sCXg/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MHSPtVynv8HoJCvjaJzBlxQY0ay35pWEJwG0bgncF2li3i4Vf8hwUNqJha0ax+91l
-	 yGmWzE08COK3N6aFXBZM+r5Gvufkhfwap7+HordMs5kbNxYcaXXZ/T4RwdHehaWE8l
-	 cK9NGlZryB9fdoJjTzl9SdKeSBKJHYxmTF4mpGo8=
+	b=ryJv7Gq78UDQHoTiZm4ey5yrGEC51rXpAbfcwGDP7bTSQzp6l2xZvLAZnrQq5Q5HF
+	 +1lfp0Wi8IIlrGCkacv/7dgjNfVvUn+PX+s0ZV+XlMgOP0w4qeDcgLxYDg2OMm5Nz0
+	 DvcxN8x93fm+6cSnl7SFqZgPeAMv0cFIh6APSrRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0211/1102] ASoC: codecs: rk3328: Use managed GPIO and clock helpers
-Date: Thu, 17 Sep 2026 16:02:34 +0100
-Message-ID: <20260917151544.875034483@linuxfoundation.org>
+Subject: [PATCH 6.12 0238/1102] hsr: broadcast netlink notifications in the devices net namespace
+Date: Thu, 17 Sep 2026 16:03:01 +0100
+Message-ID: <20260917151545.563668373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,134 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 0cf3489bba9ad13aae052232e223e19a620fe7a7 ]
+[ Upstream commit a762fabd7ef9a6cc07258684138f9c3f078d0326 ]
 
-rk3328_platform_probe() acquires the mute GPIO with gpiod_get_optional()
-but never releases it. It also enables mclk and pclk manually while
-relying on probe error labels for unwind, and the driver has no platform
-remove callback to disable those clocks after a successful unbind.
+The HSR generic netlink family sets .netnsok = true. HSR devices can
+live in network namespaces other than init_net.
 
-This path has already needed fixes for missing clock unwinds on probe
-errors. Use devm_gpiod_get_optional() and devm_clk_get_enabled() so the
-GPIO and enabled clock lifetimes are tied to the device. This removes the
-manual error labels and makes both probe failure and driver unbind follow
-the normal devres cleanup path.
+Two async notifiers broadcast events with genlmsg_multicast(). They
+are hsr_nl_ringerror() and hsr_nl_nodedown(). That helper delivers
+only on the default genl socket in init_net. So the events always land
+in init_net. The network namespace of the device does not matter.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260525-asoc-rk3328-devm-resources-v1-1-2abde0006f89@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This has two effects. A listener in the device's own namespace never
+sees its own ring error and node down events. A privileged listener in
+init_net receives events from HSR devices in other namespaces. The
+payload carries the peer node MAC (HSR_A_NODE_ADDR) and the slave port
+ifindex (HSR_A_IFINDEX).
+
+Switch both callers to genlmsg_multicast_netns(). Other families with
+.netnsok = true already do this. Examples are gtp, ovpn, team,
+batman-adv, netdev-genl, ethtool and handshake.
+
+hsr_nl_ringerror() already has the slave port. It uses
+dev_net(port->dev). hsr_nl_nodedown() takes the namespace from the
+master port via hsr_port_get_hsr().
+
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260604054949.2999304-1-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rk3328_codec.c | 54 ++++++++-------------------------
- 1 file changed, 13 insertions(+), 41 deletions(-)
+ net/hsr/hsr_netlink.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rk3328_codec.c b/sound/soc/codecs/rk3328_codec.c
-index 9697aefc6e030..5871b5a819757 100644
---- a/sound/soc/codecs/rk3328_codec.c
-+++ b/sound/soc/codecs/rk3328_codec.c
-@@ -425,7 +425,6 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 	struct rk3328_codec_priv *rk3328;
- 	struct regmap *grf;
- 	void __iomem *base;
--	int ret = 0;
+diff --git a/net/hsr/hsr_netlink.c b/net/hsr/hsr_netlink.c
+index f6ff0b61e08a9..20dbe1c54dd33 100644
+--- a/net/hsr/hsr_netlink.c
++++ b/net/hsr/hsr_netlink.c
+@@ -234,7 +234,8 @@ void hsr_nl_ringerror(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN],
+ 		goto nla_put_failure;
  
- 	rk3328 = devm_kzalloc(&pdev->dev, sizeof(*rk3328), GFP_KERNEL);
- 	if (!rk3328)
-@@ -441,14 +440,13 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 	regmap_write(grf, RK3328_GRF_SOC_CON2,
- 		     (BIT(14) << 16 | BIT(14)));
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(port->dev),
++				skb, 0, 0, GFP_ATOMIC);
  
--	ret = of_property_read_u32(rk3328_np, "spk-depop-time-ms",
--				   &rk3328->spk_depop_time);
--	if (ret < 0) {
-+	if (of_property_read_u32(rk3328_np, "spk-depop-time-ms",
-+				 &rk3328->spk_depop_time)) {
- 		dev_info(&pdev->dev, "spk_depop_time use default value.\n");
- 		rk3328->spk_depop_time = 200;
- 	}
+ 	return;
  
--	rk3328->mute = gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
-+	rk3328->mute = devm_gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
- 	if (IS_ERR(rk3328->mute))
- 		return PTR_ERR(rk3328->mute);
- 	/*
-@@ -461,57 +459,31 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 		regmap_write(grf, RK3328_GRF_SOC_CON10, BIT(17) | BIT(1));
- 	}
+@@ -270,8 +271,12 @@ void hsr_nl_nodedown(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN])
+ 	if (res < 0)
+ 		goto nla_put_failure;
  
--	rk3328->mclk = devm_clk_get(&pdev->dev, "mclk");
-+	rk3328->mclk = devm_clk_get_enabled(&pdev->dev, "mclk");
- 	if (IS_ERR(rk3328->mclk))
- 		return PTR_ERR(rk3328->mclk);
++	rcu_read_lock();
++	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(master->dev),
++				skb, 0, 0, GFP_ATOMIC);
++	rcu_read_unlock();
  
--	ret = clk_prepare_enable(rk3328->mclk);
--	if (ret)
--		return ret;
- 	clk_set_rate(rk3328->mclk, INITIAL_FREQ);
+ 	return;
  
--	rk3328->pclk = devm_clk_get(&pdev->dev, "pclk");
--	if (IS_ERR(rk3328->pclk)) {
--		dev_err(&pdev->dev, "can't get acodec pclk\n");
--		ret = PTR_ERR(rk3328->pclk);
--		goto err_unprepare_mclk;
--	}
--
--	ret = clk_prepare_enable(rk3328->pclk);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to enable acodec pclk\n");
--		goto err_unprepare_mclk;
--	}
-+	rk3328->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
-+	if (IS_ERR(rk3328->pclk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(rk3328->pclk),
-+				     "failed to get or enable acodec pclk\n");
- 
- 	base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(base)) {
--		ret = PTR_ERR(base);
--		goto err_unprepare_pclk;
--	}
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
- 
- 	rk3328->regmap = devm_regmap_init_mmio(&pdev->dev, base,
- 					       &rk3328_codec_regmap_config);
--	if (IS_ERR(rk3328->regmap)) {
--		ret = PTR_ERR(rk3328->regmap);
--		goto err_unprepare_pclk;
--	}
-+	if (IS_ERR(rk3328->regmap))
-+		return PTR_ERR(rk3328->regmap);
- 
- 	platform_set_drvdata(pdev, rk3328);
- 
--	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
-+	return devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
- 					       rk3328_dai,
- 					       ARRAY_SIZE(rk3328_dai));
--	if (ret)
--		goto err_unprepare_pclk;
--
--	return 0;
--
--err_unprepare_pclk:
--	clk_disable_unprepare(rk3328->pclk);
--
--err_unprepare_mclk:
--	clk_disable_unprepare(rk3328->mclk);
--	return ret;
- }
- 
- static const struct of_device_id rk3328_codec_of_match[] __maybe_unused = {
 -- 
 2.53.0
 
