@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD903AEF28;
-	Thu, 17 Sep 2026 18:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8833DB62F;
+	Thu, 17 Sep 2026 18:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670596; cv=none; b=S1V5suViYx5OR9g7H7733i7n3SmydhGrebp1bjR2Oz9GmJjycQly7y51Hz1mMdUdW5pxy2zDpZWe812kkS3NsNFNUyIvdvyXRpKAh7LuvGWUU3aeGCkrUiCS4EEbaHVryAVB+yyyNzIDqZieddVHdeEhTNGuprnWZWNfoWjBaWE=
+	t=1789670600; cv=none; b=kAPB37Yh6zpZTDDRhpcbdyUkX5+ChSVq/hJr8aNEt1MVdaaavTwPec4LZ5MedQLkKhmBN70ivQaVtBVVUsLXptVlRoM8mvyPVJXRVRQTcD6JtMFAVsBOEe5/uCdq2fg3PCMkhWzpjD9jNPJlZrh66HpxaWI4hytXnuT42i02aGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670596; c=relaxed/simple;
-	bh=w9LhUrLJo328IFSv2zaAvdPgPjDDMpU28hxARgUNyvU=;
+	s=arc-20240116; t=1789670600; c=relaxed/simple;
+	bh=cW/ERb4v5m21Y2Z9DXTPZqdUt7RVOrYkT0O1SE32/cI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVpc29xvBaQHfu44ACingNDMwCy3fRXH6/xcsBnAaf+tzS4GFHoYM1egvCRyH7wRRqmKiceIFl3EPrMxbsAg4buvTmUmJfR9Eb/lpgar1wklPqAmXoZopB/GaUuNCi08dT2ne7yCwXpWTxy2P0dKe9QuEnHe+ArnLohBiXbuPtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyaxGWzX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L50fISsNlQUtCljd3FO2kIDGX32w13Eey9gnA6LRtsauWWNd+XCkh1MIMz74XI1WKr0whPuCNcFTPVOrmede2JxWqa6Lz/5eZ7P8zkERItb8l6zIu8AaQnivqpVMaLjqmilp7Qa6ab/LGWf+H9/rTy8l5QgCZfD7pHsK552d0fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TM86tNHB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyaxGWzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A071F000FF;
-	Thu, 17 Sep 2026 18:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TM86tNHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE501F000FF;
+	Thu, 17 Sep 2026 18:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670595;
-	bh=A393V3164r7JakIJu+JNfo9OkQVhPhPYAYDPuZ0v0oU=;
+	s=korg; t=1789670598;
+	bh=rrm1bFGQvFmgERa+XPXuFYj6NKxdkAb9teJrD4EP0vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyaxGWzXaHb+Q/5PNayQFs7J/sMem/N231Dyu4o8bTKbZdVPl9OCeK7kT7U2f6WFg
-	 RyvzAE0P+SPe8iO4WliYC0US9BwIJoRrR4iFLnMFDVcxAOmvGNAYVJtr5BbFjy1q2a
-	 ZsH1Pfb7dsrknEtaUFKAUg352gBsN75nqF25HoAg=
+	b=TM86tNHBP4r5hk8zLawJap/CSfcjyqc1BuNunXPjS1X3DzF7UxqZfWi2hBlmzYX+p
+	 Kn1wjfW+ppX6nzHhlFWtfvjehFFJQcltKzXhFUFjimGKKbgo2nCg4PmFajWk7vG+MY
+	 iPhTP3uGuoS6TnscFnH601KFREQubbn0agmxciJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jia Jia <physicalmtea@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0711/1102] virtio: fix use-after-free in unregister_virtio_device()
-Date: Thu, 17 Sep 2026 16:10:54 +0100
-Message-ID: <20260917151558.178836085@linuxfoundation.org>
+Subject: [PATCH 6.12 0712/1102] virtio_console: do not free control-out buffers on remove
+Date: Thu, 17 Sep 2026 16:10:55 +0100
+Message-ID: <20260917151558.206539400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,75 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 3f9a0fceb730f5107d52421ead5568eae25a0049 ]
+[ Upstream commit 894f98e73983f37354214a89a3a7fd35bf9e3072 ]
 
-device_unregister() is device_del() plus put_device(). When the caller
-holds no extra reference, that drops the last one and runs the release
-callback, which for several transports frees the memory the embedded
-struct virtio_device sits in. unregister_virtio_device() then calls
-virtio_debug_device_exit(), which reads dev->debugfs_dir out of the freed
-object.
+__send_control_msg() publishes &portdev->cpkt as the control-out
+virtqueue cookie. remove_vqs() walks every virtqueue and passes leftover
+cookies to free_buf(), which treats them as struct port_buffer and
+reads sgpages.
 
-Affected transports are the ones whose release callback frees and whose
-remove path takes no reference: virtio_mmio, virtio_vdpa, virtio_uml,
-mlxbf-tmfifo and virtio_ccw. virtio_pci is unaffected because
-virtio_pci_remove() brackets the call with get_device() and put_device().
+If a control message is still on c_ovq when the device is unbound,
+free_buf() reads past the ports_device object.
 
-Remove the debugfs entries before the device can go away. They are only
-accessed through the protected debugfs interface, so
-debugfs_remove_recursive() waits for in-progress file operations before
-returning. Tearing them down while the device is still alive is therefore
-safe.
+KASAN reported slab-out-of-bounds in free_buf():
 
-Reproduced on User-Mode Linux with CONFIG_KASAN and CONFIG_VIRTIO_DEBUG
-by unbinding a virtio-uml device:
+	free_buf
+	remove_vqs
+	virtcons_remove
+	unbind_store
 
-  BUG: KASAN: slab-use-after-free in virtio_debug_device_exit+0x36/0x4d
-  Read of size 8 at addr 00000000616e0b10 by task init/1
-   __asan_report_load8_noabort
-   virtio_debug_device_exit+0x36/0x4d
-   unregister_virtio_device+0x48/0x75
-   virtio_uml_remove
-   platform_remove
-   device_release_driver_internal
-   unbind_store
+The object was the ports_device allocated in virtcons_probe().
 
-  Freed by task 1:
-   kfree
-   virtio_uml_release_dev
-   device_release
-   kobject_put
-   put_device
-   device_unregister
+Drain c_ovq without freeing. The packet lives in portdev and is released
+with it.
 
-With this applied, the report is gone and unbind is clean.
-
-Fixes: 96a8326d69ff ("virtio: add debugfs infrastructure to allow to debug virtio features")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: a7a69ec0d8e4 ("virtio_console: free buffers after reset")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260821213953.76906-1-kmehltretter@gmail.com>
+Message-ID: <20260819021230.292696-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/virtio_console.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index b9095751e43bb..1b193d08a6ba8 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -521,8 +521,8 @@ void unregister_virtio_device(struct virtio_device *dev)
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 8765e8fcb68a7..75ba23fa2187b 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1896,13 +1896,28 @@ static const struct file_operations portdev_fops = {
+ static void remove_vqs(struct ports_device *portdev)
  {
- 	int index = dev->index; /* save for after device release */
+ 	struct virtqueue *vq;
++	bool multiport = use_multiport(portdev);
  
--	device_unregister(&dev->dev);
- 	virtio_debug_device_exit(dev);
-+	device_unregister(&dev->dev);
- 	ida_free(&virtio_index_ida, index);
- }
- EXPORT_SYMBOL_GPL(unregister_virtio_device);
+ 	virtio_device_for_each_vq(portdev->vdev, vq) {
+ 		struct port_buffer *buf;
++		unsigned int len;
+ 
+-		flush_bufs(vq, true);
+-		while ((buf = virtqueue_detach_unused_buf(vq)))
+-			free_buf(buf, true);
++		/*
++		 * c_ovq cookies are &portdev->cpkt, not port_buffer.
++		 * Detach them but do not free_buf().
++		 */
++		if (multiport && vq == portdev->c_ovq) {
++			spin_lock(&portdev->c_ovq_lock);
++			while (virtqueue_get_buf(vq, &len))
++				;
++			while (virtqueue_detach_unused_buf(vq))
++				;
++			spin_unlock(&portdev->c_ovq_lock);
++		} else {
++			flush_bufs(vq, true);
++			while ((buf = virtqueue_detach_unused_buf(vq)))
++				free_buf(buf, true);
++		}
+ 		cond_resched();
+ 	}
+ 	portdev->vdev->config->del_vqs(portdev->vdev);
 -- 
 2.53.0
 
