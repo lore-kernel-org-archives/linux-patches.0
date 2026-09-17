@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04D754706B;
-	Thu, 17 Sep 2026 18:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEDC470EB6;
+	Thu, 17 Sep 2026 18:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670936; cv=none; b=HwCf/UW19SMX0db2rQf6lWJZ9lSVhJRWtmWyOWSUMSqUvjerEAEniE1CgyGLYvRuwS0ee+9EY3oVHAV3Gk6e+YpKa5ut8nwW/011iy1IvqAmbCTRGpPRO5jf+NEEqjJZQUg8EBnXwSUnJwJYwD5dOWyxK8IdBP0xcKvZujvuPfs=
+	t=1789670940; cv=none; b=dMUALSIudODB6+Xx0b2PgLbQDNz3/WluWZkSB5YSmTGzyotScAWtDTIn/YzAJnFFoTH0b7ZkL8VURH3nFlCVsW8hqx3/HrPD8w70O9Dej4A7nKQu3N2dynAgyQmibxgWgGCoKOJuCdcaXLzSBniKS46u449oX7UNTCOpYoK5muc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670936; c=relaxed/simple;
-	bh=CM63sEQwL+DL+5gdoQZEuDK1+AyspMU1SrKkOK22iUA=;
+	s=arc-20240116; t=1789670940; c=relaxed/simple;
+	bh=1HU6bcabhnWg4ViWDp6NW/AhCMm97MrVMcJGx2Wz0mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+tOPnYDXpk5q22CQP+BDMu7PWE/q/G0WQFnGeGtbN+pw3RSHuf+U44WAzmzJpM87Yx79X3RxLi7XRrYUsrUvfpV5uvHr+rCVV9c4t7KZoX6BvU9Yc+qy9X7SWDWqCPAVWIH1hUw3d1DuDqPrruY4Ak3+2WtWv5RvEziCYmJ2WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVtjIJAt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QFslksGpLxsYEwe+vhhBB8JFeLYoGIFx4GQ7WgOETDAWnx9zFcTJfMzwkA6Pa5eZe4GfyQdPlVRrj5xkcT37vbMsMk+6ZxhdcaaWr3x5bFeU0E6WgYU92vBMx1fpfhScq5NjfP2j3ve/laaGAInJT985Hlp1xQcvRP/LxcpvHHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piqew39W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVtjIJAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3581F000FF;
-	Thu, 17 Sep 2026 18:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piqew39W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125A21F000FF;
+	Thu, 17 Sep 2026 18:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670935;
-	bh=8hcQ4qF+o87CB4l/M5m/klNrKF+RQ97AFC4jYXKMM9A=;
+	s=korg; t=1789670938;
+	bh=FR9e8rXfoxaALMM81/5ZL+5KrGtURhVZnxaF0E4uwsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oVtjIJAt9DnoDnJrlyYsWiEY30qQ6RdICrC0ulf3i+cUGJTzmxI+aai6NnF7FPuI5
-	 aCXSxEZciCa3neJ8qtTwNKFGn6WoGUfrZHtF6izanh3ZGNY2+I4mPGcJ8vncjZr3jN
-	 cl2LNHwxLCZJuuPHh9y0uH7gxpneuD3bbxk3vYVA=
+	b=piqew39WCjCoQZiGYShb2edayz2/kArzGGIEkAeqQIGnK5XuIpNsouRxairVXvq3K
+	 thA7ig8TO3ImHXWd3P0DgEwnIg3IlcAQmBrNirCUpgiC2+ILlQDUCarHjNzVQqCcmd
+	 S58YP4rzJ3RMlQSZ7RGPFYiV9pTS15yeBoi0GIYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0800/1102] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
-Date: Thu, 17 Sep 2026 16:12:23 +0100
-Message-ID: <20260917151600.559414302@linuxfoundation.org>
+	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Bradley Morgan <brads@mainlining.org>,
+	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>
+Subject: [PATCH 6.12 0818/1102] tick/broadcast: Plug clockevents replacement race
+Date: Thu, 17 Sep 2026 16:12:41 +0100
+Message-ID: <20260917151601.036386702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,60 +47,207 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
+commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 upstream.
 
-When a LUN_RESET aborts a WRITE command that is in the
-TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
-waits for the frontend to finish processing.
+朱恺乾 reported and decoded the following race condition when a broadcast
+device is replaced:
 
-If the initiator subsequently sends the remaining dataout PDUs,
-__iscsit_check_dataout_hdr() catches the payload, stops the dataout
-timer if the sequence is final and finally dumps the data.  However, the
-iSCSI target doesn't trigger the completion process for these aborted
-commands. Because of this, the abort path hangs indefinitely in
-target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
+CPUA					CPUB
+ __tick_broadcast_oneshot_control()
+   bc = tick_broadcast_device.evtdev;
+					tick_install_broadcast_device(dev)
+        				clockevents_exchange_device(cur, dev)
+					   shutdown(cur);
+					   detach(cur);
+					   cur->handler = noop;
+					   tick_broadcast_device.evtdev = dev;
 
-Fix this by explicitly calling target_complete_cmd() when the final
-dataout PDU is received for an aborted WRITE command.
-target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
-the command into target_abort_work, allowing the abort completion to
-successfully unblock.
+  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the original broadcast device has a restricted interrupt affinity mask
+and the last CPU in that mask goes offline then the BUG() in
+tick_cleanup_dead_cpu() triggers because the clockevent device is not in
+detached state.
+
+The reason for this is that tick_install_broadcast_device() is not
+serialized vs. tick broadcast operations.
+
+The obvious cure is to serialize tick_install_broadcast_device() with
+tick_broadcast_lock against a concurrent tick broadcast operation.
+
+That requires to split clockevents_exchange_device() into two parts, one
+which does the exchange, shutdown and detach operation and the other which
+drops the module reference count. This is required because the module
+reference cannot be dropped while holding tick_broadcast_lock.
+
+Let clockevents_exchange_device() do both operations as before, but let the
+broadcast device code take the two step approach and do the device
+exchange under tick_broadcast_lock and drop the module reference count
+after releasing it.
+
+Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
+Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Tested-by: 刘术高 <liushugao@xiaomi.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/time/clockevents.c    |   33 ++++++++++++++++++++-------------
+ kernel/time/tick-broadcast.c |   36 ++++++++++++++++++++++--------------
+ kernel/time/tick-internal.h  |    2 ++
+ 3 files changed, 44 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 8a7d308da991b..a23553a3d279b 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -1561,8 +1561,10 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
- 		 */
- 		if (se_cmd->transport_state & CMD_T_ABORTED) {
- 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
--			    --cmd->outstanding_r2ts < 1)
-+			    --cmd->outstanding_r2ts < 1) {
- 				iscsit_stop_dataout_timer(cmd);
-+				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
-+			}
+--- a/kernel/time/clockevents.c
++++ b/kernel/time/clockevents.c
+@@ -557,34 +557,41 @@ void clockevents_handle_noop(struct cloc
+ {
+ }
  
- 			return iscsit_dump_data_payload(conn, payload_length, 1);
+-/**
+- * clockevents_exchange_device - release and request clock devices
+- * @old:	device to release (can be NULL)
+- * @new:	device to request (can be NULL)
+- *
+- * Called from various tick functions with clockevents_lock held and
+- * interrupts disabled.
+- */
+-void clockevents_exchange_device(struct clock_event_device *old,
+-				 struct clock_event_device *new)
++void __clockevents_exchange_device(struct clock_event_device *old,
++				   struct clock_event_device *new)
+ {
+ 	/*
+ 	 * Caller releases a clock event device. We queue it into the
+ 	 * released list and do a notify add later.
+ 	 */
+ 	if (old) {
+-		module_put(old->owner);
+ 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
+ 		list_move(&old->list, &clockevents_released);
+ 	}
+ 
+ 	if (new) {
+-		BUG_ON(!clockevent_state_detached(new));
++		WARN_ON(!clockevent_state_detached(new));
+ 		clockevents_shutdown(new);
+ 	}
+ }
+ 
+ /**
++ * clockevents_exchange_device - release and request clock devices
++ * @old:	device to release (can be NULL)
++ * @new:	device to request (can be NULL)
++ *
++ * Called from various tick functions with clockevents_lock held and
++ * interrupts disabled.
++ */
++void clockevents_exchange_device(struct clock_event_device *old,
++				 struct clock_event_device *new)
++{
++	__clockevents_exchange_device(old, new);
++	if (old)
++		module_put(old->owner);
++}
++
++/**
+  * clockevents_suspend - suspend clock devices
+  */
+ void clockevents_suspend(void)
+@@ -650,7 +657,7 @@ void tick_cleanup_dead_cpu(int cpu)
+ 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
+ 		    cpumask_weight(dev->cpumask) == 1 &&
+ 		    !tick_is_broadcast_device(dev)) {
+-			BUG_ON(!clockevent_state_detached(dev));
++			WARN_ON(!clockevent_state_detached(dev));
+ 			list_del(&dev->list);
  		}
--- 
-2.53.0
-
+ 	}
+--- a/kernel/time/tick-broadcast.c
++++ b/kernel/time/tick-broadcast.c
+@@ -162,23 +162,31 @@ static bool tick_set_oneshot_wakeup_devi
+  */
+ void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
+ {
+-	struct clock_event_device *cur = tick_broadcast_device.evtdev;
++	struct clock_event_device *cur;
+ 
+-	if (tick_set_oneshot_wakeup_device(dev, cpu))
+-		return;
++	scoped_guard(raw_spinlock_irqsave, &tick_broadcast_lock) {
+ 
+-	if (!tick_check_broadcast_device(cur, dev))
+-		return;
++		if (tick_set_oneshot_wakeup_device(dev, cpu))
++			return;
+ 
+-	if (!try_module_get(dev->owner))
+-		return;
++		cur = tick_broadcast_device.evtdev;
++		if (!tick_check_broadcast_device(cur, dev))
++			return;
+ 
+-	clockevents_exchange_device(cur, dev);
++		if (!try_module_get(dev->owner))
++			return;
++
++		__clockevents_exchange_device(cur, dev);
++		if (cur)
++			cur->event_handler = clockevents_handle_noop;
++		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
++		if (!cpumask_empty(tick_broadcast_mask))
++			tick_broadcast_start_periodic(dev);
++	}
++
++	/* Module release must be outside of the lock */
+ 	if (cur)
+-		cur->event_handler = clockevents_handle_noop;
+-	tick_broadcast_device.evtdev = dev;
+-	if (!cpumask_empty(tick_broadcast_mask))
+-		tick_broadcast_start_periodic(dev);
++		module_put(cur->owner);
+ 
+ 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
+ 		return;
+@@ -1209,7 +1217,7 @@ int tick_broadcast_oneshot_active(void)
+  */
+ bool tick_broadcast_oneshot_available(void)
+ {
+-	struct clock_event_device *bc = tick_broadcast_device.evtdev;
++	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
+ 
+ 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
+ }
+@@ -1217,7 +1225,7 @@ bool tick_broadcast_oneshot_available(vo
+ #else
+ int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
+ {
+-	struct clock_event_device *bc = tick_broadcast_device.evtdev;
++	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
+ 
+ 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
+ 		return -EBUSY;
+--- a/kernel/time/tick-internal.h
++++ b/kernel/time/tick-internal.h
+@@ -53,6 +53,8 @@ static inline void clockevent_set_state(
+ }
+ 
+ extern void clockevents_shutdown(struct clock_event_device *dev);
++extern void __clockevents_exchange_device(struct clock_event_device *old,
++					  struct clock_event_device *new);
+ extern void clockevents_exchange_device(struct clock_event_device *old,
+ 					struct clock_event_device *new);
+ extern void clockevents_switch_state(struct clock_event_device *dev,
 
 
