@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65597518156;
-	Thu, 17 Sep 2026 17:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8550E59C;
+	Thu, 17 Sep 2026 17:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665830; cv=none; b=dxeHAT46ML1gotJFL46a/Cmcbp/VcxF2NdrpllB0iw76UbOuMTQziUxDOLmNv1slPhdcQ4kHKl7r3rmAZKpVPHBqvSJt3ROwTHN1FAFjET5J+pxNN+9j2LkiGu/Ia2GjPGEqsAyPT+Hy8JI4XGg6yT4dxIyTji2rml9tI9Y8VBM=
+	t=1789665833; cv=none; b=Yf8P8ymHhdYgN1cpGDzCqLUErLXLYDz/+rlNdPqCMWEntq1SFKBkDbBgNYdgpB/HfqP0tETu3wwH0qkrCm2gES1ey0s40anQxL2njN4cY41EydK4AgvpCluy2o/eEPkm1BlF3bxgIUf4+AXUY93RoKVoz7Tlfvfl4BIHMO6Bc44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665830; c=relaxed/simple;
-	bh=CnmklAW9IKxFcnioOpDFtV1Ul3+eJ38hjpONTcxLEGI=;
+	s=arc-20240116; t=1789665833; c=relaxed/simple;
+	bh=D9Rqxvx9GTR1ZVegDwEypYAxuzBmcYwv6MpRPR9VS+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqmbMkYMcWN54H3tkCxGri3HasLWYFW3egpn6aAad2n5msEgvIoQWF+mjDX8q1PdjdsRNH1m2nnaujwYUqH5sCnrpZt3Q07w9jkQe6QU1wp3sQ9vx3loUXyx9ZO0J43d1SaUavUkz7c1f8MACzZXe2Ahg15akpOP/o4EUNnWS5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUQiRhZH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZryuTbMqEn8sv2dhk/FHr+W73yMQqR7PCbk9YfEjFy1aV/4KOFk1YKAH/NcCO9Z6Waja2E0OTWKo434mlCCVRLzdnhA8SYuQJsgUf/vRorSRqUnIan/cNBpoGUrxS1W0rb3appjJz757gAM1xS5ve+7h/fTzwffCHxiDh4ieME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofLXmHLf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUQiRhZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7411F00893;
-	Thu, 17 Sep 2026 17:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofLXmHLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777371F000FF;
+	Thu, 17 Sep 2026 17:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665828;
-	bh=GGrjZrWhBFjnX96pcg6IDg/A8KLstGG7e+PUdKj4N8M=;
+	s=korg; t=1789665832;
+	bh=Sd/fwfw8LvSS01budw7/XBgB7jL/AL7R8yN6ya4wiSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TUQiRhZHCzqqF9YCog36g7xiDLcxJNSr9BA6+1XwIe5ffDxpVxhJDArMoLz97+QnJ
-	 au8lKKXEpuK3gQMNuUZ2wuqUkXUFBsR4KD8war5XsebUWGg4md5n+rMqIVQbz90grl
-	 njUQhK6hbfK4yvqtsVr71feozWV2FiKmVqDp+7N8=
+	b=ofLXmHLfWkFz2otm2ULUquzrRGctY8GocmrWLQU+nQLpNG4kF8ePUNvptEY5N5vM9
+	 3GyAhOXAWjvhZBlWMZJ3w8O5aACcHvwFDzLM/kkmmXhR47z6bP+uWAtThm4VefD1Ye
+	 Cs+QaZ+e4fnkXfe6BpvXI9rgwKbU0sETQJlsvqPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Juch <andreas@juch.cc>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Brian Masney <bmasney@redhat.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0834/1250] iommu/amd: Fix premature break in init_iommu_one() again
-Date: Thu, 17 Sep 2026 16:10:29 +0100
-Message-ID: <20260917151614.553535762@linuxfoundation.org>
+Subject: [PATCH 6.18 0835/1250] hwmon: (ltc4282) Make sure clk_init_data is fully initialized
+Date: Thu, 17 Sep 2026 16:10:30 +0100
+Message-ID: <20260917151614.580524321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,65 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit eb29b7bbc8ba28bbb0b9fdd655e931e1d1fa625c ]
+[ Upstream commit e317326d1755ea054b98e7a4833b929157461c35 ]
 
-Commit 283d245468a2 ("iommu/amd: Fix premature break in
-init_iommu_one()") unintentionally broke older platforms - such as
-the ASRockRack B550D4-4L - where the BIOS advertises incorrect IOMMU
-features.
+The clk_init_data structure contains several mutually-exclusive members
+for different methods to specify the possible parents of a clock,
+prompting drivers to initialize only the members they need.  However,
+not initializing all members may cause subtle issues, which are only
+exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
+enabled.
 
-Move the HATDis check ahead of the GASup check, and re-introduce the
-break inside the GASup check to restore correct behavior on affected
-platforms.
+ltc428_clk_provider_setup() does not fill in any parent clocks, and
+assumes that init.num_parents is NULL.  However, the latter in
+uninitialized, and thus may cause a crash.
 
-This is a short-term fix to resolve the regression. Longer term, we
-should rework how EFRs are tracked and prioritize the MMIO-advertised
-EFR over the one reported via IVRS. That requires more extensive
-changes and will be addressed separately.
+Make sure all members are fully initialized, to fix such bugs, and to
+avoid future breakage when converting drivers to a different method for
+specifying the parents.
 
-Fixes: 283d245468a2 ("iommu/amd: Fix premature break in init_iommu_one()")
-Reported-by: Andreas Juch <andreas@juch.cc>
-Closes: https://lore.kernel.org/linux-iommu/07b2d390-f7a0-47e2-bc2c-eb0853acf52e@juch.cc/
-Tested-by: Andreas Juch <andreas@juch.cc>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: cbc29538dbf7d740 ("hwmon: Add driver for LTC4282")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/8ec3c5cbd2df675a938f090470f5da5f22008517.1787165329.git.geert+renesas@glider.be
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/hwmon/ltc4282.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index e9f1e38e0deea..c07c3a01b978b 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1938,19 +1938,20 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
- 		else
- 			iommu->mmio_phys_end = MMIO_CNTR_CONF_OFFSET;
+diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
+index 269f96738f5b3..a82374ba7fc58 100644
+--- a/drivers/hwmon/ltc4282.c
++++ b/drivers/hwmon/ltc4282.c
+@@ -1140,7 +1140,7 @@ static const struct clk_ops ltc4282_ops = {
+ static int ltc428_clk_provider_setup(struct ltc4282_state *st,
+ 				     struct device *dev)
+ {
+-	struct clk_init_data init;
++	struct clk_init_data init = {};
+ 	int ret;
  
-+		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
-+			pr_warn_once("Host Address Translation is not supported.\n");
-+			amd_iommu_hatdis = true;
-+		}
-+
- 		/* XT and GAM require GA mode. */
- 		if ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0) {
- 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
-+			break;
- 		} else {
- 			if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
- 				amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
- 		}
- 
--		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
--			pr_warn_once("Host Address Translation is not supported.\n");
--			amd_iommu_hatdis = true;
--		}
--
- 		early_iommu_features_init(iommu, h);
- 
- 		break;
+ 	if (!IS_ENABLED(CONFIG_COMMON_CLK))
 -- 
 2.53.0
 
