@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164E04ABBD0;
-	Thu, 17 Sep 2026 15:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7974973A6;
+	Thu, 17 Sep 2026 15:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659999; cv=none; b=NLRED5OXUy9QG+ai9nb1Z3nYR7l9JhiivepvY+lwmUwXnxXNZsLWIZL6fA5iPP1Vc73AmTYZe072kdnHtSfddQIhhn/7MXI+7V7Rnypv95pWNiOZt8W/p3BYTmFmszOMHDyXGFhquQobBClym0Vdc+7wvBaVwdCcirA4RbY+mK8=
+	t=1789660001; cv=none; b=TufKQOrqbMqjkR7SKFiQa61ubPpyHA0hJAmllVa2Mi8omAUSkWACdYwbALc11lDjR//MDY/adKzVuyAEIyRsX0ihmrEDWk6kBdc1JrmN450dpdv69GrNGvBz5bq840iV6qaREPZWEsCZRhigJgvXFS8laF1NRenA5JxE7L+lBtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659999; c=relaxed/simple;
-	bh=Ys/hBc8+AGk2larD2CBjU2W872iUzduIw+antJNTLDs=;
+	s=arc-20240116; t=1789660001; c=relaxed/simple;
+	bh=j0AFHNQGi92BD4Y66dwoxifekZV+He/+rgcpwkpOf/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVhtZwGieG7qBnOIRbEwh8iT4ptiOs75g+GwmwIuRjQAsKeMlNwDj6MFcHMqjI1jaGj0HWdgIrhPKiGSiDHRS3GE8lsjrAEAFPi1N8MkaEragXVBgWDbwTnFLdUJghqrwYpj+SduwBsldL1qcLgRAotaGjqey+6Uy3pzuySqXaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ6Kj/H0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=prsCJ4PkqjYkw1wWQXhcyMt+5SLybP6hgp5Vtqnw1o8RmwFZgvbIVg3xY/VEnFeG/Km2i6KYAlcC4PFZIjAtFpRnUkyfvffGf2drCSZRrEV5Zn5afHY2wbFghEp8jwjD1Tt7wpE/ry+JBSDzZLVVBjRU+OfM6ZAr6aOL6Hyydlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Zxe/SDz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ6Kj/H0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9212C1F00893;
-	Thu, 17 Sep 2026 15:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Zxe/SDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5C41F000FF;
+	Thu, 17 Sep 2026 15:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659991;
-	bh=O9vOR1B9MWDVm5Ci0XLe9InykCykI+Z3m1X/hLt8t3c=;
+	s=korg; t=1789659994;
+	bh=vBcgiQl8UxyTVunwawaFvbWJtZmXar8f3gFynNDbV5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZ6Kj/H048BzBQEm/UOGI4mgUEObgKr0nxCJ42P/ci9UNnDtMvkl2mHMCpKNCEh6S
-	 ZwR2P2E50Umba+Oysve2f0VffWk++LKuz91CrpYhP68bLS1Ff0Pg7yWgkrxBp0QItG
-	 raB9OaXTqPyl8JtrcGDPoSKzZYGLFN5xE2ig7+Tg=
+	b=2Zxe/SDzsQLH316WDdf+L9egxqxovBGusAypUphVffiT3JrYnH/IFsJmYPPmPTbjm
+	 ce9Um/AziZP4mEV8QIFOFo+3B8oGiSkedylt9H7HaCf0zdl6EgWxyt2DVKO2UXUw9x
+	 FcZwc6j7NqLhB/OD4+Tw0DMDbtnce32kj+BrSurI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binglei Wang <l3b2w1@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 441/733] erofs: add missing buf->off in erofs_bread()
-Date: Thu, 17 Sep 2026 16:12:29 +0100
-Message-ID: <20260917151402.861027193@linuxfoundation.org>
+Subject: [PATCH 7.2 442/733] tracing: Fix ring_buffer_read_page_size() kernel-doc
+Date: Thu, 17 Sep 2026 16:12:30 +0100
+Message-ID: <20260917151402.889320596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,69 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binglei Wang <l3b2w1@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 135d84c66f85426299db01a09d93a79a87af18ba ]
+[ Upstream commit 7e645147dfba67edb3ed3090a1ed1d89df77fc27 ]
 
-erofs_bread() locates the target folio with
+ring_buffer_read_page_size() takes a parameter named rpage, but its
+kernel-doc describes page. As a result, kernel-doc reports rpage as
+undescribed and page as an excess parameter description.
 
- index = (buf->off + offset) >> PAGE_SHIFT;
+Rename the documentation entry to match the function.
 
-but computes the in-folio offset without taking buf->off into account:
-
- return buf->base + (offset & ~PAGE_MASK);
-
-If buf->off is not page-aligned, the returned pointer misses the in-page
-component of buf->off, so callers end up fetching data from a wrong
-offset.
-
-buf->off is set to sbi->dif0.fsoff in erofs_init_metabuf(), and fsoff can
-be specified via the "fsoffset=" mount option, which only requires
-block-size alignment. Therefore, on an image with a sub-page block size
-(e.g. 512 bytes), a non-page-aligned fsoff (e.g. 512) triggers the issue,
-since 512 is a multiple of the block size but not of PAGE_SIZE.
-
-It can be reproduced by mounting an image that is placed at a
-non-page-aligned offset:
-
- mkfs.erofs -b512 -zlz4hc sub.erofs src/
- # prepend 512 bytes of padding to the image
- mount -t erofs -o loop,fsoffset=512 padded.erofs /mnt
-
-which fails with
-
- erofs (device loop0): cannot find valid erofs superblock
-
-because the on-disk superblock (at offset 1024 within the image, i.e.
-1536 within the padded file) is read from a wrong in-folio offset. With
-this fixed, the very same image mounts successfully and its file contents
-match those read from the unpadded image.
-
-Fix it by including buf->off in the in-folio offset calculation, so that
-it is consistent with the folio index calculation.
-
-Fixes: c36ec00d7f67 ("erofs: add 'fsoffset' mount option to specify filesystem offset")
-Signed-off-by: Binglei Wang <l3b2w1@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Link: https://patch.msgid.link/20260909062917.89482-1-kmehltretter@gmail.com
+Fixes: dae8dda341d2 ("tracing: Fix subbuf resize races with trace_pipe_raw readers")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c | 2 +-
+ kernel/trace/ring_buffer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/data.c b/fs/erofs/data.c
-index 9aa48c8d67d12..b6cdffd0d8936 100644
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -61,7 +61,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
- 		return NULL;
- 	if (!buf->base)
- 		buf->base = kmap_local_page(buf->page);
--	return buf->base + (offset & ~PAGE_MASK);
-+	return buf->base + ((buf->off + offset) & ~PAGE_MASK);
- }
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 66760542fce10..f958538c649ae 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7368,7 +7368,7 @@ EXPORT_SYMBOL_GPL(ring_buffer_read_page_data);
  
- int erofs_init_metabuf(struct erofs_buf *buf, struct super_block *sb,
+ /**
+  * ring_buffer_read_page_size - get size of the read page.
+- * @page:  the page to get the size from
++ * @rpage:  the page to get the size from
+  *
+  * Returns size of the page in bytes.
+  */
 -- 
 2.53.0
 
