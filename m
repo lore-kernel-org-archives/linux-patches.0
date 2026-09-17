@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D1B502786;
-	Thu, 17 Sep 2026 18:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A574FDA76;
+	Thu, 17 Sep 2026 18:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668688; cv=none; b=Z9AzxP0GvJQus1z/+jrLqo/vFJKSAIovS9Bxrx8EZRw74qyDEZm/9Q+vjsX15C9rjPzqoMSDx8+C5AKLyQ5z31Kodne4iLoD3IprMmHwYg3CWpo1SxdQHiHLSmis8IQngtw+GBB9MXHUwmREKU8mvz/sfBW6aDPQvf8ctNCtfjs=
+	t=1789668691; cv=none; b=bukXHolW5TzbqygHSxnBs+k/6nOvJPBjHG5BPVvsQpwVEjB1pz2unykfQYOsFS0tYlzpqqg9ACTxeai4DTtFsfIADR0yJdDBnPLKH8beqHLP4Y+pupkhsDdvHrI+wYWfRODA0i9SzwTWGMytS5GcyO/YPy2aEODLEF/Wcmqv8X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668688; c=relaxed/simple;
-	bh=do0so5fTEiIgKR4gdbcr3gWN6PiD61+VZ7lu60jgnsw=;
+	s=arc-20240116; t=1789668691; c=relaxed/simple;
+	bh=tz9kTeameQMSpJXxsSGrb48iGuyYT8qtMX9772hnAII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfXRVi0YsXLi9877Z12U5WhTqX+vB2wx6e9oZuczfJoSMf3C5+Bop9tbfPcqJcTii1ltqEE7xv1NnmB2rfHdI2ycOq+hz9++z51jjPZDbFuL4rG89V9Ot8yEIhAQ7FJix93SStHpHtMZfhzwMerUQqAv5peh0ETP3xhLSp9oro8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtiGo8k+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n+895gGI92Yc49LA0Ryz07gZdY0Wa4nJTMsYLW+zCZfPjrUMfH/66s6B5m0o1mbJDdympFMoV7mQHlayzx+nQFR4MVpKE5LjKx2kGUNU1lACBlKcPnCYBv3qnkQ55H9yu3Rsb2shfmYL2dRF2K4ySz5G0LP6mxREbGOIf+XywBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix26NH9A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtiGo8k+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A3E1F00893;
-	Thu, 17 Sep 2026 18:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix26NH9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9345A1F000FF;
+	Thu, 17 Sep 2026 18:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668687;
-	bh=f/JtoOf8ySoukRLqAIQNzjj/GfoqbIpBNdTzo2pKciU=;
+	s=korg; t=1789668690;
+	bh=gdkeb1ft6AxVraveA+wDq71AcTFKUmIZKnVxXBD6+xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtiGo8k+A7SLehKrT9OMEEhbRGiFrPhq3X4nbmkIRGg3hHevHWZMegshZxRzhBtD9
-	 DVFr7Q6TORS5ZnzRadzQkcjzsEo49TPB3/XDIupPkKF4AczddmsvP2l9TjnAcWWv69
-	 hRH9SJzaLuHV6yWbAAuk45HR5H15oycPuZojgW6k=
+	b=Ix26NH9AwY+f16pcBQBByYFPZY64IADm+0IAaWSoGt+e2TKsZ3YYfyRer4tpsFiI7
+	 8XnEm2oAlUsEARK1kipIAZZzIv8mS2Ch1iSOzu2bI50AF0s7PmRGR6DLh/NfuTR4ck
+	 kkXEuypbEllbuqeZcaQnOGSihl2CkVCvaoVf1UHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruikai Peng <ruikai@pwno.io>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0506/1102] accel/qaic: Address potential out-of-bounds read in resp_worker()
-Date: Thu, 17 Sep 2026 16:07:29 +0100
-Message-ID: <20260917151552.442188885@linuxfoundation.org>
+Subject: [PATCH 6.12 0507/1102] nvme-rdma: fix -EIO cleanup order in queue_rq
+Date: Thu, 17 Sep 2026 16:07:30 +0100
+Message-ID: <20260917151552.467952148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,123 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit ab243f74ab4084ca5c8dec608cb5b0deb27db067 ]
+[ Upstream commit d61828199c6cb4b76d48403c77023cd4bb9d09fc ]
 
-Although 'commit 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the
-owner went away")' fixes the scenario it was intended for by walking the
-message and only decoding QAIC_TRANS_DEACTIVATE_FROM_DEV, if present, it
-skipped over the bounds checking code that is included in decode_message().
-This could lead to issues such as reading past the slab allocation's end,
-infinite loops or kernel panics. For those issues to happen, a malformed
-wire message is needed to be sent from the device.
+On -EIO, the RDMA queue_rq path reports a host path error and then
+still cleans up the command and unmaps the SQE DMA. The path error
+helper completes the request, so that is double cleanup and DMA unmap
+after the request is already complete.
 
-Instead of duplicating the bounds checking code already present in
-decode_message(), use the function inside resp_worker().
+Unmap the SQE first, then report the host path error. Skip the outer
+command cleanup on that path.
 
-Reported-by: Ruikai Peng <ruikai@pwno.io>
-Fixes: 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the owner went away")
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260731152344.1905882-1-youssef.abdulrahman@oss.qualcomm.com
+Fixes: 62eca39722fd ("nvme-rdma: handle nvme_rdma_post_send failures better")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_control.c | 46 ++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
+ drivers/nvme/host/rdma.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index 8759b53ba38eb..b10ace7853b72 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -958,11 +958,13 @@ static int decode_status(struct qaic_device *qdev, void *trans, struct manage_ms
+diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
+index 913e6e5a80705..afa71191cd112 100644
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -2002,7 +2002,7 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	struct ib_device *dev;
+ 	bool queue_ready = test_bit(NVME_RDMA_Q_LIVE, &queue->flags);
+ 	blk_status_t ret;
+-	int err;
++	int err = 0;
  
- static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
- 			  struct wire_msg *msg, struct ioctl_resources *resources,
--			  struct qaic_user *usr)
-+			  struct qaic_user *usr, bool orphaned_deactivate)
- {
-+	u32 msg_hdr_count = le32_to_cpu(msg->hdr.count);
- 	u32 msg_hdr_len = le32_to_cpu(msg->hdr.len);
- 	struct wire_trans_hdr *trans_hdr;
- 	u32 msg_len = 0;
-+	int trans_type;
- 	int ret;
- 	int i;
+ 	WARN_ON_ONCE(rq->tag < 0);
  
-@@ -970,10 +972,12 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
- 	    msg_hdr_len > QAIC_MANAGE_MAX_MSG_LENGTH)
- 		return -EINVAL;
- 
--	user_msg->len = 0;
--	user_msg->count = le32_to_cpu(msg->hdr.count);
-+	if (user_msg) {
-+		user_msg->len = 0;
-+		user_msg->count = msg_hdr_count;
+@@ -2058,16 +2058,18 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
+ err_unmap:
+ 	nvme_rdma_unmap_data(queue, rq);
+ err:
+-	if (err == -EIO)
+-		ret = nvme_host_path_error(rq);
+-	else if (err == -ENOMEM || err == -EAGAIN)
+-		ret = BLK_STS_RESOURCE;
+-	else
+-		ret = BLK_STS_IOERR;
+-	nvme_cleanup_cmd(rq);
++	if (err != -EIO) {
++		nvme_cleanup_cmd(rq);
++		if (err == -ENOMEM || err == -EAGAIN)
++			ret = BLK_STS_RESOURCE;
++		else
++			ret = BLK_STS_IOERR;
 +	}
+ unmap_qe:
+ 	ib_dma_unmap_single(dev, req->sqe.dma, sizeof(struct nvme_command),
+ 			    DMA_TO_DEVICE);
++	if (err == -EIO)
++		return nvme_host_path_error(rq);
+ 	return ret;
+ }
  
--	for (i = 0; i < user_msg->count; ++i) {
-+	for (i = 0; i < msg_hdr_count; ++i) {
- 		u32 hdr_len;
- 
- 		if (msg_len > msg_hdr_len - sizeof(*trans_hdr))
-@@ -985,7 +989,20 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
- 		    size_add(msg_len, hdr_len) > msg_hdr_len)
- 			return -EINVAL;
- 
--		switch (le32_to_cpu(trans_hdr->type)) {
-+		trans_type = le32_to_cpu(trans_hdr->type);
-+		/*
-+		 * orphaned_deactivate is the case where a deactivate response
-+		 * is received from the device after the user owning the DBC,
-+		 * and the message requesting deactivation, has gone away.
-+		 * In this case, only process QAIC_TRANS_DEACTIVATE_FROM_DEV
-+		 * transaction and skip the others.
-+		 */
-+		if (orphaned_deactivate && trans_type != QAIC_TRANS_DEACTIVATE_FROM_DEV) {
-+			msg_len += hdr_len;
-+			continue;
-+		}
-+
-+		switch (trans_type) {
- 		case QAIC_TRANS_PASSTHROUGH_FROM_DEV:
- 			ret = decode_passthrough(qdev, trans_hdr, user_msg, &msg_len);
- 			break;
-@@ -1277,7 +1294,7 @@ static int qaic_manage(struct qaic_device *qdev, struct qaic_user *usr, struct m
- 		goto dma_cont_failed;
- 	}
- 
--	ret = decode_message(qdev, user_msg, rsp, &resources, usr);
-+	ret = decode_message(qdev, user_msg, rsp, &resources, usr, false);
- 
- dma_cont_failed:
- 	free_dbc_buf(qdev, &resources);
-@@ -1442,22 +1459,7 @@ static void resp_worker(struct work_struct *work)
- 		 * response to the QAIC_TRANS_TERMINATE_TO_DEV transaction,
- 		 * otherwise, the user can issue an soc_reset to the device.
- 		 */
--		u32 msg_count = le32_to_cpu(msg->hdr.count);
--		u32 msg_len = le32_to_cpu(msg->hdr.len);
--		u32 len = 0;
--		int j;
--
--		for (j = 0; j < msg_count && len < msg_len; ++j) {
--			struct wire_trans_hdr *trans_hdr;
--
--			trans_hdr = (struct wire_trans_hdr *)(msg->data + len);
--			if (le32_to_cpu(trans_hdr->type) == QAIC_TRANS_DEACTIVATE_FROM_DEV) {
--				if (decode_deactivate(qdev, trans_hdr, &len, NULL))
--					len += le32_to_cpu(trans_hdr->len);
--			} else {
--				len += le32_to_cpu(trans_hdr->len);
--			}
--		}
-+		decode_message(qdev, NULL, msg, NULL, NULL, true);
- 		/* request must have timed out, drop packet */
- 		kfree(msg);
- 	}
 -- 
 2.53.0
 
