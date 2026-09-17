@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DFA4E0B93;
-	Thu, 17 Sep 2026 18:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A6A2931F8;
+	Thu, 17 Sep 2026 18:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668376; cv=none; b=g5u7WAis7gA/aZq56FekuFoEeixHARC6/kyXp+E2l2LcQHF3IW8xXqvOgZqexsbhYFL5OpV9w5kG43QCe5c9XBfgeb0m/OioqHkNsY5S5qOvDzxfpanHJ6g594v5ehmNH+AysCztuT1yBXwNhtwG6Pmyvrfkj4AKsD2X4h92pB4=
+	t=1789668379; cv=none; b=A2m68cdpADSmk3j6i5od/Iwlt4EIwk2RR6VOVO/tMCCapL0t9vEtOUPuDANtEaA1TrXzNGvyzOgCSzNFAWF3xVyEPkuB+/39+zzJKPm3lNlZqATkf6c+jW2GSyeENglOUzPgGlPThh92Z+I151q1D01bCBZ7uRfoW2MTSzb6xOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668376; c=relaxed/simple;
-	bh=IQ2itAORLKsmu99ZNZaLg/ohPpu2XeVcVrHcbTbRh2Y=;
+	s=arc-20240116; t=1789668379; c=relaxed/simple;
+	bh=1G2OMS50DgjJKVgJ+ZJEVPEHC2F7aH2vusOvvm8xars=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhQD/4P/W2DsRbYlaEcAD7fEfniRDIXIiHwLYnGzHFvlqBL9FLiMHXfnlYbxxxxyp6COXuSs9i8+9UyuqNHJ4IA2juD4QnGE7t9q0YhPPpr41ymiA10iplN4G7RfE03fEkZtEMuPcwr+XN2WvScPL7BJVptGptPXVN2ax5jHqE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR/rHQXu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+ZrycAGd1NQBv8bHP0328VDLUH8YIv4Pwi97KbcfDH2ukEo7LaK4zM+fldzZl81rBDZRZNCJjfsChd+60YEwTtX1ncS4BTWvA8cmDfdv5iLNg9i9ZzEzCxo72+Vit56WxB/c8rVrfd3cfhmD02O1zTOMEIgzmmDgerI29oI/HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZztVQ0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR/rHQXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF401F000FF;
-	Thu, 17 Sep 2026 18:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZztVQ0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345871F000FF;
+	Thu, 17 Sep 2026 18:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668374;
-	bh=V00hhl68NtJlsnBgkfdhTlvCvdQSHLH3gaIOuo3sEOs=;
+	s=korg; t=1789668377;
+	bh=K2Qr9nXnM5+Z/j02z93DLn4JJo3UoSVhi0N/C5O2g4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QR/rHQXujX0g8YPonSgpBvXBftTgEmnf45jwDHabotgf57OjIQvvpmZ+fggENnsAm
-	 aj/Op96A2RBiRgsDGxEZytWRLbkKlMMQgjKD1jJn6C1GlUxjQwyo/w+g7Fy8fys/j+
-	 XGdh5yqoP3ORBjGUHcxg8GIcPXoxYpcw6m/7n/NU=
+	b=gZztVQ0a0Hr+wFray5sRBi6GwGVMMJ4S1UJAs9/MNXqWH93Ef8d3xKwsg2W10b9RE
+	 6jYWN8xd5Ft0oHrQeFQdiKbrBe5YOO5+Lh8YEwcHt1InWwi9Sla1grfmP0OEdX33lx
+	 n8KaYhs6YS/gq8qSG1i8TnzGkAeFsNrAXzG9ye7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0403/1102] smb/client: reduce fallocate zero buffer allocation
-Date: Thu, 17 Sep 2026 16:05:46 +0100
-Message-ID: <20260917151549.778500916@linuxfoundation.org>
+Subject: [PATCH 6.12 0368/1102] fbdev: pm2fb: unwind WC setup on probe failure
+Date: Thu, 17 Sep 2026 16:05:11 +0100
+Message-ID: <20260917151548.889419603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,64 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 9e4ec3be67af41ab859302d7109b34976efd9258 ]
+[ Upstream commit 16eb19f0c90af03bda6ba66586d7bb0e9cf85b43 ]
 
-The fallocate emulation allocates a 1 MiB zero-filled buffer even
-though each SMB2_write request is limited to SMB2_MAX_BUFFER_SIZE,
-which is 64 KiB. A high-order 1 MiB allocation is more likely to
-fail on a fragmented system.
+Add arch_phys_wc_del() on error path to keep the
+write-combining setup balanced when later probe
+steps fail.
 
-Allocate only the smaller of the requested range and SMB2_MAX_BUFFER_SIZE,
-and reuse that zero-filled buffer for every write request. Also reject
-a successful write that makes no progress to avoid looping indefinitely.
-
-This reduces the contiguous allocation required by fallocate emulation
-without changing the written data or range semantics.
-
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/pm2fb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index e99b8e1f66d4f..3119d664e8684 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3442,7 +3442,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
- 					     char *buf)
- {
- 	struct cifs_io_parms io_parms = {0};
--	int nbytes;
-+	unsigned int nbytes;
- 	int rc = 0;
- 	struct kvec iov[2];
- 
-@@ -3463,9 +3463,10 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
- 		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
- 		if (rc)
- 			break;
-+		if (!nbytes)
-+			return -EIO;
- 		if (nbytes > len)
- 			return -EINVAL;
--		buf += nbytes;
- 		off += nbytes;
- 		len -= nbytes;
- 	}
-@@ -3495,7 +3496,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	if (rc)
- 		goto out;
- 
--	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
+diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
+index f34429829b7d7..82408503c2812 100644
+--- a/drivers/video/fbdev/pm2fb.c
++++ b/drivers/video/fbdev/pm2fb.c
+@@ -1711,6 +1711,7 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+  err_exit_both:
+ 	kfree(info->pixmap.addr);
+  err_exit_pixmap:
++	arch_phys_wc_del(default_par->wc_cookie);
+ 	iounmap(info->screen_base);
+ 	release_mem_region(pm2fb_fix.smem_start, pm2fb_fix.smem_len);
+  err_exit_mmio:
 -- 
 2.53.0
 
