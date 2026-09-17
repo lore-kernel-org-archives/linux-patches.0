@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BE54E9C20;
-	Thu, 17 Sep 2026 18:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B733F37FF6F;
+	Thu, 17 Sep 2026 18:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668671; cv=none; b=OCHt2pu/AYcw9t/7TK8AoBf+uBSD8HTwQ/szOY7dPITXjHG4a6M07FkjNk718bzpMPaQJhPeB61c4j7WFBZYidHD/8DExCZrvWZeuie4YXydQWNiqJjjjqVJVdEObAap435ZGTGkaZaca0QFIRH0CINPDHaG3019Ir8/eFaevRc=
+	t=1789668673; cv=none; b=VBmfjjoCY5wuH1BmGWPgWeBA29Jwo1uZnMrKUzsjk33IU4ytpTPVIiqBeNUG/Za7XT0H0TgJWHWsxtKjSY2z0UuSmzQjK+LMu93A3c72i1x4hyhjj2S3ddOfdfgjYK96E+/bdVDzzM48Pvl/krDi7e3QlilduY/fRtrIW5uDdyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668671; c=relaxed/simple;
-	bh=LiKu73MZaqevUBTcuURQD5mmVNZTm7vcyNeJ/vGijWg=;
+	s=arc-20240116; t=1789668673; c=relaxed/simple;
+	bh=o8UAJjF4iXEBjWnj4AvmZsum9Dgwizdcy6NrF97T0VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBKiCDT+L1zW8WSdOfJt5+xOxmhok9lqkzGTZvX+GiGgW3u4Ccv4Mju9q73PrJejq+oK+HVxYUVSYDHEheCL7TfItKFUQ3ZtL22JPbcXjpaj0cerg50Erfb8QZ7pD2CpLqPTqSnu3LE/AOX9WXUinGJxgOr3ZKZ1H4JWLpEZpq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVMNClR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ubFnZX6YkeQoid8aYLPcNjKr5WwixVO6ZBNvfnrdF3yzssvnvxyPmclcTLPfAokgqVx6m27U35j+QmSy3eJWHjGgIEur1Q4Vt6BYrmYYFQxyjudfyISrAu7RbQP7NMJ/i3kr8H52MsgYp5Z0VjT7siVU0J1nieexQDUzQJDK7y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8WigzZM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVMNClR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6C71F000FF;
-	Thu, 17 Sep 2026 18:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8WigzZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85581F000FF;
+	Thu, 17 Sep 2026 18:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668669;
-	bh=cs0H1ruQSMUyiQ0PPE2fZcg8c3zNFQBos0gTxCr1TXE=;
+	s=korg; t=1789668672;
+	bh=F1yND7ScuzaqFvv6Ro50jMe0Mak+Se4PmUfqb1rVK5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVMNClR+1rNo6zvUU890hTSojUeLMmj1ZmZpJb6+YQY+Vw329wfoeDqhPdzr6f7w1
-	 oXaOduW1jSAL6mZJXRZazOYMMm6YDbAoaK6Nb0w3hfecfPx5o41L4PIpFoFR1xKFnk
-	 yYqJtdkvYVjpuIuon8YyQcEnAYfGRURMqYgQMR4o=
+	b=Q8WigzZMhxrSUlbKlLdlFGoYqB7ARdn2ZcxqWO3k3QrTBive6ZlHUmbbBN6Cri/R3
+	 9DWqfzdtmykA2XBKxurwzlweeP7Wa0gcUk4OsjBqGWE/mkwSMIcMWvf0QTn9libaEn
+	 Cm7f9jIwUDrfqQ66MHsY3bt6gjosuibg1Hnr2eI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Deskhmukh Shrirang <Shrirang.Deskhmukh@amd.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0500/1102] RAS/AMD/ATL, EDAC/amd64: Only load ATL when needed
-Date: Thu, 17 Sep 2026 16:07:23 +0100
-Message-ID: <20260917151552.284402405@linuxfoundation.org>
+Subject: [PATCH 6.12 0501/1102] EDAC/igen6: Fix interleave boundary condition
+Date: Thu, 17 Sep 2026 16:07:24 +0100
+Message-ID: <20260917151552.310171605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,61 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 4c3da04827dc01dc1cfc3d03654b7de656c42d80 ]
+[ Upstream commit f4008169bd320eedb9ddf2b39eeb21370ddac278 ]
 
-The AMD Address Translation Library (ATL) will attempt to load on all AMD
-Zen/SMCA systems.
+The address translation logic splits the memory space into interleaved
+and non-interleaved regions using a boundary at 2 * s_size.
 
-However, only systems with DRAM ECC enabled will use the library. Other
-systems will fail to load the library and produce an unnecessary message to
-the user. More importantly, that thing is dead code loaded and unused.
+The current check uses '>' and incorrectly classifies the boundary
+address (2 * s_size) as part of the interleaved region. This leads to
+incorrect channel/sub-channel selection at the region boundary.
 
-Remove the ATL module dependency table to prevent autoloading. Request
-ATL to load from EDAC once all system checks are complete.
+Fix the classification by using '>=' so that the boundary address is
+handled in the non-interleaved region, matching the hardware layout.
 
-  [ bp: Massage commit message. ]
-
-Fixes: 3f3174996be6 ("RAS: Introduce AMD Address Translation Library")
-Closes: https://lore.kernel.org/20260305154528.1171999-1-mario.limonciello@amd.com
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Deskhmukh Shrirang <Shrirang.Deskhmukh@amd.com>
-Link: https://lore.kernel.org/all/20260307144910.GA113343@yaz-khff2.amd.com
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260730024238.4096623-3-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/amd64_edac.c  | 2 ++
- drivers/ras/amd/atl/core.c | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/edac/igen6_edac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
-index 322ba16b31bf2..682a9374778ee 100644
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -4184,6 +4184,8 @@ static int __init amd64_edac_init(void)
- 		goto err_pci;
- 	}
- 
-+	request_module_nowait("amd_atl");
-+
- 	/* register stuff with EDAC MCE */
- 	if (boot_cpu_data.x86 >= 0x17) {
- 		amd_register_ecc_decoder(decode_umc_error);
-diff --git a/drivers/ras/amd/atl/core.c b/drivers/ras/amd/atl/core.c
-index 4197e10993aca..81ebde74cb107 100644
---- a/drivers/ras/amd/atl/core.c
-+++ b/drivers/ras/amd/atl/core.c
-@@ -190,7 +190,6 @@ static const struct x86_cpu_id amd_atl_cpuids[] = {
- 	X86_MATCH_FEATURE(X86_FEATURE_ZEN, NULL),
- 	{ }
- };
--MODULE_DEVICE_TABLE(x86cpu, amd_atl_cpuids);
- 
- static int __init amd_atl_init(void)
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 07dacf8c10be3..13da52bc29cae 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -674,7 +674,7 @@ static void decode_addr(u64 addr, u32 hash, u64 s_size, int l_map,
  {
+ 	int intlv_bit = CHANNEL_HASH_LSB_MASK_BIT(hash) + 6;
+ 
+-	if (addr > 2 * s_size) {
++	if (addr >= 2 * s_size) {
+ 		*sub_addr = addr - s_size;
+ 		*idx = l_map;
+ 		return;
 -- 
 2.53.0
 
