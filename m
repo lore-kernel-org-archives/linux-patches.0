@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4474B50B41B;
-	Thu, 17 Sep 2026 17:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50187488203;
+	Thu, 17 Sep 2026 17:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667737; cv=none; b=SH9SySXW9fX1DzFJkPEVB1/yWXrccoY+t7IW8NiYMleGKTJsU7mTb0wnI01rnehPPHA8cXL/fBzoc43/1uc8mIoEs6y8pwUnsEeK7kySyCxa69vq3yNOU0pZ4HJFNtD8KPwjjPX2AhE96A5nShkL3xqcJKMfekpRL+4e6+HqSBA=
+	t=1789667740; cv=none; b=mRBwGjQQ9zPfP18br7u2eGjFDZnAtIPNYZaHouaScdHY8Ohd7vynpBPKjgiyIDPfpIH0Xg8lW7I/E1KgsY9xezbwE0kR3hN7cM7vMddu8wfIF5PTQLhT9AUq3VHRzn5RR25Z6Iv1sWoGLn21FtmWLVERd4fyDEL3P4HoMtaO+lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667737; c=relaxed/simple;
-	bh=rbUYwJnmthVXiMdv5gB2cMbBJ/7YwkKMZAVD195uMaY=;
+	s=arc-20240116; t=1789667740; c=relaxed/simple;
+	bh=3poxXTgq3QOq5/kI6U9huN4C5tDoCjjsMcDBpOtEDvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhuqoCdNDI0goTAQjzrEB69sc87MyM56ghYLoRvjqhnSgHA5w0ukiSxpXJTrtxNALXBiM69bdkGPxUUWLnVQPoJYDuYAHzc1/7NUMxl0Uq2KXTwpsrgFRv90WM+hnz8549f9Kg0V89LG92OGvcmqM6TsfYQvv3R1FTjyMORMc+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEcsAguz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NZLHAh7rG714pR4vd2b5XEVbmrixFtrCcacsNFXH9OcY6o5X9uhIeTPedjWeZYRDyN+9IY0YK5ZBVuA7JJrsVTICpLHdJnyN0KeOrWeEIsKlBGUPdCPnzEQb7ih7L7UY4I7FYbYxZo231gW0YNPER2qQMGa8kn4vP9Gavp/Ehy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyHveIM9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEcsAguz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BF21F00893;
-	Thu, 17 Sep 2026 17:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyHveIM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950851F00893;
+	Thu, 17 Sep 2026 17:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667736;
-	bh=qE+2RECQU4rIv/M81lsnrcjYFiPjxpSBahl2DIPjbMs=;
+	s=korg; t=1789667739;
+	bh=A/JUM2bs/8UI1Gds+eQsq54PsikHnQKlI8Xk7rw/rK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dEcsAguzrQse+2dNggrX7+zCv1axVebkwpUXGfQVQuwCStW6akNQ9DKcjMbw5simS
-	 a6kUBfY6sCPk4yQOIwf9F+kOq5pQyKQM4SmCYTqqZ5AXP/tJnT5+hyfnmeo5QiOn5h
-	 R4BjUPswXNc6oJVol5hToErzQR44z1kBR1bcdV6Q=
+	b=zyHveIM9xPJvdmkPBnF7xzV0boDdhRwcQ/IH9RyTkmIaGCXqkXVRrg8Xx0P4Ys8YM
+	 8i3wIVHC8LYmkz0Re1X34Q1mmlqI5yZPcRXUGTpywmA8ryojmRx71DzqGUdex3yqod
+	 mAcqC00POb942HBaZnE76mMq6fhLVVprCH3D9Qy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0192/1102] iio: light: stk3310: Deal with the ps interrupt issue in PM
-Date: Thu, 17 Sep 2026 16:02:15 +0100
-Message-ID: <20260917151544.387303941@linuxfoundation.org>
+Subject: [PATCH 6.12 0193/1102] perf/ftrace: Fix WARNING in __unregister_ftrace_function
+Date: Thu, 17 Sep 2026 16:02:16 +0100
+Message-ID: <20260917151544.413284480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,168 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit 9c1d639e90cf42f5c1401f91f38ffd89af6dd970 ]
+[ Upstream commit 9581123304b23049437324038698af9fb56ee663 ]
 
-On the Inspur HS326 laptop(which integrated with HiSilicon M900
-processor), if the STK3311-X chip's PS interrupt is configured
-in "Recommended interrupt mode", the interrupt cannot be triggered
-normally after waking from suspend or hibernation.
+perf_ftrace_function_unregister() unconditionally calls
+unregister_ftrace_function() without checking whether the ftrace_ops
+was ever successfully registered. This triggers a WARN_ON in
+__unregister_ftrace_function() when the ops doesn't have
+FTRACE_OPS_FL_ENABLED set.
 
-In this case, neither disabling and re-enabling the interrupt nor
-resetting the PS threshold register can restore the interrupt to
-normal operation.
+This can happen during perf_event_alloc() error cleanup when
+perf_trace_destroy() is called via __free_event() on an event whose
+ftrace_ops registration failed or was already torn down by
+perf_try_init_event()'s err_destroy path.
 
-If the interrupt is disabled in suspend() then reset the PS threshold
-register and enable the interrupt in resume(). This resolves the issue.
+The call path is:
+  perf_event_alloc() error cleanup
+    -> __free_event()
+      -> event->destroy() [tp_perf_event_destroy]
+        -> perf_trace_destroy()
+          -> perf_trace_event_close()
+            -> TRACE_REG_PERF_CLOSE
+              -> perf_ftrace_function_unregister()
+                -> unregister_ftrace_function()
+                  -> __unregister_ftrace_function()
+                    -> WARN_ON(!(ops->flags & FTRACE_OPS_FL_ENABLED))
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fix this by checking FTRACE_OPS_FL_ENABLED before attempting to
+unregister. If the ops is not enabled, just free the filter and
+return success.
+
+Link: https://patch.msgid.link/20260527111301.2d0d8256@fangorn
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/stk3310.c | 76 +++++++++++++++++++++++++++++++++----
- 1 file changed, 69 insertions(+), 7 deletions(-)
+ kernel/trace/trace_event_perf.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/stk3310.c b/drivers/iio/light/stk3310.c
-index ed20b67145463..4656f93ad2c2d 100644
---- a/drivers/iio/light/stk3310.c
-+++ b/drivers/iio/light/stk3310.c
-@@ -119,6 +119,9 @@ struct stk3310_data {
- 	struct mutex lock;
- 	bool als_enabled;
- 	bool ps_enabled;
-+	bool ps_int_enabled;
-+	uint32_t ps_thdl;
-+	uint32_t ps_thdh;
- 	uint32_t ps_near_level;
- 	u64 timestamp;
- 	struct regmap *regmap;
-@@ -298,10 +301,17 @@ static int stk3310_write_event(struct iio_dev *indio_dev,
- 
- 	buf = cpu_to_be16(val);
- 	ret = regmap_bulk_write(data->regmap, reg, &buf, 2);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(&client->dev, "failed to set PS threshold!\n");
-+		return ret;
-+	}
- 
--	return ret;
-+	if (reg == STK3310_REG_THDH_PS)
-+		data->ps_thdh = val;
-+	else
-+		data->ps_thdl = val;
-+
-+	return 0;
- }
- 
- static int stk3310_read_event_config(struct iio_dev *indio_dev,
-@@ -336,11 +346,17 @@ static int stk3310_write_event_config(struct iio_dev *indio_dev,
- 	/* Set INT_PS value */
- 	mutex_lock(&data->lock);
- 	ret = regmap_field_write(data->reg_int_ps, state);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(&client->dev, "failed to set interrupt mode\n");
-+		mutex_unlock(&data->lock);
-+		return ret;
-+	}
-+
-+	data->ps_int_enabled = state;
-+
- 	mutex_unlock(&data->lock);
- 
--	return ret;
-+	return 0;
- }
- 
- static int stk3310_read_raw(struct iio_dev *indio_dev,
-@@ -509,10 +525,15 @@ static int stk3310_init(struct iio_dev *indio_dev)
- 
- 	/* Enable PS interrupts */
- 	ret = regmap_field_write(data->reg_int_ps, STK3310_PSINT_EN);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(&client->dev, "failed to enable interrupts!\n");
-+		return ret;
-+	}
- 
--	return ret;
-+	data->ps_int_enabled = true;
-+	data->ps_thdh = STK3310_PS_MAX_VAL;
-+
-+	return 0;
- }
- 
- static bool stk3310_is_volatile_reg(struct device *dev, unsigned int reg)
-@@ -678,9 +699,18 @@ static void stk3310_remove(struct i2c_client *client)
- static int stk3310_suspend(struct device *dev)
+diff --git a/kernel/trace/trace_event_perf.c b/kernel/trace/trace_event_perf.c
+index 3ff9caa4a71bb..bc01ba2069434 100644
+--- a/kernel/trace/trace_event_perf.c
++++ b/kernel/trace/trace_event_perf.c
+@@ -497,7 +497,17 @@ static int perf_ftrace_function_register(struct perf_event *event)
+ static int perf_ftrace_function_unregister(struct perf_event *event)
  {
- 	struct stk3310_data *data;
-+	int ret;
- 
- 	data = iio_priv(i2c_get_clientdata(to_i2c_client(dev)));
- 
-+	if (data->ps_int_enabled) {
-+		ret = regmap_field_write(data->reg_int_ps, 0x0);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to disable ps int at suspend.\n");
-+			return ret;
-+		}
-+	}
+ 	struct ftrace_ops *ops = &event->ftrace_ops;
+-	int ret = unregister_ftrace_function(ops);
++	int ret = 0;
 +
- 	return stk3310_set_state(data, STK3310_STATE_STANDBY);
++	/*
++	 * Perf will call this unconditionally even if the ops is not
++	 * enabled. The unregister_ftrace_function() will warn if called
++	 * when not enabled. Just bypass the unregistering if ops isn't
++	 * enabled here.
++	 */
++	if (ops->flags & FTRACE_OPS_FL_ENABLED)
++		ret = unregister_ftrace_function(ops);
++
+ 	ftrace_free_filter(ops);
+ 	return ret;
  }
- 
-@@ -688,6 +718,8 @@ static int stk3310_resume(struct device *dev)
- {
- 	u8 state = 0;
- 	struct stk3310_data *data;
-+	__be16 buf;
-+	int ret;
- 
- 	data = iio_priv(i2c_get_clientdata(to_i2c_client(dev)));
- 	if (data->ps_enabled)
-@@ -695,7 +727,37 @@ static int stk3310_resume(struct device *dev)
- 	if (data->als_enabled)
- 		state |= STK3310_STATE_EN_ALS;
- 
--	return stk3310_set_state(data, state);
-+	ret = stk3310_set_state(data, state);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (data->ps_thdl != 0x0) {
-+		buf = cpu_to_be16(data->ps_thdl);
-+		ret = regmap_bulk_write(data->regmap, STK3310_REG_THDL_PS, &buf, 2);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to set reg THDL_PS at resume.\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (data->ps_thdh != STK3310_PS_MAX_VAL) {
-+		buf = cpu_to_be16(data->ps_thdh);
-+		ret = regmap_bulk_write(data->regmap, STK3310_REG_THDH_PS, &buf, 2);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to set reg THDH_PS at resume.\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (data->ps_int_enabled) {
-+		ret = regmap_field_write(data->reg_int_ps, STK3310_PSINT_EN);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to enable ps int at resume.\n");
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- static DEFINE_SIMPLE_DEV_PM_OPS(stk3310_pm_ops, stk3310_suspend,
 -- 
 2.53.0
 
