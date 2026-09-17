@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D64E7802;
-	Thu, 17 Sep 2026 16:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A83361967;
+	Thu, 17 Sep 2026 16:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661049; cv=none; b=Rtav2WH09wK5kOzI5ImKQjVKREhVi/6Tog/73KR40V0InQH/0KIfawvi1vVkK2+65MM8oHScHzoltPjOIFMTeOd2+W2Cj/8XVYcYr/gcBRqaHfeFphL7A+ByBYoDoEshPzf7kf8SNxCr0VDWO1R0VqnrGcmzmtrHW6vJPk85wJE=
+	t=1789661052; cv=none; b=tG0tddT1sFHBTLiqFV7OQx+HcEqCxf1IR/geyncMNZK8T/DzdtRaNFwG6o6B+4IzQ9cgb+nFAla1dO1tZI6QHheeC1kXdUdfW9Rss3tK9iC82ptDvFl73W4Em9oj7TK0pRSO0dCu3nV3pQSBzr8gyTf/YA8y7Bo+WyeLc87k9wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661049; c=relaxed/simple;
-	bh=M0r75BGjHceCOyUnmjFDX/Zqpq4P590HgmNciTvvEAs=;
+	s=arc-20240116; t=1789661052; c=relaxed/simple;
+	bh=KXhCyjs2AXCuKxLEiJXWMoxbo0g8AOmxwt36A93Kq1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hctf/oBm+Z9ch8wT/1MnVhqMVoLMKMCUCVhNvBDf66WSJiiaMwjZM34q8WW3Kl/ensHffeQHW2Hi5VE0jajgU8WU/IZlWQA7s22vy8p32wXktSEJOlwNUiLtBe2dhiWsxeyyPbsPDxFXRqgoO4PFcpYPPjoazpG8Hh0R5Rqk6PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yd9A+nv1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GfigrCHOKqZTe5gY1QbcLS8Rmv//5JDmFrplgDFBw2+IUsmNRbkzMM+03JXHGapf9R9d79A34FyTMIHeySWM0ULsbM9oASOOWD9HGciG8HAg4ezzVKNo7wecEZR3685ePixBToWfXuTZB0tdGIQyqgUjUAGLbYOF2Z85xK547dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boptJ5AN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yd9A+nv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D35A1F000FF;
-	Thu, 17 Sep 2026 16:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boptJ5AN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4961F000FF;
+	Thu, 17 Sep 2026 16:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661048;
-	bh=EaxEh/TjGGQL3uWADS29eOA1bT1ny/YAcO5HVOwH7Qg=;
+	s=korg; t=1789661051;
+	bh=CSVyq3UDnwjQtdKYAnzgKDn1vEsH5sgLGtkscOnzMII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yd9A+nv17Wh2RaKxn+9zK8oBh14WmPl6DlTL1MCH1O8EDRfL7YIY/fAbOy5sT3lG+
-	 r22vdj/SKsEoJnxLsmO0MA8LA+GnBLd7YaxMM5aDJZXUqLvmQnqdmuaucYheVSenqS
-	 9S3oeHT10a0OJOhZPgVcvGKCe+iYEEhcSSms2e9A=
+	b=boptJ5ANNpqlEI/qOZ8XYLUyFNtpfn5eR4eq1I05aG9pw9DqvFFc8m+vHdcULmvzX
+	 IgXdjH0t72+gQb75H8HwId9bvE1PPdzdci0RzSMNo2CGajGfuNNycmrh7C8QuYtWLB
+	 fdvbhvv39ZS0XwMiln0OMzVBWpoJZQCCrCprM1AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Zhaoyang Yu <2426767509@qq.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0064/1250] drm/panel: Enable GPIOLIB for panels which uses functions from it
-Date: Thu, 17 Sep 2026 15:57:39 +0100
-Message-ID: <20260917151553.678172493@linuxfoundation.org>
+Subject: [PATCH 6.18 0065/1250] media: dm1105: fix missing error check for dma_alloc_coherent
+Date: Thu, 17 Sep 2026 15:57:40 +0100
+Message-ID: <20260917151553.705656156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,86 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Zhaoyang Yu <2426767509@qq.com>
 
-[ Upstream commit ae3aa8cf5fd5ccb428a814e7eb38ae33ad1cfa34 ]
+[ Upstream commit 3eaac9e02d8591d3c790db572ef1c8fa5a841fdb ]
 
-These panels used on sdm845 devices are using GPIOLIB functions,
-ensure it's enabled.
+The return value of dm1105_dma_map(), which handles DMA memory allocation,
+is ignored in dm1105_hw_init(). If dma_alloc_coherent() fails, the driver
+will proceed using a NULL pointer for DMA transfers, leading to a kernel
+oops or invalid hardware access.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260505-panel-clean-up-kconfig-dep-v2-4-9cc31d6e6919@ixit.cz
+Fix this by checking the return value and propagating -ENOMEM on failure.
+
+Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/Kconfig | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/media/pci/dm1105/dm1105.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 7354dc85a6aa7..967265ed6fc96 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -107,6 +107,7 @@ config DRM_PANEL_BOE_TV101WUM_LL2
+diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
+index c1d55b9836744..abd86488064b5 100644
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -768,6 +768,8 @@ static void dm1105_ir_exit(struct dm1105_dev *dm1105)
  
- config DRM_PANEL_EBBG_FT8719
- 	tristate "EBBG FT8719 panel driver"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
-@@ -316,7 +317,8 @@ config DRM_PANEL_JADARD_JD9365DA_H3
+ static int dm1105_hw_init(struct dm1105_dev *dev)
+ {
++	int ret;
++
+ 	dm1105_disable_irqs(dev);
  
- config DRM_PANEL_JDI_LPM102A188A
- 	tristate "JDI LPM102A188A DSI panel"
--	depends on OF && GPIOLIB
-+	depends on GPIOLIB
-+	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	help
-@@ -418,6 +420,7 @@ config DRM_PANEL_LG_LG4573
+ 	dm_writeb(DM1105_HOST_CTR, 0);
+@@ -778,7 +780,10 @@ static int dm1105_hw_init(struct dm1105_dev *dev)
+ 	dm_writew(DM1105_TSCTR, 0xc10a);
  
- config DRM_PANEL_LG_SW43408
- 	tristate "LG SW43408 panel"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
-@@ -522,6 +525,7 @@ config DRM_PANEL_NOVATEK_NT36523
- 
- config DRM_PANEL_NOVATEK_NT36672A
- 	tristate "Novatek NT36672A DSI panel"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
-@@ -532,6 +536,7 @@ config DRM_PANEL_NOVATEK_NT36672A
- 
- config DRM_PANEL_NOVATEK_NT36672E
- 	tristate "Novatek NT36672E DSI panel"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
-@@ -660,7 +665,8 @@ config DRM_PANEL_RAYDIUM_RM692E5
- 
- config DRM_PANEL_RAYDIUM_RM69380
- 	tristate "Raydium RM69380-based DSI panel"
--	depends on OF && GPIOLIB
-+	depends on GPIOLIB
-+	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	help
-@@ -1118,6 +1124,7 @@ config DRM_PANEL_VISIONOX_R66451
- 
- config DRM_PANEL_VISIONOX_RM69299
- 	tristate "Visionox RM69299"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	help
+ 	/* map DMA and set address */
+-	dm1105_dma_map(dev);
++	ret = dm1105_dma_map(dev);
++	if (ret)
++		return -ENOMEM;
++
+ 	dm1105_set_dma_addr(dev);
+ 	/* big buffer */
+ 	dm_writel(DM1105_RLEN, 5 * DM1105_DMA_BYTES);
 -- 
 2.53.0
 
