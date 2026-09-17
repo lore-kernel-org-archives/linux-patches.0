@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E8A51AEC2;
-	Thu, 17 Sep 2026 16:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9844EDCCF;
+	Thu, 17 Sep 2026 16:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664188; cv=none; b=fFNcMxKqbpJRhEpJyxvVHTIPzJqok7T037ykbkMTExq4dNeBWeQZ7TOwTpP+2I7tsSu3nj+AscXmoQ7tit4mDR99mPyCmGs1nPyV5qiUzBOeBlnyduuk0EZZ4M5JwmKrmco9QIFyJ+6ckCjnj8Dyj12KIdiyxuUhXswbQkUljsE=
+	t=1789664191; cv=none; b=bocNVqKN6J7QqMkdEE1biRm/WHw1qyV2w2HnZU7Aa80QVjdWhAOaFhUxjPWTvYFM11eEBMz4En9ibSklxAy3vqr7XNMxy7z0ZeJK4Y90t/hcXSsKwT+fN2SH9IomC2tpB1LwhwxAKJEssUOsBhoJyBG9BZd7b/M5PaMltw1L+nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664188; c=relaxed/simple;
-	bh=x6bDvR2fsyX8InyCAMdJYzK1N/t1aN12S8M9TTskWio=;
+	s=arc-20240116; t=1789664191; c=relaxed/simple;
+	bh=vvk6AeFD6PhBav1J250qf5N2fFmFy+pbOt9OVzczRDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtFokRU69xyV9KD/hEGaglhCnv88bNokBpkoEhRvwZBN2mRDpgSTxB52Fen2Cm8aRsqWkGujdRSvxUSrzq+oWddCz0teiXfWMLR/paO3muUnoPAZU8m+UEOyVfm1aFGoN87NGX4ujvVWU41lbX4PzEzUV1w/tQklb2j/8wYPi2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMtuQ9mK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JIZt5PGMZGn5VtI4JG9OrRe6Fx0K3bTQaCLTZBJQ4tnoTn/gvfmI4kPAt9Cr0ELs/RWBVqGtk8kAbqc/sk/A9mTBngrCUutdZ33N0bcU5ZtgyKAbqZdqBjXg/+xpEg5mgG/EweR6Zv1JkKFWOXuPAXqII6NsnmD9oFYiDojD0+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaQe6hwr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMtuQ9mK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39C91F000FF;
-	Thu, 17 Sep 2026 16:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaQe6hwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0E61F000FF;
+	Thu, 17 Sep 2026 16:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664187;
-	bh=bTV0uiPynQFE2lbkik7t5hkvPhAejmZbg6UVC6Ujg+k=;
+	s=korg; t=1789664190;
+	bh=IWuy+n/Y/vkHIXHgMA7PpCIfrwwtS4hibdnDctCJ8BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMtuQ9mK1YxVnadvPEVLlw8LLFGERzjkjTTb8LpXZ4teDtKcW5ZMqvKOylLgIaSFH
-	 GuAkE9jqZH5nv4tXme9DVx5s9R7uBGT3TBxPSFagWBb7RUzg0411m00Ai4NXV6bHka
-	 dvdMjM9uq/bIw5fy5eW9bzZSfwn8reC4JaccOtFc=
+	b=HaQe6hwryGRcSuCKJ6fYnjIxFf/3zLZ8pjscXXykL2FqY93sP4+L+Bgi3mSNthm4A
+	 PONYkqUEt8YG/QrAWOtpCTqRpmD7ul1934ymqECNBmwVsgqzFgjUyXJEFxUBzpuRQ2
+	 Aq8VMjXhVtx7PT6Cwb6ZVhUbIJEkkR40aCdIY3GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0287/1250] net: wwan: t7xx: Add delay between MD and SAP suspend
-Date: Thu, 17 Sep 2026 16:01:22 +0100
-Message-ID: <20260917151559.909618243@linuxfoundation.org>
+Subject: [PATCH 6.18 0288/1250] net: txgbe: fix phylink leak on AML init failure
+Date: Thu, 17 Sep 2026 16:01:23 +0100
+Message-ID: <20260917151559.935284147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,72 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit ae733795e593272f67d607c09d2a00637ac13ed0 ]
+[ Upstream commit 9c89f975e66922f346d92d60c9d51d07274a7f3b ]
 
-SAP (Service Access Point) suspend occasionally times out with error
--110 (ETIMEDOUT), followed by modem port errors and complete modem
-failure requiring a system reboot to recover.
+Destroy the phylink instance when fixed-link setup fails.
 
-Error symptoms:
-  mtk_t7xx 0000:72:00.0: [PM] SAP suspend error: -110
-  mtk_t7xx 0000:72:00.0: can't suspend (...returned -110)
-  mtk_t7xx 0000:07:00.0: Failed to send skb: -22
-  mtk_t7xx 0000:07:00.0: Write error on MBIM port, -22
-
-The modem firmware needs time after receiving the MD (modem) suspend
-request to complete internal operations before it is ready to accept
-the SAP suspend request. Without this delay, if runtime PM attempts
-to suspend while the firmware is busy, the SAP suspend command times
-out, leaving the modem in an unrecoverable state.
-
-Root cause and userspace interaction:
-ModemManager 1.24+ includes changes that reduce the likelihood of this
-issue by ensuring the modem is in a low-power state before the kernel
-attempts runtime suspend. However, the kernel driver should not depend
-on specific userspace behavior or ModemManager versions. Older versions
-(1.20-1.22) are still widely deployed, and the kernel should be robust
-regardless of userspace implementation details.
-
-There appears to be no hardware status register or other mechanism
-available to query whether the firmware is ready for SAP suspend.
-A delay between the two suspend requests is the most reliable solution
-found through testing.
-
-Add a 50ms delay between MD suspend and SAP suspend. This gives the
-firmware adequate time to complete internal operations without adding
-significant latency to the suspend path. This makes the driver robust
-across all ModemManager versions and system conditions.
-
-Testing: 96+ hours of continuous operation with ModemManager 1.20.2
-and Fibocom FM350-GL modem. Zero SAP suspend timeouts observed across
-2000+ successful suspend/resume cycles. Previously failed within
-24 hours with 100% reproducibility.
-
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260527061451.12710-1-jtornosm@redhat.com
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20260528013258.129146-1-zhaochenguang@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_pci.c b/drivers/net/wwan/t7xx/t7xx_pci.c
-index eb137e0784232..46613bba1f411 100644
---- a/drivers/net/wwan/t7xx/t7xx_pci.c
-+++ b/drivers/net/wwan/t7xx/t7xx_pci.c
-@@ -447,6 +447,9 @@ static int __t7xx_pci_pm_suspend(struct pci_dev *pdev)
- 		goto abort_suspend;
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+index 07ae491e3bc9b..a919962b71605 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+@@ -381,6 +381,7 @@ int txgbe_phylink_init_aml(struct txgbe *txgbe)
+ 	err = phylink_set_fixed_link(phylink, &state);
+ 	if (err) {
+ 		wx_err(wx, "Failed to set fixed link\n");
++		phylink_destroy(phylink);
+ 		return err;
  	}
  
-+	/* Delay to prevent SAP suspend timeout */
-+	msleep(50);
-+
- 	ret = t7xx_send_pm_request(t7xx_dev, H2D_CH_SUSPEND_REQ_AP);
- 	if (ret) {
- 		t7xx_send_pm_request(t7xx_dev, H2D_CH_RESUME_REQ);
 -- 
 2.53.0
 
