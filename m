@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944403B14A2;
-	Thu, 17 Sep 2026 18:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A65F3CE4B2;
+	Thu, 17 Sep 2026 18:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671541; cv=none; b=nijt/LWt3TvrPMP/EVJ3a7LhvP+M1jZTPZwC1m6O8f+DZfaJjd50+aFR6s4fgd6kApwx1eAe6AN0D3eVqAZpWSse7XeNMf6HOgXaSDK1NfTIlERXr+d0w50HRrFO7cLnYcRX+G7+IpxJKZCx1gBKdTzl4tkiBx9ADlO9bNcTVJc=
+	t=1789671544; cv=none; b=PjMigzZrLfQF8n+QFn7QzctPB8VciAMjSHuy0HRe3alTOGOSy9Tnjme8Jqwodn4XB1xzjOOiPdNFEwiYUYoEx6lqXaHPKYq1IQa9C2uoYz9TidvqHnRcJQTSwA2yyqujIJuBBQkIK6Xp32Rd/aPWanBhXEz5LoW4RfxPE8qYAzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671541; c=relaxed/simple;
-	bh=pM+Tey1srRiTJuC744dU6deOaDGxADUjFuHIJVMyjMA=;
+	s=arc-20240116; t=1789671544; c=relaxed/simple;
+	bh=Of7PKzemmkyq3WYwZ58AphAgy7b6olPNhO5VWZkfCoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dt6fY0OVP8FJb/Qdrzg6NjJfYsvIVbOx9blJj/6vTexnjr3ZFlqUInwa4Y14nvG3J7kF8g45cER7Jq52pNGf/k7hMmUgDvaQ8xtCs6+IP4oU5H5a/K190kqz8fAR2QRu2IkMNXuc4ynvaxeBMozRKS0p3hHhxNFoHJiPvfRihyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyAODBbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SO9yYftatLyRg5Fs+ZowQsouNfjwokrPtquGnwjda5Gk8YalpuKmm6lvh4kIgO4ArjPYK6pEU89InjlmtfAr19rIe4Wyd1Tou3QaGnA3tR6ogYBszjczYSgucy1IY8MJHALLTp62u+kwxEZjJupHiGEEixoXXm04g/X7tvAUVXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xj2tEol/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyAODBbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1491F000FF;
-	Thu, 17 Sep 2026 18:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xj2tEol/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3391F00898;
+	Thu, 17 Sep 2026 18:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671540;
-	bh=jTDYOVJ54uZ7iAvleOEdrx2tWuucFqKRxYzGiHoaZ14=;
+	s=korg; t=1789671543;
+	bh=z991+laEPEWSVnJEDaF4SB/ZtZSOuk7/ENELo1svslk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uyAODBbOFOemeAy2VbRvfiZfte89xFPzlmmzAtlCAYkrySUoNhtBqUg/jbkuTBiDx
-	 2zf/2GMRoOcRH1sWhwQSf8rDZpzBxIG8//w30laekn8+0AxJV51PpitbkyhzJcMILq
-	 7+PuB9Ja9huflv4pNzxZV0shr6oUla9CIXWqHvkU=
+	b=Xj2tEol/Lgc5QjmgS8Mi3SQcRK9YNovZwco6WP2qhQxcX03e//yJMqWll1b9/KFdA
+	 9IUMAv0oZJbzgQxzCUerfSh5qYMgUE4qskhHN6mhmYSVaObk1le5Jg3CJ/1bNPdBQl
+	 XpvsEAGPpKD2nroGPGQw7lEuvIf+Q43ZNsf3TCgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0962/1102] KVM: SEV: Make it more obvious when KVM is writing back the current PSC index
-Date: Thu, 17 Sep 2026 16:15:05 +0100
-Message-ID: <20260917151604.820011395@linuxfoundation.org>
+Subject: [PATCH 6.12 1004/1102] x86/xen: fix init of balloon stats again
+Date: Thu, 17 Sep 2026 16:15:47 +0100
+Message-ID: <20260917151605.948075200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,62 +46,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Roger Pau Monne <roger@xenproject.org>
 
-[ Upstream commit 17d62e0b157f262dd8c7586cb882ece72a5b10c2 ]
+[ Upstream commit 5d00a11d484e7b31a358cd81afebccb4602dbe8c ]
 
-Increment the guest-visible "cur_entry" index outside of the for-loop
-when processing Page State Change entries, and add a comment to make it
-more obvious which code is operating on trusted data, and which code is
-touching guest-accessible data.
+The handling of extra memory regions done in balloon_add_regions() is not
+correct for PV guests, since the initial target is set to reflect the real
+memory the system has, not what's described on the memory map, which can be
+higher if memory != maxmem.
 
-No functional change intended.
+Introduce separate logic for addition vs subtraction in
+balloon_add_regions() and handle extra regions correctly by adding them to
+the total amount of pages, instead of subtracting from the current and
+target pages amounts.
 
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-12-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20260529183549.1104619-12-pbonzini@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 0060569e4f18 ("KVM: SEV: Extract loading of guest-provided VMSA to a separate helper")
+In the common case PV domU/dom0 and PVH dom0 will use the addition path,
+since the initial target reflects the real assigned memory.  HVM and PVH
+domUs use the subtraction path, since the target is set based on the amount
+of memory reported in the memory map, without accounting for released
+regions.
+
+Fixes: 87af633689ce ("x86/xen: fix balloon target initialization for PVH dom0")
+Fixes: 0949c646d646 ("Partial revert "x86/xen: fix balloon target initialization for PVH dom0"")
+Signed-off-by: Roger Pau Monné <roger@xenproject.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Matthias Goergens <matthias.goergens@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260805094008.95778-1-roger@xenproject.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/xen/balloon.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3821,7 +3821,7 @@ next_range:
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -675,7 +675,7 @@ void xen_free_ballooned_pages(unsigned i
+ }
+ EXPORT_SYMBOL(xen_free_ballooned_pages);
+ 
+-static int __init balloon_add_regions(void)
++static int __init balloon_add_regions(bool append)
+ {
+ 	unsigned long start_pfn, pages;
+ 	unsigned long pfn, extra_pfn_end;
+@@ -699,19 +699,26 @@ static int __init balloon_add_regions(vo
+ 			balloon_append(pfn_to_page(pfn));
+ 
+ 		/*
+-		 * Extra regions are accounted for in the physmap, but need
+-		 * decreasing from current_pages and target_pages to balloon
+-		 * down the initial allocation, because they are already
+-		 * accounted for in total_pages.
++		 * There are two different use-cases depending on how the
++		 * initial memory target is fetched.  For PVH dom0 and PV the
++		 * target is usually set to reflect the domain assigned memory,
++		 * and hence extra regions need adding.
++		 *
++		 * OTOH for HVM and PVH domU the target is set to the amount of
++		 * RAM reported in the memory map, and hence extra regions need
++		 * subtracting to reflect the real memory usage.
+ 		 */
+ 		pages = extra_pfn_end - start_pfn;
+-		if (pages >= balloon_stats.current_pages ||
+-		    pages >= balloon_stats.target_pages) {
++		if (append) {
++			balloon_stats.total_pages += pages;
++		} else if (pages >= balloon_stats.current_pages ||
++		           pages >= balloon_stats.target_pages) {
+ 			WARN(1, "Extra pages underflow current target");
+ 			return -ERANGE;
++		} else {
++			balloon_stats.current_pages -= pages;
++			balloon_stats.target_pages -= pages;
+ 		}
+-		balloon_stats.current_pages -= pages;
+-		balloon_stats.target_pages -= pages;
  	}
  
- 	/* Find the start of the next range which needs processing. */
--	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
-+	for (idx = idx_start; idx <= idx_end; idx++) {
- 		entry_start = READ_ONCE(entries[idx]);
+ 	return 0;
+@@ -722,6 +729,7 @@ static int __init balloon_init(void)
+ 	struct task_struct *task;
+ 	long current_pages = 0;
+ 	domid_t domid = DOMID_SELF;
++	bool append = true;
+ 	int rc;
  
- 		gfn = entry_start.gfn;
-@@ -3848,6 +3848,14 @@ next_range:
+ 	if (!xen_domain())
+@@ -741,6 +749,7 @@ static int __init balloon_init(void)
+ 		} else {
+ 			if (xen_unpopulated_pages >= get_num_physpages())
+ 				goto underflow;
++			append = false;
+ 			current_pages = get_num_physpages() -
+ 			                xen_unpopulated_pages;
+ 		}
+@@ -763,7 +772,7 @@ static int __init balloon_init(void)
+ 	register_sysctl_init("xen/balloon", balloon_table);
+ #endif
  
- 		if (npages)
- 			break;
-+
-+		/*
-+		 * Increment the guest-visible index to communicate the current
-+		 * entry back to the guest, e.g. in case of failure.  No need
-+		 * for READ_ONCE() as KVM doesn't consume the field, i.e. a
-+		 * misbehaving guest can only break itself.
-+		 */
-+		hdr->cur_entry++;
- 	}
+-	rc = balloon_add_regions();
++	rc = balloon_add_regions(append);
+ 	if (rc)
+ 		return rc;
  
- 	if (idx > idx_end) {
 
 
