@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDF64B7A55;
-	Thu, 17 Sep 2026 17:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5974FD7A4;
+	Thu, 17 Sep 2026 17:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667229; cv=none; b=pW/4dADB27sZVhHHG6F2MxqUU8dgMjnEOcCkb5ArZHVfECFF5OcxMipiEiI+9rN2QRfxHPcZt9KFZ6sIhMcgHSNdN5UCN0i4ttMs3O90AfyWDhCuwyD3CtVX7BLLklRnzGEX7pD7lDnMM2bqY/PTQPHzCXdzEpLkt3GWz3GmF50=
+	t=1789667232; cv=none; b=GBVRP3DPXKyyjB6dYvz/ZlSLuk62knUna+bI0fInFyssk7tnUGYSfSu3aKIUVd72rcr281Oqam2BZzs/zxRdr74fThRBE7EMFkJfDW/bZXNFC/ZDdcVaB8J3otOkocgQhTTx4qABOKNJVk7fcn2YW/tE4TCAvcDE6ChAnuntcpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667229; c=relaxed/simple;
-	bh=J32f8svJJL4SDPlMoXXO+8bwTPBMwytrdhEBR8RzKsc=;
+	s=arc-20240116; t=1789667232; c=relaxed/simple;
+	bh=5GndlTAdgWSVTSaZVrNoyF/e/TnkrsIFMKt63ug8XRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dc+2/pEJSSRRuuE651mch9q9DCzcVATPCy8BeAjf3hbT2eOOfVD9smreWrNl3sZwpYuRMw4ZW2Ub9j8QfCbF80rv63hqM9tkZ2faFclAcSMcH4V+0BGzf17l3hNUwzP2K/yq20/gHHNLbq/uc/PzATQfFdchxcYqnwsJA5CNjbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5JLHxgg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k2DTdfpqGT1cavvIj1QvK3VWA68UO8dEJPu3ZIYx2F6it+ZifyAwEUXL9OOqdEJFlzVoZxJOqxu6iaPB+8GOZVKuHZ6lQxvvKfzHhdxSxpXXJPTyNdJkJVtpNPaaJXE3iUGqbIAroeI+Mby3KiZwzWseb1rX1o6SXOtFBkWECFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn/ACmii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5JLHxgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D575D1F000FF;
-	Thu, 17 Sep 2026 17:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn/ACmii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C663C1F000FF;
+	Thu, 17 Sep 2026 17:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667228;
-	bh=gpBsegsXYZFEi96STKrITfZOS8c2+fNOFj6vbURDsm8=;
+	s=korg; t=1789667231;
+	bh=tJvLHZEQRldnMCufzRN4Ar6fDe3m4d1lEQOtW78BXko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5JLHxggvFp5Z+MiIgVcbUsX445uouIGtaROsJq7F2n2mtrySdlzO0VxrQ9bDV7zq
-	 GmTQPCj5Ge//eUmOym8my9hTkScRd8XjcBk5+itxW95ELNVsP/EU/jqEA8rcrIJFk1
-	 JP4YbrhH/iDiqepFUK4hsE0mpwSNIvsgGmiPfI78=
+	b=Zn/ACmiioDOCSKfuUsc5ljsE+4udHH9aNfeQWYWyS4K7vvBgES8s/YhFLboOtryHh
+	 3IlhyBYf5tjE5es/mbCQLhQm2oNHT7li3B8JFwLFg7L0VCjGw724m3s8TdEJ/6bvh+
+	 QrzyItR6kRFNpuZmjZ51pVv5NVAZnwx8X1POP2/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0023/1102] wifi: rtw89: disable CSI STBC for VHT 160MHz
-Date: Thu, 17 Sep 2026 15:59:26 +0100
-Message-ID: <20260917151540.012951456@linuxfoundation.org>
+Subject: [PATCH 6.12 0024/1102] ASoC: fsl-asoc-card: reduce WM8904 PLL ratio to meet frequency limit
+Date: Thu, 17 Sep 2026 15:59:27 +0100
+Message-ID: <20260917151540.039051913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,46 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit d1fba55228685a7a237681be739683eaf698b9bc ]
+[ Upstream commit 99b5316f08f390a5e1ea2239ecca8e2b4ef70ac6 ]
 
-Fix interoperability problem where CSI feedback with STBC enabled at
-VHT 160MHz BW cannot be properly decoded by certain APs, causing CSI
-reports to be rejected. This problem is specific to Wi-Fi 7 chips,
-as Wi-Fi 6 defaults to 20MHz CSI BW. Therefore, disable STBC encoding
-for CSI transmission in VHT 160MHz mode to ensure CSI feedback is
-accepted by these APs and maintain smooth throughput.
+WM8904 has a 27 MHz PLL frequency limit. The current S24_LE PLL ratio
+of 384 exceeds this at high sample rates (96 kHz × 384 = 36.864 MHz).
 
-Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260424072552.59220-4-pkshih@realtek.com
+Reduce the ratio to 192 for WM8904, keeping PLL within limits at all
+supported rates (96 kHz × 192 = 18.432 MHz).
+
+Add codec-specific pll_ratio_s24 field, default 384, override to 192
+for WM8904.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260429100028.2739711-6-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac_be.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/fsl/fsl-asoc-card.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
-index 2896abce94a3c..4d180f7723d43 100644
---- a/drivers/net/wireless/realtek/rtw89/mac_be.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
-@@ -2131,6 +2131,10 @@ static int rtw89_mac_set_csi_para_reg_be(struct rtw89_dev *rtwdev,
- 		sound_dim = min(sound_dim, t);
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index 5a69f9d255acb..4762e38922d76 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -48,6 +48,9 @@
+  * @mclk_id: MCLK (or main clock) id for set_sysclk()
+  * @fll_id: FLL (or secordary clock) id for set_sysclk()
+  * @pll_id: PLL id for set_pll()
++ * @pll_ratio_s24: PLL output ratio for S24_LE format (PLL_freq = sample_rate × ratio)
++ *                 Default is 384, but some codecs (e.g., WM8904) require lower values
++ *                 to stay within PLL frequency limits
+  */
+ struct codec_priv {
+ 	struct clk *mclk;
+@@ -56,6 +59,7 @@ struct codec_priv {
+ 	u32 mclk_id;
+ 	int fll_id;
+ 	int pll_id;
++	int pll_ratio_s24;
+ };
+ 
+ /**
+@@ -215,7 +219,7 @@ static int fsl_asoc_card_hw_params(struct snd_pcm_substream *substream,
+ 
+ 		if (codec_priv->pll_id >= 0 && codec_priv->fll_id >= 0) {
+ 			if (priv->sample_format == SNDRV_PCM_FORMAT_S24_LE)
+-				pll_out = priv->sample_rate * 384;
++				pll_out = priv->sample_rate * codec_priv->pll_ratio_s24;
+ 			else
+ 				pll_out = priv->sample_rate * 256;
+ 
+@@ -739,6 +743,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 	for (codec_idx = 0; codec_idx < 2; codec_idx++) {
+ 		priv->codec_priv[codec_idx].fll_id = -1;
+ 		priv->codec_priv[codec_idx].pll_id = -1;
++		priv->codec_priv[codec_idx].pll_ratio_s24 = 384;
  	}
  
-+	/* Disable stbc_en in VHT 160MHz to avoid IOT issues with certain APs */
-+	if (link_sta->vht_cap.cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ)
-+		stbc_en = 0;
-+
- 	nc = min(nc, sound_dim);
- 	nr = min(nr, sound_dim);
- 
+ 	/* Diversify the card configurations */
+@@ -830,6 +835,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+ 		priv->codec_priv[0].mclk_id = WM8904_FLL_MCLK;
+ 		priv->codec_priv[0].fll_id = WM8904_CLK_FLL;
+ 		priv->codec_priv[0].pll_id = WM8904_FLL_MCLK;
++		priv->codec_priv[0].pll_ratio_s24 = 192;
+ 		priv->dai_fmt |= SND_SOC_DAIFMT_CBP_CFP;
+ 	} else if (of_device_is_compatible(np, "fsl,imx-audio-spdif")) {
+ 		ret = fsl_asoc_card_spdif_init(codec_np, cpu_np, codec_dai_name, priv);
 -- 
 2.53.0
 
