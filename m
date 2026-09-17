@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36114FC355;
-	Thu, 17 Sep 2026 17:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23EC4ABBB4;
+	Thu, 17 Sep 2026 17:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665283; cv=none; b=NJ+VboYR+2Y34kNURYungOxpmUjccPDAm/WvpsaMy9Aq0a+lJdMXpKKMBxtoIuOgDl86EQ4bB34bF77jaUnTnUmSvrwm0R0Jj39y5YZGNDO+IZg2qDVnBGlF1JFQbnd6jXKKG3JNgCY2VgVenLOno/MT3Vzb9k4/ESIuKdawvP0=
+	t=1789665286; cv=none; b=BL+ZKhg0n/Y17kTgThs355wO/o2sWHnV7IZLPfnvoV0SE92mZxoG3oqFJR/IxbZhMriNDpYtGO9NCYnp4QmSf6ZrmasXHL6+FEh1ob/uXUjtezJxr/YEqyJZwJf2lPOy6eQo6jiMlWQsd0xK6LShHP8ZLOtNJz69u7PIvr0ErYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665283; c=relaxed/simple;
-	bh=riTC/9Ki232pUMSEKfo5n3MeBdwdgA6UVnFC3lRkNU0=;
+	s=arc-20240116; t=1789665286; c=relaxed/simple;
+	bh=reHFVdIYdo+O60nm1JGYkpyvvoIjb82bihAFey73Mt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kn4up5I2FlWJOW9qckjERwhe10n67FfTyqTtmQTWJqp3Ft/UtTdlgCmIAM2HG3/06YlZhruX4QyocGuaubRV3tvjzNXyVIkGw/oQ+xXa9atFyQ8Ywh+7jvRix9C5r9mS7eyM9HNVuEtUl6gq3Pj88nJoFqCrpizSIxuorY4oHVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3u9iurf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K6wi5pQPPCNDjzLe4WC6/6r5FmOrZmCPOD7WAEU41sjtThi0PLbHqIk3Ah19AzuP5rc7EdkvsZpMaBdSntIfL1tgOoRFgjpAZwFSSmrH4NNpbKJ8zk7t9Pb3U+IEVR8del9W0EtEX/EfLVW+or6e5x/KWYcldPUhmhRV3UwKD8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdNSmn3K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3u9iurf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B3E1F000FF;
-	Thu, 17 Sep 2026 17:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdNSmn3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2DE1F000FF;
+	Thu, 17 Sep 2026 17:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665281;
-	bh=y/YThA2UsqhfOrxPEJi1MVszGCHWVZoN9yvguGRD7w8=;
+	s=korg; t=1789665284;
+	bh=vf0eEGbfoDTvUSXbmw0N2bwzSLsYrO/1olLFqDTjV28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3u9iurf9Y1Mwmexka2G52e2IvBXwOTVSTwjwR5x4tWgYf9olD8RoSTJYIX0ZoVxN
-	 ssethh/Kp8vEEsyjv7SHKDzu+CI8lZKSisVHxZKahZ4f+cOdKTVNX/+ZhN4IBmKJPQ
-	 tDVytx9FXoQHzHSFIOB+t29xDUQeLRUXhPvOvW2I=
+	b=UdNSmn3KRgsaeX7gfO99GAnM0+5ZZKCHyR9XGLgS0JUZTOCbmulLotT7Ys2BW+uEt
+	 ssw1BFwFJwZlrGOJzlTL43y3qhJbjVeTqNQ0Dy+AiRBCToPgMzRkmnDDdboUIj7zzd
+	 15EkfwQBT7cYDMRQGAhFGLUFUTly7NCfofxP0JMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Deskhmukh Shrirang <Shrirang.Deskhmukh@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0610/1250] nvmet-rdma: fix queue leak when connect backlog is exceeded
-Date: Thu, 17 Sep 2026 16:06:45 +0100
-Message-ID: <20260917151608.411362051@linuxfoundation.org>
+Subject: [PATCH 6.18 0601/1250] RAS/AMD/ATL, EDAC/amd64: Only load ATL when needed
+Date: Thu, 17 Sep 2026 16:06:36 +0100
+Message-ID: <20260917151608.171047406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,61 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit fb1ed67788e21832b614c23767a088c08cfdd2f2 ]
+[ Upstream commit 4c3da04827dc01dc1cfc3d03654b7de656c42d80 ]
 
-When pending disconnecting queues exceed the backlog limit, the
-connect path only drops the device reference and leaks the newly
-allocated queue and its IB resources.
+The AMD Address Translation Library (ATL) will attempt to load on all AMD
+Zen/SMCA systems.
 
-Fixes: badc53620fe8 ("nvme: target: rdma: fix ndev refcount leak on queue connect")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+However, only systems with DRAM ECC enabled will use the library. Other
+systems will fail to load the library and produce an unnecessary message to
+the user. More importantly, that thing is dead code loaded and unused.
+
+Remove the ATL module dependency table to prevent autoloading. Request
+ATL to load from EDAC once all system checks are complete.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 3f3174996be6 ("RAS: Introduce AMD Address Translation Library")
+Closes: https://lore.kernel.org/20260305154528.1171999-1-mario.limonciello@amd.com
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Deskhmukh Shrirang <Shrirang.Deskhmukh@amd.com>
+Link: https://lore.kernel.org/all/20260307144910.GA113343@yaz-khff2.amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/edac/amd64_edac.c  | 2 ++
+ drivers/ras/amd/atl/core.c | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 97eb0c61baa14..2b03bce27a88c 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1628,19 +1628,13 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 		mutex_unlock(&nvmet_rdma_queue_mutex);
- 		if (pending > NVMET_RDMA_BACKLOG) {
- 			ret = NVME_SC_CONNECT_CTRL_BUSY;
--			goto put_device;
-+			goto free_queue;
- 		}
+diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
+index 2f6ab783bf209..8bec21dbc7575 100644
+--- a/drivers/edac/amd64_edac.c
++++ b/drivers/edac/amd64_edac.c
+@@ -4201,6 +4201,8 @@ static int __init amd64_edac_init(void)
+ 		goto err_pci;
  	}
  
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
--	if (ret) {
--		/*
--		 * Don't destroy the cm_id in free path, as we implicitly
--		 * destroy the cm_id here with non-zero ret code.
--		 */
--		queue->cm_id = NULL;
-+	if (ret)
- 		goto free_queue;
--	}
++	request_module_nowait("amd_atl");
++
+ 	/* register stuff with EDAC MCE */
+ 	if (boot_cpu_data.x86 >= 0x17) {
+ 		amd_register_ecc_decoder(decode_umc_error);
+diff --git a/drivers/ras/amd/atl/core.c b/drivers/ras/amd/atl/core.c
+index 4197e10993aca..81ebde74cb107 100644
+--- a/drivers/ras/amd/atl/core.c
++++ b/drivers/ras/amd/atl/core.c
+@@ -190,7 +190,6 @@ static const struct x86_cpu_id amd_atl_cpuids[] = {
+ 	X86_MATCH_FEATURE(X86_FEATURE_ZEN, NULL),
+ 	{ }
+ };
+-MODULE_DEVICE_TABLE(x86cpu, amd_atl_cpuids);
  
- 	mutex_lock(&nvmet_rdma_queue_mutex);
- 	list_add_tail(&queue->queue_list, &nvmet_rdma_queue_list);
-@@ -1649,6 +1643,11 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 	return 0;
- 
- free_queue:
-+	/*
-+	 * Don't destroy the cm_id in free path, as we implicitly
-+	 * destroy the cm_id here with non-zero ret code.
-+	 */
-+	queue->cm_id = NULL;
- 	nvmet_rdma_free_queue(queue);
- put_device:
- 	kref_put(&ndev->ref, nvmet_rdma_free_dev);
+ static int __init amd_atl_init(void)
+ {
 -- 
 2.53.0
 
