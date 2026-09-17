@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C844E5350;
-	Thu, 17 Sep 2026 17:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC54E7807;
+	Thu, 17 Sep 2026 17:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666718; cv=none; b=rXQClmTmRud8CyZawHgd3P7eTxhPRwbKaHMP6Dv38MMHM7S3zUUGLaVmTzIK/K2ffYeDCrtavvxwK7BeleAjLhZcerkmAd330rhbTiMH9mUGQt0ClN5ZqA/iPSXI1P1LXv4l9yC7AkIlJkFV34b5dTnTeCbtazEH66bxYKJGIJU=
+	t=1789666808; cv=none; b=gQ2oEkzsxf64xhrNQcndbqqwiRnYQTNRcvGXzKqBZ+ftpYJkWPZhF+/yvaM5binrQVU/+Hg6QOgfKPBze/VrCIyvwFJ6MZDS1eCikj/Aw8fitWyrsa9hTKOMbNM3iJ5HCYAqIBPBqggazRO+Phenz3HjU/QpslQbs2CbRXs32zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666718; c=relaxed/simple;
-	bh=mxm3OPskTFv5WsvPUP0kedj56FNTxfmfosI0FSmzEJk=;
+	s=arc-20240116; t=1789666808; c=relaxed/simple;
+	bh=DEHEVbjCkg0s64MarJj0jhLVLnjebgqRXNiCm8yIleY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvSOhhjgdSqEC8tREmp72WU9ILsdpVFDGnt9aEG0mT8g81EP56mrqKQKIQra3+f/Il8LC0vq5nezWjYI87CSh6KTVMBkdu09a8FEiVfnnZugUi4+Aamzxsmvt1eENQIY9nMa94e9YbVWruOb81nsmFRn9r+cL/t+gU+3Cf0OJlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW9H9FRH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ok5q1Drkx459N7IrkrrCQPf/HjdR+PHsI5ADWvZecl2WvewrZ9gJMD4hwT0ilQWLXpEDuws0QGCy4RqqZadM70NEH1hzOI7ktJkffUGiPPt2RxIuhW8G+ppG/wt0ffL/o5bkGFWVjcr5q/QTk0FKWDJGJN+0ZoEhVi2Dg1Yt1Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btA+lxcE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW9H9FRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483071F000FF;
-	Thu, 17 Sep 2026 17:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btA+lxcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3811F000FF;
+	Thu, 17 Sep 2026 17:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666716;
-	bh=bs+nOvgXFtzKw1GRf4faaQ5De21TE/nD7RP/fssPXME=;
+	s=korg; t=1789666807;
+	bh=CSBO4jyacl28yGGrT7Q4/T9eDGZC/37YA7NwJrHoCB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RW9H9FRHGhYB5Kc9Kmdb5zdL67dc8U7uj2DNhKhPU9ylcttH+EFrGXU9sCWOCUOy/
-	 j1KDOKmxKhBhLAog3HpWVTVfOIqY8wxh8pSHT8wLjbEJj/HDnXZGCw+N0L4Q5SyhUY
-	 JmBhi+HgB2pYNf5b4Uc3Ik0l/Fmnc13f6RdLR09o=
+	b=btA+lxcEScucD6sfifSF5EoUROL3FhtZdezMgSasVw+/gsgZ/Oj/2UHbrvsJcpuCU
+	 nFkTDWW6YCLs+QRUG3xBmFQgXkrspAC8SntM9ml/DfBhS3VAcsxC+TJzQxiDoE1K0S
+	 U3NNaEGNU/vIlzSSUGUfFlX/9mBGJ5Wb6vRuRYPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Abdifatah Suruur <suruurism@gmail.com>,
+	Chris Mason <clm@meta.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Atish Patra <atishp@meta.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1130/1250] ksmbd: dont hold ci->m_lock while waiting for a lease break ack
-Date: Thu, 17 Sep 2026 16:15:25 +0100
-Message-ID: <20260917151622.880774693@linuxfoundation.org>
+Subject: [PATCH 6.18 1131/1250] crypto: ccp - Fix possible deadlock in SEV init failure path
+Date: Thu, 17 Sep 2026 16:15:26 +0100
+Message-ID: <20260917151622.906072533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,180 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Atish Patra <atishp@meta.com>
 
-commit 27a9bc968d4ae809a3f5ca2f2b136856ee613cb4 upstream.
+[ Upstream commit b0e7ec0dab242c5e480121ba12400d0513e37ca2 ]
 
-When a cifs.ko client caches a read-handle (RH) lease via deferred close
-and a conflicting open arrives, ksmbd breaks the lease and waits for the
-acknowledgment in wait_for_break_ack() for up to OPLOCK_WAIT_TIME (35s).
-__smb_break_all_levII_oplock() runs that wait while holding ci->m_lock
-for read.
+__sev_platform_init_handle_init_ex_path() calls
+rmp_mark_pages_firmware() with locked=false while the parent
+function of init_ex_path already acquired the sev_cmd_mutex.
+In the case of an RMPUPDATE failure for any page after the first, the cleanup
+path would invoke reclaim pages which would result in a deadlock in
+sev_do_cmd.
 
-cifs.ko reacts to a handle-lease break by closing the deferred handle
-rather than sending a lease break acknowledgment. That close path
-(close_id_del_oplock() -> opinfo_del()) takes ci->m_lock for write and
-is exactly what would wake the waiter, but it blocks on the read lock
-held by the waiting thread. The break is then resolved only by the 35s
-timeout, so xfstests generic/001 takes ~78s with leases enabled versus
-~4s with oplocks only.
+Pass locked=true to honor the lock status of the parent function.
 
-Collect the target opinfos (each pinned with a reference) while holding
-ci->m_lock, then break them after releasing it, matching how
-smb_grant_oplock() already breaks a conflicting lease using only a
-reference.  The reference keeps the opinfo (and its conn and lease)
-alive across the unlocked window, and a close racing the break is
-handled by the existing OPLOCK_CLOSING state check. Apply the same fix
-to the parent lease break paths.
+Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-
-[ This tree predates the deferred break machinery.  The 6.18.y
-backport of the oplock break UAF fix (applied here as c8279ae8df68)
-calls oplock_break() directly while holding ci->m_lock, and its
-smb2_oplock_break_conn_get() takes down_read(ci->m_lock) internally,
-so the three walks self-nest the read lock and deadlock for up to
-OPLOCK_WAIT_TIME (35s) once a writer queues on the inode.  Port the
-machinery above so the walks collect the breaks and drain them after
-releasing ci->m_lock, matching the 7.2.y shape of the fix. ]
-
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reported-by: Chris Mason <clm@meta.com>
+Assisted-by: Claude:claude-opus-4-6
+Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Atish Patra <atishp@meta.com>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 63 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 58 insertions(+), 5 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 6fafcbd9aceb7..6183bd52ca9d1 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1033,6 +1033,43 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 	return err;
- }
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 5aa0f158c43b8..8820efe5ef0af 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1531,7 +1531,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
+ 		unsigned long npages;
  
-+struct oplock_break_entry {
-+	struct list_head	list;
-+	struct oplock_info	*opinfo;
-+};
-+
-+/*
-+ * Collect an oplock for a deferred break.  oplock_break() may block for
-+ * the client's break acknowledgment, and the close that wakes that wait
-+ * needs ci->m_lock for write, so the walks that hold ci->m_lock defer the
-+ * break until the lock is released.
-+ */
-+static int oplock_break_add(struct list_head *head, struct oplock_info *opinfo)
-+{
-+	struct oplock_break_entry *ent;
-+
-+	ent = kmalloc_obj(struct oplock_break_entry, KSMBD_DEFAULT_GFP);
-+	if (!ent)
-+		return -ENOMEM;
-+
-+	ent->opinfo = opinfo;
-+	list_add_tail(&ent->list, head);
-+	return 0;
-+}
-+
-+static void oplock_break_drain_none(struct list_head *head,
-+				    struct ksmbd_inode *ci)
-+{
-+	struct oplock_break_entry *ent, *tmp;
-+
-+	list_for_each_entry_safe(ent, tmp, head, list) {
-+		oplock_break(ent->opinfo, ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
-+		list_del(&ent->list);
-+		opinfo_put(ent->opinfo);
-+		kfree(ent);
-+	}
-+}
-+
- void destroy_lease_table(struct ksmbd_conn *conn)
- {
- 	struct lease_table *lb, *lbtmp;
-@@ -1179,6 +1216,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- {
- 	struct oplock_info *opinfo;
- 	struct ksmbd_inode *p_ci = NULL;
-+	LIST_HEAD(brk_list);
- 
- 	if (lctx->version != 2)
- 		return;
-@@ -1204,12 +1242,14 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 				continue;
- 			}
- 
--			oplock_break(opinfo, p_ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
--			opinfo_put(opinfo);
-+			if (oplock_break_add(&brk_list, opinfo))
-+				opinfo_put(opinfo);
- 		}
- 	}
- 	up_read(&p_ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, p_ci);
-+
- 	ksmbd_inode_put(p_ci);
- }
- 
-@@ -1217,6 +1257,7 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
- {
- 	struct oplock_info *opinfo;
- 	struct ksmbd_inode *p_ci = NULL;
-+	LIST_HEAD(brk_list);
- 
- 	rcu_read_lock();
- 	opinfo = rcu_dereference(fp->f_opinfo);
-@@ -1245,12 +1286,14 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
- 				continue;
- 			}
- 
--			oplock_break(opinfo, p_ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
--			opinfo_put(opinfo);
-+			if (oplock_break_add(&brk_list, opinfo))
-+				opinfo_put(opinfo);
- 		}
- 	}
- 	up_read(&p_ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, p_ci);
-+
- 	ksmbd_inode_put(p_ci);
- }
- 
-@@ -1461,6 +1504,7 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 	struct oplock_info *op, *brk_op;
- 	struct ksmbd_inode *ci;
- 	struct ksmbd_conn *conn = work->conn;
-+	LIST_HEAD(brk_list);
- 
- 	if (!test_share_config_flag(work->tcon->share_conf,
- 				    KSMBD_SHARE_FLAG_OPLOCKS))
-@@ -1502,12 +1546,21 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			    SMB2_LEASE_KEY_SIZE))
- 			goto next;
- 		brk_op->open_trunc = is_trunc;
--		oplock_break(brk_op, ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
-+
-+		/*
-+		 * Defer the break until ci->m_lock is released: oplock_break()
-+		 * may block waiting for the break acknowledgment, and the
-+		 * close that wakes that wait needs ci->m_lock for write.
-+		 */
-+		if (!oplock_break_add(&brk_list, brk_op))
-+			continue;
- next:
- 		opinfo_put(brk_op);
- 	}
- 	up_read(&ci->m_lock);
- 
-+	oplock_break_drain_none(&brk_list, ci);
-+
- 	if (op)
- 		opinfo_put(op);
- }
+ 		npages = 1UL << get_order(NV_LENGTH);
+-		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, false)) {
++		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
+ 			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
+ 			rc = -ENOMEM;
+ 			/*
 -- 
 2.53.0
 
