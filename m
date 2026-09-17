@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F14651AFDA;
-	Thu, 17 Sep 2026 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8581351B19A;
+	Thu, 17 Sep 2026 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664976; cv=none; b=nNH09EIscHC69BF+MQ2HTNuB1B5Vr/UIqXSLDSbKkpDwWKkS6NTqgxhbDi7mbmFQY0St/bjP7A0FAw+5t86U+e3/KG8YTdUWlULjuGUJeyZ2J+Ya7uzW7u6+wucJKEhPMB7gDDgPxkzwEBJRVWzcirfWQwpdIzjJdbjuzZxSDhI=
+	t=1789664980; cv=none; b=iP/Wrot7JDcxAaMxN0ZHJRmrWdBdnh5Z+5+grDoIM6V8s7WfXIXCwjKy2TGWhF/u0Jtf30PinFEG1IYN/DurgGhca90J1tUxMPu3uw8B2KUha8ocE1SBaBR8b33TzNMwPVlOla+9OAH8MSGLZ/5TlGZZIlC9In1OAqKX9SLYHVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664976; c=relaxed/simple;
-	bh=LYe9pFIY0v9jO8oc3ZeCuL7FYXm3LlAEBZ8+tqvzrnc=;
+	s=arc-20240116; t=1789664980; c=relaxed/simple;
+	bh=eBoPF6zEZuJLlijaoTH12BetScQZ1Q3ZjnoKrboi2pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqMEZg/O03bnSj2bWKE7BZjhFF1AEzoTLVq6NyQZ52eKUCMKD0w6Fkpss1Ya0wydMyIzCDKAfkhgoIQUNRKamwYQWIqg+q0cqMim2aXZoIrWul6K1sl41wcCrMKxfvcTbQDHiYvIWq4WXs6owfnfUK3kgR4/rByK7cQ9xSegg0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqjdq2ye; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qssFAgHlKidB3+PykTL9xJi+Oh8XNm5c8GLMlLCwEoG2nmdLEQ7qsAbwLfFGoNVQiUB1QtgvaoNHhfhHk5BfS9TjdFzcy1UZxgABoSuYTW2yAAJEbNx4vxqvXBRlOYmzkhIrasvXHsQiaUlqHuE0d0yIREbKcAzaXT7Ut0Wb40Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaJ667U1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqjdq2ye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DFB1F000FF;
-	Thu, 17 Sep 2026 17:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaJ667U1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DD11F000FF;
+	Thu, 17 Sep 2026 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664975;
-	bh=MPkqIHNgHwtUFtUtaLA74f/0tsvBAHKunwLihtbWxno=;
+	s=korg; t=1789664978;
+	bh=hfnJVEl0FdTN/iWYrZSc9B1UG+BB4jr93rWt6MaQ5qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqjdq2ye2U379VsH73AgviFFCmKXvGb1HIMguA0p/z79u5ZECkrLOAezcUxGi0GZp
-	 QzPZgxOjeulE2ywljDr5Pe3TP/fbYUZPwMJQwrQlhntjsN2Py++KTvibxqs44xNAkp
-	 JlegNLwx3yjr88jQhbPxYWzMgVZrmchjp3s7MKCo=
+	b=aaJ667U1b7Og0wVqzsJiPyTOZkYjkfJ1L+d7kFf6vntUmNZYx2nRe2rENnMtH0nT6
+	 uuEn17yK9FtzNv5z6FE++2EFMv7Ik0ShtxcWSN5c95H9lTmG3N/n6UHqgPYLvf9VKM
+	 Cph3drCXYnS5iNo8Vrj60q4gNal7EexCbKsR8H20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0550/1250] cifs: validate idmap key payload length
-Date: Thu, 17 Sep 2026 16:05:45 +0100
-Message-ID: <20260917151606.842239352@linuxfoundation.org>
+Subject: [PATCH 6.18 0551/1250] wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()
+Date: Thu, 17 Sep 2026 16:05:46 +0100
+Message-ID: <20260917151606.869422628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,40 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 455488cd5054bcc59db40fa1cc2c004031a5b2a5 ]
+[ Upstream commit a2f5286ca4f304d3fd469f01b96b518608912a5c ]
 
-The cifs.idmap key type stores its payload length in key->datalen, which
-is limited to U16_MAX.  Accepting a larger key payload truncates the
-recorded length and can make later users interpret the payload using
-inconsistent bounds.
+The KASAN allocation trace shows that a malformed IE buffer is
+stored via SIOCSIWGENIE (cfg80211_wext_siwgenie()) without any
+validation. The crash trace shows that a subsequent SIOCSIWESSID
+triggers a connection attempt which calls cfg80211_sme_get_conn_ies()
+to process the stored IE buffer, causing:
 
-Reject oversized preparsed payloads before allocating or copying them.
-This keeps key->datalen consistent with the stored data for both inline
-and separately allocated idmap payloads.
+ - An out-of-bounds read in skip_ie() which reads ies[pos+1]
+   (the length byte) past the end of the 1-byte buffer.
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ - An integer underflow in the memcpy size argument when offs
+   returned by ieee80211_ie_split() exceeds ies_len, causing
+   unsigned subtraction to wrap to SIZE_MAX and triggering a
+   fortify panic.
+
+Fix this by validating the IE buffer in cfg80211_wext_siwgenie()
+before storing it.
+
+Reported-by: syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cc867e537e4bd36f69bb
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
+[drop unnecessary ie_len check, update commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireless/wext-sme.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index 92ee03cd01b39..50cf6345975e3 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -69,6 +69,9 @@ cifs_idmap_key_instantiate(struct key *key, struct key_preparsed_payload *prep)
- {
- 	char *payload;
+diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
+index 573b6b15a446e..b5914f3658db4 100644
+--- a/net/wireless/wext-sme.c
++++ b/net/wireless/wext-sme.c
+@@ -319,6 +319,15 @@ int cfg80211_wext_siwgenie(struct net_device *dev,
+ 		return 0;
  
-+	if (prep->datalen > U16_MAX)
-+		return -EINVAL;
+ 	if (ie_len) {
++		const struct element *elem;
 +
- 	/*
- 	 * If the payload is less than or equal to the size of a pointer, then
- 	 * an allocation here is wasteful. Just copy the data directly to the
++		for_each_element(elem, extra, ie_len) {
++			/* nothing */
++		}
++
++		if (!for_each_element_completed(elem, extra, ie_len))
++			return -EINVAL;
++
+ 		ie = kmemdup(extra, ie_len, GFP_KERNEL);
+ 		if (!ie)
+ 			return -ENOMEM;
 -- 
 2.53.0
 
