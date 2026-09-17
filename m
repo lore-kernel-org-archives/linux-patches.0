@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FD94F4023;
-	Thu, 17 Sep 2026 17:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489264F403A;
+	Thu, 17 Sep 2026 17:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664598; cv=none; b=NgSgmxhk4nJ6228ODgRKXrnIZWXR2Bi+4jbLAYSSb/T91ScwoumFgr6eP3IRUDnMp4h8HBLarE/kiW6y2Fx/t5nwGBG2Zl99jbvv92RJhbDAQ0VmugEIDjaC0xHCeI6MNw6DAmfPW0pk/Y3H4KQ2zA0q/4louzsOZ0UtUDOySAA=
+	t=1789664601; cv=none; b=huW/gUDNgWE6axpMgTfCxscz4Af9DFj4hWBJzYitRWzdkQTDcIyxzWbNGp0xF5TqDcxnlmqy2cRzIGly/9Tt90lahQe9jqQt+KfzPsHPTYAFLUWlpYB9LbUL898x2GbG1ZNRkBAmXQUQES2OSVCiI9qcxCjE36Q8TD7lUSVa/yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664598; c=relaxed/simple;
-	bh=lxugPKnN/zXVr3xRUOXNYM82KlMWswYYFmqW75keDVw=;
+	s=arc-20240116; t=1789664601; c=relaxed/simple;
+	bh=ftFY6KrGpjOebxxvuj0rvrBbA1iMKnH7WgTvE1L41lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwXsi2mUzl8AnjYCDoUhyNuObbKMallKOzwiwOuwy5I0okowkkmYoa4VzgCcO1kZ/kOwms8ZVGHENgD8MJJ0DeR80Ai+3FUJPYiqY+hB+z2xq4h5nLuTwKtA5U4KjiZAnfv4056LV07jOdnIA3edHZrh59qdxyp7vyKk/yF7s68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcYfMyhr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Orq5qqihVjdbUgll0NCayLOu/CsjPjvIdvdXBgH++hn6hxfc/58APHoV6FYzUmtB16ovtd+jZvy/24BGaalUAU8kUQ9CuEN+d6mNyYmXfBdbn+ITlA5VqYyo6UUtCy7NfOn1A2l1AxO3lrHH8Ci1dGZastR6mtDTVpGF9RM3MZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8FyHJJ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcYfMyhr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EBB1F000FF;
-	Thu, 17 Sep 2026 17:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8FyHJJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB7F1F000FF;
+	Thu, 17 Sep 2026 17:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664597;
-	bh=T/mNcOC+ANRESCFviAdwAoBxqCZfgWcFtjpgyWDYSOM=;
+	s=korg; t=1789664600;
+	bh=01o+BxcMac88Vb6X+m4sX01+ARSn6s1YjaXKT98JjeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcYfMyhrXb0l8MSGy/Swh6N1pGE2qzWA842p4tzBGXH9x7K9ojdWBdncdErzofSPS
-	 eRD0vQ+v/1p+bykbhVZYflpttSqacJBeNV+lb/G1pK1kfvqZRYfl9hHSY7D4qdzYU3
-	 dCqEuniDpSZhvv2uA1gn0MOcs71XZXgISM9J79wA=
+	b=Z8FyHJJ/ni/pxXcXAcHgMBbd18NAxNBsfeNMyY5RzAlOZdlkGq8TGx86lgB/U4u4f
+	 c2/VoPPgOr6EpTwslMEwPpvJA1XXQorYgJt0kliinyQZSF/DTlUrbr6AcfYoiW34iC
+	 ZMZKbx8ALiA6tlZmIIfiDYPCl5xv/96eeVEiflXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	guoqi0226 <guoqi0226@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0424/1250] gpio: pisosr: Read "ngpios" as u32
-Date: Thu, 17 Sep 2026 16:03:39 +0100
-Message-ID: <20260917151603.508619872@linuxfoundation.org>
+Subject: [PATCH 6.18 0425/1250] spi: Add NULL check for spi_get_device_id() in spi_get_device_match_data()
+Date: Thu, 17 Sep 2026 16:03:40 +0100
+Message-ID: <20260917151603.534704894@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,47 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: guoqi0226 <guoqi0226@163.com>
 
-[ Upstream commit 4910aa198d25e5d1067236560ba34ab12bccc677 ]
+[ Upstream commit f1b061b4d4c6cbf861319ba954caa80145cf018f ]
 
-The generic "ngpios" property is encoded as a normal uint32 cell. The
-pisosr driver stores it in the gpio_chip field, but reading it with a
-u16 helper does not match the DT property encoding.
+Prevent NULL pointer dereference when spi_get_device_id() returns NULL,
+which can happen when using driver_override without matching SPI ID entry.
 
-Read "ngpios" as u32 and keep the existing assignment to the chip
-field.
-
-Assisted-by: Codex:gpt-5-5
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20260612215216.1887485-1-robh@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: guoqi0226 <guoqi0226@163.com>
+Link: https://patch.msgid.link/20260616103018.105612-3-guoqi0226@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pisosr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-pisosr.c b/drivers/gpio/gpio-pisosr.c
-index 7ec6a46ed6007..2732ea8c16b7b 100644
---- a/drivers/gpio/gpio-pisosr.c
-+++ b/drivers/gpio/gpio-pisosr.c
-@@ -112,6 +112,7 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 6900514e7329b..1be9dd4c89fe5 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -358,12 +358,16 @@ EXPORT_SYMBOL_GPL(spi_get_device_id);
+ const void *spi_get_device_match_data(const struct spi_device *sdev)
  {
- 	struct device *dev = &spi->dev;
- 	struct pisosr_gpio *gpio;
-+	u32 ngpios;
- 	int ret;
+ 	const void *match;
++	const struct spi_device_id *id;
  
- 	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
-@@ -120,7 +121,8 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+ 	match = device_get_match_data(&sdev->dev);
+ 	if (match)
+ 		return match;
  
- 	gpio->chip = template_chip;
- 	gpio->chip.parent = dev;
--	of_property_read_u16(dev->of_node, "ngpios", &gpio->chip.ngpio);
-+	if (!of_property_read_u32(dev->of_node, "ngpios", &ngpios))
-+		gpio->chip.ngpio = ngpios;
- 
- 	gpio->spi = spi;
+-	return (const void *)spi_get_device_id(sdev)->driver_data;
++	id = spi_get_device_id(sdev);
++	if (!id)
++		return NULL;
++	return (const void *)id->driver_data;
+ }
+ EXPORT_SYMBOL_GPL(spi_get_device_match_data);
  
 -- 
 2.53.0
