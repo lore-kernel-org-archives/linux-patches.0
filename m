@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B44E36D5;
-	Thu, 17 Sep 2026 16:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCF84E36F7;
+	Thu, 17 Sep 2026 16:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663899; cv=none; b=Od0xzNGs0c9AzTT4HaRCFDMYFr8Th6E7Llv2KCKWs50KyP6acR8GN8Jbe0c7E6i9oJW/KKJNXUIMji3z+ZjtISDEB5g/rbkffMW3a8q+rdiDpKe5uSQQA5LHe+LdEAtOhsvkvH4S6HICktzYYO+HZnc+rxxeRTEHmdYRznOLAoA=
+	t=1789663902; cv=none; b=Tl2ZO1C4Z8/6yVozl4xGwApjLqU5EH6d2KuX+mK0B8s7Rt9loU76tT/B1k/1raKTLLU3jNRBAz0GNiHkiQajJ1p5GBaC+MipgZovKkjedPY9ADqpTsshgSMH1VjK7ZyBa6Re9vWBGruLw2K83MeRmbULkNfv4j8c12XNAgoqJMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663899; c=relaxed/simple;
-	bh=EN5jxOOWeTI89gdAUbP1rLXFJ8b8rwCwJy+RyznnLMg=;
+	s=arc-20240116; t=1789663902; c=relaxed/simple;
+	bh=vng9JcahfHbhbSgPeV6+duOe+u6CSvn2TPpjqikQv10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfXojvdfSqpMPCjIEKFwcUVf+uHRBTpjIPSROK3Euej1K0zIrzLrtxidn82dToDzY5pNxAcRrWKC9+nLnXN8MwQLNSGaMHIMh8iT5AwcSXqptgM+DT3FqCaDSRDdm2xzbnk0EIETJk1fLzD8wo4tUs1cjm2lnRyp7EdgvMVeXI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxKWwluQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JKKQmkwiE2RjUO2A+7ZriKaCvs1t9D5j63P3cp8MnsDU2UYcyfSxMEwjJ6AChhJ0A4OkC1h2Ws9yzSBhmCdLx14+Alo+qyW0GB8FvfzCe9+3RU35RZ9AJPSVZ34dnkrl5cI63OCo6JhoBd4NgxcHr40XGNpTlEgE4zl0oLuwnzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czYjLzIR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxKWwluQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3D11F000FF;
-	Thu, 17 Sep 2026 16:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czYjLzIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411BD1F000FF;
+	Thu, 17 Sep 2026 16:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663897;
-	bh=ZnUVxT0qADu2KwQNsG4aze+S1bLmdbHl9kr3c3wWN34=;
+	s=korg; t=1789663900;
+	bh=0k/22hgKZg5ydu/wmiRFGQl2okM+NBq3/ttx3ZyYqtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxKWwluQf/OfHLsOcloPdTnXSJy+XNkmYb36kQuYcvbhTEV7oy70GG4x7fQzD3WRf
-	 HdpuWRs/pep09lVjdaRwyQq8E+1JjAoiLSodTxlVTCWzI7kc76WrhbiILTllSAl070
-	 63RWIpdwcxvyXeocL68TmHEs2P/+FBMqwgbgsOLM=
+	b=czYjLzIR9Sid3Uyn7EopTGZsthgmdgiU60WjRNx5IW2wuK7hcvzLIXqSwrV0qVqHJ
+	 06nELBOIOTCEmZhvU8z4B324UIYpD72XCdi8g1cqntsBE+XNK3YK6CVTcoCXx2aJUP
+	 nsnr9mwRbTwvPLoeznHlFOoEp2Y5jZvWWZj/c/KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
+	Christian Marangi <ansuelsmth@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0191/1250] serial: 8250: fix possible ISR soft lockup
-Date: Thu, 17 Sep 2026 15:59:46 +0100
-Message-ID: <20260917151557.291268582@linuxfoundation.org>
+Subject: [PATCH 6.18 0192/1250] usb: host: add ARCH_AIROHA in XHCI MTK dependency
+Date: Thu, 17 Sep 2026 15:59:47 +0100
+Message-ID: <20260917151557.318391306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,51 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 0c6bf45e5a345cc3b9ffbeaf9083ecac3c2293eb ]
+[ Upstream commit ffeaf31f05d664581aa436d9cb92b4d1d8d301ce ]
 
-There are rare cases in which the host gets stuck in the ISR because it
-is flooded with messages during the startup phase.
+Airoha SoC use the same register map and logic of the Mediatek xHCI
+driver, hence add it to the dependency list to permit compilation also
+on this ARCH.
 
-The reason for the soft lockup in the ISR is the missing FIFO error IRQ
-(FIFOE) handling. Not handling it and reporting IRQ_HANDLED triggers
-the IRQ immediately again.
-
-Fix this by adding a check for the FIFOE status and clearing the FIFO
-if no data is ready (DR).
-
-This behavior was observed on an AM62L device which uses the OMAP 8250
-driver. Fix it for all 8250 drivers, since the OMAP driver's special
-IRQ setup handling may trigger this behavior more frequently, but it
-is not ensured that other 8250 drivers aren't affected.
-
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Link: https://patch.msgid.link/20260519-v7-1-topic-serial-8250-v1-1-56b04293a246@pengutronix.de
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://patch.msgid.link/20260519164903.31258-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/host/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 9564a5d9b4d02..455d55827ada1 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1802,6 +1802,13 @@ void serial8250_handle_irq_locked(struct uart_port *port, unsigned int iir)
- 
- 	status = serial_lsr_in(up);
- 
-+	/*
-+	 * Recover from no-data-ready and FIFO error condition to avoid getting
-+	 * stuck in the ISR.
-+	 */
-+	if (!(status & UART_LSR_DR) && (status & UART_LSR_FIFOE))
-+		serial8250_clear_and_reinit_fifos(up);
-+
- 	/*
- 	 * If port is stopped and there are no error conditions in the
- 	 * FIFO, then don't drain the FIFO, as this may lead to TTY buffer
+diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
+index c4f17ce5c77b1..87103b868032d 100644
+--- a/drivers/usb/host/Kconfig
++++ b/drivers/usb/host/Kconfig
+@@ -71,7 +71,7 @@ config USB_XHCI_HISTB
+ config USB_XHCI_MTK
+ 	tristate "xHCI support for MediaTek SoCs"
+ 	select MFD_SYSCON
+-	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || COMPILE_TEST
++	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || ARCH_AIROHA || COMPILE_TEST
+ 	help
+ 	  Say 'Y' to enable the support for the xHCI host controller
+ 	  found in MediaTek SoCs.
 -- 
 2.53.0
 
