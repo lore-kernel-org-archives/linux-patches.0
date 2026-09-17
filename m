@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8805E4FD261;
-	Thu, 17 Sep 2026 18:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5811A2C04;
+	Thu, 17 Sep 2026 18:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668032; cv=none; b=lkHN6VOBrdNIHCHL4hxBYeOUZjn2QBq/OZDBcy/l8XOP+LCFIFlmadPVf+C3MapdCkjV974r102aeZfJvF+3FHTVR+4tGqqbge6NZg01Kc5kZmjdpqS0hrpc+PwXmuqofkKCWNeCMQcPvnaxxSWoy7Xk8i9nNhR4C/K6+g+4tIQ=
+	t=1789668034; cv=none; b=oBjNSMCa/FllD1K5oceGPD4yNCE+7NIs4M8xKxGx33o+usN4tHudADtBoA1Ockoo34Zjt5G4+IuG2uOd8MUOI61gIHL9+tW4FmnewoQCj9WCbQ14vW5OA64dP4g6bSEe2zCBZlxeqtGHhUmdrTIAjxagEa+AD1PIrT7tg11VTA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668032; c=relaxed/simple;
-	bh=SUdNPiyo+pCPlRlMzCqMPvXTugJp/B1CE8JP/oJRMvs=;
+	s=arc-20240116; t=1789668034; c=relaxed/simple;
+	bh=yq0oTbA8sVnqXFFZdiHHCDIMbUbU8vaa+XeccbrS4GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/9EdgeZf+we7zeNLh6jh693630VF8jiObed1Z82Mr5Qu9h6RPtx2x3VSgrXfBsOUrDSp+TLArzPyyJapC8mSpbrLafoMuuQCMb9v0pJTf4iz7rjIcTYaL1qaWFzeSbmthjQekyWLywCDiMBLNxevnKUgwd8jVMef9kVVwPzlLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUNaElZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XnumgYDLc4NjI44Lo/CN4LycNRmb2UXy+E1oPqqLu/49/fiIUN8Hk9rm2fd3pSVctJ78vurk0FBAxk6r90hxvq9cLT2Yu8Y790e/mKY1J1pKRTdk/cV/IwePdtxSpgXGc8apHNrHjbrrTW3M4MK/N2t5E+cfhohMXzgeA11T558=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hl0ko8jK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUNaElZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6ED1F000FF;
-	Thu, 17 Sep 2026 18:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hl0ko8jK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35EB1F000FF;
+	Thu, 17 Sep 2026 18:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668030;
-	bh=XCegzEccFonHFem1lWGV5H6PlpfVUWOD/LZC1yBErG0=;
+	s=korg; t=1789668033;
+	bh=qIEViAM9RipjXyES4uUVcG2DyWlcVSmmvNdLOxA/hUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RUNaElZG0Q1KJ7frFw11gEckf/VYH5v0iqP2D8C6xHDX228XmOfxBDjM7x2hPfw+9
-	 2Gz5Q3ugFC94N6EX3ReYMnhkhuqBh+JAWHifdLBHAO0XAkq2j4swjQPOMJhrgLLYfs
-	 IUCsygj3FiSPz6C51yljbcF4IkEw377c6pm9I5HM=
+	b=hl0ko8jK/Oa+QnLT2uMo/iqjMGRrTHeH6YGMZU4pJ4ogAkusctG+vE3IA8VRwzbZA
+	 0H/imJxnxHQcjXC6WR+2UOwpRIqibRxLOPI1XvqX75+3eVUH8ueBalvw1sAPb2+tlK
+	 uPHr2fsDiiPNwb/qIATqXHpfzQV6DzPFBwTvqgj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tze Yee Ng <tze.yee.ng@altera.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Cris <cxs1494089474@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0283/1102] dmaengine: dw-axi-dmac: fix PM for system sleep and channel alloc
-Date: Thu, 17 Sep 2026 16:03:46 +0100
-Message-ID: <20260917151546.718257688@linuxfoundation.org>
+Subject: [PATCH 6.12 0292/1102] Bluetooth: btusb: Add support for TP-Link TL-UB250
+Date: Thu, 17 Sep 2026 16:03:55 +0100
+Message-ID: <20260917151546.946027302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,76 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tze Yee Ng <tze.yee.ng@altera.com>
+From: Cris <cxs1494089474@gmail.com>
 
-[ Upstream commit df0c2dc68770cf43f15df40b184df030b850ea05 ]
+[ Upstream commit ea77debfe443f505a4edbb7f21340a583a8a143f ]
 
-The driver only had runtime PM callbacks. If a channel stayed allocated
-across system suspend/resume, the runtime usage count could remain
-non-zero while hardware state (DMAC_CFG, clocks) was lost, and
-axi_dma_runtime_resume() would not run to restore it.
+Add USB ID 2357:0607 for TP-Link TL-UB250.
 
-Add system-sleep PM ops that use pm_runtime_force_suspend() and
-pm_runtime_force_resume() so suspend/resume reuses the existing
-axi_dma_suspend() and axi_dma_resume() paths.
+This is a Realtek RTL8761BUV based Bluetooth adapter.
 
-Replace pm_runtime_get() with pm_runtime_resume_and_get() in
-dma_chan_alloc_chan_resources() so clocks are enabled before a client
-can immediately submit a transfer and touch MMIO.
+Without this entry the device is picked up by the generic Bluetooth USB
+class match and exposes hci0, but the Realtek setup path is not used and
+rtl8761bu firmware/config are not loaded.
 
-Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
-Link: https://patch.msgid.link/18bf778a3a1cc2f377ef8eb0d1508d8ac6371896.1779688569.git.tze.yee.ng@altera.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The controller reports Realtek Semiconductor Corporation as the
+manufacturer and LMP subversion 0x8761. With this entry added, btusb
+loads rtl_bt/rtl8761bu_fw.bin and rtl_bt/rtl8761bu_config.bin
+successfully.
+
+Relevant part of /sys/kernel/debug/usb/devices:
+
+T:  Bus=01 Lev=02 Prnt=06 Port=00 Cnt=01 Dev#=  9 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2357 ProdID=0607 Rev= 2.00
+S:  Product=TP-Link TL-UB250 Adapter
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+
+Use the same flags as the existing TP-Link 2357:0604 entry.
+
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Cris <cxs1494089474@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index adef111aca31e..eee37f3de0da3 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -516,11 +516,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
- static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(chan->chip->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	/* ASSERT: channel is idle */
- 	if (axi_chan_is_hw_enable(chan)) {
- 		dev_err(chan2dev(chan), "%s is non-idle!\n",
- 			axi_chan_name(chan));
-+		pm_runtime_put(chan->chip->dev);
- 		return -EBUSY;
- 	}
- 
-@@ -531,12 +537,11 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
- 					  64, 0);
- 	if (!chan->desc_pool) {
- 		dev_err(chan2dev(chan), "No memory for descriptors\n");
-+		pm_runtime_put(chan->chip->dev);
- 		return -ENOMEM;
- 	}
- 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
- 
--	pm_runtime_get(chan->chip->dev);
--
- 	return 0;
- }
- 
-@@ -1652,6 +1657,8 @@ static void dw_remove(struct platform_device *pdev)
- }
- 
- static const struct dev_pm_ops dw_axi_dma_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
- 	SET_RUNTIME_PM_OPS(axi_dma_runtime_suspend, axi_dma_runtime_resume, NULL)
- };
- 
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 3dbe00521a81f..9569739ebbcb1 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -777,6 +777,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2357, 0x0604), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2357, 0x0607), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
+ 	  					     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
 -- 
 2.53.0
 
