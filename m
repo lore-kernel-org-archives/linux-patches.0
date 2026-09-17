@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165104DEC07;
-	Thu, 17 Sep 2026 17:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65A351DB1F;
+	Thu, 17 Sep 2026 17:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665250; cv=none; b=K0D6r4YN/0Ca/FA5EwWZ3BwpRA53mS4g8pTwl5qKq0VcqYbNIQZBUPKDmPXGJ4KpmxDCwfBUBubiPuG+4tV52EsXv0cz67xGl5EaswR9zq/fAi1QzzFxG7gN/rpm3Q+oI5BHBsomx4+0AcxilcYnz6loyNlke9g0+eXz96UNjZ4=
+	t=1789665252; cv=none; b=fGSNJUKQV5dYP00SylIEathGdJOb5FHMtxDCMkVb1ilKo6OkOs6LECWlstkqGohV3dBB+++am2H5HW6FJpd/z1X605MjZ7C8YVM4TdrYEYLlYmh4/5wDIZv+Bbf+Ef8gVKkLsV5GXJ4gxCBV5UZNBRWDX9F7MAzwFCZNzzfbyjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665250; c=relaxed/simple;
-	bh=+BPwmDM3I6ehtGGbLWTaX9Qa6R3/0FVSlJF4eDJNuU8=;
+	s=arc-20240116; t=1789665252; c=relaxed/simple;
+	bh=9L5Erbyqy996AxZ0DDw+VjruL8jh8xlC7fk64LVH/dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbZGMJhve9h48jeOpzyntZUS/Zv6Xov4WGEzyr0UDvnfQRjXCJz0CIoz44G+mDAcZ3brrs9eaYwcTpHgo8CUNlaZPn4Nghaq2IuJ8iDUEAKNIlLW2ad9Jn2JDGDKhIIqD9rjITc1mZj0PPJ4RY0h0sOYMUBd39UUc2YJEYXzlRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cQlVnXd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N3kvZrhWrssistj41FMKVYtCb/C+nFGeWwM5WQ1AqAh7FO0JR49g8864xYgYNl1rW7QusCSBn/zKI8yCS2VuUZzYzcJ70MY0dMmwwT+CcSQiK9911yCgB9weOZrJnZLjybV0efY/k5QwmpYCoSfUTHUUTC7lJMKxavtES9DeRb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYdkQ9DZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cQlVnXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6251F000FF;
-	Thu, 17 Sep 2026 17:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYdkQ9DZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188AC1F000FF;
+	Thu, 17 Sep 2026 17:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665248;
-	bh=bJ6v0T5kB3JxyzNh2bHw4LM+TLleCY0I3W9pNSWfh8I=;
+	s=korg; t=1789665251;
+	bh=KZmERMGpocpF6j/oSW9zFQ44AE4nQRkGQFTy8GfYxFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2cQlVnXd3ZJvGLuvfL0rGNAnG0DYeJg46o5qqgyiL/tDAPP7IiCcxnnngUWUaIQq6
-	 ysqJVxj2dOOIjJDWVSBJW9D1CFbVSoAgzVG+RzAwkD3jq2PASWmpmQd53xqup32SPa
-	 sdxn4KmOv/8gOavN4Eb/9/KAhWn/T5M/yBodQi98=
+	b=rYdkQ9DZ7dBR3MvGPMXetii7AJIBPTUIz7qBKPu7u8RNhy0ROsdFP3W/1KzwkS9tK
+	 EKowk/xMgmQcHDOnrzYeeP4cEk93HQWsuRN+Aa5Of282/7zkNvq/VWzJt+2TdmbH2+
+	 IOz8PAedyCSlXuNvwpk3IpOq04qDoy7lgIvewip8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jad Keskes <inasj268@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Wang Yan <wangyan01@kylinos.cn>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0605/1250] EDAC/device_sysfs: Use kstrtouint() for poll_msec to prevent truncation
-Date: Thu, 17 Sep 2026 16:06:40 +0100
-Message-ID: <20260917151608.275374433@linuxfoundation.org>
+Subject: [PATCH 6.18 0641/1250] perf powerpc-vpadtl: Fix raw_size of DTL samples
+Date: Thu, 17 Sep 2026 16:07:16 +0100
+Message-ID: <20260917151609.264522734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,56 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jad Keskes <inasj268@gmail.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-[ Upstream commit 66cc9dec919dd63d8e4b3d386f7aed3ae684e645 ]
+[ Upstream commit aadea57f532882d8bab444646863c7ef8a778ff1 ]
 
-The poll_msec sysfs store file uses simple_strtoul() which accepts an unsigned
-long, but the target field (poll_msec) is unsigned int. On 64-bit systems,
-a value > UINT_MAX is silently truncated when stored.
+In powerpc_vpadtl_sample(), raw_data of the synthetic sample points to a
+struct powerpc_vpadtl_entry (48 bytes), but raw_size is set to
+sizeof(record).  record is a struct powerpc_vpadtl_entry pointer, so
+sizeof(record) is the size of the pointer (8 bytes on 64-bit) rather
+than the size of the record itself.
 
-Fix the mismatch by using kstrtouint() instead. This rejects values larger
-than UINT_MAX at parse time, making truncation impossible. Also add a check
-for value < 1 to reject the 0-delay case, which would cause the poll work to
-spin without delay and consume 100% CPU.
+As a result, consumers that bound their access to raw_data by raw_size
+only see or copy the first 8 bytes of each DTL entry instead of the full
+record.
 
-Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-Signed-off-by: Jad Keskes <inasj268@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260730145549.148229-1-inasj268@gmail.com
+Use sizeof(*record) so that raw_size reflects the actual length of the
+raw data.
+
+Fixes: 8644834a482a ("perf powerpc: Process the DTL entries in queue and deliver samples")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Reviewed-by: Athira Rajeev <atrajeev@linux.ibm.com>
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_device_sysfs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/perf/util/powerpc-vpadtl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/edac_device_sysfs.c b/drivers/edac/edac_device_sysfs.c
-index fcebc4ffea26d..71940f43a0dd8 100644
---- a/drivers/edac/edac_device_sysfs.c
-+++ b/drivers/edac/edac_device_sysfs.c
-@@ -90,14 +90,21 @@ static ssize_t edac_device_ctl_poll_msec_store(struct edac_device_ctl_info
- 					*ctl_info, const char *data,
- 					size_t count)
- {
--	unsigned long value;
-+	unsigned int value;
-+	int ret;
- 
- 	/* get the value and enforce that it is non-zero, must be at least
- 	 * one millisecond for the delay period, between scans
- 	 * Then cancel last outstanding delay for the work request
- 	 * and set a new one.
- 	 */
--	value = simple_strtoul(data, NULL, 0);
-+	ret = kstrtouint(data, 0, &value);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (value < 1)
-+		return -EINVAL;
-+
- 	edac_device_reset_delay_period(ctl_info, value);
- 
- 	return count;
+diff --git a/tools/perf/util/powerpc-vpadtl.c b/tools/perf/util/powerpc-vpadtl.c
+index 39a3fb3f13301..55b9b6e070746 100644
+--- a/tools/perf/util/powerpc-vpadtl.c
++++ b/tools/perf/util/powerpc-vpadtl.c
+@@ -192,7 +192,7 @@ static int powerpc_vpadtl_sample(struct powerpc_vpadtl_entry *record,
+ 	sample.cpumode = PERF_RECORD_MISC_KERNEL;
+ 	sample.time = save;
+ 	sample.raw_data = record;
+-	sample.raw_size = sizeof(record);
++	sample.raw_size = sizeof(*record);
+ 	event.sample.header.type = PERF_RECORD_SAMPLE;
+ 	event.sample.header.misc = sample.cpumode;
+ 	event.sample.header.size = sizeof(struct perf_event_header);
 -- 
 2.53.0
 
