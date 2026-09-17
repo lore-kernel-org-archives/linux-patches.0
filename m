@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDF03B14CC;
-	Thu, 17 Sep 2026 18:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7445A4D178E;
+	Thu, 17 Sep 2026 18:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668920; cv=none; b=HMLhjrr6oMbw1gow2dyjuThczEttphdwwmeFQlgrL+gMI9uagdDwNnB6P0G8UjaD/b9IJmZcRALt3g0y5IFzgmsJIBZ6rnAE6e/A28eMWmrGb/g3QSyXhE3qYQVmHD6L1mNGTRncGCg8LVX4Cs6qN124lFc2YpqtUGEA2L1zaTk=
+	t=1789668923; cv=none; b=jrcZ3D5AlcKZJSYnAEuMjoljR2UJ/M9J+Cj6kDDpLDF3DfbwpjPDs2Qqv+V82cug8Aklh8qZwVHmddbdP1aoM0g0US/gOXqWwEjVSLEFotfwD/z6OJvcf6ljfbX0CMtcTxku56tr3PctZB+PoyiaNfCx/IFpXPlDGTNJMOygpWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668920; c=relaxed/simple;
-	bh=YRjc3h6KW1lFVoxuKwUzGZn4Dqhg21N0LS3BHhjmFJY=;
+	s=arc-20240116; t=1789668923; c=relaxed/simple;
+	bh=35BGgz6g25KGn8edegyh5fNrLOm06ThRlPXiHESVRe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VifrGxuvFov4Kb1gbSjrH1bwBxUKw3imCD3lq8LFh9aQrWy+2Ga3WjksHLKfrapcE0siFAsCBrj+wDL3d4xXUDbT8nTUQnmSC6PkNadOY4tAtX6Ob3MTrdlc4HQugrrKV6VhQ5auFRMbst1HBtib3bI0hR2RMLkd/+sHImastcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lv3lG2Fb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XfUhGxxicfv7tOi9+S2OmcfavvpX3TkRb8XRgkk1uNnb8tZdEtwCoqV1V3cmZP0ofTxg5B9DVFErAF3EUc14PnpLB9xNmehByLpcvnNlnimlBRzAdZPUWp3Dso11+8faEpyLK5GxR8Zhoh0//LVvdipWQIL254qSxjgj16CGGc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwOtPXJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv3lG2Fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DDF1F000FF;
-	Thu, 17 Sep 2026 18:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwOtPXJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C31B1F000FF;
+	Thu, 17 Sep 2026 18:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668919;
-	bh=6F9LXXBFR4iTgxqrcHREpuVq4vChnfrNfFw8KEIn55U=;
+	s=korg; t=1789668922;
+	bh=kOGQDlzxUkSasq5X3dhuMYpqnsgjEgFbE5vPvtAchN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lv3lG2Fb211SVfQ1i/VXKGKeJSn9+ZzrjBDmW8RGEjtxF2A+9UvrwtBH84EJ5cWhy
-	 zqOqcoiBPDIlmBqOh1mUAGZAoxrFHWJBroDXrU8KZjqea2sX+VNAs7icJs556wAJNL
-	 dYUwk7LL/hql6oYfI7MR1Z568xvyWHPsRHhMdyUA=
+	b=HwOtPXJMqBPqFDYHEqGJvk9dN4i84E5vT+pO+OY3F1AvcEzbWqtYM1wcjY8JXCxnT
+	 +YNMfwXbr7Pogt4Grr0+skv7cYuxEwUKaRqbDTte+J87muEA2id3iH9KCPPHSblkI6
+	 XjFLvDc5C3S+evQmsQSkV8b60IQPBPSQSRSasdv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Nam Cao <namcao@linutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0583/1102] staging: fbtft: make dirty_lock IRQ-safe
-Date: Thu, 17 Sep 2026 16:08:46 +0100
-Message-ID: <20260917151554.588886445@linuxfoundation.org>
+Subject: [PATCH 6.12 0584/1102] ALSA: hda/core: Use guard() for mutex locks
+Date: Thu, 17 Sep 2026 16:08:47 +0100
+Message-ID: <20260917151554.615766960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,98 +50,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f576944a59f31bcffff121117ebf452c5dd162b7 ]
+[ Upstream commit 0a930d8732fc076600c4b346a83d9b0a190aeaf0 ]
 
-fbtft_mkdirty() can be reached from the fbcon rendering path while
-processing printk() in hardirq context. Meanwhile, dirty_lock is also
-taken by fbtft_deferred_io() in workqueue context with local interrupts
-enabled.
+Replace the manual mutex lock/unlock pairs with guard().
 
-Lockdep reports a possible IRQ lock inversion involving dirty_lock and
-console_owner. A hardirq can interrupt a CPU holding dirty_lock and
-enter the console rendering path, which can attempt to acquire
-dirty_lock again.
+Only code refactoring, and no behavior change.
 
-The following lockdep report was observed on an RK3566 system with
-CONFIG_PROVE_LOCKING enabled:
-
-  WARNING: possible irq lock inversion dependency detected
-  swapper/2/0 just changed the state of lock:
-  (console_owner){-...}-{0:0}
-  but this lock took another, HARDIRQ-unsafe lock in the past:
-  (&par->dirty_lock){+.+.}-{2:2}
-
-  CPU0                    CPU1
-  ----                    ----
-  lock(&par->dirty_lock);
-                         local_irq_disable();
-                         lock(console_owner);
-                         lock(&par->dirty_lock);
-  <Interrupt>
-    lock(console_owner);
-
-  *** DEADLOCK ***
-
-Use spin_lock_irqsave() for fbtft_mkdirty() and spin_lock_irq() for
-fbtft_deferred_io(). They only access the dirty line range, so the
-IRQ-off regions remain short.
-
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Hui Su <sh_def@163.com>
-Link: https://lore.kernel.org/lkml/20260804173712.176017-1-sh_def@163.com/
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://patch.msgid.link/20260807150953.2811933-3-sh_def@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250827072916.31933-9-tiwai@suse.de
+Stable-dep-of: 32d7226e6105 ("ALSA: hda: restore MFG widget enumeration after core split")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ sound/hda/ext/hdac_ext_controller.c |  6 ++---
+ sound/hda/hdac_bus.c                |  8 ++-----
+ sound/hda/hdac_component.c          |  6 ++---
+ sound/hda/hdac_device.c             | 23 +++++++++----------
+ sound/hda/hdac_regmap.c             | 35 +++++++++--------------------
+ 5 files changed, 27 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index 69649c0ef8739..088c31d3b02f2 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -299,6 +299,7 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
- {
- 	struct fbtft_par *par = info->par;
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
-+	unsigned long flags;
+diff --git a/sound/hda/ext/hdac_ext_controller.c b/sound/hda/ext/hdac_ext_controller.c
+index 6199bb60ccf00..582fb34a5096e 100644
+--- a/sound/hda/ext/hdac_ext_controller.c
++++ b/sound/hda/ext/hdac_ext_controller.c
+@@ -281,7 +281,7 @@ int snd_hdac_ext_bus_link_get(struct hdac_bus *bus,
+ 	unsigned long codec_mask;
+ 	int ret = 0;
  
- 	/* special case, needed ? */
- 	if (y == -1) {
-@@ -307,12 +308,12 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
+-	mutex_lock(&bus->lock);
++	guard(mutex)(&bus->lock);
+ 
+ 	/*
+ 	 * if we move from 0 to 1, count will be 1 so power up this link
+@@ -312,7 +312,6 @@ int snd_hdac_ext_bus_link_get(struct hdac_bus *bus,
+ 			bus->codec_mask = codec_mask;
  	}
  
- 	/* Mark display lines/area as dirty */
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irqsave(&par->dirty_lock, flags);
- 	if (y < par->dirty_lines_start)
- 		par->dirty_lines_start = y;
- 	if (y + height - 1 > par->dirty_lines_end)
- 		par->dirty_lines_end = y + height - 1;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irqrestore(&par->dirty_lock, flags);
+-	mutex_unlock(&bus->lock);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_ext_bus_link_get);
+@@ -324,7 +323,7 @@ int snd_hdac_ext_bus_link_put(struct hdac_bus *bus,
+ 	struct hdac_ext_link *hlink_tmp;
+ 	bool link_up = false;
  
- 	/* Schedule deferred_io to update display (no-op if already on queue)*/
- 	schedule_delayed_work(&info->deferred_work, fbdefio->delay);
-@@ -325,13 +326,13 @@ static void fbtft_deferred_io(struct fb_info *info, struct list_head *pagereflis
- 	struct fb_deferred_io_pageref *pageref;
- 	unsigned int y_low = 0, y_high = 0;
+-	mutex_lock(&bus->lock);
++	guard(mutex)(&bus->lock);
  
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irq(&par->dirty_lock);
- 	dirty_lines_start = par->dirty_lines_start;
- 	dirty_lines_end = par->dirty_lines_end;
- 	/* set display line markers as clean */
- 	par->dirty_lines_start = par->info->var.yres - 1;
- 	par->dirty_lines_end = 0;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irq(&par->dirty_lock);
+ 	/*
+ 	 * if we move from 1 to 0, count will be 0
+@@ -350,7 +349,6 @@ int snd_hdac_ext_bus_link_put(struct hdac_bus *bus,
+ 		}
+ 	}
  
- 	/* Mark display lines as dirty */
- 	list_for_each_entry(pageref, pagereflist, list) {
+-	mutex_unlock(&bus->lock);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_ext_bus_link_put);
+diff --git a/sound/hda/hdac_bus.c b/sound/hda/hdac_bus.c
+index d497414a5538f..9b196c915f378 100644
+--- a/sound/hda/hdac_bus.c
++++ b/sound/hda/hdac_bus.c
+@@ -87,12 +87,8 @@ EXPORT_SYMBOL_GPL(snd_hdac_bus_exit);
+ int snd_hdac_bus_exec_verb(struct hdac_bus *bus, unsigned int addr,
+ 			   unsigned int cmd, unsigned int *res)
+ {
+-	int err;
+-
+-	mutex_lock(&bus->cmd_mutex);
+-	err = snd_hdac_bus_exec_verb_unlocked(bus, addr, cmd, res);
+-	mutex_unlock(&bus->cmd_mutex);
+-	return err;
++	guard(mutex)(&bus->cmd_mutex);
++	return snd_hdac_bus_exec_verb_unlocked(bus, addr, cmd, res);
+ }
+ 
+ /**
+diff --git a/sound/hda/hdac_component.c b/sound/hda/hdac_component.c
+index bb37e7e0bd790..870375ed02daf 100644
+--- a/sound/hda/hdac_component.c
++++ b/sound/hda/hdac_component.c
+@@ -70,14 +70,14 @@ void snd_hdac_display_power(struct hdac_bus *bus, unsigned int idx, bool enable)
+ 	dev_dbg(bus->dev, "display power %s\n",
+ 		enable ? "enable" : "disable");
+ 
+-	mutex_lock(&bus->lock);
++	guard(mutex)(&bus->lock);
+ 	if (enable)
+ 		set_bit(idx, &bus->display_power_status);
+ 	else
+ 		clear_bit(idx, &bus->display_power_status);
+ 
+ 	if (!acomp || !acomp->ops)
+-		goto unlock;
++		return;
+ 
+ 	if (bus->display_power_status) {
+ 		if (!bus->display_power_active) {
+@@ -100,8 +100,6 @@ void snd_hdac_display_power(struct hdac_bus *bus, unsigned int idx, bool enable)
+ 			bus->display_power_active = 0;
+ 		}
+ 	}
+- unlock:
+-	mutex_unlock(&bus->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_display_power);
+ 
+diff --git a/sound/hda/hdac_device.c b/sound/hda/hdac_device.c
+index 3fbb9793dcfce..0f2e768fd678c 100644
+--- a/sound/hda/hdac_device.c
++++ b/sound/hda/hdac_device.c
+@@ -147,9 +147,9 @@ int snd_hdac_device_register(struct hdac_device *codec)
+ 	err = device_add(&codec->dev);
+ 	if (err < 0)
+ 		return err;
+-	mutex_lock(&codec->widget_lock);
+-	err = hda_widget_sysfs_init(codec);
+-	mutex_unlock(&codec->widget_lock);
++	scoped_guard(mutex, &codec->widget_lock) {
++		err = hda_widget_sysfs_init(codec);
++	}
+ 	if (err < 0) {
+ 		device_del(&codec->dev);
+ 		return err;
+@@ -166,9 +166,9 @@ EXPORT_SYMBOL_GPL(snd_hdac_device_register);
+ void snd_hdac_device_unregister(struct hdac_device *codec)
+ {
+ 	if (device_is_registered(&codec->dev)) {
+-		mutex_lock(&codec->widget_lock);
+-		hda_widget_sysfs_exit(codec);
+-		mutex_unlock(&codec->widget_lock);
++		scoped_guard(mutex, &codec->widget_lock) {
++			hda_widget_sysfs_exit(codec);
++		}
+ 		device_del(&codec->dev);
+ 		snd_hdac_bus_remove_device(codec->bus, codec);
+ 	}
+@@ -411,25 +411,22 @@ int snd_hdac_refresh_widgets(struct hdac_device *codec)
+ 	 * Serialize against multiple threads trying to update the sysfs
+ 	 * widgets array.
+ 	 */
+-	mutex_lock(&codec->widget_lock);
++	guard(mutex)(&codec->widget_lock);
+ 	nums = snd_hdac_get_sub_nodes(codec, codec->afg, &start_nid);
+ 	if (!start_nid || nums <= 0 || nums >= 0xff) {
+ 		dev_err(&codec->dev, "cannot read sub nodes for FG 0x%02x\n",
+ 			codec->afg);
+-		err = -EINVAL;
+-		goto unlock;
++		return -EINVAL;
+ 	}
+ 
+ 	err = hda_widget_sysfs_reinit(codec, start_nid, nums);
+ 	if (err < 0)
+-		goto unlock;
++		return err;
+ 
+ 	codec->num_nodes = nums;
+ 	codec->start_nid = start_nid;
+ 	codec->end_nid = start_nid + nums;
+-unlock:
+-	mutex_unlock(&codec->widget_lock);
+-	return err;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_refresh_widgets);
+ 
+diff --git a/sound/hda/hdac_regmap.c b/sound/hda/hdac_regmap.c
+index 1ebc6dcc66893..d6eb17aa9e086 100644
+--- a/sound/hda/hdac_regmap.c
++++ b/sound/hda/hdac_regmap.c
+@@ -425,15 +425,11 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_add_vendor_verb);
+ static int reg_raw_write(struct hdac_device *codec, unsigned int reg,
+ 			 unsigned int val)
+ {
+-	int err;
+-
+-	mutex_lock(&codec->regmap_lock);
++	guard(mutex)(&codec->regmap_lock);
+ 	if (!codec->regmap)
+-		err = hda_reg_write(codec, reg, val);
++		return hda_reg_write(codec, reg, val);
+ 	else
+-		err = regmap_write(codec->regmap, reg, val);
+-	mutex_unlock(&codec->regmap_lock);
+-	return err;
++		return regmap_write(codec->regmap, reg, val);
+ }
+ 
+ /* a helper macro to call @func_call; retry with power-up if failed */
+@@ -466,15 +462,11 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_write_raw);
+ static int reg_raw_read(struct hdac_device *codec, unsigned int reg,
+ 			unsigned int *val, bool uncached)
+ {
+-	int err;
+-
+-	mutex_lock(&codec->regmap_lock);
++	guard(mutex)(&codec->regmap_lock);
+ 	if (uncached || !codec->regmap)
+-		err = hda_reg_read(codec, reg, val);
++		return hda_reg_read(codec, reg, val);
+ 	else
+-		err = regmap_read(codec->regmap, reg, val);
+-	mutex_unlock(&codec->regmap_lock);
+-	return err;
++		return regmap_read(codec->regmap, reg, val);
+ }
+ 
+ static int __snd_hdac_regmap_read_raw(struct hdac_device *codec,
+@@ -515,7 +507,7 @@ static int reg_raw_update(struct hdac_device *codec, unsigned int reg,
+ 	bool change;
+ 	int err;
+ 
+-	mutex_lock(&codec->regmap_lock);
++	guard(mutex)(&codec->regmap_lock);
+ 	if (codec->regmap) {
+ 		err = regmap_update_bits_check(codec->regmap, reg, mask, val,
+ 					       &change);
+@@ -533,7 +525,6 @@ static int reg_raw_update(struct hdac_device *codec, unsigned int reg,
+ 			}
+ 		}
+ 	}
+-	mutex_unlock(&codec->regmap_lock);
+ 	return err;
+ }
+ 
+@@ -556,17 +547,14 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_update_raw);
+ static int reg_raw_update_once(struct hdac_device *codec, unsigned int reg,
+ 			       unsigned int mask, unsigned int val)
+ {
+-	int err = 0;
+-
+ 	if (!codec->regmap)
+ 		return reg_raw_update(codec, reg, mask, val);
+ 
+-	mutex_lock(&codec->regmap_lock);
++	guard(mutex)(&codec->regmap_lock);
+ 	/* Discard any updates to already initialised registers. */
+ 	if (!regcache_reg_cached(codec->regmap, reg))
+-		err = regmap_update_bits(codec->regmap, reg, mask, val);
+-	mutex_unlock(&codec->regmap_lock);
+-	return err;
++		return regmap_update_bits(codec->regmap, reg, mask, val);
++	return 0;
+ }
+ 
+ /**
+@@ -593,9 +581,8 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_update_raw_once);
+  */
+ void snd_hdac_regmap_sync(struct hdac_device *codec)
+ {
+-	mutex_lock(&codec->regmap_lock);
++	guard(mutex)(&codec->regmap_lock);
+ 	if (codec->regmap)
+ 		regcache_sync(codec->regmap);
+-	mutex_unlock(&codec->regmap_lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_regmap_sync);
 -- 
 2.53.0
 
