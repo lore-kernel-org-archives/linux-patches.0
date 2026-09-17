@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCA14DEC01;
-	Thu, 17 Sep 2026 17:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36114FC355;
+	Thu, 17 Sep 2026 17:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665280; cv=none; b=Rvx3SF/Va0tO+2VPH7afBe/mIVsNb+5cfU02lARb1zdZfo6Ul9e39294tl2CNorn6XfLPK4FvpCoL5uVoxOoaItzIDWRkQFsit5XvuacBtW9qSKbG1jrMJ4WUGddi6lgTkXGO0FfS6Buwi03TwCySwPaeCYchzk+NQf0aUNa2rM=
+	t=1789665283; cv=none; b=NJ+VboYR+2Y34kNURYungOxpmUjccPDAm/WvpsaMy9Aq0a+lJdMXpKKMBxtoIuOgDl86EQ4bB34bF77jaUnTnUmSvrwm0R0Jj39y5YZGNDO+IZg2qDVnBGlF1JFQbnd6jXKKG3JNgCY2VgVenLOno/MT3Vzb9k4/ESIuKdawvP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665280; c=relaxed/simple;
-	bh=6/RK2gi7zmFx/u36vHlb9myDVa18GKPQkTjV4yhkApI=;
+	s=arc-20240116; t=1789665283; c=relaxed/simple;
+	bh=riTC/9Ki232pUMSEKfo5n3MeBdwdgA6UVnFC3lRkNU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFPYWHIiBGh6wn+sizJDXFHNLXQfLuaAPk/+NytTJFrL67/S6xFEOvj9rX+mHH/UkERlX/nU8amnECF4kZug1eTm786vGXq5ot5MR93bVenmy7XIZliced1Y0DlrbPReZ8xYFigwXFD5XOHrwYmZiqFtYukz5fDN0O6AQa5uVj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8uDaG7w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kn4up5I2FlWJOW9qckjERwhe10n67FfTyqTtmQTWJqp3Ft/UtTdlgCmIAM2HG3/06YlZhruX4QyocGuaubRV3tvjzNXyVIkGw/oQ+xXa9atFyQ8Ywh+7jvRix9C5r9mS7eyM9HNVuEtUl6gq3Pj88nJoFqCrpizSIxuorY4oHVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3u9iurf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8uDaG7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3AF1F000FF;
-	Thu, 17 Sep 2026 17:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3u9iurf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B3E1F000FF;
+	Thu, 17 Sep 2026 17:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665278;
-	bh=SuMZQIF4WWIeyXOPlXcHPM0Jb84wvG2MSfVWqOw4Lhk=;
+	s=korg; t=1789665281;
+	bh=y/YThA2UsqhfOrxPEJi1MVszGCHWVZoN9yvguGRD7w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8uDaG7wtHKSqngtz8HGZsGjJplPETKm2BYO/5fZLmcee3coji79blV7he7nDye0/
-	 EtgCSsQYitJ3thTM8oMbHUQ2kE3CAQwHqKJYH5S9w4ax4MNH3PCgO5LAM/HgYktezM
-	 wKTZagC5vgfRGej6Vybq/okkpFbsV3MF72CN9AIk=
+	b=T3u9iurf9Y1Mwmexka2G52e2IvBXwOTVSTwjwR5x4tWgYf9olD8RoSTJYIX0ZoVxN
+	 ssethh/Kp8vEEsyjv7SHKDzu+CI8lZKSisVHxZKahZ4f+cOdKTVNX/+ZhN4IBmKJPQ
+	 tDVytx9FXoQHzHSFIOB+t29xDUQeLRUXhPvOvW2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xixin Liu <liuxixin@kylinos.cn>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0609/1250] nvme-rdma: fix -EIO cleanup order in queue_rq
-Date: Thu, 17 Sep 2026 16:06:44 +0100
-Message-ID: <20260917151608.383710978@linuxfoundation.org>
+Subject: [PATCH 6.18 0610/1250] nvmet-rdma: fix queue leak when connect backlog is exceeded
+Date: Thu, 17 Sep 2026 16:06:45 +0100
+Message-ID: <20260917151608.411362051@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,64 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit d61828199c6cb4b76d48403c77023cd4bb9d09fc ]
+[ Upstream commit fb1ed67788e21832b614c23767a088c08cfdd2f2 ]
 
-On -EIO, the RDMA queue_rq path reports a host path error and then
-still cleans up the command and unmaps the SQE DMA. The path error
-helper completes the request, so that is double cleanup and DMA unmap
-after the request is already complete.
+When pending disconnecting queues exceed the backlog limit, the
+connect path only drops the device reference and leaks the newly
+allocated queue and its IB resources.
 
-Unmap the SQE first, then report the host path error. Skip the outer
-command cleanup on that path.
-
-Fixes: 62eca39722fd ("nvme-rdma: handle nvme_rdma_post_send failures better")
+Fixes: badc53620fe8 ("nvme: target: rdma: fix ndev refcount leak on queue connect")
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/nvme/target/rdma.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 35c0822edb2d7..19a9dd7caed8d 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -2001,7 +2001,7 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	struct ib_device *dev;
- 	bool queue_ready = test_bit(NVME_RDMA_Q_LIVE, &queue->flags);
- 	blk_status_t ret;
--	int err;
-+	int err = 0;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 97eb0c61baa14..2b03bce27a88c 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1628,19 +1628,13 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
+ 		mutex_unlock(&nvmet_rdma_queue_mutex);
+ 		if (pending > NVMET_RDMA_BACKLOG) {
+ 			ret = NVME_SC_CONNECT_CTRL_BUSY;
+-			goto put_device;
++			goto free_queue;
+ 		}
+ 	}
  
- 	WARN_ON_ONCE(rq->tag < 0);
+ 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
+-	if (ret) {
+-		/*
+-		 * Don't destroy the cm_id in free path, as we implicitly
+-		 * destroy the cm_id here with non-zero ret code.
+-		 */
+-		queue->cm_id = NULL;
++	if (ret)
+ 		goto free_queue;
+-	}
  
-@@ -2057,16 +2057,18 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
- err_unmap:
- 	nvme_rdma_unmap_data(queue, rq);
- err:
--	if (err == -EIO)
--		ret = nvme_host_path_error(rq);
--	else if (err == -ENOMEM || err == -EAGAIN)
--		ret = BLK_STS_RESOURCE;
--	else
--		ret = BLK_STS_IOERR;
--	nvme_cleanup_cmd(rq);
-+	if (err != -EIO) {
-+		nvme_cleanup_cmd(rq);
-+		if (err == -ENOMEM || err == -EAGAIN)
-+			ret = BLK_STS_RESOURCE;
-+		else
-+			ret = BLK_STS_IOERR;
-+	}
- unmap_qe:
- 	ib_dma_unmap_single(dev, req->sqe.dma, sizeof(struct nvme_command),
- 			    DMA_TO_DEVICE);
-+	if (err == -EIO)
-+		return nvme_host_path_error(rq);
- 	return ret;
- }
+ 	mutex_lock(&nvmet_rdma_queue_mutex);
+ 	list_add_tail(&queue->queue_list, &nvmet_rdma_queue_list);
+@@ -1649,6 +1643,11 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
+ 	return 0;
  
+ free_queue:
++	/*
++	 * Don't destroy the cm_id in free path, as we implicitly
++	 * destroy the cm_id here with non-zero ret code.
++	 */
++	queue->cm_id = NULL;
+ 	nvmet_rdma_free_queue(queue);
+ put_device:
+ 	kref_put(&ndev->ref, nvmet_rdma_free_dev);
 -- 
 2.53.0
 
