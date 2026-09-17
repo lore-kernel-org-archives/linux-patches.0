@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2A64D4897;
-	Thu, 17 Sep 2026 15:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A7D5237A3;
+	Thu, 17 Sep 2026 15:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658951; cv=none; b=tOJ/U1XvJbDNasuxYxrVZTdvZnvF4jkgrDRc17X/z26E9fJQ0sjagEBmz8U/ZuTw6QBuq8syEJSmpxjj2kjsadwj20/FMVdeE6zICgsK3VAmAEmk8zrg7vIjHp1uAYqABdOiJuzDn0+vjBW5dMkOPKCi0xA+E/Ii3cNoWC+BdU4=
+	t=1789658958; cv=none; b=C/NWA5zaqbS3kdC0PHn2jfPu0quYAYmB+kSFvLX4X0CWlt29KbcG8+WT+iauhluXLiLrOlBBpSfpY5EFQPAUQFaPsVW+MdupiZ/zCbOyfv6L/hdbQOBlWKh813eXgs/juHpuyETqjIwIrz5W9XuIb9MptuzMXcnkoJXG5N5pMgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658951; c=relaxed/simple;
-	bh=A3DI6KydET+tGdPr2Ni7ipdSBdCyvrOsXVzJj2Tm5sk=;
+	s=arc-20240116; t=1789658958; c=relaxed/simple;
+	bh=myhLJGGpuVtb425HqEvRB4QhTu7fAwnnXIYcZJWWBsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgHuS9f8ZYa98LC1/BdGqnZhe6l1UkNS+XBVK05TpQDnkOUJE0sDgyK5yQoFAvlpi/6PadfQGAasnZSBXor57UAr/grV0wM78nChHY7ZZEy0/SYoHLjICTd4T/B3EQvv6QKjrU7EAlTBofXy/04FmYK1TQC3CqIqRyJ0ayTsUeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgeqK9Hw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Pss9LwMhthB4FTJ3M8QVHyfEsFhkJYwiMEAa7DakZGOT7bpblsqT9CUFziuyjuZ1KN4baUyibO+HRp0QeLtUUP1pZ9BWxXAmuLZq0WmyI9XlmbBOe/1YCqIpS7TwWndsxXM4nyTyh8WX86EPsWDqrV4kHSlZ2mbYd0IamK/hWQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPyLB18b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgeqK9Hw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8FE1F00893;
-	Thu, 17 Sep 2026 15:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPyLB18b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0671F000FF;
+	Thu, 17 Sep 2026 15:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658940;
-	bh=tt2aiRlCGa01l2XWKAfosLLFWP2L8nBjSVDyF7wIM48=;
+	s=korg; t=1789658946;
+	bh=NO9TvcIjxYUTBj+VC686TcdZ2tep4G37rdR/bB1JGwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TgeqK9HwwKw40x3OvFA5W17jtjRAenHGbnvaWasAg18TlI3Gtjb8MdEp90eqrgTWq
-	 TXzvwCiwQpalpMTfebnfBVrOmGOF0vJTPr38M42SkaAqwn1sI4dEbewCPLciD1GHVw
-	 +SZiI+EadtxhEzDTF92wwNCbH6ilQLN11V7y4HEk=
+	b=OPyLB18bAl7llfxvLERjPkkDHDKWWG0JKnnFJr4U0pjoRvG5Gy7XIpxDE8GO5IXte
+	 Dl195bd9JW/oQpNbxbeYLFz21NPmdpcEHTzJl4N/hUo5Yk90dBuxN7oSyWWNdI7BeX
+	 94OZs1Mg76h10CUy9NgyWUEJSc7lz++Gw+ZqYpOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran Kumar K <kirankumark@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 091/733] octeontx2-af: fix CN20K default MCAM rule removal on port cleanup
-Date: Thu, 17 Sep 2026 16:06:39 +0100
-Message-ID: <20260917151353.191154079@linuxfoundation.org>
+Subject: [PATCH 7.2 093/733] drm/i915/cdclk: Fix dg2_power_well_count() return type
+Date: Thu, 17 Sep 2026 16:06:41 +0100
+Message-ID: <20260917151353.247506987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -46,50 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kiran Kumar K <kirankumark@marvell.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 1376afc7660bad2a1a5ee0876898312a486cf8bd ]
+[ Upstream commit a154f2ae8eecbf2a4f97376d29b8d38c198b54e7 ]
 
-npc_mcam_free_all_entries() disables every MCAM entry mapped to a
-port before freeing it.  On CN20K, that also disables the default
-broadcast, multicast, promiscuous, and unicast rules, which causes
-packet drops when all rules are removed per port.
+dg2_power_well_count() is supposed to return an integer,
+not a boolean. Make it so.
 
-Only disable and free non-default entries.  Leave CN20K default rules
-enabled when freeing the remaining port entries.
-
-Fixes: 013717353c03 ("octeontx2-af: npc: cn20k: Tear down default MCAM rules explicitly on free")
-Signed-off-by: Kiran Kumar K <kirankumark@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9112ce99c1d7 ("drm/i915/cdclk: Extract dg2_power_well_count()")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260826143100.19401-1-ville.syrjala@linux.intel.com
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit dcf423710d0253d7d729c3992bbae0c6197c9c22)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cdclk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index 38554d51164e1..6f2e6bce164de 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -2957,10 +2957,9 @@ static void npc_mcam_free_all_entries(struct rvu *rvu, struct npc_mcam *mcam,
- 			}
- 		}
+diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
+index 7bc9b956554ba..44a6503b2be73 100644
+--- a/drivers/gpu/drm/i915/display/intel_cdclk.c
++++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
+@@ -2697,8 +2697,8 @@ static void intel_set_cdclk(struct intel_display *display,
+ 	}
+ }
  
--		/* Disable the entry */
--		npc_enable_mcam_entry(rvu, mcam, blkaddr, index, false);
--
- 		if (!cn20k_dft_rl) {
-+			/* Disable the entry */
-+			npc_enable_mcam_entry(rvu, mcam, blkaddr, index, false);
- 			mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
- 			/* Free the entry in bitmap */
- 			npc_mcam_clear_bit(mcam, index);
+-static bool dg2_power_well_count(struct intel_display *display,
+-				 const struct intel_cdclk_state *cdclk_state)
++static int dg2_power_well_count(struct intel_display *display,
++				const struct intel_cdclk_state *cdclk_state)
+ {
+ 	return display->platform.dg2 ? hweight8(cdclk_state->active_pipes) : 0;
+ }
 -- 
 2.53.0
 
