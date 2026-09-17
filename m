@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3B2519E00;
-	Thu, 17 Sep 2026 17:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F01519DFB;
+	Thu, 17 Sep 2026 17:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664664; cv=none; b=BP2L/kZQnRvOIQIHfHU+m4RV4gtpIjRNjGzd1UmK7p2taeWy23gPWdyRGF2ITu+aFPkWpBbvHExHCZTOH+QLnUIRLkpZQk9qQuAtuAcK9OaAxGr8jGVjZ75kIaZxlWElJbtc5MOVfdgJbYgKcXqsc4UnvDRe16p57Pr233KsO+E=
+	t=1789664667; cv=none; b=JPLFcEYOkIOx6FrA4+e/gMmiergU+037ZYadyiQ8F9PRbu1jGc/Uw+LEnqulKzZ6nmsibcjBJ3+KAMKJot9ErrycCMmuLkJtYtJkXLnFCnUst+ralzJyQ7QRS5sQ+hYok7kdcZWzXCxl9T833bVUqKorCiIgZHSCPr8CwVhjsCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664664; c=relaxed/simple;
-	bh=mbYs6RMnrhkCUKWTQ1Ul1Gm1x+PXMZJIgjGwwP+5Wo0=;
+	s=arc-20240116; t=1789664667; c=relaxed/simple;
+	bh=eBKYG9vMlfteGHDGJ+vaLXZP5GDPy+Z19mhsv/R6D/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amal6bZFu/Ng+5ee26yfV84OQe7gfWyApLK4x9JL8e5+ULq1quF4B/2mtQnQOsLRxqxJU7bd4Nvy5SaAO8Y1huQ66iesEVcjVPlP+SgfZJZrM/nx1gkaNcf7Cx0IZ2qHaW8GmQcIfmuoy6LHyW2S+gnPs+GqxzQEt+GU14TVqmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVvcHWio; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n+ATFwraRlCvE7hBBguEwnjI0DNHOGyyZKN020RXte29/TWjI5bliw1DcQiaa+Dk687saDfZ+XRk1r/FWuwzYsBzgGnIJVV/akMT+BTL5GxG+Zt/9bgjbi8/T19fg6ca7bp2ydZpqkNPDOCpiAG1ionFMxDkiP5BBmGtyM9jMsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfjIaqT4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVvcHWio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756661F000FF;
-	Thu, 17 Sep 2026 17:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfjIaqT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E841F00898;
+	Thu, 17 Sep 2026 17:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664663;
-	bh=m5EVKTFBczL68CJ9JMxqSpOq1ZKNlvutP2ojrhWerLg=;
+	s=korg; t=1789664666;
+	bh=XgPwDvd/hFz+uYF3l2hHMIBGtpHWur+7MrX9HMJnQVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVvcHWiognk1hk3pV9V8l4PpRxbCkH/AqfaJ8ECPWu26RV6Suf87b27oyR0G9J49g
-	 XNqNL6SgBKZiP9wER5bkSLes1A4fepIShxtfwQ5k813Ork2ObK7aNVF++fhPu9RuPG
-	 kHskY6txPUtgO/BxFV2J3AXH8HbIMEzoP5JI4vHQ=
+	b=rfjIaqT4gfPLFPgbrZIOv03m3wQ8iMaLl0XynSSVnJufUcCtPkF54TBr905b9pWn7
+	 gMoQqLzm4h0WShcpT2cQ2/oiN7OW1ZXQFBiBk9D1JKV8xyF9kjMhYJjY00jTXdTQOg
+	 s/5b5AVxf5gNtVoTOAOEsk6m5zijchDABg7Cos4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Akashdeep Kaur <a-kaur@ti.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0448/1250] mailbox: imx: use devm_of_platform_populate()
-Date: Thu, 17 Sep 2026 16:04:03 +0100
-Message-ID: <20260917151604.140384377@linuxfoundation.org>
+Subject: [PATCH 6.18 0431/1250] mfd: tps65219: Make poweroff handler conditional on system-power-controller
+Date: Thu, 17 Sep 2026 16:03:46 +0100
+Message-ID: <20260917151603.701649034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,38 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Akashdeep Kaur <a-kaur@ti.com>
 
-[ Upstream commit dd1b321e8024fb01404fe163076c9010c5df8608 ]
+[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
 
-The driver uses of_platform_populate() but does not remove the added
-devices on removal. This can lead to "double devices" on module removal
-followed by adding the module again.
+Currently, the TPS65219 driver unconditionally registers a poweroff
+handler. This causes issues on systems where a different component
+(such as TF-A firmware) should handle system poweroff instead.
 
-Use devm_of_platform_populate() to remove the populated devices once the
-parent device is removed.
+Make the poweroff handler registration conditional based on the
+"system-power-controller" device tree property. This follows the
+standard kernel pattern where only the designated power controller
+registers for system poweroff operations.
 
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+On systems where the property is absent, the PMIC will not register
+a poweroff handler, allowing other poweroff mechanisms to function.
+
+Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
+Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/tps65219.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 3e52f70434c97..445cd50c1b667 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -986,7 +986,7 @@ static int imx_mu_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_out;
+diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
+index 7275dcdb7c44f..e52fbf1481fef 100644
+--- a/drivers/mfd/tps65219.c
++++ b/drivers/mfd/tps65219.c
+@@ -541,13 +541,15 @@ static int tps65219_probe(struct i2c_client *client)
+ 		return ret;
+ 	}
  
--	of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	devm_of_platform_populate(dev);
- 
+-	ret = devm_register_power_off_handler(tps->dev,
+-					      tps65219_power_off_handler,
+-					      tps);
+-	if (ret) {
+-		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
+-		return ret;
++	if (of_device_is_system_power_controller(tps->dev->of_node)) {
++		ret = devm_register_power_off_handler(tps->dev,
++						      tps65219_power_off_handler,
++						      tps);
++		if (ret)
++			return dev_err_probe(tps->dev, ret,
++					     "Failed to register power-off handler\n");
+ 	}
++
  	return 0;
+ }
  
 -- 
 2.53.0
