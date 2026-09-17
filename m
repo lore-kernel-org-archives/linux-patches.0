@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD883590AE;
-	Thu, 17 Sep 2026 19:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39C143E4BE;
+	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671684; cv=none; b=HpljKZ8Ew2+3IYFw6jxoooySrQqlAUTnUiNd7iIartb+jE3bCWbVoZTQarjJN5e//SAtWCd9aVy3UUld/z9cXW0SG+EG1fwIxUh1EaeH7QiWPldE+NGTyk78zNn/REAa7atHVHDKtN2OZOSMjNRvVbr3NlyAxXI9/95d/9cveJI=
+	t=1789671684; cv=none; b=eC4A1HzWDvyQEUmScooWoi9vK6lW0kaOkt/kDKAFuL45r8qgCry6x5zlpjF5EG+mBddYASP1Pyo+2eDucGLzQgMd1NAuP33DDkVASAqxDwYrvClAdGK1vPDEzvgrGKgrQR2nRqmlQYpRw8hl4d1El+/rg1ZPJD5fTEZnh/Zz3c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789671684; c=relaxed/simple;
-	bh=NYfaCRqWxkGb/lIcPDN/rQyvq+os+3RUXKE9SJUhl5g=;
+	bh=83zvQONYY/KIFTq4fGkHCYABwN28wOY/5O4PtBjFliY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3/3tl/nF/OQVlYaie0Ry7/oWfsnKaLshEhh4+FpRJW9OD+6QN+F/lrAei8N73t5tgv9mDrBjhDbr3b8HoBEq/ek1fer/Qb+f6aKpbi/FJAbpSpaEmJ96tMLR49w9JTPjzaRgYksE4OahIWewIcbTuLanoYPtjmpiNPcY7mE49k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha0GMyi4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VLgaJEw+L0oYepSvXXjRC7v0wBMXpIuuNgUiCCeZlhpvmV5UJEc2jLRHzWv71nUgwp9K+8d2F3XdxLnICNfxpo7vQl2qC+1K2ZKp9lU3ban3pzqLTY/yAwC181TOydhzD0bT3itERxh8e2YCr3Zyqc4J0cH4S9rzujVstcjhiyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXtAoV9v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha0GMyi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432421F00893;
-	Thu, 17 Sep 2026 19:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXtAoV9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082121F0089F;
+	Thu, 17 Sep 2026 19:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671675;
-	bh=l9vNX6RbZxrQ28lVKbDwkzmwvuy/r9+Uiwn5mX5TBm0=;
+	s=korg; t=1789671654;
+	bh=Ka45sBtE3jecZSYpS/a9V2iWl4sNIlp3GaXzzRXCHzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ha0GMyi4p+DfW0QyJxEX4BNQDp7d7U52YZY0ls4YgUwB+8yJHFyrlMQToL9JVO7HY
-	 Zxw0Ivn+2zfbmFuo2Cuf/OopI9Mo4lZPbM+7GoqSHfnx8oSamgBDN1fGgowmLaTc56
-	 epU6/slvr6Vh4yfH6kPuOjSC7cVCnhT+cum6+AXI=
+	b=pXtAoV9viOkMxCN2lO4aXTQ+2uCWnpN6/HU3COCzlhGL+7RD13oTRDsupJvnAHpxL
+	 0gdWZNybwWbzoLCvCNpACRO3cW6d7qVQPaYYMPejq+LkgyeCFsLBlbf90Uv3dUArDk
+	 1/vWHvUkDBiHFdBKj+N0n7IahP3OKUrmY+rXC208=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosalie Wanders <rosalie@mailbox.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Gabriel Prostitis <prostitisgabriel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1055/1102] HID: sony: use guard() and scoped_guard()
-Date: Thu, 17 Sep 2026 16:16:38 +0100
-Message-ID: <20260917151607.296869106@linuxfoundation.org>
+Subject: [PATCH 6.12 1009/1102] USB: gadget: ffs: fix mm lifetime handling
+Date: Thu, 17 Sep 2026 16:15:52 +0100
+Message-ID: <20260917151606.078013515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,153 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosalie Wanders <rosalie@mailbox.org>
+From: Gabriel Prostitis <prostitisgabriel@gmail.com>
 
-[ Upstream commit da4f817ad273bca9aefd8636d347a8c101069111 ]
+[ Upstream commit 5eb5c72c72fef76cb765ef1669b62b6a3ba1bfc8 ]
 
-This replaces the spin_lock_irqsave() and spin_unlock_irqrestore() calls
-with the RAII guard() and scoped_guard().
+io_data stores a pointer to the submitting task's mm_struct,
+but does not currently hold a reference to it while async
+requests are pending.
 
-Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 7c65699a3a31 ("HID: sony: clean up device list on probe failure")
+This can result in a use-after-free if the task exits before
+completion handling finishes.
+
+Take a reference with mmgrab() when queuing the read request
+and release it with mmdrop() on request completion.
+
+Reported-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
+Signed-off-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
+Link: https://patch.msgid.link/20260601-mm-uaf-fix-v2-1-3c942a707bce@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e78dcb1f7ec2 ("usb: gadget: f_fs: Fix Use-After-Free in AIO error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sony.c |   53 ++++++++++++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 31 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -27,6 +27,7 @@
-  * There will be no PIN request from the device.
-  */
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -866,9 +866,15 @@ static void ffs_user_copy_worker(struct
+ 	unsigned long flags;
  
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/hid.h>
- #include <linux/module.h>
-@@ -520,14 +521,12 @@ static void sony_set_leds(struct sony_sc
- static inline void sony_schedule_work(struct sony_sc *sc,
- 				      enum sony_worker which)
- {
--	unsigned long flags;
--
- 	switch (which) {
- 	case SONY_WORKER_STATE:
--		spin_lock_irqsave(&sc->lock, flags);
--		if (!sc->defer_initialization && sc->state_worker_initialized)
--			schedule_work(&sc->state_worker);
--		spin_unlock_irqrestore(&sc->lock, flags);
-+		scoped_guard(spinlock_irqsave, &sc->lock) {
-+			if (!sc->defer_initialization && sc->state_worker_initialized)
-+				schedule_work(&sc->state_worker);
+ 	if (io_data->read && ret > 0) {
+-		kthread_use_mm(io_data->mm);
+-		ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
+-		kthread_unuse_mm(io_data->mm);
++		if (mmget_not_zero(io_data->mm)) {
++			kthread_use_mm(io_data->mm);
++			ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
++			kthread_unuse_mm(io_data->mm);
++			mmput(io_data->mm);
++		} else {
++			ret = -EFAULT;
 +		}
- 		break;
- 	}
- }
-@@ -796,7 +795,6 @@ static const u8 *sony_report_fixup(struc
- static void sixaxis_parse_report(struct sony_sc *sc, u8 *rd, int size)
- {
- 	static const u8 sixaxis_battery_capacity[] = { 0, 1, 25, 50, 75, 100 };
--	unsigned long flags;
- 	int offset;
- 	u8 battery_capacity;
- 	int battery_status;
-@@ -818,10 +816,10 @@ static void sixaxis_parse_report(struct
- 		battery_status = POWER_SUPPLY_STATUS_DISCHARGING;
++		mmdrop(io_data->mm);
  	}
  
--	spin_lock_irqsave(&sc->lock, flags);
--	sc->battery_capacity = battery_capacity;
--	sc->battery_status = battery_status;
--	spin_unlock_irqrestore(&sc->lock, flags);
-+	scoped_guard(spinlock_irqsave, &sc->lock) {
-+		sc->battery_capacity = battery_capacity;
-+		sc->battery_status = battery_status;
+ 	io_data->kiocb->ki_complete(io_data->kiocb, ret);
+@@ -1258,16 +1264,20 @@ static ssize_t ffs_epfile_write_iter(str
+ 
+ 	kiocb->private = p;
+ 
+-	if (p->aio)
++	if (p->aio) {
++		mmgrab(p->mm);
+ 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
 +	}
  
- 	if (sc->quirks & SIXAXIS_CONTROLLER) {
- 		int val;
-@@ -1624,15 +1622,14 @@ static int sony_battery_get_property(str
- 				     union power_supply_propval *val)
- {
- 	struct sony_sc *sc = power_supply_get_drvdata(psy);
--	unsigned long flags;
- 	int ret = 0;
- 	u8 battery_capacity;
- 	int battery_status;
+ 	res = ffs_epfile_io(kiocb->ki_filp, p);
+ 	if (res == -EIOCBQUEUED)
+ 		return res;
+-	if (p->aio)
++	if (p->aio) {
++		mmdrop(p->mm);
+ 		kfree(p);
+-	else
++	} else {
+ 		*from = p->data;
++	}
+ 	return res;
+ }
  
--	spin_lock_irqsave(&sc->lock, flags);
--	battery_capacity = sc->battery_capacity;
--	battery_status = sc->battery_status;
--	spin_unlock_irqrestore(&sc->lock, flags);
-+	scoped_guard(spinlock_irqsave, &sc->lock) {
-+		battery_capacity = sc->battery_capacity;
-+		battery_status = sc->battery_status;
+@@ -1302,14 +1312,17 @@ static ssize_t ffs_epfile_read_iter(stru
+ 
+ 	kiocb->private = p;
+ 
+-	if (p->aio)
++	if (p->aio) {
++		mmgrab(p->mm);
+ 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
 +	}
  
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_PRESENT:
-@@ -1714,10 +1711,9 @@ static inline int sony_compare_connectio
- static int sony_check_add_dev_list(struct sony_sc *sc)
- {
- 	struct sony_sc *entry;
--	unsigned long flags;
- 	int ret;
+ 	res = ffs_epfile_io(kiocb->ki_filp, p);
+ 	if (res == -EIOCBQUEUED)
+ 		return res;
  
--	spin_lock_irqsave(&sony_dev_list_lock, flags);
-+	guard(spinlock_irqsave)(&sony_dev_list_lock);
- 
- 	list_for_each_entry(entry, &sony_device_list, list_node) {
- 		ret = memcmp(sc->mac_address, entry->mac_address,
-@@ -1731,26 +1727,23 @@ static int sony_check_add_dev_list(struc
- 				"controller with MAC address %pMR already connected\n",
- 				sc->mac_address);
- 			}
--			goto unlock;
-+			goto out;
- 		}
- 	}
- 
- 	ret = 0;
- 	list_add(&(sc->list_node), &sony_device_list);
- 
--unlock:
--	spin_unlock_irqrestore(&sony_dev_list_lock, flags);
-+out:
- 	return ret;
- }
- 
- static void sony_remove_dev_list(struct sony_sc *sc)
- {
--	unsigned long flags;
--
- 	if (sc->list_node.next) {
--		spin_lock_irqsave(&sony_dev_list_lock, flags);
--		list_del(&(sc->list_node));
--		spin_unlock_irqrestore(&sony_dev_list_lock, flags);
-+		scoped_guard(spinlock_irqsave, &sony_dev_list_lock) {
-+			list_del(&(sc->list_node));
-+		}
- 	}
- }
- 
-@@ -1878,12 +1871,10 @@ static inline void sony_init_output_repo
- 
- static inline void sony_cancel_work_sync(struct sony_sc *sc)
- {
--	unsigned long flags;
--
- 	if (sc->state_worker_initialized) {
--		spin_lock_irqsave(&sc->lock, flags);
--		sc->state_worker_initialized = 0;
--		spin_unlock_irqrestore(&sc->lock, flags);
-+		scoped_guard(spinlock_irqsave, &sc->lock) {
-+			sc->state_worker_initialized = 0;
-+		}
- 		cancel_work_sync(&sc->state_worker);
- 	}
- }
+ 	if (p->aio) {
++		mmdrop(p->mm);
+ 		kfree(p->to_free);
+ 		kfree(p);
+ 	} else {
 
 
