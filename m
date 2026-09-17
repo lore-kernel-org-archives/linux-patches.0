@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E134F68CB;
-	Thu, 17 Sep 2026 17:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EAD4F68C3;
+	Thu, 17 Sep 2026 17:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665453; cv=none; b=tfZdWGY61ujJBi/tYiOXSiXW6UMTWR+QZ9RwAfQgkRbBZJNGhsfMGHCo42EGJ4hpEXLCGqE8sg3hxolFcDSKzkUN3URcid2VL4szWTdTkOtD1msDssfP1XmDgP4K8+s1jUOmLB3lX+I+MybIJ1vl6XNf0Y2CTZHqgwIkm7c6pRc=
+	t=1789665457; cv=none; b=nYhwK3ERTXk/GkH4/Zusa3P85Tjtg/3Saim8gSiSLyxUjpzJ2I53Fo36LFBm9fIOxiHn5RjfOX3F375KadU9SOcLKxwKJmUIXg1/7VkzefApxOLjq7wWOQoRr+wWiTW2JhV5OmA+z79a3F9zMVPZap+tjAfwlYiMFoNcdvFAsAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665453; c=relaxed/simple;
-	bh=lajtoSSAYTI3j5z1LYSmEcIonUlWbB5HUszg8JnkJr0=;
+	s=arc-20240116; t=1789665457; c=relaxed/simple;
+	bh=gxyzIWNRy9T3C3HqdRR4PC4tgB1s0lXDMOZcEiiqpVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUlyvZ9kod+PWVTec5hy1H9jobhxRTF6stLPrItErM3fzgFeAWsz8XVGORYVBQdxp/f/OJWQUn6gBPNoZCyK92oHAeT11Z6Bwu80Z5dqyAkv9UosQdqEw+RJSiPdh+JwG43RqU2LNijsJ49DzJah7VgO1kmtz5t6W6PePNcOvNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdRnywyB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBSQxcjR4PanwfpYWnTmHXHKOKn6wOGUEjUm6fSR2XsRTH7ZlgQifzxVI6IIU3dhoDzHZL6D6PLzhveLFN0xrH7EgS59ItI65DbsFLiucixyrhxAjGa4UfCNEe3p2UdNrDkLpIMK029r5Y0ieR9xNKUIQ2MC+CIuhYB1mEF71vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hG/KMCuf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdRnywyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2D21F000FF;
-	Thu, 17 Sep 2026 17:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hG/KMCuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA271F0089C;
+	Thu, 17 Sep 2026 17:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665452;
-	bh=Zy7ZmoFxN+EAQnEQYvvTdiKveGsJdncdSXjNlwG/qDU=;
+	s=korg; t=1789665455;
+	bh=0ccEEIOFs/GICHVL6Q/B6d6Teo0uHrjhvLhnlOHunAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdRnywyBhLGXmdcg1RctA6YCKOeUtxV9yPtWtyg0A6Xgpn6GOJp89FgSJKp6To952
-	 W4ikqe8AA3bUlB8Dw3WszIVWYmEurYKYj2H8Sle0PaFMlneKaaCQuqFPvfIizU8kEe
-	 kzo/pOXdZWoJYf6bBeUN14vh9laTVbvfqdUhhwKg=
+	b=hG/KMCufX+gv77DW0FNk0VyXIC9Uck5ChNHsFxYEff648FTIh+EbLMQQEw5alXNdJ
+	 A1Y8v20tj5Kk7iRpTRVSDrnVdWsTwEpaqpEHTro4bw4uGl8L7neKZ7W9uGB59r5G9I
+	 yc992njarP79SkKDtaCONLrNjQwAKBok7tzpXuxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2d770620059281e225a4@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0709/1250] locking/lockdep: Invalidate stale class_cache entries for zapped classes
-Date: Thu, 17 Sep 2026 16:08:24 +0100
-Message-ID: <20260917151611.114100379@linuxfoundation.org>
+Subject: [PATCH 6.18 0710/1250] octeontx2-af: Fix limiting SRIOV VF count logic
+Date: Thu, 17 Sep 2026 16:08:25 +0100
+Message-ID: <20260917151611.140096353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,166 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sunil Goutham <sgoutham@marvell.com>
 
-[ Upstream commit 02c6be7d675b21d81f0ba3a524346850a8c0e3bf ]
+[ Upstream commit f695390ea63941a9e412bf1f3afe65ab245fc681 ]
 
-syzbot reported a lockdep splat hitting DEBUG_LOCKS_WARN_ON(1) in
-hlock_class() due to an invalid class_idx:
+When RVU PF0/AF's VFs are SDP instead of LBK, limiting the VF count
+based on the LBK channel count is incorrect.
 
-  WARNING: kernel/locking/lockdep.c:238 at __lock_acquire+0x382/0x2cf0 kernel/locking/lockdep.c:5203
-  Workqueue: wg-crypt-wg0 wg_packet_tx_worker
-  RIP: 0010:hlock_class kernel/locking/lockdep.c:238 [inline]
-  RIP: 0010:check_wait_context kernel/locking/lockdep.c:4870 [inline]
-  RIP: 0010:__lock_acquire+0x389/0x2cf0 kernel/locking/lockdep.c:5203
-  Call Trace:
-   <IRQ>
-   lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5886
-   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:173
-   tcp_tsq_handler+0x29/0x200 net/ipv4/tcp_output.c:1291
-   tcp_tsq_workfn+0x384/0x410 net/ipv4/tcp_output.c:1325
-   ...
+Apply LBK channel-based VF limits only when the VF device ID matches
+the LBK RVU AFVF device.
 
-When a lock class is zapped (e.g. during module unload or key
-unregistration), zap_class() clears the class's bit in
-lock_classes_in_use and removes it from the class hash table.
-However, existing lockdep_map instances embedded in data structures
-may still retain a pointer to the zapped class in their class_cache[]
-array.
-
-When __lock_acquire() subsequently runs on such a lock, it finds
-lock->class_cache[subclass] != NULL, skipping register_lock_class()
-and assigning hlock->class_idx to the index of the zapped class. When
-check_wait_context() or hlock_class() inspects the held_lock, it finds
-!test_bit(class_idx, lock_classes_in_use) and warns. Furthermore, if
-the zapped slot is subsequently re-allocated to an unrelated lock key,
-the stale class_cache entry would erroneously match the unrelated
-class (ABA issue).
-
-Add lock_class_cache_is_valid() to validate that the cached class is
-within lock_classes bounds, still allocated in lock_classes_in_use
-(using uninstrumented arch_test_bit() in __always_inline context so it
-is safe in noinstr contexts like match_held_lock()), and that
-class->key matches the expected subkey (taking lockdep_set_subclass()
-overrides into account). Also use READ_ONCE()/WRITE_ONCE() when
-accessing class_cache[].  If the entry is invalid or stale, fall back
-to register_lock_class() / look_up_lock_class().
-
-Fixes: a0b0fd53e1e6 ("locking/lockdep: Free lock classes that are no longer in use")
-Closes: https://lore.kernel.org/netdev/6a8c66dc.4d75e56a.c9a88.0050.GAE@google.com/T/#u
-Reported-by: syzbot+2d770620059281e225a4@syzkaller.appspotmail.com
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260824155129.676096-1-edumazet@google.com
+Fixes: 9bd6caf33567 ("octeontx2-af: Enable sriov on AF to create VFs")
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 50 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 8 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   | 33 +++++++++++--------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index e0de811148242..06f025abe8875 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -947,6 +947,34 @@ look_up_lock_class(const struct lockdep_map *lock, unsigned int subclass)
- 	return NULL;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 019bd49015c60..0590313bcd81c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -3377,6 +3377,8 @@ int rvu_get_num_lbk_chans(void)
+ 	return ret;
  }
  
-+static __always_inline bool lock_class_cache_is_valid(const struct lockdep_map *lock,
-+						      const struct lock_class *class,
-+						      unsigned int subclass)
-+{
-+	unsigned int class_subclass;
++#define PCI_DEVID_OCTEONTX2_RVU_AFVF	0xA0F8
 +
-+	if (!class)
-+		return false;
-+
-+	if (unlikely(class < lock_classes || class >= lock_classes + MAX_LOCKDEP_KEYS))
-+		return false;
-+
-+	if (unlikely(!arch_test_bit(class - lock_classes, lock_classes_in_use)))
-+		return false;
-+
-+	if (unlikely(!lock->key))
-+		return false;
-+
-+	class_subclass = subclass ? subclass : class->subclass;
-+	if (unlikely(class_subclass >= MAX_LOCKDEP_SUBCLASSES))
-+		return false;
-+
-+	if (unlikely(READ_ONCE(class->key) != lock->key->subkeys + class_subclass))
-+		return false;
-+
-+	return true;
-+}
-+
- /*
-  * Static locks do not have their class-keys yet - for them the key is
-  * the lock object itself. If the lock is in the per cpu area, the
-@@ -1379,9 +1407,9 @@ register_lock_class(struct lockdep_map *lock, unsigned int subclass, int force)
- 
- out_set_class_cache:
- 	if (!subclass || force)
--		lock->class_cache[0] = class;
-+		WRITE_ONCE(lock->class_cache[0], class);
- 	else if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		lock->class_cache[subclass] = class;
-+		WRITE_ONCE(lock->class_cache[subclass], class);
- 
- 	/*
- 	 * Hash collision, did we smoke some? We found a class with a matching
-@@ -4941,7 +4969,7 @@ void lockdep_init_map_type(struct lockdep_map *lock, const char *name,
- 	int i;
- 
- 	for (i = 0; i < NR_LOCKDEP_CACHING_CLASSES; i++)
--		lock->class_cache[i] = NULL;
-+		WRITE_ONCE(lock->class_cache[i], NULL);
- 
- #ifdef CONFIG_LOCK_STAT
- 	lock->cpu = raw_smp_processor_id();
-@@ -5006,12 +5034,15 @@ EXPORT_SYMBOL_GPL(__lockdep_no_track__);
- void lockdep_set_lock_cmp_fn(struct lockdep_map *lock, lock_cmp_fn cmp_fn,
- 			     lock_print_fn print_fn)
+ static int rvu_enable_sriov(struct rvu *rvu)
  {
--	struct lock_class *class = lock->class_cache[0];
-+	struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 	unsigned long flags;
+ 	struct pci_dev *pdev = rvu->pdev;
+@@ -3395,24 +3397,27 @@ static int rvu_enable_sriov(struct rvu *rvu)
+ 		return 0;
+ 	pci_read_config_word(pdev, pos + PCI_SRIOV_VF_DID, &rvu->vf_devid);
  
- 	raw_local_irq_save(flags);
- 	lockdep_recursion_inc();
- 
-+	if (!lock_class_cache_is_valid(lock, class, 0))
-+		class = NULL;
-+
- 	if (!class)
- 		class = register_lock_class(lock, 0, 0);
- 
-@@ -5103,8 +5134,11 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 	if (DEBUG_LOCKS_WARN_ON(subclass >= MAX_LOCKDEP_SUBCLASSES))
+-	chans = rvu_get_num_lbk_chans();
+-	if (chans < 0)
+-		return chans;
+-
+ 	vfs = pci_sriov_get_totalvfs(pdev);
+-
+-	/* Limit VFs in case we have more VFs than LBK channels available. */
+-	if (vfs > chans)
+-		vfs = chans;
+-
+ 	if (!vfs)
  		return 0;
  
--	if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		class = lock->class_cache[subclass];
-+	if (subclass < NR_LOCKDEP_CACHING_CLASSES) {
-+		class = READ_ONCE(lock->class_cache[subclass]);
-+		if (!lock_class_cache_is_valid(lock, class, subclass))
-+			class = NULL;
+-	/* LBK channel number 63 is used for switching packets between
+-	 * CGX mapped VFs. Hence limit LBK pairs till 62 only.
+-	 */
+-	if (vfs > 62)
+-		vfs = 62;
++	if (rvu->vf_devid == PCI_DEVID_OCTEONTX2_RVU_AFVF) {
++		chans = rvu_get_num_lbk_chans();
++		if (chans < 0)
++			return chans;
++
++		/* The last LBK channel is reserved for switching packets between
++		 * CGX mapped VFs. Also, since LBK VFs work in pairs, limit VF
++		 * count to available LBK channels minus 2.
++		 */
++		vfs = min(vfs, chans - 2);
++
++		if (vfs <= 0) {
++			dev_warn(&pdev->dev,
++				 "Skipping SRIOV enablement, not enough LBK channels available\n");
++			return 0;
++		}
 +	}
- 	/*
- 	 * Not cached?
- 	 */
-@@ -5307,9 +5341,9 @@ static noinstr int match_held_lock(const struct held_lock *hlock,
- 		return 1;
  
- 	if (hlock->references) {
--		const struct lock_class *class = lock->class_cache[0];
-+		const struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 
--		if (!class)
-+		if (!lock_class_cache_is_valid(lock, class, 0))
- 			class = look_up_lock_class(lock, 0);
- 
- 		/*
+ 	/* Save VFs number for reference in VF interrupts handlers.
+ 	 * Since interrupts might start arriving during SRIOV enablement
 -- 
 2.53.0
 
