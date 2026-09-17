@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B553A4FE2D5;
-	Thu, 17 Sep 2026 17:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B57A50257B;
+	Thu, 17 Sep 2026 17:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667299; cv=none; b=cPB8STpa5yCoQOga4FRRrXfzQNi4YX0uFaw8cqCwPQiAm+KaMqnl4OAPFEFFdcy96S11zhSeZDbjiUsN/jc9N3HEeHDKfHskTN/Za/soT02fZO2MdaOsTlGJbE789XEzJtiWffEFBXyVixaQjP1vu+bpmIv/d6CmsysRDTFGtAk=
+	t=1789667303; cv=none; b=Z+CuYjk3HDSy/tNjAyaAIwjM2N96uNFAs2W5CAfXJ/QHLPExsq2VXFwXLnOYLxeX8RGWLEP0/VTmwJp/J9jyY6aD5DdhkJyjOWfWuhV/72/zcaBw1B//s9ZOOz90uOwTk3zbHh+x7hAqiimn4Aj2Uhfjo+f/1QqmlTQRSbNWsR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667299; c=relaxed/simple;
-	bh=3RK4h70u6wsgL6D5ujbRHcZai24LgN5VQWLRhAB49aI=;
+	s=arc-20240116; t=1789667303; c=relaxed/simple;
+	bh=dac2EC1LM5iKhzvlt9izoc5q4/yuLDYbNAPstzPawIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGmpB5OO8uZEvjjcJ0SJ+NX5GZj9H14pxpCLKdLw7jQglyTyVQdBJePtyHBWFpFg7n4WqCY0JhwqyFxGpZ7xHNc7pAnnjibDfGELzRIlnbo0V6BT8krzT6bTC1udfKNea/vzHfVkG6b1MPwZ5JTvIa5f++4gQvcOXBzEg/17Hik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uni2IToG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=koyegorNBn7tv4eoTLh3kBLgBOvkmx6FDzhqCqGFNw9ABb3kMdND7HUytGkLKMa5nTvz679TUpmD8U0pJHvqv5mPEgyT3lXPrz7/NgbGQWyxfDOeOgTj5RI2tDl2Mtmqmaslem4A9S4HC/UDIXeqK+xAB1SemTp3HaUopyHnGIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7daBnyV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uni2IToG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AF21F000FF;
-	Thu, 17 Sep 2026 17:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7daBnyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40DB1F000FF;
+	Thu, 17 Sep 2026 17:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667298;
-	bh=Jg0HMLponssJyUVRcphC7nqJzhlYg+KMuOusLh0JLUY=;
+	s=korg; t=1789667301;
+	bh=kYxMY/q1fo059B7SIizzN21cz4znSv0NMBIOGb87MQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uni2IToGJt+o5mA9jhZ5XwmfLqab26MPDF5cRcixAlnZKmHdDFmHcH3B+trI6Gopf
-	 IT0Y884u4E9rDVwRDKhZ4o5vCefN76zHNgYIMfwBOFOObbeCBh3XQiE/Nd7QvrFfQX
-	 y2XDiBY9cIRAXg5YAyGGoIgdjJyjQ2caoHdERDMU=
+	b=M7daBnyVJkfBlvLcoVgfqGZXvT3TqeWcm1CEjWHWICZodedZf5bF+2f/Sd5Rdl2Gw
+	 iH/q4nPZ7HL6vxyM2jZ+Cw63ho6HoS2Ku8gCKgjjqJvrDGjQyygjibp+Tl1Pu1KAFi
+	 mFv7wqRYy+R4Hx5xanYVO8AtsRNl+sVqdjAcalE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com,
 	Jie Wang <jie.wang@intel.com>,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0008/1102] gfs2: fix quota init duplicate scan
-Date: Thu, 17 Sep 2026 15:59:11 +0100
-Message-ID: <20260917151539.630886030@linuxfoundation.org>
+Subject: [PATCH 6.12 0009/1102] gfs2: move quota_init qc iterator increment
+Date: Thu, 17 Sep 2026 15:59:12 +0100
+Message-ID: <20260917151539.656116194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,100 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jie Wang <jie.wang@intel.com>
 
-[ Upstream commit b99a1f0f18ee50445907f55069e88bcfd8947383 ]
+[ Upstream commit 942202677f8f2ee448a6a2feb06aeeaf520342e3 ]
 
-gfs2_quota_init() checks for duplicate quota_change IDs while holding
-qd_lock and the quota hash bucket bitlock. That path used
-gfs2_qd_search_bucket(), which takes a lockref reference via
-lockref_get_not_dead().
+Move qc++ from the loop body into the for-loop increment
+expression in gfs2_quota_init().
 
-On PREEMPT_RT this may sleep, which is not allowed under the bucket
-bitlock, triggering "sleeping function called from invalid context".
+This keeps iterator progression explicit and avoids mixing pointer
+advance with duplicate-slot handling in the loop body.
 
-Use a no-ref bucket lookup in this path, then continue duplicate
-handling without taking a lockref there.
-
-Refactor gfs2_qd_search_bucket() to build on top of the no-ref helper
-so lookup traversal stays in one place.
-
-This patch fixes a bug reported by syzbot.
-
-Reported-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=642d0561f78362d67d3f
-Tested-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
 Signed-off-by: Jie Wang <jie.wang@intel.com>
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ fs/gfs2/quota.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 95b20e6a3fbc6..da62e0c5ee388 100644
+index da62e0c5ee388..def166bff5289 100644
 --- a/fs/gfs2/quota.c
 +++ b/fs/gfs2/quota.c
-@@ -255,9 +255,13 @@ static struct gfs2_quota_data *qd_alloc(unsigned hash, struct gfs2_sbd *sdp, str
- 	return NULL;
- }
+@@ -1449,7 +1449,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
  
--static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
--						     const struct gfs2_sbd *sdp,
--						     struct kqid qid)
-+/*
-+ * Lookup variant for callers which already hold qd_lock + bucket lock.
-+ */
-+static struct gfs2_quota_data *
-+gfs2_qd_search_bucket_noref(unsigned int hash,
-+			    const struct gfs2_sbd *sdp,
-+			    struct kqid qid)
- {
- 	struct gfs2_quota_data *qd;
- 	struct hlist_bl_node *h;
-@@ -265,12 +269,22 @@ static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
- 	hlist_bl_for_each_entry_rcu(qd, h, &qd_hash_table[hash], qd_hlist) {
- 		if (!qid_eq(qd->qd_id, qid))
- 			continue;
--		if (qd->qd_sbd != sdp)
--			continue;
--		if (lockref_get_not_dead(&qd->qd_lockref)) {
--			list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
-+		if (qd->qd_sbd == sdp)
- 			return qd;
--		}
-+	}
-+
-+	return NULL;
-+}
-+
-+static struct gfs2_quota_data *
-+gfs2_qd_search_bucket(unsigned int hash, const struct gfs2_sbd *sdp, struct kqid qid)
-+{
-+	struct gfs2_quota_data *qd;
-+
-+	qd = gfs2_qd_search_bucket_noref(hash, sdp, qid);
-+	if (qd && lockref_get_not_dead(&qd->qd_lockref)) {
-+		list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
-+		return qd;
- 	}
+ 		qc = (struct gfs2_quota_change *)(bh->b_data + sizeof(struct gfs2_meta_header));
+ 		for (y = 0; y < sdp->sd_qc_per_block && slot < sdp->sd_quota_slots;
+-		     y++, slot++) {
++		     y++, slot++, qc++) {
+ 			struct gfs2_quota_data *old_qd, *qd;
+ 			s64 qc_change = be64_to_cpu(qc->qc_change);
+ 			u32 qc_flags = be32_to_cpu(qc->qc_flags);
+@@ -1457,7 +1457,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 						USRQUOTA : GRPQUOTA;
+ 			struct kqid qc_id = make_kqid(&init_user_ns, qtype,
+ 						      be32_to_cpu(qc->qc_id));
+-			qc++;
+ 			if (!qc_change)
+ 				continue;
  
- 	return NULL;
-@@ -1459,7 +1473,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
- 
- 			spin_lock(&qd_lock);
- 			spin_lock_bucket(hash);
--			old_qd = gfs2_qd_search_bucket(hash, sdp, qc_id);
-+			old_qd = gfs2_qd_search_bucket_noref(hash, sdp, qc_id);
- 			if (old_qd) {
- 				fs_err(sdp, "Corruption found in quota_change%u"
- 					    "file: duplicate identifier in "
-@@ -1468,7 +1482,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
- 
- 				spin_unlock_bucket(hash);
- 				spin_unlock(&qd_lock);
--				qd_put(old_qd);
- 
- 				gfs2_glock_put(qd->qd_gl);
- 				kmem_cache_free(gfs2_quotad_cachep, qd);
 -- 
 2.53.0
 
