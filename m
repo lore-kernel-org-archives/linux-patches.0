@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11D531E852;
-	Thu, 17 Sep 2026 15:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4789497398;
+	Thu, 17 Sep 2026 15:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660254; cv=none; b=uKXetUOMeTgXQVGOQFM3ufTHNI4y74rnxnjyJPeBm2XEHbtfhyp3YX72hVRr0mwVh1j2XhqRmgAcQaPz+0RfGOSz0rrRHqd7JMj49FhSb+egvkr4jkJbrO7jTJckE3z6Le8CuLt3PN5EyCGhsQY9O/8eh4qBqnxA5sdcAdMi2cU=
+	t=1789660264; cv=none; b=I/RJa0wruW+nlgF3J7/moPgjLT9jvHWoovyptMbxI5Um9I00eJ5NvMdPsZno0LRwNN4TUesozBH/jw3WzjjZC3NIXN5K8hwf3tNI00YE4bT16cAJ70eFu9eoZ3CroqkK0KN1aVvO5MDT8T4v0H9ZCg+INDCdr0X3rau/Jw8KZcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660254; c=relaxed/simple;
-	bh=/yF97nxW8w2Pz4e3XRt1XYyjE+A090QhYQApZRb0qOk=;
+	s=arc-20240116; t=1789660264; c=relaxed/simple;
+	bh=VlD6zeVlDgS+PWLQ5hC85Hrn701QOU0mr6RVvU0sQ/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRJWZZbU1rHbOSeH1omSXAwycM497VN57Ka7tYN9fnz1wUGLBEtoZwLEzvvsyzFliN/T6ObWP9ZiL5/5ii1Ph3MVtApIHues1/hM/pWyyPRgu+J+qyxbS0WzTFs+R4u+RqRbYfCTlBap9PdPi3GocFRA0qtSLRgBrvyAUHiV4E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF6ZBcn7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nvzj1ZlhuLCuekzvLFb8SLYadUO9UQ4R+vGi2BNYmakdmdEm4EKee5LJ0qB38I6clRx6hmbFdnMVXC39RD91sKLdWLtwePheLUkv2VK5316AcBug//S+veTvGix/lqSm3Dm8YGqYXi5rfWj1We9RUDemt6b0Sl5FGFPrxC+Ao9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gv7S8hzw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF6ZBcn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1944B1F00893;
-	Thu, 17 Sep 2026 15:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gv7S8hzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0291F00899;
+	Thu, 17 Sep 2026 15:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660250;
-	bh=WfweQyX/VDgMEUyAa4Ly/0jUXW5uzIQ0rDC7bdDsE9U=;
+	s=korg; t=1789660253;
+	bh=cEr2FCy7OP9qXxopl5+hFu5b9jbCWyFChiFVK3X2m8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XF6ZBcn75B+ouoN5ZZ+uXbrGCSK8KtsOXvoaX1bEPG/1Ysr6tFP+u1rwt5BKeUHvy
-	 /VdNXOABtW39u/PDW7dJ/pgINB7G0NJGavHRw3C9cW++uQ9HjiAWQpHbHpefUe8POM
-	 jL2Ao79Bqy3P6tCFAgig2jRqBr3GoAW0mu0xkIVE=
+	b=gv7S8hzwSOgxRmzjBE5E/63xMekOMOY8WiI0Jrlxd87gQApE3evQwoLTumbx0osLI
+	 LhNc+kelNNQQLZRjyGOWFwZsQFKfEyB5A0XZgDFd4xTomG5PZp6aDeipmUcqEj0ys5
+	 5Y2CqoEhLLfZB0R3tIJ82sFaB0hX8NdAWAx+V8O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonardo Costa <leonardo.costa@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Swamil Jain <s-jain1@ti.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Herve Codina <herve.codina@bootlin.com>,
 	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 7.2 528/733] drm/bridge: tc358768: Enforce input bus flags via atomic_check
-Date: Thu, 17 Sep 2026 16:13:56 +0100
-Message-ID: <20260917151405.346041668@linuxfoundation.org>
+Subject: [PATCH 7.2 529/733] drm/bridge: ti-sn65dsi83: Fix error handling in sn65dsi83_reset_work()
+Date: Thu, 17 Sep 2026 16:13:57 +0100
+Message-ID: <20260917151405.370204448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,73 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Costa <leonardo.costa@toradex.com>
+From: Esben Haabendal <esben@geanix.com>
 
-commit ed761e0693950fcb4f6b0f60387a3961b972adf3 upstream.
+commit 4600b4d1a9ee730d03ddac5ce409cd2730ce8c0c upstream.
 
-The tc358768 declares static bridge timings requiring pixel data to be
-sampled on the positive clock edge.
+The error handling of sn65dsi83_reset_pipe() in sn65dsi83_reset_work() has
+seen a couple of changes that seems to cause a bit of confusion.
 
-However, the DRM core default propagation simply copies the output-side
-bus flags, coming from the next bridge, connector or panel, to the
-input side. If the propagated flags are incompatible with the bridge
-ones, the data is wrongly sampled, typically resulting in visual
-artifacts on the panel.
+While sn65dsi83_reset_work() has implemented an early exit if
+sn65dsi83_reset_pipe() fails since it was added, when a commit from Maxime
+Ripard switched to use drm_bridge_helper_reset_crtc() [1] the
+sn65dsi83_reset_pipe() function would no longer return an error code, so
+the early exit was then a no-op, and even on sn65dsi83_reset_pipe()
+failure, enable_irq() has been called.
 
-Implement the atomic_check hook, replacing the mutually exclusive
-mode_fixup, and set the bridge state input bus flags to the ones
-required by the tc358768. The sync polarity defaulting previously done
-in mode_fixup is carried over into atomic_check unchanged.
+When drm_bridge_enter()/drm_bridge_exit() resource protection was added,
+the drm_bridge_exit() incidentally was always called, which is the correct
+approach. But only because the early exit in sn65dsi83_reset_pipe() was
+never hit because sn65dsi83_reset_pipe() always returns 0.
 
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+In order get back to a situation where enable_irq() is not called on
+sn65dsi83_reset_pipe() failure, which should help protect against irq
+storms, we need to reintroduce a non-zero return value from
+sn65dsi83_reset_pipe() on error, and fix sn65dsi83_reset_work() so that we
+always exit the DRM bridge critical section with drm_bridge_exit().
+
+[1] commit e17fadff7ab9 ("drm/bridge: ti-sn65dsi83: Switch to drm_bridge_helper_reset_crtc")
+[2] commit d2e8d1bc840b ("drm/bridge: ti-sn65dsi83: protect device resources on unplug")
+
+Fixes: e17fadff7ab9 ("drm/bridge: ti-sn65dsi83: Switch to drm_bridge_helper_reset_crtc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Leonardo Costa <leonardo.costa@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Swamil Jain <s-jain1@ti.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
 Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260706132440.1594239-1-leoreis.costa@gmail.com
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260831-ti-sn65dsi83-fixes-v5-1-e712765d6c4f@geanix.com
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -1262,10 +1262,13 @@ tc358768_atomic_get_input_bus_fmts(struc
- 	return input_fmts;
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -403,7 +403,7 @@ retry:
+ 	drm_modeset_drop_locks(&ctx);
+ 	drm_modeset_acquire_fini(&ctx);
+ 
+-	return 0;
++	return err;
  }
  
--static bool tc358768_mode_fixup(struct drm_bridge *bridge,
--				const struct drm_display_mode *mode,
--				struct drm_display_mode *adjusted_mode)
-+static int tc358768_bridge_atomic_check(struct drm_bridge *bridge,
-+					struct drm_bridge_state *bridge_state,
-+					struct drm_crtc_state *crtc_state,
-+					struct drm_connector_state *conn_state)
- {
-+	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
+ static void sn65dsi83_reset_work(struct work_struct *ws)
+@@ -419,11 +419,13 @@ static void sn65dsi83_reset_work(struct
+ 	ret = sn65dsi83_reset_pipe(ctx);
+ 	if (ret) {
+ 		dev_err(ctx->dev, "reset pipe failed %pe\n", ERR_PTR(ret));
+-		return;
++		goto bridge_exit;
+ 	}
 +
- 	/* Default to positive sync */
+ 	if (ctx->irq)
+ 		enable_irq(ctx->irq);
  
- 	if (!(adjusted_mode->flags &
-@@ -1276,13 +1279,15 @@ static bool tc358768_mode_fixup(struct d
- 	      (DRM_MODE_FLAG_PVSYNC | DRM_MODE_FLAG_NVSYNC)))
- 		adjusted_mode->flags |= DRM_MODE_FLAG_PVSYNC;
- 
--	return true;
-+	bridge_state->input_bus_cfg.flags = bridge->timings->input_bus_flags;
-+
-+	return 0;
++bridge_exit:
+ 	drm_bridge_exit(idx);
  }
  
- static const struct drm_bridge_funcs tc358768_bridge_funcs = {
- 	.attach = tc358768_bridge_attach,
- 	.mode_valid = tc358768_bridge_mode_valid,
--	.mode_fixup = tc358768_mode_fixup,
-+	.atomic_check = tc358768_bridge_atomic_check,
- 	.atomic_pre_enable = tc358768_bridge_atomic_pre_enable,
- 	.atomic_enable = tc358768_bridge_atomic_enable,
- 	.atomic_disable = tc358768_bridge_atomic_disable,
 
 
