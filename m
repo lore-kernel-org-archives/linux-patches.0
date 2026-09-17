@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8718A547042;
-	Thu, 17 Sep 2026 18:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C93DD521;
+	Thu, 17 Sep 2026 18:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670813; cv=none; b=kkbLJpmaHmdiXfRUY6KiNqXEO7IP90ZsfP0UsWuzWFv1uyk/vzWvI+VbOOmLiaXHcj7x90rZRpWPp7dz3F0NbMBULvTBY7R8GzMirVk1bCnRfLLL6Y79wD8QAyfkUF8q0pKA8yuemLm2ha7HTpiZOZnhYuCH2T3srKA5yKzg7XY=
+	t=1789670817; cv=none; b=h2zYofgm+4h0eRDCajlF873piL68/mrFHrG6jHqkHgY198icwFMxJw8IMlaIgYUBvW43kUFi7K36gKusLrqerI0bIZWdZX1uvNeTNF+qC4K1SD6hPytSLumTYwVi71kuozvz4gpALxjdzMQyGXSbfvy8ygdtdgyl7CYq6No+otk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670813; c=relaxed/simple;
-	bh=whxPuzV00rb+1tkP5v9KwyKGe8sjnUL5Skk956FY+Co=;
+	s=arc-20240116; t=1789670817; c=relaxed/simple;
+	bh=SGiZvVKi1hCo6yG3e2xB74xOs+pqVy/5a5A+QEtEh8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Olqr10sP0kk5aGrgGB9DsUVbU4pMzlsCn9ErIh9T9rQjApxKEGql1lB+YWqm9HcQkeno4OHACi9uh5vUzBEWsYCSRf7gyjWAW1lzFR6d8DtzmrgQzUxl9HHxsaliz3ibERDwB32hBmPM8bpqfxqfjPcByd/qKOTjiK42ItMqdsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fl9MOEMd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nUxMBjtnRUU9XAKIQX8jqmmKo3RnyoF8ZMVOP2P8DmthmciTjAb8DLiWmg+d/gIZ5B2PZHmPRe/hxyAoOK1VlPz2Ji5lAv4updop+m27ipCkSo4r5HgLVaclewTFE3biYxOo1szuuxi8Ub+zh2ktmLIL18AOe7bTCDSVS/qMHkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwPMB7yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fl9MOEMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73D81F000FF;
-	Thu, 17 Sep 2026 18:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwPMB7yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A70A1F000FF;
+	Thu, 17 Sep 2026 18:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670812;
-	bh=vZtbHPuzPV+auiSnWGvKPm5n1XY9LOc4SMdEq9LSjZU=;
+	s=korg; t=1789670816;
+	bh=3rscCjOncl2IDH3/FFn9QXOXfDMmkl+YJUukT/bVSIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fl9MOEMdjIZIAOLID8oQF6ZJghh/mR5K0XGee6EUXfRoqBHf79IwxKGbF6HJYgYte
-	 VkpVilef9/uUtEcfegs1YAotUPDERFYk1ahssEK6mI4MinjVcAjEPT0Mwrk5BanW7b
-	 +8NgJKySDqBPTeGLAtfJ20Z+CzpHL0zc/EaTzYy0=
+	b=pwPMB7ykohnsFTTy4SbxEom/MwCUOZpOyaXyJFAKTakIwAAYqmVsXxGOy1WAbABch
+	 roefeNBHSruFsVr+SIzGgdj53nElVwPx9IYQyKPsU0+AoTZkv1WSktIUcufy8mAMJD
+	 +2wBNYSmsm7uiRCzsocQwrQdLezCg6fQYcD3/X9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Vega <vega@nebusec.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0778/1102] sched/eevdf: Fix rb augmented with multi fields
-Date: Thu, 17 Sep 2026 16:12:01 +0100
-Message-ID: <20260917151559.987747454@linuxfoundation.org>
+Subject: [PATCH 6.12 0779/1102] net/sched: cls_route: free emptied bucket on filter move
+Date: Thu, 17 Sep 2026 16:12:02 +0100
+Message-ID: <20260917151600.015548127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,132 +53,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 51b0e68cfa0ac69e3c3ea9d6753af7e15dfaab22 ]
+[ Upstream commit 1853f30cf5c84971f99788a76207c6f745380896 ]
 
-The eevdf rb tree maintains 3 augmented fields but only one is currently
-copied when balancing the tree.
+route4_change can move an existing filter to a different top-level
+bucket: route4_set_parms recomputes the handle from TCA_ROUTE4_TO/
+FROM/IIF, and the handle-mismatch check is gated on the 'new' flag, so
+for an existing filter the new handle may differ from the old one and
+land in a different bucket. When this happens, the filter is unlinked
+from the old bucket, but the bucket itself is never freed once it goes
+empty. The stale empty bucket remains in head->table[], causing
+route4_delete to report *last=false even after the last live filter is
+gone. That pins the empty tcf_proto and causes a leak.
 
-Add a more generic define that can be used when there are several augmented
-fields. In this case, we provide a function that takes care of copying all
-fields.
+Fix this by refcounting the filters linked to a bucket and freeing the
+bucket when the count drops to zero. The existing scan in route4_delete
+goes away with it.
 
-Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://patch.msgid.link/20260909150522.858312-1-vincent.guittot@linaro.org
+The count is updated at all sites that link or unlink a filter during add,
+change and delete, and the bucket is dropped from head->table[] as soon as
+it reaches zero.
+
+Conditions to recreate the bug:
+  CONFIG_NET_CLS_ROUTE4=y, CONFIG_NET_SCH_INGRESS=y, CONFIG_NET_CLS_ACT=y.
+
+  tc qdisc replace dev lo clsact
+  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
+  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
+    route from 1 to 2
+  tc filter del dev lo ingress protocol ip pref 100 handle 0x10002 \
+    route from 1 to 2
+  tc filter show dev lo ingress | grep -c 'pref 100 route chain 0 '
+
+Fixes: 1e052be69d04 ("net_sched: destroy proto tp when all filters are gone")
+Reported-by: Vega <vega@nebusec.ai>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260907192133.2639067-2-victor@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rbtree_augmented.h | 35 +++++++++++++++++++++++++-------
- kernel/sched/fair.c              | 12 +++++++++--
- 2 files changed, 38 insertions(+), 9 deletions(-)
+ net/sched/cls_route.c | 45 +++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/include/linux/rbtree_augmented.h b/include/linux/rbtree_augmented.h
-index 6dbc5a1bf6a8c..d2fa1c41bfd2b 100644
---- a/include/linux/rbtree_augmented.h
-+++ b/include/linux/rbtree_augmented.h
-@@ -87,18 +87,18 @@ rb_add_augmented_cached(struct rb_node *node, struct rb_root_cached *tree,
- }
- 
- /*
-- * Template for declaring augmented rbtree callbacks (generic case)
-+ * Template for declaring augmented rbtree callbacks (generic multi fields)
-  *
-  * RBSTATIC:    'static' or empty
-  * RBNAME:      name of the rb_augment_callbacks structure
-  * RBSTRUCT:    struct type of the tree nodes
-  * RBFIELD:     name of struct rb_node field within RBSTRUCT
-- * RBAUGMENTED: name of field within RBSTRUCT holding data for subtree
-- * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED data
-+ * RBCOPY:	name of function that copies the RBAUGMENTED datas
-+ * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED datas
-  */
- 
--#define RB_DECLARE_CALLBACKS(RBSTATIC, RBNAME,				\
--			     RBSTRUCT, RBFIELD, RBAUGMENTED, RBCOMPUTE)	\
-+#define RB_DECLARE_CALLBACKS_MULTI(RBSTATIC, RBNAME,			\
-+			     RBSTRUCT, RBFIELD, RBCOPY, RBCOMPUTE)	\
- static inline void							\
- RBNAME ## _propagate(struct rb_node *rb, struct rb_node *stop)		\
- {									\
-@@ -114,14 +114,14 @@ RBNAME ## _copy(struct rb_node *rb_old, struct rb_node *rb_new)		\
- {									\
- 	RBSTRUCT *old = rb_entry(rb_old, RBSTRUCT, RBFIELD);		\
- 	RBSTRUCT *new = rb_entry(rb_new, RBSTRUCT, RBFIELD);		\
--	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+	RBCOPY(new, old);						\
- }									\
- static void								\
- RBNAME ## _rotate(struct rb_node *rb_old, struct rb_node *rb_new)	\
- {									\
- 	RBSTRUCT *old = rb_entry(rb_old, RBSTRUCT, RBFIELD);		\
- 	RBSTRUCT *new = rb_entry(rb_new, RBSTRUCT, RBFIELD);		\
--	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+	RBCOPY(new, old);						\
- 	RBCOMPUTE(old, false);						\
- }									\
- RBSTATIC const struct rb_augment_callbacks RBNAME = {			\
-@@ -130,6 +130,27 @@ RBSTATIC const struct rb_augment_callbacks RBNAME = {			\
- 	.rotate = RBNAME ## _rotate					\
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 38469cdcb22d6..bc2ac17406586 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -11,6 +11,7 @@
+ #include <linux/kernel.h>
+ #include <linux/string.h>
+ #include <linux/errno.h>
++#include <linux/refcount.h>
+ #include <linux/skbuff.h>
+ #include <net/dst.h>
+ #include <net/route.h>
+@@ -41,6 +42,7 @@ struct route4_head {
+ struct route4_bucket {
+ 	/* 16 FROM buckets + 16 IIF buckets + 1 wildcard bucket */
+ 	struct route4_filter __rcu	*ht[16 + 16 + 1];
++	refcount_t			filters_ref;
+ 	struct rcu_head			rcu;
  };
  
-+/*
-+ * Template for declaring augmented rbtree callbacks (generic single field)
-+ *
-+ * RBSTATIC:    'static' or empty
-+ * RBNAME:      name of the rb_augment_callbacks structure
-+ * RBSTRUCT:    struct type of the tree nodes
-+ * RBFIELD:     name of struct rb_node field within RBSTRUCT
-+ * RBAUGMENTED: name of field within RBSTRUCT holding data for subtree
-+ * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED data
-+ */
-+
-+#define RB_DECLARE_CALLBACKS(RBSTATIC, RBNAME,				\
-+			     RBSTRUCT, RBFIELD, RBAUGMENTED, RBCOMPUTE)	\
-+static inline void							\
-+RBNAME ## _copy_single(RBSTRUCT *new, RBSTRUCT *old)			\
-+{									\
-+	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+}									\
-+RB_DECLARE_CALLBACKS_MULTI(RBSTATIC, RBNAME,				\
-+		     RBSTRUCT, RBFIELD, RBNAME ## _copy_single, RBCOMPUTE)
-+
- /*
-  * Template for declaring augmented rbtree callbacks,
-  * computing RBAUGMENTED scalar as max(RBCOMPUTE(node)) for all subtree nodes.
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 3219a9fe3201a..d8a1fb3921faa 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -841,6 +841,13 @@ static inline void __max_slice_update(struct sched_entity *se, struct rb_node *n
+@@ -336,7 +338,7 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
+ 	struct route4_filter *nf;
+ 	struct route4_bucket *b;
+ 	unsigned int h = 0;
+-	int i, h1;
++	int h1;
+ 
+ 	if (!head || !f)
+ 		return -EINVAL;
+@@ -362,23 +364,14 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
+ 			tcf_exts_get_net(&f->exts);
+ 			tcf_queue_work(&f->rwork, route4_delete_filter_work);
+ 
+-			/* Strip RTNL protected tree */
+-			for (i = 0; i <= 32; i++) {
+-				struct route4_filter *rt;
+-
+-				rt = rtnl_dereference(b->ht[i]);
+-				if (rt)
+-					goto out;
++			if (refcount_dec_and_test(&b->filters_ref)) {
++				RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
++				kfree_rcu(b, rcu);
+ 			}
+-
+-			/* OK, session has no flows */
+-			RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
+-			kfree_rcu(b, rcu);
+ 			break;
+ 		}
  	}
- }
  
-+static inline void min_vruntime_copy(struct sched_entity *new, struct sched_entity *old)
-+{
-+	new->min_vruntime = old->min_vruntime;
-+	new->min_slice = old->min_slice;
-+	new->max_slice = old->max_slice;
-+}
+-out:
+ 	*last = true;
+ 	for (h1 = 0; h1 <= 256; h1++) {
+ 		if (rcu_access_pointer(head->table[h1])) {
+@@ -459,6 +452,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 		if (b == NULL)
+ 			return -ENOBUFS;
+ 
++		refcount_set(&b->filters_ref, 1);
+ 		rcu_assign_pointer(head->table[h1], b);
+ 	} else {
+ 		unsigned int h2 = from_hash(nhandle >> 16);
+@@ -468,6 +462,8 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 		     fp = rtnl_dereference(fp->next))
+ 			if (fp->handle == f->handle)
+ 				return -EEXIST;
 +
- /*
-  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
-  */
-@@ -868,8 +875,9 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- 	       se->max_slice == old_max_slice;
- }
++		refcount_inc(&b->filters_ref);
+ 	}
  
--RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
--		     run_node, min_vruntime, min_vruntime_update);
+ 	if (tb[TCA_ROUTE4_TO])
+@@ -500,7 +496,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 	struct route4_filter *fold, *f1, *pfp, *f = NULL;
+ 	struct route4_bucket *b;
+ 	struct nlattr *tb[TCA_ROUTE4_MAX + 1];
+-	unsigned int h, th;
++	unsigned int h;
+ 	int err;
+ 	bool new = true;
+ 
+@@ -560,17 +556,20 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 	rcu_assign_pointer(*fp, f);
+ 
+ 	if (fold) {
+-		th = to_hash(fold->handle);
++		b = fold->bkt;
+ 		h = from_hash(fold->handle >> 16);
+-		b = rtnl_dereference(head->table[th]);
+-		if (b) {
+-			fp = &b->ht[h];
+-			for (pfp = rtnl_dereference(*fp); pfp;
+-			     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
+-				if (pfp == fold) {
+-					rcu_assign_pointer(*fp, fold->next);
+-					break;
++		fp = &b->ht[h];
++		for (pfp = rtnl_dereference(*fp); pfp;
++		     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
++			if (pfp == fold) {
++				rcu_assign_pointer(*fp, fold->next);
++				if (refcount_dec_and_test(&b->filters_ref)) {
++					unsigned int th = to_hash(fold->handle);
 +
-+RB_DECLARE_CALLBACKS_MULTI(static, min_vruntime_cb, struct sched_entity,
-+		     run_node, min_vruntime_copy, min_vruntime_update);
- 
- /*
-  * Enqueue an entity into the rb-tree:
++					RCU_INIT_POINTER(head->table[th], NULL);
++					kfree_rcu(b, rcu);
+ 				}
++				break;
+ 			}
+ 		}
+ 	}
 -- 
 2.53.0
 
