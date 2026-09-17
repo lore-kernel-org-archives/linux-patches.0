@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8F03E40EF;
-	Thu, 17 Sep 2026 18:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5EE19F40B;
+	Thu, 17 Sep 2026 18:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668088; cv=none; b=G35K564lBtOrTMdujpnTGJnBplGKdEyWaNOeiOIO9joIE2KO8u4mg44NG3nJO2svxoBD2/Y6RqVfcaR7EwxLXeMvrrA96qo3StElKguLQ5Fq9siDiw0Gg4DOnwtZUD9/0s2C+3RF5T4GOXB7W4sXU00TK7YfzkmXsrZ5D/V4D1U=
+	t=1789668091; cv=none; b=Ir3cGui5NJ+xcmXjGTh0giPHdkH+8fcA4udcvNTKsIgCyoNWjXyyAg7MgV4uc7Yj2zbVM0XqvlaRUUereM4sVwiJkjiX60k8YPFyaPhqdJXo15a59UhnmeEK8eaBdj475wtqXbUrGrhE3/bJafNO/Dh7jwzJoxwRFOIAx/LCSxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668088; c=relaxed/simple;
-	bh=JkYL4+6Eu2Fqs2N7dBJO4G1GSpI/Rd8hFe7n7M43Vbk=;
+	s=arc-20240116; t=1789668091; c=relaxed/simple;
+	bh=Wa0a/f9pVpjI5iLnER2FtBU8xg57MqIGnSss+p8JQnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tf3lxhhmKzwD3fVKMpBrejdXV+HdIZSVRYZYAC0G8RA7HSuAgrsYI3EI53/Mec/yYNyRXzfqbHQiIvshbA54y/rX0WvGR3sqSVL/0NKsAXhcyghMOjw1GV4yhd3HQlIQN/IRqSeWiBBgZPptmRYjWyh5x3pTMd9I3yaTQh7jUDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IONZ+cSL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTZQO40Xm7mdWGeI2lTU0kdb91T+RYUtqvXoBvfJ66ikJf0tlDMm7UHRCNY5VoNHx/CSc1rFYildI58Bd4ZrOT2mLNlaQgo/rNStgwomOaP9bKNUFEL73FEJF8pGK87KwVY5tWfhJMdMFYThEe5Q5SaWOGtJZTKkRBNNopoMHIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4QT8n9R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IONZ+cSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B71B1F000FF;
-	Thu, 17 Sep 2026 18:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4QT8n9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0001F000FF;
+	Thu, 17 Sep 2026 18:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668087;
-	bh=NdQKO4sPvmSL795Jdo8PrSwy87vEGruWn3VaN3/9CxQ=;
+	s=korg; t=1789668090;
+	bh=eWhSDGD3rp9F5q79eMBHJMiDclqHDlytcbGnF46BPps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IONZ+cSLrBCbxXatHXSMDhktW5Jq82uTGkxdmL4rMXN3Az5GwsCLVepZu6R+AOBwU
-	 +7l8T0S0b8pAzT+QLtdPvmNeyS8uWSxqI4Z39NfM7lTSbTfwv1L6AGSfHbRmz/xPso
-	 qGlBR6LSYEvNOGAeXyyMQ89bisALhVMy+o5RI97k=
+	b=a4QT8n9RHFn9+TMW9CHFRLHdyEofNMnCFTd+HmiGwduFfG/Bk7tFkGL887HLkPOyk
+	 cf6UW0voLwXn0hQMJw/RhLomspV0Lz2Om/Yn14+SAuO7SNIpH2kta2nnfGarNWsQKB
+	 v6GNMjTVL0sotvbjH/lvNbGXe9Atz1CdFxLUk6wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0309/1102] smb: client: fix races in cifsd thread creation
-Date: Thu, 17 Sep 2026 16:04:12 +0100
-Message-ID: <20260917151547.379071908@linuxfoundation.org>
+Subject: [PATCH 6.12 0310/1102] i3c: mipi-i3c-hci: Tolerate i3c_master_add_i3c_dev_locked() failures in DAA
+Date: Thu, 17 Sep 2026 16:04:13 +0100
+Message-ID: <20260917151547.404030181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,91 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit e8a5cf2ff5a13fefb228f2069e29dd7d8e37185d ]
+[ Upstream commit c236563c8a84239d31a1e6ec4444887a7b5ed98f ]
 
-The cifsd demultiplex thread can run and access tcp_ses before the parent
-thread has finished populating tcp_ses, which the worker thread accesses
-locklessly.
+i3c_master_add_i3c_dev_locked() no longer leaves the address marked as
+free on failure, so aborting the DAA sequence on its error is unnecessary.
 
-Also, the kthread_run macro may start the thread before returning the
-thread pointer. Because the pointer is part of the structure that the
-thread can access, if the kernel is preempted after the thread is spawned,
-but before the thread pointer is populated and the thread attempts to exit,
-it will sleep, waiting for a SIGKILL signal.
+Failure to register a discovered device does not invalidate the entire
+Dynamic Address Assignment (DAA) procedure.  Align with the behavior of
+other I3C master drivers by ignoring errors from
+i3c_master_add_i3c_dev_locked() and continuing enumeration.
 
-Fix this by moving creation of the thread to after all of tcp_ses'es
-fields are populated, and spawning the thread last, using a split
-kthread_create/wake_up_process logic.
-
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260612080107.11606-5-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/cmd_v1.c | 4 +---
+ drivers/i3c/master/mipi-i3c-hci/cmd_v2.c | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 52ac9b096a402..5e17462c8e372 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1823,14 +1823,6 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	 * this will succeed. No need for try_module_get().
- 	 */
- 	__module_get(THIS_MODULE);
--	tcp_ses->tsk = kthread_run(cifs_demultiplex_thread,
--				  tcp_ses, "cifsd");
--	if (IS_ERR(tcp_ses->tsk)) {
--		rc = PTR_ERR(tcp_ses->tsk);
--		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
--		module_put(THIS_MODULE);
--		goto out_err_crypto_release;
--	}
- 	tcp_ses->min_offload = ctx->min_offload;
- 	tcp_ses->retrans = ctx->retrans;
- 	/*
-@@ -1838,9 +1830,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	 * to the struct since the kernel thread not created yet
- 	 * no need to spinlock this update of tcpStatus
- 	 */
--	spin_lock(&tcp_ses->srv_lock);
- 	tcp_ses->tcpStatus = CifsNeedNegotiate;
--	spin_unlock(&tcp_ses->srv_lock);
+diff --git a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
+index 1b4f4d0db486a..9acfccf785aa3 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
+@@ -359,9 +359,7 @@ static int hci_cmd_v1_daa(struct i3c_hci *hci)
+ 		 * TODO: Extend the subsystem layer to allow for registering
+ 		 * new device and provide BCR/DCR/PID at the same time.
+ 		 */
+-		ret = i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+-		if (ret)
+-			break;
++		i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+ 	}
  
- 	if ((ctx->max_credits < 20) || (ctx->max_credits > 60000))
- 		tcp_ses->max_credits = SMB2_MAX_CREDITS_AVAILABLE;
-@@ -1849,7 +1839,16 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	if (dat_idx >= 0)
+diff --git a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
+index 3d33bfe937a6a..3ab51aaf63dc1 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
+@@ -299,9 +299,7 @@ static int hci_cmd_v2_daa(struct i3c_hci *hci)
+ 		 * TODO: Extend the subsystem layer to allow for registering
+ 		 * new device and provide BCR/DCR/PID at the same time.
+ 		 */
+-		ret = i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+-		if (ret)
+-			break;
++		i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+ 	}
  
- 	tcp_ses->nr_targets = 1;
- 	tcp_ses->ignore_signature = ctx->ignore_signature;
--	/* thread spawned, put it on the list */
-+
-+	tcp_ses->tsk = kthread_create(cifs_demultiplex_thread,
-+				  tcp_ses, "cifsd");
-+	if (IS_ERR(tcp_ses->tsk)) {
-+		rc = PTR_ERR(tcp_ses->tsk);
-+		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
-+		module_put(THIS_MODULE);
-+		goto out_err_crypto_release;
-+	}
-+	/* thread created, put it on the list */
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
-@@ -1857,6 +1856,12 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	/* queue echo request delayed work */
- 	queue_delayed_work(cifsiod_wq, &tcp_ses->echo, tcp_ses->echo_interval);
- 
-+	/*
-+	 * Use split create/wake logic to ensure that tcp_ses is fully populated
-+	 * and tcp_ses->tsk is valid
-+	 */
-+	wake_up_process(tcp_ses->tsk);
-+
- 	return tcp_ses;
- 
- out_err_crypto_release:
+ 	hci_free_xfer(xfer, 2);
 -- 
 2.53.0
 
