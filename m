@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0164C10C0;
-	Thu, 17 Sep 2026 15:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70AF4EB853;
+	Thu, 17 Sep 2026 15:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659438; cv=none; b=mbmlAGJIi41cxfJsvYb9B5uk163njIF6hylovxNt8gh4NokmJu7ySCUDgUzLAV70C/oUz/bvckbYA4Cfj6oYopOodgxNJ2+6XhvsfgztP7h35oVCWuJADKCml7oD0/xo8Q5L7hGNA7etX02Kn/B65dbXEuRiCk1ChRqRl5Buz4s=
+	t=1789659437; cv=none; b=E8R5WU85HjPXkjbSchp2eES3jGbs/wG1mifcHRH/ddrw9ATgfk2uzLvhyPdLxc326lxP77CUyFJ2w0ffR0glN32RQXjy194KF204IHu83eiWoymuGQjqra+hSlqFiNkdLveGzhZP2B85Dv4nreImzdQTNmgzWMUVbfhMYJGrszc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659438; c=relaxed/simple;
-	bh=+EfShaMvnYsXvkNgd5ZrysbTaHlvrSpZ+7GYiHf1bP4=;
+	s=arc-20240116; t=1789659437; c=relaxed/simple;
+	bh=MAqVGiuq8mNgKbMUT7FffHO2Lsn56fnLZkfgoHyKVHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCTUwcJaTogA3nYlpLe2qk9ewZh/9+kWf7c/pArwEqNFNJE8M+tmOSmRDkeQRm7bzDN3V3QLHuuBeqLU63w15f0No7MaBvq0WEsNbx8o7acBMIluMtqti5PAX+6rRFXbcKB93G1AZmKJ37lSWYvR1eCzaBoPcZVtTkerCItl9sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIxcD8vZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1Kjr0+4UXwymorx9DNdJytd4EYhvVJtiMxE4AKPlXtrs1vCacxJZK9zX5yIfSD8VaffWNh6t0XLyuUq/iId7ER3Bb/2wQHIes9e+SLTnl/cNu53lzC7QY7mS7+5HUlhVsDhTy9tIl+UHcONVDdDceu09yDsJfAhQ7rc+X2YXGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dx9DiUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIxcD8vZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A5D1F000FF;
-	Thu, 17 Sep 2026 15:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dx9DiUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602B11F00898;
+	Thu, 17 Sep 2026 15:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659430;
-	bh=iq8awfH4wGyfFLqryo6JZzQBNT0c6dF4kZbxJslHjPU=;
+	s=korg; t=1789659427;
+	bh=BOKnLYT7Nk8yTxmO3JA4/oQRbNsbcxPt1w0rispw034=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TIxcD8vZ8/7aduACmp8czxA8zrbVXDW8LSd2G4x1t53/TJ0851sHBsqj/wZxNPVh3
-	 UAN6Vvjtl7N9dAzkpcUgtQxWBPNI1fo45P9oB0CE9mEYqwhnZBi3ykHqEQBYFWskup
-	 Qdc1qdAXueG8s6cCXPe7Vw1ED4G7+8y9CAvmXJlg=
+	b=2dx9DiUdJXiectC4fxZwYEOJYVwbwnDrfrVSOdoAB94+q319odsSk10Pj6A9TONn8
+	 TufgrwnaFAZP8bl9nPLwjKBbM0+KUq8iXMVgSKjXByndlSvN7oBwtimGUpz/Qn650o
+	 sDdSEjc4hzAgcspDrqRtehUa6bJvsjPOai/rhHzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 255/733] bpf: Dont resurrect a scalar id dropped by collect_linked_regs()
-Date: Thu, 17 Sep 2026 16:09:23 +0100
-Message-ID: <20260917151357.654463967@linuxfoundation.org>
+Subject: [PATCH 7.2 254/733] bpf: Dont infer non-NULL from a pointer with an unbounded offset
+Date: Thu, 17 Sep 2026 16:09:22 +0100
+Message-ID: <20260917151357.627157212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,68 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 73a98f96811e2cb0f4210b1caa8cb322f92f2a2b ]
+[ Upstream commit 67b529f521a6676cdfc78b91b0217d7eaa84216b ]
 
-check_cond_jmp_op() copies the compared registers into
-env->{false,true}_reg{1,2} before collect_linked_regs() runs and copies
-those snapshots back into both branch states afterwards.
+reg_not_null() decides that a register holds a non-NULL value by
+looking at its type alone. For pointer types that allow arithmetic the
+type only guarantees a non-NULL base, in case of an unbound offset
+the runtime offset value might still add up to NULL.
+Consider the followng program:
 
-collect_linked_regs() records at most LINKED_REGS_MAX members of a
-linked registers group in the jump history and calls clear_scalar_id()
-for every member that does not fit. The compared register is not exempt
-from that.
+  r6 = bpf_map_lookup_elem(map, &0);  /* present */
+  if (r6 == 0) return 0;
+  r7 = bpf_map_lookup_elem(map, &1);  /* absent, NULL at runtime */
+  r8 = r7;
+  r8 -= r6;     /* pointer - pointer: unknown scalar, -r6 */
+  r8 <<= 1;
+  r8 >>= 1;     /* any non-negative offset is accepted by */
+                /* check_reg_sane_offset_ptr() */
+  r6 += r8;     /* verifier: map value;    runtime: zero  */
+  if (r7 != r6) return 0;
+  *(u8 *)(r7 + 0);  /* r7 is inferred non-NULL, both are zero */
 
-As a consequence, sync_linked_regs() might adjust ranges for more
-registers than bpf_bt_sync_linked_regs() can propagate precision to.
+At runtime both registers are zero, the comparison is true and the
+load faults with NULL pointer dereference.
 
-Collect the linked registers before the snapshots are taken instead.
-This might lead to some unnecessary clear_scalar_id's, but from
-previous testing situations with many linked registers are
-extremely rare.
+Require the offset to be within +-BPF_MAX_VAR_OFF in reg_not_null().
 
-Fixes: ec1d77cb0ee9 ("bpf: Use bpf_verifier_env buffers for reg_set_min_max")
+Fixes: cac616db39c2 ("bpf: Verifier track null pointer branch_taken with JNE and JEQ")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260904083325.2083493-3-eddyz87@gmail.com
+Link: https://lore.kernel.org/bpf/20260904083325.2083493-1-eddyz87@gmail.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 84b05958c3250..2c1da0d38450c 100644
+index 96aaa9155e59e..84b05958c3250 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -16142,6 +16142,16 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 			return err;
- 	}
+@@ -367,6 +367,13 @@ static bool reg_not_null(struct bpf_verifier_env *env, const struct bpf_reg_stat
+ 	if (type_may_be_null(type))
+ 		return false;
  
 +	/*
-+	 * Collect the linked registers before env->{true,false}_reg{1,2} setup,
-+	 * otherwise ids dropped by collect_linked_regs() would be resurrected
-+	 * when env->{true,false}_reg{1,2} are copied back.
++	 * The types below guarantee a non-NULL base, an unbounded offset can
++	 * still wrap base + offset to zero.
 +	 */
-+	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
-+		collect_linked_regs(env, this_branch, src_reg->id, &linked_regs);
-+	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
-+		collect_linked_regs(env, this_branch, dst_reg->id, &linked_regs);
++	if (reg_smin(reg) <= -BPF_MAX_VAR_OFF || reg_smax(reg) >= BPF_MAX_VAR_OFF)
++		return false;
 +
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
- 	env->false_reg1 = *dst_reg;
- 	env->false_reg2 = *src_reg;
-@@ -16196,10 +16206,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	 * 'this_branch' and 'other_branch' share this history
- 	 * if parent state is created.
- 	 */
--	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
--		collect_linked_regs(env, this_branch, src_reg->id, &linked_regs);
--	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
--		collect_linked_regs(env, this_branch, dst_reg->id, &linked_regs);
- 	if (linked_regs.cnt > 1) {
- 		err = bpf_push_jmp_history(env, this_branch, 0, 0, 0, linked_regs_pack(&linked_regs));
- 		if (err)
+ 	type = base_type(type);
+ 	return type == PTR_TO_SOCKET ||
+ 		type == PTR_TO_TCP_SOCK ||
 -- 
 2.53.0
 
