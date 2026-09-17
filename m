@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9880C54A7C6;
-	Thu, 17 Sep 2026 15:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B40A4B44B3;
+	Thu, 17 Sep 2026 15:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659915; cv=none; b=KCk5w/Lnwu3/K+/pXZQrAeIiIUQg//59d3H3og89P1C0DAu5/RLfeHUWgwVlSH/t4rc4LiJ+DlHvDb3g42A5oQLineAMrrWgyTfbyxLTrVE98VkJ0CGqzeWAZ9wbSN1To7R9V3keyOEC3BuF9Len4uUUXLRrukBAaJV5dRSv+oU=
+	t=1789659915; cv=none; b=KkQ4J310YP6vFhV+e6BaoHXB5cI1Ny0iv6lWLhGQi1xthWn1sJLJitl4rF/xxKlZZh7nK4P0vzdUKaRim7qaqMsfhUkqQIROv/EkuO6BLUvIP0AAXn9DOK1cu7Yma8v9aro4bFk0Y/cy2FM6HLsf8B0+G0gXX87lWUEcUSXdp2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659915; c=relaxed/simple;
-	bh=4ZF/CH350vOUOBAeIBHJ8339ZnqByZuPrdOEt4GMBwQ=;
+	bh=veh5F3H/oO5V4tmRpku+vnk0FWUSTZYshHvBpKRsqbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6czo9ZziigfyEwmoAd+GcMp1ZVuU5rr69l0pi1hmErwQSsvahGnjRNe0PDmXSE2yfbdts6Q3VnTA1ap12v7Czv2+XekZEiyjRefbSzBFUlyzsaYxYXq/IqxA35CY8e2egJ50lGAovPtuOwVZGuJi3BI8NVO1npPuSCUI+kTFqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lIsj+Bj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L9yNxt1YuOFotLiQ2ocZDUJ9N29cQBzdUrrv63RLMVr5dErDzq7iN4cV61TxDw1kkQ6SIAbsLTwspWtjdMcgifuiwGCD+NtmIFPBbugpBFavi1xN/sqIeX5ulHoc78ZKH7fM8zveDHI2mxzGnE6FeAecaK+pXOq6syN919ePV6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S90yukbT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lIsj+Bj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54C41F00899;
-	Thu, 17 Sep 2026 15:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S90yukbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9E11F00893;
+	Thu, 17 Sep 2026 15:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659905;
-	bh=NEKoK8aj11Rv2wfHIXgq74pVmD3lM6bcJjZNFhgjG98=;
+	s=korg; t=1789659908;
+	bh=V20E7ft7lj1GLVz1/cVlDVU9nMM1J+aXb4VxJ0B74qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0lIsj+BjOzTbkfHjIUXkI0a0BvzFhfBqHw25fGUjB/8rVj30oyqXIhe/Z7pQr1UvW
-	 BzlB7PUmgikd8xt/7ZQ86lZ4YHg30Hk+sKNl476S0AjMzqP98N7/hlOcElzR9V/xnQ
-	 ls2Pn+hdn5yo21QkxTdaU4J2Wpk7pyuPuHB/Rxdk=
+	b=S90yukbTgO20cTwv5UAPf48oGHhMOGt7eUcSpUyN6XdXKcFW281KLtKGRtJXjr21e
+	 SQSWiN5sKwgBUcvdthWn2V2SLJ09RA4GCwYIrMMevBvda4neO654ptlWsckVahi+CB
+	 rdCGf5/6vLiWuk6DKgSjuWcLTjeLPm85YiZnBDAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Rafael Passos <rafael@rcpassos.me>,
+	Rong Zhang <i@rong.moe>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 374/733] eth: ice: dont dereference pointers from TP_printk()
-Date: Thu, 17 Sep 2026 16:11:22 +0100
-Message-ID: <20260917151400.972674644@linuxfoundation.org>
+Subject: [PATCH 7.2 375/733] Bluetooth: Properly disable remote wakeup for MT7922/MT7925 on Ryzen platform
+Date: Thu, 17 Sep 2026 16:11:23 +0100
+Message-ID: <20260917151401.002439114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,126 +52,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit b8bf9bfda5f62e11444e483c2b4aaff90c5cfc6b ]
+[ Upstream commit dcaf83ead130d3067862599089b0999b3da140a4 ]
 
-After forwarding net-next during the v7.3 merge window we started
-seeing:
+It is reported that a remote wakeup could cause MT7922/MT7925's btusb
+interface completely unresponsive. Resetting the xHCI root hub doesn't
+help at all, and recovering from such a state needs a power cycle.
 
-  TRACE EVENT ERROR: Event ice_tx_dim_work has double dereference in TP_printk: REC->q_vector->tx.tx_ring->q_index
-  WARNING: kernel/trace/trace_events.c:420 at test_double_dereference.cold+0x39/0x4b
+All reports seen to be relevant to Ryzen-based laptops. These NICs are
+usually used as OEM components thanks to some sort of reference designs.
+Their popularity on other platforms is unclear. While there is still a
+chance that the quirk may exist on other platforms, be cautious and only
+apply the quirk to direct children of Ryzen platforms's root hubs for
+the time being. In most cases the root hub is on the SoC or PCH, which
+needs the quirk. Unfortunately, this can't distinguish root hubs on PCIe
+add-in cards. Such roughness should be acceptable, as PCIe USB
+controller add-in cards are less commonly used nowadays. On the other
+hand, applying the quirk doesn't hurt any functionalities either, as the
+device can still be used as a wakeup source if desired. Theoretically,
+we could retrieve the root hub's PCI vendor ID with some hierarchy
+magic, but that's too intrusive...
 
-this is due to extra checks added in tracing subsystem in
-commit b5cc230af5e5 ("tracing: Warn when an event dereferences a pointer in TP_printk()").
+Meanwhile, though device_set_wakeup_capable(false) is the correct fix
+for other NICs with fake remote wakeup capabilities, doing so for
+MT7922/MT7925 effectively prevents it from being used as wakeup
+sources as per userspace requests. Hence, return -EBUSY on runtime
+suspend to prevent the interface from being autosuspended while it's
+still opened, which has the same effect as
+device_set_wakeup_capable(false), since disabling remote wakeup simply
+causes the USB core to gate runtime autosuspend as well due to
+needs_remote_wakeup == 1. The interface can be safely autosuspended as
+long as remote wakeup is disabled, i.e., after closing the HCI device.
 
-Printing happens long after the event was recorded, by which point
-the pointers may be invalid (the ring or the dim instance).
-Copy the eight scalars into the event instead.
+Specifically, the interface may still take the advantage of remote
+wakeup in order to wake up the system from sleep if userspace has
+enabled it as a wakeup source.
 
-Fixes: 3089cf6d3caa ("ice: add tracepoints")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: e31d761628ad ("Bluetooth: btmtk: Disable remote wakeup for MT7922/MT7925")
+Tested-by: Rafael Passos <rafael@rcpassos.me>
+Signed-off-by: Rong Zhang <i@rong.moe>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_trace.h | 64 ++++++++++++++--------
- 1 file changed, 42 insertions(+), 22 deletions(-)
+ drivers/bluetooth/btmtk.c | 10 ------
+ drivers/bluetooth/btusb.c | 73 ++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 69 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_trace.h b/drivers/net/ethernet/intel/ice/ice_trace.h
-index 4f35ef8d6b299..7568c917cdbe1 100644
---- a/drivers/net/ethernet/intel/ice/ice_trace.h
-+++ b/drivers/net/ethernet/intel/ice/ice_trace.h
-@@ -63,23 +63,33 @@
- DECLARE_EVENT_CLASS(ice_rx_dim_template,
- 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
- 		    TP_ARGS(q_vector, dim),
--		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
--				     __field(struct dim *, dim)
-+		    TP_STRUCT__entry(__field(u16, q_index)
-+				     __field(u8, state)
-+				     __field(u8, profile_ix)
-+				     __field(u8, tune_state)
-+				     __field(u8, steps_right)
-+				     __field(u8, steps_left)
-+				     __field(u8, tired)
- 				     __string(devname, q_vector->rx.rx_ring->netdev->name)),
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index c0ed51567ed4d..9589caff925de 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1374,16 +1374,6 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		break;
+ 	case 0x7922:
+ 	case 0x7925:
+-		/*
+-		 * A remote wakeup could cause the device completely unresponsive, and
+-		 * recovering from such a state needs a power cycle.
+-		 *
+-		 * Since the remote wakeup capability is super broken, just disable it
+-		 * to get rid of the troubles. The device can still be autosuspended
+-		 * when the bluetooth interface is closed.
+-		 */
+-		device_set_wakeup_capable(&btmtk_data->udev->dev, false);
+-		fallthrough;
+ 	case 0x7961:
+ 	case 0x7902:
+ 	case 0x6639:
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a3d6d3194b15b..ed4bf9a478087 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -6,6 +6,7 @@
+  *  Copyright (C) 2005-2008  Marcel Holtmann <marcel@holtmann.org>
+  */
  
--		    TP_fast_assign(__entry->q_vector = q_vector;
--				   __entry->dim = dim;
-+		    TP_fast_assign(__entry->q_index = q_vector->rx.rx_ring->q_index;
-+				   __entry->state = dim->state;
-+				   __entry->profile_ix = dim->profile_ix;
-+				   __entry->tune_state = dim->tune_state;
-+				   __entry->steps_right = dim->steps_right;
-+				   __entry->steps_left = dim->steps_left;
-+				   __entry->tired = dim->tired;
- 				   __assign_str(devname);),
++#include <linux/cpufeature.h>
+ #include <linux/dmi.h>
+ #include <linux/module.h>
+ #include <linux/usb.h>
+@@ -968,6 +969,7 @@ struct qca_dump_info {
+ #define BTUSB_USE_ALT3_FOR_WBS	15
+ #define BTUSB_ALT6_CONTINUOUS_TX	16
+ #define BTUSB_HW_SSR_ACTIVE	17
++#define BTUSB_WAKEUP_BROKEN	18
  
- 		    TP_printk("netdev: %s Rx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
- 			      __get_str(devname),
--			      __entry->q_vector->rx.rx_ring->q_index,
--			      __entry->dim->state,
--			      __entry->dim->profile_ix,
--			      __entry->dim->tune_state,
--			      __entry->dim->steps_right,
--			      __entry->dim->steps_left,
--			      __entry->dim->tired)
-+			      __entry->q_index,
-+			      __entry->state,
-+			      __entry->profile_ix,
-+			      __entry->tune_state,
-+			      __entry->steps_right,
-+			      __entry->steps_left,
-+			      __entry->tired)
- );
+ struct btusb_data {
+ 	struct hci_dev       *hdev;
+@@ -2950,10 +2952,25 @@ static int btusb_send_frame_mtk(struct hci_dev *hdev, struct sk_buff *skb)
+ 	}
+ }
  
- DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
-@@ -90,23 +100,33 @@ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
- DECLARE_EVENT_CLASS(ice_tx_dim_template,
- 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
- 		    TP_ARGS(q_vector, dim),
--		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
--				     __field(struct dim *, dim)
-+		    TP_STRUCT__entry(__field(u16, q_index)
-+				     __field(u8, state)
-+				     __field(u8, profile_ix)
-+				     __field(u8, tune_state)
-+				     __field(u8, steps_right)
-+				     __field(u8, steps_left)
-+				     __field(u8, tired)
- 				     __string(devname, q_vector->tx.tx_ring->netdev->name)),
++static inline bool platform_is_ryzen(void)
++{
++#ifdef CONFIG_X86
++	return boot_cpu_has(X86_FEATURE_ZEN);
++#else
++	return false;
++#endif
++}
++
++static inline bool is_direct_child_of_root_hub(struct usb_device *udev)
++{
++	return udev->parent == udev->bus->root_hub;
++}
++
+ static int btusb_mtk_setup(struct hci_dev *hdev)
+ {
+ 	struct btusb_data *data = hci_get_drvdata(hdev);
+ 	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
++	int err;
  
--		    TP_fast_assign(__entry->q_vector = q_vector;
--				   __entry->dim = dim;
-+		    TP_fast_assign(__entry->q_index = q_vector->tx.tx_ring->q_index;
-+				   __entry->state = dim->state;
-+				   __entry->profile_ix = dim->profile_ix;
-+				   __entry->tune_state = dim->tune_state;
-+				   __entry->steps_right = dim->steps_right;
-+				   __entry->steps_left = dim->steps_left;
-+				   __entry->tired = dim->tired;
- 				   __assign_str(devname);),
+ 	/* MediaTek WMT vendor cmd requiring below USB resources to
+ 	 * complete the handshake.
+@@ -2970,7 +2987,40 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
+ 		btusb_mtk_claim_iso_intf(data);
+ 	}
  
- 		    TP_printk("netdev: %s Tx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
- 			      __get_str(devname),
--			      __entry->q_vector->tx.tx_ring->q_index,
--			      __entry->dim->state,
--			      __entry->dim->profile_ix,
--			      __entry->dim->tune_state,
--			      __entry->dim->steps_right,
--			      __entry->dim->steps_left,
--			      __entry->dim->tired)
-+			      __entry->q_index,
-+			      __entry->state,
-+			      __entry->profile_ix,
-+			      __entry->tune_state,
-+			      __entry->steps_right,
-+			      __entry->steps_left,
-+			      __entry->tired)
- );
+-	return btmtk_usb_setup(hdev);
++	err = btmtk_usb_setup(hdev);
++	if (err)
++		return err;
++
++	switch (btmtk_data->dev_id) {
++	case 0x7922:
++	case 0x7925:
++		/*
++		 * All reports seen to be relevant to Ryzen-based laptops. These
++		 * NICs are usually used as OEM components thanks to some sort
++		 * of reference designs.
++		 *
++		 * Their popularity on other platforms is unclear. While there
++		 * is still a chance that the quirk may exist on other
++		 * platforms, be cautious and only apply the quirk to direct
++		 * children of Ryzen platforms's root hubs for the time being.
++		 *
++		 * In most cases the root hub is on the SoC or PCH, which needs
++		 * the quirk. Unfortunately, this can't distinguish root hubs on
++		 * PCIe add-in cards. Such roughness should be acceptable, as
++		 * PCIe USB controller add-in cards are less commonly used
++		 * nowadays. On the other hand, applying the quirk doesn't hurt
++		 * any functionalities either, as the device can still be used
++		 * as a wakeup source if desired.
++		 *
++		 * Theoretically, we could retrieve the root hub's PCI vendor ID
++		 * with some hierarchy magic, but that's too intrusive...
++		 */
++		if (platform_is_ryzen() && is_direct_child_of_root_hub(data->udev))
++			set_bit(BTUSB_WAKEUP_BROKEN, &data->flags);
++		break;
++	}
++
++	return 0;
+ }
  
- DEFINE_EVENT(ice_tx_dim_template, ice_tx_dim_work,
+ static int btusb_mtk_shutdown(struct hci_dev *hdev)
+@@ -4541,11 +4591,26 @@ static int btusb_suspend(struct usb_interface *intf, pm_message_t message)
+ 
+ 	BT_DBG("intf %p", intf);
+ 
+-	/* Don't auto-suspend if there are connections or discovery in
+-	 * progress; external suspend calls shall never fail.
++	/*
++	 * It is reported that remote wakeup events could sometimes cause some
++	 * adapters completely unresponsive. Resetting the xHCI root hub doesn't
++	 * help at all, and recovering from such a state needs a power cycle.
++	 * Since disabling remote wakeup simply causes the USB core to gate
++	 * runtime autosuspend as well due to needs_remote_wakeup == 1, let's do
++	 * this ourselves to make our life easier. The interface can be safely
++	 * autosuspended as long as remote wakeup is disabled, i.e., after
++	 * closing the HCI device.
++	 *
++	 * Don't auto-suspend if there are connections or discovery in progress.
++	 *
++	 * External suspend calls shall never fail. Specifically, a device with
++	 * broken remote wakeup may still take the advantage of remote wakeup in
++	 * order to wake up the system from sleep if userspace has enabled it as
++	 * a wakeup source.
+ 	 */
+ 	if (PMSG_IS_AUTO(message) &&
+-	    (hci_conn_count(data->hdev) || hci_discovery_active(data->hdev)))
++	    ((test_bit(BTUSB_WAKEUP_BROKEN, &data->flags) && data->intf->needs_remote_wakeup) ||
++	     hci_conn_count(data->hdev) || hci_discovery_active(data->hdev)))
+ 		return -EBUSY;
+ 
+ 	if (data->suspend_count++)
 -- 
 2.53.0
 
