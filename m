@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D0F3D4137;
-	Thu, 17 Sep 2026 18:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC86C3CB57B;
+	Thu, 17 Sep 2026 18:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670702; cv=none; b=FZInNqz5VAwIi3fQnAWDuzlqx552/QwwnwN51g1IY7N5qVBUis7lX10hulAM/xhZL5p275fZwzx2WXnLg9bgQXOSSLJ9GFlEPsGYgl5KploC2CuKR7Uva9TR8cMiMGW+Qa1AwZFp+UVRRYhFkRIbmLqzuUuXfggn+CmOXFhzO2E=
+	t=1789670706; cv=none; b=hLjUNlJiLxnGPcaQXlYuY7OiRfEncfEyvJcrE/X/Fu7R3kEV2ckCwgKDeYw9dHXww1PF3LTp9V7AsvEwq2+2+a6zz9w0T6rc5NYKrda6o7d/2D6RTYMvtvwW3cEywHvtp9uSvY9MCBGsQoSVWTplrdVOiI6aRza5Clf9oiGbB8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670702; c=relaxed/simple;
-	bh=rAeCcU3yIsr5sGCun7XapWjvxr0jaZVOVgJc2y/xlEE=;
+	s=arc-20240116; t=1789670706; c=relaxed/simple;
+	bh=YDCXIJhITTkyWWgNATn1MGI4PU1rcU3UcMAXv2T8CD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0cPiOw5ufBafKKbk3mtPFWK4fxS4dLKXO1z4RYeKM0EpxZ+Vms4yNWQijiN9kI2uhAmmdIQAvZcWsUixc+nLeAIk/k5e+DpXt57TE38i7tyg2u3amECndrifG/KsRmnvsCQ1TQnfT4Us5PO6hgvb3HHPup/hws0A+rR5c6NEGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD0C3UWK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kbjGXzhkEBGjYeBnVlRfJbxM3bRfe2Kb2vsznJ7At3Q+Xc8pJpblRQUEYV4RUyLrRQmKQyu5giltlX7sa2+yUuIECq7jnvd4XZO1UxmvtEOrdvOFHWoYulkT9xKU7ofAfS2ovyhlPs6RTu3xW4EF6H9qWI0drCA97SeYkHwARzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPQ4qNRB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD0C3UWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6541F000FF;
-	Thu, 17 Sep 2026 18:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPQ4qNRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9F01F000FF;
+	Thu, 17 Sep 2026 18:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670701;
-	bh=njY00kbHfCM43pZ0GKHrvzdG51Iys5jWGjf0Km2pCwo=;
+	s=korg; t=1789670705;
+	bh=8rH9KLAkSsjy71PX6UAfJFw19btHvfPEKnvNA5GV8sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qD0C3UWKgfgTgMJqfHBWzu4hAeHvbNChf1CuyX4RoPpY/y5GA6B8FFCFeUSGXmiIX
-	 cFjiQViuEfXTfVFQrZj32xga744U3JpqQAMY6LFMEwQ0x5KIBhXREahiAQujvc/eod
-	 6D0KoQSDb23t7nbDpEU4F0j5b4NcTsPWN2AWeeU4=
+	b=aPQ4qNRBJVteSEOTx24+VXMgqwgTDTBcoGdBh3C4/YR0PKn50vr9RTHvuQjdAVfMf
+	 +R00viy8EC2KtI8Sad6rW7GWLYqpEuFwh/1DfQhnvGtFK1RkZ/rjx41u/kw2bUMG/l
+	 mx+ATzp82oRxP8giB8qu6EGh17Af/vpzdTD/aMsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiajia Liu <liujiajia@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0743/1102] Bluetooth: btusb: mediatek: Fix leaked runtime PM reference in reset
-Date: Thu, 17 Sep 2026 16:11:26 +0100
-Message-ID: <20260917151559.061396736@linuxfoundation.org>
+Subject: [PATCH 6.12 0744/1102] Bluetooth: btusb: Fix leaked runtime PM reference in btusb_reset
+Date: Thu, 17 Sep 2026 16:11:27 +0100
+Message-ID: <20260917151559.088576450@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,94 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit e486a891c412d9d82ee865987f4eead6196e1f96 ]
+[ Upstream commit c93922dd316b7273a8667d29084632066fa8a2d3 ]
 
-MT7925 on HP Pro Mini 260 sometimes timed out during reloading driver
-and reset usb device. btusb_suspend is not called again after closing
-bluetooth interface.
+btusb_reset calls usb_autopm_get_interface to resume the device
+before queuing a reset of it, but never calls the matching
+usb_autopm_put_interface.
 
- usbcore: registered new interface driver btusb
- Bluetooth: hci0: HW/SW Version: 0x00000000, Build Time: 20260605184935
- Bluetooth: hci0: Execution of wmt command timed out
- Bluetooth: hci0: Failed to send wmt patch dwnld (-110)
- Bluetooth: hci0: Failed to set up firmware (-110)
- usb 3-10: reset high-speed USB device number 4 using xhci_hcd
- Bluetooth: hci0: HW/SW Version: 0x00000000, Build Time: 20260605184935
- Bluetooth: hci0: Device setup in 1856545 usecs
- Bluetooth: hci0: AOSP extensions version v1.00
- Bluetooth: hci0: AOSP quality report is supported
- Bluetooth: MGMT ver 1.23
+usb_queue_reset_device ends up in usb_reset_device(), and since
+btusb provides no pre_reset/post_reset callbacks the interface is
+merely unbound and rebound: the interface device object survives
+this cycle, and so does its PM usage count, which is not cleared
+when the driver is unbound.
 
-btusb_mtk_reset calls usb_autopm_get_interface to resume the device
-before driving the hardware reset, but never calls the matching
-usb_autopm_put_interface. Every hardware reset therefore leaks a PM
-usage reference of the interface, preventing the device from being
-runtime suspended again until it is unbound.
+As a result every reset permanently leaks a PM usage reference,
+preventing the interface from being runtime suspended again until
+it is unbound.
 
-Add the BTUSB_RESET flag. It is set before usb_queue_reset_device
-and is cleared in btusb_disconnect, which drops the reference as well.
-If the flag is already set when a new reset is requested, drop one
-reference.
+Set BTUSB_RESET flag before usb_queue_reset_device so that
+btusb_disconnect drops the reference. If the flag is already set,
+drop one reference.
 
-Also clear BTMTK_HW_RESET_ACTIVE if usb_autopm_get_interface fails,
-otherwise no further reset could ever be attempted.
-
-Fixes: 25b6d7593a3a ("Bluetooth: btmtk: introduce btmtk reset work")
+Fixes: c9209b269afd ("Bluetooth: btusb: Introduce generic USB reset")
 Assisted-by: Claude:qwen3.8-max
 Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index d75a11b6fee2f..6f9b9084c4ddf 100644
+index 6f9b9084c4ddf..3afb36a84c640 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -911,6 +911,7 @@ struct qca_dump_info {
- #define BTUSB_USE_ALT3_FOR_WBS	15
- #define BTUSB_ALT6_CONTINUOUS_TX	16
- #define BTUSB_HW_SSR_ACTIVE	17
-+#define BTUSB_RESET		19
- 
- struct btusb_data {
- 	struct hci_dev       *hdev;
-@@ -2844,8 +2845,11 @@ static int btusb_mtk_reset(struct hci_dev *hdev, void *rst_data)
+@@ -994,13 +994,15 @@ static void btusb_reset(struct hci_dev *hdev)
  	}
  
+ 	data = hci_get_drvdata(hdev);
+-	/* This is not an unbalanced PM reference since the device will reset */
  	err = usb_autopm_get_interface(data->intf);
--	if (err < 0)
-+	if (err < 0) {
-+		bt_dev_err(hdev, "Failed usb_autopm_get_interface: %d", err);
-+		clear_bit(BTMTK_HW_RESET_ACTIVE, &btmtk_data->flags);
- 		return err;
-+	}
+ 	if (err) {
+ 		bt_dev_err(hdev, "Failed usb_autopm_get_interface: %d", err);
+ 		return;
+ 	}
  
- 	/* Release MediaTek ISO data interface */
- 	btusb_mtk_release_iso_intf(hdev);
-@@ -2855,6 +2859,11 @@ static int btusb_mtk_reset(struct hci_dev *hdev, void *rst_data)
- 
- 	err = btmtk_usb_subsys_reset(hdev, btmtk_data->dev_id);
- 
-+	if (test_and_set_bit(BTUSB_RESET, &data->flags)) {
-+		bt_dev_err(hdev, "last usb reset failed? Resetting again");
++	if (test_and_set_bit(BTUSB_RESET, &data->flags))
 +		usb_autopm_put_interface_no_suspend(data->intf);
-+	}
 +
+ 	bt_dev_err(hdev, "Resetting usb device.");
  	usb_queue_reset_device(data->intf);
- 	clear_bit(BTMTK_HW_RESET_ACTIVE, &btmtk_data->flags);
- 
-@@ -4252,6 +4261,9 @@ static void btusb_disconnect(struct usb_interface *intf)
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
- 
-+	if (test_and_clear_bit(BTUSB_RESET, &data->flags))
-+		usb_autopm_put_interface_no_suspend(data->intf);
-+
- 	if (intf == data->intf) {
- 		if (data->isoc)
- 			usb_driver_release_interface(&btusb_driver, data->isoc);
+ }
 -- 
 2.53.0
 
