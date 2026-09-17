@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2854973A6;
-	Thu, 17 Sep 2026 16:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39817463B63;
+	Thu, 17 Sep 2026 16:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660925; cv=none; b=oPgXRfIw4eiO6tqEp5sOg7BsJjtw5+y8hUw3umZj0nRPAC0TLnA/j5bCOY1Y6LJirZmELBi5nwV8BIaRCxeiJifJ5pIHwOxO8Bl/lQdCzej7EE3J3CFAK6VPQ2D96QMJ0BRuKRVsrexuugF+KcEB4FIx/OeTT9nSEDO2R9Q1DlI=
+	t=1789660928; cv=none; b=mBlHMXZRwbsOYfu6lv1j0Vhf3Txw7BtpmhT4QDffRgLzYS8phFVAv2DEBcN5Hu/GqiRtcXgXcGpE8pyIGTTdPAi9FiqDZlKRxETT/saKyRTpPj+r9RGDA4fYgK4+zgXFem0gUKJ2m8TFZ+hVR8SnWnDiUE7mDgHnyB7Af3XV24s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660925; c=relaxed/simple;
-	bh=wVrloVZVId3wV5zb181PAXRy6LSnIN2HZ5LJYXCXsIM=;
+	s=arc-20240116; t=1789660928; c=relaxed/simple;
+	bh=t/5QB6dGFxnM9IdQGbxF77XpqXN24xa2a4jdRl7Od/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRYS3fWdCORr1uKYSf3c8PtVOGJoTOZvLNmOJ2y5JScsH+r5QjDrsS02BAdOqOOwSPdOs4dYDWW9EW0ESvqDa66zdRHn6JOczwitgToJLZFxwRWPuu6UYiBvJQ2DLQ028bd3XvvuYjgpBExVEfh+ba6ub6xAwLMGRV+pRzk5ej4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhP0CKq5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tnp9jbt/tvUI395bjpaV62vb1xrXExHi+WegKsXbBU1P0Y9JdjKZ9yNOwhCQazTXp0gD0JB6lIi+bScx3fyhyyfrzptpPUWhjUi5wkY8Ovujk0cwsos55rLTUdzAWVn5WnkKuHzswtPihCUbkrV8YzNutBxbJumDpBhRoCw2ryA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek7+OaOB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhP0CKq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797671F000FF;
-	Thu, 17 Sep 2026 16:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek7+OaOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2B31F000FF;
+	Thu, 17 Sep 2026 16:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660924;
-	bh=1p1YW33catrJbRzUIw5Lmg9K8mTbiz9yhrophMistC0=;
+	s=korg; t=1789660927;
+	bh=W9MmPA7yYdryGk1rMJZqHGvBS1YobvJxpPYNWhDe4SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VhP0CKq5ugPhvidU6mCzCw9ciD1jK6ambbN1FZ3lMxDzMnLzGlDRKUiEzbqndbOIv
-	 izFTBfsEkobrVdU5SRP9XCJLDbPxYiLQod44PZ+9Kx9hMl77EZvSgvsrJaYLCkZe60
-	 u/dw09aH2yHk5UHqQ7QN0hftG71QdIg5drd1Lyi0=
+	b=ek7+OaOB7HhimKv6nJ4rPBJdctqahggBUH6OLhIvrKqlOHAhoIazi8ajRsT5Tr3Mt
+	 upw52tqvo6G6G5NQYbzbQaSKotMCCkguLRtc4N3HTSDS7sUBAD07NTswRHBAi4FijA
+	 oX3LQ7gFMU4dH/EsK8blKwkO4Q1vjruFPpmpgXDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Hirokazu Honda <hiroh@chromium.org>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0023/1250] usb: gadget: udc: skip pullup() if already connected
-Date: Thu, 17 Sep 2026 15:56:58 +0100
-Message-ID: <20260917151552.557132765@linuxfoundation.org>
+Subject: [PATCH 6.18 0024/1250] tee: optee: Allow MT_NORMAL_TAGGED shared memory
+Date: Thu, 17 Sep 2026 15:56:59 +0100
+Message-ID: <20260917151552.582584955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,54 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Hirokazu Honda <hiroh@chromium.org>
 
-[ Upstream commit 62911bc82b0332aee7546156800d3516500fa1e1 ]
+[ Upstream commit 1a6e94a8ff32e7879effd1e4a45bf112e506edc1 ]
 
-The device controller may update vbus status via usb_udc_vbus_handler(),
-which tries to connect the gadget even though gadget_bind_driver() has
-already called usb_udc_connect_control_locked(). This causes pullup() to
-be called twice. Avoid this by checking if gadget->connected is true.
+On ARM64, shared memory can have MT_NORMAL_TAGGED attribute when using
+the Memory Tagging Extension (MTE). The OP-TEE driver needs to
+recognize this as normal memory to allow sharing such buffers with the
+Secure World.
 
-This also set gadget->connected as false in usb_gadget_activate() if it
-became connected while it was being deactivated. Otherwise,
-usb_gadget_connect_locked will return early and pullup() won't be called.
-
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260423095355.2673035-1-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hirokazu Honda <hiroh@chromium.org>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/tee/optee/call.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index ab1bcc5512b2c..fa49746d54036 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -714,6 +714,9 @@ static int usb_gadget_connect_locked(struct usb_gadget *gadget)
- 		goto out;
- 	}
- 
-+	if (gadget->connected)
-+		goto out;
-+
- 	if (gadget->deactivated || !gadget->udc->allow_connect || !gadget->udc->started) {
- 		/*
- 		 * If the gadget isn't usable (because it is deactivated,
-@@ -887,8 +890,10 @@ int usb_gadget_activate(struct usb_gadget *gadget)
- 	 * If gadget has been connected before deactivation, or became connected
- 	 * while it was being deactivated, we call usb_gadget_connect().
- 	 */
--	if (gadget->connected)
-+	if (gadget->connected) {
-+		gadget->connected = false;
- 		ret = usb_gadget_connect_locked(gadget);
-+	}
- 
- unlock:
- 	mutex_unlock(&gadget->udc->connect_lock);
+diff --git a/drivers/tee/optee/call.c b/drivers/tee/optee/call.c
+index 16eb953e14bb6..e422e77b06fb8 100644
+--- a/drivers/tee/optee/call.c
++++ b/drivers/tee/optee/call.c
+@@ -602,7 +602,8 @@ static bool is_normal_memory(pgprot_t p)
+ 	return (((pgprot_val(p) & L_PTE_MT_MASK) == L_PTE_MT_WRITEALLOC) ||
+ 		((pgprot_val(p) & L_PTE_MT_MASK) == L_PTE_MT_WRITEBACK));
+ #elif defined(CONFIG_ARM64)
+-	return (pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL);
++	return ((pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL)) ||
++	       ((pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL_TAGGED));
+ #else
+ #error "Unsupported architecture"
+ #endif
 -- 
 2.53.0
 
