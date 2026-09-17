@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34E44ED1A0;
-	Thu, 17 Sep 2026 15:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595AD4E4C52;
+	Thu, 17 Sep 2026 15:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659684; cv=none; b=ekIqVWJ8XsggJmt7ckgy4jMKkLUmu3d6kb70LJXXQHHJPPez82zwcZEAcYsVUXC4Ga0DR6rmglbPKKhICg+4Ofjkv+mmxG4M1A523JqxejmqkhFNZuvHMVqacOJ8gS8JyddQiTji9hoV3BiVnC6ejkNXPX1wfEzaBn3sXP3P+sU=
+	t=1789659688; cv=none; b=rW3j65+kyswae17fk39Cv/kK6p1slicHs5eLMBg2GI5ttzFubJwOeoR5fz8YSOzsNpBO/pIxwwOV7sjkFvzJglmGk8ta00CmDbRnXfsynkjEKzy4Lbm2moXwi4i5H3lja+4xQqWBZKumcFKYkWkjsTqT0uOZ42DvUXW1o+KhHzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659684; c=relaxed/simple;
-	bh=H6hmrOY8W1Hj+P0c8qJWW4envI3R7RVb7Su+wdUVZvM=;
+	s=arc-20240116; t=1789659688; c=relaxed/simple;
+	bh=yABeOfpDvCpmW1waiqey7534b8gEn4EB84yUcJVMup4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxL/qh2PcjK1cLQe9sk0XcgLO9HQWllqXckcr4VMV3lSxWTnDc3Z45G9niod7FT7/TIP9uX491Kcll4Qzy/J2RATY783xcEfiZspwzmNEl69eiUBvLE8P6MpnPfjkV9mm6nV3nDLhDZrdmXGz89Y8I5ss+9ESTi6NONSw33Y82U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsBSiumr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uqYIf9pInfRStQp4V4D7QJTqSf0y1tT1sVe4q0GV9j9tonzN+xzoOYX+D2juStwcxD+j087DGmO8dxQ5Ggadwk1b8INJtfYP+fGIo8xv85FCXrneCqt813dSWnTKXejRQXvdJd0TkAekEKWnkVQQXzUfx8Kp1g3WvdYfaFi0Z5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fk5wgYmn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsBSiumr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD161F00899;
-	Thu, 17 Sep 2026 15:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fk5wgYmn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A731F00898;
+	Thu, 17 Sep 2026 15:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659673;
-	bh=Zg+T74+v/ZbOxAR8nCVldKWYi18epWhEA2sURg2RZ3w=;
+	s=korg; t=1789659679;
+	bh=hg9YVJeppVl9Z6gUppdWXRKm/F7ulWakOUMWgcmwu2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wsBSiumrJoZ8R9hxdS6+CgwZF4AQ4MvojBlocXfOY+PmD5dnv9mQTPZLI7CUTMG1H
-	 wXZSpgVT+7DW1/eOSSdeGqRFmjLb2G7lveC3lhFqOH7cXVwG9Ijj1R9zKtZvdNMdKA
-	 8l1VwErwp9suLUaug1b8sTIArSTG9ahp/3aWTLOs=
+	b=fk5wgYmn++jd7s+hbsuMpbTdD6zscdgQb06VOCDZXQ7xM6SjWJxxdQmBL0anNaN9k
+	 vckRbIKc7+hRfiNAUggZujOZlTDXyeIvZzzMw8hSkZSCj+rLYUNB1tr77XEmbSWOTu
+	 cBjFGiAFPA7JbbZGGXYQDuA3QvEefnDq2k2G3IQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Kangas <jkangas@redhat.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 328/733] hwmon: (ina2xx) Decouple in0 and curr1 alarms
-Date: Thu, 17 Sep 2026 16:10:36 +0100
-Message-ID: <20260917151359.686407616@linuxfoundation.org>
+Subject: [PATCH 7.2 338/733] regulator: pf1550: fix which regulator is notified
+Date: Thu, 17 Sep 2026 16:10:46 +0100
+Message-ID: <20260917151359.962993145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,224 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Kangas <jkangas@redhat.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 35760f5efd7bfa7a44a3831f47e19fe9cbafc905 ]
+[ Upstream commit f3e6ef13e24c9f26dca0d35de57fcdf04f78e378 ]
 
-INA2XX current limits are converted into shunt voltage limits internally
-using the shunt resistor value. Once a current limit's corresponding
-voltage limit is written to the hardware, shunt voltage and current
-alarms are indistinguishable from each other.
+The interrupt handler distinguishes the rail that reported the fault, but
+the body ignores it. Every SW interrupt walks the regulator array looking
+for the name "SW3" and every LDO interrupt looks for "LDO3", so an
+over-current on SW1 is reported to the consumers of SW3 while the
+consumers of SW1 hear nothing.
 
-This causes two issues:
+The lookup itself is unreliable as well. rdev_get_name() returns the
+device tree regulator-name property whenever the board supplies one, and
+only falls back to the name in the driver descriptor when it does not.
+The binding example for this device sets regulator-name to "sw3" and
+"ldo3", which strcmp() does not match against the upper case literals
+used here, so a board that follows the documentation gets no over-current
+notification at all. A board that names its rails after the schematic
+does not match either. No other driver in the tree selects a notification
+target this way.
 
-1. in0/curr1 alarms may be unintentionally cleared by reading from the
-   opposite input's alarm.
+Replace the name lookup with rdev_get_id(), which returns the descriptor
+id set by the driver and cannot be overridden from the device tree, and
+take both the id and the event from a table indexed by the interrupt.
+The die temperature interrupts keep notifying every regulator since they
+report a chip wide condition.
 
-2. When a limit for either in0 (shunt voltage) or curr1 (current) is
-   set, both of their alarms are triggered, and both of their limits
-   read nonzero.
-
-An example of this behavior on an INA231:
-
-        # cd /sys/class/hwmon/hwmon0
-        # head {curr1,in0}_input
-        ==> curr1_input <==
-        1713
-
-        ==> in0_input <==
-        2
-        # echo 1800 >curr1_lcrit
-        # head {curr1,in0}_lcrit_alarm
-        ==> curr1_lcrit_alarm <==
-        1
-
-        ==> in0_lcrit_alarm <==
-        0
-        # head {in0,curr1}_lcrit_alarm
-        ==> in0_lcrit_alarm <==
-        1
-
-        ==> curr1_lcrit_alarm <==
-        0
-        # head {in0,curr1}_lcrit_alarm
-        ==> in0_lcrit_alarm <==
-        1
-
-        ==> curr1_lcrit_alarm <==
-        1
-
-This is because curr1 uses the same underlying masks
-(INA226_SHUNT_*_VOLTAGE_MASK) as in0 on the hardware. As a result,
-ina2xx_{curr,in}_read() both read the shunt voltage alarms/limits
-without considering whether the voltage or current is currently set.
-
-To fix this, track the active alarm type in ina2xx_data and guard
-alarm/limit reads with a check that returns zero if the active alarm is
-for a different type. The new field is initialized based on the
-MASK_ENABLE register's set function, assuming voltage instead of current
-when the shunt voltage mask is set.
-
-After this fix, the alarms only read back 1 if their corresponding limit
-is set:
-
-        # echo 0 >curr1_lcrit
-        # head {curr1,in0}_lcrit_alarm
-        ==> curr1_lcrit_alarm <==
-        0
-
-        ==> in0_lcrit_alarm <==
-        0
-        # echo 9999 >curr1_lcrit
-        # head {curr1,in0}_lcrit_alarm
-        ==> curr1_lcrit_alarm <==
-        1
-
-        ==> in0_lcrit_alarm <==
-        0
-        # echo 9999 >in0_lcrit
-        # head {curr1,in0}_lcrit_alarm
-        ==> curr1_lcrit_alarm <==
-        0
-
-        ==> in0_lcrit_alarm <==
-        1
-
-Fixes: 4d5c2d986757 ("hwmon: (ina2xx) Add support for current limits")
-Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Link: https://patch.msgid.link/20260820-upstream-ina2xx-in0-curr1-alarms-v2-4-fdce35abc41e@redhat.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 7320d41c29bb ("regulator: pf1550: Add support for regulator")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://patch.msgid.link/20260904105624.48577-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ina2xx.c | 65 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 63 insertions(+), 2 deletions(-)
+ drivers/regulator/pf1550-regulator.c | 82 ++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
-index dec4e72be2f92..958a1e3ec728d 100644
---- a/drivers/hwmon/ina2xx.c
-+++ b/drivers/hwmon/ina2xx.c
-@@ -8,6 +8,7 @@
-  */
+diff --git a/drivers/regulator/pf1550-regulator.c b/drivers/regulator/pf1550-regulator.c
+index 610eac9bb9cb2..ceee553a84b23 100644
+--- a/drivers/regulator/pf1550-regulator.c
++++ b/drivers/regulator/pf1550-regulator.c
+@@ -283,63 +283,61 @@ static struct pf1550_desc pf1550_regulators[] = {
+ 	PF_LDO1(PF1550, "ldo3", LDO3, 0x1f, pf1550_ldo13_volts),
+ };
  
- #include <linux/bitfield.h>
-+#include <linux/bitops.h>
- #include <linux/bits.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-@@ -158,6 +159,7 @@ struct ina2xx_data {
- 	const struct ina2xx_config *config;
- 	enum ina2xx_ids chip;
- 
-+	enum ina2xx_alert_type active_alert;
- 	long rshunt;
- 	long current_lsb_uA;
- 	long power_lsb_uW;
-@@ -448,6 +450,35 @@ static u32 ina2xx_alert_type_to_mask(enum ina2xx_alert_type alert)
- 	}
- }
- 
-+static enum ina2xx_alert_type ina2xx_mask_to_alert_type(u32 mask)
-+{
-+	int top_bit = fls(mask & INA226_ALERT_CONFIG_MASK);
++/*
++ * The _LS interrupts indicate an over-current event. The _HS
++ * interrupts, which are more accurate and can detect catastrophic
++ * faults, issue an error event. The current limit FAULT interrupt is
++ * similar to the _HS.
++ */
++static const struct pf1550_regulator_irq {
++	unsigned int event;
++	u8 id;
++} pf1550_regulator_irqs[] = {
++	[PF1550_PMIC_IRQ_SW1_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW1 },
++	[PF1550_PMIC_IRQ_SW2_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW2 },
++	[PF1550_PMIC_IRQ_SW3_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW3 },
++	[PF1550_PMIC_IRQ_SW1_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW1 },
++	[PF1550_PMIC_IRQ_SW2_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW2 },
++	[PF1550_PMIC_IRQ_SW3_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW3 },
++	[PF1550_PMIC_IRQ_LDO1_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO1 },
++	[PF1550_PMIC_IRQ_LDO2_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO2 },
++	[PF1550_PMIC_IRQ_LDO3_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO3 },
++};
 +
-+	if (!top_bit)
-+		return INA2XX_ALERT_NONE;
-+
-+	/*
-+	 * Multiple bits may be set, with the highest-set function taking
-+	 * precedence according to the datasheet. Shunt voltage masks are
-+	 * assumed to map to voltage monitoring rather than current monitoring,
-+	 * since the latter isn't directly implemented in the hardware.
-+	 */
-+	switch (BIT(top_bit - 1)) {
-+	case INA226_SHUNT_OVER_VOLTAGE_MASK:
-+		return INA2XX_ALERT_SHUNT_VOLTAGE_HIGH;
-+	case INA226_SHUNT_UNDER_VOLTAGE_MASK:
-+		return INA2XX_ALERT_SHUNT_VOLTAGE_LOW;
-+	case INA226_BUS_OVER_VOLTAGE_MASK:
-+		return INA2XX_ALERT_BUS_VOLTAGE_HIGH;
-+	case INA226_BUS_UNDER_VOLTAGE_MASK:
-+		return INA2XX_ALERT_BUS_VOLTAGE_LOW;
-+	case INA226_POWER_OVER_LIMIT_MASK:
-+		return INA2XX_ALERT_POWER_HIGH;
-+	default:
-+		return INA2XX_ALERT_NONE;
-+	}
-+}
-+
- static int ina226_alert_limit_read(struct ina2xx_data *data, enum ina2xx_alert_type alert,
- 				   int reg, long *val)
+ static irqreturn_t pf1550_regulator_irq_handler(int irq, void *data)
  {
-@@ -456,6 +487,12 @@ static int ina226_alert_limit_read(struct ina2xx_data *data, enum ina2xx_alert_t
- 	u32 mask;
- 	int ret;
++	const struct pf1550_regulator_irq *map;
+ 	struct pf1550_regulator_info *info = data;
+ 	struct device *dev = info->dev;
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	int i, irq_type = -1;
+-	unsigned int event;
  
-+	/* Avoid nonzero reads from inactive alerts caused by shared limit register */
-+	if (data->active_alert != alert) {
-+		*val = 0;
-+		return 0;
+ 	for (i = 0; i < PF1550_REGULATOR_IRQ_NR; i++)
+ 		if (irq == platform_get_irq(pdev, i))
+ 			irq_type = i;
+ 
+-	switch (irq_type) {
+-	/* The _LS interrupts indicate over-current event. The _HS interrupts
+-	 * which are more accurate and can detect catastrophic faults, issue
+-	 * an error event. The current limit FAULT interrupt is similar to the
+-	 * _HS'
+-	 */
+-	case PF1550_PMIC_IRQ_SW1_LS:
+-	case PF1550_PMIC_IRQ_SW2_LS:
+-	case PF1550_PMIC_IRQ_SW3_LS:
+-		event = REGULATOR_EVENT_OVER_CURRENT_WARN;
+-		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
+-			if (!strcmp(rdev_get_name(info->rdevs[i]), "SW3"))
+-				regulator_notifier_call_chain(info->rdevs[i],
+-							      event, NULL);
+-		break;
+-	case PF1550_PMIC_IRQ_SW1_HS:
+-	case PF1550_PMIC_IRQ_SW2_HS:
+-	case PF1550_PMIC_IRQ_SW3_HS:
+-		event = REGULATOR_EVENT_OVER_CURRENT;
+-		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
+-			if (!strcmp(rdev_get_name(info->rdevs[i]), "SW3"))
+-				regulator_notifier_call_chain(info->rdevs[i],
+-							      event, NULL);
+-		break;
+-	case PF1550_PMIC_IRQ_LDO1_FAULT:
+-	case PF1550_PMIC_IRQ_LDO2_FAULT:
+-	case PF1550_PMIC_IRQ_LDO3_FAULT:
+-		event = REGULATOR_EVENT_OVER_CURRENT;
+-		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
+-			if (!strcmp(rdev_get_name(info->rdevs[i]), "LDO3"))
+-				regulator_notifier_call_chain(info->rdevs[i],
+-							      event, NULL);
+-		break;
+-	case PF1550_PMIC_IRQ_TEMP_110:
+-	case PF1550_PMIC_IRQ_TEMP_125:
+-		event = REGULATOR_EVENT_OVER_TEMP;
++	/* The die temperature concerns every rail. */
++	if (irq_type == PF1550_PMIC_IRQ_TEMP_110 ||
++	    irq_type == PF1550_PMIC_IRQ_TEMP_125) {
+ 		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
+ 			regulator_notifier_call_chain(info->rdevs[i],
+-						      event, NULL);
+-		break;
+-	default:
+-		dev_err(dev, "regulator interrupt: irq %d occurred\n",
+-			irq_type);
++						      REGULATOR_EVENT_OVER_TEMP,
++						      NULL);
++		return IRQ_HANDLED;
 +	}
 +
- 	ret = regmap_read(regmap, INA226_MASK_ENABLE, &regval);
- 	if (ret)
- 		return ret;
-@@ -491,6 +528,7 @@ static int ina226_alert_limit_write(struct ina2xx_data *data, enum ina2xx_alert_
- 				 INA226_ALERT_CONFIG_MASK, 0);
- 	if (ret < 0)
- 		return ret;
-+	data->active_alert = INA2XX_ALERT_NONE;
- 
- 	ret = regmap_write(regmap, INA226_ALERT_LIMIT,
- 			   ina226_alert_to_reg(data, reg, val));
-@@ -499,9 +537,13 @@ static int ina226_alert_limit_write(struct ina2xx_data *data, enum ina2xx_alert_
- 
- 	if (val) {
- 		mask = ina2xx_alert_type_to_mask(alert);
--		return regmap_update_bits(regmap, INA226_MASK_ENABLE,
--					  INA226_ALERT_CONFIG_MASK, mask);
-+		ret = regmap_update_bits(regmap, INA226_MASK_ENABLE,
-+					 INA226_ALERT_CONFIG_MASK, mask);
-+		if (ret < 0)
-+			return ret;
-+		data->active_alert = alert;
++	if (irq_type < 0 || irq_type >= (int)ARRAY_SIZE(pf1550_regulator_irqs)) {
++		dev_err(dev, "regulator interrupt: irq %d occurred\n", irq_type);
++		return IRQ_HANDLED;
  	}
+ 
++	map = &pf1550_regulator_irqs[irq_type];
 +
- 	return 0;
++	for (i = 0; i < PF1550_MAX_REGULATOR; i++)
++		if (rdev_get_id(info->rdevs[i]) == map->id)
++			regulator_notifier_call_chain(info->rdevs[i],
++						      map->event, NULL);
++
+ 	return IRQ_HANDLED;
  }
  
-@@ -531,6 +573,15 @@ static int ina226_alert_read(struct ina2xx_data *data, enum ina2xx_alert_type al
- 	u32 mask;
- 	int ret;
- 
-+	/*
-+	 * With alert latching, reading alerts from hardware also clears the
-+	 * alert, so return early if the alert is inactive.
-+	 */
-+	if (data->active_alert != alert) {
-+		*val = 0;
-+		return 0;
-+	}
-+
- 	ret = regmap_read_bypassed(data->regmap, INA226_MASK_ENABLE, &regval);
- 	if (ret)
- 		return ret;
-@@ -973,6 +1024,16 @@ static int ina2xx_init(struct device *dev, struct ina2xx_data *data)
- 
- 	if (data->config->has_alerts) {
- 		bool active_high = device_property_read_bool(dev, "ti,alert-polarity-active-high");
-+		unsigned int mask_enable;
-+
-+		/*
-+		 * Infer active alert from MASK_ENABLE in case it's already
-+		 * configured (e.g., by a past probe or firmware)
-+		 */
-+		ret = regmap_read(regmap, INA226_MASK_ENABLE, &mask_enable);
-+		if (ret < 0)
-+			return ret;
-+		data->active_alert = ina2xx_mask_to_alert_type(mask_enable);
- 
- 		regmap_update_bits(regmap, INA226_MASK_ENABLE,
- 				   INA226_ALERT_LATCH_ENABLE | INA226_ALERT_POLARITY,
 -- 
 2.53.0
 
