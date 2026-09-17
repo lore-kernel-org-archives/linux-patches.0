@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C64394783;
-	Thu, 17 Sep 2026 17:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39182547075;
+	Thu, 17 Sep 2026 17:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666433; cv=none; b=sEyrhl5kJeWwmTLzk7l517g3UIoLc4i6Z/YburW0qRXzbikVX6jAYO8MBpcTPmiCKhOea0qMTfVmbbvy1B5vUcNzNskyylMVx4VRFg7LZAAuh5cEDQGtzFpnOEnmpM7irjHpqdxV6KX3M0raEKZaWkOYCi/tRaj+AuODr3P1Q/g=
+	t=1789666436; cv=none; b=XJDEEsDmNG/0mDqaQJcHkkkqURWQNoRvKn7jxrghLE0rk6HMlsGf1xcUD7YaH2LFsStif1HULqbpzNUf+2GGsRjzm1NX1Eg40xDgqbVb2O8H5BlgUQkC8oLHD/pAcICXygngzT0XuiYffFwO/DxZu/9tiOA5F1UH14mBCo34ULk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666433; c=relaxed/simple;
-	bh=zrxwl55YHQ+oTwiazu72zOZFF7ME/kWKZV66XwkO61o=;
+	s=arc-20240116; t=1789666436; c=relaxed/simple;
+	bh=9Q6wyOQmTccHM3KCo7SjeqCYNw4P7grcB3DCMVqbnm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQbUHNYVNHWTWeEFcer62DYwpC2VR4NQM+7NJ/URcqh8QJqJ+yN3PCesZl0nNaQd1OUqZ/Vr+hTzhQYNOB+JfSHBtnWKZS7NIsQvfxQQ+Rm6rmN/7HT6AEAkXQ4rwmIHSx7q1wjA+iZiM0A1QeRvJ6Q9FRy0Bgcs0sSw+PKjqAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6LUre8D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjmK/FlmT/A3A9vM6eK4U1s5tXK51V1kLCMJZQnJD3Acs5vmIc2gSBs9qN0s2MfZVicLeQuSfGhpjunzYdeuPwbsqmWWiwXxdfhJckh58F8QFB5AOrmZ0PoUdseHixNCHiwaSHVIZnTyzkKR44XoDeqr7NDu0xpV2q48tmgPZps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlMEGOeE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6LUre8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719181F000FF;
-	Thu, 17 Sep 2026 17:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlMEGOeE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777B51F000FF;
+	Thu, 17 Sep 2026 17:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666432;
-	bh=t82/Jc2D7H4rzfdqUsNrai295ZpeF+emGXxkgKfNvco=;
+	s=korg; t=1789666435;
+	bh=oTo8iHuEYRcWvF3YqXzZNvPohE8cQg3F0owc3f+6bmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6LUre8DyzQLhf2aeWfLz8JNoob7qjFC0Mw8KmIj/uofkIzhnCIvhglHbLzJtIEoG
-	 H+jSkyb0mDBVNm7GJey8AxLLy1LKc++rH/i/J+b3MGGF7mtrNfeJ/t+2BLL+VROnQe
-	 kldpW0LH7oPgi2Cq4kWyTmRXLMY+PXWienkVgWoQ=
+	b=KlMEGOeEL+BBc2NvZQXEaLUK5TSJdHUY/uIP++dEpfbu26FBTA4ISCccFdyvJ1JaQ
+	 b52GziJ8ntNn6YW0XJ3OvIZ3s6/2p55EKps5rePapBUAJ+KuAwneD+4dxR35VdDrjR
+	 Hc8blIwXF0eMIAzfMLzGwjHyvQ9mFCQg6LdO4hhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1036/1250] ipv6: flowlabel: cap duplicate leases per socket
-Date: Thu, 17 Sep 2026 16:13:51 +0100
-Message-ID: <20260917151620.158898247@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 1037/1250] ipvs: reject invalid states in connection template sync records
+Date: Thu, 17 Sep 2026 16:13:52 +0100
+Message-ID: <20260917151620.185814380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,81 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 8d6cd188508513503805c156165de38e4e4a8615 upstream.
+commit 74cb39735b6cd0aff4b5584158f09376fd97aadf upstream.
 
-ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
-successful GET. The recheck path for a compatible existing flowlabel
-links another lease without applying any lease admission check. Repeated
-GET requests for one shareable label can therefore grow a socket's lease
-list without bound.
+IPVS sync receivers validate protocol states before creating or updating a
+connection. For connection templates, however, they only log states outside
+the template state range and still store the value in the connection.
 
-Reject a new unprivileged lease once the socket already holds
-FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
-of a globally interned label, including the fl_intern() collision path,
-is covered as well. New-label admission remains under the existing
-mem_check() policy.
+A template can be returned by ordinary connection lookup. TCP and SCTP then
+use the invalid state as an index into their transition tables.
 
-Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
-mem_check(). An unprivileged user must not bypass the cap by creating a
-user namespace and a netns where they have CAP_NET_ADMIN, which would
-still consume host memory.
+Reject invalid template states in both sync protocol versions before
+looking up or modifying a connection. The version 1 path handles both
+IPv4 and IPv6 records.
 
-Check the capability only when the socket reaches the limit, so
-successful unprivileged GET requests below the cap do not generate a
-capability audit. Do the admission check before updating linger and
-expires so a rejected GET does not refresh the shared label, matching
-the existing socket-list allocation failure path.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 275411430f89 ("ipvs: add assured state for conn templates")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_flowlabel.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/netfilter/ipvs/ip_vs_sync.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -462,6 +462,21 @@ done:
- 	return NULL;
- }
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -1000,10 +1000,10 @@ static void ip_vs_process_message_v0(str
+ 					pp->name, state);
+ 				continue;
+ 			}
+-		} else {
+-			if (state >= IP_VS_CTPL_S_LAST)
+-				IP_VS_DBG(7, "BACKUP v0, Invalid tpl state %u\n",
+-					  state);
++		} else if (state >= IP_VS_CTPL_S_LAST) {
++			IP_VS_DBG(7, "BACKUP v0, Invalid tpl state %u\n",
++				  state);
++			continue;
+ 		}
  
-+static bool fl_sock_at_lease_limit(const struct sock *sk)
-+{
-+	const struct ipv6_fl_socklist *sfl;
-+	int count = 0;
-+
-+	rcu_read_lock();
-+	for_each_sk_fl_rcu(sk, sfl) {
-+		if (++count >= FL_MAX_PER_SOCK)
-+			break;
-+	}
-+	rcu_read_unlock();
-+
-+	return count >= FL_MAX_PER_SOCK;
-+}
-+
- static int mem_check(struct sock *sk)
- {
- 	int room = FL_MAX_SIZE - atomic_read(&fl_size);
-@@ -671,6 +686,10 @@ recheck:
- 			err = -ENOMEM;
- 			if (!sfl1)
- 				goto release;
-+			err = -ENOBUFS;
-+			if (fl_sock_at_lease_limit(sk) &&
-+			    !capable(CAP_NET_ADMIN))
-+				goto release;
- 			if (fl->linger > fl1->linger)
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
+ 		ip_vs_conn_fill_param(ipvs, AF_INET, s->protocol,
+@@ -1160,10 +1160,10 @@ static inline int ip_vs_proc_sync_conn(s
+ 			retc = 40;
+ 			goto out;
+ 		}
+-	} else {
+-		if (state >= IP_VS_CTPL_S_LAST)
+-			IP_VS_DBG(7, "BACKUP, Invalid tpl state %u\n",
+-				  state);
++	} else if (state >= IP_VS_CTPL_S_LAST) {
++		IP_VS_DBG(7, "BACKUP, Invalid tpl state %u\n", state);
++		retc = 40;
++		goto out;
+ 	}
+ 	if (ip_vs_conn_fill_param_sync(ipvs, af, s, &param, pe_data,
+ 				       pe_data_len, pe_name, pe_name_len)) {
 
 
