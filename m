@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55BA4F392B;
-	Thu, 17 Sep 2026 16:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9844F55D3;
+	Thu, 17 Sep 2026 16:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661163; cv=none; b=IyeHX9tEYZiA7QpY38rTitgPKAZyb9rIwZ9KLza3AqVMG2FACr9k/DSM5tEgurE+MrKuy81+3we0/l2My3sxdvLCsERhrS/4qAB/xmYpuyDf8tY8s7HrX5x8kOoBUasp2C4P+fhDh6xLrgtppYIhstMQYCmEOfeV9QfvjXNjOao=
+	t=1789661166; cv=none; b=J6e1NllJV9n8sGYKqM768loprDlevhCkJZBsWIMn+EFqoKY7S+16Obzg3unoh8Rqf4co3+eAq3jwHf9MNkS4og2+YbKmEoT7DBxfWxOtnGkWu3gjswrdupl9wcz2dDY2w31PeKn06XS+V4+7YIsmFNRDub2sB9iDKyCOE9RhwlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661163; c=relaxed/simple;
-	bh=xmPSNJnXVt4dYS26rxvWk+op3hcyFUpPvnOmgxdfQa8=;
+	s=arc-20240116; t=1789661166; c=relaxed/simple;
+	bh=AgTcGRZYoDBmMyq9AmIssYTWkwMbQTc58uWTTrWuu0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKBT56obD1zs1v2R//LqJRyHwalL+Ck3HPnizxYgI9oboQWOcbH+TFtHsRieZSuv9qTOgEojaD9CRYLn4cj3fKnLgBSCPdkM1GVXWDiqZT1s61VoigqNb7M6br5PrETgTbnc4JMWMfNj/31e/LolWI0Wei4U6kyLu0+LoQIkKK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxd3aO5l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdX0OuB1TrAuZTzFFrncACoK320juX29qGvEV5Yq6x5AI4E6L2j7NOmDHCi3MtqWUXd2lrQkNKo3QUBpXzbPWF3M+uzSzk+MySJWjCTu9O0s3xOR/xnjXduZPZc52IJIgwGjswS8MuREsWS2c05Y/5Zke1FxURjpyBYMtNjqjbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v413vTrJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxd3aO5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3651C1F000FF;
-	Thu, 17 Sep 2026 16:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v413vTrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8CD1F00893;
+	Thu, 17 Sep 2026 16:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661161;
-	bh=P8TfD2bbMwfFTXfdIMiDZ9hrYohTtEPW4TRSmnepnVA=;
+	s=korg; t=1789661164;
+	bh=AoH0CUBqyqUP+laCPawKHDInr2irCkitnwVA2b7DauY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxd3aO5lPoOvhlvuwRVrx7XHpwD7QI50DFARlbAm3aYJlmV2LdPFz5fBFYEh2elkQ
-	 W5+MvT6+S5nMz0r5/KleqfacmWj0O6pt0Xf6cP4lQzuRPC9MC3bmdI44woumbOxQxT
-	 j3AHgQVCy3a6LU8RfkG+t1h6bOWWFHgRlheeWILM=
+	b=v413vTrJbNGOLelIujuabPTW7SuVELOArwYzM5clk9qSAkHhn9+YTwggQZjSYgeUw
+	 Q6o1176+GtFxkUqbymp1bYBF3Gqe6frzTgZn6BX5O0bZqnNUOsoKIhL4xBcZ8Nd+YW
+	 wXTZ9zSBsMf3q7lVH/px4EaIR3PEtQFAsBUvt8jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"chunzhi.lin" <linchunzhi0@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0103/1250] hfsplus: rework hfsplus_readdir() logic
-Date: Thu, 17 Sep 2026 15:58:18 +0100
-Message-ID: <20260917151554.786817976@linuxfoundation.org>
+Subject: [PATCH 6.18 0104/1250] net: phy: motorcomm: use device properties for firmware tuning
+Date: Thu, 17 Sep 2026 15:58:19 +0100
+Message-ID: <20260917151554.817024123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,219 +52,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: chunzhi.lin <linchunzhi0@gmail.com>
 
-[ Upstream commit 4b0496432844628ad05a5b1efce329a3340174d2 ]
+[ Upstream commit fffedfece2b46bb99b00740697f6c0c874de3cf4 ]
 
-The xfstests' test-case generic/637 fails with error:
+The Motorcomm PHY driver reads optional firmware properties via
+of_property_read_*() from phydev->mdio.dev.of_node. This works for
+Device Tree based systems, but causes ACPI platforms to ignore the same
+properties when they are supplied through _DSD.
 
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc4+ #8 SMP PREEMPT_DYNAMIC Thu May 1 16:43:22 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+As a result, ACPI-described Motorcomm PHY devices fall back to default
+settings instead of applying firmware-provided tuning such as
+rx/tx internal delay, drive strength, clock output frequency, and
+optional boolean controls like auto-sleep-disabled,
+keep-pll-enabled, and tx clock inversion.
 
-QA output created by 637
-entries 7 and 8 have duplicate d_off 8
-Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
+Switch these lookups to device_property_read_*() so the driver uses the
+generic firmware node interface and can consume the same property names
+from either Device Tree or ACPI.
 
-Debugging of the hfsplus_readdir() logic showed this:
+This keeps the existing DT behavior unchanged while allowing ACPI
+platforms to honor PHY configuration from firmware.
 
-hfsplus: hfsplus_readdir(): 163 ctx->pos 0
-hfsplus: hfsplus_readdir(): 189 ctx->pos 1
-hfsplus: hfsplus_readdir(): 264 ctx->pos 2, ino 18
-hfsplus: hfsplus_readdir(): 264 ctx->pos 3, ino 19
-hfsplus: hfsplus_readdir(): 264 ctx->pos 4, ino 28
-hfsplus: hfsplus_readdir(): 264 ctx->pos 5, ino 118
-hfsplus: hfsplus_readdir(): 264 ctx->pos 6, ino 29
-hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 30
-hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 31
-hfsplus: hfsplus_readdir(): 304 ctx->pos 8
-hfsplus: hfsplus_unlink():420 dir->i_ino 17, inode->i_ino 28
-hfsplus: hfsplus_readdir(): 141 ctx->pos 7
-hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 31
-hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 32
-hfsplus: hfsplus_readdir(): 264 ctx->pos 9, ino 33
+We have completed testing on Sophgo RISC-V architecture server SD3-10.
+This server has a 64-core Thead C920 CPU whose DWMAC is connected to
+Motorcomm's PHY YT8531. This server supports UEFI boot and it would like
+to use the ACPI table.
 
-It means that hfsplus_readdir() stopped the processing of
-folder's items on ctx->pos 8, then, item with ino 28 has
-been deleted and hfsplus_readdir() re-started the logic
-from ctx->pos 7. As a result, previous and new sets of
-folder's items have overlapping values for the case of
-d_off 8.
-
-Currently, HFS+ has very complicated and fragile logic
-of rd->file->f_pos correction in hfsplus_delete_cat().
-This patch removes this logic and it stores the current
-pos into hfsplus_readdir_data. Finally, if rd->pos == ctx->pos
-then hfsplus_readdir() tries to find the position in
-b-tree's node by means of hfsplus_cat_key. This position is
-used to re-start the folder's content traversal.
-
-sudo ./check generic/637
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #44 SMP PREEMPT_DYNAMIC Mon May  4 15:58:45 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/637  22s ...  22s
-Ran: generic/637
-Passed all 1 tests
-
-Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/198
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505220051.2854696-2-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: chunzhi.lin <linchunzhi0@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260507040221.3679454-2-linchunzhi0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/catalog.c    | 11 -----------
- fs/hfsplus/dir.c        | 28 +++++++++++-----------------
- fs/hfsplus/hfsplus_fs.h |  5 +----
- fs/hfsplus/inode.c      |  2 --
- fs/hfsplus/super.c      |  2 --
- 5 files changed, 12 insertions(+), 36 deletions(-)
+ drivers/net/phy/motorcomm.c | 41 ++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/fs/hfsplus/catalog.c b/fs/hfsplus/catalog.c
-index 32eb1283d7d05..97333ca50ec8f 100644
---- a/fs/hfsplus/catalog.c
-+++ b/fs/hfsplus/catalog.c
-@@ -332,7 +332,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
- 	struct super_block *sb = dir->i_sb;
- 	struct hfs_find_data fd;
- 	struct hfsplus_fork_raw fork;
--	struct list_head *pos;
- 	int err, off;
- 	u16 type;
+diff --git a/drivers/net/phy/motorcomm.c b/drivers/net/phy/motorcomm.c
+index b49897500a592..b76011b227c46 100644
+--- a/drivers/net/phy/motorcomm.c
++++ b/drivers/net/phy/motorcomm.c
+@@ -10,7 +10,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/phy.h>
+-#include <linux/of.h>
++#include <linux/property.h>
  
-@@ -390,16 +389,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
- 		hfsplus_free_fork(sb, cnid, &fork, HFSPLUS_TYPE_RSRC);
- 	}
- 
--	/* we only need to take spinlock for exclusion with ->release() */
--	spin_lock(&HFSPLUS_I(dir)->open_dir_lock);
--	list_for_each(pos, &HFSPLUS_I(dir)->open_dir_list) {
--		struct hfsplus_readdir_data *rd =
--			list_entry(pos, struct hfsplus_readdir_data, list);
--		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
--			rd->file->f_pos--;
--	}
--	spin_unlock(&HFSPLUS_I(dir)->open_dir_lock);
--
- 	err = hfs_brec_remove(&fd);
- 	if (err)
- 		goto out;
-diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
-index 8aeb861969d37..8254d6c92eb94 100644
---- a/fs/hfsplus/dir.c
-+++ b/fs/hfsplus/dir.c
-@@ -185,7 +185,15 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 	}
- 	if (ctx->pos >= inode->i_size)
- 		goto out;
--	err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	rd = file->private_data;
-+	if (rd && rd->pos == ctx->pos) {
-+		memcpy(fd.search_key, &rd->key, sizeof(struct hfsplus_cat_key));
-+		err = hfs_brec_find(&fd, hfs_find_rec_by_key);
-+		if (err == -ENOENT)
-+			err = hfs_brec_goto(&fd, 1);
-+	} else {
-+		err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	}
- 	if (err)
- 		goto out;
- 	for (;;) {
-@@ -261,7 +269,6 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 		if (err)
- 			goto out;
- 	}
--	rd = file->private_data;
- 	if (!rd) {
- 		rd = kmalloc(sizeof(struct hfsplus_readdir_data), GFP_KERNEL);
- 		if (!rd) {
-@@ -269,15 +276,8 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 			goto out;
- 		}
- 		file->private_data = rd;
--		rd->file = file;
--		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
--		list_add(&rd->list, &HFSPLUS_I(inode)->open_dir_list);
--		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
- 	}
--	/*
--	 * Can be done after the list insertion; exclusion with
--	 * hfsplus_delete_cat() is provided by directory lock.
--	 */
-+	rd->pos = ctx->pos;
- 	memcpy(&rd->key, fd.key, sizeof(struct hfsplus_cat_key));
- out:
- 	kfree(strbuf);
-@@ -287,13 +287,7 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 
- static int hfsplus_dir_release(struct inode *inode, struct file *file)
+ #define PHY_ID_YT8511		0x0000010a
+ #define PHY_ID_YT8521		0x0000011a
+@@ -843,12 +843,12 @@ static u32 ytphy_get_delay_reg_value(struct phy_device *phydev,
+ 				     u16 *rxc_dly_en,
+ 				     u32 dflt)
  {
--	struct hfsplus_readdir_data *rd = file->private_data;
--	if (rd) {
--		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
--		list_del(&rd->list);
--		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
--		kfree(rd);
--	}
-+	kfree(file->private_data);
- 	return 0;
- }
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	int tb_size_half = tb_size / 2;
+ 	u32 val;
+ 	int i;
  
-diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
-index e66773cbb3336..08ed2381c719f 100644
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -215,8 +215,6 @@ struct hfsplus_inode_info {
- 	sector_t fs_blocks;
- 	u8 userflags;		/* BSD user file flags */
- 	u32 subfolders;		/* Subfolder count (HFSX only) */
--	struct list_head open_dir_list;
--	spinlock_t open_dir_lock;
- 	loff_t phys_size;
+-	if (of_property_read_u32(node, prop_name, &val))
++	if (device_property_read_u32(dev, prop_name, &val))
+ 		goto err_dts_val;
  
- 	struct inode vfs_inode;
-@@ -266,8 +264,7 @@ struct hfs_find_data {
- };
+ 	/* when rxc_dly_en is NULL, it is get the delay for tx, only half of
+@@ -992,12 +992,12 @@ static int yt8531_get_ds_map(struct phy_device *phydev, u32 cur)
  
- struct hfsplus_readdir_data {
--	struct list_head list;
--	struct file *file;
-+	loff_t pos;
- 	struct hfsplus_cat_key key;
- };
+ static int yt8531_set_ds(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	u32 ds_field_low, ds_field_hi, val;
+ 	int ret, ds;
  
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index 7e6cc4dde9f26..ab1c343955b10 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -459,8 +459,6 @@ struct inode *hfsplus_new_inode(struct super_block *sb, struct inode *dir,
- 	simple_inode_init_ts(inode);
+ 	/* set rgmii rx clk driver strength */
+-	if (!of_property_read_u32(node, "motorcomm,rx-clk-drv-microamp", &val)) {
++	if (!device_property_read_u32(dev, "motorcomm,rx-clk-drv-microamp", &val)) {
+ 		ds = yt8531_get_ds_map(phydev, val);
+ 		if (ds < 0)
+ 			return dev_err_probe(&phydev->mdio.dev, ds,
+@@ -1014,7 +1014,7 @@ static int yt8531_set_ds(struct phy_device *phydev)
+ 		return ret;
  
- 	hip = HFSPLUS_I(inode);
--	INIT_LIST_HEAD(&hip->open_dir_list);
--	spin_lock_init(&hip->open_dir_lock);
- 	mutex_init(&hip->extents_lock);
- 	atomic_set(&hip->opencnt, 0);
- 	hip->extent_state = 0;
-diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
-index e1e2833f528d1..d031c77fb4eb3 100644
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -91,8 +91,6 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
- 	HFSPLUS_I(inode)->fs_blocks = 0;
- 	HFSPLUS_I(inode)->userflags = 0;
- 	HFSPLUS_I(inode)->subfolders = 0;
--	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
--	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
- 	HFSPLUS_I(inode)->phys_size = 0;
+ 	/* set rgmii rx data driver strength */
+-	if (!of_property_read_u32(node, "motorcomm,rx-data-drv-microamp", &val)) {
++	if (!device_property_read_u32(dev, "motorcomm,rx-data-drv-microamp", &val)) {
+ 		ds = yt8531_get_ds_map(phydev, val);
+ 		if (ds < 0)
+ 			return dev_err_probe(&phydev->mdio.dev, ds,
+@@ -1047,7 +1047,6 @@ static int yt8531_set_ds(struct phy_device *phydev)
+  */
+ static int yt8521_probe(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
+ 	struct device *dev = &phydev->mdio.dev;
+ 	struct yt8521_priv *priv;
+ 	int chip_config;
+@@ -1097,7 +1096,7 @@ static int yt8521_probe(struct phy_device *phydev)
+ 			return ret;
+ 	}
  
- 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
+-	if (of_property_read_u32(node, "motorcomm,clk-out-frequency-hz", &freq))
++	if (device_property_read_u32(dev, "motorcomm,clk-out-frequency-hz", &freq))
+ 		freq = YTPHY_DTS_OUTPUT_CLK_DIS;
+ 
+ 	if (phydev->drv->phy_id == PHY_ID_YT8521) {
+@@ -1165,11 +1164,11 @@ static int yt8521_probe(struct phy_device *phydev)
+ 
+ static int yt8531_probe(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	u16 mask, val;
+ 	u32 freq;
+ 
+-	if (of_property_read_u32(node, "motorcomm,clk-out-frequency-hz", &freq))
++	if (device_property_read_u32(dev, "motorcomm,clk-out-frequency-hz", &freq))
+ 		freq = YTPHY_DTS_OUTPUT_CLK_DIS;
+ 
+ 	switch (freq) {
+@@ -1661,7 +1660,7 @@ static int yt8521_resume(struct phy_device *phydev)
+  */
+ static int yt8521_config_init(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	int old_page;
+ 	int ret = 0;
+ 
+@@ -1676,7 +1675,7 @@ static int yt8521_config_init(struct phy_device *phydev)
+ 			goto err_restore_page;
+ 	}
+ 
+-	if (of_property_read_bool(node, "motorcomm,auto-sleep-disabled")) {
++	if (device_property_read_bool(dev, "motorcomm,auto-sleep-disabled")) {
+ 		/* disable auto sleep */
+ 		ret = ytphy_modify_ext(phydev, YT8521_EXTREG_SLEEP_CONTROL1_REG,
+ 				       YT8521_ESC1R_SLEEP_SW, 0);
+@@ -1684,7 +1683,7 @@ static int yt8521_config_init(struct phy_device *phydev)
+ 			goto err_restore_page;
+ 	}
+ 
+-	if (of_property_read_bool(node, "motorcomm,keep-pll-enabled")) {
++	if (device_property_read_bool(dev, "motorcomm,keep-pll-enabled")) {
+ 		/* enable RXC clock when no wire plug */
+ 		ret = ytphy_modify_ext(phydev, YT8521_CLOCK_GATING_REG,
+ 				       YT8521_CGR_RX_CLK_EN, 0);
+@@ -1797,14 +1796,14 @@ static int yt8521_led_hw_control_get(struct phy_device *phydev, u8 index,
+ 
+ static int yt8531_config_init(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	int ret;
+ 
+ 	ret = ytphy_rgmii_clk_delay_config_with_lock(phydev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	if (of_property_read_bool(node, "motorcomm,auto-sleep-disabled")) {
++	if (device_property_read_bool(dev, "motorcomm,auto-sleep-disabled")) {
+ 		/* disable auto sleep */
+ 		ret = ytphy_modify_ext_with_lock(phydev,
+ 						 YT8521_EXTREG_SLEEP_CONTROL1_REG,
+@@ -1813,7 +1812,7 @@ static int yt8531_config_init(struct phy_device *phydev)
+ 			return ret;
+ 	}
+ 
+-	if (of_property_read_bool(node, "motorcomm,keep-pll-enabled")) {
++	if (device_property_read_bool(dev, "motorcomm,keep-pll-enabled")) {
+ 		/* enable RXC clock when no wire plug */
+ 		ret = ytphy_modify_ext_with_lock(phydev,
+ 						 YT8521_CLOCK_GATING_REG,
+@@ -1840,7 +1839,7 @@ static int yt8531_config_init(struct phy_device *phydev)
+  */
+ static void yt8531_link_change_notify(struct phy_device *phydev)
+ {
+-	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device *dev = &phydev->mdio.dev;
+ 	bool tx_clk_1000_inverted = false;
+ 	bool tx_clk_100_inverted = false;
+ 	bool tx_clk_10_inverted = false;
+@@ -1848,17 +1847,17 @@ static void yt8531_link_change_notify(struct phy_device *phydev)
+ 	u16 val = 0;
+ 	int ret;
+ 
+-	if (of_property_read_bool(node, "motorcomm,tx-clk-adj-enabled"))
++	if (device_property_read_bool(dev, "motorcomm,tx-clk-adj-enabled"))
+ 		tx_clk_adj_enabled = true;
+ 
+ 	if (!tx_clk_adj_enabled)
+ 		return;
+ 
+-	if (of_property_read_bool(node, "motorcomm,tx-clk-10-inverted"))
++	if (device_property_read_bool(dev, "motorcomm,tx-clk-10-inverted"))
+ 		tx_clk_10_inverted = true;
+-	if (of_property_read_bool(node, "motorcomm,tx-clk-100-inverted"))
++	if (device_property_read_bool(dev, "motorcomm,tx-clk-100-inverted"))
+ 		tx_clk_100_inverted = true;
+-	if (of_property_read_bool(node, "motorcomm,tx-clk-1000-inverted"))
++	if (device_property_read_bool(dev, "motorcomm,tx-clk-1000-inverted"))
+ 		tx_clk_1000_inverted = true;
+ 
+ 	if (phydev->speed < 0)
 -- 
 2.53.0
 
