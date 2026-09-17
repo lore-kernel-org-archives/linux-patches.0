@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C0C4C10FA;
-	Thu, 17 Sep 2026 15:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7594D599C;
+	Thu, 17 Sep 2026 15:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659251; cv=none; b=JCtrsy/BIoY5V79VpCbzsqzVFYrG7kdtO/KewYZh8Z7Aw+h7WcnLrvUyXYM1HoutooC+U5ERHRdIJzloUjfvkGmRsOTRekk80z39vce04phEc1lElHkym6X776jLev7wYEonhI9treRoTkTkIEst7IX7f319dR/bunS9Ai4p4NQ=
+	t=1789659256; cv=none; b=SN3bkwUpRiVwPIKnoMZxQBVY+GR3vkW30ATdMCMztpRi1+mUQneTNDA0xcFq09Uba1ih1oQBGMga6hyl7VrU/gFsmIcH+NhymDe4JczbWjJkhu3my66wrHs5JNj+FFIBkwZxbtOjoVD/1c90XIGQQaP96V8CZMy3uY1soA3+5iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659251; c=relaxed/simple;
-	bh=5Onsmavx3uL5QsIurZKjj2hya+GFmgET6gWT8FdEIMU=;
+	s=arc-20240116; t=1789659256; c=relaxed/simple;
+	bh=3QlDIgl/Iz6FgJJ73WS2zdCRW5L4ElXGm5NXY806D9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+hwZtsOsCgc8+Zdlvq7KBmpO4TuXzNEHXn1pwCS+v8ZFDmIZ/HG1ay9t/o8D1S7tFjRLwSj02DS/H2G3f7FL62BVyqx5W1NRLgZHCuUcjxBE9N9xi/VkXf/TM2Va0O4IrvMKQd6WF217e/rqxxsodXDE0CV8Xr5kIMrMr9o5JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfR9KrHX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ONyuocGXs/rpYwyMa9P/TfoqIewRkaMgDcB4lhuai9xl4Q3viNgeWG7L8a0br1df74abDmpvKPfojhKHpcDuQybeB//3wlX3XHlCEBj1zwh5QrJ3nBcl0qRvYLwn/XCG34KSQeAhWHA463mmX49BDOhpIuQcxphLVgaZLITpPqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/blhtG5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfR9KrHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE3C1F0089A;
-	Thu, 17 Sep 2026 15:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/blhtG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2011F00893;
+	Thu, 17 Sep 2026 15:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659245;
-	bh=nAW+c2yBuY0q3CGlJc35fRXcoUUkJzo8Vk1ZtojW71I=;
+	s=korg; t=1789659251;
+	bh=gIWGd7h1pq12Q22jsmJQDNcswNur0eyQKhJFvldOx9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfR9KrHXlBClGHhe2lLsowjxSYNOrQxtXOKW5kBxo0TP1A9EG4NTIiwOcXq9fq/4q
-	 vTsqfxuL/edjh1F2St+V/2bkrIBS+Y8nJGfyG/k63mkbSXNpaKqwTdJUIcj7FAtEdM
-	 OIZw6MWGIVje22skKaRva8X4GQWsBQE3nIwsjjdE=
+	b=E/blhtG5vDyB8lELvfuAXciaEdVFsJ0IddYLvZ7BlJN2rI9wl3yBe3pVknxmQbyLf
+	 5ADISdyZi/sZswpbIgcT/erU1jH3sn750zLWggcgoONdvA1rMdxsWvWk8ZFQHvPRSs
+	 z24zUu36aNTacoHShHHAsyrHulmsp95mA59z3npc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Qu Wenruo <wqu@suse.com>,
-	"James C. Owens" <jamesowens@optonline.net>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 191/733] btrfs: scrub: report the failing sectors address, not the stripe base
-Date: Thu, 17 Sep 2026 16:08:19 +0100
-Message-ID: <20260917151355.906055126@linuxfoundation.org>
+Subject: [PATCH 7.2 193/733] btrfs: fix the possible bioc_list memory leak during error
+Date: Thu, 17 Sep 2026 16:08:21 +0100
+Message-ID: <20260917151355.959727107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,118 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James C. Owens <jamesowens@optonline.net>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 33ce0aa4c57611c3a3485ec7c01ad67b3751447d ]
+[ Upstream commit afbe73778338e6d1ac8c4486fbdf33f0cc1f2624 ]
 
-scrub_stripe_report_errors() iterates over the sectors of a stripe, but
-every message it emits passes stripe->logical, the address of the first
-sector of the 64KiB stripe, rather than the address of the sector being
-reported. The physical address is likewise computed once, before the
-loop, from stripe->logical.
+There are two possible ways to leak bioc memory on
+btrfs_ordered_extent::bioc_list:
 
-This matters because scrub_print_common_warning() uses that logical
-address for the backref walk which produces the "root %llu inode %llu
-offset %llu ... (path: ...)" part of the message. As the address is
-always the stripe base, the reported root/inode/offset/path can identify
-a different file from the one whose sector actually failed.
+- An error occurred for btrfs_insert_one_raid_extent()
+  Then the function btrfs_insert_raid_extent() immediately return
+  without freeing any bioc in the bioc_list.
 
-A 64KiB stripe routinely spans several extents belonging to unrelated
-files. On the machine where this was found, the stripe at logical
-0x17D9380000 holds four sectors of /usr/share/plasma/emoji/bg.dict, then
-a file inside a docker volume, then sectors referenced only by
-snapshots. Every error anywhere in that stripe is attributed to bg.dict.
+- An ordered extent hit an IO error
+  In that case the ordered extent will have BTRFS_ORDERED_IOERR set, and
+  skip the call on btrfs_insert_raid_extent() completely.
 
-The effect is visible statistically: across ten months and four kernel
-series that machine logged 81 distinct flagged logical addresses, and
-every one of them is exactly 64KiB aligned. Since BTRFS_STRIPE_LEN is
-64KiB and stripe->logical is stripe aligned by construction, real
-failures distributed across sectors could not produce that.
+Fix the problem by:
 
-Report the address of the sector actually being examined. Adding the
-sector offset to the physical address is valid because BTRFS_STRIPE_LEN
-is the unit contiguous on a single device for every profile, so a stripe
-never crosses a device boundary.
+- Introduce a new helper, btrfs_cleanup_ordered_bioc_list()
+  Which will remove all bioc from the bioc_list, and release the bioc.
 
-Fixes: 0096580713ff ("btrfs: scrub: introduce error reporting functionality for scrub_stripe")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: James C. Owens <jamesowens@optonline.net>
-Reviewed-by: David Sterba <dsterba@suse.com>
+- Call the above helper for btrfs_insert_raid_extent()
+  So that the cleanup helper is always called no matter what.
+
+- Call the above helper for btrfs_finish_one_ordered()
+  This is called just before the final release on the ordered extent.
+
+This was reported by Sashiko when reviewing another patch.
+
+Link: https://sashiko.dev/#/patchset/20260817021512.3010812-1-shuangpeng.kernel%40gmail.com
+Fixes: 02c372e1f016 ("btrfs: add support for inserting raid stripe extents")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ fs/btrfs/inode.c            |  3 +++
+ fs/btrfs/raid-stripe-tree.c | 18 ++++++++++++------
+ fs/btrfs/raid-stripe-tree.h |  1 +
+ 3 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index d2f7ac5b6e961..3b3f04521369d 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1041,6 +1041,10 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 39a01f9cf6b51..188b4ac9889fc 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3435,6 +3435,9 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
+ 	 */
+ 	btrfs_remove_ordered_extent(ordered_extent);
  
- skip:
- 	for_each_set_bit(sector_nr, &extent_bitmap, stripe->nr_sectors) {
-+		const u64 sector_logical = stripe->logical +
-+					   ((u64)sector_nr << fs_info->sectorsize_bits);
-+		const u64 sector_physical = physical +
-+					   ((u64)sector_nr << fs_info->sectorsize_bits);
- 		bool repaired = false;
++	/* Cleanup any remaining biocs attached to the OE. */
++	btrfs_cleanup_ordered_bioc_list(ordered_extent);
++
+ 	/* once for us */
+ 	btrfs_put_ordered_extent(ordered_extent);
+ 	/* once for the tree */
+diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
+index 89e259a47d8de..6291775dbe0e7 100644
+--- a/fs/btrfs/raid-stripe-tree.c
++++ b/fs/btrfs/raid-stripe-tree.c
+@@ -373,7 +373,7 @@ int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
+ 			     struct btrfs_ordered_extent *ordered_extent)
+ {
+ 	struct btrfs_io_context *bioc;
+-	int ret;
++	int ret = 0;
  
- 		if (scrub_bitmap_test_bit_is_metadata(stripe, sector_nr)) {
-@@ -1069,12 +1073,12 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
- 			if (dev) {
- 				btrfs_err_rl(fs_info,
- 		"scrub: fixed up error at logical %llu on dev %s physical %llu",
--					    stripe->logical, btrfs_dev_name(dev),
--					    physical);
-+					    sector_logical, btrfs_dev_name(dev),
-+					    sector_physical);
- 			} else {
- 				btrfs_err_rl(fs_info,
- 			   "scrub: fixed up error at logical %llu on mirror %u",
--					    stripe->logical, stripe->mirror_num);
-+					    sector_logical, stripe->mirror_num);
- 			}
- 			continue;
- 		}
-@@ -1083,30 +1087,30 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
- 		if (dev) {
- 			btrfs_err_rl(fs_info,
- "scrub: unable to fixup (regular) error at logical %llu on dev %s physical %llu",
--					    stripe->logical, btrfs_dev_name(dev),
--					    physical);
-+					    sector_logical, btrfs_dev_name(dev),
-+					    sector_physical);
- 		} else {
- 			btrfs_err_rl(fs_info,
- 	  "scrub: unable to fixup (regular) error at logical %llu on mirror %u",
--					    stripe->logical, stripe->mirror_num);
-+					    sector_logical, stripe->mirror_num);
- 		}
- 
- 		if (scrub_bitmap_test_bit_io_error(stripe, sector_nr))
- 			if (__ratelimit(&rs) && dev)
- 				scrub_print_common_warning("i/o error", dev, false,
--						     stripe->logical, physical);
-+						     sector_logical, sector_physical);
- 		if (scrub_bitmap_test_bit_csum_error(stripe, sector_nr))
- 			if (__ratelimit(&rs) && dev)
- 				scrub_print_common_warning("checksum error", dev, false,
--						     stripe->logical, physical);
-+						     sector_logical, sector_physical);
- 		if (scrub_bitmap_test_bit_meta_error(stripe, sector_nr))
- 			if (__ratelimit(&rs) && dev)
- 				scrub_print_common_warning("header error", dev, false,
--						     stripe->logical, physical);
-+						     sector_logical, sector_physical);
- 		if (scrub_bitmap_test_bit_meta_gen_error(stripe, sector_nr))
- 			if (__ratelimit(&rs) && dev)
- 				scrub_print_common_warning("generation error", dev, false,
--						     stripe->logical, physical);
-+						     sector_logical, sector_physical);
+ 	if (!btrfs_fs_incompat(trans->fs_info, RAID_STRIPE_TREE))
+ 		return 0;
+@@ -381,17 +381,23 @@ int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
+ 	list_for_each_entry(bioc, &ordered_extent->bioc_list, rst_ordered_entry) {
+ 		ret = btrfs_insert_one_raid_extent(trans, bioc);
+ 		if (ret)
+-			return ret;
++			break;
  	}
  
- 	/* Update the device stats. */
+-	while (!list_empty(&ordered_extent->bioc_list)) {
+-		bioc = list_first_entry(&ordered_extent->bioc_list,
++	btrfs_cleanup_ordered_bioc_list(ordered_extent);
++	return ret;
++}
++
++void btrfs_cleanup_ordered_bioc_list(struct btrfs_ordered_extent *ordered)
++{
++	while (!list_empty(&ordered->bioc_list)) {
++		struct btrfs_io_context *bioc;
++
++		bioc = list_first_entry(&ordered->bioc_list,
+ 					typeof(*bioc), rst_ordered_entry);
+ 		list_del(&bioc->rst_ordered_entry);
+ 		btrfs_put_bioc(bioc);
+ 	}
+-
+-	return 0;
+ }
+ 
+ int btrfs_get_raid_extent_offset(struct btrfs_fs_info *fs_info,
+diff --git a/fs/btrfs/raid-stripe-tree.h b/fs/btrfs/raid-stripe-tree.h
+index 69942ad431408..eb02cf48511bc 100644
+--- a/fs/btrfs/raid-stripe-tree.h
++++ b/fs/btrfs/raid-stripe-tree.h
+@@ -28,6 +28,7 @@ int btrfs_get_raid_extent_offset(struct btrfs_fs_info *fs_info,
+ 				 u32 stripe_index, struct btrfs_io_stripe *stripe);
+ int btrfs_insert_raid_extent(struct btrfs_trans_handle *trans,
+ 			     struct btrfs_ordered_extent *ordered_extent);
++void btrfs_cleanup_ordered_bioc_list(struct btrfs_ordered_extent *ordered);
+ 
+ #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
+ int btrfs_insert_one_raid_extent(struct btrfs_trans_handle *trans,
 -- 
 2.53.0
 
