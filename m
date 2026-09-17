@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E93547057;
-	Thu, 17 Sep 2026 17:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75D254704F;
+	Thu, 17 Sep 2026 17:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667404; cv=none; b=B2Oefg0lqszQsLROb91FSLbN7ox8TgdTgFwAR80B1FuWgrXigGMkXl8PqJ5PO9BXKhBihfxC6asIpfJ2FMhUzWK+g0bLZPWIxInmWwwHZoMANxdAVLYLyIbLD+XcotxeIIn/FKUn7XGe2IF+SpwtAn2fThVRDESb5hFmYL9HBrs=
+	t=1789667407; cv=none; b=o6dNGMFIifKmRnkuXoZ+bASds0MPgptL5VoBRSvgv6CvHwsgMvdSGxN3ns+eYjd3S/ggi9JKUhmuoSapfO6jiXNJfPXrls6gStFlpRPsREpuAUuZJEd8Up4JcCskffFI3kb/xGm1KKmCvWaxKGY+V+FSX/biIklWkJu89khkhHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667404; c=relaxed/simple;
-	bh=9g2vyp7zb/JsxwkACrS6+IcSY3BHbk6iD+6l6c/0oxs=;
+	s=arc-20240116; t=1789667407; c=relaxed/simple;
+	bh=moGswaEW5mlaNZcfy72/q0tlvXaBGeC/bNLUtgmZq2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZBxqcW2DRvDn8X3tnzAJuLxHGgyPg1YdQQWsqnpqhZCrpG8+niS3Y+u4MAVXv5mpCQ9/R6hkS+S0ZOp5mUA1mAIZorwVtzzoWpWy1qgbrAIkBANwhFNvLiWIVbtMpr5+zc5HMpXt6hHXtkEARlw4JWBD31rTlFTISIf7bBtNoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGImmmFT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H4C4pAeGjJsYh4sgn7qHUVs4BqQVRJxmp0R+ifmwYp1XjdROXi6ylBIIr+009kYMmnbf6NlJu1kgcFhHCz+3AlH+G5lGQOa1K8PEWHJmmwv8KQ7N+CSx05omsaNwr+IedRw14W9pD8lewy7H26adWh6EWE0Ke08vzukRKd8BAJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AV8Ntg6/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGImmmFT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5511F000FF;
-	Thu, 17 Sep 2026 17:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AV8Ntg6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5391F000FF;
+	Thu, 17 Sep 2026 17:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667402;
-	bh=VrGq8BT6JWpY30di43N6DL3aboPLbXmGtQQNdInEofk=;
+	s=korg; t=1789667405;
+	bh=+BjLF/R7CCF5wQj7GbypH2JTF3sDq3VXPz1DOa99tK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGImmmFT5iFpxh016t9ZcI6Na/xz3aNdZIaX/RORpXQM5UZNmD8TyG82oOlTD0Uxu
-	 UoQCBUL3s2uKTK4A5KashF5jipqKk6HPDGI/jQfsERvbl1hqivcLyMl6+xkEYAew4w
-	 ZU8LGVakpUp0l26xuNi8Kcw/QxXyoI4NgigbRpeI=
+	b=AV8Ntg6/bBinpbXvk7V+hiH/qtICCWzRgFKAWxD/dQMQm/C69nXxAa2mZrhOINRp3
+	 rOoEymoPPgyMLVf+kKa17LroEAnTW6y5SJFDW5FveMfPBngrgLmSwiTzvmEcMREXin
+	 E/IBRp5uyxCViSdZIfL/uVa7ALAXtm18tWLVyMy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0080/1102] drivers/of: validate status properties in reconfig state changes
-Date: Thu, 17 Sep 2026 16:00:23 +0100
-Message-ID: <20260917151541.481833821@linuxfoundation.org>
+Subject: [PATCH 6.12 0081/1102] soundwire: intel: Move suspend tracking from trigger to pm suspend
+Date: Thu, 17 Sep 2026 16:00:24 +0100
+Message-ID: <20260917151541.508755891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,66 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 0b6b12c5dcce16e604d4cde953bef46531b98571 ]
+[ Upstream commit acf676b9de0c86bc735a7f04962d3d688e156ffc ]
 
-Live-tree reconfiguration properties also carry raw values plus explicit
-lengths. `of_reconfig_get_state_change()` currently treats `status`
-property values as NUL-terminated strings and feeds them straight into
-`strcmp()`.
+Mark all open DAI runtimes as suspended in the component .suspend
+callback instead of relying on SNDRV_PCM_TRIGGER_SUSPEND, which is
+not delivered during PAUSE or xrun states.
 
-Factor the `"okay"` / `"ok"` check out into a helper that first verifies
-that the property contains a bounded C string within `prop->length`.
-Malformed `status` updates should be treated as not enabling the node.
+If during system suspend a dai is open it means that it is in either in
+SUSPENDED, PAUSED or STOPPED  (due to xrun) state and they will need to be
+re-initialized during resume (which is done in .prepare callback).
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260507081812.91838-2-pengpeng@iscas.ac.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260508101755.1247039-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/dynamic.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/soundwire/intel.c       | 31 ++++++--------------------
+ drivers/soundwire/intel_ace2x.c | 39 ++++++++++++++++++++++-----------
+ 2 files changed, 33 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-index 77818436fd60a..e206fd916c1c9 100644
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -74,6 +74,20 @@ static const char *action_names[] = {
- 	[OF_RECONFIG_UPDATE_PROPERTY] = "UPDATE_PROPERTY",
- };
- 
-+static bool of_property_status_ok(const struct property *prop)
-+{
-+	const char *status;
-+
-+	if (!prop || !prop->value || prop->length <= 0)
-+		return false;
-+
-+	status = prop->value;
-+	if (strnlen(status, prop->length) >= prop->length)
-+		return false;
-+
-+	return !strcmp(status, "okay") || !strcmp(status, "ok");
-+}
-+
- #define _do_print(func, prefix, action, node, prop, ...) ({	\
- 	func("changeset: " prefix "%-15s %pOF%s%s\n",		\
- 	     ##__VA_ARGS__, action_names[action], node,		\
-@@ -135,11 +149,9 @@ int of_reconfig_get_state_change(unsigned long action, struct of_reconfig_data *
- 
- 	if (prop && !strcmp(prop->name, "status")) {
- 		is_status = 1;
--		status_state = !strcmp(prop->value, "okay") ||
--			       !strcmp(prop->value, "ok");
-+		status_state = of_property_status_ok(prop);
- 		if (old_prop)
--			old_status_state = !strcmp(old_prop->value, "okay") ||
--					   !strcmp(old_prop->value, "ok");
-+			old_status_state = of_property_status_ok(old_prop);
+diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
+index 421da0f86fad6..75a7bc40a68e7 100644
+--- a/drivers/soundwire/intel.c
++++ b/drivers/soundwire/intel.c
+@@ -907,19 +907,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
  	}
  
- 	switch (action) {
+ 	switch (cmd) {
+-	case SNDRV_PCM_TRIGGER_SUSPEND:
+-
+-		/*
+-		 * The .prepare callback is used to deal with xruns and resume operations.
+-		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
+-		 * but for resume operations the DMAs and SHIM registers need to be initialized.
+-		 * the .trigger callback is used to track the suspend case only.
+-		 */
+-
+-		dai_runtime->suspended = true;
+-
+-		break;
+-
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		dai_runtime->paused = true;
+ 		break;
+@@ -956,10 +943,12 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
+ 	struct snd_soc_dai *dai;
+ 
+ 	/*
+-	 * In the corner case where a SUSPEND happens during a PAUSE, the ALSA core
+-	 * does not throw the TRIGGER_SUSPEND. This leaves the DAIs in an unbalanced state.
+-	 * Since the component suspend is called last, we can trap this corner case
+-	 * and force the DAIs to release their resources.
++	 * Mark all open streams as suspended.
++	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
++	 * state and during prepare the DMAs and SHIM registers need to be
++	 * initialized for them.
++	 * The STOPPED state is a special corner case which can happen if audio
++	 * experiences xrun at suspend time.
+ 	 */
+ 	for_each_component_dais(component, dai) {
+ 		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+@@ -967,13 +956,7 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
+ 
+ 		dai_runtime = cdns->dai_runtime_array[dai->id];
+ 
+-		if (!dai_runtime)
+-			continue;
+-
+-		if (dai_runtime->suspended)
+-			continue;
+-
+-		if (dai_runtime->paused)
++		if (dai_runtime)
+ 			dai_runtime->suspended = true;
+ 	}
+ 
+diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
+index 4f3dd70d6a1a7..eca38648d5d15 100644
+--- a/drivers/soundwire/intel_ace2x.c
++++ b/drivers/soundwire/intel_ace2x.c
+@@ -500,19 +500,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
+ 	}
+ 
+ 	switch (cmd) {
+-	case SNDRV_PCM_TRIGGER_SUSPEND:
+-
+-		/*
+-		 * The .prepare callback is used to deal with xruns and resume operations.
+-		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
+-		 * but for resume operations the DMAs and SHIM registers need to be initialized.
+-		 * the .trigger callback is used to track the suspend case only.
+-		 */
+-
+-		dai_runtime->suspended = true;
+-
+-		break;
+-
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		dai_runtime->paused = true;
+ 		break;
+@@ -536,8 +523,34 @@ static const struct snd_soc_dai_ops intel_pcm_dai_ops = {
+ 	.get_stream = intel_get_sdw_stream,
+ };
+ 
++static int intel_component_dais_suspend(struct snd_soc_component *component)
++{
++	struct snd_soc_dai *dai;
++
++	/*
++	 * Mark all open streams as suspended.
++	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
++	 * state and during prepare the DMAs and SHIM registers need to be
++	 * initialized for them.
++	 * The STOPPED state is a special corner case which can happen if audio
++	 * experiences xrun at suspend time.
++	 */
++	for_each_component_dais(component, dai) {
++		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
++		struct sdw_cdns_dai_runtime *dai_runtime;
++
++		dai_runtime = cdns->dai_runtime_array[dai->id];
++
++		if (dai_runtime)
++			dai_runtime->suspended = true;
++	}
++
++	return 0;
++}
++
+ static const struct snd_soc_component_driver dai_component = {
+ 	.name			= "soundwire",
++	.suspend		= intel_component_dais_suspend,
+ };
+ 
+ /*
 -- 
 2.53.0
 
