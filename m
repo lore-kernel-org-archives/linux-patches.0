@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B744E3237;
-	Thu, 17 Sep 2026 15:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834D759C985;
+	Thu, 17 Sep 2026 15:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658790; cv=none; b=P001Djzi7V9yc0HAh/qpRKpQyGm/+Lul6P3RnIkhhwVaZuH1ymltT4+Y9FvK+Fp1wyBT/Vzwy5WiSgD4TqOmxGxbEpVgEFwCNGAUDAa4uzg+Ys7KVX1TAl5XUKK+NkRZ3/59qXj9sVzzHyYoFNgHMVMU/3h//Cxn4XrksV5p9D4=
+	t=1789658788; cv=none; b=nNVGgyJK9cEC0i5CsPv1xykCqjCrI2e+JqgsnFPNnX06NwYETxW30fs6fHBUYDn7W7ECSbadaVmrEGISa3k9CM0oFNPEGq8QEyyD5Fd8D/cnO4H66zAbYYm2tUTvgpEPqR0WJAHs3w03AxGWcPFZ+zHutjxJfnnlI2pfWNbgtM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658790; c=relaxed/simple;
-	bh=3jX19FaI5fWBl1IzxFVC7WFpcAoNSZkrvJ1+WcutVe4=;
+	s=arc-20240116; t=1789658788; c=relaxed/simple;
+	bh=KCIta00qt6ifeWgPFH3BXE83nenzfPeE95+xL34k/WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haljy1+3wf4vKFkXujIgq2S3BcrNjf49yJPRBfp8zfEKINn110fzSKKF57gkMJpNGsXqCY3COX0d9qQh9uNcmlnn401QBWHruFyW3Iu4T6rlPYPF24r7LRJWjz1XHaVbmhkVCpiyYSf0i7y1XtsQOpCJRjF9Sbvk5HK4nRBLSGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/Bq2BOs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NBSfIQHwhiyDTwjb6ujR5NW3cAao5dGpbwYVyqxI0TEeyCofGKWhz/98k4kskVaZH23o9Zi0mKoxeebIfjC6e36nCGM/KIWA21hDQmql+g+R4bhFOSaRLaUBdQgQzG+QbaVJ00yLH1O2VhHAmZX+EZwBJEzxSWr5NeH4szRB9gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndJ987aN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/Bq2BOs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEAA1F00898;
-	Thu, 17 Sep 2026 15:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndJ987aN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1F41F000FF;
+	Thu, 17 Sep 2026 15:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658779;
-	bh=orLAE7UWMKUbKyLcv0On9lgpg5hooENGeYXGnNkWgG8=;
+	s=korg; t=1789658776;
+	bh=5XCyU9BXmw7U61nIyi1jSOBsS2LfzS0ww9jjGl29Hrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e/Bq2BOs5BKY8Z5ytUCND5lIiOdPDNgtqytNzZhbaw4ngt3JsJCfRAaIrAtUO4cj+
-	 LxoKUW5rbugI4RERP1FBQoT4z97aohhgd2zIqeW3XYK1t9HlkhW5CZsX1LgHrYygQb
-	 dhLfT7AGN/vOeuaUC4DzZ6SppAuXgH7mJPTCUc7k=
+	b=ndJ987aNr5/qHIn2X8u+Pe4G2O1E1py59TlXZT1eFN17zfzESLPCZT4uwgdgatCkw
+	 VQi+79QiJl5zxWT2WZodJnnifj8CbqpwaxNc9XTH9Qz+H8RgLrnbUEW8i4ZXmT65un
+	 2fZZACIaQbE5Ntl/W3n7sLassc+Nrh8fEKNq/DbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 035/733] ufs: do not treat unreadable directory blocks as empty
-Date: Thu, 17 Sep 2026 16:05:43 +0100
-Message-ID: <20260917151351.613441251@linuxfoundation.org>
+Subject: [PATCH 7.2 034/733] accel: ethosu: Dont read the U65 rounding mode as a storage mode
+Date: Thu, 17 Sep 2026 16:05:42 +0100
+Message-ID: <20260917151351.585270140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,49 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 
-[ Upstream commit 08edfb34ee9ca54383970c65ed3a6013e84f5e16 ]
+[ Upstream commit db9deec5a345abc538d081fb221dc0b00a9695bd ]
 
-ufs_empty_dir() scans every directory block to decide whether a
-directory is empty before rmdir() removes it. When ufs_get_folio()
-cannot read or validate a block it returns an error pointer, and the
-loop currently skips that block with continue and keeps scanning the
-remaining blocks.
+Bits 15:14 of NPU_SET_{IFM,OFM}_PRECISION select the activation storage
+mode on U85 only. On U65 the same field holds the rounding mode, and the
+command stream parser has read it as a storage mode since the driver was
+added.
 
-If none of the readable blocks hold an entry, the function returns 1
-and the caller unlinks the directory. A directory whose contents live
-in a block that cannot be read, for example because of an I/O error or
-corrupted directory metadata, is therefore seen as empty and removed,
-losing the entries it still holds.
+That went unnoticed while unknown values fell through the switch, but
+now that they are rejected, every U65 command stream that asks for
+natural rounding (2) fails CMDSTREAM_BO_CREATE with -EINVAL. Mesa emits
+it for average pooling, concatenation, split, unpack, strided slice, LUT
+and argmax, which is 72 failures of the Teflon test suite on an i.MX93.
+Truncating rounding (1) is misread as well: it picks the two-tile
+address path and computes a bogus feature map size from tile bases the
+command stream never set.
 
-Follow the ext2 behaviour and treat an unreadable block as a reason to
-consider the directory not empty, so rmdir() fails instead of
-discarding data that could not be verified.
+Read the field as a storage mode only on the hardware where it is one.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801013942.279992-1-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
+Fixes: 6b7e0066294d ("accel: ethosu: Handle U85 internal chaining buffer")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Link: https://patch.msgid.link/20260824152612.751007-1-tomeu@tomeuvizoso.net
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ufs/dir.c | 2 +-
+ drivers/accel/ethosu/ethosu_gem.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ufs/dir.c b/fs/ufs/dir.c
-index e62fe56676710..ce43cf20b07c9 100644
---- a/fs/ufs/dir.c
-+++ b/fs/ufs/dir.c
-@@ -590,7 +590,7 @@ int ufs_empty_dir(struct inode * inode)
+diff --git a/drivers/accel/ethosu/ethosu_gem.c b/drivers/accel/ethosu/ethosu_gem.c
+index d50fed64d4d93..fa37a190e9fff 100644
+--- a/drivers/accel/ethosu/ethosu_gem.c
++++ b/drivers/accel/ethosu/ethosu_gem.c
+@@ -204,7 +204,7 @@ static u64 feat_matrix_length(struct ethosu_device *edev,
+ 			      struct feat_matrix *fm,
+ 			      u32 x, u32 y, u32 c, bool ofm)
+ {
+-	u32 element_size, storage = fm->precision >> 14;
++	u32 element_size, storage = ethosu_is_u65(edev) ? 0 : fm->precision >> 14;
+ 	int tile = 0;
+ 	u64 addr;
  
- 		kaddr = ufs_get_folio(inode, i, &folio);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
- 
- 		de = (struct ufs_dir_entry *)kaddr;
- 		kaddr += ufs_last_byte(inode, i) - UFS_DIR_REC_LEN(1);
 -- 
 2.53.0
 
