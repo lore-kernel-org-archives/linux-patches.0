@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A0051FCBB;
-	Thu, 17 Sep 2026 15:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545D659E355;
+	Thu, 17 Sep 2026 15:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658770; cv=none; b=Y0OZwM8UTgzqWpXVNWKWUAEXKcxt0kJCjF4M+50yeFKenQIfvZB/ZxItizIolgUYirAanenFXgdfrmQIaAeI8pCdmxTZ+TdwNDED9GzISheW5hVUVEMMMUPu6jUY60Z0gpemgEdhbL88JW8mGIWqBFcsjbEBNvRDf0ddcCKs9K8=
+	t=1789658773; cv=none; b=DeapRt4uI0jrz680Szj0qpuB1YHHTydjvaurOT+wt/XF7PlqfEarLnSX7qhOVgKsz7ZXn3J1huHTxZqRISRX/JtTyQaKDLXNBg2V2nqpI89k+dYJuWXGrtvKhKF8ocLq1bdHIULUTsIXlmUf9xiBX4AYFXQuDuDiPbFEbvmm4tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658770; c=relaxed/simple;
-	bh=2wEK9dtHCcBU5y+/N1g9cctrFiYyoPkNJE6x3SP+W2o=;
+	s=arc-20240116; t=1789658773; c=relaxed/simple;
+	bh=/zHM8icV2apeGp7SKngWN8QsQKwp85F7GmS+XyoJ26Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDpnMYMKRjGUt1edWpYCemjAqYpjxcsY/0sp7aMl5mX0YmIqajMH5HKdwOlDD7f9vWFWvKH50F8UmgnyfVrRjSRDYOt6h7Knbm1AMnVuyd7Luv/OZodU+m107JWA0QBkSRSuqvkKegL35e0m3pm5ijSa8PamByJyPrn2AwIiEkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOBjTKkn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TCWSzI3W/1cBJ5PYrRB+K3NdsMOH7aA+g6kVi5yFvn/wZI7ND17DRNPusyRkSDfE7+yBf3TBJoKZwdu8m3YO6A0iTT/1J58Yj4mU6U9+4cYf0PRi19o1SHKf2dM+9rYae1Jdf9YVQMAQ1PzCDeKAibD7D6emveDZbzX0MOoFN6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SnLZVaO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOBjTKkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9821F0089B;
-	Thu, 17 Sep 2026 15:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SnLZVaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63331F000FF;
+	Thu, 17 Sep 2026 15:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658758;
-	bh=5+FBqBotE6RV6GZANoCcgdbaXgXZOgoRmkqjkabKIfc=;
+	s=korg; t=1789658761;
+	bh=zfqMhaxqtsq3s0eIhk40/2jkl5nwyvc1SCDLjNcejnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOBjTKkndflxLmhkhZ8Kj7E0LVZE+X07wqoRkgfRz5mVzIIUuJtoqVeM1UPHD/Vpr
-	 uIIQtBuWqhG+NTGsHFWX/EBj+KXgKcOt346JCazp5pTTndzTHj3rt8v+4IotI1OSb1
-	 r8RTTArG5LVG4219hd9/7fEOgf+5zaSmTOdAazRk=
+	b=0SnLZVaOiCVHTPRk5i8utPg+3gMvL33MJNFS9mGDQ7YuK4Qj4r9IT3nKMAfeufc+K
+	 K1938lty55wSiPhJmmWXTWnykVvGGuY8tKPpleTU31s1hVRDUtxj65HQvDgcZtrmGx
+	 /x1W3Isa73NNbj2ZrETMObkcSzYl8JsTHwp7Rh/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
+	Taimuraz Kaitmazov <taimuraz@kaitmazov.com>,
 	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 029/733] accel/amdxdna: Remove __counted_by from struct amdxdna_cmd_chain
-Date: Thu, 17 Sep 2026 16:05:37 +0100
-Message-ID: <20260917151351.448910896@linuxfoundation.org>
+Subject: [PATCH 7.2 030/733] accel/amdxdna: reject a command chain that carries no commands
+Date: Thu, 17 Sep 2026 16:05:38 +0100
+Message-ID: <20260917151351.477907182@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,41 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
 
-[ Upstream commit b3709d354545e70388177500761f92d906c4dfd6 ]
+[ Upstream commit ef6d27af71e1dc43181ec797a6aaa77c27c36786 ]
 
-struct amdxdna_cmd_chain contains a flexible array annotated with
-__counted_by(command_count). Since the structure is stored in shared
-AMDXDNA_BO_SHARE memory, userspace can modify command_count concurrently.
-If command_count is changed to zero, the bounds check generated from
-__counted_by may fail and trigger a kernel panic.
+A chain whose command_count is zero passes the payload length check,
+because struct_size(payload, data, 0) is just the header. The fill loop
+then does not run, so offset stays zero and the request is submitted with
+a zero-length buffer.
 
-Remove __counted_by to avoid relying on the userspace-controlled
-command_count for the flexible array bounds check.
+On firmware without AIE2_NPU_COMMAND that ends at the opcode check, since
+op is still ERT_INVALID_CMD and aie2_get_chain_msg_op() answers
+MSG_OP_MAX_OPCODE. aie2_get_npu_chain_msg_op() answers
+MSG_OP_CHAIN_EXEC_NPU whatever it is given, so there the submission
+continues to drm_clflush_virt_range(cmd_buf, 0), which reads the byte
+before the buffer and faults on the vmap guard page. EXEC_CMD is
+reachable by any process that can open the render node.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
+Reject the request instead.
+
+Fixes: 8ed8b0239617 ("accel/amdxdna: Add debug prints for command submission")
+Signed-off-by: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260821033543.1839719-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260818000019.369366-1-taimuraz@kaitmazov.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.h | 2 +-
+ drivers/accel/amdxdna/aie2_message.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
-index b6bef3af7dab4..6e78bab8a02c0 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.h
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.h
-@@ -55,7 +55,7 @@ struct amdxdna_cmd_chain {
- 	u32 submit_index;
- 	u32 error_index;
- 	u32 reserved[3];
--	u64 data[] __counted_by(command_count);
-+	u64 data[];
- };
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index dfe0fbdf066d2..b4c49259a1a23 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -994,7 +994,7 @@ int aie2_cmdlist_multi_execbuf(struct amdxdna_hwctx *hwctx,
+ 	}
  
- /*
+ 	ccnt = payload->command_count;
+-	if (payload_len < struct_size(payload, data, ccnt)) {
++	if (!ccnt || payload_len < struct_size(payload, data, ccnt)) {
+ 		XDNA_DBG(xdna, "Invalid command count %d", ccnt);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
