@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1464E3224;
-	Thu, 17 Sep 2026 15:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D920A4E73BD;
+	Thu, 17 Sep 2026 15:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660548; cv=none; b=VZRH027xJE/ft0cjRZnIx38Fcqd1ut93+Ynl7yRU4k8F6hsfLORgLrnNwloE97BGy/skkc3rNbjdHhLzQLKkSR4R7isOEaeLAmAv8sLuAKceOYmTApv0qWiaN7eQZV3411SONPXvU0UEmkXbwcEGB4HHEY9CgikpjtaCDQUkkms=
+	t=1789660551; cv=none; b=AUJ6okLLus6Kb2G1tELhEHCsSuALV4hiiw9yDBbZuHnGEOxFkiYraaPoBTSObp+mJny+903Z5Bd+okZ+wRwzsTys1g9Qf7jlbrU3mlWSaeLn8sT5ko5OHg6LnGFZ+3JiLBf/JPyaEqbxikPuh5sHsZvPHebK82HP9/NHr4DjzDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660548; c=relaxed/simple;
-	bh=16Tu2OSriFGh0HkxR771oN1859xAGpbbq3t2s0Gnr9g=;
+	s=arc-20240116; t=1789660551; c=relaxed/simple;
+	bh=vrrmJ9oY216gVgRPCFssNyMMpPZ/X984cWI/wL7o09I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJSc9F2dOHIZubVq6UVJQ1JdiITJsEndEPMOcTU7AJ6ljSfQjW0MAyi/q++XcJK1YQM3X3+7X8MrT1y/eoemZSKJzqjGlhNLzgtgo4w3WEvIw+pf3RZ2mxYZBtXpYagxyNldoJNHerfFZwIvE6vgYoTG+r4TsP/dq0WvUfFY1FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sh+8dLE/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lohByQeMTXHOY2HGeOuObrzFC2OQ1961IVszCwP4GnvdqXIN963+RMMjDB6Dq0ScZ6PujKIZJ1QICq/OjTr3F3PFvcPYC/ciG6KuSgMuqnDvqaUqT3m7CiOa6ZaiIZiAc6Ri6zT+WPMWUP5ZaXcJScOtrLVjopmAN43env0qSgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjuN+boy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sh+8dLE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181A51F000FF;
-	Thu, 17 Sep 2026 15:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjuN+boy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DBF1F00893;
+	Thu, 17 Sep 2026 15:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660546;
-	bh=XIAHHeDjJSttV5VWOnbtQWQPUW7AYjarSizLL49yaUs=;
+	s=korg; t=1789660549;
+	bh=+soOy404VatnP+fT3K94LEyINuhM2qw8dxT1Nrh4wXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sh+8dLE/ULkzpNs3rhcWld+UosE+ozr0N2dXkbk2v3AC967B+e+wkOyFarj6ZRUyL
-	 d2kYE3oIUgFMMU3+JNnFQPJAOueHrq69Ym4aUnu9mX70VQPRZmUuNMBELNu0Qgf5HJ
-	 ci4EvzaWJp/jYwVuzoVkOzX4UEecta7LKa6inVpU=
+	b=CjuN+boyGwiLFkF9jbjvcJPDWczs70bmySiq4t6ZjVPSj5fMYzxqNmXoR3bEeU23q
+	 guWEOoJDYL891Is/N8ZH5EV+VylBd/w1wKNdsmWaW2v3oDRNa2xRaHviuGeFn6M6ym
+	 +Fzk+787i+DDQsRuB9z2KiralT5pWFyyogepOCHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arthur Lesuisse <arthur.lesuisse@ulb.be>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 629/733] smb: client: fix WSL reparse point uid/gid override
-Date: Thu, 17 Sep 2026 16:15:37 +0100
-Message-ID: <20260917151408.236479359@linuxfoundation.org>
+Subject: [PATCH 7.2 630/733] smb: client: fix uid/gid override in getattr with posix extensions
+Date: Thu, 17 Sep 2026 16:15:38 +0100
+Message-ID: <20260917151408.263928590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -56,16 +57,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit cd2b2b57921d4caa7875e83198bb2aa71254328b upstream.
+commit cf4d35896621b7298eef51b7a465e5c0cb22f670 upstream.
 
-wsl_to_fattr() unconditionally overwrites cf_uid/cf_gid with values
-from WSL extended attributes ($LXUID/$LXGID), ignoring the forceuid
-and forcegid mount options.
+When mounting with 'multiuser,posix' options, cifs_getattr() overrides
+the server-provided uid/gid with the current process's fsuid/fsgid.
+This is because the condition only checks for unix extensions
+(tcon->unix_ext) but not posix extensions (tcon->posix_extensions).
 
-Fix this by initializing cf_uid/cf_gid to the mount defaults and
-gating the $LXUID/$LXGID EA parsing on forceuid/forcegid.
+With SMB3 POSIX extensions, the server provides real uid/gid values
+just like with unix extensions, so they should be preserved rather
+than replaced with the caller's credentials.
 
-Closes: https://sashiko.dev/#/patchset/20260906190803.667489-1-pc%40manguebit.org
+Add a tcon->posix_extensions check to the condition so that uid/gid
+from the server are properly reported in stat results.
+
+Reported-by: Arthur Lesuisse <arthur.lesuisse@ulb.be>
+Closes: https://lore.kernel.org/r/DB9P190MB2012266F6B8DECBE5D26A1798DB52@DB9P190MB2012.EURP190.PROD.OUTLOOK.COM
+Suggested-by: Arthur Lesuisse <arthur.lesuisse@ulb.be>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
@@ -75,44 +83,29 @@ Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/smb/client/inode.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -1137,10 +1137,14 @@ static bool wsl_to_fattr(struct cifs_ope
- 			 struct cifs_sb_info *cifs_sb,
- 			 u32 tag, struct cifs_fattr *fattr)
- {
-+	unsigned int sbflags = cifs_sb_flags(cifs_sb);
- 	struct smb2_file_full_ea_info *ea;
- 	bool have_xattr_dev = false;
- 	u32 next = 0;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -2988,14 +2988,14 @@ int cifs_getattr(struct mnt_idmap *idmap
+ 		stat->attributes |= STATX_ATTR_ENCRYPTED;
  
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+
- 	switch (tag) {
- 	case IO_REPARSE_TAG_LX_SYMLINK:
- 		fattr->cf_mode |= S_IFLNK;
-@@ -1177,11 +1181,13 @@ static bool wsl_to_fattr(struct cifs_ope
- 		nlen = ea->ea_name_length;
- 		v = (void *)((u8 *)ea->ea_data + ea->ea_name_length + 1);
- 
--		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen))
--			fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen))
--			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
-+		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
-+			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
-+				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
-+			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
-+				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
- 			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
- 				return false;
+ 	/*
+-	 * If on a multiuser mount without unix extensions or cifsacl being
+-	 * enabled, and the admin hasn't overridden them, set the ownership
+-	 * to the fsuid/fsgid of the current process.
++	 * If on a multiuser mount without unix extensions, posix extensions
++	 * or cifsacl being enabled, and the admin hasn't overridden them,
++	 * set the ownership to the fsuid/fsgid of the current process.
+ 	 */
+ 	sbflags = cifs_sb_flags(cifs_sb);
+ 	if ((sbflags & CIFS_MOUNT_MULTIUSER) &&
+ 	    !(sbflags & CIFS_MOUNT_CIFS_ACL) &&
+-	    !tcon->unix_ext) {
++	    !tcon->unix_ext && !tcon->posix_extensions) {
+ 		if (!(sbflags & CIFS_MOUNT_OVERR_UID))
+ 			stat->uid = current_fsuid();
+ 		if (!(sbflags & CIFS_MOUNT_OVERR_GID))
 
 
