@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0887250E5A7;
-	Thu, 17 Sep 2026 17:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A30450E5BA;
+	Thu, 17 Sep 2026 17:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665113; cv=none; b=A7xYZd82c9slNh7J7pSzDBMw5ADdDlwN19yekfmchypCHqAMC0gm/x/A6KWe2ATo6yNrwj4CkvprxYgeRmHRPsyqFck02elpqFWdaQ64i0anrDQfVoSbb8eQBvNzFYIp4gmHYEhJStzIXo7NIaHzBoRJfOUCGMdMnp2/LHKZCgU=
+	t=1789665116; cv=none; b=iOOgk13JCBfxD5gtLpWZ3AYbpQIsgaTjKtTljggGQg7ZTGvXiiLj1b77fe7LsehNtAxl5YTOTEoZZQ9RPo40THcMl89sGdMLa4Sus0VtzQERjv1V1MpeWdl+zY/uxkdGqRgrMAXK2UBTHmmDZYL8EZlN7KBH44oC7/lnZZgbP3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665113; c=relaxed/simple;
-	bh=y3L3XuU3Qk055EFc2tuetZ+9cSuMdZIKem4AGABz4Wo=;
+	s=arc-20240116; t=1789665116; c=relaxed/simple;
+	bh=0yyVcWCmnGxx9zr0Gd06LiHi9RrfXzgmOjTfKBDJdqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qorhvO61wr4mf/smASBNCD9Ug7/AvfaMBvEEwtM8cLM0mWJPNViNMujMfFcXADriBIUe9GTe/5orsDQI4Zw9jzmwNnbTmKZBXvGzkrmtxakGaexg0MAOo2Dv9Y+4iUH3fYsQPXxtqTuolmw2XYT+SPgzqKW5XloL3lcPz3ZQCh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtZdO76I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQVdmIPjVwF4XymWUXPyDFcgg7EqaIX3CdYuFvqseNoA9SmiOChB/dkiNHlHKwND80uU8Un6ux9w4vK7bcY24uWVYK5WCb67RZHUSMrUoPfck7w8lFHj6CPjF2przR8sA5EZrZgJI4/HxksFmbdyyZ7XiQ/ZdBy7zX0A/njmdno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibFLIeZZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtZdO76I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5951F000FF;
-	Thu, 17 Sep 2026 17:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibFLIeZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060BF1F000FF;
+	Thu, 17 Sep 2026 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665111;
-	bh=olyuG0jenuC/i/rkufbDRLbWOfdMDbVTJ35wO42/TaM=;
+	s=korg; t=1789665114;
+	bh=fxdD2QXfkjZ9Tgs4B98l4fkARN+1Fb0akQ1xJLif7tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EtZdO76I1mqmMsR5HpERBBrD5kV021vA46KvHDbwVjBAnfvwOx5auyf8bKIGhVD1p
-	 kYPxGyPKbPazVGfQB6wxL3fTjbuAs37quiomUO1ZSCmDtmLSeqeV/jFdNkvsqH1+gr
-	 P/bM8110EjoCwG7wjvfl9mdzuM+ogkkksTV0vOok=
+	b=ibFLIeZZai8GYPjGzQUNS+EW+KDfZ5fM3J5QRHDMTbGXZIPcrymX9E1gbFnqs5JhH
+	 vTrCzTQ0zHL/KJ1Fm9CH0zshdnboD2RnYmhQA1yJHpaaDNL+A1IluWZ8AgbLqobnYP
+	 BAFd6K+JgNpXzP4NXetYSnNviN9V28WnqFIEI5uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Samu <nomomentomori@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0559/1250] vhost-scsi: flush backend after device ioctls
-Date: Thu, 17 Sep 2026 16:05:54 +0100
-Message-ID: <20260917151607.082567058@linuxfoundation.org>
+Subject: [PATCH 6.18 0595/1250] ksmbd: use memcmp() to compare ClientGUIDs
+Date: Thu, 17 Sep 2026 16:06:30 +0100
+Message-ID: <20260917151608.009140989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 22598f55a4c2b510b3df5e69e563387a963222ae ]
+[ Upstream commit e8bb506e6ef749ac0336f3e579d8d02396b7d832 ]
 
-vhost-scsi translates guest response descriptors into userspace iovecs
-when commands are submitted.  Target-core completes those commands
-asynchronously, so VHOST_SET_MEM_TABLE can replace the memory table while
-an in-flight command still retains response iovecs translated through the
-old table.
+ClientGUID is a fixed-size binary value and can contain embedded NUL
+bytes. strncmp() stops comparing at the first NUL byte, so different
+ClientGUID values can incorrectly be treated as equal.
 
-If the old mapping is reused after VHOST_SET_MEM_TABLE returns, command
-completion can write the response to an unrelated userspace object.
+Use memcmp() in SMB3 multichannel session binding and
+FSCTL_VALIDATE_NEGOTIATE_INFO to compare all SMB2_CLIENT_GUID_SIZE
+bytes.
 
-Flush the vhost-scsi backend after vhost_dev_ioctl() handles a device
-ioctl.  This waits for in-flight commands that can still use the old
-response iovecs before the ioctl returns.
-
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724060919.1569170-1-physicalmtea@gmail.com>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Samu <nomomentomori@gmail.com>
+Suggested-by: Samu <nomomentomori@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 29716ce714554..deb4c8bfd3d57 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -2448,9 +2448,10 @@ vhost_scsi_ioctl(struct file *f,
- 	default:
- 		mutex_lock(&vs->dev.mutex);
- 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
--		/* TODO: flush backend after dev ioctl. */
- 		if (r == -ENOIOCTLCMD)
- 			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
-+		else
-+			vhost_scsi_flush(vs);
- 		mutex_unlock(&vs->dev.mutex);
- 		return r;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index f2a53841e8a81..88e4176dd97ac 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1752,7 +1752,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 			goto out_err;
+ 		}
+ 
+-		if (strncmp(conn->ClientGUID, sess->ClientGUID,
++		if (memcmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
+ 			goto out_err;
+@@ -8170,7 +8170,7 @@ static int fsctl_validate_negotiate_info(struct ksmbd_conn *conn,
+ 		goto err_out;
+ 	}
+ 
+-	if (strncmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
++	if (memcmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
+ 		ret = -EINVAL;
+ 		goto err_out;
  	}
 -- 
 2.53.0
