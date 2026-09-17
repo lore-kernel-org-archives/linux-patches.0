@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C9D4F7CC0;
-	Thu, 17 Sep 2026 17:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9D24F7CD2;
+	Thu, 17 Sep 2026 17:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666655; cv=none; b=KutMuHQkgCr4o1QnWlsgwqAfipVmrT1e6xvE72MPoKGZI8WtRpZf0z4VRTnoN1fb0lwJ2bSzVeuJkozC0jut72vvxL7ATCm+zDPylMNPusnUjSsAS+ZRssGweezphDUV93JGQ5pYKIRAY/HZbtAtMRrbp6MhMfokITSUgJ/MQXw=
+	t=1789666658; cv=none; b=q+eGAWfHCZq6q3+F2OXDDCTuzyC9qFk5mZez5iyprAofxAM5hyYnfNYz1Xwo69+qHIHQw+mORn5nAB3xiXyMyGo3+a2ywxze4na2atcSKTEhpPm19KrBtO7hfBQErCAXbGVk2FNDczk6NUJMvs5e5doCOJRqb29PW4wPgoGVmTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666655; c=relaxed/simple;
-	bh=DGI6GxebG3BMVXj2tFoBN+If8NZkzs4P2mCTzIqtqxc=;
+	s=arc-20240116; t=1789666658; c=relaxed/simple;
+	bh=nIrg8e3nvFxuCi0AtN2txRNmqpbyC/X8wm6ckL2YvXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miR1+MYyNg/TmJMtD24Xw7aSrmVt6umUYU5pt1zkDhZA/JbPuZ/AUNTUofU9qXOkHjUaiv5g4AdU2xe3KV/UeNskWQ85silpkfTK1g1SUQSjkLrCXHbnoJy9HjbX8VBRcSpRNrEprj3arqgeBfat0WLiRYBPv5D1AzhR1vAJMlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyUJEk/B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=brip/YjsLb5oz8Kexwf+p8RggN0nbo6IQLZawEBrnqZQxHl5tA2MrbOnmabP2EgEFiuDL3FUBKTfmEOQ4dFBBUNcfVlNQiH5Fq+RCGplfVFKeE8W+0J0dOZOW1/ez/+pv18N7Lhqm9Hc8UfOG+ux5Cez/UTGObpKTGH0oUMAAqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp3U6apU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyUJEk/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEE01F000FF;
-	Thu, 17 Sep 2026 17:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp3U6apU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0C21F000FF;
+	Thu, 17 Sep 2026 17:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666654;
-	bh=umj99C7+wQpkuBFd0c6lnvGuqMDn037oOUdkYwTCCh8=;
+	s=korg; t=1789666657;
+	bh=tquOoi3E/JiPLAiwrggeRxF3irrdoBt8pBAI8Dxhew8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyUJEk/BMGwthB9vr9GN8jSd2JjxULi1vu6CE0nDod+kug37Xm27ZL4HyuZ79Xo6d
-	 ND85rNQZYCh4AazdKj5OD+WBSDcwS+yYoalABAsRUr1S++FAiXOsGaE2WvdMgGKABq
-	 CVSpsR9eTJ8wGkIHkHc93TI41bQjynYHM1K34mqc=
+	b=Tp3U6apU718l6+i+ZgwpkC6LO2YCQP4ZOmw3oQH5hVLJVWgUJO1YfyYYnCx1nxZOi
+	 kSQwH4WpN2cYqKKqziDYhTvZdTpz+JUrD2gk0qAqa/mbCQACzeMhkTQxk7cmVUfprA
+	 Fpm57KS09YXgQDbiIHzHfkRyG0DxsDfUwik1W7m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1071/1250] bnxt_en: Propagate TPA buffer allocation failures in bnxt_queue_mem_alloc()
-Date: Thu, 17 Sep 2026 16:14:26 +0100
-Message-ID: <20260917151621.161263591@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 1062/1250] media: mediatek: vcodec: bound AV1 tile-start copy to the array capacity
+Date: Thu, 17 Sep 2026 16:14:17 +0100
+Message-ID: <20260917151620.908770791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,55 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit b814dfbfeb0a68c9a52073f2caa05a2d5247a329 upstream.
+commit 37bef2170d4c88fc3d708eecf3ef0f4032bc1372 upstream.
 
-bnxt_alloc_one_tpa_info_data() returns -ENOMEM as soon as one allocation
-fails. This leaves the remaining rxr->rx_tpa[] entries zeroed.
+vdec_av1_slice_setup_tile() copies tile_cols + 1 / tile_rows + 1 entries
+into mi_col_starts[] / mi_row_starts[] from the bitstream tile_info. Bound
+the copy to the array capacity.
 
-bnxt_queue_mem_alloc() discards that return value, so the partially
-initialized ring is installed by bnxt_queue_start().
-
-Since the agg_id is picked by the hardware and bnxt_alloc_agg_idx maps
-it to a SW index in rxr->rx_tpa[], it is possible that an uninitialized
-slot can be chosen which would hand a zero DMA address to the device.
-
-Fix this by checking the return value of bnxt_alloc_one_tpa_info_data
-and unwinding, freeing the ring buffers.
-
-Fixes: bd649c5cc958 ("bnxt_en: handle tpa_info in queue API implementation")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
+Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
+Assisted-by: Claude:claude-opus-4-8
 Cc: stable@vger.kernel.org
-Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-4-joe@dama.to
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -16104,11 +16104,16 @@ static int bnxt_queue_mem_alloc(struct n
- 	bnxt_alloc_one_rx_ring_skb(bp, clone, idx);
- 	if (bp->flags & BNXT_FLAG_AGG_RINGS)
- 		bnxt_alloc_one_rx_ring_netmem(bp, clone, idx);
--	if (bp->flags & BNXT_FLAG_TPA)
--		bnxt_alloc_one_tpa_info_data(bp, clone);
-+	if (bp->flags & BNXT_FLAG_TPA) {
-+		rc = bnxt_alloc_one_tpa_info_data(bp, clone);
-+		if (rc)
-+			goto err_free_rx_ring_skbs;
-+	}
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
+@@ -1299,11 +1299,12 @@ static void vdec_av1_slice_setup_tile(st
+ 	tile->uniform_tile_spacing_flag =
+ 		BIT_FLAG(ctrl_tile, V4L2_AV1_TILE_INFO_FLAG_UNIFORM_TILE_SPACING);
  
- 	return 0;
+-	for (i = 0; i < tile->tile_cols + 1; i++)
++	/* Bound the copy to the mi_col_starts[]/mi_row_starts[] capacity. */
++	for (i = 0; i < tile->tile_cols + 1 && i < V4L2_AV1_MAX_TILE_COLS + 1; i++)
+ 		tile->mi_col_starts[i] =
+ 			ALIGN(ctrl_tile->mi_col_starts[i], BIT(mib_size_log2)) >> mib_size_log2;
  
-+err_free_rx_ring_skbs:
-+	bnxt_free_one_rx_ring_skbs(bp, clone);
- err_free_tpa_info:
- 	bnxt_free_one_tpa_info(bp, clone);
- err_free_rx_agg_ring:
+-	for (i = 0; i < tile->tile_rows + 1; i++)
++	for (i = 0; i < tile->tile_rows + 1 && i < V4L2_AV1_MAX_TILE_ROWS + 1; i++)
+ 		tile->mi_row_starts[i] =
+ 			ALIGN(ctrl_tile->mi_row_starts[i], BIT(mib_size_log2)) >> mib_size_log2;
+ }
 
 
