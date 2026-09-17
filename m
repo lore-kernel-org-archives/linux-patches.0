@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9676E502D47;
-	Thu, 17 Sep 2026 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A31F502D4D;
+	Thu, 17 Sep 2026 17:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665025; cv=none; b=kKcQSYaQ2XYWdPvA5a1InK+yt2QId7dKObe6Iz9Div51iw5Asx35sWr7pYpvwgV2WgKuBCdrBPS0AEx0yGx8n0q+qcgy3frtORebUws9578xp9V6u+wc4seSeDCm/707KBt0Vv/gylmzHgpbWMuTUq9J1ClW8OyUWbNUIfQz6rw=
+	t=1789665027; cv=none; b=o0IKqQRT1pYC7PgFNX0p1TCGh39RyacUzma+UHHQAubsqAJJYKjWIejh1XrMeGB8chMOdqiTRk+gC4t9TWXHUEZBsWNb2Xq5Qyrb3FY5YQh9KvdLAnO+C9cFGRbkjZZsnBwnYX1IGIRvmJnlScmxdTaJ62OOblX6mRrJ4w7fvjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665025; c=relaxed/simple;
-	bh=y/bSs18fTjpqfUe7Mm0xkx/s4SvCLsR6fRow2nHuvtQ=;
+	s=arc-20240116; t=1789665027; c=relaxed/simple;
+	bh=290nwblcXCVrAG/e0ADE1zq0Zsh3Z18VXBKeTAhQrtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBiIXVk+rK33Q+SSSxazaAAT8fBxP/p8C3t0+OxKBZIxhGX1rmtSPCR3+7PMSq99YdwRbo4RNhvRCzY7LtpCw70gJ2PfHwbnt9yoMmbNMTL/aD7vhqOQz7QRMcelp2BTkj8PdVKOyIy2quEXyvqxIgU6rh0Kb5tIFZhGm69Qr0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQDGypcn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s5ZGPNH+PtsQF6Is9DVJ0eK+LP1ZPgGtJs6EoLpB6GSzCOg07QkMkUcM+vln6hBY86R7ME99UqQRd+ZNPRTaFVDgpF5yUXrIGX+z3ZLqwhAvXjYk90v/7Hi5MzOG7dxkr/4kjMiuGOARlbw85n4//gP6VTMcjUMrTWpMsdJNBns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgOxM9Sd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQDGypcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9588B1F00893;
-	Thu, 17 Sep 2026 17:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgOxM9Sd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EA11F000FF;
+	Thu, 17 Sep 2026 17:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665023;
-	bh=DxmvC9WxN9hRpU2Ap48akdnYD/AxLo4L8aomRSWttOQ=;
+	s=korg; t=1789665026;
+	bh=noohRZPDk3eHv5my15xXUlzV+3uApUB8UcmYrvvvZ0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQDGypcnVkq5QCJQqiIgEt2X4Yn9Fe+c4pdWnKe2HCEo2VJ+7WHX3POdHELv+Gnd8
-	 WaM2QL/I63MRXFEVsEmDxfrYyAeCWG3x2m4kmoNdQBNxNgvek6EUK7tky7ykXyO3Su
-	 zD38I6eG0KdC8YRfUwbf3mlNO5IbTvSVmtS4BASw=
+	b=UgOxM9SdQwdIzyTP1ikn7WlkX+IX9jRd+Vo/6U7XUwPxxIWXH5yCj6OCJtEzCmHeO
+	 Fcw5aCDNro7Gp6HEMAdeXdyTY8pnmRrVQPcwwJBA6kdJrsra7uoBW+ZsvvuN9dBYYN
+	 RIL2UPMZloPCT7WFbIV77yFYEdF9lfGLgzkOKnLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0568/1250] ksmbd: remove stale channels from all sessions on teardown
-Date: Thu, 17 Sep 2026 16:06:03 +0100
-Message-ID: <20260917151607.311533472@linuxfoundation.org>
+Subject: [PATCH 6.18 0569/1250] iommu/arm-smmu-v3: Disable implementations during devm teardown
+Date: Thu, 17 Sep 2026 16:06:04 +0100
+Message-ID: <20260917151607.337598309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,87 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit b10665730fbf6b5e45fe422badcbbc3f0df96ef5 ]
+The Tegra241 CMDQV teardown fix moved VINTF hardware deinitialization
+into the implementation device_disable() callback. However, its stable
+backport preceded the conversion to devm teardown and could only invoke
+the callback from the shutdown path.
 
-ksmbd_sessions_deregister() removes a connection's channels from other
-sessions' channel lists only while conn->binding is still set:
+Now that arm_smmu_disable_action() manages normal teardown, invoke the
+implementation callback there while the command queue is still alive.
+This prevents the subsequent implementation remove action from releasing
+resources while the CMDQV hardware remains active.
 
-	if (conn->binding) {
-		hash_for_each_safe(sessions_table, ...)
-			ksmbd_chann_del(conn, sess);
-	}
+After ("iommu/arm-smmu-v3: Manage teardown with devm") merged in stable,
+now keep the shutdown path consistent with mainline, where disabling
+the base SMMU is sufficient.
 
-conn->binding is a transient flag: it is cleared once a binding
-SESSION_SETUP completes, and also by a subsequent non-binding
-SESSION_SETUP on the same connection (a reauthentication on a bound
-channel, or a new SessionId==0 setup). A connection that has bound a
-channel into another session's ksmbd_chann_list and then clears
-conn->binding leaves that channel behind when it disconnects: the
-channel, whose chann->conn points at the now freed struct ksmbd_conn,
-stays on the owner session's list.
+It is a fix for stable tree commit to aligned with mainline, so no
+upstream commit id here.
 
-When the owning connection later tears down, the second loop
-dereferences the stale channel:
-
-	xa_for_each(&sess->ksmbd_chann_list, chann_id, chann)
-		if (chann->conn != conn)
-			ksmbd_conn_set_exiting(chann->conn);   /* freed */
-
-which is a use-after-free write into the freed ksmbd_conn (the same
-stale channel is also walked by show_proc_session() through /proc). The
-session is leaked as well, because its channel list never empties.
-
-Remove the conn->binding gate so a connection always removes its
-channels from every session on teardown.
-
-Fixes: faf8578c77f3 ("ksmbd: find bound sessions during reauthentication")
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 5994617e09ee ("iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown")
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index e815915665211..920eb3963ae9f 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -247,22 +247,19 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index b677390e95bb9..3d796ff6c2c62 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -4180,6 +4180,8 @@ static void arm_smmu_disable_action(void *data)
  {
- 	struct ksmbd_session *sess;
- 	unsigned long id;
-+	struct hlist_node *tmp;
-+	int bkt;
+ 	struct arm_smmu_device *smmu = data;
  
- 	down_write(&sessions_table_lock);
--	if (conn->binding) {
--		int bkt;
--		struct hlist_node *tmp;
--
--		hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
--			if (!ksmbd_chann_del(conn, sess) &&
--			    xa_empty(&sess->ksmbd_chann_list)) {
--				hash_del(&sess->hlist);
--				down_write(&conn->session_lock);
--				xa_erase(&conn->sessions, sess->id);
--				up_write(&conn->session_lock);
--				if (atomic_dec_and_test(&sess->refcnt))
--					ksmbd_session_destroy(sess);
--			}
-+	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
-+		if (!ksmbd_chann_del(conn, sess) &&
-+		    xa_empty(&sess->ksmbd_chann_list)) {
-+			hash_del(&sess->hlist);
-+			down_write(&conn->session_lock);
-+			xa_erase(&conn->sessions, sess->id);
-+			up_write(&conn->session_lock);
-+			if (atomic_dec_and_test(&sess->refcnt))
-+				ksmbd_session_destroy(sess);
- 		}
- 	}
++	if (smmu->impl_ops && smmu->impl_ops->device_disable)
++		smmu->impl_ops->device_disable(smmu);
+ 	arm_smmu_device_disable(smmu);
+ }
+ 
+@@ -4961,8 +4963,6 @@ static void arm_smmu_device_shutdown(struct platform_device *pdev)
+ {
+ 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
+ 
+-	if (smmu->impl_ops && smmu->impl_ops->device_disable)
+-		smmu->impl_ops->device_disable(smmu);
+ 	arm_smmu_device_disable(smmu);
+ }
  
 -- 
 2.53.0
