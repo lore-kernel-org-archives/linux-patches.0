@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398734EDCB2;
-	Thu, 17 Sep 2026 17:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E7549D590;
+	Thu, 17 Sep 2026 17:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666865; cv=none; b=iwjFaKI+IpVnQGqUO1GDNUcN0bKckk6o9bCZg0W0ULEkbuMWkJ5+9ycQaI1+ituQaS/SfjqXZBfA/hd42Mu+9C0+bK4iWl/5cRacCXftUFxi6xO+R+T09sDgtHmBrXYoMc4U0b2byOI1kZz/xAk/b9TEuboQHYEaMtBaeCIxH9Q=
+	t=1789666869; cv=none; b=fnRtPxknHaDXbPGHaW9Y/1kLI31QuHwdwYJOfAlECTDa7ejhsTYLYSGykuh6ZG4Z8YZmBzYOO4TDV/EeQ9OQEGj66jg8AzlydCdaJRLgz8m5y+E2WixKvAsydmb/UgLIhAU7WFky0QTQ7uf9zgZqz7t+5EfHPu9w65n41y+TCD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666865; c=relaxed/simple;
-	bh=ES51ed3/JNfuuCDlnOU0w1Q7eCGDMzQr70e9H1QP0/U=;
+	s=arc-20240116; t=1789666869; c=relaxed/simple;
+	bh=AkImZwsN5+hJxsMWSNyCYxtPb3Jo2R1AYXCyl38dlTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jakUAYIr8JRo9fzeAo1Sai3l6DdLMmMvBre6pX3RW1fkFjlX5vFd2NDOG9KGpqtW+N3XoB1RbGiuZjy/AXNhpm/AsB5u1UVH527yvtsc+b3m17BBi1ujl4SKnUa2z9HT+EZoAEh9J9cX+7GwqNHXuplUAc5KMgWXFoPNyk3K9gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6q9TAmb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=boPfn3ROKTinS3SmO+inbpJ38S0lbPhe8v/GLSRJiru1YX6AkZGPerHyXLe7iyVOD6o7nOmPv3l5Z/LQ3SfU+7gyKkas/QeZ3OlHqa2ipSCmeGV0Vq0cEGFsY/DfH/oQ+AzAotsqRPhw2ag3/7R7vgZwLiRT8fJEVpdQXFgKOBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZuBmfJ6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6q9TAmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A1B1F000FF;
-	Thu, 17 Sep 2026 17:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZuBmfJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A495C1F000FF;
+	Thu, 17 Sep 2026 17:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666864;
-	bh=3E++cEodCnTXYertu8gz0MynNP7UvpAkalAnzvEjIlI=;
+	s=korg; t=1789666867;
+	bh=nsQ10FrZr6gMJme/BYrZccdlJfDd2f+JvWXAEjddgjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6q9TAmb85UJc32VNfkdnKctT9pwH3MsitHx1CP2ZaiOwBrlfb77Zc8yvTphlQIpr
-	 5tPsm6nDJMg2Fi5VaO4ZymFkblHgUzyCEaThHxwjbEynYF0FTPhSURzs7tDPZJPuoR
-	 kuNxn1aK6JThWhQWdYnoEiHDaE71fbLEsoy/1tto=
+	b=vZuBmfJ6KrpJlon4RzgAkhAhVxt00nI89SvNJa2NyKYYCNtM81D6QgRdSXmVq/eH7
+	 2ij/XZ7UZnBeA5976us9fQ87r4qujIfo7syN2tlkyNp2SlGVXuiQAuHtClMOr4hRj0
+	 2EnLhvAuSzOlK3/aZSvHTWCvCf+yM5fkmcy6YYFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin Jiapeng (TencentOS Red Team)" <jiapenglin@tencent.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1112/1250] xfs: fix exchange-range reflink flag clearing issue with INO1_WRITTEN
-Date: Thu, 17 Sep 2026 16:15:07 +0100
-Message-ID: <20260917151622.363355667@linuxfoundation.org>
+Subject: [PATCH 6.18 1103/1250] xfs: fix unit conversions in per_binval computation
+Date: Thu, 17 Sep 2026 16:14:58 +0100
+Message-ID: <20260917151622.077118561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,61 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Jiapeng <ljp1205831794@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit a23eca88448e52eb1a81549862df7adce794fafb upstream.
+commit 05cff7c2b79f76c7cfe90613a60e16aaaa051ef7 upstream.
 
-When exchanging two full-file ranges, xmi_can_exchange_reflink_flags()
-can move the reflink inode flag from the file that currently has it to
-the other file, as long as exactly one side is marked.  This assumes
-that the file contents, and therefore all shared extents, are exchanged.
+LOLLM noticed that we're doing the unit conversion in the per_binval
+computation backwards -- xfs_buf_inval_log_space's second parameter is
+supposed to be in bytes, but max_binval is in units of fsblocks.  Hence
+the conversion should be FSB -> B, not the other way around.
 
-That assumption is not true when XFS_EXCHMAPS_INO1_WRITTEN is set.
-xfs_exchmaps_can_skip_mapping() can skip hole and unwritten mappings
-from file1, so an exchange can complete without moving every mapping
-that the earlier flag-swap decision accounted for.  In that case the
-post-operation cleanup can clear the reflink flag from an inode that
-still owns shared written extents.  Later writes then take the
-non-reflink write path and may update blocks that should still have
-been protected by CoW, which shows up as data corruption between
-reflink-related files.
-
-Fix this by disabling the reflink flag exchange whenever
-XFS_EXCHMAPS_INO1_WRITTEN is requested.  The contents exchange can still
-proceed; the conservative outcome is that both inodes keep the reflink
-flag.  The regular reflink flag cleanup path can drop the extra flag
-later once the inode no longer has shared extents.
-
-Reported-by: Lin Jiapeng (TencentOS Red Team) <jiapenglin@tencent.com>
-Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
-Cc: stable@vger.kernel.org # v6.10
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.18
+Fixes: b2311ec6778fcd ("xfs: compute per-AG extent reap limits dynamically")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Lin Jiapeng <jiapenglin@tencent.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_exchmaps.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/xfs/scrub/reap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_exchmaps.c
-+++ b/fs/xfs/libxfs/xfs_exchmaps.c
-@@ -969,6 +969,16 @@ xmi_can_exchange_reflink_flags(
- 	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
- 		return false;
+diff --git a/fs/xfs/scrub/reap.c b/fs/xfs/scrub/reap.c
+index fcd14c1703ea..496c6eab555e 100644
+--- a/fs/xfs/scrub/reap.c
++++ b/fs/xfs/scrub/reap.c
+@@ -601,7 +601,7 @@ xreap_configure_agextent_limits(
  
-+	/*
-+	 * The INO1_WRITTEN optimization can skip exchanging hole and
-+	 * unwritten mappings, which means we cannot guarantee that all
-+	 * shared extents actually moved to the other file.  Clearing the
-+	 * reflink flag of an inode that still holds shared extents breaks
-+	 * the CoW write path, so refuse to exchange the flags in that case.
-+	 */
-+	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
-+		return false;
-+
- 	if (hweight32(reflink_state) != 1)
- 		return false;
- 	if (req->startoff1 != 0 || req->startoff2 != 0)
+ 	/* Maximum overhead of invalidating one buffer. */
+ 	const unsigned int	per_binval =
+-		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
++		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
+ 
+ 	/*
+ 	 * For each transaction in a reap chain, we can delete some number of
+@@ -680,7 +680,7 @@ xreap_configure_agcow_limits(
+ 
+ 	/* Overhead of invalidating one buffer */
+ 	const unsigned int	per_binval =
+-		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
++		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
+ 
+ 	/*
+ 	 * For each transaction in a reap chain, we can delete some number of
+-- 
+2.55.0
+
 
 
