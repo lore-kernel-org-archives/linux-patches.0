@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6E14E021D;
-	Thu, 17 Sep 2026 15:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584B64E4C5E;
+	Thu, 17 Sep 2026 15:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659894; cv=none; b=rgmn67G4xDppuPyua02/jLpSrX9OVDvcx5smk3jZtSzUtmEyLMS8UffNj7K1xTLjqVxFY0jsqtwtqQnV3e+pHntj858yztb6P48pPBnNOKU+bKEODDh9/lSSx15gt/ArfQZN/mlOU2Os+8zSew2+xdyDdjJI0kSxvzbqcSg1LbE=
+	t=1789659894; cv=none; b=G5BCqDfHhFP7a1cG0WB7TVQ8fGeWvRHDqABbAN9NlUcpwiiX/7jw17fDrwsNfdr9ci+2N9FzMoJQKJVhXCaz0ltnHagcbs8l/1GF327Wytsuu+0ebIuMYVOumy03+T3QyaJ7oj7SyCfBiEaTouqdRE4h0Si0GxG866JyFQauc2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659894; c=relaxed/simple;
-	bh=lOkjPxYPzDHDxW1TMa3cop9BdialBt8DC8BTgsrsDaI=;
+	bh=nVy3LCn9xRHRFjWqGSEpOsEZLOWRZFqbC1aM9Rnco8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3YtDIAxO4r5Hd10MS9ttN4xaBfX977dLt2RXBLhIhEOlSlEtTrsdQKSsHM2fMnFz1PJFysglQC2kjtAA4SGfBgKyZm1KwgW4P4QDvmLOissYlv2K4/x2p0tHdpkI3j+8DFhgcYuVzD+FzPBNvTbECggnU0ieWK03KrMBQwlu74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d94XhGET; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X99xb4R/HOXK6N9AoaHOcfmICVL8eBGVLmyQBf/nUSqdgyjPosOMLEoGDq9JmcXbGLcELNhnyNeFACDNDxOyBfv4ZpfC9QExzJhS1By+nBxfNtsFpUN4BlbHcdYt2SW41AFhyvHf5Gxyb4BJoiIyi/a7ztmmbxdg8qJ/FL1Vk8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdohib6d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d94XhGET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4825F1F000FF;
-	Thu, 17 Sep 2026 15:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdohib6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4E91F00893;
+	Thu, 17 Sep 2026 15:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659890;
-	bh=NMRpCW/3gUgJ/W3oeIvplQn6ZpMeBBuOwuqpFT9u1rM=;
+	s=korg; t=1789659887;
+	bh=O2YMziWDZ6AhJ2mxDnG6Dk8X/ByhxENF06qSSyzTcVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d94XhGETcli/9MPJqyiOneHF+zS2OSoygFjpQAWKEtbsiEfMiNnqUueI8EAPlfEa6
-	 l2jGKgMcf1tz5NCraYa5dj5Ub3u+DZJYy+sHoMCtNBCyROawv/kW5WSPXqLh+iDlBd
-	 Y+TvhwGn2ZuxsGDgApNoda66G81DsBd9RaROAGyY=
+	b=fdohib6dPBVFd7+rd+QHng0mL/u8/Ym2zI49wjizwSUyEJjwiz3dS5BweGVmEoTvl
+	 QczLrUV/uO+THaGfzNR2KhvwQ2jk5FMgDLYUF2mJ9U4mqcg0kh3w7gdwvRN6fuf2vq
+	 rCVARBdj7glz5KsVGV3RTtRE7CpElcIRwwv/0dlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Sviridkin <f@lex.la>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 407/733] net: phylink: initialise link_state before a forced major config
-Date: Thu, 17 Sep 2026 16:11:55 +0100
-Message-ID: <20260917151401.901502074@linuxfoundation.org>
+Subject: [PATCH 7.2 406/733] ppp_synctty: ensure a writeable skb header
+Date: Thu, 17 Sep 2026 16:11:54 +0100
+Message-ID: <20260917151401.872163845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,61 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Sviridkin <f@lex.la>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 113998aa372f4869bf62cfc75c28a2849e8487be ]
+[ Upstream commit 8aaeb56aff2a557a88f83ae866da2c91ad247e59 ]
 
-phylink_resolve() leaves link_state on the stack unpopulated on its
-disable and link-failed branches, which set only link_state.link.
-phylink_apply_manual_flow() then reads the struct's advertising on
-every mode but MLO_AN_FIXED, and has done so since long before
-force_major_config existed.
+ppp_sync_txmunge() checks headroom before prepending the address and
+control bytes, but does not ensure that the skb header is writable.
+A received skb can reach this function through PPP channel bridging
+without passing through ppp_start_xmit(), which calls skb_cow_head().
 
-force_major_config turns that into a write to the hardware. It is the
-only trigger for the major-config block that does not require
-mac_config, so phylink_major_config() programs the MAC for whatever
-the stack held, a zeroed interface is PHY_INTERFACE_MODE_NA, and the
-write-back stores it in pl->link_config.interface.
+For example, a PPPoE frame may share its buffer with a clone queued to
+an AF_PACKET socket. If it is bridged to a synchronous tty channel, the
+address/control bytes can overwrite data still visible to that socket.
 
-phylink_replay_link_end() is the only in-tree setter, and
-sja1105_static_config_reload() calls it for every port that has a
-phylink instance, regardless of admin state. On a stopped port
-phylink_run_resolve() no-ops, so the flag outlives the call. The next
-resolve consumes it whatever branch it takes; an unpopulated branch is
-where that does damage.
+Use skb_cow_head() to ensure both sufficient headroom and a writable
+header.
 
-Found while developing a series that attaches a late PHY from a
-delayed work item and sets this flag there, so the PHY attached after
-its port was already up. The link stayed down until the port was
-cycled 29 minutes later. With this patch on the same board the same
-attach programs the MAC for 2500base-x rather than unknown, and the
-PHY's interrupt fires without a port bounce where it had stayed at
-zero throughout the failure.
-
-Fixes: 96969b132bf1 ("net: phylink: introduce helpers for replaying link callbacks")
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260904185540.2844261-1-f@lex.la
+Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260908072135.877364-1-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ppp/ppp_synctty.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 7397169236fdf..27fd9aa2027a4 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1630,8 +1630,10 @@ static void phylink_resolve(struct work_struct *w)
+diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
+index 0208e752ef1eb..1b64e610f9609 100644
+--- a/drivers/net/ppp/ppp_synctty.c
++++ b/drivers/net/ppp/ppp_synctty.c
+@@ -457,17 +457,9 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
  
- 	if (pl->phylink_disable_state) {
- 		pl->link_failed = false;
-+		link_state = pl->link_config;
- 		link_state.link = false;
- 	} else if (pl->link_failed) {
-+		link_state = pl->link_config;
- 		link_state.link = false;
- 		retrigger = true;
- 	} else if (pl->act_link_an_mode == MLO_AN_FIXED) {
+ 	/* prepend address/control fields if necessary */
+ 	if ((ap->flags & SC_COMP_AC) == 0 || islcp) {
+-		if (skb_headroom(skb) < 2) {
+-			struct sk_buff *npkt = dev_alloc_skb(skb->len + 2);
+-			if (npkt == NULL) {
+-				kfree_skb(skb);
+-				return NULL;
+-			}
+-			skb_reserve(npkt,2);
+-			skb_copy_from_linear_data(skb,
+-				      skb_put(npkt, skb->len), skb->len);
+-			consume_skb(skb);
+-			skb = npkt;
++		if (skb_cow_head(skb, 2)) {
++			kfree_skb(skb);
++			return NULL;
+ 		}
+ 		skb_push(skb,2);
+ 		skb->data[0] = PPP_ALLSTATIONS;
 -- 
 2.53.0
 
