@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357EE4B44D0;
-	Thu, 17 Sep 2026 15:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6D3497382;
+	Thu, 17 Sep 2026 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658943; cv=none; b=oE2NHe0t1OBX7IE1j2xSaYumqtgdGwZ5ZHaIvPopx1VUyFIMJzJj7Jl1KqZbUkoWbJy2UiaAiyXA7XVygvkKWlLNQHckp3SBGQg0YKEOn6LhuKnX6suEq079a4FzIub6vD6377CVBHp3ZL1znW+B5/eOZawFs8vG8gdk6Sc+sGw=
+	t=1789658946; cv=none; b=FhXy4UAeEoTB9/t/CirP99c8pUccUMSEWu+mKsi7SUxpSHEbyr9uroqtAO6E1kr5835jx9zX/8SiDDlVXvTktCNvT0Wt1V53DAXJcQFd8Aw5Kk1+nzDOhNDw2OtHj0tzcK5Fh4XA24A/aWVg5qINMKo8rtU8vXm9+jgsq8GhkVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658943; c=relaxed/simple;
-	bh=eDCZvXUs3KjozovqIowS24BveAw1NmlbLaw+ZNbfOZs=;
+	s=arc-20240116; t=1789658946; c=relaxed/simple;
+	bh=kcM7noRP8DtvfOz36zx5L51XkZv0TB2/qnHKCNvTogs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCZbQ8D47h854AzcnMMRGX06Fov270MONDOkAXTeBc98drlFLPayiQ7HTlhlKENtmWWcaPubtWgVn/sx6N8Xvlh9AgNVFZEzV2fzKb+/wviBTs0oBYBxIMAUfhxjuJe1jYnRZJr0Tdto0fGd+TPXEJdXzc1d/FY8KBKbEK8xg+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJ1zqMZX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nkotoDybvGOG1Mak8shi19ZMATG4CLwg0iH75p+CupJjRaN2kW7dx702vrZHwCGjqpkyF23WDzC0YbZxprOBFmdJSx8L92VA2LHNJlmGK2wQW7ZNxS9BnlzIiDy/y5MD4Gvhn9i09aNMmJPBJuq+D5+NkrZ7BtV2BCpiVvnljx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1X95eSR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJ1zqMZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7BA1F00898;
-	Thu, 17 Sep 2026 15:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1X95eSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE671F00899;
+	Thu, 17 Sep 2026 15:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658928;
-	bh=Jc/+fvTKatvcChYTQEj+1rtBra/NtGyk0fuUmxdJTUM=;
+	s=korg; t=1789658937;
+	bh=DZ6rE6HI+t2ADjemU6ZvCLdq10FPoHbQdlUh44lsXZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJ1zqMZXZEDOTRVl5azUA03Bqj4p7wiWbjRirq/qiGXZNSz/Wl4tGZx1gq9o57EE8
-	 pUKkZr1YwOzE0xtmBNwrAF6tFFjNKiKwNqvWO2bJ/AokA6a4OWoVjdVOQsNCl6gMAL
-	 oHHdBKCAa8Aj+iHfjtL+XID2kjUwf0mP4DpScMDo=
+	b=x1X95eSRp5mL2mulTh7nJ+J9T+SYBTt+z+3rXfOrkZeCrja8+hB3u68G0kZQAiMYw
+	 Duh8Or0kF4huM/ly2xKiVOihG16FWUHKr5BA9trmUCj0s/PCg80f0lhDR8mwFAye/B
+	 YV7Lgz7yGS5UBe55MQ77LFJ5LTfLo5lI44RJTS88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 087/733] netfs: Fix read progress reporting
-Date: Thu, 17 Sep 2026 16:06:35 +0100
-Message-ID: <20260917151353.074841239@linuxfoundation.org>
+Subject: [PATCH 7.2 090/733] dma-buf: fix some kernel-doc warnings
+Date: Thu, 17 Sep 2026 16:06:38 +0100
+Message-ID: <20260917151353.159426998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -48,333 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit e00827a4d0cfebf8d78dfd0a9a024237f57c9273 ]
+[ Upstream commit c8329cb590df4a8b3a4e878d289d4b17824db8d1 ]
 
-For really big read RPC ops that span multiple folios, netfslib allows the
-filesystem to give progress notifications to wake up the collector thread
-to do a collection of folios that have now been fetched, even if the RPC is
-still ongoing, thereby allowing the application to make progress.
+- drop Excess description of @lock from kernel-doc
+- add missing function/macro short descriptions
 
-This works by taking the current rreq->cleaned_to value (which indicates
-which folios have been unlocked) and adding the stashed size of the next
-folio to it.  cleaned_to, however, is subject to 64-bit tearing on a 32-bit
-arch.
+WARNING: include/linux/dma-fence-array.h:47 Excess struct member 'lock' description in 'dma_fence_array'
+WARNING: include/linux/dma-fence-chain.h:48 Excess struct member 'lock' description in 'dma_fence_chain'
+Warning: include/linux/dma-fence-chain.h:82 missing initial short description on line:
+ * dma_fence_chain_alloc
+Warning: include/linux/dma-fence-chain.h:94 missing initial short description on line:
+ * dma_fence_chain_free
 
-Fix this by stashing the next progress notification point as a size_t
-(which won't tear) to be added to rreq->start (which won't change), with
-the collector thread calculating that from cleaned_to plus the next folio
-size.
-
-Further, however, if the folios are small, the collector thread gets
-constantly woken up - which has a negative performance impact on the
-system.
-
-Fix that too by setting a minimum trigger of 256KiB or the size of the
-folio at the front of the queue, whichever is larger.  Note that this has
-an issue that different subreqs have different need-to-be-cached
-properties; this is solved by a preceding patch that marks the property on
-the folios whilst issuing subreqs rather than when collecting them.
-
-Also, make sure rreq->cleaned_to is initialised up front, along with
-rreq->collected_to and stream->collected_to.
-
-Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
-Link: https://sashiko.dev/#/patchset/20260804100224.2748935-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260827134304.2075713-10-dhowells@redhat.com
-Acked-by: Paulo Alcantara <pc@manguebit.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 5943243914b9 ("dma-buf: use inline lock for the dma-fence-array")
+Fixes: a408c0ca0c41 ("dma-buf: use inline lock for the dma-fence-chain")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260831031956.3410813-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c     |  2 ++
- fs/netfs/internal.h          |  1 +
- fs/netfs/objects.c           | 32 +++++++++++++--------
- fs/netfs/read_collect.c      | 54 ++++++++++++++++++++++++++++--------
- fs/netfs/read_single.c       |  2 ++
- include/linux/netfs.h        |  2 +-
- include/trace/events/netfs.h | 21 ++++++++++++++
- 7 files changed, 89 insertions(+), 25 deletions(-)
+ include/linux/dma-fence-array.h | 1 -
+ include/linux/dma-fence-chain.h | 9 ++++-----
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 16d4db776f6ae..424df70a5c30f 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -442,6 +442,7 @@ void netfs_readahead(struct readahead_control *ractl)
- 
- 	rreq->submitted = rreq->start + added;
- 	rreq->cleaned_to = rreq->start;
-+	netfs_read_set_unlock_at(rreq);
- 
- 	netfs_read_to_pagecache(rreq);
- 	netfs_maybe_bulk_drop_ra_refs(rreq);
-@@ -467,6 +468,7 @@ static int netfs_create_singular_buffer(struct netfs_io_request *rreq, struct fo
- 	if (added < 0)
- 		return added;
- 	rreq->submitted = rreq->start + added;
-+	rreq->progress_at = added;
- 	return 0;
- }
- 
-diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
-index dfe7939f35f37..c79c8e69d60ca 100644
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -111,6 +111,7 @@ static inline void netfs_see_subrequest(struct netfs_io_subrequest *subreq,
-  * read_collect.c
+diff --git a/include/linux/dma-fence-array.h b/include/linux/dma-fence-array.h
+index 1b1d87579c382..0c49d7ccefb64 100644
+--- a/include/linux/dma-fence-array.h
++++ b/include/linux/dma-fence-array.h
+@@ -28,7 +28,6 @@ struct dma_fence_array_cb {
+ /**
+  * struct dma_fence_array - fence to represent an array of fences
+  * @base: fence base class
+- * @lock: spinlock for fence handling
+  * @num_fences: number of fences in the array
+  * @num_pending: fences in the array still pending
+  * @fences: array of the fences
+diff --git a/include/linux/dma-fence-chain.h b/include/linux/dma-fence-chain.h
+index df3beadf15157..705c4394ac0d0 100644
+--- a/include/linux/dma-fence-chain.h
++++ b/include/linux/dma-fence-chain.h
+@@ -20,7 +20,6 @@
+  * @prev: previous fence of the chain
+  * @prev_seqno: original previous seqno before garbage collection
+  * @fence: encapsulated fence
+- * @lock: spinlock for fence handling
   */
- void netfs_cancel_copy_to_cache(struct netfs_io_request *rreq, struct folio *folio);
-+void netfs_read_set_unlock_at(struct netfs_io_request *rreq);
- bool netfs_read_collection(struct netfs_io_request *rreq);
- void netfs_read_collection_worker(struct work_struct *work);
- void netfs_cancel_read(struct netfs_io_subrequest *subreq, int error);
-diff --git a/fs/netfs/objects.c b/fs/netfs/objects.c
-index 01461a74642d6..7f6a3e912602e 100644
---- a/fs/netfs/objects.c
-+++ b/fs/netfs/objects.c
-@@ -41,24 +41,32 @@ struct netfs_io_request *netfs_alloc_request(struct address_space *mapping,
- 
- 	memset(rreq, 0, kmem_cache_size(cache));
- 	INIT_WORK(&rreq->cleanup_work, netfs_free_request);
--	rreq->gfp	= gfp;
--	rreq->start	= start;
--	rreq->len	= len;
--	rreq->origin	= origin;
--	rreq->netfs_ops	= ctx->ops;
--	rreq->mapping	= mapping;
--	rreq->inode	= inode;
--	rreq->i_size	= i_size_read(inode);
--	rreq->debug_id	= atomic_inc_return(&debug_ids);
--	rreq->wsize	= INT_MAX;
-+	rreq->gfp		= gfp;
-+	rreq->start		= start;
-+	rreq->collected_to	= start;
-+	rreq->cleaned_to	= start;
-+	rreq->len		= len;
-+	rreq->progress_at	= 0;
-+	rreq->origin		= origin;
-+	rreq->netfs_ops		= ctx->ops;
-+	rreq->mapping		= mapping;
-+	rreq->inode		= inode;
-+	rreq->i_size		= i_size_read(inode);
-+	rreq->debug_id		= atomic_inc_return(&debug_ids);
-+	rreq->wsize		= INT_MAX;
- 	rreq->io_streams[0].sreq_max_len = ULONG_MAX;
- 	rreq->io_streams[0].sreq_max_segs = 0;
- 	spin_lock_init(&rreq->lock);
--	INIT_LIST_HEAD(&rreq->io_streams[0].subrequests);
--	INIT_LIST_HEAD(&rreq->io_streams[1].subrequests);
- 	init_waitqueue_head(&rreq->waitq);
- 	refcount_set(&rreq->ref, 2);
- 
-+	for (int s = 0; s < NR_IO_STREAMS; s++) {
-+		struct netfs_io_stream *stream = &rreq->io_streams[s];
-+
-+		INIT_LIST_HEAD(&stream->subrequests);
-+		stream->collected_to = rreq->start;
-+	}
-+
- 	if (origin == NETFS_READAHEAD ||
- 	    origin == NETFS_READPAGE ||
- 	    origin == NETFS_READ_GAPS ||
-diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
-index 12a786be1ea26..5cf22087d2439 100644
---- a/fs/netfs/read_collect.c
-+++ b/fs/netfs/read_collect.c
-@@ -117,6 +117,35 @@ static void netfs_unlock_read_folio(struct netfs_io_request *rreq,
- 	folioq_clear(folioq, slot);
+ struct dma_fence_chain {
+ 	struct dma_fence base;
+@@ -81,9 +80,8 @@ dma_fence_chain_contained(struct dma_fence *fence)
  }
  
-+/*
-+ * Determine how much to gather before unlocking more folios.
-+ */
-+void netfs_read_set_unlock_at(struct netfs_io_request *rreq)
-+{
-+	struct folio_queue *folioq = rreq->buffer.tail;
-+	unsigned int slot = rreq->buffer.first_tail_slot;
-+	size_t cleaned_to = rreq->cleaned_to - rreq->start;
-+	size_t progress_at = cleaned_to;
-+	size_t minimum = 256 * 1024;
-+
-+	while (progress_at < rreq->len) {
-+		if (slot >= folioq_count(folioq)) {
-+			folioq = folioq->next;
-+			if (!folioq)
-+				break;
-+			slot = 0;
-+		}
-+
-+		progress_at += folioq_folio_size(folioq, slot);
-+		if (progress_at - cleaned_to >= minimum)
-+			break;
-+		slot++;
-+	}
-+
-+	WRITE_ONCE(rreq->progress_at, progress_at);
-+	trace_netfs_read_progress_at(rreq);
-+}
-+
- /*
-  * Unlock any folios we've finished with.
-  */
-@@ -135,7 +164,7 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 	if (slot >= folioq_nr_slots(folioq)) {
- 		folioq = rolling_buffer_delete_spent(&rreq->buffer);
- 		if (!folioq) {
--			rreq->front_folio_order = 0;
-+			WRITE_ONCE(rreq->progress_at, rreq->len);
- 			return;
- 		}
- 		slot = 0;
-@@ -151,7 +180,6 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 	for (;;) {
- 		struct folio *folio;
- 		unsigned long long fpos, fend;
--		unsigned int order;
- 		size_t fsize;
+ /**
+- * dma_fence_chain_alloc
+- *
+- * Returns a new struct dma_fence_chain object or NULL on failure.
++ * dma_fence_chain_alloc - Returns a new &struct dma_fence_chain object or
++ * %NULL on failure.
+  *
+  * This specialized allocator has to be a macro for its allocations to be
+  * accounted separately (to have a separate alloc_tag). The typecast is
+@@ -93,7 +91,8 @@ dma_fence_chain_contained(struct dma_fence *fence)
+ 		kmalloc_obj(struct dma_fence_chain)
  
- 		folio = folioq_folio(folioq, slot);
-@@ -160,9 +188,7 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 			      rreq->debug_id, folio->index))
- 			trace_netfs_folio(folio, netfs_folio_trace_not_locked);
- 
--		order = folioq_folio_order(folioq, slot);
--		rreq->front_folio_order = order;
--		fsize = PAGE_SIZE << order;
-+		fsize = folioq_folio_size(folioq, slot);
- 		fpos = folio_pos(folio);
- 		fend = fpos + fsize;
- 
-@@ -197,6 +223,8 @@ static void netfs_read_unlock_folios(struct netfs_io_request *rreq,
- 	rreq->buffer.tail = folioq;
- done:
- 	rreq->buffer.first_tail_slot = slot;
-+
-+	netfs_read_set_unlock_at(rreq);
- }
- 
- /*
-@@ -257,7 +285,7 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
- 		 * subreqs.
- 		 */
- 		if (notes & BUFFERED) {
--			size_t fsize = PAGE_SIZE << rreq->front_folio_order;
-+			uoff_t unlock_at = rreq->start + rreq->progress_at;
- 
- 			/* Clear the tail of a short read. */
- 			if (!(notes & HIT_PENDING) &&
-@@ -279,7 +307,7 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
- 				transferred = front->len;
- 				trace_netfs_rreq(rreq, netfs_rreq_trace_set_abandon);
- 			}
--			if (front->start + transferred >= rreq->cleaned_to + fsize ||
-+			if (front->start + transferred >= unlock_at ||
- 			    test_bit(NETFS_SREQ_HIT_EOF, &front->flags))
- 				netfs_read_unlock_folios(rreq, &notes);
- 		} else {
-@@ -499,20 +527,22 @@ void netfs_read_collection_worker(struct work_struct *work)
- void netfs_read_subreq_progress(struct netfs_io_subrequest *subreq)
- {
- 	struct netfs_io_request *rreq = subreq->rreq;
--	struct netfs_io_stream *stream = &rreq->io_streams[0];
--	size_t fsize = PAGE_SIZE << rreq->front_folio_order;
--
--	trace_netfs_sreq(subreq, netfs_sreq_trace_progress);
-+	struct netfs_io_stream *stream = &rreq->io_streams[subreq->stream_nr];
-+	size_t progress_at = READ_ONCE(rreq->progress_at);
-+	uoff_t update_at = rreq->start + progress_at;
-+	uoff_t transferred_to = subreq->start + subreq->transferred;
- 
- 	/* If we are at the head of the queue, wake up the collector,
- 	 * getting a ref to it if we were the ones to do so.
- 	 */
--	if (subreq->start + subreq->transferred > rreq->cleaned_to + fsize &&
-+	if (progress_at < rreq->len &&
-+	    transferred_to >= update_at &&
- 	    (rreq->origin == NETFS_READAHEAD ||
- 	     rreq->origin == NETFS_READPAGE ||
- 	     rreq->origin == NETFS_READ_FOR_WRITE) &&
- 	    list_is_first(&subreq->rreq_link, &stream->subrequests)
- 	    ) {
-+		trace_netfs_sreq(subreq, netfs_sreq_trace_progress);
- 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
- 		netfs_wake_collector(rreq);
- 	}
-diff --git a/fs/netfs/read_single.c b/fs/netfs/read_single.c
-index 8833550d2eb60..de67ac41548d1 100644
---- a/fs/netfs/read_single.c
-+++ b/fs/netfs/read_single.c
-@@ -170,6 +170,8 @@ ssize_t netfs_read_single(struct inode *inode, struct file *file, struct iov_ite
- 	if (IS_ERR(rreq))
- 		return PTR_ERR(rreq);
- 
-+	rreq->progress_at = rreq->len;
-+
- 	ret = netfs_single_begin_cache_read(rreq, ictx);
- 	if (ret == -ENOMEM || ret == -EINTR || ret == -ERESTARTSYS)
- 		goto cleanup_free;
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index 029456e034849..67c2d9ef7c623 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -247,6 +247,7 @@ struct netfs_io_request {
- 	unsigned long long	submitted;	/* Amount submitted for I/O so far */
- 	unsigned long long	len;		/* Length of the request */
- 	size_t			transferred;	/* Amount to be indicated as transferred */
-+	size_t			progress_at;	/* Report read progress when hit this much read */
- 	long			error;		/* 0 or error that occurred */
- 	unsigned long long	i_size;		/* Size of the file */
- 	unsigned long long	start;		/* Start position */
-@@ -263,7 +264,6 @@ struct netfs_io_request {
- 	atomic_t		subreq_counter;	/* Next subreq->debug_index */
- 	unsigned int		nr_group_rel;	/* Number of refs to release on ->group */
- 	spinlock_t		lock;		/* Lock for queuing subreqs */
--	unsigned char		front_folio_order; /* Order (size) of front folio */
- 	enum netfs_io_origin	origin;		/* Origin of the request */
- 	bool			direct_bv_unpin; /* T if direct_bv[] must be unpinned */
- 	refcount_t		ref;
-diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
-index a22084813cb59..3fec3e8f91c85 100644
---- a/include/trace/events/netfs.h
-+++ b/include/trace/events/netfs.h
-@@ -791,6 +791,27 @@ TRACE_EVENT(netfs_folioq,
- 		      __print_symbolic(__entry->trace, netfs_folioq_traces))
- 	    );
- 
-+TRACE_EVENT(netfs_read_progress_at,
-+	    TP_PROTO(const struct netfs_io_request *rreq),
-+
-+	    TP_ARGS(rreq),
-+
-+	    TP_STRUCT__entry(
-+		    __field(unsigned int,	rreq)
-+		    __field(size_t,		progress_at)
-+		    __field(size_t,		cleaned_to)
-+			     ),
-+
-+	    TP_fast_assign(
-+		    __entry->rreq	= rreq->debug_id;
-+		    __entry->cleaned_to	= rreq->cleaned_to - rreq->start;
-+		    __entry->progress_at = rreq->progress_at;
-+			   ),
-+
-+	    TP_printk("R=%08x cln=%zx prg=%zx",
-+		      __entry->rreq, __entry->cleaned_to, __entry->progress_at)
-+	    );
-+
- #undef EM
- #undef E_
- #endif /* _TRACE_NETFS_H */
+ /**
+- * dma_fence_chain_free
++ * dma_fence_chain_free - Frees an allocated but not used
++ * &struct dma_fence_chain object.
+  * @chain: chain node to free
+  *
+  * Frees up an allocated but not used struct dma_fence_chain object. This
 -- 
 2.53.0
 
