@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE63E497396;
-	Thu, 17 Sep 2026 18:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6BA4B7A55;
+	Thu, 17 Sep 2026 18:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671252; cv=none; b=rZTpGNwyXKA4d3KAt3NhfGLQJFw1pk04sns/3ksw+IMGw5WLch3HNfMB3NyYXvSmPzKyOrSkgPQTq9+SUyeLiY+57t+RKgNuqdPr+4Z+0uFpfXZ5xWZmQiUv5zGqrgNJQfdBmy9MM0iN7gHR4RuOrzrYpumJtmqsjmwtT+rW8RA=
+	t=1789671254; cv=none; b=B5M1GlzNwmQIO4+ZTjouyaQaWRHv4EkhGaDGpxSmLpG+/gfloekhJlU/JlK1gJyaiOvsXzSei0NJoLl13wUR/huC6Wmtg4PKbnWozuV+s+zaFQfz64D2FSVbHwZJeayDU9oiAQKNcR8p7p9JhudOXjm/1kLc/4wtfaSBaBo/oQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671252; c=relaxed/simple;
-	bh=XLFtD9JCZTz5r5Gts1Q2Dnw7MGGE9TakjAQD6C17BNE=;
+	s=arc-20240116; t=1789671254; c=relaxed/simple;
+	bh=M2QaUc0bZCZ4Wjhc3YI5uHjCJlEyoKIGoLvgckdr/YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQD28AjKfVXslNF7htzB8zi7EW9R5zyycdwxu0xHmH7q8a5eK0tXdrDi9+OUvHGBLFMW2qwPoVg7qqVir+U9mzVM+kL5JqT+s4XbzOctq5o+bvFUfYY8F33SOrjdd7reNaXUr3K4NasVxZGofYS/20Zr9JpvzfJ25o+o5LcgVbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ954Tmf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qr/C7uiFHAPh/Zszc/kh55bGvDnUaWpOs++FtK+BWKO9h3106amKUJQWeiO0NHpOlc1KfY2AIs8W2iTeiK+/GO4S4WMb108jtQP8b2PUM1Ulu1Pe02uXBubt7MUxm4+VPXEul+qeUe8b1NMTM06kFcmW8OMOaNXhfQfmAY3SMrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqC2ZtAt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ954Tmf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2379C1F000FF;
-	Thu, 17 Sep 2026 18:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqC2ZtAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA311F000FF;
+	Thu, 17 Sep 2026 18:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671250;
-	bh=zh6RNarzP938xFKtYIaa1j/YUdbkK3SzGrVWVPMf9oQ=;
+	s=korg; t=1789671253;
+	bh=INzv7FSRJp7Oi0tBzsuL7k4L3KgbEx1x/zrbldZRTvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZ954Tmfm7hgcJnoJ0xmZVPzNIQdbDDDmbulT7ATXzVAjCsBC79Oyc0fogcD3Fp74
-	 e3pieLBVlG8/SHfTyLKkwio9njngiRJVI+7ykpOPNTB2hO58xOW0RSYoOZijwyMRKq
-	 6hX/9trz1uGXQb/EiybDJWutIWgoPab6Qr17naTE=
+	b=VqC2ZtAtcVkECxY37GttxfNKIaYNFVSdQMKMy01lX2R8yUJO0RHE44Uzq0LaCExIx
+	 QKBUry9AbAyctnzwkAcTUqAzAwxprMWfqfnR0rmRo3bRSee0fTLVOd9PQYO8eY3FHO
+	 8ywdrVhChXzMGukJJcz/shsDX34JmS/Ty6wfU3j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0914/1102] xfs: dont leak dqacct if rhashtable insertion fails
-Date: Thu, 17 Sep 2026 16:14:17 +0100
-Message-ID: <20260917151603.564854050@linuxfoundation.org>
+Subject: [PATCH 6.12 0915/1102] xfs: destroy seen inode bitmap when we fail to add a dirpath
+Date: Thu, 17 Sep 2026 16:14:18 +0100
+Message-ID: <20260917151603.593688863@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,35 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 2eac8d01d2c776fc26b0ac74aebdf91bc4490891 upstream.
+commit 1a441c6842da75c5b862cc1c9f7969d6a93b54b9 upstream.
 
-LOLLM observes that xqcheck_mod_live_ino_dqtrx doesn't free the newly
-allocated dqa object if rhashtable insertion fails.  Fix this leak.
+LOLLM observes a memory leak in xchk_dirtree_create_path if we create
+the directory path object but appending the name to the path fails.
+When this happens, we don't tear down the (empty) seen inode bitmap.
+This is a pretty trivial error, but let's not leave logic bombs.
 
-Cc: stable@vger.kernel.org # v6.9
-Fixes: 200491875ce144 ("xfs: track quota updates during live quotacheck")
+Do the same for a similar bug in xrep_dirtree_create_adoption_path.
+
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 928b721a11789a ("xfs: teach online scrub to find directory tree structure problems")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quotacheck.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/dirtree.c        |    1 +
+ fs/xfs/scrub/dirtree_repair.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/fs/xfs/scrub/quotacheck.c
-+++ b/fs/xfs/scrub/quotacheck.c
-@@ -263,8 +263,10 @@ xqcheck_mod_live_ino_dqtrx(
- 		dqa->tx_id = p->tx_id;
- 		error = rhashtable_insert_fast(&xqc->shadow_dquot_acct,
- 				&dqa->hash, xqcheck_dqacct_hash_params);
--		if (error)
-+		if (error) {
-+			kfree(dqa);
- 			goto out_abort;
-+		}
- 	}
+--- a/fs/xfs/scrub/dirtree.c
++++ b/fs/xfs/scrub/dirtree.c
+@@ -259,6 +259,7 @@ xchk_dirtree_create_path(
+ 	dl->nr_paths++;
+ 	return 0;
+ out_path:
++	xino_bitmap_destroy(&path->seen_inodes);
+ 	kfree(path);
+ 	return error;
+ }
+--- a/fs/xfs/scrub/dirtree_repair.c
++++ b/fs/xfs/scrub/dirtree_repair.c
+@@ -619,6 +619,7 @@ xrep_dirtree_create_adoption_path(
+ 	return 0;
  
- 	/* Find the shadow dqtrx (or an empty slot) here. */
+ out_path:
++	xino_bitmap_destroy(&path->seen_inodes);
+ 	kfree(path);
+ 	return error;
+ }
 
 
