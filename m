@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3883B776A;
-	Thu, 17 Sep 2026 18:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392E9768EA;
+	Thu, 17 Sep 2026 18:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671049; cv=none; b=dp97nuzqPY7EaTjqPlT+O7jLjtRCGwAzOtL7Vdkoa5j3883fwjjn89Ca2fITKNiXajG/wiwdvr2XUs9ETNSctbkRznWxsWWTEK+6pPoz4w6jfUpQQrvaHXsycPY6IvxrgE3HKmTowhtGH4dggAaq/Fqoow+meXy0x2gwk9ZmwCw=
+	t=1789671052; cv=none; b=q4IMlglkzqK1TE9w6vLSbjppBtQwUWTxBqAn/aPXoPe0wE+BGSbW/vICyL8qGCKjC80IzgB5w3h6c3YWSUdXJT1syK8cpQUcz6gxCceE2osv66xX+8vAHUYC2FYHep4nJpbM+UIAW1lgafo/zQkOzrxLOIuOnvJ1at06Ey0jNaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671049; c=relaxed/simple;
-	bh=q/w+DN8EJwFBupsthrv8pPjMUY0SkRj2du+3dz/Vo4k=;
+	s=arc-20240116; t=1789671052; c=relaxed/simple;
+	bh=Yj/2M9tL79VL027ukiw+DqoOh+b9eks9HeaFGxoerqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehr5SuQPHYxBYMyxoTe4yGJq4Zhfw0DB4u215ISBgzA8KNX1sqJFu7UK7wGlenMzCtD7rGWDaYr8FA0we0U/SjvXHFNC1uC7uVO1GCoLo6VkZxAw/ZwUV0mD3rS3NSMCBA6/W+mxh7U4i6Ytyw/tZrjbISUmjT6rJr0t5WvtF5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0o6efil; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MUKKcHVrCl/pk2AIIaqoBlrMLTNrlkhWC52ZwVcE5Gl2AJDsTgL9+RXzJqlNpWAR3olsG8jUaOyQspEyEzfItuUBp0SX6oCioKuvXpixEeoTh4pbayn0GdEqXY77j9sODw49GkRtFoJYmjO9uQc40/Z3ws6dwCfGsP9BIg8iMrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFlAWYP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0o6efil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEF51F000FF;
-	Thu, 17 Sep 2026 18:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFlAWYP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFE71F000FF;
+	Thu, 17 Sep 2026 18:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671047;
-	bh=zefQk6oLUj5MA936tiq5vmq40uIVjBh3h2R4lpyxKxU=;
+	s=korg; t=1789671050;
+	bh=1eStxZcGgrXczPrCKnWxV5E3z0I5GbuCVyO8f1+JCVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0o6efilTFaSEmnwmvMy7R5JJ7PQEesBUqVJ4HFxCsZR2MZOTHZkRUecBhFkyWmQY
-	 jjvfUrj10nqiFxnLkTdwdFNnhbzxZYvQrXv4oARUE5blP5DbbuffjKNIGa1ohzXxTE
-	 jD0abuIl9SChMY6Zvvud3wTspve0QVBly6t2TAH8=
+	b=GFlAWYP8DicEafcJKl8x4YJBQEzNYW+mLRXF6kOV6lG6wFGFNBb/naZaWDobDYxHj
+	 PJJm3GK47gK8fiJBSc/wJuBFQzYJzv2atBUbT939FkafryzbUucK6KakbBvFIt4ypg
+	 Vm0Oyc/UzmCBMiLgozkjK9RnxSBetWRX+ecd/8Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Gurudasani <nikhilgurudasani314@gmail.com>,
-	Gao Xiang <xiang@kernel.org>
-Subject: [PATCH 6.12 0852/1102] erofs: preserve LZMA decoders on resize failure
-Date: Thu, 17 Sep 2026 16:13:15 +0100
-Message-ID: <20260917151601.927945914@linuxfoundation.org>
+	co+c25629c98ba36ebe@bugs.sh,
+	stable@kernel.org,
+	Weiming Shi <bestswngs@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 0853/1102] fbdev: vfb: defer cleanup until the last reference
+Date: Thu, 17 Sep 2026 16:13:16 +0100
+Message-ID: <20260917151601.954547412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,81 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 617d0d8d199ba1790c94310fd75a22d01c97a8d6 upstream.
+commit a0a34a40ed299c9c7cff6af163a5b883ee9d6d73 upstream.
 
-The pool-resize path frees each stream's old decoder before allocating
-its replacement. If an allocation fails after some streams have already
-been replaced, the failed stream is put back on the list with state ==
-NULL. z_erofs_lzma_max_dictsize is still advanced as if the whole
-pool had been resized.
+FBIOGETCMAP takes a shallow snapshot of info->cmap and performs the
+usercopy after dropping info->lock. vfb_remove() frees the colormap
+immediately after unregistering the framebuffer, even when an open file
+still holds a reference to fb_info. A concurrent driver unbind can
+therefore free the colormap while the ioctl copies it to userspace.
 
-An existing LZMA mount can select the broken stream and pass
-NULL to xz_dec_microlzma_reset(). A retry at the same size also
-skip another resize attempt. Since the global maximum was advanced,
-thus, the invalid state is left unrepaired.
+KASAN reports:
 
-Allocate each replacement before freeing the old decoder, temporarily
-retaining one old decoder during allocation. Stop at the first failure
-and advance z_erofs_lzma_max_dictsize only after all streams satisfy
-the request.
+  BUG: KASAN: slab-use-after-free in _copy_to_user
+  Read of size 512 by task poc/125
 
-Record each stream's dictionary capacity so retries can skip streams
-already enlarged before a partial failure.
+   _copy_to_user (./include/linux/instrumented.h:129 ./include/linux/uaccess.h:201 lib/usercopy.c:24)
+   fb_cmap_to_user (./include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
+   do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
 
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+   Allocated by task 1:
+   fb_alloc_cmap_gfp (./include/linux/slab.h:973 ./include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
+   vfb_probe (drivers/video/fbdev/vfb.c:459)
+
+   Freed by task 124:
+   fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
+   vfb_remove (drivers/video/fbdev/vfb.c:489)
+
+unregister_framebuffer() drops the registration reference, and fbdev calls
+fb_destroy after the last put_fb_info(). Move the registered framebuffer's
+cleanup into an fb_destroy callback so its colormap and screen buffer stay
+alive until all file references have been released.
+
+Fixes: 5e266e2e0e19 ("vfb: fix memory leaks in removal path")
+Reported-by: co+c25629c98ba36ebe@bugs.sh
+Cc: stable@kernel.org
+Closes: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
+Assisted-by: Codex:gpt-5
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor_lzma.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/vfb.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -5,6 +5,7 @@
- struct z_erofs_lzma {
- 	struct z_erofs_lzma *next;
- 	struct xz_dec_microlzma *state;
-+	unsigned int dict_size;
- 	u8 bounce[PAGE_SIZE];
+--- a/drivers/video/fbdev/vfb.c
++++ b/drivers/video/fbdev/vfb.c
+@@ -78,6 +78,13 @@ static int vfb_pan_display(struct fb_var
+ static int vfb_mmap(struct fb_info *info,
+ 		    struct vm_area_struct *vma);
+ 
++static void vfb_destroy(struct fb_info *info)
++{
++	vfree(info->screen_buffer);
++	fb_dealloc_cmap(&info->cmap);
++	framebuffer_release(info);
++}
++
+ static const struct fb_ops vfb_ops = {
+ 	.owner		= THIS_MODULE,
+ 	__FB_DEFAULT_SYSMEM_OPS_RDWR,
+@@ -87,6 +94,7 @@ static const struct fb_ops vfb_ops = {
+ 	.fb_pan_display	= vfb_pan_display,
+ 	__FB_DEFAULT_SYSMEM_OPS_DRAW,
+ 	.fb_mmap	= vfb_mmap,
++	.fb_destroy	= vfb_destroy,
  };
  
-@@ -128,11 +129,19 @@ again:
- 	err = 0;
- 	/* 2. walk each isolated stream and grow max dict_size if needed */
- 	for (strm = head; strm; strm = strm->next) {
-+		struct xz_dec_microlzma *state;
-+
-+		if (strm->dict_size >= dict_size)
-+			continue;
-+		state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
-+		if (!state) {
-+			err = -ENOMEM;
-+			break;
-+		}
- 		if (strm->state)
- 			xz_dec_microlzma_end(strm->state);
--		strm->state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
--		if (!strm->state)
--			err = -ENOMEM;
-+		strm->state = state;
-+		strm->dict_size = dict_size;
+     /*
+@@ -485,9 +493,6 @@ static void vfb_remove(struct platform_d
+ 
+ 	if (info) {
+ 		unregister_framebuffer(info);
+-		vfree(videomemory);
+-		fb_dealloc_cmap(&info->cmap);
+-		framebuffer_release(info);
  	}
- 
- 	/* 3. push back all to the global list and update max dict_size */
-@@ -142,7 +151,8 @@ again:
- 	spin_unlock(&z_erofs_lzma_lock);
- 	wake_up_all(&z_erofs_lzma_wq);
- 
--	z_erofs_lzma_max_dictsize = dict_size;
-+	if (!err)
-+		z_erofs_lzma_max_dictsize = dict_size;
- 	mutex_unlock(&lzma_resize_mutex);
- 	return err;
  }
+ 
 
 
