@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113574EDCA9;
-	Thu, 17 Sep 2026 18:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5D64E77EC;
+	Thu, 17 Sep 2026 18:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668500; cv=none; b=oLOSe7/Y7urTJt8pMnwlTJYOL1VcDvm7yLmrDESXxPh+5XWnKkz1i9llIzGtoCUCUfZkVS5RsaPhlK7MWBb3x5VNzMdNKvNMT60DOAnauwuMvooCY31ZDftjsjEFF92iVHGXvJEbHSZgoWAlK5nKCYvWkKwBtRT4JjKbUyyfhVM=
+	t=1789668503; cv=none; b=OWNFSS3udvvdSHbtpiKhVQ6AX5MbdBk5F21T+7nD+mgqyvBJUiIjGa3t8DR3GzkP/3UDNfE2rU9c/2XVr4MhhdzvVSMJeutY31KHnNljkrIyM9lVOqPW3v/JER4rA1REe9GMQmQTC8OcFCd22ex6KmQ0xqViJhnxJr1rBmYtM4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668500; c=relaxed/simple;
-	bh=vuesMibT5FPh+qHN06rbeyumjT/BJTV1f5iTy7VoFtY=;
+	s=arc-20240116; t=1789668503; c=relaxed/simple;
+	bh=dyxyjaM71sAX8u9vht6Pnv7FlPJanzEpRp56qOU5jSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1pbz/SbgARUBo0672iDQ1y7RXJ0t3k1yU6R/aoNB7ntPh7XsmAYYAPBUk4kfScScW5qF7JHrlTuaI8j/ONYgSG94/OS/KN/uPM015BNqFT0CkqGwpgzov+yDHfFFT8JMjNO58+NWV3N8USyiwzNEiRG4Ziq3arynyQh9zu/Kzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDKIfbG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UcPeQoh7uFpoOniP1BfolEuTIBzSr5lfYgH+geb25o00zq634Y0WhygyjaY8eC9wwnxlqCXBHb+fRuEBdWou1t5r8xTAexWwFv1PjEY2l/pXhIxtgQT9rtUuFQgUx5TJvudR7tuT22jaFyA0M4Zf6Qpdz1aU9zHypvgafPOYUCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cllykjR6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDKIfbG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D091F000FF;
-	Thu, 17 Sep 2026 18:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cllykjR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589B01F000FF;
+	Thu, 17 Sep 2026 18:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668499;
-	bh=iXhuVLCbYjYacaKCeQvjD0XIN7qDy0bwahjGMjlCg90=;
+	s=korg; t=1789668501;
+	bh=bIOC7KzV48VQhFjOnEre9PxClzyLalXDW8lmO8+srPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDKIfbG2ylOVXnPgk4ZMfFnaqAdP+tALf7g3wnxaTL2bUvex7QWHyVM4+IoQsag6Y
-	 RUfKpMz8JrgGAQ38kdnH1hsmK7KEsEgsF3u4BPXCRmS+7TGZWJ/Cpe4d8SK0j3GL1b
-	 vE+Mj8G1zb6DlYaaCH8JnhiQfdbgl/ihs/7tuQc8=
+	b=cllykjR6o6BtjiUg4OFv1RYyv7QzZC3XmXNH0JkbDzqUs92tRXNFMlw5qMLqzH6bt
+	 TEWPA/rrIHbgSqv0ZH4PiTpEIMyQhP9aFxvV9hqXYNk6shYE3L2//cLlOMNBoROCjt
+	 u2E+Xg9MgxLCMgpgbXAGEJIgpn5TIFOnK0X/TXu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhavender Singh <madhav@disroot.org>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0444/1102] ALSA: hda/realtek: Add mute LED quirk for HP Laptop 14s-dr1xxx
-Date: Thu, 17 Sep 2026 16:06:27 +0100
-Message-ID: <20260917151550.826358919@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 0445/1102] ice: pass the return value of skb_checksum_help()
+Date: Thu, 17 Sep 2026 16:06:28 +0100
+Message-ID: <20260917151550.851467979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,37 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavender Singh <madhav@disroot.org>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit bf4fc9f33ec21595143132a3e7fb8b5d2c2261cd ]
+[ Upstream commit 2d19302f628853742c4828381abbd668c1315598 ]
 
-This laptop with an ALC236 codec requires the
-ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
-fixup for its mute LED to function correctly.
+skb_checksum_help() can fail. Pass its return value back to the caller.
 
-Add the subsystem ID 0x103c:0x86c8 to the quirk table to apply this
-fixup.
+Commonize this software path in goto.
 
-Signed-off-by: Madhavender Singh <madhav@disroot.org>
-Link: https://patch.msgid.link/20260723104736.23386-1-madhav@disroot.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Instead of just returning error try calculating software checksum first.
+There is a check for TSO in checksum_sw_fb.
+
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-4-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 70cac100b2064..58729c8430273 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10899,6 +10899,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
-+	SND_PCI_QUIRK(0x103c, 0x86c8, "HP Laptop 14s-dr1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
- 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 431a6ed498a4e..0bb9f0dbf5350 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -1857,7 +1857,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
+ 			ret = ipv6_skip_exthdr(skb, exthdr - skb->data,
+ 					       &l4_proto, &frag_off);
+ 			if (ret < 0)
+-				return -1;
++				goto checksum_sw_fb;
+ 		}
+ 
+ 		/* define outer transport */
+@@ -1876,11 +1876,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
+ 			l4.hdr = skb_inner_network_header(skb);
+ 			break;
+ 		default:
+-			if (first->tx_flags & ICE_TX_FLAGS_TSO)
+-				return -1;
+-
+-			skb_checksum_help(skb);
+-			return 0;
++			goto checksum_sw_fb;
+ 		}
+ 
+ 		/* compute outer L3 header size */
+@@ -1939,7 +1935,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
+ 			ipv6_skip_exthdr(skb, exthdr - skb->data, &l4_proto,
+ 					 &frag_off);
+ 	} else {
+-		return -1;
++		goto checksum_sw_fb;
+ 	}
+ 
+ 	/* compute inner L3 header size */
+@@ -1968,15 +1964,17 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
+ 		break;
+ 
+ 	default:
+-		if (first->tx_flags & ICE_TX_FLAGS_TSO)
+-			return -1;
+-		skb_checksum_help(skb);
+-		return 0;
++		goto checksum_sw_fb;
+ 	}
+ 
+ 	off->td_cmd |= cmd;
+ 	off->td_offset |= offset;
+ 	return 1;
++
++checksum_sw_fb:
++	if (first->tx_flags & ICE_TX_FLAGS_TSO)
++		return -1;
++	return skb_checksum_help(skb);
+ }
+ 
+ /**
 -- 
 2.53.0
 
