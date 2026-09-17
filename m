@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C4C5326B1;
-	Thu, 17 Sep 2026 17:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D3535FA7;
+	Thu, 17 Sep 2026 17:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664521; cv=none; b=Whwjz567A/lBZesiiA65ZrZMo4z0Ikd2t9wwM6rYf6QDFseGBnwxfwa9YcYURbZnVXRybHDmwXz5xeWBVPHpDOEIOM6Xpk7wHPoh2emm4iw+JxH0L/s6MgUgvcytEn4NfbdBuL6RjS87s4PDNwqQFfSLrIXKegtL7WpKQ/6AdUQ=
+	t=1789664523; cv=none; b=QFv4M+UgFI0aQ2ITGn0/mk0Qavi2dOts0yUzdO3P1/9p0F8p+QpBGARPMBWfo7MBY8zrHF/snFRj0l3gR2vThZo8lBv/SAmc6O5biVinvihu8mVaJuUOuRGMFfKjGdv+HZQQgKyAPPBxWflh0UtlO4W4sIaw0wKiIr5SFJmrQhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664521; c=relaxed/simple;
-	bh=xODdbNPInZg4Pmbjmjjt0ZoOUIVaOUehnfs4v3Kb4i8=;
+	s=arc-20240116; t=1789664523; c=relaxed/simple;
+	bh=8iv+qtLGcbrrdr40tJK0vafnEOkRM+L5gbSVujYcN40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdKmKaLBdGkb2YmsNfv70FhDRParNxma29nhmv5H9zYgsdtRK3lxXJ4xr4ljOQnqYTi/9aTJXYiFupZ+gtCqR8V5xvsSDMXOTh1OU/JC+SxBbi1v3M5fvKoByCsFW3xDXsuwMMypUM1IXkgT78QUAbnIKp9ZFfsD+mrn5FASzbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xj+ShSiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qQ/Om1i4vW+Ap/zyWOykGBpZKzdgjNzrkrvn244PKJbNtCLq+5M1nrfPreeYTsHJbup2w0yd8JQYSjPO0m1f3FYTKIunholXssg4SNe7VvdcDyPZzO/LpKVJTsgnuAFjA5795VZJKxPsCl7uUXdjEpI62ncmrItRG85sCVnctjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+HQBCpM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xj+ShSiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2113D1F000FF;
-	Thu, 17 Sep 2026 17:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+HQBCpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0051F00899;
+	Thu, 17 Sep 2026 17:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664519;
-	bh=tMkhGBv5JnZcalZmqld6ViNMsbH5Iaq0+mtDCWVZIZ0=;
+	s=korg; t=1789664522;
+	bh=5RJJhuxWRnijQDGLcLQwJUtrk2FAXphLmvgdxWGLggI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xj+ShSiMA1sBI37gGUXlwJWhBXRqRK+DsTDav5Ytl3xUbHF6PYJNX5CAKn/P9LPBD
-	 rAunrDuBEluHDwUkhMzT1qR5csIFrX4GzIX8fWAmbcYHVbWOgMPyFRh4qzI1nVaBAN
-	 jOwYnR3cAKCjyU5pJ+bItGvmEUDK0cpIGPjr5C/c=
+	b=z+HQBCpMj7y1mQZ0dvkXgdg3Hj0fzJ2Lr6rBAoBEDrm0l88QoOEKbPbKdzA92tweJ
+	 H6ZE1EHI7ocR6EZcxo4z5NlGZQyIepEpxoNwaV+C3uAa7n01Q2hk8T+uGB4oi76TnA
+	 vlaU9mJh4oiMYJz5hmDDvcx1Mfc+7hzWY8Butkk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0400/1250] Bluetooth: btintel_pcie: Add 50 ms delay before MAC init on BlazarIW
-Date: Thu, 17 Sep 2026 16:03:15 +0100
-Message-ID: <20260917151602.871310667@linuxfoundation.org>
+Subject: [PATCH 6.18 0401/1250] ASoC: rockchip: rockchip_pdm: Handle runtime PM resume failures in set_fmt
+Date: Thu, 17 Sep 2026 16:03:16 +0100
+Message-ID: <20260917151602.897769689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 4d62d88e7ae6dcecd9a8c70a045a6c6c64bf3b52 ]
+[ Upstream commit ee7b5f7b39332febf917f9ebf212842cc9379815 ]
 
-On BlazarIW, fast restart cycles fail because the D0 entry to MAC
-init does not complete in time. As a result, MAC initialization
-does not proceed and the controller fails to transition past the
-ROM boot stage.
+rockchip_pdm_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Add a 50 ms delay (worst case as per HW analysis) before doing MAC
-init in btintel_pcie_enable_bt() so the shared hardware reset flow
-has time to complete. The delay is gated on the BlazarIW PCI device
-id 0x4D76 so other Intel BT PCIe controllers are unaffected.
-
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260522110302.349421F000E9@smtp.kernel.org/
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260602101608.45137-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ sound/soc/rockchip/rockchip_pdm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index d0aa1666d6ac6..c0441541c0862 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -740,6 +740,11 @@ static void btintel_pcie_dump_traces(struct hci_dev *hdev)
- 		bt_dev_err(hdev, "Failed to dump traces: (%d)", ret);
- }
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index c69cdd6f24994..01292b63bf9d6 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -321,6 +321,7 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
+ {
+ 	struct rk_pdm_dev *pdm = to_info(cpu_dai);
+ 	unsigned int mask = 0, val = 0;
++	int ret;
  
-+static bool btintel_pcie_is_blazariw(struct pci_dev *pdev)
-+{
-+	return pdev->device == 0x4D76;
-+}
-+
- /* This function enables BT function by setting BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT bit in
-  * BTINTEL_PCIE_CSR_FUNC_CTRL_REG register and wait for MSI-X with
-  * BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0.
-@@ -759,6 +764,14 @@ static int btintel_pcie_enable_bt(struct btintel_pcie_data *data)
- 	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_CI_ADDR_MSB_REG,
- 			      (u64)data->ci_p_addr >> 32);
+ 	mask = PDM_CKP_MSK;
+ 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+@@ -334,7 +335,10 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
+ 		return -EINVAL;
+ 	}
  
-+	/* On BlazarIW, the D0 entry to MAC init does not complete in
-+	 * time. Wait 50 ms (worst case as per HW analysis) for the
-+	 * shared hardware reset flow to complete before proceeding with
-+	 * MAC init.
-+	 */
-+	if (btintel_pcie_is_blazariw(data->pdev))
-+		msleep(50);
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
 +
- 	/* Reset the cached value of boot stage. it is updated by the MSI-X
- 	 * gp0 interrupt handler.
- 	 */
+ 	regmap_update_bits(pdm->regmap, PDM_CLK_CTRL, mask, val);
+ 	pm_runtime_put(cpu_dai->dev);
+ 
 -- 
 2.53.0
 
