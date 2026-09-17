@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B8A4F4D08;
-	Thu, 17 Sep 2026 16:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BC84F4D0B;
+	Thu, 17 Sep 2026 16:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661277; cv=none; b=oiYgEL04IUDR2Wz7xp3MsQWeelMDhz5jdqIse3CZQZ0BfsxnRcudx1e0ciSEz4Dy2IV2UWP443bpvYpy6IDXeEoUfQC6VbiyuwI/SK2zVovAHEGhfxmasOqox/58WqDZSgye2nCgZTs000TBb8d1BKVWphVBULTH9hdq2gbP5lw=
+	t=1789661280; cv=none; b=WjZoruYbFjydaQ2EZuczMbNabJ5N2rrZ1UNthW+Hdwz7i/0c/IdeG2yMznlJAsKATliYq8eW2Ta9scCBEuvU1+FhjsvduxYfZfnG0sVcpFfoSouDjK1CokMcN7k1yokJj2rVvR0cBATHc7wlfUMmwd+RqxcdXowwNmr8FYBT/WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661277; c=relaxed/simple;
-	bh=kIz1uMU/H8HF+10ITezTlIYROqPIaPqf1oZ5MIuHzUE=;
+	s=arc-20240116; t=1789661280; c=relaxed/simple;
+	bh=Ndc7ZhFDTgTAj+1ukUlI/GR6Fm0W4q02eDSq5oEEWt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhwVsPb//uvUFkiuOve4GDj6AENcuJzK9TEyyCcHkCzVY+ar4cZGgMp+Mgu/AuBizLZ0alQfq+t4d2SKvTgOuRXU6WMrtJ68+zYHc/ISe+xY8s+KwNs/KiBnymGeYuq2JxdA73WUN+3mP2LZkaGPME2WjbwN5l2HGO6+3OK5+54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpI5BWJU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZK1x3NT6o4/IlVg5N661VzJ84mN//+CMQ88wCGBPY393iZ/xKRrNgWjb1Az4bHrkC4CrVKfUXdcKlUSELdL2s5pc1C4tuocEqXV7uzf++5IKE5FSkOaNgvl5iAkyCdooJv20kVxFS0uJZ7k6fuQArj57DXbdra0+hXU41zfQQFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfjEtNzW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpI5BWJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B9F1F000FF;
-	Thu, 17 Sep 2026 16:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfjEtNzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDBC1F00898;
+	Thu, 17 Sep 2026 16:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661276;
-	bh=v/f8uLX8zumlpgXuyE9gIOXyMmHy1IHPunmrReE/1D8=;
+	s=korg; t=1789661279;
+	bh=xDq/TpG/D7Dq9LxQusQ+mueedo8m+XB6xgN8R/aZXKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dpI5BWJUjGFULA9Blq+ekh9qS67RviX8PxrvXoKPVd0qRql0gfxNEa3fEDlWL+ZLM
-	 6Dy5GYE3SP89ajH6gCQ8Dv4+zd+Mr6mjNwINndTfIEs7G+MGj+lXaLQN5Cg1slU4vZ
-	 azxl9cj4kelKw8ML6ZvY/UR6o+wsS4cTXVq0XY9U=
+	b=KfjEtNzWixxIBzKFYD9mye79hSrWNe0ZviSmUKDlR3Z0HwQShJGYHfrh8yI2Wp36j
+	 NwqwyKNx/fM6fcOZ9zU70xLcwk9SVy+Ax4I07j0T7XbpXX4b92YgtmpvxmrIex33bP
+	 WDS7V0Qi6CL1galJ1+SdcRRGJ6po3+9IbKzauutg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0142/1250] iommu: arm-smmu-qcom: Ensure smmu is powered up in set_ttbr0_cfg
-Date: Thu, 17 Sep 2026 15:58:57 +0100
-Message-ID: <20260917151555.904198439@linuxfoundation.org>
+Subject: [PATCH 6.18 0143/1250] drm/imagination: Dont timeout job if its fence has been signaled
+Date: Thu, 17 Sep 2026 15:58:58 +0100
+Message-ID: <20260917151555.931813893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -47,62 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-[ Upstream commit 8a0aab012b52b5c044ca3bec523e91f95dd40765 ]
+[ Upstream commit ee7cb742531432ec1bb29b996e3363aacd860054 ]
 
-arm_smmu_write_context_bank() assumes it is being called with RPM
-active, but it turns out that is not guaranteed in the path from
-qcom_adreno_smmu_set_ttbr0_cfg(), so it's possible for the register
-writes to get lost when configuring the context bank while the GPU is
-idle, leading to page faults later.
-Add the RPM calls here to make sure the SMMU is active before we touch
-it.
+Verify the job’s fence in the timeout handler; if the firmware has since
+signaled completion, then report NO HANG.
 
-Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260519-b4-context_reset-v2-2-931018a7131d@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/imagination/pvr_queue.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 3b9fb1c71e5f9..f7cb7de80cfb9 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -231,6 +231,7 @@ static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
- 	struct io_pgtable *pgtable = io_pgtable_ops_to_pgtable(smmu_domain->pgtbl_ops);
- 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
- 	struct arm_smmu_cb *cb = &smmu_domain->smmu->cbs[cfg->cbndx];
-+	int ret;
+diff --git a/drivers/gpu/drm/imagination/pvr_queue.c b/drivers/gpu/drm/imagination/pvr_queue.c
+index bb5835ede6660..7497bca2e7e83 100644
+--- a/drivers/gpu/drm/imagination/pvr_queue.c
++++ b/drivers/gpu/drm/imagination/pvr_queue.c
+@@ -818,7 +818,9 @@ static void pvr_queue_start(struct pvr_queue *queue)
+  * the scheduler, and re-assign parent fences in the middle.
+  *
+  * Return:
+- *  * DRM_GPU_SCHED_STAT_RESET.
++ *  *%DRM_GPU_SCHED_STAT_NO_HANG if the job fence has already been
++ *   signaled, or
++ *  *%DRM_GPU_SCHED_STAT_RESET otherwise.
+  */
+ static enum drm_gpu_sched_stat
+ pvr_queue_timedout_job(struct drm_sched_job *s_job)
+@@ -829,6 +831,9 @@ pvr_queue_timedout_job(struct drm_sched_job *s_job)
+ 	struct pvr_job *job;
+ 	u32 job_count = 0;
  
- 	/* The domain must have split pagetables already enabled */
- 	if (cb->tcr[0] & ARM_SMMU_TCR_EPD1)
-@@ -260,8 +261,16 @@ static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
- 		cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID, cb->cfg->asid);
- 	}
- 
-+	ret = pm_runtime_resume_and_get(smmu_domain->smmu->dev);
-+	if (ret < 0) {
-+		dev_err(smmu_domain->smmu->dev, "failed to get runtime PM: %d\n", ret);
-+		return -ENODEV;
-+	}
++	if (dma_fence_is_signaled(s_job->s_fence->parent))
++		return DRM_GPU_SCHED_STAT_NO_HANG;
 +
- 	arm_smmu_write_context_bank(smmu_domain->smmu, cb->cfg->cbndx);
+ 	dev_err(sched->dev, "Job timeout\n");
  
-+	pm_runtime_put_autosuspend(smmu_domain->smmu->dev);
-+
- 	return 0;
- }
- 
+ 	/* Before we stop the scheduler, make sure the queue is out of any list, so
 -- 
 2.53.0
 
