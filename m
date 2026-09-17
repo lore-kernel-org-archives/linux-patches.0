@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770AB433AD;
-	Thu, 17 Sep 2026 17:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754174F96B6;
+	Thu, 17 Sep 2026 17:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664788; cv=none; b=HydHGAtgzERKmBmkMApNvATEFrY5R/z1ySEQxtO0xwUERGQUQBbxN7IXFBk+bxNxBbk/Z2mtCdDF+tjjrqHXZcMFGhU3yInm48NN5TQRH7OHBa2J48hMVBBNkdRXP+QpL9tWJuEbIdss2kXumrK9gNZbQtyWTdLoS3EWvg33dBM=
+	t=1789664791; cv=none; b=ceKKeap2ocME4glcqVv5+POq4hSpe0DrMOiWaG9WnWZm8LOdfhRA1LiAcTZc5dlcrwN0lj9h5Mc5pf9lk1Gp88Uap+0fcgNROE/0gSZvx5ViLDIAPKrQohEBoxL4qFSSMOPD7dHR3d7DS9NFCLW196pcTcHMKBltCi4dY/HJW/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664788; c=relaxed/simple;
-	bh=nQQyF+W1P6guDd5P0P52YBKOsvFFykBA/bYp7pKXXtE=;
+	s=arc-20240116; t=1789664791; c=relaxed/simple;
+	bh=a9Fs+wsXWTY/I7ONXgAwrezCWzeAjdjaT947yZok6jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EdnddDDRtoN4teawW0Mf7A4QZ6kGH0iCBOLGEWsmXixBaZzDNpepBavngz9wysYkRCNr6ArzbVWHRbplZM2RAQWgNh4cSAVwdtCQd2C5XhLg6RSqzJsICVdVGINNb4Rt2WvhCj9az83XXrEUcpt8TpWt/fZ5Lb0nPgMLdi3y5so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8bDMB8q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GSK9UMiPv/wg88CzyKg/VP8EnmUc26SHRRfUoj6nABxOr+tPGKDObppuEkiZ0vEhGyUFznKjI/c2Q8P3pZJIpjNvl2CEMYhqT3M3kVkjIQqT0XIaZcXS3wfa4z4su+WHntUrqqh17tahL9N8xbKKwB51FrGAN5I4tgOzL+hdx9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSn10Asp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8bDMB8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7671F00893;
-	Thu, 17 Sep 2026 17:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSn10Asp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9B71F000FF;
+	Thu, 17 Sep 2026 17:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664787;
-	bh=VsE7irDojpDHkeyOCv+FvjAF2u9kcH2PtWmbc7czOs8=;
+	s=korg; t=1789664790;
+	bh=8wO3yocJgpE6Pg5gpajmuzQzwai5LVpNFOLiEPj9g0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o8bDMB8q6FfzksjY/+EPHExhrhNmOuIMgl69EMWkMLhzhOG2vL1R9V8EjoVA48alC
-	 EOWOkpVLItYUJqGTFdHQrg5DgdafTV/Kz4j8pn9a6cj0RQFtjqpbO7/yeYJNmbpMFy
-	 Znq3Gp73aBfgwvDlPPOZ2k/N9GfeUUJYCgbawrLk=
+	b=SSn10AspJDz64v/ROJQcMAsb8Akc8GBa/FJL8VAf3PXqUiIvKmj2m6xmrSvfBPWr2
+	 JVsAnJQuFKFAsyElGZpSRtLA450lv/i4kWFDWlXq4SFb8T18TuYQiM+6r7/Ir+gjgG
+	 C8LUvVEoUFhA+tmC785uiWKukB2gADXEysIKhY5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0489/1250] drm/amdgpu: flush pending RCU callbacks on module unload
-Date: Thu, 17 Sep 2026 16:04:44 +0100
-Message-ID: <20260917151605.222148159@linuxfoundation.org>
+Subject: [PATCH 6.18 0490/1250] ksmbd: fix credit charge calculation for SMB2 QUERY_INFO
+Date: Thu, 17 Sep 2026 16:04:45 +0100
+Message-ID: <20260917151605.247840184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -47,84 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 67a654b41cfa73c3b83402c4a01b2689cad5b9bc ]
+[ Upstream commit 284dc80ff529a0b454f11b6c2fea0d5daf6f315f ]
 
-Call rcu_barrier() in module exit to wait for outstanding call_rcu() callbacks
-before freeing module text, preventing late callback execution in freed memory.
+smb2_validate_credit_charge() computes the credit charge a request is
+allowed to consume from the payload size:
 
-BUG: unable to handle page fault for address: ffffffffc1d59c40
-PGD 6a12067 P4D 6a12067 PUD 6a14067 PMD 13698b067 PTE 0
-Oops: 0010 [#1] SMP NOPTI
-RIP: 0010:0xffffffffc1d59c40
-Code: Unable to access opcode bytes at RIP 0xffffffffc1d59c16.
-RSP: 0018:ffffc900198c0f28 EFLAGS: 00010286
-RAX: ffffffffc1d59c40 RBX: ffff897c7d6b61c0 RCX: ffff88826aff4590
-RDX: ffff8884d8b35490 RSI: ffffc900198c0f30 RDI: ffff88812af67290
-RBP: 000000000000000a (DONE segment entries) R08: 0000000000000000 R09: 0000000000000100
-R10: 0000000000000000 R11: ffffffff82a06100 R12: ffff88811a4e3700
-R13: 0000000000000000 R14: ffff897c7d6b6270 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff897c7d680000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffc1d59c16 CR3: 00000104a980a001 CR4: 0000000002770ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <IRQ>
- ? rcu_do_batch+0x163/0x450
- ? rcu_core+0x177/0x1c0
- ? __do_softirq+0xc1/0x280
- ? asm_call_irq_on_stack+0xf/0x20
- </IRQ>
- ? do_softirq_own_stack+0x37/0x50
- ? irq_exit_rcu+0xc4/0x100
- ? sysvec_apic_timer_interrupt+0x36/0x80
- ? asm_sysvec_apic_timer_interrupt+0x12/0x20
- ? cpuidle_enter_state+0xd4/0x360
- ? cpuidle_enter+0x29/0x40
- ? cpuidle_idle_call+0x108/0x1a0
- ? do_idle+0x77/0xf0
- ? cpu_startup_entry+0x19/0x20
- ? secondary_startup_64_no_verify+0xbf/0xcb
+  CreditCharge = (max(SendPayloadSize, ResponsePayloadSize) - 1)/65536 + 1
 
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit feaa5039f6c12acc9aa934c2d45dcd251a12c69f)
+For SMB2 QUERY_INFO, the server must validate CreditCharge based on the
+*maximum* of InputBufferLength and OutputBufferLength. ksmbd instead
+summed the two lengths, which overestimates the required charge.
+
+As a result a single-credit QUERY_INFO whose InputBufferLength and
+OutputBufferLength each fit in 64KB but whose sum exceeds 64KB is
+rejected with STATUS_INVALID_PARAMETER, even though it is a valid
+request. IOCTL already uses max() of the request and response sizes;
+make QUERY_INFO consistent by feeding InputBufferLength as the request
+length and OutputBufferLength as the expected response length so that
+smb2_validate_credit_charge() takes their maximum.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/smb/server/smb2misc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 9b17a47304615..fb753613e00d7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -3218,6 +3218,14 @@ static void __exit amdgpu_exit(void)
- 	amdgpu_userq_fence_slab_fini();
- 	mmu_notifier_synchronize();
- 	amdgpu_xcp_drv_release();
+diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
+index b11d854d3fcfb..05da29c72c4f0 100644
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -262,8 +262,12 @@ static int smb2_calc_size(void *buf, unsigned int *len)
+ 
+ static inline int smb2_query_info_req_len(struct smb2_query_info_req *h)
+ {
+-	return le32_to_cpu(h->InputBufferLength) +
+-		le32_to_cpu(h->OutputBufferLength);
++	return le32_to_cpu(h->InputBufferLength);
++}
 +
-+	/*
-+	 * Flush outstanding call_rcu() callbacks before the
-+	 * module text is freed.  Otherwise a grace period elapsing after
-+	 * unload invokes a callback in already-freed module memory and
-+	 * faults in rcu_do_batch().
-+	 */
-+	rcu_barrier();
++static inline int smb2_query_info_resp_len(struct smb2_query_info_req *h)
++{
++	return le32_to_cpu(h->OutputBufferLength);
  }
  
- module_init(amdgpu_init);
+ static inline int smb2_set_info_req_len(struct smb2_set_info_req *h)
+@@ -309,6 +313,7 @@ static int smb2_validate_credit_charge(struct ksmbd_conn *conn,
+ 	switch (hdr->Command) {
+ 	case SMB2_QUERY_INFO:
+ 		req_len = smb2_query_info_req_len(__hdr);
++		expect_resp_len = smb2_query_info_resp_len(__hdr);
+ 		break;
+ 	case SMB2_SET_INFO:
+ 		req_len = smb2_set_info_req_len(__hdr);
 -- 
 2.53.0
 
