@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A55581F7;
-	Thu, 17 Sep 2026 15:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E284DDB57;
+	Thu, 17 Sep 2026 15:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659019; cv=none; b=f8LSjMkHxIHfeCHcI3R1AZRBPV6GBUQxrlDqFnDfBNaZQUZnClibDkaU9CZLzcnTlY9E8eFUDQR4IEUrApaowxc+Y7WXe9zl2vFtrktH5uK0sojgr+NtZ4xgDhsdwtzhhr8S9yC0vbnqOIG/dGqXetPDfuEus6nTHWLZsZ+PK2U=
+	t=1789659021; cv=none; b=VPrYSezrU7vyku9DpnSw5fvl+5dILudKhuSmt3WzUVodnVehjE06mou//Gsl0BTHRjZ05RtpQJWvxgHCmir+N0VqL5VcfTWNOj+UfjKE6XO4d1YsAzaxWEtW/o5+7R1TvrbVcKAQaGqwtBMgV6JCxSPZ4CV68GxfkK2oe4lG1y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659019; c=relaxed/simple;
-	bh=v4u/J6vhtp9Ra/GILAjsGyTetLN03G4K7Q6MPPsGwtk=;
+	s=arc-20240116; t=1789659021; c=relaxed/simple;
+	bh=lN1Z92EJ3fYW+JEsiXtw7dyjbb60u80f7j426WzaE+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnmF8OrCKKq1sFZRIiWRKp2ESUr2Zng3R6qahnSSyYoRy/EJT+d/Iw4XjtxL8Ebn0Kl/dyxFlBq2kouAmT2AKsZac8lw6XbfCnMrB/G7DPhI4r02KQQPjzXzHlJ/XDFWO6xuulWOz2PVcUJ3mmT3f2l9/x/o+ow5HJ6Aigl0y7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1x5o2Yq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pTj+/ZLOxZRQRbVoj0TACpcRhkU38n4enzSlMsmfQIlYlcaK/BIbpctWRY6lE1/8J9TAscTOaL9d5vc6HJIaTvtR4FL5t1y1mrBw/inNoZ6W2QKwMs2v52nD1XikX9RB4VOa9g1ViIQPhYYXH/6p0Zp1yBhabRTZxfMdhjnD1sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXFf8YTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1x5o2Yq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0821F00899;
-	Thu, 17 Sep 2026 15:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXFf8YTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050311F008A2;
+	Thu, 17 Sep 2026 15:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659007;
-	bh=w5ktI75tKqhjKXR1z08PXK7p+nJbxHT34gLtTObmXik=;
+	s=korg; t=1789659013;
+	bh=EBNFGgAXycdf6AaIH3wIx8M9Cl/3Pof4k/uI6btg8yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L1x5o2YqrMggnn0XgxAlDABiDqE52Taqo0uLulANZlMK5jD8RWC1CqiVAz5ENle0E
-	 vWrbxBP7W5g8wDX9EZHOrWGIakMuqlqAI9wuDh2E9uXJPl5dIzVSDd+DlXAxcfV000
-	 hMdjvt9wOSgw1QzaLeWU986z7JQVbsLYoy0ufB6U=
+	b=BXFf8YTY8H1ppH2ercZoEV0je6PgrL5BHWmkrCPlymEWXxoG1AOPTqWtg7YPM3Ubh
+	 TxIcK+CcMY82L1v8Qevw9xvkRbR29ZTDuH4FPgq5S/sRcr3LPAX3e7m6IMIz7e/YYI
+	 YeY751s7I8wxj/1G46SC+3HKf+RkMBSAdgmcqOSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 111/733] Bluetooth: hci_core: Fix race condition during device registration
-Date: Thu, 17 Sep 2026 16:06:59 +0100
-Message-ID: <20260917151353.749823532@linuxfoundation.org>
+Subject: [PATCH 7.2 113/733] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
+Date: Thu, 17 Sep 2026 16:07:01 +0100
+Message-ID: <20260917151353.802960040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,95 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 57938bbdb9bf7fd41cbd5cd509ec10c4b22bec18 ]
+[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
 
-In hci_register_dev(), the power_on work item is queued to
-hdev->req_workqueue before initializing hdev->adv_monitors_idr and
-registering the MSFT extension via msft_register(). For devices marked with
-quirks such as HCI_QUIRK_RAW_DEVICE, the HCI_UNCONFIGURED flag is set on
-the device. When the power_on work item runs concurrently on another CPU,
-hci_power_on() detects that the device is unconfigured and immediately
-invokes hci_dev_do_close(), which calls msft_do_close().
+l2cap_chan_connect() tries to ensure there are no more than
+L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
+same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
 
-Concurrently, msft_register() allocates the msft structure and exposes it
-to hdev->msft_data prior to calling mutex_init(&msft->filter_lock). If
-msft_do_close() executes while hdev->msft_data is already assigned but the
-mutex has not yet been initialized, mutex_lock(&msft->filter_lock) operates
-on an uninitialized mutex, triggering a DEBUG_LOCKS warning:
+However, the check only counts deferred channels.  If 6 L2CAP sockets
+are connected at the same time in order DDDDND (D=deferred,
+N=non-deferred), the last can bump the total to max+1.  It results to
+one __le16 written out of bounds of the scid array, and an invalid
+ECRED_CONN_REQ being sent.
 
-DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-WARNING: kernel/locking/mutex.c:625 at __mutex_lock_common
-kernel/locking/mutex.c:625 [inline]
-WARNING: kernel/locking/mutex.c:625 at __mutex_lock+0x12d8/0x1550
-kernel/locking/mutex.c:821
-...
-Call Trace:
- <TASK>
- msft_do_close+0x308/0x7b0 net/bluetooth/msft.c:693
- hci_dev_close_sync+0x86b/0x10a0 net/bluetooth/hci_sync.c:5522
- hci_dev_do_close net/bluetooth/hci_core.c:499 [inline]
- hci_power_on+0x32c/0x750 net/bluetooth/hci_core.c:937
- process_one_work kernel/workqueue.c:3322 [inline]
- process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
- worker_thread+0x92d/0xe10 kernel/workqueue.c:3486
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+Fix by leaving room for the non-deferred pending ECRED channels in the
+counting in l2cap_chan_connect(), so the limit can't be exceeded.
 
-Fix this by moving the queue_work() call in hci_register_dev() to after
-idr_init(&hdev->adv_monitors_idr) and msft_register(hdev) so that device
-structures and extensions are fully initialized before asynchronous tasks
-can access them. Additionally, assign hdev->msft_data in msft_register()
-only after mutex_init(&msft->filter_lock) has completed.
+Move counting under same critical section where the channel is added.
+Although race conditions involving this appear unreachable, it's easier
+to see.
 
-Fixes: 9e14606d8f38 ("Bluetooth: msft: Extended monitor tracking by address filter")
-Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=14ce1b05b7d5a989abbe
-Link: https://syzkaller.appspot.com/ai_job?id=2bc9e8aa-ca6d-43e2-be2c-fd5d9f649d7e
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
+less brittle.
+
+Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 ++--
- net/bluetooth/msft.c     | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index f346505c3f88c..f747492da5f66 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2629,11 +2629,11 @@ int hci_register_dev(struct hci_dev *hdev)
- 	if (error)
- 		BT_WARN("register suspend notifier failed error:%d\n", error);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index d9d72cac9269b..b31afc4d7dae2 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1337,7 +1337,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
+ struct l2cap_ecred_conn_data {
+ 	struct {
+ 		struct l2cap_ecred_conn_req_hdr req;
+-		__le16 scid[5];
++		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
+ 	} __packed pdu;
+ 	struct l2cap_chan *chan;
+ 	struct pid *pid;
+@@ -1365,6 +1365,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
+ 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
+ 		return;
  
--	queue_work(hdev->req_workqueue, &hdev->power_on);
--
- 	idr_init(&hdev->adv_monitors_idr);
- 	msft_register(hdev);
- 
-+	queue_work(hdev->req_workqueue, &hdev->power_on);
++	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
++	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
++		return;
 +
- 	return id;
+ 	l2cap_ecred_init(chan, 0);
  
- err_wqueue:
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index ded68568e6c9b..d9dd722db3ebd 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -769,8 +769,8 @@ void msft_register(struct hci_dev *hdev)
+ 	/* Set the same ident so we can match on the rsp */
+@@ -7373,6 +7377,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		goto done;
+ 	}
  
- 	INIT_LIST_HEAD(&msft->handle_map);
- 	INIT_LIST_HEAD(&msft->address_filters);
--	hdev->msft_data = msft;
- 	mutex_init(&msft->filter_lock);
-+	hdev->msft_data = msft;
- }
++	mutex_lock(&conn->lock);
++	l2cap_chan_lock(chan);
++
+ 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
+ 		struct l2cap_chan_data data;
  
- void msft_release(struct hci_dev *hdev)
+@@ -7380,19 +7387,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		data.pid = chan->ops->get_peer_pid(chan);
+ 		data.count = 1;
+ 
+-		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++
++		/* Leave room for non-deferred channel that ends the group. */
++		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
++			data.count += 1;
+ 
+ 		/* Check if there isn't too many channels being connected */
+ 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
+ 			hci_conn_drop(hcon);
+ 			err = -EPROTO;
+-			goto done;
++			goto chan_unlock;
+ 		}
+ 	}
+ 
+-	mutex_lock(&conn->lock);
+-	l2cap_chan_lock(chan);
+-
+ 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
+ 		hci_conn_drop(hcon);
+ 		err = -EBUSY;
 -- 
 2.53.0
 
