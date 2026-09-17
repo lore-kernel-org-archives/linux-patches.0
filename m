@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592DD54707E;
-	Thu, 17 Sep 2026 19:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A833B9922;
+	Thu, 17 Sep 2026 19:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671619; cv=none; b=E2e3kl6WzQXCfevKjTBjV8AvCpwWPXTMfMOEWS5fnqpYeePvzaF0dgeOWgNL8Oo4XjFOrIvPLbO3GQKxA4eJiCHMF76TmDqpV3nfasyROEa/cLx8Tpxq4/Co69TPBNFahTgwSVUGlRqAjvf0Ttiy9gPGMgat9CiyhUy+xBJnFBU=
+	t=1789671622; cv=none; b=AanIJarC//IQSJKSrWsDiWy9nXk7/qkwNmYrdvafY1DAWI/SmWf2H8zaeKCmPo9SsFb4fWe5vmEcFh+S1eScXGWpTEpu1mgumu6mZutc1mC+m9OEo9hbRTD4Owc3nPxzfLVcOnv9dDXK64cNw7ISBZy0pKuex81w36rdR6mH7RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671619; c=relaxed/simple;
-	bh=nFY785JYS4j8s4omKDF31b0KyqApwRf9MyKYfKVaJRI=;
+	s=arc-20240116; t=1789671622; c=relaxed/simple;
+	bh=kcbjlMCm7BPcFEGcRrA6nP5CzaXYvKnhFa/Bt9uE0AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OiL9lqQPOPelTtoFyH3lsu249QXKzCMBmJjBSR6we6iSv2quMDoTSUNleivBPpLnh03BRGKW9oPkXmc5TeuzqTwg4dUut8msJ6erJiO4T3+cY3K7vZ18xwvo+JSVYDcZ7CHKQqZFpAbB3/K/aVVquJQ8v+qBSyvGBOkksyzOwv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh/D7/xj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MtUpmQt5K75CO++l9IFBQf0pwj+iIqikkIWWtWhfQakHG2ghY2rKRkq+x1jXRJrsyFiAucka58eHFD8PSs/tq7Omy/vKGEhniZCKiEXludmeRHl5phWZLD+5gA2NkmWzAJB6l+Wey9Y1ud/zIyDua12Hhxvlc/0U4niE7wsptgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTFkxAWq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh/D7/xj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BA11F000FF;
-	Thu, 17 Sep 2026 19:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTFkxAWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A8A1F000FF;
+	Thu, 17 Sep 2026 19:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671617;
-	bh=Aup/Rqal+1mJM2jmhgnKvuCyl6qOit8SMeIVkpLLxsU=;
+	s=korg; t=1789671621;
+	bh=0hWFJoGa/CVKkbeZp7diO7zYXI5c+AYcqjyGnfQBXJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uh/D7/xjFfigHz8KdNs6ed7jv/50Q/+2mSwqLs3jwB71z6s/d43OJ3Z3qlVeZcGbn
-	 stPUxkJeX2DEt4XNRVtIveAmx/3SEkLfZ5a09/HY+R8gnhSoMiJf94EcOC3bF8gpEv
-	 5aObWcTanJMI9gdKpyQkOSnHL9dScP6JP+mCNo1s=
+	b=aTFkxAWq3HeKZMF2Agq38toNkVfgG/PkkVk+xD+26zxkrqhns8iTU7TIVjViMODUi
+	 L+4gW2yC6MKGOYXLo8MFd/aLOJeWrMyRZixZjRgWFpEYm48oI6nwNRLFpLxeyFo6Fc
+	 Nf7RsUCLgXQHkHWSM/G8jS+wE3jpnttQID0I0lOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1034/1102] NFSD: Prevent client use-after-free during delegation revoke
-Date: Thu, 17 Sep 2026 16:16:17 +0100
-Message-ID: <20260917151606.737344795@linuxfoundation.org>
+Subject: [PATCH 6.12 1035/1102] ceph: Remove fs/ceph deadcode
+Date: Thu, 17 Sep 2026 16:16:18 +0100
+Message-ID: <20260917151606.767036840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,114 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
 
-[ Upstream commit 4683ca76b3b7e5808338491c6eb3c20e6b4894d5 ]
+[ Upstream commit 6025b482e48041cd71111ab4f7cc28e0371b2e3e ]
 
-A delegation stateid holds only a bare pointer to its owning
-nfs4_client and does not keep it alive.  The client survives its
-stateids only because __destroy_client() drains cl_delegations and
-cl_revoked before free_client() runs.
+ceph_caps_revoking() has been unused since 2017's commit
+3fb99d483e61 ("ceph: nuke startsync op")
 
-nfs4_laundromat() breaks that invariant: it unhashes an
-expired delegation from cl_delegations, drops deleg_lock, then
-revoke_delegation() relinks it onto cl_revoked under cl_lock.  In that
-window the delegation is on neither list, so client_has_state() can
-report no remaining state.
+ceph_mdsc_open_export_target_sessions() has been unused since 2013's
+commit 11df2dfb610d ("ceph: add imported caps when handling cap export message")
 
-Every teardown path first requires cl_rpc_users to be zero, but
-the laundromat holds no such reference.  A client whose recalled
-delegation has just timed out can therefore reach free_client()
-while revoke_delegation() is still about to dereference cl_lock,
-a use-after-free.
+Remove them.
 
-Pin the client with cl_rpc_users across the revoke so teardown blocks
-until it completes, then reap the delegation from cl_revoked.  A client
-already expiring reaps its own, so skip it and leave the delegation on
-del_recall_lru.
-
-Fixes: 3bd64a5ba171 ("nfsd4: implement SEQ4_STATUS_RECALLABLE_STATE_REVOKED")
-Cc: stable@vger.kernel.org
-Reviewed-by: NeilBrown <neil@brown.name>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-2-1d519d9be0cb@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 8fdf94644573 ("ceph: force a cap message when a deferred revoke can't be acked immediately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/netns.h     |    6 ++++--
- fs/nfsd/nfs4state.c |   23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
+ fs/ceph/caps.c       |   14 --------------
+ fs/ceph/mds_client.c |    8 --------
+ fs/ceph/mds_client.h |    2 --
+ fs/ceph/super.h      |    1 -
+ 4 files changed, 25 deletions(-)
 
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -106,7 +106,8 @@ struct nfsd_net {
- 	struct list_head client_lru;
- 	struct list_head close_lru;
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -978,20 +978,6 @@ int __ceph_caps_revoking_other(struct ce
+ 	return 0;
+ }
  
--	/* protects del_recall_lru and delegation hash/unhash */
-+	/* protects del_recall_lru and delegation hash/unhash;
-+	 * nests outside client_lock */
- 	spinlock_t deleg_lock ____cacheline_aligned;
- 	struct list_head del_recall_lru;
- 
-@@ -115,7 +116,8 @@ struct nfsd_net {
- 
- 	struct delayed_work laundromat_work;
- 
--	/* client_lock protects the client lru list and session hash table */
-+	/* client_lock protects the client lru list and session hash
-+	 * table; nests inside deleg_lock */
- 	spinlock_t client_lock;
- 
- 	/* protects blocked_locks_lru */
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6783,6 +6783,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		.new_timeo = nn->nfsd4_lease
- 	};
- 	struct nfs4_cpntf_state *cps;
-+	struct nfs4_client *clp;
- 	copy_stateid_t *cps_t;
- 	int i;
- 
-@@ -6810,6 +6811,18 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
- 		if (!state_expired(&lt, dp->dl_time))
- 			break;
-+		clp = dp->dl_stid.sc_client;
-+		spin_lock(&nn->client_lock);
-+		if (is_client_expired(clp)) {
-+			spin_unlock(&nn->client_lock);
-+			continue;
-+		}
-+		/*
-+		 * Pin without reviving: get_client_locked() would
-+		 * flip a courtesy client back to NFSD4_ACTIVE.
-+		 */
-+		atomic_inc(&clp->cl_rpc_users);
-+		spin_unlock(&nn->client_lock);
- 		refcount_inc(&dp->dl_stid.sc_count);
- 		unhash_delegation_locked(dp, SC_STATUS_REVOKED);
- 		list_add(&dp->dl_recall_lru, &reaplist);
-@@ -6818,8 +6831,18 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	while (!list_empty(&reaplist)) {
- 		dp = list_first_entry(&reaplist, struct nfs4_delegation,
- 					dl_recall_lru);
-+		clp = dp->dl_stid.sc_client;
- 		list_del_init(&dp->dl_recall_lru);
- 		revoke_delegation(dp);
-+		/*
-+		 * Unpin without renewing: put_client_renew() would
-+		 * renew the reaped client's lease.
-+		 */
-+		if (atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock)) {
-+			if (is_client_expired(clp))
-+				wake_up_all(&expiry_wq);
-+			spin_unlock(&nn->client_lock);
-+		}
+-int ceph_caps_revoking(struct ceph_inode_info *ci, int mask)
+-{
+-	struct inode *inode = &ci->netfs.inode;
+-	struct ceph_client *cl = ceph_inode_to_client(inode);
+-	int ret;
+-
+-	spin_lock(&ci->i_ceph_lock);
+-	ret = __ceph_caps_revoking_other(ci, NULL, mask);
+-	spin_unlock(&ci->i_ceph_lock);
+-	doutc(cl, "%p %llx.%llx %s = %d\n", inode, ceph_vinop(inode),
+-	      ceph_cap_string(mask), ret);
+-	return ret;
+-}
+-
+ int __ceph_caps_used(struct ceph_inode_info *ci)
+ {
+ 	int used = 0;
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -1748,14 +1748,6 @@ static void __open_export_target_session
  	}
+ }
  
- 	spin_lock(&nn->client_lock);
+-void ceph_mdsc_open_export_target_sessions(struct ceph_mds_client *mdsc,
+-					   struct ceph_mds_session *session)
+-{
+-	mutex_lock(&mdsc->mutex);
+-	__open_export_target_sessions(mdsc, session);
+-	mutex_unlock(&mdsc->mutex);
+-}
+-
+ /*
+  * session caps
+  */
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -646,8 +646,6 @@ extern void ceph_mdsc_handle_fsmap(struc
+ 
+ extern struct ceph_mds_session *
+ ceph_mdsc_open_export_target_session(struct ceph_mds_client *mdsc, int target);
+-extern void ceph_mdsc_open_export_target_sessions(struct ceph_mds_client *mdsc,
+-					  struct ceph_mds_session *session);
+ 
+ extern int ceph_trim_caps(struct ceph_mds_client *mdsc,
+ 			  struct ceph_mds_session *session,
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -822,7 +822,6 @@ extern int __ceph_mark_dirty_caps(struct
+ 
+ extern int __ceph_caps_revoking_other(struct ceph_inode_info *ci,
+ 				      struct ceph_cap *ocap, int mask);
+-extern int ceph_caps_revoking(struct ceph_inode_info *ci, int mask);
+ extern int __ceph_caps_used(struct ceph_inode_info *ci);
+ 
+ static inline bool __ceph_is_file_opened(struct ceph_inode_info *ci)
 
 
