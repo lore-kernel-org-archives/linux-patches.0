@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9864E36F7;
-	Thu, 17 Sep 2026 17:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59873B6BE3;
+	Thu, 17 Sep 2026 17:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666602; cv=none; b=qyD5TSi5knOkXvoHSF3m95UfpQryIGS1OfY14q1kaVPrlEaBMOanTkG3RcGyj9m/b/J63tDDXevRi/r3askHbyjWuxs1mwr5Zp9oZR9vjBCou3n6nlTKh6sUCh0gCvYACEQdlW1m7Z+eoDYAUzSfTK9TFDFGA1yrvwZA+Hliijo=
+	t=1789666606; cv=none; b=dJPY0u1ekR1kPMBsJq1NxkfC5rup+Ztis9jt5/xkVDME758ZnDMe9IHWRWo4A7Yi2C0XhvUUfiNtzHP5sK9mEB9nFZtSr4yM90hTGnNdZUFfFxKomyco8jlqNxi9+JotXqzZHHI7i7y5qI6/hfNKe8OUVYNk7ZrS4e9Tme1g7SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666602; c=relaxed/simple;
-	bh=a0NSVlCBubGr6wnn9YNnvBY0iHiZ7DLn01/F2p2NCBI=;
+	s=arc-20240116; t=1789666606; c=relaxed/simple;
+	bh=4dxkN8+n/NCxAOqYcEvbZg9XIRlJyM9CKc5TqHQUN50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmeyLxA47jIc3LYKuXDzH3DbXimWBVZblJOwPFi2hpIwJW0CmmV5E0aCzvPWulM9du6ukGxVcCEXOi6NeH21E5ws7IHbkv+kf/JosABpGio4+O0uxkZCoHRNqXmW33/UvMiypTch8XNDE1suVZZhJvBB22cjfU+pCe9ZsK2wGKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihh5afSH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lyQ0KbG1RBJnA1Yo4mEsz4ZA3O6y7/xOuWZIfuGFY3nnkfRzq9bAv00n8hhbcA0ExbkUevyL6m8yCsCYn56CHmq6JefxTrH69kqa8CDCa7cjj9jHFbRF652o2107oAKZiYAGLXUI9UvFtFDZ4Y9hGDJsUSF1j+MKTf17oBIJXEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfOeabVg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihh5afSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75D21F000FF;
-	Thu, 17 Sep 2026 17:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfOeabVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78381F000FF;
+	Thu, 17 Sep 2026 17:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666601;
-	bh=Q/a2ZTntbkEPeyb6v157YZPMgCgxw7tG9HWxtl4ow+k=;
+	s=korg; t=1789666604;
+	bh=Q7Q32Y//t60LwQxFtIdFfjTy4eYIl/fEg7vN4Nc0PI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihh5afSHbt6scU6ixE7ZFqA7F5wcAnPJNatqqP2MWVfWFbjZiINBN1zrTzH6gC5kF
-	 uahUQnXnQkqJNprF0rtPqgVeGLxfAmWPaS07iMA8GjTS0vFZ99x0QCHEJUQGwiVz2m
-	 Kn8Om/mG0Y9bzbAqHVLXVuan8bVUMiosfWqDKBi8=
+	b=PfOeabVgJ8wXKwUOgEvbq2yOszZSZyZDUdNqnn+mTJQu2VGWzVk4nNq67Q7Oljayj
+	 UmOGONqWGpKrNBoPJDJSezMkYR2qHNV7f4sJWdKOMMYky4xuxA7kpqSgEfKkLCaJZ5
+	 ev+1uhoDTHd0bY/cNNWM2UeAhqQoLIoqIXuENeg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 1065/1250] media: verisilicon: rockchip: reject AV1 frames exceeding the tile capacity
-Date: Thu, 17 Sep 2026 16:14:20 +0100
-Message-ID: <20260917151620.994229217@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 1092/1250] xfs: snapshot old AGFL before rewriting it
+Date: Thu, 17 Sep 2026 16:14:47 +0100
+Message-ID: <20260917151621.763932077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,81 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 367db8b23c26a913d76ed70457bbcd781c422b49 upstream.
+commit 3466dfef0a20f842363958deea55be9f1d26818a upstream.
 
-rockchip_vpu981_av1_dec_set_tile_info() indexes the tile group entry
-array by tile1 * tile_cols + tile0, reading up to tile_cols * tile_rows
-entries, lays out one descriptor per tile in the AV1_MAX_TILES tile_info
-buffer, and programs the real tile_cols / tile_rows into the hardware.
+LOLLM complains that we can't undo an attempt at fixing the AGFL if
+anything goes wrong during the rewrite, so take a snapshot of the whole
+buffer so that we can restore it.  Move the xrep_agfl_update_agf call so
+that we only update the AGF if the AGFL update is 100% successful.
 
-The tile group entry control is a dynamic array sized to the number of
-entries userspace submitted, independent of tile_cols / tile_rows, so a
-frame that claims more tiles than entries reads past the array. A frame
-that claims more than AV1_MAX_TILES tiles also leaves the hardware
-programmed for more tiles than the descriptor buffer holds.
+While we're at it, fix leaking the used_extents bitmap if the disunion
+operation fails.
 
-Reject both in prepare_run(): tile_cols * tile_rows must not exceed the
-submitted entry count or AV1_MAX_TILES. The entry count is read via
-v4l2_ctrl_find() (ctrl->elems). This mirrors the bound the mediatek AV1
-decoder already enforces.
-
-Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
-Assisted-by: Claude:claude-opus-4-8
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: stable@vger.kernel.org # v4.19
+Fixes: 0e93d3f43ec7d3 ("xfs: repair the AGFL")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |   25 ++++++++--
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ fs/xfs/scrub/agheader_repair.c |   35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -431,20 +431,39 @@ static int rockchip_vpu981_av1_dec_prepa
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -668,14 +668,16 @@ xrep_agfl_init_header(
+ 	struct xfs_scrub	*sc,
+ 	struct xfs_buf		*agfl_bp,
+ 	struct xagb_bitmap	*agfl_extents,
+-	xfs_agblock_t		flcount)
++	xfs_agblock_t		flcount,
++	struct xfs_agfl		*old_agfl)
  {
- 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
- 	struct hantro_av1_dec_ctrls *ctrls = &av1_dec->ctrls;
-+	const struct v4l2_av1_tile_info *tile_info;
-+	struct v4l2_ctrl *tge;
-+	u32 num_tiles;
+ 	struct xrep_agfl_fill	af = {
+ 		.sc		= sc,
+ 		.flcount	= flcount,
+ 	};
+ 	struct xfs_mount	*mp = sc->mp;
+-	struct xfs_agfl		*agfl;
++	struct xfs_agfl		*agfl = XFS_BUF_TO_AGFL(agfl_bp);
++	const size_t		agfl_sz = BBTOB(agfl_bp->b_length);
+ 	int			error;
  
- 	ctrls->sequence = hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_SEQUENCE);
- 	if (WARN_ON(!ctrls->sequence))
- 		return -EINVAL;
+ 	ASSERT(flcount <= xfs_agfl_size(mp));
+@@ -684,8 +686,8 @@ xrep_agfl_init_header(
+ 	 * Start rewriting the header by setting the bno[] array to
+ 	 * NULLAGBLOCK, then setting AGFL header fields.
+ 	 */
+-	agfl = XFS_BUF_TO_AGFL(agfl_bp);
+-	memset(agfl, 0xFF, BBTOB(agfl_bp->b_length));
++	memcpy(old_agfl, agfl, agfl_sz);
++	memset(agfl, 0xFF, agfl_sz);
+ 	agfl->agfl_magicnum = cpu_to_be32(XFS_AGFL_MAGIC);
+ 	agfl->agfl_seqno = cpu_to_be32(pag_agno(sc->sa.pag));
+ 	uuid_copy(&agfl->agfl_uuid, &mp->m_sb.sb_meta_uuid);
+@@ -700,13 +702,18 @@ xrep_agfl_init_header(
+ 	xagb_bitmap_walk(agfl_extents, xrep_agfl_fill, &af);
+ 	error = xagb_bitmap_disunion(agfl_extents, &af.used_extents);
+ 	if (error)
+-		return error;
++		goto err_undo;
  
--	ctrls->tile_group_entry =
--	    hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_TILE_GROUP_ENTRY);
--	if (WARN_ON(!ctrls->tile_group_entry))
-+	tge = v4l2_ctrl_find(&ctx->ctrl_handler,
-+			     V4L2_CID_STATELESS_AV1_TILE_GROUP_ENTRY);
-+	if (WARN_ON(!tge))
- 		return -EINVAL;
-+	ctrls->tile_group_entry = tge->p_cur.p;
- 
- 	ctrls->frame = hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_FRAME);
- 	if (WARN_ON(!ctrls->frame))
- 		return -EINVAL;
- 
-+	/*
-+	 * rockchip_vpu981_av1_dec_set_tile_info() indexes the tile group
-+	 * entry array by tile1 * tile_cols + tile0, so it reads up to
-+	 * tile_cols * tile_rows entries, and lays out one descriptor per tile
-+	 * in the AV1_MAX_TILES tile_info buffer while programming the real
-+	 * tile geometry into the hardware. Reject a frame that claims more
-+	 * tiles than userspace submitted, or more than the hardware tile
-+	 * buffer holds, so the read stays in bounds and the programmed
-+	 * geometry matches the descriptors written.
-+	 */
-+	tile_info = &ctrls->frame->tile_info;
-+	num_tiles = (u32)tile_info->tile_cols * tile_info->tile_rows;
-+	if (num_tiles > tge->elems || num_tiles > AV1_MAX_TILES)
-+		return -EINVAL;
+ 	/* Write new AGFL to disk. */
+ 	xfs_trans_buf_set_type(sc->tp, agfl_bp, XFS_BLFT_AGFL_BUF);
+-	xfs_trans_log_buf(sc->tp, agfl_bp, 0, BBTOB(agfl_bp->b_length) - 1);
++	xfs_trans_log_buf(sc->tp, agfl_bp, 0, agfl_sz - 1);
+ 	xagb_bitmap_destroy(&af.used_extents);
+ 	return 0;
 +
- 	ctrls->film_grain =
- 	    hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_FILM_GRAIN);
++err_undo:
++	xagb_bitmap_destroy(&af.used_extents);
++	memcpy(agfl, old_agfl, agfl_sz);
++	return error;
+ }
+ 
+ /* Repair the AGFL. */
+@@ -718,6 +725,7 @@ xrep_agfl(
+ 	struct xfs_mount	*mp = sc->mp;
+ 	struct xfs_buf		*agf_bp;
+ 	struct xfs_buf		*agfl_bp;
++	struct xfs_agfl		*old_agfl;
+ 	xfs_agblock_t		flcount;
+ 	int			error;
+ 
+@@ -725,6 +733,10 @@ xrep_agfl(
+ 	if (!xfs_has_rmapbt(mp))
+ 		return -EOPNOTSUPP;
+ 
++	old_agfl = kzalloc(BBTOB(XFS_FSS_TO_BB(mp, 1)), XCHK_GFP_FLAGS);
++	if (!old_agfl)
++		return -ENOMEM;
++
+ 	xagb_bitmap_init(&agfl_extents);
+ 
+ 	/*
+@@ -734,7 +746,7 @@ xrep_agfl(
+ 	 */
+ 	error = xfs_alloc_read_agf(sc->sa.pag, sc->tp, 0, &agf_bp);
+ 	if (error)
+-		return error;
++		goto err_old_agfl;
+ 
+ 	/*
+ 	 * Make sure we have the AGFL buffer, as scrub might have decided it
+@@ -745,7 +757,7 @@ xrep_agfl(
+ 						XFS_AGFL_DADDR(mp)),
+ 			XFS_FSS_TO_BB(mp, 1), 0, &agfl_bp, NULL);
+ 	if (error)
+-		return error;
++		goto err_old_agfl;
+ 	agfl_bp->b_ops = &xfs_agfl_buf_ops;
+ 
+ 	/* Gather all the extents we're going to put on the new AGFL. */
+@@ -762,10 +774,11 @@ xrep_agfl(
+ 	 * we adjust the AGF flcount (which can fail) so avoid updating any
+ 	 * buffers until we know that part works.
+ 	 */
+-	xrep_agfl_update_agf(sc, agf_bp, flcount);
+-	error = xrep_agfl_init_header(sc, agfl_bp, &agfl_extents, flcount);
++	error = xrep_agfl_init_header(sc, agfl_bp, &agfl_extents, flcount,
++			old_agfl);
+ 	if (error)
+ 		goto err;
++	xrep_agfl_update_agf(sc, agf_bp, flcount);
+ 
+ 	/*
+ 	 * Ok, the AGFL should be ready to go now.  Roll the transaction to
+@@ -785,6 +798,8 @@ xrep_agfl(
+ 
+ err:
+ 	xagb_bitmap_destroy(&agfl_extents);
++err_old_agfl:
++	kfree(old_agfl);
+ 	return error;
+ }
  
 
 
