@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A22561A2;
-	Thu, 17 Sep 2026 15:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA5F358D27;
+	Thu, 17 Sep 2026 15:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660486; cv=none; b=GjH2skZW5yw98P/7AOattNFdPkcFEiOxpW+Mf8zgY73ZaKg6FyjEeOB8pAVTdrdRLGec7fLqnKCHijnm/rlkaXNHdxzgaV8x3w1uHq7dDXPQgOpw7VLeoPwrFAt7+Uuvwa5N/Rvj0oBI/tG5pf9g8VdID103W31lVuniY1BQ37w=
+	t=1789660490; cv=none; b=X0LzwzoOFGe1+IwHKaEAz2fBGroTfvJwZQqNoZf/r06NZTQXPbwaAiLwXtNvhTeA1kwQD0UPFjnwAPQ2SlNiZW1rCuC3LrD8HTZH8vOYJcht8Od8JGVYZZBIToxusE9D/XVGuEzTAwnm0koYYEHFYhqgvXQvWD9os+VEVkp6xno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660486; c=relaxed/simple;
-	bh=7kbAlvNzNOsbfa1s3OqTycDypoGynnRB/+S4A8866Jc=;
+	s=arc-20240116; t=1789660490; c=relaxed/simple;
+	bh=uxffugRgt3xCBlVBygMi3ENZfBw8tPgKhXGo6oDmz5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUj8mv1kogRBl4udyUWbDv1X2BTm7AxC1umAKib0En6hkpzYQ6O/bFfyWyChieuv5B6nb8M896ilhBhbhg3vgcTdOLycNT8wiSEi9jR3OgrD1qtcJab0jZ0u3G1IvAToLD26GEd9T+6dYmx+vhCzwXIS8DiUEjGGuqrrawxYD+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPIOZMz/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EOoJwirWUk0w/ddRNbu3OkLnexwGL3ZQeFIwBhYlMCb5jbk9rSvKDtgOFotQq0TPkEoYiXnKalSQcmMbP2fi+fcUhCrVqUYJVcb4PkiLmwdrgDJt01faHJx3UsP+WGSxp0yrM8C/+3w2EAFoQ0+uKem+D7OeBxw5F5qCwaffbyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEPzWIIr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPIOZMz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4E51F000FF;
-	Thu, 17 Sep 2026 15:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEPzWIIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB14B1F000FF;
+	Thu, 17 Sep 2026 15:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660485;
-	bh=R8uRzHtu/da5N4rUusjXyL1xqDpGs4NlM94bBnZJvL4=;
+	s=korg; t=1789660489;
+	bh=HAgQ+d716F01w25w/yEokKnBupbWeytlfd+JQfSn6Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OPIOZMz/QIzpb5i0niLJmS6fw7v0Yo2Vp/laCizEFlo7AA73uvGmaX3UbXPjI1OiO
-	 nHE77gvdCE6K6/K72L2rm4gXsDPDsXNbIdGVWaAg6zMQFqUPvA2eDWDBw40H1SVVPq
-	 N4KeNkAxebDcCOWIdlydmRoqKTIJVxif+i0SeAl4=
+	b=cEPzWIIrBL3VsqYeMJNVkJfRjkeiYMyq+zCDf47bC8XRKTzGTNuSyowyMaQqrqRpx
+	 r4IfKlsvaI93JvI5huYZuHs0ObfHcNjqSA2sgNaco6D+GtYkIdiGXRDTcJihx6XAd/
+	 KeYdfrgtZwuwdQmRwQZbTaRauM+7iCWPo2LrxJik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot+sashiko@kernel.org>,
 	Joe Damato <joe@dama.to>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 607/733] bnxt_en: Handle buffer allocation failure in bnxt_rx_ring_reset()
-Date: Thu, 17 Sep 2026 16:15:15 +0100
-Message-ID: <20260917151407.611786423@linuxfoundation.org>
+Subject: [PATCH 7.2 608/733] bnxt_en: Propagate RX ring init failures in bnxt_init_nic()
+Date: Thu, 17 Sep 2026 16:15:16 +0100
+Message-ID: <20260917151407.639467179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,57 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Joe Damato <joe@dama.to>
 
-commit 961e2a17c5e3559b3f8654d2daabdd25a42e770a upstream.
+commit 8e6a850c0746bb4be167aedf1ee57469fcda09a9 upstream.
 
-bnxt_rx_ring_reset() frees the ring buffers and then reallocates them,
-ignoring the result.
+bnxt_init_rx_rings() returns an error when bnxt_alloc_one_rx_ring()
+fails, but bnxt_init_nic() discards that return value and calls
+bnxt_init_chip(), which enables TPA.
 
-bnxt_alloc_one_rx_ring() can fail in bnxt_alloc_one_tpa_info_data(), which
-returns -ENOMEM on the first failed allocation and leaves the remaining
-rxr->rx_tpa[] entries zeroed.
+If an allocation fails, this could leave rxr->rx_tpa[] partially zeroed
+and TPA would be enabled over an array with zeroed entries. This would
+lead to a zeroed DMA address being handed out if the agg_idx is
+translated to a SW index at a zeroed entry.
 
-The error isn't propagated up, so the loop in bnxt_rx_ring_reset
-continues and at the end the code re-enables TPA with partially
-unallocated rx_tpa array.
+Fix this by propagating the error out of bnxt_init_nic(). Both callers
+already check its return value and unwind with bnxt_free_skbs() and
+bnxt_free_mem(), which tolerate a partially initialized RX ring.
 
-This means that when the agg_id from hardware is mapped to a SW index in
-rxr->rx_tpa[], an uninitialized slot can be chosen which would hand a
-zero DMA address to the device.
-
-Fix this by falling back to a global reset, which is what the existing
-code already does when other functions fail, but unlike the other
-failure cases this particular failure has to return because TPA can't
-be re-enabled since the allocation failed.
-
-Fixes: 8fbf58e17dce ("bnxt_en: Implement RX ring reset in response to buffer errors.")
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
 Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
 Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
 Cc: stable@vger.kernel.org
 Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-5-joe@dama.to
+Link: https://patch.msgid.link/20260902015652.2421609-6-joe@dama.to
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -14564,7 +14564,14 @@ static void bnxt_rx_ring_reset(struct bn
- 		rxr->rx_sw_agg_prod = 0;
- 		rxr->rx_next_cons = 0;
- 		rxr->bnapi->in_reset = false;
--		bnxt_alloc_one_rx_ring(bp, i);
-+		rc = bnxt_alloc_one_rx_ring(bp, i);
-+		if (rc) {
-+			netdev_warn(bp->dev, "RX ring reset failed to allocate buffers, rc = %d, falling back to global reset\n",
-+				    rc);
-+			bnxt_reset_task(bp, true);
-+			bnxt_rtnl_unlock_sp(bp);
-+			return;
-+		}
- 		cpr = &rxr->bnapi->cp_ring;
- 		cpr->sw_stats->rx.rx_resets++;
- 		if (bp->flags & BNXT_FLAG_AGG_RINGS)
+@@ -11341,8 +11341,13 @@ static int bnxt_shutdown_nic(struct bnxt
+ 
+ static int bnxt_init_nic(struct bnxt *bp, bool irq_re_init)
+ {
++	int rc;
++
+ 	bnxt_init_cp_rings(bp);
+-	bnxt_init_rx_rings(bp);
++	rc = bnxt_init_rx_rings(bp);
++	if (rc)
++		return rc;
++
+ 	bnxt_init_tx_rings(bp);
+ 	bnxt_init_ring_grps(bp, irq_re_init);
+ 	bnxt_init_vnics(bp);
 
 
