@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DA64F3919;
-	Thu, 17 Sep 2026 16:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5EB54CF65;
+	Thu, 17 Sep 2026 16:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660890; cv=none; b=sTd3NH3oZIPbhgxGeKIp+eiFrSo4nYnJzVWYiZ81yuWOGh2yKcoCZybN5lN6yW/aWzvNhbAcDUT2kjI0REZ4e7X1zdjuGdt9Mwqam1NT6jbrQaCYAwJd2Fcwm1k4cYl8Sy3SBxXQ73+8LsNCewtmNwvPO+EBfXH+CJov4i8TmE0=
+	t=1789660893; cv=none; b=EPiv81g1fpn/v1tBw0tDJHjci53r7uoGlSPjak7Y3v7BfHRygDb8TqIXcvkNOTbtoDRnBFzFEol2TWjYXKe0NffdQBRBHF8XjsLSVMwpPaNtbDrfJVgt4GC3qwQFyzXHzDb/8T3WsfVw8coPTxroUFJBWsWPt0QEWp51TeyTku0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660890; c=relaxed/simple;
-	bh=zPXvsYsr8fsJo4gHNMPWCVVoUy7jrFuxiF9f1zdw9l0=;
+	s=arc-20240116; t=1789660893; c=relaxed/simple;
+	bh=rjJ5EoIcqb5A0TRu1KRVNz9NzgILSdFB8GN+lVeP9uI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXIThPXMMjecCn/4UyBsSy3H7ECiZ+Vo7RpM5eeaxsBmrv4F6qFUVyKMDPMVCT/aETeeF23gkb2+x/mhysZRFDbFflpRepLUsQKb4t5CsQJPrkdDxxDbjLy/tqApRiY40RX2ydK29uW0hhZyLu/pIp9qPYPwEYpW23JCgqfcBHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOy9O2cT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0lo0uDC7izNnXBd8tG3DCd8unrsafKXgsjcY/l6XKlWp5i/xku/fM5RCdKe4vKn43OCLjdJCrm2XIGeF5bCdwMFj42TncfUxP6He9lUgihIQVw8lS4D/M21xsa7nlRYCzXarwg5gE1rbI/E+JaXOkvmg/68psJsfp/QVG3xHaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ykx6S3zf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOy9O2cT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B191F000FF;
-	Thu, 17 Sep 2026 16:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ykx6S3zf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E391F0089A;
+	Thu, 17 Sep 2026 16:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660888;
-	bh=SJ30JQAV99hvXqZZe/RhW8sBKzO3IcFBjdiFmCAmnTA=;
+	s=korg; t=1789660891;
+	bh=F58AyJjY18TPOKEcl40XyEZo5f2pI/r3LbOMG4qaCuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOy9O2cTyKwIAyGsaR11chaXDeDxUCU6KpTL2/H7a7NKrUdpjcPvdrmGOQ4qwUntg
-	 lHiPNhKVS9WzWzIGQhgvszAfURQq7lRr7HhDUXM8PEgajFmtiQt3jhXuRcT7ISVYxx
-	 ZuCr+G6Z3tZBEnRkIneGC8ZZbpYyIQl939lcYhg4=
+	b=Ykx6S3zf7oyqv9B1qC+MB+XCKJjCh0HB9OmMwVsalWqANNLodOb49pPpfZdHzU+9b
+	 E6B7qwS4R/TRa2Mu+UohnXHtNIWv5BhCcM5fD+EPOa8ZtHImam2WzmA6g05/TQ2Vfg
+	 7h1FfI/7E+9EyZQU0GHatSU4KGXjSjTD+apJ3pxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com,
+	Jie Wang <jie.wang@intel.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0004/1250] drm/gem: Consider GEM object reclaimable if shrinking fails
-Date: Thu, 17 Sep 2026 15:56:39 +0100
-Message-ID: <20260917151552.036261066@linuxfoundation.org>
+Subject: [PATCH 6.18 0013/1250] gfs2: fix quota init duplicate scan
+Date: Thu, 17 Sep 2026 15:56:48 +0100
+Message-ID: <20260917151552.284645802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,62 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Jie Wang <jie.wang@intel.com>
 
-[ Upstream commit 71c8224a18825102ee1e5e70498f96f6c2d2a81d ]
+[ Upstream commit b99a1f0f18ee50445907f55069e88bcfd8947383 ]
 
-If the object wasn't moved to a different LRU after the shrink callback
-returns, it means the buffer is still reclaimable. Update the remaining
-counter to reflect that.
+gfs2_quota_init() checks for duplicate quota_change IDs while holding
+qd_lock and the quota hash bucket bitlock. That path used
+gfs2_qd_search_bucket(), which takes a lockref reference via
+lockref_get_not_dead().
 
-v2:
-- Collect R-b
+On PREEMPT_RT this may sleep, which is not allowed under the bucket
+bitlock, triggering "sleeping function called from invalid context".
 
-v3:
-- Collect R-b
+Use a no-ref bucket lookup in this path, then continue duplicate
+handling without taking a lockref there.
 
-v4:
-- No changes
+Refactor gfs2_qd_search_bucket() to build on top of the no-ref helper
+so lookup traversal stays in one place.
 
-v5:
-- No changes
+This patch fixes a bug reported by syzbot.
 
-v6:
-- No changes
-
-v7:
-- No changes
-
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20260401134854.2275433-2-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reported-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=642d0561f78362d67d3f
+Tested-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
+Signed-off-by: Jie Wang <jie.wang@intel.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gem.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/gfs2/quota.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index 5c4a113b08941..224ed96bd0d4a 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1601,6 +1601,16 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 			 */
- 			WARN_ON(obj->lru == &still_in_lru);
- 			WARN_ON(obj->lru == lru);
-+		} else if (obj->lru == &still_in_lru) {
-+			/*
-+			 * If the object wasn't moved and wasn't shrunk either,
-+			 * it's still remaining as reclaimable. Note that
-+			 * obj->lru is supposed to be checked with the LRU lock
-+			 * held for an accurate result, but we don't care about
-+			 * accuracy here. Worst thing that could happen is an
-+			 * extra scan.
-+			 */
-+			*remaining += obj->size >> PAGE_SHIFT;
- 		}
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index 898fc3937b449..7a36a3fe5e6e6 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -254,9 +254,13 @@ static struct gfs2_quota_data *qd_alloc(unsigned hash, struct gfs2_sbd *sdp, str
+ 	return NULL;
+ }
  
- 		dma_resv_unlock(obj->resv);
+-static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
+-						     const struct gfs2_sbd *sdp,
+-						     struct kqid qid)
++/*
++ * Lookup variant for callers which already hold qd_lock + bucket lock.
++ */
++static struct gfs2_quota_data *
++gfs2_qd_search_bucket_noref(unsigned int hash,
++			    const struct gfs2_sbd *sdp,
++			    struct kqid qid)
+ {
+ 	struct gfs2_quota_data *qd;
+ 	struct hlist_bl_node *h;
+@@ -264,12 +268,22 @@ static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
+ 	hlist_bl_for_each_entry_rcu(qd, h, &qd_hash_table[hash], qd_hlist) {
+ 		if (!qid_eq(qd->qd_id, qid))
+ 			continue;
+-		if (qd->qd_sbd != sdp)
+-			continue;
+-		if (lockref_get_not_dead(&qd->qd_lockref)) {
+-			list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
++		if (qd->qd_sbd == sdp)
+ 			return qd;
+-		}
++	}
++
++	return NULL;
++}
++
++static struct gfs2_quota_data *
++gfs2_qd_search_bucket(unsigned int hash, const struct gfs2_sbd *sdp, struct kqid qid)
++{
++	struct gfs2_quota_data *qd;
++
++	qd = gfs2_qd_search_bucket_noref(hash, sdp, qid);
++	if (qd && lockref_get_not_dead(&qd->qd_lockref)) {
++		list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
++		return qd;
+ 	}
+ 
+ 	return NULL;
+@@ -1458,7 +1472,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 
+ 			spin_lock(&qd_lock);
+ 			spin_lock_bucket(hash);
+-			old_qd = gfs2_qd_search_bucket(hash, sdp, qc_id);
++			old_qd = gfs2_qd_search_bucket_noref(hash, sdp, qc_id);
+ 			if (old_qd) {
+ 				fs_err(sdp, "Corruption found in quota_change%u"
+ 					    "file: duplicate identifier in "
+@@ -1467,7 +1481,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 
+ 				spin_unlock_bucket(hash);
+ 				spin_unlock(&qd_lock);
+-				qd_put(old_qd);
+ 
+ 				gfs2_glock_put(qd->qd_gl);
+ 				kmem_cache_free(gfs2_quotad_cachep, qd);
 -- 
 2.53.0
 
