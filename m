@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B774AD4D4;
-	Thu, 17 Sep 2026 18:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3E34398F5;
+	Thu, 17 Sep 2026 18:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670870; cv=none; b=b3rROZeDa+0TbB0bwynHACBX3y/adcxb6MrfGryrVtACV6SJ+GK+Usy6O8PsddjvKs/Bw3QDviaQ4z90zQ7p0BlAHYCW8RE2G3744/vfmYyMJLCYPmKMZAVWYVO//itvtgUlLBqoBku3NC55Yi7uY2UaGmpPiSXn2oxPzDSlefY=
+	t=1789670874; cv=none; b=XTwZAiQFXetoA5FEU1r7gnBOIF+n8uuegEQodzeN/3khDrw4pmYdIbRjimNElHjOBfLb8ldD6Pnw1GK2WY5ZuxqJp+/ATwILh2BPJ62aR8EbjszihOMtm1gzXcHEusgSJZl9WPQoT3wJQXl3tjowDfxtdSfo0V7CwnKRUiVMr+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670870; c=relaxed/simple;
-	bh=/KnZ5xSnx7QWf7MGovkJlLfZ9sjklT6MigrMlsUfmDY=;
+	s=arc-20240116; t=1789670874; c=relaxed/simple;
+	bh=o666wxS/Kk23+ik0si2nof8MpqjHTqyu0fGXtYcl7Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FscFhwq46UBouFAZlJJ0axeu8NG5pEC5dwfTBVCYBePhJXR74rSYM9Q/NbukiTrtFTS3O0vFZF8PqMiw8vUISMDAhvbgb8ED3NzhyN01nZdYICwxVDaoXzErTyK5lj/sSXkLBwLIn1uT7H2MgrLE1yEBNedgmGIR1HvUqz0iUwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idiHXjP2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T6IPeJKRq+lHEZbSroQo6gW1YRHNJ6eMjkAotFQ5KEv/rVaue90iX7pPJMGhshIQDpmvaShzw6rfaVGu5FVKYxEiNYVNxy2xI7DxsYV15morAGjp6RAHUOEKUK6taJPNecesiYFKirwqBdBzLlPbYKqkIhz8GqVy389rXfjzt1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAE2HyCv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idiHXjP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E51F00898;
-	Thu, 17 Sep 2026 18:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAE2HyCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCDD1F000FF;
+	Thu, 17 Sep 2026 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670869;
-	bh=tTENmiquG5Dt2I5SRr7qe0KB6id9jG2+Fl8Kg3gjiF4=;
+	s=korg; t=1789670872;
+	bh=mF47+3uI9OunmtChKTnsLEkXkFrm7BGEvQmbqQ9Twos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idiHXjP2pYmpTJc25hEnkuqgMSVLiWSvuUZfQ0Gi4igufOPxy2XqWzeENk3X+Ebyr
-	 aTvOSA4Ab7k0/h0/ZzjJsnEHiU8wCCGOA7OLiKn3jVm3UaptQPak6yUpgcpWWOiaMd
-	 De8iZ9VrBUaocTImixfNo8PrWlSNPcPrqf8BD03E=
+	b=LAE2HyCvE2RbDqRKSISkIIYG3BKY4GbbaS2Kby255C9I/A9nNuN3qjC6T1cDxqbe7
+	 9pkg6SZ99LYYzdNB9j8RAygNSTnBbXQGjfa/R9jupTWAFK/j+RXEUhWMv6dkPLUSRN
+	 Xhl5F4vXABaNtS9RKIr8o7jdRkdb5mix5KAXyFbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0795/1102] net: stmmac: fix TX descriptor availability check for TSO traffic
-Date: Thu, 17 Sep 2026 16:12:18 +0100
-Message-ID: <20260917151600.430614609@linuxfoundation.org>
+Subject: [PATCH 6.12 0796/1102] net: hsr: enable promiscuous mode on interlink port with fwd offload
+Date: Thu, 17 Sep 2026 16:12:19 +0100
+Message-ID: <20260917151600.456031180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,108 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 5e38d732ec67a5b1f9a56e6c73add480c4b6030a ]
+[ Upstream commit a2dc179481d18f6df7274522571b64dd50f31e81 ]
 
-stmmac_tso_xmit() estimates the number of free TX descriptors required by
-a TSO skb as:
+hsr_portdev_setup() skips promiscuous mode on non-master ports when
+hsr->fwd_offloaded is set. fwd_offloaded is derived only from the ring
+slaves' NETIF_F_HW_HSR_FWD bit, so this also skips it for the interlink
+port, which never gets forwarding offload. Without promiscuous mode,
+the interlink NIC drops unicast frames addressed to hsr_dev's MAC
+(e.g. SAN traffic to the RedBox), breaking RedBox whenever the ring is
+HW-offloaded.
 
-	(skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1
-
-which assumes the payload is split into TSO_MAX_BUFF_SIZE chunks. This
-underestimates the descriptors actually consumed by stmmac_tso_allocator(),
-since each fragment is mapped individually and so it needs at least one
-descriptor regardless of its size. Moreover, one descriptor is used for
-the L2/L3/L4 headers and, when the MSS changes, one more is consumed for
-the MSS context descriptor.
-For a highly fragmented TSO skb the check can therefore pass even when the
-ring has too few free slots. stmmac_tso_allocator() then writes past the
-available descriptors, overwriting descriptors still owned by the DMA
-engine, corrupting the TX ring.
-Add stmmac_tso_get_num_desc() to compute the exact number of descriptors
-needed for the header, the linear payload and each fragment, plus the MSS
-context descriptor when required, and use it in the availability check.
-
-Fixes: f748be531d70 ("stmmac: support new GMAC4")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260907-stmmac-fix-tso-nfrags-check-v1-1-328459906cdb@oss.qualcomm.com
+Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260908090856.2876114-1-danishanwar@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 31 +++++++++++++++----
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ net/hsr/hsr_slave.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 0ac8c57079321..91c07c04435f2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4177,6 +4177,26 @@ static bool stmmac_tso_valid_packet(struct sk_buff *skb)
- 	return header_len <= 1023;
- }
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index ffc7259729527..e22694b727b28 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -148,9 +148,12 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
+ 	int res;
  
-+static int stmmac_tso_get_num_desc(struct stmmac_tx_queue *tx_q,
-+				   struct sk_buff *skb, u32 pay_len)
-+{
-+	int i, ndesc = 1;
-+
-+	/* head payload */
-+	ndesc += DIV_ROUND_UP(pay_len, TSO_MAX_BUFF_SIZE);
-+	/* frag payload */
-+	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
-+		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
-+
-+		ndesc += DIV_ROUND_UP(skb_frag_size(frag),
-+				      TSO_MAX_BUFF_SIZE);
-+	}
-+	/* MSS update requires a new descriptor */
-+	ndesc += !!(skb_shinfo(skb)->gso_size != tx_q->mss);
-+
-+	return ndesc;
-+}
-+
- /**
-  *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
-  *  @skb : the socket buffer
-@@ -4220,9 +4240,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	unsigned int first_entry, tx_packets;
- 	struct stmmac_txq_stats *txq_stats;
-+	int i, first_tx, nfrags, ndesc;
- 	struct stmmac_tx_queue *tx_q;
- 	u32 pay_len, mss, queue;
--	int i, first_tx, nfrags;
- 	u8 proto_hdr_len, hdr;
- 	dma_addr_t des;
- 	bool set_ic;
-@@ -4249,14 +4269,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	/* Don't use promiscuous mode for offload since L2 frame forward
+-	 * happens at the offloaded hardware.
++	 * happens at the offloaded hardware. The interlink port never
++	 * gets forwarding offload (RedBox forwarding to/from it is done
++	 * by this driver), so it still needs promiscuous mode to receive
++	 * frames addressed to hsr_dev's MAC rather than its own.
+ 	 */
+-	if (!port->hsr->fwd_offloaded) {
++	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK) {
+ 		res = dev_set_promiscuity(dev, 1);
+ 		if (res)
+ 			return res;
+@@ -173,7 +176,7 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
+ fail_rx_handler:
+ 	netdev_upper_dev_unlink(dev, hsr_dev);
+ fail_upper_dev_link:
+-	if (!port->hsr->fwd_offloaded)
++	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
+ 		dev_set_promiscuity(dev, -1);
  
- 	/* Compute header lengths */
- 	proto_hdr_len = stmmac_tso_header_size(skb);
-+	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
-+
- 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
- 		hdr = sizeof(struct udphdr);
- 	else
- 		hdr = tcp_hdrlen(skb);
- 
--	/* Desc availability based on threshold should be enough safe */
--	if (unlikely(stmmac_tx_avail(priv, queue) <
--		(((skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1)))) {
-+	ndesc = stmmac_tso_get_num_desc(tx_q, skb, pay_len);
-+	if (unlikely(stmmac_tx_avail(priv, queue) < ndesc)) {
- 		if (!netif_tx_queue_stopped(netdev_get_tx_queue(dev, queue))) {
- 			netif_tx_stop_queue(netdev_get_tx_queue(priv->dev,
- 								queue));
-@@ -4268,8 +4289,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 		return NETDEV_TX_BUSY;
- 	}
- 
--	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
--
- 	mss = skb_shinfo(skb)->gso_size;
- 
- 	/* set new MSS value if needed */
+ 	return res;
+@@ -236,7 +239,7 @@ void hsr_del_port(struct hsr_port *port)
+ 		netdev_update_features(master->dev);
+ 		dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
+ 		netdev_rx_handler_unregister(port->dev);
+-		if (!port->hsr->fwd_offloaded)
++		if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
+ 			dev_set_promiscuity(port->dev, -1);
+ 		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
+ 			vlan_vids_del_by_dev(port->dev, master->dev);
 -- 
 2.53.0
 
