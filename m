@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2313411FA8;
-	Thu, 17 Sep 2026 18:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C054848BF;
+	Thu, 17 Sep 2026 18:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670824; cv=none; b=rn2gzNukAsCvFy9B+tglELs2wr0Dt+4fsXfMMNPMvY/unb6rBRdp/JcL7D5F+iKNWAsZU2j8PoZUsRZhB3pNfQp3w375FihbKtUwajmy7qsdmiZ/og7nJk1ihSvzZy+rG2GnOw+ImxnW/q+g/xvf25DJncTKQ+gSoWFNRBpBteI=
+	t=1789670828; cv=none; b=aO2RWCO05dN9L8j/uTYUvN6UYla6M/+qd11r9ZTgTiZzBTpO4p00pPwbS3fbf8xe5FLXUk5/u7zSP17FjrB2AXtcg0/Ndzk0+M2HoSw8DilGvIs0H2T9icGS1TYsmP7CJG3XLrNrrHRNNxlRpApwSgDMGwh77I9Ce4Qoql/SJwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670824; c=relaxed/simple;
-	bh=V9C+zxdP3YwqmZgJQw7M3A0GElsnwGhT+FR6rcdc4fU=;
+	s=arc-20240116; t=1789670828; c=relaxed/simple;
+	bh=WgD/ep0ArEcz93eETjTaqz/Ncr1hq4U9aJL+/X6RvdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFFusQIExRkIcqnEK41NWzMHXwRsZuJNd4101oFD9r6orZW2cgfdHtA1RE9NMchcxMvabIArsdrXiquod/GLIuw31ihsyaJAhp1dJjZj+toyAAqWTA46Xl3MJgYjttCfKBdlYzDm9P0CuCO0JsjBz4vgjCBcH/lMVjL9heBgz2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEng4AoS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r6E/DEHpMMyFyQmKXTYOwjwYY2IO3o6sSlRNtgINtuN/brG9sD7t1mrG/XNAYUx2+k+yeqbz6gMSyxO4du7m0QbhfsXxaG/UWFVkd17NrpDaiSISpRe+VrKkQWBKjBRtpR58H71Jc52tU5yg/tG1LICaGIu2QBd2nYU+RQJ1McI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4CEd6lL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEng4AoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BB31F000FF;
-	Thu, 17 Sep 2026 18:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4CEd6lL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A931F000FF;
+	Thu, 17 Sep 2026 18:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670822;
-	bh=zg6EaeIiq8t1PIDtIqenxLuksCkzSF7Qx+x8AEKhTE0=;
+	s=korg; t=1789670825;
+	bh=nCB/R7y2ZShIS5kDhTQMJBxHyoQF1/AaFlFKGkWMvqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEng4AoSU3RhU9LGxV6PWmYyv2OLWx0vfoOGvbjfGUepw5sjyUiUjM63pZziIUvgy
-	 W59JAV9YnpP7mKSJhzUAOuaVamVDsK3j1xGDNuzYpBoaCmjf6It2RrM7oiDgSG2P0h
-	 2cnu70HjOmpZbLY/WaQH0iIBgkI2UM6E1QVbwqp0=
+	b=s4CEd6lLIBC2CV4vaWvmiB1M1jMQ2xy3ligDB6lMlnsCjh5O0BE51zbZmriCVU3Kq
+	 hf3KENscPBCoOU3+5UjXo3D3BkP9OD+yVJJTiaYwyFDuC5UELpkn1d9iiPN4x4WwcD
+	 gghM1sm0j3YFACcP10U5uK8xr+Klr3e8+Sl7/8x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	hybris@mojatatu.ai,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0781/1102] net/sched: cls_route: Fix in-place replace
-Date: Thu, 17 Sep 2026 16:12:04 +0100
-Message-ID: <20260917151600.067364355@linuxfoundation.org>
+Subject: [PATCH 6.12 0782/1102] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
+Date: Thu, 17 Sep 2026 16:12:05 +0100
+Message-ID: <20260917151600.094859891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,128 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 41e85e54e5649a1617698438b0ce64c6f9d83d69 ]
+[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
 
-Building on the previous patch, route4_set_parms rejects a duplicate by
-scanning the destination chain for nhandle, but the scan doesn't exclude
-the older version it is replacing, so an in-place replace will match
-the older version's handle and fail.
+If a netlink socket sends RTM_GETCHAIN requests repeatedly
+without recv()ing the responses, tc_ctl_chain() hogs CPU and
+triggers Hung Task splat. [0]
 
-Fix this by passing the older filter as a parameter to route4_set_parms
-(replacing "new") and skipping it in the scan.
+As caught in the stack trace, netlink_attachskb() could confuse
+tc_ctl_chain() by returning -EAGAIN when the userspace netlink
+socket's receive buffer is full.
 
-Excluding the older version is not enough on its own. nhandle is built
-out of TCA_ROUTE4_TO, TCA_ROUTE4_FROM and TCA_ROUTE4_IIF alone, while the
-0x7F00 bits, which only tell apart filters sharing one key, are folded in
-on the create path. Letting the replace through would therefore rename
-the filter it replaces: replacing handle 0x10101 stored it back as
-0x10001, and a sibling at 0x10201 could then no longer be replaced at
-all, since its own nhandle collided with the renamed filter.
+The replay: label exists since commit 32a4f5ecd738 ("net: sched:
+introduce chain object to uapi") but was not used initially.
 
-	tc filter add ... handle 0x10101 route from 1 to 1 classid 1:1
-	tc filter add ... handle 0x10201 route from 1 to 1 classid 1:2
-	tc filter replace ... handle 0x10101 route from 1 to 1 classid 1:9
-	... fh 0x00010001 flowid 1:9 to 1 from 1
-	... fh 0x00010201 flowid 1:2 to 1 from 1
-	tc filter replace ... handle 0x10201 route from 1 to 1 classid 1:8
-	Error: Handle 10001 is already in use.
+Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
+the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
+may release RTNL to call request_module().
 
-So carry those bits over when the key the request builds is the key the
-older filter already has. An in-place replace then keeps the handle
-userspace named the filter by, while a request that does change the key
-still renames it, as it did before.
+However, the replay logic is unnecessary for RTM_GETCHAIN.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260829205422.854785-1-victor%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260907192133.2639067-4-victor@mojatatu.com
+Let's apply the replay logic only for RTM_NEWCHAIN.
+
+[0]:
+INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
+task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
+Call Trace:
+ <TASK>
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? pskb_expand_head (net/core/skbuff.c:615)
+ ? skb_release_data (net/core/skbuff.c:1122)
+ ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
+ ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
+ ? tc_chain_notify (net/sched/cls_api.c:3045)
+ ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
+ ? netlink_unicast (net/netlink/af_netlink.c:1335)
+ ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
+ ? tc_ctl_chain (net/sched/cls_api.c:3242)
+ ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
+ ? netlink_unicast (net/netlink/af_netlink.c:1354)
+ ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
+ ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ ? netlink_unicast (net/netlink/af_netlink.c:1319)
+ ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ? __sock_sendmsg (net/socket.c:800)
+ ? __sys_sendto (net/socket.c:2281)
+ ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
+ ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: hybris@mojatatu.ai
+Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 1699ae262a615..5a0ddcf3e2b40 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -393,8 +393,9 @@ static const struct nla_policy route4_policy[TCA_ROUTE4_MAX + 1] = {
- static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 			    unsigned long base, struct route4_filter *f,
- 			    u32 handle, struct route4_head *head,
--			    struct nlattr **tb, struct nlattr *est, int new,
--			    u32 flags, struct netlink_ext_ack *extack)
-+			    struct nlattr **tb, struct nlattr *est,
-+			    struct route4_filter *fold, u32 flags,
-+			    struct netlink_ext_ack *extack)
- {
- 	u32 id = 0, to = 0, nhandle = 0x8000;
- 	struct route4_filter *fp;
-@@ -407,7 +408,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		return err;
- 
- 	if (tb[TCA_ROUTE4_TO]) {
--		if (new && handle & 0x8000) {
-+		if (!fold && handle & 0x8000) {
- 			NL_SET_ERR_MSG(extack, "Invalid handle");
- 			return -EINVAL;
- 		}
-@@ -430,14 +431,14 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	} else
- 		nhandle |= 0xFFFF << 16;
- 
--	if (handle && new) {
-+	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
- 		nhandle |= handle & 0x7F00;
--		if (nhandle != handle) {
--			NL_SET_ERR_MSG_FMT(extack,
--					   "Handle mismatch constructed: %x (expected: %x)",
--					   handle, nhandle);
--			return -EINVAL;
--		}
-+
-+	if (handle && !fold && nhandle != handle) {
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "Handle mismatch constructed: %x (expected: %x)",
-+				   handle, nhandle);
-+		return -EINVAL;
- 	}
- 
- 	if (!nhandle) {
-@@ -460,7 +461,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		for (fp = rtnl_dereference(b->ht[h2]);
- 		     fp;
- 		     fp = rtnl_dereference(fp->next))
--			if (fp->handle == nhandle) {
-+			if (fp != fold && fp->handle == nhandle) {
- 				NL_SET_ERR_MSG_FMT(extack,
- 						   "Handle %x is already in use",
- 						   nhandle);
-@@ -502,7 +503,6 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	struct nlattr *tb[TCA_ROUTE4_MAX + 1];
- 	unsigned int h;
- 	int err;
--	bool new = true;
- 
- 	if (!handle) {
- 		NL_SET_ERR_MSG(extack, "Creating with handle of 0 is invalid");
-@@ -539,11 +539,10 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 
- 		f->tp = fold->tp;
- 		f->bkt = fold->bkt;
--		new = false;
- 	}
- 
- 	err = route4_set_parms(net, tp, base, f, handle, head, tb,
--			       tca[TCA_RATE], new, flags, extack);
-+			       tca[TCA_RATE], fold, flags, extack);
- 	if (err < 0)
- 		goto errout;
- 
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index f8c89e30fc04a..4754139691382 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3243,7 +3243,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
+ 	tcf_chain_put(chain);
+ errout_block:
+ 	tcf_block_release(q, block, true);
+-	if (err == -EAGAIN)
++	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
+ 		/* Replay the request. */
+ 		goto replay;
+ 	return err;
 -- 
 2.53.0
 
