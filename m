@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86733438A8;
-	Thu, 17 Sep 2026 16:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAF64B7A20;
+	Thu, 17 Sep 2026 16:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660967; cv=none; b=nJt6+nSp2TE3wNpjdTz8tkFjJ+SEYlR7ikV6L+TBqaa7x904qlS+IX/eauBIElIobau6PVEJqaOx0n8fWAJ1FHT+pP43Fnu3q8f/LH4nFBVVRARU5K7MAGbaR+IEs8BasWDIpRl5L+ABYNS3qXmYdqB8kIU/dOfT84Zmei0Rrys=
+	t=1789660969; cv=none; b=DMcQAINi9S9I1fj7qrGvL45T5FTjJEh4XljcpfxpCazVksv2GtriVIAEpaUcT7S6qKr03gUd9YJ4XxuLAJmPOlaSkbdu0aYxSjtlY+Aa9gItIRNleZvK7zglW/NyDVlyBX+fuCzPQYX9dvgSzlyg8dM6hp6R4HFqw2qkbu/OEDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660967; c=relaxed/simple;
-	bh=lGrDv+Z8rTzcGK1lAJ9eEHNfuXIU3IW8AXBRHZg7vqc=;
+	s=arc-20240116; t=1789660969; c=relaxed/simple;
+	bh=qHE3tFAQKiqZwSIlfzCxh1yEyanwhryZ769QzqO7cEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ik3CGUXweB08wm8SCdPbgZH+1dwmOd0gK/F95zJLXElBlQ3UfGT0JICDbU5r2uiMJbGOfNtZvOJ/dZcO6ryCDwhuGkgcgawtxlY1j49iPyde+p1h7tQvaAFcauog8fOuDpPooI2qG3l1MGgmHsHF+J08cP87ChupgB0icCPTTgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoSjgTty; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffTU8heD0AaBHYFaO7iMZrUj+YbJkjDB2z2CpXyOlRaoXLmciV7DeDY1m6CTKp+93QF7NnPTn2SpVHoa9/q47wxjgJZTtvHTV6vVTpw1RgbbOedmfG+SiSgHdbcK4c4rHFQcMFkF0Ewu+lB24OF+8sPni5XDz8x0AIUW5YV8b/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQKYW/2t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoSjgTty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA01F000FF;
-	Thu, 17 Sep 2026 16:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQKYW/2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40FD1F000FF;
+	Thu, 17 Sep 2026 16:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660965;
-	bh=bVxD8Q3m3llA0nquR8v/Ep0q1CGoCuOX0x4iF7qkScM=;
+	s=korg; t=1789660968;
+	bh=n0BTgJKPLuaO/NZQLOSKmAdR4LVFnTAkbSZES8Ro6fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoSjgTtye0Z8e1p+7wMC1s2PK9lSeXUcZ5JDacT3wQxs4Cd7QRHgr0d6I6IQorGB+
-	 CJc0MvptqKN2aPTex5k4+ev0r0OCntOHc44TRMpYdUDrkAeHegQ5HhswSdiygyZ8Oy
-	 85aPjxdzsrpJcHk6pqtrZ6yBhrWIYSKAi4ZRqO54=
+	b=kQKYW/2tz5rP5K5tVk5jeA4WC9WJb7ByHclEZl6kKqjHrHhj4Cw+9hN2krhEF+n75
+	 8Q2z6AHjKEg71N7tJw6EPI00Te5vr/pSbxWoZ+yAjiunBgBDdevit1zo7mTMd1BB+I
+	 Q46iz5q8m/oVlZ4CC88vhDBotdBFzbKLxvcgpKjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <kernel@kempniu.pl>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0012/1250] wifi: ath9k: Obtain system GPIOS from descriptors
-Date: Thu, 17 Sep 2026 15:56:47 +0100
-Message-ID: <20260917151552.256491313@linuxfoundation.org>
+Subject: [PATCH 6.18 0003/1250] drm/panel-edp: Add CSW PNB601LS1-2 and LGD LP116WHA-SPB1
+Date: Thu, 17 Sep 2026 15:56:38 +0100
+Message-ID: <20260917151552.009523029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -49,256 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
 
-[ Upstream commit 34a5329beee86a22a446e27eb37f06caa63479ca ]
+[ Upstream commit e88b5cc6d6e5b1ba257f00e5c186ba137e6e8bc3 ]
 
-The ath9k has an odd use of system-wide GPIOs: if the chip
-does not have internal GPIO capability, it will try to obtain a
-GPIO line from the system GPIO controller:
+The raw EDIDs for each panel:
 
-  if (BIT(gpio) & ah->caps.gpio_mask)
-        ath9k_hw_gpio_cfg_wmac(...);
-  else if (AR_SREV_SOC(ah))
-        ath9k_hw_gpio_cfg_soc(ah, gpio, out, label);
+CSW
+- PNB601LS1-2
+00 ff ff ff ff ff ff 00 0e 77 0a 11 00 00 00 00
+30 23 01 04 a5 1a 0e 78 03 a1 35 9b 5e 58 91 25
+1c 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 09 1e 56 dc 50 00 28 30 30 20
+36 00 00 90 10 00 00 1a 06 14 56 dc 50 00 28 30
+30 20 36 00 00 90 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0c 3d ff 0c 3c 7d 0e 0b 17 7d 00 00 00 00 e8
 
-Where ath9k_hw_gpio_cfg_soc() will attempt to issue
-gpio_request_one() passing the local GPIO number of the controller
-(0..31) to gpio_request_one().
+LGD
+- LP116WHA-SPB1
+00 ff ff ff ff ff ff 00 30 e4 fe 07 01 01 00 00
+00 24 01 04 a5 1a 0e 78 03 72 e5 9c 5e 5b 94 27
+19 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 d5 21 56 a0 50 00 b2 30 30 20
+f8 0c 00 90 10 00 00 1a 8e 16 56 a0 50 00 b2 30
+30 20 f8 0c 00 90 10 00 00 1a 00 00 00 fd 00 28
+3c 39 39 09 01 0a 20 20 20 20 20 20 00 00 00 02
+00 0f 3d ff 0f 3c 7d 0d 0a 15 7d 00 00 00 01 da
 
-This is somewhat peculiar and possibly even dangerous: there is
-nowadays no guarantee of the numbering of these system-wide
-GPIOs, and assuming that GPIO 0..31 as used by ath9k would
-correspond to GPIOs 0..31 on the system as a whole seems a bit
-wild.
+70 20 79 02 00 25 00 09 57 52 01 57 52 01 28 3c
+80 81 00 15 74 1a 00 00 03 01 28 3c 00 00 4a 5a
+4a 5a 3c 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 ef 90
 
-Register all 32 GPIOs at index 0..31 directly in the ATH79K
-GPIO driver and associate with the NULL device (making them
-widely available) if and only if we are probing ATH79K wifi
-from the AHB bus (used for SoCs). We obtain these offsets from
-the NULL device if necessary.
-
-These GPIOs should ideally be defined in the device tree
-instead, but we have no control over that for the legacy
-code path.
-
-Testcompiled with the ath79 defconfig.
-
-Reported-by: Michał Kępień <kernel@kempniu.pl>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Michał Kępień <kernel@kempniu.pl>
-Link: https://patch.msgid.link/20260317-descriptors-wireless-v6-1-b19ecff9cd2b@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260324061444.242917-1-terry_hsiao@compal.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-ath79.c           | 57 ++++++++++++++++++++++++++++-
- drivers/net/wireless/ath/ath9k/hw.c | 33 +++++++++++------
- drivers/net/wireless/ath/ath9k/hw.h |  3 +-
- 3 files changed, 80 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-ath79.c b/drivers/gpio/gpio-ath79.c
-index 2ad9f6ac66362..85bd994d15d48 100644
---- a/drivers/gpio/gpio-ath79.c
-+++ b/drivers/gpio/gpio-ath79.c
-@@ -11,6 +11,7 @@
- #include <linux/device.h>
- #include <linux/gpio/driver.h>
- #include <linux/gpio/generic.h>
-+#include <linux/gpio/machine.h> /* For WLAN GPIOs */
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/mod_devicetable.h>
-@@ -214,6 +215,56 @@ static const struct of_device_id ath79_gpio_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, ath79_gpio_of_match);
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index b00c91d2a9aea..334d71e282ccd 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -2036,6 +2036,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1100, &delay_200_500_e80_d50, "MNB601LS1-1"),
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1103, &delay_200_500_e80_d50, "MNB601LS1-3"),
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1104, &delay_200_500_e50_d100, "MNB601LS1-4"),
++	EDP_PANEL_ENTRY('C', 'S', 'W', 0x110a, &delay_200_500_e50, "PNB601LS1-2"),
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x143f, &delay_200_500_e50, "MNE007QS3-6"),
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1448, &delay_200_500_e50, "MNE007QS3-7"),
+ 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1457, &delay_80_500_e80_p2e200, "MNE007QS3-8"),
+@@ -2077,6 +2078,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('L', 'G', 'D', 0x05af, &delay_200_500_e200_d200, "Unknown"),
+ 	EDP_PANEL_ENTRY('L', 'G', 'D', 0x05f1, &delay_200_500_e200_d200, "Unknown"),
+ 	EDP_PANEL_ENTRY('L', 'G', 'D', 0x0778, &delay_200_500_e200_d200, "134WT1"),
++	EDP_PANEL_ENTRY('L', 'G', 'D', 0x07fe, &delay_200_500_e200_d200, "LP116WHA-SPB1"),
  
-+#if IS_ENABLED(CONFIG_ATH9K_AHB)
-+/*
-+ * This registers all of the ath79k GPIOs as descriptors to be picked
-+ * directly from the ATH79K wifi driver if the two are jitted together
-+ * in the same SoC.
-+ */
-+#define ATH79K_WIFI_DESCS 32
-+static int ath79_gpio_register_wifi_descriptors(struct device *dev,
-+						const char *label)
-+{
-+	struct gpiod_lookup_table *lookup;
-+	int i;
-+
-+	/* Create a gpiod lookup using gpiochip-local offsets + 1 for NULL */
-+	lookup = devm_kzalloc(dev,
-+			      struct_size(lookup, table, ATH79K_WIFI_DESCS + 1),
-+			      GFP_KERNEL);
-+	if (!lookup)
-+		return -ENOMEM;
-+
-+	/*
-+	 * Ugly system-wide lookup for the NULL device: we know this
-+	 * is already NULL but explicitly assign it here for people to
-+	 * know what is going on. (Yes this is an ugly legacy hack, live
-+	 * with it.)
-+	 */
-+	lookup->dev_id = NULL;
-+
-+	for (i = 0; i < ATH79K_WIFI_DESCS; i++) {
-+		lookup->table[i] =
-+			/*
-+			 * Set the HW offset on the chip and the lookup
-+			 * index to the same value, so looking up index 0
-+			 * will get HW offset 0, index 1 HW offset 1 etc.
-+			 */
-+			GPIO_LOOKUP_IDX(label, i, "ath9k", i, GPIO_ACTIVE_HIGH);
-+	}
-+
-+	gpiod_add_lookup_table(lookup);
-+
-+	return 0;
-+}
-+#else
-+static int ath79_gpio_register_wifi_descriptors(struct device *dev,
-+						const char *label)
-+{
-+	return 0;
-+}
-+#endif
-+
- static int ath79_gpio_probe(struct platform_device *pdev)
- {
- 	struct gpio_generic_chip_config config;
-@@ -276,7 +327,11 @@ static int ath79_gpio_probe(struct platform_device *pdev)
- 		girq->handler = handle_simple_irq;
- 	}
- 
--	return devm_gpiochip_add_data(dev, &ctrl->chip.gc, ctrl);
-+	err = devm_gpiochip_add_data(dev, &ctrl->chip.gc, ctrl);
-+	if (err)
-+		return err;
-+
-+	return ath79_gpio_register_wifi_descriptors(dev, ctrl->chip.gc.label);
- }
- 
- static struct platform_driver ath79_gpio_driver = {
-diff --git a/drivers/net/wireless/ath/ath9k/hw.c b/drivers/net/wireless/ath/ath9k/hw.c
-index 14de62c1a32bd..9a32cf683c4fd 100644
---- a/drivers/net/wireless/ath/ath9k/hw.c
-+++ b/drivers/net/wireless/ath/ath9k/hw.c
-@@ -21,7 +21,7 @@
- #include <linux/time.h>
- #include <linux/bitops.h>
- #include <linux/etherdevice.h>
--#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/unaligned.h>
- 
- #include "hw.h"
-@@ -2719,19 +2719,28 @@ static void ath9k_hw_gpio_cfg_output_mux(struct ath_hw *ah, u32 gpio, u32 type)
- static void ath9k_hw_gpio_cfg_soc(struct ath_hw *ah, u32 gpio, bool out,
- 				  const char *label)
- {
-+	enum gpiod_flags flags = out ? GPIOD_OUT_LOW : GPIOD_IN;
-+	struct gpio_desc *gpiod;
- 	int err;
- 
--	if (ah->caps.gpio_requested & BIT(gpio))
-+	if (ah->gpiods[gpio])
- 		return;
- 
--	err = devm_gpio_request_one(ah->dev, gpio, out ? GPIOF_OUT_INIT_LOW : GPIOF_IN, label);
-+	/*
-+	 * Obtains a system specific GPIO descriptor from another GPIO controller.
-+	 * Ideally this should come from the device tree, this is a legacy code
-+	 * path.
-+	 */
-+	gpiod = gpiod_get_index(NULL, "ath9k", gpio, flags);
-+	err = PTR_ERR_OR_ZERO(gpiod);
- 	if (err) {
- 		ath_err(ath9k_hw_common(ah), "request GPIO%d failed:%d\n",
- 			gpio, err);
- 		return;
- 	}
- 
--	ah->caps.gpio_requested |= BIT(gpio);
-+	gpiod_set_consumer_name(gpiod, label);
-+	ah->gpiods[gpio] = gpiod;
- }
- 
- static void ath9k_hw_gpio_cfg_wmac(struct ath_hw *ah, u32 gpio, bool out,
-@@ -2791,10 +2800,12 @@ void ath9k_hw_gpio_free(struct ath_hw *ah, u32 gpio)
- 	if (!AR_SREV_SOC(ah))
- 		return;
- 
--	WARN_ON(gpio >= ah->caps.num_gpio_pins);
-+	if (ah->gpiods[gpio]) {
-+		gpiod_put(ah->gpiods[gpio]);
-+		ah->gpiods[gpio] = NULL;
-+	}
- 
--	if (ah->caps.gpio_requested & BIT(gpio))
--		ah->caps.gpio_requested &= ~BIT(gpio);
-+	WARN_ON(gpio >= ah->caps.num_gpio_pins);
- }
- EXPORT_SYMBOL(ath9k_hw_gpio_free);
- 
-@@ -2822,8 +2833,8 @@ u32 ath9k_hw_gpio_get(struct ath_hw *ah, u32 gpio)
- 			val = REG_READ(ah, AR_GPIO_IN(ah)) & BIT(gpio);
- 		else
- 			val = MS_REG_READ(AR, gpio);
--	} else if (BIT(gpio) & ah->caps.gpio_requested) {
--		val = gpio_get_value(gpio) & BIT(gpio);
-+	} else if (ah->gpiods[gpio]) {
-+		val = gpiod_get_value(ah->gpiods[gpio]);
- 	} else {
- 		WARN_ON(1);
- 	}
-@@ -2846,8 +2857,8 @@ void ath9k_hw_set_gpio(struct ath_hw *ah, u32 gpio, u32 val)
- 			AR7010_GPIO_OUT : AR_GPIO_IN_OUT(ah);
- 
- 		REG_RMW(ah, out_addr, val << gpio, BIT(gpio));
--	} else if (BIT(gpio) & ah->caps.gpio_requested) {
--		gpio_set_value(gpio, val);
-+	} else if (ah->gpiods[gpio]) {
-+		gpiod_set_value(ah->gpiods[gpio], val);
- 	} else {
- 		WARN_ON(1);
- 	}
-diff --git a/drivers/net/wireless/ath/ath9k/hw.h b/drivers/net/wireless/ath/ath9k/hw.h
-index eaa07d6dbde00..d9d2f64c55700 100644
---- a/drivers/net/wireless/ath/ath9k/hw.h
-+++ b/drivers/net/wireless/ath/ath9k/hw.h
-@@ -19,6 +19,7 @@
- 
- #include <linux/if_ether.h>
- #include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/io.h>
- #include <linux/firmware.h>
- 
-@@ -302,7 +303,6 @@ struct ath9k_hw_capabilities {
- 	u8 max_rxchains;
- 	u8 num_gpio_pins;
- 	u32 gpio_mask;
--	u32 gpio_requested;
- 	u8 rx_hp_qdepth;
- 	u8 rx_lp_qdepth;
- 	u8 rx_status_len;
-@@ -783,6 +783,7 @@ struct ath_hw {
- 	struct ath9k_hw_capabilities caps;
- 	struct ath9k_channel channels[ATH9K_NUM_CHANNELS];
- 	struct ath9k_channel *curchan;
-+	struct gpio_desc *gpiods[32];
- 
- 	union {
- 		struct ar5416_eeprom_def def;
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x1511, &delay_200_500_e50, "LQ140M1JW48"),
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &delay_80_500_e50, "LQ140M1JW46"),
 -- 
 2.53.0
 
