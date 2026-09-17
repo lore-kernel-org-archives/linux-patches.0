@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCDA4F3923;
-	Thu, 17 Sep 2026 15:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF97A4F393E;
+	Thu, 17 Sep 2026 15:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660397; cv=none; b=j7ImVhjg+tFslFm284+UjmRDiFeGCPpbmjdsrLJEdaqsnjxRMm5LtI1kqMpq9X3bglzCltkeGPmr+RwWVD3i6WFVzXI8H2wzGuh09BdT7UujpoeyFQ6ZIDbZXf/0yO2FfXpuASnBE3mVq76a+GVj4FyidY6LcrUZDi35QZowYCE=
+	t=1789660400; cv=none; b=Pe8oJpL0VM2PfQNdtgagFq4u1aQXssrtRQ+Teu5FOvbJMt+Ilm26YDbyo4FnG4X8IPKix4MxMH87dW1+iHdY6gJ5XBSj0Ci85PaKYnxq1T5Q9tsobP4FsgLNU7mf4yPeXBS00pWYR/i6nSNncVMhHWMSZuoFsCU82wklyO5Y0CU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660397; c=relaxed/simple;
-	bh=9KvkQa2QYMIWmP9L8cOs0rMUDismZwRjmazERBpfLdM=;
+	s=arc-20240116; t=1789660400; c=relaxed/simple;
+	bh=gBN6moVPkr9u4R1QyThW0cDEbxw29x4WVQ73Fi+bRf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtM9h2qqeoT2j5g9ZOZxoYmE956Zj7Xdn7Gm/qlIS2gkYl9lCDdgdhzBitpgYszLRZWqAsD50na189JX6zXH3d/UUIjyWBVnX8vEdKbUnIZo0QH2mzOUvieShx++sbz1UW8oCQCKcrZ7WUlpQvnaXEVImrmI1PD/hxZqS1d468w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=borOwsen; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g44TTd4QPt/AH1m93GXHQWlpuKlsB1VrXARf2vlQhyJ/ycT5NdtIRljgKT2JU/v63dDSYdUpDNHqXlx7YCQIjcVcpTKgNKQKY7owm+g1MQ929tMkS7iO8qDj7nKaHZauRn5/os0nWWj41UCbpu5pRaqFqr5ZRB/nTyHif/lhu6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TF0cdeF0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="borOwsen"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1BB1F000FF;
-	Thu, 17 Sep 2026 15:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TF0cdeF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7711F000FF;
+	Thu, 17 Sep 2026 15:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660395;
-	bh=B5m2KlzioEysMgBIVrrkUs/A5/Dnj42dAgGvVQnAMYY=;
+	s=korg; t=1789660398;
+	bh=2Q/ZShoec6aN/D2o/7POkVxklaotevaSkc9toTOy+Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=borOwsenIqTwqn/eyNztBCqUe/e/27bAr+LO/vmvGUCGYUUrzZ1Hnr2Zz6VD6FrbF
-	 T10sBnCZ2r0l/ufiUN6qGlw1J9ScQQ4PcADDqvi57x8bkDxPeKwPJ4y1dnO9hHiX5E
-	 h/S429gC5lLi7VswlhxhQm1cPKppoiFrlmjDyAEY=
+	b=TF0cdeF0PFELLr2jYT3RCZAJ+dGLwPiqueaaulgJLr5j0hPTruYsauM2mFnYeKaxw
+	 mYt0RP3zgWpXLtM9Shr74sGNb+vuo70fFyh5P1FUt93zyXC18AQhzYB2p0ktpLzfJ2
+	 SlC3h4Arcqs6FzNYCky+rKrqtgqj9TBwGokZSfRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	David Carlier <devnexen@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 540/733] ring-buffer: Acquire the lock with irqsave in rb_wake_up_waiters()
-Date: Thu, 17 Sep 2026 16:14:08 +0100
-Message-ID: <20260917151405.684277846@linuxfoundation.org>
+Subject: [PATCH 7.2 541/733] ring-buffer: Check resize_disabled before publishing the new subbuf order
+Date: Thu, 17 Sep 2026 16:14:09 +0100
+Message-ID: <20260917151405.709575687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,52 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: David Carlier <devnexen@gmail.com>
 
-commit 815e07c8fe885a87751c2496a30ae0dcd4118210 upstream.
+commit d860c67c051685abb0460b593b193f0f45f4fa92 upstream.
 
-rb_wake_up_waiters() is a irq_work callback which is initialized with
-init_irq_work(). As such it will be invoked in thread context on
-PREEMPT_RT. Invoking the callback in IRQ context on PREEMPT_RT is not an
-option due its usage of wake_up_all().  Since this callback may run in
-thread context, it needs to acquire ring_buffer_per_cpu::reader_lock with
-disabling interrupts and may not assume that they are disabled.
+ring_buffer_subbuf_order_set() stores the new order and only then walks
+the CPUs, returning -EBUSY if any of them has resizing disabled. A user
+mapped buffer has resizing disabled, and __rb_map_vma() reads
+buffer->subbuf_order without buffer->mutex, so an mmap of an already
+mapped CPU racing the failing order change sizes the mapping with the
+new order and inserts pages past the sub-buffer into the VMA.
 
-Use raw_spinlock_irqsave() to acquire ring_buffer_per_cpu::reader_lock.
+Check the CPUs before storing the new order.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260911102152.YEtwkBj9@linutronix.de
-Fixes: 68282dd930ea3 ("ring-buffer: Fix resetting of shortest_full")
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 117c39200d9d ("ring-buffer: Introducing ring-buffer mapping functions")
+Link: https://patch.msgid.link/20260912103938.1127021-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ kernel/trace/ring_buffer.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -885,14 +885,13 @@ static void rb_wake_up_waiters(struct ir
- 		struct ring_buffer_per_cpu *cpu_buffer =
- 			container_of(rbwork, struct ring_buffer_per_cpu, irq_work);
+@@ -7457,6 +7457,14 @@ int ring_buffer_subbuf_order_set(struct
  
--		/* Called from interrupt context */
--		raw_spin_lock(&cpu_buffer->reader_lock);
--		rbwork->wakeup_full = false;
--		rbwork->full_waiters_pending = false;
-+		scoped_guard(raw_spinlock_irqsave, &cpu_buffer->reader_lock) {
-+			rbwork->wakeup_full = false;
-+			rbwork->full_waiters_pending = false;
+ 	old_capacity = rb_subbuf_capacity(buffer);
  
--		/* Waking up all waiters, they will reset the shortest full */
--		cpu_buffer->shortest_full = 0;
--		raw_spin_unlock(&cpu_buffer->reader_lock);
-+			/* Waking up all waiters, they will reset the shortest full */
-+			cpu_buffer->shortest_full = 0;
-+		}
++	/* The mmap fast path reads subbuf_order without buffer->mutex. */
++	for_each_buffer_cpu(buffer, cpu) {
++		if (!cpumask_test_cpu(cpu, buffer->cpumask))
++			continue;
++		if (atomic_read(&buffer->buffers[cpu]->resize_disabled))
++			return -EBUSY;
++	}
++
+ 	atomic_inc(&buffer->record_disabled);
  
- 		wake_up_all(&rbwork->full_waiters);
- 	}
+ 	/* Make sure all commits have finished */
 
 
