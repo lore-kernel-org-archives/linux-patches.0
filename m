@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DD34EDCBC;
-	Thu, 17 Sep 2026 17:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75B34F5DE3;
+	Thu, 17 Sep 2026 17:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667809; cv=none; b=FuQCzj9gvtaL/Ne+bqpZzgGdevwUHn73Tq+gKcc7G+sH8i7JE1VZAXF23GN2OerPEeKTrCDjikwOcCZUtj3i33BEXuD2mGKIFs0nnj613ex5nqXw31e9QLOkZj5LgbC0CxHs223VYTmo7sUtMoUHZGbDv467lJxHuDdxSFvpq9o=
+	t=1789667812; cv=none; b=ttCA86K6OwxzEj6pm41tS+qH0RL7119Led3M2hZGkfP6kqlKdtP+pVO7oJmZY2xOKE20DPNepjNCQrZLu+PFkxg2tawBAO8nbMvVNMcJBD8JUoqEADzk+C2nKDereKZONz/6IegwgHcNCbiW/XGAP+FIpQ2dGwbG9RcxSXcQY9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667809; c=relaxed/simple;
-	bh=3mF0gezGLcPthzCG29hEqTZ/mLD1ZTug/l5gbWEgY/E=;
+	s=arc-20240116; t=1789667812; c=relaxed/simple;
+	bh=zyVs8kk22+1P6LHdYHMd6pvgjUOcKGo8Z1WQC/eNCR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwJiAAK988eFUegw9wrr6uPAqMBA+m3CPx4QMSSpsrXFZfAFIdKKanVseqvXWvsPg/eEtSo0xiJB61u39y1jBCppQmGtD14pEJJ8fBux75JLdlRJCffc7E2noOJJGDlzSC082yNPCDGSdDWcTgrHUf2hB2GsvnPx6gdqy0Y65Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcAE+MGj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e7j4KVnjYKO5PxXf09fuzDahYxSSfBxdPoqvRJvb2oAnDD3GamSYar6Kmk8XdJlL+LMDYleNBi4de3niYp9ViX+LLB7+49a/TUuFwvm2pOgr+lq/Q+O2L/hxkYT/hnLi6seWFvkFw1m3W42PDjD/orYTfPUxTi6FIA35ArA0gKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvIRg95c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcAE+MGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780CA1F00893;
-	Thu, 17 Sep 2026 17:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvIRg95c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAED1F000FF;
+	Thu, 17 Sep 2026 17:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667808;
-	bh=WweSXXEoWS9i7c+JmeYjjH7C2xlB87ZG+OQRG/ctaMw=;
+	s=korg; t=1789667811;
+	bh=KXyvtZ6e0H7iDgPAvUXS0N9GAV5tJDgn85qL1xvlwxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcAE+MGjJGOYuRO+ps8Dq3JkqjmyzlkjUawubXbU8dkGbsd/pvJ59nRuTaVPHmiEq
-	 nL3f4Vfs3xslnBrks7yZ5SvPIHnbHT73csTPvepVRbVq+AsbJlKtGbIIzirOJiPCrF
-	 hPPClz4GOQeFzW07Ee7oyEn451xoN8Y0nRsW/xLM=
+	b=HvIRg95cCXphRIT9gXdn9v8VhuAaqYVICPiDssrN1+O1fzjnU/KLfobNzsocBVIAb
+	 8qY0/SURtXL9RufKXFVwTVh2DaLuW7/YLaiMUFYwP7rQ5wWk/yNVoNnstcprtrjtEZ
+	 TXNdGU3cF+xdCk7WRE0N8hnCFL91mE7bzJD7s7GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0209/1102] fs/ntfs3: validate index entry key bounds
-Date: Thu, 17 Sep 2026 16:02:32 +0100
-Message-ID: <20260917151544.824537348@linuxfoundation.org>
+Subject: [PATCH 6.12 0218/1102] usb: xhci: Improve Soft Retries after short transfers
+Date: Thu, 17 Sep 2026 16:02:41 +0100
+Message-ID: <20260917151545.051697875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,207 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
+[ Upstream commit e765ab012f73717238c95ab9c34bfc3c767fa48c ]
 
-[BUG]
-A malformed NTFS directory index entry can advertise a key_size larger
-than the bytes actually present in its NTFS_DE payload. Directory lookup
-then passes that malformed key to cmp_fnames(), which can read past the
-end of the kmalloc'ed index buffer.
+A short transfer is a successful one, so reset the error count.
+Otherwise, endpoints which always complete short are limited to
+three retries per endpoint life rather than per URB.
 
-BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
-BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
-Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
-
-Call Trace:
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xd1/0x650 mm/kasan/report.c:482
- kasan_report+0xfb/0x140 mm/kasan/report.c:595
- __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
- fname_full_size fs/ntfs3/ntfs.h:590 [inline]
- cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
- hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
- indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
-
-Allocated by task 9279:
- kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
- kasan_save_track+0x14/0x40 mm/kasan/common.c:77
- kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
- poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
- __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
- kasan_kmalloc include/linux/kasan.h:262 [inline]
- __do_kmalloc_node mm/slub.c:5650 [inline]
- __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
- kmalloc_noprof include/linux/slab.h:961 [inline]
- indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
- indx_find+0x447/0x900 fs/ntfs3/index.c:1179
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
-
-[CAUSE]
-The index-header validators only validated INDEX_HDR-level geometry.
-They did not walk each NTFS_DE to verify entry alignment, subnode
-layout, or that key_size fit inside the entry payload. They also
-allowed a last sentinel entry to carry a non-zero key_size.
-
-[FIX]
-Walk every NTFS_DE in ntfs3's index-header validators and reject
-entries with invalid layout, mismatched subnode state, oversized
-key_size, or non-zero sentinel keys before lookup or log replay can
-consume them.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260603091132.1110849-7-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
- fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ drivers/usb/host/xhci-ring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index f7fa1471d6b98..1879d04e3cd05 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
- 
- bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
- 	__le16 mask;
- 	u32 min_de, de_off, used, total;
- 	const struct NTFS_DE *e;
- 
--	if (hdr_has_subnode(hdr)) {
-+	if (has_subnode) {
- 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
- 		mask = NTFS_IE_HAS_SUBNODES;
- 	} else {
-@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- 		return false;
- 	}
- 
--	e = Add2Ptr(hdr, de_off);
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	for (;;) {
- 		u16 esize = le16_to_cpu(e->size);
--		struct NTFS_DE *next = Add2Ptr(e, esize);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
- 
--		if (esize < min_de || PtrOffset(hdr, next) > used ||
-+		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
- 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
- 			return false;
- 		}
- 
--		if (de_is_last(e))
-+		if (size_add(de_off, esize) > used)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
- 			break;
-+		}
-+
-+		data_size = esize - min_de;
-+		if (key_size > data_size)
-+			return false;
- 
--		e = next;
-+		de_off += esize;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	}
- 
- 	return true;
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index a9c5dcc23a5ce..dd54c966babca 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
-  */
- static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
-+	const u16 min_size = sizeof(struct NTFS_DE) +
-+			     (has_subnode ? sizeof(u64) : 0);
- 	u32 end = le32_to_cpu(hdr->used);
- 	u32 tot = le32_to_cpu(hdr->total);
- 	u32 off = le32_to_cpu(hdr->de_off);
-+	const struct NTFS_DE *e;
- 
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    size_add(off, sizeof(struct NTFS_DE)) > end) {
-+	    size_add(off, min_size) > end) {
- 		/* incorrect index buffer. */
- 		return false;
- 	}
- 
-+	/* Ensure every key stays inside its entry before lookup walks it. */
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	for (;;) {
-+		u16 e_size = le16_to_cpu(e->size);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
-+
-+		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
-+		    de_has_vcn(e) != has_subnode) {
-+			/* incorrect index entry. */
-+			return false;
-+		}
-+
-+		if (size_add(off, e_size) > end)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
-+			break;
-+		}
-+
-+		data_size = e_size - min_size;
-+		if (key_size > data_size)
-+			return false;
-+
-+		off += e_size;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	}
-+
- 	return true;
- }
- 
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index df2617f6b60b7..169c126067e87 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2613,6 +2613,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
+ 		td->status = 0;
+ 		break;
+ 	case COMP_SHORT_PACKET:
++		ep->err_count = 0;
+ 		td->status = 0;
+ 		break;
+ 	case COMP_STOPPED_SHORT_PACKET:
 -- 
 2.53.0
 
