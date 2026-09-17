@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDFF503BD8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8594E4C24;
 	Thu, 17 Sep 2026 15:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659905; cv=none; b=JmhUDFb9BDSHYI3MWorGOpRSGjAsVeRrTeSEFppUa8JcJDjaEkTe7ZywhlAEEylYuDlQExLTCGPdBbaf+MzoCxTfPcpcddOYxowhVP3XE6rqRefRp6dSTh3Ysug9zWWW701EL8qxIIcasyFoEwHsyuyKGLbu4W42NRJzMrLLux0=
+	t=1789659909; cv=none; b=fZ+J41+H543ohkQgZpf0HBOIIBeYyDytZt2720A1mjNyvl9IIuAdBxtXvwuwXpJ5g/jqQ5oOdkg0m6XQ4C6vEykrh7oliPSyai5TNKubxpM+qPZp9AGFizHv3DxyK0CkNJ/V9mO3pWIuyXQUSZ/E6jUwqYvuJh+O1X1s/o5xVmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659905; c=relaxed/simple;
-	bh=RwjnhEuRj+/cr60cGORPVp6gKwQpV+VeBoRNvS3YYRg=;
+	s=arc-20240116; t=1789659909; c=relaxed/simple;
+	bh=OSlT3W7LrnOCZOUYbDK+uRlrnBj+aWirYHKhAgJmF1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjDYrOUFgjG5n4An5CNn7gEobnRIzGJFrKgUkNRF3c6VroKIEZQQ51dShJq8qJPmzj3TWlr5neXWf0VwBsSGNBzR7nYejYVsWt8xpXqzv6UvCydX4p+6MrH9REnlwOqdSGEYyI+oHSCG6TkG+VOopU3cjHE5rN/pIgucqQHLGc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vk2SRQzt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s2TaZjHvqcfk14B2UavMsVD9J4NmYY5iwuGGQSB0YSEiJhsXqkidDn6WTF6nS5zD8idutxz9tMvORYCdZwax/x/VYu5cQW8iAQRUqKFHLMA0VOoOTkdhTOW9U54L0et04XZz7IptEKaT+aqCzTHKx+1N385tW6cSLqvEOnTKxjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp5FquwE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vk2SRQzt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A99A1F00893;
-	Thu, 17 Sep 2026 15:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp5FquwE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EECD1F000FF;
+	Thu, 17 Sep 2026 15:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659899;
-	bh=gNjQ4woE2EYWVmqNufGVCeugXNDDNwciZb5XaepimpY=;
+	s=korg; t=1789659896;
+	bh=HBHL3DDLCtSsRiK6/Npyq3v6fFEvM2F7AXkN7CFCXVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vk2SRQztlETr4+/Ql9QmqdchfxokVrR+hhuuA4QlqMHLC3AwVePeoQGRC/EZzbJ8O
-	 vSlGcsdafpBwu5+pPe2Ng6/0g5GvM/HfoWBu6iALu6haZ+EuD2Cse+PrtcKMrhWk9X
-	 frqDO4KwVxUzYMqy9nXMjXc2F7zqoaiPRGhFCp/0=
+	b=Mp5FquwEQzl0MXxefzt6h04UewjIl48YOxp70EIwvOOzf1fCDsG327m1XjplpMiDM
+	 D9xkEbKTUCMRw9TtzaQM57bceu4MY7Gjgzkb3H7wEaOCG6MGhqEm0gFVZPjE6RfjKF
+	 whxmvX9yaoq9cYSLbl2E7BrAu02WEuaC4ZKaVCcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 409/733] net/mlx5e: Move representor vnic reporter to eswitch devlink port
-Date: Thu, 17 Sep 2026 16:11:57 +0100
-Message-ID: <20260917151401.955498188@linuxfoundation.org>
+Subject: [PATCH 7.2 408/733] net: stmmac: initialize ptp_lock at probe time
+Date: Thu, 17 Sep 2026 16:11:56 +0100
+Message-ID: <20260917151401.928368340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,237 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 7f26a5e8040b4957ef4dbdfcde6cc7ba2db53937 ]
+[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
 
-The representor vnic devlink health reporter is created and destroyed
-along the representor netdev (un)load path, which is not serialized by
-the devlink instance lock. Destroying the reporter from there triggers
-a devl_assert_locked() splat on driver unbind:
-  WARNING: net/devlink/core.c:259 at devl_assert_locked+0x54/0x70, CPU#2: bash/3758
-  Modules linked in: mlx5_vdpa vringh vdpa mlx5_ib mlx5_fwctl mlx5_core ...
-  CPU: 2 UID: 0 PID: 3758 Comm: bash Tainted: G        W           6.19.0+ #1 PREEMPT
-  Tainted: [W]=WARN
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), ...
-  RIP: 0010:devl_assert_locked+0x54/0x70
-  Call Trace:
-   <TASK>
-   devl_health_reporter_destroy+0x3a/0x1b0
-   mlx5e_vport_rep_unload+0x12d/0x2b0 [mlx5_core]
-   mlx5_eswitch_unregister_vport_reps+0x1b8/0x220 [mlx5_core]
-   ? __esw_offloads_unload_rep+0x190/0x190 [mlx5_core]
-   ? kernfs_remove_by_name_ns+0xc3/0xf0
-   device_release_driver_internal+0x3b2/0x560
-   unbind_store+0xce/0xf0
+priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
+during __stmmac_open(). However, the lock is also used while the
+interface is down and has never been opened: tc_taprio_configure()
+invokes the PTP gettime64() callback to compute the EST base time when
+offloading a TAPRIO schedule, and stmmac_get_time() takes
+priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
+Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
+private locks, so that ptp_lock is always valid regardless of the
+interface state.
 
-Move the reporter's lifecycle to the eswitch devlink port (un)register
-paths, which are already serialized by the devlink instance lock, and
-store the handle on mlx5_devlink_port. Use the port's mlx5_vport as the
-reporter priv since the diagnose callback only needs a device handle and
-a vport number, and mlx5_vport carries both and is initialized before
-any representor driver probes.
-
-Fixes: cf14af140a5a ("net/mlx5e: Add vnic devlink health reporter to representors")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260906090700.3761260-1-tariqt@nvidia.com
+Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 52 +------------------
- .../net/ethernet/mellanox/mlx5/core/en_rep.h  |  1 -
- .../mellanox/mlx5/core/esw/devlink_port.c     | 37 +++++++++++++
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
- 4 files changed, 39 insertions(+), 52 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 3d544fe4e6f73..eb3160bfbb29d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -56,7 +56,6 @@
- #include "lib/vxlan.h"
- #define CREATE_TRACE_POINTS
- #include "diag/en_rep_tracepoint.h"
--#include "diag/reporter_vnic.h"
- #include "en_accel/ipsec.h"
- #include "en/tc/int_port.h"
- #include "en/ptp.h"
-@@ -1435,51 +1434,6 @@ static unsigned int mlx5e_ul_rep_stats_grps_num(struct mlx5e_priv *priv)
- 	return ARRAY_SIZE(mlx5e_ul_rep_stats_grps);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 1e88575fdddbb..aa05160c22e35 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -8032,6 +8032,7 @@ static int __stmmac_dvr_probe(struct device *device,
+ 	stmmac_napi_add(ndev);
  
--static int
--mlx5e_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
--				 struct devlink_fmsg *fmsg,
--				 struct netlink_ext_ack *extack)
--{
--	struct mlx5e_rep_priv *rpriv = devlink_health_reporter_priv(reporter);
--	struct mlx5_eswitch_rep *rep = rpriv->rep;
--
--	mlx5_reporter_vnic_diagnose_counters(rep->esw->dev, fmsg, rep->vport,
--					     true);
--	return 0;
--}
--
--static const struct devlink_health_reporter_ops mlx5_rep_vnic_reporter_ops = {
--	.name = "vnic",
--	.diagnose = mlx5e_rep_vnic_reporter_diagnose,
--};
--
--static void mlx5e_rep_vnic_reporter_create(struct mlx5e_priv *priv,
--					   struct devlink_port *dl_port)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--	struct devlink_health_reporter *reporter;
--
--	reporter = devl_port_health_reporter_create(dl_port,
--						    &mlx5_rep_vnic_reporter_ops,
--						    rpriv);
--	if (IS_ERR(reporter)) {
--		mlx5_core_err(priv->mdev,
--			      "Failed to create representor vnic reporter, err = %pe\n",
--			      reporter);
--		return;
--	}
--
--	rpriv->rep_vnic_reporter = reporter;
--}
--
--static void mlx5e_rep_vnic_reporter_destroy(struct mlx5e_priv *priv)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--
--	if (!IS_ERR_OR_NULL(rpriv->rep_vnic_reporter))
--		devl_health_reporter_destroy(rpriv->rep_vnic_reporter);
--}
--
- static const struct mlx5e_profile mlx5e_rep_profile = {
- 	.init			= mlx5e_init_rep,
- 	.cleanup		= mlx5e_cleanup_rep,
-@@ -1603,10 +1557,8 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
+ 	mutex_init(&priv->lock);
++	rwlock_init(&priv->ptp_lock);
  
- 	dl_port = mlx5_esw_offloads_devlink_port(dev->priv.eswitch,
- 						 rpriv->rep->vport);
--	if (!IS_ERR(dl_port)) {
-+	if (!IS_ERR(dl_port))
- 		SET_NETDEV_DEVLINK_PORT(netdev, dl_port);
--		mlx5e_rep_vnic_reporter_create(priv, dl_port);
--	}
+ 	stmmac_fpe_init(priv);
  
- 	err = register_netdev(netdev);
- 	if (err) {
-@@ -1619,7 +1571,6 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 	return 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index 960249960004c..3bfcc9760dce7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -365,7 +365,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 	if (priv->plat->crosststamp)
+ 		priv->ptp_clock_ops.getcrosststamp = stmmac_getcrosststamp;
  
- err_detach_netdev:
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(netdev_priv(netdev));
- err_cleanup_profile:
- 	priv->profile->cleanup(priv);
-@@ -1677,7 +1628,6 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
- 	}
+-	rwlock_init(&priv->ptp_lock);
+ 	mutex_init(&priv->aux_ts_lock);
  
- 	unregister_netdev(netdev);
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(priv);
- 	priv->profile->cleanup(priv);
- 	mlx5e_destroy_netdev(netdev);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-index 70640fa1ad7bc..bcd7b4e814d06 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-@@ -118,7 +118,6 @@ struct mlx5e_rep_priv {
- 	struct rtnl_link_stats64 prev_vf_vport_stats;
- 	struct mlx5_flow_handle *send_to_vport_meta_rule;
- 	struct rhashtable tc_ht;
--	struct devlink_health_reporter *rep_vnic_reporter;
- };
- 
- static inline
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-index 6e50311faa27f..2e7eac4bca3dd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-@@ -4,6 +4,26 @@
- #include <linux/mlx5/driver.h>
- #include "eswitch.h"
- #include "devlink.h"
-+#include "diag/reporter_vnic.h"
-+
-+static int
-+mlx5_esw_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
-+				    struct devlink_fmsg *fmsg,
-+				    struct netlink_ext_ack *extack)
-+{
-+	struct mlx5_vport *vport = devlink_health_reporter_priv(reporter);
-+
-+	mlx5_reporter_vnic_diagnose_counters(vport->dev, fmsg, vport->vport,
-+					     true);
-+
-+	return 0;
-+}
-+
-+static const
-+struct devlink_health_reporter_ops mlx5_esw_rep_vnic_reporter_ops = {
-+	.name = "vnic",
-+	.diagnose = mlx5_esw_rep_vnic_reporter_diagnose,
-+};
- 
- static void
- mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
-@@ -217,6 +237,7 @@ static void mlx5_esw_devlink_port_res_unregister(struct devlink_port *dl_port)
- 
- int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
- {
-+	struct devlink_health_reporter *reporter;
- 	struct mlx5_core_dev *dev = esw->dev;
- 	const struct devlink_port_ops *ops;
- 	struct mlx5_devlink_port *dl_port;
-@@ -252,6 +273,16 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
- 		mlx5_core_dbg(dev, "Failed to register port resources: %d\n",
- 			      err);
- 
-+	reporter = devl_port_health_reporter_create(
-+		&dl_port->dl_port, &mlx5_esw_rep_vnic_reporter_ops,
-+		vport);
-+	if (IS_ERR(reporter))
-+		mlx5_core_err(dev,
-+			      "Failed to create vnic health reporter for vport %d: %pe\n",
-+			      vport_num, reporter);
-+	else
-+		dl_port->vnic_reporter = reporter;
-+
- 	return 0;
- 
- rate_err:
-@@ -266,6 +297,12 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_vport *vport)
- 	if (!vport->dl_port)
- 		return;
- 	dl_port = vport->dl_port;
-+
-+	if (dl_port->vnic_reporter) {
-+		devl_health_reporter_destroy(dl_port->vnic_reporter);
-+		dl_port->vnic_reporter = NULL;
-+	}
-+
- 	mlx5_esw_devlink_port_res_unregister(&dl_port->dl_port);
- 
- 	mlx5_esw_qos_vport_update_parent(vport, NULL, NULL);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index fea72b1dedab9..e8817d45763a6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -189,6 +189,7 @@ struct mlx5_vport;
- struct mlx5_devlink_port {
- 	struct devlink_port dl_port;
- 	struct mlx5_vport *vport;
-+	struct devlink_health_reporter *vnic_reporter;
- };
- 
- static inline void mlx5_devlink_port_init(struct mlx5_devlink_port *dl_port,
+ 	priv->ptp_clock = ptp_clock_register(&priv->ptp_clock_ops,
 -- 
 2.53.0
 
