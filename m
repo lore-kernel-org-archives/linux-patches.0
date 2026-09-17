@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0CF4EB840;
-	Thu, 17 Sep 2026 17:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DD34EDCBC;
+	Thu, 17 Sep 2026 17:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667806; cv=none; b=t+q7F+4QOviDWQSWe2/x7m/UC6GAeCZSFHl3r4x5dAAuPW6r6ahh3fWDQTzb4RfCNIvMO1Xalse4hwTRev0XOk6qWHoJG8Vo+CNPn7mjrHdzrDf6/rrQrypuFeCFozOqaKxpFuOUlEeaK30yQ67diLQafbLmSYwCf0R+Tnw4N2c=
+	t=1789667809; cv=none; b=FuQCzj9gvtaL/Ne+bqpZzgGdevwUHn73Tq+gKcc7G+sH8i7JE1VZAXF23GN2OerPEeKTrCDjikwOcCZUtj3i33BEXuD2mGKIFs0nnj613ex5nqXw31e9QLOkZj5LgbC0CxHs223VYTmo7sUtMoUHZGbDv467lJxHuDdxSFvpq9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667806; c=relaxed/simple;
-	bh=x6prb5wRM+fKcx5KIjUihU8xCGVnFN07QAZNgRZa0/M=;
+	s=arc-20240116; t=1789667809; c=relaxed/simple;
+	bh=3mF0gezGLcPthzCG29hEqTZ/mLD1ZTug/l5gbWEgY/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtEsNDmKTFxJYVQuTXRmtPlpvH6umwR4leV4CYBWLJILrRuEVlBSfOr6Q0ZBtPsCKADrke4YkXKwRBtH9xsI5sQv852SAU/Ae4Aeg/QmYx75D/BMJYyOf/CzARUJP2B0A0YwAtSixzVpHwjOx8lJRvDGFo5v4Uf0HZn6GVRP07g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGXQ1PbK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UwJiAAK988eFUegw9wrr6uPAqMBA+m3CPx4QMSSpsrXFZfAFIdKKanVseqvXWvsPg/eEtSo0xiJB61u39y1jBCppQmGtD14pEJJ8fBux75JLdlRJCffc7E2noOJJGDlzSC082yNPCDGSdDWcTgrHUf2hB2GsvnPx6gdqy0Y65Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcAE+MGj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGXQ1PbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7177E1F000FF;
-	Thu, 17 Sep 2026 17:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcAE+MGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780CA1F00893;
+	Thu, 17 Sep 2026 17:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667805;
-	bh=1gn4VCBTEUP/AyN68IwI+KzELnJ49e9kL4izy+q3j9M=;
+	s=korg; t=1789667808;
+	bh=WweSXXEoWS9i7c+JmeYjjH7C2xlB87ZG+OQRG/ctaMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGXQ1PbKlaH1ni5A2uQJBMMJWBQ2m8bwAMgSFb6QvL9/9s9O6nlqeO82eaJaUUHnG
-	 lf3QXQeup4ilRI1m432hQ7ZdvtTLSpxH0x/w60ZNW3pi7pGAtDKJNBGwLxNEvnrlJO
-	 Ip+bg0zbIiYymxpPt8UmMD44jFoC1CCKn8qWUMbo=
+	b=TcAE+MGjJGOYuRO+ps8Dq3JkqjmyzlkjUawubXbU8dkGbsd/pvJ59nRuTaVPHmiEq
+	 nL3f4Vfs3xslnBrks7yZ5SvPIHnbHT73csTPvepVRbVq+AsbJlKtGbIIzirOJiPCrF
+	 hPPClz4GOQeFzW07Ee7oyEn451xoN8Y0nRsW/xLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0167/1102] ACPICA: Improve argument parsing in acpi_ps_get_next_simple_arg()
-Date: Thu, 17 Sep 2026 16:01:50 +0100
-Message-ID: <20260917151543.732207767@linuxfoundation.org>
+Subject: [PATCH 6.12 0209/1102] fs/ntfs3: validate index entry key bounds
+Date: Thu, 17 Sep 2026 16:02:32 +0100
+Message-ID: <20260917151544.824537348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,148 +51,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 27d27e75ecb752a0b4da848c440bb3a88396ecba ]
+[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
 
-Improve argument parsing in acpi_ps_get_next_simple_arg() to handle
-remaining AML data safely.
+[BUG]
+A malformed NTFS directory index entry can advertise a key_size larger
+than the bytes actually present in its NTFS_DE payload. Directory lookup
+then passes that malformed key to cmp_fnames(), which can read past the
+end of the kmalloc'ed index buffer.
 
-Link: https://github.com/acpica/acpica/commit/ecbb8bcfe301
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2008043.taCxCBeP46@rafael.j.wysocki
+BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
+
+Call Trace:
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xd1/0x650 mm/kasan/report.c:482
+ kasan_report+0xfb/0x140 mm/kasan/report.c:595
+ __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
+ fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+ cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+ hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
+ indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
+
+Allocated by task 9279:
+ kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
+ kasan_save_track+0x14/0x40 mm/kasan/common.c:77
+ kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
+ poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
+ __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
+ kasan_kmalloc include/linux/kasan.h:262 [inline]
+ __do_kmalloc_node mm/slub.c:5650 [inline]
+ __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
+ kmalloc_noprof include/linux/slab.h:961 [inline]
+ indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
+ indx_find+0x447/0x900 fs/ntfs3/index.c:1179
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
+
+[CAUSE]
+The index-header validators only validated INDEX_HDR-level geometry.
+They did not walk each NTFS_DE to verify entry alignment, subnode
+layout, or that key_size fit inside the entry payload. They also
+allowed a last sentinel entry to carry a non-zero key_size.
+
+[FIX]
+Walk every NTFS_DE in ntfs3's index-header validators and reject
+entries with invalid layout, mismatched subnode state, oversized
+key_size, or non-zero sentinel keys before lookup or log replay can
+consume them.
+
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 78 +++++++++++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 10 deletions(-)
+ fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
+ fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 095cbb77a3fc1..a880959ebafce 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -384,6 +384,8 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 	u32 length;
- 	u16 opcode;
- 	u8 *aml = parser_state->aml;
-+	u32 remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
-+	u64 partial_value;
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index f7fa1471d6b98..1879d04e3cd05 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
  
- 	ACPI_FUNCTION_TRACE_U32(ps_get_next_simple_arg, arg_type);
+ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
+ 	__le16 mask;
+ 	u32 min_de, de_off, used, total;
+ 	const struct NTFS_DE *e;
  
-@@ -393,8 +395,13 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 1 byte from the AML stream */
+-	if (hdr_has_subnode(hdr)) {
++	if (has_subnode) {
+ 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
+ 		mask = NTFS_IE_HAS_SUBNODES;
+ 	} else {
+@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ 		return false;
+ 	}
  
- 		opcode = AML_BYTE_OP;
--		arg->common.value.integer = (u64) *aml;
--		length = 1;
-+		if (remaining >= 1) {
-+			arg->common.value.integer = (u64)*aml;
-+			length = 1;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+		}
- 		break;
+-	e = Add2Ptr(hdr, de_off);
++	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
+ 	for (;;) {
+ 		u16 esize = le16_to_cpu(e->size);
+-		struct NTFS_DE *next = Add2Ptr(e, esize);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
  
- 	case ARGP_WORDDATA:
-@@ -402,8 +409,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 2 bytes from the AML stream */
- 
- 		opcode = AML_WORD_OP;
--		ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
--		length = 2;
-+		if (remaining >= 2) {
-+			ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
-+			length = 2;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_DWORDDATA:
-@@ -411,8 +429,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 4 bytes from the AML stream */
- 
- 		opcode = AML_DWORD_OP;
--		ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
--		length = 4;
-+		if (remaining >= 4) {
-+			ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
-+			length = 4;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_QWORDDATA:
-@@ -420,8 +449,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 8 bytes from the AML stream */
- 
- 		opcode = AML_QWORD_OP;
--		ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
--		length = 8;
-+		if (remaining >= 8) {
-+			ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
-+			length = 8;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_CHARLIST:
-@@ -434,10 +474,28 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Find the null terminator */
- 
- 		length = 0;
--		while (aml[length]) {
-+		while ((length < remaining) && aml[length]) {
-+			length++;
-+		}
-+		if (length < remaining) {
-+
-+			/* Account for the terminating null */
- 			length++;
-+		} else {
-+			/*
-+			 * No terminator found - add null at buffer boundary
-+			 * and report a warning
-+			 */
-+			ACPI_WARNING((AE_INFO,
-+				      "Invalid AML string: no null terminator, truncating at offset %u",
-+				      (u32)(aml - parser_state->aml)));
-+
-+			/* Add null terminator at the boundary */
-+			if (remaining > 0) {
-+				aml[remaining - 1] = 0;
-+				length = remaining;
-+			}
+-		if (esize < min_de || PtrOffset(hdr, next) > used ||
++		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
+ 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
+ 			return false;
  		}
--		length++;
- 		break;
  
- 	case ARGP_NAME:
+-		if (de_is_last(e))
++		if (size_add(de_off, esize) > used)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
+ 			break;
++		}
++
++		data_size = esize - min_de;
++		if (key_size > data_size)
++			return false;
+ 
+-		e = next;
++		de_off += esize;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
+ 	}
+ 
+ 	return true;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index a9c5dcc23a5ce..dd54c966babca 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
+  */
+ static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
++	const u16 min_size = sizeof(struct NTFS_DE) +
++			     (has_subnode ? sizeof(u64) : 0);
+ 	u32 end = le32_to_cpu(hdr->used);
+ 	u32 tot = le32_to_cpu(hdr->total);
+ 	u32 off = le32_to_cpu(hdr->de_off);
++	const struct NTFS_DE *e;
+ 
+ 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
+-	    size_add(off, sizeof(struct NTFS_DE)) > end) {
++	    size_add(off, min_size) > end) {
+ 		/* incorrect index buffer. */
+ 		return false;
+ 	}
+ 
++	/* Ensure every key stays inside its entry before lookup walks it. */
++	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	for (;;) {
++		u16 e_size = le16_to_cpu(e->size);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
++
++		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
++		    de_has_vcn(e) != has_subnode) {
++			/* incorrect index entry. */
++			return false;
++		}
++
++		if (size_add(off, e_size) > end)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
++			break;
++		}
++
++		data_size = e_size - min_size;
++		if (key_size > data_size)
++			return false;
++
++		off += e_size;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	}
++
+ 	return true;
+ }
+ 
 -- 
 2.53.0
 
