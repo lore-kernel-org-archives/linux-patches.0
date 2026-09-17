@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8A9369D71;
-	Thu, 17 Sep 2026 15:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764D3A48E3;
+	Thu, 17 Sep 2026 15:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660634; cv=none; b=j7xFLuC4RfUrvKNBxpdREAUtpGXSDLKUQx5m0DH0CxU9Efk39i0fgOjraP2msaPxNCAwg8gE9aKo1eBHG5GjSIgx0u0d87Ap8Yld8QVGBBds44UK+v7GCyWEYVMVcSEVAriUX4ZGWlXEUJSB1rbG23R/vf/UpXb3NotVB7yjlYs=
+	t=1789660637; cv=none; b=dpFgTKUUC4lF9DL/hFp3wAD+9TrwrAYjHs72TfFLMIfHptjHzPBsCYVwKDfS6T50zHBbSfYBRyiWR4EIwx9DZ89xdIk1UI1WcfindMX08pxvklCyLZ+bGLL9aLcecp/MjOnMMS/Oz7ZOw+/xGKLzWyu6TQbgPAoiY/49HtmnP8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660634; c=relaxed/simple;
-	bh=M2BlFSxmmEQ7Ozw+8RJx/x+PSPhBedPhWO+qcIIFk/M=;
+	s=arc-20240116; t=1789660637; c=relaxed/simple;
+	bh=vFaO+Xp94YuPdB6YRQW/2IMJQDcBNK5IHLEqfkcuBDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZowpP/E+LOZxPKAYyXt58cktn/csBctycrRSysWA8NUyVAT8MJOHbpg0/DMIsF8ssau83N5O1gbagiuRIxSpZWwLJ16OgPh/KXU0AQXXnY+utZ91Hv4rwDLjpfqdZHY1bNiOGlP7CRLq30Qd+guspAq/3olmIHKBHdaneGGk4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LerHTDSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ssu7GkuKxn74ER457PZvpp/Ro1g8LpKrS+L2bOVaZljRkNZYbNKOCoc2AFQLEeDLtzl7LMhDZ4fgiS7/37gsbyK+UaYPP/k4tipBDf0c45WRLbnJDpBRRqIEP8iWPo417NE2fKdF+ea+7qVdadYAvmHfbMpZ0Zu3l9QPcaywUCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukIS3aFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LerHTDSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325D91F000FF;
-	Thu, 17 Sep 2026 15:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukIS3aFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2597C1F000FF;
+	Thu, 17 Sep 2026 15:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660632;
-	bh=CLi6cemvN1gtaBhwue0WLs1nAXE2HyKQPsk/6joy2c0=;
+	s=korg; t=1789660635;
+	bh=MqJfd8PG+OqyLFLidUGixvx7vXNnr9vaHjiC7FSrMmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LerHTDSiHbsKugBCZcNHFIGIY30N28IIr7BGtK0ii+stEjwoaHo87xRpJCEaxs3+t
-	 rwVKfTZ9eqJ8Fjl8NIWNE7l2aiRqwE0pRmcltqrmvgeJQ1cWAkFHBAZg352Yna1SDi
-	 QSYYz+Tl3p2ulINy1uApkBj81C53mBciIUtePHXc=
+	b=ukIS3aFbfh8S5ieW0AE97D72WCj93CRQfregxOSbB5WTS/YYJqtU4Ej6qT99Bvjbs
+	 aGM51sS4+yxotQwxlsrYM9Ga5C0mSXyCEogQBpHwocIYLuIICBAWtp7KnNNjM+C90u
+	 nWwm12qIAuU4Y+ga0/RJlg/j4S9FkuxlpgpPqiw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Tia <floss@jetm.me>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 656/733] xfs: initialise args->total for parent pointer updates
-Date: Thu, 17 Sep 2026 16:16:04 +0100
-Message-ID: <20260917151408.999313678@linuxfoundation.org>
+	syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com,
+	Tao Cui <cuitao@kylinos.cn>,
+	Kalpan Jani <kalpan.jani@mpiricsoftware.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 621/733] mptcp: pm: kernel: drop pending ADD_ADDR when removing ID0
+Date: Thu, 17 Sep 2026 16:15:29 +0100
+Message-ID: <20260917151408.011388298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,76 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Tia <javier@peridio.com>
+From: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
 
-commit 8e4ebb6afaa34bd2e8ce52da231003d24111c2d6 upstream.
+commit 2ac7d6e620764f1fc79eb4edd3610a7a661981ca upstream.
 
-xfs_parent_da_args_init() builds an xfs_da_args from a zeroed
-xfs_parent_args (kmem_cache_zalloc), leaving args->total == 0.
-xfs_da_grow_inode_int() treats that field as a running block reservation
-and subtracts from it; because it is an xfs_extlen_t (uint32_t), the
-first attr-fork growth wraps it to ~0U.  That defeats the free-space
-check in xfs_alloc_space_available(), and when it coincides with an AG
-that has exactly zero available blocks the allocation is clamped to
-maxlen 0 and returns -ENOSPC, which xfs_defer_finish_noroll() escalates
-to a filesystem shutdown.
+The in-kernel MPTCP path manager can leave a stale ADD_ADDR announcement
+entry alive when removing the id 0 endpoint. This happens because the id 0
+removal path does not tear down pending announcements, unlike the non-zero
+id path.
 
-Set args->total the way the log recovery path does
-(xfs_attri_recover_work(), xfs_attr_item.c:706), in the add and replace
-paths that can grow the fork.  Removals and lookups never grow it, so
-they leave the field alone, matching that switch.
+When the PM later reselects id 0 after adding another signal endpoint, it
+finds the stale anno_list entry and hits WARN_ON_ONCE(mptcp_pm_is_kernel())
+in mptcp_pm_announced_alloc().
 
-Fixes: b7c62d90c12c ("xfs: parent pointer attribute creation")
-Cc: stable@vger.kernel.org # v6.10
-Signed-off-by: Javier Tia <floss@jetm.me>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Root cause: asymmetry between removal paths.
+- Non-zero id path: mptcp_nl_remove_subflow_and_signal_addr() calls
+  mptcp_pm_remove_announced() to clean up.
+- Id 0 path: mptcp_nl_remove_id_zero_address() skips cleanup entirely.
+
+Fix by making the id 0 path symmetric: call mptcp_pm_announced_remove()
+and decrement add_addr_signaled before queuing the RM_ADDR.
+
+Subtle detail: signal endpoints are stored in anno_list with port 0, but
+msk_local carries the connection's local port. In other words, entries
+linked to ID0 paths should have port == 0. A follow-up patch will ensure
+that. mptcp_pm_announced_remove() uses use_port=true for comparison. So
+clear the port before the lookup.
+
+Fixes: 740d798e8767 ("mptcp: remove id 0 address")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/620
+Suggested-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-4-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_parent.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/mptcp/pm_kernel.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_parent.c
-+++ b/fs/xfs/libxfs/xfs_parent.c
-@@ -193,7 +193,7 @@ xfs_parent_addname(
- 	const struct xfs_name	*parent_name,
- 	struct xfs_inode	*child)
- {
--	int			error;
-+	int			error, local;
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -1137,6 +1137,8 @@ static int mptcp_nl_remove_id_zero_addre
+ 	while ((msk = mptcp_token_iter_next(net, &s_slot, &s_num)) != NULL) {
+ 		struct sock *sk = (struct sock *)msk;
+ 		struct mptcp_addr_info msk_local;
++		struct mptcp_addr_info anno_addr;
++		bool announced;
  
- 	error = xfs_parent_iread_extents(tp, child);
- 	if (error)
-@@ -203,6 +203,10 @@ xfs_parent_addname(
- 	xfs_parent_da_args_init(&ppargs->args, tp, &ppargs->rec, child,
- 			I_INO(child), parent_name);
+ 		if (list_empty(&msk->conn_list) || mptcp_pm_is_userspace(msk))
+ 			goto next;
+@@ -1146,7 +1148,13 @@ static int mptcp_nl_remove_id_zero_addre
+ 			goto next;
  
-+	/* Growing the attr fork needs a real reservation in args->total. */
-+	ppargs->args.total = xfs_attr_calc_size(&ppargs->args, &local);
-+	ASSERT(local);
-+
- 	return xfs_attr_setname(&ppargs->args, 0);
- }
- 
-@@ -239,7 +243,7 @@ xfs_parent_replacename(
- 	const struct xfs_name	*new_name,
- 	struct xfs_inode	*child)
- {
--	int			error;
-+	int			error, local;
- 
- 	error = xfs_parent_iread_extents(tp, child);
- 	if (error)
-@@ -249,6 +253,10 @@ xfs_parent_replacename(
- 	xfs_parent_da_args_init(&ppargs->args, tp, &ppargs->rec, child,
- 			I_INO(child), old_name);
- 
-+	/* Growing the attr fork needs a real reservation in args->total. */
-+	ppargs->args.total = xfs_attr_calc_size(&ppargs->args, &local);
-+	ASSERT(local);
-+
- 	xfs_inode_to_parent_rec(&ppargs->new_rec, new_dp);
- 
- 	ppargs->args.new_name = new_name->name;
+ 		lock_sock(sk);
++		/* Drop a possibly pending ADD_ADDR for this address. */
++		anno_addr = msk_local;
++		anno_addr.port = 0;
++		announced = mptcp_pm_announced_remove(msk, &anno_addr);
+ 		spin_lock_bh(&msk->pm.lock);
++		if (announced)
++			msk->pm.add_addr_signaled--;
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		mptcp_pm_rm_subflow(msk, &list);
+ 		__mark_subflow_endp_available(msk, 0);
 
 
