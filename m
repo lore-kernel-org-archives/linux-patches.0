@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DAE51B194;
-	Thu, 17 Sep 2026 17:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED3F51CF5B;
+	Thu, 17 Sep 2026 17:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667732; cv=none; b=lrAXXAbdCnKGsE5i4GBTQYVsfPtr9Lsu1y/Qdk2sMBTjd5e/84LwCECUpkFtVRAZvjWxzukjslisbo5EuyrwKv1/kb+DTTPDUTFYXuWK8zOYIzpGjPNCxJjuo92xdMI+u6zUSLJEmp9SM9KApU5nbRokIajCow8CNwyeHM3Gs70=
+	t=1789667734; cv=none; b=mLi5UGRYHq3VkTvFsChOfKBsnzrGEorHVaITSVHp8aTb5n0VWS7GHgrFZg0SPVPWfxWWkSoBAn//TZFxJYqInuHAbq1HYjyrkmVopLFwCU22D+HAEOL0B1JIGkqezpOkGOMXQPxXx5k3+JQcN6U9BmdvlWUQUi3qqtTrGIPEpuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667732; c=relaxed/simple;
-	bh=Mtpdd5EglnSJeRG9XOtZlr7iqMzOywPy+3d62XiBkYc=;
+	s=arc-20240116; t=1789667734; c=relaxed/simple;
+	bh=jQjWhIKfvTrobOwZWlXOx5X7QhxPo8tL56VvcWJSpOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SekJTU3gfv+KkhtezkhplzVaXzVPL41kV9VA+lq6PT8sdNKcPmIfo70xjuhqemri9+SvRVNwR/6Z3v8hS24hWgNiIxf90A72MD91XaBoQkJ6sdZbA8GkYsLLdDRWEjoiOnj/95GBN8VglhQLuLooVfeKh/wmNAbR9zaMTUgLxcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceXLqU7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tDAtbySawGX5/PLVTGFAKbqO5iL7PyT88yQnwU/ghImarLeBqwggHmcwCy160YiloV8XHZE8GaXj/cB05Zc6u5Ftpg/MSx3X/+oEe/H5bFKLlWXvPX9XAg55iG+IHqWQztgNCaSecSRUlHtD4Ez8g4K36X5niUY61djW1mMzkh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjTREO6g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceXLqU7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CC21F00898;
-	Thu, 17 Sep 2026 17:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjTREO6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E8F1F00893;
+	Thu, 17 Sep 2026 17:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667730;
-	bh=5FDGLl+tcI7UmUTxMqx6fMMXludhC9plWsFxK88wRIo=;
+	s=korg; t=1789667733;
+	bh=uuuIba4ZBRlwxzaRriJshg3bA7ElhRDSne4dBSchrnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ceXLqU7kOySWe85Yl3AgGrH5cbq6+U6YeWVPdjfWF8M7/8kqgcm8PuHUW3bQowWNi
-	 MbQQ9Dp1ktoX1vXdEaDcC36Vw3WlrJObbQg/5Fc9S1aGDV4XSP2R4btsgtDk43BYOo
-	 g6OkcRh3tm8h0oSH0XKij8TTfCiSPB/gkM8/od1U=
+	b=SjTREO6gPdDQyOH0kAnGtRzrB0BQX8O2lyWS6wlCIutC70fsUAYnwMUl9KaRk7oSs
+	 AVL1D2sb9kuyeBm2lkxiW3X5RO/tD1Fq0G09cIYhM1TsGpEYHehHQ8+T/GUxBiZa3c
+	 DgYYNfFr3fOaou/jNJd1X7TdSQDcz5GQ8Lrrm+nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0190/1102] tracing: Disable KCOV instrumentation for trace_irqsoff.o
-Date: Thu, 17 Sep 2026 16:02:13 +0100
-Message-ID: <20260917151544.335562513@linuxfoundation.org>
+Subject: [PATCH 6.12 0191/1102] mmc: renesas_sdhi: Add OF entry for RZ/G2E SoC
+Date: Thu, 17 Sep 2026 16:02:14 +0100
+Message-ID: <20260917151544.360970773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,73 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 01046072880b654dbadf71be2f645aad4a7b5d87 ]
+[ Upstream commit ebf7f2198ac4817bd2929cf83c697cefa8bf36a9 ]
 
-When KCOV runs its boot selftest with whole-kernel instrumentation
-enabled, it sets current->kcov_mode to KCOV_MODE_TRACE_PC without
-installing a coverage area. Any instrumented code accepted as task-context
-coverage in that window dereferences current->kcov_area and crashes.
+The RZ/G2E (R8A774C0) SoC was previously handled via the generic
+"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
+the SDHI IP on RZ/G2E is identical with the R-Car E3 (R8A77990), it
+requires the specific quirks and configuration defined in
+`of_r8a77990_compatible` rather than the generic Gen3 data.
 
-On ARMv5 Versatile PB with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y, boot hits a
-NULL pointer fault during the selftest:
+Add the explicit "renesas,sdhi-r8a774c0" match entry to map it correctly.
+Note that the DT binding file renesas,sdhi.yaml does not need an update
+as the entry for this SoC is already present.
 
-  kcov: running self test
-  Internal error: Oops: 5 [#1] ARM
-  PC is at __sanitizer_cov_trace_pc+0x4c/0x90
-  Kernel panic - not syncing: Fatal exception
-
-A diagnostic run showed the unwanted coverage comes from the IRQs-off
-tracer callbacks reached from ARM IRQ entry before hardirq context is
-visible to KCOV:
-
-  __sanitizer_cov_trace_pc from tracer_hardirqs_off+0x18/0x1cc
-  tracer_hardirqs_off from trace_hardirqs_off+0x34/0x54
-  trace_hardirqs_off from __irq_svc+0x58/0xb0
-  __irq_svc from kcov_init+0x7c/0xdc
-
-and similarly through tracer_hardirqs_on().
-
-trace_preemptirq.o is already excluded because this tracing path can run
-from early interrupt code and produce coverage unrelated to syscall
-inputs. Exclude trace_irqsoff.o as well, instead of requiring users to
-turn off CONFIG_KCOV_INSTRUMENT_ALL=y, which is the default whole-kernel
-KCOV mode.
-
-With the exclusion in place, the same ARMv5 Versatile PB QEMU test boots
-through the KCOV selftest and reaches userspace.
-
-Tested on ARMv5 Versatile PB QEMU with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y.
-
-Link: https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
-Assisted-by: Codex:gpt-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index 057cd975d0146..7cde801a5987d 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -31,9 +31,10 @@ ifdef CONFIG_GCOV_PROFILE_FTRACE
- GCOV_PROFILE := y
- endif
- 
--# Functions in this file could be invoked from early interrupt
--# code and produce random code coverage.
-+# Functions in these files can run from IRQ entry before hardirq context
-+# is visible to KCOV, and produce coverage unrelated to syscall inputs.
- KCOV_INSTRUMENT_trace_preemptirq.o := n
-+KCOV_INSTRUMENT_trace_irqsoff.o := n
- 
- CFLAGS_bpf_trace.o := -I$(src)
- 
+diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+index 5ef84a36b2f75..128fdd9deed60 100644
+--- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
++++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+@@ -279,6 +279,7 @@ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
+ 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
+ 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
++	{ .compatible = "renesas,sdhi-r8a774c0", .data = &of_r8a77990_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
 -- 
 2.53.0
 
