@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7EF32ED21;
-	Thu, 17 Sep 2026 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD96D4C10E5;
+	Thu, 17 Sep 2026 15:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659150; cv=none; b=WICQ+fkjSQgI3qLh20KzHXHMr5SoPjeLH0YnU9UdnBsWqkaVoF0FyekpZyVcrF0v2ycRRcWHcP5ZdAM1rxQLb3UhSzKdjYWrPVoE3RWQbyGQ7Bgf6UzO44ffbGh9DEU03WbBpzjWM0C5BrFZTFflNJvJ2TnpNNlWMqLnoUttKmo=
+	t=1789659148; cv=none; b=K2lYTXWqxJqyzsyREFYfAKbnbBJBLQVahcwIpO+XbybGdv8e0eUvIesgeEGGjz+TVcdoUS/Nduz0iUjzollHItH+/Pc0Lmj+WR50uqNsJPIzMvZjnUSOTJS/wBBvNMk/jQnkpit1eihvQZeNG32DeUwVpkmoyHbSA5KsePn4u4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659150; c=relaxed/simple;
-	bh=465K43QdrcDWWHymiZMvL2Fnjkl/ioTdkcD8ZccHLaQ=;
+	s=arc-20240116; t=1789659148; c=relaxed/simple;
+	bh=dQ8LRtrwjnswWR2IaM3bpWlP2dXkBj5I0FVyL7VdooM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPOLHdKutgCfkw3rI50EliCulvnlHSDamuEP6GQqobyvmAj/xO3Z1teksOMd3AZ8u134EIXufjqPPFggG4XEOPRDMDfxDRMCX0oel0dv1ttPLVn2I3o4zD3r8rot7k9zGhNVxy0Scq99f81StE6SAl15B7WTz0qLR+R2p0F7dEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7XFNwdv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L5TUI0/LY1fetMwF7RRxFhFDqlnxwyD6VSoBLqqFP0AN3c/p0wFh7Ed2B7ViUKAX5fIEVju5q2sLTWg9gu570dZBsji1pZ9OD4l7CNLU85UoL1ReZVoFkw/SiRs6Hv7JKtKeCzxzKDEIQTcS7xk644Gos+Mg4xNIaJKfOooE1pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiBtGMc+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7XFNwdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917E11F000FF;
-	Thu, 17 Sep 2026 15:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiBtGMc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7C51F00899;
+	Thu, 17 Sep 2026 15:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659141;
-	bh=QIRivA4VGDvkTtRvhuwWQFqPFQgaPHdlE9hklv5aJ1s=;
+	s=korg; t=1789659135;
+	bh=L+JP3Q+XN8rqG8m63iK2ngNiIIifTVfH7z5zWpQdNbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7XFNwdvaZeg0aNjLUk9buiDfhUjzuzA349vgCC9KxLHUxoXOe4pXjf7/z995L4ji
-	 EBOsRYREut9NIjnEZfVrdH0v3HYrhMQvw5dgHS4HOEQCsdAtF59pPobe6xb83ObitW
-	 LUoNPWD8gvTYQkksRIitmPlXPf07bULNmd739Lo8=
+	b=SiBtGMc+NWXfhApThqpin8W0ueapWjZYP0SkOonE7ivlSwgw8tmk7aW58bnlohDNE
+	 V8ZissmqCRXL1SN2IvoKrfJSfgdAW4NFKX82PCP2osltGn0GfSm4sWqak10BmV1PPz
+	 sWn9mheG1k4l+SZlx/AN+stik31LdM/kHbw9BfQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 156/733] ASoC: amd: renoir: fix disable_pdm_interrupts() to clear mask bits
-Date: Thu, 17 Sep 2026 16:07:44 +0100
-Message-ID: <20260917151354.954317520@linuxfoundation.org>
+Subject: [PATCH 7.2 154/733] s390/boot: Avoid IPL parameter append past command line
+Date: Thu, 17 Sep 2026 16:07:42 +0100
+Message-ID: <20260917151354.899673139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,37 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 0c06c4ce0206290c9a934a1e7196aaa86adfe018 ]
+[ Upstream commit d76181dfabdaa720703167393704efacba343442 ]
 
-disable_pdm_interrupts() uses |= ~PDM_DMA_INTR_MASK which sets all
-bits except the PDM DMA interrupt bit instead of clearing only the
-PDM DMA interrupt bit. Use &= ~PDM_DMA_INTR_MASK to clear only the
-target bit.
+A command line may occupy all but the terminating byte of
+COMMAND_LINE_SIZE. In that case append_ipl_block_parm() passes a zero size
+to the IPL parameter conversion helpers and points the destination one
+byte past early_command_line. The helpers subtract one from the unsigned
+size and write the converted parameter outside the command line buffer.
 
-Fixes: f621a3676d3f ("ASoC: amd: add ACP3x PDM platform driver")
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260824063507.483784-1-wangdich9700@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Convert the IPL parameter in the command line parsing buffer first. A
+parameter beginning with '=' can then replace the existing command line
+regardless of its length, while other parameters are appended only when
+space remains.
+
+Fixes: 5ecb2da660ab ("s390: support command lines longer than 896 bytes")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/renoir/acp3x-pdm-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/boot/ipl_parm.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/amd/renoir/acp3x-pdm-dma.c b/sound/soc/amd/renoir/acp3x-pdm-dma.c
-index e60e3821703cc..3f59b753243d5 100644
---- a/sound/soc/amd/renoir/acp3x-pdm-dma.c
-+++ b/sound/soc/amd/renoir/acp3x-pdm-dma.c
-@@ -104,7 +104,7 @@ static void disable_pdm_interrupts(void __iomem *acp_base)
- 	u32 ext_int_ctrl;
+diff --git a/arch/s390/boot/ipl_parm.c b/arch/s390/boot/ipl_parm.c
+index 6bc950b92be76..59eabf4a2de05 100644
+--- a/arch/s390/boot/ipl_parm.c
++++ b/arch/s390/boot/ipl_parm.c
+@@ -23,6 +23,7 @@ struct parmarea parmarea __section(".parmarea") = {
+ };
  
- 	ext_int_ctrl = rn_readl(acp_base + ACP_EXTERNAL_INTR_CNTL);
--	ext_int_ctrl |= ~PDM_DMA_INTR_MASK;
-+	ext_int_ctrl &= ~PDM_DMA_INTR_MASK;
- 	rn_writel(ext_int_ctrl, acp_base + ACP_EXTERNAL_INTR_CNTL);
+ char __bootdata(early_command_line)[COMMAND_LINE_SIZE];
++static char command_line_buf[COMMAND_LINE_SIZE];
+ 
+ unsigned int __bootdata_preserved(zlib_dfltcc_support) = ZLIB_DFLTCC_FULL;
+ struct ipl_parameter_block __bootdata_preserved(ipl_block);
+@@ -135,31 +136,29 @@ static size_t ipl_block_get_ascii_scpdata(char *dest, size_t size,
+ 
+ static void append_ipl_block_parm(void)
+ {
+-	char *parm, *delim;
+-	size_t len, rc = 0;
++	size_t len, extra = 0;
++	char *delim;
+ 
+ 	len = strlen(early_command_line);
+-
+-	delim = early_command_line + len;    /* '\0' character position */
+-	parm = early_command_line + len + 1; /* append right after '\0' */
++	delim = early_command_line + len; /* '\0' character position */
+ 
+ 	switch (ipl_block.pb0_hdr.pbt) {
+ 	case IPL_PBT_CCW:
+-		rc = ipl_block_get_ascii_vmparm(
+-			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
++		extra = ipl_block_get_ascii_vmparm(command_line_buf, sizeof(command_line_buf), &ipl_block);
+ 		break;
+ 	case IPL_PBT_FCP:
+ 	case IPL_PBT_NVME:
+ 	case IPL_PBT_ECKD:
+-		rc = ipl_block_get_ascii_scpdata(
+-			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
++		extra = ipl_block_get_ascii_scpdata(command_line_buf, sizeof(command_line_buf), &ipl_block);
+ 		break;
+ 	}
+-	if (rc) {
+-		if (*parm == '=')
+-			memmove(early_command_line, parm + 1, rc);
+-		else
++	if (extra) {
++		if (command_line_buf[0] == '=') {
++			memmove(early_command_line, command_line_buf + 1, extra);
++		} else if (len < COMMAND_LINE_SIZE - 2) {
+ 			*delim = ' '; /* replace '\0' with space */
++			sized_strscpy(delim + 1, command_line_buf, COMMAND_LINE_SIZE - len - 1);
++		}
+ 	}
  }
  
+@@ -245,7 +244,6 @@ static void modify_fac_list(char *str)
+ 	check_cleared_facilities();
+ }
+ 
+-static char command_line_buf[COMMAND_LINE_SIZE];
+ void parse_boot_command_line(void)
+ {
+ 	char *param, *val;
 -- 
 2.53.0
 
