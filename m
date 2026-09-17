@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63754973B9;
-	Thu, 17 Sep 2026 18:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DCF399D0B;
+	Thu, 17 Sep 2026 18:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670888; cv=none; b=LI3YlxhjtccMgraDmIoAptHubyilhri76luE6olq9n7cosnyhiVxx/iDr3r5xvwls/wNkZXIvuKZegX7Ioys5GMpSZ46h0fYnB+NIFQfalLS/oAh7+zFIQJy/wn16tgU2Xl9KCFufdnt4FHdJ0sl34VfVGf8r3DkjV2iYrj47Cc=
+	t=1789670892; cv=none; b=A5FaPk2kgnjzs1+Rdb4Y2UF8/KqM6iOXLsb9GXe0MyNTQBj/pIMMLwG9LAT9O1ErlXj5RMJBpkzcSvQpqCgM/0YQdZ26crqjV9PNigL6sXgNhLT37/3VHYPo+DaF7Y/6oiqd/PRHeUQ6PWHrrMNh2HukUHc07aYlox31BdTIc3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670888; c=relaxed/simple;
-	bh=2/iogWFp5LABcG14RFPzz5Mol08YImszMyBqNcRwdeA=;
+	s=arc-20240116; t=1789670892; c=relaxed/simple;
+	bh=KdFMhvyeFmoyWRrtw4EFTCEx6L7f2vlYtjlKdCBr0ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pfu9wMJ97v5HkVI9IpcqIle1nMcifp86inwM0MhfcqKQgiAu/H/La7Gv1pjCKozpjPrRbcC4Riliio6oUbVEeR6D/6oRsjNLfGg2acaBdYu28sRlG3mrxGfw0V4XVQ6maRmqse11UH1KqAAIdsRzODQ5UHccUGkfPwe2ySAdBGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7wOPyRt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mOCM0/bpnzmsvYuo+IF5v06rYddGefVmqeCiUBJOgCgB5BwYd44xN3Qr48hs4bOEbZgqdT4DdPW7BWFdItPNfz/AKePpWAC3wPnBTsbaqpUkzWljYuyElZSfXjRn+rjZ6WDPuCcSAqUaCMKxl7iw4JKHU+5nOFSjWGuMFZQMTEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3o25xGn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7wOPyRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06F21F000FF;
-	Thu, 17 Sep 2026 18:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3o25xGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFE41F000FF;
+	Thu, 17 Sep 2026 18:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670887;
-	bh=1dtmN90sXBqcas5sht7AkTd6YH1v/+cPzf6A6mLRBT0=;
+	s=korg; t=1789670891;
+	bh=MU7y+0BRF8ykk8uvK2sfOCj6ys4KWS7aQjD/tNmOPqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y7wOPyRtUrx8ARXbOE2ImXZJ0eyNR/tIdmfSRgVT1AteFAsVSDge7Wjhyx2/JfGiK
-	 2X9Gtkz79+Fw/BZ0SKkt8L27PNYM3PycfectCbfDfQrpJf2KCeOlu8oJLFO+xcmCFL
-	 erc20JabnL/0VLMFs04+UXhGwfCM3fXU47uR0RjY=
+	b=E3o25xGnOuUNblp9Iv65hkOm5L2BgswB3eFoS64rIvc0T78w1kmUTvzQp87T/8leh
+	 zLRUzT5EPTHCNGs6TBixZxy4nzay9GSnkZaKizDpVV2c2Tr5kHO1j7aDfptopePKxT
+	 A7sKNdcxeibMZ7qOQniz6/EheT2qQV7qH3NaPaSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qingfang Deng <qingfang.deng@linux.dev>,
 	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0765/1102] vxlan: initialize _md in vxlan_xmit_one()
-Date: Thu, 17 Sep 2026 16:11:48 +0100
-Message-ID: <20260917151559.644287148@linuxfoundation.org>
+Subject: [PATCH 6.12 0766/1102] ppp_synctty: ensure a writeable skb header
+Date: Thu, 17 Sep 2026 16:11:49 +0100
+Message-ID: <20260917151559.672937929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,70 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit be83178bfc44588f6e3adb827ed874c683193466 ]
+[ Upstream commit 8aaeb56aff2a557a88f83ae866da2c91ad247e59 ]
 
-If a VXLAN device is configured with both VXLAN_F_COLLECT_METADATA and
-VXLAN_F_GBP, and a packet is transmitted through it using an external
-ip_tunnel_info that lacks the IP_TUNNEL_VXLAN_OPT_BIT flag, md is left
-pointing to the uninitialized _md stack variable:
+ppp_sync_txmunge() checks headroom before prepending the address and
+control bytes, but does not ensure that the skb header is writable.
+A received skb can reach this function through PPP channel bridging
+without passing through ppp_start_xmit(), which calls skb_cow_head().
 
-                if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
-                        if (info->options_len < sizeof(*md))
-                                goto drop;
-                        md = ip_tunnel_info_opts(info);
-                }
+For example, a PPPoE frame may share its buffer with a clone queued to
+an AF_PACKET socket. If it is bridged to a synchronous tty channel, the
+address/control bytes can overwrite data still visible to that socket.
 
-Because IP_TUNNEL_VXLAN_OPT_BIT is not set, md is not updated and remains
-pointing to _md. Later, vxlan_build_skb() is called with md, which
-eventually calls vxlan_build_gbp_hdr():
+Use skb_cow_head() to ensure both sufficient headroom and a writable
+header.
 
-        if (vxflags & VXLAN_F_GBP)
-                vxlan_build_gbp_hdr(vxh, md);
-
-Inside vxlan_build_gbp_hdr(), md->gbp is read:
-
-        if (!md->gbp)
-                return;
-        gbp = (struct vxlanhdr_gbp *)vxh;
-        ...
-        if (md->gbp & VXLAN_GBP_DONT_LEARN)
-                gbp->dont_learn = 1;
-
-If the stack contains garbage, this causes:
-1) VXLAN_HF_GBP flag to be spuriously set in the VXLAN header.
-2) gbp->dont_learn and gbp->policy_applied to be set from stack bits.
-3) gbp->policy_id to receive 16 bits of uninitialized kernel stack data,
-   leaking it onto the wire.
-
-Fix this by zero-initializing _md. If IP_TUNNEL_VXLAN_OPT_BIT is not
-present, md->gbp remains 0, and vxlan_build_gbp_hdr() returns early
-without modifying the VXLAN header.
-
-Fixes: ee122c79d422 ("vxlan: Flow based tunneling")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260906180111.1973188-2-edumazet@google.com
+Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260908072135.877364-1-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/ppp_synctty.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index bf50dc239b1d0..b14dbc6892078 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2392,7 +2392,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
- 	struct ip_tunnel_key key;
- 	struct vxlan_dev *vxlan = netdev_priv(dev);
- 	const struct iphdr *old_iph;
--	struct vxlan_metadata _md;
-+	struct vxlan_metadata _md = {};
- 	struct vxlan_metadata *md = &_md;
- 	unsigned int pkt_len = skb->len;
- 	__be16 src_port = 0, dst_port;
+diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
+index 1a1eb029a531b..4514bcadd6eef 100644
+--- a/drivers/net/ppp/ppp_synctty.c
++++ b/drivers/net/ppp/ppp_synctty.c
+@@ -457,17 +457,9 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
+ 
+ 	/* prepend address/control fields if necessary */
+ 	if ((ap->flags & SC_COMP_AC) == 0 || islcp) {
+-		if (skb_headroom(skb) < 2) {
+-			struct sk_buff *npkt = dev_alloc_skb(skb->len + 2);
+-			if (npkt == NULL) {
+-				kfree_skb(skb);
+-				return NULL;
+-			}
+-			skb_reserve(npkt,2);
+-			skb_copy_from_linear_data(skb,
+-				      skb_put(npkt, skb->len), skb->len);
+-			consume_skb(skb);
+-			skb = npkt;
++		if (skb_cow_head(skb, 2)) {
++			kfree_skb(skb);
++			return NULL;
+ 		}
+ 		skb_push(skb,2);
+ 		skb->data[0] = PPP_ALLSTATIONS;
 -- 
 2.53.0
 
