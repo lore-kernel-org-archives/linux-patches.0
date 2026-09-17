@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3634A0F14;
-	Thu, 17 Sep 2026 15:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFB14EB860;
+	Thu, 17 Sep 2026 15:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660040; cv=none; b=mwtAgEc/X9yAtTgd9dEs4mRyGaDP4R7n7uhbng97HP++YVAkde2YZwljzc3dxFUxEE/Fb0dBwPz9+H+0QDthV6xQ/tufrM/cgyD/pwXSgcTXZIbQmKiwCO9s4WzyyGUinMxJO1fDaBbH5t2SaqcA3Yi4MpuXlsde/auwM1fzGmI=
+	t=1789660042; cv=none; b=I/H+TRdZ0ompBB7NcoZVDGcBmbJidOvsEIXWYclGAm8r2KsSFjnFD+g8tJM9y/Ql8ThflmCanP+NBccEtk9E52a2Flksz60ywVO8EON0359QDE1lqFy39vYKCHHAaUjfmjP1TZGIqpZhLR3Xem5EBnKvTAnDK3/Z+p/8ePqr4BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660040; c=relaxed/simple;
-	bh=HnZgjOvXAZTe+5ovHrmnv/ZoOflmo5RHJZVDrlOzM1s=;
+	s=arc-20240116; t=1789660042; c=relaxed/simple;
+	bh=UxzPibLZ637m5C3CzyKb9HHxW1fXvD8ALhTz59pN9Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OV6UpRdkbmn5QQLtVidtNcVHdEvc4cTPEaPjH0AOvjFosML5cq6NqXbSvfxibgomln0ETQp9XSV3zYU22AcfLHMi51JbhIDfNnbiYFgSN2toPmf1YYW0MkzmG5KkUQWsl6ziuyh8IPcqCDDiZtpTxzlbRmEeKlGBgz7IVlz4sa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4c2vOsz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LkS2LTp5H/Cdumdasjx+LAdamulu51ZvuIESLOuSE+sUM7JUkj6AXOpJ1GWV2BNVd0wH/NmBsIMczmqy5SicyvC8YNY6091dPYuATjNEuiYTdKOKTe7xhDasjuSPcFQ+reOBGL4spQdHHcGX8QNCpztOXoan/NjYMDCqy+jZEqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY83fNPY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4c2vOsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058311F00893;
-	Thu, 17 Sep 2026 15:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY83fNPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F005C1F000FF;
+	Thu, 17 Sep 2026 15:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660035;
-	bh=X9nww6wJQsd8mQ2JFq0AHcGk7dYbgEGTP7wRcduljM4=;
+	s=korg; t=1789660038;
+	bh=4jL3ELlYOHjGT1YMv5Auk6ASlxbXENHk3q3e1rfX7Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l4c2vOszYNujPtewVXuwXm23g44Gqiyz8vyQrFoS5bgG2d/uA92ZHbo1EV00QPsqZ
-	 cjVAfNb3jek1ROeXJBG1bK3ccAsrzrIXLiA+sDzPLmc5IsdUT4Bq4KAUI6fCUKVkyM
-	 Tj2ttDzGfTFDf8Pnk7UlOp1ncN/gPfwSKtlUwGHQ=
+	b=iY83fNPYxGdT5hbX4rvHP4d8MrDX13p7pokma3hvlzV3b9xwr0wfxq9OeZeOwYU06
+	 0jxKQ44sndrXbceyj+nFovlLDJpXRNeYhgoF6jFJsCme9XDvUz/I7FULtEkdtDE9F6
+	 1sYt/VMsHnCWgMkICd3/lq9zukJ0wwA10zxdhLcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tejun Heo <tj@kernel.org>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 419/733] sched/core: Call wq_worker_tick() for the execution context
-Date: Thu, 17 Sep 2026 16:12:07 +0100
-Message-ID: <20260917151402.243506748@linuxfoundation.org>
+Subject: [PATCH 7.2 410/733] powerpc/entry: Fix double accounting of user time on interrupt entry
+Date: Thu, 17 Sep 2026 16:11:58 +0100
+Message-ID: <20260917151401.983263241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,68 +56,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit f5741d2b34519d387edf6e9798fc7030c20a35f3 ]
+[ Upstream commit 11ae2e1dc58304a48816fc8ca4afa8f2ef9d1bdf ]
 
-wq_worker_tick() accounts CPU time and detects CPU-intensive work for
-the kworker that is actually running. With proxy execution, rq->donor
-is the scheduling context while rq->curr is the execution context.
+Since the switch to generic entry, an interrupt from user mode
+accounts user time twice: once in arch_interrupt_enter_prepare()
+and again in arch_enter_from_user_mode(), which irqentry_enter()
+invokes for the same interrupt:
 
-Calling the hook with rq->donor can skip workqueue accounting when a
-kworker is executing on behalf of a donor task. It can also account a
-blocked kworker when the donor is a worker but rq->curr is the task
-actually executing. The former can delay WORKER_CPU_INTENSIVE handling
-and pool concurrency management, which can delay pending kernel work
-and userspace operations depending on it.
+	arch_interrupt_enter_prepare()
+	  account_cpu_user_entry()		/* first */
+	irqentry_enter()
+	  arch_enter_from_user_mode()
+	    account_cpu_user_entry()		/* second */
 
-Use rq->curr for the workqueue tick hook while retaining rq->donor for
-scheduler accounting.
+The second call charges the same interval again, because
+account_cpu_user_entry() accumulates the time spent in user mode
+since the last return to user space.
 
-Fixes: af0c8b2bf67b ("sched: Split scheduler and execution contexts")
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260902150208.1209922-2-sh_def@163.com
+The two calls come from the GENERIC_ENTRY preparation series,
+where each step was a no-op on its own. Commit 09a9d3a8499d
+("powerpc: introduce arch_enter_from_user_mode") added the hook
+with the user-time accounting in it, but nothing called it yet.
+Commit 893082ac769b ("powerpc: Prepare for IRQ entry exit")
+copied interrupt_enter_prepare() verbatim into entry-common.h as
+arch_interrupt_enter_prepare(); that copy was equally unused, as
+handlers still called interrupt_enter_prepare().
+
+Commit bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
+made both live. On the syscall side it did the full conversion:
+system_call_exception() now accounts once through the hook via
+syscall_enter_from_user_mode(), rather than calling
+account_cpu_user_entry() directly. On the interrupt side it
+switched the handler macros to arch_interrupt_enter_prepare()
+followed by irqentry_enter(), which also runs the hook, but the
+accounting in arch_interrupt_enter_prepare() was not removed to
+match. The double accounting starts with that commit.
+
+With CONFIG_VIRT_CPU_ACCOUNTING_NATIVE=y this roughly doubles the
+reported user time of any workload that takes interrupts. The
+other accounting modes compile account_cpu_user_entry() to an
+empty stub, so they are not affected.
+
+Remove the accounting from arch_interrupt_enter_prepare() and rely
+on arch_enter_from_user_mode(), which already runs for both
+syscalls and interrupts. The duplicate account_stolen_time() call
+is removed the same way.
+
+On a pseries LPAR a busy loop reports 6s user time in 3s elapsed
+(~210% CPU) before the fix, and 3s (~105% CPU) after it:
+
+  $ python3 -c 'while True: pass' &
+  $ sleep 3; ps -p $! -o etime,time,pcpu
+
+            ELAPSED     TIME  %CPU
+  Before      00:03 00:00:06   210
+  After       00:03 00:00:03   105
+
+A 50% load reports ~70% usr / 30% idle before the fix, and
+~49% usr / 51% idle after it:
+
+  $ taskset -c 6 stress-ng --cpu 1 --cpu-load 50 &
+  $ mpstat -P 6 1
+
+            CPU    %usr   %idle
+  Before      6   69.74   30.26
+  After       6   48.51   50.50
+
+Fixes: bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260904025831.3439809-1-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/powerpc/include/asm/entry-common.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index d0992ecda4c72..35d647c8c3683 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5780,8 +5780,8 @@ void sched_tick(void)
- {
- 	int cpu = smp_processor_id();
- 	struct rq *rq = cpu_rq(cpu);
--	/* accounting goes to the donor task */
--	struct task_struct *donor;
-+	/* scheduler accounting goes to the donor task */
-+	struct task_struct *curr, *donor;
- 	struct rq_flags rf;
- 	unsigned long hw_pressure;
- 	u64 resched_latency;
-@@ -5792,6 +5792,7 @@ void sched_tick(void)
- 	sched_clock_tick();
+diff --git a/arch/powerpc/include/asm/entry-common.h b/arch/powerpc/include/asm/entry-common.h
+index 80b07750b531b..8e91489fdf2bb 100644
+--- a/arch/powerpc/include/asm/entry-common.h
++++ b/arch/powerpc/include/asm/entry-common.h
+@@ -222,8 +222,6 @@ static inline void arch_interrupt_enter_prepare(struct pt_regs *regs)
  
- 	rq_lock(rq, &rf);
-+	curr = rq->curr;
- 	donor = rq->donor;
- 
- 	psi_account_irqtime(rq, donor, NULL);
-@@ -5817,8 +5818,8 @@ void sched_tick(void)
- 
- 	perf_event_task_tick();
- 
--	if (donor->flags & PF_WQ_WORKER)
--		wq_worker_tick(donor);
-+	if (curr->flags & PF_WQ_WORKER)
-+		wq_worker_tick(curr);
- 
- 	if (!scx_switched_all()) {
- 		rq->idle_balance = idle_cpu(cpu);
+ 	if (user_mode(regs)) {
+ 		kuap_lock();
+-		account_cpu_user_entry();
+-		account_stolen_time();
+ 	} else {
+ 		kuap_save_and_lock(regs);
+ 		/*
 -- 
 2.53.0
 
