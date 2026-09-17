@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65496554090;
-	Thu, 17 Sep 2026 15:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A10451D52A;
+	Thu, 17 Sep 2026 15:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659218; cv=none; b=BipLiOwUqV9KCfzCDRD8nILngrutg/ipJqzbETM9pgofMeWS360s+zNGsz2Ln74B3xcD+eaEEe9PtkctOo6lBsh33EtMaNAhdICGv0kAvT79OiDjuNylgwQsqKFsyyvzevhAfPb9Go81x+gmMs7Cbdy0pUOeKEglcAL7Gh6ZB7s=
+	t=1789659221; cv=none; b=AQ0LwNNLa2IkKIAYdigSX8EAr1KLmnLJ6mmLAMRjhUzwq5mbbXBAqmhfytJmJ1/kr6TxNeOIZw+wB6P2rgB7pbHMpCAN2ccEnOHkOhkHV6joQW4mE9mewjf/JFGMWC27m+5xNTu+Buo7d1qqJbpfhQ7zAmDMyYztxAU5acPtNME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659218; c=relaxed/simple;
-	bh=vHSbvNoDpLRkVpd/XHt+eGDzXE/7BdnYEPGhikBGCMQ=;
+	s=arc-20240116; t=1789659221; c=relaxed/simple;
+	bh=6kGqnUFRMUuULrm8fybriHYW/cvVzXMtJTEIEJgRFn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ai8C0rvCJrrQdXQNekKhEQ4Lq6fYDHcRxZujF5HNN1+cqJHJKAMcnIVAKir3qngH8uC+2oLXNtkkneSsIr7uYecHiIJETA9ZVDiWSYDQItdOGrfikRR1tmj5mCqnWub5sBREDPukh7Y+gz/E7FBkdkzEanN14h8jpX5BJGuLm3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEFiEvcI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IqYNLALG+CABOT1dPKOIdvrsnIHTvGNDzpdLRIXT8Ce/iQbIGBmea6pxfzzPrgLDinR7erSSeBC1E+sB5r4YAJgz/IeUdspykIra5DoZQXb2F6PSc9gbIh8TtWDeAyEdmqL0XmOLs61U0S1aTjt7ito6IaVz6HTSwDv5IKgJO04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9NLpgLD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEFiEvcI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879D51F00899;
-	Thu, 17 Sep 2026 15:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9NLpgLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3E61F00893;
+	Thu, 17 Sep 2026 15:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659215;
-	bh=7yzaKKqdKZctRk3ZCbN+a7oDJTKB0OV9NjNTsdPP0/I=;
+	s=korg; t=1789659212;
+	bh=xPNcK8i6xcfbGVpfK3tvNhh/wvOalEbw0eXCQsKyqCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XEFiEvcITRgoLGWGTLCmqYeb7JIF3MhhxSJfBy3ZQCu4oiy0atcnAeMd4sf4h6Zhy
-	 cqC/1uJdmLyOrcOMAzxOrvluNY52uEMRrWgyaNfXtw2f952/Wcc0amrDhOhARIAL3x
-	 cYoIh2dUIW/I+RWRv/r/61Pskf4yvKUAM1aRpHsE=
+	b=i9NLpgLD7CR57GkoKMJZO5Fadv2LjbeBMAxTclmVh+LBI6jcUvf2BRSMDyA4GCTc3
+	 Sxi6JfVpjiY+dK14QNAvbIiBd0oxeiX34P8mx7NPFDEIj5IF9npVnE+pUL5eq7SVqp
+	 JvbvUrwS06SKnto3HKUs0al8/Bz/xGLp8qWCVUDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 182/733] ASoC: ux500: Validate MSP DAI configuration
-Date: Thu, 17 Sep 2026 16:08:10 +0100
-Message-ID: <20260917151355.667686469@linuxfoundation.org>
+Subject: [PATCH 7.2 181/733] ASoC: ux500: Correct MSP frame and bit clock setup
+Date: Thu, 17 Sep 2026 16:08:09 +0100
+Message-ID: <20260917151355.635642379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,176 +53,273 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9ccbacf5a0120964fc1ffacb8151e3347bee9287 ]
+[ Upstream commit 94c18cea657c48680e4ee20b635b6c01f3eb352e ]
 
-Installing channel constraints from hw_params is too late to affect the
-parameters being committed. The driver consequently accepts channel
-counts which disagree with the I2S or TDM setup. It also silently
-truncates out-of-range slot masks and accepts inverted bit clock formats
-which prepare then rejects.
+FRPER plus one is the number of bit clocks in a frame. It must follow
+the configured slot count and width. The legacy rate-dependent
+constants produce malformed frames; notably, a 16-slot, 16-bit frame
+is programmed as 278 rather than 256 clocks.
 
-Validate the selected channel count directly, reject invalid masks
-before changing cached TDM state, and implement all four standard clock
-and frame inversion combinations. Use the requested format in
-validation diagnostics.
+Derive the frame period from the TDM geometry and use the real
+functional clock rate. Validate that the requested bit clock has an
+exact, representable divider, program SCKDIV as divider minus one, and
+report the resulting bit clock using that same divisor.
 
 Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-4-4b60b002d55a@kernel.org
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-3-4b60b002d55a@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 41 ++++++++++++++++++++++-----------
- sound/soc/ux500/ux500_msp_i2s.c |  7 ++++--
- sound/soc/ux500/ux500_msp_i2s.h |  1 +
- 3 files changed, 33 insertions(+), 16 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 75 +++++++--------------------------
+ sound/soc/ux500/ux500_msp_dai.h | 11 -----
+ sound/soc/ux500/ux500_msp_i2s.c | 54 ++++++++++++++----------
+ sound/soc/ux500/ux500_msp_i2s.h |  2 -
+ 4 files changed, 46 insertions(+), 96 deletions(-)
 
 diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 0a9cc7e769fe3..599de5de23dde 100644
+index 32d751fc1e784..0a9cc7e769fe3 100644
 --- a/sound/soc/ux500/ux500_msp_dai.c
 +++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -130,7 +130,16 @@ static int setup_clocking(struct snd_soc_dai *dai,
- 	case SND_SOC_DAIFMT_NB_IF:
- 		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
- 		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
-+		break;
-+
-+	case SND_SOC_DAIFMT_IB_NF:
-+		msp_config->bclk_inverted = true;
-+		break;
+@@ -59,72 +59,21 @@ static int setup_pcm_multichan(struct snd_soc_dai *dai,
+ 	return 0;
+ }
  
-+	case SND_SOC_DAIFMT_IB_IF:
-+		msp_config->bclk_inverted = true;
-+		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
-+		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
- 		break;
- 
- 	default:
-@@ -453,7 +462,6 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_soc_dai *dai)
+-static int setup_frameper(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static void setup_frameper(struct snd_soc_dai *dai,
++			   struct msp_protdesc *prot_desc)
  {
- 	unsigned int mask, slots_active;
--	struct snd_pcm_runtime *runtime = substream->runtime;
  	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
  
- 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter.\n",
-@@ -461,9 +469,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
+-	switch (drvdata->slots) {
+-	case 1:
+-		switch (rate) {
+-		case 8000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_8_KHZ;
+-			break;
+-
+-		case 16000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_16_KHZ;
+-			break;
+-
+-		case 44100:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_44_1_KHZ;
+-			break;
+-
+-		case 48000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_48_KHZ;
+-			break;
+-
+-		default:
+-			dev_err(dai->dev,
+-				"%s: Error: Unsupported sample-rate (freq = %d)!\n",
+-				__func__, rate);
+-			return -EINVAL;
+-		}
+-		break;
+-
+-	case 2:
+-		prot_desc->frame_period = FRAME_PER_2_SLOTS;
+-		break;
+-
+-	case 8:
+-		prot_desc->frame_period = FRAME_PER_8_SLOTS;
+-		break;
+-
+-	case 16:
+-		prot_desc->frame_period = FRAME_PER_16_SLOTS;
+-		break;
+-	default:
+-		dev_err(dai->dev,
+-			"%s: Error: Unsupported slot-count (slots = %d)!\n",
+-			__func__, drvdata->slots);
+-		return -EINVAL;
+-	}
+-
+-	prot_desc->clocks_per_frame =
+-			prot_desc->frame_period+1;
++	prot_desc->clocks_per_frame = drvdata->slots * drvdata->slot_width;
++	prot_desc->frame_period = prot_desc->clocks_per_frame - 1;
  
- 	switch (drvdata->fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
--		snd_pcm_hw_constraint_minmax(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				1, 2);
-+		if (params_channels(params) < 1 || params_channels(params) > 2)
-+			return -EINVAL;
+ 	dev_dbg(dai->dev, "%s: Clocks per frame: %u\n",
+ 		__func__,
+ 		prot_desc->clocks_per_frame);
+-
+-	return 0;
+ }
+ 
+-static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static int setup_pcm_framing(struct snd_soc_dai *dai,
++			     struct msp_protdesc *prot_desc)
+ {
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
+ 
+@@ -165,7 +114,9 @@ static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+ 	prot_desc->tx_elem_len_2 = MSP_ELEM_LEN_16;
+ 	prot_desc->rx_elem_len_2 = MSP_ELEM_LEN_16;
+ 
+-	return setup_frameper(dai, rate, prot_desc);
++	setup_frameper(dai, prot_desc);
++
++	return 0;
+ }
+ 
+ static int setup_clocking(struct snd_soc_dai *dai,
+@@ -366,7 +317,7 @@ static int setup_msp_config(struct snd_pcm_substream *substream,
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		ret = setup_pcm_framing(dai, runtime->rate, prot_desc);
++		ret = setup_pcm_framing(dai, prot_desc);
+ 		if (ret < 0)
+ 			return ret;
+ 
+@@ -735,7 +686,6 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 	drvdata->tx_mask = 0x01;
+ 	drvdata->rx_mask = 0x01;
+ 	drvdata->slot_width = 16;
+-	drvdata->master_clk = MSP_INPUT_FREQ_APB;
+ 
+ 	drvdata->reg_vape = devm_regulator_get(&pdev->dev, "v-ape");
+ 	if (IS_ERR(drvdata->reg_vape)) {
+@@ -764,6 +714,11 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 			__func__, ret);
+ 		return ret;
+ 	}
++	drvdata->master_clk = clk_get_rate(drvdata->clk);
++	if (!drvdata->master_clk) {
++		dev_err(&pdev->dev, "MSP clock has no rate\n");
++		return -EINVAL;
++	}
+ 
+ 	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
+ 	if (ret) {
+diff --git a/sound/soc/ux500/ux500_msp_dai.h b/sound/soc/ux500/ux500_msp_dai.h
+index 30bf708381961..19058c238420e 100644
+--- a/sound/soc/ux500/ux500_msp_dai.h
++++ b/sound/soc/ux500/ux500_msp_dai.h
+@@ -22,17 +22,6 @@
+ 
+ #define UX500_I2S_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
+ 
+-#define FRAME_PER_SINGLE_SLOT_8_KHZ		31
+-#define FRAME_PER_SINGLE_SLOT_16_KHZ	124
+-#define FRAME_PER_SINGLE_SLOT_44_1_KHZ	63
+-#define FRAME_PER_SINGLE_SLOT_48_KHZ	49
+-#define FRAME_PER_2_SLOTS				31
+-#define FRAME_PER_8_SLOTS				138
+-#define FRAME_PER_16_SLOTS				277
+-
+-#define UX500_MSP_INTERNAL_CLOCK_FREQ  40000000
+-#define UX500_MSP1_INTERNAL_CLOCK_FREQ UX500_MSP_INTERNAL_CLOCK_FREQ
+-
+ #define UX500_MSP_MIN_CHANNELS		1
+ #define UX500_MSP_MAX_CHANNELS		8
+ 
+diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
+index ec6f0874294ae..ef41de92d8e76 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.c
++++ b/sound/soc/ux500/ux500_msp_i2s.c
+@@ -212,35 +212,20 @@ static int configure_protocol(struct ux500_msp *msp,
+ 
+ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
+ {
++	struct msp_protdesc *protdesc;
++	u64 desired_bitclk;
++	unsigned int bitclk;
+ 	u32 reg_val_GCR;
+-	u32 frame_per = 0;
+-	u32 sck_div = 0;
+-	u32 frame_width = 0;
+-	u32 temp_reg = 0;
+-	struct msp_protdesc *protdesc = NULL;
++	u32 sck_div;
++	u32 temp_reg;
+ 
+ 	reg_val_GCR = readl(msp->registers + MSP_GCR);
+ 	writel(reg_val_GCR & ~SRG_ENABLE, msp->registers + MSP_GCR);
+ 
+-	if (config->default_protdesc)
+-		protdesc =
+-			(struct msp_protdesc *)&prot_descs[config->protocol];
+-	else
+-		protdesc = (struct msp_protdesc *)&config->protdesc;
+-
+ 	switch (config->protocol) {
+ 	case MSP_PCM_PROTOCOL:
+ 	case MSP_PCM_COMPAND_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
+-		break;
+ 	case MSP_I2S_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
  		break;
- 
- 	case SND_SOC_DAIFMT_DSP_B:
-@@ -475,9 +482,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 		slots_active = hweight32(mask);
- 		dev_dbg(dai->dev, "TDM-slots active: %d", slots_active);
- 
--		snd_pcm_hw_constraint_single(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				slots_active);
-+		if (!slots_active || params_channels(params) != slots_active)
-+			return -EINVAL;
- 		break;
- 
  	default:
-@@ -510,20 +516,21 @@ static int ux500_msp_dai_set_dai_fmt(struct snd_soc_dai *dai,
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported protocol/master (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
+ 		dev_err(msp->dev, "%s: ERROR: Unknown protocol (%d)!\n",
+@@ -249,12 +234,35 @@ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
  		return -EINVAL;
  	}
  
- 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
- 	case SND_SOC_DAIFMT_NB_NF:
- 	case SND_SOC_DAIFMT_NB_IF:
-+	case SND_SOC_DAIFMT_IB_NF:
- 	case SND_SOC_DAIFMT_IB_IF:
- 		break;
- 
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported inversion (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
- 		return -EINVAL;
- 	}
- 
-@@ -557,17 +564,23 @@ static int ux500_msp_dai_set_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	drvdata->slots = slots;
- 
--	if (!(slot_width == 16)) {
-+	if (slot_width != 16) {
- 		dev_err(dai->dev, "%s: Error: Unsupported slot-width (%d)!\n",
- 			__func__, slot_width);
- 		return -EINVAL;
- 	}
--	drvdata->slot_width = slot_width;
- 
--	drvdata->tx_mask = tx_mask & cap;
--	drvdata->rx_mask = rx_mask & cap;
-+	if ((tx_mask | rx_mask) & ~cap) {
-+		dev_err(dai->dev, "%s: Slot mask exceeds %d slots\n",
-+			__func__, slots);
++	if (config->default_protdesc)
++		protdesc = (struct msp_protdesc *)&prot_descs[config->protocol];
++	else
++		protdesc = &config->protdesc;
++
++	if (!config->frame_freq || !protdesc->clocks_per_frame)
++		return -EINVAL;
++
++	desired_bitclk = (u64)config->frame_freq * protdesc->clocks_per_frame;
++	if (desired_bitclk > config->f_inputclk)
++		return -EINVAL;
++	bitclk = desired_bitclk;
++	if (config->f_inputclk % bitclk) {
++		dev_err(msp->dev,
++			"Input clock %u cannot generate bit clock %u\n",
++			config->f_inputclk, bitclk);
 +		return -EINVAL;
 +	}
 +
-+	drvdata->slots = slots;
-+	drvdata->slot_width = slot_width;
-+	drvdata->tx_mask = tx_mask;
-+	drvdata->rx_mask = rx_mask;
++	sck_div = config->f_inputclk / bitclk;
++	if (!sck_div || sck_div > SCK_DIV_MASK + 1)
++		return -EINVAL;
++
+ 	temp_reg = (sck_div - 1) & SCK_DIV_MASK;
+-	temp_reg |= FRAME_WIDTH_BITS(frame_width);
+-	temp_reg |= FRAME_PERIOD_BITS(frame_per);
++	temp_reg |= FRAME_WIDTH_BITS(protdesc->frame_width);
++	temp_reg |= FRAME_PERIOD_BITS(protdesc->frame_period);
+ 	writel(temp_reg, msp->registers + MSP_SRG);
  
- 	return 0;
- }
-diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index ef41de92d8e76..bc77174e00707 100644
---- a/sound/soc/ux500/ux500_msp_i2s.c
-+++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -201,10 +201,12 @@ static int configure_protocol(struct ux500_msp *msp,
+-	msp->f_bitclk = (config->f_inputclk)/(sck_div + 1);
++	msp->f_bitclk = config->f_inputclk / sck_div;
  
- 	/* The code below should not be separated. */
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~TX_CLK_POL_RISING;
--	temp_reg |= MSP_TX_CLKPOL_BIT(~protdesc->tx_clk_pol);
-+	temp_reg |= MSP_TX_CLKPOL_BIT(!protdesc->tx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~RX_CLK_POL_RISING;
--	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol);
-+	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
- 
- 	return 0;
-@@ -441,6 +443,7 @@ static bool ux500_msp_config_compatible(struct ux500_msp *msp,
- 	       active->data_size == config->data_size &&
- 	       active->def_elem_len == config->def_elem_len &&
- 	       active->clock_provider == config->clock_provider &&
-+	       active->bclk_inverted == config->bclk_inverted &&
- 	       !memcmp(&active->protdesc, &config->protdesc,
- 		       sizeof(active->protdesc));
- }
+ 	/* Enable bit-clock */
+ 	udelay(100);
 diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 80085dde50793..17b5c37a7e5d5 100644
+index d75a0974369a5..80085dde50793 100644
 --- a/sound/soc/ux500/ux500_msp_i2s.h
 +++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -459,6 +459,7 @@ struct ux500_msp_config {
- 	unsigned int def_elem_len;
- 	unsigned int iodelay;
- 	bool clock_provider;
-+	bool bclk_inverted;
- };
+@@ -12,8 +12,6 @@
  
- struct ux500_msp {
+ #include <linux/platform_device.h>
+ 
+-#define MSP_INPUT_FREQ_APB 48000000
+-
+ /*** Stereo mode. Used for APB data accesses as 16 bits accesses (mono),
+  *   32 bits accesses (stereo).
+  ***/
 -- 
 2.53.0
 
