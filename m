@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF283A6B66;
-	Thu, 17 Sep 2026 15:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B64FB9C3;
+	Thu, 17 Sep 2026 15:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658821; cv=none; b=lnhmH7JcL6QKPmIFT+0OyIuZ2TrtaK+xtrMdBs/rtgwSkQUWLyWQUhR4xv3Bz1RzJqKWyUPoH9cZuaQk2bLn9IRoEGcveMebNlKZ/W+joK4aGMExsn8tmgZeJs+ZFi7nhD9uJwmZ4LEHrr7zS68otq16RWo2X6Ovg+bbXEF4juY=
+	t=1789658822; cv=none; b=X+vo2aTSXyAvQXpEF9NxsnDdWIflYccgFH+oYD4PhXYSPO4wIMqbUWwiJL3UmgOY5AQsPxWVZVQShQKYK9kuVafZ/wC6Z9Mj3UCa3zq407m/LesASb8ONxoQ7u+XwgBEAh1K/+YeusFuC94+uaOCzuDfa2u26yLRjIlG3fxSZmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658821; c=relaxed/simple;
-	bh=X49b+NE97QXPpesVO16BxOHSFQcs7Sh3CjvXpiw7qik=;
+	s=arc-20240116; t=1789658822; c=relaxed/simple;
+	bh=HjoFK/Th/fRVberONkA7dQIQDm5JsdvLhzkWs6ymbHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P27nogubjYWzqz9W5arnnt7pNegBo7oH3frr7/KL+ggllrda5yzurvlK5ivILx9y7Ti0dAz9XI6wLrOLwhnh98mnOJq9ETQiDQSXXClEvg5HKvx0rFg77bFYgSjr1hGwchny9NSo4GAcGlqWqFTtO9r/d6aJvFzpc4wB5na8ZZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePEcvGHK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EStafq54q+L086tjooVsKGNiSm1axL0mpI8h3o9+LWBLh+gi6wL5/x/dERJIMEKN82VbG2GNatbu6DooKED8MQFjfA41ZLwXuTPfgVG6/ii0Q6vTblUJ7sksIh8D22TxE14zbxA4lAyn6E1WSfONKUCXIAbEtQwDeNSzrLF9EZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyT+0LKc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePEcvGHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC4C1F000FF;
-	Thu, 17 Sep 2026 15:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyT+0LKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F751F00893;
+	Thu, 17 Sep 2026 15:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658814;
-	bh=b/MhsAW7bXltJQwDUXTdPWZbNwSVlGT2cpZWDpz8uGw=;
+	s=korg; t=1789658808;
+	bh=fdZ2KxW6cWoGbPhNVzPzybx9J7XiPp3aqp/xGB1NDVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ePEcvGHKmiBdVy/PCDBJvbcS2bnAHD3XX1zJ/yTBHs8r1NLFZqPNjCUHLedBYEa/I
-	 20JWX2P6i8bSEkuBoSfOVIg+DeN6yNz1lA6yUZ1uLaAhseYTk6On9JSjJmsoK0JqQI
-	 EcOAFjJf4bOzaYQX/RtiGcUTjzSj5zPqx9ZHMtyI=
+	b=uyT+0LKcpUF3NQLtRiOkRVkD1toc2DMrPORD7Q/Ub9lMbQAzqoaYnAh0f2GxHkpem
+	 LFxOXgJupQdElTBo8KV+aTCBn4babRyAORugZJBBLP7sFN03gkQ86sEAKLokTLrM2c
+	 i4LBECekH5Zky8mA1j1jS+OeDvfn4TiOYH1kLkWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dennis Tighe <dennis.tighe@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 049/733] bpf: check_cond_jmp_op(): properly infer if register is null
-Date: Thu, 17 Sep 2026 16:05:57 +0100
-Message-ID: <20260917151352.000589516@linuxfoundation.org>
+Subject: [PATCH 7.2 047/733] ntfs: bound $AttrDef table walk to the loaded table size
+Date: Thu, 17 Sep 2026 16:05:55 +0100
+Message-ID: <20260917151351.946094736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,97 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Dennis Tighe <dennis.tighe@gmail.com>
 
-[ Upstream commit d3ef6c097ba078e1f8c7239d76a0ce8b61e75095 ]
+[ Upstream commit c8504fc1245f5322af5fa5c325ab05f9cf792b87 ]
 
-Nicholas Carlini reported a bug when verifier can incorrectly infer
-that a pointer is non-null. The bug occurs when two pointers are
-compared and one of them has a type w/o PTR_MAYBE_NULL flag,
-but which allows a value to be NULL at runtime.
-Here is an example:
+ntfs_attr_find_in_attrdef() walks the in-memory $AttrDef table, but the
+loop condition bounds only the start of each entry, not the whole entry:
 
-  // `a` is PTR_TO_MEM | MEM_RDONLY | PTR_UNTRUSTED
-  // `a` is 0 at runtime.
-  // `b` is PTR_TO_MAP_VALUE | PTR_MAYBE_NULL
-  void *a = bpf_rdonly_cast(0, 0);
-  int  *b = bpf_map_lookup_elem(...);
+	for (ad = vol->attrdef; (u8 *)ad - (u8 *)vol->attrdef <
+			vol->attrdef_size && ad->type; ++ad)
 
-  if (a == b)
-    *b = 42;  // verifier does not catch null pointer dereference
+struct attr_def is 160 bytes; the guard reads ad->type at offset 128 and
+the loop body reads further fields. vol->attrdef is kvzalloc(i_size),
+where i_size is the on-disk $AttrDef data size, checked in
+load_and_init_attrdef() only as 0 < i_size <= 0x7fffffff. A volume whose
+$AttrDef data size is smaller than one entry (e.g. 120 bytes) makes the
+read of ad->type run past the allocation. Creating a file reaches this
+through ntfs_attr_size_bounds_check() and reads out of bounds:
 
-This happens because of a special case in check_cond_jmp_op(),
-which attempts to strip PTR_MAYBE_NULL flags from pointer types,
-when processing comparisons like `rA == rB`, if either rA or rB can't
-be null.
+  BUG: KASAN: slab-out-of-bounds in ntfs_attr_find_in_attrdef+0x66/0xa0
+  Read of size 4 at addr ffff888005833280 by task init/1
+   ntfs_attr_find_in_attrdef
+   ntfs_attr_size_bounds_check
+   ntfs_attr_can_be_non_resident
+   ntfs_attr_add
 
-The non-null property is derived based on the absence of
-PTR_MAYBE_NULL flag on rA's or rB's type. But that is not sufficient
-for types like PTR_TO_MEM, as in the example.
+Require the whole entry to lie within attrdef_size in the loop guard, and
+reject at mount a $AttrDef too small to hold one attr_def entry.
 
-This patch replaces type_may_be_null() call with reg_not_null(),
-which contains an allowlist of types for which absence of
-PTR_MAYBE_NULL actually means that the value can't be NULL at runtime.
-
-At the moment, the list in the reg_not_null() omits two types for
-which PTR_MAYBE_NULL is applicable: PTR_TO_XDP_SOCK and PTR_TO_BUF.
-In order to remain backward compatible, and assuming that only
-comparison between pointers of the same type makes sense,
-this commit extends reg_not_null(). W/o such an extension e.g.
-verifier_jeq_infer_not_null/null_ptr_to_map_value fails.
-
-reg_not_null() can be extended further, but I deem that out of scope
-for the fix at hand. Explicit base_type(...) != PTR_TO_BTF_ID
-checks in the check_cond_jmp_op() can be removed with migration to
-reg_not_null(), but that is a behavioural change, as the special case
-would start matching for PTR_TO_BTF_ID that is also is_trusted_reg().
-I omit the behavioural change from this commit.
-
-Fixes: befae75856ab ("bpf: propagate nullness information for reg to reg comparisons")
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260826-bug-029-bad-non-null-inference-v2-1-136789ace9e9@localhost
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Dennis Tighe <dennis.tighe@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ntfs/attrib.c | 4 ++--
+ fs/ntfs/super.c  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 03187bab806a7..59f12ba70eb6e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -370,6 +370,8 @@ static bool reg_not_null(struct bpf_verifier_env *env, const struct bpf_reg_stat
- 	type = base_type(type);
- 	return type == PTR_TO_SOCKET ||
- 		type == PTR_TO_TCP_SOCK ||
-+		type == PTR_TO_XDP_SOCK ||
-+		type == PTR_TO_BUF ||
- 		type == PTR_TO_MAP_VALUE ||
- 		type == PTR_TO_MAP_KEY ||
- 		type == PTR_TO_SOCK_COMMON ||
-@@ -16173,7 +16175,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	 */
- 	if (!is_jmp32 && BPF_SRC(insn->code) == BPF_X &&
- 	    __is_pointer_value(false, src_reg) && __is_pointer_value(false, dst_reg) &&
--	    type_may_be_null(src_reg->type) != type_may_be_null(dst_reg->type) &&
- 	    base_type(src_reg->type) != PTR_TO_BTF_ID &&
- 	    base_type(dst_reg->type) != PTR_TO_BTF_ID) {
- 		eq_branch_regs = NULL;
-@@ -16189,9 +16190,11 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 			break;
- 		}
- 		if (eq_branch_regs) {
--			if (type_may_be_null(src_reg->type))
-+			/* src == dst && dst != NULL => src != NULL */
-+			if (reg_not_null(env, dst_reg) && type_may_be_null(src_reg->type))
- 				mark_ptr_not_null_reg(&eq_branch_regs[insn->src_reg]);
--			else
-+			/* src == dst && src != NULL => dst != NULL */
-+			if (reg_not_null(env, src_reg) && type_may_be_null(dst_reg->type))
- 				mark_ptr_not_null_reg(&eq_branch_regs[insn->dst_reg]);
- 		}
+diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
+index 9e41ba97e024d..918ff4db75f73 100644
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -1732,8 +1732,8 @@ static struct attr_def *ntfs_attr_find_in_attrdef(const struct ntfs_volume *vol,
+ 	struct attr_def *ad;
+ 
+ 	WARN_ON(!type);
+-	for (ad = vol->attrdef; (u8 *)ad - (u8 *)vol->attrdef <
+-			vol->attrdef_size && ad->type; ++ad) {
++	for (ad = vol->attrdef; (u8 *)ad - (u8 *)vol->attrdef <=
++	     vol->attrdef_size - (s32)sizeof(*ad) && ad->type; ++ad) {
+ 		/* We have not found it yet, carry on searching. */
+ 		if (likely(le32_to_cpu(ad->type) < le32_to_cpu(type)))
+ 			continue;
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index d287140b3fc61..242f6f9b5598e 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -1241,9 +1241,9 @@ static bool load_and_init_attrdef(struct ntfs_volume *vol)
+ 		goto failed;
  	}
+ 	NInoSetSparseDisabled(NTFS_I(ino));
+-	/* The size of FILE_AttrDef must be above 0 and fit inside 31 bits. */
++	/* FILE_AttrDef must hold at least one entry and fit inside 31 bits. */
+ 	i_size = i_size_read(ino);
+-	if (i_size <= 0 || i_size > 0x7fffffff)
++	if (i_size < (s64)sizeof(struct attr_def) || i_size > 0x7fffffff)
+ 		goto iput_failed;
+ 	vol->attrdef = kvzalloc(i_size, GFP_NOFS);
+ 	if (!vol->attrdef)
 -- 
 2.53.0
 
