@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7C84DDB2F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB35579813;
 	Thu, 17 Sep 2026 15:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659610; cv=none; b=dU5HgZuIikJ4zwtsTtuMPrAinKWalYeESRyYgqBYbQabmgRkqYD38yjIgdEPWABtnitWqRIU1MNWBfA6akNz/Pe4m7FZgBg4srWN79iYNQol/LsXCZRJPa3jT9rfsj+gOvlHbFHOyHyoH+Ht1ZynjxRJuSoKqxZdpE1eSPgxUzY=
+	t=1789659613; cv=none; b=RMLtf9aYnJV41PnRkPPObvLBuljOqISunfTBCdlJD1hfi6YhThxvFl28PbYjvwz4b+RS9rQ3j5WXnP68M92ZWCNe9/+8MDm1F6Vv9U8YXb2GsD0idL6PCMuioCZYqoXbLPqLnAzLk+PNxD0+hac5JrAljno0B5IuhAnqjLiGcvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659610; c=relaxed/simple;
-	bh=2THnTI0GRd5uI1HNNtSWD/vqUI+9UdbMCNJ7N/PnOxA=;
+	s=arc-20240116; t=1789659613; c=relaxed/simple;
+	bh=fE0ctDbzLxPjOryX/+46cgbQ9IcNV4daPIIgWyVDpM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sg4crlCin3Yf43IHsEZKDdMl1/t3J+I+gzrcCsgVtsUXp7q2wOHawxcJX5M44305l6F4CXX+7Z/bApUyGEi+JXT8H9u+ozmak18h787QlLLPCioE1iofoj3OcFRqXTr7nJJcPhQ1kcEu6aVUBgnLHT7vQDjWQllYfmPfgaS7gK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Agfn63uE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hd7en70yIUoJyhm+97KU7TthB46jqEEJT5FT5Nu+TSKdDLlXKuLpv/DHkYIZG5XC8oNLno9x+M2tA7hQH0+nDkf7eqdcOAgk3aPgtTcrR9lawu2xCxZ2SyXYqCGHKDjEWoLmO7doqNrKv6i936rn9ErnfT7t/8AcDYT8BSbqvOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MugNzmpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Agfn63uE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093D21F000FF;
-	Thu, 17 Sep 2026 15:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MugNzmpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BC81F0089A;
+	Thu, 17 Sep 2026 15:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659601;
-	bh=p6PT9nym2NKWUBfsbgf1TwaZjFg0UuVfB60WnANF8JU=;
+	s=korg; t=1789659604;
+	bh=007DDRUg8E583gQOsPh4dXqtBoJbR5qfE/miFgdQ4vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Agfn63uE6uOi+s0OX6wCgv0ZGxH9ZYspvVVF/Inr+fvfTRybgCbltPP08JKcn9GY+
-	 vh1w4Ew/dxKk8iqedhJ4cyLc0TGPH605TZjntNSWUl00TP/2LsX8R5BitYpaXxJhRv
-	 ifepamXCcJ6tfl/VN/4tvy5aRPeqdxfMJs2wSUTY=
+	b=MugNzmpBUv6QvUDCP0/dcVt8NNr/iowhcX4RkM5OyKvmO7lbaSoC5+wnLgcEAfLzi
+	 hHm4iPlWeKqSXHRpe3gnRwT4Li1UHg3KMOnSgrWdaM0QKp5R7I/ARgLpD8XzMeg/gz
+	 9cfF3TirP9hcyft8nFlfdZxO4xRANEgorTS+LaKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vineeth Karumanchi <vineeth.karumanchi@amd.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 311/733] net/sched: ets: clamp quantum in parse and fallback paths
-Date: Thu, 17 Sep 2026 16:10:19 +0100
-Message-ID: <20260917151359.218651052@linuxfoundation.org>
+Subject: [PATCH 7.2 312/733] net: macb: fix NULL pointer dereference on unbind with fixed-link
+Date: Thu, 17 Sep 2026 16:10:20 +0100
+Message-ID: <20260917151359.246019547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -48,76 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
 
-[ Upstream commit 1c38487f46b243bfeefec0c0c86023a3904f2214 ]
+[ Upstream commit 38b6be101006d3e7af972999f45d4f1e8250587a ]
 
-ets_qdisc_change() falls back to psched_mtu() with no floor for bands
-without an explicit quantum. With a crafted size table qdisc_pkt_len
-reaches ~2 GiB, so a zero psched_mtu on a headerless device makes the
-deficit-refill loop spin under the qdisc lock.
+When the device tree describes a fixed-link and has no "mdio" child
+node, macb_mii_init() returns early without allocating the MDIO bus,
+leaving bp->mii_bus as NULL.
 
-Move the floor into ets_quantum_parse() so explicitly configured quanta
-are also clamped to [256, 1<<20], not just the fallback path.
+Two cleanup paths then dereference this NULL bus:
 
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_ETS=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
+1. On driver unbind, macb_remove() unconditionally calls
+   mdiobus_unregister(bp->mii_bus), which oopses:
 
-  tc qdisc add dev dummy0 root ets bands 3 strict 2 quanta 1 1
+  Unable to handle kernel NULL pointer dereference at virtual address 00000000000004a8
+  pc : mdiobus_unregister+0x14/0xa4
+  lr : macb_remove+0x38/0xa4
+  Call trace:
+   mdiobus_unregister+0x14/0xa4 (P)
+   macb_remove+0x38/0xa4
+   platform_remove+0x20/0x30
+   device_release_driver_internal+0x1c8/0x224
+   unbind_store+0xb4/0xbc
 
-Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.9
+2. On the probe error path in macb_probe(), reached when
+   macb_mii_init() has succeeded but a subsequent step fails, the
+   err_out_unregister_mdio label runs the same unconditional cleanup.
+
+mdiobus_unregister() and mdiobus_free() do not guard against a NULL
+bus, so guard the calls in both macb_remove() and the probe error
+path.
+
+Fixes: d0c3601f2c4e ("net: macb: Avoid 20s boot delay by skipping MDIO bus registration for fixed-link PHY")
+Signed-off-by: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260902102836.2019355-1-vineeth.karumanchi@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index 25fcf4079fece..6cc902a038387 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -83,11 +83,7 @@ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
- 			     unsigned int *quantum,
- 			     struct netlink_ext_ack *extack)
- {
--	*quantum = nla_get_u32(attr);
--	if (!*quantum) {
--		NL_SET_ERR_MSG(extack, "ETS quantum cannot be zero");
--		return -EINVAL;
--	}
-+	*quantum = clamp_t(u32, nla_get_u32(attr), 256, 1 << 20);
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 05eda2545597b..cd140f98cbc83 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5964,8 +5964,10 @@ static int macb_probe(struct platform_device *pdev)
  	return 0;
- }
  
-@@ -632,11 +628,13 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 			return err;
- 	}
- 	/* If there are more bands than strict + quanta provided, the remaining
--	 * ones are ETS with quantum of MTU. Initialize the missing values here.
-+	 * ones are ETS with quantum of max(MTU, 256). Initialize the missing
-+	 * values here.
- 	 */
- 	for (i = nstrict; i < nbands; i++) {
- 		if (!quanta[i])
--			quanta[i] = psched_mtu(qdisc_dev(sch));
-+			quanta[i] = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)),
-+					    256, 1 << 20);
- 	}
+ err_out_unregister_mdio:
+-	mdiobus_unregister(bp->mii_bus);
+-	mdiobus_free(bp->mii_bus);
++	if (bp->mii_bus) {
++		mdiobus_unregister(bp->mii_bus);
++		mdiobus_free(bp->mii_bus);
++	}
  
- 	/* Before commit, make sure we can allocate all new qdiscs */
+ err_out_phy_exit:
+ 	phy_exit(bp->phy);
+@@ -5993,8 +5995,10 @@ static void macb_remove(struct platform_device *pdev)
+ 		bp = netdev_priv(netdev);
+ 		unregister_netdev(netdev);
+ 		phy_exit(bp->phy);
+-		mdiobus_unregister(bp->mii_bus);
+-		mdiobus_free(bp->mii_bus);
++		if (bp->mii_bus) {
++			mdiobus_unregister(bp->mii_bus);
++			mdiobus_free(bp->mii_bus);
++		}
+ 
+ 		device_set_wakeup_enable(&bp->pdev->dev, 0);
+ 		cancel_delayed_work_sync(&bp->tx_lpi_work);
 -- 
 2.53.0
 
