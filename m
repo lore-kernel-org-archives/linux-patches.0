@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95544ABBBF;
-	Thu, 17 Sep 2026 16:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31544E2F08;
+	Thu, 17 Sep 2026 16:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661013; cv=none; b=CPuMdsc76y8DdQoeVX9+4tCtqL7ABVX3Cz+NXEZEYwK50B2AX8srJJRZF5hxUhWYma+8mlI1Iix9UzddoxmEdVNVrEwvzMHQfKb6s6p/j1cZy/+0npFCuPrzJFBKyKjKUyynZz3X3lEj6nKqfhJcA3CE1L2FgGE7xP0NX5NHsPI=
+	t=1789661016; cv=none; b=PEJk4Ak8aCDRDJ8Hnm6i878lae37vWKOrNKEUYIbJ5IYv4bXhwgJuu5p3aV/rTKgmyESGVt7HXEiIgCPu0RtgzF/GHzmDYjm9UouCVASM3OYI++dDreDnUxqIjuW2CxME93QQa/Dpd+NV5y92qjsf8/zXsDtl/5zNkB8KeqYEUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661013; c=relaxed/simple;
-	bh=gKPMQvnPi3Sz+re9HkmGGTfTnrDU37C4VEbfi1bt5ME=;
+	s=arc-20240116; t=1789661016; c=relaxed/simple;
+	bh=QC2zDP00j1s+BEVkQLvvl5xQBSTD7LRI7sG42uNuiSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FytIncDhilIp2a++KdlgrZ9gC6aBbi8d9anTwYJH1AffdW31KBoy6haGWHzW0Gr/8kL9TyfnoGxYinEvxAvMDHvktPg0KFsy+JtMxTv6Xu4zPufZBLMdN/z+lEQmDY0MH0KGtFPKbvYWn96SPzv0TmF+pvdL2ysJW5mTxqe/fEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soJzLkCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HfjTvsQF6wCOWFMRGMcIM05rRWgYmi+kt7iGn2kTZZTbmwdYWk1GSL4OL4PM28QIHDGCQwdQoKxgD9SyxEKnmqNVi1YKrfQ/dp4ci7lFU1RUW/4hx5LCv35cRTZ45lIib9Q+1b8eORKtWWfI9KA62v/94rA/wfqxs7koK+rj2AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsm1KDFN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soJzLkCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2D11F000FF;
-	Thu, 17 Sep 2026 16:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsm1KDFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053881F000FF;
+	Thu, 17 Sep 2026 16:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661012;
-	bh=tQMFlpy0A7y+Kpx+XiRDz0Exq/uMuLll2yhw5l92bQo=;
+	s=korg; t=1789661015;
+	bh=lzUyPjTOYxnJYwJF+HtaI85EkfOOOAGSwGEYBT7h0tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=soJzLkCD8ujb3L63H8H6t9Nkk6k7VfokEwvBBOqS4c7D6SEc9NZJLveTqkZcGGNwI
-	 nR3Qr/pnC4I8BOEzUibEfnPoFbXKEKGjr3wRGm4c9KumUhDB8mEwADyriLXVUFI5Em
-	 lXQNcK2RqoBaPCHERqSeu4DYmrqGW7vEmh8tz7ek=
+	b=lsm1KDFNNXPWFpw9m2kx8aU7VtvBHKDQ+geAhToBfta4SUh6q2nMZa4V6V2vp9epC
+	 dtY5+RKAwROOlNfGlRSPGoct5dcfyWvpjmuNdsQQKKOqqjJzSVQ1h4XdW8djdwL0nv
+	 AL4infVil3GeZZcjnBj9MD9RMGAAt6MMJRPBonAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Lin <kenlin5@quanta.corp-partner.google.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0053/1250] media: platform: cros-ec: Add Kulnex and Moxoe to the match table
-Date: Thu, 17 Sep 2026 15:57:28 +0100
-Message-ID: <20260917151553.375689535@linuxfoundation.org>
+Subject: [PATCH 6.18 0054/1250] wifi: mac80211: avoid out-of-bounds access in monitor
+Date: Thu, 17 Sep 2026 15:57:29 +0100
+Message-ID: <20260917151553.400836589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,35 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ken Lin <kenlin5@quanta.corp-partner.google.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit e024767f90f9f50bfcce4b20bb74237ad72450f3 ]
+[ Upstream commit 03c41203ee5a833a9d7a7630be190830cede29d8 ]
 
-The Google Kulnex and Moxoe device uses the same approach as Google Brask
-which enables the HDMI CEC via the cros-ec-cec driver.
+In NAN, we don't know on what band the frame will be sent. Therefore we
+set info->band to NUM_NL80211_BANDS. However, this leads to out-of-bound
+access in ieee80211_add_tx_radiotap_header when we try to access the
+sbands array.
 
-Signed-off-by: Ken Lin <kenlin5@quanta.corp-partner.google.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fix it by not accessing the array if the band is NUM_NL80211_BANDS.
+This means that we will not report rate info for legacy rate in NAN.
+But nobody really cares about it.
+
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260504101829.346c9893d136.I15919027597c04ec35c6217db6e52e2a605e5cfc@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/platform/cros-ec/cros-ec-cec.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/status.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/cec/platform/cros-ec/cros-ec-cec.c b/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-index 419b9a7abcceb..4b3f9bff6067a 100644
---- a/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-+++ b/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-@@ -334,6 +334,10 @@ static const struct cec_dmi_match cec_dmi_match_table[] = {
- 	{ "Google", "Dirks", "0000:00:02.0", port_ab_conns },
- 	/* Google Moxie */
- 	{ "Google", "Moxie", "0000:00:02.0", port_b_conns },
-+	/* Google Kulnex */
-+	{ "Google", "Kulnex", "0000:00:02.0", port_b_conns },
-+	/* Google Moxoe */
-+	{ "Google", "Moxoe", "0000:00:02.0", port_b_conns },
- };
+diff --git a/net/mac80211/status.c b/net/mac80211/status.c
+index 4b38aa0e902a8..8716eda8317d1 100644
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2008-2010	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+- * Copyright 2021-2025  Intel Corporation
++ * Copyright 2021-2026  Intel Corporation
+  */
  
- static struct device *cros_ec_cec_find_hdmi_dev(struct device *dev,
+ #include <linux/export.h>
+@@ -295,9 +295,10 @@ ieee80211_add_tx_radiotap_header(struct ieee80211_local *local,
+ 						 RATE_INFO_FLAGS_VHT_MCS |
+ 						 RATE_INFO_FLAGS_HE_MCS)))
+ 			legacy_rate = status_rate->rate_idx.legacy;
+-	} else if (info->status.rates[0].idx >= 0 &&
+-		 !(info->status.rates[0].flags & (IEEE80211_TX_RC_MCS |
+-						  IEEE80211_TX_RC_VHT_MCS))) {
++	} else if (info->band < NUM_NL80211_BANDS &&
++		   info->status.rates[0].idx >= 0 &&
++		   !(info->status.rates[0].flags & (IEEE80211_TX_RC_MCS |
++						    IEEE80211_TX_RC_VHT_MCS))) {
+ 		struct ieee80211_supported_band *sband;
+ 
+ 		sband = local->hw.wiphy->bands[info->band];
 -- 
 2.53.0
 
