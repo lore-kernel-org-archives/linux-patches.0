@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0AC3CD8BF;
-	Thu, 17 Sep 2026 18:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24DC389E1A;
+	Thu, 17 Sep 2026 18:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670726; cv=none; b=sh+Buz8iAUW08yVf2LQCTKET2sEnyeVP/RV+1hh/b0qFwUApv4Nc4hbjaQalvYz3iX+yQI8WLd8guaKyTkGSyKepZjPv4roPyVKmC5apLKBrG1nOjvpA8ZGD08SzBG7OogDsY4J6UXsEvDrgRS1Nj5HP6KYVkszl0RV6yskTN0U=
+	t=1789670729; cv=none; b=X42T2Gf7+dOCbjpJ5/1SBMQlQxf2GMNMBw807t0QX6dC59YO4nICNo2nlnFZE4/WEW2MvkTlZ4Ia/1LfM9Pcer3bsYc9kF2OkGYcpT6LAyaCUSGjAaG5sLOjNcWhDjsWczVXtmnomf7h4LmwtVOiAtgA7Mvh+0cd6ZOAGQkwpz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670726; c=relaxed/simple;
-	bh=fL+wBUNJwiUmw9k93ji+x2ktEWoLf0ed26EmHWcqhFU=;
+	s=arc-20240116; t=1789670729; c=relaxed/simple;
+	bh=7/dpSgYfaQnFzCFb1UFS1I6Kkt28ONQ8YwKmstm9KBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puPCvGhxuR6M8qQNyM6ZIhDKh/sEicLix5H/jwWtTdKqL78OU2/aDOF//SdI4HW12Q1rQm7ZPTHBf/MjRy891n/MoMCFmQNJSqGbVURbHZtIM6OVv3mwP93h0HfdQ9MT+vQpGZjJZyQHD++URkubmliDGB4IgLn857T1UGMlbAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0Vr7YD0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YamW3vVGhy/bfnS/xf9vu1v0Seuv/SHPxdFZ1g71aueUYpyRP93NounWzo8L9wh2ppw2N3wokdxRKlQ5yE2soosVqwPhFKWyIe1Gdj7l0dLpjumWMJ442FOYXXoUrS7NDwsolEFgNmprabRTgdhetyZnvcD1av7RXj32LkHpxvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq07v6pl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0Vr7YD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090B31F000FF;
-	Thu, 17 Sep 2026 18:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq07v6pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C251F000FF;
+	Thu, 17 Sep 2026 18:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670724;
-	bh=Au3+Q2CWGMOECW4DRpyVOsNpogtbRWxxf90gs63zUes=;
+	s=korg; t=1789670727;
+	bh=wSjCuMnLMbLymKnwyOY8+UVWMRMvXeeYT0eBvW6sbCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D0Vr7YD0MwOvWh38zAphQYL4Ejlivz/aN77YgtOgN0Z18v4a94AWWuGApFmU16ruG
-	 IrmsaBuSg8eCTxR6c1x0fYSz8OtNERSui1wQJhnUHsgRIieTsRrIaJ7TsRIe026CmY
-	 ErfQ1E3shGbONMwsxj9QKTybOuh1eYJNl+44cuJw=
+	b=Wq07v6plA2Ffum2F4LCpKU1JbYW65nwAyWqprG2mlqtpLSYrktngU/XmQOpglgEc6
+	 6Bh+wAr4MKwBRCGgTjy90xyhsoMMXZrBM9ldtCO0AUF9DWkvQNKruzzMqfn8Zf/YGP
+	 OegFKaLx+lTGSWGX1EWPxWfXYLu/7hrjinZjK+JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0749/1102] watchdog: msc313e: Fix clock leak and spurious timer in settimeout()
-Date: Thu, 17 Sep 2026 16:11:32 +0100
-Message-ID: <20260917151559.221021160@linuxfoundation.org>
+Subject: [PATCH 6.12 0750/1102] watchdog: msc313e: Enable clock before accessing hardware registers
+Date: Thu, 17 Sep 2026 16:11:33 +0100
+Message-ID: <20260917151559.248540442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,81 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 3db30f315935c2fb0d95f46b7a593b5b4d3ec3d0 ]
+[ Upstream commit 3db2df24e7f11fb117718f6abe326628d91bc500 ]
 
-msc313e_wdt_settimeout() unconditionally calls msc313e_wdt_start() which
-introduces two severe bugs:
+msc313e_wdt_probe() reads from hardware registers without ensuring the
+required clock is enabled.  Furthermore, if the bootloader leaves the
+watchdog running, msc313e_wdt_probe() sets WDOG_HW_RUNNING without
+increasing the clock's reference count.
 
-1. If the watchdog is already active, calling start() again will
-   increase the reference count of the clock again.  However stop() is
-   only called once, the reference count is unbalance.
-2. If the watchdog is stopped, calling settimeout() will start
-   the hardware timer accidentally.
+While the clock is currently supplied as a fixed clock by the device
+tree (`xtal_div2` in arch/arm/boot/dts/sigmastar/mstar-v7.dtsi) which
+masks the physical issue, this still violates the API usage.
 
-Factor out the register-writing logic into a helper function.  Only call
-it in settimeout() if the watchdog is running.  Otherwise, simply update
-`wdev->timeout`.
+Call clk_prepare_enable() before reading WDT registers.  If the WDT is
+running, leave the clock enabled so the CCF reference counter is
+balanced.
 
-Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
+Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-4-tzungbi@kernel.org
+Link: https://patch.msgid.link/20260828161348.13212-5-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/watchdog/msc313e_wdt.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 072bfcea85c24..5dc5e3ab7001e 100644
+index 5dc5e3ab7001e..86e72aea96855 100644
 --- a/drivers/watchdog/msc313e_wdt.c
 +++ b/drivers/watchdog/msc313e_wdt.c
-@@ -32,20 +32,26 @@ struct msc313e_wdt_priv {
- 	struct clk *clk;
- };
+@@ -109,6 +109,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct msc313e_wdt_priv *priv;
+ 	unsigned long rate;
++	int ret;
  
-+static void msc313e_wdt_set_hw_timeout(struct msc313e_wdt_priv *priv,
-+				       unsigned int timeout)
-+{
-+	u32 t = timeout * clk_get_rate(priv->clk);
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -134,9 +135,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	priv->wdev.max_timeout = U32_MAX / rate;
+ 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
+ 
++	ret = clk_prepare_enable(priv->clk);
++	if (ret)
++		return ret;
 +
-+	writew(t & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
-+	writew((t >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
-+	writew(1, priv->base + REG_WDT_CLR);
-+}
+ 	/* If the period is non-zero the WDT is running */
+-	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16))
++	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16)) {
+ 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
++		/*
++		 * Keep the clock enabled. The watchdog core will skip the next
++		 * start() and a future stop() will balance the CCF reference
++		 * count.
++		 */
++	} else {
++		clk_disable_unprepare(priv->clk);
++	}
+ 
+ 	watchdog_set_drvdata(&priv->wdev, priv);
+ 	platform_set_drvdata(pdev, priv);
+@@ -145,7 +158,13 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	watchdog_stop_on_reboot(&priv->wdev);
+ 	watchdog_stop_on_unregister(&priv->wdev);
+ 
+-	return devm_watchdog_register_device(dev, &priv->wdev);
++	ret = devm_watchdog_register_device(dev, &priv->wdev);
 +
- static int msc313e_wdt_start(struct watchdog_device *wdev)
- {
- 	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
--	u32 timeout;
- 	int err;
- 
- 	err = clk_prepare_enable(priv->clk);
- 	if (err)
- 		return err;
- 
--	timeout = wdev->timeout * clk_get_rate(priv->clk);
--	writew(timeout & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
--	writew((timeout >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
--	writew(1, priv->base + REG_WDT_CLR);
-+	msc313e_wdt_set_hw_timeout(priv, wdev->timeout);
- 	return 0;
++	/* If the WDT is running and anything goes wrong, disable the clock. */
++	if (ret && test_bit(WDOG_HW_RUNNING, &priv->wdev.status))
++		clk_disable_unprepare(priv->clk);
++
++	return ret;
  }
  
-@@ -70,9 +76,13 @@ static int msc313e_wdt_stop(struct watchdog_device *wdev)
- 
- static int msc313e_wdt_settimeout(struct watchdog_device *wdev, unsigned int new_time)
- {
-+	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
-+
- 	wdev->timeout = new_time;
- 
--	return msc313e_wdt_start(wdev);
-+	if (watchdog_hw_running(wdev) || watchdog_active(wdev))
-+		msc313e_wdt_set_hw_timeout(priv, wdev->timeout);
-+	return 0;
- }
- 
- static const struct watchdog_info msc313e_wdt_ident = {
+ static int __maybe_unused msc313e_wdt_suspend(struct device *dev)
 -- 
 2.53.0
 
