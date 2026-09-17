@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF654FD27A;
-	Thu, 17 Sep 2026 17:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27AD4E06F5;
+	Thu, 17 Sep 2026 17:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666181; cv=none; b=flFd7280g5NkV/tc5x9+6gNuNHMEhdJm+6KcDVr8WfjLopEMQOdoXa27iOWLfDZDB3+fmgN1BwhpQwxoWsHMLE0El0bJdIOY1AAMlVynWdRhFoU1IYHqV7youtcJ/vtKoxMJImMLGnM+TWmTJIG7pjpeyUu6ixj8+5jupgfDZgM=
+	t=1789666183; cv=none; b=FjOF4K+3sM1MjYhJLkZYXRzMJVY+JqMkUK542FD9v3WyqvNpfkl7F5Lo6LoNaCs1GMvUgZ8nCb0vhrSY/APbXrQ26TfAiOTtvEa3vI6hG03spKm1DJZNZty+UHxvVt4CAGF8tjAyWlL22Ni5VjHLn7buLE37SwcpF2kLnMgJKFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666181; c=relaxed/simple;
-	bh=CE3yJ0si4F7bHOIpsxQincuVcxQHkGPRLVfM7IWggT4=;
+	s=arc-20240116; t=1789666183; c=relaxed/simple;
+	bh=uOMTN0u6Lrg1ubVBdXOUI7ZpzmHGf+5A+CCYCX7ShOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X33ZHMH+hoJbgnssOPbIfxhep0O3/9nXootqusc/N4P2JIcJ0SAEY/tJa/DQAW2gxHuwkn6WAH4utm9FiDeA/KV6gkjzPiIt5Dz4muWmZY5lpdnWPRLLx6l0zoqbax1hZxQOHqoZk+tGptdhsFNksiUrtXy+u5nBQFJHHXlcR9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3CLRSn8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Z7D39XkFhhUagk1LK0pv+QokHpwMlekjkKex+SdO0sHILgJkSnyVOJhe1KB6ALPkvqyJcp+rm8cWdFLCGWoBr4PlAXvh2N9bJJRXZV7A5xWxfK97kTarsrbB6DJLuGWZaIE0tPL1lGG1jYbPT21bWKMhmYxVBhs/F06XEbrkvxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0vj4HGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3CLRSn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E771F000FF;
-	Thu, 17 Sep 2026 17:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0vj4HGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C561F000FF;
+	Thu, 17 Sep 2026 17:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666179;
-	bh=BmJfhpfw4SF9qqNbgVzGZspy2AyQE7DcmI8rbCSbbSQ=;
+	s=korg; t=1789666182;
+	bh=yVoJLLGvvrXcKnCxLNL6J//nVxTU4a7oQ0hhX+XfCqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3CLRSn8RpPbIjpNJLqgs1fyJv+Maj3G5oSVc8YO5IyneehGTDltuvtKPj5ZkZ/Ap
-	 XxMi0PVtjYQ+s0wkUNhFGwpN56e7PY52BY/JYtx9SK4+SKa4RQAzo5kPhgvnpGtjHb
-	 5l7IA4kZj599lMJMwQlx162HB1a0XJH5JqSULHdg=
+	b=s0vj4HGmSLZe6N4johZS7XeIsPRmVPFkys5uo45StcesoYiJNL0p/9iGH1Eb5ec8F
+	 NCtnmLiQUiOZXZC56Y05Ljej0uUOcphxaAZ3bDJutVlj/PyvuLSaFsd9ZrKTyou2GW
+	 HjhEL9tEh6sopN9365Z5+C0AMQ2amEt5EFkFIR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	Breno Leitao <leitao@debian.org>
-Subject: [PATCH 6.18 0952/1250] configfs: pin the symlink targets dirent instead of chasing ->ci_dentry
-Date: Thu, 17 Sep 2026 16:12:27 +0100
-Message-ID: <20260917151617.825387050@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 0953/1250] powerpc/ps3: Fix repository.c build failure
+Date: Thu, 17 Sep 2026 16:12:28 +0100
+Message-ID: <20260917151617.850923539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -44,116 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit a7c1290eef60711c10289c056ad32ed1f2b47b12 upstream.
+commit 5ba79d37403d86082ab4083b0f51ec3008a942cb upstream.
 
-create_link() reads the target's configfs_dirent from
-item->ci_dentry->d_fsdata, relying on the item reference taken by
-get_target().  That reference pins the item, not its dentry: the dentry is
-pinned by DCACHE_PERSISTENT, which configfs_remove_dir() releases via
-simple_rmdir() while the item is still alive.  A symlink racing with rmdir
-of its target can therefore find ->ci_dentry freed and its dirent
-released, triggering WARN_ON(!atomic_read(&sd->s_count)) in configfs_get().
+GCC fails to build ps3_defconfig with the following errors:
 
-Take the dirent in get_target() as well, under ->d_lock and atomically
-with the item reference, and pass it down to create_link().  A hashed
-dentry has not been killed yet, so its ->d_fsdata reference keeps the
-dirent alive there.
+  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
+  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 3 [-Werror=stringop-overread]
+     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
+  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 4 [-Werror=stringop-overread]
+     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The current use of strnlen(text, sizeof(n)) triggers -Wstringop-overread
+when text is a short string literal that is smaller than sizeof(n), such
+as "bi" or "bus". Use strlen(text) instead and clamp the copy length to
+sizeof(n) before memcpy().
+
+Drop the redundant char * cast while at it.
+
+Fixes: f94a84a09148 ("powerpc/ps3: refactor strncpy usage")
 Cc: stable@vger.kernel.org
-Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Tested-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260730093435.195441-2-vasilisalmpanis@gmail.com
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260703165834.137242-2-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/configfs/symlink.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ arch/powerpc/platforms/ps3/repository.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/configfs/symlink.c
-+++ b/fs/configfs/symlink.c
-@@ -76,9 +76,9 @@ static int configfs_get_target_path(stru
+--- a/arch/powerpc/platforms/ps3/repository.c
++++ b/arch/powerpc/platforms/ps3/repository.c
+@@ -6,6 +6,8 @@
+  *  Copyright 2006 Sony Corp.
+  */
  
- static int create_link(struct config_item *parent_item,
- 		       struct config_item *item,
-+		       struct configfs_dirent *target_sd,
- 		       struct dentry *dentry)
- {
--	struct configfs_dirent *target_sd = item->ci_dentry->d_fsdata;
- 	char *body;
- 	int ret;
- 
-@@ -115,6 +115,7 @@ static int create_link(struct config_ite
- 
- 
- static int get_target(const char *symname, struct config_item **target,
-+		      struct configfs_dirent **target_sd,
- 		      struct super_block *sb)
- {
- 	struct path path __free(path_put) = {};
-@@ -125,7 +126,20 @@ static int get_target(const char *symnam
- 		return ret;
- 	if (path.dentry->d_sb != sb)
- 		return -EPERM;
--	*target = configfs_get_config_item(path.dentry);
-+	/*
-+	 * A hashed dentry guarantees that neither the item nor the dirent
-+	 * have been released yet, as removals unhash before dropping.
-+	 * Grab both references here. An item reference alone would not keep
-+	 * ->ci_dentry alive.
-+	 */
-+	spin_lock(&path.dentry->d_lock);
-+	if (!d_unhashed(path.dentry)) {
-+		struct configfs_dirent *sd = path.dentry->d_fsdata;
++#include <linux/minmax.h>
 +
-+		*target = config_item_get(sd->s_element);
-+		*target_sd = configfs_get(sd);
-+	}
-+	spin_unlock(&path.dentry->d_lock);
- 	if (!*target)
- 		return -ENOENT;
- 	return 0;
-@@ -139,6 +153,7 @@ int configfs_symlink(struct mnt_idmap *i
- 	struct configfs_dirent *sd;
- 	struct config_item *parent_item;
- 	struct config_item *target_item = NULL;
-+	struct configfs_dirent *target_sd = NULL;
- 	const struct config_item_type *type;
+ #include <asm/lv1call.h>
  
- 	sd = dentry->d_parent->d_fsdata;
-@@ -182,7 +197,7 @@ int configfs_symlink(struct mnt_idmap *i
- 	 *  AV, a thoroughly annoyed bastard.
- 	 */
- 	inode_unlock(dir);
--	ret = get_target(symname, &target_item, dentry->d_sb);
-+	ret = get_target(symname, &target_item, &target_sd, dentry->d_sb);
- 	inode_lock(dir);
- 	if (ret)
- 		goto out_put;
-@@ -196,13 +211,14 @@ int configfs_symlink(struct mnt_idmap *i
- 		ret = type->ct_item_ops->allow_link(parent_item, target_item);
- 	if (!ret) {
- 		mutex_lock(&configfs_symlink_mutex);
--		ret = create_link(parent_item, target_item, dentry);
-+		ret = create_link(parent_item, target_item, target_sd, dentry);
- 		mutex_unlock(&configfs_symlink_mutex);
- 		if (ret && type->ct_item_ops->drop_link)
- 			type->ct_item_ops->drop_link(parent_item,
- 						     target_item);
- 	}
+ #include "platform.h"
+@@ -74,8 +76,9 @@ static void _dump_node(unsigned int lpar
+ static u64 make_first_field(const char *text, u64 index)
+ {
+ 	u64 n = 0;
++	size_t len = min(strlen(text), sizeof(n));
  
-+	configfs_put(target_sd);
- 	config_item_put(target_item);
+-	memcpy((char *)&n, text, strnlen(text, sizeof(n)));
++	memcpy(&n, text, len);
+ 	return PS3_VENDOR_ID_NONE + (n >> 32) + index;
+ }
  
- out_put:
 
 
