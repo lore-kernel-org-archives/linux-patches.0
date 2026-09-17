@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFEF3DD879;
-	Thu, 17 Sep 2026 18:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7F3DCD86;
+	Thu, 17 Sep 2026 18:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668761; cv=none; b=MJ7PSLRLvPL9blTrq+Ekt1X/wWV3S6l84YtuiIRnCaBaLtg/t9X8iT9QaqGxDZRtciip/qCTERdPBAnnh+l7rK6rw98b5j+3Z4rhoKJqRPXdXur120AMgHIIqRjm8muRy/6Ik0Bi8E6NiJ45+02axx7Hb2qtEYHC2zxVCeIDGGQ=
+	t=1789668763; cv=none; b=QOSc+rGFHxP+94Kr+cozoIWmIOkyGOtDzJDE9+sYEfKa/DYtdb5eYJypGV5nJo/tCgDjFUB1khUVseKVpplV+R29aV1ufio0upsDVGGD1D3cxHRqxbbVvKLChr+5yg3776SGOV+D+zNpR2dAHqnh6opfOpbq2Kgzf0YdDXZeAio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668761; c=relaxed/simple;
-	bh=JrMn4NhG+0ULFxfF6Iaep3mQOoiL++6k7/Nz4Xe7tK0=;
+	s=arc-20240116; t=1789668763; c=relaxed/simple;
+	bh=++drMzTmrIAF01xo5HB5KmQ8Eo5TrbJa8b/Px3I1wPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/Pv+cwjs+PJdkhsmzzxc0odrEhMT/Z5qlPXlMtB5dinC5mv4DirFqi/vg95SLEuAKHxjvPYsDuCErff9U/iPtQnr62LmZ6WuaFyIvOy3Kx05R9OcJm3okjiUnpyjgRq/ZVRGgo1jrHbXKlRWXw9DTcetlVnK25y+9Z6VuyS3bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKZAWlPY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nclt/saGae5cMhjxw7bsJwfx3z/zUMXd2DBJ4hRFdhhWJnTaIQu+3zIYTcVYu1VgPynbgAuywaZ4zMW6xkdzyJsl8N7DPOYeBHC5fe5yrn9HWMQB6aD1u2QEtvk9/9aXtxe1OhiTwvFY8XQwc+XlrV5S1uF0DB7YNX9G1ZUqCuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNy1yzEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKZAWlPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD46D1F000FF;
-	Thu, 17 Sep 2026 18:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNy1yzEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69A41F000FF;
+	Thu, 17 Sep 2026 18:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668759;
-	bh=mYRITr0YeIXMQkm71fforxxWlT9ZcGAJ2sDA4/mGTEQ=;
+	s=korg; t=1789668762;
+	bh=sxS/xNL061QNYvVHxIEBAfj1psFrXiHqlraT5XhbyBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PKZAWlPYZOLgEwinBrRi/uXGLFfP1rvBsyDPhHiyGM/jcw+4VnHIlOe0hHoWLcJm3
-	 H/lAKKbt3pc5wchVtQT6Q/tSHh75tYzB42Wkw5LHCOuC2qsu5nqVseBduJ7P3l2R48
-	 JfupyniyhLvj/wDTqjVv3zYMM22VAiqqkr+bNPR4=
+	b=JNy1yzEp5s2uPRtc78xsSkIoo2Xyq16qioRe7ZTiY1E1H5r4gHzRgJgMDTsPMmD49
+	 Kw/IFeEcAjja2AdNqWubx2nBCxFyuHAn8lJ2xqLlIpao5wuxqMt+kNTCUn/NtnexzR
+	 gDKQubKXCuNWeCSDMw97cniCEeaN3SZbIoYXbzcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0532/1102] sctp: fix soft lockup from unpadded ASCONF-ACK parameter iteration
-Date: Thu, 17 Sep 2026 16:07:55 +0100
-Message-ID: <20260917151553.158771861@linuxfoundation.org>
+Subject: [PATCH 6.12 0533/1102] raw: annotate disconnect-side IPv4 match writers
+Date: Thu, 17 Sep 2026 16:07:56 +0100
+Message-ID: <20260917151553.184517314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,94 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 2cb0b0b1ed69430bf73740377ea0a1c44c50db63 ]
+[ Upstream commit ac08d183dac0441e41f77bbad50798fe609d90f1 ]
 
-sctp_verify_asconf() walks ASCONF-ACK parameters with
-sctp_walk_params(), which advances by SCTP_PAD4(length), while the
-consumer sctp_get_asconf_response() iterates the same parameters
-advancing by the raw length, without padding. A single odd-length
-parameter desynchronises the two walks and makes the consumer
-interpret attacker-controlled bytes at a misaligned offset.
+raw_v4_match() reads inet_daddr, inet_rcv_saddr and
+sk_bound_dev_if locklessly under RCU. Bind and connect writers are
+annotated, but __udp_disconnect() still clears the same fields using
+plain stores.
 
-When those bytes yield a length of zero, the while loop over
-asconf_ack_len makes no progress, spinning forever in softirq
-context, and the watchdog reports a soft lockup. All reads stay
-within the received skb, so the lockup is a pure remote denial of
-service. A remote peer can trigger it with a crafted ASCONF-ACK on
-an ADD-IP enabled association with an outstanding ASCONF (RFC 5061
-section 4.1.2 requires the chunk to be authenticated, but the
-predefined empty key id 0 allows the peer to compute the same
-association HMAC from publicly exchanged parameters, so the gate
-does not help).
+Commit 18f116931f52e ("raw: annotate lockless match fields in
+raw_v4_match()") added the lockless readers and annotated the raw bind
+and datagram connect writers. Its v4 revision intentionally left the
+shared disconnect-side IPv4 writers for follow-up cleanup.
 
-The SCTP_PARAM_ERR_CAUSE case of sctp_verify_asconf() also performs
-no length check, letting a parameter without a complete error
-header reach the consumer, which reads errhdr.cause past the end of
-the parameter, an out-of-bounds read.
+Complete that follow-up by using WRITE_ONCE() for the disconnect-side
+stores, including the inet_rcv_saddr reset in inet_reset_saddr(), to
+pair with the lockless raw socket matcher.
 
-Reject SCTP_PARAM_ERR_CAUSE parameters shorter than
-sizeof(struct sctp_addip_param) + sizeof(struct sctp_errhdr) at the
-verifier, and advance the consumer iterator with the same padding
-rule as the verifier to keep the two walks in lockstep. The verifier
-change guarantees a complete error header in every ERR_CAUSE
-parameter the consumer can see, so the consumer's asconf_ack_len
-check is dropped and it returns err_param->cause directly. The
-consumer padding fix is still required because odd lengths remain
-valid for SCTP_PARAM_ERR_CAUSE per RFC 5061.
-
-The issue was found by ZeroHive, a vulnerability hunting agent at
-Tencent Yunding Lab.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260828042431.3873725-1-bsdhenrymartin@gmail.com
+Fixes: 0daf07e52709 ("raw: convert raw sockets to RCU")
+Link: https://lore.kernel.org/netdev/20260716142958.3064224-1-runyu.xiao@seu.edu.cn/
+Suggested-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260828012918.1461-1-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ include/net/ip.h | 3 ++-
+ net/ipv4/udp.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index b6eb79ef6a55d..2366dd0298ebd 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3230,6 +3230,9 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
- 		*errp = param.p;
- 		switch (param.p->type) {
- 		case SCTP_PARAM_ERR_CAUSE:
-+			if (length < sizeof(struct sctp_addip_param) +
-+				     sizeof(struct sctp_errhdr))
-+				return false;
- 			break;
- 		case SCTP_PARAM_IPV4_ADDRESS:
- 			if (length != sizeof(struct sctp_ipv4addr_param))
-@@ -3463,20 +3466,15 @@ static __be16 sctp_get_asconf_response(struct sctp_chunk *asconf_ack,
- 			case SCTP_PARAM_ERR_CAUSE:
- 				length = sizeof(*asconf_ack_param);
- 				err_param = (void *)asconf_ack_param + length;
--				asconf_ack_len -= length;
--				if (asconf_ack_len > 0)
--					return err_param->cause;
--				else
--					return SCTP_ERROR_INV_PARAM;
--				break;
-+				return err_param->cause;
- 			default:
- 				return SCTP_ERROR_INV_PARAM;
- 			}
- 		}
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 39c6a4033aeda..1a2383c773146 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -689,7 +689,8 @@ static inline void ip_ipgre_mc_map(__be32 naddr, const unsigned char *broadcast,
  
- 		length = ntohs(asconf_ack_param->param_hdr.length);
--		asconf_ack_param = (void *)asconf_ack_param + length;
--		asconf_ack_len -= length;
-+		asconf_ack_param = (void *)asconf_ack_param + SCTP_PAD4(length);
-+		asconf_ack_len -= SCTP_PAD4(length);
- 	}
+ static __inline__ void inet_reset_saddr(struct sock *sk)
+ {
+-	inet_sk(sk)->inet_rcv_saddr = inet_sk(sk)->inet_saddr = 0;
++	inet_sk(sk)->inet_saddr = 0;
++	WRITE_ONCE(inet_sk(sk)->inet_rcv_saddr, 0);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == PF_INET6) {
+ 		struct ipv6_pinfo *np = inet6_sk(sk);
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index a891504a96524..69e6897337417 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2006,10 +2006,10 @@ int __udp_disconnect(struct sock *sk, int flags)
+ 	 */
  
- 	return err_code;
+ 	sk->sk_state = TCP_CLOSE;
+-	inet->inet_daddr = 0;
++	WRITE_ONCE(inet->inet_daddr, 0);
+ 	inet->inet_dport = 0;
+ 	sock_rps_reset_rxhash(sk);
+-	sk->sk_bound_dev_if = 0;
++	WRITE_ONCE(sk->sk_bound_dev_if, 0);
+ 	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK)) {
+ 		inet_reset_saddr(sk);
+ 		if (sk->sk_prot->rehash &&
 -- 
 2.53.0
 
