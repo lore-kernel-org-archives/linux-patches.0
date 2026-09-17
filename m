@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3043E763E;
-	Thu, 17 Sep 2026 19:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4093CC7F8;
+	Thu, 17 Sep 2026 19:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671781; cv=none; b=ItgmO5N0500uIqTh+CRbqfkB1fJIcQxy86rJIK2T2RbLcV4FfBl26BR5/pi8LqzPEARqI0HNODOnQV/yHEmAzgq86nGtV0jiVJ5lzRNVw8f3Qkxob/pBottuCAJXyqDBPLqcsPoH+PhYBMt5s2Fo8I4j0G/Ei5Wgoc91tS3Lpdg=
+	t=1789671784; cv=none; b=sQNUicJHch7FBfbtZ5Ot2TCTm+Tq0VzD21I1pb6QT2BGo3vK0SrYcl6vaKoaPwQz2j96yT6efZOXG+SvzR8vCTdz5iDT4vfpJum6biUtH8Nlw/lEb4X5dPMVCbizR2vs48X9lLSc5OByk/PYrmnNuxoRaDAsjdrIZ9hmQM05W7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671781; c=relaxed/simple;
-	bh=r7ZLlRWqMqsVqcPi7i5G55XJvU7wYlbCtyP1NX7UgEg=;
+	s=arc-20240116; t=1789671784; c=relaxed/simple;
+	bh=pfoEzrNsBrQNYkOLqTOUEo6WKnuOrgqV35YCgLLizV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+JAfGx3eLH50YFwWu9GPbtP7y1Uzw/4kwYQjBhH4xR5FO7j5FgiHyqhXiBDCtCJXD3LKBLEZsII9DmIogPR40uiQsa5MFcL40s/0gkW8bALEExW+FzK0dT3XhCOcFTwUJj/E0r+2mEKUwv96+U7QtKfgiVU+vNyn40YStDbrY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4XmTWAO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EciPGDnM/sqGYc3VUDYU3X7oVlGz0RZInFQEA0+E33UOWFNyjZyC3STato3G/l3eLT0yLyuUjI60G/VqRkBStHe/k95n11D/NZ4IdRF6MlsNKPqwWsJm0elZHla4xH8hw2uoReNNf326aZrfzVgyw9XwMefYZDs2OT+4y2YPD08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqINzycs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4XmTWAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4900C1F000FF;
-	Thu, 17 Sep 2026 19:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqINzycs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDDC1F00893;
+	Thu, 17 Sep 2026 19:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671778;
-	bh=AfJWbfW3VYcM6+jTvdZdCrWgYnRrqfRp6ALiO9qeVSE=;
+	s=korg; t=1789671781;
+	bh=QrJ9EytTs46oTRlI99ovWyR0b8FFm/FrQ1gpXEGaFqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m4XmTWAOay1hp0ZgvJO/pvzpUjwylTNC5BaXn85udkFwmM/VE3kkqBYsu1Z2GWzT9
-	 0wdBbM2tQc+2TOcBgaaNPcsH8wGS6d6eWdayBNi5vwREYl+Se5IrY1fYWR4Iwt876c
-	 JV0zPtVxUJoiweMXZl4D0QbtOCJ89am4EiInIQH8=
+	b=vqINzycsnnHpJtWSxfDBldu/iYrjlhu3r6TuoGdrlN5BTLJp1q5bJohjO4BVmoHh+
+	 shSKxNn+mbOZDAQguNFhkEQpHA8+SdW3hdxe0XtUMM+/U+tJHBg31U0DRyihPQdpRr
+	 C735HZRCv7FZ0qeLqaqVQEC/lKGeGzKN7tB3JAeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1050/1102] btrfs: rename extent map functions to get block start, end and check if in tree
-Date: Thu, 17 Sep 2026 16:16:33 +0100
-Message-ID: <20260917151607.166349013@linuxfoundation.org>
+Subject: [PATCH 6.12 1051/1102] btrfs: fix extent map leak in NOCOW direct I/O write
+Date: Thu, 17 Sep 2026 16:16:34 +0100
+Message-ID: <20260917151607.193021749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,634 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit 2e871330cea44f7459726b0d83252949ae76166f ]
+[ Upstream commit 3f950867c307c5413d628a153ac44915bd117ffd ]
 
-These functions are exported and don't have a 'btrfs_' prefix in their
-names, which goes against coding style conventions. Rename them to have
-such prefix, making it clear they are from btrfs and avoiding potential
-collisions in the future with functions defined elsewhere outside btrfs.
+btrfs_dio_iomap_begin() calls btrfs_get_extent(), which returns an
+extent map reference that must be dropped on all exit paths.
 
+For direct writes into a NOCOW range, btrfs_get_blocks_direct_write()
+keeps using that extent map and asks btrfs_create_dio_extent() to
+allocate the ordered extent. If that fails, for example because
+btrfs_alloc_ordered_extent() fails, the function returns the error
+without dropping the input extent map. The PREALLOC path avoided this by
+dropping the input extent map before replacing it with the newly created
+one.
+
+Check the error from btrfs_create_dio_extent() before replacing the
+map and drop the input extent map on failure.
+
+Fixes: 5f9a8a51d8b9 ("Btrfs: add semaphore to synchronize direct IO writes with fsync")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 3f950867c307 ("btrfs: fix extent map leak in NOCOW direct I/O write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/compression.c            |    4 +--
- fs/btrfs/defrag.c                 |    4 +--
- fs/btrfs/direct-io.c              |    4 +--
- fs/btrfs/extent_io.c              |   23 +++++++++--------
- fs/btrfs/extent_map.c             |   50 +++++++++++++++++++-------------------
- fs/btrfs/extent_map.h             |    6 ++--
- fs/btrfs/file.c                   |    6 ++--
- fs/btrfs/inode.c                  |   14 +++++-----
- fs/btrfs/tests/extent-map-tests.c |   14 +++++-----
- fs/btrfs/tests/inode-tests.c      |   27 ++++++++++----------
- fs/btrfs/tree-log.c               |    4 +--
- 11 files changed, 79 insertions(+), 77 deletions(-)
+ fs/btrfs/direct-io.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/compression.c
-+++ b/fs/btrfs/compression.c
-@@ -510,8 +510,8 @@ static noinline int add_ra_bio_pages(str
- 		 * to this compressed extent on disk.
- 		 */
- 		if (!em || cur < em->start ||
--		    (cur + fs_info->sectorsize > extent_map_end(em)) ||
--		    (extent_map_block_start(em) >> SECTOR_SHIFT) !=
-+		    (cur + fs_info->sectorsize > btrfs_extent_map_end(em)) ||
-+		    (btrfs_extent_map_block_start(em) >> SECTOR_SHIFT) !=
- 		    orig_bio->bi_iter.bi_sector) {
- 			btrfs_free_extent_map(em);
- 			btrfs_unlock_extent(tree, cur, page_end, NULL);
---- a/fs/btrfs/defrag.c
-+++ b/fs/btrfs/defrag.c
-@@ -1077,7 +1077,7 @@ static int defrag_collect_targets(struct
- 
- add:
- 		last_is_target = true;
--		range_len = min(extent_map_end(em), start + len) - cur;
-+		range_len = min(btrfs_extent_map_end(em), start + len) - cur;
- 		/*
- 		 * This one is a good target, check if it can be merged into
- 		 * last range of the target list.
-@@ -1108,7 +1108,7 @@ add:
- 		list_add_tail(&new->list, target_list);
- 
- next:
--		cur = extent_map_end(em);
-+		cur = btrfs_extent_map_end(em);
- 		btrfs_free_extent_map(em);
- 	}
- 	if (ret < 0) {
 --- a/fs/btrfs/direct-io.c
 +++ b/fs/btrfs/direct-io.c
-@@ -249,7 +249,7 @@ static int btrfs_get_blocks_direct_write
- 		else
- 			type = BTRFS_ORDERED_NOCOW;
- 		len = min(len, em->len - (start - em->start));
--		block_start = extent_map_block_start(em) + (start - em->start);
-+		block_start = btrfs_extent_map_block_start(em) + (start - em->start);
+@@ -280,17 +280,24 @@ static int btrfs_get_blocks_direct_write
+ 		em2 = btrfs_create_dio_extent(BTRFS_I(inode), dio_data, start,
+ 					      &file_extent, type);
+ 		btrfs_dec_nocow_writers(bg);
+-		if (type == BTRFS_ORDERED_PREALLOC) {
+-			btrfs_free_extent_map(em);
+-			*map = em2;
+-			em = em2;
+-		}
+-
+ 		if (IS_ERR(em2)) {
+ 			ret = PTR_ERR(em2);
++			btrfs_free_extent_map(em);
++			*map = NULL;
+ 			goto out;
+ 		}
  
- 		if (can_nocow_extent(inode, start, &len,
- 				     &file_extent, false, false) == 1) {
-@@ -567,7 +567,7 @@ static int btrfs_dio_iomap_begin(struct
- 		iomap->addr = IOMAP_NULL_ADDR;
- 		iomap->type = IOMAP_HOLE;
++		/*
++		 * True NOCOW writes don't need to create a new extent map,
++		 * while PREALLOC writes must replace the existing one.
++		 */
++		if (em2) {
++			ASSERT(type == BTRFS_ORDERED_PREALLOC);
++			btrfs_free_extent_map(em);
++			*map = em2;
++			em = em2;
++		}
++
+ 		dio_data->nocow_done = true;
  	} else {
--		iomap->addr = extent_map_block_start(em) + (start - em->start);
-+		iomap->addr = btrfs_extent_map_block_start(em) + (start - em->start);
- 		iomap->type = IOMAP_MAPPED;
- 	}
- 	iomap->offset = start;
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -941,8 +941,8 @@ static struct extent_map *get_extent_map
- 
- 	if (*em_cached) {
- 		em = *em_cached;
--		if (extent_map_in_tree(em) && start >= em->start &&
--		    start < extent_map_end(em)) {
-+		if (btrfs_extent_map_in_tree(em) && start >= em->start &&
-+		    start < btrfs_extent_map_end(em)) {
- 			refcount_inc(&em->refs);
- 			return em;
- 		}
-@@ -1035,12 +1035,12 @@ static int btrfs_do_readpage(struct foli
- 			return PTR_ERR(em);
- 		}
- 		extent_offset = cur - em->start;
--		BUG_ON(extent_map_end(em) <= cur);
-+		BUG_ON(btrfs_extent_map_end(em) <= cur);
- 		BUG_ON(end < cur);
- 
- 		compress_type = extent_map_compression(em);
- 
--		iosize = min(extent_map_end(em) - cur, end - cur + 1);
-+		iosize = min(btrfs_extent_map_end(em) - cur, end - cur + 1);
- 		iosize = ALIGN(iosize, blocksize);
- 
- 		/*
-@@ -1056,8 +1056,8 @@ static int btrfs_do_readpage(struct foli
- 		if (compress_type != BTRFS_COMPRESS_NONE)
- 			disk_bytenr = em->disk_bytenr;
- 		else
--			disk_bytenr = extent_map_block_start(em) + extent_offset;
--		block_start = extent_map_block_start(em);
-+			disk_bytenr = btrfs_extent_map_block_start(em) + extent_offset;
-+		block_start = btrfs_extent_map_block_start(em);
- 		if (em->flags & EXTENT_FLAG_PREALLOC)
- 			block_start = EXTENT_MAP_HOLE;
- 
-@@ -1479,13 +1479,13 @@ static int submit_one_sector(struct btrf
- 	}
- 
- 	extent_offset = filepos - em->start;
--	em_end = extent_map_end(em);
-+	em_end = btrfs_extent_map_end(em);
- 	ASSERT(filepos <= em_end);
- 	ASSERT(IS_ALIGNED(em->start, sectorsize));
- 	ASSERT(IS_ALIGNED(em->len, sectorsize));
- 
--	block_start = extent_map_block_start(em);
--	disk_bytenr = extent_map_block_start(em) + extent_offset;
-+	block_start = btrfs_extent_map_block_start(em);
-+	disk_bytenr = btrfs_extent_map_block_start(em) + extent_offset;
- 
- 	ASSERT(!extent_map_is_compressed(em));
- 	ASSERT(block_start != EXTENT_MAP_HOLE);
-@@ -2606,7 +2606,8 @@ bool try_release_extent_mapping(struct f
- 			break;
- 		}
- 		if (test_range_bit_exists(io_tree, em->start,
--					  extent_map_end(em) - 1, EXTENT_LOCKED))
-+						btrfs_extent_map_end(em) - 1,
-+						EXTENT_LOCKED))
- 			goto next;
- 		/*
- 		 * If it's not in the list of modified extents, used by a fast
-@@ -2637,7 +2638,7 @@ remove_em:
- 		/* Once for the inode's extent map tree. */
- 		btrfs_free_extent_map(em);
- next:
--		start = extent_map_end(em);
-+		start = btrfs_extent_map_end(em);
- 		write_unlock(&extent_tree->lock);
- 
- 		/* Once for us, for the lookup_extent_mapping() reference. */
---- a/fs/btrfs/extent_map.c
-+++ b/fs/btrfs/extent_map.c
-@@ -63,7 +63,7 @@ void btrfs_free_extent_map(struct extent
- 	if (!em)
- 		return;
- 	if (refcount_dec_and_test(&em->refs)) {
--		WARN_ON(extent_map_in_tree(em));
-+		WARN_ON(btrfs_extent_map_in_tree(em));
- 		WARN_ON(!list_empty(&em->list));
- 		kmem_cache_free(extent_map_cache, em);
- 	}
-@@ -99,19 +99,19 @@ static int tree_insert(struct rb_root *r
- 
- 		if (em->start < entry->start)
- 			p = &(*p)->rb_left;
--		else if (em->start >= extent_map_end(entry))
-+		else if (em->start >= btrfs_extent_map_end(entry))
- 			p = &(*p)->rb_right;
- 		else
- 			return -EEXIST;
- 	}
- 
- 	orig_parent = parent;
--	while (parent && em->start >= extent_map_end(entry)) {
-+	while (parent && em->start >= btrfs_extent_map_end(entry)) {
- 		parent = rb_next(parent);
- 		entry = rb_entry(parent, struct extent_map, rb_node);
- 	}
- 	if (parent)
--		if (end > entry->start && em->start < extent_map_end(entry))
-+		if (end > entry->start && em->start < btrfs_extent_map_end(entry))
- 			return -EEXIST;
- 
- 	parent = orig_parent;
-@@ -121,7 +121,7 @@ static int tree_insert(struct rb_root *r
- 		entry = rb_entry(parent, struct extent_map, rb_node);
- 	}
- 	if (parent)
--		if (end > entry->start && em->start < extent_map_end(entry))
-+		if (end > entry->start && em->start < btrfs_extent_map_end(entry))
- 			return -EEXIST;
- 
- 	rb_link_node(&em->rb_node, orig_parent, p);
-@@ -151,14 +151,14 @@ static struct rb_node *__tree_search(str
- 
- 		if (offset < entry->start)
- 			n = n->rb_left;
--		else if (offset >= extent_map_end(entry))
-+		else if (offset >= btrfs_extent_map_end(entry))
- 			n = n->rb_right;
- 		else
- 			return n;
- 	}
- 
- 	orig_prev = prev;
--	while (prev && offset >= extent_map_end(prev_entry)) {
-+	while (prev && offset >= btrfs_extent_map_end(prev_entry)) {
- 		prev = rb_next(prev);
- 		prev_entry = rb_entry(prev, struct extent_map, rb_node);
- 	}
-@@ -192,7 +192,7 @@ static inline u64 extent_map_block_len(c
- 
- static inline u64 extent_map_block_end(const struct extent_map *em)
- {
--	const u64 block_start = extent_map_block_start(em);
-+	const u64 block_start = btrfs_extent_map_block_start(em);
- 	const u64 block_end = block_start + extent_map_block_len(em);
- 
- 	if (block_end < block_start)
-@@ -227,7 +227,7 @@ static bool can_merge_extent_map(const s
- /* Check to see if two extent_map structs are adjacent and safe to merge. */
- static bool mergeable_maps(const struct extent_map *prev, const struct extent_map *next)
- {
--	if (extent_map_end(prev) != next->start)
-+	if (btrfs_extent_map_end(prev) != next->start)
- 		return false;
- 
- 	/*
-@@ -239,7 +239,7 @@ static bool mergeable_maps(const struct
- 		return false;
- 
- 	if (next->disk_bytenr < EXTENT_MAP_LAST_BYTE - 1)
--		return extent_map_block_start(next) == extent_map_block_end(prev);
-+		return btrfs_extent_map_block_start(next) == extent_map_block_end(prev);
- 
- 	/* HOLES and INLINE extents. */
- 	return next->disk_bytenr == prev->disk_bytenr;
-@@ -456,7 +456,7 @@ void clear_em_logging(struct btrfs_inode
- 	lockdep_assert_held_write(&inode->extent_tree.lock);
- 
- 	em->flags &= ~EXTENT_FLAG_LOGGING;
--	if (extent_map_in_tree(em))
-+	if (btrfs_extent_map_in_tree(em))
- 		try_merge_map(inode, em);
- }
- 
-@@ -529,7 +529,7 @@ __lookup_extent_mapping(struct extent_ma
- 
- 	em = rb_entry(rb_node, struct extent_map, rb_node);
- 
--	if (strict && !(end > em->start && start < extent_map_end(em)))
-+	if (strict && !(end > em->start && start < btrfs_extent_map_end(em)))
- 		return NULL;
- 
- 	refcount_inc(&em->refs);
-@@ -609,7 +609,7 @@ static void replace_extent_mapping(struc
- 	validate_extent_map(fs_info, new);
- 
- 	WARN_ON(cur->flags & EXTENT_FLAG_PINNED);
--	ASSERT(extent_map_in_tree(cur));
-+	ASSERT(btrfs_extent_map_in_tree(cur));
- 	if (!(cur->flags & EXTENT_FLAG_LOGGING))
- 		list_del_init(&cur->list);
- 	rb_replace_node(&cur->rb_node, &new->rb_node, &tree->root);
-@@ -655,7 +655,7 @@ static noinline int merge_extent_mapping
- 	u64 end;
- 	u64 start_diff;
- 
--	if (map_start < em->start || map_start >= extent_map_end(em))
-+	if (map_start < em->start || map_start >= btrfs_extent_map_end(em))
- 		return -EINVAL;
- 
- 	if (existing->start > map_start) {
-@@ -666,10 +666,10 @@ static noinline int merge_extent_mapping
- 		next = next_extent_map(prev);
- 	}
- 
--	start = prev ? extent_map_end(prev) : em->start;
-+	start = prev ? btrfs_extent_map_end(prev) : em->start;
- 	start = max_t(u64, start, em->start);
--	end = next ? next->start : extent_map_end(em);
--	end = min_t(u64, end, extent_map_end(em));
-+	end = next ? next->start : btrfs_extent_map_end(em);
-+	end = min_t(u64, end, btrfs_extent_map_end(em));
- 	start_diff = start - em->start;
- 	em->start = start;
- 	em->len = end - start;
-@@ -729,7 +729,7 @@ int btrfs_add_extent_mapping(struct btrf
- 		 * extent causing the -EEXIST.
- 		 */
- 		if (start >= existing->start &&
--		    start < extent_map_end(existing)) {
-+		    start < btrfs_extent_map_end(existing)) {
- 			btrfs_free_extent_map(em);
- 			*em_in = existing;
- 			ret = 0;
-@@ -747,7 +747,7 @@ int btrfs_add_extent_mapping(struct btrf
- 				*em_in = NULL;
- 				btrfs_warn(fs_info,
- "extent map merge error existing [%llu, %llu) with em [%llu, %llu) start %llu",
--					   existing->start, extent_map_end(existing),
-+					   existing->start, btrfs_extent_map_end(existing),
- 					   orig_start, orig_start + orig_len, start);
- 			}
- 			btrfs_free_extent_map(existing);
-@@ -837,8 +837,8 @@ void btrfs_drop_extent_map_range(struct
- 	em = lookup_extent_mapping(em_tree, start, len);
- 
- 	while (em) {
--		/* extent_map_end() returns exclusive value (last byte + 1). */
--		const u64 em_end = extent_map_end(em);
-+		/* btrfs_extent_map_end() returns exclusive value (last byte + 1). */
-+		const u64 em_end = btrfs_extent_map_end(em);
- 		struct extent_map *next_em = NULL;
- 		u64 gen;
- 		unsigned long flags;
-@@ -929,7 +929,7 @@ void btrfs_drop_extent_map_range(struct
- 				split->ram_bytes = split->len;
- 			}
- 
--			if (extent_map_in_tree(em)) {
-+			if (btrfs_extent_map_in_tree(em)) {
- 				replace_extent_mapping(inode, em, split, modified);
- 			} else {
- 				int ret;
-@@ -944,7 +944,7 @@ void btrfs_drop_extent_map_range(struct
- 			split = NULL;
- 		}
- remove_em:
--		if (extent_map_in_tree(em)) {
-+		if (btrfs_extent_map_in_tree(em)) {
- 			/*
- 			 * If the extent map is still in the tree it means that
- 			 * either of the following is true:
-@@ -1011,7 +1011,7 @@ int btrfs_replace_extent_map_range(struc
- 	struct extent_map_tree *tree = &inode->extent_tree;
- 	int ret;
- 
--	ASSERT(!extent_map_in_tree(new_em));
-+	ASSERT(!btrfs_extent_map_in_tree(new_em));
- 
- 	/*
- 	 * The caller has locked an appropriate file range in the inode's io
-@@ -1097,7 +1097,7 @@ int split_extent_map(struct btrfs_inode
- 	/* Insert the middle extent_map. */
- 	split_mid->start = em->start + pre;
- 	split_mid->len = em->len - pre;
--	split_mid->disk_bytenr = extent_map_block_start(em) + pre;
-+	split_mid->disk_bytenr = btrfs_extent_map_block_start(em) + pre;
- 	split_mid->disk_num_bytes = split_mid->len;
- 	split_mid->offset = 0;
- 	split_mid->ram_bytes = split_mid->len;
---- a/fs/btrfs/extent_map.h
-+++ b/fs/btrfs/extent_map.h
-@@ -144,12 +144,12 @@ static inline bool extent_map_is_compres
- 			     EXTENT_FLAG_COMPRESS_ZSTD)) != 0;
- }
- 
--static inline int extent_map_in_tree(const struct extent_map *em)
-+static inline int btrfs_extent_map_in_tree(const struct extent_map *em)
- {
- 	return !RB_EMPTY_NODE(&em->rb_node);
- }
- 
--static inline u64 extent_map_block_start(const struct extent_map *em)
-+static inline u64 btrfs_extent_map_block_start(const struct extent_map *em)
- {
- 	if (em->disk_bytenr < EXTENT_MAP_LAST_BYTE) {
- 		if (extent_map_is_compressed(em))
-@@ -159,7 +159,7 @@ static inline u64 extent_map_block_start
- 	return em->disk_bytenr;
- }
- 
--static inline u64 extent_map_end(const struct extent_map *em)
-+static inline u64 btrfs_extent_map_end(const struct extent_map *em)
- {
- 	if (em->start + em->len < em->start)
- 		return (u64)-1;
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2975,7 +2975,7 @@ static int btrfs_zero_range(struct inode
- 		ASSERT(IS_ALIGNED(alloc_start, sectorsize));
- 		len = offset + len - alloc_start;
- 		offset = alloc_start;
--		alloc_hint = extent_map_block_start(em) + em->len;
-+		alloc_hint = btrfs_extent_map_block_start(em) + em->len;
- 	}
- 	btrfs_free_extent_map(em);
- 
-@@ -3203,8 +3203,8 @@ static long btrfs_fallocate(struct file
- 			ret = PTR_ERR(em);
- 			break;
- 		}
--		last_byte = min(extent_map_end(em), alloc_end);
--		actual_end = min_t(u64, extent_map_end(em), offset + len);
-+		last_byte = min(btrfs_extent_map_end(em), alloc_end);
-+		actual_end = min_t(u64, btrfs_extent_map_end(em), offset + len);
- 		last_byte = ALIGN(last_byte, blocksize);
- 		if (em->disk_bytenr == EXTENT_MAP_HOLE ||
- 		    (cur_offset >= inode->i_size &&
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1326,11 +1326,11 @@ u64 btrfs_get_extent_allocation_hint(str
- 			btrfs_free_extent_map(em);
- 			em = search_extent_mapping(em_tree, 0, 0);
- 			if (em && em->disk_bytenr < EXTENT_MAP_LAST_BYTE)
--				alloc_hint = extent_map_block_start(em);
-+				alloc_hint = btrfs_extent_map_block_start(em);
- 			if (em)
- 				btrfs_free_extent_map(em);
- 		} else {
--			alloc_hint = extent_map_block_start(em);
-+			alloc_hint = btrfs_extent_map_block_start(em);
- 			btrfs_free_extent_map(em);
- 		}
- 	}
-@@ -2787,7 +2787,7 @@ static int btrfs_find_new_delalloc_bytes
- 				     search_start + em_len - 1,
- 				     EXTENT_DELALLOC_NEW, cached_state);
- next:
--		search_start = extent_map_end(em);
-+		search_start = btrfs_extent_map_end(em);
- 		btrfs_free_extent_map(em);
- 		if (ret)
- 			return ret;
-@@ -4935,7 +4935,7 @@ int btrfs_cont_expand(struct btrfs_inode
- 			em = NULL;
- 			break;
- 		}
--		last_byte = min(extent_map_end(em), block_end);
-+		last_byte = min(btrfs_extent_map_end(em), block_end);
- 		last_byte = ALIGN(last_byte, fs_info->sectorsize);
- 		hole_size = last_byte - cur_offset;
- 
-@@ -6992,7 +6992,7 @@ not_found:
- insert:
- 	ret = 0;
- 	btrfs_release_path(path);
--	if (em->start > start || extent_map_end(em) <= start) {
-+	if (em->start > start || btrfs_extent_map_end(em) <= start) {
- 		btrfs_err(fs_info,
- 			  "bad extent! em: [%llu %llu] passed [%llu %llu]",
- 			  em->start, em->len, start, len);
-@@ -9373,7 +9373,7 @@ ssize_t btrfs_encoded_read(struct kiocb
- 	 * We only want to return up to EOF even if the extent extends beyond
- 	 * that.
- 	 */
--	encoded->len = min_t(u64, extent_map_end(em),
-+	encoded->len = min_t(u64, btrfs_extent_map_end(em),
- 			     inode->vfs_inode.i_size) - iocb->ki_pos;
- 	if (em->disk_bytenr == EXTENT_MAP_HOLE ||
- 	    (em->flags & EXTENT_FLAG_PREALLOC)) {
-@@ -9401,7 +9401,7 @@ ssize_t btrfs_encoded_read(struct kiocb
- 			goto out_em;
- 		encoded->compression = ret;
- 	} else {
--		*disk_bytenr = extent_map_block_start(em) + (start - em->start);
-+		*disk_bytenr = btrfs_extent_map_block_start(em) + (start - em->start);
- 		if (encoded->len > count)
- 			encoded->len = count;
- 		/*
---- a/fs/btrfs/tests/extent-map-tests.c
-+++ b/fs/btrfs/tests/extent-map-tests.c
-@@ -137,7 +137,7 @@ static int test_case_1(struct btrfs_fs_i
- 		ret = -ENOENT;
- 		goto out;
- 	}
--	if (em->start != 0 || extent_map_end(em) != SZ_16K ||
-+	if (em->start != 0 || btrfs_extent_map_end(em) != SZ_16K ||
- 	    em->disk_bytenr != 0 || em->disk_num_bytes != SZ_16K) {
- 		test_err(
- "case1 [%llu %llu]: ret %d return a wrong em (start %llu len %llu disk_bytenr %llu disk_num_bytes %llu",
-@@ -235,7 +235,7 @@ static int test_case_2(struct btrfs_fs_i
- 		ret = -ENOENT;
- 		goto out;
- 	}
--	if (em->start != 0 || extent_map_end(em) != SZ_1K ||
-+	if (em->start != 0 || btrfs_extent_map_end(em) != SZ_1K ||
- 	    em->disk_bytenr != EXTENT_MAP_INLINE) {
- 		test_err(
- "case2 [0 1K]: ret %d return a wrong em (start %llu len %llu disk_bytenr %llu",
-@@ -312,8 +312,8 @@ static int __test_case_3(struct btrfs_fs
- 	 * Since bytes within em are contiguous, em->block_start is identical to
- 	 * em->start.
- 	 */
--	if (start < em->start || start + len > extent_map_end(em) ||
--	    em->start != extent_map_block_start(em)) {
-+	if (start < em->start || start + len > btrfs_extent_map_end(em) ||
-+	    em->start != btrfs_extent_map_block_start(em)) {
- 		test_err(
- "case3 [%llu %llu): ret %d em (start %llu len %llu disk_bytenr %llu block_len %llu)",
- 			 start, start + len, ret, em->start, em->len,
-@@ -438,7 +438,7 @@ static int __test_case_4(struct btrfs_fs
- 		ret = -ENOENT;
- 		goto out;
- 	}
--	if (start < em->start || start + len > extent_map_end(em)) {
-+	if (start < em->start || start + len > btrfs_extent_map_end(em)) {
- 		test_err(
- "case4 [%llu %llu): ret %d, added wrong em (start %llu len %llu disk_bytenr %llu disk_num_bytes %llu)",
- 			 start, start + len, ret, em->start, em->len,
-@@ -870,9 +870,9 @@ static int test_case_7(struct btrfs_fs_i
- 		goto out;
- 	}
- 
--	if (extent_map_block_start(em) != SZ_32K + SZ_4K) {
-+	if (btrfs_extent_map_block_start(em) != SZ_32K + SZ_4K) {
- 		test_err("em->block_start is %llu, expected 36K",
--				extent_map_block_start(em));
-+			 btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 
---- a/fs/btrfs/tests/inode-tests.c
-+++ b/fs/btrfs/tests/inode-tests.c
-@@ -389,7 +389,7 @@ static noinline int test_btrfs_get_exten
- 		test_err("wrong offset, want 0, have %llu", em->offset);
- 		goto out;
- 	}
--	disk_bytenr = extent_map_block_start(em);
-+	disk_bytenr = btrfs_extent_map_block_start(em);
- 	orig_start = em->start;
- 	offset = em->start + em->len;
- 	btrfs_free_extent_map(em);
-@@ -441,9 +441,9 @@ static noinline int test_btrfs_get_exten
- 		goto out;
- 	}
- 	disk_bytenr += (em->start - orig_start);
--	if (extent_map_block_start(em) != disk_bytenr) {
-+	if (btrfs_extent_map_block_start(em) != disk_bytenr) {
- 		test_err("wrong block start, want %llu, have %llu",
--			 disk_bytenr, extent_map_block_start(em));
-+			 disk_bytenr, btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 	offset = em->start + em->len;
-@@ -502,7 +502,7 @@ static noinline int test_btrfs_get_exten
- 		test_err("wrong offset, want 0, have %llu", em->offset);
- 		goto out;
- 	}
--	disk_bytenr = extent_map_block_start(em);
-+	disk_bytenr = btrfs_extent_map_block_start(em);
- 	orig_start = em->start;
- 	offset = em->start + em->len;
- 	btrfs_free_extent_map(em);
-@@ -531,9 +531,9 @@ static noinline int test_btrfs_get_exten
- 			 em->start - orig_start, em->offset);
- 		goto out;
- 	}
--	if (extent_map_block_start(em) != disk_bytenr + em->offset) {
-+	if (btrfs_extent_map_block_start(em) != disk_bytenr + em->offset) {
- 		test_err("unexpected block start, wanted %llu, have %llu",
--			 disk_bytenr + em->offset, extent_map_block_start(em));
-+			 disk_bytenr + em->offset, btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 	offset = em->start + em->len;
-@@ -564,9 +564,9 @@ static noinline int test_btrfs_get_exten
- 			 em->start, em->offset, orig_start);
- 		goto out;
- 	}
--	if (extent_map_block_start(em) != disk_bytenr + em->offset) {
-+	if (btrfs_extent_map_block_start(em) != disk_bytenr + em->offset) {
- 		test_err("unexpected block start, wanted %llu, have %llu",
--			 disk_bytenr + em->offset, extent_map_block_start(em));
-+			 disk_bytenr + em->offset, btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 	offset = em->start + em->len;
-@@ -635,7 +635,7 @@ static noinline int test_btrfs_get_exten
- 			 BTRFS_COMPRESS_ZLIB, extent_map_compression(em));
- 		goto out;
- 	}
--	disk_bytenr = extent_map_block_start(em);
-+	disk_bytenr = btrfs_extent_map_block_start(em);
- 	orig_start = em->start;
- 	offset = em->start + em->len;
- 	btrfs_free_extent_map(em);
-@@ -671,9 +671,9 @@ static noinline int test_btrfs_get_exten
- 		test_err("got an error when we shouldn't have");
- 		goto out;
- 	}
--	if (extent_map_block_start(em) != disk_bytenr) {
-+	if (btrfs_extent_map_block_start(em) != disk_bytenr) {
- 		test_err("block start does not match, want %llu got %llu",
--			 disk_bytenr, extent_map_block_start(em));
-+			 disk_bytenr, btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 	if (em->start != offset || em->len != 2 * sectorsize) {
-@@ -865,8 +865,9 @@ static int test_hole_first(u32 sectorsiz
- 		test_err("got an error when we shouldn't have");
- 		goto out;
- 	}
--	if (extent_map_block_start(em) != sectorsize) {
--		test_err("expected a real extent, got %llu", extent_map_block_start(em));
-+	if (btrfs_extent_map_block_start(em) != sectorsize) {
-+		test_err("expected a real extent, got %llu",
-+			 btrfs_extent_map_block_start(em));
- 		goto out;
- 	}
- 	if (em->start != sectorsize || em->len != sectorsize) {
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4765,7 +4765,7 @@ static int log_extent_csums(struct btrfs
- 	}
- 
- 	/* block start is already adjusted for the file extent offset. */
--	block_start = extent_map_block_start(em);
-+	block_start = btrfs_extent_map_block_start(em);
- 	csum_root = btrfs_csum_root(trans->fs_info, block_start);
- 	ret = btrfs_lookup_csums_list(csum_root, block_start + csum_offset,
- 				      block_start + csum_offset + csum_len - 1,
-@@ -4800,7 +4800,7 @@ static int log_one_extent(struct btrfs_t
- 	struct btrfs_key key;
- 	enum btrfs_compression_type compress_type;
- 	u64 extent_offset = em->offset;
--	u64 block_start = extent_map_block_start(em);
-+	u64 block_start = btrfs_extent_map_block_start(em);
- 	u64 block_len;
- 	int ret;
- 
+ 		/* Our caller expects us to free the input extent map. */
 
 
