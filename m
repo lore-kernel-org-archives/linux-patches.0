@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDDE4ED189;
-	Thu, 17 Sep 2026 18:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE04E77FF;
+	Thu, 17 Sep 2026 18:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669064; cv=none; b=gl5lwRsQzEXfhu3HfwEB5L+nEaBtos9k2ua41nfBeFbXNrOOmeU742udFkMajaIh58e66ZEMJ3kVs+ycF6lEvM8oZOBqHxL6EHQKzOf9QTCv+ctNm8awOY5ZASv9jHVQ9Nbd1sHn5hSmuhVdvt+dmvanE9Fu2r+VrH7XLzumC/U=
+	t=1789669067; cv=none; b=iKuvDXeu5NLcL75xiWRZ+xw7P0XvsHb8gNzawM7/9NDQazzZ+MjlZFmgp9cOW1zkGV9rRaWymlW32N4Dw0U7dhVLyymyq+tMsfpD33p2/qmnh/qh/+W09GWKJ09KC79oJtzH7ot36o9A6sjKjvQusPf3thEO08BU8u6lE0qLivA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669064; c=relaxed/simple;
-	bh=tVqstbMohJkqOImRtUKaU/y9VG3jyDGy2GteFVdp4SY=;
+	s=arc-20240116; t=1789669067; c=relaxed/simple;
+	bh=Gn2jIuIQXU6yBZ4TobhYWFrZjchJCa3lvMEsvTyrtgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMiRJyPl8KJrCAxxOYPhxE5kdye8ytzF4u3IKyDsL8jvdM5jRRmAyBSKtVN9qylIqQYFzWCnzIsD0g8IRd+hloNKsT1aPXByKIsjwhzARL04Z8gHUQvveE4ErhyEVFhjqisBozuPvtQCMxDUM8+O5c/6fDk9lv+5M+yo3w31GiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XShHcHv+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AimrtVu7GBYXO8Z9VY0ZxU+EitNs1pdSrymi8xxyE0AnRL+cI2QkoRniZM6lMeC82cdgoojsi4u+3hTijM4Mng+3s5yxFROUF6jpeBrWv9RsPBCeK3rn7NewK51LeKr5eToGKx6kP2Ut6Wlbv0UyvzwWzjJISY7rOrwhoA/bsDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVFlm815; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XShHcHv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788971F000FF;
-	Thu, 17 Sep 2026 18:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVFlm815"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A621F000FF;
+	Thu, 17 Sep 2026 18:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669063;
-	bh=XmuNuHKn3kB8AHJbnGA9nYqgPKAZ6F/LypqbtUtFBjw=;
+	s=korg; t=1789669065;
+	bh=3Gpq+jjFvRYX9onFHeWjkl4h1ES9Az8v4QTs5qgcy10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XShHcHv+fzKC0jhdCoyUPk3V5B+0oXnLukT3e+o7zGyykoSTMc1KMAJ6p0G+NofFz
-	 lkYIExfdAOPY8hUzh9S2t8YCpuq5p7ZVG9YiJfF470VG5I4qpbJRsdmzA87vAIcHK7
-	 vKyTHQBbs+ULxizAaeXxyM+hE85CKyn5PmGh/hXQ=
+	b=iVFlm8158uS+rzABRU/wimn++xvU6bRoOprnVhMQE94CaoUwvdTKK55hkl4EGNqrv
+	 +BCYX41CsZ+XIT8rc196xo5D/hbfYxLrhToS7NXxqZTaJzc4Ss7vlq5izWWiqW+tRs
+	 g9Ve2xT1pS1lkgbQUualD670rTuc2+4Ht2h76ang=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gerd Rausch <gerd.rausch@oracle.com>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0631/1102] net/rds: clear cp_flags bits individually in rds_conn_path_reset()
-Date: Thu, 17 Sep 2026 16:09:34 +0100
-Message-ID: <20260917151555.947589573@linuxfoundation.org>
+Subject: [PATCH 6.12 0632/1102] net/rds: tcp: dont force RDS_CONN_RESETTING over a concurrent shutdown
+Date: Thu, 17 Sep 2026 16:09:35 +0100
+Message-ID: <20260917151555.980596564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,74 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Gerd Rausch <gerd.rausch@oracle.com>
 
-[ Upstream commit 103c4b13c4f50322910078d1c02f29334a574122 ]
+[ Upstream commit e8e60d74fec49ccae2aea9b04a6eb162feb8d9af ]
 
-rds_conn_path_reset() wipes the whole flag word with a plain
-cp->cp_flags = 0 store.  Every other accessor of that word uses
-atomic bitops, and some of them can run concurrently with the reset:
-RDS_LL_SEND_FULL is set from rds_send_xmit() and cleared from the
-transport completion paths, neither of which holds anything that
-excludes the shutdown worker.  A plain store racing an atomic
-read-modify-write on the same word is a data race, and whichever
-side loses has its update silently discarded.
+rds_tcp_reset_callbacks() resolves a duelling SYN by storing
+RDS_CONN_RESETTING into cp_state unconditionally.  Nothing serializes
+that store against the shutdown path: rds_tcp_accept_one() checks
+for RDS_CONN_CONNECTING or RDS_CONN_ERROR under t_conn_path_lock, but
+neither rds_conn_path_drop(), which forces RDS_CONN_ERROR, nor
+rds_conn_shutdown(), which moves the path to RDS_CONN_DISCONNECTING
+under cp_cm_lock, takes that lock.  The store can therefore land on
+top of a shutdown that is already in progress, or that gets queued
+right after the accept-side check.
 
-Clear the two bits the reset is actually responsible for instead.
-RDS_IN_XMIT and RDS_RECV_REFILL need no store at all here: they
-belong to the caller, rds_conn_shutdown(), which waits for both to be
-clear before calling the transport shutdown and this reset.
+When it does, the shutdown worker's final DISCONNECTING -> DOWN
+transition fails and the path goes through rds_conn_path_error() and
+a second drop/shutdown cycle instead of a clean reconnect, tearing
+down the socket the accept path has just installed.  Before commit
+ad22d24be635 ("net/rds: No shortcut out of RDS_CONN_ERROR") a path
+found in RDS_CONN_RESETTING even made rds_conn_shutdown() bail out
+altogether.
 
-This also gives every bit in cp_flags a single well-defined writer
-discipline, which the following patches rely on when they turn
-RDS_IN_XMIT and RDS_RECV_REFILL into bit locks held across the
-teardown: a blanket store mid-teardown would destroy lock ownership
-that an atomic clear preserves.
+Make the transition conditional: move CONNECTING -> RESETTING (or
+stay in RESETTING from an earlier duel), and drop the path in any
+other state.  The drop has side effects of its own: it replaces the
+shutdown's RDS_CONN_DISCONNECTING (or RDS_CONN_ERROR) with
+RDS_CONN_ERROR and queues one more cp_down_w run.  The difference is
+that rds_conn_shutdown() accepts RDS_CONN_ERROR in its final
+transition to RDS_CONN_DOWN, so the shutdown in flight completes
+normally instead of through rds_conn_path_error(); the extra
+down-work pass then finds the path already down and falls through to
+the reconnect check, or catches a reconnect that has already started
+and restarts it.  The accept path still installs the new socket,
+rds_connect_path_complete() then fails its RESETTING -> UP transition
+and drops it: the raced socket ends up torn down as it does today.
+The comment at that call site, which promised that
+rds_connect_path_complete() marks the path RDS_CONN_UP, is updated to
+name this outcome as well.
 
-Oracle UEK carries the same conversion ("net/rds: Preserve essential
-connection state flags"), motivated by its asynchronous shutdown
-state machine, whose progress and destroy flags must survive the
-reset.  UEK's variant also clears RDS_IN_XMIT and RDS_RECV_REFILL
-because there the reset runs as the final step of a teardown that
-owns both bits, making those clears its unlock.  Upstream that
-release belongs in rds_conn_shutdown(): once a later patch in this
-series turns the two bits into locks held across the teardown, ending
-ownership needs release semantics and a wake-up that a plain clear
-inside the reset would not provide.
+The state can change again between the failed transitions and the
+drop.  That is inherent to rds_conn_path_drop(), which the socket
+state-change callbacks also call unconditionally, and costs at most
+one extra drop/reconnect cycle.
 
-Based on Oracle UEK commit "net/rds: Preserve essential connection
-state flags" by Gerd Rausch.
+Based on Oracle UEK commit "net/rds: Don't force state
+RDS_CONN_RESETTING" by Gerd Rausch.
 
-Fixes: 00e0f34c6166 ("RDS: Connection handling")
+Fixes: 9c79440e2c5e ("RDS: TCP: fix race windows in send-path quiescence by rds_tcp_accept_one()")
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+[achender: port to net-next: use the two-argument
+ rds_conn_path_transition()/rds_conn_path_drop() and rewrite the
+ changelog for the upstream shutdown path]
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-4-achender@kernel.org
+Link: https://patch.msgid.link/20260828223921.202913-5-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/rds/tcp.c        | 17 +++++++++++++++--
+ net/rds/tcp_listen.c |  6 +++++-
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 9fa76fe9f2356..f897f5ba9312b 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -119,7 +119,15 @@ static void rds_conn_path_reset(struct rds_conn_path *cp)
- 
- 	rds_stats_inc(s_conn_reset);
- 	rds_send_path_reset(cp);
--	cp->cp_flags = 0;
-+
-+	/* Clear the bits the reset is responsible for individually: a
-+	 * blanket cp_flags = 0 is a plain store that can clobber a
-+	 * concurrent atomic read-modify-write on the same word.
-+	 * RDS_IN_XMIT and RDS_RECV_REFILL belong to the caller,
-+	 * rds_conn_shutdown(), and are left alone here.
-+	 */
-+	clear_bit(RDS_LL_SEND_FULL, &cp->cp_flags);
-+	clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
- 
- 	/* Do not clear next_rx_seq here, else we cannot distinguish
- 	 * retransmitted packets from new packets, and will hand all
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index ab509498cf752..84cd673b8b7e1 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -150,9 +150,22 @@ void rds_tcp_reset_callbacks(struct socket *sock,
+ 	 * end up deadlocking with tcp_sendmsg(), and the RDS_IN_XMIT
+ 	 * would not get set. As a result, we set c_state to
+ 	 * RDS_CONN_RESETTTING, to ensure that rds_tcp_state_change
+-	 * cannot mark rds_conn_path_up() in the window before lock_sock()
++	 * cannot mark rds_conn_path_up() in the window before lock_sock().
++	 *
++	 * Only make that transition if the path is still connecting
++	 * (or already resetting from an earlier duel).  A path in any
++	 * other state - typically RDS_CONN_DISCONNECTING or
++	 * RDS_CONN_ERROR with a shutdown in flight - is dropped
++	 * instead.  That still replaces its state, with RDS_CONN_ERROR,
++	 * and queues one more shutdown pass, but rds_conn_shutdown()
++	 * accepts RDS_CONN_ERROR in its final transition to
++	 * RDS_CONN_DOWN, so the shutdown in flight completes normally.
+ 	 */
+-	atomic_set(&cp->cp_state, RDS_CONN_RESETTING);
++	if (!rds_conn_path_transition(cp, RDS_CONN_CONNECTING,
++				      RDS_CONN_RESETTING) &&
++	    !rds_conn_path_transition(cp, RDS_CONN_RESETTING,
++				      RDS_CONN_RESETTING))
++		rds_conn_path_drop(cp, 0);
+ 	wait_event(cp->cp_waitq, !test_bit(RDS_IN_XMIT, &cp->cp_flags));
+ 	/* reset receive side state for rds_tcp_data_recv() for osock  */
+ 	cancel_delayed_work_sync(&cp->cp_send_w);
+diff --git a/net/rds/tcp_listen.c b/net/rds/tcp_listen.c
+index fced9e286f79f..5b65154e37260 100644
+--- a/net/rds/tcp_listen.c
++++ b/net/rds/tcp_listen.c
+@@ -201,7 +201,11 @@ int rds_tcp_accept_one(struct socket *sock)
+ 	if (rs_tcp->t_sock) {
+ 		/* Duelling SYN has been handled in rds_tcp_accept_one() */
+ 		rds_tcp_reset_callbacks(new_sock, cp);
+-		/* rds_connect_path_complete() marks RDS_CONN_UP */
++		/* rds_connect_path_complete() marks RDS_CONN_UP, or,
++		 * if a concurrent shutdown won the duel, drops the
++		 * path again and the pass that drop queues reaps the
++		 * socket installed above.
++		 */
+ 		rds_connect_path_complete(cp, RDS_CONN_RESETTING);
+ 	} else {
+ 		rds_tcp_set_callbacks(new_sock, cp);
 -- 
 2.53.0
 
