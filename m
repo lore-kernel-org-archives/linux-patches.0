@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACAD49739D;
-	Thu, 17 Sep 2026 18:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A406340A93E;
+	Thu, 17 Sep 2026 18:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670378; cv=none; b=mZsy12btLbTvVm2r688RNhAlbL8qDB7fdHGAdvYSD9EPdfOc6v5Ow/nKawLCy0o+OndqLOdqzoujhDRxiByrbOmdI4GTjzexxmc+2C6xH6YjIYpXPxtcVOyItjT6CtFnk7WPey4bdDfCqf16nWVXIhMK9h0Yei/2iKSm7eG+myU=
+	t=1789670381; cv=none; b=tYCXirrtwo92FEzaUt4SZvgzzJtoTN5yk5UKNy9dWtrA3wxYzn+rLvA/5D0o3xYqAyd77gHya+X0SSSUKcSQgtmUtravgLc6PTwuqmvwqdGk9U2B9PDSzk3xsrKgzAfgDOgl5bkaZg6KVF1p+iTK/xkeDw1I90eGFcih/E5sC/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670378; c=relaxed/simple;
-	bh=E8KC1eZOj8ZypH7DLLD1OAAOTrAnfSHaRsU2iSGkV60=;
+	s=arc-20240116; t=1789670381; c=relaxed/simple;
+	bh=A88/rqlAmaq9P2EZBO1yVmqS98t5m1WusjthCttQA78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4l26pAFrIXF1pSGh8GwyxFZXzDc0qx6jUnj6YvfHYRTygxtgxozBpOgzMY3erEAw+Sg0BAeWd3ThcmnOwsbo2bdnvp2Ihj/hE5d4Vc5g9OynwVTahdUMaJDawKy9MJfHiCXjbQBQwsDHQ1ahcgSoERGlzqy+5kFaWT1/oISJ9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWLba53x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AOb1YfFGALGwAPQcGyrvh8w9tPdyjYFXys8Q9BCo6cPEmuWoXazg/j/Iionv2G+HUkLz0drOO9K1XLju+/tzo64OqMIW0o4MDCrK3NGQ2xn4jTrp9bYl6CZpmjiMpV9aKCl7JriAlbKGH8eFfSRWa2TO2vcTmwCRFgL5D37I4Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7r8hXsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWLba53x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE551F000FF;
-	Thu, 17 Sep 2026 18:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7r8hXsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57021F0089C;
+	Thu, 17 Sep 2026 18:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670376;
-	bh=vw5KHqp4kN9pXVWB/smnFZ2ny72j+CQ5j95KGrqiDQM=;
+	s=korg; t=1789670379;
+	bh=2NWWluHCLDGjTfjg9XGaOJ32duN9heKNp6FW4jzBPEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWLba53xW3EqhTn/yKwQxNuTXjffj2aNe5uZZXHn8N8eWsiMK7RBhdx6IPmoSA1zS
-	 jW1tyCfzlWONOEX+uslRpOAAhyb/Jlj0hBYoh7K78sL49BsxIXoelUaaruzYK10H3r
-	 1muj/haPow24tebT8zWyr5RQQKPOB705ExH68E3o=
+	b=p7r8hXswAnnjgWZrj4M6+sD1OfRZmesUuDEkq3hwol76MmQt8rEWqaBHjT73+ujkd
+	 skg6klRXWMzBS6qQnwJBcfh+7Mdc2me3AoUp1pseG9rkbu3wW+ckkYyhwZ0AB88Wt5
+	 65+buWsvt7ikCP6RA4n+rqAueb4juuEsu6ncEibU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Hannes Reinecke <hare@kernel.org>,
 	Sagi Grimberg <sagi@grimberg.me>,
-	Randy Jennings <randyj@purestorage.com>,
-	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0645/1102] nvme: remove stale namespaces by NSID range during scan
-Date: Thu, 17 Sep 2026 16:09:48 +0100
-Message-ID: <20260917151556.340444011@linuxfoundation.org>
+Subject: [PATCH 6.12 0646/1102] nvme-tcp: open-code nvme_tcp_queue_request() for R2T
+Date: Thu, 17 Sep 2026 16:09:49 +0100
+Message-ID: <20260917151556.367382703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,106 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 4ed7f3d7d435bf5b63da2814dc9270f5ba896011 ]
+[ Upstream commit 674f872b7cefab4564ec8b34c799a4a653e34513 ]
 
-nvme_scan_ns_list() drops the stale namespaces in each gap in the
-reported NSID list one NSID at a time. Every iteration calls
-nvme_find_get_ns() to look the namespace up and removes it if it is
-present. The loop runs once per NSID in the gap rather than once per
-namespace actually present.
+When handling an R2T PDU we short-circuit nvme_tcp_queue_request()
+as we should not attempt to send consecutive PDUs. So open-code
+nvme_tcp_queue_request() for R2T and drop the last argument.
 
-NSIDs are 32-bit, so a target with a sparse NSID space can make a
-single gap spin the loop billions of times with nothing to remove.
-
-  watchdog: BUG: soft lockup - CPU#4 stuck for 26s!
-  Workqueue: nvme-wq nvme_scan_work [nvme_core]
-  RIP: 0010:__srcu_read_unlock+0xb/0x20
-  Call Trace:
-   nvme_find_get_ns+0x7d/0xb0 [nvme_core]
-   nvme_scan_ns_list+0xe8/0x280 [nvme_core]
-   nvme_scan_work+0x18a/0x280 [nvme_core]
-   process_one_work+0x197/0x380
-   worker_thread+0x2fe/0x410
-   kthread+0xe0/0x100
-
-Rename nvme_remove_invalid_namespaces() to nvme_remove_nsid_range()
-and give it an open (start, end) NSID range. ctrl->namespaces is
-sorted by NSID, so the whole gap is dropped in a single walk that
-stops once end is reached. This bounds the work by the namespaces
-that are present instead of by the size of the gap.
-
-Fixes: 540c801c65eb ("NVMe: Implement namespace list scanning")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 08acb54b063a ("nvme-tcp: defer TLS inline send to io_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/nvme/host/tcp.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 7ab6799c193ac..3b391b6325587 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -144,8 +144,6 @@ static const struct class nvme_ns_chr_class = {
- };
- 
- static void nvme_put_subsystem(struct nvme_subsystem *subsys);
--static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
--					   unsigned nsid);
- static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
- 				   struct nvme_command *cmd);
- 
-@@ -4135,15 +4133,16 @@ static void nvme_scan_ns_async(void *data, async_cookie_t cookie)
- 	nvme_scan_ns(scan_info->ctrl, nsid);
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 545704f1efa63..8a6707a592930 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -406,7 +406,7 @@ static inline bool nvme_tcp_queue_more(struct nvme_tcp_queue *queue)
  }
  
--static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
--					unsigned nsid)
-+static void nvme_remove_nsid_range(struct nvme_ctrl *ctrl, u32 start, u32 end)
+ static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
+-		bool sync, bool last)
++		bool last)
  {
- 	struct nvme_ns *ns, *next;
- 	LIST_HEAD(rm_list);
- 
- 	mutex_lock(&ctrl->namespaces_lock);
- 	list_for_each_entry_safe(ns, next, &ctrl->namespaces, list) {
--		if (ns->head->ns_id > nsid) {
-+		if (ns->head->ns_id >= end)
-+			break;
-+		if (ns->head->ns_id > start) {
- 			list_del_rcu(&ns->list);
- 			synchronize_srcu(&ctrl->srcu);
- 			list_add_tail_rcu(&ns->list, &rm_list);
-@@ -4193,13 +4192,14 @@ static int nvme_scan_ns_list(struct nvme_ctrl *ctrl)
- 				goto out;
- 			async_schedule_domain(nvme_scan_ns_async, &scan_info,
- 						&domain);
--			while (++prev < nsid)
--				nvme_ns_remove_by_nsid(ctrl, prev);
-+			if (prev + 1 < nsid)
-+				nvme_remove_nsid_range(ctrl, prev, nsid);
-+			prev = max(prev + 1, nsid);
- 		}
- 		async_synchronize_full_domain(&domain);
+ 	struct nvme_tcp_queue *queue = req->queue;
+ 	bool empty;
+@@ -420,7 +420,7 @@ static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
+ 	 * are on the same cpu, so we don't introduce contention.
+ 	 */
+ 	if (queue->io_cpu == raw_smp_processor_id() &&
+-	    sync && empty && mutex_trylock(&queue->send_mutex)) {
++	    empty && mutex_trylock(&queue->send_mutex)) {
+ 		nvme_tcp_send_all(queue);
+ 		mutex_unlock(&queue->send_mutex);
  	}
-  out:
--	nvme_remove_invalid_namespaces(ctrl, prev);
-+	nvme_remove_nsid_range(ctrl, prev, UINT_MAX);
-  free:
- 	async_synchronize_full_domain(&domain);
- 	kfree(ns_list);
-@@ -4219,7 +4219,7 @@ static void nvme_scan_ns_sequential(struct nvme_ctrl *ctrl)
- 	for (i = 1; i <= nn; i++)
- 		nvme_scan_ns(ctrl, i);
+@@ -828,7 +828,9 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ 	req->ttag = pdu->ttag;
  
--	nvme_remove_invalid_namespaces(ctrl, nn);
-+	nvme_remove_nsid_range(ctrl, nn, UINT_MAX);
+ 	nvme_tcp_setup_h2c_data_pdu(req);
+-	nvme_tcp_queue_request(req, false, true);
++
++	llist_add(&req->lentry, &queue->req_list);
++	queue_work_on(queue->io_cpu, nvme_tcp_wq, &queue->io_work);
+ 
+ 	return 0;
+ }
+@@ -2678,7 +2680,7 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
+ 	init_llist_node(&ctrl->async_req.lentry);
+ 	INIT_LIST_HEAD(&ctrl->async_req.entry);
+ 
+-	nvme_tcp_queue_request(&ctrl->async_req, true, true);
++	nvme_tcp_queue_request(&ctrl->async_req, true);
  }
  
- static void nvme_clear_changed_ns_log(struct nvme_ctrl *ctrl)
+ static void nvme_tcp_complete_timed_out(struct request *rq)
+@@ -2831,7 +2833,7 @@ static blk_status_t nvme_tcp_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 
+ 	nvme_start_request(rq);
+ 
+-	nvme_tcp_queue_request(req, true, bd->last);
++	nvme_tcp_queue_request(req, bd->last);
+ 
+ 	return BLK_STS_OK;
+ }
 -- 
 2.53.0
 
