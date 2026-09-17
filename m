@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9A9470EB6;
-	Thu, 17 Sep 2026 17:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8987049D590;
+	Thu, 17 Sep 2026 17:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667926; cv=none; b=Ouu7R69Jai0UpRjUQ4uQ94hrtC7flD/lrCUNpMIRKxSav6QhnElC/IQseGCegK00o2rs9MnKRamUQvSnDL8OwC5vQ56ssFTWMGmUKMAoLFgTxge69H2h6l15eldxRKqHNuKJP3VfdgBn7/F3Tv1kKSxU4BOQUURTzaQnv+lGQ2E=
+	t=1789667929; cv=none; b=Xx6At/IerVnHUWT7jnx0b2/JxxQByvAJD3yLcMrg1vdOiJp/w4Z7z1btDo25bbgRLxeepbyXCLI5r5WSVslcQ2xZscbFNdcL1gpKXQ3XWkW+5WOo60ktza+dlomVh2fqOaob6C4uD3HKXwcVzPRDD2UvwZFf9RZn/leON+alBKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667926; c=relaxed/simple;
-	bh=/yOjHaBec6YGizbc2rXsSn5mJQ8s3q9B8C1hYXuo5jg=;
+	s=arc-20240116; t=1789667929; c=relaxed/simple;
+	bh=FpEGBss6wWUtEOyJvN6Y7lqy8/nFAENc8uQfiTzyWIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvQutsaNITX1IQxDl3FviChtwnYDHetD7DlV8j9a45Ph/Ic8PMwvR2BKQ7RC/sxCq5gnqMRPnI7IBi1Kt2lrMHaypmsZ0/PmdmRbRRSwrJb/ZNeRtpTT8Es6x8Y8aw/M4RVxW/vPkg4o+wxmPC3LvoyI7sdZ0kmdQ1b5cLBHjuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkUZDAvw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IHdw1KTMtmyT+y/RBrOIY7UBNBZUa/Ex5NSA6Ao3szeTsknQ6L26bQZVFMbU41Zzf8SZ+DJ2hcIfJ5d/jZ5Vkt8rEKDKEKU2F4imqrktJiQLQ0nMvsHboBdRWLBRG1MFdINVzcpcaMcgl8yLdxv6lkoBZWluX4g3AjevyPYzzZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugT2gfSZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkUZDAvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F358E1F000FF;
-	Thu, 17 Sep 2026 17:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugT2gfSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D7B1F000FF;
+	Thu, 17 Sep 2026 17:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667925;
-	bh=z9gSJoNSIdaRXzW34eb1Gu/g97pXQiYW1awWrTDVjwA=;
+	s=korg; t=1789667928;
+	bh=C8BER0uUpkhQ614PwmfQzLtNfx5K0TG1JXdAtC7AX88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkUZDAvwCY5/D6rGp1B1P6M5KkGqULv1Rs8gV7TqTCPHJCVLlJjT8BSWDUeAe7s2V
-	 p11GCt0BRw+ia9t60awMWH92uKNwCoPk82QrIfNdb5278YapPP8fh4vb/pMDHc8rIP
-	 FoED+doXpaf3JgfPXLxdZ31yecZviZq59/XT0iCQ=
+	b=ugT2gfSZ4wLHosREMeQObGOmaYcPJDK4dXQ+7PaFV3KeFmzaLNgodEdUnJbTMvY1V
+	 qcAnlQ4P7F/tR3UfFz7XKroK06J9xCozeUTK+HjczPDqupratCb+xviUo4g2zuNi91
+	 3jXxdSyyVJq9FF54FU19QY7O7PxNHOrGiLB5wdVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0248/1102] xprtrdma: Add request-pool slack for delayed recycling
-Date: Thu, 17 Sep 2026 16:03:11 +0100
-Message-ID: <20260917151545.820873574@linuxfoundation.org>
+Subject: [PATCH 6.12 0257/1102] wifi: mt76: mt7925: add Netgear A8500 USB device ID
+Date: Thu, 17 Sep 2026 16:03:20 +0100
+Message-ID: <20260917151546.049258210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,95 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 64bf6892057b746c55bcc045b9492741b72d8d27 ]
+[ Upstream commit 291b067a02b9c1fd272057ebf47c365260955fd2 ]
 
-After the previous patch gates req recycling on Send completion,
-a completed RPC's rpcrdma_req can remain pinned by the sendctx
-ring until the next signaled Send completion releases it. The
-transmitted-RPC ceiling is unchanged: xprt_request_get_cong()
-gates Sends against xprt->cwnd, the RPC/RDMA credit window fed
-by server-granted credits and capped at re_max_requests. The
-req pool, however, must exceed max_reqs by enough that this
-recycle delay does not stall a slot allocation that the credit
-window would admit.
+Add USB device ID for the Netgear A8500 (0846:9050) which uses
+the mt7925 chipset.
 
-The headroom is bounded. frwr_open() sets re_send_batch to
-re_max_requests >> 3 -- one in every eight Sends is signaled --
-so at most re_send_batch unsignaled Sends can be outstanding
-before the next signaled completion releases them. That equals
-max_reqs / 8 reqs in the worst case, with a one-slot floor for
-small max_reqs values where the right-shift rounds to zero.
-
-The sendctx ring and the hardware Send Queue are not enlarged
-to match. Both are sized in rpcrdma_sendctxs_create() and
-frwr_query_device() for re_max_requests in-flight Sends, which
-is the ceiling the credit window enforces. The pool slack does
-not raise that ceiling -- it only lets allocation keep pace
-with the credit window during the brief interval in which
-earlier reqs are pinned waiting for the next signaled
-completion. At any moment, at most re_send_batch sendctxes are
-held by unswept unsignaled Sends, leaving the rest of the ring
-available for newly admitted Sends.
-
-Allocate max_reqs + DIV_ROUND_UP(max_reqs, 8) request objects
-and name the slack calculation at the allocation site so the
-1/8 bound stays tied to the Send-signaling batch size.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260527144735.10254-1-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/usb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index e2d3cee825cd7..8449107b2a095 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1123,6 +1123,22 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
- 	spin_unlock(&buf->rb_lock);
- }
- 
-+static unsigned int rpcrdma_req_pool_slack(unsigned int max_reqs)
-+{
-+	/* The sendctx ring can hold up to one Send-signaling batch
-+	 * (re_send_batch, set by frwr_open() to re_max_requests >> 3)
-+	 * of unfinished Sends. Each pins its req until a signaled Send
-+	 * completion releases the sendctx. Size the pool above max_reqs
-+	 * by that batch so the recycle delay does not stall a slot
-+	 * allocation that the RPC/RDMA credit window would admit.
-+	 *
-+	 * Round up: re_max_requests >> 3 is zero when max_reqs < 8, but
-+	 * a single unsignaled Send is still enough to pin one req. One
-+	 * slack slot covers that case.
-+	 */
-+	return DIV_ROUND_UP(max_reqs, 8);
-+}
-+
- /**
-  * rpcrdma_buffer_create - Create initial set of req/rep objects
-  * @r_xprt: transport instance to (re)initialize
-@@ -1132,6 +1148,7 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
- int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
- {
- 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
-+	unsigned int max_reqs;
- 	int i, rc;
- 
- 	buf->rb_bc_srv_max_requests = 0;
-@@ -1145,7 +1162,9 @@ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
- 	INIT_LIST_HEAD(&buf->rb_all_reps);
- 
- 	rc = -ENOMEM;
--	for (i = 0; i < r_xprt->rx_xprt.max_reqs; i++) {
-+	max_reqs = r_xprt->rx_xprt.max_reqs;
-+	max_reqs += rpcrdma_req_pool_slack(max_reqs);
-+	for (i = 0; i < max_reqs; i++) {
- 		struct rpcrdma_req *req;
- 
- 		req = rpcrdma_req_create(r_xprt,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+index bf040f34e4b9f..995a7fcc419fd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+@@ -12,6 +12,9 @@
+ static const struct usb_device_id mt7925u_device_table[] = {
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0e8d, 0x7925, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
++	/* Netgear, Inc. A8500 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9050, 0xff, 0xff, 0xff),
++		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
+ 	/* Netgear, Inc. A9000 */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9072, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
 -- 
 2.53.0
 
