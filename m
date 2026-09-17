@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9DC8003D;
-	Thu, 17 Sep 2026 15:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901A8318EC7;
+	Thu, 17 Sep 2026 15:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659973; cv=none; b=tsseKeBR6PukKjp7Q3Rk5qBg+2ICGFecD5zXyXoSK3TWs2TSMJHWeOyKHJazwJ/D4v1cILLLwPN/ssEva1/tTQnPEx8KLXffeTme1O/J0CHWDmrqnWQLbnbyrG4fJv2ZhnK6WrgFHmcULNv3E8GDZ0pgn1jCth9AVsG0f4RRHCU=
+	t=1789659974; cv=none; b=AozPp919kbk3vsISpog2izxwSkRuVghZmRHk/Gkz+yADFOA2cBrbk44cmnn3XbucAkJGQy66yW6RiNeqIJeDJUs6tvo+rGeSIQbjIJ3Sud9FtN1G/anWJROa0Vc83S7OjVk3W5e1BYvwxepCqVzj3ilf4pD7VlBYuMlRdut7G48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659973; c=relaxed/simple;
-	bh=CqUYbRRPda0zRdoIJxKFKhj7vAwUI5njS0/erHhTZmo=;
+	s=arc-20240116; t=1789659974; c=relaxed/simple;
+	bh=86Aae8/fkHVam5uFXcrkDrpT2R90PGAe/p+hTocbwGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjYMzU34BWWEt+PasPUV/3GYONIxW7WlDTPoeYScnT8Sp3s+pQOZYTH1VonIoXN4SF1OkmnhlmAZcu98coefRkZEgATS+cpuHcVXTWSdZlx0P1C7ZuZilpGmrQcfq4Y8QB6ymxZ9Jck/wITy5Co0U5mg/idHQWdtFzaQvzrEi2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV6CEw08; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fNwhtY/7VbW6xG7Ulvmi7MWEUmZoPHMN1Rhd7AoQZYKB1DQN+dtJCKeoufC3A7j7Ocusm3wN7sBX7UHTdjPfByGJBBCwQxEM8glqeaCYg7XGDI6f0CxU9gXAYVW8996d2sc0T92aes3UPEzF0WMmTfvEQvWa3sV0l6prYoe6NNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPLPKhz8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV6CEw08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE831F00893;
-	Thu, 17 Sep 2026 15:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPLPKhz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30941F000FF;
+	Thu, 17 Sep 2026 15:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659964;
-	bh=DBS9DJFeprZwMWnfhlzvpq29vQ65A6XE0p3YXa82PSk=;
+	s=korg; t=1789659967;
+	bh=4IrV0kXJFkD6buK0YYmX7iEfmqfiZ+w29Msh7idbhKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UV6CEw08XF7nweugVXzVd52CT5zqQ8+BeZMmLsmoug1d1eLVdvWF3EkKcQgm7SmKH
-	 XiEhm7zot1ziCYfuffMA9GBXKD9JWVvh3ZMB3qB9V+XadAd8EuRXzsCkYZn9S+F8ul
-	 9eQGuV+A1bWu9obQKIpW9undaJy5OjIfiIGOezUQ=
+	b=xPLPKhz89o8/ZbM8ekbOpUz7Rl9nLLK/8M3zeugReuV2buaRsfxXT6ZCyBP9d539E
+	 SF4W/Meds1t0sOxll4M6kE78x+SejxgPnoejwDpLfxMV57f2yxX/p6OlstP6djy+6d
+	 ImaejlFEmXwS1ttC8+tw6iRbVWsP4WJxoJek544g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
+	Greg Marsden <greg.marsden@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 433/733] net: mana: restore the XDP program pointer when pre-allocation fails
-Date: Thu, 17 Sep 2026 16:12:21 +0100
-Message-ID: <20260917151402.632492957@linuxfoundation.org>
+Subject: [PATCH 7.2 434/733] net/rds: fix tcp stream corruption with large pages
+Date: Thu, 17 Sep 2026 16:12:22 +0100
+Message-ID: <20260917151402.664039567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,49 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Greg Marsden <greg.marsden@oracle.com>
 
-[ Upstream commit 4c46beb807efcc93f5899ebe1f5958248eb296c6 ]
+[ Upstream commit 2ac09b5353fe6858411fdc8c6efa60d832e20f13 ]
 
-mana_xdp_set() publishes the new program into apc->bpf_prog before it
-allocates anything, because mana_pre_alloc_rxbufs() sizes the buffers
-from it via mana_get_rxbuf_cfg(). When that allocation fails the
-function returns the error directly, skipping the err_dealloc_rxbuffs
-label which is the only place that restores the previous pointer.
+rds_message_map_pages() assigns PAGE_SIZE bytes to every
+scatterlist entry, even when total_len ends in a partial page. The RDS
+congestion map is defined as 8192 bytes, so on systems with PAGE_SIZE
+greater than 8192 the scatterlist maps bytes beyond the end of the
+congestion map.  RDS-TCP transmits the SG contents according to those
+lengths, so the extra bytes become part of the TCP RDS stream and are
+interpreted as subsequent RDS message headers, corrupting the stream.
 
-The attach is reported as failed, so the BPF core drops the reference it
-held for the caller and the program can be freed, while apc->bpf_prog
-still points at it. The next consumer of mana_xdp_get() - typically
-mana_chn_setxdp() from mana_alloc_queues() on the following ifup, or
-after a TX timeout reset - then calls bpf_prog_add() on freed memory.
+Limit the final scatterlist mapping to the number of bytes remaining.
+This has no effect on systems with a 4K page size and allows RDS-TCP to
+be used on systems with 16K and larger page sizes.
 
-This is reachable from an ordinary "ip link set dev ethX xdp obj ..."
-whenever the per-queue RX buffer pre-allocation cannot be satisfied.
+The RDS selftest, which previously hung on 16K pages, now passes.
 
-Restore the previous program on that error path.
-
-Fixes: 730ff06d3f5c ("net: mana: Use page pool fragments for RX buffers instead of full pages to improve memory efficiency.")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904202640.3900685-1-longli@microsoft.com
+Fixes: 7875e18e0996 ("RDS: Message parsing")
+Signed-off-by: Greg Marsden <greg.marsden@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/apxJjxvStibPI0AS@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_bpf.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rds/message.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_bpf.c b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
-index 53308e139cbe9..5c9961ee9747a 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_bpf.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
-@@ -208,6 +208,7 @@ static int mana_xdp_set(struct net_device *ndev, struct bpf_prog *prog,
- 		if (err) {
- 			NL_SET_ERR_MSG_MOD(extack,
- 					   "XDP: Insufficient memory for tx/rx re-config");
-+			apc->bpf_prog = old_prog;
- 			return err;
- 		}
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 7feb0eb6537db..9cbf045fe0031 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -405,7 +405,9 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
+ 	for (i = 0; i < rm->data.op_nents; ++i) {
+ 		sg_set_page(&rm->data.op_sg[i],
+ 				virt_to_page((void *)page_addrs[i]),
+-				PAGE_SIZE, 0);
++				i == rm->data.op_nents - 1
++					? total_len - (i * PAGE_SIZE)
++					: PAGE_SIZE, 0);
+ 	}
  
+ 	return rm;
 -- 
 2.53.0
 
