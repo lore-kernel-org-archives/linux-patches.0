@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20367381E95;
-	Thu, 17 Sep 2026 19:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D893CF1F1;
+	Thu, 17 Sep 2026 19:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671846; cv=none; b=qd43+Yuir2gcxvIz9Dhv06kI8UYnbzfFmASYFXRTKPDu8Sb0TI48TmB8TKwxGxKthPXKydIa/UqoPKHjlrZPRS4ucQFdXtsxEDNCx6uqEnhBvCiABlQp6YoR77F554HPOz3NTla1fh2YPI9ELKTuKHLoDLuZ5KCa75aKHJmBgyE=
+	t=1789671849; cv=none; b=SiEqO9MT6QFSpThC1OpGwvpWfH6e/yIIj/m7xecrhe6w6OIMhJ6CbM9Hv4tt0ytwriOztqNeVR715/E8TbUi/Djo6o5HFVOtyG3Tvt+zxpIk1u8rPiM8uo0dR/xfDg7e8D65GybwNWam3t9GRBsKA5wJkH0GvYbb3Q1Nsm3fa64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671846; c=relaxed/simple;
-	bh=0DKGblRPPiha0+fQgvkWeeXSzqgbi2c8fAeZkSQnQ04=;
+	s=arc-20240116; t=1789671849; c=relaxed/simple;
+	bh=1bXmjsR2HNBTVuLoAe6rC6/DnOqta1PFcXiLaSGf6vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxQVARVStw4c5m7nYUGBjC06mNhOlQRbwp+xLx1SDwm6f/cu30EPaMLUxlDzBp5mflERK50qXA8CZ5RF0J2cpISS9dB+0K8kNqaOB5tILoVbyfe4oVzAXKC/q2/dPnpdo98gjYuypjIaOY1ZxMQfy8JMCxKkiivDMLY9R1S72P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXROFTDr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rwJ0ONj2AwMgIvSLcKuMzJpLfYdND5aDKObpTAV3xEMWAH1bV0sZka/viKLIXMjcGN40WvxwaHL74M4wqTdMwsFr/Yo3HaA35mA1cyO3idW/AZmUYNGRltxTCJ+GhFXE8EKJhOsSv7HgBdoqu/40L+9fE6ZREZAsgspXWDlAvCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJRR8d1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXROFTDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D101F000FF;
-	Thu, 17 Sep 2026 19:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJRR8d1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8881F00893;
+	Thu, 17 Sep 2026 19:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671845;
-	bh=14suW+oiTA4/hsPiLcYCutv58YKeXU1I+B9eGbzo8n8=;
+	s=korg; t=1789671848;
+	bh=xoQz54iDOJz5De2GZvCAeJOQ/A81TxkIGldm1wTkQNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXROFTDrQpmEzK3VO1T1C2vePwpzMEltdvw0NG+sR5kuiSF2qNcYVn4oa9nJB1OeO
-	 mvv6P6tPczyRR3cWoSrdJOLe1r3/p+rIo1RMq0TfJCshrFmljtHeXYoOkK2T8/Zipo
-	 HJwAOy5EjCXv7NAy5HmJlRf+Chvb4njRQ7zo8Iu8=
+	b=cJRR8d1S/NGkiNWFz3lYyKoxWf1aiNYoCrDhKz7uGG+unfMuFkKp82uYfUPHcpwci
+	 +LaebTPZetQGQkIFmc/eSWt9eYOScUd8ORVuOyhshzbm+Yr9VOM7i/4LWhYVjd5qph
+	 8eRqBjg+4MunFy6D47vAhdv3o/1x/biLCuG6LXu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1091/1102] svcrdma: Reorder rpcrdma_rn_unregister before rdma_destroy_id
-Date: Thu, 17 Sep 2026 16:17:14 +0100
-Message-ID: <20260917151608.250020789@linuxfoundation.org>
+Subject: [PATCH 6.12 1092/1102] sunrpc: Add a helper to derive maxpages from sv_max_mesg
+Date: Thu, 17 Sep 2026 16:17:15 +0100
+Message-ID: <20260917151608.276638910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,69 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 4488e912973773d64368828acf3b8e39d93650ae ]
+[ Upstream commit eff042ddf4b9587fa7394d502b93e06ec6015177 ]
 
-svc_rdma_free() caches rdma->sc_cm_id->device before teardown,
-then calls rdma_destroy_id(sc_cm_id) which frees the cm_id.
-rpcrdma_rn_unregister() follows, but between those two calls
-the transport's sc_rn entry is still installed in the device's
-rd_xa. A concurrent ib_unregister_device walk can dispatch
-svc_rdma_xprt_done() against the now-freed sc_cm_id.
+This page count is to be used to allocate various arrays of pages
+and bio_vecs, replacing the fixed RPCSVC_MAXPAGES value.
 
-Move rpcrdma_rn_unregister() before rdma_destroy_id() so the
-transport's notification entry is removed from the xarray before
-the cm_id it references is destroyed.
+The documenting comment is somewhat stale -- of course NFSv4
+COMPOUND procedures may have multiple payloads.
 
-Also guard the sc_cm_id dereference with a NULL check: the
-following patches introduce paths that reach svc_rdma_free()
-with sc_cm_id == NULL (listener create failure, ADDR_CHANGE
-replacement failure).
-
-Fixes: c4de97f7c454 ("svcrdma: Handle device removal outside of the CM event handler")
-Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-2-1b09bd87b6cd@oracle.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 9808eb765666 ("svcrdma: Reject Write/Reply chunks with segcount 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ include/linux/sunrpc/svc.h |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -621,10 +621,15 @@ static void svc_rdma_free(struct svc_xpr
- {
- 	struct svcxprt_rdma *rdma =
- 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
--	struct ib_device *device = rdma->sc_cm_id->device;
-+	struct ib_device *device;
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -163,6 +163,23 @@ extern u32 svc_max_payload(const struct
+ #define RPCSVC_MAXPAGES		((RPCSVC_MAXPAYLOAD+PAGE_SIZE-1)/PAGE_SIZE \
+ 				+ 2 + 1)
  
- 	might_sleep();
- 
-+	if (!rdma->sc_cm_id)
-+		goto out_free;
++/**
++ * svc_serv_maxpages - maximum count of pages needed for one RPC message
++ * @serv: RPC service context
++ *
++ * Returns a count of pages or vectors that can hold the maximum
++ * size RPC message for @serv.
++ *
++ * Each request/reply pair can have at most one "payload", plus two
++ * pages, one for the request, and one for the reply.
++ * nfsd_splice_actor() might need an extra page when a READ payload
++ * is not page-aligned.
++ */
++static inline unsigned long svc_serv_maxpages(const struct svc_serv *serv)
++{
++	return DIV_ROUND_UP(serv->sv_max_mesg, PAGE_SIZE) + 2 + 1;
++}
 +
-+	device = rdma->sc_cm_id->device;
-+
- 	/* This blocks until the Completion Queues are empty */
- 	if (rdma->sc_qp && !IS_ERR(rdma->sc_qp))
- 		ib_drain_qp(rdma->sc_qp);
-@@ -649,11 +654,13 @@ static void svc_rdma_free(struct svc_xpr
- 	if (rdma->sc_pd && !IS_ERR(rdma->sc_pd))
- 		ib_dealloc_pd(rdma->sc_pd);
- 
-+	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
-+		rpcrdma_rn_unregister(device, &rdma->sc_rn);
-+
- 	/* Destroy the CM ID */
- 	rdma_destroy_id(rdma->sc_cm_id);
- 
--	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
--		rpcrdma_rn_unregister(device, &rdma->sc_rn);
-+out_free:
- 	kfree(rdma);
- }
- 
+ /*
+  * The context of a single thread, including the request currently being
+  * processed.
 
 
