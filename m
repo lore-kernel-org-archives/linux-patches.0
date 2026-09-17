@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BBF4398F5;
-	Thu, 17 Sep 2026 18:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C39C547042;
+	Thu, 17 Sep 2026 18:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670840; cv=none; b=kcw09bnTNh8foFtlyR7uqivdeeIMrtDsV6Nut6L9im6/ebJuQuKNLgugHmBk9i7+I+pzyQvhM6/WOfLGiSnjTmebDoxDzcugV60a5KpF0E+LYYd2lHfEpRxI5bKDXSmR/RVrFJp7ziLfPRRyi8Iz6OWqMurW/PW4nRQImRb2+ms=
+	t=1789670842; cv=none; b=fb++FfhC7xZvvdG+mCpNOH946pDAsV7bmIKHznB3Lsnh2N0+vU9qxF1m0aB7U5/9nvwNLAtO7e5rfw3QSHjyO695+Nk1pGDZmsQNhXEjwCZ2NpLfIFqxlXQmb3wiBkcm+/XaFJtZPNC1rtc/dtmXv2US7dUOZEbRRewISEt58/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670840; c=relaxed/simple;
-	bh=TxLujqFepk1pReE7bGsshdf8aFrssiM2Bi3PKox7mF4=;
+	s=arc-20240116; t=1789670842; c=relaxed/simple;
+	bh=h67vohP2QQSN7s8hH4k03bOfBypYWPm7W/28JO7kGR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyMdBiM8aTz8286pd2GJ1tw6uxOauXrRnEBa991AxOx5CGmpar0RvbO3lH2WSp13LvRMdStwKwG2S9ua8bH11rqUMhBDUKrhzJZ3kA2QZU7yXQENgjhiQhe1nc+nlZ4Uahh5B6tZUKQWj5ZBuzkimsMlri70YAVacTJS81KxXF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5pUWRar; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQoUI404wmsmawgCRJX/QsW4BZatUk7NQxyte3WqZWeB+4QgV5dPiPnC4EaCvsqhU+93kPv+tev0oVtSN5Q8/Dnu6W8o4DURXCMWP9yRfg75MchlTngMEeKUniKkzyzAU+dPItGc9yLpJOkMkleznfiarD2INWjENpIFCbc9dU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt6rWbHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5pUWRar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8981F000FF;
-	Thu, 17 Sep 2026 18:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt6rWbHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFBB1F000FF;
+	Thu, 17 Sep 2026 18:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670837;
-	bh=XB4p/sGRqG8v4q6BOeIDRBW1jylg//JcapLPUvXTHoc=;
+	s=korg; t=1789670840;
+	bh=yO9i1W9AOpssoOaPIM927+IfRvUTysM09dvSvhnaOwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I5pUWRark02TyDEmo1skSuJvfmXVkI+CJS15y13QbZDqdJ3YectB6nEAPocKyn5ps
-	 v+coLndY/Ad6s9Kt1eC+fLRXICZtn9w5N+GPOnMLBgMSN+5m491hqJjky/k8m92hGv
-	 J/B5kGhgHuTW9m55W55zgBQ9JAioDq2ZfhBZ6N8I=
+	b=bt6rWbHyijc79TiBqAcKVocZ6g31qDbl4WQACvrVUmO4GdkHDDqgRId8yHmGzds0l
+	 KmiyhUrx2C7SMh0M4ms1Vmwgv7Lcc8ZWm859JdO7gFj8cRL2llOi1K4kBwzV91BrPc
+	 kC7vxSOSIeo69RzBAyWhwCpvrxChf0UI99OHoGyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Andrew Lunn <andrew@lunn.ch>,
-	"SkyLake.Huang" <skylake.huang@mediatek.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0786/1102] net: phy: mediatek: Re-organize MediaTek ethernet phy drivers
-Date: Thu, 17 Sep 2026 16:12:09 +0100
-Message-ID: <20260917151600.197483140@linuxfoundation.org>
+Subject: [PATCH 6.12 0787/1102] net: phy: add phy_disable_eee
+Date: Thu, 17 Sep 2026 16:12:10 +0100
+Message-ID: <20260917151600.224366029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,137 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SkyLake.Huang <skylake.huang@mediatek.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 4c452f7ea86212934ae896842847d1671e13a18b ]
+[ Upstream commit b55498ff14bd14860d48dc8d2a0b6889b218c408 ]
 
-Re-organize MediaTek ethernet phy driver files and get ready to integrate
-some common functions and add new 2.5G phy driver.
-mtk-ge.c: MT7530 Gphy on MT7621 & MT7531 Gphy
-mtk-ge-soc.c: Built-in Gphy on MT7981 & Built-in switch Gphy on MT7988
-mtk-2p5ge.c: Planned for built-in 2.5G phy on MT7988
+If a MAC driver doesn't support EEE, then the PHY shouldn't advertise it.
+Add phy_disable_eee() for this purpose.
 
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: SkyLake.Huang <skylake.huang@mediatek.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://patch.msgid.link/fd51738c-dcd6-4d61-b8c5-faa6ac0f1026@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: ccbe7540e4aa ("net: phy: mediatek-ge: disable EEE on the MT7530 PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                                   |  4 ++--
- drivers/net/phy/Kconfig                       | 17 +-------------
- drivers/net/phy/Makefile                      |  3 +--
- drivers/net/phy/mediatek/Kconfig              | 22 +++++++++++++++++++
- drivers/net/phy/mediatek/Makefile             |  3 +++
- .../mtk-ge-soc.c}                             |  0
- .../phy/{mediatek-ge.c => mediatek/mtk-ge.c}  |  0
- 7 files changed, 29 insertions(+), 20 deletions(-)
- create mode 100644 drivers/net/phy/mediatek/Kconfig
- create mode 100644 drivers/net/phy/mediatek/Makefile
- rename drivers/net/phy/{mediatek-ge-soc.c => mediatek/mtk-ge-soc.c} (100%)
- rename drivers/net/phy/{mediatek-ge.c => mediatek/mtk-ge.c} (100%)
+ drivers/net/phy/phy_device.c | 16 ++++++++++++++++
+ include/linux/phy.h          |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a9a03029ecb8a..1cf22c9536b15 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14433,8 +14433,8 @@ M:	Qingfang Deng <dqfext@gmail.com>
- M:	SkyLake Huang <SkyLake.Huang@mediatek.com>
- L:	netdev@vger.kernel.org
- S:	Maintained
--F:	drivers/net/phy/mediatek-ge-soc.c
--F:	drivers/net/phy/mediatek-ge.c
-+F:	drivers/net/phy/mediatek/mtk-ge-soc.c
-+F:	drivers/net/phy/mediatek/mtk-ge.c
- F:	drivers/phy/mediatek/phy-mtk-xfi-tphy.c
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index f2d067b907bf9..8ec06756c033b 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3043,6 +3043,22 @@ void phy_support_eee(struct phy_device *phydev)
+ }
+ EXPORT_SYMBOL(phy_support_eee);
  
- MEDIATEK I2C CONTROLLER DRIVER
-diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
-index 01b235b3bb7e8..4e78a4d8fd2a7 100644
---- a/drivers/net/phy/Kconfig
-+++ b/drivers/net/phy/Kconfig
-@@ -266,22 +266,7 @@ config MAXLINEAR_GPHY
- 	  Support for the Maxlinear GPY115, GPY211, GPY212, GPY215,
- 	  GPY241, GPY245 PHYs.
- 
--config MEDIATEK_GE_PHY
--	tristate "MediaTek Gigabit Ethernet PHYs"
--	help
--	  Supports the MediaTek Gigabit Ethernet PHYs.
--
--config MEDIATEK_GE_SOC_PHY
--	tristate "MediaTek SoC Ethernet PHYs"
--	depends on (ARM64 && ARCH_MEDIATEK) || COMPILE_TEST
--	depends on NVMEM_MTK_EFUSE
--	help
--	  Supports MediaTek SoC built-in Gigabit Ethernet PHYs.
--
--	  Include support for built-in Ethernet PHYs which are present in
--	  the MT7981 and MT7988 SoCs. These PHYs need calibration data
--	  present in the SoCs efuse and will dynamically calibrate VCM
--	  (common-mode voltage) during startup.
-+source "drivers/net/phy/mediatek/Kconfig"
- 
- config MICREL_PHY
- 	tristate "Micrel PHYs"
-diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-index 90f886844381d..e6145153e837f 100644
---- a/drivers/net/phy/Makefile
-+++ b/drivers/net/phy/Makefile
-@@ -74,8 +74,7 @@ obj-$(CONFIG_MARVELL_PHY)	+= marvell.o
- obj-$(CONFIG_MARVELL_88Q2XXX_PHY)	+= marvell-88q2xxx.o
- obj-$(CONFIG_MARVELL_88X2222_PHY)	+= marvell-88x2222.o
- obj-$(CONFIG_MAXLINEAR_GPHY)	+= mxl-gpy.o
--obj-$(CONFIG_MEDIATEK_GE_PHY)	+= mediatek-ge.o
--obj-$(CONFIG_MEDIATEK_GE_SOC_PHY)	+= mediatek-ge-soc.o
-+obj-y				+= mediatek/
- obj-$(CONFIG_MESON_GXL_PHY)	+= meson-gxl.o
- obj-$(CONFIG_MICREL_KS8995MA)	+= spi_ks8995.o
- obj-$(CONFIG_MICREL_PHY)	+= micrel.o
-diff --git a/drivers/net/phy/mediatek/Kconfig b/drivers/net/phy/mediatek/Kconfig
-new file mode 100644
-index 0000000000000..112d9c0f219c6
---- /dev/null
-+++ b/drivers/net/phy/mediatek/Kconfig
-@@ -0,0 +1,22 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+config MEDIATEK_GE_PHY
-+	tristate "MediaTek Gigabit Ethernet PHYs"
-+	help
-+	  Supports the MediaTek non-built-in Gigabit Ethernet PHYs.
++/**
++ * phy_disable_eee - Disable EEE for the PHY
++ * @phydev: Target phy_device struct
++ *
++ * This function is used by MAC drivers for MAC's which don't support EEE.
++ * It disables EEE on the PHY layer.
++ */
++void phy_disable_eee(struct phy_device *phydev)
++{
++	linkmode_zero(phydev->supported_eee);
++	linkmode_zero(phydev->advertising_eee);
++	phydev->eee_cfg.tx_lpi_enabled = false;
++	phydev->eee_cfg.eee_enabled = false;
++}
++EXPORT_SYMBOL_GPL(phy_disable_eee);
 +
-+	  Non-built-in Gigabit Ethernet PHYs include mt7530/mt7531.
-+	  You may find mt7530 inside mt7621. This driver shares some
-+	  common operations with MediaTek SoC built-in Gigabit
-+	  Ethernet PHYs.
-+
-+config MEDIATEK_GE_SOC_PHY
-+	tristate "MediaTek SoC Ethernet PHYs"
-+	depends on (ARM64 && ARCH_MEDIATEK) || COMPILE_TEST
-+	depends on NVMEM_MTK_EFUSE
-+	help
-+	  Supports MediaTek SoC built-in Gigabit Ethernet PHYs.
-+
-+	  Include support for built-in Ethernet PHYs which are present in
-+	  the MT7981 and MT7988 SoCs. These PHYs need calibration data
-+	  present in the SoCs efuse and will dynamically calibrate VCM
-+	  (common-mode voltage) during startup.
-diff --git a/drivers/net/phy/mediatek/Makefile b/drivers/net/phy/mediatek/Makefile
-new file mode 100644
-index 0000000000000..005bde26c1d72
---- /dev/null
-+++ b/drivers/net/phy/mediatek/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_MEDIATEK_GE_PHY)		+= mtk-ge.o
-+obj-$(CONFIG_MEDIATEK_GE_SOC_PHY)	+= mtk-ge-soc.o
-diff --git a/drivers/net/phy/mediatek-ge-soc.c b/drivers/net/phy/mediatek/mtk-ge-soc.c
-similarity index 100%
-rename from drivers/net/phy/mediatek-ge-soc.c
-rename to drivers/net/phy/mediatek/mtk-ge-soc.c
-diff --git a/drivers/net/phy/mediatek-ge.c b/drivers/net/phy/mediatek/mtk-ge.c
-similarity index 100%
-rename from drivers/net/phy/mediatek-ge.c
-rename to drivers/net/phy/mediatek/mtk-ge.c
+ /**
+  * phy_support_sym_pause - Enable support of symmetrical pause
+  * @phydev: target phy_device struct
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 49283facf9320..957fb0cdb02c2 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -2040,6 +2040,7 @@ void phy_advertise_eee_all(struct phy_device *phydev);
+ void phy_support_sym_pause(struct phy_device *phydev);
+ void phy_support_asym_pause(struct phy_device *phydev);
+ void phy_support_eee(struct phy_device *phydev);
++void phy_disable_eee(struct phy_device *phydev);
+ void phy_set_sym_pause(struct phy_device *phydev, bool rx, bool tx,
+ 		       bool autoneg);
+ void phy_set_asym_pause(struct phy_device *phydev, bool rx, bool tx);
 -- 
 2.53.0
 
