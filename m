@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6204DA9B0;
-	Thu, 17 Sep 2026 17:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046A4F93B3;
+	Thu, 17 Sep 2026 17:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665639; cv=none; b=rpeSlgFJ2x6Z6/JOXDw8ak3vH6CdXQM78oS8u+SJqo25TBvqzoPFbvsdFscfKRbnBJoiAPR6xkFEf48JuWjBY+NCbqxa8WPGIGKkfOjsvdmeME+jLZfwx3sUr3dyGWCFiz8YsfUCJ0rPaTuiumbm6SySA/2uPVxPnWXs9ibG8qs=
+	t=1789665642; cv=none; b=jY+onr/F2QjzqflTpcchCAYXIXmecaqtbS3Slgajwp8mdbW1flH0gQCJEJMgkBwRvZAXtv8UXo9IC2FYmUK7aL9DviiltbvrRnvsZ94bh9ZfRMLwX+dz0yQpSpZXyopn0JNyWbZ33c4q1zvctKwD5fLIFMRAAnd7GjlgDUcpu5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665639; c=relaxed/simple;
-	bh=84za/Lo9pYAM3osc5oh0UhfhUCzv9zrUBZp+hUIyNxs=;
+	s=arc-20240116; t=1789665642; c=relaxed/simple;
+	bh=pD7wInguFWrYRaeNI0780GqNSNOOhYUfRLR4Jz+60eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEbGrZ1bBlJ8WF89lswpgmZnWs+TJH/ny06GyCjkPYreI8+9vvGYnxqIOX88t1dBkthQkljFC4k+SrbEAamV6s6eNKC3Z1Igbbw/HCN21o8CDgWkN1RYkXzbahEGfE+FW10eJdSKzBKSmNk4oJEHNKa0YS2hIez/cixOVfhNuUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qGAeaNI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qRVMb9SzTcSobOZjHewRg37+m23Oyv83sUu/aK57i1ZJ3tti8WCp8mbZFaiOH3WMBu8YtkVdCga9s2JfKcxxMJdpNUxoPOeR/lhwKekDZ8RCZ60FnETmpFboltxrUjz/xMldQz3fpDpf9S/SS2rC1fIFI5jT8WUmueXhg2saGLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNAXSbs8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qGAeaNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A262A1F000FF;
-	Thu, 17 Sep 2026 17:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNAXSbs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F031F000FF;
+	Thu, 17 Sep 2026 17:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665638;
-	bh=ATYe+AlsKO7VrAzUmQS/3wvP6wdFi/4u7F9lbdzARmw=;
+	s=korg; t=1789665641;
+	bh=POmJhFVLQ9WSq3Mjj5p7S8elm7ufQ9zoCtkx2W4u/Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1qGAeaNItLmH7jRKYI1/bzqkRFoWQWkqlm1zlkNzHemstlCeyMyd7vOwTgRBZ+oy9
-	 6kWL2f8K9Xp/Gpb63z+KIxuZr1xsGc7evmEUG39WYhjeGapEXhikifDKrXOpKQFS9G
-	 8RMrqi/kWvI3uTF5dgcDZeWGZLvkm6MGFBf3QljA=
+	b=dNAXSbs83MSvMOOMnHC/36Kns6ITLBJ+aEAsR4bGGlyKFHw/MxtUH85rArC/wayqQ
+	 9ohXvbQp2k8+9gSY5NNUjVOvZSgQfwhUzaFGZhOk13QHgjo8dTHbwUq/exFzAjHsww
+	 R6sv3k+tzj+qL1MDeMp7vVhtO8XU6PgbAHrD5ME8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Danesh Petigara <danesh.petigara@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0770/1250] net: bcmasp: fix tx_spb_ring_full() checking same slot cnt times
-Date: Thu, 17 Sep 2026 16:09:25 +0100
-Message-ID: <20260917151612.746871955@linuxfoundation.org>
+Subject: [PATCH 6.18 0735/1250] bpf: reject BPF_PSEUDO_FUNC reference to the main program
+Date: Thu, 17 Sep 2026 16:08:50 +0100
+Message-ID: <20260917151611.813012740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,43 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 0c5cf62e72d7a666ee4da757e122dc1600df1ecc ]
+[ Upstream commit 374b2c5561db80fcdd7cdce44af37a49416f61c7 ]
 
-The loop initialised next_index from intf->tx_spb_index on every
-iteration, so incr_ring() always produced the same result and only
-one slot was ever tested.  Move the initialisation before the loop
-so each iteration advances next_index and the function correctly
-checks that cnt consecutive descriptor slots are available before
-allowing a new transmission.
+fixups.c:jit_subprogs() rewrites BPF_PSEUDO_FUNC loads to contain real
+function addresses. This function is invoked from bpf_jit_subprogs()
+only when env->subprog_cnt > 1. Meaning that for any program like
+below:
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260831184235.4133351-3-danesh.petigara@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  int main(void *ctx) {
+    void *ptr = main;
+    ...
+    bpf_timer_set_callback(..., ptr);
+    ...
+  }
+
+The 'ptr' won't be ever converted to contain an address.
+In combination with e.g. bpf_timer_set_callback() this would lead to a
+function call at a bogus address.
+
+Instead of complicating the implementation, just assume that no useful
+program needs main to be a sync or async callback and reject
+BPF_PSEUDO_FUNC loads for the main subprogram.
+
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260902233658.1186477-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index 4e2edd537da57..d4de48c3132a3 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -147,8 +147,9 @@ static int tx_spb_ring_full(struct bcmasp_intf *intf, int cnt)
- 	int next_index, i;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 0a4198335c9b9..c0564cbb9154a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -17346,6 +17346,15 @@ static int check_ld_imm(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 			verbose(env, "callback function not static\n");
+ 			return -EINVAL;
+ 		}
++		/*
++		 * When env->subprog_cnt == 1 this instruction won't be rewritten
++		 * to hold a real function address. Assume that no usable program
++		 * combines e.g. main and timer callback and just reject here.
++		 */
++		if (subprogno == 0) {
++			verbose(env, "callback function cannot be the main program\n");
++			return -EINVAL;
++		}
  
- 	/* Check if we have enough room for cnt descriptors */
-+	next_index = intf->tx_spb_index;
- 	for (i = 0; i < cnt; i++) {
--		next_index = incr_ring(intf->tx_spb_index, DESC_RING_COUNT);
-+		next_index = incr_ring(next_index, DESC_RING_COUNT);
- 		if (next_index == intf->tx_spb_clean_index)
- 			return 1;
- 	}
+ 		dst_reg->type = PTR_TO_FUNC;
+ 		dst_reg->subprogno = subprogno;
 -- 
 2.53.0
 
