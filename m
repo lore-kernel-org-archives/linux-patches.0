@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843584E4C32;
-	Thu, 17 Sep 2026 15:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF194E3236;
+	Thu, 17 Sep 2026 15:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659363; cv=none; b=Fgzgn3P5TJcHutHvO/3bACLiRt/CyB127FObH63quomye3Iwaayyh1K88z9IUdZ+asHz5Xdmdc0mHOPSasW4iX4MSQNa5tmOOniVcmqEny6TllUoO3+1CWL97tEh0dDjqdA+Sg9yTJ6lBAHMzw1Ydh0m+GZbdOPOYVgcjXfH/QY=
+	t=1789659363; cv=none; b=aAKrBrIam2ipOsCotwBu/yIbaZWm3x00iuCLCHghUWXyFx6OYAgAYbV2nXU+GBty/4lEOn/MIft+yAR0VxniCYy83tT9FBcIiR+6DylGJDN177F/4/SBXBY5gqucW3b5zkjZkj2lQMVigQYepE6gKyyKk3SebnFgOxMs9bQzxJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659363; c=relaxed/simple;
-	bh=TINTC0o/MkpAtji35yFUPbY8hfIjWMm5L+cEoXmXO8s=;
+	bh=RfEBsOIu/hPkMpMSJnWpMp4Qm9NcF/hIYQdqPh4unxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQdh7XsYL93NCaSDqEOiboU/taNu0vVeBuY1EWJaA9EQG+JnZD2/R8waJ33eJV20wOujDvshvacGTMlKUNV2gvkzZ6B7naxN4WZGRJGcwnIY9QtMpsKMLyDNNX+JxCEK8/XusxiIfwcD7vGtH3vJZZairLaVErkVZBs/j4bpgdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcLYrb5c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GAV5UYFua2W1Ke0MVOCAAXZuVw6wl6xDeDktnrYCTp4WHIu8O5P9Ej9VG+Pnpi2snAayzvPn8o6bGud8Fcs+AMJxQ5BBqutilNIw3RI6M9XTHMI7YzGYe9PGiXn+aKCw9TzOr3RFoS1z4fFDB+0fmGxz5tUzEErsKQJZZAXyElg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npXOa/ux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcLYrb5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70E31F00898;
-	Thu, 17 Sep 2026 15:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npXOa/ux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F081F000FF;
+	Thu, 17 Sep 2026 15:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659353;
-	bh=iYbFEiLUb0sCs/S+aiVYnydJ6qoaD+0DNfLzHpkYLe8=;
+	s=korg; t=1789659356;
+	bh=bIZ6pkmNEV2Pxx32cM762F5CpAxraQY5xYwO+wVkKeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RcLYrb5cFBX/Y/Al5Clxp0C9x8vQL+c+vdn760YLmC/fVnthsCA9wEdsWTRRPkNaM
-	 xs9xy8k+JZskvQYgKs4o6donax2Eek/s1sgAuLjEsWwQqlur9oLiB9/lPEFH6LgEVD
-	 V0aNQpT0IkPNBEtMM72OfA/KR6mrCZobWMJYey0k=
+	b=npXOa/uxsoz3A9tLihNmaBh+axdbq0lG/UzDQkJltHrEVGQAA3iyn4V2YZYv3+LAI
+	 EzmWUfh76Aa0InEv9vr6LheudIuuW3H9ZMu80ChBvdiQ4Jq6BePjA4V9zKpOB2kFER
+	 kfsHQKn4z8YaB24MzYPzJiR2nPBHUjzXJMcTl/64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 228/733] bpf: Fix NULL-ptr-deref in btf_var_show()
-Date: Thu, 17 Sep 2026 16:08:56 +0100
-Message-ID: <20260917151356.904137873@linuxfoundation.org>
+Subject: [PATCH 7.2 229/733] bpf: Mark signal tracepoint siginfo arguments as scalar
+Date: Thu, 17 Sep 2026 16:08:57 +0100
+Message-ID: <20260917151356.932227061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,66 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 5403a383f52fc0905703b488f7c3db4b2447dc58 ]
+[ Upstream commit 77515ab12e4983e6416f8c35039a3f0c0822ac70 ]
 
-btf_var_show() calls btf_type_id_resolve() unconditionally, which
-dereferences btf->resolved_ids. That is NULL for a base BTF - e.g. the
-vmlinux BTF that bpf_snprintf_btf() renders against - since base BTF is
-not resolved during parsing. btf_modifier_show() guards this with
-'if (btf->resolved_ids)', but btf_var_show() does not.
+The signal_generate and signal_deliver tracepoints declare their info
+argument as a struct kernel_siginfo pointer. btf_ctx_access() therefore
+treats it as a trusted pointer for tp_btf programs.
 
-A BPF program that passes the type_id of a BTF_KIND_VAR from the vmlinux
-BTF to bpf_snprintf_btf() thus NULL-derefs:
+Signal delivery also uses SEND_SIG_NOINFO and SEND_SIG_PRIV as special
+values for this argument. Those values are zero and one respectively,
+and are not pointers. A tp_btf program can currently dereference either
+value and fault the kernel. In particular, signal_generate can run from
+timer interrupt context, turning the fault into a kernel panic.
 
-KASAN: probably user-memory-access in range [0x46638-0x4663f]
-RIP: 0010:btf_var_show (kernel/bpf/btf.c:2929)
-Call Trace:
- <TASK>
- btf_type_show (kernel/bpf/btf.c:8259)
- btf_type_snprintf_show (kernel/bpf/btf.c:8329)
- bpf_snprintf_btf (kernel/trace/bpf_trace.c:1047)
- bpf_prog_test_run_raw_tp (net/bpf/test_run.c:829)
- __sys_bpf (kernel/bpf/syscall.c:4804)
- do_syscall_64 (arch/x86/entry/syscall_64.c:84)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+Record both tracepoints in raw_tp_null_args[] and mark argument one as
+a non-pointer. This preserves scalar access to the cookie while rejecting
+direct and helper-mediated pointer use. Merely marking it nullable would
+not suffice because SEND_SIG_PRIV is nonzero.
 
-Resolve the var's type directly with btf_type_skip_modifiers() when
-resolved_ids is NULL, mirroring btf_modifier_show().
-
-Fixes: c4d0bfb45068 ("bpf: Add bpf_snprintf_btf helper")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260901104924.346187-4-jiayuan.chen@linux.dev
+Fixes: 838a10bd2ebf ("bpf: Augment raw_tp arguments with PTR_MAYBE_NULL")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260903144433.1716731-2-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index f64eb43cb1f04..8b88771571b42 100644
+index 8b88771571b42..0f7b4006a08f4 100644
 --- a/kernel/bpf/btf.c
 +++ b/kernel/bpf/btf.c
-@@ -2926,7 +2926,15 @@ static void btf_var_show(const struct btf *btf, const struct btf_type *t,
- 			 u32 type_id, void *data, u8 bits_offset,
- 			 struct btf_show *show)
- {
--	t = btf_type_id_resolve(btf, &type_id);
-+	/*
-+	 * btf_type_id_resolve() dereferences btf->resolved_ids, which is NULL
-+	 * for a base BTF (e.g. the vmlinux BTF that bpf_snprintf_btf() uses).
-+	 * Resolve the var's type directly in that case.
-+	 */
-+	if (btf->resolved_ids)
-+		t = btf_type_id_resolve(btf, &type_id);
-+	else
-+		t = btf_type_skip_modifiers(btf, t->type, &type_id);
- 
- 	btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
- }
+@@ -6740,6 +6740,9 @@ static const struct bpf_raw_tp_null_args raw_tp_null_args[] = {
+ 	{ "rxrpc_resend", 0x10 },
+ 	{ "rxrpc_tq", 0x10 },
+ 	{ "rxrpc_client", 0x1 },
++	/* signal */
++	{ "signal_generate", 0x20 },
++	{ "signal_deliver", 0x20 },
+ 	/* skb */
+ 	{"kfree_skb", 0x1000},
+ 	/* sunrpc */
 -- 
 2.53.0
 
