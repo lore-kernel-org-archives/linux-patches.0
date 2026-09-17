@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0F14F5DE6;
-	Thu, 17 Sep 2026 16:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D304A518145;
+	Thu, 17 Sep 2026 16:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664373; cv=none; b=ssVX2VSKecZJpsBbCY9uZqTptW7Lig2VzZTSZdvcHbQ61+mJG5DxKJAb5+Lrwqum0wyLEa/GvSLDFqq2jzJz8nit33+GY6F2mMxLdH0UL7NWRQDTT5SZusSI1Nc+3ZtbK12WScR96kTCajp3z+3O/JAdJ5gs0LxCDxL0J1fR0sM=
+	t=1789664376; cv=none; b=PYhPruJWKiwJpMpR/Yz//fUyXwSrTdgehOvuPcnzdma36hWcmJxwp/UgTcEVMA31nBnvP3yDwe8+Pi/T/IKQZZaTAn3S8cqLLZoHKpV9tOjdfcboGqFyc+0niBAIKBMtDHes28Ezkq1KHKjPgLxAz2GxflfkGjg41WbJZZfRVjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664373; c=relaxed/simple;
-	bh=pudlI3Wki2ivRZeHiwFh2Im+Y+6H5rdAC/df5QuaZGs=;
+	s=arc-20240116; t=1789664376; c=relaxed/simple;
+	bh=qH+jFssgf59bgo7Bo3mn+U5a/0BGFTkStwb+U79hzxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pt9lVi4We8CP5P9fKTOcEtrabsblZqe9Oxk93U8px7dcSqSiZP99Kx/2KccLF1tvu16SNEukInc7sSNUDOixHyPP1GP505ABnkdr1ND/2o84g5WLmrVV3BFGwK2Med8XFEi+JcfR1FkSw39X4n/s/2l27nuRp/7Bx6+1l3ErtUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUZq4iB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bn5W2AdXeEWpUcdj6GIIvz3kV4wJ7oR/1KLvuH944jg07ZXyeKWW9p/VBPhvCzjZsKuE77K/nKkOb+pVFwdS2lK0ysrTa+9KVGZSuqllqTmXs+fxpoP0FAYPbUosmO25XCFq4kGNChmbFjnYqKZ2Fxlx6OtZ/rpdQ/HxjxshywI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyhWg3CQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUZq4iB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF461F000FF;
-	Thu, 17 Sep 2026 16:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyhWg3CQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2761F000FF;
+	Thu, 17 Sep 2026 16:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664371;
-	bh=R51E9/kXEPbITsNFUKbgsnIeYokrstXUSrsc80xzFt0=;
+	s=korg; t=1789664374;
+	bh=AxDkiG5QxVaF2rHDOpXITpRutzkf3CC/yC0oZQ5VU1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eUZq4iB9wWILYbPJy14ByswG/MXnP9xW5glEng5zpHpwx5V40W9c4Y62i+qchKiv0
-	 r/KRCyEHo6T7WgcsGPHiS/sHsXQn7UoE8EARCxp9uByLwFsboTJgRurYZTx2YoHLrt
-	 TuyNd4l1R31IvchiQhvb2ea39+6yC0oYj7XSMJnk=
+	b=TyhWg3CQguQHxHC9e6f7GSgzLUn4oF/NCJ9d8iGNq/c+f5RKnimxtQ/8lHFRNe75K
+	 jz4fVA5TFGtftpxX0AHxxSoQIZwdf5Tq0pbt0X6De2ROVNx3lsx59dou/c7AxvODDa
+	 kwIQ4Ge1MNvzQPl2CcRsi2XN8L922+USyr8hz1LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Tuo Li <islituo@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0351/1250] NFS: fix eof updates after NFSv4.2 fallocate/zero-range
-Date: Thu, 17 Sep 2026 16:02:26 +0100
-Message-ID: <20260917151601.582831696@linuxfoundation.org>
+Subject: [PATCH 6.18 0352/1250] ASoC: mediatek: mt8365-afe-pcm: fix possible NULL-pointer dereferences in mt8365_afe_suspend()
+Date: Thu, 17 Sep 2026 16:02:27 +0100
+Message-ID: <20260917151601.609639784@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,58 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 35168eb947f230aaa35fd8416a30563ef89f5421 ]
+[ Upstream commit b8948ac26efc395264a47f9a743889065adb5cff ]
 
-Generic/075 reliably exposes a regression when the client holds an
-NFSv4 write delegation: ZERO_RANGE/ALLOCATE extends the file on the
-server, but the local inode keeps the old i_size. The test then fails
-with 'Size error' because the post-op attribute refresh refuses to
-touch i_size while a delegation is outstanding, and the cached EOF
-was never marked stale.
+mt8365_afe_suspend() allocates the register backup buffer with
+devm_kcalloc(), but does not check for allocation failure before using the
+returned pointer. This may lead to a NULL pointer dereference when
+accessing afe->reg_back_up[i].
 
-Update _nfs42_proc_fallocate() so that on success it:
+Add the missing NULL check and return -ENOMEM on allocation failure after
+disabling the main clock.
 
-- bumps i_size when the operation extends the file, and
-- marks NFS_INO_INVALID_BLOCKS since the block count can also change
+Also propagate the return value of mt8365_afe_suspend() in
+mt8365_afe_dev_runtime_suspend() so that the suspended state is not updated
+when suspend fails.
 
-Tested with xfstests generic/075 over NFSv4.2.
-
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Link: https://patch.msgid.link/20260528064107.470824-1-islituo@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42proc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8365/mt8365-afe-pcm.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index c08520828708b..1c66e1bb19652 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -81,12 +81,17 @@ static int _nfs42_proc_fallocate(struct rpc_message *msg, struct file *filep,
- 	status = nfs4_call_sync(server->client, server, msg,
- 				&args.seq_args, &res.seq_res, 0);
- 	if (status == 0) {
--		if (nfs_should_remove_suid(inode)) {
--			spin_lock(&inode->i_lock);
-+		loff_t newsize = offset + len;
+diff --git a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+index d48252cd96ac4..bf92c8922c236 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
++++ b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+@@ -1975,10 +1975,15 @@ static int mt8365_afe_suspend(struct device *dev)
+ 
+ 	mt8365_afe_enable_main_clk(afe);
+ 
+-	if (!afe->reg_back_up)
++	if (!afe->reg_back_up) {
+ 		afe->reg_back_up =
+ 			devm_kcalloc(dev, afe->reg_back_up_list_num,
+ 				     sizeof(unsigned int), GFP_KERNEL);
++		if (!afe->reg_back_up) {
++			mt8365_afe_disable_main_clk(afe);
++			return -ENOMEM;
++		}
++	}
+ 
+ 	for (i = 0; i < afe->reg_back_up_list_num; i++)
+ 		regmap_read(regmap, afe->reg_back_up_list[i],
+@@ -2012,11 +2017,15 @@ static int mt8365_afe_resume(struct device *dev)
+ static int mt8365_afe_dev_runtime_suspend(struct device *dev)
+ {
+ 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
++	int ret;
+ 
+ 	if (pm_runtime_status_suspended(dev) || afe->suspended)
+ 		return 0;
+ 
+-	mt8365_afe_suspend(dev);
++	ret = mt8365_afe_suspend(dev);
++	if (ret)
++		return ret;
 +
-+		spin_lock(&inode->i_lock);
-+		if (newsize > i_size_read(inode))
-+			i_size_write(inode, newsize);
-+		nfs_set_cache_invalid(inode, NFS_INO_INVALID_BLOCKS);
-+		if (nfs_should_remove_suid(inode))
- 			nfs_set_cache_invalid(inode,
--				NFS_INO_REVAL_FORCED | NFS_INO_INVALID_MODE);
--			spin_unlock(&inode->i_lock);
--		}
-+					      NFS_INO_REVAL_FORCED |
-+					      NFS_INO_INVALID_MODE);
-+		spin_unlock(&inode->i_lock);
- 		status = nfs_post_op_update_inode_force_wcc(inode,
- 							    res.falloc_fattr);
- 	}
+ 	afe->suspended = true;
+ 	return 0;
+ }
 -- 
 2.53.0
 
