@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBD051C074;
-	Thu, 17 Sep 2026 17:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4E64C10C4;
+	Thu, 17 Sep 2026 17:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666534; cv=none; b=O+svbtrutTVHNzYtSBluP5cU/Q4EodGkVBFcI1xfeuPTsZnle78BlTHXAG2sRztrdyxK+BgAk+h+5+jdKhYf6cVKs5er2bzASTt27YgWCbtyACrIFHn1jjOo5SpykGbQNwcj5Xsj/lC36W8IGgM0DJg+LZdcrEK4aNoANGSf6X0=
+	t=1789666538; cv=none; b=a7ShjNqp/X+m1KK+oJmhvptmIW2euOkZxUxg6obF4Ok3talV9BChPYpysrdaom4DtNRQGA1IiKgBQsdPqg+hntyoGCNQIsDTqooaFJSNuBs/dKk7JfLu72Lv7GmR0cHkfWIqAFKEEMfLiZP3NE6u5/iH4EUTFoMWB968CivO1qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666534; c=relaxed/simple;
-	bh=ZSi8lXcgY/oy9ARQdhqiYQywn4j6tebYVEiQ0MH3TR8=;
+	s=arc-20240116; t=1789666538; c=relaxed/simple;
+	bh=zYrNlnF0j7Y+/nduoda3fJQPsU0APGPJazGLOZAf2is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BE2OZtjfAzxakHOrs6/dq3I4Ndp9DXU+cwIkmUwozAR/k7Icrmul1aKIoqE7/i90ifa2o5PaF9mHscjF93bz1B/4Qh/Q/IqPoY5Ti3l8yr2sSwMYrDom4K0VVtdCiRkejDk9wQss/xYJsrRiW0as4wlL9ZpmirnednpJwVV1tDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz85WYvS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kGE/FtRWycUHKmCUAd9FzfC7XJKnlGqbzXdjqsO3y0laV9/c3woTjlq0C3Hyf0g2RZNfSlsXQEYsVk6E+I54IfKwDQM/JqIGlIujLruv4xA8Ep1hxGKWnQZ3cURWSQegLliEmFeEtA864GLKbqPv6sWhR2EhjRl7qMyrrUf2YYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/iGoPNH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz85WYvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81831F000FF;
-	Thu, 17 Sep 2026 17:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/iGoPNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAFF1F000FF;
+	Thu, 17 Sep 2026 17:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666533;
-	bh=FM+UFWi2lGqDCCY2LZTP/YYgbG3A2WD+5Hddxw63vWw=;
+	s=korg; t=1789666536;
+	bh=G/Q7qvdRYdU10jPSQskwKtvGVUnAOlT68I9gCQpSJ/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gz85WYvSJwxDCrreQc2zB5CjGmFvtt08QP3f2gN2jSfPKGQ0OSJa+1VdOoFGgwRKr
-	 9XTIzZhQU8uQl8FZdGH1tspwKHT5i3JmO72e+Pb/4RzwaSfxZ9zttuJEksO3IwehHk
-	 I2i2DIVPs1fBu/Rhh19j18dO2+jvHXBhDakm1110=
+	b=c/iGoPNHLR2hoS3CvmYHHP+inmXYt46Rwy4DihhbdUftw+vx+a8igbhSiA9CbIgHe
+	 Kmcf8n4qZkDKNZuPiE5mlaDS4cZQfgnIuTU9uXTQHDU2PISmdQ5aPb0IGjGRgd/yMQ
+	 wVzWB9JCDVcsm7PD16U1tDreAxiArB0H0QQUROWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1020/1250] net: openvswitch: fix use-after-free of the flow table mask array
-Date: Thu, 17 Sep 2026 16:13:35 +0100
-Message-ID: <20260917151619.699960961@linuxfoundation.org>
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 1063/1250] media: v4l2-h264: Fix memcmp() size in B1 reference list comparison
+Date: Thu, 17 Sep 2026 16:14:18 +0100
+Message-ID: <20260917151620.936542969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,73 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit ba4ba11ed6eb8972c69070417fc27b48deb002e8 upstream.
+commit 10e59fbdef13597836bd6459095caa02c80af3d7 upstream.
 
-tbl_mask_array_realloc() retires the old mask_array before it stops being
-reachable:
+In v4l2_h264_build_b_ref_lists(), the B0/B1 list equality
+check passes the entry count builder->num_valid to memcmp()
+instead of a byte size. Since struct v4l2_h264_reference is
+two bytes (fields and index), only half of each list is
+compared, so distinct lists can be wrongly treated as equal
+and trigger an incorrect swap(b1_reflist[0], b1_reflist[1]).
 
-	old = ovsl_dereference(tbl->mask_array);
-	if (old) {
-		...
-		call_rcu(&old->rcu, mask_array_rcu_cb);
-	}
+Change the memcmp() size argument to sizeof(b1_reflist[0]) *
+builder->num_valid so that the full byte length of both
+reference lists is compared.
 
-	rcu_assign_pointer(tbl->mask_array, new);
-
-call_rcu() only waits for read-side critical sections already in flight.
-tbl->mask_array still points at old between the call_rcu() and the
-rcu_assign_pointer(), so a reader entering ovs_flow_tbl_lookup_stats() in
-that window picks up old in a fresh critical section that the pending
-grace period does not cover.
-
-tbl_mask_array_realloc() runs in process context under ovs_mutex, so the
-window is preemptible and can outlast the grace period. Then
-mask_array_rcu_cb() frees old before the swap runs:
-
-  BUG: KASAN: slab-use-after-free in flow_lookup.constprop.0+0x2bf/0x2f0
-  Read of size 8 at addr ffff888020b3e018 by task poc/741
-   flow_lookup.constprop.0+0x2bf/0x2f0
-   ovs_flow_tbl_lookup_stats+0x4a3/0x5c0
-   ovs_dp_process_packet+0x19c/0x710
-   ovs_vport_receive+0x243/0x390
-   internal_dev_xmit+0x81/0x170
-  Freed by task 728:
-   kfree+0x16a/0x4e0
-   rcu_core+0x853/0x1030
-
-Publish the new array before retiring the old one. The kfree_rcu() that
-call_rcu() replaced ran after the swap.
-
-Fixes: eac87c413bf9 ("net: openvswitch: reorder masks array based on usage")
+Fixes: 624922a2739b ("media: v4l2-core: Add helpers to build the H264 P/B0/B1 reflists")
+Suggested-by: Nicolas Dufresne <nicolas@ndufresne.ca>
 Cc: stable@vger.kernel.org
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron echaudro@redhat.com
-Link: https://patch.msgid.link/DE115F9C-2545-423E-A702-986FC952FD62@doyensec.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow_table.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-h264.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/flow_table.c
-+++ b/net/openvswitch/flow_table.c
-@@ -258,11 +258,13 @@ static int tbl_mask_array_realloc(struct
- 			if (ovsl_dereference(old->masks[i]))
- 				new->masks[new->count++] = old->masks[i];
- 		}
--		call_rcu(&old->rcu, mask_array_rcu_cb);
+--- a/drivers/media/v4l2-core/v4l2-h264.c
++++ b/drivers/media/v4l2-core/v4l2-h264.c
+@@ -440,7 +440,8 @@ v4l2_h264_build_b_ref_lists(const struct
  	}
  
- 	rcu_assign_pointer(tbl->mask_array, new);
+ 	if (builder->num_valid > 1 &&
+-	    !memcmp(b1_reflist, b0_reflist, builder->num_valid))
++	    !memcmp(b1_reflist, b0_reflist,
++			sizeof(b1_reflist[0]) * builder->num_valid))
+ 		swap(b1_reflist[0], b1_reflist[1]);
  
-+	if (old)
-+		call_rcu(&old->rcu, mask_array_rcu_cb);
-+
- 	return 0;
- }
- 
+ 	print_ref_list_b(builder, b0_reflist, 0);
 
 
