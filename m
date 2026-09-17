@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F62B4CDDDA;
-	Thu, 17 Sep 2026 15:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749CC4E73A7;
+	Thu, 17 Sep 2026 15:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660432; cv=none; b=itIr8pupekvz9VBDmsvC6YeVZhAbwHQCULTksUxiN8SNAP+SprHLZaQszKqCGJ0Mcd1daG0qIbU7ybU2QHM6q7EqQ7jBWDdNuDLqUxJbi7Hh9NV2bK2PVWFh2lHbxpZRsZFnQHCG9TdaQC+dXGmZxvk5EXUxh7CjQT3u8ldcuxI=
+	t=1789660436; cv=none; b=UAAs4GLxf/cJExMjS6FaeGsEKe9CYVQM2gbisAqxbxqMysj0PlZ5LaIqSmFIQqGz8Ot0QpJ7m2T/kAwz5cfc+xYC9mO7zlbPbt7ppEffbYISEEsRp/PoOjtMecz1ERREIlX700RCcu1smCA1qD1gwndJmY5PkHqtjh7+0q86bjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660432; c=relaxed/simple;
-	bh=xm/H4jaD6G/OtS24wieRKFjrICdIbfBO/pzhrX6jYOU=;
+	s=arc-20240116; t=1789660436; c=relaxed/simple;
+	bh=b4eL5bsFoi3CSuAU/BKdcT9q/guE3TXbgPOyhUpxluM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRmvHxmjvkkLHbjFpvC91Hw7KYDbWytEXzZZWFG5reWxYrlzoL4Kdsk4eSu9aN42OAJ+bik7nIsfJalOnMagij75sX8xCLoNm0Uh/ZVMZ8UuriuD165UpL6kayrg1hTo3wNWkAqyFevHzETVy4A0CdIhC5o5wWKT26W0uFodctQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTydonba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCGjSPMeWWsW05X6Jq9Zne9MXz1fsvsD5ZDFoEcKTtLO81X7vwLm4C0ac1eQ1YFpRq3FiYVXDvT+oRfmceorxchWUFdLHZjDBLQedk4Jl4EArWVeeIhAw6F9HOEqxo2/zBV+imwagLb5rJv/YakSBGwZAmrdg/2sygNy3MoaYII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjiDsNRR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTydonba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76061F000FF;
-	Thu, 17 Sep 2026 15:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjiDsNRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB211F00893;
+	Thu, 17 Sep 2026 15:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660431;
-	bh=cXOpalAwXtQJBKL1279rWsWbhJENgQF5P2nc7/75VLQ=;
+	s=korg; t=1789660434;
+	bh=YIJ9lUR7MI1rMCm7/uBmem/vizUXAWxOwrmz4OlwYYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wTydonba/nRz3FFlHxabxj1rmBNRDmjLjBpCuFtWrRGXKYo+BbVo/uFZtr9+4uhJn
-	 861sc6uUX++K6iIPTfTblIwRvOslwmC+WVD2Q2Uiq9XyyhZmf8JLLoXtfrzp99HxPa
-	 PTwjGAjEv3m1SzvwNsZzBlbnjTag/mjJbZYJqrYI=
+	b=cjiDsNRRoS51ZM1YnNuP7qLt4TV9CgLXb6XOXZmy3Sk4R9Ulkjg/t1otO2dKYiA/r
+	 KIxlB5W5Ilf7UgLLcsZhqzLw5krKhWywGXvgTeCYb4NUv4r+EzKdBxh75q5NU5wjM3
+	 yk7lu+MgQvb9I75j4F9ZRpUlmErTjeT/3pamZRhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.2 591/733] hwmon: (chipcap2) fix channels in humidity alarm notifications
-Date: Thu, 17 Sep 2026 16:14:59 +0100
-Message-ID: <20260917151407.162554143@linuxfoundation.org>
+Subject: [PATCH 7.2 592/733] hwmon: (gpio-fan) Fix use-after-free in alarm work
+Date: Thu, 17 Sep 2026 16:15:00 +0100
+Message-ID: <20260917151407.193311198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,61 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 286b175bb03893949f24621f356abd9d20368b0a upstream.
+commit a2471ed17b0e6ff7bfb6b2ea8e6e5b04c309d293 upstream.
 
-hwmon_notify_event() expects the channel number as its last argument,
-taken into account with the type parameter that it is a humidity sensor
-type. Given that this device only provides one humidity channel, 0 must
-be passed. The custom construct to enumerate the channels makes wrong
-assumptions by listing all types together (temperature and humidity).
+fan_alarm_irq_handler() queues fan_data->alarm_work, but nothing
+cancels it.  fan_alarm_notify() dereferences fan_data and its hwmon
+device.  On unbind, devres frees the interrupt, which only waits for
+the handler itself, and then releases the hwmon device and fan_data,
+so a pending fan_alarm_notify() can run after those frees.
 
-Remove the custom channel enumeration and pass the right channel to
-hwmon_notify_event() for hwmon_humidity_min_alarm and
-hwmon_humidity_max_alarm.
+Replace INIT_WORK() with devm_work_autocancel(), registered before
+devm_request_irq().  The devres cleanup then frees the interrupt
+first, so no new work can be queued, and cancels the work while
+fan_data and the hwmon device are still alive.
 
-Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
+This issue was found by an in-house static analysis tool.
+
+Fixes: d6fe1360f42e ("hwmon: add generic GPIO fan driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20260823-chipcap2_locks-v2-1-6a26c8e9e2fc@gmail.com
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260819033317.446191-1-fanwu01@zju.edu.cn
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/chipcap2.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/hwmon/gpio-fan.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/chipcap2.c
-+++ b/drivers/hwmon/chipcap2.c
-@@ -89,11 +89,6 @@ struct cc2_data {
- 	bool process_irqs;
- };
- 
--enum cc2_chan_addr {
--	CC2_CHAN_TEMP = 0,
--	CC2_CHAN_HUMIDITY,
--};
--
- /* %RH as a per cent mille from a register value */
- static long cc2_rh_convert(u16 data)
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -12,6 +12,7 @@
+ #include <linux/slab.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
++#include <linux/devm-helpers.h>
+ #include <linux/platform_device.h>
+ #include <linux/err.h>
+ #include <linux/kstrtox.h>
+@@ -84,6 +85,7 @@ static DEVICE_ATTR_RO(fan1_alarm);
+ static int fan_alarm_init(struct gpio_fan_data *fan_data)
  {
-@@ -492,7 +487,7 @@ static irqreturn_t cc2_low_interrupt(int
+ 	int alarm_irq;
++	int err;
+ 	struct device *dev = fan_data->dev;
  
- 	if (cc2->process_irqs) {
- 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
--				   hwmon_humidity_min_alarm, CC2_CHAN_HUMIDITY);
-+				   hwmon_humidity_min_alarm, 0);
- 		cc2->rh_alarm.low_alarm = true;
- 	}
+ 	/*
+@@ -94,7 +96,11 @@ static int fan_alarm_init(struct gpio_fa
+ 	if (alarm_irq <= 0)
+ 		return 0;
  
-@@ -505,7 +500,7 @@ static irqreturn_t cc2_high_interrupt(in
- 
- 	if (cc2->process_irqs) {
- 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
--				   hwmon_humidity_max_alarm, CC2_CHAN_HUMIDITY);
-+				   hwmon_humidity_max_alarm, 0);
- 		cc2->rh_alarm.high_alarm = true;
- 	}
- 
+-	INIT_WORK(&fan_data->alarm_work, fan_alarm_notify);
++	err = devm_work_autocancel(dev, &fan_data->alarm_work,
++				   fan_alarm_notify);
++	if (err)
++		return err;
++
+ 	irq_set_irq_type(alarm_irq, IRQ_TYPE_EDGE_BOTH);
+ 	return devm_request_irq(dev, alarm_irq, fan_alarm_irq_handler,
+ 				IRQF_SHARED, "GPIO fan alarm", fan_data);
 
 
