@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8B13921DC;
-	Thu, 17 Sep 2026 18:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C984E533C;
+	Thu, 17 Sep 2026 18:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668953; cv=none; b=l1Neg9UZLPlQQAaC7ZHHK6nETngS3DrUuZ7nzBqXPPv3BWzb/2jzjjBJXa4bY26CcrrN929+x/UHKkSvOxDgF7VonkE1Ox14SoKmCUEFlTZjcPcQjrBvhHvoirDyXcfP/KKgEmUpQHHM/NpUI8qAEy2D7H02PBI6abMdhN2CnYU=
+	t=1789668956; cv=none; b=IMkGa/UN+ibOPKblUUadz40pQiXo8e6yxhYF0XsvQQjGrqevw9B1zk+AgA/Z3f33p40wb4jQT8lwg9QR/4HEB5ENkgH6MB5MBn0r03GYMU42uQ2ypLHSGmrDgcI3XKq30yTZugGt8NRCGYkFqkhKFZzCOuvrjx9bYcgMVaJFOOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668953; c=relaxed/simple;
-	bh=PtkzS4ht/3rxFHzAAxvwp316EMGkLYwYnHj51mfZjvc=;
+	s=arc-20240116; t=1789668956; c=relaxed/simple;
+	bh=53fI2q+7c/qwxo3ZS3ro0PJlYDuXlcxbJqRQJRDOoYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/3DiwqxLEdNvHJvaqeqW6MSUBAqYvcp6numSTF1AoAsclSd6bAPRyeEEDGnup+KC7HFZTG/v4tYL7i8FDByYdHFGNu9s7qANlwrtYK+dxbzXjSbY1p+BBg2njYPPQQM5Rc6tLvqW7UZCwdqb+9x/gbr7dbo95s6uz/oGq+6Rbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gASa9e+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PxHYQ9XuvmXHYqcw6av+pxQRSSS/yQIjk6SKGZsaBcBZPFpo8vrtVJo7sC5r29gsbmYwTsGOqp3ymEsFw/+TM0dGv0CQRVWJsAuT2yeFNKzNGSv7jL8r6x6RceraDyAbnIH+Zj4tQZ4N0MAcXPeyccRjmPN0yO8kHG2Sq0gGWvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuS4/B2k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gASa9e+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF391F000FF;
-	Thu, 17 Sep 2026 18:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuS4/B2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1691F000FF;
+	Thu, 17 Sep 2026 18:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668952;
-	bh=J/qXGUJbM6IRzHhZUBr2Uur8cr6OHx1O8+6dXlGBYDU=;
+	s=korg; t=1789668955;
+	bh=i54Foz7/KmB+MgGv44r1Xm0qeCwkcjDd/radS9Jfja8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gASa9e+RclqNCAR52akevqavU+yBkADNZltvePXBhSneG57GYsNpfDfyWA/VVTU2l
-	 psS0mvAAIRI1wG0HtAhqm0V02l5DxPRE9jcZI59s8yCyfHslkp+WRZsyaflIYicy0Z
-	 INFa4hVo/va8srNOQ/c2dBoXf5Y1Bamh3eP4X5Lw=
+	b=WuS4/B2kYUhSShtoA/QMJ5aTi3U7NBdXv4d2K5hQj90jI9xGQ3+I5Rf7dtTcr1Qh8
+	 RrG+Bae75KxOipCvOthoUlSFGyvudtEZeyK8EG1L5jkkrgzXGWIXd/46mh0ZfV4vsd
+	 gKg4//+eztqVvsf01f3FKc+JmMbQ85DQUsQDwDos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0593/1102] bonding: alb: fix uninitialized transport header access in alb_determine_nd()
-Date: Thu, 17 Sep 2026 16:08:56 +0100
-Message-ID: <20260917151554.864079270@linuxfoundation.org>
+Subject: [PATCH 6.12 0558/1102] ASoC: ab8500: Repair the DAPM capture graph
+Date: Thu, 17 Sep 2026 16:08:21 +0100
+Message-ID: <20260917151553.872716651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,79 +51,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 70f3995830d3f1e79faa14eb0605914f778feca9 ]
+[ Upstream commit 103fe1a37f040ef6ac9ed1cf33be786149d2bb15 ]
 
-alb_determine_nd() uses icmp6_hdr(skb) to inspect ICMPv6 headers.
-However, in xmit paths (e.g. packets sent via AF_PACKET / raw sockets
-or forwarded packets), skb->transport_header is not guaranteed to be
-initialized. While pskb_network_may_pull() ensures the packet data is
-linear starting from the network header, it does not set or adjust the
-transport header offset.
+The capture stream routes point away from the stream widget. Digital
+microphone mux routes are unconditional and bypass their enable bits,
+and several widgets independently own shared AD path enable bits. The
+dummy ADC and DAC widgets hide the resulting power graph errors.
 
-Dereferencing icmp6_hdr(skb) can therefore access out-of-bounds memory.
+Connect each real AIF widget to the stream and main supply, use the mux
+item names on digital microphone routes, and model shared AD enables as
+supplies. Also make the ANC DAPM switch writable.
 
-Fetch the icmp6hdr directly after ipv6hdr following pskb_network_may_pull(),
-and reload ipv6hdr in case pskb_may_pull() reallocated skb->head.
-Also remove the unused bond argument from alb_determine_nd().
-
-Fixes: 0da8aa00bfcf ("net: bonding: Add support for IPV6 ns/na to balance-alb/balance-tlb mode")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260831194626.119371-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-2-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 120 +++++++++++++++-----------------
+ 1 file changed, 56 insertions(+), 64 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index ce6a3a0a2e153..5a7148c515c21 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -1282,10 +1282,10 @@ static int alb_set_mac_address(struct bonding *bond, void *addr)
- }
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index c79ed95414780..2c7e3b7a386ae 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -303,7 +303,7 @@ static const struct snd_kcontrol_new dapm_anc_in_select[] = {
+ /* ANC - Enable/Disable */
+ static const struct snd_kcontrol_new dapm_anc_enable[] = {
+ 	SOC_DAPM_SINGLE("Switch", AB8500_ANCCONF1,
+-			AB8500_ANCCONF1_ENANC, 0, 0),
++			AB8500_ANCCONF1_ENANC, 1, 0),
+ };
  
- /* determine if the packet is NA or NS */
--static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
-+static bool alb_determine_nd(struct sk_buff *skb)
- {
--	struct ipv6hdr *ip6hdr;
--	struct icmp6hdr *hdr;
-+	const struct ipv6hdr *ip6hdr;
-+	const struct icmp6hdr *hdr;
+ /* ANC to Earpiece - Mute */
+@@ -385,12 +385,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
  
- 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr)))
- 		return true;
-@@ -1297,7 +1297,8 @@ static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
- 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr) + sizeof(*hdr)))
- 		return true;
+ 	/* DA/AD */
  
--	hdr = icmp6_hdr(skb);
-+	ip6hdr = ipv6_hdr(skb);
-+	hdr = (const struct icmp6hdr *)(ip6hdr + 1);
- 	return hdr->icmp6_type == NDISC_NEIGHBOUR_ADVERTISEMENT ||
- 		hdr->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION;
- }
-@@ -1382,7 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
- 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
- 		switch (skb->protocol) {
- 		case htons(ETH_P_IPV6):
--			if (alb_determine_nd(skb, bond))
-+			if (alb_determine_nd(skb))
- 				break;
- 			fallthrough;
- 		case htons(ETH_P_IP):
-@@ -1468,7 +1469,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
- 			break;
- 		}
+-	SND_SOC_DAPM_INPUT("ADC Input"),
+-	SND_SOC_DAPM_ADC("ADC", "ab8500_0c", SND_SOC_NOPM, 0, 0),
+-
+-	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
+-	SND_SOC_DAPM_OUTPUT("DAC Output"),
+-
+ 	SND_SOC_DAPM_AIF_IN("DA_IN1", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_IN("DA_IN2", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_IN("DA_IN3", NULL, 0, SND_SOC_NOPM, 0, 0),
+@@ -582,9 +576,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD3 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD3 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD34 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD34, 0, NULL, 0),
  
--		if (alb_determine_nd(skb, bond)) {
-+		if (alb_determine_nd(skb)) {
- 			do_tx_balance = false;
- 			break;
- 		}
+ 	/* Mic 2 */
+ 
+@@ -643,9 +636,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+ 
+-	SND_SOC_DAPM_MIXER("AD12 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD12, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD12 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD12, 0, NULL, 0),
+ 
+ 	/* HD Capture path */
+ 
+@@ -659,12 +651,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD6 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD57 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD68 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD5768 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD5768, 0, NULL, 0),
+ 
+ 	/* Digital Microphone path */
+ 
+@@ -696,10 +684,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD4 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD4 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34,
+-			0, NULL, 0),
+-
+ 	/* Acoustical Noise Cancellation path */
+ 
+ 	SND_SOC_DAPM_INPUT("ANC Configure Input"),
+@@ -747,24 +731,17 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"Main Supply", NULL, "Audio Power"},
+ 	{"Main Supply", NULL, "Audio Analog Power"},
+ 
+-	{"DAC", NULL, "ab8500_0p"},
+-	{"DAC", NULL, "Main Supply"},
+-	{"ADC", NULL, "ab8500_0c"},
+-	{"ADC", NULL, "Main Supply"},
+-
+ 	/* ANC Configure */
+ 	{"ANC Configure Input", NULL, "Main Supply"},
+ 	{"ANC Configure Output", NULL, "ANC Configure Input"},
+ 
+-	/* AD/DA */
+-	{"ADC", NULL, "ADC Input"},
+-	{"DAC Output", NULL, "DAC"},
+-
+ 	/* Powerup charge pump if DA1/2 is in use */
+ 
+ 	{"DA_IN1", NULL, "ab8500_0p"},
++	{"DA_IN1", NULL, "Main Supply"},
+ 	{"DA_IN1", NULL, "Charge Pump"},
+ 	{"DA_IN2", NULL, "ab8500_0p"},
++	{"DA_IN2", NULL, "Main Supply"},
+ 	{"DA_IN2", NULL, "Charge Pump"},
+ 
+ 	/* Headset path */
+@@ -799,8 +776,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	/* HF or LineOut path */
+ 
+ 	{"DA_IN3", NULL, "ab8500_0p"},
++	{"DA_IN3", NULL, "Main Supply"},
+ 	{"DA3 Channel Volume", NULL, "DA_IN3"},
+ 	{"DA_IN4", NULL, "ab8500_0p"},
++	{"DA_IN4", NULL, "Main Supply"},
+ 	{"DA4 Channel Volume", NULL, "DA_IN4"},
+ 
+ 	{"Speaker Left Source", "Audio Path", "DA3 Channel Volume"},
+@@ -858,8 +837,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	/* Vibrator path */
+ 
+ 	{"DA_IN5", NULL, "ab8500_0p"},
++	{"DA_IN5", NULL, "Main Supply"},
+ 	{"DA5 Channel Volume", NULL, "DA_IN5"},
+ 	{"DA_IN6", NULL, "ab8500_0p"},
++	{"DA_IN6", NULL, "Main Supply"},
+ 	{"DA6 Channel Volume", NULL, "DA_IN6"},
+ 
+ 	{"VIB1 DAC", NULL, "DA5 Channel Volume"},
+@@ -901,13 +882,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"AD1 Channel Volume", NULL, "AD1 Source Select"},
+ 	{"AD2 Channel Volume", NULL, "AD2 Source Select"},
+ 
+-	{"AD12 Enable", NULL, "AD1 Channel Volume"},
+-	{"AD12 Enable", NULL, "AD2 Channel Volume"},
++	{"AD1 Channel Volume", NULL, "AD12 Enable"},
++	{"AD2 Channel Volume", NULL, "AD12 Enable"},
+ 
+-	{"AD_OUT1", NULL, "ab8500_0c"},
+-	{"AD_OUT1", NULL, "AD12 Enable"},
+-	{"AD_OUT2", NULL, "ab8500_0c"},
+-	{"AD_OUT2", NULL, "AD12 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT1"},
++	{"AD_OUT1", NULL, "Main Supply"},
++	{"AD_OUT1", NULL, "AD1 Channel Volume"},
++	{"ab8500_0c", NULL, "AD_OUT2"},
++	{"AD_OUT2", NULL, "Main Supply"},
++	{"AD_OUT2", NULL, "AD2 Channel Volume"},
+ 
+ 	/* Mic 1 */
+ 
+@@ -924,11 +907,11 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"AD3 Source Select", "Mic 1", "MIC1 ADC"},
+ 
+ 	{"AD3 Channel Volume", NULL, "AD3 Source Select"},
++	{"AD3 Channel Volume", NULL, "AD34 Enable"},
+ 
+-	{"AD3 Enable", NULL, "AD3 Channel Volume"},
+-
+-	{"AD_OUT3", NULL, "ab8500_0c"},
+-	{"AD_OUT3", NULL, "AD3 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT3"},
++	{"AD_OUT3", NULL, "Main Supply"},
++	{"AD_OUT3", NULL, "AD3 Channel Volume"},
+ 
+ 	/* HD Capture path */
+ 
+@@ -937,14 +920,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 
+ 	{"AD5 Channel Volume", NULL, "AD5 Source Select"},
+ 	{"AD6 Channel Volume", NULL, "AD6 Source Select"},
++	{"AD5 Channel Volume", NULL, "AD5768 Enable"},
++	{"AD6 Channel Volume", NULL, "AD5768 Enable"},
+ 
+-	{"AD57 Enable", NULL, "AD5 Channel Volume"},
+-	{"AD68 Enable", NULL, "AD6 Channel Volume"},
+-
+-	{"AD_OUT57", NULL, "ab8500_0c"},
+-	{"AD_OUT57", NULL, "AD57 Enable"},
+-	{"AD_OUT68", NULL, "ab8500_0c"},
+-	{"AD_OUT68", NULL, "AD68 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT57"},
++	{"AD_OUT57", NULL, "Main Supply"},
++	{"AD_OUT57", NULL, "AD5 Channel Volume"},
++	{"ab8500_0c", NULL, "AD_OUT68"},
++	{"AD_OUT68", NULL, "Main Supply"},
++	{"AD_OUT68", NULL, "AD6 Channel Volume"},
+ 
+ 	/* Digital Microphone path */
+ 
+@@ -955,17 +939,25 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"DMic 5", NULL, "V-DMIC"},
+ 	{"DMic 6", NULL, "V-DMIC"},
+ 
+-	{"AD1 Source Select", NULL, "DMic 1"},
+-	{"AD2 Source Select", NULL, "DMic 2"},
+-	{"AD3 Source Select", NULL, "DMic 3"},
+-	{"AD5 Source Select", NULL, "DMic 5"},
+-	{"AD6 Source Select", NULL, "DMic 6"},
++	{"DMIC1", NULL, "DMic 1"},
++	{"DMIC2", NULL, "DMic 2"},
++	{"DMIC3", NULL, "DMic 3"},
++	{"DMIC4", NULL, "DMic 4"},
++	{"DMIC5", NULL, "DMic 5"},
++	{"DMIC6", NULL, "DMic 6"},
++
++	{"AD1 Source Select", "DMic 1", "DMIC1"},
++	{"AD2 Source Select", "DMic 2", "DMIC2"},
++	{"AD3 Source Select", "DMic 3", "DMIC3"},
++	{"AD5 Source Select", "DMic 5", "DMIC5"},
++	{"AD6 Source Select", "DMic 6", "DMIC6"},
+ 
+-	{"AD4 Channel Volume", NULL, "DMic 4"},
+-	{"AD4 Enable", NULL, "AD4 Channel Volume"},
++	{"AD4 Channel Volume", NULL, "DMIC4"},
++	{"AD4 Channel Volume", NULL, "AD34 Enable"},
+ 
+-	{"AD_OUT4", NULL, "ab8500_0c"},
+-	{"AD_OUT4", NULL, "AD4 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT4"},
++	{"AD_OUT4", NULL, "Main Supply"},
++	{"AD_OUT4", NULL, "AD4 Channel Volume"},
+ 
+ 	/* LineIn Bypass path */
+ 
+@@ -990,13 +982,13 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 
+ 	/* Sidetone Filter path */
+ 
+-	{"Sidetone Left Source", "LineIn Left", "AD12 Enable"},
+-	{"Sidetone Left Source", "LineIn Right", "AD12 Enable"},
+-	{"Sidetone Left Source", "Mic 1", "AD3 Enable"},
++	{"Sidetone Left Source", "LineIn Left", "AD1 Channel Volume"},
++	{"Sidetone Left Source", "LineIn Right", "AD2 Channel Volume"},
++	{"Sidetone Left Source", "Mic 1", "AD3 Channel Volume"},
+ 	{"Sidetone Left Source", "Headset Left", "DA_IN1"},
+-	{"Sidetone Right Source", "LineIn Right", "AD12 Enable"},
+-	{"Sidetone Right Source", "Mic 1", "AD3 Enable"},
+-	{"Sidetone Right Source", "DMic 4", "AD4 Enable"},
++	{"Sidetone Right Source", "LineIn Right", "AD2 Channel Volume"},
++	{"Sidetone Right Source", "Mic 1", "AD3 Channel Volume"},
++	{"Sidetone Right Source", "DMic 4", "AD4 Channel Volume"},
+ 	{"Sidetone Right Source", "Headset Right", "DA_IN2"},
+ 
+ 	{"STFIR1 Control", NULL, "Sidetone Left Source"},
 -- 
 2.53.0
 
