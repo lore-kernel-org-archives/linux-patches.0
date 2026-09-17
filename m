@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E414EF13D;
-	Thu, 17 Sep 2026 18:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D394F4020;
+	Thu, 17 Sep 2026 18:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668476; cv=none; b=INJh6smWcGu1cMALLhf14vn9njzjlzo20T4YHeIOr+tWx/htcETIoGDbvmWLcoNCfXKM+i38081qD3taQz5bWcvBV7tAg85Q23WNNa21Ol6acZS8teqhNae7OPj1IYOkVMWi5/Wez48PNF0PcZGDIYnvaaJIPaUL9YzzNQwamc8=
+	t=1789668479; cv=none; b=jlJ7JlciVp8RDEOTQta+pl6+TVW5jXT2BsqPtGecNXuhkEUpg2v8DvqVc5O0D/WFQ8TxyiAdZ7yk6jMJge48fwO5fs7U01tOEJoewoyBWYnc9f/Tf07QJxnkD6kXTTKXqTot7YpHWZbusJ88CNeDP9HKX1JF6NCPt4vxxlDQVf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668476; c=relaxed/simple;
-	bh=4DhYMJSZAA9hb1wisl0ySF44MSUWfmqK6NjoYgizCmo=;
+	s=arc-20240116; t=1789668479; c=relaxed/simple;
+	bh=EiCxOy9b2o6avajXyE7otvEaq/8w+LWgEPB+uDtRaDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNzM0VOP1XUbgu7uZAEK7zE/2GCHzHKfzOoa0fRhIgM4XAmLte91gNu+OtwBokMTr+SQferK8kXF3Z022+GhJ/fknG8Iuanijqmu+Z/HhGgGbWMG6CpWT2mhYpD3eU4wQvIlivcth06jKzYFLpe66Yr15nnqGCA2Ij/QNgHSOvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xevBCVmn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bNXigZ4jC+cw6Ds3Eul+JpDt8zPcQxlfxXqIBr+Qc+sPC6Jz6yTmcoR0797RQDWVm33ONuluFTrHxVdj8/Gq7hqig/3/dnrvJalvH4+I8YErZLlaLHJTuNkeJZqv8+dXHfkJU/zrZLeNGCeMJ2KsQaP66MZyZyldXI2VYOp+sak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k57LNR4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xevBCVmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613891F000FF;
-	Thu, 17 Sep 2026 18:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k57LNR4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674411F000FF;
+	Thu, 17 Sep 2026 18:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668475;
-	bh=Qcs++gw7opsW/V78HrYVyzcDQMd+uzxx+h44VwQZ2TE=;
+	s=korg; t=1789668478;
+	bh=PS5ZHFH49BRl6Am3ZMLFvXMGOMYoeG6uT5nZ8grZbZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xevBCVmn3A1BcJM7ppr8E2AratpyAnvXpQeBAZwEP5Ynfmv2hEtTMleAaexXOTXwO
-	 v1jhj1MBKOlTnjYdvQiUjhROo0jNkamKfXkNmFRRCIABvN1eFUa+G0zo1sxe/9rlbl
-	 il3T1LDAT2JF0rJapyQynG8Bt7Nymy2fGJ4b0HOA=
+	b=k57LNR4jQ5rWCdcdNxMudamz1pt0RpAyk9fPsLcujoCzELsiY/obrE/EfLmaADkt0
+	 50tMespiQDTtcErByq/sUNKNXJZaqaNEs96NFKdYBxejomIMZd5hvViT7AUgVtXU/O
+	 cKm9takLxuYwHmIQKJEo4IzshYE2sYlAHek7/Pl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Dave Chen <davechen@synology.com>,
-	David Sterba <dsterba@suse.com>,
+	Jay Vadayath <jay@artiphishell.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0410/1102] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
-Date: Thu, 17 Sep 2026 16:05:53 +0100
-Message-ID: <20260917151549.957142353@linuxfoundation.org>
+Subject: [PATCH 6.12 0437/1102] smb: client: bound dirent name against end of SMB response in cifs_filldir
+Date: Thu, 17 Sep 2026 16:06:20 +0100
+Message-ID: <20260917151550.646254726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,72 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chen <davechen@synology.com>
+From: Jay Vadayath <jay@artiphishell.com>
 
-[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
+[ Upstream commit f8cf09a53a0dc1da298e9dd0ba5f21710cf119d6 ]
 
-btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
-and adds it (sector-aligned) to stat->blocks for every inode type.
-However, new_delalloc_bytes lives in a union with last_dir_index_offset:
+cifs_filldir() copies the entry name out of an SMB1 TRANS2_FIND_FIRST /
+FIND_NEXT response using a length (de.namelen) supplied by the server.
+The kmalloc'd SMB response buffer is bounded, but nothing checks that
+de.name + de.namelen still lies inside that buffer before the eventual
+filldir64() -> verify_dirent_name() -> memchr() reads namelen bytes.
 
-    union {
-        u64 new_delalloc_bytes;     /* files only */
-        u64 last_dir_index_offset;  /* directories only */
-    };
+A hostile SMB1 server that returns an oversized FileNameLength in a
+directory entry therefore causes memchr() to read past the end of the
+response slab buffer. Reachable from any user who can list a directory
+on a CIFS mount served by an attacker-controlled server (getdents64()
+on the mounted directory):
 
-For a directory inode this memory holds last_dir_index_offset, which is
-set during directory logging (e.g. flush_dir_items_batch()) to the
-offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
-the number of entries ever created in the directory (dir indexes are
-monotonic and never reused), so it can be arbitrarily large.
+  BUG: KASAN: slab-out-of-bounds in memchr+0x71/0x80
+  Read of size 1 at addr ffff88800e0640cc by task poc/115
+  Call Trace:
+   dump_stack_lvl+0x64/0x80
+   print_report+0xce/0x620
+   kasan_report+0xec/0x120
+   memchr+0x71/0x80
+   filldir64+0x4c/0x6a0
+   cifs_filldir.constprop.0+0x9bb/0x1e00
+   cifs_readdir+0x2101/0x3380
+   iterate_dir+0x19c/0x520
+   __x64_sys_getdents64+0x126/0x210
+   do_syscall_64+0x107/0x5a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-As a result, after a directory has been logged (e.g. via an fsync that
-triggers directory logging), btrfs_getattr() reports inflated st_blocks
-for that directory.  The inflation is purely in-core and disappears
-after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
-union), e.g. after a remount.
+Pass the end-of-response pointer down to cifs_filldir() and reject
+entries whose name would extend past that boundary.
 
-Reproducer (on a btrfs filesystem):
+This bug was discovered by Artiphishell's vTriage pipeline, which
+generated a userspace reproducer (an emulated hostile SMB1 server plus
+a getdents64() client) that reliably triggers the KASAN report on an
+unpatched kernel. The fix below was drafted with the Claude coding
+assistant; a userspace reproducer is available on request.
 
-    D=/mnt/btrfs/d
-    mkdir -p $D
-    for i in $(seq 1 20000); do touch $D/f$i; done
-    sync                      # commit, push dir index high
-    touch $D/trigger          # dirty the dir in a new transaction
-    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
-    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
-    # umount + mount -> st_blocks drops back to the correct value
-
-The evict path already knows this union is type-dependent and guards the
-corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
-btrfs_getattr() was missing the equivalent check.
-
-Only read new_delalloc_bytes for regular files, which are the only
-inodes that ever set it.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Dave Chen <davechen@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Jay Vadayath <jay@artiphishell.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/readdir.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index ab7f19ca21457..1245904884f5f 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -7877,7 +7877,8 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
- 	stat->result_mask |= STATX_SUBVOL;
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index 7bf3214117a91..6b619506b7a1c 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -934,7 +934,7 @@ static bool cifs_dir_emit(struct dir_context *ctx,
+ static int cifs_filldir(char *find_entry, struct file *file,
+ 			struct dir_context *ctx,
+ 			char *scratch_buf, unsigned int max_len,
+-			struct cached_fid *cfid)
++			char *end_of_smb, struct cached_fid *cfid)
+ {
+ 	struct cifsFileInfo *file_info = file->private_data;
+ 	struct super_block *sb = file_inode(file)->i_sb;
+@@ -955,6 +955,11 @@ static int cifs_filldir(char *find_entry, struct file *file,
+ 		return -EINVAL;
+ 	}
  
- 	spin_lock(&BTRFS_I(inode)->lock);
--	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
-+	delalloc_bytes = S_ISREG(inode->i_mode) ?
-+			 BTRFS_I(inode)->new_delalloc_bytes : 0;
- 	inode_bytes = inode_get_bytes(inode);
- 	spin_unlock(&BTRFS_I(inode)->lock);
- 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
++	if (de.name + de.namelen > end_of_smb) {
++		cifs_dbg(VFS, "search entry name extends past end of SMB\n");
++		return -EINVAL;
++	}
++
+ 	/* skip . and .. since we added them first */
+ 	if (cifs_entry_is_dot(&de, file_info->srch_inf.unicode))
+ 		return 0;
+@@ -1175,7 +1180,7 @@ int cifs_readdir(struct file *file, struct dir_context *ctx)
+ 		 */
+ 		*tmp_buf = 0;
+ 		rc = cifs_filldir(current_entry, file, ctx,
+-				  tmp_buf, max_len, cfid);
++				  tmp_buf, max_len, end_of_smb, cfid);
+ 		if (rc) {
+ 			if (rc > 0)
+ 				rc = 0;
 -- 
 2.53.0
 
