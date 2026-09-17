@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E1551599F;
-	Thu, 17 Sep 2026 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5A350E5A6;
+	Thu, 17 Sep 2026 17:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666364; cv=none; b=kDQzuWvmtJ2D3qkdLx5aOSvfn5AZD8hhhnA36m9KIBVSa1oZ1qs4IcEMhuo3sy1pGoOeE406FX6YkPQUt8lNpbMJwmphSF5yWHh9cbQcC79848JUcf9Fovma5/Pewp1G4Q7ALWqZGzX7JBHQuRF9FfCc2d+b256Xw8xTruYB57A=
+	t=1789666367; cv=none; b=nAb9dwWJOhX4qB+XdkgKLBwunvQdpEuF8uddk8U5oFLJx5bJsTbmRkK9sZiCG5we5f18w5JSedjL+zAv63EIFkuQ3W8RPnP92zsK+wix5kOwKL2XLVGI/SXuIGz0AhVGfcgUoD4+IGSaO0npqRTASiMj1GECjJ1b4NQAjQh955Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666364; c=relaxed/simple;
-	bh=opRGvCurkDaESLXpYJ1seyset579P2DGFJ3ofMg3r0A=;
+	s=arc-20240116; t=1789666367; c=relaxed/simple;
+	bh=DpZ7DGwBFSws6lRkPkxB4HstxToUZUV+ED2aqo6fBV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drZgaD7fOSPyV2Uee+Ain/i69SwSWBZor3f3stxhgiga4BvrTaev/PjiGn/MdRfp2IXeUhDArLhIkwk8PXh4KLWBfCxw4Kb7aN6aY35hNqtxRaTszoZFhJL3T+RPMLunSXAMEUWUOEbMR57f9nSbz2enI8AIxcC+c4HfZNbaRSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HywQc9r3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffnlQWn7OCuE5W/v+v0CKEoYLYmknm1+eN51CclxVpCYE5ULXpbO4K44lOwMb8BSKDoEyNvLLre8EKLkVHWRoir6OGkcLpp0urtDtApabL56JEMaBEweje7vnCIa/8Y0k8NVtlp/B1fNpPDRfgRrcD2Jw/TY4d/BAY5hufD7fdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBxKI13Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HywQc9r3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2861F000FF;
-	Thu, 17 Sep 2026 17:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBxKI13Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB4C1F000FF;
+	Thu, 17 Sep 2026 17:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666363;
-	bh=NY6nwb0dE6c0Rt/jAApWfGbFTsrO/Sk4JBqp2ISZEkg=;
+	s=korg; t=1789666366;
+	bh=DDvGwbPS3/d0mJRiFtHJT7XUffTHR2CjaIV/MpOXwyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HywQc9r3VUoFEdSB1yGFOe56+pWC77QbcYbSj45B56jaSsF/+KA+S6wH7pIJsqzAa
-	 MvoEi67OVdrpzPkotDpYZwHYZQEsALGmANWNMI/aqNbpBYJp4fMjPC5PoprI2UyOdH
-	 S1LlxVR2/ugnk2O0CQUobC3FyTTD/pOe71BUUVwg=
+	b=iBxKI13YP1qIJaqWMMK+viUBBNYjPQEvopCRDQKLXBYDZg3t0aPAwPhTSR9xsQkAk
+	 vbVMoRCqumACcT9E68/RZ2X9Elf3qithUu2DKCzu1xfIZu8f6Ca9W0Zt6twujZcFUW
+	 HxGymB9gUWtnYryRW0zZVdAGj4CmmpQv3P0kW0p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 1011/1250] io_uring/net: dont overconsume buffers when using MSG_TRUNC
-Date: Thu, 17 Sep 2026 16:13:26 +0100
-Message-ID: <20260917151619.450379425@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 1012/1250] ring-buffer: Acquire the lock with irqsave in rb_wake_up_waiters()
+Date: Thu, 17 Sep 2026 16:13:27 +0100
+Message-ID: <20260917151619.476845571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,171 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 6028b543884f8735e057ec9eea4908cd61cab230 upstream.
+commit 815e07c8fe885a87751c2496a30ae0dcd4118210 upstream.
 
-When a recv/recvmsg is issued with MSG_TRUNC and the incoming packet is
-larger than the provided buffer, the net layer returns the full length
-of the packet rather than the number of bytes actually copied into the
-buffer.  As a result, io_uring advances more of the provided buffer ring
-than was actually filled.  Use the actual filled region size to consume
-the buffer, but still return the full size to preserve MSG_TRUNC
-semantics.
+rb_wake_up_waiters() is a irq_work callback which is initialized with
+init_irq_work(). As such it will be invoked in thread context on
+PREEMPT_RT. Invoking the callback in IRQ context on PREEMPT_RT is not an
+option due its usage of wake_up_all().  Since this callback may run in
+thread context, it needs to acquire ring_buffer_per_cpu::reader_lock with
+disabling interrupts and may not assume that they are disabled.
 
-Take care with multishot, because that seems to already truncate the
-consumption based on the available payload size.
+Use raw_spinlock_irqsave() to acquire ring_buffer_per_cpu::reader_lock.
 
-This was reported in https://github.com/axboe/liburing/issues/1619.
-
-Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260728191454.1850326-1-krisman@suse.de
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260902230041.1320658-3-krisman@suse.de
-[axboe: fold in size_t unsigned fix]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260911102152.YEtwkBj9@linutronix.de
+Fixes: 68282dd930ea3 ("ring-buffer: Fix resetting of shortest_full")
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   41 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 33 insertions(+), 8 deletions(-)
+ kernel/trace/ring_buffer.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -852,7 +852,7 @@ int io_recvmsg_prep(struct io_kiocb *req
- static inline bool io_recv_finish(struct io_kiocb *req,
- 				  struct io_async_msghdr *kmsg,
- 				  struct io_br_sel *sel, bool mshot_finished,
--				  unsigned issue_flags)
-+				  unsigned issue_flags, int consumed)
- {
- 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
- 	unsigned int cflags = 0;
-@@ -876,7 +876,7 @@ static inline bool io_recv_finish(struct
- 	if (sr->flags & IORING_RECVSEND_BUNDLE) {
- 		size_t this_ret = sel->val - sr->done_io;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -875,14 +875,13 @@ static void rb_wake_up_waiters(struct ir
+ 		struct ring_buffer_per_cpu *cpu_buffer =
+ 			container_of(rbwork, struct ring_buffer_per_cpu, irq_work);
  
--		cflags |= io_put_kbufs(req, this_ret, sel->buf_list, io_bundle_nbufs(kmsg, this_ret));
-+		cflags |= io_put_kbufs(req, consumed, sel->buf_list, io_bundle_nbufs(kmsg, consumed));
- 		if (sr->flags & IORING_RECV_RETRY)
- 			cflags = req->cqe.flags | (cflags & CQE_F_MASK);
- 		if (sr->mshot_len && sel->val >= sr->mshot_len)
-@@ -898,7 +898,7 @@ static inline bool io_recv_finish(struct
- 			return false;
- 		}
- 	} else {
--		cflags |= io_put_kbuf(req, sel->val, sel->buf_list);
-+		cflags |= io_put_kbuf(req, consumed, sel->buf_list);
+-		/* Called from interrupt context */
+-		raw_spin_lock(&cpu_buffer->reader_lock);
+-		rbwork->wakeup_full = false;
+-		rbwork->full_waiters_pending = false;
++		scoped_guard(raw_spinlock_irqsave, &cpu_buffer->reader_lock) {
++			rbwork->wakeup_full = false;
++			rbwork->full_waiters_pending = false;
+ 
+-		/* Waking up all waiters, they will reset the shortest full */
+-		cpu_buffer->shortest_full = 0;
+-		raw_spin_unlock(&cpu_buffer->reader_lock);
++			/* Waking up all waiters, they will reset the shortest full */
++			cpu_buffer->shortest_full = 0;
++		}
+ 
+ 		wake_up_all(&rbwork->full_waiters);
  	}
- 
- 	/*
-@@ -1026,6 +1026,8 @@ int io_recvmsg(struct io_kiocb *req, uns
- 	int ret, min_ret = 0;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	bool mshot_finished = true;
-+	int consumed = 0;
-+	size_t len;
- 
- 	sock = sock_from_file(req->file);
- 	if (unlikely(!sock))
-@@ -1041,9 +1043,8 @@ int io_recvmsg(struct io_kiocb *req, uns
- 
- retry_multishot:
- 	sel.buf_list = NULL;
-+	len = sr->len;
- 	if (io_do_buffer_select(req)) {
--		size_t len = sr->len;
--
- 		sel = io_buffer_select(req, &len, sr->buf_group, issue_flags);
- 		if (!sel.addr)
- 			return -ENOBUFS;
-@@ -1064,6 +1065,7 @@ retry_multishot:
- 	if (req->flags & REQ_F_APOLL_MULTISHOT) {
- 		ret = io_recvmsg_multishot(sock, sr, kmsg, flags,
- 					   &mshot_finished);
-+		consumed = ret;
- 	} else {
- 		/* disable partial retry for recvmsg with cmsg attached */
- 		if (flags & MSG_WAITALL && !kmsg->msg.msg_controllen)
-@@ -1071,6 +1073,15 @@ retry_multishot:
- 
- 		ret = __sys_recvmsg_sock(sock, &kmsg->msg, sr->umsg,
- 					 kmsg->uaddr, flags);
-+		/*
-+		 * With MSG_TRUNC, the net layer will return the full size of
-+		 * the packet, even if we only filled part of it in the buffers.
-+		 * Adjust the returned size to consume only the real part of the
-+		 * buffer.
-+		 */
-+		consumed = ret;
-+		if (ret > 0)
-+			consumed = min_t(size_t, ret, len);
- 	}
- 
- 	if (ret < min_ret) {
-@@ -1097,7 +1108,7 @@ retry_multishot:
- 		io_kbuf_recycle(req, sel.buf_list, issue_flags);
- 
- 	sel.val = ret;
--	if (!io_recv_finish(req, kmsg, &sel, mshot_finished, issue_flags))
-+	if (!io_recv_finish(req, kmsg, &sel, mshot_finished, issue_flags, consumed))
- 		goto retry_multishot;
- 
- 	return sel.val;
-@@ -1184,9 +1195,10 @@ int io_recv(struct io_kiocb *req, unsign
- 	struct io_br_sel sel;
- 	struct socket *sock;
- 	unsigned flags;
--	int ret, min_ret = 0;
-+	int ret, min_ret = 0, consumed = 0;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	bool mshot_finished;
-+	size_t len = 0;
- 
- 	if (!(req->flags & REQ_F_POLLED) &&
- 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
-@@ -1202,6 +1214,7 @@ int io_recv(struct io_kiocb *req, unsign
- 
- retry_multishot:
- 	sel.buf_list = NULL;
-+	len = sr->len;
- 	if (io_do_buffer_select(req)) {
- 		sel.val = sr->len;
- 		ret = io_recv_buf_select(req, kmsg, &sel, issue_flags);
-@@ -1209,6 +1222,7 @@ retry_multishot:
- 			kmsg->msg.msg_inq = -1;
- 			goto out_free;
- 		}
-+		len = ret;
- 		sr->buf = NULL;
- 	}
- 
-@@ -1239,6 +1253,17 @@ out_free:
- 	}
- 
- 	mshot_finished = ret <= 0;
-+
-+	/*
-+	 * With MSG_TRUNC, the net layer will return the full size of
-+	 * the packet, even if we only filled part of it in the buffers.
-+	 * Adjust the returned size to consume only the real part of the
-+	 * buffer.
-+	 */
-+	consumed = ret;
-+	if (ret > 0)
-+		consumed = min_t(size_t, ret, len);
-+
- 	if (ret > 0)
- 		ret += sr->done_io;
- 	else if (sr->done_io)
-@@ -1247,7 +1272,7 @@ out_free:
- 		io_kbuf_recycle(req, sel.buf_list, issue_flags);
- 
- 	sel.val = ret;
--	if (!io_recv_finish(req, kmsg, &sel, mshot_finished, issue_flags))
-+	if (!io_recv_finish(req, kmsg, &sel, mshot_finished, issue_flags, consumed))
- 		goto retry_multishot;
- 
- 	return sel.val;
 
 
