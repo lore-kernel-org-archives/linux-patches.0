@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC710502788;
-	Thu, 17 Sep 2026 17:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EFC50279B;
+	Thu, 17 Sep 2026 17:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666484; cv=none; b=NihaXgY8+K0Fv6xJGhsEQU5VTcLUHmTBpftAcYLmv68Mtg85SVL3byajQTyXRKNDdYx32OvBBaZgUFQR2WmRJEXxROs9xws2VvQhQ6WghNG+xzubMGFPREARPpzbTO9HJvDFH2f7IE8wFMQMrTJLU8QzT2Td/Q4rCBcH3KLaoSs=
+	t=1789666487; cv=none; b=Hmt0mCg6NcOJ8Pbu/0TgOBIDzvigeppih5dZz4W1SO8LbVFqGpuynB2N1ZWJVmERo45aZ25lOh2n4iwDenyGQBK8girplMXjfuDj2zpT2UH90KbtyY9BQwfVSOyTfS/AnOkXUmWWCk27CZAbkoxpRYpf7LsrO6bdpmQP/9Z+/c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666484; c=relaxed/simple;
-	bh=Kuo72NIG0SRM4rd5KozRJbsy2tBCKt49RTRGEhSY2mY=;
+	s=arc-20240116; t=1789666487; c=relaxed/simple;
+	bh=d4U7d9mwMfYhzVmQqFaoSkDbeRNexmNKEyeYFYAyRYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJbVZIqd57fYhaWTt0c+eOmbH/AulMtUxLCCw7a/oAETX7jUUkbtTjMFVt/HzXSyUBct1g+aws6ETPjqg6URkfxcJ7k/Q1mVhyRAzlYzRezImvJJJgxgbGQhgOMN9tfAOIEDDOGCewNeOjt5C8DEx6BfdnFHyba/aTw3ceOvkJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHertkkV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TXW3yO5iUVeSCkNiK/0t+ysGLF2wIdI/BqL7MSDIO63oXWVxlCyOaht+tn7YuiXwKnpp9tW44K/A1U0abkZxcAC9bZaBRBepjEwDeOKt0ohdD6YJiCZJqvzPWU4BHgWgL0V66qofxMmyUSAWLBZn6ORDJooWjaxP8cDS+/trShk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVx6TeR9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHertkkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0261F00893;
-	Thu, 17 Sep 2026 17:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVx6TeR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2071C1F000FF;
+	Thu, 17 Sep 2026 17:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666482;
-	bh=xb2jtjfKzPsS9FYPa/qs2oZkzjDZJ2A4d7IyjrK4Uqw=;
+	s=korg; t=1789666485;
+	bh=1KeVZ+81yZZEL7etov3mpUV//iTiei6blrWxT9EFy20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yHertkkV2jK39aax3FLbGCl781i9iY2ZD1JvKU5mFUO7z35ZkrM9X2xDyxS4WzZbt
-	 RoiBco3A/d639tcKkppD1Q09iIqL1xBVALE33YqGd/WCG53GFUiME4A6p+MxopI+rq
-	 ykCw/15khv/5EPoZJQOTBkkUAdtS2sYxYxFXu6og=
+	b=eVx6TeR9PkQb33jbXAuomBu2khe1tKx+xzxfFJRqPCLF/9KiT4sw7A+KYA1fLMvN4
+	 udSzXmIbymEwgbhRlP5G7yRG/BSvOp9R00ZGjNpNr5jwA5TBMB1hkbg8GyRty+iIGb
+	 eT286zGGvVKAiCfU8QGrH6DjxBtv+1yMjr/lE5Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.18 1051/1250] perf: RISC-V: use BIT_ULL for u64 overflow masks
-Date: Thu, 17 Sep 2026 16:14:06 +0100
-Message-ID: <20260917151620.605567142@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 1052/1250] afs: Fix missing kunmap in afs_dir_search_bucket()
+Date: Thu, 17 Sep 2026 16:14:07 +0100
+Message-ID: <20260917151620.634632291@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,55 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-commit 6693171c8c540b3a54e671992f0561613076fc3b upstream.
+commit 950ae84b5cc944fbe27d81806d0b76af765f779c upstream.
 
-Overflow status and restart masks are u64, but bits were built with
-BIT(). On RV32 that is an unsigned long shift, so indices >= 32 truncate
-or wrap and corrupt the mask.
+Fix afs_dir_search_bucket() to kunmap the block it's using in the "bad:"
+path.
 
-Use BIT_ULL() for those u64 bitops.
-
-Fixes: a8625217a054 ("drivers/perf: riscv: Implement SBI PMU snapshot function")
-Assisted-by: DeepSeek:deepseek-v3
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/prpmask01bitul.v2.1786434000.git.liuxixin@kylinos.cn
-Cc: stable@vger.kernel.org
-[pjw@kernel.org: updated to apply]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: a5b5beebcf96 ("afs: Use the contained hashtable to search a directory")
+Closes: https://sashiko.dev/#/patchset/20260716103030.3065561-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260902121024.3328255-2-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/riscv_pmu_sbi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/afs/dir_search.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -1039,7 +1039,7 @@ static inline void pmu_sbi_start_ovf_ctr
- 	struct riscv_pmu_snapshot_data *sdata = cpu_hw_evt->snapshot_addr;
+--- a/fs/afs/dir_search.c
++++ b/fs/afs/dir_search.c
+@@ -173,12 +173,11 @@ int afs_dir_search_bucket(struct afs_dir
  
- 	for_each_set_bit(idx, cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS) {
--		if (ctr_ovf_mask & BIT(idx)) {
-+		if (ctr_ovf_mask & BIT_ULL(idx)) {
- 			event = cpu_hw_evt->events[idx];
- 			hwc = &event->hw;
- 			max_period = riscv_pmu_ctr_get_width_mask(event);
-@@ -1148,14 +1148,14 @@ static irqreturn_t pmu_sbi_ovf_handler(i
- 			hidx = info->csr - CSR_CYCLE;
- 
- 		/* check if the corresponding bit is set in scountovf or overflow mask in shmem */
--		if (!(overflow & BIT(hidx)))
-+		if (!(overflow & BIT_ULL(hidx)))
- 			continue;
- 
- 		/*
- 		 * Keep a track of overflowed counters so that they can be started
- 		 * with updated initial value.
- 		 */
--		overflowed_ctrs |= BIT(lidx);
-+		overflowed_ctrs |= BIT_ULL(lidx);
- 		hw_evt = &event->hw;
- 		/* Update the event states here so that we know the state while reading */
- 		hw_evt->state |= PERF_HES_STOPPED;
+ 	ret = -ENOENT;
+ found:
++bad:
+ 	if (iter->block) {
+ 		kunmap_local(iter->block);
+ 		iter->block = NULL;
+ 	}
+-
+-bad:
+ 	if (ret == -ESTALE)
+ 		afs_invalidate_dir(iter->dvnode, afs_dir_invalid_iter_stale);
+ 	_leave(" = %d", ret);
 
 
