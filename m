@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC874E0B91;
-	Thu, 17 Sep 2026 17:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E323BB12A;
+	Thu, 17 Sep 2026 17:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667698; cv=none; b=tdTDRgnRzr1k4SObYnjYxS8kuzzeyoOm8tdZOlPCkNyTNmGLdQKdN4ktlsgvyA9tMmN2scSUBFrjiKB9e2wB4IqBa7qHDlETp3v3hC1Zha1gBkxiXJAr0RDlfPAMweA4BF7WuFeCAkyOW6VE+uEMGDXOEeqOOk3XBs38zuyBU4o=
+	t=1789667701; cv=none; b=T0eeDqyNYtBce9y7qDb/bdpmqmPR1mIGyJ3qYCEqJwJaKRvBhE5x886tevSBKo5942P3wqjC3QoyvNv4smKzenA46Sd+lWkUFRZTLzQfJXFZGN/6LKRZgoT5yE1pC7k5dp8ZaDBGhfMH/l/OUirEfRZfdJ1YghmlqOcLNGNsrZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667698; c=relaxed/simple;
-	bh=0DeWBGRSW762fJJJlSu4t9X8yB6Pc6WQQ9sLzCbHzr8=;
+	s=arc-20240116; t=1789667701; c=relaxed/simple;
+	bh=qAQCuJCXAe7svlC21G9SXDxlq88ygqO+O1vB/A5mmWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1CKv5yZ17gZoRpg5CiJoj3Owzc5kn96KdIAT1kIeV6ndhBtGasygOB10hQhUqAXTwRyIqjwIplBbm9jWn+Y7+nuPU40GsSOrQ4SBYIcsd6UB5vUil4Qm++8nPik9iatw66zAx3yEBDpAddO0rmVQlCyjhEieXuVpz3crtFz/Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEPs6gfZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BKREmlhLxNl77R/YiZkiT/wozq9q4b22TzLjO/WzoDuJ1wzjGhfJboqkbITanfdvJbtLq52aPrJzbi2aZ5q3sibvkXaXcBkc6tFXx/x/kse9yTWQXqSBrCjFQ+ImYf/58efSxolaWvx+95daOciwF78wLDyHv638OHupo9lxoLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fw4xqfgE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEPs6gfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684251F000FF;
-	Thu, 17 Sep 2026 17:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fw4xqfgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613971F000FF;
+	Thu, 17 Sep 2026 17:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667696;
-	bh=BHdoLD97CkMSGztk5H+bC7htBDjTnXqYa/z7vcXiMC4=;
+	s=korg; t=1789667699;
+	bh=oHSVGp0AO+mXrNWS3BX3bvznlkMcyfcNuJjCOun2YGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nEPs6gfZgaVf8UPhOsnEiK2yr91bVmHEHPagxP/HRqNEFh6iDppo/LZmNQ1ieXmrs
-	 R5YRePTWnzQQ1NK1TzoWR8VInvp+NtixTZw2btqn/LfPUZOi1ME6oGefEwk3sT70Kr
-	 1GZ+ngXLlkJsyGBB711TXmPxykKkHDa58araZvCk=
+	b=fw4xqfgEJ5tmZbpXuuYbBRpU7l80nzsXLSPWKgMpWp2oEYClww0mRKkj8yQSjZ+aW
+	 8CUJpO+8Grx9AFnGsNJpnTjvP49U2yuJ1v4B/Q7PEPEINdxwE0KBFZIMlRi8/tccPT
+	 Q1j/sf9VoKR0fGTSBP7V5yrW0YPlY4v8jLS9Lex4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0180/1102] ASoC: Intel: catpt: Complete coredump handling
-Date: Thu, 17 Sep 2026 16:02:03 +0100
-Message-ID: <20260917151544.080177445@linuxfoundation.org>
+Subject: [PATCH 6.12 0181/1102] drm/nouveau/bios: skip the IFR header if present
+Date: Thu, 17 Sep 2026 16:02:04 +0100
+Message-ID: <20260917151544.106910734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,108 +52,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit 7e5d59f407bc39d43b350cc45f7880647429eb5d ]
+[ Upstream commit 4beeac5d2015df1017732ce4c57d634f557dd304 ]
 
-An exception may occur during the firmware booting procedure.  In such
-case the firmware sends COREDUMP_REQUESTS and expects the driver to dump
-relevant information and finish with the COREDUMP_RELEASE write.
+The GPU's ROM may begin with an Init-from-ROM (IFR) header that precedes
+the PCI Expansion ROM images (VBIOS).  When present, the PROM shadow
+method must parse this header to determine the offset where the PCI ROM
+images actually begin, and adjust all subsequent reads accordingly.
 
-To distinguish such situation from generic timeout, always signal
-fw_ready completion when a coredump request is received and translate
-it to -EREMOTEIO in catpt_boot_firmware().
+On most GPUs this is not needed because either the PRAMIN shadow method
+(which reads from VRAM via the display engine) succeeds first, or the IFR
+microcode has already applied the ROM offset so that PROM reads
+transparently skip the header.  However, on GA100 neither of these
+applies: GA100 has no display engine (so PRAMIN is unavailable), and the
+IFR offset is not applied to PROM reads on this GPU.
 
-The "FW READY" print makes the success clearly visible even when
-the event-traces are not enabled.
-
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260528083444.1439233-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260430223838.2530778-9-ttabi@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/ipc.c       |  8 ++++++++
- sound/soc/intel/catpt/loader.c    |  3 +++
- sound/soc/intel/catpt/registers.h | 12 ++++++++++++
- 3 files changed, 23 insertions(+)
+ .../drm/nouveau/nvkm/subdev/bios/shadowrom.c  | 110 ++++++++++++++++--
+ 1 file changed, 101 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/intel/catpt/ipc.c b/sound/soc/intel/catpt/ipc.c
-index d26863249097f..952c26e5d0e6c 100644
---- a/sound/soc/intel/catpt/ipc.c
-+++ b/sound/soc/intel/catpt/ipc.c
-@@ -205,6 +205,7 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		memcpy_fromio(&config, cdev->lpe_ba + off, sizeof(config));
- 		trace_catpt_ipc_payload((u8 *)&config, sizeof(config));
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowrom.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowrom.c
+index 39144ceb117b4..9e171b1bad732 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowrom.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowrom.c
+@@ -24,34 +24,126 @@
  
-+		dev_dbg(cdev->dev, "FW READY 0x%08x\n", header);
- 		catpt_ipc_arm(ipc, &config);
- 		complete(&cdev->fw_ready);
- 		return;
-@@ -215,6 +216,13 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		dev_err(cdev->dev, "ADSP device coredump received\n");
- 		ipc->ready = false;
- 		catpt_coredump(cdev);
+ #include <subdev/pci.h>
+ 
++#define NV_PBUS_IFR_FMT_FIXED0_SIGNATURE_VALUE 0x4947564E	/* "NVGI" */
++#define NV_ROM_DIRECTORY_IDENTIFIER 0x44524652			/* "RFRD" */
 +
-+		if (catpt_readl_dram(cdev, COREDUMP) == CATPT_COREDUMP_REQUEST) {
-+			dev_dbg(cdev->dev, "releasing firmware from the coredump state\n");
-+			catpt_writel_dram(cdev, COREDUMP, CATPT_COREDUMP_RELEASE);
++struct priv {
++	struct nvkm_device *device;
++	u32 pci_rom_offset;
++};
++
+ static u32
+ nvbios_prom_read(void *data, u32 offset, u32 length, struct nvkm_bios *bios)
+ {
+-	struct nvkm_device *device = data;
++	struct priv *priv = data;
++	struct nvkm_device *device = priv->device;
+ 	u32 i;
+-	if (offset + length <= 0x00100000) {
+-		for (i = offset; i < offset + length; i += 4)
+-			*(u32 *)&bios->data[i] = nvkm_rd32(device, 0x300000 + i);
+-		return length;
+-	}
+-	return 0;
++
++	/* Make sure we don't try to read past the end of data[] */
++	if (offset + length > bios->size)
++		return 0;
++
++	/* Make sure the read falls within the 1MB PROM window */
++	if (offset + priv->pci_rom_offset + length > 0x00100000)
++		return 0;
++
++	for (i = offset; i < offset + length; i += 4)
++		*(u32 *)&bios->data[i] = nvkm_rd32(device, 0x300000 + priv->pci_rom_offset + i);
++	return length;
+ }
+ 
+ static void
+ nvbios_prom_fini(void *data)
+ {
+-	struct nvkm_device *device = data;
++	struct priv *priv = data;
++	struct nvkm_device *device = priv->device;
++
+ 	nvkm_pci_rom_shadow(device->pci, true);
++
++	kfree(data);
+ }
+ 
+ static void *
+ nvbios_prom_init(struct nvkm_bios *bios, const char *name)
+ {
+ 	struct nvkm_device *device = bios->subdev.device;
++	struct priv *priv;
++	u32 fixed0;
++
++	/* There is no PROM on NV4x iGPUs */
+ 	if (device->card_type == NV_40 && device->chipset >= 0x4c)
+ 		return ERR_PTR(-ENODEV);
++
++	priv = kzalloc_obj(*priv);
++	if (!priv)
++		return ERR_PTR(-ENOMEM);
++
++	/* Disable the PCI ROM shadow so that we can read PROM. */
+ 	nvkm_pci_rom_shadow(device->pci, false);
+-	return device;
++
++	/*
++	 * Check for an IFR header. If present, parse it to find the actual PCI ROM header.
++	 *
++	 * The IFR header is documented in Documentation/gpu/nova/core/vbios.rst
++	 */
++	fixed0 = nvkm_rd32(device, 0x300000);
++	if (fixed0 == NV_PBUS_IFR_FMT_FIXED0_SIGNATURE_VALUE) {
++		u32 fixed1 = nvkm_rd32(device, 0x300004);
++		u8 version = (fixed1 >> 8) & 0xff;
++		u32 fixed2, data_size, offset, signature;
++
++		switch (version) {
++		case 1:
++		case 2:
++			data_size = (fixed1 >> 16) & 0x7fff;
++			priv->pci_rom_offset = nvkm_rd32(device, 0x300000 + data_size + 4);
++			break;
++		case 3:
++			fixed2 = nvkm_rd32(device, 0x300008);
++			data_size = fixed2 & 0x000fffff;
++
++			/* ROM directory offset */
++			offset = nvkm_rd32(device, 0x300000 + data_size) + 4096;
++
++			signature = nvkm_rd32(device, 0x300000 + offset);
++			if (signature != NV_ROM_DIRECTORY_IDENTIFIER) {
++				nvkm_error(&bios->subdev, "could not find IFR ROM directory\n");
++				goto fail;
++			}
++
++			priv->pci_rom_offset = nvkm_rd32(device, 0x300000 + offset + 8);
++
++			break;
++		default:
++			nvkm_error(&bios->subdev, "unsupported IFR header version %u\n",
++				   version);
++			goto fail;
 +		}
 +
-+		complete(&cdev->fw_ready);
- 		/* TODO: attempt recovery */
- 		break;
- 
-diff --git a/sound/soc/intel/catpt/loader.c b/sound/soc/intel/catpt/loader.c
-index 696d84314eeb5..680efad5f458d 100644
---- a/sound/soc/intel/catpt/loader.c
-+++ b/sound/soc/intel/catpt/loader.c
-@@ -626,6 +626,9 @@ int catpt_boot_firmware(struct catpt_dev *cdev, bool restore)
- 	if (!ret) {
- 		dev_err(cdev->dev, "firmware ready timeout\n");
- 		return -ETIMEDOUT;
-+	/* Wake up does not mean FW is ready, an exception could occur. */
-+	} else if (!cdev->ipc.ready) {
-+		return -EREMOTEIO;
- 	}
- 
- 	/* update sram pg & clock once done booting */
-diff --git a/sound/soc/intel/catpt/registers.h b/sound/soc/intel/catpt/registers.h
-index 6c1ad28c6d692..64bd534a76ff4 100644
---- a/sound/soc/intel/catpt/registers.h
-+++ b/sound/soc/intel/catpt/registers.h
-@@ -124,6 +124,11 @@
- #define CATPT_SSCR2_DEFAULT		0x0
- #define CATPT_SSPSP2_DEFAULT		0x0
- 
-+/* Coredump register and its states */
-+#define CATPT_DRAM_COREDUMP		0x1F4
-+#define CATPT_COREDUMP_REQUEST		UINT_MAX
-+#define CATPT_COREDUMP_RELEASE		0
++		/* Double-check that the offset is valid */
++		if (priv->pci_rom_offset >= 0x00100000) {
++			nvkm_error(&bios->subdev,
++				   "PCI ROM offset of 0x%x is too large\n", priv->pci_rom_offset);
++			goto fail;
++		}
 +
- /* Physically the same block, access address differs between host and dsp */
- #define CATPT_DSP_DRAM_OFFSET		0x400000
- #define catpt_to_host_offset(offset)	((offset) & ~(CATPT_DSP_DRAM_OFFSET))
-@@ -137,6 +142,8 @@
- 
- /* registry I/O helpers */
- 
-+#define catpt_dram_addr(cdev) \
-+	((cdev)->lpe_ba + (cdev)->spec->host_dram_offset)
- #define catpt_shim_addr(cdev) \
- 	((cdev)->lpe_ba + (cdev)->spec->host_shim_offset)
- #define catpt_dma_addr(cdev, dma) \
-@@ -151,6 +158,11 @@
- #define catpt_writel_ssp(cdev, ssp, reg, val) \
- 	writel(val, catpt_ssp_addr(cdev, ssp) + (reg))
- 
-+#define catpt_readl_dram(cdev, reg) \
-+	readl(catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
-+#define catpt_writel_dram(cdev, reg, val) \
-+	writel(val, catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
++		/* If there is an IFR header, there must also be a PCI ROM header. */
++		signature = nvkm_rd32(device, 0x300000 + priv->pci_rom_offset) & 0xffff;
++		if (signature != 0xaa55) {
++			nvkm_error(&bios->subdev,
++				   "could not find PCI ROM signature at offset 0x%x\n",
++				   priv->pci_rom_offset);
++			goto fail;
++		}
++	}
 +
- #define catpt_readl_shim(cdev, reg) \
- 	readl(catpt_shim_addr(cdev) + CATPT_SHIM_##reg)
- #define catpt_writel_shim(cdev, reg, val) \
++	priv->device = device;
++	return priv;
++
++fail:
++	nvkm_pci_rom_shadow(device->pci, true);
++	kfree(priv);
++	return ERR_PTR(-ENODEV);
+ }
+ 
+ const struct nvbios_source
 -- 
 2.53.0
 
