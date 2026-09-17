@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B66F4FC359;
-	Thu, 17 Sep 2026 17:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0DA4FD786;
+	Thu, 17 Sep 2026 17:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664769; cv=none; b=VEWbSUq7Vt4fyag2ebAnnqYXHJG81tj0ziym5lqAo6pjfuUg8e7Q85iQXirACo7Ze56FOuB4sbDFcfiPdf7a1S4bS6bK3qy2ydViVftxSWcyo2k+UwffSvB3k4/TGI4d4bYfiBBK8OnmfMAOMSGf6ZBKeJUtKlhLy5KKVNrxviQ=
+	t=1789664772; cv=none; b=g04WiFrgbeiuNLf7eUXsjxpJVb0SD6mV3+Gw8hf5cQtZimaQyee4o0U87Lu0WZm2p73wSWEVjnEIEzIVBb+p/IO29/gg0wwXzTznOAXpMhMuGZwWk8TI79tVQEYgdgSHCHD5SbIGVcYNyUCkquVLfwRjCn+f0hIIdGgaZ7iABfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664769; c=relaxed/simple;
-	bh=MP9+ynBl8nTezkd0wWRrm3LUjkIdDJYwrMPS0keZxuI=;
+	s=arc-20240116; t=1789664772; c=relaxed/simple;
+	bh=d1/xrpOELrsoEQDveGWTR5/j0PpMRgaRyNL8e3+ql3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCKeaNNFBJlenhdN8Nv16yTDfRU4egrw/0PtmDUm5BwMoC62VVmSpRU8VeCqm6OwM3JBd5dyHleJ4zsr7DHu3iLp1IOIS5ZSUgfegB/hZ3XDvoZHE3j0xlXzZHguda7pUe9fKz1pBHUb7XO2PER0zliWv9fd3z5xEDS9sI7XN3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fhn+A/JI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sbw3xmdIOQtre0woE9QSp9drrm7G6b8f3sZjB1YTvhpilyzlhl4bmM9Z3koyLCekZQpcqe2tNWvywLqyU8GKAnq9Cmz9SGMQcn93373+KilpQXir7Yurpl3F+tK5hMoEtz8pwXyxMWexfftBdPHygDz6uNX5D7uPzZTgmLUG0lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJtKdHVC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fhn+A/JI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578EA1F000FF;
-	Thu, 17 Sep 2026 17:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJtKdHVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5292F1F000FF;
+	Thu, 17 Sep 2026 17:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664767;
-	bh=s0kNwFK5peK2NU597Bi1FZiBRFgiFE8Txp8TNHuhmMM=;
+	s=korg; t=1789664770;
+	bh=Ohld/zU0T29cdVTibVTaxlpGl4qgJB7u+DxdeP5g65E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fhn+A/JI0+noev96FxnBRWd/QbcWkoZo/2HmFGFs4Z62XPP3zwTmFPDogCV12Trd3
-	 ztfpBJ+BYUunj8yxRPHBByfTpH1s+k8QaG47hRl6cUKgNaue4Wars6977RP1MM8z/r
-	 tATewiEkfczNDyiKalTgk0zIy80jW3Ifcqgu+q4k=
+	b=iJtKdHVCEOUrPKTt7mM5eU/jBQ0JaM0viW0zmmkbrMEpUke8hLd/GvxZPiw4tmeg5
+	 JO3nRyY/W7qsnansNrrHBCs7JlAN8XDX4p1MytVQAqsYTr1phlytdh1WQjqoCrJmhW
+	 dR/gJbHTIUWPWGSo3TJSB0FYkqr8awnFUHCNPwRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0483/1250] xen/front-pgdir-shbuf: free grant reference head on errors
-Date: Thu, 17 Sep 2026 16:04:38 +0100
-Message-ID: <20260917151605.056829436@linuxfoundation.org>
+Subject: [PATCH 6.18 0484/1250] freevxfs: dont BUG() on unknown typed-extent type
+Date: Thu, 17 Sep 2026 16:04:39 +0100
+Message-ID: <20260917151605.085826909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,61 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Farhad Alemi <farhad.alemi@berkeley.edu>
 
-[ Upstream commit 678d59219ce0ae883f04c96936222c6168ef1164 ]
+[ Upstream commit 704d48d81dc41470e108811c32c577ada66192d4 ]
 
-grant_references() allocates a private grant-reference head before
-claiming references for the page directory and, for guest-owned buffers,
-the data pages. The success path frees the remaining head, but claim
-failures and grant_refs_for_buffer() errors return immediately.
+vxfs_bmap_typed() handles four typed-extent types and calls BUG() in
+its default case, so an on-disk typed extent with any other type value
+crashes the kernel. It is reachable from ioctl(FIBMAP) on a regular
+file:
 
-Unwind through a common exit path so the private grant-reference head is
-released even when granting fails part-way through setup. The caller
-still tears down any references already stored in buf->grefs.
+  kernel BUG at fs/freevxfs/vxfs_bmap.c:230!
+  RIP: vxfs_bmap_typed fs/freevxfs/vxfs_bmap.c:230 [inline]
+       vxfs_bmap1+0x128a/0x12d0 fs/freevxfs/vxfs_bmap.c:257
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260629160517.29340-1-alhouseenyousef@gmail.com>
+Replace the BUG() with WARN_ON_ONCE() and return 0 -- the value
+vxfs_bmap_typed() already returns on failure (and from the DEV4 case
+above); vxfs_getblk() maps 0 to -EIO, so the ioctl fails cleanly.
+
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Link: https://patch.msgid.link/CA+0ovChveuAwv=t15dr2m09E32bM48hHJxvfeEYZOhdNiEc9Tw@mail.gmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xen-front-pgdir-shbuf.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/freevxfs/vxfs_bmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xen-front-pgdir-shbuf.c b/drivers/xen/xen-front-pgdir-shbuf.c
-index 223870a0111b2..e7fb06f607711 100644
---- a/drivers/xen/xen-front-pgdir-shbuf.c
-+++ b/drivers/xen/xen-front-pgdir-shbuf.c
-@@ -447,8 +447,10 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
- 		unsigned long frame;
- 
- 		cur_ref = gnttab_claim_grant_reference(&priv_gref_head);
--		if (cur_ref < 0)
--			return cur_ref;
-+		if (cur_ref < 0) {
-+			ret = cur_ref;
-+			goto out_free_refs;
-+		}
- 
- 		frame = xen_page_to_gfn(virt_to_page(buf->directory +
- 						     PAGE_SIZE * i));
-@@ -459,11 +461,13 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
- 	if (buf->ops->grant_refs_for_buffer) {
- 		ret = buf->ops->grant_refs_for_buffer(buf, &priv_gref_head, j);
- 		if (ret)
--			return ret;
-+			goto out_free_refs;
+diff --git a/fs/freevxfs/vxfs_bmap.c b/fs/freevxfs/vxfs_bmap.c
+index 26d367e3668da..de4003597b555 100644
+--- a/fs/freevxfs/vxfs_bmap.c
++++ b/fs/freevxfs/vxfs_bmap.c
+@@ -227,7 +227,8 @@ vxfs_bmap_typed(struct inode *ip, long iblock)
+ 			return 0;
+ 		}
+ 		default:
+-			BUG();
++			WARN_ON_ONCE(1);
++			return 0;
+ 		}
  	}
  
-+	ret = 0;
-+out_free_refs:
- 	gnttab_free_grant_references(priv_gref_head);
--	return 0;
-+	return ret;
- }
- 
- /*
 -- 
 2.53.0
 
