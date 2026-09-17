@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DFB4A207F;
-	Thu, 17 Sep 2026 17:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DFB3B776C;
+	Thu, 17 Sep 2026 17:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664827; cv=none; b=e8Ye1jNwArP3484nwgOtyYae7cHAg1cLURnvjj+ajmH3zXqSc2uQ959wGr7KajsfkiknbMTPGivlInWa3tvlvfB+vzxbPDQO0jER68rfabcaqSeEk+KBq4okK+e1M2rgv3WstH5Qo5Idg1euSM7fXkq1YJHsWI8m9JjTnt1X1wQ=
+	t=1789664830; cv=none; b=ky0wUhl2QVS4X4XIDU0zH5hbsz0pTtS/QG8qEP1gjW4AjjlJ0cI9d6TClpf+SaMgN9VTm3Pv/xOCi07IhzSH0CSlVM2z0WLx8wk4nASo86fcTw5KCe0SHGlOlSheu8g/6uYdeq36Z1VWv790SoWtvwe6HtL9cQ50VY4MpkhPO/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664827; c=relaxed/simple;
-	bh=n9sLzYCfOT26hwp++KaosXyEgKrX44HPUmLb1U6gwio=;
+	s=arc-20240116; t=1789664830; c=relaxed/simple;
+	bh=zxANXSHzZwXY0pTZ5LLppNzEUQjKVBppHJJLPXyUjtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c21ep0D2dCedEbUN2lJkye6shHjfQTvtktwvkdMRLnEcrijHOhIInUNAF9KxxHUbIEUPDXY7DNoabaymWbOSeCo499182M0p0K2P7Pscn0LPbb4/C5woGitI6F7rsvkBDg5+C6BysHe6dj1Z5GkIP5sH41mAfG9Wk74WLZm2kVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZmJsgvm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T8HDSUAfNR80vgVjlmerJj0KbfzimmjwbYvdMYeCKXVQJmLHHoLCPsfcA1harC4fE5eDv5RAEn47qq2Z928vdAT9jTyLLbbdQXiXfTC9lKfO58iviCMl7OMDUkjr3paBOmIvAAhQymnyixKK1CDmD1b4G07JRmKRNCAGUd+QDPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwSEmS1n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZmJsgvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8920E1F000FF;
-	Thu, 17 Sep 2026 17:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwSEmS1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8943D1F00893;
+	Thu, 17 Sep 2026 17:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664826;
-	bh=y55eeXiw0VrL6ac5r51m6KWjiq3n1RGQyn3ifcz1EqI=;
+	s=korg; t=1789664829;
+	bh=Ig+6lHg/ww7rmszGntAyPJw8WtnRl4R739xNc3Gr92Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZmJsgvm7f0Fmi6DJFBC2Wum6Cp/WAmhnz0U7yYWQxT0Qa0Ma32f6YEulG/a0DiE/
-	 Oaw0W/agBcZiHRgVFhzf2ztBOgj2cAROuyZEUfjPuXnqAHcfo6ZrhG1tsx/X11/Ofy
-	 HG6pcya+Is1YyoX1aNmxPKLfbnaNiUQJhUXe1/QM=
+	b=OwSEmS1nDzGHK/mq3J2TTPGQhVKXbF+OeFPKLsx6vGvxqXeDVSLyMy3S/MlIGyYkY
+	 UnoixP+jZKAhw6Vf5rq7V75j+akLgvzeo7BiAxaWQln0WkRiLd5Bm2wwbM3SNTAFDl
+	 CeetTbNzUJhWR7xORKzCIPct429ufONZPcHS4Fu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0474/1250] spi: core: Abort active target transfer on controller suspend
-Date: Thu, 17 Sep 2026 16:04:29 +0100
-Message-ID: <20260917151604.819365503@linuxfoundation.org>
+Subject: [PATCH 6.18 0501/1250] wifi: mac80211: ibss: wait for in-flight TX on disconnect
+Date: Thu, 17 Sep 2026 16:04:56 +0100
+Message-ID: <20260917151605.540052981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,43 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit c1bab046d4786c5b17aab7c5225bf0d4a2a2d19b ]
+[ Upstream commit d0e69d9afa59b93c30294eba89b1f15f69e91105 ]
 
-When an SPI controller operating in target mode has a transfer in
-progress at the time of system suspend, the suspend path proceeds
-without aborting the ongoing transfer. This can leave the hardware in
-an inconsistent state, potentially causing the system to hang or fail
-to resume cleanly.
+While leaving an IBSS in ieee80211_ibss_disconnect() mac80211 flushes
+stations, turns the carrier off and immediately tells the driver to
+leave as well. While there may be synchronize_net() in station flush
+and in this code later, packets can still be transmitted due to
+cross-CPU race conditions after carrier off is set.
+Therefore, it's possible for a race to happen where a TX to the
+driver occurs while or after telling it to leave the IBSS. This can
+be confusing to drivers, and in the case of iwlwifi leads to an
+attempt to use invalid queues.
 
-Fix this by invoking the controller's target_abort callback from
-spi_controller_suspend() when the controller is in target mode and the
-callback is registered. This ensures any active target transfer is
-cleanly terminated before the controller is suspended.
+Move netif_carrier_off() to occur before sta_info_flush() during
+IBSS disconnect, and add synchronize_net() if flushing didn't,
+so that the synchronize_net() always happens between turning the
+carrier off and telling the driver, avoiding this race.
 
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260625-abort_active_transfer_duirng_s2r-v2-1-1d6f724406b6@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/ibss.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 1be9dd4c89fe5..e103a003e6a65 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -3503,6 +3503,9 @@ int spi_controller_suspend(struct spi_controller *ctlr)
- {
- 	int ret = 0;
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index 6e36b09fe97f8..6ca2ff354e768 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -675,7 +675,9 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
  
-+	if (ctlr->cur_msg && spi_controller_is_target(ctlr) && ctlr->target_abort)
-+		ctlr->target_abort(ctlr);
-+
- 	/* Basically no-ops for non-queued controllers */
- 	if (ctlr->queued) {
- 		ret = spi_stop_queue(ctlr);
+ 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
+ 
+-	sta_info_flush(sdata, -1);
++	netif_carrier_off(sdata->dev);
++	if (!sta_info_flush(sdata, -1))
++		synchronize_net();
+ 
+ 	spin_lock_bh(&ifibss->incomplete_lock);
+ 	while (!list_empty(&ifibss->incomplete_stations)) {
+@@ -689,8 +691,6 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+ 	}
+ 	spin_unlock_bh(&ifibss->incomplete_lock);
+ 
+-	netif_carrier_off(sdata->dev);
+-
+ 	sdata->vif.cfg.ibss_joined = false;
+ 	sdata->vif.cfg.ibss_creator = false;
+ 	sdata->vif.bss_conf.enable_beacon = false;
+@@ -717,7 +717,6 @@ static void ieee80211_csa_connection_drop_work(struct wiphy *wiphy,
+ 			     u.ibss.csa_connection_drop_work);
+ 
+ 	ieee80211_ibss_disconnect(sdata);
+-	synchronize_rcu();
+ 	skb_queue_purge(&sdata->skb_queue);
+ 
+ 	/* trigger a scan to find another IBSS network to join */
+@@ -1823,8 +1822,6 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
+ 	memset(&ifibss->ht_capa, 0, sizeof(ifibss->ht_capa));
+ 	memset(&ifibss->ht_capa_mask, 0, sizeof(ifibss->ht_capa_mask));
+ 
+-	synchronize_rcu();
+-
+ 	skb_queue_purge(&sdata->skb_queue);
+ 
+ 	timer_delete_sync(&sdata->u.ibss.timer);
 -- 
 2.53.0
 
