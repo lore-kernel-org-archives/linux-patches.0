@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D93A59B68B;
-	Thu, 17 Sep 2026 15:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810B94D4883;
+	Thu, 17 Sep 2026 15:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659579; cv=none; b=pKOXsxoErTw/+IH13tZ6y6mu0fnICaVt41UeXKiuoMg1XKr3eUizEMeBhUdw7NunFYGQtlJ4sPRw2AlI8IwWUFj+w7VrfbIzcAy6hC7Gfqq1CS13mI/h0tjAqMxTYiSaHlVi6JsCXCqBRVJbQVozET0wqiBsuzbewIilNOkLTiM=
+	t=1789659585; cv=none; b=c+TYRiiQZXqfMNhrYf/VYQ/0sNaB8XDEOBWYYG3MvwZoY599tlDwm0UOP30+4RI+B7qbRRK3XpLuFmAvzfo7sWLbS3SJP5QiN3W1GjPCExgpGh2PzGl47MeQerxaSIzWlAZAvEBsWsEpzs/+8tWmibfmj4Lh1hoxIQDJPtgg6Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659579; c=relaxed/simple;
-	bh=0Ua6By/19LxeHUWA8to7cDUlgnXtJUDWxoNXnjZkEn8=;
+	s=arc-20240116; t=1789659585; c=relaxed/simple;
+	bh=/vNK+k115YGSKowTkB/Nwg5LblM2yy66QH+4ylINJ/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUrtajiJlV4UW5ReP/nz223TcZwmG2AfXvWx9atXxIDvryoMFY1PUbOaaqip8HfJn+ATIepkTHjjV21rIs4uE2vZLXL8vchUKzcRMuDKtEkr9vUVObZke0qIZBrHRIkbTA6x9/oVV4Jp/LVendqj62u96nDuBQxDIi9nd+xJVBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfiW9hLi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0kfgM/MvAq+bW6ISH5WRQSXkBKY7r/OQHTwGZEkqOO3Epu/LlVh8COlH0NyKFaSDuxujOvXVewaSmeJoV5LEQ7viCd+XKcfHf82H4gPW/Ri4dKbrWiySmU0DoVWlFNOEtBwnDXJW3ukRTHuwhSpXxsJAIOSwuYDG0CBUJbHdmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8lS5UdS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfiW9hLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4EE1F00893;
-	Thu, 17 Sep 2026 15:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8lS5UdS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD21F000FF;
+	Thu, 17 Sep 2026 15:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659568;
-	bh=5fnqt6LIR98LNvGi75BmhnyKz8MNfSnhIJ91fVrHYiM=;
+	s=korg; t=1789659574;
+	bh=fwIwl3Z6IhEeLZTFhI0X5R/6u4FhJ8ttQjIbMfmoBUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SfiW9hLiLu2qW2kywNVQVkMtHEmUwEuDjPOnuF5IZVQkqtmVZV47/gblsalIK8w/T
-	 JIutrx+A9JcrsxPLNUlmyBuGsZciuxzgME8SMbPAdyiEobM20HwzW4TE36cC4VQunL
-	 qwOQ4/KNfs/++jjjIkP3pXM2Dg3T+7KtKk0dQhL0=
+	b=S8lS5UdSlR+1bfZ2osF2mcvzah0cILN0Y2sW9gb5s130a0sjMC8aKx8wprAJhG2wA
+	 8abmhNVuSM3yqAw6PyLTDd5dmcy5V5ksb2npa/npm8L+SE1SAAWjEOXVyQoVMCJK5O
+	 /FxfCzJ2oahx8VtdQ1WCBEtF9PxBeKDO5QktnPTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
+	Lama Kayal <lkayal@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 301/733] net/mlx5e: Fix use-after-free race in sample_restore_put()
-Date: Thu, 17 Sep 2026 16:10:09 +0100
-Message-ID: <20260917151358.938889490@linuxfoundation.org>
+Subject: [PATCH 7.2 303/733] net/mlx5: E-Switch, prevent mc_list repopulation during vport disable
+Date: Thu, 17 Sep 2026 16:10:11 +0100
+Message-ID: <20260917151358.992440366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,51 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Lama Kayal <lkayal@nvidia.com>
 
-[ Upstream commit af3aef0245abbab5e9f6302e7a7d6407187afb71 ]
+[ Upstream commit c0c6f4ba8a37688f7b4d4044898d88f0450d44c2 ]
 
-Concurrent teardown of TC sample rules sharing the same restore
-context may re-read restore->count after dropping restore_lock.
-At that point another thread may already have completed cleanup and
-freed the restore object.
+In mlx5_esw_vport_disable(), move esw_apply_vport_rx_mode() ahead
+of esw_vport_change_handle_locked() so vport->allmulti_rule is
+NULL before the change handler observes it.
 
-Use the result of the refcount decrement while holding restore_lock to
-determine whether cleanup is needed.
+During FW-fatal recovery the disable runs while dev->state ==
+INTERNAL_ERROR. The promisc query inside esw_update_vport_rx_mode()
+fails and returns early, leaving vport->allmulti_rule intact, so
+esw_update_vport_mc_promisc() runs and adds MLX5_ACTION_ADD entries
+to vport->mc_list whose flow rules are then installed in the FDB
+by esw_add_mc_addr(). esw_destroy_legacy_table() tears down the
+FDB with those refs still held, corrupting the sub-tree and
+leaving dangling flow_rule pointers in vport->mc_list.
 
-Fixes: 36a3196256bf ("net/mlx5e: TC, Add sampler restore handle API")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Two-stage failure on `echo 1 > /sys/bus/pci/devices/<bdf>/reset`:
+
+  refcount_t: underflow; use-after-free.
+   tree_put_node+0xef/0x110 [mlx5_core]
+   clean_tree+0x44/0xd0 [mlx5_core] (x5)
+   mlx5_fs_core_cleanup+0x57/0x1c0 [mlx5_core]
+   mlx5_unload+0x65/0xd0 [mlx5_core]
+   ... mlx5_health_try_recover
+
+  BUG: unable to handle page fault for address: 0000000003000055
+   down_write+0x1c/0x60
+   mlx5_del_flow_rules+0x33/0x1f0 [mlx5_core]
+   esw_del_mc_addr+0x7b/0x170 [mlx5_core]
+   esw_apply_vport_addr_list+0x56/0xf0 [mlx5_core]
+   esw_vport_change_handle_locked+0x28b/0x310 [mlx5_core]
+   mlx5_esw_vport_enable+0x270/0x4a0 [mlx5_core]
+   ... mlx5_load ... mlx5_health_try_recover
+
+esw_apply_vport_rx_mode(false, false) clears vport->allmulti_rule
+via its local state machine even when the FW del fails. With the
+rule NULL the !IS_ERR_OR_NULL(allmulti_rule) gate in the change
+handler closes, no rules are installed during disable, and the
+reload starts with a clean mc_list.
+
+Fixes: 922f56e9a795 ("net/mlx5: Fix steering rules cleanup")
+Signed-off-by: Lama Kayal <lkayal@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193341.3668809-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193854.3669035-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-index 89490f687a9c6..93c62d3f3e5bd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-@@ -311,12 +311,15 @@ sample_restore_get(struct mlx5e_tc_psample *tc_psample, u32 obj_id,
- static void
- sample_restore_put(struct mlx5e_tc_psample *tc_psample, struct mlx5e_sample_restore *restore)
- {
-+	bool last;
-+
- 	mutex_lock(&tc_psample->restore_lock);
--	if (--restore->count == 0)
-+	last = --restore->count == 0;
-+	if (last)
- 		hash_del(&restore->hlist);
- 	mutex_unlock(&tc_psample->restore_lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index a0e2ca87b8d8f..eadc44119b1f4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1040,13 +1040,19 @@ void mlx5_esw_vport_disable(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
+ 	    (vport->info.ipsec_crypto_enabled || vport->info.ipsec_packet_enabled))
+ 		esw->enabled_ipsec_vf_count--;
  
--	if (!restore->count) {
-+	if (last) {
- 		mlx5_del_flow_rules(restore->rule);
- 		mlx5_modify_header_dealloc(tc_psample->esw->dev, restore->modify_hdr);
- 		kfree(restore);
++	/* Clear rx-mode before esw_vport_change_handle_locked(): on
++	 * MLX5_VPORT_PROMISC_CHANGE it calls esw_update_vport_mc_promisc()
++	 * when vport->allmulti_rule is set, repopulating mc_list with FDB
++	 * rules that dangle once the FDB is destroyed. NULL allmulti_rule
++	 * here skips that path.
++	 */
++	esw_apply_vport_rx_mode(esw, vport, false, false);
+ 	/* We don't assume VFs will cleanup after themselves.
+ 	 * Calling vport change handler while vport is disabled will cleanup
+ 	 * the vport resources.
+ 	 */
+ 	esw_vport_change_handle_locked(vport);
+ 	vport->enabled_events = 0;
+-	esw_apply_vport_rx_mode(esw, vport, false, false);
+ 	esw_vport_cleanup(esw, vport);
+ 	esw->enabled_vports--;
+ 
 -- 
 2.53.0
 
