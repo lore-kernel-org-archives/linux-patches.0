@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3034A4D1795;
-	Thu, 17 Sep 2026 17:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E41D4D17A3;
+	Thu, 17 Sep 2026 17:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664607; cv=none; b=avoGdivCwU/epx6+OUgWiDpNaCp0P3H6csjCJMDEZLD3VbZUHNxdVBU5g4BY+uLFMeOKvvw18x+kECrdvCrMf3uLPGorPYbmYJdoLXN3zvxMjLCac1EUJJtBwbXi0RDu3+2G6YIcPE+QHtjozwDdEqxCx0poqHZH9Hpzm9h9d0s=
+	t=1789664611; cv=none; b=WHk6BpqgJM2I6M0SZNx2zMm2/vFaD7HQtnsKsJjLZMfJ+lfbaTJCJTlzMQbXj1aY6Y1K4E1qway+dJ0Gv13sgUQDjGMyWT5V4hyXNA6nx/MJZUvepXkQtAA7qqr/3Pf9/GqpJzgKm4zxMx0GddvRGutsf8vM3rzZEYtpqBFVyvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664607; c=relaxed/simple;
-	bh=gmw7t5HRFprBGeuBoifAf9GDnZWawF25wdifqtRpep4=;
+	s=arc-20240116; t=1789664611; c=relaxed/simple;
+	bh=7nEKSZsqvXl/eaQvXB1kWIbdy/bpEnxMNodKyo02P/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2Y3ctcgUrRIZswoX/z/3hz5kc6kSMzQI7xoXvSPvD7YOIsn7g9Ec1w+azNjdiPsXPQJDBR/drTDG91ckUvVe+LOIzizytiEoGjJeiJGOtXcJcUSi70ZO1OTrPq+72B4GzN3pSL5pGC6XiBTyrKe1y8HGfWRMySbLsMdV2HhSTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uBY5cuG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=foaJ1EDT3ivV0X9nbWx3qFKQytbvg0I2OM6aRL2jbyEhP9X6F7PEBDan5CXi/FOfB/6JSrQCX54Ffk1By//pUD8IJnhxp+p48HONbzdOFXNzhfLyyvr5A5LP/JOVcYFSbziqEFLqOlM7so7R3FirwfCXso04+5WBspGh988zMSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0ZEP4yG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uBY5cuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F471F000FF;
-	Thu, 17 Sep 2026 17:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0ZEP4yG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AC21F000FF;
+	Thu, 17 Sep 2026 17:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664606;
-	bh=lTCTgb6qS1nvV825WPd4AhLZ1kEnIoeeumwqMshUQiw=;
+	s=korg; t=1789664609;
+	bh=mpjC4B/0qV8THpcGwO6hITnKfzG4xdlaXLfVIdzKO3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0uBY5cuGl4H3DTmT0L7CLBoBWxxhDEdWtdqRYAuW/x4fef0Q4W0Ld1njCKhffG02r
-	 h+zczyifeFwasulF6GLlWQsTRBow7Wh8zwB+aSizavuugLNLJoHWVu4YFd373Gxffs
-	 l7JjOTn4zzefGE6DaY+QtUO6iJCUC8HWTpg0LN4c=
+	b=B0ZEP4yGAOfFlpTR10feJrT2Beb8/cFBQ9FG2QetcYB/lqISOlkkEQ2m9WRjw5pmT
+	 l+30uiB5gM7fogJ2wKEHbDWyTcDjvd5i9GRL2RHKKQsOoZ+lMHSOPVssEv14uA0TuM
+	 A0YSp6Wn6zmCwjcRozOBvu6WyCbaR5eBful/GkMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0391/1250] spi: xilinx: let transfers timeout in case of no IRQ
-Date: Thu, 17 Sep 2026 16:03:06 +0100
-Message-ID: <20260917151602.634130499@linuxfoundation.org>
+Subject: [PATCH 6.18 0427/1250] tls: reject the combination of TLS and sockmap
+Date: Thu, 17 Sep 2026 16:03:42 +0100
+Message-ID: <20260917151603.591657390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,45 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0f95264f49ace739d411fd9149e2b3545d741d06 ]
+[ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
 
-In case of failed HW the driver may not see an interrupt and will stuck
-in waiting forever. We can avoid such situation by timing out of
-transfers if the interrupt is not seen in a reasonable time.
+TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
+Bugs which may be more or less relevant for real users but they
+are definitely exploitable.
 
-This problem can be found on unload of ptp_ocp driver for TimeCard which
-uses Xilinx SPI AXI and SPI-NOR flash memory. During tear-down process
-spi-nor drivers send soft reset command which is not triggering an
-interrupt stalling the unload process completely.
+We could not find anyone actively using this integration so let's
+reject this config. Adding a TLS socket to a sockmap was already
+rejected by sk_psock_init() through the inet_csk_has_ulp() check.
+We need to reject the attempts to configure the TLS keys (rather
+than adding the ULP itself) because checking prior to the ULP
+installation is tricky without risking a race with sockmap getting
+added in parallel (sockmap does not hold the socket lock).
 
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260610222843.782337-1-vadim.fedorenko@linux.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch is a minimal rejection of the feature. Subsequent patch
+in the series will do a light dead code removal. Full cleanup would
+require a major rewrite of the Tx path, we don't need skmsg any more.
+
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-xilinx.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tls/tls_main.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
-index 8085571913c8b..dac6c695f0727 100644
---- a/drivers/spi/spi-xilinx.c
-+++ b/drivers/spi/spi-xilinx.c
-@@ -285,7 +285,11 @@ static int xilinx_spi_txrx_bufs(struct spi_device *spi, struct spi_transfer *t)
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 39a2ab47fe720..ab30f5de2c658 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -620,6 +620,17 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 	int rc = 0;
+ 	int conf;
  
- 		if (use_irq) {
- 			xspi->write_fn(cr, xspi->regs + XSPI_CR_OFFSET);
--			wait_for_completion(&xspi->done);
-+			if (!wait_for_completion_timeout(&xspi->done, secs_to_jiffies(1))) {
-+				dev_err(&spi->dev, "SPI transfer timed out\n");
-+				xspi_init_hw(xspi);
-+				return -ETIMEDOUT;
-+			}
- 			/* A transmit has just completed. Process received data
- 			 * and check for more data to transmit. Always inhibit
- 			 * the transmitter while the Isr refills the transmit
++	/* TLS and sockmap are mutually exclusive. A socket already in a
++	 * sockmap (i.e. with a psock attached) cannot be upgraded to TLS.
++	 * sockmap rejects TLS sockets already (see sk_psock_init()).
++	 */
++	rcu_read_lock();
++	if (sk_psock(sk)) {
++		rcu_read_unlock();
++		return -EINVAL;
++	}
++	rcu_read_unlock();
++
+ 	if (sockptr_is_null(optval) || (optlen < sizeof(*crypto_info)))
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
