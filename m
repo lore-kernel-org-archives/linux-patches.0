@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F114EDCCD;
-	Thu, 17 Sep 2026 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41AD4E5358;
+	Thu, 17 Sep 2026 17:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667782; cv=none; b=mqIUlVaRvjRIiADS2Fyi61GAT6sqmVtFV0+0sTiZxprRyGuVdNYQ6p/3fTMutxTDprBxiExT/bOxPVlWEwWYaOont+Z8cpPEE0RaddvlS3CGHiknPPX6PimiLzHzX1VK20aC+dm5yqhdXAb8zZNyrV1CKQnnitb8oHYt+ywDP70=
+	t=1789667786; cv=none; b=GAyIrSdsQPduLbYitZzxA9+6bWGv8dHge0Z3BBPRKzAAS/clxYaa/xedlpKzEKKXGYRoVPWvj6lGQkGvFZQ817Kv+ybl/cJLqZqDRyihgyeaqG8CsqYijvHXc/Owo+dpr2vqwsJUEPUTXjp1i1JOsK/1Mlc6k1/pZjjjmaFDN5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667782; c=relaxed/simple;
-	bh=c3BGrLzPOPjWgXRTAnkn6QS4J+F2wyxJ760WiugS/1Q=;
+	s=arc-20240116; t=1789667786; c=relaxed/simple;
+	bh=bAXRxMrDmvxpRbWHyNvyQ1FVYmw5I3vL27z7SE0YbaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBvRWPKOEIDl1CJ4xDCuctYoJs4f8DMokIdsSFCNrF0CqjeuXeLg6vMhmxiq+dcHX/QGNFUqpcmf1WbCkvc+hFcxacQRcEvvIO99VVVA/8B9lRhwbOYkYcCH6CdZm0V7l7nxZqttM4jkMApKSEi3BVMyPinrZFNkVx+HipHW/yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xbdyeduu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uoa9JJa9zp+FlnGb6W66e6iDLkQAYWkDcVb/6AKheuGLCw8+UieWCAVIYQZpk8JKA4T4eyLkRGxgZK6sCEwG5IOvqimpKdT3ul6OP1K2RDt2kTggxvdBmDYenbN0vULr4QJySgvQbbCBU3V3oZ54tOLexc18QtZeUmD5RVGUGR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJDkC/Zx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xbdyeduu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8EB1F000FF;
-	Thu, 17 Sep 2026 17:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJDkC/Zx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E641F000FF;
+	Thu, 17 Sep 2026 17:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667781;
-	bh=qAlacmRp+in9SI0g/kr7jMNOXINqB/WofOZvxR6t/6k=;
+	s=korg; t=1789667784;
+	bh=mzEKiVyisCvbsalOxo9tpLb66JbKdLKZo/LXrYQKmBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XbdyeduuN9QgwixfDDcQabxktURZAJApLswy6tYC+cJd4m4gbWuMXL5Hd7P5k1Bt9
-	 PM/0R56ibnAhiJLrtJN4iohdB69UAxzv7zkGn/tMYm9bAfkF7GgYIKxZxZ5D7dR09y
-	 SZT5IBVeRzdU5la4ZBHRX7YhBrPXLHWKUCenkrmw=
+	b=IJDkC/Zxu23Q3wzQS3gnzxS6yo4lKnNpHWczoHEwPNO0AXpvMwMjj9foMRK/mkaIy
+	 Jtl4L1CHGstD1QVTbbBQT/pGcEwnKdadKYqo/EZ5L1wOZdOLndsMuEBV4ioEw15xlR
+	 PzFFQvqdQ1Uryw+sZuKAdY+qH0UNhyLLizOFHW1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adriano Vero <adri.vero.dev@gmail.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0206/1102] powerpc/fadump: Add timeout to RTAS busy-wait loops
-Date: Thu, 17 Sep 2026 16:02:29 +0100
-Message-ID: <20260917151544.747347292@linuxfoundation.org>
+Subject: [PATCH 6.12 0171/1102] ACPICA: Enhance OEM ID and Table ID validation in acpi_ex_load_table_op()
+Date: Thu, 17 Sep 2026 16:01:54 +0100
+Message-ID: <20260917151543.833223408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,170 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adriano Vero <adri.vero.dev@gmail.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit b3580dd1c68cec23d44a39c439e18b4686c13480 ]
+[ Upstream commit 485829e6999b7909f50761a1c708660304edc945 ]
 
-The ibm,configure-kernel-dump RTAS call sites in
-rtas_fadump_register(), rtas_fadump_unregister(), and
-rtas_fadump_invalidate() polled indefinitely while firmware returned
-a busy status. A misbehaving or hung firmware could stall these paths
-forever, blocking fadump registration at boot or preventing clean
-teardown.
+Enhance OEM ID and Table ID validation in acpi_ex_load_table_op() to
+prevent buffer overflows.
 
-Introduce rtas_fadump_call(), a helper that wraps the common
-busy-wait pattern shared by all three sites. The helper accumulates
-the total delay and returns -ETIMEDOUT if firmware keeps returning a
-busy status beyond RTAS_FADUMP_MAX_WAIT_MS (60 seconds). A pr_debug()
-message is emitted on each busy iteration to aid diagnosis when the
-timeout is hit.
-
-Signed-off-by: Adriano Vero <adri.vero.dev@gmail.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-[Maddy: Fixed newline after Signed-off-by]
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260506222024.30352-1-adri.vero.dev@gmail.com
+Link: https://github.com/acpica/acpica/commit/f85a43098d65
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2230782.OBFZWjSADL@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/rtas-fadump.c | 80 ++++++++++++--------
- arch/powerpc/platforms/pseries/rtas-fadump.h |  6 ++
- 2 files changed, 53 insertions(+), 33 deletions(-)
+ drivers/acpi/acpica/exconfig.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/rtas-fadump.c b/arch/powerpc/platforms/pseries/rtas-fadump.c
-index eceb3289383ec..3bb4ac2ab6cc3 100644
---- a/arch/powerpc/platforms/pseries/rtas-fadump.c
-+++ b/arch/powerpc/platforms/pseries/rtas-fadump.c
-@@ -179,9 +179,42 @@ static u64 rtas_fadump_get_bootmem_min(void)
- 	return RTAS_FADUMP_MIN_BOOT_MEM;
- }
+diff --git a/drivers/acpi/acpica/exconfig.c b/drivers/acpi/acpica/exconfig.c
+index 473115309860d..2cd1d3367a243 100644
+--- a/drivers/acpi/acpica/exconfig.c
++++ b/drivers/acpi/acpica/exconfig.c
+@@ -90,6 +90,8 @@ acpi_ex_load_table_op(struct acpi_walk_state *walk_state,
+ 	union acpi_operand_object *return_obj;
+ 	union acpi_operand_object *ddb_handle;
+ 	u32 table_index;
++	char oem_id[ACPI_OEM_ID_SIZE + 1];
++	char oem_table_id[ACPI_OEM_TABLE_ID_SIZE + 1];
  
-+/*
-+ * Helper to make an ibm,configure-kernel-dump RTAS call with a bounded
-+ * busy-wait loop. Returns the RTAS return code on completion, or
-+ * -ETIMEDOUT if firmware keeps returning a busy status beyond
-+ * RTAS_FADUMP_MAX_WAIT_MS milliseconds.
-+ */
-+static int rtas_fadump_call(struct fw_dump *fadump_conf, int operation,
-+			    void *fdm_ptr, unsigned int fdm_size,
-+			    const char *op_name)
-+{
-+	unsigned int wait_time, total_wait = 0;
-+	int rc;
+ 	ACPI_FUNCTION_TRACE(ex_load_table_op);
+ 
+@@ -102,12 +104,32 @@ acpi_ex_load_table_op(struct acpi_walk_state *walk_state,
+ 
+ 	*return_desc = return_obj;
+ 
++	/*
++	 * Validate OEM ID and OEM Table ID string lengths.
++	 * acpi_tb_find_table expects strings that can safely read
++	 * ACPI_OEM_ID_SIZE and ACPI_OEM_TABLE_ID_SIZE bytes.
++	 */
++	if ((operand[1]->string.length > ACPI_OEM_ID_SIZE) ||
++	    (operand[2]->string.length > ACPI_OEM_TABLE_ID_SIZE)) {
++		return_ACPI_STATUS(AE_AML_STRING_LIMIT);
++	}
 +
-+	do {
-+		rc = rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
-+			       NULL, operation, fdm_ptr, fdm_size);
-+		wait_time = rtas_busy_delay_time(rc);
-+		if (wait_time) {
-+			pr_debug("Firmware busy during fadump %s, waiting %ums (total %ums)\n",
-+				 op_name, wait_time, total_wait);
-+			if (total_wait >= RTAS_FADUMP_MAX_WAIT_MS) {
-+				pr_err("Timed out waiting for firmware to complete fadump %s\n",
-+				       op_name);
-+				return -ETIMEDOUT;
-+			}
-+			total_wait += wait_time;
-+			mdelay(wait_time);
-+		}
-+	} while (wait_time);
++	/*
++	 * Copy OEM strings to local buffers with guaranteed null-termination.
++	 * This prevents heap-buffer-overflow when acpi_tb_find_table reads
++	 * ACPI_OEM_ID_SIZE/ACPI_OEM_TABLE_ID_SIZE bytes.
++	 */
++	memcpy(oem_id, operand[1]->string.pointer, operand[1]->string.length);
++	oem_id[operand[1]->string.length] = 0;
++	memcpy(oem_table_id, operand[2]->string.pointer,
++	       operand[2]->string.length);
++	oem_table_id[operand[2]->string.length] = 0;
 +
-+	return rc;
-+}
-+
- static int rtas_fadump_register(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time, fdm_size;
-+	unsigned int fdm_size;
- 	int rc, err = -EIO;
+ 	/* Find the ACPI table in the RSDT/XSDT */
  
- 	/*
-@@ -192,16 +225,10 @@ static int rtas_fadump_register(struct fw_dump *fadump_conf)
- 	fdm_size = sizeof(struct rtas_fadump_section_header);
- 	fdm_size += be16_to_cpu(fdm.header.dump_num_sections) * sizeof(struct rtas_fadump_section);
- 
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_REGISTER, &fdm, fdm_size);
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_REGISTER, &fdm, fdm_size,
-+			      "register");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
- 
- 	switch (rc) {
- 	case 0:
-@@ -234,19 +261,12 @@ static int rtas_fadump_register(struct fw_dump *fadump_conf)
- 
- static int rtas_fadump_unregister(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time;
- 	int rc;
- 
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_UNREGISTER, &fdm,
--				sizeof(struct rtas_fadump_mem_struct));
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_UNREGISTER, &fdm,
-+			      sizeof(struct rtas_fadump_mem_struct), "unregister");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
- 
- 	if (rc) {
- 		pr_err("Failed to un-register - unexpected error(%d).\n", rc);
-@@ -259,19 +279,13 @@ static int rtas_fadump_unregister(struct fw_dump *fadump_conf)
- 
- static int rtas_fadump_invalidate(struct fw_dump *fadump_conf)
- {
--	unsigned int wait_time;
- 	int rc;
- 
--	/* TODO: Add upper time limit for the delay */
--	do {
--		rc =  rtas_call(fadump_conf->ibm_configure_kernel_dump, 3, 1,
--				NULL, FADUMP_INVALIDATE, fdm_active,
--				sizeof(struct rtas_fadump_mem_struct));
--
--		wait_time = rtas_busy_delay_time(rc);
--		if (wait_time)
--			mdelay(wait_time);
--	} while (wait_time);
-+	rc = rtas_fadump_call(fadump_conf, FADUMP_INVALIDATE,
-+			      (void *)fdm_active,
-+			      sizeof(struct rtas_fadump_mem_struct), "invalidate");
-+	if (rc == -ETIMEDOUT)
-+		return -ETIMEDOUT;
- 
- 	if (rc) {
- 		pr_err("Failed to invalidate - unexpected error (%d).\n", rc);
-diff --git a/arch/powerpc/platforms/pseries/rtas-fadump.h b/arch/powerpc/platforms/pseries/rtas-fadump.h
-index c109abf6befd9..65fdab7b5b8d3 100644
---- a/arch/powerpc/platforms/pseries/rtas-fadump.h
-+++ b/arch/powerpc/platforms/pseries/rtas-fadump.h
-@@ -41,6 +41,12 @@
- #define MAX_SECTIONS				10
- #define RTAS_FADUMP_MAX_BOOT_MEM_REGS		7
- 
-+/*
-+ * Maximum time to wait for firmware to respond to an
-+ * ibm,configure-kernel-dump RTAS call before giving up.
-+ */
-+#define RTAS_FADUMP_MAX_WAIT_MS			60000U
-+
- /* Kernel Dump section info */
- struct rtas_fadump_section {
- 	__be32	request_flag;
+ 	acpi_ex_exit_interpreter();
+ 	status = acpi_tb_find_table(operand[0]->string.pointer,
+-				    operand[1]->string.pointer,
+-				    operand[2]->string.pointer, &table_index);
++				    oem_id, oem_table_id, &table_index);
+ 	acpi_ex_enter_interpreter();
+ 	if (ACPI_FAILURE(status)) {
+ 		if (status != AE_NOT_FOUND) {
 -- 
 2.53.0
 
