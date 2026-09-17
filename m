@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0A4E3224;
-	Thu, 17 Sep 2026 16:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B084E430B;
+	Thu, 17 Sep 2026 16:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664044; cv=none; b=DAG2eEmHn/KR1364+6wbyRYfz9aRY8hMemlwGG/huRR9jbkewNLwDa54olQzY+1wierobkM4OU2SKRfBVWy5oqzyxMLRh86sNjnIem93uYOInM85Ip1D+7jTpjYQZdfhu8hlEEvVq+tPflLMR2TvBfu9A8eMguv8XSVMxUReGhQ=
+	t=1789664047; cv=none; b=jfrkVf+vcpXY/huNMobDw6uwRmLgtzivT27J4ZZioJ3WrMVmT7xrNkUErSe86JV30jaTniF3jNlI6wMZN5VUiZUemTxqKzQ1YLG13FBef70NX+p5LiIugBScoFBzNUZoWuuwRj0NM4gZkAihinitYXwmVpmH7wrC6Pm3ZbFhg3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664044; c=relaxed/simple;
-	bh=GBmj4fOVEgOcF8gWXi2Cm6xzHGXsi5l0B1r5UV06NT8=;
+	s=arc-20240116; t=1789664047; c=relaxed/simple;
+	bh=MgEU60+e3rp96/1HNbEHqlI/q62bgkWsmW7J4Cn/aBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCwPx+C5iUVUVm+1ia4H8B6OTt58jDcLaeWeEaPkYhJxo+JKg2yiulbpNztHmppRfvdG0rLXjbLorikjhI9wotJVhCMiVKSNTcXJqR7lVdWnBOGXFOf6qWOSQhIL4SvVCzXWlnKVr07Vs4uyM6bVhaK+irNwxdPgCl6GBZ32MG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwkxiD7B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iRI7XmDXIafgWUyZy0ckiE5/AQTH4bwVnn0btqF7n2E01rEEPilStLSgj/+C1MVPbM/i0n/xKJfwNhFLIu4pweFISY0tyli9hqJCjgTa6cE+rNFrS5ebTTOKte3/f8taB8lN3XO2sXJpJaSVLSd3iUD2h8nRhJKX98u/SKgULaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fX8u/yjw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwkxiD7B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09C61F00893;
-	Thu, 17 Sep 2026 16:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fX8u/yjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4271F000FF;
+	Thu, 17 Sep 2026 16:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664043;
-	bh=925J4vCmU1fIpHCMVKDIM9nP5Im32CLZVlzmi87sq9A=;
+	s=korg; t=1789664046;
+	bh=fEt3Je/cRvng1uAeU9KAqcAvaNwKADI26WGYLaroJic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SwkxiD7Bqm6/KdwhMHrkwYWoFpIlKB0uKzuuH6TCswD4khDgmVzpHK6nmampAIz+P
-	 ALZaea5sKDbZ+D2BmTwVSGe5nfDp0XNAAlEd6UR5WbfEAl15wp6RPDrQ6FD3/a3oEu
-	 nVHVnRZkjD0ZKH38q2yaCv9nzPiSocqxd6PeoYGk=
+	b=fX8u/yjwz3OQ3mI4KmkKpp31Y+7eKPXrjXGuX1SR71TbfSsIaC4cF+TOYheJ6Ckb9
+	 BCa6HF6CIQ7jIFPs4bliXBE/8q6HOoRPyYqYXL19rw4NHu16P4siLw8qmTYORKxeKo
+	 xuGwx/ereDqnD6FkexALIp8ri7ev+Q/qcSSYBmU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Compostella <jeremy.compostella@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0213/1250] wifi: iwlwifi: pcie: fix ACPI DSM check
-Date: Thu, 17 Sep 2026 16:00:08 +0100
-Message-ID: <20260917151557.901344645@linuxfoundation.org>
+Subject: [PATCH 6.18 0240/1250] ACPICA: Fix integer overflow in acpi_ex_opcode_3A_1T_1R() (mid_op)
+Date: Thu, 17 Sep 2026 16:00:35 +0100
+Message-ID: <20260917151558.647581671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 7b2b86fd7030abe8330f57ed1faf54ea214eb872 ]
+[ Upstream commit 0e2021f49e64b3c8a9aa880d0c62a218bfe147ce ]
 
-The acpi_check_dsm() function expects a bitmap of function
-IDs to check for, not a single value. Evidently, on many
-platforms function 1 exists so checking for 2 succeeded,
-but it's wrong, we need to check correctly for function 2.
-Fix that.
+Add overflow check for Index + Length to prevent integer overflow
+when calculating the truncation length. This prevents negative
+size parameter being passed to memcpy().
 
-Reported-by: Jeremy Compostella <jeremy.compostella@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260512082114.81c4022ae602.Id3f575944ee6b87634cfb976d7334eac227d18a6@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://github.com/acpica/acpica/commit/d281ec1ac84e
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3760974.R56niFO833@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c | 2 +-
+ drivers/acpi/acpica/exoparg3.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-index b003abf1fe2ce..0c920e3d6c5e0 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-@@ -2044,7 +2044,7 @@ iwl_trans_pcie_call_prod_reset_dsm(struct pci_dev *pdev, u16 cmd, u16 value)
- 						 0xDD, 0x26, 0xB5, 0xFD);
+diff --git a/drivers/acpi/acpica/exoparg3.c b/drivers/acpi/acpica/exoparg3.c
+index c8c8c4e49563e..df770f36b4d08 100644
+--- a/drivers/acpi/acpica/exoparg3.c
++++ b/drivers/acpi/acpica/exoparg3.c
+@@ -152,7 +152,7 @@ acpi_status acpi_ex_opcode_3A_1T_1R(struct acpi_walk_state *walk_state)
  
- 	if (!acpi_check_dsm(ACPI_HANDLE(&pdev->dev), &dsm_guid, ACPI_DSM_REV,
--			    DSM_INTERNAL_FUNC_PRODUCT_RESET))
-+			    BIT(DSM_INTERNAL_FUNC_PRODUCT_RESET)))
- 		return ERR_PTR(-ENODEV);
+ 		/* Truncate request if larger than the actual String/Buffer */
  
- 	return iwl_acpi_get_dsm_object(&pdev->dev, ACPI_DSM_REV,
+-		else if ((index + length) > operand[0]->string.length) {
++		else if ((index + length) > operand[0]->string.length || (index + length) < index) {	/* Check for overflow */
+ 			length =
+ 			    (acpi_size)operand[0]->string.length -
+ 			    (acpi_size)index;
 -- 
 2.53.0
 
