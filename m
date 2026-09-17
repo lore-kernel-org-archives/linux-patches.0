@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CB74F5E0F;
-	Thu, 17 Sep 2026 17:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA351598C;
+	Thu, 17 Sep 2026 17:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665615; cv=none; b=gKeveTgOCVLIvrTrMcO0BWWW6obxi+L6nwyiGs7bXqjuiNQ3VwAFNT1YGovTqEO8rFnrcvUFQB/c8/nC78QNUr5Yrt6Mm+YkvJQ4KrwWenXEWPc3/Xp8AM2uYNTN88Z4mYUtRgD/7TeqeIN2pi3ofQqxVwlB3x4vB4bkfGsjYn4=
+	t=1789665618; cv=none; b=BfbZY2uaGTjnbsKbm5MtYl0n128A1+lJ8VqxlEe0GH8picCTjAZjDe8EoZCg0UyS2of80We+6vx1qYF6JnvD/nIWj8mgGHp++ZWhdKqrVQ9O/c1CIj9sAYNcaQHiB++FkyizLINX+uL2OXz6wxqcKKBhDcmSHJjpGIedOrHOpPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665615; c=relaxed/simple;
-	bh=zjxsyCBr3AusmE5fR7EApUTtqXvuuGvB5mMwF/RN2Po=;
+	s=arc-20240116; t=1789665618; c=relaxed/simple;
+	bh=WJZLRnPnxHnhypd9qJCzb4IO+TaZqAPoKGAYQgtWOEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uLqLkg3alU0nknX654oFZjNgYT2wvXLTrBjYivuAIZffg3F6/Sn/E9GLCyaeZ181bv+FX1QT+zk1BQIrt1MqF71Oy1y2oABbCPm0jvzdGtyFqrECkh3sfu0Hdp5fgsJ7XL2CjSUXhcZb0Cw47yfALBCraNMPl9xr8nfq3N5AeGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4mx3XNV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hA+rDHTpYUmdbFzGEHtSqKI9QKpWcOw9gmbKxiGKnfgKqpTgNF+tQgovCC5TmEfzQ56OPFOCv2c3MK9aSViY3sHsSgpeuuEl0krzCZo/X+9987sNfY41/y0HcYA/Dknnn+OpEO8uY9SPLAmBgxnHQ6XKVDY9SCM1W0ogVWbRhno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDSlmBkH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4mx3XNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8014A1F00893;
-	Thu, 17 Sep 2026 17:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDSlmBkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD3D1F000FF;
+	Thu, 17 Sep 2026 17:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665614;
-	bh=cUBdg3S+vC/K7JFlNIQhQ2qbH4PT+OBQhqqC73XeACE=;
+	s=korg; t=1789665617;
+	bh=LYYGvPRLtt6p+AyHDH3LK4/Cm502l8crBpbMkS59u+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4mx3XNV78HvPplYAhQYAR/PkBmFmCkvyQtG6cio1GWDwp7Rtn3eWYnjw1zuL2vQI
-	 /JvlU9S9U1GzBi22rzX5tf0yiareYH4MT/WngMgPBFOo45nmjfureVXykkzfO/RBK7
-	 4vZJh5bTsGZFoQLXQ9WaKYElB5u1TcO11ZTcMebQ=
+	b=MDSlmBkHbVu8bTnqWKn9v9g7vd9zeahAq/3I3Ju8RgB9xrL6hFuVtJ1vyOgHzP1Xr
+	 E4UdTjhEdrgzi1oR8GAEF0IpGIcqehezZP2ZASKuYkqhI7kF69AKlmRxjtYWP41A2+
+	 Nybjp2lWPvqo3WXwkqCrjlM/sML5Gjka7hGOlYic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0762/1250] ASoC: Intel: avs: Clean up the bus when fetching ML caps fails
-Date: Thu, 17 Sep 2026 16:09:17 +0100
-Message-ID: <20260917151612.531731672@linuxfoundation.org>
+Subject: [PATCH 6.18 0763/1250] ASoC: Intel: avs: Clean up streams if their initialization fails
+Date: Thu, 17 Sep 2026 16:09:18 +0100
+Message-ID: <20260917151612.556755246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,56 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 559ea14b7ae7c7562b48759fa545b64958f35b73 ]
+[ Upstream commit f4ba00bb56a8511bafbd19826501d27157141c6d ]
 
-snd_hdac_ext_bus_get_ml_capabilities() may fail and its return code
-shall be checked and accounted for. Address the issue by updating the
-error-path for avs_pci_probe().
-
-At the same time, if the function in question succeeds but the next part
-of avs_pci_probe() fails, the hlink list shall be cleaned up before
-leaving the scope.
+When streams are being initialized the memory allocation may fail.
+Have an error path and return early if that is the case.
 
 Fixes: 1affc44ea5dd ("ASoC: Intel: avs: PCI driver implementation")
 Co-developed-by: Amadeusz Sławiński <amade@asmblr.net>
 Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260902081814.1590883-5-cezary.rojewski@intel.com
+Link: https://patch.msgid.link/20260902081814.1590883-6-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/intel/avs/core.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/sound/soc/intel/avs/core.c b/sound/soc/intel/avs/core.c
-index 6e0e65584c7f8..061d97603abbf 100644
+index 061d97603abbf..b52809934186b 100644
 --- a/sound/soc/intel/avs/core.c
 +++ b/sound/soc/intel/avs/core.c
-@@ -473,8 +473,13 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	}
+@@ -91,16 +91,28 @@ static int avs_hdac_bus_init_streams(struct hdac_bus *bus)
+ {
+ 	unsigned int cp_streams, pb_streams;
+ 	unsigned int gcap;
++	int ret;
  
- 	snd_hdac_bus_parse_capabilities(bus);
--	if (bus->mlcap)
--		snd_hdac_ext_bus_get_ml_capabilities(bus);
-+	if (bus->mlcap) {
-+		ret = snd_hdac_ext_bus_get_ml_capabilities(bus);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to get ml capabilities: %d\n", ret);
-+			goto err_ml_cap;
-+		}
-+	}
+ 	gcap = snd_hdac_chip_readw(bus, GCAP);
+ 	cp_streams = (gcap >> 8) & 0x0F;
+ 	pb_streams = (gcap >> 12) & 0x0F;
+ 	bus->num_streams = cp_streams + pb_streams;
  
- 	if (dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
- 		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-@@ -516,6 +521,8 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	snd_hdac_bus_free_stream_pages(bus);
- 	snd_hdac_ext_stream_free_all(bus);
- err_init_streams:
-+	snd_hdac_ext_link_free_all(bus);
-+err_ml_cap:
- 	iounmap(adev->dsp_ba);
- err_remap_bar4:
- 	iounmap(bus->remap_addr);
+-	snd_hdac_ext_stream_init_all(bus, 0, cp_streams, SNDRV_PCM_STREAM_CAPTURE);
+-	snd_hdac_ext_stream_init_all(bus, cp_streams, pb_streams, SNDRV_PCM_STREAM_PLAYBACK);
++	ret = snd_hdac_ext_stream_init_all(bus, 0, cp_streams, SNDRV_PCM_STREAM_CAPTURE);
++	if (ret)
++		return ret;
++	ret = snd_hdac_ext_stream_init_all(bus, cp_streams, pb_streams, SNDRV_PCM_STREAM_PLAYBACK);
++	if (ret)
++		goto err;
++
++	ret = snd_hdac_bus_alloc_stream_pages(bus);
++	if (ret)
++		goto err;
+ 
+-	return snd_hdac_bus_alloc_stream_pages(bus);
++	return 0;
++err:
++	snd_hdac_ext_stream_free_all(bus);
++	return ret;
+ }
+ 
+ static bool avs_hdac_bus_init_chip(struct hdac_bus *bus, bool full_reset)
 -- 
 2.53.0
 
