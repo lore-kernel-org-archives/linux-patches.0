@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93EB3A5E84;
-	Thu, 17 Sep 2026 15:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25497398911;
+	Thu, 17 Sep 2026 15:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658855; cv=none; b=VNurx7W/WuBApmyb9Go8V8aox2FHKMRQE6MUVVgOjNZK/OkiII4iGOBOPe8wNuPSntrgX/U5vJ1qzXg37D2LfpUSvE5scBa9jmZhCIEuFRKXDkZlTyWq+aIV5T5Rq42J9J4dz8kBOPWxB+uBq19aV/YsYqlZy8vK+s9AMXQm7Ms=
+	t=1789658865; cv=none; b=tE0cmtsIjEXis0VOyFBIha8BEw/s4sFZ9Ksyy1MK4zwybdrvRL7+xRQpz3VdgvZSjzv0NrELPOkSuNupk/cPjxtnBznP8UwKPYtu2RVyNXrnY6twFX2WSOXClCkAD4bny8Kj+EtHjPVFnJ5oQ6M7tGWKG0dCZ0nRYisyr6t0iKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658855; c=relaxed/simple;
-	bh=OIRd34ub6ZJZcEPqCaNKc0TDt/HCJN4GkpKlPU1kOCA=;
+	s=arc-20240116; t=1789658865; c=relaxed/simple;
+	bh=TU1bpUc3U6jyvxtQbJjNIlkDpg+hIRDLeK4ml5limCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nixeQ/YZYFFwM/eMM23ZxQ8Ze7fYDLI1T0BqaSHO7Uv8cXj2Y4UjOHWUHjmKBpI0d+P6Hwia/6gtgalX2AfR86sJBacZS5gB8r+q5Sa1Kd9YlsfkcLYmto5cSgSNIUQgn5ue+WdutxMwYV+HH5O6uWYaWT2Og8Mul5qRKUAIqEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncaaRUbU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PNrXUL+Uvc6tG4vK3UoIhZTE42nJD9uXq9ZQ61w9EaUVAaXaRzQ6rzia2llnqHXqC6ImCIdJlGbxIPmOedcq3cl9gAiWg9MvxIb0tTJ8rilLtO8mCwLgc8yy+v7r7em+/GtT+gaVewAXEu4T1dtZjHPSiko4jLESmutdf1oV9RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAyiiYPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncaaRUbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1051F000FF;
-	Thu, 17 Sep 2026 15:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAyiiYPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167D71F0089B;
+	Thu, 17 Sep 2026 15:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658841;
-	bh=LzfPkjT5ufnj2PwfO8K8tU1ucBT4JdSrnT4sZcazky4=;
+	s=korg; t=1789658850;
+	bh=BTMoHFcllgVt7Jj2fF4+eBv0rGlfepIfyBQ+iDjfmuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncaaRUbUQ567QOJORdPXwWxlSGQLzqO+xQ5y9e8pFp0SHLfHB5PymOoXecZi5uX2u
-	 3kgaElMBILeJIAUye9efSjU1FphQNnIE6BIB395GLb6vPGBKnkAAHR0x8b5d/xvK/K
-	 1u5hZyeH3JMVblDwK7aEZrMl9sKZ0coS1L9PPC60=
+	b=fAyiiYPxdgSU8aypevQ7zru9N/5hYXm896zuUrfOCf3hmdk7uYUHr0RSXiBrxbRTw
+	 Po9EHj+72Ke5zQhXViz/crZ/kyL2Vn9KjcKn6/1YYfjLVYTqsUMX9K/ezXA++27dqE
+	 CSxo2MXKQHpcIaWZhB/d4S3npytZwMuo4SVbgMyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Milan P. Gandhi" <mgandhi@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 057/733] net/sched: act_api: size the RTM_GETACTION reply from the actions
-Date: Thu, 17 Sep 2026 16:06:05 +0100
-Message-ID: <20260917151352.227751231@linuxfoundation.org>
+Subject: [PATCH 7.2 060/733] scsi: mpi3mr: Fix NULL pointer dereference in mpi3mr_sas_port_add()
+Date: Thu, 17 Sep 2026 16:06:08 +0100
+Message-ID: <20260917151352.315399042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,79 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Milan P. Gandhi <mgandhi@redhat.com>
 
-[ Upstream commit e9ca46ebc3262b498626c4095826b8fa034bbf21 ]
+[ Upstream commit dba9e2181ca5e875f98b8b9b4535cdaab87dcb0d ]
 
-tca_action_gd() already walks every requested action and accumulates
-attr_size += tcf_action_fill_size(act), then wraps the result in
-tcf_action_full_attrs_size().  For RTM_DELACTION that value is handed to
-tcf_del_notify_msg(), which allocates max(attr_size, NLMSG_GOODSIZE).  For
-RTM_GETACTION it is silently discarded and tcf_get_notify() allocates a
-fixed NLMSG_GOODSIZE skb instead.
+sas_port_alloc_num() can return NULL on memory allocation failure. The
+return value is passed directly to sas_port_add() without a NULL check,
+which causes a NULL pointer dereference.
 
-Any action whose dump exceeds that fixed budget therefore cannot be read
-back. For example, act_pedit overruns the budget with 32 actions of four
-munge keys each, act_police with 32 policers once the optional
-rate/peakrate/result/avrate attributes are present
+Additionally, if sas_port_add() fails, the allocated port is not freed
+before jumping to out_fail, leaking the sas_port structure. Call
+sas_port_free() to properly release it.
 
-Fix this by passing attr_size through and allocate the reply the way the
-add and delete paths do.
-
-Note on exposure: RTM_GETACTION is the only one of the three action
-commands that is not capability checked - tc_ctl_action() requires
-CAP_NET_ADMIN for RTM_NEWACTION and RTM_DELACTION only - so this turns a
-fixed NLMSG_GOODSIZE reply into a user sized allocation on an
-unprivileged path.  It is bounded by TCA_ACT_MAX_PRIO actions per
-request, and tca_action_gd() does not reject duplicate indices, so a
-single large action can be requested 32 times; an act_bpf program near
-BPF_MAXINSNS is about 32KB of dump, or roughly 1MB for one request.
-Creating such an action still requires CAP_NET_ADMIN, and the add and
-delete paths have sized their skbs this way since the Fixes commit.
-Should this ever need bounding, GFP_KERNEL_ACCOUNT would charge the
-reply to the caller's memcg.
-
-Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260824153903.4143642-3-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e22bae30667a ("scsi: mpi3mr: Add expander devices to STL")
+Signed-off-by: Milan P. Gandhi <mgandhi@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260812103344.174247-2-mgandhi@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 766162b0b8102..20b6501fd33b2 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1697,12 +1697,12 @@ static int tca_get_fill(struct sk_buff *skb, struct tc_action *actions[],
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index 240f67a8e2e3b..ea2c04384a0e1 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1428,9 +1428,15 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
+ 	}
  
- static int
- tcf_get_notify(struct net *net, u32 portid, struct nlmsghdr *n,
--	       struct tc_action *actions[], int event,
-+	       struct tc_action *actions[], size_t attr_size, int event,
- 	       struct netlink_ext_ack *extack)
- {
- 	struct sk_buff *skb;
+ 	port = sas_port_alloc_num(mr_sas_node->parent_dev);
++	if (!port) {
++		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
++		    __FILE__, __LINE__, __func__);
++		goto out_fail;
++	}
+ 	if ((sas_port_add(port))) {
+ 		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
+ 		    __FILE__, __LINE__, __func__);
++		sas_port_free(port);
+ 		goto out_fail;
+ 	}
  
--	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
-+	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
- 	if (!skb)
- 		return -ENOBUFS;
- 	if (tca_get_fill(skb, actions, portid, n->nlmsg_seq, 0, event,
-@@ -2053,7 +2053,8 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 	attr_size = tcf_action_full_attrs_size(attr_size);
- 
- 	if (event == RTM_GETACTION)
--		ret = tcf_get_notify(net, portid, n, actions, event, extack);
-+		ret = tcf_get_notify(net, portid, n, actions, attr_size, event,
-+				     extack);
- 	else { /* delete */
- 		ret = tcf_del_notify(net, n, actions, portid, attr_size, extack);
- 		if (ret)
 -- 
 2.53.0
 
