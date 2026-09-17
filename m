@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5910E470EB6;
-	Thu, 17 Sep 2026 18:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5F1399D0B;
+	Thu, 17 Sep 2026 18:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670919; cv=none; b=BiNvEd+rr5lpb7sAola+aM+rmJf96JPmOLCCctsWh/z4SlR+8me8X/1w0spRo30YdOQmbbOOt02r89adjGDfpF991blZjPKHnRD5pVJdJ8r5gGo4EDBz5uYhV7Dh9MI0gdQjeA2nrO8YclPXtwWj+d6SjLBI1mJRvKMIupz2YIw=
+	t=1789670922; cv=none; b=F7FUufcsiJ/K4g+pC6cv1EtN817OzFdv/QeHbjaZzEk1ZiqniniqcZ+NmuWaqFxl2JWSh1SvfxxMMF+z/vnHtRo7MuVV+/25/kXRMx1y+tMC4nhEdq8CzWRCxQBtiNlVqONJEb1ge+iZ82PMTsQkTUCTxdmw2BjcR6hFaOpFHfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670919; c=relaxed/simple;
-	bh=OXFPszMDGUGMw+gubm1ux2na88K+3enqqg6ZMtfZRVw=;
+	s=arc-20240116; t=1789670922; c=relaxed/simple;
+	bh=5v/1WxMh90i4c8Gpo6qWnhSM8XHY6N+iEjiBnLxY0/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XR6wl8LiWeAToC0Un5BUJJOd9NEUfiEzwD/2gNy71NT6Oib/+Z2iZNEvSI1gm6uJ4yoacxDqwuWpaOySmYbgsMNHeCG4EuvPfienGIO6qx+l8yBBor33W/LV7sBb1g0L6pQEDXASLs91HBRnASKAe7QgslT+xWI+peJ16kuE+OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is7CydQD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPAlEOdXFgZydDXYyRTklpahrJskWxwvh/VSgZnhvZqtTX2ExmqLM286iT3Utn3SOUoMYMqzxlOKa1MB5yNG86j+BVZZD4CCgMpLuPYSFJRvgbYK5lPN4BPIRRi7cN/OMv8tn5yMMhV/sOv0BOvCC1vUVZiGUnbBshKpxMNGfz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1krgtAIA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is7CydQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23DE1F00893;
-	Thu, 17 Sep 2026 18:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1krgtAIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFDF1F000FF;
+	Thu, 17 Sep 2026 18:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670918;
-	bh=4INT0lty3GHwqPepiZhqjEsOApjLjjIGlt/HPO5krxc=;
+	s=korg; t=1789670921;
+	bh=Ddl+uct85J6AxKF/fZWtInOwgdwSkQ5J9JdvwqKsbEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Is7CydQDlLIYG4SIKbleStHd2FCCcN3tK0C3GdTYf5zg8fZ4vfj1TosdX6A95hAxY
-	 f4SU37lIxppu4gDr1CgllDXCgFq4wM7vhJ/vnS4cRe/j4dnGhzWKXJU5nr44WiG5bA
-	 TgbI7TgrTZfsfu7aTItXMIErMAO9KRPRPnVD9JbU=
+	b=1krgtAIAmnaz4xjGgYFqoKvddqImko79MeM3DoME7uY2Jfw9zAxKhCH1LdjRF/sU7
+	 6s75bZm35VuM5jHQ0Yi3jHp+T5F9RftLGiL8pAEfeZPMulXoygvoPtk7omiJHvxfDy
+	 xVnz70xx2+zA7buzaGFqywtBC7jiv9s6YvfNgITw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 0813/1102] dm/amdgpu: fix malformed link_settings debugfs output
-Date: Thu, 17 Sep 2026 16:12:36 +0100
-Message-ID: <20260917151600.905635085@linuxfoundation.org>
+	James Hilliard <james.hilliard1@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 0814/1102] watchdog: sunxi_wdt: preserve boot-enabled watchdog
+Date: Thu, 17 Sep 2026 16:12:37 +0100
+Message-ID: <20260917151600.932250831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,85 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-commit 622b4e8505aa7453a53d17fa3a288871f270fc8b upstream.
+commit aab55360fa11a2c054798a484ac67ad606f563e4 upstream.
 
-[Why]
-dp_link_settings_read() passed strlen() of each format string as the size
-argument to snprintf() and then advanced rd_buf_ptr by that same fixed amount.
-The format-string length has no relation to the formatted output length, so
-snprintf() truncated each field at a NUL it wrote inside the buffer while the
-pointer was advanced past it. The result is a buffer peppered with embedded NUL
-bytes and fields that are silently cut short, so the data read back from the
-debugfs node does not reflect the actual link settings.
+sunxi_wdt_probe() unconditionally stops the watchdog even when firmware
+left it running. This opens an unprotected interval during boot and
+prevents CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED from taking over the active
+watchdog.
 
-[How]
-Use scnprintf() with the real remaining buffer size
-(rd_buf_size - (rd_buf_ptr - rd_buf)) and advance rd_buf_ptr by its return
-value, which is the number of characters actually written. This both bounds
-each write to the space left in rd_buf and keeps the output a single,
-properly terminated string. The now-unused str_len local is removed.
+Detect an enabled watchdog and decode its programmed interval. Preserve
+representable timeouts, and round the 0.5-second interval up to the
+minimum representable one-second timeout. Use the configured timeout for
+reserved interval encodings. Set the Linux reset mode and ping the
+watchdog without clearing its enable bit, then mark it hardware-running
+before registration so the watchdog core services it until userspace
+takes control. Leave disabled watchdogs untouched.
 
-Fixes: 41db5f1931ec ("drm/amd/display: set-read link rate and lane count through debugfs")
-Assisted-by: Copilot:claude-opus-4.8
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 43b9f0f18693c7f7b75613f3aeae25fa2b4e2f76)
+Fixes: d00680ed0026 ("watchdog: sunxi: New watchdog driver for Allwinner A10/A13")
 Cc: stable@vger.kernel.org
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20260827-submit-sunxi-wdt-boot-enabled-v1-v2-1-610d37dccc97@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   20 +++++---------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/watchdog/sunxi_wdt.c |   45 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -192,7 +192,6 @@ static ssize_t dp_link_settings_read(str
- 	char *rd_buf_ptr = NULL;
- 	const uint32_t rd_buf_size = 100;
- 	uint32_t result = 0;
--	uint8_t str_len = 0;
- 	int r;
+--- a/drivers/watchdog/sunxi_wdt.c
++++ b/drivers/watchdog/sunxi_wdt.c
+@@ -128,6 +128,38 @@ static int sunxi_wdt_ping(struct watchdo
+ 	return 0;
+ }
  
- 	if (*pos & 3 || size & 3)
-@@ -204,29 +203,26 @@ static ssize_t dp_link_settings_read(str
++static bool sunxi_wdt_is_running(struct watchdog_device *wdt_dev)
++{
++	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
++	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
++
++	return readl(sunxi_wdt->wdt_base + regs->wdt_mode) & WDT_MODE_EN;
++}
++
++static unsigned int sunxi_wdt_get_timeout(struct watchdog_device *wdt_dev)
++{
++	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
++	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
++	unsigned int timeout;
++	u32 interval;
++
++	interval = readl(sunxi_wdt->wdt_base + regs->wdt_mode);
++	interval >>= regs->wdt_timeout_shift;
++	interval &= WDT_TIMEOUT_MASK;
++	/* Round the 0.5-second interval up to the minimum representable timeout. */
++	if (!interval)
++		return WDT_MIN_TIMEOUT;
++
++	for (timeout = WDT_MIN_TIMEOUT;
++	     timeout < ARRAY_SIZE(wdt_timeout_map); timeout++) {
++		if (wdt_timeout_map[timeout] == interval)
++			return timeout;
++	}
++
++	/* Reserved interval encoding. */
++	return 0;
++}
++
+ static int sunxi_wdt_set_timeout(struct watchdog_device *wdt_dev,
+ 		unsigned int timeout)
+ {
+@@ -248,6 +280,7 @@ static int sunxi_wdt_probe(struct platfo
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct sunxi_wdt_dev *sunxi_wdt;
++	unsigned int running_timeout;
+ 	int err;
  
- 	rd_buf_ptr = rd_buf;
+ 	sunxi_wdt = devm_kzalloc(dev, sizeof(*sunxi_wdt), GFP_KERNEL);
+@@ -275,7 +308,17 @@ static int sunxi_wdt_probe(struct platfo
  
--	str_len = strlen("Current:  %d  0x%x  %d  ");
--	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
-+	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
-+			"Current:  %d  0x%x  %d  ",
- 			link->cur_link_settings.lane_count,
- 			link->cur_link_settings.link_rate,
- 			link->cur_link_settings.link_spread);
--	rd_buf_ptr += str_len;
+ 	watchdog_set_drvdata(&sunxi_wdt->wdt_dev, sunxi_wdt);
  
--	str_len = strlen("Verified:  %d  0x%x  %d  ");
--	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
-+	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
-+			"Verified:  %d  0x%x  %d  ",
- 			link->verified_link_cap.lane_count,
- 			link->verified_link_cap.link_rate,
- 			link->verified_link_cap.link_spread);
--	rd_buf_ptr += str_len;
+-	sunxi_wdt_stop(&sunxi_wdt->wdt_dev);
++	if (sunxi_wdt_is_running(&sunxi_wdt->wdt_dev)) {
++		running_timeout = sunxi_wdt_get_timeout(&sunxi_wdt->wdt_dev);
++		if (running_timeout)
++			sunxi_wdt->wdt_dev.timeout = running_timeout;
++
++		err = sunxi_wdt_start(&sunxi_wdt->wdt_dev);
++		if (err)
++			return err;
++
++		set_bit(WDOG_HW_RUNNING, &sunxi_wdt->wdt_dev.status);
++	}
  
--	str_len = strlen("Reported:  %d  0x%x  %d  ");
--	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
-+	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
-+			"Reported:  %d  0x%x  %d  ",
- 			link->reported_link_cap.lane_count,
- 			link->reported_link_cap.link_rate,
- 			link->reported_link_cap.link_spread);
--	rd_buf_ptr += str_len;
- 
--	str_len = strlen("Preferred:  %d  0x%x  %d  ");
--	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
-+	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
-+			"Preferred:  %d  0x%x  %d\n",
- 			link->preferred_link_setting.lane_count,
- 			link->preferred_link_setting.link_rate,
- 			link->preferred_link_setting.link_spread);
+ 	watchdog_stop_on_reboot(&sunxi_wdt->wdt_dev);
+ 	err = devm_watchdog_register_device(dev, &sunxi_wdt->wdt_dev);
 
 
