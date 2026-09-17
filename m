@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384B74DDB5D;
-	Thu, 17 Sep 2026 15:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272FA4848B7;
+	Thu, 17 Sep 2026 15:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659692; cv=none; b=hSBldl3g11jbmqSNfWb4EN7E/6TZIcsUcbzpA8RiDsWnQtPYuAr318mstJ8PapR70qSvq4hniv3cty7MEmTKg7nj7l51+3c+VXNTQeR3cTYM8hGaWIh8+t+FTnFFkFPQnejoi0bj8PshnXhbOta2cSjYQTufYRl0t6x+XNttJJU=
+	t=1789659694; cv=none; b=G6knYdhm4tAaJHHh7yrYoxV8USFFe/NkexW/oQrM8bO7SnKB3dv6t8wZtinSu/p2wDWjePdh/WZzEBISkkfuYR9i40uEmRr6yWApk0IgHhprJKO3pyL5oXfj7KDquzvNlEFmpGfuzBO+mqdQR6gQfoU2FP6JcjroI0ucgh2cTfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659692; c=relaxed/simple;
-	bh=IRJfpe7tQK0YHSFau7OMykcspDLp398UyoXu5DKh1oI=;
+	s=arc-20240116; t=1789659694; c=relaxed/simple;
+	bh=OISFBBld0QQhixhSp+XL/aQbuKMyFEtyhohgyj1KSPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1yodQmHp1a1y60gb412uhfflKIasz4RNhlgoqSH3bnpQsA/RxAVVRmzL5r8ZcUQ0NTBilQZza8pMhDeW7hJSs5VclAh2/HqLpDjk2ilODJ5W6W27jiwducpBfojqBR+kgSEgxcmnSZ3eVCCJVhPEDYUudsPvdjMNl8hTq3+4Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsH6d03a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HWbWqFPomrZfE4iuxoTUJrSACxIZsYTmY9mMWJ3BhZBJmB7XLzabxLKGYhOHJR5q5qk80vkRt93Hk3ZzufMtzW7jPpOP1WUjRpHIZTjW4JHRA1sOwYi1RscxTVyiEiSPv5yzDZSHbjyUZv/iZPI13d1Ra9kKVnMrsQvQ4JRBF6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+NtlKNS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsH6d03a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8831F000FF;
-	Thu, 17 Sep 2026 15:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+NtlKNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AE81F00893;
+	Thu, 17 Sep 2026 15:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659685;
-	bh=cOm9weGMZCSG5pJLjw7/D5Dy7vEUw8jI5F7JKyUQooQ=;
+	s=korg; t=1789659682;
+	bh=dWASDiOAqg++JNHURGwilICiD3N7wFB+topk6u0zRoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsH6d03ao7Hk5aCVFKtpywkkb/HBZu/NZVi69TXT4ZlXDWeSclr40HJz8TkZ/f/mt
-	 Zn9p59MvjY1T2bEFXExdBFzq410Z+vK6E8eUco7E3rdm6u98xtv3BTZTA7PTvh/8yr
-	 sK6LYTs3RYHoo3vCUCpmBn6xcjGbASOHQVBJjSdU=
+	b=T+NtlKNS7pfR+Nfizv/kjOY1MdkdZ39nguSUYTr8ABeZabua0qCS034Fv3HgCru0f
+	 PC6lctXudW6+Iax32lClp6xf/Y9GFyME1mxvwZ7G7i4Wydfernxln4QsRDbEr4cI7F
+	 PvY38ntwUAeT8Z1JOInnote1Z4m+sMnfJxYP0/g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sascha Bischoff <sascha.bischoff@arm.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 340/733] irqchip/gic-v5: Preserve ICC_CR0_EL1 state
-Date: Thu, 17 Sep 2026 16:10:48 +0100
-Message-ID: <20260917151400.016754173@linuxfoundation.org>
+Subject: [PATCH 7.2 339/733] ASoC: mt6351: Publish the OF module alias
+Date: Thu, 17 Sep 2026 16:10:47 +0100
+Message-ID: <20260917151359.988282675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,70 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Bischoff <Sascha.Bischoff@arm.com>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit 1017911fcc03584b6854b1b8f0aafeb25f5a8d25 ]
+[ Upstream commit 9c3882ec10399c14c59b7e4599d33c4395367c37 ]
 
-In addition to EN, ICC_CR0_EL1 contains other fields, such as LINK and
-LINK_IDLE. The driver only needs to modify EN, and must preserve the
-values of all other fields when enabling or disabling the CPU
-interface.
+The MT6351 codec platform driver uses mt6351_of_match to bind devices
+with compatible mediatek,mt6351-sound. The codec can be a separate
+module, but the OF table is not exported to module alias metadata.
 
-Define the missing LINK and LINK_IDLE fields, and use read-modify-write
-accesses to update EN without affecting the rest of ICC_CR0_EL1.
+Publish the existing table without changing codec matching, register
+access or the machine-driver configuration.
 
-Fixes: 7ec80fb3f025 ("irqchip/gic-v5: Add GICv5 PPI support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Sascha Bischoff <sascha.bischoff@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260907164945.714545-1-sascha.bischoff@arm.com
-Closes: https://lore.kernel.org/r/20260807121703.D4B7A1F00A3A@smtp.kernel.org
+Fixes: a74d51ba0e17 ("ASoC: add mt6351 codec driver")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905133210.63803-1-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/tools/sysreg      | 4 +++-
- drivers/irqchip/irq-gic-v5.c | 6 ++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/codecs/mt6351.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-index 7cb61aca3797f..03f5e1755a633 100644
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -3736,7 +3736,9 @@ Sysreg	ICC_CR0_EL1	3	1	12	0	1
- Res0	63:39
- Field	38	PID
- Field	37:32	IPPT
--Res0	31:1
-+Res0	31:3
-+Field	2	LINK_IDLE
-+Field	1	LINK
- Field	0	EN
- EndSysreg
+diff --git a/sound/soc/codecs/mt6351.c b/sound/soc/codecs/mt6351.c
+index 1768c249650d8..3be0491a2588c 100644
+--- a/sound/soc/codecs/mt6351.c
++++ b/sound/soc/codecs/mt6351.c
+@@ -1478,6 +1478,7 @@ static const struct of_device_id mt6351_of_match[] = {
+ 	{.compatible = "mediatek,mt6351-sound",},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, mt6351_of_match);
  
-diff --git a/drivers/irqchip/irq-gic-v5.c b/drivers/irqchip/irq-gic-v5.c
-index d6f1c0c8b7473..21c34e7587323 100644
---- a/drivers/irqchip/irq-gic-v5.c
-+++ b/drivers/irqchip/irq-gic-v5.c
-@@ -974,7 +974,8 @@ static void gicv5_cpu_disable_interrupts(void)
- {
- 	u64 cr0;
- 
--	cr0 = FIELD_PREP(ICC_CR0_EL1_EN, 0);
-+	cr0 = read_sysreg_s(SYS_ICC_CR0_EL1);
-+	cr0 &= ~ICC_CR0_EL1_EN_MASK;
- 	write_sysreg_s(cr0, SYS_ICC_CR0_EL1);
- 	isb();
- }
-@@ -991,7 +992,8 @@ static void gicv5_cpu_enable_interrupts(void)
- 	pcr = FIELD_PREP(ICC_PCR_EL1_PRIORITY, GICV5_IRQ_PRI_MI);
- 	write_sysreg_s(pcr, SYS_ICC_PCR_EL1);
- 
--	cr0 = FIELD_PREP(ICC_CR0_EL1_EN, 1);
-+	cr0 = read_sysreg_s(SYS_ICC_CR0_EL1);
-+	cr0 |= ICC_CR0_EL1_EN_MASK;
- 	write_sysreg_s(cr0, SYS_ICC_CR0_EL1);
- }
- 
+ static struct platform_driver mt6351_codec_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
