@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8CC4FD265;
-	Thu, 17 Sep 2026 17:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45E64ABBB9;
+	Thu, 17 Sep 2026 17:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667243; cv=none; b=SHdsRJkVyBzVQteozJIRz9SwYe2BxQXEdyBIVT2kIVNLj7jH/jsYRlYqps9dO0HDL9DyKFkpxo78DE1SyPt4eYcREwaIuBqxeh2J3Gq+pT2lPglaOI871gIeKfJRWWlJw7BuNpd31VLHlC0aJBNiOxVb6GdqjaVOsCPrwn0yir4=
+	t=1789667245; cv=none; b=ieHBLEbyGloaG4FTVeL2KVXEk4GsCEvX6gg3AN+HlBGAFrXbIUvoqSHsVzuYCTj3iDFUOOgH2wB/IH9DCx2ycOPWNfUTfui7CnCHEgtbt4ILe1Uiyer7LlrRzNIHsk9uATRfN/8FzasTAeISPXB1zL0TQma+PHY0mhfmFDn1BBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667243; c=relaxed/simple;
-	bh=ngFbR6iOwSapSneTH4M0phcxDP+nhLZ0NIRnGPxClpI=;
+	s=arc-20240116; t=1789667245; c=relaxed/simple;
+	bh=XTQjmyOTbRDoyPnoZscuMSJnr4kRNMURW08fUZmxw3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cP7vaNJ+zTh06SOvlaDPxyQd1wnG1yuIabXeYRzOtO5ffAvjlg66o6Ms6OT8ZmtM1Pbp3Kd7Y1bCxNUdAUqA2HZ7/Q4pD8lPOzuW0tp0PpKjVo7NwqYURoNtsx3JGbwWVOJmMb1aQFv+6HVOPpJTAFlsn6UJVbT4PsDOwkqu768=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7kqImw3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dpRVE5rRqnYbJhlvxJv7dU5oTBdNT6fh26Qw50R2NNYr/vMQPhWJYp6pNqrArOXwiQaUffspfj/EBNvZtFHIx/97oY/6p778zGVCBRWhEFtb7it8ztJy4uIOL2BWp4nDozAsEHzFIHsWt0Gciz6jPn6mqKirRSY5ceHKqr05Uys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9MwJ+dL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7kqImw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44631F000FF;
-	Thu, 17 Sep 2026 17:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9MwJ+dL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279921F000FF;
+	Thu, 17 Sep 2026 17:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667241;
-	bh=pQXdN6azuLdZQ8iCuOJid4kOHH3CmSaQ9g+cyaswsUw=;
+	s=korg; t=1789667244;
+	bh=NenelXMwPtfcxqilE3nQ+jxCCRM3nh0ObrbU8zlsNio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7kqImw3MI1iR8thMQbUMIxr9hEymWY6m1G/yeBcfytLA/CrwGT+he9cXH5i9L7vO
-	 5pyf/ptOrTlkHtIbXCvylT6pX7oaAZvMw5JnMiN3plXZEzRONGVRp0Cuu4bcFeYwv0
-	 sEiovdsliXbTEL8ZAUtABi8xJI37otoX9QDjFjyw=
+	b=t9MwJ+dLf34Dsa/0SyE8RTIntposWiikwacWFI9aI2O1WEJBYg2a27Kxrg5mHUlEK
+	 IbZWCzfMmmSRXrgg/ww6UpYwT7yNRvdBpt67UJAEyk2ABJkAMwe8V6ikRw59BTGfXp
+	 CP85HXcr38AD/qqDTIh+eC9QMTA8iZEiBjK9NXsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0027/1102] bridge: Do not suppress ARP probes and DAD NS unconditionally
-Date: Thu, 17 Sep 2026 15:59:30 +0100
-Message-ID: <20260917151540.117861448@linuxfoundation.org>
+Subject: [PATCH 6.12 0028/1102] soundwire: intel_auxdevice: Add cs42l43b to wake_capable_list
+Date: Thu, 17 Sep 2026 15:59:31 +0100
+Message-ID: <20260917151540.143792121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,113 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit fee1fc1d5a5475f5516d406a03e443348cd0f06c ]
+[ Upstream commit be6d8daaab654e9b0a8508757534d556d399d0cd ]
 
-When neighbor suppression is enabled on a VXLAN port, the bridge is
-expected to reply to ARP/NS messages on behalf of remote hosts when both
-FDB and neighbor entries exist. This allows the bridge to suppress
-flooding of these messages to the VXLAN overlay.
+Add cs42l43b (both packaging options) to the wake_capable_list
+because it can generate jack events whilst the bus is stopped.
 
-According to RFC 9161 ("Operational Aspects of Proxy ARP/ND in Ethernet
-Virtual Private Networks"):
-"A PE SHOULD reply to broadcast/multicast address resolution messages,
-i.e., ARP Requests, ARP probes, NS messages, as well as DAD NS messages.
-An ARP probe is an ARP Request constructed with an all-zero sender IP
-address that may be used by hosts for IPv4 Address Conflict Detection as
-specified in [RFC5227]".
-
-However, the current implementation unconditionally suppresses ARP probes
-and DAD Neighbor Solicitations, which breaks Duplicate Address Detection
-(DAD) over EVPN.
-
-For DAD to work correctly over the VXLAN fabric:
-- When the bridge does not know the answer:
-  flood the probe/DAD packet to allow remote VTEPs to respond.
-- When the bridge knows the answer:
-  reply to indicate the address is in use.
-
-Fix by adjusting the early suppression checks to exclude ARP probes and
-DAD NS from unconditional suppression.
-
-When replying to a DAD NS, br_nd_send() is adjusted to set the NA
-destination to the all-nodes multicast address (ff02::1) and clear the
-Solicited flag, in accordance with RFC 4861 section 7.2.4.
-
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260429062405.1386417-2-danieller@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260429153614.741899-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/soundwire/intel_auxdevice.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index 985aaf7ff1564..f2d6643d2c0a1 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -162,7 +162,7 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 			return;
- 		if (parp->ar_op != htons(ARPOP_RREQUEST) &&
- 		    parp->ar_op != htons(ARPOP_RREPLY) &&
--		    (ipv4_is_zeronet(sip) || sip == tip)) {
-+		    sip == tip) {
- 			/* prevent flooding to neigh suppress ports */
- 			BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
- 			return;
-@@ -260,6 +260,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	int ns_olen;
- 	int i, len;
- 	u8 *daddr;
-+	bool dad;
- 	u16 pvid;
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index 61f07d2d75efc..078f9eaf5161b 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -47,6 +47,8 @@ struct wake_capable_part {
+ };
  
- 	if (!dev || skb_linearize(request))
-@@ -298,8 +299,13 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		}
- 	}
- 
-+	dad = ipv6_addr_any(&ipv6_hdr(request)->saddr);
-+
- 	/* Ethernet header */
--	ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
-+	if (dad)
-+		ipv6_eth_mc_map(&in6addr_linklocal_allnodes, eth_hdr(reply)->h_dest);
-+	else
-+		ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
- 	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
- 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
- 	reply->protocol = htons(ETH_P_IPV6);
-@@ -315,7 +321,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	pip6->priority = ipv6_hdr(request)->priority;
- 	pip6->nexthdr = IPPROTO_ICMPV6;
- 	pip6->hop_limit = 255;
--	pip6->daddr = ipv6_hdr(request)->saddr;
-+	pip6->daddr = dad ? in6addr_linklocal_allnodes : ipv6_hdr(request)->saddr;
- 	pip6->saddr = *(struct in6_addr *)n->primary_key;
- 
- 	skb_pull(reply, sizeof(struct ipv6hdr));
-@@ -328,7 +334,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	na->icmph.icmp6_type = NDISC_NEIGHBOUR_ADVERTISEMENT;
- 	na->icmph.icmp6_router = (n->flags & NTF_ROUTER) ? 1 : 0;
- 	na->icmph.icmp6_override = 1;
--	na->icmph.icmp6_solicited = 1;
-+	na->icmph.icmp6_solicited = dad ? 0 : 1;
- 	na->target = ns->target;
- 	ether_addr_copy(&na->opt[2], n->ha);
- 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
-@@ -429,7 +435,7 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 	saddr = &iphdr->saddr;
- 	daddr = &iphdr->daddr;
- 
--	if (ipv6_addr_any(saddr) || !ipv6_addr_cmp(saddr, daddr)) {
-+	if (!ipv6_addr_cmp(saddr, daddr)) {
- 		/* prevent flooding to neigh suppress ports */
- 		BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
- 		return;
+ static struct wake_capable_part wake_capable_list[] = {
++	{0x01fa, 0x2A30},
++	{0x01fa, 0x2A3B},
+ 	{0x01fa, 0x4243},
+ 	{0x01fa, 0x4245},
+ 	{0x025d, 0x5682},
 -- 
 2.53.0
 
