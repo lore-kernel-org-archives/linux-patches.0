@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAB54E4C4D;
-	Thu, 17 Sep 2026 15:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894C64E4C5A;
+	Thu, 17 Sep 2026 15:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659008; cv=none; b=hzHdvcgUngqfQZPZMPO+/b5j1vON6IvjsHt8oAZ3cyZ7TwgagGyEA2VK1+/ihqfQ0ZQEU0rtGfEPyo01YCzNbSk6Fnx8aMUnN4JEUdC7PD8x4q5W+n9bmPv4JqZ/vdofBV4XTzgfcTSYJs1JM2T8P+9V16b2vXkWza3O7Sn7cWw=
+	t=1789659009; cv=none; b=fvz7IlQfa1spdyfwcoMqZx546tocOiLVAK8/1X4/ADW3KAmmVVALJV4k98rEPCfJIcmqb2uuje7doYOF9/ciuje7mE0nVnDgkbbg5puHOXOD0M7baRoPGKi9hcXkGumdy/mhb4185LkEIy4iRPUTaAyWNHJqcvuogozRdWg+3nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659008; c=relaxed/simple;
-	bh=7GvBC2SsmG78lS7mdUwTVHGkQMJT/Oj+d4Pi61O8j4s=;
+	s=arc-20240116; t=1789659009; c=relaxed/simple;
+	bh=a74H5hBtUSbxWRHT8C4s+BlG+GOGsKXoxd9wGOS5bro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUkOpZ9JUYeZ94GYcCTkxyBOpDe7eK7Bkx5JCL1QZ05PFdvxQHs2oJY0akJcUZoWOhL+Bz2x9N5KvvAxLHX9ffgoPpFV2LO3cnvdsxkBGLkfRsOmUDmbkPY5+Z54V0hGlCxh3wTGCBgBJMeudWL04ix0p8GKb2d7fApWZ1kBLbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GANViMB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BLIAZwqzP67gGrjn4XtrQnMfy7RlnsoyuqzNaa1IGoVnWWYEob0HixyPZGrYHnho9yUem/fKsbK/8fM3Y6BG6UAqx5oNseJyHbaLjY717o/UEOMNkayF3cWdDX5985B54mJEki/l+JXlXRa4CLFDBXVgzDvFhX0MPSy6wSfwANM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cG1rDgYx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GANViMB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62101F0089C;
-	Thu, 17 Sep 2026 15:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cG1rDgYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5AB1F00893;
+	Thu, 17 Sep 2026 15:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658998;
-	bh=QG7SzJ+YIrNsW9Kv5f5yYjYrIKR04O45ffg/VKQyU5s=;
+	s=korg; t=1789659001;
+	bh=Bs9eJnS5pkb47L8OlcRxIL6/DstEjR3CcLnRnRnineA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GANViMBz7H4SNj9O9J9ewl1DeLQynrdCVe+DfUyolZFyE9+YktRfk4z4HCj1o6Vy
-	 /Zrg6C3VuioPe8Av0QgrQ/JPA1clvslocqRJt3Rd6T19xQxHN6BDZjUmJtFA+wIkr9
-	 JmWKW1wVAhghedHgQXv6VuSsX2NgphgSreEvS1RQ=
+	b=cG1rDgYxbU0vqq+mfxYyYSwNvnIMgl59SD/IjJrXXOCuNP8o6srK5joqaEQ5/4t/7
+	 FvRpbX5kNHX6g9DR5kaDERfIWqe5AcfPIBMR2EgF64KZJ4yyGuu/8/UGrgr+gy9oms
+	 Dc9c5iPAtrnFwFJHpcPBznBCc71cWh8vjO2MSU5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiacheng Xu <stitch@zju.edu.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 108/733] workqueue: reject watchdog thresholds that overflow jiffies
-Date: Thu, 17 Sep 2026 16:06:56 +0100
-Message-ID: <20260917151353.667053158@linuxfoundation.org>
+Subject: [PATCH 7.2 109/733] Bluetooth: btintel: validate version TLV value lengths
+Date: Thu, 17 Sep 2026 16:06:57 +0100
+Message-ID: <20260917151353.692187151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,40 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiacheng Xu <stitch@zju.edu.cn>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 068c35b5d0546c8625b3d7c61910f73775cf1216 ]
+[ Upstream commit a086c0892969bf8a0151b0f12bd14a68827c88b2 ]
 
-The watchdog threshold is supplied in seconds but is multiplied by HZ
-before being used as a jiffies interval. Reject values that exceed
-MAX_JIFFY_OFFSET / HZ so the multiplication cannot wrap and the
-time_after() comparisons remain within their supported range.
+btintel_parse_version_tlv() verifies that a complete TLV is present in
+the response, but it does not ensure that the value is long enough for
+the specific TLV type. A short value can therefore cause an
+out-of-bounds read through get_unaligned_le16(), get_unaligned_le32(),
+or memcpy().
 
-The check is performed before changing the threshold or watchdog timer.
-Zero remains the value used to disable the watchdog.
+Reject values shorter than the minimum required by each known TLV type.
+Also reject responses that do not contain the Command Complete Status
+field.
 
-Fixes: 82607adcf9cdf ("workqueue: implement lockup detector")
-Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 57375beef71a ("Bluetooth: btintel: Add infrastructure to read controller information")
+Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Tested-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bluetooth/btintel.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 929c04a9581bd..36aaeb38e2174 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -7923,6 +7923,9 @@ static int wq_watchdog_param_set_thresh(const char *val,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index cc2234470960a..ecee50373f566 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -570,12 +570,44 @@ int btintel_version_info_tlv(struct hci_dev *hdev,
+ }
+ EXPORT_SYMBOL_GPL(btintel_version_info_tlv);
  
-+	if (thresh > MAX_JIFFY_OFFSET / HZ)
-+		return -ERANGE;
++static u8 btintel_version_tlv_min_len(u8 type)
++{
++	switch (type) {
++	case INTEL_TLV_CNVI_TOP:
++	case INTEL_TLV_CNVR_TOP:
++	case INTEL_TLV_CNVI_BT:
++	case INTEL_TLV_CNVR_BT:
++	case INTEL_TLV_BUILD_NUM:
++	case INTEL_TLV_GIT_SHA1:
++		return sizeof(u32);
++	case INTEL_TLV_DEV_REV_ID:
++	case INTEL_TLV_TIME_STAMP:
++		return sizeof(u16);
++	case INTEL_TLV_IMAGE_TYPE:
++	case INTEL_TLV_BUILD_TYPE:
++	case INTEL_TLV_SECURE_BOOT:
++	case INTEL_TLV_OTP_LOCK:
++	case INTEL_TLV_API_LOCK:
++	case INTEL_TLV_DEBUG_LOCK:
++	case INTEL_TLV_LIMITED_CCE:
++	case INTEL_TLV_SBE_TYPE:
++		return sizeof(u8);
++	case INTEL_TLV_MIN_FW:
++		return 3;
++	case INTEL_TLV_OTP_BDADDR:
++		return sizeof(bdaddr_t);
++	default:
++		return 0;
++	}
++}
 +
- 	if (system_percpu_wq)
- 		wq_watchdog_set_thresh(thresh);
- 	else
+ int btintel_parse_version_tlv(struct hci_dev *hdev,
+ 			      struct intel_version_tlv *version,
+ 			      struct sk_buff *skb)
+ {
+ 	/* Consume Command Complete Status field */
+-	skb_pull(skb, 1);
++	if (!skb_pull(skb, 1))
++		return -EINVAL;
+ 
+ 	/* Event parameters contain multiple TLVs. Read each of them
+ 	 * and only keep the required data. Also, it use existing legacy
+@@ -595,6 +627,9 @@ int btintel_parse_version_tlv(struct hci_dev *hdev,
+ 		if (skb->len < tlv->len + sizeof(*tlv))
+ 			return -EINVAL;
+ 
++		if (tlv->len < btintel_version_tlv_min_len(tlv->type))
++			return -EINVAL;
++
+ 		switch (tlv->type) {
+ 		case INTEL_TLV_CNVI_TOP:
+ 			version->cnvi_top = get_unaligned_le32(tlv->val);
 -- 
 2.53.0
 
