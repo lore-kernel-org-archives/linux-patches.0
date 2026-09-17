@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC204FE2DC;
-	Thu, 17 Sep 2026 16:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1464E77F4;
+	Thu, 17 Sep 2026 16:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664218; cv=none; b=jIgUb0Irhynllt9jvQINtt3fxiNNaQoXIC+d+nQSF+JlAqep3zGOj8lEwDO7nB8108t4UzWsWTdSVKAckhlwspWpL/IpPOZwQ3wT/uSmzGZenMM7hOTnlMX9+WyLQUIq5KAEdX0Xg75GmM+zyrpnUQJQIcPc1FyXsnmpph3EdT0=
+	t=1789664221; cv=none; b=Z9CHcTeeCSdTRVKNcrASMRlyFjsYr0/JAF6HQoRBkJLTNwasFOiDTzen8JjxEhxcU8dAMP3juPFPHFIolZ1bm2+rkboWiIhIbCvcp7UkZdlEXz1lmhMA1QMbJ5retSpFqCHwYSf3C+xXQiSoZj6vC0yLGwgCJadRsJQjBz89p7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664218; c=relaxed/simple;
-	bh=Qiqxh98ToBlQeKGVE62BOMvHXy1L9chh7PlpWGETqaw=;
+	s=arc-20240116; t=1789664221; c=relaxed/simple;
+	bh=neR+vfEH700yNzwNJuvGB45U21Pa1VlaBCEpS1MA1w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7Q585b251TCfRB9jO7nnVWMys7rlKhW5dzvIy5JY4RCtEzQ/4xWNgHX6ceiSN6LCyv3vK4svALA9idr1s71jy7AthbN+SKZvL0eHDluNb7TrNqt+o/JvFkqdT9XxqrTiJS7jMk2uJtgAU117ClETfrIG4OUZrxyk26Ec3CL0Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLWct/Pz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBKdD4TdiPfG4hPk3FhsUazwZuvjO8LjlwTVeeHuCiADZ5UKzXJcLewTTq/9hIFauMF/effW/AYp6AqvMF9qAPDUp5HRAwwMATPbpa5SXKQxPQ+KDqGiUxw1IgFZGYNBsCkDWn18shOWAcvVhr7RfvE+Wo5XiVDH0cMr0cO4QO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDZ9si1w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLWct/Pz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932811F000FF;
-	Thu, 17 Sep 2026 16:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDZ9si1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F25B1F000FF;
+	Thu, 17 Sep 2026 16:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664217;
-	bh=Cff7ZKV3ruKuhwAV1nzkQ1zRyxRY9s/aOlkp0h7+QBs=;
+	s=korg; t=1789664220;
+	bh=gT4eZXiRpmW6XRKADkyvQS/0NxcojUAlsIm/qxAlr6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLWct/Pz3q2wggSEyfOj0KcOj/spxvdV+QDOy2yFtp7FK4d9pWPjCx3b4cLIPh660
-	 4oo7coGPC7TA22ly/kamW6sLAh7e617JSr++PbL4DzS1kvzx/Prx/mKDmOrLRQzDfo
-	 0lguR6Qnvp4gZqXWXtK8t52MdY5fJBRHHQ9Eufdg=
+	b=TDZ9si1wgES2k1KGBGMTYRo/dHwpsi5gZQZkJ4XQehnMK+sEc0gQhuZ612GFedmxP
+	 HFMhnlH0MoMsuRWngr3dUDsZFFm9D5k/JwD5CQpmyo0UOCimJPW/KNIGfFR6aPl1jk
+	 ysgrsXOkcWcalLH08udfSlSnzymAc9ewCzq4Wl58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0260/1250] soundwire: dmi-quirks: Disable ghost Realtek devices
-Date: Thu, 17 Sep 2026 16:00:55 +0100
-Message-ID: <20260917151559.199661599@linuxfoundation.org>
+Subject: [PATCH 6.18 0251/1250] pinctrl: renesas: rzv2m: Use -ENOTSUPP instead of -EOPNOTSUPP
+Date: Thu, 17 Sep 2026 16:00:46 +0100
+Message-ID: <20260917151558.954473080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,86 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 4dab2b904414fac53535c4e4cdad808132f4cdc2 ]
+[ Upstream commit 01f94d53947df35ba77cdb3992a4e3ef9d9dc1ad ]
 
-Many systems ship with a Realtek audio codec in the ACPI that doesn't
-physically exist in the system. This confuses the newer function
-topology system that creates the soundcard, as it builds the card based
-on the ACPI information.
+The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
+code. One such example is gpio_set_config_with_argument_optional(), which
+returns success when gpio_set_config_with_argument() returns -ENOTSUPP, but
+reports failure for all other error codes.
 
-Whilst we are working with the laptop vendors to try and stop this
-happening there are quite a few systems where this has shipped. Add a
-quirk to disable this "ghost" device.
+Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
+operation may lead to boot failures when pinctrl drivers implements
+struct gpio_chip::set_config, the system uses GPIO hogs, and the
+struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
+unsupported operations.
 
-Currently this patch should cover:
- - Asus UX5406AA
- - Lenovo Yoga Pro 9i (83SF)
- - Lenovo Yoga Slim 7 Ultra (83QK)
+Currently, the driver does not implement struct gpio_chip::set_config().
+To avoid future failures, return -ENOTSUPP from
+rzv2m_pinctrl_pinconf_set().
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260520163631.3300102-4-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+rzv2m_pinctrl_pinconf_group_get() is used when dumping pinctrl
+configuration. pinconf_generic_dump_one(), which calls it, makes
+exceptions for the -EINVAL and -ENOTSUPP error codes. The documentation
+for struct pinconf_ops::pin_config_group_get states that it "should
+return -ENOTSUPP and -EINVAL using the same rules as pin_config_get()".
+The documentation for struct pinconf_ops::pin_config_get states:
+
+"get the config of a certain pin, if the requested config is not available
+on this controller this should return -ENOTSUPP and if it is available but
+disabled it should return -EINVAL".
+
+Return -ENOTSUPP for the unsupported pinctrl operation.
+
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260522105717.1727837-1-claudiu.beznea@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 35 ++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/pinctrl/renesas/pinctrl-rzv2m.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 5854218e1a274..32a46a2d90f7c 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -90,6 +90,19 @@ static const struct adr_remap intel_rooks_county[] = {
- 	{}
- };
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+index dce68f93d2d57..e08f24d5a89f5 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+@@ -661,7 +661,7 @@ static int rzv2m_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
+ 		}
  
-+/*
-+ * Many platforms have ghost realtek devices in the ACPI that don't physically
-+ * exist, remove those devices.
-+ */
-+static const struct adr_remap ghost_realtek[] = {
-+	/* rt722 on link3 */
-+	{
-+		0x000330025d072201ull,
-+		0x0000000000000000ull
-+	},
-+	{}
-+};
-+
- static const struct dmi_system_id adr_remap_quirk_table[] = {
- 	/* TGL devices */
- 	{
-@@ -164,6 +177,28 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)hp_omen_16,
- 	},
-+	/* PTL devices */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_BOARD_NAME, "UX5406AA"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83SF"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
- 	{}
- };
+ 		default:
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 		}
+ 	}
  
+@@ -710,7 +710,7 @@ static int rzv2m_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
+ 
+ 		/* Check config matches previous pins */
+ 		if (i && prev_config != *config)
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 
+ 		prev_config = *config;
+ 	}
 -- 
 2.53.0
 
