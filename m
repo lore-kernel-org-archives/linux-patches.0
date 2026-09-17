@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B7C4F93CA;
-	Thu, 17 Sep 2026 17:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E85949D58C;
+	Thu, 17 Sep 2026 17:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665684; cv=none; b=QoqsjWH53135JLp0Sq4phTkhUi3ik1+zdoUXzvy1sSWGC/329QbbDAsVNUCVTCpn9IQmb1LlYF4c1H9jwjez+VaANJiq+fv8DXtcvzFPTPJhK6vqyNHJrwSF+naUDHyU95FnSFHc/MHTtPKrnuN6Oa7rWGuwr+C8xNjthPF63no=
+	t=1789665687; cv=none; b=K26iQ1KXVmcj9jWzBWyrBP6x9zH2L/fdjPDe2PhsNp1YjiKyNsvjmvzRgASkoRgs7xdz7rCUk3jIng58h/V5kKilYgNTVWeSXXia648SpxLYjimAKdMq4euFk1cgdaZh4tWqisXJhxTITlyFYLYuD1REqpsPE0C59C0z3jjEX9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665684; c=relaxed/simple;
-	bh=bghWoUQs+Tjg1nht8OUEuLyOuzvrQECiL6I88KqsRBQ=;
+	s=arc-20240116; t=1789665687; c=relaxed/simple;
+	bh=yJuWz9ybUd7D3bNRMr4ZE4zIlM8c/gUaW+CAIysMpQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtT1QAUm8eI0rTKLzmk7VDkh2dM/seXubZagBiHue2dVsVnl08Pb4vJ+gKXnhLXJsuTzZf0yOhYxR5KkENMkr3UnnmGygevSs/CT6wBbbHFY4OA9wYozN8WnhyBX9mKB9T/PHEMqXm6rdmSjvjWozibwL62oK5P/VFdlYuyPWh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eiR3bhs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KjFP+0lhFQFD8s1wyGPYLLzPC04rMhgzcZI16OPrDZDoD7RXCeth0Yk7Bia6aYe+jjjmf0aqodJ/3eYKc0hRTPwW+9B0BPgsyhRtOl6ptsrmEbceiTRZ2dl7tpbiAUkrLC/j0cW/ys4QNTfz0SqH2mTXgARW4ZC/tV3HravBe5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgBRhDiq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eiR3bhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA9C1F00893;
-	Thu, 17 Sep 2026 17:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgBRhDiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ED11F000FF;
+	Thu, 17 Sep 2026 17:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665683;
-	bh=upe25V8Qcg3xJvEzwXGxWF1EXVWXJw6bcIj4M/pdUHc=;
+	s=korg; t=1789665686;
+	bh=juvAF1ej/Jtv0UGTESquQVbuT8bh6SJVRqYPpXn3vUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0eiR3bhsZlpldFKWY3eQDNtS+BrHObOhRwcxZy+R8eD2vDMnqookaM+0V3TYqWh9j
-	 ZSuoyh3+p5/LoIyYExr6mY4VC7nu1M0DqbWGxO6v3kqdqRCq6ZBC+GLnFJRbnHpyKI
-	 kpHxVe07znTJ/S8U/Big2fmQ0Ip87SV9/FQxlOYQ=
+	b=pgBRhDiqkDAapnyqggNsIlDCJ+gl/4GCRzD1ush1aB0k29CY6wGVJNz+OSrTFq+rT
+	 2Z02y7sB5lg6eBmvRHX45tNVXKkcAUZi7f8mL1eTdXDHyMLvpTQ8RCp8/svLpvvev0
+	 3KhYSLEzjMQi75BVmRvdP2M4h5TiuO/g2gSJP2nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0787/1250] selftests/bpf: Fix flaky bpf_nf test when random NAT port is 0
-Date: Thu, 17 Sep 2026 16:09:42 +0100
-Message-ID: <20260917151613.225581378@linuxfoundation.org>
+Subject: [PATCH 6.18 0788/1250] nexthop: Initialize extack in remove_nh_grp_entry()
+Date: Thu, 17 Sep 2026 16:09:43 +0100
+Message-ID: <20260917151613.252932064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 5e8c349bc8d790fe031a4332e502f5d4f9878644 ]
+[ Upstream commit 5bd9e4e7cdaa03879e9b73b12ab52cceb1edd55b ]
 
-The bpf_nf test allocs a ct, sets snat and dnat with random addr and
-port via bpf_ct_set_nat_info(), then looks the ct up and checks the
-reply tuple against what was set.
+remove_nh_grp_entry() prints the extack message when a listener fails
+to replace the reduced nexthop group. However, extack is not
+initialized and listeners are not required to set a message when
+returning an error. Neither netdevsim nor mlxsw do so when an
+allocation fails, resulting in the dereference of an uninitialized
+stack pointer.
 
-The port comes from bpf_get_prandom_u32() and can be 0. For
-bpf_ct_set_nat_info(), port 0 means "port not specified", so only the
-addr is mapped and the kernel keeps the original port. The check then
-compares that port with 0 and fails, which shows up as a flaky
-"Test for source natting" failure in CI [1][2].
+Fix by zero-initializing extack, as was done in commit 6347c5314cee
+("nexthop: initialize extack in nh_res_bucket_migrate()").
 
-Keep the random port in 1..65535 so it is always specified.
-
-[1] https://github.com/kernel-patches/bpf/actions/runs/33830002889/job/100893868791
-[2] https://github.com/kernel-patches/bpf/actions/runs/33829976794/job/100893220999
-
-Fixes: b06b45e82b59 ("selftests/bpf: add tests for bpf_ct_set_nat_info kfunc")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260904073745.363314-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 833a1065eeb1 ("nexthop: Emit a notification when a nexthop group is reduced")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260903080259.10378-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_bpf_nf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/nexthop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-index f7b330ddd007e..b42e6e149e26c 100644
---- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-+++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-@@ -171,8 +171,8 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
- 	ct = alloc_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
- 		      sizeof(opts_def));
- 	if (ct) {
--		__u16 sport = bpf_get_prandom_u32();
--		__u16 dport = bpf_get_prandom_u32();
-+		__u16 sport = bpf_get_prandom_u32() % 65535 + 1;
-+		__u16 dport = bpf_get_prandom_u32() % 65535 + 1;
- 		union nf_inet_addr saddr = {};
- 		union nf_inet_addr daddr = {};
- 		struct nf_conn *ct_ins;
-@@ -274,8 +274,8 @@ nf_ct_opts_new_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *
- 	ct = alloc_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
- 		      sizeof(opts_def));
- 	if (ct) {
--		__u16 sport = bpf_get_prandom_u32();
--		__u16 dport = bpf_get_prandom_u32();
-+		__u16 sport = bpf_get_prandom_u32() % 65535 + 1;
-+		__u16 dport = bpf_get_prandom_u32() % 65535 + 1;
- 		union nf_inet_addr saddr = {};
- 		union nf_inet_addr daddr = {};
- 		struct nf_conn *ct_ins;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index a8bf1ec548995..66d5c996866bf 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2025,7 +2025,7 @@ static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
+ {
+ 	struct nh_grp_entry *nhges, *new_nhges;
+ 	struct nexthop *nhp = nhge->nh_parent;
+-	struct netlink_ext_ack extack;
++	struct netlink_ext_ack extack = {};
+ 	struct nexthop *nh = nhge->nh;
+ 	struct nh_group *nhg, *newg;
+ 	int i, j, err;
 -- 
 2.53.0
 
