@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF149547050;
-	Thu, 17 Sep 2026 17:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8CB50E5A6;
+	Thu, 17 Sep 2026 17:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666391; cv=none; b=WmSiKc5AiQviWP27Fg5+kzEWV6n7yJn/ug0Q7I6FUdW2YjKL7P/tE1pYJMRiuuzFIg7mADVFdNsZt60QqiJrtUQtz3fzFsxhoYUvLmGXm8rSVSww6IKideNjXaYgc11shPusONqgUYRxVv7Vedb3wDdSKLV5yBi6jBQqhfT+icM=
+	t=1789666394; cv=none; b=S0X1qKUnDT02vuJy55JBPbnY6+53+hhVAmCA6eC7gLTPfaC4He+w2Hq3dLZu/hsmaDZA2+VJfWDQhoMAlv2K4tgajbHoA8CckCVUNd6obdHtRt/vcgXe/x55NIr8CrUAir3Laqp3WjGSMcqtwbRFXvs81mQc8hICv4tC0GeEuEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666391; c=relaxed/simple;
-	bh=oShg8sbuZEV69tLm5EWI0gEMGNw/ulsh2e2Ty+46Yro=;
+	s=arc-20240116; t=1789666394; c=relaxed/simple;
+	bh=y0GqzxjfEbWfnuQRTWhGhy64lwbbMMzf/NA7c4JeVZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmXCapjV2y99wXvfbKQnQB2/Fe/z0vNLtjxJeZb4wrFc47Jjjym8N2rYjb4cbWTzGgyDvGS/p1DxSOr7GGQ51yOXRZEXF9SIKXG4arrhsVMQi6jGrNVZAKCyDW13BgNcKcFKT6zgdJpw7Y893H39U3sz2BBbyTUZSvOcCda3rJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLt/cozQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QUCNKSNf7ICDfUKeuwHjGHRHxiqVZfQWR7isb3wXoel3L3dpQEwD25oHe5M+ZwMQPbgJ8rMkDY7ZN52Hr8fEdDiBmXqw6WJtvGT9AbaNRpL3focSINeipc5hrcS7BbcNckGIPkIZbfHNEBva4QPF+8FwsTZUfSxtB0m6W0jo7JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deRBGS5D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLt/cozQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430801F000FF;
-	Thu, 17 Sep 2026 17:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deRBGS5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541BA1F000FF;
+	Thu, 17 Sep 2026 17:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666389;
-	bh=97ZXALKKFzUFCNtIMhQn4+e9G3KxtMJBoGUz+PqwZ9Y=;
+	s=korg; t=1789666392;
+	bh=9yy7lpQ6uYfrO++4jXAMkmbvXxq6+Hx674OdTpl0VJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLt/cozQYib1EiuXIEPgv8zYZi1JtZas1kNiJtWkI4KBy2I8UHHfdwBlxc2hw+dgK
-	 SbgMXArQDb8WBYC5i3DzjXJIYLKIFLQZXY7tOLcgOLnJ42Cqivc2JE3aHG573Mnaob
-	 i/Jlx8yOIn7WauZAXWDNQfYRIqnQcY53w/ZGAR5c=
+	b=deRBGS5DSdqMQ+7tO7Xggk5jdmIhqYhWWXR6hpcP4i7K9iZDW0yBIurbvW2QMN6wg
+	 4Y6+o1BZXDSYKdcHwchB3OKwJWd45d66z8rFO95HzqnPS5D+XanrVOAIyFi0cqF8Jv
+	 o32OPDsN+sIppRxpPFCe+GkpUHlxH3VZSdOWV7NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Jiri Benc <jbenc@redhat.com>,
+	Laika Price <laikabcprice@gmail.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Charles Bordet <rough.rock3059@datachamp.fr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1019/1250] net: mpls: clear inner_protocol when the last label is popped
-Date: Thu, 17 Sep 2026 16:13:34 +0100
-Message-ID: <20260917151619.671855152@linuxfoundation.org>
+Subject: [PATCH 6.18 0984/1250] tunnels: Drop stale dst when building an ICMP error for PMTUD
+Date: Thu, 17 Sep 2026 16:12:59 +0100
+Message-ID: <20260917151618.695027483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,82 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 78a86d75a70e1e227711c72865c59b1422d0a5ae upstream.
+commit b58d749633203d92c265317b45fccee555090352 upstream.
 
-skb_mpls_push() records the pre-encapsulation network header once, gated
-on !skb->inner_protocol. skb_mpls_pop() never clears that record, so it
-outlives the encapsulation it describes.
+Bridged UDP tunnels such as VXLAN and GENEVE build an ICMP error packet
+around an overlay packet if the packet is going to exceed the underlay
+path MTU. The ICMP error packet is then injected back into the Rx path
+with the source and destination addresses swapped, so that it will be
+delivered to the overlay source.
 
-Open vSwitch can then re-push MPLS onto a packet whose
-inner_network_header still points at the older, deeper offset: push a
-label, pop every label, recirculate (ovs_flow_key_update() re-derives
-key->eth.type and resets network_header, but leaves inner_*), then push
-again. ovs_fragment() trusts the record:
+If the overlay packet was routed to the UDP tunnel or locally generated,
+then it is already carrying a valid dst entry and this entry is not
+dropped when transforming the packet to an ICMP error packet. This
+causes the IP layer to reuse the dst entry, leading to the ICMP error
+packet being dropped or routed out of the UDP tunnel interface in case
+of forwarding.
 
-	skb->network_header = skb->inner_network_header;
+Prior to the blamed commit this could not happen, as
+skb_tunnel_check_pmtu() did not build ICMP errors for PACKET_HOST
+packets. Such packets were instead encapsulated and, unless the DF bit
+was set in the outer header, fragmented by the underlay.
 
-so skb_network_offset() goes negative. The bound check is signed:
+Fix this by making sure that the ICMP error packet does not have a valid
+dst entry, thereby forcing the IP layer to perform a route lookup.
 
-	if (skb_network_offset(skb) > MAX_L2_LEN)
+Adjust the bridged PMTU exception selftests accordingly. When the
+local sender in ns_a pings the overlay destination with a deadline
+(-w), ping exits on the first socket error before any reply is
+received and returns a non-zero exit code. The test therefore only
+passed because the ICMP error was never delivered. Use a packet count
+(-c) like the ns_c line above it, so that the ICMP error counts
+against the packet budget and the exit code depends on whether echo
+replies were received. This passes with and without the fix.
 
-a negative offset passes it, and prepare_frag() widens the value:
-
-	unsigned int hlen = skb_network_offset(skb);
-	memcpy(&data->l2_data, skb->data, hlen);
-
-which is a ~4GiB memcpy out of a 30-byte per-CPU buffer.
-
-Reproduced on v7.3-rc1. RDX is the truncated length, (unsigned int)(-8):
-
-  BUG: unable to handle page fault for address: ffffe8ffffc16000
-  #PF: supervisor write access in kernel mode
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:memcpy+0x8/0x20
-  RDX: 00000000fffffff8 RSI: ffff888105d732db RDI: ffffe8ffffc16000
-   prepare_frag+0x3df/0x4e0
-   ovs_fragment+0x589/0x7e0
-   do_output+0x4ce/0x5e0
-   do_execute_actions+0x55d2/0x7b30
-   ovs_execute_actions+0xea/0x450
-
-Same root-cause shape as commit 975b5b067f52 ("ipv6: sr: restore network
-header before routing and forwarding"): a stale network header offset
-reaching a consumer that widens it. Here it originates in the MPLS
-push/pop path.
-
-Clear inner_protocol once the packet is no longer MPLS, so a later push
-re-records the current header. net/sched/act_mpls.c is the only other
-skb_mpls_pop() caller and gets the same fix; sch_frag.c saves and
-restores inner_protocol around fragmentation in the same way OVS does.
-
-Fixes: 48d2ab609b6b ("net: mpls: Fixups for GSO")
+Fixes: 8930424777e4 ("tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Acked-by: Jiri Benc <jbenc@redhat.com>
-Link: https://patch.msgid.link/20260902092719.2874481-1-fouriezhang@tencent.com
+Reported-by: Laika Price <laikabcprice@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260614-master-v3-1-9f5060ba1ed1@gmail.com/
+Reported-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260901081825.287173-1-aroslavdudkov622@gmail.com/
+Reported-by: Charles Bordet <rough.rock3059@datachamp.fr>
+Closes: https://lore.kernel.org/netdev/aHVhQLPJIhq-SYPM@eldamar.lan/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20260902190112.4126199-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv4/ip_tunnel_core.c           |    6 ++++++
+ tools/testing/selftests/net/pmtu.sh |    2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6624,6 +6624,13 @@ int skb_mpls_pop(struct sk_buff *skb, __
- 	}
- 	skb->protocol = next_proto;
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -268,6 +268,9 @@ static int iptunnel_pmtud_build_icmp(str
+ 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
+ 	skb_reset_mac_header(skb);
  
-+	/* The last label is gone, so the inner header recorded by
-+	 * skb_mpls_push() no longer describes this packet. Drop it, or a
-+	 * later push keeps the stale offset.
-+	 */
-+	if (!eth_p_mpls(next_proto))
-+		skb->inner_protocol = 0;
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
 +
- 	return 0;
+ 	return skb->len;
  }
- EXPORT_SYMBOL_GPL(skb_mpls_pop);
+ 
+@@ -371,6 +374,9 @@ static int iptunnel_pmtud_build_icmpv6(s
+ 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
+ 	skb_reset_mac_header(skb);
+ 
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
++
+ 	return skb->len;
+ }
+ 
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1457,7 +1457,7 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_ge
+ 	mtu "${ns_b}" ${type}_b $((${ll_mtu} + 1000))
+ 
+ 	run_cmd ${ns_c} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
+-	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -w 1  -s $((${ll_mtu} + 500)) ${dst} || return 1
++	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
+ 
+ 	# Check that exceptions were created
+ 	pmtu="$(route_get_dst_pmtu_from_exception "${ns_c}" ${dst})"
 
 
