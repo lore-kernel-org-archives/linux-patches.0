@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89B839CD06;
-	Thu, 17 Sep 2026 17:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57CE4F96CB;
+	Thu, 17 Sep 2026 17:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666199; cv=none; b=rH6b7t9AN4sg4q8VIvMK4Ln5cRTj9tzR6ePFXCenIHmBP5L0vdwPC97MjHvV/1D6mPBL4pdd7ewuV0yCSbt1an6z0mD1oDpxMjxMH4yLpKquDMuK3SCK1R/LG1uk/hkfeW6mmSVrvLsz8bd4d90tksD0TZRhGeLkdS1b4APpTQA=
+	t=1789666202; cv=none; b=YsOn0vty38m+dzgZ87GkzSgAUiD/zLS9pE3Ro57K+wn5JvnFalfBdum/J1DPCLakDutBYBns4iSRlhEievjmQeZYR3Gc7hWK88afS7iPz1IR2oLRUC5ltbji4jw30qAhqNZqFU+o5cbV1TGUG96OiDPT2Dl5bM61UsFdghW4pX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666199; c=relaxed/simple;
-	bh=8s0k7HkFQb/fjvds4X1Uip559NYANo6hVXa+4SZnp3g=;
+	s=arc-20240116; t=1789666202; c=relaxed/simple;
+	bh=qzIoJPiV1wzIfUuqMK88/zDEXVT/olZxL9UhOW5dG9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uH6W9eMvYVTHg+Qti3wMbMD5D3VKv6091saPP/k/ol5tSVKqxkhXQuak3JB12JtpbXB5DxebzgOE98Ehk+G//xoakcpV3rrOBOrDCYLTz6mZcO6Vr/zjZwK5RM86CTzsgiQwe2200ra0nLHynKuqhJyzU/ugPXpUsXNioj2TMPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj+SZY+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nXxHG4M2N4HHufZGBs/ED94EFdTtmZBPiv/jAAl2TWdHNw+yV9ts3H7CqWOwTtEELYfeRiQmQ/bezCkXb4l/8U/ElH9+2BPjrzNZ+5IEpaEwysCP3dBHBPMctHpQORsKhGnXt4PjifjDhlGS75ICo8gpazoiDBtT1mljOg8KbK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvcXme9r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj+SZY+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA5B1F000FF;
-	Thu, 17 Sep 2026 17:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvcXme9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283881F000FF;
+	Thu, 17 Sep 2026 17:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666197;
-	bh=GEyn8vPDZSK/mUzY68Ppc+9JU7M1TiZB+RUc23wF/qQ=;
+	s=korg; t=1789666200;
+	bh=rxEKXQDXly+cAt/6V+OCWeukoT/v+hnPPJiWAiTVwnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rj+SZY+DhaB5eEcPaYso2PdrJSwX9YVGbvnrWhSU+ccNzCX2aUvRdKMg10ER0fnc2
-	 b+/78IDW+fGMmkfBcZDy6bjBaI0Hxyaa80kiL0gxwlBR0mIh5fhtge9jqBf3fd+Vut
-	 V8CTUA6pGs0uO1nlRjIxxHMymNYMiXAvwFSj9UDQ=
+	b=jvcXme9rnQvMAuo4GK+DwJl39q0hD0r+VzGIwSuF4jhUjmKyvwo2ReVoWUb98Estv
+	 GzdXluHBhuhDUZixNMP0gpXPXrHsKfFKQGXbAcaNRNXcI4vdrxB8fVRQ/ADg8OskHJ
+	 IpC/3PNpZw51Upog/4x1pzmktGqYnMmg4VPx+H0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0940/1250] net: stmmac: fix TSO support when some channels have TBS available
-Date: Thu, 17 Sep 2026 16:12:15 +0100
-Message-ID: <20260917151617.496563801@linuxfoundation.org>
+	Taehee Yoo <ap420073@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 0958/1250] crypto: x86/aria - add missing vzeroupper in AVX2 code
+Date: Thu, 17 Sep 2026 16:12:33 +0100
+Message-ID: <20260917151617.985341544@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,104 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit e32820264c2949a3e75bc5083e49c885e3bbaf62 ]
+commit ac53977611428db3bc0b4ac0225e19c3e08ae50b upstream.
 
-According to the STM32MP25xx manual, which is dwmac v5.3, TBS (time
-based scheduling) is not permitted for channels which have hardware
-TSO enabled. Intel's commit 5e6038b88a57 ("net: stmmac: fix TSO and
-TBS feature enabling during driver open") concurs with this, but it
-is incomplete.
+Since the AVX2 optimized ARIA code uses YMM registers, execute
+vzeroupper before returning from it.  This is needed to avoid degrading
+the performance of any later SSE code that may happen to be executed.
 
-This commit avoids enabling TSO support on the channels which have
-TBS available, which, as far as the hardware is concerned, means we
-do not set the TSE bit in the DMA channel's transmit control register.
-
-However, the net device's features apply to all queues(channels), which
-means these channels may still be handed TSO skbs to transmit, and the
-driver will pass them to stmmac_tso_xmit(). This will generate the
-descriptors for TSO, even though the channel has the TSE bit clear.
-
-Fix this by checking whether the queue(channel) has TBS available,
-and if it does, fall back to software GSO support.
-
-Fixes: 5e6038b88a57 ("net: stmmac: fix TSO and TBS feature enabling during driver open")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1w7ptE-0000000Easz-28tv@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 37d8d3ae7a58 ("crypto: x86/aria - implement aria-avx2")
+Cc: stable@vger.kernel.org
+Cc: Taehee Yoo <ap420073@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 32 ++++++++++++++++---
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ arch/x86/crypto/aria-aesni-avx2-asm_64.S |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 253f044fa70c6..007eee6798a5f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3390,6 +3390,17 @@ static void stmmac_safety_feat_configuration(struct stmmac_priv *priv)
- 	}
- }
+--- a/arch/x86/crypto/aria-aesni-avx2-asm_64.S
++++ b/arch/x86/crypto/aria-aesni-avx2-asm_64.S
+@@ -982,6 +982,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_enc
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
  
-+/* STM32MP25xx (dwmac v5.3) states "Do not enable time-based scheduling for
-+ * channels on which the TSO feature is enabled." If we have a skb for a
-+ * channel which has TBS enabled, fall back to software GSO.
-+ */
-+static bool stmmac_tso_channel_permitted(struct stmmac_priv *priv,
-+					 unsigned int chan)
-+{
-+	/* TSO and TBS cannot co-exist */
-+	return !(priv->dma_conf.tx_queue[chan].tbs & STMMAC_TBS_AVAIL);
-+}
-+
- /**
-  * stmmac_hw_setup - setup mac in a usable state.
-  *  @dev : pointer to the device structure.
-@@ -3502,10 +3513,7 @@ static int stmmac_hw_setup(struct net_device *dev)
- 	/* Enable TSO */
- 	if (priv->tso) {
- 		for (chan = 0; chan < tx_cnt; chan++) {
--			struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
--
--			/* TSO and TBS cannot co-exist */
--			if (tx_q->tbs & STMMAC_TBS_AVAIL)
-+			if (!stmmac_tso_channel_permitted(priv, chan))
- 				continue;
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_encrypt_32way)
+@@ -1007,6 +1008,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_dec
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
  
- 			stmmac_enable_tso(priv, priv->ioaddr, 1, chan);
-@@ -4728,6 +4736,21 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	return NETDEV_TX_OK;
- }
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_decrypt_32way)
+@@ -1209,6 +1211,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_ctr
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %r10);
  
-+static netdev_features_t stmmac_features_check(struct sk_buff *skb,
-+					       struct net_device *dev,
-+					       netdev_features_t features)
-+{
-+	u16 queue;
-+
-+	if (skb_is_gso(skb)) {
-+		queue = skb_get_queue_mapping(skb);
-+		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue))
-+			features &= ~NETIF_F_GSO_MASK;
-+	}
-+
-+	return vlan_features_check(skb, features);
-+}
-+
- static void stmmac_rx_vlan(struct net_device *dev, struct sk_buff *skb)
- {
- 	struct vlan_ethhdr *veth = skb_vlan_eth_hdr(skb);
-@@ -7097,6 +7120,7 @@ static void stmmac_get_stats64(struct net_device *dev, struct rtnl_link_stats64
- static const struct net_device_ops stmmac_netdev_ops = {
- 	.ndo_open = stmmac_open,
- 	.ndo_start_xmit = stmmac_xmit,
-+	.ndo_features_check = stmmac_features_check,
- 	.ndo_stop = stmmac_release,
- 	.ndo_change_mtu = stmmac_change_mtu,
- 	.ndo_fix_features = stmmac_fix_features,
--- 
-2.53.0
-
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_ctr_crypt_32way)
+@@ -1359,6 +1362,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_encrypt_32way)
+@@ -1384,6 +1388,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %rax);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_decrypt_32way)
+@@ -1428,6 +1433,7 @@ SYM_TYPED_FUNC_START(aria_aesni_avx2_gfn
+ 		     %ymm8, %ymm9, %ymm10, %ymm11, %ymm12, %ymm13, %ymm14,
+ 		     %ymm15, %r10);
+ 
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_aesni_avx2_gfni_ctr_crypt_32way)
 
 
