@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31F2389E1A;
-	Thu, 17 Sep 2026 18:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54787374A0E;
+	Thu, 17 Sep 2026 18:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670773; cv=none; b=K93v+rZiIr5PE1iQ/6hegsNRhLyagojB+RHWef8YDwlhkro33zIh1oEtoQAUdoRLANZJSQSsQzlpDl4PlKu7JDjzFf+KvJsUUL/mYByBKmzl7jS07PgXVv524UPzyujuOxBO7xnPJSDQgqR8td+tJ/rF9GxosFNKp3edYtTBmqY=
+	t=1789670776; cv=none; b=do3CuK631NTNqY6OVFQgJzCZ44tBSXhFkAh6v+NgicJFGOD6Al+dvXW2E7EUTSITkmNENKHdUMsOmg9O+8LbXz3pY7w3c6QVPe+75cumFnLTzE3cVOMLyIriUmXsy1vQ6pnDgU4G8Y+TJCt2Pe7G1fo572RKpUQDUXqJH6CU3Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670773; c=relaxed/simple;
-	bh=qmlHyWEO5wGInEz9+Z6Jml11egSHJQuax6q9cqpSrxA=;
+	s=arc-20240116; t=1789670776; c=relaxed/simple;
+	bh=MeQL0koj55G2GKjSc1/q3Irs/PfEcEaeVDCBZh1SH8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsCjzLexllXDBTHzmIEvgn0PZkRzY+u6blxtCvTGqfndeejht+X59idpN2HBI37G0uwMDbL6hkuTMFg3+cp6GaiRY+gXZpT/9JcXuyFNZRKP8hi5+G38292Jr6Bt+dtDS0M2bLoyEm+uEq40b3EAf4ESBnYEAYerRjro0xH7WEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gk+CbQqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E0Xs1HJbC81a570BzJRE4p8Vm1SNIb9jh9OsObiQw67q1RdzOHlNzPcTtwAlOvUR0LJbjyrd++ZktdSuwBnPsLD6OcbRmNXpj0Qfx3hW6xs3QMh4EHbZQ/7aItEngRoPJEfISnYcCkp2Sk/QPZCa3yU5q5+202r8xNkBar13S98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsOXQih5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gk+CbQqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080311F000FF;
-	Thu, 17 Sep 2026 18:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsOXQih5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372C01F000FF;
+	Thu, 17 Sep 2026 18:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670771;
-	bh=JixZnJdHLAQ3+SP4EulRLp7qAGvgzEXTghmcig+n0Jw=;
+	s=korg; t=1789670774;
+	bh=5Pl1JlUyDdMuPj1ih9FbfqZI/9iieaPx3TvI7SYdN5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gk+CbQqhoi5Zer2NzbyZW21gVRUw6DlTQclcsZiKsVlkvAYjy2T9u0aI+320VapQr
-	 ogQBl3092tBaqqvuf7CTcOzb6s6SkB7y7xJ+0R4VoykOTzcKm/2+I4VuYaiev7Kk7l
-	 aR+F2Fc9sdlTx0FzDH1SCkC50OH4fRl/xW41dHI4=
+	b=UsOXQih59TczsV8YEAm0Fsh49zo/uP4RgmwAspcpt2GHsOLzldGWQh53mJ5lnH9Sc
+	 LU9JunrWthABi+gXUCdAcC8BfyUXXZxjpivtGu9WnMsZb1mOs8c5urRdHFddNbQhGX
+	 845Ge/iYgNaQX1LT6XCtrF4RXuMgPXm/FF5AM1Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Vasut <marex@nabladev.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0716/1102] vdpa_sim_blk: reject out-of-range sector starts
-Date: Thu, 17 Sep 2026 16:10:59 +0100
-Message-ID: <20260917151558.316421812@linuxfoundation.org>
+Subject: [PATCH 6.12 0759/1102] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
+Date: Thu, 17 Sep 2026 16:11:42 +0100
+Message-ID: <20260917151559.484738712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,58 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit 0a8693f00c408d85f086ad85d29e7030bf1e2055 ]
+[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
 
-vdpasim_blk_check_range() logs an invalid start sector but continues
-validating the request.  The subsequent unsigned capacity subtraction can
-underflow and let an out-of-range buffer offset reach the data path.
+KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
+when issuing a software power-down (PMECR[1:0] = 10) followed by a
+power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
+properly preventing communication. The Transmitter will still send
+data, but no data will be received.
 
-The invalid offset is used by three request paths.  VIRTIO_BLK_T_OUT
-copies guest data to blk->buffer + offset through
-vringh_iov_pull_iotlb(), causing an out-of-bounds write in
-_copy_from_iter() or memcpy().  VIRTIO_BLK_T_IN copies from
-blk->buffer + offset to the guest through vringh_iov_push_iotlb(),
-causing an out-of-bounds read in _copy_to_iter().
-VIRTIO_BLK_T_WRITE_ZEROES passes blk->buffer + offset to memset(),
-causing an out-of-bounds write.
+The errata sheet also includes a workaround, which states that,
+it is recommended that the software power-down feature not be used.
 
-Reject starts at or beyond the capacity before the subtraction.  Treat the
-capacity boundary as invalid because the IN and OUT paths round byte counts
-down to sectors for validation but later copy the original byte counts.  A
-sub-sector request at the capacity boundary would otherwise still access
-past the end of the buffer.
+Implement that workaround and drop the entry into software power-down
+mode. The ks8851_write_mac_addr() calls entry into normal power-on
+mode at the very beginning of the function, therefore dropping the
+second call to enter software power-down mode is sufficient here.
+The ks8851_net_stop() can only be called after ks8851_net_start()
+was already called, and ks8851_net_start() also makes the MAC enter
+normal power-on mode, therefore it is also fine to drop the call to
+enter software power-down mode from ks8851_net_stop().
 
-I found this bug myself, though the patch was written with AI assistance.
+This will lead to a slight increase in power consumption, but it also
+fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
+is where the problem was reported and this fix was tested.
 
-Fixes: 7d189f617f83 ("vdpa_sim_blk: implement ramdisk behaviour")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901094800.25475-1-linfeng.sun.dev@gmail.com>
+[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
+
+Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-index b137f36793439..770a40a20be9d 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-@@ -79,10 +79,11 @@ static void vdpasim_blk_buffer_unlock(struct vdpasim_blk *blk)
- static bool vdpasim_blk_check_range(struct vdpasim *vdpasim, u64 start_sector,
- 				    u64 num_sectors, u64 max_sectors)
- {
--	if (start_sector > VDPASIM_BLK_CAPACITY) {
-+	if (start_sector >= VDPASIM_BLK_CAPACITY) {
- 		dev_dbg(&vdpasim->vdpa.dev,
- 			"starting sector exceeds the capacity - start: 0x%llx capacity: 0x%x\n",
- 			start_sector, VDPASIM_BLK_CAPACITY);
-+		return false;
+diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
+index 7c336e0a4b8ae..4267c4cb1acdc 100644
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
+ 		ks8851_wrreg16(ks, KS_MAR(i), val);
  	}
  
- 	if (num_sectors > max_sectors) {
+-	if (!netif_running(dev))
+-		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+-
+ 	ks8851_unlock(ks);
+ 
+ 	return 0;
+@@ -494,8 +491,7 @@ static int ks8851_net_open(struct net_device *dev)
+  * @dev: The device being closed.
+  *
+  * Called to close down a network device which has been active. Cancel any
+- * work, shutdown the RX and TX process and then place the chip into a low
+- * power state whilst it is not being used.
++ * work and shutdown the RX and TX process.
+  */
+ static int ks8851_net_stop(struct net_device *dev)
+ {
+@@ -522,8 +518,6 @@ static int ks8851_net_stop(struct net_device *dev)
+ 	/* shutdown TX process */
+ 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
+ 
+-	/* set powermode to soft power down to save power */
+-	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+ 	ks8851_unlock(ks);
+ 
+ 	/* ensure any queued tx buffers are dumped */
 -- 
 2.53.0
 
