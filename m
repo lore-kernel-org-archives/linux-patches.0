@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8819538F658;
-	Thu, 17 Sep 2026 15:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DE82C1788;
+	Thu, 17 Sep 2026 15:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660503; cv=none; b=txuHnoorJkRUDSjiS+qX4UOBCLXtaRBtF9pZTbaQjwnuiKGyTycSqrTjJKfypFFRAPVyw/yJIdY2N+sw8KjIL5i9+r54VO/bsHd8GuK+ayv+PsshLDPrqMbOx2Ccf8w/CAYhKeuKQz4Kr4dGDmsuaxqVgMCvsjdKukXmkjueaCg=
+	t=1789660505; cv=none; b=CVnTvus7qJ9FIBSrjmXWsEsv2o98b6U067+f6/vK/uLxNGc6ne7XeM4dL8i/vjuwXkGeNVitAu9y0lRrd4YWO8fthIWUiW7zPngnkg4Pnx6MPj7HzlmbVHfLsnqTETLSqFjAWCqNqnOqSRO7AzsZIs3SIxxgGr/fS5+Sfv5YJsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660503; c=relaxed/simple;
-	bh=AxwlHSnzGglTZalNZAH+VrY8EKC0v2dF9qn4XzA0Q7Q=;
+	s=arc-20240116; t=1789660505; c=relaxed/simple;
+	bh=ze3jAUQInaH/7dZsEorj0dcy07zLmDnIHc3TBe0H9I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0y01J+bpiORQ5FNdiS5xpFnOhecE87cOr2dF94fNXhSUMvtOuV62wIReiAsHWy3dqRVzOJX0/1Kij7c5KZ0OZMGLmldW0lw7Ia6dwkmpqSh2xVQqydha2D2bViuez/E2pE1sS8aouEtq4/sYDomvkYh0Dpj5nvQpdC/BS63IoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0OzEaw4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUvmaPgvJiPKVyONOtK30UA6KW7kVPw9Q9o/gr1Ke7+mpMFk8GjE013cjdWP4Q/3GQZvcqqz3T/Q5bAAOudt1Tq/iXnJcWamUAWIm+/1+ai4zh+5dUmyqAUVNkKDc5RyZC9L+ZzVDJPD4yhjeN9jI7bPiiG/ujmSunHJkEdUfL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKkoeL2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0OzEaw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5911F00893;
-	Thu, 17 Sep 2026 15:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKkoeL2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC811F000FF;
+	Thu, 17 Sep 2026 15:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660501;
-	bh=gk0ALQAl1oWyvJdTaV7wewtJgxmfCNd4PXB1oGa3rlo=;
+	s=korg; t=1789660503;
+	bh=C7u21wtFCYL4qpl1/iyO3B/lhhBfLi7vDKjpxgXrdyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0OzEaw4yxByVfZqkxM1mlnUbrdNHTXfev/98C9e/2BRV3EQVhXvD6Fs9CFDFmAhI
-	 hngr9DIPA924s0jXmQCWhiev8P3Ey6++v6cPCJxoowS07B0AvuiATdCy2OcTtP+uzs
-	 xdqTiwNhqcp6idpp/aCbJ6GopbuYODiqY5099wr0=
+	b=WKkoeL2QZeFlo1+PqQTavg1K4OWGqp97cBxkTyKTWHhGv8NNHFmPbCe8orjUdme9O
+	 cCVFPsKFjxsEM57mxjrxmkBl7Q6AQgT35HOEP1S3FVDjDjbCAhqMjWffN2OdK1XZ08
+	 S1YTo1kyEi9wsTHWYD8r1BK9+dKpo/iGJtQwOEsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 612/733] mptcp: do not reschedule the RTX timer for fallback sockets
-Date: Thu, 17 Sep 2026 16:15:20 +0100
-Message-ID: <20260917151407.751597153@linuxfoundation.org>
+Subject: [PATCH 7.2 613/733] mptcp: options: handle MPC data + csum reqd + no csum
+Date: Thu, 17 Sep 2026 16:15:21 +0100
+Message-ID: <20260917151407.779095064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,105 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit e2ab913f68c7d11e2561b8a8ad0b87ffefcad667 upstream.
+commit ab36b1a80942c78ddb04d006ff38aa7ed3ec0e5e upstream.
 
-On fallback socket the retrans timer is a quite convoluted no-op, but
-currently nothing prevents the MPTCP core to keep rescheduling it.
+Before this modification, a remote peer could send an MP_CAPABLE with
+data, with the checksum flag set, but without adding the actual 2 bytes
+of checksum. As a result, uninitialised bytes could be used for the
+'csum' field.
 
-Additionally gate RTX timer reset to the msk not being fallen back to
-TCP yet. To avoid adding multiple tests in fast-path, use a new flags
-bit for such condition.
+That was not a critical issue, because this 'csum' field is only used to
+compare with the expected one, if previously negotiated in the 3WHS.
+Worst case, the checksum is likely wrong, a fallback is done without a
+reject if the negotiation was done earlier. That's OK.
 
-The RTX enable bit is clear at close time and set before the msk could
-start retransmitting, with a couple of caveats:
+Yet, better to take the expected path with this case: only look at the
+checksum flag for MP_CAPABLEs not carrying a data-len.
 
-- passive sockets inherit the bit from the listener msk; set the bit on
-  such socket to avoid flipping it in the fast-path, even if the
-  listener will obviously never retransmit.
+Such packet can be seen as a 3rd or 4th ACK. The RFC8684 mentions [1]
+that the 3rd packet should have the checksum flag set. When an MPC + ACK
+contains data, the checksum flag is redundant with the checksum field.
+It is not clear what should be done for the 4th ACK, nor if the flag has
+to be set if the checksum field is set.
 
-- while fastopening (MPTFO), mptcp_sendmsg_fastopen still ends-up
-  calling mptcp_connect via tcp_sendmsg_fastopen ->
-  __inet_stream_connect(ssk->sk_socket), and the first subflow's
-  sk_socket points to the msk one.
+Therefore, it seems fine to only look at the presence of the checksum
+field, not to break the interaction with stacks that were not setting
+both.
 
-Fixes: b51f9b80c032 ("mptcp: introduce MPTCP retransmission timer")
+Note that linked to this checksum flag on the 3rd ACK, with the current
+implementation, we can have a situation where the SYN packets have no
+checksum flag, but the 3rd ACK has one, and this is the one that will be
+taken into account. First, that's clearly not directly linked to this
+patch, but Clashiko forced us to look at that. At the end, that seems
+fine to act like that: yes that's not how the negotiation should work,
+but being flexible without introducing side effects is also fine: fixing
+this would mean increasing the complexity, and that's not worth it.
+
+Fixes: 208e8f66926c ("mptcp: receive checksum for MP_CAPABLE with data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.1-23 [1]
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-0-b8f496d71664%40kernel.org?part=1
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-1-df1de70348b6@kernel.org
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-5-df1de70348b6@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   13 ++++++++++---
- net/mptcp/protocol.h |    1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ net/mptcp/options.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -95,6 +95,7 @@ bool __mptcp_try_fallback(struct mptcp_s
- 
- 	msk->allow_subflows = false;
- 	set_bit(MPTCP_FALLBACK_DONE, &msk->flags);
-+	clear_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	__MPTCP_INC_STATS(net, fb_mib);
- 	spin_unlock_bh(&msk->fallback_lock);
- 	return true;
-@@ -1001,13 +1002,14 @@ static bool mptcp_rtx_timer_pending(stru
- 
- static void mptcp_reset_rtx_timer(struct sock *sk)
- {
-+	struct mptcp_sock *msk = mptcp_sk(sk);
- 	unsigned long tout;
- 
--	/* prevent rescheduling on close */
--	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
-+	/* Prevent rescheduling on close and in case of fallback. */
-+	if (!test_bit(MPTCP_RTX_ENABLED, &msk->flags))
- 		return;
- 
--	tout = mptcp_sk(sk)->timer_ival;
-+	tout = msk->timer_ival;
- 	sk_reset_timer(sk, &sk->mptcp_retransmit_timer, jiffies + tout);
- }
- 
-@@ -3191,6 +3193,9 @@ void mptcp_set_state(struct sock *sk, in
- 		 * transition from TCP_SYN_RECV to TCP_CLOSE_WAIT.
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -93,7 +93,8 @@ static void mptcp_parse_option(const str
+ 		 * In other words, the only way for checksums not to be used
+ 		 * is if both hosts in their SYNs set A=0."
  		 */
- 		break;
-+	case TCP_CLOSE:
-+		clear_bit(MPTCP_RTX_ENABLED, &mptcp_sk(sk)->flags);
-+		fallthrough;
- 	default:
- 		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
- 			MPTCP_DEC_STATS(sock_net(sk), MPTCP_MIB_CURRESTAB);
-@@ -4008,6 +4013,7 @@ static int mptcp_connect(struct sock *sk
- 	if (IS_ERR(ssk))
- 		return PTR_ERR(ssk);
+-		if (flags & MPTCP_CAP_CHECKSUM_REQD)
++		if ((flags & MPTCP_CAP_CHECKSUM_REQD) &&
++		    opsize < TCPOLEN_MPTCP_MPC_ACK_DATA)
+ 			mp_opt->suboptions |= OPTION_MPTCP_CSUMREQD;
  
-+	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	mptcp_set_state(sk, TCP_SYN_SENT);
- 	subflow = mptcp_subflow_ctx(ssk);
- #ifdef CONFIG_TCP_MD5SIG
-@@ -4155,6 +4161,7 @@ static int mptcp_listen(struct socket *s
- 		goto unlock;
- 	}
- 
-+	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	mptcp_set_state(sk, TCP_LISTEN);
- 	sock_set_flag(sk, SOCK_RCU_FREE);
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -116,6 +116,7 @@
- #define MPTCP_WORK_RTX		1
- #define MPTCP_FALLBACK_DONE	2
- #define MPTCP_WORK_CLOSE_SUBFLOW 3
-+#define MPTCP_RTX_ENABLED	4
- 
- /* MPTCP socket release cb flags */
- #define MPTCP_PUSH_PENDING	1
+ 		mp_opt->deny_join_id0 = !!(flags & MPTCP_CAP_DENY_JOIN_ID0);
 
 
