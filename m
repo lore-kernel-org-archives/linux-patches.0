@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39C143E4BE;
-	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C4543F8D6;
+	Thu, 17 Sep 2026 19:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671684; cv=none; b=eC4A1HzWDvyQEUmScooWoi9vK6lW0kaOkt/kDKAFuL45r8qgCry6x5zlpjF5EG+mBddYASP1Pyo+2eDucGLzQgMd1NAuP33DDkVASAqxDwYrvClAdGK1vPDEzvgrGKgrQR2nRqmlQYpRw8hl4d1El+/rg1ZPJD5fTEZnh/Zz3c8=
+	t=1789671683; cv=none; b=PQl5GEGS3c1FFNCURT+9zzBUBPwgE7CcMndr5TpUieNTLfdO/yEuQWM8WwnLbiqG387mhc93Qo4V4aTFhicxIKykFA5fNbSHtclbH7owUMgv0Vxag/XVdmGhkBzEPVmuSK7E23mboJQ49IkYem+61hfTozuIrtsc+DMK26nPGlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671684; c=relaxed/simple;
-	bh=83zvQONYY/KIFTq4fGkHCYABwN28wOY/5O4PtBjFliY=;
+	s=arc-20240116; t=1789671683; c=relaxed/simple;
+	bh=BDB26bcDxzBM6B5Ki02IiQOzQG1zNa12pw9qqp7Zp5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLgaJEw+L0oYepSvXXjRC7v0wBMXpIuuNgUiCCeZlhpvmV5UJEc2jLRHzWv71nUgwp9K+8d2F3XdxLnICNfxpo7vQl2qC+1K2ZKp9lU3ban3pzqLTY/yAwC181TOydhzD0bT3itERxh8e2YCr3Zyqc4J0cH4S9rzujVstcjhiyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXtAoV9v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iyfTHmmHS6hQTvkfPkdc0KXG4bscCBbLsaS60yiMg9JPtsrfQHvXJPzOl0JOPa9hjU39VBHSFlwx5VeiHsikYw9EjujL4pvnXK96SdgQA3efTaegfhqqC8nMlcAM5cVwhxBGndThpQ7GxC90tgjnfSTP2Z5W2L7+NFr8XLSLd4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPr8yLbH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXtAoV9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082121F0089F;
-	Thu, 17 Sep 2026 19:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPr8yLbH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C8F1F000FF;
+	Thu, 17 Sep 2026 19:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671654;
-	bh=Ka45sBtE3jecZSYpS/a9V2iWl4sNIlp3GaXzzRXCHzY=;
+	s=korg; t=1789671672;
+	bh=JPNMpPWKi9027dqzA5LKIEMENhHAhBJSSyV+kJluZdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pXtAoV9viOkMxCN2lO4aXTQ+2uCWnpN6/HU3COCzlhGL+7RD13oTRDsupJvnAHpxL
-	 0gdWZNybwWbzoLCvCNpACRO3cW6d7qVQPaYYMPejq+LkgyeCFsLBlbf90Uv3dUArDk
-	 1/vWHvUkDBiHFdBKj+N0n7IahP3OKUrmY+rXC208=
+	b=QPr8yLbHMvgXO/VdfhklPJt4N38CoiIX76bWvZF1SYUOs7PaFawEDl9utFEDEZx+l
+	 8q+jbDtsenb52kNqpJVoGzBvkDIuUpRTAErySqwKlyCcCLTxZJNUwnW7I+v7Ktwc3E
+	 3Y+0PfjqyJEq67dBZqt9TY16fvKziRkPYVZ7dI4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Prostitis <prostitisgabriel@gmail.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1009/1102] USB: gadget: ffs: fix mm lifetime handling
-Date: Thu, 17 Sep 2026 16:15:52 +0100
-Message-ID: <20260917151606.078013515@linuxfoundation.org>
+Subject: [PATCH 6.12 1054/1102] HID: universal-pidff: stop the device when force-feedback init fails
+Date: Thu, 17 Sep 2026 16:16:37 +0100
+Message-ID: <20260917151607.271874028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,94 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Prostitis <prostitisgabriel@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit 5eb5c72c72fef76cb765ef1669b62b6a3ba1bfc8 ]
+[ Upstream commit ce08c5555cabcd444d8b77fa69a7cb68bb05f611 ]
 
-io_data stores a pointer to the submitting task's mm_struct,
-but does not currently hold a reference to it while async
-requests are pending.
+universal_pidff_probe() starts the device with hid_hw_start() and then, if
+force-feedback initialisation fails, returns the error through a label that
+only does "return error".  The device is left started.
 
-This can result in a use-after-free if the task exits before
-completion handling finishes.
+The HID core does not unwind on the driver's behalf.  __hid_device_probe()
+releases the devres group, closes the report and clears hdev->driver:
 
-Take a reference with mmgrab() when queuing the read request
-and release it with mmdrop() on request completion.
+	if (ret) {
+		devres_release_group(&hdev->dev, hdev->devres_group_id);
+		hid_close_report(hdev);
+		hdev->driver = NULL;
+	}
 
-Reported-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Signed-off-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Link: https://patch.msgid.link/20260601-mm-uaf-fix-v2-1-3c942a707bce@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e78dcb1f7ec2 ("usb: gadget: f_fs: Fix Use-After-Free in AIO error path")
+The hidraw character device that hid_hw_start() registered through
+hid_connect() is allocated with kzalloc() and added with cdev_device_add(),
+so it is not devres-managed and survives that.  With hdev->driver NULL,
+hid_device_remove() skips hid_hw_stop() as well, because it only unwinds
+while a driver is still attached.  The registration therefore outlives the
+device on both paths.
+
+Opening the surviving /dev/hidrawX writes into freed memory.  KASAN reports
+a use-after-free write from hidraw_open() -> hid_hw_open() -> the
+transport's open callback, which takes a spinlock inside the freed object.
+A descriptor that carries a PID usage page and no input reports is enough:
+hidraw claims the device so hid_hw_start() succeeds, while hid->inputs
+stays empty so force-feedback init fails.  The other failure returns in
+hid_pidff_init_with_quirks() - no output reports, an allocation failure,
+pidff_init_fields(), pidff_check_autocenter(), an unusable effect count,
+input_ff_create() - all reach the same label.
+
+Stop the device on that path.  hid-dr.c and hid-emsff.c, which start the
+device with the same HID_CONNECT_DEFAULT & ~HID_CONNECT_FF mask, already do
+this.  The two earlier gotos must keep returning without hid_hw_stop(),
+since neither has a started device, so give the path that fails after the
+start its own label.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: f06bf8d94fff ("HID: Add hid-universal-pidff driver and supported device ids")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ adjusted context for preexisting formatting and spelling differences while preserving the 6.12 code ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/hid/hid-universal-pidff.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -866,9 +866,15 @@ static void ffs_user_copy_worker(struct
- 	unsigned long flags;
- 
- 	if (io_data->read && ret > 0) {
--		kthread_use_mm(io_data->mm);
--		ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
--		kthread_unuse_mm(io_data->mm);
-+		if (mmget_not_zero(io_data->mm)) {
-+			kthread_use_mm(io_data->mm);
-+			ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
-+			kthread_unuse_mm(io_data->mm);
-+			mmput(io_data->mm);
-+		} else {
-+			ret = -EFAULT;
-+		}
-+		mmdrop(io_data->mm);
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -101,12 +101,14 @@ static int universal_pidff_probe(struct
+ 	error = init_function(hdev, id->driver_data);
+ 	if (error) {
+ 		hid_warn(hdev, "Error initialising force feedback\n");
+-		goto err;
++		goto err_stop;
  	}
  
- 	io_data->kiocb->ki_complete(io_data->kiocb, ret);
-@@ -1258,16 +1264,20 @@ static ssize_t ffs_epfile_write_iter(str
+ 	hid_info(hdev, "Universal pidff driver loaded sucessfully!");
  
- 	kiocb->private = p;
- 
--	if (p->aio)
-+	if (p->aio) {
-+		mmgrab(p->mm);
- 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
-+	}
- 
- 	res = ffs_epfile_io(kiocb->ki_filp, p);
- 	if (res == -EIOCBQUEUED)
- 		return res;
--	if (p->aio)
-+	if (p->aio) {
-+		mmdrop(p->mm);
- 		kfree(p);
--	else
-+	} else {
- 		*from = p->data;
-+	}
- 	return res;
+ 	return 0;
++err_stop:
++	hid_hw_stop(hdev);
+ err:
+ 	return error;
  }
- 
-@@ -1302,14 +1312,17 @@ static ssize_t ffs_epfile_read_iter(stru
- 
- 	kiocb->private = p;
- 
--	if (p->aio)
-+	if (p->aio) {
-+		mmgrab(p->mm);
- 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
-+	}
- 
- 	res = ffs_epfile_io(kiocb->ki_filp, p);
- 	if (res == -EIOCBQUEUED)
- 		return res;
- 
- 	if (p->aio) {
-+		mmdrop(p->mm);
- 		kfree(p->to_free);
- 		kfree(p);
- 	} else {
 
 
