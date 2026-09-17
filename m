@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A134F5E01;
-	Thu, 17 Sep 2026 17:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF324D7D2F;
+	Thu, 17 Sep 2026 17:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667818; cv=none; b=QZ3ny004uDtks7wg6vbDtBOtrhvMqx4xCEFsW23tY8EI3m56Xdo7OLXvVhaCeloSEQoO9mmdS27SyvI2F3ZwaJAt9afEpPIQUwVmmvPi4D0HUhp5EWNhZ36dNDMIZ/jBQkN/g8bFkTA9VxzYYNscTC95A8Xpxg1v4NLTmaS/G7o=
+	t=1789667821; cv=none; b=gOS/EYR8XR7BgcabuwccpLBHGc+fAs0SeJNCqxEKvwY6THEujHkT2Zjne266pp/BhaDnqBSDAJJVlq/xTEbXVQgIgd1I+IJiJDqB7GHQ7UWjl0y9hXLcdDfGySJoqzNjJpoS+0ZmpxyK0m5NnwluJrndisLePwB9CPF4j3kKkZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667818; c=relaxed/simple;
-	bh=jP1bzkw+PsUtSXdmZ53BKhI677sMynMow7MA6r4t9Ss=;
+	s=arc-20240116; t=1789667821; c=relaxed/simple;
+	bh=Bc/5V2HnMbNpfFp3EpnfyQbs88GoX2qGrrfJY4oh1q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYe0idfJ+2ArPN16ugeQxH3BkY57b6Fintns2VJcD8MxultnUIuAtQ+YYp1fXUk7piQsk1MpvopOHbotgXTbavuQixFiwMy3U8XxlwXxPur9+CQONeBk9A43z1pYGfT55NXzR3mvEu8Il7PNzieKbq0HNEkq4Cys4sy25Ew4Bmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8lD7Hgz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LabgHOGMXIEchFaEGqQD2u3bL6P8LAsYfJZkz8I3zTvO+FKyxD1UPYZHFPX9hzl8IZ3ulN9vJaq/2IWjvuMBL7Hyx+7m1h8NnUMf1ZwMNEVpjuoag4jmun+JDqA9xrCGjPs3vOwnEFnBzwVQfQaeuoRCH6m9TG0f05nqsQso3WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmyzuZbo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8lD7Hgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D6B1F000FF;
-	Thu, 17 Sep 2026 17:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmyzuZbo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DBA1F000FF;
+	Thu, 17 Sep 2026 17:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667816;
-	bh=+GdyRUMaID0O6aO7LfiviQkSH565BdA+mh7ZUT8Cpuk=;
+	s=korg; t=1789667819;
+	bh=123aqxgAPU+xGLGrATWGtrWlkAVA53Y6VjPfl64TFEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8lD7Hgz1W/QlyRNQTxROXdu0fSHMQs1yGetv7lYUVXpebUnKK8bLrpR9fAF/RXgf
-	 UnmXX21r1gCjWODtcNB1KRKLifYMYPQ0T5viVmdnPCX0DbCtYEbS+PUOtPVZ8iD7bq
-	 EQXfp68jZ5Hlclp5C2fXqfXKfe5JK6IiZKx0b8Do=
+	b=YmyzuZboxxiGcCnPb2tq3bxD+zoX360TlG+fgafIIiCyAFUNDpZjyKeaFQjUqQ6H9
+	 TURA5RCbskv6e4PSr+X0Mg1HhuVCZDhEE+NLwXtSgZOxqdQuPqRi5MujlVT2M3VSYS
+	 wowqMBpxvtPMuYtASEH+6fE7r3GQ3qsFC+fko5Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Samson Tam <Samson.Tam@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Amir Shetaia <Amir.Shetaia@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0220/1102] drm/amd/display: Check for sharpening case when calculating max vtaps for scaler
-Date: Thu, 17 Sep 2026 16:02:43 +0100
-Message-ID: <20260917151545.102312554@linuxfoundation.org>
+Subject: [PATCH 6.12 0221/1102] drm/amdkfd: fix UAF race in destroy_queue_cpsch
+Date: Thu, 17 Sep 2026 16:02:44 +0100
+Message-ID: <20260917151545.127651950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,58 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samson Tam <Samson.Tam@amd.com>
+From: Alysa Liu <Alysa.Liu@amd.com>
 
-[ Upstream commit 4d8cfd570386eb0b6cb8aa0ca9e9db60a0404337 ]
+[ Upstream commit ac081deaf16a639ea7dff2f285fe421a33c1ade0 ]
 
-[Why & How]
-- calc_lb_num_partitions has check when scaler is not enabled to use
- larger LB in calculations for max vtaps based on viewport being 1:1
-- however, scaler is forced on when sharpening is enabled, so need
- to consider this in check
-- taps is predetermined in spl_get_optimal_number_of_taps prior to
- calc_lb_num_partitions.  Add check for taps not 1 to handle
- sharpening case
+wait_on_destroy_queue() drops locks to wait for queue resume, allowing
+a concurrent destroy to free the queue. Use is_being_destroyed flag to
+serialize destruction.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Samson Tam <Samson.Tam@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Amir Shetaia <Amir.Shetaia@amd.com>
+Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-index 3e24ac07eebd9..d7fd738dc2a89 100644
---- a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-@@ -389,9 +389,11 @@ void dscl401_spl_calc_lb_num_partitions(
- 		lb_memory_size_a = 1290;
- 	} else if (lb_config == LB_MEMORY_CONFIG_3) {
- 		if (scl_data->viewport.width  == scl_data->h_active &&
--			scl_data->viewport.height == scl_data->v_active) {
-+			scl_data->viewport.height == scl_data->v_active &&
-+			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
- 			/* 420 mode: luma using all 3 mem from Y, plus 3rd mem from Cr and Cb */
- 			/* use increased LB size for calculation only if Scaler not enabled */
-+			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
- 			lb_memory_size = 970 + 1290 + 1170 + 1170 + 1170;
- 			lb_memory_size_c = 970 + 1290;
- 			lb_memory_size_a = 970 + 1290 + 1170;
-@@ -403,8 +405,10 @@ void dscl401_spl_calc_lb_num_partitions(
- 		}
- 	} else {
- 		if (scl_data->viewport.width  == scl_data->h_active &&
--			scl_data->viewport.height == scl_data->v_active) {
-+			scl_data->viewport.height == scl_data->v_active &&
-+			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
- 			/* use increased LB size for calculation only if Scaler not enabled */
-+			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
- 			lb_memory_size = 970 + 1290 + 1170;
- 			lb_memory_size_c = 970 + 1290 + 1170;
- 			lb_memory_size_a = 970 + 1290 + 1170;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 96e05078c524d..f2a7e91e20947 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2362,6 +2362,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
+ 	if (pdd->qpd.is_debug)
+ 		return ret;
+ 
++	if (q->properties.is_being_destroyed)
++		return -EBUSY;
++
+ 	q->properties.is_being_destroyed = true;
+ 
+ 	if (pdd->process->debug_trap_enabled && q->properties.is_suspended) {
+@@ -2374,6 +2377,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
+ 		dqm_lock(dqm);
+ 	}
+ 
++	if (ret)
++		q->properties.is_being_destroyed = false;
++
+ 	return ret;
+ }
+ 
+@@ -2467,7 +2473,7 @@ static int destroy_queue_cpsch(struct device_queue_manager *dqm,
+ 	return retval;
+ 
+ failed_try_destroy_debugged_queue:
+-
++	q->properties.is_being_destroyed = false;
+ 	dqm_unlock(dqm);
+ 	return retval;
+ }
 -- 
 2.53.0
 
