@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C725293F4;
-	Thu, 17 Sep 2026 16:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6179C3A7F4B;
+	Thu, 17 Sep 2026 16:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661177; cv=none; b=XNS6XqAUFlio6Kt02Z+RtDe62sHApIWvExJ3TeGjqVzva0UgQpuMr0g5bkL1rUR4rOzyMwRoHHQQtQvQ5RK7av9VaJkfUEJWGDaLiiDbJ/ZGBqmx1pZ63r2G9x4F5JrIVrhbp/uyxm2o5R0mNSBbomYqlRGys2NBOnyrH+dYTA8=
+	t=1789661180; cv=none; b=oiGv2CGo4ClpRdeLCjLMGVzuVHMj0bW6kfSInUncfbdTd99PFbMjqsTgvsj5Vo9XXvM9D9x//o7oVb0cvAQckk+HRZPg4X4bvlLoIUwhWvWrzKhJs0bmeUbZ3CX3y0SbLXu2wDV8YG0twmS0NdamK6QR+l3p022I82J0Y7mZHuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661177; c=relaxed/simple;
-	bh=eVZv99EnOkL7Pn9jatgZna6AdNi2nlTc2ciFH7CWeFw=;
+	s=arc-20240116; t=1789661180; c=relaxed/simple;
+	bh=igD12QvkHrxWqFmgw7gcxgnrV8Vksch2E+c3bRSqSy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laIJHyDMydDTLbPE8Ufl41Ol/QV81RccOHmXNnxSk9cAL+8Z49HcgKwPFsYEw7JQlXdPKwdwTcjlCCYXkRSz62i6YE5BrAC7dKcJYb4qO06cZDojL10pP/eRZK4chn5obgUwGIUfbgPBvptw1r2B54ZmcSKnVo9/cBDq7Vhkt0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzRvl1NU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DlpmxkZ5Ofak9rOOs7UFQ3TBbQuku140CnpQYbaWVQkPWu3IbyLguoEL/Sh0aCGonzR3HdM2jKEr/hJCRqaO1WVfLqAxBqjQzPJJNmv8LhBLF9Fs2xaP0M38OMnOX01ECu4JV27yvGy68P+GXaZepqlByZrXuT0Xp/PV6oMuk0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwj9Qv0v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzRvl1NU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89141F000FF;
-	Thu, 17 Sep 2026 16:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwj9Qv0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F31F000FF;
+	Thu, 17 Sep 2026 16:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661176;
-	bh=IcLQjBOfVRlf8j2KU2kpvtrN8pvEuaNPCBcVwHEQUXI=;
+	s=korg; t=1789661179;
+	bh=JjO+k8/FllnRyBuIqMoU+L17L0y0PRWYI55lqEE9Irw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzRvl1NUVVPq65GrZztvGUSqSM2JFbrBacatQZ8T8YXxEPjQFFrCJOoeXL4x8VCkG
-	 PKXQ0wEExFJeAJoaVUeioZr3egvNAjIiD2N9aOQ/MlIOpW48VeqR8sfHiRpw5tr+yV
-	 PRcwAEkJYrQ6/F6QyFqUjCD2LN+z7kkKq79lftns=
+	b=Pwj9Qv0vC2mCu9FZiazyApZ14kAGA7tqByMsY4xquw4ZGNqxCOyomHOS3GgmLbWzL
+	 w4NT3affvWmLRkJiavUsZWCVJFtNi9jNOeqmb/kmB1sgyfgcZdr/oSk8c8pl6RUPrR
+	 PwgkG/PJAbNav+djdC78T0feQI3KIVDxE4lPbwG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Javier Achirica <jachirica@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0107/1250] media: video-i2c: use vb2_video_unregister_device on driver removal
-Date: Thu, 17 Sep 2026 15:58:22 +0100
-Message-ID: <20260917151554.900224300@linuxfoundation.org>
+Subject: [PATCH 6.18 0108/1250] bus: mhi: host: pci_generic: Round up nr_irqs to power of two
+Date: Thu, 17 Sep 2026 15:58:23 +0100
+Message-ID: <20260917151554.929665824@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,37 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Javier Achirica <jachirica@gmail.com>
 
-[ Upstream commit 56384b486b80ce4a2bc93689aae49995f908f90d ]
+[ Upstream commit 86f6dc05ea051fa03ebc03174bc00f734593465d ]
 
-The driver uses vb2_fop_release() as its file release operation, so
-vb2_video_unregister_device() should be used instead of
-video_unregister_device() during driver removal.
+When an MHI device uses standard MSI, the PCI core requires the allocated
+number of vectors to be a strict power of two. But devices will only ask
+for the irqs they need, so they might not be properly aligned.
 
-This ensures that the vb2 queue is properly disconnected before the
-video device is unregistered.
+Make sure a power-of-2 number of vectors is requested.
 
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Javier Achirica <jachirica@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/CACixm21q7b_diEx5COZxVZm9EhZ0hnakM_WBjEWcCsznfWeniw@mail.gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/video-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/mhi/host/pci_generic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index 8909b5173eb42..20889f94610cb 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -892,7 +892,7 @@ static void video_i2c_remove(struct i2c_client *client)
- 	if (data->chip->set_power)
- 		data->chip->set_power(data, false);
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 646f3bcdc636a..a5b47728f9aba 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -1139,7 +1139,8 @@ static int mhi_pci_get_irqs(struct mhi_controller *mhi_cntrl,
+ 	 */
+ 	mhi_cntrl->nr_irqs = 1 + mhi_cntrl_config->num_events;
  
--	video_unregister_device(&data->vdev);
-+	vb2_video_unregister_device(&data->vdev);
- }
- 
- #ifdef CONFIG_PM
+-	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhi_cntrl->nr_irqs, PCI_IRQ_MSIX | PCI_IRQ_MSI);
++	nr_vectors = pci_alloc_irq_vectors(pdev, 1, roundup_pow_of_two(mhi_cntrl->nr_irqs),
++					   PCI_IRQ_MSIX | PCI_IRQ_MSI);
+ 	if (nr_vectors < 0) {
+ 		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
+ 			nr_vectors);
 -- 
 2.53.0
 
