@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800213B7752;
-	Thu, 17 Sep 2026 19:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6323A9D90;
+	Thu, 17 Sep 2026 19:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671705; cv=none; b=DpzEhPRDGBa16V5ruq4pTnFYZ3sbLLzCmVvN2X75jbGiZ5UBO+sv+o9gOTZu+ujlZ7hqaUJGmtFQc1uSLCw4cBtCUZtUYepZu1dKSHd2v/2qCwoc72AnZzv5S80C8tHDqIglH35ICdYOWDGv5zMrjEw7kEM6Y4//2VLnTOLT6Us=
+	t=1789671709; cv=none; b=bcJZQuffgkBZLE64muMSpEt8N44g9QSEELkLnhl3+hBQi44+T/L8ItxfW7EivUVwtGqXfKP64z4o/2E4T6VTQ2BiIWxRpX14TR40R7koe5efWlqYC/IVAEHGynfhCn8IDk6gPmV4nye+gEeWccNRz9ijVyVQridUCWUdcICnfRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671705; c=relaxed/simple;
-	bh=ME0Kj3l0V7JqhKS2iO+HLLrjyMX8f3O8he6WGvRj3kM=;
+	s=arc-20240116; t=1789671709; c=relaxed/simple;
+	bh=d68l/Q8ZYv176tpLZ2EPy9bCA8UsKn9miNzrdFzT4vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JziNGqbZGSQgxwvWRPHWHWBjdqjHcy22+kHUlLozfOcA1dOZegPo2qyYLf4m+XdS/gQh8nBhGPoY2iwTq1LNOIYmE809wftk/W4md8FJzJRkdGssyETOttrOY4jnOBJ9HqyzEXSAGDwTaBNiIQZwuRK71MnGQqsUul2goFqIQeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rx0Gvo23; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eA3dLNCs/0NfrsZKHuFlcvoexWNsjvy2nqJIeoX4rmKT9cxstPzf2zkGjJSrtOUfwgD2Y/dB2TqtvXZH2wlACEmmnvhqhivI1lsTw9pYy4CgzhlTVyjy+amPX2Ycd2FOMX8+pjudDwsk0LK89VgeCKGfXCfy2MuonEn0qn+ZbVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mbuegXS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rx0Gvo23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F761F000FF;
-	Thu, 17 Sep 2026 19:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mbuegXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AD81F000FF;
+	Thu, 17 Sep 2026 19:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671704;
-	bh=iyITG1QNo9UoAKTNMeioYBLNizmhSxywCOZ/VZumRKw=;
+	s=korg; t=1789671707;
+	bh=BlrBPx8ZcUrEkrsOwyrrTLAnC4H8J8rc8syi6vBGkQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rx0Gvo23rcuJdtmjZD52nTMxwtznAj7I0W57z50va+zJLmXr9LBSpY/qFMFcoPr6C
-	 8hxRxhJNNVMWtwPluFFYkjj5j83HosFmY4QLoVcJ2+C6pD1DhMo9dCCwwQ1DlQxWlU
-	 B/Du+GK9aP3Rht99WnD6neeCnWZA1NcQTsQ6GY8g=
+	b=1mbuegXSxDwVDq+uJ+1cdoNArcVlDZn9ciwrob/wbdQcmEkvmwdqyxa6JOKFJFs9v
+	 wmTFM6yeLv//jxkUYVadj/TzwA+GsBPbIRVKLJ3iX9xHI3Fu12i/YdG/31tU3j7TgF
+	 M21d5xJB7qlB4/7P51Afb0PtDWhSLwC4dR7OxARU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Sterba <dsterba@suse.com>,
+	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fan Ni <fan.ni@samsung.com>,
+	Gregory Price <gourry@gourry.net>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1046/1102] btrfs: pass struct btrfs_inode to btrfs_sync_inode_flags_to_i_flags()
-Date: Thu, 17 Sep 2026 16:16:29 +0100
-Message-ID: <20260917151607.058086081@linuxfoundation.org>
+Subject: [PATCH 6.12 1064/1102] efi/cper, cxl: Make definitions and structures global
+Date: Thu, 17 Sep 2026 16:16:47 +0100
+Message-ID: <20260917151607.529632511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,129 +56,259 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-[ Upstream commit 4f27a693940bcf313d17792ac4ec13a83f71cf25 ]
+[ Upstream commit 958c3a6706863f9f77b21c90d2428473441cd8a1 ]
 
-Pass a struct btrfs_inode to btrfs_sync_inode_flags_to_i_flags() as it's
-an internal interface.
+In preparation to add tracepoint support, move protocol error UUID
+definition to a common location, Also, make struct CXL RAS capability,
+cxl_cper_sec_prot_err and CPER validation flags global for use across
+different modules.
 
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 15f7c86215e8 ("btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag")
+Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20250123084421.127697-3-Smita.KoralahalliChannabasappa@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 6625ca499c31 ("acpi/apei/ghes: Use raw_spinlock_t for CXL CPER work locks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c  |    4 ++--
- fs/btrfs/ioctl.c  |   19 +++++++++----------
- fs/btrfs/ioctl.h  |    4 ++--
- fs/btrfs/verity.c |    4 ++--
- 4 files changed, 15 insertions(+), 16 deletions(-)
+ drivers/firmware/efi/cper.c     |    1 
+ drivers/firmware/efi/cper_cxl.c |   35 -----------------
+ drivers/firmware/efi/cper_cxl.h |   51 -------------------------
+ include/cxl/event.h             |   80 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/cper.h            |    4 ++
+ 5 files changed, 86 insertions(+), 85 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3975,7 +3975,7 @@ cache_acl:
- 		break;
- 	}
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -25,6 +25,7 @@
+ #include <linux/bcd.h>
+ #include <acpi/ghes.h>
+ #include <ras/ras_event.h>
++#include <cxl/event.h>
+ #include "cper_cxl.h"
  
--	btrfs_sync_inode_flags_to_i_flags(inode);
-+	btrfs_sync_inode_flags_to_i_flags(BTRFS_I(inode));
- 	return 0;
- }
- 
-@@ -6212,7 +6212,7 @@ static void btrfs_inherit_iflags(struct
- 			inode->flags |= BTRFS_INODE_NODATASUM;
- 	}
- 
--	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
-+	btrfs_sync_inode_flags_to_i_flags(inode);
- }
- 
- int btrfs_create_new_inode(struct btrfs_trans_handle *trans,
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -166,25 +166,24 @@ static unsigned int btrfs_inode_flags_to
  /*
-  * Update inode->i_flags based on the btrfs internal flags.
+--- a/drivers/firmware/efi/cper_cxl.c
++++ b/drivers/firmware/efi/cper_cxl.c
+@@ -8,27 +8,9 @@
   */
--void btrfs_sync_inode_flags_to_i_flags(struct inode *inode)
-+void btrfs_sync_inode_flags_to_i_flags(struct btrfs_inode *inode)
+ 
+ #include <linux/cper.h>
++#include <cxl/event.h>
+ #include "cper_cxl.h"
+ 
+-#define PROT_ERR_VALID_AGENT_TYPE		BIT_ULL(0)
+-#define PROT_ERR_VALID_AGENT_ADDRESS		BIT_ULL(1)
+-#define PROT_ERR_VALID_DEVICE_ID		BIT_ULL(2)
+-#define PROT_ERR_VALID_SERIAL_NUMBER		BIT_ULL(3)
+-#define PROT_ERR_VALID_CAPABILITY		BIT_ULL(4)
+-#define PROT_ERR_VALID_DVSEC			BIT_ULL(5)
+-#define PROT_ERR_VALID_ERROR_LOG		BIT_ULL(6)
+-
+-/* CXL RAS Capability Structure, CXL v3.0 sec 8.2.4.16 */
+-struct cxl_ras_capability_regs {
+-	u32 uncor_status;
+-	u32 uncor_mask;
+-	u32 uncor_severity;
+-	u32 cor_status;
+-	u32 cor_mask;
+-	u32 cap_control;
+-	u32 header_log[16];
+-};
+-
+ static const char * const prot_err_agent_type_strs[] = {
+ 	"Restricted CXL Device",
+ 	"Restricted CXL Host Downstream Port",
+@@ -40,21 +22,6 @@ static const char * const prot_err_agent
+ 	"CXL Upstream Switch Port",
+ };
+ 
+-/*
+- * The layout of the enumeration and the values matches CXL Agent Type
+- * field in the UEFI 2.10 Section N.2.13,
+- */
+-enum {
+-	RCD,	/* Restricted CXL Device */
+-	RCH_DP,	/* Restricted CXL Host Downstream Port */
+-	DEVICE,	/* CXL Device */
+-	LD,	/* CXL Logical Device */
+-	FMLD,	/* CXL Fabric Manager managed Logical Device */
+-	RP,	/* CXL Root Port */
+-	DSP,	/* CXL Downstream Switch Port */
+-	USP,	/* CXL Upstream Switch Port */
+-};
+-
+ void cxl_cper_print_prot_err(const char *pfx,
+ 			     const struct cxl_cper_sec_prot_err *prot_err)
  {
--	struct btrfs_inode *binode = BTRFS_I(inode);
- 	unsigned int new_fl = 0;
+--- a/drivers/firmware/efi/cper_cxl.h
++++ b/drivers/firmware/efi/cper_cxl.h
+@@ -10,57 +10,6 @@
+ #ifndef LINUX_CPER_CXL_H
+ #define LINUX_CPER_CXL_H
  
--	if (binode->flags & BTRFS_INODE_SYNC)
-+	if (inode->flags & BTRFS_INODE_SYNC)
- 		new_fl |= S_SYNC;
--	if (binode->flags & BTRFS_INODE_IMMUTABLE)
-+	if (inode->flags & BTRFS_INODE_IMMUTABLE)
- 		new_fl |= S_IMMUTABLE;
--	if (binode->flags & BTRFS_INODE_APPEND)
-+	if (inode->flags & BTRFS_INODE_APPEND)
- 		new_fl |= S_APPEND;
--	if (binode->flags & BTRFS_INODE_NOATIME)
-+	if (inode->flags & BTRFS_INODE_NOATIME)
- 		new_fl |= S_NOATIME;
--	if (binode->flags & BTRFS_INODE_DIRSYNC)
-+	if (inode->flags & BTRFS_INODE_DIRSYNC)
- 		new_fl |= S_DIRSYNC;
--	if (binode->ro_flags & BTRFS_INODE_RO_VERITY)
-+	if (inode->ro_flags & BTRFS_INODE_RO_VERITY)
- 		new_fl |= S_VERITY;
+-/* CXL Protocol Error Section */
+-#define CPER_SEC_CXL_PROT_ERR						\
+-	GUID_INIT(0x80B9EFB4, 0x52B5, 0x4DE3, 0xA7, 0x77, 0x68, 0x78,	\
+-		  0x4B, 0x77, 0x10, 0x48)
+-
+-#pragma pack(1)
+-
+-/* Compute Express Link Protocol Error Section, UEFI v2.10 sec N.2.13 */
+-struct cxl_cper_sec_prot_err {
+-	u64 valid_bits;
+-	u8 agent_type;
+-	u8 reserved[7];
+-
+-	/*
+-	 * Except for RCH Downstream Port, all the remaining CXL Agent
+-	 * types are uniquely identified by the PCIe compatible SBDF number.
+-	 */
+-	union {
+-		u64 rcrb_base_addr;
+-		struct {
+-			u8 function;
+-			u8 device;
+-			u8 bus;
+-			u16 segment;
+-			u8 reserved_1[3];
+-		};
+-	} agent_addr;
+-
+-	struct {
+-		u16 vendor_id;
+-		u16 device_id;
+-		u16 subsystem_vendor_id;
+-		u16 subsystem_id;
+-		u8 class_code[2];
+-		u16 slot;
+-		u8 reserved_1[4];
+-	} device_id;
+-
+-	struct {
+-		u32 lower_dw;
+-		u32 upper_dw;
+-	} dev_serial_num;
+-
+-	u8 capability[60];
+-	u16 dvsec_len;
+-	u16 err_len;
+-	u8 reserved_2[4];
+-};
+-
+-#pragma pack()
+-
+ void cxl_cper_print_prot_err(const char *pfx,
+ 			     const struct cxl_cper_sec_prot_err *prot_err);
  
--	set_mask_bits(&inode->i_flags,
-+	set_mask_bits(&inode->vfs_inode.i_flags,
- 		      S_SYNC | S_APPEND | S_IMMUTABLE | S_NOATIME | S_DIRSYNC |
- 		      S_VERITY, new_fl);
- }
-@@ -395,7 +394,7 @@ update_flags:
- 		mapping_clear_stable_writes(inode->vfs_inode.i_mapping);
- 	else
- 		mapping_set_stable_writes(inode->vfs_inode.i_mapping);
--	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
-+	btrfs_sync_inode_flags_to_i_flags(inode);
- 	inode_inc_iversion(&inode->vfs_inode);
- 	inode_set_ctime_current(&inode->vfs_inode);
- 	ret = btrfs_update_inode(trans, inode);
---- a/fs/btrfs/ioctl.h
-+++ b/fs/btrfs/ioctl.h
-@@ -9,8 +9,8 @@ struct file;
- struct dentry;
- struct mnt_idmap;
- struct fileattr;
--struct inode;
- struct io_uring_cmd;
-+struct btrfs_inode;
- struct btrfs_fs_info;
- struct btrfs_ioctl_balance_args;
+--- a/include/cxl/event.h
++++ b/include/cxl/event.h
+@@ -152,6 +152,86 @@ struct cxl_cper_work_data {
+ 	struct cxl_cper_event_rec rec;
+ };
  
-@@ -20,7 +20,7 @@ int btrfs_fileattr_get(struct dentry *de
- int btrfs_fileattr_set(struct mnt_idmap *idmap,
- 		       struct dentry *dentry, struct fileattr *fa);
- int btrfs_ioctl_get_supported_features(void __user *arg);
--void btrfs_sync_inode_flags_to_i_flags(struct inode *inode);
-+void btrfs_sync_inode_flags_to_i_flags(struct btrfs_inode *inode);
- void btrfs_update_ioctl_balance_args(struct btrfs_fs_info *fs_info,
- 				     struct btrfs_ioctl_balance_args *bargs);
++#define PROT_ERR_VALID_AGENT_TYPE		BIT_ULL(0)
++#define PROT_ERR_VALID_AGENT_ADDRESS		BIT_ULL(1)
++#define PROT_ERR_VALID_DEVICE_ID		BIT_ULL(2)
++#define PROT_ERR_VALID_SERIAL_NUMBER		BIT_ULL(3)
++#define PROT_ERR_VALID_CAPABILITY		BIT_ULL(4)
++#define PROT_ERR_VALID_DVSEC			BIT_ULL(5)
++#define PROT_ERR_VALID_ERROR_LOG		BIT_ULL(6)
++
++/*
++ * The layout of the enumeration and the values matches CXL Agent Type
++ * field in the UEFI 2.10 Section N.2.13,
++ */
++enum {
++	RCD,	/* Restricted CXL Device */
++	RCH_DP,	/* Restricted CXL Host Downstream Port */
++	DEVICE,	/* CXL Device */
++	LD,	/* CXL Logical Device */
++	FMLD,	/* CXL Fabric Manager managed Logical Device */
++	RP,	/* CXL Root Port */
++	DSP,	/* CXL Downstream Switch Port */
++	USP,	/* CXL Upstream Switch Port */
++};
++
++#pragma pack(1)
++
++/* Compute Express Link Protocol Error Section, UEFI v2.10 sec N.2.13 */
++struct cxl_cper_sec_prot_err {
++	u64 valid_bits;
++	u8 agent_type;
++	u8 reserved[7];
++
++	/*
++	 * Except for RCH Downstream Port, all the remaining CXL Agent
++	 * types are uniquely identified by the PCIe compatible SBDF number.
++	 */
++	union {
++		u64 rcrb_base_addr;
++		struct {
++			u8 function;
++			u8 device;
++			u8 bus;
++			u16 segment;
++			u8 reserved_1[3];
++		};
++	} agent_addr;
++
++	struct {
++		u16 vendor_id;
++		u16 device_id;
++		u16 subsystem_vendor_id;
++		u16 subsystem_id;
++		u8 class_code[2];
++		u16 slot;
++		u8 reserved_1[4];
++	} device_id;
++
++	struct {
++		u32 lower_dw;
++		u32 upper_dw;
++	} dev_serial_num;
++
++	u8 capability[60];
++	u16 dvsec_len;
++	u16 err_len;
++	u8 reserved_2[4];
++};
++
++#pragma pack()
++
++/* CXL RAS Capability Structure, CXL v3.0 sec 8.2.4.16 */
++struct cxl_ras_capability_regs {
++	u32 uncor_status;
++	u32 uncor_mask;
++	u32 uncor_severity;
++	u32 cor_status;
++	u32 cor_mask;
++	u32 cap_control;
++	u32 header_log[16];
++};
++
+ #ifdef CONFIG_ACPI_APEI_GHES
+ int cxl_cper_register_work(struct work_struct *work);
+ int cxl_cper_unregister_work(struct work_struct *work);
+--- a/include/linux/cper.h
++++ b/include/linux/cper.h
+@@ -89,6 +89,10 @@ enum {
+ #define CPER_NOTIFY_DMAR						\
+ 	GUID_INIT(0x667DD791, 0xC6B3, 0x4c27, 0x8A, 0x6B, 0x0F, 0x8E,	\
+ 		  0x72, 0x2D, 0xEB, 0x41)
++/* CXL Protocol Error Section */
++#define CPER_SEC_CXL_PROT_ERR						\
++	GUID_INIT(0x80B9EFB4, 0x52B5, 0x4DE3, 0xA7, 0x77, 0x68, 0x78,	\
++		  0x4B, 0x77, 0x10, 0x48)
  
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -485,7 +485,7 @@ static int rollback_verity(struct btrfs_
- 		goto out;
- 	}
- 	inode->ro_flags &= ~BTRFS_INODE_RO_VERITY;
--	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
-+	btrfs_sync_inode_flags_to_i_flags(inode);
- 	ret = btrfs_update_inode(trans, inode);
- 	if (ret) {
- 		btrfs_abort_transaction(trans, ret);
-@@ -552,7 +552,7 @@ static int finish_verity(struct btrfs_in
- 		goto out;
- 	}
- 	inode->ro_flags |= BTRFS_INODE_RO_VERITY;
--	btrfs_sync_inode_flags_to_i_flags(&inode->vfs_inode);
-+	btrfs_sync_inode_flags_to_i_flags(inode);
- 	ret = btrfs_update_inode(trans, inode);
- 	if (ret)
- 		goto end_trans;
+ /* CXL Event record UUIDs are formatted as GUIDs and reported in section type */
+ /*
 
 
