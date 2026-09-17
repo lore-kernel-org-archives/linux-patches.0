@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653EA3CEB9E;
-	Thu, 17 Sep 2026 18:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635C64B44C4;
+	Thu, 17 Sep 2026 18:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671103; cv=none; b=b3RR0fzb4aX4GkYtD4Rs3HUZT8kw6zeTKHaw9lX0W6/Fm+l/zozEriKxojBGOZQ3D296xmA8WRcEakF0j67thXGPO247Vti+7FFW675eKzakglYAouRCx8+WX9wO76mQ6VHVQadyaP3T7kxkEXuoTSX4JpomfUZEx9IgReK7Qkk=
+	t=1789671106; cv=none; b=uenHcuFEW+riS7bc4gH4zsfIS5HK4SPpZOM8wFLxa/MHu5PwdsahPSIiX7a4lJ7XlxdMSrzx6MxvcAwbjGgrO7no66uSqMqy4qDcfku06sg/2j6KPZB9xxSwR100CjYBMDem8xt3AZzhME5D8qVQpWB3Hwhhwk1DyivQAAoIsJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671103; c=relaxed/simple;
-	bh=VM3UjkkGT7pcnVu7/cBdfyxUyjVB2sZ9XTuQfviciYc=;
+	s=arc-20240116; t=1789671106; c=relaxed/simple;
+	bh=/U6tYkqyTy1GhCAYUmvTT6ATpz6cRT5ZgtsoflMiZCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1pFFN2h/RNWzWtx/hdosOYnCpQy/GukHVgr28Rr8+Wc3t9f6r4KiZ4g9msmGPKlejmhgqkQKkO/r7JqcF33WbIYll+jkoDfwe5n01EV0J6jMoupFYddE+7QiUqcNF45vID23T2vvRBgHUGpB6DY5BYRDkZQ35zB0JF1FDd/Vn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWVd+BiQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZivbQbD22lh91XHzPt6dq4+fBeEFrIDPcd0V/kWVpCGKWyD8+DI476Mth9VGDgCcYfnSLBjV907dveUUWQdyzmDhXQwRUn7QZasauxsWTYJySKjbDkPEOxmWhW8Knioe1UMeeh1moDtgcnvGsKqHELFvEprK4xUhQOu0J+mJLDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VofvtApo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWVd+BiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2731F00898;
-	Thu, 17 Sep 2026 18:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VofvtApo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63451F000FF;
+	Thu, 17 Sep 2026 18:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671102;
-	bh=0cMcxMWMgvLjuE+nDPtjrEndn89tWmdbbNf1nmHwgd4=;
+	s=korg; t=1789671105;
+	bh=Lj0LMgTtt+osem8mNMcd2tUw8wBDK0PxZPwdgNixz5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aWVd+BiQtwadAngm3mQwT2BS+HXxAHvavVgreCR0RORobRDdPlTwPS09v6cfu5mY3
-	 QptYSFpCtVe/viROYA1eaQ0lDotQvU/tI5k0hK6skEFLf3uZmcZgLm6HtBwL1wFBFL
-	 QUAiwtHxfHgTA0RX8eFALcPSZMWQKkfHPItM/RxM=
+	b=VofvtApoodJcnpBUg8gKMSP1kTo8JKmrdxfkH8RLpf4qK0iGn37r2DZCBqHo80k2S
+	 WNZOR9Xcr/0iuTDmJpgr3NFpxiL/jRNOEfTQj/QeSK2ri2BFOAOXctxi5HR9r8t03G
+	 iUGUbso8muxwH6MnuHC9hkgJ4g69NiFz8yeSYqiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 0841/1102] net/sched: act_api: release all action references on NEWACTION failure
-Date: Thu, 17 Sep 2026 16:13:04 +0100
-Message-ID: <20260917151601.634891320@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 0868/1102] afs: Fix incorrect free in candidate cleanup in afs_lookup_server()
+Date: Thu, 17 Sep 2026 16:13:31 +0100
+Message-ID: <20260917151602.348171222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,61 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-commit 478eb5abb51931a152abab068f8a717b7ff480fd upstream.
+commit 044d596094af4b769fb8e1173dff0d08bd68db6c upstream.
 
-When a batched RTM_NEWACTION request replaces an existing action,
-tcf_idr_check_alloc() takes a temporary reference on it. If a later
-action fails to initialize, tcf_action_destroy() uses strict release
-semantics to clean up the actions initialized so far. For an action
-bound to a filter, the strict check returns -EPERM without dropping
-the temporary reference.
+Fix afs_lookup_server() to not free an existing server's endpoint state
+when cleaning up a candidate server.  The candidate record doesn't have an
+endpoint state yet at this point, so the free for that can just be removed.
 
-This error also makes tcf_action_destroy() return before releasing
-subsequent entries. Any new action initialized between the bound
-action and the failing entry is leaked together with its reserved
-IDR slot, preventing reuse of its index.
-
-Use tcf_idr_release() to drop each reference held by the batch without
-rejecting bound actions. This allows cleanup to continue through all
-initialized entries and preserves the module reference release when
-an action is destroyed. Explicit action deletion and flushing retain
-their separate bind-count checks.
-
-Fixes: 55334a5db5cd ("net_sched: act: refuse to remove bound action outside")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260909070336.32979-2-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4882ba78574e ("afs: Fix afs_server ref accounting")
+Link: https://sashiko.dev/#/patchset/20260729160108.2031453-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260902121024.3328255-4-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/afs/server.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1147,18 +1147,13 @@ EXPORT_SYMBOL(tcf_action_exec);
- 
- int tcf_action_destroy(struct tc_action *actions[], int bind)
- {
--	const struct tc_action_ops *ops;
- 	struct tc_action *a;
- 	int ret = 0, i;
- 
- 	tcf_act_for_each_action(i, a, actions) {
- 		actions[i] = NULL;
--		ops = a->ops;
--		ret = __tcf_idr_release(a, bind, true);
--		if (ret == ACT_P_DELETED)
--			module_put(ops->owner);
--		else if (ret < 0)
--			return ret;
-+		/* Drop our reference even if the action is still bound to a filter. */
-+		ret = tcf_idr_release(a, bind);
+--- a/fs/afs/server.c
++++ b/fs/afs/server.c
+@@ -241,7 +241,6 @@ struct afs_server *afs_lookup_server(str
+ out:
+ 	afs_put_addrlist(alist, afs_alist_trace_put_server_create);
+ 	if (candidate) {
+-		kfree(rcu_access_pointer(server->endpoint_state));
+ 		kfree(candidate);
+ 		afs_dec_servers_outstanding(cell->net);
  	}
- 	return ret;
- }
 
 
