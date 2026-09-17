@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955B64E9C3A;
-	Thu, 17 Sep 2026 18:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F278C4F3ED5;
+	Thu, 17 Sep 2026 18:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668471; cv=none; b=aPW1qCk5zmIni26pQgGIzCWVGDV7QAuH3Kb33k5XVE+M1DldBlOm8RL7PtDwyEFFRTgd83Yq5pcW2XUhuyGvg1DfBoo/3ixGmz6vlMiuomgAoAmh4UkmEyIWMknSOeqp6XiFbquhao9EVPqLlYr8McUWTlaSJPE73oxyG8H1qVc=
+	t=1789668473; cv=none; b=Rwe4VoFMFlLmkCW46i9DRotItML/RjgMnzPDNWucyUm3USsGLs/tmerjRrJ5RxKUAlnRz4OetZh8uEvYTPlf1SKh2689UFYt+0S+Vlc84EdqrRww9c0z0F8SH5EDbPaT2465ECLctms0jSr/KAPJX3yruIY0lBXZw7ESwtOX05w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668471; c=relaxed/simple;
-	bh=ULQUp0s+iycodXB53mno+LVHWbLCEbgusrCRG/j/Krk=;
+	s=arc-20240116; t=1789668473; c=relaxed/simple;
+	bh=9lKGonEdwmnAUvrF1XEOCyyyM0fj9UO6xIONiwn4fnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlJDxF3eDJmEQiSJnvMalTaSbOLtSRz8T2nTp6w+rKJAaAIhjN7qVr0ss1r4dIdqsGffree1iBop3TVXqkuhfHyBsnwNWrz7O6R1QTj+alLtRkTDvn7woWSSQQvFkYKuYKkh9GRujcNvNiyxCbqTYRzXFrYIY1VRMAo/bLCW11E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4gmwS0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L6qPhGbRJGnUvLlpCpPS1Urdd35emBkNaBYQIqv0blji/O4RixDisMKg6FtKPnk5al8ETMKHWrwD0sh2oR2fN/c7ILoAxVkRB/S+KFqAh6tW7XCSMZ2cGiUCtdw8UKwJ8dsAz2lRZrzAA/vxaPRqZcB78AiuyvYx4mBIq5N7jng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmQoV46g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4gmwS0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46C81F000FF;
-	Thu, 17 Sep 2026 18:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmQoV46g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B571F000FF;
+	Thu, 17 Sep 2026 18:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668468;
-	bh=UxeWL8m2noE780gHtg+QGiMtTXlBKNQ7qiaBFQvt1NA=;
+	s=korg; t=1789668471;
+	bh=BKlAtVtdf77FxcedIIQqMIcJXguqhpSqU06I/Ki/NwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4gmwS0x4o16OSKdi0zxGqh8WZS9pc04SY7vbiRDcfZ5NLQxmAiNrGWJGuju0lv45
-	 kLD6cZUGLAVIxCSS3zVezyD7ZUl4nJSOm7Sg6viXQnzfC3v4DOX2/mgNU+y1YtiamV
-	 0JG9PQ44xnhpnExAOx9c6GZnp0NCjA5F5uOfOlT8=
+	b=UmQoV46g9Shob74rkE8t7ACHHdjhEakNGEy/mh5cm3eT9Vb7/Udqk+cqPbgHmUbRM
+	 K6+W0yyhVou9kqNR/O4X8MNAAG9D0N3rFqAPS9RVgXm6JbkvqHdvK2pKKjOYDtCFj5
+	 5BFZaRxJFaJOheZm8+I170gHoxxiUPwf+hW+eUaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caio Ramos <caioramos97@gmail.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0435/1102] ALSA: hda/realtek: Add HDA_CODEC_QUIRK for Samsung 750XBE/730XBE
-Date: Thu, 17 Sep 2026 16:06:18 +0100
-Message-ID: <20260917151550.595302854@linuxfoundation.org>
+Subject: [PATCH 6.12 0436/1102] wifi: mwifiex: replace one-element arrays with flexible array members
+Date: Thu, 17 Sep 2026 16:06:19 +0100
+Message-ID: <20260917151550.620248066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,40 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Georgi Valkov <gvalkov@gmail.com>
 
-[ Upstream commit 740b3c6780ec1f65aba2bc99a3f41d70bdb13477 ]
+[ Upstream commit 1cb5845a58d8e1f85d5766c6fbcbfddf96c212a1 ]
 
-Add a codec SSID quirk for Samsung ELECTRONICS 750XBE/730XBE using
-HDA_CODEC_QUIRK() instead of SND_PCI_QUIRK(), because the alsa-info
-report from this device does not expose a PCI subsystem ID, only the
-HDA codec subsystem ID (0x144d:0xc824) is available.
+Replace deprecated one-element arrays with flexible array members.
+CONFIG_FORTIFY_SOURCE reports the following warning when
+one-element arrays are used as variable-length buffers:
 
-This applies ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET to fix sound
-being very low and distorted on the headphone jack of this system.
+sta_cmd.c:1033 mwifiex_sta_prepare_cmd
+memcpy: detected field-spanning write (size 84) of single field
+"domain->triplet" at .../marvell/mwifiex/sta_cmd.c:1033 (size 3)
 
-Reported-by: Caio Ramos <caioramos97@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=208663
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260720123702.799474-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Convert affected structs to use flexible array members.
+- Preserve existing wire layouts.
+- Use DECLARE_FLEX_ARRAY() for structs inside affected unions.
+
+Tested-on: WRT3200ACM, OpenWrt
+Signed-off-by: Georgi Valkov <gvalkov@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260716001728.57799-1-gvalkov@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/marvell/mwifiex/fw.h      | 18 +++++++++---------
+ drivers/net/wireless/marvell/mwifiex/join.c    |  8 ++++----
+ drivers/net/wireless/marvell/mwifiex/sta_cmd.c |  2 +-
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index d5282a803a19a..70cac100b2064 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11363,6 +11363,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
- 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
-+	HDA_CODEC_QUIRK(0x144d, 0xc824, "Samsung ELECTRONICS (750XBE/730XBE)", ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
- 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
- 	SND_PCI_QUIRK(0x144d, 0xca03, "Samsung Galaxy Book2 Pro 360 (NP930QED)", ALC298_FIXUP_SAMSUNG_AMP),
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index 4a96281792cc1..2a7ebac212385 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -818,7 +818,7 @@ struct chan_band_param_set {
+ 
+ struct mwifiex_ie_types_chan_band_list_param_set {
+ 	struct mwifiex_ie_types_header header;
+-	struct chan_band_param_set chan_band_param[1];
++	struct chan_band_param_set chan_band_param[];
+ } __packed;
+ 
+ struct mwifiex_ie_types_rates_param_set {
+@@ -881,7 +881,7 @@ struct mwifiex_ie_types_wildcard_ssid_params {
+ #define TSF_DATA_SIZE            8
+ struct mwifiex_ie_types_tsf_timestamp {
+ 	struct mwifiex_ie_types_header header;
+-	u8 tsf_data[1];
++	u8 tsf_data[];
+ } __packed;
+ 
+ struct mwifiex_cf_param_set {
+@@ -898,8 +898,8 @@ struct mwifiex_ibss_param_set {
+ struct mwifiex_ie_types_ss_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	union {
+-		struct mwifiex_cf_param_set cf_param_set[1];
+-		struct mwifiex_ibss_param_set ibss_param_set[1];
++		DECLARE_FLEX_ARRAY(struct mwifiex_cf_param_set, cf_param_set);
++		DECLARE_FLEX_ARRAY(struct mwifiex_ibss_param_set, ibss_param_set);
+ 	} cf_ibss;
+ } __packed;
+ 
+@@ -917,8 +917,8 @@ struct mwifiex_ds_param_set {
+ struct mwifiex_ie_types_phy_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	union {
+-		struct mwifiex_fh_param_set fh_param_set[1];
+-		struct mwifiex_ds_param_set ds_param_set[1];
++		DECLARE_FLEX_ARRAY(struct mwifiex_fh_param_set, fh_param_set);
++		DECLARE_FLEX_ARRAY(struct mwifiex_ds_param_set, ds_param_set);
+ 	} fh_ds;
+ } __packed;
+ 
+@@ -1378,7 +1378,7 @@ struct host_cmd_ds_802_11_snmp_mib {
+ 	__le16 query_type;
+ 	__le16 oid;
+ 	__le16 buf_size;
+-	u8 value[1];
++	u8 value[];
+ } __packed;
+ 
+ struct mwifiex_rate_scope {
+@@ -1546,7 +1546,7 @@ struct mwifiex_scan_cmd_config {
+ 	 *  TLV_TYPE_CHANLIST, mwifiex_ie_types_chan_list_param_set
+ 	 *  WLAN_EID_SSID, mwifiex_ie_types_ssid_param_set
+ 	 */
+-	u8 tlv_buf[1];	/* SSID TLV(s) and ChanList TLVs are stored
++	u8 tlv_buf[];	/* SSID TLV(s) and ChanList TLVs are stored
+ 				   here */
+ } __packed;
+ 
+@@ -1678,7 +1678,7 @@ struct host_cmd_ds_802_11_bg_scan_query_rsp {
+ struct mwifiex_ietypes_domain_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	u8 country_code[IEEE80211_COUNTRY_STRING_LEN];
+-	struct ieee80211_country_ie_triplet triplet[1];
++	struct ieee80211_country_ie_triplet triplet[];
+ } __packed;
+ 
+ struct host_cmd_ds_802_11d_domain_info {
+diff --git a/drivers/net/wireless/marvell/mwifiex/join.c b/drivers/net/wireless/marvell/mwifiex/join.c
+index 6500adae252c8..1d34b76da9a44 100644
+--- a/drivers/net/wireless/marvell/mwifiex/join.c
++++ b/drivers/net/wireless/marvell/mwifiex/join.c
+@@ -421,15 +421,15 @@ int mwifiex_cmd_802_11_associate(struct mwifiex_private *priv,
+ 
+ 	phy_tlv = (struct mwifiex_ie_types_phy_param_set *) pos;
+ 	phy_tlv->header.type = cpu_to_le16(WLAN_EID_DS_PARAMS);
+-	phy_tlv->header.len = cpu_to_le16(sizeof(phy_tlv->fh_ds.ds_param_set));
+-	memcpy(&phy_tlv->fh_ds.ds_param_set,
++	phy_tlv->header.len = cpu_to_le16(sizeof(*phy_tlv->fh_ds.ds_param_set));
++	memcpy(phy_tlv->fh_ds.ds_param_set,
+ 	       &bss_desc->phy_param_set.ds_param_set.current_chan,
+-	       sizeof(phy_tlv->fh_ds.ds_param_set));
++	       sizeof(*phy_tlv->fh_ds.ds_param_set));
+ 	pos += sizeof(phy_tlv->header) + le16_to_cpu(phy_tlv->header.len);
+ 
+ 	ss_tlv = (struct mwifiex_ie_types_ss_param_set *) pos;
+ 	ss_tlv->header.type = cpu_to_le16(WLAN_EID_CF_PARAMS);
+-	ss_tlv->header.len = cpu_to_le16(sizeof(ss_tlv->cf_ibss.cf_param_set));
++	ss_tlv->header.len = cpu_to_le16(sizeof(*ss_tlv->cf_ibss.cf_param_set));
+ 	pos += sizeof(ss_tlv->header) + le16_to_cpu(ss_tlv->header.len);
+ 
+ 	/* Get the common rates supported between the driver and the BSS Desc */
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
+index e2800a831c8ed..db16ec72d91cc 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
+@@ -108,7 +108,7 @@ static int mwifiex_cmd_802_11_snmp_mib(struct mwifiex_private *priv,
+ 		    "cmd: SNMP_CMD: cmd_oid = 0x%x\n", cmd_oid);
+ 	cmd->command = cpu_to_le16(HostCmd_CMD_802_11_SNMP_MIB);
+ 	cmd->size = cpu_to_le16(sizeof(struct host_cmd_ds_802_11_snmp_mib)
+-				- 1 + S_DS_GEN);
++				+ S_DS_GEN);
+ 
+ 	snmp_mib->oid = cpu_to_le16((u16)cmd_oid);
+ 	if (cmd_action == HostCmd_ACT_GEN_GET) {
 -- 
 2.53.0
 
