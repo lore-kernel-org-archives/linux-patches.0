@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95AF399D0B;
-	Thu, 17 Sep 2026 18:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B002B4F93BD;
+	Thu, 17 Sep 2026 18:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668138; cv=none; b=nS8ynZzce6kRab+pe6jJzddHWyM8j/6uWzkMCpSYPdsXFuIDEyzNMV7nPuhEB8xjPYzLa1VbQosUVpu9quiQlXP/J8prSp5zR90hajaZiLzW9S7UuDG+GzFw3qVc/8jJvZdgTl3bvF4drE+yjqKbuWySO2hPbmJTXSeYygRtSso=
+	t=1789668141; cv=none; b=EUjg8R810TARqz37avLfwuLzCp5da3Izn+rOdhZcEum2HOfPDfw2Ulv4xXWfugs+xQmundB9HsKDZLXhuML8AGRmE+uSrdLmK6k7rbfUHFfyCjg1feeJOAkI9SrcKV7y/ldjYVa3nazgkGOrD76NVcn5fbqnLqxczxZrA3ucoMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668138; c=relaxed/simple;
-	bh=q0gGckPDLuGVvyWEaE+RU79mo7zvdniid2bNLhcX05g=;
+	s=arc-20240116; t=1789668141; c=relaxed/simple;
+	bh=+yL+mG2t7H+UYUJBqQWthlMCUJGebiHq8xGwvyt2JHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyyXNcLkWpNH3MGw+hXqVGySp6vpj7ZOShf7QrY9YcODE86FeA5hs+Km3yzYfnzaBYPGQszSdFuUt6jwI9WmuRErxlm63boZAz+wbgJFjerkmCfEUirpN/EZBPsFuMZSimyL6XkK4sWlleU7Q3EQUAOJYpyx/IRcq8xxGCIcgBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myHJT59G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnJx/6u5HwtMCUYzMs+p3NLkzR1h9bDFy1VIPWnPMXnsGhbO3MnWJ7dLRktixaXh/kh/2o3StptF4NbO9MtDS3Z5vutJuWVYuNxZIGidHzr0t2I3dK/pwCyc8szmBeaF0k88xAqFySTLw22akvEaGWQiXaO/NDMZQp4BsLe3Y4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duzSIDM3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myHJT59G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDBB1F000FF;
-	Thu, 17 Sep 2026 18:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duzSIDM3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116471F000FF;
+	Thu, 17 Sep 2026 18:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668137;
-	bh=JscHzDykchaALcBw03P3vvlXSpel3Hhi/f3fRYbPStU=;
+	s=korg; t=1789668140;
+	bh=eb5VpsC6JVDtjTiby2gpUbAWA5+CPc+EQdBpPMf5z6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myHJT59GmOuxhqJ/6zbjxnVAwttAwLz/1f2CaGp1fbxC4fEsRgpxnE1B2wHeicb1h
-	 q1kUDO3M0Kz4wFSBtAehDQigBghSeIHoUpGimeza6iU2xf1Y/5aZfDhAFaaFWhAuzs
-	 /bRvsGYQwo73go7sSGqrsgpsALw8Y+jXjqmzj994=
+	b=duzSIDM3a4AC7VEeihxdIVdM6U01m9l46H/qLd82bLH2Xdk5D01jPHf8x8J0PenHw
+	 5LRcbZdQmuh1hW4/KG8bLHyq9pmBxOFX/CDDQS2Qg0f4gdgFP9x6awwngX8mnkI5qO
+	 FNPYAzLwyR7fELYj91DbUKuk5x1N7lKujBL38aNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhang <zhangchen01@kylinos.cn>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hrvoje Nuic <hrvoje.nuic@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0288/1102] Bluetooth: btusb: Add Realtek RTL8922AE VID/PID 0bda/d922
-Date: Thu, 17 Sep 2026 16:03:51 +0100
-Message-ID: <20260917151546.845233685@linuxfoundation.org>
+Subject: [PATCH 6.12 0289/1102] Bluetooth: btusb: Add Mercusys MA530 for Realtek RTL8761BUV
+Date: Thu, 17 Sep 2026 16:03:52 +0100
+Message-ID: <20260917151546.870663317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,50 +51,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Zhang <zhangchen01@kylinos.cn>
+From: Hrvoje Nuic <hrvoje.nuic@gmail.com>
 
-[ Upstream commit 480dcc68f2826a9768e6fc9e81f02078c1ed0e01 ]
+[ Upstream commit ce21a5cf3d1fd92b84ea9ad2b7c7240aff2162d2 ]
 
-Add the vendor/product ID (0x0bda, 0xd922) to usb_device_id table for
-Realtek RTL8922AE.
+Add the USB ID for the Mercusys MA530 Bluetooth adapter. The device uses
+a Realtek RTL8761BUV controller and works with the existing Realtek setup
+path.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+The device reports vendor ID 0x2c4e and product ID 0x0115, and loads the
+rtl_bt/rtl8761bu_fw.bin firmware successfully with this quirk.
 
-T:  Bus=10 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=d922 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00E04C885A01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-
-Signed-off-by: Chen Zhang <zhangchen01@kylinos.cn>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Hrvoje Nuic <hrvoje.nuic@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -103,18 +70,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ace66bcc8ea41..14b0ec6bfb83b 100644
+index 14b0ec6bfb83b..90d098d5c4106 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -590,6 +590,8 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Realtek 8922AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x8922), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0xd922), .driver_info = BTUSB_REALTEK |
+@@ -771,6 +771,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x2ff8, 0xb011), .driver_info = BTUSB_REALTEK },
+ 
+ 	/* Additional Realtek 8761BUV Bluetooth devices */
++	{ USB_DEVICE(0x2c4e, 0x0115), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3617), .driver_info = BTUSB_REALTEK |
+ 	{ USB_DEVICE(0x2357, 0x0604), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3616), .driver_info = BTUSB_REALTEK |
+ 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
 -- 
 2.53.0
 
