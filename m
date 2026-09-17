@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352A38DC7C;
-	Thu, 17 Sep 2026 18:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B1C547059;
+	Thu, 17 Sep 2026 18:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668734; cv=none; b=ZdyTnP6JHeBn4y5Ti6H5jcM1109geX2sAiDk8e91ngxnjrQ7okIRrz00zWJSp9XOfK1Ca5ER/vp/mlkX9/ineR1lNkpnEE3V2hGHrQ5Ub5/Ql9WTfAYBVXS0tzLFaBvPK8lqLEOMZoLjogCpEhtt4MH42esMrQ6/dgTD2dF3OtM=
+	t=1789668736; cv=none; b=quOWQ2fflX+XHnwgzwgyURdqOeuZzm4fnoK+6/OiDZ0UjIAJZYR8F8ADihiPovF7OtcSZwU2iRLTUBpExqP7pQ7oVbMy2cpf/FuNfn2t9rYiwCpULkXHFl9KLD/2EYGLkTTV/T8sNgbNo/hzfaYA3C2yJvJMfF0EmuVeu2AV1Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668734; c=relaxed/simple;
-	bh=GXQq7ot8YjFSJ5SiQqYVlQA0cnOgFdVZAl36ILIWBDo=;
+	s=arc-20240116; t=1789668736; c=relaxed/simple;
+	bh=kQCsphude1zBN8uvM59Bc24lJ35XeBc4/HbK598nLrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnrXrs1YZIFPqNjId11U6qM09AS8DBNgiTKc1vRUap+JH5h7OyR6pYG9XOK0+56ev7sDIT81Q4dJn9StvlwEWH7p6l5IKsv2Z8SJwAKDdheeGvOp4MhzoZwqkvsfNqVxxZogUsvKg8nrQgLzZgFNhpmC2I8w6S2kMA5pDHewgp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIIkYrw4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m94LnjpKwA6zNU2YFIQEJ71EsndHOS34XgxiqwxoSNW+TW9gTKgXkQQh4mZUx3NXRJ+1VNIJdlIAEWbB7+mpMUw0ND0pBpn/Yy0XrL8gUQ0hQaRF9jy51z/1LuemxUx+5fkUwr70/Xe7e1f6nwsx4wI+9+9BSiEtzv5gxkEA2Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXz95sT/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIIkYrw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76EF1F000FF;
-	Thu, 17 Sep 2026 18:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXz95sT/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD3D1F000FF;
+	Thu, 17 Sep 2026 18:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668732;
-	bh=3gD5/zS3Fl2wtnAII6CFQAnLCXBlihYNJjFYUyAqFLg=;
+	s=korg; t=1789668735;
+	bh=vaVY7sleMgg83WoIvRa3BIDfYrcXg+oYjt0CCWZShow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KIIkYrw4qyGNl7IOHfK7ix0+zBXmj0A0x0Nvlr+ucISkHQfB4gDhmdeCGqJ8ZRF2Y
-	 5hFqKCbPdz1R8K/fgVaNWObeQaSxHQRQe9mVf/pzExNSy4z79s+sCtSKmlpNDqkPxk
-	 7YVZ8NYtBO8YoQbG9b3lwgpBJVrvmZvgSL9AIV3Q=
+	b=AXz95sT/SW/ssvZxpKMo0OfQDT5OYY+yx0nwdyOy7DgGfAF1HZ8aFMg5gsEZkFM7k
+	 CZvmouYl49OnbOUkV54sGVrkhCTzrsAqZT6l7nXrNq54Q7IGEpk/ESXMkGWo4U/l0b
+	 f1mElnmedj70VS+B33o4a5zQq0RoXbyQQw24NO0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0524/1102] smb/client: validate new EOF for insert range
-Date: Thu, 17 Sep 2026 16:07:47 +0100
-Message-ID: <20260917151552.941211856@linuxfoundation.org>
+Subject: [PATCH 6.12 0525/1102] smb/client: validate new EOF for zero range
+Date: Thu, 17 Sep 2026 16:07:48 +0100
+Message-ID: <20260917151552.968572040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,90 +55,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 1519dc88c87f5346dae0464d7d6da1b6bf1f6e8e ]
+[ Upstream commit 88972e35750792e717af287dc71f42a03b5cbce4 ]
 
-smb3_insert_range() does not check if the new file size
-(i_size + len) is valid. This allows FALLOC_FL_INSERT_RANGE to bypass
-RLIMIT_FSIZE, exceed s_maxbytes, or produce a size outside the loff_t
-range.
+When FALLOC_FL_ZERO_RANGE is used without FALLOC_FL_KEEP_SIZE,
+smb3_zero_range() may extend EOF without checking RLIMIT_FSIZE, allowing
+the file to grow beyond the caller's file-size limit.
 
-Use check_add_overflow() to calculate the new EOF. Validate it with
-inode_newsize_ok() before modifying the file.
+Fix this by calling inode_newsize_ok() before sending the zero-range
+request when the operation would extend EOF.
 
 Reproducer, using a file on a CIFS mount:
 
 	bash -c '
-		FILE=/mnt/cifs/repro
+	        FILE=/mnt/cifs/repro
 
-		trap "" SIGXFSZ
-		ulimit -f 3072		# RLIMIT_FSIZE = 3 MiB
+	        trap "" SIGXFSZ
+	        ulimit -f 3072
 
-		# A regular write is stopped at 3 MiB.
-		dd if=/dev/zero of="$FILE" bs=1M count=4 status=none
-		stat -c "size after write: %s" "$FILE"
-
-		# Insert 2 MiB into a 2 MiB file.
-		truncate -s 2M "$FILE"
-		fallocate -i -o 0 -l 2M "$FILE"
-		stat -c "size after insert: %s" "$FILE"
+	        truncate -s 2M "$FILE"
+	        fallocate --zero-range -o 0 -l 4M "$FILE"
+	        echo "fallocate rc=$?"
+	        stat -c "file size=%s" "$FILE"
 	'
 
-Before this change, the regular write stops at the 3 MiB limit, but
-insert range grows the file to 4 MiB:
+Before this change, the operation succeeds despite the 3 MiB limit:
 
-	dd: error writing '/mnt/cifs/repro': File too large
-	size after write: 3145728
-	size after insert: 4194304
+	fallocate rc=0
+	file size=4194304
 
-After this change, insert range also fails at the limit and leaves the
-2 MiB file unchanged:
+After this change, fallocate fails and leaves the file at 2 MiB.
 
-	dd: error writing '/mnt/cifs/repro': File too large
-	size after write: 3145728
-	fallocate: fallocate failed: File too large
-	size after insert: 2097152
-
-Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
 Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 54d7c00c9f6b0..bf9a5d890ae74 100644
+index bf9a5d890ae74..80103ac78886b 100644
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3765,7 +3765,8 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
- 	struct cifsFileInfo *cfile = file->private_data;
- 	struct inode *inode = file_inode(file);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
--	__u64 count, old_eof, new_eof;
-+	u64 count;
-+	loff_t old_eof, new_eof;
+@@ -3315,6 +3315,13 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	trace_smb3_zero_enter(xid, cfile->fid.persistent_fid, tcon->tid,
+ 			      ses->Suid, offset, len);
  
- 	xid = get_xid();
- 
-@@ -3775,8 +3776,15 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
- 		goto out;
- 	}
- 
-+	if (check_add_overflow(old_eof, len, &new_eof)) {
-+		rc = -EFBIG;
-+		goto out;
++	new_size = offset + len;
++	if (!keep_size && i_size_read(inode) < new_size) {
++		rc = inode_newsize_ok(inode, new_size);
++		if (rc)
++			goto out;
 +	}
-+	rc = inode_newsize_ok(inode, new_eof);
-+	if (rc)
-+		goto out;
 +
- 	count = old_eof - off;
--	new_eof = old_eof + len;
- 
  	filemap_invalidate_lock(inode->i_mapping);
- 	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
+ 
+ 	i_size = i_size_read(inode);
+@@ -3346,7 +3353,6 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	/*
+ 	 * do we also need to change the size of the file?
+ 	 */
+-	new_size = offset + len;
+ 	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
+ 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 				  cfile->fid.volatile_fid, cfile->pid, new_size);
+@@ -3361,6 +3367,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 
+  zero_range_exit:
+ 	filemap_invalidate_unlock(inode->i_mapping);
++ out:
+ 	free_xid(xid);
+ 	if (rc)
+ 		trace_smb3_zero_err(xid, cfile->fid.persistent_fid, tcon->tid,
 -- 
 2.53.0
 
