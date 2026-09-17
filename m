@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201D54ABBCD;
-	Thu, 17 Sep 2026 17:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155D54F96C8;
+	Thu, 17 Sep 2026 17:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666145; cv=none; b=lBYCxOeoJmhdhQMH/XIKdlVbxwxod+a6/cOv5aY+YzJd3Ob0B9U2BQFRBKWhJFmNM2+L2nwby6LXVZ61X+OLeZGy+dBcegrgEhkhNOSXmjskZ8igMVOg0nDK9i6SM04U8kzateNdjaN817/HSE2XKYyG52WGa4OvUgKQMMTX3e0=
+	t=1789666148; cv=none; b=M1XCvcAPfn0OPS6l4LAGPQ1RP3jEEm2JxQNx+qVtE38RUFHBZdeWWpFXuim0vEfiO9f6M5mmBDRo3qKiTZhmAoh0fLSBSkSw2S0MwQ7lNey8Y4x5RvVTPWbCrBz9lNHBE8Zov0UFFJfjtjXH6eiqIlvA1Qvbm1vm+D3d3PyxDfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666145; c=relaxed/simple;
-	bh=cPqUbPdSoVzne5zIp5YMEJKQte2EnCctalnHp7yMvq0=;
+	s=arc-20240116; t=1789666148; c=relaxed/simple;
+	bh=7FWvpLtbGzoRhnf2wMZsgaidKsBTa42tJJhXw6aW+E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hz0d/WrLtgfddW87GgKoHUMW6RNa/oW6KVjVOmsamNvsr0Bv8uzfaAL/ckmzk3bPE/+4zf7L1G/wOdFVgbj3VmqOiTu8pvoN/I1gGEwHctluZytzM5QGp9IM/unlLeyZIcwqol8/NkdZMdA5DyQ0b8uE6khKX6W5ZsE2PAw0FL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XinqBDaV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OzvM99aNWbSJ+vfMxnIAl6fUlrI374g/nfHe+UTV7JYkmYugzf+JCkqXYTHHtLtQxDb5QRodAUz/5oQXFhZi8CBad0F5y10ZXlHI1LbIG240rJBmZeGlZ4qwZzBhR2seldI5iUudQRrSvq3skRSaAJ1A6Ar53MSG7EPMoWCzX+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt7c708i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XinqBDaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3311F000FF;
-	Thu, 17 Sep 2026 17:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt7c708i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F611F000FF;
+	Thu, 17 Sep 2026 17:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666144;
-	bh=fSWDtKddyHZlvas5GKwcrl0Us3XwfRqsTgzAlBszDs8=;
+	s=korg; t=1789666146;
+	bh=YIA6a3Gst28qE3CDeL5DIIZ5LMoOAyrWnyF5TlGDwqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XinqBDaVQ3ISzf98IZk3WNF84xTueLvrNePqvis566utl2pbvObsQVqggHXWx/1J1
-	 FLcZXk65wC3wiGy7V95i+ny8b0NXvg0ENHiFeGbE4B5RXx3tjmUltTDPZ2mO4xxL6r
-	 l9i2kUEXViwHGjafcgf46dkBQ8nxdAYc9f2deMLs=
+	b=Bt7c708imJAuck7u1ewU/r1waQF1NbRL7OVuS1yGRqqTDaZGYW7Asu6cnwYuci598
+	 H/JHK85DRaCeEnj5vwm/joULvdIJ/PbaqYBp2P+VhoPdG70huXe98HqUXYKzzdzB26
+	 BNLLAXrMNqsiN7nLxIbiUhmX1K9xaNROUI+joJaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0937/1250] net: phy: dp83867: handle the active-high LED polarity mode
-Date: Thu, 17 Sep 2026 16:12:12 +0100
-Message-ID: <20260917151617.412967065@linuxfoundation.org>
+Subject: [PATCH 6.18 0901/1250] hwmon: (corsair-cpro) Create debugfs entries after hwmon registration
+Date: Thu, 17 Sep 2026 16:11:36 +0100
+Message-ID: <20260917151616.408940685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,55 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 36a45facedd5c8e73bfb2403f8b0dbff05124c9c ]
+[ Upstream commit 508baf1713f32f287bfb4f85d759403ec8ba35a3 ]
 
-Commit a274465cc3be ("net: phy: support 'active-high' property for PHY
-LEDs") added PHY_LED_ACTIVE_HIGH and made of_phy_led() set the matching
-bit in the modes mask when a LED node carries the 'active-high'
-property. dp83867 was not part of that series.
+ccp_debugfs_init() registers debugfs files whose private data is the devm
+allocated ccp.  It runs before hwmon_device_register_with_info(), so when
+that registration fails, ccp_probe() returns with the files still in
+place.  The HID core then frees ccp, and ccp_remove() is not called for a
+failed probe, so nothing removes them later either.  Reading one of the
+files dereferences the freed pointer.
 
-dp83867_led_polarity_set() only recognizes PHY_LED_ACTIVE_LOW, so
-PHY_LED_ACTIVE_HIGH falls through to the default case and returns -EINVAL.
-of_phy_led() propagates the error, of_phy_leds() drops the LEDs registered
-so far and passes it on, and phy_probe() fails. A device tree marking a
-DP83867 LED as 'active-high', which leds/common.yaml allows and
-ethernet-phy.yaml references for led@N nodes, thus stops the PHY from
-probing.
+Create the debugfs entries only after the hwmon device has been
+registered, so no failing path can leave them behind.
 
-Active high is what the function programs when no polarity mode is
-requested at all, so the initial value of polarity already satisfies the
-request and only the case label is missing.
+The two version queries stay where they are.  They send USB commands
+without holding ccp->mutex, which is only safe as long as nothing else
+can call send_usb_cmd(); once the hwmon device is registered its
+callbacks can do so concurrently.  Only the debugfs creation moves, and
+it is told which queries succeeded.
 
-The same series updated mxl-gpy in commit eb89c79c1b8f ("net: phy:
-mxl-gpy: correctly describe LED polarity") and aquantia in
-commit 9d55e68b19f2 ("net: phy: aquantia: correctly describe LED
-polarity override").
-
-Fixes: a274465cc3be ("net: phy: support 'active-high' property for PHY LEDs")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260903022839.4006614-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hwmon/20260708031612.BD7E61F000E9@smtp.kernel.org/
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5997eb60f896 ("hwmon: (corsair-cpro) Add firmware and bootloader information")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260831014509.3352442-1-lilinmao@kylinos.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83867.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/corsair-cpro.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
-index 36a0c1b7f59c7..411fd65722743 100644
---- a/drivers/net/phy/dp83867.c
-+++ b/drivers/net/phy/dp83867.c
-@@ -1108,6 +1108,9 @@ static int dp83867_led_polarity_set(struct phy_device *phydev, int index,
- 		case PHY_LED_ACTIVE_LOW:
- 			polarity = 0;
- 			break;
-+		case PHY_LED_ACTIVE_HIGH:
-+			polarity = DP83867_LED_POLARITY(index);
-+			break;
- 		default:
- 			return -EINVAL;
- 		}
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 71e48b3bba60f..1eac947078826 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -566,21 +566,18 @@ static int bootloader_show(struct seq_file *seqf, void *unused)
+ }
+ DEFINE_SHOW_ATTRIBUTE(bootloader);
+ 
+-static void ccp_debugfs_init(struct ccp_device *ccp)
++static void ccp_debugfs_init(struct ccp_device *ccp, bool fw_valid, bool bl_valid)
+ {
+ 	char name[32];
+-	int ret;
+ 
+ 	scnprintf(name, sizeof(name), "corsaircpro-%s", dev_name(&ccp->hdev->dev));
+ 	ccp->debugfs = debugfs_create_dir(name, NULL);
+ 
+-	ret = get_fw_version(ccp);
+-	if (!ret)
++	if (fw_valid)
+ 		debugfs_create_file("firmware_version", 0444,
+ 				    ccp->debugfs, ccp, &firmware_fops);
+ 
+-	ret = get_bl_version(ccp);
+-	if (!ret)
++	if (bl_valid)
+ 		debugfs_create_file("bootloader_version", 0444,
+ 				    ccp->debugfs, ccp, &bootloader_fops);
+ }
+@@ -588,6 +585,7 @@ static void ccp_debugfs_init(struct ccp_device *ccp)
+ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ {
+ 	struct ccp_device *ccp;
++	bool fw_valid, bl_valid;
+ 	int ret;
+ 
+ 	ccp = devm_kzalloc(&hdev->dev, sizeof(*ccp), GFP_KERNEL);
+@@ -632,7 +630,13 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	if (ret)
+ 		goto out_hw_close;
+ 
+-	ccp_debugfs_init(ccp);
++	/*
++	 * Query the versions before registering the hwmon device: they send
++	 * USB commands without holding ccp->mutex, which is only safe while
++	 * nothing else can call send_usb_cmd().
++	 */
++	fw_valid = !get_fw_version(ccp);
++	bl_valid = !get_bl_version(ccp);
+ 
+ 	ccp->hwmon_dev = hwmon_device_register_with_info(&hdev->dev, "corsaircpro",
+ 							 ccp, &ccp_chip_info, NULL);
+@@ -641,6 +645,8 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		goto out_hw_close;
+ 	}
+ 
++	ccp_debugfs_init(ccp, fw_valid, bl_valid);
++
+ 	return 0;
+ 
+ out_hw_close:
 -- 
 2.53.0
 
