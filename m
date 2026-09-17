@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888754ABBA1;
-	Thu, 17 Sep 2026 17:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DE24F85B0;
+	Thu, 17 Sep 2026 17:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665757; cv=none; b=ipSfTA+hZHtOQiH3sguPPD9kliSiNubqB/6FywWaMKlQOqUUo1CzJjd0CRVzvEThSEleHIkBEf4kktKGItoSAP5cUMkc/0ips+5PfaRpRj+YNdKnDCOEMAuwLQewfRRCQoFjRj///7OuiYSdTnMlArWHoI2MH5MBXmYuRq2pJQU=
+	t=1789665760; cv=none; b=FH1TeYuTxvT0Razfbvyd4z8RA7fLjLC2vJkMvWJRk4AVnYXNos8ky9o2J1fpvyNvEE/E+bN3Ne2KMblQsGOrdTRzTvnVXwrA1DzDCMEJsk4L22r2oaZrjORWz6f2DGa4YzwcLl215XXhg1AUMUA7k2iB6kroje+sTnJgGDbPi4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665757; c=relaxed/simple;
-	bh=wfLsiOC5DbSbJx/gNAK9jAHXav/s6U3vLNDs5vA6+QQ=;
+	s=arc-20240116; t=1789665760; c=relaxed/simple;
+	bh=Xvue89D0lMUHjWYkAIDZEC/rUzr/dMYmVKtFspn1Qus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIPkXiwxtB3WRWmjbeO82O/9DvRhihI+s9fYGqZwvBtUGRcvvLpDUHVBDSzA5C77nrEQ3qPkEwdMtSSPOkuLyzsfKwRbZgEAL6LhyGhVWmOFNIfH1s4x5kRopUxnA4wnwWXl+HwyGmyrukF1LglBEFxpjLTfHO82MKqRDCmSbB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItTD+89d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=afSrwX0OCFE8Ez2F7iYyo7cYytfXJol2RNIs9d/EcrhnMiEzOhR+MRp3ymuuvS770gcgkwCEiVc/uRiDevVZNC53yqf2CpXp3g2yPmbaBv4BnI9532w/T0VDK0kmV2c+vG9/v2axHVF4lgEbJHUo2prNe5OiTZJedITT1lItbWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vz+TF3VM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItTD+89d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A441F000FF;
-	Thu, 17 Sep 2026 17:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz+TF3VM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5CC1F000FF;
+	Thu, 17 Sep 2026 17:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665756;
-	bh=mHfbJp62jGur6DwPLgEN7no30GAeucyJU9KTjoP2rXo=;
+	s=korg; t=1789665759;
+	bh=JsKEu4p9voYaMLmzEcVtJSVSHWRQE2LsFyS2DLt2EeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ItTD+89ddFanbZ1vfu0F5r2YhqhvVELSWh82wPRUSzLD6tRWLGW24BNpmSCjkA2fE
-	 Uj6zFdjGI8mZH1dA3EHIHb8vBmdXsejMmnVQOMn8MR0vJDCD6LeMG4FAl99XVVLJue
-	 xJkWRgy7dNTfu05CXxZlnkM2G1gctV2ylEPG9dLo=
+	b=vz+TF3VMMHNe62kWP8+2RcVdIJB07d9XFtNVnNn+6M/K82nBVbA0f9EsH4T6xXYHr
+	 gBGPmqJZ1i7GQDk6Ufn6HRITqmnCiV+lrIVixpFgoEcOTZss9o6x9YNLGmJmzVXK+6
+	 VYuZAIgXbkbKP6udbd/ttBoY8vnTt4zIGdbG5XWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XingWang Xiang <v3rdant.xiang@gmail.com>,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0809/1250] net: mctp: i3c: serialize probe with bus removal
-Date: Thu, 17 Sep 2026 16:10:04 +0100
-Message-ID: <20260917151613.843733468@linuxfoundation.org>
+Subject: [PATCH 6.18 0810/1250] net/sched: defer qdisc freeing after failed creation
+Date: Thu, 17 Sep 2026 16:10:05 +0100
+Message-ID: <20260917151613.872957716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,59 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: XingWang Xiang <v3rdant.xiang@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 2b4707a149a55e8fa75c9ef32b359d60f470a566 ]
+[ Upstream commit e6662f2100f8d33b0f4d0047c219efd6bba186ea ]
 
-mctp_i3c_probe() drops busdevs_lock after finding the matching bus. A
-concurrent I3C_NOTIFY_BUS_REMOVE can then unregister and free the bus
-netdev before probe passes its private data to mctp_i3c_add_device().
-The latter consequently adds a list node through a freed mbus pointer.
+An RTM_NEWQDISC request can make clsact bind a populated shared ingress
+block during ->init(), publishing an embedded mini_Qdisc to lockless
+readers.  If the same request has an invalid TCA_RATE, estimator setup
+fails after ->init(); the unwind removes the pointer but synchronously
+frees its containing qdisc while tc_run() may still hold it.
 
-Keep busdevs_lock held until the device has been added. This also
-satisfies the __must_hold annotation on mctp_i3c_add_device().
+Retire failed qdiscs through the same RCU helper as normal destruction.
+Inline the synchronous free into the callback now that no direct callers
+remain.
 
-Fixes: c8755b29b58e ("mctp i3c: MCTP I3C driver")
-Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
-Acked-by: Matt Johnston <matt@codeconstruct.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 51ab2994c387 ("net: sched: allow ingress and clsact qdiscs to share filter blocks")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/netdev/20260805102505.740806-1-david.lee@trailofbits.com/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260902155231.2149915-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i3c.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/net/sch_generic.h |  2 +-
+ net/sched/sch_api.c       |  2 +-
+ net/sched/sch_generic.c   | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
-index c5d0bc517fea9..1d9d0c1418ebd 100644
---- a/drivers/net/mctp/mctp-i3c.c
-+++ b/drivers/net/mctp/mctp-i3c.c
-@@ -288,6 +288,7 @@ __must_hold(&busdevs_lock)
- static int mctp_i3c_probe(struct i3c_device *i3c)
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index cf1923f8cb524..97c1b2828bcd5 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -755,7 +755,7 @@ void qdisc_offload_query_caps(struct net_device *dev,
+ struct Qdisc *qdisc_alloc(struct netdev_queue *dev_queue,
+ 			  const struct Qdisc_ops *ops,
+ 			  struct netlink_ext_ack *extack);
+-void qdisc_free(struct Qdisc *qdisc);
++void qdisc_free_rcu(struct Qdisc *qdisc);
+ struct Qdisc *qdisc_create_dflt(struct netdev_queue *dev_queue,
+ 				const struct Qdisc_ops *ops, u32 parentid,
+ 				struct netlink_ext_ack *extack);
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index efe055a9c669b..df271cbc2d9f2 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1381,7 +1381,7 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
+ err_out3:
+ 	lockdep_unregister_key(&sch->root_lock_key);
+ 	netdev_put(dev, &sch->dev_tracker);
+-	qdisc_free(sch);
++	qdisc_free_rcu(sch);
+ err_out2:
+ 	bpf_module_put(ops, ops->owner);
+ err_out:
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index a753945f860c3..bf8bd129ce911 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1067,21 +1067,21 @@ void qdisc_reset(struct Qdisc *qdisc)
+ }
+ EXPORT_SYMBOL(qdisc_reset);
+ 
+-void qdisc_free(struct Qdisc *qdisc)
++static void qdisc_free_cb(struct rcu_head *head)
  {
- 	struct mctp_i3c_bus *b = NULL, *mbus = NULL;
-+	int rc;
- 
- 	/* Look for a known bus */
- 	mutex_lock(&busdevs_lock);
-@@ -296,14 +297,16 @@ static int mctp_i3c_probe(struct i3c_device *i3c)
- 			mbus = b;
- 			break;
- 		}
--	mutex_unlock(&busdevs_lock);
- 
- 	if (!mbus) {
- 		/* probably no "mctp-controller" property on the i3c bus */
--		return -ENODEV;
-+		rc = -ENODEV;
-+	} else {
-+		rc = mctp_i3c_add_device(mbus, i3c);
+-	if (qdisc_is_percpu_stats(qdisc)) {
+-		free_percpu(qdisc->cpu_bstats);
+-		free_percpu(qdisc->cpu_qstats);
++	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
++
++	if (qdisc_is_percpu_stats(q)) {
++		free_percpu(q->cpu_bstats);
++		free_percpu(q->cpu_qstats);
  	}
-+	mutex_unlock(&busdevs_lock);
  
--	return mctp_i3c_add_device(mbus, i3c);
-+	return rc;
+-	kfree(qdisc);
++	kfree(q);
  }
  
- static void mctp_i3c_remove_device(struct mctp_i3c_device *mi)
+-static void qdisc_free_cb(struct rcu_head *head)
++void qdisc_free_rcu(struct Qdisc *qdisc)
+ {
+-	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
+-
+-	qdisc_free(q);
++	call_rcu(&qdisc->rcu, qdisc_free_cb);
+ }
+ 
+ static void __qdisc_destroy(struct Qdisc *qdisc)
+@@ -1108,7 +1108,7 @@ static void __qdisc_destroy(struct Qdisc *qdisc)
+ 
+ 	trace_qdisc_destroy(qdisc);
+ 
+-	call_rcu(&qdisc->rcu, qdisc_free_cb);
++	qdisc_free_rcu(qdisc);
+ }
+ 
+ void qdisc_destroy(struct Qdisc *qdisc)
 -- 
 2.53.0
 
