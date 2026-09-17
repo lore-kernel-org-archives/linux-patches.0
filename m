@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4291A4E780A;
-	Thu, 17 Sep 2026 17:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65984F85CA;
+	Thu, 17 Sep 2026 17:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666874; cv=none; b=fjei+0CQU6BRaTMqHJZnHI9gNHYvkRyJcj0TjPtc0nJUfnv2TFuxNaKntCaSDqVC4pF5mIUwoExtWczNrD/94o3YPW6pflV4nr4zOyAagTeUqu9GvixTt4M4Woaba36/t9j7tuGjec3tpUhZd2SrWyYPm0wE1K5fRSg6S6mwa98=
+	t=1789666878; cv=none; b=Q6P+vqHcXmj/3BkAsIF4ZLm4SG9UFBDkjjkEtNGsDl6UTa69FEn/OjV2cACEwUf49vC2VrhAo+qAyY2TbMcYMDQzpNX3bhnYWESBGkqKwzSgnvof5yyvVZqkFgsPf2zUrOwqUGsQJ2u3OnqVW8M+GLYfC2pI6hWnlWZ7yAWE6vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666874; c=relaxed/simple;
-	bh=cPxKISqMryPI8SEM16QYuNp3+kh6DuS3YqCsFP+ECYc=;
+	s=arc-20240116; t=1789666878; c=relaxed/simple;
+	bh=WhzDPwbunecHHsvIcnOIRQo9kT9QiPNShckkS4am/ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TiF9KRaylAJB9u7At8qu2+2QuMAZ1FvFQiwMxgwC7baqaM+blVz0f+isP2/NFKSnSM4D2LyLDAlrR3JHF74QrIHngHn/vnMGnhNW80AGFCjgfE1mmH1Wd6mnhGuNttibJ0QpI60BuW9V3hnJlh2B1tFxgvGeXYb0zm8HComKv2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4dLnJzW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IlhSW1403mGhZ3nXYfprAlg/AKJ5On78T0SEOliAe1XEzC2DAws7wPffCP8mrd4ZZTJib0/h5Obxi5v7kJ1lFr3W/OIIuze43JC0y2p2Av3XTnt07eG6ra9auMpMRdke9t8nBOHU73owwlZrmQbPvg7kd8LPbiVcIxt2TH4h6Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWiXk/NN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4dLnJzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D8A1F000FF;
-	Thu, 17 Sep 2026 17:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWiXk/NN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927551F000FF;
+	Thu, 17 Sep 2026 17:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666873;
-	bh=1SjKvI3wcWxGKjW91Tjm3/7oTOL9NdfnAT/iXD/CP+Q=;
+	s=korg; t=1789666876;
+	bh=0P2CQZ8fj0xwSdpiXeV+veIbiRpRzt+KavyvoDbw6GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4dLnJzWJvHbWCGG4CMWqIe1EKkYc1rp2nKc/gCjLd7oVc3mqnECOI5aMaOYwDkkS
-	 PD7xrQRCqam/axwa5HnQIm0p70uMKw6m9HvBhaYH73JEvp9zpJmVkk3enZ3KWjbkEh
-	 9hfl8X45bKG0slqvAAsmpwKNEwUgqc7cijsAgO50=
+	b=KWiXk/NNaP8MmUPsLNA7R4VCFKWzBHf2/s4YSbTY6n8WU2GhWojWjcdubHbOpIyUS
+	 VeZDyUd0pB8tILxhBXNBBgjCgoDDWyvEXUthh+ycjGnyDNbeGrUMe5HTO3vVWlTISX
+	 ll+JlFdbbA5sGw7d/dHq3jzsbjhcCNHoRcSHKjVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1154/1250] net: appletalk: fix NULL pointer dereference in aarp_send_ddp()
-Date: Thu, 17 Sep 2026 16:15:49 +0100
-Message-ID: <20260917151623.543169211@linuxfoundation.org>
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1155/1250] media: chips-media: wave5: Add timeout while stop_streaming
+Date: Thu, 17 Sep 2026 16:15:50 +0100
+Message-ID: <20260917151623.570703929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,57 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-commit 9e7f36ab5b7bf68463faa5f7b926fea8f35597bb upstream.
+[ Upstream commit 2ae7faed2e60d6d07d9efdd962d20dcb15330ced ]
 
-aarp_send_ddp() calls atalk_find_dev_addr(dev) in the LocalTalk fast
-path without checking for NULL. When the device has no AppleTalk
-interface configured (dev->atalk_ptr == NULL), this leads to a NULL
-pointer dereference at the at->s_net access.
+When stop_streaming is called, an infinite loop may occur in some cases.
+Add a bounded poll of the queue status: loop until the queues drain,
+sleeping briefly between polls, and bail out once VPU_DEC_STOP_TIMEOUT
+elapses.
 
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:aarp_send_ddp (net/appletalk/aarp.c:552 (discriminator 2))
- Call Trace:
-  <TASK>
-  atalk_sendmsg (net/appletalk/ddp.c:1715)
-  __sys_sendto (net/socket.c:2265 (discriminator 1))
-  __x64_sys_sendto (net/socket.c:2272)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Add a NULL check consistent with the other callers of
-atalk_find_dev_addr().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514123806.3085961-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ adapted timeout polling to the older decoder’s report_queue_count condition. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/appletalk/aarp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c   |   12 ++++++------
+ drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h |    1 +
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/net/appletalk/aarp.c
-+++ b/net/appletalk/aarp.c
-@@ -542,6 +542,11 @@ int aarp_send_ddp(struct net_device *dev
- 		struct ddpehdr *ddp = (struct ddpehdr *)skb->data;
- 		int ft = 2;
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -5,6 +5,7 @@
+  * Copyright (C) 2021-2023 CHIPS&MEDIA INC
+  */
  
-+		if (!at) {
-+			kfree_skb(skb);
-+			return NET_XMIT_DROP;
-+		}
-+
- 		/*
- 		 * Compressible ?
- 		 *
++#include <linux/delay.h>
+ #include <linux/pm_runtime.h>
+ #include "wave5-helper.h"
+ 
+@@ -1490,25 +1491,24 @@ static void wave5_vpu_dec_stop_streaming
+ {
+ 	struct vpu_instance *inst = vb2_get_drv_priv(q);
+ 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
+-	bool check_cmd = TRUE;
++	unsigned long timeout;
+ 
+ 	dev_dbg(inst->dev->dev, "%s: type: %u\n", __func__, q->type);
+ 	pm_runtime_resume_and_get(inst->dev->dev);
+ 
+-	while (check_cmd) {
++	timeout = jiffies + msecs_to_jiffies(VPU_DEC_STOP_TIMEOUT);
++	while (true) {
+ 		struct queue_status_info q_status;
+-		struct dec_output_info dec_output_info;
+ 
+ 		wave5_vpu_dec_give_command(inst, DEC_GET_QUEUE_STATUS, &q_status);
+ 
+ 		if (q_status.report_queue_count == 0)
+ 			break;
+ 
+-		if (wave5_vpu_wait_interrupt(inst, VPU_DEC_TIMEOUT) < 0)
++		if (time_after(jiffies, timeout))
+ 			break;
+ 
+-		if (wave5_vpu_dec_get_output_info(inst, &dec_output_info))
+-			dev_dbg(inst->dev->dev, "there is no output info\n");
++		usleep_range(1000, 2000);
+ 	}
+ 
+ 	v4l2_m2m_update_stop_streaming_state(m2m_ctx, q);
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
+@@ -59,6 +59,7 @@
+ //  application specific configuration
+ #define VPU_ENC_TIMEOUT                 60000
+ #define VPU_DEC_TIMEOUT                 60000
++#define VPU_DEC_STOP_TIMEOUT            300
+ 
+ // for WAVE encoder
+ #define USE_SRC_PRP_AXI         0
 
 
