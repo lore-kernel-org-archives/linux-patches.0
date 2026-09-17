@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B161C3BFE3F;
-	Thu, 17 Sep 2026 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9B83CB54B;
+	Thu, 17 Sep 2026 17:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665119; cv=none; b=nQ9ryLalffUQVQK5dVaLd0Km8vcSVpyTlxlDmXN7qj21xpAg7EgGIKGeeDBCBrIt+HeFeWxex8hodWYXoxMBUxjNRzyygmTtBeIwtciu3tSNaAvtbf3LoxqLv+vDGW9q3PQkh3XgtCcDkAcfUC4RAIiQSjLExobHGZGzJJtbvg4=
+	t=1789665122; cv=none; b=ry/nq0rBqcmYK9Aa00ig48smdPecPJwuZOuGG/Wf03WUrO88sXGR2gx5JEl33lnxWj3RZE4rAPLdcny6O7Tc4ira6jiefWz88ouxQgslHkAh4Di+JdpZ6bf7S+17EDxmxZkwYh9ZTX0+m5GunPFPqtkfxwa9u6Hv6H/OSgVo8gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665119; c=relaxed/simple;
-	bh=4QyUZeaKxhajEkY4rlcZ/QkZbqJvHT9BlpkeAjpxQ1g=;
+	s=arc-20240116; t=1789665122; c=relaxed/simple;
+	bh=o8uBQzk9wPZWIvDC7UQnH1Wh7Su1IOj9NCRc47PPyK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0swCS3S+o3/Lwgt/pAuKwAwcAixdaN3q8V4lmXReCmtkpfNNZ2g4/O3t+tcAtyZCuxuaw6cfrvNnqOPHdcZD6RbBn7UJ0YMV95TnszR/VN+0GYhPSDJgP9eH7GPUtt1LrNjyWFfW0n8BqYbJiBV8V7Qj4q7RD5HSlnGZbNIqUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u51uRfto; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DeUoPlaA5xEBQPGhvoBWN62X1IlWSLtomuhy7hJys4hYatxztle9xF1f+eA2jAhztegdqri187zhrx6kZZuUOusKfpyLk6dGDceB/QaZ4l/0jelYTgHdfcnrTQrZueRsbrFGv9CcSX/Q7bArHTCBYShXzKErp8IfMe8nrUK4IyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuvBaUHA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u51uRfto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E5D1F000FF;
-	Thu, 17 Sep 2026 17:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuvBaUHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0501F000FF;
+	Thu, 17 Sep 2026 17:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665117;
-	bh=f9IRRwcpPufYFHOVQU55+kLs6seC4J722vqKi+mryyE=;
+	s=korg; t=1789665120;
+	bh=qhr93lpOSxgqTi3I8J/dNVKCKBzaRcVw3JypnRM2fnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u51uRftoHGyT/n7Zk2kc4GlULjpMs0iTq0DaRq6raXZcKNbSx3GhMTZIUUx7B0G1m
-	 kChMwO4v/4BLq61wTFnrsbaW3VNJHloQbhvXv9pzh/lVJbV2wHOlj9p+dCuHjimKnz
-	 /SKPvSJGMWflmxuHIK73vbZbHS0T+dkV3sYHsI3A=
+	b=wuvBaUHA4qeOvA4rUfVbtBgEfFFfX1R0xuD2FsMBdQR0fZwr2rkHo5+z/M3o8DR6H
+	 kM6aMZxZXzkdOq4t46kC80ONxVQEYoqe78buVsWmwSOlUENJGtBtBa+xHjqBo44n+6
+	 Hx/NhrA4j1IMvC7X4zJmg8Q+YJScnhj2KWpLP70w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com,
-	James Chapman <jchapman@katalix.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0596/1250] l2tp: fix tunnel and session refcount leak on seq_file release
-Date: Thu, 17 Sep 2026 16:06:31 +0100
-Message-ID: <20260917151608.035453972@linuxfoundation.org>
+Subject: [PATCH 6.18 0597/1250] af_unix: Unlink scc_entry in unix_del_edge().
+Date: Thu, 17 Sep 2026 16:06:32 +0100
+Message-ID: <20260917151608.062276309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,136 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 9006c116dd111d457bf5d074990210f70a4ad2c8 ]
+[ Upstream commit 594d905195024b228c962627ae5ae7c17bd582a4 ]
 
-In pppol2tp_proc_open() and l2tp_dfs_seq_open(), iteration state
-(pd->tunnel and pd->session) is kept in seq_file private data to allow
-iteration across multiple read() system calls.
+Kyle Zeng reported that GC could free a dead SCC partially.
 
-However, if userspace closes /proc/net/pppol2tp or /sys/kernel/debug/l2tp/tunnels
-before reading to end-of-file (EOF), any tunnel or session reference stored in
-pd->tunnel / pd->session is left un-dropped when seq_file private data is freed.
+The scenario is as follows:
 
-Fix this by dropping any remaining pd->tunnel and pd->session references in
-pppol2tp_proc_release() and l2tp_dfs_seq_release() when closing the file.
+   1) Create two SCCs:
 
-Fixes: 0e0c3fee3a59 ("l2tp: hold reference on tunnels printed in pppol2tp proc file")
-Fixes: f726214d9b23 ("l2tp: hold reference on tunnels printed in l2tp/tunnels debugfs file")
-Reported-by: syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a760f32.01d0871a.3a0d52.004f.GAE@google.com/T/#u
-Assisted-by: Jetski:Gemini-3.1-Pro
-Cc: James Chapman <jchapman@katalix.com>
-Cc: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260811144651.2733424-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+       X -.   A <-> B
+       ^--'
+
+   2) Run the following concurrently:
+
+      2-1) send() sk-B to sk-B from sk-X
+      2-2) close() both A and B
+
+At 2-1), there is a small window where unix_add_edges()
+publishes a new edge (B <-> B) to GC but its skb is not queued
+by skb_queue_tail().
+
+If 2-2) completes before skb_queue_tail() and GC is triggered,
+it judges A <-> B as dead, but B is not freed because GC cannot
+collect the not-yet-queued skb holding the B <-> B edge.
+
+       X -.   A <-> B -. This edge is visible
+       ^--'         ^..'  but skb is not
+
+This itself is not a problem since the next GC run will judge
+B as dead as well and free it finally.
+
+       X -.   A <.> B -.
+       ^--'         ^--'
+
+However, X's SCC forces the next GC to call unix_walk_scc_fast(),
+and it iterates over A through B's scc_entry.
+
+Let's unlink scc_entry before freeing the vertex in unix_del_edge().
+
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Kyle Zeng <kylebot@openai.com>
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.").
+Link: https://patch.msgid.link/20260804002155.2233594-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_debugfs.c |  4 +++
- net/l2tp/l2tp_ppp.c     | 56 ++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 57 insertions(+), 3 deletions(-)
+ net/unix/garbage.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
-index 2d0c8275a3a82..90fc0a59d50ac 100644
---- a/net/l2tp/l2tp_debugfs.c
-+++ b/net/l2tp/l2tp_debugfs.c
-@@ -306,6 +306,10 @@ static int l2tp_dfs_seq_release(struct inode *inode, struct file *file)
- 
- 	seq = file->private_data;
- 	pd = seq->private;
-+	if (pd->session)
-+		l2tp_session_put(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_put(pd->tunnel);
- 	if (pd->net)
- 		put_net_track(pd->net, &pd->ns_tracker);
- 	kfree(pd);
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index f388bf9abf378..c67ba1eab4769 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1608,7 +1608,53 @@ static const struct seq_operations pppol2tp_seq_ops = {
- 	.stop		= pppol2tp_seq_stop,
- 	.show		= pppol2tp_seq_show,
- };
--#endif /* CONFIG_PROC_FS */
-+
-+static int pppol2tp_proc_open(struct inode *inode, struct file *file)
-+{
-+	struct net *net = pde_data(inode);
-+	struct pppol2tp_seq_data *pd;
-+
-+	net = maybe_get_net(net);
-+	if (!net)
-+		return -ENXIO;
-+
-+	pd = __seq_open_private(file, &pppol2tp_seq_ops, sizeof(*pd));
-+	if (!pd) {
-+		put_net(net);
-+		return -ENOMEM;
-+	}
-+
-+#ifdef CONFIG_NET_NS
-+	pd->p.net = net;
-+	netns_tracker_alloc(net, &pd->p.ns_tracker, GFP_KERNEL);
-+#endif
-+	return 0;
-+}
-+
-+static int pppol2tp_proc_release(struct inode *inode, struct file *file)
-+{
-+	struct seq_file *seq = file->private_data;
-+	struct pppol2tp_seq_data *pd = seq->private;
-+
-+	if (pd->session)
-+		l2tp_session_put(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_put(pd->tunnel);
-+
-+#ifdef CONFIG_NET_NS
-+	put_net_track(pd->p.net, &pd->p.ns_tracker);
-+#else
-+	put_net(&init_net);
-+#endif
-+	return seq_release_private(inode, file);
-+}
-+
-+static const struct proc_ops pppol2tp_proc_ops = {
-+	.proc_open	= pppol2tp_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= pppol2tp_proc_release,
-+};
- 
- /*****************************************************************************
-  * Network namespace
-@@ -1619,8 +1665,8 @@ static __net_init int pppol2tp_init_net(struct net *net)
- 	struct proc_dir_entry *pde;
- 	int err = 0;
- 
--	pde = proc_create_net("pppol2tp", 0444, net->proc_net,
--			      &pppol2tp_seq_ops, sizeof(struct pppol2tp_seq_data));
-+	pde = proc_create_data("pppol2tp", 0444, net->proc_net,
-+			       &pppol2tp_proc_ops, net);
- 	if (!pde) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -1635,9 +1681,13 @@ static __net_exit void pppol2tp_exit_net(struct net *net)
- 	remove_proc_entry("pppol2tp", net->proc_net);
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 3986717090266..cad17f639b01b 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -186,6 +186,7 @@ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+ 	if (!vertex->out_degree) {
+ 		edge->predecessor->vertex = NULL;
+ 		list_move_tail(&vertex->entry, &fpl->vertices);
++		list_del(&vertex->scc_entry);
+ 	}
  }
  
-+#endif /* CONFIG_PROC_FS */
-+
- static struct pernet_operations pppol2tp_net_ops = {
-+#ifdef CONFIG_PROC_FS
- 	.init = pppol2tp_init_net,
- 	.exit = pppol2tp_exit_net,
-+#endif
- };
- 
- /*****************************************************************************
 -- 
 2.53.0
 
