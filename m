@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D436F2C1788;
-	Thu, 17 Sep 2026 15:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5EA4EFFA6;
+	Thu, 17 Sep 2026 15:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660237; cv=none; b=EHoUOJc6/ij76dSJFW06PMtkRDUtmWYFUdLQZ0exRYn5ip6RukdtOadNVo6NcUeXJuzxhdSQpW0Nf9y9WxrWvwgxVqw06E+AUrZ3scVR2w6RrClBoD+LQMOCCLGip0k4FQ54/rpIa756EY6YDsnRtSVLPuIT8Lret5yq8ypGtd0=
+	t=1789660240; cv=none; b=B7SSRQolxJaKzTih9l51b7/400Ni8xn4V1l3CAOylXK0GgAGu66SQe+DEEeAicBdavtVD0++6vUA885n4eBIa+EdsduZmXr1xdPv769QKLmLoQ49ZT2knN1wbziqrR658AmYQwhTEtduybeOVbDViPrLIkO7EbIItKHdtSuTbEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660237; c=relaxed/simple;
-	bh=GFqM4pfs69o1IhkoAaISd7QzaFXR+0uxT75RNdnmjA8=;
+	s=arc-20240116; t=1789660240; c=relaxed/simple;
+	bh=Tr3D46roHtK1hwrOSJTvu7LoDHwnBGPHSaDQY/SxBAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EsPYdt8PShTJCNtk7IQ/rKaEo0ip02G4Hc1UKJBOV6BULqpUa9E4ARS9hrm6QBUp1EYktD7voLntJN/mSc6IrYbUtyp0eu+DWoBs3nhYKlT2ZQFL38MlRMrHOOqwnhrSG3Tu0r1Ih1SJ7FrxNRmzF9c6S4KII4mMMAHMrd79aOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPcQYHpk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OeAlSux9rTLOnH1BSTLPQiw4gS3JQ+CKJ4uVfLQqQ+nxtt9M3R/V32uelCUjv7d5xW+RTB/h8GQLFu/9G/qOkp6myYZ2HFmcFge43Uv/nX3Mc97w5oHItf0Zgz3DEXMSDgVXnuRZ5wppjuezTpzOQ11p80hhlNCKdx396npzcCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUIXjExU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPcQYHpk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5E61F00898;
-	Thu, 17 Sep 2026 15:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUIXjExU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451271F00893;
+	Thu, 17 Sep 2026 15:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660229;
-	bh=32+vlJx7jZw/sjZRUN8t8yj3iVSM2YN6MDstrRX6Zzc=;
+	s=korg; t=1789660232;
+	bh=4a5s8EPa2BOMXdMOGYIHZCoh2vMq22VAdkxgZTsmB50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPcQYHpksShSvYFX6TMI7Aowl5CYmNpm0pljIn401Q0FLV9Fi+wYoWZlIzuOZgqJL
-	 7tzCthINr7JbMOKFG3WU93R0ARf2oboekFeLjSCiXzRJROR+f5Hx1Qvs6cB1+U6S5D
-	 no769/C6yoMXDQ3ISLfXrQdOvtbkYd3+5pds1cCs=
+	b=nUIXjExU+J55d109BGnmWItLQ6UTt4vvYH40VOYmJfGLPEG6WbDYauhW8H23oAOsU
+	 tfNYswBntZqPvoTD5yCtUjyly9aJUePvqrPNUhsGkwBd+jKSLS+SwDCuZKHNkkTB3M
+	 kTV2nuPmNVS5YFuuK07cGNms2gdhb+SOMbz7R1Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>
-Subject: [PATCH 7.2 495/733] tools/bootconfig: Fix integer overflow and truncation in size checks
-Date: Thu, 17 Sep 2026 16:13:23 +0100
-Message-ID: <20260917151404.408132566@linuxfoundation.org>
+	syzbot+0aee5e8066eddbbe7397@syzkaller.appspotmail.com,
+	syzbot+e8b3520b53e78e90034e@syzkaller.appspotmail.com,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 522/733] exit: hold a reference to thread_pid across proc_flush_pid
+Date: Thu, 17 Sep 2026 16:13:50 +0100
+Message-ID: <20260917151405.173309432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,88 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 462d0b066b613103f579793031429db2ca23abc0 upstream.
+commit cdd812d0683dee14ead02c9eded568685e61b23f upstream.
 
-Sashiko reported that on 32-bit systems, if an attacker crafts size in
-the bootconfig footer such that adding BOOTCONFIG_FOOTER_SIZE wraps around
-(for instance, if size is 0xFFFFFFFF), the size check in
-load_xbc_from_initrd() can be bypassed:
+Commit 0a36bad01731 ("release_task: kill the no longer needed
+get/put_pid(thread_pid)") removed the reference around proc_flush_pid().
+It assumed that free_pids(post.pids) at the end of release_task() would
+keep thread_pid alive until then.
 
-    if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
-        pr_err("bootconfig size is too big\n");
-        return -E2BIG;
-    }
+That assumption is wrong.  __change_pid() only records a detached PID in
+post.pids when pid_has_task() is false for every PIDTYPE.  If another task
+still uses the exiting task's PID as its process group or session ID,
+__unhash_process() removes the exiting task's PIDTYPE_PID link but leaves
+the PID out of post.pids.  release_task() therefore holds no reference to
+it after dropping tasklist_lock.
 
-Furthermore, on 64-bit systems with an initrd > 4.29 GB, comparing a
-corrupted 32-bit size (e.g. 0xFFFFFFFF) against
-stat.st_size - BOOTCONFIG_FOOTER_SIZE can also bypass the check if
-size is not bounded. Similarly, load_xbc_file() passes 64-bit stat.st_size
-directly into the 32-bit int size parameter of load_xbc_fd(), truncating
-large standalone files (>= 2GB).
+The other task can then remove the remaining PIDTYPE links.  Its
+free_pids() call schedules delayed_put_pid(), and the RCU callback can free
+the PID before the first release_task() reaches proc_flush_pid().
 
-In both cases, passing 0xFFFFFFFF to load_xbc_fd() truncates to -1,
-resulting in malloc(0), an integer overflow in read(), and an
-out-of-bounds null-byte write.
+An unprivileged reproducer races wait4(-1) against setsid() to trigger this
+ordering.  Three of three fresh v7.2 KASAN boots reported:
 
-Fix this by:
-1. Rejecting size > XBC_DATA_MAX or
-   size > stat.st_size - BOOTCONFIG_FOOTER_SIZE in load_xbc_from_initrd().
-2. Rejecting stat.st_size > XBC_DATA_MAX in load_xbc_file() before passing
-   it to load_xbc_fd().
-3. Checking size < 0 || size > XBC_DATA_MAX defensively in load_xbc_fd().
+    BUG: KASAN: slab-use-after-free in
+    proc_invalidate_siblings_dcache+0x3e2/0x3f0
+    Read of size 8 by task h7_pid_reaper/1921
 
-Link: https://lore.kernel.org/all/178905332413.213925.3179977110281463499.stgit@devnote2/
+    Call Trace:
+     proc_invalidate_siblings_dcache
+     release_task
+     wait_consider_task
+     __do_wait
+     do_wait
+     kernel_wait4
 
-Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260909161113.16C691F00A3A@smtp.kernel.org/
-Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.8-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+    Freed by task 0:
+     kmem_cache_free
+     put_pid
+     delayed_put_pid
+     rcu_core
+
+    Last potentially related work creation:
+     __call_rcu_common
+     free_pids
+     ksys_setsid
+
+KASAN identified a 144-byte object from the pid cache and located the bad
+read 80 bytes into the freed object, matching pid->inodes.  With an
+explicit reference, three of three fresh boots completed without a KASAN
+report.  The concurrent RCU callback dropped its reference while
+proc_flush_pid() was protected, and the balancing put_pid() performed the
+final free afterward.
+
+Take a reference before __unhash_process() clears p->thread_pid and release
+it after proc_flush_pid() completes.
+
+A tested source reproducer is available privately on request.  No
+controlled read or write, information leak, or privilege escalation is
+claimed.  The mainline patch applies directly to v6.19.y and newer;
+v6.16.y through v6.18.y need a context-adjusted backport.
+
+Fixes: 0a36bad01731 ("release_task: kill the no longer needed get/put_pid(thread_pid)")
+Reported-by: syzbot+0aee5e8066eddbbe7397@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0aee5e8066eddbbe7397
+Reported-by: syzbot+e8b3520b53e78e90034e@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=e8b3520b53e78e90034e
+Cc: stable@vger.kernel.org # see patch description, needs adjustments for 6.16.y-6.18.y
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260831001221.3755948-1-4ncienth@gmail.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bootconfig/main.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/exit.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/tools/bootconfig/main.c
-+++ b/tools/bootconfig/main.c
-@@ -140,6 +140,9 @@ static int load_xbc_fd(int fd, char **bu
- {
- 	int ret;
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -262,8 +262,11 @@ repeat:
+ 	pidfs_exit(p);
+ 	cgroup_task_release(p);
  
-+	if (size < 0 || size > XBC_DATA_MAX)
-+		return -EINVAL;
-+
- 	*buf = malloc(size + 1);
- 	if (!*buf)
- 		return -ENOMEM;
-@@ -168,6 +171,13 @@ static int load_xbc_file(const char *pat
- 		return ret;
+-	/* Retrieve @thread_pid before __unhash_process() may set it to NULL. */
+-	thread_pid = task_pid(p);
++	/*
++	 * Pin @thread_pid before __unhash_process() clears it. The last
++	 * PIDTYPE detach can otherwise free it before proc_flush_pid().
++	 */
++	thread_pid = get_pid(task_pid(p));
+ 
+ 	write_lock_irq(&tasklist_lock);
+ 	ptrace_release_task(p);
+@@ -292,8 +295,8 @@ repeat:
  	}
  
-+	if (stat.st_size > XBC_DATA_MAX) {
-+		pr_err("%s size is too big\n", path);
-+		ret = -E2BIG;
-+		close(fd);
-+		return ret;
-+	}
-+
- 	ret = load_xbc_fd(fd, buf, stat.st_size);
- 
- 	close(fd);
-@@ -218,7 +228,8 @@ static int load_xbc_from_initrd(int fd,
- 	csum = le32toh(csum);
- 
- 	/* Wrong size error  */
--	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
-+	if (size > XBC_DATA_MAX ||
-+	    size > stat.st_size - BOOTCONFIG_FOOTER_SIZE) {
- 		pr_err("bootconfig size is too big\n");
- 		return -E2BIG;
- 	}
+ 	write_unlock_irq(&tasklist_lock);
+-	/* @thread_pid can't go away until free_pids() below */
+ 	proc_flush_pid(thread_pid);
++	put_pid(thread_pid);
+ 	exit_cred_namespaces(p);
+ 	add_device_randomness(&p->se.sum_exec_runtime,
+ 			      sizeof(p->se.sum_exec_runtime));
 
 
