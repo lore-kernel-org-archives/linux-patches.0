@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E70522697;
-	Thu, 17 Sep 2026 16:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3324EDCA8;
+	Thu, 17 Sep 2026 16:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664203; cv=none; b=joOfYvQpZ4KrPZG9NvuAixj7KsBpTUOGCRrnVO5Y/kkLkLcBY7peagv1EAa9L7YxWrBoZdY74C2W7qf4TCU6JrudhQ4oU0aIls9N4c+wP8NfGmDUFv6j+JjzHKnYNtJxWKF+UEWt1mB4VV2uyEgpqRrhHBfoUCuXMeM3al0I/d4=
+	t=1789664206; cv=none; b=F2+V5zP612biODnrEX7ZYISlBMfChH/5uDgYhLR1xUBKPW8vuR7eBVFsitzr1Wx8JB5lVkuLI8sd8R5I+HI95bIfsphF8Ebi6AfjQgsvlbA+ZV1CBzSDZiVYC/bboXcNX2Fuhga7GkOm1IEWCwXF9mZjWcmdf3Uc3PUCZj7UeXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664203; c=relaxed/simple;
-	bh=tNxogsIG1hkogksH9hCa2tylujLzOHXm144M1pPDMvM=;
+	s=arc-20240116; t=1789664206; c=relaxed/simple;
+	bh=kgO9MGSKSvML+Vzfc1s4nmVRcZpNpTY4Ox6f9Dk4wAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFFi1gRbjrMnVaqcTQv5nB6hlsR1+qIHAw86c1Py3DdLKIcvgA5X6yNoKiMc917ogrI/SxqkL4xt/2UzehhBBl2bCVZnfigtHREOTLmSTCNmWMq0dNq31k6nUu9u89N5b+zGSlyB2Zmo2fLwsRI5180Yqq0jRpnsETn+I+6Vapg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkbhnQUS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IfYuDp99fEsptNrPOR6NKIlakIr2eMDAiBGbl4rzPdpTfWjKqKc4W94urfbUf9C28JSXaGNxRrANEmnm1E0NzBajXTDZfuIsPambZ6sIOy3hsPoeAdjRzN4PPyzGX3jt0TL8FJEEZB0PqVybNqoGCc7bYPdIG8z2TDYU6h8InTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1CqMK5f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkbhnQUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CF51F000FF;
-	Thu, 17 Sep 2026 16:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1CqMK5f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F5F1F00893;
+	Thu, 17 Sep 2026 16:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664202;
-	bh=7BCkNTZXCZn992d88EMJTM2jCqegkiJvh0eViXW035g=;
+	s=korg; t=1789664205;
+	bh=UEmlm3jEX20r88836q3mdrwVcH9mO7jpYPaCDQvKEc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FkbhnQUSmjrG+czxQZ6KcNocIQdEzQOosI4hsS0dv2iJnQAQRwEZN6PYM9Z36zxRE
-	 FrwPsHYJ7NBN8Bq630tI3f0IETpTYD3pjXdaWgi1NUf9sh9lPDNaZgwAIh200Ycnxj
-	 eTJjSJsOzRuKZYLOoCORM15zaCSITUo1x4JES+/E=
+	b=g1CqMK5faQXEDN+Lot69zQTK408/dGPvqCCS8qU2vVe4Vrctdg8oODSJolhWEtjYB
+	 fo8zRBUiyV0QgEvl7Thu8ynnqc3tlE/jrwmpZblETGtEUoPUjhk7CN9xHH8UE2+1yW
+	 pPWXd3wEf1FJWH7TUPVl9AoSMurMUlOzkxQtnfS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0291/1250] fs/ntfs3: preserve non-DOS attribute bits in system.dos_attrib
-Date: Thu, 17 Sep 2026 16:01:26 +0100
-Message-ID: <20260917151600.016692686@linuxfoundation.org>
+Subject: [PATCH 6.18 0256/1250] ASoC: Intel: catpt: Complete coredump handling
+Date: Thu, 17 Sep 2026 16:00:51 +0100
+Message-ID: <20260917151559.094979569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,74 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b1c1101067d9536bcb0fe023b96ee2dde5535959 ]
+[ Upstream commit 7e5d59f407bc39d43b350cc45f7880647429eb5d ]
 
-[BUG]
-A corrupted ntfs3 image can hit a NULL function pointer call in
-generic_perform_write() after toggling system.ntfs_attrib and then
-overwriting system.dos_attrib on the same file.
+An exception may occur during the firmware booting procedure.  In such
+case the firmware sends COREDUMP_REQUESTS and expects the driver to dump
+relevant information and finish with the COREDUMP_RELEASE write.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-\#PF: supervisor instruction fetch in kernel mode
-\#PF: error_code(0x0010) - not-present page
-PGD bed5067 P4D bed5067 PUD 0
-Oops: Oops: 0010 [#1] SMP KASAN NOPTI
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-RSP: 0018:ffff88801025f988 EFLAGS: 00010246
-Call Trace:
- generic_perform_write+0x409/0x8c0 mm/filemap.c:4255
- __generic_file_write_iter+0x1bb/0x200 mm/filemap.c:4372
- ntfs_file_write_iter+0xcd9/0x1c20 fs/ntfs3/file.c:1253
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x63b/0xf70 fs/read_write.c:686
- ksys_write+0x133/0x250 fs/read_write.c:738
- __do_sys_write fs/read_write.c:749 [inline]
- __se_sys_write fs/read_write.c:746 [inline]
- __x64_sys_write+0x77/0xc0 fs/read_write.c:746
- ...
+To distinguish such situation from generic timeout, always signal
+fw_ready completion when a coredump request is received and translate
+it to -EREMOTEIO in catpt_boot_firmware().
 
-[CAUSE]
-system.ntfs_attrib updates ATTR_DATA flags via ni_new_attr_flags()
-and switches i_mapping->a_ops to ntfs_aops_cmpr when
-FILE_ATTRIBUTE_COMPRESSED is set. system.dos_attrib then overwrites
-ni->std_fa from a one-byte DOS attribute value, clearing the compression
-bit without updating ATTR_DATA or the mapping operations.
+The "FW READY" print makes the success clearly visible even when
+the event-traces are not enabled.
 
-Old buffered writes use is_compressed(ni) to choose
-__generic_file_write_iter(). That leaves generic_perform_write() calling
-a NULL write_begin callback from ntfs_aops_cmpr.
-
-[FIX]
-Treat system.dos_attrib as a low-byte DOS attribute update and preserve the
-existing non-DOS attribute bits in ni->std_fa. This keeps compressed and
-sparse state consistent with ATTR_DATA and the mapping operations while
-keeping the existing DOS attribute semantics intact.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260528083444.1439233-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/intel/catpt/ipc.c       |  8 ++++++++
+ sound/soc/intel/catpt/loader.c    |  3 +++
+ sound/soc/intel/catpt/registers.h | 12 ++++++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index a664ac5398c67..0dbb410d51dfe 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -870,7 +870,9 @@ static noinline int ntfs_setxattr(const struct xattr_handler *handler,
- 	if (!strcmp(name, SYSTEM_DOS_ATTRIB)) {
- 		if (sizeof(u8) != size)
- 			goto out;
--		new_fa = cpu_to_le32(*(u8 *)value);
-+		/* system.dos_attrib only covers the low DOS attribute byte. */
-+		new_fa = (ni->std_fa & ~cpu_to_le32(0xff)) |
-+			 cpu_to_le32(*(u8 *)value);
- 		goto set_new_fa;
+diff --git a/sound/soc/intel/catpt/ipc.c b/sound/soc/intel/catpt/ipc.c
+index d26863249097f..952c26e5d0e6c 100644
+--- a/sound/soc/intel/catpt/ipc.c
++++ b/sound/soc/intel/catpt/ipc.c
+@@ -205,6 +205,7 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
+ 		memcpy_fromio(&config, cdev->lpe_ba + off, sizeof(config));
+ 		trace_catpt_ipc_payload((u8 *)&config, sizeof(config));
+ 
++		dev_dbg(cdev->dev, "FW READY 0x%08x\n", header);
+ 		catpt_ipc_arm(ipc, &config);
+ 		complete(&cdev->fw_ready);
+ 		return;
+@@ -215,6 +216,13 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
+ 		dev_err(cdev->dev, "ADSP device coredump received\n");
+ 		ipc->ready = false;
+ 		catpt_coredump(cdev);
++
++		if (catpt_readl_dram(cdev, COREDUMP) == CATPT_COREDUMP_REQUEST) {
++			dev_dbg(cdev->dev, "releasing firmware from the coredump state\n");
++			catpt_writel_dram(cdev, COREDUMP, CATPT_COREDUMP_RELEASE);
++		}
++
++		complete(&cdev->fw_ready);
+ 		/* TODO: attempt recovery */
+ 		break;
+ 
+diff --git a/sound/soc/intel/catpt/loader.c b/sound/soc/intel/catpt/loader.c
+index 696d84314eeb5..680efad5f458d 100644
+--- a/sound/soc/intel/catpt/loader.c
++++ b/sound/soc/intel/catpt/loader.c
+@@ -626,6 +626,9 @@ int catpt_boot_firmware(struct catpt_dev *cdev, bool restore)
+ 	if (!ret) {
+ 		dev_err(cdev->dev, "firmware ready timeout\n");
+ 		return -ETIMEDOUT;
++	/* Wake up does not mean FW is ready, an exception could occur. */
++	} else if (!cdev->ipc.ready) {
++		return -EREMOTEIO;
  	}
  
+ 	/* update sram pg & clock once done booting */
+diff --git a/sound/soc/intel/catpt/registers.h b/sound/soc/intel/catpt/registers.h
+index 6c1ad28c6d692..64bd534a76ff4 100644
+--- a/sound/soc/intel/catpt/registers.h
++++ b/sound/soc/intel/catpt/registers.h
+@@ -124,6 +124,11 @@
+ #define CATPT_SSCR2_DEFAULT		0x0
+ #define CATPT_SSPSP2_DEFAULT		0x0
+ 
++/* Coredump register and its states */
++#define CATPT_DRAM_COREDUMP		0x1F4
++#define CATPT_COREDUMP_REQUEST		UINT_MAX
++#define CATPT_COREDUMP_RELEASE		0
++
+ /* Physically the same block, access address differs between host and dsp */
+ #define CATPT_DSP_DRAM_OFFSET		0x400000
+ #define catpt_to_host_offset(offset)	((offset) & ~(CATPT_DSP_DRAM_OFFSET))
+@@ -137,6 +142,8 @@
+ 
+ /* registry I/O helpers */
+ 
++#define catpt_dram_addr(cdev) \
++	((cdev)->lpe_ba + (cdev)->spec->host_dram_offset)
+ #define catpt_shim_addr(cdev) \
+ 	((cdev)->lpe_ba + (cdev)->spec->host_shim_offset)
+ #define catpt_dma_addr(cdev, dma) \
+@@ -151,6 +158,11 @@
+ #define catpt_writel_ssp(cdev, ssp, reg, val) \
+ 	writel(val, catpt_ssp_addr(cdev, ssp) + (reg))
+ 
++#define catpt_readl_dram(cdev, reg) \
++	readl(catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
++#define catpt_writel_dram(cdev, reg, val) \
++	writel(val, catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
++
+ #define catpt_readl_shim(cdev, reg) \
+ 	readl(catpt_shim_addr(cdev) + CATPT_SHIM_##reg)
+ #define catpt_writel_shim(cdev, reg, val) \
 -- 
 2.53.0
 
