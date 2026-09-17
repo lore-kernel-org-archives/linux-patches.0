@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4454E3244;
-	Thu, 17 Sep 2026 15:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA615448BE;
+	Thu, 17 Sep 2026 15:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659773; cv=none; b=YyJ1LXfyz4wPf8T37shfEbO+7OGX/b4umnR1J0whWYuh1gCWbxFiitenVjZmK0774WefIh3emOjCKioQNOOoZ3DTXVhT6luWgk8R6JfzMSlHYGao0cfeB6Xm+So9f0PZE+s6oQXrmnmXJ6yocrA2k/POpcHUsh1Ngdo38b+cp0Q=
+	t=1789659780; cv=none; b=Qm7UXpw0mHsltPuMXdCI8D61r4OCCBLZ7gptiT2MnADY+xtHguCkwIne6HWMaUfzq0VrmZ1LRVxsSqLqMV9Psfe/Ajo4/QDVF2pNueONOBt4UXXrKNmIRrEDX6zXZK6cHnwT3ZAFV5XXbHypqqddO/u98P04MnbAliYjo1Xl/4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659773; c=relaxed/simple;
-	bh=AC4LVMVOp3sejvhTQz98bKRoAwfgSjWWQtC/9yrvGJA=;
+	s=arc-20240116; t=1789659780; c=relaxed/simple;
+	bh=LwUU1dxEyap28JMJMPNqfFsvo4Hrk2dUeLxM+fcLBlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVD3kl7b4X7xMgoFoG1yjsuQ2CzhhrWKIzB32lGJwxIa4rp5Xu71QgfOwQ2KYPHmDASJ2XlsYMXXYyAQqbgg87by7gCcn9B4I6JbcvsxZglzlT/sCFwa6aSxbaa5hz2TulWsUKBzyJ7Y0euEcqiahXtOT/dQ5sRJPjXT7sy8Lqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhBdDZV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p3794RieunmQqdBH09DIn5tb6c01WwhUHGPVyOkdaAztXgTc+Z8T772MpEoVL/kW/K4i0bEPfgJIja49RN8vmHNO95BvEXXg/Q2SpeYZJbWXb+iCxwRYVlNUInOaCsayJ+s7G1ucgnt+zbHLFXxNy29XVA63Sb3MRUFX+5Y1gHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9iCAjzs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhBdDZV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019711F00899;
-	Thu, 17 Sep 2026 15:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9iCAjzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB99E1F000FF;
+	Thu, 17 Sep 2026 15:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659767;
-	bh=fA63hOX5bv6gQaExXF8BDGNKTmGGml4DB8Sconn07AY=;
+	s=korg; t=1789659770;
+	bh=LYUlqJfmDSnQEKFN4WGttcRW1g9vqDOC3RX+Yi8O6ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhBdDZV43qh+EaDwh/wBq9mygQ3IT8ks/iP03qfjWxXpdw5sIG7e++V/lIUIBuN8j
-	 fVx+YhptNWoxZ45FqeE3nDBze3TFTnEI7XfdQKJXPLAl/JpQiQqECuwydHI+w81NO0
-	 bx3Rc/3yXxqZ1QXlPUh1FoNn6R/VUgmiYtVzusoE=
+	b=U9iCAjzsAFVO4Sw6+tR3liLjcZa1Y9jGAue1Mg8YK8qLV153/wOnv6JicZtfEp+fL
+	 Mpr1csiXyqSIUxuFTpyV4o7E/O25epe/N2qtY7qImYpQbMLrbNRu7hCxX8sC4KcoQ1
+	 en/PqSOiT0iD3YaTCIBTzEoNIqVuvQPvDAXIaWf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alessandro Zini <alessandro.zini@siemens.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 366/733] net: ethernet: cortina: Count RX descriptors for freeq refill
-Date: Thu, 17 Sep 2026 16:11:14 +0100
-Message-ID: <20260917151400.744018116@linuxfoundation.org>
+Subject: [PATCH 7.2 331/733] hwmon: (sht4x) Add missing locks
+Date: Thu, 17 Sep 2026 16:10:39 +0100
+Message-ID: <20260917151359.773321673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,89 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e89e88ad41d9f31c829c2af39c48313e8e48d5b0 ]
+[ Upstream commit 06b7cf395b1fb652a50db39674a759658fbfba0d ]
 
-The software free queue provides one buffer fragment for every descriptor
-moved to an RX queue. The refill heuristic instead advances by NAPI work,
-which counts frames. A fragmented or discarded frame can consume several
-queue entries while adding only one to the refill count.
+Sashiko reports:
 
-Count the RX descriptors as they are consumed and report that separately
-from NAPI work. Use the descriptor count to drive free queue refills.
+Heater sysfs callbacks (heater_enable_store, heater_power_store, and
+heater_time_store) are exposed to data races without the hwmon lock.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Assisted-by: LLM
-Reviewed-by: Joe Damato <joe@dama.to>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-5-2bbbd598ca6e@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If a user-space process reads hwmon data while another process enables
+the heater, heater_enable_store() executes without holding
+hwmon_lock(dev). This can interleave I2C commands and mutate shared
+state (data->heating_complete and data->data_pending) concurrently
+with sht4x_read_values(), leading to corrupted I2C sequences.
+
+Fixes: 53dfa12299c1 ("hwmon: (sht4x) Rely on subsystem locking")
+Cc: Alessandro Zini <alessandro.zini@siemens.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20260821144916.2889031-1-linux@roeck-us.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/hwmon/sht4x.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 9ba8524fa3710..f08de623e6f7c 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1440,7 +1440,8 @@ static struct sk_buff *gmac_skb_if_good_frame(struct gemini_ethernet_port *port,
- 	return skb;
- }
+diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
+index 9cace0e8acdab..7a0dc2ed723d8 100644
+--- a/drivers/hwmon/sht4x.c
++++ b/drivers/hwmon/sht4x.c
+@@ -277,6 +277,8 @@ static ssize_t heater_enable_store(struct device *dev,
+ 		heating_time_bound = 1100;
+ 	}
  
--static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
-+static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget,
-+			    unsigned int *freeq_consumed)
- {
- 	struct gemini_ethernet_port *port = netdev_priv(netdev);
- 	unsigned short m = (1 << port->rxq_order) - 1;
-@@ -1448,6 +1449,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	void __iomem *ptr_reg = port->rxq_rwptr;
- 	unsigned int frag_nr = port->rx_frag_nr;
- 	struct sk_buff *skb = port->rx_skb;
-+	unsigned int consumed = 0;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
- 	struct gmac_queue_page *gpage;
-@@ -1483,6 +1485,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
++	guard(hwmon_lock)(dev);
++
+ 	if (time_before(jiffies, data->heating_complete))
+ 		return -EBUSY;
  
- 		r++;
- 		r &= m;
-+		consumed++;
+@@ -314,6 +316,8 @@ static ssize_t heater_power_store(struct device *dev,
+ 	if (power != 20 && power != 110 && power != 200)
+ 		return -EINVAL;
  
- 		frag_len = word0.bits.buffer_size;
- 		frame_len = word1.bits.byte_count;
-@@ -1575,6 +1578,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	port->rx_skb = skb;
- 	port->rx_frag_nr = frag_nr;
- 	port->rx_dropping = dropping;
-+	*freeq_consumed = consumed;
- 	writew(r, ptr_reg);
- 	return received;
- }
-@@ -1584,18 +1588,19 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 	struct gemini_ethernet_port *port = netdev_priv(napi->dev);
- 	struct gemini_ethernet *geth = port->geth;
- 	unsigned int freeq_threshold;
-+	unsigned int freeq_consumed;
- 	unsigned int received;
++	guard(hwmon_lock)(dev);
++
+ 	data->heater_power = power;
  
- 	freeq_threshold = 1 << (geth->freeq_order - 1);
- 	u64_stats_update_begin(&port->rx_stats_syncp);
+ 	return count;
+@@ -344,6 +348,8 @@ static ssize_t heater_time_store(struct device *dev,
+ 	if (time != 100 && time != 1000)
+ 		return -EINVAL;
  
--	received = gmac_rx(napi->dev, budget);
-+	received = gmac_rx(napi->dev, budget, &freeq_consumed);
- 	if (received < budget)
- 		++port->rx_napi_exits;
++	guard(hwmon_lock)(dev);
++
+ 	data->heater_time = time;
  
- 	u64_stats_update_end(&port->rx_stats_syncp);
- 
--	port->freeq_refill += received;
-+	port->freeq_refill += freeq_consumed;
- 	if (port->freeq_refill > freeq_threshold) {
- 		port->freeq_refill -= freeq_threshold;
- 		geth_fill_freeq(geth, true);
+ 	return count;
 -- 
 2.53.0
 
