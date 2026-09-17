@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3AF4B7A26;
-	Thu, 17 Sep 2026 15:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4902F4E73BB;
+	Thu, 17 Sep 2026 15:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658742; cv=none; b=WoSNGFFbtEO8ypr4fac3QMfgAmYhgOCzCheEO/T9FJCZG0B7t5bDnNFlKKlDfwjPlw3FYrw1OLZZI3hIcjUOXPZHSfU2+WjE9fHfWg8DVa2ChHQhteIXmw+tL8yizYwFGFsns5b4/0ETq4tF+GAdHWdhQBnI68LpWS+wDHbcg4E=
+	t=1789658742; cv=none; b=IR1VfDhqb4GqRouX2DGhimWnnRIyhagTw4ecgotfuEHMXnDuhHfEgEM2kccJWRAhkF/xsbtGp0UrIgUYYYAJr1gO+5UDwz+OhdBXNoTzESv/qlo1zH5S3OTrt7yaxkOrDEPvi/3/+4W/rGKGdL9Q/iBa+Z7eqKmrDNACK1YHgMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789658742; c=relaxed/simple;
-	bh=y3FdZUVFG/GhNRJhiEYZx9SFGGkRW7JwT3+STFpQDXo=;
+	bh=huzYVSNY9grhqiQJeCzxDR3q/vk/NrYAIS2ZkL68dZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQc53KCYfJbcc0o+xsfs/rdcdF9jnR+FGXj0+7WjH8YvGTIBq64pPWEzeoJk1sT4WbZXJAQN7+TGjF1uG/x+nsxfeEs3ApF5WiMpLOTnKqsvbM/1sgNtGhM5hgp68NHXWXoh/OvdNjF+cLMprMYD/LFoV0P7n6wQ4dy/e5RkD3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwyKI+HS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bkEXsDUiCcnnc5kLCBzN4EGzjos+cm4VDg3DuPEyBOw5MkesC3aGc3rZJt1qdicWzzmNNQ7H3W+v96d9nlZnrWok+9CTiJIeWxMASB/maEB2bLYyoSrOwc3DarizsEMXbwIGDf831sOpj9IT4Tskbj9XKc441o2CTFy3jpc2pP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uX/OafwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwyKI+HS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E431F00893;
-	Thu, 17 Sep 2026 15:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uX/OafwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0181F000FF;
+	Thu, 17 Sep 2026 15:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658737;
-	bh=bn1nk9aouYNQtdYE33nWpiRmeylvv6olnlweWQYGqJc=;
+	s=korg; t=1789658731;
+	bh=tccHEs0YVu6GYVlvEzYWRq7dG9meMXIVMzPNtLiUkwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qwyKI+HSQ25OWDOhQZhEdMopJ7kJmVeGcEmiU7s9VUe6hWA5S+Ty04uCF+aYCtQW+
-	 dDkKcJCy/EgPI6MaZ5WY8v9leHw0QWouYkifm7QwxrNasJoxFt7sxsyglTLsv/oBIs
-	 YU1lC0Y13t2Wc5ODitSuGmbq1NhOQZn2WbCqqJ9Q=
+	b=uX/OafwLNNcCim1CngyTSklk65EA9Pa4H3+7X5cPK59lZAakH3rbbwcYUvYjV4Bov
+	 KmmVryy4ZzVnkokWzShcXBT5s067zPsBUXclxd6E4j+gDHhd4f0C/OObzLXbBj0isL
+	 xyS4QAt/pI5lhUQeDya2OTyho7a+RgqjHoFVc2RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vlatko Kosturjak <kost@linux.hr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hemanth Selam <hemanth.selam@gmail.com>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 005/733] ppp_async: drop the errored frame instead of resetting its headroom
-Date: Thu, 17 Sep 2026 16:05:13 +0100
-Message-ID: <20260917151350.759675044@linuxfoundation.org>
+Subject: [PATCH 7.2 021/733] selftests/cgroup: set the test plan after the setup checks
+Date: Thu, 17 Sep 2026 16:05:29 +0100
+Message-ID: <20260917151351.219798444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,94 +52,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlatko Kosturjak <kost@linux.hr>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit 8dc5d98a16fa23c00999aecf10018c9f69fa5bf4 ]
+[ Upstream commit 0c893d170ff8efe7b4067552932d26e7defba307 ]
 
-ppp_receive_nonmp_frame() prepends a two-byte direction tag before running
-the pass/active BPF filters:
+The cgroup tests announce their plan before checking whether cgroup v2 is
+available, so on a host without it they promise a number of results and
+then skip out after the first one:
 
-	*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+	TAP version 13
+	1..3
+	ok 1 # SKIP cgroup v2 isn't mounted
+	# Planned tests != run tests (3 != 1)
+	# Totals: pass:0 fail:0 xfail:0 xpass:0 skip:1 error:0
 
-Nothing on the receive path guarantees those two bytes of headroom. The
-frame-error path in ppp_async's process_input_packet() resets a reused skb's
-headroom to zero while claiming to restore it to a freshly allocated state -
-but a fresh skb from dev_alloc_skb() carries NET_SKB_PAD:
+ksft_exit_skip() can only emit a well formed "1..0 # SKIP" line while no
+plan has been printed, as the comment above it in kselftest.h points out.
 
-	err:
-		if (skb) {
-			/* make skb appear as freshly allocated */
-			skb_trim(skb, 0);
-			skb_reserve(skb, - skb_headroom(skb));
-		}
+Move ksft_set_plan() below the setup checks that can skip, so that a
+skipped run reports:
 
-ap->rpkt still points at that skb, so the next frame is reassembled into it
-with no headroom at all. A peer that sends a bad-FCS frame followed by one
-beginning ff 03 then leaves a single byte of headroom by the time the filter
-tag is pushed, which lands one byte below skb->head:
+	TAP version 13
+	1..0 # SKIP cgroup v2 isn't mounted
 
-  skbuff: skb_under_panic: len:49 put:2 head:ffff888003c10000
-          data:ffff888003c0ffff tail:0x30 end:0x640 dev:<NULL>
-  kernel BUG at net/core/skbuff.c:214!
-  RIP: 0010:skb_panic+0x13e/0x230
-  Call Trace:
-   skb_push+0xbd/0x100
-   ppp_receive_nonmp_frame+0x48a/0x1d10
-   ppp_input+0x4e9/0x2f80
-   ppp_async_process+0x2a/0xe0
-   tasklet_action_common+0x20f/0x8a0
-   handle_softirqs+0x18e/0x590
-  Kernel panic - not syncing: Fatal exception in interrupt
+Several of the tests skip more than once while setting up, for a missing
+or unwritable controller as well, so the plan goes after the last of
+them.  test_core joins its two setup paths at the post_v2_setup label and
+sets the plan there.
 
-Zeroing the headroom violates the NET_SKB_PAD guarantee that dev_alloc_skb()
-gives the rest of the receive path. Besides the filter panic above, when CCP
-compression is enabled ppp_decompress_frame() hands skb->data - 2 to
-->decompress()/->incomp(), which then reads out of bounds before skb->head
-for the same reason.
+Reporting each planned test as skipped instead would keep the plan where
+it is, but the setup failures here mean the whole test cannot run rather
+than its individual cases being skipped, which is what "1..0 # SKIP" is
+for.
 
-Rather than restore the headroom, drop the errored frame - as ppp_synctty
-already does on its error path - and clear ap->rpkt so the next frame is
-reassembled into a fresh skb with proper headroom. This is simpler and fixes
-both the filter under-panic and the CCP out-of-bounds read.
-
-The original V1 of this patch made room in ppp_receive_nonmp_frame() with
-skb_cow_head(); Eric pointed out that fixing the root cause in the transport
-is the right approach.
-
-Found by fuzzing the PPP receive path with a mutating peer on a pty; it is an
-interesting (remote) DoS: root configures PPP, the peer supplies two crashing
-frames. The reproducer (repro-ppp-skb.c, unchanged from v1) panics in about a
-second, and returns cleanly with this applied.
-
-Fixes: 6722e78c9005 ("[PPP]: handle misaligned accesses")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Vlatko Kosturjak <kost@linux.hr>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/apkR6ZU+tqP2C3Fl@griffin.linux.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1dc830ee4c15 ("selftests/cgroup: conform test to KTAP format output")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Reviewed-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ tools/testing/selftests/cgroup/test_core.c       | 2 +-
+ tools/testing/selftests/cgroup/test_cpu.c        | 2 +-
+ tools/testing/selftests/cgroup/test_cpuset.c     | 2 +-
+ tools/testing/selftests/cgroup/test_freezer.c    | 2 +-
+ tools/testing/selftests/cgroup/test_kill.c       | 2 +-
+ tools/testing/selftests/cgroup/test_kmem.c       | 2 +-
+ tools/testing/selftests/cgroup/test_memcontrol.c | 2 +-
+ tools/testing/selftests/cgroup/test_pids.c       | 2 +-
+ tools/testing/selftests/cgroup/test_zswap.c      | 2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index 93a7b0f6c4e7e..a5db4f78b5fc8 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -812,11 +812,8 @@ process_input_packet(struct asyncppp *ap)
-  err:
- 	/* frame had an error, remember that, reset SC_TOSS & SC_ESCAPE */
- 	ap->state = SC_PREV_ERROR;
--	if (skb) {
--		/* make skb appear as freshly allocated */
--		skb_trim(skb, 0);
--		skb_reserve(skb, - skb_headroom(skb));
--	}
-+	kfree_skb(skb);
-+	ap->rpkt = NULL;
- }
+diff --git a/tools/testing/selftests/cgroup/test_core.c b/tools/testing/selftests/cgroup/test_core.c
+index 88ca832d4fc13..64f4962a4659d 100644
+--- a/tools/testing/selftests/cgroup/test_core.c
++++ b/tools/testing/selftests/cgroup/test_core.c
+@@ -927,7 +927,6 @@ int main(int argc, char *argv[])
+ 	int i;
  
- /* Called when the tty driver has data for us. Runs parallel with the
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), &nsdelegate)) {
+ 		if (setup_named_v1_root(root, sizeof(root), CG_NAMED_NAME))
+ 			ksft_exit_skip("cgroup v2 isn't mounted and could not setup named v1 hierarchy\n");
+@@ -940,6 +939,7 @@ int main(int argc, char *argv[])
+ 			ksft_exit_skip("Failed to set memory controller\n");
+ 
+ post_v2_setup:
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_cpu.c b/tools/testing/selftests/cgroup/test_cpu.c
+index 7a40d76b95487..8f96bfd19ab9f 100644
+--- a/tools/testing/selftests/cgroup/test_cpu.c
++++ b/tools/testing/selftests/cgroup/test_cpu.c
+@@ -799,7 +799,6 @@ int main(int argc, char *argv[])
+ 	int i;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -807,6 +806,7 @@ int main(int argc, char *argv[])
+ 		if (cg_write(root, "cgroup.subtree_control", "+cpu"))
+ 			ksft_exit_skip("Failed to set cpu controller\n");
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_cpuset.c b/tools/testing/selftests/cgroup/test_cpuset.c
+index c5cf8b56ceb8f..52ed8fba685ae 100644
+--- a/tools/testing/selftests/cgroup/test_cpuset.c
++++ b/tools/testing/selftests/cgroup/test_cpuset.c
+@@ -250,7 +250,6 @@ int main(int argc, char *argv[])
+ 	int i;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -258,6 +257,7 @@ int main(int argc, char *argv[])
+ 		if (cg_write(root, "cgroup.subtree_control", "+cpuset"))
+ 			ksft_exit_skip("Failed to set cpuset controller\n");
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_freezer.c b/tools/testing/selftests/cgroup/test_freezer.c
+index 0569e93fa6b00..f28bb02e9783b 100644
+--- a/tools/testing/selftests/cgroup/test_freezer.c
++++ b/tools/testing/selftests/cgroup/test_freezer.c
+@@ -1491,9 +1491,9 @@ int main(int argc, char *argv[])
+ 	int i;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_kill.c b/tools/testing/selftests/cgroup/test_kill.c
+index f6cd23a8ecc71..99cafd9dc0136 100644
+--- a/tools/testing/selftests/cgroup/test_kill.c
++++ b/tools/testing/selftests/cgroup/test_kill.c
+@@ -278,9 +278,9 @@ int main(int argc, char *argv[])
+ 	int i;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_kmem.c b/tools/testing/selftests/cgroup/test_kmem.c
+index 1db0ba1226b9b..cb47561b4b443 100644
+--- a/tools/testing/selftests/cgroup/test_kmem.c
++++ b/tools/testing/selftests/cgroup/test_kmem.c
+@@ -426,7 +426,6 @@ int main(int argc, char **argv)
+ 	int i;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -441,6 +440,7 @@ int main(int argc, char **argv)
+ 		if (cg_write(root, "cgroup.subtree_control", "+memory"))
+ 			ksft_exit_skip("Failed to set memory controller\n");
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index 0ebf796f3cffe..3a84d068fbf36 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -1798,7 +1798,6 @@ int main(int argc, char **argv)
+ 		page_size = BUF_SIZE;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -1823,6 +1822,7 @@ int main(int argc, char **argv)
+ 		ksft_exit_skip("Failed to query cgroup mount option\n");
+ 	has_localevents = proc_status;
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_pids.c b/tools/testing/selftests/cgroup/test_pids.c
+index 9a387c815d2cd..710109b53dfe9 100644
+--- a/tools/testing/selftests/cgroup/test_pids.c
++++ b/tools/testing/selftests/cgroup/test_pids.c
+@@ -148,7 +148,6 @@ int main(int argc, char **argv)
+ 	char root[PATH_MAX];
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -163,6 +162,7 @@ int main(int argc, char **argv)
+ 		if (cg_write(root, "cgroup.subtree_control", "+pids"))
+ 			ksft_exit_skip("Failed to set pids controller\n");
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (int i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
+diff --git a/tools/testing/selftests/cgroup/test_zswap.c b/tools/testing/selftests/cgroup/test_zswap.c
+index 49b36ee791606..6e7b89315bbf3 100644
+--- a/tools/testing/selftests/cgroup/test_zswap.c
++++ b/tools/testing/selftests/cgroup/test_zswap.c
+@@ -810,7 +810,6 @@ int main(int argc, char **argv)
+ 		page_size = BUF_SIZE;
+ 
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(tests));
+ 	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+@@ -827,6 +826,7 @@ int main(int argc, char **argv)
+ 		if (cg_write(root, "cgroup.subtree_control", "+memory"))
+ 			ksft_exit_skip("Failed to set memory controller\n");
+ 
++	ksft_set_plan(ARRAY_SIZE(tests));
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+ 		case KSFT_PASS:
 -- 
 2.53.0
 
