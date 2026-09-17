@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32CC54706B;
-	Thu, 17 Sep 2026 18:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067303CD8BF;
+	Thu, 17 Sep 2026 18:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670741; cv=none; b=Y8hHUGdjKwJB+C5lAsavzXAJbBcA5HEFgLeyAnacpL232Qx6RZuew8Dxsz/701z/6vcIjT35c8dRdDPoIA2/mSKAaOJMDW48J+iaPWR3IqbcAPOjJlb9MyEFoKl2DdNrIeTA+3JmKFrUGkCvUcfyBdagLn+szYH91B+rSiOMzp8=
+	t=1789670745; cv=none; b=HhwktFg7D5LT6VTITVxYQ8zAOwX57iSNIjxkYfEWeS2UCYltvz28skATtZf4M9u9wRLdOEMYZHGoVx8v2UIVqlM2fPnIECJtUUoe4ETzcxGb/+TqLPcwFv0oY3SS5/JWEuR61a/dc77u/oDku7+0kSzBq0GqZsGH8v8Uadt9h4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670741; c=relaxed/simple;
-	bh=DCZfazi83GVQCkpYBgDZIj2cBDjcK2YCWklRib/dtGo=;
+	s=arc-20240116; t=1789670745; c=relaxed/simple;
+	bh=RtJzv5r9y5tadXdBDeUUneuuAPa+DBRDM53+IcCI6EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jaeu0QR8KwNLTMzNHimhMfsvISCvSJDoNid8V1vk00Cm8j1c1BEL6jhd9H1Z8kgRh+C2+T2k49++xqHMV/nUAY+IGoGbx7PK62YPr3i3Wo5EjVQGK708unXQ/8ZUaR0AfdqlO17fXBlO4NzhnA9RRcDMDeELIdXTpLZL6vmrh7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpy5R1ee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hb6dV4xckgF4OfjIhpIjAM78G8pi/XI6vUVRQvs1ksIJbxnAglcyCj42VBXxFIRRhuVogi0Pr2QBkTu0RFoRPfz5YUq48WXW4UxHrruCJ70B6rc6Ojp8oEgDHjIv841Kxe9VKMcmi2yLrjAIcK0UXRMUeW69eVgrrft49ACgXcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqX/e8Ss; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpy5R1ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284D41F000FF;
-	Thu, 17 Sep 2026 18:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqX/e8Ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174991F00893;
+	Thu, 17 Sep 2026 18:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670739;
-	bh=APwCFebqKlfa+kNWj+YtFucSfBjVZXb0/kfFkJY1HAk=;
+	s=korg; t=1789670743;
+	bh=fvkipSENLHWWJuvgwe91LfFND7lh/knBIJz0rdNbgag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpy5R1eeLlUJUiOSh9hPKqDaxucql/XJ3HEA1om0UnxWVl7wWqyuXGZEAIHssQcs3
-	 poLzwEaz2UMfI08qiEcJOkY3+FdmCPZ+hqYgIPC48QwrdD3cZVAcXg4P3Kc0ZpaKSI
-	 oJdgirv6CSiRbJOzs0SR/BR1U/Ihid4BOc9S7p4E=
+	b=ZqX/e8Ssvc109taFbyC4/D6XK4nlAFK8YVFQjKuNYRwxzm/1Yce3+LHC9VLr03O3J
+	 MIF8LIKkCt7cgr5+3i9JtIJmslz5b2ZUV4QBVM8XWDOxjeV6jN8qmQfeE8v8yWdFol
+	 NdDBqgnBQB/elpiKpeG6JCMhlN8aYeAr9kb+5rTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0754/1102] net: dsa: lantiq_gswip: deduplicate dsa_switch_ops
-Date: Thu, 17 Sep 2026 16:11:37 +0100
-Message-ID: <20260917151559.354447768@linuxfoundation.org>
+Subject: [PATCH 6.12 0755/1102] net: dsa: lantiq_gswip: prepare for more CPU port options
+Date: Thu, 17 Sep 2026 16:11:38 +0100
+Message-ID: <20260917151559.381162060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,119 +55,220 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit fa1439a865830ec3b599114e7cc907f5ad126b07 ]
+[ Upstream commit 2bec1c3836990d1159d2fe113f3ffddb48b9e040 ]
 
-The two instances of struct dsa_switch_ops differ only by their
-.phylink_get_caps op. Instead of having two instances of dsa_switch_ops,
-rather just have a pointer to the phylink_get_caps function in
-struct gswip_hw_info.
+The MaxLinear GSW1xx series of switches support using either the
+(R)(G)MII interface on port 5 or the SGMII interface on port 4 to be
+used as CPU port. Prepare for supporting them by defining a mask of
+allowed CPU ports instead of a single port.
 
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/03d72eceeb3faecdbe03ce58aab40861cf6b77c1.1755878232.git.daniel@makrotopia.org
+Link: https://patch.msgid.link/879c66672d26fe49c1f5d9aa40d8ebc0f31885ab.1755878232.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 59fb389ad6bf ("net: dsa: lantiq_gswip: fix GSWIP_MDIO_PHY_FCONTX_EN value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 44 ++++++++++++----------------------
- 1 file changed, 15 insertions(+), 29 deletions(-)
+ drivers/net/dsa/lantiq_gswip.c | 79 +++++++++++++++++++++-------------
+ 1 file changed, 50 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index b1f18a840da77..2c2b943ad13e1 100644
+index 2c2b943ad13e1..dbfadc9831f54 100644
 --- a/drivers/net/dsa/lantiq_gswip.c
 +++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -254,7 +254,8 @@
+@@ -253,7 +253,7 @@
+ 
  struct gswip_hw_info {
  	int max_ports;
- 	int cpu_port;
--	const struct dsa_switch_ops *ops;
-+	void (*phylink_get_caps)(struct dsa_switch *ds, int port,
-+				 struct phylink_config *config);
+-	int cpu_port;
++	unsigned int allowed_cpu_ports;
+ 	void (*phylink_get_caps)(struct dsa_switch *ds, int port,
+ 				 struct phylink_config *config);
  };
+@@ -655,7 +655,6 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
+ {
+ 	struct gswip_pce_table_entry vlan_active = {0,};
+ 	struct gswip_pce_table_entry vlan_mapping = {0,};
+-	unsigned int cpu_port = priv->hw_info->cpu_port;
+ 	int err;
  
- struct xway_gphy_match_data {
-@@ -1564,6 +1565,14 @@ static void gswip_xrx300_phylink_get_caps(struct dsa_switch *ds, int port,
- 		MAC_10 | MAC_100 | MAC_1000;
+ 	vlan_active.index = port + 1;
+@@ -675,7 +674,7 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
+ 	vlan_mapping.index = port + 1;
+ 	vlan_mapping.table = GSWIP_TABLE_VLAN_MAPPING;
+ 	vlan_mapping.val[0] = 0 /* vid */;
+-	vlan_mapping.val[1] = BIT(port) | BIT(cpu_port);
++	vlan_mapping.val[1] = BIT(port) | dsa_cpu_ports(priv->ds);
+ 	vlan_mapping.val[2] = 0;
+ 	err = gswip_pce_table_entry_write(priv, &vlan_mapping);
+ 	if (err) {
+@@ -814,10 +813,10 @@ static int gswip_port_vlan_filtering(struct dsa_switch *ds, int port,
+ 
+ static int gswip_setup(struct dsa_switch *ds)
+ {
++	unsigned int cpu_ports = dsa_cpu_ports(ds);
+ 	struct gswip_priv *priv = ds->priv;
+-	unsigned int cpu_port = priv->hw_info->cpu_port;
+-	int i;
+-	int err;
++	struct dsa_port *cpu_dp;
++	int err, i;
+ 
+ 	gswip_switch_w(priv, GSWIP_SWRES_R0, GSWIP_SWRES);
+ 	usleep_range(5000, 10000);
+@@ -839,9 +838,9 @@ static int gswip_setup(struct dsa_switch *ds)
+ 	}
+ 
+ 	/* Default unknown Broadcast/Multicast/Unicast port maps */
+-	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP1);
+-	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP2);
+-	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP3);
++	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP1);
++	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP2);
++	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP3);
+ 
+ 	/* Deactivate MDIO PHY auto polling. Some PHYs as the AR8030 have an
+ 	 * interoperability problem with this auto polling mechanism because
+@@ -870,13 +869,15 @@ static int gswip_setup(struct dsa_switch *ds)
+ 				   GSWIP_MII_CFG_EN | GSWIP_MII_CFG_ISOLATE,
+ 				   0, i);
+ 
+-	/* enable special tag insertion on cpu port */
+-	gswip_switch_mask(priv, 0, GSWIP_FDMA_PCTRL_STEN,
+-			  GSWIP_FDMA_PCTRLp(cpu_port));
++	dsa_switch_for_each_cpu_port(cpu_dp, ds) {
++		/* enable special tag insertion on cpu port */
++		gswip_switch_mask(priv, 0, GSWIP_FDMA_PCTRL_STEN,
++				  GSWIP_FDMA_PCTRLp(cpu_dp->index));
+ 
+-	/* accept special tag in ingress direction */
+-	gswip_switch_mask(priv, 0, GSWIP_PCE_PCTRL_0_INGRESS,
+-			  GSWIP_PCE_PCTRL_0p(cpu_port));
++		/* accept special tag in ingress direction */
++		gswip_switch_mask(priv, 0, GSWIP_PCE_PCTRL_0_INGRESS,
++				  GSWIP_PCE_PCTRL_0p(cpu_dp->index));
++	}
+ 
+ 	gswip_switch_mask(priv, 0, GSWIP_BM_QUEUE_GCTRL_GL_MOD,
+ 			  GSWIP_BM_QUEUE_GCTRL);
+@@ -972,7 +973,6 @@ static int gswip_vlan_add_unaware(struct gswip_priv *priv,
+ {
+ 	struct gswip_pce_table_entry vlan_mapping = {0,};
+ 	unsigned int max_ports = priv->hw_info->max_ports;
+-	unsigned int cpu_port = priv->hw_info->cpu_port;
+ 	bool active_vlan_created = false;
+ 	int idx = -1;
+ 	int i;
+@@ -1012,7 +1012,7 @@ static int gswip_vlan_add_unaware(struct gswip_priv *priv,
+ 	}
+ 
+ 	/* Update the VLAN mapping entry and write it to the switch */
+-	vlan_mapping.val[1] |= BIT(cpu_port);
++	vlan_mapping.val[1] |= dsa_cpu_ports(priv->ds);
+ 	vlan_mapping.val[1] |= BIT(port);
+ 	err = gswip_pce_table_entry_write(priv, &vlan_mapping);
+ 	if (err) {
+@@ -1034,7 +1034,7 @@ static int gswip_vlan_add_aware(struct gswip_priv *priv,
+ {
+ 	struct gswip_pce_table_entry vlan_mapping = {0,};
+ 	unsigned int max_ports = priv->hw_info->max_ports;
+-	unsigned int cpu_port = priv->hw_info->cpu_port;
++	unsigned int cpu_ports = dsa_cpu_ports(priv->ds);
+ 	bool active_vlan_created = false;
+ 	int idx = -1;
+ 	int fid = -1;
+@@ -1081,8 +1081,8 @@ static int gswip_vlan_add_aware(struct gswip_priv *priv,
+ 
+ 	vlan_mapping.val[0] = vid;
+ 	/* Update the VLAN mapping entry and write it to the switch */
+-	vlan_mapping.val[1] |= BIT(cpu_port);
+-	vlan_mapping.val[2] |= BIT(cpu_port);
++	vlan_mapping.val[1] |= cpu_ports;
++	vlan_mapping.val[2] |= cpu_ports;
+ 	vlan_mapping.val[1] |= BIT(port);
+ 	if (untagged)
+ 		vlan_mapping.val[2] &= ~BIT(port);
+@@ -1109,7 +1109,6 @@ static int gswip_vlan_remove(struct gswip_priv *priv,
+ {
+ 	struct gswip_pce_table_entry vlan_mapping = {0,};
+ 	unsigned int max_ports = priv->hw_info->max_ports;
+-	unsigned int cpu_port = priv->hw_info->cpu_port;
+ 	int idx = -1;
+ 	int i;
+ 	int err;
+@@ -1145,7 +1144,7 @@ static int gswip_vlan_remove(struct gswip_priv *priv,
+ 	}
+ 
+ 	/* In case all ports are removed from the bridge, remove the VLAN */
+-	if ((vlan_mapping.val[1] & ~BIT(cpu_port)) == 0) {
++	if (!(vlan_mapping.val[1] & ~dsa_cpu_ports(priv->ds))) {
+ 		err = gswip_vlan_active_remove(priv, idx);
+ 		if (err) {
+ 			dev_err(priv->dev, "failed to write active VLAN: %d\n",
+@@ -2090,6 +2089,30 @@ static int gswip_gphy_fw_list(struct gswip_priv *priv,
+ 	return err;
  }
  
-+static void gswip_phylink_get_caps(struct dsa_switch *ds, int port,
-+				   struct phylink_config *config)
++static int gswip_validate_cpu_port(struct dsa_switch *ds)
 +{
 +	struct gswip_priv *priv = ds->priv;
++	struct dsa_port *cpu_dp;
++	int cpu_port = -1;
 +
-+	priv->hw_info->phylink_get_caps(ds, port, config);
++	dsa_switch_for_each_cpu_port(cpu_dp, ds) {
++		if (cpu_port != -1)
++			return dev_err_probe(ds->dev, -EINVAL,
++					     "only a single CPU port is supported\n");
++
++		cpu_port = cpu_dp->index;
++	}
++
++	if (cpu_port == -1)
++		return dev_err_probe(ds->dev, -EINVAL, "no CPU port defined\n");
++
++	if (BIT(cpu_port) & ~priv->hw_info->allowed_cpu_ports)
++		return dev_err_probe(ds->dev, -EINVAL,
++				     "unsupported CPU port defined\n");
++
++	return 0;
 +}
 +
- static void gswip_port_set_link(struct gswip_priv *priv, int port, bool link)
+ static int gswip_probe(struct platform_device *pdev)
  {
- 	u32 mdio_phy;
-@@ -1836,7 +1845,7 @@ static const struct phylink_mac_ops gswip_phylink_mac_ops = {
- 	.mac_link_up	= gswip_phylink_mac_link_up,
- };
+ 	struct device_node *np, *gphy_fw_np;
+@@ -2172,12 +2195,10 @@ static int gswip_probe(struct platform_device *pdev)
+ 		dev_err_probe(dev, err, "dsa switch registration failed\n");
+ 		goto gphy_fw_remove;
+ 	}
+-	if (!dsa_is_cpu_port(priv->ds, priv->hw_info->cpu_port)) {
+-		err = dev_err_probe(dev, -EINVAL,
+-				    "wrong CPU port defined, HW only supports port: %i\n",
+-				    priv->hw_info->cpu_port);
++
++	err = gswip_validate_cpu_port(priv->ds);
++	if (err)
+ 		goto disable_switch;
+-	}
  
--static const struct dsa_switch_ops gswip_xrx200_switch_ops = {
-+static const struct dsa_switch_ops gswip_switch_ops = {
- 	.get_tag_protocol	= gswip_get_tag_protocol,
- 	.setup			= gswip_setup,
- 	.port_setup		= gswip_port_setup,
-@@ -1854,30 +1863,7 @@ static const struct dsa_switch_ops gswip_xrx200_switch_ops = {
- 	.port_fdb_dump		= gswip_port_fdb_dump,
- 	.port_change_mtu	= gswip_port_change_mtu,
- 	.port_max_mtu		= gswip_port_max_mtu,
--	.phylink_get_caps	= gswip_xrx200_phylink_get_caps,
--	.get_strings		= gswip_get_strings,
--	.get_ethtool_stats	= gswip_get_ethtool_stats,
--	.get_sset_count		= gswip_get_sset_count,
--};
--
--static const struct dsa_switch_ops gswip_xrx300_switch_ops = {
--	.get_tag_protocol	= gswip_get_tag_protocol,
--	.setup			= gswip_setup,
--	.port_enable		= gswip_port_enable,
--	.port_disable		= gswip_port_disable,
--	.port_bridge_join	= gswip_port_bridge_join,
--	.port_bridge_leave	= gswip_port_bridge_leave,
--	.port_fast_age		= gswip_port_fast_age,
--	.port_vlan_filtering	= gswip_port_vlan_filtering,
--	.port_vlan_add		= gswip_port_vlan_add,
--	.port_vlan_del		= gswip_port_vlan_del,
--	.port_stp_state_set	= gswip_port_stp_state_set,
--	.port_fdb_add		= gswip_port_fdb_add,
--	.port_fdb_del		= gswip_port_fdb_del,
--	.port_fdb_dump		= gswip_port_fdb_dump,
--	.port_change_mtu	= gswip_port_change_mtu,
--	.port_max_mtu		= gswip_port_max_mtu,
--	.phylink_get_caps	= gswip_xrx300_phylink_get_caps,
-+	.phylink_get_caps	= gswip_phylink_get_caps,
- 	.get_strings		= gswip_get_strings,
- 	.get_ethtool_stats	= gswip_get_ethtool_stats,
- 	.get_sset_count		= gswip_get_sset_count,
-@@ -2140,7 +2126,7 @@ static int gswip_probe(struct platform_device *pdev)
- 	priv->ds->dev = dev;
- 	priv->ds->num_ports = priv->hw_info->max_ports;
- 	priv->ds->priv = priv;
--	priv->ds->ops = priv->hw_info->ops;
-+	priv->ds->ops = &gswip_switch_ops;
- 	priv->ds->phylink_mac_ops = &gswip_phylink_mac_ops;
- 	priv->dev = dev;
- 	mutex_init(&priv->pce_table_lock);
-@@ -2241,13 +2227,13 @@ static void gswip_shutdown(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, priv);
+ 
+@@ -2226,13 +2247,13 @@ static void gswip_shutdown(struct platform_device *pdev)
+ 
  static const struct gswip_hw_info gswip_xrx200 = {
  	.max_ports = 7,
- 	.cpu_port = 6,
--	.ops = &gswip_xrx200_switch_ops,
-+	.phylink_get_caps = gswip_xrx200_phylink_get_caps,
+-	.cpu_port = 6,
++	.allowed_cpu_ports = BIT(6),
+ 	.phylink_get_caps = gswip_xrx200_phylink_get_caps,
  };
  
  static const struct gswip_hw_info gswip_xrx300 = {
  	.max_ports = 7,
- 	.cpu_port = 6,
--	.ops = &gswip_xrx300_switch_ops,
-+	.phylink_get_caps = gswip_xrx300_phylink_get_caps,
+-	.cpu_port = 6,
++	.allowed_cpu_ports = BIT(6),
+ 	.phylink_get_caps = gswip_xrx300_phylink_get_caps,
  };
  
- static const struct of_device_id gswip_of_match[] = {
 -- 
 2.53.0
 
