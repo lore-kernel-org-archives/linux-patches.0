@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABC054B1C5;
-	Thu, 17 Sep 2026 16:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0455B3A1686;
+	Thu, 17 Sep 2026 16:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661207; cv=none; b=M1xJw1If0MBhp4zRrSS0QswRKDtK5nIn5AP+9CZCKq2QJUwphLoz5UofGpPG22+H9Qttd0OGHNAzn94s62uDwrEQrrKGdLMB+oDwHw8WcI0CUdK5Tb8fVJDfnrsd1iqdrt+I7an25euWZCnnmKLz/LQ/S23we3FJCLSNJxEglC8=
+	t=1789661210; cv=none; b=r47yOakusOGMay4NGrpEVzfWYitVYBrjJs8ncYxcLi7P0Hk8jtSDRW3Hxas7l63Uv1u5NQNo2oiJ10PPQp3r74YcpQWEGPB7eqFYOltwil5xK0UtgahIuB/5sCejJMRty+hhfi2hwh4iXXipXIxQ176cJYJYKLFpBN9J/85Jchc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661207; c=relaxed/simple;
-	bh=vboq1+u206s9tET4dpxCyThtV02qD/WdvGjXKMVM0nw=;
+	s=arc-20240116; t=1789661210; c=relaxed/simple;
+	bh=fDRPIv4+BcZfX3/1u0EgfIKpBlijAD0JQAo51E1qA+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzaICZI8gCfL92cm4hSBUnhRn3P4W4QLqvhIoaAlSoGtWpHXaqIUJY5AAn3Dh/yHV3qDwJOba/3gl6bsWWB5LcozzgSlJgX7iOERVThQoROHZY6UY+L3ZNemvNCRzo9Rga2mSzvgrLD7J8KkkZrh47SjD8zUKF5802sLiPRU7Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzMf0l8N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=diPcBR3GHPDif7HVel85t10bgVfJGUXgDi8THcnMHJZoc6lfs67NXGePJiOlSGlCXXWDYcbmyC2tmkrDwZjZi6oDTRLpY0Vj3HA+w3lerSHCLoGGu32muiFmxuAa+42rxpvch6193MfAGVd6t7RDIF93bTY5qPqMD6rOgWqNFzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUzqXqw1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzMf0l8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B46E1F00893;
-	Thu, 17 Sep 2026 16:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUzqXqw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544451F00898;
+	Thu, 17 Sep 2026 16:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661205;
-	bh=JI1bXL1YXJGBnqxMoxY74SKxym8EsXdwWACSre03Q3k=;
+	s=korg; t=1789661208;
+	bh=lExZN2ehkCe3NfsKbfFcK1KKTb9MgHS+3KTSoBRH1dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AzMf0l8N9+/VxubHJCCZ7gl1DtrZy/1skGRfno0eIIT8VQs7yiKNSeR5Vrr0SXDu7
-	 NCt0oZfUAduMgpi6q0kMS3HuI4BDavDpd2QgisE454ojzFTOJ//neN+dXXDOiE7GYo
-	 MTrk95uSHpqsqBSs8izvBrvLQxTBuciFnDa6CeKk=
+	b=JUzqXqw1a7YCO6xZaDYVj+DL2aACr3VcNjXwxgZe1GOcl+/QLW5h6UHzcgRkq6Dj8
+	 hndsUuZ36qnlcOMG2edduyF6Mexhbz7Y69j8iT0aJyBHDlAaivViav1KWkKEkkgx36
+	 DzgxB5rmOzdZ8Jcuxv914RykzlxccF8rCmWm5OxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0116/1250] soundwire: intel: Move suspend tracking from trigger to pm suspend
-Date: Thu, 17 Sep 2026 15:58:31 +0100
-Message-ID: <20260917151555.160577039@linuxfoundation.org>
+Subject: [PATCH 6.18 0080/1250] media: qcom: camss: avoid format string warning
+Date: Thu, 17 Sep 2026 15:57:55 +0100
+Message-ID: <20260917151554.137442222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,143 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit acf676b9de0c86bc735a7f04962d3d688e156ffc ]
+[ Upstream commit 797c1cbf672f372d6a464df0dcedf476fc715969 ]
 
-Mark all open DAI runtimes as suspended in the component .suspend
-callback instead of relying on SNDRV_PCM_TRIGGER_SUSPEND, which is
-not delivered during PAUSE or xrun states.
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-If during system suspend a dai is open it means that it is in either in
-SUSPENDED, PAUSED or STOPPED  (due to xrun) state and they will need to be
-re-initialized during resume (which is done in .prepare callback).
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260508101755.1247039-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel.c       | 31 ++++++--------------------
- drivers/soundwire/intel_ace2x.c | 39 ++++++++++++++++++++++-----------
- 2 files changed, 33 insertions(+), 37 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
-index 9db78f3d76152..a83371233603b 100644
---- a/drivers/soundwire/intel.c
-+++ b/drivers/soundwire/intel.c
-@@ -907,19 +907,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 2de97f58f9ae4..74c77969db7ef 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
  
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -956,10 +943,12 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 	struct snd_soc_dai *dai;
- 
- 	/*
--	 * In the corner case where a SUSPEND happens during a PAUSE, the ALSA core
--	 * does not throw the TRIGGER_SUSPEND. This leaves the DAIs in an unbalanced state.
--	 * Since the component suspend is called last, we can trap this corner case
--	 * and force the DAIs to release their resources.
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
- 	 */
- 	for_each_component_dais(component, dai) {
- 		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-@@ -967,13 +956,7 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 
- 		dai_runtime = cdns->dai_runtime_array[dai->id];
- 
--		if (!dai_runtime)
--			continue;
--
--		if (dai_runtime->suspended)
--			continue;
--
--		if (dai_runtime->paused)
-+		if (dai_runtime)
- 			dai_runtime->suspended = true;
- 	}
- 
-diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
-index 63aef98361467..f0e0a79b30b0e 100644
---- a/drivers/soundwire/intel_ace2x.c
-+++ b/drivers/soundwire/intel_ace2x.c
-@@ -822,19 +822,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
- 
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -858,8 +845,34 @@ static const struct snd_soc_dai_ops intel_pcm_dai_ops = {
- 	.get_stream = intel_get_sdw_stream,
- };
- 
-+static int intel_component_dais_suspend(struct snd_soc_component *component)
-+{
-+	struct snd_soc_dai *dai;
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
+ {
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
 +
-+	/*
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
-+	 */
-+	for_each_component_dais(component, dai) {
-+		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-+		struct sdw_cdns_dai_runtime *dai_runtime;
-+
-+		dai_runtime = cdns->dai_runtime_array[dai->id];
-+
-+		if (dai_runtime)
-+			dai_runtime->suspended = true;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct snd_soc_component_driver dai_component = {
- 	.name			= "soundwire",
-+	.suspend		= intel_component_dais_suspend,
- };
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
  
- /*
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
+ 
 -- 
 2.53.0
 
