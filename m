@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA0251AEF1;
-	Thu, 17 Sep 2026 17:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E34251AEFF;
+	Thu, 17 Sep 2026 17:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665669; cv=none; b=fWPPV/VehLjmis2ytzaGO9YCjGiK5pblmuGZSM3j/h0F1+2mKDGkb9MUFg7U+venLGwlTY68JoZlwPt7sKeccixRUxVGbkGcXSlhJjkNF1EONERXwLidWK/u/RKVOi3WRqEwALNttkRJoRw+00f3eU8+mC0NaAoHcQL5BGZuARM=
+	t=1789665672; cv=none; b=g8Tdamz+65ay89CGpSFDmuQf7+1OaJY54TtoKG4hK3IzN1xu02hQALBGu/bu8Uvyc+gbKX0Cu065DZr6huROWNMY78XDnpMi3Re8uCCMJvxRZhbB8TB/w3ptD8oMxLGO0j4xSg6mQslUayWXhzJAjCudB70xD7mXmrPCNaBcRd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665669; c=relaxed/simple;
-	bh=YqJnb4ClYPksC82dT2zSel24EDpL/I2X8/pcqwFfmQ4=;
+	s=arc-20240116; t=1789665672; c=relaxed/simple;
+	bh=ueX6gP+S/D3JlCir3lvhjXXvROl6wAl5DBLt61hFRcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VI8ijpfezPNK9XkpxlpqZUhXd9KpixPnKbbRCNFiKFIldaAKcFfBLQ0OIl5LnLItL3kOfagpGNGfB7tuk8nFavYc5tb5rlUGuhTDIrtBiuIK46cQBl6ayonu09WjATxQ2E3cmXnXboEOGCkfxdYOHDCKq/xPo0pJn/HUWWVLAVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMIrMILH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9ZGdzcbJQu/uJxRoNZmvFHqk+itaWvF2LZGeyKS6jK1rbNxWZoCPZ6bueqc3arEtzeX40QbMe9fHjQaM8VhfI6CHFJLT7vOvoNBRSsSnknkozOe5fso28zV0L0sEmvMWGd5JjAt8j/SysrVsK0jp460es/avsIS6Ja3B0VfuYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QScJVSl2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMIrMILH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9920D1F000FF;
-	Thu, 17 Sep 2026 17:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QScJVSl2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AAD91F000FF;
+	Thu, 17 Sep 2026 17:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665668;
-	bh=Ju3vCnGjwU+ehge223f0nxuSC72vGeNtv9JGDLDM8rE=;
+	s=korg; t=1789665671;
+	bh=8I5zWp6/4Pou4TS+OKXNeokeXJ5HMExlzchEULrRFmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMIrMILH6OiyyS86LxKkbzV58QknGaw92+gYjN/jn1NQ0yOGvle/ekTWpjYdfuF3R
-	 68cd8PHjtnp03lKpDauQH4iL2LvKo4vQ1T4vhhorpgt0or4YIXmPKWCU2WQnxWuu8U
-	 tmvwOpGw5ogskT0AN2iqDP8D1StuuY5rdxbYPM/8=
+	b=QScJVSl2Lp4JsQs0fEdFisl+na+QimPkXOzvtDhFiVLJ/XrHY9wnda0GkivnAgoUO
+	 sOjlaxw32J5VVg8ohHhHI59UU5JWhq9nKHqQQ/CjuhjRllhthXRbbnapRTgKR/kwKs
+	 B9TOAT1Kxn5gsaV3sNCpa0vWC3Z08PsTNU1Qx0/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0782/1250] thermal: sysfs: switch to use scnprintf() to suppress truncation warning
-Date: Thu, 17 Sep 2026 16:09:37 +0100
-Message-ID: <20260917151613.088224801@linuxfoundation.org>
+Subject: [PATCH 6.18 0783/1250] bpf: Require MEM_PERCPU for percpu kptr stores
+Date: Thu, 17 Sep 2026 16:09:38 +0100
+Message-ID: <20260917151613.115127874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,64 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 5ad0af4f4367202b1bc71813052fe39b5116cdb9 ]
+[ Upstream commit 048029ba1c793f8cabc4ad5eea765da01903f8f1 ]
 
-Switch the sysfs code to use scnprintf() to avoid warnings about potential
-truncation of the names of the sysfs attributes. We can't increase the buffer
-size because the size is the part of an ABI for some reason. Note, with
-the current size of buffer the affected attributes have a room for up to
-1000 names, which ought to be enough for all cases. There is no functional
-change, as the same limitation was implied before.
+map_kptr_match_type() treats perm_flags as the set of register type flags
+that a kptr field permits. Adding MEM_PERCPU to that set for
+BPF_KPTR_PERCPU does not require the source register to carry it, however.
+The subset test consequently accepts both a plain bpf_obj_new() allocation
+and a referenced kernel pointer into a __percpu_kptr map field.
 
-Fixes: c56f5c0342df ("Thermal: Make Thermal trip points writeable")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/20260817103324.1020212-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Loads from the field are always marked MEM_PERCPU. Consumers then treat the
+stored value as the cookie returned by bpf_percpu_obj_new(): per-CPU pointer
+helpers relocate it, and map teardown selects the per-CPU free path. A plain
+allocation can therefore provide an arbitrary kernel read/write, while a
+kernel pointer can be relocated into an invalid address or sent through a
+missing destructor.
+
+Require the source MEM_PERCPU flag to match the destination field kind.
+This preserves valid bpf_percpu_obj_new() stores and rejects both the
+program-BTF and kernel-BTF variants.
+
+Fixes: 36d8bdf75a93 ("bpf: Add alloc/xchg/direct_access support for local percpu kptr")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260904084325.52250-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_sysfs.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
-index d80612506a334..e7fb5a5865db5 100644
---- a/drivers/thermal/thermal_sysfs.c
-+++ b/drivers/thermal/thermal_sysfs.c
-@@ -401,8 +401,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
- 		struct thermal_trip_attrs *trip_attrs = &td->trip_attrs;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e0ec0f47febeb..bef18a2cc95a6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5889,6 +5889,13 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	if (type_flag(reg->type) & ~perm_flags)
+ 		goto bad_type;
  
- 		/* create trip type attribute */
--		snprintf(trip_attrs->type.name, THERMAL_NAME_LENGTH,
--			 "trip_point_%d_type", i);
-+		scnprintf(trip_attrs->type.name, sizeof(trip_attrs->type.name),
-+			  "trip_point_%d_type", i);
++	/*
++	 * A BPF_KPTR_PERCPU field is read back as MEM_PERCPU, so the value
++	 * stored in it must carry the same flag.
++	 */
++	if ((kptr_field->type == BPF_KPTR_PERCPU) != !!(reg->type & MEM_PERCPU))
++		goto bad_type;
++
+ 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
+ 	reg_name = btf_type_name(reg->btf, reg->btf_id);
  
- 		sysfs_attr_init(&trip_attrs->type.attr.attr);
- 		trip_attrs->type.attr.attr.name = trip_attrs->type.name;
-@@ -411,8 +411,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
- 		attrs[i] = &trip_attrs->type.attr.attr;
- 
- 		/* create trip temp attribute */
--		snprintf(trip_attrs->temp.name, THERMAL_NAME_LENGTH,
--			 "trip_point_%d_temp", i);
-+		scnprintf(trip_attrs->temp.name, sizeof(trip_attrs->temp.name),
-+			  "trip_point_%d_temp", i);
- 
- 		sysfs_attr_init(&trip_attrs->temp.attr.attr);
- 		trip_attrs->temp.attr.attr.name = trip_attrs->temp.name;
-@@ -424,8 +424,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
- 		}
- 		attrs[i + tz->num_trips] = &trip_attrs->temp.attr.attr;
- 
--		snprintf(trip_attrs->hyst.name, THERMAL_NAME_LENGTH,
--			 "trip_point_%d_hyst", i);
-+		scnprintf(trip_attrs->hyst.name, sizeof(trip_attrs->hyst.name),
-+			  "trip_point_%d_hyst", i);
- 
- 		sysfs_attr_init(&trip_attrs->hyst.attr.attr);
- 		trip_attrs->hyst.attr.attr.name = trip_attrs->hyst.name;
 -- 
 2.53.0
 
