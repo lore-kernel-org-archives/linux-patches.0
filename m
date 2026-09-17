@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305724F5DEA;
-	Thu, 17 Sep 2026 18:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EBD4F85AD;
+	Thu, 17 Sep 2026 18:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668118; cv=none; b=l3+19I9PvQowLD2Z/8RajNz1a68M+l06ZNDiivhK991rjX3qVZX9AN+UW4312poUzUCsI7pzoFOpc5Iq9IjJWOfXcwQPU0VyKadSU2ejrTTyaaFKAMTOfSVhHGRyoWXkQZDx8WMpMLs+rPHjS/mgoSNwkzTZcHcXBnPtQOI+Pco=
+	t=1789668121; cv=none; b=Vq9lBfl8lsdCfRx6G5+UlPYB+oXUWNEikPphWm25wIeXS0YAPlwy+2GTLSJzjxCES3CU5ShyAM8m3O5jirGy2TUduuRnXR9A1jWoqNcAUeIX3z5dNizhufaow0X3fxKFeD5iAu9Niea0j5cMrDxaozeVkktAIbayoXhebTyYLWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668118; c=relaxed/simple;
-	bh=2JfAxJKdxjQ/BdvZKGzujeLmASCa9xiYK7gR9eh+J6s=;
+	s=arc-20240116; t=1789668121; c=relaxed/simple;
+	bh=Msa7AbTHAeoYaezmb7tv9RpvY3WxxdEetDhDqB/Ys54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfkVydAlhJ0xggqgsvlBbaAhuhTtAcA3+PxpFb66tlDRxrqcLace5AjwcXUoA7eoZdmC5M/6iTG9/rFN68evua7PsKVKc9hbeJSdeTTTTk+tlWb+kn29VA4Bwl2dAFgxaeBiNEAmxUp9pfzFGxAzdGv2SnNN+VXoIgSmf0fyyLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqDy58uh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nb5416E+agIi0rLMtMzJ225RdSMnuXAHGX+OV/PEtfwZiRu3RnohRE9oZrtwzkfZgEYl0QQhgB7zKVpOyhZz3iKrNYkMeUzOw1WT9A5DB1dcmcnL97PLX78jA8f2qIK+PkzD49Nv1ntHENoE/dWrZ6E/h6oUItGybuWxYLo3qhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O30F9nku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqDy58uh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494C21F000FF;
-	Thu, 17 Sep 2026 18:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O30F9nku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAB11F000FF;
+	Thu, 17 Sep 2026 18:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668116;
-	bh=Wn0IS3ZPbHbUzyKBa+ciD9sBoEotGaI7WJwPCKjbQOg=;
+	s=korg; t=1789668119;
+	bh=S7yBo018nKEZABMtLLsaU7HiR0oFURdvwqGHGJCeduI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqDy58uhTJd5opmCeIiRCJMD0SmO7QQTQ/1ng2tLb3c7vOBdWm9XguW727kUaKpaE
-	 lZ/V+hE6WwKIpcVUTk/K0ZqIvVzhc883C3T2mRmeQ9eS7izkXk2eCGRdEYNhPsUEo1
-	 DxDDlHWXmpXzY/yD5tQTC08A5+Wjc0Xu8N2p87cc=
+	b=O30F9nku3XZkMTJca0gUVMJTHEBPRHUudBwZvKWAU6NOGrnR0y7MNx+hAKMGMGhoH
+	 AVpjMhghiO7DHgq7ort/c1mINDq5icfTS06t9U4B9y/grgZ8y4eM+5WQ4u22Y0KZFn
+	 AZvYzBhw2Jlli3/cFeS3S9/w90SsaSLdd6RG83kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0318/1102] scsi: bfa: Reduce kernel stack usage in bfa_fcs_lport_fdmi_build_portattr_block()
-Date: Thu, 17 Sep 2026 16:04:21 +0100
-Message-ID: <20260917151547.607217896@linuxfoundation.org>
+Subject: [PATCH 6.12 0319/1102] gpio: pisosr: Read "ngpios" as u32
+Date: Thu, 17 Sep 2026 16:04:22 +0100
+Message-ID: <20260917151547.634181522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 57a6ed0b41677ccc5e28cc0976e495c1dfa33747 ]
+[ Upstream commit 4910aa198d25e5d1067236560ba34ab12bccc677 ]
 
-bfa_fcs_fdmi_get_portattr() gets inlined into multiple places and has
-two fairly large variables on the stack, to the point of causing a
-warning in some randconfig builds:
+The generic "ngpios" property is encoded as a normal uint32 cell. The
+pisosr driver stores it in the gpio_chip field, but reading it with a
+u16 helper does not match the DT property encoding.
 
-drivers/scsi/bfa/bfa_fcs_lport.c:2198:1: error: stack frame size (1560) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_portattr_block' [-Werror,-Wframe-larger-than]
- 2198 | bfa_fcs_lport_fdmi_build_portattr_block(struct bfa_fcs_lport_fdmi_s *fdmi,
-      | ^
-drivers/scsi/bfa/bfa_fcs_lport.c:1856:1: error: stack frame size (1600) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_rhba_pyld' [-Werror,-Wframe-larger-than]
- 1856 | bfa_fcs_lport_fdmi_build_rhba_pyld(struct bfa_fcs_lport_fdmi_s *fdmi, u8 *pyld)
-      | ^
+Read "ngpios" as u32 and keep the existing assignment to the chip
+field.
 
-Mark the inner function as noinline_for_stack to keep it separate from
-the other variables and prevent multiple copies of the same variable to
-get inlined here.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260611125601.3385418-1-arnd@kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assisted-by: Codex:gpt-5-5
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260612215216.1887485-1-robh@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bfa/bfa_fcs_lport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-pisosr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/bfa/bfa_fcs_lport.c b/drivers/scsi/bfa/bfa_fcs_lport.c
-index 966bf6cc6dd90..b056daa51c2a5 100644
---- a/drivers/scsi/bfa/bfa_fcs_lport.c
-+++ b/drivers/scsi/bfa/bfa_fcs_lport.c
-@@ -2646,7 +2646,7 @@ bfa_fcs_fdmi_get_hbaattr(struct bfa_fcs_lport_fdmi_s *fdmi,
- 
- }
- 
--static void
-+static noinline_for_stack void
- bfa_fcs_fdmi_get_portattr(struct bfa_fcs_lport_fdmi_s *fdmi,
- 			  struct bfa_fcs_fdmi_port_attr_s *port_attr)
+diff --git a/drivers/gpio/gpio-pisosr.c b/drivers/gpio/gpio-pisosr.c
+index e3013e778e151..dd4a0a990d158 100644
+--- a/drivers/gpio/gpio-pisosr.c
++++ b/drivers/gpio/gpio-pisosr.c
+@@ -125,6 +125,7 @@ static int pisosr_gpio_probe(struct spi_device *spi)
  {
+ 	struct device *dev = &spi->dev;
+ 	struct pisosr_gpio *gpio;
++	u32 ngpios;
+ 	int ret;
+ 
+ 	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
+@@ -133,7 +134,8 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+ 
+ 	gpio->chip = template_chip;
+ 	gpio->chip.parent = dev;
+-	of_property_read_u16(dev->of_node, "ngpios", &gpio->chip.ngpio);
++	if (!of_property_read_u32(dev->of_node, "ngpios", &ngpios))
++		gpio->chip.ngpio = ngpios;
+ 
+ 	gpio->spi = spi;
+ 
 -- 
 2.53.0
 
