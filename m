@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA255218B1;
-	Thu, 17 Sep 2026 17:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5365218A5;
+	Thu, 17 Sep 2026 17:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665894; cv=none; b=r4hZkJjLDRDl5wlT2lPzu9icpYk3obWBT05R23xswSLZazU4PgGSGnTBABhYMRMF40720MDCuXvLZo01+r+JX/ai4BD5XBuKVBdWHbNPvsmrhAj3edDczFJvwxbSYONEZ3mVDzviGMIn1OSkkFwgRng20JorZIUF8oSALvV+6hc=
+	t=1789665898; cv=none; b=orGoDmGWSrlvs0bQ2A0Q/+hfXIC0Z4jtceXSBHNXAKeb+rWlf9dnfu9cBM/yvz/dF0B/ubpMCfo+btj8ocI7StJuoAX2kvhbGgLfTV/0CBNYIOgo4xc/2vEchFKCIrvgECqnhndw6tuKLdQf5v8oVwNTX8XjExky1T9GlR/AeYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665894; c=relaxed/simple;
-	bh=2qq9dWDSgZwGNcLWP4tDloVZAwnettd8gvMLY2IcUlA=;
+	s=arc-20240116; t=1789665898; c=relaxed/simple;
+	bh=oS/lZ2Va7JQ7vRKCRFHhPdRmP6030s5CNB0VXlEKzww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skwh3TywCZRcw/QHWkR6RCqbeKQCimBbeUcDFh0G2JX8gqAUV0WU1B5gwmDLLYietWcESawVvLEkuvKflZUQ/lt0emkLTvFgPIcN8Pc/nG5v66DtNJuepkwU4+08sMNbTwD3YhO1wT2NNtPAw1TK61qD8j0ftVy3EDccON3XMuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOHkJu9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NNWYzw7RZEv/8ZNtwj13DznwrFbrou+tBorKwbaXvgvUck6bUt9MZ83st+jpNphcErPejvJPdWQm4zukMKjjGn+NjZNj9G5C+0IwEKJUsXcA9toGAxB685AozjZU4sTJLvOg1ZrcTrmLtWDtgbqpHxnbjSnT0pWWr7E3RjZXz48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzZXudQI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOHkJu9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919671F000FF;
-	Thu, 17 Sep 2026 17:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzZXudQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9999D1F000FF;
+	Thu, 17 Sep 2026 17:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665893;
-	bh=Pet23uJxW3gACUaJN/nmJzp9H5a6QBgvrfc4Kig9KAk=;
+	s=korg; t=1789665896;
+	bh=IqcPyW0L2ms7ZdVwgIF4sdhuV1UN4eX5+kjhEd4sXsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOHkJu9Z9CrQq9bkXTxgB6Va2dtykJvlN/UhJCxFvGsJdutw0EXNMCRO+FqOhcavK
-	 XkfDuoj+9IatVtolMUxysD3V78KeYMJKp+ntPEtOEJMXqZ/Z+1kEhIskXB1Ubg/OS1
-	 8xOsl+P+tDpPR1pGvJjyN4hytif8w+dJhxfxEsqU=
+	b=bzZXudQIdo6uf62RA7t8Rf5s9XqXZCFRlkXV0giZ7tXCZQI1I2/La56GBj4TwU0io
+	 iotOWAukEeM5t3TgRvrZIeiNk5zw6V/cGx1/CKbxJNZDM+dCH+JmxW19i54eNw0afc
+	 pRhaw0nrnhkPYmZMkEmeGh7oC9jU8g2acRibsCFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0818/1250] net/mlx5e: Keep HW timestamp stats monotonic across reconfiguration
-Date: Thu, 17 Sep 2026 16:10:13 +0100
-Message-ID: <20260917151614.103530549@linuxfoundation.org>
+Subject: [PATCH 6.18 0854/1250] vhost/vdpa: reject VRING_NUM larger than device max
+Date: Thu, 17 Sep 2026 16:10:49 +0100
+Message-ID: <20260917151615.114386289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,116 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit df99553f840e4c529c1ba4c29bd39396466ca11a ]
+[ Upstream commit ccb1dc7c527f8c925925cf92afc76ae590dac311 ]
 
-`mlx5e_stats_ts_get()` currently selects either DMA or port timestamp
-counters based on `tx_ptp_opened`. This flag is intentionally kept set
-once the PTP TX queues have been opened so their statistics remain
-available after queue teardown. As a result, DMA timestamps are no
-longer reported after switching from port timestamping back to DMA
-timestamping.
+vhost_vring_set_num() accepts any non-zero power-of-two queue size that
+fits in 16 bits. vhost-vdpa then passes that value to set_vq_num()
+without comparing it with get_vq_num_max().
 
-The function also reads statistics only from the currently active
-channels and TCs. Reducing the number of channels or TCs can therefore
-drop previously accumulated timestamp counters from the reported value.
+A process with access to /dev/vhost-vdpa-* can therefore configure a
+queue larger than the device advertises. With vdpa_sim, the worker can
+walk descriptors beyond the mapped descriptor ring. KASAN reports a
+16-byte out-of-bounds read, corresponding to one vring_desc, in the
+vringh IOTLB path:
 
-Read the persistent channel statistics instead and always include DMA
-timestamp counters. Once the PTP TX queues have been opened, also
-include the port timestamp counters.
+  BUG: KASAN: out-of-bounds in _copy_from_iter
+  Read of size 16
+  copy_from_iotlb
+  copydesc_iotlb
+  vringh_getdesc_iotlb
+  vdpasim_net_work
 
-This also drops state_lock. It previously protected live channel/PTP
-pointers, the new code only reads persistent channel_stats and
-ptp_stats via mlx5e_stats_nch_read(), which is already safe for
-lockless stats access.
+Cache get_vq_num_max() immediately after reset. Some backends derive
+it from writable queue-size state, so querying it after SET_NUM may
+return the current size instead of the device capability. Invalidate
+the cached value before reset so a failed reset leaves SET_NUM
+disabled.
 
-Fixes: 3579032c08c1 ("net/mlx5e: Implement ethtool hardware timestamping statistics")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193731.3668958-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For VHOST_SET_VRING_NUM, copy the complete vring state once and use
+the same index and size for validation, vq->num, and set_vq_num().
+This ensures that validation and use operate on the same copied values.
+
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260810010300.132959-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en_stats.c    | 51 ++++++++-----------
- 1 file changed, 20 insertions(+), 31 deletions(-)
+ drivers/vhost/vdpa.c | 44 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 37 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-index 5ae501f448338..8450b07b0146e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-@@ -1170,50 +1170,39 @@ void mlx5e_stats_rmon_get(struct mlx5e_priv *priv,
- void mlx5e_stats_ts_get(struct mlx5e_priv *priv,
- 			struct ethtool_ts_stats *ts_stats)
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 4c988f30a55c3..068fb6aa33fa7 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -53,6 +53,7 @@ struct vhost_vdpa {
+ 	struct cdev cdev;
+ 	atomic_t opened;
+ 	u32 nvqs;
++	u16 vq_num_max;
+ 	int virtio_id;
+ 	int minor;
+ 	struct eventfd_ctx *config_ctx;
+@@ -229,7 +230,9 @@ static void vhost_vdpa_unsetup_vq_irq(struct vhost_vdpa *v, u16 qid)
+ static int _compat_vdpa_reset(struct vhost_vdpa *v)
  {
--	int i, j;
-+	u16 nch = mlx5e_stats_nch_read(priv);
-+	int i, tc;
+ 	struct vdpa_device *vdpa = v->vdpa;
++	const struct vdpa_config_ops *ops = vdpa->config;
+ 	u32 flags = 0;
++	int ret;
  
--	mutex_lock(&priv->state_lock);
-+	ts_stats->pkts = 0;
+ 	v->suspended = false;
  
--	if (priv->tx_ptp_opened) {
--		struct mlx5e_ptp *ptp = priv->channels.ptp;
-+	for (i = 0; i < nch; i++) {
-+		struct mlx5e_channel_stats *channel_stats =
-+			priv->channel_stats[i];
+@@ -239,7 +242,14 @@ static int _compat_vdpa_reset(struct vhost_vdpa *v)
+ 			 VDPA_RESET_F_CLEAN_MAP : 0;
+ 	}
  
--		ts_stats->pkts = 0;
-+		for (tc = 0; tc < priv->max_opened_tc; tc++)
-+			ts_stats->pkts += channel_stats->sq[tc].timestamps;
+-	return vdpa_reset(vdpa, flags);
++	v->vq_num_max = 0;
++	ret = vdpa_reset(vdpa, flags);
++	if (!ret) {
++		/* Some backends derive the max from mutable queue state. */
++		v->vq_num_max = ops->get_vq_num_max(vdpa);
 +	}
 +
-+	/* Accumulate DMA and port timestamp counters so values stay monotonic
-+	 * across channel teardown and mode switches.
-+	 */
-+	if (priv->tx_ptp_opened) {
-+		/* Err and Lost stats are only relevant for port timestamping,
-+		 * as the DMA layer will always successfully timestamp packets.
-+		 */
- 		ts_stats->err = 0;
- 		ts_stats->lost = 0;
- 
--		if (!ptp)
--			goto out;
--
--		/* Aggregate stats across all TCs */
--		for (i = 0; i < ptp->num_tc; i++) {
-+		for (tc = 0; tc < priv->max_opened_tc; tc++) {
- 			struct mlx5e_ptp_cq_stats *stats =
--				ptp->ptpsq[i].cq_stats;
-+				&priv->ptp_stats.cq[tc];
- 
- 			ts_stats->pkts += stats->cqe;
- 			ts_stats->err += stats->abort + stats->err_cqe +
--				stats->late_cqe;
-+					stats->late_cqe;
- 			ts_stats->lost += stats->lost_cqe;
- 		}
--	} else {
--		/* DMA layer will always successfully timestamp packets. Other
--		 * counters do not make sense for this layer.
--		 */
--		ts_stats->pkts = 0;
--
--		/* Aggregate stats across all SQs */
--		for (j = 0; j < priv->channels.num; j++) {
--			struct mlx5e_channel *c = priv->channels.c[j];
--
--			for (i = 0; i < c->num_tc; i++) {
--				struct mlx5e_sq_stats *stats = c->sq[i].stats;
--
--				ts_stats->pkts += stats->timestamps;
--			}
--		}
- 	}
--
--out:
--	mutex_unlock(&priv->state_lock);
++	return ret;
  }
  
- #define PPORT_PHY_LAYER_OFF(c) \
+ static int vhost_vdpa_reset(struct vhost_vdpa *v)
+@@ -641,9 +651,15 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 	u32 idx;
+ 	long r;
+ 
+-	r = get_user(idx, (u32 __user *)argp);
+-	if (r < 0)
+-		return r;
++	if (cmd == VHOST_SET_VRING_NUM) {
++		if (copy_from_user(&s, argp, sizeof(s)))
++			return -EFAULT;
++		idx = s.index;
++	} else {
++		r = get_user(idx, (u32 __user *)argp);
++		if (r < 0)
++			return r;
++	}
+ 
+ 	if (idx >= v->nvqs)
+ 		return -ENOBUFS;
+@@ -652,6 +668,23 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 	vq = &v->vqs[idx];
+ 
+ 	switch (cmd) {
++	case VHOST_SET_VRING_NUM:
++		mutex_lock(&vq->mutex);
++		if (vq->private_data) {
++			r = -EBUSY;
++		} else if (!s.num || s.num > 0xffff ||
++			   s.num > v->vq_num_max ||
++			   (s.num & (s.num - 1))) {
++			r = -EINVAL;
++		} else {
++			vq->num = s.num;
++			r = 0;
++		}
++		mutex_unlock(&vq->mutex);
++		if (r)
++			return r;
++		ops->set_vq_num(vdpa, idx, s.num);
++		return 0;
+ 	case VHOST_VDPA_SET_VRING_ENABLE:
+ 		if (copy_from_user(&s, argp, sizeof(s)))
+ 			return -EFAULT;
+@@ -763,9 +796,6 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 		ops->set_vq_cb(vdpa, idx, &cb);
+ 		break;
+ 
+-	case VHOST_SET_VRING_NUM:
+-		ops->set_vq_num(vdpa, idx, vq->num);
+-		break;
+ 	}
+ 
+ 	return r;
 -- 
 2.53.0
 
