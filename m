@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75004DDB2F;
-	Thu, 17 Sep 2026 15:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AA04E73C7;
+	Thu, 17 Sep 2026 15:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660159; cv=none; b=hHoJa9MFztBQelKTDF9sCK1o0/Ch/LfcD0OprUv9+g2wtlV8PJJL+Jc6hUZEZh6xgcWDgrGXzArCii5AuusDbfqBNk4I2TF5KCVWaaIAisrwXdwRkMp1MaHKZqmJjDBhE2jlcSXNaDVy47/MAvptV9cgVwlYQi9XLPYtTZYqzzA=
+	t=1789660164; cv=none; b=kOYriGbaphAIN4+FE/LwSfE/kSCfp2G/H7To8V6G0tYv3V94fryNEYZRruvw0pINjMK0L1/s3dBdZ7oQuX6xBy4mhF8wHBXEvgr8d3CmSYRPMi0YyQMtxhFcSfdtGDOfv7yTqei6pMaid53z54cCu8ZRipv+MFKK2A0pLMXiL7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660159; c=relaxed/simple;
-	bh=IPw5yqdZoP5gj3RjCGoWqvQcFBpqNhTXMe/Euvq3cd4=;
+	s=arc-20240116; t=1789660164; c=relaxed/simple;
+	bh=g310+1E7S71BEv/qyjbVRYsh3PAImFrKOwrSCkOSdWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XuRqlCi5HLq997HSrR6GlaPi9yfHExI/PdRRzypkyTS1sMDTnwpLSWitl02TrdvI776Nl3kNcbzmzgjnFj13QhQZa0BvMXILxMm90JETV5XjfDEUiDKVlU4oLdjwg95MLXIXuwRaUxYBV5s8WIRjYP5KBiaCYL4Gv2kDXegu2ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smlroJ7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XJKbrsWNWGCN0ysL2pQfdDt582k8z18NAmoF4BL+csli8lUHz3a5RlfWsdOYSOZ0NqaxZGVBjW8zs6D9oiyZUzTzPDehJImP7irITZ1QgA97Q5daytcWw821+78dCvPqjyfruT0DC4btcFCWT0pZgFB3HzgOlBBQBGp/a8tK9cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L90yt5q+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smlroJ7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799451F00893;
-	Thu, 17 Sep 2026 15:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L90yt5q+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBD61F000FF;
+	Thu, 17 Sep 2026 15:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660151;
-	bh=cAdgS9ATNWTO1ImvXnKiM1Oy5kD2o8ngsMjYpvYXSxM=;
+	s=korg; t=1789660159;
+	bh=8zLVM6V2vS1oyhBsxl6yEEvKB1ou3bapeOdrjOa4GO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smlroJ7HOQE5D0vmTl4agt/uE9bJm2DMelzr/v/75BBhu3ZlDKU0w187Fs1AHWk8X
-	 q9qkQiYPZlBgI1aJdf6tlhZ0grHkiYrlAU6lEH4jkyJb6HK5g/5EmxQGL0OBoJO1Y8
-	 AG1KB/J1pqwXeh9d5EzaTUSispcLrwLbCQkLly70=
+	b=L90yt5q+dG9+QQCy4JAIXh046NYEvUDd12txHePcXKMv+bV8GPm1lExluzirCPnA/
+	 f/5ATzzOnlRr3UqRFUMeCfwWbqG5fQK6e8gQvDQ0XHmsdnk98efh6nqNmlJjtB6Ra8
+	 y331QT0WUmQCbdIFF2M+8xw5S3jDv56UigZvdr+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 7.2 458/733] x86/amd_node: Fix PCI device reference counting in amd_smn_init()
-Date: Thu, 17 Sep 2026 16:12:46 +0100
-Message-ID: <20260917151403.346278649@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.2 451/733] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
+Date: Thu, 17 Sep 2026 16:12:39 +0100
+Message-ID: <20260917151403.144191562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,72 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-commit 27600805e62f800bacf990354632eae4e487d34c upstream.
+commit c5e68706527968282e49de205cc2b935823cb88a upstream.
 
-The local "root" pointer is a temporary variable used during the device
-search. Therefore, refcount related to the search iterators should be cleaned
-up after the search is complete.
+The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
+safe") refactored the EEH code such that the pci_rescan_remove_lock is
+held at the beginning of eeh_handle_normal_event() and the
+eeh_reset_device() is called with that lock being held. Looks like the
+commit missed to remove the existing lock/unlock inside eeh_rmv_device()
+which is no longer necessary. This is causing the eehd to hang on the
+lock which it actually holds when that code path is taken.
 
-Use the __free() cleanup macro to ensure the refcount is decremented when the
-temporary pointer goes out of scope.
+[<0>] 0xc00000011c78f870
+[<0>] __switch_to+0xfc/0x1a0
+[<0>] pci_lock_rescan_remove+0x30/0x44
+[<0>] eeh_rmv_device+0x290/0x2e0
+[<0>] eeh_pe_dev_traverse+0x80/0x130
+[<0>] eeh_reset_device+0xcc/0x23c
+[<0>] eeh_handle_normal_event+0x830/0xa80
+[<0>] eeh_event_handler+0xf8/0x190
+[<0>] kthread+0x194/0x1b0
+[<0>] start_kernel_thread+0x14/0x18
 
-Additionally, increment the refcount when caching a root pointer. This ensures
-the in-use refcount is separate from the temporary search refcounting.
+The issue is seen for cases where the errors are detected on the PHB
+directly AND|OR for devices where the driver error_detected() returns
+PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
+error handlers like slot_reset(), resume() etc defined).
 
-Finally, drop the redundant "root = NULL" before the second search loop. The
-pci_get_class() iterator always decrements the refcount of its "from"
-argument, so the first loop can only fall through with "root" already NULL.
-
-Fixes: 0a4b61d9c2e4 ("x86/amd_node: Fix AMD root device caching")
-Closes: https://sashiko.dev/#/patchset/20260806160159.230453-1-jason.andryuk%40amd.com
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260903154325.74343-1-yazen.ghannam@amd.com
+Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_node.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/powerpc/kernel/eeh_driver.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/x86/kernel/amd_node.c
-+++ b/arch/x86/kernel/amd_node.c
-@@ -251,7 +251,7 @@ __setup("amd_smn_debugfs_enable", amd_sm
- static int __init amd_smn_init(void)
- {
- 	u16 count, num_roots, roots_per_node, node, num_nodes;
--	struct pci_dev *root;
-+	struct pci_dev *root __free(pci_dev_put) = NULL;
- 
- 	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
- 		return 0;
-@@ -262,7 +262,6 @@ static int __init amd_smn_init(void)
- 		return 0;
- 
- 	num_roots = 0;
--	root = NULL;
- 	while ((root = get_next_root(root))) {
- 		pci_dbg(root, "Reserving PCI config space\n");
- 
-@@ -299,14 +298,13 @@ static int __init amd_smn_init(void)
- 
- 	count = 0;
- 	node = 0;
--	root = NULL;
- 	while (node < num_nodes && (root = get_next_root(root))) {
- 		/* Use one root for each node and skip the rest. */
- 		if (count++ % roots_per_node)
- 			continue;
- 
- 		pci_dbg(root, "is root for AMD node %u\n", node);
--		amd_roots[node++] = root;
-+		amd_roots[node++] = pci_dev_get(root);
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
+ 		if (rmv_data)
+ 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
+ 	} else {
+-		pci_lock_rescan_remove();
+ 		pci_stop_and_remove_bus_device(dev);
+-		pci_unlock_rescan_remove();
  	}
+ }
  
- 	if (enable_dfs) {
 
 
