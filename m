@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CEB4FE2D7;
-	Thu, 17 Sep 2026 17:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AD04EF137;
+	Thu, 17 Sep 2026 17:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667602; cv=none; b=bDxC7bUjARR2k61llgX0Bl2Zdw2kUVRAACDxH+quiACY9BTvT+MlqiRlr6jtacdGgVheZUc3pATSXzhAYxyg5c1zwE2ptWoPWANnfgx6NFnzNoI1PhtBCOMMYCzG7t6O4cNx6qMSumo7So5F5okK8tFPwxItYSSrhqakSKawSaw=
+	t=1789667606; cv=none; b=Ex05ma1WfYwGEd8Z9zOUsbiSmLy5amiXcT83PL/8g/W2KjTmBpFmmhambXSwB3Tpfx+EnY2forgxpqS6d8E7XEi95n9bbq/TPRkbn3TctB3ZdnkfKG8tKz9toc3CH696jmouLfW/SbSdG3wC0tlsHTBkOoqH9/bugFnKIfRE4kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667602; c=relaxed/simple;
-	bh=ytHtNiE1BnNPHl74szif3qqhoESD4ugnKWw0Iz5g+mw=;
+	s=arc-20240116; t=1789667606; c=relaxed/simple;
+	bh=2snxsHW09H/ZoaDfPDQHDLv9iTqDvIwKb0UIWlUf0FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkrWUHtI5LX3aC6PEt/8Oku9HhpgL2umT1432URtTioQM6H32XeXIkofUmSkaMqOy/JK2IqnTU9BqRPjw2eUhSJVh/amt70Btv4YVjHQSdPrl5D3z2F6QVPPzEu3mKVPPiEI+V1pQmF22UE1ymn84LrTVsmIIOH1rk08Ul9b1V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXdGKTEp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cCMlo7QXIDp8VZ54Kkwh1fPK9wmP12kedkjcTz1+Bwe5YCx0DF0siiInIkw2HJP2bWbpfbSo72fgtEgnZOfjGrmx7jilN7NkvZos0t2WdM9Gigq0nNSWBiq/HHHhBZEXqEP4rOZmETkZCjG1NI8o+ZJ0Tu0rRwHAaLzRW44O36M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtZYySRC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXdGKTEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DA31F000FF;
-	Thu, 17 Sep 2026 17:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtZYySRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D075B1F000FF;
+	Thu, 17 Sep 2026 17:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667601;
-	bh=QzdR2wy1e8hPvR4Mf4xg3X7zhjEGzb4LMEV8aLH4ye8=;
+	s=korg; t=1789667604;
+	bh=dlaD71TrNK+7QjtC1xX6Jg2MEG97+TfPPyFy/SsZP0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WXdGKTEpBNKL10hxNJsttZquUQdeOo0u+Cxoq3SHOilYu/jmIaKr6scPSZpyXW3bC
-	 z89cBp8LsQqGI2hzEMlaF0JDOq2tU3xzvGl5tf7lyRa63kk0sC/D/ig9heHoIuWeYG
-	 yaYRRNb0obf81qcJq+acDiV2/DmtbzKlnruxUZuc=
+	b=rtZYySRCh3R8YwP1WKLQtzGt0KoZFu0OogpMhH4yO7K+mwWBrgWqgaG7ppmNfd7rN
+	 dVgOVCX2StVjXDMyHdFxKoEEW8g+upp4ngWPEAitvfXTyMV2NlYfrhPZ2Z6bCKTe1g
+	 lW4WQkNWwP5CZ2P9SqzOq995e+gUQ++sjSxctfvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0147/1102] clk: socfpga: agilex: implement l3_main_free_clk
-Date: Thu, 17 Sep 2026 16:01:30 +0100
-Message-ID: <20260917151543.217467294@linuxfoundation.org>
+Subject: [PATCH 6.12 0148/1102] thermal/drivers/tegra/soctherma: Switch to devm cooling device registration
+Date: Thu, 17 Sep 2026 16:01:31 +0100
+Message-ID: <20260917151543.243638989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,35 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
 
-[ Upstream commit 1e7f56205813a2c48cdb3e9a4b0a24f49fd9a548 ]
+[ Upstream commit ee126267bc04bfb03816ae9d71ca24c5bf99e739 ]
 
-The AGILEX_L3_MAIN_FREE_CLK is defined in the dt-bindings header but
-was never implemented in the clock driver. Per the Agilex TRM,
-l3_main_free_clk has no divider or mux and is a fixed 1:1 derivative
-of noc_free_clk that clocks most of the interconnect datapath.
+Use devm_thermal_of_cooling_device_register() to simplify resource
+management and avoid manual cleanup in error paths.
 
-Signed-off-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+As a side effect this change has the benefit of solving an existing
+issue. Before, the function tegra_soctherm_remove() only called
+debugfs_remove_recursive() and never called thermal_cooling_device_unregister()
+for any of the cooling devices registered here.
+
+After the driver removal, the thermal framework's cdev list would
+still hold references to thermal_cooling_device objects whose devdata
+pointer (ts) pointed to memory already freed by the platform device's
+devm cleanup.
+
+With this change, the cooling device is unregistered when the driver
+is removed, thus fixing the issue above.
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260424160019.41710-2-daniel.lezcano@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/socfpga/clk-agilex.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/tegra/soctherm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/socfpga/clk-agilex.c b/drivers/clk/socfpga/clk-agilex.c
-index 8dd94f64756b9..2bdea1997b5ef 100644
---- a/drivers/clk/socfpga/clk-agilex.c
-+++ b/drivers/clk/socfpga/clk-agilex.c
-@@ -259,6 +259,8 @@ static const struct stratix10_perip_cnt_clock agilex_main_perip_cnt_clks[] = {
- 	   0, 0x3C, 0, 0, 0},
- 	{ AGILEX_NOC_FREE_CLK, "noc_free_clk", NULL, noc_free_mux, ARRAY_SIZE(noc_free_mux),
- 	  0, 0x40, 0, 0, 0},
-+	{ AGILEX_L3_MAIN_FREE_CLK, "l3_main_free_clk", "noc_free_clk", NULL,
-+	  1, 0, 0, 1, 0, 0},
- 	{ AGILEX_L4_SYS_FREE_CLK, "l4_sys_free_clk", NULL, noc_mux, ARRAY_SIZE(noc_mux), 0,
- 	  0, 4, 0x30, 1},
- 	{ AGILEX_EMAC_A_FREE_CLK, "emaca_free_clk", NULL, emaca_free_mux, ARRAY_SIZE(emaca_free_mux),
+diff --git a/drivers/thermal/tegra/soctherm.c b/drivers/thermal/tegra/soctherm.c
+index a023c948afbdd..5a163c0befa64 100644
+--- a/drivers/thermal/tegra/soctherm.c
++++ b/drivers/thermal/tegra/soctherm.c
+@@ -1696,9 +1696,9 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
+ 			stc->init = true;
+ 		} else {
+ 
+-			tcd = thermal_of_cooling_device_register(np_stcc,
+-							 (char *)name, ts,
+-							 &throt_cooling_ops);
++			tcd = devm_thermal_of_cooling_device_register(dev, np_stcc,
++								      (char *)name, ts,
++								      &throt_cooling_ops);
+ 			if (IS_ERR_OR_NULL(tcd)) {
+ 				dev_err(dev,
+ 					"throttle-cfg: %s: failed to register cooling device\n",
 -- 
 2.53.0
 
