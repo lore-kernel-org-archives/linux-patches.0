@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3343DAAC9;
-	Thu, 17 Sep 2026 18:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50B34D17A6;
+	Thu, 17 Sep 2026 18:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671299; cv=none; b=CRVFv0ak6ISefaEPjruwUWDyhRLU4xODgEfk+j0wYfqo2qwzJY7n1MRHhgcFH/VIT7BPwgErGPzCnpdi/nkWERp/ydcdC6luuGopeeFoF3tcJIdHil3GM0osZc8SEBRl8o5uhBwtquQxEpmHssrnq3kctSnueC0CPNSB9d4BnMI=
+	t=1789671302; cv=none; b=GUyUAFkijkxNvgbKAW1QNIHioGLbMaurKJDk2Fuy9EyLq15Dby4HBrsmkfMsN03WmmHBbKdv6k4P89An8QfnPk8nu4X/TPJrxBtNIgIzWeJIgZzQoF39+c49crj1ARcYlTAm4mewIPY/g0k7dwrKx6pxMbejf+2ciF87cyvdeQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671299; c=relaxed/simple;
-	bh=TXVfG/mHD4zgomLnBFaLFJV34S8s7wyCXgK3nwO0FoI=;
+	s=arc-20240116; t=1789671302; c=relaxed/simple;
+	bh=e05Q9sEgSV7vFflbgz4L3Syb+CFkpkn0X6/lrgX2f0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzqljIHp+llgXuysGZfIyX8Dfx9M5fHQyhj9n1WrGkkHkWcBdhcS/hnkoNRixXBgOOHdM71Zvl1KCWtvWXV+9siqo/L+YZV1PdOVsOCYs9e/Jx1wX6mi8ZbsSTgKMzCTKP/B86gsGn9O/7t4OD7QNI0jw+eMkpEDc1/gxQfMB0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLR9Wraz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M2aGTqhBUsDWHXZxnMfQafXS25HZsCbFSliVVs0xn29ababBeHDF2Smq2CQV4Y88q24idylMdTNqIPPocQzBzsfBsyV/4nIVyT1Qjmf6IQhhyO013qp4qRpreMtzKiMFAxt6SPMUXA0BZnu/o1NC9eSJDeZzRl/NjJti4GY6aAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbqsSS79; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLR9Wraz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C901F000FF;
-	Thu, 17 Sep 2026 18:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbqsSS79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446091F000FF;
+	Thu, 17 Sep 2026 18:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671297;
-	bh=6oqYsXjdDn6tpHjF9UOLd3p9IuDjMd/qu2HCUqna8oo=;
+	s=korg; t=1789671300;
+	bh=+/iOPbQGpFnZSBMa0Zn8Xdoe5mioj/PA7rvg5rrf240=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sLR9WrazfsyEGfVpTneqd6i8SKZBDxkfcYuWvanwpcmOn5JruR+Zsb+yC81Z4LgDn
-	 hbJk7L/kqDXwVou+tPDjPZ65WLFrdkFvZh3SMHDLjzj/d0TaPfNIwT5gXt9KLPQMKM
-	 nCMAKO9R+gySG3Djb3FVO6uRNG77XtWaSio+vjn8=
+	b=bbqsSS79bTl9ii2b0j6JcWhqdzqZlqgk/9cWH17oWa58L6/yBPOfhLSxsXWRKC561
+	 l/NFCRkW13yXvFGl3DrTfUhlop3APOR5PkC408JNBkv8JgIs0PSAACNpoVuS0i9G+r
+	 svs4HOd+na1g/ma7OZLw2QuARMYCXSGnbWBjRBsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0931/1102] Revert "arm64: dts: qcom: sc8180x: Fix the PCIe iommu-map entries"
-Date: Thu, 17 Sep 2026 16:14:34 +0100
-Message-ID: <20260917151604.011423212@linuxfoundation.org>
+Subject: [PATCH 6.12 0932/1102] Revert "nvme-apple: Reset q->sq_tail during queue init"
+Date: Thu, 17 Sep 2026 16:14:35 +0100
+Message-ID: <20260917151604.037447681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -49,61 +49,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 0936e21622b0862953174d573920720d439e43c5.
+This reverts commit 7f2047888e37dbe3f185d8104b671959eddb98a3.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/nvme/host/apple.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index d3aed296e32cc..4715e26fc2647 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -1761,8 +1761,8 @@ pcie0: pcie@1c00000 {
- 			assigned-clocks = <&gcc GCC_PCIE_0_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index db8c20a60064f..1cc222fdbf22e 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1025,7 +1025,6 @@ static void apple_nvme_init_queue(struct apple_nvme_queue *q)
+ 	unsigned int depth = apple_nvme_queue_depth(q);
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
  
--			iommu-map = <0x0   &apps_smmu 0x1d80 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1d81 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
-+				    <0x100 &apps_smmu 0x1d81 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
-@@ -1882,8 +1882,8 @@ pcie3: pcie@1c08000 {
- 			assigned-clocks = <&gcc GCC_PCIE_3_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommu-map = <0x0   &apps_smmu 0x1e00 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1e01 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
-+				    <0x100 &apps_smmu 0x1e01 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_3_BCR>;
- 			reset-names = "pci";
-@@ -2004,8 +2004,8 @@ pcie1: pcie@1c10000 {
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
-+				    <0x100 &apps_smmu 0x1c81 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_1_BCR>;
- 			reset-names = "pci";
-@@ -2126,8 +2126,8 @@ pcie2: pcie@1c18000 {
- 			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommu-map = <0x0   &apps_smmu 0x1d00 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1d01 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
-+				    <0x100 &apps_smmu 0x1d01 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_2_BCR>;
- 			reset-names = "pci";
+-	q->sq_tail = 0;
+ 	q->cq_head = 0;
+ 	q->cq_phase = 1;
+ 	if (anv->hw->has_lsq_nvmmu)
 -- 
 2.53.0
 
