@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C67B3B0586;
-	Thu, 17 Sep 2026 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354ED3B0586;
+	Thu, 17 Sep 2026 18:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668287; cv=none; b=mamnzD2uCYT8HPnUJOQ1ao8g+2Dz5giaJx/OXHcFVIBynPiNyD+etkO6M1V+G9jzJhJZFWUhm2CGXXEzr+IZM3PEPtrcL02wRq+2dCPyu/k2mqxxxrq4vr2aIwYYkIfzxObP5hwfN66OiCI46CBvp29qcLa0JThCCHmdeZqTu7w=
+	t=1789668289; cv=none; b=H4dHp3wTPVvgOorasvTeZdvlcH5LGWuI7Bv7Vttfh8dzO/8l3N1C8FOVP1oPaiNCkxzBC7tnkapc2ACsVm5ps2T5tS0ajNdDO33xRhkZcZJXhYVEDZLZau9l6TtLmCxPQptbpwB0MnmD97qc8a8AJ5hogYB2iCPC8m12vWdBiEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668287; c=relaxed/simple;
-	bh=1dq8v1l+LLf42YUewmYaig7rExfC0KY26gG896Vz554=;
+	s=arc-20240116; t=1789668289; c=relaxed/simple;
+	bh=fxrhyYY7vwGE4cRUwkoFeQ8j+t46VsVVHdo9xXfiGgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMUEA+mAHD07X6VzZ7/P/AR0yJ2Vd/0qqIUQFE8Gqfjsi/chMMC9E1cZ5d46jeE6qcSv6XBYFD9SnHErBemQBXBZqPghYJy4LNgRVRr/jDalV6lMoMCPcdCD33XmHVSB/+vtNSnO04N2OBDnid9Fr0kLt2o0/Tm9CCcXqRIrSD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGC2XwCs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GHxWNRcoFydTPNr9junQ6ousOmwy4EnkeQagL91KRO9d78OmrvJaKJcd3Fn1MDHwnsLIc01w2dNjM+kK3lnlRXMdfAaxB7ruEJ3W8sIGL9AQwCHie8tU0d69/Vt4gWu0bHL73DRUkpNFmyYyB7aEinS5iNaqmgxhfOAd309VTr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuNDIrnS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGC2XwCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FA01F000FF;
-	Thu, 17 Sep 2026 18:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuNDIrnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A5B1F000FF;
+	Thu, 17 Sep 2026 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668285;
-	bh=fsRO9Tx6GQuXj5amRzrF6uM/nPYCL7hqu4cDyg/+6BQ=;
+	s=korg; t=1789668288;
+	bh=kNSL6t1WSGJ4Pi0mIuH+woeQ7mLsiPUcpX9IGvxvDFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGC2XwCspmBMjDEsNlfMHxa8eRC8bzMRHHcCUR7LfvzomCV/0waQsrgNyifH073po
-	 8yOBft4S1wc0HTQ9I03sECA9F64I/dMvOinc0FjNJPOyEJzD8ODW+tTNcwDCPYM1Qz
-	 va0cCdGSqt5kGVA8BixZfyDFiyTF0X94wmBIT5SU=
+	b=DuNDIrnS1RZDozgopYcUyFj33KFQtPRAmYeEfco2zCoJDOTktWqw6TUu/UEfuSnfm
+	 +Gy26oMvHGL7cDlY8+sVJy8dJ5TpJzCw7kD9sFP0gXVWdfW1ViopJxUrmRW0PDnrwi
+	 +00I4YqNvGmbB1j/De55ooZIIfZvEmEW8qzxtOsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Nayak <shubhamnayak392reborn@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0375/1102] ALSA: hda/realtek: Add quirk for HP Victus 16-e0xxx (88EE) to enable mute LED
-Date: Thu, 17 Sep 2026 16:05:18 +0100
-Message-ID: <20260917151549.067184812@linuxfoundation.org>
+Subject: [PATCH 6.12 0376/1102] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
+Date: Thu, 17 Sep 2026 16:05:19 +0100
+Message-ID: <20260917151549.093345821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,40 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shubham Nayak <shubhamnayak392reborn@gmail.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 6c18817c01f6f76d9e2739903abde4d69397f2c6 ]
+[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
 
-The mute LED on the HP Victus 16-e0xxx (board ID 88EE, ALC245 codec)
-does not function by default. Add the ALC245_FIXUP_HP_MUTE_LED_COEFBIT
-quirk to enable it. Tested on my HP Victus 16-e0xxx with kernel 7.1.2.
+komeda_dev_resume() calls clk_prepare_enable() without checking the
+return value. If the clock fails to enable, the function returns 0
+(success) while IRQs are enabled and IOMMU is connected on potentially
+unclocked hardware, causing undefined behavior on resume.
 
-Signed-off-by: Shubham Nayak <shubhamnayak392reborn@gmail.com>
-Link: https://patch.msgid.link/20260629-hp-victus-16-mute-led-v1-1-ab0f4a8a533b@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Propagate the error from clk_prepare_enable() and fix all call sites
+in komeda_drv.c that previously ignored the return value of
+komeda_dev_resume():
+
+- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
+  (skipping the suspend call, since the clock was never enabled)
+- komeda_pm_resume(): propagate the error and skip
+  drm_mode_config_helper_resume() on failure
+
+This issue was found by code review without access to Komeda hardware.
+
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
+ drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 1b01c88ed9aad..a03f94a1bcd18 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10943,6 +10943,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x88ee, "HP Victus 16-e0xxx (MB 88EE)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+index 5ba62e637a616..9aad1d1d28ec0 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+@@ -313,7 +313,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
+ 
+ int komeda_dev_resume(struct komeda_dev *mdev)
+ {
+-	clk_prepare_enable(mdev->aclk);
++	int err;
++
++	err = clk_prepare_enable(mdev->aclk);
++	if (err)
++		return err;
+ 
+ 	mdev->funcs->enable_irq(mdev);
+ 
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+index 55c3773befde2..20a1a11262759 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+@@ -74,8 +74,11 @@ static int komeda_platform_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev))
+-		komeda_dev_resume(mdrv->mdev);
++	if (!pm_runtime_enabled(dev)) {
++		err = komeda_dev_resume(mdrv->mdev);
++		if (err)
++			goto err_destroy_mdev;
++	}
+ 
+ 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
+ 	if (IS_ERR(mdrv->kms)) {
+@@ -93,7 +96,7 @@ static int komeda_platform_probe(struct platform_device *pdev)
+ 		pm_runtime_disable(dev);
+ 	else
+ 		komeda_dev_suspend(mdrv->mdev);
+-
++err_destroy_mdev:
+ 	komeda_dev_destroy(mdrv->mdev);
+ 
+ free_mdrv:
+@@ -139,11 +142,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
+ static int __maybe_unused komeda_pm_resume(struct device *dev)
+ {
+ 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
++	int err = 0;
+ 
+ 	if (!pm_runtime_status_suspended(dev))
+-		komeda_dev_resume(mdrv->mdev);
++		err = komeda_dev_resume(mdrv->mdev);
+ 
+-	return drm_mode_config_helper_resume(&mdrv->kms->base);
++	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
+ }
+ 
+ static const struct dev_pm_ops komeda_pm_ops = {
 -- 
 2.53.0
 
