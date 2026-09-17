@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB5E49D584;
-	Thu, 17 Sep 2026 17:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8C749D58C;
+	Thu, 17 Sep 2026 17:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665702; cv=none; b=QBgtBgf3hHtFNodQWqgGvyCLm2jcXdmrWw/VeonRaJc8CLaUKoysWLeIZLhWl3NtE3V56f4zJmITfaRyCY3VApfTRLu1OGzni/uMCQEBNkyn6ai0XRq+vJ7b8Vn62JcfQHZWz+mNya8w5sNSEDeFgdvuBKKnVahWDNml5F5iuTk=
+	t=1789665706; cv=none; b=q1JtZM0Fx2diS8/P+vEKyJggi/D4tbNAxHxwLuGv4zHlsr/p5k9y14pUvquLFsf5O8ui8yakhKPvZWxi3Kntwh6e2VPwaj5EpJaIK0GGDQCAV8PH+/RY7hoJqe1niIw4kj2yCxknjtCxmmxpTRfz3xV/H4+VvjuLqoGb4WOhPFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665702; c=relaxed/simple;
-	bh=kTqaMd2lkLiBzvrDwxwnw+3YfX3eJv2xbAQyR4ilRkk=;
+	s=arc-20240116; t=1789665706; c=relaxed/simple;
+	bh=58Pxqf6TD7In/cNttfxogHm88IPoUnhYPXnBMm6hceY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HE9miRD51jadTWJHYBEUTe9GEJKaklxRIQJozKveLGm/8nV5i5ptZL4Q3PTl+xd/5vUqxRrikY9NI4Ht9V86YJGgLNCMnqJ8/A4vAo8PXMbgctFflnmoE37hWljCzxnN3ww62G08rSUYrufzXjGGRRSPZdQZhMT7Idm3FEM0KGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J82LlCvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DIrnCXRcRB1iVmah7Zuv6q/A/xiSuxBtqyPUifkIUTGtK19wLdSytNiExig0PC9R8dlaihPaLCMC1bWkJHQ6V+H9Q0LBWvwe8bKVMesm3lxzRhiGUojjNHrE+wZUG9RC4p5mr3AM3ewC0+Qz6vNhwyvfGKrHIy0+yZO14OZxpBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5hZCrD/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J82LlCvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8F21F000FF;
-	Thu, 17 Sep 2026 17:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5hZCrD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C1B1F000FF;
+	Thu, 17 Sep 2026 17:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665701;
-	bh=uR9phbCHhKQ9h+nZFP79q6377uFyuLevOjpcdSxp2JI=;
+	s=korg; t=1789665704;
+	bh=0peRlPws8nUJtaHo3bzRy58Qb7o+Bi3A8BxbGXP2xSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J82LlCvINTWJoeUddg0o4liBPzG31fxQCRdmeneITfNHfWg4q58jcvRvaBME1/QDg
-	 vRpq7fEvqHlcBlTER6HL1Y/n3OQCQDlJDAttRrPsTCsc/zUtvAjrkgoHNa8yc8ZvFx
-	 f2u8Z051RgWO0mWbXrgGYWi1ZwKrqAYmF48ARxAs=
+	b=s5hZCrD/qjfHlFwP5W21/FnUbltmiCLPpkMFc3EiyxDDCFGvYSOFAaI0KMTl5JMTn
+	 hRfgZEJBrXFLv19oDTqE9l9YZNt7Jl/4V5U9MmeKPRz18qpIqcHVpbUF1LmbPGX5+O
+	 X1eRXupZZrvp+YQOcJyFlFcuV96vRUJijb0vb3XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0792/1250] eth: nfp: drop the replaced rule from the list when reprogramming fails
-Date: Thu, 17 Sep 2026 16:09:47 +0100
-Message-ID: <20260917151613.362280190@linuxfoundation.org>
+Subject: [PATCH 6.18 0793/1250] net: dsa: mv88e6xxx: bound the policy rule dump by the callers buffer size
+Date: Thu, 17 Sep 2026 16:09:48 +0100
+Message-ID: <20260917151613.390665016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,50 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 108bb2142e3a12c9ad625ad662973127a113ddc6 ]
+[ Upstream commit b1fffc273112e7284c5b705e186b43b5770cd3d5 ]
 
-nfp_net_fs_add() replaces an existing rule by deleting it from the
-hardware, decrementing nn->fs.count and programming the new one.  If
-nfp_net_fs_add_hw() fails the old entry stays on nn->fs.list - only the
-success path reaches list_replace() - so the list is one longer than
-nn->fs.count, and it advertises a rule whose hardware entry has already
-been torn down.
+mv88e6xxx_get_rxnfc() uses rxnfc->rule_cnt as the write index while
+dumping the policy IDR, clobbering the input value before it has been
+looked at.  That input is the number of entries the caller had room for.
+ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN and the ioctl sizes the
+buffer from the rule_cnt userspace passes in, so once an admin has
+installed policy rules any user can ask for fewer slots than there are
+rules and run off the end of the allocation.  A rule_cnt of 0 leaves the
+buffer pointer NULL and the walk dereferences it.
 
-nn->fs.count is what ETHTOOL_GRXCLSRLCNT reports, so userspace then sizes
-its buffer one entry short of what the GRXCLSRLALL walk wants to write.
-That used to overwrite one u32 past the allocation; since the walk is
-bounded it is a permanent -EMSGSIZE instead, as nothing ever resyncs the
-counter.
+Count into a local so the caller's limit survives the walk, and stop with
+-EMSGSIZE once it is reached.
 
-Fixes: 9eb03bb1c035 ("nfp: add ethtool flow steering callbacks")
+Fixes: da7dc8755304 ("net: dsa: mv88e6xxx: add RXNFC support")
 Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260903032611.3000029-4-kuba@kernel.org
+Link: https://patch.msgid.link/20260903032611.3000029-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-index d6e1998e55367..2e8343e647546 100644
---- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-@@ -1699,8 +1699,14 @@ static int nfp_net_fs_add(struct nfp_net *nn, struct ethtool_rxnfc *cmd)
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 7e294f2104b86..e9270c266884c 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2439,6 +2439,7 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 	struct ethtool_rx_flow_spec *fs = &rxnfc->fs;
+ 	struct mv88e6xxx_chip *chip = ds->priv;
+ 	struct mv88e6xxx_policy *policy;
++	u32 cnt = 0;
+ 	int err;
+ 	int id;
  
- 			nn->fs.count--;
- 			err = nfp_net_fs_add_hw(nn, new);
--			if (err)
-+			if (err) {
-+				/* mbox broken, adding the old rule back will
-+				 * likely also fail.
-+				 */
-+				list_del(&entry->node);
-+				kfree(entry);
- 				goto err;
+@@ -2464,11 +2465,18 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 		break;
+ 	case ETHTOOL_GRXCLSRLALL:
+ 		rxnfc->data = 0;
+-		rxnfc->rule_cnt = 0;
+-		idr_for_each_entry(&chip->policies, policy, id)
+-			if (policy->port == port)
+-				rule_locs[rxnfc->rule_cnt++] = id;
+ 		err = 0;
++		idr_for_each_entry(&chip->policies, policy, id) {
++			if (policy->port != port)
++				continue;
++			if (cnt == rxnfc->rule_cnt) {
++				err = -EMSGSIZE;
++				break;
 +			}
- 
- 			nn->fs.count++;
- 			list_replace(&entry->node, &new->node);
++			rule_locs[cnt++] = id;
++		}
++		if (!err)
++			rxnfc->rule_cnt = cnt;
+ 		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
 -- 
 2.53.0
 
