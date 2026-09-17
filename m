@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE1F5187DE;
-	Thu, 17 Sep 2026 17:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAD852CCCC;
+	Thu, 17 Sep 2026 17:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665963; cv=none; b=OTh7Dl0G9K1NzIa0TvOqiSv+OFcWV6jgMpRnt+lK3ziX5GDz9yPt1drPaKIg6wJuMPrOlviDz63tlpZR2bVnRdXPras3plAc7vGZTyqQt7Hgn/MRVpNlr0Joc4h858kgTAdMmUB+FrP8aGbkJ+qcR95Ufxv6qi8q62R1CX/D9b4=
+	t=1789665966; cv=none; b=a40Ek/AHNTvSTS0IzNhkpbNSkVsSCCzYkILUunv1vWSsBrCIJgYrFqybijEq2/EOzTxPGgKeLyAAgGUjVR6dHoRo0U1BVcbWzTR99KoEgnb6h8kOOILzjnirnGPnuWd3PaGr8atc86tk3JDi9C9u6CXiIn9e1lc53ZGe0ffHViQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665963; c=relaxed/simple;
-	bh=0LxU4ZeLzID0kSZ4IYEoGeMdmKC1puJKzKUi++iG4bA=;
+	s=arc-20240116; t=1789665966; c=relaxed/simple;
+	bh=/fAMv5SBwiPT/pP7Xn1eqmeue6uBunIG1QnaDoqR5qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leSxCepzi7MoV+nXYVKhVMRzDQK0ymbDIkJejMXsjXMRNrLTe4JBDBNdXUj3HUx4ESD76pcQJq13GmwYuldpwjHOmo6+sq8MRpfNyy7xSrj84BjIRDoU9g+eCPKZCobi7Yn5cUGXgSZCjL5zFFE7MnhUa89yl8LblsAPPyZQ5MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkVKu381; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XAk3poBfHLx7u1vM5w+HdkmXsd2JEnJfzbtdsnSWXxvYzSNPbzj7aDgpPWCfdwhfDs7YzPwaODFvxOW9icBmrp7xh633oWDO5hZSRIGcXqRZAkFQ1Uu1yjW5AZgmKFUk0c1rNo9mYsAGvht5J8wt/IQ6562DUfeWpOReZYHXuvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmgzRIrV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkVKu381"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0637E1F000FF;
-	Thu, 17 Sep 2026 17:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmgzRIrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E327B1F000FF;
+	Thu, 17 Sep 2026 17:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665961;
-	bh=Hj0k/UKN4QI+lWl+k+ycR5wpFahC6a/Iuf9a6gWdDag=;
+	s=korg; t=1789665964;
+	bh=pjFDfu+6mPFRykmlbQRzPSPBKM+YXEBNUIhCWD+XnAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VkVKu3812IADKofNEEJBV3u/murWo7cxf5VkJhID+O4we5GUahZ9W3yewMLf8laYc
-	 BFGMw1BUFLeRL/QGeMpSo/KCEL3PT+p/+KlBUk2CXIU5/x09ElbRZOJKbqA52SDdqB
-	 CLDO2OnOfEOrvbjDdknB+rIE6eCof65Q07qBK1SE=
+	b=ZmgzRIrVPtuq3TyJuCcEt2V3WeGTJkqL0neGT6Ag21ey0Flh1ayQa97RgOgo9UCz/
+	 oSAEyIFcqmZNConN3q40u+SteftCOIGYGD67dQkJHxYr3h6ffKeVd/GxEEMQQzgZ9G
+	 3OG2qsHa4DJkZdibXzAGS7lYP68h4k1Un3a2gwsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0878/1250] eth: ice: dont dereference pointers from TP_printk()
-Date: Thu, 17 Sep 2026 16:11:13 +0100
-Message-ID: <20260917151615.781093088@linuxfoundation.org>
+Subject: [PATCH 6.18 0879/1250] Bluetooth: btusb: Fix UAF of btusb_data by rx_work
+Date: Thu, 17 Sep 2026 16:11:14 +0100
+Message-ID: <20260917151615.809632263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,126 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b8bf9bfda5f62e11444e483c2b4aaff90c5cfc6b ]
+[ Upstream commit 1c12c3117639e78940959d956519c758c57d0849 ]
 
-After forwarding net-next during the v7.3 merge window we started
-seeing:
+btusb_close() and btusb_flush() cancel data->rx_work with the
+asynchronous cancel_delayed_work(), so if btusb_rx_work() is already
+running on another CPU it keeps running after the cancel returns.
 
-  TRACE EVENT ERROR: Event ice_tx_dim_work has double dereference in TP_printk: REC->q_vector->tx.tx_ring->q_index
-  WARNING: kernel/trace/trace_events.c:420 at test_double_dereference.cold+0x39/0x4b
+btusb_disconnect() calls hci_unregister_dev(), which invokes
+btusb_close(), and then frees the btusb_data. A still running
+btusb_rx_work() then dereferences the freed data:
 
-this is due to extra checks added in tracing subsystem in
-commit b5cc230af5e5 ("tracing: Warn when an event dereferences a pointer in TP_printk()").
+	while ((skb = skb_dequeue(&data->acl_q)))
+		data->recv_acl(data->hdev, skb);
 
-Printing happens long after the event was recorded, by which point
-the pointers may be invalid (the ring or the dim instance).
-Copy the eight scalars into the event instead.
+Use cancel_delayed_work_sync() instead. In btusb_close() the cancel also
+has to happen after btusb_stop_traffic(), otherwise an URB completion
+racing with the cancel can requeue the work right after it has been
+waited for.
 
-Fixes: 3089cf6d3caa ("ice: add tracepoints")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_trace.h | 64 ++++++++++++++--------
- 1 file changed, 42 insertions(+), 22 deletions(-)
+ drivers/bluetooth/btusb.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_trace.h b/drivers/net/ethernet/intel/ice/ice_trace.h
-index 4f35ef8d6b299..7568c917cdbe1 100644
---- a/drivers/net/ethernet/intel/ice/ice_trace.h
-+++ b/drivers/net/ethernet/intel/ice/ice_trace.h
-@@ -63,23 +63,33 @@
- DECLARE_EVENT_CLASS(ice_rx_dim_template,
- 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
- 		    TP_ARGS(q_vector, dim),
--		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
--				     __field(struct dim *, dim)
-+		    TP_STRUCT__entry(__field(u16, q_index)
-+				     __field(u8, state)
-+				     __field(u8, profile_ix)
-+				     __field(u8, tune_state)
-+				     __field(u8, steps_right)
-+				     __field(u8, steps_left)
-+				     __field(u8, tired)
- 				     __string(devname, q_vector->rx.rx_ring->netdev->name)),
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index befda7caca40a..98d6b27fe07f6 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2022,18 +2022,24 @@ static int btusb_close(struct hci_dev *hdev)
  
--		    TP_fast_assign(__entry->q_vector = q_vector;
--				   __entry->dim = dim;
-+		    TP_fast_assign(__entry->q_index = q_vector->rx.rx_ring->q_index;
-+				   __entry->state = dim->state;
-+				   __entry->profile_ix = dim->profile_ix;
-+				   __entry->tune_state = dim->tune_state;
-+				   __entry->steps_right = dim->steps_right;
-+				   __entry->steps_left = dim->steps_left;
-+				   __entry->tired = dim->tired;
- 				   __assign_str(devname);),
+ 	BT_DBG("%s", hdev->name);
  
- 		    TP_printk("netdev: %s Rx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
- 			      __get_str(devname),
--			      __entry->q_vector->rx.rx_ring->q_index,
--			      __entry->dim->state,
--			      __entry->dim->profile_ix,
--			      __entry->dim->tune_state,
--			      __entry->dim->steps_right,
--			      __entry->dim->steps_left,
--			      __entry->dim->tired)
-+			      __entry->q_index,
-+			      __entry->state,
-+			      __entry->profile_ix,
-+			      __entry->tune_state,
-+			      __entry->steps_right,
-+			      __entry->steps_left,
-+			      __entry->tired)
- );
+-	cancel_delayed_work(&data->rx_work);
+ 	cancel_work_sync(&data->work);
+ 	cancel_work_sync(&data->waker);
  
- DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
-@@ -90,23 +100,33 @@ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
- DECLARE_EVENT_CLASS(ice_tx_dim_template,
- 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
- 		    TP_ARGS(q_vector, dim),
--		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
--				     __field(struct dim *, dim)
-+		    TP_STRUCT__entry(__field(u16, q_index)
-+				     __field(u8, state)
-+				     __field(u8, profile_ix)
-+				     __field(u8, tune_state)
-+				     __field(u8, steps_right)
-+				     __field(u8, steps_left)
-+				     __field(u8, tired)
- 				     __string(devname, q_vector->tx.tx_ring->netdev->name)),
+-	skb_queue_purge(&data->acl_q);
+-
+ 	clear_bit(BTUSB_ISOC_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_BULK_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_INTR_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_DIAG_RUNNING, &data->flags);
  
--		    TP_fast_assign(__entry->q_vector = q_vector;
--				   __entry->dim = dim;
-+		    TP_fast_assign(__entry->q_index = q_vector->tx.tx_ring->q_index;
-+				   __entry->state = dim->state;
-+				   __entry->profile_ix = dim->profile_ix;
-+				   __entry->tune_state = dim->tune_state;
-+				   __entry->steps_right = dim->steps_right;
-+				   __entry->steps_left = dim->steps_left;
-+				   __entry->tired = dim->tired;
- 				   __assign_str(devname);),
+ 	btusb_stop_traffic(data);
++
++	/* rx_work must only be canceled once the URBs that can rearm it are
++	 * gone, and it must be canceled synchronously since btusb_disconnect()
++	 * frees the btusb_data it dereferences right after hci_unregister_dev().
++	 */
++	cancel_delayed_work_sync(&data->rx_work);
++
++	skb_queue_purge(&data->acl_q);
++
+ 	btusb_free_frags(data);
  
- 		    TP_printk("netdev: %s Tx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
- 			      __get_str(devname),
--			      __entry->q_vector->tx.tx_ring->q_index,
--			      __entry->dim->state,
--			      __entry->dim->profile_ix,
--			      __entry->dim->tune_state,
--			      __entry->dim->steps_right,
--			      __entry->dim->steps_left,
--			      __entry->dim->tired)
-+			      __entry->q_index,
-+			      __entry->state,
-+			      __entry->profile_ix,
-+			      __entry->tune_state,
-+			      __entry->steps_right,
-+			      __entry->steps_left,
-+			      __entry->tired)
- );
+ 	err = usb_autopm_get_interface(data->intf);
+@@ -2059,7 +2065,7 @@ static int btusb_flush(struct hci_dev *hdev)
  
- DEFINE_EVENT(ice_tx_dim_template, ice_tx_dim_work,
+ 	BT_DBG("%s", hdev->name);
+ 
+-	cancel_delayed_work(&data->rx_work);
++	cancel_delayed_work_sync(&data->rx_work);
+ 
+ 	skb_queue_purge(&data->acl_q);
+ 
 -- 
 2.53.0
 
