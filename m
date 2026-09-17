@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD23845AC;
-	Thu, 17 Sep 2026 15:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBC4E4C3D;
+	Thu, 17 Sep 2026 15:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659304; cv=none; b=b61S4jSpjING0n00z76RIzwaL1Bz1KpV64Y97MPXJ/JZViAh4zlkX20GTlpvr0bE2rfDc7466NBtiSTEOJjIkpxbDIJJVr9xpH8BcJCHUnNPfZjAV4it/6fKSBq1CK55a3EIH9caE+d9w7XCKs8VQZaL1F/mjgvzyqtfpW7Odz4=
+	t=1789659307; cv=none; b=KrugzLtw7Modrj0+HAcuroRceqpEDPYL/pzzVIyyR1qS4cJBs9VtTcI41wmsjF+2uCBvTr5yPF36yz7WhAvoOTXkRBXE8t+pdXOc4ra/LYweKMOJV1U6aOyDN2LX62gRo53li5pPLlZRT7nnkqkMW6EFO0/cgJ9WHBNOhjE49rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659304; c=relaxed/simple;
-	bh=ZXqXRcCKZ2vZPG9aGS6oYtuW1vazTEaCKcveuUFJbAI=;
+	s=arc-20240116; t=1789659307; c=relaxed/simple;
+	bh=URxrj2ZbbClfLHuLgNlIEG4Y5GHVZB4YcAkULZqKYRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEwc2WesQ8LaN2+rkaUpKDbENrRng6R9LtXCL53xY0W6+vdv0E7NExJ38YgN2t4ROsJFxwYryCF9/Rw9bGUz2NUKRoWnKeMKyCP1UP+Y/D6qONglE4EFJYjHU05/nCvJdpQesVb87MxKdx3T6xoPa35u/UJGN/P+5UmqHGBnI2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL58NEAl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAiBNqGdkVEyaD+g8cBxWyC5VwYD43RCw6fttAfbxIXyzWsU6Huc2JewqO6iFnXvrfxlgFDPrWAeFg5ySSRK+VK0ky8JEBbXuRSTcPB9AsgphIXatUWVsS6nkaZcLg4CUTDktjmXmWT4214k1TfX0bNwUp/BGzEhgtn86XQezL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2L+Ojg5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL58NEAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C191F00893;
-	Thu, 17 Sep 2026 15:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2L+Ojg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12CB1F0089A;
+	Thu, 17 Sep 2026 15:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659297;
-	bh=n3PAc3Lp3O0iXmC3DYQT0AjdN+SCXNDzpuTlH8F+/Vo=;
+	s=korg; t=1789659300;
+	bh=qS2Za81BR3aShCFbZoEOyM37BYi3conpCeeu1ELkRuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hL58NEAl2zDX6bNi66iZ176KWeR2GWzPq3sqRu+BwWW+ozycjFpuyAujIJ5pz0Ye2
-	 ov1Hfl/DeGQzpHL0CZHH43plW+ISXCroJLHmp+664Ew0RyHluUvVGThJztTkraS+j7
-	 gaTiXy0p4fVeFQf2uBK+9lrgW59q36DWSpzD9uh8=
+	b=O2L+Ojg5ifRzx6BAqQk9YLDReDliFMoQy1y2LQeZIzHDPSoQX74GGaD1Uso70QCGm
+	 g8lvqLmz1MvKpAviTboF/vtRHQnaxf4qnWPgxjazfMhT12RyRNNgs5ZILWfj2UClTp
+	 4wQfImb5PUQ5PkGYO8jvS78PX4EnVFSirAHZ/aOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Yao <yaolu@kylinos.cn>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 161/733] drm/xe/oa: Remove sysfs entry on idr_alloc failure in xe_oa_add_config_ioctl()
-Date: Thu, 17 Sep 2026 16:07:49 +0100
-Message-ID: <20260917151355.086626877@linuxfoundation.org>
+Subject: [PATCH 7.2 203/733] bpf: reject BPF_PSEUDO_FUNC reference to the main program
+Date: Thu, 17 Sep 2026 16:08:31 +0100
+Message-ID: <20260917151356.234517436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,54 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 3663c8d1f31e65771bd73ee3259f35fd397f9933 ]
+[ Upstream commit 374b2c5561db80fcdd7cdce44af37a49416f61c7 ]
 
-If idr_alloc() fails after create_dynamic_oa_sysfs_entry() has
-succeeded, the error path frees the OA config without removing the
-metrics sysfs group.
+fixups.c:jit_subprogs() rewrites BPF_PSEUDO_FUNC loads to contain real
+function addresses. This function is invoked from bpf_jit_subprogs()
+only when env->subprog_cnt > 1. Meaning that for any program like
+below:
 
-Remove the sysfs group before releasing the config, and fix up the
-misleading error message copied from the sysfs creation failure path.
+  int main(void *ctx) {
+    void *ptr = main;
+    ...
+    bpf_timer_set_callback(..., ptr);
+    ...
+  }
 
-Fixes: cdf02fe1a94a ("drm/xe/oa/uapi: Add/remove OA config perf ops")
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
-Link: https://patch.msgid.link/20260831014218.28515-1-yaolu@kylinos.cn
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 2c6fbda5fdde461d6dedb82a59285182720b8fef)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The 'ptr' won't be ever converted to contain an address.
+In combination with e.g. bpf_timer_set_callback() this would lead to a
+function call at a bogus address.
+
+Instead of complicating the implementation, just assume that no useful
+program needs main to be a sync or async callback and reject
+BPF_PSEUDO_FUNC loads for the main subprogram.
+
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260902233658.1186477-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index 18d990c5d4ec4..e5b0f3e2f3894 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -2431,9 +2431,9 @@ int xe_oa_add_config_ioctl(struct drm_device *dev, u64 data, struct drm_file *fi
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 59f12ba70eb6e..b0118bccf3280 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16291,6 +16291,15 @@ static int check_ld_imm(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 			verbose(env, "callback function not static\n");
+ 			return -EINVAL;
+ 		}
++		/*
++		 * When env->subprog_cnt == 1 this instruction won't be rewritten
++		 * to hold a real function address. Assume that no usable program
++		 * combines e.g. main and timer callback and just reject here.
++		 */
++		if (subprogno == 0) {
++			verbose(env, "callback function cannot be the main program\n");
++			return -EINVAL;
++		}
  
- 	oa_config->id = idr_alloc(&oa->metrics_idr, oa_config, 1, 0, GFP_KERNEL);
- 	if (oa_config->id < 0) {
--		drm_dbg(&oa->xe->drm, "Failed to create sysfs entry for OA config\n");
-+		drm_dbg(&oa->xe->drm, "Failed to allocate id for OA config\n");
- 		err = oa_config->id;
--		goto sysfs_err;
-+		goto id_alloc_err;
- 	}
- 
- 	id = oa_config->id;
-@@ -2444,6 +2444,8 @@ int xe_oa_add_config_ioctl(struct drm_device *dev, u64 data, struct drm_file *fi
- 
- 	return id;
- 
-+id_alloc_err:
-+	sysfs_remove_group(oa->metrics_kobj, &oa_config->sysfs_metric);
- sysfs_err:
- 	mutex_unlock(&oa->metrics_lock);
- reg_err:
+ 		dst_reg->type = PTR_TO_FUNC;
+ 		dst_reg->subprogno = subprogno;
 -- 
 2.53.0
 
