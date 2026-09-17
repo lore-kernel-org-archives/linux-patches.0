@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A74ED1B7;
-	Thu, 17 Sep 2026 16:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EF54EFFA9;
+	Thu, 17 Sep 2026 16:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661127; cv=none; b=pTBkWhky5w+KYEsAq6YX2Et8sRSGf0zu21nFmCx4RjD3nOiHoLGTHYjLgae3urV6HrfDiYo6L7Zz0u01NMMn4R21UGP0/zCUIrv7BRziWDw7TSaHZLU/lceJVb0v5z05J21JT6JwxI/KEjkrxITdp6NT+H4h5JntEsBXpG6vq4A=
+	t=1789661130; cv=none; b=YYmRDxYHbfKrFv9rWGBXJKMDdobIGquhLrUEBJhvhMjl/htZMjlsGO5VcrHWN5P93QJykQCjt8MxI7nZa6frapJUnb8xzPZAKrbGyXHMi8CricL690Q3J2a1cWmF0JLYnZ/QItjv5HXG9BXZc8r78FIxyRAV5dsFpTFHb1yGFjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661127; c=relaxed/simple;
-	bh=uzScEWWlllsItuzETzXbFpP+P86W8ZE63QcIS8nclus=;
+	s=arc-20240116; t=1789661130; c=relaxed/simple;
+	bh=iGpV/xFqxKpCFGAEb/V1y/rRx74gJTOvgEA04H8Ibkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW1w+IVryPY3zqtS7vqKbdv1uQbejvQlCHsQVsbUXlsQTD9KehEeUgVT8hEIIJXHDzsvAqEYG3LXG3eBdl79g8P7crELizxqSpvwITim9+6JueyG0d/oaiFvvE0qLhYXWXYLexet7NkkcPxpuskIdCA4YMbmNvNM00y1CUSioVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKhfkiAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QrFiIAacgwikyLK3M+eFTicSKqQvBjvrd9crBC9L8XwNk1Ca+BC0xmv2SkHPGqkUBVDiwddaoxuWlw3StW6/4H4aDBjZs5RHWR1kzSTf83s6JpU+0YkHff63whDyNpe1kE9I23dPD7x/9zZ2EjluDiRLCtB2dJLsQljFEmFFoCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1JuZUlo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKhfkiAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DD51F00893;
-	Thu, 17 Sep 2026 16:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1JuZUlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC5B1F000FF;
+	Thu, 17 Sep 2026 16:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661126;
-	bh=Uh2mtH1+EUHZwcmtjLO+sNXwWMMJQT+JkSy1ykzlgpI=;
+	s=korg; t=1789661129;
+	bh=s8qJd4o4S7x8iIclb6xXwPUwL3cDjQ5fM+2RASND+8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uKhfkiAD8efQMKMkY1hSDREWGy16zJA4f470/zc+sxJcjWVU8NFe2JvyEc9O8oiCZ
-	 uzsDLW3jpwrLvlujmUaEz71YnvPsIdGPdXbRBySJGtk4kWh7oGetUHYJOAfl7NL/B2
-	 Y0FRKtR/cKtEslm03LXpoCsHq6PJcr+ygBcXQ5CE=
+	b=N1JuZUloifm7E9Dz+BBO5Ey16IekfvimPm+xpmFJ3/MtwRCiMgrv2o49RcHG9K7/E
+	 ew2OEzvZemT4cuKUNGGovoYQAW1lIHsFE8RaqcXWkeSnugZWy8DXIQxhHEaHJoj8Mb
+	 CUB6xx+UunxeFJlfh+3swaqkgecf1apNmW8rqdLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Albert Esteve <aesteve@redhat.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0092/1250] drm/panel/tdo-tl070wsh30: Use refcounted allocation in place of devm_kzalloc()
-Date: Thu, 17 Sep 2026 15:58:07 +0100
-Message-ID: <20260917151554.479919443@linuxfoundation.org>
+Subject: [PATCH 6.18 0093/1250] mmc: core: Add validation for host-provided max_segs
+Date: Thu, 17 Sep 2026 15:58:08 +0100
+Message-ID: <20260917151554.507400732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,58 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 928decbed75bf215a8d0eecc88aa2edc77023db2 ]
+[ Upstream commit 3e0483e93a8be320f70a1ff68d835f7f015af311 ]
 
-Move to using the new API devm_drm_panel_alloc() to allocate the
-panel. In the call to the new API, avoid using explicit type and use
-__typeof() for more type safety.
+The max_segs field is of type unsigned short, and if a host driver
+sets an excessively large value, it may be truncated to zero. This
+can cause mmc_alloc_sg() to call kmalloc_objs() with a zero size
+allocation request, which leads to undefined behavior.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260508-drm_panel_init_rm-v2-6-0bd4ac429971@redhat.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Under the SLUB allocator, kmalloc(0) returns a special pointer
+(ZERO_SIZE_PTR). The subsequent 'if (sg)' check will evaluate to
+true, and sg_init_table() will then attempt to access invalid memory,
+resulting in a crash:
+
+dwmmc_rockchip 2a310000.mmc: Successfully tuned phase to 133
+mmc1: new UHS-I speed SDR104 SDHC card at address aaaa
+Unable to handle kernel paging request at virtual address 0000001ffffffff0
+Mem abort info:
+ESR = 0x0000000096000004
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x04: level 0 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=0000000102c88000
+[0000001ffffffff0] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] SMP
+Modules linked in:
+CPU: 2 UID: 0 PID: 102 Comm: kworker/2:1 Not tainted 7.0.0-rc6-next-20260331-00013-g4d93c25963c5-dirty #80 PREEMPT
+Hardware name: Rockchip RK3576 EVB V10 Board (DT)
+Workqueue: events_freezable mmc_rescan
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : sg_init_table+0x2c/0x50
+lr : sg_init_table+0x24/0x50
+sp : ffff8000837db710
+x29: ffff8000837db710 x28: 000000000000c000 x27: 0000000000000300
+x26: 0000000000000000 x25: 0000000000000040 x24: ffff0000c46a0000
+x23: 0000000000000000 x22: ffff0000c0c73c00 x21: 0000000000000010
+x20: 0000000000000010 x19: 0000000000000000 x18: 000000000000002c
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
+x14: 0000000000000400 x13: ffff8000837dc000 x12: 0000000000000000
+x11: ffff0000c0c73ca0 x10: 0000000000000040 x9 : 459ec1f0abbdbb00
+x8 : 0000001fffffffe0 x7 : 0000000000000000 x6 : 000000000000003f
+x5 : 0000000000035579 x4 : 0000000000000901 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000010
+Call trace:
+sg_init_table+0x2c/0x50 (P)
+mmc_mq_init_request+0x64/0x90
+blk_mq_alloc_map_and_rqs+0x3ac/0x480
+blk_mq_alloc_set_map_and_rqs+0x98/0x1e0
+blk_mq_alloc_tag_set+0x1c0/0x290
+mmc_init_queue+0x120/0x370
+mmc_blk_alloc_req+0x150/0x420
+
+To prevent this, add a validation check in mmc_mq_init_request() to
+detect when sg_len (derived from max_segs) is zero. If sg_len is zero,
+we return an error and print an error message, allowing host driver
+developers to identify and fix incorrect max_segs configuration.
+
+This is a defensive measure that ensures the MMC core fails gracefully
+when host drivers provide invalid max_segs values, rather than crashing
+with a page fault.
+
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/mmc/core/queue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
-index 227f97f9b136f..13cfe252a838d 100644
---- a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
-+++ b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
-@@ -162,9 +162,6 @@ static int tdo_tl070wsh30_panel_add(struct tdo_tl070wsh30_panel *tdo_tl070wsh30)
- 		return err;
- 	}
+diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+index eb1053d8cae72..eb25a0825adcf 100644
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -214,8 +214,14 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+ 	struct mmc_queue *mq = set->driver_data;
+ 	struct mmc_card *card = mq->card;
+ 	struct mmc_host *host = card->host;
++	u16 sg_len = mmc_get_max_segments(host);
  
--	drm_panel_init(&tdo_tl070wsh30->base, &tdo_tl070wsh30->link->dev,
--		       &tdo_tl070wsh30_panel_funcs, DRM_MODE_CONNECTOR_DSI);
--
- 	err = drm_panel_of_backlight(&tdo_tl070wsh30->base);
- 	if (err)
- 		return err;
-@@ -183,10 +180,13 @@ static int tdo_tl070wsh30_panel_probe(struct mipi_dsi_device *dsi)
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST | MIPI_DSI_MODE_LPM;
- 
--	tdo_tl070wsh30 = devm_kzalloc(&dsi->dev, sizeof(*tdo_tl070wsh30),
--				    GFP_KERNEL);
--	if (!tdo_tl070wsh30)
--		return -ENOMEM;
-+	tdo_tl070wsh30 = devm_drm_panel_alloc(&dsi->dev,
-+					      __typeof(*tdo_tl070wsh30), base,
-+					      &tdo_tl070wsh30_panel_funcs,
-+					      DRM_MODE_CONNECTOR_DSI);
+-	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
++	if (!sg_len) {
++		dev_err(mmc_dev(host), "Wrong max_segs assigned\n");
++		return -EINVAL;
++	}
 +
-+	if (IS_ERR(tdo_tl070wsh30))
-+		return PTR_ERR(tdo_tl070wsh30);
++	mq_rq->sg = mmc_alloc_sg(sg_len, GFP_KERNEL);
+ 	if (!mq_rq->sg)
+ 		return -ENOMEM;
  
- 	mipi_dsi_set_drvdata(dsi, tdo_tl070wsh30);
- 	tdo_tl070wsh30->link = dsi;
 -- 
 2.53.0
 
