@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2C7394783;
-	Thu, 17 Sep 2026 17:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2125F3CAE99;
+	Thu, 17 Sep 2026 17:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666440; cv=none; b=lJxZmygOgNeNfG1U3mS0V/wumn/uwqmQdOdan3v7RHX2hIIu9TIkRrVX51E0uNgUlE+sOf/DCTrmgKPLZHccfhNKc2LOWHH82uE1zM0pebVjI0DLhLPPPPG9listNu8oRG0UZWPsk732bcGoBasy2edYxAA+Vn5+ua33w4WSjCI=
+	t=1789666442; cv=none; b=Nl/2+gC6aAOSNoDPnajWVijtdQnq4UJCdQno+xiFgV+3TIy8Rp4P9xkmXSMVoB2xa20ufD13sY3uZTnba8om1CDaht0PoZgjzUZ2Boiw0CVEmBdBtBJki+jGiN4OfGwiyUYmnnejQck/pfgC3L2g2G8CThTRS1th4Y/gRndKsmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666440; c=relaxed/simple;
-	bh=X+XxOsXcPutZ9fFW8RphHG2UjIb9ueo1UlB6Rw6Y7UM=;
+	s=arc-20240116; t=1789666442; c=relaxed/simple;
+	bh=42yC6Eziqvnbcnet8+RKg1y4k3Hj6cceL24CtMv0vQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UL/uD2xTTT5f2Vwh1ZFw1eXDZ3RvSSo8FVOu3Xa8FOxGpCDMoX76I/gn7S8Fv6sNRT2vHbN5kOt+Enap1dSKAGW13Tq/p0wgCEoltq3u56MceD6xHWPSzAhXJQUeJssTBTNJ5sH6KJZGYtv0qucEz3U0PQbDyvcL75SaKQqqSBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwZTCElN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vA2aaz2RNdI53nFLOAofJuLQwTBix3+gW0Pm391S+sy4rUPlcYcDTTjc7YyQOXK95ho4S6UJMh/8fvJq2byHAeBX9hwA46cx+ZapWpgAIDoVeyI3dhCD5K+XcSiGDUvhNWa8Nj1RUIm7SNBQNsSRPuGy7BRRhPnH2FroPU/L7Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQZtXnTn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwZTCElN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CAC1F000FF;
-	Thu, 17 Sep 2026 17:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQZtXnTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A091F00893;
+	Thu, 17 Sep 2026 17:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666438;
-	bh=toU3UXWufza4ORP4pUfPruzNs8UqVFsw3bJLYp/O9O8=;
+	s=korg; t=1789666441;
+	bh=hHtG/abmciHDu1PUyyLkGJ7LD0KlSwat3g9csiuaIN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwZTCElNfZr8fwq0LAutH53dJlm7+g7fSB34ePfrE1fF0j6sgOmyOcFfnxpnuuqAL
-	 94UehJHVImQIAOoUXpMGHZooP8VdkDt5a/mUCpHDBBJtbEiSq/W69zSJlbRtHXiuGo
-	 vAgN8PevmQxCa4bJrKtP6aukeGl86esXHbo12nL0=
+	b=gQZtXnTnhqeCttgaLrN8ZbZ/id2raUb7I8LZ2VyQMquAewSaDm/SaV8RmDbesWEtb
+	 JFoFlYmVqDhIc9ooaUq49UdBUCnmmrtboSXTucjfibkJxtsw+CwENqwnjfvK1MxoC0
+	 iMnFnvqJ7hGh2tgd3P6glIFoy5eODkp/bsq2E1RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.18 1038/1250] mac802154: fix use-after-free of sdata via queued RX frames
-Date: Thu, 17 Sep 2026 16:13:53 +0100
-Message-ID: <20260917151620.210897319@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	leixiang <leixiang@kylinos.cn>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 1039/1250] KVM: PPC: Book3S HV: Set irqfd->producer only on success
+Date: Thu, 17 Sep 2026 16:13:54 +0100
+Message-ID: <20260917151620.237845509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,340 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: leixiang <leixiang@kylinos.cn>
 
-commit 2f37fba846c9fdff5fc15b6d93656057ccd13031 upstream.
+commit 1144454ea22290d7c6998a2af6239e5995476afc upstream.
 
-The RX softirq producer ieee802154_subif_frame() queues received beacon
-and MAC-command frames onto local->rx_beacon_list / rx_mac_cmd_list and
-schedules a process-context worker, storing a raw mac_pkt->sdata (and
-skb->dev == sdata->dev) with neither a reference nor any locking:
+Set irqfd->producer only after kvmppc_set_passthru_irq() succeeds to
+avoid leaving a dangling pointer on failure. The bypass manager does
+not register a failed producer, so the pointer is never cleared.
 
- - the lists have no lock: the softirq producer list_add_tail()s while the
-   mac_wq worker list_del()s, so sibling interfaces on the same phy corrupt
-   the list;
-
- - the workers dereference the interface after it may have been freed.
-   mac802154_rx_mac_cmd_worker() touches mac_pkt->sdata directly, and
-   mac802154_rx_beacon_worker() -> mac802154_process_beacon() dereferences
-   skb->dev (== sdata->dev). Removing an interface frees its sdata
-   (netdev_priv) while a queued frame still points at it, so a later worker
-   run is a use-after-free.
-
-Reproduced under KASAN by flooding a victim interface with MAC command
-frames and removing it (the beacon path is the same class via skb->dev):
-
-  BUG: KASAN: slab-use-after-free in mac802154_rx_mac_cmd_worker+0x463/0x630 [mac802154]
-  Read of size 4 at addr ffff888002f9ea18 by task kworker/u8:1/31
-  Workqueue: phy0-mac-cmds mac802154_rx_mac_cmd_worker [mac802154]
-  Call Trace:
-   mac802154_rx_mac_cmd_worker+0x463/0x630 [mac802154]
-   process_one_work+0x611/0xe80
-   worker_thread+0x52e/0xdc0
-   kthread+0x30c/0x630
-   ret_from_fork+0x2fd/0x3e0
-
-Fix both lists together:
-
- - add local->rx_lock and take it around every list access: the softirq
-   producer (plain spin_lock, softirq context) and the workers and flush
-   (spin_lock_bh, process context);
-
- - pin the interface for the lifetime of a queued frame with
-   netdev_hold()/netdev_put(), so the worker can safely dereference sdata /
-   skb->dev even while the interface is being removed;
-
- - dequeue under the lock at the head and loop-drain the whole list in the
-   workers (they previously processed one frame per run and relied on a
-   later enqueue to drain the rest);
-
- - drop not-yet-started frames of an interface before it is unregistered,
-   from ieee802154_if_remove() (after the RCU grace period) and from the
-   ieee802154_remove_interfaces() loop -- the latter is the whole-phy
-   teardown path, which does not go through ieee802154_if_remove().
-
-An in-flight worker that already dequeued a frame keeps its own netdev
-reference; unregister_netdevice() then waits it out in netdev_run_todo(),
-which runs at rtnl_unlock() (rtnl released) and after the interface has
-been closed, so it does not pin rtnl. A worker blocked in an association
-TX only delays that one interface's unregister (the usual "waiting for %s
-to become free"), it does not hold rtnl. netdev_hold() is used for this
-reason instead of a cancel_work_sync() under rtnl, which would block on
-the worker's unbounded MLME TX wait via ieee802154_sync_queue().
-
-The mac-command worker additionally skips processing for a stopped
-interface (ieee802154_sdata_running()), avoiding a needless association
-response during teardown.
-
-Fixes: 57588c71177f ("mac802154: Handle passive scanning")
+Fixes: c57875f5f9be ("KVM: PPC: Book3S HV: Enable IRQ bypass")
+Suggested-by: Sean Christopherson <seanjc@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/20260725135154.99876-1-security@auditcode.ai
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: leixiang <leixiang@kylinos.cn>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260709055755.31297-1-leixiang@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/cfg802154.h      |    1 
- net/mac802154/ieee802154_i.h |    8 ++
- net/mac802154/iface.c        |    6 ++
- net/mac802154/main.c         |    1 
- net/mac802154/rx.c           |  120 +++++++++++++++++++++++++++++++++++--------
- net/mac802154/scan.c         |   10 +--
- 6 files changed, 117 insertions(+), 29 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/cfg802154.h
-+++ b/include/net/cfg802154.h
-@@ -376,6 +376,7 @@ struct cfg802154_mac_pkt {
- 	struct list_head node;
- 	struct sk_buff *skb;
- 	struct ieee802154_sub_if_data *sdata;
-+	netdevice_tracker dev_tracker;
- 	u8 page;
- 	u8 channel;
- };
---- a/net/mac802154/ieee802154_i.h
-+++ b/net/mac802154/ieee802154_i.h
-@@ -74,6 +74,10 @@ struct ieee802154_local {
- 	struct work_struct rx_beacon_work;
- 	struct list_head rx_mac_cmd_list;
- 	struct work_struct rx_mac_cmd_work;
-+	/* Serializes rx_beacon_list and rx_mac_cmd_list against the RX
-+	 * softirq producer, the mac_wq workers and the teardown flush.
-+	 */
-+	spinlock_t rx_lock;
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -6125,12 +6125,12 @@ static int kvmppc_irq_bypass_add_produce
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
  
- 	/* Association */
- 	struct ieee802154_pan_device *assoc_dev;
-@@ -300,6 +304,10 @@ static inline bool mac802154_is_beaconin
- }
- 
- void mac802154_rx_mac_cmd_worker(struct work_struct *work);
-+void mac802154_flush_list(struct list_head *list,
-+			  struct ieee802154_sub_if_data *sdata);
-+void mac802154_flush_queued_pkts(struct ieee802154_local *local,
-+				 struct ieee802154_sub_if_data *sdata);
- 
- int mac802154_perform_association(struct ieee802154_sub_if_data *sdata,
- 				  struct ieee802154_pan_device *coord,
---- a/net/mac802154/iface.c
-+++ b/net/mac802154/iface.c
-@@ -694,6 +694,7 @@ void ieee802154_if_remove(struct ieee802
- 	mutex_unlock(&sdata->local->iflist_mtx);
- 
- 	synchronize_rcu();
-+	mac802154_flush_queued_pkts(sdata->local, sdata);
- 	unregister_netdevice(sdata->dev);
- }
- 
-@@ -705,6 +706,11 @@ void ieee802154_remove_interfaces(struct
- 	list_for_each_entry_safe(sdata, tmp, &local->interfaces, list) {
- 		list_del_rcu(&sdata->list);
- 
-+		/* Best-effort: a frame the RX softirq queues for this sdata
-+		 * after the flush still pins the netdev, so the
-+		 * unregister_netdevice() below waits it out.
-+		 */
-+		mac802154_flush_queued_pkts(local, sdata);
- 		unregister_netdevice(sdata->dev);
- 	}
- 	mutex_unlock(&local->iflist_mtx);
---- a/net/mac802154/main.c
-+++ b/net/mac802154/main.c
-@@ -91,6 +91,7 @@ ieee802154_alloc_hw(size_t priv_data_len
- 	INIT_LIST_HEAD(&local->interfaces);
- 	INIT_LIST_HEAD(&local->rx_beacon_list);
- 	INIT_LIST_HEAD(&local->rx_mac_cmd_list);
-+	spin_lock_init(&local->rx_lock);
- 	mutex_init(&local->iflist_mtx);
- 
- 	tasklet_setup(&local->tasklet, ieee802154_tasklet_handler);
---- a/net/mac802154/rx.c
-+++ b/net/mac802154/rx.c
-@@ -35,16 +35,23 @@ void mac802154_rx_beacon_worker(struct w
- 		container_of(work, struct ieee802154_local, rx_beacon_work);
- 	struct cfg802154_mac_pkt *mac_pkt;
- 
--	mac_pkt = list_first_entry_or_null(&local->rx_beacon_list,
--					   struct cfg802154_mac_pkt, node);
--	if (!mac_pkt)
--		return;
-+	for (;;) {
-+		spin_lock_bh(&local->rx_lock);
-+		mac_pkt = list_first_entry_or_null(&local->rx_beacon_list,
-+						   struct cfg802154_mac_pkt, node);
-+		if (mac_pkt)
-+			list_del(&mac_pkt->node);
-+		spin_unlock_bh(&local->rx_lock);
-+		if (!mac_pkt)
-+			break;
- 
--	mac802154_process_beacon(local, mac_pkt->skb, mac_pkt->page, mac_pkt->channel);
-+		mac802154_process_beacon(local, mac_pkt->skb,
-+					 mac_pkt->page, mac_pkt->channel);
- 
--	list_del(&mac_pkt->node);
--	kfree_skb(mac_pkt->skb);
--	kfree(mac_pkt);
-+		netdev_put(mac_pkt->sdata->dev, &mac_pkt->dev_tracker);
-+		kfree_skb(mac_pkt->skb);
-+		kfree(mac_pkt);
-+	}
- }
- 
- static bool mac802154_should_answer_beacon_req(struct ieee802154_local *local)
-@@ -68,22 +75,15 @@ static bool mac802154_should_answer_beac
- 	return interval == IEEE802154_ACTIVE_SCAN_DURATION;
- }
- 
--void mac802154_rx_mac_cmd_worker(struct work_struct *work)
-+static void mac802154_rx_mac_cmd(struct ieee802154_local *local,
-+				 struct cfg802154_mac_pkt *mac_pkt)
- {
--	struct ieee802154_local *local =
--		container_of(work, struct ieee802154_local, rx_mac_cmd_work);
--	struct cfg802154_mac_pkt *mac_pkt;
- 	u8 mac_cmd;
- 	int rc;
- 
--	mac_pkt = list_first_entry_or_null(&local->rx_mac_cmd_list,
--					   struct cfg802154_mac_pkt, node);
--	if (!mac_pkt)
--		return;
+-	irqfd->producer = prod;
 -
- 	rc = ieee802154_get_mac_cmd(mac_pkt->skb, &mac_cmd);
- 	if (rc)
--		goto out;
-+		return;
+ 	ret = kvmppc_set_passthru_irq(irqfd->kvm, prod->irq, irqfd->gsi);
+ 	if (ret)
+ 		pr_info("kvmppc_set_passthru_irq (irq %d, gsi %d) fails: %d\n",
+ 			prod->irq, irqfd->gsi, ret);
++	else
++		irqfd->producer = prod;
  
- 	switch (mac_cmd) {
- 	case IEEE802154_CMD_BEACON_REQ:
-@@ -121,11 +121,81 @@ void mac802154_rx_mac_cmd_worker(struct
- 	default:
- 		break;
- 	}
-+}
-+
-+void mac802154_rx_mac_cmd_worker(struct work_struct *work)
-+{
-+	struct ieee802154_local *local =
-+		container_of(work, struct ieee802154_local, rx_mac_cmd_work);
-+	struct cfg802154_mac_pkt *mac_pkt;
-+
-+	for (;;) {
-+		spin_lock_bh(&local->rx_lock);
-+		mac_pkt = list_first_entry_or_null(&local->rx_mac_cmd_list,
-+						   struct cfg802154_mac_pkt, node);
-+		if (mac_pkt)
-+			list_del(&mac_pkt->node);
-+		spin_unlock_bh(&local->rx_lock);
-+		if (!mac_pkt)
-+			break;
-+
-+		/* A stopped interface cannot transmit; skipping avoids a
-+		 * needless association response (and the !netif_running()
-+		 * warning it would trip) during teardown. The beacon worker
-+		 * needs no such check as it never transmits.
-+		 */
-+		if (ieee802154_sdata_running(mac_pkt->sdata))
-+			mac802154_rx_mac_cmd(local, mac_pkt);
-+
-+		netdev_put(mac_pkt->sdata->dev, &mac_pkt->dev_tracker);
-+		kfree_skb(mac_pkt->skb);
-+		kfree(mac_pkt);
-+	}
-+}
-+
-+/**
-+ * mac802154_flush_list - free queued RX frames on @list
-+ * @list: rx_beacon_list or rx_mac_cmd_list
-+ * @sdata: only free frames received on this interface, or %NULL for all
-+ *
-+ * Each frame pins the net_device it was received on (via netdev_hold()),
-+ * so release that reference as the frame is dropped. Caller must hold
-+ * local->rx_lock.
-+ */
-+void mac802154_flush_list(struct list_head *list,
-+			  struct ieee802154_sub_if_data *sdata)
-+{
-+	struct cfg802154_mac_pkt *mac_pkt, *tmp;
- 
--out:
--	list_del(&mac_pkt->node);
--	kfree_skb(mac_pkt->skb);
--	kfree(mac_pkt);
-+	list_for_each_entry_safe(mac_pkt, tmp, list, node) {
-+		if (sdata && mac_pkt->sdata != sdata)
-+			continue;
-+		list_del(&mac_pkt->node);
-+		netdev_put(mac_pkt->sdata->dev, &mac_pkt->dev_tracker);
-+		kfree_skb(mac_pkt->skb);
-+		kfree(mac_pkt);
-+	}
-+}
-+
-+/**
-+ * mac802154_flush_queued_pkts - drop queued RX work referencing @sdata
-+ * @local: the mac802154 device
-+ * @sdata: interface being removed
-+ *
-+ * The workers dereference the queued frame's interface directly
-+ * (mac_pkt->sdata) or through skb->dev in mac802154_process_beacon(). Drop
-+ * the not-yet-started entries belonging to @sdata before it is unregistered
-+ * so their netdev reference is released; an entry already dequeued by a
-+ * running worker keeps its own reference until the worker completes, which
-+ * unregister_netdevice() then waits out.
-+ */
-+void mac802154_flush_queued_pkts(struct ieee802154_local *local,
-+				 struct ieee802154_sub_if_data *sdata)
-+{
-+	spin_lock_bh(&local->rx_lock);
-+	mac802154_flush_list(&local->rx_beacon_list, sdata);
-+	mac802154_flush_list(&local->rx_mac_cmd_list, sdata);
-+	spin_unlock_bh(&local->rx_lock);
+ 	return ret;
  }
- 
- static int
-@@ -221,7 +291,10 @@ ieee802154_subif_frame(struct ieee802154
- 		mac_pkt->sdata = sdata;
- 		mac_pkt->page = sdata->local->scan_page;
- 		mac_pkt->channel = sdata->local->scan_channel;
-+		netdev_hold(sdata->dev, &mac_pkt->dev_tracker, GFP_ATOMIC);
-+		spin_lock(&sdata->local->rx_lock);
- 		list_add_tail(&mac_pkt->node, &sdata->local->rx_beacon_list);
-+		spin_unlock(&sdata->local->rx_lock);
- 		queue_work(sdata->local->mac_wq, &sdata->local->rx_beacon_work);
- 		return NET_RX_SUCCESS;
- 
-@@ -233,7 +306,10 @@ ieee802154_subif_frame(struct ieee802154
- 
- 		mac_pkt->skb = skb_get(skb);
- 		mac_pkt->sdata = sdata;
-+		netdev_hold(sdata->dev, &mac_pkt->dev_tracker, GFP_ATOMIC);
-+		spin_lock(&sdata->local->rx_lock);
- 		list_add_tail(&mac_pkt->node, &sdata->local->rx_mac_cmd_list);
-+		spin_unlock(&sdata->local->rx_lock);
- 		queue_work(sdata->local->mac_wq, &sdata->local->rx_mac_cmd_work);
- 		return NET_RX_SUCCESS;
- 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -104,13 +104,9 @@ static unsigned int mac802154_scan_get_c
- 
- static void mac802154_flush_queued_beacons(struct ieee802154_local *local)
- {
--	struct cfg802154_mac_pkt *mac_pkt, *tmp;
--
--	list_for_each_entry_safe(mac_pkt, tmp, &local->rx_beacon_list, node) {
--		list_del(&mac_pkt->node);
--		kfree_skb(mac_pkt->skb);
--		kfree(mac_pkt);
--	}
-+	spin_lock_bh(&local->rx_lock);
-+	mac802154_flush_list(&local->rx_beacon_list, NULL);
-+	spin_unlock_bh(&local->rx_lock);
- }
- 
- static void
 
 
