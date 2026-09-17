@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF2F4F649C;
-	Thu, 17 Sep 2026 17:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAF44E4C54;
+	Thu, 17 Sep 2026 17:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666139; cv=none; b=DyigLT184S8hATihFM6WtmqzqNok22zYrgsHw+N0mlz0Ah34BfWGcb6YQXlIvpER+I70Zmjewik/ehy4I8Uaj3poeSXrkvg3DKwC8TfItx+/DXtliup+OrN+sEu5ZqkB5BBxv8DJ/x0onBaKuFVfvm5VjeyXPN1wjVy/CovyOxY=
+	t=1789666142; cv=none; b=PAFtmRDHfYxiPYUJ7pNalTjauXv27Ieb5nq5uQaslluLspsNkRxmA59amkEo9a+7VZMInXJgSsBz0mndKSPmEjvyULfBU2kMtpOe0vGtrhH9eaS5SHsbNcMRqwFWYce42j60Zs6lioMGnt0fMoXCM2xbYUpG08BquZi9juZbgeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666139; c=relaxed/simple;
-	bh=rJ36x3NsC/vag+4hXMCHcy4SIF6B7l5eUhu0Ho9PmY8=;
+	s=arc-20240116; t=1789666142; c=relaxed/simple;
+	bh=S35+X6EULtu4kkc1PqgaXwaXqD5z4rsf41mDGZ5Fm04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHkU6p232r9d6Sa0Tv7mzqMsNyj3xbKBd06uVAFUM4iBEBMlWCesZsyPIB9+cChjk63q/EL0JfV3FtxsDd++2CNlglVTDnLknyqHjRS1i0gTIg5bJyE5FNiUvFwIzvdQu6YnmgXkuKwx5AnrSZwy98Zk6QbTdvU1aviXs0zZVpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWCb0bV6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MFKr3KAuefrqVKVvKEGbqEcCWZWAUBf2ZwsWRa68IapWOajxQlgG4FAjagoGEohmJAyShiQBpW6r6oJNIWQ22/jqzeXqG1HEX87VsMiGb9v1ZWs9XxOJaTLmWNfxqhcNSui0sScmV8591L5x+G4LkUxAzoPaDmFF6zYxmWJbiqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y184UFBx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWCb0bV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C9B1F000FF;
-	Thu, 17 Sep 2026 17:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y184UFBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9427C1F000FF;
+	Thu, 17 Sep 2026 17:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666138;
-	bh=lqE933a7WJLrcEWvMbGZAhLtIybaFVrItYXqk32mJsE=;
+	s=korg; t=1789666141;
+	bh=21RMkaHaFBJa0XXK//UgJPnsNUxeHMLgK3SfQr9YMbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWCb0bV6pmdtgqHk1w9JbYdp6egWttrooHXsgzSk1+35GtUHfspQR/S3luNutNUZy
-	 a4Y90C1fDFmJB4dTpcsiNBgsggCUf3gdH/7XmK81GINOSJ/1UFzMzyj/hACm9FsF6z
-	 geQd4BglnaY4+1JW5zOzis59PIeqD7yYiH0nBZsc=
+	b=y184UFBxUIoOE6wgfE1ihQG04TabQabSKx4tkOY8yL61/Gy2xkNtsYcb4zi5UJ0Qt
+	 h26KJSBht9FnoOH/cRUkDs0ft9PuAss1bdQl9WkaStIJxqXFZWz4nSFeqktv6Frbt6
+	 JVs8dXnVR3E9O5MjiJEHQ+8ghLYQsEhpQzpG6HMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marek Vasut <marex@nabladev.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0900/1250] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
-Date: Thu, 17 Sep 2026 16:11:35 +0100
-Message-ID: <20260917151616.383278342@linuxfoundation.org>
+Subject: [PATCH 6.18 0936/1250] octeontx2-af: fix PF/CGX debugfs PCI bus lookup
+Date: Thu, 17 Sep 2026 16:12:11 +0100
+Message-ID: <20260917151617.385595008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,77 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
+[ Upstream commit 4f4b743c2d2bbc336cb164d9d3d2ed6956ad8437 ]
 
-KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
-when issuing a software power-down (PMECR[1:0] = 10) followed by a
-power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
-properly preventing communication. The Transmitter will still send
-data, but no data will be received.
+rvu_dbg_rvu_pf_cgx_map_display() locates each RVU PF PCI device via
+pci_get_domain_bus_and_slot() when printing the PF-to-CGX map. It
+assumed PF0 always sits on PCI bus 1 and derived other PF bus numbers
+as pf + 1, but the AF device can be enumerated on a different bus.
 
-The errata sheet also includes a workaround, which states that,
-it is recommended that the software power-down feature not be used.
+Use rvu->pdev->bus->number as the base bus instead, so each PF lookup
+uses pf + start on systems where RVU functions are on contiguous buses
+but do not start at bus 1.
 
-Implement that workaround and drop the entry into software power-down
-mode. The ks8851_write_mac_addr() calls entry into normal power-on
-mode at the very beginning of the function, therefore dropping the
-second call to enter software power-down mode is sufficient here.
-The ks8851_net_stop() can only be called after ks8851_net_start()
-was already called, and ks8851_net_start() also makes the MAC enter
-normal power-on mode, therefore it is also fine to drop the call to
-enter software power-down mode from ks8851_net_stop().
-
-This will lead to a slight increase in power consumption, but it also
-fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
-is where the problem was reported and this fix was tested.
-
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
-
-Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
+Fixes: e2fb373038654 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904085114.3385530-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index 4afbb40bc0e4a..d49f281c78676 100644
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
- 		ks8851_wrreg16(ks, KS_MAR(i), val);
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index 91a9ad0d37c0a..0a1c778d14b69 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -825,19 +825,25 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
+ 	int pf, domain, blkid;
+ 	u8 cgx_id, lmac_id;
+ 	u16 pcifunc;
++	u8 start;
  
--	if (!netif_running(dev))
--		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
--
- 	ks8851_unlock(ks);
+-	domain = 2;
++	domain = pci_domain_nr(rvu->pdev->bus);
+ 	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
+ 	/* There can be no CGX devices at all */
+ 	if (!mac_ops)
+ 		return 0;
+ 	seq_printf(filp, "PCI dev\t\tRVU PF Func\tNIX block\t%s\tLMAC\tCHAN\n",
+ 		   mac_ops->name);
++
++	/* All the PF devices are on contiguous PCI bus numbers, but the PF0(AF)
++	 * may not start from 1 always. Hence get domain and bus from PCI device.
++	 */
++	start = rvu->pdev->bus->number;
+ 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
+ 		if (!is_pf_cgxmapped(rvu, pf))
+ 			continue;
  
- 	return 0;
-@@ -478,8 +475,7 @@ static int ks8851_net_open(struct net_device *dev)
-  * @dev: The device being closed.
-  *
-  * Called to close down a network device which has been active. Cancel any
-- * work, shutdown the RX and TX process and then place the chip into a low
-- * power state whilst it is not being used.
-+ * work and shutdown the RX and TX process.
-  */
- static int ks8851_net_stop(struct net_device *dev)
- {
-@@ -506,8 +502,6 @@ static int ks8851_net_stop(struct net_device *dev)
- 	/* shutdown TX process */
- 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
+-		pdev =  pci_get_domain_bus_and_slot(domain, pf + 1, 0);
++		pdev =  pci_get_domain_bus_and_slot(domain, pf + start, 0);
+ 		if (!pdev)
+ 			continue;
  
--	/* set powermode to soft power down to save power */
--	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
- 	ks8851_unlock(ks);
- 
- 	/* ensure any queued tx buffers are dumped */
 -- 
 2.53.0
 
