@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32C049738C;
-	Thu, 17 Sep 2026 15:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEB63976A0;
+	Thu, 17 Sep 2026 15:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658722; cv=none; b=cuxIPvk012eaZAacKPKC0q9GAdZtYJ3No/Mn6tUQnBVSdPXGRnBBFS5T5YbhhSZOKcqUZQGsmDnQ270KBzySx7mYXHv5c8Lk7ZZNseOyOgi1ZgdoMWjtZrY/JpKGojyKqRUNjK+fx2oUYqWmYMBF7cVjhjJwEdzzNB1DcqgsNWE=
+	t=1789658724; cv=none; b=UjH5kzJ3Ko1tDyKPCTWSeUtJmw/NI7wlTb5ORCeMYNyL2EX41+MnL9IWc9EkvTMB20AyaJZjPLqkavr6VYOLe81G9aJ5S7bEw459p9ZRc36DTgzDbNDmLk22Zm5RIXptmpngbRoUhW4wu8guoi+DXNa3cJnLs8E/tHQ+wUStfkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658722; c=relaxed/simple;
-	bh=qzy+9RIrRU2oWg0OEoispbqcvbTAu+4JyiW4d1Ixn0k=;
+	s=arc-20240116; t=1789658724; c=relaxed/simple;
+	bh=lmma7+ZVl4BKTDst3xAgE0wlSnH5/xq1JEWq+/tQkTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY+3LTYpVampcjhozuSFHQ8PkP0tkVNWDzcECSFqsKXyvMJqR/d1h9KQkT1ZI0EgsIAayOJVj9TOCAGM5gKQZA/My4H+vW0ev9OLbp6iY3XeRspSlckakdjU/eQwUAnrfj3PsO5A3rk+oud+dQQ9ELyHLFChcmlO0jykGHB3+XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryC5IdS+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cX0Aj/8sZDSBsNxI7jqZ9yU2c5pAU8dQKqonhGyiDCt8lPGxWfxWuuvcZT3FkNB5tUHlntqOHykUDgD2MSDupzCxaiL2AFTVAbjJQUYgpWXdQj5geZ+dXyxUYSocU+oUaqN0PbPM32JZvdFGtIBS+CQZ9DbsGzFcfOOcufSpVOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ayc1KHPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryC5IdS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F801F00899;
-	Thu, 17 Sep 2026 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ayc1KHPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A8F1F0089D;
+	Thu, 17 Sep 2026 15:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658713;
-	bh=0xLXh0FYw5B0Ctq60/2PzqvrqE3Nzs+z0IyH7U2zGig=;
+	s=korg; t=1789658716;
+	bh=XLp4zxZpz9f1dBpIjl3ScGvdAoYw+SYrPj4lhxYajPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ryC5IdS+pdCCpv6c6dOBH8yPUQKVyR10tTUXU4MvX1ax85zh84ZdHxxttH1T+8sQw
-	 bWtbccXYi/d4oHzKivDvV2+EBF89qnrZfNgcR0NnuLyzFSKEMbdnJnBTfr9mPxcDiW
-	 eDea+o5Mi5Vc+mngfoGXYlbGUJsKbPBlOU486wYc=
+	b=Ayc1KHPsRn+xci1p700n1kwlILuOCfjwIVoNGKSQb+nkCRWfqdnOg6z0d5r/44J+G
+	 7jAaPoHoSVXIDCdCtpf/0OTstN92X8Z+uNkr46QT+ZyYV62BsCpiXnGLkJnoKbjjNp
+	 RXsGNADrnD1bPiKlM6uljp9th/M9a9/wq9oBxX7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Xixin Liu <liuxixin@kylinos.cn>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 015/733] nvme-rdma: fix -EIO cleanup order in queue_rq
-Date: Thu, 17 Sep 2026 16:05:23 +0100
-Message-ID: <20260917151351.048804418@linuxfoundation.org>
+Subject: [PATCH 7.2 016/733] nvme: add context annotations for nvme_subsystem::lock
+Date: Thu, 17 Sep 2026 16:05:24 +0100
+Message-ID: <20260917151351.077360215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,66 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit d61828199c6cb4b76d48403c77023cd4bb9d09fc ]
+[ Upstream commit d1fdf49b5f7fce5f65ae0d11d484bd7e31cedbb1 ]
 
-On -EIO, the RDMA queue_rq path reports a host path error and then
-still cleans up the command and unmaps the SQE DMA. The path error
-helper completes the request, so that is double cleanup and DMA unmap
-after the request is already complete.
+Several helpers access or traverse data structures protected by
+nvme_subsystem::lock and therefore require callers to hold the lock.
+Annotate nvme_mpath_unfreeze(), nvme_mpath_wait_freeze(),
+nvme_mpath_start_freeze(), nvme_find_ns_head(), nvme_alloc_ns_head()
+and nvme_subsys_check_duplicate_ids() with __must_hold(&subsys->lock)
+so that Clang's lock context analysis can validate the locking
+requirements at compile time.
 
-Unmap the SQE first, then report the host path error. Skip the outer
-command cleanup on that path.
+Also annotate nvme_subsystem::nsheads and
+nvme_ns_head::delayed_removal_secs with __guarded_by(&subsys->lock),
+as both are protected by the subsystem lock.
 
-Fixes: 62eca39722fd ("nvme-rdma: handle nvme_rdma_post_send failures better")
+Annotate nvme_init_subsystem() with __context_unsafe(), as it
+initializes these lock-protected members before the object is published,
+suppressing a false positive from Clang's context analysis.
+
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 56e1c6bbe4bb ("nvme: fix racy access to FDP placement id array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/nvme/host/core.c |  4 ++++
+ drivers/nvme/host/nvme.h | 15 ++++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 6909e35427942..618ee95444263 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -2003,7 +2003,7 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	struct ib_device *dev;
- 	bool queue_ready = test_bit(NVME_RDMA_Q_LIVE, &queue->flags);
- 	blk_status_t ret;
--	int err;
-+	int err = 0;
- 
- 	WARN_ON_ONCE(rq->tag < 0);
- 
-@@ -2059,16 +2059,18 @@ static blk_status_t nvme_rdma_queue_rq(struct blk_mq_hw_ctx *hctx,
- err_unmap:
- 	nvme_rdma_unmap_data(queue, rq);
- err:
--	if (err == -EIO)
--		ret = nvme_host_path_error(rq);
--	else if (err == -ENOMEM || err == -EAGAIN)
--		ret = BLK_STS_RESOURCE;
--	else
--		ret = BLK_STS_IOERR;
--	nvme_cleanup_cmd(rq);
-+	if (err != -EIO) {
-+		nvme_cleanup_cmd(rq);
-+		if (err == -ENOMEM || err == -EAGAIN)
-+			ret = BLK_STS_RESOURCE;
-+		else
-+			ret = BLK_STS_IOERR;
-+	}
- unmap_qe:
- 	ib_dma_unmap_single(dev, req->sqe.dma, sizeof(struct nvme_command),
- 			    DMA_TO_DEVICE);
-+	if (err == -EIO)
-+		return nvme_host_path_error(rq);
- 	return ret;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 0b80db7a0599f..0224b99317cdd 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3292,6 +3292,7 @@ static bool nvme_validate_cntlid(struct nvme_subsystem *subsys,
  }
  
+ static int nvme_init_subsystem(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
++	__context_unsafe(/* initialize unpublished/lock-guarded variables */)
+ {
+ 	struct nvme_subsystem *subsys, *found;
+ 	int ret;
+@@ -3863,6 +3864,7 @@ static const struct file_operations nvme_dev_fops = {
+ 
+ static struct nvme_ns_head *nvme_find_ns_head(struct nvme_ctrl *ctrl,
+ 		unsigned nsid)
++	__must_hold(&ctrl->subsys->lock)
+ {
+ 	struct nvme_ns_head *h;
+ 
+@@ -3885,6 +3887,7 @@ static struct nvme_ns_head *nvme_find_ns_head(struct nvme_ctrl *ctrl,
+ 
+ static int nvme_subsys_check_duplicate_ids(struct nvme_subsystem *subsys,
+ 		struct nvme_ns_ids *ids)
++	__must_hold(&subsys->lock)
+ {
+ 	bool has_uuid = !uuid_is_null(&ids->uuid);
+ 	bool has_nguid = memchr_inv(ids->nguid, 0, sizeof(ids->nguid));
+@@ -3986,6 +3989,7 @@ static void nvme_add_ns_cdev(struct nvme_ns *ns)
+ 
+ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 		struct nvme_ns_info *info)
++	__must_hold(&ctrl->subsys->lock)
+ {
+ 	struct nvme_ns_head *head;
+ 	size_t size = sizeof(*head);
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 957ded0c6f53b..5e2e45ef7dadf 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -503,7 +503,8 @@ struct nvme_subsystem {
+ 	struct list_head	entry;
+ 	struct mutex		lock;
+ 	struct list_head	ctrls;
+-	struct list_head	nsheads;
++	struct list_head	nsheads
++		__guarded_by(&lock);
+ 	char			subnqn[NVMF_NQN_SIZE];
+ 	char			serial[20];
+ 	char			model[40];
+@@ -575,7 +576,8 @@ struct nvme_ns_head {
+ 	struct mutex		lock;
+ 	unsigned long		flags;
+ 	struct delayed_work	remove_work;
+-	unsigned int		delayed_removal_secs;
++	unsigned int		delayed_removal_secs
++		__guarded_by(&subsys->lock);
+ 	atomic_long_t		io_requeue_no_usable_path_count;
+ 	atomic_long_t		io_fail_no_available_path_count;
+ #define NVME_NSHEAD_DISK_LIVE		0
+@@ -1046,9 +1048,12 @@ static inline bool nvme_ctrl_use_ana(struct nvme_ctrl *ctrl)
+ 	return ctrl->ana_log_buf != NULL;
+ }
+ 
+-void nvme_mpath_unfreeze(struct nvme_subsystem *subsys);
+-void nvme_mpath_wait_freeze(struct nvme_subsystem *subsys);
+-void nvme_mpath_start_freeze(struct nvme_subsystem *subsys);
++void nvme_mpath_unfreeze(struct nvme_subsystem *subsys)
++	__must_hold(&subsys->lock);
++void nvme_mpath_wait_freeze(struct nvme_subsystem *subsys)
++	__must_hold(&subsys->lock);
++void nvme_mpath_start_freeze(struct nvme_subsystem *subsys)
++	__must_hold(&subsys->lock);
+ void nvme_mpath_default_iopolicy(struct nvme_subsystem *subsys);
+ void nvme_failover_req(struct request *req);
+ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl);
 -- 
 2.53.0
 
