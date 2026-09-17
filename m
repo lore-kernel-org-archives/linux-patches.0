@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC4502761;
-	Thu, 17 Sep 2026 17:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8804CDDF7;
+	Thu, 17 Sep 2026 17:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667498; cv=none; b=lUIoRRIynkUJ2XyJ4gqYWQxGHsIbC+G32TQJ9ErmOvplDp3gq9r/gHyoahVyHXFe1jWan79bxLFV1YUj7GKy/B3u55flZ6dpbWEhMiA/3EYqLTOLadsS/LxxJi9e3yeabB4Mx1x7o/Sz8Nyk5J69sZ3v+nbNQm+SNEzgLpHMO5c=
+	t=1789667502; cv=none; b=GghcwHToCxRJLyIQDjTOjmZ0NuaO0gA3ADO2D7Yu0S0SnCGkCzoEhJ/oBmx1MCaAW8hKSiRd2yduKDK82iAk0ofKxSmQ4zCLHJbaivqKSDerkTDWVjICDFYUHI6j8lR36f7BD0+jmpZTtstUDmXosmy+D019vyDl77EgBai9jNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667498; c=relaxed/simple;
-	bh=mAOajevdAl5RAEBVYX5NM4ziMR1Nt/aKl7VOtPxRzb0=;
+	s=arc-20240116; t=1789667502; c=relaxed/simple;
+	bh=JBhchY14g7YKd2pR9ilqaH8gYeNmu2XFFOGobPQW/Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQ+rU1Mp1Tjy2qlkF+ddXhue4CZksgY0vYv+FHLBaJtM7uk4tJ1c2hCCwqKb1lZ/7srcIdVD/HTwTELBwhFoHg1nLjynp7N7cm3uWEOLrQ66ieF4Edtp2t95VlfjmtO2UAZPCYFXTfs7N25wLrN3OrRQSTj2htnTyzS0cMNPBMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wymUr5Q9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KS1Xh8JMmE0h34aVuSUjaYmkz6a8ADZN6M7JD2qZbuBkaXPqPHcbjfCT07ejCZ69aa2gZdjNu8jCOD/mpzmc7eHX22uKoftDDijgGyY9GOw1TNNasXIPbGdMd0jGNDSWRMw/p03RyCucVe2ebyeQvrC6A520DDZGdg5BNUh1ltQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEQvE0RF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wymUr5Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18991F000FF;
-	Thu, 17 Sep 2026 17:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEQvE0RF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98FF1F000FF;
+	Thu, 17 Sep 2026 17:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667497;
-	bh=twcNEJD+60bo5XsxrH8Z+VObxoz04+y8E4GXJpAW/mw=;
+	s=korg; t=1789667500;
+	bh=bpwhcT+TMQFaaQp4ktRIiRi1YVCc0EWAKGjQxkaRkww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wymUr5Q9IuBxkpcq4t+ZBizpE4hxT+9YPm/D5S0y1hmIY7MQuTJRbi15hGDq2gXNG
-	 24/WujKEA9eNu5zogHIoYxA2IRRyVhDz3h2FJo8gN28vy4+g5gEdTGVdoBp73Ies1V
-	 aTs73s84gHZAD1RAoD7q3PXr8R2T5nYtwJ/y+PhU=
+	b=jEQvE0RFyU895Yq9kfHOtGH7IlQptUcnhTZHugBITzh+wRFKWtvaiVWCMOsZCsLdr
+	 Xe2is1hEqbhCo2L63xnOglaNIORjlZ3wayAX0HrtAFVNGO6rPOyX6UdPXBV3EXFRNd
+	 bOXFPMP+HIDaUhgH451bMGsmojfh/IMgKiMqnk7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Coster <matt.coster@imgtec.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Daniel Wagner <dwagner@suse.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0113/1102] bitfield: wire __bf_shf to __builtin_ctzll
-Date: Thu, 17 Sep 2026 16:00:56 +0100
-Message-ID: <20260917151542.340253063@linuxfoundation.org>
+Subject: [PATCH 6.12 0114/1102] nvme-core: align fabrics_q teardown with admin_q in nvme_free_ctrl
+Date: Thu, 17 Sep 2026 16:00:57 +0100
+Message-ID: <20260917151542.367328295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,49 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <ynorov@nvidia.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 09472f591aa0b72c2dd6c693f48b2d6fea66c7ba ]
+[ Upstream commit f702badaf7d31dc3dea6c66da92b5f35fadd89dc ]
 
-__bf_shf() is currently based on built-in ffsll. It's more
-straightforward to wire it to __builtin_ctzll, which makes it a pure
-rename.
+Currently, the final reference for the fabrics admin queue (fabrics_q)
+is dropped inside nvme_remove_admin_tag_set(). However, the primary admin
+queue (admin_q) defers dropping its final reference until
+nvme_free_ctrl().
 
-Worth to notice that __builtin_ffsll() is buggy on GCC before 14.1:
+Move the blk_put_queue() call for fabrics_q from
+nvme_remove_admin_tag_set() to nvme_free_ctrl(). This aligns the
+lifecycle management of both admin queues, ensuring they are freed
+symmetrically when the controller is finally torn down.
 
-  int main() {
-      sizeof(struct {
-          int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
-      });
-  }
-
-  test.c: In function 'main':
-  test.c:3:21: error: bit-field 't' width not an integer constant
-      3 |                 int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
-        |                     ^
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699
-Reported-by: Matt Coster <matt.coster@imgtec.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-lkp@intel.com/
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bitfield.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
-index 63928f1732230..20978c60b565d 100644
---- a/include/linux/bitfield.h
-+++ b/include/linux/bitfield.h
-@@ -42,7 +42,7 @@
-  *  reg |= FIELD_PREP(REG_FIELD_C, c);
-  */
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 4b13427d0a8a4..cd1b1ae4930e9 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4652,10 +4652,8 @@ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
+ 	 */
+ 	nvme_stop_keep_alive(ctrl);
+ 	blk_mq_destroy_queue(ctrl->admin_q);
+-	if (ctrl->ops->flags & NVME_F_FABRICS) {
++	if (ctrl->fabrics_q)
+ 		blk_mq_destroy_queue(ctrl->fabrics_q);
+-		blk_put_queue(ctrl->fabrics_q);
+-	}
+ 	blk_mq_free_tag_set(ctrl->admin_tagset);
+ }
+ EXPORT_SYMBOL_GPL(nvme_remove_admin_tag_set);
+@@ -4798,6 +4796,8 @@ static void nvme_free_ctrl(struct device *dev)
  
--#define __bf_shf(x) (__builtin_ffsll(x) - 1)
-+#define __bf_shf __builtin_ctzll
- 
- #define __scalar_type_to_unsigned_cases(type)				\
- 		unsigned type:	(unsigned type)0,			\
+ 	if (ctrl->admin_q)
+ 		blk_put_queue(ctrl->admin_q);
++	if (ctrl->fabrics_q)
++		blk_put_queue(ctrl->fabrics_q);
+ 	if (!subsys || ctrl->instance != subsys->instance)
+ 		ida_free(&nvme_instance_ida, ctrl->instance);
+ 	nvme_free_cels(ctrl);
 -- 
 2.53.0
 
