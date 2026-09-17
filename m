@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B854E2F09;
-	Thu, 17 Sep 2026 18:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C135547076;
+	Thu, 17 Sep 2026 18:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668485; cv=none; b=FCsTYzaT/FIKhBusQT/2wQwXrM0SMTtNONiaXJ5IxUpSsbrxsv5RjCJzpxjHKPfrq0/m5THz/54aRTohulyLA7zTS5hdwlXsFt5tw6/02H6xUkIIPTmF7W20a6+TKQBlXNHZr8btG9kk7hqaxL19a21Gh6X86ezIPzB+gCWq0jI=
+	t=1789668488; cv=none; b=HsIMozO+xjorEoxiH/1zoI2CTg5DILuRGB26IvTgdiAzk/0fI0tXmIWkeow44pu4Xg8mtF8Wi2EGfd4AQY6FOEEMqQGV5vvGDr7lTwOQvHUjfoAKlBIx8tfi6Z4qRRETWo8IpckuS9iPJfiIIS4Mp/b1Mi6vdMQv4JDKAqv0CHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668485; c=relaxed/simple;
-	bh=TKmF2iUIT98rfIOxmHa34EhnDdq/5w7VLcLvdJN9aKY=;
+	s=arc-20240116; t=1789668488; c=relaxed/simple;
+	bh=Cep+mCOIYD+bjV/ijBgHw1xc/5Rn+KwEnGO5sUNsimU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgMns9o67Gs7/Z5pH0ltNSIbsieLUxdQMQWuUv3nTGXm3c6944Svu2RmTdTYQAd5BX22YdNPU3HZl88vawc7zWXHnqTUbjZqqo9tqxZXbHp3myt7OuEdE6K3qEVr0YKEysBGkx1IJpg3wOtOTs/KZHKsx5PvSte1AfBtfhqWw+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXZWrGcm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kRnse7skUwGblsa6Sw0+ibISD32dIvgcLdcMxV1iEQ/+yBRU7twbAUVYytgeevYelhQ95LXcGuq3xxEy3OJl7bFSyM53JIayTTgx3S4479IerwDwQwI95KiK9TQqJOnTfzLMAs8SMTl/06fEy4ahHX6lcqrTeOvFQ5N1eqwemAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTYkrPiX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXZWrGcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E91F000FF;
-	Thu, 17 Sep 2026 18:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTYkrPiX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735201F000FF;
+	Thu, 17 Sep 2026 18:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668483;
-	bh=u+ZCFA56KG63IbWBTNhPs4eS59vmaBOr/hgaODzfIa4=;
+	s=korg; t=1789668487;
+	bh=KRSbK7A5NHcK0mVh8KPSxDYPrnAcAz+d8b2CZb41buw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yXZWrGcmK90xNjrr0EvqCF4M/v3mtf4kHjwXW8rbfeao7M/o4az7MLo/sBOPnNEfs
-	 Go+gB0SsKbm5H1gpRLe3+cMLoNuyfgrazd4iJPuGWyC8d9oHjm7mn9xgXRWEnl+GPY
-	 Nmv3k41RaU+jr2OPsuw7n8G4LXWprG/t08K7i4N0=
+	b=pTYkrPiXcerk7eNi8dugQVsEN2+jv21DgxhEIRkofSlb44NMUy54W4Sz22jMu5D5s
+	 uTYVk/+hDxchBtKO00y6rTJ6QfV9DEbJ70XgXULsxrzrBneULA++UN3dtMCnXNXAsg
+	 jLJvavpW1weGVDfkKMweSp/hyZZAUmQSoCbWrsjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Charles Vosburgh <trilobyte777@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0439/1102] wifi: mac80211_hwsim: reject undersized HWSIM_ATTR_TX_INFO
-Date: Thu, 17 Sep 2026 16:06:22 +0100
-Message-ID: <20260917151550.696894337@linuxfoundation.org>
+Subject: [PATCH 6.12 0440/1102] ksmbd: preserve VFS inherited POSIX ACL mask
+Date: Thu, 17 Sep 2026 16:06:23 +0100
+Message-ID: <20260917151550.722304971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,46 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3dc723ac78a6e4fa0fd49e27e487ed319da40a9f ]
+[ Upstream commit e148e567a9252643baa125cb65d7ae9c2c6cf68a ]
 
-hwsim_tx_info_frame_received_nl() casts the HWSIM_ATTR_TX_INFO payload
-to a struct hwsim_tx_rate * and unconditionally reads
-IEEE80211_TX_MAX_RATES entries (8 bytes) from it. The policy only bounds
-the attribute from above (NLA_BINARY .len is a maximum) and the op sets
-GENL_DONT_VALIDATE_STRICT, so a short or zero-length attribute is
-accepted and the loop reads past the payload.
+The VFS initializes a child's POSIX ACL from the parent's default ACL and
+the requested creation mode. Do not mutate the parent ACL or overwrite the
+child's VFS-computed access and default ACLs afterwards.
 
-Require the exact length in the policy, so a malformed attribute is
-rejected before the handler runs.
+This preserves restrictive ACL_MASK entries and prevents SMB object creation
+from widening effective permissions.
 
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Link: https://patch.msgid.link/20260721115346.17236-1-security@auditcode.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Charles Vosburgh <trilobyte777@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/vfs.c | 26 +-------------------------
+ 1 file changed, 1 insertion(+), 25 deletions(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 4622cbf4f5f98..9410059e97f01 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -903,9 +903,9 @@ static const struct nla_policy hwsim_genl_policy[HWSIM_ATTR_MAX + 1] = {
- 	[HWSIM_ATTR_FLAGS] = { .type = NLA_U32 },
- 	[HWSIM_ATTR_RX_RATE] = { .type = NLA_U32 },
- 	[HWSIM_ATTR_SIGNAL] = { .type = NLA_U32 },
--	[HWSIM_ATTR_TX_INFO] = { .type = NLA_BINARY,
--				 .len = IEEE80211_TX_MAX_RATES *
--					sizeof(struct hwsim_tx_rate)},
-+	[HWSIM_ATTR_TX_INFO] =
-+		NLA_POLICY_EXACT_LEN(IEEE80211_TX_MAX_RATES *
-+				     sizeof(struct hwsim_tx_rate)),
- 	[HWSIM_ATTR_COOKIE] = { .type = NLA_U64 },
- 	[HWSIM_ATTR_CHANNELS] = { .type = NLA_U32 },
- 	[HWSIM_ATTR_RADIO_ID] = { .type = NLA_U32 },
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 13cb68135d1a1..7785bc10aff11 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1965,10 +1965,6 @@ int ksmbd_vfs_inherit_posix_acl(struct mnt_idmap *idmap,
+ 				struct path *path, struct inode *parent_inode)
+ {
+ 	struct posix_acl *acls;
+-	struct posix_acl_entry *pace;
+-	struct dentry *dentry = path->dentry;
+-	struct inode *inode = d_inode(dentry);
+-	int rc, i;
+ 
+ 	if (!IS_ENABLED(CONFIG_FS_POSIX_ACL))
+ 		return -EOPNOTSUPP;
+@@ -1976,27 +1972,7 @@ int ksmbd_vfs_inherit_posix_acl(struct mnt_idmap *idmap,
+ 	acls = get_inode_acl(parent_inode, ACL_TYPE_DEFAULT);
+ 	if (IS_ERR_OR_NULL(acls))
+ 		return -ENOENT;
+-	pace = acls->a_entries;
+-
+-	for (i = 0; i < acls->a_count; i++, pace++) {
+-		if (pace->e_tag == ACL_MASK) {
+-			pace->e_perm = 0x07;
+-			break;
+-		}
+-	}
+-
+-	rc = set_posix_acl(idmap, dentry, ACL_TYPE_ACCESS, acls);
+-	if (rc < 0)
+-		ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_ACCESS) failed, rc : %d\n",
+-			    rc);
+-	if (S_ISDIR(inode->i_mode)) {
+-		rc = set_posix_acl(idmap, dentry, ACL_TYPE_DEFAULT,
+-				   acls);
+-		if (rc < 0)
+-			ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_DEFAULT) failed, rc : %d\n",
+-				    rc);
+-	}
+ 
+ 	posix_acl_release(acls);
+-	return rc;
++	return 0;
+ }
 -- 
 2.53.0
 
