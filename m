@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F34F5E18;
-	Thu, 17 Sep 2026 18:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEB04F68CC;
+	Thu, 17 Sep 2026 18:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668643; cv=none; b=a3MO3lh0HAMmLNqU/7wq3CwE2S2tIGoErmdRwCpsnh9xt5cyEyuBUIrjLlql4MuE/2dNS1Zyk7s1tbK0ChYgtJcOPa4B/cH03pVTl3bpVNHcw/bh3xi0hlZBBjgWRoegUsZitgw9sR8gGgrPv9VlI7g2ggH71GegzD+BmiaMD0E=
+	t=1789668647; cv=none; b=pTJYE2FitTS6xIiFGRCjFc1E/mb6Edij5q43eyU5VMeVKzug6DwGm7Gq8lUfeWddAeKdWeUpQdbLj9+ICs6jZUVR/iEx0GUdmK0LPQsifNefiWvbRhhc0vfjFV0sv2ToFlb9X7eLyXj14uXioRzh6ztpQhoihsrL8z3zADw+nWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668643; c=relaxed/simple;
-	bh=ALk5GEuGsgVPxZcb5H2zUT+5DfUmIpk9rrueNMqjo0M=;
+	s=arc-20240116; t=1789668647; c=relaxed/simple;
+	bh=ZNWD8nXq/x7dc/F5qy+yK4R6Ein/6ZpsSkz1HsIXYyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vupf7ca9V9LOSMRt56FoHtEuLnbSOScNIZslO6LeObaOK7Lh1xJwOfGqcCRfNHTlVobV6aWCmT1dnt7HoUao/c9LU48KUsDyTZ4GXJbgbDXyou4Cou1Fhpmtc34YdpEF1CGIXh/ak8M9kkHMGgStlVDCzMx9Ztv2ptlxRKf//CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpCB5KIs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uY5sdSyL+dXmbS9CXv7HtsbuOBlM2UGguA+RExKietwSN8wLGavzOkYNuaxDSxu49nJI6yUy5FDlPtwhLKJi4HDjgA7xOgo4IQPYvsgg3BSuqC7wY3SPwMMrDQ4O6LQeT9BZU741ESGoBEM0Ey/MMzXD/7KhgxGQGnWO2CJySc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG9PXy9L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpCB5KIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E871F000FF;
-	Thu, 17 Sep 2026 18:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG9PXy9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10A51F000FF;
+	Thu, 17 Sep 2026 18:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668642;
-	bh=aMSlwTNmLTzK5w7L3v5MRTBCZvdNhnXHXqqzNHKoryc=;
+	s=korg; t=1789668645;
+	bh=gpOa5+es791hEsiHjM6GA0ceMRk9tNcstmUKMz40fMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bpCB5KIsOhAXhwZJwfXbw69gHBjUCSOIXS0i34KeeZsebaExb+NEwqlOqKJUd+Xf7
-	 9NR0mRebbR6V/DVbmSUkJS1rbDX6lMsONsMOyYYAipMITutixAW4JAIPc5t23dlenR
-	 n9OoMO1O0MLIqT9TSjJq8ja8Fjy/2/U6uIVvHaBQ=
+	b=yG9PXy9LeLvZI5LvUF+lLs/x8PXMMzxvOOOM1HcGlK9FI4vZEoBrnVE/yTPNV7kM8
+	 drz/T2mL9b79i2TmdsodH73PIPuEV6W76IA0xpI9dC54hU2X+mQl67Z1E2QB3v5h5c
+	 WHOll9su2wcll+gBEDV/6uu3DJM3xqVPc2FKFH0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Samu <nomomentomori@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0492/1102] ASoC: meson: aiu: Validate written enum values
-Date: Thu, 17 Sep 2026 16:07:15 +0100
-Message-ID: <20260917151552.066153765@linuxfoundation.org>
+Subject: [PATCH 6.12 0493/1102] ksmbd: use memcmp() to compare ClientGUIDs
+Date: Thu, 17 Sep 2026 16:07:16 +0100
+Message-ID: <20260917151552.095077626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,57 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d65adf85477247be04ac86886f8edfaa047b5d4a ]
+[ Upstream commit e8bb506e6ef749ac0336f3e579d8d02396b7d832 ]
 
-The AIU HDMI and internal codec mux put callbacks use the written enum
-value with snd_soc_enum_item_to_val() before checking whether the value is
-valid for the enumeration.
+ClientGUID is a fixed-size binary value and can contain embedded NUL
+bytes. strncmp() stops comparing at the first NUL byte, so different
+ClientGUID values can incorrectly be treated as equal.
 
-Reject out-of-range values before converting the enum item, matching the
-validation already done by the G12A HDMI and internal codec mux controls.
+Use memcmp() in SMB3 multichannel session binding and
+FSCTL_VALIDATE_NEGOTIATE_INFO to compare all SMB2_CLIENT_GUID_SIZE
+bytes.
 
-Fixes: b82b734c0e9a ("ASoC: meson: aiu: add hdmi codec control support")
-Fixes: 65816025d461 ("ASoC: meson: aiu: add internal dac codec control support")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260609124317.38046-3-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Samu <nomomentomori@gmail.com>
+Suggested-by: Samu <nomomentomori@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/aiu-acodec-ctrl.c | 3 +++
- sound/soc/meson/aiu-codec-ctrl.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ fs/smb/server/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/meson/aiu-acodec-ctrl.c b/sound/soc/meson/aiu-acodec-ctrl.c
-index 7b04b97f7b41c..c4cf97d2c82f5 100644
---- a/sound/soc/meson/aiu-acodec-ctrl.c
-+++ b/sound/soc/meson/aiu-acodec-ctrl.c
-@@ -38,6 +38,9 @@ static int aiu_acodec_ctrl_mux_put_enum(struct snd_kcontrol *kcontrol,
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int mux, changed;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 464970f3af7c3..fc5689b2ea152 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1761,7 +1761,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 			goto out_err;
+ 		}
  
-+	if (ucontrol->value.enumerated.item[0] >= e->items)
-+		return -EINVAL;
-+
- 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
- 	changed = snd_soc_component_test_bits(component, e->reg,
- 					      CTRL_DIN_LRCLK_SRC,
-diff --git a/sound/soc/meson/aiu-codec-ctrl.c b/sound/soc/meson/aiu-codec-ctrl.c
-index ee0ef6301010c..fe776de739881 100644
---- a/sound/soc/meson/aiu-codec-ctrl.c
-+++ b/sound/soc/meson/aiu-codec-ctrl.c
-@@ -30,6 +30,9 @@ static int aiu_codec_ctrl_mux_put_enum(struct snd_kcontrol *kcontrol,
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int mux, changed;
+-		if (strncmp(conn->ClientGUID, sess->ClientGUID,
++		if (memcmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
+ 			goto out_err;
+@@ -8132,7 +8132,7 @@ static int fsctl_validate_negotiate_info(struct ksmbd_conn *conn,
+ 		goto err_out;
+ 	}
  
-+	if (ucontrol->value.enumerated.item[0] >= e->items)
-+		return -EINVAL;
-+
- 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
- 	changed = snd_soc_component_test_bits(component, e->reg,
- 					      CTRL_DATA_SEL,
+-	if (strncmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
++	if (memcmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
+ 		ret = -EINVAL;
+ 		goto err_out;
+ 	}
 -- 
 2.53.0
 
