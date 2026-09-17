@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F259C80;
-	Thu, 17 Sep 2026 15:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B7A4F3910;
+	Thu, 17 Sep 2026 15:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660208; cv=none; b=oSIf+806BVE0IIVzpRH95oYTUPE+dtd1VWJxA/glfrdC/l1BR/8X9B+mj2IdBxzexo4P4Die4ovbBEH2JSINmndhmg1c/AdcWKIkiagqm7Q6p/Hn4ktq4PZdGkLOLLS6sbJGRnCSEsavcCXlBINZ9rMGZI++rVLJfeIQy0kt+0Q=
+	t=1789660212; cv=none; b=qvhhyPXFlG1ofTdme9pCkQAvuxcKkhaaUq+gjfBUmPJUbM1OFA2tfmuyNawfBJAVJUzGlpBSZoM2m0SZAoPrkGixGXyg3BI/eRGzS1yZyqKjkq0B3NaN+oZrwCfaxC7F9NvsrJkfHtw2R+RoTQsiPr6IaIGnuv3IB5BJzRBkdbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660208; c=relaxed/simple;
-	bh=Dj9FA4i6uNtego8cKOwGaeVeQEoa/YTAGpdqqg4uzDw=;
+	s=arc-20240116; t=1789660212; c=relaxed/simple;
+	bh=GRMEGyINUb0WI5j6YophnT2EpPnWKyN26qJ+gXqcM+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx4Kg+T8NgbZ9J0sQ6FhiOG/aU0TrK047/D71L90oMPvHDBhcTjUlZH85A3YTm/rQ7TA6kEhMeOHcipMugRdAF80ClxrS9Ukhn5+5vKjgb2zfQQ1lY6avgwC0BTxEp6neGkn3F637peHiaUallv+Ug7GuGI58x0dh7zTCChlsy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw6LrrvL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtbBLqJVd983sIAoC/mNVrlyM/ihlaEfscGSCdJyuxCjCSG9dDZcHur53iaaPtpKkdtqxKr4E+8kfVOAp+S54Fex1/8MBF40uq5spdsF3ACfB67ccQw+dAIwSOhV20yp78SLEFwIUAX5zTG7H1QQFZDkGo7LCZ1I7jzeL5YBcLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGlFhxfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw6LrrvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EA41F00893;
-	Thu, 17 Sep 2026 15:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGlFhxfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7C71F000FF;
+	Thu, 17 Sep 2026 15:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660200;
-	bh=p/cbF3VR5hLlGgTJqKV8FKT0VsWdgE+QCs0CFvbgtgI=;
+	s=korg; t=1789660203;
+	bh=+6KaTfkkHHoCIMOUikuuGNQB6SqeWDspcpfZpzkr/3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zw6LrrvL7MH932C5VStBPpQRFBykjqRruBqw3z/PyEsFmu6J4rqSNpHJSdKJZZEG4
-	 CwmWW+aqZKlJCUPGcurDOX7TFBhZKTegvUc389hfOjGCqHZCYCI7SHHCz05lmzdIRf
-	 fvXjOInVbb1ntY+1MBOtg+ZscQqOVZiOXpjevAyU=
+	b=UGlFhxfP5ai9FrAvN2BizQPtBoHopxUvrfQl1keP3Nbkl24Z0Z1dQIpkJSlYibqQG
+	 E1NZU5HxNLadi5uX1gOl2Oul4SNyY+z0jvndi37CZoUr6kK6bWqjBd48ujPA/1r9/n
+	 lihJ1gYB5hpcf8asGZQMSMA1J/vanAyAEsIFAsn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 7.2 512/733] ata: pata_legacy: remove documentation for removed module parameters
-Date: Thu, 17 Sep 2026 16:13:40 +0100
-Message-ID: <20260917151404.887706345@linuxfoundation.org>
+	Yorick Rommers <yorick-rommers@hotmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 513/733] ASoC: amd: acp-da7219-max98357a: dont bind on Raven/Picasso boards
+Date: Thu, 17 Sep 2026 16:13:41 +0100
+Message-ID: <20260917151404.916756059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,86 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Yorick Rommers <yorick-rommers@hotmail.com>
 
-commit a19d4f9b8befdcfcd5a87bab91312fe64af3bbb8 upstream.
+commit 7e125889f1705fc6326679a3db3b4159f7a8c87e upstream.
 
-Commit 3c4d783f6922 ("ata: pata_legacy: remove VLB support") removed
-several module parameters from the pata_legacy driver, but neglected to
-remove their documentation. Remove it.
+The "AMDI5682" ACPI HID is matched by two AMD ASoC machine drivers:
+cz-da7219-max98357a (this driver, Carrizo/Stoney) and
+acp3x-alc5682-max98357 (Raven/Picasso). cz-da7219-max98357a is linked
+first and probes the platform device first; its DAI links reference the
+Stoney ACP, which is absent on Raven/Picasso, so its card can never be
+instantiated there.
 
-Fixes: 3c4d783f6922 ("ata: pata_legacy: remove VLB support")
-Cc: stable@vger.kernel.org # 7.0+
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Reviewed-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20260607064053.195166-1-enelsonmoore@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+This was harmless until commit 42d99857d6f0 ("ASoC: core: Move all users
+to deferrable card binding"): devm_snd_soc_register_card() now returns 0
+for a card left pending instead of propagating -EPROBE_DEFER, so
+cz_probe() succeeds and permanently binds AMDI5682. acp3x-alc5682-max98357
+never binds and the internal speakers and headphone jack get no card.
+
+Detect Raven/Picasso (and later) by the ACP3.x audio coprocessor's
+dedicated PCI function (1022:15e2); Carrizo/Stoney reach the ACP through
+the GPU driver and have no such device. Return -ENODEV so the driver core
+continues probing AMDI5682 with acp3x-alc5682-max98357.
+
+Fixes: 42d99857d6f0 ("ASoC: core: Move all users to deferrable card binding")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yorick Rommers <yorick-rommers@hotmail.com>
+Tested-by: Yorick Rommers <yorick-rommers@hotmail.com>
+Link: https://patch.msgid.link/20260907121228.13754-1-yorick-rommers@hotmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |   37 ------------------------
- 1 file changed, 37 deletions(-)
+ sound/soc/amd/acp-da7219-max98357a.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4922,18 +4922,6 @@ Kernel parameters
- 			Set to non-zero if a chip is present that snoops speed
- 			changes.  Disabled by default.
+diff --git a/sound/soc/amd/acp-da7219-max98357a.c b/sound/soc/amd/acp-da7219-max98357a.c
+index af559653e625..1ac729a58bb4 100644
+--- a/sound/soc/amd/acp-da7219-max98357a.c
++++ b/sound/soc/amd/acp-da7219-max98357a.c
+@@ -17,6 +17,7 @@
+ #include <linux/i2c.h>
+ #include <linux/input.h>
+ #include <linux/acpi.h>
++#include <linux/pci.h>
  
--	pata_legacy.ht6560a=	[HW,LIBATA]
--			Format: <int>
--			Set to 1, 2, or 3 for HT 6560A on the primary channel,
--			the secondary channel, or both channels respectively.
--			Disabled by default.
--
--	pata_legacy.ht6560b=	[HW,LIBATA]
--			Format: <int>
--			Set to 1, 2, or 3 for HT 6560B on the primary channel,
--			the secondary channel, or both channels respectively.
--			Disabled by default.
--
- 	pata_legacy.iordy_mask=	[HW,LIBATA]
- 			Format: <int>
- 			IORDY enable mask.  Set individual bits to allow IORDY
-@@ -4946,18 +4934,6 @@ Kernel parameters
- 			with the sequence.  By default IORDY is allowed across
- 			all channels.
+ #include "acp.h"
+ #include "../codecs/da7219.h"
+@@ -742,6 +743,18 @@ static const struct regulator_desc acp_da7219_desc = {
+ 	.n_voltages = 1,
+ };
  
--	pata_legacy.opti82c46x=	[HW,LIBATA]
--			Format: <int>
--			Set to 1, 2, or 3 for Opti 82c611A on the primary
--			channel, the secondary channel, or both channels
--			respectively.  Disabled by default.
--
--	pata_legacy.opti82c611a=	[HW,LIBATA]
--			Format: <int>
--			Set to 1, 2, or 3 for Opti 82c465MV on the primary
--			channel, the secondary channel, or both channels
--			respectively.  Disabled by default.
--
- 	pata_legacy.pio_mask=	[HW,LIBATA]
- 			Format: <int>
- 			PIO mode mask for autospeed devices.  Set individual
-@@ -4981,19 +4957,6 @@ Kernel parameters
- 			the first port in the list above (0x1f0), and so on.
- 			By default all supported ports are probed.
++/*
++ * The ACP3.x+ (Raven/Picasso and later) audio coprocessor is a dedicated PCI
++ * function.  Carrizo/Stoney - the only platforms handled by this driver - reach
++ * the ACP through the GPU driver and have no such device.
++ */
++#define ACP3X_PCI_DEV_ID	0x15e2
++
++static const struct pci_device_id acp3x_pci_ids[] = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, ACP3X_PCI_DEV_ID) },
++	{ 0, },
++};
++
+ static int cz_probe(struct platform_device *pdev)
+ {
+ 	int ret;
+@@ -750,6 +763,16 @@ static int cz_probe(struct platform_device *pdev)
+ 	struct regulator_dev *rdev;
+ 	struct device *dev = &pdev->dev;
  
--	pata_legacy.qdi=	[HW,LIBATA]
--			Format: <int>
--			Set to non-zero to probe QDI controllers.  By default
--			set to 1 if CONFIG_PATA_QDI_MODULE, 0 otherwise.
--
--	pata_legacy.winbond=	[HW,LIBATA]
--			Format: <int>
--			Set to non-zero to probe Winbond controllers.  Use
--			the standard I/O port (0x130) if 1, otherwise the
--			value given is the I/O port to use (typically 0x1b0).
--			By default set to 1 if CONFIG_PATA_WINBOND_VLB_MODULE,
--			0 otherwise.
--
- 	pata_platform.pio_mask=	[HW,LIBATA]
- 			Format: <int>
- 			Supported PIO mode mask.  Set individual bits to allow
++	/*
++	 * AMDI5682 is also matched by acp3x-alc5682-max98357 (Raven/Picasso).
++	 * If the ACP3.x PCI function is present this is such a board; return
++	 * -ENODEV so that driver binds instead.
++	 */
++	if (pci_dev_present(acp3x_pci_ids)) {
++		dev_info(dev, "ACP3.x PCI device present, deferring to acp3x-alc5682-max98357\n");
++		return -ENODEV;
++	}
++
+ 	card = (struct snd_soc_card *)acp_soc_is_rltk_max(dev);
+ 	if (!card)
+ 		return -ENODEV;
+-- 
+2.55.0
+
 
 
