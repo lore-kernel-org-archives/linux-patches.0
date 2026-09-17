@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F034F3913;
-	Thu, 17 Sep 2026 15:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183AC4DDB5D;
+	Thu, 17 Sep 2026 15:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659810; cv=none; b=er41beqtNmwaOWlVrLXo2J/hEHD+/376uF7si2uvo884pI8PPgjY9hZ86ZZDLKlMccMQuYmAkSXWW44UTv8Vn2Aif/7Cymdu32uSDlAOzYuVBt8uw02JzKZq11sGW4HdZ/wHPbvGwI7j6G1UD0bSF649AIygDhnlknJNMX4jZ9w=
+	t=1789659811; cv=none; b=UiKi5yQMzdzS/BJf3e/tB2a2HjS63QBcyFow12G3xfHzHRCpwNhC/ffSQmKup3E19Vw9HUkKPaS1bb9tsO6ubnBkyn4bClPf1SHMKhbLt3tkyxuLdWIpQ/dedDHwcWYkhdW8OrPp9NbC5D5I68F+kbGZn1fWgTi8ULpihn7VDPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659810; c=relaxed/simple;
-	bh=FJkAtpEvLEEC5EIJKfodl/IZwXzDBl52JqdkCXYLEtg=;
+	s=arc-20240116; t=1789659811; c=relaxed/simple;
+	bh=NQciJp6HmZvsZmFUMg9T8TsuzHe+mfayDDIIKZyN+h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=looEmRXSjH9fQfYYdjGfvWDSYWUJJ+UH82inMBBaxopxpzwVxQg6UlshlsjcsugRjJIlsPYGP+0x0W8MO/8tb8ISuOzTiUJoRgTw2mZL9K0m3KEHaK4ewmXIRo62g/6ZvjASHd5gN35bbGiFZZgd2KxjtDknk/JVwizEqqtCU24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umgeUORt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YxBUAWMX4j27/MA2Fc3wLEwoDdKYyG6ayeTgTHgsP06k4KK8rP2iU/Janf3UAIEHIzXI0Yzl/k8z4xK5poqxCwF12rWq2ekbDAITqscURahLExNrCE3nmT+U9krkuDLbWkUaqonHWCYWVXoHCwBgm11QYJCusFxM/MHMZoGoMKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w67osurv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umgeUORt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8063C1F000FF;
-	Thu, 17 Sep 2026 15:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w67osurv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865F71F00899;
+	Thu, 17 Sep 2026 15:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659794;
-	bh=XrxMeD9nxqzzCGyR396NXQmTlTkOSedXVEpQrj3WrEw=;
+	s=korg; t=1789659797;
+	bh=b5B2CKfdgt2KtTmld0bG5Sm18cRBsna5HA540FTp5kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=umgeUORtoOOtocT+HTBZ3wdwLM76Osmrko0m46GBszPP2pZRWjg7G7qgmYY0nm3si
-	 oKVtgY4bGss/eDQ5ysDjl+EP+qBG/3d0XohB5K8vtLeaTfhC+8m56l6xUjC4ArFRzD
-	 3wXfGm5yDk2iPr/EcePXV9AOq+xm7tQ7h0PMrr2E=
+	b=w67osurvCCgfxT7ZZgiAUkq+X0T6ODiVi2AJG3rNGne9b2+kTI6pTBoL0euCtDO9s
+	 i4GBBhGzcLht5Rj3rZ8q/+EICFxxCesImElOUqE8SzR3tE7OdPlXZ5+ljIt8p9TRm8
+	 0qA9t/rn6RudVH7ccqV33opph47uWwx2UGU6C/Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 369/733] s390/debug: Fix NULL pointer dereference in debug_set_level()
-Date: Thu, 17 Sep 2026 16:11:17 +0100
-Message-ID: <20260917151400.829085919@linuxfoundation.org>
+Subject: [PATCH 7.2 378/733] Bluetooth: btintel_pcie: fix tx_handle bounds off-by-one
+Date: Thu, 17 Sep 2026 16:11:26 +0100
+Message-ID: <20260917151401.085711717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Zaslonko <zaslonko@linux.ibm.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit b1eb31d533cdfcae1011ed53850d52f36afe5774 ]
+[ Upstream commit 3dd1b41f96aad08444be1b7626c89de2b9f2abd4 ]
 
-Commit a2cec6863709 ("s390/debug: Add s390dbf kernel parameter")
-incorrectly removed a null-id check from debug_set_level(), introducing
-a possible NULL pointer dereference for debug-API users that put
-debug_register() results unchecked into debug_set_level().
+Valid indices into txq->urbd0s/tfds/bufs are 0..txq->count-1, so
+tfd_index == txq->count is already out of range. Change the guard in
+btintel_pcie_msix_tx_handle() from '> txq->count' to '>= txq->count'.
 
-Fix this by moving the check from the internal _debug_set_level()
-variant back to the external debug_set_level() wrapper.
+This issue was reported by Claude Mythos.
 
-Fixes: a2cec6863709 ("s390/debug: Add s390dbf kernel parameter")
-
-Signed-off-by: Mikhail Zaslonko <zaslonko@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index 14d2b58ad0930..e06abf1dbc218 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -1074,9 +1074,6 @@ static void _debug_set_level(debug_info_t *id, int new_level)
- {
- 	unsigned long flags;
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index da46fb39d53ea..c64e96fe88976 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1099,7 +1099,7 @@ static void btintel_pcie_msix_tx_handle(struct btintel_pcie_data *data)
  
--	if (!id)
--		return;
--
- 	if (new_level == DEBUG_OFF_LEVEL) {
- 		pr_info("%s: switched off\n", id->name);
- 	} else if ((new_level > DEBUG_MAX_LEVEL) || (new_level < 0)) {
-@@ -1101,6 +1098,9 @@ static void _debug_set_level(debug_info_t *id, int new_level)
-  */
- void debug_set_level(debug_info_t *id, int new_level)
- {
-+	if (!id)
-+		return;
-+
- 	/* Level specified via kernel parameter takes precedence */
- 	debug_get_param(id->name, &new_level, NULL);
+ 		urbd0 = &txq->urbd0s[cr_tia];
  
+-		if (urbd0->tfd_index > txq->count)
++		if (urbd0->tfd_index >= txq->count)
+ 			return;
+ 
+ 		cr_tia = (cr_tia + 1) % txq->count;
 -- 
 2.53.0
 
