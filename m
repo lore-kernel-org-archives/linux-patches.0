@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEAA3DCD9C;
-	Thu, 17 Sep 2026 17:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C01A3C872B;
+	Thu, 17 Sep 2026 17:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666448; cv=none; b=U/0NUaQnlQe94KzJwPKOuuvNpKWMRLeyi/IfNz59VQ0zw7TuHHAL1Da+rFSWeX+iaWJQxAQNV5krsES+dUrIX86weRW7DdNTpWl36ZAdJ9JcMX8bSFJsxmwq7doTBLPE/6JqyLsjA4sOJYh7ryIjgvSCZ16J2CniRd8N33g/36Y=
+	t=1789666451; cv=none; b=WS6BqkSbBy3/f54DxVXE8cHeBPO7mjuekAQExllNvwhNXZapHPBJcykKbsiBr13GJdiyF3HD/wEEPnwVtXfRRY/QITS1rpTM6Gt2jLqK2d+u9xvlzOXcJWb02wj8EV/mC2nL5yl6CbKTprWcaQH1qWroaNK6Szdn43TJXeRz5Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666448; c=relaxed/simple;
-	bh=HgLPyIZrNKlaN7L0wRmv3I6gnM9Kywd1tmDSdVk/VLY=;
+	s=arc-20240116; t=1789666451; c=relaxed/simple;
+	bh=ycyYiGIQd8ASo315zHu9dmV4jJDM2vBETlXKjqzqxiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asZbSBFCrBWMXUz+ycbYudatkbukph2f3feBfTn2LLc4/nhYLbfWRI94gs9cg92TNmTQ5cFyJOOGm4cSUNQoxh8+WuqsfhM9jYkia+aWUE+zLjwONKE0DeQ3ugh2v013wdkuTca4F9ij2QVIrWZ3+LDf9SFKR+ScZcsUfldHExw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9L3FDeW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F7A7QeniTdrler5Ie0FXjN86oRhZjAFaBfWWjr0Oe+pY2VEaRsvBixSEDcXRNIsTx2hEtgZsPCXegH2E125rwtnZDkS1x+9FIAtZRvV0aGB2cpddDZtfqOjxxLoaiHsbuZGa1QHBOvjJLEFE57swEy2adZ/HuoDreHOL3qlpp+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhF/OubE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9L3FDeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737251F000FF;
-	Thu, 17 Sep 2026 17:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhF/OubE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7485A1F000FF;
+	Thu, 17 Sep 2026 17:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666447;
-	bh=/eo3PBCRC7l6lEyUO/0yigSM5RyFEJ+Bnn9VUWkh/Zk=;
+	s=korg; t=1789666450;
+	bh=BMMpkuNCRviE+Oyw0adXvFwUfrbJERhztwFYlHNGiIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9L3FDeWYE//jH28wb/v/NIsDQ78AtF1CoGJoTDZSWo5TJbPDTKfrw6D/xAHNGK7X
-	 9NlN1OPc/6mBNDrubO0G1SVgFHGq2FIB7HX8C0+X2wli0WGWaON06tDMLoJz41q53P
-	 iQeHN4Pit77fo+YOqjqV5IMktfHC2+KXtl35cQD8=
+	b=fhF/OubED4jcvIhR9a1TuGugWN8wHpxlUFU5RXUkeh5STpkgHRlyRgIPx43WRNTbQ
+	 yIYzVRkDqIZIDyl3S6OCIdPJ6wnjcnzRb4+J5OPv9BslssBVRUw8co3JeZWVM0Mr+K
+	 A0mWtCv1Au2llJPuWU0SIKdpbrCLIGEc5+Ps21ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 1040/1250] iommu/s390: Fix NULL dereference in iova_to_phys() with ZPCI_TABLE_TYPE_RFX
-Date: Thu, 17 Sep 2026 16:13:55 +0100
-Message-ID: <20260917151620.264894620@linuxfoundation.org>
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Nagamani PV <nagamani@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1041/1250] s390/qeth: allow bridgeport queries despite OS_MISMATCH
+Date: Thu, 17 Sep 2026 16:13:56 +0100
+Message-ID: <20260917151620.292310607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,39 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Nagamani PV <nagamani@linux.ibm.com>
 
-commit 20db6573301e66cd65ebf6c130b6563c69374d9d upstream.
+commit 74f27fc8642b7e8d139796f8c18ee46df393c2b2 upstream.
 
-When using a 5-level translation table via ZPCI_TABLE_TYPE_RFX
-get_rso_from_iova() returns NULL when the region-first entry is invalid.
-Yet in get_rto_from_iova() the region-second origin rso is not checked
-to be non-NULL before accessing rso[rsx] leading to a NULL pointer
-dereference instead of a NULL return when iova_to_phys() is called on
-a unmapped IOVA. Fix this by adding the missing NULL check.
+When HiperSockets interfaces on the same VCHID span different OS
+families, reads of the sysfs attributes bridge_role and bridge_state
+fail with -EPERM if bridge port ownership belongs to another OS family.
 
+As a result, userspace tools such as 'lszdev -ii' cannot retrieve
+bridge_role and bridge_state, even though firmware returns valid bridge
+port data for QUERY_BRIDGE_PORTS requests.
+
+The firmware reports IPA_RC_SBP_IQD_OS_MISMATCH (0x0010) to indicate
+that bridge port ownership belongs to a different OS family. For
+QUERY_BRIDGE_PORTS operations, firmware still returns valid bridge port
+data (role=none, state=inactive) together with a primary return code of
+0x0000 (success).
+
+Allow QUERY_BRIDGE_PORTS requests to return the bridge port data
+provided by the firmware despite OS_MISMATCH. To make the OS family
+mismatch visible to userspace, represent the firmware-reported role
+"none" as "none (OS family mismatch)" while preserving the reported
+bridge_state.
+
+The behavior for non-QUERY bridge port commands is unchanged; SET
+operations continue to return -EPERM when another OS family owns the
+bridge port.
+
+This restores readability of bridge_role and bridge_state.
+
+Fixes: 1b05cf6285c1 ("qeth: Include error message for "OS Mismatch"")
 Cc: stable@vger.kernel.org
-Fixes: 81244074b518 ("iommu/s390: allow larger region tables")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Suggested-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Nagamani PV <nagamani@linux.ibm.com>
+Link: https://patch.msgid.link/20260901155344.3561483-1-nagamani@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/s390-iommu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/net/qeth_l2.h      |    3 ++-
+ drivers/s390/net/qeth_l2_main.c |   26 ++++++++++++++++++++++----
+ drivers/s390/net/qeth_l2_sys.c  |    7 ++++++-
+ 3 files changed, 30 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/s390-iommu.c
-+++ b/drivers/iommu/s390-iommu.c
-@@ -972,6 +972,8 @@ static unsigned long *get_rto_from_iova(
- 	case ZPCI_TABLE_TYPE_RFX:
- 	case ZPCI_TABLE_TYPE_RSX:
- 		rso = get_rso_from_iova(domain, iova);
-+		if (!rso)
-+			return NULL;
- 		rsx = calc_rsx(iova);
- 		rse = READ_ONCE(rso[rsx]);
- 		if (!reg_entry_isvalid(rse))
+--- a/drivers/s390/net/qeth_l2.h
++++ b/drivers/s390/net/qeth_l2.h
+@@ -13,7 +13,8 @@ extern const struct attribute_group *qet
+ 
+ int qeth_bridgeport_query_ports(struct qeth_card *card,
+ 				enum qeth_sbp_roles *role,
+-				enum qeth_sbp_states *state);
++				enum qeth_sbp_states *state,
++				bool *os_mismatch);
+ int qeth_bridgeport_setrole(struct qeth_card *card, enum qeth_sbp_roles role);
+ int qeth_bridgeport_an_set(struct qeth_card *card, int enable);
+ 
+--- a/drivers/s390/net/qeth_l2_main.c
++++ b/drivers/s390/net/qeth_l2_main.c
+@@ -1159,7 +1159,7 @@ static void qeth_l2_setup_bridgeport_att
+ 		qeth_bridgeport_setrole(card, card->options.sbp.role);
+ 		/* Let the callback function refresh the stored role value. */
+ 		qeth_bridgeport_query_ports(card, &card->options.sbp.role,
+-					    NULL);
++					    NULL, NULL);
+ 	}
+ 	if (card->options.sbp.hostnotification) {
+ 		if (qeth_bridgeport_an_set(card, 1))
+@@ -1546,6 +1546,7 @@ struct _qeth_sbp_cbctl {
+ 		struct {
+ 			enum qeth_sbp_roles *role;
+ 			enum qeth_sbp_states *state;
++			bool *os_mismatch;
+ 		} qports;
+ 	} data;
+ };
+@@ -1722,10 +1723,19 @@ static int qeth_bridgeport_query_ports_c
+ 	struct qeth_ipa_cmd *cmd = (struct qeth_ipa_cmd *) data;
+ 	struct _qeth_sbp_cbctl *cbctl = (struct _qeth_sbp_cbctl *)reply->param;
+ 	struct qeth_sbp_port_data *qports;
++	u16 sbp_rc;
+ 	int rc;
+ 
+ 	QETH_CARD_TEXT(card, 2, "brqprtcb");
+-	rc = qeth_bridgeport_makerc(card, cmd);
++	sbp_rc = cmd->data.sbp.hdr.return_code;
++
++	/* on OS family mismatch, query still returns valid port data;
++	 * treat as success
++	 */
++	if (sbp_rc == IPA_RC_SBP_IQD_OS_MISMATCH && !cmd->hdr.return_code)
++		rc = 0;
++	else
++		rc = qeth_bridgeport_makerc(card, cmd);
+ 	if (rc)
+ 		return rc;
+ 
+@@ -1741,6 +1751,9 @@ static int qeth_bridgeport_query_ports_c
+ 		if (cbctl->data.qports.state)
+ 			*cbctl->data.qports.state = qports->entry[0].state;
+ 	}
++	if (cbctl->data.qports.os_mismatch)
++		*cbctl->data.qports.os_mismatch =
++			(sbp_rc == IPA_RC_SBP_IQD_OS_MISMATCH);
+ 	return 0;
+ }
+ 
+@@ -1749,13 +1762,17 @@ static int qeth_bridgeport_query_ports_c
+  * @card:			   qeth_card structure pointer.
+  * @role:   Role of the port: 0-none, 1-primary, 2-secondary.
+  * @state:  State of the port: 0-inactive, 1-standby, 2-active.
++ * @os_mismatch: if non-NULL, set to true when firmware reports
++ *		 OS family mismatch.
+  *
+  * Returns negative errno-compatible error indication or 0 on success.
+  *
+- * 'role' and 'state' are not updated in case of hardware operation failure.
++ * 'role', 'state' and 'os_mismatch' are not updated in case of
++ * hardware operation failure.
+  */
+ int qeth_bridgeport_query_ports(struct qeth_card *card,
+-	enum qeth_sbp_roles *role, enum qeth_sbp_states *state)
++	enum qeth_sbp_roles *role, enum qeth_sbp_states *state,
++	bool *os_mismatch)
+ {
+ 	struct qeth_cmd_buffer *iob;
+ 	struct _qeth_sbp_cbctl cbctl = {
+@@ -1763,6 +1780,7 @@ int qeth_bridgeport_query_ports(struct q
+ 			.qports = {
+ 				.role = role,
+ 				.state = state,
++				.os_mismatch = os_mismatch,
+ 			},
+ 		},
+ 	};
+--- a/drivers/s390/net/qeth_l2_sys.c
++++ b/drivers/s390/net/qeth_l2_sys.c
+@@ -15,6 +15,7 @@ static ssize_t qeth_bridge_port_role_sta
+ {
+ 	struct qeth_card *card = dev_get_drvdata(dev);
+ 	enum qeth_sbp_states state = QETH_SBP_STATE_INACTIVE;
++	bool os_mismatch = false;
+ 	int rc = 0;
+ 	char *word;
+ 
+@@ -25,7 +26,7 @@ static ssize_t qeth_bridge_port_role_sta
+ 	if (qeth_card_hw_is_reachable(card) &&
+ 					card->options.sbp.supported_funcs)
+ 		rc = qeth_bridgeport_query_ports(card,
+-			&card->options.sbp.role, &state);
++			&card->options.sbp.role, &state, &os_mismatch);
+ 	if (!rc) {
+ 		if (show_state)
+ 			switch (state) {
+@@ -52,6 +53,10 @@ static ssize_t qeth_bridge_port_role_sta
+ 		if (rc)
+ 			QETH_CARD_TEXT_(card, 2, "SBP%02x:%02x",
+ 				card->options.sbp.role, state);
++		else if (!show_state &&
++			 card->options.sbp.role == QETH_SBP_ROLE_NONE &&
++			 os_mismatch)
++			rc = sysfs_emit(buf, "%s (OS family mismatch)\n", word);
+ 		else
+ 			rc = sysfs_emit(buf, "%s\n", word);
+ 	}
 
 
