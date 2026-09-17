@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1820F3B3BE7;
-	Thu, 17 Sep 2026 17:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141C14EF153;
+	Thu, 17 Sep 2026 17:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665416; cv=none; b=LRcqm43WZGiFAHMJS6dKixIvkkEtlimisT6Y8AgeW9TFmH8Q+ZwtuCBbZssq6qmuUdVakktGRjqrm2xlbd+9nlav/2MRDil+aReARFvTtu4vWDxHu4is5qi3sE0GPrqTwNiThB7DB+Mi3olWLPGpdQVjFd1X3d8UblI4JCIQVYs=
+	t=1789665419; cv=none; b=GQlf7SpYO/Th3dDG/iFEhs7m61eLFDtRvJ73KqrjrZJo1KRycHaek2xOKpBhpslVEo2R1VhufYKFPUpIZbu5jwlaYdiMv6f7UIGOIQIPxT1MJ4qy4QSnvRL3wgO31RrDgnbVdRmj3yysMcOtq0Z+i0sge6tQgpS5JFCwG96qRHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665416; c=relaxed/simple;
-	bh=w8z1iDckyk6RNhPfR/3L8H9Dq5FbVeN1JXcgCawGwWQ=;
+	s=arc-20240116; t=1789665419; c=relaxed/simple;
+	bh=A3nkvJ/+YEN7eEUuZC4pWT4ODvciv0jWkP9SmyZnXiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1caTZeE/5mdVyXAA69PgYIYey76iI0M2KQmY0QJqAtbfD/75Ur6IhLzmwGDUYkGYFhJbDCa/E5ybzJ43X7ZUyJtCDrSH/oTkkWofQK/+ll5W7iQuwh+rryt3CMX+LS+BCPgPyTaoel+zMWziHwLctnU48OM6UaJo0TXMfK/QJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxLOn8SE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNTl/RqBWCgC3fcnfVXMqKSzbz+fqmvJZ28dumQbhqga9LP+axLqUA2DI56AjUyTigpUDMrpzcAaoMVsJhs2HCdr1iWIl8b/WJQNAAs4CIa+OjpCZzbQqZWVPGAFam8X8nukAKzDpk/+dD85UesdmBmFLWJPzlrvmrQLIJsMVao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+tenSsu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxLOn8SE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744E81F000FF;
-	Thu, 17 Sep 2026 17:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+tenSsu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFAB1F00893;
+	Thu, 17 Sep 2026 17:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665415;
-	bh=opssT6o6z74rR49RX0CvQJr1xhQHlGrVu967UD4LJ5Y=;
+	s=korg; t=1789665417;
+	bh=h8Sz9Qj8p4mQgrWDfY2zzfPgk09s5gmQ6qoWtju05cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxLOn8SEkKWBLSRv071D33VFmKvBLZZU1zMUl+d+lLfjJrnm9kpwHoXCW/xXh0XDl
-	 wCfbjTTRjSf2Y1rEBsB6HSWAgvXVfcVQiR/uUW0x8ifbcz4xEVllM82ZdxmajGKFpO
-	 4YYNm3NfI/wWX72AEq9yxk+euZUT6UkvNiKMkhDQ=
+	b=D+tenSsutKJcyCCHBeIR91Xqqtw4lxaQqPE/aHCv5UyJeP2jMcAv02essHULCGFpW
+	 QzZh2alTti8YcP+6A6cbHNuFDhZx15wEuJM1hkjvN11/ZUk+5akziRtICjqBqSjIoa
+	 LE40rCGn+1yL+00vqpU3bd428JxkOfaAXSS5W8K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0690/1250] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
-Date: Thu, 17 Sep 2026 16:08:05 +0100
-Message-ID: <20260917151610.592980533@linuxfoundation.org>
+Subject: [PATCH 6.18 0699/1250] ALSA: dummy: Report a change when one capture switch channel moves
+Date: Thu, 17 Sep 2026 16:08:14 +0100
+Message-ID: <20260917151610.836611313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,104 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
+[ Upstream commit 83162eeaf78c71ff6f6fa31dc95e3b6e90ee593f ]
 
-syzbot reported BUG() in sock_sendmsg_nosec(). [0]
+The snd_dummy_capsrc_put() builds its change flag with &&, so it reports
+a change only when both channels move at once.  Writing a single channel
+stores the new value and returns 0, the control core then sends no
+SNDRV_CTL_EVENT_MASK_VALUE, and a second reader keeps showing the old
+setting until it polls again.
 
-The problem is that tpacket_parse_header() casts user-provided
-tpacket_hdr.tp_len, which is u32, to int.
+The volume put a few lines above compares the same pair of channels with
+||.
 
-If the length is larger than INT_MAX, the following condition
-in tpacket_parse_header() passes,
+The mixer selftest already reports this.  With snd-dummy loaded it fails
+event_missing on all five capture switches:
 
-  if (unlikely(tp_len > size_max))
+  # CD Capture Switch.1 orig 0 read 1, is_volatile 0
+  not ok 13 event_missing.Dummy.9
 
-and any negative value can be returned to the caller, up to
-sock_sendmsg_nosec().
-
-The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
-to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
-
-  *(uint64_t*)0x200000000008 = 0xfffffdef;
-  ...
-  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
-
-Let's define the local tp_len as u32 in tpacket_parse_header().
-
-[0]:
-kernel BUG at net/socket.c:803!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
-RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
-Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
-RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
-RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
-RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
-RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
-R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
-R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
-FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __sock_sendmsg net/socket.c:815 [inline]
- sock_write_iter+0x2de/0x3e0 net/socket.c:1266
- new_sync_write fs/read_write.c:595 [inline]
- vfs_write+0x612/0xba0 fs/read_write.c:687
- ksys_write+0x150/0x270 fs/read_write.c:739
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f173130ecb9
-Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
-RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
-RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
-R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
- </TASK>
-
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260901153921.3971-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/drivers/dummy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index cb3376f04dfa8..772ecfa13cd78 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2674,7 +2674,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
- 				int size_max, void **data)
- {
- 	union tpacket_uhdr ph;
--	int tp_len, off;
-+	u32 tp_len;
-+	int off;
- 
- 	ph.raw = frame;
- 
-@@ -2694,7 +2695,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
- 		break;
- 	}
- 	if (unlikely(tp_len > size_max)) {
--		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
-+		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
- 		return -EMSGSIZE;
- 	}
- 
+diff --git a/sound/drivers/dummy.c b/sound/drivers/dummy.c
+index bf20c1009707f..b871fa34bf1bd 100644
+--- a/sound/drivers/dummy.c
++++ b/sound/drivers/dummy.c
+@@ -782,7 +782,7 @@ static int snd_dummy_capsrc_put(struct snd_kcontrol *kcontrol, struct snd_ctl_el
+ 	left = ucontrol->value.integer.value[0] & 1;
+ 	right = ucontrol->value.integer.value[1] & 1;
+ 	guard(spinlock_irq)(&dummy->mixer_lock);
+-	change = dummy->capture_source[addr][0] != left &&
++	change = dummy->capture_source[addr][0] != left ||
+ 	         dummy->capture_source[addr][1] != right;
+ 	dummy->capture_source[addr][0] = left;
+ 	dummy->capture_source[addr][1] = right;
 -- 
 2.53.0
 
