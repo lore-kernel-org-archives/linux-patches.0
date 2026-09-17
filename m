@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1105C50B423;
-	Thu, 17 Sep 2026 17:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8A502D40;
+	Thu, 17 Sep 2026 17:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666703; cv=none; b=C8F0TW7lwe0nqkWVr75HWNzXZszKerfpVMODgFyJlhh1c5qjotfEmbJ7V2hfB0bcrEba7Eh3wq1LWuZPdW26aL9Tp93SlhlR5EbjIyRkMS+iaQSG6NmbVAEurRThRz08c2r9h43OuW8dFsxRCUsDHQC7Of1PBw8kJA1bZeu28co=
+	t=1789666706; cv=none; b=S7bibdd4BnbEk13qjTKXqAnUtu8DmpyD21sxNlHxgxe5Q3M7Xo09jeocfmcRJVQHeWV2PZNpn/jFn7hAvblip8bcFJFC+yk2d1a+DHQGicvEAvuhMH9rrhqIkF/q44kn94zmYH3C0zIc1XMCaejqtGzOx1I3JFZpXooFclkv8MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666703; c=relaxed/simple;
-	bh=shdkwxHr8v6FIfU/tbWCWU2Rd83+VCCFbkAE3yY3H1k=;
+	s=arc-20240116; t=1789666706; c=relaxed/simple;
+	bh=3zu1pMN5wbFQPMcuLP9NAQTeNWVYfRkb2x/+8858Ou4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnMMiq0fmSae5dua+Q0cHsusslCyYrOQYsFPi52SiH0zvidmbx1iokTMoTUf1brWUqXjN+ZkFbnlI4ikvC71SgjKEMZSE7iIa6P92zroxy2Htuw8Yb/w4PXwcFQnEO9im/Q2XuQWLC3cenZ27mmzuIKN7PlfjWfzLABKm5c41WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bu/FmK+Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kx7IMZmRUERh1noFjaGi2md8kpPUfAokh9MLDRL8WcDqD/+Q69ooBnQHV0/Fk1nECgWNrQFXf3bskxyjaPNiJlvBrYoQGcjAHr1auy47dGZvKNPsiqJ9cr04AcFiTaCIq9oGFldaMMp4kKFNEfWjJYqerg3BD8Uj/JH6WPJ2R1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjQM+a4M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bu/FmK+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E78F1F00893;
-	Thu, 17 Sep 2026 17:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjQM+a4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF901F00898;
+	Thu, 17 Sep 2026 17:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666701;
-	bh=DP9tIjfv8q8XlFzKoWcK4IbRNBURyno+ykLpMU8i2eI=;
+	s=korg; t=1789666704;
+	bh=8O09EoTxcB2SW23TykrxV2jVrIOMWcn/7wFp+7RYTsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bu/FmK+YC8kSz+aJ7sRFqtsXWE90jpY77L1QdaUvpNa9f1RBXdASVlHb6FPrsyekT
-	 /PzvkTZ/iZE/qWah3anPbKopbTxgQHkMpUg5/PAJ9h+cFS8TZwe5hUBUwBUwjFFSrg
-	 YBTW99WTgMe2mZ16cJSKy6o1f5GU042i9KqN0xfE=
+	b=CjQM+a4M3aafprQeldMzJY8vXSsyXK3mXwskCuDzh+OESqv5HwmtuefBFkerD9WiD
+	 Ti30sWiTr1x7kQ6Yu46t6Q54oNijMMXy8iphexgnj2gD0tbOEFSSLGQPPJYz2IpJPg
+	 p223/sE+Euw5ny8BZvh0WVLtMldQurZeEVIud9nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1125/1250] xfs: advance the findparent inode scan cursor while holding ILOCK
-Date: Thu, 17 Sep 2026 16:15:20 +0100
-Message-ID: <20260917151622.733316551@linuxfoundation.org>
+Subject: [PATCH 6.18 1126/1250] xfs: actually recover intended file sizes in xfs_xmi_item_recover_intent
+Date: Thu, 17 Sep 2026 16:15:21 +0100
+Message-ID: <20260917151622.763398031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,131 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit ad4497a92caba4630f75c80d49cb947026213280 upstream.
+commit b71ae66863e4320a3b7313b53bb4d65f1718d58b upstream.
 
-LOLLM pointed out a race condition in xrep_findparent_scan -- the
-directory live update hook holds the directory ILOCK when it calls the
-xchk_iscan_want_live_update predicate to figure out if it needs to
-remember the live update, but xrep_findparent_scan drops the directory
-ILOCK before advancing the cursor.  Therefore, it's possible for a live
-update to check the scan cursor after the scan drops the ILOCK but
-before the scan updates its cursor.  If this happens, we'll fail to
-record the live update.  Fix this by moving the cursor update logic
-inside xrep_findparent_walk_directory.
-
-Note that for non-directories it's ok to advance the cursor without
-holding any ILOCK because the findparent scan only cares about directory
-parents, not the children.
+LOLLM points out that xfs_xmi_item_recover_intent doesn't actually
+restore the isize1 and isize2 fields that were recovered from an
+unfinished exchmaps log intent item.  Instead, xfs_exchmaps_init_intent
+sets the wrong isize values from the recovered inodes, with the result
+that the file sizes are not set correctly when item recovery finishes.
+Fix this by restoring isize[12] from the log item.
 
 Cc: stable@vger.kernel.org # v6.10
-Fixes: a07b45576264e7 ("xfs: scan the filesystem to repair a directory dotdot entry")
+Fixes: 966ceafc7a4371 ("xfs: create deferred log items for file mapping exchanges")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/findparent.c |   54 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 18 deletions(-)
+ fs/xfs/xfs_exchmaps_item.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/findparent.c
-+++ b/fs/xfs/scrub/findparent.c
-@@ -139,32 +139,52 @@ xrep_findparent_dirent(
- 	return 0;
- }
+--- a/fs/xfs/xfs_exchmaps_item.c
++++ b/fs/xfs/xfs_exchmaps_item.c
+@@ -347,7 +347,17 @@ xfs_xmi_validate(
+ 	if (!xfs_verify_fileext(mp, xlf->xmi_startoff1, xlf->xmi_blockcount))
+ 		return false;
  
--/*
-- * If this is a directory, walk the dirents looking for any that point to the
-- * scrub target inode.
-- */
--STATIC int
--xrep_findparent_walk_directory(
--	struct xrep_findparent_info	*fpi)
-+static inline bool
-+xrep_findparent_want_scan_file(
-+	const struct xrep_findparent_info	*fpi)
- {
--	struct xfs_scrub		*sc = fpi->sc;
--	struct xfs_inode		*dp = fpi->dp;
--	unsigned int			lock_mode;
--	int				error = 0;
-+	const struct xfs_scrub			*sc = fpi->sc;
-+	const struct xfs_inode			*dp = fpi->dp;
+-	return xfs_verify_fileext(mp, xlf->xmi_startoff2, xlf->xmi_blockcount);
++	if (!xfs_verify_fileext(mp, xlf->xmi_startoff2, xlf->xmi_blockcount))
++		return false;
 +
-+	/* Only directories can be parents */
-+	if (!S_ISDIR(VFS_IC(dp)->i_mode))
-+		return false;
- 
- 	/*
- 	 * The inode being scanned cannot be its own parent, nor can any
- 	 * temporary directory we created to stage this repair.
- 	 */
- 	if (dp == sc->ip || dp == sc->tempip)
--		return 0;
-+		return false;
- 
- 	/*
- 	 * Similarly, temporary files created to stage a repair cannot be the
- 	 * parent of this inode.
- 	 */
- 	if (xrep_is_tempfile(dp))
-+		return false;
++	if (xlf->xmi_flags & XFS_EXCHMAPS_SET_SIZES) {
++		if ((int64_t)xlf->xmi_isize1 < 0)
++			return false;
++		if ((int64_t)xlf->xmi_isize2 < 0)
++			return false;
++	}
 +
 +	return true;
-+}
-+
-+/*
-+ * If this is a directory, walk the dirents looking for any that point to the
-+ * scrub target inode.
-+ */
-+STATIC int
-+xrep_findparent_walk_file(
-+	struct xrep_findparent_info	*fpi)
-+{
-+	struct xfs_scrub		*sc = fpi->sc;
-+	struct xfs_inode		*dp = fpi->dp;
-+	unsigned int			lock_mode;
-+	int				error = 0;
-+
-+	if (!xrep_findparent_want_scan_file(fpi)) {
-+		if (fpi->parent_scan)
-+			xchk_iscan_mark_visited(&fpi->parent_scan->iscan, dp);
- 		return 0;
-+	}
- 
- 	/*
- 	 * Scan the directory to see if there it contains an entry pointing to
-@@ -201,6 +221,8 @@ xrep_findparent_walk_directory(
- 		goto out_unlock;
- 
- out_unlock:
-+	if (fpi->parent_scan)
-+		xchk_iscan_mark_visited(&fpi->parent_scan->iscan, dp);
- 	xfs_iunlock(dp, lock_mode);
- 	return error;
  }
-@@ -309,11 +331,7 @@ xrep_findparent_scan(
- 	ASSERT(S_ISDIR(VFS_IC(sc->ip)->i_mode));
  
- 	while ((ret = xchk_iscan_iter(&pscan->iscan, &fpi.dp)) == 1) {
--		if (S_ISDIR(VFS_I(fpi.dp)->i_mode))
--			ret = xrep_findparent_walk_directory(&fpi);
--		else
--			ret = 0;
--		xchk_iscan_mark_visited(&pscan->iscan, fpi.dp);
-+		ret = xrep_findparent_walk_file(&fpi);
- 		xchk_irele(sc, fpi.dp);
- 		if (ret)
- 			break;
-@@ -402,7 +420,7 @@ xrep_findparent_confirm(
- 		goto out_rele;
- 	}
- 
--	error = xrep_findparent_walk_directory(&fpi);
-+	error = xrep_findparent_walk_file(&fpi);
- 	if (error)
- 		goto out_rele;
+ /*
+@@ -406,6 +416,13 @@ xfs_xmi_item_recover_intent(
+ 	*ipp1 = ip1;
+ 	*ipp2 = ip2;
+ 	xmi = xfs_exchmaps_init_intent(req);
++
++	/* Restore intended file sizes from recovered logged item */
++	if (req->flags & XFS_EXCHMAPS_SET_SIZES) {
++		xmi->xmi_isize1 = xlf->xmi_isize1;
++		xmi->xmi_isize2 = xlf->xmi_isize2;
++	}
++
+ 	xfs_defer_add_item(dfp, &xmi->xmi_list);
+ 	return xmi;
  
 
 
