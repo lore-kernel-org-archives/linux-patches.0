@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3411D3BAD9C;
-	Thu, 17 Sep 2026 17:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14F53B2FC2;
+	Thu, 17 Sep 2026 17:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665388; cv=none; b=lnilJZVk0sGlRL3JfAzgeD8ieUkl8+Ek9dqf/8Svn6fsOHfWhiQobNWh8Qxjfo0ZdJyG3k+numQzzzAPWoJ98QTWkxU5ODFfPowg5Hbx7sOEHVl2rmPdLH8D5SxWvvJBcsZyGQDwtC1rejpTgDbs6Xw8PofkMEbLJHolFSzjQA8=
+	t=1789665391; cv=none; b=Rvw20Fem8rhc7mrdTiOzHGLJVNEEzoE7Y7In/Qoc2eNmg9Mr1pwRF+uP4z1kMNuyV98ZLElZ/u78gyMF1e9P0E5MZ2uSi0VcH2Bf8ljad43VyP11AuV2ryHpVjBOiZi5rXGHP3Uia3Xrtq9zqotkeCXbJb21QZxizIveFzQ/yP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665388; c=relaxed/simple;
-	bh=D1cbQHm/wr4+rG1zm2UV51uxia48Riym6XUH8QmUDuU=;
+	s=arc-20240116; t=1789665391; c=relaxed/simple;
+	bh=khPcQU0DhiGKq0VEj53xlCSPS1OSQwzmVUDqi+F6hcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHNDYLr6Oxw4ym+EThWrKwmhD5PbhUttF0BYVuuEADRtjyrO35l5CUw/bA2STDRSxRsK8T18+7+c/t/eWzk0x9WcQa0eT7DnIA/pdz5bhErN5ddlSD4eoe5O37qzTfQZgltHNKJsT3L1Uxj7eKkJ/+fr5pvN0pubJw3BfjYzvaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQRA6Lyb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k8o6OsAiZcQARVQ4GuTg76n+CljR2Yo+LIyp8miHN+jPVZvo8zALoPC/UUlMT1mx6QarzisYOJsTXxmCuAfdQ1uOdcb/MlN5xK1+VTVH2Esjfo0OoqyhODqKAhcskvjyoAs+OPKl99wkoikgrguDBDCctAZMleiUdloXSmHOsQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2Pmvoab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQRA6Lyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED1B1F000FF;
-	Thu, 17 Sep 2026 17:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2Pmvoab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C631F000FF;
+	Thu, 17 Sep 2026 17:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665386;
-	bh=XK/qwiRhRHpBAnIRjCjLWhyOc67Q8Wb7uG79UK4rEcw=;
+	s=korg; t=1789665389;
+	bh=QXWU/h3aeUVmcG4OBSXX6BE8XXakRAm7wq8zk6ufyT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQRA6Lyb01S9dIH9HbqTorgmkCXY39UM1bxCdW4b25y1KYGnT/rFKxu4Fpb+fj6Oo
-	 vWGZl60HXH6b0kirmTXOlf6iVa35cobWBaEeA8O2VFxn2Tehk1Vn6A/GSaBcsq5DsF
-	 2i7940LamDLmErLIAM6SH4E/S7OjlwEB6gQD7uas=
+	b=s2PmvoabZ6EkWnybj7ZxFT8pHCHCCm5ELtVKCLoyaHJKZkaDTY5METGIFrl7B3q8Z
+	 WNl38yy+W0a5/iEZgRSzqdElO39TD7ZNtZOA7u8jWpGUB+NKHYvSz+3mmOCaVkWOxy
+	 1zQLIOCbGwsHUkh/kzx0WYXvDdlMdZ2jjqTGv8kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0651/1250] s390/vtime: Use __this_cpu_read() / get rid of READ_ONCE()
-Date: Thu, 17 Sep 2026 16:07:26 +0100
-Message-ID: <20260917151609.542239762@linuxfoundation.org>
+Subject: [PATCH 6.18 0687/1250] tipc: fix NULL deref in tipc_named_node_up() on empty publication list
+Date: Thu, 17 Sep 2026 16:08:02 +0100
+Message-ID: <20260917151610.510694578@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,61 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit e282ccd308de7b2a65eb4596da8030c18b543071 ]
+[ Upstream commit b3b76e9f4f2476f1135b2ba7743a821db4a0df4b ]
 
-do_account_vtime() runs always with interrupts disabled, therefore use
-__this_cpu_read() instead of this_cpu_read() to get rid of a pointless
-preempt_disable() / preempt_enable() pair.
+User-space applications can bind a large number of service addresses to
+one or more sockets. Each binding of a local-scope service address inserts
+one entry (publication) into the TIPC name table. If the number of these
+publications exceeds TIPC_MAX_PUBL (65535), protocol service types
+(such as node state and link state) are no longer inserted into the name
+table. This causes two issues:
 
-Also there are no concurrent writers to the cpu time accounting fields
-in lowcore. Therefore get rid of READ_ONCE() usages.
+1. User-space applications subscribing to node or link up/down events
+   stop receiving notifications.
 
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Stable-dep-of: ca1f4a5ecab0 ("s390/time: Use jiffies instead of jiffies_64")
+2. A NULL pointer dereference can occur:
+
+   BUG: kernel NULL pointer dereference, address: 00000000000000d0
+   ...
+   CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc4-default+ #5 PREEMPT(full)
+   ...
+   RIP: 0010:tipc_named_node_up (./include/linux/skbuff.h:2251 net/tipc/name_distr.c:195 net/tipc/name_distr.c:221)
+   ...
+   Call Trace:
+   <IRQ>
+   tipc_node_write_unlock (net/tipc/node.c:428)
+   tipc_rcv (net/tipc/node.c:934 net/tipc/node.c:2189)
+   tipc_udp_recv (net/tipc/udp_media.c:389)
+
+   Thread 1 (tipc_net_finalize) | Thread 2 (named_distribute)
+   -----------------------------|-----------------------------
+                                | ...
+                                | list_for_each_entry(publ, pls, binding_node) {
+                                | ...
+                                | __skb_queue_tail(list, skb);
+                                | ...
+                                | }
+                                | ...
+                                | hdr = buf_msg(skb_peek_tail(list));
+   ...                          |
+   tipc_nametbl_publish();      |
+
+   If 'tipc_nametbl_publish()' (Thread 1) fails because the number of
+   local publications reaches TIPC_MAX_PUBL, list (Thread 2) will be empty. As a
+   result, NULL is passed to 'buf_msg()', leading to a NULL pointer dereference.
+
+Fix these issues by allowing protocol service types (node state, link state,
+and topology server) to be inserted into the name table unconditionally.
+This ensures that users subscribing to these types always receive
+notifications. In addition, the maximum number of local user publications is
+reduced to (TIPC_MAX_PUBL - 1). This ensures that the maximum bulk size
+calculated in tipc_link_set_queue_limits() remains valid.
+
+Fixes: a5e7ac5ce134 ("tipc: fix regression bug where node events are not being generated")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260827111418.164957-1-tung.quang.nguyen@est.tech
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vtime.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ net/tipc/name_table.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/kernel/vtime.c b/arch/s390/kernel/vtime.c
-index 122d30b104401..4111ff4d727cc 100644
---- a/arch/s390/kernel/vtime.c
-+++ b/arch/s390/kernel/vtime.c
-@@ -137,23 +137,16 @@ static int do_account_vtime(struct task_struct *tsk)
- 		lc->system_timer += timer;
+diff --git a/net/tipc/name_table.c b/net/tipc/name_table.c
+index 7f42fb6a8481f..cc99a9324837a 100644
+--- a/net/tipc/name_table.c
++++ b/net/tipc/name_table.c
+@@ -763,21 +763,40 @@ struct publication *tipc_nametbl_publish(struct net *net, struct tipc_uaddr *ua,
+ 					 struct tipc_socket_addr *sk, u32 key)
+ {
+ 	struct name_table *nt = tipc_name_table(net);
++	u32 max_user_pub = TIPC_MAX_PUBL - 1;
+ 	struct tipc_net *tn = tipc_net(net);
+ 	struct publication *p = NULL;
+ 	struct sk_buff *skb = NULL;
++	bool protocol_type = false;
+ 	u32 rc_dests;
  
- 	/* Update MT utilization calculation */
--	if (smp_cpu_mtid &&
--	    time_after64(jiffies_64, this_cpu_read(mt_scaling_jiffies)))
-+	if (smp_cpu_mtid && time_after64(jiffies_64, __this_cpu_read(mt_scaling_jiffies)))
- 		update_mt_scaling();
++	if (ua->sr.type == TIPC_NODE_STATE || ua->sr.type == TIPC_LINK_STATE ||
++	    ua->sr.type == TIPC_TOP_SRV)
++		protocol_type = true;
++
+ 	spin_lock_bh(&tn->nametbl_lock);
++	if (protocol_type)
++		goto insert;
  
- 	/* Calculate cputime delta */
--	user = update_tsk_timer(&tsk->thread.user_timer,
--				READ_ONCE(lc->user_timer));
--	guest = update_tsk_timer(&tsk->thread.guest_timer,
--				 READ_ONCE(lc->guest_timer));
--	system = update_tsk_timer(&tsk->thread.system_timer,
--				  READ_ONCE(lc->system_timer));
--	hardirq = update_tsk_timer(&tsk->thread.hardirq_timer,
--				   READ_ONCE(lc->hardirq_timer));
--	softirq = update_tsk_timer(&tsk->thread.softirq_timer,
--				   READ_ONCE(lc->softirq_timer));
--	lc->steal_timer +=
--		clock - user - guest - system - hardirq - softirq;
-+	user = update_tsk_timer(&tsk->thread.user_timer, lc->user_timer);
-+	guest = update_tsk_timer(&tsk->thread.guest_timer, lc->guest_timer);
-+	system = update_tsk_timer(&tsk->thread.system_timer, lc->system_timer);
-+	hardirq = update_tsk_timer(&tsk->thread.hardirq_timer, lc->hardirq_timer);
-+	softirq = update_tsk_timer(&tsk->thread.softirq_timer, lc->softirq_timer);
-+	lc->steal_timer += clock - user - guest - system - hardirq - softirq;
+-	if (nt->local_publ_count >= TIPC_MAX_PUBL) {
+-		pr_warn("Bind failed, max limit %u reached\n", TIPC_MAX_PUBL);
++	/* Reserve one entry for node state service type because it has cluster
++	 * scope and it is distributed in bulk. So, the maximum number of user's
++	 * publications is (TIPC_MAX_PUBL - 1).
++	 */
++	if (nt->local_publ_count >= max_user_pub) {
++		pr_warn("Bind failed, max limit %u reached\n", max_user_pub);
+ 		goto exit;
+ 	}
  
- 	/* Push account value */
- 	if (user) {
++insert:
+ 	p = tipc_nametbl_insert_publ(net, ua, sk, key);
+ 	if (p) {
+-		nt->local_publ_count++;
++		/* Not count node state, link state and topology server types
++		 * so that maximum nt->local_publ_count does not prevent
++		 * protocol service types from being inserted into the name
++		 * table.
++		 */
++		if (!protocol_type)
++			nt->local_publ_count++;
+ 		skb = tipc_named_publish(net, p);
+ 	}
+ 	rc_dests = nt->rc_dests;
+@@ -810,7 +829,10 @@ void tipc_nametbl_withdraw(struct net *net, struct tipc_uaddr *ua,
+ 
+ 	p = tipc_nametbl_remove_publ(net, ua, sk, key);
+ 	if (p) {
+-		nt->local_publ_count--;
++		if (p->sr.type != TIPC_NODE_STATE &&
++		    p->sr.type != TIPC_LINK_STATE &&
++		    p->sr.type != TIPC_TOP_SRV)
++			nt->local_publ_count--;
+ 		skb = tipc_named_withdraw(net, p);
+ 		list_del_init(&p->binding_sock);
+ 		kfree_rcu(p, rcu);
 -- 
 2.53.0
 
