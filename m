@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BE24F3936;
-	Thu, 17 Sep 2026 15:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4394F3936;
+	Thu, 17 Sep 2026 15:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660284; cv=none; b=sAEENukaCIuES/ukURz4zH8Fd1t+WH+8wYf6VS8Yhpt8iO3pZ2GoXyyyIRxLvOVantGuOrbkbPGRI57XijUnp0K925VCenLJDj1avgavtO9tKQR7i0KTbw4zXFDr72InqKoTsNyn1qxIV/22Ronr/mgfzRN67Z1F57l9vZbN8hE=
+	t=1789660287; cv=none; b=avhVPtE+5mHRbX2PEmR1RWGbxov0SMzx+97GZOo1PGpOQ3zmD/odr8Y9BifQLE1vBaD7MQ7GS61Yqacij4PARrVWs1GdbxrwRZ1XAVZGflrNnfJ/dFjbfe7ruQ+H1du+cLDwgeLu0DHCC8rkbfYahdk5iAhB0B4UoZcGixwYR/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660284; c=relaxed/simple;
-	bh=nh0X1KgQrMZqmmuSNrxhiA3XeM9eSokXjCHqQL9Juk4=;
+	s=arc-20240116; t=1789660287; c=relaxed/simple;
+	bh=T05NCPQ/oQliRDBZm5RPiPsZo28apRxImtnT2gdp/tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTnKEWpt/1mRE5Kmn4HRQjdHVw3w2mCHUh6IYJF/a7bE4lwnI2CiPhePXCOn9w56lOkuARRnzRPlJ7ryx4mayGDEOhLPcZxV8L4ezk08uYbn00jALRo1FjNr+zycTd/wyNtELiFsTmo3X4+0ojznv1jL8fFWos9iQDWdSnt5kfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOC+p5ta; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hn4F/EodniXMOayREdb4I6lITKO3jF8XULty/5Lrw68M4S1zk4msmDvuhanKo9IAXoEmBaxQDKV/B7CLB8xU0gsqnalK4TpOSmzGbQV9n87f/2fkqkrjYBr6VDQmOQHXdViDihuoMgq6dptDhqeNfEKaCrnQWwzieX2lDTsx5xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYnjkd4K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOC+p5ta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00AB1F000FF;
-	Thu, 17 Sep 2026 15:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYnjkd4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9116A1F000FF;
+	Thu, 17 Sep 2026 15:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660283;
-	bh=NHbkus/3cFRXegslz8gcoVy60H2NTG9iU22XAX+OhrY=;
+	s=korg; t=1789660286;
+	bh=6VILPpiGYuQdTGdiGp+FwWTvqshPXND9QolLbianViw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GOC+p5taCATen/2ROzK4n/RG5YOc8LVHUTsB3KbWDBuFkWka4ou/mVMSOWqLX7qxF
-	 1m4RnClGcFn1NgY+KBkESGeCI4fH33wj6/O8Z9Ck5GK3qD3rVNdwk3GcjLlm6WMA2K
-	 91hX5V77luG9z+R6Pt5926vLHLr/7JyvT2E7XU98=
+	b=IYnjkd4KS2v0grjuVMgH70vXoMxqohe1gTn81GnZXKRnCHaVPW9NERv+KPGXZC6aY
+	 UCUPhdSZ5GB8cQDq4z8FtkoB9qGDfAip9B+CzRhG5mIriFJwhu3BMO+piTsoNXoOjZ
+	 COOUf54BJ5EwRKSLUWsRENIvPbHvPDPUdpRhRRdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 501/733] tracing: Keep the entry count when the histogram stats allocation fails
-Date: Thu, 17 Sep 2026 16:13:29 +0100
-Message-ID: <20260917151404.579098097@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 492/733] ufs: validate cylinder group metadata before caching it
+Date: Thu, 17 Sep 2026 16:13:20 +0100
+Message-ID: <20260917151404.321977194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,106 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 06f5634ec5584954177f9a22e36b3bfb398a971b upstream.
+commit c9d263be26806d388129fab8c6904bed197fc6af upstream.
 
-print_entries() uses n_entries both as the number of sort entries and as
-its own return value, so the -ENOMEM it stores when the stats allocation
-fails overwrites the count that the cleanup still needs:
+ufs_read_cylinder() copies the cylinder group index and the rotor
+positions straight from the on-disk group and caches them without any
+check:
 
-	n_entries = tracing_map_sort_entries(map, ...);
-	if (n_entries < 0)
-		return n_entries;
-	...
-			if (!stats) {
-				n_entries = -ENOMEM;
-				goto out;
-			}
-	...
- out:
-	tracing_map_destroy_sort_entries(sort_entries, n_entries);
+	ucpi->c_cgx    = fs32_to_cpu(sb, ucg->cg_cgx);
+	ucpi->c_rotor  = fs32_to_cpu(sb, ucg->cg_rotor);
+	ucpi->c_frotor = fs32_to_cpu(sb, ucg->cg_frotor);
+	ucpi->c_irotor = fs32_to_cpu(sb, ucg->cg_irotor);
 
-tracing_map_destroy_sort_entries() takes an unsigned int and loops up to
-it, so -ENOMEM arrives as 4294967284. It walks an array of at most
-map->max_elts pointers and calls destroy_sort_entry(), which dereferences
-and frees, on whatever lies past the end.
+They are then used as indices during allocation and free:
 
-Reading the hist file of a trigger with a .percent value, with that
-allocation forced to fail:
+  - c_cgx indexes the cylinder summary array as
+    UFS_SB(sb)->fs_cs(ucpi->c_cgx), so a value past s_ncg writes a 32
+    bit count outside the s_csp allocation.
 
-  BUG: KASAN: vmalloc-out-of-bounds in tracing_map_destroy_sort_entries+0xa0/0xb0
-  Read of size 8 at addr ffffc90000045000 by task init/1
-   tracing_map_destroy_sort_entries+0xa0/0xb0
-   hist_show+0x6f7/0x1df0
-   seq_read_iter+0x2b8/0x1190
-   vfs_read+0x176/0xa40
-  The buggy address belongs to a 4-page vmalloc region starting at
-  ffffc90000041000 allocated at tracing_map_sort_entries+0x5c/0xd50
+  - c_frotor becomes a bitmap scan start, start = c_frotor >> 3, and
+    then length = ((s_fpg + 7) >> 3) - start. A start beyond the block
+    bitmap wraps the unsigned length to a huge value, so ubh_scanc()
+    walks far past the cylinder group buffers. c_irotor drives the
+    inode bitmap the same way.
 
-A few pages further the fault is fatal. The registers at the oops confirm
-the bound: the loop's end pointer less the array start, over the pointer
-size, is 4294967284.
+A crafted image can set any of these freely, turning an ordinary
+allocation into an out of bounds access.
 
-Return the error in a separate variable and leave n_entries holding the
-count, the way tracing_map_sort_entries() does on its own error path.
+Reject a cylinder group whose recorded index does not match the group
+being read, or whose rotors fall outside the group, before the metadata
+is cached. Valid filesystems keep cg_cgx equal to the group number and
+the rotors within the group, so only malformed images are rejected.
 
-The stats block is only entered for a value carrying .percent or .graph,
-which __create_val_field() has rejected since v6.3, so this cannot be
-reached in mainline as it stands. It becomes reachable again with
-"tracing: hist: let values keep the percent and graph modifiers", so it
-should be applied first.
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: abaa5258ce5e ("tracing: Add .percent suffix option to histogram values")
-Link: https://patch.msgid.link/20260907060323.480728-1-donggeunyoo.kernel@gmail.com
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260907053113.1CED91F00A3A@smtp.kernel.org/
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260801071306.59484-3-ali@iusegentoo.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ufs/cylinder.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5665,7 +5665,7 @@ static int print_entries(struct seq_file
- {
- 	struct tracing_map_sort_entry **sort_entries = NULL;
- 	struct tracing_map *map = hist_data->map;
--	int i, j, n_entries;
-+	int i, j, n_entries, ret;
- 	struct hist_val_stat *stats = NULL;
- 	u64 val;
- 
-@@ -5675,6 +5675,8 @@ static int print_entries(struct seq_file
- 	if (n_entries < 0)
- 		return n_entries;
- 
-+	ret = n_entries;
+--- a/fs/ufs/cylinder.c
++++ b/fs/ufs/cylinder.c
+@@ -68,6 +68,16 @@ static bool ufs_read_cylinder(struct sup
+ 	ucpi->c_clustersumoff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clustersumoff);
+ 	ucpi->c_clusteroff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clusteroff);
+ 	ucpi->c_nclusterblks = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_nclusterblks);
 +
- 	/* Calculate the max and the total for each field if needed. */
- 	for (j = 0; j < hist_data->n_vals; j++) {
- 		if (!(hist_data->fields[j]->flags &
-@@ -5683,7 +5685,7 @@ static int print_entries(struct seq_file
- 		if (!stats) {
- 			stats = kzalloc_objs(*stats, hist_data->n_vals);
- 			if (!stats) {
--				n_entries = -ENOMEM;
-+				ret = -ENOMEM;
- 				goto out;
- 			}
- 		}
-@@ -5704,7 +5706,7 @@ static int print_entries(struct seq_file
- out:
- 	tracing_map_destroy_sort_entries(sort_entries, n_entries);
- 
--	return n_entries;
-+	return ret;
- }
- 
- static void hist_trigger_show(struct seq_file *m,
++	/* these on-disk values become array and bitmap indices */
++	if (ucpi->c_cgx != cgno ||
++	    ucpi->c_rotor >= uspi->s_fpg ||
++	    ucpi->c_frotor >= uspi->s_fpg ||
++	    ucpi->c_irotor >= uspi->s_ipg) {
++		ufs_error(sb, __func__,
++			  "inconsistent metadata in cylinder group %u\n", cgno);
++		goto failed;
++	}
+ 	UFSD("EXIT\n");
+ 	return true;
+ 	
 
 
