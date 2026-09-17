@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82596502D6C;
-	Thu, 17 Sep 2026 17:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8032F502D4E;
+	Thu, 17 Sep 2026 17:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667332; cv=none; b=drkiIqACEpyvrQ51asyEyk+SssL1Xuc+lWnlSrlAoQlcbOGFpO+bQo9X9dcfrXykYqBY7sAGNU912a+ccbJ3jycrzsnPCS9dlhs5PDfydM7JL0XOXYDxOJ0WgFspXt8DOJeQ4baFav0eRMzwu0f6b0polNlSRY+mBeDo5tNuoBY=
+	t=1789667335; cv=none; b=E0GzDnQDCEfojcBOcDVETREyGELgbrBylyNnHyiD58Wjh41LRowjmzXfeT5Kj2b5sSW01Su2amoRJWScdSO3whBbL7t+xBXqpgzNMhiA3o7U9DfNyoyT3YdS6gGqhiyIixTB29PS458ON/0PkDOQSR9GqtgsynpolpDvEFDPCt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667332; c=relaxed/simple;
-	bh=RWmgRm05WfVKJjVWF69+L6zNl+hvSEMbBTNexP82omc=;
+	s=arc-20240116; t=1789667335; c=relaxed/simple;
+	bh=xtzrNd4X8XswM08EmMp2qGMJtNsXR+SNpHXZuFxZSlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uNnklqsqk4RffbnyN0xWNhM/OFbcmoFeHJM85O5EsjFxX8lvmpO2GSowFoglzxY6gWpzGRKGaJYl4FvDJYruwwB1lV+2WCg9pScsgdQsgqqlAZgqbIGOrRydd7AGmf0riO/3lhfdCJK1hrivzxk19sQDLCgQVdm2sgIrcJ3RgZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=borYYz2G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HBWjKuHe0Hfu7e1xWMAsH+V7/6jc98wIjA7J5c8knTSSuE75gD5jqCisT7RSoi1lIyAwIwlH6OBPKLzIv6oowZAXngtgN3Z1G8CIgQWrwlV9B9ByWce8gdYLPn4Sau+FedbiYb/OGAFo40TQFztHN+W5Pk5C5EiITZ4EgDGyKfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3huKVt2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="borYYz2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34871F000FF;
-	Thu, 17 Sep 2026 17:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3huKVt2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C798E1F000FF;
+	Thu, 17 Sep 2026 17:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667331;
-	bh=4m+Ttd3/S0eL7WApO/P7cTwigxrwuen5GFXUkcAGUb8=;
+	s=korg; t=1789667334;
+	bh=l6zEb9g4cHJbSDw/qKPdHr/TD3oUKUdkkpGE92bgvc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=borYYz2GAUEMA0qrhBRvLtAKX2+8ifpMs7LSbTKPD4P9DQSxgPGJa8x31MeXHQUJA
-	 NrXzroNrHX6pcpZw4pXfRjm6JMm9eVXPk6mqmWj+X1i70TiE1BsN7NSnY2j9LMuSDF
-	 rLgpm6GkhSKUbQEBBxfC9f7AA/O7Qv6mi3rRoEXQ=
+	b=M3huKVt2FZMJZw1kjTa9FvgB0WZVEcIAXFus1V0tmo4ZtqnnQScpnPkyC7X0zgqiZ
+	 0Uww5nO+XxM/OGOeeJnskVYUaJ8H6KNXElHJUzR7Mb433Re1YC5/PESqMIpTFlBs0N
+	 +RSK1yxRnR45midsdVr6qTNWP4uP573xBU00lp2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0058/1102] PCI/sysfs: Add CAP_SYS_ADMIN check to __resource_resize_store()
-Date: Thu, 17 Sep 2026 16:00:01 +0100
-Message-ID: <20260917151540.910596777@linuxfoundation.org>
+Subject: [PATCH 6.12 0059/1102] media: qcom: camss: avoid format string warning
+Date: Thu, 17 Sep 2026 16:00:02 +0100
+Message-ID: <20260917151540.935896992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,51 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 25ec7f57deceec633f27bc93b615f951e2ade814 ]
+[ Upstream commit 797c1cbf672f372d6a464df0dcedf476fc715969 ]
 
-Currently, the __resource_resize_store() allows writing to the
-resourceN_resize sysfs attribute to change a BAR's size without checking
-for capabilities, currently relying only on the file access check.
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-Resizing a BAR modifies PCI device configuration and can disrupt active
-drivers.  After the upcoming conversion to static attributes, it will also
-trigger resource file updates via sysfs_update_groups().
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
 
-Add a CAP_SYS_ADMIN check to prevent unprivileged users from performing BAR
-resize operations.
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
 
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260508043543.217179-6-kwilczynski@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-sysfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index bfbb605c40191..458c99388a305 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1431,6 +1431,9 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
- 	int ret;
- 	u16 cmd;
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 2f7361dfd4614..7444b42cc1e23 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -545,12 +545,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
  
-+	if (!capable(CAP_SYS_ADMIN))
-+		return -EPERM;
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
+ {
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
 +
- 	if (kstrtoul(buf, 0, &size) < 0)
- 		return -EINVAL;
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
+ 
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
  
 -- 
 2.53.0
