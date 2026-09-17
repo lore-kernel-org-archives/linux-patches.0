@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595AD4E4C52;
-	Thu, 17 Sep 2026 15:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384B74DDB5D;
+	Thu, 17 Sep 2026 15:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659688; cv=none; b=rW3j65+kyswae17fk39Cv/kK6p1slicHs5eLMBg2GI5ttzFubJwOeoR5fz8YSOzsNpBO/pIxwwOV7sjkFvzJglmGk8ta00CmDbRnXfsynkjEKzy4Lbm2moXwi4i5H3lja+4xQqWBZKumcFKYkWkjsTqT0uOZ42DvUXW1o+KhHzc=
+	t=1789659692; cv=none; b=hSBldl3g11jbmqSNfWb4EN7E/6TZIcsUcbzpA8RiDsWnQtPYuAr318mstJ8PapR70qSvq4hniv3cty7MEmTKg7nj7l51+3c+VXNTQeR3cTYM8hGaWIh8+t+FTnFFkFPQnejoi0bj8PshnXhbOta2cSjYQTufYRl0t6x+XNttJJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659688; c=relaxed/simple;
-	bh=yABeOfpDvCpmW1waiqey7534b8gEn4EB84yUcJVMup4=;
+	s=arc-20240116; t=1789659692; c=relaxed/simple;
+	bh=IRJfpe7tQK0YHSFau7OMykcspDLp398UyoXu5DKh1oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqYIf9pInfRStQp4V4D7QJTqSf0y1tT1sVe4q0GV9j9tonzN+xzoOYX+D2juStwcxD+j087DGmO8dxQ5Ggadwk1b8INJtfYP+fGIo8xv85FCXrneCqt813dSWnTKXejRQXvdJd0TkAekEKWnkVQQXzUfx8Kp1g3WvdYfaFi0Z5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fk5wgYmn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L1yodQmHp1a1y60gb412uhfflKIasz4RNhlgoqSH3bnpQsA/RxAVVRmzL5r8ZcUQ0NTBilQZza8pMhDeW7hJSs5VclAh2/HqLpDjk2ilODJ5W6W27jiwducpBfojqBR+kgSEgxcmnSZ3eVCCJVhPEDYUudsPvdjMNl8hTq3+4Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsH6d03a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fk5wgYmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A731F00898;
-	Thu, 17 Sep 2026 15:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsH6d03a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8831F000FF;
+	Thu, 17 Sep 2026 15:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659679;
-	bh=hg9YVJeppVl9Z6gUppdWXRKm/F7ulWakOUMWgcmwu2U=;
+	s=korg; t=1789659685;
+	bh=cOm9weGMZCSG5pJLjw7/D5Dy7vEUw8jI5F7JKyUQooQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fk5wgYmn++jd7s+hbsuMpbTdD6zscdgQb06VOCDZXQ7xM6SjWJxxdQmBL0anNaN9k
-	 vckRbIKc7+hRfiNAUggZujOZlTDXyeIvZzzMw8hSkZSCj+rLYUNB1tr77XEmbSWOTu
-	 cBjFGiAFPA7JbbZGGXYQDuA3QvEefnDq2k2G3IQQ=
+	b=rsH6d03ao7Hk5aCVFKtpywkkb/HBZu/NZVi69TXT4ZlXDWeSclr40HJz8TkZ/f/mt
+	 Zn9p59MvjY1T2bEFXExdBFzq410Z+vK6E8eUco7E3rdm6u98xtv3BTZTA7PTvh/8yr
+	 sK6LYTs3RYHoo3vCUCpmBn6xcjGbASOHQVBJjSdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sascha Bischoff <sascha.bischoff@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 338/733] regulator: pf1550: fix which regulator is notified
-Date: Thu, 17 Sep 2026 16:10:46 +0100
-Message-ID: <20260917151359.962993145@linuxfoundation.org>
+Subject: [PATCH 7.2 340/733] irqchip/gic-v5: Preserve ICC_CR0_EL1 state
+Date: Thu, 17 Sep 2026 16:10:48 +0100
+Message-ID: <20260917151400.016754173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,147 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Sascha Bischoff <Sascha.Bischoff@arm.com>
 
-[ Upstream commit f3e6ef13e24c9f26dca0d35de57fcdf04f78e378 ]
+[ Upstream commit 1017911fcc03584b6854b1b8f0aafeb25f5a8d25 ]
 
-The interrupt handler distinguishes the rail that reported the fault, but
-the body ignores it. Every SW interrupt walks the regulator array looking
-for the name "SW3" and every LDO interrupt looks for "LDO3", so an
-over-current on SW1 is reported to the consumers of SW3 while the
-consumers of SW1 hear nothing.
+In addition to EN, ICC_CR0_EL1 contains other fields, such as LINK and
+LINK_IDLE. The driver only needs to modify EN, and must preserve the
+values of all other fields when enabling or disabling the CPU
+interface.
 
-The lookup itself is unreliable as well. rdev_get_name() returns the
-device tree regulator-name property whenever the board supplies one, and
-only falls back to the name in the driver descriptor when it does not.
-The binding example for this device sets regulator-name to "sw3" and
-"ldo3", which strcmp() does not match against the upper case literals
-used here, so a board that follows the documentation gets no over-current
-notification at all. A board that names its rails after the schematic
-does not match either. No other driver in the tree selects a notification
-target this way.
+Define the missing LINK and LINK_IDLE fields, and use read-modify-write
+accesses to update EN without affecting the rest of ICC_CR0_EL1.
 
-Replace the name lookup with rdev_get_id(), which returns the descriptor
-id set by the driver and cannot be overridden from the device tree, and
-take both the id and the event from a table indexed by the interrupt.
-The die temperature interrupts keep notifying every regulator since they
-report a chip wide condition.
-
-Fixes: 7320d41c29bb ("regulator: pf1550: Add support for regulator")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260904105624.48577-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7ec80fb3f025 ("irqchip/gic-v5: Add GICv5 PPI support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260907164945.714545-1-sascha.bischoff@arm.com
+Closes: https://lore.kernel.org/r/20260807121703.D4B7A1F00A3A@smtp.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pf1550-regulator.c | 82 ++++++++++++++--------------
- 1 file changed, 40 insertions(+), 42 deletions(-)
+ arch/arm64/tools/sysreg      | 4 +++-
+ drivers/irqchip/irq-gic-v5.c | 6 ++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/pf1550-regulator.c b/drivers/regulator/pf1550-regulator.c
-index 610eac9bb9cb2..ceee553a84b23 100644
---- a/drivers/regulator/pf1550-regulator.c
-+++ b/drivers/regulator/pf1550-regulator.c
-@@ -283,63 +283,61 @@ static struct pf1550_desc pf1550_regulators[] = {
- 	PF_LDO1(PF1550, "ldo3", LDO3, 0x1f, pf1550_ldo13_volts),
- };
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index 7cb61aca3797f..03f5e1755a633 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -3736,7 +3736,9 @@ Sysreg	ICC_CR0_EL1	3	1	12	0	1
+ Res0	63:39
+ Field	38	PID
+ Field	37:32	IPPT
+-Res0	31:1
++Res0	31:3
++Field	2	LINK_IDLE
++Field	1	LINK
+ Field	0	EN
+ EndSysreg
  
-+/*
-+ * The _LS interrupts indicate an over-current event. The _HS
-+ * interrupts, which are more accurate and can detect catastrophic
-+ * faults, issue an error event. The current limit FAULT interrupt is
-+ * similar to the _HS.
-+ */
-+static const struct pf1550_regulator_irq {
-+	unsigned int event;
-+	u8 id;
-+} pf1550_regulator_irqs[] = {
-+	[PF1550_PMIC_IRQ_SW1_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW1 },
-+	[PF1550_PMIC_IRQ_SW2_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW2 },
-+	[PF1550_PMIC_IRQ_SW3_LS]     = { REGULATOR_EVENT_OVER_CURRENT_WARN, PF1550_SW3 },
-+	[PF1550_PMIC_IRQ_SW1_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW1 },
-+	[PF1550_PMIC_IRQ_SW2_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW2 },
-+	[PF1550_PMIC_IRQ_SW3_HS]     = { REGULATOR_EVENT_OVER_CURRENT, PF1550_SW3 },
-+	[PF1550_PMIC_IRQ_LDO1_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO1 },
-+	[PF1550_PMIC_IRQ_LDO2_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO2 },
-+	[PF1550_PMIC_IRQ_LDO3_FAULT] = { REGULATOR_EVENT_OVER_CURRENT, PF1550_LDO3 },
-+};
-+
- static irqreturn_t pf1550_regulator_irq_handler(int irq, void *data)
+diff --git a/drivers/irqchip/irq-gic-v5.c b/drivers/irqchip/irq-gic-v5.c
+index d6f1c0c8b7473..21c34e7587323 100644
+--- a/drivers/irqchip/irq-gic-v5.c
++++ b/drivers/irqchip/irq-gic-v5.c
+@@ -974,7 +974,8 @@ static void gicv5_cpu_disable_interrupts(void)
  {
-+	const struct pf1550_regulator_irq *map;
- 	struct pf1550_regulator_info *info = data;
- 	struct device *dev = info->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
- 	int i, irq_type = -1;
--	unsigned int event;
+ 	u64 cr0;
  
- 	for (i = 0; i < PF1550_REGULATOR_IRQ_NR; i++)
- 		if (irq == platform_get_irq(pdev, i))
- 			irq_type = i;
+-	cr0 = FIELD_PREP(ICC_CR0_EL1_EN, 0);
++	cr0 = read_sysreg_s(SYS_ICC_CR0_EL1);
++	cr0 &= ~ICC_CR0_EL1_EN_MASK;
+ 	write_sysreg_s(cr0, SYS_ICC_CR0_EL1);
+ 	isb();
+ }
+@@ -991,7 +992,8 @@ static void gicv5_cpu_enable_interrupts(void)
+ 	pcr = FIELD_PREP(ICC_PCR_EL1_PRIORITY, GICV5_IRQ_PRI_MI);
+ 	write_sysreg_s(pcr, SYS_ICC_PCR_EL1);
  
--	switch (irq_type) {
--	/* The _LS interrupts indicate over-current event. The _HS interrupts
--	 * which are more accurate and can detect catastrophic faults, issue
--	 * an error event. The current limit FAULT interrupt is similar to the
--	 * _HS'
--	 */
--	case PF1550_PMIC_IRQ_SW1_LS:
--	case PF1550_PMIC_IRQ_SW2_LS:
--	case PF1550_PMIC_IRQ_SW3_LS:
--		event = REGULATOR_EVENT_OVER_CURRENT_WARN;
--		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
--			if (!strcmp(rdev_get_name(info->rdevs[i]), "SW3"))
--				regulator_notifier_call_chain(info->rdevs[i],
--							      event, NULL);
--		break;
--	case PF1550_PMIC_IRQ_SW1_HS:
--	case PF1550_PMIC_IRQ_SW2_HS:
--	case PF1550_PMIC_IRQ_SW3_HS:
--		event = REGULATOR_EVENT_OVER_CURRENT;
--		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
--			if (!strcmp(rdev_get_name(info->rdevs[i]), "SW3"))
--				regulator_notifier_call_chain(info->rdevs[i],
--							      event, NULL);
--		break;
--	case PF1550_PMIC_IRQ_LDO1_FAULT:
--	case PF1550_PMIC_IRQ_LDO2_FAULT:
--	case PF1550_PMIC_IRQ_LDO3_FAULT:
--		event = REGULATOR_EVENT_OVER_CURRENT;
--		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
--			if (!strcmp(rdev_get_name(info->rdevs[i]), "LDO3"))
--				regulator_notifier_call_chain(info->rdevs[i],
--							      event, NULL);
--		break;
--	case PF1550_PMIC_IRQ_TEMP_110:
--	case PF1550_PMIC_IRQ_TEMP_125:
--		event = REGULATOR_EVENT_OVER_TEMP;
-+	/* The die temperature concerns every rail. */
-+	if (irq_type == PF1550_PMIC_IRQ_TEMP_110 ||
-+	    irq_type == PF1550_PMIC_IRQ_TEMP_125) {
- 		for (i = 0; i < PF1550_MAX_REGULATOR; i++)
- 			regulator_notifier_call_chain(info->rdevs[i],
--						      event, NULL);
--		break;
--	default:
--		dev_err(dev, "regulator interrupt: irq %d occurred\n",
--			irq_type);
-+						      REGULATOR_EVENT_OVER_TEMP,
-+						      NULL);
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (irq_type < 0 || irq_type >= (int)ARRAY_SIZE(pf1550_regulator_irqs)) {
-+		dev_err(dev, "regulator interrupt: irq %d occurred\n", irq_type);
-+		return IRQ_HANDLED;
- 	}
- 
-+	map = &pf1550_regulator_irqs[irq_type];
-+
-+	for (i = 0; i < PF1550_MAX_REGULATOR; i++)
-+		if (rdev_get_id(info->rdevs[i]) == map->id)
-+			regulator_notifier_call_chain(info->rdevs[i],
-+						      map->event, NULL);
-+
- 	return IRQ_HANDLED;
+-	cr0 = FIELD_PREP(ICC_CR0_EL1_EN, 1);
++	cr0 = read_sysreg_s(SYS_ICC_CR0_EL1);
++	cr0 |= ICC_CR0_EL1_EN_MASK;
+ 	write_sysreg_s(cr0, SYS_ICC_CR0_EL1);
  }
  
 -- 
