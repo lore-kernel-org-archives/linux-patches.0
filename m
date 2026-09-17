@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146C4C33D3;
-	Thu, 17 Sep 2026 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A664DEC09;
+	Thu, 17 Sep 2026 18:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671193; cv=none; b=huzKyR1aLFLva7NniIf4A1FVLkmgkqlySOhzRD72gyMjbSm2ngFibI0lC7PGFue9Pk/ZiguyJ5r+H7l2XTXbqRVHegbCTKn2bhDPYEIinWqhybK+Shn7LmF621zGFGW5UOfBf6PE1P67GTfXzIqmMEp9lLkC1YwTMKLXQjg7bq8=
+	t=1789671196; cv=none; b=WcXR4W6l0NaBhpT/AATkXGTrFrqLNGV4aS+vU9e6PoSxhQNqOFKyYV04C/xpw0BF3TPDF3s++fbePou+mNXM/rP57QA+PSEc4kPkCfJTUjjfFq6SVfRQuiPBviF+KRD6lCVIOYblr9VoG/2TNC6sSlDH2sbQ0PFbAy2TPeDqvPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671193; c=relaxed/simple;
-	bh=hCbfcpbpWGVV+fbuRTIUbNFrMTcw7V7xqsS9csr//UY=;
+	s=arc-20240116; t=1789671196; c=relaxed/simple;
+	bh=XUhMXOOSQ9c1J6cnu1Suh3GltgwDJxb/OW81dx57gQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xw1Nx8plDV7Rx7x9HU6DsWbTxfHLHomAvj5Ih+TccRLAjk5thksl43QCIaaZeYHM83dbHVPhkIdbelsP8BFH8NOpfg/Z0/gjFYiFeMJFjf1VkMGYhQyfow4TWETo+DgQy72A3+xtiDeDczSWRWdu5mx03CWrLG0VdImNbrndgm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02akiAWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ULw1dMYOqMm+y8O1mf1WLWprJvbQ0hw4xc6U+qISlwKO63rTvYy38rGatusBESTjCfsLWPUS42Ri4zhvCQPpBY0og/KBGBuAQef2lVd9MX9GTR+Yb8Eo7GPIHs2Mq56R6qUhVvvOYggaEiDGzNZd5+wrYg5M2C+lTx/qA3pt7KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu35LWY6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02akiAWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E4E1F000FF;
-	Thu, 17 Sep 2026 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu35LWY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD3B1F00898;
+	Thu, 17 Sep 2026 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671192;
-	bh=ZPDWee84tHczW0sOHGwU1kcgosip7nuyaq8P05Ysub8=;
+	s=korg; t=1789671195;
+	bh=Q//VgErUrYXEACySnDzErdbJHBoIk/c1a9LeotMXxHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02akiAWj0r8hse28je6L4U8HCgIknTFQplccwvIsl9p+PgDyFLcE7ExCR7i9P7Qi5
-	 7STtrwRRP8v0mgMB8gRTNFYAg8UY/bWkce5bJwKm0EZwDAbp1wSNtQudiBtII5S9wH
-	 YgocIAjuLUdaeKGWJcSsumuZYP7ui81G3decFlHM=
+	b=gu35LWY6gL4T82B0Ps7sat/3XqHJeCimda+4xrz8UkiJwzbUZdC3Z23sM5dsjdSAW
+	 9/XV6FWJ7u24VWYvqwmZOJIBSMe6Os1pz2FcG5uMqaMEaNWm8NO9SU132UDXGH/x/J
+	 HMs+O/sK1ffDrHk7siHVIZgSkI3BwQVH8aaDnV50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0897/1102] xfs: truncate quota file correctly when repairing quota file
-Date: Thu, 17 Sep 2026 16:14:00 +0100
-Message-ID: <20260917151603.110592360@linuxfoundation.org>
+Subject: [PATCH 6.12 0898/1102] xfs: snapshot scrub stats when rendering them
+Date: Thu, 17 Sep 2026 16:14:01 +0100
+Message-ID: <20260917151603.138683922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,37 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0fc67528f54bb91dac22093749b425207c0fc245 upstream.
+commit 568a1588b906780dc3e9be56a61217afb4f7800e upstream.
 
-LOLLM noticed that xrep_quota_data_fork screws up the unit handling when
-it computes the offset at which to start truncating the quota file.
-max_dquid_off is the file block offset containing the highest possible
-dquot, and xfs_bunmapi_range takes the starting file block offset.
-Therefore, it makes no sense to multiply max_dquid_off by the blocksize;
-all we need to do is start truncating at the next block.
+LOLLM complains about concurrency problems in the scrub stats code
+because xchk_stats_format doesn't synchronize in any way with updates.
+These stats are only reported through debugfs so I don't think it really
+matters, but I guess I exist to make bots happy now.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: a5b91555403e3a ("xfs: repair quotas")
+Note: We snapshot the entire stats object with a spinlock so that we
+don't have to worry about users seeing slightly weird numbers (e.g.
+invocations has incremented but none of the outcomes have been yet) if
+we race with xchk_stats_merge_one.  This isn't a hot path.
+
+Cc: stable@vger.kernel.org # v6.6
+Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quota_repair.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/xfs/scrub/stats.c |   32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -457,8 +457,7 @@ xrep_quota_data_fork(
+--- a/fs/xfs/scrub/stats.c
++++ b/fs/xfs/scrub/stats.c
+@@ -95,25 +95,31 @@ xchk_stats_format(
+ 	int			ret = 0;
  
- 	if (truncate) {
- 		/* Erase everything after the block containing the max dquot */
--		error = xfs_bunmapi_range(&sc->tp, sc->ip, 0,
--				max_dqid_off * sc->mp->m_sb.sb_blocksize,
-+		error = xfs_bunmapi_range(&sc->tp, sc->ip, 0, max_dqid_off + 1,
- 				XFS_MAX_FILEOFF);
- 		if (error)
- 			goto out;
+ 	for (i = 0; i < XFS_SCRUB_TYPE_NR; i++, css++) {
++		struct xchk_scrub_stats	fss;
++
+ 		if (!name_map[i])
+ 			continue;
+ 
++		spin_lock(&css->css_lock);
++		memcpy(&fss, css, offsetof(struct xchk_scrub_stats, css_lock));
++		spin_unlock(&css->css_lock);
++
+ 		ret = scnprintf(buf, remaining,
+  "%s %u %u %u %u %u %u %u %u %u %llu %u %u %llu\n",
+ 				name_map[i],
+-				(unsigned int)css->invocations,
+-				(unsigned int)css->clean,
+-				(unsigned int)css->corrupt,
+-				(unsigned int)css->preen,
+-				(unsigned int)css->xfail,
+-				(unsigned int)css->xcorrupt,
+-				(unsigned int)css->incomplete,
+-				(unsigned int)css->warning,
+-				(unsigned int)css->retries,
+-				(unsigned long long)css->checktime_us,
+-				(unsigned int)css->repair_invocations,
+-				(unsigned int)css->repair_success,
+-				(unsigned long long)css->repairtime_us);
++				(unsigned int)fss.invocations,
++				(unsigned int)fss.clean,
++				(unsigned int)fss.corrupt,
++				(unsigned int)fss.preen,
++				(unsigned int)fss.xfail,
++				(unsigned int)fss.xcorrupt,
++				(unsigned int)fss.incomplete,
++				(unsigned int)fss.warning,
++				(unsigned int)fss.retries,
++				(unsigned long long)fss.checktime_us,
++				(unsigned int)fss.repair_invocations,
++				(unsigned int)fss.repair_success,
++				(unsigned long long)fss.repairtime_us);
+ 		if (ret <= 0)
+ 			break;
+ 
 
 
