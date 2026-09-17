@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC844ABBAC;
-	Thu, 17 Sep 2026 16:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A194B4ABBAC;
+	Thu, 17 Sep 2026 16:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661081; cv=none; b=IZICByuWxtNtFCwNw/xCW2otRjJwl+bCLQeQBgQiJjyLJWMozNVl8jwiQhp6it8W5z5L897NyFn96IGYIPLIiu7TlJ8oQT86AUNc8bdteLKwA5i4VHn0cBH2wdlpu1B0jazUHJJcJmwbKeLjLtnugD2ClCTJ716Oi6hbRNsn8zg=
+	t=1789661084; cv=none; b=ekIwhb8A5HIXUJfXwzWxEMwWKohGwxeTseSwvdzodsUcJBmASNgdyFuwHGIGVLSm/OBUxjtdpInd4JJHnU74E/on/GgPPqMszsgjXa5q/bFXHInK53xiKd3i1FWrId6myG6kBBnKYhGfdJpmzER/s8mlNOQA3HIFkwnMsgUWG+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661081; c=relaxed/simple;
-	bh=1TCBI2VAKrIkWPk7TZW3+fz7M+kgL1d2NUuJOBGJVMA=;
+	s=arc-20240116; t=1789661084; c=relaxed/simple;
+	bh=BFd+lP5v7/h/qsGB/HRXMURthRNvsJjnGVr+JxgM0NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjgZRyJpie17yocMO1ao43cqIDZ2C5EWo9DtVbtJUqpN2k4N1Tg6wcnS8N9Y3oNIKVIueFH8GKd4smVAZnxrycfZWODhjbsJ6DY8RK7YbK20zsRzsHfM6DC26U5zp6wfJnPxLqWpXnF/jpAg85ObXF25fWociMGnPmCBzCctz/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFiy8p79; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/WCBpSpcikBvr+yTISYtsk+W3UX+8bHttlXaNO9++9/R9N7cEx+85we8DV475YYiKaftpOHr8LsosTx4iJVpWcEPZkmvWEijU6STxpmva28ng/204w73+f2kCs/q70WxQyZTQXDjKhqdcjH2OGGSExg7RHiS+Z1VNnhlG6b22U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMUgYUlb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFiy8p79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DD41F00893;
-	Thu, 17 Sep 2026 16:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMUgYUlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92C21F00898;
+	Thu, 17 Sep 2026 16:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661080;
-	bh=mHGPpl5gIEawj+WxlzRmGiBIy1Ch85Bx2bWc7zSxIiA=;
+	s=korg; t=1789661083;
+	bh=LqNA+jmgY6Y2A9Roxx/lKDLP9yrtJup0rPZrg9HNNEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BFiy8p79S0hdYg0CN7nzDKwoMLCXwOJuMztaJ2AVdbERllKf+7SKh5VYxWo7xlGic
-	 PGGRyaXhnBCkR/jaeRsyj0Q+PEly9lVo5ZiNgzch6u2kcCtbdBZTID4yuhbp5aEz3l
-	 ZF/TyuoN5zfPdsj2OK4ujqO6hAcY4Pz25Kh7LcSQ=
+	b=MMUgYUlbIJNF9OJsUXsP6MSCWnJ70txHVIoT07+jdgHyWzo6XrCHV+QGUG4BJ77rO
+	 OGHX6A7SZf92W6lLzk40cE/eLZtH57NInH32cCN5G+I5U73aNmj8vFyDiwsqufF6UY
+	 OUr/GUsrNUgIMMt8Ar9Aq17g7aeQcCPm6Gs40cAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0074/1250] crypto: ixp4xx - fix buffer chain unwind on allocation failure
-Date: Thu, 17 Sep 2026 15:57:49 +0100
-Message-ID: <20260917151553.957207426@linuxfoundation.org>
+Subject: [PATCH 6.18 0036/1250] wifi: rtw89: disable HTC field in AP mode
+Date: Thu, 17 Sep 2026 15:57:11 +0100
+Message-ID: <20260917151552.914330154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,95 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 25056329384010a8672552b134f609601dc4f80e ]
+[ Upstream commit 1e53b826d5f8a3ca6d88fa6ed263acf54503214b ]
 
-chainup_buffers() builds a linked list of buffer descriptors for a
-scatterlist. If dma_pool_alloc() fails while constructing the list, the
-current code sets buf to NULL and later dereferences it unconditionally
-at the end of the function:
+Disable HE QoS HTC field when operating in AP mode to resolve
+interoperability issues with some stations.
 
-  buf->next = NULL;
-  buf->phys_next = 0;
-
-This can lead to a null-pointer dereference on allocation failure.
-
-If the failure happens after part of the descriptor chain has already
-been allocated and DMA-mapped, the partially constructed chain also
-needs to be released.
-
-Fix this by terminating the partially constructed chain on allocation
-failure and letting the callers unwind it via their existing cleanup
-paths. Also fix ablk_perform() to preserve the hook pointers before
-checking for failure, so partially built chains can be freed correctly.
-
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 25 ++++++++++++---------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-index fcc0cf4df637d..5b90cf0fb0e41 100644
---- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-+++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-@@ -884,8 +884,9 @@ static struct buffer_desc *chainup_buffers(struct device *dev,
- 		ptr = sg_virt(sg);
- 		next_buf = dma_pool_alloc(buffer_pool, flags, &next_buf_phys);
- 		if (!next_buf) {
--			buf = NULL;
--			break;
-+			buf->next = NULL;
-+			buf->phys_next = 0;
-+			return NULL;
- 		}
- 		sg_dma_address(sg) = dma_map_single(dev, ptr, len, dir);
- 		buf->next = next_buf;
-@@ -983,7 +984,7 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 	unsigned int nbytes = req->cryptlen;
- 	enum dma_data_direction src_direction = DMA_BIDIRECTIONAL;
- 	struct ablk_ctx *req_ctx = skcipher_request_ctx(req);
--	struct buffer_desc src_hook;
-+	struct buffer_desc *buf, src_hook;
- 	struct device *dev = &pdev->dev;
- 	unsigned int offset;
- 	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
-@@ -1025,22 +1026,24 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 		/* This was never tested by Intel
- 		 * for more than one dst buffer, I think. */
- 		req_ctx->dst = NULL;
--		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
--				     flags, DMA_FROM_DEVICE))
--			goto free_buf_dest;
--		src_direction = DMA_TO_DEVICE;
-+		buf = chainup_buffers(dev, req->dst, nbytes, &dst_hook,
-+				      flags, DMA_FROM_DEVICE);
- 		req_ctx->dst = dst_hook.next;
- 		crypt->dst_buf = dst_hook.phys_next;
-+		if (!buf)
-+			goto free_buf_dest;
-+		src_direction = DMA_TO_DEVICE;
- 	} else {
- 		req_ctx->dst = NULL;
- 	}
- 	req_ctx->src = NULL;
--	if (!chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
--			     src_direction))
--		goto free_buf_src;
--
-+	buf = chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
-+			      src_direction);
- 	req_ctx->src = src_hook.next;
- 	crypt->src_buf = src_hook.phys_next;
-+	if (!buf)
-+		goto free_buf_src;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 3842b0e3bcb44..fa277c8e899fd 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -847,6 +847,7 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
+ 				 enum btc_pkt_type pkt_type)
+ {
+ 	struct rtw89_sta_link *rtwsta_link = tx_req->rtwsta_link;
++	struct ieee80211_vif *vif = tx_req->vif;
+ 	struct sk_buff *skb = tx_req->skb;
+ 	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 	struct ieee80211_link_sta *link_sta;
+@@ -878,6 +879,9 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
+ 	if (rtwsta_link && rtwsta_link->ra_report.might_fallback_legacy)
+ 		return false;
+ 
++	if (vif->type == NL80211_IFTYPE_AP)
++		return false;
 +
- 	crypt->ctl_flags |= CTL_FLAG_PERFORM_ABLK;
- 	qmgr_put_entry(send_qid, crypt_virt2phys(crypt));
- 	BUG_ON(qmgr_stat_overflow(send_qid));
+ 	return true;
+ }
+ 
 -- 
 2.53.0
 
