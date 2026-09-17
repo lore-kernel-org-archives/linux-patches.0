@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3528252F29E;
-	Thu, 17 Sep 2026 17:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45D4FE2E1;
+	Thu, 17 Sep 2026 17:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666288; cv=none; b=gD0f7yUK3QBUzh5xdo2740LZqIRDuZ67yKVBvQv4vT1KFuV5OniuhhxTFfKMpqXK5Q/gfI4qbD26Ebo3XatK6bUuUDRBSfW5B99xBwLbtEHZb62lJJNVYpv83Xq4UFFjM78CQI5MqXChWdBxawiJ/1tlEVbvNYsK0a6Kxn0VsYg=
+	t=1789666291; cv=none; b=d+nC4Pk0uQXNS1wPbuGfDqcLeXJ9i/Az93NMbGIkM+Iy1Qy7AklG6lVeUe5Gm3qP6SXC2d4+/YDpLjWpKJC8Vle/AKBZh7BRBCStvjPhasxwaEGIIS2DW5M5mrYAjnst0phM4hTZXEuGCIB1gVuPcImFtps1LoQChF/FpPO9y3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666288; c=relaxed/simple;
-	bh=ogziZGBIweYml83XMTOoPZ33QjHhyc1xl4Pw0IGCs3o=;
+	s=arc-20240116; t=1789666291; c=relaxed/simple;
+	bh=ns7OcB7QaOx6LRcThunfR3xzsE/1qEcYEyphZ/4VT04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfMyjIIz36AklDfIRPF8vosKXvyI7vHnHlxVEKO7kkH8ftSZO/rCtlv+6Q+FPwYmA53eslVf1/IGjEEGAPTzW0TNX1BiUttzITS8unoPlTcjA8JkMOijt3jXDCUw8lnq1QM6p0NpfREA5FR63sV3XFRXKeT/KSl6C+DrvdY8MGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvUzF7u0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H6UIZHJ7EihJuzi6IosbDmEaw+iFxHay8lE6FUMCJn24lqatUSkGaJBRud2z4p0HqeC27uzg5cbR+l/F8Pgb8u+EFHe1463cvkoMvLY8FC9e3Q6K35c0JQ0oUJDVPBlk1lpTNnEIQ0TL5q+o9+IhDj6WLv/fZzPzwFLAiLfHY1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cxX0Uhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvUzF7u0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893FF1F000FF;
-	Thu, 17 Sep 2026 17:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cxX0Uhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B51F0089A;
+	Thu, 17 Sep 2026 17:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666287;
-	bh=1K6i/qudXP0XzY9rLBJwp/ua8NsT7Jz2E5ZOuVt81eM=;
+	s=korg; t=1789666290;
+	bh=a+/YrHzTyc6+4BcuLNfahmnCMIiu0DOe+HyP43tGngU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BvUzF7u0sxQVbdFnD/CC3j/sDcEozBPfbOLJsOFbobqB9Qea0mBaBvuGinHFcNrov
-	 ofstkgaDdK+e8gtRcn7KkdSKvNbn6sVnHzFj5UvjQ3+UdYs2SVRSMp+YItb1FgdFkx
-	 YVRex9XoQGkHhdWbTFLE823MIK95mbbWyPCcKO/4=
+	b=2cxX0UhsQdTBl0L427+Sh4mxaBdKqt5VofCWm6gUbmoHugdNkLGGNcuL3kCej0lTT
+	 9FljWF69qV9mIhPYhx5qTeyYhy+HTMRlmLFVaZQjtAvFzsNsfD2XI3/UVNhs5sv0ac
+	 6kHOwaQ0qFPWkbouujReI7GpgaLElc1OWLSc/1xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 0980/1250] watchdog: sunxi_wdt: preserve boot-enabled watchdog
-Date: Thu, 17 Sep 2026 16:12:55 +0100
-Message-ID: <20260917151618.581280403@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 0989/1250] tracing: Free histogram var refs regardless of how often they are referenced
+Date: Thu, 17 Sep 2026 16:13:04 +0100
+Message-ID: <20260917151618.835213400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,100 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit aab55360fa11a2c054798a484ac67ad606f563e4 upstream.
+commit 4bddcb346a6cf4615ca77f69a589623b877ca267 upstream.
 
-sunxi_wdt_probe() unconditionally stops the watchdog even when firmware
-left it running. This opens an unprotected interval during boot and
-prevents CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED from taking over the active
-watchdog.
+Using the same variable three or more times in one hist trigger leaks the
+variable reference and its strings when the trigger is removed.
 
-Detect an enabled watchdog and decode its programmed interval. Preserve
-representable timeouts, and round the 0.5-second interval up to the
-minimum representable one-second timeout. Use the configured timeout for
-reserved interval encodings. Set the Linux reset mode and ping the
-watchdog without clearing its enable bit, then mark it hardware-running
-before registration so the watchdog core services it until userspace
-takes control. Leave disabled watchdogs untouched.
+commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
+var_refs") made a trigger's var_refs[] array the only owner of a var ref:
+destroy_hist_field() returns early for HIST_FIELD_FL_VAR_REF, so the field
+expressions never destroy one. One entry, freed once, no count needed.
 
-Fixes: d00680ed0026 ("watchdog: sunxi: New watchdog driver for Allwinner A10/A13")
+commit 8bcebc77e85f ("tracing: Fix histogram code when expression has same
+var as value") then made repeated references share one object and added a
+count of them. Only the increment side exists, since those expressions
+still return early and never drop a reference, so __destroy_hist_field()
+sees how many references were created rather than how many are left. It
+frees when the decremented count is 0 or 1, so two references work and
+three or more leak.
+
+Sharing kept one array entry per object, and create_var_ref() searches and
+appends within a single trigger, so nothing outside it holds the object.
+Removing a trigger whose variables are still referenced is already refused
+by check_var_refs() with -EBUSY. Drop the count and free unconditionally.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20260827-submit-sunxi-wdt-boot-enabled-v1-v2-1-610d37dccc97@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20260906124025.3550596-1-donggeunyoo.kernel@gmail.com
+Fixes: 8bcebc77e85f ("tracing: Fix histogram code when expression has same var as value")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sunxi_wdt.c |   45 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |   16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
---- a/drivers/watchdog/sunxi_wdt.c
-+++ b/drivers/watchdog/sunxi_wdt.c
-@@ -128,6 +128,38 @@ static int sunxi_wdt_ping(struct watchdo
- 	return 0;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -164,7 +164,6 @@ struct hist_field {
+ 	struct hist_field		*operands[HIST_FIELD_OPERANDS_MAX];
+ 	struct hist_trigger_data	*hist_data;
+ 	enum hist_field_fn		fn_num;
+-	unsigned int			ref;
+ 	unsigned int			size;
+ 	unsigned int			offset;
+ 	unsigned int                    is_signed;
+@@ -1905,16 +1904,8 @@ out:
+ 	return field_op;
  }
  
-+static bool sunxi_wdt_is_running(struct watchdog_device *wdt_dev)
-+{
-+	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
-+	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
-+
-+	return readl(sunxi_wdt->wdt_base + regs->wdt_mode) & WDT_MODE_EN;
-+}
-+
-+static unsigned int sunxi_wdt_get_timeout(struct watchdog_device *wdt_dev)
-+{
-+	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
-+	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
-+	unsigned int timeout;
-+	u32 interval;
-+
-+	interval = readl(sunxi_wdt->wdt_base + regs->wdt_mode);
-+	interval >>= regs->wdt_timeout_shift;
-+	interval &= WDT_TIMEOUT_MASK;
-+	/* Round the 0.5-second interval up to the minimum representable timeout. */
-+	if (!interval)
-+		return WDT_MIN_TIMEOUT;
-+
-+	for (timeout = WDT_MIN_TIMEOUT;
-+	     timeout < ARRAY_SIZE(wdt_timeout_map); timeout++) {
-+		if (wdt_timeout_map[timeout] == interval)
-+			return timeout;
-+	}
-+
-+	/* Reserved interval encoding. */
-+	return 0;
-+}
-+
- static int sunxi_wdt_set_timeout(struct watchdog_device *wdt_dev,
- 		unsigned int timeout)
+-static void get_hist_field(struct hist_field *hist_field)
+-{
+-	hist_field->ref++;
+-}
+-
+ static void __destroy_hist_field(struct hist_field *hist_field)
  {
-@@ -259,6 +291,7 @@ static int sunxi_wdt_probe(struct platfo
- {
- 	struct device *dev = &pdev->dev;
- 	struct sunxi_wdt_dev *sunxi_wdt;
-+	unsigned int running_timeout;
- 	int err;
+-	if (--hist_field->ref > 1)
+-		return;
+-
+ 	kfree(hist_field->var.name);
+ 	kfree(hist_field->name);
  
- 	sunxi_wdt = devm_kzalloc(dev, sizeof(*sunxi_wdt), GFP_KERNEL);
-@@ -286,7 +319,17 @@ static int sunxi_wdt_probe(struct platfo
+@@ -1961,8 +1952,6 @@ static struct hist_field *create_hist_fi
+ 	if (!hist_field)
+ 		return NULL;
  
- 	watchdog_set_drvdata(&sunxi_wdt->wdt_dev, sunxi_wdt);
+-	hist_field->ref = 1;
+-
+ 	hist_field->hist_data = hist_data;
  
--	sunxi_wdt_stop(&sunxi_wdt->wdt_dev);
-+	if (sunxi_wdt_is_running(&sunxi_wdt->wdt_dev)) {
-+		running_timeout = sunxi_wdt_get_timeout(&sunxi_wdt->wdt_dev);
-+		if (running_timeout)
-+			sunxi_wdt->wdt_dev.timeout = running_timeout;
-+
-+		err = sunxi_wdt_start(&sunxi_wdt->wdt_dev);
-+		if (err)
-+			return err;
-+
-+		set_bit(WDOG_HW_RUNNING, &sunxi_wdt->wdt_dev.status);
-+	}
+ 	if (flags & HIST_FIELD_FL_EXPR || flags & HIST_FIELD_FL_ALIAS)
+@@ -2217,10 +2206,8 @@ static struct hist_field *create_var_ref
+ 	for (i = 0; i < hist_data->n_var_refs; i++) {
+ 		ref_field = hist_data->var_refs[i];
+ 		if (ref_field->var.idx == var_field->var.idx &&
+-		    ref_field->var.hist_data == var_field->hist_data) {
+-			get_hist_field(ref_field);
++		    ref_field->var.hist_data == var_field->hist_data)
+ 			return ref_field;
+-		}
+ 	}
+ 	/* Sanity check to avoid out-of-bound write on 'hist_data->var_refs' */
+ 	if (hist_data->n_var_refs >= TRACING_MAP_VARS_MAX)
+@@ -3264,7 +3251,6 @@ static struct hist_field *create_var(str
+ 		goto out;
+ 	}
  
- 	watchdog_stop_on_reboot(&sunxi_wdt->wdt_dev);
- 	err = devm_watchdog_register_device(dev, &sunxi_wdt->wdt_dev);
+-	var->ref = 1;
+ 	var->flags = HIST_FIELD_FL_VAR;
+ 	var->var.idx = idx;
+ 	var->var.hist_data = var->hist_data = hist_data;
 
 
