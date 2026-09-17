@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059264DDB41;
-	Thu, 17 Sep 2026 15:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE824EB840;
+	Thu, 17 Sep 2026 15:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659447; cv=none; b=BeygpX/jRUjxDIiK6xMdN7KB7y0F7zRFH1PXqAo/Y2nJ4u2AVf4afiecPhv7JoRmvTNrXd3YaXNftGhPvc6VS+4njOdUEXAJhnb1kg9moXhSGXVfwSlkH9TX3+A7X3OEndU5BCAHGNjL0uy/elGB/9sZAIeTiWdiA7lpEhTOCng=
+	t=1789659449; cv=none; b=Wu01qDfPUCQmg18T5ZBdyQodAlvf0w5YdoHp5A04/GpzLftC/9JD8AyTDzWIegGMo9ELRgK52jp3IvkVFTkO78ENJghm+r+mLgvWJ5b19BEPvdTxLu7hk2VQZZjujKtCW+Umvk7vQhl2f+fA39DVSvMg9kBnpra+oUiYgARmIIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659447; c=relaxed/simple;
-	bh=lOCxMxObiCXBXoIW+tNRuvL1DEFpfD5aVxgmV9RZa5c=;
+	s=arc-20240116; t=1789659449; c=relaxed/simple;
+	bh=opFqok6Ad0dVvbd5U2ov5BdhjSlYlP/gozaOm1Jb4nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJmZBiniP+ICZEhPMqirovudtWlh173KE/iYzUE9x5KBS8r4tPgx9Rpz6thBL0w+967L+Lor/pH8c2We9dUT9J8Vn+Z9M6sAIRVJpzy12+AgJ2zakIidNct5LMrG3XdmsU6ZsGQpmzhGgT0fjP2ZdvcgLLunBVSF80PmKWhI2xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdY4E+rk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tXsMVAIMqP0BuKvO2N4bHGOkLdqcl4TxyG9Y+8LFwWXLCf+YogQRDqK7iv0MC0NKTkuW3RTuys8XaCyzfrLQjLknhDPRPkOC7EvaHJHEEZt8mlD4GVbcqNC23eVXnePaET8YvQVAnv+cZP+2UZagnNT8xGbdsPq9/rhG1J8TT1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bATP507M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdY4E+rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD5F1F00898;
-	Thu, 17 Sep 2026 15:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bATP507M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD761F000FF;
+	Thu, 17 Sep 2026 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659442;
-	bh=dmh4+qRFo4qcY/ZhYTYqoGybP+TEq0MrARjD3sZWlRY=;
+	s=korg; t=1789659445;
+	bh=d4yJt0GY7po6CgT5u0EPYYAhNl7gcr/5w5HZkfC96rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SdY4E+rky2+H1KEqgMSQTH7cRDq95+80ScygC5q59ddpjDWmwy4tjTP6sj0orVKSJ
-	 iIWUq7Ul0CaWeckxuWg4IL5RBgmwK+aLqfBTfF5R0dZ0sADeiNu1eOuNGwWI+PDV3d
-	 8lWA+CxR8JUWKzNkTTe2lbV7ys8w4jPOHD8BE5VE=
+	b=bATP507MhvVi80mSei/P6K2ePGnKKIfF8VdLX2AguaKWZrqfqUVZEx1qZ98S4nqEf
+	 Y9cwhs+P6RFotdvYAypOPI7c9pJWG7G9ra3P3qc+DuIUkwyFoxqfDTc+u0IA4e1U/J
+	 M3sw51FCRbNj74lR8R2cjPljgqv4iOvg20ee4Xvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nicholas Carlini <npc@anthropic.com>,
+	Ning Ding <dingning04@gmail.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 259/733] bpf: Require MEM_PERCPU for percpu kptr stores
-Date: Thu, 17 Sep 2026 16:09:27 +0100
-Message-ID: <20260917151357.766868209@linuxfoundation.org>
+Subject: [PATCH 7.2 260/733] bpf: Keep refcount_acquire nullable for borrowed RCU kptrs
+Date: Thu, 17 Sep 2026 16:09:28 +0100
+Message-ID: <20260917151357.795260158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,56 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Ning Ding <dingning04@gmail.com>
 
-[ Upstream commit 048029ba1c793f8cabc4ad5eea765da01903f8f1 ]
+[ Upstream commit dc36739e5cc9f60485418a910b42bc95339218d2 ]
 
-map_kptr_match_type() treats perm_flags as the set of register type flags
-that a kptr field permits. Adding MEM_PERCPU to that set for
-BPF_KPTR_PERCPU does not require the source register to carry it, however.
-The subset test consequently accepts both a plain bpf_obj_new() allocation
-and a referenced kernel pointer into a __percpu_kptr map field.
+bpf_refcount_acquire() is fallible for a borrowed reference because the
+object may have reached a zero refcount. The verifier therefore keeps
+KF_RET_NULL on the return value unless the argument is an owning reference.
 
-Loads from the field are always marked MEM_PERCPU. Consumers then treat the
-stored value as the cookie returned by bpf_percpu_obj_new(): per-CPU pointer
-helpers relocate it, and map teardown selects the per-CPU free path. A plain
-allocation can therefore provide an arbitrary kernel read/write, while a
-kernel pointer can be relocated into an invalid address or sent through a
-missing destructor.
+An RCU-protected load of a local kptr is marked MEM_ALLOC, but it only
+receives NON_OWN_REF when the pointee contains a graph node. A refcounted
+object without a graph node consequently looks like an owning reference
+even though the loaded register has no acquired reference state. If the
+program drops the last real reference while remaining in the RCU critical
+section, refcount_inc_not_zero() returns NULL while the verifier treats the
+result as non-NULL.
 
-Require the source MEM_PERCPU flag to match the destination field kind.
-This preserves valid bpf_percpu_obj_new() stores and rejects both the
-program-BTF and kernel-BTF variants.
+Only classify the argument as owning when it is backed by a verifier-tracked
+reference. This retains the non-NULL return for pointers from bpf_obj_new(),
+bpf_kptr_xchg(), or an earlier successful acquisition, while requiring a
+NULL check for borrowed RCU kptrs.
 
-Fixes: 36d8bdf75a93 ("bpf: Add alloc/xchg/direct_access support for local percpu kptr")
+Fixes: 1b12171533a9 ("bpf: Mark direct ld of stashed bpf_{rb,list}_node as non-owning ref")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
 Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Ning Ding <dingning04@gmail.com>
+[ kkd: Rewrote commit log ]
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260904084325.52250-2-memxor@gmail.com
+Link: https://lore.kernel.org/r/20260904084325.52250-4-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f913e3603a5ea..6d66a5dbf8dff 100644
+index 6d66a5dbf8dff..72994e41843ca 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -4320,6 +4320,13 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
- 	if (type_flag(reg->type) & ~perm_flags)
- 		goto bad_type;
+@@ -12537,7 +12537,7 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 					reg_arg_name(env, argno));
+ 				return -EINVAL;
+ 			}
+-			if (!type_is_non_owning_ref(reg->type))
++			if (!type_is_non_owning_ref(reg->type) && reg_is_referenced(env, reg))
+ 				meta->arg_owning_ref = true;
  
-+	/*
-+	 * A BPF_KPTR_PERCPU field is read back as MEM_PERCPU, so the value
-+	 * stored in it must carry the same flag.
-+	 */
-+	if ((kptr_field->type == BPF_KPTR_PERCPU) != !!(reg->type & MEM_PERCPU))
-+		goto bad_type;
-+
- 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
- 	reg_name = btf_type_name(reg->btf, reg->btf_id);
- 
+ 			rec = reg_btf_record(reg);
 -- 
 2.53.0
 
