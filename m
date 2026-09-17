@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2E049D58F;
-	Thu, 17 Sep 2026 19:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0074D17B2;
+	Thu, 17 Sep 2026 19:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671811; cv=none; b=iNtxaByBzSwIl5uP1XaWOXK5x8w6naiU3AFEZuwv1V8RBA+xCyTNRUtfc0ZdAhXh5yDOJFbo20CzhngyRUexfiatVCGryL7F3Vo/SX2cBtfSMPcg72sBpArQ4am3Eql/Z9YOolJJD9S84UJRBiwRVWt+KRF6XEdOHkDeNxsLTFY=
+	t=1789671813; cv=none; b=DzFKmcge5tzYkUhDHyeAaZyNvg9Lf97tX5HrIuUPFRUbTjWT3gfrajN2KtzVTI964lHSwi87cKeyO1ESLYhy8eWJmhwL+b5fm5Ks3xF3jTWvT0IrSQiwGqOli0HpKOfrgvIvPdXXwJr9dOrKJf28JAIdREsYusQ+b+gNa4++7Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671811; c=relaxed/simple;
-	bh=gqJjXWRRQ1cTxsdIeVcvZqxVr4EWEMimFg6xzkqkNLc=;
+	s=arc-20240116; t=1789671813; c=relaxed/simple;
+	bh=zw5Lg0Hn8TfqRq67d4zvBowsQYTgEVX/MQxWLQN0ZZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfPKAI1DkepaxwF0EPipNP0b45Jkw9pXYMZP380Ij5kEp8cVju1Dew8GDtMNM+0ivM05dX6Baxa4G/VJ7d0zuQHRmZ9dX9Mwb8qagbgkCr3NAnCjzjXMRdKEHwX4xbZQ6DqpibvBUBwhJp8834qxDF6mooXn2g3UG/6NOdpjvwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYDG2sUU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ItKBNyazLaB/CWUrAExf4lvsht0MgGwmgh0DQJafO+bVKf+fzfwgpCp2SbvVVbYIoxDy6UrvdS61fh6QT30A0WF325MNFDHLG9XF408hk7Pb/FK/3TDjs7h5zqJMz3rrZjj92g3TDuo2YebXSSeD5CByb8IYfPLzHmsvad4WGfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzYUC9gE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYDG2sUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E942D1F000FF;
-	Thu, 17 Sep 2026 19:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzYUC9gE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE31F000FF;
+	Thu, 17 Sep 2026 19:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671809;
-	bh=kwRvgSknM8navXt4FqfuEz/Z8aNs6KDeazmNRx+kK8E=;
+	s=korg; t=1789671812;
+	bh=IqqcLwGPYpOkwifvIvALQRXrb+VMseOTAwofL+tcvnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VYDG2sUUAW2vg2brYtEleM5HKhzwkJuHqdJk+4+0biGfhEkrDPOoCtNUXf8zT5+6y
-	 NoMXJDEJp1y5CT5mQIicKFhL9iz5+H124+ITCx9EfhdvvOgzm5lvV4lMf1fuB+XOmQ
-	 eVeXmFudznGmEcbWSFCyB6W22+25Z65p53a7xRzU=
+	b=pzYUC9gEadGobowNKx2yxAvq/zy99+1nZ3Lz+PXEGwKQQFS4AWPcR7EP/AA5Jog6L
+	 x7J01qBi0/ef2OE/0vBAUF/n8Osd8ReWB97Yz2AoxtbaeTiHYvL1X+S59IOKbK1qZ0
+	 ps0YyAx6ylyqiMgK7gORGk3MGkMfj6u60EPeaj+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1097/1102] ocfs2: validate directory-index entry counts when reading metadata
-Date: Thu, 17 Sep 2026 16:17:20 +0100
-Message-ID: <20260917151608.411910585@linuxfoundation.org>
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 1098/1102] mm, hugetlb: increment the number of pages to be reset on HVO
+Date: Thu, 17 Sep 2026 16:17:21 +0100
+Message-ID: <20260917151608.437958800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -59,124 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Oscar Salvador <osalvador@suse.de>
 
-[ Upstream commit bc70726ddad53c7e9a9a85915bf2415b0d4f42f9 ]
+commit 274fe92de2c4e50dbfd1b30070b4f6d8a27b388a upstream.
 
-ocfs2_validate_dx_leaf() and ocfs2_validate_dx_root() check the ECC and
-signature of an indexed-directory block before it reaches higher-level
-callers, but neither validator bounds the ocfs2_dx_entry_list counts
-against the capacity of the block that holds them.
+commit 4eeec8c89a0c ("mm: move hugetlb specific things in folio to
+page[3]") shifted hugetlb specific stuff, and now mapping overlaps
+_hugetlb_cgroup field.
 
-ocfs2_dx_dir_search() then walks
+Upon restoring the vmemmap for HVO, only the first two tail pages are
+reset, and this causes the check in free_tail_page_prepare() to fail as it
+finds an unexpected mapping value in some tails.
 
-	for (i = 0; i < le16_to_cpu(entry_list->de_num_used); i++)
-		dx_entry = &entry_list->de_entries[i];
+Increment the number of pages to be reset to 4 (head + 3 tail pages)
 
-over de_num_used entries with no bounds check.  entry_list is either
-dx_leaf->dl_list (from ocfs2_read_dx_leaf) or, for an inline root,
-dx_root->dr_entries.  A crafted on-disk image can set de_num_used (and
-de_count, which is the __counted_by_le() bound of de_entries) to 0xffff
-and make the walk read far past the end of the 4KB metadata block, giving
-a slab out-of-bounds read reachable from any path lookup, stat() or open()
-on an indexed directory once the image is mounted.
-
-Commit 775c17386a6f ("ocfs2: validate dx_root extent list fields during
-block read") already bounds dr_list for the non-inline dx_root, but left
-the inline dr_entries path and the dx_leaf dl_list unchecked.  Add the
-same read-time validation for both entry lists: de_count must equal the
-capacity of the block (ocfs2_dx_entries_per_leaf()/per_root()) and
-de_num_used must not exceed de_count, rejecting corrupted metadata with
--EFSCORRUPTED before ocfs2_dx_dir_search() can walk an out-of-range entry
-array.
-
-de_count is always written as exactly the block capacity when a leaf or
-inline root is formatted, so the equality check does not reject any valid
-image.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Link: https://lore.kernel.org/20260713205625.92391-1-doruk@0sec.ai
-Fixes: 9b7895efac90 ("ocfs2: Add a name indexed b-tree to directory inodes")
-Fixes: 4ed8a6bb083b ("ocfs2: Store dir index records inline")
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20250415111859.376302-1-osalvador@suse.de
+Fixes: 4eeec8c89a0c ("mm: move hugetlb specific things in folio to page[3]")
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dir.c |   45 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ mm/hugetlb_vmemmap.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -611,6 +611,28 @@ static int ocfs2_validate_dx_root(struct
- 					  le16_to_cpu(el->l_count));
- 			goto bail;
- 		}
-+	} else {
-+		struct ocfs2_dx_entry_list *dl_list = &dx_root->dr_entries;
-+
-+		if (le16_to_cpu(dl_list->de_count) !=
-+		    ocfs2_dx_entries_per_root(sb)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_count %u (expected %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_count),
-+					  ocfs2_dx_entries_per_root(sb));
-+			goto bail;
-+		}
-+
-+		if (le16_to_cpu(dl_list->de_num_used) >
-+		    le16_to_cpu(dl_list->de_count)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_num_used %u (de_count %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_num_used),
-+					  le16_to_cpu(dl_list->de_count));
-+			goto bail;
-+		}
- 	}
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -238,11 +238,11 @@ static void vmemmap_remap_pte(pte_t *pte
+  * struct page, the special metadata (e.g. page->flags or page->mapping)
+  * cannot copy to the tail struct page structs. The invalid value will be
+  * checked in the free_tail_page_prepare(). In order to avoid the message
+- * of "corrupted mapping in tail page". We need to reset at least 3 (one
+- * head struct page struct and two tail struct page structs) struct page
++ * of "corrupted mapping in tail page". We need to reset at least 4 (one
++ * head struct page struct and three tail struct page structs) struct page
+  * structs.
+  */
+-#define NR_RESET_STRUCT_PAGE		3
++#define NR_RESET_STRUCT_PAGE		4
  
- bail:
-@@ -650,10 +672,25 @@ static int ocfs2_validate_dx_leaf(struct
- 		return ret;
- 	}
- 
--	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf)) {
--		ret = ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
--				  7, dx_leaf->dl_signature);
--	}
-+	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf))
-+		return ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
-+				   7, dx_leaf->dl_signature);
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_count) !=
-+	    ocfs2_dx_entries_per_leaf(sb))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_count %u (expected %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count),
-+				   ocfs2_dx_entries_per_leaf(sb));
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_num_used) >
-+	    le16_to_cpu(dx_leaf->dl_list.de_count))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_num_used %u (de_count %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_num_used),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count));
- 
- 	return ret;
- }
+ static inline void reset_struct_pages(struct page *start)
+ {
 
 
