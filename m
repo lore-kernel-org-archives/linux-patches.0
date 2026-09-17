@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB9C4E3237;
-	Thu, 17 Sep 2026 15:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE809345EC0;
+	Thu, 17 Sep 2026 15:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659123; cv=none; b=YDfEqWpItksJ7sR74TtZRBa8RmwJ3dqZQW5doV494R/9bJ8tNUQJjQFSe+0Sx3SPMjzrt+/+4CqKurzYEpcuK0YSRhtVzbXQU33PL/OitSEgZ1JRBUmgPMRflt/DnuWkSQnw6QlzzSJ1Pz12k7Amiypde9GDuZ2nXNv8K82CgRA=
+	t=1789659133; cv=none; b=gU5ioAeIw1LU2AbK93aLftY0Iio+OnpBiuXO3/WlIjhNgHE9YNf5i9My0D2FGBMI3gYOgIQMQRBp6RoFJL1m6E0pblDN4bVfSP8FNjAIYgddRthmxNMxcU21Keh4fzV3cq5dV/Rq6u1EvOdGhHa9M0z/TrAzRDhv8uZbRShC2tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659123; c=relaxed/simple;
-	bh=6M6iLDDspgN4RAAtJRj8man0LD3sMfMNOaNfYdKjWhg=;
+	s=arc-20240116; t=1789659133; c=relaxed/simple;
+	bh=cozsA1d5pqG1VpC/y83VQQEsRteST/L8pmBzcytGhlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gE7zl44DXrBxTQ2/MDvw5vZ42KTgFDgnXAwR219CAERE7Y7vuM/F+8lwvVhHeoXiVE0jgWUYM3hhsAlm8IGoGfKiGO2pXocMfWuKNpLpUKSPsgGb8SS0LxCvbiQRFkqPhrVK22kzXD2nv5H7WwXU43axekPHPk0CbP9vOmCMXBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPTbhFR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OZAPSYW1rNSESf47RutBkrh9UevjmZhiceFRC/aOaRzXyRHLa1gWlj8+ps8OCs2Md/Y3aDQXT0ND6lehZruV5RbxRKmWf3crBquGSeN3NnALCUgZ6oPOE1zD8pVDHfCfXTxH9soeLUdtIN3isapIv6291zJb8lVsTCqxrbyc3VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O62C1Hcf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPTbhFR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A4C1F00893;
-	Thu, 17 Sep 2026 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O62C1Hcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B8D1F00899;
+	Thu, 17 Sep 2026 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659117;
-	bh=2XFSiem2S/lgBKVVABjJLnn2vlrp9dn8fIsm7ILpaIs=;
+	s=korg; t=1789659120;
+	bh=BTdgU4LxAt8lDiFMp7aqqkUskWddrHbFxRgyiG235rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPTbhFR6jURsYi7zqaf9lRpSMw3ZBOn+pbZS+nPnryQ/apbDwaihV1unx8dp2C14M
-	 xKEtKxbeDOH8Rvvf559CDsJcNKqZi03U45r5/ZPjqIanDpjyNySfax6+Lfd8RIYGmo
-	 /ee+wLUWU8lJ1pCa7vnbkmlGcKGfIT2AobDhZRc8=
+	b=O62C1Hcft0ksmsAsU83Xk0HV9vXU0rsMqHpkFa9QvLIDCPOvH7AIclbAPPAzZRow2
+	 RwvB0TaZNB2tHdzyfkGRXTJtkjg/OFK8l5mbKY0BSY+KOa0q78EYrmB0jFksNEvwcM
+	 GsXy9clwK99dsAFCgktndhUJulCNA/iiRjihDHjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 122/733] ASoC: ab8500: Remove the nonfunctional sidetone apply control
-Date: Thu, 17 Sep 2026 16:07:10 +0100
-Message-ID: <20260917151354.046380666@linuxfoundation.org>
+Subject: [PATCH 7.2 149/733] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
+Date: Thu, 17 Sep 2026 16:07:37 +0100
+Message-ID: <20260917151354.766911420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,230 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ec75e653b70ce26ea68187c2069722baa80efadb ]
+[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
 
-After the coefficient controls were removed, writing "Apply FIR"
-programs 128 zero coefficients and reports that the sidetone filter is
-configured. The associated ANC configuration DAPM pins are also now
-unreachable dead infrastructure.
+syzbot reported BUG() in sock_sendmsg_nosec(). [0]
 
-Remove the misleading status/apply control, its private state, and the
-obsolete configuration-only DAPM pins. Keep the direct sidetone reset
-and remaining hardware controls.
+The problem is that tpacket_parse_header() casts user-provided
+tpacket_hdr.tp_len, which is u32, to int.
 
-Fixes: e366ce8b22ec ("ASoC: codecs: ab8500: Remove suspicious code")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-5-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If the length is larger than INT_MAX, the following condition
+in tpacket_parse_header() passes,
+
+  if (unlikely(tp_len > size_max))
+
+and any negative value can be returned to the caller, up to
+sock_sendmsg_nosec().
+
+The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
+to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
+
+  *(uint64_t*)0x200000000008 = 0xfffffdef;
+  ...
+  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
+
+Let's define the local tp_len as u32 in tpacket_parse_header().
+
+[0]:
+kernel BUG at net/socket.c:803!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
+Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
+RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
+RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
+RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
+RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
+R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
+R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
+FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __sock_sendmsg net/socket.c:815 [inline]
+ sock_write_iter+0x2de/0x3e0 net/socket.c:1266
+ new_sync_write fs/read_write.c:595 [inline]
+ vfs_write+0x612/0xba0 fs/read_write.c:687
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f173130ecb9
+Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
+RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
+R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
+ </TASK>
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 114 --------------------------------
- 1 file changed, 114 deletions(-)
+ net/packet/af_packet.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 167f021c7ecbc..11142d15df450 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -14,17 +14,14 @@
-  *         for ST-Ericsson.
-  */
- 
--#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/slab.h>
- #include <linux/moduleparam.h>
- #include <linux/init.h>
--#include <linux/delay.h>
- #include <linux/pm.h>
- #include <linux/platform_device.h>
--#include <linux/mutex.h>
- #include <linux/mfd/abx500/ab8500.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500-sysctrl.h>
-@@ -54,32 +51,9 @@
- /* Macrocell register definitions */
- #define AB8500_GPIO_DIR4_REG			0x13 /* Bank AB8500_MISC */
- 
--/* Nr of FIR/IIR-coeff banks in ANC-block */
--#define AB8500_NR_OF_ANC_COEFF_BANKS		2
--
--/* Minimum duration to keep ANC IIR Init bit high or
--low before proceeding with the configuration sequence */
--#define AB8500_ANC_SM_DELAY			2000
--
--/* Sidetone states */
--static const char * const enum_sid_state[] = {
--	"Unconfigured",
--	"Apply FIR",
--	"FIR is configured",
--};
--enum sid_state {
--	SID_UNCONFIGURED = 0,
--	SID_APPLY_FIR = 1,
--	SID_FIR_CONFIGURED = 2,
--};
--
- /* Private data for AB8500 device-driver */
- struct ab8500_codec_drvdata {
- 	struct regmap *regmap;
--	struct mutex ctrl_lock;
--
--	/* Sidetone */
--	enum sid_state sid_status;
- };
- 
- static inline const char *amic_micbias_str(enum amic_micbias micbias)
-@@ -642,9 +616,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 			NULL, 0),
- 	/* Acoustical Noise Cancellation path */
- 
--	SND_SOC_DAPM_INPUT("ANC Configure Input"),
--	SND_SOC_DAPM_OUTPUT("ANC Configure Output"),
--
- 	SND_SOC_DAPM_MUX("ANC Source",
- 			SND_SOC_NOPM, 0, 0,
- 			dapm_anc_in_select),
-@@ -687,10 +658,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"Main Supply", NULL, "Audio Power"},
- 	{"Main Supply", NULL, "Audio Analog Power"},
- 
--	/* ANC Configure */
--	{"ANC Configure Input", NULL, "Main Supply"},
--	{"ANC Configure Output", NULL, "ANC Configure Input"},
--
- 	/* Powerup charge pump if DA1/2 is in use */
- 
- 	{"DA_IN1", NULL, "ab8500_0p"},
-@@ -972,75 +939,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes_mic2_vamicx[] = {
- 	{"MIC2 V-AMICx Enable", NULL, "V-AMIC2"},
- };
- 
--/*
-- * Control-events
-- */
--
--static int sid_status_control_get(struct snd_kcontrol *kcontrol,
--		struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--
--	guard(mutex)(&drvdata->ctrl_lock);
--	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
--
--	return 0;
--}
--
--/* Write sidetone FIR-coefficients configuration sequence */
--static int sid_status_control_put(struct snd_kcontrol *kcontrol,
--				struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--	unsigned int param, sidconf;
--	int status = 1;
--
--	dev_dbg(component->dev, "%s: Enter\n", __func__);
--
--	if (ucontrol->value.enumerated.item[0] != SID_APPLY_FIR) {
--		dev_err(component->dev,
--			"%s: ERROR: This control supports '%s' only!\n",
--			__func__, enum_sid_state[SID_APPLY_FIR]);
--		return -EIO;
--	}
--
--	guard(mutex)(&drvdata->ctrl_lock);
--
--	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
--	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
--		if ((sidconf & BIT(AB8500_SIDFIRCONF_ENFIRSIDS)) == 0) {
--			dev_err(component->dev, "%s: Sidetone busy while off!\n",
--				__func__);
--			status = -EPERM;
--		} else {
--			status = -EBUSY;
--		}
--		dev_dbg(component->dev, "%s: Exit\n", __func__);
--		return status;
--	}
--
--	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
--
--	for (param = 0; param < AB8500_SID_FIR_COEFFS; param++) {
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF1, 0);
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF2, 0);
--	}
--
--	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
--		BIT(AB8500_SIDFIRADR_FIRSIDSET),
--		BIT(AB8500_SIDFIRADR_FIRSIDSET));
--	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
--		BIT(AB8500_SIDFIRADR_FIRSIDSET), 0);
--
--	drvdata->sid_status = SID_FIR_CONFIGURED;
--
--	dev_dbg(component->dev, "%s: Exit\n", __func__);
--
--	return status;
--}
--
- /*
-  * Controls - Non-DAPM ASoC
-  */
-@@ -1324,9 +1222,6 @@ static SOC_ENUM_SINGLE_DECL(soc_enum_bfifomast,
- 			AB8500_FIFOCONF3, AB8500_FIFOCONF3_BFIFOMAST_SHIFT,
- 			enum_slavemaster);
- 
--/* Sidetone */
--static SOC_ENUM_SINGLE_EXT_DECL(soc_enum_sidstate, enum_sid_state);
--
- /* ANC */
- 
- static struct snd_kcontrol_new ab8500_ctrls[] = {
-@@ -1617,8 +1512,6 @@ static struct snd_kcontrol_new ab8500_ctrls[] = {
- 		AB8500_ANC_WARP_DELAY_MIN, AB8500_ANC_WARP_DELAY_MAX, 0),
- 
- 	/* Sidetone */
--	SOC_ENUM_EXT("Sidetone Status", soc_enum_sidstate,
--		sid_status_control_get, sid_status_control_put),
- 	SOC_SINGLE_STROBE("Sidetone Reset",
- 		AB8500_SIDFIRADR, AB8500_SIDFIRADR_FIRSIDSET, 0),
- };
-@@ -2145,10 +2038,8 @@ static void ab8500_codec_of_probe(struct device *dev, struct device_node *np,
- 
- static int ab8500_codec_probe(struct snd_soc_component *component)
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index b22cda3221363..76bde7906d494 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2675,7 +2675,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 				int size_max, void **data)
  {
--	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	struct device *dev = component->dev;
- 	struct device_node *np = dev->of_node;
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(dev);
- 	struct ab8500_codec_platform_data codec_pdata;
- 	int status;
+ 	union tpacket_uhdr ph;
+-	int tp_len, off;
++	u32 tp_len;
++	int off;
  
-@@ -2181,10 +2072,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 	snd_soc_component_write(component, AB8500_SHORTCIRCONF,
- 		      BIT(AB8500_SHORTCIRCONF_HSZCDDIS));
+ 	ph.raw = frame;
  
--	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
--
--	mutex_init(&drvdata->ctrl_lock);
--
- 	return status;
- }
+@@ -2695,7 +2696,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 		break;
+ 	}
+ 	if (unlikely(tp_len > size_max)) {
+-		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
++		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
+ 		return -EMSGSIZE;
+ 	}
  
-@@ -2213,7 +2100,6 @@ static int ab8500_codec_driver_probe(struct platform_device *pdev)
- 			GFP_KERNEL);
- 	if (!drvdata)
- 		return -ENOMEM;
--	drvdata->sid_status = SID_UNCONFIGURED;
- 	dev_set_drvdata(&pdev->dev, drvdata);
- 
- 	drvdata->regmap = devm_regmap_init(&pdev->dev, NULL, &pdev->dev,
 -- 
 2.53.0
 
