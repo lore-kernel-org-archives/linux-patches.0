@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9DB4EB87C;
-	Thu, 17 Sep 2026 17:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E815D4F403A;
+	Thu, 17 Sep 2026 17:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667070; cv=none; b=KfBDrRZOkuTxNf7z0FWq06Nzcgiuz70evFTBINYSGkh7akKzIlc94UofvjfbPDQ0ATzYTo0m0GElGK2+fQ/ZU37w9uEeC+Rw2ieStG8KjFwwhKPlCNtzDuxYNOLGVyHyZuoCQI1kF+wpAoseqBFLnsvEuM2KnT7o83UAK9CyTK8=
+	t=1789667073; cv=none; b=WA8/tnPtEyfDFqWC+KW8kpzNRFlbWKXJnaWG0uDrJWzzrsfV0xEK9cX0hlUEolplUiiDJL27Ku8UKHkvv40wooi8s2HSHmar0e9+kU6Bp3bE1F9pfHW8XdSLvEcq4DqFS4acApHdyYyK1TCTb79eXcunDvM4SHAYudqFSwOJStc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667070; c=relaxed/simple;
-	bh=zxqVaCxiQLtwHWaa8zWN1VpqkKf9bACqSbGLyVF6e1E=;
+	s=arc-20240116; t=1789667073; c=relaxed/simple;
+	bh=mCDueY0rXMqKXqGvAvnnjX2BLzAWgM7A6cpArD21Lvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ag1V+ov5+4XmoLNSj5orAgq4Eq0w9m8B/kWfXge/9eb33GjycFbOCztbsduVpzOhyjCqkCcraGsJgljfDK/j2qstDpkN2LHdtTFl2cs505bwmQypVzx65NiP0U599r9FfdBIFxnnq4Fb9gGgyn1g4xpuTNV6iDfCgz5KCkrCZAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewiUXYng; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c9oZS+txwNtZBlIqtWudzzd3+PeZvTbNugem6uOtOrqXDCjfnv4mdXV7eaEq53cL9wqTU8HceHy9DbVUcDshQpUhKP0mt8Dl57jpT292HTZ/2oPv8x19XM20L1XND5OSgACzo9e+CPLdI6gpYY6PDwAyb6eUc4RDMeh+uhIvzVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CThwF9JM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewiUXYng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278B11F000FF;
-	Thu, 17 Sep 2026 17:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CThwF9JM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D651F000FF;
+	Thu, 17 Sep 2026 17:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667068;
-	bh=QCcBAD76N/gEoQutLr8VfPbBC+pBdeIKMINZe1C/cr8=;
+	s=korg; t=1789667071;
+	bh=FUaLRSsaz6IKRSnhLQqMqo9VvWya7hG8jDpPa991hP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewiUXYngj0CQ+BuchijloIl82bSN+eFQsUvu1LSjVNLMJf02lyUnMsgeqCTSbjieB
-	 Qza/1X2+iLKP14sPAyY6yeZImZ7CuCTgClH5n4eW9jv6FFZnFzp9zP1IMAuQRqQz4X
-	 Bggy1ApSeJxwO47Yfx+TsEWwSro8eYDNLMMqA7gw=
+	b=CThwF9JM/CBN5HTFYkxkDgliW5NXT2+DpU33oRpyxO+hSUM1+1T2iUbYGib6t9wPn
+	 ajD5njW7HLrGEbno2hmhBJ99EPYcVVeFZJQRkDvf4WBd2BTGUbNdUJN2Bx9xDfMgLJ
+	 PAx7HiubPbyCze5wVppRV60BKxo7BcuOcxd/cdYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0aee5e8066eddbbe7397@syzkaller.appspotmail.com,
-	syzbot+e8b3520b53e78e90034e@syzkaller.appspotmail.com,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Kevin Hao <haokexin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1217/1250] exit: hold a reference to thread_pid across proc_flush_pid
-Date: Thu, 17 Sep 2026 16:16:52 +0100
-Message-ID: <20260917151625.273810080@linuxfoundation.org>
+Subject: [PATCH 6.18 1218/1250] net: macb: Replace open-coded implementation with napi_schedule()
+Date: Thu, 17 Sep 2026 16:16:53 +0100
+Message-ID: <20260917151625.299726505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,110 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Kevin Hao <haokexin@gmail.com>
 
-[ Upstream commit cdd812d0683dee14ead02c9eded568685e61b23f ]
+[ Upstream commit dc3bd465ea36af7fd6f9197c05353effc616145c ]
 
-Commit 0a36bad01731 ("release_task: kill the no longer needed
-get/put_pid(thread_pid)") removed the reference around proc_flush_pid().
-It assumed that free_pids(post.pids) at the end of release_task() would
-keep thread_pid alive until then.
+The driver currently duplicates the logic of napi_schedule() primarily
+to include additional debug information. However, these debug details
+are not essential for a specific driver and can be effectively obtained
+through existing tracepoints in the networking core, such as
+/sys/kernel/tracing/events/napi/napi_poll. Therefore, this patch
+replaces the open-coded implementation with napi_schedule() to
+simplify the driver's code.
 
-That assumption is wrong.  __change_pid() only records a detached PID in
-post.pids when pid_has_task() is false for every PIDTYPE.  If another task
-still uses the exiting task's PID as its process group or session ID,
-__unhash_process() removes the exiting task's PIDTYPE_PID link but leaves
-the PID out of post.pids.  release_task() therefore holds no reference to
-it after dropping tasklist_lock.
-
-The other task can then remove the remaining PIDTYPE links.  Its
-free_pids() call schedules delayed_put_pid(), and the RCU callback can free
-the PID before the first release_task() reaches proc_flush_pid().
-
-An unprivileged reproducer races wait4(-1) against setsid() to trigger this
-ordering.  Three of three fresh v7.2 KASAN boots reported:
-
-    BUG: KASAN: slab-use-after-free in
-    proc_invalidate_siblings_dcache+0x3e2/0x3f0
-    Read of size 8 by task h7_pid_reaper/1921
-
-    Call Trace:
-     proc_invalidate_siblings_dcache
-     release_task
-     wait_consider_task
-     __do_wait
-     do_wait
-     kernel_wait4
-
-    Freed by task 0:
-     kmem_cache_free
-     put_pid
-     delayed_put_pid
-     rcu_core
-
-    Last potentially related work creation:
-     __call_rcu_common
-     free_pids
-     ksys_setsid
-
-KASAN identified a 144-byte object from the pid cache and located the bad
-read 80 bytes into the freed object, matching pid->inodes.  With an
-explicit reference, three of three fresh boots completed without a KASAN
-report.  The concurrent RCU callback dropped its reference while
-proc_flush_pid() was protected, and the balancing put_pid() performed the
-final free afterward.
-
-Take a reference before __unhash_process() clears p->thread_pid and release
-it after proc_flush_pid() completes.
-
-A tested source reproducer is available privately on request.  No
-controlled read or write, information leak, or privilege escalation is
-claimed.  The mainline patch applies directly to v6.19.y and newer;
-v6.16.y through v6.18.y need a context-adjusted backport.
-
-Fixes: 0a36bad01731 ("release_task: kill the no longer needed get/put_pid(thread_pid)")
-Reported-by: syzbot+0aee5e8066eddbbe7397@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0aee5e8066eddbbe7397
-Reported-by: syzbot+e8b3520b53e78e90034e@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=e8b3520b53e78e90034e
-Cc: stable@vger.kernel.org # see patch description, needs adjustments for 6.16.y-6.18.y
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260831001221.3755948-1-4ncienth@gmail.com
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ Adjusted context for cgroup_release() and the missing exit_cred_namespaces() call. ]
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Link: https://patch.msgid.link/20260402-macb-irq-v2-1-942d98ab1154@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e1406330d70e ("net: macb: initialize PTP state before registering clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -264,8 +264,11 @@ repeat:
- 	pidfs_exit(p);
- 	cgroup_release(p);
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2010,10 +2010,7 @@ static irqreturn_t macb_interrupt(int ir
+ 			if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
+ 				queue_writel(queue, ISR, MACB_BIT(RCOMP));
  
--	/* Retrieve @thread_pid before __unhash_process() may set it to NULL. */
--	thread_pid = task_pid(p);
-+	/*
-+	 * Pin @thread_pid before __unhash_process() clears it. The last
-+	 * PIDTYPE detach can otherwise free it before proc_flush_pid().
-+	 */
-+	thread_pid = get_pid(task_pid(p));
+-			if (napi_schedule_prep(&queue->napi_rx)) {
+-				netdev_vdbg(bp->dev, "scheduling RX softirq\n");
+-				__napi_schedule(&queue->napi_rx);
+-			}
++			napi_schedule(&queue->napi_rx);
+ 		}
  
- 	write_lock_irq(&tasklist_lock);
- 	ptrace_release_task(p);
-@@ -294,8 +297,8 @@ repeat:
- 	}
+ 		if (status & (MACB_BIT(TCOMP) |
+@@ -2028,10 +2025,7 @@ static irqreturn_t macb_interrupt(int ir
+ 				wmb(); // ensure softirq can see update
+ 			}
  
- 	write_unlock_irq(&tasklist_lock);
--	/* @thread_pid can't go away until free_pids() below */
- 	proc_flush_pid(thread_pid);
-+	put_pid(thread_pid);
- 	add_device_randomness(&p->se.sum_exec_runtime,
- 			      sizeof(p->se.sum_exec_runtime));
- 	free_pids(post.pids);
+-			if (napi_schedule_prep(&queue->napi_tx)) {
+-				netdev_vdbg(bp->dev, "scheduling TX softirq\n");
+-				__napi_schedule(&queue->napi_tx);
+-			}
++			napi_schedule(&queue->napi_tx);
+ 		}
+ 
+ 		if (unlikely(status & (MACB_TX_ERR_FLAGS))) {
 
 
