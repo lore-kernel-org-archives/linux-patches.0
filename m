@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610F4388369;
-	Thu, 17 Sep 2026 15:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1208455C1DB;
+	Thu, 17 Sep 2026 15:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659277; cv=none; b=nyTeA+PkjkfhY8+t+JnNvWf6OgSZyfQGTL0deGjL3sQwPv3zXNmrsDF6dgcVYElobTmLhAyowgHrWVK/CXXWnxcNp4PyGDJwyhRZXR4k8NGHIHIJCjq7579jQkPjopqDD+PctccaWa1sPqveRbNj8V0drS2ORw5tocSvUPGXtak=
+	t=1789659280; cv=none; b=MNqkqDpEgcKDOI/VtnFZRPCUTZpWrizxAv5mB/IiDP95dkuinaMeNGj+I0oI/4hTR2m3OzqQbut9B1ExBw94DgwoGEAt0mo8d8FkxW+pnwaF/Scw4PilCj8d+PHbMOvtwROUG+OTYEyVvxd4CEuTdPcRRn1YTm0fBU3pfATirvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659277; c=relaxed/simple;
-	bh=4Za2+nc9oUUc77LGS9ZY7qpdXq4Lp6ObqZWyjtpzLpc=;
+	s=arc-20240116; t=1789659280; c=relaxed/simple;
+	bh=YwH43v3e5DY3e2WEye0KTnpRjfrahn5NfbnNUBklaIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeTfSXeKOKJYdIKrQuDYrQXNpr7ztbo+SjnkOLmiILMSb2C1sF0Smr/ODILcBV/14lT2q02Bkbc/oAk88ru19LVheBzTcfDEYwYbtvsN2i41PPbOhtaY6HCsTf2j2iCAD9JWrRzBgw3JvHwPgMvsJ+wOmz5iZCI7b3sJ4MEOuz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlokyfxT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nN99knWqlllBBnti3J+YUeSUKESB4i92cd5qIwQtdYvkfsop5/N4mWGfrI2SrwQQhZl7yRMKnZzn4JyTsRPkBpEe3XpyifwelfzrANVpvrpcuxyIT7MfChr2zIOPO8kGHLo1KQAtIdY9KsxvGWB9MkVsx2wxOaYRx6Owz4WLnM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtvwKVwY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlokyfxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B711F00893;
-	Thu, 17 Sep 2026 15:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtvwKVwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2635F1F00899;
+	Thu, 17 Sep 2026 15:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659267;
-	bh=v3pAuuXPQMcVGibxKxzJeBEzS3x5ZLDSPg/fwlBk65U=;
+	s=korg; t=1789659273;
+	bh=Z0HCyYERm4fn06wlUppnbvLbz7FvfU/b2LSz44WuAuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlokyfxToMG+kroEWdWZgQpv4DSSpyqgItk1N//sevOrQeT2gOxRXQlPQPlkUXR03
-	 fDFmJYCDjgNxgm1h3pHwhRj1AM8jU+dmyf5aqq1MlaUevUe8569F20ehkI9tng4rYH
-	 6bNJeOTVojpLu0jBDl11EjHiVU29NncxyXmr8jDQ=
+	b=jtvwKVwYaMxfjZEKNIEvZH01wOGubOh2lj/f66yLLGlJXAZyuV/sq2NK8Vn8FXa+O
+	 9t1mjWd35FXZAXojRPu43zE9q0FoVGdppWGWZ1bqDjCxbm3OAAzSI9OFczAgLzBjXi
+	 J0VsZW/NaFTh49yg5fceFtVl4kHYfMjwYvVIntXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	FAN YE <fy15309206903@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 198/733] btrfs: zstd: fix lost wakeup when waiting for a workspace
-Date: Thu, 17 Sep 2026 16:08:26 +0100
-Message-ID: <20260917151356.095463017@linuxfoundation.org>
+Subject: [PATCH 7.2 200/733] ipvs: fix reversed sequence option serialization
+Date: Thu, 17 Sep 2026 16:08:28 +0100
+Message-ID: <20260917151356.150863709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,58 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FAN YE <fy15309206903@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 2acb9f3d1cc8f65dc81ed55e238cbf8e5b60bff7 ]
+[ Upstream commit b04578b74f2d3755548fe9e829e3b2a6c6f966a1 ]
 
-A writer can sleep forever in zstd_get_workspace() even though a workspace
-is free.  When zstd_alloc_workspace() fails, the task is queued on
-zwsm->wait and schedules unconditionally, never re-testing the pool.
-zstd_put_workspace() publishes the workspace and then calls cond_wake_up(),
-which only wakes when a sleeper is already visible, so a workspace returned
-between the failed allocation and prepare_to_wait() wakes nobody.  The
-window is wide: zstd_alloc_workspace() goes through kvmalloc() and may
-enter reclaim.
+hton_seq() expects the host-order source first and the unaligned
+network-order destination second. The version 1 sync sender passes these
+arguments in reverse for both sequence blocks. This leaves 24 bytes of the
+kmalloc-backed message unwritten. It may disclose stale heap data and
+replace the live connection sequence state with values read from the
+buffer.
 
-Only a max level workspace triggers the wakeup and one is deliberately kept
-allocated as the fallback every waiter waits for, so once its wakeup is
-lost the writer stays in TASK_UNINTERRUPTIBLE until some other task happens
-to return one.  Re-check the pool after prepare_to_wait() has published the
-waiter, and use the workspace if one turned up.
+Pass the connection sequence state as the source and the message payload as
+the destination for both blocks.
 
-Fixes: 3f93aef535c8 ("btrfs: add zstd compression level support")
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: FAN YE <fy15309206903@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 986a07579533 ("IPVS: Backup, Change sending to Version 1 format")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zstd.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_sync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/zstd.c b/fs/btrfs/zstd.c
-index 86919293fd546..58d9ff76fe07b 100644
---- a/fs/btrfs/zstd.c
-+++ b/fs/btrfs/zstd.c
-@@ -307,8 +307,17 @@ struct list_head *zstd_get_workspace(struct btrfs_fs_info *fs_info, int level)
- 		DEFINE_WAIT(wait);
- 
- 		prepare_to_wait(&zwsm->wait, &wait, TASK_UNINTERRUPTIBLE);
--		schedule();
-+		/*
-+		 * Re-check after being queued: zstd_put_workspace() only wakes
-+		 * a queue that already has a sleeper, so a workspace returned
-+		 * since the failed allocation woke nobody.
-+		 */
-+		ws = zstd_find_workspace(fs_info, level);
-+		if (!ws)
-+			schedule();
- 		finish_wait(&zwsm->wait, &wait);
-+		if (ws)
-+			return ws;
- 
- 		goto again;
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index ea5fdd4f4ce76..fff2f7d6069aa 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -747,9 +747,9 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
+ 		*(p++) = IPVS_OPT_SEQ_DATA;
+ 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
+-		hton_seq((struct ip_vs_seq *)p, &cp->in_seq);
++		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
+-		hton_seq((struct ip_vs_seq *)p, &cp->out_seq);
++		hton_seq(&cp->out_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
  	}
+ 	/* Handle pe data */
 -- 
 2.53.0
 
