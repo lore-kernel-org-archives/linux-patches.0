@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3E4ED1A4;
-	Thu, 17 Sep 2026 15:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFA3A0E99;
+	Thu, 17 Sep 2026 15:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660011; cv=none; b=m0F815StEPQyAmzq0nBh7SCCCrDFXT7ejsc6xlXK/R1cc/uG2adJdMLftx2wNr5ARIlZj5dRm8bbd6SmHbEFw43LGA4P8YgQYxZCj7T+Pp09jYbZoe8C/0ogkpPwg57b5JMNGtPCIYOZpBLWYUYhFPH8Pl6HETL7P4U9TktybNU=
+	t=1789660016; cv=none; b=cyQTOILrsk/XQ50dcrQUMDc3ZUbsQ6BfzDZIpMmhaKsBZHe6XK6H0StpkYFp29Q/pYmrZjNiTREkVOU+Mrutc3tU34oV9KoXCzt8nhPhOXYVUxvlCunIv3OuUjTbfG7DeoN11FJG/bGB/YQY0rIHKj+S2wCyNVdBJl/tqagOXl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660011; c=relaxed/simple;
-	bh=UUkP+zd8Ze8grXfsXZTsR+iJTNl3If73AGj3Y5FYa/o=;
+	s=arc-20240116; t=1789660016; c=relaxed/simple;
+	bh=O8L3HGI62ute0PDjRd7egJ5pq5pYkoXbu8czcvY5Rxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjsVBWXnbQ/ThqRSAb0KtRjP4SFcduHSK1/UqjeIH4qZPdrZRh3KnIP1ivrMQIPr8LS+Gi7cI/L3pnjI/jKQR82u2tZrglOGStl1bM1gxJKT/RBfJWDw22Yi7CK8Ek7cuzkdAuwwvTlF1J3tQC3LJ8xK/B3dh8LOJ7D8jaQ9A9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8HOeQox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+6efkRzG/CYU8W1cP5fYzBg6pg3+d0ZN8cC2F5KkBi7+hxKF5JxKTtJKYxBtXpVMm5fBX5CfR8tbJzr5TL7ljLgnbSNxktfn9ojOk+dJOaCwom/0Xb90Nva0+HDPGpOcGu8nDgLtOUwU25Mb5T5081hhFqRofVjGbGNnDqvTxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xx68Vfb/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8HOeQox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BA31F00893;
-	Thu, 17 Sep 2026 15:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xx68Vfb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681F21F0089A;
+	Thu, 17 Sep 2026 15:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660000;
-	bh=omDbppcLIX0R47x7upb8n6QuS8aPoDsG+PBwPXGuE3I=;
+	s=korg; t=1789660009;
+	bh=7UBD/yfX9FEKhAYvF4R6vPpvtwyPF5SMHAj6SsLQTaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z8HOeQoxqQsajDitU5QvOvsObpC3DrM6N3FVFiOAMaVlFmLoQ/B54O3Mu+IVhWTUz
-	 kqFe+AM8gd4a+HhjFPfruxnfkaMZzcBp8b8bBC1jaea+mFqVWQDYZUT7jqtCfLrBNi
-	 P67m78VuMdq1lI/A1FrHpp79AQ8RlTPfe7aO4aAA=
+	b=xx68Vfb/hDFgHCQV1bP/uC1X03w+OMtVI5HmcmGqj03+2TKci0RU71yzJ7J4ICE71
+	 Ae3r7LRhc7OSiKXwfJipcnlSZsO4+WdrQnMJNRw7246vSQ2+CD3mbpzSfcVJMpwSqf
+	 vXX7f5LHykjKSXqx8J32te3SsEC7Yl+10ucd0DGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 444/733] scripts/mksysmap: fix escape of $ in the __pi_ pattern
-Date: Thu, 17 Sep 2026 16:12:32 +0100
-Message-ID: <20260917151402.944492139@linuxfoundation.org>
+Subject: [PATCH 7.2 447/733] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
+Date: Thu, 17 Sep 2026 16:12:35 +0100
+Message-ID: <20260917151403.030157155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,51 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 59351365ac271b5e0eb180f211c531476a36221f ]
+[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
 
-Commit b18b047002b7 ("kbuild: change scripts/mksysmap into sed script")
-converted scripts/mksysmap from a shell script to a sed script.
+When a LUN_RESET aborts a WRITE command that is in the
+TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
+waits for the frontend to finish processing.
 
-However an error was made - escaping of '$' required \\ escaping in shell
-but only \ in a sed script.
+If the initiator subsequently sends the remaining dataout PDUs,
+__iscsit_check_dataout_hdr() catches the payload, stops the dataout
+timer if the sequence is final and finally dumps the data.  However, the
+iSCSI target doesn't trigger the completion process for these aborted
+commands. Because of this, the abort path hangs indefinitely in
+target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
 
-This was mostly corrected in commit 7a6c355b55c0 ("scripts/mksysmap: Fix
-escape chars '$'"), but this fix missed arm64 PIE namespace local symbols
-like __pi_$x and __pi_$d which appear in System.map and /proc/kallsyms:
+Fix this by explicitly calling target_complete_cmd() when the final
+dataout PDU is received for an aborted WRITE command.
+target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
+the command into target_abort_work, allowing the abort completion to
+successfully unblock.
 
-$ grep __pi_\\$ /proc/kallsyms | sort -u
-0000000000000000 d __pi_$d
-0000000000000000 t __pi_$x
-
-Fix the escaping properly.
-
-Fixes: b18b047002b7 ("kbuild: change scripts/mksysmap into sed script")
-Assisted-by: LLM
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260908-build-speedup-v1-2-5dc1ac01672d@kernel.org
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mksysmap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/mksysmap b/scripts/mksysmap
-index 56a8b8bbdb373..856b26ba2ac02 100755
---- a/scripts/mksysmap
-+++ b/scripts/mksysmap
-@@ -35,7 +35,7 @@
- / __efistub_/d
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 62ada3a52210e..124ff269b8e75 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -1533,8 +1533,10 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
+ 		 */
+ 		if (se_cmd->transport_state & CMD_T_ABORTED) {
+ 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+-			    --cmd->outstanding_r2ts < 1)
++			    --cmd->outstanding_r2ts < 1) {
+ 				iscsit_stop_dataout_timer(cmd);
++				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
++			}
  
- # arm64 local symbols in PIE namespace
--/ __pi_\\$/d
-+/ __pi_\$/d
- / __pi_\.L/d
- 
- # arm64 local symbols in non-VHE KVM namespace
+ 			return iscsit_dump_data_payload(conn, payload_length, 1);
+ 		}
 -- 
 2.53.0
 
