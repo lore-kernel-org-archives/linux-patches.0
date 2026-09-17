@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1D94F5E08;
-	Thu, 17 Sep 2026 17:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD2D4F4049;
+	Thu, 17 Sep 2026 17:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666038; cv=none; b=d23//HjpIkyfBBavooPJYJdrln7RauYgaCIdbaiwkHmM9rkSdPv/99nNVQnluOX681fVdPkabydtc/5v7qgKUkTBy17S+fRwheOn771M7abLlafuFajM5iQhayUDrlS9iaPG6ePoV5RUtOt2KBMrSNhQufJIJ16AobWaRQVMKVo=
+	t=1789666041; cv=none; b=SbpWNPZO/99YEWeDQa130J5fYtP6q31FZrPZpa3VnqBNd6tHBuENu8VPgQGtHW7ny8+IypMHbv9MNATjuRIL18pdaHYGJx614AyEDVP89FYuh723hlT0Lin8A5kIFFT51OA+Bq/7carFlOPqeI1BnC0UpINfcGcQN/cJzOpMIqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666038; c=relaxed/simple;
-	bh=cq+9ISvm1wSXjeMp3KNxDlPFLx0S3aLFB2oxZNRkBmw=;
+	s=arc-20240116; t=1789666041; c=relaxed/simple;
+	bh=1PLxZhFugN9pDq9ZUz52AkYuPi9z+JK7If5R9lcHMN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZDrbVGmYJDvjgjFUQ4CYri9gIwh3M1WCuRD/Xs/lLp6cCHg0JozEDbWDuDBGgd9sVSPaVT9OMUb6TEwhS3W55FzsVpKd/MT9p1MUD/9DBRDDGAQJecw2cRb+s7WQy/OD6+eh5vuJOaMZLpKAjsiI5LkWlNbsPgP0h/A3G5OWyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flz5Z1RA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=okjwcHwPVU7a0enKvqTQBlbA+2apKFXQbzBZuJiggCXHz6n9x99P1JUeVpSTWtMiT8xpw4orAXWVV7YF3oaoqqeOh39UhFM+jAEAq555wN5f2iXv1xgxxoTY2XVOuPfz7jt87tHiZtVD3VmQYEkZSecd6gtpx33D9/7eGWT0lJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMc8jAAA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flz5Z1RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AF31F000FF;
-	Thu, 17 Sep 2026 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMc8jAAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A2A1F000FF;
+	Thu, 17 Sep 2026 17:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666037;
-	bh=MKxifP2s9/028gSeVk58j8MbZcWJ07oOkDBoEmekq2I=;
+	s=korg; t=1789666040;
+	bh=3bKBUyXynaH8/laT9p/4uXlJ9g3/EJiKJjkmRfjlpA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Flz5Z1RAh4c5pn4TQ2sBSlMlmokvNx3AurxTYxNpRpU0XR0T3RNvrDR9K68v5BZkw
-	 PCRApmyw6LKc5U6sdfK2dI4p5KLRg3lSstlE7byF9pZA8Kksi5kTKrdmCx8RqkcPKl
-	 5IgJOAK20Ppy+zzlAxl1SDZi03+K8EsjtBCxPI6I=
+	b=qMc8jAAAM2IOV+o4u8t0XGE9pWG0JAvds84Pd9PVDsJyJOjPI41KeMks3Cxjsc1zV
+	 eROwvsR3b/Sk26iqlc4ESNhAoX8vv4UHaeqfNuBMJtpo/R2r6XE7dg+OCY9WRfYidX
+	 cM58npPwVe8o8KG5DZpwPxz/70GpSVTWy2pTVitw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yuz08559@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0855/1250] vhost-vdpa: dont install the eventfd_ctx_fdget() error in config_ctx
-Date: Thu, 17 Sep 2026 16:10:50 +0100
-Message-ID: <20260917151615.143515553@linuxfoundation.org>
+Subject: [PATCH 6.18 0897/1250] watchdog: msc313e: Sync timeout value if WDT was running at boot
+Date: Thu, 17 Sep 2026 16:11:32 +0100
+Message-ID: <20260917151616.301586038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,80 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit e74a9fa50749b9940b4fb13199652325e08d3c4a ]
+[ Upstream commit 01504d14e47b34779911250dd308a03f6ef681c2 ]
 
-vhost_vdpa_set_config_call() swaps the eventfd_ctx_fdget() return value
-into v->config_ctx before checking it, so on failure the field briefly
-holds an ERR_PTR:
+If WDT was running at boot, the hardware timeout might be set to values
+other than the final software timeout.
 
-	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
-	swap(ctx, v->config_ctx);
+To be consistent, set the hardware timeout to match the final software
+timeout (i.e., after watchdog_init_timeout()) if WDT was running.
 
-	if (!IS_ERR_OR_NULL(ctx))
-		eventfd_ctx_put(ctx);
-
-	if (IS_ERR(v->config_ctx)) {
-		long ret = PTR_ERR(v->config_ctx);
-
-		v->config_ctx = NULL;
-		return ret;
-	}
-
-Commit 0bde59c1723a ("vhost-vdpa: set v->config_ctx to NULL if
-eventfd_ctx_fdget() fails") added that clearing, and spelled out the
-invariant the rest of the file relies on: "we consider 'v->config_ctx'
-valid if it is not NULL".  The window between the swap and the clearing
-still breaks it.  vhost_vdpa_config_cb() only tests for NULL, so a config
-interrupt delivered inside the window hands the ERR_PTR to
-eventfd_signal().
-
-Check the fd before installing it instead.  That closes the window and
-matches how vhost_vring_ioctl() handles the same failure for the vq call
-fd.
-
-It also stops a rejected fd from tearing down a config interrupt that was
-working: until now the swap replaced the live context and put it, so
-after an EBADF the device silently stopped delivering config interrupts
-until userspace installed a new fd.
-
-Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807100025.19750-2-yuz08559@gmail.com>
+Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260828161348.13212-8-tzungbi@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/watchdog/msc313e_wdt.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 068fb6aa33fa7..0d0206862cced 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -539,18 +539,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
- 		return  -EFAULT;
+diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
+index 72620adec641a..eea26c6c95d84 100644
+--- a/drivers/watchdog/msc313e_wdt.c
++++ b/drivers/watchdog/msc313e_wdt.c
+@@ -145,12 +145,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	priv->wdev.max_timeout = U32_MAX / rate;
+ 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
  
- 	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
-+	if (IS_ERR(ctx))
-+		return PTR_ERR(ctx);
++	watchdog_set_drvdata(&priv->wdev, priv);
++	platform_set_drvdata(pdev, priv);
 +
- 	swap(ctx, v->config_ctx);
++	watchdog_init_timeout(&priv->wdev, timeout, dev);
++	watchdog_stop_on_reboot(&priv->wdev);
++	watchdog_stop_on_unregister(&priv->wdev);
++	watchdog_stop_ping_on_suspend(&priv->wdev);
++
+ 	ret = clk_prepare_enable(priv->clk);
+ 	if (ret)
+ 		return ret;
  
--	if (!IS_ERR_OR_NULL(ctx))
-+	if (ctx)
- 		eventfd_ctx_put(ctx);
+ 	/* If the period is non-zero the WDT is running */
+ 	if (msc313e_wdt_get_hw_timeout(priv)) {
++		msc313e_wdt_set_hw_timeout(priv, priv->wdev.timeout);
+ 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
+ 		/*
+ 		 * Keep the clock enabled. The watchdog core will skip the next
+@@ -161,14 +170,6 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 		clk_disable_unprepare(priv->clk);
+ 	}
  
--	if (IS_ERR(v->config_ctx)) {
--		long ret = PTR_ERR(v->config_ctx);
+-	watchdog_set_drvdata(&priv->wdev, priv);
+-	platform_set_drvdata(pdev, priv);
 -
--		v->config_ctx = NULL;
--		return ret;
--	}
+-	watchdog_init_timeout(&priv->wdev, timeout, dev);
+-	watchdog_stop_on_reboot(&priv->wdev);
+-	watchdog_stop_on_unregister(&priv->wdev);
+-	watchdog_stop_ping_on_suspend(&priv->wdev);
 -
- 	v->vdpa->config->set_config_cb(v->vdpa, &cb);
+ 	ret = devm_watchdog_register_device(dev, &priv->wdev);
  
- 	return 0;
+ 	/* If the WDT is running and anything goes wrong, disable the clock. */
 -- 
 2.53.0
 
