@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C0343F4BC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7A13CDBD3;
 	Thu, 17 Sep 2026 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671682; cv=none; b=JOhQwoXLf70+p2AM6g1deDL++ZdO3yHE8n3a0KbtS4SH2PNxfgcVsGjgLyClq9ZnAprK2iFOU76RSQNiVwhQj1hB4Edl5O5wIPWkA5/ak3YU79r8zwe9CnVMr5f6kzTftCYR5RklYQYNjC13lbe2i4YnPNMZU0/4nHAh55E+my8=
+	t=1789671682; cv=none; b=dFGMVazXb6++kb6Rd1U8O8ky1vY8HjBlaVE7xF6D9TWBqMgKI49Et3tgWcYQo9kf1x2Em4Ozbyu6wAco4J4jy6I664gahOv6RojaWU+3UU3jeOGyOrpM8JPQO1FTZkJgBFlfNskxOHXI0Xk3aY6orKSM/7LJp4OLe9II0E3OHfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789671682; c=relaxed/simple;
-	bh=JlKKpck2d44+dRzIswD2AzuSvaGqBcNtiLbgCcR1bYY=;
+	bh=4NAXNc6+dqez8XTmt89vHm22ExuyqYT6SryLKOVZmH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fAULnhGpwsIthMDmJKtnphXg8hjpwZW5lX8hX7ydQeHvabZDvTzXhCa+SD1C6HrbckVwVCI1QiDMxQweHDyi4YUNHuDXVeJitqrhKk4sDSskLFdY6vJNTYmKESN0ieTPKGm0LD3A/md2bRaHmRyg29c/CdjvJLusx6My/hXEhqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeu2WZGH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ruhkimNIFaQAXHcB0H7yWBvgVc2EIwd3aWgmrPDyFhDFZBP6VviKfkUC9le53Bs2e1varOCWQy0P9jT0hvRI8tcNskh6TGSHNPMAemEM37HJUvwfZG5GIZ9Kzu4d0HBxceTzFaX3HV+E2796+pb1Nl1rz68OSapPwdYn6odLk9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAlZjMsd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeu2WZGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379141F008A1;
-	Thu, 17 Sep 2026 19:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAlZjMsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275E81F008A0;
+	Thu, 17 Sep 2026 19:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671666;
-	bh=xeUiQzDLF4i8l4by4dSrqo6oNlbfRHqiZ5spndEOtNI=;
+	s=korg; t=1789671663;
+	bh=5JFCXPmpXnjmWqaiP1TcEIl+K3WWXSJ5bEFvwcyYyTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeu2WZGHx8jSPRk9+5AiHM2CQ0L9t2WxDode0+PA91Rcu+9bPdQlueDk36WVkbsA6
-	 hGLhhZZlRvOItRP/s7n+XhTsovfPoEmDw6KabKX2c0ufwbDUMsOQaLZzrg0qDuLCBe
-	 oV5y6cOZ5HiqwtNZO0PTaOFl2wEbm7M2OWhrO5XQ=
+	b=PAlZjMsdu6h4Qm0BFb0xnA+xI6IZmFgtItMWtKAbKtr5vXsDoR6ZoWNKpEd7KBXtz
+	 mMbW9dGKQ5SePWTCwm4nL/g/k+amf0ZYnsKzp878zxqHOwLqwFAgSL79Np6bAtxNl6
+	 gop6cjzBmFLNF4WroG0OpxCwTfmcROVWGLGD1zns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1003/1102] xen/balloon: improve accuracy of initial balloon target for dom0
-Date: Thu, 17 Sep 2026 16:15:46 +0100
-Message-ID: <20260917151605.923331830@linuxfoundation.org>
+Subject: [PATCH 6.12 1012/1102] zram: fix out-of-bounds access in read_block_state()
+Date: Thu, 17 Sep 2026 16:15:55 +0100
+Message-ID: <20260917151606.154273914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,81 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit b13cd24c15d74f6dfcddf0d53ae6efb58d3f0461 ]
+[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
 
-The dom0 balloon target set by the toolstack is the value returned by
-XENMEM_current_reservation.  Do the same in the kernel balloon driver and
-set the current allocation to the value returned by
-XENMEM_current_reservation.  On my test system this causes the kernel
-balloon driver target to exactly match the value set by the toolstack in
-xenstore.
+read_block_state() calculates nr_pages before taking dev_lock.  If the
+device is reset and reinitialized with a smaller disksize before lock
+acquisition, nr_pages still describes the old table.  The subsequent loop
+can then call slot_lock() past the end of the newly allocated table.
 
-Note this approach can be used by both PV and PVH dom0s, as the toolstack
-always uses XENMEM_current_reservation to set the initial target regardless
-of the dom0 type.
+Read disksize after acquiring dev_lock and checking that the device is
+initialized.  The read lock then keeps the table and its bound stable for
+the duration of the scan.
 
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260128110510.46425-3-roger.pau@citrix.com>
-Stable-dep-of: 5d00a11d484e ("x86/xen: fix init of balloon stats again")
+Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
+Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/balloon.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/block/zram/zram_drv.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/xen/balloon.c
-+++ b/drivers/xen/balloon.c
-@@ -720,7 +720,8 @@ static int __init balloon_add_regions(vo
- static int __init balloon_init(void)
- {
- 	struct task_struct *task;
--	unsigned long current_pages;
-+	long current_pages = 0;
-+	domid_t domid = DOMID_SELF;
- 	int rc;
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -868,7 +868,7 @@ static ssize_t read_block_state(struct f
+ 	char *kbuf;
+ 	ssize_t index, written = 0;
+ 	struct zram *zram = file->private_data;
+-	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
++	unsigned long nr_pages;
  
- 	if (!xen_domain())
-@@ -728,15 +729,21 @@ static int __init balloon_init(void)
- 
- 	pr_info("Initialising balloon driver\n");
- 
--	if (xen_pv_domain()) {
--		if (xen_released_pages >= xen_start_info->nr_pages)
--			goto underflow;
--		current_pages = min(xen_start_info->nr_pages -
--		                    xen_released_pages, max_pfn);
--	} else {
--		if (xen_unpopulated_pages >= get_num_physpages())
--			goto underflow;
--		current_pages = get_num_physpages() - xen_unpopulated_pages;
-+	if (xen_initial_domain())
-+		current_pages = HYPERVISOR_memory_op(XENMEM_current_reservation,
-+		                                     &domid);
-+	if (current_pages <= 0) {
-+		if (xen_pv_domain()) {
-+			if (xen_released_pages >= xen_start_info->nr_pages)
-+				goto underflow;
-+			current_pages = min(xen_start_info->nr_pages -
-+			                    xen_released_pages, max_pfn);
-+		} else {
-+			if (xen_unpopulated_pages >= get_num_physpages())
-+				goto underflow;
-+			current_pages = get_num_physpages() -
-+			                xen_unpopulated_pages;
-+		}
+ 	kbuf = kvmalloc(count, GFP_KERNEL);
+ 	if (!kbuf)
+@@ -881,6 +881,8 @@ static ssize_t read_block_state(struct f
+ 		return -EINVAL;
  	}
  
- 	balloon_stats.current_pages = current_pages;
++	nr_pages = zram->disksize >> PAGE_SHIFT;
++
+ 	for (index = *ppos; index < nr_pages; index++) {
+ 		int copied;
+ 		struct timespec64 ts;
 
 
