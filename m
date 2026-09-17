@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B597C3DFC99;
-	Thu, 17 Sep 2026 17:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87B3C7E19;
+	Thu, 17 Sep 2026 17:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667492; cv=none; b=ZmqnNZX6Tn1Ni6dNSrVWkqrI8VzFjVR+GXuKB6I8oAw05fC4X2EH9Gduq2nd2rXT+bh9uf1V3HP9dPO0STvSleizkxQy96SD5gBZHc6X+QPXyPfSX0YaQ4Mf7CfkWezqrYH2hRXLx2GKgab9wryLjwt8xOnxzgPC2jOAWRTctyY=
+	t=1789667495; cv=none; b=k5CcBblsEFiTnKDManjhIQMn3Tc1Yr2QjWpJGhsgCJb5P9LvRtEVk2s33HcsKpXRQ4yB6qksSXx/xtKWweNJgBY26YY9luFF0aW8zTDRiZv7y3j+MrapPT55hmYxC4LVAbcVzU6AmgmRi1qNdeCGcTWlHB4d0c0Sb70qtcINZ/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667492; c=relaxed/simple;
-	bh=UGR+U0/sXr4Ad4i6l9MqS05TjEV8wmMk12N7zEZAyPg=;
+	s=arc-20240116; t=1789667495; c=relaxed/simple;
+	bh=uRA3W+hyKuCsfxJSWacQ8N2mILoJxhIzwm6dsQv469w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5dW8CIJUWlYcXVbHyA6WcU2ImHuXAaQQuDd2AZr0JOkRh1bL+fxpND65G3kG19/NIJwdvUL1JAgDFYDHCJpG8fARetbAAesqMHxeSaMQ+g+tCvznQW/yRdwjyRVwc9VV9rwyF7GdU588vGM67HbOOPYah210m0J2NjELAnIDro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnq1WJkp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kFLxLLGcXd5ZeINGZdjgbMJWrBxEejh4GT37SEnkuQpQ2EHLLk44OGyi+kUkiCNiReUBAW4h0XSVZduJXMnheYcJXbxX6n9yYQueLNRIhFnv4J9Z1J3S6hQ3OS2aN7/8WMahUuvsYwRQJ2Jja638/VOiGf+zvYOVqNyzkAjx5b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgOE954X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnq1WJkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1977E1F000FF;
-	Thu, 17 Sep 2026 17:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgOE954X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE221F000FF;
+	Thu, 17 Sep 2026 17:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667491;
-	bh=G3x1oYTzsnxT9jcXXqSNb16yvIROGtqHF+VEUJKUbro=;
+	s=korg; t=1789667494;
+	bh=SVZMiGVzWzPQ9DRGtqiBlAuM+oYL3wb767ZIoLsLEaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnq1WJkp8uUueA3ZrMM91NKcu20T6ubpvI+GRuoVj22FNucf1oXDqapT/A41wD88s
-	 DR3w0KQmx6+XlrgKsNf+Xng392zhS2+DlDP9TSsM82QklHjTggN1pHLOjMknYlj6PY
-	 G7//AG+LmUbiWEidliDo0XRDC3FpiUZReANRYjrQ=
+	b=PgOE954XOHG3Iwj4oVM87lUyaGk3mEkbQJigsUIQ/NrrPymRW8lXJq0BMJRifzmnI
+	 m/K17p+PNME2ogmLYxhxCL/k9Tt9yd8oNObPoQFh7HRg8OOl3TRf0gpITLceK2+cq3
+	 cumR/BvR6uopFd5Baxl1I5u9wvWOsNu1EOixffV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0111/1102] wifi: mac80211: dont call ieee80211_handle_reconfig_failure when not needed
-Date: Thu, 17 Sep 2026 16:00:54 +0100
-Message-ID: <20260917151542.289359369@linuxfoundation.org>
+Subject: [PATCH 6.12 0112/1102] thunderbolt: Verify Router Ready bit is set after router enumeration
+Date: Thu, 17 Sep 2026 16:00:55 +0100
+Message-ID: <20260917151542.315518004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,55 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit 7a8a3ff2815501f78f494808355ddf37e08647d0 ]
+[ Upstream commit 062023c4364ffdc72978ed2de1d1435e5d4eee43 ]
 
-In case reconfiguration of NAN fails, we call
-ieee80211_handle_reconfig_failure, that marks all interfaces as not in
-the driver.
-Then, at the error path of the reconfig, cfg80211_shutdown_all_interfaces
-is called to destroy all the interfaces.
+The USB4 Connection Manager guide specifies that after enumerating a
+router, the Connection Manager shall verify that the Router Ready bit
+(ROUTER_CS_6.RR) has been set to ensure hardware configuration has completed.
+Currently, this step is missing from the enumeration sequence.
 
-If we have any other interface but the NAN one, for example a BSS
-station, then when its state (links, stations) will be removed, we
-won't tell the driver about this, because we will think that the
-interfaces are not in the driver, and then drivers might remain with
-dangling pointers to objects like stations and links (at least for
-iwlwifi this is the case).
+Add this check to follow the Connection Manager guide more closely.
 
-ieee80211_handle_reconfig_failure is meant to be called after we cleaned
-up the state in the driver, there is no reason to call it for NAN
-reconfiguration failure.
-
-Fix the code to just warn in such a case, as we do in other error paths
-in reconfig where it is too complicated to rewind.
-
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260513182548.6a25f3a0a6ec.I83d1f2a7eed20200a78a62757c6b193e3bab892b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/thunderbolt/tb_regs.h | 1 +
+ drivers/thunderbolt/usb4.c    | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 5bb9e1d2479f3..8ffd7e0643751 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2049,11 +2049,7 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 			}
- 			break;
- 		case NL80211_IFTYPE_NAN:
--			res = ieee80211_reconfig_nan(sdata);
--			if (res < 0) {
--				ieee80211_handle_reconfig_failure(local);
--				return res;
--			}
-+			WARN_ON(ieee80211_reconfig_nan(sdata));
- 			break;
- 		case NL80211_IFTYPE_AP_VLAN:
- 		case NL80211_IFTYPE_MONITOR:
+diff --git a/drivers/thunderbolt/tb_regs.h b/drivers/thunderbolt/tb_regs.h
+index 4e43b47f9f119..65d2797f2b01a 100644
+--- a/drivers/thunderbolt/tb_regs.h
++++ b/drivers/thunderbolt/tb_regs.h
+@@ -216,6 +216,7 @@ struct tb_regs_switch_header {
+ #define ROUTER_CS_6_WOPS			BIT(2)
+ #define ROUTER_CS_6_WOUS			BIT(3)
+ #define ROUTER_CS_6_HCI				BIT(18)
++#define ROUTER_CS_6_RR				BIT(24)
+ #define ROUTER_CS_6_CR				BIT(25)
+ #define ROUTER_CS_7				0x07
+ #define ROUTER_CS_9				0x09
+diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
+index 9fb81ce1e5eab..4fc0731078487 100644
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -291,7 +291,12 @@ int usb4_switch_setup(struct tb_switch *sw)
+ 	/* TBT3 supported by the CM */
+ 	val &= ~ROUTER_CS_5_CNS;
+ 
+-	return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
++	ret = tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
++	if (ret)
++		return ret;
++
++	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_RR,
++				      ROUTER_CS_6_RR, 500);
+ }
+ 
+ /**
 -- 
 2.53.0
 
