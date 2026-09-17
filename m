@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682DD4F85A9;
-	Thu, 17 Sep 2026 17:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9724F85C5;
+	Thu, 17 Sep 2026 17:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667882; cv=none; b=F87b+dN7YiHnUQGLfja1/GorPJXQrXKgnIK+3QthSKydwbddUv3JybPJk8cM1fQ+BjrdsfwVgrlEPbXwHtCLUcMYp5wRz01wkcrIvdPfksU/qZEF9MODnrT2pMcimJ2+3Jx5HczITWPghDwZAPPcNQ7KrNiKMPwMOMIVKyk7YLs=
+	t=1789667885; cv=none; b=rOxE4CJUuRhJhfEmDCCRGqc7F+D5NVS2u2dVBJpF2R00KyUUNxI+xER7IHE14iJ6iOtr43AoM/CBKtyRqeAJ3GbPbuQwjdP1f+rPlqs6FapxEROAvvsd1xrRsEpZ8vYgM/z1Z/WZxg6cauTTdZeYCb9Et2w6sZUxfiUtwu9wypk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667882; c=relaxed/simple;
-	bh=yhUnsi1M9mnvoBIeCLhoU0n5cvMlL+IvV8lBd5TWFfU=;
+	s=arc-20240116; t=1789667885; c=relaxed/simple;
+	bh=fa3cdVOco8UxYLMRgyonOLA1tna9LOpRQz/HlyKCfnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F43p44Ur5rRXTnrwSxb7Bpbzg9s5C50dcTLQlzxF8fq1k4+hyYtNRNVdaadd9tGpFGK+bxYXGBiK0l3gw/nFu0AWyBuhud2DwnJve8y6mdN4hcVGLg6c5mnlyvO5O5uB7DuX8ttfCVsp4f+3nbEz/eKLJBPdyclkOlMaFaY7d2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBRficyP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iqg7jq2e0YWmOd0NI9PbOF6hB20hLWveQ7BY/lERpG4DAwm+J/eWMt5a5Mg6Q0/7ZfdByg1wcH6MVATvxEQtMIVOSbq4ObPtf1DEnN0mWJlQcqU1FrcXFaIDOSxHkv+8oSZC8VuAiDET63PXK8UnPTj67rjWIDelyIkmnPUsOvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/VMqKLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBRficyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85621F000FF;
-	Thu, 17 Sep 2026 17:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/VMqKLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46FB1F000FF;
+	Thu, 17 Sep 2026 17:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667881;
-	bh=3TTLXV02wDNoqlNfrOuvl96vWGP48rlnrPADJmeuHHY=;
+	s=korg; t=1789667884;
+	bh=+MmPDdTLmRFSBxp+s/5CdRElooBddrxxuegFrtAcvpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBRficyPgbNoctfnXM61U+Nrak9cVo/yahm8dWRiRDSuNA4lYawc9OtlqkO4ozQeu
-	 +KrxBbj9Q4KCBDh4j+ZGPrxNnrclXMhjqh1v3uAmwezbCtRvbEH1TW32cHyWpAvyRX
-	 gCjbycc96uPc+OE0uWPu13t31Hky3XoVDB69lRkE=
+	b=L/VMqKLr8d3mHohZJgUr1ctIk7c195CMfwnjpWS1wMTZXo+gJugYpxoru7KDoagWE
+	 /44fywzjXnImJBZxGTdyZE/S3GWWgRVgVNY8uG7ebdlMzpNoRkg0n77TX+STcZydoA
+	 j44dkIFdpROYUaQe+O675CIcwTAUvIlJdcgmGIso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0239/1102] net: microchip: sparx5: clean up PSFP resources on flower setup failure
-Date: Thu, 17 Sep 2026 16:03:02 +0100
-Message-ID: <20260917151545.590115521@linuxfoundation.org>
+Subject: [PATCH 6.12 0240/1102] ALSA: es18xx: check control allocation before private data setup
+Date: Thu, 17 Sep 2026 16:03:03 +0100
+Message-ID: <20260917151545.617070835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,104 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 46e50367338702abe3df661df7795bdada40fef7 ]
+[ Upstream commit 422e42b7c2b882ba1d16d4afc8891bcea7c4de93 ]
 
-sparx5_tc_flower_psfp_setup() allocates PSFP stream gate, flow meter and
-stream filter resources before adding VCAP actions. If a later step
-fails, the resources allocated earlier in the function are not unwound.
+snd_es18xx_mixer() creates controls with snd_ctl_new1() and then stores
+bookkeeping pointers or sets private_free before calling snd_ctl_add().
+snd_ctl_new1() can return NULL on allocation failure, so those writes
+can dereference a NULL control pointer.
 
-Add error paths to release the stream filter, flow meter and stream gate
-when setup fails after they have been acquired.
+Check the returned control pointers before using them and return -ENOMEM
+on allocation failure.
 
-Also make sparx5_psfp_fm_add() return the acquired flow-meter id before
-the existing-flow-meter early return. When an existing flow meter is
-reused, sparx5_psfp_fm_get() increments its pool reference count, but the
-caller previously kept psfp_fmid as 0. If a later setup step failed, the
-error path could try to delete flow-meter id 0 instead of the reused flow
-meter, leaving the incremented reference behind.
-
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260603061716.747282-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260607074219.3-1-ruoyuw560@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/sparx5/sparx5_psfp.c    |  5 +++--
- .../microchip/sparx5/sparx5_tc_flower.c        | 18 ++++++++++++++----
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ sound/isa/es18xx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-index 8dee1ab1fa754..2f06d7ab7d4b7 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-@@ -273,6 +273,9 @@ int sparx5_psfp_fm_add(struct sparx5 *sparx5, u32 uidx,
- 	ret = sparx5_psfp_fm_get(uidx, &fm->pol.idx);
- 	if (ret < 0)
- 		return ret;
-+
-+	*id = fm->pol.idx;
-+
- 	/* Was already in use, no need to reconfigure */
- 	if (ret > 1)
- 		return 0;
-@@ -287,8 +290,6 @@ int sparx5_psfp_fm_add(struct sparx5 *sparx5, u32 uidx,
- 	if (ret < 0)
- 		return ret;
- 
--	*id = fm->pol.idx;
--
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
-index 8d67d9f24c76b..472386c8d769e 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
-@@ -805,7 +805,7 @@ static int sparx5_tc_flower_psfp_setup(struct sparx5 *sparx5,
- 		/* Add new flow-meter */
- 		ret = sparx5_psfp_fm_add(sparx5, pol_idx, fm, &psfp_fmid);
- 		if (ret < 0)
--			return ret;
-+			goto err_sg_del;
- 	}
- 
- 	/* Map stream filter to stream gate */
-@@ -814,7 +814,7 @@ static int sparx5_tc_flower_psfp_setup(struct sparx5 *sparx5,
- 	/* Add new stream-filter and map it to a steam gate */
- 	ret = sparx5_psfp_sf_add(sparx5, sf, &psfp_sfid);
- 	if (ret < 0)
--		return ret;
-+		goto err_fm_del;
- 
- 	/* Streams are classified by ISDX - map ISDX 1:1 to sfid for now. */
- 	sparx5_isdx_conf_set(sparx5, psfp_sfid, psfp_sfid, psfp_fmid);
-@@ -822,13 +822,23 @@ static int sparx5_tc_flower_psfp_setup(struct sparx5 *sparx5,
- 	ret = vcap_rule_add_action_bit(vrule, VCAP_AF_ISDX_ADD_REPLACE_SEL,
- 				       VCAP_BIT_1);
- 	if (ret)
--		return ret;
-+		goto err_sf_del;
- 
- 	ret = vcap_rule_add_action_u32(vrule, VCAP_AF_ISDX_VAL, psfp_sfid);
- 	if (ret)
--		return ret;
-+		goto err_sf_del;
- 
- 	return 0;
-+
-+err_sf_del:
-+	sparx5_isdx_conf_set(sparx5, psfp_sfid, 0, 0);
-+	sparx5_psfp_sf_del(sparx5, psfp_sfid);
-+err_fm_del:
-+	if (pol_idx >= 0)
-+		sparx5_psfp_fm_del(sparx5, psfp_fmid);
-+err_sg_del:
-+	sparx5_psfp_sg_del(sparx5, psfp_sgid);
-+	return ret;
- }
- 
- /* Handle the action trap for a VCAP rule */
+diff --git a/sound/isa/es18xx.c b/sound/isa/es18xx.c
+index 59c784a70ac1a..e660e7db8a5c2 100644
+--- a/sound/isa/es18xx.c
++++ b/sound/isa/es18xx.c
+@@ -1776,6 +1776,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_base_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es18xx_base_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		if (chip->caps & ES18XX_HWV) {
+ 			switch (idx) {
+ 			case 0:
+@@ -1837,6 +1839,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 		for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_hw_volume_controls); idx++) {
+ 			struct snd_kcontrol *kctl;
+ 			kctl = snd_ctl_new1(&snd_es18xx_hw_volume_controls[idx], chip);
++			if (!kctl)
++				return -ENOMEM;
+ 			if (idx == 0)
+ 				chip->hw_volume = kctl;
+ 			else
 -- 
 2.53.0
 
