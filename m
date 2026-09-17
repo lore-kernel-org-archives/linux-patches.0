@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2CF4FDA4C;
-	Thu, 17 Sep 2026 17:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6424FDA59;
+	Thu, 17 Sep 2026 17:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664879; cv=none; b=N3SZj3kTszxOIXAwpkRO2qXvanmmR8VUsy2HdFRK5y/TxNohYKJCJ/9f7l43rRPniNHGA97+Fa+jRnGgTzXm3mninQZNekNzatl9P0/Ra3b8uRVpUcV883Vaj3ify9UfpfVcdWzJl4+zPis9aewAVC3kmQPEXJ9iP+Y/MAeH6GU=
+	t=1789664882; cv=none; b=Pj+EtJAlkSJw1H/6GX2AtZUOETW865NqnpPIBqEqlhI7QVmRCYlRFF7mG1BejPrHt94BVi+37PQOgl6DrE/w2epcY9aDv0zE9bYlgR1Z6IAkPsaZy29cm3k+spiNMHKUOhHBI/dy8xAYkAl9fqyssUjhjtebslqZj0yNRb+PkhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664879; c=relaxed/simple;
-	bh=KdjR1D4awLab3GAbjvoafU2fRozVqrRl9wQkG1h8WeM=;
+	s=arc-20240116; t=1789664882; c=relaxed/simple;
+	bh=Yeb9JmS0debnopb9tAwH4JYTV/uSw71jrcif0icwAhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KKMzz39/KqQgrUQ6w6193dpNJnnPlafs4THfkOpZXzl4gyt85t5EUaHzZzo2mq2TKX6JrU6pHlY608bTcAoOFFyaCXB8pL/TzHJUwUP1jIQmZ1zHeU/rC4LQjkYtPYu8E6vjZ6u5uWxdLyty/vABvzcjG5hawFKU8i44u3lca0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFd9NLL+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SXamkBINZx3PPWHKfARbtP20NMMxFCvrRejpRILvGaQngpov89LJvq4Q9UT+BMMElyx2YXFm8JrHUgk9/vTOPlKp1hyRYJ50B79vjC5WGy05FwQH9hNTQaLiIYy+jvDzFFz/rYjZUm8dtbkdBgg9HI7mit2XH2MDkUElzPxiFXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1sY1ELG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFd9NLL+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A4C1F00893;
-	Thu, 17 Sep 2026 17:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1sY1ELG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D641F00898;
+	Thu, 17 Sep 2026 17:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664876;
-	bh=6aPm4tE9fgDWXLAMVh/xkFZ/Wg8lt0GGpYBsLhh4LkI=;
+	s=korg; t=1789664879;
+	bh=aDkm/ZBhM1tFPUUqRA2ju3zNgyzmFAJd+FuhoqID5y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFd9NLL+Gk+PNRhkFsO1Wot8ER2D5STwlx1SXV0T8mzmW90EJ6p/Of440a6RQBYZ3
-	 DxecP14M84C/WzB7u0w8jf6LGUTKwjJX3Sx/P9aKZwww70wEbr0dOEgCRWDgOUYSUo
-	 1nLfkvhBgg1ATp17qPPQM7SdEjTP6G/HLDkWYYkw=
+	b=z1sY1ELGBiU7omU+RbvjPkqBgvqu3P+oWmduLlrkvUdG14Ez/fo2ah/8YM8cMNfK9
+	 uaukI6wFpS22Pcejl7W4wGcXh90E/demqhgmEUgxMt48kb9b5NZq7QdHeW5By6GQnG
+	 qfZc88tOcWYRqbJVzjF6CrLczNqWASjQEeXEnRb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Kamlesh Chhetty <kamleshkc2002@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0480/1250] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
-Date: Thu, 17 Sep 2026 16:04:35 +0100
-Message-ID: <20260917151604.976978637@linuxfoundation.org>
+Subject: [PATCH 6.18 0471/1250] ALSA: hda: Add Lenovo Legion 7i 16IAX7 17AA3874 quirk
+Date: Thu, 17 Sep 2026 16:04:26 +0100
+Message-ID: <20260917151604.738945986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,102 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+From: Kamlesh Chhetty <kamleshkc2002@gmail.com>
 
-[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
+[ Upstream commit 6485da8579e2b0132630faa1ee2ac72ccaf01501 ]
 
-komeda_dev_resume() calls clk_prepare_enable() without checking the
-return value. If the clock fails to enable, the function returns 0
-(success) while IRQs are enabled and IOMMU is connected on potentially
-unclocked hardware, causing undefined behavior on resume.
+Lenovo Legion 7i 16IAX7 systems with Realtek ALC287 codec SSID
+17aa:3874 and CSC3551/CS35L41 speaker amps do not provide the
+required CS35L41 _DSD properties in ACPI.
 
-Propagate the error from clk_prepare_enable() and fix all call sites
-in komeda_drv.c that previously ignored the return value of
-komeda_dev_resume():
+Without a quirk, cs35l41-hda fails probing the amps with missing
+cirrus,dev-index / Platform not supported errors, leaving the built-in
+speakers silent.
 
-- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
-  (skipping the suspend call, since the clock was never enabled)
-- komeda_pm_resume(): propagate the error and skip
-  drm_mode_config_helper_resume() on failure
+This model is similar to the already-supported 17AA386F Legion 7i
+16IAX7 variant. Add the Realtek ALC287 quirk to select
+ALC287_FIXUP_CS35L41_I2C_2 and add 17AA3874 to the CS35L41 property
+table using the same two-amp external-boost configuration.
 
-This issue was found by code review without access to Komeda hardware.
+Tested on a Lenovo Legion 7 16IAX7 with Ubuntu 7.0.0-22-generic. Both
+CSC3551 CS35L41 amps probe and bind, firmware loads, calibration
+applies, built-in speaker playback works, and the cirrus,dev-index
+failure is gone.
 
-Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221663
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2157060
+Signed-off-by: Kamlesh Chhetty <kamleshkc2002@gmail.com>
+Link: https://patch.msgid.link/20260622172247.19301-1-kamleshkc2002@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
- drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ sound/hda/codecs/realtek/alc269.c                   | 1 +
+ sound/hda/codecs/side-codecs/cs35l41_hda_property.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-index 5ba62e637a616..9aad1d1d28ec0 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-@@ -313,7 +313,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
- 
- int komeda_dev_resume(struct komeda_dev *mdev)
- {
--	clk_prepare_enable(mdev->aclk);
-+	int err;
-+
-+	err = clk_prepare_enable(mdev->aclk);
-+	if (err)
-+		return err;
- 
- 	mdev->funcs->enable_irq(mdev);
- 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-index 358c1512b0879..fc1816c634087 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-@@ -74,8 +74,11 @@ static int komeda_platform_probe(struct platform_device *pdev)
- 	}
- 
- 	pm_runtime_enable(dev);
--	if (!pm_runtime_enabled(dev))
--		komeda_dev_resume(mdrv->mdev);
-+	if (!pm_runtime_enabled(dev)) {
-+		err = komeda_dev_resume(mdrv->mdev);
-+		if (err)
-+			goto err_destroy_mdev;
-+	}
- 
- 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
- 	if (IS_ERR(mdrv->kms)) {
-@@ -93,7 +96,7 @@ static int komeda_platform_probe(struct platform_device *pdev)
- 		pm_runtime_disable(dev);
- 	else
- 		komeda_dev_suspend(mdrv->mdev);
--
-+err_destroy_mdev:
- 	komeda_dev_destroy(mdrv->mdev);
- 
- free_mdrv:
-@@ -139,11 +142,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
- static int __maybe_unused komeda_pm_resume(struct device *dev)
- {
- 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
-+	int err = 0;
- 
- 	if (!pm_runtime_status_suspended(dev))
--		komeda_dev_resume(mdrv->mdev);
-+		err = komeda_dev_resume(mdrv->mdev);
- 
--	return drm_mode_config_helper_resume(&mdrv->kms->base);
-+	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
- }
- 
- static const struct dev_pm_ops komeda_pm_ops = {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index fc179a302efb8..90e64fbd5291b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7456,6 +7456,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	HDA_CODEC_QUIRK(0x17aa, 0x38a7, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
+ 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3874, "Legion 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3878, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
+diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda_property.c b/sound/hda/codecs/side-codecs/cs35l41_hda_property.c
+index 16d5ea77192f0..dd8875b111ade 100644
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda_property.c
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda_property.c
+@@ -123,6 +123,7 @@ static const struct cs35l41_config cs35l41_config_table[] = {
+ 	{ "17AA3866", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "17AA386E", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
+ 	{ "17AA386F", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "17AA3874", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "17AA3877", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "17AA3878", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "17AA38A9", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
+@@ -548,6 +549,7 @@ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
+ 	{ "CSC3551", "17AA3866", generic_dsd_config },
+ 	{ "CSC3551", "17AA386E", generic_dsd_config },
+ 	{ "CSC3551", "17AA386F", generic_dsd_config },
++	{ "CSC3551", "17AA3874", generic_dsd_config },
+ 	{ "CSC3551", "17AA3877", generic_dsd_config },
+ 	{ "CSC3551", "17AA3878", generic_dsd_config },
+ 	{ "CSC3551", "17AA38A9", generic_dsd_config },
 -- 
 2.53.0
 
