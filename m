@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79D837B3FD;
-	Thu, 17 Sep 2026 18:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F214B49D5AF;
+	Thu, 17 Sep 2026 18:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668562; cv=none; b=aKTDn1F7YAlcuj4KVKjS+wgfTpMFYpbjHXg/UUgoW6DD7P/4KAGRwrVjtg0Ym+0U6+vXXlMArnXOXV9mvxy65G21PB8vWjapbeQkb4FztaSckvU6h7yyz5UkE9lN0ieXpIIt8XLIInfLCiYm6pu1+2jkI6yxAT6qqITsMzTAqmY=
+	t=1789668566; cv=none; b=eiIewmjcsaj2ZCJxxDzRp8pO+F+BK3K04XfAp7E4N9AQF2jnDmKuCRFsfDmqiRoIF7gBxiKUWuv5STZ2xubIhUpZTtYy8c3LbN7alWom5TjhmRWABne1k3AgS3OUkqenevDOO07jx/5VjpKS0C+9lYh0m6NFkkR/fLtnhl2QfxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668562; c=relaxed/simple;
-	bh=oVlF929xHviqP6JVS2M5NOTBLwnpLvBcF70iBxBatOA=;
+	s=arc-20240116; t=1789668566; c=relaxed/simple;
+	bh=uWPbL0JVdbO80wxDXVIT8zB9n402TbAwZ8qO0oPUgy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo8x6R7vJ7PI0d+Z0lVU2j/OFpyf9PPwIL3VEn+UXhM/UdNgMsp5d6uNAaEjn9Noegcgs7Ph5mUqqw6pCKy5RpwHeyC5TE7KbQpbQeTTWme5r8MakzrZxNCJjqeIp2znhZPhoc6kEPxPj2HWnCZScD9xxVXlaorrFqmrYkFZ4wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afj5/4gu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYUQoImPv+d/feZX8bxlcxLrOJjwlc8itncNjNSUWOLMmoQWkq41Hq/WLkNHLijhhDrV8e0++LaX13C+UmLvGlCijoSWU2IpP2ONJNIrSHTebNkXerDGjI9yQc+Xgio1enyVODOq7cCThD6cYfRIZklfIJUF5Ae84xUsi9fyJg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXWOAN41; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afj5/4gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146911F000FF;
-	Thu, 17 Sep 2026 18:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXWOAN41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0C41F00898;
+	Thu, 17 Sep 2026 18:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668561;
-	bh=WJsHI69/vH+RW6IXg1wBe2fi17HLUf6JiRFBICWp4H8=;
+	s=korg; t=1789668564;
+	bh=p0J03HYsMkKNuOqsfOfC/QTp/iSEHqdpHYx+MbSnbbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Afj5/4guEfrGNg98678V63o+Ra2GAi1StbG29sm2ArBSi50iOZTGskvafcbFNzFFQ
-	 GyajjC3YfvkUca8unDwkx0Nr39TbSsyTsNp9NoKMKf1oVJJ3UWFYyUkgfZDmOqSOFD
-	 hkRHzp+D7l22LTGeh2xohLxJ7vPYai6KDgdOuFeQ=
+	b=EXWOAN41fKaFAUbPHAApnedVdd86smoHZLlj2UGqyUfP8tEs3eNjw8DsqD9rX9oww
+	 NZZOOZ0KDEJH52GND/Su24CA8VLF6ps0+QeIhY47oXYmtHh+61Q0LmPzveRrrUuyyN
+	 9G/6Pe32OYPLfEVvKUkVKKiU97Kes4J3hDvuh6SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Rohit Sinha <rohitsinha12043@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0416/1102] wifi: iwlwifi: mvm: fix an off-by-1 boundary check
-Date: Thu, 17 Sep 2026 16:05:59 +0100
-Message-ID: <20260917151550.110051398@linuxfoundation.org>
+Subject: [PATCH 6.12 0407/1102] ALSA: hda/realtek - Add quirk for HP Victus 15-fa0xxx (MB 8A50)
+Date: Thu, 17 Sep 2026 16:05:50 +0100
+Message-ID: <20260917151549.881398431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Rohit Sinha <rohitsinha12043@gmail.com>
 
-[ Upstream commit d77aff138c9ec6c8562f4c2c9f262d3d9c4b4cb8 ]
+[ Upstream commit 5c3f4b583c25911fad9890b463632761291f65ab ]
 
-Before looking at the 11th byte, check the length is big enough.
+The mute LED on HP Victus 15-fa0xxx (board ID 8A50) uses ALC245 but
+requires a quirk to work. This patch enables the existing
+ALC245_FIXUP_HP_MUTE_LED_COEFBIT quirk for the device.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260714141909.d22bf52a18d0.If0ef6612a67cca671428b06dbdeec68549e50ae6@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Tested on my HP Victus 15-fa0xxx. The LED behaviour works as intended.
+
+Signed-off-by: Rohit Sinha <rohitsinha12043@gmail.com>
+Link: https://patch.msgid.link/20260706211834.384022-1-rohitsinha12043@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 3fd257f770baa..0a1ba7a8f4562 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -3616,7 +3616,7 @@ static void iwl_mvm_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
- 	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, ies->data,
- 				  ies->len);
- 
--	if (!elem || elem->datalen < 10 ||
-+	if (!elem || elem->datalen < 11 ||
- 	    !(elem->data[10] &
- 	      WLAN_EXT_CAPA10_OBSS_NARROW_BW_RU_TOLERANCE_SUPPORT)) {
- 		data->tolerated = false;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 632d52a9aec98..74768dd0a0e7c 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10999,6 +10999,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
++	SND_PCI_QUIRK(0x103c, 0x8a50, "HP Victus 15-fa0xxx (MB 8A50)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
+ 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
 -- 
 2.53.0
 
