@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8249D59C;
-	Thu, 17 Sep 2026 18:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3195C497396;
+	Thu, 17 Sep 2026 18:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671264; cv=none; b=mLuDP/bRPBKuRdljJd+oBEGN6FMIKdjChwoFFtOIk5NBRNfWU+NudYwCHkK4JQWfFK4FASR29w+FAVXvbDAi+thTx4oGAYNIMvGcip4uQy4Gx8gykecWNcsHVuCurZ0PY6/qMFJuhFrxFigjeWmp71oIbbgq+XxF4WzFIVSOqsM=
+	t=1789671267; cv=none; b=FyRkZOb8XIzDY+qZOo4+uATMbxEZyIiqaWK/DgBOMh1FQrl76H5yiobgwUXANcw6SY25BPn4UeskObTXZgzTEmAavWQgZwW4vZXnKewTLPmgFIpHSEA3eBvv3FczFmlVMjlcK+1g9mKOj+k1ZPSQS9IyUhh6Y+hBzfed6MFlay4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671264; c=relaxed/simple;
-	bh=hZ9DZs0a3diS3XNDPn7kD8CgFH1aMD2pb76FWUmpDoE=;
+	s=arc-20240116; t=1789671267; c=relaxed/simple;
+	bh=VDmjD5J0L7uF6g2HH+3Nm+Os9lSXJX4Bjs86EHxbI5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYMmblJN5MNmNueLuXr0HA7tbUscvUHiZAJ95DjDTL5eI7TBLrmBtzZcyFIsSB1XjjR3UrREmUj4MrDVySQ0l4oTk7zOGJyzvRh3l6yDGJqlZPKJKUHI+IDMVpiZSKUxTsNitiK+Dz+mKykkpv6d1YA8H/L0wxlA8FJQgGC7wCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdlMWnMl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ypf5daBNhyyeewHvbPwmRlkvfXnsZ+R3thqmYx0JU2oRYD+7kQRRJRo4DAuB03LrUOa1O/aLmWqrlW4XH9hJU2xxYujwqOqGCJdgK79qnQaWs91nz50sMudck16BfyNN8/O37c2qvuu5yQFn9sURDVGITChoCRDLnaFY0Nd+xtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cG+2e9VR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdlMWnMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6FF1F000FF;
-	Thu, 17 Sep 2026 18:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cG+2e9VR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A0C1F000FF;
+	Thu, 17 Sep 2026 18:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671262;
-	bh=G8gKDkJubXQfl5o2LjJBT4x08QdNiybgxuedKS9A2rQ=;
+	s=korg; t=1789671265;
+	bh=id+eQGC+Xo7TgkLfvQlRDr2hTwkt4iYLaWylzzjYsno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdlMWnMl6B7oWJQjt/gY8b49O9lKX2eYsUuqAMLPWNUWVKUEa08Fi1ocftPOUUHuK
-	 eE33kPnMewbw95PHf4X2WcaeDt1NCF6LdPnpLmRIVWY7NI0eA/YDO/aljPPtH/VftY
-	 rx/9qV35JtRLvIZPW/KF6Kux4zJq1FarCPv26OGY=
+	b=cG+2e9VR/58R2GNwgk4UztyY1WncouF6Qlr4dMT3NgAxIww4J/0bdI853y07+AO3W
+	 /EYws+TsJ1mvKgU+EqRJY7mFN1+pZ22+wdSCFai1pz6LBumEXN3M9EQunO/Uftk88N
+	 qdfe1uqAxBT6u8ufdtgYtSuB0kx6BV0MmTEws5Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0918/1102] xfs: bail out on bitmap errors in xrep_agfl_fill
-Date: Thu, 17 Sep 2026 16:14:21 +0100
-Message-ID: <20260917151603.673762875@linuxfoundation.org>
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 0883/1102] bnxt_en: Handle buffer allocation failure in bnxt_rx_ring_reset()
+Date: Thu, 17 Sep 2026 16:13:46 +0100
+Message-ID: <20260917151602.737708339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Joe Damato <joe@dama.to>
 
-commit eaf580538eb1be3d162400d04c4b7dc4c627296b upstream.
+commit 961e2a17c5e3559b3f8654d2daabdd25a42e770a upstream.
 
-LOLLM also points out that the xagb_bitmap_set call in xrep_agfl_fill
-can fail, but we don't check the result of xagb_bitmap_walk, so we
-silently drop the error and proceed with inconsistent incore data.
-That shouldn't be allowed.
+bnxt_rx_ring_reset() frees the ring buffers and then reallocates them,
+ignoring the result.
 
-Cc: stable@vger.kernel.org # v6.6
-Fixes: 014ad53732d2ba ("xfs: use per-AG bitmaps to reap unused AG metadata blocks during repair")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+bnxt_alloc_one_rx_ring() can fail in bnxt_alloc_one_tpa_info_data(), which
+returns -ENOMEM on the first failed allocation and leaves the remaining
+rxr->rx_tpa[] entries zeroed.
+
+The error isn't propagated up, so the loop in bnxt_rx_ring_reset
+continues and at the end the code re-enables TPA with partially
+unallocated rx_tpa array.
+
+This means that when the agg_id from hardware is mapped to a SW index in
+rxr->rx_tpa[], an uninitialized slot can be chosen which would hand a
+zero DMA address to the device.
+
+Fix this by falling back to a global reset, which is what the existing
+code already does when other functions fail, but unlike the other
+failure cases this particular failure has to return because TPA can't
+be re-enabled since the allocation failed.
+
+Fixes: 8fbf58e17dce ("bnxt_en: Implement RX ring reset in response to buffer errors.")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
+Cc: stable@vger.kernel.org
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260902015652.2421609-5-joe@dama.to
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader_repair.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/agheader_repair.c
-+++ b/fs/xfs/scrub/agheader_repair.c
-@@ -699,7 +699,9 @@ xrep_agfl_init_header(
- 	 */
- 	xagb_bitmap_init(&af.used_extents);
- 	af.agfl_bno = xfs_buf_to_agfl_bno(agfl_bp);
--	xagb_bitmap_walk(agfl_extents, xrep_agfl_fill, &af);
-+	error = xagb_bitmap_walk(agfl_extents, xrep_agfl_fill, &af);
-+	if (error && error != -ECANCELED)
-+		goto err_undo;
- 	error = xagb_bitmap_disunion(agfl_extents, &af.used_extents);
- 	if (error)
- 		goto err_undo;
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -13706,7 +13706,14 @@ static void bnxt_rx_ring_reset(struct bn
+ 		rxr->rx_sw_agg_prod = 0;
+ 		rxr->rx_next_cons = 0;
+ 		rxr->bnapi->in_reset = false;
+-		bnxt_alloc_one_rx_ring(bp, i);
++		rc = bnxt_alloc_one_rx_ring(bp, i);
++		if (rc) {
++			netdev_warn(bp->dev, "RX ring reset failed to allocate buffers, rc = %d, falling back to global reset\n",
++				    rc);
++			bnxt_reset_task(bp, true);
++			bnxt_rtnl_unlock_sp(bp);
++			return;
++		}
+ 		cpr = &rxr->bnapi->cp_ring;
+ 		cpr->sw_stats->rx.rx_resets++;
+ 		if (bp->flags & BNXT_FLAG_AGG_RINGS)
 
 
