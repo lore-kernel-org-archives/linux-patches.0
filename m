@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5974FD7A4;
-	Thu, 17 Sep 2026 17:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6462E19F40B;
+	Thu, 17 Sep 2026 17:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667232; cv=none; b=GBVRP3DPXKyyjB6dYvz/ZlSLuk62knUna+bI0fInFyssk7tnUGYSfSu3aKIUVd72rcr281Oqam2BZzs/zxRdr74fThRBE7EMFkJfDW/bZXNFC/ZDdcVaB8J3otOkocgQhTTx4qABOKNJVk7fcn2YW/tE4TCAvcDE6ChAnuntcpY=
+	t=1789667235; cv=none; b=G9EVj6RA//YK5HrB7actf2T3fUAtGrzlj4s+0gTLdcHkup/D2bpasZhEtMFea4bePuuXuIfF+YiPbI3iWlwlOPbiLYDfyw2mUrzeYyNFEgGFqu7QwVB0r36m8Z/W2gQts39LBqzCSRzg8MuxpHvYMu+fh4yMygpL3miZROF+uik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667232; c=relaxed/simple;
-	bh=5GndlTAdgWSVTSaZVrNoyF/e/TnkrsIFMKt63ug8XRI=;
+	s=arc-20240116; t=1789667235; c=relaxed/simple;
+	bh=NeSVafSvisaI0QIneGEEZ1j+1hSkn8QIxJ8zWD1no9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k2DTdfpqGT1cavvIj1QvK3VWA68UO8dEJPu3ZIYx2F6it+ZifyAwEUXL9OOqdEJFlzVoZxJOqxu6iaPB+8GOZVKuHZ6lQxvvKfzHhdxSxpXXJPTyNdJkJVtpNPaaJXE3iUGqbIAroeI+Mby3KiZwzWseb1rX1o6SXOtFBkWECFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn/ACmii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aKIu3S84IRvOduSYX3sb1hMMqRXAz+Oc0DHbhf8HvkKBJENj6OQ1JKpp4zMbrdSewW+otcr75vvpk7caLT9sMwLUiE9rDXKEmZ81+JdBmtN+hkmnXL6ej84cPegPeOq2Ktggurjvn6W13PJHXqQNRxup5GZkyPvxiisA3g174ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJoxT14F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn/ACmii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C663C1F000FF;
-	Thu, 17 Sep 2026 17:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJoxT14F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEBC1F000FF;
+	Thu, 17 Sep 2026 17:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667231;
-	bh=tJvLHZEQRldnMCufzRN4Ar6fDe3m4d1lEQOtW78BXko=;
+	s=korg; t=1789667234;
+	bh=q0H0FjNzwUAiL2cpCnH6F/nUNIHg/mKhrO5+Z6WhsoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zn/ACmiioDOCSKfuUsc5ljsE+4udHH9aNfeQWYWyS4K7vvBgES8s/YhFLboOtryHh
-	 3IlhyBYf5tjE5es/mbCQLhQm2oNHT7li3B8JFwLFg7L0VCjGw724m3s8TdEJ/6bvh+
-	 QrzyItR6kRFNpuZmjZ51pVv5NVAZnwx8X1POP2/E=
+	b=UJoxT14FuYTcNHH5nNeWdUfuQAYHQqi/z1hW9gb6S/QdglRAx1ceG9UFAFVLXlZVa
+	 SFqUfp4cJwp6x0s/MskGD7o1m3Ir6u/rGiHJqiIKe199q/kEeazkCxIWhqi3jPDBrx
+	 LbYfOqBirTdGF41mZlcDVBteg0y/pwF9pKPkhmEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0024/1102] ASoC: fsl-asoc-card: reduce WM8904 PLL ratio to meet frequency limit
-Date: Thu, 17 Sep 2026 15:59:27 +0100
-Message-ID: <20260917151540.039051913@linuxfoundation.org>
+Subject: [PATCH 6.12 0025/1102] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
+Date: Thu, 17 Sep 2026 15:59:28 +0100
+Message-ID: <20260917151540.064762934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,81 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 99b5316f08f390a5e1ea2239ecca8e2b4ef70ac6 ]
+[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
 
-WM8904 has a 27 MHz PLL frequency limit. The current S24_LE PLL ratio
-of 384 exceeds this at high sample rates (96 kHz × 384 = 36.864 MHz).
+Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
+false positives when KCSAN is enabled. Specifically, passing an
+uninitialized variable to functions that instrument accesses (e.g.,
+copy_from_user()) results in calls to __kcsan_check_access().
 
-Reduce the ratio to 192 for WM8904, keeping PLL within limits at all
-supported rates (96 kHz × 192 = 18.432 MHz).
+Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
+infers that the function may only read the memory location, and thus
+warns if the passed variable is uninitialized.
 
-Add codec-specific pll_ratio_s24 field, default 384, override to 192
-for WM8904.
+However, KCSAN is a dynamic analysis tool for data race detection; while
+it does read the memory location to detect concurrent modifications, the
+"initialized'ness" of the memory location is irrelevant for its analysis.
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260429100028.2739711-6-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
+and kcsan_check_atomic_write() to hide the pointer from the compiler,
+preventing it from concluding that the pointer passed points to
+uninitialized memory.
+
+This fixes warnings like:
+
+|   CC      fs/ntfs3/file.o
+| In file included from include/asm-generic/rwonce.h:27,
+|                  from arch/arm64/include/asm/rwonce.h:81,
+|                  from include/linux/compiler.h:369,
+|                  from include/linux/array_size.h:5,
+|                  from include/linux/kernel.h:16,
+|                  from include/linux/backing-dev.h:12,
+|                  from fs/ntfs3/file.c:10:
+| In function 'instrument_copy_from_user_before',
+|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
+|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
+|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
+|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
+| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
+|   220 | #define kcsan_check_access __kcsan_check_access
+|       |                            ^
+| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
+|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
+|       |         ^~~~~~~~~~~~~~~~~~
+| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
+|   147 |         kcsan_check_write(to, n);
+|       |         ^~~~~~~~~~~~~~~~~
+| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
+| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
+|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
+|       |      ^~~~~~~~~~~~~~~~~~~~
+| fs/ntfs3/file.c:65:29: note: 'range' declared here
+|    65 |         struct fstrim_range range;
+|       |                             ^~~~~
+
+Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/linux/kcsan-checks.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 5a69f9d255acb..4762e38922d76 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -48,6 +48,9 @@
-  * @mclk_id: MCLK (or main clock) id for set_sysclk()
-  * @fll_id: FLL (or secordary clock) id for set_sysclk()
-  * @pll_id: PLL id for set_pll()
-+ * @pll_ratio_s24: PLL output ratio for S24_LE format (PLL_freq = sample_rate × ratio)
-+ *                 Default is 384, but some codecs (e.g., WM8904) require lower values
-+ *                 to stay within PLL frequency limits
+diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
+index 92f3843d9ebb8..e135dacaa90f3 100644
+--- a/include/linux/kcsan-checks.h
++++ b/include/linux/kcsan-checks.h
+@@ -282,7 +282,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
   */
- struct codec_priv {
- 	struct clk *mclk;
-@@ -56,6 +59,7 @@ struct codec_priv {
- 	u32 mclk_id;
- 	int fll_id;
- 	int pll_id;
-+	int pll_ratio_s24;
- };
+ #define __kcsan_check_write(ptr, size)                                         \
+-	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
  /**
-@@ -215,7 +219,7 @@ static int fsl_asoc_card_hw_params(struct snd_pcm_substream *substream,
+  * __kcsan_check_read_write - check regular read-write access for races
+@@ -308,7 +308,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define kcsan_check_write(ptr, size)                                           \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
- 		if (codec_priv->pll_id >= 0 && codec_priv->fll_id >= 0) {
- 			if (priv->sample_format == SNDRV_PCM_FORMAT_S24_LE)
--				pll_out = priv->sample_rate * 384;
-+				pll_out = priv->sample_rate * codec_priv->pll_ratio_s24;
- 			else
- 				pll_out = priv->sample_rate * 256;
- 
-@@ -739,6 +743,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	for (codec_idx = 0; codec_idx < 2; codec_idx++) {
- 		priv->codec_priv[codec_idx].fll_id = -1;
- 		priv->codec_priv[codec_idx].pll_id = -1;
-+		priv->codec_priv[codec_idx].pll_ratio_s24 = 384;
- 	}
- 
- 	/* Diversify the card configurations */
-@@ -830,6 +835,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 		priv->codec_priv[0].mclk_id = WM8904_FLL_MCLK;
- 		priv->codec_priv[0].fll_id = WM8904_CLK_FLL;
- 		priv->codec_priv[0].pll_id = WM8904_FLL_MCLK;
-+		priv->codec_priv[0].pll_ratio_s24 = 192;
- 		priv->dai_fmt |= SND_SOC_DAIFMT_CBP_CFP;
- 	} else if (of_device_is_compatible(np, "fsl,imx-audio-spdif")) {
- 		ret = fsl_asoc_card_spdif_init(codec_np, cpu_np, codec_dai_name, priv);
+ /**
+  * kcsan_check_read_write - check regular read-write access for races
+@@ -331,7 +331,7 @@ static inline void __kcsan_disable_current(void) { }
+ #define kcsan_check_atomic_read(ptr, size)                                     \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
+ #define kcsan_check_atomic_write(ptr, size)                                    \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
+ #define kcsan_check_atomic_read_write(ptr, size)                               \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
+ #endif
 -- 
 2.53.0
 
