@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE154D4881;
-	Thu, 17 Sep 2026 15:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A354E3248;
+	Thu, 17 Sep 2026 15:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659696; cv=none; b=FtSBOgZIcV4o1G+r0jVxwJRVv2EdhX1bbg3SxP88yXJ2k25d8liffHKLzB1Ty4deZyzcs5mcTbZkhGmAni954zAjjHnSdVZlSCnn71Zg7/DyBOCEJHfqSMwZO28mg4Knui5l1WMJhOFmqCeXH/STLd65EfqxfPT3PZJme3l1KqI=
+	t=1789659704; cv=none; b=HARNM6u2z/uo05fCvKRwNa5lxBN1TUcaIMQqHu4pDcIUaS3z7Idk8XijoZ9/32BBxtEQLp72D1weImdnlqSOIJiHdqNuxpZ98B0yZk8V1IHlJMljEchevYsUM0SrScfBk4400NG1aa38a/2WXw7aOeijCE5jMVOJJnLi3RU6dpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659696; c=relaxed/simple;
-	bh=FAm0jqkG2WjJmEbffgQ5exbxEtW2V6+B9DbRSKwLXrY=;
+	s=arc-20240116; t=1789659704; c=relaxed/simple;
+	bh=svsb+9hDIQaU9ah2hycbspTp1AkWNKdiieMf8GSgt8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dedU9YtMeOPWTVFtHiGE/CFSeiDmSr4PXAmbzCyePqpPIwR9Yg3CEyik4ZBHX1LxB0PCOtMlea1S+8Zn1Oeve/Dg5aUL38Vht5TAD48zGkolDt6xY8smlPy5E4oYKLqZUa13dC5L5ODxQdrqNAXP2ow5Bse9v4FZbBlGJuSV+0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq4Q1Iri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OXbjqtF2MFMQx/m3rupTWm5KgiQkTzuGGelRuTK3Ol42HRBz73Y5sQRAlmVY3fmUhfBWqTZDfSfLl60HsscPs7U+spvE7Tj3LosujD12k/o51Tt0fKMgSydZqcbskKiZrSCpX+21qP0H7KFzqiz8JqkHKqAtMNaT+m9iNMt+phQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mB6Nhh58; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq4Q1Iri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB101F00899;
-	Thu, 17 Sep 2026 15:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mB6Nhh58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4356E1F00898;
+	Thu, 17 Sep 2026 15:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659687;
-	bh=VJXJxNy4e4XpIXexgaW8tKAkGUK5Te7qguoXxbcOsw0=;
+	s=korg; t=1789659690;
+	bh=YT2GrYArb4PFldIvQBkDZ3Ych7cUzATfbfJqPXDz7Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rq4Q1IrigOxNjAE02c6qvbHdJe4TTkrObBDTdtfe/jX4/stfs/gir0yCM9J9/glpP
-	 n4n0rY0kFuvpUA495J2+FTaekq87GiUVXJduHvIydbjMrpTrChbk/u/TqKgPMbeO+B
-	 lDv/kHWNlqkHXjxd3WiGwrC7PDpkrELWbuSr/cEs=
+	b=mB6Nhh58LEEPRXdteXbJ96Dxr+UdynW8esnY61v0d73U4rOSzrnqJYBj+LUwSxN9g
+	 ssLTPfr/xj3/9Ado4+/AuybWSZi9FVzDZ06Z5EamFu1wK8eta6MGoYHaOCwR034Z+t
+	 +a4qDsJr25eDV8itDeIgkwqRUY1q3zZHUVXQuIOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Graf <graf@amazon.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 341/733] virtio_ring: fix stale descriptor flags after a failed packed add
-Date: Thu, 17 Sep 2026 16:10:49 +0100
-Message-ID: <20260917151400.045313532@linuxfoundation.org>
+Subject: [PATCH 7.2 342/733] virtio: fix use-after-free in unregister_virtio_device()
+Date: Thu, 17 Sep 2026 16:10:50 +0100
+Message-ID: <20260917151400.073787405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,153 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Graf <graf@amazon.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 75d276e5bb68778b2916f98a2bc30f142ebadc64 ]
+[ Upstream commit 3f9a0fceb730f5107d52421ead5568eae25a0049 ]
 
-In a packed ring the AVAIL and USED bits sit in the descriptor itself,
-so writing them makes that descriptor available. Those bit combinations
-flip meaning on every round of the ring, tracked by a wrap counter, so
-invalidating or validating a descriptor means inverting both bits.
+device_unregister() is device_del() plus put_device(). When the caller
+holds no extra reference, that drops the last one and runs the release
+callback, which for several transports frees the memory the embedded
+struct virtio_device sits in. unregister_virtio_device() then calls
+virtio_debug_device_exit(), which reads dev->debugfs_dir out of the freed
+object.
 
-Commit 1ce9e6055fa0 ("virtio_ring: introduce packed ring support") has
-virtqueue_add_packed() make every descriptor of a chain available as it
-maps the chain, and write the head last. The device consumes the ring in
-order and stops at a head that is not available yet, so it never reaches
-the rest.
+Affected transports are the ones whose release callback frees and whose
+remove path takes no reference: virtio_mmio, virtio_vdpa, virtio_uml,
+mlxbf-tmfifo and virtio_ccw. virtio_pci is unaffected because
+virtio_pci_remove() brackets the call with get_device() and put_device().
 
-When vring_map_one_sg() fails partway, unmap_release unmaps the segments
-and restores avail_used_flags, but the descriptors it wrote to in the
-ring stay marked with AVAIL and USED bits. The head is now the only
-entry that keeps the device from consuming these stale entries.
+Remove the debugfs entries before the device can go away. They are only
+accessed through the protected debugfs interface, so
+debugfs_remove_recursive() waits for in-progress file operations before
+returning. Tearing them down while the device is still alive is therefore
+safe.
 
-For example, the ring would look like this now.
+Reproduced on User-Mode Linux with CONFIG_KASAN and CONFIG_VIRTIO_DEBUG
+by unbinding a virtio-uml device:
 
-  Z - pre-previous command
-  A - previous command
-  B - aborted command
-  C - current command
+  BUG: KASAN: slab-use-after-free in virtio_debug_device_exit+0x36/0x4d
+  Read of size 8 at addr 00000000616e0b10 by task init/1
+   __asan_report_load8_noabort
+   virtio_debug_device_exit+0x36/0x4d
+   unregister_virtio_device+0x48/0x75
+   virtio_uml_remove
+   platform_remove
+   device_release_driver_internal
+   unbind_store
 
-  [A1 DONE] [A2 DONE] <C1 EMPTY> [B2] [B3] [Z1 DONE]
+  Freed by task 1:
+   kfree
+   virtio_uml_release_dev
+   device_release
+   kobject_put
+   put_device
+   device_unregister
 
-When the driver now attempts to issue the C command, the next add starts
-at the same head as B. If C spans less descriptors than B, there is no
-end marker because AVAIL and USED bits were still in place. And that
-means the device will start interpreting these stale entries (B2/B3) as
-another command entry, which then blocks the queue.
+With this applied, the report is gone and unbind is clean.
 
-This effect typically happens in swiotlb configurations under memory
-pressure, because vring_map_one_sg() can then fail with larger I/O
-requests which then leads to command abortions.
-
-There are broadly 2 ways to avoid leaving those flags behind:
-
-  1) Defer those flags too until the chain is complete.
-  2) Rewrite those flags for the previous wrap counter.
-
-Implement the second option in both packed add paths. The first option
-traverses the chain a second time on every successful add. The second
-option invalidates all added descriptors when any add fails.
-
-With this patch applied, a packed virtqueue keeps completing requests
-after a failed add.
-
-Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
-Fixes: f6a15d854986 ("virtio_ring: add in order support")
-Assisted-by: Kiro:claude-opus-5 checkpatch sparse
-Signed-off-by: Alexander Graf <graf@amazon.com>
+Fixes: 96a8326d69ff ("virtio: add debugfs infrastructure to allow to debug virtio features")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260817223229.28954-1-graf@amazon.com>
+Message-ID: <20260821213953.76906-1-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 38 ++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ drivers/virtio/virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index b438dc2ce1b80..a9e1ee9536b5b 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -1670,7 +1670,7 @@ static inline int virtqueue_add_packed(struct vring_virtqueue *vq,
- 	struct scatterlist *sg;
- 	unsigned int i, n, c, descs_used, err_idx, len;
- 	__le16 head_flags, flags;
--	u16 head, id, prev, curr, avail_used_flags;
-+	u16 head, id, prev, curr, avail_used_flags, unpub_flags;
- 	int err;
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index 75bb4ffe3b877..b6c9e927bef57 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -604,8 +604,8 @@ void unregister_virtio_device(struct virtio_device *dev)
+ {
+ 	int index = dev->index; /* save for after device release */
  
- 	START_USE(vq);
-@@ -1798,15 +1798,30 @@ static inline int virtqueue_add_packed(struct vring_virtqueue *vq,
- 	curr = vq->free_head;
- 
- 	vq->packed.avail_used_flags = avail_used_flags;
-+	unpub_flags = avail_used_flags ^ (1 << VRING_PACKED_DESC_F_AVAIL |
-+					  1 << VRING_PACKED_DESC_F_USED);
- 
- 	for (n = 0; n < total_sg; n++) {
- 		if (i == err_idx)
- 			break;
-+		/*
-+		 * The mapping loop made every descriptor but the head
-+		 * available. Stamp the previous wrap counter's AVAIL and USED
-+		 * bits on those, so that a later and shorter chain at this head
-+		 * does not leave one of them available beyond its own last
-+		 * descriptor. Marking them used instead would hand
-+		 * is_used_desc_packed() a completion we never made.
-+		 */
-+		if (i != head)
-+			desc[i].flags = cpu_to_le16(unpub_flags);
- 		vring_unmap_extra_packed(vq, &vq->packed.desc_extra[curr]);
- 		curr = vq->packed.desc_extra[curr].next;
- 		i++;
--		if (i >= vq->packed.vring.num)
-+		if (i >= vq->packed.vring.num) {
- 			i = 0;
-+			unpub_flags ^= 1 << VRING_PACKED_DESC_F_AVAIL |
-+				       1 << VRING_PACKED_DESC_F_USED;
-+		}
- 	}
- 
- 	END_USE(vq);
-@@ -1828,7 +1843,7 @@ static inline int virtqueue_add_packed_in_order(struct vring_virtqueue *vq,
- 	struct scatterlist *sg;
- 	unsigned int i, n, sg_count, err_idx, total_in_len = 0;
- 	__le16 head_flags, flags;
--	u16 head, avail_used_flags;
-+	u16 head, avail_used_flags, unpub_flags;
- 	bool avail_wrap_counter;
- 	int err;
- 
-@@ -1955,14 +1970,29 @@ static inline int virtqueue_add_packed_in_order(struct vring_virtqueue *vq,
- 	i = head;
- 	vq->packed.avail_used_flags = avail_used_flags;
- 	vq->packed.avail_wrap_counter = avail_wrap_counter;
-+	unpub_flags = avail_used_flags ^ (1 << VRING_PACKED_DESC_F_AVAIL |
-+					  1 << VRING_PACKED_DESC_F_USED);
- 
- 	for (n = 0; n < total_sg; n++) {
- 		if (i == err_idx)
- 			break;
-+		/*
-+		 * The mapping loop made every descriptor but the head
-+		 * available. Stamp the previous wrap counter's AVAIL and USED
-+		 * bits on those, so that a later and shorter chain at this head
-+		 * does not leave one of them available beyond its own last
-+		 * descriptor. Marking them used instead would hand
-+		 * is_used_desc_packed() a completion we never made.
-+		 */
-+		if (i != head)
-+			desc[i].flags = cpu_to_le16(unpub_flags);
- 		vring_unmap_extra_packed(vq, &vq->packed.desc_extra[i]);
- 		i++;
--		if (i >= vq->packed.vring.num)
-+		if (i >= vq->packed.vring.num) {
- 			i = 0;
-+			unpub_flags ^= 1 << VRING_PACKED_DESC_F_AVAIL |
-+				       1 << VRING_PACKED_DESC_F_USED;
-+		}
- 	}
- 
- 	END_USE(vq);
+-	device_unregister(&dev->dev);
+ 	virtio_debug_device_exit(dev);
++	device_unregister(&dev->dev);
+ 	ida_free(&virtio_index_ida, index);
+ }
+ EXPORT_SYMBOL_GPL(unregister_virtio_device);
 -- 
 2.53.0
 
