@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C04598C01;
-	Thu, 17 Sep 2026 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D953B3A48E3;
+	Thu, 17 Sep 2026 15:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660642; cv=none; b=qwUTlMsvZ5izu4vmfvSigRT7FckJxuvKTLabnEiAi4Is6B24YBGb8MNDuv1fl9n67Yuv4irwhMF4nbsuQkip1mN+SSNqZmStBG2OV+qsZa5B3vUkssv7525LdfATU+83nFVWhZP4/0hcw6n1R7XuEDgmK1PMU4Vu85jwTmBUgcI=
+	t=1789660646; cv=none; b=jps+Tzh8pvIl7D4ao6xmLjaFbcltR2MD+1SFW/asykRiRJqKJXdM9SMgQSalOrEiPXxZRsk3VMqz8/puM48ILLUM0QbJWLBXLJ1GtaN1HRNZ2gOr/k8XYj8jiYlYhqiPOu78Iv3r99FcEJpY0MhbDp6L8S6514Tc00NTj1pmlzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660642; c=relaxed/simple;
-	bh=+BJLRxosKHhGjjxZrMLkkJpaT1/FKIJcz9Mtg4ArmWU=;
+	s=arc-20240116; t=1789660646; c=relaxed/simple;
+	bh=v5Bl0h5HJkOksfCSN/4N8mmkVLzxL4oOUbW+N3wcaAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohA/0y39hI1LAJz9HKsy7+sszWg1s8vRLe+K2PdepWXdSdb7BojM9LVeTfpijUuB9mdcANa3UBbljiWlZDn194ZIPWvm1GFMWIcvb18LJdEdjyn/XLaAth9JsFOo0dVrjaJ4T8Clp9xCKA3EPvtuKEOiLKKY3CiGo/DDs+famrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtcvQ7ii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QYsemymIuCHAjGJmTPaf/QmJNWT4wnb3dpb+9NMSwvrvlquwcm/PXmdwgDjlN3/cxUxJkuNgDfkRtTQzsD2QGLZRWnNO0rBOFyIQAbeL1qOgdW/F1J+XWylSkCcJLoEOCJdOJOvcVWuY+QnQUd1AfaO4LB8EIWxMc6vszeYP7jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJ9gPznn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtcvQ7ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCC31F00898;
-	Thu, 17 Sep 2026 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJ9gPznn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FDB1F000FF;
+	Thu, 17 Sep 2026 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660641;
-	bh=/8F/bxHKEd2ZjIPKqi2CUFTPKam7RZrZzVgeD3flrPk=;
+	s=korg; t=1789660644;
+	bh=exfv/a7DGCuSzJbSpdOLHikI2rUOV73kUIsOGay9nGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtcvQ7iipprOPNqU0taQlzML+O422wwVqTDurseI3y3okh9gCk5ENULqLVNjmpOvE
-	 nKsEXHQK3fbLJmGSHYGMg37elEsgMlRg1XDth3Cd6vNTxImxl77pNYciBP9Ao+wq8R
-	 4M0f8yLGr+151d8RM7Nx0fVIZrLq0U4j8OIvaA+E=
+	b=yJ9gPznniWM51OvX9k053TE7t4xUcGWUVuYVmBRShMaTjRSNuM78/yNuF1gTY07Yw
+	 N1BQQGlQ7ez87f/P78nhOlwqmfX3L3h2nSf+/ogHEeA7RLa8ikaFo6wzXSttadEVB4
+	 sTKeGidVmviZY9slNCVJK8f3pQPvTFawQgA+kDEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 623/733] mptcp: pm: userspace: fix address ID overflow
-Date: Thu, 17 Sep 2026 16:15:31 +0100
-Message-ID: <20260917151408.063046614@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>,
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>
+Subject: [PATCH 7.2 624/733] smb: client: reject short READ responses in CIFSSMBRead()
+Date: Thu, 17 Sep 2026 16:15:32 +0100
+Message-ID: <20260917151408.093701561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,73 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Diego Oliva <diego@bynar.io>
 
-commit f9f0068e8813d8c10d016b030fc3a320d0b6767c upstream.
+commit e6142a8bfc230c7263eb8b0475249c958ce49367 upstream.
 
-When all MPTCP address IDs (1-255) are exhausted in the userspace PM,
-find_next_zero_bit() returns MPTCP_PM_MAX_ADDR_ID + 1 (256). This value
-overflows when stored in the u8 field e->addr.id, resulting in ID 0
-being stored and the entry being incorrectly added to the list.
+CIFSSMBRead() reads DataLengthHigh, DataLength and DataOffset out of
+the READ_RSP returned by the server without first checking that a
+whole READ_RSP was actually received. The length of the response is
+recorded in rsp_iov.iov_len, but nothing constrains it to be at least
+read_rsp_size before those fields are dereferenced.
 
-ID 0 is reserved for the initial connection in MPTCP, so this overflow
-can cause address conflicts.
+A malicious or compromised SMB1 server can return a response shorter
+than the READ_RSP header, so that parsing the header itself reads past
+the end of the receive buffer. SMB1 is not negotiated by default;
+reaching this code requires an explicit vers=1.0 mount.
 
-Note: the in-kernel PM already has an 'endpoints == MPTCP_PM_MAX_ADDR_ID'
-check in mptcp_pm_nl_append_new_local_addr() that returns -ERANGE before
-reaching find_next_zero_bit(), preventing this overflow. So this fix only
-addresses the userspace PM path.
+Reject the response unless it is at least read_rsp_size bytes long.
 
-Check the find_next_zero_bit() result against MPTCP_PM_MAX_ADDR_ID and
-return -ENOSPC if all IDs are truly exhausted. Move the ID allocation
-check before the memory allocation so that the error path does not need
-to free the allocated entry.
-
-Fixes: 4638de5aefe5 ("mptcp: handle local addrs announced by userspace PMs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-8-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org # 6.19.x
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/smb/client/cifssmb.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -69,6 +69,19 @@ static int mptcp_userspace_pm_append_new
- 	}
- 
- 	if (!addr_match && !id_match) {
-+		unsigned int id;
-+
-+		if (!entry->addr.id && needs_id) {
-+			id = find_next_zero_bit(id_bitmap,
-+						MPTCP_PM_MAX_ADDR_ID + 1, 1);
-+			if (id > MPTCP_PM_MAX_ADDR_ID) {
-+				ret = -ENOSPC;
-+				goto append_err;
-+			}
-+		} else {
-+			id = entry->addr.id;
-+		}
-+
- 		/* Memory for the entry is allocated from the
- 		 * sock option buffer.
- 		 */
-@@ -78,10 +91,7 @@ static int mptcp_userspace_pm_append_new
- 			goto append_err;
- 		}
- 
--		if (!e->addr.id && needs_id)
--			e->addr.id = find_next_zero_bit(id_bitmap,
--							MPTCP_PM_MAX_ADDR_ID + 1,
--							1);
-+		e->addr.id = id;
- 		list_add_tail_rcu(&e->list, &msk->pm.userspace_pm_local_addr_list);
- 		msk->pm.local_addr_used++;
- 		ret = e->addr.id;
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -1719,6 +1719,14 @@ CIFSSMBRead(const unsigned int xid, stru
+ 	pSMBr = (READ_RSP *)rsp_iov.iov_base;
+ 	if (rc) {
+ 		cifs_dbg(VFS, "Send error in read = %d\n", rc);
++	} else if (rsp_iov.iov_len < tcon->ses->server->vals->read_rsp_size) {
++		/* check that the received response can hold a whole READ_RSP */
++		cifs_dbg(FYI, "%s: server returned short header. got=%zu expected=%zu\n",
++			 __func__, rsp_iov.iov_len,
++			 tcon->ses->server->vals->read_rsp_size);
++		rc = smb_EIO2(smb_eio_trace_read_rsp_short,
++			      rsp_iov.iov_len, tcon->ses->server->vals->read_rsp_size);
++		*nbytes = 0;
+ 	} else {
+ 		int data_length = le16_to_cpu(pSMBr->DataLengthHigh);
+ 		data_length = data_length << 16;
 
 
