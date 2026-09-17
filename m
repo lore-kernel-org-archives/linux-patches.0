@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A0A4F3904;
-	Thu, 17 Sep 2026 15:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384D14F3904;
+	Thu, 17 Sep 2026 15:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660474; cv=none; b=V99nGt+K0hAYVTtSzr4UFZBwUkLquU2Um4gssY/2R0RY/3D6xbaQQJlBSXFpSTRBldhTIIsFNu02cvdNnyw7CCRkGmtuewXgMAJtUTGULMZ02aUHvcuZm88hQkSzoHJ/uNqH8Ap8piOCKD+n9tyImVg1mE98gpOGSMAQSAVVsIo=
+	t=1789660477; cv=none; b=RHWzliry/9tPlMdptGSLZmHgbJmxAgNprxLODeoOx9wneTv2+7bCr38MvhsNb5dGqWCWDSMxiERjEuQpwMQo0VrI/RCKvz9e68WsxkN4JSzL+shmd90L9jXHZcx/BBLS9WewotqveagblsRy6r91lKZ3szuwrzZHofliEyA+Csc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660474; c=relaxed/simple;
-	bh=Uc3P50e8CkxpVvgxjYKU4eAyNAytnbB6xsA4qzcArww=;
+	s=arc-20240116; t=1789660477; c=relaxed/simple;
+	bh=/n3NdSr4kLh31+glUO5sk6inVtmRytNlZNaVM+SoU/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKMAfJKuahXk+rSK0L72e2lFhvbecg9m70ZE5ntaQg4jm0dF3VGqPQvvNFPNvZEIHvnxUfaBxiwy87prLs/uoA++6gt3eo+5s6YZ8+sLo9yyapECiGvUK3Y382RjNCf6iuQdgAHHXiWcpm3N+5mWhh8y78eZc5lMWJRKcoagMrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+fX0cht; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FOlPv1viw3gZZsFLhHwfU7hIo5Sb4f8jhR5OIN852og/xOymvCnfr7jVckODtQT+oFkpVh4lLF1x+zoLoXQ98NsSVB36MCE14ERZA/OW3aphINPDB2elI8BkXGMoESlbyszbaB/IcW37BKLpBojNabKvunO71I2rnc4Ve5LziT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKZRBGpL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+fX0cht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635151F000FF;
-	Thu, 17 Sep 2026 15:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKZRBGpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49ABF1F000FF;
+	Thu, 17 Sep 2026 15:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660472;
-	bh=nw3lCAtknTsI5m8badtGRADp5VEXxscvU1gApFEfBK4=;
+	s=korg; t=1789660475;
+	bh=nS2QB/1Juh28xu5xqDJeinejkHrStd0yhIf2phGXFbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K+fX0chtG72QT9ri0pfiA02KdjYDSrAT6nAjfgi+V8vPwAJKwE4Uj0BJUlk5+s6QE
-	 bvZoPdUU9KSzBw/YVu12YoLAJvO4KiRwFZ+bYjUfWtasSuGg/E657O4EetoQ6n+maQ
-	 yWmtEq5rTcAEk20GxXo0HjJUBBTnJ+LXsk5p2uXw=
+	b=TKZRBGpLFlon8nvtTlYnFVstn+HInJWQKJh84yrGHXkSk3JFxmxtzW+gvfTtEW/vR
+	 xHHkjAXLNHs7dsJJ1puaiE53fxaApbH/OoRUihmgxXjAnx0lp3qxK670S4rD5XW+H8
+	 DxQ51fXgXkBvn5S3jXhEOF0VDB+UBEWgq1uqU9wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 604/733] media: v4l2-ctrls: validate AV1 tile counts
-Date: Thu, 17 Sep 2026 16:15:12 +0100
-Message-ID: <20260917151407.528072144@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 7.2 578/733] s390/crypto: Fix missing cra_flags in paes_s390
+Date: Thu, 17 Sep 2026 16:14:46 +0100
+Message-ID: <20260917151406.779750215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,63 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 439058ced617fbb3febc017b9e93bb7387f309e0 upstream.
+commit 5b97b969030c099333d973be420edef0d6452e0f upstream.
 
-The stateless AV1 decoders use tile_info.tile_cols and tile_rows as loop
-bounds and as indices into the mi_*_starts[] and *_in_sbs_minus_1[]
-arrays, as the divisor for context_update_tile_id, and their product
-bounds the per-tile descriptor buffers, but std_validate_compound() does
-not bound these u8 fields. Reject a V4L2_CTRL_TYPE_AV1_FRAME whose
-tile_cols or tile_rows exceeds V4L2_AV1_MAX_TILE_COLS / _ROWS, or whose
-product exceeds V4L2_AV1_MAX_TILE_COUNT. A zero tile count is left to the
-consuming driver so the zero-initialised control that existing userspace
-submits is still accepted.
+The 4 algorithms implemented in paes_s390 never had any cra_flags
+set. So add code which sets the cra_flag to CRYPTO_ALG_ASYNC and
+CRYPTO_ALG_NO_FALLBACK.
 
-Fixes: 9de30f579980 ("media: Add AV1 uAPI")
-Assisted-by: Claude:claude-opus-4-8
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 4ccd065a69df ("crypto: ahash - Add support for drivers with no fallback")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 6.17+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/s390/crypto/paes_s390.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -793,10 +793,30 @@ static int validate_av1_film_grain(struc
- 	return 0;
- }
- 
-+static int validate_av1_tile_info(struct v4l2_av1_tile_info *t)
-+{
-+	/*
-+	 * tile_cols and tile_rows index the per-tile descriptor arrays and
-+	 * bound the tile loops in the stateless AV1 drivers; the product
-+	 * bounds the total tile descriptor count.
-+	 */
-+	if (t->tile_cols > V4L2_AV1_MAX_TILE_COLS ||
-+	    t->tile_rows > V4L2_AV1_MAX_TILE_ROWS)
-+		return -EINVAL;
-+
-+	if ((u32)t->tile_cols * t->tile_rows > V4L2_AV1_MAX_TILE_COUNT)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- static int validate_av1_frame(struct v4l2_ctrl_av1_frame *f)
- {
- 	int ret = 0;
- 
-+	ret = validate_av1_tile_info(&f->tile_info);
-+	if (ret)
-+		return ret;
- 	ret = validate_av1_quantization(&f->quantization);
- 	if (ret)
- 		return ret;
+--- a/arch/s390/crypto/paes_s390.c
++++ b/arch/s390/crypto/paes_s390.c
+@@ -576,6 +576,7 @@ static struct skcipher_engine_alg ecb_pa
+ 		.base.cra_name	      = "ecb(paes)",
+ 		.base.cra_driver_name = "ecb-paes-s390",
+ 		.base.cra_priority    = 401,	/* combo: aes + ecb + 1 */
++		.base.cra_flags	      = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NO_FALLBACK,
+ 		.base.cra_blocksize   = AES_BLOCK_SIZE,
+ 		.base.cra_ctxsize     = sizeof(struct s390_paes_ctx),
+ 		.base.cra_module      = THIS_MODULE,
+@@ -842,6 +843,7 @@ static struct skcipher_engine_alg cbc_pa
+ 		.base.cra_name	      = "cbc(paes)",
+ 		.base.cra_driver_name = "cbc-paes-s390",
+ 		.base.cra_priority    = 402,	/* cbc-paes-s390 + 1 */
++		.base.cra_flags	      = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NO_FALLBACK,
+ 		.base.cra_blocksize   = AES_BLOCK_SIZE,
+ 		.base.cra_ctxsize     = sizeof(struct s390_paes_ctx),
+ 		.base.cra_module      = THIS_MODULE,
+@@ -1150,6 +1152,7 @@ static struct skcipher_engine_alg ctr_pa
+ 		.base.cra_name	      =	"ctr(paes)",
+ 		.base.cra_driver_name =	"ctr-paes-s390",
+ 		.base.cra_priority    =	402,	/* ecb-paes-s390 + 1 */
++		.base.cra_flags	      = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NO_FALLBACK,
+ 		.base.cra_blocksize   =	1,
+ 		.base.cra_ctxsize     =	sizeof(struct s390_paes_ctx),
+ 		.base.cra_module      =	THIS_MODULE,
+@@ -1593,6 +1596,7 @@ static struct skcipher_engine_alg xts_pa
+ 		.base.cra_name	      =	"xts(paes)",
+ 		.base.cra_driver_name =	"xts-paes-s390",
+ 		.base.cra_priority    =	402,	/* ecb-paes-s390 + 1 */
++		.base.cra_flags	      = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NO_FALLBACK,
+ 		.base.cra_blocksize   =	AES_BLOCK_SIZE,
+ 		.base.cra_ctxsize     =	sizeof(struct s390_pxts_ctx),
+ 		.base.cra_module      =	THIS_MODULE,
 
 
