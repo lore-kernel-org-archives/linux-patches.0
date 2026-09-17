@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7294A4ABBDB;
-	Thu, 17 Sep 2026 17:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE644F68CB;
+	Thu, 17 Sep 2026 17:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667632; cv=none; b=u99i+6exNc7eHc0N+nfSnRss1HaXxB+mdZPx/BzKzQBQtkO0Ujo51UoJsFsTbbzczuQ6EGbGmLer16X5qijCqlsZ4bpUxKVuY6bUtW3H9Bxd4aRLcrfKAxr5dX0d90shu83MZkCwY0y4Q7GtD/0kiIyewwjG5KGDTtmSvYZkTmg=
+	t=1789667635; cv=none; b=p6AI+ftytGvxCCjorOoHTs4O0e/IssBU6EaGuoYJGhuMT2WALo703LLkdwQdTQpmixNx9xrM23To/wIBKE0J00hvDAKkjerPLb2OfxdKjcmydW900V0aI26IZoYrlCl44vXJekmDok3Lor+Z36ZXqK99kuneTl0U3PKJcMrLoAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667632; c=relaxed/simple;
-	bh=sZWWWMbgtluVEToHfTNRn6r3VLlFcxtM57YfWLzzWUc=;
+	s=arc-20240116; t=1789667635; c=relaxed/simple;
+	bh=3RPFg5ilwkziM4c4q79op3J1EUPw7m0xa61u28W/LFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S7EFqXBs9abGHn79Kq7gGolc42G7uiKxieydyUNeMd6bmoHpqqrYA/43SNbRA/S4JEAxz5jgZYMGCC/mkyj7jE61n67WI2Q3VgW4dYEgHQQHHmXmnq2ZiqRZ3ZwyPb53eixWCaqPWGvv9uBkkWYhJGzr2TlYd5Uy6NU2vzx5WnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLMdRYgb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DRpLt2QDEC/vEdzDGGboJ7La/uOi8orUNpma/kqhYzDpamKsz/b/P6wEfqHKyDpQyuD8b4wUB0JZOZ1rueiyQr8PBV2S/z3sSzcv6buji55ZsInmjgnPt2Y+A52JoCPd+muGoaKCA6NmcuOwQBFUgBePd3aYp1MNAYEgqwZzNNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExrUykd4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLMdRYgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CDF1F00893;
-	Thu, 17 Sep 2026 17:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExrUykd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95E61F000FF;
+	Thu, 17 Sep 2026 17:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667631;
-	bh=LiTt1Fa5F110bRKN0y+3sgrQ9RNT2UFACM4KgfkYs40=;
+	s=korg; t=1789667634;
+	bh=pBlI9pRzFJhfIqF+kOGgLI/qtcISjUC4K4H10eOyuQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLMdRYgbfp3NQJkoaWYbYWPAV6hY/o4ockh/HT/zkYjcZwYJ59/GvOUm8JKiGwtkY
-	 r0yGwylJPfZV8rX+kn4udLplesPsUhahD74b2ctdwNlAq04DAZkORlGTHZjeCic3fR
-	 0ZWNUIMkPAfxGM1LPVhspbXgmjjFTuygBWCxe5tc=
+	b=ExrUykd412tX3KQmZ4kKb5uaPJ78BSCxvlVAn78suJVxvCMsUgGmCGKjPETiZ/z1L
+	 J7Vuo6P/BUhjGX2ocUDsEkBk+DDXGLV1UaOIHNig1vSC16Sf0kqrLJw3Ntpn/9Npjm
+	 Z+T78Ek3fjAee3bgktN8QjjpCWEphFu7mG6Dnn+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <steelman@post.pl>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0156/1102] ipv6: addrconf: fix temp address generation after prefix deprecation
-Date: Thu, 17 Sep 2026 16:01:39 +0100
-Message-ID: <20260917151543.449202496@linuxfoundation.org>
+Subject: [PATCH 6.12 0157/1102] net: thunderx: fix PTP device ref leak in nicvf_probe()
+Date: Thu, 17 Sep 2026 16:01:40 +0100
+Message-ID: <20260917151543.476136439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,85 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit e20d8922aa8fe441d291364c96c2179a005b79ea ]
+[ Upstream commit 2bcf59eefb9f00a2b1d426b639ee49c305a80695 ]
 
-When a router temporarily deprecates an IPv6 prefix (either by sending a
-Router Advertisement with Preferred Lifetime = 0 or by letting the
-lifetime expire) and later restores it, the kernel permanently loses its
-ability to generate temporary privacy addresses (RFC 8981) for that
-prefix.
+cavium_ptp_get() acquires a reference to the PTP PCI device
+through pci_get_device(). If any initialization step fails
+after cavium_ptp_get(), the PTP PCI device reference is leaked.
+Add a common error path to release the PTP reference before
+returning from probe failures.
 
-This happens because the address worker attempts to generate a
-replacement temporary address when the current one nears expiration. As
-the base prefix is deprecated already, the generation fails after
-marking the temporary address as already having spawned a replacement
-(ifp->regen_count++).
-
-When the router eventually restores the prefix, the temporary address
-becomes active again. However, once it naturally expires, the address
-worker sees this temporary address already tried to generate one and
-skips the regeneration.
-
-Fix the issue by resetting the regen_count check of the latest temp
-address generated for the prefix updated by the incoming RA.
-
-Reported-by: Łukasz Stelmach <steelman@post.pl>
-Closes: https://lore.kernel.org/netdev/87340td30q.fsf%25steelman@post.pl/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260523103811.3790-1-fmancera@suse.de
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Link: https://patch.msgid.link/20260525082611.61817-1-lihaoxiang@isrc.iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cavium/thunder/nicvf_main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 9fe7851029e25..ef938fb1d7549 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1173,6 +1173,7 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
- 	ipv6_link_dev_addr(idev, ifa);
- 
- 	if (ifa->flags&IFA_F_TEMPORARY) {
-+		/* manage_tempaddrs() relies on addresses being added to the head */
- 		list_add(&ifa->tmp_list, &idev->tempaddr_list);
- 		in6_ifa_hold(ifa);
+diff --git a/drivers/net/ethernet/cavium/thunder/nicvf_main.c b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
+index aebb9fef3f6eb..5730ce711b249 100644
+--- a/drivers/net/ethernet/cavium/thunder/nicvf_main.c
++++ b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
+@@ -2110,8 +2110,10 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  	}
-@@ -2606,8 +2607,10 @@ static void manage_tempaddrs(struct inet6_dev *idev,
- 			     __u32 valid_lft, __u32 prefered_lft,
- 			     bool create, unsigned long now)
- {
--	u32 flags;
-+	u32 orig_prefered_lft = prefered_lft;
- 	struct inet6_ifaddr *ift;
-+	bool reset_done = false;
-+	u32 flags;
  
- 	read_lock_bh(&idev->lock);
- 	/* update all temporary addresses in the list */
-@@ -2642,6 +2645,11 @@ static void manage_tempaddrs(struct inet6_dev *idev,
- 			prefered_lft = max_prefered;
+ 	err = pci_enable_device(pdev);
+-	if (err)
+-		return dev_err_probe(dev, err, "Failed to enable PCI device\n");
++	if (err) {
++		err = dev_err_probe(dev, err, "Failed to enable PCI device\n");
++		goto err_put_ptp;
++	}
  
- 		spin_lock(&ift->lock);
-+		/* the first match is the most recent temp address */
-+		if (!reset_done && orig_prefered_lft > 0) {
-+			ift->regen_count = 0;
-+			reset_done = true;
-+		}
- 		flags = ift->flags;
- 		ift->valid_lft = valid_lft;
- 		ift->prefered_lft = prefered_lft;
+ 	err = pci_request_regions(pdev, DRV_NAME);
+ 	if (err) {
+@@ -2265,6 +2267,8 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	pci_release_regions(pdev);
+ err_disable_device:
+ 	pci_disable_device(pdev);
++err_put_ptp:
++	cavium_ptp_put(ptp_clock);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
