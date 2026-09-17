@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0534D4897;
-	Thu, 17 Sep 2026 15:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C0C4C10FA;
+	Thu, 17 Sep 2026 15:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659251; cv=none; b=YTKyOKhUVMFoBwRojkL63txyDwfZ/AN99iwpzW5s9v/q/7O4A9fndJJ1GkAumMywmUcuEm/xxMY/9Kfxi7l3pze+dxkI7Ix6fHSZHp0BEks5tgeZDa/D1+JWVIBK1fJsKLwIuToOm282dFKMUqGl+ccga7JOFdxf6yxNkN1fdvE=
+	t=1789659251; cv=none; b=JCtrsy/BIoY5V79VpCbzsqzVFYrG7kdtO/KewYZh8Z7Aw+h7WcnLrvUyXYM1HoutooC+U5ERHRdIJzloUjfvkGmRsOTRekk80z39vce04phEc1lElHkym6X776jLev7wYEonhI9treRoTkTkIEst7IX7f319dR/bunS9Ai4p4NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659251; c=relaxed/simple;
-	bh=cwf9373YsAJtPP0cjRZGOTGujOQQ5Bqkm2M5GaytsMA=;
+	bh=5Onsmavx3uL5QsIurZKjj2hya+GFmgET6gWT8FdEIMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tzlfw/M4Z/OmXDuxYHCjROSoBAKlzr3TTMPtWtb17pUyBQVMD8w4918CsAJT/Sg7zDQ4wUR03ququmWdsglLnK03f+r3ks2UOx6yyZBPuXis1JgBj2g71+hDXAcMNVBW9xXPQkx0QNyFWPp7Gmht5gAE5QNDvP8I2V/eiW/a6eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7hJYymN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+hwZtsOsCgc8+Zdlvq7KBmpO4TuXzNEHXn1pwCS+v8ZFDmIZ/HG1ay9t/o8D1S7tFjRLwSj02DS/H2G3f7FL62BVyqx5W1NRLgZHCuUcjxBE9N9xi/VkXf/TM2Va0O4IrvMKQd6WF217e/rqxxsodXDE0CV8Xr5kIMrMr9o5JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfR9KrHX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7hJYymN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87ADC1F00899;
-	Thu, 17 Sep 2026 15:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfR9KrHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE3C1F0089A;
+	Thu, 17 Sep 2026 15:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659242;
-	bh=WCbGtUFwifFmW3vLKHRujurRlIXmmu7YEof4Gkc0KWs=;
+	s=korg; t=1789659245;
+	bh=nAW+c2yBuY0q3CGlJc35fRXcoUUkJzo8Vk1ZtojW71I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7hJYymNiWtkwVZz+ZmYIpKI1ABDhGrSH8R/8T0ovrb9JV38VbO/8PFbY7yNFEEkQ
-	 zXQno0U872jVHhOaumUptrFCIgVbAJ6sEfPbIpGsOY2zxW2g1ZtUl1lDwnVGSlxTXT
-	 W6FWwbRGLy3X7aOIYj7RKjgLK+hQ+wKHg0tn1xTI=
+	b=qfR9KrHXlBClGHhe2lLsowjxSYNOrQxtXOKW5kBxo0TP1A9EG4NTIiwOcXq9fq/4q
+	 vTsqfxuL/edjh1F2St+V/2bkrIBS+Y8nJGfyG/k63mkbSXNpaKqwTdJUIcj7FAtEdM
+	 OIZw6MWGIVje22skKaRva8X4GQWsBQE3nIwsjjdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qu Wenruo <wqu@suse.com>,
-	Guanghui Yang <3497809730@qq.com>,
+	"James C. Owens" <jamesowens@optonline.net>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 164/733] btrfs: detach failed sprout device from transaction update list
-Date: Thu, 17 Sep 2026 16:07:52 +0100
-Message-ID: <20260917151355.168896210@linuxfoundation.org>
+Subject: [PATCH 7.2 191/733] btrfs: scrub: report the failing sectors address, not the stripe base
+Date: Thu, 17 Sep 2026 16:08:19 +0100
+Message-ID: <20260917151355.906055126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,45 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: James C. Owens <jamesowens@optonline.net>
 
-[ Upstream commit c93b3c43df561cd9f592cee20ae058b563f9e5b6 ]
+[ Upstream commit 33ce0aa4c57611c3a3485ec7c01ad67b3751447d ]
 
-When creating the first metadata chunk for a sprout filesystem,
-create_chunk() adds the new device to the transaction dev_update_list
-through device->post_commit_list.
+scrub_stripe_report_errors() iterates over the sectors of a stripe, but
+every message it emits passes stripe->logical, the address of the first
+sector of the 64KiB stripe, rather than the address of the sector being
+reported. The physical address is likewise computed once, before the
+loop, from stripe->logical.
 
-If the subsequent system chunk creation fails, btrfs_init_new_device()
-aborts the transaction and releases the device while post_commit_list is
-still linked. This triggers a warning in btrfs_free_device() and leaves
-the transaction list referencing freed memory.
+This matters because scrub_print_common_warning() uses that logical
+address for the backref walk which produces the "root %llu inode %llu
+offset %llu ... (path: ...)" part of the message. As the address is
+always the stripe base, the reported root/inode/offset/path can identify
+a different file from the one whose sector actually failed.
 
-Detach the device while holding chunk_mutex before releasing it.
+A 64KiB stripe routinely spans several extents belonging to unrelated
+files. On the machine where this was found, the stripe at logical
+0x17D9380000 holds four sectors of /usr/share/plasma/emoji/bg.dict, then
+a file inside a docker volume, then sectors referenced only by
+snapshots. Every error anywhere in that stripe is attributed to bg.dict.
 
-Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
-Assisted-by: Codex:gpt-5
+The effect is visible statistically: across ten months and four kernel
+series that machine logged 81 distinct flagged logical addresses, and
+every one of them is exactly 64KiB aligned. Since BTRFS_STRIPE_LEN is
+64KiB and stripe->logical is stripe aligned by construction, real
+failures distributed across sectors could not produce that.
+
+Report the address of the sector actually being examined. Adding the
+sector offset to the physical address is valid because BTRFS_STRIPE_LEN
+is the unit contiguous on a single device for every profile, so a stripe
+never crosses a device boundary.
+
+Fixes: 0096580713ff ("btrfs: scrub: introduce error reporting functionality for scrub_stripe")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Signed-off-by: James C. Owens <jamesowens@optonline.net>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/scrub.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 6eab4cc73ce44..556d8a60a5ec9 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3071,6 +3071,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 	btrfs_sysfs_remove_device(device);
- 	mutex_lock(&fs_info->fs_devices->device_list_mutex);
- 	mutex_lock(&fs_info->chunk_mutex);
-+	if (!list_empty(&device->post_commit_list))
-+		list_del_init(&device->post_commit_list);
- 	list_del_rcu(&device->dev_list);
- 	list_del(&device->dev_alloc_list);
- 	fs_info->fs_devices->num_devices--;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index d2f7ac5b6e961..3b3f04521369d 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1041,6 +1041,10 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 
+ skip:
+ 	for_each_set_bit(sector_nr, &extent_bitmap, stripe->nr_sectors) {
++		const u64 sector_logical = stripe->logical +
++					   ((u64)sector_nr << fs_info->sectorsize_bits);
++		const u64 sector_physical = physical +
++					   ((u64)sector_nr << fs_info->sectorsize_bits);
+ 		bool repaired = false;
+ 
+ 		if (scrub_bitmap_test_bit_is_metadata(stripe, sector_nr)) {
+@@ -1069,12 +1073,12 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 			if (dev) {
+ 				btrfs_err_rl(fs_info,
+ 		"scrub: fixed up error at logical %llu on dev %s physical %llu",
+-					    stripe->logical, btrfs_dev_name(dev),
+-					    physical);
++					    sector_logical, btrfs_dev_name(dev),
++					    sector_physical);
+ 			} else {
+ 				btrfs_err_rl(fs_info,
+ 			   "scrub: fixed up error at logical %llu on mirror %u",
+-					    stripe->logical, stripe->mirror_num);
++					    sector_logical, stripe->mirror_num);
+ 			}
+ 			continue;
+ 		}
+@@ -1083,30 +1087,30 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 		if (dev) {
+ 			btrfs_err_rl(fs_info,
+ "scrub: unable to fixup (regular) error at logical %llu on dev %s physical %llu",
+-					    stripe->logical, btrfs_dev_name(dev),
+-					    physical);
++					    sector_logical, btrfs_dev_name(dev),
++					    sector_physical);
+ 		} else {
+ 			btrfs_err_rl(fs_info,
+ 	  "scrub: unable to fixup (regular) error at logical %llu on mirror %u",
+-					    stripe->logical, stripe->mirror_num);
++					    sector_logical, stripe->mirror_num);
+ 		}
+ 
+ 		if (scrub_bitmap_test_bit_io_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("i/o error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_csum_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("checksum error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_meta_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("header error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_meta_gen_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("generation error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 	}
+ 
+ 	/* Update the device stats. */
 -- 
 2.53.0
 
