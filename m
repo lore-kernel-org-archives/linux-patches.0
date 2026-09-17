@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D304A518145;
-	Thu, 17 Sep 2026 16:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71474F85DD;
+	Thu, 17 Sep 2026 16:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664376; cv=none; b=PYhPruJWKiwJpMpR/Yz//fUyXwSrTdgehOvuPcnzdma36hWcmJxwp/UgTcEVMA31nBnvP3yDwe8+Pi/T/IKQZZaTAn3S8cqLLZoHKpV9tOjdfcboGqFyc+0niBAIKBMtDHes28Ezkq1KHKjPgLxAz2GxflfkGjg41WbJZZfRVjo=
+	t=1789664378; cv=none; b=Fc9l7c7MEWVbWoeakp1BnX/hgIgSWqgLTfvnZgxMhwYIjS8ImvPIUM0F/+e0FgErz39FOuzn7U2eFB+r+VVIMBcSLEVWBvpRMJN4gpAvH+HAwJaMW5WU3f7UV/UJyWdmpwaGg0g3SBYWnutKtIYWlmxsvm2RuZKjQBX14ZlovjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664376; c=relaxed/simple;
-	bh=qH+jFssgf59bgo7Bo3mn+U5a/0BGFTkStwb+U79hzxU=;
+	s=arc-20240116; t=1789664378; c=relaxed/simple;
+	bh=TaolKg3UH9oJwD27/0yfUoj4fKlK5qWOyuOuskPjGkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bn5W2AdXeEWpUcdj6GIIvz3kV4wJ7oR/1KLvuH944jg07ZXyeKWW9p/VBPhvCzjZsKuE77K/nKkOb+pVFwdS2lK0ysrTa+9KVGZSuqllqTmXs+fxpoP0FAYPbUosmO25XCFq4kGNChmbFjnYqKZ2Fxlx6OtZ/rpdQ/HxjxshywI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyhWg3CQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKmEPbKUxgkemJG5HtXnEuXokrJYWcF7osNi+1JpUxg/mGRsjlIQhdkOG152X/y5PwTj7PNP3xV0cGfNseV7teNZYaXJnMryDbdKGTYzDe0Ma0muQvFwnt9FYQm9ouj91iitzPhtwu9TzFNVeG1+5x1nM5/Sn/RrRAEixD+eDDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqiwVYSr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyhWg3CQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2761F000FF;
-	Thu, 17 Sep 2026 16:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqiwVYSr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2DA1F00893;
+	Thu, 17 Sep 2026 16:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664374;
-	bh=AxDkiG5QxVaF2rHDOpXITpRutzkf3CC/yC0oZQ5VU1U=;
+	s=korg; t=1789664377;
+	bh=uMZTb/TjrZMSrS6gVYtNLx8fkAdoso2XzQ9y1/1dBXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TyhWg3CQguQHxHC9e6f7GSgzLUn4oF/NCJ9d8iGNq/c+f5RKnimxtQ/8lHFRNe75K
-	 jz4fVA5TFGtftpxX0AHxxSoQIZwdf5Tq0pbt0X6De2ROVNx3lsx59dou/c7AxvODDa
-	 kwIQ4Ge1MNvzQPl2CcRsi2XN8L922+USyr8hz1LE=
+	b=uqiwVYSr2zy1eturm9+bBhUjhHcdO+x8LEqanbKr/DL53xrfGUNcel19VRj7Fc9H5
+	 c49vb0M2e1NDoc3WTFGKaugBTwoBsMWD7NA6xdpkZZMn6Q2hyMFXnrlUYmSaaLiVVC
+	 AEpO6Ro/LwzV0z3gLdCfgV09FENiFar8s8lFZAqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuo Li <islituo@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0352/1250] ASoC: mediatek: mt8365-afe-pcm: fix possible NULL-pointer dereferences in mt8365_afe_suspend()
-Date: Thu, 17 Sep 2026 16:02:27 +0100
-Message-ID: <20260917151601.609639784@linuxfoundation.org>
+Subject: [PATCH 6.18 0336/1250] ipv6: use READ_ONCE() for bindv6only default in inet6_create()
+Date: Thu, 17 Sep 2026 16:02:11 +0100
+Message-ID: <20260917151601.193515417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit b8948ac26efc395264a47f9a743889065adb5cff ]
+[ Upstream commit 7a20eb54224ab7481c1f5a1619a6a5677be93eed ]
 
-mt8365_afe_suspend() allocates the register backup buffer with
-devm_kcalloc(), but does not check for allocation failure before using the
-returned pointer. This may lead to a NULL pointer dereference when
-accessing afe->reg_back_up[i].
+inet6_create() reads net->ipv6.sysctl.bindv6only locklessly.
 
-Add the missing NULL check and return -ENOMEM on allocation failure after
-disabling the main clock.
+Use READ_ONCE() for this sysctl access.
 
-Also propagate the return value of mt8365_afe_suspend() in
-mt8365_afe_dev_runtime_suspend() so that the suspended state is not updated
-when suspend fails.
-
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Link: https://patch.msgid.link/20260528064107.470824-1-islituo@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602002414.1504106-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8365/mt8365-afe-pcm.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ net/ipv6/af_inet6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-index d48252cd96ac4..bf92c8922c236 100644
---- a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
-@@ -1975,10 +1975,15 @@ static int mt8365_afe_suspend(struct device *dev)
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index f8e1dc4f3227f..1c45e1d15506c 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -226,7 +226,7 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
+ 	inet6_assign_bit(REPFLOW, sk, READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
+ 				      FLOWLABEL_REFLECT_ESTABLISHED);
+-	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
++	sk->sk_ipv6only	= READ_ONCE(net->ipv6.sysctl.bindv6only);
+ 	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
  
- 	mt8365_afe_enable_main_clk(afe);
- 
--	if (!afe->reg_back_up)
-+	if (!afe->reg_back_up) {
- 		afe->reg_back_up =
- 			devm_kcalloc(dev, afe->reg_back_up_list_num,
- 				     sizeof(unsigned int), GFP_KERNEL);
-+		if (!afe->reg_back_up) {
-+			mt8365_afe_disable_main_clk(afe);
-+			return -ENOMEM;
-+		}
-+	}
- 
- 	for (i = 0; i < afe->reg_back_up_list_num; i++)
- 		regmap_read(regmap, afe->reg_back_up_list[i],
-@@ -2012,11 +2017,15 @@ static int mt8365_afe_resume(struct device *dev)
- static int mt8365_afe_dev_runtime_suspend(struct device *dev)
- {
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
-+	int ret;
- 
- 	if (pm_runtime_status_suspended(dev) || afe->suspended)
- 		return 0;
- 
--	mt8365_afe_suspend(dev);
-+	ret = mt8365_afe_suspend(dev);
-+	if (ret)
-+		return ret;
-+
- 	afe->suspended = true;
- 	return 0;
- }
+ 	/* Init the ipv4 part of the socket since we can have sockets
 -- 
 2.53.0
 
