@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FE84ABBBA;
-	Thu, 17 Sep 2026 15:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0861C4F3936;
+	Thu, 17 Sep 2026 15:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660518; cv=none; b=qq8sfY/55YXNNct42Z10i3t0l7+eCc0yDj0Cw3v8n7WQehappWTtcFL5HMKsKG4EaMNC5qbZVMNROzDsaxdu7qjmnwaWtNxDvKOihV1JfsPDa5qMNd/BCmbRFWv/Vy8XDXItMjTfMMI1hv+7vN/o6sMJsq8V4Ie5wf3YFjRT9xg=
+	t=1789660521; cv=none; b=JYxb+jHrUDFHAtdMxyx6M6WQvMgZWVJ6Zqd6Q9o+ZD7O+1PUA+z8MR7Z1h6hZMYgPKq09VqDBv1fcXL6hUh7C4mRI1w55CT855egAlpZqDWXPYjQJYfUTmAhthnmLxffS1e3FkFsCNT4Yfs/7bNanCRM3jVToG6264Ucgl9Ebgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660518; c=relaxed/simple;
-	bh=Jd4VA2clDBgp+i9YMgO3w+FdHjVrqujM0ueV0BqS3JU=;
+	s=arc-20240116; t=1789660521; c=relaxed/simple;
+	bh=PtfGs2dj1GXP024S+7O20OcIdEJYUarCWwuckA/7fR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlYGHzLHfHLMS3COonidPHG9J0XT/82ZHfxB2dEKwHlWI0h56hjP+HewOIp5EQX9UnGb+hZ63X8QMXUdhINVQnLSfjh7KRJW+kVHu2ENqiOIEWcnFJhrkLuiUHb6PxFczT7kcMWyWGDZ11sKpBO8ttuAbORUzRJ8gN/QBVOWhpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Skru3oBP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SKEnbhXmd++27xQ+6pshd4wrzMIsmjXBxjTdDRTkj8wSq36AAdKJFErJ/OxuENzzhCzWBuTek4I2o3IyL4eXrqMuycwfnHl4eu46jSP6+7Ijv/PL4Uoorbo/7uHAd9fPOpx7fpkkCYxJIZScTREv8hgpHFGjmDsLzxSuVI3cNg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ms83dj5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Skru3oBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CAD1F000FF;
-	Thu, 17 Sep 2026 15:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ms83dj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569051F000FF;
+	Thu, 17 Sep 2026 15:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660516;
-	bh=BhCOEzr+ZyfehwUa4E5+Fe1tk884eZELoZJ523+CBvU=;
+	s=korg; t=1789660519;
+	bh=aXDl6Yam9/823KUvJ4/jjQSiF7iI97Gcgvwz37CxX6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Skru3oBPqT3VPxIJ7dbAu2g9dalNGrx3/M0WL7cNieGJNZdR+QIEAn6KlszpE/7YL
-	 lhJLyn9s3VZACrTTdsX7i8w3XmdVfwmHyWN4vbjucDNnTB44WkL2yz9bth+P/IR0yo
-	 p1V3rkK6FWZPMqhUUp8N2nZUu8q87rg2BpfGXBRE=
+	b=1Ms83dj5ba/dYLaMoRYjb8nxCmfs9pdZ53N7/gb6bCUQJY3ofZCB6qhOJeS/srlxL
+	 H5xOYYu1Vvnw9C9/Ph+Pwu311pNZ4bqtjZ2rgxON0KbKXVnwevQGfNRwejPxVH6+Q8
+	 po/9N1vuRT6uuEglBEDiVtQ5wPQjLj6uSXKrB45s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 616/733] mptcp: options: fix uninit-value in mptcp_write_data_fin
-Date: Thu, 17 Sep 2026 16:15:24 +0100
-Message-ID: <20260917151407.864954798@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 7.2 580/733] s390/crypto: Fix missing scrub of temp buffers with PAES algorithm
+Date: Thu, 17 Sep 2026 16:14:48 +0100
+Message-ID: <20260917151406.842275906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,51 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit b110f1dd6cb6a9930503354a01a315e0a821eaa7 upstream.
+commit 19a218b46b2471d370c11fb52040f36ac8d05d23 upstream.
 
-When sending a DATA_FIN without data, and because the DATA_FIN occupies
-1 octet of the connection-level sequence space [1], it is then required
-to add a DSS mapping with specific values.
+In function ctr_paes_do_crypt() there is a buffer used to process
+remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
+thus could lead to expose of unwanted data. Rework the code to
+explicitly scrub the buffer at the end of the function to avoid
+exposure of maybe sensitive data.
 
-If the checksum has been negotiated, it also needs to be computed, and
-included in the outgoing packet, and thus the initial csum data needs to
-be reset to 0 as well. This is no longer the case since commit
-cfcceb7a39fc ("tcp: shrink per-packet memset in __tcp_transmit_skb()"),
-because the whole ext_copy structure is no longer zeroed by default.
+In function __xts_2keys_prep_param() change the existing scrub to
+clean the whole param block instead of just the key field.
 
-This seems to be the only case where use_map is changed and set
-afterwards, so initialising the csum field only in this case, along with
-other fields for this specific case.
-
-Fixes: cfcceb7a39fc ("tcp: shrink per-packet memset in __tcp_transmit_skb()")
-Cc: stable@vger.kernel.org
-Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.3.3 [1]
-Link: https://sashiko.dev/#/patchset/20260812-net-next-mptcp-misc-feat-7-3-v1-0-1905a818f6cb%40kernel.org?part=2
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-13-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6cd87cb5ef6c ("s390/crypto: Rework protected key AES for true asynch support")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 6.16+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/crypto/paes_s390.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index 196a46e7467d..ce0de02f5a3a 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -612,6 +612,7 @@ static void mptcp_write_data_fin(struct mptcp_subflow_context *subflow,
- 		ext->data_seq = data_fin_tx_seq;
- 		ext->subflow_seq = 0;
- 		ext->data_len = 1;
-+		ext->csum = 0;
- 	} else if (ext->data_seq + ext->data_len == data_fin_tx_seq) {
- 		/* If there's an existing DSS mapping and it is the
- 		 * final mapping, DATA_FIN consumes 1 additional byte of
--- 
-2.55.0
-
+--- a/arch/s390/crypto/paes_s390.c
++++ b/arch/s390/crypto/paes_s390.c
+@@ -1036,6 +1036,7 @@ static int ctr_paes_do_crypt(struct s390
+ 	}
+ 
+ out:
++	memzero_explicit(buf, sizeof(buf));
+ 	pr_debug("rc=%d\n", rc);
+ 	return rc;
+ }
+@@ -1367,7 +1368,7 @@ static inline int __xts_2keys_prep_param
+ 		memcpy(param->init, pcc_param.xts, 16);
+ 	}
+ 
+-	memzero_explicit(pcc_param.key, sizeof(pcc_param.key));
++	memzero_explicit(&pcc_param, sizeof(pcc_param));
+ 	return rc;
+ }
+ 
 
 
