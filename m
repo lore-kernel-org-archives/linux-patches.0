@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87B3C7E19;
-	Thu, 17 Sep 2026 17:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC4502761;
+	Thu, 17 Sep 2026 17:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667495; cv=none; b=k5CcBblsEFiTnKDManjhIQMn3Tc1Yr2QjWpJGhsgCJb5P9LvRtEVk2s33HcsKpXRQ4yB6qksSXx/xtKWweNJgBY26YY9luFF0aW8zTDRiZv7y3j+MrapPT55hmYxC4LVAbcVzU6AmgmRi1qNdeCGcTWlHB4d0c0Sb70qtcINZ/g=
+	t=1789667498; cv=none; b=lUIoRRIynkUJ2XyJ4gqYWQxGHsIbC+G32TQJ9ErmOvplDp3gq9r/gHyoahVyHXFe1jWan79bxLFV1YUj7GKy/B3u55flZ6dpbWEhMiA/3EYqLTOLadsS/LxxJi9e3yeabB4Mx1x7o/Sz8Nyk5J69sZ3v+nbNQm+SNEzgLpHMO5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667495; c=relaxed/simple;
-	bh=uRA3W+hyKuCsfxJSWacQ8N2mILoJxhIzwm6dsQv469w=;
+	s=arc-20240116; t=1789667498; c=relaxed/simple;
+	bh=mAOajevdAl5RAEBVYX5NM4ziMR1Nt/aKl7VOtPxRzb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFLxLLGcXd5ZeINGZdjgbMJWrBxEejh4GT37SEnkuQpQ2EHLLk44OGyi+kUkiCNiReUBAW4h0XSVZduJXMnheYcJXbxX6n9yYQueLNRIhFnv4J9Z1J3S6hQ3OS2aN7/8WMahUuvsYwRQJ2Jja638/VOiGf+zvYOVqNyzkAjx5b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgOE954X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQ+rU1Mp1Tjy2qlkF+ddXhue4CZksgY0vYv+FHLBaJtM7uk4tJ1c2hCCwqKb1lZ/7srcIdVD/HTwTELBwhFoHg1nLjynp7N7cm3uWEOLrQ66ieF4Edtp2t95VlfjmtO2UAZPCYFXTfs7N25wLrN3OrRQSTj2htnTyzS0cMNPBMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wymUr5Q9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgOE954X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE221F000FF;
-	Thu, 17 Sep 2026 17:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wymUr5Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18991F000FF;
+	Thu, 17 Sep 2026 17:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667494;
-	bh=SVZMiGVzWzPQ9DRGtqiBlAuM+oYL3wb767ZIoLsLEaw=;
+	s=korg; t=1789667497;
+	bh=twcNEJD+60bo5XsxrH8Z+VObxoz04+y8E4GXJpAW/mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgOE954XOHG3Iwj4oVM87lUyaGk3mEkbQJigsUIQ/NrrPymRW8lXJq0BMJRifzmnI
-	 m/K17p+PNME2ogmLYxhxCL/k9Tt9yd8oNObPoQFh7HRg8OOl3TRf0gpITLceK2+cq3
-	 cumR/BvR6uopFd5Baxl1I5u9wvWOsNu1EOixffV0=
+	b=wymUr5Q9IuBxkpcq4t+ZBizpE4hxT+9YPm/D5S0y1hmIY7MQuTJRbi15hGDq2gXNG
+	 24/WujKEA9eNu5zogHIoYxA2IRRyVhDz3h2FJo8gN28vy4+g5gEdTGVdoBp73Ies1V
+	 aTs73s84gHZAD1RAoD7q3PXr8R2T5nYtwJ/y+PhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0112/1102] thunderbolt: Verify Router Ready bit is set after router enumeration
-Date: Thu, 17 Sep 2026 16:00:55 +0100
-Message-ID: <20260917151542.315518004@linuxfoundation.org>
+Subject: [PATCH 6.12 0113/1102] bitfield: wire __bf_shf to __builtin_ctzll
+Date: Thu, 17 Sep 2026 16:00:56 +0100
+Message-ID: <20260917151542.340253063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,55 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Yury Norov <ynorov@nvidia.com>
 
-[ Upstream commit 062023c4364ffdc72978ed2de1d1435e5d4eee43 ]
+[ Upstream commit 09472f591aa0b72c2dd6c693f48b2d6fea66c7ba ]
 
-The USB4 Connection Manager guide specifies that after enumerating a
-router, the Connection Manager shall verify that the Router Ready bit
-(ROUTER_CS_6.RR) has been set to ensure hardware configuration has completed.
-Currently, this step is missing from the enumeration sequence.
+__bf_shf() is currently based on built-in ffsll. It's more
+straightforward to wire it to __builtin_ctzll, which makes it a pure
+rename.
 
-Add this check to follow the Connection Manager guide more closely.
+Worth to notice that __builtin_ffsll() is buggy on GCC before 14.1:
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+  int main() {
+      sizeof(struct {
+          int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+      });
+  }
+
+  test.c: In function 'main':
+  test.c:3:21: error: bit-field 't' width not an integer constant
+      3 |                 int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+        |                     ^
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699
+Reported-by: Matt Coster <matt.coster@imgtec.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-lkp@intel.com/
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb_regs.h | 1 +
- drivers/thunderbolt/usb4.c    | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ include/linux/bitfield.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/tb_regs.h b/drivers/thunderbolt/tb_regs.h
-index 4e43b47f9f119..65d2797f2b01a 100644
---- a/drivers/thunderbolt/tb_regs.h
-+++ b/drivers/thunderbolt/tb_regs.h
-@@ -216,6 +216,7 @@ struct tb_regs_switch_header {
- #define ROUTER_CS_6_WOPS			BIT(2)
- #define ROUTER_CS_6_WOUS			BIT(3)
- #define ROUTER_CS_6_HCI				BIT(18)
-+#define ROUTER_CS_6_RR				BIT(24)
- #define ROUTER_CS_6_CR				BIT(25)
- #define ROUTER_CS_7				0x07
- #define ROUTER_CS_9				0x09
-diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
-index 9fb81ce1e5eab..4fc0731078487 100644
---- a/drivers/thunderbolt/usb4.c
-+++ b/drivers/thunderbolt/usb4.c
-@@ -291,7 +291,12 @@ int usb4_switch_setup(struct tb_switch *sw)
- 	/* TBT3 supported by the CM */
- 	val &= ~ROUTER_CS_5_CNS;
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 63928f1732230..20978c60b565d 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -42,7 +42,7 @@
+  *  reg |= FIELD_PREP(REG_FIELD_C, c);
+  */
  
--	return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
-+	ret = tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
-+	if (ret)
-+		return ret;
-+
-+	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_RR,
-+				      ROUTER_CS_6_RR, 500);
- }
+-#define __bf_shf(x) (__builtin_ffsll(x) - 1)
++#define __bf_shf __builtin_ctzll
  
- /**
+ #define __scalar_type_to_unsigned_cases(type)				\
+ 		unsigned type:	(unsigned type)0,			\
 -- 
 2.53.0
 
