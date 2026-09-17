@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB5A4D17A8;
-	Thu, 17 Sep 2026 18:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998DA4ED188;
+	Thu, 17 Sep 2026 18:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668602; cv=none; b=de6kJosFJP7f9omvCpFewqwzAqNv4y5zF7luj87cbeLpm4ejFgthpkShTri1+qH+KXk7jt6+8z/ANhw9RuMEAerDPO++9bVVReQa/GjIPWVceaqjokKiS65mqzokFDaynIiHkge3aJIkdyrED2KgJST66vTxxObrzPYRFML/BSg=
+	t=1789668604; cv=none; b=OliHBSTC41rn1fUPhRcciZOM+MQTb3SjSSFuvMkviA3y1Tav4eut0YM+eQZiGB2b2ZpvyzAQr911PrSAkcjea8bemWbpB/Kttdu5FDO1qP6uCPaK62EPUNTfaJdgweYiKDGNzmPmCnwO5AncXv+L8nOlDj7oBDXkNjB3JnEFQPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668602; c=relaxed/simple;
-	bh=lI69ST0VzEb7S8VsfNEpbDEeenRYn2EzOykV+cEpmqI=;
+	s=arc-20240116; t=1789668604; c=relaxed/simple;
+	bh=ED5qY6wn9r6OKYYrDi+UeJdKhQB8bUGQz9yzFKGYtQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWnKdbIzMxTLPvca8yTHceN12OKNfJBM08KYC9H8CXbjYB5AWw5dAv8GLIOy3l+Yazxx+9x70hweo5hFiBPK4neMcLQO57oeqNBnWZYWo4VOc6otsBhHv6/E1JzTRl0dk/LqdRN6bUYLSmi3wYJDSoDVXpURcbkRIVISpc/+ErE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIaXmien; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jhwh9xYmzStkoMrKuPRSP+vKaNOTIIVyhVFah/spH/Zt0zMHWRSwX/SIq72ZDp/QOSQT5b5ObKav2pKeGie5DicjXGkN6z4Gj5yByJ97Xvuf/az8VcCShlX8MG+e4N+bMXp31FLidV1VzJ+ijalJ6bE8+5L8UaaXHBqQa0qEfUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/sc6PY2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIaXmien"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCED1F000FF;
-	Thu, 17 Sep 2026 18:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/sc6PY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F2F1F00899;
+	Thu, 17 Sep 2026 18:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668600;
-	bh=q/9eUejTHe2Jz/uh1ftuhEKzo9ad8DZPqhI84HBMz1I=;
+	s=korg; t=1789668603;
+	bh=YxduDaMLJFWua46XO8bpRljE1kdlDz6EOi6wJ+f1jsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yIaXmienfYEkBwAB9M/xGEWHZ3JeWoDSiQMyv9+0khdgLi2SBi8D7a/CSnfoQMiUV
-	 4cS5xcH0bA97qk8TahR60r+1zpzZ32uBtSmdrucVqc7IItQ8cD+fSGX8TB1r2mdxLJ
-	 RKy2Kos8CSBSzuK9q4bdi39Y3o7nKDYyAPVIvOV8=
+	b=O/sc6PY2XmN+4/oMFyY0dnANe6yvYqT6nvferbuX6F7AS9Ff47KBLuHQN+7zsMo4s
+	 wz+vpYwAED0iEIFoc4TstKrqxyTdXtcHDBPhufF1a0NL8ZVhrrzZey+4TVJjVMg0Rf
+	 tl/2i/IkFCqVXRT7qwRI6zYfp5ivovW82047RIdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Xianglin <1021538027@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0462/1102] ASoC: amd: yc: Add DMI quirk for HyperX OMEN Gaming Laptop 16-ap1xxx
-Date: Thu, 17 Sep 2026 16:06:45 +0100
-Message-ID: <20260917151551.286979798@linuxfoundation.org>
+Subject: [PATCH 6.12 0480/1102] tipc: fix integer overflow in tipc_recvmsg() and tipc_recvstream()
+Date: Thu, 17 Sep 2026 16:07:03 +0100
+Message-ID: <20260917151551.748478093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,45 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Xianglin <1021538027@qq.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit fe21db8c5e7c2a9815a9be54a1f5d556f905506e ]
+[ Upstream commit 47f42ff521b4eeb46e82f9a46a4783a99f7570d7 ]
 
-The HyperX OMEN Gaming Laptop 16-ap1xxx (HP board 8F06) has an
-internal digital microphone array attached to the AMD ACP PDM
-controller, but the acp6x machine driver does not register the DMIC
-sound card because this board is missing from the DMI quirk table,
-leaving the internal microphone unusable.
+In tipc_recvmsg(), the copy length is computed as:
 
-Add a DMI quirk entry for the HP board "8F06" so the acp6x DMIC
-capture card gets registered.
+  copy = min_t(int, dlen - offset, buflen);
 
-Signed-off-by: Lin Xianglin <1021538027@qq.com>
-Link: https://patch.msgid.link/tencent_428392223C2AD3BF23E7ABAA7521FE5C0C07@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+buflen is size_t but min_t(int, ...) casts it to int. When buflen
+exceeds INT_MAX (e.g. 0xFFFFFFFF via io_uring provided buffers), it
+wraps negative, wins the comparison, and the negative copy length
+propagates to simple_copy_to_iter() where int-to-size_t promotion
+makes it SIZE_MAX, triggering a WARN_ON. tipc_recvstream() has the
+same pattern.
+
+  Kernel panic - not syncing: kernel: panic_on_warn set ...
+  RIP: 0010:simple_copy_to_iter+0x9e/0xd0 (net/core/datagram.c:521)
+  Call Trace:
+   __skb_datagram_iter+0x123/0x8b0 (net/core/datagram.c:402)
+   skb_copy_datagram_iter+0x77/0x1a0 (net/core/datagram.c:534)
+   tipc_recvmsg+0x3d7/0xe80 (net/tipc/socket.c:1934)
+   io_recvmsg+0x47e/0xda0
+
+Fix by changing min_t(int, ...) to min_t(size_t, ...) in both
+functions. The result is always <= (dlen - offset), which is bounded
+by TIPC maximum message size (0x1ffff bytes), so the implicit
+narrowing on assignment to int copy is always safe.
+
+Fixes: e9f8b10101c6 ("tipc: refactor function tipc_sk_recvmsg()")
+Fixes: ec8a09fbbeff ("tipc: refactor function tipc_sk_recv_stream()")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260720214103.47732-1-blbllhy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/tipc/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 8ffaceae8fa07..045c1b8fa2c92 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -668,6 +668,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8F06"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index 97ac69e77ceef..0ae02e8e11ff5 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -1935,7 +1935,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
+ 	if (likely(!err)) {
+ 		int offset = skb_cb->bytes_read;
+ 
+-		copy = min_t(int, dlen - offset, buflen);
++		copy = min_t(size_t, dlen - offset, buflen);
+ 		rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 		if (unlikely(rc))
+ 			goto exit;
+@@ -2067,7 +2067,7 @@ static int tipc_recvstream(struct socket *sock, struct msghdr *m,
+ 		/* Copy data if msg ok, otherwise return error/partial data */
+ 		if (likely(!err)) {
+ 			offset = skb_cb->bytes_read;
+-			copy = min_t(int, dlen - offset, buflen - copied);
++			copy = min_t(size_t, dlen - offset, buflen - copied);
+ 			rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 			if (unlikely(rc))
+ 				break;
 -- 
 2.53.0
 
