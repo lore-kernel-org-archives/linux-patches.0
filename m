@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AD04EF137;
-	Thu, 17 Sep 2026 17:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8D4502D4A;
+	Thu, 17 Sep 2026 17:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667606; cv=none; b=Ex05ma1WfYwGEd8Z9zOUsbiSmLy5amiXcT83PL/8g/W2KjTmBpFmmhambXSwB3Tpfx+EnY2forgxpqS6d8E7XEi95n9bbq/TPRkbn3TctB3ZdnkfKG8tKz9toc3CH696jmouLfW/SbSdG3wC0tlsHTBkOoqH9/bugFnKIfRE4kk=
+	t=1789667609; cv=none; b=S+E8UFKgDtBJKJVMhNbZbjD22KjCXSiB5K4k4YSAM+s2obTrs44Q6VeeQg/uGZvNA2EZrcOrqTaxzkmZ4K7FDfoBh5VE9nmop0lKLojk6JCyyfafJ8YQzdgQxlxiQYIYjT1g1dADKvHxZ4R0lkA0ZESqMoIMbSaiQvKdrWSBZL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667606; c=relaxed/simple;
-	bh=2snxsHW09H/ZoaDfPDQHDLv9iTqDvIwKb0UIWlUf0FY=;
+	s=arc-20240116; t=1789667609; c=relaxed/simple;
+	bh=upkxk1btuzjwIbRdjCFeYi0M9DLx77hofnU+krvx/Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCMlo7QXIDp8VZ54Kkwh1fPK9wmP12kedkjcTz1+Bwe5YCx0DF0siiInIkw2HJP2bWbpfbSo72fgtEgnZOfjGrmx7jilN7NkvZos0t2WdM9Gigq0nNSWBiq/HHHhBZEXqEP4rOZmETkZCjG1NI8o+ZJ0Tu0rRwHAaLzRW44O36M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtZYySRC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L2AVjg1n4yxXmHDrk9BayI5no0gkN2Ao2mfYVH1nZIbDSh9MJ5+ug1GmNDe+QsZMzVMmC+Y3Sdevx9uJZQioUX376lNHovoSyLbW5/7yuiu7ph2xe9QpEXRcgDdaNiaP4SXPUi2ECYuVkp2wLMhTD99X0DPOvkFsnlhjpC7G74U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6D6Saks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtZYySRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D075B1F000FF;
-	Thu, 17 Sep 2026 17:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6D6Saks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64521F000FF;
+	Thu, 17 Sep 2026 17:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667604;
-	bh=dlaD71TrNK+7QjtC1xX6Jg2MEG97+TfPPyFy/SsZP0M=;
+	s=korg; t=1789667607;
+	bh=6woy9dqnhxqgs7IQgZ32KdoC9Z+VoVzDnb6NCajpPm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rtZYySRCh3R8YwP1WKLQtzGt0KoZFu0OogpMhH4yO7K+mwWBrgWqgaG7ppmNfd7rN
-	 dVgOVCX2StVjXDMyHdFxKoEEW8g+upp4ngWPEAitvfXTyMV2NlYfrhPZ2Z6bCKTe1g
-	 lW4WQkNWwP5CZ2P9SqzOq995e+gUQ++sjSxctfvQ=
+	b=m6D6SaksF0nlJ1pV5X0q3cmxe8HuFBi796uIpfXRlFtZ2MQnlGlqPoocCRkAzz89C
+	 OChQyKyD/8qOW3OR8dAWwm+vp1XxVI9D1lel1OFUdyknBnF528oGmFHvzMSQxhHPh2
+	 UGn/xELY5P5AZ0vGUAO5sOgaLjMm/CQDF2AVMpjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0148/1102] thermal/drivers/tegra/soctherma: Switch to devm cooling device registration
-Date: Thu, 17 Sep 2026 16:01:31 +0100
-Message-ID: <20260917151543.243638989@linuxfoundation.org>
+Subject: [PATCH 6.12 0149/1102] powercap: intel_rapl: Fix memory leak in rapl_add_package_cpuslocked()
+Date: Thu, 17 Sep 2026 16:01:32 +0100
+Message-ID: <20260917151543.269764379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit ee126267bc04bfb03816ae9d71ca24c5bf99e739 ]
+[ Upstream commit bfc7d93bc5e12288e5dc6bb54260f68cdf5a5c47 ]
 
-Use devm_thermal_of_cooling_device_register() to simplify resource
-management and avoid manual cleanup in error paths.
+When topology_physical_package_id()/topology_logical_die_id() returns
+a negative value, rapl_add_package_cpuslocked() returns ERR_PTR(-EINVAL)
+directly without freeing the rapl_package structure that was just
+allocated by kzalloc_obj(), leaking memory on every failed package
+addition.
 
-As a side effect this change has the benefit of solving an existing
-issue. Before, the function tegra_soctherm_remove() only called
-debugfs_remove_recursive() and never called thermal_cooling_device_unregister()
-for any of the cooling devices registered here.
+Use the existing err_free_package label so that the allocation is
+released on the error path.
 
-After the driver removal, the thermal framework's cdev list would
-still hold references to thermal_cooling_device objects whose devdata
-pointer (ts) pointed to memory already freed by the platform device's
-devm cleanup.
-
-With this change, the cooling device is unregistered when the driver
-is removed, thus fixing the issue above.
-
-Signed-off-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/20260424160019.41710-2-daniel.lezcano@oss.qualcomm.com
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+Link: https://patch.msgid.link/20260515182616.227707-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/tegra/soctherm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/powercap/intel_rapl_common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/tegra/soctherm.c b/drivers/thermal/tegra/soctherm.c
-index a023c948afbdd..5a163c0befa64 100644
---- a/drivers/thermal/tegra/soctherm.c
-+++ b/drivers/thermal/tegra/soctherm.c
-@@ -1696,9 +1696,9 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
- 			stc->init = true;
- 		} else {
- 
--			tcd = thermal_of_cooling_device_register(np_stcc,
--							 (char *)name, ts,
--							 &throt_cooling_ops);
-+			tcd = devm_thermal_of_cooling_device_register(dev, np_stcc,
-+								      (char *)name, ts,
-+								      &throt_cooling_ops);
- 			if (IS_ERR_OR_NULL(tcd)) {
- 				dev_err(dev,
- 					"throttle-cfg: %s: failed to register cooling device\n",
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index c3de52e78e016..4af20c36a8095 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -2211,7 +2211,8 @@ struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *pr
+ 			 topology_physical_package_id(id) : topology_logical_die_id(id);
+ 		if ((int)(rp->id) < 0) {
+ 			pr_err("topology_logical_(package/die)_id() returned a negative value");
+-			return ERR_PTR(-EINVAL);
++			ret = -EINVAL;
++			goto err_free_package;
+ 		}
+ 		rp->lead_cpu = id;
+ 		if (!rapl_msrs_are_pkg_scope() && topology_max_dies_per_package() > 1)
 -- 
 2.53.0
 
