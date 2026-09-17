@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93C33B71AC;
-	Thu, 17 Sep 2026 18:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29154E36C2;
+	Thu, 17 Sep 2026 18:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668351; cv=none; b=ucJ2eD/JHeADhAht2ruF+svifjVdMVWQAb83M80uXfqfUneRODsArz49M95cvz3BXIylsHZi+6miYgZS0UBck4SWMUgpUpgabeRDW73xjGsHvUqPVh9/zQXaCaNg72ZZafFJW8mMdcbvv6LfBN0rvyeQwiCZDVIE0wuSRNnPl9U=
+	t=1789668354; cv=none; b=it+lYTNgEjFemjwytMIe9Idy9Dm/WTy5jlTEdCsq/YYPT0bVKGnYNpmIK9k6K/tlnuUBWjIknHBR1o1m3tvjEgO/opXIOmfTA0WgdotGUgOUzYYVWvWqEC6ufTyYvoHJNA4f3eq2jguPNncFE/AnUnFRNHJ/7VskoO8gdTRFrzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668351; c=relaxed/simple;
-	bh=90KuQg11BEZbDcbf1+1K3ExceoSDC1IRtNPHsm0Xnnc=;
+	s=arc-20240116; t=1789668354; c=relaxed/simple;
+	bh=42MpPFais6AdiI2/esZjNirfiucbqqJXbma04yRyBlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTgaf3EFZNrZPWkQ2uLSZmeyqbwBRUO3jeb5zabc1viNaHxtAMIpfk+9c5csaYKVJA92MSdNmRevXRw9pQPeGGzf+7+2W4/emnytw8KkofJsGjjRQaRD6LSM65sQCA1hQAE0nLhDkBjfVI6XGQYGiJYn2GjDn1x7u8xQ+31w3o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2OV9/xm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KyoCpWFtE9qFA+DJOkOBzYkgdiIBAIcidfvJy6OCCdDNM6DXCmY2s9YwpSidDRkrpXGQpoIbD89e9uE2/tU/JgnaScI6XEfUjem7Yb9Sj3/2GyPm5W7NJ5YKiMCBR4osDO6ApDZObgWDm5mi7iUedl0Ba673e+y+R+3NjoCpPpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zacwpxcr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2OV9/xm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6591F000FF;
-	Thu, 17 Sep 2026 18:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zacwpxcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19F71F000FF;
+	Thu, 17 Sep 2026 18:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668350;
-	bh=A7h4XU+yfO4TLod5t/Ttr+Qh00Z6iTX/nm/oUu44T2A=;
+	s=korg; t=1789668353;
+	bh=7yAAWNKDdGY0O29+o+rU9iYC20fLPHSdhOEk2b0XztU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q2OV9/xmqNE3i/bVTsOos1myK9dbc5b8RzSjJrIuvfoL9ReNHo/JZq8R8VeKTngsI
-	 ymSyUU401w8nYltyGD0Dcpd1xhQuNjjC2NCg0ltKpTtVDVmIwPSK2P3JXgu0E17nRH
-	 uNu0ZwsUsO4TFHcXi8C43DAen1oWcOg5vLiYSOss=
+	b=Zacwpxcr3+jWNylzxBav3WjgE/W2iKsUPwVwWKm5wPQn9jvH0nGV0YpbtU01ToARL
+	 OLkpW5H0W7WdL+PCQ8J1BJ9HRsRxeB4dDs0x9L+0qDipPsvjJzDcSbpvaNipTAMxx1
+	 r5C4SgVafZ3QFYsJcF/OymKx7lziNm2RKfrk4fjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0395/1102] ksmbd: validate SID namespace before mapping IDs
-Date: Thu, 17 Sep 2026 16:05:38 +0100
-Message-ID: <20260917151549.574845403@linuxfoundation.org>
+Subject: [PATCH 6.12 0396/1102] wifi: cfg80211: validate rx/tx MLME callback frame lengths before access
+Date: Thu, 17 Sep 2026 16:05:39 +0100
+Message-ID: <20260917151549.601101396@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,93 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit fbe0bb2b75eb3c61e8464486506253d1b471240b ]
+[ Upstream commit d5e4586546974179feca305a94e07fac3e9727fe ]
 
-sid_to_id() currently treats the last subauthority of any owner or group
-SID as a Unix uid or gid. For example, this maps Everyone (S-1-1-0) to
-uid 0 and BUILTIN\Users (S-1-5-32-545) to gid 545.
+cfg80211_rx_mlme_mgmt() and cfg80211_tx_mlme_mgmt() call tracepoints
+before rejecting frames shorter than the frame-control field. After
+that, they only require len >= 2 before dispatching into subtype
+handlers that assume their fixed fields are present.
 
-When an SMB2 CREATE security descriptor contains those SIDs, ksmbd
-attempts to change the newly created file to the bogus Unix ownership.
-notify_change() then returns -EPERM, which makes smb2.create.aclfile fail
-with NT_STATUS_SHARING_VIOLATION.
+The frames that trip this are not shorter than 2 bytes; they are short
+relative to their subtype. mwifiex is a concrete in-tree example on the
+length side: mwifiex_process_mgmt_packet() only requires a 4-address
+ieee80211_hdr plus the 2-byte firmware length prefix before handing the
+frame to cfg80211_rx_mlme_mgmt(). After stripping the length prefix and
+removing addr4, pkt_len can be exactly 24: a bare 3-address management
+header with no reason-code body. The existing WARN_ON(len < 2) does not
+fire on such a frame, and cfg80211_process_deauth() then reads
+u.deauth.reason_code as a two-byte access starting at offset 24,
+immediately past the 24-byte buffer.
 
-Validate the SID prefix before extracting its RID. Only server-domain
-owner SIDs and S-1-22-2 Unix group SIDs have local ID representations.
-Treat other valid Windows SIDs as unmapped so their original values can
-still be preserved in the NT ACL xattr.
+Add a frame-control length gate, then validate each subtype's minimum
+frame size in an if/else-if chain that mirrors the dispatch logic. Trace
+only after the frame is known to be well-formed.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Side effects of this change:
+ - The WARN_ON(len < 2) is dropped. It only guarded the frame_control
+   read, never the subtype fixed fields, and it does not fire on the
+   frames that actually trigger the out-of-bounds read (which are >= 2).
+   The len >= 2 check is kept as the guard before dereferencing
+   frame_control, but without the warning: these are exported callbacks
+   and a malformed frame from a driver should be dropped silently rather
+   than backtraced.
+ - cfg80211_tx_mlme_mgmt() previously routed every non-deauth subtype
+   through disassociation handling; it now silently ignores unrecognised
+   subtypes.
+
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260707025336.22557-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ net/wireless/mlme.c | 45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 0879012aa63c8..3586a6025127e 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -258,6 +258,7 @@ static int sid_to_id(struct mnt_idmap *idmap,
- 		     struct smb_sid *psid, uint sidtype,
- 		     struct smb_fattr *fattr)
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index f9a2892337933..65f93f99e5254 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -164,19 +164,35 @@ void cfg80211_rx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len)
  {
-+	const struct smb_sid *sid_prefix;
- 	int rc = -EINVAL;
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	struct ieee80211_mgmt *mgmt = (void *)buf;
++	__le16 fc;
  
- 	/*
-@@ -279,6 +280,12 @@ static int sid_to_id(struct mnt_idmap *idmap,
- 		kuid_t uid;
- 		uid_t id;
+ 	lockdep_assert_wiphy(wdev->wiphy);
  
-+		/* Only the server domain RID has a local uid representation. */
-+		sid_prefix = &server_conf.domain_sid;
-+		if (psid->num_subauth != sid_prefix->num_subauth + 1 ||
-+		    compare_sids(psid, sid_prefix))
-+			return -EINVAL;
+-	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
++	if (len < sizeof(fc))
++		return;
 +
- 		id = le32_to_cpu(psid->sub_auth[psid->num_subauth - 1]);
- 		uid = KUIDT_INIT(id);
- 		uid = from_vfsuid(idmap, &init_user_ns, VFSUIDT_INIT(uid));
-@@ -290,6 +297,12 @@ static int sid_to_id(struct mnt_idmap *idmap,
- 		kgid_t gid;
- 		gid_t id;
++	fc = mgmt->frame_control;
  
-+		/* Local gids are represented by S-1-22-2-<gid>. */
-+		sid_prefix = &sid_unix_groups;
-+		if (psid->num_subauth != sid_prefix->num_subauth + 1 ||
-+		    compare_sids(psid, sid_prefix))
-+			return -EINVAL;
+-	if (WARN_ON(len < 2))
++	if (ieee80211_is_auth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.auth.status_code))
++			return;
++	} else if (ieee80211_is_deauth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
++			return;
++	} else if (ieee80211_is_disassoc(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
++			return;
++	} else {
+ 		return;
++	}
 +
- 		id = le32_to_cpu(psid->sub_auth[psid->num_subauth - 1]);
- 		gid = KGIDT_INIT(id);
- 		gid = from_vfsgid(idmap, &init_user_ns, VFSGIDT_INIT(gid));
-@@ -916,9 +929,9 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
++	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
  
- 		rc = sid_to_id(idmap, owner_sid_ptr, SIDOWNER, fattr);
- 		if (rc) {
--			pr_err("%s: Error %d mapping Owner SID to uid\n",
--			       __func__, rc);
-+			ksmbd_debug(SMB, "Owner SID has no Unix uid mapping\n");
- 			owner_sid_ptr = NULL;
-+			rc = 0;
- 		}
- 	}
+-	if (ieee80211_is_auth(mgmt->frame_control))
++	if (ieee80211_is_auth(fc))
+ 		cfg80211_process_auth(wdev, buf, len);
+-	else if (ieee80211_is_deauth(mgmt->frame_control))
++	else if (ieee80211_is_deauth(fc))
+ 		cfg80211_process_deauth(wdev, buf, len, false);
+-	else if (ieee80211_is_disassoc(mgmt->frame_control))
++	else
+ 		cfg80211_process_disassoc(wdev, buf, len, false);
+ }
+ EXPORT_SYMBOL(cfg80211_rx_mlme_mgmt);
+@@ -229,15 +245,28 @@ void cfg80211_tx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len,
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	struct ieee80211_mgmt *mgmt = (void *)buf;
++	__le16 fc;
  
-@@ -934,9 +947,9 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
- 		}
- 		rc = sid_to_id(idmap, group_sid_ptr, SIDUNIX_GROUP, fattr);
- 		if (rc) {
--			pr_err("%s: Error %d mapping Group SID to gid\n",
--			       __func__, rc);
-+			ksmbd_debug(SMB, "Group SID has no Unix gid mapping\n");
- 			group_sid_ptr = NULL;
-+			rc = 0;
- 		}
- 	}
+ 	lockdep_assert_wiphy(wdev->wiphy);
  
+-	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
++	if (len < sizeof(fc))
++		return;
+ 
+-	if (WARN_ON(len < 2))
++	fc = mgmt->frame_control;
++
++	if (ieee80211_is_deauth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
++			return;
++	} else if (ieee80211_is_disassoc(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
++			return;
++	} else {
+ 		return;
++	}
++
++	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
+ 
+-	if (ieee80211_is_deauth(mgmt->frame_control))
++	if (ieee80211_is_deauth(fc))
+ 		cfg80211_process_deauth(wdev, buf, len, reconnect);
+ 	else
+ 		cfg80211_process_disassoc(wdev, buf, len, reconnect);
 -- 
 2.53.0
 
