@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712275349DD;
-	Thu, 17 Sep 2026 17:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B094ABBCD;
+	Thu, 17 Sep 2026 17:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666282; cv=none; b=ZBkAi0c2p3rbLIg5sPjoEwCIWqAfQrTdaWyRbTxnfC7Xq6pVTNY4bhnDdzE5y4tIldH04fksZrPYWZkFZPu7axxvDyoMDWIi+5q3hi9pQDQKM+NMmBaEPGI1FdeQhpXRuNz/6bD5Eair3dGwJLNnD2a3+lxB3TpAUrDXlYB/zG4=
+	t=1789666285; cv=none; b=niBLAu2nrY33kIDlj2Uyr3cFTR0Z9HFlfAYvkp99RoxjgjoPNKUy4qPkJPNnwxHV9zvLHbbg2tl8RXQ869b54FIf2KdNlVLgmZXH9PuTUX6xlqw+Xdr7qSH3DYEmXlE1R0XRXv3tb6MVhp0j98hsNtanQDNJmtWhMhvTnIYn5Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666282; c=relaxed/simple;
-	bh=uWgUW/vrKhqdzjcV6jK5Uye5YrXXZyYO+8mRZHvtCcM=;
+	s=arc-20240116; t=1789666285; c=relaxed/simple;
+	bh=kQ1wU0WqY0gS6uGrvPsu812QnqpPqaSCouig4wmDits=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7vBbvR/IpLXiZZW9cOpXp3upnSGGFpK/AH/xP4A1921lLnMcwiy1+O2kGNM3cmjG7jEddxpLTfQO1PltZwJG2zyvDtxYN5IQ4VzU3E6lLZtRXALePgpUGteghntZIWuqb5jZeDxtZi7AyUwIRSUYFTuZt7HHg+xSZ2p0wI2V4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLlYdrIL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsTfqdxhlVlxvU4BE7QxUNuQdPBKbU/C578ATMaMR42A1JuYvhccG4sliEuePzRdjV2pI86cqoQrs+PF7AYFhU+hB0asNzrzJwkX0Cxd8qMQ6i8nR9hfVUt/kYTMiXU4xotK4pcMZ+HOd87jE09aaF/4qK/DttXjYDkcpzcc1Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2nQXgws; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLlYdrIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8374C1F00893;
-	Thu, 17 Sep 2026 17:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2nQXgws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1771F000FF;
+	Thu, 17 Sep 2026 17:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666281;
-	bh=h9jzAZh61SWga/mHQ2fVrs5aaIrNDyrNC4gYhjU/3Lk=;
+	s=korg; t=1789666284;
+	bh=xQ/k2CSBCzDEJJraf1qafPjDF1801V7IHCz13BseTI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLlYdrILwC6PYc5Rw7CJGvKxZmv4R2GQMNtZornGpj9vhAasuObBvmU+LclC2Q/CA
-	 gdsIApBJ9CgQngaixoajbVa9uQdz3d5lyZY4rn55OxGLyKKBIuO/93CC3YSYKxhl4g
-	 6IT+nEURMyP4QDIqFYfxZtfQ+RLmMzmuCyM6p9Dg=
+	b=N2nQXgwsKHrUkd8lpM/XV4N3cQJWm2WBpmG0kRt5pM+fGelX/6KW0sX2AxZNC674t
+	 FXDy7RXvn6JmlIedKoTfPhm66HYgC824lf1ttH/iCY+HS2D5vFnL9ZbnCNdhdyS4yd
+	 lS+YzrB/3oMSVXX0a2kZGMLAVagEaE2qlm9Me7EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binglei Wang <l3b2w1@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Long Li <longli@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0947/1250] erofs: add missing buf->off in erofs_bread()
-Date: Thu, 17 Sep 2026 16:12:22 +0100
-Message-ID: <20260917151617.693258163@linuxfoundation.org>
+Subject: [PATCH 6.18 0938/1250] net: mana: restore the XDP program pointer when pre-allocation fails
+Date: Thu, 17 Sep 2026 16:12:13 +0100
+Message-ID: <20260917151617.441722329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,69 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binglei Wang <l3b2w1@gmail.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 135d84c66f85426299db01a09d93a79a87af18ba ]
+[ Upstream commit 4c46beb807efcc93f5899ebe1f5958248eb296c6 ]
 
-erofs_bread() locates the target folio with
+mana_xdp_set() publishes the new program into apc->bpf_prog before it
+allocates anything, because mana_pre_alloc_rxbufs() sizes the buffers
+from it via mana_get_rxbuf_cfg(). When that allocation fails the
+function returns the error directly, skipping the err_dealloc_rxbuffs
+label which is the only place that restores the previous pointer.
 
- index = (buf->off + offset) >> PAGE_SHIFT;
+The attach is reported as failed, so the BPF core drops the reference it
+held for the caller and the program can be freed, while apc->bpf_prog
+still points at it. The next consumer of mana_xdp_get() - typically
+mana_chn_setxdp() from mana_alloc_queues() on the following ifup, or
+after a TX timeout reset - then calls bpf_prog_add() on freed memory.
 
-but computes the in-folio offset without taking buf->off into account:
+This is reachable from an ordinary "ip link set dev ethX xdp obj ..."
+whenever the per-queue RX buffer pre-allocation cannot be satisfied.
 
- return buf->base + (offset & ~PAGE_MASK);
+Restore the previous program on that error path.
 
-If buf->off is not page-aligned, the returned pointer misses the in-page
-component of buf->off, so callers end up fetching data from a wrong
-offset.
-
-buf->off is set to sbi->dif0.fsoff in erofs_init_metabuf(), and fsoff can
-be specified via the "fsoffset=" mount option, which only requires
-block-size alignment. Therefore, on an image with a sub-page block size
-(e.g. 512 bytes), a non-page-aligned fsoff (e.g. 512) triggers the issue,
-since 512 is a multiple of the block size but not of PAGE_SIZE.
-
-It can be reproduced by mounting an image that is placed at a
-non-page-aligned offset:
-
- mkfs.erofs -b512 -zlz4hc sub.erofs src/
- # prepend 512 bytes of padding to the image
- mount -t erofs -o loop,fsoffset=512 padded.erofs /mnt
-
-which fails with
-
- erofs (device loop0): cannot find valid erofs superblock
-
-because the on-disk superblock (at offset 1024 within the image, i.e.
-1536 within the padded file) is read from a wrong in-folio offset. With
-this fixed, the very same image mounts successfully and its file contents
-match those read from the unpadded image.
-
-Fix it by including buf->off in the in-folio offset calculation, so that
-it is consistent with the folio index calculation.
-
-Fixes: c36ec00d7f67 ("erofs: add 'fsoffset' mount option to specify filesystem offset")
-Signed-off-by: Binglei Wang <l3b2w1@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Fixes: 730ff06d3f5c ("net: mana: Use page pool fragments for RX buffers instead of full pages to improve memory efficiency.")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904202640.3900685-1-longli@microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/mana_bpf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/erofs/data.c b/fs/erofs/data.c
-index 8ca29962a3dde..3e6b512efe21c 100644
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -46,7 +46,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
- 		return NULL;
- 	if (!buf->base)
- 		buf->base = kmap_local_page(buf->page);
--	return buf->base + (offset & ~PAGE_MASK);
-+	return buf->base + ((buf->off + offset) & ~PAGE_MASK);
- }
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_bpf.c b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
+index 7697c9b52ed34..7bb8382940b38 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_bpf.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
+@@ -208,6 +208,7 @@ static int mana_xdp_set(struct net_device *ndev, struct bpf_prog *prog,
+ 		if (err) {
+ 			NL_SET_ERR_MSG_MOD(extack,
+ 					   "XDP: Insufficient memory for tx/rx re-config");
++			apc->bpf_prog = old_prog;
+ 			return err;
+ 		}
  
- int erofs_init_metabuf(struct erofs_buf *buf, struct super_block *sb,
 -- 
 2.53.0
 
