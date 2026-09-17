@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457333D3D1B;
-	Thu, 17 Sep 2026 18:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7308E318EC7;
+	Thu, 17 Sep 2026 18:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668914; cv=none; b=PpUAyvjriniZOiAHAQIk5E5OhOx2RboGsu5DzoVDMNlH2NRO/dmZ/IF2gws6CNyQ6X7xcHyOxpgcldgsOUqq9C2+/b/T3UGKpKqZOIYZUu8aYwUt/TB9DbpI8Q9yexDjFLdJCU0TauG/fRGL1RBNRfx8ikVEM9QITLd9aYRYoVU=
+	t=1789668917; cv=none; b=EZCpdxvZLvxB9rF8UMwPQ7ygKHAF9TXWJTxogj73xCZwfhOjVhovSIkbmpyHPJlsQD+Yb17/Uvx8rQUsrEnoS3ZWQKn3EeRKi8xI+KcZjpCKUBwplbrr7gBhPP2OGRjlqqPnIQDztqbEmsqcCDvoqpH7DvjJLAmSpvbFmP0UtEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668914; c=relaxed/simple;
-	bh=zQzx/JPSP4fd9ugVPHth6zmBUrCYQo/+gRjZYnRUUTs=;
+	s=arc-20240116; t=1789668917; c=relaxed/simple;
+	bh=IuQEOULtU3jd9un4G68SstL0GH8Ned2LblekqQejpuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=am79bi6mvpXDi0UO4V01TN9viCYDJ6fWvp/iV8V0tjFyhLx2yQGznHMmf33FINQPlVddFVKpUPt5R39Z8WOmQ84O14QlQHiIXbo6NUJ6f8FJkNk9jubgDnBVAHflJg9JjHKnQSLJyi0O4gQKJMeDiJbtMQpJvmXgRedEeSKh8DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKxhIkCR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tuBELTm1pYt01Ar9K/0SpMjq8qbjam9YVXSY6o9lpLVmTOPpSLKsGSquqyfywIl2aNkdBIePl7SAUkxvnt2vErtWWLb4y5vk1+4EETFjgyyxPOZlMHiv8aRG8ffI+7s2ehV1Ax4OAdXpCOLs2COXQZJ8yJSclxyLRF85PObpxR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtdXcFp4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKxhIkCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DDA1F000FF;
-	Thu, 17 Sep 2026 18:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtdXcFp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4F41F000FF;
+	Thu, 17 Sep 2026 18:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668913;
-	bh=gHWnlvbAZCduv95zJC6qKd7r9ijVl6obL/pLrkYhvtA=;
+	s=korg; t=1789668916;
+	bh=NjJe0VBbhByEWUIXbwRyQfCyPitye3rlXUzAFWkWXwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKxhIkCRAGvjiNRpEVa3Sq9bLJnrVAk7/412tK9B1sUY9txw5VL/b5ayCSGpWKOiK
-	 KGbAqPxdQhPzFhxtwA3QMH5iwN31+hjP2iLj0dqwqj+7UDlO500LIG6euaUfFTAH/k
-	 2X0KzXGJO1pqoZnBKtjU5f2rMWiRanLdlrG2H2+Y=
+	b=LtdXcFp4JypuVSEQcc6J/O+SBeYZ4rDrsRZcPW4/EkYUstIwJlOtW9uqlRHdNL5Sn
+	 QXYAKFx0pIPDik5kapXK3wAVZuiXOqAVYjmnoA6A5RZhJW9V1jn+s3W9omYxlBwb93
+	 xNIVwwIGgJQQBs8tUcqaAYOawjtWOOk0qjQygTPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gongwei Li <ligongwei@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0582/1102] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
-Date: Thu, 17 Sep 2026 16:08:45 +0100
-Message-ID: <20260917151554.561228249@linuxfoundation.org>
+Subject: [PATCH 6.12 0556/1102] Bluetooth: hci_mrvl: Fix wrong return value check of wait_on_bit_timeout()
+Date: Thu, 17 Sep 2026 16:08:19 +0100
+Message-ID: <20260917151553.813789673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,104 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
+[ Upstream commit 2deb76c21b81e42b3282224f7dd2046fe73fd1e0 ]
 
-syzbot reported BUG() in sock_sendmsg_nosec(). [0]
+wait_on_bit_timeout() returns 0 if the bit was cleared, -EINTR if the
+process received a signal and the mode permitted wake up on that signal,
+or -EAGAIN if the timeout elapsed.  It never returns 1.
 
-The problem is that tpacket_parse_header() casts user-provided
-tpacket_hdr.tp_len, which is u32, to int.
+Hence the check "err == 1" in mrvl_load_firmware() is dead code: when
+the waiting task is interrupted by a signal (-EINTR), the code falls
+into the "else if (err)" branch and misreports it as "Firmware request
+timeout" with -ETIMEDOUT instead of propagating -EINTR.
 
-If the length is larger than INT_MAX, the following condition
-in tpacket_parse_header() passes,
+Fix this by testing for -EINTR so that an interrupted firmware load is
+properly detected and reported.
 
-  if (unlikely(tp_len > size_max))
-
-and any negative value can be returned to the caller, up to
-sock_sendmsg_nosec().
-
-The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
-to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
-
-  *(uint64_t*)0x200000000008 = 0xfffffdef;
-  ...
-  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
-
-Let's define the local tp_len as u32 in tpacket_parse_header().
-
-[0]:
-kernel BUG at net/socket.c:803!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
-RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
-Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
-RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
-RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
-RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
-RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
-R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
-R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
-FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __sock_sendmsg net/socket.c:815 [inline]
- sock_write_iter+0x2de/0x3e0 net/socket.c:1266
- new_sync_write fs/read_write.c:595 [inline]
- vfs_write+0x612/0xba0 fs/read_write.c:687
- ksys_write+0x150/0x270 fs/read_write.c:739
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f173130ecb9
-Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
-RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
-RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
-R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
- </TASK>
-
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 162f812f23ba ("Bluetooth: hci_uart: Add Marvell support")
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_mrvl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 7e55ddab7b961..cfda2f9a8e1c3 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2724,7 +2724,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
- 				int size_max, void **data)
- {
- 	union tpacket_uhdr ph;
--	int tp_len, off;
-+	u32 tp_len;
-+	int off;
- 
- 	ph.raw = frame;
- 
-@@ -2744,7 +2745,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
- 		break;
- 	}
- 	if (unlikely(tp_len > size_max)) {
--		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
-+		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
- 		return -EMSGSIZE;
- 	}
- 
+diff --git a/drivers/bluetooth/hci_mrvl.c b/drivers/bluetooth/hci_mrvl.c
+index e08222395772d..b4edaac2032e8 100644
+--- a/drivers/bluetooth/hci_mrvl.c
++++ b/drivers/bluetooth/hci_mrvl.c
+@@ -307,9 +307,8 @@ static int mrvl_load_firmware(struct hci_dev *hdev, const char *name)
+ 		err = wait_on_bit_timeout(&mrvl->flags, STATE_FW_REQ_PENDING,
+ 					  TASK_INTERRUPTIBLE,
+ 					  msecs_to_jiffies(2000));
+-		if (err == 1) {
++		if (err == -EINTR) {
+ 			bt_dev_err(hdev, "Firmware load interrupted");
+-			err = -EINTR;
+ 			break;
+ 		} else if (err) {
+ 			bt_dev_err(hdev, "Firmware request timeout");
 -- 
 2.53.0
 
