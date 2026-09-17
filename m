@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD48613D51E;
-	Thu, 17 Sep 2026 17:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FB34D1789;
+	Thu, 17 Sep 2026 17:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666017; cv=none; b=ApQUJyvblonzliH0knxLImoi3ZJsvolpJPJXl18Cc8HEnBpGTA9xb6FHcyy/ytdgl9X+575akxrg+EgERi8F+nke24Keo0bdVYJPI+ChlswH+u3cdp9aKSLqRPbY2fYjinkcEMCbxDfm+8RMkVX7fV4OW0Q1FPxkCbtzALGY+mY=
+	t=1789666020; cv=none; b=mGg346/6BTfmFCLN9rNAs6pgMB9mimEgnGwbUirubeJHd+i0YlV38+dlWq7oYlsUVnn4UD3cGoKyl+luuco3+ct2Cfh+WkpwSEHCw1ZUh3Oz3OEOCMccN6VdYSxVlbNB7I8YeCR6Dr2BnKTePQ5DrQB/0Svs8C+SXAdOkpyblUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666017; c=relaxed/simple;
-	bh=fO8bXhynMhbvSjssUWQkY8v81s6HkfaXgyq4e4NReA8=;
+	s=arc-20240116; t=1789666020; c=relaxed/simple;
+	bh=KsPORZuy1tk/gnYcU/m8aFlW82r2vtpwttluTXkX5MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDrglDqVb1VnL1JB0zVlC40JLLHKitw+hkaVpELmCnTzZ/nT7IViRb62F6AMfittMJIMTY27AR/7FFpDpRJ4HhuBYXsThc+VxZIuCWJ/x9Tn+cABGVeHGIFyAvGI+SpbM2zI5us+07ZqSaigU3/cBmiSIAnlB/R63fiObZwezqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vChowzsW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BqD/U8JLM9jVjq+WWmvO9nGQnb1TlCBhiQ9cgitVQ9EAYakVKwePc1eIp/bHOr4nCTrUHM65Q9lU0jqPwoH27fkvEq19/ptD6xxKUYECcL9Oq7NgcC0+XnbTP2ZvFnFe8kGySXZXYRspj4uLi3F2y5Tlu1sYbEeGfY/OCj0Csug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyBFpRYN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vChowzsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25251F00893;
-	Thu, 17 Sep 2026 17:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyBFpRYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6C51F00893;
+	Thu, 17 Sep 2026 17:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666016;
-	bh=kbxd1chCL2qKKVoaf1dGW9e2pYLwdszLMcARE4EBBoc=;
+	s=korg; t=1789666019;
+	bh=PJrK57OSYiqSY36g0MdaCRnU1/kdt/Kao2HDXdmg/8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vChowzsWuozepVMC+MLBFgCwhXlMfkICNmjjXLxjE3uhFweY+Q+4LvU2Ya64JI8YM
-	 DLIcArlrCBDoO9LjoUjBqCaLgD0u6YYSdsGhZLbv3t6glMO66L2gktLzdIXJ84uhcX
-	 +ZaUErevlmHFLN8lTQYlujlTjeHUfVze9Kt3McJs=
+	b=QyBFpRYNEXiC5bzRBO6dnDKFhlP2G7lf5Sfs37ljVaBQ1e+nXtpgKO7KQEeWf1Iwq
+	 zisLL9OBbMwepS4rUHeNTB11ePNPHtjIwTpGo0I1zwuDxtwaSbFxn1Z4OlX0Ivh5ra
+	 hY4mezpa7qN8KvPuAlVCiIla0Dctd0F9MKpGuFiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0859/1250] virtio-pci: return IRQ_HANDLED after non-zero ISR
-Date: Thu, 17 Sep 2026 16:10:54 +0100
-Message-ID: <20260917151615.251127844@linuxfoundation.org>
+Subject: [PATCH 6.18 0895/1250] watchdog: msc313e: Fix spurious reset on suspend
+Date: Thu, 17 Sep 2026 16:11:30 +0100
+Message-ID: <20260917151616.245742483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,60 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 93fa09455fb1a9624b73d42ac1f83771f4818e80 ]
+[ Upstream commit 4f6817c9eff4aa1078e16652d82e4b7ef4ffae3e ]
 
-vp_interrupt() reads the ISR before dispatching config-change and
-vring handling. Reading the ISR also clears it, so once the read
-returns non-zero the interrupt was from this device and has already
-been consumed.
+If the hardware watchdog was started by the bootloader and the device is
+suspended before userspace opens it, the ping worker (from watchdog
+core) is frozen and the active hardware timer continues running.  This
+leads to a spurious system reset.
 
-Currently vp_interrupt() returns the result of vp_vring_interrupt().
-For a config-change interrupt with no vring work, that can return
-IRQ_NONE even though the ISR was non-zero and the interrupt was
-handled.
+Check both watchdog_active() and watchdog_hw_running() when deciding
+whether to start or stop the watchdog during suspend and resume.
 
-Call vp_vring_interrupt() for any queue work, but once the ISR is
-non-zero return IRQ_HANDLED.
+Additionally, call watchdog_stop_ping_on_suspend() to ensure the ping
+worker be correctly paused and restarted during suspend and resume.
 
-Tested with QEMU virtio-blk-pci forced to INTx using vectors=0 and
-pci=nomsi. On an idle device, 200 config-change interrupts were
-generated using QMP block_resize.
-
-Before this change, irq_handler_exit reported ret=unhandled and
-/proc/irq/11/spurious increased from 0 to 200 unhandled interrupts.
-After this change, irq_handler_exit reported ret=handled and the
-unhandled count remained at 0.
-
-The issue was found during an LLM-assisted Quality Playbook review.
-
-Fixes: 77cf524654a8 ("virtio_pci: split up vp_interrupt")
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Assisted-by: LLM
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Message-ID: <20260904141318.30278-1-astellman@stellman-greene.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260828161348.13212-6-tzungbi@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/watchdog/msc313e_wdt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
-index ef87e7584756e..64806d042dbb2 100644
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -120,7 +120,9 @@ static irqreturn_t vp_interrupt(int irq, void *opaque)
- 	if (isr & VIRTIO_PCI_ISR_CONFIG)
- 		vp_config_changed(irq, opaque);
+diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
+index 86e72aea96855..9cfe059fd31a7 100644
+--- a/drivers/watchdog/msc313e_wdt.c
++++ b/drivers/watchdog/msc313e_wdt.c
+@@ -157,6 +157,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(&priv->wdev, timeout, dev);
+ 	watchdog_stop_on_reboot(&priv->wdev);
+ 	watchdog_stop_on_unregister(&priv->wdev);
++	watchdog_stop_ping_on_suspend(&priv->wdev);
  
--	return vp_vring_interrupt(irq, opaque);
-+	vp_vring_interrupt(irq, opaque);
-+
-+	return IRQ_HANDLED;
- }
+ 	ret = devm_watchdog_register_device(dev, &priv->wdev);
  
- static int vp_request_msix_vectors(struct virtio_device *vdev, int nvectors,
+@@ -171,7 +172,7 @@ static int __maybe_unused msc313e_wdt_suspend(struct device *dev)
+ {
+ 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
+ 
+-	if (watchdog_active(&priv->wdev))
++	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
+ 		msc313e_wdt_stop(&priv->wdev);
+ 
+ 	return 0;
+@@ -181,7 +182,7 @@ static int __maybe_unused msc313e_wdt_resume(struct device *dev)
+ {
+ 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
+ 
+-	if (watchdog_active(&priv->wdev))
++	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
+ 		msc313e_wdt_start(&priv->wdev);
+ 
+ 	return 0;
 -- 
 2.53.0
 
