@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DF254707A;
-	Thu, 17 Sep 2026 18:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4804FC339;
+	Thu, 17 Sep 2026 18:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668064; cv=none; b=nmqkRng/lOw/lgMPihmWwNK93IEcubmHFnJEqX1MIAmoHU5jDf4sh19Pf7AD8+Ipw9CvM0p+Uh9ruBseRyZU4o4DsmKkW4Y/AcfyWW6Wt42i0rxhL2IunjXNMJJG0NPoDnq5xrPEmEgfeiF+/Z8w9AKg9gwHpJOno1V3LHhr0vE=
+	t=1789668067; cv=none; b=rR7VzNC4GSPrl+kYk55LcM7zeEQyuG+G+aFUgWLM708NcNuASlqbGTSMgeWg9q4yCpivfKLEmbfvyies/ZgjDXbigPtlJT9/3LKQn3VLANtNtqUSQZuj1Ap+QgbLGCw4NKsOqsxIopDUHoCnrz2pzRsV3ue3zx/DqNlCKRDp5Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668064; c=relaxed/simple;
-	bh=7hEFU/9yGOnuj+U+ZjsBwKHIyaby7UJxjAd6reBv8Ao=;
+	s=arc-20240116; t=1789668067; c=relaxed/simple;
+	bh=EoGlteGslfWLIsjrNy7H3cQPrUbwj5ahOZTEJLyrSgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJMI/xfW6obmWzHPKBJzse2R7uBqR+7C4J3PJ+H9Ox+RMtLi0+NvqPf5Dz29fnDj+/mtmDyOh+o806wIGloDpkWXPU8XC6DwAnBJrFvb/siowMxra99sDyPG4Xv57TzdRB+GcRdMfLW95lzt7cJfyRPGnRuBgw9icZmG9Tt27+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yoi8fAVQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rvTI8Fcmvzt7zD/38otmKYYraDGG5jqXahdUh+Rir7SjAK+WOSKP3lngPrPrt0ZVPAiT9bLlOBxnP7nl6g7umtTBzoaEnm58N4gzk+It0h4D4+FkbXVVhQMPiL5Wxj/Xhw/Ly0EAAngR9i2WTjWlA/SefQSPJ3rj9LVcS+1lWA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tnbg4+m8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yoi8fAVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA81F00893;
-	Thu, 17 Sep 2026 18:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tnbg4+m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7328B1F000FF;
+	Thu, 17 Sep 2026 18:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668063;
-	bh=xU2n/l1m6OTIVaPYFjQ/ZLbSmM136Q9qun2xd/de7gQ=;
+	s=korg; t=1789668066;
+	bh=udfGCs9GThtI+yNngeahBbTwTfjFvFpqYz/7OYznFsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yoi8fAVQuUKUW3Sw9OdaWx+CxQ/3caa82hHGg1DvXsROOpElCdpT3jhyXS4o3fJLR
-	 Dbex/9uROG//iUrwj+pd8aE1WKGyGgRuaCdhRDWyqdquua4UQMhCPrvbvJY+jfSuoB
-	 1eDn8RLXdtbM/iPha7nPc7CVgxJQFSKaEau9Xijs=
+	b=Tnbg4+m8d3OQ84yXZ8eTxj6XRbWHNE7TyyP+0ysQ10xb2ConYWYeAWvePsDZ2ew/W
+	 PqN2xQo8/dTxulnRyuD0PK+9GpxWKmGEH+EGFYH4zhr/IPw3ihb8b4RzNVmVz4QqwR
+	 368wQ0ymji00LPlMQV4UqXjnNTH2xWsNtKIxuIyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Potin Lai <potin.lai.pt@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0284/1102] hwmon: (pmbus/lm25066) Fix PMBus coefficients for LM5064/5066/5066i
-Date: Thu, 17 Sep 2026 16:03:47 +0100
-Message-ID: <20260917151546.744125434@linuxfoundation.org>
+Subject: [PATCH 6.12 0302/1102] ptp: ocp: add shutdown callback
+Date: Thu, 17 Sep 2026 16:04:05 +0100
+Message-ID: <20260917151547.201215277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,150 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Potin Lai <potin.lai.pt@gmail.com>
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 
-[ Upstream commit 83dda7ed185501ba1f8165aeca83ff4a8ef7c263 ]
+[ Upstream commit f6f955cbf9d4e02deebe54ca91c118b53be9ffe6 ]
 
-Swap the high setting and low setting coefficients in the lm25066_coeff
-table for LM5064, LM5066, and LM5066i. The coefficients were previously
-mapped incorrectly, resulting in inverted current and power scaling.
+The shutdown callback was never implemented for this driver, but it's
+needed because .remove() callback is never called during kexec/reboot
+process. That leaves HW with some interrupts enabled and may cause
+spurious interrupt while booting into a new kernel during with kexec.
+If it happens that I2C interrupt fires during kexec, the whole I2C bus
+is disabled leaving TimeCard with no devlink communication. The same
+happens if timestampers were enabled, leaving the card without
+timestamper interrupts until full reboot cycle.
 
-Additionally, dynamically assign the exponent (R) registers inside the
-probe's LM25066_DEV_SETUP_CL check. This ensures that the proper
-exponent is applied (e.g., for LM25056, high setting power exponent
-is -4, but low setting power exponent is -3).
+Implement .shutdown() callback with the same function as remove
+callback.
 
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
-Link: https://lore.kernel.org/r/20260611-lm25066-driver-fix-v3-1-9d7d4b4e253d@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260611190333.787132-1-vadim.fedorenko@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/lm25066.c | 54 ++++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 26 deletions(-)
+ drivers/ptp/ptp_ocp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
-index f0bf3b1533313..cd013871ddc30 100644
---- a/drivers/hwmon/pmbus/lm25066.c
-+++ b/drivers/hwmon/pmbus/lm25066.c
-@@ -133,23 +133,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 10742,
--			.b = 1552,
-+			.m = 5456,
-+			.b = 2118,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 5456,
--			.b = 2118,
-+			.m = 10742,
-+			.b = 1552,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1204,
--			.b = 8524,
-+			.m = 612,
-+			.b = 11202,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 612,
--			.b = 11202,
-+			.m = 1204,
-+			.b = 8524,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -168,23 +168,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 10753,
--			.b = -1200,
-+			.m = 5405,
-+			.b = -600,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 5405,
--			.b = -600,
-+			.m = 10753,
-+			.b = -1200,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1204,
--			.b = -6000,
-+			.m = 605,
-+			.b = -8000,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 605,
--			.b = -8000,
-+			.m = 1204,
-+			.b = -6000,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -203,23 +203,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 15076,
--			.b = -504,
-+			.m = 7645,
-+			.b = 100,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 7645,
--			.b = 100,
-+			.m = 15076,
-+			.b = -504,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1701,
--			.b = -4000,
-+			.m = 861,
-+			.b = -965,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 861,
--			.b = -965,
-+			.m = 1701,
-+			.b = -4000,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -520,18 +520,20 @@ static int lm25066_probe(struct i2c_client *client)
- 	info->m[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].m;
- 	info->b[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].b;
- 	info->R[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].R;
--	info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
--	info->R[PSC_POWER] = coeff[PSC_POWER].R;
- 	if (config & LM25066_DEV_SETUP_CL) {
- 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].m;
- 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].b;
-+		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].R;
- 		info->m[PSC_POWER] = coeff[PSC_POWER_L].m;
- 		info->b[PSC_POWER] = coeff[PSC_POWER_L].b;
-+		info->R[PSC_POWER] = coeff[PSC_POWER_L].R;
- 	} else {
- 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].m;
- 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].b;
-+		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
- 		info->m[PSC_POWER] = coeff[PSC_POWER].m;
- 		info->b[PSC_POWER] = coeff[PSC_POWER].b;
-+		info->R[PSC_POWER] = coeff[PSC_POWER].R;
- 	}
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index fce46b88458fa..27d2f009a51b9 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -4870,6 +4870,7 @@ static struct pci_driver ptp_ocp_driver = {
+ 	.id_table	= ptp_ocp_pcidev_id,
+ 	.probe		= ptp_ocp_probe,
+ 	.remove		= ptp_ocp_remove,
++	.shutdown	= ptp_ocp_remove,
+ };
  
- 	/*
+ static int
 -- 
 2.53.0
 
