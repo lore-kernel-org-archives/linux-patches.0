@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4424CDDE7;
-	Thu, 17 Sep 2026 15:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3AF4B7A26;
+	Thu, 17 Sep 2026 15:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658738; cv=none; b=G7ej/dWitQs9cKHlmOKUcT0lssiq5FQORiMAPorhQdxLn1MYt83gm3jIq5GR9AOrV5Gt//QaCNgd3d83ZA9rz3vbcu4aAYVQB1B1Kb7mbR8u5rY34mqmTbSRs71DRUPqtgXWO9XkgYlBli9KzODcm6GYeeN9CABkUmmL0vsQuLU=
+	t=1789658742; cv=none; b=WoSNGFFbtEO8ypr4fac3QMfgAmYhgOCzCheEO/T9FJCZG0B7t5bDnNFlKKlDfwjPlw3FYrw1OLZZI3hIcjUOXPZHSfU2+WjE9fHfWg8DVa2ChHQhteIXmw+tL8yizYwFGFsns5b4/0ETq4tF+GAdHWdhQBnI68LpWS+wDHbcg4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658738; c=relaxed/simple;
-	bh=ApHb271DyTTS6UMljiYclmpBeXIpc/V9oOhAqef1H78=;
+	s=arc-20240116; t=1789658742; c=relaxed/simple;
+	bh=y3FdZUVFG/GhNRJhiEYZx9SFGGkRW7JwT3+STFpQDXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHSq52rriuRCN86w5br2q8yjcssXC7WssB/PS4GJTYKIs7EOt9veQKYBW7dhiDVtgO1cpYMR/En/dFKpTiRllz32tJnao/fzMMKUvhUGjanFeY3g9vUH+EpfcZHPKVFRJfdZYSxWhX0bf6+Fb5TKXNXrpPHZ6nwQ0c/zlNnQJck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfDvE0bd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sQc53KCYfJbcc0o+xsfs/rdcdF9jnR+FGXj0+7WjH8YvGTIBq64pPWEzeoJk1sT4WbZXJAQN7+TGjF1uG/x+nsxfeEs3ApF5WiMpLOTnKqsvbM/1sgNtGhM5hgp68NHXWXoh/OvdNjF+cLMprMYD/LFoV0P7n6wQ4dy/e5RkD3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwyKI+HS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfDvE0bd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6F91F008BC;
-	Thu, 17 Sep 2026 15:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwyKI+HS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E431F00893;
+	Thu, 17 Sep 2026 15:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658725;
-	bh=OHPumBSotRKyCm2S5mdEM7F5E/EwhjPc8EmdofeKB2c=;
+	s=korg; t=1789658737;
+	bh=bn1nk9aouYNQtdYE33nWpiRmeylvv6olnlweWQYGqJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sfDvE0bdzwINPyjhDS0qCyViZGZ0ZSpL0A0BAv8bcILBmQUliTmxKmgqDID9zV/Ou
-	 LW6j9LHhuZ+gV8pysEVNbmSpmKwm4XXnAULHsFIeyAbXF8Z47nQU7ut2pTvkVDmqQ1
-	 nvPtygJ780+1aVhcdfO4Gj9p0TNhwNnGXMzNdToE=
+	b=qwyKI+HSQ25OWDOhQZhEdMopJ7kJmVeGcEmiU7s9VUe6hWA5S+Ty04uCF+aYCtQW+
+	 dDkKcJCy/EgPI6MaZ5WY8v9leHw0QWouYkifm7QwxrNasJoxFt7sxsyglTLsv/oBIs
+	 YU1lC0Y13t2Wc5ODitSuGmbq1NhOQZn2WbCqqJ9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Vlatko Kosturjak <kost@linux.hr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 019/733] nvmet-rdma: fix queue leak when connect backlog is exceeded
-Date: Thu, 17 Sep 2026 16:05:27 +0100
-Message-ID: <20260917151351.161382005@linuxfoundation.org>
+Subject: [PATCH 7.2 005/733] ppp_async: drop the errored frame instead of resetting its headroom
+Date: Thu, 17 Sep 2026 16:05:13 +0100
+Message-ID: <20260917151350.759675044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,61 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Vlatko Kosturjak <kost@linux.hr>
 
-[ Upstream commit fb1ed67788e21832b614c23767a088c08cfdd2f2 ]
+[ Upstream commit 8dc5d98a16fa23c00999aecf10018c9f69fa5bf4 ]
 
-When pending disconnecting queues exceed the backlog limit, the
-connect path only drops the device reference and leaks the newly
-allocated queue and its IB resources.
+ppp_receive_nonmp_frame() prepends a two-byte direction tag before running
+the pass/active BPF filters:
 
-Fixes: badc53620fe8 ("nvme: target: rdma: fix ndev refcount leak on queue connect")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+	*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+
+Nothing on the receive path guarantees those two bytes of headroom. The
+frame-error path in ppp_async's process_input_packet() resets a reused skb's
+headroom to zero while claiming to restore it to a freshly allocated state -
+but a fresh skb from dev_alloc_skb() carries NET_SKB_PAD:
+
+	err:
+		if (skb) {
+			/* make skb appear as freshly allocated */
+			skb_trim(skb, 0);
+			skb_reserve(skb, - skb_headroom(skb));
+		}
+
+ap->rpkt still points at that skb, so the next frame is reassembled into it
+with no headroom at all. A peer that sends a bad-FCS frame followed by one
+beginning ff 03 then leaves a single byte of headroom by the time the filter
+tag is pushed, which lands one byte below skb->head:
+
+  skbuff: skb_under_panic: len:49 put:2 head:ffff888003c10000
+          data:ffff888003c0ffff tail:0x30 end:0x640 dev:<NULL>
+  kernel BUG at net/core/skbuff.c:214!
+  RIP: 0010:skb_panic+0x13e/0x230
+  Call Trace:
+   skb_push+0xbd/0x100
+   ppp_receive_nonmp_frame+0x48a/0x1d10
+   ppp_input+0x4e9/0x2f80
+   ppp_async_process+0x2a/0xe0
+   tasklet_action_common+0x20f/0x8a0
+   handle_softirqs+0x18e/0x590
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Zeroing the headroom violates the NET_SKB_PAD guarantee that dev_alloc_skb()
+gives the rest of the receive path. Besides the filter panic above, when CCP
+compression is enabled ppp_decompress_frame() hands skb->data - 2 to
+->decompress()/->incomp(), which then reads out of bounds before skb->head
+for the same reason.
+
+Rather than restore the headroom, drop the errored frame - as ppp_synctty
+already does on its error path - and clear ap->rpkt so the next frame is
+reassembled into a fresh skb with proper headroom. This is simpler and fixes
+both the filter under-panic and the CCP out-of-bounds read.
+
+The original V1 of this patch made room in ppp_receive_nonmp_frame() with
+skb_cow_head(); Eric pointed out that fixing the root cause in the transport
+is the right approach.
+
+Found by fuzzing the PPP receive path with a mutating peer on a pty; it is an
+interesting (remote) DoS: root configures PPP, the peer supplies two crashing
+frames. The reproducer (repro-ppp-skb.c, unchanged from v1) panics in about a
+second, and returns cleanly with this applied.
+
+Fixes: 6722e78c9005 ("[PPP]: handle misaligned accesses")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Vlatko Kosturjak <kost@linux.hr>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/apkR6ZU+tqP2C3Fl@griffin.linux.hr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/ppp/ppp_async.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index de5a88fbb2337..542138fd669f4 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1627,19 +1627,13 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 		mutex_unlock(&nvmet_rdma_queue_mutex);
- 		if (pending > NVMET_RDMA_BACKLOG) {
- 			ret = NVME_SC_CONNECT_CTRL_BUSY;
--			goto put_device;
-+			goto free_queue;
- 		}
- 	}
- 
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
--	if (ret) {
--		/*
--		 * Don't destroy the cm_id in free path, as we implicitly
--		 * destroy the cm_id here with non-zero ret code.
--		 */
--		queue->cm_id = NULL;
-+	if (ret)
- 		goto free_queue;
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index 93a7b0f6c4e7e..a5db4f78b5fc8 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -812,11 +812,8 @@ process_input_packet(struct asyncppp *ap)
+  err:
+ 	/* frame had an error, remember that, reset SC_TOSS & SC_ESCAPE */
+ 	ap->state = SC_PREV_ERROR;
+-	if (skb) {
+-		/* make skb appear as freshly allocated */
+-		skb_trim(skb, 0);
+-		skb_reserve(skb, - skb_headroom(skb));
 -	}
++	kfree_skb(skb);
++	ap->rpkt = NULL;
+ }
  
- 	mutex_lock(&nvmet_rdma_queue_mutex);
- 	list_add_tail(&queue->queue_list, &nvmet_rdma_queue_list);
-@@ -1648,6 +1642,11 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 	return 0;
- 
- free_queue:
-+	/*
-+	 * Don't destroy the cm_id in free path, as we implicitly
-+	 * destroy the cm_id here with non-zero ret code.
-+	 */
-+	queue->cm_id = NULL;
- 	nvmet_rdma_free_queue(queue);
- put_device:
- 	kref_put(&ndev->ref, nvmet_rdma_free_dev);
+ /* Called when the tty driver has data for us. Runs parallel with the
 -- 
 2.53.0
 
