@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C925326C4;
-	Thu, 17 Sep 2026 17:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CB25326BE;
+	Thu, 17 Sep 2026 17:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666115; cv=none; b=poUiPKP1Z9WQDq20d7tmNoQM3V9El5FqIG6vOTVT5vVbSHogR480h9fAV454JoLrWjkSD2fyTCnvYXj4ThOef85DNs//yDO4qM1+8rKGSByUxRXjUAmhV1QdNqnF0i/qYjG0RMjU1ssc1CdHCqKqj3yDBMAt6wXcPGgfUz4pP0o=
+	t=1789666118; cv=none; b=VxWbwf4hsIARb5XQ132/MqlReRIIB35QqogB3OB8hkTi0LOr0NIM0cxHVIcsCiBl8UCxIMZTSBzEYxI/SMBEJVXi1F2IXbgb0q2YcmMtC0/r7Mrw95ekg7Y1aZ4q/96skuwKoMkK91JumGhGV2qeXVTB7FHQoU/6ctai8/v5Jek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666115; c=relaxed/simple;
-	bh=3KM3iOXvw9bYk2gkTfddD9l8lkZQ88QND7QCNK5HMys=;
+	s=arc-20240116; t=1789666118; c=relaxed/simple;
+	bh=3VNwHOVLUlV/fee0TFRM+UplXDHl1nG0XYXqHx0Sh2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kX09E/iwQi84K8GSbSugIvhrtnAqqITewjHSk9UpfPM/4duHSmIRiTLorwYkVVfnJBL9Kc6GhL/fICP5ptqrZNiJxmPN80ulYj+rp3757Rv6EaBCa4ibdVrBPJUk7nd6DK1CWCGpSmU3MDsDiDdmyeoTOh0Df1ob6IsXlLbmikI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEH1dKi9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s81YuF2W9ts3DgKNVoQuD8aEChvTJ7PBq5vIxU3XLxMzaCsff648TeGw2UzxJxlsjUT4hp12xyPVy6D+ymaEjhhRhNDd4FbtZcdVOVsUlBz24ttpMBTyOpfu1TuuybbK9QnMr66NNiz2y7NSmKjO+srDn6aQZYOU4xpLt9k0Ob0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjDT8f0b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEH1dKi9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6881D1F000FF;
-	Thu, 17 Sep 2026 17:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjDT8f0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B8A1F000FF;
+	Thu, 17 Sep 2026 17:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666114;
-	bh=uAN+lZA2qtfHYnGFcv8bg/YwGXj5+JtMBkkKNgP5Ji4=;
+	s=korg; t=1789666116;
+	bh=jIrtCLHG3lRjDPYgl9gjgbz4NgzmbkMygrOM8xlsBYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YEH1dKi9FYSeljNRJgUX2dbTeg46NLLWPqvZ42XymhnC1Sdmt9P900Sg5JkWwsr6H
-	 hrhSp7Rr+/7Fs/9CNG/hCN5ssOCPmbPBRvNeb0mnjIjsiKIk/UBavwAX8nYx6jwKwM
-	 vL6tJOZf95z0zGoX4A9Q719IZ8SXbFMmzerGDWwc=
+	b=LjDT8f0bDdY/8zRtZnh5R6FoXuGPEac6RU16mzHk9PijGSZgkxckmM5FZ8RAWjbav
+	 g56UMTHPupJOqNsX/CW+1ZRtdWSFeIZGq23O79UUD+EHY/rF/SWqj1fX9KbfOARwh3
+	 VdU715gnv0OeQTcFUbrBdoXruxCBuqHW7aWPXjeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ahmed Naseef <naseefkm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0928/1250] net: hinic: fix mailbox segment buffer overflow
-Date: Thu, 17 Sep 2026 16:12:03 +0100
-Message-ID: <20260917151617.164336558@linuxfoundation.org>
+Subject: [PATCH 6.18 0929/1250] net: dsa: mt7530: add EN7528 support
+Date: Thu, 17 Sep 2026 16:12:04 +0100
+Message-ID: <20260917151617.191420100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,54 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-[ Upstream commit 5d4d985957434867bbe85e4fa5e638f3e48ad522 ]
+[ Upstream commit cf23fcc9437e5c383d9f282197d580a5a3fd6e6e ]
 
-check_mbox_seq_id_and_seg_len() validates that seq_id does not
-exceed SEQ_ID_MAX_VAL (42) and seg_len does not exceed
-MBOX_SEG_LEN (48).  However, this allows the last segment
-(seq_id=42) to carry a full 48-byte payload, writing to offset
-42*48=2016 for 48 bytes (ending at byte 2064).  The receive
-buffer is only MBOX_MAX_BUF_SZ (2048) bytes, resulting in a
-16-byte heap buffer overflow.
+The EcoNet EN7528 SoC integrates an MT7530 switch (the chip revision
+register reads 0x7530), memory-mapped in the SoC register space and
+reached through the same MMIO glue used for the built-in switches of the
+MediaTek MT7988 and Airoha EN7581/AN7583 SoCs. Its reset sequence and its
+PHY indirect access registers are the same as on those switches, so add
+an ID_EN7528 variant bound with the "econet,en7528-switch" compatible,
+reusing mt7988_setup() and the indirect PHY accessors.
 
-The hinic3 driver already handles this correctly by defining
-MBOX_LAST_SEG_MAX_LEN and rejecting the last segment when it
-exceeds the remaining buffer space.  Apply the same fix to the
-hinic driver.
+The switch core, however, is an MT7530 and not an MT7531 derivative: the
+CPU port to trap frames to is set through the MT7530-style CPU_EN /
+CPU_PORT fields of the MFC register rather than the MT7531 CFC register,
+so add it to the MT7530 handling in mt753x_conduit_state_change(). For the
+same reason the MT7530 mirror and force-mode register layouts already
+apply to it as the default of the MT753X_*() macros.
 
-Fixes: a425b6e1c69b ("hinic: add mailbox function support")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB0001AE870B09020B46B5D7DBC8B22@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The four user ports (1-4) are connected to integrated Gigabit PHYs at
+MDIO addresses 9-12 of the switch internal MDIO bus. The CPU port (port
+6) is connected to the SoC Ethernet MAC at a fixed 1000 Mbps full duplex
+link, so the port capabilities cannot be shared with the MT7988 and
+EN7581 switches, whose CPU ports run at 10 Gbps.
+
+The LAN GPHYs advertise EEE by default, but negotiating EEE with some
+link partners results in an unstable link with dropped frames. Leave the
+LPI capabilities empty for the EN7528 so that phylink disables EEE on
+these PHYs and refuses to enable it from userspace.
+
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Link: https://patch.msgid.link/8c7dfabd860ab0a6dd771c2bac7b7599eb369a4f.1783770059.git.naseefkm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3c18e3c9a54e ("net: dsa: mt7530: populate lpi_interfaces to fix EEE support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530-mmio.c |  1 +
+ drivers/net/dsa/mt7530.c      | 58 ++++++++++++++++++++++++++++++-----
+ drivers/net/dsa/mt7530.h      |  1 +
+ 3 files changed, 52 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-index 97c1584dc05bc..1868a13588c00 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-@@ -128,6 +128,7 @@ enum hinic_mbox_tx_status {
+diff --git a/drivers/net/dsa/mt7530-mmio.c b/drivers/net/dsa/mt7530-mmio.c
+index 1dc8b93fb51a1..1065671bcdd13 100644
+--- a/drivers/net/dsa/mt7530-mmio.c
++++ b/drivers/net/dsa/mt7530-mmio.c
+@@ -13,6 +13,7 @@
+ static const struct of_device_id mt7988_of_match[] = {
+ 	{ .compatible = "airoha,an7583-switch", .data = &mt753x_table[ID_AN7583], },
+ 	{ .compatible = "airoha,en7581-switch", .data = &mt753x_table[ID_EN7581], },
++	{ .compatible = "econet,en7528-switch", .data = &mt753x_table[ID_EN7528], },
+ 	{ .compatible = "mediatek,mt7988-switch", .data = &mt753x_table[ID_MT7988], },
+ 	{ /* sentinel */ },
+ };
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 2a70fa4b5fa3e..969857975ce63 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2829,6 +2829,30 @@ static void en7581_mac_port_get_caps(struct dsa_switch *ds, int port,
+ 	}
+ }
  
- #define SEQ_ID_START_VAL			0
- #define SEQ_ID_MAX_VAL				42
-+#define MBOX_LAST_SEG_MAX_LEN			(MBOX_MAX_BUF_SZ - SEQ_ID_MAX_VAL * MBOX_SEG_LEN)
- 
- #define NO_DMA_ATTRIBUTE_VAL			0
- 
-@@ -372,7 +373,8 @@ recv_pf_from_vf_mbox_handler(struct hinic_mbox_func_to_func *func_to_func,
- static bool check_mbox_seq_id_and_seg_len(struct hinic_recv_mbox *recv_mbox,
- 					  u8 seq_id, u8 seg_len)
++static void en7528_mac_port_get_caps(struct dsa_switch *ds, int port,
++				     struct phylink_config *config)
++{
++	switch (port) {
++	/* Ports which are connected to switch PHYs. There is no MII pinout. */
++	case 1 ... 4:
++		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
++			  config->supported_interfaces);
++
++		config->mac_capabilities |= MAC_10 | MAC_100 | MAC_1000FD;
++		break;
++
++	/* Port 6 is connected to SoC's GMAC at 1000 Mbps full duplex. There
++	 * is no MII pinout.
++	 */
++	case 6:
++		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
++			  config->supported_interfaces);
++
++		config->mac_capabilities |= MAC_1000FD;
++		break;
++	}
++}
++
+ static void
+ mt7530_mac_config(struct dsa_switch *ds, int port, unsigned int mode,
+ 		  phy_interface_t interface)
+@@ -3018,17 +3042,24 @@ static void mt753x_phylink_get_caps(struct dsa_switch *ds, int port,
+ 				    struct phylink_config *config)
  {
--	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN)
-+	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN ||
-+	    (seq_id == SEQ_ID_MAX_VAL && seg_len > MBOX_LAST_SEG_MAX_LEN))
- 		return false;
+ 	struct mt7530_priv *priv = ds->priv;
+-	u32 eeecr;
  
- 	if (seq_id == 0) {
+ 	config->mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE;
+ 
+-	config->lpi_capabilities = MAC_100FD | MAC_1000FD | MAC_2500FD;
+-
+-	eeecr = mt7530_read(priv, MT753X_PMEEECR_P(port));
+-	/* tx_lpi_timer should be in microseconds. The time units for
+-	 * LPI threshold are unspecified.
++	/* The EN7528 GPHYs report EEE capability, but negotiating EEE with
++	 * common link partners (e.g. Realtek GbE NICs) results in an unstable
++	 * link with dropped frames. Leave the LPI capabilities empty so that
++	 * phylink disables EEE on these PHYs and refuses to enable it from
++	 * userspace.
+ 	 */
+-	config->lpi_timer_default = FIELD_GET(LPI_THRESH_MASK, eeecr);
++	if (priv->id != ID_EN7528) {
++		u32 eeecr = mt7530_read(priv, MT753X_PMEEECR_P(port));
++
++		config->lpi_capabilities = MAC_100FD | MAC_1000FD | MAC_2500FD;
++		/* tx_lpi_timer should be in microseconds. The time units for
++		 * LPI threshold are unspecified.
++		 */
++		config->lpi_timer_default = FIELD_GET(LPI_THRESH_MASK, eeecr);
++	}
+ 
+ 	priv->info->mac_port_get_caps(ds, port, config);
+ }
+@@ -3156,7 +3187,8 @@ mt753x_conduit_state_change(struct dsa_switch *ds,
+ 	 * forwarded to the numerically smallest CPU port whose conduit
+ 	 * interface is up.
+ 	 */
+-	if (priv->id != ID_MT7530 && priv->id != ID_MT7621)
++	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
++	    priv->id != ID_EN7528)
+ 		return;
+ 
+ 	mask = BIT(cpu_dp->index);
+@@ -3359,6 +3391,16 @@ const struct mt753x_info mt753x_table[] = {
+ 		.phy_write_c45 = mt7531_ind_c45_phy_write,
+ 		.mac_port_get_caps = en7581_mac_port_get_caps,
+ 	},
++	[ID_EN7528] = {
++		.id = ID_EN7528,
++		.pcs_ops = &mt7530_pcs_ops,
++		.sw_setup = mt7988_setup,
++		.phy_read_c22 = mt7531_ind_c22_phy_read,
++		.phy_write_c22 = mt7531_ind_c22_phy_write,
++		.phy_read_c45 = mt7531_ind_c45_phy_read,
++		.phy_write_c45 = mt7531_ind_c45_phy_write,
++		.mac_port_get_caps = en7528_mac_port_get_caps,
++	},
+ };
+ EXPORT_SYMBOL_GPL(mt753x_table);
+ 
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index 7e47cd9af2564..69be713bab800 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -21,6 +21,7 @@ enum mt753x_id {
+ 	ID_MT7988 = 3,
+ 	ID_EN7581 = 4,
+ 	ID_AN7583 = 5,
++	ID_EN7528 = 6,
+ };
+ 
+ #define	NUM_TRGMII_CTRL			5
 -- 
 2.53.0
 
