@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D0849D5AF;
-	Thu, 17 Sep 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B185E4EFFD2;
+	Thu, 17 Sep 2026 17:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667835; cv=none; b=oVj05fk4T1J2QiJa5lWAXzu6rQmtHYfnV4+mXJ4q1Re9NPMcP/tOLqBK+OmAJCANMCu9uxZamblBLx/BmLH839WXpA8TxJNlXN/jE3rXhYIcruY0qnnCyv8DYctbnJiJLx4UoxcywY38XQHWg7G7Wmxu/h+sMfMkDdGG4vyICxg=
+	t=1789667838; cv=none; b=u9Fj5tHcyoEbZOx5uXjgUFlcIrZ0piDK9310FLk9yXgkEysx0+uGPUnzFKe9noF4fa6hi1zPf5iqrIyVjxmlKMDnKKdQeoPTLAQ6D5oIF20HrZCZpfbqB/Ah83qa3Son49Y1N+ikePJ/xGod13j4jcu+tF13U8jEGVYNGXApZsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667835; c=relaxed/simple;
-	bh=fCYCF/Zs9AVQIqBSXCBv9RhEl66kuV/0tzjs6g1Ndu0=;
+	s=arc-20240116; t=1789667838; c=relaxed/simple;
+	bh=yhe+KDxBy69tistMbRngLd2u+0iPfJQBFvKKLpwi7LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpsC3Scj6rVC5Mxv9lw8iW8gvnCBBn7qzz6xQ/xC0228gqOvGGo4aSK8p9CMfyT6SQNBsT+5pwQyTIqkIFqF+dr9Iggf5sucUKUB+vRrNXk/0SJFsqj0eYCXcj7KJdmxpmlDEH3RlbD1QNns/vcc8fgHih3/TBlHcLK3GG+r7oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgngC6lC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ClQ7S6+fCEXpsODk+WNYANpdjxurhqF9aTxJMIKD3wXe9wikzzEtZRBvkorjxEVn2RBV6U0/+G2llZXGNasjRRmXKDfxhmbmyh306VFUz80UAlZsamzWIXSi2CZR3v97DfAG53dFCjO/SWvnxw25/znnPsOjxeICiq3m2WJiTpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0uEDnpi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgngC6lC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198F71F000FF;
-	Thu, 17 Sep 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0uEDnpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EFD1F000FF;
+	Thu, 17 Sep 2026 17:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667834;
-	bh=WFvO13201fgGTYaoNfcak1UkEBVCrmTGSFPO89tGc/0=;
+	s=korg; t=1789667837;
+	bh=CReqMzvOOJAdZiuauzgvAieIkbcJPdZ7quBtMnDJUhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgngC6lCEM75bZeUDO1QsQwK67oPdt1P2Eczt8e7a6qSuh1LGDfxLfTuYus/Mk+0C
-	 P38uAWa6gP7FzwwLVfH21j0GQrfE41NrLL6ykZ23HUC6QwPJtzBV9CCGj4sdP4NRw1
-	 /1yoBOYu3YelzBykocyX9d5AX8gmu9Js+AfbB54g=
+	b=n0uEDnpiLPkzfKQvc8qf/Ri9dOBtypnT1PcSXAz0siRu+o7MEfjA1V0r+GDU1XXwI
+	 SrooeiRq60EvRu7e2uYSBd+SCcdMFDnwYa8BSoDKiaK1KUgc3agvj4lpN+aLicYWdC
+	 Nyye5FiTzSvomPsD+ATvUe2pkZYCeJGXXV3CEk+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0226/1102] RDMA/irdma: Fix typo in SQ completions generation
-Date: Thu, 17 Sep 2026 16:02:49 +0100
-Message-ID: <20260917151545.254905775@linuxfoundation.org>
+Subject: [PATCH 6.12 0227/1102] net/mlx5: E-Switch, align disable sequence with switchdev-to-legacy transition
+Date: Thu, 17 Sep 2026 16:02:50 +0100
+Message-ID: <20260917151545.282435744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,36 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyrill Gorcunov <gorcunov@gmail.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit b548a6c4eee5c428663f3944e173e6c92e2e8d6f ]
+[ Upstream commit b48b6308dfaeae49fcda61b4066773cb5e8a9ce8 ]
 
-When we generate completion for SQ the opcode while being properly read
-from ring buffer is ignored when written back to completion. Seems
-to be a simple typo.
+This patch align the eswitch disable sequence with the
+switchdev-to-legacy mode transition, where eswitch must be disabled
+before device detachment. The consistent ordering is required for proper
+SD LAG cleanup which depends on eswitch state during teardown.
 
-Link: https://patch.msgid.link/r/ahjB87k54bYdFbft@grain
-Signed-off-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260531113954.395443-3-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/utils.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index a88f93b961682..45c3f82887eff 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2473,7 +2473,7 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 			cmpl->cpi.wr_id = qp->sq_wrtrk_array[wqe_idx].wrid;
- 			sw_wqe = qp->sq_base[wqe_idx].elem;
- 			get_64bit_val(sw_wqe, 24, &wqe_qword);
--			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, IRDMAQPSQ_OPCODE);
-+			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, wqe_qword);
- 			cmpl->cpi.q_type = IRDMA_CQE_QTYPE_SQ;
- 			/* remove the SQ WR by moving SQ tail*/
- 			IRDMA_RING_SET_TAIL(*sq_ring,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index f77b6362fd9f5..fd5676dfda4af 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1438,7 +1438,6 @@ static int mlx5_load(struct mlx5_core_dev *dev)
+ 
+ static void mlx5_unload(struct mlx5_core_dev *dev)
+ {
+-	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_devlink_traps_unregister(priv_to_devlink(dev));
+ 	mlx5_sf_dev_table_destroy(dev);
+ 	mlx5_sriov_detach(dev);
+@@ -1546,6 +1545,7 @@ void mlx5_uninit_one(struct mlx5_core_dev *dev)
+ 
+ 	mlx5_hwmon_dev_unregister(dev);
+ 	mlx5_crdump_disable(dev);
++	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_unregister_device(dev);
+ 
+ 	if (!test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
+@@ -1630,6 +1630,7 @@ void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend)
+ 	devl_assert_locked(priv_to_devlink(dev));
+ 	mutex_lock(&dev->intf_state_mutex);
+ 
++	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_detach_device(dev, suspend);
+ 
+ 	if (!test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
 -- 
 2.53.0
 
