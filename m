@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FA93D9523;
-	Thu, 17 Sep 2026 18:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7993249D58C;
+	Thu, 17 Sep 2026 18:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671437; cv=none; b=ihuP6YUtpQb5c12xeC6LBBF11H77wjwRLvdBXI0accPBK89s0JSjBCLkATL/cJXGwJfqmQ7rAc5zrYRhQCoV4RTxAK+XGuUiUg6TzKfv/VG5hI4pYdzEOAhLBQ2YDxmv8Hud+q91DykxJ8c7n87BkM0oRoZph3s670X4mh35ZUo=
+	t=1789671440; cv=none; b=lXSeFKch0uPS71G+El8a1baP8Tl4QIm+f9cilq4QV1xuSzLkhtejiERq36LiYhjR+0YwXz9J28b1JsNsQfQ5w1W4XOKH6Cj/3iSUVr0HghdzS1sArLE9url0hJ1ZSrIRrqZEB9JjGn7uRBvVTXVVZSSaSYdDRNuqWmBjcmG+2DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671437; c=relaxed/simple;
-	bh=bgyimjgvktxEjrfcINJqpKG/vCcq0Zz1Qu6VvFkkOpo=;
+	s=arc-20240116; t=1789671440; c=relaxed/simple;
+	bh=3H7YLNGq3sZ0aVq8G/QMUfrgkTy8TQ3hqe/y7QwGqWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGe8yNf3hQ+QyjJOrwqDvCLeYcMCSMDu9En2vLJalKh1n5ZlzdAaSYZq94RpEJMx5XxAAbU6x43zPcZhdG6XezNwCUUTUehTtgNF20SBExWuoTj8VEoIZjuVCedr1bSTDKwxwXa8TyvdEUag2pvI/NxCvOruF5/ksllXZbYfWdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTYZlRio; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W1rkOBfOkY+mkOXrb/fVqSfLUiCaqIhaey4ZBw38czcIoOhOuwCI7JwmtY1isOY7HmrQ9IwysgMpFx0ftP7kIVLuY/eCEU++qxd2kcgKaZV9HeX4spOpbkNlLSqNT+3azHjOGYi1ItVXiG7AAtNQ09rL40lDRokplmI2aq52zNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=celHT7oO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTYZlRio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47BE1F000FF;
-	Thu, 17 Sep 2026 18:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="celHT7oO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA951F000FF;
+	Thu, 17 Sep 2026 18:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671435;
-	bh=EdbbTMWruBK6ZxfR4+awj5te++TGgV4nQ4bF0a0g7Yk=;
+	s=korg; t=1789671438;
+	bh=L3aGQxmd8dA7jYRNEheWY7ArMypDF9YqvHdjjtKjkuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTYZlRioMucK3Xd//ZNcQ7/uveoAT73ewCce6ZVf6VQsZ39JzKxJN/LcXU57pfr1y
-	 KP1nXuGmEebO9RqoojhSfMoUVnQz8//Z+Gh2wsOrWKTD3MuDjqeGglnWwmJTEdCkQ/
-	 z35wjltMLIcohECwULIk37vu5BRV1UyVrZ7sDAkM=
+	b=celHT7oOh+TSLWUDL67aM2VMEUd3yNLg5pFNdIevxf8V0xplJ2kKEdl2AA42twfi1
+	 z26WMfnidrnTEhQCZh3LxdeuyRNvRN3OSc/t3/93e1vajqL2ClKrt9ShEg/wcLRGFQ
+	 S8OI4lTcJ6KbR5WvOVGudQvCGvslutnVStOFh+oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0976/1102] net: advertise TCP MSS from the configured MTU, not the learned PMTU
-Date: Thu, 17 Sep 2026 16:15:19 +0100
-Message-ID: <20260917151605.197747919@linuxfoundation.org>
+Subject: [PATCH 6.12 0977/1102] KVM: SVM: Mark VMCB dirty before processing incoming snp_vmsa_gpa
+Date: Thu, 17 Sep 2026 16:15:20 +0100
+Message-ID: <20260917151605.224134515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,147 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 2640e64195948a601430d230c9864f5426574cde ]
+[ Upstream commit e268beee4a25ce58807a96253e95e96c2e3a5c1a ]
 
-The MSS a host puts in its SYN tells the peer how big a segment it may
-send us. Right now we can shrink it with a PMTU we learned on our own
-send path, which is the wrong direction entirely.
+Mark the VMCB dirty, i.e. zero control.clean, prior to handling the new
+VMSA.  Nothing in the VALID_PAGE() case touches control.clean, and
+isolating the VALID_PAGE() code will allow simplifying the overall logic.
 
-On asymmetric paths this bites - think DSR load balancers, where the
-request side goes through a smaller-MTU overlay. We learn a small PMTU
-going out, then advertise a small MSS, and the peer stays capped for the
-whole connection even though its path back to us is wide. MSS only shows
-up in the SYN and never grows back.
+Note, the VMCB probably doesn't need to be marked dirty when the VMSA is
+invalid, as KVM will disallow running the vCPU in such a state.  But it
+also doesn't hurt anything.
 
-On symmetric paths we lose nothing by dropping it either: the peer runs
-its own PMTU discovery and usually already knows the real path MTU.
-
-So work out the advertised MSS from the configured route or device MTU
-and ignore the learned PMTU. Our send side is unchanged, still clamped by
-tcp_current_mss(). Add ip_dst_mtu_configured()/ip6_dst_mtu_configured()
-and use them from the two default_advmss() paths.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 164a5e7ad531 ("ipv4: ipv4_default_advmss() should use route mtu")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260815070413.294559-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250227012541.3234589-9-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 42a39ad5d592 ("KVM: SEV: Track the GPA of the guest-controlled VMSA used for SNP guests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip.h        |   25 +++++++++++++++++++++++++
- include/net/ip6_route.h |   37 +++++++++++++++++++++++++++++++++++++
- net/ipv4/route.c        |    4 ++--
- net/ipv6/route.c        |    2 +-
- 4 files changed, 65 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/sev.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -508,6 +508,31 @@ out:
- 	return res;
- }
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3924,6 +3924,12 @@ static int __sev_snp_update_protected_gu
+ 	/* Clear use of the VMSA */
+ 	svm->vmcb->control.vmsa_pa = INVALID_PAGE;
  
-+/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-+ *
-+ * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
-+ * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
-+ * peer may send to us and must reflect our receive capability (the device or
-+ * route-configured MTU), not a path MTU learned on the reverse (send)
-+ * direction, which may not apply to the peer->us path and outlives the fnhe
-+ * for the whole connection.  See RFC 2923 section 2.3 and the comment above
-+ * tcp_advertise_mss().
-+ */
-+static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
-+{
-+	unsigned int mtu, res;
-+
-+	rcu_read_lock();
-+	mtu = dst_metric_raw(dst, RTAX_MTU);
-+	if (!mtu)
-+		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
-+	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
-+	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+	rcu_read_unlock();
-+
-+	return res;
-+}
-+
- static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
- 					  const struct sk_buff *skb)
- {
---- a/include/net/ip6_route.h
-+++ b/include/net/ip6_route.h
-@@ -354,6 +354,43 @@ out:
- 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
- }
- 
-+/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-+ *
-+ * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
-+ * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
-+ * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
-+ * bounds what the peer may send to us and must reflect our receive
-+ * capability, not a path MTU learned on the reverse (send) direction.  See
-+ * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
-+ */
-+static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
-+{
-+	const struct rt6_info *rt = dst_rt6_info(dst);
-+	const struct fib6_info *from;
-+	struct inet6_dev *idev;
-+	unsigned int mtu = 0;
-+
-+	rcu_read_lock();
-+	/* IPv6 keeps the learned PMTU and the configured MTU in the same
-+	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
-+	 * dst, the configured one on the underlying route.  Reach the latter
-+	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
++	/*
++	 * When replacing the VMSA during SEV-SNP AP creation,
++	 * mark the VMCB dirty so that full state is always reloaded.
 +	 */
-+	from = rcu_dereference(rt->from);
-+	if (from)
-+		mtu = from->fib6_pmtu;
-+	if (!mtu) {
-+		mtu = IPV6_MIN_MTU;
-+		idev = __in6_dev_get(dst_dev_rcu(dst));
-+		if (idev)
-+			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
-+	}
-+	rcu_read_unlock();
++	vmcb_mark_all_dirty(svm->vmcb);
 +
-+	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
-+	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+}
-+
- u32 ip6_mtu_from_fib6(const struct fib6_result *res,
- 		      const struct in6_addr *daddr,
- 		      const struct in6_addr *saddr);
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1356,8 +1356,8 @@ static unsigned int ipv4_default_advmss(
+ 	if (VALID_PAGE(svm->sev_es.snp_vmsa_gpa)) {
+ 		gfn_t gfn = gpa_to_gfn(svm->sev_es.snp_vmsa_gpa);
+ 		struct kvm_memory_slot *slot;
+@@ -3969,12 +3975,6 @@ static int __sev_snp_update_protected_gu
+ 		kvm_release_pfn_clean(pfn);
+ 	}
  
- 	rcu_read_lock();
- 	net = dst_dev_net_rcu(dst);
--	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
--				   net->ipv4.ip_rt_min_advmss);
-+	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
-+		       net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
+-	/*
+-	 * When replacing the VMSA during SEV-SNP AP creation,
+-	 * mark the VMCB dirty so that full state is always reloaded.
+-	 */
+-	vmcb_mark_all_dirty(svm->vmcb);
+-
+ 	return 0;
+ }
  
- 	return min(advmss, IPV4_MAX_PMTU - header_size);
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3250,7 +3250,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
- static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- {
- 	struct net_device *dev = dst_dev(dst);
--	unsigned int mtu = dst6_mtu(dst);
-+	unsigned int mtu = ip6_dst_mtu_configured(dst);
- 	struct net *net;
- 
- 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
 
 
