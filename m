@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5A83AAF7D;
-	Thu, 17 Sep 2026 18:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0F23AEF2D;
+	Thu, 17 Sep 2026 18:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668264; cv=none; b=nuo44KFvn0BoawvFd+aKjf2I8leX9E7QdjK7GW0v1l8pyELjmpqzbiXDWU27lzduNHJKSOi8AYDbEjTwlXCqL3pnZRN7/zqEPhuu2vsKzzST6xpN5DRKlSyqIpJuWiQAjTUuYczYOc19dbtdDeyTsXX8gtkiuIB6K+6tEJIvr8E=
+	t=1789668268; cv=none; b=IQi9RW5FuSbUAFTTGkWqL3mJ+yzl/SG6IGIf0Put0n7L0ynoAb7q+7XDdMPAyA+pujr0YheUFcfz33i2/3dXuYKfbv5Mj3+JTVqnBvPbDdEz3iRNQDRMTNHi6k1Ne9Ay5tVKt8kPuhpuTLv10yh9S9pq/F2xRjcqXiwuYr61dgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668264; c=relaxed/simple;
-	bh=AUUB1o4+IuL8c0kWd80dguZtC1820CR63Ed3WXS/4ME=;
+	s=arc-20240116; t=1789668268; c=relaxed/simple;
+	bh=xK6up6Y7i2LJklJ8oMKr1P0nze12U2Cpm36CclmO3J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/GT8If82CS+/H5ZWyejfmvBhkKKLNqHdt0PtOrIeQA7BnQgC8FV3BgAkQzfWl1Da7PIMWvUCazcJ+zN3eiaHSHzpdjQgRLZseBo/KsypyQXfM8qVb+oPdhP7Cq2aqdSMmosiXLR0mub8HgQK7Av7dH8RGhS+5qGUXENqvsdJv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYkbSHQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jC1W/6yc4trP/rtQGYVB2Wz9KAzkH/dJdtYpBd0EbPkpCa5YhX/4bPXOeX6zy52KTiA3+td+3I1XTZ1bnCILH2TIsJklIPBy5/0+36oI3uKNh4fumASIfj1POF1YZ87QTPD1FrU4kkAGnDGJ1wII67qWCt+++mpCtCIFfS0kFeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiDtD3I6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYkbSHQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879541F000FF;
-	Thu, 17 Sep 2026 18:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiDtD3I6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022D01F000FF;
+	Thu, 17 Sep 2026 18:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668263;
-	bh=W4vtvIktGNvYcrov7oeZTN8Mzlq3jXGS+QH+XmcGz1w=;
+	s=korg; t=1789668266;
+	bh=YFwRX/Qm/EJ0eXAVwf2m+7ert/q95eiehJ2LO+Uj5vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eYkbSHQFo3zxuWISX0wd9uZPtLPkBjycu62ZGOXh2SQCZDolJdl7zG+UXAxj2nn/B
-	 9bUsZHkURTgC3fOSA83oZcJib+8v3Jv+hmTZ2oDiYoUbr/xTRcyzcGU0TVBHU08oOt
-	 Th3VMFP+41v7670F0wuI3f/ghpvbHzOJHJE8ghew=
+	b=xiDtD3I6BOU7p2JiQnMhPr2LaBygjoPGXKFGsVq7/pBdCskfj/g+OvSWnCwonbmdp
+	 uh5OXHyHMv5/50TsYV2nxztCmdElbStyKLmj6L7xmgvZsnKWjcb6pe+TTSJ9EexxGH
+	 +M4LApX1OOWqHnqicHX407X/BnKtQE8ECMYtB00Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiaogang Chen <xiaogang.chen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0329/1102] drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl
-Date: Thu, 17 Sep 2026 16:04:32 +0100
-Message-ID: <20260917151547.891509015@linuxfoundation.org>
+Subject: [PATCH 6.12 0330/1102] drm/amdkfd: check find_first_zero_bit before __set_bit on kfd->doorbell_bitmap
+Date: Thu, 17 Sep 2026 16:04:33 +0100
+Message-ID: <20260917151547.917458684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,117 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit 8242a8d9d7194d5ef8a8b38a5621ca0966a3ec15 ]
+[ Upstream commit 516bf737a5602875f6c28d1028967837c8edf2c0 ]
 
-amdkfd driver needs allocate buffer to return bo metadata to user space. The
-buffer size is controlled by user currently. It is a potential security issue
-that hostile value (e.g. 2 GiB) lets any render-group user trigger order-MAX
-allocation/OOM in kernel context.
-
-This patch first finds bo metadata size. If the size is smaller than user
-provided value drive can safely allocate buffer in kernel space and copy to
-user space buffer. If not, driver will let user know, not allocate and copy.
-User will redo with new buffer in user space.
-
-This patch lets driver decide buffer allocation size to avoid potential hostile
-size from user space.
+If inx from find_first_zero_bit is beyond range not need set doorbell_bitmap.
 
 Signed-off-by: Xiaogang Chen <xiaogang.chen@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f54ce9e8cbd3abe0eda3a285f54dc4f572fe589a)
+(cherry picked from commit 2664ce9143d174651a793d96a6a2326050c4f45a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 23 ++++++++++++++++++----
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h |  2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c   | 10 ++--------
- 3 files changed, 22 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index 0863550cd82e4..b6a928a0e6ca5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -501,7 +501,7 @@ uint32_t amdgpu_amdkfd_get_max_engine_clock_in_mhz(struct amdgpu_device *adev)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
+index 05c74887fd6fd..fdcf7f2d1b5b4 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
+@@ -153,14 +153,16 @@ void __iomem *kfd_get_kernel_doorbell(struct kfd_dev *kfd,
+ 	u32 inx;
  
- int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
- 				  struct amdgpu_device **dmabuf_adev,
--				  uint64_t *bo_size, void *metadata_buffer,
-+				  uint64_t *bo_size, void **metadata_buffer,
- 				  size_t buffer_size, uint32_t *metadata_size,
- 				  uint32_t *flags, int8_t *xcp_id)
- {
-@@ -536,9 +536,24 @@ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
- 		*dmabuf_adev = adev;
- 	if (bo_size)
- 		*bo_size = amdgpu_bo_size(bo);
--	if (metadata_buffer)
--		r = amdgpu_bo_get_metadata(bo, metadata_buffer, buffer_size,
--					   metadata_size, &metadata_flags);
-+	if (metadata_buffer) {
-+		/* first get metadata_size by buffer = NULL */
-+		r = amdgpu_bo_get_metadata(bo, NULL, 0,
-+					   metadata_size, NULL);
+ 	mutex_lock(&kfd->doorbell_mutex);
 +
-+		/* user buf_size is bigger than bo metadata_size
-+		 * allocate a buf at kernel space and copy */
-+		if (*metadata_size <= buffer_size) {
-+			*metadata_buffer = kzalloc(*metadata_size, GFP_KERNEL);
-+
-+			if (!*metadata_buffer)
-+				return -ENOMEM;
-+
-+			r = amdgpu_bo_get_metadata(bo, *metadata_buffer, *metadata_size,
-+						   NULL, &metadata_flags);
-+		} else
-+			r = -EINVAL;
+ 	inx = find_first_zero_bit(kfd->doorbell_bitmap, PAGE_SIZE / sizeof(u32));
++	if (inx >= KFD_MAX_NUM_OF_QUEUES_PER_PROCESS) {
++		mutex_unlock(&kfd->doorbell_mutex);
++		return NULL;
 +	}
- 	if (flags) {
- 		*flags = (bo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM) ?
- 				KFD_IOC_ALLOC_MEM_FLAGS_VRAM
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index 581fe1a48f376..d7de6fe404940 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -250,7 +250,7 @@ uint64_t amdgpu_amdkfd_get_gpu_clock_counter(struct amdgpu_device *adev);
- uint32_t amdgpu_amdkfd_get_max_engine_clock_in_mhz(struct amdgpu_device *adev);
- int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
- 				  struct amdgpu_device **dmabuf_adev,
--				  uint64_t *bo_size, void *metadata_buffer,
-+				  uint64_t *bo_size, void **metadata_buffer,
- 				  size_t buffer_size, uint32_t *metadata_size,
- 				  uint32_t *flags, int8_t *xcp_id);
- uint8_t amdgpu_amdkfd_get_xgmi_hops_count(struct amdgpu_device *dst,
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 45bb957421aa6..6aeda30797074 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1530,16 +1530,10 @@ static int kfd_ioctl_get_dmabuf_info(struct file *filep,
- 	if (!dev)
- 		return -EINVAL;
  
--	if (args->metadata_ptr) {
--		metadata_buffer = kzalloc(args->metadata_size, GFP_KERNEL);
--		if (!metadata_buffer)
--			return -ENOMEM;
--	}
+ 	__set_bit(inx, kfd->doorbell_bitmap);
+ 	mutex_unlock(&kfd->doorbell_mutex);
+ 
+-	if (inx >= KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
+-		return NULL;
 -
- 	/* Get dmabuf info from KGD */
- 	r = amdgpu_amdkfd_get_dmabuf_info(dev->adev, args->dmabuf_fd,
- 					  &dmabuf_adev, &args->size,
--					  metadata_buffer, args->metadata_size,
-+					  &metadata_buffer, args->metadata_size,
- 					  &args->metadata_size, &flags, &xcp_id);
- 	if (r)
- 		goto exit;
-@@ -1551,7 +1545,7 @@ static int kfd_ioctl_get_dmabuf_info(struct file *filep,
- 	args->flags = flags;
- 
- 	/* Copy metadata buffer to user mode */
--	if (metadata_buffer) {
-+	if (metadata_buffer && args->metadata_ptr) {
- 		r = copy_to_user((void __user *)args->metadata_ptr,
- 				 metadata_buffer, args->metadata_size);
- 		if (r != 0)
+ 	*doorbell_off = amdgpu_doorbell_index_on_bar(kfd->adev,
+ 						     kfd->doorbells,
+ 						     inx,
 -- 
 2.53.0
 
