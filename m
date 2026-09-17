@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855C3D3321;
-	Thu, 17 Sep 2026 18:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8730F49D59C;
+	Thu, 17 Sep 2026 18:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671055; cv=none; b=dR/v9g0GpVuAB+y+psWhduEzhK1c/EOaUKxo5kbaO8LEgWDdhP79TId8pW5Asgu2hQsNLvddD2L44S7oEWkfziGvihBsDtsYVesnhPLorSF+rhPFxVrAztOjU38FCdUygWZ3v6aBNIb8Qjnw537W7htG6ja8PYZidLc+8c9Yq4E=
+	t=1789671059; cv=none; b=pmaHhNylMiiOnTClN1oluFrvjmOl48l2DspiOTQtqQRVnYbabj0P9JC/D8xhDPgDAdT0qzhxuObMpiFzQTXQGyuO4mNSW5fupm0R5qAGZ+rjUd+pUm8JHQSiZzZ/eAHU0KQXR8uQJic2nvblbXceLvZoQ5meDSfE0x1V39rQxuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671055; c=relaxed/simple;
-	bh=L7SkZm/Vm8irgRJTmyIa50AqA87hohsTd1tE60WEvtY=;
+	s=arc-20240116; t=1789671059; c=relaxed/simple;
+	bh=payvh8koTNOxaOcI8T+oHiqahN1sdHum1YPrEd60fNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vERR+eeeb+TcPpRXIEcn8xOnEQOaxhCKT3JJDSlFSPxxv6YeVkvQpHVSjnjC4/4DcUHfPid0YLCMr6rYNWWxwDV/a/UwKjPsVkDxzWov2BItqPfKDlXZ5E5Cfh7QF7nW7O51nsGUOqIe/rXk1m0hBFPa4TfCD4mpiwilwEho3Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQsbk9Ep; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lEpkDaH/8RWvAjAgp+jwJt543ltoSKMcd0d9HSXKJhgxQRlgRo5DAnLj0dK1h3J2PK5NAS6JyteeZeG3fhEAqF0vbuHqI92idIBcCmBmVfHisuKzkw5W9whVJ/PNudVytKKKDUvpdVDDB1fHdppw60GnFUGiQpezOe1MSGebAfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNQNe7lI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQsbk9Ep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8011F000FF;
-	Thu, 17 Sep 2026 18:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNQNe7lI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155001F000FF;
+	Thu, 17 Sep 2026 18:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671053;
-	bh=glwaDW2Kwjg5tqWtXJQMIExiG+b9NsdUzMuNB4Y17vA=;
+	s=korg; t=1789671057;
+	bh=WC5l+xPj400xbml6zJ44trr8BEQbDjVEp8R6JwLfd3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQsbk9EpcSrhNRwd6OItzZqF5L7veFLG/Vofgcl6w7tEb2WgeXPdpaV/3ichh3fYk
-	 uj2625FuBkuxRjfjrdD3+o5yuiO2mf2uzSHFIPH+Xuc6JQXN+mNFE86U4Qpc27bwXQ
-	 QEigMyMfcB0LJ6Ru4cTELUPunBUAF3R5UTXdT8M8=
+	b=eNQNe7lITSUt28nWoPrx0iSBK/tWlb2zURSMdfxHZ8rGb82QwMjvqTnqzH0FdgtFf
+	 MYYmY4MMXQ6qog27BwcVPQs3e09Hwy1/NTDYD5kYe7xRk44bMfU1jdkQVTjG6JGgFD
+	 rv5ZMun99P5WOcVZrl10LVVpxYakcAtO6vk0MiTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Weiming Shi <shiweiming@moonshot.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 0854/1102] inet: frags: invalidate queues before flushing them
-Date: Thu, 17 Sep 2026 16:13:17 +0100
-Message-ID: <20260917151601.982196110@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.12 0855/1102] ieee802154: 6lowpan: fix NULL dereference in lowpan_newlink
+Date: Thu, 17 Sep 2026 16:13:18 +0100
+Message-ID: <20260917151602.007473767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,100 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit b824476c56a153934c67c9e0f873e1fd967743d6 upstream.
+commit bf79662bc85e820ac3b846e2f347da29fbf6ac95 upstream.
 
-fqdir_pre_exit() flushes the skbs from incomplete queues without
-changing their completion state. A fragment which found a queue before
-high_thresh was cleared can then acquire the queue lock and reuse stale
-reassembly metadata. A queue concurrently killed after fqdir->dead is
-set can instead become INET_FRAG_COMPLETE|INET_FRAG_HASH_DEAD while
-still holding its old skbs; skipping it because it is complete leaves
-those references behind until asynchronous fqdir teardown.
+TUNSETLINK allows a TUN device to change its link-layer type to
+ARPHRD_IEEE802154 without initializing ieee802154_ptr. lowpan_newlink()
+checks only the device type before dereferencing the pointer, so an
+RTM_NEWLINK request can trigger a NULL pointer dereference.
 
-For IPv6, stale metadata can make ip6_frag_reasm() use the old
-nhoffset with a new skb and access memory out of bounds. The resulting
-heap corruption can be leveraged for local privilege escalation when
-unprivileged network namespaces are available. Unflushed fragments can
-also keep conntrack references alive after the conntrack per-net
-cleanup point.
+Reject devices without ieee802154_ptr along with devices of the wrong type.
 
-Kill each incomplete queue, then flush every queue still owned by the
-dying rhashtable. HASH_DEAD identifies that ownership, while complete
-queues without it are already owned by another destroy path and must be
-left alone. Releasing a timer reference removed by inet_frag_kill() is
-deferred to inet_frag_putn(), after the queue lock is dropped.
-
-KASAN report:
-
-  BUG: KASAN: slab-out-of-bounds in ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  Write of size 1 at addr ff110001039c6e00 by task poc/771
-  Call Trace:
-  ? ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479 (discriminator 5))
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
-  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  The buggy address belongs to the object at ff110001039c6b40
-  which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 0 bytes to the right of
-  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
-
-  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  Read of size 1 at addr ff110001039c6e08 by task poc/771
-  Call Trace:
-  ? ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
-  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  packet_sendmsg (net/packet/af_packet.c:2959 net/packet/af_packet.c:3053 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  The buggy address belongs to the object at ff110001039c6b40
-  which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 8 bytes to the right of
-  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
-
-Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Fixes: 51e0e5d8124e ("ieee802154: 6lowpan: remove multiple lowpan per wpan support")
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Tested-by: Weiming Shi <shiweiming@moonshot.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260904162800.1095662-1-yilinzhang@moonshot.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://lore.kernel.org/0b715da69bd15a86ddc47dad5cf12da648211050.1787997209.git.zhilinz@nebusec.ai
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ieee802154/6lowpan/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -237,6 +237,8 @@ void fqdir_pre_exit(struct fqdir *fqdir)
- 	rhashtable_walk_start(&hti);
- 
- 	while ((fq = rhashtable_walk_next(&hti))) {
-+		int refs = 0;
-+
- 		if (IS_ERR(fq)) {
- 			if (PTR_ERR(fq) != -EAGAIN)
- 				break;
-@@ -244,8 +246,12 @@ void fqdir_pre_exit(struct fqdir *fqdir)
- 		}
- 		spin_lock_bh(&fq->lock);
- 		if (!(fq->flags & INET_FRAG_COMPLETE))
-+			inet_frag_kill(fq, &refs);
-+
-+		if (fq->flags & INET_FRAG_HASH_DEAD)
- 			inet_frag_queue_flush(fq, 0);
- 		spin_unlock_bh(&fq->lock);
-+		inet_frag_putn(fq, refs);
+--- a/net/ieee802154/6lowpan/core.c
++++ b/net/ieee802154/6lowpan/core.c
+@@ -146,7 +146,7 @@ static int lowpan_newlink(struct net *sr
+ 	wdev = dev_get_by_index(dev_net(ldev), nla_get_u32(tb[IFLA_LINK]));
+ 	if (!wdev)
+ 		return -ENODEV;
+-	if (wdev->type != ARPHRD_IEEE802154) {
++	if (wdev->type != ARPHRD_IEEE802154 || !wdev->ieee802154_ptr) {
+ 		dev_put(wdev);
+ 		return -EINVAL;
  	}
- 
- 	rhashtable_walk_stop(&hti);
 
 
