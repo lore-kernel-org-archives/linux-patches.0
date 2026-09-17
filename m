@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28824F4023;
-	Thu, 17 Sep 2026 17:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF654FD27A;
+	Thu, 17 Sep 2026 17:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666178; cv=none; b=X07WNHPqsKxn5/L2s7eVdVQXuyhnpHi+DQ4ZMVo94hYpMQzLZncomgjX3zs71WI0dq8e4L8b3KWdU/CHERvsCxb+RkA6LM4+SiCFr6x96XtqMpfk08G2SXajxVXzEe542VUd7Z3exm+byWQ1gDWbwWEit5iRPj33zPN2uTkrNdA=
+	t=1789666181; cv=none; b=flFd7280g5NkV/tc5x9+6gNuNHMEhdJm+6KcDVr8WfjLopEMQOdoXa27iOWLfDZDB3+fmgN1BwhpQwxoWsHMLE0El0bJdIOY1AAMlVynWdRhFoU1IYHqV7youtcJ/vtKoxMJImMLGnM+TWmTJIG7pjpeyUu6ixj8+5jupgfDZgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666178; c=relaxed/simple;
-	bh=3Se8mw6g7La+zVzM6WClo3cwrRLR31k458fMeTd+xrI=;
+	s=arc-20240116; t=1789666181; c=relaxed/simple;
+	bh=CE3yJ0si4F7bHOIpsxQincuVcxQHkGPRLVfM7IWggT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXS5eDWVkga2gAFsDXHr++7E9uz8Tk4bkMGphHEqd4HJdvAV7/Kh8R7jjbouWATfSvbL4kbb8EH0UEOX70OeoBNtU8JOKZH0lu8RSDXhis8mTTpzc1ex55ruqIEB6ztUxrklbkH7DZU1PBLMUNTbgPNdqyj+Vwg8iN7j2RJHouI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyZTo8Ys; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X33ZHMH+hoJbgnssOPbIfxhep0O3/9nXootqusc/N4P2JIcJ0SAEY/tJa/DQAW2gxHuwkn6WAH4utm9FiDeA/KV6gkjzPiIt5Dz4muWmZY5lpdnWPRLLx6l0zoqbax1hZxQOHqoZk+tGptdhsFNksiUrtXy+u5nBQFJHHXlcR9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3CLRSn8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyZTo8Ys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468A51F000FF;
-	Thu, 17 Sep 2026 17:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3CLRSn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E771F000FF;
+	Thu, 17 Sep 2026 17:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666176;
-	bh=7EBInug6xVzudhFNVyEiH0LzPsYqDUdQN5RMtL/wUA8=;
+	s=korg; t=1789666179;
+	bh=BmJfhpfw4SF9qqNbgVzGZspy2AyQE7DcmI8rbCSbbSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uyZTo8Ys3bpyR9UNGBhQlt16bOV+jDf+DoVT6rca4G0Tx8N8sOiHbv+Yc+I7PIuJz
-	 Ee/bsLT3OgydNhH4qSyfux1DUqNYLpCG68y8Cb/uHkcDj1fVhfopL8dBy0YH26RBQ+
-	 FAldic2zd/NKjo9ctPEnC7jevGniLw3zHSiDalcE=
+	b=M3CLRSn8RpPbIjpNJLqgs1fyJv+Maj3G5oSVc8YO5IyneehGTDltuvtKPj5ZkZ/Ap
+	 XxMi0PVtjYQ+s0wkUNhFGwpN56e7PY52BY/JYtx9SK4+SKa4RQAzo5kPhgvnpGtjHb
+	 5l7IA4kZj599lMJMwQlx162HB1a0XJH5JqSULHdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanishka De Silva <kpskanna1915@gmail.com>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0951/1250] ksmbd: prevent out-of-bounds reads in share config responses
-Date: Thu, 17 Sep 2026 16:12:26 +0100
-Message-ID: <20260917151617.798388994@linuxfoundation.org>
+	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Breno Leitao <leitao@debian.org>
+Subject: [PATCH 6.18 0952/1250] configfs: pin the symlink targets dirent instead of chasing ->ci_dentry
+Date: Thu, 17 Sep 2026 16:12:27 +0100
+Message-ID: <20260917151617.825387050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,146 +50,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-[ Upstream commit f25e93768fcc5d8287e50b1ec52a42e4c276df34 ]
+commit a7c1290eef60711c10289c056ad32ed1f2b47b12 upstream.
 
-Validate IPC share configuration payload sizes before consuming
-variable-length fields. Bound veto list parsing and account for
-the separator byte when deriving the path length.
+create_link() reads the target's configfs_dirent from
+item->ci_dentry->d_fsdata, relying on the item reference taken by
+get_target().  That reference pins the item, not its dentry: the dentry is
+pinned by DCACHE_PERSISTENT, which configfs_remove_dir() releases via
+simple_rmdir() while the item is still alive.  A symlink racing with rmdir
+of its target can therefore find ->ci_dentry freed and its dirent
+released, triggering WARN_ON(!atomic_read(&sd->s_count)) in configfs_get().
 
-Fixes: a677ebd8ca2f ("ksmbd: validate payload size in ipc response")
-Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Take the dirent in get_target() as well, under ->d_lock and atomically
+with the item reference, and pass it down to create_link().  A hashed
+dentry has not been killed yet, so its ->d_fsdata reference keeps the
+dirent alive there.
+
+Cc: stable@vger.kernel.org
+Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+Tested-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260730093435.195441-2-vasilisalmpanis@gmail.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/share_config.c | 38 +++++++++++++++++++++++--------
- fs/smb/server/transport_ipc.c     | 21 +++++++++++------
- 2 files changed, 42 insertions(+), 17 deletions(-)
+ fs/configfs/symlink.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index 1e90fd30bd771..8813a81ca6629 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -88,9 +88,9 @@ static struct ksmbd_share_config *__share_lookup(const char *name)
+--- a/fs/configfs/symlink.c
++++ b/fs/configfs/symlink.c
+@@ -76,9 +76,9 @@ static int configfs_get_target_path(stru
  
- static int parse_veto_list(struct ksmbd_share_config *share,
- 			   char *veto_list,
--			   int veto_list_sz)
-+			   size_t veto_list_sz)
+ static int create_link(struct config_item *parent_item,
+ 		       struct config_item *item,
++		       struct configfs_dirent *target_sd,
+ 		       struct dentry *dentry)
  {
--	int sz = 0;
-+	size_t sz;
+-	struct configfs_dirent *target_sd = item->ci_dentry->d_fsdata;
+ 	char *body;
+ 	int ret;
  
- 	if (!veto_list_sz)
- 		return 0;
-@@ -98,7 +98,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 	while (veto_list_sz > 0) {
- 		struct ksmbd_veto_pattern *p;
+@@ -115,6 +115,7 @@ static int create_link(struct config_ite
  
--		sz = strlen(veto_list);
-+		sz = strnlen(veto_list, veto_list_sz);
- 		if (!sz)
- 			break;
  
-@@ -106,7 +106,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 		if (!p)
- 			return -ENOMEM;
- 
--		p->pattern = kstrdup(veto_list, KSMBD_DEFAULT_GFP);
-+		p->pattern = kstrndup(veto_list, sz, KSMBD_DEFAULT_GFP);
- 		if (!p->pattern) {
- 			kfree(p);
- 			return -ENOMEM;
-@@ -114,6 +114,9 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 
- 		list_add(&p->list, &share->veto_list);
- 
-+		if (sz == veto_list_sz)
-+			break;
+ static int get_target(const char *symname, struct config_item **target,
++		      struct configfs_dirent **target_sd,
+ 		      struct super_block *sb)
+ {
+ 	struct path path __free(path_put) = {};
+@@ -125,7 +126,20 @@ static int get_target(const char *symnam
+ 		return ret;
+ 	if (path.dentry->d_sb != sb)
+ 		return -EPERM;
+-	*target = configfs_get_config_item(path.dentry);
++	/*
++	 * A hashed dentry guarantees that neither the item nor the dirent
++	 * have been released yet, as removals unhash before dropping.
++	 * Grab both references here. An item reference alone would not keep
++	 * ->ci_dentry alive.
++	 */
++	spin_lock(&path.dentry->d_lock);
++	if (!d_unhashed(path.dentry)) {
++		struct configfs_dirent *sd = path.dentry->d_fsdata;
 +
- 		veto_list += sz + 1;
- 		veto_list_sz -= (sz + 1);
++		*target = config_item_get(sd->s_element);
++		*target_sd = configfs_get(sd);
++	}
++	spin_unlock(&path.dentry->d_lock);
+ 	if (!*target)
+ 		return -ENOENT;
+ 	return 0;
+@@ -139,6 +153,7 @@ int configfs_symlink(struct mnt_idmap *i
+ 	struct configfs_dirent *sd;
+ 	struct config_item *parent_item;
+ 	struct config_item *target_item = NULL;
++	struct configfs_dirent *target_sd = NULL;
+ 	const struct config_item_type *type;
+ 
+ 	sd = dentry->d_parent->d_fsdata;
+@@ -182,7 +197,7 @@ int configfs_symlink(struct mnt_idmap *i
+ 	 *  AV, a thoroughly annoyed bastard.
+ 	 */
+ 	inode_unlock(dir);
+-	ret = get_target(symname, &target_item, dentry->d_sb);
++	ret = get_target(symname, &target_item, &target_sd, dentry->d_sb);
+ 	inode_lock(dir);
+ 	if (ret)
+ 		goto out_put;
+@@ -196,13 +211,14 @@ int configfs_symlink(struct mnt_idmap *i
+ 		ret = type->ct_item_ops->allow_link(parent_item, target_item);
+ 	if (!ret) {
+ 		mutex_lock(&configfs_symlink_mutex);
+-		ret = create_link(parent_item, target_item, dentry);
++		ret = create_link(parent_item, target_item, target_sd, dentry);
+ 		mutex_unlock(&configfs_symlink_mutex);
+ 		if (ret && type->ct_item_ops->drop_link)
+ 			type->ct_item_ops->drop_link(parent_item,
+ 						     target_item);
  	}
-@@ -165,13 +168,27 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 	}
  
- 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
--		int path_len = PATH_MAX;
-+		size_t path_len;
++	configfs_put(target_sd);
+ 	config_item_put(target_item);
  
--		if (resp->payload_sz)
-+		if (resp->payload_sz <= resp->veto_list_sz) {
-+			ret = -EINVAL;
-+		} else {
- 			path_len = resp->payload_sz - resp->veto_list_sz;
--
--		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
--				      KSMBD_DEFAULT_GFP);
-+			if (resp->veto_list_sz)
-+				path_len--;
-+
-+			if (!path_len) {
-+				ret = -EINVAL;
-+			} else {
-+				share->path = kstrndup(
-+					ksmbd_share_config_path(resp),
-+					path_len, KSMBD_DEFAULT_GFP);
-+				if (!share->path)
-+					ret = -ENOMEM;
-+				else
-+					ret = 0;
-+			}
-+		}
- 		if (share->path) {
- 			share->path_sz = strlen(share->path);
- 			while (share->path_sz > 1 &&
-@@ -184,7 +201,8 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 		share->force_directory_mode = resp->force_directory_mode;
- 		share->force_uid = resp->force_uid;
- 		share->force_gid = resp->force_gid;
--		ret = parse_veto_list(share,
-+		if (!ret)
-+			ret = parse_veto_list(share,
- 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
- 				      resp->veto_list_sz);
- 		if (!ret && share->path) {
-diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
-index 225f6459f3780..7c30b50f23f04 100644
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -524,14 +524,21 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
- 			return -EINVAL;
- 
--		if (resp->payload_sz) {
--			if (resp->payload_sz < resp->veto_list_sz)
--				return -EINVAL;
-+		if (strnlen(resp->share_name, sizeof(resp->share_name)) ==
-+		    sizeof(resp->share_name))
-+			return -EINVAL;
- 
--			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
--					       resp->payload_sz, &msg_sz))
--				return -EINVAL;
--		}
-+		if (resp->veto_list_sz > resp->payload_sz)
-+			return -EINVAL;
-+
-+		if (resp->flags != KSMBD_SHARE_FLAG_INVALID &&
-+		    !(resp->flags & KSMBD_SHARE_FLAG_PIPE) &&
-+		    resp->payload_sz <= resp->veto_list_sz)
-+			return -EINVAL;
-+
-+		if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
- 	}
- 	case KSMBD_EVENT_LOGIN_REQUEST_EXT:
--- 
-2.53.0
-
+ out_put:
 
 
