@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A655AA695;
-	Thu, 17 Sep 2026 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB005AEC42;
+	Thu, 17 Sep 2026 16:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661257; cv=none; b=KWI4X/0m16TvtuHRjzmU0JmQDLpckbz+oXu2VlpvKS49vSMLjzKe/Ck6mWezBbk4anfXf4WkoLUtgQFZamG9IdwKsIq18CHASnc6n4X2guatK/Ueks3/MUUSkXc2Zx3uiNifkM3NeC63iZ/p6487NLIDuA+SiP9NPDLkqKmfzHY=
+	t=1789661260; cv=none; b=OsjzooVK+oYv6SSJ2/ei5ZhJMxdcubAboFnxGS/mBeRt2UnZLYQ6fgzpZ4su6+GJBepOaQC+UEmMdGJX7YCx8GJqkAwVJW2ntnenSjelb28D0WXgGDZ9wS/KsXYsDPzwndC/CZgKEscfv0yu4kD44kD6zTcydHava/DlumSqh4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661257; c=relaxed/simple;
-	bh=bWDSPiMDKiqhsJ9qXxpfQpIMQXnx6dd4wTZExW18U0E=;
+	s=arc-20240116; t=1789661260; c=relaxed/simple;
+	bh=YDBQ+aofiSOTTKDTyphomDrq25/tU/B0bn5z++fe158=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/e34mq9xZ/Le9vPkxTeVmu/VRfxlbBxRsNZDB+XzgJpI6u56YGHeNBfErR/PIXFN0UUr6HuMvHjbJDKYe5QgMxeQnSJ/pZ/KfgD2lz96M2FB/wX9wLFI3XxHwPpy/r+7l5+dfLxbaO8gvft2JIBLo8fGImvp0gqB6YOygPQ6GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjx+nXY4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iu0TJ5D11fi7P3xSd+qT2jhIbAtChqoXiLqQxsZ5b2f/ecNgf2JI1QEwqKc2zuLZ/MtaYW8uY3jEAFAzFD4cud7hRP4A0UpzBUoJMOJNhB/Dar/x4q5YWSVntAJEHO9YEtUwPenZIYJuX9PnDziCoyWL3MFpWGea081XzxXuFHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PdFMImU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjx+nXY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907EE1F000FF;
-	Thu, 17 Sep 2026 16:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PdFMImU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851201F000FF;
+	Thu, 17 Sep 2026 16:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661256;
-	bh=F+peQKnnRl1V9qZ+QOHB5BwChfJ8+i7VOguw8eGPEo4=;
+	s=korg; t=1789661259;
+	bh=oWsNmXEKQu3+OEEPngLXSDGrK0EIOyr2eSzLTecyPWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjx+nXY4jpaeXO5HrRb7B828sxVhlTopMfCYqoximgYD22v4T9tfTolvbY5tkDxo5
-	 3waE8R7mJIH3+aC5PyOETSgYt5cuCvSSyTlsTqp2WDDJ89sUE1yN1L4XNPj3wf7f11
-	 BVU/uis2BOeoS82+YYxtGzFvpwkLrijhMRuayJFw=
+	b=0PdFMImUoPpAepyhXxDqg7r0oDK5YdulI5Y8rTrvH3TCGClGw7OmJZE5lUSlvXJlp
+	 RKNDAJ/Aw1ToREqRoz7SrkNy7z/WcE8v1zpxHqJHOcknAFEY2PiS0I32Vy5j45jB/y
+	 pEl7nOwFMxzkDxpjPc4csMIdLiL9DtF+LExwz+20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Francis <David.Francis@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kumar Meiyappan <kumar.meiyappan@microchip.com>,
+	Sagar Biradar <sagar.biradar@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0136/1250] drm/amdkfd: Check bounds on allocate_doorbell
-Date: Thu, 17 Sep 2026 15:58:51 +0100
-Message-ID: <20260917151555.733414565@linuxfoundation.org>
+Subject: [PATCH 6.18 0119/1250] scsi: pm8001: Reject non-fatal dump when controller is crashed
+Date: Thu, 17 Sep 2026 15:58:34 +0100
+Message-ID: <20260917151555.245158048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,38 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
 
-[ Upstream commit 1f087bb8cf9e8797633da35c85435e557ef74d06 ]
+[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
 
-allocated_doorbell has an option to set the doorbell id
-to a specific value (used by CRIU). This value was not
-bounds checked.
+pm80xx_get_non_fatal_dump() can be called even after the controller has
+entered a fatal error state. In that case the forensic memory contents
+are not safe to access for a non-fatal dump request, and attempting to
+do so can trigger a call trace.
 
-Check to confirm it's less than KFD_MAX_NUM_OF_QUEUES_PER_PROCESS.
+Check controller_fatal_error before reading the non-fatal dump buffer
+and return -EINVAL when the controller is already in a crashed state.
 
-Signed-off-by: David Francis <David.Francis@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This prevents non-fatal dump collection from running in an invalid
+controller state.
+
+Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
+Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 7a752cff6c34a..4de6bc59569a4 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -472,6 +472,9 @@ static int allocate_doorbell(struct qcm_process_device *qpd,
- 	} else {
- 		/* For CP queues on SOC15 */
- 		if (restore_id) {
-+			if (*restore_id >= KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
-+				return -EINVAL;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index 31960b72c1e92..1ce8226fcd292 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -401,6 +401,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
+ 	char *buf_copy = buf;
+ 
+ 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
 +
- 			/* make sure that ID is free  */
- 			if (__test_and_set_bit(*restore_id, qpd->doorbell_bitmap))
- 				return -EINVAL;
++	if (pm8001_ha->controller_fatal_error) {
++		pm8001_dbg(pm8001_ha, FAIL,
++			   "non-fatal dump not available in fatal error state\n");
++		return -EINVAL;
++	}
++
+ 	if (++pm8001_ha->non_fatal_count == 1) {
+ 		if (pm8001_ha->chip_id == chip_8001) {
+ 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
 -- 
 2.53.0
 
