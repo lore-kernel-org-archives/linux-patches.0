@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9354151812F;
-	Thu, 17 Sep 2026 16:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA5C518135;
+	Thu, 17 Sep 2026 16:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664301; cv=none; b=GQFH4eD8Onc31/tJnOMv/VDt0lI0ujzkKo7HyglJXTbkdIYlqj5aPCZBDFGEVLQ60eT3UrbZKj1Q6Cwkr4dgvG/KedAc2S2SCwFHh1lJR7FG9i/XuI6OJhkiTsbxERvi6i1rbtRggmVn+XWB375na46Sgj7z+J9FwlW25d3iU20=
+	t=1789664304; cv=none; b=oLfwti0via/ijwkBjGRDKQwHmyOEewRb23L5wsENpcsYw0kFEbDeC9t3y9WzHJAwr0Sk92ikCkS9lQMg+cXLqH4Mf0s3Lb9Umm8gjAIwN4G5QRuZC4xQvJc5VLlhJemaub3R0ZorQVfX56IyeG4afwaOLQmQfsAsGtBYiQXdMRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664301; c=relaxed/simple;
-	bh=nLjkuDAg1DLh+h4ujrWy0FTbmtHO9Yh2jJVc1/IcwEs=;
+	s=arc-20240116; t=1789664304; c=relaxed/simple;
+	bh=1PN1TJx++isbTyHDl7accFvyniTnRYPAMcowQaE9L+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVXnPDe0lf2WjVXUNwQtiHoid1LWMuZVlby9OzgBjzghkF1bySZUQiL9aimDMzleZhGCEDtfxEaH54GE7X3bk9X5kUjifwMoO1sjeXW8GIePWnLk3WdEsREPeEGOdCsVQ9ms9mFVjc2H4loFmqYUvPcsMA2ZcqMm225g66iAGe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bI0msaQR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ham9VX2h368ufp3BnTO0ZuBZcnx1fPcht6pw/zMXYNipcve7AE3ebl/8DzGnd2g7ocpuRgP4i20fDLVjZIbTOw/m/hddr4wghGLgk+UmYyczStcUD3G4epBtOwSpj8d8g+R09vDaZQhWU3CmqptULMwvGvpXhc3+riHu5LKY7RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiDWK+T6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bI0msaQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B991F000FF;
-	Thu, 17 Sep 2026 16:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiDWK+T6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9C71F000FF;
+	Thu, 17 Sep 2026 16:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664300;
-	bh=wksyeaW57yOkjqNlnZuBojWBuitD77q+IYx/x5Nc1Ds=;
+	s=korg; t=1789664303;
+	bh=eC6ZjwNRtPlIhYteh9e+NaDvxy6/3Kh10RhWKp07zms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bI0msaQRSIrcwJX8+hJjPisnXNW4oojH9u7TKhHz1Wn9slnjL6B5+szxEKFq1eG4O
-	 PysG/adl9f6Dsve9YPcLBHfJUoT9GB4+WOU0nttMxWf+C/KT5weREMFhP8GIMT0LqZ
-	 /8VVhKwuv5T23LS99IQ/Velf0rBbCFLX+fKbwaGk=
+	b=KiDWK+T6Iq58ir0ltucH+6Gex9Nb7Fvvkv1XEtCXVDDdjMtiX0PYeLe0pVtM/Z/JU
+	 4jAUEUhMglP5a6hNa7lNf1gDfaimPfafLUV4syqgqKdmEDiF4y0Ys0IAd3uFxMnaxV
+	 As5WaDEp7H9mL1Rq8buvB/CUoukYpPzn1HeZ8rBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Randolph Sapp <rs@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Antonios Christidis <a-christidis@ti.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0325/1250] net: ibm: emac: fix unchecked platform_get_irq return value
-Date: Thu, 17 Sep 2026 16:02:00 +0100
-Message-ID: <20260917151600.905676640@linuxfoundation.org>
+Subject: [PATCH 6.18 0326/1250] clk: keystone: dont cache clock rate
+Date: Thu, 17 Sep 2026 16:02:01 +0100
+Message-ID: <20260917151600.932343440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,44 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 1681cb1bde051c3b9ebbd337c0bfdd3e74167b2f ]
+[ Upstream commit a80b32a140c8612bbaed27009c383d43304db6d5 ]
 
-platform_get_irq() returns a negative errno on failure.
-Commit a598f66d9169 replaced irq_of_parse_and_map() (which returns 0
-on failure) with platform_get_irq() but dropped the error check.
-Without it, a negative IRQ number is passed to devm_request_irq(),
-which fails with -EINVAL instead of propagating the real error
-from platform_get_irq().
+The TISCI firmware will return 0 if the clock or consumer is not
+enabled although there is a stored value in the firmware. IOW a call to
+set rate will work but at get rate will always return 0 if the clock is
+disabled.
+The clk framework will try to cache the clock rate when it's requested
+by a consumer. If the clock or consumer is not enabled at that point,
+the cached value is 0, which is wrong. Thus, disable the cache
+altogether.
 
-Add the missing error check and goto err_gone.
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260601040201.103481-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Reviewed-by: Randolph Sapp <rs@ti.com>
+Reviewed-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Antonios Christidis <a-christidis@ti.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://patch.msgid.link/20260507-clk-sci-v2-1-38f59b48777a@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/keystone/sci-clk.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
-index f48568140480e..074cc6d1050eb 100644
---- a/drivers/net/ethernet/ibm/emac/core.c
-+++ b/drivers/net/ethernet/ibm/emac/core.c
-@@ -3044,6 +3044,11 @@ static int emac_probe(struct platform_device *ofdev)
+diff --git a/drivers/clk/keystone/sci-clk.c b/drivers/clk/keystone/sci-clk.c
+index a4b42811de55d..066823458a75c 100644
+--- a/drivers/clk/keystone/sci-clk.c
++++ b/drivers/clk/keystone/sci-clk.c
+@@ -333,6 +333,14 @@ static int _sci_clk_build(struct sci_clk_provider *provider,
  
- 	/* Setup error IRQ handler */
- 	dev->emac_irq = platform_get_irq(ofdev, 0);
-+	if (dev->emac_irq < 0) {
-+		err = dev->emac_irq;
-+		goto err_gone;
-+	}
+ 	init.ops = &sci_clk_ops;
+ 	init.num_parents = sci_clk->num_parents;
 +
- 	err = devm_request_irq(&ofdev->dev, dev->emac_irq, emac_irq, 0, "EMAC",
- 			       dev);
- 	if (err) {
++	/*
++	 * A clock rate query to the SCI firmware will return 0 if either the
++	 * clock itself is disabled or the attached device/consumer is disabled.
++	 * This makes it inherently unsuitable for the caching of the clk
++	 * framework.
++	 */
++	init.flags = CLK_GET_RATE_NOCACHE;
+ 	sci_clk->hw.init = &init;
+ 
+ 	ret = devm_clk_hw_register(provider->dev, &sci_clk->hw);
 -- 
 2.53.0
 
