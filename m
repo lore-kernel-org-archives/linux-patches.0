@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED688470EB6;
-	Thu, 17 Sep 2026 18:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4075049D587;
+	Thu, 17 Sep 2026 18:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670541; cv=none; b=U+8SpcNLd5taUMx/dSaQsiNdAgPSmJov1ZJHeraA2Z+Vl+2n6ZWr9aQKhFadRebQY3xo+Sp75ktI0rGwE0cZwjt7GmGPzSrnLavPdvEBxHRvhe19h+psFoxVFTYKI2YjPCnp9D7tVPNjfTrDfdvqsGW2R0DcHXlBatgk6pKdJGo=
+	t=1789670544; cv=none; b=upzJPyqxanm/kAZxzTxZn9mzxN/2VIiGpSdsopmDL8F0mRmA1GfyLU8vtZpH0SaoqT27phbLYhyA7T3i41/VM29xiP+OWcztRicPHogsudE24xuwkp2wdD6JNyZQf2khcCsKniFRC+mNlQrhksiVtyLnkEdt5FNGIo/oClILrt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670541; c=relaxed/simple;
-	bh=TejlvuW8Zq35HK7TKG+GJyd29BlZ4IYJUi4mXJXbrGc=;
+	s=arc-20240116; t=1789670544; c=relaxed/simple;
+	bh=dwSPjAo/3hLZOxbJkan9Dn6UDrlHQzVvjg9kocghzJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P0Ryz8aS4e8+XSHyUqEA988c61hTHRS8KJVUun4nvWvX7rDlAqCr+bCYdnTECXOb3QO6daMZGU/q3K/BXofeqK6YnbRIAvA0XDzcCUbGSGW64elDfD55TflnrSw2MVlxu39wPOT33C9UIqx3iZipinALKCJoga5tpSRnnu9zshY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ycsees9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L7j8eZRKVqKK0WTpDyZ5BnfmYNC57JR/iZxKzUM2M0vjnhE2bN3PM7l8CW5h0eOdJwUlKUVV8oAUc9eDM0Wqk2ABrDdvQFAsPDmFLcx/mV2ZV4PROe+rucdw/YaDvsuP+PggMXXifH3in2OIje8vRXXAHmV2ln1hO/Bqnu9AgEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1ITtDsI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ycsees9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100471F000FF;
-	Thu, 17 Sep 2026 18:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1ITtDsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEF81F000FF;
+	Thu, 17 Sep 2026 18:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670539;
-	bh=B0MxyKz344R7RJuymIXvkqUOIu+h/U/F5DNAniJOs50=;
+	s=korg; t=1789670543;
+	bh=jSvobYaQ0H3g5w5PCTrOPEeS6jHfX9AwDMQy3rzv46U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ycsees9q2yrXreVTnWrDIOomkQAz6eAF6Ed06v9hYUF8UCCNy+YrXovsbfmw64YJj
-	 Yb7zU4QVWEYLE7aOEF4exy5eN3FMDhcUL0pEudBV+ZuJ+/a8yjfJ1kZeg8be9v2gYQ
-	 24pvTbbdFsS8lQIpeZnX3eb/eQvXOGR6g5L3cedY=
+	b=A1ITtDsIl0ToNFOdO4ZpX9FkczxlwHAEBtXgT5h9KTwbr4JXJTAHuHFUmWMB+1hdz
+	 0okCkiuZ+H/p4Xfx2n88iu9sLdh6XskppqHFzynyTUkU4vbwRs1LT/mNCML1S4ZQOl
+	 lnr/peyzfaUCVtHuKMefNh7TRv5aueTOxnpqvmq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0695/1102] net/sched: pie: clamp psched_mtu in pie_drop_early
-Date: Thu, 17 Sep 2026 16:10:38 +0100
-Message-ID: <20260917151557.735235178@linuxfoundation.org>
+Subject: [PATCH 6.12 0678/1102] s390/ism: folio_put() after error
+Date: Thu, 17 Sep 2026 16:10:21 +0100
+Message-ID: <20260917151557.259640048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -48,53 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit 54370e44c002770ae61fc889f28f699e91616ffc ]
+[ Upstream commit 907a56ab3eb8a58500a58daa76087f17bb2b6826 ]
 
-pie_drop_early() calls psched_mtu() with no clamp. With mtu=0x80000000
-the bytemode divide silently zeroes the drop probability, disabling AQM.
-Clamp to [1, 1<<20].
+dmb->cpu_addr was allocated via folio_alloc(). Use folio_put() instead of
+kfree() in the error exit of ism_alloc_dmb() to avoid slab allocator
+corruption.
 
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_PIE=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
+While at it, reset dmb->cpu_addr after folio_put to avoid unintentional UAF
+by future callers.
 
-  tc qdisc add dev dummy0 root pie
-  tc qdisc change dev dummy0 root pie stab data 32768 size_log 15 cell_log 0
-
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.7
+Fixes: 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Link: https://patch.msgid.link/20260902143733.433574-1-wintera@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_pie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/net/ism_drv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index a7c8477810107..793a155e27f99 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -35,7 +35,7 @@ bool pie_drop_early(struct Qdisc *sch, struct pie_params *params,
- {
- 	u64 rnd;
- 	u64 local_prob = vars->prob;
--	u32 mtu = psched_mtu(qdisc_dev(sch));
-+	u32 mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index 7cfc4f9862977..f2264cf6f40d8 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -297,6 +297,7 @@ static void ism_free_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 	dma_unmap_page(&ism->pdev->dev, dmb->dma_addr, dmb->dmb_len,
+ 		       DMA_FROM_DEVICE);
+ 	folio_put(virt_to_folio(dmb->cpu_addr));
++	dmb->cpu_addr = NULL;
+ }
  
- 	/* If there is still burst allowance left skip random early drop */
- 	if (vars->burst_time > 0)
+ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+@@ -340,7 +341,8 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 	return 0;
+ 
+ out_free:
+-	kfree(dmb->cpu_addr);
++	folio_put(folio);
++	dmb->cpu_addr = NULL;
+ out_bit:
+ 	clear_bit(dmb->sba_idx, ism->sba_bitmap);
+ 	return rc;
 -- 
 2.53.0
 
