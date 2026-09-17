@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8876B4B7A55;
-	Thu, 17 Sep 2026 17:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933BE4F5DEA;
+	Thu, 17 Sep 2026 17:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667223; cv=none; b=I3ddSMf2hbiy/f2RrlnSEdavYUEGt9VMROl5p5DgetfQNkjFbTaAJmYzPg54HfucfhqDS9s1FdR6NxKvKFpn592PfPmltvvSut0nu+LwdUdZJg5yL5komgkNBj3Zkjr5bVHima/eyFYMO1ypw1RZCGgo+TeTEcnn7PJYPc1EdRU=
+	t=1789667226; cv=none; b=bqUreDF90K3Q5wzHJyussvyLD1yaUm7Kw4UGz6Fb6C9yR1ZMK14KFYxlNJSOLxlTkvn9FpVVED+d6FVsyWTLeWEaufTxA7pot+12ZlGM9g8JUteNCNmgAxPlbaS1BtI2dX9aLx0tO+DpjcI0nxA28QijCq6/mnwkJtBx88xIfYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667223; c=relaxed/simple;
-	bh=HFvTbKIglM9AArdxkd1fnKFSePF4+N8NOWYMhceY630=;
+	s=arc-20240116; t=1789667226; c=relaxed/simple;
+	bh=lL8k7NjookgSnDXqbj6P94l5PGBZmzYbE0RwInxeXR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/DytMNYkNBHCtQXjMl7YitDHr7CIDRVq5wULMi07kV2TWdGuVjFarjRC0p1D40qmAz/ZLX04jTddx6olFSDZYw25gtwBUDiPWaHhNtmzN6oY0/K6DTowAWFkTR1UENlmDto0ZPEmZz636JpLoDzJAiZdcHqzdzwT2yll+gErMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUlajTa/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmq6GOx4nIKlmmArLUxPMRSlov/aDI8Ked3KP1UyGDYexxHuqddxladMbyPuIEGRJIBrMJP0xWmzVIIEfVuudP831zwh+pGmM/dlJU/muYdO0e1IXfsISKdim00qfbdgjkgx45CAMryhwJdDrkhE4uTMdqONC77l42c5heFGGR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPDCyO2X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUlajTa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB391F000FF;
-	Thu, 17 Sep 2026 17:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPDCyO2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1661F000FF;
+	Thu, 17 Sep 2026 17:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667222;
-	bh=gccsxWPkzzkLFF38V26SgIXMRQ4MW60xGGh4JpvGbik=;
+	s=korg; t=1789667225;
+	bh=DYnkZ9o6Gy6kZDiEcFG4sYeGZBHOF/iTlylGp741TQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUlajTa/MwYngAv1usmKIpmVX/kkE7ZS3/rohOKnyfy3MJdz7ZtTXQkpaPxIAUCYx
-	 zEeWhbTZAozdkrbU6uZe9V0X4gsgWzOvP2Iy83UWCSoZdPaPS/UsszWmS4ms9uyKmG
-	 YDq2wA/ci5901weV+UKaRKyK9//+mvEP66nVZ0tY=
+	b=iPDCyO2X4wWdhaHcWBXiZuKpCKP7kLAhCUn7ZesITTMaFwKu26rxKKumEThV5bCME
+	 Go0QT1ZDqdXi7kxrKYQ10q3LevqIfxSz8Kg/MU5EGqg+vcctT5MnSt/Qs2UgqRycRq
+	 LpZPMnAS1A1uFC+fLL94oUQC/RLlysVirLxEvJL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Oleksandr Havrylov <goainwo@gmail.com>,
-	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Dominik Kaszewski <dominik.kaszewski@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0022/1102] wifi: rtw88: Add NULL check for chip->edcca_th in rtw_fw_adaptivity_result()
-Date: Thu, 17 Sep 2026 15:59:25 +0100
-Message-ID: <20260917151539.987974187@linuxfoundation.org>
+Subject: [PATCH 6.12 0005/1102] drm/amd/display: Fix DPMS using partially updated pipe context
+Date: Thu, 17 Sep 2026 15:59:08 +0100
+Message-ID: <20260917151539.555348698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,58 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+From: Dominik Kaszewski <dominik.kaszewski@amd.com>
 
-[ Upstream commit d5e6f353ce1e1c25b8458ea390ed09d2377412c5 ]
+[ Upstream commit 6fd45b5d8955bbc362ac3dfe181529f7b1cfd224 ]
 
-It was recently reported that rtw_fw_adaptivity_result()
-in fw.c dereferences rtwdev->chip->edcca_th without
-a NULL check. The issue is that devices with the
-8821CE chip don't define edcca_th in their chip
-info. As a result, when rtw_fw_adaptivity_result()
-tries to dereference it, the kernel triggers an oops.
+[Why & How]
+DPMS functions should not use partially updated pipe context passed
+as argument of commit_planes_do_stream_update, and instead use the
+one in current_state, which is guaranteed to be the most recently
+programmed HW config.
 
-Add a NULL check for edcca_th before dereferencing
-it in rtw_fw_adaptivity_result() in fw.c. Placing
-the check at the function entry avoids logging any
-garbage values.
-
-This change does not address the root cause for
-this behavior, but it prevents the NULL dereference
-and the resulting oops while a more permanent solution
-is developed.
-
-Tested on a 8822CE chip which defines edcca_th, so
-this issue is not present on it, but it still uses
-this driver and I can verify there are no regressions.
-
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Reported-by: Oleksandr Havrylov <goainwo@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221286
-Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Oleksandr Havrylov <goainwo@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260415052959.14844-1-npetrakopoulos2003@gmail.com
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/fw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/fw.c b/drivers/net/wireless/realtek/rtw88/fw.c
-index b9b0114e253b4..43e3df6a48369 100644
---- a/drivers/net/wireless/realtek/rtw88/fw.c
-+++ b/drivers/net/wireless/realtek/rtw88/fw.c
-@@ -270,6 +270,9 @@ static void rtw_fw_adaptivity_result(struct rtw_dev *rtwdev, u8 *payload,
- 	struct rtw_hw_reg_offset *edcca_th = rtwdev->chip->edcca_th;
- 	struct rtw_c2h_adaptivity *result = (struct rtw_c2h_adaptivity *)payload;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index edb7e957b4dd8..070cca8b521b6 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3411,27 +3411,34 @@ static void commit_planes_do_stream_update(struct dc *dc,
+ 				resource_build_test_pattern_params(&context->res_ctx, pipe_ctx);
+ 			}
  
-+	if (!edcca_th)
-+		return;
++			// DPMS should not use partially updated pipe context
++			struct pipe_ctx *dpms_pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[j];
 +
- 	rtw_dbg(rtwdev, RTW_DBG_ADAPTIVITY,
- 		"Adaptivity: density %x igi %x l2h_th_init %x l2h %x h2l %x option %x\n",
- 		result->density, result->igi, result->l2h_th_init, result->l2h,
+ 			if (stream_update->dpms_off) {
+ 				if (*stream_update->dpms_off) {
+-					dc->link_srv->set_dpms_off(pipe_ctx);
++					dc->link_srv->set_dpms_off(dpms_pipe_ctx);
+ 					/* for dpms, keep acquired resources*/
+-					if (pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only)
+-						pipe_ctx->stream_res.audio->funcs->az_disable(pipe_ctx->stream_res.audio);
++					if (dpms_pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only) {
++						struct audio *audio = dpms_pipe_ctx->stream_res.audio;
++
++						audio->funcs->az_disable(audio);
++					}
+ 
+ 					dc->optimized_required = true;
+ 
+ 				} else {
+ 					if (get_seamless_boot_stream_count(context) == 0)
+ 						dc->hwss.prepare_bandwidth(dc, dc->current_state);
+-					dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
++					dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
+ 				}
+-			} else if (pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change && stream_update->output_color_space
+-					&& !stream->dpms_off && dc_is_dp_signal(pipe_ctx->stream->signal)) {
++			} else if (dpms_pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change &&
++					stream_update->output_color_space &&
++					!stream->dpms_off && dc_is_dp_signal(dpms_pipe_ctx->stream->signal)) {
+ 				/*
+ 				 * Workaround for firmware issue in some receivers where they don't pick up
+ 				 * correct output color space unless DP link is disabled/re-enabled
+ 				 */
+-				dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
++				dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
+ 			}
+ 
+ 			if (stream_update->abm_level && pipe_ctx->stream_res.abm) {
 -- 
 2.53.0
 
