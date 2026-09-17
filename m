@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E1D4DC557;
-	Thu, 17 Sep 2026 15:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FAF4C10D1;
+	Thu, 17 Sep 2026 15:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660353; cv=none; b=bQzg+ziK5MnYjNSbNTyd5X69JpQRZbVvjFlNoMALVJWe6zp25pQikiYk1FecSelDCuIBrbwXhK8lRRsIa38eI3lYzXSgKWNn9C0la+IwEYi6NFbOL1iMRNh7mxeiee6V54b6nFezw44P2vUwtH3ufKb/ZCk08qrxJUlhCSm7W3o=
+	t=1789660355; cv=none; b=OusnIscovtt3/9BnjI6Q7chzVIPPId5B4vUDDM6PWBHRtSSQPYztE3KRiJKMpDDKzW7LhZEf8zv4DtN5ISRkTKBOniDOYl123ANmZ4c7+qQRRVludUQEDHt7qSlb1qMlheCrLraD6MoZvA9AfgVmAXhvOyus+tkWNiqLfrphKGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660353; c=relaxed/simple;
-	bh=gokXANcuOz9qJHUCX+anXonXv+o64yBw47pG0Cx5Jjc=;
+	s=arc-20240116; t=1789660355; c=relaxed/simple;
+	bh=4+IR1nleLYCQv12+WVesYidWY6kWDiOP3mI715JqEgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PO5Zn++8fWN6hSfdkLsfgIWGeAXJiS3PfLOt1NxOzbi3OE8DMnvuesurq2kDsfFhgpwwOP02AgN86rEpJMqeV1eU+Q8mfLHHNjpxQOyoVtrUJwWnKgzGRSLNDF00wM/OB8Dkn6FRS6vmRgHBfMHlpk3O5nggyZH08ISdIHJ0LsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yev4xxzo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CdtjEl+ExsDCM8HDqZ+X0Q5f1P4jRNQjLywg9jVPB7eslUzoJD+UxmA3+kWoogHoFViQhpGUI9WICtYGmykqRHGIlt0UCuFuZK+Aity6T5plUATQYgx9RPbYp0jxXVLYCmCQWDhi/sbiAydruWnXEerbCm0didSYkgshS1jv0GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+l1yA3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yev4xxzo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2261F000FF;
-	Thu, 17 Sep 2026 15:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+l1yA3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1191F00893;
+	Thu, 17 Sep 2026 15:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660351;
-	bh=KgmULTd+lQxyuCSREIgQS3jtL0O1r8Y4k5Vwwt+21uQ=;
+	s=korg; t=1789660354;
+	bh=063cncR0rfzsTah+jDrwQx0s6D2fpIljfrcoxV0FUhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yev4xxzoP1Dy+MwQoxv37CdYYkpA0qjBWyC/c1dkPIMaA/EBpz2wRCxWReSD5cIC5
-	 yAulphTZG74RF1BBs8CZgBzhd+yFikAiP+rk7h5kzCvA0JQeG8q152O0VPwaaXqTFZ
-	 UwrVK0iJqnnv7GpGqs8U8FvRQRrChG9psdouFrSc=
+	b=X+l1yA3cUqplbC9gBW0du14s/yySImsbsZQ5DKw6tDnQNctu+7+zC/g0lavtZuBEl
+	 /JMvu5jYJgqoiqEart423zz61xe40PMzu7Q2a2qJFU3VZLKh0TCM2V7Fwzay0CHYql
+	 by+mFj9ZlM7WXkC4xQqGLQCBibz2zQy3SuGQ++ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Weiming Shi <shiweiming@moonshot.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 563/733] inet: frags: invalidate queues before flushing them
-Date: Thu, 17 Sep 2026 16:14:31 +0100
-Message-ID: <20260917151406.349939819@linuxfoundation.org>
+	syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 537/733] io_uring/rw: end write accounting from ->ki_complete
+Date: Thu, 17 Sep 2026 16:14:05 +0100
+Message-ID: <20260917151405.600580189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,100 +50,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit b824476c56a153934c67c9e0f873e1fd967743d6 upstream.
+commit 796aa0547557e63338657ed1c487906f9fac4c73 upstream.
 
-fqdir_pre_exit() flushes the skbs from incomplete queues without
-changing their completion state. A fragment which found a queue before
-high_thresh was cleared can then acquire the queue lock and reuse stale
-reassembly metadata. A queue concurrently killed after fqdir->dead is
-set can instead become INET_FRAG_COMPLETE|INET_FRAG_HASH_DEAD while
-still holding its old skbs; skipping it because it is complete leaves
-those references behind until asynchronous fqdir teardown.
+Commit b000145e9907 moved both the fsnotify calls and the write
+accounting out of the kiocb completion handler and into the
+io_req_rw_complete() task_work. However, only the fsnotify part actually
+needed to move as it may sleep. Ending the write accounting is just a
+percpu_up_read() on the superblock writers sem.
 
-For IPv6, stale metadata can make ip6_frag_reasm() use the old
-nhoffset with a new skb and access memory out of bounds. The resulting
-heap corruption can be leveraged for local privilege escalation when
-unprivileged network namespaces are available. Unflushed fragments can
-also keep conntrack references alive after the conntrack per-net
-cleanup point.
+Deferring it is a problem, because it makes dropping SB_FREEZE_WRITE
+protection depend on the ring owner getting to running task_work. But
+the task may be blocked in freeze_super(), causing it to never get to
+that:
 
-Kill each incomplete queue, then flush every queue still owned by the
-dying rhashtable. HASH_DEAD identifies that ownership, while complete
-queues without it are already owned by another destroy path and must be
-left alone. Releasing a timer reference removed by inet_frag_kill() is
-deferred to inet_frag_putn(), after the queue lock is dropped.
+  task                             io-wq worker
+  --------------------------------------------------------------
+  io_write()
+    io_kiocb_start_write()         (takes sb_writers, hidden from
+                                    lockdep by __sb_writers_release)
+    write_iter() -> -EIOCBQUEUED
+  ioctl(FS_IOC_SHUTDOWN)
+    bdev_freeze()
+      freeze_super()
+        percpu_down_write()        <- waits for the reader above
+                                   io_write()
+                                     kiocb_start_write()
+                                       percpu_down_read()  <- queued
+                                                              behind the
+                                                              writer
+  <bio completes>
+    io_complete_rw()
+      queues io_req_rw_complete()  <- never runs, task is in D state
 
-KASAN report:
+End the write from io_complete_rw() instead, and leave only the fsnotify
+calls in task_work.
 
-  BUG: KASAN: slab-out-of-bounds in ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  Write of size 1 at addr ff110001039c6e00 by task poc/771
-  Call Trace:
-  ? ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479 (discriminator 5))
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
-  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  The buggy address belongs to the object at ff110001039c6b40
-  which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 0 bytes to the right of
-  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
-
-  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  Read of size 1 at addr ff110001039c6e08 by task poc/771
-  Call Trace:
-  ? ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
-  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  packet_sendmsg (net/packet/af_packet.c:2959 net/packet/af_packet.c:3053 net/packet/af_packet.c:3142)
-  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
-  The buggy address belongs to the object at ff110001039c6b40
-  which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 8 bytes to the right of
-  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
-
-Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Reported-by: syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Tested-by: Weiming Shi <shiweiming@moonshot.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260904162800.1095662-1-yilinzhang@moonshot.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b000145e9907 ("io_uring/rw: defer fsnotify calls to task context")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/rw.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -235,6 +235,8 @@ void fqdir_pre_exit(struct fqdir *fqdir)
- 	rhashtable_walk_start(&hti);
- 
- 	while ((fq = rhashtable_walk_next(&hti))) {
-+		int refs = 0;
-+
- 		if (IS_ERR(fq)) {
- 			if (PTR_ERR(fq) != -EAGAIN)
- 				break;
-@@ -242,8 +244,12 @@ void fqdir_pre_exit(struct fqdir *fqdir)
- 		}
- 		spin_lock_bh(&fq->lock);
- 		if (!(fq->flags & INET_FRAG_COMPLETE))
-+			inet_frag_kill(fq, &refs);
-+
-+		if (fq->flags & INET_FRAG_HASH_DEAD)
- 			inet_frag_queue_flush(fq, 0);
- 		spin_unlock_bh(&fq->lock);
-+		inet_frag_putn(fq, refs);
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -531,20 +531,25 @@ static void io_req_end_write(struct io_k
  	}
+ }
  
- 	rhashtable_walk_stop(&hti);
+-/*
+- * Trigger the notifications after having done some IO, and finish the write
+- * accounting, if any.
+- */
+-static void io_req_io_end(struct io_kiocb *req)
++/* Trigger the notifications after having done some IO. */
++static void io_req_io_notify(struct io_kiocb *req)
+ {
+ 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
+ 
+-	if (rw->kiocb.ki_flags & IOCB_WRITE) {
+-		io_req_end_write(req);
++	if (rw->kiocb.ki_flags & IOCB_WRITE)
+ 		fsnotify_modify(req->file);
+-	} else {
++	else
+ 		fsnotify_access(req->file);
+-	}
++}
++
++/* Finish write accounting and notify, for inline completions only. */
++static void io_req_io_end(struct io_kiocb *req)
++{
++	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
++
++	if (rw->kiocb.ki_flags & IOCB_WRITE)
++		io_req_end_write(req);
++	io_req_io_notify(req);
+ }
+ 
+ static void __io_complete_rw_common(struct io_kiocb *req, long res)
+@@ -577,7 +582,7 @@ void io_req_rw_complete(struct io_tw_req
+ {
+ 	struct io_kiocb *req = tw_req.req;
+ 
+-	io_req_io_end(req);
++	io_req_io_notify(req);
+ 
+ 	if (req->flags & (REQ_F_BUFFER_SELECTED|REQ_F_BUFFER_RING))
+ 		req->cqe.flags |= io_put_kbuf(req, max(req->cqe.res, 0), NULL);
+@@ -591,6 +596,10 @@ static void io_complete_rw(struct kiocb
+ 	struct io_rw *rw = container_of(kiocb, struct io_rw, kiocb);
+ 	struct io_kiocb *req = cmd_to_io_kiocb(rw);
+ 
++	/* ring owner may block in freeze_super() before task_work runs */
++	if (kiocb->ki_flags & IOCB_WRITE)
++		io_req_end_write(req);
++
+ 	__io_complete_rw_common(req, res);
+ 	io_req_set_res(req, io_fixup_rw_res(req, res), 0);
+ 	req->io_task_work.func = io_req_rw_complete;
 
 
