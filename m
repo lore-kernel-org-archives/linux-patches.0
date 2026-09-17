@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A583B4EB84F;
-	Thu, 17 Sep 2026 15:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FCF384CCD;
+	Thu, 17 Sep 2026 15:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659087; cv=none; b=OfmIanSGIWbuIWYaXNQassYtKWcSeGixFqygOK4qXpkcwhqjHoMUHuwtKEjO6M+ZntVGZNeJzpKpDi/iZeETHIq1N2Ys4a6cpmJRFB9585je8XevA+yIZlVxY89yennjS9m1fADefTy5actnj9bzQW3FB0S1wDzARvAGWCEuNgA=
+	t=1789659091; cv=none; b=CNoV936s4IarUxy1ICY3E0iFFUuB5I9TI6QLI1q50wzma99eYSDZ6KL8KuWCaXsVV03axs+He4O0vh0hwfpEhej4TDBqeVwjruQKLGjFJdFRpTFFD0jffdxAEg3vyn596z46DHaJR4DgIYza+VCxrdFvMDj9yVWYcmcwjxLdIF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659087; c=relaxed/simple;
-	bh=+B7kAO1O4NhosPymq6P8awmuUA3+115Jic0Qeud7N5M=;
+	s=arc-20240116; t=1789659091; c=relaxed/simple;
+	bh=Idasqce+6daeHqTGs6rISuoQW97yDTesVSdasQTvyiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgtFjOxX0GEFM9vBdPJIfzuvTm8b4RJYG+FxV8TZdpDVDynB7KVYcla4vIU4K/b5wE7KyPGOV81eX0AlQJorTAoAPrQZqLm7N67lW19mAXTn2jtXLZ1d3QM9p1r/n99APGB8DyoKy5ejfotcc7VDisidpcbbLkizzFlIbgC5crg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDPIlB03; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IcWO0d5UhHQm6EULBEZd03WPd5wxwyGio8BexqVSdT/slh34JQV9SkVfQp5BOWFflbxW7HhRqy+wHIzHXkRnLZmTTsJPFppFpjDteXVG4ebkWiZ48iLbIxzTe4spriGDhScaw2pARxYyTW2pQa3KtfpKI8kZLkd1aE1TpZF86FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBv+hXx4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDPIlB03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099031F000FF;
-	Thu, 17 Sep 2026 15:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBv+hXx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCBE1F00899;
+	Thu, 17 Sep 2026 15:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659081;
-	bh=1yT5OYZaUZpnbTEKlwCCWQArZrTBdBuAzbndGAy78/c=;
+	s=korg; t=1789659084;
+	bh=9p0lV56rzyT17GC2tbmNrQH1Lm5P6x4Vm7hsc/nhk2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDPIlB03anAP/lz3kUc8WfrctOsDMjloQ9Lok0f96yjbFRrvwhSEyzsT66qKMWcO1
-	 syhwTpB2l2PAbNssiebuBqy9E0SZ/e8sj5NzNQUd0vGwsmdwQyKKbtu/xd7mVymHll
-	 H0Toy2Dp16QzU/8wad7ywc9W03SkvpJYFaL7phNg=
+	b=YBv+hXx4srHiG/OBuw3yYRb7vNBYDkaZlIqqu3zLXs79HGMtbPHRV+6HMgm891oFv
+	 cHAlaTSABEOn0JUZ3sLq+FkGzq0K7Q3EMFlBxqXSYBNuasW+F+/8JIsRZjD0cbTAD3
+	 QdCn4xiYPZmvA9WUNWpIlE0eUBboETSoyz7UBMRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 138/733] klp-build: Fix wrong index in funcs cleanup error path
-Date: Thu, 17 Sep 2026 16:07:26 +0100
-Message-ID: <20260917151354.471764801@linuxfoundation.org>
+Subject: [PATCH 7.2 121/733] ASoC: codecs: ab8500: Use guard() for mutex locks
+Date: Thu, 17 Sep 2026 16:07:09 +0100
+Message-ID: <20260917151354.020175727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,40 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 4825ef699cda4c6f2f0586b17a5e225560481da6 ]
+[ Upstream commit 350b7eae8e8b2bd3885a3e2424381494d6bde038 ]
 
-In the object allocation loop, when kzalloc() for funcs fails, the
-cleanup loop uses `objs[i].funcs` instead of `objs[j].funcs`. Since
-`objs[i].funcs` is still NULL at that point, it repeatedly calls
-kfree(NULL) and leaks all previously allocated funcs arrays.
+Clean up the code using guard() for mutex locks.
+Merely code refactoring, and no behavior change.
 
-Fixes: 59adee07b568 ("livepatch/klp-build: Add stub init code for livepatch modules")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Song Liu <song@kernel.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Acked-by: Miroslav Benes <mbenes@suse.cz>
-Link: https://patch.msgid.link/20260816090442.18128-2-laoar.shao@gmail.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260708125002.202515-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: ec75e653b70c ("ASoC: ab8500: Remove the nonfunctional sidetone apply control")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/livepatch/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/ab8500-codec.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/scripts/livepatch/init.c b/scripts/livepatch/init.c
-index f14d8c8fb35fa..16aff8f736eb6 100644
---- a/scripts/livepatch/init.c
-+++ b/scripts/livepatch/init.c
-@@ -51,7 +51,7 @@ static int __init livepatch_mod_init(void)
- 		if (!funcs) {
- 			ret = -ENOMEM;
- 			for (int j = 0; j < i; j++)
--				kfree(objs[i].funcs);
-+				kfree(objs[j].funcs);
- 			goto err_free_objs;
- 		}
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 63b0d57341396..167f021c7ecbc 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -14,6 +14,7 @@
+  *         for ST-Ericsson.
+  */
  
++#include <linux/cleanup.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+@@ -981,9 +982,8 @@ static int sid_status_control_get(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
+ 
+-	mutex_lock(&drvdata->ctrl_lock);
++	guard(mutex)(&drvdata->ctrl_lock);
+ 	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
+-	mutex_unlock(&drvdata->ctrl_lock);
+ 
+ 	return 0;
+ }
+@@ -1006,7 +1006,7 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 		return -EIO;
+ 	}
+ 
+-	mutex_lock(&drvdata->ctrl_lock);
++	guard(mutex)(&drvdata->ctrl_lock);
+ 
+ 	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
+ 	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
+@@ -1017,7 +1017,8 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 		} else {
+ 			status = -EBUSY;
+ 		}
+-		goto out;
++		dev_dbg(component->dev, "%s: Exit\n", __func__);
++		return status;
+ 	}
+ 
+ 	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
+@@ -1035,9 +1036,6 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 
+ 	drvdata->sid_status = SID_FIR_CONFIGURED;
+ 
+-out:
+-	mutex_unlock(&drvdata->ctrl_lock);
+-
+ 	dev_dbg(component->dev, "%s: Exit\n", __func__);
+ 
+ 	return status;
 -- 
 2.53.0
 
