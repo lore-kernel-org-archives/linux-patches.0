@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F329C3C9892;
-	Thu, 17 Sep 2026 18:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DFA54705A;
+	Thu, 17 Sep 2026 18:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668239; cv=none; b=nmIUjUnXP6B1bBMjwgkayQsHAlqqjx2gXpm3yC7WSbMfxBFCwfejYbybaBhChDCueLhuVpgaiy0YpoU0XhUVRj8GpNBWOS/8eKpryoDxsqfDM63wAE7qwL4SgqNjHwb+8Ui6y96yoemV79pZyuYG9WNyy+QPgEAUHWd3dJ3rnwY=
+	t=1789668242; cv=none; b=Jh9SEqTFoSfGWSDQj8g+atScMAqpkIqkB2ieCB+GKk3vw6/kjlvhwAIPsJFz4v3SrAKcc0B1RYwiNFEXHABu1oxan3RYVM7NNAPscsMHRbUVy8Yr1PCjARB2DJ3M+mM6ipC7TiPugRpiF7DTbg9lPSwwEVrGV1hJYYbItcYOeMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668239; c=relaxed/simple;
-	bh=DcifOI/Sszrb0E4/TANNi/e4WP0tm6CqWYlZAVg1iPk=;
+	s=arc-20240116; t=1789668242; c=relaxed/simple;
+	bh=glHA/snsfntS8g3gsm6oYFcAzI/TO3df2VG+ZdwpfxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g15iHg14e1OuxpuDkM7D2AisNP7LggQnUk4tZZa7RPxpNIzg8kni1QnfeB0reAcY0SJdJb0zD6pjdelSvoav+fR7eAurNnUwdp7QDkpue6tfCRvKsf8S9dcOFxXiJs00ULS2wmXRX1QcQQHiNC24M/LbY3rQEPX7dkrO2GvcHYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IohsR2Cx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CE0yvzYGjK68a67GSqhgkcHsfTKLJCh6DxaLOlS4YUjHklwA2Do+IVsbK+Nfme22iQZ0uc+gHJbzw1d5NxwKxFroZ/87SYARspHySdAnDuOvJQ03F45lW7fRFzkigv9Id1qITKrN4rc2BI5a6/nzS6GVwUh8WB7ts4veGMUclCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGI1Ktxm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IohsR2Cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537551F000FF;
-	Thu, 17 Sep 2026 18:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGI1Ktxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A621F000FF;
+	Thu, 17 Sep 2026 18:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668237;
-	bh=SdNRlKz6KuNOS4OQtN4EFmOyK06Ooo6Gt1aMuPApyYI=;
+	s=korg; t=1789668240;
+	bh=qz8UQPeA3SOsQYaFWKz/sxrkz0m90loFKwmdQdtom2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IohsR2CxSe+CESJeG/Cbo32jcg/S1X7k5Ndl3VZ5z3o6BWMoyWlLfI218kcoFlAMt
-	 +eJ046rSzNDMdq90w/Xni5sxlVWtFPG1XQJNSrX4QYjfjgwZCKGwOH5fQTGlKbWfLz
-	 OiWUt7GbcKZnFQY+ARaURNxgWfv2f4jetQGgs1vk=
+	b=KGI1Ktxm7A5AMJZBNOW0y8NSGfQSNygYszrnCd88GVs1UjXG/L+lw5LMvS/IaLXfh
+	 1BKJz1nRom78nOnq8bZA2/g5AwuNGk7rjYaexY7LCqfS1FtQEz/mbMMMdN+gkncza2
+	 IDNPKoWGj5fEU7oLbe2F9EpVUbNOkPxOQszjy+9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0358/1102] ksmbd: break RH leases before delete-on-close
-Date: Thu, 17 Sep 2026 16:05:01 +0100
-Message-ID: <20260917151548.634757603@linuxfoundation.org>
+Subject: [PATCH 6.12 0359/1102] ksmbd: treat read-control opens as stat opens only for leases
+Date: Thu, 17 Sep 2026 16:05:02 +0100
+Message-ID: <20260917151548.659872599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,70 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1f1083c36fa11c5d9011451c7b9ab380545c72ea ]
+[ Upstream commit be939e11c4724d1de3650e8bafd4c3583d9684b2 ]
 
-The delete paths only marked the opened file delete pending or
-delete-on-close.  When another client still held a read/handle lease, no
-lease break was sent before the delete state changed.
+A second open that requests only metadata-level access must not break
+the existing caching state. ksmbd already skips the break for such opens
+via fp->attrib_only (FILE_READ_ATTRIBUTES,
+FILE_WRITE_ATTRIBUTES and FILE_SYNCHRONIZE).
 
-smb2.lease.unlink uses a create request with FILE_DELETE_ON_CLOSE and
-expects the second client's unlink to break the first client's RH lease to
-R with ACK_REQUIRED set.  SetInfo(FileDispositionInformation) has the same
-lease-breaking requirement.
+An open requesting only READ_CONTROL (reading the security descriptor)
+must be treated differently depending on the existing caching state.
+smbtorture smb2.lease.statopen4 expects a read-control open NOT to break
+a caching lease, while smb2.oplock.statopen1 expects the same open to
+break a batch oplock. So READ_CONTROL is a stat open for leases but not
+for oplocks.
 
-Break level-II/read-handle leases before setting delete pending or
-delete-on-close so clients are notified before the file is removed.
+Extend the stat-open break-skip in smb_grant_oplock() to also cover a
+read-control-only open, but only when the existing holder is a lease.
+The global fp->attrib_only flag (used for share-mode, rename and truncate
+decisions) is left unchanged so oplock behaviour is preserved.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/smb/server/oplock.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 09c97814fc9c0..5526006979269 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3553,8 +3553,10 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out1;
- 	}
- 
--	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)
-+	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE) {
-+		smb_break_all_levII_oplock(work, fp, 0);
- 		ksmbd_fd_set_delete_on_close(fp, file_info);
-+	}
- 
- 	if (need_truncate) {
- 		rc = smb2_create_truncate(&fp->filp->f_path);
-@@ -6449,7 +6451,8 @@ static int set_rename_info(struct ksmbd_work *work, struct ksmbd_file *fp,
- 	return smb2_rename(work, fp, rename_info, work->conn->local_nls);
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index a413d81db11b9..6183bd52ca9d1 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -208,6 +208,18 @@ void opinfo_put(struct oplock_info *opinfo)
+ 	free_opinfo(opinfo);
  }
  
--static int set_file_disposition_info(struct ksmbd_file *fp,
-+static int set_file_disposition_info(struct ksmbd_work *work,
-+				     struct ksmbd_file *fp,
- 				     struct smb2_file_disposition_info *file_info)
++static bool ksmbd_inode_has_lease(struct ksmbd_inode *ci)
++{
++	struct oplock_info *opinfo = opinfo_get_list(ci);
++	bool is_lease;
++
++	if (!opinfo)
++		return false;
++	is_lease = opinfo->is_lease;
++	opinfo_put(opinfo);
++	return is_lease;
++}
++
+ static void opinfo_add(struct oplock_info *opinfo, struct ksmbd_file *fp)
  {
- 	struct inode *inode;
-@@ -6464,6 +6467,7 @@ static int set_file_disposition_info(struct ksmbd_file *fp,
- 		if (S_ISDIR(inode->i_mode) &&
- 		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
- 			return -EBUSY;
-+		smb_break_all_levII_oplock(work, fp, 0);
- 		ksmbd_set_inode_pending_delete(fp);
- 	} else {
- 		ksmbd_clear_inode_pending_delete(fp);
-@@ -6587,7 +6591,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_disposition_info))
- 			return -EINVAL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
+@@ -1331,10 +1343,22 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 	if (!opinfo_count(fp))
+ 		goto set_lev;
  
--		return set_file_disposition_info(fp,
-+		return set_file_disposition_info(work, fp,
- 						 (struct smb2_file_disposition_info *)buffer);
+-	/* grant none-oplock if second open is trunc */
+-	if (fp->attrib_only && fp->cdoption != FILE_OVERWRITE_IF_LE &&
++	/*
++	 * A stat open that only requests metadata access must not break the
++	 * existing caching state. READ_CONTROL (reading the security
++	 * descriptor) does not conflict with a lease, but it does conflict
++	 * with an oplock, so only treat a read-control-only open as a stat
++	 * open when the existing holder is a lease.
++	 */
++	if (fp->cdoption != FILE_OVERWRITE_IF_LE &&
+ 	    fp->cdoption != FILE_OVERWRITE_LE &&
+-	    fp->cdoption != FILE_SUPERSEDE_LE) {
++	    fp->cdoption != FILE_SUPERSEDE_LE &&
++	    (fp->attrib_only ||
++	     (!(fp->daccess & ~(FILE_READ_ATTRIBUTES_LE |
++				FILE_WRITE_ATTRIBUTES_LE |
++				FILE_SYNCHRONIZE_LE |
++				FILE_READ_CONTROL_LE)) &&
++	      ksmbd_inode_has_lease(ci)))) {
+ 		req_op_level = SMB2_OPLOCK_LEVEL_NONE;
+ 		goto set_lev;
  	}
- 	case FILE_FULL_EA_INFORMATION:
 -- 
 2.53.0
 
