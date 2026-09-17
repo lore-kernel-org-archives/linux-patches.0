@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FCF384CCD;
-	Thu, 17 Sep 2026 15:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0CE3A6B66;
+	Thu, 17 Sep 2026 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659091; cv=none; b=CNoV936s4IarUxy1ICY3E0iFFUuB5I9TI6QLI1q50wzma99eYSDZ6KL8KuWCaXsVV03axs+He4O0vh0hwfpEhej4TDBqeVwjruQKLGjFJdFRpTFFD0jffdxAEg3vyn596z46DHaJR4DgIYza+VCxrdFvMDj9yVWYcmcwjxLdIF8=
+	t=1789659094; cv=none; b=mKyrm6SoPyW1zUDqhHxRJBD5KGbzndox41FJDjCRpgSh0NKA5fO92pO/8rKlzBh2/4zQrvAaZZClIjN/YaYbO7MtUHiTXlNXBGU598bpvMH10f5FKNwfItX6jgciJ3WNXRjKfbZ2YAtSQ5ObpV5PFXomXaUcEtoln4JDz2wSEa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659091; c=relaxed/simple;
-	bh=Idasqce+6daeHqTGs6rISuoQW97yDTesVSdasQTvyiI=;
+	s=arc-20240116; t=1789659094; c=relaxed/simple;
+	bh=kRjzSKlPzGcWtz2S+9yHuJdfq2RZP6pUaro/5mcR1s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcWO0d5UhHQm6EULBEZd03WPd5wxwyGio8BexqVSdT/slh34JQV9SkVfQp5BOWFflbxW7HhRqy+wHIzHXkRnLZmTTsJPFppFpjDteXVG4ebkWiZ48iLbIxzTe4spriGDhScaw2pARxYyTW2pQa3KtfpKI8kZLkd1aE1TpZF86FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBv+hXx4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TzgZSC6T6SIK5dvj2lCZG7AvOwVgDRMn7l/LaValWh9VGpRGznW8D5QxJmjDdSAkXvJj9A065vwx9ZLiRIS6n6FFbq6Y0KLWkUHXLy7FCevVZPagBjWCd1OFNRUXPFPUzy+jAMQ9UGAztnIOYgV4P2Ajc+tJa40zMhHj/GIlI+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQofM1KF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBv+hXx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCBE1F00899;
-	Thu, 17 Sep 2026 15:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQofM1KF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6FB1F000FF;
+	Thu, 17 Sep 2026 15:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659084;
-	bh=9p0lV56rzyT17GC2tbmNrQH1Lm5P6x4Vm7hsc/nhk2w=;
+	s=korg; t=1789659090;
+	bh=Ll/9doTKkJd59A4KRTQQAVv0fp4mmjifi9GCY2NtwkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBv+hXx4srHiG/OBuw3yYRb7vNBYDkaZlIqqu3zLXs79HGMtbPHRV+6HMgm891oFv
-	 cHAlaTSABEOn0JUZ3sLq+FkGzq0K7Q3EMFlBxqXSYBNuasW+F+/8JIsRZjD0cbTAD3
-	 QdCn4xiYPZmvA9WUNWpIlE0eUBboETSoyz7UBMRA=
+	b=VQofM1KFwq1zjlUVadqRrjeDnhFasJrvWSI7IwNlLP/YQBG2eirMzUpbSoA9fSv1L
+	 IR0cs46WxGeIpxD62Hu02u2Xj7ibxhGkcidsHXflNijkszddY5lEY5ZwAj8a1qhVFv
+	 IuRj6f0rY7SIL6xCW3z2Vrty8LrJDVn05b4fshwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 121/733] ASoC: codecs: ab8500: Use guard() for mutex locks
-Date: Thu, 17 Sep 2026 16:07:09 +0100
-Message-ID: <20260917151354.020175727@linuxfoundation.org>
+Subject: [PATCH 7.2 140/733] ipv6: mcast: fix RCU list diversion in ip6_mc_del1_src()
+Date: Thu, 17 Sep 2026 16:07:28 +0100
+Message-ID: <20260917151354.523613086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,75 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 350b7eae8e8b2bd3885a3e2424381494d6bde038 ]
+[ Upstream commit 93b49239840b91313adbd77b8b52993eff2d08c1 ]
 
-Clean up the code using guard() for mutex locks.
-Merely code refactoring, and no behavior change.
+When removing a source filter whose count reaches zero, ip6_mc_del1_src()
+unlinks psf from pmc->mca_sources. If the filter was previously active,
+the code moved psf directly into pmc->mca_tomb by updating psf->sf_next.
 
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260708125002.202515-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: ec75e653b70c ("ASoC: ab8500: Remove the nonfunctional sidetone apply control")
+Because pmc->mca_sources is traversed locklessly under RCU (e.g. by
+ipv6_chk_mcast_addr()), mutating psf->sf_next before a grace period
+elapses diverts concurrent readers to the tombstone list. Consequently,
+readers miss remaining active sources in pmc->mca_sources and improperly
+examine deleted tombstone entries.
+
+Fix this by allocating a new tombstone node for pmc->mca_tomb (as done
+in sf_setstate()) and retiring the original psf via kfree_rcu().
+
+Fixes: 4b200e398953 ("mld: convert ip6_sf_list to RCU")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828084531.1826790-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ net/ipv6/mcast.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 63b0d57341396..167f021c7ecbc 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -14,6 +14,7 @@
-  *         for ST-Ericsson.
-  */
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 4d2b9377ba2de..54acc9d4cae03 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -2350,14 +2350,18 @@ static int ip6_mc_del1_src(struct ifmcaddr6 *pmc, int sfmode,
  
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
-@@ -981,9 +982,8 @@ static int sid_status_control_get(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
- 
--	mutex_lock(&drvdata->ctrl_lock);
-+	guard(mutex)(&drvdata->ctrl_lock);
- 	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
--	mutex_unlock(&drvdata->ctrl_lock);
- 
- 	return 0;
- }
-@@ -1006,7 +1006,7 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
- 		return -EIO;
- 	}
- 
--	mutex_lock(&drvdata->ctrl_lock);
-+	guard(mutex)(&drvdata->ctrl_lock);
- 
- 	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
- 	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
-@@ -1017,7 +1017,8 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
- 		} else {
- 			status = -EBUSY;
+ 		if (psf->sf_oldin && !(pmc->mca_flags & MAF_NOREPORT) &&
+ 		    !mld_in_v1_mode(idev)) {
+-			psf->sf_crcount = idev->mc_qrv;
+-			rcu_assign_pointer(psf->sf_next,
+-					   mc_dereference(pmc->mca_tomb, idev));
+-			rcu_assign_pointer(pmc->mca_tomb, psf);
+-			rv = 1;
+-		} else {
+-			kfree_rcu(psf, rcu);
++			struct ip6_sf_list *dpsf = kmalloc_obj(*dpsf);
++
++			if (dpsf) {
++				*dpsf = *psf;
++				dpsf->sf_crcount = idev->mc_qrv;
++				rcu_assign_pointer(dpsf->sf_next,
++						   mc_dereference(pmc->mca_tomb, idev));
++				rcu_assign_pointer(pmc->mca_tomb, dpsf);
++				rv = 1;
++			}
  		}
--		goto out;
-+		dev_dbg(component->dev, "%s: Exit\n", __func__);
-+		return status;
++		kfree_rcu(psf, rcu);
  	}
- 
- 	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
-@@ -1035,9 +1036,6 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
- 
- 	drvdata->sid_status = SID_FIR_CONFIGURED;
- 
--out:
--	mutex_unlock(&drvdata->ctrl_lock);
--
- 	dev_dbg(component->dev, "%s: Exit\n", __func__);
- 
- 	return status;
+ 	return rv;
+ }
 -- 
 2.53.0
 
