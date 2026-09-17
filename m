@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CE04E73D1;
-	Thu, 17 Sep 2026 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A87F514752;
+	Thu, 17 Sep 2026 15:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659263; cv=none; b=MC93sdXI2PG/JdoqW4QSgtpm5OejzczRBgQOKEBzKkx4lthmbgFS6LYrR9uwFh0OT6+oEinIHD22y1+WOgQZJD893ILV9dun+h7bThimjF2ss3+tJ5/pvPOXb0ZFqQbf78Q/FnFtEeahkcprGvEO5EaD6HFkjwWVSWwcngpliOU=
+	t=1789659267; cv=none; b=iHWxj8jGMjDf+8PCYLHKp0F0cuShCqtneIMTrNVdOtNBKRexs4zeUWRRMfDBC+BVStNq8BVRG2wofnSoA4auevAQYyx9LHMW5ii2l2d1oUco9tRwT8NVB6Le81Ob1NBwR2KDMS0EjWgRCOWw27nkGJQnTu1j+O92/1EhMa4TPjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659263; c=relaxed/simple;
-	bh=GIpkshkCk/TFxsHveOuWWJfCaITfktVMwTfRuu7gU6w=;
+	s=arc-20240116; t=1789659267; c=relaxed/simple;
+	bh=tOVtI3fS6NZpCBZAHfeAQnwNM706vf0ObpNk77KqFBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdC55qea2nJGJgX9pohM5YyRFkAVuyYzVI+czt3JZg+XZRGRdnWRDMF4TrEmhY1HRf4JoKFgHYB5O6ElDfWgS2Uf2388+jO1SiGHdnCVdEhNBy/Rktrxb9+wW3av9H07ptoP0Xa/8spoE5MZFC+qLuT3OGID7JNe9LEEHb3Oltk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD7TywTs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fJVMCAMaegfSfWJs5ZuDTruTLtBE9t4mn560R6ugkJuaMuHJnBblmLkvHwIZZR1GXfeIvgDliVPTScID2FvQqzZ2xRN7H6JqESZTzEc3iV4EknSo+ZDm2/XQiIHj+2vVJVnBmEiKMNjk/H8471kmnz1vYE5KG/oTM7qzd14Ly/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqMm1/Ac; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD7TywTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CC91F00898;
-	Thu, 17 Sep 2026 15:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqMm1/Ac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1CA1F000FF;
+	Thu, 17 Sep 2026 15:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659254;
-	bh=ceIoBpw4jcOhGl8IpcgYi+setd4GT0p+Uohty0/IkbQ=;
+	s=korg; t=1789659261;
+	bh=UMXsm1KWpxbjwYfaZw34RlQGB4moCp3LCVhkYLYLRP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XD7TywTsxLYR+MlynrecsxSEFwbQHxHqKJoshP+YjMMHJvLRMC+qKl9z8v7HrEqA1
-	 WL1EgwuhVA62CfPgBmgiNkQkzmmxBTCQ0+DEE2LNH25Qku8uMXbYXoMQHJRaqLGdse
-	 ciCbYe4QqX+wNIiN2nYvN+gBgLtXiWDmM7CjldWI=
+	b=ZqMm1/AcwN8+gZ8xTsTGMDLNYfy9ysuag8C11jSMwnT2YzXUm38CtQZ4Xul8qifpy
+	 ikLn/ObTeV1A2/1b6NlJHNRld6XvfMty2qHrwIGaRUWXpQpRNwP2lUr9iw4zDtSSy5
+	 beGI/bQXardjDyVNSVZ/HLL0Xo1CygB6VrGKWO84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 194/733] btrfs: return proper negative error code for update_raid_extent_item()
-Date: Thu, 17 Sep 2026 16:08:22 +0100
-Message-ID: <20260917151355.988000326@linuxfoundation.org>
+Subject: [PATCH 7.2 196/733] btrfs: send: fix lost error return value in will_overwrite_ref()
+Date: Thu, 17 Sep 2026 16:08:24 +0100
+Message-ID: <20260917151356.042385875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,55 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit a03fa65184545837d6461413275da71f30527385 ]
+[ Upstream commit d0285dfbc3b46f41395b26ee2f4a16d99fb3e736 ]
 
-The function btrfs_abort_transaction() only accepts negative error code,
-and have the macro VERIFY_NEGATIVE_ERROR() to verify that error code.
+The direct-return refactoring in commit b3047a42f55d ("btrfs: send:
+directly return from will_overwrite_ref() and simplify it") changed
+will_overwrite_ref() to return directly instead of going through the
+common out label.
 
-But inside update_raid_extent_item(), if there is such key found, we
-return 1, breaking the negative error code scheme.
+That resulted in a negative return value from is_inode_existent() to
+start being converted to 0, making lookup errors unable to be
+distinguished from the inode not existing.
 
-Furthermore if we hit some real error during the tree search, e.g. -EIO,
-then the error code is always over-written to -EINVAL.
+process_recorded_refs() expects negative errors from
+will_overwrite_ref() and aborts processing when it receives one.
 
-Fix both problems by following other call sites by overwriting @ret to
--ENOENT if the btrfs_search_slot() failed to locate the key.
+Return the value from is_inode_existent() to restore the previous error
+propagation behavior as it was before the refactor.
 
-This is very unlikely to hit, as we only enter update_raid_extent_item()
-if there is a conflicting key already in the raid stripe tree.
-
-This was reported by Sashiko when reviewing another patch.
-
-Link: https://sashiko.dev/#/patchset/20260817021512.3010812-1-shuangpeng.kernel%40gmail.com
-Fixes: 8c4cba2adbb0 ("btrfs: update stripe extents for existing logical addresses")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Fixes: b3047a42f55d ("btrfs: send: directly return from will_overwrite_ref() and simplify it")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/raid-stripe-tree.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/send.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
-index 6291775dbe0e7..d9e660447205f 100644
---- a/fs/btrfs/raid-stripe-tree.c
-+++ b/fs/btrfs/raid-stripe-tree.c
-@@ -310,8 +310,10 @@ static int update_raid_extent_item(struct btrfs_trans_handle *trans,
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 3ae480c7474b0..a888202397edb 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -2066,7 +2066,7 @@ static int will_overwrite_ref(struct send_ctx *sctx, u64 dir, u64 dir_gen,
  
- 	ret = btrfs_search_slot(trans, trans->fs_info->stripe_root, key, path,
- 				0, 1);
--	if (ret)
--		return (ret == 1 ? ret : -EINVAL);
-+	if (ret > 0)
-+		ret = -ENOENT;
-+	if (ret < 0)
+ 	ret = is_inode_existent(sctx, dir, dir_gen, NULL, &parent_root_dir_gen);
+ 	if (ret <= 0)
+-		return 0;
 +		return ret;
  
- 	leaf = path->nodes[0];
- 	slot = path->slots[0];
+ 	/*
+ 	 * If we have a parent root we need to verify that the parent dir was
 -- 
 2.53.0
 
