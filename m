@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E4937EFFB;
-	Thu, 17 Sep 2026 15:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623EA4E323A;
+	Thu, 17 Sep 2026 15:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660060; cv=none; b=fgEFNsT7TcRSIBB162gqdNNb7dgr2jWAvtjzG73drBaKqgok6T0I29nhB5FvtrpFM30bfxHEzakXt1xKnoakGzV3dILEQY5ZRRDCqqXuH0YmucUq+Sui/otsMky9PgG7ViVZKrDgS84bWwGgIEIV0i53C6HznLPYNzEdwhvXjXI=
+	t=1789660060; cv=none; b=BvMScDS4yoXDoBHZxiujqL/w+zmWz6yrtQCwJX0U2dclmO6uHa5ohvMrTBp6V5y+m7ETpwBk7kns3Bk+5X3/JhrxWhtVe07/K7ckYnn4cjYPOg9FHiVylDkzJ+V7LOfV85SB4bs2eUVAH9VDpVmK+Wf+I7ia7vIW6iNg64yUv4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789660060; c=relaxed/simple;
-	bh=8DV12reLxJVN5UfGZ7K4D6uHSIHi5iICaByOueN9xbc=;
+	bh=86HGwE19lyDd+m2VysZs9pbCWvXj5dv5ApgYVc4wGJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEneBunMKsRHWhNEh6TybgOEwvIOyp6DnPbsa2SqD0MVnoh9NOMFvmv1VdOpQRNTfaXe43eGQ25aoMGYw4eRwHVbucqiRzsnsNoDP8/mzZOs4v4lH6yvshHjkKKOjrTgYC6EYV/hdKqnwDK5tCCyJv2PEidzI+4vK4xyD3L1zUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JliD6ZLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p10q8MfwoWZxNItJJ5eEDSaaaheyDlqfzgzpKaBWVmKJXkF+HfER5jl2Q4pF/yABS3t7AGz3XGxkUYy1yh/uvuiwD6wZ95eczgAd4Ck4iC88xuPUfdD3icQM9agqN3Q4OTe40vjj1H92QRXIhfV5oe2WW8Dd2FgEY1kMTsNdVKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPr0iFIS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JliD6ZLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42211F00898;
-	Thu, 17 Sep 2026 15:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPr0iFIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27A61F00893;
+	Thu, 17 Sep 2026 15:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660047;
-	bh=hovB1SBYRyv5aZ2Gt7J0nIFT/I6LYoQ6cGqjfO7QLvY=;
+	s=korg; t=1789660050;
+	bh=3lXOu5khfqDlWEw9VR0XGQu7tObzEzdkl9rHmK+0XY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JliD6ZLO6Z4dzRI5BONSnOAFExyhLLh5E8JNa+da1C2DiNmk/OScp4keUbVRyxabM
-	 Je0kUYFM6y2bzOqDU1+/es3vq+r36/Gi+4984axF+U+ZmphFbOTmOWzcjsai/mX4It
-	 p68L0oWEgUZO6XEs9dIweu88dpOxZhAFaEzinzLs=
+	b=bPr0iFISzhfXrqi7GK159oilCme1ANeDru+yOWaXi/C7hT9Q0L/cGulog8oSSCDaB
+	 Ln5uoGAKe7FyJhIYnfUOBej4+mnufuScz+QHDYwgMqXa5jBsRsPqT7FDOwF54Xbigo
+	 QtpM2Q2eUy1MLQX/0Ibu1OE2N5K475toO+qhXKL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Steffen Dirkwinkel <lists@steffen.cc>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>
-Subject: [PATCH 7.2 462/733] x86/alternatives: Exclude text poking against change_page_attr()
-Date: Thu, 17 Sep 2026 16:12:50 +0100
-Message-ID: <20260917151403.461525291@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.2 463/733] mm/slab: take n->list_lock in __slab_try_return_freelist() to avoid race
+Date: Thu, 17 Sep 2026 16:12:51 +0100
+Message-ID: <20260917151403.491451234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -57,139 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Harry Yoo (Meta) <harry@kernel.org>
 
-commit 1587d3394e254639cc36516256031334095e6ef3 upstream.
+commit 4a724bcf5d703e18957397914d79156fa2cf1174 upstream.
 
->From time to time, the following BUG can be observed
-in the x86 alternatives patching code [0]:
+Commit ba7425312607 ("mm, slab: add an optimistic
+__slab_try_return_freelist()") incorrectly assumed that nobody has freed
+an object to the slab as long as slab->freelist is NULL and cmpxchg
+succeeds.
 
-  > kernel BUG at arch/x86/kernel/alternative.c:2576!
-  > Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  > CPU: 0 UID: 0 PID: 355 Comm: (udev-worker) Not tainted 7.1.3-1-default #1 PREEMPT(full) openSUSE Tumbleweed  8c1795b03ec64f997e57a8ad38b1161e3b98da64
-  > Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
-  > RIP: 0010:__text_poke+0x2aa/0x450
-  > Call Trace:
-  >  <TASK>
-  >  smp_text_poke_batch_finish+0x2a7/0x320
-  >  __static_call_transform+0xb7/0x220
-  >  arch_static_call_transform+0x5b/0xb0
-  >  __static_call_init+0xe9/0x270
-  >  static_call_module_notify+0x11f/0x150
-  >  notifier_call_chain+0x61/0xe0
-  >  blocking_notifier_call_chain_robust+0x63/0xc0
-  >  load_module+0x1c92/0x20c0
-  >  init_module_from_file+0xd8/0x140
-  >  idempotent_init_module+0x100/0x2f0
-  >  __x64_sys_finit_module+0x71/0xe0
-  >  do_syscall_64+0xe1/0x610
-  >  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+However, as reported by Hyunwoo Kim [1], other CPUs might have freed
+an object to the slab, insert the slab to the partial list, then
+allocated an object from the slab, and be in the middle of removing
+the slab from the list under n->list_lock.
 
-which matches the following BUG_ON() in alternative.c:
+Since __refill_objects_node() puts the slab back on pc.slabs
+outside n->list_lock, it might insert the slab into that list while
+the slab is concurrently being removed from n->partial.
+This led to a list corruption [1]:
 
-	/*
-	 * If something went wrong, crash and burn since recovery paths are not
-	 * implemented.
-	 */
-	BUG_ON(!pages[0] || (cross_page_boundary && !pages[1]));
+  list_add corruption. next->prev should be prev
+  (ffff888100000248), but was dead000000000122.
+  (next=ffffea000416e410).
+  kernel BUG at lib/list_debug.c:29!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  CPU: 1 UID: 65534 PID: 144 Comm: poc Not tainted
+  7.2.0-16172-gcf72cbb39da8-dirty #1 PREEMPT(lazy)
+  RIP: 0010:__list_add_valid_or_report+0x80/0xd0
+  ...
+  Call Trace:
+   alloc_from_new_slab+0x183/0x300
+   ___slab_alloc+0x31c/0x890
+   __kmalloc_noprof+0x3d4/0x800
+   lsm_blob_alloc+0x2d/0x50
+   security_msg_msg_alloc+0x26/0x90
+   load_msg+0x1aa/0x210
+   do_msgsnd+0x91/0x800
+   do_syscall_64+0x109/0x5d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  ...
+  Kernel panic - not syncing: Fatal exception
 
-This can happen if vmalloc_to_page() fails, for any reason. Such can happen
-if text poking races with CPA, which can possibly result in the collapsing
-of page tables (or breaking of PMD hugepages). It is not a problem for most
-users of vmalloc_to_page() (they solely own the vmalloc'd range) but, when
-CONFIG_ARCH_HAS_EXECMEM_ROX=y, various modules own a single execmem vmalloc
-range, and can call set_memory_*() in parallel on it. This can happen to
-race against __text_poke and cause havoc in vmalloc_to_page().
+This is a classic ABA problem where cmpxchg succeeds but the state has
+changed since __refill_objects_node() took the freelist from the slab.
 
-Fix it by excluding against CPA using the init_mm mmap read lock.
+As Vlastimil Babka mentioned [2], it should be rare to return more than
+one slab (due to the racy read of slab->counters in
+get_partial_node_bulk()). Therefore, instead of introducing additional
+complexity, acquire and release n->list_lock twice in the worst case.
 
-[ dhansen: Fix up SoB ordering. The actual code flow here was:
-	   Pedro=>Lorenzo=>Mike=>Me which is reflected in the SoB chain
-	   now. I *believe* Mike simply picked up Lorenzo's update to
-	   Pedro's post from the Link ]
+Return the slab directly to the partial list and hold n->list_lock
+across the cmpxchg and add_partial(). This is similar to the initial
+version of commit ba7425312607 [3]. This is enough to avoid the race as
+the list manipulation is serialized by n->list_lock. While at it,
+bring back unlikely() hint now that the condition is unlikely.
 
-Fixes: 64f6a4e10c05 ("x86: re-enable EXECMEM_ROX support")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Reported-by: Steffen Dirkwinkel <lists@steffen.cc>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Co-developed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/apPa-cGLcyt90l-E@v4bel [1]
+Link: https://lore.kernel.org/linux-mm/ae25c193-b95f-40c1-83b6-1c2546467e41@kernel.org [2]
+Link: https://lore.kernel.org/all/20260421-b4-refill-optimistic-return-v1-1-24f0bfc1acff@kernel.org [3]
+Fixes: ba7425312607 ("mm, slab: add an optimistic __slab_try_return_freelist()")
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.opensuse.org/show_bug.cgi?id=1271202 [0]
-Link: https://lore.kernel.org/linux-mm/555ea1d43a12c30a8f1eaf10c899b3790d728f33.camel@dirkwinkel.cc/
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-3-39b4ff90f91d@kernel.org
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20260903-slab-fix-aba-v3-1-b44cb6badd54@kernel.org
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |   39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ mm/slub.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -6,6 +6,9 @@
- #include <linux/vmalloc.h>
- #include <linux/memory.h>
- #include <linux/execmem.h>
-+#include <linux/cleanup.h>
-+#include <linux/kgdb.h>
-+#include <linux/mmap_lock.h>
- 
- #include <asm/text-patching.h>
- #include <asm/insn.h>
-@@ -2547,6 +2550,38 @@ static void text_poke_memset(void *dst,
- 
- typedef void text_poke_f(void *dst, const void *src, size_t len);
- 
-+static void __poke_vmalloc_pages(struct page **pages, void *addr,
-+				 bool cross_page_boundary)
-+{
-+	pages[0] = vmalloc_to_page(addr);
-+	if (cross_page_boundary)
-+		pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
-+}
-+
-+static void poke_vmalloc_pages(struct page **pages, void *addr,
-+			       bool cross_page_boundary)
-+{
-+	if (in_dbg_master()) {
-+		/*
-+		 * If called from kgdb cannot sleep, but all other CPUs stopped
-+		 * anyway so safe to proceed without locks
-+		 */
-+		__poke_vmalloc_pages(pages, addr, cross_page_boundary);
-+	} else {
-+		/*
-+		 * execmem ROX ranges are shared between modules and can be
-+		 * collapsed to huge PMD entries, and this collapse can happen
-+		 * concurrently with a racing set_memory_rox().
-+		 *
-+		 * Prevent vmalloc_to_page() from racing by acquiring an
-+		 * init_mm read lock which pairs with the init_mm write lock in
-+		 * cpa_collapse_large_pages().
-+		 */
-+		guard(mmap_read_lock)(&init_mm);
-+		__poke_vmalloc_pages(pages, addr, cross_page_boundary);
-+	}
-+}
-+
- static void *__text_poke(text_poke_f func, void *addr, const void *src, size_t len)
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -5612,10 +5612,12 @@ static noinline void free_to_partial_lis
+  *
+  * Fail if the slab isn't full anymore due to a concurrent free.
+  */
+-static bool __slab_try_return_freelist(struct kmem_cache *s, struct slab *slab,
+-				       void *head, int cnt)
++static bool __slab_try_return_freelist(struct kmem_cache *s,
++				       struct kmem_cache_node *n,
++				       struct slab *slab, void *head, int cnt)
  {
- 	bool cross_page_boundary = offset_in_page(addr) + len > PAGE_SIZE;
-@@ -2564,9 +2599,7 @@ static void *__text_poke(text_poke_f fun
- 	BUG_ON(!after_bootmem);
+ 	struct freelist_counters old, new;
++	unsigned long flags;
  
- 	if (!core_kernel_text((unsigned long)addr)) {
--		pages[0] = vmalloc_to_page(addr);
--		if (cross_page_boundary)
--			pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
-+		poke_vmalloc_pages(pages, addr, cross_page_boundary);
- 	} else {
- 		pages[0] = virt_to_page(addr);
- 		WARN_ON(!PageReserved(pages[0]));
+ 	old.freelist = slab->freelist;
+ 	old.counters = slab->counters;
+@@ -5627,9 +5629,15 @@ static bool __slab_try_return_freelist(s
+ 	new.counters = old.counters;
+ 	new.inuse -= cnt;
+ 
+-	if (!slab_update_freelist(s, slab, &old, &new, "__slab_try_return_freelist"))
++	spin_lock_irqsave(&n->list_lock, flags);
++
++	if (!slab_update_freelist(s, slab, &old, &new, "__slab_try_return_freelist")) {
++		spin_unlock_irqrestore(&n->list_lock, flags);
+ 		return false;
++	}
+ 
++	add_partial(n, slab, ADD_TO_TAIL);
++	spin_unlock_irqrestore(&n->list_lock, flags);
+ 	return true;
+ }
+ 
+@@ -7202,10 +7210,8 @@ __refill_objects_node(struct kmem_cache
+ 			void *head = object;
+ 			void *tail;
+ 
+-			if (__slab_try_return_freelist(s, slab, head, count)) {
+-				list_add(&slab->slab_list, &pc.slabs);
++			if (__slab_try_return_freelist(s, n, slab, head, count))
+ 				break;
+-			}
+ 
+ 			do {
+ 				tail = object;
+@@ -7218,7 +7224,7 @@ __refill_objects_node(struct kmem_cache
+ 			break;
+ 	}
+ 
+-	if (!list_empty(&pc.slabs)) {
++	if (unlikely(!list_empty(&pc.slabs))) {
+ 		spin_lock_irqsave(&n->list_lock, flags);
+ 
+ 		list_for_each_entry(slab, &pc.slabs, slab_list)
 
 
