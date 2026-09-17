@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A7E3D3001;
-	Thu, 17 Sep 2026 19:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD883590AE;
+	Thu, 17 Sep 2026 19:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671683; cv=none; b=ciM677XCxyZ5OulE+T0+/FGWHtKJ4IT1GESOzBmWrbe154HLfF03VNTJIwCF4P2jGUishOd/01wnHrwjWdDb0UCMVroZuB6dRTIMKSrXjwI+efA4N/uhjQTp5YKHVcdpAykzQKmjGGS3uATzMPO6K/TlInWB3ZmH9HsElmiPDRw=
+	t=1789671684; cv=none; b=HpljKZ8Ew2+3IYFw6jxoooySrQqlAUTnUiNd7iIartb+jE3bCWbVoZTQarjJN5e//SAtWCd9aVy3UUld/z9cXW0SG+EG1fwIxUh1EaeH7QiWPldE+NGTyk78zNn/REAa7atHVHDKtN2OZOSMjNRvVbr3NlyAxXI9/95d/9cveJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671683; c=relaxed/simple;
-	bh=UYXXltDdNJycU4aYaHv3RgDty1TjLIkA8GoKw5gXjEc=;
+	s=arc-20240116; t=1789671684; c=relaxed/simple;
+	bh=NYfaCRqWxkGb/lIcPDN/rQyvq+os+3RUXKE9SJUhl5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjJ9/qQrjBTXRu1jF3G/BCbuIFGL4e4Cy+DFR38ijvZj3jMvP12HEU/wfVE4LofgtObYKWxhBU3MqB27KYGOwgntCZzcRmO+knlH+NB/0KfNHSGviMLFoS/AvdXMSc3JDSYxdNsbVp3iqKMpghQ0PzE4en5eXeMMg9dE/ZbRUoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJ9z/mMv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3/3tl/nF/OQVlYaie0Ry7/oWfsnKaLshEhh4+FpRJW9OD+6QN+F/lrAei8N73t5tgv9mDrBjhDbr3b8HoBEq/ek1fer/Qb+f6aKpbi/FJAbpSpaEmJ96tMLR49w9JTPjzaRgYksE4OahIWewIcbTuLanoYPtjmpiNPcY7mE49k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha0GMyi4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ9z/mMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5F21F0089D;
-	Thu, 17 Sep 2026 19:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha0GMyi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432421F00893;
+	Thu, 17 Sep 2026 19:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671651;
-	bh=5WPuCgw6b2+hVW6qwF34UT0YPAeOM+Osnbk03cxHlwg=;
+	s=korg; t=1789671675;
+	bh=l9vNX6RbZxrQ28lVKbDwkzmwvuy/r9+Uiwn5mX5TBm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJ9z/mMvXwxSoob/q3rTcqHqGs8lKR23XVg6EZf1synNza4QLuvXHWTSUHuqJPlCs
-	 k4hER9ravs0SikStEdFS0GnFsh37wk+F4JP+WeXarpGnE9pO7MIUm3Hdp1vlzcC7/W
-	 JOJ9jmv365IxBTTRcd9JUENOzWoDr1G9I5IEcp4Q=
+	b=ha0GMyi4p+DfW0QyJxEX4BNQDp7d7U52YZY0ls4YgUwB+8yJHFyrlMQToL9JVO7HY
+	 Zxw0Ivn+2zfbmFuo2Cuf/OopI9Mo4lZPbM+7GoqSHfnx8oSamgBDN1fGgowmLaTc56
+	 epU6/slvr6Vh4yfH6kPuOjSC7cVCnhT+cum6+AXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko@linuxfoundation.org>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Rosalie Wanders <rosalie@mailbox.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1008/1102] cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read
-Date: Thu, 17 Sep 2026 16:15:51 +0100
-Message-ID: <20260917151606.052398665@linuxfoundation.org>
+Subject: [PATCH 6.12 1055/1102] HID: sony: use guard() and scoped_guard()
+Date: Thu, 17 Sep 2026 16:16:38 +0100
+Message-ID: <20260917151607.296869106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,74 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Bowman <terry.bowman@amd.com>
+From: Rosalie Wanders <rosalie@mailbox.org>
 
-[ Upstream commit 29458e62d0829cbc99435f3e44fd560f9bbf1da7 ]
+[ Upstream commit da4f817ad273bca9aefd8636d347a8c101069111 ]
 
-cxl_rch_get_aer_info() copies the RCH Downstream Port AER capability from
-the RCRB MMIO block using a readl() loop bounded by sizeof(struct
-aer_capability_regs). This struct is a software layout and its embedded
-struct pcie_tlp_log is larger than the on-wire AER capability. As a
-result the loop reads past the mapped AER register block.
+This replaces the spin_lock_irqsave() and spin_unlock_irqrestore() calls
+with the RAII guard() and scoped_guard().
 
-The over-read also populates the software-only tail fields including
-header_log.header_len. An out-of-range header_len passed to
-pcie_print_tlp_log() can then loop past the header log buffer and cause
-a second out-of-bounds read.
-
-The read was correct when introduced, but struct pcie_tlp_log has since
-grown (Header Log and TLP Prefix Log sizes, header_len and flit fields),
-so sizeof(struct aer_capability_regs) no longer matches the physical AER
-capability.
-
-Bound the read to the physical AER registers, header through the 16 byte
-Header Log. Zero the destination first so the software-only fields are
-deterministic.
-
-Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
-Reported-by: Sashiko <sashiko@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260803221810.3685703-2-terry.bowman@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 7c65699a3a31 ("HID: sony: clean up device list on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/ras_rch.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/hid/hid-sony.c |   53 ++++++++++++++++++++-----------------------------
+ 1 file changed, 22 insertions(+), 31 deletions(-)
 
---- a/drivers/cxl/core/ras_rch.c
-+++ b/drivers/cxl/core/ras_rch.c
-@@ -58,13 +58,28 @@ void cxl_disable_rch_root_ints(struct cx
- static bool cxl_rch_get_aer_info(void __iomem *aer_base,
- 				 struct aer_capability_regs *aer_regs)
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -27,6 +27,7 @@
+  * There will be no PIN request from the device.
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/hid.h>
+ #include <linux/module.h>
+@@ -520,14 +521,12 @@ static void sony_set_leds(struct sony_sc
+ static inline void sony_schedule_work(struct sony_sc *sc,
+ 				      enum sony_worker which)
  {
--	int read_cnt = sizeof(struct aer_capability_regs) / sizeof(u32);
-+	/*
-+	 * Bound the copy to the physically-defined AER registers (header
-+	 * through the 16-byte Header Log). struct aer_capability_regs is a
-+	 * software layout whose embedded struct pcie_tlp_log is larger than
-+	 * the on-wire AER capability; copying sizeof(*aer_regs) would
-+	 * over-read the RCRB-mapped MMIO block.
-+	 */
-+	int read_cnt = (PCI_ERR_HEADER_LOG + 16) / sizeof(u32);
- 	u32 *aer_regs_buf = (u32 *)aer_regs;
- 	int n;
+-	unsigned long flags;
+-
+ 	switch (which) {
+ 	case SONY_WORKER_STATE:
+-		spin_lock_irqsave(&sc->lock, flags);
+-		if (!sc->defer_initialization && sc->state_worker_initialized)
+-			schedule_work(&sc->state_worker);
+-		spin_unlock_irqrestore(&sc->lock, flags);
++		scoped_guard(spinlock_irqsave, &sc->lock) {
++			if (!sc->defer_initialization && sc->state_worker_initialized)
++				schedule_work(&sc->state_worker);
++		}
+ 		break;
+ 	}
+ }
+@@ -796,7 +795,6 @@ static const u8 *sony_report_fixup(struc
+ static void sixaxis_parse_report(struct sony_sc *sc, u8 *rd, int size)
+ {
+ 	static const u8 sixaxis_battery_capacity[] = { 0, 1, 25, 50, 75, 100 };
+-	unsigned long flags;
+ 	int offset;
+ 	u8 battery_capacity;
+ 	int battery_status;
+@@ -818,10 +816,10 @@ static void sixaxis_parse_report(struct
+ 		battery_status = POWER_SUPPLY_STATUS_DISCHARGING;
+ 	}
  
- 	if (!aer_base)
- 		return false;
+-	spin_lock_irqsave(&sc->lock, flags);
+-	sc->battery_capacity = battery_capacity;
+-	sc->battery_status = battery_status;
+-	spin_unlock_irqrestore(&sc->lock, flags);
++	scoped_guard(spinlock_irqsave, &sc->lock) {
++		sc->battery_capacity = battery_capacity;
++		sc->battery_status = battery_status;
++	}
  
-+	/*
-+	 * Zero the destination so the software-only tail fields
-+	 * (e.g. header_log.header_len) are deterministic rather than
-+	 * left as uninitialized stack, which could drive a bogus loop
-+	 * length in pcie_print_tlp_log().
-+	 */
-+	memset(aer_regs, 0, sizeof(*aer_regs));
-+
- 	/* Use readl() to guarantee 32-bit accesses */
- 	for (n = 0; n < read_cnt; n++)
- 		aer_regs_buf[n] = readl(aer_base + n * sizeof(u32));
+ 	if (sc->quirks & SIXAXIS_CONTROLLER) {
+ 		int val;
+@@ -1624,15 +1622,14 @@ static int sony_battery_get_property(str
+ 				     union power_supply_propval *val)
+ {
+ 	struct sony_sc *sc = power_supply_get_drvdata(psy);
+-	unsigned long flags;
+ 	int ret = 0;
+ 	u8 battery_capacity;
+ 	int battery_status;
+ 
+-	spin_lock_irqsave(&sc->lock, flags);
+-	battery_capacity = sc->battery_capacity;
+-	battery_status = sc->battery_status;
+-	spin_unlock_irqrestore(&sc->lock, flags);
++	scoped_guard(spinlock_irqsave, &sc->lock) {
++		battery_capacity = sc->battery_capacity;
++		battery_status = sc->battery_status;
++	}
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_PRESENT:
+@@ -1714,10 +1711,9 @@ static inline int sony_compare_connectio
+ static int sony_check_add_dev_list(struct sony_sc *sc)
+ {
+ 	struct sony_sc *entry;
+-	unsigned long flags;
+ 	int ret;
+ 
+-	spin_lock_irqsave(&sony_dev_list_lock, flags);
++	guard(spinlock_irqsave)(&sony_dev_list_lock);
+ 
+ 	list_for_each_entry(entry, &sony_device_list, list_node) {
+ 		ret = memcmp(sc->mac_address, entry->mac_address,
+@@ -1731,26 +1727,23 @@ static int sony_check_add_dev_list(struc
+ 				"controller with MAC address %pMR already connected\n",
+ 				sc->mac_address);
+ 			}
+-			goto unlock;
++			goto out;
+ 		}
+ 	}
+ 
+ 	ret = 0;
+ 	list_add(&(sc->list_node), &sony_device_list);
+ 
+-unlock:
+-	spin_unlock_irqrestore(&sony_dev_list_lock, flags);
++out:
+ 	return ret;
+ }
+ 
+ static void sony_remove_dev_list(struct sony_sc *sc)
+ {
+-	unsigned long flags;
+-
+ 	if (sc->list_node.next) {
+-		spin_lock_irqsave(&sony_dev_list_lock, flags);
+-		list_del(&(sc->list_node));
+-		spin_unlock_irqrestore(&sony_dev_list_lock, flags);
++		scoped_guard(spinlock_irqsave, &sony_dev_list_lock) {
++			list_del(&(sc->list_node));
++		}
+ 	}
+ }
+ 
+@@ -1878,12 +1871,10 @@ static inline void sony_init_output_repo
+ 
+ static inline void sony_cancel_work_sync(struct sony_sc *sc)
+ {
+-	unsigned long flags;
+-
+ 	if (sc->state_worker_initialized) {
+-		spin_lock_irqsave(&sc->lock, flags);
+-		sc->state_worker_initialized = 0;
+-		spin_unlock_irqrestore(&sc->lock, flags);
++		scoped_guard(spinlock_irqsave, &sc->lock) {
++			sc->state_worker_initialized = 0;
++		}
+ 		cancel_work_sync(&sc->state_worker);
+ 	}
+ }
 
 
