@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7514ED1BA;
-	Thu, 17 Sep 2026 15:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421F04EFFD5;
+	Thu, 17 Sep 2026 15:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660571; cv=none; b=AXvOj9nVxFJQCavx074wOUO0m9fErPC6eQ29zqdIRPKhOVJk33/Xf91WAa8+hsQfe1BlS1H/eMJn4lQVz3UsmlboJ2onji/Fawah7PYbhaQIDz+vPytsoKsk1PTG6hzwexYZERpZygPnk8KFn+6lww5Vd12lx7taaek/GUKW/Sw=
+	t=1789660574; cv=none; b=c28O+g6E4CvQPe1owsrqZl4C/20xoizpu0y7Mlh4Y2D88KBjMqskotOw8bsSz/jnDkv6qG1XEWnKtJB/6PF98xZC/u9Mj3H40yMWhaFQ+KdvaqULWCTYYFSDyoEIYZDgA3i/0490HhxUqNP1jgvIE+B6k+G65FRwGoNHk1l80H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660571; c=relaxed/simple;
-	bh=m0LulyMdre23i9Il+cdBNTkZNkR6W1gE3RCSzI8IWzs=;
+	s=arc-20240116; t=1789660574; c=relaxed/simple;
+	bh=LWNCv6fmCGU7tWGLpDsfyllkFG2cJVkm8VMeiGJWzfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lxjqix+r0V+0RGqhxVEUBb0uFzDXaKKoFOiwjy99zHavNDrLi4IuUDLj7R3SD7kchM/VlQhQKgKXNQ977h2ATYM61TAEYGNx1SyxO/GwKukljeaOnxrWSpBKO23Mh/WB2mZccd/inSlJ2SfbIdwm84MFY8RXzLYBa7nsMVM23vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kglnw1pi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qm2noYq1rJMXw58r+kF2Uois/3vReqkwHyOhWmdJngs8Qt7aEMfR/QXd85iiptUzKUS/EnscJhNGmNaUQ7I2KV14iamvF508rsM3hD7xA19bkdcVitZzLihI8/ClU0AyOCFLFLrqYyrYYK1kkTt20TLeFKznMjoh44wWDt1yVA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMAmqE+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kglnw1pi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28D51F000FF;
-	Thu, 17 Sep 2026 15:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMAmqE+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949711F000FF;
+	Thu, 17 Sep 2026 15:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660570;
-	bh=un4pBvTL8u93gi/bc91xCPfIzJk5Xeot5ghR2JhL6Dw=;
+	s=korg; t=1789660573;
+	bh=eEekKH46o5oW21f5Ua+1K5tBZjxzWZHW/k+x702QhXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kglnw1pii6hH9ZgQnufu6sIGmUdqnh73Up3dbZ1Nq2gIBlwTKrx5fdSAMAQhsc8uT
-	 L2lEuX80/qKmFNvrgBPBlgJyCxNCs+kMAun7hXPrWUWR4yKbAzENt/2HIIMXq8P3+O
-	 Y0R0odOBC5oGFUD/IopTXz9eEVqFO5ckAoRaSQHo=
+	b=vMAmqE+N/stSP67lSWkNy6y4LsSSA9bu14lJvp8car+QGWIHLIfFUtj1ra5p9DBmS
+	 +qhwyYiGpQ+8uI16aUNm0cTaUxBYTQrulo1A2oInwktgvr+COmm7MY58hADZ8pGL3W
+	 iiRwXDCYt7Clt9ATqa3U4Dv+lAxSwl+aFmpkCfvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 619/733] selftests: mptcp: lib: get counters for the right test
-Date: Thu, 17 Sep 2026 16:15:27 +0100
-Message-ID: <20260917151407.957616584@linuxfoundation.org>
+	Bjoern Doebel <doebel@amazon.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 637/733] smb: client: avoid leaking refcount in cifs_queue_oplock_break()
+Date: Thu, 17 Sep 2026 16:15:45 +0100
+Message-ID: <20260917151408.456865142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,71 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Bjoern Doebel <doebel@amazon.de>
 
-commit d23c41366e85f149b48323d66adc36c4a9f18cbd upstream.
+commit 9f2e63f1b2d5fc5b5423424902c091123e220e7e upstream.
 
-When the value for a MIB counter is required, mptcp_lib_get_counter is
-called. It tries to use the cache, if available. If not it falls back to
-calling 'nstat' directly by looking at the absolute counters.
+cifs_queue_oplock_break() unconditionally takes a reference on the
+target file before queueing cifs_oplock_break(). Only that work item
+decreases the reference counter again.
 
-That's an issue for tests that don't recreate the netns for each
-subtest. In this case, 'nstat -a' will look at the counters for the
-netns.
+If another oplock break arrives while that work is still queued,
+queue_work() will return false and not queue this second work item. As a
+result, we will never reach the point to drop the file reference again
+and are leaking this reference. This can be triggered when interacting
+with a slow-responding server.
 
-Instead, it should look at the increment for the current test, by using
-the history recorded in /tmp/<ns>.nstat, if available, and not using
-'-a' which was dumping the absolute values.
+As a result, later unmount operations for this file system will fail with
 
-While at it, rename the previous 'hist' variable to 'cache' as it was
-used to look at the cache, not the nstat history.
+  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
+  VFS: Busy inodes after unmount of cifs (cifs)
+  kernel BUG at fs/super.c:777!
 
-Fixes: 71388a9f331d ("selftests: mptcp: lib: get counters from nstat history")
+Fix this by only incrementing the reference count if the work has been
+queued successfully. Taking it after queue_work() is safe because all
+three callers hold tcon->open_file_lock across the call and
+_cifsFileInfo_put() decrements under that same lock, so a worker that
+starts the handler in the window cannot drop the reference before it has
+been taken.
+
+Fixes: b98749cac4a69 ("CIFS: keep FileInfo handle live during oplock break")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-12-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_lib.sh | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/smb/client/misc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_lib.sh b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-index da1da414c30f..b9d14647f401 100644
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -416,19 +416,21 @@ mptcp_lib_nstat_get() {
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -378,10 +378,11 @@ void cifs_queue_oplock_break(struct cifs
+ 	 * open_file_lock to enforce the validity of it for the oplock
+ 	 * break handler. The matching put is done at the end of the
+ 	 * handler.
++	 *
++	 * Only take a reference if the work is actually queued.
+ 	 */
+-	cifsFileInfo_get(cfile);
+-
+-	queue_work(cifsoplockd_wq, &cfile->oplock_break);
++	if (queue_work(cifsoplockd_wq, &cfile->oplock_break))
++		cifsFileInfo_get(cfile);
  }
  
- # $1: ns, $2: MIB counter
--# Get the counter from the history (mptcp_lib_nstat_{init,get}()) if available.
--# If not, get the counter from nstat ignoring any history.
-+# Get the counter from the cache (mptcp_lib_nstat_{init,get}()) if available.
-+# If not, get the counter from nstat ignoring any cache, but using the history.
- mptcp_lib_get_counter() {
- 	local ns="${1}"
- 	local counter="${2}"
--	local hist="/tmp/${ns}.out"
-+	local cache="/tmp/${ns}.out"
-+	local hist="/tmp/${ns}.nstat"
- 	local count
- 
--	if [[ -s "${hist}" && "${counter}" == *"Tcp"* ]]; then
--		count=$(awk "/^${counter} / {print \$2; exit}" "${hist}")
-+	if [[ -s "${cache}" && "${counter}" == *"Tcp"* ]]; then
-+		count=$(awk "/^${counter} / {print \$2; exit}" "${cache}")
- 	else
--		count=$(ip netns exec "${ns}" nstat -asz "${counter}" |
--			awk 'NR==1 {next} {print $2}')
-+		count=$(NSTAT_HISTORY="${hist}" ip netns exec "${ns}" \
-+			nstat -sz "${counter}" |
-+				awk 'NR==1 {next} {print $2}')
- 	fi
- 	if [ -z "${count}" ]; then
- 		mptcp_lib_fail_if_expected_feature "${counter} counter"
--- 
-2.55.0
-
+ void cifs_done_oplock_break(struct cifsInodeInfo *cinode)
 
 
