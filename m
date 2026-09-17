@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557484F3939;
-	Thu, 17 Sep 2026 15:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F1F4EFFA6;
+	Thu, 17 Sep 2026 15:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659823; cv=none; b=LB2Jf6EFSfLkATDNlJ6We8DVM/c/EjKa25cUPFAAUceqaYXlurA7SSJRLMOF83rS0ozGsHaoeUleqa3mUQ+Z2xq64fHfqSxlatqWz7Mv2ZTUbTDlHwvM3nTw36s7YjolCnXBbkIOl6OhPZru7zqB/WnbLcAx9EM2a8e0aC0o6Q8=
+	t=1789659825; cv=none; b=UaofmRoUACgzaJqkpKQQyrf3R7n+9YD7ijYK8zQ9AD6r4XR0FO7MEOs9fnaftgChkTJaq4BNjCqnx9+mN2ywzYKwy8X5pisg2ZYw6kZ+ApdwusWQu+rCFyP9VPJVngMbli44D3dL4JYqBRVZaoQ0TSO8izMVgk0//7EIlA2DAz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659823; c=relaxed/simple;
-	bh=X2X8xo6gUg3rTg91M78e0FBPUKgOOCcoAuvPwCkHEMM=;
+	s=arc-20240116; t=1789659825; c=relaxed/simple;
+	bh=lv9Ib/lMkn317skQnwFpqe9G/b/UVHpt5LBNdI1R9m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyIa+s+qMXNMEmPAQ7I3JULHMVhVbcjyW99a3AeVGyncL77ArNu65JtrgxbGQBS6+87sGzfBA3wQXA5v45nxq0z65dzj0FS9k/ur3GJrEwg6m8YtirxkVhrc3nonh23zEKiQSxAvBZbv1SwdWSZ5Uq1r0S8jJ8RGCkEDVYwtyO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EiFG2uri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ej036sYCTAwxrAGDOu16Fa1XZUCuFnHj9Prndjhfhp5QoSIjQ5WMMkWgxWEBQlnT7LY3qZh/pnqcr/pJ56PBZvzkOw00yXJwfSRW0DF2I7hlqqKBgKS+q6i5Y9dcN1pzHSNNEa1TLMEYBT5B5hpZWE1GAp2wvdjJwkDkXIqAifc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvQRE+lf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EiFG2uri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BD91F0089A;
-	Thu, 17 Sep 2026 15:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvQRE+lf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E6F1F0089B;
+	Thu, 17 Sep 2026 15:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659809;
-	bh=VE7qEASRGEGylF0wNmQU3eSR+PaHOD4SkGzJiGOUCIM=;
+	s=korg; t=1789659818;
+	bh=yKYrKCS5UlWEVTanjHODbF3qnXcha75VPa99Gnmt/Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EiFG2uriPkpFbusn320EdGThqYhr7fXqxyRm7IN25uOZm1pJRoZuyzd7nHNd+IMgt
-	 rjKd9yHPkm2yogCvSf63zfSXhkKSzTWf7HGxsnQNNLgD6N1kIasqtyz3VTdMLI/sTa
-	 z4CsmR7+wmCTa+ApbnEnctwGpDKjDgn4dkvJNibQ=
+	b=jvQRE+lfGTMhMfy+IKagZI+65JlpihNIpKbamKsk+wYkbJBBL1JZwivR4rzB/NP0v
+	 jJb9/yZ5JALHnVj9r9UrKzth3uHNQ+9xHujka0u5WVvfU+TeOmX+FoqXvYBzZLK3Jv
+	 J8aDNO+fgtR8fGHsiMBLqegljrkbwb5q+J65ZiFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 382/733] Bluetooth: btusb: Fix leaked runtime PM reference in btusb_reset
-Date: Thu, 17 Sep 2026 16:11:30 +0100
-Message-ID: <20260917151401.202336817@linuxfoundation.org>
+Subject: [PATCH 7.2 385/733] net: macb: destroy the phylink instance on the probe error path
+Date: Thu, 17 Sep 2026 16:11:33 +0100
+Message-ID: <20260917151401.284525413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit c93922dd316b7273a8667d29084632066fa8a2d3 ]
+[ Upstream commit 7d059f390750152b9bd69df934198651b94fc26d ]
 
-btusb_reset calls usb_autopm_get_interface to resume the device
-before queuing a reset of it, but never calls the matching
-usb_autopm_put_interface.
+macb_mii_init() creates a phylink instance on both of its success paths,
+but the probe unwind frees the netdev without destroying it, so a failing
+macb_alloc_tieoff() or register_netdev() leaks the instance.
 
-usb_queue_reset_device ends up in usb_reset_device(), and since
-btusb provides no pre_reset/post_reset callbacks the interface is
-merely unbound and rebound: the interface device object survives
-this cycle, and so does its PM usage count, which is not cleared
-when the driver is unbound.
+Destroy it at err_out_unregister_mdio, which is only reachable once
+macb_mii_init() has succeeded, so bp->phylink is valid there.
 
-As a result every reset permanently leaks a PM usage reference,
-preventing the interface from being runtime suspended again until
-it is unbound.
-
-Set BTUSB_RESET flag before usb_queue_reset_device so that
-btusb_disconnect drops the reference. If the flag is already set,
-drop one reference.
-
-Fixes: c9209b269afd ("Bluetooth: btusb: Introduce generic USB reset")
-Assisted-by: Claude:qwen3.8-max
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 7897b071ac3b ("net: macb: convert to phylink")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260907210856.1673589-2-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index f91a828f4b23b..84f55f67523e0 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1047,13 +1047,15 @@ static void btusb_reset(struct hci_dev *hdev)
- 	int err;
- 
- 	data = hci_get_drvdata(hdev);
--	/* This is not an unbalanced PM reference since the device will reset */
- 	err = usb_autopm_get_interface(data->intf);
- 	if (err) {
- 		bt_dev_err(hdev, "Failed usb_autopm_get_interface: %d", err);
- 		return;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 55ed40a0a6062..404aebe01ed01 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5968,6 +5968,7 @@ static int macb_probe(struct platform_device *pdev)
+ 		mdiobus_unregister(bp->mii_bus);
+ 		mdiobus_free(bp->mii_bus);
  	}
++	phylink_destroy(bp->phylink);
  
-+	if (test_and_set_bit(BTUSB_RESET, &data->flags))
-+		usb_autopm_put_interface_no_suspend(data->intf);
-+
- 	bt_dev_err(hdev, "Resetting usb device.");
- 	usb_queue_reset_device(data->intf);
- }
+ err_out_phy_exit:
+ 	phy_exit(bp->phy);
 -- 
 2.53.0
 
