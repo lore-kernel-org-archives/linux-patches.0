@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9B84D7D2F;
-	Thu, 17 Sep 2026 17:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A05F4F93DE;
+	Thu, 17 Sep 2026 17:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666826; cv=none; b=sGgruW4oZRhKGuVliOq5SqboIEHYsIiJb9i9yg8B4a1JPHqKd03w3X4MAfTcV5FuaCDoVYwaAWgysc96rGpwZJwxH/V+dAt9qNdwQlabBnalWyQIVEQKk/lLrpQfT123yQaICKJCvrgCdT+N6nNFr5rBOWeY/tr1qiXAQUuH3ds=
+	t=1789666829; cv=none; b=P9Vaklge68zcmIXF+SLXaQZ9c6OB18re1av5OYg2720SqEvj84w6fQvV7B23ZefddZvlcuK+ioG+kICOrJ4vxJ9qDybBecxN04yFPMLSTV3d3kaqVxDHkDrhfzzQGhXpwrfOIqgOp9NKnjPbE+5munWZP7m5qNooAa0c/IuD8cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666826; c=relaxed/simple;
-	bh=rmreQYyK/qu4qA1f6eJlm8GquT5bQAQ0Mb7G//dU5Dw=;
+	s=arc-20240116; t=1789666829; c=relaxed/simple;
+	bh=6isCj7vtCxAnqB2l2DbBKsQHdoy6rHgtdGUz6kynkxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNe7QfJEBs34JbBt2yiOhJ4sFs7GEqOy1E9XorcpmlwHKEJjXP+392CaxZoMztiIOOfWsjuUh8xDFJT0hsIoD86zpbPKzuuWuOn4ZBem9XcRcpbx0zPqEyM+O2N0FMGAT8RTYIlqGtQSljeYyA5UKZEPfZzOTCDw2LrTcAGU0nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0CyO1Im; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=caFQwkrZjPRU6dOqadoscpuGZCtwJm4Pfx/YH+1vELAGllviWMresp2l1+vFgEYnT29nU2WxaSFwUw1a2a68LcgnpxudE08fdBc8D4kAEB8IYRL/iLjY63L6kk/Djnb0ugpHfIfccBR/uoEXxHbLHp2+phay1LQP7jMR25jRwlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKpw4DQY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0CyO1Im"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706B71F000FF;
-	Thu, 17 Sep 2026 17:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKpw4DQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D00E1F000FF;
+	Thu, 17 Sep 2026 17:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666825;
-	bh=NnlZEYxUPMXxyRJTjIkU34JpI9ZqUEqc/65wvnqMFp0=;
+	s=korg; t=1789666827;
+	bh=IPzizOLn4oW9TAFNQVY0D5BG2JckjOGuA/uPQa8Tk9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0CyO1ImngDMdyOBmqDEcpKbxEKMA7Ofe8kHs208zxrhL4HfAlg20FlrQMcZEOZaA
-	 V8fnAnnAW7bll3pt8BSq0lBFkJuQChAkA9OEK2hxFyv0U6FR/FVrULuoBx7wtubZ2T
-	 RUuyNKhNAuwgrRFJFtSWuxJWvg5wjXogkQrkAp7M=
+	b=fKpw4DQYOAJrDym38D8ABnYltfivJXQU59L53O83nkCGs7hjbD91vz/qLD4StEj+0
+	 vyo8d2AiODYHiGZ3jZbVBWEgJ5/YuzZsuhVqGBVcjUGGCsariuSh6bfku1X+XhqNCb
+	 D5Y4dRJEBpCxXS4lxmudsYG5rtIh5OLeQz8FFpFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1136/1250] Revert "arm64: dts: qcom: sm8650: Fix the PCIe iommu-map entries"
-Date: Thu, 17 Sep 2026 16:15:31 +0100
-Message-ID: <20260917151623.039192817@linuxfoundation.org>
+Subject: [PATCH 6.18 1137/1250] Revert "arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries"
+Date: Thu, 17 Sep 2026 16:15:32 +0100
+Message-ID: <20260917151623.066685979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -49,39 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit f418e83ac1abec16df99e36185c44b7a08c2aaf7.
+This reverts commit e8a7928da474e5e944f4747b096cc8515b3ffb73.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 8 ++++----
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 349ce22c6b686..6c775ef20cb0a 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -3626,8 +3626,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index e38d3ea19e7dd..479c94f5066f3 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -2009,8 +2009,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 			operating-points-v2 = <&pcie0_opp_table>;
- 
--			iommu-map = <0     &apps_smmu 0x1400 0x0 0x1>,
+ 			msi-map = <0x0 &gic_its 0x1400 0x1>,
+ 				  <0x100 &gic_its 0x1401 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
 -				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
-+			iommu-map = <0     &apps_smmu 0x1400 0x1>,
++			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
 +				    <0x100 &apps_smmu 0x1401 0x1>;
  
- 			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH 0>,
- 					<0 0 0 2 &intc 0 0 GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH 0>,
-@@ -3806,8 +3806,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -2175,8 +2175,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 			operating-points-v2 = <&pcie1_opp_table>;
- 
--			iommu-map = <0     &apps_smmu 0x1480 0x0 0x1>,
+ 			msi-map = <0x0 &gic_its 0x1480 0x1>,
+ 				  <0x100 &gic_its 0x1481 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1480 0x0 0x1>,
 -				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
-+			iommu-map = <0     &apps_smmu 0x1480 0x1>,
++			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
 +				    <0x100 &apps_smmu 0x1481 0x1>;
  
- 			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH 0>,
- 					<0 0 0 2 &intc 0 0 GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH 0>,
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
 -- 
 2.53.0
 
