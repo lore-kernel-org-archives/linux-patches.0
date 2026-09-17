@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2F82417DE;
-	Thu, 17 Sep 2026 18:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC139547046;
+	Thu, 17 Sep 2026 18:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668390; cv=none; b=IoyY6ulUroGVhPN0OkTNc6EyjLB3rb2MCWXCZ8YrG5KSWgUx4VkIJhBIcwOw/Th+oDM2ldAFoZRiBjvvkvGVYOQ6R8hwzJrPlIUOv/Kwvaq+Nj/y1IUQGHAugbSz8uksxQIblfJyPSSQz0+gSxMIudZUOfy3Z6I72GsvZsfAwQk=
+	t=1789668393; cv=none; b=FQGwBmyfmL1+iUJC7bBadV/6bnPR55dlC6eo01jpTnk7JxO4+Xo4f2RJf7Qc1JjBqDIPdmSsLW3yjTShdaGUKfF9Ltr5M8Bt81SUnmxwb6UTCs6AOzEBk9sLPDR1/cjuDv/GpDdzQ5GWtFZmaoNn+3iF81xk5LbKmx9XzDbTrHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668390; c=relaxed/simple;
-	bh=L8YHd+6rm6iJX4W1dn/mCV9F2CaGzzAf0uVsqzL7PCI=;
+	s=arc-20240116; t=1789668393; c=relaxed/simple;
+	bh=zcJD/G4EIpOyQ47JWQPjODWWmBy+RUc+Bn8+QWllO7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJebissUE51KB9gpchnv1Qm0Ial9SGJxkShNs4ixJ8EFlbzNTp90TfNFfVNVdvq6yov0mMl9m0O+eJPcRT7uut3A4SzuMipbBA0LNvGd3HJetbGcDRB32FYGyWPo9GsLiHYNfhfUUgQEg5rOArVUJLjlamyE136v0wOGuoMFkIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7RBmS0O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gIAfPCAQnf+37o4GADWTg30vBGDi4C5HZ1b/3L6lP45AOm5nx1IfmlXkf2bG3Hr9i+cHm3r9JCB9V8/jMSAOOCVmhYfHi4td3BRIMF3vIe1pH2jYUYoBTHUA1VlioSgbc8lbpgsXNM0I7PhYK6wfcIXMGMs6VU+0towwgZ7VsPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDHez/Sn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7RBmS0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2391F000FF;
-	Thu, 17 Sep 2026 18:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDHez/Sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD0E1F000FF;
+	Thu, 17 Sep 2026 18:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668389;
-	bh=9Hiqdztd5jSYozL8AfB9l5WfdBKu1gy5YFb5JE1gk/0=;
+	s=korg; t=1789668392;
+	bh=D6QIJwDg8EAwsBR9xIrzI15io3Yan2w2E88i11QAhKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7RBmS0OQU/GPjqNjHLYiNAVwDz7IgD1/x0rg0t13byhB4ubKIm5uidCFMcgGV8mm
-	 TYGNDg18P8YoSEdzFwp/Ba/UvKdPxR0YPaNOTTM79i2M1bOcvm1M5X7gp/EDRodyXk
-	 ko4Q2CM2NOImh0P2YT6fqH6GFC/BpfD7CvDCpWN0=
+	b=LDHez/Snvz4GfXguHaxDnj6AjMjCMAWWPUQz1m+CX6u0kkinLEu3cIsNVh5GMs7Ee
+	 h10nk+Qdf6uTLLwbkPBo/ULz/MnZ7nrB5QT4qPNs4a+TmPIkoTGCGIVsZxXK19eDl1
+	 5PSr0//SHKoGWUpx2uDxPeGbi6icsYmmrywREZ04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0369/1102] ASoC: tas2781: Update default register address to TAS2563
-Date: Thu, 17 Sep 2026 16:05:12 +0100
-Message-ID: <20260917151548.914465736@linuxfoundation.org>
+Subject: [PATCH 6.12 0370/1102] spi: core: Abort active target transfer on controller suspend
+Date: Thu, 17 Sep 2026 16:05:13 +0100
+Message-ID: <20260917151548.940758536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,37 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit 64184f07e7516eb3ac1839387eb7cbe2dbeaa96f ]
+[ Upstream commit c1bab046d4786c5b17aab7c5225bf0d4a2a2d19b ]
 
-The previous TAS2781 address is overwritten during calibration,
-so switching to the TAS2563 address is required.
+When an SPI controller operating in target mode has a transfer in
+progress at the time of system suspend, the suspend path proceeds
+without aborting the ongoing transfer. This can leave the hardware in
+an inconsistent state, potentially causing the system to hang or fail
+to resume cleanly.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20260625102815.20043-1-baojun.xu@ti.com
+Fix this by invoking the controller's target_abort callback from
+spi_controller_suspend() when the controller is in target mode and the
+callback is registered. This ensures any active target transfer is
+cleanly terminated before the controller is suspended.
+
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260625-abort_active_transfer_duirng_s2r-v2-1-1d6f724406b6@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/sound/tas2781.h b/include/sound/tas2781.h
-index 8cd6da0480b79..a9ccbbd1945c4 100644
---- a/include/sound/tas2781.h
-+++ b/include/sound/tas2781.h
-@@ -50,9 +50,9 @@
- #define TASDEVICE_I2CChecksum		TASDEVICE_REG(0x0, 0x0, 0x7E)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 9374c057f7ccb..780a8c4bef392 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -3527,6 +3527,9 @@ int spi_controller_suspend(struct spi_controller *ctlr)
+ {
+ 	int ret = 0;
  
- /* XM_340 */
--#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x63, 0x3c)
-+#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x02, 0x4c)
- /* XM_341 */
--#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x63, 0x38)
-+#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x02, 0x64)
- 
- /* Volume control */
- #define TAS2563_DVC_LVL			TASDEVICE_REG(0x00, 0x02, 0x0C)
++	if (ctlr->cur_msg && spi_controller_is_target(ctlr) && ctlr->target_abort)
++		ctlr->target_abort(ctlr);
++
+ 	/* Basically no-ops for non-queued controllers */
+ 	if (ctlr->queued) {
+ 		ret = spi_stop_queue(ctlr);
 -- 
 2.53.0
 
