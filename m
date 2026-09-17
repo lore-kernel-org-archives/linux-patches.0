@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90A14F3EDA;
-	Thu, 17 Sep 2026 17:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66BE50E5B2;
+	Thu, 17 Sep 2026 17:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666205; cv=none; b=ZXcXKevdL/tehAmbDRB+ql+Z22/sV02FbbNjNDkymvOSa/8OoJ0Aja/IUzqAaoclOJkOxc+U7ryQ4+l+IULy3guoyjTKyuQPOlZ0GVh9x/YRG9DSnvmVPa66gvropjLVGJjLsEPice3UPEbuw4OJstZFIckubHlaaeLg1+gXf+s=
+	t=1789666208; cv=none; b=ToXMZ2+/QTi5VP32MVl/aX2xDPbv2fcuOug0tRk8W8TeouUvjSEBva8jbFUYCzbXrpzpoXBiTyJtDsLk0QKQg/UITESWmjWoasIZqqVF5qt76RVOKfk/0hFqAZBnhR6ROqkXPOF/b2JNOPbXPHbJRAcYbJD8ppg57gNgFFg/RLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666205; c=relaxed/simple;
-	bh=GdkBTSfXQw1g3LSDjOtshsQ61RsNNpRoPqNXpm+/hv8=;
+	s=arc-20240116; t=1789666208; c=relaxed/simple;
+	bh=aZ1Dmf0tXU+9s/Mcq9D+NzK/H0GCYM5u6aP18zmdPJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1eXqoHO29+WqTbWeIyD63XLf6fhycX3j6yJgJy5Y61MfvfE3l+YK/D23C8pamKnb0AFawsOY0e0+fZtlwZ+E9jzMoBCvoGSvmnp/vWgvA29T3s6EjbjJyHX7cY/x1JncWU6t5c2Q4ljYXdA/9i1wmI6upCGiWCdlxsXBGoQIcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiAQjBYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DIvcp733Y4FNri8VtXMMiPMN4ZYw5S24b4JP7m8L1YfWs/wra77kiRMQI98KH8vOkhRo8hUvPojjm9/h4mls+p7v5k4bXq7QF2ubZjfHHedsHfdkBnrkiPqtSJQHt45GDrx5cBvK5hkkJyf3w8qPZwKl1zKZ12E9uz1fhBf0T5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPXudm8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiAQjBYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6101A1F000FF;
-	Thu, 17 Sep 2026 17:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPXudm8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5DD1F000FF;
+	Thu, 17 Sep 2026 17:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666203;
-	bh=GGx7KOtuLTaBR+gJVbZpmqggBY29mU5jrVC5TW389aU=;
+	s=korg; t=1789666206;
+	bh=HNjFpBvXdnGd1NcAVA11B3cWkxaMd3dZqMtznZf291E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fiAQjBYFKFlKmBglvlB97x8rinlso2jU8JL47/Axn+pU0l2xcXaEhq0D1H4z19E8r
-	 FiZ91M0qmtYOtXCvLdNcFbdO4aeJa5NCSN3NX+jGRIsHFzvfbk3/g18GqiTz9Y+6yM
-	 BpSiDBbOuyIK26KuSFB38snRLpzlTAOrxd5Y9j08=
+	b=sPXudm8G7Syk6Gxfb0FwkYsGsFQjqm+LNwYj9TofZVsv2J8ir6oJksb+ms+0p33Px
+	 wG9ExQDIA/ehDkb5jk2di1CTwNOxKO1vVx4eXqwF3ToBhuJFu1MsQLEUG0XCGpfj78
+	 RhXm4vMnUcx9u/6R5uEmF834lPN+XsOPiC8vpOkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 0959/1250] crypto: x86/aria - add missing vzeroupper in AVX-512 code
-Date: Thu, 17 Sep 2026 16:12:34 +0100
-Message-ID: <20260917151618.010584769@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 0960/1250] x86/amd_node: Fix PCI device reference counting in amd_smn_init()
+Date: Thu, 17 Sep 2026 16:12:35 +0100
+Message-ID: <20260917151618.036363467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,49 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 60892a384aa1e65d0e703e1c513417bdf0c80777 upstream.
+commit 27600805e62f800bacf990354632eae4e487d34c upstream.
 
-Since the AVX-512 optimized ARIA code uses ZMM registers, execute
-vzeroupper before returning from it.  This is needed to avoid degrading
-the performance of any later SSE code that may happen to be executed.
+The local "root" pointer is a temporary variable used during the device
+search. Therefore, refcount related to the search iterators should be cleaned
+up after the search is complete.
 
-Fixes: c970d42001f2 ("crypto: x86/aria - implement aria-avx512")
-Cc: stable@vger.kernel.org
-Cc: Taehee Yoo <ap420073@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Use the __free() cleanup macro to ensure the refcount is decremented when the
+temporary pointer goes out of scope.
+
+Additionally, increment the refcount when caching a root pointer. This ensures
+the in-use refcount is separate from the temporary search refcounting.
+
+Finally, drop the redundant "root = NULL" before the second search loop. The
+pci_get_class() iterator always decrements the refcount of its "from"
+argument, so the first loop can only fall through with "root" already NULL.
+
+Fixes: 0a4b61d9c2e4 ("x86/amd_node: Fix AMD root device caching")
+Closes: https://sashiko.dev/#/patchset/20260806160159.230453-1-jason.andryuk%40amd.com
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260903154325.74343-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/aria-gfni-avx512-asm_64.S |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/amd_node.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/x86/crypto/aria-gfni-avx512-asm_64.S
-+++ b/arch/x86/crypto/aria-gfni-avx512-asm_64.S
-@@ -800,6 +800,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_en
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %rax);
+diff --git a/arch/x86/kernel/amd_node.c b/arch/x86/kernel/amd_node.c
+index 762585775b5a..b7926ba3610a 100644
+--- a/arch/x86/kernel/amd_node.c
++++ b/arch/x86/kernel/amd_node.c
+@@ -251,7 +251,7 @@ __setup("amd_smn_debugfs_enable", amd_smn_enable_dfs);
+ static int __init amd_smn_init(void)
+ {
+ 	u16 count, num_roots, roots_per_node, node, num_nodes;
+-	struct pci_dev *root;
++	struct pci_dev *root __free(pci_dev_put) = NULL;
  
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_encrypt_64way)
-@@ -825,6 +826,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_de
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %rax);
+ 	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
+ 		return 0;
+@@ -262,7 +262,6 @@ static int __init amd_smn_init(void)
+ 		return 0;
  
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_decrypt_64way)
-@@ -966,6 +968,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_ct
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %r10);
+ 	num_roots = 0;
+-	root = NULL;
+ 	while ((root = get_next_root(root))) {
+ 		pci_dbg(root, "Reserving PCI config space\n");
  
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_ctr_crypt_64way)
+@@ -299,14 +298,13 @@ static int __init amd_smn_init(void)
+ 
+ 	count = 0;
+ 	node = 0;
+-	root = NULL;
+ 	while (node < num_nodes && (root = get_next_root(root))) {
+ 		/* Use one root for each node and skip the rest. */
+ 		if (count++ % roots_per_node)
+ 			continue;
+ 
+ 		pci_dbg(root, "is root for AMD node %u\n", node);
+-		amd_roots[node++] = root;
++		amd_roots[node++] = pci_dev_get(root);
+ 	}
+ 
+ 	if (enable_dfs) {
+-- 
+2.55.0
+
 
 
