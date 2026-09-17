@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C93DD521;
-	Thu, 17 Sep 2026 18:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41374484892;
+	Thu, 17 Sep 2026 18:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670817; cv=none; b=h2zYofgm+4h0eRDCajlF873piL68/mrFHrG6jHqkHgY198icwFMxJw8IMlaIgYUBvW43kUFi7K36gKusLrqerI0bIZWdZX1uvNeTNF+qC4K1SD6hPytSLumTYwVi71kuozvz4gpALxjdzMQyGXSbfvy8ygdtdgyl7CYq6No+otk=
+	t=1789670821; cv=none; b=iX7ZJhKN2BKn7YP+WXyG39s5QBFFScrZyEI/SQoJmvQSnFQLFwzph5OoNBhTrlvHHiHcHkD6H4GZTVZLWqyHcEaMqwS6yltamX3doVpRLJts2/n5+ZBkBbtYtK9AEv6nMmAQLlWlQO7z7mdZQlP/XaLRcnzopuO777hmAYUYFWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670817; c=relaxed/simple;
-	bh=SGiZvVKi1hCo6yG3e2xB74xOs+pqVy/5a5A+QEtEh8o=;
+	s=arc-20240116; t=1789670821; c=relaxed/simple;
+	bh=k7ZdCLt4Ftztq4dJWzhq3fUFEyjcARxYgsEWBiVBQxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUxMBjtnRUU9XAKIQX8jqmmKo3RnyoF8ZMVOP2P8DmthmciTjAb8DLiWmg+d/gIZ5B2PZHmPRe/hxyAoOK1VlPz2Ji5lAv4updop+m27ipCkSo4r5HgLVaclewTFE3biYxOo1szuuxi8Ub+zh2ktmLIL18AOe7bTCDSVS/qMHkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwPMB7yk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBbo0VO55/Lds6c2GS+Aw0bYMwoIZ3AwMCSOf0hkC1tAB8OstEpTNIPeccf39PFALMJbq6iWiY7pQJHvqzcty5kaaoS1PoJUF8LYeyO+G4h/bHf2NYdRSvJf34JB4e5AEGAQQqixz3BeFBUJn4ea4whKjXEVcx7054iOf1aIG64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw+HBRCR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwPMB7yk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A70A1F000FF;
-	Thu, 17 Sep 2026 18:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw+HBRCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E7D1F000FF;
+	Thu, 17 Sep 2026 18:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670816;
-	bh=3rscCjOncl2IDH3/FFn9QXOXfDMmkl+YJUukT/bVSIM=;
+	s=korg; t=1789670819;
+	bh=FS+5+UsjWXGz1LHJ3ygMiIIO7nvItA7pNGHrWibW1wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwPMB7ykohnsFTTy4SbxEom/MwCUOZpOyaXyJFAKTakIwAAYqmVsXxGOy1WAbABch
-	 roefeNBHSruFsVr+SIzGgdj53nElVwPx9IYQyKPsU0+AoTZkv1WSktIUcufy8mAMJD
-	 +2wBNYSmsm7uiRCzsocQwrQdLezCg6fQYcD3/X9E=
+	b=Lw+HBRCR4gWtRGg911KXAkRsLFqU/DE1IbDLEbeh/AvscDzwTEJ8lyyjRQm3+8CuO
+	 qu/e0WpSYvaFAazePKKCZLlr9ONv/LixfGaJndnG/G5daa5M1lDnH310pp0A+BStu7
+	 97DDKtEKRCZTzHXG1aMDHAMQAOL+n1k/oWgUaozk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0779/1102] net/sched: cls_route: free emptied bucket on filter move
-Date: Thu, 17 Sep 2026 16:12:02 +0100
-Message-ID: <20260917151600.015548127@linuxfoundation.org>
+Subject: [PATCH 6.12 0780/1102] net/sched: cls_route: Reject handle aliasing
+Date: Thu, 17 Sep 2026 16:12:03 +0100
+Message-ID: <20260917151600.042459511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,159 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 1853f30cf5c84971f99788a76207c6f745380896 ]
+[ Upstream commit b74a8455a2f271f54695b6a8ec1f113824a46c0e ]
 
-route4_change can move an existing filter to a different top-level
-bucket: route4_set_parms recomputes the handle from TCA_ROUTE4_TO/
-FROM/IIF, and the handle-mismatch check is gated on the 'new' flag, so
-for an existing filter the new handle may differ from the old one and
-land in a different bucket. When this happens, the filter is unlinked
-from the old bucket, but the bucket itself is never freed once it goes
-empty. The stale empty bucket remains in head->table[], causing
-route4_delete to report *last=false even after the last live filter is
-gone. That pins the empty tcf_proto and causes a leak.
+route4_set_parms() rejects a duplicate by scanning the destination chain
+for f->handle, but f->handle is the handle the filter has before the
+update, not the one it is about to be linked under. The comparison and
+the insertion therefore use different handles, which causes breakage.
 
-Fix this by refcounting the filters linked to a bucket and freeing the
-bucket when the count drops to zero. The existing scan in route4_delete
-goes away with it.
+When a change moves the filter to a chain that already holds nhandle,
+the scan looks for the old handle instead, misses the collision and
+links a second filter with the same handle:
 
-The count is updated at all sites that link or unlink a filter during add,
-change and delete, and the bucket is dropped from head->table[] as soon as
-it reaches zero.
-
-Conditions to recreate the bug:
-  CONFIG_NET_CLS_ROUTE4=y, CONFIG_NET_SCH_INGRESS=y, CONFIG_NET_CLS_ACT=y.
-
-  tc qdisc replace dev lo clsact
-  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
+  tc filter add dev lo ingress protocol ip pref 100 \
+    route from 1 to 1 classid 1:1 action ok
+  tc filter add dev lo ingress protocol ip pref 100 \
+    route from 2 to 2 classid 1:2 action drop
   tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
-    route from 1 to 2
-  tc filter del dev lo ingress protocol ip pref 100 handle 0x10002 \
-    route from 1 to 2
-  tc filter show dev lo ingress | grep -c 'pref 100 route chain 0 '
+    route from 2 to 2 classid 1:1 action ok
+  tc filter show dev lo ingress
+  ... fh 0x00020002 flowid 1:2 to 2 from 2
+  ... fh 0x00020002 flowid 1:1 to 2 from 2
 
-Fixes: 1e052be69d04 ("net_sched: destroy proto tp when all filters are gone")
-Reported-by: Vega <vega@nebusec.ai>
+The newcomer is appended after the incumbent, and both end up with the
+same f->id. route4_get() returns the first match, so the second filter
+can no longer be addressed by handle, and route4_classify() stops at the
+first filter whose f->id matches. The second filter is dumped but is
+effectively dead.
+
+Fix this by comparing against nhandle.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260829205422.854785-1-victor%40mojatatu.com
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260907192133.2639067-2-victor@mojatatu.com
+Link: https://patch.msgid.link/20260907192133.2639067-3-victor@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 45 +++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 23 deletions(-)
+ net/sched/cls_route.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 38469cdcb22d6..bc2ac17406586 100644
+index bc2ac17406586..1699ae262a615 100644
 --- a/net/sched/cls_route.c
 +++ b/net/sched/cls_route.c
-@@ -11,6 +11,7 @@
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/errno.h>
-+#include <linux/refcount.h>
- #include <linux/skbuff.h>
- #include <net/dst.h>
- #include <net/route.h>
-@@ -41,6 +42,7 @@ struct route4_head {
- struct route4_bucket {
- 	/* 16 FROM buckets + 16 IIF buckets + 1 wildcard bucket */
- 	struct route4_filter __rcu	*ht[16 + 16 + 1];
-+	refcount_t			filters_ref;
- 	struct rcu_head			rcu;
- };
- 
-@@ -336,7 +338,7 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
- 	struct route4_filter *nf;
- 	struct route4_bucket *b;
- 	unsigned int h = 0;
--	int i, h1;
-+	int h1;
- 
- 	if (!head || !f)
- 		return -EINVAL;
-@@ -362,23 +364,14 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
- 			tcf_exts_get_net(&f->exts);
- 			tcf_queue_work(&f->rwork, route4_delete_filter_work);
- 
--			/* Strip RTNL protected tree */
--			for (i = 0; i <= 32; i++) {
--				struct route4_filter *rt;
--
--				rt = rtnl_dereference(b->ht[i]);
--				if (rt)
--					goto out;
-+			if (refcount_dec_and_test(&b->filters_ref)) {
-+				RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
-+				kfree_rcu(b, rcu);
- 			}
--
--			/* OK, session has no flows */
--			RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
--			kfree_rcu(b, rcu);
- 			break;
- 		}
- 	}
- 
--out:
- 	*last = true;
- 	for (h1 = 0; h1 <= 256; h1++) {
- 		if (rcu_access_pointer(head->table[h1])) {
-@@ -459,6 +452,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		if (b == NULL)
- 			return -ENOBUFS;
- 
-+		refcount_set(&b->filters_ref, 1);
- 		rcu_assign_pointer(head->table[h1], b);
- 	} else {
- 		unsigned int h2 = from_hash(nhandle >> 16);
-@@ -468,6 +462,8 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+@@ -460,8 +460,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 		for (fp = rtnl_dereference(b->ht[h2]);
+ 		     fp;
  		     fp = rtnl_dereference(fp->next))
- 			if (fp->handle == f->handle)
+-			if (fp->handle == f->handle)
++			if (fp->handle == nhandle) {
++				NL_SET_ERR_MSG_FMT(extack,
++						   "Handle %x is already in use",
++						   nhandle);
  				return -EEXIST;
-+
-+		refcount_inc(&b->filters_ref);
- 	}
++			}
  
- 	if (tb[TCA_ROUTE4_TO])
-@@ -500,7 +496,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	struct route4_filter *fold, *f1, *pfp, *f = NULL;
- 	struct route4_bucket *b;
- 	struct nlattr *tb[TCA_ROUTE4_MAX + 1];
--	unsigned int h, th;
-+	unsigned int h;
- 	int err;
- 	bool new = true;
- 
-@@ -560,17 +556,20 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	rcu_assign_pointer(*fp, f);
- 
- 	if (fold) {
--		th = to_hash(fold->handle);
-+		b = fold->bkt;
- 		h = from_hash(fold->handle >> 16);
--		b = rtnl_dereference(head->table[th]);
--		if (b) {
--			fp = &b->ht[h];
--			for (pfp = rtnl_dereference(*fp); pfp;
--			     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
--				if (pfp == fold) {
--					rcu_assign_pointer(*fp, fold->next);
--					break;
-+		fp = &b->ht[h];
-+		for (pfp = rtnl_dereference(*fp); pfp;
-+		     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
-+			if (pfp == fold) {
-+				rcu_assign_pointer(*fp, fold->next);
-+				if (refcount_dec_and_test(&b->filters_ref)) {
-+					unsigned int th = to_hash(fold->handle);
-+
-+					RCU_INIT_POINTER(head->table[th], NULL);
-+					kfree_rcu(b, rcu);
- 				}
-+				break;
- 			}
- 		}
+ 		refcount_inc(&b->filters_ref);
  	}
 -- 
 2.53.0
