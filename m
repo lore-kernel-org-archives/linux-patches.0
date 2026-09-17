@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7475E4973B9;
-	Thu, 17 Sep 2026 15:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D75E4848B5;
+	Thu, 17 Sep 2026 15:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660654; cv=none; b=RWAyQQFcjS9ptFBizj4AAwmTwo4XsdM3qo0fG5OFYjjlLdBcoTtGnAI8oAk0oG0ISLybE6SDK6wIph1D2VoTl9jgJpxSIQ+Xgy3FXwmCx4C0MaOjFmON3aF51MjCv2jSaq4JrIIMBrT5bSGYBsgn2yw45QvwMkkNV+Tfl96shmA=
+	t=1789660657; cv=none; b=Ui8tbNPZp4LnuCSTbxh9cx1/7Jfc+2Jd9NjGzgo0oCk9RcriYEucOfSBM/TzyACMTbFVoSp+S/jgVcEDVjlA30H+4bKxpmUtozgM9PO5tYewEki0X4qSJ4JLAXeOL2xDSb0154MONhVTtalwOpRAHqa3e6NXWu3VHhPOTLIZyyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660654; c=relaxed/simple;
-	bh=Lrf83OyEv4HspsTAJL8O4uiJD2OlFhB9X3WxUpNTu9A=;
+	s=arc-20240116; t=1789660657; c=relaxed/simple;
+	bh=j+W16nc4Xgj/STxbQEPfT2xwbgO10jZUoV2ZHmFFJFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSbgiUN3Qwci8ol7VK/4tK5w6c5Gp6ViQ+/oKLV0G3ths14W/wkp66jQTanjTCtDwt/XmmJuH7vMHEJ8WUFOUm0ATcmdpF97JEYgdfyox2xIs3E/FEveHt4PnjCBys7zdXUra4SxSr+433ibatpwX5IbNb35ahNZpFEOnv/j2bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uxpx463o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPfEwA45thLBWcCeKcl2GvUbuKw+juG/HiWUff2GIvIa+FYSX/6DvZC3EEi82IWJ/pWgNK6F16nimCYOiuu8yirHbqk2W5OxWavLQeV6cnubEiFENY7Bke0AfQeN6ta/7C8mqVsXN78QAJxXsNWMVqp/PzRSwQguehb2/hNo2lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsVu8FS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uxpx463o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3751F00893;
-	Thu, 17 Sep 2026 15:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsVu8FS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C392F1F000FF;
+	Thu, 17 Sep 2026 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660653;
-	bh=Szqu+fJYIZ2eZDJw+8YIRfNlLflMb72H1P62gsGrtBE=;
+	s=korg; t=1789660656;
+	bh=U6H6U2T5Qc2jH8K3Ne78Zc9Y47oCUy14GVo+ECS8VLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uxpx463opbhfhMqyEB6HCMErSmpf77uUmrvCJEd7n8MlYXxvA2iNse9v+fro0zPp/
-	 FWOBinCYpWpy/b/3pkkHeY4UQvKu7MLJbnuZHzGQbzmwWNMoOXtdSb85Yesj3Him7b
-	 Ks0RYY0fGpa4rSewiS3iTygDMj+TWOyVcBuAL8CM=
+	b=WsVu8FS4eZ+bQTsGmkObukcjim/jBLB6/Sv3aD0udocLnlYjmuGL8RLrvEgC6PGfR
+	 2baZ4RkQVO0+AHv5YOvTJ9W8VX4cXvswAyH3gXgLPIZxf89fnwNJINJmm7uOSM8D82
+	 3Nqfm9GmvxY7ih+6b6k+WGjMHQhRMNYFP3mNjeVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Gang Yan <yangang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 617/733] selftests: mptcp: fix an UAF in mptcp_connect.c
-Date: Thu, 17 Sep 2026 16:15:25 +0100
-Message-ID: <20260917151407.894891427@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.2 658/733] xfs: fix unit conversions in per_binval computation
+Date: Thu, 17 Sep 2026 16:16:06 +0100
+Message-ID: <20260917151409.059914752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 730444f094b12052916ebd7e14fe57bc3d47bf38 upstream.
+commit 05cff7c2b79f76c7cfe90613a60e16aaaa051ef7 upstream.
 
-At the end of 'sock_connect_mptcp()', it calls 'freeaddrinfo(addr)',
-the 'peer' pointer (which points into 'addr') remains. Later, the main
-loop uses this peer pointer for reconnection attempts. If the memory has
-been freed and reused, the address data could be overwritten, resulting
-in an invalid remote address.
+LOLLM noticed that we're doing the unit conversion in the per_binval
+computation backwards -- xfs_buf_inval_log_space's second parameter is
+supposed to be in bytes, but max_binval is in units of fsblocks.  Hence
+the conversion should be FSB -> B, not the other way around.
 
-This patch keeps the addrinfo list allocated for the whole process
-lifetime so "peer" remains valid across reconnects; the memory will be
-released at exit() time.
-
-Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
-Cc: stable@vger.kernel.org
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-7-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # v6.18
+Fixes: b2311ec6778fcd ("xfs: compute per-AG extent reap limits dynamically")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/reap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -381,6 +381,9 @@ static int sock_connect_mptcp(const char
+--- a/fs/xfs/scrub/reap.c
++++ b/fs/xfs/scrub/reap.c
+@@ -601,7 +601,7 @@ xreap_configure_agextent_limits(
  
- 	hints.ai_family = pf;
+ 	/* Maximum overhead of invalidating one buffer. */
+ 	const unsigned int	per_binval =
+-		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
++		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
  
-+	/* Keep the resolved address alive for the whole execution: it is
-+	 * used again when reconnecting, and will be released at exit time.
-+	 */
- 	xgetaddrinfo(remoteaddr, port, &hints, &addr);
- 	for (a = addr; a; a = a->ai_next) {
- 		sock = socket(a->ai_family, a->ai_socktype, proto);
-@@ -421,7 +424,6 @@ static int sock_connect_mptcp(const char
- 		sock = -1;
- 	}
+ 	/*
+ 	 * For each transaction in a reap chain, we can delete some number of
+@@ -680,7 +680,7 @@ xreap_configure_agcow_limits(
  
--	freeaddrinfo(addr);
- 	if (sock != -1)
- 		SOCK_TEST_TCPULP(sock, proto);
- 	return sock;
+ 	/* Overhead of invalidating one buffer */
+ 	const unsigned int	per_binval =
+-		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
++		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
+ 
+ 	/*
+ 	 * For each transaction in a reap chain, we can delete some number of
 
 
