@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316064F93A3;
-	Thu, 17 Sep 2026 16:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B334F93BA;
+	Thu, 17 Sep 2026 16:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664254; cv=none; b=j6sz1I2TqQVYvY6pL7pk0X9DpmvTURL1DKjdB49tZw5h1HuNAkTcJOJQxX+UomQFGyMd5lY6MNyQyhjlS7sYUcmbLCkhAyn7VGYmqQ3VXXd7Ll1TZ5n+CCWw49MBEzAbvVMTGnk9ILhOZGj/MnNvqZJDlhqzVFSAQp7sDxcJres=
+	t=1789664257; cv=none; b=GtJfGd0M2OVqH3dwbnlD1F5rBrPb1VJFGFE6G25GZEQ6Cr0gRjQmpVLKVc+2eA1/u18ERnvlMrVL1llJXFfvTds3RS2LuuAfeTMkVrsnDQg49FUN7DCoQe2ar1JtywYwA+HVmPM6QmhflmpaY/FCwBueqOCMOEYtqsmty8riClE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664254; c=relaxed/simple;
-	bh=Wics+XY/EJgWKs6oD05T8LrrQQ/W3Zyk65+o+ct5j6U=;
+	s=arc-20240116; t=1789664257; c=relaxed/simple;
+	bh=UrAoJJZYKwlHZGsrhsxcRgNjfnAo6xJN2ToQt4BETGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haQPInQw0k2AT186BcH1Vcjj3PKB5shaAecrHaVBUBRB1ICgoqLHk1pAbgZOsHIg1xHeX3IiDv150irSfXw94rb8yQqJG6puKPPq2GHHhrfpZ5uexGXoSjvmeygeqXzAdJ44u3Cpp450XbWh/td2ntwvFNn5qOD2mFRcXkm4gSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pk2fSceY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k2NIXxvXT/3jYumVMQC+g9VxJDCtAHqswqNXAfIrIC+uJlWSnio9cVJP69j68g2VwONaNMC+0DPJF6eZc6BX3gQE19QNrzt0ATregK6SWzloSaelsNsxJ2lvuoYRL0/htpSQ7Ccn+BrKcke/Cp+svj9w6H5Ue1cLYodZgkSoF2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6TTln0T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pk2fSceY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6381F000FF;
-	Thu, 17 Sep 2026 16:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6TTln0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DB21F000FF;
+	Thu, 17 Sep 2026 16:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664252;
-	bh=DznF7fa2JGuLUrZNY4KtXcmiN/sMtNC2jPuJ7tZAZgo=;
+	s=korg; t=1789664255;
+	bh=nC8YQ7yNzpjnRQM/C5wvYU8IATayh3JUOhYwfYfZ2cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pk2fSceYdRUspIMVrX+3hLsrcshtTNJywGVDByBsbXn76vo517TyvJIHgjiSCAXC3
-	 UxGl0EvFlxtCNk9Hj92Ok4ZftKjeLJWWkoew+eBhViNBcD9+cKV3MQf7ikoch/CM80
-	 XydQW76k3aH6RVsDvKdhiB5IlWtFfBHDkOww/adY=
+	b=y6TTln0ThC/bf9Ur6Jz+xvjSEx+stYiA/KMvb2oaEGFAxXjFVhuzYsuPHRNe0WfOr
+	 L4vvrMEiGe2aaRADjdvbR9nJVZLAaSSXT8nJRICwDBJhaqXlz0T/an6bj4v2pbnZax
+	 cdQkSVaLnRe/Hulvac92D7MPQWLxWZCBO54fMu5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Alessandro Schino <7991aleschino@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0311/1250] usb: xhci: remove legacy num_trbs_free tracking
-Date: Thu, 17 Sep 2026 16:01:46 +0100
-Message-ID: <20260917151600.533912245@linuxfoundation.org>
+Subject: [PATCH 6.18 0294/1250] ntfs3: fix out-of-bounds read in ntfs_dir_emit() and hdr_find_e()
+Date: Thu, 17 Sep 2026 16:01:29 +0100
+Message-ID: <20260917151600.094995244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,121 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Alessandro Schino <7991aleschino@gmail.com>
 
-[ Upstream commit 7ee645963075651d72f8d85bee428a9b7f1f148c ]
+[ Upstream commit aa1bdbb39f49c5bc9779316891c40005517842a5 ]
 
-Keeping track of free TRBs in a ring by adding and subtracting each time
-a enqueue or dequeue pointer is modified has proven to be buggy and
-complicated, especially over long periods of time.
-The xhci driver has already moved to calculating free TRBs dynamically
-based on ring size and the enqueue/dequeue positions.
+The bounds check in ntfs_dir_emit() compares fname->name_len (a
+character count) against e->size (a byte count) without accounting
+for the 2-byte-per-character UTF-16LE encoding or the ATTR_FILE_NAME
+header size:
 
-The DbC path is the last user of 'num_trbs_free'. Rather than maintaining
-two separate accounting mechanisms, remove the field entirely and switch
-DbC to use xhci_num_trbs_free(). Since 'num_trbs_free' undercounts by one,
-and xhci_num_trbs_free() does not, the check for sufficient free TRBs is
-adjusted.
+  if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
 
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260603091132.1110849-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This computes: name_len + 16 > e_size
+
+The correct check must account for the ATTR_FILE_NAME header (66 bytes
+before the name) and the UTF-16LE character size (2 bytes each):
+
+  sizeof(NTFS_DE) + offsetof(ATTR_FILE_NAME, name) +
+  name_len * sizeof(short) > e_size
+
+Which computes: 16 + 66 + name_len * 2 > e_size
+
+The correct calculation already exists as fname_full_size() in ntfs.h
+and is used in cmp_fnames(), namei.c, and fslog.c, but was not used
+in the readdir path.
+
+A crafted NTFS image with an index entry containing a small e->size
+but large fname->name_len bypasses the current check, causing
+ntfs_utf16_to_nls() to read past the entry boundary.
+
+Additionally, add a key_size validation in hdr_find_e() to ensure the
+declared key_size does not exceed the available entry data, preventing
+comparison functions from reading past entry boundaries on the lookup
+path.
+
+Signed-off-by: Alessandro Schino <7991aleschino@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-dbgcap.c | 5 +----
- drivers/usb/host/xhci-mem.c    | 6 ------
- drivers/usb/host/xhci-ring.c   | 2 +-
- drivers/usb/host/xhci.h        | 2 +-
- 4 files changed, 3 insertions(+), 12 deletions(-)
+ fs/ntfs3/dir.c   | 4 +++-
+ fs/ntfs3/index.c | 4 ++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-dbgcap.c b/drivers/usb/host/xhci-dbgcap.c
-index ecda964e018ac..e2e0694d0c22a 100644
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -260,7 +260,6 @@ xhci_dbc_queue_trb(struct xhci_ring *ring, u32 field1,
- 	trace_xhci_dbc_gadget_ep_queue(ring, &trb->generic,
- 				       xhci_trb_virt_to_dma(ring->enq_seg,
- 							    ring->enqueue));
--	ring->num_trbs_free--;
- 	next = ++(ring->enqueue);
- 	if (TRB_TYPE_LINK_LE32(next->link.control)) {
- 		next->link.control ^= cpu_to_le32(TRB_CYCLE);
-@@ -281,7 +280,7 @@ static int xhci_dbc_queue_bulk_tx(struct dbc_ep *dep,
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index d41d02372c747..a68eff8cf1d66 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -304,7 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
+ 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
+ 		return true;
  
- 	num_trbs = count_trbs(req->dma, req->length);
- 	WARN_ON(num_trbs != 1);
--	if (ring->num_trbs_free < num_trbs)
-+	if (xhci_num_trbs_free(ring) <= num_trbs)
- 		return -EBUSY;
+-	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
++	if (sizeof(struct NTFS_DE) +
++	    offsetof(struct ATTR_FILE_NAME, name) +
++	    fname->name_len * sizeof(short) > le16_to_cpu(e->size))
+ 		return true;
  
- 	addr	= req->dma;
-@@ -782,7 +781,6 @@ static void dbc_handle_xfer_event(struct xhci_dbc *dbc, union xhci_trb *event)
- 		}
- 		if (r->status == -COMP_STALL_ERROR) {
- 			dev_warn(dbc->dev, "Give back stale stalled req\n");
--			ring->num_trbs_free++;
- 			xhci_dbc_giveback(r, 0);
- 		}
- 	}
-@@ -847,7 +845,6 @@ static void dbc_handle_xfer_event(struct xhci_dbc *dbc, union xhci_trb *event)
- 		break;
- 	}
+ 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index dd54c966babca..edfcd28573ef9 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -794,6 +794,10 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
+ binary_search:
+ 	e_key_len = le16_to_cpu(e->key_size);
  
--	ring->num_trbs_free++;
- 	req->actual = req->length - remain_length;
- 	xhci_dbc_giveback(req, status);
- }
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 2bbbf64a32c87..932284dbd1b12 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -317,12 +317,6 @@ void xhci_initialize_ring_info(struct xhci_ring *ring)
- 	 * handling ring expansion, set the cycle state equal to the old ring.
- 	 */
- 	ring->cycle_state = 1;
--
--	/*
--	 * Each segment has a link TRB, and leave an extra TRB for SW
--	 * accounting purpose
--	 */
--	ring->num_trbs_free = ring->num_segs * (TRBS_PER_SEGMENT - 1) - 1;
- }
- EXPORT_SYMBOL_GPL(xhci_initialize_ring_info);
- 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 75f0e438f34fd..5624765fb6645 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -339,7 +339,7 @@ static struct xhci_segment *trb_in_td(struct xhci_td *td, dma_addr_t suspect_dma
-  * Only for transfer and command rings where driver is the producer, not for
-  * event rings.
-  */
--static unsigned int xhci_num_trbs_free(struct xhci_ring *ring)
-+unsigned int xhci_num_trbs_free(struct xhci_ring *ring)
- {
- 	struct xhci_segment *enq_seg = ring->enq_seg;
- 	union xhci_trb *enq = ring->enqueue;
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 5fd15b998b697..caa3fbee29f2c 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1368,7 +1368,6 @@ struct xhci_ring {
- 	u32			cycle_state;
- 	unsigned int		stream_id;
- 	unsigned int		num_segs;
--	unsigned int		num_trbs_free; /* used only by xhci DbC */
- 	unsigned int		bounce_buf_len;
- 	enum xhci_ring_type	type;
- 	u32			old_trb_comp_code;
-@@ -1945,6 +1944,7 @@ void xhci_ring_doorbell_for_active_rings(struct xhci_hcd *xhci,
- void xhci_cleanup_command_queue(struct xhci_hcd *xhci);
- void inc_deq(struct xhci_hcd *xhci, struct xhci_ring *ring);
- unsigned int count_trbs(u64 addr, u64 len);
-+unsigned int xhci_num_trbs_free(struct xhci_ring *ring);
- int xhci_stop_endpoint_sync(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
- 			    int suspend, gfp_t gfp_flags);
- void xhci_process_cancelled_tds(struct xhci_virt_ep *ep);
++	/* Validate key_size fits within the entry data area. */
++	if (e_key_len > le16_to_cpu(e->size) - sizeof(struct NTFS_DE))
++		return NULL;
++
+ 	diff2 = (*cmp)(key, key_len, e + 1, e_key_len, ctx);
+ 	if (diff2 > 0) {
+ 		if (found) {
 -- 
 2.53.0
 
