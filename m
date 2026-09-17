@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A84D4EB85E;
-	Thu, 17 Sep 2026 15:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DAA4DA9A2;
+	Thu, 17 Sep 2026 15:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659645; cv=none; b=O61SmyOlu+e6NnOLk1ArcoplogNt8ziZNcU4ZWlVknFZkVZNLxL2aa0ilBadKY7G9gNDnNs3c5wApR+PfP4SWKx0wT7M9a2NC9cTJBc3mp0MUV0KlCK0TPOZI6eMIaBHiCaFIFCVvmvv1EgFCsZWKUfpl5Xgj+5XOqGPQt72jMw=
+	t=1789659647; cv=none; b=RDgQRvneZLnR5HgmVpPWaGns2KNxUimbAu4d4KRx847u83fIjl82Bwng/BDm0IwQcwOws7BB+pdbGHL2Ce3tnVRJ2f7J8YTb/SMCpnGyE4LPZDgkbcBehAegJxUlrE0YQu+Tin034wfYcCtNpkOUgrulemNlxXZWd6AQOUDXtLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659645; c=relaxed/simple;
-	bh=tFP8linhE3aBmNkwGo0if/TqaCycd0iPlX/4L8IXIK8=;
+	s=arc-20240116; t=1789659647; c=relaxed/simple;
+	bh=jkwcsrUWzBlHXKA8iBkH5jFjgs5Q6nelnAz5Jv5EQ2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOwt/CNYqJIyo87EHO+THaRqqURlZEljRQzz0FrsRaoOhTSQ1GkbeHv/mMowFktnu5O31DCTqf50Tg3d2LaqDPO+oS9+vozhf+pbDJ1KzjYJ4pJBrhFgF/Y1APx90/CS//JhulfYTTB3nW0pBMlGSFGPp87UkqUmSDeYSTFL+UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kP1WRaDS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rwptsh2IMO0LLsXE8iRryU/58zdCY5E8MFtoXxQfHlxMENwG4bVhS/UJ2DeTJMr6EToSoRGHxlWnC7XczUchLoQO/gkrmSd3GTmEBNyQk2TLGuiogNVyC9z0Q+Qn3mY1mJfLmkhYuttin2EzzjSt0fGfvZeLNwQAzzGJvrnIxAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXBi04FT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kP1WRaDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47561F00899;
-	Thu, 17 Sep 2026 15:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXBi04FT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FB71F000FF;
+	Thu, 17 Sep 2026 15:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659634;
-	bh=LjBUDz7IC+c1Yb2C9gkK5/jQQGXGLfMWvSBamdmxrBQ=;
+	s=korg; t=1789659640;
+	bh=oKSoYtdhhCW44MRgKeE9zYDroVBahAYYaW8YcRZdjr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kP1WRaDSR7VIUb9ttdr5Ackse+K6c03a+BIkkcLNeJlTFwQK79LIpKJXNFA7ocs1Q
-	 78qd/QETjUv7er8zV0YUp3a/iYyBOsKanvXo+8PNt2SFag+dIWD3sTsS+zXWFJP6sl
-	 eINzZrmXVhC3ZAmGfz219ZJpP4h1j+WWIREphrXs=
+	b=LXBi04FTU/yMld24Huui9RmBP7nuuMHB6QnGQWWfJtWRek0JqEuAGFbE7//3mc9kR
+	 n2sZwCKAKiwJAG3wY1e6SoaD+WbtYVHAbpPK5JL/jIY3/DkLvewGZ9eM8Z2tIv3/lb
+	 DTlueq/UwnKHpAcoAhSDiAR6u/K39ujtfGDx0tnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hemanth Selam <hemanth.selam@gmail.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 321/733] iommu/amd: Fix ineffective error check in nested domain allocation
-Date: Thu, 17 Sep 2026 16:10:29 +0100
-Message-ID: <20260917151359.496058195@linuxfoundation.org>
+Subject: [PATCH 7.2 323/733] Documentation/hwmon: Document hwmon_notify_event()
+Date: Thu, 17 Sep 2026 16:10:31 +0100
+Message-ID: <20260917151359.550190848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,66 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hemanth Selam <hemanth.selam@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit fa5c0827f0b7bac6d0a188f10118151769ae68fd ]
+[ Upstream commit b4fffa75c1d6f87e6dc6191dec900f2b5bd23a1c ]
 
-amd_iommu_pdom_id_alloc() returns an int: a domain ID on success, or the
-negative errno from ida_alloc_range() when the ID space is exhausted or
-memory is short.  amd_iommu_alloc_domain_nested() stores that return value
-in gdom_info->hdom_id, which is a u32, and only then tests it:
+The hwmon core provides hwmon_notify_event() for drivers to report events
+such as alarm or fault conditions to userspace via sysfs notifications
+and uevents, as well as to the thermal subsystem for temperature sensors.
+However, this function is not documented in the hwmon kernel API guide.
 
-	gdom_info->hdom_id = amd_iommu_pdom_id_alloc();
-	if (gdom_info->hdom_id <= 0) {
+Add the function prototype and description of hwmon_notify_event() to
+Documentation/hwmon/hwmon-kernel-api.rst.
 
-The assignment discards the sign, so -ENOSPC becomes 0xffffffe4 and the
-test never fires.  The nested domain is then set up with a host domain ID
-that was never allocated, instead of the allocation failing with -ENOSPC.
-
-Keep the value in an int, test it there, and store it only once it is
-known to be valid, which is what the other amd_iommu_pdom_id_alloc()
-callers already do.
-
-Fixes: 757d2b1fdf5b ("iommu/amd: Introduce gDomID-to-hDomID Mapping and handle parent domain invalidation")
-Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 1597b374af222 ("hwmon: Add notification support")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/nested.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/hwmon/hwmon-kernel-api.rst | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/iommu/amd/nested.c b/drivers/iommu/amd/nested.c
-index 63b53b29e0298..f1c7987fc5859 100644
---- a/drivers/iommu/amd/nested.c
-+++ b/drivers/iommu/amd/nested.c
-@@ -96,7 +96,7 @@ struct iommu_domain *
- amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
- 			      const struct iommu_user_data *user_data)
- {
--	int ret;
-+	int ret, hdom_id;
- 	unsigned long irqflags;
- 	struct nested_domain *ndom;
- 	struct guest_domain_mapping_info *gdom_info;
-@@ -161,8 +161,8 @@ amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
- 	}
+diff --git a/Documentation/hwmon/hwmon-kernel-api.rst b/Documentation/hwmon/hwmon-kernel-api.rst
+index 9fcde32a140df..c3eb433a78f61 100644
+--- a/Documentation/hwmon/hwmon-kernel-api.rst
++++ b/Documentation/hwmon/hwmon-kernel-api.rst
+@@ -42,6 +42,9 @@ register/unregister functions::
  
- 	/* The gDomID does not exist. We allocate new hdom_id */
--	gdom_info->hdom_id = amd_iommu_pdom_id_alloc();
--	if (gdom_info->hdom_id <= 0) {
-+	hdom_id = amd_iommu_pdom_id_alloc();
-+	if (hdom_id <= 0) {
- 		__xa_cmpxchg(&aviommu->gdomid_array,
- 			     ndom->gdom_id, gdom_info, NULL, GFP_ATOMIC);
- 		xa_unlock_irqrestore(&aviommu->gdomid_array, irqflags);
-@@ -170,6 +170,7 @@ amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
- 		goto out_err_gdom_info;
- 	}
+   char *devm_hwmon_sanitize_name(struct device *dev, const char *name);
  
-+	gdom_info->hdom_id = hdom_id;
- 	ndom->gdom_info = gdom_info;
- 	refcount_set(&gdom_info->users, 1);
++  int hwmon_notify_event(struct device *dev, enum hwmon_sensor_types type,
++			 u32 attr, int channel);
++
+   void hwmon_lock(struct device *dev);
+   void hwmon_unlock(struct device *dev);
+ 
+@@ -90,6 +93,18 @@ implemented in the driver, or debugfs functions, hwmon_lock() and hwmon_unlock()
+ can be used to ensure that calls to those functions are serialized. Those
+ functions also support guard() and scoped_guard() variants.
+ 
++Drivers can call hwmon_notify_event() to notify userspace and the thermal
++subsystem when a hardware monitoring event (such as an alarm or a fault
++condition) occurs or clears. The parameters are the hwmon device, the sensor
++type, the attribute identifier associated with the event (such as
++hwmon_temp_max_alarm or hwmon_fan_fault), and the sensor channel number.
++hwmon_notify_event() generates a sysfs event (calling sysfs_notify()) and a
++udev event with the attribute name passed in the NAME environment property
++(e.g., "NAME=temp1_max_alarm"). If the event is for a temperature sensor and
++the sensor is attached to a thermal zone, it also notifies the thermal
++subsystem to update the thermal zone. hwmon_notify_event() returns 0 on
++success or a negative error code on failure.
++
+ Using devm_hwmon_device_register_with_info()
+ --------------------------------------------
  
 -- 
 2.53.0
