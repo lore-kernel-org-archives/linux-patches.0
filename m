@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB149D587;
-	Thu, 17 Sep 2026 18:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5841F54706B;
+	Thu, 17 Sep 2026 18:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670855; cv=none; b=dseV46ZA0HCELhF72KE7juLie9vhiudjOpcWXcis8MNFiHZXTtu7AmxcBV13K1X+lbWXS2y/ejN6VrJd4A9BmIO3ljEQcm/ugLQxvpow1DldY5tLEvdcSj0JIrxorvIzvha/9+VLEIFDGz7JozFMKHc6yK4bIHjeJHv969i7OnE=
+	t=1789670858; cv=none; b=ZsJhoDT5e6e1XJMkVjcwY3x1AkQfKgDnSHaX4YVIkDFEbDXTwdgIZ+l/tic4OambWHjLKvDP+/BTAXJNhs63bVPCrpWeV9+udbEyplyxPgrTVfFrNKrcUFbNTxCyyIfukbPdxoGrFC1eTM877+uqIOg8lD3hPFZ3WslSiqSnPDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670855; c=relaxed/simple;
-	bh=hTwzZdD122Dvjr5eNXQoKkXImJ3GOLbJV1hWjQ+Lhy4=;
+	s=arc-20240116; t=1789670858; c=relaxed/simple;
+	bh=/Q3Rxx6gEswnNHactBNe4Htf7d39DcILYTg81PyC/vQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoJv9PWj3HouqjBy1J6/DtxoEkyhWGk7u+7wguZ/GqStgypXz6sIMsXX9eBJaIVkpgejiO4hAE/CW9dBQaxL6hC+yqENBmPHqpzH3HzszbnQGdHN3CRT2491tZhtP7nPUmRt35YY9q7gTg39iz/7SSHmjRJ8hpER0aMGCI3IWrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX9A6ziE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mx/0CIz1D0CqPLYdXoZohSUy7VTkSOPS63j1l28tDWyBeD0Ro+feqEks5rqav/s735KJmpJ6rifkp8piS7g4yGYre49Scs5N+UYjmJYnxDkwbIBqCMucXNluzInuA0T/DhPAa985+lgIyIcwsHmxm9AwpzRqlzREB3BoK+X3BUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VI0LC3fV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX9A6ziE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0341F000FF;
-	Thu, 17 Sep 2026 18:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VI0LC3fV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10091F000FF;
+	Thu, 17 Sep 2026 18:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670854;
-	bh=j3IM7e4b5+CKlzRD6GIWtiyq1/W6wKcZiOZ2DN5Jg4E=;
+	s=korg; t=1789670857;
+	bh=DPqpk4XDpwYmR5Vz3zzPpbpUQW+XdRMEXTClFdfaNyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iX9A6ziED+7ckLtbAb/tp2aaktHoS50YwSdWauQKIHztE0uOr8FVKoZZsPqTdvEeT
-	 dMg03GiPqoMY5X9dzznYWGGKRyXhmRYvWrklGxGEaxxITjzO8jsS1UmKkdXkYNQ6K6
-	 ZzTRofRJuBQKyA9sIWW41wVuufDreCQx520EGo/k=
+	b=VI0LC3fVHgD4l47e9aCW57zzUZSt1yUYp6lG8jUB8GcbB9+jk493sDS2voqhhypX/
+	 KehW0XGG2kq2GHimW9RrtR4vsCWA4hoFWr5HomY04DdtClqV72uOfd5pW09J78KgTo
+	 0EhEVjePKgfWmHjse5PK4oXSegYyEaotVcskAnfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Marsden <greg.marsden@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
+	Furong Xu <0x1207@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0790/1102] net/rds: fix tcp stream corruption with large pages
-Date: Thu, 17 Sep 2026 16:12:13 +0100
-Message-ID: <20260917151600.301627322@linuxfoundation.org>
+Subject: [PATCH 6.12 0791/1102] net: stmmac: TSO: Simplify the code flow of DMA descriptor allocations
+Date: Thu, 17 Sep 2026 16:12:14 +0100
+Message-ID: <20260917151600.327705220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,49 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Marsden <greg.marsden@oracle.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit 2ac09b5353fe6858411fdc8c6efa60d832e20f13 ]
+[ Upstream commit 3569399994384f7e409a560910613edc2ad4a779 ]
 
-rds_message_map_pages() assigns PAGE_SIZE bytes to every
-scatterlist entry, even when total_len ends in a partial page. The RDS
-congestion map is defined as 8192 bytes, so on systems with PAGE_SIZE
-greater than 8192 the scatterlist maps bytes beyond the end of the
-congestion map.  RDS-TCP transmits the SG contents according to those
-lengths, so the extra bytes become part of the TCP RDS stream and are
-interpreted as subsequent RDS message headers, corrupting the stream.
+The TCP Segmentation Offload (TSO) engine is an optional function in
+DWMAC cores, it is implemented for dwmac4 and dwxgmac2 only, ancient
+dwmac100 and dwmac1000 are not supported by hardware. Current driver
+code checks priv->dma_cap.tsoen which is read from MAC_HW_Feature1
+register to determine if TSO is enabled in hardware configurations,
+if (!priv->dma_cap.tsoen) driver never sets NETIF_F_TSO for net_device.
 
-Limit the final scatterlist mapping to the number of bytes remaining.
-This has no effect on systems with a 4K page size and allows RDS-TCP to
-be used on systems with 16K and larger page sizes.
+This patch never affects dwmac100/dwmac1000 and their stmmac_desc_ops:
+ndesc_ops/enh_desc_ops, since TSO is never supported by them two.
 
-The RDS selftest, which previously hung on 16K pages, now passes.
+The DMA AXI address width of DWMAC cores can be configured to
+32-bit/40-bit/48-bit, then the format of DMA transmit descriptors
+get a little different between 32-bit and 40-bit/48-bit.
+Current driver code checks priv->dma_cap.addr64 to use certain format
+with certain configuration.
 
-Fixes: 7875e18e0996 ("RDS: Message parsing")
-Signed-off-by: Greg Marsden <greg.marsden@oracle.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/apxJjxvStibPI0AS@oracle.com
+This patch converts the format of DMA transmit descriptors on dwmac4
+and dwxgmac2 that the DMA AXI address width is configured to 32-bit (as
+described by function comments of stmmac_tso_xmit() in current code) to
+a more generic format (see updated function comments after this patch)
+which is actually already used on 40-bit/48-bit platforms to provide
+better compatibility and make code flow cleaner in TSO TX routine.
+
+Another interesting finding, struct stmmac_desc_ops is a common abstract
+interface to maintain descriptors, we should avoid the direct assignment
+of descriptor members (e.g. desc->des0), stmmac_set_desc_addr() is the
+proper method yet. This patch tries to improve this by the way.
+
+Tested and verified on:
+DWMAC CORE 5.00a with 32-bit DMA AXI address width
+DWMAC CORE 5.10a with 32-bit DMA AXI address width
+DWXGMAC CORE 3.20a with 40-bit DMA AXI address width
+
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/20241220080726.1733837-1-0x1207@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/message.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 60 ++++++++-----------
+ 1 file changed, 24 insertions(+), 36 deletions(-)
 
-diff --git a/net/rds/message.c b/net/rds/message.c
-index 9824e79e057f4..5d9286da53c9a 100644
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -365,7 +365,9 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
- 	for (i = 0; i < rm->data.op_nents; ++i) {
- 		sg_set_page(&rm->data.op_sg[i],
- 				virt_to_page((void *)page_addrs[i]),
--				PAGE_SIZE, 0);
-+				i == rm->data.op_nents - 1
-+					? total_len - (i * PAGE_SIZE)
-+					: PAGE_SIZE, 0);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index f583542edd801..1184a6833d753 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4108,11 +4108,7 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
+ 			desc = &tx_q->dma_tx[tx_q->cur_tx];
+ 
+ 		curr_addr = des + (total_len - tmp_len);
+-		if (priv->dma_cap.addr64 <= 32)
+-			desc->des0 = cpu_to_le32(curr_addr);
+-		else
+-			stmmac_set_desc_addr(priv, desc, curr_addr);
+-
++		stmmac_set_desc_addr(priv, desc, curr_addr);
+ 		buff_size = tmp_len >= TSO_MAX_BUFF_SIZE ?
+ 			    TSO_MAX_BUFF_SIZE : tmp_len;
+ 
+@@ -4158,17 +4154,27 @@ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
+  *  First Descriptor
+  *   --------
+  *   | DES0 |---> buffer1 = L2/L3/L4 header
+- *   | DES1 |---> TCP Payload (can continue on next descr...)
+- *   | DES2 |---> buffer 1 and 2 len
++ *   | DES1 |---> can be used as buffer2 for TCP Payload if the DMA AXI address
++ *   |      |     width is 32-bit, but we never use it.
++ *   |      |     Also can be used as the most-significant 8-bits or 16-bits of
++ *   |      |     buffer1 address pointer if the DMA AXI address width is 40-bit
++ *   |      |     or 48-bit, and we always use it.
++ *   | DES2 |---> buffer1 len
+  *   | DES3 |---> must set TSE, TCP hdr len-> [22:19]. TCP payload len [17:0]
+  *   --------
++ *   --------
++ *   | DES0 |---> buffer1 = TCP Payload (can continue on next descr...)
++ *   | DES1 |---> same as the First Descriptor
++ *   | DES2 |---> buffer1 len
++ *   | DES3 |
++ *   --------
+  *	|
+  *     ...
+  *	|
+  *   --------
+- *   | DES0 | --| Split TCP Payload on Buffers 1 and 2
+- *   | DES1 | --|
+- *   | DES2 | --> buffer 1 and 2 len
++ *   | DES0 |---> buffer1 = Split TCP Payload
++ *   | DES1 |---> same as the First Descriptor
++ *   | DES2 |---> buffer1 len
+  *   | DES3 |
+  *   --------
+  *
+@@ -4178,15 +4184,14 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct dma_desc *desc, *first, *mss_desc = NULL;
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+-	int tmp_pay_len = 0, first_tx, nfrags;
+ 	unsigned int first_entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
+ 	struct stmmac_tx_queue *tx_q;
+ 	u32 pay_len, mss, queue;
+-	dma_addr_t tso_des, des;
++	int i, first_tx, nfrags;
+ 	u8 proto_hdr_len, hdr;
++	dma_addr_t des;
+ 	bool set_ic;
+-	int i;
+ 
+ 	/* Always insert VLAN tag to SKB payload for TSO frames.
+ 	 *
+@@ -4271,24 +4276,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (dma_mapping_error(priv->device, des))
+ 		goto dma_map_err;
+ 
+-	if (priv->dma_cap.addr64 <= 32) {
+-		first->des0 = cpu_to_le32(des);
+-
+-		/* Fill start of payload in buff2 of first descriptor */
+-		if (pay_len)
+-			first->des1 = cpu_to_le32(des + proto_hdr_len);
+-
+-		/* If needed take extra descriptors to fill the remaining payload */
+-		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
+-		tso_des = des;
+-	} else {
+-		stmmac_set_desc_addr(priv, first, des);
+-		tmp_pay_len = pay_len;
+-		tso_des = des + proto_hdr_len;
+-		pay_len = 0;
+-	}
+-
+-	stmmac_tso_allocator(priv, tso_des, tmp_pay_len, (nfrags == 0), queue);
++	stmmac_set_desc_addr(priv, first, des);
++	stmmac_tso_allocator(priv, des + proto_hdr_len, pay_len,
++			     (nfrags == 0), queue);
+ 
+ 	/* In case two or more DMA transmit descriptors are allocated for this
+ 	 * non-paged SKB data, the DMA buffer address should be saved to
+@@ -4390,11 +4380,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
  	}
  
- 	return rm;
+ 	/* Complete the first descriptor before granting the DMA */
+-	stmmac_prepare_tso_tx_desc(priv, first, 1,
+-			proto_hdr_len,
+-			pay_len,
+-			1, tx_q->tx_skbuff_dma[first_entry].last_segment,
+-			hdr / 4, (skb->len - proto_hdr_len));
++	stmmac_prepare_tso_tx_desc(priv, first, 1, proto_hdr_len, 0, 1,
++				   tx_q->tx_skbuff_dma[first_entry].last_segment,
++				   hdr / 4, (skb->len - proto_hdr_len));
+ 
+ 	/* If context desc is used to change MSS */
+ 	if (mss_desc) {
 -- 
 2.53.0
 
