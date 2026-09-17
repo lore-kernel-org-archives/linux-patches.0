@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2E554704A;
-	Thu, 17 Sep 2026 18:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A77081A;
+	Thu, 17 Sep 2026 18:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668831; cv=none; b=L+cGpsVIutZJM2CvvMHEYLiSKrSiS4sSTkMctYDkDHvQoWA4JT2J+6s7tcfvWemU8T8O3uYT+8hAJqJx4VLWq/chSYS78ZBJe1Gf9P03XILMsPhRnmiPxmsExz3FqdufNu5ed5TK4SDLzf8iqP8GPvoNCwGqv7ljv9x4nIQmzlk=
+	t=1789668835; cv=none; b=VhNs/EBcPS+SOCZHOHw5D6uOyOytY83Kp/CypeHFP+59QsnvHS2INHKdyYZKZpZNOG8cp/yMHELb28DhCMlWA0WqJS5bSooVNBetTMOdDC0E2zXQLnmHwEI9g72dw7kCIuLuRNC4EUvjERriemGQyZ2kgFrusgyApyYs3XRN4XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668831; c=relaxed/simple;
-	bh=ovQKnURWVnK+rN65wbxB0TzlmXzYSQlCueOQBU5fULs=;
+	s=arc-20240116; t=1789668835; c=relaxed/simple;
+	bh=9KWx1QY79MLKJ7BZwysWU86fdpcEm4q5xoQ7HnjgpD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qx3tl/kIy0dqe7WaKhNe1ljsNwmSAyAOyMyYDNwloKsCteE6VcsErCAixqlCNmqIcunzbDTZCOMKVW7MnMdPCxtYM2/iqv0OWhugB+Ny391d2a+aMj5JB2gwcxx71TemFwvkrGke7WOftNDruHMjIcNiXksbm6wDiFkixRhOQT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cE13ZRwR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PmyMTgpgO19ws8fUka1iU5M7sPlI5AURPfwxnyh8zKNbRD7rl7vpaYuOf18rheNo7gKraeD4Phch7MxE/Tj0IG0Och+EsccS//cSRkPGUq1zTJdIf88E1xfPjuBNFxkiXjWb+k9znXFigLK17KkwjAyoLn+evdTbLeF/2vA9gW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCkjkSjA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE13ZRwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC47F1F000FF;
-	Thu, 17 Sep 2026 18:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCkjkSjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018D81F000FF;
+	Thu, 17 Sep 2026 18:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668830;
-	bh=N8Q7NgOA1WA8neziv/QPUfotFqfQosUs45S+yREPjWQ=;
+	s=korg; t=1789668833;
+	bh=UeFAgbw++xUHeL9gUeT0XHVTiPefTdPe2vBZUD28sq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cE13ZRwRnQD15No+oir9fSqVPKQ8X6IE821P3cXsH4x/vnhpGPfq04kZvhQrD0gC0
-	 JWsR0KU83CeAvD6FiIqazfgXyEr6Diw6L7lW//k98W63JzmNWMPqvZ5Z17DQrQSSj4
-	 exVqiom/j57ams6EFhIJWqy/vpXPPd3XGTEOLzkI=
+	b=MCkjkSjA6Vj4y3YjN/3ihoV+FYPH5vOwgO+Gnat9jkg/43W9zl+6ImaVGcPdORmGq
+	 01JAF/s9HPmBCD2SzWCRpF5bZsdn9sJOoIfvxQ7SzDhF50rR+VNVJMU+z8PFipatNL
+	 RSvsSGfkfYac745RDJRX7EeQofCUc1qBCawIjc2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+83181a31faf9455499c5@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0517/1102] net: iptunnel: fix stale transport header during tunnel decapsulation
-Date: Thu, 17 Sep 2026 16:07:40 +0100
-Message-ID: <20260917151552.747304091@linuxfoundation.org>
+Subject: [PATCH 6.12 0518/1102] net/sched: act_api: budget all shared attributes in notify skbs
+Date: Thu, 17 Sep 2026 16:07:41 +0100
+Message-ID: <20260917151552.774726015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,123 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 28a57fb2c5df4deb42a06e52fd36c14b37aa0034 ]
+[ Upstream commit 13eb543cebef6d6c3ec42e31afe3856f51b7126b ]
 
-Syzbot reported a crash in qdisc_pkt_len_segs_init() caused by a stale
-transport_header offset after tunnel decapsulation.
+tcf_action_shared_attrs_size() is supposed to return an upper bound on the
+netlink attributes every action dump emits outside of TCA_ACT_OPTIONS, so
+that tcf_add_notify_msg(), tcf_del_notify_msg() and friends can allocate
+an skb large enough for the reply.  It has fallen behind the dump path and
+is now an underestimate for every single action.
 
-BUG: unable to handle page fault for address: ffffed102091a42e
-Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 340 Comm: qdisc_uaf_repro Not tainted 7.2.0-rc4-00061-g248951ddc14d #256 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:__asan_load2
-<IRQ>
-qdisc_pkt_len_segs_init (net/core/dev.c:4145)
-__dev_queue_xmit (net/core/dev.c:4787)
-br_dev_queue_push_xmit (net/bridge/br_forward.c:53)
-br_handle_frame_finish (net/bridge/br_input.c:229)
-br_handle_frame (net/bridge/br_input.c:315)
-__netif_receive_skb_core.constprop.0 (net/core/dev.c:6099)
-__netif_receive_skb_list_core (net/core/dev.c:6287)
-netif_receive_skb_list_internal (net/core/dev.c:6445)
-napi_complete_done (net/core/dev.c:6813)
-gro_cell_poll (net/core/gro_cells.c:74)
-__napi_poll (net/core/dev.c:7735)
-net_rx_action (net/core/dev.c:7798 net/core/dev.c:7955)
-handle_softirqs (kernel/softirq.c:622)
-do_softirq (kernel/softirq.c:523  kernel/softirq.c:510 )
-__local_bh_enable_ip (kernel/softirq.c:450)
-tun_get_user (drivers/net/tun.c:1986 (discriminator 1))
-tun_chr_write_iter (drivers/net/tun.c:2032)
+Attributes, such as, TCA_ACT_IN_HW_COUNT and TCA_STATS_BASIC_HW are
+emitted unconditionally and never accounted for. TCA_STATS_PKT64,
+TCA_ACT_USED_HW_STATS, TCA_STATS_RATE_EST, TCA_STATS_RATE_EST64 require
+specific conditions, but are also not accounted for.
 
-The issue is completely latent until qdisc read transport header in
-commit 7fb4c1967011 ("net: pull headers in qdisc_pkt_len_segs_init()").
-The crash requires four conditions to line up:
+Fix the issue by budgeting all of them so that we have a legitimate
+upper bound. Even tough for of them require specific conditions, they
+are cheap so, to avoid overcomplicating, we opted to account for them
+unconditionally as well to account for a real worst case scenario.
 
-1. The incoming packet is encapsulated and carries GSO metadata. The outer
-   transport header offset is stored in skb->transport_header while the
-   packet is still in the outer tunnel context.
-2. The tunnel receiver strips the outer headers. skb->data is advanced to
-   the inner frame, but skb->transport_header is left pointing to the
-   now-removed outer L4 header, so it becomes a negative offset relative to
-   the new data.
-3. The inner frame is not delivered to the local IP stack. Instead, it
-   is forwarded at L2 by a bridge or HSR, so ip_rcv_core() never runs and
-   the transport header is not reset to the inner L4 offset.
-4. The forwarding path calls __dev_queue_xmit(), which enters
-   qdisc_pkt_len_segs_init(). That function computes the GSO header length
-   from skb_transport_offset(skb). Because the offset is negative, the
-   unsigned cast overflows and pskb_may_pull(skb, hdr_len +
-   sizeof(struct tcphdr)) reads past the end of the skb, triggering a
-   KASAN fault or page fault.
-
-The issue specifically requires GSO packets (shinfo->gso_size != 0), which
-are processed/aggregated through gro_cells. Fix this by clearing
-transport_header to the ~0U sentinel in gro_cell for all tunnnel driver.
-GTP does not support GRO/GSO, drop the evil GSO packets in GTP directly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+83181a31faf9455499c5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69de2bee.a00a0220.475f0.0041.GAE@google.com/T/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260825123909.1463121-1-dongchenchen2@huawei.com
+Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260824153903.4143642-2-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c      | 5 +++++
- include/linux/skbuff.h | 5 +++++
- net/core/gro_cells.c   | 2 ++
- 3 files changed, 12 insertions(+)
+ net/sched/act_api.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 2437b77e92279..cac997254ad6a 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -315,6 +315,11 @@ static int gtp_inner_proto(struct sk_buff *skb, unsigned int hdrlen,
- static int gtp_rx(struct pdp_ctx *pctx, struct sk_buff *skb,
- 		  unsigned int hdrlen, unsigned int role, __u16 inner_proto)
- {
-+	if (skb_is_gso(skb)) {
-+		netdev_dbg(pctx->dev, "GSO is not supported in GTP\n");
-+		goto err;
-+	}
-+
- 	if (!gtp_check_ms(skb, pctx, hdrlen, role, inner_proto)) {
- 		netdev_dbg(pctx->dev, "No PDP ctx for this MS\n");
- 		return 1;
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index b1e7802cc89ef..1bfdc03e0d94e 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3014,6 +3014,11 @@ static inline bool skb_transport_header_was_set(const struct sk_buff *skb)
- 	return skb->transport_header != (typeof(skb->transport_header))~0U;
- }
- 
-+static inline void skb_unset_transport_header(struct sk_buff *skb)
-+{
-+	skb->transport_header = (typeof(skb->transport_header))~0U;
-+}
-+
- static inline unsigned char *skb_transport_header(const struct sk_buff *skb)
- {
- 	DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb));
-diff --git a/net/core/gro_cells.c b/net/core/gro_cells.c
-index ff8e5b64bf6b7..15f4c8ae7384d 100644
---- a/net/core/gro_cells.c
-+++ b/net/core/gro_cells.c
-@@ -20,6 +20,8 @@ int gro_cells_receive(struct gro_cells *gcells, struct sk_buff *skb)
- 	if (unlikely(!(dev->flags & IFF_UP)))
- 		goto drop;
- 
-+	skb_unset_transport_header(skb);
-+
- 	if (!gcells->cells || skb_cloned(skb) || netif_elide_gro(dev)) {
- 		res = netif_rx(skb);
- 		goto unlock;
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index a5330dfef4123..ba770defd54d8 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -443,12 +443,21 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
+ 		+ nla_total_size(IFNAMSIZ) /* TCA_ACT_KIND */
+ 		+ cookie_len /* TCA_ACT_COOKIE */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_HW_STATS */
++		/* TCA_ACT_USED_HW_STATS */
++		+ nla_total_size(sizeof(struct nla_bitfield32))
++		+ nla_total_size(sizeof(u32)) /* TCA_ACT_IN_HW_COUNT */
+ 		+ nla_total_size(0) /* TCA_ACT_STATS nested */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_FLAGS */
+ 		/* TCA_STATS_BASIC */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
+-		/* TCA_STATS_PKT64 */
+-		+ nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_BASIC_HW */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
++		/* TCA_STATS_PKT64, emitted by both of the basic copies above */
++		+ 2 * nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_RATE_EST */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est))
++		/* TCA_STATS_RATE_EST64 */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est64))
+ 		/* TCA_STATS_QUEUE */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
+ 		+ nla_total_size(0) /* TCA_ACT_OPTIONS nested */
 -- 
 2.53.0
 
