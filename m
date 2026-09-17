@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980FF4F391B;
-	Thu, 17 Sep 2026 16:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FA44F391B;
+	Thu, 17 Sep 2026 16:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661087; cv=none; b=oZvLgK3UOpi5FW/ErEOkieTCBwasAHY9UjzBbnFCzNHZrcexfB++HpeYAbgsGUz+Een3pyL/Y2rtMHsT9bjXRtInHxt4mkUySDQQUs/1wRh3smDgWEBb+6YEbdrEbvLi1nthzjL9yTBGDjBECaUE7x2Ei8Upzc+LvmStIVf72xk=
+	t=1789661090; cv=none; b=oDdJWH9UsoP0MTCjcS5ra8Pa2hUj9TLKIk1Mcl0JMulvXQR75n+9EPeM21UnB4WZ8WoHzDEVJhKhZOFX2n0t1+lGXZcM8iLQ777QtCrs4fa+ILWnq1iew1LQh55/g6+ZVxnBgLynPdEDL4bs4A2oqJOXxYuoFIANNrQtmqcK6DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661087; c=relaxed/simple;
-	bh=WWrVte9Eh+GIMmJMItnEcVyLs1yKcR4Fy/oHRt0oGZg=;
+	s=arc-20240116; t=1789661090; c=relaxed/simple;
+	bh=1LsmVAh/whLBTWtV3SaNJqvbfLkrQQoTlvqenhaJ/s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mN6qVMaBPBu5ETFCY+hKhQTMZwSGJKZXYYx4zPV+wy8ZSsD9QD9f6f10WvO8amWZDVP5Hjmx/+ikmZKU5yUpfWF9tQBLT8wslVxcFz7glGY3MILWak5mXcMblb/YxvjHnmTfkvUeYRZ56h/8zmnxdFjku8ils5W7eNtUttABWJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTlBqnna; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zbvvz3ieYzyMEy1+WIxEaCHLdbuDuaYciOBoW7zKXcrmZTvr/wwo37/n1sfJgYVbjWFCy0afvTXnoEJxILa7e1HGKIcXSf97iWuNGXUJVZG4Q72Plu7TWRCP27ZWGc2qWvb/y0iLWtNj9rLz5LOpvw9aDMiJE2Ni2LKkPeXrDl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFQGby+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTlBqnna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B221F00893;
-	Thu, 17 Sep 2026 16:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFQGby+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E840D1F000FF;
+	Thu, 17 Sep 2026 16:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661086;
-	bh=zQNjpT8bmJiPVndwWP2bI+c5cO4oxMUucsvIA6suGBo=;
+	s=korg; t=1789661089;
+	bh=lpq8b7QdIoE0O0m4ibl+SZ8lI1r2atBsksQ+OCmQtiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PTlBqnnazmG+0TzANuY/T5EtiRe+e8swRNcfAiLagUTSayMiE3mRnneiWgSvQ+U+q
-	 F2dV1vGAauuBkLC3ba4+IYRe+bUINx5Psy0EqehfX64KdKApfjKG8GdqNL3loXKu4r
-	 wBG84frPWUDWWduh1GdVMsFvON68Q9736dA1GD8g=
+	b=BFQGby+s4RAJZzQ1tIxin86AGeoeznsI11JB09EXNO+MTE44iW4eE4q2vyrFas9R/
+	 ooE2ity4zarirgXqKUp98/ja/dS10Vby7AkVgGnVj2TuhEFLZOZRUKMzV7iSgO84aT
+	 m2v70mk34+qm93f4IJsnttq9Tnwmi4uTWUSAi4Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0037/1250] wifi: rtw89: disable CSI STBC for VHT 160MHz
-Date: Thu, 17 Sep 2026 15:57:12 +0100
-Message-ID: <20260917151552.941246288@linuxfoundation.org>
+Subject: [PATCH 6.18 0038/1250] psp: validate IPv4 header fields in psp_dev_rcv()
+Date: Thu, 17 Sep 2026 15:57:13 +0100
+Message-ID: <20260917151552.967458351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,40 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit d1fba55228685a7a237681be739683eaf698b9bc ]
+[ Upstream commit c2b22277ad897d21341f502f87fccd905ff4e207 ]
 
-Fix interoperability problem where CSI feedback with STBC enabled at
-VHT 160MHz BW cannot be properly decoded by certain APs, causing CSI
-reports to be rejected. This problem is specific to Wi-Fi 7 chips,
-as Wi-Fi 6 defaults to 20MHz CSI BW. Therefore, disable STBC encoding
-for CSI transmission in VHT 160MHz mode to ensure CSI feedback is
-accepted by these APs and maintain smooth throughput.
+psp_dev_rcv() is called from the NIC driver's RX completion path
+before the frame reaches ip_rcv_core(), so the IP header has not
+been validated in SW, yet. We expect that the device has done
+all this validation, but let's also add the SW checks, to avoid
+surprises.
 
-Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260424072552.59220-4-pkshih@realtek.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260428205352.1247325-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac_be.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/psp/psp_main.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
-index e5a61c628b731..b03392612f252 100644
---- a/drivers/net/wireless/realtek/rtw89/mac_be.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
-@@ -2147,6 +2147,10 @@ static int rtw89_mac_set_csi_para_reg_be(struct rtw89_dev *rtwdev,
- 		sound_dim = min(sound_dim, t);
- 	}
+diff --git a/net/psp/psp_main.c b/net/psp/psp_main.c
+index e35c31977479c..afda9cb660275 100644
+--- a/net/psp/psp_main.c
++++ b/net/psp/psp_main.c
+@@ -294,6 +294,9 @@ int psp_dev_rcv(struct sk_buff *skb, u16 dev_id, u8 generation, bool strip_icv)
+ 	if (proto == htons(ETH_P_IP)) {
+ 		struct iphdr *iph = (struct iphdr *)(skb->data + l2_hlen);
  
-+	/* Disable stbc_en in VHT 160MHz to avoid IOT issues with certain APs */
-+	if (link_sta->vht_cap.cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ)
-+		stbc_en = 0;
++		if (unlikely(iph->ihl < 5))
++			return -EINVAL;
 +
- 	nc = min(nc, sound_dim);
- 	nr = min(nr, sound_dim);
+ 		is_udp = iph->protocol == IPPROTO_UDP;
+ 		l3_hlen = iph->ihl * 4;
+ 		if (l3_hlen != sizeof(struct iphdr) &&
+@@ -347,6 +350,9 @@ int psp_dev_rcv(struct sk_buff *skb, u16 dev_id, u8 generation, bool strip_icv)
+ 	if (proto == htons(ETH_P_IP)) {
+ 		struct iphdr *iph = (struct iphdr *)(skb->data + l2_hlen);
  
++		if (unlikely(ntohs(iph->tot_len) < l3_hlen + encap))
++			return -EINVAL;
++
+ 		iph->protocol = psph->nexthdr;
+ 		iph->tot_len = htons(ntohs(iph->tot_len) - encap);
+ 		iph->check = 0;
+@@ -354,6 +360,9 @@ int psp_dev_rcv(struct sk_buff *skb, u16 dev_id, u8 generation, bool strip_icv)
+ 	} else {
+ 		struct ipv6hdr *ipv6h = (struct ipv6hdr *)(skb->data + l2_hlen);
+ 
++		if (unlikely(ntohs(ipv6h->payload_len) < encap))
++			return -EINVAL;
++
+ 		ipv6h->nexthdr = psph->nexthdr;
+ 		ipv6h->payload_len = htons(ntohs(ipv6h->payload_len) - encap);
+ 	}
 -- 
 2.53.0
 
