@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B745B4F4CF5;
-	Thu, 17 Sep 2026 16:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B8A4F4D08;
+	Thu, 17 Sep 2026 16:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661275; cv=none; b=o59z4rUDVctTpVY2MZKmNquUA+IsAbGi/bwMMnTslnJvYwv4nrTRxA5zfVhbGshFv1PxaKrjaV20giPoVrc7h6P8YGSPTTQuSnW+7qShpdPFNm41+IVVaHA0u1YMmng6MZ8CggXXVBrwbasJ7nS0ib32MZUqO3tVNC9Krsrs9Vw=
+	t=1789661277; cv=none; b=oiYgEL04IUDR2Wz7xp3MsQWeelMDhz5jdqIse3CZQZ0BfsxnRcudx1e0ciSEz4Dy2IV2UWP443bpvYpy6IDXeEoUfQC6VbiyuwI/SK2zVovAHEGhfxmasOqox/58WqDZSgye2nCgZTs000TBb8d1BKVWphVBULTH9hdq2gbP5lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661275; c=relaxed/simple;
-	bh=Q7ItusjTZiSIFmpTzf+jL8DoqQoDH2xQtDUK8fV1Q10=;
+	s=arc-20240116; t=1789661277; c=relaxed/simple;
+	bh=kIz1uMU/H8HF+10ITezTlIYROqPIaPqf1oZ5MIuHzUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrMy3Dt4Gd+bjaYsaJc6djC/pqAljUSN7sEDg80jEtdGvvrnLyq5Pi56a4+2nQVTaBbfMFvPOT2TpfeJhOagvoQFnIHvmMVCgWSCm012Yy/g/Xh+7MyKS3Vm+QXrEQQjlxHr7CSm/SDVB/0d3cPX4rQjCqeA5rQdWIGg6XQ+rt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjKx04Ui; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AhwVsPb//uvUFkiuOve4GDj6AENcuJzK9TEyyCcHkCzVY+ar4cZGgMp+Mgu/AuBizLZ0alQfq+t4d2SKvTgOuRXU6WMrtJ68+zYHc/ISe+xY8s+KwNs/KiBnymGeYuq2JxdA73WUN+3mP2LZkaGPME2WjbwN5l2HGO6+3OK5+54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpI5BWJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjKx04Ui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191B51F000FF;
-	Thu, 17 Sep 2026 16:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpI5BWJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B9F1F000FF;
+	Thu, 17 Sep 2026 16:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661273;
-	bh=7nl34vNX83gzxl9iD68LnQRVrqf6WRtYvxYh79/JCZI=;
+	s=korg; t=1789661276;
+	bh=v/f8uLX8zumlpgXuyE9gIOXyMmHy1IHPunmrReE/1D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AjKx04UiwBf8zZtYYNiX88dk/0SCtESudbzGEeoh6Q3HzBxkVgJFeUg08Cmvo3cjM
-	 tDcbjWlpfsnmW+nUzbUGCNcqAz/smdXjlbkxmXD41jo8pms7rFU30PjWR0CGmDozmq
-	 Zc8B7pzO/vrQU5ZPxtJEg7Wlvp96enh5lfyBBLGs=
+	b=dpI5BWJUjGFULA9Blq+ekh9qS67RviX8PxrvXoKPVd0qRql0gfxNEa3fEDlWL+ZLM
+	 6Dy5GYE3SP89ajH6gCQ8Dv4+zd+Mr6mjNwINndTfIEs7G+MGj+lXaLQN5Cg1slU4vZ
+	 azxl9cj4kelKw8ML6ZvY/UR6o+wsS4cTXVq0XY9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Abecassis <fabecassis@nvidia.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0141/1250] sched/fair: Reject misfit pulls onto busy SMT siblings on asym-capacity
-Date: Thu, 17 Sep 2026 15:58:56 +0100
-Message-ID: <20260917151555.877157639@linuxfoundation.org>
+Subject: [PATCH 6.18 0142/1250] iommu: arm-smmu-qcom: Ensure smmu is powered up in set_ttbr0_cfg
+Date: Thu, 17 Sep 2026 15:58:57 +0100
+Message-ID: <20260917151555.904198439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,67 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
-[ Upstream commit bf6aa722198d3c06e4236e8c5a480f30a64e1513 ]
+[ Upstream commit 8a0aab012b52b5c044ca3bec523e91f95dd40765 ]
 
-When SD_ASYM_CPUCAPACITY load balancing considers pulling a misfit task,
-capacity_of(dst_cpu) can overstate available compute if the SMT sibling is
-busy: the core does not deliver its full nominal capacity.
+arm_smmu_write_context_bank() assumes it is being called with RPM
+active, but it turns out that is not guaranteed in the path from
+qcom_adreno_smmu_set_ttbr0_cfg(), so it's possible for the register
+writes to get lost when configuring the context bank while the GPU is
+idle, leading to page faults later.
+Add the RPM calls here to make sure the SMMU is active before we touch
+it.
 
-If SMT is active and dst_cpu is not on a fully idle core, skip this
-destination so we do not migrate a misfit expecting a capacity upgrade we
-cannot actually provide.
-
-Reported-by: Felix Abecassis <fabecassis@nvidia.com>
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://patch.msgid.link/20260509180955.1840064-5-arighi@nvidia.com
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 4f02f823d1042..2aeb12a6ce2d0 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -9498,6 +9498,7 @@ struct lb_env {
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 3b9fb1c71e5f9..f7cb7de80cfb9 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -231,6 +231,7 @@ static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
+ 	struct io_pgtable *pgtable = io_pgtable_ops_to_pgtable(smmu_domain->pgtbl_ops);
+ 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+ 	struct arm_smmu_cb *cb = &smmu_domain->smmu->cbs[cfg->cbndx];
++	int ret;
  
- 	int			dst_cpu;
- 	struct rq		*dst_rq;
-+	bool			dst_core_idle;
+ 	/* The domain must have split pagetables already enabled */
+ 	if (cb->tcr[0] & ARM_SMMU_TCR_EPD1)
+@@ -260,8 +261,16 @@ static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
+ 		cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID, cb->cfg->asid);
+ 	}
  
- 	struct cpumask		*dst_grpmask;
- 	int			new_dst_cpu;
-@@ -10741,10 +10742,16 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 	 * We can use max_capacity here as reduction in capacity on some
- 	 * CPUs in the group should either be possible to resolve
- 	 * internally or be covered by avg_load imbalance (eventually).
-+	 *
-+	 * When SMT is active, only pull a misfit to dst_cpu if it is on a
-+	 * fully idle core; otherwise the effective capacity of the core is
-+	 * reduced and we may not actually provide more capacity than the
-+	 * source.
- 	 */
- 	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
- 	    (sgs->group_type == group_misfit_task) &&
--	    (!capacity_greater(capacity_of(env->dst_cpu), sg->sgc->max_capacity) ||
-+	    (!env->dst_core_idle ||
-+	     !capacity_greater(capacity_of(env->dst_cpu), sg->sgc->max_capacity) ||
- 	     sds->local_stat.group_type != group_has_spare))
- 		return false;
- 
-@@ -11311,6 +11318,8 @@ static inline void update_sd_lb_stats(struct lb_env *env, struct sd_lb_stats *sd
- 	unsigned long sum_util = 0;
- 	bool sg_overloaded = 0, sg_overutilized = 0;
- 
-+	env->dst_core_idle = !sched_smt_active() || is_core_idle(env->dst_cpu);
++	ret = pm_runtime_resume_and_get(smmu_domain->smmu->dev);
++	if (ret < 0) {
++		dev_err(smmu_domain->smmu->dev, "failed to get runtime PM: %d\n", ret);
++		return -ENODEV;
++	}
 +
- 	do {
- 		struct sg_lb_stats *sgs = &tmp_sgs;
- 		int local_group;
+ 	arm_smmu_write_context_bank(smmu_domain->smmu, cb->cfg->cbndx);
+ 
++	pm_runtime_put_autosuspend(smmu_domain->smmu->dev);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
