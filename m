@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365CA556B8B;
-	Thu, 17 Sep 2026 15:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B7C4C10E4;
+	Thu, 17 Sep 2026 15:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658843; cv=none; b=FExn0R0FcOrcFeSPTmVgev3C4Wb5YxwHm+/ojJGfxDrRi3d0Jq5hiNZ8hZvdQtYy3Q42Rvn3dcf60cy11pHb4Enc2Y52XlY6O5nd6UWCKsY4/EVpvanHnnC+5/b9L63cWfXtDtVcaUGQdTgMCqpGCEcnrMzdp6PdSxQ8qoSucgs=
+	t=1789658846; cv=none; b=SrS0r11dmvoF+8P1+n/RIOSRsKL3CQrbtNm0UtKhXX99XCmYuyGyFATfa9/XbsVZCM0jouy1uQdkk/OEwrZQbGW03vo5Yx0pnsG4axWMq0RWvhNpj7hPlWCvQfxpU3e0X4IMFqmIRZ40s0sMB9JXA7Znp6fuJuMnTi6kqwmXWFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658843; c=relaxed/simple;
-	bh=1mCngvLazbweyPgmh6u6xJZNA8po5Q7n9dq3lq9Hed0=;
+	s=arc-20240116; t=1789658846; c=relaxed/simple;
+	bh=aYkRb13b0g6pz8uhT+b7qBvp+mWYLDG/oHqjvtHZtQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLx8Z/+JUzi1ywMDV3NnFg21CT/Qbqk7l7plz7QbTfMNz69OxJP3IQO2GH6mEnyOzv65CJ+bt1KY5/aOhQXAIeSewkF3yuTXH7XAjVqPoMyQDINsQy7gHpBUr4URpti9W5+cU3kPk0TozzI2lb86+ZAZ7YxSyU3IzLnR1bV7UF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSjUesyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EYia3R/0GdgG/N4ZPCJovjn3RfMuGjKCd0po79mZoo30MMvSTxuvA19XsfkxppA7Bxfscq7oN3r3MDZKxMbJNz5ye468SD239IxHHuwddxgI51ZsSHre94EupsEmWk6GvqcfYlXKmcUpddymjvZfnW0+yx1/BGFsrQAv87hQ9ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY/Zzs4E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSjUesyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CDA1F00898;
-	Thu, 17 Sep 2026 15:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY/Zzs4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1701F0089B;
+	Thu, 17 Sep 2026 15:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658829;
-	bh=SzFaqTxE97QjQmvyhby46puCyLsdbbf+6cb5Hoxq7lw=;
+	s=korg; t=1789658832;
+	bh=6/hGDeDlHSX5Dv+2T/4dOBawuGkCv2gQzD2esRZZlmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vSjUesyrGaKNdODEoGX4krc1tbqk8+S7Ptn7/uvXG6nKdNQHkaOqVSRqeQ8T92YoI
-	 KsH4xQ3aID77RXoK8E0bmyva6FiAvRKh60xGssOcp5SGNwi2fy8cCpwGuE42g7XiW2
-	 tLXYTu+Fc4qEK7wzsP0n/sxJa0by9jdeWglEUjxE=
+	b=PY/Zzs4EGTLb3Jlctkc1yDgwDnrC/LbjVofQU+iaHuQYVcCqRnEy5vra5ADyqgolR
+	 dG6FCK/wIk/5vf7TWPJpTGIbznkvslcx5RxHRT765+whHQxVVOZ42EvuIAqgG939xv
+	 3C3CEK4pui8ddpkJrdBiThlP3MgpuCg7Mc3whiB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	syzbot+83181a31faf9455499c5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 054/733] net: stmmac: fix dma mapping leak in stmmac_tso_xmit()
-Date: Thu, 17 Sep 2026 16:06:02 +0100
-Message-ID: <20260917151352.142033974@linuxfoundation.org>
+Subject: [PATCH 7.2 055/733] net: iptunnel: fix stale transport header during tunnel decapsulation
+Date: Thu, 17 Sep 2026 16:06:03 +0100
+Message-ID: <20260917151352.170108914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,160 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit a5d946466a95621fa2769720d59ea336003aa1a5 ]
+[ Upstream commit 28a57fb2c5df4deb42a06e52fd36c14b37aa0034 ]
 
-In stmmac_tso_xmit(), if the DMA mapping of an skb fragment fails, the
-frame is dropped but the DMA mappings already created for the linear
-part and for the fragments mapped before the failure are never
-unmapped, leaking DMA mappings.
+Syzbot reported a crash in qdisc_pkt_len_segs_init() caused by a stale
+transport_header offset after tunnel decapsulation.
 
-Fix the leak by walking back over the descriptors used by the frame and
-releasing each of them with stmmac_free_tx_buffer(). Moreover, release
-the descriptors with stmmac_release_tx_desc() unmapping the DMA buffers.
+BUG: unable to handle page fault for address: ffffed102091a42e
+Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 340 Comm: qdisc_uaf_repro Not tainted 7.2.0-rc4-00061-g248951ddc14d #256 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:__asan_load2
+<IRQ>
+qdisc_pkt_len_segs_init (net/core/dev.c:4145)
+__dev_queue_xmit (net/core/dev.c:4787)
+br_dev_queue_push_xmit (net/bridge/br_forward.c:53)
+br_handle_frame_finish (net/bridge/br_input.c:229)
+br_handle_frame (net/bridge/br_input.c:315)
+__netif_receive_skb_core.constprop.0 (net/core/dev.c:6099)
+__netif_receive_skb_list_core (net/core/dev.c:6287)
+netif_receive_skb_list_internal (net/core/dev.c:6445)
+napi_complete_done (net/core/dev.c:6813)
+gro_cell_poll (net/core/gro_cells.c:74)
+__napi_poll (net/core/dev.c:7735)
+net_rx_action (net/core/dev.c:7798 net/core/dev.c:7955)
+handle_softirqs (kernel/softirq.c:622)
+do_softirq (kernel/softirq.c:523  kernel/softirq.c:510 )
+__local_bh_enable_ip (kernel/softirq.c:450)
+tun_get_user (drivers/net/tun.c:1986 (discriminator 1))
+tun_chr_write_iter (drivers/net/tun.c:2032)
 
-Fixes: f748be531d70 ("stmmac: support new GMAC4")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260826-stmmac_dma_unmap_tso-v1-1-a2753d1576ba@oss.qualcomm.com
+The issue is completely latent until qdisc read transport header in
+commit 7fb4c1967011 ("net: pull headers in qdisc_pkt_len_segs_init()").
+The crash requires four conditions to line up:
+
+1. The incoming packet is encapsulated and carries GSO metadata. The outer
+   transport header offset is stored in skb->transport_header while the
+   packet is still in the outer tunnel context.
+2. The tunnel receiver strips the outer headers. skb->data is advanced to
+   the inner frame, but skb->transport_header is left pointing to the
+   now-removed outer L4 header, so it becomes a negative offset relative to
+   the new data.
+3. The inner frame is not delivered to the local IP stack. Instead, it
+   is forwarded at L2 by a bridge or HSR, so ip_rcv_core() never runs and
+   the transport header is not reset to the inner L4 offset.
+4. The forwarding path calls __dev_queue_xmit(), which enters
+   qdisc_pkt_len_segs_init(). That function computes the GSO header length
+   from skb_transport_offset(skb). Because the offset is negative, the
+   unsigned cast overflows and pskb_may_pull(skb, hdr_len +
+   sizeof(struct tcphdr)) reads past the end of the skb, triggering a
+   KASAN fault or page fault.
+
+The issue specifically requires GSO packets (shinfo->gso_size != 0), which
+are processed/aggregated through gro_cells. Fix this by clearing
+transport_header to the ~0U sentinel in gro_cell for all tunnnel driver.
+GTP does not support GRO/GSO, drop the evil GSO packets in GTP directly.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+83181a31faf9455499c5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69de2bee.a00a0220.475f0.0041.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260825123909.1463121-1-dongchenchen2@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 53 ++++++++++++-------
- 1 file changed, 34 insertions(+), 19 deletions(-)
+ drivers/net/gtp.c      | 5 +++++
+ include/linux/skbuff.h | 5 +++++
+ net/core/gro_cells.c   | 2 ++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3a437409f78ae..1946361081fc2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4319,6 +4319,7 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
- /**
-  *  stmmac_tso_allocator - close entry point of the driver
-  *  @priv: driver private structure
-+ *  @entry: TX queue buffer index
-  *  @des: buffer start address
-  *  @total_len: total length to fill in descriptors
-  *  @last_segment: condition for the last descriptor
-@@ -4327,8 +4328,9 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
-  *  This function fills descriptor and request new descriptors according to
-  *  buffer length to fill
-  */
--static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
--				 int total_len, bool last_segment, u32 queue)
-+static void stmmac_tso_allocator(struct stmmac_priv *priv, u32 *entry,
-+				 dma_addr_t des, int total_len,
-+				 bool last_segment, u32 queue)
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 298efc76a56b0..69fe5717846b5 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -318,6 +318,11 @@ static int gtp_inner_proto(struct sk_buff *skb, unsigned int hdrlen,
+ static int gtp_rx(struct pdp_ctx *pctx, struct sk_buff *skb,
+ 		  unsigned int hdrlen, unsigned int role, __u16 inner_proto)
  {
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct dma_desc *desc;
-@@ -4340,14 +4342,13 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
- 	while (tmp_len > 0) {
- 		dma_addr_t curr_addr;
- 
--		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
--						priv->dma_conf.dma_tx_size);
--		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
-+		*entry = STMMAC_NEXT_ENTRY(*entry, priv->dma_conf.dma_tx_size);
-+		WARN_ON(tx_q->tx_skbuff[*entry]);
- 
- 		if (tx_q->tbs & STMMAC_TBS_AVAIL)
--			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
-+			desc = &tx_q->dma_entx[*entry].basic;
- 		else
--			desc = &tx_q->dma_tx[tx_q->cur_tx];
-+			desc = &tx_q->dma_tx[*entry];
- 
- 		curr_addr = des + (total_len - tmp_len);
- 		stmmac_set_desc_addr(priv, desc, curr_addr);
-@@ -4486,7 +4487,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct dma_desc *desc, *first, *mss_desc = NULL;
- 	struct stmmac_priv *priv = netdev_priv(dev);
--	unsigned int first_entry, tx_packets;
-+	unsigned int first_entry, entry, tx_packets;
- 	struct stmmac_txq_stats *txq_stats;
- 	struct stmmac_tx_queue *tx_q;
- 	bool set_ic, is_last_segment;
-@@ -4549,22 +4550,24 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 
- 	first_entry = tx_q->cur_tx;
--	WARN_ON(tx_q->tx_skbuff[first_entry]);
-+	entry = first_entry;
-+
-+	WARN_ON(tx_q->tx_skbuff[entry]);
- 
- 	if (tx_q->tbs & STMMAC_TBS_AVAIL)
--		desc = &tx_q->dma_entx[first_entry].basic;
-+		desc = &tx_q->dma_entx[entry].basic;
- 	else
--		desc = &tx_q->dma_tx[first_entry];
-+		desc = &tx_q->dma_tx[entry];
- 	first = desc;
- 
- 	/* first descriptor: fill Headers on Buf1 */
- 	des = dma_map_single(priv->device, skb->data, skb_headlen(skb),
- 			     DMA_TO_DEVICE);
- 	if (dma_mapping_error(priv->device, des))
--		goto dma_map_err;
-+		goto error;
- 
- 	stmmac_set_desc_addr(priv, first, des);
--	stmmac_tso_allocator(priv, des + proto_hdr_len, pay_len,
-+	stmmac_tso_allocator(priv, &entry, des + proto_hdr_len, pay_len,
- 			     (nfrags == 0), queue);
- 
- 	/* In case two or more DMA transmit descriptors are allocated for this
-@@ -4579,8 +4582,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	 * this DMA buffer right after the DMA engine completely finishes the
- 	 * full buffer transmission.
- 	 */
--	stmmac_set_tx_skb_dma_entry(tx_q, tx_q->cur_tx, des, skb_headlen(skb),
--				    false);
-+	stmmac_set_tx_skb_dma_entry(tx_q, entry, des, skb_headlen(skb), false);
- 
- 	/* Prepare fragments */
- 	for (i = 0; i < nfrags; i++) {
-@@ -4590,14 +4592,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 				       skb_frag_size(frag),
- 				       DMA_TO_DEVICE);
- 		if (dma_mapping_error(priv->device, des))
--			goto dma_map_err;
-+			goto error_dma_unmap;
- 
--		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
-+		stmmac_tso_allocator(priv, &entry, des, skb_frag_size(frag),
- 				     (i == nfrags - 1), queue);
- 
--		stmmac_set_tx_skb_dma_entry(tx_q, tx_q->cur_tx, des,
-+		stmmac_set_tx_skb_dma_entry(tx_q, entry, des,
- 					    skb_frag_size(frag), true);
- 	}
-+	tx_q->cur_tx = entry;
- 
- 	stmmac_set_tx_dma_last_segment(tx_q, tx_q->cur_tx);
- 
-@@ -4700,7 +4703,19 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	return NETDEV_TX_OK;
- 
--dma_map_err:
-+error_dma_unmap:
-+	for (;;) {
-+		desc = stmmac_get_tx_desc(priv, tx_q, first_entry);
-+		stmmac_release_tx_desc(priv, desc, priv->descriptor_mode);
-+		stmmac_free_tx_buffer(priv, &priv->dma_conf, queue,
-+				      first_entry);
-+		if (first_entry == entry)
-+			break;
-+
-+		first_entry = STMMAC_NEXT_ENTRY(first_entry,
-+						priv->dma_conf.dma_tx_size);
++	if (skb_is_gso(skb)) {
++		netdev_dbg(pctx->dev, "GSO is not supported in GTP\n");
++		goto err;
 +	}
-+error:
- 	dev_err(priv->device, "Tx dma map failed\n");
- 	dev_kfree_skb(skb);
- 	priv->xstats.tx_dropped++;
++
+ 	if (!gtp_check_ms(skb, pctx, hdrlen, role, inner_proto)) {
+ 		netdev_dbg(pctx->dev, "No PDP ctx for this MS\n");
+ 		return 1;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index ed6a2bc23db51..f7dd3db9459c6 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -3082,6 +3082,11 @@ static inline bool skb_transport_header_was_set(const struct sk_buff *skb)
+ 	return skb->transport_header != (typeof(skb->transport_header))~0U;
+ }
+ 
++static inline void skb_unset_transport_header(struct sk_buff *skb)
++{
++	skb->transport_header = (typeof(skb->transport_header))~0U;
++}
++
+ static inline unsigned char *skb_transport_header(const struct sk_buff *skb)
+ {
+ 	DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb));
+diff --git a/net/core/gro_cells.c b/net/core/gro_cells.c
+index 1b84385c04bd9..d8c0a28671201 100644
+--- a/net/core/gro_cells.c
++++ b/net/core/gro_cells.c
+@@ -22,6 +22,8 @@ int gro_cells_receive(struct gro_cells *gcells, struct sk_buff *skb)
+ 	if (unlikely(!(dev->flags & IFF_UP)))
+ 		goto drop;
+ 
++	skb_unset_transport_header(skb);
++
+ 	if (!gcells->cells || skb_cloned(skb) || netif_elide_gro(dev)) {
+ 		res = netif_rx(skb);
+ 		goto unlock;
 -- 
 2.53.0
 
