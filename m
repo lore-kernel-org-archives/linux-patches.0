@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE34A4F4CF2;
-	Thu, 17 Sep 2026 17:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A165854704F;
+	Thu, 17 Sep 2026 17:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667397; cv=none; b=av41S2yiXjrgUW/YoVRDozSh7DBeNhTg0mXKGOfdVDPykMKG1k5FCCCUxcgopMlvoUl0f6KyeMiMk7q1J92ArjcOpOnPf4ZnaGoyVUMBSl7qEjJr/0Qp6XikLeQiMeFXCjB4HGCTohHNJLthETwYj98tANjNFpJrIgL5cGJ/eOM=
+	t=1789667401; cv=none; b=Pj7CtMUe4IPLPVlJ+Wu7XekajotCplqXhBmCaFilaOV8rd/PgO/KaTve65sZZ7ae0jblAmPOWma+pOdCWIX/NISmckoi8ZgJQdNOnx63gZIlseeg0d0SNLTCO/J67993fmDDQGVmJ9hAZrWGuduX55a5NrN7ZMkpAgfpAWxWzKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667397; c=relaxed/simple;
-	bh=ftvfcoRnODG5ocmrQ1pnOX0bc92mXAFQNQ42/gkelh0=;
+	s=arc-20240116; t=1789667401; c=relaxed/simple;
+	bh=/T2eXMS+fe31F4pMv5s+bjD9wdKPjFmno7AxsKJsY+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXMNiEDS/YCBd3K9mxWzpkNiyAHQwFZ8nEwuOygPVBeb0lj007m4Q8gneUxDpIVl3n+uMjAfclFq2iCilFDTlcvep77NPrcwYMts8fB/V0Bgkd8e3Tev3Yk3UulJxp0Dbjw4hL+i5/r+98pmQAzazHkkz8ekRfbQaLl5B0EXNWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPjnkPt4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5M6+7pkRYE6M+ea1Bt/IuZ05+pvWI2YNQVEPllD4MwE0PkeiZLzUjZyfXmgeXqCo+8vZPFqD9BwBnHhhgQ3BB0wgKbF8EMXlLhaCKK6/uHSWgriNgLJkr2o/QcZLMwXQbwMizkhHkJ3HC0R8dAAJOk3UHsIONN6crWvDa2nZ0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9IrUbd5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPjnkPt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3421F000FF;
-	Thu, 17 Sep 2026 17:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9IrUbd5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90601F000FF;
+	Thu, 17 Sep 2026 17:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667396;
-	bh=Nbi03LDJyxvtxA95h4LGaNJwekMtwYcXqUcc0Wfmw1U=;
+	s=korg; t=1789667399;
+	bh=ny9UKR25vcx7Tbskukf3uvxmO4wDNoCuKwfJO39Hm80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPjnkPt4fX5aL4VzRFEADAhk/7gbCgBQr+VPqz6hx3QXwkQ8d6KOBiq9rDGIfuCqJ
-	 j2BzK+vVHP+CNWSzlwjPo1azqT5gQxtRpJcCQd39BwtSc4nAQELwS2V6hhG03aSNMH
-	 tIqawBqNLZpAHBJZKEvavtNQCujb2PVY5WM0IYSE=
+	b=R9IrUbd5AClL5FgH498nT7gGhh6x+l3Mewi36fCjAa0zK5J922y4Xd6hMKar2Woo7
+	 uJXri2smwDxMWOUnLHaTUVp2pVr8xgtgfGhcf7CuA1D45HcJQyOvcqQt5U2qqpd9Ia
+	 0lIhwRKlAnBfwRVoJVHvlUDjzTR3Uk74snuJnGOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Kamlesh Kumar <kam@juniper.net>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0078/1102] net: dsa: realtek: rtl8365mb: add support for RTL8367SB
-Date: Thu, 17 Sep 2026 16:00:21 +0100
-Message-ID: <20260917151541.429727892@linuxfoundation.org>
+Subject: [PATCH 6.12 0079/1102] integrity: Check for NULL returned by asymmetric_key_public_key
+Date: Thu, 17 Sep 2026 16:00:22 +0100
+Message-ID: <20260917151541.456711701@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,50 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit 28702a215c96917d85558ad6309a57ab224808c0 ]
+[ Upstream commit c93a5f038ccc11ed8558ce642f62d5ede701a348 ]
 
-Add chip info entry for the Realtek RTL8367SB switch. This device has
-chip ID 0x6367 and version 0x0010. It exposes two external interfaces:
-port 6 supports MII, TMII, RMII, RGMII, SGMII and HSGMII, while port 7
-supports MII, TMII, RMII and RGMII. Use the existing 8365MB-VC jam table
-for initialization.
+Check for a NULL pointer returned by asymmetric_key_public_key and return
+-ENOKEY in this case.
 
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Link: https://patch.msgid.link/3c6d822b-0e85-4173-86ba-2badb140bbf1@yahoo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Tested-by: Kamlesh Kumar <kam@juniper.net>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ security/integrity/digsig_asymmetric.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index 9621fa4052f84..755d3e9543853 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -544,6 +544,20 @@ static const struct rtl8365mb_chip_info rtl8365mb_chip_infos[] = {
- 		.jam_table = rtl8365mb_init_jam_8365mb_vc,
- 		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
- 	},
-+	{
-+		.name = "RTL8367SB",
-+		.chip_id = 0x6367,
-+		.chip_ver = 0x0010,
-+		.extints = {
-+			{ 6, 1, PHY_INTF(MII) | PHY_INTF(TMII) |
-+				PHY_INTF(RMII) | PHY_INTF(RGMII) |
-+				PHY_INTF(SGMII) | PHY_INTF(HSGMII) },
-+			{ 7, 2, PHY_INTF(MII) | PHY_INTF(TMII) |
-+				PHY_INTF(RMII) | PHY_INTF(RGMII) },
-+		},
-+		.jam_table = rtl8365mb_init_jam_8365mb_vc,
-+		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
-+	},
- 	{
- 		.name = "RTL8367RB-VB",
- 		.chip_id = 0x6367,
+diff --git a/security/integrity/digsig_asymmetric.c b/security/integrity/digsig_asymmetric.c
+index 457c0a396caf3..17219424a34dd 100644
+--- a/security/integrity/digsig_asymmetric.c
++++ b/security/integrity/digsig_asymmetric.c
+@@ -108,6 +108,10 @@ int asymmetric_verify(struct key *keyring, const char *sig,
+ 	pks.hash_algo = hash_algo_name[hdr->hash_algo];
+ 
+ 	pk = asymmetric_key_public_key(key);
++	if (!pk) {
++		ret = -ENOKEY;
++		goto out;
++	}
+ 	pks.pkey_algo = pk->pkey_algo;
+ 	if (!strcmp(pk->pkey_algo, "rsa")) {
+ 		pks.encoding = "pkcs1";
 -- 
 2.53.0
 
