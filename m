@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155034E5323;
-	Thu, 17 Sep 2026 17:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573B74F3EC2;
+	Thu, 17 Sep 2026 17:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667689; cv=none; b=SHCfxIIpfRg17Ue6VCB9B+VFdeUJ5TdNvJvYVRF4DkovT0SATRlnm3n2nwVzlGHkbE4+AuvFT1BzeQ55LGOvPQKyRefSjsug5LkJm6hCfSo4brCxqqzlB4xDtMMsg5LaFoEp/yknCK+ONEgM7gfgW4PpeQxr01zAaP1/EdPFr6E=
+	t=1789667692; cv=none; b=kY5qMfhjRQzHsBpsZ53DZAqh8Mfelu78+aDhrz7osrrH/tkJ1H04kytbCLWninOVnictnnPMllHs4DVJ6i5Sk8WNEXqMnqbIUwAyCIyfGlt1mDFwNMxzNbMefN9dbZP5zJbxvo0dcqiEOL4/h3rXD0XtUqeJDXozrNU3c9UsNsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667689; c=relaxed/simple;
-	bh=bb2yRBcYeWl3dPEEQ2EsGnXruga+kl7juf138z/DHfM=;
+	s=arc-20240116; t=1789667692; c=relaxed/simple;
+	bh=PZUxMEY4TnH1+ZBd2oaabETZH1AkB9lwRBStagsnFCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4tUiqXmi/+6A3U/PSyULRf1bH3RFxJzNHkb02cZoEhFHJRHO5jiQBCZkdgLvNJO4Gm6yBPgojO/J9ByaZdIfx9/8iMvuibSBziqmaIJKpOgTQNfrE9SnDCpU254QoRyPFajUiv545fZYSaBLH10txLs7pHHRjfLQ7oCuiz9I8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbrMHebY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+bsv33uZs/g3yId8rHGg6zuqN6V7e5nekYsP3XwvjwgYf8fvNHYGX84oVJk8tPAfNKGp9xvctboQpsoVez5j6MbD4BYPPlPjO3grybFe7LWTtT4z8VVrteM/SvCpCJShvSK4IH6Y7gRxtdZk+nG5I9jnY4fV23AgHRoAUzIz30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XODkwh2y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbrMHebY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA4D1F000FF;
-	Thu, 17 Sep 2026 17:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XODkwh2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786D01F000FF;
+	Thu, 17 Sep 2026 17:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667688;
-	bh=nM0N+jWRcbKioF/f/ahmTOWdt+rR1lenBJWhCFlsmSY=;
+	s=korg; t=1789667691;
+	bh=YgwS5p5fMKa7D5vlJyq1WHU9Z9CBUEDWD5yvaAK+aeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZbrMHebYEwHLJXRNiGfafHt+7jJQnvxm/YXvuLAkP03OSPrjhGmSCGMP5zL6KhJae
-	 Htte0AaTbnuQmcredYenlrqI2IdIijmNKtrIFz6ANRQLyLJsNSOpKzT/I5iuTX2nZ9
-	 hSTGTS6L3pT3dQsAtFzzWaOpJk2ouxaQtiohl0Ag=
+	b=XODkwh2yud2z55aswYZSCgGpUp3P5QLnIsA//x3gk9l4jLOmZAjxYg5RJXnwVOZmb
+	 H9ahNqvdWll48lqpx47PiWAXZCl6VmdGhMH/IwIbEy7oLc2M04S3WUCQY288s9IhB2
+	 fVwQIy4sXE3JwK5qLzSFiYj1oQhjIE+UhM8+45EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	shayderrr <darknessshayder@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0177/1102] pinctrl: renesas: rzv2m: Use -ENOTSUPP instead of -EOPNOTSUPP
-Date: Thu, 17 Sep 2026 16:02:00 +0100
-Message-ID: <20260917151544.003113244@linuxfoundation.org>
+Subject: [PATCH 6.12 0178/1102] host1x: bus: Fix missing ops null check in error teardown
+Date: Thu, 17 Sep 2026 16:02:01 +0100
+Message-ID: <20260917151544.029339555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,70 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: shayderrr <darknessshayder@gmail.com>
 
-[ Upstream commit 01f94d53947df35ba77cdb3992a4e3ef9d9dc1ad ]
+[ Upstream commit 71d25f668bc5c0f36ea843462e12307dea45aaa3 ]
 
-The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
-code. One such example is gpio_set_config_with_argument_optional(), which
-returns success when gpio_set_config_with_argument() returns -ENOTSUPP, but
-reports failure for all other error codes.
+In host1x_device_init(), the error teardown paths do not check
+client->ops before dereferencing it, unlike the forward init paths
+which correctly guard with 'client->ops &&'. This can result in a
+NULL pointer dereference if client->ops is NULL.
 
-Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
-operation may lead to boot failures when pinctrl drivers implements
-struct gpio_chip::set_config, the system uses GPIO hogs, and the
-struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
-unsupported operations.
+Fix by adding the missing client->ops check in both the teardown
+and teardown_late labels.
 
-Currently, the driver does not implement struct gpio_chip::set_config().
-To avoid future failures, return -ENOTSUPP from
-rzv2m_pinctrl_pinconf_set().
-
-rzv2m_pinctrl_pinconf_group_get() is used when dumping pinctrl
-configuration. pinconf_generic_dump_one(), which calls it, makes
-exceptions for the -EINVAL and -ENOTSUPP error codes. The documentation
-for struct pinconf_ops::pin_config_group_get states that it "should
-return -ENOTSUPP and -EINVAL using the same rules as pin_config_get()".
-The documentation for struct pinconf_ops::pin_config_get states:
-
-"get the config of a certain pin, if the requested config is not available
-on this controller this should return -ENOTSUPP and if it is available but
-disabled it should return -EINVAL".
-
-Return -ENOTSUPP for the unsupported pinctrl operation.
-
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260522105717.1727837-1-claudiu.beznea@kernel.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: shayderrr <darknessshayder@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260517170456.84927-1-darknessshayder@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 4 ++--
+ drivers/gpu/host1x/bus.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index 8c7169db4fcce..30c916d4b8fd1 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -661,7 +661,7 @@ static int rzv2m_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
- 		}
+diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
+index 4dd83627fae06..5184932f379ed 100644
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -226,7 +226,7 @@ int host1x_device_init(struct host1x_device *device)
  
- 		default:
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 		}
- 	}
+ teardown:
+ 	list_for_each_entry_continue_reverse(client, &device->clients, list)
+-		if (client->ops->exit)
++		if (client->ops && client->ops->exit)
+ 			client->ops->exit(client);
  
-@@ -710,7 +710,7 @@ static int rzv2m_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
+ 	/* reset client to end of list for late teardown */
+@@ -234,7 +234,7 @@ int host1x_device_init(struct host1x_device *device)
  
- 		/* Check config matches previous pins */
- 		if (i && prev_config != *config)
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
+ teardown_late:
+ 	list_for_each_entry_continue_reverse(client, &device->clients, list)
+-		if (client->ops->late_exit)
++		if (client->ops && client->ops->late_exit)
+ 			client->ops->late_exit(client);
  
- 		prev_config = *config;
- 	}
+ 	mutex_unlock(&device->clients_lock);
 -- 
 2.53.0
 
