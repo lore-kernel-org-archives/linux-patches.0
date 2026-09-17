@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D9535FC9;
-	Thu, 17 Sep 2026 17:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7325372D4;
+	Thu, 17 Sep 2026 17:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664555; cv=none; b=tCX4iA3+41qFnXq9mepmV6dyDHXHd8wg4DDMy1vDnnBrf2iH2hhIF6jGoU6X/8iFX5CSMc3lxVvj8xCXQr7xyUGUvL0fDt7Oa0/YyagehoI0hGyXwFLUmalMcOfnjMdB8GCSDvO4AmHM0NjPiG+SQ4qMbdFTEmIO9tK+az1HIT4=
+	t=1789664557; cv=none; b=Eo364XMTdCem+/Zme2crTH0UHSoMw9zqsX78xVwYwsLdzOqdJzuO8ci1Gr48mPoZctI+ZH1tyHd8hKO6T1dUdIhBLpaqcF5aT9bN4zmaVnYPVr5RYNhOnCyRmY5tkTrmklqrr2pFPTLTba+nNLpOeNSzCKcfXeGMIk6NZTVL/No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664555; c=relaxed/simple;
-	bh=guhoS8Tmkv/OTtfxO38Nd2ArTbAv8//1iH1nJi/eo0I=;
+	s=arc-20240116; t=1789664557; c=relaxed/simple;
+	bh=YtslD1NvKopIcvh6K92NJdV/k4X63AkiE6XQeBBKci4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBBduWMoV7TIcG0CJsIJRBej9W0XCiPuo4do3qs95gCaUFrNTr5LhV1y1/v/rzhXIutlBmBWh34TwZ58/5Q7alP9/raRyg/3DwDc8WLsevRIRJ3DN8IiQfOiyExes3DoJiksitMSTRZYvise/bcwtf9fxu3ezi1PkQmmnEICozY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6akj1Tc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P19+4+4Vz7gNPdDScFzqQ4O8ngaCV8CYpfxG1qCnH+ry1eyLztdKZehpNkPYGT8tgWYLd2yXTBZEkeTd3dh3lOGRdR9TYf/9L5b07NjgYqJOaLElTDnqvmKE4VayvGNyxtzZx67blmi+85P13gNltkwW4+1zSpx+y/80QPoxGZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIYAs9V2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6akj1Tc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0550E1F000FF;
-	Thu, 17 Sep 2026 17:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIYAs9V2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BA11F0089A;
+	Thu, 17 Sep 2026 17:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664552;
-	bh=t7apKhSoTJWcUzKRbw2/M00F/87bun1o9x8TjjITK00=;
+	s=korg; t=1789664555;
+	bh=1QxygpTGJkv1iWgbBY1aWRUK6V3taHmriZH+rcU1FaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6akj1TcVPLMYu6wSccf5ybx4OQPnMttXgNa6cFo4cj0aNwFYga6eEa5sCHElCRX8
-	 M90s8pag1MKoqJcGOSsemOBZ7TCfBJ0cUbnZBWlwy60UGjBDUygZWd0p0H5BPsLUQ/
-	 y3yCFJ0PsBsW2ftGWIG0j9VFkFvBi0wa9TPvvwgE=
+	b=iIYAs9V2aeFh1THlySSVJsPxgByDB+8oeZWYQ4oyNBiOQs2EXrXyqhcDHYQ47+8FG
+	 6tEu+D1wAJQwNrY3+DHd6Epk1MkoV9rhm16UIOwnGYb6QTEK7j2ctTngwvRm1/vVjG
+	 Gyl90nAVGNZVDG6Krt2uR1gkOwjbwr6XvkeQWvXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iskhakov Daniil <dish@amicon.ru>,
-	Agalakov Daniil <ade@amicon.ru>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0410/1250] e1000e: limit endianness conversion to boundary words
-Date: Thu, 17 Sep 2026 16:03:25 +0100
-Message-ID: <20260917151603.137645033@linuxfoundation.org>
+Subject: [PATCH 6.18 0411/1250] net: hns3: improve the unused_tuple parameter setting
+Date: Thu, 17 Sep 2026 16:03:26 +0100
+Message-ID: <20260917151603.164396131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,75 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Agalakov Daniil <ade@amicon.ru>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit a5ecafcfb27baf2dba766c4fd99dbb947f4e85d8 ]
+[ Upstream commit 1ad6f1ff3e96c7ee888475740c8acdaf822e0813 ]
 
-[Why]
-In e1000_set_eeprom(), the eeprom_buff is allocated to hold a range of
-words. However, only the boundary words (the first and the last) are
-populated from the EEPROM if the write request is not word-aligned.
-The words in the middle of the buffer remain uninitialized because they
-are intended to be completely overwritten by the new data via memcpy().
+Currently, when the tc tool is used to set flow table rules, the IP address
+and MAC address can be configured separately, for example, src_xx or dst_xx
+can be configured separately.
 
-The previous implementation had a loop that performed le16_to_cpus()
-on the entire buffer. This resulted in endianness conversion being
-performed on uninitialized memory for all interior words.
+Therefore, the driver needs to check whether the mask is all zero in
+keys, such as FLOW_DISSECTOR_KEY_IPV4_ADDRS, FLOW_DISSECTOR_KEY_IPV6_ADDRS,
+and FLOW_DISSECTOR_KEY_ETH_ADDRS.
+If the mask is all zero, the tuple is not configured.
+In this case, the driver adds the tuple to unused_tuple.
 
-Fix this by converting the endianness only for the boundary words
-immediately after they are successfully read from the EEPROM.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Agalakov Daniil <ade@amicon.ru>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260609213559.178657-14-anthony.l.nguyen@intel.com
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ethtool.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ethtool.c b/drivers/net/ethernet/intel/e1000e/ethtool.c
-index 8e40bb50a01e1..77f3e7991e75c 100644
---- a/drivers/net/ethernet/intel/e1000e/ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
-@@ -585,20 +585,25 @@ static int e1000_set_eeprom(struct net_device *netdev,
- 		/* need read/modify/write of first changed EEPROM word */
- 		/* only the second byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, first_word, 1, &eeprom_buff[0]);
-+		if (ret_val)
-+			goto out;
-+
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[0]);
-+
- 		ptr++;
- 	}
--	if (((eeprom->offset + eeprom->len) & 1) && (!ret_val))
-+	if ((eeprom->offset + eeprom->len) & 1) {
- 		/* need read/modify/write of last changed EEPROM word */
- 		/* only the first byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, last_word, 1,
- 					 &eeprom_buff[last_word - first_word]);
-+		if (ret_val)
-+			goto out;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 02fee71c20886..f6fa60f3126f5 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -7261,6 +7261,10 @@ static void hclge_get_cls_key_mac(const struct flow_rule *flow,
+ 		ether_addr_copy(rule->tuples_mask.dst_mac, match.mask->dst);
+ 		ether_addr_copy(rule->tuples.src_mac, match.key->src);
+ 		ether_addr_copy(rule->tuples_mask.src_mac, match.mask->src);
++		if (is_zero_ether_addr(match.mask->dst))
++			rule->unused_tuple |= BIT(INNER_DST_MAC);
++		if (is_zero_ether_addr(match.mask->src))
++			rule->unused_tuple |= BIT(INNER_SRC_MAC);
+ 	} else {
+ 		rule->unused_tuple |= BIT(INNER_DST_MAC);
+ 		rule->unused_tuple |= BIT(INNER_SRC_MAC);
+@@ -7309,6 +7313,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
+ 		rule->tuples.dst_ip[IPV4_INDEX] = be32_to_cpu(match.key->dst);
+ 		rule->tuples_mask.dst_ip[IPV4_INDEX] =
+ 						be32_to_cpu(match.mask->dst);
++		if (!match.mask->src)
++			rule->unused_tuple |= BIT(INNER_SRC_IP);
++		if (!match.mask->dst)
++			rule->unused_tuple |= BIT(INNER_DST_IP);
+ 	} else if (addr_type == FLOW_DISSECTOR_KEY_IPV6_ADDRS) {
+ 		struct flow_match_ipv6_addrs match;
  
--	if (ret_val)
--		goto out;
--
--	/* Device's eeprom is always little-endian, word addressable */
--	for (i = 0; i < last_word - first_word + 1; i++)
--		le16_to_cpus(&eeprom_buff[i]);
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[last_word - first_word]);
-+	}
- 
- 	memcpy(ptr, bytes, eeprom->len);
- 
+@@ -7321,6 +7329,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
+ 				      match.key->dst.s6_addr32);
+ 		ipv6_addr_be32_to_cpu(rule->tuples_mask.dst_ip,
+ 				      match.mask->dst.s6_addr32);
++		if (ipv6_addr_any(&match.mask->src))
++			rule->unused_tuple |= BIT(INNER_SRC_IP);
++		if (ipv6_addr_any(&match.mask->dst))
++			rule->unused_tuple |= BIT(INNER_DST_IP);
+ 	} else {
+ 		rule->unused_tuple |= BIT(INNER_SRC_IP);
+ 		rule->unused_tuple |= BIT(INNER_DST_IP);
 -- 
 2.53.0
 
