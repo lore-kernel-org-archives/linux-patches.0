@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB34E020C;
-	Thu, 17 Sep 2026 15:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B549A4E4C5F;
+	Thu, 17 Sep 2026 15:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659565; cv=none; b=Cz6LTp9ucUWt2Y5C96PzZy7XQ2kw7JCeSA+o7V/CSluaPt6VDUNUcsHgKWx1u/kNT0LOBaYRNSx5/diwBjmxKN8nZGLpxOLCV0mxcYSTEXJ96j5We3f6gcGxEIyQKGLdYUBuk6PXUsE153nrtDKBbYxZp1YuSBNMx9XFhXo/Mj4=
+	t=1789659571; cv=none; b=X/IYpDu0WgW0vMk2hLvj/mfdcmXf88HewycWBgyEC1VukU9bd0LZVDhvXNBJ8JZ2S3MoTEtaXH/gdKcNFXYx5/m/awm2IWhfgOVclOmjO5egPtMBDi/6o1ah7th/in5Uz1tVR/X9suMfirDIbbGFUUkM/XOZcWdlv3BLcrF6Hyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659565; c=relaxed/simple;
-	bh=2rfmqC8OwLxuygfGcaKCtmntDWBowgKes3NQUoH9WZA=;
+	s=arc-20240116; t=1789659571; c=relaxed/simple;
+	bh=ttwAZP4IpHFKFOUJGMIZuyWwRNAz4jleTjAoaBV4i7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRu3bOUQabWwLS78HasriqKPNVfx11WyfvPQWnucovOUoC7jraVQyB/cs8dWBOXqc9LyJF6FkdDe/U8O+65FzDJA+pAJ7nM5ua7hnsJL3yASb2sgj61NbkQEKmv040/zR4EtGNfelldHo14NBXY313SqjeNNqV9coPNcuxwewXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3dLyosu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NmcSUalaTZGE5BBxeJYIUdwfqGP5cWGIoIyj7OFtlfw5W/fKxPW+ASpR7Zzb9o+RyACo8+ieS6G/qaFXdu3bVlJdAkjtsdEpnPuEJ4+rebhiUK/fp5lDmO3lPOyW3KiJQUhivEVHAnhlFe6f0xftprO4TQ6xKcAJiNr7NnT8s/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laEZopO+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3dLyosu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72C41F00893;
-	Thu, 17 Sep 2026 15:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laEZopO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2A11F00899;
+	Thu, 17 Sep 2026 15:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659558;
-	bh=mRzoyl2utnER0ez8EI1oAR60DqJlHO11mnqwrbSUkeA=;
+	s=korg; t=1789659561;
+	bh=3VmzPB5RHmgipsdtyOl10U3xsHTQg34hcfFRL6ZRym8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3dLyosu+YczXd3IzSKxpPHY466HXPmO1jrNIFI2V/ANO+lq9aXdVjhBydoe8y1f4
-	 4LAhVS0kfO38R6E73W/aWUtEhNEV11T3gc5s25AcbpXJ5+bX2ll+R9YcmztRnWtbgA
-	 KcXITqelLL9zlxherXj+UHVtpurmIwkj4vQAN5eE=
+	b=laEZopO+B75yVLlybE63pejuIrt0vL6qXRgNUkMr2aObLdVpTpS6hIiAvoCrq9bEV
+	 ZRhSIf0UUPniCmMQYW+McNoFVlKhQBxwTb90RAmpni/qfRepjgE8BJBbX0UpPSJZ5z
+	 HJSfMsE+sGWozV3TUJZO2z5EqhBnaDgItPC+I0HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 298/733] net/mlx5e: Fix reporting support for all RS FEC variants
-Date: Thu, 17 Sep 2026 16:10:06 +0100
-Message-ID: <20260917151358.855595516@linuxfoundation.org>
+Subject: [PATCH 7.2 299/733] net/mlx5: LAG, use local tracker to update active ports
+Date: Thu, 17 Sep 2026 16:10:07 +0100
+Message-ID: <20260917151358.884499192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,81 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Akiva Goldberger <agoldberger@nvidia.com>
 
-[ Upstream commit c84ce45a7a3f3f024502c7f53308db9c76e4ae71 ]
+[ Upstream commit b3c79dee5038c5e8460c59d7d01cb1450bdf5ecb ]
 
-get_fec_supported_advertised() populates the FEC modes reported as
-supported to userspace. The MLX5E_ADVERTISE_SUPPORTED_FEC macro only
-checked MLX5E_FEC_RS_528_514, causing devices that support only the
-other RS variants (RS_544_514_INTERLEAVED_QUAD or RS_544_514) to not
-advertise RS as supported to ethtool at all.
+The CREATE_LAG command is handled asynchronously by queuing a work,
+which stores a local copy of ldev->tracker. When the work is processed,
+it is possible that the values of the local copy and ldev->tracker have
+diverged.
 
-Introduce MLX5E_FEC_RS_MASK covering all three RS bit positions,
-update the macro to accept a bitmask directly rather than a single
-enum value, and pass MLX5E_FEC_RS_MASK for the RS entry.
+A single CREATE_LAG command programs two related fields into the
+firmware: the v2p (virtual-to-physical) map, which selects the physical
+egress port for each hash bucket, and the active_port bitmask, which
+tells the firmware which physical ports are currently up so it can
+redirect QP/TIS away from inactive ports. For the firmware to steer
+traffic correctly, both must be derived from the same view of the ports'
+link state.
 
-Fixes: b5ede32d3329 ("net/mlx5e: Add support for FEC modes based on 50G per lane links")
-Fixes: 4e343c11efbb ("net/mlx5e: Support FEC settings for 200G per lane link modes")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+The v2p map is computed by mlx5_infer_tx_affinity_mapping() from the
+local tracker snapshot, but lag_active_port_bits() called
+mlx5_infer_tx_enabled() on the live ldev->tracker instead. If
+ldev->tracker changed between the snapshot and command execution, the
+two fields reflect different port states: the v2p map may steer a bucket
+to a port that the active_port mask marks as inactive (or vice versa).
+The firmware then receives a self-contradictory configuration and can
+redirect or drop traffic on a port the mapping still points at, until a
+later event happens to reconcile the state.
+
+Update lag_active_port_bits so that it receives the local version of the
+tracker from when the work was queued, effectively closing the window
+for injecting an inconsistency.
+
+Fixes: c5c13b456cb8 ("net/mlx5: Lag, set active ports if support bypass port select flow table")
+Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902164634.3657606-4-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902192740.3665435-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port.h    |  4 ++++
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 12 ++++++------
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/lag/lag.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port.h
-index fa2283dd383b0..53dbdf77bccea 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port.h
-@@ -66,4 +66,8 @@ enum {
- 	MLX5E_FEC_LLRS_272_257_1 = 9,
- };
- 
-+#define MLX5E_FEC_RS_MASK (BIT(MLX5E_FEC_RS_528_514) | \
-+			   BIT(MLX5E_FEC_RS_544_514_INTERLEAVED_QUAD) | \
-+			   BIT(MLX5E_FEC_RS_544_514))
-+
- #endif
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index f285ad88b6d5a..3ed59ced0407a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -1002,9 +1002,9 @@ static u32 pplm2ethtool_fec(u_long fec_mode, unsigned long size)
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 2285c889c215e..c655f6e32e9b0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -63,14 +63,15 @@ static int get_port_sel_mode(enum mlx5_lag_mode mode, unsigned long flags)
+ 	return MLX5_LAG_PORT_SELECT_MODE_QUEUE_AFFINITY;
  }
  
--#define MLX5E_ADVERTISE_SUPPORTED_FEC(mlx5_fec, ethtool_fec)		\
-+#define MLX5E_ADVERTISE_SUPPORTED_FEC(fec_mask, ethtool_fec)		\
- 	do {								\
--		if (mlx5e_fec_in_caps(dev, 1 << (mlx5_fec)))		\
-+		if (mlx5e_fec_in_caps(dev, fec_mask))			\
- 			__set_bit(ethtool_fec,				\
- 				  link_ksettings->link_modes.supported);\
- 	} while (0)
-@@ -1030,13 +1030,13 @@ static int get_fec_supported_advertised(struct mlx5_core_dev *dev,
- 	if (err)
- 		return (err == -EOPNOTSUPP) ? 0 : err;
+-static u8 lag_active_port_bits(struct mlx5_lag *ldev)
++static u8 lag_active_port_bits(struct mlx5_lag *ldev,
++			       struct lag_tracker *tracker)
+ {
+ 	u8 enabled_ports[MLX5_MAX_PORTS] = {};
+ 	u8 active_port = 0;
+ 	int num_enabled;
+ 	int idx;
  
--	MLX5E_ADVERTISE_SUPPORTED_FEC(MLX5E_FEC_NOFEC,
-+	MLX5E_ADVERTISE_SUPPORTED_FEC(BIT(MLX5E_FEC_NOFEC),
- 				      ETHTOOL_LINK_MODE_FEC_NONE_BIT);
--	MLX5E_ADVERTISE_SUPPORTED_FEC(MLX5E_FEC_FIRECODE,
-+	MLX5E_ADVERTISE_SUPPORTED_FEC(BIT(MLX5E_FEC_FIRECODE),
- 				      ETHTOOL_LINK_MODE_FEC_BASER_BIT);
--	MLX5E_ADVERTISE_SUPPORTED_FEC(MLX5E_FEC_RS_528_514,
-+	MLX5E_ADVERTISE_SUPPORTED_FEC(MLX5E_FEC_RS_MASK,
- 				      ETHTOOL_LINK_MODE_FEC_RS_BIT);
--	MLX5E_ADVERTISE_SUPPORTED_FEC(MLX5E_FEC_LLRS_272_257_1,
-+	MLX5E_ADVERTISE_SUPPORTED_FEC(BIT(MLX5E_FEC_LLRS_272_257_1),
- 				      ETHTOOL_LINK_MODE_FEC_LLRS_BIT);
+-	mlx5_infer_tx_enabled(&ldev->tracker, ldev, enabled_ports,
++	mlx5_infer_tx_enabled(tracker, ldev, enabled_ports,
+ 			      &num_enabled);
+ 	for (idx = 0; idx < num_enabled; idx++)
+ 		active_port |= BIT_MASK(enabled_ports[idx]);
+@@ -79,7 +80,8 @@ static u8 lag_active_port_bits(struct mlx5_lag *ldev)
+ }
  
- 	active_fec_long = active_fec;
+ static int mlx5_cmd_create_lag(struct mlx5_core_dev *dev, struct mlx5_lag *ldev,
+-			       int mode, unsigned long flags)
++			       struct lag_tracker *tracker, int mode,
++			       unsigned long flags)
+ {
+ 	bool fdb_sel_mode = test_bit(MLX5_LAG_MODE_FLAG_FDB_SEL_MODE_NATIVE,
+ 				     &flags);
+@@ -108,7 +110,7 @@ static int mlx5_cmd_create_lag(struct mlx5_core_dev *dev, struct mlx5_lag *ldev,
+ 			break;
+ 
+ 		MLX5_SET(lagc, lag_ctx, active_port,
+-			 lag_active_port_bits(mlx5_lag_dev(dev)));
++			 lag_active_port_bits(ldev, tracker));
+ 		break;
+ 	default:
+ 		break;
+@@ -787,7 +789,8 @@ static int mlx5_cmd_modify_active_port(struct mlx5_core_dev *dev, u8 ports)
+ 	return mlx5_cmd_exec_in(dev, modify_lag, in);
+ }
+ 
+-static int _mlx5_modify_lag(struct mlx5_lag *ldev, u8 *ports)
++static int _mlx5_modify_lag(struct mlx5_lag *ldev,
++			    struct lag_tracker *tracker, u8 *ports)
+ {
+ 	int idx = mlx5_lag_get_dev_index_by_seq(ldev, MLX5_LAG_P1);
+ 	struct mlx5_core_dev *dev0;
+@@ -804,7 +807,7 @@ static int _mlx5_modify_lag(struct mlx5_lag *ldev, u8 *ports)
+ 		    !MLX5_CAP_PORT_SELECTION(dev0, port_select_flow_table_bypass))
+ 			return ret;
+ 
+-		active_ports = lag_active_port_bits(ldev);
++		active_ports = lag_active_port_bits(ldev, tracker);
+ 
+ 		return mlx5_cmd_modify_active_port(dev0, active_ports);
+ 	}
+@@ -868,7 +871,7 @@ void mlx5_modify_lag(struct mlx5_lag *ldev,
+ 			idx = i * ldev->buckets + j;
+ 			if (ports[idx] == ldev->v2p_map[idx])
+ 				continue;
+-			err = _mlx5_modify_lag(ldev, ports);
++			err = _mlx5_modify_lag(ldev, tracker, ports);
+ 			if (err) {
+ 				mlx5_core_err(dev0,
+ 					      "Failed to modify LAG (%d)\n",
+@@ -976,7 +979,7 @@ static int mlx5_create_lag(struct mlx5_lag *ldev,
+ 	mlx5_core_info(dev0, "shared_fdb:%d mode:%s\n",
+ 		       shared_fdb, mlx5_get_str_port_sel_mode(mode, flags));
+ 
+-	err = mlx5_cmd_create_lag(dev0, ldev, mode, flags);
++	err = mlx5_cmd_create_lag(dev0, ldev, tracker, mode, flags);
+ 	if (err) {
+ 		mlx5_core_err(dev0,
+ 			      "Failed to create LAG (%d)\n",
 -- 
 2.53.0
 
