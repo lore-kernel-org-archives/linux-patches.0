@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8502B4C10E9;
-	Thu, 17 Sep 2026 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF74B44CD;
+	Thu, 17 Sep 2026 15:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658879; cv=none; b=qxNWzc74t+k0RFUaBGJ4Lzs7eKYz03woA1MVxYjkwy95S2beTLCovOBQ0I13QEtE1zDYs4YDdudN1KJ23ZDeh06LWKbHi6BxyG8MLM9k0PIOmV7XxamrIlT3swXBdQUxD4bFLOgaaRgICnN77+l4MdID84Glgtn5j+mX1bCtne8=
+	t=1789658879; cv=none; b=WkZtm7ILPRyicLqSUB9FaPyiePvkvaD4SNbS0Ulxk2Pe4jeAKJvsxUrQ+t6bAzvIQePnqN9mTNsVSehcoIFocHInsWJ2dUb/RARx6fLK6C8jcFv9gAoqiyvDPgXtUoL1K93Ne1mrtav7N60p+r7ZIS4GNjRuzK89pCkf4FAPiIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789658879; c=relaxed/simple;
-	bh=eEANYvhLfZtC8YJDgGgTzaZkDPbrPgyyEXS+d3q/yzs=;
+	bh=DNWczy1GQ42LIjaEJK0SpOplSdZDpf77ojZeK80Ft2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMAV6FJDnV99atLBG8BvkPXKPtI3jh+dmhgDiX8+HJLFGiszKVHWOKzoD5kFQZNCuH7wdx1iKa3WaVvSJIDGtRCBNTH/9IpG81h6BjiuVdI0Zw8yTtW7Q7AvMwdQGkUei5TXJcxQDAi0m7J+b4o259O0oX5AOpjdMfZwktG9GTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTxyF+Ip; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p9IgLKgAXykEistwWj3tX7qgeZTdAwNX/zAY9hI/AMXDPsz3+RZEFynlgxRt6S0t+mYb1qJAw2xI4iHZPJBp90tM3W6ErmIoxWbnpbubJ+0utHjrx5AJJXVIC9IXlZhE3vImFtQjLPCfcYGFDbjjWhzKwu/6Hte7jqGV0IBe+Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyQ34gTv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTxyF+Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B26F1F000FF;
-	Thu, 17 Sep 2026 15:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyQ34gTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38E81F00899;
+	Thu, 17 Sep 2026 15:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658868;
-	bh=anhbweqgU0sfVMPt/zguPQTbkDNG5aBTeHBWSsUfL+I=;
+	s=korg; t=1789658871;
+	bh=zVR50E6rs05Vb30+Hdxc8zdH6tYPF4SJWMuD5TO7SKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UTxyF+IpHCGPGG9AHRBMoaS0F+Dp+o7y1cCcfs/+lHpG/H9u0jsjAbX0Khp73/iBU
-	 rwc2cG1M/niwrjH2Oy3xzSaBaC8ryKE2vb0oojvA3ewhOdlLm78jCFHjlaR+qhj05u
-	 THEqqnL9jX9hIKwJQxXSKut44xZkj0rZtVcivd04=
+	b=KyQ34gTvkjcDInK2gFvr8VolfSpvOz89BP/JpyW/lK6vfhFRGjOv1TsBkIcbbIB2h
+	 fkAbCsNrNiXJUzC55zAZxxYj2/oUSHLImV36cHRomFVkopWuxGEfjV1IjMOR2doSBQ
+	 jf6jORORG7rcxUAN3cf7PZpjpgwdcXpR8wIDqozo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 039/733] ntfs: return -ERANGE for undersized xattr buffer
-Date: Thu, 17 Sep 2026 16:05:47 +0100
-Message-ID: <20260917151351.723529066@linuxfoundation.org>
+Subject: [PATCH 7.2 066/733] smb/client: mark file sparse before emulating insert range
+Date: Thu, 17 Sep 2026 16:06:14 +0100
+Message-ID: <20260917151352.485533461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,48 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit ada728801999e25e610091362447372f1b25dd25 ]
+[ Upstream commit cd03ce4950d80147ac8f20bc03c42b75b0352407 ]
 
-When the value buffer passed to getxattr(2) for system.dos_attrib,
-system.ntfs_attrib or system.ntfs_attrib_be is smaller than the
-attribute value, ntfs_getxattr() returns -ENODATA, which tells
-userspace the attribute does not exist. The xattr API expects
--ERANGE in this case, and ntfs_get_ea() in the same file already
-returns -ERANGE for regular EAs.
+The SMB client emulates FALLOC_FL_INSERT_RANGE with SET_EOF, COPYCHUNK
+and SET_ZERO_DATA.
 
-Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+SET_ZERO_DATA creates a hole only when the file is sparse. On a
+non-sparse file, it clears the inserted range but leaves its blocks
+allocated, causing the extent count check in xfstests generic/064 to
+fail.
+
+Fix this by marking the file sparse before modifying it.
+
+This patch produces the expected sparse extents in xfstests generic/064
+only when the server-reported block size is compatible with the server's
+deallocation granularity.
+
+For ksmbd, the reported block size follows the backing filesystem,
+and the test passes. For Samba, the test passes with a block size
+matching the backend granularity, for example, 4 KiB on Btrfs, but not
+with the default 1 KiB value. For Windows Server 2022, 4 KiB inserts do
+not generate holes, while aligned inserts of 64 KiB or larger do.
+
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/ea.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
-index 25ff159dbfd38..08c35f9751114 100644
---- a/fs/ntfs/ea.c
-+++ b/fs/ntfs/ea.c
-@@ -591,7 +591,7 @@ static int ntfs_getxattr(const struct xattr_handler *handler,
- 		if (!buffer) {
- 			err = sizeof(u8);
- 		} else if (size < sizeof(u8)) {
--			err = -ENODATA;
-+			err = -ERANGE;
- 		} else {
- 			err = sizeof(u8);
- 			*(u8 *)buffer = (u8)(le32_to_cpu(ni->flags) & 0x3F);
-@@ -604,7 +604,7 @@ static int ntfs_getxattr(const struct xattr_handler *handler,
- 		if (!buffer) {
- 			err = sizeof(u32);
- 		} else if (size < sizeof(u32)) {
--			err = -ENODATA;
-+			err = -ERANGE;
- 		} else {
- 			err = sizeof(u32);
- 			*(u32 *)buffer = le32_to_cpu(ni->flags);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 3b96dc3615ab4..a2fe71df2d4fb 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4010,6 +4010,11 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
+ 
+ 	count = old_eof - off;
+ 
++	/* SET_ZERO_DATA creates a hole only in a sparse file. */
++	rc = smb2_set_sparse(xid, tcon, cfile, inode, true);
++	if (rc)
++		goto out;
++
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
+ 	if (rc < 0)
 -- 
 2.53.0
 
