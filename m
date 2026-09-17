@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123EC49D5BF;
-	Thu, 17 Sep 2026 18:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F013DE447;
+	Thu, 17 Sep 2026 18:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670556; cv=none; b=ROJ8TWoavDRuOlBXEL/tKsUNnMN7x23Dq4RP0jWmvnrY1CFjlIj1LKKs63IBETZhIkcK5TaalZs4/f9vJ4havWl0OUffQLqpJY1mDaEtp1L0MV7yb1QCYY02EwIeWCeCuSAp6BL1iZXsbT5AP4ZP7Y3dfPxNfDDXarAQtoXB0Ts=
+	t=1789670559; cv=none; b=MmjAWTTnb+uvbE+o8eGMQFOzWQMGBVwFn+KCVS8E7TWpy1hNXBhMUihNFAowI7SjBz1J6WX7S94qam2vJtmQ697cUN9suZPhMYPxJRhxZzs8Lbp00+z0fa9E9SPpL/bh8k2JxKr8U6a/83Q8TUx94kerNjhtDi7jkT8rCOSsFCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670556; c=relaxed/simple;
-	bh=rOK+w9X9BHjBbxmUt7M2LJlYWADVN1QDT6XmL0DjQdw=;
+	s=arc-20240116; t=1789670559; c=relaxed/simple;
+	bh=eDCL2uFBDDbJCvEr6G+QSoCal55C98+AXcF3kyVde9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMFx/odYSAlKGu8HY1CYCQ1nQppUyRDFVMWD9wUpTfvWysGm/4OHPmNvGk7yF9qQowJ+fGV9uITPZvuGqQd0TyQD07yXRhESy0CYcsxQtKNfzyEctiX/WUhPW2eN/j6CSJriTUIOyIKrWjqgOJodsw25UlNQ6VOGOd+bm4BprhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW+zAq2R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tAUx+f53v6bxIqEFSlG1RaYW0aQ+qxPwRXbPvcd1Sqp5VSuyqVob35zpPziP8wr5ACImdR58wy6lxfNKouAQiIN827H+9COx07+lRwDjAI3waZlgMgWFdFdqEq6ZSizikCFXQVapF+s3gFqZY3fF03Ae4CIt269RryZlMKEIfiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAbt6mjV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW+zAq2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADAA1F000FF;
-	Thu, 17 Sep 2026 18:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAbt6mjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A11E1F000FF;
+	Thu, 17 Sep 2026 18:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670555;
-	bh=v3pOroHkD4krMv4msX/Xz8egoZOt7pS93DaOHrxwvZY=;
+	s=korg; t=1789670558;
+	bh=kzAqcsEhBHFjaxq4vK05iostjCSlpvqr2v/DUN8PJaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RW+zAq2RxPhR5p3128XDkJl8spUqhym9G+O6X3B8J9bFnMVIlYMs/A9xfIBiLomVl
-	 tahAkcFh7S3KEunZ/643knLig5JImLi9opeTMRt7XwpvW9uhqaoehgw2k+IfPQ3RxQ
-	 oXTBPgf5uGsdQu/UzVonV5M/2PfCVBoxT5E51S1I=
+	b=pAbt6mjVGpiCYNGRnuh8sO8h6SMX8zLkB9U442c5vSQnqeeUVXHT22FSjXupTS81X
+	 m60oYGymVsQPvwSk2vcWMkyTq/obf6jLUow0xyciIvMgEcN99f0S3uAsWG8Kz7paWT
+	 QI8rDJBOA1r7ZwgtIgfTXHrM4/6tmQ7hP/cZfSBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Karumanchi <vineeth.karumanchi@amd.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+7b47f87674e9a1569110@syzkaller.appspotmail.com,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0699/1102] net: macb: fix NULL pointer dereference on unbind with fixed-link
-Date: Thu, 17 Sep 2026 16:10:42 +0100
-Message-ID: <20260917151557.847125318@linuxfoundation.org>
+Subject: [PATCH 6.12 0700/1102] bpf: Reject non-scalar bpf_loop iteration counts
+Date: Thu, 17 Sep 2026 16:10:43 +0100
+Message-ID: <20260917151557.874629166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,78 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 38b6be101006d3e7af972999f45d4f1e8250587a ]
+[ Upstream commit c3fd8e5fd100f122bad503bdc0e9277219533253 ]
 
-When the device tree describes a fixed-link and has no "mdio" child
-node, macb_mii_init() returns early without allocating the MDIO bus,
-leaving bp->mii_bus as NULL.
+bpf_loop() declares its nr_loops argument as ARG_ANYTHING. Privileged
+programs may pass pointer values to such arguments, so check_func_arg()
+lets a pointer-valued R1 reach the helper-specific checks.
 
-Two cleanup paths then dereference this NULL bus:
+Since commit bb124da69c47 ("bpf: keep track of max number of bpf_loop
+callback iterations"), the verifier marks R1 precise and reads its upper
+bound to limit callback simulation. Precision backtracking only accepts
+scalar registers, so passing a pointer instead triggers the "backtracking
+misuse" verifier warning. Kernels with panic_on_warn enabled subsequently
+panic.
 
-1. On driver unbind, macb_remove() unconditionally calls
-   mdiobus_unregister(bp->mii_bus), which oopses:
+Introduce ARG_SCALAR for helper arguments that only accept scalar values
+and use it for bpf_loop() nr_loops. Generic helper argument validation then
+rejects pointers before loop inlining and precision processing.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 00000000000004a8
-  pc : mdiobus_unregister+0x14/0xa4
-  lr : macb_remove+0x38/0xa4
-  Call trace:
-   mdiobus_unregister+0x14/0xa4 (P)
-   macb_remove+0x38/0xa4
-   platform_remove+0x20/0x30
-   device_release_driver_internal+0x1c8/0x224
-   unbind_store+0xb4/0xbc
-
-2. On the probe error path in macb_probe(), reached when
-   macb_mii_init() has succeeded but a subsequent step fails, the
-   err_out_unregister_mdio label runs the same unconditional cleanup.
-
-mdiobus_unregister() and mdiobus_free() do not guard against a NULL
-bus, so guard the calls in both macb_remove() and the probe error
-path.
-
-Fixes: d0c3601f2c4e ("net: macb: Avoid 20s boot delay by skipping MDIO bus registration for fixed-link PHY")
-Signed-off-by: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260902102836.2019355-1-vineeth.karumanchi@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bb124da69c47 ("bpf: keep track of max number of bpf_loop callback iterations")
+Reported-by: syzbot+7b47f87674e9a1569110@syzkaller.appspotmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://patch.msgid.link/20260905014735.1452988-2-memxor@gmail.com
+Closes: https://lore.kernel.org/bpf/6a9ad24c.b5d4176b.238c3e.0001.GAE@google.com/
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/linux/bpf.h   | 1 +
+ kernel/bpf/bpf_iter.c | 2 +-
+ kernel/bpf/verifier.c | 1 +
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 23aef4b00e83c..e2e3f8d12fdbc 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5320,8 +5320,10 @@ static int macb_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 47fdbf13abe16..a63fd54ac6b4f 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -762,6 +762,7 @@ enum bpf_arg_type {
  
- err_out_unregister_mdio:
--	mdiobus_unregister(bp->mii_bus);
--	mdiobus_free(bp->mii_bus);
-+	if (bp->mii_bus) {
-+		mdiobus_unregister(bp->mii_bus);
-+		mdiobus_free(bp->mii_bus);
-+	}
- 
- err_out_phy_exit:
- 	phy_exit(bp->phy);
-@@ -5349,8 +5351,10 @@ static void macb_remove(struct platform_device *pdev)
- 		bp = netdev_priv(dev);
- 		unregister_netdev(dev);
- 		phy_exit(bp->phy);
--		mdiobus_unregister(bp->mii_bus);
--		mdiobus_free(bp->mii_bus);
-+		if (bp->mii_bus) {
-+			mdiobus_unregister(bp->mii_bus);
-+			mdiobus_free(bp->mii_bus);
-+		}
- 
- 		device_set_wakeup_enable(&bp->pdev->dev, 0);
- 		cancel_work_sync(&bp->hresp_err_bh_work);
+ 	ARG_PTR_TO_CTX,		/* pointer to context */
+ 	ARG_ANYTHING,		/* any (initialized) argument is ok */
++	ARG_SCALAR,		/* scalar argument */
+ 	ARG_PTR_TO_SPIN_LOCK,	/* pointer to bpf_spin_lock */
+ 	ARG_PTR_TO_SOCK_COMMON,	/* pointer to sock_common */
+ 	ARG_PTR_TO_SOCKET,	/* pointer to bpf_sock (fullsock) */
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index 106735145948b..d5c30594c40a0 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -770,7 +770,7 @@ const struct bpf_func_proto bpf_loop_proto = {
+ 	.func		= bpf_loop,
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_ANYTHING,
++	.arg1_type	= ARG_SCALAR,
+ 	.arg2_type	= ARG_PTR_TO_FUNC,
+ 	.arg3_type	= ARG_PTR_TO_STACK_OR_NULL,
+ 	.arg4_type	= ARG_ANYTHING,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index d6ab9b57f0135..8af06f02ac44a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8647,6 +8647,7 @@ static const struct bpf_reg_types *compatible_reg_types[__BPF_ARG_TYPE_MAX] = {
+ 	[ARG_CONST_SIZE]		= &scalar_types,
+ 	[ARG_CONST_SIZE_OR_ZERO]	= &scalar_types,
+ 	[ARG_CONST_ALLOC_SIZE_OR_ZERO]	= &scalar_types,
++	[ARG_SCALAR]			= &scalar_types,
+ 	[ARG_CONST_MAP_PTR]		= &const_map_ptr_types,
+ 	[ARG_PTR_TO_CTX]		= &context_types,
+ 	[ARG_PTR_TO_SOCK_COMMON]	= &sock_types,
 -- 
 2.53.0
 
