@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B3A4F392B;
-	Thu, 17 Sep 2026 15:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0CD4F3928;
+	Thu, 17 Sep 2026 15:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660619; cv=none; b=Ldg9GNAQVeZY4wu7lHGEXdnRmDlzPU+LN8UuIU+wT/tx7RFjAZAKaoQ6C+98MWPJjIaOIKOdGRvv6ZFpE5OKVYwAmjg5Mov1QygDwB9VZbFnCr8OHiKSzASel7Qk0RxXRFtoQIIyJO5kAujn8dB60LSlip/4UPpp/teBkZWz1Ms=
+	t=1789660622; cv=none; b=oOzu9kKGQhPmXJcjOv+Eg2CLTEeWF7UvdlVzYnBT52wlya2Vnfd+EeXVfIEQ1xy7dsi7BnqIlgBaWA+YdHZoUwhgNR0IaC6/E8bSfm8Byas7AHdW/N5TlYDzxL7qnosvebnHTKXt25WeI1L840OuAZATFPE4xG2qBl3GaAeuRio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660619; c=relaxed/simple;
-	bh=j9OqSdh249UYMidq5BazGbNIhBXalIIWOzXSGQA/nto=;
+	s=arc-20240116; t=1789660622; c=relaxed/simple;
+	bh=r2vxysVNa3c86NR64pGihQ7VPCCb+mRytwgz3BA1SYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BazIH04vnfOixiXGmfjz4OsbzgV3RojkL/3bjFNpM2ihqD8D1cQ23gFvuE06yrV/1toNdOszROqkIf2tpWGaPqx7Fvkyrm+TKIUbg28enL8oTqlYLC5Ls6Wet0LcuC7axqJA7ZD1CVpVN3xkVKqJ1lIQtmqBbxc9YVL33zwfq9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLxBRQj4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uqol4Z4rxoIpQIuUMpdSFdlXbvqRRXO9zsNxwiv6sW3xQmyghsD6qtp+h33rThpbjHCHWAKG34g4NHWoGeSYHsUF6tKEwzlXloolcQdObnZ0Nj9n1ZFesoIRwCD0xbjAQ+JloSDxOr/Nl28j7HvFdH3jjQUgGvYJJBSf7Qq1PZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX+Xz/Zg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLxBRQj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B261F000FF;
-	Thu, 17 Sep 2026 15:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX+Xz/Zg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466631F00898;
+	Thu, 17 Sep 2026 15:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660617;
-	bh=sfFMFpbCxwQAsWMMlK0z0VVxTBt6VD8si13SNQS9x3U=;
+	s=korg; t=1789660620;
+	bh=L6SKZlpeIw5d2Gtkg0D95zCWRbRow5ruQplPH4aVQ48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLxBRQj4lARz7pAjHG/j2tlCt74xVFYbW3Iox2lp275uKZIiERHW+MCy8VRgRa9Tg
-	 XlZv1bLQdtL1a8asZtBpA/9x9uAoJIq8+a0T3iClW1eOr9RkgtxG/sm1pyFpSuodKT
-	 TaDZx/PucFIycjQlw8BAUWWjJQ/uakT85Lp+aZfM=
+	b=kX+Xz/ZgNCJ2ebwi65tEvLDue3mW8ZdFHw1K8q5E8X+B9fJLJ+3MsGzNXvHVA/erE
+	 kjGCmH5Q+nj54+0SpB8c4fX6LX1phJFFDtuee3iDb+g1tqhXZkOt+OCp0iSBggR0y+
+	 qGtNE/C66IEwxJMePLS2gYbSvunBKI+O1cVtWWqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 651/733] xfs: preserve owner on in-memory btree creation
-Date: Thu, 17 Sep 2026 16:15:59 +0100
-Message-ID: <20260917151408.851532590@linuxfoundation.org>
+Subject: [PATCH 7.2 652/733] xfs: make the rtsummary repair fix the file size too
+Date: Thu, 17 Sep 2026 16:16:00 +0100
+Message-ID: <20260917151408.879821244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,41 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 5287e56cba3be4a64bff9f73bce5964fda2590dc upstream.
+commit 6b760b3232b3efc8bcc7c165e76300bc1c9140c5 upstream.
 
-LOLLM points out a minor bug where a higher level function creating an
-in-memory btree is required to pass in an owner number, but the creation
-function erases that.  In-memory btrees are ephemeral so this really
-doesn't matter except for debugging.  But let's fix this papercut.
+LOLLM noticed that the rtsummary repair code will create a new rtsummary
+with the correct file size, but it won't force the new file size to be
+set on the existing rtsummary file, leaving the rtsummary corrupt.  Fix
+this by setting up the tempfile mapping-exchange to run to the end of
+both files, which is the magic offset needed to reset the file size.
 
-Cc: stable@vger.kernel.org # v6.9
-Fixes: a095686a238352 ("xfs: support in-memory btrees")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: abf039e2e4afde ("xfs: online repair of realtime summaries")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_btree_mem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/scrub/rtsummary_repair.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_btree_mem.c
-+++ b/fs/xfs/libxfs/xfs_btree_mem.c
-@@ -117,6 +117,7 @@ xfbtree_init(
- 	struct xfs_buftarg		*btp,
- 	const struct xfs_btree_ops	*ops)
- {
-+	unsigned long long		owner = xfbt->owner;
- 	unsigned int			blocklen = xfbtree_rec_bytes(mp, ops);
- 	unsigned int			keyptr_len;
- 	int				error;
-@@ -133,6 +134,7 @@ xfbtree_init(
+--- a/fs/xfs/scrub/rtsummary_repair.c
++++ b/fs/xfs/scrub/rtsummary_repair.c
+@@ -164,9 +164,10 @@ xrep_rtsummary(
+ 	/*
+ 	 * Now exchange the contents.  Nothing in repair uses the temporary
+ 	 * buffer, so we can reuse it for the tempfile exchrange information.
++	 * Use XFS_MAX_FILEOFF here so that we correct the rtsummary file size.
+ 	 */
+ 	error = xrep_tempexch_trans_reserve(sc, XFS_DATA_FORK, 0,
+-			rts->rsumblocks, &rts->tempexch);
++			XFS_MAX_FILEOFF, &rts->tempexch);
+ 	if (error)
+ 		return error;
  
- 	memset(xfbt, 0, sizeof(*xfbt));
- 	xfbt->target = btp;
-+	xfbt->owner = owner;
- 
- 	/* Set up min/maxrecs for this btree. */
- 	keyptr_len = ops->key_len + sizeof(__be64);
 
 
