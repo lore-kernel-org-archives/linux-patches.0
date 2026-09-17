@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C214E4C2C;
-	Thu, 17 Sep 2026 15:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAB54E4C4D;
+	Thu, 17 Sep 2026 15:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659002; cv=none; b=BYnBiBlBXukPQylvWU2GVhfFxpjzHzc6mLrxBsx0CCHVY+cRWltIoqkY0EfL51mQ1i/RONiu0A/FfUbhFJAUoVdE0irBLXTl+VYoOo2G8O/AiSsAqhNU+5mH3E4UPntHtzmkTJfS/73OPjc6INz1r+3D9KeOGTwJkm8u9uR6hG8=
+	t=1789659008; cv=none; b=hzHdvcgUngqfQZPZMPO+/b5j1vON6IvjsHt8oAZ3cyZ7TwgagGyEA2VK1+/ihqfQ0ZQEU0rtGfEPyo01YCzNbSk6Fnx8aMUnN4JEUdC7PD8x4q5W+n9bmPv4JqZ/vdofBV4XTzgfcTSYJs1JM2T8P+9V16b2vXkWza3O7Sn7cWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659002; c=relaxed/simple;
-	bh=HFzPYGRO//bLRs1c3l/+Bv3HOapYgt1wOz8CxGPQfQM=;
+	s=arc-20240116; t=1789659008; c=relaxed/simple;
+	bh=7GvBC2SsmG78lS7mdUwTVHGkQMJT/Oj+d4Pi61O8j4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWyzVH2qMiAlNbSnRi00zu4QkD5Gt2ouWwupd1f8pESLA/+QAFLi/VHO/0szDTBFRTeCcRzOXe0XcW9d+fHAnemx8zDU+BpJEHgxFRSwLkBOSkdLE5IbWYES55NXSrZ9ihMkHGKUdTgXDhEkeay8jsyLjmtmsyUfokaKQj5qfHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgBd9v0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oUkOpZ9JUYeZ94GYcCTkxyBOpDe7eK7Bkx5JCL1QZ05PFdvxQHs2oJY0akJcUZoWOhL+Bz2x9N5KvvAxLHX9ffgoPpFV2LO3cnvdsxkBGLkfRsOmUDmbkPY5+Z54V0hGlCxh3wTGCBgBJMeudWL04ix0p8GKb2d7fApWZ1kBLbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GANViMB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgBd9v0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0439A1F000FF;
-	Thu, 17 Sep 2026 15:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GANViMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62101F0089C;
+	Thu, 17 Sep 2026 15:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658995;
-	bh=vA0qzMrZrc2jMuYOtjxbLNjWh4VJ/5ndpk8ESQorvlU=;
+	s=korg; t=1789658998;
+	bh=QG7SzJ+YIrNsW9Kv5f5yYjYrIKR04O45ffg/VKQyU5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgBd9v0L8nIyLts3O+6dBYjF5PJIJg9jTVeBdBK/tqcJumwyyxzRalyS4WMViBmQD
-	 aqaMksuHs4AwdU/X8uGuZmtc7aavov8XRZprIzlCs+lGKNqo24Uh4g2WTKCoc2lYi/
-	 hei8hSr9708EORUzlm149H0deaklmg/oMJyHv+gM=
+	b=1GANViMBz7H4SNj9O9J9ewl1DeLQynrdCVe+DfUyolZFyE9+YktRfk4z4HCj1o6Vy
+	 /Zrg6C3VuioPe8Av0QgrQ/JPA1clvslocqRJt3Rd6T19xQxHN6BDZjUmJtFA+wIkr9
+	 JmWKW1wVAhghedHgQXv6VuSsX2NgphgSreEvS1RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 107/733] Bluetooth: btintel_pcie: Clear automask on spurious interrupts
-Date: Thu, 17 Sep 2026 16:06:55 +0100
-Message-ID: <20260917151353.638130485@linuxfoundation.org>
+Subject: [PATCH 7.2 108/733] workqueue: reject watchdog thresholds that overflow jiffies
+Date: Thu, 17 Sep 2026 16:06:56 +0100
+Message-ID: <20260917151353.667053158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,36 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Jiacheng Xu <stitch@zju.edu.cn>
 
-[ Upstream commit ea2ee8b222306208d2b094d1a11894da6c106d42 ]
+[ Upstream commit 068c35b5d0546c8625b3d7c61910f73775cf1216 ]
 
-On spurious interrupt where the TX and RX causes are not set, driver was
-not clearing the auto mask which can block all the interrupts. Driver
-needs to clear the automask even if no causes are set.
+The watchdog threshold is supplied in seconds but is multiplied by HZ
+before being used as a jiffies interval. Reject values that exceed
+MAX_JIFFY_OFFSET / HZ so the multiplication cannot wrap and the
+time_after() comparisons remain within their supported range.
 
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The check is performed before changing the threshold or watchdog timer.
+Zero remains the value used to disable the watchdog.
+
+Fixes: 82607adcf9cdf ("workqueue: implement lockup detector")
+Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 3 +++
+ kernel/workqueue.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 2b7231be5973d..6b6258d03dd84 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1634,6 +1634,9 @@ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 929c04a9581bd..36aaeb38e2174 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -7923,6 +7923,9 @@ static int wq_watchdog_param_set_thresh(const char *val,
+ 	if (ret)
+ 		return ret;
  
- 	if (unlikely(!(intr_fh | intr_hw))) {
- 		/* Ignore interrupt, inta == 0 */
-+		bt_warn_ratelimited("Bluetooth: btintel_pcie: Received spurious interrupt\n");
-+		btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_MSIX_AUTOMASK_ST,
-+				      BIT(entry->entry));
- 		return IRQ_NONE;
- 	}
- 
++	if (thresh > MAX_JIFFY_OFFSET / HZ)
++		return -ERANGE;
++
+ 	if (system_percpu_wq)
+ 		wq_watchdog_set_thresh(thresh);
+ 	else
 -- 
 2.53.0
 
