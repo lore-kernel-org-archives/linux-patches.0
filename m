@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A724E2F3C;
-	Thu, 17 Sep 2026 17:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961844F96CD;
+	Thu, 17 Sep 2026 17:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664794; cv=none; b=gYD8Cv9G2hsPk65NcivPjZqCjIdBt0HlEqnyo6sNS3gwcNFPorWUB8K7nCS/gt8TbwNrDNAaizw01e8ofI6et0bwSx3YBfeTkSVjvlDlXoYZkPRPICfwhUNDbn6hA3q8XnY10v8JdwlM2692IALRiYdI+QoOcBIwccc5OnAuk4k=
+	t=1789664797; cv=none; b=RqWGXWiktGWaOwHxxKLvRuGd+DhdaVyki202JbXBymktjQxfG2osWD0+fVJzurVZsHXcUPyoAWJrcY+LgQBjF1YUZX/nJYFQaigw1GwDqd+pUvJYDi4AtoRRb246J8yqan1/4vqJ9WP8r7Seeakr4I4f68hRzfe6vwGFjZJ2Lvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664794; c=relaxed/simple;
-	bh=moppdQcd7llF8WiKlOyJRpBb8S+uroE2NSL/M+7x1tY=;
+	s=arc-20240116; t=1789664797; c=relaxed/simple;
+	bh=udLHDHaQ3Ww8wFJB1+91OzpMLZAB1nDO27TCUsHxxKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpvtGXoMBhwGWvgwfMiD8N5vsWzmBM4g/rNzRSSlAmEIDbzJA0fjTp5jshxCaRQx3gkWLCAHGCYFR9X/QtuGfEQ4++L9ENcaxbzOB2SfQn+V3QGDmzY6KHJkqZemc8bCaAWg8FVarIA6q3oFZY9VZ13T4vo2F6m/SIXETkfyVrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fE8Kq3jX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F0yb5L2DC90e2F6zKNihRxxcUliBW7OIChS+3Dxa586lDBvUlCHe7zXm+//kpkfuanF9pJhdv53U8HyfrxrVXZDskCOEh4NyuJjuvn4W5JbVBm1rOa7PNC2Tr1DjEcKkHJSp6Ww09UGueQPmD+AzmFNKRv71ZJmOgv4AMUSBTgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+Smwy6g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fE8Kq3jX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76BC1F000FF;
-	Thu, 17 Sep 2026 17:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+Smwy6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C651F000FF;
+	Thu, 17 Sep 2026 17:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664793;
-	bh=4cbngDMyg2iiOUXgag+/tRbfxp2+KV/BzVRyBFaj7yI=;
+	s=korg; t=1789664796;
+	bh=YHDmlZjREvw1nUsOW5AIOcjJ/2o7dfHNzmdo3s0o1as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fE8Kq3jXUXZeABzN2VlPLw95WDpiogYv8FJm00UO39i2DFDZWXTcfdPktjTCtQoPb
-	 9U8G30Hrjp1W3qJ0v3DdwYGqjrB7/LTGuh4v4kT8LlaHSWjWfDP8es59Ul46ZfdRfa
-	 pptQvovtu/ghe1uDcHniL/8QqYMR3Yc+qns2zIXk=
+	b=D+Smwy6gO/qj8WqBkfzSQXbKG+GQDiw71l8iaIuqpzmJYYsTOoCigyWZ96aHmPqXa
+	 vwddxMwtdTCl493mK1LcfTSqUrG3xOQT4bzLdtgO7scS4S+h8nwjB4Cy2MFQMFqbLe
+	 aSJh1IXvFGf6oyIJE3qTzdolxj0H14sAGmUI23Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0473/1250] ASoC: tas2781: Update default register address to TAS2563
-Date: Thu, 17 Sep 2026 16:04:28 +0100
-Message-ID: <20260917151604.790578182@linuxfoundation.org>
+Subject: [PATCH 6.18 0491/1250] ALSA: usb-audio: caiaq: validate EP1 reply lengths
+Date: Thu, 17 Sep 2026 16:04:46 +0100
+Message-ID: <20260917151605.274412000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,37 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 64184f07e7516eb3ac1839387eb7cbe2dbeaa96f ]
+[ Upstream commit aba30af07d4fe499b50209801eba9da8a815522f ]
 
-The previous TAS2781 address is overwritten during calibration,
-so switching to the TAS2563 address is required.
+usb_ep1_command_reply_dispatch() uses buf[0] as a command byte and then
+reads command-specific fixed items from the same URB buffer. Several
+paths use buf + 1, buf[1], buf[2], or buf + 3 without first proving that
+urb->actual_length contains those bytes.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20260625102815.20043-1-baojun.xu@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add per-command length checks, use a payload length derived from the
+bytes after the command byte for the control-state copy, and reject short
+analog input payloads before the input helper reads fixed offsets from
+the EP1 reply.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260705084601.56400-1-pengpeng@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/caiaq/device.c | 17 ++++++++++++++---
+ sound/usb/caiaq/input.c  |  6 ++++++
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/include/sound/tas2781.h b/include/sound/tas2781.h
-index 29d15ba65f04d..648fb55073282 100644
---- a/include/sound/tas2781.h
-+++ b/include/sound/tas2781.h
-@@ -59,9 +59,9 @@
- #define TASDEVICE_CHECKSUM_REG		TASDEVICE_REG(0x0, 0x0, 0x7e)
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index b20aae0caf60a..a16e592484803 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -134,14 +134,22 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 	struct device *dev = &urb->dev->dev;
+ 	struct snd_usb_caiaqdev *cdev = urb->context;
+ 	unsigned char *buf = urb->transfer_buffer;
++	unsigned int payload_len;
++	unsigned int copy_len;
  
- /* XM_340 */
--#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x63, 0x3c)
-+#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x02, 0x4c)
- /* XM_341 */
--#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x63, 0x38)
-+#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x02, 0x64)
+ 	if (urb->status || !cdev) {
+ 		dev_warn(dev, "received EP1 urb->status = %i\n", urb->status);
+ 		return;
+ 	}
++	if (urb->actual_length < 1)
++		return;
++
++	payload_len = urb->actual_length - 1;
  
- /* Volume control */
- #define TAS2563_DVC_LVL			TASDEVICE_REG(0x00, 0x02, 0x0c)
+ 	switch(buf[0]) {
+ 	case EP1_CMD_GET_DEVICE_INFO:
++		if (payload_len < sizeof(struct caiaq_device_spec))
++			break;
+ 	 	memcpy(&cdev->spec, buf+1, sizeof(struct caiaq_device_spec));
+ 		cdev->spec.fw_version = le16_to_cpu(cdev->spec.fw_version);
+ 		dev_dbg(dev, "device spec (firmware %d): audio: %d in, %d out, "
+@@ -157,18 +165,21 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 		wake_up(&cdev->ep1_wait_queue);
+ 		break;
+ 	case EP1_CMD_AUDIO_PARAMS:
++		if (payload_len < 1)
++			break;
+ 		cdev->audio_parm_answer = buf[1];
+ 		wake_up(&cdev->ep1_wait_queue);
+ 		break;
+ 	case EP1_CMD_MIDI_READ:
++		if (urb->actual_length < 3 || urb->actual_length - 3 < buf[2])
++			break;
+ 		snd_usb_caiaq_midi_handle_input(cdev, buf[1], buf + 3, buf[2]);
+ 		break;
+ 	case EP1_CMD_READ_IO:
+ 		if (cdev->chip.usb_id ==
+ 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_AUDIO8DJ)) {
+-			if (urb->actual_length > sizeof(cdev->control_state))
+-				urb->actual_length = sizeof(cdev->control_state);
+-			memcpy(cdev->control_state, buf + 1, urb->actual_length);
++			copy_len = min_t(unsigned int, payload_len, sizeof(cdev->control_state));
++			memcpy(cdev->control_state, buf + 1, copy_len);
+ 			wake_up(&cdev->ep1_wait_queue);
+ 			break;
+ 		}
+diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
+index 2db4d1332df1c..c12eeb9710002 100644
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -203,6 +203,8 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
+ 
+ 	switch (cdev->chip.usb_id) {
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL2):
++		if (len < 6)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 2);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 0);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 1);
+@@ -210,11 +212,15 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL3):
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER):
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER2):
++		if (len < 6)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 0);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 1);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 2);
+ 		break;
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_TRAKTORKONTROLX1):
++		if (len < 16)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT0X, buf, 4);
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT0Y, buf, 2);
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT1X, buf, 6);
 -- 
 2.53.0
 
