@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C334D259C80;
-	Thu, 17 Sep 2026 17:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29335187E8;
+	Thu, 17 Sep 2026 17:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665818; cv=none; b=kbh/V5YlqFZ4i5UzSAMt1h5WTn8Cccyq7sEnPMxEnKDXdty4/MBz2sBRLJP1ZpfSiwm/pRLyeLveC3U+I/9QN94Ws66KPqsIPtm/a34YVnd8RFb8qQGtBQ7qatlwv563Xt48fdy3zGxhlcqFl0b6FxN2b61KK/6MPkKpi1WVgkM=
+	t=1789665820; cv=none; b=QGoNtz8+GLBbWZKIOGolTr6L1Uc2PM1HJ1JgmPkiEsOxv/2ORE1ckwGJV4Xd1CSXmQBLlbZ8Xe3YnmWy943u8Hjp+KZ9FHr7wxcrMXzFMu1sw5TqSpZrlJ7VGe0IhpRiMckptCgs6oi22824OxsHbMr6/VXaRQz4JnWhMvRh7g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665818; c=relaxed/simple;
-	bh=gvPPyIBfMfgbnAI/xDcvpw1TCTxUGZc0xaN8+hzFpww=;
+	s=arc-20240116; t=1789665820; c=relaxed/simple;
+	bh=7+qXeDy37Xw2IfzenH/ub5oeC0gkDzFlUvW3MHNRHIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/8FKJEZ6HvrSZPStJT5wwIMZR1Lek5jp3SnG73RS3RoUWUBoka1fYXpSheFljj8Yn6JMkM9zOls9zEuUpBk4xrlFZYd23FSV8yMgYqCI2WGtQa1x2INpFYM0yEhFQryvIwP00C1Dk9O5twAfQLAkEM6Y1eCz4k7cfcemViyxR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsjDnRSP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mVN3akmuE6h7rdWCB3uXrap3+L+ViQUdvXWzcvnoo4JjIwJSTWB6/0MEkMgitEBZzTMfw9QNQ5uIJ6pOx3KGg45oX9eJvJW9agRjI+885YZU8nugtYELnB/hTGu1ttPXehBFk8VOEQW4/CqeYNmkqkutPiLlG5O6T3h5cJZoVNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luqh0wyf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsjDnRSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5DF1F000FF;
-	Thu, 17 Sep 2026 17:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luqh0wyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227621F00893;
+	Thu, 17 Sep 2026 17:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665816;
-	bh=85J98I2qU3h/nDEDwFQHX0lTOuyVQQ9JzY/V++zqJ48=;
+	s=korg; t=1789665819;
+	bh=70HlZytaoggxyUUG5er1wDCwBBNGLHhASg7c/EprX7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsjDnRSPjAVICaZ2ThRBvX4B8DaaMVepFapR6rZN8FlbRGs/ZS/2RgolmLqPP/Yzr
-	 EVaYdV+6rL5DhGvtWBYy/mymwTr9eQOdjzYE6jD5JXOtn8ft06CZSqaU0kpvyyMaDF
-	 lsfO5diRUcfggTc1wYPkhR1IMK1pDi5AClK5GB7E=
+	b=luqh0wyfRtvXAc17Gg/bixc3g4DM5n4ti8KvC809EFGF3QYuTHd/fDxEdypQYXb4r
+	 f3YBEobnJnmE1j7XOmdhTH1nDKwQ8CcHXObBRGVLLcc48UvNufCFIG5n70b8aAakwG
+	 eoi7bZPvMKH0iVCQy3oaHwz+7vpOQGkJqFAFF+xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Chen <vincent.chen@sifive.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.18 0831/1250] iommu/riscv: Disable SADE
-Date: Thu, 17 Sep 2026 16:10:26 +0100
-Message-ID: <20260917151614.467129870@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0832/1250] iommu/amd: Add NUMA node affinity for IOMMU log buffers
+Date: Thu, 17 Sep 2026 16:10:27 +0100
+Message-ID: <20260917151614.497711203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,72 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit e93e4a6363b8f812cb89f2b2d97cbaf017a3d7f8 ]
+[ Upstream commit 1e0c8d6b695217cb0b16f13e31c7f08b453097b4 ]
 
-In terms of the iommu subystem the SADE/GADE feature "3.4. IOMMU updating
-of PTE accessed (A) and dirty (D) updates" is called dirty tracking.
+Currently, PPR Log and GA logs for AMD IOMMU are allocated using
+iommu_alloc_pages_sz(), which does not account for NUMA affinity. This can
+lead to remote memory access latencies if the memory is allocated on a
+different node than the IOMMU hardware.
 
-There is no reason to enable HW support for this, and the HW cost
-associated with it, unless dirty tracking is actually enabled through
-iommufd. It should be a dynamic feature linked to user request.
+Switch to iommu_alloc_pages_node_sz() to ensure that these data structures
+are allocated on the same NUMA node as the IOMMU device. If the node
+information is unavailable, it defaults to NUMA_NO_NODE.
 
-Further, without implementing the read dirty ops the whole thing is
-pointless.
-
-Do not set DC.tc.SADE just because the HW has support for dirty tracking.
-
-Tested-by: Vincent Chen <vincent.chen@sifive.com>
-Acked-by: Paul Walmsley <pjw@kernel.org> # arch/riscv
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Tested-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Stable-dep-of: ca58afa40946 ("iommu/riscv: Serialize command queue publishing")
+Stable-dep-of: 00a7dd64888d ("iommu/amd: Do not reallocate GA log buffers on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/iommu/amd/init.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index d5611dcc162a8..1f7b8e46812c9 100644
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -813,7 +813,6 @@ struct riscv_iommu_domain {
- 	struct list_head bonds;
- 	spinlock_t lock;		/* protect bonds list updates. */
- 	int pscid;
--	bool amo_enabled;
- 	int numa_node;
- 	unsigned int pgd_mode;
- 	unsigned long *pgd_root;
-@@ -1275,8 +1274,6 @@ static int riscv_iommu_map_pages(struct iommu_domain *iommu_domain,
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 6bb9d3661baed..0561c17a24e73 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -854,10 +854,11 @@ static void __init free_command_buffer(struct amd_iommu *iommu)
+ void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
+ 				  size_t size)
+ {
++	int nid = iommu->dev ? dev_to_node(&iommu->dev->dev) : NUMA_NO_NODE;
+ 	void *buf;
  
- 	if (!(prot & IOMMU_WRITE))
- 		pte_prot = _PAGE_BASE | _PAGE_READ;
--	else if (domain->amo_enabled)
--		pte_prot = _PAGE_BASE | _PAGE_READ | _PAGE_WRITE;
- 	else
- 		pte_prot = _PAGE_BASE | _PAGE_READ | _PAGE_WRITE | _PAGE_DIRTY;
+ 	size = PAGE_ALIGN(size);
+-	buf = iommu_alloc_pages_sz(gfp, size);
++	buf = iommu_alloc_pages_node_sz(nid, gfp, size);
+ 	if (!buf)
+ 		return NULL;
+ 	if (check_feature(FEATURE_SNP) &&
+@@ -972,14 +973,16 @@ static int iommu_ga_log_enable(struct amd_iommu *iommu)
  
-@@ -1460,7 +1457,6 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
- 	INIT_LIST_HEAD_RCU(&domain->bonds);
- 	spin_lock_init(&domain->lock);
- 	domain->numa_node = dev_to_node(iommu->dev);
--	domain->amo_enabled = !!(iommu->caps & RISCV_IOMMU_CAPABILITIES_AMO_HWAD);
- 	domain->pgd_mode = pgd_mode;
- 	domain->pgd_root = iommu_alloc_pages_node_sz(domain->numa_node,
- 						     GFP_KERNEL_ACCOUNT, SZ_4K);
-@@ -1583,8 +1579,6 @@ static struct iommu_device *riscv_iommu_probe_device(struct device *dev)
- 	 * the device directory. Do not mark the context valid yet.
- 	 */
- 	tc = 0;
--	if (iommu->caps & RISCV_IOMMU_CAPABILITIES_AMO_HWAD)
--		tc |= RISCV_IOMMU_DC_TC_SADE;
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		dc = riscv_iommu_get_dc(iommu, fwspec->ids[i]);
- 		if (!dc) {
+ static int iommu_init_ga_log(struct amd_iommu *iommu)
+ {
++	int nid = iommu->dev ? dev_to_node(&iommu->dev->dev) : NUMA_NO_NODE;
++
+ 	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
+ 		return 0;
+ 
+-	iommu->ga_log = iommu_alloc_pages_sz(GFP_KERNEL, GA_LOG_SIZE);
++	iommu->ga_log = iommu_alloc_pages_node_sz(nid, GFP_KERNEL, GA_LOG_SIZE);
+ 	if (!iommu->ga_log)
+ 		goto err_out;
+ 
+-	iommu->ga_log_tail = iommu_alloc_pages_sz(GFP_KERNEL, 8);
++	iommu->ga_log_tail = iommu_alloc_pages_node_sz(nid, GFP_KERNEL, 8);
+ 	if (!iommu->ga_log_tail)
+ 		goto err_out;
+ 
 -- 
 2.53.0
 
