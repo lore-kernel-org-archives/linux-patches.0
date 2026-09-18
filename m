@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8804F50E5A2;
-	Fri, 18 Sep 2026 15:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392DC50EBE9;
+	Fri, 18 Sep 2026 15:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789746859; cv=none; b=SHnuX3Q09dLJf271eg6YRvX8jFzmT/MbW1TpOcFDdqdrGbGsPNaEKtkwBBqbKN1by+U0/+aypfF8dujlGrhYTJyvXO/UHSMQfJcU0OzXfGIa7H2BLZ6mEzsuCH5zUUb7x9P0AUwfgOTpx7T1kk+RbFS+VYEwOVyVdBbO6iMkD5E=
+	t=1789746862; cv=none; b=lBSSL5z8Gu+/P+t61I0XHS+vW178iAckTzXpe8LkFLmdTbwz9nRwrmWswa2eYwkBW1Fxn3qvKRDHM4mydajOQDhgKenN1Lw3JVa2ajQRTkEHcSdyOTSnY3IF6Ub4gQUNzHnAduCyHQ718nZ2lrcr0SvmkOjj/Ql5PxIrH9pBJso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789746859; c=relaxed/simple;
-	bh=48pWqb5Yj6a7QnjmVJbOWVqwqPuD5kTjTSTV5vGNkxY=;
+	s=arc-20240116; t=1789746862; c=relaxed/simple;
+	bh=iw2hwh4nqaBk0ro521t1gMgj985Pb+sUyEIefCrWMbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxOAxHXKrRRrTRCaD3OeV7bsBNVwZrtA15KCousYROlM0iSfq46FmE0G7jXB5rffTPmGNKdy3WcOYSG7WuRhOCY95G4Jl2FPY4ez/dMsUJz/3G4m2OePIUiRIOCSQaVeeqBTVf2TNgitpVMjPsnfXpJlBWYFwZqwbXCOVIEc+6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/J7oAfO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pfKLVVh4l0AM05cBAoG65cpvvUuddWyi2w5vwB8tBKXnKZ/kvgfYfSvtVYHOUkpGNaChf8vPWai0UtZGm8EByawVaxF47tedgKKgktAbpk6wJKUrsTfH+tGU6mc6wyqktFTQHaL15CmxhtkkNk969rPSfITcEZclUeT8ub3Pp8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPCC6t5h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/J7oAfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7EA1F00898;
-	Fri, 18 Sep 2026 15:54:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPCC6t5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66841F000FF;
+	Fri, 18 Sep 2026 15:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789746858;
-	bh=NRNWg8hV1eAfDqRqVZBeUZziA8JOqxKim6N8/iE9Y1Y=;
+	s=k20260515; t=1789746860;
+	bh=J4MNoaR/MNmLT3RFNxvpSS79yLUzde0GXWfAll/s8Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/J7oAfOfUMV0zLNWpV7CFO4yUtfxZKYHGAQJYiG50qnDcL+PU/8dUyrasN714/p6
-	 QCnZNkd/zYgYBrAVmDqApwlfcg13/wwNnSKhfFopz2E9rszTF50eNapLff5YnrCpR5
-	 VDLcSK9aqw0SCRKG10Sw2H8PFBE2ACAlGg7YxK24WMLVmXD6FgdUUDXAP8Guk6MTlK
-	 ZguRLA4APfDTb45YxdY39nITqJiMlWpbfzFKNo+TNy9K8DUyTj98YT/pMheztTqdzC
-	 tLu3vRQ12TREayHoQ+Z1JCkazgLhR5yHHfeUrlsYFw7/1jlLdrPW1lRu3MhAumH3ji
-	 v5/OxeFGiZUfg==
+	b=JPCC6t5hAiloOnE8j7AjpJBl1/rR/ROh4uNxIhCiXSV1gQWeDhpXFTxIX+vlb52od
+	 jj5J3UK0Tq1LSpPSKFPm+uu+QrgiLw7uwJJhiQZQd9vR5RWqjym7YwyBvyEt93AskS
+	 XU6RX7L3tHPgM5UWA+W8gumSpGsG2kv4RdbpVYpwJNwvxxd/R6W+KjNG64qUT8l+H3
+	 e6UVNVcANv5V+0qn1Uy0OKZcTbS/lwuVWrdMuZXKw4HdIt5+7YNJ8nb0+dMJgdWTz2
+	 JyTJcbw/JK6Z3uSxgCqZkp0cbgHQqlupeSNbPenrgkYufBaUsQ73uwK6qtFu1r8K2i
+	 4GblHUicWuUAA==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Peter Schneider <pschneider1968@googlemail.com>
 Cc: Sasha Levin <sashal@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
@@ -49,11 +50,11 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	achill@achill.org,
 	sr@sladewatkins.com
 Subject: Re: [PATCH 6.12 0000/1102] 6.12.111-rc1 review
-Date: Fri, 18 Sep 2026 11:54:05 -0400
-Message-ID: <20260918151138.2101477303-sashal@kernel.org>
+Date: Fri, 18 Sep 2026 11:54:06 -0400
+Message-ID: <20260918151139.2101477304-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aqxLGIyiWCdsQoyR@duo.ucw.cz>
-References: <20260917151539.408551884@linuxfoundation.org> <aqxLGIyiWCdsQoyR@duo.ucw.cz>
+In-Reply-To: <aqxL2yCxD-sqNdi4@duo.ucw.cz>
+References: <20260917151539.408551884@linuxfoundation.org> <dda6b1b0-5c9c-4417-976a-e20c4ee59ef4@googlemail.com> <aqxL2yCxD-sqNdi4@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,48 +63,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 17, 2026 at 10:18:32PM +0200, Pavel Machek wrote:
-> drivers/net/ethernet/ti/cpsw.c: In function 'cpsw_ndo_set_rx_mode_work':
-> ./include/linux/container_of.h:20:54: error: 'struct cpsw_priv' has no
-> member named 'rx_mode_work'
+On Thu, Sep 17, 2026 at 10:21:47PM +0200, Pavel Machek wrote:
+> Seems to be identical / very similar to crash we see, and we have full
+> log:
+> 
+> https://lava.ciplatform.org/scheduler/job/1510595
 
-Dropped from the 6.12 and 6.6 queues:
-
-  0b8c878d1173 ("net: cpsw: Execute ndo_set_rx_mode callback in a work
-                 queue")
-
-It only touches drivers/net/ethernet/ti/cpsw.c, but the
-'struct work_struct rx_mode_work' member it uses is added to cpsw_priv.h
-by a different commit, c0b5dc73a38f ("net: cpsw_new: Execute
-ndo_set_rx_mode callback in a work queue"), which isn't queued anywhere.
-6.6 additionally lacks disable_work_sync(), so it could not have built
-there either.
-
-> I don't have good diagnostic for runtime problem on arm. Example is here:
-> (hang)
-
-> It is better on x86:
-> L328[    0.264887] RIP: 0010:gather_bootmem_prealloc_parallel+0x117/0x250
-[...]
-> L343[    0.264887]  hugetlb_bootmem_struct_page_init+0x6f/0x90
-
-That one is a second, independent problem, also dropped from the 6.12
-queue:
+It is the same one - the photo shows the same
+gather_bootmem_prealloc_parallel() fault as your LAVA log, and Peter's
+and Brett's bisects both land on it. Dropped from the 6.12 queue:
 
   b1b7c045e808 ("mm/hugetlb: initialize gigantic bootmem hugepage
                  struct pages earlier")
 
-The backport moves gather_bootmem_prealloc() into page_alloc_init_late(), which
-on 6.12 runs before anything initializes the per-node huge_boot_pages[] list
-heads - upstream that happens unconditionally in hugetlb_bootmem_alloc() since
-v6.15, which 6.12 does not have. Without hugepagesz=/hugepages= on the command
-line the list head is still all zeroes, so the first list_for_each_entry()
-iteration yields NULL and m->hstate faults - which matches your log exactly
-(CR2 0000000000000010, 'mov r15,[r12+0x10]' with r12 == 0, .hstate sitting at
-offset 0x10 in struct huge_bootmem_page).
-
-Two independent bisects from Brett Sheffield and Peter Schneider landed on the
-same commit.
+Thanks both of you for correlating these - having the full oops next to
+the bisect made this a quick call.
 
 -- 
 Thanks,
