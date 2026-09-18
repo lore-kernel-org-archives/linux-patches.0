@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C10150E590;
-	Fri, 18 Sep 2026 15:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53A1511191;
+	Fri, 18 Sep 2026 15:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789746864; cv=none; b=M1uLcoGXjJW2BjdSs4MW9bG0dOW2IvmRCu5Hs5nzaz2ghLq6yXLHTm8hKgIqawRc35YPeBj0bQkXAKusmhvd7p/584Vm9I5ai1XE8tkyUpoQpPsOERArh2yu+WvP3crK/Bb9NP+1hzLvbbVLlfX+qBCorPOcYvN0wtwukU0Azj8=
+	t=1789746866; cv=none; b=kV/oHTIN217d5SBTlIfBrFdxBTfzIS4KnxueUXOOmPhBqxvWVCoXa5xc/tzlyiYIfnnapg7xkCPqu+m7gXq2yxOIH8FfD+4cLg7io/KVYT0q0IsEQR3oyR4sx0sZsiRB0F2qJgkN+6Gn4bXoGSNWPDbkHMiFnud1dK7FnY3KA+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789746864; c=relaxed/simple;
-	bh=tq2aFE8qk8W08Dpe6HtCknDX8FIgl5aKryUBa5d/yBk=;
+	s=arc-20240116; t=1789746866; c=relaxed/simple;
+	bh=peulqKYmVPW0msB4c0GTfd51rxsopByUZTSKNltenqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/D/Km2mYRH+HBLZSBPtsKmTDsnlHCyoyKBEvMXQ1bopNear9v6O5Gadb4PsLEN5R2GraNSyyA1YZCC9ruvEFKwTSnu1pU7yLfKbd2qDf7Pw4K+3NRJEXS1MpTcaq7vRGabwpmWPj2JEE+JVQSIDeRQ2wu5TzWVkqjyhMy8IRZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bm98SgwP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jWtGSP4VZYl5YJltdk3embprEQVLHq/YPikiN1k0al89H2aw/Kc/2pEmWaTGJqYU1lUxlMHRs6vDyINcAq3FivLZCQIotBba+MPt+PNpLdUNfGv/YB7Gqy8Kx7R9DN/QZvkzvL8SjWBY9QFyOc6sK7xXcd9Rq1HXxBXnEp6zBG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYeOJOdp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bm98SgwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1600E1F00898;
-	Fri, 18 Sep 2026 15:54:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYeOJOdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659A31F0089A;
+	Fri, 18 Sep 2026 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789746863;
-	bh=/tQprN3z/v5xGa72y/P3ii6p47RjByq0SxNA7vQBM6s=;
+	s=k20260515; t=1789746865;
+	bh=SMflwobboO00hd2qWckgVats2PLXIerCxVxrM8bbJnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bm98SgwPfK3uLO2/YXScjJtjeowXcQvwbMslqUfZrApbWZ6VN5ucR8gy5K61M5qU3
-	 k0xqYY0bXdMcklfFUUR46h1BEYiy7zGD9fD5mvxsRRZyCEL8sZkSIIX/JFoJ+qtANN
-	 VoV/vtUZ3LCDXL7G8ozkS8SCs2ds/Rxp5IJuhQnLIlDOaVQ1a4AjsVShpdtyjunaI+
-	 VsrojhwOG8oGF2JN7EK36C7z61yac49pnnVRHjtfVYpGclWJBXdEFSv+81484mrQVC
-	 qSJa5LLNqFlVNSfimdux85VpHIJsu+AXuZgt4ge9I43doOPkMpxCAZGF2vRfUGcXxT
-	 JCk8JJNfIVllw==
+	b=RYeOJOdpS3WV6iRpeYEANqSPNDvWCn2zoDWhciW3Duls22h4wBDa2aTfD+gO+ggXr
+	 7f1xeIxewj5fjdnGqWyHFAixS8sdV6RhXBkQsp4TJlmlhqlmvQiveLLhbWGLd9ekJ9
+	 ROEtpODUe8pxUJxYogqGvcbVhaZOi2CT10idJ3irNKel3hc0on0Bmvynm3KDvJo8/R
+	 hHlm+8z9CY6OMzK8a55fQEkVIdHGY1o7PiKXyfMTF7J7qaQ68QSN7sIfcWajillcTz
+	 w8qBI2vOhzLBir/BcAJ9BbCe+VNfxI+ZgNTq7Ll6EIik1zzwXqGxAq4f5/G0zc0kvL
+	 1TI1AEr9jFkUw==
 From: Sasha Levin <sashal@kernel.org>
-To: Brett A C Sheffield <bacs@librecast.net>,
+To: Pavel Machek <pavel@nabladev.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
 	stable@vger.kernel.org,
@@ -39,8 +39,6 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	shuah@kernel.org,
 	patches@kernelci.org,
 	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
 	f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com,
 	rwarsow@gmx.de,
@@ -49,13 +47,13 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	broonie@kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com,
-	Peter Schneider <pschneider1968@googlemail.com>
+	Jon Hunter <jonathanh@nvidia.com>
 Subject: Re: [PATCH 6.12 0000/1102] 6.12.111-rc1 review
-Date: Fri, 18 Sep 2026 11:54:07 -0400
-Message-ID: <20260918151140.2101477305-sashal@kernel.org>
+Date: Fri, 18 Sep 2026 11:54:08 -0400
+Message-ID: <20260918151141.2101477306-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <1e80f4b3-3919-4568-aabd-f0172581831d@googlemail.com>
-References: <20260917151539.408551884@linuxfoundation.org> <aqxBBu5GXVhHcqTz@auntie.librecast.net> <0dc35fd5-ee4c-4140-b154-78a49981ddb7@googlemail.com> <1e80f4b3-3919-4568-aabd-f0172581831d@googlemail.com>
+In-Reply-To: <8cc48d19-ccb9-46f0-92c9-b26916a349da@nvidia.com>
+References: <20260917151539.408551884@linuxfoundation.org> <aqxLGIyiWCdsQoyR@duo.ucw.cz> <8cc48d19-ccb9-46f0-92c9-b26916a349da@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,38 +62,19 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 18, 2026 at 07:49:48AM +0200, Peter Schneider wrote:
-> So I have bisected this warning, and the first bad commit is
-> 
-> [af5775004c9c02f37be06d2035a056b6abb1cb6c] sched/fair: Fix EEVDF entity
-> placement bug causing scheduling lag
+On Fri, Sep 18, 2026 at 12:27:18PM +0100, Jon Hunter wrote:
+> FWIW, I am seeing the same build error for ARM.
 
-Thank you - a second bisect on top of a reverted tree is real work, and
-it was the right call. Dropped from the 6.12 queue:
+Thanks for the confirmation. Dropped from the 6.12 and 6.6 queues:
 
-  6d71a9c61604 ("sched/fair: Fix EEVDF entity placement bug causing
-                 scheduling lag")
+  0b8c878d1173 ("net: cpsw: Execute ndo_set_rx_mode callback in a work
+                 queue")
 
-> Trying to revert this from 6.12.111-rc1 however resulted in some
-> conflicts I was unable to resolve. There are other dependencies like:
-
-Right, which is why the three patches stacked on top of it came out at
-the same time:
-
-  6e3c0a4e1ad1 ("sched/fair: Fix lag clamp")
-  51b0e68cfa0a ("sched/eevdf: Fix rb augmented with multi fields")
-  9a8bc9bb4c3f ("sched/eevdf: Fix augmented max_slice")
-
-Some background on why this only bites 6.12: the WARN_ON_ONCE(!load) you hit
-needs 4423af84b297 ("sched/fair: optimize the PLACE_LAG when se->vlag is zero")
-and c70fc32f4443 ("sched/fair: Adhere to place_entity() constraints", which is
-a Fixes: for exactly this commit) to be shut up, and 6.12 has neither. More to
-the point, upstream has since reverted 6d71a9c61604 outright - 101f3498b4bd
-("sched/fair: Revert 6d71a9c61604 ...") from January, which concludes the
-original commit "was wrong!" because avg_vruntime() already accounts for
-cfs_rq->curr when it is on_rq. 6.12 only ever picked it up as a dependency of
-the eevdf fixes above, so carrying placement math that mainline has disowned is
-not something we want here.
+The patch only touches drivers/net/ethernet/ti/cpsw.c, but the 'struct
+work_struct rx_mode_work' member it dereferences is added to cpsw_priv.h by a
+separate commit, c0b5dc73a38f ("net: cpsw_new: Execute ndo_set_rx_mode callback
+in a work queue"), which is not queued anywhere.  6.6 also lacks
+disable_work_sync(), so it had a second reason to fail there.
 
 -- 
 Thanks,
