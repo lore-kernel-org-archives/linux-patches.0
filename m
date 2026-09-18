@@ -1,45 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE47D2F8EA3;
-	Fri, 18 Sep 2026 00:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3343630AF;
+	Fri, 18 Sep 2026 00:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789692772; cv=none; b=tCzozaDiHKSLcI/GVjRIRxMncWg6xCpMoC2Kvoe1O7luxBUy+I+mx6o0gbtznFIGiUtmnWcSsqI+oFhPVy+QdmzajpvpEFPMcrzDgBX/gC2iKihvOsvNp/2XQ4BYz4d6cAj6GQmhBSiJ/dC7lgHPPGRZ+hM7a3Q1kFbMwIIN7/k=
+	t=1789692779; cv=none; b=BMGnS7R7iUcnVKZ0/57veItGKNSrj0ngrJcEZSWHxtxn2NVYTjqHNnTDd9LwHXbXmQmL9aDFU6+Oyxuvph8NZNXaLet4O/X0ID9H7lInTKtsen5ZtMZl9B0EuvvUS7siRrs1StxboNxkegplJkdRDdiB94kFnCwciEaqLQZs3Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789692772; c=relaxed/simple;
-	bh=RIWe9JJYTIJ08u0damYVibDfKedlRdwA3qZjV2J0ba0=;
+	s=arc-20240116; t=1789692779; c=relaxed/simple;
+	bh=MAGcvP6geABCHMrgoyp0wiFaGxNP98/yBIKndJkGMzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJonztRIlKfT/1ewV4wXTEnpiAxDF7LHxl/SLQObhMvyhztpCNwQpKpXS4SCqsBrmuFFlx0+kugwkPq7wHSDbons+6sldR60sBEyTpof7uIxe1Xj6wQvTJ5Kt22qZExsoCCdcccPmowGEepIR11OalnPOOLsgGAgqkgJ9Wn7gbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dcz/BkpI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RUe4/NtmxjHweC90JFNfwC1fBp54ram91oUlnIxSL1MWRzMapMP0sHm+q1Nm5DWYJ4Ocfdy66ZIF/o2NF8h8ARao86Lm7UZhP9Y7ItPKnIJHsi+/uCKVfczSZiHFM/oBSMSnhDXjuHlADOovEbrd80hTgg+XAyJ9iZqxEsRaoHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ghhB9O26; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dcz/BkpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6965B1F00893;
-	Fri, 18 Sep 2026 00:52:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ghhB9O26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4518C1F00898;
+	Fri, 18 Sep 2026 00:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789692771;
-	bh=aU1WmNXjGgLFEwV3D7HSJUfixZMg0wdQKZK+8KHzZcw=;
+	s=k20260515; t=1789692777;
+	bh=5BNIj8BNGyST6arfh5kwxyIl6omywdbjBlhFJKJwhCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dcz/BkpIPVDPh2Ill5gIkIwZv9rq6JjdAzHTh5rsmDk1clInF3XBugAUppakw+FJ6
-	 zYhti3YkNBpXGZLld6mJt/TD7M6WUR3xvMxDKqDGslqUYmnlRW1Vi6EMKlNh5fk+BM
-	 EqvQo9aCDPds6ZdCdIHYBd8qIafffd5DiJAI94ZaLG2J3Gbhg4p7LEA6HQHvlSc8ZL
-	 ZFj3S6e2kiuoNRXynXW0VaFvXFyaOWBHB9yR8notvJZeit8EcHgHUS+ICnBWXK7iYj
-	 Wgx/dc7xWzScthPqbWsQ+pw/tUPIj8RDTJLKC4Pe37UqzZhT/L4z87ZiTQ2l3b9Yh6
-	 ZpIsFCKPXb2bw==
+	b=ghhB9O2692MT4im0KMC8DxoRkDUJMw3+K5grZTmpqIYsKoU0gKTk+PJYy5rGC1n04
+	 odzqsKgm4QHXWEJDAHYBgZ2pE+1AP34OUiDEVZdYmfi/N2dGrdiswZndNbByoGzj6u
+	 g8FtYPcps1PKy2QWONeWlv9kpNeKFv6dKxJVorL4SaTMsBz2K+pfxL95kF6lgfpOXt
+	 vt3ZT+xHTmpeFpJ3ku84odLZC8kV5SLwFURFsnlb2Jc45qOk0ESmyMciSJItZT56L/
+	 sV2mwTkt8WL7rn41ZtpAA7zStlmHlJ1wYz3T02+uyaOWNTJ8E5SzG2iF0NumSSswef
+	 /8Xo2XltfHYqg==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	gregkh@linuxfoundation.org,
+	luiz.dentz@gmail.com,
+	luiz.von.dentz@intel.com,
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	eadavis@qq.com,
+	davem@davemloft.net,
+	kuba@kernel.org,
+	linux-bluetooth@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tianyou Li <tianyou.li@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>
-Subject: Re: [PATCH 6.18 1481/1518] perf annotate: Fix build with NO_SLANG=1
-Date: Thu, 17 Sep 2026 20:52:29 -0400
-Message-ID: <2026-09-17-daily-reply-0002-perf-annotate-no-slang@kernel.org>
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
+Subject: Re: [PATCH 5.10.y] Bluetooth: L2CAP: Fix deadlock
+Date: Thu, 17 Sep 2026 20:52:35 -0400
+Message-ID: <2026-09-17-daily-reply-0008-l2cap-deadlock-5-10@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aqsb9cc0sIUtI265@Cyndaquil.localdomain>
-References: <aqsb9cc0sIUtI265@Cyndaquil.localdomain>
+In-Reply-To: <20260916193454.9996-1-kmehltretter@gmail.com>
+References: <20260916193454.9996-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,17 +57,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> This appears to be the same patch from [1] that was previously dropped.
-> With this patch applied, I'm seeing the same build error as Jiri Slaby
-> did on the linked thread when !HAVE_SLANG_SUPPORT.
+> [ Upstream commit f1a8f402f13f94263cf349216c257b2985100927 ]
+>
+> This fixes the following deadlock introduced by 39a92a55be13
+> ("bluetooth/l2cap: sync sock recv cb and release")
 
-Reverted from 6.18, thanks for catching it.
+Queued for 5.10, thanks.
 
-The commit only adds the fourth parameter to the !HAVE_SLANG_SUPPORT
-stubs. 6.18 does not carry cd3466cd2639 ("perf c2c: Add annotation
-support to perf c2c report"), so the HAVE_SLANG_SUPPORT declarations and
-the only caller still use three arguments, and the patch breaks the
-NO_SLANG=1 build here instead of fixing it.
+89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release") is back
+on 5.10 as well, so the tree now has both halves rather than the revert.
 
 -- 
 Thanks,
