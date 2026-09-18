@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392DC50EBE9;
-	Fri, 18 Sep 2026 15:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C10150E590;
+	Fri, 18 Sep 2026 15:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789746862; cv=none; b=lBSSL5z8Gu+/P+t61I0XHS+vW178iAckTzXpe8LkFLmdTbwz9nRwrmWswa2eYwkBW1Fxn3qvKRDHM4mydajOQDhgKenN1Lw3JVa2ajQRTkEHcSdyOTSnY3IF6Ub4gQUNzHnAduCyHQ718nZ2lrcr0SvmkOjj/Ql5PxIrH9pBJso=
+	t=1789746864; cv=none; b=M1uLcoGXjJW2BjdSs4MW9bG0dOW2IvmRCu5Hs5nzaz2ghLq6yXLHTm8hKgIqawRc35YPeBj0bQkXAKusmhvd7p/584Vm9I5ai1XE8tkyUpoQpPsOERArh2yu+WvP3crK/Bb9NP+1hzLvbbVLlfX+qBCorPOcYvN0wtwukU0Azj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789746862; c=relaxed/simple;
-	bh=iw2hwh4nqaBk0ro521t1gMgj985Pb+sUyEIefCrWMbk=;
+	s=arc-20240116; t=1789746864; c=relaxed/simple;
+	bh=tq2aFE8qk8W08Dpe6HtCknDX8FIgl5aKryUBa5d/yBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfKLVVh4l0AM05cBAoG65cpvvUuddWyi2w5vwB8tBKXnKZ/kvgfYfSvtVYHOUkpGNaChf8vPWai0UtZGm8EByawVaxF47tedgKKgktAbpk6wJKUrsTfH+tGU6mc6wyqktFTQHaL15CmxhtkkNk969rPSfITcEZclUeT8ub3Pp8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPCC6t5h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f/D/Km2mYRH+HBLZSBPtsKmTDsnlHCyoyKBEvMXQ1bopNear9v6O5Gadb4PsLEN5R2GraNSyyA1YZCC9ruvEFKwTSnu1pU7yLfKbd2qDf7Pw4K+3NRJEXS1MpTcaq7vRGabwpmWPj2JEE+JVQSIDeRQ2wu5TzWVkqjyhMy8IRZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bm98SgwP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPCC6t5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66841F000FF;
-	Fri, 18 Sep 2026 15:54:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bm98SgwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1600E1F00898;
+	Fri, 18 Sep 2026 15:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789746860;
-	bh=J4MNoaR/MNmLT3RFNxvpSS79yLUzde0GXWfAll/s8Bc=;
+	s=k20260515; t=1789746863;
+	bh=/tQprN3z/v5xGa72y/P3ii6p47RjByq0SxNA7vQBM6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JPCC6t5hAiloOnE8j7AjpJBl1/rR/ROh4uNxIhCiXSV1gQWeDhpXFTxIX+vlb52od
-	 jj5J3UK0Tq1LSpPSKFPm+uu+QrgiLw7uwJJhiQZQd9vR5RWqjym7YwyBvyEt93AskS
-	 XU6RX7L3tHPgM5UWA+W8gumSpGsG2kv4RdbpVYpwJNwvxxd/R6W+KjNG64qUT8l+H3
-	 e6UVNVcANv5V+0qn1Uy0OKZcTbS/lwuVWrdMuZXKw4HdIt5+7YNJ8nb0+dMJgdWTz2
-	 JyTJcbw/JK6Z3uSxgCqZkp0cbgHQqlupeSNbPenrgkYufBaUsQ73uwK6qtFu1r8K2i
-	 4GblHUicWuUAA==
+	b=Bm98SgwPfK3uLO2/YXScjJtjeowXcQvwbMslqUfZrApbWZ6VN5ucR8gy5K61M5qU3
+	 k0xqYY0bXdMcklfFUUR46h1BEYiy7zGD9fD5mvxsRRZyCEL8sZkSIIX/JFoJ+qtANN
+	 VoV/vtUZ3LCDXL7G8ozkS8SCs2ds/Rxp5IJuhQnLIlDOaVQ1a4AjsVShpdtyjunaI+
+	 VsrojhwOG8oGF2JN7EK36C7z61yac49pnnVRHjtfVYpGclWJBXdEFSv+81484mrQVC
+	 qSJa5LLNqFlVNSfimdux85VpHIJsu+AXuZgt4ge9I43doOPkMpxCAZGF2vRfUGcXxT
+	 JCk8JJNfIVllw==
 From: Sasha Levin <sashal@kernel.org>
-To: Peter Schneider <pschneider1968@googlemail.com>
+To: Brett A C Sheffield <bacs@librecast.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
@@ -48,13 +48,14 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	hargar@microsoft.com,
 	broonie@kernel.org,
 	achill@achill.org,
-	sr@sladewatkins.com
+	sr@sladewatkins.com,
+	Peter Schneider <pschneider1968@googlemail.com>
 Subject: Re: [PATCH 6.12 0000/1102] 6.12.111-rc1 review
-Date: Fri, 18 Sep 2026 11:54:06 -0400
-Message-ID: <20260918151139.2101477304-sashal@kernel.org>
+Date: Fri, 18 Sep 2026 11:54:07 -0400
+Message-ID: <20260918151140.2101477305-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aqxL2yCxD-sqNdi4@duo.ucw.cz>
-References: <20260917151539.408551884@linuxfoundation.org> <dda6b1b0-5c9c-4417-976a-e20c4ee59ef4@googlemail.com> <aqxL2yCxD-sqNdi4@duo.ucw.cz>
+In-Reply-To: <1e80f4b3-3919-4568-aabd-f0172581831d@googlemail.com>
+References: <20260917151539.408551884@linuxfoundation.org> <aqxBBu5GXVhHcqTz@auntie.librecast.net> <0dc35fd5-ee4c-4140-b154-78a49981ddb7@googlemail.com> <1e80f4b3-3919-4568-aabd-f0172581831d@googlemail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,21 +64,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 17, 2026 at 10:21:47PM +0200, Pavel Machek wrote:
-> Seems to be identical / very similar to crash we see, and we have full
-> log:
+On Fri, Sep 18, 2026 at 07:49:48AM +0200, Peter Schneider wrote:
+> So I have bisected this warning, and the first bad commit is
 > 
-> https://lava.ciplatform.org/scheduler/job/1510595
+> [af5775004c9c02f37be06d2035a056b6abb1cb6c] sched/fair: Fix EEVDF entity
+> placement bug causing scheduling lag
 
-It is the same one - the photo shows the same
-gather_bootmem_prealloc_parallel() fault as your LAVA log, and Peter's
-and Brett's bisects both land on it. Dropped from the 6.12 queue:
+Thank you - a second bisect on top of a reverted tree is real work, and
+it was the right call. Dropped from the 6.12 queue:
 
-  b1b7c045e808 ("mm/hugetlb: initialize gigantic bootmem hugepage
-                 struct pages earlier")
+  6d71a9c61604 ("sched/fair: Fix EEVDF entity placement bug causing
+                 scheduling lag")
 
-Thanks both of you for correlating these - having the full oops next to
-the bisect made this a quick call.
+> Trying to revert this from 6.12.111-rc1 however resulted in some
+> conflicts I was unable to resolve. There are other dependencies like:
+
+Right, which is why the three patches stacked on top of it came out at
+the same time:
+
+  6e3c0a4e1ad1 ("sched/fair: Fix lag clamp")
+  51b0e68cfa0a ("sched/eevdf: Fix rb augmented with multi fields")
+  9a8bc9bb4c3f ("sched/eevdf: Fix augmented max_slice")
+
+Some background on why this only bites 6.12: the WARN_ON_ONCE(!load) you hit
+needs 4423af84b297 ("sched/fair: optimize the PLACE_LAG when se->vlag is zero")
+and c70fc32f4443 ("sched/fair: Adhere to place_entity() constraints", which is
+a Fixes: for exactly this commit) to be shut up, and 6.12 has neither. More to
+the point, upstream has since reverted 6d71a9c61604 outright - 101f3498b4bd
+("sched/fair: Revert 6d71a9c61604 ...") from January, which concludes the
+original commit "was wrong!" because avg_vruntime() already accounts for
+cfs_rq->curr when it is on_rq. 6.12 only ever picked it up as a dependency of
+the eevdf fixes above, so carrying placement math that mainline has disowned is
+not something we want here.
 
 -- 
 Thanks,
