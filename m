@@ -1,56 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261262BEFF5;
-	Sun, 20 Sep 2026 00:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B38298CAF;
+	Sun, 20 Sep 2026 00:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789865239; cv=none; b=Qi+Zv0DS8anM7bMYHuynSDOJnT2SncnzKVKod7v4zvczC3GHhKeF7WhdoAfmDiWNVAklcQ+iAsbFygVZBHdb93vpXDWhMy/1i4FHx9JUXPvssoSXK6MJEtxWe8E+EOoI+mqBzZdwAs1DiXnTc0txhNrDwhl/2d0iH6zVJkrJNus=
+	t=1789865240; cv=none; b=kxZs1v2tOmDFCLZF6X1a/X/YoY7cJCAUBxXf+qU6QEZF05ULb+0aAnXYCUe3nW/vTfq3bJgWczOYywVQ4dYqe7mhBAfpU2KzOIUP3KCrzf7TSmuDnyN5o/QKLvs/MvzGbrjSRli9ptJWaNW14efDIFNuI1+UPtqN0v1rjgO5Xek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789865239; c=relaxed/simple;
-	bh=vlQzPUqzTh6633wyF0xfxamftMvimSbs61K2GFgAUHU=;
+	s=arc-20240116; t=1789865240; c=relaxed/simple;
+	bh=JGFNw8FuupXnJmPBuj5N2U8vRzQx/6Bh1xWCsuV9dLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZnXRZyM2WwwUg6neWbmbt9Mgd5kY4m77GKQHitO49Osi59Gt+2h18LyA8SdUe05sqg9EAZvfWTTRoCcBb6Ya1fQGjagtOFfyjAhAi8fdfINb6BlyDcAL+qt8es20GATxoz8QQCEIZMYhSFhJ2QWbEV/C4slFKG6K3WPAP586PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K2JqifWl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f+gZsL24ZJ87gMvhSwHqnjMyU4EdYnlUVyQJMcAipe3dXn1i3+LjPaIhxwne/GkCn1Ek8VPdg2l/+cwSTBNOHBiJNL5OkKpwBIjhM18d8VAKzoFxHM+gXscFGDH2OHxAE2Y9h9zt5iQsehQhgVQBLiDpE0ypacWLVA3mmU82ji4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X0DG+kOb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K2JqifWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E361F00893;
-	Sun, 20 Sep 2026 00:47:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X0DG+kOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091331F00898;
+	Sun, 20 Sep 2026 00:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789865237;
-	bh=fRAlVhqYeTNDBx+btosYwp5D9p9nx12hOSmBmGbHePU=;
+	s=k20260515; t=1789865239;
+	bh=2viQGhZ2e9fTMvUadsz2SKYZ6mgJV40Iq+0k8AtigyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K2JqifWlbanyxzL/PFJWLMx2WsZR7s1riE11RrhpqxYVH1QOB4vpzMM87N2CXqmfP
-	 vF5F+1G5yY7KlroeqjOi+nW99S4LrGEktUNkCKrCLSFGbwh2Bqbie6GynKtmrQeWMa
-	 dyOF30DJIHEdd0uYFOCSbhkRyDLkoWahtNqzbPPRHgBGzj/xokJnU0oqw5wkV2xtMr
-	 NquMhbuTgz4HfWTnoWnMBT//vad2mMuOB4tmlXPFZ6Q//rKKZoL54prgy+u+i+ikGy
-	 APKqkJKI/qbQw+GOrEWXlGJcqQSmbShvbmP1fvBjwNVYMeO81RxhQwwg+aCmCWazk1
-	 tg0DoHXPzJw1A==
+	b=X0DG+kObvHHJC63H5evw7nWX6c81TqQ4ff2uDl3/YMpxwzlsEcDXWuBph3DiwRxAD
+	 iNullN/JQkLt8tKq7tg3y5EH8z0j2x5nYAFOpSRql5AjSsmwnyD92oRdBkAmXXe+uX
+	 GcjEQ7H3wSPRBCBfN0DAzkz6HYOrxB/oelWx2/hoI4oTbr9qt3ULV3wx48XMa28Ttz
+	 wwcc5a+p7Zu8iO8dJCr99fPr4kdB6xAwmkQwZckF64lq7+tApnoUOVOHYcK2CYAnQG
+	 XTCn5zpr1Nw4MXKZZwnSiBh0gVB3onJkAH6k479v59KS/ebMYm0T1LCbb9NwQHaBXN
+	 VO7UVEwht4OiA==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 0472/1102] mm/huge_memory: use folios memcg inside __folio_split()
-Date: Sat, 19 Sep 2026 20:47:07 -0400
-Message-ID: <20260920000825.3-1-sashal@kernel.org>
+Subject: Re: [PATCH 6.12 0649/1102] ASoC: Intel: avs: Clean up streams if their initialization fails
+Date: Sat, 19 Sep 2026 20:47:08 -0400
+Message-ID: <20260920000825.4-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <70fbd5c6-2903-47e5-9627-4e028be7a858@oracle.com>
-References: <20260917151539.408551884@linuxfoundation.org> <20260917151551.542102472@linuxfoundation.org> <70fbd5c6-2903-47e5-9627-4e028be7a858@oracle.com>
+In-Reply-To: <9b023ec0-80ff-438a-8d1e-15e49182d7d8@oracle.com>
+References: <20260917151539.408551884@linuxfoundation.org> <20260917151556.451520849@linuxfoundation.org> <9b023ec0-80ff-438a-8d1e-15e49182d7d8@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,15 +50,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 19, 2026 at 08:23:49PM +0530, Harshit Mogalapalli wrote:
-> The backport instead passes the raw result of folio_memcg() and never
-> drops a reference.  That raw pointer provides neither the css reference
-> required by set_active_memcg() nor the helper's root-memcg fallback.
+On Fri, Sep 19, 2026 at 08:35:36PM +0530, Harshit Mogalapalli wrote:
+> Without the first commit, a capture allocation failure can return while
+> partial stream objects remain.
 [...]
-> Maybe lets drop this and get it backported correctly next cycle ?
+> I think both prerequisite cleanups should be applied before retrying
+> 8dac807fb313, thoughts?
 
-Dropped from the 6.12 and 6.6 queues (the same substitution is present on
-both, not just 6.12).
+Agreed, and dropped from all five queues.
 
 -- 
 Thanks,
