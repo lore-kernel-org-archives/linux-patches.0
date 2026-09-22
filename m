@@ -1,56 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57209381EAF;
-	Tue, 22 Sep 2026 02:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B25381EAF;
+	Tue, 22 Sep 2026 02:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790043832; cv=none; b=XdtkMXTXr1Eb0A84W+aySVMHTGZrqNO50PTaaYpuxI49+4AlO7LIPZ9u0pYPR7PfhBhVLX0+ImAQujdws3ZU0IsGjJV1VT0S6v2XTKZUf3poRqSd3hkLQ3VdAtS9okRoibgiuPn+ORts80nq939i55NadQfWVvIRjn73xPOCjq8=
+	t=1790043838; cv=none; b=ZEMVMEtg20XyHP51kNmXVmJ3qT/JpQgF+d+LAtvZ3GKt50AKx+SGeILvl6BH38TWGLLYNbwVqB20Ikf9w6+Eb0IxDiKs30lDdRd0flQLxWhD02lvY7JPpngf8DF4slNb0gocpEiwNqp2YgxI/jSkAK0sgG0fFwPoxR3CCAXP2R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790043832; c=relaxed/simple;
-	bh=TjVsCdoMOgxC4qmub43FU8vqX/COiNe8A2cDmY4oc/Y=;
+	s=arc-20240116; t=1790043838; c=relaxed/simple;
+	bh=hVPaxAMEVdim6+ivDyrGXzQaYDCwYhhJnxFIMyHFADE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NowN4q91xOLNVeyM7DorfEtuWWmEkSDkwmUXB8TzZGqmW316HvUWB5fWUvZbkUiEPidJKw5gyVeaEjtAldPNBv4yokyhV9fxUUxephAgviuRfGAoZeCcYPCFi79k2hmAYJaQZvDK13/Lr+eNo9iAVgeNvjQTG94BgIF814z4HvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMB6bSuf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tiJh4O543nIzLpdTQMkEccLJkiL3BN1DDR94yQ/2uCjhl/efIyU9RDs0E7m1uxn4Cckj7fd8kETq3Q1jextWksQ2v+JhgSXY2u888QTpguVjvI+5sNp0o6l2+scGQevrH2b4LqfI34CpKw31fUXgsDyFZ3LlP4OLPWckUXHv3V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIls1kMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMB6bSuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1B61F00899;
-	Tue, 22 Sep 2026 02:23:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIls1kMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9841F00898;
+	Tue, 22 Sep 2026 02:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790043831;
-	bh=DvpHe9goWKptvXpvHaZISQed/cSncJ9KwzC6BY4n1Lc=;
+	s=k20260515; t=1790043836;
+	bh=acBaOP6ye9nHL2ncE2Z17ex4G+4Gfyfbw3VKyRM1wqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMB6bSuffAh1cD/6qgVMYEsniGAlIS1GzO/8ghMqgZ3ZBPsCkoswLuwKmX84RVLBH
-	 d8HgifVHOOncBv7e8Ygaw2F6wtd+4VAs1RXjEEb5MMGLWje7zg0HCLv42kw49JzanL
-	 C5qpQc42hhDz/87CXIPziZm5k44BNeY8x4trwwJWkIC4brt9lBKhCaEoTPaW49kJkM
-	 CSdMPZTPR+nkUq5wrdGGG6jnbp+FaBYCp9lLjmHDA2UHewkb4O1NTRQNNY0I36CVYe
-	 YX+t3kUxgF4mzBdJ3krv79cWctah7W/aH7XqL9jBaGUH8IPaQLcXauBcBGSDY/nyjU
-	 +vPAqvsOBSeyw==
+	b=AIls1kMeBde+IOj4AC7vNOPoMJQ2x2nSp4CZPYszgVSUBxbVz/LuDN+iSfgTmlhl7
+	 /EHxYPzoVoJfI4Nu702uC3fjCZb+L5PKqX5TyIhOhmTsbXsVgvngNzFzTfnqqkWsmG
+	 lGC+Dvm4kchgVIfMEbgXrgATVsmoahWC6z6XcK3e8qjWTJUPJcReOTqNdVmTB74qXk
+	 ZKkMFoJ6iKTTnbWUqxDckZERet6tr6XWw4MFJkytqqaG5RCqZb4d62wefDaeyMJeQ6
+	 PWbl+DnXYhS/k4PzTbBD067gL/pxW19maKra37i1qOMHYOos2OVZfZ84psDwoKpOP6
+	 hSt4i/oFYoqOg==
 From: Sasha Levin <sashal@kernel.org>
-To: Zi Yan <ziy@nvidia.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 0472/1102] mm/huge_memory: use folios memcg inside __folio_split()
-Date: Mon, 21 Sep 2026 22:23:39 -0400
-Message-ID: <2026-09-21-daily-reply-0002-re-folio-split-memcg-requeue@kernel.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 6.12 0766/1376] arm64: dts: qcom: sc8180x: Fix the PCIe iommu-map entries
+Date: Mon, 21 Sep 2026 22:23:45 -0400
+Message-ID: <2026-09-21-daily-reply-0009-re-qcom-pcie-msi-map@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <9200dfdc-009a-4998-8d2f-b106d362e6ad@oracle.com>
-References: <9200dfdc-009a-4998-8d2f-b106d362e6ad@oracle.com>
+In-Reply-To: <c32f67e6-c4d6-450d-8a7d-3057ce3a94d8@oss.qualcomm.com>
+References: <c32f67e6-c4d6-450d-8a7d-3057ce3a94d8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,13 +51,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Looks like a very similar report was clarified by Johannes and Zi. Sorry 
-> for the noise.
-> 
-> Sasha: Will it be possible for you to re-queue this ?
+> For clarity "the updated msi-maps parsing" - "the parsing of the
+> updated msi-map which contains the amount of cells that the iommu
+> node provides, rather than an always-assumed 1"
 
-Re-queued for 6.12 and 6.6, thanks. No noise at all, it is easier to put a
-patch back than to ship a broken one.
+Which commits do you have in mind? Going through the trees I could not find an
+msi-map record that was widened the way the iommu-map ones were, either
+upstream or in stable, and gic_its is #msi-cells = <1> everywhere I looked, so
+the fixed four cell parse in of_map_id() still reads them correctly without
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps").
+
+If you have specific SHAs in mind, name them and I will take them out of the
+same trees the iommu-map family came out of.
 
 -- 
 Thanks,
