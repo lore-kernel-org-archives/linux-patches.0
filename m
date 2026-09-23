@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B077A48EC6C;
-	Wed, 23 Sep 2026 14:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED72338D6A2;
+	Wed, 23 Sep 2026 14:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173503; cv=none; b=NNTg1YAagL8k5bQ4ZJ4Ew819OqPolUDEeiu3GPBlZCdHz7hjATi1aaHxZT42r/Yl70WL1D1qEaffegBljh456OGdOJ/vuGILyPyJvMkT05BUt7rGbWkDcttGictBDx979ornS9tz/+WTjlWPzMOMc+g+wGbxmujU2j+v8HC6J8U=
+	t=1790173507; cv=none; b=bVXIKlXebxjcOQruuhHjrTRA+L+iUMFjvu+7+qerhvOzxM/QpvQAMPiCPh8pcf65jIwyiHLn1DeNLgTBl3sqj3l2xhpcgFNlix1TN5IDL4wOtT4GuQWjSE65r3uoXiuiqjFJTKVQNTPGk7Neiguw9DVyS864P851LCRQOs996Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173503; c=relaxed/simple;
-	bh=vA7992hEkqEUKr2Dwex9JT7YVgijHrvPntmIp/HTPvY=;
+	s=arc-20240116; t=1790173507; c=relaxed/simple;
+	bh=9CA+5qT4YPvyi2D2g4vXAO/ErrZ0ey+8vTNKB09VjDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAmrHvRHLjY03U1+G8WU9onOiPB2T4yP8PX8Zakc68Y2NhMwZwaCNTpMRJWQkAJx7lu1N1bFia9RHjAhad6zT4F4o8hBIrTsdol5BNFlr5ug74yGmoa4l8hfOXPwOiftFqY4tELnSQVVL5G4xiBl9Ko3Y2a5VMU/C4FmbeCE6NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rap6JtUD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EavJuFasxtV+B0/Mf66JBOiLWsErM0wLcIsnYvIOGVsVvLo3WAcAdgbpafGQnMOgeq0rryP75o5qEjkz6E6qClAnyUgUA2SWFSnHK53zMKaRYKiibHgWHGDRPYzIjoY1jUI0m7Fc5TapQgjItB/dh5oIHdeoNou+iRuZcPaPnmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRviTy1Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rap6JtUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30771F000FF;
-	Wed, 23 Sep 2026 14:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRviTy1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FF51F000FF;
+	Wed, 23 Sep 2026 14:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173502;
-	bh=BII2ay10m0Rg8dahK+434aIUScBa8juHthid0hgOYx8=;
+	s=korg; t=1790173505;
+	bh=ohR5rfflaPvsbYZhZX1qpgvHoxKzQR3gz2NOIS0m/34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rap6JtUDFP4UI3rCgnQ/V2oo5Qx0Py9LMOahEjwoJfe5FqHhvM8k7mipAuAg4PmGX
-	 FPNSZjcrzN17xdTY3OQgI/V8RvaenhJ1wwXS8eItk6Ii//rPFW10awhH0WpFfIv5xk
-	 20grfo4xwJ3KMepxJrU8edjlH3KIcv6UNbnyUtEk=
+	b=aRviTy1YqT7x3DToIGj7eons1VWzkmCJQOvtd4dKZcICFvTDPjkKxodcSyrkqpoZ8
+	 F2kXjqJFxGKqcfo9Mo1TKmtO5kZC6aLC8YvVvvOpakDP1PyK2ugAm9NK2q8Oec3VnN
+	 o5BRAAcqzI7zpf7bMAkdCrQylb7Y74wJ1wLQNyTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 267/438] openvswitch: avoid reallocating confirmed conntrack labels
-Date: Wed, 23 Sep 2026 16:04:48 +0200
-Message-ID: <20260923140651.688538132@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 268/438] nfsd: fix handling of NFSEXP_PNFS in the netlink codepath
+Date: Wed, 23 Sep 2026 16:04:49 +0200
+Message-ID: <20260923140651.712482932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,42 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 3f118c8217c109fd13ca61caa301d72c483897ef upstream.
+commit f76017a7663c4ce5e379f8a8d39f032bdb1fd865 upstream.
 
-ovs_ct_get_conn_labels() adds the labels extension when a conntrack
-entry does not have one.  Confirmed conntracks can be read locklessly,
-so adding an extension may reallocate and free the extension block
-while another CPU accesses it.
+The rework of how block layouts were checked moved the check for
+NFSEXP_PNFS out of nfsd4_setup_layout_type() and into the callers. That
+patch didn't account for the new call in nfsd4_setup_layout_type().
 
-Only add the extension for unconfirmed conntracks.  A confirmed
-conntrack without labels now fails the caller's label operation instead
-of reallocating its extension storage.
-
-Fixes: c2ac66735870 ("openvswitch: Allow matching on conntrack label")
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: da9baa5470dc ("exportfs,nfsd: rework checking for layout-based block device access support")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/372fbb062b40ae6723684f55484be86ff0064f8e.1789218015.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260414-pnfs-exp-fix-v1-1-9face14c16c2@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/export.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -366,7 +366,7 @@ static struct nf_conn_labels *ovs_ct_get
- 	struct nf_conn_labels *cl;
+diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
+index a47c90f40422..1f678583f612 100644
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -1006,7 +1006,8 @@ static int nfsd_nl_parse_one_export(struct cache_detail *cd,
+ 			goto out_uuid;
+ 		err = 0;
  
- 	cl = nf_ct_labels_find(ct);
--	if (!cl) {
-+	if (!cl && !nf_ct_is_confirmed(ct)) {
- 		nf_ct_labels_ext_add(ct);
- 		cl = nf_ct_labels_find(ct);
+-		nfsd4_setup_layout_type(&exp);
++		if (exp.ex_flags & NFSEXP_PNFS)
++			nfsd4_setup_layout_type(&exp);
  	}
+ 
+ 	expp = svc_export_lookup(&exp);
+-- 
+2.55.0
+
 
 
