@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4482526ABD;
-	Wed, 23 Sep 2026 14:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0B03A9DBE;
+	Wed, 23 Sep 2026 14:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172815; cv=none; b=oZo4tSdJREyr8z5pKH49sChsVKIU3wmIgVP9DpcDpyzdyuTzrYs+VjU6wjBHZ8B1Wwo76Nei0upQnKTXuDKUbUm61piBIV30SQfdXyqg0I0SoUOXNFvdm79RPpeXPOZWPhSARBarsxniMc0Pz7JBTa/++i3DD+pfDAGWsGHvCCY=
+	t=1790172818; cv=none; b=t3ZkfKyOPQgfIQxqPOAXdlmnKhVrn3XHArniaWoRiPnlq0/ftQepn7EeifnaziT/nFJZzJYTFFFoSO/Ww/kToqpR+WgdxI8pUXGKus+ogEK6t/LiN7Giv2BM+8z/ZEc/1+9+JT0U7GsGhKreVOxlH7v9Xm1VT9XZi3tEsYo9cXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172815; c=relaxed/simple;
-	bh=6KiN5DwPAshIiHG05w66zpbaYONs5ifQeqqwmtgzZK8=;
+	s=arc-20240116; t=1790172818; c=relaxed/simple;
+	bh=q8D3IPj9T8+OTdeEfkS079SDY4o8i6hf95wX9zknw6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbHAJ9ZZ5g7cmJOWdYzX3nOapMgWMFeIXg96qahmQQcIvsaGcNfn9rKqF+Hw0wOdGNESAA7p9Wyj7TIFi7DrWeU6B91JubeFsqN8mS/SMZQ2ywsz4aUt1KnHkyXmvG6ZFvLNilQC6+PdMVK1vWBR8dRJ0v0dtSlsGsM/F/XHV4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTOIcq5Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyL6z1Ii9uNQJCx1HQ4WygoXZJuBEs/fHLDEirbvwkaQKm2wrM618wy7X27qHpbAxil/5mUtVIp+Hg5VymmqStY0jGSjt45PJo6hXfNN2kkMeBi4zB6NJrB1XOs/0lzBSGxSd1nQuoyAWluoLC1alP5WiMWSouMjrFEYGJ2pnVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zt2bftqV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTOIcq5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A6A1F000FF;
-	Wed, 23 Sep 2026 14:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zt2bftqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9151F000FF;
+	Wed, 23 Sep 2026 14:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172814;
-	bh=OSRtsDWZrSUKeq92QzJYut+N3c7n20TQcvjmR7nqdHk=;
+	s=korg; t=1790172817;
+	bh=PUQZBDe25SQxHLlpvm+JOrTvc+J9YzPfReXUd895dn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTOIcq5Z2Yt1QEDxz3RIw2qTs3ZIC/QEZmXw1njA3vypIG21eLcr7aTENzWjAWZca
-	 eCcEVa5V7324uAoTLDPgf0oPOGNqiPsI6ojTcAZ/TjZl/U8mtFtFuNKlYbbb3d8jXJ
-	 Om2cg1JkSlSi7GBLedPde32hx7ZTuLiCBwD7D7RE=
+	b=zt2bftqVvozLQhOieJDRhCgM+bC5ARMS0gBAGzgMvFCoV/6sq9MXim++uKK/eh4d0
+	 0Ypz0bpJ7FoaR/kSjxN1ZoiK91AA2Ixk5aF26bfH8d2xTkOkgukvWJ/bRiNeB7RQFL
+	 xX3QLW6fvVdl4J4OgDfTO35xlnKvvW46ln4O1ByE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com,
+	syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 069/438] wifi: mac80211: dont start a ROC while scanning
-Date: Wed, 23 Sep 2026 16:01:30 +0200
-Message-ID: <20260923140646.577240806@linuxfoundation.org>
+Subject: [PATCH 7.2 070/438] wifi: mac80211: dont warn when an IBSS has no channel to scan
+Date: Wed, 23 Sep 2026 16:01:31 +0200
+Message-ID: <20260923140646.601353030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,51 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 733f0fde95392ed5f61a4e36aee661ea8d0e8581 ]
+[ Upstream commit a7491b7efbd9136b120a12ed72af9c12121dd134 ]
 
-The ROC work can be pending when a scan starts (which requires
-ROC list to be empty, but that's possible), and then a new ROC
-can be added to the list and the work will pick it up.
+ieee80211_request_ibss_scan() warns when regulatory leaves no
+allowed channel, but that can happen as the regdomain can change
+while IBSS is operating, and it can continue to operate briefly
+during the 60s grace period until it's shut down.
 
-Avoid starting that ROC if a scan made it between things, as
-otherwise we'll hit a warning later:
-
-  WARNING: net/mac80211/offchannel.c:404 at ieee80211_start_next_roc+0x256/0x2d0
-  Workqueue: events_unbound cfg80211_wiphy_work
-  Call Trace:
-   __ieee80211_scan_completed+0x4fd/0xe40 net/mac80211/scan.c:537
-   ieee80211_scan_work+0x472/0x1ff0 net/mac80211/scan.c:1193
-   cfg80211_wiphy_work+0x410/0x570 net/wireless/core.c:513
+Just remove the warning in this case.
 
 Assisted-by: LLM
-Fixes: aaa016ccd5df ("mac80211: rewrite remain-on-channel logic")
-Reported-by: syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c3a167b5615df4ccd7fb
-Link: https://patch.msgid.link/20260904165722.f9d5b150edd8.I61bc9de8c8d089096ad695213b9c85c7df38c3bd@changeid
+Fixes: 34bcf7150241 ("mac80211: fix ibss scanning")
+Reported-by: syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1634c5399e29d8b66789
+Link: https://patch.msgid.link/20260904165722.fe380c27fef4.I0e8bee2e12a40d240851a4bc724d47753af46159@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/offchannel.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/mac80211/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
-index 2bceb73717c66..6f8de5d4a20d3 100644
---- a/net/mac80211/offchannel.c
-+++ b/net/mac80211/offchannel.c
-@@ -460,6 +460,13 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
- 		return;
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index eeff230bd909f..8e950ef6d1ead 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -1242,7 +1242,7 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
  
- 	if (!roc->started) {
-+		/*
-+		 * The work can be started by a previous ROC work, but a scan
-+		 * can get between things; scan finish will retrigger us.
-+		 */
-+		if (local->scanning)
-+			return;
-+
- 		WARN_ON(!local->emulate_chanctx);
- 		_ieee80211_start_next_roc(local);
- 	} else {
+-		if (WARN_ON_ONCE(n_ch == 0))
++		if (n_ch == 0)
+ 			return -EINVAL;
+ 
+ 		local->int_scan_req->n_channels = n_ch;
 -- 
 2.53.0
 
