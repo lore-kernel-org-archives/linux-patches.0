@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CAA52F264;
-	Wed, 23 Sep 2026 14:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0353B14AB;
+	Wed, 23 Sep 2026 14:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173679; cv=none; b=jNomJ28dPWA7BCft46m1zlextoEHidbtRdtXkqO4+ii6tDrBmrCdrPNiXtfFeGPJOmcvcfFVHB2iGmKB029KzmkFNIKRCQBWatgnqNWvBJR945RisteJY+04Sy5iQtb1x/2tGv+b4v0/hPzy/w7rptPs4rzmC5EJC/HFSD0mzqk=
+	t=1790173683; cv=none; b=WIAgWm8ypFmmFG3QLv0XD42IFJPkGzlT/PG6ld5oYfiAdKspRwekqnFvFAoM83OX4BrrHwMbHcUoWamdDAnKfTwWIAuUxmoPcOiBt3GX15HdEXnSUS3aQ0SIvxbivdx5egs3f0xHBDaPzRex+INHyBb0p74yQjBKUCkRhzPFFFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173679; c=relaxed/simple;
-	bh=lFt7dGBHwdB45NU0qlxDlnREtmGPNhOS0CS3ZAij5XA=;
+	s=arc-20240116; t=1790173683; c=relaxed/simple;
+	bh=xapTjpJhBkTaCuxPYiZ2yCdJwrnpZDYxrJmz8Lktlhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPhOQSLzudXOtPFftspxeWU0sRexWCoTyrNCv3umqibHRZ+220FOxowQEm+NWzZVv9fGepE5mwNeywOOwQse4JBvT+giG4rFa616Qu0C3l08YgjU2r0lP2hSYFoFxgb5aNqbSWZZudJBqOJ6UP9BcxVYGd6cspgWfQIXKxQdvU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CIBvtCX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kajxkIOd4uTfDyeWTi0i1HlwxBocrPI5JzALKlLTAXJE8XRCI4O+g1RT+I684PvtxA2nMqHmV4Mxi1syx7N4NLfraZbo78brWdctULiy+HawN1tK5BTGpJZ6xUE7x2KG8j1iQIS1it1HdLfjOdsT0ybe+9W1qcFiESngW0iOAP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX/uB11x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CIBvtCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830C11F000FF;
-	Wed, 23 Sep 2026 14:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX/uB11x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4620D1F00893;
+	Wed, 23 Sep 2026 14:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173678;
-	bh=sXhBia1tQ6DFZTeteh2sNpq5jLyjqdH3e1sUbwcYYRQ=;
+	s=korg; t=1790173681;
+	bh=Fyu2a9KQSFPSl2ZUe4CPem+ewfmVNOl4lnnyT4EjGgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CIBvtCXH5NHtGrWGCBBKXnStu0fTtTIXiJwlc7Y0pkthXl642wuVeRd75sIvhGv2
-	 bsmSZ2rSsi2HzrQ4n54UROIpszYDJwf5PMLtoDKOMqyyOE5YinYilrovZoYyWTd6/a
-	 1CNmEiXw3InNOJxfUbtEBxB5+YYKprs07Rh1UVxo=
+	b=kX/uB11xMMn/oVaQGmg+yd+Sri86kyJsRCXf4IVhfbNEE280Hn2MGA+by+ecmXamF
+	 HtwNelDPaBozt/TxEtPaPBndp67wvqrwOMEbWNhML//UWs43w1AGTsNvAAzrmMVDMu
+	 TCDkKw380pAZQgwhE8ln3tw1kHiMsz6zWFlKFHYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.2 321/438] keys: translate request_key_auth pid for the reading procfs instance
-Date: Wed, 23 Sep 2026 16:05:42 +0200
-Message-ID: <20260923140653.114789053@linuxfoundation.org>
+	Gris Ge <cnfourt@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 295/438] net: ip_tunnel: initialize `options_len` before referencing options
+Date: Wed, 23 Sep 2026 16:05:16 +0200
+Message-ID: <20260923140652.423334554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,103 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Gris Ge <cnfourt@gmail.com>
 
-commit 0d6a4268b06084baafd8ee5d66955c7e1c2e053b upstream.
+commit 455ebeadf714f51e1dbbd6a022c74c9215b1cd76 upstream.
 
-request_key_auth_describe() prints rka->pid into /proc/keys as a raw
-pid_t in the initial pid namespace. A reader can open /proc/keys through
-a mount in another pid namespace. That reader sees a number with no
-meaning there. The number can even name an unrelated task. The line
-needs VIEW on the key. So the reader either shares the key owner's uid
-or possesses the key.
+The following command triggers a kernel panic:
 
-The fix keeps a struct pid. Commit 4f82f45730c6 ("net ip6 flowlabel:
-Make owner a union of struct pid * and kuid_t") gave
-/proc/net/ip6_flowlabel the same storage. The print goes through
-pid_nr_ns(). It renders against the pid namespace of the procfs instance
-the line is read through. Commit ad08978ab41c ("ipv6/flowlabel: simplify
-pid namespace lookup") moved that print to the same anchor. Output
-through an initial namespace /proc does not change. The line shows 0 for
-a requestor with no number in that namespace.
+  ip link add d0 type dummy; ip link set d0 up
+  ip route add 10.30.0.0/16 \
+    encap ip id 300 geneve_opts 4660:66:11223344 dev d0
 
-Translating at read time was the alternative. find_pid_ns() can resolve
-a recycled number. The line would then name a live task with no
-connection to the key. A stored struct pid gives 0 instead when the
-requestor has no number there.
+  memcpy: detected buffer overflow: 4 byte write of buffer size 0
+  kernel BUG at lib/string_helpers.c:1044!
+  ...
+  ip_tun_parse_opts.part.0.cold+0x10/0x10
+  ip_tun_build_state+0x116/0x2a0
 
-Link: https://lore.kernel.org/keyrings/20260809110202.2180410-1-maoyixie.tju@gmail.com/
-Fixes: 78b7280cce23 ("KEYS: Improve /proc/keys")
-Cc: stable@vger.kernel.org # v5.10+
-Assisted-by: Claude:claude-opus-5 codeql
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://lore.kernel.org/r/20260821095935.1864998-1-maoyixie.tju@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+On kernels built with GCC 15+ and `CONFIG_FORTIFY_SOURCE`, the fortified
+`memcpy()` got 0 sized destination with request of 4 bytes length:
+
+  static int ip_tun_parse_opts_geneve(...)
+  {
+      ...
+      attr = tb[LWTUNNEL_IP_OPT_GENEVE_DATA];
+      data_len = nla_len(attr); /* == 4 */
+
+      struct geneve_opt *opt = ip_tunnel_info_opts(info) + opts_len;
+      memcpy(opt->opt_data, nla_data(attr), data_len);
+      /*     ^^^^^^^^^^^^^ 0 since options_len is assigned afterwards */
+
+Fixed by initializing the counter before the options are referenced.
+Matching what `tunnel_key_opts_set()` already does.
+
+Fixes: bb5e62f2d547 ("net: Add options as a flexible array to struct ip_tunnel_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gris Ge <cnfourt@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20260913090851.468216-1-cnfourt@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/keys/request_key_auth-type.h |    2 +-
- security/keys/request_key_auth.c     |   12 +++++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ net/ipv4/ip_tunnel_core.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/include/keys/request_key_auth-type.h
-+++ b/include/keys/request_key_auth-type.h
-@@ -22,7 +22,7 @@ struct request_key_auth {
- 	const struct cred	*cred;
- 	void			*callout_info;
- 	size_t			callout_len;
--	pid_t			pid;
-+	struct pid		*pid;
- 	char			op[8];
- } __randomize_layout;
- 
---- a/security/keys/request_key_auth.c
-+++ b/security/keys/request_key_auth.c
-@@ -9,6 +9,8 @@
- 
- #include <linux/sched.h>
- #include <linux/err.h>
-+#include <linux/pid.h>
-+#include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -73,7 +75,10 @@ static void request_key_auth_describe(co
- 	seq_puts(m, "key:");
- 	seq_puts(m, key->description);
- 	if (key_is_positive(key))
--		seq_printf(m, " pid:%d ci:%zu", rka->pid, rka->callout_len);
-+		seq_printf(m, " pid:%d ci:%zu",
-+			   pid_nr_ns(rka->pid,
-+				     proc_pid_ns(file_inode(m->file)->i_sb)),
-+			   rka->callout_len);
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -680,8 +680,14 @@ static int ip_tun_get_optlen(struct nlat
  }
  
- /*
-@@ -113,6 +118,7 @@ static void free_request_key_auth(struct
- 	if (rka->cred)
- 		put_cred(rka->cred);
- 	kfree(rka->callout_info);
-+	put_pid(rka->pid);
- 	kfree(rka);
+ static int ip_tun_set_opts(struct nlattr *attr, struct ip_tunnel_info *info,
+-			   struct netlink_ext_ack *extack)
++			   int opts_len, struct netlink_ext_ack *extack)
+ {
++	/* `options_len` is the __counted_by() annotation of the `options`
++	 * flexible array, it must be initialized before parsing writes
++	 * into it.
++	 */
++	info->options_len = opts_len;
++
+ 	return ip_tun_parse_opts(attr, info, extack);
  }
  
-@@ -226,14 +232,14 @@ struct key *request_key_auth_new(struct
+@@ -712,7 +718,8 @@ static int ip_tun_build_state(struct net
  
- 		irka = cred->request_key_auth->payload.data[0];
- 		rka->cred = get_cred(irka->cred);
--		rka->pid = irka->pid;
-+		rka->pid = get_pid(irka->pid);
+ 	tun_info = lwt_tun_info(new_state);
  
- 		up_read(&cred->request_key_auth->sem);
- 	}
- 	else {
- 		/* it isn't - use this process as the context */
- 		rka->cred = get_cred(cred);
--		rka->pid = current->pid;
-+		rka->pid = get_pid(task_pid(current));
+-	err = ip_tun_set_opts(tb[LWTUNNEL_IP_OPTS], tun_info, extack);
++	err = ip_tun_set_opts(tb[LWTUNNEL_IP_OPTS], tun_info, opt_len,
++			      extack);
+ 	if (err < 0) {
+ 		lwtstate_free(new_state);
+ 		return err;
+@@ -753,7 +760,6 @@ static int ip_tun_build_state(struct net
  	}
  
- 	rka->target_key = key_get(target);
+ 	tun_info->mode = IP_TUNNEL_INFO_TX;
+-	tun_info->options_len = opt_len;
+ 
+ 	*ts = new_state;
+ 
+@@ -1006,7 +1012,8 @@ static int ip6_tun_build_state(struct ne
+ 
+ 	tun_info = lwt_tun_info(new_state);
+ 
+-	err = ip_tun_set_opts(tb[LWTUNNEL_IP6_OPTS], tun_info, extack);
++	err = ip_tun_set_opts(tb[LWTUNNEL_IP6_OPTS], tun_info, opt_len,
++			      extack);
+ 	if (err < 0) {
+ 		lwtstate_free(new_state);
+ 		return err;
+@@ -1040,7 +1047,6 @@ static int ip6_tun_build_state(struct ne
+ 	}
+ 
+ 	tun_info->mode = IP_TUNNEL_INFO_TX | IP_TUNNEL_INFO_IPV6;
+-	tun_info->options_len = opt_len;
+ 
+ 	*ts = new_state;
+ 
 
 
