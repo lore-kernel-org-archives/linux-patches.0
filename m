@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B59470121;
-	Wed, 23 Sep 2026 14:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EEF3ACF1C;
+	Wed, 23 Sep 2026 14:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173657; cv=none; b=Oaxw+49Oc3RyYOFu4B7+8zWNLr3h5UAFkeEDL9frU4xKJfXI4N5k5d9Kqnu+oq+W2m8PEv2baPaE1cphXVwsLCfxXiXHBIRzBPGRkQA1CVTWZzmkA4s22lfikEvfghijEnNEIBn2Tdqy6ZABHMEUMkPHHxfFadwiJzO9woQtPU8=
+	t=1790173659; cv=none; b=cIB4La8adNR5/QQWgmA7Y8xxXEh6e5PB79uRQnGSXRPzdTT3GDN0XsxC6v4w9ujo1FX4QuITB5p65WWg7wKQsbjc6V3gG+UM+c6IA87EV1unfqIHriXUzLnriwD4KMSBk8sHS9eadzTcNU0jGSEjoo8nUG6PdU6tHGSmt4e3hl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173657; c=relaxed/simple;
-	bh=oatbCy1U+/nKem0La2h3NxPIKb8JZ4UsBjpgNqwK1Zs=;
+	s=arc-20240116; t=1790173659; c=relaxed/simple;
+	bh=MgRAuPwSMiY+x6iDIlozqvHGxN2X4zMhU3hXKn5vjiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsBjmlfqx8+GZ8O9A7UxuiolaJs7ddgc2+R8xdfScACL70iRmJRRN4WLGJ02BIH+FipYDh3V9+POELAamuZVzRxUd4qndVT8IPFRlYRJyQiRapih6FCv9ImOBpoC2QLtra1ka2Gl6mv/JvwciU/DurXgwTe9IAIJsc9nnHj44hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRTXNbgL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MzKsgSoLrer02t/yMNP7t6wTwEN4Vc+l+cRboirzbewGZKidtsVfIf5agwdIpDSDfr1VBRPwDUKgAX7IfhyfheHtGrrpaIORdT+GNJtsBcEnH08/uvFW5RDm1/AWmdXEwYDTs6UvzNRPzHOymoi8UlIX+rA3pdurMVE9pWGZero=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6UhzDUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRTXNbgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E371F00893;
-	Wed, 23 Sep 2026 14:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6UhzDUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A4E1F00893;
+	Wed, 23 Sep 2026 14:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173655;
-	bh=jgMKP9Uug9VMnKs/DOzMey+4Bbxye8zwqqUM/Y4nDN8=;
+	s=korg; t=1790173658;
+	bh=kqjnIZzlG3qw/UezYfmwrR65XpXQTOQD8zHdnHgdOC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRTXNbgLpMg1Dmc9UJi+7zVgS5JtvMNG4XZpmn97Q+3FTjOCDJ9ODK/AJgXMsz5F0
-	 RsMiTogh2L3+6ha03mP4b9KiZUFSvNZbvvfHp6Sz9U7vOJVxv4oZ241vm0WI5u2BG0
-	 EF+u2l1UhkkZdMvXroiqEP4ofz9+SqugN//ee8ms=
+	b=s6UhzDUS13CdTXlKzT8hQTs0t2btoq3i6Fk6QRdcidn3bSrUYwU6YbG/KUZlnfik0
+	 jlZRaZCvPVmU89qX1uot4TzcITFG6VOU5Y1ZNyFvyDDgcK/OCjm598DjoUug8VXsKc
+	 s0uU4fQqCcuiQE8k2jWf/JzFcxS5nM5D57s47xLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Cedric Le Goater <clg@redhat.com>,
-	Saravanan D <saravanand@crusoe.ai>,
-	Lance Yang <lance.yang@linux.dev>,
-	SJ Park <sj@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com,
+	Hugh Dickins <hughd@google.com>,
+	Jann Horn <jannh@google.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Peter Xu <peterx@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 314/438] mm/huge_memory: bypass THP tuneables for huge pfnmap mappings
-Date: Wed, 23 Sep 2026 16:05:35 +0200
-Message-ID: <20260923140652.925229019@linuxfoundation.org>
+Subject: [PATCH 7.2 315/438] mm/mlock: use the IRQ-safe accessor for NR_MLOCK in __munlock_folio()
+Date: Wed, 23 Sep 2026 16:05:36 +0200
+Message-ID: <20260923140652.954368628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -63,184 +58,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit e384abeb559d10d6505aec053ede9368d81d4c71 upstream.
+commit e14a3454806468b086fe2e4ca2e1bff95b528531 upstream.
 
-The sysfs THP tuneables at /sys/kernel/mm/transparent_huge_pages/ rather
-confusingly only control the behaviour of THP in some instances.
+NR_MLOCK is updated from interrupt context.  __free_pages_prepare() clears
+a stray PG_mlocked and adjusts NR_MLOCK, and a folio can reach it with the
+flag still set from a bio completion handler:
 
-They are not applicable to MADV_COLLAPSE operations, nor to DAX mappings.
+  __free_pages_ok+0x6af/0x7a0
+  <IRQ>
+  __bio_release_pages+0xde/0x260
+  __iomap_dio_bio_end_io+0x16e/0x1a0
+  blk_update_request+0x14b/0x3d0
+  blk_mq_end_request+0x18/0x30
+  blk_done_softirq+0x49/0x60
 
-Long-term, THP is predicated upon compaction being able to obtain large
-folios to populate THP ranges.
+The folio gets there like this.  A MAP_SHARED file mapping is mlocked, so
+its page cache folios carry PG_mlocked, and an O_DIRECT write sourced from
+that mapping GUP-pins those same folios.  munlock() then runs
+mlock_vma_pages_range(), which clears VM_LOCKED before walking the page
+tables to munlock each folio.  A concurrent hole punch reaches the folio
+through the rmap (i_mmap_rwsem, not mmap_lock) and can land inside that
+window: __folio_remove_rmap() -> munlock_vma_folio() sees VM_LOCKED
+already clear, so it neither queues the folio on the mlock batch nor takes
+a reference, and the pte it clears makes the pending mlock_pte_range()
+walk skip the folio at its !pte_present() check.  filemap_remove_folio()
+then drops the page cache reference, leaving the bio's pin as the last
+one, released from the completion handler above.
 
-However, vm_normal_folio() returns NULL for PFN map mappings, thus their
-reference count is maintained by the driver, not core mm.
+So __zone_stat_mod_folio() here needs interrupts disabled, not merely
+preemption, and __munlock_folio() has a path where they are not: when the
+folio has already been taken off the LRU by somebody else the function
+jumps straight to the counter update without taking the lruvec lock.  The
+read-modify-write of the per-CPU NR_MLOCK diff can then be interrupted by
+the softirq above, and one of the two decrements is lost, leaving Mlocked
+in /proc/meminfo permanently overstated.
 
-As a consequence, the folios are not subject to reclaim nor compaction, so
-are not truly part of the THP mechanism at all.
+Use zone_stat_mod_folio().  mod_zone_state()'s this_cpu_try_cmpxchg() is
+atomic against a same-CPU interrupt and retries, and on the path where the
+lruvec lock is held its cost is negligible next to the lock itself.
 
-However, since commit 5dd40721f147 ("mm: allow THP orders for PFNMAPs")
-introduced the ability to establish huge PFN maps, they have been subject
-to THP tuneables.
+The UNEVICTABLE_PG* events are deliberately left on the __ accessors: they
+occupy different vm_event_states slots from the UNEVICTABLE_PGCLEARED that
+__free_pages_prepare() bumps, and nothing updates those two from interrupt
+context.
 
-This is incorrect - if a huge PFN map is available (defined by
-vma->vm_ops->huge_fault being non-NULL for a VMA_PFNMAP_BIT VMA), then it
-should be mapped huge upon fault-in.
-
-Correct this by explicitly checking for this while ensuring that smaps
-continues to accurately report THPeligible statistics.
-
-While here, abstract the entire file-backed THP check in
-vma_can_map_huge_file(), with sensible separation of logic into helper
-functions.
-
-Note that drm_gem_shmem_mmap() and panthor_gem_mmap() establish huge PFN
-maps of shmem folios, however they are marked unevictable in
-drm_gem_get_pages(), and in any case would fail the reference check in
-__remove_mapping() even if they weren't.
-
-Failing to map huge PFN maps has resulted in significant real-world
-performance degradation, see links for details.
-
-[ziy@nvidia.com: rename some functions]
-  Link: https://lore.kernel.org/DL1HIHWYJ7TB.1CY76SJS0V03L@nvidia.com
-Link: https://lore.kernel.org/20260827-hugepfn-allowable-orders-v1-1-94819c8807c8@kernel.org
-Fixes: 5dd40721f147 ("mm: allow THP orders for PFNMAPs")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reported-by: Cedric Le Goater <clg@redhat.com>
-Closes: https://lore.kernel.org/linux-mm/20260805055544.1568534-1-clg@redhat.com/
-Reported-by: Saravanan D <saravanand@crusoe.ai>
-Closes: https://lore.kernel.org/linux-mm/20260821070520.25759-1-saravanand@crusoe.ai/
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Saravanan D <saravanand@crusoe.ai>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: SJ Park <sj@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Link: https://lore.kernel.org/20260901180109.3797944-1-shakeel.butt@linux.dev
+Fixes: 2fbb0c10d1e8 ("mm/munlock: mlock_page() munlock_page() batch by pagevec")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/6a931c5a.08e933ee.dbf97.0093.GAE@google.com/
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   86 ++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 64 insertions(+), 22 deletions(-)
+ mm/mlock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -92,7 +92,7 @@ unsigned long huge_anon_orders_madvise _
- unsigned long huge_anon_orders_inherit __read_mostly;
- static bool anon_orders_configured __initdata;
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -141,7 +141,7 @@ static struct lruvec *__munlock_folio(st
  
--static inline bool file_thp_enabled(struct vm_area_struct *vma)
-+static inline bool file_thp_enabled(const struct vm_area_struct *vma)
- {
- 	struct inode *inode;
- 
-@@ -118,6 +118,67 @@ static bool vma_is_special_huge(const st
- 	return vma_test_any(vma, VMA_PFNMAP_BIT, VMA_MIXEDMAP_BIT);
- }
- 
-+static bool vma_file_bypass_thp_tuneables(const struct vm_area_struct *vma,
-+		enum tva_type type)
-+{
-+	const bool has_huge_fault = vma->vm_ops->huge_fault;
-+
-+	/* MADV_COLLAPSE ignores tuneables. */
-+	if (type == TVA_FORCED_COLLAPSE)
-+		return true;
-+	/* Huge PFN mappings are uncompactable so the policy doesn't apply. */
-+	if (vma_test(vma, VMA_PFNMAP_BIT) && has_huge_fault)
-+		return true;
-+	return false;
-+}
-+
-+static bool vma_file_allow_thp_tuneables(vm_flags_t vm_flags)
-+{
-+	/* THP=always? */
-+	if (hugepage_global_always())
-+		return true;
-+	/* THP=madvise and marked MADV_HUGEPAGE? */
-+	if (hugepage_global_enabled() && (vm_flags & VM_HUGEPAGE))
-+		return true;
-+	return false;
-+}
-+
-+static bool vma_file_check_thp_tuneables(const struct vm_area_struct *vma,
-+		vm_flags_t vm_flags, enum tva_type type)
-+{
-+	return vma_file_bypass_thp_tuneables(vma, type) ||
-+		vma_file_allow_thp_tuneables(vm_flags);
-+}
-+
-+static bool vma_can_map_huge_file(const struct vm_area_struct *vma,
-+		vm_flags_t vm_flags, enum tva_type type)
-+{
-+	const bool has_huge_fault = vma->vm_ops->huge_fault;
-+
-+	/*
-+	 * Enforce THP collapse requirements as necessary. Anonymous vmas
-+	 * were already handled in thp_vma_allowable_orders().
-+	 */
-+	if (!vma_file_check_thp_tuneables(vma, vm_flags, type))
-+		return false;
-+
-+	switch (type) {
-+	case TVA_PAGEFAULT:
-+		/*
-+		 * Trust that ->huge_fault() handlers know what they are doing
-+		 * in fault path.
-+		 */
-+		return has_huge_fault;
-+	case TVA_SMAPS:
-+		if (has_huge_fault)
-+			return true;
-+		fallthrough;
-+	default:
-+		/* Only regular file is valid in collapse path. */
-+		return file_thp_enabled(vma);
-+	}
-+}
-+
- unsigned long __thp_vma_allowable_orders(struct vm_area_struct *vma,
- 					 vm_flags_t vm_flags,
- 					 enum tva_type type,
-@@ -190,27 +251,8 @@ unsigned long __thp_vma_allowable_orders
- 						   vma, vma->vm_pgoff, 0,
- 						   forced_collapse);
- 
--	if (!vma_is_anonymous(vma)) {
--		/*
--		 * Enforce THP collapse requirements as necessary. Anonymous vmas
--		 * were already handled in thp_vma_allowable_orders().
--		 */
--		if (!forced_collapse &&
--		    (!hugepage_global_enabled() || (!(vm_flags & VM_HUGEPAGE) &&
--						    !hugepage_global_always())))
--			return 0;
--
--		/*
--		 * Trust that ->huge_fault() handlers know what they are doing
--		 * in fault path.
--		 */
--		if (((in_pf || smaps)) && vma->vm_ops->huge_fault)
--			return orders;
--		/* Only regular file is valid in collapse path */
--		if (((!in_pf || smaps)) && file_thp_enabled(vma))
--			return orders;
--		return 0;
--	}
-+	if (!vma_is_anonymous(vma))
-+		return vma_can_map_huge_file(vma, vm_flags, type) ? orders : 0;
- 
- 	if (vma_is_temporary_stack(vma))
- 		return 0;
+ munlock:
+ 	if (folio_test_clear_mlocked(folio)) {
+-		__zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
++		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
+ 		if (isolated || !folio_test_unevictable(folio))
+ 			__count_vm_events(UNEVICTABLE_PGMUNLOCKED, nr_pages);
+ 		else
 
 
