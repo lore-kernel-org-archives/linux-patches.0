@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90873B388E;
-	Wed, 23 Sep 2026 14:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCC8244687;
+	Wed, 23 Sep 2026 14:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172694; cv=none; b=lrZWEHIvdXxzZnlVsSvM2tFJR+SrZFNvrqd4z2GlSPjJC46Dyw4Fj7dbuBD9H3xvPNnbxMaPLk8WncFNQ1lmdspivDP72GYasH8kXE7xp5xIIfohNatqsvUEkY9GLXbeRobGIWs4f7D92Pd/gRVM5PbdNjpO/1sZ8Xp5SI4Ca1w=
+	t=1790172697; cv=none; b=AJrIZ4/aJU6hQr9SzklihHhSIw+vjq0WgG+kXcgSMfnJco7WMtA++S+RoYRPUPZZrs9suRzG+Vsrc7oysepJBbXC5wMu8OusXMCZZhTCxkKMtc+UPYxrY5yjGZeChHymbAty/rnkIlCQu4DRpaAD81iLKfGRx1p1gPd7VCm9N1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172694; c=relaxed/simple;
-	bh=hhdqMjEsbGDd8PfsXjVHpwO4pbV/3m2v6IFRcFqsz7I=;
+	s=arc-20240116; t=1790172697; c=relaxed/simple;
+	bh=parezjo2CGaOEVI7yI2u5rK2D1KhIgKNouNG0j6bw7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb/UbcC3sePbRHnzHOUdGwl2eov90pt1KsWSLPwnp4VNpYamn0zOwiEFaEAQg9Fa9BCSGWiYNjHEoVFJGNEZmA1lavOlXzEVFLmpQ9hroHdERUV78FXcLo+8nK90vtkw1w6FkP1oJ8rUzyMkoSYgjipk8Lu+4Uiur0Zgjy6zOYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0eMfPC2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eAl0hlsPAMCjMNOwZ+kb/eLh8eqGlc38w+22z/yJ27bqgiq1LBAqBnLtzrjNUpWcfJivr9SQ5+bkCJx2y48YPlRe4+6HS0+iNr4DqX5FdgDfyPd5hqUbvHZ7z3yaY5Ei39waiYIo3R5KX20OxrQTdx5G/AVY1zsahSwBsY+wtq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6YDBPTj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0eMfPC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491981F000FF;
-	Wed, 23 Sep 2026 14:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6YDBPTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484011F000FF;
+	Wed, 23 Sep 2026 14:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172692;
-	bh=yXrCc1uuMNNSgMopydAf/LQUio4r82KzExHq88niSZg=;
+	s=korg; t=1790172695;
+	bh=L7m238QTyWTAnPPelEAmKpPU6swCwC05xXbPDawN+Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O0eMfPC2rhFEGX8MIzGZCgd3vgiFOWqZM2+HSyjpihahd/w/rH1ZQsu4sXt5stbDo
-	 WcuqwpU1HBmGZEnWQCisxONnw3cFGlSlqyOaPeEKx6oWdRPI6o3ODoec+MO+apDYdZ
-	 LKdfrnnNVJfsWvWhm6bw6SeT3gwDx+SaPePD/pEE=
+	b=G6YDBPTjZ9YgmWjmiAWWu3qiW/P9GM5+t1KudKmNqkLpPq8LwdlBBEesVnCZougIi
+	 xOYQo5U+ZZS2v7NbaK9zydJ0GIyvf4DL/ayr1JeHeYtDBer07qrzOHdJzHj0YrBqyp
+	 rOugMlkzXmq+mA/2qTbIwBbLUtCiNy7JrmpDOJko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Lucas Tanure <tanure@linux.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 032/438] arm64: dts: renesas: r9a09g047: Switch GBETH TX queue scheduling to WRR
-Date: Wed, 23 Sep 2026 16:00:53 +0200
-Message-ID: <20260923140645.616355552@linuxfoundation.org>
+Subject: [PATCH 7.2 015/438] arm64: dts: amlogic: t7: fix the pin groups of the vsync PWM
+Date: Wed, 23 Sep 2026 16:00:36 +0200
+Message-ID: <20260923140645.168618842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,101 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Lucas Tanure <tanure@linux.com>
 
-[ Upstream commit 63016c3a91f2c458ca75869c8c782e899591f22d ]
+[ Upstream commit 406292fd75f95aa3010fec95b5beb5a8b7e3ba3a ]
 
-The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
-falls back to Strict Priority. In this configuration the queue with the
-highest priority gets all the traffic, starving the others under load.
+The vsync PWM output can appear on either of two pins, but the
+description named a single group that does not exist, so anything using
+it would refuse to start.
 
-Under sustained UDP TX load with multiple data streams, this starvation
-triggers spurious adapter resets due to TX queue timeouts:
+Name the real groups instead, one entry per pin. No board describes this
+output yet, so nothing changes today.
 
-  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
-  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
-  end0: Reset adapter.
-
-Investigation shows that only the highest priority queue is advancing
-while the others stall for more than 5 seconds, causing a netdev watchdog
-reset.
-
-Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
-traffic is processed across all queues, eliminating the stalls.
-
-Fixes: 41ffbb1c42d3 ("arm64: dts: renesas: r9a09g047: Add GBETH nodes")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260722085353.136986-4-ovidiu.panait.rb@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 2a2a7b9701a7 ("arm64: dts: amlogic: t7: Add PWM pinctrl nodes")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Lucas Tanure <tanure@linux.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260829094758.23248-5-tanure@linux.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g047.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-index b6193c1583706..4de93fceb605a 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-@@ -1394,23 +1394,28 @@ queue3 {
- 
- 			mtl_tx_setup0: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
+diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
+index 66605b200b708..1711e24cce17b 100644
+--- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
++++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
+@@ -546,9 +546,17 @@ mux {
+ 					};
  				};
  
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
-@@ -1494,23 +1499,28 @@ queue3 {
- 
- 			mtl_tx_setup1: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
+-				pwm_vs_pins: pwm-vs {
++				pwm_vs_y_pins: pwm-vs-y {
+ 					mux {
+-						groups = "pwm_vs";
++						groups = "pwm_vs_y";
++						function = "pwm_vs";
++						bias-disable;
++					};
++				};
++
++				pwm_vs_h_pins: pwm-vs-h {
++					mux {
++						groups = "pwm_vs_h";
+ 						function = "pwm_vs";
+ 						bias-disable;
+ 					};
 -- 
 2.53.0
 
