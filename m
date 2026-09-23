@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129F739A07C;
-	Wed, 23 Sep 2026 14:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624F639A07C;
+	Wed, 23 Sep 2026 14:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174180; cv=none; b=LKwRKfkslP+dOTWBRwlI/J5c7NKzmweagJgfUSaRVstIAnZbYUJyajk/k0zhxW3or5QHXe5uIM4Ooj//Z8evRhkpYrEYVAXHH7lG9gXHDgNcBYcb+aF0f5SVyslh/DNwiAFMT1cozBy8SnVwF5rN8rNFwmLCwepZabSX7ckzeuI=
+	t=1790174183; cv=none; b=ZnYxUgoCR44R1LEo+J07Q73rS6lSP2FLm3cwpWUUMulRQRthlEMQEXGpshQez1LB/wfoZE/3txkyj3zepiTYf9EDoy7TaBVYAz3+nKmZBcLBwT4eKVuzmoroEh0+E1ywZR7BGZsdva9U7zxjH0pN/bAyMVZQUMxH1dkKtn4S2pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174180; c=relaxed/simple;
-	bh=EwAd4zDuBYAciNYG1wfxXD9lxgP+tQ/EFk597JCNgDQ=;
+	s=arc-20240116; t=1790174183; c=relaxed/simple;
+	bh=a8T0r46XbJSAQWBhCngVE+e170kOrOk5STa91761XHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWf6A6H1iHStOktjWb/Hmfqie5GStkJAMrd9m9ZrBiop6Q6OsRFF+JukV34vNp/al4sWGfu4OgPRFUj36XPKAeRxk94zBuy6WfY/yotKTpSrKJJTgJOLh8DdRlsCXbRCUlgCpHYFW/1xU5CQ9v32nciQ9kjf2S+u2gEUFDrhYV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8poxL7N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rF0UfbjoeH9ys0qJPhUe/e4WusY0pvYPD0KRQHRDmupxgdR9smyLzNUZOYiwSb/At4J/HVrh+lvuk8SPPlf2eu3KLXY1P/1wa5TVwBx1BNGX93V2vn7d31WsuQAVkhlSVUoa06fQPFYp8Z2GohOUPZrdTPdIafcXEYEqoWDeQnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9dYFw8I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8poxL7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351501F000FF;
-	Wed, 23 Sep 2026 14:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9dYFw8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7064F1F00893;
+	Wed, 23 Sep 2026 14:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174178;
-	bh=C2950mYDmGadrvqNf+PZKDOr2aNz9JnN5oJotejNdi4=;
+	s=korg; t=1790174182;
+	bh=goiFT7jU8Y1qmGVf3J1XNlGwE5v3Ix1+xrNvJN1xQqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F8poxL7Nhl2kov/pQpYBL6jZurLd2loU30JIAFf0VG3QzjeNCgPHSHbRvoC7FiMfx
-	 1Qc2/TiFehk7MrANnkI9YuG0m+HghWUnqsKsXBDsgl/X96eb3o2J3pNziG14/33pCK
-	 JHFFOTabbrPFbEtInPuTYFEidApTVrcNuiT1/2jo=
+	b=V9dYFw8IVIXxCVbktyqQDq4XcSfzcD8boMoxKr1LNuJidP4kFKRXDU/1ypnMaDpyg
+	 9dTflwcAICGoCIc60s5KivHu8l5pjSwqOfkKQTA9uWt1DdC+yV7opheea/fqSkYTdk
+	 1QifaKLKail66j9r59cUtyAVmASMfB3pfGo72Szw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Roshan Kumar <roshaen09@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/398] ipv6: Honor oif when choosing nexthop for locally generated traffic
-Date: Wed, 23 Sep 2026 16:01:30 +0200
-Message-ID: <20260923140643.860822445@linuxfoundation.org>
+Subject: [PATCH 6.18 017/398] xfrm: iptfs: fix stack OOB read in iptfs_skb_reset_frag_walk()
+Date: Wed, 23 Sep 2026 16:01:31 +0200
+Message-ID: <20260923140643.884769624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,117 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Roshan Kumar <roshaen09@gmail.com>
 
-[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
+[ Upstream commit d042487dc118e494db2e2c1382310255c90ff544 ]
 
-Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
-set") made the kernel honor the oif parameter when specified as part of
-output route lookup:
+iptfs_skb_reset_frag_walk() advances to the fragment containing @offset
+with an unbounded loop:
 
- # ip route add 2001:db8:1::/64 dev dummy1
- # ip route add ::/0 dev dummy2
- # ip route get 2001:db8:1::1 oif dummy2 fibmatch
- default dev dummy2 metric 1024 pref medium
+	while (offset >= walk->past + walk->frags[walk->fragi].len)
+		walk->past += walk->frags[walk->fragi++].len;
 
-Due to regression reports, the behavior was partially reverted in commit
-d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
-set") to only honor the oif if source address is not specified:
+walk->fragi is advanced and walk->frags[walk->fragi] is dereferenced
+without ever checking fragi against walk->nr_frags. When the requested
+offset is at or beyond the total length spanned by the walk's fragments,
+fragi runs past nr_frags and off the end of the fixed-size on-stack
+frags[MAX_SKB_FRAGS + 1] array, reading out-of-bounds stack memory.
 
- # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
- 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
+The two callers behave differently: iptfs_skb_add_frags() already guards
+against this with
 
-That is, when source address is specified, the kernel will choose the
-most specific route even if its nexthop device does not match the
-specified oif.
+	if (!walk->nr_frags ||
+	    offset >= walk->total + walk->initial_offset)
+		return len;
 
-This creates a problem for multipath routes. After looking up a route,
-when source address is not specified, the kernel will choose a nexthop
-whose nexthop device matches the specified oif:
+but iptfs_skb_can_add_frags() has no such guard and calls
+iptfs_skb_reset_frag_walk() unconditionally, so it performs the
+out-of-range walk. Its own "fragi < walk->nr_frags" bound check runs only
+afterwards, too late to prevent the read.
 
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
+This is reachable from the receive path: a crafted IP-TFS (AGGFRAG)
+payload delivered to an IPTFS SA drives iptfs_reassem_cont() ->
+iptfs_skb_can_add_frags() with an offset past the fragment total, e.g.:
 
-But will disregard the oif when source address is specified despite the
-fact that a matching nexthop exists:
+  BUG: KASAN: stack-out-of-bounds in iptfs_skb_reset_frag_walk+0x235/0x250
+  Read of size 4 at addr ffff888008ad7210 by task repro/345
+   iptfs_skb_reset_frag_walk+0x235/0x250 net/xfrm/xfrm_iptfs.c:392
+   iptfs_skb_can_add_frags+0x155/0x310  net/xfrm/xfrm_iptfs.c:420
+   iptfs_reassem_cont+0xcf8/0x1140      net/xfrm/xfrm_iptfs.c:902
+   iptfs_input_ordered+0x552/0x670      net/xfrm/xfrm_iptfs.c:1280
+   iptfs_input+0x3d6/0xde0              net/xfrm/xfrm_iptfs.c:1741
+   xfrm_input+0x282f/0x6140             net/xfrm/xfrm_input.c:700
+   xfrm4_esp_rcv+0x93/0x120             net/ipv4/xfrm4_protocol.c:104
+   ip_rcv+0x278/0x2d0                   net/ipv4/ip_input.c:612
 
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      53 dummy1
-      47 dummy2
+Give iptfs_skb_can_add_frags() the same up-front guard that
+iptfs_skb_add_frags() already has, so the walk is never entered with an
+out-of-range offset. When it triggers, the caller falls back to the
+existing linearize-and-copy path, which is safe.
 
-This behavior differs from IPv4:
-
- # ip address add 192.0.2.1/32 dev lo
- # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-What happens is that fib6_table_lookup() returns a route with a matching
-nexthop device (assuming it exists):
-
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But it is later overwritten during path selection in fib6_select_path()
-which instead chooses a nexthop according to the calculated hash.
-
-Solve this by telling fib6_select_path() to skip path selection if we
-have an oif match during output route lookup (iif being
-LOOPBACK_IFINDEX).
-
-Behavior after the change:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-Note that enabling forwarding is only needed because we did not add
-neighbor entries for the gateway addresses. When forwarding is disabled
-and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
-will treat non-existing neighbor entries as errors and perform
-round-robin between the nexthops:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=0
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      50 dummy1
-      50 dummy2
-
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
+Reported-by: Roshan Kumar <roshaen09@gmail.com>
+Signed-off-by: Roshan Kumar <roshaen09@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_iptfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 03b26738bd718..71a38034f5ca8 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -2272,6 +2272,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- {
- 	struct fib6_result res = {};
- 	struct rt6_info *rt = NULL;
-+	bool have_oif_match;
- 	int strict = 0;
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index d39253b06c4ef..0f562301ceb34 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -416,6 +416,14 @@ static bool iptfs_skb_can_add_frags(const struct sk_buff *skb,
+ 	if (skb_has_frag_list(skb) || skb->pp_recycle != walk->pp_recycle)
+ 		return false;
  
- 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
-@@ -2288,7 +2289,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- 	if (res.f6i == net->ipv6.fib6_null_entry)
- 		goto out;
++	/* Reject an @offset that is at or beyond the end of the walk's data
++	 * before calling iptfs_skb_reset_frag_walk(), whose fragment-advance
++	 * loop is otherwise unbounded and would index past walk->frags[].
++	 * This mirrors the guard already present in iptfs_skb_add_frags().
++	 */
++	if (!walk->nr_frags || offset >= walk->total + walk->initial_offset)
++		return false;
++
+ 	/* Make offset relative to current frag after setting that */
+ 	offset = iptfs_skb_reset_frag_walk(walk, offset);
  
--	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
-+	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
-+			 oif == res.nh->fib_nh_dev->ifindex;
-+	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
- 
- 	/*Search through exception table */
- 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
 -- 
 2.53.0
 
