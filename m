@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2143047F2CB;
-	Wed, 23 Sep 2026 14:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5F74A3850;
+	Wed, 23 Sep 2026 14:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172607; cv=none; b=MMlDQ/CqgRvcfot9ENQKjN+A90tfAA5nKHVKMQh67wTg3hAUiaPxVvO/WmndssQ5h69B7dwp4bqTmlioh10anPDxnkshV4oI8iEP1oLAyYfMorX10lJFiDB577XCJqnBhKeqFYvcMixyDby+ybh2sQVNW1Gv20Yx6LqN4kgd6S0=
+	t=1790172610; cv=none; b=RXCRqYiMEZUYLSx6pKUda7dEMoJT4iGKMoe9yfkM+pASd1plq/nQbDHeXoeI7NilsQr58Z4Ai/h+UmwBjMgT/C/ei7sJ5TkdlWlrkOgSceNpCeI6OSjeZw7oQP6aHqrma7W+fVB/dY8L56o2mXJJfE6W0wv+jX6DI8Go9Pd7WOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172607; c=relaxed/simple;
-	bh=qYESzQLU9k7o35GtDOpSR85JbuNxNGYixTszncicoCQ=;
+	s=arc-20240116; t=1790172610; c=relaxed/simple;
+	bh=+4KBdo6NB5/LqzVsqcmQK6SEDR3fzSS/uoVonszmTjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJNijDoFpmZmVludAdtdb3qWPhwSXvwuqHu3CjGq3/ZpfrEeTcF3dPXHwliwzNl3uJskxjCEpXetKAUVo1kFCTJP3N5dQg98Z8mjMLHClGCqiQ35WB1Gbq7ghtuzJPou9ARjg9DEqaJIXSeI3xYasO/vrhQOWWbKfbddyGfG5qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTAc/EIV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AsvXc1C9LSk8xgEk6OpxwiAjD+3ZucJI+EmCK47bjb0rTIi2R4xpcCCsk1x1XmiX2UE2qTBFDLrt2Mcw/ug2Fo3tfQpChJ9QWMn7Z0Tj/w2JYjQ12+a8e668fGU1b72A6a/XUiBuJ1K554wW1PLJ1nkKF0wk8z2txrLjG1gkzfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClY6BoVc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTAc/EIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D751F000FF;
-	Wed, 23 Sep 2026 14:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClY6BoVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF69D1F000FF;
+	Wed, 23 Sep 2026 14:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172606;
-	bh=uphKHsyf2t5HSajMKtmm+EW8/ZyA7MInhK7vAa03DLI=;
+	s=korg; t=1790172609;
+	bh=nXsNC8ADAR+qQus8gNz/qlvDNe0luOu/7Fvd6B67JHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTAc/EIVldZ3dpY29aM7arglmQBQWPGyOzeg9E90wEO/DcsuJmtfk81nBv7EF4UzO
-	 UgknZ7chCnCDEnuGACI0l1J6pXn2osz+Yq2ffEycl+xx2K4L7dSetBXa8Xf1JOuyp8
-	 DX4NC3qmscqMN1J6qXNzXAH6qXwkhcAbHx5G6GW0=
+	b=ClY6BoVcy9mnCEhopt3PPhTRs6a0mGH283wgoXZ9Ar6egaoNFj1Ot32b8C8oiVcPT
+	 wTLt6yYa+r4nOtJzAD9XniIaSHlsKRmQo8gyOqwf0OHqYQa1fb10EZMtWkuE5JQ56K
+	 y8JWsIBuz06ATdbBOgOyjhxIWAet7Vf+Y3gR5aVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Roshan Kumar <roshaen09@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
-	Liu Jian <liujian56@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 009/438] xfrm: add missing rcu_read_lock(), skb_dst_force() and dev_hold() for xfrm_trans_reinject()
-Date: Wed, 23 Sep 2026 16:00:30 +0200
-Message-ID: <20260923140645.011492203@linuxfoundation.org>
+Subject: [PATCH 7.2 005/438] xfrm: iptfs: fix stack OOB read in iptfs_skb_reset_frag_walk()
+Date: Wed, 23 Sep 2026 16:00:26 +0200
+Message-ID: <20260923140644.902839362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,101 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Roshan Kumar <roshaen09@gmail.com>
 
-[ Upstream commit d2f5082f9e84653fa1a9e8aebaaff23e688f5e19 ]
+[ Upstream commit d042487dc118e494db2e2c1382310255c90ff544 ]
 
-syzbot reported a suspicious RCU usage warning in ip6_pkt_drop():
+iptfs_skb_reset_frag_walk() advances to the fragment containing @offset
+with an unbounded loop:
 
-  WARNING: suspicious RCU usage in ip6_pkt_drop
-  include/net/addrconf.h:389 suspicious rcu_dereference_check() usage!
+	while (offset >= walk->past + walk->frags[walk->fragi].len)
+		walk->past += walk->frags[walk->fragi++].len;
 
-  Call Trace:
-   __in6_dev_get_safely include/net/addrconf.h:389 [inline]
-   ip6_pkt_drop+0x596/0x610 net/ipv6/route.c:4620
-   ip6_pkt_discard+0x1c/0x30 net/ipv6/route.c:4651
-   xfrm_trans_reinject+0x324/0x630 net/xfrm/xfrm_input.c:806
-   process_one_work kernel/workqueue.c:3322 [inline]
-   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
-   worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
+walk->fragi is advanced and walk->frags[walk->fragi] is dereferenced
+without ever checking fragi against walk->nr_frags. When the requested
+offset is at or beyond the total length spanned by the walk's fragments,
+fragi runs past nr_frags and off the end of the fixed-size on-stack
+frags[MAX_SKB_FRAGS + 1] array, reading out-of-bounds stack memory.
 
-When commit 4f4920669d21 ("xfrm: Reinject transport-mode packets through
-workqueue") converted xfrm_trans_reinject from a tasklet to a workqueue,
-the reinjection loop ceased running in softirq context. Workqueue workers
-run in process context where local_bh_disable() does not enter an RCU
-read-side critical section under CONFIG_PREEMPT_RCU.
+The two callers behave differently: iptfs_skb_add_frags() already guards
+against this with
 
-Because finish callbacks (such as ip6_rcv_finish) expect to run under an
-RCU read lock (performing route lookups, l3mdev lookups, and accessing
-RCU-protected data structures), invoking them in workqueue context without
-rcu_read_lock() triggers RCU lockdep warnings.
+	if (!walk->nr_frags ||
+	    offset >= walk->total + walk->initial_offset)
+		return len;
 
-Furthermore, packets queued to the workqueue via xfrm_trans_queue_net()
-may carry non-refcounted (noref) dst entries (e.g. from ip_route_input_noref).
-Additionally, on netdevice unregistration, dst_dev_put() replaces dst->dev
-with blackhole_netdev, so dst entries do not keep skb->dev alive while
-queued in the workqueue.
+but iptfs_skb_can_add_frags() has no such guard and calls
+iptfs_skb_reset_frag_walk() unconditionally, so it performs the
+out-of-range walk. Its own "fragi < walk->nr_frags" bound check runs only
+afterwards, too late to prevent the read.
 
-Fix these issues by:
-1. Calling skb_dst_force(skb) in xfrm_trans_queue_net() while still in the
-   caller's RCU section to ensure dst is reference-counted before queuing.
-2. Holding a reference on skb->dev via dev_hold()/dev_put() across workqueue
-   deferral so skb->dev remains valid during finish() callback processing.
-3. Acquiring rcu_read_lock() around the finish callback invocation loop in
-   xfrm_trans_reinject().
+This is reachable from the receive path: a crafted IP-TFS (AGGFRAG)
+payload delivered to an IPTFS SA drives iptfs_reassem_cont() ->
+iptfs_skb_can_add_frags() with an offset past the fragment total, e.g.:
 
-Fixes: 4f4920669d21 ("xfrm: Reinject transport-mode packets through workqueue")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Liu Jian <liujian56@huawei.com>
+  BUG: KASAN: stack-out-of-bounds in iptfs_skb_reset_frag_walk+0x235/0x250
+  Read of size 4 at addr ffff888008ad7210 by task repro/345
+   iptfs_skb_reset_frag_walk+0x235/0x250 net/xfrm/xfrm_iptfs.c:392
+   iptfs_skb_can_add_frags+0x155/0x310  net/xfrm/xfrm_iptfs.c:420
+   iptfs_reassem_cont+0xcf8/0x1140      net/xfrm/xfrm_iptfs.c:902
+   iptfs_input_ordered+0x552/0x670      net/xfrm/xfrm_iptfs.c:1280
+   iptfs_input+0x3d6/0xde0              net/xfrm/xfrm_iptfs.c:1741
+   xfrm_input+0x282f/0x6140             net/xfrm/xfrm_input.c:700
+   xfrm4_esp_rcv+0x93/0x120             net/ipv4/xfrm4_protocol.c:104
+   ip_rcv+0x278/0x2d0                   net/ipv4/ip_input.c:612
+
+Give iptfs_skb_can_add_frags() the same up-front guard that
+iptfs_skb_add_frags() already has, so the walk is never entered with an
+out-of-range offset. When it triggers, the caller falls back to the
+existing linearize-and-copy path, which is safe.
+
+Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
+Reported-by: Roshan Kumar <roshaen09@gmail.com>
+Signed-off-by: Roshan Kumar <roshaen09@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/xfrm/xfrm_iptfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index eecab337bd0a7..8f6109eada7ea 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -800,12 +800,17 @@ static void xfrm_trans_reinject(struct work_struct *work)
- 	spin_unlock_bh(&trans->queue_lock);
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index 597aedeac26eb..2ce15c472cc4d 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -416,6 +416,14 @@ static bool iptfs_skb_can_add_frags(const struct sk_buff *skb,
+ 	if (skb_has_frag_list(skb) || skb->pp_recycle != walk->pp_recycle)
+ 		return false;
  
- 	local_bh_disable();
-+	rcu_read_lock();
- 	while ((skb = __skb_dequeue(&queue))) {
- 		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
-+		struct net_device *dev = skb->dev;
- 
- 		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
-+		if (dev)
-+			dev_put(dev);
- 		put_net(net);
- 	}
-+	rcu_read_unlock();
- 	local_bh_enable();
- }
- 
-@@ -821,12 +826,18 @@ int xfrm_trans_queue_net(struct net *net, struct sk_buff *skb,
- 	if (skb_queue_len(&trans->queue) >= READ_ONCE(net_hotdata.max_backlog))
- 		return -ENOBUFS;
- 
-+	if (skb_dst(skb) && !skb_dst_force(skb))
-+		return -EHOSTUNREACH;
++	/* Reject an @offset that is at or beyond the end of the walk's data
++	 * before calling iptfs_skb_reset_frag_walk(), whose fragment-advance
++	 * loop is otherwise unbounded and would index past walk->frags[].
++	 * This mirrors the guard already present in iptfs_skb_add_frags().
++	 */
++	if (!walk->nr_frags || offset >= walk->total + walk->initial_offset)
++		return false;
 +
- 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
+ 	/* Make offset relative to current frag after setting that */
+ 	offset = iptfs_skb_reset_frag_walk(walk, offset);
  
- 	hold_net = maybe_get_net(net);
- 	if (!hold_net)
- 		return -ENODEV;
- 
-+	if (skb->dev)
-+		dev_hold(skb->dev);
-+
- 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
- 	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
- 	spin_lock_bh(&trans->queue_lock);
 -- 
 2.53.0
 
