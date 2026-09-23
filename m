@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEB83D9029;
-	Wed, 23 Sep 2026 14:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A4753C3A0;
+	Wed, 23 Sep 2026 14:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175213; cv=none; b=oxa8RYnlwx6qCthxJYXYFl8mROpt+PW9628pjiFFVNTXBj7WbBI1XvRhn+hgotzDk/oAcWt2HyOPeI+sFbKmiKKR7ZsWh1UbeGjNyu73RUdMTDgUkFSQgQ5EqjyIO+ow+2k2ApHkGJ8sBc/EeRhGXz0dMoP7GDzf5mXjjW7VozQ=
+	t=1790175217; cv=none; b=YxcSDlNtg88Vz/av6GcmcE0iSCPY24KpoVyZp/JabDRSdZAS5TOc6ztsrVZoXaS0UBAAZDybaz27kUgChBj/CTrYJn4GjQ0bLQmBwTtFKkYxnpgjvD/zMi+L2C27uRtM9whpPB0huuM4PMGW548+lSBbRprZlClMFhL1iq7oq+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175213; c=relaxed/simple;
-	bh=tOEVry2WHwg3mB98iwEDMJZ4ruLwBLCqBkhE29hVZQA=;
+	s=arc-20240116; t=1790175217; c=relaxed/simple;
+	bh=TvtbFl5gFNVTK0ydsZ6QJBdeunHIBg3zhkSJTY8ILx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iagCJOnxNVoC6TLtEvBNoWS2/SLIz1oRtS63aAw4DBJN7peI/oBLLqkUtOWReZyd4uaTkE0j18+gmz40ecUogspXFAgl2ZQxzQLcHSI7CpHtwBKHoIS5lmzs5nHh12ngj+i3K+tDJad4yki/65ag+wE3zEU5tCosFl3cntnqqIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8h2ORnE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cyVN5Wk4zVwXsQrO7ET64bG5YUa6dFnqUVSpjY/1FDQYTcvGyp84pYE9jlRakY3NFQ6iAUML73c6YbyhXkcFbQL+2f7wxfBVvUjJn2M6RPJPgYsI2nDAJPylJwETOr7/3eAHc/Z5qNdePeaTqsOMvCS/EE06BgQtl9hdZRIcoro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va/sDZ+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8h2ORnE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C411F000FF;
-	Wed, 23 Sep 2026 14:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va/sDZ+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEB81F000FF;
+	Wed, 23 Sep 2026 14:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175212;
-	bh=LJ80iB3eEEbAqjuUY7058cXpGZajMnGiFLFvTpAeA5E=;
+	s=korg; t=1790175215;
+	bh=O9Ookv3N0nsHb4dQXPLR55NntBGf4GY3kgLyb7+kpz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T8h2ORnERDgTA3kA4Q4tfnlx8UK6hZbo6EoJTu/Wv85TM0SxTpLPwa3v4UBFHil87
-	 /ADZzf+84kKXgqhIfeAfy2iTKpF+xvGHL+d24Z+Hq+vZgtP8covutbZe7oSn9qr8uU
-	 unJVk3G63od3CTUl26x0tHXqmnoCZWwrJMNbj93Y=
+	b=Va/sDZ+GQCZwvUbVQfwoZLaEp5DUiXrXNoe3a3MJKKy3qzSZ+koi4KSKBxqb0qsSU
+	 GfsuYdNPmchV7xh3p4MXjVCg8UN5rGUjnQ3zREyJ1/0+whSIoWfP7LgaVUKqio4xYh
+	 NFfYmB2L2HORNliC61AiI70fFB7LqSP1LioDOBWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 321/398] watchdog: sp5100_tco: Fix pci_dev reference leak in sp5100_tco_init()
-Date: Wed, 23 Sep 2026 16:06:35 +0200
-Message-ID: <20260923140651.739742911@linuxfoundation.org>
+Subject: [PATCH 6.18 322/398] watchdog: starfive-wdt: Fix runtime PM leak in starfive_wdt_pm_start()
+Date: Wed, 23 Sep 2026 16:06:36 +0200
+Message-ID: <20260923140651.765336990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,56 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 88f113634028ca90a857031837d8061d1a9e1a7b upstream.
+commit 8f0ca55016a7647109ae2bc91bcb346fc8b13785 upstream.
 
-sp5100_tco_init() stores the PCI device matched by for_each_pci_dev()
-in the global sp5100_tco_pci and keeps its reference for the lifetime
-of the driver, but neither sp5100_tco_exit() nor the error paths of
-sp5100_tco_init() call pci_dev_put(), leaking the reference on driver
-registration failure and on every module load/unload cycle.
+starfive_wdt_pm_start() takes a runtime PM reference with
+pm_runtime_get_sync(), which increments the usage counter even when it
+fails, and returns the error without dropping it again.  The watchdog
+core does not invoke the stop callback when start fails, so the
+reference taken on the error path is leaked.
 
-Drop the reference when the platform driver or device registration
-fails and when the module is unloaded.
+Use pm_runtime_resume_and_get() instead, which keeps the usage counter
+balanced when the resume fails.
 
-Fixes: 15e28bf13008 ("watchdog: Add support for sp5100 chipset TCO")
+Fixes: db728ea9c7be ("drivers: watchdog: Add StarFive Watchdog driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916170511.2086199-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260916170704.2086331-1-vulab@iscas.ac.cn
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sp5100_tco.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/watchdog/starfive-wdt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -605,8 +605,10 @@ static int __init sp5100_tco_init(void)
- 	pr_info("SP5100/SB800 TCO WatchDog Timer Driver\n");
- 
- 	err = platform_driver_register(&sp5100_tco_driver);
--	if (err)
-+	if (err) {
-+		pci_dev_put(sp5100_tco_pci);
- 		return err;
-+	}
- 
- 	sp5100_tco_platform_device =
- 		platform_device_register_simple(TCO_DRIVER_NAME, -1, NULL, 0);
-@@ -619,6 +621,7 @@ static int __init sp5100_tco_init(void)
- 
- unreg_platform_driver:
- 	platform_driver_unregister(&sp5100_tco_driver);
-+	pci_dev_put(sp5100_tco_pci);
- 	return err;
- }
- 
-@@ -626,6 +629,7 @@ static void __exit sp5100_tco_exit(void)
+--- a/drivers/watchdog/starfive-wdt.c
++++ b/drivers/watchdog/starfive-wdt.c
+@@ -371,7 +371,7 @@ static void starfive_wdt_stop(struct sta
+ static int starfive_wdt_pm_start(struct watchdog_device *wdd)
  {
- 	platform_device_unregister(sp5100_tco_platform_device);
- 	platform_driver_unregister(&sp5100_tco_driver);
-+	pci_dev_put(sp5100_tco_pci);
- }
+ 	struct starfive_wdt *wdt = watchdog_get_drvdata(wdd);
+-	int ret = pm_runtime_get_sync(wdd->parent);
++	int ret = pm_runtime_resume_and_get(wdd->parent);
  
- module_init(sp5100_tco_init);
+ 	if (ret < 0)
+ 		return ret;
 
 
