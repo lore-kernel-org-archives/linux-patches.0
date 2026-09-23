@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E6F3B3BE9;
-	Wed, 23 Sep 2026 14:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6872492E5C;
+	Wed, 23 Sep 2026 14:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173747; cv=none; b=rAQ5+DMpEuvZiOO02s6X9oUw2hMSn6ye9boInafWVLkeSdeToBeHBEekoUInqjr7K3xp2wLi3kXCfmO+V5lR3FolWpn0p+Ky4xqJLGiB3Ph8PY6YfSw2lEXjpuJ781GVcS4WqEo0+A8MXS6ixVwPZv4QNFdnrikpnsK74mrqVXE=
+	t=1790173751; cv=none; b=aTIgEBMSg9YE7Q08YlXgdxZAlvuZJUGt+Ut5I0X/DpOrEe04zsiv1AXTAIVfI0PR7DoyopQK46NUhpJZJ3TjXoTryihrzQozOfpLrSy8cHzMx38I9sPqmoavyh1LIXYCGoNEWCueTOmXXiPKkqKhnj1hEhnOBHxDy1Le8EQ1OdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173747; c=relaxed/simple;
-	bh=3ORtoJc8iH/AWA1zP9FXGCeOmiqQfeFEkuyfzwWXXFY=;
+	s=arc-20240116; t=1790173751; c=relaxed/simple;
+	bh=OiFshu69rQX1Igdtwu+GN2mdj7kyyfdCqDc11Mx7rsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQrtczu/0TRiGDuV+MW6RfZeslYpmOQZEKQ/wKTqKxdJjeyznz7OAujN5T1ZYiV1QhanfuSc1SMwZAKmKZ+rhFTWdoRyj7y45vEFTEF+f3QltJqKEZhs6bXQFcCAGnB3laeycLCgE7AJuykux0Ff1EUNhcugw3IzvAWuEADPwvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxBTmfAH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XiAbwBoXIEVtF9yh2DDhSBRO1euh4vXE++u9DRy/8BVYJomKKDLrBfbKpNO4RxAcAKPU6VL6Upxk7bQ1Jfci4s3ObqgVlRMqOOKkDU+grklCWl/AjLL/zQ+4An+i/DDjy5KZWf9a9Bbx/E19Z9QSyVOokdKUrW+zFy+0oBcWcr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dE2hEzP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxBTmfAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AB21F000FF;
-	Wed, 23 Sep 2026 14:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dE2hEzP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DC41F000FF;
+	Wed, 23 Sep 2026 14:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173746;
-	bh=A0lb1NOKYLNvJbAYQaiXMPQxb6SeJYWRa5oGLom8BX8=;
+	s=korg; t=1790173749;
+	bh=JTkK10xif3RZAme6yIBUXWe/BDNzc1Hfs4hguWSWb5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxBTmfAHoLpSiNhob5+EdTgXhVp29fF920ODE3kcg0OA4pd7mSL4y2uX6l2uwnxB4
-	 /nCCdbHJcBdfFjDBX7MplzFngBAOQ1ghLBOwkrwa690v0ou9d/1QJTFuQp749+W/Om
-	 J8NxxXssdrwt5Cs0V6rD0c1TNUsWPIMqWksS5MSg=
+	b=dE2hEzP9FMeLn07kkmm6i76vKHFT4Yidu7qquGXzQhjApPEe5ZKc3X66dMeJqmcET
+	 Qcqkel03vo1XsCKRJIOgw5H8+9M21RZ7vCYL/zz4ZiIt9W7QAtPgM/nNvGKXnEqx3L
+	 eWg19lp6dq1zqQYiw4I/t2lqTRpoiSNIl2NYiFx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Amirkan <markdamirkan@gmail.com>,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Ahmed Naseef <naseefkm@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 296/438] net: lan743x: fix RX checksum use-after-free
-Date: Wed, 23 Sep 2026 16:05:17 +0200
-Message-ID: <20260923140652.451445888@linuxfoundation.org>
+Subject: [PATCH 7.2 297/438] net: phy: mediatek: do not report link and per-speed LED rules together
+Date: Wed, 23 Sep 2026 16:05:18 +0200
+Message-ID: <20260923140652.477384307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,48 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Amirkan <markdamirkan@gmail.com>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-commit a9ce4053dc945c5372dedba5017ee675b30dc0c5 upstream.
+commit bde5212360bd44506edec073ebbd6d0c72f75820 upstream.
 
-lan743x_rx_process_buffer() adds each non-first receive buffer to the
-head skb's frag_list.  On the last descriptor, lan743x_rx_trim_skb()
-linearizes the head and frees the fragment skb metadata.
+mtk_phy_led_hw_ctrl_get() reports TRIGGER_NETDEV_LINK whenever any of the
+speed bits in on_set is on, and in addition reports every individual
+TRIGGER_NETDEV_LINK_* bit that is set. The netdev trigger refuses that
+combination: netdev_led_attr_store() rejects TRIGGER_NETDEV_LINK together
+with any per-speed rule, and it validates the whole resulting mode rather
+than just the bit being written. Once the hardware has any link bit
+programmed, every write to the trigger attributes of that LED therefore
+fails with -EINVAL and the LED can no longer be configured.
 
-The checksum-success path then writes ip_summed through the local skb
-pointer, which still points to the final fragment.  This causes a
-use-after-free write when a packet spans more than one receive buffer.
+The rules are also fed back into the hardware: the trigger stores what is
+read back, and a later write of device_name programs it again, expanding
+TRIGGER_NETDEV_LINK to every speed in on_set. An LED configured for a
+single speed is thereby silently widened to "on at any link speed".
 
-Set ip_summed on the surviving head skb instead.  Multi-buffer receive
-can occur after a live MTU increase because existing ring entries keep
-their old buffer size until they are replenished.
+Both are easy to see on the EcoNet EN7528, whose four PHYs share one LED
+block. The first LED programs the block correctly, the second reads those
+rules back and rewrites them widened, and the remaining two then read the
+widened value, so an LED configured for "link_10 link_100" ends up lit on a
+1000 Mbps link.
 
-A KUnit test invoking lan743x_rx_process_buffer() with a two-buffer
-packet produced a one-byte KASAN use-after-free write before this change.
-The same test passed after the change.  The driver object also builds
-with W=1.  This was not tested on physical LAN743x hardware.
+on_set holds every speed the LED can indicate and is exactly what
+mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so report the
+speed independent rule only when all of them are on, and the individual
+speeds otherwise. The mapping is then the inverse of the one used when
+programming the LED and round trips without changing the register.
 
-Fixes: cd6910501cfd ("net: lan743x: Add support for Rx IP & TCP checksum offload")
+Fixes: c66937b0f8db ("net: phy: mediatek-ge-soc: support PHY LEDs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260913-b4-send-lan743x-uaf-v1-1-73d563d08ba9@gmail.com
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260912134306.3544329-1-naseefkm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mediatek/mtk-phy-lib.c |   33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -2594,7 +2594,7 @@ process_extension:
- 							rx->adapter->netdev);
- 		if (rx->adapter->netdev->features & NETIF_F_RXCSUM) {
- 			if (!is_ice && !is_tce && !is_icsm)
--				skb->ip_summed = CHECKSUM_UNNECESSARY;
-+				rx->skb_head->ip_summed = CHECKSUM_UNNECESSARY;
- 		}
- 		netdev_dbg(netdev, "sending %d byte frame to OS",
- 			   rx->skb_head->len);
+--- a/drivers/net/phy/mediatek/mtk-phy-lib.c
++++ b/drivers/net/phy/mediatek/mtk-phy-lib.c
+@@ -156,20 +156,27 @@ int mtk_phy_led_hw_ctrl_get(struct phy_d
+ 	if (!rules)
+ 		return 0;
+ 
+-	if (on & on_set)
++	/* TRIGGER_NETDEV_LINK must not be reported together with any of the
++	 * per-speed rules, the netdev trigger rejects that combination.
++	 * on_set holds every speed this LED can indicate and is what
++	 * mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so
++	 * report the speed independent rule only when they are all on.
++	 */
++	if ((on & on_set) == on_set) {
+ 		*rules |= BIT(TRIGGER_NETDEV_LINK);
+-
+-	if (on & MTK_PHY_LED_ON_LINK10)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_10);
+-
+-	if (on & MTK_PHY_LED_ON_LINK100)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_100);
+-
+-	if (on & MTK_PHY_LED_ON_LINK1000)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
+-
+-	if (on & MTK_PHY_LED_ON_LINK2500)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_2500);
++	} else {
++		if (on & MTK_PHY_LED_ON_LINK10)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_10);
++
++		if (on & MTK_PHY_LED_ON_LINK100)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_100);
++
++		if (on & MTK_PHY_LED_ON_LINK1000)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
++
++		if (on & MTK_PHY_LED_ON_LINK2500)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_2500);
++	}
+ 
+ 	if (on & MTK_PHY_LED_ON_FDX)
+ 		*rules |= BIT(TRIGGER_NETDEV_FULL_DUPLEX);
 
 
