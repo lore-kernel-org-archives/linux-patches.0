@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F2853A390;
-	Wed, 23 Sep 2026 14:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6175328A6;
+	Wed, 23 Sep 2026 14:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175312; cv=none; b=YKFpASPEqJWocmGDgdLgpme+YbF6pV/XML2b/1WZ2Si8CCmUoEDuvKpMhR9D1zEbC73fGJC6cheFNsVZZ8Z8N3L64w0vcsN5Yl03ymrjW8T0Su7vu+BSU81lWX1C/tKbgZrVw0Kt3EM3H/7aC5g2Hg86uyDsmP4GnhWcmxoiUQk=
+	t=1790175314; cv=none; b=pTo9H+HG6vFgGY9SCIpHzXvqrCYLrI43UuUjsTC2zcXgbbxPpKKG5tOcmmEWrah+vgnhUcIrNN4Po89x8Awf873J2Wrxd1UJuRgGj/DSgDltDel+DxRqF/V+7RMukDqiG03bMWJB4DcIG+nqCFInlgcX5T3YCiPGa+dTaCL9hWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175312; c=relaxed/simple;
-	bh=5MS9CQQd0SfanUjiOS8JbF9CUO0xdNlY+ufBa9K7Cr0=;
+	s=arc-20240116; t=1790175314; c=relaxed/simple;
+	bh=iydUURCmBKSHYfK19v4a5L+6Y7ST3aBOdmrxRS5JuC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frIR+33keu7MAP9w/9F6qarVaG9YbHOC3xZ2aVB2tx2sbC+5qILmNw87WaCfvpBV73T5svElVCufM9xvtMwXzd2BQ23XzPR1P+0oKt7sVUqUOw3ba5ySE50Fn4l3B/STz658Z7CvUqO0YDa5/GmSg82vHlodTUG67c+Qd8AY5T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osvQLdyf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GdyBJxXh+UzQWtjVDYnfadSMD7mC5DCHDKaIWoiWslVBrpw6t57kmhT4cnI/QOToSTWxUVSbk5qyYI7e1iVCbc5XyhiK76JjByLK9RX0tV87zTRUX4FCk3JZ4LheLEIwKAKK/J9YNQIYQHLDLte3Sb4sZOROYU27zZ98ajF0CQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSe8IgKw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osvQLdyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3491F0089A;
-	Wed, 23 Sep 2026 14:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSe8IgKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0DF1F00893;
+	Wed, 23 Sep 2026 14:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175310;
-	bh=YFr+uLmSJ9XfRPZ8xXzEsFaTRVShVkFLpALg53Q/CFY=;
+	s=korg; t=1790175313;
+	bh=molLXTXtqWPmuM0oPWvwY3k75QUK3yrAQyajr5udb9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osvQLdyfdcIabGS2Gv5btRdsP8JGMVkOPCazloGFciwo5ic6dMaMNRCmgSbc9dt7I
-	 vpY6EQtQ1ESxi81G2/y8ArRlfgSkZPUixDwWBYsxELab53aj/z78o+tZrgeTtEgpG2
-	 i+FHygkTvTb5F4PZYozwfZwHgKos9oepI5AQoYZM=
+	b=TSe8IgKwCVMOab7UidQ6QGChjcl4ABl6QByEgW9BraeXK0MqiXeD3FlrnMkZ2bXRZ
+	 5/2uSY+WL/ruu0xe2e0kmsYe3g/S+qRbwzFczSZdjgHGsLlpmwk52E037eVj1Ie2ZQ
+	 xTwzqVUUNnumfmfYtH9D76+ZnG+gvvkG3yP2zNUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Elizabeth Figura <zfigura@codeweavers.com>,
 	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.18 358/398] ntsync: Honour callers time namespace for absolute MONOTONIC timeouts
-Date: Wed, 23 Sep 2026 16:07:12 +0200
-Message-ID: <20260923140652.707368856@linuxfoundation.org>
+Subject: [PATCH 6.18 359/398] ntsync: reject wait ioctls with zero owner
+Date: Wed, 23 Sep 2026 16:07:13 +0200
+Message-ID: <20260923140652.731707868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -46,47 +46,26 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
 
-commit 180a232ea78003d1dc869b217b4e49106fd58e8f upstream.
+commit 61611481f7b599e0526a3782c626b1a9deeb48bd upstream.
 
-ntsync_schedule() takes the absolute timeout from userspace and hands it to
-schedule_hrtimeout_range_clock() with HRTIMER_MODE_ABS. For the default
-CLOCK_MONOTONIC path, it does not call timens_ktime_to_host() first.
+setup_wait() already validates pad and flags but not owner, while
+Documentation/userspace-api/ntsync.rst requires EINVAL when owner is
+zero. Reject early before queueing waiters.
 
-A process inside a CLOCK_MONOTONIC time namespace computes the absolute
-timeout in its own clock view. The kernel reads the same value against the
-host clock. The two differ by the namespace offset.  The timeout then fires
-too early or too late.
-
-Other users of absolute timeouts run the ktime through
-timens_ktime_to_host() before starting the hrtimer. ntsync was added later
-and missed that step.
-
-/dev/ntsync is mode 0666. Any user inside a time namespace that can
-open it is affected. The visible effect is wrong timeout behaviour
-for Wine in a container that sets a CLOCK_MONOTONIC offset.
-
-Reproducer: unshare --user --time, set the monotonic offset to -10s,
-issue NTSYNC_IOC_WAIT_ANY with a 100 ms absolute MONOTONIC timeout.
-The baseline run elapses about 100 ms. The run inside the namespace
-elapses about 0 ms.
-
-Apply timens_ktime_to_host() to the parsed timeout when the caller
-did not set NTSYNC_WAIT_REALTIME. The helper does nothing in the
-initial time namespace, so the fast path is unchanged.
-
-Fixes: b4a7b5fe3f51 ("ntsync: Introduce NTSYNC_IOC_WAIT_ANY.")
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
 Reviewed-by: Elizabeth Figura <zfigura@codeweavers.com>
-Link: https://patch.msgid.link/20260528063311.3300393-3-maoyixie.tju@gmail.com
+Signed-off-by: Elizabeth Figura <zfigura@codeweavers.com>
+Link: https://patch.msgid.link/20260723201301.11826-4-zfigura@codeweavers.com
 Cc: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -95,22 +74,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/misc/ntsync.c
 +++ b/drivers/misc/ntsync.c
-@@ -19,6 +19,7 @@
- #include <linux/sched/signal.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-+#include <linux/time_namespace.h>
- #include <uapi/linux/ntsync.h>
+@@ -884,6 +884,9 @@ static int setup_wait(struct ntsync_devi
+ 	if (args->pad || (args->flags & ~NTSYNC_WAIT_REALTIME))
+ 		return -EINVAL;
  
- #define NTSYNC_NAME	"ntsync"
-@@ -845,6 +846,8 @@ static int ntsync_schedule(const struct
++	if (!args->owner)
++		return -EINVAL;
++
+ 	if (size >= sizeof(fds))
+ 		return -EINVAL;
  
- 	if (args->flags & NTSYNC_WAIT_REALTIME)
- 		clock = CLOCK_REALTIME;
-+	else
-+		timeout = timens_ktime_to_host(clock, timeout);
- 
- 	do {
- 		if (signal_pending(current)) {
 
 
