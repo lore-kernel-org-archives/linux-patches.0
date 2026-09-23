@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CC7244687;
-	Wed, 23 Sep 2026 14:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5974189DD;
+	Wed, 23 Sep 2026 14:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173126; cv=none; b=Nk4HRuHJiL7HlMwW5WDuJb5HZvZRYHn/lBd8qi6117lLPvDVfjXbIzi0tiGK12ankQwm8NlyRL0GL2c8GBd4MdJfouP/Og4YOUXUtwEb6GLdN3mcSyFR0GdkYt22lmTotxBTGvmgClyTsgq12msPflr3UUp+zCRszSiLE/Z10/I=
+	t=1790173129; cv=none; b=Yz0EFb+x9S8rGALRMf5lezvI3utbh8EG7/A2DeeLiwl/ySOKYG/E7AmTK0SmzI6TwJXma0ejNZoyNnsrmNBmL5GPPJrrqqk4B+m0wAT9yx4jsNV0KMTpRLRACh977V9ayjRDW1N58DckUZ/Jl/ikhVaahRKjKO3YgJ+aNrMGfLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173126; c=relaxed/simple;
-	bh=m/McX7Nf3MeeDAwBLwDVkzpSsZ6Xa7JXPNihnq+j008=;
+	s=arc-20240116; t=1790173129; c=relaxed/simple;
+	bh=XJMdLHWN7YMSBEWKFNpb1pJA7nNRkv6iu5fL11jCedw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnU8AWShLqNMCLzd3HrjSb00bYtG7oShTktZuTJQapb5bq+daUBkAKkEbDa1Uo/G+ykh485czkp0aXRQHg9WsVTbttE8mv0SvYbyA6yjFnW+uF1pVzsYjknv3SF2IBSYy0zAompT3Oy72toyzMaaSoOSg+ek9SKpD8wOTN2I4zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUUiRbuj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HltwwUUnvg+7EIOaqAhXNxWEtv71ZktrckiFync/F2PhiaIgqO5ebrwKgt7DIsaYvfLXyx24CrKuwDROmGtQifnk/98uKGHR9evLUsm4zBRWKZPYzq/21QMteiHknJHfXvsALeCKzGOPph52UfQv+GPUY+tyr5/jL3DRjbxPoMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1Pvb/+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUUiRbuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0421F000FF;
-	Wed, 23 Sep 2026 14:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1Pvb/+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953591F000FF;
+	Wed, 23 Sep 2026 14:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173125;
-	bh=cnkG0zV1+Nk4RbwWMDTnMbyxI44e01xII5cDDCMP24U=;
+	s=korg; t=1790173128;
+	bh=zfWdI/pid5zHoa6GnMa9WPoGCQGwAHTVkwMvVhqGfrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EUUiRbujWXq2oUewMoMSn9oa/IXvru5PrpwKLbpsDGuqTwXc0ooH8GxvGrDG8S5DJ
-	 oL6YFBr2/3XO9/ji6qpXttLt3z1QwGyzMdKWFiy5dDe1fYpXUQoDNt0Q2bYyQ/yKyn
-	 xr8mUISvZ+kqFfbmkRoymKxrRIC2RjvBFE6L/0u4=
+	b=o1Pvb/+LvK43AB1a8/caAUL4ws1+E9M3pmNTHKDgC4sZLc1o9KqOVH8vo7VLYE+qf
+	 OQTSLNpTiOaV1Tb7Kx+7yDIDUexQPtUkQpPnc/b+nKjlKs4XkSQrcCbCy3Rp1cQUF6
+	 toDqETncZi9UN2/qaz8SddrnwPbkS7xPJDH3d9UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 116/438] neighbour: Enforce min/max to NDTPA_INTERVAL_PROBE_TIME_MS.
-Date: Wed, 23 Sep 2026 16:02:17 +0200
-Message-ID: <20260923140647.789100014@linuxfoundation.org>
+Subject: [PATCH 7.2 117/438] neighbour: Dont render blackhole_netdev via RTM_GETNEIGHTBL.
+Date: Wed, 23 Sep 2026 16:02:18 +0200
+Message-ID: <20260923140647.813161180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,131 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 6d79b223ec44ada58ad37db42f539b60985a7722 ]
+[ Upstream commit 7b430fcfc972f61b09cc19ca95997586af4a147d ]
 
-NDTPA_INTERVAL_PROBE_TIME_MS sets .type and .min but misses
-.validation_type, so no validation is applied:
+The cited commits started to initialise blackhole_netdev with
+neigh_parms_alloc().
 
-  # ynl --family rt-neigh --do setneightbl \
-  --json '{"name": "arp_cache", "parms": {"interval-probe-time-ms": 0}}'
+This is visible in init_net as the ifindex==0 entries via
+RTM_GETNEIGHTBL:
 
-  # ynl --family rt-neigh --dump getneightbl --output-json | \
-  jq '.[] | select(.name == "arp_cache" and has("config"))
-          | .parms["interval-probe-time-ms"]'
-  0
+  # ynl --family rt-neigh --dump getneightbl --output-json \
+    | jq '.[] | select(.parms.ifindex == 0)
+              | {name: .name, ifindex: .parms.ifindex}'
+  {
+    "name": "arp_cache",
+    "ifindex": 0
+  }
+  {
+    "name": "ndisc_cache",
+    "ifindex": 0
+  }
 
-Moreover, nla_get_msecs() uses msecs_to_jiffies(), and u64 is
-silently cast to u32, so a larger value can bypass the min check:
+For RTM_SETNEIGHTBL, ifindex being 0 means wildcard.
 
-  e.g. 4294967296 == 0x100000000
+Let's skip blackhole_netdev's parms in neightbl_dump_info().
 
-  # ynl --family rt-neigh --do setneightbl \
-  --json '{"name": "arp_cache", "parms": {"interval-probe-time-ms": 4294967296}}'
+Note that lookup_neigh_parms() does not need the same change
+because the default parms is always the first entry and matches
+with ifindex == 0.
 
-  # ynl --family rt-neigh --dump getneightbl --output-json | \
-  jq '.[] | select(.name == "arp_cache" and has("config"))
-          | .parms["interval-probe-time-ms"]'
-  0
-
-msecs_to_jiffies() returns MAX_JIFFY_OFFSET if the value is
-larger than INT_MAX.  Also, INT_MAX ms overflows int NEIGH_VAR()
-when HZ > 1000 (Alpha, MIPS), and passing a negative integer to
-queue_delayed_work(unsigned long delay) causes sign extension,
-which wraps around the expiry time to the past, resulting in it
-being handled as 0 delay in the timer wheel.
-
-Let's use NLA_POLICY_FULL_RANGE() and limit the max to 1 day.
-
-The same max check is applied to sysctl as well.
-
-Note that this controls the probe interval for NTF_MANAGED
-entries, so the max of 1 day is unlikely to break any
-deployments.
-
-Fixes: 211da42eaa45 ("net, neigh: introduce interval_probe_time_ms for periodic probe")
+Fixes: e5f80fcf869a ("ipv6: give an IPv6 dev to blackhole_netdev")
+Fixes: 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260909233143.2401847-3-kuniyu@google.com
+Link: https://patch.msgid.link/20260909233143.2401847-4-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/rt-neigh.yaml |  3 +++
- Documentation/networking/ip-sysctl.rst    |  2 +-
- net/core/neighbour.c                      | 17 +++++++++++++----
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ net/core/neighbour.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/rt-neigh.yaml b/Documentation/netlink/specs/rt-neigh.yaml
-index 0f46ef3135905..c8e55c98d5649 100644
---- a/Documentation/netlink/specs/rt-neigh.yaml
-+++ b/Documentation/netlink/specs/rt-neigh.yaml
-@@ -341,6 +341,9 @@ attribute-sets:
-       -
-         name: interval-probe-time-ms
-         type: u64
-+        checks:
-+          min: 1
-+          max: 86400000
- 
- operations:
-   enum-model: directional
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index 208f46967ee59..b05829e44d8fc 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -248,7 +248,7 @@ neigh/default/unres_qlen - INTEGER
- 
- neigh/default/interval_probe_time_ms - INTEGER
- 	The probe interval for neighbor entries with NTF_MANAGED flag,
--	the min value is 1.
-+	the min value is 1, and the max value is 86400000 (1 day).
- 
- 	Default: 5000
- 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 49dd7df149ef3..0db78a0dfb516 100644
+index 0db78a0dfb516..02bf940ce00af 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -2359,6 +2359,13 @@ static const struct nla_policy nl_neightbl_policy[NDTA_MAX+1] = {
- 	[NDTA_PARMS]		= { .type = NLA_NESTED },
- };
+@@ -2624,7 +2624,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 			if (!net_eq(neigh_parms_net(p), net))
+ 				continue;
  
-+#define NTBL_PARM_MS_MAX	(24 * 60 * 60 * MSEC_PER_SEC)
-+
-+static const struct netlink_range_validation nl_ntbl_parm_ms_range = {
-+	.min = 1,
-+	.max = NTBL_PARM_MS_MAX,
-+};
-+
- static const struct nla_policy nl_ntbl_parm_policy[NDTPA_MAX+1] = {
- 	[NDTPA_IFINDEX]			= { .type = NLA_U32 },
- 	[NDTPA_QUEUE_LEN]		= { .type = NLA_U32 },
-@@ -2375,7 +2382,8 @@ static const struct nla_policy nl_ntbl_parm_policy[NDTPA_MAX+1] = {
- 	[NDTPA_ANYCAST_DELAY]		= { .type = NLA_U64 },
- 	[NDTPA_PROXY_DELAY]		= { .type = NLA_U64 },
- 	[NDTPA_LOCKTIME]		= { .type = NLA_U64 },
--	[NDTPA_INTERVAL_PROBE_TIME_MS]	= { .type = NLA_U64, .min = 1 },
-+	[NDTPA_INTERVAL_PROBE_TIME_MS]	= NLA_POLICY_FULL_RANGE(NLA_U64,
-+								&nl_ntbl_parm_ms_range),
- };
+-			if (!p->dev)
++			if (!p->dev || p->dev == blackhole_netdev)
+ 				continue;
  
- static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
-@@ -3672,12 +3680,13 @@ static int neigh_proc_dointvec_ms_jiffies_positive(const struct ctl_table *ctl,
- 						   void *buffer, size_t *lenp, loff_t *ppos)
- {
- 	struct ctl_table tmp = *ctl;
--	int ret;
-+	int ret, min, max;
- 
--	int min = msecs_to_jiffies(1);
-+	min = msecs_to_jiffies(1);
-+	max = msecs_to_jiffies(NTBL_PARM_MS_MAX);
- 
- 	tmp.extra1 = &min;
--	tmp.extra2 = NULL;
-+	tmp.extra2 = &max;
- 
- 	ret = proc_dointvec_ms_jiffies_minmax(&tmp, write, buffer, lenp, ppos);
- 	neigh_proc_update(ctl, write);
+ 			if (nidx < neigh_skip)
 -- 
 2.53.0
 
