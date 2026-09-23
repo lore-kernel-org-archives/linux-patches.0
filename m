@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D59B51EE1A;
-	Wed, 23 Sep 2026 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6111051AFC6;
+	Wed, 23 Sep 2026 14:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172846; cv=none; b=ZIdYmqDWGfoq80HD66qFFs1Z7X90jCKeCNm062uPY2lD6agZArHS54zqOMVaKFsqGNlJHcG5+4ppbsoSjC8dshB006OIcnjK8lIisCviE63j7nvTN6Q3+/3C9S2evN3/Kj6KnfTjxlikCkvNCJ3YCLzy4KxcOu+estjbXFt3tSY=
+	t=1790172849; cv=none; b=b3LlKIDAFwss+MtxQIb6CsvICOifzViEKbx1yo5edSzkV9AlXWNiyFzr7YUFfpNN8dXJ7xA5PG+BjK9b5aKmAsEBrLwXcbJFZzr5fN9DBfWg1ItdF/E3OTcAkz347jqpkqGXCEkk1bTxA70nJRCvjxqUvPsoVuWxhp6EhXRwZkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172846; c=relaxed/simple;
-	bh=Hd6bEj8P1Um+ITgNr4yUg5FD/E7OAzs+fBRotCTSNOM=;
+	s=arc-20240116; t=1790172849; c=relaxed/simple;
+	bh=V4lNSSdckW9dhPKiZ5X/DWnqc/VlLuV0AcEKN1nFu4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d90pMr+j79BwbBxDEX3UsHKE/tOPZvadU3TEQjHp/QnCFN3x1rxxBFIZwkuZz751krxVR5UpulCH9e3hwfLCrY+CxMBeubSIME9FIFgCtmnIES/upghNxNldX657jdmNHhFdFMGu85zcJdKchMdbn/Aa8TPeiXE4LzlYbjLQNcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXLm2ckR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tE6zRX/6UTiP+u/FZFjTahPU0eqaxOdgLKMMs3M3erRXItnd2zoQ4EWw2pBo4DzO0btTgNxsRdH0YoDjjIrOE0q1Kf8ZXT/lhkgk/IfqxCfHQ695142qIqWVtoaZab1TgxbjELQRGBvuIRI2LRcAVGzYa+cSVunwsiqku5SMCGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W73dnxSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXLm2ckR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9853C1F000FF;
-	Wed, 23 Sep 2026 14:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W73dnxSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B703B1F000FF;
+	Wed, 23 Sep 2026 14:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172845;
-	bh=ojy2Ez+4dROi7nznEAsef5TT2g+bmOkb6i+fLoRBpEg=;
+	s=korg; t=1790172848;
+	bh=W5wwqitPjDoEMPxXpwMUrMDegDpdUKqaqKE/kJxzBYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TXLm2ckRgJDqjiF4KH8rE7e7+DtLhAQUE+HuTvYwEjsiu/KSKQWMLQSKiwRcvvRpM
-	 Ylja8MWpHXl4oqj3PiZFJx53Zx4kRAudu/3Wm5VrtRC//MrLISZkIN0VmuqeQ4/eaw
-	 EKh2lnmnzZSHLn+lu6nNRaYLNJjl9VJT3wDYkMDs=
+	b=W73dnxSVsaFt4WbrEK55D3j6D5qUViJW37D4X0TMyBiLfSQA8ErrHyivOoYv4QM3M
+	 /RsNaoaNez7rL1nbBxGMU+yhFDkO5oZXVMhHE1mbw96f82PhcI/sgHrKVwcrZ50rQX
+	 DEsqDFd5FGiyWIwrixWohs8kSGbNpGZBEys6aVpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e84ecca6d1fa09a9b3d9@syzkaller.appspotmail.com,
+	syzbot+a59b5291776979816910@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 075/438] wifi: mac80211: reset the LED state when ifup fails
-Date: Wed, 23 Sep 2026 16:01:36 +0200
-Message-ID: <20260923140646.729779388@linuxfoundation.org>
+Subject: [PATCH 7.2 076/438] wifi: mac80211: only operate on TDLS peers in the TDLS code
+Date: Wed, 23 Sep 2026 16:01:37 +0200
+Message-ID: <20260923140646.753669571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,53 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 78183e8331958fda11cd2b6850bb424a9747c4b2 ]
+[ Upstream commit 6f0a100df8539ce90f37c14e1945f396ca2410bc ]
 
-When the first interface comes up, the radio LED is turned on. This can
-start the TPT trigger timer, which continues running.
+ieee80211_tdls_oper() can operate on the AP station, which then
+yields various warnings when the AP station is removed then or
+at a later point in time after being confused for a TDLS peer.
 
-But if bringing up the interface fails then the timer keeps running and
-won't be stopped by anything, eventually it can be freed:
-
-  ODEBUG: free active (active state 0) object: ffff888127e12130 object type: timer_list hint: tpt_trig_timer+0x0/0x300 net/mac80211/led.c:145
-  WARNING: CPU: 0 PID: 5923 at lib/debugobjects.c:612 debug_print_object+0x1a2/0x2b0
-   debug_check_no_obj_freed+0x4b7/0x600 lib/debugobjects.c:1129
-   kfree+0x436/0x670 mm/slub.c:6818
-   ieee80211_led_exit+0x162/0x1c0 net/mac80211/led.c:210
-   ieee80211_unregister_hw+0x27e/0x3a0 net/mac80211/main.c:1706
-   rt2x00lib_remove_dev+0x55b/0x670
-
-Undo the LED state in the error path.
+Always check that the station is a TDLS peer.
 
 Assisted-by: LLM
-Fixes: 67408c8c7b9d ("mac80211: selective throughput LED trigger active")
-Reported-by: syzbot+e84ecca6d1fa09a9b3d9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e84ecca6d1fa09a9b3d9
-Link: https://patch.msgid.link/20260904165722.044aa432f873.I601a67a2cd558b8ef8416a07554ae7efe896e9d8@changeid
+Fixes: dfe018bf9953 ("mac80211: handle TDLS high-level commands and frames")
+Fixes: 17e6a59a365a ("mac80211: cleanup TDLS state during failed setup")
+Reported-by: syzbot+a59b5291776979816910@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a59b5291776979816910
+Link: https://patch.msgid.link/20260904165722.3bad8b79679b.I99618745e83cbe9b9804179387be15fcd3505ae3@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/tdls.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 8c300e045fdf9..4c34c3287eb4a 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -1606,8 +1606,12 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
-  err_del_interface:
- 	drv_remove_interface(local, sdata);
-  err_stop:
--	if (!local->open_count)
-+	if (!local->open_count) {
-+		ieee80211_led_radio(local, false);
-+		ieee80211_mod_tpt_led_trig(local, 0,
-+					   IEEE80211_TPT_LEDTRIG_FL_RADIO);
- 		drv_stop(local, false);
-+	}
- 	if (sdata->vif.type == NL80211_IFTYPE_NAN_DATA)
- 		RCU_INIT_POINTER(sdata->u.nan_data.nmi, NULL);
- 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index ffd575a8d188f..5f2f89795dc99 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1142,6 +1142,7 @@ ieee80211_tdls_mgmt_setup(struct wiphy *wiphy, struct net_device *dev,
+ 	struct ieee80211_local *local = sdata->local;
+ 	enum ieee80211_smps_mode smps_mode =
+ 		sdata->deflink.u.mgd.driver_smps_mode;
++	struct sta_info *sta;
+ 	int ret;
+ 
+ 	/* don't support setup with forced SMPS mode that's not off */
+@@ -1168,14 +1169,10 @@ ieee80211_tdls_mgmt_setup(struct wiphy *wiphy, struct net_device *dev,
+ 	 * Allow error packets to be sent - sometimes we don't even add a STA
+ 	 * before failing the setup.
+ 	 */
+-	if (status_code == 0) {
+-		rcu_read_lock();
+-		if (!sta_info_get(sdata, peer)) {
+-			rcu_read_unlock();
+-			ret = -ENOLINK;
+-			goto out_unlock;
+-		}
+-		rcu_read_unlock();
++	sta = sta_info_get(sdata, peer);
++	if ((status_code == 0 && !sta) || (sta && !sta->sta.tdls)) {
++		ret = -ENOLINK;
++		goto out_unlock;
+ 	}
+ 
+ 	ieee80211_flush_queues(local, sdata, false);
+@@ -1442,6 +1439,10 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+ 	 */
+ 	tdls_dbg(sdata, "TDLS oper %d peer %pM\n", oper, peer);
+ 
++	sta = sta_info_get(sdata, peer);
++	if (!sta || !sta->sta.tdls)
++		return -ENOLINK;
++
+ 	switch (oper) {
+ 	case NL80211_TDLS_ENABLE_LINK:
+ 		if (sdata->vif.bss_conf.csa_active) {
+@@ -1449,10 +1450,6 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+ 			return -EBUSY;
+ 		}
+ 
+-		sta = sta_info_get(sdata, peer);
+-		if (!sta || !sta->sta.tdls)
+-			return -ENOLINK;
+-
+ 		iee80211_tdls_recalc_chanctx(sdata, sta);
+ 		iee80211_tdls_recalc_ht_protection(sdata, sta);
+ 
 -- 
 2.53.0
 
