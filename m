@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57413334C3B;
-	Wed, 23 Sep 2026 14:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5801B38D6A2;
+	Wed, 23 Sep 2026 14:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173465; cv=none; b=s+8RleZEuFXYJGA6DozJpjPcf2UkZiPMs3W0LnWCe6XaANdcF8PXSSyjsLEOvKBL5gurLLpxqPKqTCg/GkeeGYGxHmHhfMEBptAn1mPrrrNbOus44rEyn9lIBFA9cXUp9xyEOTxsaJSsI0V7XqfwFHcnUeLmC7OublpnPSxHKWk=
+	t=1790173468; cv=none; b=jcqk4x4qVBS0fNTWiPiha3Ikxm5pS3Tzzwma1EoOreD3d++bRYwLcipKAvpeZXi8cj7kWAsoisc2MSiQ3DC3O77K3hEWbzSfJosa6E+OwQQZhoVUYIMf1iNa85144jSvlRwDReT16eOY5KMbke8Ci5GDW/xVbcbLlh1JzIyt3yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173465; c=relaxed/simple;
-	bh=D/6swvvkXGAE0WlWOZ7jdOuumLcT+Z4a8wTXKYPtplk=;
+	s=arc-20240116; t=1790173468; c=relaxed/simple;
+	bh=pDoR5X9ARGsqwfTeEj+dbDEZFSwU3Xmak2Oc5NPc1wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkGFI1kv6skXQ9KxGb3Ri7gDF8ygSUtQRRMBojTrVhgNmdyqaG2sBuPc2/duZGwCbKf1Wvu9p15AtSv4i0ijPx7VwkMrXgW3vdOD7IPNcqUSR6EPED54GotqzrnG3MgurZQYWKYL8EU3cBTd6Vz5DKWMGmAC8Cgzg1c/1G2n0Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQoiLXSr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAPFyKME15djQBGYl6h5QZU+oQszHI1aFowlVSzIMsgwS/aIg8xxxx9vIGrHeRcWv1gPxPN8nzZhi57ymOxUiMiGqx6p65IQZNvsFYPJsvfwkhwHKVdgviG6o0pNq1ToYHGnvfi7Bi5rprkcyX6UXPHteLDMcH9KIxZ5u/wweGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIirmdIT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQoiLXSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDBF1F000FF;
-	Wed, 23 Sep 2026 14:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIirmdIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EAF1F000FF;
+	Wed, 23 Sep 2026 14:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173464;
-	bh=fiBkGaa5jtYbkNihUOtXPn16esMHgeGTxepzgFTxbE8=;
+	s=korg; t=1790173467;
+	bh=kpPZRPvKd/dR4pPgMz294+JOg+iJLry4hiM/xMB3LMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQoiLXSruwwBBJHavGocHrmbEa1cXnYI7VEGT076rbmtC0b+RNci1AAX0gTOALwG3
-	 2NEnqu1b5sJ5+C+zWsyuKHEicviTzloB+1mBpkxQNtB0p6dS3BhLBsXJ57rDzOtcxH
-	 LJ+qtGx07bfuzrJQVAtelZ2wZa8abImQKj+w1seU=
+	b=JIirmdITD7Dt7kAkqlxZk/AXS2puVvXFiBO3HYjf+dioNtXZ5HkYUJEJ2N5VS0oGG
+	 UJKIf0duinyk1DHdSO3ROsRzPHYc1PygLcbAYgg6GUrUMNg0n7yvIXy/W4yIENEThZ
+	 bnlCx21hgsc6yvHheOUoUzIhHbFy4voQXwZcRSpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lyude Paul <lyude@redhat.com>,
 	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 7.2 253/438] Revert "nouveau/gsp: fix suspend/resume regression on r570 firmware"
-Date: Wed, 23 Sep 2026 16:04:34 +0200
-Message-ID: <20260923140651.328008938@linuxfoundation.org>
+Subject: [PATCH 7.2 254/438] drm/nouveau/gsp: Increase delay for magic sleep in r535_gsp_fini()
+Date: Wed, 23 Sep 2026 16:04:35 +0200
+Message-ID: <20260923140651.354271514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,98 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Lyude Paul <lyude@redhat.com>
 
-commit a5c41fa7f925fda2db394329fa0b26243fa63a81 upstream.
+commit bbb9293c9bb792f3f16c842f223b8c97bdbaf227 upstream.
 
-This reverts commit 8302d0afeaec0bc57d951dd085e0cffe997d4d18.
+As it turns out, Turing isn't the only architecture that needs this. On
+this Dell Precision 7780 with an AD103 GPU, along with pretty much every
+other laptop I tested, runtime PM is still somewhat unreliable. At first
+glance it seems as if it's fixed, but lowering the autosuspend delay to
+500ms and then doing a stress test of suspend/resume cycles on the GPU ends
+up causing everything to start timing out.
 
-It turns out this looked like the right fix on some systems, but it's not -
-as this causes runtime PM to actually fail on many a laptop.
+After quite a lot of digging, I eventually landed back on this magic
+timeout in r535_gsp_fini(). As it turns out, increasing the timeout ends up
+fixing the runtime PM issues as far as I can tell, even during intense
+stress testing.
 
-Fixes: 8302d0afeaec ("nouveau/gsp: fix suspend/resume regression on r570 firmware")
-Cc: <stable@vger.kernel.org> # v6.19+
+Unfortunately after spending quite a bit of time trying to dig through
+OpenRM to figure out what this magic sleep is actually doing, I've also
+come up short with any reasonable explanation. In lieu of that, I'm going
+to include the observations I did make while trying to figure this out in
+hopes someone eventually does figure this out:
+
+* The magic sleep has to occur after fbsr is initialized. Performing it at
+  any time before that doesn't appear to work.
+* In situations where runtime PM starts getting flaky, some rather
+  interesting visual effects end up happening on occasion before the GPU
+  fully falls over. In particular, squares that look like the result of an
+  incomplete blitting operation to a tiled buffer end up showing up on
+  applications like vkcube. Interestingly enough, they remain in precisely
+  the same place between runtime PM cycles until the GPU falls over - even
+  when restarting vkcube multiple times, and even when vkcube is actively
+  updating the screen. Even more interestingly, they're not limited to a
+  specific framebuffer - you can see the squares changing as the cube
+  rotates around.
+  We cannot however, say that this is likely to be a incomplete fbsr
+  operation. The magic sleep happens before fbsr is actually saved (which
+  happens on the GSP unload), so it's something else.
+* During a short bit of testing with a desktop that I have, the magic sleep
+  seemed to make no difference to whether or not suspend/resume works. It
+  seems to generally work almost always. So we can assume this is likely
+  exclusive to runtime PM, not S3.
+
+As well, here's a list of the things I tried before settling on the magic
+sleep:
+
+* Hooking up NV2080_CTRL_CMD_INTERNAL_GCX_ENTRY_PREREQUISITE and then
+  blocking runtime PM until OpenRM signals that GC6/GCOFF is ready appears
+  to make no difference.
+* Hooking up some (maybe not all, unsure about that part) bits of comptag
+  saving including:
+  * Fetching static memsys information from GSP
+  * Adding the size of the comptag storage to the fbsr data
+  * Adding a GA103+ workaround for disabling raw compression mode during
+    fbsr (it doesn't seem like it applies for any systems I tried it on
+    anyhow)
+  * Setting bPreserveVideoMemoryAllocations=1 in GspSystemInfo
+
+So, until we can figure this out properly - just sleep for longer.
+
 Signed-off-by: Lyude Paul <lyude@redhat.com>
+Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
+Cc: <stable@vger.kernel.org> # v6.16+
 Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260814194542.781955-2-lyude@redhat.com
-(cherry picked from commit 94097122bfd701976bc1a62ccd434c13f3f67cde)
+Link: https://patch.msgid.link/20260814194542.781955-5-lyude@redhat.com
+(cherry picked from commit 09b47186a4164f3aaa3591313f80794443117342)
 Signed-off-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c  |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c |    8 ++++----
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h        |    2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-@@ -208,7 +208,7 @@ r535_fbsr_resume(struct nvkm_gsp *gsp)
- }
- 
- static int
--r535_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
-+r535_fbsr_suspend(struct nvkm_gsp *gsp)
- {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
 --- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
 +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-@@ -1749,7 +1749,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, enum
- 		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.lvl0.addr;
- 		sr->sizeOfSuspendResumeData = len;
+@@ -1761,8 +1761,12 @@ r535_gsp_fini(struct nvkm_gsp *gsp, enum
+ 		 * TODO: Debug the GSP firmware / RPC handling to find out why
+ 		 * without this Turing (but none of the other architectures)
+ 		 * ends up resetting all channels after resume.
++		 * Additionally, runtime suspend on other architectures quickly
++		 * becomes unreliable without this sleep. If you're experiencing
++		 * issues with runtime suspend, try bumping this delay up and
++		 * sending a patch if it fixes your GPU.
+ 		 */
+-		msleep(50);
++		msleep(200);
+ 	}
  
--		ret = rm->api->fbsr->suspend(gsp, suspend == NVKM_RUNTIME_SUSPEND);
-+		ret = rm->api->fbsr->suspend(gsp);
- 		if (ret) {
- 			nvkm_gsp_mem_dtor(&gsp->sr.meta);
- 			nvkm_gsp_radix3_dtor(gsp, &gsp->sr.radix3);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-@@ -62,7 +62,7 @@ r570_fbsr_resume(struct nvkm_gsp *gsp)
- }
- 
- static int
--r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size, bool runtime)
-+r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size)
- {
- 	NV2080_CTRL_INTERNAL_FBSR_INIT_PARAMS *ctrl;
- 	struct nvkm_gsp_object memlist;
-@@ -81,7 +81,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- 	ctrl->hClient = gsp->internal.client.object.handle;
- 	ctrl->hSysMem = memlist.handle;
- 	ctrl->sysmemAddrOfSuspendResumeData = gsp->sr.meta.addr;
--	ctrl->bEnteringGcoffState = runtime ? 1 : 0;
-+	ctrl->bEnteringGcoffState = 1;
- 
- 	ret = nvkm_gsp_rm_ctrl_wr(&gsp->internal.device.subdevice, ctrl);
- 	if (ret)
-@@ -92,7 +92,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- }
- 
- static int
--r570_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
-+r570_fbsr_suspend(struct nvkm_gsp *gsp)
- {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
-@@ -133,7 +133,7 @@ r570_fbsr_suspend(struct nvkm_gsp *gsp,
- 		return ret;
- 
- 	/* Initialise FBSR on RM. */
--	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size, runtime);
-+	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size);
- 	if (ret) {
- 		nvkm_gsp_sg_free(device, &gsp->sr.fbsr);
- 		return ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-@@ -79,7 +79,7 @@ struct nvkm_rm_api {
- 	} *device;
- 
- 	const struct nvkm_rm_api_fbsr {
--		int (*suspend)(struct nvkm_gsp *, bool runtime);
-+		int (*suspend)(struct nvkm_gsp *);
- 		void (*resume)(struct nvkm_gsp *);
- 	} *fbsr;
- 
+ 	ret = r535_gsp_rpc_unloading_guest_driver(gsp, suspend);
 
 
