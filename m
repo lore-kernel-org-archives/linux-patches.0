@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD075372DD;
-	Wed, 23 Sep 2026 14:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0B553162E;
+	Wed, 23 Sep 2026 14:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174078; cv=none; b=gYZCKDwlVnYGsLnQouKgfzidjy8qDURUakkWPx8hOonOPfOtQz9utRf1138cmDAQkSNBGXXPKK7+v71h2FNLsS5XT0d+XyhByYHoPlGASjpaF7d+c2xc055R21QD6cx47nqlx+HfTwrWtwWpaSuwoPNubVp8hkB/hdqAhKbAkb4=
+	t=1790174081; cv=none; b=NIpi/4I4Aq0o3WAP6xmp+TFTcyz3/uPraZNQ8Na32I+SrIM0/ARNMRuc4wJyBv7iOzurkjbkgrHjdo5orwPHEDYieGk+T5ECgylPAAWoGjPHHbrrsTlLvvb68tmlsvYrMd8sl75UksMZ78dTEoH/f4En4LLapgf3K8+kDSJAocM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174078; c=relaxed/simple;
-	bh=3ZUjiJbSPA/uppnM8X7YRP6uJC7sKNSkkD+eEM8oW34=;
+	s=arc-20240116; t=1790174081; c=relaxed/simple;
+	bh=EEmyaEE0usAKnj5RB3IEOW/UFTyRaqwt6ttsqKWNmRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RU78fc9leIGlGMuGGYm0n3RYI0dk2S8lJ2qVQuJiqpPiTKKvgK89E2ZSwz67N4JFAKMRkHeI7C7sTnAEHsf7UAsmAzUZTCx7GjPWk3s62FagLFUDR9HSAuvJP5rNXwK2kkILsJlj8KZ8ZQyzn+0uz6UYvmp31H/N39giDU5HBx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH6Di2eW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfrneLFuv6Rh1pziYpzIyeENEmSCONjoDZOWtYuPb1dv2BqGOppQ1vm8y+HHzS7lFk69rML5LQjOykwuJGtLPar98PbPSrP8FOdXLGWSk0O7QfuEuuIPpho93mTxUGka5yASAREOEUGepPsmDmG9zRhW1B0/rajnusoLuPJeggU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrWJGy/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH6Di2eW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE1A1F000FF;
-	Wed, 23 Sep 2026 14:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrWJGy/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C6E1F000FF;
+	Wed, 23 Sep 2026 14:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174076;
-	bh=xpersycC1b9cjPp85+WOCLtVKePsU/ez1SdHAw/eBoM=;
+	s=korg; t=1790174080;
+	bh=lOyBuEcCxrzwLjoD6+SKItJKcGsCF9vd5kRz2nh8UL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GH6Di2eWQXVN+Xgwwiqlcwp/xAL97Mja6vQ5GxICUxIsdGs94RYxKERGx6hOtqyHH
-	 tLhODN7Al0Yl4rFOfiB5DcXwAJ/arUFd4yBRbPMulhstjzt0WlznvUm6T+Cgx541NZ
-	 /w11SpmP3xM5aleb9sFaJgO7dTQk2OWS10R8NozM=
+	b=hrWJGy/xSdEIDkjID/g4QxOaiqvsiHOlpa0UNQWPAeV1x/Bel2ET4UQ1tsBbhXLUq
+	 +gcJEqu8kHtI2qTE1tbsknsJ8swtodEyBzxhKHMJpkf2mRcoKxtnZBwLBujgYMCI8/
+	 vnTvQkmUxA97kg45O7ifprijExJRAu7iC6wF69ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 427/438] smb: client: fix missing iov bounds check in parse_posix_sids()
-Date: Wed, 23 Sep 2026 16:07:28 +0200
-Message-ID: <20260923140655.989047253@linuxfoundation.org>
+	Usama Arif <usama.arif@linux.dev>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 428/438] fs/super: skip non-memcg-aware nr_cached_objects in memcg slab shrink
+Date: Wed, 23 Sep 2026 16:07:29 +0200
+Message-ID: <20260923140656.013440884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,50 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Usama Arif <usama.arif@linux.dev>
 
-commit b09d092eb24ad0110f16a9b7c1ed5d2a0c1733dc upstream.
+[ Upstream commit 0baad6f9b9970c6e3f1d33dbfd17d1a77702771d ]
 
-In parse_posix_sids(), sidsbuf_end is calculated using the server-supplied
-out_len without being validated against the actual length of the received
-iov (iov_len).
+The super_block shrinker is registered with SHRINKER_MEMCG_AWARE because its
+dentry and inode LRUs are memcg-aware (via list_lru). But the optional
+->nr_cached_objects() hooks that the shrinker also drives are not memcg-aware:
+btrfs extent maps and xfs inode reclaim operate on filesystem-global
+state, and shmem's unused-huge shrinker walks a per-superblock shrinklist.
+None of them filter by sc->memcg.
 
-If a server provides an inflated out_len, sidsbuf_end will point past the
-end of the iov. This defeats the bounds guards in posix_info_sid_size(),
-allowing out-of-bounds reads into adjacent kernel memory.
+The mismatch shows up under memcg-heavy slab reclaim. shrink_slab_memcg()
+calls do_shrink_slab() once per (memcg, NUMA node) pair for every memcg
+whose bit is set in the per-superblock shrinker bitmap, which on a busy
+host means hundreds of calls per reclaim pass. Each scan queues the same
+global shrinker work item that's already kicked from the root path.
 
-Fix this by rejecting responses where the calculated sidsbuf_end would
-exceed the received iov boundaries or cause pointer wraparound.
+Because btrfs/xfs global count is typically non-zero on any in-use filesystem,
+the returned total stays positive even if a memcg's own dentry/inode LRUs
+are empty. shrink_slab_memcg() therefore never clears the SB shrinker bit
+in the memcg bitmap, so subsequent reclaim passes from the same memcg
+re-enter super_cache_count() and pay for the global counter walk again.
 
-Fixes: a90f37e3d7ac ("smb: client: parse owner/group when creating reparse points")
-Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Restrict ->nr_cached_objects() to the global shrink path (sc->memcg NULL
+or root). The memcg-aware dentry/inode LRUs keep being counted and
+scanned per memcg as before; only the global fs-specific hooks are skipped.
+The root/global shrink path still drives those hooks; only their
+invocation from non-root memcg slab reclaim is removed.
+
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Link: https://patch.msgid.link/20260609123047.1948242-1-usama.arif@linux.dev
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: 641aade99f06 ("fs: fix missed removal of super_fs_objects_eligible()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/super.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -76,6 +76,17 @@ static int parse_posix_sids(struct cifs_
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -24,6 +24,7 @@
+ #include <linux/export.h>
+ #include <linux/slab.h>
+ #include <linux/blkdev.h>
++#include <linux/memcontrol.h>
+ #include <linux/mount.h>
+ #include <linux/security.h>
+ #include <linux/writeback.h>		/* for the emergency remount stuff */
+@@ -170,6 +171,19 @@ static void super_wake(struct super_bloc
+ }
  
- 	sidsbuf = (u8 *)qi + le16_to_cpu(qi->OutputBufferOffset) + qi_len;
- 	sidsbuf_end = sidsbuf + out_len - qi_len;
-+	if (sidsbuf_end < sidsbuf) {
-+		cifs_dbg(VFS, "%s: server-supplied out_len %u caused pointer wraparound\n",
-+			 __func__, out_len);
-+		return -EINVAL;
-+	}
-+	if (sidsbuf_end > (u8 *)rsp_iov->iov_base + rsp_iov->iov_len) {
-+		cifs_dbg(VFS, "%s: server-supplied out_len %u overruns iov by %td bytes\n",
-+			 __func__, out_len,
-+			 sidsbuf_end - ((u8 *)rsp_iov->iov_base + rsp_iov->iov_len));
-+		return -EINVAL;
-+	}
+ /*
++ * The s_op->nr_cached_objects hooks (used for example by btrfs and xfs)
++ * operate on filesystem-global state and ignore sc->memcg. Driving them
++ * from per-memcg shrink_slab_memcg() invocations only burns CPU walking
++ * per-cpu counters and queueing duplicate work: the actual reclaim happens on
++ * the global path (kswapd or root direct reclaim) regardless. Restrict them
++ * to that path.
++ */
++static inline bool super_fs_objects_eligible(struct shrink_control *sc)
++{
++	return !sc->memcg || mem_cgroup_is_root(sc->memcg);
++}
++
++/*
+  * One thing we have to be careful of with a per-sb shrinker is that we don't
+  * drop the last active reference to the superblock from within the shrinker.
+  * If that happens we could trigger unregistering the shrinker from within the
+@@ -198,7 +212,7 @@ static unsigned long super_cache_scan(st
+ 	if (!super_trylock_shared(sb))
+ 		return SHRINK_STOP;
  
- 	owner_len = posix_info_sid_size(sidsbuf, sidsbuf_end);
- 	if (owner_len == -1)
+-	if (sb->s_op->nr_cached_objects)
++	if (sb->s_op->nr_cached_objects && super_fs_objects_eligible(sc))
+ 		fs_objects = sb->s_op->nr_cached_objects(sb, sc);
+ 
+ 	inodes = list_lru_shrink_count(&sb->s_inode_lru, sc);
+@@ -259,7 +273,8 @@ static unsigned long super_cache_count(s
+ 		return 0;
+ 	smp_rmb();
+ 
+-	if (sb->s_op && sb->s_op->nr_cached_objects)
++	if (sb->s_op && sb->s_op->nr_cached_objects &&
++	    super_fs_objects_eligible(sc))
+ 		total_objects = sb->s_op->nr_cached_objects(sb, sc);
+ 
+ 	total_objects += list_lru_shrink_count(&sb->s_dentry_lru, sc);
 
 
