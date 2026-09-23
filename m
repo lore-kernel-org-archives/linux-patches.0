@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8D553F6B8;
-	Wed, 23 Sep 2026 14:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3849E541E48;
+	Wed, 23 Sep 2026 14:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174670; cv=none; b=q3kmfMQzk7Ih3UqEzJnb8BC4aO2J7HQOWkgSPv1b4YGrfyYVgLd31sUcKkFBr4nRswzRguugeh2F+HCNukIm8zWkS/U7Lb7myv4Bhi4YuTjX3IdFCpfqavh6dOZVW3U3v6hQvW6oZppsl/e/Fzv8ZrA7MWwZElohG69xzrdFD2s=
+	t=1790174676; cv=none; b=WEeltKHyigyLc82SysMzRs+oCNNII/jhexSrBTfXuOGA1ZXfWWPpyfz/baQm5+P+yKudkYnHLxuPEXxQYPkFJ3dcxOh51suelcOgvSZvRX+KfsnNetKjTVPL+n3DGHtNeRqRKxOYkX0WgT4pLTwlkntsSq+LzuxgoNCDrjrGnyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174670; c=relaxed/simple;
-	bh=wIv6mPSe30RFJhTgM21dxGJQHTMFlnVhqk5xoFfnjDc=;
+	s=arc-20240116; t=1790174676; c=relaxed/simple;
+	bh=kup+CQ4vCOM5XlhGYeT4hwY3bucGjG6EfF++gFTpHvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyqell+DrTrZco1dnkhl4PRtavs/dLQYenocEL1p2uBitVGduCphhBgKpdMKBHn1peOYfBk0RkMkKyxmR3STSyPtiWyteqJ/KjQu99HjR20YKnjaMUqjjRO7c+ScXymdNI8D78cPi7CYCC04b+dDb+c81SwFJl1pVR4wOKu4rj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UO11vnQW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QMTHs7SiK3NBfPqNaEKwFrrY/c7bkUPGvYJUwbJfxkHqU9ZeXsgSUPQdbbNLuZlrmLXXGO49nKn5tsHbs0kiyRkzTh+XCvYxuXu/LYEKxOK9IUUcy7pLyjPEHY01swniDlu+k05X3nCShe5eoPPhdpLmPeMmPDOX03tgonB7xvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BE5k/U9Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO11vnQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7311F000FF;
-	Wed, 23 Sep 2026 14:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BE5k/U9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A751F000FF;
+	Wed, 23 Sep 2026 14:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174669;
-	bh=DBhMV15t6hpukKb3OPPFuuApz/qqaWmxP66AF+jUBG8=;
+	s=korg; t=1790174672;
+	bh=YH5OJPe5K9DrVOsWhXaKkmnwEpcC7GiYN1/jA0a2DVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UO11vnQWtasLQjpH/d9gbxpXtw+lwnrRRZFofznRVkPID9t+btW5wPba1eeXtssBU
-	 WiPzirFmKx7qQ/ZIsPQVr4vgc8Z9WXBEJ3BqL8XoxbBj366D0F+aKvww0d+S2tpTvD
-	 gmdI3vaUoGG1co6Y2XDB85Wk45ItPIVVTGsMHlYM=
+	b=BE5k/U9ZoGHy/Kq/GPagn2KwbjNenDmnf4L2o7omSgk8Ov2rJ/DVuIVnx8bNK7k3P
+	 7YItKbWgAR3pWB4F4LTzaaVtoEIOcB3NidbM0pUsGqraJ97ctGjCVbaCwmpT/DLRMt
+	 qSpw7q0vzDN2lDBDh+rxEhSt2I7Awas9X6bKXFGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Paul Gofman <pgofman@codeweavers.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 188/398] btrfs: check if there is space for chunk item when validating sys chunk array
-Date: Wed, 23 Sep 2026 16:04:22 +0200
-Message-ID: <20260923140648.303757712@linuxfoundation.org>
+Subject: [PATCH 6.18 189/398] x86/fred: Reconstruct the #GP context for rejected INT instructions
+Date: Wed, 23 Sep 2026 16:04:23 +0200
+Message-ID: <20260923140648.329463406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,41 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit aeab4c62875748ecfd390a47ac1d91ea7c9a6abb ]
+[ Upstream commit 93f53499d0b945e8ae447f497faf743d60069f61 ]
 
-We checked if have enough remaining space for a key before dereferencing a
-key, but we then dereference a chunk item, to get the number of stripes,
-without checking if there is space for the item. So add a check to see if
-there is enough space for a chunk item before dereferencing the item to
-extract the stripe count.
+FRED event delivery does not use the IDT, so the gate DPL check that
+rejects a user INT n falls to software (Intel FRED specification [1],
+section 8.3). fred_intx() rejects the same vectors as IDT delivery, but
+reports a zero error code and the IP after the INT. This breaks the
+signal ABI. Wine uses the error code to recognize INT 0x2d, so the
+changed context turns a handled breakpoint into an access violation in
+Elden Ring.
 
-Fixes: 2a9bb78cfd36 ("btrfs: validate system chunk array at btrfs_validate_super()")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Rewind IP using the instruction length in the augmented SS and
+synthesize the IDT selector error code, (vector << 3) | 2. Set RF in the
+saved flags, as the CPU does for a #GP fault. Section 5.2.1 defines the
+saved vector, instruction length and RF state. The supplied length
+handles prefixes without reading user memory. Limit the changes to
+already-rejected software interrupts, preserving the accepted INT3, INT4
+and enabled INT80 paths and hardware exceptions. With IA32 emulation
+disabled, INT 0x80 now reports the same #GP as the DPL 0 gate IDT
+installs there. The rewound IP also stops fixup_iopl_exception() from
+inspecting the byte after the INT.
+
+Also clear the software event flag. Section 6.2.3 specifies that ERETU
+with this flag and TF set traps before executing any user instruction. A
+tracer that suppresses SIGSEGV and resumes with TF set expects the next
+instruction to run first, as after IRET. The sigreturn path clears the
+same flag for this reason in prevent_single_step_upon_eretu().
+
+[1] Intel Flexible Return and Event Delivery (FRED) Specification,
+revision 9.0 (346446-009US), sections 5.2.1, 6.2.3 and 8.3.
+
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/15745
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16132
+Reported-by: Paul Gofman <pgofman@codeweavers.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: H. Peter Anvin <hpa@zytor.com>
+Link: https://cdrdv2.intel.com/v1/dl/getContent/678938 # [1]
+Link: https://patch.msgid.link/20260917230907.2080792-2-matthew.schwartz@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/entry/entry_fred.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 8863479a19d3e..5396f900d5f12 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2338,6 +2338,10 @@ static int validate_sys_chunk_array(const struct btrfs_fs_info *fs_info,
- 				  key.type, cur);
- 			return -EUCLEAN;
- 		}
-+
-+		if (unlikely(cur + sizeof(*chunk) > sys_array_size))
-+			goto short_read;
-+
- 		chunk = (struct btrfs_chunk *)(sb->sys_chunk_array + cur);
- 		num_stripes = btrfs_stack_chunk_num_stripes(chunk);
- 		if (unlikely(cur + btrfs_chunk_item_size(num_stripes) > sys_array_size))
+diff --git a/arch/x86/entry/entry_fred.c b/arch/x86/entry/entry_fred.c
+index 9f50f0c1c00f5..c43c750fa26dc 100644
+--- a/arch/x86/entry/entry_fred.c
++++ b/arch/x86/entry/entry_fred.c
+@@ -10,6 +10,7 @@
+ #include <asm/desc.h>
+ #include <asm/fred.h>
+ #include <asm/idtentry.h>
++#include <asm/processor-flags.h>
+ #include <asm/syscall.h>
+ #include <asm/trapnr.h>
+ #include <asm/traps.h>
+@@ -71,7 +72,15 @@ static noinstr void fred_intx(struct pt_regs *regs)
+ #endif
+ 
+ 	default:
+-		return exc_general_protection(regs, 0);
++		/*
++		 * Reconstruct the #GP fault state that IDT delivery would produce.
++		 * Clear the software event flag so ERETU with TF set does not trap
++		 * before the resumed instruction. See prevent_single_step_upon_eretu().
++		 */
++		regs->ip -= regs->fred_ss.insnlen;
++		regs->flags |= X86_EFLAGS_RF;
++		regs->fred_ss.swevent = 0;
++		return exc_general_protection(regs, (regs->fred_ss.vector << 3) | 2);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
