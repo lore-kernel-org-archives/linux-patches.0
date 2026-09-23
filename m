@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6572377A80;
-	Wed, 23 Sep 2026 14:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0DC334C3B;
+	Wed, 23 Sep 2026 14:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173448; cv=none; b=X1H39QQYj26zDJAZSRBXgVTqyguENyYlNNHD5spVKXbW/Kgttc7lL0PKEI29A3N2kZTMxISx04j8eCaJBC1ZaUYPM0WD46yA3jyFERkrhf5bN+l6vgH2iQG7tDLERBO4qUG1tBNCudTbEiaC9uwH4W6kTOuUYaU08/5eY/O51JQ=
+	t=1790173452; cv=none; b=VpblJGjm1DVajmHLB5uOcSFeMLHIXJPibMYAXaRZBIHzpXn2/jVBqVJeSdC3WMqa3CWGkEYnOP5DJChUcrYc61nB1b2F5A2M/mQuVie3Ll/2r3kkMurqthXZR7+lz/8aZ2pFqJGqzLWP4lvK2mFd7dfO67JQXkejKlG0FRzp284=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173448; c=relaxed/simple;
-	bh=sLiEJTU/4vyk8B3XYNHhYpvc2sWK5T9SRxYBTSOT3TY=;
+	s=arc-20240116; t=1790173452; c=relaxed/simple;
+	bh=VfZqqwsKewm/87IlrI51tdxZxg4v5Eb8KR7hnxCnmDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gx5OBnKHF4o3oGLdDKzd7nh2An7n0CNzNrZ+S9w485aoVlLlV3Ox59kPJ7KdZ/qXTwnjLhYvYW3vXqbX7tG/YefNMNpO3KUhsVfq+j6BS3cu3/cyOrwyZe269H7n8WsN+9iSRpX3LostbaY5LvjIbU8MHxseyTom7NuVbkMmBqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPzsEaD8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdPYMfWLoDEISg9UN4mNyTdT4HReUoBKFTSmlmpCFfmtnm19lKU8ztAqg5HXCQJ8+KgaDAuSOpMkbvJwcAqYNHwMLS/ty7b9Nz8KCoof0op4apaM7KCsgl/gRtOwrmHNk3UrUG3rEYW1EpmwJiwDSN4PMUgWVOtsPQ/fGXntZ8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4GoWWEk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPzsEaD8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088681F000FF;
-	Wed, 23 Sep 2026 14:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4GoWWEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B771F000FF;
+	Wed, 23 Sep 2026 14:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173447;
-	bh=S/mlxDWZJv+kXKMlV7N1a7H8sZP/17As/8m0xM1u8Bo=;
+	s=korg; t=1790173450;
+	bh=M0AxDZEr5KdeNy0b59ewGNhCIE4EptkSFH0E5DRSaT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPzsEaD8qkG4WzZ43pvd5fFzc9e0hlVjiu0Y0fkOwyh08KBX3BNCxqxkdeYTYTjU2
-	 Vid0H9dTAOnx/jL6bskZR0YCdBJ8H8YHW9ujdNzgcwwjQayo/sgg983Jb8cBMis7El
-	 dTz+LPWEz+2AcP04Ra33U2QrwGuMapLWrloLoYog=
+	b=l4GoWWEkbeNfrDji6ubDGuNbhlmtgnV7I9xFit/EwfNmGy8wvIKunBO9NJykYl3o+
+	 9nbAnj6PTP9DefeTZ2da7t6wR7fRDSUYLmlCjXT1miM7saAeh0IL/nwhe3Bh9Dmb7z
+	 URwruNCScrAb1NIUFROXzHkHqVmZeDsRIkHDqzv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 222/438] drm/amdgpu: check ras and obj before dereference
-Date: Wed, 23 Sep 2026 16:04:03 +0200
-Message-ID: <20260923140650.522309009@linuxfoundation.org>
+	Kijo Park <red993688@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 7.2 249/438] posix-cpu-timers: Prevent freeing a timer which is queued on the expiry list
+Date: Wed, 23 Sep 2026 16:04:30 +0200
+Message-ID: <20260923140651.224759897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,49 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>
+From: Thomas Gleixner <tglx@kernel.org>
 
-[ Upstream commit 723d4dc628d764b19cf9efca14b82cca5ff020c9 ]
+commit c21eaa72f02fc6e85621cbe09d303d8fb8bd39cd upstream.
 
-nbio_v7_9_handle_ras_controller_intr_no_bifring() dereferences ras and obj
-without checking either for NULL. Both amdgpu_ras_get_context() and
-amdgpu_ras_find_obj() can return NULL, e.g. during the window between
-adev->nbio.ras being set (early in amdgpu_ras_init(), by design, to
-enable the fatal-error interrupt as soon as possible) and the PCIE_BIF
-ras object actually being created in RAS late_init. Any interrupt in that
-window crashes in hard-IRQ context.
+Kijo analyzed another race in the POSIX CPU timer code:
 
-This is analogous to commit d190b459b2a4 ("drm/amdgpu: the warning
-dereferencing obj for nbio_v7_4"), which fixed the same issue in the
-nbio_v7_4 handler.
+Commit bf635681c906 converted cpu_timer::firing from a tristate value to a
+boolean. This lost the distinction between "not owned by the firing list"
+and "still owned, but delivery was canceled". The resulting race is:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+    expiry handler              timer_settime()        timer_delete()
+    --------------              ---------------        --------------
+    collect timer onto
+    private firing list
+    firing = true
+                                observes firing = true
+                                firing = false
+                                return TIMER_RETRY
+                                wait for handler
+                                                       observes firing = false
+                                                       finish deletion
+                                                       unhash and free timer
+    resume list traversal
+    read freed elist.next
+    -> UAF
 
-Fixes: 7692e1ee2446 ("drm/amdgpu: add RAS fatal error handler for NBIO v7.9")
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c7071767a50a32ed727cf800ac84372429e3b4b3)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The firing bit is clearly the wrong indicator since that commit.
+
+Check whether the timer is queued on the expiry list or not instead. If it
+is queued clear the firing bit to prevent signal delivery as before and
+return TIMER_RETRY so the caller unlocks the timer which allows the expiry
+code to make progress and remove it from the list.
+
+Fixes: bf635681c906 ("posix-cpu-timers: Cleanup the firing logic")
+Reported-by: Kijo Park <red993688@gmail.com>
+Debugged-by: Kijo Park <red993688@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Kijo Park <red993688@gmail.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/posix-cpu-timers.c |   40 ++++++++++++++++++++++------------------
+ 1 file changed, 22 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-index bdfd2917e3cab..def02993b7cfd 100644
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-@@ -535,7 +535,7 @@ static void nbio_v7_9_handle_ras_controller_intr_no_bifring(struct amdgpu_device
- 						RAS_CNTLR_INTERRUPT_CLEAR, 1);
- 		WREG32_SOC15(NBIO, 0, regBIF_BX0_BIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -408,6 +408,7 @@ static int posix_cpu_timer_create(struct
  
--		if (!ras->disable_ras_err_cnt_harvest) {
-+		if (ras && !ras->disable_ras_err_cnt_harvest && obj) {
- 			/*
- 			 * clear error status after ras_controller_intr
- 			 * according to hw team and count ue number
--- 
-2.53.0
-
+ 	new_timer->kclock = &clock_posix_cpu;
+ 	timerqueue_init(&new_timer->it.cpu.node);
++	INIT_LIST_HEAD(&new_timer->it.cpu.elist);
+ 	new_timer->it.cpu.pid = get_pid(pid);
+ 	rcu_read_unlock();
+ 	return 0;
+@@ -566,6 +567,24 @@ static struct task_struct *timer_lock_si
+ }
+ 
+ /*
++ * If the timer is queued on the expiry list, then it cannot be dequeued because
++ * the firing list is not protected by sighand->lock. The delivery path is
++ * waiting for the timer lock. So go back, unlock and retry.
++ */
++static bool posix_cpu_timer_on_expiry_list(struct k_itimer *timer)
++{
++	if (list_empty(&timer->it.cpu.elist))
++		return false;
++
++	/*
++	 * Prevent signal delivery as there is no point in delivering a signal
++	 * which is made obsolete right away.
++	 */
++	timer->it.cpu.firing = false;
++	return true;
++}
++
++/*
+  * Clean up a CPU-clock timer that is about to be destroyed.
+  * This is called from timer deletion with the timer already locked.
+  * If we return TIMER_RETRY, it's necessary to release the timer's lock
+@@ -580,18 +599,10 @@ static int posix_cpu_timer_del(struct k_
+ 	p = timer_lock_sighand(timer, &flags);
+ 
+ 	if (likely(p)) {
+-		if (timer->it.cpu.firing) {
+-			/*
+-			 * Prevent signal delivery. The timer cannot be dequeued
+-			 * because it is on the firing list which is not protected
+-			 * by sighand->lock. The delivery path is waiting for
+-			 * the timer lock. So go back, unlock and retry.
+-			 */
+-			timer->it.cpu.firing = false;
++		if (posix_cpu_timer_on_expiry_list(timer))
+ 			ret = TIMER_RETRY;
+-		} else {
++		else
+ 			disarm_timer(timer, p);
+-		}
+ 		unlock_task_sighand(p, &flags);
+ 	}
+ 
+@@ -731,14 +742,7 @@ static int posix_cpu_timer_set(struct k_
+ 	/* Retrieve the current expiry time before disarming the timer */
+ 	old_expires = cpu_timer_getexpires(ctmr);
+ 
+-	if (unlikely(timer->it.cpu.firing)) {
+-		/*
+-		 * Prevent signal delivery. The timer cannot be dequeued
+-		 * because it is on the firing list which is not protected
+-		 * by sighand->lock. The delivery path is waiting for
+-		 * the timer lock. So go back, unlock and retry.
+-		 */
+-		timer->it.cpu.firing = false;
++	if (posix_cpu_timer_on_expiry_list(timer)) {
+ 		ret = TIMER_RETRY;
+ 	} else {
+ 		cpu_timer_dequeue(ctmr);
 
 
