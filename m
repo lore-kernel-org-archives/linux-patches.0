@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA1253162E;
-	Wed, 23 Sep 2026 14:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD075372DD;
+	Wed, 23 Sep 2026 14:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174075; cv=none; b=RnEAx1QbHkoubVw3v3wWAfzZ91FuvVkTc5dstx5ndSlIBUAPJ2/coZoKIB9sZjliHOPmV8r97h5bKJiqIA/VR93O4jGzkViYgJRECWvg3rLM//10Cc2vkw7B/4uq0pjgq/1jGkVSkRN6HYu13ePHpP0ot2gyGWoRKbxtuFOH9/g=
+	t=1790174078; cv=none; b=gYZCKDwlVnYGsLnQouKgfzidjy8qDURUakkWPx8hOonOPfOtQz9utRf1138cmDAQkSNBGXXPKK7+v71h2FNLsS5XT0d+XyhByYHoPlGASjpaF7d+c2xc055R21QD6cx47nqlx+HfTwrWtwWpaSuwoPNubVp8hkB/hdqAhKbAkb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174075; c=relaxed/simple;
-	bh=Bk1s0arntI39HKiZTPBitjSyEs9ub2Gfdb2arN2FJho=;
+	s=arc-20240116; t=1790174078; c=relaxed/simple;
+	bh=3ZUjiJbSPA/uppnM8X7YRP6uJC7sKNSkkD+eEM8oW34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3434gYyxzbJtQe3q1lItmPUeUDtv8fVQZ64hyeP2QcPXx6B0YPRWppyK2JAZvXqnUI4hxdD8OYADnY8dMpaq/Q3QdTeIf41fVhNFdlGK1O+Uj020WNMhf4PHQ5QlzBD+dZXpf4F2GBlUu+p85+0zDMSZzoY/oqIWDdc/aeQZ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fboypp/h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RU78fc9leIGlGMuGGYm0n3RYI0dk2S8lJ2qVQuJiqpPiTKKvgK89E2ZSwz67N4JFAKMRkHeI7C7sTnAEHsf7UAsmAzUZTCx7GjPWk3s62FagLFUDR9HSAuvJP5rNXwK2kkILsJlj8KZ8ZQyzn+0uz6UYvmp31H/N39giDU5HBx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH6Di2eW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fboypp/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C341F00899;
-	Wed, 23 Sep 2026 14:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH6Di2eW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE1A1F000FF;
+	Wed, 23 Sep 2026 14:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174074;
-	bh=DWj+fd4p6QV+53YCbxtMDn3Md7L7wKi6cOjERoa1lWI=;
+	s=korg; t=1790174076;
+	bh=xpersycC1b9cjPp85+WOCLtVKePsU/ez1SdHAw/eBoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fboypp/hzom9UXtDQp7jwje+AgSo7D5rn1sxqcpctptFKSaAUPmuufwXdR86DZNHa
-	 KDZa9a2j/yZnoQz4bn1/S1O8MR+SEKyKhlnOp7j18dboU143kt6V126/r2HlG3JH2x
-	 /hWjU2r7z45+BKC78WBQQOu48EjpjMryKBe1m7w8=
+	b=GH6Di2eWQXVN+Xgwwiqlcwp/xAL97Mja6vQ5GxICUxIsdGs94RYxKERGx6hOtqyHH
+	 tLhODN7Al0Yl4rFOfiB5DcXwAJ/arUFd4yBRbPMulhstjzt0WlznvUm6T+Cgx541NZ
+	 /w11SpmP3xM5aleb9sFaJgO7dTQk2OWS10R8NozM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Sorenson <sorenson@redhat.com>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 426/438] smb: client: fix missing lower-bound check on DFS referral string offsets
-Date: Wed, 23 Sep 2026 16:07:27 +0200
-Message-ID: <20260923140655.962442712@linuxfoundation.org>
+Subject: [PATCH 7.2 427/438] smb: client: fix missing iov bounds check in parse_posix_sids()
+Date: Wed, 23 Sep 2026 16:07:28 +0200
+Message-ID: <20260923140655.989047253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,56 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit e83330c55edc0c3ac08aa6c95e49e4694c65523b upstream.
+commit b09d092eb24ad0110f16a9b7c1ed5d2a0c1733dc upstream.
 
-parse_dfs_referrals() checks that DfsPathOffset and NetworkAddressOffset
-do not exceed the buffer end, but fails to check that they don't point
-inside the referral header itself.
+In parse_posix_sids(), sidsbuf_end is calculated using the server-supplied
+out_len without being validated against the actual length of the received
+iov (iov_len).
 
-If a server provides an offset smaller than
-sizeof(struct dfs_referral_level_3), the derived string pointer overlaps
-with the struct fields, causing cifs_strndup_from_utf16() to interpret
-header data as UTF-16 strings.
+If a server provides an inflated out_len, sidsbuf_end will point past the
+end of the iov. This defeats the bounds guards in posix_info_sid_size(),
+allowing out-of-bounds reads into adjacent kernel memory.
 
-Fix this by enforcing that string offsets are at least sizeof(*ref).
+Fix this by rejecting responses where the calculated sidsbuf_end would
+exceed the received iov boundaries or cause pointer wraparound.
 
-Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
+Fixes: a90f37e3d7ac ("smb: client: parse owner/group when creating reparse points")
 Cc: stable@vger.kernel.org
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/misc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2inode.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -788,7 +788,11 @@ parse_dfs_referrals(struct get_dfs_refer
- 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -76,6 +76,17 @@ static int parse_posix_sids(struct cifs_
  
- 		/* copy DfsPath */
--		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
-+		if (le16_to_cpu(ref->DfsPathOffset) < sizeof(*ref) ||
-+		    le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
-+			cifs_dbg(VFS, "%s: DfsPathOffset %u out of range [%zu, %td]\n",
-+				 __func__, le16_to_cpu(ref->DfsPathOffset),
-+				 sizeof(*ref), data_end - (char *)ref);
- 			rc = -EINVAL;
- 			goto parse_DFS_referrals_exit;
- 		}
-@@ -802,7 +806,11 @@ parse_dfs_referrals(struct get_dfs_refer
- 		}
+ 	sidsbuf = (u8 *)qi + le16_to_cpu(qi->OutputBufferOffset) + qi_len;
+ 	sidsbuf_end = sidsbuf + out_len - qi_len;
++	if (sidsbuf_end < sidsbuf) {
++		cifs_dbg(VFS, "%s: server-supplied out_len %u caused pointer wraparound\n",
++			 __func__, out_len);
++		return -EINVAL;
++	}
++	if (sidsbuf_end > (u8 *)rsp_iov->iov_base + rsp_iov->iov_len) {
++		cifs_dbg(VFS, "%s: server-supplied out_len %u overruns iov by %td bytes\n",
++			 __func__, out_len,
++			 sidsbuf_end - ((u8 *)rsp_iov->iov_base + rsp_iov->iov_len));
++		return -EINVAL;
++	}
  
- 		/* copy link target UNC */
--		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
-+		if (le16_to_cpu(ref->NetworkAddressOffset) < sizeof(*ref) ||
-+		    le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
-+			cifs_dbg(VFS, "%s: NetworkAddressOffset %u out of range [%zu, %td]\n",
-+				 __func__, le16_to_cpu(ref->NetworkAddressOffset),
-+				 sizeof(*ref), data_end - (char *)ref);
- 			rc = -EINVAL;
- 			goto parse_DFS_referrals_exit;
- 		}
+ 	owner_len = posix_info_sid_size(sidsbuf, sidsbuf_end);
+ 	if (owner_len == -1)
 
 
