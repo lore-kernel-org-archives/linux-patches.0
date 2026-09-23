@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A1348EC6C;
-	Wed, 23 Sep 2026 14:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28412497B79;
+	Wed, 23 Sep 2026 14:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173031; cv=none; b=dSGGpIk1O6RUi6MmTFkfOXOrZ9SqUNbVdUAMWntdDNjTwZlXu7IjDfH+zLPwzz+ANi+F+DwGSlMpoCif4mD6H8dyw7cXvBBDFpTpzEs+T8NGJ+SDQJvU60M9vynnH3vKetsXnNlSVTgcCC2vBmF/Zn/XsKfcZ793OhOCldxGQ1U=
+	t=1790173034; cv=none; b=VF+w4srEWRdrvXNWFnmQzvc2cMmd08eTI9IiPRsVemkSaMAlCg9B4w18G5QNc109mjPqUDmU2XVFHx5hwZypgawCxgrM8itXfTIlfRxgfPyH3cgFqezYW8i7VGLXs6W8g1yMlF4yZ+vsOrqf5JJHxZRxmrLTPJt5VMzop/6zVmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173031; c=relaxed/simple;
-	bh=6ZSNWLm1nzCuvCXlcbXH74jP4CUptpooVRureiZggRo=;
+	s=arc-20240116; t=1790173034; c=relaxed/simple;
+	bh=Vo5k9hvtCi+xsFjO8w96NeT+te69kXNy8mNAJZ0jmmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mshcisCcXAKlsXKI2SjlusfZKYqQlgGxuJPxtiAI0+FK6fov9tWyiWmiZLZLwLxHsQZJ2SLOhfluCiM+Hhd+lygbCWsbjl/GVb7B7Py9uv8WmbGfVZqkhwZfOTdHYrUTyBCN13ta3gfA5ZKc0tjDAFed2oTzYlZlov4335lUNp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwSsZsE7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a2YTu+qUZEPK0i9dMTlQmavzhxByeH3BCuSGuQxT5WvGiN6pzgGIK4fqLRpf/Fwnu0s3htpTHeRfrPhhlYhS7Z1QBFfErH131CkoddfPt2U4CF5A/2mD2ffo6p+HdPcqV+QxR/ln2XrK1GwWSdHTXNCU5XUKpyMsAH7rqbmq71s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6b6tmYM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwSsZsE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF551F000FF;
-	Wed, 23 Sep 2026 14:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6b6tmYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638331F000FF;
+	Wed, 23 Sep 2026 14:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173029;
-	bh=fcV21FrfaKl8zf1GtAbjxAed/hfiC9sURpcn2nHw3n8=;
+	s=korg; t=1790173033;
+	bh=3HuhWbNeAxta7gqnVcjZLts73RuT0sVjZHYAigEGIbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wwSsZsE7AzW/qZAIr9eP9XUyhs3FYiCrzXjRqiAIBgOH1LoCqq8GQvn4MHuGWQmiu
-	 /6pXHq9IYSrxf6uJtPHt/6OmMtZoIi4cg1R3uw6xoWeRhL3jQis66hn3CRSc38iqF5
-	 n0lKWVM8HPeqhoKTuhapuowvrMvc5htBWSqmMnxY=
+	b=f6b6tmYMJiYOzw/ZFOSjVVE/KaLoZcSe/DMkq6tuRkcO2rAzL99FmhrJ0fNR0XbcP
+	 2Va2yvlRaJ+pOOHfATwLlDr6QtBjR0RFDootC1W8Xmret/KDSiBse1I/mLxDWVxffY
+	 XG89/PMJXybKVOoH71e4Y4aac+3KBczA05rWwvE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Bright <william.bright@imd-tec.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 130/438] drm/msm/dp: fix link bandwidth check when wide bus is enabled
-Date: Wed, 23 Sep 2026 16:02:31 +0200
-Message-ID: <20260923140648.149974757@linuxfoundation.org>
+Subject: [PATCH 7.2 131/438] ASoC: Rename snd_soc_dai_link_ch_map.ch_mask to cpu_ch_mask
+Date: Wed, 23 Sep 2026 16:02:32 +0200
+Message-ID: <20260923140648.175732695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,76 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Bright <william.bright@imd-tec.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 58995b11dfb7dda095d23f22fa4dc79b923b5adf ]
+[ Upstream commit 4d855d747521505b54457c96bc73577bf74b2374 ]
 
-msm_dp_display_mode_valid() halves the pixel clock when either YUV420 or
-wide bus is in use, then uses that halved value both for the controller
-pixel clock limit and for the DP link bandwidth check.
+Rename the ch_mask member of snd_soc_dai_link_ch_map to cpu_ch_mask,
+as that is what it is used for.
 
-Only YUV420 halves the data crossing the link. Wide bus widens the
-internal DPU to DP interface to two pixels per clock, halving the
-controller clock. Every pixel is still transmitted, so the link
-bandwidth requirement remains.
+The CPU and codec channel masks are not necessarily the same, and are
+quite likely different. SoundWire and I2S/TDM both support assigning
+different sample slots to each codec, so for example channel 0 on each
+codec could map to different channels at the CPU. So it's quite normal
+that the channel mask at the CPU end is different for each codec, but
+the codec channel masks are the same for each codec.
 
-As a result, modes needing up to twice the available link bandwidth pass
-validation. On the IMDT QCS8550 SBC (rev5 with CYPD6125), where DP runs
-over USB-C alt mode where only two lanes are available, 3840x2160@60 was
-accepted despite needing 9.6 Gbps against the 8.64 Gbps the link can
-carry.
-
-Use a separate link pixel clock that is only halved for YUV420 for the
-bandwidth calculation, leaving the wide bus halving to apply solely to
-the controller pixel clock limit. With this, 4k@60 is correctly rejected
-and 4k@30 selected instead.
-
-Fixes: df9cf852ca30 ("drm/msm/dp: account for widebus and yuv420 during mode validation")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: William Bright <william.bright@imd-tec.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/746145/
-Link: https://lore.kernel.org/r/20260812-msm-dp-link-bw-v1-1-b0e3ce1190be@imd-tec.com
-[DB: dropped useless comment]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260910114500.1586637-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 6b382bdfe26a ("ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/sound/soc.h                 | 2 +-
+ sound/soc/sdw_utils/soc_sdw_utils.c | 2 +-
+ sound/soc/soc-pcm.c                 | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index a2f799cf50f63..22eade11c6150 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -698,6 +698,7 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
- 	u32 mode_rate_khz = 0, supported_rate_khz = 0, mode_bpp = 0;
- 	struct msm_dp *dp;
- 	int mode_pclk_khz = mode->clock;
-+	int link_pclk_khz;
- 	bool is_yuv_420;
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index 10ad80f930c2e..300ce20fc7b70 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -698,7 +698,7 @@ struct snd_soc_dai_link_component {
+ struct snd_soc_dai_link_ch_map {
+ 	unsigned int cpu;
+ 	unsigned int codec;
+-	unsigned int ch_mask;
++	unsigned int cpu_ch_mask;
+ };
  
- 	dp = to_dp_bridge(bridge)->msm_dp_display;
-@@ -719,6 +720,8 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
- 	if (is_yuv_420 && !msm_dp_display->panel->vsc_sdp_supported)
- 		return MODE_NO_420;
+ struct snd_soc_dai_link {
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index d8db8fc5313ee..ce2a9c28fe1a5 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -1541,7 +1541,7 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
+ 	 * ASoC will set the corresponding channel numbers for each cpu dai.
+ 	 */
+ 	for_each_link_ch_maps(rtd->dai_link, i, ch_maps)
+-		ch_maps->ch_mask = ch_mask << (i * step);
++		ch_maps->cpu_ch_mask = ch_mask << (i * step);
  
-+	link_pclk_khz = is_yuv_420 ? mode_pclk_khz / 2 : mode_pclk_khz;
-+
- 	if (is_yuv_420 || msm_dp_display->wide_bus_supported)
- 		mode_pclk_khz /= 2;
+ 	return 0;
+ }
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 0e49290a8c903..cb64ced211494 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1264,7 +1264,7 @@ static int __soc_pcm_hw_params(struct snd_pcm_substream *substream,
+ 		 */
+ 		for_each_rtd_ch_maps(rtd, j, ch_maps)
+ 			if (ch_maps->cpu == i)
+-				ch_mask |= ch_maps->ch_mask;
++				ch_mask |= ch_maps->cpu_ch_mask;
  
-@@ -730,9 +733,9 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
- 		mode_bpp = default_bpp;
- 
- 	mode_bpp = msm_dp_panel_get_mode_bpp(msm_dp_display->panel,
--			mode_bpp, mode_pclk_khz);
-+			mode_bpp, link_pclk_khz);
- 
--	mode_rate_khz = mode_pclk_khz * mode_bpp;
-+	mode_rate_khz = link_pclk_khz * mode_bpp;
- 	supported_rate_khz = link_info->num_lanes * link_info->rate * 8;
- 
- 	if (mode_rate_khz > supported_rate_khz)
+ 		/* fixup cpu channel number */
+ 		if (ch_mask)
 -- 
 2.53.0
 
