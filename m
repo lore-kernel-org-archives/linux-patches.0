@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E81493656;
-	Wed, 23 Sep 2026 14:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58EC53162E;
+	Wed, 23 Sep 2026 14:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173736; cv=none; b=ky++t+tIHObZ9VmgYDkA2ctgC2ksxte+oawgl9WiZ6NU3JC2kRfGoB5lO8L6zRjIAgY4iXQcJt11GFgmH6LJG1B5Txs/+0qksj9UlScU/cf1dMnZju09tOIMlw1WNmeEQ3dPBblHIg9Jo0/deSHrMVh/vl7Vp3L9dPiHG69jNbQ=
+	t=1790173738; cv=none; b=hvBlUPcdrj683Z+vrXvrj7aMQC+aeGb7wYaZll4Fq3yVq1JHxh5EGYCpPC+aLc36bowFYuJUut6vaI29Wg4WMUWJh7JuqjzuGUJY+EEtRbTr3h5eXhSyP8WOnQluqQ9hmXspaxAWBmdiS3QGPiC0rPTdAr3/ZEyBuC3TlkUSIZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173736; c=relaxed/simple;
-	bh=8yuCwGVQFzMYo8Uf85M3dr4NLN+/5KyyFGonALCun7s=;
+	s=arc-20240116; t=1790173738; c=relaxed/simple;
+	bh=OJZwE84pTxLwSqfOU/3puEVEx2zP/c+H4TeKzOGlE8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5YvVWBvQ0thqKOKPffm4Kc2wftEIavPnfxVlm6/7fQlvYso3BjyLh8iS2Jcrs9mXGMkI08gwNHfA/Fq1DNlLV0xuYz+eENJKLZ8/ditKcLnIT0zFniZzU9uCoD0Q/F5WiyJufDoBUkK5AvPr9xvXGKQasLKcGA+LclQxw6Q4Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBbeqEIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5xZ0IrU38sGXsS5cZy7OAP7uhqIv78LdJXoC0vAW4xNvgy7EqSe5IEcac7HRVppmeJ0SyEA1bb6cCsr6fp08ROMhHLFcoA41AmhkGcUyIRpsAJSxjxvXdQwI9zkDRJ1vGATsFKUZIUdn6HX0j/lpSiYH0YKMkepO+882gxSQTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjWKMBft; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBbeqEIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EC61F000FF;
-	Wed, 23 Sep 2026 14:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjWKMBft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7EF1F0089E;
+	Wed, 23 Sep 2026 14:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173734;
-	bh=ydEu1uQT62d17JAp/xcoMI2lG3ey2B4KNwm7cUf/0co=;
+	s=korg; t=1790173737;
+	bh=ed/LlIACSw4ZDZIe7PO9llAI3RR3DArVeEqv3NJw4GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JBbeqEIR0wIUmxGoEK44S3mgzFSZJh8xuwRqmsKuohiLW/LI/PJ9XxjxBkNpC18mt
-	 l5ShFMLTZ7OmlNwYRokgYTmPA+AObxhgVU14KBbWKDjI+PFHL7U1b9nac6/N37zQ0b
-	 assSc/IDbGRsy2mVBSlI1/GpjLASVKRePQvn4164=
+	b=pjWKMBftl2/s/M0O7eGLUgUBmU7pAUYm7KpwtIS0cd5NzzvBwpnXOINexBJ/NbiNl
+	 MLjSXocEXFQc3JaPUTN2lsMAJuA6hn9uRY60pVa9AQni5YAGVQdMM6daw2x7clCpJ+
+	 AOtmXrEcovsQduC69aWuoVpFMmfTnca1WxikPBCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.2 325/438] i2c: at91: release DMA channels on remove and probe error
-Date: Wed, 23 Sep 2026 16:05:46 +0200
-Message-ID: <20260923140653.224841805@linuxfoundation.org>
+Subject: [PATCH 7.2 326/438] i2c: atr: fix dangling adapter pointer on add failure
+Date: Wed, 23 Sep 2026 16:05:47 +0200
+Message-ID: <20260923140653.251649390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,87 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit f7eeb1af8537b05953fb1c88ab8b59d94059a381 upstream.
+commit ad34235808b63a70ca4989b7a2852923193d06ef upstream.
 
-at91_twi_configure_dma() requests exclusive tx/rx DMA channels, but
-nothing ever releases them on driver detach, and the probe error path
-after the channels are acquired (i2c_add_numbered_adapter() failure)
-returns without releasing them either, because the remove callback is
-not invoked after a failed probe.
+i2c_atr_add_adapter() stores atr->adapter[chan_id] before
+i2c_add_adapter() so that the I2C bus notifier can match child clients
+during registration. On failure the channel is freed but the slot was
+left pointing at freed memory, which can lead to use-after-free in
+i2c_atr_del_adapter() / cleanup and also block reuse with -EEXIST.
 
-Move the release into a helper, call it from the existing
-configure-failure path, the adapter-registration failure path, and
-at91_twi_remove().
+Clear the slot on the i2c_add_adapter() error path before freeing chan.
 
-Fixes: 60937b2cdbf9 ("i2c: at91: add dma support")
-Assisted-by: GLM:5.3
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Cc: <stable@vger.kernel.org> # v3.8+
-Acked-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Fixes: a076a860acae ("media: i2c: add I2C Address Translator (ATR) support")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v6.6+
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-1-271d4adc03a0@cherr.cc
+Link: https://patch.msgid.link/20260907071102.1080840-1-gonglinkai@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-at91-core.c   |    3 +++
- drivers/i2c/busses/i2c-at91-master.c |   12 +++++++++++-
- drivers/i2c/busses/i2c-at91.h        |    1 +
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-atr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-at91-core.c
-+++ b/drivers/i2c/busses/i2c-at91-core.c
-@@ -255,6 +255,7 @@ static int at91_twi_probe(struct platfor
- 	if (rc) {
- 		pm_runtime_disable(dev->dev);
- 		pm_runtime_set_suspended(dev->dev);
-+		at91_twi_dma_release(dev);
+--- a/drivers/i2c/i2c-atr.c
++++ b/drivers/i2c/i2c-atr.c
+@@ -855,6 +855,7 @@ int i2c_atr_add_adapter(struct i2c_atr *
  
- 		return rc;
- 	}
-@@ -270,6 +271,8 @@ static void at91_twi_remove(struct platf
- 
- 	i2c_del_adapter(&dev->adapter);
- 
-+	at91_twi_dma_release(dev);
-+
- 	pm_runtime_disable(dev->dev);
- 	pm_runtime_set_suspended(dev->dev);
- }
---- a/drivers/i2c/busses/i2c-at91-master.c
-+++ b/drivers/i2c/busses/i2c-at91-master.c
-@@ -817,11 +817,21 @@ static int at91_twi_configure_dma(struct
- error:
- 	if (ret != -EPROBE_DEFER)
- 		dev_info(dev->dev, "can't get DMA channel, continue without DMA support\n");
-+	at91_twi_dma_release(dev);
-+	return ret;
-+}
-+
-+void at91_twi_dma_release(struct at91_twi_dev *dev)
-+{
-+	struct at91_twi_dma *dma = &dev->dma;
-+
- 	if (dma->chan_rx)
- 		dma_release_channel(dma->chan_rx);
- 	if (dma->chan_tx)
- 		dma_release_channel(dma->chan_tx);
--	return ret;
-+	dma->chan_rx = NULL;
-+	dma->chan_tx = NULL;
-+	dev->use_dma = false;
- }
- 
- static int at91_init_twi_recovery_gpio(struct platform_device *pdev,
---- a/drivers/i2c/busses/i2c-at91.h
-+++ b/drivers/i2c/busses/i2c-at91.h
-@@ -172,6 +172,7 @@ void at91_twi_irq_restore(struct at91_tw
- void at91_init_twi_bus(struct at91_twi_dev *dev);
- 
- void at91_init_twi_bus_master(struct at91_twi_dev *dev);
-+void at91_twi_dma_release(struct at91_twi_dev *dev);
- int at91_twi_probe_master(struct platform_device *pdev, u32 phy_addr,
- 			  struct at91_twi_dev *dev);
- 
+ 	ret = i2c_add_adapter(&chan->adap);
+ 	if (ret) {
++		atr->adapter[chan_id] = NULL;
+ 		dev_err(dev, "failed to add atr-adapter %u (error=%d)\n",
+ 			chan_id, ret);
+ 		goto err_free_alias_pool;
 
 
