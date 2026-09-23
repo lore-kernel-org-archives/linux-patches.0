@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A41E51C356;
-	Wed, 23 Sep 2026 14:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1ED375F65;
+	Wed, 23 Sep 2026 14:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175367; cv=none; b=f4gfQ2dT5zA1fT1yrrviLshtnsW5EJtwpKRyzTxipx4Eu1Jt6qCLDeBjaWjmQMGSzxo7OZgAs31UtFV2P8W5GD48RLe8uYGLRN8g/GMEvuZZGBoQSP43E1DoabFbCEuAFLxuDCmjXj7o8GeCZVLyIJN4zpdIpbY8waaTI6dK7qg=
+	t=1790175369; cv=none; b=TKC6XLDCX4xGVhZTERAEw4/YkNF35B84/psiclUp3+Q5nVA7EA/VFEz4+r3y8/mySkXgeHDzI7YtRUsSCufKgkmBT7mUB6FO0HVGCAk492K0qlc2LfYtrh/LFAUEZv/DcdHF2ohaae8l4wFfOdKjGTiYFxf7t7kSA3/yt5i6vKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175367; c=relaxed/simple;
-	bh=hX1C3W0Iz/KgFKN52MhgBI0lwav6BtRpJor8YLSRckI=;
+	s=arc-20240116; t=1790175369; c=relaxed/simple;
+	bh=B38rMCAIDfDJIMlS4a6bEmvfgHNXKnWxMUrnBNKaBE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu9OsNnePV/9aB8+k49O/5XW+oNOB2jWBhCbSd3AgYASlSwmbra+FPucaCGApEj+z4c2nKllxeCSLG4XwGXMdXojCrzpWnPvlOHMloIEheydGw8Eu+RFJn76/52b8No/8udkB/IRT2E5O+FOROq+DaHxaIClxPfQHhqEpfZSclY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgaGy5NP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lW98VVzN1IOpsvum/MT0Az+TrDB0BX4WxLemSeqWOnLkMPPct5ydc80Gf9+knY81xAcrPHYk4NB5I/ZNzuwVmTd1+5L+CiuWaTPP7PO39YvgRt7zOKyyY9OFFdKS+w6vGeovNJrtymWE3hHr78QCdGNDe2Rd+0SzLcmsHdodXE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUA8ICX2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgaGy5NP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623691F000FF;
-	Wed, 23 Sep 2026 14:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUA8ICX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560251F000FF;
+	Wed, 23 Sep 2026 14:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175364;
-	bh=42LCXrnTJ4yN42TwltehikNNuzdsR3IYuLrz9W8OuGE=;
+	s=korg; t=1790175367;
+	bh=tZ5OmI+q+/9X4Xsat9XkXU7hxsMVKVNcEaYh9umj0o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgaGy5NPvVbj7UMcAorssgeWcF7HGq2ap5WSpZ7JNvLpB5D9P37kT2f3TujIj8IQc
-	 SFGMyyw/h/lzEdRkiYJLFgk5S4zAUP6BK8sqkDB+JqOzmbq/QvfAVwXW5w6YQw3v+u
-	 tH9/C89LVjLtknN5DQ43rsYzx/yivCvhNIFRuJHE=
+	b=qUA8ICX2VHGuIPMTe8bfwuDcIo/zbGWzsnTkAlx5Sn5EZS69xcCYjBDDOAQ1BgzvO
+	 rGS5MsZB6Hr7yNOTl6QZt+GDMbCZ3yTISAJXxtyT7QTBObroj/eHgTtYTin+emNSS7
+	 6RIgWLJ45qqSxcRxZ6Ba7q3EyfIERA4/RAFMCbys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mobin Aydinfar <mobin@mobintestserver.ir>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.18 393/398] ksmbd: fix partial normalized name responses
-Date: Wed, 23 Sep 2026 16:07:47 +0200
-Message-ID: <20260923140653.659790325@linuxfoundation.org>
+	syzbot+bc1aabf52d0a31e91f96@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 394/398] wifi: mac80211: fix list iteration in ieee80211_add_virtual_monitor()
+Date: Wed, 23 Sep 2026 16:07:48 +0200
+Message-ID: <20260923140653.684871452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit f4fafaf02174c32bce2f9bb4196fadf13f1fd96e upstream.
+commit cbf0dc37bb4e949f1c76566657e71f8e0bdcf338 upstream.
 
-Windows may request FILE_NORMALIZED_NAME_INFORMATION with an output
-buffer that only fits the fixed portion of the variable-length response.
-Treat the fixed portion as FILE_NORMALIZED_NAME_INFORMATION_SIZE so ksmbd
-returns STATUS_BUFFER_OVERFLOW instead of STATUS_INFO_LENGTH_MISMATCH.
+Since 'mon_list' of 'struct ieee80211_local' is RCU-protected and
+an instances of 'struct ieee80211_sub_if_data' are linked there
+via 'u.mntr.list' member, adjust the corresponding list iteration
+in 'ieee80211_add_virtual_monitor()' accordingly.
 
-This avoids rejecting valid partial normalized-name responses.
-
-Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
-Reported-by: Mobin Aydinfar <mobin@mobintestserver.ir>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: syzbot+bc1aabf52d0a31e91f96@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bc1aabf52d0a31e91f96
+Fixes: a5aa46f1ac4f ("wifi: mac80211: track MU-MIMO configuration on disabled interfaces")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20251204130533.340069-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- fs/smb/server/smb2pdu.h |    1 +
- 2 files changed, 4 insertions(+)
+ net/mac80211/iface.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5542,6 +5542,9 @@ static int smb2_get_info_file(struct ksm
- 		case FILE_ALTERNATE_NAME_INFORMATION:
- 			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
- 			break;
-+		case FILE_NORMALIZED_NAME_INFORMATION:
-+			fixed_len = FILE_NORMALIZED_NAME_INFORMATION_SIZE;
-+			break;
- 		case FILE_STREAM_INFORMATION:
- 			fixed_len = FILE_STREAM_INFORMATION_SIZE;
- 			break;
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -213,6 +213,7 @@ struct file_sparse {
- #define FILE_ALLOCATION_INFORMATION_SIZE      19
- #define FILE_END_OF_FILE_INFORMATION_SIZE     20
- #define FILE_ALTERNATE_NAME_INFORMATION_SIZE  8
-+#define FILE_NORMALIZED_NAME_INFORMATION_SIZE 8
- #define FILE_STREAM_INFORMATION_SIZE          32
- #define FILE_PIPE_INFORMATION_SIZE            23
- #define FILE_PIPE_LOCAL_INFORMATION_SIZE      24
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -1290,7 +1290,7 @@ configure_monitor:
+ 	if (!creator_sdata) {
+ 		struct ieee80211_sub_if_data *other;
+ 
+-		list_for_each_entry(other, &local->mon_list, list) {
++		list_for_each_entry_rcu(other, &local->mon_list, u.mntr.list) {
+ 			if (!other->vif.bss_conf.mu_mimo_owner)
+ 				continue;
+ 
 
 
