@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E765383F5;
-	Wed, 23 Sep 2026 14:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B44531AE6;
+	Wed, 23 Sep 2026 14:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174644; cv=none; b=qvuvWQzP8OOP2S+Ibbx0nWsdbP3XKAr73arPmQyqgQg62nQ41BbmHdTA1tj6v7EvfebT4g+qYzFVwmEFbva68YqrPhsynHSBTxglvu+Bzl957iB/Kfoa9Lw5GBHlWcsQSvmyNQ+JmiqtPiPQP9nlsvHJ9qh0AEg4aCmQPG5hyOY=
+	t=1790174647; cv=none; b=VczlCxs3RlF/apofQiEBDNrYo+PHPMxNIehStQuuycV+8EkGQmArCWSqpPeWOcZ9Jnar1WvRG+h9f+8VtJayoX3RK/eeXOEHvfCsoD+ODg9kp+3u55oFW1KDKS7OOQcD9nbyRIT6mxCDdJ2hw6AACaaZdO3q7sR8N43gtJcd61g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174644; c=relaxed/simple;
-	bh=yqFlr3emXXirsCPRZynxIBoo3dIQDZN7DhSPWKozIHs=;
+	s=arc-20240116; t=1790174647; c=relaxed/simple;
+	bh=tDT4jN1MvKMcuRB9eQQqbjMnfj7kOZruRiqrzEMtmWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atSMgVc4uu6VwXLMMS+sKtz9NdZsKOGzFq1heNzn3ScSw+iqH5SxuFrFMiZXZi2mdA7aNBASbBYD7Yce7uaPnX2qjQYOwLYd7/nZqbT4s5CZOQJhhw2oQbxoPfyhkwK8/JHd1eqEzBTVi3S6RzXH+/aSpNagm3vKVZdSFJF+cgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG7pKaLn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvS/39AEjuDi+oSnb2HSeMoVbzaU551AoAKLkoDXoIQLBqt/YTwpnZWxJymdlhe6mBOKaM2SuIstxjNI7ht7So9KiXcV8PTdgl33l3Bb8GMtLrlyx/xBT5ThL6ZSRcns/ZIiBqKknqiQWak1dZzQqEs1ZqxkW5x0opCoX3zpvRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtfOSyl0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG7pKaLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51371F000FF;
-	Wed, 23 Sep 2026 14:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtfOSyl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD5F1F000FF;
+	Wed, 23 Sep 2026 14:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174643;
-	bh=xQnIMBmeAOsWPKtFNmH8ahgAo3s4Jdyv8oE+2WmSvsY=;
+	s=korg; t=1790174646;
+	bh=Dm04kzk2tmRcJia220p30Ggpe9GBOWFiVG/WdQFEHtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bG7pKaLnCujxVaS9tEgA4tNIgEg8U2TRxToaazr/L+W5Cf9hka4t69/6jZkqhrkNA
-	 oPKTi//Et1ux1QwK4HieUr3vA1Ix7ora+r/W3lar/pOV34gB2RaK5jpJEC2BEYP6FU
-	 5bob1P2lU9iEez2QEcadQo4L3YYkbb34C5LZkyPo=
+	b=CtfOSyl0iV77d60rFW3IX7r2Nr06pDcN3wno+ZgkauaXdcdBUYDqq7Bv/Sq8xXtKR
+	 t0gZA5n4B3pPGMq0UsoEr0s4sFalwqDwsIHVV4WkP7pglkoFfalsyRLpOIRXj+H9or
+	 awVCxEaUYpdDViCtbRS1WdQxw35FFhK42qBHrT44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jinke Han <jinkehan@didiglobal.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 181/398] x86/alternative: Refactor INT3 call emulation selftest
-Date: Wed, 23 Sep 2026 16:04:15 +0200
-Message-ID: <20260923140648.124822384@linuxfoundation.org>
+Subject: [PATCH 6.18 182/398] x86/kprobes: Fix crash when probing CS CALL instructions
+Date: Wed, 23 Sep 2026 16:04:16 +0200
+Message-ID: <20260923140648.150856984@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,120 +55,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Jinke Han <jinkehan@didiglobal.com>
 
-[ Upstream commit 3049fc4b5f1d2320a84e2902b3ac5a735f60ca04 ]
+[ Upstream commit a5f7a5bb3b7f28ba7e4fa246775b29a0e5537255 ]
 
-The INT3 call emulation selftest is a bit fragile as it relies on the
-compiler not inserting any extra instructions before the
-int3_selftest_ip() definition.
+When using eBPF to probe CS CALL instructions within a function,
+a crash can be triggered.
 
-Also, the int3_selftest_ip() symbol overlaps with the int3_selftest
-symbol(), which can confuse objtool.
+The eBPF tool probes offset 257 of the __hrtimer_run_queues()
+function:
 
-Fix those issues by slightly reworking the functionality and moving
-int3_selftest_ip() to a separate asm function.  While at it, improve the
-naming.
+<__hrtimer_run_queues+249>:  nopl   0x0(%rax,%rax,1)
+<__hrtimer_run_queues+254>:  mov    %r14,%rdi
+<__hrtimer_run_queues+257>:  cs call <__x86_indirect_thunk_r12>
+<__hrtimer_run_queues+263>:  mov    %eax,%r12d
+<__hrtimer_run_queues+266>:  xchg   %ax,%ax
+<__hrtimer_run_queues+268>:  mov    %r13,%rdi
 
-Acked-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Joe Lawrence <joe.lawrence@redhat.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Stable-dep-of: a5f7a5bb3b7f ("x86/kprobes: Fix crash when probing CS CALL instructions")
+Which triggers this crash:
+
+  BUG: unable to handle page fault for address: 00000000000f41c9
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 0 P4D 0
+  Oops: 0002 [#1] SMP NOPTI
+  CPU: 1 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: P
+  RIP: 0010:__hrtimer_run_queues+0x106/0x230
+
+Note that __hrtimer_run_queues+0x106 is __hrtimer_run_queues+262, which is
+at the 6th byte of the above CS CALL instruction. Since the CS CALL
+instruction occupies 6 bytes, the exception occurred in the middle of that
+call instruction.
+
+The root cause is that when using eBPF tools to probe in the middle of a
+function, a kprobe with INT3 is used as the underlying implementation.
+
+During single-step emulation of the original CALL instruction,
+int3_emulate_call() assumes that the probed CALL instruction is 5 bytes
+long. However, the actual CS-prefixed CALL instruction occupies 6 bytes,
+so it constructs an incorrect exception return address. When the CPU
+returns from the kprobe handler, the next instruction to be executed is at
+the address of the last byte of that CS CALL instruction. Coincidentally,
+starting from that address, the CPU fetches and decodes a completely
+different instruction, which ultimately triggers a kernel crash.
+
+Fix the issue by using the actual instruction length obtained from
+the instruction decoder when constructing the exception return
+address, rather than relying on the hardcoded CALL_INSN_SIZE macro.
+
+[ mingo: Refined the changelog ]
+
+Fixes: 6256e668b7af ("x86/kprobes: Use int3 instead of debug trap for single-step")
+Suggested-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Jinke Han <jinkehan@didiglobal.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Borislav Petkov <bp@alien8.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://patch.msgid.link/20260908073742.GA10517@didi-ThinkCentre-M920t-N000
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/alternative.c | 51 +++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 23 deletions(-)
+ arch/x86/include/asm/text-patching.h | 4 ++--
+ arch/x86/kernel/alternative.c        | 6 ++++--
+ arch/x86/kernel/kprobes/core.c       | 5 ++---
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
+diff --git a/arch/x86/include/asm/text-patching.h b/arch/x86/include/asm/text-patching.h
+index f2d142a0a862e..ea09381070e82 100644
+--- a/arch/x86/include/asm/text-patching.h
++++ b/arch/x86/include/asm/text-patching.h
+@@ -164,9 +164,9 @@ unsigned long int3_emulate_pop(struct pt_regs *regs)
+ }
+ 
+ static __always_inline
+-void int3_emulate_call(struct pt_regs *regs, unsigned long func)
++void int3_emulate_call(struct pt_regs *regs, unsigned long ip, unsigned long func)
+ {
+-	int3_emulate_push(regs, regs->ip - INT3_INSN_SIZE + CALL_INSN_SIZE);
++	int3_emulate_push(regs, ip);
+ 	int3_emulate_jmp(regs, func);
+ }
+ 
 diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 109a285cca514..4917d2843feb4 100644
+index 4917d2843feb4..9c980b4f1943b 100644
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -2266,21 +2266,34 @@ int alternatives_text_reserved(void *start, void *end)
-  * See entry_{32,64}.S for more details.
-  */
- 
--/*
-- * We define the int3_magic() function in assembly to control the calling
-- * convention such that we can 'call' it from assembly.
-- */
-+extern void int3_selftest_asm(unsigned int *ptr);
- 
--extern void int3_magic(unsigned int *ptr); /* defined in asm */
-+asm (
-+"	.pushsection	.init.text, \"ax\", @progbits\n"
-+"	.type		int3_selftest_asm, @function\n"
-+"int3_selftest_asm:\n"
-+	ANNOTATE_NOENDBR
-+	/*
-+	 * INT3 padded with NOP to CALL_INSN_SIZE. The INT3 triggers an
-+	 * exception, then the int3_exception_nb notifier emulates a call to
-+	 * int3_selftest_callee().
-+	 */
-+"	int3; nop; nop; nop; nop\n"
-+	ASM_RET
-+"	.size		int3_selftest_asm, . - int3_selftest_asm\n"
-+"	.popsection\n"
-+);
-+
-+extern void int3_selftest_callee(unsigned int *ptr);
- 
- asm (
- "	.pushsection	.init.text, \"ax\", @progbits\n"
--"	.type		int3_magic, @function\n"
--"int3_magic:\n"
-+"	.type		int3_selftest_callee, @function\n"
-+"int3_selftest_callee:\n"
- 	ANNOTATE_NOENDBR
--"	movl	$1, (%" _ASM_ARG1 ")\n"
-+"	movl	$0x1234, (%" _ASM_ARG1 ")\n"
- 	ASM_RET
--"	.size		int3_magic, .-int3_magic\n"
-+"	.size		int3_selftest_callee, . - int3_selftest_callee\n"
- "	.popsection\n"
- );
- 
-@@ -2289,7 +2302,7 @@ extern void int3_selftest_ip(void); /* defined in asm below */
- static int __init
- int3_exception_notify(struct notifier_block *self, unsigned long val, void *data)
- {
--	unsigned long selftest = (unsigned long)&int3_selftest_ip;
-+	unsigned long selftest = (unsigned long)&int3_selftest_asm;
+@@ -2305,6 +2305,7 @@ int3_exception_notify(struct notifier_block *self, unsigned long val, void *data
+ 	unsigned long selftest = (unsigned long)&int3_selftest_asm;
  	struct die_args *args = data;
  	struct pt_regs *regs = args->regs;
++	unsigned long ip;
  
-@@ -2304,7 +2317,7 @@ int3_exception_notify(struct notifier_block *self, unsigned long val, void *data
+ 	OPTIMIZER_HIDE_VAR(selftest);
+ 
+@@ -2317,7 +2318,8 @@ int3_exception_notify(struct notifier_block *self, unsigned long val, void *data
  	if (regs->ip - INT3_INSN_SIZE != selftest)
  		return NOTIFY_DONE;
  
--	int3_emulate_call(regs, (unsigned long)&int3_magic);
-+	int3_emulate_call(regs, (unsigned long)&int3_selftest_callee);
+-	int3_emulate_call(regs, (unsigned long)&int3_selftest_callee);
++	ip = regs->ip - INT3_INSN_SIZE + CALL_INSN_SIZE;
++	int3_emulate_call(regs, ip, (unsigned long)&int3_selftest_callee);
  	return NOTIFY_STOP;
  }
  
-@@ -2320,19 +2333,11 @@ static noinline void __init int3_selftest(void)
- 	BUG_ON(register_die_notifier(&int3_exception_nb));
+@@ -2889,7 +2891,7 @@ noinstr int smp_text_poke_int3_handler(struct pt_regs *regs)
+ 		break;
  
- 	/*
--	 * Basically: int3_magic(&val); but really complicated :-)
--	 *
--	 * INT3 padded with NOP to CALL_INSN_SIZE. The int3_exception_nb
--	 * notifier above will emulate CALL for us.
-+	 * Basically: int3_selftest_callee(&val); but really complicated :-)
- 	 */
--	asm volatile ("int3_selftest_ip:\n\t"
--		      ANNOTATE_NOENDBR
--		      "    int3; nop; nop; nop; nop\n\t"
--		      : ASM_CALL_CONSTRAINT
--		      : __ASM_SEL_RAW(a, D) (&val)
--		      : "memory");
--
--	BUG_ON(val != 1);
-+	int3_selftest_asm(&val);
-+
-+	BUG_ON(val != 0x1234);
+ 	case CALL_INSN_OPCODE:
+-		int3_emulate_call(regs, (long)ip + tpl->disp);
++		int3_emulate_call(regs, (long)ip, (long)ip + tpl->disp);
+ 		break;
  
- 	unregister_die_notifier(&int3_exception_nb);
+ 	case JMP32_INSN_OPCODE:
+diff --git a/arch/x86/kernel/kprobes/core.c b/arch/x86/kernel/kprobes/core.c
+index 3863d7709386f..95ab48b3b0f89 100644
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -511,10 +511,9 @@ NOKPROBE_SYMBOL(kprobe_emulate_ret);
+ 
+ static void kprobe_emulate_call(struct kprobe *p, struct pt_regs *regs)
+ {
+-	unsigned long func = regs->ip - INT3_INSN_SIZE + p->ainsn.size;
++	unsigned long ip = regs->ip - INT3_INSN_SIZE + p->ainsn.size;
+ 
+-	func += p->ainsn.rel32;
+-	int3_emulate_call(regs, func);
++	int3_emulate_call(regs, ip, ip + p->ainsn.rel32);
  }
+ NOKPROBE_SYMBOL(kprobe_emulate_call);
+ 
 -- 
 2.53.0
 
