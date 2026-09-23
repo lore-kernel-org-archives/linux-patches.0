@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E113538D7A;
-	Wed, 23 Sep 2026 14:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7F7329C7C;
+	Wed, 23 Sep 2026 14:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174807; cv=none; b=nUpd0P9nM+uupwdD68J49nab3a+fHn829LDKRcS2dYcqYp4+Ylt42ZXS8pkjbBcJqnu3Yc/juRh5sij6nNE+wz9m0gKqKCKQb48wefBcbTQH/L94PDbPozVbsBxiNC0wOCxCzzXZvrTIbTwc0alaUjaSEsBmgmZ49V/AMd+wbX0=
+	t=1790174811; cv=none; b=rSMhvPLkIKaOyQpWtbRxtlOEAUZnIqJPjPaz5fwMJLM3LVam2XJLCBsJfGLZkq5w7IQb323ygX5tcnwZtlapZQB9UGFG0DdOWIAM0/2OMopqnZxfVQcyCd6gZHyUBpu2dRlTm4F09VC5847f1y9LqnSoLdd8hNDNPg1N2JmRAss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174807; c=relaxed/simple;
-	bh=beoGYQF9n2mgqkl9gT3a5bJQCPgI86FGbTWTNGa266o=;
+	s=arc-20240116; t=1790174811; c=relaxed/simple;
+	bh=74a/734VhPiJemFmNgKJJhd2FqGDWK9BfrW70gA+DVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lq4fOEVHZBnblpGC48FrBlN2bVCKhQnzTQcjkO1hFTtc1wozf5UW3gXJ72jp2nAGqlNt5b1goJO8y6/hQxg/2yExfKJaCVuiI4Hy0kH3V3dzmG6sTJthagO3Qbi5Mmep5cli9hWtXlvojL27qeASyBp7Gt3J7aXTa+3Z6bbbw3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMOw2Roj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUOdNoWFzxRct8Ax7gyZsnV3az0iLKJSQCHsFooReEWDRvFB/Y5EENVgt18xPecta5fvWCKR+10Ps/4HbI65ysn3ANsX51DJ4wILNLM454IBrOw6pOl4fOjML7ahd41Tzvv/aNZDRkSlHLX7DhPZQYa7+LBqqmdrKItjCU14AxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWswLy0u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMOw2Roj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94EF1F000FF;
-	Wed, 23 Sep 2026 14:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWswLy0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7604A1F000FF;
+	Wed, 23 Sep 2026 14:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174806;
-	bh=DmTjSafAF9Un08i6eKzWDWsmZgd5wIIYiuo3hhdqpkY=;
+	s=korg; t=1790174809;
+	bh=TYDhngAqqtXhE3jlLg3eUnlBgcis8ahSen1ZWFdPjZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMOw2RojEVGvLrkivvnUc0sbX/Rqbw1hZn1Ffg8/CIYQ/PI1B55Qp5Yu83P46QO4m
-	 OeTeHepyHW758n6KqaeEU+IcVf65kS7iZjku1Xzdu9BjxR1oh1+KsfDTKpBYbuh/X5
-	 XkW/c90hlnzzWXuKU5lLrJ7rTgohe0/saEqFdDYc=
+	b=YWswLy0uBsTd4DOK7ZASXUCaUgmWh7fnZ3aiYYIBCp2VdOm5SOfLdiZDgLH2hm1jB
+	 GosExi6P8w9M3Mv+e8pETyfJj/Zi7uQgbjAye63sxJ/M7TZH7zNFGptHCGWSNTgIxg
+	 V9LeH1FD5fTWyb6bTYtIu3qD3+0LTIfpPbUtKEkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Kijo Park <red993688@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 6.18 205/398] exec: Cleanup POSIX timers right after de_thread()
-Date: Wed, 23 Sep 2026 16:04:39 +0200
-Message-ID: <20260923140648.737203036@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Yang Shi <yang@os.amperecomputing.com>
+Subject: [PATCH 6.18 232/398] arm64: percpu: Fix LSE operations on {8,16}-bit types
+Date: Wed, 23 Sep 2026 16:05:06 +0200
+Message-ID: <20260923140649.432683995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,128 +59,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
+commit 8cf2093f5372952a9ebc805c418d45df7112cd14 upstream.
 
-A per-thread CPU timer holds a reference to the PID of the thread it is
-attached to and, while it is armed, its node is queued in that thread's
-posix_cputimers. The task is looked up by that PID.
+The assembly for __percpu_##name##_case_##sz() and
+__percpu_##name##_return_case_##sz() doesn't use the 'sfx' macro
+argument to form the LSE instruction. Without 'sfx', a W register
+argument will imply a 32-bit memory location, and consequently
+{8,16}-bit ops will erroneously read and write 32 bits of memory when
+the LSE instruction is used.
 
-When a non-leader thread exec()s, de_thread() changes which task owns
-that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
-but the node is still queued on tsk, which is alive. timer_lock_sighand()
-takes a failed lookup to mean that the node is already dequeued, so it
-has nothing to undo.
+Fix this by appending 'sfx' to 'op_lse' to LSE instruction. It is not
+necessary (and not valid) to append 'sfx' to 'op_llsc', as 'op_llsc' is
+a register-register operation which does not access memory (and does not
+take a size suffix).
 
-begin_new_exec() calls posix_cpu_timers_exit(me) right after
-exec_task_namespaces() and that removes the leftover node, so the state
-normally stays invisible. But bprm->point_of_no_return is set before
-de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
-exec_task_namespaces() fails, the task dies before it gets there.
-exit_itimers() then frees the k_itimer while its node is still queued,
-and reaping tsk later erases that freed node from the rbtree.
-
-In short:
-
-      the non-leader thread B           the parent
-
-  timer_create(CLOCK_THREAD_CPUTIME_ID)
-  timer_settime()
-    arm_timer()            // the node is queued on B
-  execve()
-    de_thread(B)
-      exchange_tids(B, leader)  // B's PID now belongs to the leader
-      release_task(leader)
-        __exit_signal(leader)
-          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
-          __unhash_process(leader)  // that PID has no task anymore
-    exec_mmap()
-      mmap_read_lock_killable(old_mm)
-                                kill(B, SIGKILL)
-      // -EINTR
-  get_signal()
-    do_exit()
-      exit_itimers()
-        posix_timer_delete()
-          posix_cpu_timer_del()
-        posix_timer_unhash_and_free()  // freed while still queued
-                                wait4()
-                                  release_task(B)
-                                    posix_cpu_timers_exit(B)
-                                      cleanup_timerqueue()
-                                        timerqueue_del()  // use-after-free
-
-Move the POSIX timer cleanup right after de_thread() before any of the
-later failure conditions brings the task into do_exit().
-
-[ tglx: Move the cleanup right after de_thread() ]
-
-Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Kijo Park <red993688@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yang Shi <yang@os.amperecomputing.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
-Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ arch/arm64/include/asm/percpu.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1094,6 +1094,17 @@ void __set_task_comm(struct task_struct
- 	perf_event_comm(tsk, exec);
- }
- 
-+static void posixtimer_exec(struct task_struct *me)
-+{
-+#ifdef CONFIG_POSIX_TIMERS
-+	spin_lock_irq(&me->sighand->siglock);
-+	posix_cpu_timers_exit(me);
-+	spin_unlock_irq(&me->sighand->siglock);
-+	exit_itimers(me);
-+	flush_itimer_signals();
-+#endif
-+}
-+
- /*
-  * Calling this is the point of no return. None of the failures will be
-  * seen by userspace since either the process is already taking a fatal
-@@ -1127,6 +1138,16 @@ int begin_new_exec(struct linux_binprm *
- 	retval = de_thread(me);
- 	if (retval)
- 		goto out;
-+
-+	/*
-+	 * This must be done here to ensure that POSIX CPU timers which were
-+	 * armed on the current task are dequeued from me::posix_cputimers.
-+	 * Otherwise in case of a TID switch the deletion of the related POSIX
-+	 * timer would not remove an enqueued timer because the TID lookup
-+	 * of the old TID fails.
-+	 */
-+	posixtimer_exec(me);
-+
- 	/* see the comment in check_unsafe_exec() */
- 	current->fs->in_exec = 0;
- 	/*
-@@ -1181,14 +1202,6 @@ int begin_new_exec(struct linux_binprm *
- 	if (retval)
- 		goto out_unlock;
- 
--#ifdef CONFIG_POSIX_TIMERS
--	spin_lock_irq(&me->sighand->siglock);
--	posix_cpu_timers_exit(me);
--	spin_unlock_irq(&me->sighand->siglock);
--	exit_itimers(me);
--	flush_itimer_signals();
--#endif
--
- 	/*
- 	 * Make the signal table private.
- 	 */
+--- a/arch/arm64/include/asm/percpu.h
++++ b/arch/arm64/include/asm/percpu.h
+@@ -77,7 +77,7 @@ __percpu_##name##_case_##sz(void *ptr, u
+ 	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
+ 	"	cbnz	%w[loop], 1b",					\
+ 	/* LSE atomics */						\
+-		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
++		#op_lse #sfx "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
+ 		__nops(3))						\
+ 	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
+ 	  [ptr] "+Q"(*(u##sz *)ptr)					\
+@@ -98,7 +98,7 @@ __percpu_##name##_return_case_##sz(void
+ 	"	stxr" #sfx "\t%w[loop], %" #w "[ret], %[ptr]\n"		\
+ 	"	cbnz	%w[loop], 1b",					\
+ 	/* LSE atomics */						\
+-		#op_lse "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
++		#op_lse #sfx "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
+ 		#op_llsc "\t%" #w "[ret], %" #w "[ret], %" #w "[val]\n"	\
+ 		__nops(2))						\
+ 	: [loop] "=&r" (loop), [ret] "=&r" (ret),			\
 
 
