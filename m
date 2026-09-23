@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30064535FD3;
-	Wed, 23 Sep 2026 14:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC225383DB;
+	Wed, 23 Sep 2026 14:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174457; cv=none; b=gDv44JA9RXapRpVTdkg73VH5O5f+1N8MjLyv464olPZnh66SgNKhOXkj43ykSGMGoHhBAryffUSUTOsX8wNUQxnWrmHnBwfDcnDcxCALob+7XR3IP4LybMxOV8TowALsr96KMMcZfkFVzijDWY5rc89nmb/CTmkF/unzyydZUkQ=
+	t=1790174460; cv=none; b=pMRtHRrBPjPXJDj5frETXdyBxsZnVwyuHJJOHo9Jdmqw3gNMVN/ecJJio+bdjrIG6fVuNlt4X6S7i6w8dHwYe1WE/0UHoy4UuWVHJX919Tb5suxvA4o5mxmWtiV/VJrlo+KZoV1tlyWtGaUNCQuIQBNOTcfVJOMYb4Uyiv9uShQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174457; c=relaxed/simple;
-	bh=9lbXgLW0nFYq1ZqL8tHSdnnx0oKRRuhn/giEEW48Oo4=;
+	s=arc-20240116; t=1790174460; c=relaxed/simple;
+	bh=TED/F+nVakZCcw1cGoqo1pWs8hbV9ftn+CaGgZFof1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srqrCfI7fBSd7zR0jmb8O0UZalU369+pdWJULSd4ypdErDPfvHI/j4BkasKA2KkDn21yQjFh1F+2rzftg8LeLv3rDhAS0DFuvXkNvlG4tC5SNq0OamZ0plMQKu0NccquLA+lRrdRTZUK1XtfSL3rPRKsMc5CmFtEJeoaPBpjfHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsSF+G4Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5tv/G9J0GoJqBzHAJxaXDaYJe3XdFkvU2/OwKN+snMpwnEw5pdcAmTg+bhCnqUHnAIdKKbn4zkCoE2JXTZs6ZdFTVBvAZDb3eId0FG63YLYR9zYbB2yPVTdgJtU7W4a2KaD9xvkkZKQr+Dln/uvDAHbEnrQwGVNTdMtN8kaBfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgP8ksCf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsSF+G4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4811F000FF;
-	Wed, 23 Sep 2026 14:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgP8ksCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4111F000FF;
+	Wed, 23 Sep 2026 14:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174455;
-	bh=GZjg9GoUEg+Qs0JHtwh26zNGfjGa15OuLgbpmnv2iIU=;
+	s=korg; t=1790174459;
+	bh=KQn/U9A6SZFBbNfQwcGHeLf7UajCwFDkytCVpKsVblk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tsSF+G4Q7xjUkfNNozooAJYpguYpsF8VZDh0iu0Ibd3CHP38JXVmbF2TwpCP4awyU
-	 jv7DxLjz+klwgXVgmHAeJsxBdykC4ZaxqU19vqlPJrjSUpPnT7srcMCDa0rmSOGmjq
-	 6x6cso/te3bF8KTYL3JcV+9KlPVHCbLkrbcy9vaQ=
+	b=hgP8ksCfLh8RjMoitX7SLSM7BpjkRCOiROBVWrAHC7EE4E8zs9IlDuxT3vfbmluU1
+	 pyeblRlxDMkQe800dVLppDqEd2LoepuUoi4ckw66IQrnB6N55Yiz8MQpjC+HRTKNh2
+	 QX1VCvO2HRbq0lzT3v4QLzpeBXYRUhOSVYUnMdWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Ilia Levi <ilia.levi@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Matthew Auld <matthew.auld@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/398] drm/xe/mmio_gem: use write-back mapping for dummy page
-Date: Wed, 23 Sep 2026 16:03:14 +0200
-Message-ID: <20260923140646.552574074@linuxfoundation.org>
+Subject: [PATCH 6.18 121/398] drm/xe/mmio_gem: Revoke drm_vma_node on xe_mmio_gem destroy
+Date: Wed, 23 Sep 2026 16:03:15 +0200
+Message-ID: <20260923140646.578443627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,82 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 819f189265a5955da743e78e20a713a038982e89 ]
+[ Upstream commit 37fcbd7b2f8996d783932dab11bc668e169b0de6 ]
 
-Currently vmf_insert_pfn() maps the dummy page as UC, inheriting the
-VMA's page protection which was set for the real MMIO region. This
-conflicts with the direct map's WB mapping of the same page, creating a
-cache type alias which is architecturally undefined on some platforms.
+xe_mmio_gem_create() calls drm_vma_node_allow() but nothing ever calls
+drm_vma_node_revoke(). The drm_vma_offset_file rb-tree entry allocated
+by drm_vma_node_allow() is not freed by drm_gem_object_release(), so
+it is leaked on every create/destroy cycle.
 
-Use vmf_insert_pfn_prot() with a WB pgprot instead. Also simplify to
-fault in the requested page instead of the whole VMA.
+Add a struct drm_file * parameter to xe_mmio_gem_destroy() and call
+drm_vma_node_revoke() from there, mirroring the drm_vma_node_allow()
+call in xe_mmio_gem_create().
 
 Fixes: 1ffcf8b8ae8a ("drm/xe: Support for mmap-ing mmio regions")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260525125801.975038-6-ilia.levi%40intel.com
-Assisted-by: GitHub-Copilot:claude-opus-4.6
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Suggested-by: Ilia Levi <ilia.levi@intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Ilia Levi <ilia.levi@intel.com>
 Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260908165046.1393557-12-matthew.auld@intel.com
-(cherry picked from commit 1e8e28e35df0e77ae1b22fc091c1f422f62fa5e9)
+Link: https://patch.msgid.link/20260908165046.1393557-14-matthew.auld@intel.com
+(cherry picked from commit 32f0cb250598456d812fb7ca57a040282858323d)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_mmio_gem.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/xe/xe_mmio_gem.c | 4 +++-
+ drivers/gpu/drm/xe/xe_mmio_gem.h | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.c b/drivers/gpu/drm/xe/xe_mmio_gem.c
-index 6daedf0feae99..30c31b0658e2b 100644
+index 30c31b0658e2b..afb880c7955eb 100644
 --- a/drivers/gpu/drm/xe/xe_mmio_gem.c
 +++ b/drivers/gpu/drm/xe/xe_mmio_gem.c
-@@ -172,14 +172,13 @@ static void xe_mmio_gem_release_dummy_page(struct drm_device *dev, void *res)
- 	__free_page((struct page *)res);
- }
- 
--static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
-+static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_fault *vmf)
+@@ -138,14 +138,16 @@ static void xe_mmio_gem_free(struct drm_gem_object *base)
+ /**
+  * xe_mmio_gem_destroy - Destroy the GEM object that exposes an MMIO region
+  * @gem: the GEM object to destroy
++ * @file: DRM file descriptor previously passed to xe_mmio_gem_create()
+  *
+  * This function releases resources associated with the GEM object created by
+  * xe_mmio_gem_create().
+  *
+  * See: "Exposing MMIO regions to userspace"
+  */
+-void xe_mmio_gem_destroy(struct xe_mmio_gem *gem)
++void xe_mmio_gem_destroy(struct xe_mmio_gem *gem, struct drm_file *file)
  {
-+	struct vm_area_struct *vma = vmf->vma;
- 	struct drm_gem_object *base = vma->vm_private_data;
- 	struct drm_device *dev = base->dev;
--	vm_fault_t ret = VM_FAULT_NOPAGE;
- 	struct page *page;
- 	unsigned long pfn;
--	unsigned long i;
- 
- 	page = alloc_page(GFP_KERNEL | __GFP_ZERO);
- 	if (!page)
-@@ -190,16 +189,8 @@ static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
- 
- 	pfn = page_to_pfn(page);
- 
--	/* Map the entire VMA to the same dummy page */
--	for (i = 0; i < base->size; i += PAGE_SIZE) {
--		unsigned long addr = vma->vm_start + i;
--
--		ret = vmf_insert_pfn(vma, addr, pfn);
--		if (ret & VM_FAULT_ERROR)
--			break;
--	}
--
--	return ret;
-+	return vmf_insert_pfn_prot(vma, vmf->address, pfn,
-+				   vm_get_page_prot(vma->vm_flags));
++	drm_vma_node_revoke(&gem->base.vma_node, file);
+ 	xe_mmio_gem_free(&gem->base);
  }
  
- static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
-@@ -219,7 +210,7 @@ static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
- 		 * It is assumed the userspace will receive the notification via some
- 		 * other channel (e.g. drm uevent).
- 		 */
--		return xe_mmio_gem_vm_fault_dummy_page(vma);
-+		return xe_mmio_gem_vm_fault_dummy_page(vmf);
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.h b/drivers/gpu/drm/xe/xe_mmio_gem.h
+index 4b76d5586ebb8..80d7795f07c8e 100644
+--- a/drivers/gpu/drm/xe/xe_mmio_gem.h
++++ b/drivers/gpu/drm/xe/xe_mmio_gem.h
+@@ -15,6 +15,6 @@ struct xe_mmio_gem;
+ struct xe_mmio_gem *xe_mmio_gem_create(struct xe_device *xe, struct drm_file *file,
+ 				       phys_addr_t phys_addr, size_t size);
+ u64 xe_mmio_gem_mmap_offset(struct xe_mmio_gem *gem);
+-void xe_mmio_gem_destroy(struct xe_mmio_gem *gem);
++void xe_mmio_gem_destroy(struct xe_mmio_gem *gem, struct drm_file *file);
  
- 	for (i = 0; i < base->size; i += PAGE_SIZE) {
+ #endif /* _XE_MMIO_GEM_H_ */
 -- 
 2.53.0
 
