@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA123C10A0;
-	Wed, 23 Sep 2026 14:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AFF3AE198;
+	Wed, 23 Sep 2026 14:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174252; cv=none; b=i36If10Tp9oKzGSywH9ZiT+3ktcdrnz3oHG8qFpeJjGJW7Rnvy7OMYITa5CTwCKvP/z2xs2pod7IfmAURHWA7IsWj/h47ymNSbV6J92yOkT87WrhKmlryfHLpM6oE4P0SPlq+6mlzHbQn/ERyezWhJ2NX0isQCKFdep1PbgzwRk=
+	t=1790174255; cv=none; b=WgXxdpf/GnPlPsAIAlBWz6+OVNh+sTiq+h61UUVILG0E1mZOWdVJqeyxNAD7tENL+0+eIEyAl9311uURNpDB5mg1rOc1vbTIP5UdPzii5n9/eTTCc9WozQ2+Alj4C6DUVbD8jeXmSpci9fS+QtqIi7vciVhUYk6d+Ixv96XQKyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174252; c=relaxed/simple;
-	bh=aPdYCxz+FLQySsSzwdIGGQ37by0BVgUmkWsFLDZdZXA=;
+	s=arc-20240116; t=1790174255; c=relaxed/simple;
+	bh=BJMlksyTfO0OaTWqF+LfL1Oruy/Z1iHJDVI7eTOSOsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gbbRWDHtH6OaN2nM/9tFXEZ1TJs8uPwJRDvqq53ZTNGXIvB1rk5wLNVonvOFxCYVdmdTx/aQEqLBaHSad4As/Yfbtr/yVYjauVc27wc+vhSwyYGSTMVCS8tBZdwRWJdfWAx9wf5NQkF7ATVYVOKuXRIe1uLLEmUsJOZNI8usnQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jISuetc6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZCWGyihbpdO9C+NRdUc31+vpNwraQGJ5nqFsXR6A2LFBs1BnTQEQnaTZpzHGw7GbmDOlRx9mZ2sJ06ih/sxtHAbEGekwhFbyJlwSam3Rl8MtvJ4GHD/XgM6tbJkyZC5u65ta6Hok/p5VIIC1jMN/feJdLHYQvbWpX+Jbb/3s6l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NApEKTVe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jISuetc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8FD1F000FF;
-	Wed, 23 Sep 2026 14:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NApEKTVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0981F000FF;
+	Wed, 23 Sep 2026 14:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174250;
-	bh=svggEF+SD3RfVeXRdcerMBpElR9JQYwqYUzRCnDphVA=;
+	s=korg; t=1790174253;
+	bh=YIGQIH5R2htSGQxwzEywQMdgYsgrNimSw9EYHQCjeyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jISuetc6tbQLHbrj7cobbaqM/hke9H1dsOfpiIlXmFe/rPhE2sWo3tA0vaUIkLCKL
-	 Doi/uaqpip3RdkpgqxypOFaQwSafETnDxJprYNgPNrjzLJC9yeNA77Qq5yvfRi6hRP
-	 DyyiLpcF369DR2i9QXjVQAc2YJ+jE3pZnqBvyeKI=
+	b=NApEKTVeWbUcRr7pf8f7KdUEWLF6KDSzT9PR604cQEzS7x589OV9NQ1D+ZDvDljV4
+	 vs6v+GCNd1iO7DdiOYFiOnw3rF084VEcF+L/SWSFMWSjWgY8w+MI9hE8CkN465b0zc
+	 2nFKuuBCGno22W2hW8dwEp1wsxfYHADvZaYA10aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/398] dma-coherent: report a failed reserved memory assignment
-Date: Wed, 23 Sep 2026 16:02:09 +0200
-Message-ID: <20260923140644.851172684@linuxfoundation.org>
+Subject: [PATCH 6.18 056/398] dmaengine: Fix device kref underflow in dma_chan_put()
+Date: Wed, 23 Sep 2026 16:02:10 +0200
+Message-ID: <20260923140644.876010401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,50 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Shivank Garg <shivankg@amd.com>
 
-[ Upstream commit 504981db4f69bdd28054fb98c96a3a67f7248dde ]
+[ Upstream commit 44dab659064eb5c10adb0306510eebe848ed592d ]
 
-rmem_dma_device_init() drops the return value of
-dma_assign_coherent_memory() and always reports success. That call fails
-with -EBUSY when the device already has a coherent pool, and the file
-allows only "*one* such region of memory" per device.
+dma_chan_get() takes chan->device->ref only on the slow path:
 
-of_reserved_mem_device_init_by_idx() reads the zero as success. It logs
-"assigned reserved memory node" for a region that was not assigned and
-records the pairing, so of_reserved_mem_device_release() later runs
-rmem_dma_device_release() for it. That clears dev->dma_mem without
-looking at which region it was called for, dropping the pool the device
-did get and leaving it on ordinary memory.
+	/* no kref on fast path */
+	if (chan->client_count) {
+		__module_get(owner);
+		chan->client_count++;
+		return 0;
+	}
+	if (!try_module_get(owner))
+		return -ENODEV;
+	if (!dma_device_get(chan->device)) { // calls kref_get_unless_zero()
 
-dma_declare_coherent_memory() checks the same call and releases the
-memory on failure, and rmem_swiotlb_device_init() propagates its own
-errors. Return the error here as well, so a device tree that assigns two
-pools to one device fails the probe instead of half working.
+dma_chan_put() drops the ref unconditionally, so every fast-path
+get/put pair drops one extra device reference.
 
-Fixes: 7bfa5ab6fa1b ("drivers: dma-coherent: add initialization from device tree")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://lore.kernel.org/r/20260905074727.108029-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+The bug fires when two conditions hold together: a non-private
+provider has a persistent client holding chan->client_count > 0
+and another client cycles dmaengine_get()/dmaengine_put().
+When the kref hits zero, the subsequent dma_find_channel() returns
+NULL even though the provider module is still loaded.
+
+Fix this by dropping device->ref only on the last put, matching the
+single slow-path get.
+
+Fixes: 8ad342a86359 ("dmaengine: Add reference counting to dma_device struct")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Shivank Garg <shivankg@amd.com>
+Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-2-d4a4ee47d927@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/coherent.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/dmaengine.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
-index 77c8d9487a9ab..87f2f02e921a6 100644
---- a/kernel/dma/coherent.c
-+++ b/kernel/dma/coherent.c
-@@ -351,8 +351,7 @@ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
- 	    min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit))
- 		dev_warn(dev, "reserved memory is beyond device's set DMA address range\n");
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index e6d9d338a60a8..07eb4a7437c3c 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -515,7 +515,9 @@ static void dma_chan_put(struct dma_chan *chan)
+ 		chan->route_data = NULL;
+ 	}
  
--	dma_assign_coherent_memory(dev, mem);
--	return 0;
-+	return dma_assign_coherent_memory(dev, mem);
+-	dma_device_put(chan->device);
++	/* This channel is not in use anymore, drop the device ref */
++	if (!chan->client_count)
++		dma_device_put(chan->device);
+ 	module_put(dma_chan_to_owner(chan));
  }
  
- static void rmem_dma_device_release(struct reserved_mem *rmem,
 -- 
 2.53.0
 
