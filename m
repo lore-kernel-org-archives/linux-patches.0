@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE8653B32E;
-	Wed, 23 Sep 2026 14:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246FD53B348;
+	Wed, 23 Sep 2026 14:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174902; cv=none; b=ZhfEYcLXJC/jMbQTcYVkkkx5IgKUXFMW+4B0IuK0TK0CImCzXgbLImTF5bSJS+hejOAzmuQ0Y0zwOhRqjCNdiUqxFvlr6K187gNYg6Y1UYaQlidynp/8xJvRIsAFOojozdpacmxlq9ycldmXp5uquvL7JKWG/EciQ4I2KT/Go60=
+	t=1790174905; cv=none; b=HEWbdHTR0d0PjFDRR2rET5aDv31smvK9DV6oSmXaBaJYrsWU5Yr0UzYt3kZirzCRKwmR0o0l6ZguM8wvCqjsi3gK8ckBN9fGjfCc88QhKFW7shT2HNuQlu63hAtxvdexC6lXt6sABNEXPb1JE7Xlc9XnfbOzObysRT22mvZN/oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174902; c=relaxed/simple;
-	bh=8B0auiOdW1vs3V0Z5wSzkjYkvWtF8h1Qqk+DqvciCDs=;
+	s=arc-20240116; t=1790174905; c=relaxed/simple;
+	bh=rVXx3V32nD/lAwYW/MW5TnikoQHYiXETvR6LGfBqjKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G24eMFwOiZuTAR2lOB06ZEEsZAfcfaxF5tuNG4g1105e896GCHBg9NjLR5ysgt1Qf9JgrLCYS+d8NDW34rIudGp78Qa0DLlZiVo0x3k25TEq+PfEuDzNmqhPihf/YXkDUu4gZrcQPdm5AXRdFIEECVG49+vRbenWTxOVtfnCJOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYEmBhrP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRa1SSIj0J2QlG6C2d9jfBJPEb9AB6bwBruGCfF4EXrMnOfPtqY29KPn+Spyz0HlxQGYuYK/pNltXNolHjrbIdgXZYaCfQQadYxHTx02meEcp9b2S33pVKNEXGZixSzjRCl7wM8OUQeO0ByBjNucUZHhf6D+N7E3WuR3Xf4u7D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmh17upW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYEmBhrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B2F1F000FF;
-	Wed, 23 Sep 2026 14:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmh17upW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787A01F000FF;
+	Wed, 23 Sep 2026 14:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174900;
-	bh=rt4KQeoqwDx2rCF2LX9D1sqJS5XS8oW1tbMKQRo0lnA=;
+	s=korg; t=1790174904;
+	bh=ypv8TXmamGbUkmTHirneilpUueHIZUAsk2Oy/c1bZFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aYEmBhrPeMV0Au4cq7k330rPsNTB8UNWNm+DqyJs1Vm/J8n/9N1ZRKgosoYEy0JuJ
-	 R4XLSE+ueZ+PtKGY9cDO810q5xBrAbMuM2MMMoK2gPqLz1CFH1YeKUD8RkDQjSxB3j
-	 0p6fa1vf46jEft3agxjfv5rbRiBEewEI4ubz+/w0=
+	b=bmh17upWOsR23KpZlafMnv4OaB4ynJ7ISFT+Ga0GXmK1gYnENOEHd1vseUMt2M24z
+	 n8gi0PQGTjjJX9eybG/QLNDuqvClzq1id/WPpPD72mngho92dChMQkyl7J0b0RL0YW
+	 ThIILWhWus/C9EEuvLqv3su6jJFYDDuisQPhgCRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Jann Horn <jannh@google.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Pedro Falcato <pfalcato@suse.de>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 260/398] mm/mlock: use the IRQ-safe accessor for NR_MLOCK in __munlock_folio()
-Date: Wed, 23 Sep 2026 16:05:34 +0200
-Message-ID: <20260923140650.152824554@linuxfoundation.org>
+Subject: [PATCH 6.18 261/398] mm/mremap: account mm->locked_vm correctly for MREMAP_DONTUNMAP
+Date: Wed, 23 Sep 2026 16:05:35 +0200
+Message-ID: <20260923140650.177967426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,86 +51,91 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260923140535.-COOV-pavnh3Cz7UjjXOuDFyBpamei48Rwh7RkkooGo@z>
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit e14a3454806468b086fe2e4ca2e1bff95b528531 upstream.
+commit 397432cab17bccb600fd6c16ed593f1149042268 upstream.
 
-NR_MLOCK is updated from interrupt context.  __free_pages_prepare() clears
-a stray PG_mlocked and adjusts NR_MLOCK, and a folio can reach it with the
-flag still set from a bio completion handler:
+When a VMA is mremap()'d with MREMAP_DONTUNMAP set, that results in the
+VMA being copied, but the source VMA not being unmapped.
 
-  __free_pages_ok+0x6af/0x7a0
-  <IRQ>
-  __bio_release_pages+0xde/0x260
-  __iomap_dio_bio_end_io+0x16e/0x1a0
-  blk_update_request+0x14b/0x3d0
-  blk_mq_end_request+0x18/0x30
-  blk_done_softirq+0x49/0x60
+If the VMA is mlock()'d this is a legal operation, though the source VMA
+has its VMA_LOCKED_BIT cleared.
 
-The folio gets there like this.  A MAP_SHARED file mapping is mlocked, so
-its page cache folios carry PG_mlocked, and an O_DIRECT write sourced from
-that mapping GUP-pins those same folios.  munlock() then runs
-mlock_vma_pages_range(), which clears VM_LOCKED before walking the page
-tables to munlock each folio.  A concurrent hole punch reaches the folio
-through the rmap (i_mmap_rwsem, not mmap_lock) and can land inside that
-window: __folio_remove_rmap() -> munlock_vma_folio() sees VM_LOCKED
-already clear, so it neither queues the folio on the mlock batch nor takes
-a reference, and the pte it clears makes the pending mlock_pte_range()
-walk skip the folio at its !pte_present() check.  filemap_remove_folio()
-then drops the page cache reference, leaving the bio's pin as the last
-one, released from the completion handler above.
+However this is done in dontunmap_complete(), after mm->locked_vm was
+incremented via vrm_stat_account(), resulting in double-counting.
 
-So __zone_stat_mod_folio() here needs interrupts disabled, not merely
-preemption, and __munlock_folio() has a path where they are not: when the
-folio has already been taken off the LRU by somebody else the function
-jumps straight to the counter update without taking the lruvec lock.  The
-read-modify-write of the per-CPU NR_MLOCK diff can then be interrupted by
-the softirq above, and one of the two decrements is lost, leaving Mlocked
-in /proc/meminfo permanently overstated.
+Worse, this is not even corrected when source VMA is unmapped, due to the
+VMA_LOCKED_BIT flag having been cleared.
 
-Use zone_stat_mod_folio().  mod_zone_state()'s this_cpu_try_cmpxchg() is
-atomic against a same-CPU interrupt and retries, and on the path where the
-lruvec lock is held its cost is negligible next to the lock itself.
+This all works fine in the usual mremap() case (without MREMAP_DONTUNMAP),
+as the source VMA is unmapped with VMA_LOCKED_BIT intact, at which time
+mm->locked_vm is decremented accordingly.
 
-The UNEVICTABLE_PG* events are deliberately left on the __ accessors: they
-occupy different vm_event_states slots from the UNEVICTABLE_PGCLEARED that
-__free_pages_prepare() bumps, and nothing updates those two from interrupt
-context.
+Resolve the issue by invoking vrm_stat_account() only after
+dontunmap_complete() has run.
 
-Link: https://lore.kernel.org/20260901180109.3797944-1-shakeel.butt@linux.dev
-Fixes: 2fbb0c10d1e8 ("mm/munlock: mlock_page() munlock_page() batch by pagevec")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-mm/6a931c5a.08e933ee.dbf97.0093.GAE@google.com/
-Acked-by: Hugh Dickins <hughd@google.com>
+Note that MREMAP_DONTUNMAP requires old_len == new_len, so no need to
+account for a delta in size in this case.
+
+The bug was introduced by commit b714ccb02a76 ("mm/mremap: complete
+refactor of move_vma()") which incorrectly reordered the accounting and
+the clearing of the VMA_LOCKED_BIT flag.
+
+Link: https://lore.kernel.org/20260828-mremap-fix-locked-vm-v1-1-c80be7505d1e@kernel.org
+Fixes: b714ccb02a76 ("mm/mremap: complete refactor of move_vma()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260825-fix-mremap-dontunmap-pgoff-v1-1-39a40b2c98b3@kernel.org
+Reported-by: Kunwu Chan <kunwu.chan@gmail.com>
+Closes: https://lore.kernel.org/all/20260828094823.594279-1-kunwu.chan@linux.dev/
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Tested-by: Kunwu Chan <kunwu.chan@gmail.com>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 Cc: Jann Horn <jannh@google.com>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mlock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mremap.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/mm/mlock.c
-+++ b/mm/mlock.c
-@@ -141,7 +141,7 @@ static struct lruvec *__munlock_folio(st
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1270,12 +1270,11 @@ static void dontunmap_complete(struct vm
+ 		if (vma_is_anonymous(vma) && !vma->vm_file)
+ 			vma->vm_pgoff = pgoff_unfaulted;
+ 	}
+-
+-	/* Because we won't unmap we don't need to touch locked_vm. */
+ }
  
- munlock:
- 	if (folio_test_clear_mlocked(folio)) {
--		__zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
-+		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
- 		if (isolated || !folio_test_unevictable(folio))
- 			__count_vm_events(UNEVICTABLE_PGMUNLOCKED, nr_pages);
- 		else
+ static unsigned long move_vma(struct vma_remap_struct *vrm)
+ {
++	const bool is_dontunmap = vrm->flags & MREMAP_DONTUNMAP;
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *new_vma;
+ 	unsigned long hiwater_vm;
+@@ -1316,10 +1315,10 @@ static unsigned long move_vma(struct vma
+ 	 */
+ 	hiwater_vm = mm->hiwater_vm;
+ 
+-	vrm_stat_account(vrm, vrm->new_len);
+-	if (unlikely(!err && (vrm->flags & MREMAP_DONTUNMAP)))
++	if (unlikely(is_dontunmap && !err))
+ 		dontunmap_complete(vrm, new_vma);
+-	else
++	vrm_stat_account(vrm, vrm->new_len);
++	if (!is_dontunmap || err)
+ 		unmap_source_vma(vrm);
+ 
+ 	mm->hiwater_vm = hiwater_vm;
 
 
