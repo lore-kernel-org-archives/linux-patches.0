@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BB39F190;
-	Wed, 23 Sep 2026 14:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2F42C11E4;
+	Wed, 23 Sep 2026 14:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173924; cv=none; b=SbyCHdi7MuwuUKz4APdFwjhigJRju36eV/dPRHA+MALv1zt+j7S035bfXzKqYm9UU4iAM+3kpvazUNKyrblRiWG4c2Nwc3wCDa+M8RKKCa+suDMKor+bwOJAMd6rdzSCbybOf54abQkuh0glV71btDf+Q8hDeLac7xs4egmiKbk=
+	t=1790173927; cv=none; b=GMd4ue8EKvg4YRm3JweHEIV0LH3Cd1vUbiAyvVCPOlrR1PCue+ZWOJknpg6koPHg40Den2esrjhNQGQ7dUP0fIlKA5Ep/XQmXzvqS8iXXBVhdMqGPNpWTvHgEIzT3QfOphkwbDkV2csuGr/jd7JzktN2qv8mnZ3HTU9LPxznHVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173924; c=relaxed/simple;
-	bh=j60SGVWrRavf4bMavDCgVT8E5Nd6p0yt1dqGlA75/10=;
+	s=arc-20240116; t=1790173927; c=relaxed/simple;
+	bh=gE7clvhbZP3OCzFJPELwDWVEk8/mr41wMpS8+XbB8Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVOhVkxABpKRfOA4F0jmHJCtWND+bjpOdDqBu9BZtFE/O3xjCKI25AnJnxkKEVSVSHnsQ/lkN+xAOxP8t1g4AFBBJnJdQK+dBizC+DfV9ZyfMrzSnk721OpuAT90OoikhVZKY1C2+VDYMqC5y+hmOrYWjg7SxkbqN6ju4qY/S7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv+T7E4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pzl4ZURRK3Dz7lhRMRAvixDulk7v+BUoShBlZrpHPq9xLcMjRWdqSeLfM8ICWAZNMoX+LW+WS3+ByOXDSeYxxm7O+Ms+J4lZCcwF1UCvh4CWjoE402pVThSgIsfOp7/BDSBengRFyB5cpiSePuiZLCXRu2XbLs6Uqu660L05e4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWSSaR/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv+T7E4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC951F000FF;
-	Wed, 23 Sep 2026 14:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWSSaR/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7C01F00898;
+	Wed, 23 Sep 2026 14:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173922;
-	bh=GJCl5iRk33eKSvfqVY1uO7IoysNh1NMnbDJfuPmElnQ=;
+	s=korg; t=1790173925;
+	bh=Y+JY0ZOjnHertGHSVNr8YUOCEgeHrFNvzMFMcRr5wIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vv+T7E4I8rd6B8mVvaZEZ3otynzPGFGzMKCUdt64B5UA/+imj9wZvlI2V9HUTML0x
-	 SH3e7ZSr9Ih8xAiED6Qdh2xncMgqCqONVDw4JA2pVC8lkn4BGpac6QIFsfaibeKqgE
-	 3TFRhEeZinHfNrOA9DnWJ9grvmqiFnYfJvRkOJ9w=
+	b=WWSSaR/LPoe0BJ8ESduLCHR5vQj3FHu6oQNirig1+Xx8CA+UjGupOSKFvYYR+znKi
+	 pItEJcJw12fW4EGlDe8KcelPodfxWn5Q+O/apPuH+wGVX5HX589HgPjuOmhtSof1j+
+	 q45uMd/EU8zwTY07BAXqC3GCcPHGLi9ySlp1YiFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 386/438] wifi: rsi: fix heap OOB write on key removal
-Date: Wed, 23 Sep 2026 16:06:47 +0200
-Message-ID: <20260923140654.880519163@linuxfoundation.org>
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 7.2 387/438] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
+Date: Wed, 23 Sep 2026 16:06:48 +0200
+Message-ID: <20260923140654.908312277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,51 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e6c5ed7a98d7bc8b0f7918246f1c90ddb3f79dfa upstream.
+commit d9be5e75530772fc31637070d51e5717d6aeaa2a upstream.
 
-When a key is removed (data == NULL), rsi_hal_load_key() runs:
+wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
+which only dequeues the timer and does not wait for a callback that is
+already executing; the preceding free_irq() calls synchronize the
+interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
+therefore be running past the teardown and use the wcn freed along
+with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
+reads wcn->tx_ack_skb and passes wcn->hw to
+ieee80211_tx_status_irqsafe().
 
-	memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+Fix this by using timer_shutdown_sync(), which waits for a running
+callback and also prevents the timer from being rearmed again. The
+timer is set up again by wcn36xx_dxe_init() on the next start, so the
+start/stop cycle is unaffected.
 
-set_key is a struct rsi_set_key *, so the subscript is scaled by
-sizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is
-skb->data + 2560, and the memset writes 144 zero bytes starting
-2.4KB past the end of the 160-byte skb data buffer, corrupting
-unrelated heap objects. The intended byte offset would have been
-(u8 *)set_key + FRAME_DESC_SZ.
+This issue was found by an in-house static analysis tool.
 
-The write fires on every DISABLE_KEY callback, so plain disconnects,
-roams and interface teardowns trigger it on real networks.
-
-The memset is redundant: the whole buffer is zeroed right after
-allocation, so the frame sent to the device is byte-identical
-without it. Drop the else branch; normal operation is unaffected.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
+Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/90bb2b07007942064c04aa3729cedd9eb1e930b1@linux.dev
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mgmt.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ath/wcn36xx/dxe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-@@ -852,8 +852,6 @@ int rsi_hal_load_key(struct rsi_common *
- 			memcpy(set_key->tx_mic_key, &data[16], 8);
- 			memcpy(set_key->rx_mic_key, &data[24], 8);
- 		}
--	} else {
--		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
- 	}
+--- a/drivers/net/wireless/ath/wcn36xx/dxe.c
++++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
+@@ -1055,7 +1055,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *
  
- 	skb_put(skb, frame_len);
+ 	free_irq(wcn->tx_irq, wcn);
+ 	free_irq(wcn->rx_irq, wcn);
+-	timer_delete(&wcn->tx_ack_timer);
++	timer_shutdown_sync(&wcn->tx_ack_timer);
+ 
+ 	if (wcn->tx_ack_skb) {
+ 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
 
 
