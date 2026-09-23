@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6769138D6A2;
-	Wed, 23 Sep 2026 14:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E93A6F1C;
+	Wed, 23 Sep 2026 14:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173327; cv=none; b=oRDsilfbwiv72vvSnDy9BnjXBd05kwsvYBTG6iIDnOkQnR0JWf2pZHHqgiqoH88Xa6CI8BRk30xWdCBnACXUelV1eaFXpgoYfkjA94EpjNTMC87VoJZdfNsJysS0VGClySseZXGkVqECAhjDU6kCWN0eNyvmQAOKV5Nc0yKm3VY=
+	t=1790173330; cv=none; b=fFYfg8mn56vNA1qGYAqlqFrl5aNByPFnDmm9wtyrNY3CB/dwMl6c+bpi1OL0CM9YBfkhFBbWSuyfJboJj4tiD2MNxr6SIteWIl1ClmkDr9dT5tsI0mx+FZVI+3Gm2lJM7TS6+I9Y9scX1A+0ulbMKcpNxQpRL3ShZ5qOpXmAVZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173327; c=relaxed/simple;
-	bh=xLgCPdpcmvunqP2WGg8SNtuhy7w7N8j5ieF8viWqOA0=;
+	s=arc-20240116; t=1790173330; c=relaxed/simple;
+	bh=W6SHaedIs/WQlZquifl7+Glwoj23qtLkLz7PsjO8Ukg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEDtaKKfg6L3Fxmq0CjvmR6WdarwhR92H1r4FMTbvy2E1NcwGTsUTRnljDE5xOKk8A1ZnqUc07utXUTxU1hklscjsSUXZ67zy7gMfbfAD9dhyM/pp/WkfEz99QDr4hI/YdvyezcNJBng83kOnFvyAtDI1rA79Yh6iAK7dP1Jt8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6dQCd4t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLPOlC3T7qQkPiApZCKU9dQRxP2gRjpus7Yf/TE0gdH6Zp645TaHQmg/OnahgE4M+HQ0N9jzLgZrV9c4t6uD1iIUgCAaRBBZKXET/BHJdCjqWKMv7XbyIOZ/59eIwigzDVd0DuuqV54InOUPsFOTLVoWcxvvAsSLobzHkolA/Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adZ00dYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6dQCd4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FE81F000FF;
-	Wed, 23 Sep 2026 14:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adZ00dYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B481F000FF;
+	Wed, 23 Sep 2026 14:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173325;
-	bh=DxI5ZucpeBz/r/sm1fgCHRZQtZAwondqlCuKM8hCPjk=;
+	s=korg; t=1790173329;
+	bh=ao0uM18tSNsUxjzIcpU219G504vJyztXfzObFjFYWHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g6dQCd4tdsRyBSihQSMh2eLiE6faBK1Muax7do2zfSbkAqesLukXEnV8YuMEuNDRt
-	 bTmUkXuc4rovMti78uRbAT5UWa6D4fq39rT9wwb2DODaz5vrYXd5KiN9DZHJczXJYR
-	 DX1AzdP4gz1b84JNLwjwIr1wX+KMw5fBpoNu2n/E=
+	b=adZ00dYLoWgryYLc02HFiw7GiQXM+m57QhGEPpUYinMjuhOyEuZ8m1ZMeCTuLXBH5
+	 OCcDnweNfp5jFzT3+rcCzjwebpqJzyzkyVCAkjBQYy3nFrAtJGNFMnFQe6V2HOirKY
+	 ewpb3LkOpv5XICn6aOGbyuxwNRMrGX0ElGhrWBlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+dc57fd6722deb17e92af@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 211/438] eth: fbnic: ring the doorbell if a burst ends in a drop
-Date: Wed, 23 Sep 2026 16:03:52 +0200
-Message-ID: <20260923140650.229439368@linuxfoundation.org>
+Subject: [PATCH 7.2 185/438] drop_monitor: use raw_cpu_ptr() in tracepoint probes
+Date: Wed, 23 Sep 2026 16:03:26 +0200
+Message-ID: <20260923140649.560336171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,141 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 490599ab23134962a6d18a024e84541d77bdb999 ]
+[ Upstream commit c19b7d35086b7d240f1ca3088b0079d2bd39ffb9 ]
 
-fbnic_tx_map() skips the doorbell write, and the completion request,
-for every packet handed to it with xmit_more set, counting on the
-packet which ends the burst to publish them all. When that packet is
-dropped instead - skb_put_padto(), skb_cow_head() or a DMA mapping
-failure - nothing rings. The descriptors of the preceding packets stay
-invisible to the HW until the next transmit on that queue, which for a
-burst-then-idle workload may never come.
+syzbot reported a preemption warning in sk_skb_reason_drop():
 
-Remember the meta descriptor of the last packet left without a doorbell
-and flush it from the error paths. The completion request has to be set
-on that descriptor rather than simply writing the tail, otherwise the HW
-would transmit the packets but never report a head, and the ring would
-fill up and stall for good.
+ BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.17/5917
+ caller is net_dm_packet_trace_kfree_skb_hit+0x119/0x350 net/core/drop_monitor.c:519
 
-This is very similar to Joe's recent series of fixes for bnxt.
-Not seen in real life, reproduced under QEMU with failure injection.
+In net_dm_packet_trace_kfree_skb_hit(), data = this_cpu_ptr(&dm_cpu_data)
+is evaluated before spin_lock_irqsave(&data->drop_queue.lock, flags).
+When kfree_skb() is called from preemptible context (e.g. process context
+during close() on /dev/net/tun), preemption is enabled, triggering the
+CONFIG_DEBUG_PREEMPT warning in smp_processor_id().
 
-Fixes: 9a57bacd574b ("eth: fbnic: Add basic Tx handling")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915022327.913218-1-kuba@kernel.org
+The same pattern exists in net_dm_hw_trap_summary_probe() and
+net_dm_hw_trap_packet_probe() for dm_hw_cpu_data.
+
+This is a false positive because each per-cpu structure is protected
+by its own spinlock. If the task migrates to another CPU right after
+reading the per-cpu pointer, the lock still safely synchronizes
+access to that queue.
+
+Use raw_cpu_ptr() instead of this_cpu_ptr() to silence
+CONFIG_DEBUG_PREEMPT without disturbing interrupt state or breaking
+PREEMPT_RT locking semantics.
+
+Fixes: ca30707dee2b ("drop_monitor: Add packet alert mode")
+Fixes: 5855357cd40e ("drop_monitor: Prepare probe functions for devlink tracepoint")
+Reported-by: syzbot+dc57fd6722deb17e92af@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6aa316b2.f81106d8.2ab401.0014.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260910204612.3762015-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 42 +++++++++++++++-----
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.h |  9 ++++-
- 2 files changed, 40 insertions(+), 11 deletions(-)
+ net/core/drop_monitor.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-index 401f8b8ae1cae..e7918d3f6aba9 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-@@ -311,6 +311,29 @@ fbnic_rx_csum(u64 rcd, struct sk_buff *skb, struct fbnic_ring *rcq,
- 	}
- }
+diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
+index 873155ca72432..795c15dd1771a 100644
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -448,7 +448,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
+ 	if (metadata->trap_type == DEVLINK_TRAP_TYPE_CONTROL)
+ 		return;
  
-+static void fbnic_tx_doorbell(struct fbnic_ring *ring, __le64 *meta)
-+{
-+	*meta |= cpu_to_le64(FBNIC_TWD_FLAG_REQ_COMPLETION);
-+	ring->deferred_meta = -1;
-+
-+	/* Force DMA writes to flush before writing to tail */
-+	dma_wmb();
-+
-+	writel(ring->tail, ring->doorbell);
-+}
-+
-+/* Packets handed to us with xmit_more set are left in the ring without a
-+ * doorbell, and without a completion request, in the expectation that the
-+ * packet ending the burst will ring for all of them. If that packet gets
-+ * dropped instead we have to ring here, otherwise the descriptors sit in
-+ * the ring until the next transmit, which may never come.
-+ */
-+static void fbnic_tx_flush_doorbell(struct fbnic_ring *ring)
-+{
-+	if (ring->deferred_meta >= 0)
-+		fbnic_tx_doorbell(ring, &ring->desc[ring->deferred_meta]);
-+}
-+
- static bool
- fbnic_tx_map(struct fbnic_ring *ring, struct sk_buff *skb, __le64 *meta)
- {
-@@ -378,14 +401,10 @@ fbnic_tx_map(struct fbnic_ring *ring, struct sk_buff *skb, __le64 *meta)
- 	/* Verify there is room for another packet */
- 	fbnic_maybe_stop_tx(skb->dev, ring, FBNIC_MAX_SKB_DESC);
+-	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
++	hw_data = raw_cpu_ptr(&dm_hw_cpu_data);
+ 	raw_spin_lock_irqsave(&hw_data->lock, flags);
+ 	hw_entries = hw_data->hw_entries;
  
--	if (fbnic_tx_sent_queue(skb, ring)) {
--		*meta |= cpu_to_le64(FBNIC_TWD_FLAG_REQ_COMPLETION);
--
--		/* Force DMA writes to flush before writing to tail */
--		dma_wmb();
--
--		writel(tail, ring->doorbell);
--	}
-+	if (fbnic_tx_sent_queue(skb, ring))
-+		fbnic_tx_doorbell(ring, meta);
-+	else
-+		ring->deferred_meta = meta - ring->desc;
- 
- 	return false;
- dma_error:
-@@ -425,8 +444,10 @@ fbnic_xmit_frame_ring(struct sk_buff *skb, struct fbnic_ring *ring)
- 	 * otherwise try next time
+@@ -516,7 +516,7 @@ static void net_dm_packet_trace_kfree_skb_hit(void *ignore,
  	 */
- 	desc_needed = skb_shinfo(skb)->nr_frags + 10;
--	if (fbnic_maybe_stop_tx(skb->dev, ring, desc_needed))
-+	if (fbnic_maybe_stop_tx(skb->dev, ring, desc_needed)) {
-+		fbnic_tx_flush_doorbell(ring);
- 		return NETDEV_TX_BUSY;
-+	}
+ 	nskb->tstamp = tstamp;
  
- 	*meta = cpu_to_le64(FBNIC_TWD_FLAG_DEST_MAC);
+-	data = this_cpu_ptr(&dm_cpu_data);
++	data = raw_cpu_ptr(&dm_cpu_data);
  
-@@ -447,6 +468,8 @@ fbnic_xmit_frame_ring(struct sk_buff *skb, struct fbnic_ring *ring)
- err_free:
- 	dev_kfree_skb_any(skb);
- err_count:
-+	fbnic_tx_flush_doorbell(ring);
-+
- 	u64_stats_update_begin(&ring->stats.syncp);
- 	ring->stats.dropped++;
- 	u64_stats_update_end(&ring->stats.syncp);
-@@ -2491,6 +2514,7 @@ static void fbnic_enable_twq0(struct fbnic_ring *twq)
- 	fbnic_ring_wr32(twq, FBNIC_QUEUE_TWQ0_CTL, FBNIC_QUEUE_TWQ_CTL_RESET);
- 	twq->tail = 0;
- 	twq->head = 0;
-+	twq->deferred_meta = -1;
+ 	spin_lock_irqsave(&data->drop_queue.lock, flags);
+ 	if (skb_queue_len(&data->drop_queue) < net_dm_queue_len)
+@@ -983,7 +983,7 @@ net_dm_hw_trap_packet_probe(void *ignore, const struct devlink *devlink,
+ 	NET_DM_SKB_CB(nskb)->hw_metadata = n_hw_metadata;
+ 	nskb->tstamp = tstamp;
  
- 	/* Store descriptor ring address and size */
- 	fbnic_ring_wr32(twq, FBNIC_QUEUE_TWQ0_BAL, lower_32_bits(twq->dma));
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-index e03c9d2c38dca..f5899446dcc51 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-@@ -128,9 +128,14 @@ struct fbnic_ring {
- 		/* Rx BDQs only */
- 		struct page_pool *page_pool;
+-	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
++	hw_data = raw_cpu_ptr(&dm_hw_cpu_data);
  
--		/* Deferred_head is used to cache the head for TWQ1 if
-+		/* TWQ0 only, index of the meta descriptor of the last packet
-+		 * placed in the ring without ringing the doorbell, -1 if the
-+		 * doorbell is in sync with the tail.
-+		 */
-+		s32 deferred_meta;
-+
-+		/* TCQ only, used to cache the head for TWQ1 if
- 		 * an attempt is made to clean TWQ1 with zero napi_budget.
--		 * We do not use it for any other ring.
- 		 */
- 		s32 deferred_head;
- 	};
+ 	spin_lock_irqsave(&hw_data->drop_queue.lock, flags);
+ 	if (skb_queue_len(&hw_data->drop_queue) < net_dm_queue_len)
 -- 
 2.53.0
 
