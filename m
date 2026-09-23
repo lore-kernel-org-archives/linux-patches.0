@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C655293E9;
-	Wed, 23 Sep 2026 14:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D677C3B102F;
+	Wed, 23 Sep 2026 14:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172737; cv=none; b=U/sAGFqx8Lu9ds5YccaoOEd9u7swKba5oQHkNsDUUkanbDZD6PHCciTxjwilt2hrLXkn8xN0qA632TnqT5eNv7XDoYa4N6wibFmkRUjr3U0TAD4d3fAsc4rzDncGsTYLjsiVCrJiyw8SOQh/4cuhcxcjEfllp2HQQge55o+B4Lo=
+	t=1790172740; cv=none; b=YJ9PGl8Bpsf41GyfhgAhgTBe3mkAK2m/zkGrvYuHDNgDHwwoVlwt0C8Sr0HaUiVHBp2M1AEabXz6Ge8LMrW732NuDhl+myA5JbpyOpy3xLZVz9yevAnbjQCRB51KAMEqlKPRnV8hNdR7sVcPqEoOXjQ4Qbj5SgiaHBwBRXU/n/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172737; c=relaxed/simple;
-	bh=GmjZHXUik1z9XSUED2AVMJBYWvBTKXIOVldX7pXKRwE=;
+	s=arc-20240116; t=1790172740; c=relaxed/simple;
+	bh=zM0Um1iSFIKRflTiIcOqoHd63G56HqWB40hiT1UqPhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbEST4tr0gD+W8+9gCRpnL43yAwoxvfOW/G8CduzSOkwT+uSY2yNxfINe2D8KOs43AQAtDpndh09BXN/c3zzwIhwYhaAMgKzJWpxJcIiGGNoEHWQYw8Q8SVRroCJz9Ea4q3Bs++/95KiGlm5qtkAKQvcxPSD248mxpXfFkbfTfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkA9WlIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GttsqUdUOk4i4MOZlF/hH6pEM2Yrn2Hop1UwsDQWBZj6J6d+tRfoNaCPImWUkKykVlscHGR2szcoC+LjVEIKOP1H14xD3PxXS0CZGKr+B5QNSea8T/hP6D+ezTeIItPtD5ZNwIqmVVEBJtwYuD6qxuAjhngTWCm7aHjWN5noEFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPDjq1tv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkA9WlIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3431F000FF;
-	Wed, 23 Sep 2026 14:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPDjq1tv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173291F000FF;
+	Wed, 23 Sep 2026 14:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172735;
-	bh=9RRh8R9pPWj+eotXyC/b3XzSHehWSA7F8ui9jzL2mVY=;
+	s=korg; t=1790172738;
+	bh=uWBzQzNA9CqJU3QCov/7Z3HnrNZJajNhmccZkx3zdXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WkA9WlIWH9FqkbS1qxZUlbZMv4yt1Q7L800qoHnloyW0QjGmgKz5w9sm/UaDlrXdN
-	 +xtJ4W8on0vYogeeK9fqlV1Un/nO7PVxoqScYJyYhyZddXiF9OEEjJWujU39JI7zAY
-	 HOXfx0CbiiGH7V0+IAoiLEdD6IAQmSa4blz7jCgM=
+	b=XPDjq1tvuoF3fonRFIdLgcbfkrrskUnQTPJHSYEtzz6OE/+we8QYMDYuDD0Q9hDyZ
+	 vpwgOWdRb7jHwNvkxv5WJ+VQr7lWdvEe497AA4Sa4IxIobBGUylO5H8VruWgMHmpP2
+	 cE1rEmP5KeuU8UYxvJVzMH+Q5rzcopXk/Gkqn92k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 020/438] xfrm: hold net_device reference under RCU in bundle creation
-Date: Wed, 23 Sep 2026 16:00:41 +0200
-Message-ID: <20260923140645.298801344@linuxfoundation.org>
+Subject: [PATCH 7.2 021/438] firmware: arm_scpi: reject DVFS OPP count above MAX_DVFS_OPPS
+Date: Wed, 23 Sep 2026 16:00:42 +0200
+Message-ID: <20260923140645.325342958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,101 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1 ]
+[ Upstream commit 32471d84a487c7fd74532bc96be56f8028cf4a3f ]
 
-xfrm_bundle_create() and xfrm_create_dummy_bundle() read dst->dev into
-a local pointer without taking a device reference, then pass it to
-xfrm_fill_dst(). A concurrent RTM_DELLINK replaces dst->dev via
-dst_dev_put() and frees the old net_device, causing a use-after-free
-when xfrm6_fill_dst() later dereferences the stale dev pointer.
+scpi_dvfs_get_info() already rejected a zero opp_count, but still trusted
+any larger value from the SCP firmware. The shared-memory reply only holds
+MAX_DVFS_OPPS entries in buf.opps[]; a bigger count over-reads that array
+and then sizes the allocated OPP table incorrectly (garbage OPPs / OOB).
+The missing upper bound dates back to the original SCPI DVFS support.
 
-  BUG: KASAN: slab-use-after-free in xfrm6_fill_dst+0x82c/0x860
-  (net/ipv6/xfrm6_policy.c:86 netdev_hold())
-  Read of size 8 at addr ffff8880142fe588 by task exploit/153
-  Call Trace:
-   xfrm6_fill_dst+0x82c/0x860
-   xfrm_resolve_and_create_bundle+0x21d4/0x2bd0
-   xfrm_lookup_with_ifid+0x485/0x1640
-   ip6_dst_lookup_flow+0x19b/0x1e0
-   udpv6_sendmsg+0x1443/0x2dd0
+Reject zero and out-of-range counts in one check and return -EINVAL.
 
-Fix this by reading dst->dev via dst_dev_rcu() and keeping the RCU
-read-side critical section active until xfrm_fill_dst() has taken the
-required device references.
-
-Fixes: 25ee3286dcbc ("[IPSEC]: Merge common code into xfrm_bundle_create")
-Fixes: a0073fe18e71 ("xfrm: Add a state resolution packet queue")
-Suggested-by: Steffen Klassert <steffen.klassert@secunet.com>
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Link: https://lore.kernel.org/all/20260820200245.44312-1-blbllhy@gmail.com/
-Cc: AutonomousCodeSecurity@microsoft.com
-Assisted-by: GitHub-Copilot:claude-opus-4.6
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/022802f0b38f.v2.1785200642.git.liuxixin@kylinos.cn
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/firmware/arm_scpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 932a313b9460a..513c9f2283347 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -2770,9 +2770,12 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
- 	xdst0->path = dst;
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 2acad5fa5a286..6eeb0ad9b0085 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -631,8 +631,8 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	err = -ENODEV;
--	dev = dst->dev;
--	if (!dev)
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	if (!dev) {
-+		rcu_read_unlock();
- 		goto free_dst;
-+	}
+-	if (!buf.opp_count)
+-		return ERR_PTR(-ENOENT);
++	if (!buf.opp_count || buf.opp_count > MAX_DVFS_OPPS)
++		return ERR_PTR(-EINVAL);
  
- 	xfrm_init_path(xdst0, dst, nfheader_len);
- 	xfrm_init_pmtu(bundle, nx);
-@@ -2780,8 +2783,10 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
- 	for (xdst_prev = xdst0; xdst_prev != (struct xfrm_dst *)dst;
- 	     xdst_prev = (struct xfrm_dst *) xfrm_dst_child(&xdst_prev->u.dst)) {
- 		err = xfrm_fill_dst(xdst_prev, dev, fl);
--		if (err)
-+		if (err) {
-+			rcu_read_unlock();
- 			goto free_dst;
-+		}
- 
- 		xdst_prev->u.dst.header_len = header_len;
- 		xdst_prev->u.dst.trailer_len = trailer_len;
-@@ -2789,6 +2794,7 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
- 		trailer_len -= xdst_prev->u.dst.xfrm->props.trailer_len;
- 	}
- 
-+	rcu_read_unlock();
- 	return &xdst0->u.dst;
- 
- put_states:
-@@ -3058,11 +3064,15 @@ static struct xfrm_dst *xfrm_create_dummy_bundle(struct net *net,
- 	xfrm_init_path((struct xfrm_dst *)dst1, dst, 0);
- 
- 	err = -ENODEV;
--	dev = dst->dev;
--	if (!dev)
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	if (!dev) {
-+		rcu_read_unlock();
- 		goto free_dst;
-+	}
- 
- 	err = xfrm_fill_dst(xdst, dev, fl);
-+	rcu_read_unlock();
- 	if (err)
- 		goto free_dst;
- 
+ 	info = kmalloc_obj(*info);
+ 	if (!info)
 -- 
 2.53.0
 
