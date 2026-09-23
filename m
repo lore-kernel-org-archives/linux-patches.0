@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CCE53160C;
-	Wed, 23 Sep 2026 14:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95767332EC5;
+	Wed, 23 Sep 2026 14:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175148; cv=none; b=N1BdWl+KVFWWZ0+2gEXQnplh1FH+Ij5XNLFx9tGo/NrmGFeaTkgM7iNJL54OBn78fa4CRoo6UgHkYnwiPnPFF7km/c0A4B60wdf9sZXtHlZnBGHglzNDUFqgYkryU63U2jeuNk6Lo3BvQLoGL8wYw8ZbEuMjViUTEhO21wNjmLc=
+	t=1790175150; cv=none; b=iMXwEyCpxfGmYho5oO0m1osr76vtWzZFr+qxCdDvaR4feB7GE8wHiPpcJFbqRq4x+dCt7ldjNv809SxyGokzzkep8XfagyaI3R8kPOGvHfFn98hn7UQT+wV6cP92ME25crPFNsfVB3tsYZxiz0wdpBkXOdjMn6gk+yiiSAZSbW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175148; c=relaxed/simple;
-	bh=EkRMUDNJDEaLEUB51VtlJg1cfVL6iM06SSn0R+wId0A=;
+	s=arc-20240116; t=1790175150; c=relaxed/simple;
+	bh=8jRYDq+GvpY7xHAUOKrir0DgbyDBFgbNdka7THJlNj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSzALFQTg7+SCroQpjj1HItpJcliP8W/ng2DFRvLJGVWDdx8nhtlgA7GJ8kvx+kfjT8MRP9i4frXDvH5BJl4N77rsTaWWsTDqBXDHKMQ+7VgXrEUqLqvvbp0sFtN383+2NxGorupp0R/NI5wWJQGEzeZTL30Yq0DRaRwLra29LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qb04wspG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6vQa9NKPYpViTZJXt1/FxkrVfHCMGhVY1OUZcsuHdkFXOTDaZR7XHkZaXSlWMTIkKlFEV1HdTpGSdu9F7VUbys6188IRbc15Vw8njlYc2hVsRj9tAXq/AoWhlUaqT3LOLow/0cmKx1bLNyhnnxs/ULoOQwmtV85HItT7v+HYKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqtCCffS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qb04wspG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F601F000FF;
-	Wed, 23 Sep 2026 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqtCCffS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631D51F00893;
+	Wed, 23 Sep 2026 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175144;
-	bh=KlFKmZT1LriL9JMd8/OYbQ3vjoROg5jzsHgvCscYStw=;
+	s=korg; t=1790175147;
+	bh=n6iqhq656JKzDqMl2APypjpkXvQ5cYnZ0ClT4GTGvGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qb04wspGVsiPlJjGCbZBRM9zfluz+J8ezmcbsKfSAKf4+hhWTmCZoHU7rK6I/DG3V
-	 kSrr5Ae1BxcSqPyEEq3BDUqaGetdnXVHB7u8aic/NdzaRFxrh+ma2UBvERxpC4pjNW
-	 FznQsMbJoJEq0FdvbVd5tRWKhCpLzInTmzIXSrWk=
+	b=yqtCCffSQoKb5IPoW5emeqWuet9VBdjvfn6BYNuYE9VUEc9UUKJJ0zw/LSn83u3IL
+	 k1xDejCKK22P+aPwgkwA260RRtzwnzfvDWMdsSdfzaLd7LrEKgNPaAx1DoBHXVWOwy
+	 7lGwNkLoahTYfepRaPiVrpmSwGGS65EuNpqBIG+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 317/398] watchdog: msc313e: Fix premature reset during timeout update
-Date: Wed, 23 Sep 2026 16:06:31 +0200
-Message-ID: <20260923140651.638910199@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 335/398] wifi: mwifiex: prevent authentication frame length truncation
+Date: Wed, 23 Sep 2026 16:06:49 +0200
+Message-ID: <20260923140652.103803386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,48 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 22737cfced627ffcb4b5c36d63bb3d4476f63213 upstream.
+commit fa00193eb991f92b007aefe7afb6a7566976dacf upstream.
 
-Updating the 32-bit hardware timeout requires writing to two 16-bit
-registers sequentially.  If the watchdog is actively running, this
-non-atomic update might trigger a premature system reset.
+mwifiex_cfg80211_authenticate() derives the authentication frame length
+from req->ie_len and req->auth_data_len, both of type size_t, but stores
+it in a u16.
 
-Clear the watchdog counter before updating the registers to prevent the
-timer from timing out prematurely against an intermediate threshold.
+NL80211_ATTR_AUTH_DATA only has a minimum length policy. Since nla_len is
+a u16, a single attribute can carry up to 65531 bytes of payload, so the
+sum can exceed U16_MAX before it is assigned to pkt_len. The truncated
+pkt_len determines the skb frame area, while the copy length remains
+req->auth_data_len - 4, resulting in a heap buffer overflow.
 
-Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913065126.8350-1-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+For example, with auth_data_len equal to 65510 and no IEs, the sum is
+65546. It is truncated to 10 and then reduced by four to 6. The driver
+appends only six bytes to the skb with skb_put(), but then copies 65506
+user-provided bytes into the authentication body.
+
+Reaching this path requires CAP_NET_ADMIN in the user namespace owning
+the network namespace, an up station netdev, and a suitable BSS/SAE
+authentication request.
+
+Compute the length in size_t, reject values that cannot be represented by
+the firmware's u16 frame length field, and only then assign it to pkt_len.
+
+Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
+Cc: stable@vger.kernel.org # 6.12+
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260820062155.3981976-1-lilinmao@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/msc313e_wdt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -47,6 +47,9 @@ static void msc313e_wdt_set_hw_timeout(s
- {
- 	u32 t = timeout * clk_get_rate(priv->clk);
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4271,6 +4271,7 @@ mwifiex_cfg80211_authenticate(struct wip
+ 	struct mwifiex_adapter *adapter = priv->adapter;
+ 	struct sk_buff *skb;
+ 	u16 pkt_len, auth_alg;
++	size_t frame_len;
+ 	int ret;
+ 	struct mwifiex_ieee80211_mgmt *mgmt;
+ 	struct mwifiex_txinfo *tx_info;
+@@ -4343,10 +4344,17 @@ mwifiex_cfg80211_authenticate(struct wip
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
-+
- 	writew(t & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
- 	writew((t >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(1, priv->base + REG_WDT_CLR);
-@@ -77,6 +80,9 @@ static int msc313e_wdt_stop(struct watch
- {
- 	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
+ 	mwifiex_cancel_scan(adapter);
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
+-	pkt_len = (u16)req->ie_len + req->auth_data_len +
++	frame_len = req->ie_len + req->auth_data_len +
+ 		MWIFIEX_MGMT_HEADER_LEN + MWIFIEX_AUTH_BODY_LEN;
+ 	if (req->auth_data_len >= 4)
+-		pkt_len -= 4;
++		frame_len -= 4;
 +
- 	writew(0, priv->base + REG_WDT_MAX_PRD_L);
- 	writew(0, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(0, priv->base + REG_WDT_CLR);
++	if (frame_len > U16_MAX) {
++		mwifiex_dbg(priv->adapter, ERROR,
++			    "auth frame too long: %zu bytes\n", frame_len);
++		return -EINVAL;
++	}
++	pkt_len = frame_len;
+ 
+ 	skb = dev_alloc_skb(MWIFIEX_MIN_DATA_HEADER_LEN +
+ 			    MWIFIEX_MGMT_FRAME_HEADER_SIZE +
 
 
