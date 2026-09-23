@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E93A6F1C;
-	Wed, 23 Sep 2026 14:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D823AA19B;
+	Wed, 23 Sep 2026 14:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173330; cv=none; b=fFYfg8mn56vNA1qGYAqlqFrl5aNByPFnDmm9wtyrNY3CB/dwMl6c+bpi1OL0CM9YBfkhFBbWSuyfJboJj4tiD2MNxr6SIteWIl1ClmkDr9dT5tsI0mx+FZVI+3Gm2lJM7TS6+I9Y9scX1A+0ulbMKcpNxQpRL3ShZ5qOpXmAVZ0=
+	t=1790173335; cv=none; b=Z1Xrlvs48BK6obe7Tx95ASo++HZlX0szEcnhH60/770xw09EnEBPWNGVfppefknLA62AhItYE1Zv7aeHf3loKoLk8FODuAxhkVDMeMFcIDqgYny5J9HaDJQFpQ5Okz6bNDBO2HcNp0+G6UsscKmAnXzPIfVpdYDsbrcrpDGi9B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173330; c=relaxed/simple;
-	bh=W6SHaedIs/WQlZquifl7+Glwoj23qtLkLz7PsjO8Ukg=;
+	s=arc-20240116; t=1790173335; c=relaxed/simple;
+	bh=Mq57Y13eowkDvg4h2pFbtqkkyz8Dizhg9pF3E0iDGss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLPOlC3T7qQkPiApZCKU9dQRxP2gRjpus7Yf/TE0gdH6Zp645TaHQmg/OnahgE4M+HQ0N9jzLgZrV9c4t6uD1iIUgCAaRBBZKXET/BHJdCjqWKMv7XbyIOZ/59eIwigzDVd0DuuqV54InOUPsFOTLVoWcxvvAsSLobzHkolA/Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adZ00dYL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qTd4d/5SzuCl6YkHkiDQIf+50AJETQuI7u5p5gGdcYyLk67beghhHXuP/2weohES1z5HYje32P3C5AtcxD3Qwk+aRO8GLgPmRx6z7PZlV3nSdysyz0kWCFuwGlK3oWZOcz2ue7aei+D2GECRe1uBoH0F+/XelATSI7HApQmQSxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8khgkiA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adZ00dYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B481F000FF;
-	Wed, 23 Sep 2026 14:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8khgkiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E299B1F000FF;
+	Wed, 23 Sep 2026 14:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173329;
-	bh=ao0uM18tSNsUxjzIcpU219G504vJyztXfzObFjFYWHU=;
+	s=korg; t=1790173333;
+	bh=43Kl0VxwBJWk/qTx9ustmNg51EFt6Sy0279vfUq/Ob8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adZ00dYLoWgryYLc02HFiw7GiQXM+m57QhGEPpUYinMjuhOyEuZ8m1ZMeCTuLXBH5
-	 OCcDnweNfp5jFzT3+rcCzjwebpqJzyzkyVCAkjBQYy3nFrAtJGNFMnFQe6V2HOirKY
-	 ewpb3LkOpv5XICn6aOGbyuxwNRMrGX0ElGhrWBlc=
+	b=I8khgkiAkWkgwzusyByD2y+RlmVMGqDTNPeS8Me3rD1PLggCRrU4bk+ceUHU50CH3
+	 rvhPb9kTJrSvJCaAXGbnTwyL6v5kzSMFGMOEpZE75T5yVkISph+7tEH4GUQdCfblQA
+	 4EDzOiKHF24Lw5K4UzvMWvkDgtN0u8RM7fUGtEvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dc57fd6722deb17e92af@syzkaller.appspotmail.com,
+	Jungwoo Lee <jwlee2217@gmail.com>,
+	Wongi Lee <qw3rtyp0@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 185/438] drop_monitor: use raw_cpu_ptr() in tracepoint probes
-Date: Wed, 23 Sep 2026 16:03:26 +0200
-Message-ID: <20260923140649.560336171@linuxfoundation.org>
+Subject: [PATCH 7.2 212/438] net: lock the socket in sock_gettstamp()
+Date: Wed, 23 Sep 2026 16:03:53 +0200
+Message-ID: <20260923140650.253571776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,74 +56,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c19b7d35086b7d240f1ca3088b0079d2bd39ffb9 ]
+[ Upstream commit 9ed55f3dbef4f4adfe65eb03b0c35c53229a8490 ]
 
-syzbot reported a preemption warning in sk_skb_reason_drop():
+sk->sk_flags must only be changed while holding the socket lock,
+because sock_set_flag() and sock_reset_flag() use non atomic
+operations (__set_bit() and __clear_bit()).
 
- BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.17/5917
- caller is net_dm_packet_trace_kfree_skb_hit+0x119/0x350 net/core/drop_monitor.c:519
+sock_gettstamp() is one of the last places where a bit of sk->sk_flags
+is changed from a syscall without owning the socket lock, through
+sock_enable_timestamp(sk, SOCK_TIMESTAMP).
 
-In net_dm_packet_trace_kfree_skb_hit(), data = this_cpu_ptr(&dm_cpu_data)
-is evaluated before spin_lock_irqsave(&data->drop_queue.lock, flags).
-When kfree_skb() is called from preemptible context (e.g. process context
-during close() on /dev/net/tun), preemption is enabled, triggering the
-CONFIG_DEBUG_PREEMPT warning in smp_processor_id().
+sk_set_memalloc() and sk_clear_memalloc() also change sk->sk_flags
+without the socket lock, but their callers (nbd, iscsi_tcp, nvme-tcp,
+sunrpc, wireguard) need a careful audit, this will be addressed in a
+separate patch.
 
-The same pattern exists in net_dm_hw_trap_summary_probe() and
-net_dm_hw_trap_packet_probe() for dm_hw_cpu_data.
+Jungwoo Lee and Wongi Lee reported an UDP socket use-after-free
+caused by this bug: a SIOCGSTAMPNS_NEW ioctl racing with bind()
+can cancel the SOCK_RCU_FREE bit that udp_lib_get_port() just set,
+because both threads perform a read-modify-write on the same word.
 
-This is a false positive because each per-cpu structure is protected
-by its own spinlock. If the task migrates to another CPU right after
-reading the per-cpu pointer, the lock still safely synchronizes
-access to that queue.
+  CPU 0 (bind)                        CPU 1 (SIOCGSTAMPNS_NEW)
+  --------------------------------    ----------------------------
+  read sk_flags = F                   read sk_flags = F
+  compute F | BIT(SOCK_RCU_FREE)      compute F | BIT(SOCK_TIMESTAMP)
+  store F | BIT(SOCK_RCU_FREE)
+  sk_add_node_rcu(sk, ...)
+                                      store F | BIT(SOCK_TIMESTAMP)
 
-Use raw_cpu_ptr() instead of this_cpu_ptr() to silence
-CONFIG_DEBUG_PREEMPT without disturbing interrupt state or breaking
-PREEMPT_RT locking semantics.
+After the lost update, SOCK_RCU_FREE is clear while the socket is
+visible to lockless UDP receive lookups. sk_destruct() then frees
+the socket immediately instead of waiting for a RCU grace period,
+while the receive path still holds a reference-less pointer to it:
 
-Fixes: ca30707dee2b ("drop_monitor: Add packet alert mode")
-Fixes: 5855357cd40e ("drop_monitor: Prepare probe functions for devlink tracepoint")
-Reported-by: syzbot+dc57fd6722deb17e92af@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6aa316b2.f81106d8.2ab401.0014.GAE@google.com/
+ BUG: KASAN: slab-use-after-free in ipv4_pktinfo_prepare+0x30/0x410
+ Read of size 8 at addr ffff888008806610 by task exploit/207
+ CPU: 0 UID: 1000 PID: 207 Comm: exploit Not tainted 6.12.95+ #1
+  ipv4_pktinfo_prepare+0x30/0x410
+  udp_queue_rcv_one_skb+0x51c/0x1180
+  udp_unicast_rcv_skb+0x109/0x350
+  ip_protocol_deliver_rcu+0x14b/0x310
+  ip_local_deliver_finish+0x29d/0x390
+  ip_local_deliver+0x24d/0x2a0
+
+Only grab the socket lock when SOCK_TIMESTAMP has to be set,
+to keep the common case lockless.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Jungwoo Lee <jwlee2217@gmail.com>
+Reported-by: Wongi Lee <qw3rtyp0@gmail.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260910204612.3762015-4-edumazet@google.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260915043055.3441600-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/sock.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 873155ca72432..795c15dd1771a 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -448,7 +448,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
- 	if (metadata->trap_type == DEVLINK_TRAP_TYPE_CONTROL)
- 		return;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 1ad41904db25b..5c1a1d1950752 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3908,7 +3908,14 @@ int sock_gettstamp(struct socket *sock, void __user *userstamp,
+ 	struct sock *sk = sock->sk;
+ 	struct timespec64 ts;
  
--	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
-+	hw_data = raw_cpu_ptr(&dm_hw_cpu_data);
- 	raw_spin_lock_irqsave(&hw_data->lock, flags);
- 	hw_entries = hw_data->hw_entries;
- 
-@@ -516,7 +516,7 @@ static void net_dm_packet_trace_kfree_skb_hit(void *ignore,
- 	 */
- 	nskb->tstamp = tstamp;
- 
--	data = this_cpu_ptr(&dm_cpu_data);
-+	data = raw_cpu_ptr(&dm_cpu_data);
- 
- 	spin_lock_irqsave(&data->drop_queue.lock, flags);
- 	if (skb_queue_len(&data->drop_queue) < net_dm_queue_len)
-@@ -983,7 +983,7 @@ net_dm_hw_trap_packet_probe(void *ignore, const struct devlink *devlink,
- 	NET_DM_SKB_CB(nskb)->hw_metadata = n_hw_metadata;
- 	nskb->tstamp = tstamp;
- 
--	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
-+	hw_data = raw_cpu_ptr(&dm_hw_cpu_data);
- 
- 	spin_lock_irqsave(&hw_data->drop_queue.lock, flags);
- 	if (skb_queue_len(&hw_data->drop_queue) < net_dm_queue_len)
+-	sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++	/* sk->sk_flags must only be changed under the socket lock,
++	 * because sock_set_flag() uses non atomic operations.
++	 */
++	if (!sock_flag(sk, SOCK_TIMESTAMP)) {
++		lock_sock(sk);
++		sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++		release_sock(sk);
++	}
+ 	ts = ktime_to_timespec64(sock_read_timestamp(sk));
+ 	if (ts.tv_sec == -1)
+ 		return -ENOENT;
 -- 
 2.53.0
 
