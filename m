@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB36032B125;
-	Wed, 23 Sep 2026 14:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454C3A6EF1;
+	Wed, 23 Sep 2026 14:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173023; cv=none; b=LFXcTZlVUYVljjERAzJDLAUMMQTqxorCUq1ost7s4o6CWeOSQpnl6/qg6UB7KR7+D4/T50J344c8wCLYeLJmPqPrPf5XDT1vkGoMBT7+Q99326nSV0Jc202dlWZwxXcLSwer2pIlLc8GFzlQLJgLTy5WKmHOntqENM/RsmtJBDg=
+	t=1790173027; cv=none; b=Y733i686QY6wVKMQ8Pku8hx7FH9LEwzZyIPwQdu39GAr3ayE0Dm3xoW0D3tlOvtVMXVvUqzV9kLvLrdCYy+4hvJs3eLyNvQ4o78BGE9hwSjcWWREUgBfG/P/LkrDhF+xSYjv6rpMhtd7avRqnHtxKovU47oY9qRtC9L0XdApC6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173023; c=relaxed/simple;
-	bh=FvAv5z4xiqGKmNM61iTf8ICT3UzmbmXD14IRulfqFUE=;
+	s=arc-20240116; t=1790173027; c=relaxed/simple;
+	bh=VmeT/g/hejFHbifrhf06dCAb88jRuasff1SPuS7EX1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYxQ5Yw9cJHKbLXc56wXeRRv+TL6SCEXZl/ELhQgx1djboZgfYcV6vXZApucHR5vUg2Wh0D43q0XgC8BKAE2Xi+k7GCnWsc9PJdQg8EKSb2fO8fgDgr45EcXPtTzYHEi0BDOw+pgN7olLXuwlnVAvUzqF0DYMmJ1K6gkqwOdqv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOIcIv/G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MqRfsO+fld/Hl+4qUeXY/m/4KbWHaAtHwZVb4OHuwSXdzdezfPqry5E6b8aM+8piRMjU9YWRjBlz8cdsFTYxsHSaNntep0O2VQwb5P4AwTs/nOEIP7dy4fyPTYDhd8gS0pvoZvRjubDaB/iw+je4nfL927757QP9A1+HAUCjKtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jV85Cwjg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOIcIv/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105141F000FF;
-	Wed, 23 Sep 2026 14:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jV85Cwjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AB21F000FF;
+	Wed, 23 Sep 2026 14:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173022;
-	bh=zZgS8Ypbbv0HDUVmEpN3cKpOwOzwaULs1JHNrzuExT8=;
+	s=korg; t=1790173026;
+	bh=nUebcCfFCZ7ty6SVIwC/J3egKkKJ+8bEUcZ8WzkW3kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOIcIv/GXo9tqOjDRwA3QmyoSyHhucir/B4FmRqcFrP1ip8DPlZlw+wKSKKkG7JLi
-	 RyjqPfSWFFPw6982TekB1oktjDAfR5Yf23fFoN8VbVWuCxvLbxW2/6kH5wZ2XWtc+w
-	 MIPWIngv7MxLvfiGQg6lu3jeEP7J641rsCU4pj2c=
+	b=jV85Cwjgrdpkfn2RVUc9IlJrmdYvdqDbCcs+V/5zXx0cZDPOocZP3cSISAZDE4sZv
+	 oM+eDvE/cybA4X12T/4QktBmGBThYXCGCazGH1UJDTBVZ7nVLZsHjewS9TPwBNegii
+	 k5swjTxg1AOx1tEMC3dT8bbmR1rNZK7YC7emlNxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Casco <jesse.casco@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	sashiko-bot@kernel.org,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Melissa Wen <mwen@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 129/438] drm/msm/dp: skip PUSH_IDLE when the link was never enabled
-Date: Wed, 23 Sep 2026 16:02:30 +0200
-Message-ID: <20260923140648.124893627@linuxfoundation.org>
+Subject: [PATCH 7.2 112/438] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
+Date: Wed, 23 Sep 2026 16:02:13 +0200
+Message-ID: <20260923140647.683609184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,93 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Casco <jesse.casco@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit e249a6e2a130c08bb4d8b0a55cbe29754307e5c9 ]
+[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
 
-msm_dp_display_atomic_enable() returns early when link training fails,
-leaving ->power_on false and the main link down.
-msm_dp_display_atomic_disable() nevertheless writes DP_STATE_CTRL_PUSH_IDLE
-and waits for an idle-pattern completion that cannot arrive, so every failed
-enable is followed by "PUSH_IDLE pattern timedout".
+When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
+set, a drm_pending_vblank_event will be allocated. If later, there is an
+allocation failure or another failure at setup_out_fence(), that event
+will not have base.fence set and it will not be released at
+complete_signaling().
 
-Every other step of the teardown is already gated on that flag:
-msm_dp_display_disable(), called from .atomic_post_disable(), returns early
-on !power_on. The PUSH_IDLE write is the only one that is not, so the
-controller's runtime-PM reference is then dropped without the link having
-been taken down.
+Release the event and set crtc_state->event to NULL just like in the
+DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
+drm_event_reserve_init(). That is, prepare_signaling() releases the
+event and there is nothing to be done at complete_signaling(). Use
+drm_event_cancel_free() as that will also undo drm_event_reserve_init()
+in case it has been called.
 
-On glymur (Snapdragon X2 Elite) the consequence is not a warning. The SoC
-does not survive it: TrustZone force-stops the SOCCP and ADSP remote
-processors and the machine resets silently about 50 ms later, with no oops
-and no panic. On an ASUS Zenbook A16 (UX3607OA), whose eDP panel does not
-currently train, this reproduces without any compositor or GPU involvement:
-
-  # eDP enable has already failed with "Failed link training (rc=-104)"
-  echo 1 > /sys/class/graphics/fb0/blank
-
-  [535.645455] === marker ===
-  [535.694833] qcom_q6v5_pas d00000.remoteproc: fatal error received: \
-                 sys_m_smsm.c:512:TZ force stop
-  [535.694875] remoteproc remoteproc0: crash detected in soccp: type fatal error
-  [535.728857] qcom_q6v5_pas 6800000.remoteproc: fatal error received: \
-                 sys_m_smsm.c:783:err fatal notification received from TZ
-  <SoC reset>
-
-Gate the PUSH_IDLE write on ->power_on so the disable path is consistent
-with the rest of the teardown. With this applied the same sequence is
-harmless and the machine stays up; without it, it resets every time.
-
-The unconditional write dates back to the original DP driver
-(c943b4948b58 ("drm/msm/dp: add displayPort driver support")), but the
-surrounding code has been restructured several times since, so no Fixes:
-tag is offered.
-
-Note that the eDP link-training failure that exposes this on the A16 is a
-separate problem in the glymur eDP PHY and is reported separately; this
-change is about not damaging the machine when training fails, for whatever
-reason.
-
-Tested on ASUS Zenbook A16 (UX3607OA), Snapdragon X2 Elite Extreme, on
-linux-next next-20260803 and next-20260807. The machine has since been
-running next-20260807 with this patch as its daily driver.
-
-Assisted-by: Anthropic:Claude-Opus-5
-Signed-off-by: Jesse Casco <jesse.casco@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/745167/
-Link: https://lore.kernel.org/r/20260808171325.133041-1-jesse.casco@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
+Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 79e2b171e269a..a2f799cf50f63 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1412,6 +1412,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
+diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+index 7b951af5ab320..66b591b39a513 100644
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -1461,10 +1461,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 			struct dma_fence *fence;
+ 			struct drm_out_fence_state *f;
  
- 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
- 
-+	/*
-+	 * If .atomic_enable() bailed out - link training failure is the common
-+	 * case - the mainlink was never brought up and ->power_on stayed false.
-+	 * Driving the PUSH_IDLE pattern into a controller that was never
-+	 * enabled times out, and .atomic_post_disable() then drops the
-+	 * controller's runtime-PM reference without tearing the PHY back down,
-+	 * because msm_dp_display_disable() returns early on !power_on.  On
-+	 * glymur (Snapdragon X2 Elite) that combination is answered by a
-+	 * TrustZone-level SOCCP/ADSP force-stop and a silent SoC reset.
-+	 * There is nothing to push idle, so leave it alone.
-+	 */
-+	if (!dp->power_on)
-+		return;
++			ret = -ENOMEM;
 +
- 	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
+ 			f = krealloc(*fence_state, sizeof(**fence_state) *
+ 				     (*num_fences + 1), GFP_KERNEL);
+ 			if (!f)
+-				return -ENOMEM;
++				goto err_free_event;
+ 
+ 			memset(&f[*num_fences], 0, sizeof(*f));
+ 
+@@ -1473,12 +1475,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 
+ 			fence = drm_crtc_create_fence(crtc);
+ 			if (!fence)
+-				return -ENOMEM;
++				goto err_free_event;
+ 
+ 			ret = setup_out_fence(&f[(*num_fences)++], fence);
+ 			if (ret) {
+ 				dma_fence_put(fence);
+-				return ret;
++				goto err_free_event;
+ 			}
+ 
+ 			crtc_state->event->base.fence = fence;
+@@ -1534,6 +1536,11 @@ static int prepare_signaling(struct drm_device *dev,
+ 	}
+ 
+ 	return 0;
++
++err_free_event:
++	drm_event_cancel_free(dev, &crtc_state->event->base);
++	crtc_state->event = NULL;
++	return ret;
  }
  
+ static void complete_signaling(struct drm_device *dev,
 -- 
 2.53.0
 
