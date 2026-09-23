@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBD9470121;
-	Wed, 23 Sep 2026 14:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC5248EC6C;
+	Wed, 23 Sep 2026 14:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173624; cv=none; b=WdzPBpveNpcfpqNvEhpbREGlGEG8UObxkrPrsKW/p2fjSQWqS40Iojr8i8FXbe6d/KwjaECegKBIjCjxcW5blnvO8ykv9CR33/HXA02XO53PBIoxv1CUDLfd3umS4hj1sDbWWnyy/OPDrUGARcMZGqNkhcCxH1p/uyrnhKII690=
+	t=1790173628; cv=none; b=uEXIGiMdVMfgjP1bKLgcs3eHz5R3hlx8TUvX6K8P32A99F8bSF9Z3HdhWqWDaN4wMe0y6n0B4dXNKz4IiKRzkpV7SJuDmD0sXemgISqxN1t3rnDDu2t/zepGEzhq+SxDgIkHWfHOkJupooHNWUr64FXOgyIPngZZ/9xPgSBG5FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173624; c=relaxed/simple;
-	bh=/BCWuqM22Ri1EHkApuOV7vud61wp7TXj7ZdkoPrnZ1Y=;
+	s=arc-20240116; t=1790173628; c=relaxed/simple;
+	bh=zqy/a+4YmYc9PYl4O3BLde3PJAs8CElymDB52Eom19E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JuQ5gPKwNHQfjC5tmocz/51vrnq7oVwCD16n0OZy7cAb2vhw9kRr/vGardyVrDZd201MdNWxfT9tKnwiPcmrO+K1cSx6ORvdA3eoQ4r/tB9+MDb/5sZ94rtccHbCk06BeIFgq1lw+9vpc3iGKrH+ib2I3l4zDgMSPB5EICljVug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjuudaZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tgDGkA4LyD4BvNw2TBYjqXcX29peojzAGH9C9gCcZ/FM+1OBupGH2oJRnfm7wFjKcxstUbO5grryXeFX1hNF46y8soUbhy59jB7B8fbJA5nv1sTUdpML4Fvc5hKNAW92LF5L5GnJu/CDkSueJN0DI9g3hxGp4palHalwb98B02U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVnGNziq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjuudaZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0D81F000FF;
-	Wed, 23 Sep 2026 14:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVnGNziq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD161F000FF;
+	Wed, 23 Sep 2026 14:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173622;
-	bh=1lRp4Dy8VeNERvU+HG+TM1mqMfciDGJLYYu4Jqcrk2w=;
+	s=korg; t=1790173626;
+	bh=aOIjEaZ464BHQkNfF5i0pK31F6KsrDvxi5mP4pam01o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YjuudaZIP0xD4ckHRZ49vJWFvepfXA23nIQ2YkMq6Gd1yhP1hR8iD9niFXt92Lwu+
-	 5MuzEywSo/YrLkLpNq//RIkR/bZfeGBqoFRYtgEnopXw3/PCjv+5HBcVoXUDDT5XVs
-	 LeeOaBmp6u6Tz05yajmLKHR/40srqUT1c3ZMU/v0=
+	b=zVnGNziqC4Nf3EW3UAAMn0r9NCUUvskAqivS/T3cq2w/lFpJBlmwwwe46dLA42SFF
+	 BkMihzGf+sYmanznF6/91UXKep/tueTLu74tN1dbjgIbVZywxbEF5sYA4u7y4FwQcl
+	 cb4jWHxgmSQhQZw0haypLXAI+MqekB1tz3vhnd9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
-	"Pimen Flavian Dei (Drivesec S.r.l.)" <fdei@drivesec.com>,
-	"Alberto Carboneri (Drivesec S.r.l.)" <acarboneri@drivesec.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 305/438] scsi: core: Validate MODE SENSE lengths in scsi_cdl_enable()
-Date: Wed, 23 Sep 2026 16:05:26 +0200
-Message-ID: <20260923140652.682874296@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.2 306/438] xfrm: serialize state GC with device state flush
+Date: Wed, 23 Sep 2026 16:05:27 +0200
+Message-ID: <20260923140652.707379542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,97 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alberto Carboneri <acarboneri@drivesec.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 3d676e458fe0c566f5a62753dc696b6a862fc412 upstream.
+commit 89fefad9f971bc637fb22373078144f2563c4be9 upstream.
 
-scsi_cdl_enable() uses length fields returned by MODE SENSE to locate
-the ATA feature mode page in a 64-byte stack buffer. A target can report
-a total length shorter than its mode header and block descriptors. The
-unsigned subtraction used for the MODE SELECT length can wrap, and the
-separately computed buf_data can point beyond buf.
+The deferred-device pass in xfrm_dev_state_flush() finds states under
+xfrm_state_dev_gc_lock, but drops the lock before calling
+xfrm_dev_state_free() because the driver callback may sleep.  The device
+GC list does not hold an xfrm_state reference, so the state GC worker can
+destroy the same state concurrently.
 
-During automatic scan, enable is false, so the read-modify-write of
-buf_data[4] can clear the low two bits of a target-selected
-out-of-bounds stack byte. scsi_mode_select() can then copy up to 64
-bytes from outside the buffer into the outgoing MODE SELECT payload,
-disclosing stack contents to the target.
+The race can proceed as follows:
 
-This is reachable while scanning a USB storage device that identifies as
-an ATA device and advertises CDL support. No filesystem mount or
-userspace access to the block device is required.
+  CPU 0                               CPU 1
+  find x on the device GC list
+  drop xfrm_state_dev_gc_lock
+  read x->xso.dev
+                                      xfrm_state_gc_destroy(x)
+                                      xfrm_dev_state_free(x)
+                                      xfrm_state_free(x)
+  continue xfrm_dev_state_free(x)
 
-On upstream commit cee9395acd80 ("Linux 7.3-rc1"), a build-specific,
-one-vCPU QEMU/Raw Gadget proof using QEMU-only multi-UDC allocator
-sampling executed a fixed proof command inside the guest and created a
-UID-0-owned marker during automatic enumeration, with KASLR and NX
-enabled.
+Both paths can invoke the driver callback and drop the device reference.
+CPU 0 can also access the xfrm_state after CPU 1 has freed it.
 
-The issue was independently found during security research at Drivesec
-S.r.l.
+KASAN reported:
 
-Cap the available length to the buffer size. Validate and consume the
-mode header and block descriptor lengths before using the page, and
-require the five bytes needed to access the CDL field.
+  BUG: KASAN: slab-use-after-free in xfrm_dev_state_free+0x24c/0x2a0
+  Read of size 8 at addr ffff88810bbaa960 by task poc/102
 
-Fixes: 1b22cfb14142 ("scsi: core: Allow enabling and disabling command duration limits")
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-scsi/20260717192313.93D791F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-scsi/20260717222931.AC4EE1F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/linux-scsi/df13ec87ac9b28e3b0a2d9eb26477e276ff0278a.camel@HansenPartnership.com/
+  Call Trace:
+   xfrm_dev_state_free+0x24c/0x2a0
+   xfrm_dev_state_flush+0x353/0x400
+   xfrm_dev_event+0x26d/0x3a0
+   notifier_call_chain+0xc0/0x280
+   __dev_notify_flags+0x169/0x250
+   netif_change_flags+0xe7/0x160
+   dev_change_flags+0x96/0x220
+   devinet_ioctl+0x7f4/0x1880
+
+  Allocated by task 87:
+   xfrm_state_alloc+0x1e/0x5c0
+   xfrm_add_sa+0xe7f/0x5820
+   xfrm_user_rcv_msg+0x4f3/0x940
+
+  Freed by task 57:
+   kmem_cache_free+0xcb/0x3d0
+   xfrm_state_gc_task+0x4a8/0x650
+   process_one_work+0x63a/0x1070
+
+Serialize xfrm_state destruction against the deferred-device pass with a
+mutex.  Keep xfrm_state_dev_gc_lock limited to list operations and retain
+the existing callback and device-reference release ordering.
+
+Fixes: 07b87f9eea0c ("xfrm: Fix unregister netdevice hang on hardware offload.")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Pimen Flavian Dei (Drivesec S.r.l.) <fdei@drivesec.com>
-Signed-off-by: Pimen Flavian Dei (Drivesec S.r.l.) <fdei@drivesec.com>
-Signed-off-by: Alberto Carboneri (Drivesec S.r.l.) <acarboneri@drivesec.com>
-Link: https://lore.kernel.org/linux-scsi/20260717192313.93D791F000E9@smtp.kernel.org/
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260904135410.360314-1-acarboneri@drivesec.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ net/xfrm/xfrm_state.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -727,6 +727,7 @@ int scsi_cdl_enable(struct scsi_device *
- 		struct scsi_mode_data data;
- 		struct scsi_sense_hdr sshdr;
- 		char *buf_data;
-+		size_t avail, offset;
- 		int len;
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -226,6 +226,7 @@ static struct xfrm_state_afinfo __rcu *x
  
- 		ret = scsi_mode_sense(sdev, 0x08, 0x0a, 0xf2, buf, sizeof(buf),
-@@ -735,11 +736,24 @@ int scsi_cdl_enable(struct scsi_device *
- 			return -EINVAL;
+ static DEFINE_SPINLOCK(xfrm_state_gc_lock);
+ static DEFINE_SPINLOCK(xfrm_state_dev_gc_lock);
++static DEFINE_MUTEX(xfrm_state_gc_mutex);
  
- 		/* Enable or disable CDL using the ATA feature page */
--		len = min_t(size_t, sizeof(buf),
--			    data.length - data.header_length -
--			    data.block_descriptor_length);
--		buf_data = buf + data.header_length +
--			data.block_descriptor_length;
-+		avail = min_t(size_t, data.length, sizeof(buf));
-+		if (data.header_length > avail)
-+			return -EINVAL;
-+
-+		offset = data.header_length;
-+		avail -= data.header_length;
-+
-+		if (data.block_descriptor_length > avail)
-+			return -EINVAL;
-+
-+		offset += data.block_descriptor_length;
-+		avail -= data.block_descriptor_length;
-+
-+		if (avail < 5)
-+			return -EINVAL;
-+
-+		buf_data = buf + offset;
-+		len = avail;
+ int __xfrm_state_delete(struct xfrm_state *x);
  
- 		/*
- 		 * If we want to enable CDL and CDL is already enabled on the
+@@ -632,8 +633,10 @@ static void xfrm_state_gc_task(struct wo
+ 
+ 	synchronize_rcu();
+ 
++	mutex_lock(&xfrm_state_gc_mutex);
+ 	hlist_for_each_entry_safe(x, tmp, &gc_list, gclist)
+ 		xfrm_state_gc_destroy(x);
++	mutex_unlock(&xfrm_state_gc_mutex);
+ }
+ 
+ static enum hrtimer_restart xfrm_timer_handler(struct hrtimer *me)
+@@ -1000,6 +1003,7 @@ restart:
+ out:
+ 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
+ 
++	mutex_lock(&xfrm_state_gc_mutex);
+ 	spin_lock_bh(&xfrm_state_dev_gc_lock);
+ restart_gc:
+ 	hlist_for_each_entry_safe(x, tmp, &xfrm_state_dev_gc_list, dev_gclist) {
+@@ -1014,6 +1018,7 @@ restart_gc:
+ 
+ 	}
+ 	spin_unlock_bh(&xfrm_state_dev_gc_lock);
++	mutex_unlock(&xfrm_state_gc_mutex);
+ 
+ 	xfrm_flush_gc();
+ 
 
 
