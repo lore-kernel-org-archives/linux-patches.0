@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CB65275B8;
-	Wed, 23 Sep 2026 14:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E311A332EC5;
+	Wed, 23 Sep 2026 14:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174948; cv=none; b=X3V65nsLzZrJW2d67cikgVJJYLoEmDA2UbV3ygj4pZgp2G3GTlGot7iqw6a0C8SrsJCzs1aE/wYB7k/KpSYB6zyD0pS1sWOW203zMrWnaBcNMnVxmXri8y8v+FuhPA/CChX9E3j316N/p3rUnAmjdZ2ZDHHl486r0rpVmnzqal4=
+	t=1790174951; cv=none; b=j0sNWoAHgwOxnDtc3imsEl4w42IhYWVQuCpWvmFLPhXo6y8w+oc+YINGQ9SKpPgVO4Vz0Bx+gwgnlGfbsEFrLLmRkTYlIfgqIInN3FGMinLrZBZvSroOY2smICDinfYCZtU1XKpQaOOdOv/2yAibGfOza/MUXpo/kR4XPlebnBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174948; c=relaxed/simple;
-	bh=nsc+aE32dMDv6AtGXeeqz6PuBsWmEXLBN36Ww/u47Qk=;
+	s=arc-20240116; t=1790174951; c=relaxed/simple;
+	bh=it9MM6ryw0tgxafhLu8OxjRqGiHniSnZRLENmfF7MOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGi5ahxp+1uiJjOSF0tt5QFoZRDIuuyNO0tZYpgpN6F9K56VyunsJ6eke/W1nX+RkKDkYCcz74wgoXSqtnF0aAznSyvBDv+61QLsHyySjTSf6GCK+Yr2tAGZEH54+5cXnB2ff0mQlCSmdAWmnlKUMfGhnXBPbxP7SF9vBwkcCT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jamV2a9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OOIm5b105fDSMil1skXcRQ/CLZwrXuE1zUG2TPHmgNk0rANMc6jwC5LmHxZYuAJ6xXx60gGFvkB58wiOQdToRM3fDb8aZTo38x716RfYgBW6xcD3NpjvULc6UzTQzEqqXUJAOvNW6MiZ3TwWj9PQ+mPclpBsB8tkoK/GBlHxDjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbzMhtiF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jamV2a9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1008B1F000FF;
-	Wed, 23 Sep 2026 14:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbzMhtiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389691F000FF;
+	Wed, 23 Sep 2026 14:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174946;
-	bh=UkDpiYqfWmtk6O1jBKAhjTItJRUOXPNiFi0oMdVO70c=;
+	s=korg; t=1790174949;
+	bh=Bwrjn17mdANF82Q1nFIc2SDBGEqDJMxxzkTLJrLWXIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2jamV2a9cBbqa89QoTpa8ehImimGhH33S+F2nNvC/iHX96yZlVFMMvvlDs3BBnxUr
-	 Qyx8lCl+3Jvb1cftspln/5U2FA2ivC5/JoGgHSfl2/8ZAAJBvLFwFg5bZAx30ufGMf
-	 6oIufpKwF2BTYZCR4XvIcBITJVM2CHO2nPXl0PME=
+	b=ZbzMhtiFATwCUqpXBw+u7aMgO+qXnC1QxWqLfFWwd9Xlj6LkEYjr4bMlziB5xIdjR
+	 mZRn92/J8I7xBIgesK/aULMMnSgqfW5MqBEe8fCd+e8eLK3qpS7rqakRPxOvupI6cW
+	 O6G92GLLEm8R2+To7dmgAfb0Evoj2gA/1mN1NSGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.18 273/398] IB/hfi1: Fix the PIO_CRED credit-return mmap
-Date: Wed, 23 Sep 2026 16:05:47 +0200
-Message-ID: <20260923140650.494300977@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.18 274/398] selinux: preserve user SID across nested backing files
+Date: Wed, 23 Sep 2026 16:05:48 +0200
+Message-ID: <20260923140650.519232495@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,118 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 62f0f34fbd2b2d5653d33d3b9d42fdcabb1c0101 upstream.
+commit 8c0c602202b9a4909b00bc3354e3c0355bc69e65 upstream.
 
-hfi1_file_mmap()'s PIO_CRED case must hand user space the single
-credit-return page that holds this context's entry.  That page is the
-second or third page of the per-node credit-return allocation once the
-hardware send context index reaches 64 or 128, so the failure below is
-intermittent: when the entry lands on the first page the offset is zero
-and everything works.
+SELinux saves the user file SID in a backing-file security blob so it
+remains available after mmap() replaces vma->vm_file with a backing file.
 
-Two things are wrong.
+For nested backing files (overlayfs over overlayfs, or FUSE passthrough
+backed by overlayfs), user_file may itself be a backing file.  Its
+fsec->sid is the SID of the mounter that opened it, rather than the user
+that opened the top-level file.  mprotect() then checks fd { use } against
+the mounter SID.  This can incorrectly deny access without a domain
+transition, or check the wrong target SID after one.
 
-First, cr_page_offset is a byte offset but .va is a struct
-credit_return *, so adding it is pointer arithmetic and scales the offset
-by sizeof(struct credit_return) == 64.  memvirt then lands 256 KiB or
-512 KiB past a 10240-byte allocation.  With an IOMMU translating, that
-address is inside the vmalloc range but in no vm_area, so
-dma_mmap_coherent() -> iommu_dma_mmap() finds no pages, vmalloc_to_pfn()
-returns page_to_pfn(NULL), and remap_pfn_range() installs a frame above
-MAXPHYADDR.  The first user read then takes:
+Copy the saved user SID when user_file is a backing file.  Keep using the
+regular file SID for the first backing layer.
 
-  psm2_ep_open_pr: Corrupted page table at address 7a14d007e000
-  PGD 800000013886a067 P4D 800000013886a067 PUD 13886b067 PMD 13886c067
-                                            PTE 800049168e911235
-  Oops: Bad pagetable: 000d [#1] SMP PTI
+With two nested overlayfs mounts and SELinux enforcing,
+mprotect(PROT_READ) returns EACCES with an fd { use } denial against the
+mounter SID.  With this change, mprotect() succeeds.
 
-Second, and still wrong once the arithmetic is corrected,
-dma_mmap_coherent() describes a whole coherent buffer and selects the
-page within it with vma->vm_pgoff.  Offsetting cpu_addr has no effect:
-for a vmap'd allocation iommu_dma_mmap() uses cpu_addr only to locate the
-vm_area and then maps pages[vm_pgoff], which hfi1_file_mmap() has just
-set to 0.  User space therefore always receives the first credit-return
-page, every credit read is for the wrong context, and send PIO stalls
-forever.
+Tested on arm64 QEMU with a small BusyBox initramfs and a purpose-built
+SELinux policy.  The original test was also repeated with Fedora Cloud
+Base 44 userspace and gave the same result.
 
-Use the DMA API as intended: pass the base of the allocation with its
-full length and select the page with vm_pgoff.  A separate length is
-needed because memlen must keep describing the VMA for the existing size
-check.  The dma-direct path stays correct as well, since dma_direct_mmap()
-adds the same vm_pgoff to the base pfn.
-
-Tested on a Dell T7610 (Xeon E5-2650 v2, Intel IOMMU in DMA-FQ mode)
-against a Threadripper PRO 3995WX peer, both Omni-Path 100.  Before this
-change psm2_ep_open() Oopses the kernel; with only the arithmetic
-corrected psm2_ep_open() succeeds but any transfer that uses send PIO
-hangs, PSM2_SDMA=2 (send PIO disabled) completing normally while
-PSM2_SDMA=0 (send PIO only) hangs every time.  With this change send PIO,
-send DMA and the default mixed mode all work.
-
-Fixes: 1ec82317a1da ("IB/hfi1: Use dma_mmap_coherent for matching buffers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
-Link: https://patch.msgid.link/20260809032743.2671579-3-jyohuku.alterego@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 82544d36b172 ("selinux: fix overlayfs mmap() and mprotect() access checks")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/file_ops.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ security/selinux/hooks.c          |    9 ++++++++-
+ security/selinux/include/objsec.h |    2 +-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/file_ops.c
-+++ b/drivers/infiniband/hw/hfi1/file_ops.c
-@@ -326,6 +326,7 @@ static int hfi1_file_mmap(struct file *f
- 	void *memvirt = NULL;
- 	dma_addr_t memdma = 0;
- 	u8 subctxt, mapio = 0, vmf = 0, type;
-+	size_t memdmalen = 0;
- 	ssize_t memlen = 0;
- 	int ret = 0;
- 	u16 ctxt;
-@@ -371,7 +372,9 @@ static int hfi1_file_mmap(struct file *f
- 		mapio = 1;
- 		break;
- 	case PIO_CRED: {
-+		struct credit_return_base *cr = &dd->cr_base[uctxt->sc->node];
- 		u64 cr_page_offset;
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -3822,13 +3822,20 @@ static int selinux_file_alloc_security(s
+ 	return 0;
+ }
+ 
++static inline u32 selinux_file_user_sid(const struct file *file)
++{
++	if (unlikely(file->f_mode & FMODE_BACKING))
++		return selinux_backing_file(file)->uf_sid;
++	return selinux_file(file)->sid;
++}
 +
- 		if (flags & VM_WRITE) {
- 			ret = -EPERM;
- 			goto done;
-@@ -381,11 +384,18 @@ static int hfi1_file_mmap(struct file *f
- 		 * second or third page allocated for credit returns (if number
- 		 * of enabled contexts > 64 and 128 respectively).
- 		 */
--		cr_page_offset = ((u64)uctxt->sc->hw_free -
--				  (u64)dd->cr_base[uctxt->sc->node].va) &
-+		cr_page_offset = ((u64)uctxt->sc->hw_free - (u64)cr->va) &
- 				 PAGE_MASK;
--		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
--		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
-+		/*
-+		 * dma_mmap_coherent() describes the whole coherent buffer and
-+		 * selects the page within it with vma->vm_pgoff, so pass the
-+		 * base of the allocation and its length and let vm_pgoff pick
-+		 * the page.
-+		 */
-+		vma->vm_pgoff = cr_page_offset >> PAGE_SHIFT;
-+		memvirt = cr->va;
-+		memdma = cr->dma;
-+		memdmalen = TXE_NUM_CONTEXTS * sizeof(struct credit_return);
- 		memlen = PAGE_SIZE;
- 		flags &= ~VM_MAYWRITE;
- 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
-@@ -567,7 +577,8 @@ static int hfi1_file_mmap(struct file *f
- 		ret = 0;
- 	} else if (memdma) {
- 		ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
--					memvirt, memdma, memlen);
-+					memvirt, memdma,
-+					memdmalen ? memdmalen : memlen);
- 	} else if (mapio) {
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 PFN_DOWN(memaddr),
+ static int selinux_backing_file_alloc(struct file *backing_file,
+ 				      const struct file *user_file)
+ {
+ 	struct backing_file_security_struct *bfsec;
+ 
+ 	bfsec = selinux_backing_file(backing_file);
+-	bfsec->uf_sid = selinux_file(user_file)->sid;
++	bfsec->uf_sid = selinux_file_user_sid(user_file);
+ 
+ 	return 0;
+ }
+--- a/security/selinux/include/objsec.h
++++ b/security/selinux/include/objsec.h
+@@ -87,7 +87,7 @@ struct file_security_struct {
+ };
+ 
+ struct backing_file_security_struct {
+-	u32 uf_sid; /* associated user file fsec->sid */
++	u32 uf_sid; /* top-level user file fsec->sid */
+ };
+ 
+ struct superblock_security_struct {
 
 
