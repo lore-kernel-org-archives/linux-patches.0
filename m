@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751F23AA19B;
-	Wed, 23 Sep 2026 14:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC6438D6A2;
+	Wed, 23 Sep 2026 14:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173341; cv=none; b=b2Pe3NFpVOJEd/eu2S+Pm4JQ4zS5AOGY7LYSqiC5oNB9wknuEczVZnfq1uvGeTg7cRUX3joXldU58bJ+0pGvQwStScSJKdy0fEA+982ktY328eJm6fAoVGSw7dJOicr4TJgOP8IQd9OEXgEPJ6g0OVX1ZDUZ94Q7Pi4WueErpqo=
+	t=1790173345; cv=none; b=kmx8TVxrBt653MEXBe4Infsi9if/+KblEzBLBySslV6Mr4a76sd7eKYwxDHzsJWPBmGKFZF5+wP+2SBnlvgKxIzwGZzKORoIQDJnzidckhugSpKBRZWmPHBNoIgLa4HRMOObzjT46TjMdhMG/6ZSUjJ6ZZNy7eYP2IYoBIt4l14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173341; c=relaxed/simple;
-	bh=ykxYLq1tYa6RP0gkehx4b+Jg3hBCRKKuTaNEpdtcPJI=;
+	s=arc-20240116; t=1790173345; c=relaxed/simple;
+	bh=EIOo2jKWeLNA4V5lBxLrXxi4XX4PGbxWwYLXU/aXmpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CChyLg4CgD4+Fooh39JwYAwd1FGGIC/vlCCZeHdgMq9vv75ciZuwRr0atI9ubQmupbWi6OUqGjDbGni61p//ZefPnsvOJlmvrH6IrlUG2cOfyo5SoWmj8Pke6GaaJc3gcKG0U1MN9mG1Pz9FslDAlkjhXcAtgxY+kLb775fZDP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+sKUF4R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pPIi2fPGlMOnJbquNuq2pcpRBzziiAzxCrb0YwbsW7srt8RpOYhx4/B0xX7jC8NISBxL3zOY6TKTKo60zO8xEWCl1/72ckjrjU5+vPIBdCYICC7GbYnGc0QU3690cuHq3QGz4KU0Zm9tF2W4/otnJhxagZkxYUTYkjE97eFZfQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQMJnvh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+sKUF4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFC51F000FF;
-	Wed, 23 Sep 2026 14:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQMJnvh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37D81F000FF;
+	Wed, 23 Sep 2026 14:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173340;
-	bh=OIUC2J0Rjo86UtFDDtfqTmJMQ+n2DRk10uxL9Z3L5U0=;
+	s=korg; t=1790173343;
+	bh=H7/cwdLfhktUdasIh5tDpBR3D0xwXn/yalk4bd0sNQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w+sKUF4R8fcurCoPn2W5VjMYLw8/ThRxaWRaRKAkveNNFP1inORIdCwuADDaILB2z
-	 iJImNXT1vJ7rXB3SjzTaNTgplu41qPZcjFLfbStDAC4nlIZHNnOwDdXnIsSnlc5Qds
-	 7vFj/sAYjNM6BgO6g/zXGFZgCGJdKCBclr2Ig2j4=
+	b=UQMJnvh4o4sQ5mlrbB6Mk5+3179QGQCMwwO1rwRTGlqGDlJ9jXoQiyw5niPmp0Vwj
+	 qTYFjpu4DoLGZI6xyB9AiXeNl8IQGm5D/BL/9dhfpVp/haMfp7N1m83lGBW2OZEXvZ
+	 YLjvytIHm22dH85CjbOt/Z+YYbv7yufAM8INH9Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 214/438] net: stmmac: propagate FPE preemption-class mapping errors
-Date: Wed, 23 Sep 2026 16:03:55 +0200
-Message-ID: <20260923140650.308039490@linuxfoundation.org>
+Subject: [PATCH 7.2 215/438] net: prevent torn reads in netdev_tc_txq
+Date: Wed, 23 Sep 2026 16:03:56 +0200
+Message-ID: <20260923140650.334801956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,110 +51,416 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 90e4b849dfa6fc8e6c050bcfe1b331b69c015d28 ]
+[ Upstream commit 21ef2d065ad3f0cfbf2ae51260bf962a9fa2c643 ]
 
-stmmac_fpe_map_preemption_class() dispatches through the
-stmmac_do_void_callback() helper, which forces the callback's return
-value to 0 whenever the op pointer is populated. As a result the
--EINVAL returned by dwmac5_fpe_map_preemption_class() (e.g. when a
-preemptible TC owns more than one TXQ under SP scheduling) is silently
-swallowed by every caller.
+netdev_set_tc_queue() (and related helpers/drivers such as
+netdev_bind_sb_channel_queue(), netdev_reset_tc(), and
+netdev_unbind_sb_channel()) perform separate 16-bit writes to
+dev->tc_to_txq[tc].count and dev->tc_to_txq[tc].offset.
 
-Switch the dispatch macro to stmmac_do_callback() so the callback's real
-result is propagated, and honour it in the taprio and mqprio qdisc
-offload.
+Furthermore, memset() in netdev_reset_tc() and
+netdev_unbind_sb_channel() provides no guarantee of performing
+full 32-bit word stores.
 
-Note that the taprio "if (ret)" check in tc_taprio_configure() used to
-be dead code and now becomes live: a preemptible TC spanning more than
-one TXQ under SP scheduling cannot be programmed in hardware, so a
-taprio or mqprio configuration that previously returned success while
-leaving the preemption-class register unprogrammed now fails with
--EINVAL. For taprio, the failure also runs the disable path, tearing
-down the schedule that was just installed; this is the intended
-behaviour.
+Concurrent lockless readers (e.g. skb_tx_hash(), netdev_txq_to_tc(),
+ixgbe_select_queue(), taprio, mqprio, FPE drivers) can observe torn
+values where offset and count belong to inconsistent configurations.
 
-Fixes: 195e4f409a40 ("net: stmmac: support fp parameter of tc-mqprio")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260911-stmmac-tc_setup_dwmac510_mqprio-error-path-v3-1-a76b1e2547c1@oss.qualcomm.com
+Redefine struct netdev_tc_txq to embed count and offset inside a union
+with a u32 combined field, allowing atomic manipulation via
+READ_ONCE() and WRITE_ONCE().
+
+Update all lockless readers and writers across the kernel to use
+READ_ONCE() and WRITE_ONCE() on the combined field.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260812085440.3917924-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 02fffd1939f6 ("net: stmmac: preserve real_num_tx_queues on mqprio setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/hwif.h    |  2 +-
- .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 19 +++++++++----------
- 2 files changed, 10 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_tsn.c      |  6 ++-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c |  7 +--
+ .../net/ethernet/mellanox/mlx5/core/en_main.c |  2 +-
+ drivers/net/ethernet/sfc/falcon/tx.c          |  8 +++-
+ drivers/net/ethernet/sfc/siena/tx.c           |  8 +++-
+ .../net/ethernet/stmicro/stmmac/stmmac_fpe.c  | 14 ++++--
+ include/linux/netdevice.h                     |  9 +++-
+ net/core/dev.c                                | 46 +++++++++++++------
+ net/sched/sch_mqprio.c                        |  4 +-
+ net/sched/sch_mqprio_lib.c                    |  7 ++-
+ net/sched/sch_taprio.c                        | 26 ++++++-----
+ 11 files changed, 94 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 04dafec021b4f..9314bcb85c221 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -494,7 +494,7 @@ struct stmmac_ops {
- #define stmmac_set_arp_offload(__priv, __args...) \
- 	stmmac_do_void_callback(__priv, mac, set_arp_offload, __args)
- #define stmmac_fpe_map_preemption_class(__priv, __args...) \
--	stmmac_do_void_callback(__priv, mac, fpe_map_preemption_class, __args)
-+	stmmac_do_callback(__priv, mac, fpe_map_preemption_class, __args)
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 52de2bcbadbec..0c08650d3bb2d 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -183,13 +183,15 @@ static u32 igc_fpe_map_preempt_tc_to_queue(const struct igc_adapter *adapter,
+ 	u32 i, queue = 0;
  
- /* PTP and HW Timer helpers */
- struct stmmac_hwtimestamp {
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 14cabe76e53ec..5398616fcdfea 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -970,7 +970,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
- 	struct netlink_ext_ack *extack = qopt->mqprio.extack;
- 	struct timespec64 time, current_time, qopt_time;
- 	ktime_t current_time_ns;
--	int i, ret = 0;
-+	int err, i, ret = 0;
- 	u64 ctr;
+ 	for (i = 0; i < dev->num_tc; i++) {
++		struct netdev_tc_txq res;
+ 		u32 offset, count;
  
- 	if (qopt->base_time < 0)
-@@ -1120,9 +1120,9 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
- 		mutex_unlock(&priv->est_lock);
+ 		if (!(preemptible_tcs & BIT(i)))
+ 			continue;
+ 
+-		offset = dev->tc_to_txq[i].offset;
+-		count = dev->tc_to_txq[i].count;
++		res.combined = READ_ONCE(dev->tc_to_txq[i].combined);
++		offset = res.offset;
++		count = res.count;
+ 		queue |= GENMASK(offset + count - 1, offset);
  	}
  
--	stmmac_fpe_map_preemption_class(priv, priv->dev, extack, 0);
-+	err = stmmac_fpe_map_preemption_class(priv, priv->dev, extack, 0);
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 8873a8cc4a185..f91856498eb2d 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -9273,10 +9273,11 @@ static u16 ixgbe_select_queue(struct net_device *dev, struct sk_buff *skb,
+ 	if (sb_dev) {
+ 		u8 tc = netdev_get_prio_tc_map(dev, skb->priority);
+ 		struct net_device *vdev = sb_dev;
++		struct netdev_tc_txq res;
  
--	return ret;
-+	return qopt->cmd == TAPRIO_CMD_DESTROY ? err : ret;
- }
+-		txq = vdev->tc_to_txq[tc].offset;
+-		txq += reciprocal_scale(skb_get_hash(skb),
+-					vdev->tc_to_txq[tc].count);
++		res.combined = READ_ONCE(vdev->tc_to_txq[tc].combined);
++		txq = res.offset;
++		txq += reciprocal_scale(skb_get_hash(skb), res.count);
  
- static void tc_taprio_stats(struct stmmac_priv *priv,
-@@ -1237,14 +1237,15 @@ static int tc_query_caps(struct stmmac_priv *priv,
+ 		return txq;
  	}
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index f0407a850ea82..8634c970cd002 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3247,7 +3247,7 @@ static int mlx5e_update_tc_and_tx_queues(struct mlx5e_priv *priv)
+ 	old_num_txqs = netdev->real_num_tx_queues;
+ 	old_ntc = netdev->num_tc ? : 1;
+ 	for (i = 0; i < ARRAY_SIZE(old_tc_to_txq); i++)
+-		old_tc_to_txq[i] = netdev->tc_to_txq[i];
++		old_tc_to_txq[i].combined = READ_ONCE(netdev->tc_to_txq[i].combined);
  
--static void stmmac_reset_tc_mqprio(struct net_device *ndev,
--				   struct netlink_ext_ack *extack)
-+static int stmmac_reset_tc_mqprio(struct net_device *ndev,
-+				  struct netlink_ext_ack *extack)
- {
- 	struct stmmac_priv *priv = netdev_priv(ndev);
+ 	nch = priv->channels.params.num_channels;
+ 	ntc = priv->channels.params.mqprio.num_tc;
+diff --git a/drivers/net/ethernet/sfc/falcon/tx.c b/drivers/net/ethernet/sfc/falcon/tx.c
+index 9e18aaf44badd..e4d47d26a87a0 100644
+--- a/drivers/net/ethernet/sfc/falcon/tx.c
++++ b/drivers/net/ethernet/sfc/falcon/tx.c
+@@ -439,8 +439,12 @@ int ef4_setup_tc(struct net_device *net_dev, enum tc_setup_type type,
+ 		return 0;
  
- 	netdev_reset_tc(ndev);
- 	netif_set_real_num_tx_queues(ndev, priv->plat->tx_queues_to_use);
--	stmmac_fpe_map_preemption_class(priv, ndev, extack, 0);
+ 	for (tc = 0; tc < num_tc; tc++) {
+-		net_dev->tc_to_txq[tc].offset = tc * efx->n_tx_channels;
+-		net_dev->tc_to_txq[tc].count = efx->n_tx_channels;
++		struct netdev_tc_txq res = {
++			.offset = tc * efx->n_tx_channels,
++			.count = efx->n_tx_channels,
++		};
 +
-+	return stmmac_fpe_map_preemption_class(priv, ndev, extack, 0);
++		WRITE_ONCE(net_dev->tc_to_txq[tc].combined, res.combined);
+ 	}
+ 
+ 	if (num_tc > net_dev->num_tc) {
+diff --git a/drivers/net/ethernet/sfc/siena/tx.c b/drivers/net/ethernet/sfc/siena/tx.c
+index 91e87594ed1ea..1ce98f8fdaf81 100644
+--- a/drivers/net/ethernet/sfc/siena/tx.c
++++ b/drivers/net/ethernet/sfc/siena/tx.c
+@@ -380,8 +380,12 @@ int efx_siena_setup_tc(struct net_device *net_dev, enum tc_setup_type type,
+ 		return 0;
+ 
+ 	for (tc = 0; tc < num_tc; tc++) {
+-		net_dev->tc_to_txq[tc].offset = tc * efx->n_tx_channels;
+-		net_dev->tc_to_txq[tc].count = efx->n_tx_channels;
++		struct netdev_tc_txq res = {
++			.offset = tc * efx->n_tx_channels,
++			.count = efx->n_tx_channels,
++		};
++
++		WRITE_ONCE(net_dev->tc_to_txq[tc].combined, res.combined);
+ 	}
+ 
+ 	net_dev->num_tc = num_tc;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_fpe.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_fpe.c
+index c54c702243517..c889204a7aa5d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_fpe.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_fpe.c
+@@ -217,8 +217,11 @@ int dwmac5_fpe_map_preemption_class(struct net_device *ndev,
+ 	 * and is direct one-to-one mapping."
+ 	 */
+ 	for (u32 tc = 0; tc < num_tc; tc++) {
+-		count = ndev->tc_to_txq[tc].count;
+-		offset = ndev->tc_to_txq[tc].offset;
++		struct netdev_tc_txq res;
++
++		res.combined = READ_ONCE(ndev->tc_to_txq[tc].combined);
++		count = res.count;
++		offset = res.offset;
+ 
+ 		if (pclass & BIT(tc))
+ 			preemptible_txqs |= GENMASK(offset + count - 1, offset);
+@@ -275,8 +278,11 @@ int dwxgmac3_fpe_map_preemption_class(struct net_device *ndev,
+ 	 * any of the scheduling algorithms."
+ 	 */
+ 	for (u32 tc = 0; tc < num_tc; tc++) {
+-		count = ndev->tc_to_txq[tc].count;
+-		offset = ndev->tc_to_txq[tc].offset;
++		struct netdev_tc_txq res;
++
++		res.combined = READ_ONCE(ndev->tc_to_txq[tc].combined);
++		count = res.count;
++		offset = res.offset;
+ 
+ 		if (pclass & BIT(tc))
+ 			preemptible_txqs |= GENMASK(offset + count - 1, offset);
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 6a86a211fff57..14bcdcd44d1d5 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -832,8 +832,13 @@ struct xps_dev_maps {
+ #define TC_BITMASK	15
+ /* HW offloaded queuing disciplines txq count and offset maps */
+ struct netdev_tc_txq {
+-	u16 count;
+-	u16 offset;
++	union {
++		struct {
++			u16 count;
++			u16 offset;
++		};
++		u32 combined;
++	};
+ };
+ 
+ #if defined(CONFIG_FCOE) || defined(CONFIG_FCOE_MODULE)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index ff25e4c71588e..65cdaf0c81f71 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2649,11 +2649,13 @@ EXPORT_SYMBOL_GPL(dev_queue_xmit_nit);
+  */
+ static void netif_setup_tc(struct net_device *dev, unsigned int txq)
+ {
++	struct netdev_tc_txq res;
+ 	int i;
+-	struct netdev_tc_txq *tc = &dev->tc_to_txq[0];
++
++	res.combined = READ_ONCE(dev->tc_to_txq[0].combined);
+ 
+ 	/* If TC0 is invalidated disable TC mapping */
+-	if (tc->offset + tc->count > txq) {
++	if (res.offset + res.count > txq) {
+ 		netdev_warn(dev, "Number of in use tx queues changed invalidating tc mappings. Priority traffic classification disabled!\n");
+ 		dev->num_tc = 0;
+ 		return;
+@@ -2663,8 +2665,8 @@ static void netif_setup_tc(struct net_device *dev, unsigned int txq)
+ 	for (i = 1; i < TC_BITMASK + 1; i++) {
+ 		int q = netdev_get_prio_tc_map(dev, i);
+ 
+-		tc = &dev->tc_to_txq[q];
+-		if (tc->offset + tc->count > txq) {
++		res.combined = READ_ONCE(dev->tc_to_txq[q].combined);
++		if (res.offset + res.count > txq) {
+ 			netdev_warn(dev, "Number of in use tx queues changed. Priority %i to tc mapping %i is no longer valid. Setting map to 0\n",
+ 				    i, q);
+ 			netdev_set_prio_tc_map(dev, i, 0);
+@@ -2680,7 +2682,10 @@ int netdev_txq_to_tc(struct net_device *dev, unsigned int txq)
+ 
+ 		/* walk through the TCs and see if it falls into any of them */
+ 		for (i = 0; i < TC_MAX_QUEUE; i++, tc++) {
+-			if ((txq - tc->offset) < tc->count)
++			struct netdev_tc_txq res;
++
++			res.combined = READ_ONCE(tc->combined);
++			if ((txq - res.offset) < res.count)
+ 				return i;
+ 		}
+ 
+@@ -3100,6 +3105,8 @@ static void netdev_unbind_all_sb_channels(struct net_device *dev)
+ 
+ void netdev_reset_tc(struct net_device *dev)
+ {
++	int i;
++
+ #ifdef CONFIG_XPS
+ 	netif_reset_xps_queues_gt(dev, 0);
+ #endif
+@@ -3107,21 +3114,26 @@ void netdev_reset_tc(struct net_device *dev)
+ 
+ 	/* Reset TC configuration of device */
+ 	dev->num_tc = 0;
+-	memset(dev->tc_to_txq, 0, sizeof(dev->tc_to_txq));
++	for (i = 0; i < TC_MAX_QUEUE; i++)
++		WRITE_ONCE(dev->tc_to_txq[i].combined, 0);
+ 	memset(dev->prio_tc_map, 0, sizeof(dev->prio_tc_map));
+ }
+ EXPORT_SYMBOL(netdev_reset_tc);
+ 
+ int netdev_set_tc_queue(struct net_device *dev, u8 tc, u16 count, u16 offset)
+ {
++	struct netdev_tc_txq res = {
++		.count = count,
++		.offset = offset,
++	};
++
+ 	if (tc >= dev->num_tc)
+ 		return -EINVAL;
+ 
+ #ifdef CONFIG_XPS
+ 	netif_reset_xps_queues(dev, offset, count);
+ #endif
+-	dev->tc_to_txq[tc].count = count;
+-	dev->tc_to_txq[tc].offset = offset;
++	WRITE_ONCE(dev->tc_to_txq[tc].combined, res.combined);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(netdev_set_tc_queue);
+@@ -3145,11 +3157,13 @@ void netdev_unbind_sb_channel(struct net_device *dev,
+ 			      struct net_device *sb_dev)
+ {
+ 	struct netdev_queue *txq = &dev->_tx[dev->num_tx_queues];
++	int i;
+ 
+ #ifdef CONFIG_XPS
+ 	netif_reset_xps_queues_gt(sb_dev, 0);
+ #endif
+-	memset(sb_dev->tc_to_txq, 0, sizeof(sb_dev->tc_to_txq));
++	for (i = 0; i < TC_MAX_QUEUE; i++)
++		WRITE_ONCE(sb_dev->tc_to_txq[i].combined, 0);
+ 	memset(sb_dev->prio_tc_map, 0, sizeof(sb_dev->prio_tc_map));
+ 
+ 	while (txq-- != &dev->_tx[0]) {
+@@ -3172,8 +3186,12 @@ int netdev_bind_sb_channel_queue(struct net_device *dev,
+ 		return -EINVAL;
+ 
+ 	/* Record the mapping */
+-	sb_dev->tc_to_txq[tc].count = count;
+-	sb_dev->tc_to_txq[tc].offset = offset;
++	struct netdev_tc_txq res = {
++		.count = count,
++		.offset = offset,
++	};
++
++	WRITE_ONCE(sb_dev->tc_to_txq[tc].combined, res.combined);
+ 
+ 	/* Provide a way for Tx queue to find the tc_to_txq map or
+ 	 * XPS map for itself.
+@@ -3539,9 +3557,11 @@ static u16 skb_tx_hash(const struct net_device *dev,
+ 
+ 	if (dev->num_tc) {
+ 		u8 tc = netdev_get_prio_tc_map(dev, skb->priority);
++		struct netdev_tc_txq res;
+ 
+-		qoffset = sb_dev->tc_to_txq[tc].offset;
+-		qcount = sb_dev->tc_to_txq[tc].count;
++		res.combined = READ_ONCE(sb_dev->tc_to_txq[tc].combined);
++		qoffset = res.offset;
++		qcount = res.count;
+ 		if (unlikely(!qcount)) {
+ 			net_warn_ratelimited("%s: invalid qcount, qoffset %u for tc %u\n",
+ 					     sb_dev->name, qoffset, tc);
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index ae991fc25b43f..6ced7008ef5c8 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -679,12 +679,14 @@ static int mqprio_dump_class_stats(struct Qdisc *sch, unsigned long cl,
+ 	rcu_read_lock();
+ 	if (cl >= TC_H_MIN_PRIORITY) {
+ 		struct net_device *dev = qdisc_dev(sch);
+-		struct netdev_tc_txq tc = dev->tc_to_txq[cl & TC_BITMASK];
++		struct netdev_tc_txq tc;
+ 		struct gnet_stats_queue qstats = {0};
+ 		struct gnet_stats_basic_sync bstats;
+ 		u32 qlen = 0;
+ 		int i;
+ 
++		tc.combined = READ_ONCE(dev->tc_to_txq[cl & TC_BITMASK].combined);
++
+ 		gnet_stats_basic_sync_init(&bstats);
+ 
+ 		for (i = tc.offset; i < tc.offset + tc.count; i++) {
+diff --git a/net/sched/sch_mqprio_lib.c b/net/sched/sch_mqprio_lib.c
+index b3a5572c167b7..b60e130c70781 100644
+--- a/net/sched/sch_mqprio_lib.c
++++ b/net/sched/sch_mqprio_lib.c
+@@ -108,8 +108,11 @@ void mqprio_qopt_reconstruct(struct net_device *dev, struct tc_mqprio_qopt *qopt
+ 	memcpy(qopt->prio_tc_map, dev->prio_tc_map, sizeof(qopt->prio_tc_map));
+ 
+ 	for (tc = 0; tc < num_tc; tc++) {
+-		qopt->count[tc] = dev->tc_to_txq[tc].count;
+-		qopt->offset[tc] = dev->tc_to_txq[tc].offset;
++		struct netdev_tc_txq res;
++
++		res.combined = READ_ONCE(dev->tc_to_txq[tc].combined);
++		qopt->count[tc] = res.count;
++		qopt->offset[tc] = res.offset;
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(mqprio_qopt_reconstruct);
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 299234a5f0fe6..7d5fe93a4c124 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -762,12 +762,13 @@ static struct sk_buff *taprio_dequeue_from_txq(struct Qdisc *sch, int txq,
+ 
+ static void taprio_next_tc_txq(struct net_device *dev, int tc, int *txq)
+ {
+-	int offset = dev->tc_to_txq[tc].offset;
+-	int count = dev->tc_to_txq[tc].count;
++	struct netdev_tc_txq res;
++
++	res.combined = READ_ONCE(dev->tc_to_txq[tc].combined);
+ 
+ 	(*txq)++;
+-	if (*txq == offset + count)
+-		*txq = offset;
++	if (*txq == res.offset + res.count)
++		*txq = res.offset;
  }
  
- static int tc_setup_dwmac510_mqprio(struct stmmac_priv *priv,
-@@ -1257,10 +1258,8 @@ static int tc_setup_dwmac510_mqprio(struct stmmac_priv *priv,
- 	u32 num_tc = qopt->num_tc;
- 	int err;
+ /* Prioritize higher traffic classes, and select among TXQs belonging to the
+@@ -1441,15 +1442,14 @@ static u32 tc_map_to_queue_mask(struct net_device *dev, u32 tc_mask)
+ 	u32 i, queue_mask = 0;
  
--	if (!num_tc) {
--		stmmac_reset_tc_mqprio(ndev, extack);
--		return 0;
--	}
-+	if (!num_tc)
-+		return stmmac_reset_tc_mqprio(ndev, extack);
+ 	for (i = 0; i < dev->num_tc; i++) {
+-		u32 offset, count;
++		struct netdev_tc_txq res;
  
- 	err = netdev_set_num_tc(ndev, num_tc);
- 	if (err)
+ 		if (!(tc_mask & BIT(i)))
+ 			continue;
+ 
+-		offset = dev->tc_to_txq[i].offset;
+-		count = dev->tc_to_txq[i].count;
++		res.combined = READ_ONCE(dev->tc_to_txq[i].combined);
+ 
+-		queue_mask |= GENMASK(offset + count - 1, offset);
++		queue_mask |= GENMASK(res.offset + res.count - 1, res.offset);
+ 	}
+ 
+ 	return queue_mask;
+@@ -1802,10 +1802,14 @@ static int taprio_mqprio_cmp(const struct net_device *dev,
+ 	if (!mqprio || mqprio->num_tc != dev->num_tc)
+ 		return -1;
+ 
+-	for (i = 0; i < mqprio->num_tc; i++)
+-		if (dev->tc_to_txq[i].count != mqprio->count[i] ||
+-		    dev->tc_to_txq[i].offset != mqprio->offset[i])
++	for (i = 0; i < mqprio->num_tc; i++) {
++		struct netdev_tc_txq res;
++
++		res.combined = READ_ONCE(dev->tc_to_txq[i].combined);
++		if (res.count != mqprio->count[i] ||
++		    res.offset != mqprio->offset[i])
+ 			return -1;
++	}
+ 
+ 	for (i = 0; i <= TC_BITMASK; i++)
+ 		if (dev->prio_tc_map[i] != mqprio->prio_tc_map[i])
 -- 
 2.53.0
 
