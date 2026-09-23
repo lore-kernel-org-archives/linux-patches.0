@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D934FC8D1;
-	Wed, 23 Sep 2026 14:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323823C10A0;
+	Wed, 23 Sep 2026 14:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174137; cv=none; b=r9qhXzM/tAIYoz/vEEVWybhaB/8Zl8o+fzjOdNRC1GvtMv/iwZKU16E7rE84INeDaPDMsC6H46zl+8TGYUuqmfTfZXuP81sdS6J2rT4040YfD/EEf/Brm4IaS30lKTGX3/Ka6fK3zaj/wWVHPuLM4ZgVqjpxBpvmNfYS31Fe9eY=
+	t=1790174140; cv=none; b=Xf/GivJ19YJDSQnGbXWxR1jJ79RMWngwGSmSJB5sv9f9JwMHhO63j7Z+hsAXhRKnsCpmZXs1dTmb5N7WPOfF/TAtVOzvFZXkKFdkpShzCNi58SIyzF5J1R+eHg4f6kYjti6jk5r3qAWt4cLm+jV4b0gHSVMj6asU2N2nb+t1czQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174137; c=relaxed/simple;
-	bh=ZJEsE3Hiui2MoWHkOyaIMoKCOXl9ZQrPIxQ0+ZpIKcw=;
+	s=arc-20240116; t=1790174140; c=relaxed/simple;
+	bh=f73UN/gZm5hAXquL+ROxsu3wEuzd6xAyzvddZtvkios=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rYB90Oqke8O9rR0dXHg/PR+q9FMEpbnHmsxkVQ2OSicnhLbiG2H4yyN4rJVzoqlrFNSihBmPqcm7yJjskkjktPxKIW4GOmCQLfhc4H6f8UGlPlY341esjjsklUU+QEaQ2lqAtLdi9Fe8syCuzCRdyZ7JO/L8BKZqHy4zWHUzm3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QS/wojHD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LK6PQXwtIa5trgdIov64Z0TUP2GpS8AF5TSN42d1FDrr3YVurG/xtvLGOeebBpHTPDVlgrdPIkElAw/6Se/p1Qp8VO+q6svT7XRtxmn1agbuM8j3q+XduI9vKUe2V954f1oBqdPvjnCuYZ8OqVgCXDy1I40TprFUO1fbWAIrgY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BfRmgbz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QS/wojHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E15B1F000FF;
-	Wed, 23 Sep 2026 14:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BfRmgbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDBF1F000FF;
+	Wed, 23 Sep 2026 14:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174136;
-	bh=j5lz4MDi0E9v7DF2hufhexsyAGnULDss3eUOT6ORlWs=;
+	s=korg; t=1790174139;
+	bh=tsV+FIz+ke7YSfZFETUhW+80UfeOPkn/dzx+AZnTrMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QS/wojHD43HR/pGdSxqcvEq6eqQVQNTf+AeaCcCVFVjU3jpHYvlwCTX6nqBxklklg
-	 itVCvTnEtIX2Rc0wewVYVs65TFijMo5N3VlMSgyL9WAOGRu6Hd4skY8iMKL/J4RmZf
-	 8qf5JLCms9mhg7UvaFKNrAGDKSS1xfDaihaVyFtw=
+	b=2BfRmgbzIXwS6bOaM65vjFYUXxTn+xe2t0R3yBYTbI8AJSfxC84ZjyLVOMk2WkIK9
+	 GdHKy1buibNZqhhaipOFuk4RO35B/QCTHKVprYZ++40Do0EEGPU46BHrJwSF9lZfLx
+	 yfHbHrR82GIPrRWFZyuKorInDNf6nwJ79QoxUKD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Elizabeth Figura <zfigura@codeweavers.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.2 435/438] ntsync: reject wait ioctls with zero owner
-Date: Wed, 23 Sep 2026 16:07:36 +0200
-Message-ID: <20260923140656.214685961@linuxfoundation.org>
+	Arash Golgol <arash.golgol@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 014/398] media: video-i2c: fix buffer queue ordering
+Date: Wed, 23 Sep 2026 16:01:28 +0200
+Message-ID: <20260923140643.810421518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
-References: <20260923140644.756254324@linuxfoundation.org>
+In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
+References: <20260923140643.441954610@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,43 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+From: Arash Golgol <arash.golgol@gmail.com>
 
-commit 61611481f7b599e0526a3782c626b1a9deeb48bd upstream.
+[ Upstream commit bc4574c265ed738849e46d942617100580fcedd2 ]
 
-setup_wait() already validates pad and flags but not owner, while
-Documentation/userspace-api/ntsync.rst requires EINVAL when owner is
-zero. Reject early before queueing waiters.
+Queued buffers are added to the tail of vid_cap_active in
+buffer_queue(), but the capture kthread also retrieves buffers from
+the tail of the list.
 
-Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Reviewed-by: Elizabeth Figura <zfigura@codeweavers.com>
-Signed-off-by: Elizabeth Figura <zfigura@codeweavers.com>
-Link: https://patch.msgid.link/20260723201301.11826-4-zfigura@codeweavers.com
-Cc: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This makes the queue behave as LIFO instead of FIFO when multiple
+buffers are queued.
+
+Fix this by retrieving buffers from the head of the list.
+
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ntsync.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/i2c/video-i2c.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/ntsync.c
-+++ b/drivers/misc/ntsync.c
-@@ -875,6 +875,9 @@ static int setup_wait(struct ntsync_devi
- 	if (args->pad || (args->flags & ~NTSYNC_WAIT_REALTIME))
- 		return -EINVAL;
+diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
+index 20889f94610cb..3584678756979 100644
+--- a/drivers/media/i2c/video-i2c.c
++++ b/drivers/media/i2c/video-i2c.c
+@@ -454,8 +454,9 @@ static int video_i2c_thread_vid_cap(void *priv)
+ 		spin_lock(&data->slock);
  
-+	if (!args->owner)
-+		return -EINVAL;
-+
- 	if (size >= sizeof(fds))
- 		return -EINVAL;
+ 		if (!list_empty(&data->vid_cap_active)) {
+-			vid_cap_buf = list_last_entry(&data->vid_cap_active,
+-						 struct video_i2c_buffer, list);
++			vid_cap_buf = list_first_entry(&data->vid_cap_active,
++						       struct video_i2c_buffer,
++						       list);
+ 			list_del(&vid_cap_buf->list);
+ 		}
  
+-- 
+2.53.0
+
 
 
