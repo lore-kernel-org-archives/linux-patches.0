@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A803378838;
-	Wed, 23 Sep 2026 14:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB36032B125;
+	Wed, 23 Sep 2026 14:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173020; cv=none; b=gXJutwV0HgUkkXqofcT+DqEe5ucQvfoMW2fcf2ATAN4jZsxksSuEtoPlkYNsHt7NHRtLRm+e3/i2pBHxFljF7k5nHZnAcOUaX/Tw4fUutrJfp1V2kQpyQrxUukDQ24wp53nbrs5V5cDjHIKudN5kDgrNGgqsr+lQHJFF9zc2O9s=
+	t=1790173023; cv=none; b=LFXcTZlVUYVljjERAzJDLAUMMQTqxorCUq1ost7s4o6CWeOSQpnl6/qg6UB7KR7+D4/T50J344c8wCLYeLJmPqPrPf5XDT1vkGoMBT7+Q99326nSV0Jc202dlWZwxXcLSwer2pIlLc8GFzlQLJgLTy5WKmHOntqENM/RsmtJBDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173020; c=relaxed/simple;
-	bh=iZOm67f9Sp4KxwpeGEsrO0va32NdqKtCEhViI88bP8U=;
+	s=arc-20240116; t=1790173023; c=relaxed/simple;
+	bh=FvAv5z4xiqGKmNM61iTf8ICT3UzmbmXD14IRulfqFUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SE97an1yvRzwsekgFqKCAep2hS1RhUkQ+jDneTTOaroeISNAD/J+UJVlUV0WMpiytiZ3Sxg5VrvkiWgIMBTj4ihnnQcL/lH7yakgzzlnO/lBp0hQJ0fVZCcWjQ5sqACrUd2ZSos5Csm1x4uYyt/5sL6M76k1sJuWUzhFk8eBDLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvj6xHpB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYxQ5Yw9cJHKbLXc56wXeRRv+TL6SCEXZl/ELhQgx1djboZgfYcV6vXZApucHR5vUg2Wh0D43q0XgC8BKAE2Xi+k7GCnWsc9PJdQg8EKSb2fO8fgDgr45EcXPtTzYHEi0BDOw+pgN7olLXuwlnVAvUzqF0DYMmJ1K6gkqwOdqv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOIcIv/G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvj6xHpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0D51F000FF;
-	Wed, 23 Sep 2026 14:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOIcIv/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105141F000FF;
+	Wed, 23 Sep 2026 14:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173019;
-	bh=wML3DWXm3sGdyChxultBpFX7xCoQHpJc+TDRIXbuIxs=;
+	s=korg; t=1790173022;
+	bh=zZgS8Ypbbv0HDUVmEpN3cKpOwOzwaULs1JHNrzuExT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wvj6xHpBwNzYK51HMqNT1jx1QV4Y45+nB40hYO7pPaW1Bx0bQ2KtVsYXU7scEjjF3
-	 KBFjhjv6vpYiTGvpyTb//RbnHE4f7tYSQxG4q+fy5rJgSKJqdiynihgYbqcwlyLGB9
-	 KGsWWecRZ+x64Spk6DVEgxhQRKUdzi3Rt97RFq0g=
+	b=hOIcIv/GXo9tqOjDRwA3QmyoSyHhucir/B4FmRqcFrP1ip8DPlZlw+wKSKKkG7JLi
+	 RyjqPfSWFFPw6982TekB1oktjDAfR5Yf23fFoN8VbVWuCxvLbxW2/6kH5wZ2XWtc+w
+	 MIPWIngv7MxLvfiGQg6lu3jeEP7J641rsCU4pj2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+19da64013c46df87f971@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jesse Casco <jesse.casco@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 128/438] ALSA: pcm: set timer->private_data before registering the PCM timer
-Date: Wed, 23 Sep 2026 16:02:29 +0200
-Message-ID: <20260923140648.097292868@linuxfoundation.org>
+Subject: [PATCH 7.2 129/438] drm/msm/dp: skip PUSH_IDLE when the link was never enabled
+Date: Wed, 23 Sep 2026 16:02:30 +0200
+Message-ID: <20260923140648.124893627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,64 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Jesse Casco <jesse.casco@gmail.com>
 
-[ Upstream commit 1e713f9bb2ac583521f06b0eb4e22440b1e3d078 ]
+[ Upstream commit e249a6e2a130c08bb4d8b0a55cbe29754307e5c9 ]
 
-snd_pcm_timer_init() calls snd_device_register() to link the new
-struct snd_timer into the global timer list while it still carries
-hw.c_resolution = snd_pcm_timer_resolution (and hw.start/hw.stop),
-and only afterwards sets timer->private_data = substream.
+msm_dp_display_atomic_enable() returns early when link training fails,
+leaving ->power_on false and the main link down.
+msm_dp_display_atomic_disable() nevertheless writes DP_STATE_CTRL_PUSH_IDLE
+and waits for an idle-pattern completion that cannot arrive, so every failed
+enable is followed by "PUSH_IDLE pattern timedout".
 
-Once the timer is on the list under register_mutex, a concurrent
-reader can already reach it through the same mutex and invoke these
-callbacks. /proc/asound/timers does this via c_resolution(), and
-snd_timer_open()+snd_timer_start() reach start()/stop() the same way.
-All three dereference timer->private_data, which for this brief
-window is NULL, giving a NULL-pointer dereference:
+Every other step of the teardown is already gated on that flag:
+msm_dp_display_disable(), called from .atomic_post_disable(), returns early
+on !power_on. The PUSH_IDLE write is the only one that is not, so the
+controller's runtime-PM reference is then dropped without the link having
+been taken down.
 
-  substream = timer->private_data;
-  return substream->runtime ? ...   // substream is NULL
+On glymur (Snapdragon X2 Elite) the consequence is not a warning. The SoC
+does not survive it: TrustZone force-stops the SOCCP and ADSP remote
+processors and the machine resets silently about 50 ms later, with no oops
+and no panic. On an ASUS Zenbook A16 (UX3607OA), whose eDP panel does not
+currently train, this reproduces without any compositor or GPU involvement:
 
-Move the private_data/private_free assignment before
-snd_device_register() so the timer is never visible on the list
-without its private_data set. On the snd_device_register() failure
-path, private_free() (snd_pcm_timer_free()) can now run, but it only
-does substream->timer = NULL, which is already NULL at that point
-since substream->timer is set to the new timer just once, after a
-successful registration -- so the failure path stays safe.
+  # eDP enable has already failed with "Failed link training (rc=-104)"
+  echo 1 > /sys/class/graphics/fb0/blank
 
-Reported-by: syzbot+19da64013c46df87f971@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=19da64013c46df87f971
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20260913134446.114724-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  [535.645455] === marker ===
+  [535.694833] qcom_q6v5_pas d00000.remoteproc: fatal error received: \
+                 sys_m_smsm.c:512:TZ force stop
+  [535.694875] remoteproc remoteproc0: crash detected in soccp: type fatal error
+  [535.728857] qcom_q6v5_pas 6800000.remoteproc: fatal error received: \
+                 sys_m_smsm.c:783:err fatal notification received from TZ
+  <SoC reset>
+
+Gate the PUSH_IDLE write on ->power_on so the disable path is consistent
+with the rest of the teardown. With this applied the same sequence is
+harmless and the machine stays up; without it, it resets every time.
+
+The unconditional write dates back to the original DP driver
+(c943b4948b58 ("drm/msm/dp: add displayPort driver support")), but the
+surrounding code has been restructured several times since, so no Fixes:
+tag is offered.
+
+Note that the eDP link-training failure that exposes this on the A16 is a
+separate problem in the glymur eDP PHY and is reported separately; this
+change is about not damaging the machine when training fails, for whatever
+reason.
+
+Tested on ASUS Zenbook A16 (UX3607OA), Snapdragon X2 Elite Extreme, on
+linux-next next-20260803 and next-20260807. The machine has since been
+running next-20260807 with this patch as its daily driver.
+
+Assisted-by: Anthropic:Claude-Opus-5
+Signed-off-by: Jesse Casco <jesse.casco@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/745167/
+Link: https://lore.kernel.org/r/20260808171325.133041-1-jesse.casco@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_timer.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/core/pcm_timer.c b/sound/core/pcm_timer.c
-index ab0e5bd70f8fa..18bedd66435dc 100644
---- a/sound/core/pcm_timer.c
-+++ b/sound/core/pcm_timer.c
-@@ -111,12 +111,15 @@ void snd_pcm_timer_init(struct snd_pcm_substream *substream)
- 			snd_pcm_direction_name(substream->stream),
- 			tid.card, tid.device, tid.subdevice);
- 	timer->hw = snd_pcm_timer;
-+	/* Set before registering: a concurrent reader can invoke our hw
-+	 * callbacks as soon as the timer is on the global list.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 79e2b171e269a..a2f799cf50f63 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1412,6 +1412,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
+ 
+ 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+ 
++	/*
++	 * If .atomic_enable() bailed out - link training failure is the common
++	 * case - the mainlink was never brought up and ->power_on stayed false.
++	 * Driving the PUSH_IDLE pattern into a controller that was never
++	 * enabled times out, and .atomic_post_disable() then drops the
++	 * controller's runtime-PM reference without tearing the PHY back down,
++	 * because msm_dp_display_disable() returns early on !power_on.  On
++	 * glymur (Snapdragon X2 Elite) that combination is answered by a
++	 * TrustZone-level SOCCP/ADSP force-stop and a silent SoC reset.
++	 * There is nothing to push idle, so leave it alone.
 +	 */
-+	timer->private_data = substream;
-+	timer->private_free = snd_pcm_timer_free;
- 	if (snd_device_register(timer->card, timer) < 0) {
- 		snd_device_free(timer->card, timer);
- 		return;
- 	}
--	timer->private_data = substream;
--	timer->private_free = snd_pcm_timer_free;
- 	substream->timer = timer;
++	if (!dp->power_on)
++		return;
++
+ 	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
  }
  
 -- 
