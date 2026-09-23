@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E1C175A8D;
-	Wed, 23 Sep 2026 14:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CEC52ED2F;
+	Wed, 23 Sep 2026 14:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172899; cv=none; b=IdWgXAVF2CvnWvOOXR1EKWvqVtiUKMcBZ3YBPcfExgv+iDa/+RXEzo8W0hbXy+kbnT5DH3ArPUkQ1azxf2rb9jTXQEPiXm3X4JOyYUgXCtZvwE1BCVgRW/Q4eAXUkT0rV2kW1TtM6H3glQY/k4qzbsIrGfQJQuBNCIF0NagleCc=
+	t=1790172901; cv=none; b=kFDjnKj6WQAM9jrosfG6nybbsQ9DT/41+ILhk57DOhFrLo9ZGnE8Li12S3Mh0gkx3ex4pKDtxgtZbryHi29wc53fyUpHB7GOu/bfwtCCu0wR+5m7Zc5B+y/EqxWqHNtpKpJts7GJAm0KP8VKHnL9hbGF49HAkh0+qGkGkesygE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172899; c=relaxed/simple;
-	bh=w8DmWLKbUc8MuQ2epHA5pbSxkNbL+rVaWnlsc8XuHYU=;
+	s=arc-20240116; t=1790172901; c=relaxed/simple;
+	bh=h3f9E6uX83l+mTUYpCNW9GaVVycifIPPqmtcR2fcDYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWT13ZEAiUGsdppXVeKIL+AzO3zQpo3OK4URliMLcZAr1j9YK0Omeew+p3MlqSu6sHbZBc5QYF2ELyG7yG++TEA+mka6pWhw0DBGMG32HN8xwZjHq8tYtjp0mR9vcIXIcAklhjfYBi7D52KtX7V4Om+1bh5pSkoOb2MaYt6nuNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DE56UvL1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmPOA9ueGaBpZYmPcX1DolzByK2vcAT2eebPuGmfJqhno0jTdhJN4pA+FpNLLy+Lvr7wYJDM85ZIiIoh9fcCT5WD8yZXcpISjetzy5nzNUffUM7ATFiCDf6fgOn8yo3g0YS3bhD4Ft2/8FGLx5SpxbqBx4XpjQr9z51fis+yPN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycjq67pX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DE56UvL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC1D1F000FF;
-	Wed, 23 Sep 2026 14:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycjq67pX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A6B1F000FF;
+	Wed, 23 Sep 2026 14:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172896;
-	bh=UBub/GUGGklHgev1Q6Th/Y0IUXxVdA8Ck1TrOuxCppI=;
+	s=korg; t=1790172900;
+	bh=5TfL8wMFwr/VfEsdYPIy4daX8IcELjngTSx/9xK0z0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DE56UvL1U4jU45/77q9Dgv+b2uJsBAl4JloeRLtr1ay/8/eBR/yCxw0pzJHToI921
-	 d8dLwNBrwxicrSeJ86EtrdlxCxXYENOOIhlWfn/H9dATqd+K6anMXl9yXu2TqrEJGU
-	 6s4x+wBCmbP5RMvqwkns4yyytlTvwLvFCbafZnw8=
+	b=ycjq67pXjOLj43dZ1s2tux8cr2NaByyvrdXgZNvADg1voHSA3Cv0GzgH/aaFPPowF
+	 lM16e9PBml2C+FdOjnO86KaNdP5LfTGwv41GxRxMg2smicpy+A1arJx/IQ/7iUPVWl
+	 RJLhTBCM6Et/BOVpEwDlHTXcvbfj7cROJooozRhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 093/438] scsi: pm80xx: Fix the use_msix, use_tasklet and read_wwn parameter descriptions
-Date: Wed, 23 Sep 2026 16:01:54 +0200
-Message-ID: <20260923140647.190500140@linuxfoundation.org>
+Subject: [PATCH 7.2 094/438] scsi: qla2xxx: Fix the ql2xfc2target parameter description
+Date: Wed, 23 Sep 2026 16:01:55 +0200
+Message-ID: <20260923140647.215662012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,51 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 264bf9655c3d067d775a46f05eb8c871c488a864 ]
+[ Upstream commit 779f202a92ef10a426efc07d0f4267918cb07ca3 ]
 
-The MODULE_PARM_DESC() lines of use_msix, use_tasklet and read_wwn all
-name a parameter zoned, which does not exist, and the use_tasklet one
-repeats the use_msix text. modinfo shows three "zoned" entries and no
-description for the real parameters.
+The module parameter is ql2xfc2target, but its MODULE_PARM_DESC() names
+qla2xfc2target, so modinfo describes a parameter that does not exist and
+shows no description for the real one.
 
-Name the right parameters and describe use_tasklet.
+Use the parameter name in the description.
 
-Fixes: efa1fca45082 ("scsi: pm8001: Remove PM8001_USE_MSIX")
-Fixes: 205430290ad0 ("scsi: pm8001: Remove PM8001_USE_TASKLET")
-Fixes: 80975adc79dd ("scsi: pm8001: Remove PM8001_READ_VPD")
+Fixes: 877b03795fcf ("scsi: qla2xxx: Add option to disable FC2 Target support")
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260906170925.2524-1-kmehltretter@gmail.com
+Link: https://patch.msgid.link/20260906171009.2560-1-kmehltretter@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
-index 54b35893261a6..5af81c73a8f87 100644
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -58,15 +58,15 @@ MODULE_PARM_DESC(link_rate, "Enable link rate.\n"
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index e0c5732037adf..f2114b386fa0f 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -352,7 +352,7 @@ MODULE_PARM_DESC(ql2xnvme_queues,
  
- bool pm8001_use_msix = true;
- module_param_named(use_msix, pm8001_use_msix, bool, 0444);
--MODULE_PARM_DESC(zoned, "Use MSIX interrupts. Default: true");
-+MODULE_PARM_DESC(use_msix, "Use MSIX interrupts. Default: true");
- 
- static bool pm8001_use_tasklet = true;
- module_param_named(use_tasklet, pm8001_use_tasklet, bool, 0444);
--MODULE_PARM_DESC(zoned, "Use MSIX interrupts. Default: true");
-+MODULE_PARM_DESC(use_tasklet, "Use tasklets for interrupt handling. Default: true");
- 
- static bool pm8001_read_wwn = true;
- module_param_named(read_wwn, pm8001_read_wwn, bool, 0444);
--MODULE_PARM_DESC(zoned, "Get WWN from the controller. Default: true");
-+MODULE_PARM_DESC(read_wwn, "Get WWN from the controller. Default: true");
- 
- uint pcs_event_log_severity = 0x03;
- module_param(pcs_event_log_severity, int, 0644);
+ int ql2xfc2target = 1;
+ module_param(ql2xfc2target, int, 0444);
+-MODULE_PARM_DESC(qla2xfc2target,
++MODULE_PARM_DESC(ql2xfc2target,
+ 		  "Enables FC2 Target support. "
+ 		  "0 - FC2 Target support is disabled. "
+ 		  "1 - FC2 Target support is enabled (default).");
 -- 
 2.53.0
 
