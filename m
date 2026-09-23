@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6998F3AB291;
-	Wed, 23 Sep 2026 14:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9F339A07C;
+	Wed, 23 Sep 2026 14:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173151; cv=none; b=ihx6jUSWkQd8a5WWroTLI507ia4QCYX4+qGl2K/l7DtHpGkzFSe189TG+h0LVHheVu0CaICpmoFKlDMimHcyFqTHrcP1q+BFtJENtxquTDMunjSDnPS1YJnOomA5TekVMbWGCWzaCDGZiChUCGqVwp+oARycVzs9Kmf8NVw+p/8=
+	t=1790173154; cv=none; b=TsTX0ioncEXq8lzTeQoU0VQkNZ48iXA2Q6QmUsP0j9Po2LlyY2QQChycbyaZJBc3YSxNj3/M+34/zZ3wsctnOgFvkbIcZNJaJLHciQEm0gXZPEfaf8MB1QjUo2LoeHj35IzKpZwlQQa8t+d/WM6DOGx8iJP5A/Lk/ifqAx3aPOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173151; c=relaxed/simple;
-	bh=gtDRaryAox6WmR9FCzdgcKrrT5iFStfmFmGuqAqN/hI=;
+	s=arc-20240116; t=1790173154; c=relaxed/simple;
+	bh=uvRkQz5mt3Jxas4CX9bPsiK+Frp70U5OxvJwHD6VCNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TyVGzo2Sjov3LV/zy33jNP0fhazX3XoQ1AW9edyCSpRAPBXS8rhelqBAOXkZfN8j+huYRQJy9FlAyl3tyiQlKOaiEnrwzfOiR5Vuc6o3HgqW/sQGsPYj7IquNmDp36Tg9c8mHGlXLVuUpwvnKwDF4Liz7+pSNvJiVtpydEvRlms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNLPQB0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKj5NTWDVBE7Y9sQfllx0Bz0WUi5p29j56HRR+TFzeW7838zgltGQ3Ku/poJ5Ee3rVCUsyGRR7VSW14A4buDHa5cXntEVcYxgEJkBEgza4qyWU9vZfIawlakRPXWHKgASHITXSQbyW5Ec7TSVMocD5XoqpJhvPGeqvYbe+31MCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbjktmQ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNLPQB0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FDA1F00893;
-	Wed, 23 Sep 2026 14:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbjktmQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7151F000FF;
+	Wed, 23 Sep 2026 14:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173150;
-	bh=3zQqYA2aB9ECmUgt/UHMrnRIHMvVZWIEN2Mb8NJNcj0=;
+	s=korg; t=1790173153;
+	bh=P/+SJAxlIqUUbRtqJOly+1oXAmSjNyRbQkS2t2w9aE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNLPQB0Lz+iiVUN+YZhA4vv8lmDDubrUJhI/ovUfstxH00Ojl40XyjedyGpDEbQkK
-	 jg4rm6ISDija+daWXIWIBj0GPQdUfKdIjE3zq9nuXqjG7HIhedMoSpTkEM04VeitdO
-	 GNcRryLDLQ63aMa74Sh4dkYHmIVJaz3g5ALz+13I=
+	b=bbjktmQ/r7sqKO5EzKgnZRspkVy4Dr/WGwXb2ZwSB6BG7xZcVTOutke1mrnnLKUEd
+	 Boql/c2FWlt2iPu5bKhr20wcDOVqFZoRmmThdKq2rkXH2pRHJVKsS1VUF62aIJVULo
+	 kld5LlQ3YCjN0SqJx1XhuWBBVEBRsvuG1OYFWuMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Joel Granados <joel.granados@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 157/438] sysctl: Check range in proc_dointvec_ms_jiffies_minmax
-Date: Wed, 23 Sep 2026 16:02:58 +0200
-Message-ID: <20260923140648.839689781@linuxfoundation.org>
+Subject: [PATCH 7.2 158/438] ipv4: icmp: reject RTN_UNREACHABLE input routes in icmp_route_lookup
+Date: Wed, 23 Sep 2026 16:02:59 +0200
+Message-ID: <20260923140648.865375289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,35 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit 82431877d837a6c2593efd8e66ba28b35a220ca4 ]
+[ Upstream commit 2998147b59c9df0a51477c7a6b3d1f0ba3127dd4 ]
 
-Add the range check to do_proc_int_conv_ms_jiffies_minmax that commit
-d174174c6776 ("sysctl: replace SYSCTL_INT_CONV_CUSTOM macro with
-functions") incorrectly removed.
+When the forward output route cannot be used in icmp_route_lookup(),
+it enters the "reverse path" and calls ip_route_input() on fl4_dec.daddr,
+the original packet's source address.
 
-Fixes: d174174c6776 ("sysctl: replace SYSCTL_INT_CONV_CUSTOM macro with functions")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
+ip_route_input() only returns an error for truly invalid packets. For
+unreachable addresses it will succeed and return an input route whose
+dst.output is set to ip_rt_bug(). The existing check only rejects
+RTN_LOCAL routes, so the RTN_UNREACHABLE route types can still be returned
+and later used for output, syzkaller triggering a WARN_ON_ONCE()
+in ip_rt_bug() as bellow:
+
+ ------------[ cut here ]------------
+ WARNING: net/ipv4/route.c:1273 at ip_rt_bug+0x14/0x20
+ RIP: 0010:ip_rt_bug+0x14/0x20
+ Call Trace:
+  ip_push_pending_frames+0xfa/0x100
+  __icmp_send+0x905/0xf10
+  ip_options_compile+0xc0/0xd0
+  ip_rcv_finish_core+0x321/0xae0
+  ip_rcv+0x1de/0x260
+  __netif_receive_skb_one_core+0x11a/0x130
+  netif_receive_skb+0x7b/0x260
+  tun_get_user+0x11bf/0x1c10
+ ------------[ cut here ]------------
+
+Reject input route that is RTN_UNREACHABLE to fix it. The net warning
+is only printed for RTN_LOCAL, as RTN_UNREACHABLE is not the result of
+a race condition.
+
+Fixes: 8b7817f3a959 ("[IPSEC]: Add ICMP host relookup support")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Link: https://patch.msgid.link/20260910140042.1880242-1-dongchenchen2@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/jiffies.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/icmp.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/time/jiffies.c b/kernel/time/jiffies.c
-index d51428867a339..f4c43b9716f89 100644
---- a/kernel/time/jiffies.c
-+++ b/kernel/time/jiffies.c
-@@ -181,7 +181,7 @@ static int do_proc_int_conv_ms_jiffies_minmax(bool *negp, ulong *u_ptr,
- 					      int *k_ptr, int dir,
- 					      const struct ctl_table *tbl)
- {
--	return proc_int_conv(negp, u_ptr, k_ptr, dir, tbl, false,
-+	return proc_int_conv(negp, u_ptr, k_ptr, dir, tbl, true,
- 			     sysctl_u2k_int_conv_ms, sysctl_k2u_int_conv_ms);
- }
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index 0caedfc7ca92f..90c0e22c29bea 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -581,16 +581,19 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
+ 		skb_dstref_restore(skb_in, orefdst);
  
+ 		/*
+-		 * At this point, fl4_dec.daddr should NOT be local (we
+-		 * checked fl4_dec.saddr above). However, a race condition
+-		 * may occur if the address is added to the interface
+-		 * concurrently. In that case, ip_route_input() returns a
+-		 * LOCAL route with dst.output=ip_rt_bug, which must not
+-		 * be used for output.
++		 * fl4_dec.daddr is not expected to be local here, but it can be
++		 * added to an interface concurrently, in which case
++		 * ip_route_input() returns a LOCAL route. It can also fail to
++		 * build a forwarding route towards fl4_dec.daddr, for example,
++		 * when forwarding is disabled, and return an UNREACHABLE route.
++		 * Both cases will result in a route with dst.output=ip_rt_bug,
++		 * which must not be used for output.
+ 		 */
+-		if (!err && rt2 && rt2->rt_type == RTN_LOCAL) {
++		if (!err && rt2 && rt2->rt_type == RTN_LOCAL)
+ 			net_warn_ratelimited("detected local route for %pI4 during ICMP sending, src %pI4\n",
+ 					     &fl4_dec.daddr, &fl4_dec.saddr);
++		if (!err && rt2 &&
++		    (rt2->rt_type == RTN_LOCAL || rt2->rt_type == RTN_UNREACHABLE)) {
+ 			dst_release(&rt2->dst);
+ 			err = -EINVAL;
+ 		}
 -- 
 2.53.0
 
