@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349CB3346BE;
-	Wed, 23 Sep 2026 14:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FC9469855;
+	Wed, 23 Sep 2026 14:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172629; cv=none; b=elsiEnc5a4ud8D1Vmj5fQ/SmQPoKTfd7A087z2iwiGyeKASFN51V51DTQ/ZiEcaaxzlHi7z+XlUpKaSPCkbPpRsZZf+Z/eHF91Zxc5tBLviJ0Cxn/6P9NxTQ3hCaLP0qTcAimWpQgzOTctf1A19xTDzO3zZBqb9W9ZHJLr+n8EY=
+	t=1790172632; cv=none; b=QmuhHAol3VeqJoL13aG7Wml/vppmcjMqet5sCcl15Wp65nOROncpSyo9u0SU0da32wX6LD4uYtu6MtkZ93ZkxFFYUK5gplBUYyZwrt3X+yjJJeEq1LuOsmm5tpY5zHpjQ9ko2eaK/brxmOvQtVl9AM4p4iCKRL2u9BcuJRrH+e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172629; c=relaxed/simple;
-	bh=w4JZSENyuZ8tQGqzkP9Xi8Jh8I4m50jtj8gsorB9a2Q=;
+	s=arc-20240116; t=1790172632; c=relaxed/simple;
+	bh=YYveSsvdg/JHq5dkN0ApBHXAlJI6+ApHKAoPzZA19ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TbhZJgdK6bcwoaiGz2j+Te+4HVFolRiO1lW7dLOEv4tRwsV/JhNvCsMN4n+emXQbJppncHz8+jEO7NlFeurY8PoI6FRyJZgblbypF6aR02JJEkcBaiRPUYpzkAR5yKsCfoEhld2zlylawE05GvD5arZsjyUHPXLmPBwT7Qs8guE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRG/uTlw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EUU6YZs/Ai6eA4B16YOsAQVkMojklR9XZNgty3RY/w1DAG84DJn8wJjhBT8TIkgDxhnPwe67KUEGRh/Ww5M+JQz4Hoj9wLD7JMQwLJ5tYmoteD/pLgbUimUI8sK7zQyM0kPeyut8mnffFS4w69LKFb5mOw1th/KzLDIpayUIW6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXpxBXZ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRG/uTlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFFB1F000FF;
-	Wed, 23 Sep 2026 14:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXpxBXZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CC21F000FF;
+	Wed, 23 Sep 2026 14:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172628;
-	bh=PvkPbHv+eVTfABmxQFk7rtzmRjsz0biuC9bG0r8wXdA=;
+	s=korg; t=1790172631;
+	bh=R0QXTNADG+1nZN93IN4WWotXqy7JsZJ+xV5WOAFDUfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SRG/uTlwHg5KCmwiRDtxDlHebhN92l0CwLf3geleQTpxOYHZIRLrTn3mJabGRdMkc
-	 zfdSSbaPbG8tNJgOJkSaGGYKPHuglomebu+gMGIijSuS8Kr9p11kbCPMccpQxVZSE+
-	 T2UxrTaPfiv7LmuntioGFQcD2ZBP48rhY8H9TOSc=
+	b=kXpxBXZ3G0Chz1VRIMQWH0p7Ze2Z/Q8mx2RlKpWlwUTu0Lx0eyPRiPLwsrSmiybbq
+	 rWspxoYDsDgaAADFW51sDfFDGCQ/9dZcUYp/LqQo0g6Y/R864kgIsDjQtuNq0QEpKs
+	 lXSCPW3UpfiD9ZdSxjemHd9JcJ7FjWtUlcPs+aXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
+	Matthieu Buffet <matthieu@buffet.re>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/398] selftests/landlock: Increase default audit socket timeout
-Date: Wed, 23 Sep 2026 16:01:20 +0200
-Message-ID: <20260923140643.612376403@linuxfoundation.org>
+Subject: [PATCH 6.18 003/398] selftests/landlock: Add test for TCP fast open
+Date: Wed, 23 Sep 2026 16:01:17 +0200
+Message-ID: <20260923140643.535076458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -55,213 +52,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Matthieu Buffet <matthieu@buffet.re>
 
-[ Upstream commit d8dfb4c7faa87c3e41a8678f38f136c2c7c036fa ]
+[ Upstream commit f4b30e0b1d488e7ffd8ea28d1365b9ba8e551edb ]
 
-matches_log_fs() and other audit_match_record() callers intermittently
-return -EAGAIN under heavy debug configs (KASAN, lockdep).  The audit
-record delivery pipeline is asynchronous: landlock_log_denial() queues
-the record to audit_queue, and kauditd_thread dequeues and delivers via
-netlink.  Under debug configs, kauditd scheduling between
-audit_log_end() and netlink_unicast() can exceed a syscall round trip
-(more than 1 usec), which was the value of the socket timeout used for
-the recvfrom() calls.
+Enforce that TCP Fast Open is controlled by
+LANDLOCK_ACCESS_NET_CONNECT_TCP. Semantics of connect() and
+sendmsg(MSG_FASTOPEN) should be identical from Landlock's perspective.
+Also enforce error code consistency, since UDP sockets ignore the
+MSG_FASTOPEN flag while Unix sockets reject it.
 
-The observed failure [1] is an EAGAIN error code (-11) which means that
-the access record had not arrived within the 1 usec timeout of
-recvfrom().  The expected record does arrive, but only after
-matches_log_fs() has already returned.  It is then consumed by a later
-audit_count_records() call, making records.access == 1 instead of 0.
-
-Switch the default socket timeout to the slow value (1 second) so all
-audit_match_record() callers wait long enough for kauditd delivery, and
-lower it to the fast value (1 usec) only on the two paths that expect no
-record: audit_count_records() and the expected_domain_id == 0 probe in
-matches_log_domain_deallocated().  audit_init() drains stale records
-with the fast timeout (terminating on -EAGAIN once the backlog is empty)
-and switches to the patient default before returning.  1 second gives
-~10x margin over the observed maximum (~100 ms, while the happy path is
-~23 us).
-
-Rename the timeval constants to reflect their new roles:
-- audit_tv_dom_drop (1 second) -> audit_tv_default: default socket
-  timeout, patient enough for asynchronous kauditd delivery.
-- audit_tv_default (1 usec) -> audit_tv_fast: fast timeout for paths
-  that expect no record (drain, audit_count_records(), probes).
-
-Invert the conditional in matches_log_domain_deallocated().  Check
-setsockopt returns on both the lower and restore paths; preserve the
-first error via !err when the restore fails after a prior error so the
-actionable return code is not masked by a bookkeeping failure.
-
-Cc: Günther Noack <gnoack@google.com>
-Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Matthieu Buffet <matthieu@buffet.re>
+Link: https://patch.msgid.link/20260701214628.33319-2-matthieu@buffet.re
 Cc: stable@vger.kernel.org
-Depends-on: 07c2572a8757 ("selftests/landlock: Skip stale records in audit_match_record()")
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Reported-by: Günther Noack <gnoack3000@gmail.com>
-Closes: https://lore.kernel.org/r/20260402.eb5c4e85f472@gnoack.org [1]
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202605111649.a8b30a62-lkp@intel.com
-Closes: https://lore.kernel.org/oe-lkp/202604300436.a07fae12-lkp@intel.com
-Tested-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/20260513105112.140137-2-mic@digikod.net
+[mic: Fix formatting]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adapt the test to the older network fixture and add the
+required send helper]
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/audit.h | 80 +++++++++++++++++++-----
- 1 file changed, 63 insertions(+), 17 deletions(-)
+ tools/testing/selftests/landlock/net_test.c | 155 ++++++++++++++++++++
+ 1 file changed, 155 insertions(+)
 
-diff --git a/tools/testing/selftests/landlock/audit.h b/tools/testing/selftests/landlock/audit.h
-index f6d7b9ad60168..34efa5d9b0a90 100644
---- a/tools/testing/selftests/landlock/audit.h
-+++ b/tools/testing/selftests/landlock/audit.h
-@@ -45,17 +45,25 @@ struct audit_message {
- 	};
- };
+diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
+index 6fecd36f74c63..c725c08414a10 100644
+--- a/tools/testing/selftests/landlock/net_test.c
++++ b/tools/testing/selftests/landlock/net_test.c
+@@ -258,6 +258,64 @@ static int connect_variant(const int sock_fd,
+ 	return connect_variant_addrlen(sock_fd, srv, get_addrlen(srv, false));
+ }
  
--static const struct timeval audit_tv_dom_drop = {
-+static const struct timeval audit_tv_default = {
- 	/*
--	 * Because domain deallocation is tied to asynchronous credential
--	 * freeing, receiving such event may take some time.  In practice,
--	 * on a small VM, it should not exceed 100k usec, but let's wait up
--	 * to 1 second to be safe.
-+	 * Default socket timeout for audit_match_record() callers that expect a
-+	 * record to arrive.  Asynchronous kauditd delivery can exceed 1 usec
-+	 * under heavy debug configs (KASAN, lockdep), where kauditd_thread
-+	 * scheduling between audit_log_end() and netlink_unicast() takes longer
-+	 * than the previous 1 usec timeout. 1 second is a generous ceiling: on
-+	 * the happy path, kauditd delivers within dozens of usec.
- 	 */
- 	.tv_sec = 1,
- };
- 
--static const struct timeval audit_tv_default = {
-+static const struct timeval audit_tv_fast = {
++static int sendto_variant_addrlen(const int sock_fd,
++				  const struct service_fixture *const srv,
++				  const socklen_t addrlen, void *buf,
++				  size_t len, size_t flags)
++{
++	const struct sockaddr *dst = NULL;
++	ssize_t ret;
++
 +	/*
-+	 * Fast timeout for paths that expect no record (audit_init() drain,
-+	 * audit_count_records(), probes).  Causes audit_recv() to return
-+	 * -EAGAIN once the socket buffer is empty, naturally terminating the
-+	 * read loop.
++	 * We never want our processes to be killed by SIGPIPE: we check return
++	 * codes and errno, so that we have actual error messages.
 +	 */
- 	.tv_usec = 1,
- };
- 
-@@ -334,8 +342,13 @@ static int __maybe_unused matches_log_domain_allocated(int audit_fd, pid_t pid,
-  * Matches a domain deallocation record.  When expected_domain_id is non-zero,
-  * the pattern includes the specific domain ID so that stale deallocation
-  * records from a previous test (with a different domain ID) are skipped by
-- * audit_match_record(), and the socket timeout is temporarily increased to
-- * audit_tv_dom_drop to wait for the asynchronous kworker deallocation.
-+ * audit_match_record(), waiting for the asynchronous kworker deallocation with
-+ * the default patient timeout.
-+ *
-+ * When expected_domain_id is zero, the caller is probing for any dealloc record
-+ * that may or may not arrive.  Temporarily lowers the socket timeout to
-+ * audit_tv_fast for this probe so it returns promptly when no record is
-+ * pending; restores audit_tv_default after.
-  */
- static int __maybe_unused
- matches_log_domain_deallocated(int audit_fd, unsigned int num_denials,
-@@ -361,16 +374,21 @@ matches_log_domain_deallocated(int audit_fd, unsigned int num_denials,
- 	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
--	if (expected_domain_id)
--		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--			   &audit_tv_dom_drop, sizeof(audit_tv_dom_drop));
-+	if (!expected_domain_id) {
-+		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
-+			       &audit_tv_fast, sizeof(audit_tv_fast)))
++	flags |= MSG_NOSIGNAL;
++
++	if (srv != NULL) {
++		switch (srv->protocol.domain) {
++		case AF_UNSPEC:
++		case AF_INET:
++			dst = (const struct sockaddr *)&srv->ipv4_addr;
++			break;
++
++		case AF_INET6:
++			dst = (const struct sockaddr *)&srv->ipv6_addr;
++			break;
++
++		case AF_UNIX:
++			dst = (const struct sockaddr *)&srv->unix_addr;
++			break;
++
++		default:
++			errno = EAFNOSUPPORT;
 +			return -errno;
++		}
 +	}
- 
- 	err = audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
- 				 domain_id);
- 
--	if (expected_domain_id)
--		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
--			   sizeof(audit_tv_default));
-+	if (!expected_domain_id) {
-+		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
-+			       &audit_tv_default, sizeof(audit_tv_default)) &&
-+		    !err)
-+			err = -errno;
-+	}
- 
- 	return err;
- }
-@@ -387,6 +405,11 @@ struct audit_records {
-  * audit_init() and after the preceding audit_match_record() call.  Allocation
-  * records are emitted synchronously during landlock_log_denial() in the current
-  * test's syscall context, so only those are counted in records->domain.
-+ *
-+ * Temporarily lowers SO_RCVTIMEO to audit_tv_fast for the read loop: this is a
-+ * "no record expected" path that should terminate on the first -EAGAIN.  The
-+ * default patient timeout is restored on exit for subsequent
-+ * audit_match_record() callers.
-  */
- static int audit_count_records(int audit_fd, struct audit_records *records)
++
++	ret = sendto(sock_fd, buf, len, flags, dst, addrlen);
++	if (ret < 0)
++		return -errno;
++
++	/* errno is not set in cases of partial writes. */
++	if (ret != len)
++		return -EINTR;
++
++	return 0;
++}
++
++static int sendto_variant(const int sock_fd,
++			  const struct service_fixture *const srv, void *buf,
++			  size_t len, size_t flags)
++{
++	socklen_t addrlen = 0;
++
++	if (srv != NULL)
++		addrlen = get_addrlen(srv, false);
++
++	return sendto_variant_addrlen(sock_fd, srv, addrlen, buf, len, flags);
++}
++
+ FIXTURE(protocol)
  {
-@@ -403,6 +426,12 @@ static int audit_count_records(int audit_fd, struct audit_records *records)
- 	records->access = 0;
- 	records->domain = 0;
- 
-+	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
-+		       sizeof(audit_tv_fast))) {
-+		err = -errno;
-+		goto out;
-+	}
-+
- 	do {
- 		memset(&msg, 0, sizeof(msg));
- 		err = audit_recv(audit_fd, &msg);
-@@ -429,6 +458,10 @@ static int audit_count_records(int audit_fd, struct audit_records *records)
- 	} while (true);
- 
- out:
-+	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
-+		       sizeof(audit_tv_default)) &&
-+	    !err)
-+		err = -errno;
- 	regfree(&dealloc_re);
- 	return err;
+ 	struct service_fixture srv0, srv1, srv2, unspec_any0, unspec_srv0;
+@@ -938,6 +996,103 @@ TEST_F(protocol, connect_unspec)
+ 	EXPECT_EQ(0, close(bind_fd));
  }
-@@ -449,9 +482,9 @@ static int audit_init(void)
- 	if (err)
- 		goto err_close;
  
--	/* Sets a timeout for negative tests. */
--	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
--			 sizeof(audit_tv_default));
-+	/* Uses the fast timeout to drain stale records below. */
-+	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
-+			 sizeof(audit_tv_fast));
- 	if (err) {
- 		err = -errno;
- 		goto err_close;
-@@ -467,6 +500,19 @@ static int audit_init(void)
- 	while (audit_recv(fd, NULL) == 0)
- 		;
- 
-+	/*
-+	 * Restores the default timeout for audit_match_record() callers that
-+	 * expect a record to arrive.  Paths that expect no record restore the
-+	 * fast timeout locally (audit_count_records(), the expected_domain_id
-+	 * == 0 probe in matches_log_domain_deallocated()).
-+	 */
-+	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
-+			 sizeof(audit_tv_default));
-+	if (err) {
-+		err = -errno;
-+		goto err_close;
++TEST_F(protocol, tcp_fastopen)
++{
++	const bool restricted = variant->sandbox == TCP_SANDBOX &&
++				variant->prot.type == SOCK_STREAM &&
++				(variant->prot.protocol == IPPROTO_TCP ||
++				 variant->prot.protocol == IPPROTO_IP) &&
++				(variant->prot.domain == AF_INET ||
++				 variant->prot.domain == AF_INET6);
++	const struct landlock_ruleset_attr ruleset_attr = {
++		.handled_access_net = LANDLOCK_ACCESS_NET_CONNECT_TCP,
++	};
++	int bind_fd, client_fd, status;
++	char buf;
++	pid_t child;
++
++	bind_fd = socket_variant(&self->srv0);
++	ASSERT_LE(0, bind_fd);
++	EXPECT_EQ(0, bind_variant(bind_fd, &self->srv0));
++	if (self->srv0.protocol.type == SOCK_STREAM)
++		EXPECT_EQ(0, listen(bind_fd, backlog));
++
++	child = fork();
++	ASSERT_LE(0, child);
++	if (child == 0) {
++		int connect_fd, ret;
++
++		/* Closes listening socket for the child. */
++		EXPECT_EQ(0, close(bind_fd));
++
++		connect_fd = socket_variant(&self->srv0);
++		ASSERT_LE(0, connect_fd);
++
++		if (variant->sandbox == TCP_SANDBOX) {
++			const int ruleset_fd = landlock_create_ruleset(
++				&ruleset_attr, sizeof(ruleset_attr), 0);
++			ASSERT_LE(0, ruleset_fd);
++
++			enforce_ruleset(_metadata, ruleset_fd);
++			EXPECT_EQ(0, close(ruleset_fd));
++		}
++
++		/* Fast Open with no address. */
++		ret = sendto_variant(connect_fd, NULL, NULL, 0, MSG_FASTOPEN);
++		if (self->srv0.protocol.domain == AF_UNIX) {
++			EXPECT_EQ(-ENOTCONN, ret);
++		} else if (self->srv0.protocol.type == SOCK_DGRAM) {
++			EXPECT_EQ(-EDESTADDRREQ, ret);
++		} else {
++			EXPECT_EQ(-EINVAL, ret);
++		}
++
++		/* Fast Open to a denied address. */
++		ret = sendto_variant(connect_fd, &self->srv0, "A", 1,
++				     MSG_FASTOPEN);
++		if (restricted) {
++			EXPECT_EQ(-EACCES, ret);
++		} else if (self->srv0.protocol.domain == AF_UNIX &&
++			   self->srv0.protocol.type == SOCK_STREAM) {
++			EXPECT_EQ(-EOPNOTSUPP, ret);
++		} else {
++			EXPECT_EQ(0, ret);
++		}
++
++		EXPECT_EQ(0, close(connect_fd));
++		_exit(_metadata->exit_code);
++		return;
 +	}
 +
- 	return fd;
- 
- err_close:
++	client_fd = bind_fd;
++	if (!restricted && self->srv0.protocol.type == SOCK_STREAM &&
++	    self->srv0.protocol.domain != AF_UNIX) {
++		client_fd = accept(bind_fd, NULL, 0);
++		ASSERT_LE(0, client_fd);
++	}
++
++	if (restricted) {
++		EXPECT_EQ(-1, read(client_fd, &buf, 1));
++		EXPECT_EQ(ENOTCONN, errno);
++	} else if (self->srv0.protocol.domain == AF_UNIX &&
++		   self->srv0.protocol.type == SOCK_STREAM) {
++		EXPECT_EQ(-1, read(client_fd, &buf, 1));
++		EXPECT_EQ(EINVAL, errno);
++	} else {
++		EXPECT_EQ(1, read(client_fd, &buf, 1));
++		EXPECT_EQ('A', buf);
++	}
++
++	EXPECT_EQ(child, waitpid(child, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	if (client_fd != bind_fd)
++		EXPECT_LE(0, close(client_fd));
++
++	EXPECT_EQ(0, close(bind_fd));
++}
++
+ FIXTURE(ipv4)
+ {
+ 	struct service_fixture srv0, srv1;
 -- 
 2.53.0
 
