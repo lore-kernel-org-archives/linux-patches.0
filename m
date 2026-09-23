@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E534A3850;
-	Wed, 23 Sep 2026 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD9A4EB853;
+	Wed, 23 Sep 2026 14:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172614; cv=none; b=H1fNi3RfU85LfQ5C6WE/fQUAJvz6PnkV5YS1rbzg8jLFnqPvh+Of3IcC3AOdD/VsRSmcXZxmD8EWLU6YCK0fc90fzGcZhxSj6lHGdQlugq8qRLlrXRvVY7YSRCab7GuA0CADechnEqoC2qfLFuaw7TUf2Y3wMVYOAJ3HpFVeP48=
+	t=1790172617; cv=none; b=QCNMrPXZMHC0+NIMAUMPHA91Y/2EDRZSb4tZDIe+fce5zztQsnStaNUx3XkMSLhBaxYNtkaqApECDM5T1yqPGxW30sAkpEcSDPOu7rsk71pfa7yJnkJ01nuWh5XRzxwZx/Uac9JE8jERdfxJsdSjvdDYXdxO1gbejvqqjeW6MIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172614; c=relaxed/simple;
-	bh=YzsW/eFuTRvQEByVf3AeaYe236H9qr+/LfEf9Po8VcE=;
+	s=arc-20240116; t=1790172617; c=relaxed/simple;
+	bh=ylWFkkdt+bOOEnDhhfQB4yz7ht2e06EtxZRZJUeAn+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihFwDR888YIg7u2azTEhyeM9jlOuPuuUBl6g0l+cs+40a5rajwFGG2tWsuTgDbuj311a0dpHP/x/YKR7a3E7c2LgE6o8mYYwZ1LJfmtIfwHjDZy+6RNKIFCz8Ez9zf6YbnIPtPY4weQlq1qIsf7g38IuQPqGjKMyd3DWNXR9u+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6C6XK/d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcwLY6yWh896caN5FgsS80GrXE39ur276lwe3j1hP1JEhRBe2zHQPghL42qEPx31R1sB51lc+1s7L10Mwi0/IaUuU+CbsnRQNYuVtYJ79V47Xu5ISGB31347Hjkmo4YKkuDo5ckRJZi9/9+daSXlzi9PFyqkh4+o1wY8M2fnMEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cUMvD7g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6C6XK/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93F31F000FF;
-	Wed, 23 Sep 2026 14:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cUMvD7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926C71F000FF;
+	Wed, 23 Sep 2026 14:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172612;
-	bh=wIPnTa5pXys36TGcaH1uTQPLpzoGcqtJgvkK/9Xxlg0=;
+	s=korg; t=1790172616;
+	bh=SGsG5KpzffhBAhyVdaZHbgVY4dogEVifuDSzHKEtnx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L6C6XK/d2H7BArPLVH70ighAWuzOBViI6zYFL+eIsTMorsH2SFWeguG6ewmfkUJ0F
-	 iRXN3x7sobdz8aiUyRY/8n3NcjjpGMh4Og0tzePdb2+E1xK9WQrqO11NtdsvuA43+K
-	 ulW3SSd1i4kALime8jmu5pMkwWMgaQbPP1d2gxaE=
+	b=0cUMvD7gnUX9hlcOL4uVbXRMbNjwB/EhposG67Gw8mZ1Ze9Ny8E+8JVL1nKslx2E2
+	 yJ4DtDI633MP4tPUh87fQQEjWC945nv4Dxr5O6UOmGNQUtoIzA5K6RYj6pTRiA6qGD
+	 LQMeTAzzJoILE03iuiTgB7BrkRG8OtVFWMfBtCEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lucas Tanure <tanure@linux.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 011/438] arm64: dts: amlogic: t7: use the real UART pclk
-Date: Wed, 23 Sep 2026 16:00:32 +0200
-Message-ID: <20260923140645.067063002@linuxfoundation.org>
+Subject: [PATCH 7.2 012/438] arm64: dts: amlogic: t7: khadas-vim4: allow the SD card to be power cycled
+Date: Wed, 23 Sep 2026 16:00:33 +0200
+Message-ID: <20260923140645.092328177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,56 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Lucas Tanure <tanure@linux.com>
 
-[ Upstream commit 882de800bf583dd15969836088789edbf035a944 ]
+[ Upstream commit c793a084ab3088744516aef437b4239d0d98623f ]
 
-uart_a listed the 24MHz crystal for all three of its clocks because the
-T7 clock controller driver did not exist when these boards were added.
+SD cards start at 3.3V and switch to 1.8V to reach UHS-I speeds. Some
+cards refuse that switch, and the SD specification says the only way
+to recover is to power the card off and start again.
 
-That leaves the real UART bus clock without a user, so the kernel
-turns it off when it disables unused clocks at the end of boot, and
-the board hangs.
+SD_3V3 is marked regulator-always-on, so the supply never goes off,
+the card stays stuck half way through the switch, and the MMC core
+retries forever:
 
-Update the board DTS files to point uart_a's pclk to CLKID_SYS_UART_A
-instead of the dummy crystal clock.
+  mmc1: error -95 whilst initialising SD card
 
-Fixes: 4fef056588f5 ("arm64: dts: amlogic-t7-a311d2-khadas-vim4: add initial device-tree")
-Fixes: 6f048cc7a635 ("arm64: dts: add board AN400")
+Drop regulator-always-on. regulator-boot-on still turns the supply on
+at boot, and a card that refuses the switch now falls back to high
+speed instead of failing to initialise.
+
+Fixes: 8c45bf9ae4ef ("arm64: dts: amlogic: t7: khadas-vim4: Add power regulators")
 Signed-off-by: Lucas Tanure <tanure@linux.com>
 Assisted-by: Claude:claude-fable-5
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260823115335.102219-2-tanure@linux.com
+Link: https://patch.msgid.link/20260823115335.102219-3-tanure@linux.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts       | 2 +-
- arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
-index cab2ee9ea0d31..ca7536f772ff1 100644
---- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
-+++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
-@@ -33,7 +33,7 @@ xtal: xtal-clk {
- };
- 
- &uart_a {
--	clocks = <&xtal>, <&xtal>, <&xtal>;
-+	clocks = <&xtal>, <&clkc_periphs CLKID_SYS_UART_A>, <&xtal>;
- 	clock-names = "xtal", "pclk", "baud";
- 	status = "okay";
- };
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index c41525a34b721..75d81ad6830df 100644
+index 75d81ad6830df..c94afaaf8826e 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -266,6 +266,6 @@ &sd_emmc_c {
+@@ -71,7 +71,6 @@ sd_3v3: regulator-sdcard-3v3 {
+ 		vin-supply = <&vddao_3v3>;
+ 		gpio = <&gpio GPIOD_11 GPIO_ACTIVE_LOW>;
+ 		regulator-boot-on;
+-		regulator-always-on;
+ 	};
  
- &uart_a {
- 	status = "okay";
--	clocks = <&xtal>, <&xtal>, <&xtal>;
-+	clocks = <&xtal>, <&clkc_periphs CLKID_SYS_UART_A>, <&xtal>;
- 	clock-names = "xtal", "pclk", "baud";
- };
+ 	sdio_pwrseq: sdio-pwrseq {
 -- 
 2.53.0
 
