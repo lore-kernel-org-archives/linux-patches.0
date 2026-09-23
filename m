@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E904A2058;
-	Wed, 23 Sep 2026 14:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D2752CCE9;
+	Wed, 23 Sep 2026 14:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174577; cv=none; b=IirWnj3luxeGVH+zWeQ+y187GzItDmCZ4jyJLCghQ2gTUrzChDHETP8WU1qOX0jEyxMO84W25nrnzTwT//XfCc9U9arY+d8vQtIr2uebA3c+/G2jUnHTqOm9ifm+L0zuc1N0fMC1t+rDdAUmNl7Kp4zwEK8wY8d6hIygFqQy0mw=
+	t=1790174580; cv=none; b=ErzDTvFlA1B8XV9m5XsfyrKuxjRgkg6C+kpQX10JumM9Gtqq/UBze74d0HvD3UtscRYi0eOwo/Z5lOPbvFPco6dLui1cIqEGzvR5x4fusFgrlAknMeKtwIAkY3M03D2Vc8dY/ZYnuFvwZcK4xhi9CWeOSkFzIq+3qwTyQE30P68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174577; c=relaxed/simple;
-	bh=BfZ3Cxs/5Tb1LLB0NxSOV/z54h9M/AdkueDLsQinFos=;
+	s=arc-20240116; t=1790174580; c=relaxed/simple;
+	bh=UOcrUMSzDClDhoF+ZNUfR/mS0wSsHLGYshDeAYa/bUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CduaiEHFsQCUuPEETI1BtjM2L7tCeTxHLosGCzqVlsncK8g796lIZ25qhVaCcjYLCWVljGO2Z9sAlR/V0rlIG1NR9oXTSKVvJCTEOVlRGLXHdVRQN9q86LXBZ8DhIIbIaQwMBC5GMbDleDCIocotg1NzSad4ZEMiX/suOQfEs8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8LCi0Tk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Va3dkhcKpeADHswTtWtNcvGZh06FwN9isiUIplhDSfPQC27tj4dAtBgzFrRDQYI2koP7+MHruBXW1hdHfE34l6clB0ACLtES6pUU88amJTToyxaquZBUWmWOzbGU/oJTxct2729IZ/GSqlg98naYXc9gU+D8Ro2bFfTf78PKBSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1Wdofpz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8LCi0Tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA35E1F00893;
-	Wed, 23 Sep 2026 14:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1Wdofpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A653D1F00898;
+	Wed, 23 Sep 2026 14:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174576;
-	bh=tbuXOnlBYpzCCV8KsjSIoPXMBwaV87IXR96cGhWjM0M=;
+	s=korg; t=1790174579;
+	bh=LMmn8Js6g4N6bsB2vIr3NpuTogX3+UlwM0RA9YAtpns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8LCi0TkM9kudsNS6q9stFCYR3XQps+6VwFM2PcEarkQIYxBjlQXzSWX41P9b+Mk7
-	 XlsuNx2pSqOEbx4mfSCfdDlfMmhdppswQC1QWT21j6lvhdRbtWnfKI+ImT0K5ty8re
-	 d2+GUdEGVTk7n/04iAI193r6KmX7FZz9QNfRCr+c=
+	b=o1WdofpzAYSx2hRZkIrLXWO6qZFT3oyx4RVIHuk9jLqQH2QuwQHCTsOdMXQ5dbPTB
+	 rW5YdpSM9gvbeW5D9eV8r7FE+FNeIMQhQPLbWfWOyyIRJTKJdf10mPOhFIPfok6DdH
+	 xI75o6FacllB8bkFDax0v0Eprc4ccCXuq8sSzVnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 159/398] net: stmmac: do not overwrite phc_index when no PTP clock is registered
-Date: Wed, 23 Sep 2026 16:03:53 +0200
-Message-ID: <20260923140647.555343125@linuxfoundation.org>
+Subject: [PATCH 6.18 160/398] KVM: PPC: Book3S HV: fix use-after-free in kvmhv_emulate_tlbie_all_lpid()
+Date: Wed, 23 Sep 2026 16:03:54 +0200
+Message-ID: <20260923140647.583747745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,45 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-[ Upstream commit f0ef4b1eaed000a304726a43091588e8426ba08a ]
+[ Upstream commit 51938dfa8a51a4f85328413fca9b6e21f9d2d088 ]
 
-stmmac_get_ts_info() reports phc_index as 0 when hardware timestamping
-is supported but no PTP clock has been registered yet (e.g. while the
-interface is down). Zero is a valid PHC index and would make userspace
-resolve the wrong clock; the absence of a clock should be reported as
--1.
+kvmhv_emulate_tlbie_all_lpid() iterates the nested-guest IDR and drops
+mmu_lock before calling kvmhv_emulate_tlbie_lpid(), but does not hold a
+reference on the kvm_nested_guest pointer obtained from the IDR.  A
+concurrent vCPU issuing a single-LPID tlbie (is=2, ric=2) can race
+through kvmhv_flush_nested() -> kvmhv_remove_nested() -> idr_remove /
+--refcnt -> kvmhv_release_nested() -> kfree(gp) in that window, leaving
+the iterating vCPU with a dangling pointer.  The subsequent
+mutex_lock(&gp->tlb_lock) and accesses to gp->shadow_pgtable,
+gp->shadow_lpid and gp->l1_host all touch freed memory.  The free path
+is fully L1-controlled.
 
-The ethtool core already initializes phc_index to -1 before invoking
-the get_ts_info callback (ethtool_init_tsinfo()), so just drop the
-erroneous assignment.
+Fix this by incrementing gp->refcnt inside the loop before dropping
+mmu_lock, mirroring what kvmhv_get_nested() does, and releasing the
+reference with kvmhv_put_nested() after the per-guest work completes.
+This is the same get/put discipline already used at every other
+call site that drops mmu_lock while holding a nested-guest pointer.
 
-Fixes: 9364fa7fcf12 ("net: stmmac: Remove setting of RX software timestamp")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20260914-stmmac-fix-phc_index-v2-1-bf3d90373fe4@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3b6b4661527 ("KVM: PPC: Book3S HV: Implement H_TLB_INVALIDATE hcall")
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/powerpc/kvm/book3s_hv_nested.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index 81d4039e1c082..741e3864f5094 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -1059,8 +1059,6 @@ static int stmmac_get_ts_info(struct net_device *dev,
+diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
+index 5f8c2321cfb52..7b10caa3424c2 100644
+--- a/arch/powerpc/kvm/book3s_hv_nested.c
++++ b/arch/powerpc/kvm/book3s_hv_nested.c
+@@ -1204,8 +1204,10 @@ static void kvmhv_emulate_tlbie_all_lpid(struct kvm_vcpu *vcpu, int ric)
  
- 		if (priv->ptp_clock)
- 			info->phc_index = ptp_clock_index(priv->ptp_clock);
--		else
--			info->phc_index = 0;
- 
- 		info->tx_types = (1 << HWTSTAMP_TX_OFF) | (1 << HWTSTAMP_TX_ON);
- 
+ 	spin_lock(&kvm->mmu_lock);
+ 	idr_for_each_entry(&kvm->arch.kvm_nested_guest_idr, gp, lpid) {
++		++gp->refcnt;
+ 		spin_unlock(&kvm->mmu_lock);
+ 		kvmhv_emulate_tlbie_lpid(vcpu, gp, ric);
++		kvmhv_put_nested(gp);
+ 		spin_lock(&kvm->mmu_lock);
+ 	}
+ 	spin_unlock(&kvm->mmu_lock);
 -- 
 2.53.0
 
