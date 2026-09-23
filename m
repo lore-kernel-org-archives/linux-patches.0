@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5383A75B1;
-	Wed, 23 Sep 2026 14:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486A13A75B1;
+	Wed, 23 Sep 2026 14:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174599; cv=none; b=uXpsY1w+SBxG4uFIYt/e2PoV+yvAvppR1s+FP9HiByebOuubfJtcwUZb1TZD11n31qMCtoMXMMtJidlr8/iY+6msdPbmZBrDqefc06zOpHYocZvEggJw7onW9OSvDghnXO0fmojxX0DrQ1/Knlx9RXxE+cOUQ/NY2RW3YAqCRV4=
+	t=1790174602; cv=none; b=aXlToawYyUQ6GeXqsTTkx11j1gRHJ3LbukyBAZZod3x4Dr/irm5a68G99lItjxZ4mIw+GdesH86D/NyiU2sIc93/PsaT53vlM92EQ0kymISpB/M0Vy8t8kM4sgiaoCmcewI7so1elZdxT9B93JAG+PQO+3fZz25esQ95+VLg8ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174599; c=relaxed/simple;
-	bh=vhQzQLka7p1BvWk/f7D2dwYT5Se95OhevmEObntva2g=;
+	s=arc-20240116; t=1790174602; c=relaxed/simple;
+	bh=Jxxz8Q0MyXfJBA13uOI3qzL99xBiTNRsqxLLfbg6SeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ooVRpTGShbKTnb1Gij7GYWCAUy594uSkRGZ39apnX78iFB0tf1FSMlcwTCCwPcF+vVCFbH9s1/iTrrDSntYa23j+oppc3lAB6bW6gPdXikDOPTPn1Tls/xuOb3t4IjGRzW7OrxxJtbOvMccrFu1rVXpIf6we5ffO7mOICIGhVl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MRJGC/5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a/hb0hDAWH74PtptlCVEGAeiC5nWLqVLsq0udtNNAqm9OrbJyIRppJwYqjWmuxTEc+z2t7R28xuUv86YpWyA6Z6GeI3j0RHjRIAzeDQc04xpi6yrTqH42xiX0IyW/JNN2jbry108voyNuJjDe53TVtMwmH1kqMQJU3vLXFNDAj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5nARKJL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MRJGC/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3E71F000FF;
-	Wed, 23 Sep 2026 14:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5nARKJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381B11F000FF;
+	Wed, 23 Sep 2026 14:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174597;
-	bh=VU4fxyF0wIVGSRhqWRwf7aDc7hL8TfkdUQAgBnEZKg4=;
+	s=korg; t=1790174600;
+	bh=e7w2CjK1TkVylfmpYG3MGFfAPc29YFdVFpJfaFTBWGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1MRJGC/5vlY/D0RigLF1Tobnwa71by0m8H/hqa9ng90V0YS7MZX3ShpdVN9MexorB
-	 M2k807Q+3m3TfMdCpjolPeKXq52DhLwitAafGntx+ubREozfJUhoDMFtL7Ai2Xbuu6
-	 narm4D1C8E7bb1qnAYf2kdKLtMXDh+Ok2bulMeUE=
+	b=A5nARKJLxxx8jHJGNkDu/oLh5wU/wHPCFS1iyOBvAvar277Lht01iMSEz2IENNWQn
+	 APMlSBHkt9U5TnbCV0U0fUtNpSX3N2PRFb6WFk+PS0FXuSpKTt3upcNZO6jYfWGs9T
+	 WFQBF4z6WSQz4isAiCEiGtZcEh9nTXYbYH0QUph0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mobin Aydinfar <mobin@mobintestserver.ir>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 139/398] ksmbd: keep compound responses on query info errors
-Date: Wed, 23 Sep 2026 16:03:33 +0200
-Message-ID: <20260923140647.037719335@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 166/398] ASoC: ux500: Parenthesize MSP_{RX,TX}_CLKPOL_BIT() arguments
+Date: Wed, 23 Sep 2026 16:04:00 +0200
+Message-ID: <20260923140647.739209665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,143 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+[ Upstream commit 11fc0048a6930f4fca44fe3bd16a0023e78846a2 ]
 
-[ Upstream commit 9fa26285ae70ac2d3d1b47459a6b4463ab053e1c ]
+arm allmodconfig fails to build with gcc:
 
-Do not reset the RFC1002 length of the complete response when a query
-info buffer is too small. The current command will add its error response
-through ksmbd_iov_pin_rsp(), while resetting the base length can truncate
-earlier responses in a compound request.
+  In file included from sound/soc/ux500/ux500_msp_i2s.c:20:
+  sound/soc/ux500/ux500_msp_i2s.h:151:38: error: suggest parentheses
+  around arithmetic in operand of '^' [-Werror=parentheses]
+  sound/soc/ux500/ux500_msp_i2s.c:204:21: note: in expansion of macro
+  'MSP_TX_CLKPOL_BIT'
+  cc1: all warnings being treated as errors
 
-This lets ksmbd return the earlier responses and the query-info error
-response together. Remove the now-unused rsp_org parameter from the pipe
-query-info helpers.
+The macros never parenthesized their argument:
 
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Reported-by: Mobin Aydinfar <mobin@mobintestserver.ir>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+  #define MSP_TX_CLKPOL_BIT(n)  ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
+
+That went unnoticed while every caller passed a plain variable, but
+configure_protocol() now passes an XOR expression, which binds as
+"a ^ (b & MASK)" rather than "(a ^ b) & MASK", and gcc rightly
+complains.
+
+No functional change: tx_clk_pol and rx_clk_pol only ever hold
+MSP_FALLING_EDGE (0) or MSP_RISING_EDGE (1), and bclk_inverted is a
+bool, so masking before or after the XOR gives the same 0/1 result.
+Parenthesize the argument anyway - it fixes the build and stops the
+macros from silently mis-evaluating a future composite argument.
+
+Fixes: 9ccbacf5a012 ("ASoC: ux500: Validate MSP DAI configuration")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609051547.G9SJp8UQ-lkp@intel.com/
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260913173132.1172003-1-sashal@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ sound/soc/ux500/ux500_msp_i2s.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index b7fa559d2a339..9e42c65139707 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4635,21 +4635,18 @@ int smb2_query_dir(struct ksmbd_work *work)
-  * @reqOutputBufferLength:	max buffer length expected in command response
-  * @fixed_len:			minimum fixed response length
-  * @rsp:		query info response buffer contains output buffer length
-- * @rsp_org:		base response buffer pointer in case of chained response
-  *
-  * Return:	0 on success, otherwise error
-  */
- static int buffer_check_err(int reqOutputBufferLength,
- 			    unsigned int fixed_len,
--			    struct smb2_query_info_rsp *rsp,
--			    void *rsp_org)
-+			    struct smb2_query_info_rsp *rsp)
- {
- 	unsigned int output_len = le32_to_cpu(rsp->OutputBufferLength);
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 2bf2699bdc49f..c66ef455e1380 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -147,8 +147,8 @@ enum msp_direction {
+ #define RCKPOL_MASK		BIT(0)
+ #define TCKPOL_MASK		BIT(0)
+ #define SPICKM_MASK		(BIT(1) | BIT(0))
+-#define MSP_RX_CLKPOL_BIT(n)     ((n & RCKPOL_MASK) << RCKPOL_SHIFT)
+-#define MSP_TX_CLKPOL_BIT(n)     ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
++#define MSP_RX_CLKPOL_BIT(n)     (((n) & RCKPOL_MASK) << RCKPOL_SHIFT)
++#define MSP_TX_CLKPOL_BIT(n)     (((n) & TCKPOL_MASK) << TCKPOL_SHIFT)
  
- 	if (reqOutputBufferLength < fixed_len) {
- 		pr_err("Invalid Buffer Size Requested\n");
- 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
--		*(__be32 *)rsp_org = cpu_to_be32(sizeof(struct smb2_hdr));
- 		return -EINVAL;
- 	}
- 
-@@ -4660,8 +4657,7 @@ static int buffer_check_err(int reqOutputBufferLength,
- 	return 0;
- }
- 
--static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp,
--				   void *rsp_org)
-+static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp)
- {
- 	struct smb2_file_standard_info *sinfo;
- 
-@@ -4676,8 +4672,7 @@ static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp,
- 		cpu_to_le32(sizeof(struct smb2_file_standard_info));
- }
- 
--static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num,
--				   void *rsp_org)
-+static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num)
- {
- 	struct smb2_file_internal_info *file_info;
- 
-@@ -4691,8 +4686,7 @@ static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num,
- 
- static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 				   struct smb2_query_info_req *req,
--				   struct smb2_query_info_rsp *rsp,
--				   void *rsp_org)
-+				   struct smb2_query_info_rsp *rsp)
- {
- 	u64 id;
- 	int rc;
-@@ -4717,16 +4711,16 @@ static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 
- 	switch (req->FileInfoClass) {
- 	case FILE_STANDARD_INFORMATION:
--		get_standard_info_pipe(rsp, rsp_org);
-+		get_standard_info_pipe(rsp);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      le32_to_cpu(rsp->OutputBufferLength),
--				      rsp, rsp_org);
-+				      rsp);
- 		break;
- 	case FILE_INTERNAL_INFORMATION:
--		get_internal_info_pipe(rsp, id, rsp_org);
-+		get_internal_info_pipe(rsp, id);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      le32_to_cpu(rsp->OutputBufferLength),
--				      rsp, rsp_org);
-+				      rsp);
- 		break;
- 	default:
- 		ksmbd_debug(SMB, "smb2_info_file_pipe for %u not supported\n",
-@@ -5442,8 +5436,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_PIPE)) {
- 		/* smb2 info file called for pipe */
--		rc = smb2_get_info_file_pipe(work->sess, req, rsp,
--					       work->response_buf);
-+		rc = smb2_get_info_file_pipe(work->sess, req, rsp);
- 		goto iov_pin_out;
- 	}
- 
-@@ -5555,7 +5548,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 		}
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      fixed_len,
--				      rsp, work->response_buf);
-+				      rsp);
- 	}
- 	ksmbd_fd_put(work, fp);
- 
-@@ -5792,7 +5785,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	}
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 			      fixed_len,
--			      rsp, work->response_buf);
-+			      rsp);
- 	path_put(&path);
- 
- 	if (!rc)
-@@ -5907,7 +5900,7 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
- 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 			      le32_to_cpu(rsp->OutputBufferLength),
--			      rsp, work->response_buf);
-+			      rsp);
- 	if (rc)
- 		goto err_out;
- 
+ #define P1ELEN_SHIFT		0
+ #define P1FLEN_SHIFT		3
 -- 
 2.53.0
 
