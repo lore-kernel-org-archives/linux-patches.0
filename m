@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA8B2E2663;
-	Wed, 23 Sep 2026 14:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DC05328AE;
+	Wed, 23 Sep 2026 14:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175184; cv=none; b=D1fCefTgXCNkw5Uh3pbCShfBlw2EunjRGfj0i8zfU9rilAbOBewWaoO5ch81K/3LC3GTyMKiNEvRstIOzxnUOqMoApi2O6dMPO5kaQksjOFBZxj9UuhZJTWmbN0ljtvjg+c8Cuk1isTukWeryeuVwzSYGMJhcwLYrbasvYwEVDw=
+	t=1790175187; cv=none; b=DIW7Hmroz8mdga/fVNVqBjr3zqF1aZr3wkmnRRWLakZXPgIlvBdwyOoforsGh3cV2oYQn9ETDPWVrGRt3aWA2+dIGc3T+dgekTdXRFW/n8wXYm1rwr7cMjVnLTKDkREGSGp08nf9QWug4xv2Zr6GHKlXpW5qz6goDGWd/DB4GAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175184; c=relaxed/simple;
-	bh=OzPEvHatMMKP678wMbjp0BhDToyl7O4Xvb7QK5eJo/k=;
+	s=arc-20240116; t=1790175187; c=relaxed/simple;
+	bh=jXSIwymDqb/R9txFJWyEcHyUdXXhJe6wkuzJgNyHpaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrfZU6i5tFmTMJ1yFo+qTB61qHw/+h1zhkG/dtEfY4oOPnngZc5CsnfsE/mJhtiANcstfPphuHJfZCKT4TDUtZKR7/Wkb/k4PuI6/e4tpkakLlTI5e550kaFvcQoUdf9GazlDbNTwFAbYfip9OyG+KamAh4SeYe3CL1fKumMrmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5Nem6Ob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0Itqtgzbk8wH6ajwIh/7sPPXiOZQfsaJfoaf3ndodpdfugtbq2Bypp7vGJNZpvX8CGzZS0NZjCabp9HYa6jdxkrZdrNYq9qOW49tozKupPgBQC4FfHr6e1gAqMycxvX2XIrx4JyRY4KyBVCdZIkrD4LAR8ujWyEyZi4AHLvmvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYGe7LNk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5Nem6Ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70131F000FF;
-	Wed, 23 Sep 2026 14:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYGe7LNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB67D1F000FF;
+	Wed, 23 Sep 2026 14:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175182;
-	bh=Fwxmb7uC81/RbOskkrlb25hflVL8pS5ma/NRSGZRJhg=;
+	s=korg; t=1790175185;
+	bh=MeM6ZwmF9VErecpsQ5Weo2On0tkvxbSJLF11WWhFlNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5Nem6ObbRI2AgM46JOEngqmPlzKBY2O3LddI4EqDnsGuwF879Y7sEFxNVK/gukHq
-	 SJG66i6ChXeQsbOIhtU2QHeIDqZmd84mdAI4mOwjJn4+oT8PshhHM0WmZU8lOCof7B
-	 kLMQsYS3CwFWkveMKqt3Vx2CRC7jD1PxQOVw3eXk=
+	b=lYGe7LNkmHMPsBrP/HUxgRwdDupOMAflqLBlqwQw4FWIfxqlbl/wIVfvbA9EKiqXS
+	 Z3UJC2Pbvy/fimCLHtrw+ex3ugstA7DEiaxWe0svRh2craiG6J5TODra/G6Js2+gHc
+	 akGPFyAph6sr0EQ8GYpEFI9OXX4O6AnKQ57H0XiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5003556314abc915a71f@syzkaller.appspotmail.com,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	David Howells <dhowells@redhat.com>,
@@ -35,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.18 345/398] smb: client: cancel reconnect work in clean_demultiplex_info()
-Date: Wed, 23 Sep 2026 16:06:59 +0200
-Message-ID: <20260923140652.371680943@linuxfoundation.org>
+Subject: [PATCH 6.18 346/398] smb: client: fix rlist race and missing initialization
+Date: Wed, 23 Sep 2026 16:07:00 +0200
+Message-ID: <20260923140652.397833092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -58,35 +57,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit c65eae6f61d1778ff7a82e4aae4080e26f486af1 upstream.
+commit 5f270f091256da1338c3631083e15d7f83cc05e1 upstream.
 
-clean_demultiplex_info() cancels server->echo delayed work but not
-server->reconnect, which can cause a use-after-free when the
-demultiplex thread exits while a reconnect work is still queued:
+TCP_Server_Info.rlist is allocated via kzalloc which zeros both ->next
+and ->prev to NULL instead of pointing to itself, making list_empty()
+always return false and list_add() dereference a NULL ->prev pointer.
 
-  cifs_demultiplex_thread()
-    cifs_readv_from_socket()
-      cifs_reconnect()
-        __cifs_reconnect()
-          cifs_queue_server_reconn()
-            mod_delayed_work(cifsiod_wq, &server->reconnect, 0)
-    clean_demultiplex_info()
-      cancel_delayed_work_sync(&server->echo)   // echo canceled
-                                                 // reconnect NOT canceled
-      kfree_sensitive(server)                    // server freed
+Also, cifs_signal_cifsd_for_reconnect() can be called concurrently
+from multiple cifsd threads, allowing the same server's rlist node to
+be added twice into the local list, corrupting it.
 
-  ...later, on cifsiod_wq:
-
-  smb2_reconnect_server()
-    server->srv_count  // UAF read of freed server
-
-Fix this by canceling server->reconnect delayed work in
-clean_demultiplex_info() before the server is freed, the same way
-cifs_put_tcp_session() already does.
-
-Reported-by: syzbot+5003556314abc915a71f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6aa4a12d.f81106d8.2ab401.0023.GAE@google.com
-Fixes: 53e0e11efe92 ("CIFS: Fix a possible memory corruption during reconnect")
+Closes: https://sashiko.dev/#/patchset/20260911204446.1719356-1-pc%40manguebit.org
+Fixes: df0e03a4fb94 ("smb: client: fix potential deadlock when reconnecting channels")
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: David Howells <dhowells@redhat.com>
@@ -98,18 +80,43 @@ Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/connect.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/fs/smb/client/connect.c
 +++ b/fs/smb/client/connect.c
-@@ -1064,6 +1064,7 @@ clean_demultiplex_info(struct TCP_Server
- 	spin_unlock(&server->srv_lock);
+@@ -171,6 +171,8 @@ cifs_signal_cifsd_for_reconnect(struct T
+ 				nserver = ses->chans[i].server;
+ 				if (!nserver)
+ 					continue;
++				if (!list_empty(&nserver->rlist))
++					continue;
+ 				nserver->srv_count++;
+ 				list_add(&nserver->rlist, &reco);
+ 			}
+@@ -179,11 +181,15 @@ cifs_signal_cifsd_for_reconnect(struct T
+ 		}
+ 	}
  
- 	cancel_delayed_work_sync(&server->echo);
-+	cancel_delayed_work_sync(&server->reconnect);
++	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry_safe(server, nserver, &reco, rlist) {
+ 		list_del_init(&server->rlist);
+ 		set_need_reco(server);
++		spin_unlock(&cifs_tcp_ses_lock);
+ 		cifs_put_tcp_session(server, 0);
++		spin_lock(&cifs_tcp_ses_lock);
+ 	}
++	spin_unlock(&cifs_tcp_ses_lock);
+ }
  
- 	spin_lock(&server->srv_lock);
- 	server->tcpStatus = CifsExiting;
+ /*
+@@ -1823,6 +1829,7 @@ cifs_get_tcp_session(struct smb3_fs_cont
+ 	spin_lock_init(&tcp_ses->mid_counter_lock);
+ 	INIT_LIST_HEAD(&tcp_ses->tcp_ses_list);
+ 	INIT_LIST_HEAD(&tcp_ses->smb_ses_list);
++	INIT_LIST_HEAD(&tcp_ses->rlist);
+ 	INIT_DELAYED_WORK(&tcp_ses->echo, cifs_echo_request);
+ 	INIT_DELAYED_WORK(&tcp_ses->reconnect, smb2_reconnect_server);
+ 	mutex_init(&tcp_ses->reconnect_mutex);
 
 
