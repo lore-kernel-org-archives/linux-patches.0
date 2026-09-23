@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C36C52E064;
-	Wed, 23 Sep 2026 14:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B673B42FF;
+	Wed, 23 Sep 2026 14:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172724; cv=none; b=jjOowa5kSnpFANDpXb3V3X0ndQhDDBOM3ivBODatFHWKaOS+zoIEVV61GtN/2DCujtxTz0r2EI4mAsaAc+TXLUrB7o3Mh0XQM3HYadlnUFrThVCju6tdsq2L+65AlPsWHwWvgbiv72iy8ybh7z/Kiw624DZFkqSOAHhzRrU553M=
+	t=1790172727; cv=none; b=N4Frv46MGl9v1tQixj099JB26uNoD6zg1S3iRHYwjgTEUNfMetPtbSJjojZPyGyN/u9Mmbf9Zu9rxYoc+DGvEMOEw3fho9N5vAJr7AQ5k1E6CcKM9J9A6pHE99dj0NYX/qfzETEsVSX05P9IXv7ETzu+Ae5Ie0geVTI+gRsbXDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172724; c=relaxed/simple;
-	bh=NlBu2aPXt/porRhysk0caanZl1b0M+NxkqkKkMrQCTY=;
+	s=arc-20240116; t=1790172727; c=relaxed/simple;
+	bh=xJJ7zHlP/LQK4Y3gE+nRvhvQTkFrnaO2SrOYBRHK9wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVSPHI9b0EuOok4UgftybEJKe0FtjbFS2DlZ1B5UwzD0O48uh9uYJ8J49IjZrREU6oqW789pkZGEx21OEdvfCZvptha2vSoVSZtL0hvCBhVLX6hm4HAiC/FXI6QvXNd/eVDNO7pNtulimQ6+MsadLmBkHwLbMZFIOSZQjOBwRa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJppmFwu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WGzdRKU3y6OIHVFqbvJU67Aa/4Qepo4ZH0OSIFALgi53gH0K0CincHQtO741PDIu+2DQdRjQI2qPYIUF6GmziyNTw878/yas3iyk9ovLtWDWDSYZmND6YSI+O4y7L2eGEmamgojzYqpvoBe5PhDJR2mvlUYnpCSBxwHNLxhSxlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnXw5u8L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJppmFwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FB71F00893;
-	Wed, 23 Sep 2026 14:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnXw5u8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E781F000FF;
+	Wed, 23 Sep 2026 14:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172723;
-	bh=lSLLduczArHC2Lx82QHQBGlVHzeKc+PgROFT247dh8Q=;
+	s=korg; t=1790172726;
+	bh=zkXk4yWKj7CgfuWoUzWPt05Z8DWSQdRfQpod8AFeItI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJppmFwuDdrrXqU5SV4HzGsyr3eQHvE6XsnASTkAbSs07V/i5Ln6yqrtX5vg7OOn8
-	 A+UGLT0Lh2vTVjXcKX5scfD+VtoSeIwFtmyr6i+Id4dPK6t83VTxjB9+X5kJ4TcptX
-	 JXrodzgzczQJejlA7BDydqx4B3OXOCzq/iMxSTvQ=
+	b=MnXw5u8LGui4hQKZOwnVRKOmZjiTg17x5ViZLmWEEZQ4AgPkGsWcVxL5tAM2mbsMW
+	 Eh9+qfn/mk4E/jw1VXSbKVaWgs/M4gkHtReeZ4JA7j6WhGl66Ml1Vwk/gwGPJOuDDw
+	 ed+7sIT7Q9EJY62w06XV255RBVOPBz4qBtZn+XFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 016/438] ARM: socfpga: select the PL310 erratum 753970 workaround
-Date: Wed, 23 Sep 2026 16:00:37 +0200
-Message-ID: <20260923140645.193621605@linuxfoundation.org>
+Subject: [PATCH 7.2 017/438] RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept
+Date: Wed, 23 Sep 2026 16:00:38 +0200
+Message-ID: <20260923140645.222320698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,38 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit cfc1e9a543e3589ba200795b6e7fd8ef4314efdf ]
+[ Upstream commit 32cd87f54dd1070020e664ccb0312a9f0fea79b4 ]
 
-ARCH_INTEL_SOCFPGA selects CACHE_L2X0 and several PL310 erratum
-workarounds. The 753970 workaround is still conditioned on PL310, but that
-Kconfig symbol no longer exists, so this one selection is always disabled.
+We need to clear cep before release state_lock as siw_qp_llp_close and
+siw_qp_modify->siw_qp_llp_close did.
 
-Select PL310_ERRATA_753970 directly, consistently with the other PL310
-workarounds required by the platform.
+Otherwise if siw_qp_modify() fails in siw_accept(), the QP's state_lock
+is released before the error path cleanup. A concurrent ibv_modify_qp()
+transitioning the QP to ERROR can race in this window:
 
-Fixes: fbc125afdc50 ("ARM: socfpga: Turn on ARM errata for L2 cache")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+  siw_accept()                       ibv_modify_qp(ERROR)
+  ----------------------             ----------------------
+  siw_qp_modify() fails
+  up_write(&qp->state_lock)
+                                     down_write(&qp->state_lock)
+                                     nextstate_from_idle():
+				     if (qp->cep)
+                                       siw_cep_put(qp->cep) <- frees cep
+                                       qp->cep = NULL
+  goto error
+    cep->qp = NULL                   <- UAF
+
+Clear qp->cep and drop the association reference taken by siw_cep_get(),
+all under the write lock held from the initial down_write(&qp->state_lock).
+Thread B therefore sees qp->cep == NULL, skips its own put, and cannot free
+the cep before siw_accept() is done with it.
+
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://lore.kernel.org/linux-rdma/d6fbe475-a5c2-f975-99b0-a0bd6b6d10e8@linux.dev/T/#m5876c1ff2de8686a9a1173b8f1aa0ff5363a785c
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://patch.msgid.link/20260827125553.12831-1-guoqing.jiang@linux.dev
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-socfpga/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
-index eb72c240c2486..528c5c1368c37 100644
---- a/arch/arm/mach-socfpga/Kconfig
-+++ b/arch/arm/mach-socfpga/Kconfig
-@@ -16,7 +16,7 @@ menuconfig ARCH_INTEL_SOCFPGA
- 	select ARM_ERRATA_775420
- 	select PL310_ERRATA_588369
- 	select PL310_ERRATA_727915
--	select PL310_ERRATA_753970 if PL310
-+	select PL310_ERRATA_753970
- 	select PL310_ERRATA_769419
- 	select RESET_CONTROLLER
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 0245b25e72718..ed49818793dde 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1719,9 +1719,12 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			   SIW_QP_ATTR_STATE | SIW_QP_ATTR_LLP_HANDLE |
+ 				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
+ 				   SIW_QP_ATTR_MPA);
++	if (rv) {
++		qp->cep = NULL;
++		siw_cep_put(cep);
++		goto error_unlock;
++	}
+ 	up_write(&qp->state_lock);
+-	if (rv)
+-		goto error;
  
+ 	siw_dbg_cep(cep, "[QP %u]: send mpa reply, %d byte pdata\n",
+ 		    qp_id(qp), params->private_data_len);
 -- 
 2.53.0
 
