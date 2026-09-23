@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B3480DE9;
-	Wed, 23 Sep 2026 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0DC5372FA;
+	Wed, 23 Sep 2026 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174545; cv=none; b=L6uDbYqP//DjVi8jaFFsbkRzU/Ex5yWvxV+YprOFVsEI9eW9OXSfzfz/pKEvrUrMqPu8FD8j2acEwACv0uZIrjZh6sxabKosCkmK9ww10f/6NnKqHhBcy47ZOSUHSl+StwIKAI65/dviF4DEs//wrM1K/SO+Xg43AXuwE0nLP14=
+	t=1790174547; cv=none; b=ET3xzSvOdQyDE5UOfC/xJm0gpV4MF76SW3rDGN70yeOBM6FA/dEVZu4+CStX1+yTgLZo2Z4EnzVZkvQmGtidp/+DQXMAO4XeDXZmMyrTDwtgD8c9CYJhhRT1+NX/ynFuQF2pj1ri6KSPW7ozNid8H9/UDpi43w7etyIoJhZAY8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174545; c=relaxed/simple;
-	bh=s0kmyb+JxOeb+tiLg6RSQkwVRQy9G/igetA1Haw5454=;
+	s=arc-20240116; t=1790174547; c=relaxed/simple;
+	bh=ErGWIjSa2GF5dgVTeSxomuS5P9/j+oI9um07QliDq+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcToXKMBxuG7xCVLyINm/61oaguX4/SwebyolF2fIkGmKu7R81H478WdFx3mgbZoMmiqDeE6jUy6E9DaY9nGUkQl1vW4Y+5NWHu7BfgmvjKiYkFJA9L7rF3dh8NnkT4L3rLOq6NrAqEWj1F2RbEUKE43cLPCSEbwqhacOTtMINg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRp649x8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j6UwNVfUTUO7ij7+khhaXTIbqNL3VCU4+4sg3F6z4Qrto2buErfkwndJNpWfv/06W9PX2xYKcvOY/LqBrvyg2EYGlJDdPmoHzVH+cdYNsff8SJh/5wfj6su3MYjkIk7HagISu3pT4qA9zIKCXwXB1s4S6Ge/BQVYejiQZ3Esjs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VITHyPPt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRp649x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D811F000FF;
-	Wed, 23 Sep 2026 14:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VITHyPPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DF41F000FF;
+	Wed, 23 Sep 2026 14:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174543;
-	bh=VZoTt4homIX5OKwrVcwjiDU43nsilBvdKr6PA/J+qTw=;
+	s=korg; t=1790174546;
+	bh=/ZITgDOwrzKeA8K215ecV/IANHuEnXAhfhLtOAqTanc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YRp649x8ugJhV6iJ3w358FERZfFTD6QIysYFtDsmwsRp/ilc3zB2StWmito4Cs9nO
-	 mVMfGXrArxH7mSVrOG7tMLBCOWm+b7zp2DssxS8iIsGOfFjCnWS9d/MNqXzd+rev92
-	 9huKULFw4CEHWe2kMzNi7oidKl/8f+XYTX6t3B/E=
+	b=VITHyPPtHpdkezFWdet8SZT7AmIrAQ1B3M68i0RNaoK+z31HNpyrCcIGguSgk+xlu
+	 QOF0C0I+7vIho/HahTcbSmFBAJeavQFuMmnniPFA+1BoKrAr0GtkzRSTt/zcNRvoSU
+	 gh8KthhUncx/AX28ArrbBYmhTLcxQIrA/NBw67RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 149/398] Bluetooth: ISO: set BT_LISTEN before requesting a BIG sync
-Date: Wed, 23 Sep 2026 16:03:43 +0200
-Message-ID: <20260923140647.294930635@linuxfoundation.org>
+Subject: [PATCH 6.18 150/398] Bluetooth: btmtk: fix wrong status for short WMT FUNC_CTRL events
+Date: Wed, 23 Sep 2026 16:03:44 +0200
+Message-ID: <20260923140647.319936960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,141 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 296e7f3c5071cc02dc22e1566e759179fa1792ae ]
+[ Upstream commit 78b6abd6c7a7591aacdae657f813214dae4fcd3b ]
 
-A BIS connection is matched to its parent socket by looking for a
-socket in BT_LISTEN state with the same BIG handle:
+A too-short BTMTK_WMT_FUNC_CTRL event (WMT header only, no trailing
+2-byte status word) is always treated as BTMTK_WMT_ON_UNDONE. This
+short form is how firmware acks a plain enable/disable request, and
+the actual result is carried in the header's own flag byte (0 =
+success), not a separate status word. Decode it from there instead of
+assuming failure.
 
-  iso_conn_ready()
-    if (test_bit(HCI_CONN_BIG_SYNC, &hcon->flags))
-            parent = iso_get_sock(hdev, &hcon->src, &hcon->dst,
-                                  BT_LISTEN, iso_match_big_hcon, hcon);
+Verified setup on MT7920, MT7921, MT7922 and MT7925: no regression.
 
-The socket was only moved to BT_LISTEN after iso_conn_big_sync()
-returned, while the LE BIG Create Sync command has already been queued
-by then. If the BIG sync is established before the state is updated,
-which is easy to hit with an emulated controller as the command may
-complete in a few hundred microseconds, no parent is found and the BIS
-connections are never notified to the listening socket.
-
-The user space is then left waiting for connections that never arrive,
-e.g. bluetoothd never completes a MediaTransport1.Acquire of a
-Broadcast Sink transport.
-
-Move the socket to BT_LISTEN before requesting the BIG sync, so the
-state is visible by the time the command is queued, and restore the
-previous state if the request could not be started. Since the socket is
-briefly visible as a listening socket, child sockets may have been
-queued in the meantime, so drain the accept queue before restoring the
-state: the cleanup paths of BT_CONNECT2/BT_CONNECTED don't do it and the
-children would be left with a dangling parent pointer.
-
-Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
+Fixes: e3ac0d9f1a20 ("Bluetooth: btmtk: accept too short WMT FUNC_CTRL events")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 52 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 41 insertions(+), 11 deletions(-)
+ drivers/bluetooth/btmtk.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 83594bb52a14c..14f821aa8ac41 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -764,19 +764,24 @@ static void iso_sock_destruct(struct sock *sk)
- 	skb_queue_purge(&sk->sk_error_queue);
- }
- 
--static void iso_sock_cleanup_listen(struct sock *parent)
-+/* Close not yet accepted channels */
-+static void iso_sock_flush_accept_q(struct sock *parent)
- {
- 	struct sock *sk;
- 
--	BT_DBG("parent %p", parent);
--
--	/* Close not yet accepted channels */
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		iso_sock_close(sk);
- 		iso_sock_kill(sk);
- 		/* Drop the reference handed back by bt_accept_dequeue(). */
- 		sock_put(sk);
- 	}
-+}
-+
-+static void iso_sock_cleanup_listen(struct sock *parent)
-+{
-+	BT_DBG("parent %p", parent);
-+
-+	iso_sock_flush_accept_q(parent);
- 
- 	/* If listening socket has a hcon, properly disconnect it */
- 	if (iso_pi(parent)->conn && iso_pi(parent)->conn->hcon) {
-@@ -1616,6 +1621,13 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
- 			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
-+				/* Move to BT_LISTEN before requesting the BIG
-+				 * sync: the BIS connections are matched to a
-+				 * parent socket in BT_LISTEN state, and they
-+				 * may be notified before the request returns.
-+				 */
-+				sk->sk_state = BT_LISTEN;
-+
- 				release_sock(sk);
- 				err = iso_conn_big_sync(sk);
- 				lock_sock(sk);
-@@ -1624,12 +1636,20 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 				 * connection may have been torn down
- 				 * meanwhile and iso_chan_del() may have
- 				 * already moved the socket to BT_CLOSED.
--				 * Only move on to BT_LISTEN if the BIG sync
--				 * was actually started and nothing else has
--				 * changed the state.
-+				 * Only move back if the BIG sync could not be
-+				 * started and nothing else has changed the
-+				 * state.
- 				 */
--				if (!err && sk->sk_state == BT_CONNECT2)
--					sk->sk_state = BT_LISTEN;
-+				if (err && sk->sk_state == BT_LISTEN) {
-+					/* Discard any child socket that may
-+					 * have been queued while the socket
-+					 * was in BT_LISTEN, as the cleanup of
-+					 * BT_CONNECT2 doesn't drain the
-+					 * accept queue.
-+					 */
-+					iso_sock_flush_accept_q(sk);
-+					sk->sk_state = BT_CONNECT2;
-+				}
- 			} else {
- 				iso_conn_defer_accept(pi->conn->hcon);
- 				sk->sk_state = BT_CONFIG;
-@@ -1639,12 +1659,22 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index d1817dd6ab650..c525e2685a861 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -709,7 +709,12 @@ static int btmtk_usb_hci_wmt_sync(struct hci_dev *hdev,
+ 	case BTMTK_WMT_FUNC_CTRL:
+ 		if (!skb_pull_data(data->evt_skb,
+ 				   sizeof(wmt_evt_funcc->status))) {
+-			status = BTMTK_WMT_ON_UNDONE;
++			/* A plain enable/disable request is acked with just
++			 * the WMT header and no trailing status word; the
++			 * result is carried in the header's own flag byte.
++			 */
++			status = wmt_evt->whdr.flag ? BTMTK_WMT_ON_UNDONE :
++						       BTMTK_WMT_ON_DONE;
  			break;
- 		case BT_CONNECTED:
- 			if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
-+				/* As above, the BIS connections may be
-+				 * notified before the request returns.
-+				 */
-+				sk->sk_state = BT_LISTEN;
-+
- 				release_sock(sk);
- 				err = iso_conn_big_sync(sk);
- 				lock_sock(sk);
- 
--				if (!err && sk->sk_state == BT_CONNECTED)
--					sk->sk_state = BT_LISTEN;
-+				if (err && sk->sk_state == BT_LISTEN) {
-+					/* As above, don't leave any child
-+					 * socket behind in the accept queue.
-+					 */
-+					iso_sock_flush_accept_q(sk);
-+					sk->sk_state = BT_CONNECTED;
-+				}
- 				early_ret = true;
- 			}
+ 		}
  
 -- 
 2.53.0
