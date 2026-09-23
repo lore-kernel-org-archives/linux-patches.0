@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC259526ABD;
-	Wed, 23 Sep 2026 14:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1929F52940E;
+	Wed, 23 Sep 2026 14:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172876; cv=none; b=dNIlE8m9Ddvwqbnp4jXyfSUrIXOGXggCtDE96uDFCxRI6n/Vy5Wbj5SIGX9Wt+nf6DDfTY8UIChGJVe2NDWtiOZm/JDpk92xR+Fo9NycnsS4w+fJxPKZV3oP2D4yeI5016hEqjB3Z22+M9vMc6KahvWWIRBd9f6bZ46iGM/F/PU=
+	t=1790172879; cv=none; b=YXnKWINFa92FdtVli1kGWNERm+bWwMwXJGDNvT9UwoXZJhhZtSrS9z2lzMgXHoJq4o+LKYpuuOQRfrBFcBoBoEkz1POK7raV52ArqnxdGm0r1SE4gOIeU7IqgWJTWh4FJ+9XPE46yu2+T8HSVASuMGTix9r4PorxSpdqpwz7f9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172876; c=relaxed/simple;
-	bh=xh/8k0MVelm/Ce7z+pKZrfTlRbfko2UJSloLIaDFYBw=;
+	s=arc-20240116; t=1790172879; c=relaxed/simple;
+	bh=uCEKuTxej8dctPxgRl0fx3bKYqxsp/wtMjy+UtA9fuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvi55Hd2di/tQd5z2bQIn57XMRwTnGs6F45L8mg1HjopYLHP+N5Ki4s8mKZcASp3d1+Z3gv+IDc7OtKCq+xeIH93W1hQgTUUPUaxudTPus7wkJea+nMjW93wJWhSV2F+Qw+cYDJaJM1ZCKivYvBzkQ6kMOhJbbUtZDcxmMGmfnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcmYuJHU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LRx7RSEGIvPXUCzd8P4fZkQMp4MuuDqeioaESeXr7HFWrLgcwoRcJ/nHpz1SQKWHLiJ1WVESLCbStjWTWVdHBwPZ4BkNC5b/wo5a0I3AcLZgnRYDxKTtwrpWg2B+GpJqnBrsqpzsgc6dsVDd6NqYG6fdwsjLZOb65rWEz7i75BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESJSF02O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcmYuJHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB7B1F000FF;
-	Wed, 23 Sep 2026 14:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESJSF02O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655A41F000FF;
+	Wed, 23 Sep 2026 14:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172874;
-	bh=QdNoOaxRyAzFoay7EO5aimNp6H3HkMOnX8ghwylQras=;
+	s=korg; t=1790172878;
+	bh=RmMtLV+orf9DsoYvDbAxm8Q01Ro6xH+9XrvbzJiHdzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcmYuJHULZjbeOWt1zJ7sZakrytUEt3SFgCoTj3GFgkKSJfcL5S+5wQfowSXKQ2P5
-	 FMRfvfqpJgEsnJu5HswpoN1jgqOQvPZK3Z/SWNwBsT2kDTOSMuTbCawxvsHOGCyPZK
-	 y2rc0NgqEFyF/PT1VTesZNk00YGoQvfblS7/fgtw=
+	b=ESJSF02OmHBkipR1PFM6muVaQFmh5cZdMDCeDB6DQ/kVBmU+bbaYwClbC7XnKQi5b
+	 wKy+v6sPK1zEsKQRP4Tzy2W74cRP95VvintLWdSrDEOdDrKP/Ravdj00EeaQMmGa4p
+	 eae17ja2oJDsZThyUQLqRMhUkFRqO+A6HpFXVncg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 041/438] RDMA/mad: Fix receive buffer leak when PKey enforcement fails
-Date: Wed, 23 Sep 2026 16:01:02 +0200
-Message-ID: <20260923140645.848501167@linuxfoundation.org>
+Subject: [PATCH 7.2 079/438] wifi: mac80211: unlist vifs when their netdev is unregistered
+Date: Wed, 23 Sep 2026 16:01:40 +0200
+Message-ID: <20260923140646.832581980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,56 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3476c28c9addfa253f505e6bd87f1f5598b961d0 ]
+[ Upstream commit eee2efd82867b623982ac51925b5a1812a74c50d ]
 
-ib_mad_complete_recv() initializes mad_recv_wc->rmpp_list and then runs
-ib_mad_enforce_security() before linking recv_buf onto that list.  On
-failure it calls ib_free_recv_mad(), which only walks rmpp_list and frees
-the ib_mad_private of every buffer found there.  As the list is still
-empty at that point, nothing is freed at all.
+mac80211 only removes vifs from the local->interfaces list when
+an interface is removed via ieee80211_if_remove(), before it
+unregisters the netdev. However, it's possible for a netdev to
+be unregistered without going through that: When the netns that
+holds the wiphy is destroyed, the wiphy is supposed to move to
+the init_ns, but that can run into allocation failures.
 
-The caller cannot clean up either: ib_mad_recv_done() sets recv to NULL
-right after ib_mad_complete_recv() returns, assuming the MAD layer took
-ownership of the buffer.  Every MAD that fails the PKey check therefore
-leaks one ib_mad_private (about 300 bytes per IB port MAD, ~2K for OPA),
-and a remote node can trigger this repeatedly by sending MADs with a
-wrong PKey.
+Then, mac80211 has an interface listed that doesn't exist, and
+will eventually hit
 
-Link recv_buf onto rmpp_list right after the list is initialized, so the
-error path has something to free.
+  BUG: failure at net/wireless/core.h:141/wiphy_to_rdev()!
+  ...
+  _cfg80211_unregister_wdev+0x24/0x36a [cfg80211]
+  cfg80211_unregister_wdev+0x15/0x1d [cfg80211]
+  ieee80211_remove_interfaces+0x1ff/0x257 [mac80211]
+  ieee80211_unregister_hw+0x73/0x1d1 [mac80211]
+  mac80211_hwsim_del_radio+0x114/0x166 [mac80211_hwsim]
 
-Fixes: 47a2b338fe63 ("IB/core: Enforce security on management datagrams")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260826073216.2367-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Remove the interface from the list in ->ndo_uninit if it's still
+around to avoid this.
+
+Assisted-by: LLM
+Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
+Link: https://patch.msgid.link/20260904170220.038ad73e6c04.I990abca78483e058746b6f42b4796717c3028164@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/iface.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index e0b3b36b8b149..3c91f00d09c6b 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2059,6 +2059,8 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	int ret;
- 
- 	INIT_LIST_HEAD(&mad_recv_wc->rmpp_list);
-+	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+
- 	ret = ib_mad_enforce_security(mad_agent_priv,
- 				      mad_recv_wc->wc->pkey_index);
- 	if (ret) {
-@@ -2067,7 +2069,6 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 		return;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 4c34c3287eb4a..842bfb4a7cb68 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -924,9 +924,33 @@ static void ieee80211_teardown_sdata(struct ieee80211_sub_if_data *sdata)
  	}
+ }
  
--	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
- 	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
- 		spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++/*
++ * The netdev can be unregistered without mac80211 doing it, e.g. by the netdev
++ * core when cfg80211 couldn't move it out of a network namespace that's being
++ * destroyed. Drop it from the interface list either way.
++ */
++static void ieee80211_unlist_sdata(struct ieee80211_sub_if_data *sdata)
++{
++	struct ieee80211_local *local = sdata->local;
++	struct ieee80211_sub_if_data *iter;
++
++	ASSERT_RTNL();
++
++	list_for_each_entry(iter, &local->interfaces, list) {
++		if (iter != sdata)
++			continue;
++		guard(mutex)(&local->iflist_mtx);
++		list_del_rcu(&sdata->list);
++		return;
++	}
++}
++
+ static void ieee80211_uninit(struct net_device *dev)
+ {
+-	ieee80211_teardown_sdata(IEEE80211_DEV_TO_SUB_IF(dev));
++	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
++
++	ieee80211_unlist_sdata(sdata);
++	ieee80211_teardown_sdata(sdata);
+ }
+ 
+ static int ieee80211_netdev_setup_tc(struct net_device *dev,
 -- 
 2.53.0
 
