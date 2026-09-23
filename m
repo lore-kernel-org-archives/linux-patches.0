@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C7367B65;
-	Wed, 23 Sep 2026 14:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCE5414413;
+	Wed, 23 Sep 2026 14:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172671; cv=none; b=b0w1jljvjnZt9ZuwzKbtQyoZniieOhWN777u627z2RPk7wHGQgD16zF755Ni/FFYwI2bfBZytRkwiTe4qQiY0MDKJOwk+VBAXeY1rVnLPfGL4pqN2w2Gzrj52pTrnA0B3dmbK6R3A/cGBpsQgOqYV0mE/voL0VBa1k4AnEYYYU0=
+	t=1790172680; cv=none; b=F/Q7FeGqPcZidL3YGVZ4KYAZIhVDEdnyWfSh/7jn7HeGwU8+XudSd5ECP1KGWxXA4LJ7AKwi0rFHNY9HLe7/59hoGvPRsMu0aAJtNwT7agpV46/b3fesZ1Nle2U/huvFnfcxVtNUX3dcgFRIgJ1wfcY4mCrpNWTLzu2LsUOmCTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172671; c=relaxed/simple;
-	bh=SYtYOrqLJAIHZJCULKh7Kxv6WnoAJ8px4nthTeAzajY=;
+	s=arc-20240116; t=1790172680; c=relaxed/simple;
+	bh=q5NhYTBkcmxQiqo3Rcpp+fkj5pDiX+yps0mDthIZd0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLnnFF+DIAsUlsh1zzrc9H7g9a+2Ob9Dz3Q1z5JBUjvt9+Db+T7xEuPZX0VaaewXWRLYzHl2qsVO8XdHCgjQc6Rei4eqTJ80WJHKY8fxl7mtnVvcwPEXSPu0YXhEQ1JfnwZHrauaY4H5XRwkwq07jUgh2nWquzI8UxYXwbDb9ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oD5rq3U4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j3GuE3IDInDZdEWOcu1ZVilpiqlnHTQ3fU/SqCOkxMjtOqoIbxaNy0mZKQDfCkrzaCi+UFaTHYl6Zi22fncRkCh//lMFxkQUK3YjuchpNvzxLjQapeK9XQAHzXeraXTL57DkTbogg4qEyfyuZqLKJPMghj89jXvv9gQj+SpzSSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1M22ALdv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oD5rq3U4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CD31F00898;
-	Wed, 23 Sep 2026 14:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1M22ALdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565E21F000FF;
+	Wed, 23 Sep 2026 14:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172669;
-	bh=OOPwa+jEr3juuB1/jmw6FpvK57FX/naFo2HYP6bsTeU=;
+	s=korg; t=1790172678;
+	bh=zm5yd8M0iH+ummWGaQgGSGLJr4lHGpKos811JL+PISc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oD5rq3U4YDRsIim120trg4FljZ5qzFovY6B4TI7NFIJyoj/LgmrHVgODzFR8HpisZ
-	 NZR02G5G56rif4ruFxkiA7VBypnZXIZjo+P1P1baJbRSaTpI4kC2Jfe0dpgBpzzZI4
-	 XCZ0PaA5iCUcv9VMZUtfKAuy29VrVcQUD/66+nuk=
+	b=1M22ALdvDvLwsHCRtYQcHkne1ON+oEghJeyd+DtMhyenlyp4ny8lLc1q459lH1tGq
+	 gwUE/83Jgb0u4c3L/H/RZQu4tWekBBFohm92I5dmLkFBOfbiwIkhrJvNc/QUjAKXMW
+	 vTiqqvoWGepcoX1gj4anltNptVsygoLhEj3uqdXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com,
-	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 027/438] RDMA/core: Reject unregistering netdevs in ib_get_eth_speed
-Date: Wed, 23 Sep 2026 16:00:48 +0200
-Message-ID: <20260923140645.484333791@linuxfoundation.org>
+Subject: [PATCH 7.2 028/438] RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency
+Date: Wed, 23 Sep 2026 16:00:49 +0200
+Message-ID: <20260923140645.509949245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -46,77 +48,262 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit ef9fbe1b93f3b617b96e86d5cd76b3fa44514cb5 ]
+[ Upstream commit a44a3f175eaee7e5aeb6a8fed381c4a0d5f49236 ]
 
-ib_device_get_netdev() intentionally returns a referenced net_device even
-when it is unregistering, so matching and cleanup callers can still find
-the association. The reference keeps struct net_device allocated, but does
-not guarantee that the device remains operational.
+Commit 51976c6cd786 ("RDMA/core: Provide rdma_user_mmap_disassociate()
+to disassociate mmap pages") introduced disassociation_lock to protect
+new mmap registrations against uverbs_user_mmap_disassociate(), but
+created an ABBA deadlock:
 
-ib_get_eth_speed() uses the returned device operationally by invoking its
-ethtool callback. Although that call is made under RTNL, the function does
-not verify the registration state first. An asynchronous RDMA port query
-can therefore call into a netdev after NETDEV_UNREGISTER and ndo_uninit
-have completed.
+  Thread A (mmap / fork):
+    mmap_lock -> disassociation_lock
 
-Check for NETREG_REGISTERED while holding RTNL and return -ENODEV for a
-device which is being unregistered. Keeping RTNL across the check and the
-ethtool operation prevents unregister from starting between them.
+  Thread B (disassociate):
+    disassociation_lock -> mmap_lock
 
-Keep the speed fallback and warning under RTNL as well, so the warning can
-safely read netdev->name. Drop the netdev reference before releasing RTNL
-once all accesses to the device are complete.
+Fix by removing disassociation_lock entirely and using the pre-existing
+hw_destroy_rwsem instead. hw_destroy_rwsem already provides the same
+protection: rdma_umap_open() and ib_uverbs_mmap() both use
+down_read_trylock() before registering a new VMA, so holding hw_destroy_rwsem
+in uverbs_user_mmap_disassociate() is sufficient to block new registrations.
+trylock is used in both mmap paths (not blocking down_read) because
+mmap_lock is already held on entry, and uverbs_user_mmap_disassociate()
+acquires mmap_lock internally — a blocking read would recreate the same
+deadlock.
 
-Fixes: d41861942fc5 ("IB/core: Add generic function to extract IB speed from netdev")
-Reported-by: syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5fe14f2ff4ccbace9a26
-Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
-Link: https://patch.msgid.link/20260812081708.32468-1-krystianmkaniewski@gmail.com
+The only caller that was not taking hw_destroy_rwsem for write was
+rdma_user_mmap_disassociate(). Fix it to take the rwsem per-ufile while
+iterating under lists_mutex.  This is safe because ib_uverbs_close()
+releases hw_destroy_rwsem entirely before acquiring lists_mutex, so the
+two locks are never held simultaneously.
+
+lockdep warning:
+
+ [  776.654252] ======================================================
+ [  776.655214] WARNING: possible circular locking dependency detected
+ [  776.656167] 6.18.0for-upstream_debug_94e244d9ccab #1 Not tainted
+ [  776.657114] ------------------------------------------------------
+ [  776.658087] devlink/14824 is trying to acquire lock:
+ [  776.658879] ffff88811170c800 (&mm->mmap_lock){++++}-{4:4}, at: uverbs_user_mmap_disassociate+0x168/0x780 [ib_uverbs]
+ [  776.660479]
+ [  776.660479] but task is already holding lock:
+ [  776.661460] ffff888142d92b08 (&file->disassociation_lock){+.+.}-{4:4}, at: uverbs_user_mmap_disassociate+0x39/0x780 [ib_uverbs]
+ [  776.663177]
+ [  776.663177] which lock already depends on the new lock.
+ [  776.663177]
+ [  776.664525]
+ [  776.664525] the existing dependency chain (in reverse order) is:
+ [  776.665724]
+ [  776.665724] -> #2 (&file->disassociation_lock){+.+.}-{4:4}:
+ [  776.666887]        __mutex_lock+0x16d/0x2330
+ [  776.667633]        rdma_umap_open+0x129/0x280 [ib_uverbs]
+ [  776.668489]        dup_mmap+0xa40/0x1790
+ [  776.669170]        copy_process+0x5dd2/0x6170
+ [  776.669933]        kernel_clone+0xb6/0x610
+ [  776.670636]        __do_sys_clone+0xb5/0xf0
+ [  776.671354]        do_syscall_64+0x70/0x12e0
+ [  776.672083]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ [  776.672940]
+ [  776.672940] -> #1 (&mm->mmap_lock/1){+.+.}-{4:4}:
+ [  776.673985]        down_write_nested+0x90/0x1e0
+ [  776.674751]        dup_mmap+0x201/0x1790
+ [  776.675448]        copy_process+0x5dd2/0x6170
+ [  776.676180]        kernel_clone+0xb6/0x610
+ [  776.676904]        __do_sys_clone+0xb5/0xf0
+ [  776.677615]        do_syscall_64+0x70/0x12e0
+ [  776.678351]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ [  776.679239]
+ [  776.679239] -> #0 (&mm->mmap_lock){++++}-{4:4}:
+ [  776.680253]        __lock_acquire+0x18c6/0x2ec0
+ [  776.681018]        lock_acquire+0x10e/0x2e0
+ [  776.681742]        down_read+0x95/0x430
+ [  776.682395]        uverbs_user_mmap_disassociate+0x168/0x780 [ib_uverbs]
+ [  776.683436]        uverbs_destroy_ufile_hw+0x1ae/0x270 [ib_uverbs]
+ [  776.684416]        ib_uverbs_remove_one+0x22b/0x420 [ib_uverbs]
+ [  776.685371]        remove_client_context+0xa6/0xf0 [ib_core]
+ [  776.686342]        disable_device+0x12b/0x240 [ib_core]
+ [  776.687249]        __ib_unregister_device+0x269/0x460 [ib_core]
+ [  776.688233]        ib_unregister_device+0x21/0x30 [ib_core]
+ [  776.689140]        mlx5r_remove+0xd0/0x170 [mlx5_ib]
+ [  776.689999]        device_release_driver_internal+0x3b2/0x560
+ [  776.694876]        bus_remove_device+0x1f5/0x3e0
+ [  776.695638]        device_del+0x3b9/0x990
+ [  776.696329]        mlx5_detach_device+0x17e/0x350 [mlx5_core]
+ [  776.697429]        mlx5_unload_one_devl_locked+0x3f/0xb0 [mlx5_core]
+ [  776.698578]        mlx5_devlink_reload_down+0x1f9/0x550 [mlx5_core]
+ [  776.699712]        devlink_reload+0x13e/0x680
+ [  776.700456]        devlink_nl_reload_doit+0xc29/0x1160
+ [  776.701293]        genl_family_rcv_msg_doit+0x1c9/0x2a0
+ [  776.702135]        genl_rcv_msg+0x3f0/0x6b0
+ [  776.702854]        netlink_rcv_skb+0x11d/0x370
+ [  776.703605]        genl_rcv+0x24/0x40
+ [  776.704236]        netlink_unicast+0x5b4/0x970
+ [  776.704984]        netlink_sendmsg+0x730/0xbf0
+ [  776.705748]        __sock_sendmsg+0xc5/0x190
+ [  776.706461]        __sys_sendto+0x201/0x2f0
+ [  776.707188]        __x64_sys_sendto+0xdc/0x1b0
+ [  776.707931]        do_syscall_64+0x70/0x12e0
+ [  776.708643]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ [  776.709546]
+ [  776.709546] other info that might help us debug this:
+ [  776.709546]
+ [  776.710910] Chain exists of:
+ [  776.710910]   &mm->mmap_lock --> &mm->mmap_lock/1 --> &file->disassociation_lock
+ [  776.710910]
+ [  776.712805]  Possible unsafe locking scenario:
+ [  776.712805]
+ [  776.713828]        CPU0                    CPU1
+ [  776.714589]        ----                    ----
+ [  776.715347]   lock(&file->disassociation_lock);
+ [  776.716097]                                lock(&mm->mmap_lock/1);
+ [  776.717067]                                lock(&file->disassociation_lock);
+ [  776.718199]   rlock(&mm->mmap_lock);
+ [  776.718857]
+ [  776.718857]  *** DEADLOCK ***
+
+Fixes: 51976c6cd786 ("RDMA/core: Provide rdma_user_mmap_disassociate() to disassociate mmap pages")
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260811-fix-mmap-lockdep-v1-1-1151b41063b4@nvidia.com
+Acked-by: Junxian Huang <huangjunxian6@hisilicon.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/verbs.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/rdma_core.c   |  1 -
+ drivers/infiniband/core/uverbs_main.c | 25 +++++++++++--------------
+ include/rdma/uverbs_types.h           |  2 --
+ 3 files changed, 11 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index f8b219bd308bd..5447d39fa89dd 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -2056,11 +2056,13 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
- 		return -ENODEV;
+diff --git a/drivers/infiniband/core/rdma_core.c b/drivers/infiniband/core/rdma_core.c
+index fd5651c003aed..a7cbe643e33c6 100644
+--- a/drivers/infiniband/core/rdma_core.c
++++ b/drivers/infiniband/core/rdma_core.c
+@@ -69,7 +69,6 @@ void ib_uverbs_release_file(struct kref *ref)
  
- 	rtnl_lock();
--	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
--	rtnl_unlock();
--
--	dev_put(netdev);
-+	if (READ_ONCE(netdev->reg_state) != NETREG_REGISTERED) {
-+		dev_put(netdev);
-+		rtnl_unlock();
-+		return -ENODEV;
+ 	if (file->disassociate_page)
+ 		__free_pages(file->disassociate_page, 0);
+-	mutex_destroy(&file->disassociation_lock);
+ 	mutex_destroy(&file->umap_lock);
+ 	mutex_destroy(&file->ucontext_lock);
+ 	kfree(file);
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index 0d88b2ee68ffa..2a046c888dfab 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -644,12 +644,15 @@ static int ib_uverbs_mmap(struct file *filp, struct vm_area_struct *vma)
+ 		goto out;
+ 	}
+ 
+-	mutex_lock(&file->disassociation_lock);
++	if (!down_read_trylock(&file->hw_destroy_rwsem)) {
++		ret = -EIO;
++		goto out;
 +	}
  
-+	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
- 	if (!rc && lksettings.base.speed != (u32)SPEED_UNKNOWN) {
- 		netdev_speed = lksettings.base.speed;
- 	} else {
-@@ -2069,6 +2071,8 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
- 			pr_warn("%s speed is unknown, defaulting to %u\n",
- 				netdev->name, netdev_speed);
- 	}
-+	dev_put(netdev);
-+	rtnl_unlock();
+ 	vma->vm_ops = &rdma_umap_ops;
+ 	ret = ucontext->device->ops.mmap(ucontext, vma);
  
- 	ib_get_width_and_speed(netdev_speed, lksettings.lanes,
- 			       speed, width);
+-	mutex_unlock(&file->disassociation_lock);
++	up_read(&file->hw_destroy_rwsem);
+ out:
+ 	srcu_read_unlock(&file->device->disassociate_srcu, srcu_key);
+ 	return ret;
+@@ -671,7 +674,6 @@ static void rdma_umap_open(struct vm_area_struct *vma)
+ 	/* We are racing with disassociation */
+ 	if (!down_read_trylock(&ufile->hw_destroy_rwsem))
+ 		goto out_zap;
+-	mutex_lock(&ufile->disassociation_lock);
+ 
+ 	/*
+ 	 * Disassociation already completed, the VMA should already be zapped.
+@@ -684,12 +686,10 @@ static void rdma_umap_open(struct vm_area_struct *vma)
+ 		goto out_unlock;
+ 	rdma_umap_priv_init(priv, vma, opriv->entry);
+ 
+-	mutex_unlock(&ufile->disassociation_lock);
+ 	up_read(&ufile->hw_destroy_rwsem);
+ 	return;
+ 
+ out_unlock:
+-	mutex_unlock(&ufile->disassociation_lock);
+ 	up_read(&ufile->hw_destroy_rwsem);
+ out_zap:
+ 	/*
+@@ -773,7 +773,7 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ {
+ 	struct rdma_umap_priv *priv, *next_priv;
+ 
+-	mutex_lock(&ufile->disassociation_lock);
++	lockdep_assert_held_write(&ufile->hw_destroy_rwsem);
+ 
+ 	while (1) {
+ 		struct mm_struct *mm = NULL;
+@@ -799,10 +799,8 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ 			break;
+ 		}
+ 		mutex_unlock(&ufile->umap_lock);
+-		if (!mm) {
+-			mutex_unlock(&ufile->disassociation_lock);
++		if (!mm)
+ 			return;
+-		}
+ 
+ 		/*
+ 		 * The umap_lock is nested under mmap_lock since it used within
+@@ -832,8 +830,6 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ 		mmap_read_unlock(mm);
+ 		mmput(mm);
+ 	}
+-
+-	mutex_unlock(&ufile->disassociation_lock);
+ }
+ 
+ /**
+@@ -851,8 +847,11 @@ void rdma_user_mmap_disassociate(struct ib_device *device)
+ 
+ 	mutex_lock(&uverbs_dev->lists_mutex);
+ 	list_for_each_entry(ufile, &uverbs_dev->uverbs_file_list, list) {
+-		if (ufile->ucontext)
++		if (ufile->ucontext) {
++			down_write(&ufile->hw_destroy_rwsem);
+ 			uverbs_user_mmap_disassociate(ufile);
++			up_write(&ufile->hw_destroy_rwsem);
++		}
+ 	}
+ 	mutex_unlock(&uverbs_dev->lists_mutex);
+ }
+@@ -927,8 +926,6 @@ static int ib_uverbs_open(struct inode *inode, struct file *filp)
+ 	mutex_init(&file->umap_lock);
+ 	INIT_LIST_HEAD(&file->umaps);
+ 
+-	mutex_init(&file->disassociation_lock);
+-
+ 	filp->private_data = file;
+ 	list_add_tail(&file->list, &dev->uverbs_file_list);
+ 	mutex_unlock(&dev->lists_mutex);
+diff --git a/include/rdma/uverbs_types.h b/include/rdma/uverbs_types.h
+index 5a07f9a6dcd1f..6f3622892c0cc 100644
+--- a/include/rdma/uverbs_types.h
++++ b/include/rdma/uverbs_types.h
+@@ -180,8 +180,6 @@ struct ib_uverbs_file {
+ 	struct page *disassociate_page;
+ 
+ 	struct xarray		idr;
+-
+-	struct mutex disassociation_lock;
+ };
+ 
+ extern const struct uverbs_obj_type_class uverbs_idr_class;
 -- 
 2.53.0
 
