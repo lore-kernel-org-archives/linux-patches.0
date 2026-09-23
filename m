@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36E352ED2F;
-	Wed, 23 Sep 2026 14:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D964DEC16;
+	Wed, 23 Sep 2026 14:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173315; cv=none; b=Bug0Jc6La6AtvRykisM+pDAt5XTyCnmV11zaxFn9ifyFpwJ7QV3JoBkWJjlCiTwX2UBTTx2z46dIZTWsRh/oUukzy+Bz1In64RgGu3WwPQrb6r5t9J8+O7p2dBSQ4pBO1ABHml6QsqariBSFxSnJ+2EFLOuSUE02LnKdlliV858=
+	t=1790173318; cv=none; b=agjClZuqg/fmUNAuO3wX7wwt51DJPONqhtY6MloJLSswD8b0x5oUG+bk+qh3XgflDOJaTVY86qI5/c2yxmF1VTh6HXaOj89ZYu8XzCHenoXafrU5iRt35cBsaDys1n4YrniRquegPz2cS1OIbtEJtj/JyKxZVEp26+QZieOcz7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173315; c=relaxed/simple;
-	bh=5K81c/Moi/NBkUwxnKgxspi4RzeoK7BkAImSWSm7aFg=;
+	s=arc-20240116; t=1790173318; c=relaxed/simple;
+	bh=ILgSfDAet39OaOWkuADmrney2qbNd8oQfS79RxOM6cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlK20RdC5jZ+fNfokzgx6qBQG5DcOwoEBR1q12NidTr4dgzAFT4riGov+DEg0Gx+rh3zuV9BngD2lpoED01cRCM8F2Zy5qPtkokfwDaiEUnNwCOsNG6UsL7rLFb3wykt4MXEsD6VkjjAegHlbc0ZAaiXpP+YheAt5WwESQwXP+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9XyPZ6w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRMVKXyuE9uKnhUDqIgEiRdiUpMEe0+8JfJwR59aaeu9JJDwPVS9UW1dY/uTysJC3lYp6B0vVnU5SRgt2L6e6QntQe9cxSxDYewhZmZJZ2RnJpkxaJIlN1CzaWBDgKaDyqgGQ5DbykavnK5JBCSbUUVStgbRhm8xvc626kaisIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu7ccVIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9XyPZ6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59E81F000FF;
-	Wed, 23 Sep 2026 14:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu7ccVIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1351F00893;
+	Wed, 23 Sep 2026 14:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173313;
-	bh=5OMurgFa3oCGtiz7YCQRWxiAhf+KmwEOhG5HyXGjEYM=;
+	s=korg; t=1790173316;
+	bh=lC2Z/M1z70O8exXr39yY+dJ+mLnaoIFnCiAcMmAGhIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9XyPZ6wj4Uen4hUnJUDFL8CQ+IO2HLjerKVm5EZ6l3QXkf+64tAMN5g2WpQyBe7Y
-	 X1oW+l4JBowLSuj4yT5ndkh5i1qCq3fkRXTu6lrmgA/P5D6ezqzBvb6aT8Up2XLuGs
-	 aWgzo1xVpw3bXkoDh+hVIsttHG4xe9ikK5zmeDqs=
+	b=cu7ccVIWuiDnoa0w6aRNhgGxjV7Q07RzMrKoL/Mu0fgDa+U/tslnglAJNdFJweAc/
+	 rsUhvyMynDGnBV71nDzUd0qkui+ZcpcaCtcOQY/n5BBXt91VLV++nhPlj+yCw6KO/C
+	 SX+nqZ4gQHaBk5vmrntgBTg8DMMtTEZiHUq+7LxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Simon Horman <horms@kernel.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 207/438] net: pass dst via net_device_path in dev_fill_forward_path()
-Date: Wed, 23 Sep 2026 16:03:48 +0200
-Message-ID: <20260923140650.128956932@linuxfoundation.org>
+Subject: [PATCH 7.2 208/438] net: pass net_device_path_ctx to dev_fill_forward_path()
+Date: Wed, 23 Sep 2026 16:03:49 +0200
+Message-ID: <20260923140650.153620101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,184 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 0ad8404e776698de4dac5cc0df3be68d344e741c ]
+[ Upstream commit 95133a416809c7e822da4023b7f4193ef2620796 ]
 
-Add dst_entry to tunnel device path, this will allow us to remove
-a duplicated route lookup.
+Refactor dev_fill_forward_path() to take a struct net_device_path_ctx
+pointer instead of a (dev, daddr) pair, so the caller can build and
+populate the context up front and keep it after the forward path walk.
 
-This is a preparation patch to retrieve the tunnel route directly
-from the .fill_forward_path. This new dst_entry in the tunnel will be
-used by a follow up patch.
+This allows additional fields (e.g. vlan and ether_type) to be carried
+in the context and shared with ndo_fill_forward_path implementations,
+instead of being reconstructed on the stack inside the core helper.
 
-Since dst_release() works fine on NULL interface, this is still
-noop until the flowtable starts using this.
+Update the mtk_ppe_offload, airoha_ppe and nf_flow_table_path callers to
+allocate and fill the context before invoking dev_fill_forward_path().
+The network topology resolution behaviour is unchanged.
 
-Add a new dev_fill_forward_path_release() function to drop the refcount
-on the tunnel device route and use it in case of error out. Export it so
-to drop the refcount on the tunnel route at a later stage.
+This is a preliminary patch to enable HW flowtable offload for IPv4
+over IPv6 tunnels.
 
-Adjust existing drivers that recycle dev_fill_forward_path() to call
-dev_fill_forward_path_release() for safety reasons.
-
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 150dba2c69e9 ("net: remove WARN_ON_ONCE() from the dev_fill_forward_path() loop check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_ppe.c      | 10 ++++--
- .../net/ethernet/mediatek/mtk_ppe_offload.c   | 10 ++++--
- include/linux/netdevice.h                     |  2 ++
- net/core/dev.c                                | 36 ++++++++++++++++---
- 4 files changed, 47 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/airoha/airoha_ppe.c       |  7 ++++++-
+ .../net/ethernet/mediatek/mtk_ppe_offload.c    |  7 ++++++-
+ include/linux/netdevice.h                      |  2 +-
+ net/core/dev.c                                 | 18 +++++++-----------
+ net/netfilter/nf_flow_table_path.c             |  7 ++++++-
+ 5 files changed, 26 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index f6396925722d0..c8fd95e800937 100644
+index c8fd95e800937..bc2b4deafd83a 100644
 --- a/drivers/net/ethernet/airoha/airoha_ppe.c
 +++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -293,14 +293,18 @@ static int airoha_ppe_get_wdma_info(struct net_device *dev, const u8 *addr,
+@@ -280,14 +280,19 @@ static int airoha_ppe_get_wdma_info(struct net_device *dev, const u8 *addr,
+ 				    struct airoha_wdma_info *info)
+ {
+ 	struct net_device_path_stack stack;
++	struct net_device_path_ctx ctx = {
++		.dev = dev,
++	};
+ 	struct net_device_path *path;
+ 	int err;
+ 
+ 	if (!dev)
+ 		return -ENODEV;
+ 
++	ether_addr_copy(ctx.daddr, addr);
++
+ 	rcu_read_lock();
+-	err = dev_fill_forward_path(dev, addr, &stack);
++	err = dev_fill_forward_path(&ctx, &stack);
+ 	rcu_read_unlock();
+ 	if (err)
  		return err;
- 
- 	path = &stack.path[stack.num_paths - 1];
--	if (path->type != DEV_PATH_MTK_WDMA)
--		return -EINVAL;
-+	if (path->type != DEV_PATH_MTK_WDMA) {
-+		err = -EINVAL;
-+		goto err_out;
-+	}
- 
- 	info->idx = path->mtk_wdma.wdma_idx;
- 	info->bss = path->mtk_wdma.bss;
- 	info->wcid = path->mtk_wdma.wcid;
-+err_out:
-+	dev_fill_forward_path_release(&stack);
- 
--	return 0;
-+	return err;
- }
- 
- static int airoha_get_dsa_port(struct net_device **dev)
 diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-index cc8c4ef8038f3..771d9118f94ad 100644
+index 771d9118f94ad..99b28aaa7cc47 100644
 --- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
 +++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -108,16 +108,20 @@ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_i
+@@ -92,6 +92,9 @@ static int
+ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_info *info)
+ {
+ 	struct net_device_path_stack stack;
++	struct net_device_path_ctx ctx = {
++		.dev = dev,
++	};
+ 	struct net_device_path *path;
+ 	int err;
+ 
+@@ -101,8 +104,10 @@ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_i
+ 	if (!IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED))
+ 		return -1;
+ 
++	ether_addr_copy(ctx.daddr, addr);
++
+ 	rcu_read_lock();
+-	err = dev_fill_forward_path(dev, addr, &stack);
++	err = dev_fill_forward_path(&ctx, &stack);
+ 	rcu_read_unlock();
+ 	if (err)
  		return err;
- 
- 	path = &stack.path[stack.num_paths - 1];
--	if (path->type != DEV_PATH_MTK_WDMA)
--		return -1;
-+	if (path->type != DEV_PATH_MTK_WDMA) {
-+		err = -EINVAL;
-+		goto err_out;
-+	}
- 
- 	info->wdma_idx = path->mtk_wdma.wdma_idx;
- 	info->queue = path->mtk_wdma.queue;
- 	info->bss = path->mtk_wdma.bss;
- 	info->wcid = path->mtk_wdma.wcid;
- 	info->amsdu = path->mtk_wdma.amsdu;
-+err_out:
-+	dev_fill_forward_path_release(&stack);
- 
--	return 0;
-+	return err;
- }
- 
- 
 diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 8840b126979ff..d325027b03705 100644
+index d325027b03705..6a86a211fff57 100644
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -894,6 +894,7 @@ struct net_device_path {
- 			u8		h_dest[ETH_ALEN];
- 		} encap;
- 		struct {
-+			struct dst_entry *dst;
- 			union {
- 				struct in_addr	src_v4;
- 				struct in6_addr	src_v6;
-@@ -3424,6 +3425,7 @@ int dev_get_iflink(const struct net_device *dev);
+@@ -3423,7 +3423,7 @@ void dev_remove_offload(struct packet_offload *po);
+ 
+ int dev_get_iflink(const struct net_device *dev);
  int dev_fill_metadata_dst(struct net_device *dev, struct sk_buff *skb);
- int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
+-int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
++int dev_fill_forward_path(struct net_device_path_ctx *ctx,
  			  struct net_device_path_stack *stack);
-+void dev_fill_forward_path_release(struct net_device_path_stack *stack);
+ void dev_fill_forward_path_release(struct net_device_path_stack *stack);
  struct net_device *dev_get_by_name(struct net *net, const char *name);
- struct net_device *dev_get_by_name_rcu(struct net *net, const char *name);
- struct net_device *__dev_get_by_name(struct net *net, const char *name);
 diff --git a/net/core/dev.c b/net/core/dev.c
-index e68463e7310a0..2b493f4c2f0cb 100644
+index 2b493f4c2f0cb..679e75d3699ae 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -748,6 +748,27 @@ static struct net_device_path *dev_fwd_path(struct net_device_path_stack *stack)
- 	return &stack->path[stack->num_paths];
+@@ -769,35 +769,31 @@ void dev_fill_forward_path_release(struct net_device_path_stack *stack)
  }
+ EXPORT_SYMBOL_GPL(dev_fill_forward_path_release);
  
-+void dev_fill_forward_path_release(struct net_device_path_stack *stack)
-+{
-+	struct net_device_path *path;
-+	int k;
-+
-+	if (stack->num_paths == 0)
-+		return;
-+
-+	for (k = stack->num_paths - 1; k >= 0; k--) {
-+		path = &stack->path[k];
-+		switch (path->type) {
-+		case DEV_PATH_TUN:
-+			dst_release(path->tun.dst);
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+}
-+EXPORT_SYMBOL_GPL(dev_fill_forward_path_release);
-+
- int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
+-int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
++int dev_fill_forward_path(struct net_device_path_ctx *ctx,
  			  struct net_device_path_stack *stack)
  {
-@@ -764,16 +785,16 @@ int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
- 		last_dev = ctx.dev;
+ 	const struct net_device *last_dev;
+-	struct net_device_path_ctx ctx = {
+-		.dev	= dev,
+-	};
+ 	struct net_device_path *path;
+ 	int ret = 0;
+ 
+-	memcpy(ctx.daddr, daddr, sizeof(ctx.daddr));
+ 	stack->num_paths = 0;
+-	while (ctx.dev && ctx.dev->netdev_ops->ndo_fill_forward_path) {
+-		last_dev = ctx.dev;
++	while (ctx->dev && ctx->dev->netdev_ops->ndo_fill_forward_path) {
++		last_dev = ctx->dev;
  		path = dev_fwd_path(stack);
  		if (!path)
--			return -1;
-+			goto err_out;
+ 			goto err_out;
  
  		memset(path, 0, sizeof(struct net_device_path));
- 		ret = ctx.dev->netdev_ops->ndo_fill_forward_path(&ctx, path);
+-		ret = ctx.dev->netdev_ops->ndo_fill_forward_path(&ctx, path);
++		ret = ctx->dev->netdev_ops->ndo_fill_forward_path(ctx, path);
  		if (ret < 0)
--			return -1;
-+			goto err_out;
+ 			goto err_out;
  
  		stack->num_paths++;
- 		if (WARN_ON_ONCE(last_dev == ctx.dev))
--			return -1;
-+			goto err_out;
+-		if (WARN_ON_ONCE(last_dev == ctx.dev))
++		if (WARN_ON_ONCE(last_dev == ctx->dev))
+ 			goto err_out;
  	}
  
- 	if (!ctx.dev)
-@@ -781,12 +802,17 @@ int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
+-	if (!ctx.dev)
++	if (!ctx->dev)
+ 		return ret;
  
  	path = dev_fwd_path(stack);
- 	if (!path)
--		return -1;
-+		goto err_out;
-+
+@@ -805,7 +801,7 @@ int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
+ 		goto err_out;
+ 
  	path->type = DEV_PATH_ETHERNET;
- 	path->dev = ctx.dev;
+-	path->dev = ctx.dev;
++	path->dev = ctx->dev;
  	stack->num_paths++;
  
--	return ret;
-+	return 0;
-+err_out:
-+	dev_fill_forward_path_release(stack);
-+
-+	return -1;
- }
- EXPORT_SYMBOL_GPL(dev_fill_forward_path);
+ 	return 0;
+diff --git a/net/netfilter/nf_flow_table_path.c b/net/netfilter/nf_flow_table_path.c
+index 98c03b487f521..b9df7453f7620 100644
+--- a/net/netfilter/nf_flow_table_path.c
++++ b/net/netfilter/nf_flow_table_path.c
+@@ -50,6 +50,9 @@ static int nft_dev_fill_forward_path(const struct nf_flow_route *route,
+ {
+ 	const void *daddr = &ct->tuplehash[!dir].tuple.src.u3;
+ 	struct net_device *dev = dst_cache->dev;
++	struct net_device_path_ctx ctx = {
++		.dev = dev,
++	};
+ 	struct neighbour *n;
+ 	u8 nud_state;
  
+@@ -72,7 +75,9 @@ static int nft_dev_fill_forward_path(const struct nf_flow_route *route,
+ 		return -1;
+ 
+ out:
+-	return dev_fill_forward_path(dev, ha, stack);
++	ether_addr_copy(ctx.daddr, ha);
++
++	return dev_fill_forward_path(&ctx, stack);
+ }
+ 
+ struct nft_forward_info {
 -- 
 2.53.0
 
