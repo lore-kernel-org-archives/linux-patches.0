@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB499531AF3;
-	Wed, 23 Sep 2026 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129F739A07C;
+	Wed, 23 Sep 2026 14:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174176; cv=none; b=j0Ugdu4Cjvf3/hVp7chpXOWSSTEUtwJqkGhg8Cr5lRBIpQWEii80mOS5mNrx0JqvdgoYKql2DFRDkV4eAOjRFGT5hdgh9EMTuLw729qvCK1PSnB0MZUnVhPdt1QWeuCu9JzoE9sE6RS7LaCQZ7knkgEwT3qjx8+wfLoGdX7GDt0=
+	t=1790174180; cv=none; b=LKwRKfkslP+dOTWBRwlI/J5c7NKzmweagJgfUSaRVstIAnZbYUJyajk/k0zhxW3or5QHXe5uIM4Ooj//Z8evRhkpYrEYVAXHH7lG9gXHDgNcBYcb+aF0f5SVyslh/DNwiAFMT1cozBy8SnVwF5rN8rNFwmLCwepZabSX7ckzeuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174176; c=relaxed/simple;
-	bh=yXnwGxi2Qyw9JCnn03z/2keYnOWDlsC2BV+7/yI3HkQ=;
+	s=arc-20240116; t=1790174180; c=relaxed/simple;
+	bh=EwAd4zDuBYAciNYG1wfxXD9lxgP+tQ/EFk597JCNgDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usEKh4jQAYZAlTkw/6NZABwR/cUJl8IA1Ig6d4OERgJreHSQyFcYnwuWOD9PT0/qxVmjk+MSjKYnfE/0qL0mw5msLwe9JM2U3/h0mKODqBWIPRID/LYVvJQu8A5PY4BrVpOZAqCstuKOzW39Kd3jaw3S2t4WoEVoDpN5jQMb5vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXQhZyK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BWf6A6H1iHStOktjWb/Hmfqie5GStkJAMrd9m9ZrBiop6Q6OsRFF+JukV34vNp/al4sWGfu4OgPRFUj36XPKAeRxk94zBuy6WfY/yotKTpSrKJJTgJOLh8DdRlsCXbRCUlgCpHYFW/1xU5CQ9v32nciQ9kjf2S+u2gEUFDrhYV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8poxL7N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXQhZyK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBEF1F00893;
-	Wed, 23 Sep 2026 14:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8poxL7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351501F000FF;
+	Wed, 23 Sep 2026 14:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174175;
-	bh=QluXSK4KjzTZ/XXszIi6N0m6U79uEz34eoaVppL1Sa0=;
+	s=korg; t=1790174178;
+	bh=C2950mYDmGadrvqNf+PZKDOr2aNz9JnN5oJotejNdi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BXQhZyK0soGC1LADj1cp3jhgkCzho3Dea5zAnIhOlw8hJir+w7LcX6x5eaR2/Qdpp
-	 wu11Cy0KhHnSXcjdzYJt5wvkEYptrHkDU9TvXStjTi6AkIt1WO9aawlXnhzfm74nQ/
-	 9AjF4uaVHiqTw/0Qrr1rlbSomtvGwRJEb031aTcM=
+	b=F8poxL7Nhl2kov/pQpYBL6jZurLd2loU30JIAFf0VG3QzjeNCgPHSHbRvoC7FiMfx
+	 1Qc2/TiFehk7MrANnkI9YuG0m+HghWUnqsKsXBDsgl/X96eb3o2J3pNziG14/33pCK
+	 JHFFOTabbrPFbEtInPuTYFEidApTVrcNuiT1/2jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 033/398] power: sequencing: Fix build issue with COMPILE_TEST
-Date: Wed, 23 Sep 2026 16:01:47 +0200
-Message-ID: <20260923140644.286619854@linuxfoundation.org>
+Subject: [PATCH 6.18 016/398] ipv6: Honor oif when choosing nexthop for locally generated traffic
+Date: Wed, 23 Sep 2026 16:01:30 +0200
+Message-ID: <20260923140643.860822445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,43 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 3b54dbd119805361695cb50ca6a875f4c7518b74 ]
+[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
 
-The POWER_SEQUENCING_TH1520_GPU driver depends on
-(ARCH_THEAD && AUXILIARY_BUS) || COMPILE_TEST. This means when
-COMPILE_TEST=y and ARCH_THEAD is not set, the driver can still be
-built even though it requires AUXILIARY_BUS, which may not be
-selected in that configuration, leading to a build failure.
+Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
+set") made the kernel honor the oif parameter when specified as part of
+output route lookup:
 
-Fix this by dropping AUXILIARY_BUS from the dependency and instead
-selecting it directly, so the dependency is satisfied regardless of
-whether COMPILE_TEST or ARCH_THEAD is enabled.
+ # ip route add 2001:db8:1::/64 dev dummy1
+ # ip route add ::/0 dev dummy2
+ # ip route get 2001:db8:1::1 oif dummy2 fibmatch
+ default dev dummy2 metric 1024 pref medium
 
-Fixes: 1a7312b93ab0 ("power: sequencing: extend build coverage with COMPILE_TEST=y")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20260826122742.153643-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Due to regression reports, the behavior was partially reverted in commit
+d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
+set") to only honor the oif if source address is not specified:
+
+ # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
+ 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
+
+That is, when source address is specified, the kernel will choose the
+most specific route even if its nexthop device does not match the
+specified oif.
+
+This creates a problem for multipath routes. After looking up a route,
+when source address is not specified, the kernel will choose a nexthop
+whose nexthop device matches the specified oif:
+
+ # sysctl -wq net.ipv6.conf.all.forwarding=1
+ # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      100 dummy2
+
+But will disregard the oif when source address is specified despite the
+fact that a matching nexthop exists:
+
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      53 dummy1
+      47 dummy2
+
+This behavior differs from IPv4:
+
+ # ip address add 192.0.2.1/32 dev lo
+ # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy2
+
+What happens is that fib6_table_lookup() returns a route with a matching
+nexthop device (assuming it exists):
+
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+      100 dummy2
+
+But it is later overwritten during path selection in fib6_select_path()
+which instead chooses a nexthop according to the calculated hash.
+
+Solve this by telling fib6_select_path() to skip path selection if we
+have an oif match during output route lookup (iif being
+LOOPBACK_IFINDEX).
+
+Behavior after the change:
+
+ # sysctl -wq net.ipv6.conf.all.forwarding=1
+ # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy2
+
+Note that enabling forwarding is only needed because we did not add
+neighbor entries for the gateway addresses. When forwarding is disabled
+and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
+will treat non-existing neighbor entries as errors and perform
+round-robin between the nexthops:
+
+ # sysctl -wq net.ipv6.conf.all.forwarding=0
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      50 dummy1
+      50 dummy2
+
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/sequencing/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/route.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index 280f92beb5d0e..a33b705415c49 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -29,7 +29,8 @@ config POWER_SEQUENCING_QCOM_WCN
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 03b26738bd718..71a38034f5ca8 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -2272,6 +2272,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
+ {
+ 	struct fib6_result res = {};
+ 	struct rt6_info *rt = NULL;
++	bool have_oif_match;
+ 	int strict = 0;
  
- config POWER_SEQUENCING_TH1520_GPU
- 	tristate "T-HEAD TH1520 GPU power sequencing driver"
--	depends on (ARCH_THEAD && AUXILIARY_BUS) || COMPILE_TEST
-+	depends on ARCH_THEAD || COMPILE_TEST
-+	select AUXILIARY_BUS
- 	help
- 	  Say Y here to enable the power sequencing driver for the TH1520 SoC
- 	  GPU. This driver handles the complex clock and reset sequence
+ 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
+@@ -2288,7 +2289,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
+ 	if (res.f6i == net->ipv6.fib6_null_entry)
+ 		goto out;
+ 
+-	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
++	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
++			 oif == res.nh->fib_nh_dev->ifindex;
++	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
+ 
+ 	/*Search through exception table */
+ 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
 -- 
 2.53.0
 
