@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A068306D2A;
-	Wed, 23 Sep 2026 14:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A08374E64;
+	Wed, 23 Sep 2026 14:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175243; cv=none; b=QgR7mKizVWLT+Ue/I5bvsjpEPpjgTRDwxH85I5LRnNK3Y7rsQdPxvwer/Xq+hR+FqMytlFZOvbM6XK0OIZIT2iKkTh47B1NV3QkdMggQRQXbZoPF9/57YkbsNAOYsMU9N0C2mYR+YdACZDG7Vij0viRZzzlByrSkGUlTKzFEx8g=
+	t=1790175246; cv=none; b=kdksbPHSPzGRq+gU3s2RSAURzIZeEhfjzBmTSVAEroOK1f16u5j5Tl1JZPHN2DL1l1vdY6vcPcX1UcAVKz5UrvmTL4zgA6UcigBrueS09sqTKduQVmrpR9l/g7P15D0lt49G06thNKh4VtsObsdvk4Dj7NnCqylm1469FqWPobU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175243; c=relaxed/simple;
-	bh=w9x/YYi/6IkHmnvs0qQjH0iErUxpZjULaTlCKWYefZI=;
+	s=arc-20240116; t=1790175246; c=relaxed/simple;
+	bh=36IY8OjONSA6bQe+TPnfcNmaXFUGC9GS/MBV64W7Q+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOgrYfSb6C/M6+qABK0epbROc/vuAc9CM3F+v+BD7he6K64aFW2Zp5f9n8oZOY3MqabfqM57oxwomo4U83r0qiJG+KXfbbgB1aNL60Wp3dsxAP3q++woFwvLjNF6/PyNmhGJ2/82BeyxO27kzl0u+msrcAUK2ZFditI60GNGttA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BV1zHV7y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G16M4MBna3K+EyPSWxpT9KoRHV6ESYTD4djvb4ZFsD2eeGub4Tu6TBXuhS41qvournKvEjB+MrBgTIIbaPA9cd+M6ygdtHL+6l7Ws/ojEEH9blZ8xvsDiZRRmmGeZ8rhcovaZxbkZkes1/Q/0YsMjINgoMmmsc/K57c9NyNI348=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi7b3h6b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BV1zHV7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B021F000FF;
-	Wed, 23 Sep 2026 14:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi7b3h6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FC51F000FF;
+	Wed, 23 Sep 2026 14:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175242;
-	bh=X7ewYrk22M1ihG654ya4PnkXUzUDoGr0n1aDeZWvQTw=;
+	s=korg; t=1790175245;
+	bh=Rq2fsOc0btZikY4yn0bRS92KURridAA96x+ZQjiPlzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BV1zHV7yT6mYmEq+s2ELXWWpKqRG0CEsXjKxZVYATgKBSPs4Ey2BpSmD8CoUKXwmJ
-	 P3dtg6WxLwXPROnC5R848INrAuBBVSY8eWbHgaxU8h2gik16TvsqVKgDrY5NHOgJf/
-	 7Ej0dW9vzgUn9tJGVLheWDm/oVvxLpfkXw8Yklvo=
+	b=Gi7b3h6bIKneMu2gWBeoyiAISfkJQRyxGefF5VvWq46+DyhvBNuGOsJvi9UawmcFh
+	 tYLZW6QbgTMYx1oV14a6uiTxl2qlam6vEGUC7B6/w/rQ8/tvzdpveOJLIGDqkE3wG5
+	 kpDleeB4nVEkqT2Vdv4YbMo3oasgHwC5rV3KuDL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Chunxiao <xuchunxiao3@huawei.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 366/398] xfrm: Fix dev use-after-free in xfrm async resumption
-Date: Wed, 23 Sep 2026 16:07:20 +0200
-Message-ID: <20260923140652.927563417@linuxfoundation.org>
+Subject: [PATCH 6.18 367/398] xfrm: save input state data before secpath resets
+Date: Wed, 23 Sep 2026 16:07:21 +0200
+Message-ID: <20260923140652.954077718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,165 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 8045c0df98d4f14c54e5cb875f1c9c0ce89fe4ff ]
+[ Upstream commit 3cf5cdecd99c9c186a5ea518d93bbf3045b6e3aa ]
 
-xfrm async resumption hold skb->dev refcnt until after transport_finish.
-However, xfrm_rcv_cb may modify skb->dev to tunnel dev without taking
-device reference, such as vti_rcv_cb. The subsequent async resumption
-will decrement the tunnel device's reference count, which lead to uaf
-of tunnel dev and refcnt leak of orig dev as below:
+xfrm_input() stores the current xfrm_state in the skb secpath while it
+continues receive-side processing. Some input paths can reset that secpath
+before xfrm_input() has finished dereferencing the state.
 
-unregister_netdevice: waiting for vti1 to become free. Usage count = -2
+Receive callback users such as VTI and XFRM interfaces can reset the
+secpath. The VTI receive path does so before checking whether the packet
+crosses network namespaces, while the XFRM interface path does so only for
+cross-network-namespace packets. The XFRM_MAX_DEPTH error path can also
+reset the secpath before the final drop callback reports the current
+state's protocol.
 
-Stash the original skb->dev to fix refcnt imbalance. The new skb->dev set
-by xfrm_rcv_cb can race with device teardown. Extend rcu protection over
-xfrm_rcv_cb and transport_finish to prevent races.
+If secpath_reset() drops the last state reference while the state is
+concurrently deleted, xfrm_input() can still dereference the freed state
+when selecting transport_finish() or reporting the drop callback protocol.
 
-Fixes: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
-Reported-by: Xu Chunxiao <xuchunxiao3@huawei.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Save the state protocol on the stack while the state is still valid,
+and use the already saved address family for transport_finish(). A larval
+XFRM_STATE_ACQ state has no type, so retain nexthdr as its protocol. This
+preserves the existing drop-path fallback while avoiding the post-reset
+state dereferences without adding an extra state reference to every
+received packet.
+
+Fixes: df3893c176e9 ("vti: Update the ipv4 side to use it's own receive hook.")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Stable-dep-of: 3cf5cdecd99c ("xfrm: save input state data before secpath resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/xfrm4_input.c |    2 --
- net/ipv6/xfrm6_input.c |    2 --
- net/xfrm/xfrm_input.c  |   29 ++++++++++++++++-------------
- 3 files changed, 16 insertions(+), 17 deletions(-)
+ net/xfrm/xfrm_input.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -76,8 +76,6 @@ int xfrm4_transport_finish(struct sk_buf
- 	NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
- 		dev_net(dev), NULL, skb, dev, NULL,
- 		xfrm4_rcv_encap_finish);
--	if (async)
--		dev_put(dev);
- 	return 0;
- }
- 
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -71,8 +71,6 @@ int xfrm6_transport_finish(struct sk_buf
- 	NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
- 		dev_net(dev), NULL, skb, dev, NULL,
- 		xfrm6_transport_finish2);
--	if (async)
--		dev_put(dev);
- 	return 0;
- }
- 
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
-@@ -464,6 +464,7 @@ int xfrm_input(struct sk_buff *skb, int
- {
- 	const struct xfrm_state_afinfo *afinfo;
- 	struct net *net = dev_net(skb->dev);
-+	struct net_device *dev = skb->dev;
- 	int err;
- 	__be32 seq;
- 	__be32 seq_hi;
-@@ -490,7 +491,7 @@ int xfrm_input(struct sk_buff *skb, int
- 					       LINUX_MIB_XFRMINSTATEINVALID);
+@@ -471,6 +471,7 @@ int xfrm_input(struct sk_buff *skb, int
+ 	struct xfrm_state *x = NULL;
+ 	xfrm_address_t *daddr;
+ 	u32 mark = skb->mark;
++	u8 xfrm_proto = nexthdr;
+ 	unsigned int family = AF_UNSPEC;
+ 	int decaps = 0;
+ 	int async = 0;
+@@ -482,6 +483,7 @@ int xfrm_input(struct sk_buff *skb, int
+ 	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0 ||
+ 				      encap_type == UDP_ENCAP_ESPINUDP))) {
+ 		x = xfrm_input_state(skb);
++		xfrm_proto = x->type ? x->type->proto : nexthdr;
  
- 			if (encap_type == -1)
--				dev_put(skb->dev);
-+				dev_put(dev);
+ 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
+ 			if (x->km.state == XFRM_STATE_ACQ)
+@@ -589,11 +591,13 @@ int xfrm_input(struct sk_buff *skb, int
+ 
+ 		x = xfrm_input_state_lookup(net, mark, daddr, spi, nexthdr, family);
+ 		if (x == NULL) {
++			xfrm_proto = nexthdr;
+ 			secpath_reset(skb);
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
+ 			xfrm_audit_state_notfound(skb, family, spi, seq);
+ 			goto drop;
+ 		}
++		xfrm_proto = x->type ? x->type->proto : nexthdr;
+ 
+ 		if (unlikely(x->dir && x->dir != XFRM_SA_DIR_IN)) {
+ 			secpath_reset(skb);
+@@ -601,6 +605,7 @@ int xfrm_input(struct sk_buff *skb, int
+ 			xfrm_audit_state_notfound(skb, family, spi, seq);
+ 			xfrm_state_put(x);
+ 			x = NULL;
++			xfrm_proto = nexthdr;
  			goto drop;
  		}
  
-@@ -652,16 +653,16 @@ lock:
- 
- 		if (!crypto_done) {
- 			spin_unlock(&x->lock);
--			dev_hold(skb->dev);
-+			dev_hold(dev);
- 
- 			nexthdr = x->type->input(x, skb);
- 			if (nexthdr == -EINPROGRESS) {
- 				if (async)
--					dev_put(skb->dev);
-+					dev_put(dev);
- 				return 0;
- 			}
- 
--			dev_put(skb->dev);
-+			dev_put(dev);
- 			spin_lock(&x->lock);
- 		}
- resume:
-@@ -696,7 +697,7 @@ resume:
- 		err = xfrm_inner_mode_input(x, skb);
- 		if (err == -EINPROGRESS) {
- 			if (async)
--				dev_put(skb->dev);
-+				dev_put(dev);
- 			return 0;
- 		} else if (err) {
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
-@@ -723,9 +724,12 @@ resume_decapped:
- 		crypto_done = false;
+@@ -725,7 +730,7 @@ resume_decapped:
  	} while (!err);
  
-+	rcu_read_lock();
- 	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
--	if (err)
-+	if (err) {
-+		rcu_read_unlock();
+ 	rcu_read_lock();
+-	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
++	err = xfrm_rcv_cb(skb, family, xfrm_proto, 0);
+ 	if (err) {
+ 		rcu_read_unlock();
  		goto drop;
-+	}
- 
- 	nf_reset_ct(skb);
- 
-@@ -736,8 +740,9 @@ resume_decapped:
- 		if (skb_valid_dst(skb))
- 			skb_dst_drop(skb);
- 		if (async)
--			dev_put(skb->dev);
-+			dev_put(dev);
- 		gro_cells_receive(&gro_cells, skb);
-+		rcu_read_unlock();
- 		return 0;
- 	} else {
- 		xo = xfrm_offload(skb);
-@@ -745,23 +750,21 @@ resume_decapped:
+@@ -750,7 +755,7 @@ resume_decapped:
  			xfrm_gro = xo->flags & XFRM_GRO;
  
  		err = -EAFNOSUPPORT;
--		rcu_read_lock();
- 		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
+-		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
++		afinfo = xfrm_state_afinfo_get_rcu(family);
  		if (likely(afinfo))
  			err = afinfo->transport_finish(skb, xfrm_gro || async);
--		rcu_read_unlock();
  		if (xfrm_gro) {
- 			sp = skb_sec_path(skb);
- 			if (sp)
- 				sp->olen = 0;
- 			if (skb_valid_dst(skb))
- 				skb_dst_drop(skb);
--			if (async)
--				dev_put(skb->dev);
- 			gro_cells_receive(&gro_cells, skb);
--			return err;
- 		}
- 
-+		if (async)
-+			dev_put(dev);
-+		rcu_read_unlock();
- 		return err;
- 	}
- 
-@@ -769,7 +772,7 @@ drop_unlock:
- 	spin_unlock(&x->lock);
+@@ -773,7 +778,7 @@ drop_unlock:
  drop:
  	if (async)
--		dev_put(skb->dev);
-+		dev_put(dev);
- 	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
+ 		dev_put(dev);
+-	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
++	xfrm_rcv_cb(skb, family, xfrm_proto, -1);
  	kfree_skb(skb);
  	return 0;
+ }
 
 
