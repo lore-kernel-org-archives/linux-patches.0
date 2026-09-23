@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174AE53A3BF;
-	Wed, 23 Sep 2026 14:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106B75372FF;
+	Wed, 23 Sep 2026 14:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174790; cv=none; b=Y+wP4KGBi+qoBaFkh1wNjBb8czcX2ifa84PcWC2rsQOxEHF5z5fHb2585SXXsxMhzB7pAcdsz+qe5Wjqj23P4H3Jx+AoUS6zEsN4XBOY0OvFCYbhoZm+4QaYE5ErGkhnlEca6cY8wkbiwgBtqhRSOdfTiDD/5wAp4uEfkTzoPsY=
+	t=1790174793; cv=none; b=fC1P1b4Lb5ox6aBeJtT2GHr2w3AI7dS+UUTwONwdVWeKibVgqxa7QXsXStA30jOey09Jutnb7EPtqMnWSrFzEPiVOpedo870GLoQOE/SLVXwm+KLoaPrWV7Lhe2HFjRybUfRjOraNCWn92BjL129P28z5jSgTdwkgC3bVc/2z24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174790; c=relaxed/simple;
-	bh=Dgp/y7qyENxnl6RISqTPS4y2iuAIibPof7pcBWuXW5I=;
+	s=arc-20240116; t=1790174793; c=relaxed/simple;
+	bh=OFus7yV0NM2nSa6msaK55BMMJIeTczWupRGFWJoYApI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WS0x/5OYGUAbNVCOO/ar1Nu4GIbSFfAZhmNTA8CERAgOqecW8qQ3n4EeKV/3XDPNhnNX7KLFI/B+HJJjfaHhM0QdC5M/pD/iT/6G0s+9qgON72FeHZ1VU3KXVcJ/fiYbGkfq3c4tdQoqDOQ6FteNYT5AuP5UZdyI6u8hsarMffY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3dIfUHI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T465BB5wmtih2HSV/BRkDvBsyfeL/lX1rFt14ut3aHLA5Q6eqZVT2zni6/YxWjLwJgJnADqR3Db09o8m2hnSI0IksLZYoArghqLbZ/2xvegdval0cyGJLgUqaW5H2Et7AeenpKXiEJeUAtqBHlAjgfkvxi7w2/O8PxuzBDNfYSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7T3h/rr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3dIfUHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8DA1F00898;
-	Wed, 23 Sep 2026 14:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7T3h/rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C3B1F00898;
+	Wed, 23 Sep 2026 14:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174789;
-	bh=5y2cxLGaznh82KF96nico5ZqY3aYKxUKxZJEIY9qk5s=;
+	s=korg; t=1790174792;
+	bh=+PpDPyVggDSxDjeNyD/3o+eU+Rs68Xzm6pnStCh1ItI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R3dIfUHIqGj/Mypk3pk+cx4XvtZpB40tVMTxjwjmeNon5AMOKXSPQHA6aneNXss5e
-	 rCdL0rPQquEbLblPZOMBIEIwnykYwE+6GA/Wc7NQOC9QHQHV3bhBRhv1SVn7hkQqFN
-	 T5BufgD0zWEs4EMY8C0dTdhLEdSYt0sTXgv9frCQ=
+	b=D7T3h/rraO052OWxnbi+32YSa2CngwuKv7aMtk+R4J7NebMwzezYVrfDzONBeu4fq
+	 0UO7NxXP2IcFXNB4oJetu2tITGLWY8ELN1ixAdgbkLVdRBCPXhPBA/YtbFUJu73Uyu
+	 hhmqNBoWjLCC6yGAp3GpWI4ZZBG7c3KdAPrF8WLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 226/398] HID: logitech-hidpp: fix race condition when accessing stale stack pointer
-Date: Wed, 23 Sep 2026 16:05:00 +0200
-Message-ID: <20260923140649.279803454@linuxfoundation.org>
+	Thomas Huth <thuth@redhat.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 227/398] kselftest/arm64: Fix size of thread_data values for pthread_join()
+Date: Wed, 23 Sep 2026 16:05:01 +0200
+Message-ID: <20260923140649.303276864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -45,111 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Thomas Huth <thuth@redhat.com>
 
-commit e2aaf2d3ad92ac4a8afa6b69ad4c38e7747d3d6e upstream.
+commit 3d1ba5cbfb622025690c218d8f20da92a9ecb383 upstream.
 
-The driver uses hidpp->send_receive_buf to point to a stack-allocated
-buffer in the synchronous command path (__do_hidpp_send_message_sync).
-However, this pointer is not cleared when the function returns.
+pthread_join() stores the thread's return value (a "void *", i.e.
+8 bytes on 64 bit computers) into the address that is passed as second
+parameter. However, the entries of thread_data are only normal "int"s,
+i.e. only 4 bytes. The additional 4 bytes of the return value clobber
+whatever is adjacent on the stack, i.e. other members of the thread_data
+array (which will be re-written in the next iteration of the for-loop,
+so that nobody noticed this problem), or another other local variable
+on the stack for the last iteration. Use "intptr_t" to declare the
+thread_data array entries with the correct size.
 
-If an event is processed (e.g. by a different thread) while the
-send_mutex is held by a new command, but before that command has
-updated send_receive_buf, the handler (hidpp_raw_hidpp_event) will
-observe that the mutex is locked and dereference the stale pointer.
-
-This results in an out-of-bounds access on a different thread's kernel
-stack (or a NULL pointer dereference on the very first command).
-
-Fix this by:
-1. Clearing hidpp->send_receive_buf to NULL before releasing the mutex
-   in the synchronous command path.
-2. Moving the assignment of the local 'question' and 'answer' pointers
-   inside the mutex_is_locked() block in the handler, and adding
-   a NULL check before dereferencing.
-
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Cc: Lee Jones <lee@kernel.org>
+Fixes: 29f080881601c ("kselftest/arm64: check GCR_EL1 after context switch")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -305,21 +305,22 @@ static int __do_hidpp_send_message_sync(
- 	if (ret) {
- 		dbg_hid("__hidpp_send_report returned err: %d\n", ret);
- 		memset(response, 0, sizeof(struct hidpp_report));
--		return ret;
-+		goto out;
- 	}
- 
- 	if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
- 				5*HZ)) {
- 		dbg_hid("%s:timeout waiting for response\n", __func__);
- 		memset(response, 0, sizeof(struct hidpp_report));
--		return -ETIMEDOUT;
-+		ret = -ETIMEDOUT;
-+		goto out;
- 	}
- 
- 	if (response->report_id == REPORT_ID_HIDPP_SHORT &&
- 	    response->rap.sub_id == HIDPP_ERROR) {
- 		ret = response->rap.params[1];
- 		dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
--		return ret;
-+		goto out;
- 	}
- 
- 	if ((response->report_id == REPORT_ID_HIDPP_LONG ||
-@@ -327,10 +328,14 @@ static int __do_hidpp_send_message_sync(
- 	    response->fap.feature_index == HIDPP20_ERROR) {
- 		ret = response->fap.params[1];
- 		dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
--		return ret;
-+		goto out;
- 	}
- 
--	return 0;
-+	ret = 0;
-+
-+out:
-+	hidpp->send_receive_buf = NULL;
-+	return ret;
- }
- 
- /*
-@@ -3838,8 +3843,7 @@ static int hidpp_input_configured(struct
- static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
- 		int size)
+--- a/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
++++ b/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
+@@ -69,7 +69,7 @@ fail:
+ int execute_test(pid_t pid)
  {
--	struct hidpp_report *question = hidpp->send_receive_buf;
--	struct hidpp_report *answer = hidpp->send_receive_buf;
-+	struct hidpp_report *question, *answer;
- 	struct hidpp_report *report = (struct hidpp_report *)data;
- 	int ret;
- 	int last_online;
-@@ -3849,6 +3853,12 @@ static int hidpp_raw_hidpp_event(struct
- 	 * previously sent command.
- 	 */
- 	if (unlikely(mutex_is_locked(&hidpp->send_mutex))) {
-+		question = hidpp->send_receive_buf;
-+		answer = hidpp->send_receive_buf;
-+
-+		if (!question)
-+			return 0;
-+
- 		/*
- 		 * Check for a correct hidpp20 answer or the corresponding
- 		 * error
+ 	pthread_t thread_id[MAX_THREADS];
+-	int thread_data[MAX_THREADS];
++	intptr_t thread_data[MAX_THREADS];
+ 
+ 	for (int i = 0; i < MAX_THREADS; i++)
+ 		pthread_create(&thread_id[i], NULL,
 
 
