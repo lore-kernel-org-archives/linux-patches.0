@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2A152B1F7;
-	Wed, 23 Sep 2026 14:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C44527599;
+	Wed, 23 Sep 2026 14:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172859; cv=none; b=Jdpm01aY6IBGCGhpzg44YXKjTw7j2PUH/BShPYXEs5VjGK27L/cveOo1H5AbrMx8aut9a7mkSCKsphrFa1Qr1yASOGQP5sEx8BSvETmbp4OrLLTYkzy+KVaycAS9jQDYz3V+qe2Ol9K9rPU1fe/K7reyJqqphCZ9wfCkNevxsnQ=
+	t=1790172863; cv=none; b=HDLcHMV2VcWEK05WjRmgQIFRP+Y8bQWWSSuE7sqqv8Vm9YThdYNHFLAHXFWtbvjGy8IonNurmyCnUvp0SDqmmKRKGFBH4UjnHfHwgGYdp9QGt89d3N/EzslHQ7bQ4cvzAGOKjVl/iJiFkH01hCx5pxF2IZPvRU+4RKiYM3+ZjCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172859; c=relaxed/simple;
-	bh=77fH53NI1TUunKIpj2J7R8lv8DwP2ZUcBpVWcZsdnBI=;
+	s=arc-20240116; t=1790172863; c=relaxed/simple;
+	bh=vzMc/pDERlwXfOYlLfQzAOW4DA3Isod0TdFGOfZkwig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3gGQI38CPYeKuZUBj3WHNQ28ROZxCeB7huliC+gU2zpYU/XYqjdkJuqmXAxpk/btozEyBwxBBqfwVkoGMQxDngZgIEe8DyG036Q5hXE4qunCliuI9BTWJakuWRP6VQkxe1NqKmCTUvM0SzN81LFNniZsZIekzkk+eFWVfXOg0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zc9NeVsO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pru/Szu5ubat1NlTvlsoKkoprZt15BeXaOFM7tXrQoZUq6NIGH1GuB3x9zB0Nyvn025Ye3K7v1InvRrBxNdwHU0PhrWfcOV0/zg8g0i0yew1ksZKDH2vhV+h1lldWv3iBgNflDDsiUdgSf7hNYu/iX9Ax8q3YPHc8ZE974o3Ki0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9KlL60B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zc9NeVsO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BCE1F00893;
-	Wed, 23 Sep 2026 14:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9KlL60B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2506D1F000FF;
+	Wed, 23 Sep 2026 14:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172858;
-	bh=rIqb5lBxo9Mvci0YHLswD2A0GkE89mTHUiZX2yszUno=;
+	s=korg; t=1790172861;
+	bh=GQZ8fRLlrSSkz2CmHRK+DDZvNH0Hgjyxh6fQCqI/SuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zc9NeVsOTWtzPOpN+vIjhOKJeghC57TGtSgec41YalUUR12UH2qBoMRoEKi0EwWoT
-	 +ao+ZqiUAbVnD0OCtBtRbwj1/4Rt+tkJVZRCpP4rOjlbz9d+MHFAX43WICBSoxv7Lw
-	 U5C4R/XBrgr/6MgvBVepM53GFR6Kphl6qtCXm1EE=
+	b=i9KlL60BB9r5iroPxo0EGFakwNqV9TqcGr1HjCl0m+JDeHyVjoXCJP1XNxoUH90hz
+	 b2dnRz7R0YRZD/wC/5B8bA4RfsuTPY7+yFLj4BZvj7Q9RaazllQdJJV3fURvkxnM9R
+	 wUd4qAFL2FC/ZGKtT+7p2HcxFFqKteJCKQdenob4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 046/438] dmaengine: sprd: Fix runtime PM reference leak in probe
-Date: Wed, 23 Sep 2026 16:01:07 +0200
-Message-ID: <20260923140645.977913055@linuxfoundation.org>
+Subject: [PATCH 7.2 047/438] wifi: mac80211: include TIM bitmap control for buffered S1G mcast traffic
+Date: Wed, 23 Sep 2026 16:01:08 +0200
+Message-ID: <20260923140646.004543723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,57 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit a7df136ec529ee49a789c5029bc37b98b0d4bedd ]
+[ Upstream commit af72b5946d493cecced27d0951ea37c1d178601e ]
 
-pm_runtime_get_sync() increments a device's usage counter even when it
-fails. sprd_dma_probe() currently jumps directly to controller clock
-cleanup on that error, bypassing both pm_runtime_put_noidle() and
-pm_runtime_disable(). This can happen if the preceding unchecked
-pm_runtime_set_active() fails and the following runtime-resume attempt
-also returns an error.
+Currently when building the S1G TIM element, we only build the bitmap
+control if we have buffered unicast traffic. Since AID 0 sits within
+the bitmap control if we have buffered multicast traffic with no
+buffered unicast traffic the bitmap control won't be emitted and
+dozing stations will be unaware of buffered multicast.
 
-Enter the existing runtime-PM unwind path instead. This drops the
-reference without idling the partially initialized device, disables
-runtime PM, and then releases the controller clocks. The success path
-and propagated error code are unchanged.
+To fix, only exclude the bitmap control byte when we don't have
+both buffered unicast and multicast traffic.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20260813153149.3953497-1-ruoyuw560@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: ee6360945483 ("wifi: mac80211: support block bitmap S1G TIM encoding")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260827054302.254124-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/mac80211/tx.c | 41 ++++++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 087fea3af2e41..19b32a23c882d 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1212,7 +1212,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index fd4c379b3f201..7cb9dd1b27314 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5063,10 +5063,18 @@ static void ieee80211_beacon_add_tim_pvb(struct ps_data *ps,
+  */
+ static void ieee80211_s1g_beacon_add_tim_pvb(struct ps_data *ps,
+ 					     struct sk_buff *skb,
+-					     bool mcast_traffic)
++					     bool mcast_traffic,
++					     bool ucast_traffic)
+ {
+ 	int blk;
  
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
--		goto err_rpm;
-+		goto err_register;
++	/*
++	 * if no unicast and multicast traffic don't emit a bitmap control
++	 * or pvb
++	 */
++	if (!mcast_traffic && !ucast_traffic)
++		return;
++
+ 	/*
+ 	 * Emit a bitmap control block with a page slice number of 31 and a
+ 	 * page index of 0 which indicates as per IEEE80211-2024 9.4.2.5.1
+@@ -5075,6 +5083,10 @@ static void ieee80211_s1g_beacon_add_tim_pvb(struct ps_data *ps,
+ 	 */
+ 	skb_put_u8(skb, mcast_traffic | (31 << 1));
  
- 	ret = dma_async_device_register(&sdev->dma_dev);
- 	if (ret < 0) {
-@@ -1234,7 +1234,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
- err_register:
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
--err_rpm:
- 	sprd_dma_disable(sdev);
- 	return ret;
- }
++	/* If there's no unicast traffic we don't need to include a PVB. */
++	if (!ucast_traffic)
++		return;
++
+ 	/* Emit an encoded block for each non-zero sub-block */
+ 	for (blk = 0; blk < IEEE80211_MAX_SUPPORTED_S1G_TIM_BLOCKS; blk++) {
+ 		u8 blk_bmap = 0;
+@@ -5156,25 +5168,16 @@ static void __ieee80211_beacon_add_tim(struct ieee80211_sub_if_data *sdata,
+ 
+ 	ps->dtim_bc_mc = mcast_traffic;
+ 
+-	if (have_bits) {
+-		if (s1g)
+-			ieee80211_s1g_beacon_add_tim_pvb(ps, skb,
+-							 mcast_traffic);
+-		else
+-			ieee80211_beacon_add_tim_pvb(ps, skb, mcast_traffic);
++	if (s1g) {
++		ieee80211_s1g_beacon_add_tim_pvb(ps, skb, mcast_traffic,
++						 have_bits);
++	} else if (have_bits) {
++		ieee80211_beacon_add_tim_pvb(ps, skb, mcast_traffic);
+ 	} else {
+-		/*
+-		 * If there is no buffered unicast traffic for an S1G
+-		 * interface, we can exclude the bitmap control. This is in
+-		 * contrast to other phy types as they do include the bitmap
+-		 * control and pvb even when there is no buffered traffic.
+-		 */
+-		if (!s1g) {
+-			/* Bitmap control */
+-			skb_put_u8(skb, mcast_traffic);
+-			/* Part Virt Bitmap */
+-			skb_put_u8(skb, 0);
+-		}
++		/* Bitmap control */
++		skb_put_u8(skb, mcast_traffic);
++		/* Part Virt Bitmap */
++		skb_put_u8(skb, 0);
+ 	}
+ 
+ 	tim->datalen = skb_tail_pointer(skb) - tim->data;
 -- 
 2.53.0
 
