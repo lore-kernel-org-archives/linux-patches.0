@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABD1379981;
-	Wed, 23 Sep 2026 14:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CA03B27D1;
+	Wed, 23 Sep 2026 14:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174420; cv=none; b=fr2wfUp3OOFcYqKeZp4zuxVaEIKuvFggOruizRNfN8tR0F1Ly4mBhI1fZx0Z70UJDAXGg1Ji9kV3lEF4irQA4qqvaSxIhzTvyIvmRpJ2en6rOIiuIjtumQclLykf5yNckspQyEGfswkgCCmicjX2lwTFZF0IjGrUMdQK1RUskgk=
+	t=1790174423; cv=none; b=iPFJ3lcsS0bjDMH2T1Yc0LsOeRrJcGT6cXORQ3l0vz/nGnlNw/Rh2ycvKOvMYgUdy8sFMrSxVitAZqJAAB/HCyisWNVUfL23x0kdhK0y7SpKp4syYOSsGfVZBNHxle6jP96zuuh0L+tD+7KMPX9KiDs8cAJVH9mEpp4T6appdF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174420; c=relaxed/simple;
-	bh=aNYSXVROl0Ww0QN1gZrMHryc1OsHhXNHAJSf6OhAKT0=;
+	s=arc-20240116; t=1790174423; c=relaxed/simple;
+	bh=QlaM3rt9oy07kMY7u+4n/KLhaIrP+fFBPq3Btz1ZW38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vq+XHsbxdBC7+q9HfOrFsQ92nc/ceIxmADUHh2R6lUkqGuu9YoHrK1f1r2G2BFM22fbbDWdGNP4dhcUV9R2i3IlCiG0ytbHZdYUo2rJlD8g9TCGYoVscP1vtUqde7fkmeNG44LTFww7p+HSKwYXthz++83kwFcBxS3IVAxHYE1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnLs0uh8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ME35DlAJ9OhUWro8fLrPsd8Kpiwm0vev5ZZo/2sYLH0j0KXUhO/9kgaB5urZRYzwmhLymbPAtLuzFhCies9PcsOkxpIG59aMfUC6XYdyF04rI9uRE5u6dnYizOYeNrzGL1mZXE0zxDQMt3Fywyvrl1RIfs86ExrbZEStaakoZUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/mqVPqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnLs0uh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAD41F000FF;
-	Wed, 23 Sep 2026 14:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/mqVPqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9025C1F000FF;
+	Wed, 23 Sep 2026 14:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174419;
-	bh=OQky7roOG18BDsOyxQ1OSDKzxmYGwDa6vMmTViWBJcU=;
+	s=korg; t=1790174422;
+	bh=FBbsLksecix8ue8NX51UKr+WB5PKUoOr38qdP4SG5Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WnLs0uh8YeLBX0FnlDkFZ0wN9i94IsqRgWCSV3sSTfeSVOxePRi5+xi1wfQeYPPy5
-	 uiuP3OQQR+9niuc0i8f6fVwn70wrErVY+Ih98e+L0L/jZU/sYRDRsYIJFLiAXZSOxj
-	 seHHRU5wmDZhMF0U2K4ApJgkTbQy4sH5StA5CqNc=
+	b=q/mqVPqv4f8nJHFLpR5Alb3pYdFMRSx1emFqjFzaBo4uXI9wxfjAC87cydvO2vLCW
+	 jHLwIUEwbO3Ui5mkQtFjgVKDpehB2u28oNAS0oUmJ4pNweL9RzVKGlmwFZgD5ahbdc
+	 7D9yis6+rGvJ1Bl4bXQtlBAlahA3ipVRD9i5nNvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/398] neighbour: Convert RTM_GETNEIGHTBL to RCU.
-Date: Wed, 23 Sep 2026 16:02:55 +0200
-Message-ID: <20260923140646.055928990@linuxfoundation.org>
+Subject: [PATCH 6.18 110/398] ASoC: Rename snd_soc_dai_link_ch_map.ch_mask to cpu_ch_mask
+Date: Wed, 23 Sep 2026 16:03:04 +0200
+Message-ID: <20260923140646.292074900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,144 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 4ae34be500649ec452ac1fc2748958683ad9b55d ]
+[ Upstream commit 4d855d747521505b54457c96bc73577bf74b2374 ]
 
-neightbl_dump_info() calls these functions for each neigh_tables[]
-entry:
+Rename the ch_mask member of snd_soc_dai_link_ch_map to cpu_ch_mask,
+as that is what it is used for.
 
-  1. neightbl_fill_info() for tbl->parms
-  2. neightbl_fill_param_info() for tbl->parms_list (except tbl->parms)
+The CPU and codec channel masks are not necessarily the same, and are
+quite likely different. SoundWire and I2S/TDM both support assigning
+different sample slots to each codec, so for example channel 0 on each
+codec could map to different channels at the CPU. So it's quite normal
+that the channel mask at the CPU end is different for each codec, but
+the codec channel masks are the same for each codec.
 
-Both functions rely on the table lock (read_lock_bh(&tbl->lock))
-and RTNL is not needed.
-
-Let's fetch the table under RCU and convert RTM_GETNEIGHTBL to RCU.
-
-Note that the first entry of tbl->parms_list is tbl->parms.list and
-embedded in neigh_table, so list_next_entry() is safe.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251022054004.2514876-4-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 979aabdad8dd ("neighbour: Skip default parms when resumed in neightbl_dump_info().")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260910114500.1586637-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 6b382bdfe26a ("ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ include/sound/soc.h                 | 2 +-
+ sound/soc/sdw_utils/soc_sdw_utils.c | 2 +-
+ sound/soc/soc-pcm.c                 | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 4c018170edfeb..9873fc08b7494 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -2180,7 +2180,7 @@ static int neightbl_fill_parms(struct sk_buff *skb, struct neigh_parms *parms)
- 		return -ENOBUFS;
- 
- 	if ((parms->dev &&
--	     nla_put_u32(skb, NDTPA_IFINDEX, parms->dev->ifindex)) ||
-+	     nla_put_u32(skb, NDTPA_IFINDEX, READ_ONCE(parms->dev->ifindex))) ||
- 	    nla_put_u32(skb, NDTPA_REFCNT, refcount_read(&parms->refcnt)) ||
- 	    nla_put_u32(skb, NDTPA_QUEUE_LENBYTES,
- 			NEIGH_VAR(parms, QUEUE_LEN_BYTES)) ||
-@@ -2232,8 +2232,6 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 		return -EMSGSIZE;
- 
- 	ndtmsg = nlmsg_data(nlh);
--
--	read_lock_bh(&tbl->lock);
- 	ndtmsg->ndtm_family = tbl->family;
- 	ndtmsg->ndtm_pad1   = 0;
- 	ndtmsg->ndtm_pad2   = 0;
-@@ -2259,11 +2257,9 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 			.ndtc_proxy_qlen	= READ_ONCE(tbl->proxy_queue.qlen),
- 		};
- 
--		rcu_read_lock();
- 		nht = rcu_dereference(tbl->nht);
- 		ndc.ndtc_hash_rnd = nht->hash_rnd[0];
- 		ndc.ndtc_hash_mask = ((1 << nht->hash_shift) - 1);
--		rcu_read_unlock();
- 
- 		if (nla_put(skb, NDTA_CONFIG, sizeof(ndc), &ndc))
- 			goto nla_put_failure;
-@@ -2301,12 +2297,10 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 	if (neightbl_fill_parms(skb, &tbl->parms) < 0)
- 		goto nla_put_failure;
- 
--	read_unlock_bh(&tbl->lock);
- 	nlmsg_end(skb, nlh);
- 	return 0;
- 
- nla_put_failure:
--	read_unlock_bh(&tbl->lock);
- 	nlmsg_cancel(skb, nlh);
- 	return -EMSGSIZE;
- }
-@@ -2325,8 +2319,6 @@ static int neightbl_fill_param_info(struct sk_buff *skb,
- 		return -EMSGSIZE;
- 
- 	ndtmsg = nlmsg_data(nlh);
--
--	read_lock_bh(&tbl->lock);
- 	ndtmsg->ndtm_family = tbl->family;
- 	ndtmsg->ndtm_pad1   = 0;
- 	ndtmsg->ndtm_pad2   = 0;
-@@ -2335,11 +2327,9 @@ static int neightbl_fill_param_info(struct sk_buff *skb,
- 	    neightbl_fill_parms(skb, parms) < 0)
- 		goto errout;
- 
--	read_unlock_bh(&tbl->lock);
- 	nlmsg_end(skb, nlh);
- 	return 0;
- errout:
--	read_unlock_bh(&tbl->lock);
- 	nlmsg_cancel(skb, nlh);
- 	return -EMSGSIZE;
- }
-@@ -2588,10 +2578,12 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 	family = ((struct rtgenmsg *)nlmsg_data(nlh))->rtgen_family;
- 
-+	rcu_read_lock();
-+
- 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
- 		struct neigh_parms *p;
- 
--		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
-+		tbl = rcu_dereference(neigh_tables[tidx]);
- 		if (!tbl)
- 			continue;
- 
-@@ -2605,7 +2597,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 		nidx = 0;
- 		p = list_next_entry(&tbl->parms, list);
--		list_for_each_entry_from(p, &tbl->parms_list, list) {
-+		list_for_each_entry_from_rcu(p, &tbl->parms_list, list) {
- 			if (!net_eq(neigh_parms_net(p), net))
- 				continue;
- 
-@@ -2625,6 +2617,8 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 		neigh_skip = 0;
- 	}
- out:
-+	rcu_read_unlock();
-+
- 	cb->args[0] = tidx;
- 	cb->args[1] = nidx;
- 
-@@ -3928,7 +3922,8 @@ static const struct rtnl_msg_handler neigh_rtnl_msg_handlers[] __initconst = {
- 	{.msgtype = RTM_DELNEIGH, .doit = neigh_delete},
- 	{.msgtype = RTM_GETNEIGH, .doit = neigh_get, .dumpit = neigh_dump_info,
- 	 .flags = RTNL_FLAG_DOIT_UNLOCKED | RTNL_FLAG_DUMP_UNLOCKED},
--	{.msgtype = RTM_GETNEIGHTBL, .dumpit = neightbl_dump_info},
-+	{.msgtype = RTM_GETNEIGHTBL, .dumpit = neightbl_dump_info,
-+	 .flags = RTNL_FLAG_DUMP_UNLOCKED},
- 	{.msgtype = RTM_SETNEIGHTBL, .doit = neightbl_set},
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index 33968935d00a9..99a8edfd1d7d8 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -682,7 +682,7 @@ struct snd_soc_dai_link_component {
+ struct snd_soc_dai_link_ch_map {
+ 	unsigned int cpu;
+ 	unsigned int codec;
+-	unsigned int ch_mask;
++	unsigned int cpu_ch_mask;
  };
  
+ struct snd_soc_dai_link {
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 3facb78748acf..2c5c370503675 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -974,7 +974,7 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
+ 	 * ASoC will set the corresponding channel numbers for each cpu dai.
+ 	 */
+ 	for_each_link_ch_maps(rtd->dai_link, i, ch_maps)
+-		ch_maps->ch_mask = ch_mask << (i * step);
++		ch_maps->cpu_ch_mask = ch_mask << (i * step);
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 99299364c9ba3..ebd766e00bac6 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1133,7 +1133,7 @@ static int __soc_pcm_hw_params(struct snd_pcm_substream *substream,
+ 		 */
+ 		for_each_rtd_ch_maps(rtd, j, ch_maps)
+ 			if (ch_maps->cpu == i)
+-				ch_mask |= ch_maps->ch_mask;
++				ch_mask |= ch_maps->cpu_ch_mask;
+ 
+ 		/* fixup cpu channel number */
+ 		if (ch_mask)
 -- 
 2.53.0
 
