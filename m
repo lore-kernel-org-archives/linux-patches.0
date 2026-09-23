@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EFF3769F9;
-	Wed, 23 Sep 2026 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65591377567;
+	Wed, 23 Sep 2026 14:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172986; cv=none; b=GH2C0doqU+1qLD2V/N7GrXPfYbareuSKAuMnCGQsXJLbucnkuO9lEM9Ih1RZ56pG1Xn1n7z2lYFYp7SJlztWTLZvxlrHAhK2gbmiSHpHlocEbSNu9a9hv6Ah3DsAcdusztYd1lZi/5skoVFxFNdnas00UdJG+F/Ejkyc+m+BH4Y=
+	t=1790172989; cv=none; b=JGv5fhwxU6/oplaWjypn76Ju7IDLKxdzvdez/YFCfiy6zOwVPUbiv6qDasX2ECyskgaLdltXujRzvTQ2Jf0GwoqSmFkgpmtkpmG2vAi6WPHjwP523CNbWVVvCuSuiT2hB0qmCteMSJl3c0lefipQ2FeXW1twYeJ5Llv0Nvue7As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172986; c=relaxed/simple;
-	bh=Kn3EMQl+AV22W/lmwQCpLWLq4tdhIc0gvKbWzlvaVOQ=;
+	s=arc-20240116; t=1790172989; c=relaxed/simple;
+	bh=scOdo1GTSNo/oCDOxNFqAmay6sUji7G3bfHVBtEfaGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDsOBf5SIzDw4nbcPj25e+aWI3BAiRdAICE+XJlCaHeH3KTTLg0ln+6rfUQiauH5E8KfkC/6T2P0T7D2IeQnIkQoybKD0wCjInmBYcSeIlsBJPDLTPHtNQ3tFHQqYIO3m8RlU4u0w8plf0nMZK6eUwFzfgKyWauaaIEtiSwhAug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQz96stn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QljSvyyufovbNZawiUSCoB+4AnoBDnVy/7YvWg0BU64LkykUdtCRACEJePUh7BDvJku1oLoZPrGJaOWqzCTCc6WZxKBBxocPuaEZBRT/+av2q3+HnVn6CQwDHP4VBqo0jRXMcb6W0MHdsep6nRJVp7Z+1qDsaypn/YFRP42lSF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIawVFdN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQz96stn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8379A1F00893;
-	Wed, 23 Sep 2026 14:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIawVFdN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4091F000FF;
+	Wed, 23 Sep 2026 14:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172985;
-	bh=GSX1QDPXDGG4Fh2VDS/B0VPQ3bOo99ecZ37VsNanzr4=;
+	s=korg; t=1790172988;
+	bh=eBmB51VNtiGZcS+sF7A4S+GurSBlb6+pNEqoo+71Ulo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQz96stnxQ+4uWF0GBiKsFmOr7qSmnrosO2mI4HpRzxJ0OsMxjNVvobt2tTePrfP2
-	 j+77u2axCWIPJgS8nhkXko1fr+Lgme17Vp3ILGBe5jQYZFSZCWVpGKCDk2FoQ0dlDt
-	 S7u538q9yeu8yNqgB+YLWSB85+SzSEa29Td8n+5c=
+	b=MIawVFdNM59E4QohDJNJ1U6URmO6pzSMoc3exxNgVrbnTCjqb7R8PCgTEG2bAyRSw
+	 hFSQJH6VEhif3efUSHh1F2+MzqExat9viK/r29mG0w+u3awuNNQmTaCL78by7i9peC
+	 oMVGbCqdtDHXplh+SsadrU8QNdZxEKayaTZ0zcoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 121/438] ntfs: repack $MFT/$ATTRIBUTE LIST
-Date: Wed, 23 Sep 2026 16:02:22 +0200
-Message-ID: <20260923140647.917284142@linuxfoundation.org>
+Subject: [PATCH 7.2 122/438] ntfs: account for MFT records added during allocation
+Date: Wed, 23 Sep 2026 16:02:23 +0200
+Message-ID: <20260923140647.941740708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,386 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b1d732e62a5b3942546e4edaab8976258e779287 ]
+[ Upstream commit 631946431ddc66a472c5cc629cd654e62dfa1f88 ]
 
-Repack the non-resident $MFT/$ATTRIBUTE_LIST into a contiguous run
-when its mapping pairs no longer fit in the base MFT record. Propagate
-allocation and writeback errors, and check synchronous replacement writes.
+When no free MFT record is available in the initialized $MFT/$BITMAP,
+ntfs_mft_record_alloc() extends $MFT/$DATA and formats the requested record
+together with a dynamically sized tail reserve. Those records become
+visible through the $MFT file size before charging the requested record to
+the free-record counter.
 
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
+Account for all newly visible records before releasing the MFT allocation
+lock, then subtract the one record being allocated. Keep MFT counter
+updates independent of the asynchronous free-cluster scan and update the
+counter when a record is successfully cleared in the MFT bitmap.
+
+Store the clamped result of the MFT bitmap scan and keep statfs from
+exposing an invalid cached count if an accounting error occurs.
+
+Fixes: 115380f9a2f9 ("ntfs: update mft operations")
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c   |  47 ++++++++---
- fs/ntfs/attrlist.c | 202 ++++++++++++++++++++++++++++++++++++++++++---
- fs/ntfs/inode.c    |  10 ++-
- 3 files changed, 236 insertions(+), 23 deletions(-)
+ fs/ntfs/mft.c    | 11 ++++++++---
+ fs/ntfs/super.c  | 12 +++++++++---
+ fs/ntfs/volume.h |  6 ------
+ 3 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
-index f50685ec2fb34..34c4044b59af2 100644
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -3839,13 +3839,13 @@ int ntfs_attr_update_mapping_pairs(struct ntfs_inode *ni, s64 from_vcn)
- 			 */
- 			if (ni->type == AT_ATTRIBUTE_LIST) {
- 				ntfs_attr_put_search_ctx(ctx);
--				if (ntfs_inode_free_space(base_ni, mp_size -
--							cur_max_mp_size)) {
--					ntfs_debug("Attribute list is too big. Defragment the volume\n");
--					return -ENOSPC;
--				}
--				if (ntfs_attrlist_update(base_ni))
--					return -EIO;
-+				err = ntfs_inode_free_space(base_ni, mp_size -
-+							cur_max_mp_size);
-+				if (err)
-+					return err;
-+				err = ntfs_attrlist_update(base_ni);
-+				if (err)
-+					return err;
- 				goto retry;
- 			}
- 
-@@ -4517,13 +4517,39 @@ static int ntfs_non_resident_attr_expand(struct ntfs_inode *ni, const s64 newsiz
- 					ntfs_bytes_to_cluster(vol, ni->allocated_size),
- 					first_free_vcn -
- 					ntfs_bytes_to_cluster(vol, ni->allocated_size),
--					lcn_seek_from, DATA_ZONE, false, false, false);
-+					lcn_seek_from, DATA_ZONE, false,
-+					ni->type == AT_ATTRIBUTE_LIST, false);
- 			if (IS_ERR(rl)) {
- 				ntfs_debug("Cluster allocation failed (%lld)",
- 						(long long)first_free_vcn -
- 						ntfs_bytes_to_cluster(vol, ni->allocated_size));
- 				return PTR_ERR(rl);
- 			}
-+			/*
-+			 * A contiguous ATTRIBUTE_LIST allocation keeps its mapping
-+			 * pairs small enough to fit in the base MFT record. The
-+			 * allocator can return a short run when contiguity was
-+			 * requested, so discard it and retry normally if necessary.
-+			 */
-+			if (ni->type == AT_ATTRIBUTE_LIST &&
-+				(rl->vcn != ntfs_bytes_to_cluster(vol,
-+						ni->allocated_size) ||
-+				 rl->length != first_free_vcn -
-+					ntfs_bytes_to_cluster(vol, ni->allocated_size) ||
-+				 rl[1].length)) {
-+				ntfs_cluster_free_from_rl(vol, rl);
-+				kvfree(rl);
-+				rl = ntfs_cluster_alloc(vol,
-+						ntfs_bytes_to_cluster(vol,
-+								ni->allocated_size),
-+						first_free_vcn -
-+						ntfs_bytes_to_cluster(vol,
-+								ni->allocated_size),
-+						lcn_seek_from, DATA_ZONE, false,
-+						false, false);
-+				if (IS_ERR(rl))
-+					return PTR_ERR(rl);
-+			}
- 		}
- 
- 		if (!NInoCompressed(ni)) {
-@@ -4916,7 +4942,8 @@ int ntfs_attr_expand(struct ntfs_inode *ni, const s64 newsize, const s64 preallo
- 	ntfs_debug("Entering for inode 0x%llx, attr 0x%x, size %lld\n",
- 			(unsigned long long)ni->mft_no, ni->type, newsize);
- 
--	if (ni->data_size == newsize) {
-+	if (ni->data_size == newsize &&
-+		(!prealloc_size || prealloc_size <= ni->allocated_size)) {
- 		ntfs_debug("Size is already ok\n");
+diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
+index 5fae9ad03858e..ed3aa4c423e81 100644
+--- a/fs/ntfs/mft.c
++++ b/fs/ntfs/mft.c
+@@ -1539,7 +1539,6 @@ static int ntfs_mft_bitmap_extend_initialized_nolock(struct ntfs_volume *vol)
+ 	ret = ntfs_attr_set(mftbmp_ni, old_initialized_size, 8, 0);
+ 	if (likely(!ret)) {
+ 		ntfs_debug("Done.  (Wrote eight initialized bytes to mft bitmap.");
+-		ntfs_inc_free_mft_records(vol, 8 * 8);
  		return 0;
  	}
-@@ -4931,7 +4958,7 @@ int ntfs_attr_expand(struct ntfs_inode *ni, const s64 newsize, const s64 preallo
- 	}
- 
- 	if (NInoNonResident(ni)) {
--		if (newsize > ni->data_size)
-+		if (newsize > ni->data_size || prealloc_size > ni->allocated_size)
- 			err = ntfs_non_resident_attr_expand(ni, newsize, prealloc_size,
- 							    NVolDisableSparse(ni->vol) ?
- 							    HOLES_NO : HOLES_OK, true);
-diff --git a/fs/ntfs/attrlist.c b/fs/ntfs/attrlist.c
-index be3086d343381..4e60f7e930102 100644
---- a/fs/ntfs/attrlist.c
-+++ b/fs/ntfs/attrlist.c
-@@ -12,6 +12,9 @@
- #include "mft.h"
- #include "attrib.h"
- #include "attrlist.h"
-+#include "lcnalloc.h"
-+
-+#define NTFS_MAX_ATTR_LIST_SIZE	(256 * 1024)
- 
- /*
-  * ntfs_attrlist_need - check whether inode need attribute list
-@@ -51,11 +54,151 @@ int ntfs_attrlist_need(struct ntfs_inode *ni)
- 	return 0;
- }
- 
-+/*
-+ * Repack the $MFT/$ATTRIBUTE_LIST data into one run.
-+ *
-+ * The mapping pairs for an $ATTRIBUTE_LIST must remain in the base MFT
-+ * record. Once that record has no room left, extending a fragmented list
-+ * can require one more mapping-pairs byte than the record can hold. There
-+ * is no attribute that can legally be moved out in that state: $STANDARD_
-+ * INFORMATION, $ATTRIBUTE_LIST, and the first $MFT/$DATA extent all have to
-+ * stay in the base record.  Move the list data to one contiguous run. The
-+ * caller supplies the minimum allocation size so a recovery can use the
-+ * smallest useful run while normal updates can still request the maximum
-+ * legal list size as a reserve.
-+ */
-+static int ntfs_attrlist_repack(struct inode *attr_vi,
-+		struct ntfs_inode *attr_ni, s64 min_alloc_size)
-+{
-+	struct ntfs_volume *vol = attr_ni->vol;
-+	struct runlist_element *old_rl, *new_rl;
-+	u8 *data = NULL;
-+	s64 data_size, alloc_size, nr_clusters, written;
-+	s64 old_alloc_size;
-+	size_t old_rl_count, new_rl_count;
-+	unsigned long flags;
-+	int err, restore_err;
-+
-+	if (attr_ni->mft_no != FILE_MFT || !NInoNonResident(attr_ni) ||
-+		min_alloc_size < 0)
-+		return -EINVAL;
-+
-+	err = ntfs_attr_map_whole_runlist(attr_ni);
-+	if (err)
-+		return err;
-+
-+	data_size = attr_ni->data_size;
-+	if (data_size < 0)
-+		return -EIO;
-+
-+	if (data_size) {
-+		data = kvmalloc(data_size, GFP_NOFS);
-+		if (!data)
-+			return -ENOMEM;
-+
-+		written = ntfs_inode_attr_pread(attr_vi, 0, data_size, data);
-+		if (written != data_size) {
-+			err = written < 0 ? (int)written : -EIO;
-+			goto out_free_data;
-+		}
-+	}
-+
-+	old_alloc_size = attr_ni->allocated_size;
-+	alloc_size = max_t(s64, old_alloc_size, min_alloc_size);
-+	nr_clusters = ntfs_bytes_to_cluster(vol,
-+			alloc_size + vol->cluster_size - 1);
-+	if (nr_clusters <= 0) {
-+		err = -EFBIG;
-+		goto out_free_data;
-+	}
-+
-+	/* A single run keeps the mapping pairs at the minimum size. */
-+	new_rl = ntfs_cluster_alloc(vol, 0, nr_clusters, -1, DATA_ZONE,
-+				    true, true, false);
-+	if (IS_ERR(new_rl)) {
-+		err = PTR_ERR(new_rl);
-+		goto out_free_data;
-+	}
-+
-+	new_rl_count = 0;
-+	if (new_rl->vcn == 0 && new_rl->length == nr_clusters &&
-+		!new_rl[1].length)
-+		new_rl_count = 2;
-+
-+	if (new_rl_count != 2) {
-+		ntfs_cluster_free_from_rl(vol, new_rl);
-+		kvfree(new_rl);
-+		err = -ENOSPC;
-+		goto out_free_data;
-+	}
-+
-+	old_rl = attr_ni->runlist.rl;
-+	old_rl_count = attr_ni->runlist.count;
-+	down_write(&attr_ni->runlist.lock);
-+	attr_ni->runlist.rl = new_rl;
-+	attr_ni->runlist.count = new_rl_count;
-+	up_write(&attr_ni->runlist.lock);
-+
-+	write_lock_irqsave(&attr_ni->size_lock, flags);
-+	attr_ni->allocated_size = ntfs_cluster_to_bytes(vol, nr_clusters);
-+	write_unlock_irqrestore(&attr_ni->size_lock, flags);
-+
-+	/* Populate the replacement extent before publishing its mapping pairs. */
-+	if (data_size) {
-+		written = ntfs_inode_attr_pwrite(attr_vi, 0, data_size, data, true);
-+		if (written != data_size) {
-+			err = written < 0 ? (int)written : -EIO;
-+			goto restore_old_runlist;
-+		}
-+	}
-+
-+	err = ntfs_attr_update_mapping_pairs(attr_ni, 0);
-+	if (err)
-+		goto restore_old_runlist;
-+
-+	/* The new mapping is now authoritative; release the old data runs. */
-+	if (ntfs_cluster_free_from_rl(vol, old_rl)) {
-+		ntfs_error(vol->sb,
-+			   "Failed to free old ATTRIBUTE_LIST extent: inode %#llx",
-+			   (long long)attr_ni->mft_no);
-+		NVolSetErrors(vol);
-+	}
-+	kvfree(old_rl);
-+	kvfree(data);
-+	return 0;
-+
-+restore_old_runlist:
-+	down_write(&attr_ni->runlist.lock);
-+	attr_ni->runlist.rl = old_rl;
-+	attr_ni->runlist.count = old_rl_count;
-+	up_write(&attr_ni->runlist.lock);
-+
-+	write_lock_irqsave(&attr_ni->size_lock, flags);
-+	attr_ni->allocated_size = old_alloc_size;
-+	write_unlock_irqrestore(&attr_ni->size_lock, flags);
-+
-+	restore_err = ntfs_attr_update_mapping_pairs(attr_ni, 0);
-+	if (restore_err) {
-+		ntfs_error(vol->sb, "Failed to restore ATTRIBUTE_LIST mapping pairs (%d)",
-+			   restore_err);
-+		NVolSetErrors(vol);
-+	}
-+
-+	ntfs_cluster_free_from_rl(vol, new_rl);
-+	kvfree(new_rl);
-+	err = err ? err : restore_err;
-+
-+out_free_data:
-+	kvfree(data);
-+	return err;
-+}
-+
- int ntfs_attrlist_update(struct ntfs_inode *base_ni)
+ 	ntfs_error(vol->sb, "Failed to write to mft bitmap.");
+@@ -2135,6 +2134,7 @@ int ntfs_mft_record_alloc(struct ntfs_volume *vol, const int mode,
+ 			  struct mft_record **ni_mrec, const s64 mft_data_vcn)
  {
- 	struct inode *attr_vi;
- 	struct ntfs_inode *attr_ni;
--	int err;
-+	s64 written;
-+	int err, retry_err;
+ 	s64 ll, bit, old_data_initialized, old_data_size;
++	s64 nr_new_mft_records = 0;
+ 	s64 max_mft_no = -1, reserve_start = -1, reserve_end = -1;
+ 	s64 candidate_reserve_end = -1;
+ 	s64 *reserve_endp;
+@@ -2501,8 +2501,13 @@ int ntfs_mft_record_alloc(struct ntfs_volume *vol, const int mode,
+ 			mft_ni->initialized_size);
+ 	WARN_ON(i_size_read(vol->mft_ino) > mft_ni->allocated_size);
+ 	WARN_ON(mft_ni->initialized_size > i_size_read(vol->mft_ino));
++	nr_new_mft_records = (i_size_read(vol->mft_ino) - old_data_size) >>
++			     vol->mft_record_size_bits;
+ 	read_unlock_irqrestore(&mft_ni->size_lock, flags);
+ mft_rec_already_initialized:
++	/* Account for newly visible MFT records before dropping the lock. */
++	if (nr_new_mft_records > 0)
++		ntfs_inc_free_mft_records(vol, nr_new_mft_records);
+ 	/*
+ 	 * We can finally drop the mft bitmap lock as the mft data attribute
+ 	 * has been fully updated.  The only disparity left is that the
+@@ -2814,6 +2819,8 @@ int ntfs_mft_record_free(struct ntfs_volume *vol, struct ntfs_inode *ni)
+ 	if (base_ni->mft_no != FILE_MFT)
+ 		down_write(&vol->mftbmp_lock);
+ 	err = ntfs_bitmap_clear_bit(vol->mftbmp_ino, mft_no);
++	if (!err)
++		ntfs_inc_free_mft_records(vol, 1);
+ 	if (!err && base_ni->mft_no == FILE_MFT &&
+ 	    mft_no + 1 == vol->mft_record_reserve_pos &&
+ 	    mft_no < vol->mft_record_reserve_end)
+@@ -2823,9 +2830,7 @@ int ntfs_mft_record_free(struct ntfs_volume *vol, struct ntfs_inode *ni)
+ 	memalloc_nofs_restore(memalloc_flags);
+ 	if (err)
+ 		goto bitmap_rollback;
+-
+ 	unmap_mft_record(ni);
+-	ntfs_inc_free_mft_records(vol, 1);
+ 	return 0;
+ 
+ 	/* Rollback what we did... */
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index 63aa83ff77f5d..b5371d269f747 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -2064,8 +2064,7 @@ static unsigned long __get_nr_free_mft_records(struct ntfs_volume *vol,
+ 	/* If errors occurred we may well have gone below zero, fix this. */
+ 	if (nr_free < 0)
+ 		nr_free = 0;
+-	else
+-		atomic64_set(&vol->free_mft_records, nr_free);
++	atomic64_set(&vol->free_mft_records, nr_free);
+ 
+ 	ntfs_debug("Exiting.");
+ 	return nr_free;
+@@ -2131,7 +2130,14 @@ static int ntfs_statfs(struct dentry *dentry, struct kstatfs *sfs)
+ 	read_unlock_irqrestore(&mft_ni->size_lock, flags);
+ 
+ 	/* Free inodes in fs (based on current total count). */
+-	sfs->f_ffree = atomic64_read(&vol->free_mft_records);
++	size = atomic64_read(&vol->free_mft_records);
++	if (unlikely(size < 0 || size > (s64)sfs->f_files))
++		ntfs_warning(vol->sb, "Invalid free MFT record count %lld.", size);
++	if (size < 0)
++		size = 0;
++	else if (size > (s64)sfs->f_files)
++		size = sfs->f_files;
++	sfs->f_ffree = size;
  
  	/*
- 	 * generic_shutdown_super() clears SB_ACTIVE before evicting cached
-@@ -74,21 +217,55 @@ int ntfs_attrlist_update(struct ntfs_inode *base_ni)
- 	attr_ni = NTFS_I(attr_vi);
+ 	 * File system id. This is extremely *nix flavour dependent and even
+diff --git a/fs/ntfs/volume.h b/fs/ntfs/volume.h
+index 2b60d14fc7ef5..bc85a95922458 100644
+--- a/fs/ntfs/volume.h
++++ b/fs/ntfs/volume.h
+@@ -258,17 +258,11 @@ static inline void ntfs_dec_free_clusters(struct ntfs_volume *vol, s64 nr)
  
- 	err = ntfs_attr_truncate_i(attr_ni, base_ni->attr_list_size, HOLES_NO);
--	if (err == -ENOSPC && attr_ni->mft_no == FILE_MFT) {
--		err = ntfs_attr_truncate(attr_ni, 0);
--		if (err || ntfs_attr_truncate_i(attr_ni, base_ni->attr_list_size, HOLES_NO) != 0) {
-+	if (err == -ENOSPC && attr_ni->mft_no == FILE_MFT &&
-+		NInoNonResident(attr_ni)) {
-+		retry_err = ntfs_attrlist_repack(attr_vi, attr_ni,
-+					base_ni->attr_list_size);
-+		if (retry_err) {
-+			ntfs_error(base_ni->vol->sb, "Failed to repack attribute list");
- 			iput(attr_vi);
-+			return retry_err;
-+		}
-+
-+		retry_err = ntfs_attr_truncate_i(attr_ni, base_ni->attr_list_size,
-+						 HOLES_NO);
-+		if (retry_err) {
- 			ntfs_error(base_ni->vol->sb,
--					"Failed to truncate attribute list of inode %#llx",
--					(long long)base_ni->mft_no);
--			return -EIO;
-+				   "Failed to resize attribute list after repack");
-+			iput(attr_vi);
-+			return retry_err;
- 		}
- 	} else if (err) {
- 		iput(attr_vi);
- 		ntfs_error(base_ni->vol->sb,
- 			   "Failed to truncate attribute list of inode %#llx",
- 			   (long long)base_ni->mft_no);
--		return -EIO;
-+		return err;
-+	}
-+
-+	/*
-+	 * Reserve the maximum legal list size while the MFT metadata area is
-+	 * still easy to allocate contiguously. This prevents a later list entry
-+	 * from needing another mapping-pairs byte in the full base MFT record.
-+	 * Failure to obtain the optional reserve must not reject the current
-+	 * metadata update; the repack retry above remains available if needed.
-+	 */
-+	if (base_ni->mft_no == FILE_MFT && NInoNonResident(attr_ni) &&
-+		attr_ni->allocated_size < NTFS_MAX_ATTR_LIST_SIZE) {
-+		retry_err = ntfs_attr_expand(attr_ni, base_ni->attr_list_size,
-+					     NTFS_MAX_ATTR_LIST_SIZE);
-+		if (retry_err == -ENOSPC) {
-+			retry_err = ntfs_attrlist_repack(attr_vi, attr_ni,
-+					NTFS_MAX_ATTR_LIST_SIZE);
-+			if (retry_err == -ENOSPC)
-+				retry_err = 0;
-+		}
-+		if (retry_err) {
-+			ntfs_error(base_ni->vol->sb,
-+				   "Failed to reserve attribute list space");
-+			iput(attr_vi);
-+			return retry_err;
-+		}
- 	}
+ static inline void ntfs_inc_free_mft_records(struct ntfs_volume *vol, s64 nr)
+ {
+-	if (!NVolFreeClusterKnown(vol))
+-		return;
+-
+ 	atomic64_add(nr, &vol->free_mft_records);
+ }
  
- 	i_size_write(attr_vi, base_ni->attr_list_size);
-@@ -96,14 +273,15 @@ int ntfs_attrlist_update(struct ntfs_inode *base_ni)
- 	if (NInoNonResident(attr_ni) && !NInoAttrListNonResident(base_ni))
- 		NInoSetAttrListNonResident(base_ni);
+ static inline void ntfs_dec_free_mft_records(struct ntfs_volume *vol, s64 nr)
+ {
+-	if (!NVolFreeClusterKnown(vol))
+-		return;
+-
+ 	atomic64_sub(nr, &vol->free_mft_records);
+ }
  
--	if (ntfs_inode_attr_pwrite(attr_vi, 0, base_ni->attr_list_size,
--				   base_ni->attr_list, false) !=
--	    base_ni->attr_list_size) {
-+	written = ntfs_inode_attr_pwrite(attr_vi, 0, base_ni->attr_list_size,
-+					 base_ni->attr_list, false);
-+	if (written != base_ni->attr_list_size) {
-+		err = written < 0 ? (int)written : -EIO;
- 		iput(attr_vi);
- 		ntfs_error(base_ni->vol->sb,
- 			   "Failed to write attribute list of inode %#llx",
- 			   (long long)base_ni->mft_no);
--		return -EIO;
-+		return err;
- 	}
- 
- 	NInoSetAttrListDirty(base_ni);
-diff --git a/fs/ntfs/inode.c b/fs/ntfs/inode.c
-index f40f35afcda9a..cc5818d50e3e8 100644
---- a/fs/ntfs/inode.c
-+++ b/fs/ntfs/inode.c
-@@ -3745,6 +3745,7 @@ static s64 __ntfs_inode_non_resident_attr_pwrite(struct inode *vi,
- 			u64 rl_length = 0;
- 			s64 vcn;
- 			struct runlist_element *rl;
-+			int bio_err;
- 
- 			lcn_count = max_t(s64, 1, ntfs_bytes_to_cluster(vol, attr_len));
- 			vcn = ntfs_pidx_to_cluster(vol, folio->index);
-@@ -3788,8 +3789,15 @@ static s64 __ntfs_inode_non_resident_attr_pwrite(struct inode *vi,
- 					goto err_unlock_folio;
- 				}
- 
--				submit_bio_wait(bio);
-+				bio_err = submit_bio_wait(bio);
- 				bio_put(bio);
-+				if (bio_err) {
-+					ntfs_error(vi->i_sb,
-+						   "Synchronous attribute write failed (%d)",
-+						   bio_err);
-+					ret = bio_err;
-+					goto err_unlock_folio;
-+				}
- 				vcn += rl_length;
- 				offset += length;
- 			} while (lcn_count != 0);
 -- 
 2.53.0
 
