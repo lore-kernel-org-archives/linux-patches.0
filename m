@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E0B47A88C;
-	Wed, 23 Sep 2026 14:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED6953B352;
+	Wed, 23 Sep 2026 14:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175198; cv=none; b=Smmf0lP6UMEi3P4aDYKA/TwYQxMH9szuQRVBeHoe1J2q5sZbK+DNiScSbVYpMRAnRsDnj6Oi1IGW2AUTB9s4rJgXWeancfblvV2LkLE/XmpTnk+orcaPEEPDBXKjNNLU/gWTzoLf3VQK3uXnyDyo7vJ/DSLeahed7kqlg85fTU8=
+	t=1790175201; cv=none; b=sK2xHYyUF3LVcKe+cP0MYHTBceGRhqs4WIrJ/TmI+9AN4gLONJo54vLvQ+ig27ykBD6j+BplCnQ57kiO7AK4Iz+WnW+1asEIyF2949oR276aiUD7sWz81oeUZzBf35D+TYyJ/BYHO9nrtBZYZU3bNm6POKQbQU9+1liL0n2vN8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175198; c=relaxed/simple;
-	bh=vqjGcraLFL+A4Ghy/E0ZliTHf9ARZ1M0oxBYwhDwjHA=;
+	s=arc-20240116; t=1790175201; c=relaxed/simple;
+	bh=xYFQoMuS3jQj2+WLL+dapcrXsk/85XgT3bUFXlrUF8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDWyiu1ZcbrBAtOQJzpxyHg141Zh3UDC73mLMsDdu/yl1CHb2iIZduUsYnZk1L/yBHvSyJpvJscLHvxcEWxiwmP0RS18i1RA7yhofygvhGLdIMP3Odxl97FprQt89kENgMTeM/1hVCCiEh0qG/ap+aH8bsmH5zvvgK91NzeNJh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfqMO56l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GVls2DjQSUB+hD6Bhp5Ej5DIKs/U7zxm5qoM7QcANqoT5ZkTgaESM15FOjdLMejW2oF5c8S8/kcYGqKjzs8nryKkadN/TlrALZm9Jjj/ewkTuHo8E1mmu+TeF5bBLLjqcyxSoBcirgMOSqcts5lYBs2+rR2Mh43Y3tT0bVkSDXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fp5cgU+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfqMO56l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988831F000FF;
-	Wed, 23 Sep 2026 14:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fp5cgU+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6A81F000FF;
+	Wed, 23 Sep 2026 14:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175197;
-	bh=BFmB7ULHW7MK4tiLTXxtjN+VlWRC7OtvMXLtnr1ijm4=;
+	s=korg; t=1790175199;
+	bh=st4bjs8S/ycTfG38VNrd+JMqM7hS1Cw0atxrPXhVnAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DfqMO56l04EynM7onddF+l7tE3MHQtnEjgrxHnwDkUAug/Tr5dpvkvL0iGTpHmkVf
-	 /TnDvr2UURQNRGnnVCVl2/6K20+9ti20vqg7DKOZ5rNEIszW558ZhpT3EFK9/Nev+z
-	 V2voHAZoyexU9nBlg6vxcxsq6331EPAlkI45yRd8=
+	b=fp5cgU+L6dhns1dLPxiZ6PF57DELQqc+lzcEoXFtC6v4KWGEjGlvRyfU1T0psL3dW
+	 Xui6rxv8wsW3p0h9BO+Dn62JoYXEmpc6jJG2iLZJNWoOsYeTY5y4SFfDlOsvFauZes
+	 ddTezKEqzU2+s3+IDSvHug8TxwVkiD0oTK/4BRfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Frank Sorenson <sorenson@redhat.com>,
 	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.18 350/398] smb: client: fix unaligned access in WSL reparse point parser
-Date: Wed, 23 Sep 2026 16:07:04 +0200
-Message-ID: <20260923140652.504258386@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 351/398] smb: client: fix next_buffer UAF and NextCommand bounds in compound PDUs
+Date: Wed, 23 Sep 2026 16:07:05 +0200
+Message-ID: <20260923140652.529598363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -55,91 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit e1aeaf79dea51e6065da56924bc07e22d59012ac upstream.
+commit 05762c5bc1cfdcac36747994fde2c04387a457f1 upstream.
 
-When wsl_to_fattr() parses WSL extended attributes, it computes a
-payload pointer from ea->ea_data + ea_name_length + 1.  Since the
-smb2_file_full_ea_info struct is __packed and all WSL xattr names are
-6 bytes long, the value pointer always lands at an odd byte offset,
-never satisfying __le32 or __le64 alignment requirements.
+Fix several related bounds checking and pointer lifecycle issues in
+receive_encrypted_standard()'s handling of compound encrypted frames:
 
-The code then casts this pointer to __le32 * or __le64 * and
-dereferences it directly, which may cause alignment faults on some
-architectures.
+- Clear next_buffer after assigning it to server->bigbuf. A stale
+  next_buffer pointer can lead to a use-after-free on subsequent
+  error paths.
+- Update pdu_length to the decrypted plaintext size (buf_size). Using
+  the pre-decryption length allows NextCommand to point into stale
+  ciphertext residue.
+- Reject next_cmd values smaller than MID_HEADER_SIZE(server).
+- Fix an integer overflow in the upper bound check by verifying
+  pdu_length - next_cmd < MID_HEADER_SIZE(server), ensuring the
+  trailing slice is large enough for a header.
 
-Replace all such casts with get_unaligned_le32() and
-get_unaligned_le64() in reparse_mkdev(), wsl_make_kuid(),
-wsl_make_kgid() and wsl_to_fattr().
-
-Closes: https://sashiko.dev/#/patchset/20260906200517.725015-1-pc%40manguebit.org
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |    4 ++--
- fs/smb/client/reparse.h |    7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ fs/smb/client/smb2ops.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -1156,9 +1156,9 @@ static bool wsl_to_fattr(struct cifs_ope
- 			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
- 		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
--			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
-+			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
- 				return false;
--			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
-+			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
- 			fattr->cf_rdev = reparse_mkdev(v);
- 			have_xattr_dev = true;
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -9,6 +9,7 @@
- #include <linux/fs.h>
- #include <linux/stat.h>
- #include <linux/uidgid.h>
-+#include <linux/unaligned.h>
- #include "fs_context.h"
- #include "cifsglob.h"
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5280,6 +5280,7 @@ receive_encrypted_standard(struct TCP_Se
+ 	length = decrypt_raw_data(server, buf, buf_size, NULL, false);
+ 	if (length)
+ 		return length;
++	pdu_length = buf_size;
  
-@@ -22,7 +23,7 @@
+ 	next_is_large = server->large_buf;
+ one_more:
+@@ -5292,8 +5293,15 @@ one_more:
+ 	}
  
- static inline dev_t reparse_mkdev(void *ptr)
- {
--	u64 v = le64_to_cpu(*(__le64 *)ptr);
-+	u64 v = get_unaligned_le64(ptr);
- 
- 	return MKDEV(v & 0xffffffff, v >> 32);
- }
-@@ -30,7 +31,7 @@ static inline dev_t reparse_mkdev(void *
- static inline kuid_t wsl_make_kuid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 uid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 uid = get_unaligned_le32(ptr);
- 
- 	if (cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_UID)
- 		return cifs_sb->ctx->linux_uid;
-@@ -40,7 +41,7 @@ static inline kuid_t wsl_make_kuid(struc
- static inline kgid_t wsl_make_kgid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 gid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 gid = get_unaligned_le32(ptr);
- 
- 	if (cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_GID)
- 		return cifs_sb->ctx->linux_gid;
+ 	if (next_cmd) {
+-		if (WARN_ON_ONCE(next_cmd > pdu_length))
++		if (next_cmd < MID_HEADER_SIZE(server) ||
++		    next_cmd > pdu_length ||
++		    pdu_length - next_cmd < MID_HEADER_SIZE(server)) {
++			unsigned int max_next = pdu_length > (unsigned int)MID_HEADER_SIZE(server) ?
++					pdu_length - (unsigned int)MID_HEADER_SIZE(server) : 0;
++			cifs_server_dbg(VFS, "invalid NextCommand offset %u out of range [%zu, %u]\n",
++					next_cmd, MID_HEADER_SIZE(server), max_next);
+ 			return -1;
++		}
+ 		if (next_is_large)
+ 			next_buffer = (char *)cifs_buf_get();
+ 		else
+@@ -5329,6 +5337,7 @@ one_more:
+ 			server->bigbuf = buf = next_buffer;
+ 		else
+ 			server->smallbuf = buf = next_buffer;
++		next_buffer = NULL;
+ 		goto one_more;
+ 	} else if (ret != 0) {
+ 		/*
 
 
