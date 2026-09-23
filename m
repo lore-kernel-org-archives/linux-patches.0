@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE12C374E64;
-	Wed, 23 Sep 2026 14:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B0B374E64;
+	Wed, 23 Sep 2026 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175226; cv=none; b=OxCPrWvJhOAPdDcjPEef22s+HAd4U1mrvAXNnh/yBpp1rODrfrXtquhOIdtK/RgRhoTnfheEx01djCMU42HVx7WiR+uxg7HF/KXhvAb3F68KspD6lSaRbgk9NAUxm2sDiDdF7mQMP6yOJYgqI59LZiqHNWdk3cOkYAvqUOy+jW0=
+	t=1790175230; cv=none; b=H7VWC75EtPLvbIwWdsnVfxvlnTSqaGbvCJizt7s79xoCCJQ9YxFOZJmLJK6ygtmLhQKTikg6EP4h399M3Mfz+gxoP6CDbxCOeQ8Va9geangDNRMtR0l1bwmXj4dosKTGluqUvKcity++uPKld9b+1VhVPvNjecgUXjjyhDS5UYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175226; c=relaxed/simple;
-	bh=wCxrsUoUncHegxjJyFHcKQagK8cVOyeopymOZ/rJztU=;
+	s=arc-20240116; t=1790175230; c=relaxed/simple;
+	bh=mpSmYPC8TgqdH1sH+KqCuS2BoRs7I9IJpux/YVTtrp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7f4qGmkENpKMLnFExMeUDz50/4J1vPTs4PsB+H6Twtdx7yS3n5VJOYGvJ/5tGINUuvjzmXoc2E7vXTBf91UafUiBCFiVxgxzHzVohXRCHm15YhMfU5kYsD0/t8tGiavqFVctcMja4CH/VsCEb/3wt/ZLYjnsmmRV3EFp4mRroM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hskSGcx7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mkjVcdVCVhpqFYk5fRxl2bS3OMQNhZeeMd6+HqBqGWIl7GxCDXE5MV73jOo4hsY4LtVXZhTazB6bV1QMdFoVTjbWrX9thNbEZMq1eUhMUBRM3zCJPZA5xZzMsIcajRVekZdBWXmjIpiqnca++RDFpLAjtX0VenxN3dT1EGTlkfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wG5yTulW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hskSGcx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD41E1F000FF;
-	Wed, 23 Sep 2026 14:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wG5yTulW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457FC1F000FF;
+	Wed, 23 Sep 2026 14:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175225;
-	bh=gvCFfwfhIwaY7fuKRDk4z0ivO4xgSCHmX+cvNAqtY4w=;
+	s=korg; t=1790175229;
+	bh=7GOM1d0Cg4olaAgh6sEg0y5PzDFawvJ3f1PGP9mgqLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hskSGcx7dZnBAWWsGHvrt2R0SmYSIlQCUCB48XQJqm5P4Y6VLLhw/V+USNY3HUQH5
-	 ZzFKBE46zklceHmDD4DaysYt7XOO0QzATd87VBBb76GhcFSE1Dw1GBmUb2VDJ+H5mG
-	 yOJouVEIMz5J9yTAWSmRmLQoTajL2rJoxhHuSIAE=
+	b=wG5yTulWmlZ6N5+29LOkQL5si2xaXjtF9W3Ejc3hlYpyBfBPZlnpokGaKaV7dLgug
+	 hV/hor8Ud8CishPCWmA1tmqz/K65AaKA352RzYussjyvcum2xA5pU3zms5r6WTkSwH
+	 BrobwWQsE931X0Ej7C+mEYFfSZV2yFl1LvWL0/4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <lijun01@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 315/398] watchdog: da9063: fix suspend/resume handling of HW_RUNNING watchdog
-Date: Wed, 23 Sep 2026 16:06:29 +0200
-Message-ID: <20260923140651.586966865@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 354/398] smb: client: fix server->total_read for compound encrypted PDUs
+Date: Wed, 23 Sep 2026 16:07:08 +0200
+Message-ID: <20260923140652.606487462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -44,55 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Jun <lijun01@kylinos.cn>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit 7cb575b71ab98194d2e040bded3a7281e089c5ed upstream.
+commit f73726b83e4756fdaa099e1bc1143293bd57ad79 upstream.
 
-da9063_wdt_suspend() and da9063_wdt_resume() only check watchdog_active(),
-when the watchdog is left running by the driver sets
-WDOG_HW_RUNNING in da9063_wdt_probe() but userspace never opens the
-device, so WDOG_ACTIVE remains cleared, the wdt_disable() will not be
-executed in da9063_wdt_suspend. In this case, the suspend callback is
-a no-op and the watchdog keeps counting during system suspend,
-leading to an unexpected system reset.
-Check WDOG_HW_RUNNING and wdd，can fix this issue.
+In receive_encrypted_standard(), server->total_read is left at the
+full decrypted frame size when walking sub-PDUs of a compound encrypted
+frame. As a result, cifs_handle_standard() passes this full size
+to smb2_check_message(), causing the PDU length guards to incorrectly
+validate the entire compound frame instead of the current sub-PDU.
 
-Fixes: a7ceca4398bc8 ("watchdog: da9063: optionally disable watchdog during suspend")
+This allows truncated non-last sub-PDUs to bypass length validation,
+leading to out-of-bounds reads in smb2_get_data_area_len().
+
+Fix this by setting server->total_read to the true length of the
+current sub-PDU: next_cmd for non-last sub-PDUs, and the remaining
+pdu_length for the last one.
+
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Jun <lijun01@kylinos.cn>
-Link: https://patch.msgid.link/20260917013710.2754679-1-lijun01@kylinos.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/da9063_wdt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/watchdog/da9063_wdt.c
-+++ b/drivers/watchdog/da9063_wdt.c
-@@ -271,7 +271,7 @@ static int da9063_wdt_suspend(struct dev
- 	if (!da9063->use_sw_pm)
- 		return 0;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5301,6 +5301,7 @@ receive_encrypted_standard(struct TCP_Se
+ one_more:
+ 	shdr = (struct smb2_hdr *)buf;
+ 	next_cmd = le32_to_cpu(shdr->NextCommand);
++	server->total_read = next_cmd ? next_cmd : pdu_length;
  
--	if (watchdog_active(wdd))
-+	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
- 		return da9063_wdt_stop(wdd);
- 
- 	return 0;
-@@ -285,7 +285,7 @@ static int da9063_wdt_resume(struct devi
- 	if (!da9063->use_sw_pm)
- 		return 0;
- 
--	if (watchdog_active(wdd))
-+	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
- 		return da9063_wdt_start(wdd);
- 
- 	return 0;
+ 	if (*num_mids >= MAX_COMPOUND) {
+ 		cifs_server_dbg(VFS, "too many PDUs in compound\n");
 
 
