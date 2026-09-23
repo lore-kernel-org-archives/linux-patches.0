@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0044FC8D1;
-	Wed, 23 Sep 2026 14:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7D152ED2F;
+	Wed, 23 Sep 2026 14:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174192; cv=none; b=pC4xGw2/RnOtPbs3HP2Am7vxkrYkLBnM3t3FYZ62SOpwrzquizsrzE1saP87Fy73y8jXRQ9k5XnARGSQoxo//3KigrdpcST2YXREVesD+NCSsEEQ2Ft89puDJZFBA0QaPXpf8SjwSV3UYqIaJNs8xSZ/Wb+kjUpLEMsv05lOGSI=
+	t=1790174195; cv=none; b=Ic6xDK6TKF0No4GT3G981L4AgaxfgzjqFUIwEAw1UoE+hgfeNggAFHgWFI54oLpo6w/NTub7Ni0lgykfe61CGXjUDRSQ1GRRZP1ysOF9kngowc8NW/Oe3nVS/ldGPLu3K68dbKSp60EIyQncMCFfMaVZY+1NZPPa0vatV7ImHyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174192; c=relaxed/simple;
-	bh=Lc5SuoQdq7E5CtZd54KVxsEu7eg9aneTEUyZf92eDcw=;
+	s=arc-20240116; t=1790174195; c=relaxed/simple;
+	bh=UnTANAPOGpVu8H1VWkBKGotZNYFG7juzZ+y+9xfVROc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqz6UPbPK6069e6ZdjYDviRdadcXNuL8XAonapn9OElZq/5+ZZpE9lUnGqSR37HYLFhCVeIuX9jfqq57SDfCVuPQ2LCyMr42ve1OBevsEuGnpgA/C1VE7xdo1nLyHr9f9djrlqpZIAliiX2cqKYummZoyt1615cTrDh93ce0HGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/wdYHWt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzJijn6VyJrugSLAln5SV6Qt2PiTOhYufprYiPE5UD5bvOKBDyQyjYLIfDrSANJ+hf3gpHRd08Uyb+Q3Tp9Fg3NQz8iweoon/TeYCLJYFVsHxSEJwNP45+b7UEGyjXwrgZ+QECg1JLEPpHGw6TQL9dxMS0TLExsIh9CAXcG3CnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEz4MFzS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/wdYHWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD0F1F000FF;
-	Wed, 23 Sep 2026 14:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEz4MFzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EE51F000FF;
+	Wed, 23 Sep 2026 14:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174191;
-	bh=YDJ7lybnl4XPDAiM+0DwhS8w8wTZvzW7R6ZChiZ6bcs=;
+	s=korg; t=1790174194;
+	bh=psORWQ5fKWrG5jHCzDh1WDDRF+Y1w2Ztki+oeWy/yjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/wdYHWtfDaYlMrYuYxD7YHUQkGapOU9UZh35A5LcoqoODDsYBKeWAmTH6AtfDe6x
-	 3svTXgnpUDSkaZUSZ3Zgac1rHEhy6K0618+pX00LwKH+qhWCnoTtmzqlY3J+YjoSuZ
-	 dvXRbTe7F64Qi4NByzIkF0GYMw9cqw/eGNvF4V5w=
+	b=FEz4MFzSwSSA1uQJqEYfEiyFT925jZmSRba37TDV8uNp1K4bQ9TY+rdkdLm18mD8Z
+	 CLlYN8xJ5rJByhCktCMUaxXoGXgVsexFgEMiCye9o0dkP0tVUB2+y3vp6ffDyoqM+1
+	 FvJZ0YswW9EWS6yxayMKmdOzaoEMd6JcdBta3f0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
+	Liu Jian <liujian56@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/398] xfrm: fix compat ALLOCSPI request use-after-free
-Date: Wed, 23 Sep 2026 16:01:34 +0200
-Message-ID: <20260923140643.959564187@linuxfoundation.org>
+Subject: [PATCH 6.18 021/398] xfrm: add missing rcu_read_lock(), skb_dst_force() and dev_hold() for xfrm_trans_reinject()
+Date: Wed, 23 Sep 2026 16:01:35 +0200
+Message-ID: <20260923140643.984923166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,71 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d1ebd9081879fd9ae9c8fb7e8928f19cc88ae320 ]
+[ Upstream commit d2f5082f9e84653fa1a9e8aebaaff23e688f5e19 ]
 
-xfrm_state_netlink() builds the ALLOCSPI response with
-dump_one_state(), which already calls alloc_compat() with the response
-skb and header.
+syzbot reported a suspicious RCU usage warning in ip6_pkt_drop():
 
-xfrm_alloc_userspi() then calls alloc_compat() again, but passes the
-original request skb and its header. For a compat request, the
-translator therefore interprets the 228-byte compat xfrm_userspi_info
-as the 232-byte native layout and reads four bytes past the declared
-payload. It also publishes the translated child through the request's
-frag_list.
+  WARNING: suspicious RCU usage in ip6_pkt_drop
+  include/net/addrconf.h:389 suspicious rcu_dereference_check() usage!
 
-A multicast clone of the request shares skb_shared_info and can observe
-that child. xfrm_user_rcv_msg() frees it after the request handler
-returns, racing a compat receiver which may still be copying from it and
-resulting in a use-after-free.
+  Call Trace:
+   __in6_dev_get_safely include/net/addrconf.h:389 [inline]
+   ip6_pkt_drop+0x596/0x610 net/ipv6/route.c:4620
+   ip6_pkt_discard+0x1c/0x30 net/ipv6/route.c:4651
+   xfrm_trans_reinject+0x324/0x630 net/xfrm/xfrm_input.c:806
+   process_one_work kernel/workqueue.c:3322 [inline]
+   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+   worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
 
-Remove the redundant conversion. The response keeps its correct compat
-translation from dump_one_state(), and no child is attached to the
-inbound request.
+When commit 4f4920669d21 ("xfrm: Reinject transport-mode packets through
+workqueue") converted xfrm_trans_reinject from a tasklet to a workqueue,
+the reinjection loop ceased running in softirq context. Workqueue workers
+run in process context where local_bh_disable() does not enter an RCU
+read-side critical section under CONFIG_PREEMPT_RCU.
 
-Fixes: 5f3eea6b7e8f ("xfrm/compat: Attach xfrm dumps to 64=>32 bit translator")
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
+Because finish callbacks (such as ip6_rcv_finish) expect to run under an
+RCU read lock (performing route lookups, l3mdev lookups, and accessing
+RCU-protected data structures), invoking them in workqueue context without
+rcu_read_lock() triggers RCU lockdep warnings.
+
+Furthermore, packets queued to the workqueue via xfrm_trans_queue_net()
+may carry non-refcounted (noref) dst entries (e.g. from ip_route_input_noref).
+Additionally, on netdevice unregistration, dst_dev_put() replaces dst->dev
+with blackhole_netdev, so dst entries do not keep skb->dev alive while
+queued in the workqueue.
+
+Fix these issues by:
+1. Calling skb_dst_force(skb) in xfrm_trans_queue_net() while still in the
+   caller's RCU section to ensure dst is reference-counted before queuing.
+2. Holding a reference on skb->dev via dev_hold()/dev_put() across workqueue
+   deferral so skb->dev remains valid during finish() callback processing.
+3. Acquiring rcu_read_lock() around the finish callback invocation loop in
+   xfrm_trans_reinject().
+
+Fixes: 4f4920669d21 ("xfrm: Reinject transport-mode packets through workqueue")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Liu Jian <liujian56@huawei.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ net/xfrm/xfrm_input.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 4e80e1b5ef4b4..2560f3653bd38 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1830,7 +1830,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct xfrm_state *x;
- 	struct xfrm_userspi_info *p;
--	struct xfrm_translator *xtr;
- 	struct sk_buff *resp_skb;
- 	xfrm_address_t *daddr;
- 	int family;
-@@ -1896,17 +1895,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		goto out;
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index cfee63a6c87d2..b4c1cee1dbae7 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -794,12 +794,17 @@ static void xfrm_trans_reinject(struct work_struct *work)
+ 	spin_unlock_bh(&trans->queue_lock);
+ 
+ 	local_bh_disable();
++	rcu_read_lock();
+ 	while ((skb = __skb_dequeue(&queue))) {
+ 		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
++		struct net_device *dev = skb->dev;
+ 
+ 		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
++		if (dev)
++			dev_put(dev);
+ 		put_net(net);
  	}
++	rcu_read_unlock();
+ 	local_bh_enable();
+ }
  
--	xtr = xfrm_get_translator();
--	if (xtr) {
--		err = xtr->alloc_compat(skb, nlmsg_hdr(skb));
--
--		xfrm_put_translator(xtr);
--		if (err) {
--			kfree_skb(resp_skb);
--			goto out;
--		}
--	}
--
- 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
+@@ -815,12 +820,18 @@ int xfrm_trans_queue_net(struct net *net, struct sk_buff *skb,
+ 	if (skb_queue_len(&trans->queue) >= READ_ONCE(net_hotdata.max_backlog))
+ 		return -ENOBUFS;
  
- out:
++	if (skb_dst(skb) && !skb_dst_force(skb))
++		return -EHOSTUNREACH;
++
+ 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
+ 
+ 	hold_net = maybe_get_net(net);
+ 	if (!hold_net)
+ 		return -ENODEV;
+ 
++	if (skb->dev)
++		dev_hold(skb->dev);
++
+ 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
+ 	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
+ 	spin_lock_bh(&trans->queue_lock);
 -- 
 2.53.0
 
