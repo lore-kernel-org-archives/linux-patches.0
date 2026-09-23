@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6792C4A2058;
-	Wed, 23 Sep 2026 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044F75383CD;
+	Wed, 23 Sep 2026 14:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174586; cv=none; b=QLfJ9JNtU8BL8Cod2L2rAte67kdOvozMEFsleo5JloZ4dPvZjtQjgIlbIiTlxQ65jH+u1pW7VPF4FfW9KwNXpJVs9jB3jGQD4AtG6e0LVzFcR2jw360k8ti/z7cPM/mbZD6MrUFe3qxm1Y3nd52QTCsNadWmug2YNhyqsoolgBc=
+	t=1790174590; cv=none; b=J6TeiQi3Tadz0frXfkBo0Ak0uEx99YKagQlqyBBGOoeYloWtvDBvq7MiP9uI9B3Njs66KXwzdFM5+E2AV63SfUKQiLu9aafexne4tBuxX82WLoktT7UwKczaHImoa4xYaRa0H53BmQF5bYxfcdICv19SClqhXs7zqadBh6XVWgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174586; c=relaxed/simple;
-	bh=vilnHQ5WdlmwokMZTh4JWrsOLUcenIP2h+AGoNnmtm4=;
+	s=arc-20240116; t=1790174590; c=relaxed/simple;
+	bh=jLhTJQ5a5PKA4FQDTBH8V5GgXVhrw7MzH8/3PlvCmMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/Mg5N8GLxFOx5lPpOVR0y355ITDhlaJ5iAFBHr1ZhDPePA6HkxXPg2sEfmY/OZy967Sf9bPpEQwDFVqpLFNO2SY6OJKgeMcVZpl411oK+inRjH5xlt/vpoeNS0JABBNSphrMkznsXHB3hKP6oS4WHE0EHmyUtnQcRylRT/PeEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vq1ObHXt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGuQUyePi+Y+28/fHPZYmf/vQM+iHXF2SbbG8J+E6VWW9ZMS70DMQTodAFznW1/t8eG27pGog/ConWZLdGKebB5qnFtkAXvGFtwwqjBQNKablrPhu6QLY5FbBYsTvaAhSydRKxjt6JLnQQeOmUdjWoGeYOGER/Dk+88yPpAePJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l63szVgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vq1ObHXt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86A51F000FF;
-	Wed, 23 Sep 2026 14:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l63szVgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC4C1F00898;
+	Wed, 23 Sep 2026 14:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174585;
-	bh=TfginCgD2ZUd1yA4ohvxdDO7QK1U9x2RYQIH2TcSAdU=;
+	s=korg; t=1790174588;
+	bh=6pPwl/ON9nt59soQoZBy3IOLmUWAQzfnoN7ooWfgkr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vq1ObHXt5L98pA1i2UogFojcE5O8fOuwPXbVctYrK7gMYSI1cgNgjXVJRSXM32S2L
-	 REZ5Mdv837g79Rnvrp1It1xLEeQ7s5Ps7Nz/HYt6+ogctu8bZyw4o5xzLktUMwZZqc
-	 EYkQq9KJHhGPHj9UPOFB0HIvcjlxLQDkn9IKdTMg=
+	b=l63szVgFWuoLs5EPDASB7BhXlDE3rC0lgNXLiam3cxVlAkE74lgXhzY+mmF2UKeVn
+	 AiCVaYKloHF1Wnu/r/BWZiewnoBfIXeC6pdBeC51t24haRODWG2QcTm3Ir4zeI0FKp
+	 g96lwX/wGTL1VGgEMIfMKYZgZQbGhLkL0695goq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jann Horn <jannh@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/398] powerpc/iommu: Fix the overflow validation in iommu_tce_check_ioba
-Date: Wed, 23 Sep 2026 16:03:56 +0200
-Message-ID: <20260923140647.637811751@linuxfoundation.org>
+Subject: [PATCH 6.18 163/398] futex: Also allocate private hash on vfork()
+Date: Wed, 23 Sep 2026 16:03:57 +0200
+Message-ID: <20260923140647.662426238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 0b271f7d7f5ed45bc498a03ce0aa9cfd8402fc71 ]
+[ Upstream commit b61b6f95d6722ddbbbd09e689fa41b55fd36f9a5 ]
 
-The commit b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking") unified
-IOBA parameter checking across KVM and VFIO into iommu_tce_check_ioba().
-While doing so, the passed in argument npages is ignored and constant
-value '1' is used leaving out a possible overflow as the callers can
-legitimately be using npages > 1 for H_STUFF_TCE or H_PUT_TCE_INDIRECT
-cases.
+As Jann demonstrated, it is entirely feasible to access the mm through vfork().
+Therefore we need to allocate a private hash on vfork() as well as any other
+CLONE_VM user.
 
-Fix this by accounting for 'npages', checking for arithmetic overflow,
-and verifying that the entire requested range (ioba - offset + npages)
-does not exceed the table capacity 'size'.
+Specifically, it must be avoided to have (private) futex waiters before
+allocating the private hash.
 
-Fixes: b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking")
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Fixes: ee9dce44362b ("futex: Drop CLONE_THREAD requirement for private default hash alloc")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260911090447.GT788244@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/fork.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index 244eb4857e7f4..0a7d14f651e8a 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1075,7 +1075,7 @@ int iommu_tce_check_ioba(unsigned long page_shift,
- 	if (ioba < offset)
- 		return -EINVAL;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 295cf8cf719ea..7be5736d44c7f 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1918,9 +1918,9 @@ static bool need_futex_hash_allocate_default(u64 clone_flags)
+ {
+ 	/*
+ 	 * Allocate a default futex hash for any sibling that will
+-	 * share the parent's mm, except vfork.
++	 * share the parent's mm.
+ 	 */
+-	return (clone_flags & (CLONE_VM | CLONE_VFORK)) == CLONE_VM;
++	return clone_flags & CLONE_VM;
+ }
  
--	if ((ioba + 1) > (offset + size))
-+	if ((ioba + npages < ioba) || (ioba - offset + npages > size))
- 		return -EINVAL;
- 
- 	return 0;
+ /*
 -- 
 2.53.0
 
