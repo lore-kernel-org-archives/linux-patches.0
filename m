@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F443A255A;
-	Wed, 23 Sep 2026 14:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C547F3C0;
+	Wed, 23 Sep 2026 14:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173788; cv=none; b=jfv63XtNGT6y1J5cf85x8u+SRiyXzKSf7W0JphGo/gPiN32/scwIDU7BSVAw0TV29vFgbydY2vKfCxbB3NFXoTebWJUTKEDO7v024H3rZxMI9Sy2NLaivIXrpN8uJV5SLz8i1oXWhcVe9h8pz86FUP3J0Epid7HOz8aI9nW/nHI=
+	t=1790173788; cv=none; b=HtCcBVKpRbUMYrJSDSRSVDdReBfWPLlHssde0PsILm5tBP6UTHzUe6an76ogU/6FgtgGLnacxBEjeMCD/I7yRjAA3by3lz8cXBeZbrN1QsfFpthnKwRSl0mxBliFvw6y5qyZ88paw2mS/xa3Q1wgZIuI/5ft31ke366FNhHXHWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790173788; c=relaxed/simple;
-	bh=4KEHWTQzqzoqgN82nRhDsiq0hjegHTqpI+R71GRxAWM=;
+	bh=XVIK8UihrqRjOfyUDmZFVBXJQgJ7/c832kGF08i/lVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJWdJ71guHjjiHbNmethgr2/VYbn/NlonlwOSXl46Avf8V5b8OuJ5NVTLQPUCpQr7hV4Bs9HqFmvyr/PuyCQ5RJNoThbtH3os3YTCd1TXD88umQFJqXpInSxUKeH1GVTdHa8ZDxju7uLo71pSAXOGEZLtg/pnYvjtkEdsWXnKxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0fRcoIF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3/6GnpIrKBwsSh7CMVD6UNG/m32VCst9+xq/5WKnzj+sjcLrYPJWOdW/o2onftea7KSHUa7/row3AAds78Y8/49yQJO/3s73Wygf31gDeAjgF0F7acZlVQpvL8lR7EqDaSqOqiEeKPhW6ifleOaKjzdDzxiOyIZsjp0XbRNBU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku/FnkOZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0fRcoIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D741F00893;
-	Wed, 23 Sep 2026 14:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku/FnkOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E8E1F000FF;
+	Wed, 23 Sep 2026 14:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173786;
-	bh=4TmHeC7A1pY3bpiUusr8664/AQbe4e/NIIftf8TrBPk=;
+	s=korg; t=1790173783;
+	bh=XaFtfz4ZYzjbQVs3djhprSAsGpzRqeJiwRuFe+IAoWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0fRcoIFcP+kId4YU+mmTf/DFzvcGKEPHsvHt8z0bUMtAe9tMM7zbP7IZYCibS2/z
-	 LXys3pVv23B90AI28UIGG4yndKA75ItJ6l0CghSNqNC831NoAWSqoU/SfYdsW2Xrzi
-	 Jw9+3lyeE9+GT4PeabIY5eoqw/L22TtZs4ETdxKs=
+	b=Ku/FnkOZy/X7PPz7uFuR69B2flxVy3ZdRKpaO1dIglICMqjewfakWpfj+sO/AcFM9
+	 H8csnjaG4xKb8HmA5Xt29f/7Rf+CM+8cs311CVy9oee+JxX94F3ps2ssyiyz78AoeZ
+	 eQ8G2pm+JILfekAzqezot0ZWU3868riq4dKdINX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Maillard <florian.maillard@mailoo.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 344/438] mmc: rtsx_pci_sdmmc: ignore broken write-protect on ThinkPad X260
-Date: Wed, 23 Sep 2026 16:06:05 +0200
-Message-ID: <20260923140653.734884096@linuxfoundation.org>
+Subject: [PATCH 7.2 343/438] mmc: mxcmmc: cancel data work and watchdog on remove
+Date: Wed, 23 Sep 2026 16:06:04 +0200
+Message-ID: <20260923140653.708355547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,45 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Maillard <florian.maillard@mailoo.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 9c182bc5d7817437a7d04ab96133f9191846d93d upstream.
+commit d3a421c82412344022982d5b91ba23194a0a6f29 upstream.
 
-The Realtek RTS522A card reader in the Lenovo ThinkPad X260
-(subsystem 17aa:504a) incorrectly reports inserted SD cards as
-write-protected.
+mxcmci_remove() frees the host through the devm tail, but neither it nor
+mmc_remove_host() drains the driver's own asynchronous state.
+host->watchdog, a 10 s timer armed on the DMA path in mxcmci_setup_data(),
+is deleted only by the DMA- and IRQ-complete paths, which the remove path
+does not explicitly drain; it can therefore fire after the host is freed
+and dereference it in mxcmci_watchdog().  host->datawork, armed from the
+IRQ handler on the PIO path, is not cancelled by the remove path either.
 
-This causes the MMC core to expose the card as read-only:
+Free the devm-registered IRQ, then cancel datawork and delete the watchdog
+in mxcmci_remove(), before dma_release_channel().  Freeing the IRQ first
+keeps a trailing handler from re-arming datawork between the cancel and
+the host free.  Both callbacks are non-self-rearming.
 
-  mmcblk0: mmc0:aaaa SN256 238 GiB (ro)
+This issue was found by an in-house static analysis tool.
 
-and /sys/block/mmcblk0/ro reports 1.
-
-Setting MMC_CAP2_NO_WRITE_PROTECT makes the card writable again.
-Limit the quirk to the affected Lenovo subsystem.
-
-Assisted-by: ChatGPT:GPT-5.6 Sol
-Signed-off-by: Florian Maillard <florian.maillard@mailoo.org>
+Fixes: f6ad0a481342 ("mmc: mxcmmc: fix bug that may block a data transfer forever")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/host/mxcmmc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1425,6 +1425,11 @@ static void realtek_init_host(struct rea
- 		mmc->caps = mmc->caps | MMC_CAP_AGGRESSIVE_PM;
- 	mmc->caps2 = MMC_CAP2_NO_PRESCAN_POWERUP | MMC_CAP2_FULL_PWR_CYCLE |
- 		MMC_CAP2_NO_SDIO;
+--- a/drivers/mmc/host/mxcmmc.c
++++ b/drivers/mmc/host/mxcmmc.c
+@@ -1173,6 +1173,10 @@ static void mxcmci_remove(struct platfor
+ 
+ 	mmc_remove_host(mmc);
+ 
++	devm_free_irq(&pdev->dev, platform_get_irq(pdev, 0), host);
++	cancel_work_sync(&host->datawork);
++	timer_delete_sync(&host->watchdog);
 +
-+	if (pcr->pci->device == 0x522a &&
-+	    pcr->pci->subsystem_vendor == PCI_VENDOR_ID_LENOVO &&
-+	    pcr->pci->subsystem_device == 0x504a)
-+		mmc->caps2 |= MMC_CAP2_NO_WRITE_PROTECT;
- 	mmc->max_current_330 = 400;
- 	mmc->max_current_180 = 800;
- 	mmc->ops = &realtek_pci_sdmmc_ops;
+ 	if (host->pdata && host->pdata->exit)
+ 		host->pdata->exit(&pdev->dev, mmc);
+ 
 
 
