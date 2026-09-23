@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5F74A3850;
-	Wed, 23 Sep 2026 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E534A3850;
+	Wed, 23 Sep 2026 14:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172610; cv=none; b=RXCRqYiMEZUYLSx6pKUda7dEMoJT4iGKMoe9yfkM+pASd1plq/nQbDHeXoeI7NilsQr58Z4Ai/h+UmwBjMgT/C/ei7sJ5TkdlWlrkOgSceNpCeI6OSjeZw7oQP6aHqrma7W+fVB/dY8L56o2mXJJfE6W0wv+jX6DI8Go9Pd7WOU=
+	t=1790172614; cv=none; b=H1fNi3RfU85LfQ5C6WE/fQUAJvz6PnkV5YS1rbzg8jLFnqPvh+Of3IcC3AOdD/VsRSmcXZxmD8EWLU6YCK0fc90fzGcZhxSj6lHGdQlugq8qRLlrXRvVY7YSRCab7GuA0CADechnEqoC2qfLFuaw7TUf2Y3wMVYOAJ3HpFVeP48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172610; c=relaxed/simple;
-	bh=+4KBdo6NB5/LqzVsqcmQK6SEDR3fzSS/uoVonszmTjg=;
+	s=arc-20240116; t=1790172614; c=relaxed/simple;
+	bh=YzsW/eFuTRvQEByVf3AeaYe236H9qr+/LfEf9Po8VcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsvXc1C9LSk8xgEk6OpxwiAjD+3ZucJI+EmCK47bjb0rTIi2R4xpcCCsk1x1XmiX2UE2qTBFDLrt2Mcw/ug2Fo3tfQpChJ9QWMn7Z0Tj/w2JYjQ12+a8e668fGU1b72A6a/XUiBuJ1K554wW1PLJ1nkKF0wk8z2txrLjG1gkzfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClY6BoVc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ihFwDR888YIg7u2azTEhyeM9jlOuPuuUBl6g0l+cs+40a5rajwFGG2tWsuTgDbuj311a0dpHP/x/YKR7a3E7c2LgE6o8mYYwZ1LJfmtIfwHjDZy+6RNKIFCz8Ez9zf6YbnIPtPY4weQlq1qIsf7g38IuQPqGjKMyd3DWNXR9u+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6C6XK/d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClY6BoVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF69D1F000FF;
-	Wed, 23 Sep 2026 14:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6C6XK/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93F31F000FF;
+	Wed, 23 Sep 2026 14:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172609;
-	bh=nXsNC8ADAR+qQus8gNz/qlvDNe0luOu/7Fvd6B67JHo=;
+	s=korg; t=1790172612;
+	bh=wIPnTa5pXys36TGcaH1uTQPLpzoGcqtJgvkK/9Xxlg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ClY6BoVcy9mnCEhopt3PPhTRs6a0mGH283wgoXZ9Ar6egaoNFj1Ot32b8C8oiVcPT
-	 wTLt6yYa+r4nOtJzAD9XniIaSHlsKRmQo8gyOqwf0OHqYQa1fb10EZMtWkuE5JQ56K
-	 y8JWsIBuz06ATdbBOgOyjhxIWAet7Vf+Y3gR5aVI=
+	b=L6C6XK/d2H7BArPLVH70ighAWuzOBViI6zYFL+eIsTMorsH2SFWeguG6ewmfkUJ0F
+	 iRXN3x7sobdz8aiUyRY/8n3NcjjpGMh4Og0tzePdb2+E1xK9WQrqO11NtdsvuA43+K
+	 ulW3SSd1i4kALime8jmu5pMkwWMgaQbPP1d2gxaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roshan Kumar <roshaen09@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Lucas Tanure <tanure@linux.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 005/438] xfrm: iptfs: fix stack OOB read in iptfs_skb_reset_frag_walk()
-Date: Wed, 23 Sep 2026 16:00:26 +0200
-Message-ID: <20260923140644.902839362@linuxfoundation.org>
+Subject: [PATCH 7.2 011/438] arm64: dts: amlogic: t7: use the real UART pclk
+Date: Wed, 23 Sep 2026 16:00:32 +0200
+Message-ID: <20260923140645.067063002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,82 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roshan Kumar <roshaen09@gmail.com>
+From: Lucas Tanure <tanure@linux.com>
 
-[ Upstream commit d042487dc118e494db2e2c1382310255c90ff544 ]
+[ Upstream commit 882de800bf583dd15969836088789edbf035a944 ]
 
-iptfs_skb_reset_frag_walk() advances to the fragment containing @offset
-with an unbounded loop:
+uart_a listed the 24MHz crystal for all three of its clocks because the
+T7 clock controller driver did not exist when these boards were added.
 
-	while (offset >= walk->past + walk->frags[walk->fragi].len)
-		walk->past += walk->frags[walk->fragi++].len;
+That leaves the real UART bus clock without a user, so the kernel
+turns it off when it disables unused clocks at the end of boot, and
+the board hangs.
 
-walk->fragi is advanced and walk->frags[walk->fragi] is dereferenced
-without ever checking fragi against walk->nr_frags. When the requested
-offset is at or beyond the total length spanned by the walk's fragments,
-fragi runs past nr_frags and off the end of the fixed-size on-stack
-frags[MAX_SKB_FRAGS + 1] array, reading out-of-bounds stack memory.
+Update the board DTS files to point uart_a's pclk to CLKID_SYS_UART_A
+instead of the dummy crystal clock.
 
-The two callers behave differently: iptfs_skb_add_frags() already guards
-against this with
-
-	if (!walk->nr_frags ||
-	    offset >= walk->total + walk->initial_offset)
-		return len;
-
-but iptfs_skb_can_add_frags() has no such guard and calls
-iptfs_skb_reset_frag_walk() unconditionally, so it performs the
-out-of-range walk. Its own "fragi < walk->nr_frags" bound check runs only
-afterwards, too late to prevent the read.
-
-This is reachable from the receive path: a crafted IP-TFS (AGGFRAG)
-payload delivered to an IPTFS SA drives iptfs_reassem_cont() ->
-iptfs_skb_can_add_frags() with an offset past the fragment total, e.g.:
-
-  BUG: KASAN: stack-out-of-bounds in iptfs_skb_reset_frag_walk+0x235/0x250
-  Read of size 4 at addr ffff888008ad7210 by task repro/345
-   iptfs_skb_reset_frag_walk+0x235/0x250 net/xfrm/xfrm_iptfs.c:392
-   iptfs_skb_can_add_frags+0x155/0x310  net/xfrm/xfrm_iptfs.c:420
-   iptfs_reassem_cont+0xcf8/0x1140      net/xfrm/xfrm_iptfs.c:902
-   iptfs_input_ordered+0x552/0x670      net/xfrm/xfrm_iptfs.c:1280
-   iptfs_input+0x3d6/0xde0              net/xfrm/xfrm_iptfs.c:1741
-   xfrm_input+0x282f/0x6140             net/xfrm/xfrm_input.c:700
-   xfrm4_esp_rcv+0x93/0x120             net/ipv4/xfrm4_protocol.c:104
-   ip_rcv+0x278/0x2d0                   net/ipv4/ip_input.c:612
-
-Give iptfs_skb_can_add_frags() the same up-front guard that
-iptfs_skb_add_frags() already has, so the walk is never entered with an
-out-of-range offset. When it triggers, the caller falls back to the
-existing linearize-and-copy path, which is safe.
-
-Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
-Reported-by: Roshan Kumar <roshaen09@gmail.com>
-Signed-off-by: Roshan Kumar <roshaen09@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 4fef056588f5 ("arm64: dts: amlogic-t7-a311d2-khadas-vim4: add initial device-tree")
+Fixes: 6f048cc7a635 ("arm64: dts: add board AN400")
+Signed-off-by: Lucas Tanure <tanure@linux.com>
+Assisted-by: Claude:claude-fable-5
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260823115335.102219-2-tanure@linux.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_iptfs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts       | 2 +-
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
-index 597aedeac26eb..2ce15c472cc4d 100644
---- a/net/xfrm/xfrm_iptfs.c
-+++ b/net/xfrm/xfrm_iptfs.c
-@@ -416,6 +416,14 @@ static bool iptfs_skb_can_add_frags(const struct sk_buff *skb,
- 	if (skb_has_frag_list(skb) || skb->pp_recycle != walk->pp_recycle)
- 		return false;
+diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
+index cab2ee9ea0d31..ca7536f772ff1 100644
+--- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
++++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-an400.dts
+@@ -33,7 +33,7 @@ xtal: xtal-clk {
+ };
  
-+	/* Reject an @offset that is at or beyond the end of the walk's data
-+	 * before calling iptfs_skb_reset_frag_walk(), whose fragment-advance
-+	 * loop is otherwise unbounded and would index past walk->frags[].
-+	 * This mirrors the guard already present in iptfs_skb_add_frags().
-+	 */
-+	if (!walk->nr_frags || offset >= walk->total + walk->initial_offset)
-+		return false;
-+
- 	/* Make offset relative to current frag after setting that */
- 	offset = iptfs_skb_reset_frag_walk(walk, offset);
+ &uart_a {
+-	clocks = <&xtal>, <&xtal>, <&xtal>;
++	clocks = <&xtal>, <&clkc_periphs CLKID_SYS_UART_A>, <&xtal>;
+ 	clock-names = "xtal", "pclk", "baud";
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
+index c41525a34b721..75d81ad6830df 100644
+--- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
++++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
+@@ -266,6 +266,6 @@ &sd_emmc_c {
  
+ &uart_a {
+ 	status = "okay";
+-	clocks = <&xtal>, <&xtal>, <&xtal>;
++	clocks = <&xtal>, <&clkc_periphs CLKID_SYS_UART_A>, <&xtal>;
+ 	clock-names = "xtal", "pclk", "baud";
+ };
 -- 
 2.53.0
 
