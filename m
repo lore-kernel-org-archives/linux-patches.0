@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2D952E061;
-	Wed, 23 Sep 2026 14:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FF75372F7;
+	Wed, 23 Sep 2026 14:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174309; cv=none; b=PR/1e9xOLnA1lPonpsWgwjWu24pcZbljcqlnDwsyd0cyS4XU+znTJ911bL/s1DAncVHqUxii6GivLkNSq5BFhXteHHcZ2TVaWxjTPjRQlff+Ii/m5xAMnmCDFZtja5dj5DKGUQAZhIUgYbdZBLbrnQ05HLufHdRM5SjHSzLQTuE=
+	t=1790174312; cv=none; b=i3jZHKPrf58kbVjV4Pt6w23VnrF3BvY5HrZDCkI+ErBqFRzzugYRbbsVE5iPQz4irkkilaIn92lVQXiQpSWDLS15v4vZ5wxee1z1mSa8+DwOCMLSU3xKeOq4PF6CmJEu44HvxyfxpVP0+NSWAwKlTUswkBEURyAyro+8wcx1w/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174309; c=relaxed/simple;
-	bh=PJ6FTJ8UJKaO0Nep5BWL0lfPP7J8/QR9SFVNrMF2l1k=;
+	s=arc-20240116; t=1790174312; c=relaxed/simple;
+	bh=74DSPuT06NmYNxl1QhlvZQ69VESrIgieZHrQ4hhsW18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+oyMVQlJGASZA1IJGAvH8NUbDnX2qitDN5okutZfz2IH09xGP4AOSP4KSg0Ux/VKzZCtxL7Ndcr0WS6MVfNK2is4E3zUjmN0SQR756LpGOCIn+FdpigmAiRCzjwx2yWw4/SR3y9LzJcdp3A89GQ2Md0QpY9LW7Fb1Pdsg2ygdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTlTY1nX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R+bUUfjggDU9oRqkTq9WLAc4N/EDeZzP0WHF0ILlsUVtWybMuxXZW16h3jToIdYKLGaedKeWaRMalY1JRcH0/PR/G5d4msTGqHQJQhjfbTOuDo3f7xjxOS8f3taNeSfhpkX06ruC6uZC5he7W1URLEs6gxXCK5pHTRxyvx0SzM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVVZCI+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTlTY1nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9671A1F000FF;
-	Wed, 23 Sep 2026 14:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVVZCI+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00981F00893;
+	Wed, 23 Sep 2026 14:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174308;
-	bh=ZRd3+CMYnoONiti+wtrKwfVZjMbxct8vyE2hHq0KamY=;
+	s=korg; t=1790174311;
+	bh=rZGkugKZypWrqDI2cn1znOE7c2KHtF1w7irukJS0Ymw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTlTY1nXaJq5V/BtCLTfdiiQRyIOieNqLK/MTlfOirakbjyODcc/cVhz5n6lbhPw+
-	 7MG9MLOPm3QfH2j9P3wO1/egw8YR+ot/uGak5+hj3QqLvoRNCSFVI8afYpbl/6urkR
-	 wMgzRn82UJnP93aP5DS2DI+TZKilzRTvPqET4Hqs=
+	b=dVVZCI+y0nH1ex4zBYwa89+dU7crp0I7OH9f5CnZMp/CVBK/Xhtq/LYZsIIn3Q6zg
+	 aMXC/snd+qtQtMVIdZkkc15wckQlcs5r9f5Kix4hMlD6VZGENYCXxCd++xAtEuroyr
+	 xXmJsBJcgQ6BeHzR9Jybjm1EH2RYDeu8YeRPOdt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com,
+	syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/398] arm64: dts: renesas: r9a09g057: Switch GBETH TX queue scheduling to WRR
-Date: Wed, 23 Sep 2026 16:01:48 +0200
-Message-ID: <20260923140644.311051486@linuxfoundation.org>
+Subject: [PATCH 6.18 067/398] wifi: mac80211: reset state when starting AP fails
+Date: Wed, 23 Sep 2026 16:02:21 +0200
+Message-ID: <20260923140645.168604594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,102 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 33da68f61d25ef8411489d06514ff627c1f88152 ]
+[ Upstream commit 3f28551d0241254a75626d868041c6340285088b ]
 
-The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
-falls back to Strict Priority. In this configuration the queue with the
-highest priority gets all the traffic, starving the others under load.
+ieee80211_start_ap() can set enable_beacon (and beacon_int) and fail
+later, leaving it set forever. Scanning can then attempt to restore
+beaconing on such an interface, leading to:
 
-Under sustained UDP TX load with multiple data streams, this starvation
-triggers spurious adapter resets due to TX queue timeouts:
+  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:mac80211_hwsim_link_info_changed+0xca7/0xf00
+  Call Trace:
+   drv_link_info_changed+0x413/0x860 net/mac80211/driver-ops.c:495
+   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
+   ieee80211_offchannel_return+0x381/0x580 net/mac80211/offchannel.c:160
+   __ieee80211_scan_completed+0x993/0xe30 net/mac80211/scan.c:519
+   ieee80211_scan_work+0x472/0x2010 net/mac80211/scan.c:1193
+   cfg80211_wiphy_work+0x2b7/0x550 net/wireless/core.c:538
 
-  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
-  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
-  end0: Reset adapter.
+in hwsim. Also, cfg80211 then allows changing the interface type,
+and the off-channel path getgs confused about beaconing as well,
+leading to another warning:
 
-Investigation shows that only the highest priority queue is advancing
-while the others stall for more than 5 seconds, causing a netdev watchdog
-reset.
+  WARNING: net/mac80211/driver-ops.c:468 at drv_link_info_changed+0x583/0x880
+   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
+   ieee80211_offchannel_stop_vifs+0x328/0x5c0 net/mac80211/offchannel.c:122
+   ieee80211_start_sw_scan net/mac80211/scan.c:583 [inline]
+   __ieee80211_start_scan+0xfb6/0x1af0 net/mac80211/scan.c:882
 
-Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
-traffic is processed across all queues, eliminating the stalls.
+Reset the state on failures to always have it correct.
 
-Fixes: 050ee38d0002 ("arm64: dts: renesas: r9a09g057: Add GBETH nodes")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260722085353.136986-2-ovidiu.panait.rb@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-(cherry picked from commit 1ee90b0591630c8db982f13441a56fd9fb07e45b)
+Assisted-by: LLM
+Fixes: d6a83228823f ("mac80211: track enable_beacon explicitly")
+Reported-by: syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ca7a2759caaa6cd4e3db
+Reported-by: syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c4686c3eb8b64032618f
+Link: https://patch.msgid.link/20260904165722.9629429a5221.I7f599412bfe12a09d41ea4901be9ad165d07d133@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g057.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/mac80211/cfg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-index 100d5cab9b12f..dc41290ed9c5a 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-@@ -1160,23 +1160,28 @@ queue3 {
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index f6e8352665c1a..84e27d8a75ef1 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1717,6 +1717,9 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
+ 	return 0;
  
- 			mtl_tx_setup0: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
+ error:
++	link_conf->enable_beacon = false;
++	link_conf->beacon_int = prev_beacon_int;
++	sdata->vif.cfg.ssid_len = 0;
+ 	ieee80211_link_release_channel(link);
  
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
-@@ -1261,23 +1266,28 @@ queue3 {
- 
- 			mtl_tx_setup1: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
+ 	return err;
 -- 
 2.53.0
 
