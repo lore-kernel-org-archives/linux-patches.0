@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E08440A16;
-	Wed, 23 Sep 2026 14:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AD2329C7C;
+	Wed, 23 Sep 2026 14:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174975; cv=none; b=kQWbry0Lzgy57dYHKluJLXCiEeTbaghVtKIyrR69kc9OPycYY54ZhZe74pPDP3o3mf+3CVE9KfnQFaWSx6NS8Q9sdb05L/yrvo1G34h15dacW/kmOluK1Y9WkeahlSChmRslifnOJHWcaowrueMagtRjg1t2Xg/K1oQn//CwVpk=
+	t=1790174978; cv=none; b=SzTg1VvA2wgITN7itLzu/um9JMYQ4qYtf6Dj9kRQINv94EPUt6G0EbDWsDDHPLUyw4ST+cqD5IkZQxK7LOSKQTp/KRoqymdPE+QiYJ4DlkYM0Ovy4kaFx83/ghHm1LBNLz34J5amzrHb5BETna8qq32wtEhw4mLSGPZ5ds4pR0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174975; c=relaxed/simple;
-	bh=wMW9zPgFxwgc6Xn38dbZxEkAeDb4JkXDgEkqCJ60k1Q=;
+	s=arc-20240116; t=1790174978; c=relaxed/simple;
+	bh=EgkE2/0Jl3GV5YJHI1H4mTV7oLdiLXCK69tDIsnCeis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eX3YenjLRWuUbe+db7Hu1eF4ObyPFa/saVDeMsM/Sc/QFD6zWo5R+ctuwRMcIZwMUjI15UXfsr7044I8bz0eUY5cclLHSa3Ituu3ygf9gbYdkAZSDWSiPck9AYwtV57fQcN/31O5L6r2kuPPhcwC2sywb4LHbFgjKj2nD6Hub8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYzSKjvj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=okK6JePYT+gw2gnwinyhJLSrM2e0HjXCQ6N48QWhjxcGj3AUoPhpOBpiCvf54SbR1txSdumBnCCrNiOGH+pgN1EUcwug0x/Xqb/MuUQfUlRQgjZJHTCYoJbU/boUvG2Bs3U3sc3XjPhHJucPORstfsvqvQzS8fDEsV5aBk7LYvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MoQ3WGf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYzSKjvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8F41F000FF;
-	Wed, 23 Sep 2026 14:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MoQ3WGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325B51F000FF;
+	Wed, 23 Sep 2026 14:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174973;
-	bh=7FpzaDK6DIX8GjN60SXo5K2ILu/XKmWRss2Kx4qfMPk=;
+	s=korg; t=1790174976;
+	bh=N3bHjuAqCfzjVv6BmkCA1fbSxx2WfDlCnu2u1ML/gXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYzSKjvjWQMmTNAk8/1C0ExF9/ZMAb/IZOdvvJNrJ7YOwAhtysU9X9H982TB8aKsI
-	 FQtJuOygn8htmUcc/8tM87FslN24dh6zXhVDHCQfHZOMnp3QRpzqre6bAQ6i66VHp+
-	 PxLLxJ3NidpEteqxXlE49SkDOx01mYuvsE7p57Pw=
+	b=0MoQ3WGffWACLhJcplWX4mLKm7jwM7z1ENscYR9cUYkrFOjTdqGyWE5fUWmJJUZ+f
+	 cPoJFeGPYZmctwMg0fw4F55K897dwApSSZfLDc9m3aEbpjWA1jOEkhL5r3oDj9mGQr
+	 0We2f9TmHU+MHRnzSHbG9jBjfK7j9+83U0hv52Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Guanglei Zhu <zhugl3@xiaopeng.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 247/398] net: wwan: mhi_wwan_mbim: guard against a cyclic NDP chain
-Date: Wed, 23 Sep 2026 16:05:21 +0200
-Message-ID: <20260923140649.813322748@linuxfoundation.org>
+Subject: [PATCH 6.18 248/398] net: wwan: mhi_wwan_mbim: check skb_copy_bits() return value
+Date: Wed, 23 Sep 2026 16:05:22 +0200
+Message-ID: <20260923140649.839188738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,15 +53,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-commit 5d063822ac5184939c1ed377a339a01d8ae814e8 upstream.
+commit 31550d585589fde1ae95bf7f7a8188b2d2fdf1c7 upstream.
 
-The NDP traversal in mhi_mbim_rx() only stops when wNextNdpIndex is
-zero.  Nothing requires the offsets to advance, so a modem that
-points an NDP at itself, or at an earlier NDP, keeps the loop
-spinning forever on one CPU.
+mhi_mbim_rx() ignores the return value of skb_copy_bits() when it
+copies each datagram out of the NTB.  The datagram offset and length
+come from the DPE, which is only checked to lie within the NTB
+itself, so a modem can point a datagram outside the received skb.
+The copy then fails and the freshly allocated skbn is passed to
+netif_rx() with its uninitialized contents still in place, leaking
+kernel heap memory into the network stack.
 
-Break out when the next NDP offset is not larger than the current
-one.
+Free the skb and account an error when the copy fails.
 
 Fixes: aa730a9905b7 ("net: wwan: Add MHI MBIM network driver")
 Cc: stable@vger.kernel.org
@@ -69,40 +71,62 @@ Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Verified in a QEMU guest with a fault injector feeding the driver's
-receive callback an NTB whose single NDP points at itself: the
-unpatched driver spins in mhi_mbim_rx() with one CPU pinned at 100%
-and the thread never returns.  With this check the loop terminates
-within one iteration.
+Verified in a QEMU guest with a fault injector pointing a DPE
+outside the received NTB: the copy fails, and the unpatched driver
+hands the uninitialized skbn to the network stack (observed as
+"unknown protocol" on bytes that were never written).  With this
+check the failed datagram is dropped and counted as an rx error.
 
-Changes in v2: move the non-increasing check to the wNextNdpIndex
-retrieval site, as suggested by Loic Poulain, instead of tracking
-the previous offset in a separate variable.
+Changes in v2: factor the free-and-count sequence out into
+mhi_mbim_rx_drop(), shared with the unknown-protocol path, as
+suggested by Loic Poulain.
 
-Link: https://patch.msgid.link/20260911021734.1396599-1-zhugl3@xiaopeng.com
+Link: https://patch.msgid.link/20260911021734.1396599-2-zhugl3@xiaopeng.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
- drivers/net/wwan/mhi_wwan_mbim.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wwan/mhi_wwan_mbim.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 --- a/drivers/net/wwan/mhi_wwan_mbim.c
 +++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -350,9 +350,13 @@ static void mhi_mbim_rx(struct mhi_mbim_
- unlock:
- 		rcu_read_unlock();
- next_ndp:
--		/* Other NDP to process? */
--		ndpoffset = (int)le16_to_cpu(ndp16.wNextNdpIndex);
--		if (!ndpoffset)
-+		/* Other NDP to process?  The offsets must advance, or a
-+		 * self-referencing NDP keeps the loop spinning forever.
-+		 */
-+		n = (int)le16_to_cpu(ndp16.wNextNdpIndex);
-+		if (n > ndpoffset)
-+			ndpoffset = n;
-+		else
- 			break;
- 	}
+@@ -252,6 +252,14 @@ static int mbim_rx_verify_ndp16(struct s
+ 	return ret;
+ }
+ 
++static void mhi_mbim_rx_drop(struct mhi_mbim_link *link, struct sk_buff *skb)
++{
++	dev_kfree_skb_any(skb);
++	u64_stats_update_begin(&link->rx_syncp);
++	u64_stats_inc(&link->rx_errors);
++	u64_stats_update_end(&link->rx_syncp);
++}
++
+ static void mhi_mbim_rx(struct mhi_mbim_context *mbim, struct sk_buff *skb)
+ {
+ 	int ndpoffset;
+@@ -321,7 +329,10 @@ static void mhi_mbim_rx(struct mhi_mbim_
+ 				continue;
+ 
+ 			skb_put(skbn, dgram_len);
+-			skb_copy_bits(skb, dgram_offset, skbn->data, dgram_len);
++			if (skb_copy_bits(skb, dgram_offset, skbn->data, dgram_len)) {
++				mhi_mbim_rx_drop(link, skbn);
++				continue;
++			}
+ 
+ 			switch (skbn->data[0] & 0xf0) {
+ 			case 0x40:
+@@ -333,10 +344,7 @@ static void mhi_mbim_rx(struct mhi_mbim_
+ 			default:
+ 				net_err_ratelimited("%s: unknown protocol\n",
+ 						    link->ndev->name);
+-				dev_kfree_skb_any(skbn);
+-				u64_stats_update_begin(&link->rx_syncp);
+-				u64_stats_inc(&link->rx_errors);
+-				u64_stats_update_end(&link->rx_syncp);
++				mhi_mbim_rx_drop(link, skbn);
+ 				continue;
+ 			}
  
 
 
