@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D5D466B5E;
-	Wed, 23 Sep 2026 14:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F1A5328AD;
+	Wed, 23 Sep 2026 14:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173753; cv=none; b=QlYxoR4zEpA/ZUJxZNoR1O3hrDPLX2V9vGQo9b7NXULU/Mjcp9kqjrRmeQ3wj/6HIw+IcRwtsapfD+h4eL5RZCK4exvjT1LqydTpff3mdziC4g+gBSOOpO6iBjeDC3g7SMOIvJumqC+6Z4XUtaxZfMcQSBCVRuSJRQDJrtB7ylk=
+	t=1790173756; cv=none; b=B/Mb/1SI9jQ0WT6XW0m/45UgyX7WJtxpEJFxZ/DzA1HIr/zO/WUmpfadwkUAsA6wOIr6AsmDo8qYLs1IkfcgFG3vJ2LVDtgPjZLhPv92IE0Bv6KEJvxt/8V3uKoeO4rvAbRxWqvx+EhK2SjwicY37YysyRrlkmxaVVnC6pwBQE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173753; c=relaxed/simple;
-	bh=7zwD8CncL0kCsS7bRq/YoE4hSDTCbRlbwv0BP3M7DrM=;
+	s=arc-20240116; t=1790173756; c=relaxed/simple;
+	bh=UW/ZCNLPVFXpwLaAqCm5jWWUyVk+kSMSfCC8gyc7p8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZjr0rC+F8bIIy7FstF7GbrcOVvA4q7usyEu6WhwjowKmkQBEEJNTh+HobLhtI9Fm/lS6FUSt3w9nueVRJDMQ4AIw0mlltoaBsStPq0TE/SSdYSGfq6sWdnmUeWZsHOWur3gra6DXx5FLDAgwapKGZEIcLpgvfqIRtUOq/lvXKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5AsGp47; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g1ZuPMemuq3BAIYP/j/ZlbJpUZqQdXJFiKrDS9N0gg+BU/kGhs3ulM2/7ABPKq4oQSTKSdmZIDw36YBBWSBF4Uq5lNWlIdqoEePa0vlv+XS6Ju7P98NiY1ynND+FQAQ9ufxWvueySAtihJFSVrG19vtEKCvJT52nLcKurdqfHrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpKR6ll0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5AsGp47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0263B1F000FF;
-	Wed, 23 Sep 2026 14:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpKR6ll0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C3E1F00893;
+	Wed, 23 Sep 2026 14:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173752;
-	bh=6KGpUq/DOBSVzl2MVusEhSJJPZfM/hl6W9RLd0yBlRo=;
+	s=korg; t=1790173755;
+	bh=GhFUPHkixJFMSuTTXVgW4muNG92Rr20XChFdrJjFYC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i5AsGp47xiZXfEwBNmf7pJCWR//rHH1nDKDOQa+qubCzlPjcYPdRe+dFc6NwQXvRX
-	 mlsKRXZ0Aimq7hDp1U09r1JtCjIaMgpmwcjNoLK/tpq1dFMmiF6G1qpqINX6IjFZGD
-	 uZwpZlS5rv6ersc4J60siaH1wOY2RDt67+X6gle4=
+	b=jpKR6ll0aP6x+RzEER5CX++a+ctKFsxVBpbseRU1JqAyQ0doPiGiMaOYh72Jrpd0K
+	 MQzTQ3nARmcbQgyM2/nAxKIQfxnGyzGh72MFoXHUPR2K+kxNqkAGBNNMhZtah39n7B
+	 xW8Za71qr7yHgu3/Um+dtroEw310pOkuYYnpAdyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Guanglei Zhu <zhugl3@xiaopeng.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 298/438] net: wwan: t7xx: validate the netif index in t7xx_ccmni_recv_skb()
-Date: Wed, 23 Sep 2026 16:05:19 +0200
-Message-ID: <20260923140652.502753969@linuxfoundation.org>
+Subject: [PATCH 7.2 299/438] net: wwan: mhi_wwan_mbim: guard against a cyclic NDP chain
+Date: Wed, 23 Sep 2026 16:05:20 +0200
+Message-ID: <20260923140652.528932240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,49 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-commit c7ead9704249d57d4693a04697e3bbd285138fa9 upstream.
+commit 5d063822ac5184939c1ed377a339a01d8ae814e8 upstream.
 
-The netif index carried in the DPMAIF PIT header is five bits wide,
-but ccmni_inst[] only has room for NIC_DEV_MAX (21) entries.
-t7xx_ccmni_recv_skb() indexes the array without a bounds check, so
-indexes 21 to 31 read past it.  The out-of-bounds value lands in the
-callback table that follows the array, which is never NULL, so the
-existing !ccmni check does not catch it and the driver dereferences
-whatever sits there as a struct t7xx_ccmni.
+The NDP traversal in mhi_mbim_rx() only stops when wNextNdpIndex is
+zero.  Nothing requires the offsets to advance, so a modem that
+points an NDP at itself, or at an earlier NDP, keeps the loop
+spinning forever on one CPU.
 
-Drop the skb when the index is out of range.
+Break out when the next NDP offset is not larger than the current
+one.
 
-Fixes: 05d19bf500f8 ("net: wwan: t7xx: Add WWAN network interface")
+Fixes: aa730a9905b7 ("net: wwan: Add MHI MBIM network driver")
 Cc: stable@vger.kernel.org
+Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Verified in a QEMU guest with a fault injector setting the netif
-index to 25: the unpatched driver reads a value past ccmni_inst[],
-which lands in the callback table, and dereferences it far enough to
-queue the skb.  With this check the packet is dropped.  Well-formed
-traffic on index 0 is unaffected.
+Verified in a QEMU guest with a fault injector feeding the driver's
+receive callback an NTB whose single NDP points at itself: the
+unpatched driver spins in mhi_mbim_rx() with one CPU pinned at 100%
+and the thread never returns.  With this check the loop terminates
+within one iteration.
 
-Changes in v2: none.
+Changes in v2: move the non-increasing check to the wNextNdpIndex
+retrieval site, as suggested by Loic Poulain, instead of tracking
+the previous offset in a separate variable.
 
-Link: https://patch.msgid.link/20260911021734.1396599-3-zhugl3@xiaopeng.com
+Link: https://patch.msgid.link/20260911021734.1396599-1-zhugl3@xiaopeng.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_netdev.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wwan/mhi_wwan_mbim.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wwan/t7xx/t7xx_netdev.c
-+++ b/drivers/net/wwan/t7xx/t7xx_netdev.c
-@@ -420,6 +420,10 @@ static void t7xx_ccmni_recv_skb(struct t
+--- a/drivers/net/wwan/mhi_wwan_mbim.c
++++ b/drivers/net/wwan/mhi_wwan_mbim.c
+@@ -349,9 +349,13 @@ static void mhi_mbim_rx(struct mhi_mbim_
+ unlock:
+ 		rcu_read_unlock();
+ next_ndp:
+-		/* Other NDP to process? */
+-		ndpoffset = (int)le16_to_cpu(ndp16.wNextNdpIndex);
+-		if (!ndpoffset)
++		/* Other NDP to process?  The offsets must advance, or a
++		 * self-referencing NDP keeps the loop spinning forever.
++		 */
++		n = (int)le16_to_cpu(ndp16.wNextNdpIndex);
++		if (n > ndpoffset)
++			ndpoffset = n;
++		else
+ 			break;
+ 	}
  
- 	skb_cb = T7XX_SKB_CB(skb);
- 	netif_id = skb_cb->netif_idx;
-+	if (netif_id >= NIC_DEV_MAX) {
-+		dev_kfree_skb(skb);
-+		return;
-+	}
- 	ccmni = READ_ONCE(ccmni_ctlb->ccmni_inst[netif_id]);
- 	if (!ccmni) {
- 		dev_kfree_skb(skb);
 
 
