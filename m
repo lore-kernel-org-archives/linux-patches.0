@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94A53B5FD;
-	Wed, 23 Sep 2026 14:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C234D448D11;
+	Wed, 23 Sep 2026 14:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174677; cv=none; b=OnjUb/bUK8SeP7OTYHhVijujcp10PjFrN+H+HXIZyDiX9bsrGcQGpEFYt8RvcpTlzNPcWZY3ONJvuCYb9fcQ2OyZ5/JZiYo95NBJRDOFlo5M4Shu8tEEpcXwHDlzVtjb6JPk2HlBnDpVmRwrcxNBHraAS2arZ8iYkI8B9lhyytY=
+	t=1790174679; cv=none; b=OcNPf0WPDh+Mb/lnrqO/UvCEg3ItEpzCTVDriKP65lTKXcyQ6oKdCMlgpYeQY3WHEvgXej7Rxq3uSzKFyR5UjqUBhZsO78hc+IYtPq0SilHzym+9yVzIfEzKCwa6BRzs5FsDZMw/h0HSyiigAGEQot5HleRt7ohQ1bmD93vvaK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174677; c=relaxed/simple;
-	bh=zzJGLqieYouGLrG89OC4Ltnt/ONfl2ZMHCKHMGJgjAk=;
+	s=arc-20240116; t=1790174679; c=relaxed/simple;
+	bh=SugNr9Av+bPanC8YoHunPL3/6cJAzL/rUi9H5gtoOhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nv5qTZlf+/J+d8wViwyhBP1cTKZ7tBEJjS/x+s9yiBsIeO03g4EnBADp95pXRuDjBhA+QCWj7D81j+fZFZsPBIfUM5hat171y8UlvHzguEf+tR9EWEprjVmkIpLkFUG0EncrgSg0skRVRYhWnX5d7DetCh6H0QGcsJSMDY3bINI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncayeV7D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jheQmGmwU2vBPclPi43Gr+0EbuNcKKeCQjBaF9ozxrmrI+CDfk/S140D/fGTdaUzoLkg5zwgzY1yRzJnYyxkF+8nReFpQZ+i2w0wRPYFqRgYRKuYfRvqgJ+plurrR3TxbEVGrjbtcTjonRRUU00oL4xneJQkSpblnLtBmmEI+DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePksrK01; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncayeV7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D308D1F00893;
-	Wed, 23 Sep 2026 14:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePksrK01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0E21F000FF;
+	Wed, 23 Sep 2026 14:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174675;
-	bh=sgWh/eqjtTRFQP4v4esAnc4PARWHjz8Vraa2RBvWYpk=;
+	s=korg; t=1790174678;
+	bh=nVLaTtXesJs9SIm3ROvGgPqY+idFBma6+JwxU/wxDBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncayeV7DKzbQcTUXjW1sn8ZvrfKDNq0jnyDICxjYXBDwlV0nirqLRasin1Vlz849R
-	 7owVdU8vsqG7255pDirBdpD6AbFAx+UjedIj4pr3DXZ9MPMQqwJx3HtQlh7/sFQTPC
-	 y/li0qJpYIkrNBc7DP6UnHFQNXL72awpoP9nnrXM=
+	b=ePksrK01QIkJjheZD4JpV+o0FHS457weTXG9hy9oYPSm95Q5H90kq3mPClktRoYDc
+	 8FVR7tyXCLm9MchwhERQ97WXw4Ob04YaLHRxNq9/NZ3TTRHweStjCHBtitA8XTCOop
+	 HmkkvaeeBlUKAz23H6+NqAndINYcoSTQuchRlhDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/398] Input: eeti_ts - publish the OF module alias
-Date: Wed, 23 Sep 2026 16:04:24 +0200
-Message-ID: <20260923140648.353450954@linuxfoundation.org>
+Subject: [PATCH 6.18 191/398] hwmon: (gpio-fan) return IRQ_HANDLED from the shared alarm IRQ handler
+Date: Wed, 23 Sep 2026 16:04:25 +0200
+Message-ID: <20260923140648.378775497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,37 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit a52ae68a937efc353251aec27fc995ff66cbe1ca ]
+[ Upstream commit bdf5f731957de48acada392f28e82bc019713adb ]
 
-The EETI driver matches eeti,exc3000-i2c Device Tree clients, but only
-publishes the legacy eeti_ts I2C ID. The I2C core emits an OF modalias
-for a Device Tree client.
+fan_alarm_irq_handler() always schedules alarm_work but returns IRQ_NONE,
+so the kernel treats every alarm interrupt as unhandled. On a shared
+line that risks the whole line being disabled as spurious.
 
-Publish the existing OF match table within its CONFIG_OF guard.
+v1 just fixed that, but it was still IRQF_SHARED, and always returning
+IRQ_HANDLED there defeats spurious-interrupt detection for the line --
+if the interrupt ever fires without a real event, nothing catches it,
+and a fault could spin the CPU in the handler.
 
-Fixes: e32d7f1b246c ("Input: eeti - add device tree matching table")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905134004.66336-1-hppiscas@163.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Sashiko flagged this in v1, and Guenter confirmed: this interrupt must
+not be shared. So v2 drops IRQF_SHARED too.
+
+Fixes: d6fe1360f42e ("hwmon: add generic GPIO fan driver")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260901160931.DD3811F00A3D@smtp.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260914104136.1797979-1-congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/eeti_ts.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/gpio-fan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/touchscreen/eeti_ts.c b/drivers/input/touchscreen/eeti_ts.c
-index 87eb18977b71a..50f150d82f29d 100644
---- a/drivers/input/touchscreen/eeti_ts.c
-+++ b/drivers/input/touchscreen/eeti_ts.c
-@@ -283,6 +283,7 @@ static const struct of_device_id of_eeti_ts_match[] = {
- 	{ .compatible = "eeti,exc3000-i2c", },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, of_eeti_ts_match);
- #endif
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index ea5ca2dea2a99..1dfc02df9bbb0 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -68,7 +68,7 @@ static irqreturn_t fan_alarm_irq_handler(int irq, void *dev_id)
  
- static struct i2c_driver eeti_ts_driver = {
+ 	schedule_work(&fan_data->alarm_work);
+ 
+-	return IRQ_NONE;
++	return IRQ_HANDLED;
+ }
+ 
+ static ssize_t fan1_alarm_show(struct device *dev,
+@@ -103,7 +103,7 @@ static int fan_alarm_init(struct gpio_fan_data *fan_data)
+ 
+ 	irq_set_irq_type(alarm_irq, IRQ_TYPE_EDGE_BOTH);
+ 	return devm_request_irq(dev, alarm_irq, fan_alarm_irq_handler,
+-				IRQF_SHARED, "GPIO fan alarm", fan_data);
++				0, "GPIO fan alarm", fan_data);
+ }
+ 
+ /*
 -- 
 2.53.0
 
