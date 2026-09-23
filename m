@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAD95383F9;
-	Wed, 23 Sep 2026 14:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9E553B344;
+	Wed, 23 Sep 2026 14:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174651; cv=none; b=s7DMr1p0IL42kJd2msZ0lfcA4gjAqFIOTS90QJ6QqS6TPh7N9poI/EU9vHPCVonQhlawJ36d0G785PfEwlT5dbkatpWVjBhlV0NJMJmOEPBl+0iJq0RiXyQ0vyH0AKVNhp5FL6k/U+sOM2A5pYkZ5c5eEl98S2R6zGW6olGuU0g=
+	t=1790174655; cv=none; b=pPA7PELcbAnu6OURgSy2LODZGcQTw6DNklLhOn1gI2bTk3bEp+vN8MqdnUn1zJlxyk0W9T1lg6xh6Krh5LjSpxnYQ1GtdDm+h2nCAFuOluWfwjjTvmJlRLmfM3DFPZZBW/X2k1aG6UoQnHPWbPaxM2Aninm59Aj9W3Qu/K/FlVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174651; c=relaxed/simple;
-	bh=BOlUvFB9oRfsxtU87Dj8j/51G2/83mrEdSGu8IJYTv0=;
+	s=arc-20240116; t=1790174655; c=relaxed/simple;
+	bh=RPr6guBwOwXbBywXMxxnaiCy06o0+yftJ2qzTH49DZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XRDZiNjqw8Bd/njRqm1TCN13P+ozFLiOtgWvYrR9SrwC4pzlH1UWHKn66zbpasSthjgQ1NSCpqORHuQ5FhwPjMNdwGWIjYalM9zPIsoy8YhBu6045oM8inNawOdG+HCX8MFvlL3NeplW7GveoweWCjORoPjqCVrtpn+uvjYdJmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2fQM6UC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DcV29gvwyNlc+dCVrpkD/SAkZwfnkbPwYcHZLsi6zQUnFwnz5iQYqT83wst8PJlV4LyZtAT+7tmaWpnSYU0j4O2ep/ETwxYP4YoONcCkqGbBIey8R/txAvqhESVqIEgU4h2LtppnmLsBWmvL+emld90G67p3zL8+lRM5W5D+GwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQhqoNEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2fQM6UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E751F000FF;
-	Wed, 23 Sep 2026 14:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQhqoNEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EAE1F000FF;
+	Wed, 23 Sep 2026 14:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174650;
-	bh=ZhSl2uGQvlVKMf/wg3Ze33SKeJqriwcEwgfmEoS3UHA=;
+	s=korg; t=1790174653;
+	bh=N2NNq+EpjqJNydvdrS8YdgfO8l+DI7vJzNAEY5eo5Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k2fQM6UCJ5aTd488j8d3io8GulGqYycsgu3e2xSbpGmhJAKmwc6RXDtUv+DnLfIOn
-	 nMieT2TaKcitkoYT6wfgUlzXrATsyAcuDpK4FyV0xvWc7qBfMEVzV/DvHiXBZjEObU
-	 Xr4VAVla3+GLsfYIMvzk2I/y5EFlijTDX0gczz68=
+	b=aQhqoNEXBZK4uqPSuRLIAmnk2aoCxxhZ9OM97V3Q/cxgl3RcghTHzcYt5cxAIcvgh
+	 ifWPkn23wsYsFq3yop+jtNdI+RIeAJ1LTwdB22IYVxgzGGMqDFTzZdP+4eervuJN1C
+	 yuBsdQ4LeO7E3NmSoUc1PhBKHcvRWpWPG2OoAI2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	James Clark <jjc@jclark.com>,
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 183/398] net: macb: fix ordering around PTP timestamp read
-Date: Wed, 23 Sep 2026 16:04:17 +0200
-Message-ID: <20260923140648.175947612@linuxfoundation.org>
+Subject: [PATCH 6.18 184/398] net: mvpp2: prevent buffer overflow in page_pool allocation
+Date: Wed, 23 Sep 2026 16:04:18 +0200
+Message-ID: <20260923140648.200312748@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,70 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <jjc@jclark.com>
+From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
 
-[ Upstream commit 9ca4ba24259183ce15665be86b2956cd896c4687 ]
+[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
 
-PTP_SYS_OFFSET_EXTENDED returns system timestamps that do not correctly
-bracket the PHC register read on MACB/GEM. On a Raspberry Pi 5, the
-returned interval can be as short as 37 ns, while an ordered register
-read takes approximately 1 us. This biases the midpoint used by phc2sys,
-causing CLOCK_REALTIME to run approximately 0.5 us ahead when synchronized
-to the PHC.
+The per‑processor buffering scheme is supported only if the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
+This is already checked in mvpp2_probe() during the initial
+activation of percpu_pools.
 
-gem_tsu_get_time() reads the nanoseconds register using the driver's
-relaxed MMIO accessor. On weakly ordered systems, the subsequent system
-timestamp can be taken before the register read completes. The internal
-smp_rmb() in the pre-timestamp path also does not guarantee ordering
-against the subsequent MMIO read.
+However, mvpp2_change_mtu() may later call
+mvpp2_bm_switch_buffers(priv, true) without this check, which can
+lead to an out-of-bounds access in the priv->page_pool array in
+mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
+entries, and mvpp2_get_nrxqs() may return exactly that value. The
+per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
+bounds.
 
-Add rmb() before and after the bracketed nanoseconds read in both the
-normal and seconds rollover paths so the system timestamps bracket the
-PHC read. Adding the post-read barrier increases the minimum interval on
-the same Raspberry Pi 5 to approximately 1 us.
+Check that the hardware version is MVPP22 or newer and that the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
+before switching to per-CPU mode.
 
-Fixes: e51bb5c2784c ("net: macb: ptp: Switch to gettimex64() interface")
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi CM5, min bracket 37 ns -> 981 ns
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Assisted-by: LLM
-Signed-off-by: James Clark <jjc@jclark.com>
-Link: https://patch.msgid.link/20260915045823.76100-1-jjc@jclark.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_ptp.c b/drivers/net/ethernet/cadence/macb_ptp.c
-index d961a5faf355d..97b72f633d3bc 100644
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -48,7 +48,12 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 79f8e0abfdbfd..17ce1dfcccd1a 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5088,7 +5088,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
+ 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
+ 			mvpp2_bm_switch_buffers(priv, false);
+ 		}
+-	} else {
++	} else if (priv->hw_version >= MVPP22 &&
++		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
+ 		bool jumbo = false;
+ 		int i;
  
- 	spin_lock_irqsave(&bp->tsu_clk_lock, flags);
- 	ptp_read_system_prets(sts);
-+	/* explicit barriers are needed because gem_readl() is relaxed */
-+	if (sts)
-+		rmb();
- 	first = gem_readl(bp, TN);
-+	if (sts)
-+		rmb();
- 	ptp_read_system_postts(sts);
- 	secl = gem_readl(bp, TSL);
- 	sech = gem_readl(bp, TSH);
-@@ -60,7 +65,11 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
- 		 * (assume all done within 1s)
- 		 */
- 		ptp_read_system_prets(sts);
-+		if (sts)
-+			rmb();
- 		ts->tv_nsec = gem_readl(bp, TN);
-+		if (sts)
-+			rmb();
- 		ptp_read_system_postts(sts);
- 		secl = gem_readl(bp, TSL);
- 		sech = gem_readl(bp, TSH);
 -- 
 2.53.0
 
