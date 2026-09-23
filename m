@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1F4488233;
-	Wed, 23 Sep 2026 14:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF1953B333;
+	Wed, 23 Sep 2026 14:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174908; cv=none; b=ifb8R8beMg6DHgPk9UtmdKmY9KCFapNLSlRZqfFI/Knb31kiNT/baUjsjAHWSxL1uJ6+hz7DtJufdV/8VBwDttwjIph7J4316xH+6KF1oAHcBelP9aD4Ld3LCXboET62E1ZHDFGUv12JNJ9puLZ/EgDwd5GSQi0ewSjbS8TmwEI=
+	t=1790174911; cv=none; b=duKNcer8QygjlrPddCfycSiSMw1oJ95VtXQVuhgCXv0UiAYcualAy3BOq7+ZjyjiCwr9PYKtWdkxysuQvJTWlQZnJnohpPwgA3x0Ls5URPqp42N+QwMWyRrchk3FPmkTb1sLIJzZDyEUmvHY3jQZvjZHoblg9v4fFQ3dRNr4GoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174908; c=relaxed/simple;
-	bh=AXQkVREnyABKAphF2G/SvRq9a19I+00SgQBJEZGq4ac=;
+	s=arc-20240116; t=1790174911; c=relaxed/simple;
+	bh=L33zpBf1Ws093DPgX2Uw9xrYLq3fpsGqDaTQuCe6hqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNJrNSRVBaMfS+vrJnYafoABMlbav2nxZv9wWszmS17kDK4B4VOIgGpPfKXXD2dLYdji3yFchwVedJXwyVmAmC1cfaHUzc928O4Vf8MnDIGon30muJBeQ7JGbYhYTQJUKwwOXPeUvFif/Dl1euCiyGcvTEMcaH0uLhV/d0ZVrwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ox1RFp2F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DLg16e4J9FgjiyIMvcBbnEAIPMQBDwufWev4BWJ+5nF3WmME01cQgumNRhOmy/FvN4aGaiCCE1xD6KP1a/Pbw27/FdypQV5VG/NIvj3DSMmpmiG7wLs6AptHL0wzoFYhTZ8S0NQlKwer8sr9kcuftcwKiZR+s4lUvulmFvIG/QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxJi96Bt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ox1RFp2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DCF1F000FF;
-	Wed, 23 Sep 2026 14:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxJi96Bt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBE21F000FF;
+	Wed, 23 Sep 2026 14:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174907;
-	bh=VumIY5HJYGbUwHFseUCF4MlQNCad7I/KJykJRntYmPk=;
+	s=korg; t=1790174910;
+	bh=vT0/FlmhJew9cKVO1wHrP1rNhDBxmejzaFFz1MsIHi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ox1RFp2FtlkII4863jKzfSxBJFnmL1wVs8C/mix7UU92y6uoShNB6tqEAq/fmrFvX
-	 cFC2aHUYDmFvDZ0xblr7OLVRVFbxz6OzJCucM8FyjQqkgzylbOzBOtU8NmbbSi1W4u
-	 jQ09p+00uPDp1CFyukKHVmkr301EElnt8IudBSas=
+	b=gxJi96BtbGQUiJJuZwQuFZOORwJ6BAfS7R+DcIIW8wgbRkHWi1bKefQOtx3lYV3B5
+	 wfQ65y5ii/Dem1jJNlQyDPYtIGM5qrk52WkN9XnDC6bJoCuRIgb4nSbJaEwfa2AgFh
+	 IKz32DXuaSdxvE/hazJvCjjr5JkI6GATKPmJQkUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Barry Song <baohua@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 262/398] mm: filemap: retain mapped dropbehind folios
-Date: Wed, 23 Sep 2026 16:05:36 +0200
-Message-ID: <20260923140650.203587627@linuxfoundation.org>
+	Cen Zhang <cenzhang@linux.microsoft.com>,
+	Francis Perron <francis@akrites.dev>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>
+Subject: [PATCH 6.18 263/398] KEYS: encrypted: fix integer overflow of datablob_len
+Date: Wed, 23 Sep 2026 16:05:37 +0200
+Message-ID: <20260923140650.228565453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -56,52 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qiwenjie@xiaomi.com>
+From: Cen Zhang <cenzhang@linux.microsoft.com>
 
-commit 848d2ce2fce15fbdc083fbf9691bfa72911033c4 upstream.
+commit 8697c431e297eb0d0ab13dda6bc172b48a34f05c upstream.
 
-Fault-around can map ready dropbehind folios without going through the
-normal page-cache lookup that clears dropbehind.  A mapping represents a
-competing cached user, so retain the folio instead of forcibly unmapping
-it when writeback completes.
+encrypted_key_alloc() stores datablob_len in a u16. It is computed from
+multiple string and payload lengths. If the result exceeds U16_MAX, the
+assignment truncates the allocation size. KASAN reports a 32760-byte
+slab-out-of-bounds write when __ekey_init() copies the master key
+description into the undersized buffer.
 
-For a mapped folio, folio_unmap_invalidate() can call
-unmap_mapping_folio(), which takes i_mmap_rwsem and may sleep.  Retaining
-mapped folios avoids this path when folio_end_dropbehind() runs in
-non-preemptible task context.
+The total payload length stored in key->datalen is also a u16. Use
+check_add_overflow() to reject values that do not fit either destination,
+and use kzalloc_flex() for the flexible-array allocation.
 
-Tal was able to trigger a sleeping-in-atomic warning due to this [1].
-
-Unmapped dropbehind folios continue through the existing invalidation path.
-
-Link: https://lore.kernel.org/4aba05e1a2c3b61cb337d373eb9b7a8db4ddd822.1788024049.git.qiwenjie@xiaomi.com
-Link: https://lore.kernel.org/076bb01b-6fcf-4691-be8c-0e8507c9fe64@columbia.edu [1]
-Fixes: fb7d3bc41493 ("mm/filemap: drop streaming/uncached pages when writeback completes")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Tal Zussman <tz2294@columbia.edu>
-Tested-by: Tal Zussman <tz2294@columbia.edu>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Trond Myklebust <trond.myklebust@hammerspace.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7e70cb497850 ("keys: add new key-type encrypted")
+Cc: stable@vger.kernel.org
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Cen Zhang <cenzhang@linux.microsoft.com>
+Signed-off-by: Francis Perron <francis@akrites.dev>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260909153433.83117-1-cenzhang@linux.microsoft.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/encrypted-keys/encrypted.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1624,7 +1624,7 @@ static void filemap_end_dropbehind(struc
- 		return;
- 	if (!folio_test_clear_dropbehind(folio))
- 		return;
--	if (mapping)
-+	if (mapping && !folio_mapped(folio))
- 		folio_unmap_invalidate(mapping, folio, 0);
- }
+--- a/security/keys/encrypted-keys/encrypted.c
++++ b/security/keys/encrypted-keys/encrypted.c
+@@ -18,6 +18,7 @@
+ #include <linux/parser.h>
+ #include <linux/string.h>
+ #include <linux/err.h>
++#include <linux/overflow.h>
+ #include <keys/user-type.h>
+ #include <keys/trusted-type.h>
+ #include <keys/encrypted-type.h>
+@@ -578,6 +579,7 @@ static struct encrypted_key_payload *enc
+ {
+ 	struct encrypted_key_payload *epayload = NULL;
+ 	unsigned short datablob_len;
++	unsigned short payload_totallen;
+ 	unsigned short decrypted_datalen;
+ 	unsigned short payload_datalen;
+ 	unsigned int encrypted_datalen;
+@@ -631,16 +633,22 @@ static struct encrypted_key_payload *enc
+ 
+ 	encrypted_datalen = roundup(decrypted_datalen, blksize);
+ 
+-	datablob_len = format_len + 1 + strlen(master_desc) + 1
+-	    + strlen(datalen) + 1 + ivsize + 1 + encrypted_datalen;
++	if (check_add_overflow(format_len + 1 + strlen(master_desc) + 1
++			       + strlen(datalen) + 1 + ivsize + 1,
++			       encrypted_datalen, &datablob_len))
++		return ERR_PTR(-EINVAL);
++
++	if (check_add_overflow(datablob_len,
++			       payload_datalen + HASH_SIZE + 1,
++			       &payload_totallen))
++		return ERR_PTR(-EINVAL);
+ 
+-	ret = key_payload_reserve(key, payload_datalen + datablob_len
+-				  + HASH_SIZE + 1);
++	ret = key_payload_reserve(key, payload_totallen);
+ 	if (ret < 0)
+ 		return ERR_PTR(ret);
+ 
+-	epayload = kzalloc(sizeof(*epayload) + payload_datalen +
+-			   datablob_len + HASH_SIZE + 1, GFP_KERNEL);
++	epayload = kzalloc_flex(*epayload, payload_data, payload_totallen,
++				GFP_KERNEL);
+ 	if (!epayload)
+ 		return ERR_PTR(-ENOMEM);
  
 
 
