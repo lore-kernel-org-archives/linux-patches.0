@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5017E3B27D1;
-	Wed, 23 Sep 2026 14:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D753B27D1;
+	Wed, 23 Sep 2026 14:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174466; cv=none; b=EZ7quFCDzRvDuZy2T4Ho2V4suRAaJ8tpS8Y5YI/LU7HtJM/ooxoH5SkRa3NzGVqV0nZMdq9EFdhccfb1aGjsJ97m/2ELp5ScOS4w8lXouKn0Apvl4cfTHKBqr4KLBr52cIDIYlxeEM9jwPXQ6HHNAXMphoYjpRX/fxcn2hsQdTQ=
+	t=1790174469; cv=none; b=WJ3rwt61SB24Gy2Ts755h1uxEPdTqHN6prVd72ff+3JAc5+cfxjN+tg/4SPStpZpfvsedOJPpvvRI9iQ/gJA/Td/k/EVm/t15GFMfZn2PGQThMO3eRn0nEwNeysloQiTmFQD0EAcpye0itpKIN/WoxFYVL+O3B21uY5GcEhGBFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174466; c=relaxed/simple;
-	bh=TDYPFAfiTqMC1M/1cKvDOq0e+AdBQxWN7lV61njkqww=;
+	s=arc-20240116; t=1790174469; c=relaxed/simple;
+	bh=UGZ/wDE5ntBZidcYoIlKfAzR1a0y588mWtgBsXaUbxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uPN+zV1tJ0SnhbwAsu77HHBhSTZGh+bWPrlYp/0axzclwWT65SisRKe2sRlOmt6FD124G4RNNnviOuPtdX2th7bG2rIHbarDoENciUazNXIYEroIrloHaEPfc2hRj7hZhVUgcmwv4Pt54a9PLgbP3E+f2sRtFJA8RARhYPOV/9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWR+BSIx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MrGRG/cdvIAMQ9B2p7aIMr824zGds3StdBDw+jYnh/JahIHHQznZ/AY2vXiLLWCjIsjGVhnVa+VPSBZfLEzpz9Oq0RRrVMbUsblwImeEh3B/HpJFbvcRgj62tij1qq/slOjcX/F5MkN3XAsP6bTckFoXdDfMMh6wU1H0rsuirZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLHZU2HR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWR+BSIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EBB1F000FF;
-	Wed, 23 Sep 2026 14:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLHZU2HR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EED1F00893;
+	Wed, 23 Sep 2026 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174465;
-	bh=AvG9NAh9OJB7P96CmPpaodsMANq92ba5YY9zvRKKBcw=;
+	s=korg; t=1790174468;
+	bh=yoPJOQoJPYmOXzTu+0zTqp+HrhpJrcNQtf6jwa0jClE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWR+BSIxumbyT+hxfXbbcDdz1aSDfG6ZxCavYnjfoizBek02lwC9tuVNq/kcs/N9h
-	 gFDY36m1o8kbqdE58eOPHbLWml3wkkX80QqnsKGzDwP1OqHHq9L9qqO3nWmdWFOM5W
-	 WSY3YJGrMDxFeiG88bRZ7Hsfi9wicIjvdUm16Xv4=
+	b=OLHZU2HRPR2FfqSjI3ATAZe/+9raVbEnxr/eQDwgweeffDUC2tS9cFaO72MOJSOKO
+	 szwwDLRZlWVzKKWy8C1aEAt3GOJb+HpCl+K8bl2hMHa6JcrnvGIh+Gz83EeukyhFIR
+	 RmmrPe+J4mjqv0xe1CGOQhiP+OoQeTgrXA25ma94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 123/398] drm/vc4: Use managed KMS polling to fix UAF on unbind
-Date: Wed, 23 Sep 2026 16:03:17 +0200
-Message-ID: <20260923140646.630060434@linuxfoundation.org>
+Subject: [PATCH 6.18 124/398] ALSA: hda: trace PCM open only after assigning a stream
+Date: Wed, 23 Sep 2026 16:03:18 +0200
+Message-ID: <20260923140646.653206126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -45,55 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 073a30d75f309812ed61af134f24ffef4107b13a ]
+[ Upstream commit c9e6e5f38bf75276605f1952b22285f5f3abcaff ]
 
-vc4_kms_load() calls drm_kms_helper_poll_init() but the driver provides
-no matching drm_kms_helper_poll_fini(). The output poll work stays
-scheduled after unbind and runs on the freed drm_device:
+Stream assignment can fail when hardware streams are exhausted.
+Move the tracepoint after the NULL check because its payload accesses
+the assigned stream tag.
 
-  # modprobe vc4; rmmod vc4; sleep 10
-  BUG: KASAN: slab-use-after-free in delayed_work_timer_fn
-  BUG: KASAN: slab-use-after-free in drm_client_dev_hotplug [drm]
-  Workqueue: events output_poll_execute [drm_kms_helper]
-  Allocated by task 171: __devm_drm_dev_alloc
-  Freed by task 262 (rmmod): drm_dev_put / component_del
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Use drmm_kms_helper_poll_init() so polling is finalized with the device,
-as other drivers do.
-
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260822143110.68594-1-kmehltretter@gmail.com
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: 184865085b88 ("ALSA: hda - rename hda_intel_trace.h to hda_controller_trace.h")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125154.109944-1-bolin.liu@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_kms.c | 2 +-
+ sound/hda/common/controller.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
-index 8f983edb81ff0..20dad6245ac10 100644
---- a/drivers/gpu/drm/vc4/vc4_kms.c
-+++ b/drivers/gpu/drm/vc4/vc4_kms.c
-@@ -1162,7 +1162,7 @@ int vc4_kms_load(struct drm_device *dev)
+diff --git a/sound/hda/common/controller.c b/sound/hda/common/controller.c
+index b1cfd9bd4dcb7..98ab47977e318 100644
+--- a/sound/hda/common/controller.c
++++ b/sound/hda/common/controller.c
+@@ -584,11 +584,11 @@ static int azx_pcm_open(struct snd_pcm_substream *substream)
+ 	snd_hda_codec_pcm_get(apcm->info);
+ 	mutex_lock(&chip->open_mutex);
+ 	azx_dev = azx_assign_device(chip, substream);
+-	trace_azx_pcm_open(chip, azx_dev);
+ 	if (azx_dev == NULL) {
+ 		err = -EBUSY;
+ 		goto unlock;
+ 	}
++	trace_azx_pcm_open(chip, azx_dev);
+ 	runtime->private_data = azx_dev;
  
- 	drm_mode_config_reset(dev);
- 
--	drm_kms_helper_poll_init(dev);
-+	drmm_kms_helper_poll_init(dev);
- 
- 	return 0;
- }
+ 	runtime->hw = azx_pcm_hw;
 -- 
 2.53.0
 
