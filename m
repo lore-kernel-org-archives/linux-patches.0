@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6D044CAD7;
-	Wed, 23 Sep 2026 14:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F9E44CAD7;
+	Wed, 23 Sep 2026 14:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173209; cv=none; b=dwg7od3FA5krZmIfZV1T/b2B48NjiR4Toi7zPayQMBfCmQmfY0UYj3yfK1T8Wq4P5Ofk/hpM8SfzQs/kxudS8RCKr+3CoRaVheeC2FjqV4jEC68cJv3RYj8u8qEj0jv7jgEhsQc1Kpt9YmQUyjeVxklT0zGWd48ZYG3PqrIY6Lw=
+	t=1790173212; cv=none; b=adR7eapTOjcZ70b/Tnx6zrU7f/Q7wGF1EOh94SICKpBLJwTprbsntEgYZStP5cnzn/3k974gU+wHGsQHEVq1ZuVmVFL6/y8FLXB3NrSSxHL5mGo8UuCH7r/+U/m3M3cVNPN6WKIrh/7YI+O2SbDJkyIT8NPDBVODKeKUd9wnzaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173209; c=relaxed/simple;
-	bh=Gg+qOA3heZhRyAvXvFX4WLgR60ZK+qniaNRRnJ3G3XQ=;
+	s=arc-20240116; t=1790173212; c=relaxed/simple;
+	bh=WX16jnPgZyj3PmzsACn9QrDwL9hh3kq8iWCIh4YWAaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tm2u8TDot+eeLJIX6EF4PYz8aEsBgfsvWS9A3284RakRnriGsjy3FVwlqy+nf8H60QEfIsJgzQwAAN6HAE/3ETmqrWSPuopQYNbaucykvBI+cpwWxP2X6FWTgK4eV09RPUkwYdeARr9TcmZW4d3j+TAtLb+m/KVylAHh8MvQd+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjwasChU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=c/SvoqCjPtLq8WN3r2a24PJ9Sk4jngxta48JvQ4KDcxwYITi0kF6vMqAux5ynbYwKGWFPmDvu10uwFIgu+LTI4zYpiC7wzuM/lDew1n9C36nh4E2syUbqV+F6j+I7JBDg3NGzT2sHNZ9a2MPDevH/V0K2Hn30WSzQT0j12VEZ+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tkw692k+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjwasChU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1676B1F000FF;
-	Wed, 23 Sep 2026 14:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tkw692k+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA8C1F000FF;
+	Wed, 23 Sep 2026 14:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173207;
-	bh=N0Lptacweudu9CPZR7U3pOr5fRfSsGmBlVwXQpV7n90=;
+	s=korg; t=1790173211;
+	bh=npCRtLJn9wiwbsV6QPF5vRtwYbr64yUj/Oi/qYmLjP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjwasChUeCrYnCb1VPOaKHMqrXGDmlmeoAFbnmU3P7G1/iJ7arblp0CRioz6uhBFl
-	 yHpvV9M7k0sCRGK564GI0LgYt+Cd9lv63PGOXlnN8pdqC2PXLnozkBcF2JhXHjT65u
-	 FLC26+lyvALs35M6ZRcoj01dkr0JI9N1Pk1twwxM=
+	b=Tkw692k+RIKscmUIsRIGifBMH+IxrLxkBnFgBWS1CewRFUz2OgNgTIrZsGbvhdtyf
+	 CAPAy7S4oyosWJ1KqhW+yLUS7cS+V1WZMOnaTni6lcnIJjlLNN6SCSCstv3qpXfh9x
+	 UhEkGS0XYts7xcY+XzT79pyMCYxX+cFjNYgmkKik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 174/438] Bluetooth: ISO: set BT_LISTEN before requesting a BIG sync
-Date: Wed, 23 Sep 2026 16:03:15 +0200
-Message-ID: <20260923140649.278966348@linuxfoundation.org>
+Subject: [PATCH 7.2 148/438] drm/xe/shrinker: Take a runtime PM ref before shrinking non-system memory
+Date: Wed, 23 Sep 2026 16:02:49 +0200
+Message-ID: <20260923140648.608750561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -44,148 +48,233 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 296e7f3c5071cc02dc22e1566e759179fa1792ae ]
+[ Upstream commit 985862be16c7e4da808c51f393d631fb60c0be5c ]
 
-A BIS connection is matched to its parent socket by looking for a
-socket in BT_LISTEN state with the same BIG handle:
+__xe_shrinker_walk() walks the SYSTEM and TT LRUs without a runtime PM
+reference.  Shrinking a bo outside system memory invalidates its GPU
+mappings, which needs the device resumed, so while it is runtime
+suspended the page table zap trips an assert and the TLB invalidation
+returns -ENODEV:
 
-  iso_conn_ready()
-    if (test_bit(HCI_CONN_BIG_SYNC, &hcon->flags))
-            parent = iso_get_sock(hdev, &hcon->src, &hcon->dst,
-                                  BT_LISTEN, iso_match_big_hcon, hcon);
+  WARNING: drivers/gpu/drm/xe/xe_bo.c:770 at xe_bo_move_notify+0x1fc/0x450 [xe]
+   xe_bo_shrink+0x20f/0x2b0 [xe]
+   __xe_shrinker_walk+0x174/0x410 [xe]
+   xe_shrinker_scan+0x10c/0x1e0 [xe]
+   do_shrink_slab+0x176/0x7e0
+   drop_caches_sysctl_handler+0x9c/0xf0
 
-The socket was only moved to BT_LISTEN after iso_conn_big_sync()
-returned, while the LE BIG Create Sync command has already been queued
-by then. If the BIG sync is established before the state is updated,
-which is easy to hit with an emulated controller as the command may
-complete in a few hundred microseconds, no parent is found and the BIS
-connections are never notified to the listening socket.
+Take a reference before walking a memory type other than XE_PL_SYSTEM
+and stop there if it cannot be acquired.  Reuse the shrinker's existing
+acquire path, which resumes the device directly where reclaim allows
+that and otherwise queues the PM worker for a later scan.  Stop the walk
+once the scan target is met, so a satisfied scan does not wake the
+device.  System memory is still reclaimed while the device is suspended.
 
-The user space is then left waiting for connections that never arrive,
-e.g. bluetoothd never completes a MediaTransport1.Acquire of a
-Broadcast Sink transport.
+Gate this on xe_device_is_l2_flush_optimized(), the same condition under
+which xe_bo_trigger_rebind() issues the invalidation for a non-fault-mode
+vm, so reclaim is unaffected elsewhere.  The System CCS copy already has
+its own reference in xe_bo_shrink().
 
-Move the socket to BT_LISTEN before requesting the BIG sync, so the
-state is visible by the time the command is queued, and restore the
-previous state if the request could not be started. Since the socket is
-briefly visible as a listening socket, child sockets may have been
-queued in the meantime, so drain the accept queue before restoring the
-state: the cleanup paths of BT_CONNECT2/BT_CONNECTED don't do it and the
-children would be left with a dangling parent pointer.
+Only a non-fault-mode vm can reach this, since a fault-mode vm requires
+LR mode and that holds a runtime PM reference for the vm's lifetime.
 
-Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reproduced with igt@xe_madvise@dontneed-before-exec while the GPU is
+runtime suspended.
+
+v2: simplify needs_rpm check. (Matt)
+    retarget Fixes tag since the issue occurs with the non-fault-mode
+    path added by 4e7ebff69aed.
+v3: handle this in xe_shrinker.c instead of xe_bo.c (Thomas)
+v4: stop the walk once the scan target is met. (Sashiko)
+v5: rebase on the freed page accounting fix. (Sashiko)
+v6: reuse the shrinker acquire path so runtime pm can be resumed
+    directly instead of always queueing a worker. (Thomas)
+v7: replace xe_pm_runtime_put() with xe_shrinker_runtime_pm_put(). (Thomas)
+
+Fixes: 4e7ebff69aed ("drm/xe/xe3p_lpg: flush shrinker bo cachelines manually")
+Assisted-by: Claude:claude-opus-5
+Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20260909162102.1097006-3-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit 628f92b28bf4c371c10207daf6fc4caee0c0db2e)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 52 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 41 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/xe/xe_shrinker.c | 78 +++++++++++++++++++++-----------
+ 1 file changed, 51 insertions(+), 27 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 4de332b8901f2..eb99653f33f91 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -819,19 +819,24 @@ static void iso_sock_destruct(struct sock *sk)
- 	skb_queue_purge(&sk->sk_error_queue);
+diff --git a/drivers/gpu/drm/xe/xe_shrinker.c b/drivers/gpu/drm/xe/xe_shrinker.c
+index 89445cd202380..deb4378c1ec15 100644
+--- a/drivers/gpu/drm/xe/xe_shrinker.c
++++ b/drivers/gpu/drm/xe/xe_shrinker.c
+@@ -54,13 +54,39 @@ xe_shrinker_mod_pages(struct xe_shrinker *shrinker, long shrinkable, long purgea
+ 	write_unlock(&shrinker->lock);
  }
  
--static void iso_sock_cleanup_listen(struct sock *parent)
-+/* Close not yet accepted channels */
-+static void iso_sock_flush_accept_q(struct sock *parent)
- {
- 	struct sock *sk;
- 
--	BT_DBG("parent %p", parent);
--
--	/* Close not yet accepted channels */
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		iso_sock_close(sk);
- 		iso_sock_kill(sk);
- 		/* Drop the reference handed back by bt_accept_dequeue(). */
- 		sock_put(sk);
- 	}
+-static int __xe_shrinker_walk(struct xe_device *xe,
++static bool __xe_shrinker_runtime_pm_get(struct xe_shrinker *shrinker)
++{
++	struct xe_device *xe = shrinker->xe;
++
++	if (xe_pm_runtime_get_if_active(xe))
++		return true;
++
++	if (xe_rpm_reclaim_safe(xe) && !ttm_bo_shrink_avoid_wait()) {
++		xe_pm_runtime_get(xe);
++		return true;
++	}
++
++	queue_work(xe->unordered_wq, &shrinker->pm_worker);
++
++	return false;
 +}
 +
-+static void iso_sock_cleanup_listen(struct sock *parent)
++static void xe_shrinker_runtime_pm_put(struct xe_shrinker *shrinker, bool runtime_pm)
 +{
-+	BT_DBG("parent %p", parent);
++	if (runtime_pm)
++		xe_pm_runtime_put(shrinker->xe);
++}
 +
-+	iso_sock_flush_accept_q(parent);
++static int __xe_shrinker_walk(struct xe_shrinker *shrinker,
+ 			      struct ttm_operation_ctx *ctx,
+ 			      const struct xe_bo_shrink_flags flags,
+ 			      unsigned long to_scan, unsigned long *scanned,
+ 			      unsigned long *freed)
+ {
++	struct xe_device *xe = shrinker->xe;
+ 	unsigned int mem_type;
++	bool rpm = false;
++	int ret = 0;
+ 	s64 lret;
  
- 	/* If listening socket has a hcon, properly disconnect it */
- 	if (iso_pi(parent)->conn && iso_pi(parent)->conn->hcon) {
-@@ -1737,6 +1742,13 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
- 			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
-+				/* Move to BT_LISTEN before requesting the BIG
-+				 * sync: the BIS connections are matched to a
-+				 * parent socket in BT_LISTEN state, and they
-+				 * may be notified before the request returns.
-+				 */
-+				sk->sk_state = BT_LISTEN;
+ 	for (mem_type = XE_PL_SYSTEM; mem_type <= XE_PL_TT; ++mem_type) {
+@@ -75,23 +101,35 @@ static int __xe_shrinker_walk(struct xe_device *xe,
+ 		if (!man || !man->use_tt)
+ 			continue;
+ 
++		if (mem_type != XE_PL_SYSTEM && !rpm &&
++		    xe_device_is_l2_flush_optimized(xe)) {
++			if (!__xe_shrinker_runtime_pm_get(shrinker))
++				break;
++			rpm = true;
++		}
 +
- 				release_sock(sk);
- 				err = iso_conn_big_sync(sk);
- 				lock_sock(sk);
-@@ -1745,12 +1757,20 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 				 * connection may have been torn down
- 				 * meanwhile and iso_chan_del() may have
- 				 * already moved the socket to BT_CLOSED.
--				 * Only move on to BT_LISTEN if the BIG sync
--				 * was actually started and nothing else has
--				 * changed the state.
-+				 * Only move back if the BIG sync could not be
-+				 * started and nothing else has changed the
-+				 * state.
- 				 */
--				if (!err && sk->sk_state == BT_CONNECT2)
--					sk->sk_state = BT_LISTEN;
-+				if (err && sk->sk_state == BT_LISTEN) {
-+					/* Discard any child socket that may
-+					 * have been queued while the socket
-+					 * was in BT_LISTEN, as the cleanup of
-+					 * BT_CONNECT2 doesn't drain the
-+					 * accept queue.
-+					 */
-+					iso_sock_flush_accept_q(sk);
-+					sk->sk_state = BT_CONNECT2;
-+				}
- 			} else {
- 				iso_conn_defer_accept(pi->conn->hcon);
- 				sk->sk_state = BT_CONFIG;
-@@ -1760,12 +1780,22 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 			break;
- 		case BT_CONNECTED:
- 			if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
-+				/* As above, the BIS connections may be
-+				 * notified before the request returns.
-+				 */
-+				sk->sk_state = BT_LISTEN;
+ 		ttm_bo_lru_for_each_reserved_guarded(&curs, man, &arg, ttm_bo) {
+ 			if (!ttm_bo_shrink_suitable(ttm_bo, ctx))
+ 				continue;
+ 
+ 			lret = xe_bo_shrink(ctx, ttm_bo, flags, scanned);
+-			if (lret < 0)
+-				return lret;
++			if (lret < 0) {
++				ret = lret;
++				goto out;
++			}
+ 
+ 			*freed += lret;
+ 			if (*scanned >= to_scan)
+-				break;
++				goto out;
+ 		}
+ 		/* Trylocks should never error, just fail. */
+ 		xe_assert(xe, !IS_ERR(ttm_bo));
+ 	}
+ 
+-	return 0;
++out:
++	xe_shrinker_runtime_pm_put(shrinker, rpm);
 +
- 				release_sock(sk);
- 				err = iso_conn_big_sync(sk);
- 				lock_sock(sk);
++	return ret;
+ }
  
--				if (!err && sk->sk_state == BT_CONNECTED)
--					sk->sk_state = BT_LISTEN;
-+				if (err && sk->sk_state == BT_LISTEN) {
-+					/* As above, don't leave any child
-+					 * socket behind in the accept queue.
-+					 */
-+					iso_sock_flush_accept_q(sk);
-+					sk->sk_state = BT_CONNECTED;
-+				}
- 				early_ret = true;
- 			}
+ /*
+@@ -100,7 +138,7 @@ static int __xe_shrinker_walk(struct xe_device *xe,
+  * add writeback. This avoids stalls and explicit writebacks with light or
+  * moderate memory pressure.
+  */
+-static int xe_shrinker_walk(struct xe_device *xe,
++static int xe_shrinker_walk(struct xe_shrinker *shrinker,
+ 			    struct ttm_operation_ctx *ctx,
+ 			    const struct xe_bo_shrink_flags flags,
+ 			    unsigned long to_scan, unsigned long *scanned,
+@@ -112,20 +150,21 @@ static int xe_shrinker_walk(struct xe_device *xe,
  
+ 	swap(no_wait_gpu, ctx->no_wait_gpu);
+ 	save_flags.writeback = false;
+-	ret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned, freed);
++	ret = __xe_shrinker_walk(shrinker, ctx, save_flags, to_scan, scanned,
++				 freed);
+ 	swap(no_wait_gpu, ctx->no_wait_gpu);
+ 	if (ret || *scanned >= to_scan)
+ 		return ret;
+ 
+ 	if (!ctx->no_wait_gpu) {
+-		ret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned,
++		ret = __xe_shrinker_walk(shrinker, ctx, save_flags, to_scan, scanned,
+ 					 freed);
+ 		if (ret || *scanned >= to_scan)
+ 			return ret;
+ 	}
+ 
+ 	if (flags.writeback)
+-		ret = __xe_shrinker_walk(xe, ctx, flags, to_scan, scanned,
++		ret = __xe_shrinker_walk(shrinker, ctx, flags, to_scan, scanned,
+ 					 freed);
+ 
+ 	return ret;
+@@ -176,22 +215,7 @@ static bool xe_shrinker_runtime_pm_get(struct xe_shrinker *shrinker, bool force,
+ 			return false;
+ 	}
+ 
+-	if (!xe_pm_runtime_get_if_active(xe)) {
+-		if (xe_rpm_reclaim_safe(xe) && !ttm_bo_shrink_avoid_wait()) {
+-			xe_pm_runtime_get(xe);
+-			return true;
+-		}
+-		queue_work(xe->unordered_wq, &shrinker->pm_worker);
+-		return false;
+-	}
+-
+-	return true;
+-}
+-
+-static void xe_shrinker_runtime_pm_put(struct xe_shrinker *shrinker, bool runtime_pm)
+-{
+-	if (runtime_pm)
+-		xe_pm_runtime_put(shrinker->xe);
++	return __xe_shrinker_runtime_pm_get(shrinker);
+ }
+ 
+ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_control *sc)
+@@ -221,7 +245,7 @@ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_con
+ 	runtime_pm = xe_shrinker_runtime_pm_get(shrinker, false, nr_to_scan, can_backup);
+ 
+ 	if (purgeable && nr_scanned < nr_to_scan)
+-		xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
++		xe_shrinker_walk(shrinker, &ctx, shrink_flags,
+ 				 nr_to_scan, &nr_scanned, &freed);
+ 
+ 	sc->nr_scanned = nr_scanned;
+@@ -234,7 +258,7 @@ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_con
+ 
+ 	shrink_flags.purge = false;
+ 
+-	xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
++	xe_shrinker_walk(shrinker, &ctx, shrink_flags,
+ 			 nr_to_scan, &nr_scanned, &freed);
+ 
+ 	sc->nr_scanned = nr_scanned;
 -- 
 2.53.0
 
