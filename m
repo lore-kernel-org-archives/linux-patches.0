@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F8151CF76;
-	Wed, 23 Sep 2026 14:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11CF5372FC;
+	Wed, 23 Sep 2026 14:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174877; cv=none; b=ZEl1/MUDS7mnybuhsj2LHULKVP+nhzX+b/OlxHnleUP0oEzWS3O+DZ1+KxWd6TbPEkxwjFwznkVRZH2B68kGLL37JveRooKenS6TdlCS2cCsx6iLsOppcqFIx9OthZtDrqLon2e10Vd26yUD7X97luvmTqwjKnIxNrA3h1iLu5k=
+	t=1790174885; cv=none; b=urd5pzblnP8nBpkCHutITVVZzYRBKf/0WU1tXB8/kYGG4AgpojIpUXh7ji9AOz8G9az4Ra4kV9UO15ud11fUN4yFANaN+JLHD46CBO3hZv0TZHs2yVHbPHGMWT06JVmGhVPugwy6LXZNhPi0u+jOuYehPQvjS9itnDoI+zyY5sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174877; c=relaxed/simple;
-	bh=nBqMIs4KLke9tW0Lq2No0jGaFEKxWX21YozgH5aOPM0=;
+	s=arc-20240116; t=1790174885; c=relaxed/simple;
+	bh=9+1cw/S1DvnPW/1xXkcHvptt+slvIo/ivrBqzb6qN9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c3ECOHYpYbtoJNAIILAF76e/lYNMvYZhqEkA2OPi9ilJv1W2rKENA1JP3AjbF6siLpkSKYbNyVkIuwmIaLO9H5u7bfUrWcZagt3jMUY5VNaYyf8ov/se4pTen4dAHfmdzN7polWHUHLxLxZcdiCvT0r/SJQxG5BW+3fHtwbd9xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSeEJZA2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V2HfyjC3BqMigu3iLI8LzX1rGsj4MljRsGCOf8pcIuZx9k/2qI8s+kso47D5G80XzlcuaU5l4XKarGFG2Sy3CWPQhSlsGVEFoHFI7tnF7ZEwWoR9gTygvbVnL7xzKQsYW6lq4XP8nMtEKqCDbSkQBt6Yt3EDEGJMTPZ0fEKlEtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOkc/GPf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSeEJZA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6641F000FF;
-	Wed, 23 Sep 2026 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOkc/GPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094051F000FF;
+	Wed, 23 Sep 2026 14:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174876;
-	bh=ZxqvYLhtn1yvM7AJXDuA5ocpLW1arEKr3RUtUHa6bQI=;
+	s=korg; t=1790174884;
+	bh=wAReV6725kUKBLI7DExAt8jI2t4lw3V7qejE8SDMxgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSeEJZA2eJrRzPDF9CepNYd5dAiLsaQAdczc018gfUDbCbF9JpCwrJruoVtwPkFq4
-	 Pxojfu4ma0WQGM/AlI/IGXrkNMnUQ/AXy8gRvZhOlFFgB8Kj/xy/rT3UHQC5lFHE/f
-	 CxbkMAxx5VFS54qZ4ptHF62A18maRKC4/cC2uzEM=
+	b=xOkc/GPfmuTKvJE+W2Sp4X0Vz8ijvkFO95ta9Z2YohjmGS72k+cSLGIq3sEwOa1qj
+	 5moeyeoJBAa35q4z2DpoEbICm1ffV8XUJnKGGwslTjsPZuNKHLnZvHEdYakA+JrQBK
+	 cZoxde4Bj5JeMeZMQRtm53hSttNnbGlwgcgLt6n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <fourdizhang@tencent.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 255/398] xfrm: use hlist_del_init_rcu for state_cache and state_cache_input
-Date: Wed, 23 Sep 2026 16:05:29 +0200
-Message-ID: <20260923140650.025208001@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.18 256/398] soc: samsung: exynos-pmu: fix use-after-free of interrupt generator node
+Date: Wed, 23 Sep 2026 16:05:30 +0200
+Message-ID: <20260923140650.051252098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -44,64 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siwei Zhang <fourdizhang@tencent.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-commit 2afb8dc1f4390f164db8352f8e685e126e9db566 upstream.
+commit 4dd1999783d7d12434006289338373e49492dc96 upstream.
 
-Commit 14acf9652e56 ("xfrm: defensively unhash xfrm_state lists in
-__xfrm_state_delete") converted bydst/bysrc/byseq/byspi from
-hlist_del_rcu() to hlist_del_init_rcu() so that a second
-__xfrm_state_delete() on the same object becomes a no-op rather than a
-write through LIST_POISON pprev. It missed state_cache and
-state_cache_input, which kept hlist_del_rcu():
+The setup_cpuhp_and_cpuidle() parses the device tree node for the
+interrupt generation block via of_parse_phandle() and decrements its
+reference count using of_node_put() immediately after fetching the resource
+address. However, later the intr_gen_node pointer is passed into
+of_syscon_register_regmap().
 
-- hlist_del_rcu() leaves pprev = LIST_POISON2 (non-NULL), so
-  hlist_unhashed() returns false.
-- hlist_del_init_rcu() leaves pprev = NULL, so hlist_unhashed()
-  returns true.
+Fix this by declaring intr_gen_node with __free() and removing
+of_node_put().
 
-A second __xfrm_state_delete() therefore enters __hlist_del() on the
-already-deleted state_cache/state_cache_input nodes and does
-WRITE_ONCE(*pprev, next) through LIST_POISON2 — a write use-after-free
-once the slab is reused. The corruption can in turn cause a subsequent
-hlist_for_each_entry_rcu traversal to follow a dangling next pointer,
-producing the read use-after-free reported in xfrm_input_state_lookup().
-
-Switch state_cache and state_cache_input to hlist_del_init_rcu() to
-match the other four lists, closing the write use-after-free and, with
-it, the read use-after-free it spawns.
-
-Assisted-by: CodeBuddy:GLM-5.2
-Fixes: 0045e3d80613 ("xfrm: Cache used outbound xfrm states at the policy.")
-Fixes: 81a331a0e72d ("xfrm: Add an inbound percpu state cache.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260513-exynos850-cpuhotplug-v4-0-54fec5f65362@linaro.org?part=3
+Fixes: 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for gs101")
 Cc: stable@vger.kernel.org
-Signed-off-by: Siwei Zhang <fourdizhang@tencent.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20260828-exynos-pmu-cpuhp-idle-fixes-v2-1-06bce6107bd6@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20260917081641.72291-2-krzk@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/samsung/exynos-pmu.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -826,9 +826,9 @@ int __xfrm_state_delete(struct xfrm_stat
- 		if (!hlist_unhashed(&x->byseq))
- 			hlist_del_init_rcu(&x->byseq);
- 		if (!hlist_unhashed(&x->state_cache))
--			hlist_del_rcu(&x->state_cache);
-+			hlist_del_init_rcu(&x->state_cache);
- 		if (!hlist_unhashed(&x->state_cache_input))
--			hlist_del_rcu(&x->state_cache_input);
-+			hlist_del_init_rcu(&x->state_cache_input);
+--- a/drivers/soc/samsung/exynos-pmu.c
++++ b/drivers/soc/samsung/exynos-pmu.c
+@@ -540,13 +540,12 @@ static struct notifier_block exynos_cpup
  
- 		if (!hlist_unhashed(&x->byspi))
- 			hlist_del_init_rcu(&x->byspi);
+ static int setup_cpuhp_and_cpuidle(struct device *dev)
+ {
+-	struct device_node *intr_gen_node;
++	struct device_node *intr_gen_node __free(device_node) =
++		of_parse_phandle(dev->of_node, "google,pmu-intr-gen-syscon", 0);
+ 	struct resource intrgen_res;
+ 	void __iomem *virt_addr;
+ 	int ret, cpu;
+ 
+-	intr_gen_node = of_parse_phandle(dev->of_node,
+-					 "google,pmu-intr-gen-syscon", 0);
+ 	if (!intr_gen_node) {
+ 		/*
+ 		 * To maintain support for older DTs that didn't specify syscon
+@@ -562,8 +561,6 @@ static int setup_cpuhp_and_cpuidle(struc
+ 	 * syscon provided regmap.
+ 	 */
+ 	ret = of_address_to_resource(intr_gen_node, 0, &intrgen_res);
+-	of_node_put(intr_gen_node);
+-
+ 	virt_addr = devm_ioremap(dev, intrgen_res.start,
+ 				 resource_size(&intrgen_res));
+ 	if (!virt_addr)
 
 
