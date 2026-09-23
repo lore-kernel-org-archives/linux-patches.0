@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF3F53A390;
-	Wed, 23 Sep 2026 14:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746D3332EC5;
+	Wed, 23 Sep 2026 14:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174852; cv=none; b=knFYntFlyHW9MDUMgVgeL4f2x/zeXiSZZzm51/TSylQ51glQHgkA7ZkmP+soMHb8Dodqbmzk8MterqAHVTMZ/TmVMyQDwozotEeATeDTolixsPdyREG8e6KUG+YpoSe/kC41/Da9pDmX5E4x6BhsmqwX4turXJVsx/zuZZpPpVA=
+	t=1790174855; cv=none; b=cdTAFDGxjFPbtvtRu+tZ9jidGz5RrbJkv0jDfLUfUnqQak7IF9WIzr9jksdlx6gBo1tcyHu55V+tGvIHgVYq/kHz30aHEScKfmH2KMZMqA2/Cl8BwPqBO/aN1xWYrEA1eklruJf46Nr0pxtx0Pp+2UazTVSemoAUTHZTSFkqguk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174852; c=relaxed/simple;
-	bh=2ALl8WWb0W2bt9d4akfqHkdPhpWTMaY8mnGgPalXTy8=;
+	s=arc-20240116; t=1790174855; c=relaxed/simple;
+	bh=29mDNEpr7rYV2ry46lvuNsY1ciu8iBaiseeJ/zj8Uj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UegaPcFiYBR07z87+EQDbetckYGU90dVZlGDGzfz15Ca7FXMoZ1jEbkFrALxXdOM/f/KaN9xDdLzVjOnTAHPr7COcyScZeqnREBnRTarEu1bxZ6uYhrmGhyzItpU8Pkke7PDQ70cVteIbevZEcgWeTNAHPd4G0qwfCbP0dm35vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4WmxDDd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RI0XOTTTh/9vd5SsqjrosajmgHSGRwXL0T3wCLZb6qm+syeaDRKmEt6Ty22HJu1KsRQh2YOwQoMm1UVr7CBDNLcvx+9Sp8nzINDjdOIah/LNF27cAV8lEweMW85fNUuLyGEw/16yNogE93S3Ehn1rRzRK7AG1QAWCW15hBuHPHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcf86knn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4WmxDDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C741F000FF;
-	Wed, 23 Sep 2026 14:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcf86knn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70DB1F000FF;
+	Wed, 23 Sep 2026 14:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174851;
-	bh=wdeq1nHzB/sr7e3JE2t5Kh9Y/ik3z0gKXxLi/qQgewo=;
+	s=korg; t=1790174854;
+	bh=/9oysZeDWvUP/3vQcVX3Da6BX4/cY4k8Urjcw2KCDMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v4WmxDDdXT7yBK+P75PK1AWLQEq4kRdGAH+kqChDLoqxKUXrcHP4TmAMflRlge+UY
-	 qsZeKP3lC8U9iRUXqadbIllVKBRUjqo5tdZynlbkQyEUEVU22VsGBkA1Hzyywajyh0
-	 MPO+KrEYgHrg4RBjctcqCNCRelLjPEKNo+fD+khs=
+	b=lcf86knn2A4uzqGmNEA1jvU9V+gMHoR7MmSSfH7Z2hLDfYsR68hH5KJegbeosEy2T
+	 LJTCy/QWL8WoAfxc3A1UOQhSf81AX4fe+Luu7IZLUW5sIGb2iggzr70D4VNZ7blMCG
+	 cetgix5Hi208fj1RlqHP2W+wluDNc9LLay7x94ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 211/398] Revert "nouveau/gsp: fix suspend/resume regression on r570 firmware"
-Date: Wed, 23 Sep 2026 16:04:45 +0200
-Message-ID: <20260923140648.889901910@linuxfoundation.org>
+	Roland Waltersson <roland.waltersson@netinsight.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.18 202/398] ata: libahci: clear PxCLBU and PxFBU for AHCI_HFLAG_32BIT_ONLY
+Date: Wed, 23 Sep 2026 16:04:36 +0200
+Message-ID: <20260923140648.658737086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,100 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit a5c41fa7f925fda2db394329fa0b26243fa63a81 upstream.
+commit 82e47533221d4746947b74d2e79a478c36c6433a upstream.
 
-This reverts commit 8302d0afeaec0bc57d951dd085e0cffe997d4d18.
+A user reported that commit 105c42566a55 ("ata: ahci: force 32-bit DMA for
+JMicron JMB582/JMB585") made the JMicron JMB585 unusable on his board.
 
-It turns out this looked like the right fix on some systems, but it's not -
-as this causes runtime PM to actually fail on many a laptop.
+The failure is seen as soon as the ahci driver is probed, and booting with
+iommu=off does not solve the problem.
 
-Fixes: 8302d0afeaec ("nouveau/gsp: fix suspend/resume regression on r570 firmware")
-Cc: <stable@vger.kernel.org> # v6.19+
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260814194542.781955-2-lyude@redhat.com
-(cherry picked from commit 94097122bfd701976bc1a62ccd434c13f3f67cde)
-Signed-off-by: Lyude Paul <lyude@redhat.com>
+Looking at the AHCI specification, PxCLBU and PxFBU are both read only '0'
+for HBAs that do not support 64-bit addressing.
+
+For HBAs that do support 64-bit addressing, the registers are read write,
+with a reset value that is Implementation Specific.
+
+When using the AHCI_HFLAG_32BIT_ONLY flag, the HBA does support 64-bit
+addressing, and a 32-bit DMA mask is set by simply clearing HOST_CAP_64.
+Thus, in this case, we need to explicitly clear the registers to 0.
+
+Fixes: 105c42566a55 ("ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585")
+Fixes: c7a42156d99b ("ahci: disable 64bit dma on sb600")
+Cc: stable@vger.kernel.org
+Reported-by: Roland Waltersson <roland.waltersson@netinsight.net>
+Closes: https://lore.kernel.org/linux-ide/IA0PR17MB668730A4ECCD65F7A1DC3EDC9EB62@IA0PR17MB6687.namprd17.prod.outlook.com/
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260904134310.1465051-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c  |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c |    8 ++++----
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h        |    2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/ata/libahci.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-@@ -208,7 +208,7 @@ r535_fbsr_resume(struct nvkm_gsp *gsp)
- }
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -748,15 +748,28 @@ void ahci_start_fis_rx(struct ata_port *
+ 	struct ahci_port_priv *pp = ap->private_data;
+ 	u32 tmp;
  
- static int
--r535_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
-+r535_fbsr_suspend(struct nvkm_gsp *gsp)
- {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-@@ -1748,7 +1748,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, enum
- 		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.lvl0.addr;
- 		sr->sizeOfSuspendResumeData = len;
+-	/* set FIS registers */
++	/*
++	 * On HBAs that only support 32-bit addressing PxCLBU is read only '0'.
++	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxCLBU is RW, and the
++	 * reset value is Implementation Specific, so we need to clear it to 0.
++	 */
+ 	if (hpriv->cap & HOST_CAP_64)
+ 		writel((pp->cmd_slot_dma >> 16) >> 16,
+ 		       port_mmio + PORT_LST_ADDR_HI);
++	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
++		writel(0, port_mmio + PORT_LST_ADDR_HI);
+ 	writel(pp->cmd_slot_dma & 0xffffffff, port_mmio + PORT_LST_ADDR);
  
--		ret = rm->api->fbsr->suspend(gsp, suspend == NVKM_RUNTIME_SUSPEND);
-+		ret = rm->api->fbsr->suspend(gsp);
- 		if (ret) {
- 			nvkm_gsp_mem_dtor(&gsp->sr.meta);
- 			nvkm_gsp_radix3_dtor(gsp, &gsp->sr.radix3);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-@@ -62,7 +62,7 @@ r570_fbsr_resume(struct nvkm_gsp *gsp)
- }
++	/*
++	 * On HBAs that only support 32-bit addressing PxFBU is read only '0'.
++	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxFBU is RW, and the
++	 * reset value is Implementation Specific, so we need to clear it to 0.
++	 */
+ 	if (hpriv->cap & HOST_CAP_64)
+ 		writel((pp->rx_fis_dma >> 16) >> 16,
+ 		       port_mmio + PORT_FIS_ADDR_HI);
++	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
++		writel(0, port_mmio + PORT_FIS_ADDR_HI);
+ 	writel(pp->rx_fis_dma & 0xffffffff, port_mmio + PORT_FIS_ADDR);
  
- static int
--r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size, bool runtime)
-+r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size)
- {
- 	NV2080_CTRL_INTERNAL_FBSR_INIT_PARAMS *ctrl;
- 	struct nvkm_gsp_object memlist;
-@@ -81,7 +81,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- 	ctrl->hClient = gsp->internal.client.object.handle;
- 	ctrl->hSysMem = memlist.handle;
- 	ctrl->sysmemAddrOfSuspendResumeData = gsp->sr.meta.addr;
--	ctrl->bEnteringGcoffState = runtime ? 1 : 0;
-+	ctrl->bEnteringGcoffState = 1;
- 
- 	ret = nvkm_gsp_rm_ctrl_wr(&gsp->internal.device.subdevice, ctrl);
- 	if (ret)
-@@ -92,7 +92,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- }
- 
- static int
--r570_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
-+r570_fbsr_suspend(struct nvkm_gsp *gsp)
- {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
-@@ -133,7 +133,7 @@ r570_fbsr_suspend(struct nvkm_gsp *gsp,
- 		return ret;
- 
- 	/* Initialise FBSR on RM. */
--	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size, runtime);
-+	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size);
- 	if (ret) {
- 		nvkm_gsp_sg_free(device, &gsp->sr.fbsr);
- 		return ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-@@ -79,7 +79,7 @@ struct nvkm_rm_api {
- 	} *device;
- 
- 	const struct nvkm_rm_api_fbsr {
--		int (*suspend)(struct nvkm_gsp *, bool runtime);
-+		int (*suspend)(struct nvkm_gsp *);
- 		void (*resume)(struct nvkm_gsp *);
- 	} *fbsr;
- 
+ 	/* enable FIS reception */
 
 
