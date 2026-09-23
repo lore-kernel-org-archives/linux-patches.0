@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FC9469855;
-	Wed, 23 Sep 2026 14:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6051A52ED23;
+	Wed, 23 Sep 2026 14:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172632; cv=none; b=QmuhHAol3VeqJoL13aG7Wml/vppmcjMqet5sCcl15Wp65nOROncpSyo9u0SU0da32wX6LD4uYtu6MtkZ93ZkxFFYUK5gplBUYyZwrt3X+yjJJeEq1LuOsmm5tpY5zHpjQ9ko2eaK/brxmOvQtVl9AM4p4iCKRL2u9BcuJRrH+e8=
+	t=1790172636; cv=none; b=ZLFGKmyJl8b0pwbig5T897yWITGqjDKYlCmXdZaRMslwZ58BMnkYZJLiZT5h9rDjnkzONFsTelRaYTMNpf8DG4b6fkGt+zgk/EGXgVGnIej5kEnO9vjGilQg43FJh5Qy0CtyNfUCO66HVrAzWJVGflwKvanm9HCUnK1PT98pHp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172632; c=relaxed/simple;
-	bh=YYveSsvdg/JHq5dkN0ApBHXAlJI6+ApHKAoPzZA19ts=;
+	s=arc-20240116; t=1790172636; c=relaxed/simple;
+	bh=CRfWPv21odq/I9YaV0i+Hzvheg1+OahXHz3F2jg3Woo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EUU6YZs/Ai6eA4B16YOsAQVkMojklR9XZNgty3RY/w1DAG84DJn8wJjhBT8TIkgDxhnPwe67KUEGRh/Ww5M+JQz4Hoj9wLD7JMQwLJ5tYmoteD/pLgbUimUI8sK7zQyM0kPeyut8mnffFS4w69LKFb5mOw1th/KzLDIpayUIW6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXpxBXZ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GBvQ7YtyvYoJf5uNT2zFe4Y0tVj4/W+KBJLfGBFSxqCIsebVKM2zriF4Mr1jsYV3iviIK77Eaaml/EmSvHgTvTImo50RHquWEP6l3AHP6UZMjWcxX+fHAd4LgpS2wMnjgvcCyXosNcFhWsA60lwBw+8IT9aLCLlKo9NajPhbWJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSmwXL9q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXpxBXZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CC21F000FF;
-	Wed, 23 Sep 2026 14:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSmwXL9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692661F000FF;
+	Wed, 23 Sep 2026 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172631;
-	bh=R0QXTNADG+1nZN93IN4WWotXqy7JsZJ+xV5WOAFDUfo=;
+	s=korg; t=1790172634;
+	bh=KDleSkFwQ/qcEOvfKHY4fs/fVte8/knbecS+QM49H9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXpxBXZ3G0Chz1VRIMQWH0p7Ze2Z/Q8mx2RlKpWlwUTu0Lx0eyPRiPLwsrSmiybbq
-	 rWspxoYDsDgaAADFW51sDfFDGCQ/9dZcUYp/LqQo0g6Y/R864kgIsDjQtuNq0QEpKs
-	 lXSCPW3UpfiD9ZdSxjemHd9JcJ7FjWtUlcPs+aXg=
+	b=oSmwXL9q151Y6i9RWkR7LvNmXcdnfkU1LR1Nl7odA40qTZ6sA5rE/Gr9Ihh+ubuE4
+	 1ZJgSjsiaYBEiElF4DYQaSyppLZE56AvaqQgEVdMBGdO/qp0zJG1OXLZiJH60cDfPu
+	 LMG+wDJF1/mG05v0xVQ8wb8o4x60ZOhRi1q6J+T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Buffet <matthieu@buffet.re>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Song Liu <song@kernel.org>,
+	Tingmao Wang <m@maowtm.org>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/398] selftests/landlock: Add test for TCP fast open
-Date: Wed, 23 Sep 2026 16:01:17 +0200
-Message-ID: <20260923140643.535076458@linuxfoundation.org>
+Subject: [PATCH 6.18 008/398] selftests/landlock: Add tests for access through disconnected paths
+Date: Wed, 23 Sep 2026 16:01:22 +0200
+Message-ID: <20260923140643.661823860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,202 +54,516 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Buffet <matthieu@buffet.re>
+From: Tingmao Wang <m@maowtm.org>
 
-[ Upstream commit f4b30e0b1d488e7ffd8ea28d1365b9ba8e551edb ]
+[ Upstream commit a18ee3f31fd714173a62515d049d77e76ab55649 ]
 
-Enforce that TCP Fast Open is controlled by
-LANDLOCK_ACCESS_NET_CONNECT_TCP. Semantics of connect() and
-sendmsg(MSG_FASTOPEN) should be identical from Landlock's perspective.
-Also enforce error code consistency, since UDP sockets ignore the
-MSG_FASTOPEN flag while Unix sockets reject it.
+This adds tests for the edge case discussed in [1], with specific ones
+for rename and link operations when the operands are through
+disconnected paths, as that go through a separate code path in Landlock.
 
-Signed-off-by: Matthieu Buffet <matthieu@buffet.re>
-Link: https://patch.msgid.link/20260701214628.33319-2-matthieu@buffet.re
-Cc: stable@vger.kernel.org
-[mic: Fix formatting]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[mic: Backport: adapt the test to the older network fixture and add the
-required send helper]
+This has resulted in a warning, due to collect_domain_accesses() not
+expecting to reach a different root from path->mnt:
+
+  #  RUN           layout1_bind.path_disconnected ...
+  #            OK  layout1_bind.path_disconnected
+  ok 96 layout1_bind.path_disconnected
+  #  RUN           layout1_bind.path_disconnected_rename ...
+  [..] ------------[ cut here ]------------
+  [..] WARNING: CPU: 3 PID: 385 at security/landlock/fs.c:1065 collect_domain_accesses
+  [..] ...
+  [..] RIP: 0010:collect_domain_accesses (security/landlock/fs.c:1065 (discriminator 2) security/landlock/fs.c:1031 (discriminator 2))
+  [..] current_check_refer_path (security/landlock/fs.c:1205)
+  [..] ...
+  [..] hook_path_rename (security/landlock/fs.c:1526)
+  [..] security_path_rename (security/security.c:2026 (discriminator 1))
+  [..] do_renameat2 (fs/namei.c:5264)
+  #            OK  layout1_bind.path_disconnected_rename
+  ok 97 layout1_bind.path_disconnected_rename
+
+Move the const char definitions a bit above so that we can use the path
+for s4d1 in cleanup code.
+
+Cc: Günther Noack <gnoack@google.com>
+Cc: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/027d5190-b37a-40a8-84e9-4ccbc352bcdf@maowtm.org [1]
+Signed-off-by: Tingmao Wang <m@maowtm.org>
+Link: https://lore.kernel.org/r/20251128172200.760753-4-mic@digikod.net
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/net_test.c | 155 ++++++++++++++++++++
- 1 file changed, 155 insertions(+)
+ tools/testing/selftests/landlock/fs_test.c | 423 ++++++++++++++++++++-
+ 1 file changed, 415 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
-index 6fecd36f74c63..c725c08414a10 100644
---- a/tools/testing/selftests/landlock/net_test.c
-+++ b/tools/testing/selftests/landlock/net_test.c
-@@ -258,6 +258,64 @@ static int connect_variant(const int sock_fd,
- 	return connect_variant_addrlen(sock_fd, srv, get_addrlen(srv, false));
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index 29cdbb8367358..83ead11e3bcd8 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -4559,6 +4559,18 @@ TEST_F_FORK(ioctl, handle_file_access_file)
+ FIXTURE(layout1_bind) {};
+ /* clang-format on */
+ 
++static const char bind_dir_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3";
++static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
++
++/* Move targets for disconnected path tests. */
++static const char dir_s4d1[] = TMP_DIR "/s4d1";
++static const char file1_s4d1[] = TMP_DIR "/s4d1/f1";
++static const char file2_s4d1[] = TMP_DIR "/s4d1/f2";
++static const char dir_s4d2[] = TMP_DIR "/s4d1/s4d2";
++static const char file1_s4d2[] = TMP_DIR "/s4d1/s4d2/f1";
++static const char file1_name[] = "f1";
++static const char file2_name[] = "f2";
++
+ FIXTURE_SETUP(layout1_bind)
+ {
+ 	prepare_layout(_metadata);
+@@ -4574,14 +4586,14 @@ FIXTURE_TEARDOWN_PARENT(layout1_bind)
+ {
+ 	/* umount(dir_s2d2)) is handled by namespace lifetime. */
+ 
++	remove_path(file1_s4d1);
++	remove_path(file2_s4d1);
++
+ 	remove_layout1(_metadata);
+ 
+ 	cleanup_layout(_metadata);
  }
  
-+static int sendto_variant_addrlen(const int sock_fd,
-+				  const struct service_fixture *const srv,
-+				  const socklen_t addrlen, void *buf,
-+				  size_t len, size_t flags)
+-static const char bind_dir_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3";
+-static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
+-
+ /*
+  * layout1_bind hierarchy:
+  *
+@@ -4592,20 +4604,25 @@ static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
+  * │   └── s1d2
+  * │       ├── f1
+  * │       ├── f2
+- * │       └── s1d3
++ * │       └── s1d3 [disconnected by path_disconnected]
+  * │           ├── f1
+  * │           └── f2
+  * ├── s2d1
+  * │   ├── f1
+- * │   └── s2d2
++ * │   └── s2d2 [bind mount from s1d2]
+  * │       ├── f1
+  * │       ├── f2
+  * │       └── s1d3
+  * │           ├── f1
+  * │           └── f2
+- * └── s3d1
+- *     └── s3d2
+- *         └── s3d3
++ * ├── s3d1
++ * │   └── s3d2
++ * │       └── s3d3
++ * └── s4d1 [renamed from s1d3 by path_disconnected]
++ *     ├── f1
++ *     ├── f2
++ *     └── s4d2
++ *         └── f1
+  */
+ 
+ TEST_F_FORK(layout1_bind, no_restriction)
+@@ -4804,6 +4821,396 @@ TEST_F_FORK(layout1_bind, reparent_cross_mount)
+ 	ASSERT_EQ(0, rename(bind_file1_s1d3, file1_s2d2));
+ }
+ 
++/*
++ * Make sure access to file through a disconnected path works as expected.
++ * This test moves s1d3 to s4d1.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected)
 +{
-+	const struct sockaddr *dst = NULL;
-+	ssize_t ret;
++	const struct rule layer1_allow_all[] = {
++		{
++			.path = TMP_DIR,
++			.access = ACCESS_ALL,
++		},
++		{},
++	};
++	const struct rule layer2_allow_just_f1[] = {
++		{
++			.path = file1_s1d3,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
++	const struct rule layer3_only_s1d2[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
 +
-+	/*
-+	 * We never want our processes to be killed by SIGPIPE: we check return
-+	 * codes and errno, so that we have actual error messages.
-+	 */
-+	flags |= MSG_NOSIGNAL;
++	/* Landlock should not deny access just because it is disconnected. */
++	int ruleset_fd_l1 =
++		create_ruleset(_metadata, ACCESS_ALL, layer1_allow_all);
 +
-+	if (srv != NULL) {
-+		switch (srv->protocol.domain) {
-+		case AF_UNSPEC:
-+		case AF_INET:
-+			dst = (const struct sockaddr *)&srv->ipv4_addr;
-+			break;
++	/* Creates the new ruleset now before we move the dir containing the file. */
++	int ruleset_fd_l2 =
++		create_ruleset(_metadata, ACCESS_RW, layer2_allow_just_f1);
++	int ruleset_fd_l3 =
++		create_ruleset(_metadata, ACCESS_RW, layer3_only_s1d2);
++	int bind_s1d3_fd;
 +
-+		case AF_INET6:
-+			dst = (const struct sockaddr *)&srv->ipv6_addr;
-+			break;
++	ASSERT_LE(0, ruleset_fd_l1);
++	ASSERT_LE(0, ruleset_fd_l2);
++	ASSERT_LE(0, ruleset_fd_l3);
 +
-+		case AF_UNIX:
-+			dst = (const struct sockaddr *)&srv->unix_addr;
-+			break;
++	enforce_ruleset(_metadata, ruleset_fd_l1);
++	EXPECT_EQ(0, close(ruleset_fd_l1));
 +
-+		default:
-+			errno = EAFNOSUPPORT;
-+			return -errno;
-+		}
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++
++	/* Tests access is possible before we move. */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, "..", O_RDONLY | O_DIRECTORY));
++
++	/* Makes it disconnected. */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d1))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d1,
++		       strerror(errno));
 +	}
 +
-+	ret = sendto(sock_fd, buf, len, flags, dst, addrlen);
-+	if (ret < 0)
-+		return -errno;
++	/* Tests that access is still possible. */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
 +
-+	/* errno is not set in cases of partial writes. */
-+	if (ret != len)
-+		return -EINTR;
++	/*
++	 * Tests that ".." is not possible (not because of Landlock, but just
++	 * because it's disconnected).
++	 */
++	EXPECT_EQ(ENOENT,
++		  test_open_rel(bind_s1d3_fd, "..", O_RDONLY | O_DIRECTORY));
 +
-+	return 0;
++	/* This should still work with a narrower rule. */
++	enforce_ruleset(_metadata, ruleset_fd_l2);
++	EXPECT_EQ(0, close(ruleset_fd_l2));
++
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY));
++	/*
++	 * Accessing a file through a disconnected file descriptor can still be
++	 * allowed by a rule tied to this file, even if it is no longer visible in
++	 * its mount point.
++	 */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++
++	enforce_ruleset(_metadata, ruleset_fd_l3);
++	EXPECT_EQ(0, close(ruleset_fd_l3));
++
++	EXPECT_EQ(EACCES, test_open(file1_s4d1, O_RDONLY));
++	/*
++	 * Accessing a file through a disconnected file descriptor can still be
++	 * allowed by a rule tied to the original mount point, even if it is no
++	 * longer visible in its mount point.
++	 */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
 +}
 +
-+static int sendto_variant(const int sock_fd,
-+			  const struct service_fixture *const srv, void *buf,
-+			  size_t len, size_t flags)
++/*
++ * Test that renameat with disconnected paths works under Landlock.  This test
++ * moves s1d3 to s4d2, so that we can have a rule allowing refers on the move
++ * target's immediate parent.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected_rename)
 +{
-+	socklen_t addrlen = 0;
-+
-+	if (srv != NULL)
-+		addrlen = get_addrlen(srv, false);
-+
-+	return sendto_variant_addrlen(sock_fd, srv, addrlen, buf, len, flags);
-+}
-+
- FIXTURE(protocol)
- {
- 	struct service_fixture srv0, srv1, srv2, unspec_any0, unspec_srv0;
-@@ -938,6 +996,103 @@ TEST_F(protocol, connect_unspec)
- 	EXPECT_EQ(0, close(bind_fd));
- }
- 
-+TEST_F(protocol, tcp_fastopen)
-+{
-+	const bool restricted = variant->sandbox == TCP_SANDBOX &&
-+				variant->prot.type == SOCK_STREAM &&
-+				(variant->prot.protocol == IPPROTO_TCP ||
-+				 variant->prot.protocol == IPPROTO_IP) &&
-+				(variant->prot.domain == AF_INET ||
-+				 variant->prot.domain == AF_INET6);
-+	const struct landlock_ruleset_attr ruleset_attr = {
-+		.handled_access_net = LANDLOCK_ACCESS_NET_CONNECT_TCP,
++	const struct rule layer1[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_MAKE_DIR |
++				  LANDLOCK_ACCESS_FS_REMOVE_DIR |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE |
++				  LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{
++			.path = dir_s4d1,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_MAKE_DIR |
++				  LANDLOCK_ACCESS_FS_REMOVE_DIR |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE |
++				  LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{}
 +	};
-+	int bind_fd, client_fd, status;
-+	char buf;
-+	pid_t child;
 +
-+	bind_fd = socket_variant(&self->srv0);
-+	ASSERT_LE(0, bind_fd);
-+	EXPECT_EQ(0, bind_variant(bind_fd, &self->srv0));
-+	if (self->srv0.protocol.type == SOCK_STREAM)
-+		EXPECT_EQ(0, listen(bind_fd, backlog));
++	/* This layer only handles LANDLOCK_ACCESS_FS_READ_FILE. */
++	const struct rule layer2_only_s1d2[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
++	int ruleset_fd_l1, ruleset_fd_l2;
++	pid_t child_pid;
++	int bind_s1d3_fd, status;
 +
-+	child = fork();
-+	ASSERT_LE(0, child);
-+	if (child == 0) {
-+		int connect_fd, ret;
++	ASSERT_EQ(0, mkdir(dir_s4d1, 0755))
++	{
++		TH_LOG("Failed to create %s: %s", dir_s4d1, strerror(errno));
++	}
++	ruleset_fd_l1 = create_ruleset(_metadata, ACCESS_ALL, layer1);
++	ruleset_fd_l2 = create_ruleset(_metadata, LANDLOCK_ACCESS_FS_READ_FILE,
++				       layer2_only_s1d2);
++	ASSERT_LE(0, ruleset_fd_l1);
++	ASSERT_LE(0, ruleset_fd_l2);
 +
-+		/* Closes listening socket for the child. */
-+		EXPECT_EQ(0, close(bind_fd));
++	enforce_ruleset(_metadata, ruleset_fd_l1);
++	EXPECT_EQ(0, close(ruleset_fd_l1));
 +
-+		connect_fd = socket_variant(&self->srv0);
-+		ASSERT_LE(0, connect_fd);
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
 +
-+		if (variant->sandbox == TCP_SANDBOX) {
-+			const int ruleset_fd = landlock_create_ruleset(
-+				&ruleset_attr, sizeof(ruleset_attr), 0);
-+			ASSERT_LE(0, ruleset_fd);
++	/* Tests ENOENT priority over EACCES for disconnected directory. */
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, "..", O_DIRECTORY));
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d2))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d2,
++		       strerror(errno));
++	}
++	EXPECT_EQ(ENOENT, test_open_rel(bind_s1d3_fd, "..", O_DIRECTORY));
 +
-+			enforce_ruleset(_metadata, ruleset_fd);
-+			EXPECT_EQ(0, close(ruleset_fd));
-+		}
++	/*
++	 * The file is no longer under s1d2 but we should still be able to access it
++	 * with layer 2 because its mount point is evaluated as the first valid
++	 * directory because it was initially a parent.  Do a fork to test this so
++	 * we don't prevent ourselves from renaming it back later.
++	 */
++	child_pid = fork();
++	ASSERT_LE(0, child_pid);
++	if (child_pid == 0) {
++		enforce_ruleset(_metadata, ruleset_fd_l2);
++		EXPECT_EQ(0, close(ruleset_fd_l2));
++		EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++		EXPECT_EQ(EACCES, test_open(file1_s4d2, O_RDONLY));
 +
-+		/* Fast Open with no address. */
-+		ret = sendto_variant(connect_fd, NULL, NULL, 0, MSG_FASTOPEN);
-+		if (self->srv0.protocol.domain == AF_UNIX) {
-+			EXPECT_EQ(-ENOTCONN, ret);
-+		} else if (self->srv0.protocol.type == SOCK_DGRAM) {
-+			EXPECT_EQ(-EDESTADDRREQ, ret);
-+		} else {
-+			EXPECT_EQ(-EINVAL, ret);
-+		}
++		/*
++		 * Tests that access widening checks indeed prevents us from renaming it
++		 * back.
++		 */
++		EXPECT_EQ(-1, rename(dir_s4d2, dir_s1d3));
++		EXPECT_EQ(EXDEV, errno);
 +
-+		/* Fast Open to a denied address. */
-+		ret = sendto_variant(connect_fd, &self->srv0, "A", 1,
-+				     MSG_FASTOPEN);
-+		if (restricted) {
-+			EXPECT_EQ(-EACCES, ret);
-+		} else if (self->srv0.protocol.domain == AF_UNIX &&
-+			   self->srv0.protocol.type == SOCK_STREAM) {
-+			EXPECT_EQ(-EOPNOTSUPP, ret);
-+		} else {
-+			EXPECT_EQ(0, ret);
-+		}
-+
-+		EXPECT_EQ(0, close(connect_fd));
++		/*
++		 * Including through the now disconnected fd (but it should return
++		 * EXDEV).
++		 */
++		EXPECT_EQ(-1, renameat(bind_s1d3_fd, file1_name, AT_FDCWD,
++				       file1_s2d2));
++		EXPECT_EQ(EXDEV, errno);
 +		_exit(_metadata->exit_code);
 +		return;
 +	}
 +
-+	client_fd = bind_fd;
-+	if (!restricted && self->srv0.protocol.type == SOCK_STREAM &&
-+	    self->srv0.protocol.domain != AF_UNIX) {
-+		client_fd = accept(bind_fd, NULL, 0);
-+		ASSERT_LE(0, client_fd);
-+	}
-+
-+	if (restricted) {
-+		EXPECT_EQ(-1, read(client_fd, &buf, 1));
-+		EXPECT_EQ(ENOTCONN, errno);
-+	} else if (self->srv0.protocol.domain == AF_UNIX &&
-+		   self->srv0.protocol.type == SOCK_STREAM) {
-+		EXPECT_EQ(-1, read(client_fd, &buf, 1));
-+		EXPECT_EQ(EINVAL, errno);
-+	} else {
-+		EXPECT_EQ(1, read(client_fd, &buf, 1));
-+		EXPECT_EQ('A', buf);
-+	}
-+
-+	EXPECT_EQ(child, waitpid(child, &status, 0));
++	EXPECT_EQ(child_pid, waitpid(child_pid, &status, 0));
 +	EXPECT_EQ(1, WIFEXITED(status));
 +	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
 +
-+	if (client_fd != bind_fd)
-+		EXPECT_LE(0, close(client_fd));
++	ASSERT_EQ(0, rename(dir_s4d2, dir_s1d3))
++	{
++		TH_LOG("Failed to rename %s back to %s: %s", dir_s4d1, dir_s1d3,
++		       strerror(errno));
++	}
 +
-+	EXPECT_EQ(0, close(bind_fd));
++	/* Now checks that we can access it under l2. */
++	child_pid = fork();
++	ASSERT_LE(0, child_pid);
++	if (child_pid == 0) {
++		enforce_ruleset(_metadata, ruleset_fd_l2);
++		EXPECT_EQ(0, close(ruleset_fd_l2));
++		EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++		EXPECT_EQ(0, test_open(file1_s1d3, O_RDONLY));
++		_exit(_metadata->exit_code);
++		return;
++	}
++
++	EXPECT_EQ(child_pid, waitpid(child_pid, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	/*
++	 * Also test that we can rename via a disconnected path.  We move the
++	 * dir back to the disconnected place first, then we rename file1 to
++	 * file2 through our dir fd.
++	 */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d2))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d2,
++		       strerror(errno));
++	}
++	ASSERT_EQ(0,
++		  renameat(bind_s1d3_fd, file1_name, bind_s1d3_fd, file2_name))
++	{
++		TH_LOG("Failed to rename %s to %s within disconnected %s: %s",
++		       file1_name, file2_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++	ASSERT_EQ(0, renameat(bind_s1d3_fd, file2_name, AT_FDCWD, file1_s2d2))
++	{
++		TH_LOG("Failed to rename %s to %s through disconnected %s: %s",
++		       file2_name, file1_s2d2, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s2d2, O_RDONLY));
++	EXPECT_EQ(0, test_open(file1_s1d2, O_RDONLY));
++
++	/* Move it back using the disconnected path as the target. */
++	ASSERT_EQ(0, renameat(AT_FDCWD, file1_s2d2, bind_s1d3_fd, file1_name))
++	{
++		TH_LOG("Failed to rename %s to %s through disconnected %s: %s",
++		       file1_s1d2, file1_name, bind_dir_s1d3, strerror(errno));
++	}
++
++	/* Now make it connected again. */
++	ASSERT_EQ(0, rename(dir_s4d2, dir_s1d3))
++	{
++		TH_LOG("Failed to rename %s back to %s: %s", dir_s4d2, dir_s1d3,
++		       strerror(errno));
++	}
++
++	/* Checks again that we can access it under l2. */
++	enforce_ruleset(_metadata, ruleset_fd_l2);
++	EXPECT_EQ(0, close(ruleset_fd_l2));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open(file1_s1d3, O_RDONLY));
 +}
 +
- FIXTURE(ipv4)
- {
- 	struct service_fixture srv0, srv1;
++/*
++ * Test that linkat(2) with disconnected paths works under Landlock. This
++ * test moves s1d3 to s4d1.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected_link)
++{
++	/* Ruleset to be applied after renaming s1d3 to s4d1. */
++	const struct rule layer1[] = {
++		{
++			.path = dir_s4d1,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_READ_FILE |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE,
++		},
++		{
++			.path = dir_s2d2,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_READ_FILE |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE,
++		},
++		{}
++	};
++	int ruleset_fd, bind_s1d3_fd;
++
++	/* Removes unneeded files created by layout1, otherwise it will EEXIST. */
++	ASSERT_EQ(0, unlink(file1_s1d2));
++	ASSERT_EQ(0, unlink(file2_s1d3));
++
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++
++	/* Disconnects bind_s1d3_fd. */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d1))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d1,
++		       strerror(errno));
++	}
++
++	/* Need this later to test different parent link. */
++	ASSERT_EQ(0, mkdir(dir_s4d2, 0755))
++	{
++		TH_LOG("Failed to create %s: %s", dir_s4d2, strerror(errno));
++	}
++
++	ruleset_fd = create_ruleset(_metadata, ACCESS_ALL, layer1);
++	ASSERT_LE(0, ruleset_fd);
++	enforce_ruleset(_metadata, ruleset_fd);
++	EXPECT_EQ(0, close(ruleset_fd));
++
++	/* From disconnected to connected. */
++	ASSERT_EQ(0, linkat(bind_s1d3_fd, file1_name, AT_FDCWD, file1_s2d2, 0))
++	{
++		TH_LOG("Failed to link %s to %s via disconnected %s: %s",
++		       file1_name, file1_s2d2, bind_dir_s1d3, strerror(errno));
++	}
++
++	/* Tests that we can access via the new link... */
++	EXPECT_EQ(0, test_open(file1_s2d2, O_RDONLY))
++	{
++		TH_LOG("Failed to open newly linked %s: %s", file1_s2d2,
++		       strerror(errno));
++	}
++
++	/* ...as well as the old one. */
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY))
++	{
++		TH_LOG("Failed to open original %s: %s", file1_s4d1,
++		       strerror(errno));
++	}
++
++	/* From connected to disconnected. */
++	ASSERT_EQ(0, unlink(file1_s4d1));
++	ASSERT_EQ(0, linkat(AT_FDCWD, file1_s2d2, bind_s1d3_fd, file2_name, 0))
++	{
++		TH_LOG("Failed to link %s to %s via disconnected %s: %s",
++		       file1_s2d2, file2_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file2_s4d1, O_RDONLY));
++	ASSERT_EQ(0, unlink(file1_s2d2));
++
++	/* From disconnected to disconnected (same parent). */
++	ASSERT_EQ(0,
++		  linkat(bind_s1d3_fd, file2_name, bind_s1d3_fd, file1_name, 0))
++	{
++		TH_LOG("Failed to link %s to %s within disconnected %s: %s",
++		       file2_name, file1_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY))
++	{
++		TH_LOG("Failed to open newly linked %s: %s", file1_s4d1,
++		       strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY))
++	{
++		TH_LOG("Failed to open %s through newly created link under disconnected path: %s",
++		       file1_name, strerror(errno));
++	}
++	ASSERT_EQ(0, unlink(file2_s4d1));
++
++	/* From disconnected to disconnected (different parent). */
++	ASSERT_EQ(0,
++		  linkat(bind_s1d3_fd, file1_name, bind_s1d3_fd, "s4d2/f1", 0))
++	{
++		TH_LOG("Failed to link %s to %s within disconnected %s: %s",
++		       file1_name, "s4d2/f1", bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s4d2, O_RDONLY))
++	{
++		TH_LOG("Failed to open %s after link: %s", file1_s4d2,
++		       strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, "s4d2/f1", O_RDONLY))
++	{
++		TH_LOG("Failed to open %s through disconnected path after link: %s",
++		       "s4d2/f1", strerror(errno));
++	}
++}
++
+ #define LOWER_BASE TMP_DIR "/lower"
+ #define LOWER_DATA LOWER_BASE "/data"
+ static const char lower_fl1[] = LOWER_DATA "/fl1";
 -- 
 2.53.0
 
