@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C946A440A16;
-	Wed, 23 Sep 2026 14:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E347A53A3BF;
+	Wed, 23 Sep 2026 14:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175076; cv=none; b=B+B7hhPqt8szVsuFcQggb/Z/wmJEZ1dKwLT3r6Ru3E7dsv+B+M8H+bRSpwI+J1J+yQnqrq2LQhZ6G1UxYjOqZ1VtYMOYjT5Id2AzfNaIrHrpKZrG1M6IQlRFEa7o1GX0jwymav+7K+d73PA+Td1/zuj8R/Xwvfa3cmhbBi+pxik=
+	t=1790175079; cv=none; b=AvxfnVuWNZ8caQepAoLcZoZt4BBYVcq3fxnByyO+Im2i8d7WhdXsAUBFbxxJ6df8XEEYITSXwUjQraOajKRiRdAUEN5EGIuWOJaFbQtmxqFAh/BImodjKjIAZySXUdJ+7MiVUmH9WJ5Jn9Yh4f/GGT6IQXcxI2ZDHKdwlNEVZBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175076; c=relaxed/simple;
-	bh=A0UZGaS5FADNVlzt+fWr5+uaHAqafIYv7BW/+o3kDXw=;
+	s=arc-20240116; t=1790175079; c=relaxed/simple;
+	bh=GLAWsFOepfIdVWn8f4yaOJ5LOa5fplh59dapH+gYWcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYljCMWneaxXOYSsCYpUB9IszUFOqILASlQ9m3aEXMBy11TtjymMmUJuPoOtbBgBNa7wjAFM52RPTS7PXJtGSylr63Zkb0Hq0jAf3zRoGgSzkv7uo4T8+ABs/StmtB+5KmGcpMalv72GAtSCQxtgohPizdcZBIJfipn1e18UejQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqXhJTuS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPm84AKLjkIzgz6LdpzqFZckP5ZsDVMdO663VuMree2aMWh8mmuNCESHJAtdhNERn/ItpyIFvfhf2yb77NtXO0hAVi0wQntvNlmyjU+8Ug6ZWa7+Cf7qQ94mfgURHTQmkxXwyQ3lfCC2mZIazA+9DQomULUqGJzuY18tlvJQ3wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeHi55Jm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqXhJTuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276341F000FF;
-	Wed, 23 Sep 2026 14:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeHi55Jm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3852E1F000FF;
+	Wed, 23 Sep 2026 14:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175074;
-	bh=3n2WDqZhz4NQQRlzWxHs+wc89ODOYv4DKv8/oDfJ6P0=;
+	s=korg; t=1790175077;
+	bh=jxLh6TlcPdmXmmmgevFkwf5xhpHLq2MSZDnfftLtu7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqXhJTuSIE76XxLBUVFIviVhTihIAaBZwgKgyQlix5kaWslWJk69+ZzanSn8TXn0j
-	 24Knk6VFjOwsmfyXQ4ZJje1Bk8dghbYCmMUjzCvKcfZo4zmwIuonGDR3ne8VidrB0j
-	 H06OyPprea1Lp94Iko00zbEQWDCZQua2O6NwZ6Mc=
+	b=zeHi55JmaFThCGL9Tcd1C4Z1QKz4fHHShaD/juIoSR2H7ZFM9X2D82X8oGQRmeNer
+	 BCgI9blVTg07NGMmi53RQrIG9SmAoqR4sYmHjFUGagwUOlyzrp0yZYmhS02zRGK3mm
+	 BY8EOtrhC5bz/KVm7DXIqrURJ7qfNHzUwQFW1lPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	"Thomas Richard (congatec GmbH)" <thomas.richard@bootlin.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 313/398] hwmon: (cgbc-hwmon) Fix current sensors ID lookup
-Date: Wed, 23 Sep 2026 16:06:27 +0200
-Message-ID: <20260923140651.538025241@linuxfoundation.org>
+Subject: [PATCH 6.18 314/398] hwmon: (cgbc-hwmon) Add missing sensors
+Date: Wed, 23 Sep 2026 16:06:28 +0200
+Message-ID: <20260923140651.562263326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,172 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
 
-commit 7bae83ffb133bc373d098fa6828cef2ef4da49fe upstream.
+commit 3550d1dbbcb9f51b77e077e8958423ee2c401c6c upstream.
 
-Current sensors on the Congatec Board Controller don't use consecutive IDs,
-unlike other sensor types (voltage, temperature, fan). The driver assumed
-consecutive IDs and performed a simple lookup, which caused an unknown
-sensor warning. Define current sensor IDs explicitly.
+Add the following sensors:
+- Alternate Board Temperature (temp11_input)
+- Top DIMM 1-7 Temperature (temp12_input to temp18_input)
+- Bottom DIMM 1 Temperature (temp19_input)
+- 12V Standby Voltage (in14_input)
 
-Changes the warning on conga-SA7 (type and channel are correct now).
-Before:
-  Board Controller returned an unknown sensor (type=2, channel=17), ignore it
-After:
+This fixes the following warning on conga-SA7:
+
   Board Controller returned an unknown sensor (bc_type=1, bc_id=11), ignore it
+
+Also update existing labels to match Congatec documentation.
 
 Cc: stable@kernel.org
 Fixes: 08ebc9def79f ("hwmon: Add Congatec Board Controller monitoring driver")
 Signed-off-by: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
-Link: https://patch.msgid.link/20260911-cgbc-hwmon-fix-and-new-sensors-v2-1-0c6bf078d173@bootlin.com
+Link: https://patch.msgid.link/20260911-cgbc-hwmon-fix-and-new-sensors-v2-2-0c6bf078d173@bootlin.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/cgbc-hwmon.c |   93 ++++++++++++++++++++++++++-------------------
- 1 file changed, 54 insertions(+), 39 deletions(-)
+ Documentation/hwmon/cgbc-hwmon.rst |   42 ++++++++++++++++++-----------
+ drivers/hwmon/cgbc-hwmon.c         |   52 ++++++++++++++++++++++++-------------
+ 2 files changed, 60 insertions(+), 34 deletions(-)
 
+--- a/Documentation/hwmon/cgbc-hwmon.rst
++++ b/Documentation/hwmon/cgbc-hwmon.rst
+@@ -28,34 +28,44 @@ system.
+ Name          Description
+ ============= ======================
+ temp1_input   CPU temperature
+-temp2_input   Box temperature
++temp2_input   Case temperature
+ temp3_input   Ambient temperature
+-temp4_input   Board temperature
+-temp5_input   Carrier temperature
+-temp6_input   Chipset temperature
+-temp7_input   Video temperature
++temp4_input   CPU Board temperature
++temp5_input   Carrier Board temperature
++temp6_input   System Chipset temperature
++temp7_input   Video Controller/Board temperature
+ temp8_input   Other temperature
+-temp9_input   TOPDIM temperature
+-temp10_input  BOTTOMDIM temperature
+-in0_input     CPU voltage
++temp9_input   Top DIMM 0 temperature
++temp10_input  Bottom DIMM 0 temperature
++temp11_input  Alternate Board temperature
++temp12_input  Top DIMM 1 temperature
++temp13_input  Top DIMM 2 temperature
++temp14_input  Top DIMM 3 temperature
++temp15_input  Top DIMM 4 temperature
++temp16_input  Top DIMM 5 temperature
++temp17_input  Top DIMM 6 temperature
++temp18_input  Top DIMM 7 temperature
++temp19_input  Bottom DIMM 1 temperature
++in0_input     CPU Core voltage
+ in1_input     DC Runtime voltage
+ in2_input     DC Standby voltage
+ in3_input     CMOS Battery voltage
+-in4_input     Battery voltage
++in4_input     Battery Supply voltage
+ in5_input     AC voltage
+ in6_input     Other voltage
+-in7_input     5V voltage
++in7_input     5V Runtime voltage
+ in8_input     5V Standby voltage
+-in9_input     3V3 voltage
++in9_input     3V3 Runtime voltage
+ in10_input    3V3 Standby voltage
+ in11_input    VCore A voltage
+ in12_input    VCore B voltage
+-in13_input    12V voltage
+-curr1_input   DC current
+-curr2_input   5V current
+-curr3_input   12V current
++in13_input    12V Runtime voltage
++in14_input    12V Standby voltage
++curr1_input   DC Runtime current
++curr2_input   5V Runtime current
++curr3_input   12V Runtime current
+ fan1_input    CPU fan
+-fan2_input    Box fan
++fan2_input    Case fan
+ fan3_input    Ambient fan
+ fan4_input    Chiptset fan
+ fan5_input    Video fan
 --- a/drivers/hwmon/cgbc-hwmon.c
 +++ b/drivers/hwmon/cgbc-hwmon.c
-@@ -52,31 +52,36 @@ static const char * const cgbc_hwmon_lab
- 	"BOTTOMDIM Temperature",
+@@ -41,32 +41,42 @@ enum cgbc_sensor_types {
+ 
+ static const char * const cgbc_hwmon_labels_temp[] = {
+ 	"CPU Temperature",
+-	"Box Temperature",
++	"Case Temperature",
+ 	"Ambient Temperature",
+-	"Board Temperature",
+-	"Carrier Temperature",
+-	"Chipset Temperature",
+-	"Video Temperature",
++	"CPU Board Temperature",
++	"Carrier Board Temperature",
++	"System Chipset Temperature",
++	"Video Controller/Board Temperature",
+ 	"Other Temperature",
+-	"TOPDIM Temperature",
+-	"BOTTOMDIM Temperature",
++	"Top DIMM 0 Temperature",
++	"Bottom DIMM 0 Temperature",
++	"Alternate Board Temperature",
++	"Top DIMM 1 Temperature",
++	"Top DIMM 2 Temperature",
++	"Top DIMM 3 Temperature",
++	"Top DIMM 4 Temperature",
++	"Top DIMM 5 Temperature",
++	"Top DIMM 6 Temperature",
++	"Top DIMM 7 Temperature",
++	"Bottom DIMM 1 Temperature",
  };
  
-+static const char * const cgbc_hwmon_labels_in[] = {
-+	"CPU Voltage",
-+	"DC Runtime Voltage",
-+	"DC Standby Voltage",
-+	"CMOS Battery Voltage",
-+	"Battery Voltage",
-+	"AC Voltage",
-+	"Other Voltage",
-+	"5V Voltage",
-+	"5V Standby Voltage",
-+	"3V3 Voltage",
-+	"3V3 Standby Voltage",
-+	"VCore A Voltage",
-+	"VCore B Voltage",
-+	"12V Voltage",
-+};
-+
-+/*
-+ * Current sensors are a bit special, they don't have consecutive IDs like
-+ * other types of sensors. So they need to be defined explicitly.
-+ */
- static const struct {
--	enum hwmon_sensor_types type;
+ static const char * const cgbc_hwmon_labels_in[] = {
+-	"CPU Voltage",
++	"CPU Core Voltage",
+ 	"DC Runtime Voltage",
+ 	"DC Standby Voltage",
+ 	"CMOS Battery Voltage",
+-	"Battery Voltage",
++	"Battery Supply Voltage",
+ 	"AC Voltage",
+ 	"Other Voltage",
+-	"5V Voltage",
++	"5V Runtime Voltage",
+ 	"5V Standby Voltage",
+-	"3V3 Voltage",
++	"3V3 Runtime Voltage",
+ 	"3V3 Standby Voltage",
+ 	"VCore A Voltage",
+ 	"VCore B Voltage",
+-	"12V Voltage",
++	"12V Runtime Voltage",
++	"12V Standby Voltage",
+ };
+ 
+ /*
+@@ -77,14 +87,14 @@ static const struct {
  	const char *label;
--} cgbc_hwmon_labels_in[] = {
--	{ hwmon_in, "CPU Voltage" },
--	{ hwmon_in, "DC Runtime Voltage" },
--	{ hwmon_in, "DC Standby Voltage" },
--	{ hwmon_in, "CMOS Battery Voltage" },
--	{ hwmon_in, "Battery Voltage" },
--	{ hwmon_in, "AC Voltage" },
--	{ hwmon_in, "Other Voltage" },
--	{ hwmon_in, "5V Voltage" },
--	{ hwmon_in, "5V Standby Voltage" },
--	{ hwmon_in, "3V3 Voltage" },
--	{ hwmon_in, "3V3 Standby Voltage" },
--	{ hwmon_in, "VCore A Voltage" },
--	{ hwmon_in, "VCore B Voltage" },
--	{ hwmon_in, "12V Voltage" },
--	{ hwmon_curr, "DC Current" },
--	{ hwmon_curr, "5V Current" },
--	{ hwmon_curr, "12V Current" },
-+	int id;
-+} cgbc_hwmon_labels_curr[] = {
-+	{ "DC Current", 0x12 },
-+	{ "5V Current", 0x18 },
-+	{ "12V Current", 0x1E },
+ 	int id;
+ } cgbc_hwmon_labels_curr[] = {
+-	{ "DC Current", 0x12 },
+-	{ "5V Current", 0x18 },
+-	{ "12V Current", 0x1E },
++	{ "DC Runtime Current", 0x12 },
++	{ "5V Runtime Current", 0x18 },
++	{ "12V Runtime Current", 0x1E },
  };
  
--#define CGBC_HWMON_NB_IN_SENSORS	14
--
  static const char * const cgbc_hwmon_labels_fan[] = {
  	"CPU Fan",
- 	"Box Fan",
-@@ -114,7 +119,8 @@ static int cgbc_hwmon_probe_sensors(stru
- 
- 	for (i = 0; i < nb_sensors; i++) {
- 		enum cgbc_sensor_types type;
--		unsigned int channel;
-+		unsigned int channel, id;
-+		int j;
- 
- 		/*
- 		 * No need to request data for the first sensor.
-@@ -128,32 +134,49 @@ static int cgbc_hwmon_probe_sensors(stru
- 		}
- 
- 		type = FIELD_GET(CGBC_HWMON_TYPE_MASK, data[1]);
--		channel = FIELD_GET(CGBC_HWMON_ID_MASK, data[1]) - 1;
-+		id = FIELD_GET(CGBC_HWMON_ID_MASK, data[1]);
-+		channel = id - 1;
- 
- 		if (type == CGBC_HWMON_TYPE_TEMP && channel < ARRAY_SIZE(cgbc_hwmon_labels_temp)) {
- 			sensor->type = hwmon_temp;
- 			sensor->label = cgbc_hwmon_labels_temp[channel];
--		} else if (type == CGBC_HWMON_TYPE_IN &&
--			   channel < ARRAY_SIZE(cgbc_hwmon_labels_in)) {
-+		} else if (type == CGBC_HWMON_TYPE_IN) {
- 			/*
- 			 * The Board Controller doesn't differentiate current and voltage sensors.
--			 * Get the sensor type from cgbc_hwmon_labels_in[channel].type instead.
-+			 * First check if it is a current sensor.
- 			 */
--			sensor->type = cgbc_hwmon_labels_in[channel].type;
--			sensor->label = cgbc_hwmon_labels_in[channel].label;
-+			for (j = 0; j < ARRAY_SIZE(cgbc_hwmon_labels_curr); j++) {
-+				if (id == cgbc_hwmon_labels_curr[j].id) {
-+					sensor->type = hwmon_curr;
-+					sensor->label = cgbc_hwmon_labels_curr[j].label;
-+					channel = j;
-+				}
-+			}
-+
-+			/* If it's not a current sensor, it may be a voltage sensor. */
-+			if (!sensor->label && channel < ARRAY_SIZE(cgbc_hwmon_labels_in)) {
-+				sensor->type = hwmon_in;
-+				sensor->label = cgbc_hwmon_labels_in[channel];
-+			}
- 		} else if (type == CGBC_HWMON_TYPE_FAN &&
- 			   channel < ARRAY_SIZE(cgbc_hwmon_labels_fan)) {
- 			sensor->type = hwmon_fan;
- 			sensor->label = cgbc_hwmon_labels_fan[channel];
--		} else {
--			dev_warn(dev, "Board Controller returned an unknown sensor (type=%d, channel=%d), ignore it",
--				 type, channel);
-+		}
-+
-+		if (!sensor->label) {
-+			dev_warn(dev, "Board Controller returned an unknown sensor (bc_type=%d, bc_id=%d), ignore it",
-+				 type, id);
- 			continue;
- 		}
- 
- 		sensor->active = FIELD_GET(CGBC_HWMON_ACTIVE_BIT, data[1]);
- 		sensor->channel = channel;
- 		sensor->index = i;
-+
-+		dev_dbg(dev, "Found sensor: bc_type=%d, bc_id=%d, hwmon_type=%d, hwmon_channel=%d, hwmon_label='%s', active=%d\n",
-+			type, id, sensor->type, sensor->channel, sensor->label, sensor->active);
-+
- 		sensor++;
- 		hwmon->nb_sensors++;
- 	}
-@@ -167,14 +190,6 @@ static struct cgbc_hwmon_sensor *cgbc_hw
- 	struct cgbc_hwmon_sensor *sensor = NULL;
- 	int i;
- 
--	/*
--	 * The Board Controller doesn't differentiate current and voltage sensors.
--	 * The channel value (from the Board Controller point of view) shall be computed for current
--	 * sensors.
--	 */
--	if (type == hwmon_curr)
--		channel += CGBC_HWMON_NB_IN_SENSORS;
--
- 	for (i = 0; i < hwmon->nb_sensors; i++) {
- 		if (hwmon->sensors[i].type == type && hwmon->sensors[i].channel == channel) {
- 			sensor = &hwmon->sensors[i];
+-	"Box Fan",
++	"Case Fan",
+ 	"Ambient Fan",
+ 	"Chipset Fan",
+ 	"Video Fan",
+@@ -255,7 +265,12 @@ static const struct hwmon_channel_info *
+ 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
+ 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
+ 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
+-			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL),
++			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL),
+ 	HWMON_CHANNEL_INFO(in,
+ 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
+ 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
+@@ -263,7 +278,8 @@ static const struct hwmon_channel_info *
+ 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
+ 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
+ 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
+-			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL),
++			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
++			   HWMON_I_INPUT | HWMON_I_LABEL),
+ 	HWMON_CHANNEL_INFO(curr,
+ 			   HWMON_C_INPUT | HWMON_C_LABEL, HWMON_C_INPUT | HWMON_C_LABEL,
+ 			   HWMON_C_INPUT | HWMON_C_LABEL),
 
 
