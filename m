@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD79531B0B;
-	Wed, 23 Sep 2026 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C655293E9;
+	Wed, 23 Sep 2026 14:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172733; cv=none; b=brh+8qxV8sOUIEOwjQcCNVQjJobx1PvIw2brFTHgJTDRbP3Yaf1SOhKK8O53uc4sWCun6COc/HP6BuDtI9mxtyS8N4pMlq56ZB5e7Lt3H7nve+7motbm/x/8xfooQfbcxUbUBY3H7eb8SNJkjDVu9N9eVU4GAnAj8EpIL0av1Z0=
+	t=1790172737; cv=none; b=U/sAGFqx8Lu9ds5YccaoOEd9u7swKba5oQHkNsDUUkanbDZD6PHCciTxjwilt2hrLXkn8xN0qA632TnqT5eNv7XDoYa4N6wibFmkRUjr3U0TAD4d3fAsc4rzDncGsTYLjsiVCrJiyw8SOQh/4cuhcxcjEfllp2HQQge55o+B4Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172733; c=relaxed/simple;
-	bh=wwqcgmzOElUyh+PmZSebLpMIT+DrCjfzDLPVQf3Wsf8=;
+	s=arc-20240116; t=1790172737; c=relaxed/simple;
+	bh=GmjZHXUik1z9XSUED2AVMJBYWvBTKXIOVldX7pXKRwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4xYcC6dv2Kqnx77tJacKyhsESoaY3t43Q/VBu/TobPYJ83FbNMvuA1IR/yatX/aKAi/h0aXMjJacowF5/L8C9r/Y0Y5ory6JswbIhC2h9ypb36nQDjcKFgZmzBkKlLNllhNa0H1D9f9p2perqgEt8RdBuQ99iomRPe7OYDLgKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBIzpDgj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbEST4tr0gD+W8+9gCRpnL43yAwoxvfOW/G8CduzSOkwT+uSY2yNxfINe2D8KOs43AQAtDpndh09BXN/c3zzwIhwYhaAMgKzJWpxJcIiGGNoEHWQYw8Q8SVRroCJz9Ea4q3Bs++/95KiGlm5qtkAKQvcxPSD248mxpXfFkbfTfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkA9WlIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBIzpDgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2EE1F000FF;
-	Wed, 23 Sep 2026 14:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkA9WlIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3431F000FF;
+	Wed, 23 Sep 2026 14:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172732;
-	bh=b5xl2psrtcd5drfQj3w61OAe+7MHPKCG7z4/cYmKMpI=;
+	s=korg; t=1790172735;
+	bh=9RRh8R9pPWj+eotXyC/b3XzSHehWSA7F8ui9jzL2mVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBIzpDgj1qu1NED9/o4lwg6HP/xJSvtdZVbg8OrVwpF5oXJKPRQIx6k1E1aYArn3Q
-	 cRjtUczj9jQ8w9jQ8N+Inx2HA+yHRZTniwHpGAtCeXBvSxWDVt3sCoUC6YSOzx+Zgt
-	 HFCNtF06siJrTNW1hnnUOphJO/PJkhxdYlPffqbM=
+	b=WkA9WlIWH9FqkbS1qxZUlbZMv4yt1Q7L800qoHnloyW0QjGmgKz5w9sm/UaDlrXdN
+	 +xtJ4W8on0vYogeeK9fqlV1Un/nO7PVxoqScYJyYhyZddXiF9OEEjJWujU39JI7zAY
+	 HOXfx0CbiiGH7V0+IAoiLEdD6IAQmSa4blz7jCgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gang Yan <yangang@kylinos.cn>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Shukai Ni <shukai.ni@kuleuven.be>,
-	Leon Romanovsky <leon@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 019/438] RDMA/rxe: Fix integer overflow in mr_check_range() leading to OOB access
-Date: Wed, 23 Sep 2026 16:00:40 +0200
-Message-ID: <20260923140645.273853201@linuxfoundation.org>
+Subject: [PATCH 7.2 020/438] xfrm: hold net_device reference under RCU in bundle creation
+Date: Wed, 23 Sep 2026 16:00:41 +0200
+Message-ID: <20260923140645.298801344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,59 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
 
-[ Upstream commit d10e2a08799e858d3e71ea4169bcd018f216d444 ]
+[ Upstream commit 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1 ]
 
-mr_check_range() validates that [iova, iova+length) falls within the
-registered MR range using wraparound-prone arithmetic:
+xfrm_bundle_create() and xfrm_create_dummy_bundle() read dst->dev into
+a local pointer without taking a device reference, then pass it to
+xfrm_fill_dst(). A concurrent RTM_DELLINK replaces dst->dev via
+dst_dev_put() and frees the old net_device, causing a use-after-free
+when xfrm6_fill_dst() later dereferences the stale dev pointer.
 
-    if (iova < mr->ibmr.iova ||
-        iova + length > mr->ibmr.iova + mr->ibmr.length)
+  BUG: KASAN: slab-use-after-free in xfrm6_fill_dst+0x82c/0x860
+  (net/ipv6/xfrm6_policy.c:86 netdev_hold())
+  Read of size 8 at addr ffff8880142fe588 by task exploit/153
+  Call Trace:
+   xfrm6_fill_dst+0x82c/0x860
+   xfrm_resolve_and_create_bundle+0x21d4/0x2bd0
+   xfrm_lookup_with_ifid+0x485/0x1640
+   ip6_dst_lookup_flow+0x19b/0x1e0
+   udpv6_sendmsg+0x1443/0x2dd0
 
-A remote peer can craft an RDMA-Write/Read RETH so that iova + length
-wraps to 0 (e.g. iova=0xfffffffffffffff8, length=8), bypassing the
-check. rxe_mr_iova_to_index() then computes a huge index (int idx, only
-guarded by WARN_ON) and rxe_mr_copy_xarray() dereferences
-mr->page_info[huge], causing an out-of-bounds read/write and a kernel
-oops that is triggerable by an unauthenticated remote peer.
+Fix this by reading dst->dev via dst_dev_rcu() and keeping the RCU
+read-side critical section active until xfrm_fill_dst() has taken the
+required device references.
 
-Rewrite the check in overflow-safe form; the first two clauses guarantee
-that the subsequent subtractions do not underflow:
-
-    if (iova < mr->ibmr.iova ||
-        length > mr->ibmr.length ||
-        iova - mr->ibmr.iova > mr->ibmr.length - length)
-
-With the fix, mr_check_range() returns -EINVAL for the crafted iova and
-the responder reports REMOTE_ACCESS_ERROR instead of triggering the OOB.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Link: https://patch.msgid.link/20260814093740.292954-1-gang.yan@linux.dev
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Shukai Ni <shukai.ni@kuleuven.be>
-Tested-by: Shukai Ni <shukai.ni@kuleuven.be>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 25ee3286dcbc ("[IPSEC]: Merge common code into xfrm_bundle_create")
+Fixes: a0073fe18e71 ("xfrm: Add a state resolution packet queue")
+Suggested-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Link: https://lore.kernel.org/all/20260820200245.44312-1-blbllhy@gmail.com/
+Cc: AutonomousCodeSecurity@microsoft.com
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_policy.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 875eceb55fdfa..71d9ea4772890 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -33,7 +33,8 @@ int mr_check_range(struct rxe_mr *mr, u64 iova, size_t length)
- 	case IB_MR_TYPE_USER:
- 	case IB_MR_TYPE_MEM_REG:
- 		if (iova < mr->ibmr.iova ||
--		    iova + length > mr->ibmr.iova + mr->ibmr.length) {
-+		    length > mr->ibmr.length ||
-+		    iova - mr->ibmr.iova > mr->ibmr.length - length) {
- 			rxe_dbg_mr(mr, "iova/length out of range\n");
- 			return -EINVAL;
- 		}
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 932a313b9460a..513c9f2283347 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2770,9 +2770,12 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+ 	xdst0->path = dst;
+ 
+ 	err = -ENODEV;
+-	dev = dst->dev;
+-	if (!dev)
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
++	if (!dev) {
++		rcu_read_unlock();
+ 		goto free_dst;
++	}
+ 
+ 	xfrm_init_path(xdst0, dst, nfheader_len);
+ 	xfrm_init_pmtu(bundle, nx);
+@@ -2780,8 +2783,10 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+ 	for (xdst_prev = xdst0; xdst_prev != (struct xfrm_dst *)dst;
+ 	     xdst_prev = (struct xfrm_dst *) xfrm_dst_child(&xdst_prev->u.dst)) {
+ 		err = xfrm_fill_dst(xdst_prev, dev, fl);
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto free_dst;
++		}
+ 
+ 		xdst_prev->u.dst.header_len = header_len;
+ 		xdst_prev->u.dst.trailer_len = trailer_len;
+@@ -2789,6 +2794,7 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+ 		trailer_len -= xdst_prev->u.dst.xfrm->props.trailer_len;
+ 	}
+ 
++	rcu_read_unlock();
+ 	return &xdst0->u.dst;
+ 
+ put_states:
+@@ -3058,11 +3064,15 @@ static struct xfrm_dst *xfrm_create_dummy_bundle(struct net *net,
+ 	xfrm_init_path((struct xfrm_dst *)dst1, dst, 0);
+ 
+ 	err = -ENODEV;
+-	dev = dst->dev;
+-	if (!dev)
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
++	if (!dev) {
++		rcu_read_unlock();
+ 		goto free_dst;
++	}
+ 
+ 	err = xfrm_fill_dst(xdst, dev, fl);
++	rcu_read_unlock();
+ 	if (err)
+ 		goto free_dst;
+ 
 -- 
 2.53.0
 
