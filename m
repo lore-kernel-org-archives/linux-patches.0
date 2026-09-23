@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C452E3769F9;
-	Wed, 23 Sep 2026 14:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B789377ECF;
+	Wed, 23 Sep 2026 14:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172973; cv=none; b=WVelRiiBQuDS/AnBGZrkNMqqoU4f9ysXscx/2OKRsFxTpG33wImODRDn0+IUIxpqLKLLs/7dWTmatWXxz6Y6hV+h2tVsimxI/YG8F0Zhmym0H+NzVY5jX1d4tEU9YnBsK3P55wv4EZ8rqtmP8ZBszTAWQ8RyNy/LUyRNGN4q9sU=
+	t=1790172977; cv=none; b=HitSIPNNqafhUE9KURBJjjdID2n7/Q+tcDxWjR7lwTOKQDsLvS2Hd7Auf8yLxIBDin40lS7ZGnbpEKoMzJrXOMVlj92Qe7PX6b+2/iiEjtjDk3yEDlgXvz5NcWWmEgjYZH/6HXB4SBxBHLNiAsjObs6BJiWEKO6ODnROFTFiFh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172973; c=relaxed/simple;
-	bh=4udDrJCSyeRjzmHbWXfO7/clEY+GebRy0TqYhJNJ/RE=;
+	s=arc-20240116; t=1790172977; c=relaxed/simple;
+	bh=8HHm/A68x1eB/gH1N0biBOpAQl798fuqsMD8QvVrH/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ib51VQHJSd4eLQkyy9WCHmSGyVd8malaEQ1GNDNctzqcrnC0RufKG0OIJvNvSMonA5j8jGDn0/hmLstnRl5LX8EXdHa/s7AgeQbAni1GsNMtjxYmz1Dnr2gMiRi+fxNoJpN+g/L9x53VP+1VYwmLJqhNDwQUlF69xUXTRwvi+lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TMP7O2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q/C5zI9mL/YEwOiKYk65IiDMZ16GnBlUvLnnwXSQLpR1qLhfZ6ipy90xnPw/Mz/TTJIEPLkukNfvadNjDUEbBvWy+0O0dMF/rEAlk6GQRokBOUf5qcJVQe1Qq+8/b1CO8J3JBvqAIJI//utV7/+a6rJ4N+/9Lunpwt7GqdgxoTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYSGhpNo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TMP7O2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287AF1F000FF;
-	Wed, 23 Sep 2026 14:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYSGhpNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFC61F000FF;
+	Wed, 23 Sep 2026 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172972;
-	bh=9p2g9f0fVdaLtpu1ou0wkhXADQiKlWKRl2g+I+UrSRE=;
+	s=korg; t=1790172975;
+	bh=bem/I2XYCSz6sFQu26Fls+6FmoeDz7gXxFHKz5y1Rkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TMP7O2g4hAERp8JR8JzHUhSdY3io57901my3skFIUIXSHVMjUE6YzNpeIWymj53M
-	 8y4aV9ObEMkFK/wDuQ4nDus+wmDfhuHHTtqa8BwUD9f3YG1ZBH2XWCYLFpP1pSFDZc
-	 A36+EGoRT20ZuvYgF1lpSv8V0bdAPe2RzWCvNR0k=
+	b=OYSGhpNokB2W0ml4qhmUNSW/iiOk7954MffomUofmZTc0hsSWYZkfaTt6V+EV1sac
+	 zkaOKzvthkjeEmkZFc7q4UnK0SAkkTth0el/Hk9t+PUCFafAMQ0BasCnhAYIEbXMKI
+	 bFW1n9/MCk0GklIU1fdYVjJys+J2/ojiGCo6HKgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com,
+	syzbot+3515319a302224e081b4@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 087/438] wifi: mac80211: dont access the TSF of a down interface
-Date: Wed, 23 Sep 2026 16:01:48 +0200
-Message-ID: <20260923140647.037363119@linuxfoundation.org>
+Subject: [PATCH 7.2 078/438] wifi: cfg80211: undo netns switch if renaming the wiphy fails
+Date: Wed, 23 Sep 2026 16:01:39 +0200
+Message-ID: <20260923140646.806492760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,48 +53,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0b1de9feeb8651f7a3bb53ed7c9006e3b5298c01 ]
+[ Upstream commit a41bd1938a9bfe226d444172a7e20e4bd5097960 ]
 
-The tsf debugfs files call the driver even if the interface
-isn't up, tgriggering check-sdata-in-driver warnings.
+Once all the interfaces have been moved, cfg80211_switch_netns()
+moves the wiphy itself by setting its network namespace and then
+renaming it, which makes sysfs move it. The rename can fail (but
+only on allocation failures), leaving things mixed up and hitting
+the warning there.
 
-Reject the access in that case.
+Ignoring it isn't great, undo the move and let the change fail
+in this case. If undo fails then WARN, then things would again
+be stuck in two different network namespaces.
 
 Assisted-by: LLM
-Fixes: 37a41b4affa3 ("mac80211: add ieee80211_vif param to tsf functions")
-Reported-by: syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1c8c45017f784e646b47
-Link: https://patch.msgid.link/20260908122838.201719-18-johannes@sipsolutions.net
+Reported-by: syzbot+3515319a302224e081b4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3515319a302224e081b4
+Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
+Link: https://patch.msgid.link/20260904170220.7966cc705e33.Ib398351113bbd3cab85302467060cab378564421@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/wireless/core.c | 88 +++++++++++++++++++++++++--------------------
+ 1 file changed, 50 insertions(+), 38 deletions(-)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index 8346d3eb11430..6aba224936708 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -657,6 +657,9 @@ static ssize_t ieee80211_if_fmt_tsf(
- 	struct ieee80211_local *local = sdata->local;
- 	u64 tsf;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 6c0c97e57ebb2..59facacf1a36f 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -153,9 +153,25 @@ int cfg80211_dev_rename(struct cfg80211_registered_device *rdev,
+ 	return 0;
+ }
  
-+	if (!ieee80211_sdata_running((struct ieee80211_sub_if_data *)sdata))
-+		return -ENETDOWN;
++static int cfg80211_switch_wdev_netns(struct wireless_dev *wdev,
++				      struct net *net)
++{
++	int err;
 +
- 	tsf = drv_get_tsf(local, (struct ieee80211_sub_if_data *)sdata);
- 
- 	return scnprintf(buf, buflen, "0x%016llx\n", (unsigned long long) tsf);
-@@ -670,6 +673,9 @@ static ssize_t ieee80211_if_parse_tsf(
- 	int ret;
- 	int tsf_is_delta = 0;
- 
-+	if (!ieee80211_sdata_running(sdata))
-+		return -ENETDOWN;
++	if (!wdev->netdev)
++		return 0;
 +
- 	if (strncmp(buf, "reset", 5) == 0) {
- 		if (local->ops->reset_tsf) {
- 			drv_reset_tsf(local, sdata);
++	wdev->netdev->netns_immutable = false;
++	err = dev_change_net_namespace(wdev->netdev, net, "wlan%d");
++	wdev->netdev->netns_immutable = true;
++
++	return err;
++}
++
+ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 			  struct net *net)
+ {
++	struct net *old_net = wiphy_net(&rdev->wiphy);
+ 	struct wireless_dev *wdev;
+ 	int err = 0;
+ 
+@@ -163,58 +179,54 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 		return -EOPNOTSUPP;
+ 
+ 	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
+-		if (!wdev->netdev)
+-			continue;
+-		wdev->netdev->netns_immutable = false;
+-		err = dev_change_net_namespace(wdev->netdev, net, "wlan%d");
+-		wdev->netdev->netns_immutable = true;
++		err = cfg80211_switch_wdev_netns(wdev, net);
+ 		if (err)
+-			break;
++			goto undo;
+ 	}
+ 
+-	if (err) {
+-		/* failed -- clean up to old netns */
+-		net = wiphy_net(&rdev->wiphy);
+-
+-		list_for_each_entry_continue_reverse(wdev,
+-						     &rdev->wiphy.wdev_list,
+-						     list) {
++	scoped_guard(wiphy, &rdev->wiphy) {
++		list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
+ 			if (!wdev->netdev)
+ 				continue;
+-			wdev->netdev->netns_immutable = false;
+-			err = dev_change_net_namespace(wdev->netdev, net,
+-							"wlan%d");
+-			WARN_ON(err);
+-			wdev->netdev->netns_immutable = true;
++			nl80211_notify_iface(rdev, wdev,
++					     NL80211_CMD_DEL_INTERFACE);
+ 		}
+ 
+-		return err;
+-	}
++		nl80211_notify_wiphy(rdev, NL80211_CMD_DEL_WIPHY);
+ 
+-	guard(wiphy)(&rdev->wiphy);
++		wiphy_net_set(&rdev->wiphy, net);
+ 
+-	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
+-		if (!wdev->netdev)
+-			continue;
+-		nl80211_notify_iface(rdev, wdev, NL80211_CMD_DEL_INTERFACE);
+-	}
+-
+-	nl80211_notify_wiphy(rdev, NL80211_CMD_DEL_WIPHY);
++		/* this only fails on allocation failure */
++		err = device_rename(&rdev->wiphy.dev,
++				    dev_name(&rdev->wiphy.dev));
++		if (err)
++			wiphy_net_set(&rdev->wiphy, old_net);
+ 
+-	wiphy_net_set(&rdev->wiphy, net);
++		nl80211_notify_wiphy(rdev, NL80211_CMD_NEW_WIPHY);
+ 
+-	err = device_rename(&rdev->wiphy.dev, dev_name(&rdev->wiphy.dev));
+-	WARN_ON(err);
++		list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
++			if (!wdev->netdev)
++				continue;
++			nl80211_notify_iface(rdev, wdev,
++					     NL80211_CMD_NEW_INTERFACE);
++		}
++	}
+ 
+-	nl80211_notify_wiphy(rdev, NL80211_CMD_NEW_WIPHY);
++	if (!err)
++		return 0;
+ 
+-	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
+-		if (!wdev->netdev)
+-			continue;
+-		nl80211_notify_iface(rdev, wdev, NL80211_CMD_NEW_INTERFACE);
+-	}
++	/* set to the last one to undo all of them */
++	wdev = list_entry(&rdev->wiphy.wdev_list, typeof(*wdev), list);
++undo:
++	/*
++	 * Move back everything, if this fails again (allocation failures)
++	 * then things get stuck in different network namespaces.
++	 */
++	list_for_each_entry_continue_reverse(wdev, &rdev->wiphy.wdev_list,
++					     list)
++		WARN_ON(cfg80211_switch_wdev_netns(wdev, old_net));
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
 -- 
 2.53.0
 
