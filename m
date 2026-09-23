@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454C3A6EF1;
-	Wed, 23 Sep 2026 14:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A1348EC6C;
+	Wed, 23 Sep 2026 14:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173027; cv=none; b=Y733i686QY6wVKMQ8Pku8hx7FH9LEwzZyIPwQdu39GAr3ayE0Dm3xoW0D3tlOvtVMXVvUqzV9kLvLrdCYy+4hvJs3eLyNvQ4o78BGE9hwSjcWWREUgBfG/P/LkrDhF+xSYjv6rpMhtd7avRqnHtxKovU47oY9qRtC9L0XdApC6U=
+	t=1790173031; cv=none; b=dSGGpIk1O6RUi6MmTFkfOXOrZ9SqUNbVdUAMWntdDNjTwZlXu7IjDfH+zLPwzz+ANi+F+DwGSlMpoCif4mD6H8dyw7cXvBBDFpTpzEs+T8NGJ+SDQJvU60M9vynnH3vKetsXnNlSVTgcCC2vBmF/Zn/XsKfcZ793OhOCldxGQ1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173027; c=relaxed/simple;
-	bh=VmeT/g/hejFHbifrhf06dCAb88jRuasff1SPuS7EX1w=;
+	s=arc-20240116; t=1790173031; c=relaxed/simple;
+	bh=6ZSNWLm1nzCuvCXlcbXH74jP4CUptpooVRureiZggRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqRfsO+fld/Hl+4qUeXY/m/4KbWHaAtHwZVb4OHuwSXdzdezfPqry5E6b8aM+8piRMjU9YWRjBlz8cdsFTYxsHSaNntep0O2VQwb5P4AwTs/nOEIP7dy4fyPTYDhd8gS0pvoZvRjubDaB/iw+je4nfL927757QP9A1+HAUCjKtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jV85Cwjg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mshcisCcXAKlsXKI2SjlusfZKYqQlgGxuJPxtiAI0+FK6fov9tWyiWmiZLZLwLxHsQZJ2SLOhfluCiM+Hhd+lygbCWsbjl/GVb7B7Py9uv8WmbGfVZqkhwZfOTdHYrUTyBCN13ta3gfA5ZKc0tjDAFed2oTzYlZlov4335lUNp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwSsZsE7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jV85Cwjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AB21F000FF;
-	Wed, 23 Sep 2026 14:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwSsZsE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF551F000FF;
+	Wed, 23 Sep 2026 14:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173026;
-	bh=nUebcCfFCZ7ty6SVIwC/J3egKkKJ+8bEUcZ8WzkW3kA=;
+	s=korg; t=1790173029;
+	bh=fcV21FrfaKl8zf1GtAbjxAed/hfiC9sURpcn2nHw3n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jV85Cwjgrdpkfn2RVUc9IlJrmdYvdqDbCcs+V/5zXx0cZDPOocZP3cSISAZDE4sZv
-	 oM+eDvE/cybA4X12T/4QktBmGBThYXCGCazGH1UJDTBVZ7nVLZsHjewS9TPwBNegii
-	 k5swjTxg1AOx1tEMC3dT8bbmR1rNZK7YC7emlNxQ=
+	b=wwSsZsE7AzW/qZAIr9eP9XUyhs3FYiCrzXjRqiAIBgOH1LoCqq8GQvn4MHuGWQmiu
+	 /6pXHq9IYSrxf6uJtPHt/6OmMtZoIi4cg1R3uw6xoWeRhL3jQis66hn3CRSc38iqF5
+	 n0lKWVM8HPeqhoKTuhapuowvrMvc5htBWSqmMnxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Melissa Wen <mwen@igalia.com>,
+	William Bright <william.bright@imd-tec.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 112/438] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
-Date: Wed, 23 Sep 2026 16:02:13 +0200
-Message-ID: <20260923140647.683609184@linuxfoundation.org>
+Subject: [PATCH 7.2 130/438] drm/msm/dp: fix link bandwidth check when wide bus is enabled
+Date: Wed, 23 Sep 2026 16:02:31 +0200
+Message-ID: <20260923140648.149974757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,80 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: William Bright <william.bright@imd-tec.com>
 
-[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
+[ Upstream commit 58995b11dfb7dda095d23f22fa4dc79b923b5adf ]
 
-When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
-set, a drm_pending_vblank_event will be allocated. If later, there is an
-allocation failure or another failure at setup_out_fence(), that event
-will not have base.fence set and it will not be released at
-complete_signaling().
+msm_dp_display_mode_valid() halves the pixel clock when either YUV420 or
+wide bus is in use, then uses that halved value both for the controller
+pixel clock limit and for the DP link bandwidth check.
 
-Release the event and set crtc_state->event to NULL just like in the
-DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
-drm_event_reserve_init(). That is, prepare_signaling() releases the
-event and there is nothing to be done at complete_signaling(). Use
-drm_event_cancel_free() as that will also undo drm_event_reserve_init()
-in case it has been called.
+Only YUV420 halves the data crossing the link. Wide bus widens the
+internal DPU to DP interface to two pixels per clock, halving the
+controller clock. Every pixel is still transmitted, so the link
+bandwidth requirement remains.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
-Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
+As a result, modes needing up to twice the available link bandwidth pass
+validation. On the IMDT QCS8550 SBC (rev5 with CYPD6125), where DP runs
+over USB-C alt mode where only two lanes are available, 3840x2160@60 was
+accepted despite needing 9.6 Gbps against the 8.64 Gbps the link can
+carry.
+
+Use a separate link pixel clock that is only halved for YUV420 for the
+bandwidth calculation, leaving the wide bus halving to apply solely to
+the controller pixel clock limit. With this, 4k@60 is correctly rejected
+and 4k@30 selected instead.
+
+Fixes: df9cf852ca30 ("drm/msm/dp: account for widebus and yuv420 during mode validation")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: William Bright <william.bright@imd-tec.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/746145/
+Link: https://lore.kernel.org/r/20260812-msm-dp-link-bw-v1-1-b0e3ce1190be@imd-tec.com
+[DB: dropped useless comment]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index 7b951af5ab320..66b591b39a513 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -1461,10 +1461,12 @@ static int prepare_signaling(struct drm_device *dev,
- 			struct dma_fence *fence;
- 			struct drm_out_fence_state *f;
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index a2f799cf50f63..22eade11c6150 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -698,6 +698,7 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	u32 mode_rate_khz = 0, supported_rate_khz = 0, mode_bpp = 0;
+ 	struct msm_dp *dp;
+ 	int mode_pclk_khz = mode->clock;
++	int link_pclk_khz;
+ 	bool is_yuv_420;
  
-+			ret = -ENOMEM;
+ 	dp = to_dp_bridge(bridge)->msm_dp_display;
+@@ -719,6 +720,8 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	if (is_yuv_420 && !msm_dp_display->panel->vsc_sdp_supported)
+ 		return MODE_NO_420;
+ 
++	link_pclk_khz = is_yuv_420 ? mode_pclk_khz / 2 : mode_pclk_khz;
 +
- 			f = krealloc(*fence_state, sizeof(**fence_state) *
- 				     (*num_fences + 1), GFP_KERNEL);
- 			if (!f)
--				return -ENOMEM;
-+				goto err_free_event;
+ 	if (is_yuv_420 || msm_dp_display->wide_bus_supported)
+ 		mode_pclk_khz /= 2;
  
- 			memset(&f[*num_fences], 0, sizeof(*f));
+@@ -730,9 +733,9 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 		mode_bpp = default_bpp;
  
-@@ -1473,12 +1475,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 	mode_bpp = msm_dp_panel_get_mode_bpp(msm_dp_display->panel,
+-			mode_bpp, mode_pclk_khz);
++			mode_bpp, link_pclk_khz);
  
- 			fence = drm_crtc_create_fence(crtc);
- 			if (!fence)
--				return -ENOMEM;
-+				goto err_free_event;
+-	mode_rate_khz = mode_pclk_khz * mode_bpp;
++	mode_rate_khz = link_pclk_khz * mode_bpp;
+ 	supported_rate_khz = link_info->num_lanes * link_info->rate * 8;
  
- 			ret = setup_out_fence(&f[(*num_fences)++], fence);
- 			if (ret) {
- 				dma_fence_put(fence);
--				return ret;
-+				goto err_free_event;
- 			}
- 
- 			crtc_state->event->base.fence = fence;
-@@ -1534,6 +1536,11 @@ static int prepare_signaling(struct drm_device *dev,
- 	}
- 
- 	return 0;
-+
-+err_free_event:
-+	drm_event_cancel_free(dev, &crtc_state->event->base);
-+	crtc_state->event = NULL;
-+	return ret;
- }
- 
- static void complete_signaling(struct drm_device *dev,
+ 	if (mode_rate_khz > supported_rate_khz)
 -- 
 2.53.0
 
