@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73118530E0F;
-	Wed, 23 Sep 2026 14:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D033386441;
+	Wed, 23 Sep 2026 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174451; cv=none; b=EBe8gsQHEmDiIFPkR7pWCjZccb91w1QdBZpFGs6v8fZhLPktp40PP13VVlkdy3yNkt7VmlHG3IqdAj8oeg1XCGE75KMyTvo1HkSmzKpSEMinuqBNQLzdgyPpo4bZYZIvjNASQw7uzoMk9Bw9B9XjKHwn5dK9L/PqOvldeHDdw1w=
+	t=1790174454; cv=none; b=KcdLUrqhmvSALcOq5+z2t5dX1bmoWs7tmKGXA8GYYCaveg4m0WEbJmPGtOzT9ImcM4BVfZNFm6Rn/Pn0eWjnWlqPTCG9jgXCkl+fUzFu2e07mzcc72zHiypsoagb5a1zSahImK8dMALKDmuhIXxTs4XUaeCoXl8YHb3nOWNPxRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174451; c=relaxed/simple;
-	bh=xc0DvJx47YkBW7DNTTu+NsbOyvHE8/TrZnAG/DQBIFY=;
+	s=arc-20240116; t=1790174454; c=relaxed/simple;
+	bh=PTuIrYvhkxToiQ6pgv5AMNc0UzZGZVDjAH67xC3+48A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noWxJIru97gcX1X+xrNYriJa0gzc2Bg7hFstMhd+S6TCRqLQ2CpzP3v3xivC30ue2w7Xsbf380TKREpv6yER+xOP8G4OIxCAWGCLjd+Lgxd/T98Lzaw4ZgO9XK1adhY+70U75wM6KLPJ9/m1ffZ5cIhjLjsM+AWZWY5CXvrukTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPSar7N3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilyMP0TlrtKE2SUeVqmSaTA0x7GVBgVdtcCfh0HTXGAfXj38KFD6yEXrW/FOPJ7E+A/QC9M4lZOpew8EkgUJK27f7CEXySn0tmmdhSm4P/+B127bSJw31x1NrbcVtqZd1VxSvIcGOfnCjY9nSevOo3ckQWJNYwbGzTWP3U6mm0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07uhlpOy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPSar7N3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B0D1F000FF;
-	Wed, 23 Sep 2026 14:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07uhlpOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769191F00899;
+	Wed, 23 Sep 2026 14:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174450;
-	bh=jZUFO/3dAZqbjEoE4h5ROBKfRHIQZeLz71VHVp0sPz0=;
+	s=korg; t=1790174453;
+	bh=1KggqFKhpwxSX+eYZ3ZlrKOZEK1dDhCkerxB8Nnx5Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPSar7N3orpqjwTfXx79+cfw4pV66O9UXf2uPr1rKOi9ccPjrIv/Wz6Ypo/A9X+7M
-	 5DpmzLDEwMS9AnM6F7z4FLa/xQah1DCbJmgvApEWtHc1h1b9T1YK33pOLeGwgpV4F2
-	 n3vvXRjWh7u6UTR3itjBzwTgwP6nVO4oTkrj6VKw=
+	b=07uhlpOyJKc35wUud47GVsEi7evJWbdJ+H8b4CGSRfPwqHG3e7TQaWAOpMtASIO/9
+	 qZ74O4Me3rp5W544ptmHtMxEgklHHY/FV4kQ50bn7CXpNelT8naO1sL0HKmwVReIqt
+	 mIwkRd2IuI3Wvbv2Lf2GmayFWbXnAAxIHMeZXn/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Ilia Levi <ilia.levi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 119/398] drm/xe/mmio_gem: forbid VMA split
-Date: Wed, 23 Sep 2026 16:03:13 +0200
-Message-ID: <20260923140646.527026301@linuxfoundation.org>
+Subject: [PATCH 6.18 102/398] neighbour: Add missing RCU annotation for neightbl_dump_info().
+Date: Wed, 23 Sep 2026 16:02:56 +0200
+Message-ID: <20260923140646.083450196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,56 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 247a82da6f563dcfd9074a68f99a0c0997d0679c ]
+[ Upstream commit 764dcebb033764633700a036c7351a7c6350eec6 ]
 
-The fault handler assumes it always operates on a VMA spanning the entire
-GEM object. This does not hold when the VMA has been split, e.g. by a
-partial munmap or mprotect. In that case the handler may map wrong
-physical pages or cause SIGBUS.
+neightbl_dump_info() fetches the first non-default neigh_parms
+with list_next_entry(&tbl->parms, ...) and iterates through the
+list with list_for_each_entry_from_rcu().
 
-Handle this by forbidding VMA split, as partial unmaps are not deemed
-useful for MMIO GEMs.
+However, list_next_entry() does not use RCU helper.
 
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Fixes: 1ffcf8b8ae8a ("drm/xe: Support for mmap-ing mmio regions")
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260908165046.1393557-11-matthew.auld@intel.com
-(cherry picked from commit f3391a0b12d7bf826a0b21600d2f294f3dce4c14)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Let's use list_for_each_entry_rcu() and skip the default parms.
+
+Fixes: 4ae34be50064 ("neighbour: Convert RTM_GETNEIGHTBL to RCU.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260909233143.2401847-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 979aabdad8dd ("neighbour: Skip default parms when resumed in neightbl_dump_info().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_mmio_gem.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/core/neighbour.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.c b/drivers/gpu/drm/xe/xe_mmio_gem.c
-index 9a97c4387e4fc..6daedf0feae99 100644
---- a/drivers/gpu/drm/xe/xe_mmio_gem.c
-+++ b/drivers/gpu/drm/xe/xe_mmio_gem.c
-@@ -39,10 +39,20 @@ struct xe_mmio_gem {
- 	phys_addr_t phys_addr;
- };
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 9873fc08b7494..d51899b011ddd 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -2596,11 +2596,14 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 			break;
  
-+static int xe_mmio_gem_vm_may_split(struct vm_area_struct *area, unsigned long addr)
-+{
-+	/*
-+	 * Forbid splitting. Together with VM_DONTEXPAND, this keeps the VMA
-+	 * matching the GEM object exactly.
-+	 */
-+	return -EINVAL;
-+}
+ 		nidx = 0;
+-		p = list_next_entry(&tbl->parms, list);
+-		list_for_each_entry_from_rcu(p, &tbl->parms_list, list) {
 +
- static const struct vm_operations_struct vm_ops = {
- 	.open = drm_gem_vm_open,
- 	.close = drm_gem_vm_close,
- 	.fault = xe_mmio_gem_vm_fault,
-+	.may_split = xe_mmio_gem_vm_may_split,
- };
++		list_for_each_entry_rcu(p, &tbl->parms_list, list) {
+ 			if (!net_eq(neigh_parms_net(p), net))
+ 				continue;
  
- static const struct drm_gem_object_funcs xe_mmio_gem_funcs = {
++			if (!p->dev)
++				continue;
++
+ 			if (nidx < neigh_skip)
+ 				goto next;
+ 
 -- 
 2.53.0
 
