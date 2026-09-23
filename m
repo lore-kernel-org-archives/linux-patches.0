@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D075C32B125;
-	Wed, 23 Sep 2026 14:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F94488233;
+	Wed, 23 Sep 2026 14:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173044; cv=none; b=LFg9iYtTzcYAeF+csqZ29HrBY/IIaq+y1VqexgDavJKFvg4nxn1thT3DPrBQn1Iwt5dD2FenJHKD1hDXpdvw/RPJbO2HSpy3/A5FJmZXRAD/VaIzAVr7e+j9dqTHFZYmK6wdcVWdDvEwItQPKKBhVNc6PtjQxfE8Ij+o12bzeGU=
+	t=1790173046; cv=none; b=YAsKD7s4fgrATVml0EUrsYC4p6yrQemwkk9SfU1qje3YMfpgTebXU5ACu6gYUGEQLVXVw43qL07nN2S/VYkMNaXElfcBM69hca2D4yPifgBfFUKyGyOWiCYrWBRoPwZiwkhJTrjCBv9M8UuRX88efhHVN6UPhaALanJsxBAhMcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173044; c=relaxed/simple;
-	bh=pYs+f/hrqLe/ZiijPaTEf1IIGij40E6tD20Mou6xVTY=;
+	s=arc-20240116; t=1790173046; c=relaxed/simple;
+	bh=TdDbwoOp8iLRaxMc1dzNyAxOS+omyoSpy86h95pntXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=el1t03zX6DJW2xFrMEx3H/E+S77uoOtk/yHTQ8Dwvni6fJnTjPmR18bNgx3khuKSWAbYUUvO7BeBSo4ltia9bror3k+aHX7HzqamWQxBbZ4Rqw7CVAIUz0MbLQmH5Gcy5/Io/OuswZIPq10BtS8oDKdXqjl1CzI7fPGsHtyG3IE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foQy0r07; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQnImnbtgwJGOitOTHjTxDnu4eCiGLli8nGph+mQaZu6Jv5mf5viVUh7Y8fSsIYSP2XYxFTWrGGayMgbAAWH1uISChaxX7ff5a4WVlcyMv1MfEa3ltCSmhv8uRm5VcP/qpCVLDK/+yCfDq0ocVJM39id1aRpIDGitYmzEyswND0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrLQNz7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foQy0r07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA781F000FF;
-	Wed, 23 Sep 2026 14:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrLQNz7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044EA1F000FF;
+	Wed, 23 Sep 2026 14:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173042;
-	bh=dYZLvSGz0sY/bqqTfFL+LnV6usDNPNVpq+eaI2v/OJE=;
+	s=korg; t=1790173045;
+	bh=ok04YtwO4B8CFh+bjzHtK54FVrzL5kQv70toewl0aT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=foQy0r07etlLjLn72IOgkjU0roIGByLLhjO5zfIsD/nG+5W2sZ6B9dHFwj3I5j1KX
-	 AEyIYlBZy714d8BfNd35NANc7RXXkAbfU8GNTOKTHmepY7ILH77Sy8wiEssfNx2G5B
-	 d1M3MQ8Zrq0JDErp7sRIE4aeirazvEScbe9kbhac=
+	b=mrLQNz7YNjpmMZM+CDn2+RVo+7LcXvod3i0cg5pG302E/sgn1Pn8ogqqVWyZl1HOr
+	 10b/nq7R/2Tq/uWm5++qdIK1XMzNPFdni6ucxmud9x7mxBLl8NSZAo82lUy6PgSDkC
+	 uqf9ls0s+GsoEWn38MHyV8qaixz8pTVFbCarn2U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Md Sadre Alam <md.alam@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 134/438] spi: spi-qpic-snand: avoid writing QPIC_EBI2_ECC_BUF_CFG register
-Date: Wed, 23 Sep 2026 16:02:35 +0200
-Message-ID: <20260923140648.254056159@linuxfoundation.org>
+Subject: [PATCH 7.2 135/438] Input: trackpoint - fix the inertia attribute name in the ABI document
+Date: Wed, 23 Sep 2026 16:02:36 +0200
+Message-ID: <20260923140648.278952056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,54 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 930a7312c946bf4731721cadd82bb9a2ada496ca ]
+[ Upstream commit 45b0037899704caf9078be2be4de69361ca7d933 ]
 
-The description of commit bfb34eced559 ("mtd: rawnand: qcom: avoid writing
-to obsolete register") says this:
+The attribute is created as "inertia" (TRACKPOINT_INT_ATTR(inertia, ...)
+in drivers/input/mouse/trackpoint.c); the ABI file spells the path
+"intertia". The description below it already says inertia.
 
-  "QPIC_EBI2_ECC_BUF_CFG register got obsolete from QPIC V2.0 onwards.
-  Avoid writing this register if QPIC version is V2.0 or newer."
+Fix the spelling.
 
-Although the referenced commit is related to the 'qcom-nandc' driver,
-however the hardware supported by the current driver is also based on
-QPIC v2.0 so we should avoid writing that register here as well.
-
-Remove the register writing code to avoid undefined behaviour.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260909-qpic-snand-avoid-ebi2-reg-write-v1-1-9b1b1466cc75@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: aebb47d4e7a9 ("Input: trackpoint: document sysfs interface")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905102038.42882-1-kmehltretter@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 4 ----
- 1 file changed, 4 deletions(-)
+ Documentation/ABI/testing/sysfs-devices-platform-trackpoint | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index b6c58d9cfe143..8388c637eee00 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -740,8 +740,6 @@ static int qcom_spi_read_cw_raw(struct qcom_nand_controller *snandc, u8 *data_bu
+diff --git a/Documentation/ABI/testing/sysfs-devices-platform-trackpoint b/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
+index df11901a6b3df..7954434b0434a 100644
+--- a/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
++++ b/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
+@@ -5,7 +5,7 @@ Contact:	linux-input@vger.kernel.org
+ Description:
+ 		(RW) Trackpoint sensitivity.
  
- 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
- 	qcom_write_reg_dma(snandc, &snandc->regs->cfg0, NAND_DEV0_CFG0, 3, 0);
--	qcom_write_reg_dma(snandc, &snandc->regs->ecc_buf_cfg, NAND_EBI2_ECC_BUF_CFG, 1, 0);
--
- 	qcom_write_reg_dma(snandc, &snandc->regs->erased_cw_detect_cfg_clr,
- 			   NAND_ERASED_CW_DETECT_CFG, 1, 0);
- 	qcom_write_reg_dma(snandc, &snandc->regs->erased_cw_detect_cfg_set,
-@@ -1008,8 +1006,6 @@ static void qcom_spi_config_page_write(struct qcom_nand_controller *snandc)
- {
- 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
- 	qcom_write_reg_dma(snandc, &snandc->regs->cfg0, NAND_DEV0_CFG0, 3, 0);
--	qcom_write_reg_dma(snandc, &snandc->regs->ecc_buf_cfg, NAND_EBI2_ECC_BUF_CFG,
--			   1, NAND_BAM_NEXT_SGL);
- }
- 
- static void qcom_spi_config_cw_write(struct qcom_nand_controller *snandc)
+-What:		/sys/devices/platform/i8042/.../intertia
++What:		/sys/devices/platform/i8042/.../inertia
+ Date:		Aug, 2005
+ KernelVersion:	2.6.14
+ Contact:	linux-input@vger.kernel.org
 -- 
 2.53.0
 
