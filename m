@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F749891A;
-	Wed, 23 Sep 2026 14:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4AB418368;
+	Wed, 23 Sep 2026 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173280; cv=none; b=q9NFjZ9j+Muh/gq4iaLW9vqOuPU3HMvS4h4T8P/OC/NYzDdyc+9N5294P/nNnHsCE3DJb6pMVSfHIcIac5nfmRc270LqqHtjL1+OLo+vR3OqMFV9iQPZD74zumBAgQ/DSnuXQ98Qyk+XkGhn4L4Wg/+R0gqJwNgiUJTPPXQheQ0=
+	t=1790173283; cv=none; b=mbqQk+TmbPqERil+448PrZJQh1cidWzMuuoQBhKCxmsmz2CwRsGRrn723aDOpqtZdrljxR953euP9m9ft0044O0ogH5HuWfYPZoOJzT+IHWulr3Z8+jzdUfEcyjmI+/c8+fPf4XU6lA7JMu9WagnUYeAE3Q+xn1ETbkmwwA4KXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173280; c=relaxed/simple;
-	bh=XwjmhEvJ4vQ5+HHHdcbig0Qh2Pd2/03K4EhriuimguA=;
+	s=arc-20240116; t=1790173283; c=relaxed/simple;
+	bh=NqIVOw2AOh1pYDIJVpmFDyIUxdNO2KsGgkfNX1Z55wM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gap6ioEX9fErKIaIF8a74OKcyP2FuidV9jq3Z32Y8q+sGfehlSb/nzjVWSwVjmWofPNqCnSZQaxZ0l8lIC1d6J+CmRLZfq6LdLwYOCh4taMQhHk8NtUOjN5pPu6Ow8/LA2o5YPSINhobUmi7QVYTO2Evc6N9KHZh6NR4tCpTaGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9mDNOZS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKvhpQT/zBfAffxMJ56SjjPXKtAH8MpdeqTBLLeVf5KFWDl8NchqX10BwFHqdYKoAA3JvE5gGDxlFPwKsQC0bM5dlxgOAtuiwjYvK1Ctl9vA9pgTvu1kiL7XOpSkDkPR15wyT19wmcQJHr3UobpsiSIifuaLLIRFl+iKmzJhiYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xbshjmrp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9mDNOZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B4C1F000FF;
-	Wed, 23 Sep 2026 14:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xbshjmrp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B961F00893;
+	Wed, 23 Sep 2026 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173279;
-	bh=UegVMEph0nrqLOefS7hJ4qDZvLhR6K3mF0Dp6E9CvyY=;
+	s=korg; t=1790173282;
+	bh=v0ziIBmp+lSPKXz0HxRHPzUUcLcFVnBzpyX+McodUFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9mDNOZSzKoJzSZM1Xnna9jENPnpurWuIc1aDTWQsdTNtxRaSl++MS1TmiiKoQIWV
-	 TZrRH8wM6qICjWoe0gg733W0KvEPJy85Xe9IEdu2Kd4LHI6irGXQT1gRlnBaxj3Q3a
-	 lw3q+RQnt0zJ7l1WgUQ6lutVlhoY6OiA2zmbBvY8=
+	b=Xbshjmrp8NXEpxecmsWRkMm2UNP/rXqhIBc8bA8LTXcLnE00LDOY5e1NsBOMQgrln
+	 r4+tWtjeVIqG7qcp4PQcnUdoECp8tr+DX2VQNvPWZFROF1h4NR1up4dJszhanEEeBF
+	 ryVyJI3/ae2nLq8soYL+0A81Q3IGrqlIIxGtJZLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 198/438] ASoC: hdmi-codec: Report a change when the channel status moves
-Date: Wed, 23 Sep 2026 16:03:39 +0200
-Message-ID: <20260923140649.889948251@linuxfoundation.org>
+Subject: [PATCH 7.2 199/438] ASoC: cs-amp-lib: Prevent NULL pointer if efi variable is zero length
+Date: Wed, 23 Sep 2026 16:03:40 +0200
+Message-ID: <20260923140649.914907079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,55 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit c17ae8c26eac16ad244daef44044d714f68a2ddc ]
+[ Upstream commit 3482062c786ce4233f8ed3224d824184f53ec154 ]
 
-The put() callback of "IEC958 Playback Default" stores all 24 channel
-status bytes and then returns 0. The core notifies userspace only on a
-positive return, so a write that changes what the get() callback hands
-back is never announced, and a mixer holding the control open keeps
-showing the old value.
+In cs_amp_alloc_get_efi_variable() the first call to
+cs_amp_get_efi_variable() might return EFI_SUCCESS if the variable
+exists with zero length. Trap this and return -ENOENT to prevent
+returning an unexpected NULL pointer.
 
-Compare the stored bytes and return 1 when they move, the way
-snd_hda_spdif_default_put() does.
+The first cs_amp_get_efi_variable() call was assumed to return
+EFI_BUFFER_TOO_SMALL if the variable existed, but if instead it
+returned EFI_SUCCESS this would be converted to 0 by
+cs_amp_convert_efi_status() and then be returned as a NULL pointer.
 
-The same shape is in img-spdif-out and uniperif_player.
-
-No board with this codec was to hand. The change is a comparison of
-driver state with no hardware behaviour in it, and mixer-test counts the
-missing notification as event_missing.
-
-Fixes: 7a8e1d44211e ("ASoC: hdmi-codec: Add iec958 controls")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Link: https://patch.msgid.link/20260915092515.2638542-1-sammiee5311@gmail.com
+Fixes: 00fd40bc7acec ("ASoC: cs-amp-lib: Support Dell SSIDExV2 UEFI variable")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260914122611.2783563-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdmi-codec.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs-amp-lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
-index 13ae9e83bc21f..2db9cf8ec6e96 100644
---- a/sound/soc/codecs/hdmi-codec.c
-+++ b/sound/soc/codecs/hdmi-codec.c
-@@ -425,10 +425,14 @@ static int hdmi_codec_iec958_default_put(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
+diff --git a/sound/soc/codecs/cs-amp-lib.c b/sound/soc/codecs/cs-amp-lib.c
+index 371e99205b58e..58b06e6878b97 100644
+--- a/sound/soc/codecs/cs-amp-lib.c
++++ b/sound/soc/codecs/cs-amp-lib.c
+@@ -314,6 +314,8 @@ static void *cs_amp_alloc_get_efi_variable(efi_char16_t *name,
+ 	unsigned long size = 0;
  
-+	if (!memcmp(hcp->iec_status, ucontrol->value.iec958.status,
-+		    sizeof(hcp->iec_status)))
-+		return 0;
-+
- 	memcpy(hcp->iec_status, ucontrol->value.iec958.status,
- 	       sizeof(hcp->iec_status));
+ 	status = cs_amp_get_efi_variable(name, guid, NULL, &size, NULL);
++	if (status == EFI_SUCCESS)
++		return ERR_PTR(-ENOENT);
+ 	if (status != EFI_BUFFER_TOO_SMALL)
+ 		return ERR_PTR(cs_amp_convert_efi_status(status));
  
--	return 0;
-+	return 1;
- }
- 
- static int hdmi_codec_iec958_mask_get(struct snd_kcontrol *kcontrol,
 -- 
 2.53.0
 
