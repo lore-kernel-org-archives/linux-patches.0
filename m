@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F104552CCE9;
-	Wed, 23 Sep 2026 14:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F151CF6B;
+	Wed, 23 Sep 2026 14:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174733; cv=none; b=avch8TGpZjHwBSlb/202b2D3jrFdOdvZ9FzBJSXLZ67zs6wJjU3NbiUnLVq+YasQOW/35+YhFMVS6bpI/dKHkGF0ohp/aZWXS+A/aw4GzJbmc1GvGU7ChUcdxWufEdSmXz9CG0u+M28B6Om1ROvMp6eG2qt4rjq7VVZpZmvdpVM=
+	t=1790174736; cv=none; b=TPLgBZcNhrPrj782FFor2gtmlznMevy8KVc1vD8BC4qL6ZqPV7JvE0GvKCYZdYDry5XKsiyjvuCsPFh2JZTPchS8XOsB3AExI4707Ag+Yg2c/ZVEfNbb4asYG+usc/zqcHB9Di3HzWLE6gS0ZpN22wlEQT1VsmnmdDcjJVWygdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174733; c=relaxed/simple;
-	bh=FDRlvoL1okxaTSv+C53xEG0+i76suWvqNO80J9WhIA4=;
+	s=arc-20240116; t=1790174736; c=relaxed/simple;
+	bh=3uR5e++nKjLUejUeKRoEbelC6gDod9llDihaIWBslj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5I4aJhXKnjipnOIriAEb8OR1Hs5qsYb+fqFz7Yosj4lSdw0hZB2tLuHrSSTrI86I/QeEkzFerQmhmzUxP+qVLA1g6qJOh38oAJ9JWdgoA1fer91uuXWX46opKexel3zUdgiYnMgTswM9wWEhAXfttJ3tB5+1Jtd0ybZ/VhvGnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jw78+Pwm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNfZKEy2GwT9YK8f/k1snGY0CKleVC/ubFW3NlF0lsts1g3ASXynbOlXKM+8uiGEU3FYeiBOb6Hm04Vhlxyo/8ByxYjlXm5qR/dpS0HsXWzT1rrOluWAxp3TOOqeqxKU5088M08TlDJVXce4Svazv9vSS57pFNgtvVButYwVgIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytk0/UoQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw78+Pwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B21C1F000FF;
-	Wed, 23 Sep 2026 14:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytk0/UoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FB11F00899;
+	Wed, 23 Sep 2026 14:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174731;
-	bh=ss+X4XUYGHERSYmRIQb98Qxql3LSXVPBAhLv03vubT8=;
+	s=korg; t=1790174735;
+	bh=TtQiX7xCxSDXyAL1LU0SXG6+U7p1nYzUe0UlXGo2Ro0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jw78+PwmMQYWqqC6+lO9u/7/sTf1jaAI5MAfQBlnEycs9yb+C4zEucdEf0hMy5yO6
-	 mUicORINGZuwxlRFKLibRYV5/0x4UJidC5JYNPsOpnwgDE5jG5FG5gcR3hCKazZdb/
-	 7mbQ889ULSAEW92KtBjC3DETjRTkqCN7D/K/tav4=
+	b=Ytk0/UoQdT50ao8rl2dHU3TdsYlwcne4SmDpMpejZQdCqiZ7SMlIDMDeRignOCMOY
+	 OllMrsDjhinUvKf/7aPZpkC8xvdgz6nupgIMKDWHhR0/yX/T1f7gU7hPedtQUfnjl9
+	 3niSJ3O0HJ29cxP3bLuYb5XvCZf9zHn9ZjolMNhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 177/398] net: lock the socket in sock_gettstamp()
-Date: Wed, 23 Sep 2026 16:04:11 +0200
-Message-ID: <20260923140648.021551966@linuxfoundation.org>
+Subject: [PATCH 6.18 168/398] ASoC: amd: acp: bounds-check SoundWire link ID in machine drivers
+Date: Wed, 23 Sep 2026 16:04:02 +0200
+Message-ID: <20260923140647.789615339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,86 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 9ed55f3dbef4f4adfe65eb03b0c35c53229a8490 ]
+[ Upstream commit 29218a4d11a31a8157389bc2b9e62dd768d7ea42 ]
 
-sk->sk_flags must only be changed while holding the socket lock,
-because sock_set_flag() and sock_reset_flag() use non atomic
-operations (__set_bit() and __clear_bit()).
+Add a bounds check in create_sdw_dailink() to validate that the
+SoundWire link ID derived from link_mask does not exceed the maximum
+supported by the platform. If the link ID is out of range or link_mask
+is zero, log an error and return -EINVAL to prevent accessing invalid
+CPU pin ID tables.
 
-sock_gettstamp() is one of the last places where a bit of sk->sk_flags
-is changed from a syscall without owning the socket lock, through
-sock_enable_timestamp(sk, SOCK_TIMESTAMP).
+Applied to both acp-sdw-sof-mach.c and acp-sdw-legacy-mach.c.
 
-sk_set_memalloc() and sk_clear_memalloc() also change sk->sk_flags
-without the socket lock, but their callers (nbd, iscsi_tcp, nvme-tcp,
-sunrpc, wireguard) need a careful audit, this will be addressed in a
-separate patch.
-
-Jungwoo Lee and Wongi Lee reported an UDP socket use-after-free
-caused by this bug: a SIOCGSTAMPNS_NEW ioctl racing with bind()
-can cancel the SOCK_RCU_FREE bit that udp_lib_get_port() just set,
-because both threads perform a read-modify-write on the same word.
-
-  CPU 0 (bind)                        CPU 1 (SIOCGSTAMPNS_NEW)
-  --------------------------------    ----------------------------
-  read sk_flags = F                   read sk_flags = F
-  compute F | BIT(SOCK_RCU_FREE)      compute F | BIT(SOCK_TIMESTAMP)
-  store F | BIT(SOCK_RCU_FREE)
-  sk_add_node_rcu(sk, ...)
-                                      store F | BIT(SOCK_TIMESTAMP)
-
-After the lost update, SOCK_RCU_FREE is clear while the socket is
-visible to lockless UDP receive lookups. sk_destruct() then frees
-the socket immediately instead of waiting for a RCU grace period,
-while the receive path still holds a reference-less pointer to it:
-
- BUG: KASAN: slab-use-after-free in ipv4_pktinfo_prepare+0x30/0x410
- Read of size 8 at addr ffff888008806610 by task exploit/207
- CPU: 0 UID: 1000 PID: 207 Comm: exploit Not tainted 6.12.95+ #1
-  ipv4_pktinfo_prepare+0x30/0x410
-  udp_queue_rcv_one_skb+0x51c/0x1180
-  udp_unicast_rcv_skb+0x109/0x350
-  ip_protocol_deliver_rcu+0x14b/0x310
-  ip_local_deliver_finish+0x29d/0x390
-  ip_local_deliver+0x24d/0x2a0
-
-Only grab the socket lock when SOCK_TIMESTAMP has to be set,
-to keep the common case lockless.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Jungwoo Lee <jwlee2217@gmail.com>
-Reported-by: Wongi Lee <qw3rtyp0@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915043055.3441600-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6d8348ddc56e ("ASoC: amd: acp: refactor SoundWire machine driver code")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260910161728.1452808-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 10 ++++++++++
+ sound/soc/amd/acp/acp-sdw-sof-mach.c    |  9 +++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 1b64ac35073db..a0288a3618193 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3783,7 +3783,14 @@ int sock_gettstamp(struct socket *sock, void __user *userstamp,
- 	struct sock *sk = sock->sk;
- 	struct timespec64 ts;
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index ac955a9b51dc3..09387accd1269 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -189,6 +189,16 @@ static int create_sdw_dailink(struct snd_soc_card *card,
+ 			return -EINVAL;
+ 		}
  
--	sock_enable_timestamp(sk, SOCK_TIMESTAMP);
-+	/* sk->sk_flags must only be changed under the socket lock,
-+	 * because sock_set_flag() uses non atomic operations.
-+	 */
-+	if (!sock_flag(sk, SOCK_TIMESTAMP)) {
-+		lock_sock(sk);
-+		sock_enable_timestamp(sk, SOCK_TIMESTAMP);
-+		release_sock(sk);
-+	}
- 	ts = ktime_to_timespec64(sock_read_timestamp(sk));
- 	if (ts.tv_sec == -1)
- 		return -ENOENT;
++		if (!soc_end->link_mask) {
++			dev_err(dev, "invalid zero link_mask\n");
++			return -EINVAL;
++		}
++		if ((ffs(soc_end->link_mask) - 1) >= amd_ctx->max_sdw_links) {
++			dev_err(dev, "link_id %d exceeds max_sdw_links %d\n",
++				ffs(soc_end->link_mask) - 1, amd_ctx->max_sdw_links);
++			return -EINVAL;
++		}
++
+ 		switch (amd_ctx->acp_rev) {
+ 		case ACP63_PCI_REV:
+ 			ret = get_acp63_cpu_pin_id(ffs(soc_end->link_mask - 1),
+diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+index 14d6e31d50408..d365c51bb99c1 100644
+--- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+@@ -121,6 +121,15 @@ static int create_sdw_dailink(struct snd_soc_card *card,
+ 			return -EINVAL;
+ 		}
+ 
++		if (!sof_end->link_mask) {
++			dev_err(dev, "invalid zero link_mask\n");
++			return -EINVAL;
++		}
++		if ((ffs(sof_end->link_mask) - 1) >= amd_ctx->max_sdw_links) {
++			dev_err(dev, "link_id %d exceeds max_sdw_links %d\n",
++				ffs(sof_end->link_mask) - 1, amd_ctx->max_sdw_links);
++			return -EINVAL;
++		}
+ 		switch (amd_ctx->acp_rev) {
+ 		case ACP63_PCI_REV:
+ 			ret = get_acp63_cpu_pin_id(ffs(sof_end->link_mask - 1),
 -- 
 2.53.0
 
