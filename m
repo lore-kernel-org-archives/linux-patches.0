@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3CE38D6A2;
-	Wed, 23 Sep 2026 14:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD2F377AAD;
+	Wed, 23 Sep 2026 14:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173513; cv=none; b=Ug+jxn6zabZ156y9mAW5NMmzA/CHRSc60RBg4Ub5z2YQ3sDMB29EUoHYCmQR/JmospDc0Ko9c6SbhbUdL0rZ8VnycYMGzFdKzQx53fkm5lqTsfKQCHMgCqVxWruMx7Hc1jflctNn9uhm7bU0jEUqsHzzqA3z9/Uu3STFg3zIoXI=
+	t=1790173517; cv=none; b=oeaBtaK110C1tv5+PWWyUEofbwP5GqLKzSI5NvHpaGWex2cTvLiCj+KPMIP7fCyI0FowbNWHmQlJB6AFEEYQYcplDDIqCl9qkhKhp7I8gMaOzv5D68djS6pqXXHDXtZLTy36/HXdHi67BFX0+LDVc1zdPCPhb8uWHCmbx1ZcVhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173513; c=relaxed/simple;
-	bh=9Er12kunufJy0kNoord0HumqhEGsf1Gmr5zL/3NU2wQ=;
+	s=arc-20240116; t=1790173517; c=relaxed/simple;
+	bh=p7ikxTMXpkUkQyDhwCdqHpKF7uwltC2C40lnG8+mOp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgCOknx5pl96PVV0eiT+S+T+HRLOAwcBdArkdST2+om/XnjdR00bAhgVPxaO9mGj8UY2gJl4IXqVb2DPGlRYosLZ5YA0w/DsFLNeYC3rzZ15dgQy8obItQCgKHJZY2YoWLY3W3tbDkiL5lTm6B8ZWRyL4U9b3/OBz8qNncNdTow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADSCDDr+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AlWE4cLUC/NwgRUWTrjPFtG5RVicuO9dNNF3dOC29j+P4Hgcp9+mpIkyu6b0IMcc2lR3TF+7oH4Zje3KQwjozipIwHhBtQsAF2ZbH3vtjF/DtDXjQ9W40JU7oTnULWCfDR2y97fESfLA5C+6yUvjHqVE69v4XdrpKNtslV9FqKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cz4eaFp+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADSCDDr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523081F00893;
-	Wed, 23 Sep 2026 14:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cz4eaFp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB9D1F000FF;
+	Wed, 23 Sep 2026 14:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173511;
-	bh=63eGJsLiR1IhmULCAAceorKS4EN4DLyp/kDL5sOgc5w=;
+	s=korg; t=1790173515;
+	bh=S1UkhrzQXIMWZhLB6OcukG6igclYD9OISyxva0Gk5GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADSCDDr+U40G5nDpSX0F6sIVMyaAr4QJKbrK/Qw+gxb6UvwG98QaD7kIc9QBb/R2r
-	 8zi13GrujbkBuRmRPVleChZ8gHlnBeWHOq2h/IUuRnCgi5wtha9kBcMLvmjpk8XMSQ
-	 y/n63zxIeHCop+nJtIcARglQsZANIRO2mVAoRGN4=
+	b=cz4eaFp+HdXBMVVtbVylc3Pz+FjrVEMCdk/ohfF1yXRdJV1e9qewH+l8E+az/806P
+	 7Om48tSOGujQFDKFssz4V9gEEJpoBoDn4O4RxvQLxmTyMINS1m7NeA1FrN6ZENZM/F
+	 XlfpfyrgiLsxxeSMYQsPD6VOuVs6Y/cdVr9YTwLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
+	Bradley Morgan <include@grrlz.net>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.2 270/438] kselftest/arm64: Fix size of thread_data values for pthread_join()
-Date: Wed, 23 Sep 2026 16:04:51 +0200
-Message-ID: <20260923140651.765899810@linuxfoundation.org>
+Subject: [PATCH 7.2 271/438] arm64: hibernate: pass HVC_SET_VECTORS args to the resume hvc
+Date: Wed, 23 Sep 2026 16:04:52 +0200
+Message-ID: <20260923140651.791804983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 3d1ba5cbfb622025690c218d8f20da92a9ecb383 upstream.
+commit 955d86e5f3b95b731991fdb84966c50b16314629 upstream.
 
-pthread_join() stores the thread's return value (a "void *", i.e.
-8 bytes on 64 bit computers) into the address that is passed as second
-parameter. However, the entries of thread_data are only normal "int"s,
-i.e. only 4 bytes. The additional 4 bytes of the return value clobber
-whatever is adjacent on the stack, i.e. other members of the thread_data
-array (which will be re-written in the next iteration of the for-loop,
-so that nobody noticed this problem), or another other local variable
-on the stack for the last iteration. Use "intptr_t" to declare the
-thread_data array entries with the correct size.
+swsusp_arch_suspend_exit() reinstalls the restored kernel's hyp stub
+vectors with an hvc, but never passes the arguments. x0 is not set to
+HVC_SET_VECTORS and x1 is not set to the vector address, so the stub
+dispatch falls through and returns without writing vbar_el2. EL2 is
+left pointing at the trans_pgd copy of the vectors, a page that
+swsusp_free() releases right after resume.
 
-Fixes: 29f080881601c ("kselftest/arm64: check GCR_EL1 after context switch")
+Set the arguments up the same way __hyp_set_vectors() does.
+
+Without this fix, Vladimir was able to trigger a hang when resuming from
+hibernation with CONFIG_PAGE_POISONING=y and page_poison=on.
+
+Fixes: 788bfdd97434 ("arm64: trans_pgd: hibernate: Add trans_pgd_copy_el2_vectors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Tested-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/hibernate-asm.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-+++ b/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-@@ -69,7 +69,7 @@ fail:
- int execute_test(pid_t pid)
- {
- 	pthread_t thread_id[MAX_THREADS];
--	int thread_data[MAX_THREADS];
-+	intptr_t thread_data[MAX_THREADS];
+--- a/arch/arm64/kernel/hibernate-asm.S
++++ b/arch/arm64/kernel/hibernate-asm.S
+@@ -89,6 +89,8 @@ alternative_insn "dc cvau, x4",  "dc civ
+ 	isb
  
- 	for (int i = 0; i < MAX_THREADS; i++)
- 		pthread_create(&thread_id[i], NULL,
+ 	cbz	x24, 3f		/* Do we need to re-initialise EL2? */
++	mov	x1, x24
++	mov	x0, #HVC_SET_VECTORS
+ 	hvc	#0
+ 3:	ret
+ SYM_CODE_END(swsusp_arch_suspend_exit)
 
 
