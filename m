@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0353B14AB;
-	Wed, 23 Sep 2026 14:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4A23ACF1C;
+	Wed, 23 Sep 2026 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173683; cv=none; b=WIAgWm8ypFmmFG3QLv0XD42IFJPkGzlT/PG6ld5oYfiAdKspRwekqnFvFAoM83OX4BrrHwMbHcUoWamdDAnKfTwWIAuUxmoPcOiBt3GX15HdEXnSUS3aQ0SIvxbivdx5egs3f0xHBDaPzRex+INHyBb0p74yQjBKUCkRhzPFFFo=
+	t=1790173686; cv=none; b=s6nn3/H+96CusBIELNaU16WohuR8SmPi5fji4A7IoOenETr+3pBvW4BTAbxjqteq+UBt4cXLgof7NfyQ03eOI+tYM7rxZ6XgbJXFG32ezrDL7sXh2NlekYm6AIpioarrY+X9eI5KRtNGgCp2ky/S0wot8n1Px88Zk9ZRtCyKbEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173683; c=relaxed/simple;
-	bh=xapTjpJhBkTaCuxPYiZ2yCdJwrnpZDYxrJmz8Lktlhw=;
+	s=arc-20240116; t=1790173686; c=relaxed/simple;
+	bh=t2CnQF5GFO39Sv3aSYt9oHoXh6n18fX74X2RFtPcMjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kajxkIOd4uTfDyeWTi0i1HlwxBocrPI5JzALKlLTAXJE8XRCI4O+g1RT+I684PvtxA2nMqHmV4Mxi1syx7N4NLfraZbo78brWdctULiy+HawN1tK5BTGpJZ6xUE7x2KG8j1iQIS1it1HdLfjOdsT0ybe+9W1qcFiESngW0iOAP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX/uB11x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t2fd0Xx169STzDjdV9cAfZIxwP3dVJe8HFtIJNjZVC+ve2XzbjsyAD5J9+F0M3RPw7MlsdTZAwSMmlDDNMivvIBqlEDkPHMJhXkTZ+7YlKLbVWd4ogtziMksErXGy6aq+Kbe4Rupr3hm8nW0L3DM0mdW9Mfneq31YxlASvfzg2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjGPyX/t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX/uB11x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4620D1F00893;
-	Wed, 23 Sep 2026 14:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjGPyX/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA781F000FF;
+	Wed, 23 Sep 2026 14:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173681;
-	bh=Fyu2a9KQSFPSl2ZUe4CPem+ewfmVNOl4lnnyT4EjGgU=;
+	s=korg; t=1790173685;
+	bh=l6KZhEUzxmEINgxq7fL9RenRQFRFyDJGIby1+w8gVps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kX/uB11xMMn/oVaQGmg+yd+Sri86kyJsRCXf4IVhfbNEE280Hn2MGA+by+ecmXamF
-	 HtwNelDPaBozt/TxEtPaPBndp67wvqrwOMEbWNhML//UWs43w1AGTsNvAAzrmMVDMu
-	 TCDkKw380pAZQgwhE8ln3tw1kHiMsz6zWFlKFHYY=
+	b=fjGPyX/toV9KFtEVS/gJCd2CLKJs2PfQOYYRZR9w1Z/Dng+NWlIpBr9s0zDBszbWy
+	 gzlksV5+OLF9n9GRZwpfmvNt4v4ppafmL1iqnkytntVoOzNHj+HYPBSXx8vjrxXYLt
+	 /Ks0MYlgQiKTKzVUTBbrQdOzWEU+m5spV7Ky1kvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gris Ge <cnfourt@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 295/438] net: ip_tunnel: initialize `options_len` before referencing options
-Date: Wed, 23 Sep 2026 16:05:16 +0200
-Message-ID: <20260923140652.423334554@linuxfoundation.org>
+	co+6a581c4284f721d4@bugs.sh,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.2 322/438] KEYS: trusted: Fix tpm2_load_cmd() boundary check
+Date: Wed, 23 Sep 2026 16:05:43 +0200
+Message-ID: <20260923140653.140862834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,103 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gris Ge <cnfourt@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 455ebeadf714f51e1dbbd6a022c74c9215b1cd76 upstream.
+commit 114f00d738f15dd8c7318369edcdc53dd6d08763 upstream.
 
-The following command triggers a kernel panic:
+tpm2_load_cmd() does boundary checks against the ASN.1 size i.e.,
+payload->blob_len. Address this by passing the decoded blob size to
+tpm2_load_cmd(), and use it for the boundary checks.
 
-  ip link add d0 type dummy; ip link set d0 up
-  ip route add 10.30.0.0/16 \
-    encap ip id 300 geneve_opts 4660:66:11223344 dev d0
-
-  memcpy: detected buffer overflow: 4 byte write of buffer size 0
-  kernel BUG at lib/string_helpers.c:1044!
-  ...
-  ip_tun_parse_opts.part.0.cold+0x10/0x10
-  ip_tun_build_state+0x116/0x2a0
-
-On kernels built with GCC 15+ and `CONFIG_FORTIFY_SOURCE`, the fortified
-`memcpy()` got 0 sized destination with request of 4 bytes length:
-
-  static int ip_tun_parse_opts_geneve(...)
-  {
-      ...
-      attr = tb[LWTUNNEL_IP_OPT_GENEVE_DATA];
-      data_len = nla_len(attr); /* == 4 */
-
-      struct geneve_opt *opt = ip_tunnel_info_opts(info) + opts_len;
-      memcpy(opt->opt_data, nla_data(attr), data_len);
-      /*     ^^^^^^^^^^^^^ 0 since options_len is assigned afterwards */
-
-Fixed by initializing the counter before the options are referenced.
-Matching what `tunnel_key_opts_set()` already does.
-
-Fixes: bb5e62f2d547 ("net: Add options as a flexible array to struct ip_tunnel_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gris Ge <cnfourt@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://patch.msgid.link/20260913090851.468216-1-cnfourt@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Reported-by: co+6a581c4284f721d4@bugs.sh
+Closes: https://bugs.sh/b/6a581c4284f721d4/
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Tested-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260901205809.2028454-1-jarkko@kernel.org
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_tunnel_core.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ security/keys/trusted-keys/trusted_tpm2.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -680,8 +680,14 @@ static int ip_tun_get_optlen(struct nlat
- }
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -100,7 +100,7 @@ struct tpm2_key_context {
  
- static int ip_tun_set_opts(struct nlattr *attr, struct ip_tunnel_info *info,
--			   struct netlink_ext_ack *extack)
-+			   int opts_len, struct netlink_ext_ack *extack)
+ static int tpm2_key_decode(struct trusted_key_payload *payload,
+ 			   struct trusted_key_options *options,
+-			   u8 **buf)
++			   u8 **buf, unsigned int *blob_len)
  {
-+	/* `options_len` is the __counted_by() annotation of the `options`
-+	 * flexible array, it must be initialized before parsing writes
-+	 * into it.
-+	 */
-+	info->options_len = opts_len;
-+
- 	return ip_tun_parse_opts(attr, info, extack);
- }
+ 	int ret;
+ 	struct tpm2_key_context ctx;
+@@ -121,6 +121,7 @@ static int tpm2_key_decode(struct truste
+ 		return -ENOMEM;
  
-@@ -712,7 +718,8 @@ static int ip_tun_build_state(struct net
+ 	*buf = blob;
++	*blob_len = ctx.priv_len + ctx.pub_len;
+ 	options->keyhandle = ctx.parent;
  
- 	tun_info = lwt_tun_info(new_state);
+ 	memcpy(blob, ctx.priv, ctx.priv_len);
+@@ -381,10 +382,11 @@ static int tpm2_load_cmd(struct tpm_chip
+ 	int rc;
+ 	u32 attrs;
  
--	err = ip_tun_set_opts(tb[LWTUNNEL_IP_OPTS], tun_info, extack);
-+	err = ip_tun_set_opts(tb[LWTUNNEL_IP_OPTS], tun_info, opt_len,
-+			      extack);
- 	if (err < 0) {
- 		lwtstate_free(new_state);
- 		return err;
-@@ -753,7 +760,6 @@ static int ip_tun_build_state(struct net
- 	}
+-	rc = tpm2_key_decode(payload, options, &blob);
++	rc = tpm2_key_decode(payload, options, &blob, &blob_len);
+ 	if (rc) {
+ 		/* old form */
+ 		blob = payload->blob;
++		blob_len = payload->blob_len;
+ 		payload->old_format = 1;
+ 	} else {
+ 		/* Bind for cleanup: */
+@@ -396,17 +398,17 @@ static int tpm2_load_cmd(struct tpm_chip
+ 		return -EINVAL;
  
- 	tun_info->mode = IP_TUNNEL_INFO_TX;
--	tun_info->options_len = opt_len;
+ 	/* must be big enough for at least the two be16 size counts */
+-	if (payload->blob_len < 4)
++	if (blob_len < 4)
+ 		return -EINVAL;
  
- 	*ts = new_state;
+ 	private_len = get_unaligned_be16(blob);
  
-@@ -1006,7 +1012,8 @@ static int ip6_tun_build_state(struct ne
+ 	/* must be big enough for following public_len */
+-	if (private_len + 2 + 2 > (payload->blob_len))
++	if (private_len + 2 + 2 > blob_len)
+ 		return -E2BIG;
  
- 	tun_info = lwt_tun_info(new_state);
+ 	public_len = get_unaligned_be16(blob + 2 + private_len);
+-	if (private_len + 2 + public_len + 2 > payload->blob_len)
++	if (private_len + 2 + public_len + 2 > blob_len)
+ 		return -E2BIG;
  
--	err = ip_tun_set_opts(tb[LWTUNNEL_IP6_OPTS], tun_info, extack);
-+	err = ip_tun_set_opts(tb[LWTUNNEL_IP6_OPTS], tun_info, opt_len,
-+			      extack);
- 	if (err < 0) {
- 		lwtstate_free(new_state);
- 		return err;
-@@ -1040,7 +1047,6 @@ static int ip6_tun_build_state(struct ne
- 	}
- 
- 	tun_info->mode = IP_TUNNEL_INFO_TX | IP_TUNNEL_INFO_IPV6;
--	tun_info->options_len = opt_len;
- 
- 	*ts = new_state;
- 
+ 	pub = blob + 2 + private_len + 2;
 
 
