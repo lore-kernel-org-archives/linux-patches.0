@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1423AD52F;
-	Wed, 23 Sep 2026 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22AE440A16;
+	Wed, 23 Sep 2026 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174981; cv=none; b=UGBaWNIriMaQueBAmrhtf2qrTCA+hzfvnZ0kFkwHgG0pNE3ow3MSFE7MPfPseFFi4ExJY6eXna/wu2o68VuFJUOnQX6uaVET9H2R56/b/amHtVqGq9K8hl7Q9uTvpTA/V8/4c4iCsX53ujvF+4Rl2D4MW6FMXiQEtdTnoHi8DrU=
+	t=1790174984; cv=none; b=RspjebijFEbyvVArfvtYGjlBWQEEb2FjVzG632FuD4ireag3fNb2NzIKnlmZfPC+4T0i4EOwkJqzqMMtwHTZaKtWqxktERryFDoxyssVNlc41RqbmOR0hlNTsfw2uyfZUpJfuzhavyMAlvtDRkWP6Y/eNDfztnz94D/fNzwuRRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174981; c=relaxed/simple;
-	bh=ujlEKUreonprsrUEuwBGZrPbWeZPLrto+VwhrLX3Aco=;
+	s=arc-20240116; t=1790174984; c=relaxed/simple;
+	bh=U6vnXeKLTg352Ov+MMmpjP2IrcKRjRNYLj4ymYkPuvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Is2r6oINFwOqeDAfRJ0Prw2yo14+Q3wYPZquR3gF+26sj7UPVGP3F2ZHWTP5L18ag7+AcVMwvBVrNzwCmaIlzo5Tmslh84c/aL+zOxP7Iu+i226gV7Ucshrp9GxAtA++rXWNftGNM4U1LBEJmJKdeZPJD9THHymrWHoaDBdITJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMZe8K64; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P6BQETXr7FGPNrRl/X4U1muoBV9OxQdTZjNaoEAFBrd5dMUJVNojxA9bIExYJxljQlp3Ko1savlBysq8ETKOaDgJBakRWo07zhzA8UFAlAH73i7ASfRfl16ZJLTXyOmvJ2ghZzfuvqJwy35KHsQiRoLsWTC+oyTQwa91prGWcEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMTAzrbS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMZe8K64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866CF1F000FF;
-	Wed, 23 Sep 2026 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMTAzrbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C391F00898;
+	Wed, 23 Sep 2026 14:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174980;
-	bh=FRX4Mo66LabCBwYwQh7dxcROETHgG0wIFf8Q50FbNq4=;
+	s=korg; t=1790174983;
+	bh=4lRv7QTrXVeuR1tzrYeY+xpUPcnlQbCgyLCF6LKHIHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TMZe8K642AQqK5vQqeGXS/PjGPkEaLl+6jaipLfdZ2DOaHT/Ucsxzo104QVO5rzjA
-	 Krs2Xv82IjeAsKTPrDW0bpTO9BB6PdL4V4XE4TXjORcfwlxE4eQ5GmLIelbeCBh3qW
-	 dtmKnw/w6Fz2kkidgGwJKHmt40WNoG2EfkMIjtcY=
+	b=eMTAzrbSAscj1Y1wXFuKnyHWJEKFfYjhof7O7O86R/WQPhQ0NgD/VkjriWnm+7qaE
+	 JN//65TTGq38EuCIdOh7rsdWCvliF9swDvgOiC+O8sov6L6l7BKEt9vQz7O3ssMbk8
+	 1VvjPYbBapNEEgnsOZy9YrFwtGKfAXNaSicuJQbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 249/398] net/sched: act_api: release tail references on DELACTION failure
-Date: Wed, 23 Sep 2026 16:05:23 +0200
-Message-ID: <20260923140649.864989422@linuxfoundation.org>
+	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 240/398] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
+Date: Wed, 23 Sep 2026 16:05:14 +0200
+Message-ID: <20260923140649.637856961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,55 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 
-commit 6e05e46fa821a5c1b281355f1f622ac76cb6080a upstream.
+commit 9096bdc8d930147f7c39a493a859acbd3a8485d8 upstream.
 
-A batched RTM_DELACTION request takes a temporary reference on each
-action before attempting any deletion. tcf_action_delete() clears
-each processed slot and drops its temporary reference before attempting
-the deletion. If deletion fails, tca_action_gd() calls
-tcf_action_put_many() to release the remaining references, but its
-tcf_act_for_each_action() iterator stops at the first NULL slot.
+sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
+descriptor for a given cookie, before checking whether the pointer
+vd is NULL:
 
-When a batch stops at an action bound to a filter, this leaks a
-reference on each subsequent action. A later delete of an unbound
-action can then return success without removing it from the IDR.
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
 
-Walk the full array in tcf_action_put_many() and skip NULL slots to
-release the references held on the unprocessed actions.
+    if (vd) {
+        for (lli = txd->v_lli; ...)
 
-Fixes: a0e947c9ccff ("net/sched: act_api: avoid non-contiguous action array")
+vchan_find_desc() returns NULL when the descriptor has already been
+completed or is in-flight on a physical channel and no longer present
+in the virtual channel's descriptor list. When vd is NULL,
+to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
+check, which is undefined behaviour. Move the call inside the if (vd)
+guard to ensure it is only reached with a valid pointer.
+
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    if (vd) {
+        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+        for (lli = txd->v_lli; ...)
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260910093413.34509-2-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260817135723.12807-3-christian.lugnberg@soundtrack.io
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/dma/sun6i-dma.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1218,11 +1218,16 @@ static int tcf_action_put(struct tc_acti
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -971,7 +971,6 @@ static enum dma_status sun6i_dma_tx_stat
+ 	struct sun6i_pchan *pchan = vchan->phy;
+ 	struct sun6i_dma_lli *lli;
+ 	struct virt_dma_desc *vd;
+-	struct sun6i_desc *txd;
+ 	enum dma_status ret;
+ 	unsigned long flags;
+ 	size_t bytes = 0;
+@@ -983,9 +982,9 @@ static enum dma_status sun6i_dma_tx_stat
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
  
- static void tcf_action_put_many(struct tc_action *actions[])
- {
--	struct tc_action *a;
- 	int i;
+ 	vd = vchan_find_desc(&vchan->vc, cookie);
+-	txd = to_sun6i_desc(&vd->tx);
  
--	tcf_act_for_each_action(i, a, actions) {
--		const struct tc_action_ops *ops = a->ops;
-+	/* Deletion may have cleared entries before failing. */
-+	for (i = 0; i < TCA_ACT_MAX_PRIO; i++) {
-+		struct tc_action *a = actions[i];
-+		const struct tc_action_ops *ops;
-+
-+		if (!a)
-+			continue;
-+		ops = a->ops;
- 		if (tcf_action_put(a))
- 			module_put(ops->owner);
- 	}
+ 	if (vd) {
++		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+ 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
+ 			bytes += lli->len;
+ 	} else if (!pchan || !pchan->desc) {
 
 
