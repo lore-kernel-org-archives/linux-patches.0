@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1044A2058;
-	Wed, 23 Sep 2026 14:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C98391832;
+	Wed, 23 Sep 2026 14:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174749; cv=none; b=cAsGWgjvwhYsaMM5biQNg9T88Y5VVnPx5XiZQSGBhzTWl/YEMM4OvSexxyf1i8Fg9kWBXSw57ndfFNAnFJVwsUhjwLsK8X+l2pFEFottYzyKl2sSNUc+WukcI26G0VBVrvK68zZcrC1nuATq/tu1/S+Sol+RQKbwF/aMMmDZDwQ=
+	t=1790174752; cv=none; b=YrUhdSgCOPcKTT2tK/QiysCLC7vpuJm/p9vB0HvDSTNVjcv75aMoIl8XF2tnuwL7LkUF5VuU/FiVdxfE5Rox7yOQgQA8fcshw4Ask8hmp+0riMlNHtXfmd6qUZupl+k6s3ejg4Qxlu5MzkD1lS2RD74bJMOUNJso0H295TMh9jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174749; c=relaxed/simple;
-	bh=yT6VIRsf+7IpeWNrL/XWozyU4cEEiw44LD9Ng++yfWU=;
+	s=arc-20240116; t=1790174752; c=relaxed/simple;
+	bh=I3fcmIEqjNpd5eSKiXRUTzd+w99I/g4JWSHkiK8nOkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXxw8HjVNmn102ICToXNX+pra5lJbzgpQSJC0A9sh5AGsgfVTBIDzIAAhZhpOOKoLirlAc0VwP8StOkkSt3JsVvElFyMNvWWkeOPi5zx440ZkI8SnODIEX0BacYXk02St4TOPE8DJ31DVGQkZ8RbxkYuXw5aJl0ah2I2L14GFV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVdbdYN6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qh0vN+b1uvtZzIiXNefby3OG4K5tnOi+8hjSp9h6LJZ9b7/ANokLkzUXPiGl7RyhtjB12n4ZTaSliPmDQqcge78Ol2pu+ghywmX6D4VAWo/SLKgRCyDr9SOoLxOVxyRCSVhE+GthqDhPhJCJCyOmD8ny5gwoSb5zjUlnduyOl1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afpuaOiy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVdbdYN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1221F000FF;
-	Wed, 23 Sep 2026 14:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afpuaOiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABC31F000FF;
+	Wed, 23 Sep 2026 14:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174747;
-	bh=GXKwwQlapaeFzKCNsDAi6BKJi+kHipeNl9NfFZFK1VQ=;
+	s=korg; t=1790174750;
+	bh=clAvvgj8u0scXF62l3fGETZo/bZDa265cpPSCmY6N8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVdbdYN691LL7i84CySjWFWKb2/Tw18pzU3ofC0YL2afq3Tqhvowa24Wsqzv47CG6
-	 YYRylNUwA52im1pJF9ZNlxtvszEXlVN8+T6gltvigKEAg0GQpAClHRNDwWZdGR1/fy
-	 DrixAQQ3iAc6tHi2QKcmSa7ZE4zz83VVJWVXYgDo=
+	b=afpuaOiyyJrOw7XUMun8m4DdSLOJG6KZgYG+rJpGBrjHpL6aPL4dIFj0zdLjRzXHQ
+	 1uc795CmQVKqYOabOIO+Ti5RXj9Pk8VlWSHBaFz+6ms+2a5JlfhtHP2VITrZidFqVn
+	 os/zjoBJCFzMocFqfoMbqVD2TtL2S2/Z2/s2xK8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 214/398] drm/nouveau/gsp/r570: Enable S/R Display workaround in GSP
-Date: Wed, 23 Sep 2026 16:04:48 +0200
-Message-ID: <20260923140648.971312574@linuxfoundation.org>
+	Omar Avelar <omar.avelar@intel.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 215/398] x86/build/64: Prevent native builds from generating EGPR use
+Date: Wed, 23 Sep 2026 16:04:49 +0200
+Message-ID: <20260923140648.998605801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,74 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-commit 24fbd6d4bcf3363ef13ebe0d36dea93f30396c6d upstream.
+commit 63edf5a009ae366369a1b484cd9ae4ee7c51946c upstream.
 
-There's two flags that we've never been setting when asking GSP to suspend
-the GPU, which OpenRM does set:
+Omar reports that CONFIG_X86_NATIVE_CPU=y allows builds to opportunistically
+emit instructions using %r16-%r31 (EGPRs) when the build host supports APX
+since the commit:
 
-  GPU_STATE_FLAGS_PRESERVING
-  GPU_STATE_FLAGS_PM_TRANSITION
+  ea1dcca1de12 ("x86/kbuild/64: Add the CONFIG_X86_NATIVE_CPU option to locally optimize the kernel with '-march=native'")
 
-These flags aren't -supposed- to do much in GSP, they're mostly used by
-OpenRM itself for state tracking. The only thing they do from GSP's side is
-control whether or not a single display related workaround is applied
-during suspend.
+But the kernel is not yet prepared to use new registers internally. For
+example, there is no context-switch support for general in-kernel use.
 
-But as it turns out, that single workaround is actually quite crucial for
-getting runtime PM working with nouveau - and without it set we end up
-seeing a lot more failures with runtime PM resume. So, let's start setting
-it.
+Explicitly disable EGPR use when building with -march=native.
 
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
-Cc: <stable@vger.kernel.org> # v6.16+
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260814194542.781955-4-lyude@redhat.com
-(cherry picked from commit ca57629b3eb912c77bc4357178a2130ea6c2d6df)
-Signed-off-by: Lyude Paul <lyude@redhat.com>
+For C, since GCC 14 and Clang 18, both compilers support suppressing EGPR
+use with -mno-apx-features=egpr, whose availability can be detected via
+cc-option.
+
+For Rust, pass features=-apxf through the generated JSON to avoid
+unstable-feature warnings, see
+
+  https://github.com/rust-lang/rust/issues/139284
+
+Note Rust only accepts the option to disable APX instructions entirely or not.
+
+Support for this gating also depends on the Rust/LLVM combination. Rust
+1.88 introduced the `apxf` feature option, but versions prior to 1.93 may
+emit an `apxf` attribute to the backend that only LLVM 23 or later can
+interpret. Restrict native Rust builds accordingly.
+
+Fixes: ea1dcca1de12 ("x86/kbuild/64: Add the CONFIG_X86_NATIVE_CPU option to locally optimize the kernel with '-march=native'")
+Reported-by: Omar Avelar <omar.avelar@intel.com>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260916230003.1144622-1-chang.seok.bae@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c     | 3 ++-
- .../gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/gsp.h    | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig.cpu            |   11 +++++++++++
+ arch/x86/Makefile               |    5 +++++
+ scripts/generate_rust_target.rs |    5 +++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
-index 1488771c63fc..b45781cd0dfd 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
-@@ -207,7 +207,8 @@ r570_gsp_set_rmargs(struct nvkm_gsp *gsp, bool resume)
- 		args->srInitArguments.bInPMTransition = 0;
- 	} else {
- 		args->srInitArguments.oldLevel = NV2080_CTRL_GPU_SET_POWER_STATE_GPU_LEVEL_3;
--		args->srInitArguments.flags = 0;
-+		args->srInitArguments.flags =
-+			GPU_STATE_FLAGS_PRESERVING | GPU_STATE_FLAGS_PM_TRANSITION;
- 		args->srInitArguments.bInPMTransition = 1;
- 	}
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -255,10 +255,21 @@ config CC_HAS_MARCH_NATIVE
+ 	# usage warnings that only appear wth '-march=native'.
+ 	depends on CC_IS_GCC || CLANG_VERSION >= 190100
  
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/gsp.h b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/gsp.h
-index b6075021e74f..c458569af9d7 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/gsp.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/gsp.h
-@@ -523,6 +523,14 @@ typedef struct
- 
- #define NV2080_CTRL_GPU_SET_POWER_STATE_GPU_LEVEL_3            (0x00000003U)
- 
-+#define GPU_STATE_FLAGS_PRESERVING         BIT(0)  // GPU state is preserved
-+#define GPU_STATE_FLAGS_VGA_TRANSITION     BIT(1)   // To be used with GPU_STATE_FLAGS_PRESERVING.
-+#define GPU_STATE_FLAGS_PM_TRANSITION      BIT(2)   // To be used with GPU_STATE_FLAGS_PRESERVING.
-+#define GPU_STATE_FLAGS_PM_SUSPEND         BIT(3)
-+#define GPU_STATE_FLAGS_PM_HIBERNATE       BIT(4)
-+#define GPU_STATE_FLAGS_GC6_TRANSITION     BIT(5)  // To be used with GPU_STATE_FLAGS_PRESERVING.
-+#define GPU_STATE_FLAGS_FAST_UNLOAD        BIT(6)  // Used during windows restart, skips stateDestroy steps
++config RUSTC_HAS_APXF
++	# The kernel isn't ready for in-kernel APX instructions. Without
++	# explicit frontend gating of APX, the backend may emit those
++	# instructions in native builds.
++	#
++	# Rust 1.88 added the `apxf` feature option, but versions before 1.93
++	# emit an `apxf` target attribute that only LLVM 23+ can interpret.
++	def_bool (RUSTC_VERSION >= 108800 && RUSTC_LLVM_MAJOR_VERSION >= 23) || \
++		 RUSTC_VERSION >= 109300
 +
- typedef struct
- {
-     // Magic for verification by secure ucode
--- 
-2.55.0
-
+ config X86_NATIVE_CPU
+ 	bool "Build and optimize for local/native CPU"
+ 	depends on X86_64
+ 	depends on CC_HAS_MARCH_NATIVE
++	depends on !RUST || RUSTC_HAS_APXF
+ 	help
+ 	  Optimize for the current CPU used to compile the kernel.
+ 	  Use this option if you intend to build the kernel for your
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -168,6 +168,11 @@ else
+ 
+ ifdef CONFIG_X86_NATIVE_CPU
+         KBUILD_CFLAGS += -march=native
++        # Prevent the compiler from generating EGPR use. The kernel is
++        # not yet prepared for general in-kernel use.
++        KBUILD_CFLAGS += $(call cc-option,-mno-apx-features=egpr)
++
++        # generate_rust_target.rs handles Rust APX gating.
+         KBUILD_RUSTFLAGS += -Ctarget-cpu=native
+ else
+         KBUILD_CFLAGS += -march=x86-64 -mtune=generic
+--- a/scripts/generate_rust_target.rs
++++ b/scripts/generate_rust_target.rs
+@@ -224,6 +224,11 @@ fn main() {
+             features += ",+harden-sls-ijmp";
+             features += ",+harden-sls-ret";
+         }
++        if cfg.has("X86_NATIVE_CPU") {
++            // Prevent the backend from generating APX instructions. The kernel is not yet prepared
++            // for general in-kernel EGPR use.
++            features += ",-apxf";
++        }
+         ts.push("features", features);
+         ts.push("llvm-target", "x86_64-linux-gnu");
+         ts.push("supported-sanitizers", ["kcfi", "kernel-address"]);
 
 
