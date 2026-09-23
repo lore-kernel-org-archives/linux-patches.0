@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0578848E0E7;
-	Wed, 23 Sep 2026 14:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0504466B5E;
+	Wed, 23 Sep 2026 14:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173763; cv=none; b=RnFs2K2qjA7Sd4rfBMxW+tn6eh2LWo2TzcoCUMabJIONtAAsJ6bB/9xpVpRGUYRYd2ydT+qutEJ1jPEXMMk+2Um6wPxAe1UD0jwuibML2ktRDcuKl7nYZzRd0uXsuWnYuhqVJwClDQUdyYIj/xPr7r8eqt7yMMH3IWlFiLoHj/8=
+	t=1790173765; cv=none; b=h/vmAA6mAlg1kAvPAfjq6nMuiBrbvoMXVQw/imI/H94PkW/x13oqgv2JxOBrpHGaeDa3VCUcMnHFSwDNiUqShuftUXSoLSbF9Hz5j4V9KdfJtvp0tRwpt38fUelhCbUvtZgSK9c0TfZhb2WrZm5BOkQvmVRGlYsYDn6eGk57Tck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173763; c=relaxed/simple;
-	bh=Y/chAPsKtVn3UQQ2cpm2P+/fLcPle9ivNtoU79ydjao=;
+	s=arc-20240116; t=1790173765; c=relaxed/simple;
+	bh=XsEkSz9Rrkd3Q3j/N3vsQQYGRLagy6l3G3I+yl/TMTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3PnpsgJY1KA65ZiXgboT3Rt3oJ6yeT/kK5Fder/CqexYGhYciP828bQBSjdGkR4iyugPtUfbk1sJAmQZx8KtLXqhXhFsLd3xcNhMpI1q1v/RYDBdhfBEQpTpeyFGM0RDV2Kr4Pk7IgNgGgvZj+trt35pPvEQxpjKNQP2AGejgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJkeXIwh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZRn1qfxep5Bns6iTpH2vjOFzi60cc/NZcnCiSkQyEeJLMkL6SBvs0b6Ja6P4Fd7O5C5GPS2rR8v50Nzr+FtJ3RbfkBNqaBT6fpNybqgxZ48bQ9qOa3Y29mBkIw86P7rinOM5LM3pvIbYouRzxkWsuF1yzoaZEf9htxdqjJg0ztE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dodZyRb/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJkeXIwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486421F000FF;
-	Wed, 23 Sep 2026 14:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dodZyRb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4331F000FF;
+	Wed, 23 Sep 2026 14:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173761;
-	bh=CgrjqP0m7ofjFcOjmT+fjQbTfs7Eg5wdjf75unrO770=;
+	s=korg; t=1790173764;
+	bh=eiwmnUxzGMBV1WAYpShvYh43iLScb/PJjG4MJB9jdCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJkeXIwh0SZurlmupfeIjyKTCF2r2IHzo7jMCJkJsqEIxXbgCvIRru1UqIMI9qOT+
-	 UBtFs2M7f3t//RL6VFto54x+9/Ql0W+oA89MKnjg2/MUt5mkZuomJxKn/l6WTGQYNy
-	 jmR+uEU1LZ7gIHyLg5Po2rgmPNrhgbgZ2SiLDlxw=
+	b=dodZyRb/2fbzlML3z4BnG9JqCeWgtdd3EE8FDF99zl7q97biCsw2tVbDNRzX3VfAN
+	 /t4oy/wvd5LY7SNSW0KKBaq0BuXZiQsLy4rL/DaDIvjwu2vyI46x2SDiGEIKiUB+eu
+	 qaqGSgHgVxB6j9dF4QwBhTrPs6pQ+J2vVidd6b1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 301/438] net/sched: act_api: release tail references on DELACTION failure
-Date: Wed, 23 Sep 2026 16:05:22 +0200
-Message-ID: <20260923140652.580768708@linuxfoundation.org>
+	iommu@lists.linux.dev,
+	Pranjal Shrivastava <praan@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	David Hu <xuehaohu@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 7.2 292/438] dma-buf: Fix silent overflow for phys vec to sgt
+Date: Wed, 23 Sep 2026 16:05:13 +0200
+Message-ID: <20260923140652.346742302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -44,61 +48,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: David Hu <xuehaohu@google.com>
 
-commit 6e05e46fa821a5c1b281355f1f622ac76cb6080a upstream.
+commit b344ca94e8cc85796f16ea25e2e5a8e0303fe813 upstream.
 
-A batched RTM_DELACTION request takes a temporary reference on each
-action before attempting any deletion. tcf_action_delete() clears
-each processed slot and drops its temporary reference before attempting
-the deletion. If deletion fails, tca_action_gd() calls
-tcf_action_put_many() to release the remaining references, but its
-tcf_act_for_each_action() iterator stops at the first NULL slot.
+In case MMIO size is bigger than 4G and peer2peer DMA goes
+through host bridge, we trigger a code path that assigns the
+total linked IOVA (which is greater than 4G) to mapped_len.
 
-When a batch stops at an action bound to a filter, this leaks a
-reference on each subsequent action. A later delete of an unbound
-action can then return success without removing it from the IDR.
+Previously, `mapped_len` was declared as 32-bit `unsigned int`.
+When accumulating `size_t` lengths, this leads to a silent wrap-around.
+This truncation causes truncated lengths to be passed to functions
+like `fill_sg_entry()`.
 
-Walk the full array in tcf_action_put_many() and skip NULL slots to
-release the references held on the unprocessed actions.
+Fix this by changing `mapped_len` to `size_t` (64-bit). While
+at it, fix similar potential overflow issues in `calc_sg_nents`
+by using `check_add_overflow()` for `nents` and using
+`unsigned int` for the loop iterator in `fill_sg_entry` to match.
 
-Fixes: a0e947c9ccff ("net/sched: act_api: avoid non-contiguous action array")
+Fixes: 3aa31a8bb11e ("dma-buf: provide phys_vec to scatter-gather mapping routine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260910093413.34509-2-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: iommu@lists.linux.dev
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: David Hu <xuehaohu@google.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260901170849.4052816-2-dhu@x6u.co
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/dma-buf/dma-buf-mapping.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1218,11 +1218,16 @@ static int tcf_action_put(struct tc_acti
+--- a/drivers/dma-buf/dma-buf-mapping.c
++++ b/drivers/dma-buf/dma-buf-mapping.c
+@@ -5,12 +5,13 @@
+  */
+ #include <linux/dma-buf-mapping.h>
+ #include <linux/dma-resv.h>
++#include <linux/overflow.h>
  
- static void tcf_action_put_many(struct tc_action *actions[])
+ static struct scatterlist *fill_sg_entry(struct scatterlist *sgl, size_t length,
+ 					 dma_addr_t addr)
  {
--	struct tc_action *a;
- 	int i;
+ 	unsigned int len, nents;
+-	int i;
++	unsigned int i;
  
--	tcf_act_for_each_action(i, a, actions) {
--		const struct tc_action_ops *ops = a->ops;
-+	/* Deletion may have cleared entries before failing. */
-+	for (i = 0; i < TCA_ACT_MAX_PRIO; i++) {
-+		struct tc_action *a = actions[i];
-+		const struct tc_action_ops *ops;
+ 	nents = DIV_ROUND_UP(length, UINT_MAX);
+ 	for (i = 0; i < nents; i++) {
+@@ -40,8 +41,12 @@ static unsigned int calc_sg_nents(struct
+ 	size_t i;
+ 
+ 	if (!state || !dma_use_iova(state)) {
+-		for (i = 0; i < nr_ranges; i++)
+-			nents += DIV_ROUND_UP(phys_vec[i].len, UINT_MAX);
++		for (i = 0; i < nr_ranges; i++) {
++			unsigned int added = DIV_ROUND_UP(phys_vec[i].len, UINT_MAX);
 +
-+		if (!a)
-+			continue;
-+		ops = a->ops;
- 		if (tcf_action_put(a))
- 			module_put(ops->owner);
++			if (check_add_overflow(nents, added, &nents))
++				return 0;
++		}
+ 	} else {
+ 		/*
+ 		 * In IOVA case, there is only one SG entry which spans
+@@ -95,9 +100,10 @@ struct sg_table *dma_buf_phys_vec_to_sgt
+ 					 size_t nr_ranges, size_t size,
+ 					 enum dma_data_direction dir)
+ {
+-	unsigned int nents, mapped_len = 0;
+ 	struct dma_buf_dma *dma;
+ 	struct scatterlist *sgl;
++	size_t mapped_len = 0;
++	unsigned int nents;
+ 	dma_addr_t addr;
+ 	size_t i;
+ 	int ret;
+@@ -133,6 +139,8 @@ struct sg_table *dma_buf_phys_vec_to_sgt
  	}
+ 
+ 	nents = calc_sg_nents(dma->state, phys_vec, nr_ranges, size);
++
++	/* sg_alloc_table will cleanly fail and return -EINVAL if nents == 0 */
+ 	ret = sg_alloc_table(&dma->sgt, nents, GFP_KERNEL | __GFP_ZERO);
+ 	if (ret)
+ 		goto err_free_state;
 
 
