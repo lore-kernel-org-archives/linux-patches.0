@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B03538D81;
-	Wed, 23 Sep 2026 14:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27810531629;
+	Wed, 23 Sep 2026 14:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175261; cv=none; b=OeyQZudQLNBz7ODCRypHLmqes4dXt1SBmO+bKK+iyGokN+xjIQkYgOEJE1mF/ZiIcRTfCwS0PtSmh+inW/Opph2RevX2Ss6FWK+fxG56fUhnZGUtSUkOsSjephyKolHSQZ8+Wh0Tb3+sv2b0yF8hZ3/R6rU/sw3CPKOsYAXkBlU=
+	t=1790175264; cv=none; b=h4rTHT47PlJoOFuMGL3yFHUmdzS+ipWXYA8ufkFVJ6g0EATit2x4YgAHmvl/fxGwuMB2Oa17QLnjkiBcwNaYhHnJn/504W+Vs1Ikz/6KexiCw95j9KJs6268gk7sPTRi8MBjtsviqgf1x3BmugRQtldmZxxZ0rx7aWZCneYdHcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175261; c=relaxed/simple;
-	bh=f4l1LqwsT6CYQmZ5jdD3Ozb8Vqc4wIbgN/PBLoTask8=;
+	s=arc-20240116; t=1790175264; c=relaxed/simple;
+	bh=7/sKlONbzjkiOOUJCNnkB61IvTBmVg1vjqQx+TRac+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKdvnV7C7vOidEDAzNuDTyvpRy2fl8NdsHusRFSStXnutVDz9BDr7S+1PoW5bDQAegxOJyMjKNTgEBTFElda4ZQALGCfMJ9NnLue1dAMLHt9thDd5OABl+0mxIbUVh8bk3vSOEc3pStyEAxRGtZiy7Mj8I+iT60F0TKDwBB1/wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnjztRUM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kn//iT6b9fEJVAIgvIs9pWR2G4Nk2dkp6/z9FBvFROCunXkWon72K4viAZw6zrQTYxtildDmvRojsgC5D4PTlY9N886+ayReP9XR7su47meCS59iTYP7Cn5sV0Js49EwW/3JNXIEiAGDs9CEW59JeGA3DuwAg0M2fsGH7Oc8oBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IW57IxH/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnjztRUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBC21F000FF;
-	Wed, 23 Sep 2026 14:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IW57IxH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0441F000FF;
+	Wed, 23 Sep 2026 14:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175260;
-	bh=y6gpF8aqwlALUpo/l9XeE0k/UhBZIq8xinSx73P21mI=;
+	s=korg; t=1790175263;
+	bh=jec1eXUnJIFEPPAU8ZKEILBbOZow3qE9AVOCq53d3Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnjztRUM++7SRmdVhThtumZyCEeAitdL0AfFAf8MhMWdVPodDZcZAZamyFmM1TNb4
-	 cwkm3tLhsl5V4dV71lnjTu1PNVOm+dSbrsbJwmfiLzci/jeBN00VUz+ZkBMEGdknqv
-	 cfKuwxblpNRLrEwIDEzdlt+UowGHDHgGu5mln1hY=
+	b=IW57IxH/f/p+YS3gaShE+dT1xKZTOnyGD8OGAlHQi559Xxko12AZRfrcjUmKOWa8p
+	 kltM7xuq7+OAr/B4HQyQ0D1QoiUXbL24sIjRZs89S8nV9GVisZgU3gjDzUDJrtE56z
+	 GZghdB6jlkqK6IyYdIkn4iR/lB2IUtHeTAAv8uWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 372/398] mm/vma: correctly unaccount on mmap_prepare() failure
-Date: Wed, 23 Sep 2026 16:07:26 +0200
-Message-ID: <20260923140653.089641432@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 355/398] smb: client: fix missing lower-bound check on DFS referral string offsets
+Date: Wed, 23 Sep 2026 16:07:09 +0200
+Message-ID: <20260923140652.631776382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -55,56 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 6cc27d82196385fe06853319f74312a7d8019726 ]
+commit e83330c55edc0c3ac08aa6c95e49e4694c65523b upstream.
 
-__mmap_setup() accounts memory for relevant mappings via:
+parse_dfs_referrals() checks that DfsPathOffset and NetworkAddressOffset
+do not exceed the buffer end, but fails to check that they don't point
+inside the referral header itself.
 
-security_vm_enough_memory_mm()
-  -> __vm_enough_memory()
-    -> vm_acct_memory()
+If a server provides an offset smaller than
+sizeof(struct dfs_referral_level_3), the derived string pointer overlaps
+with the struct fields, causing cifs_strndup_from_utf16() to interpret
+header data as UTF-16 strings.
 
-If __mmap_setup() fails, this indicates that this accounting did not take
-place, and thus it's appropriate for __mmap_region() to jump to
-abort_munmap.
+Fix this by enforcing that string offsets are at least sizeof(*ref).
 
-However if call_mmap_prepare() fails, it also jumps there and any accounted
-memory is not correctly unaccounted.
-
-Fix this by handling each error separately.
-
-Link: https://lore.kernel.org/20260902-fix-unaccount-mmap_prepare-v1-1-ea070189fdfb@kernel.org
-Fixes: c84bf6dd2b83 ("mm: introduce new .mmap_prepare() file callback")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/misc.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2693,10 +2693,12 @@ static unsigned long __mmap_region(struc
- 	map.check_ksm_early = can_set_ksm_flags_early(&map);
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1050,7 +1050,11 @@ parse_dfs_referrals(struct get_dfs_refer
+ 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
  
- 	error = __mmap_prepare(&map, uf);
--	if (!error && have_mmap_prepare)
--		error = call_mmap_prepare(&map);
- 	if (error)
- 		goto abort_munmap;
-+	if (have_mmap_prepare)
-+		error = call_mmap_prepare(&map);
-+	if (error)
-+		goto unacct_error;
+ 		/* copy DfsPath */
+-		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++		if (le16_to_cpu(ref->DfsPathOffset) < sizeof(*ref) ||
++		    le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++			cifs_dbg(VFS, "%s: DfsPathOffset %u out of range [%zu, %td]\n",
++				 __func__, le16_to_cpu(ref->DfsPathOffset),
++				 sizeof(*ref), data_end - (char *)ref);
+ 			rc = -EINVAL;
+ 			goto parse_DFS_referrals_exit;
+ 		}
+@@ -1064,7 +1068,11 @@ parse_dfs_referrals(struct get_dfs_refer
+ 		}
  
- 	if (map.check_ksm_early)
- 		update_ksm_flags(&map);
+ 		/* copy link target UNC */
+-		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++		if (le16_to_cpu(ref->NetworkAddressOffset) < sizeof(*ref) ||
++		    le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++			cifs_dbg(VFS, "%s: NetworkAddressOffset %u out of range [%zu, %td]\n",
++				 __func__, le16_to_cpu(ref->NetworkAddressOffset),
++				 sizeof(*ref), data_end - (char *)ref);
+ 			rc = -EINVAL;
+ 			goto parse_DFS_referrals_exit;
+ 		}
 
 
