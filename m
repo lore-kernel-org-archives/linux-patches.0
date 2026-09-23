@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6872492E5C;
-	Wed, 23 Sep 2026 14:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D5D466B5E;
+	Wed, 23 Sep 2026 14:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173751; cv=none; b=aTIgEBMSg9YE7Q08YlXgdxZAlvuZJUGt+Ut5I0X/DpOrEe04zsiv1AXTAIVfI0PR7DoyopQK46NUhpJZJ3TjXoTryihrzQozOfpLrSy8cHzMx38I9sPqmoavyh1LIXYCGoNEWCueTOmXXiPKkqKhnj1hEhnOBHxDy1Le8EQ1OdY=
+	t=1790173753; cv=none; b=QlYxoR4zEpA/ZUJxZNoR1O3hrDPLX2V9vGQo9b7NXULU/Mjcp9kqjrRmeQ3wj/6HIw+IcRwtsapfD+h4eL5RZCK4exvjT1LqydTpff3mdziC4g+gBSOOpO6iBjeDC3g7SMOIvJumqC+6Z4XUtaxZfMcQSBCVRuSJRQDJrtB7ylk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173751; c=relaxed/simple;
-	bh=OiFshu69rQX1Igdtwu+GN2mdj7kyyfdCqDc11Mx7rsA=;
+	s=arc-20240116; t=1790173753; c=relaxed/simple;
+	bh=7zwD8CncL0kCsS7bRq/YoE4hSDTCbRlbwv0BP3M7DrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XiAbwBoXIEVtF9yh2DDhSBRO1euh4vXE++u9DRy/8BVYJomKKDLrBfbKpNO4RxAcAKPU6VL6Upxk7bQ1Jfci4s3ObqgVlRMqOOKkDU+grklCWl/AjLL/zQ+4An+i/DDjy5KZWf9a9Bbx/E19Z9QSyVOokdKUrW+zFy+0oBcWcr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dE2hEzP9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JZjr0rC+F8bIIy7FstF7GbrcOVvA4q7usyEu6WhwjowKmkQBEEJNTh+HobLhtI9Fm/lS6FUSt3w9nueVRJDMQ4AIw0mlltoaBsStPq0TE/SSdYSGfq6sWdnmUeWZsHOWur3gra6DXx5FLDAgwapKGZEIcLpgvfqIRtUOq/lvXKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5AsGp47; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dE2hEzP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DC41F000FF;
-	Wed, 23 Sep 2026 14:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5AsGp47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0263B1F000FF;
+	Wed, 23 Sep 2026 14:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173749;
-	bh=JTkK10xif3RZAme6yIBUXWe/BDNzc1Hfs4hguWSWb5g=;
+	s=korg; t=1790173752;
+	bh=6KGpUq/DOBSVzl2MVusEhSJJPZfM/hl6W9RLd0yBlRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dE2hEzP9FMeLn07kkmm6i76vKHFT4Yidu7qquGXzQhjApPEe5ZKc3X66dMeJqmcET
-	 Qcqkel03vo1XsCKRJIOgw5H8+9M21RZ7vCYL/zz4ZiIt9W7QAtPgM/nNvGKXnEqx3L
-	 eWg19lp6dq1zqQYiw4I/t2lqTRpoiSNIl2NYiFx0=
+	b=i5AsGp47xiZXfEwBNmf7pJCWR//rHH1nDKDOQa+qubCzlPjcYPdRe+dFc6NwQXvRX
+	 mlsKRXZ0Aimq7hDp1U09r1JtCjIaMgpmwcjNoLK/tpq1dFMmiF6G1qpqINX6IjFZGD
+	 uZwpZlS5rv6ersc4J60siaH1wOY2RDt67+X6gle4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 297/438] net: phy: mediatek: do not report link and per-speed LED rules together
-Date: Wed, 23 Sep 2026 16:05:18 +0200
-Message-ID: <20260923140652.477384307@linuxfoundation.org>
+Subject: [PATCH 7.2 298/438] net: wwan: t7xx: validate the netif index in t7xx_ccmni_recv_skb()
+Date: Wed, 23 Sep 2026 16:05:19 +0200
+Message-ID: <20260923140652.502753969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,89 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-commit bde5212360bd44506edec073ebbd6d0c72f75820 upstream.
+commit c7ead9704249d57d4693a04697e3bbd285138fa9 upstream.
 
-mtk_phy_led_hw_ctrl_get() reports TRIGGER_NETDEV_LINK whenever any of the
-speed bits in on_set is on, and in addition reports every individual
-TRIGGER_NETDEV_LINK_* bit that is set. The netdev trigger refuses that
-combination: netdev_led_attr_store() rejects TRIGGER_NETDEV_LINK together
-with any per-speed rule, and it validates the whole resulting mode rather
-than just the bit being written. Once the hardware has any link bit
-programmed, every write to the trigger attributes of that LED therefore
-fails with -EINVAL and the LED can no longer be configured.
+The netif index carried in the DPMAIF PIT header is five bits wide,
+but ccmni_inst[] only has room for NIC_DEV_MAX (21) entries.
+t7xx_ccmni_recv_skb() indexes the array without a bounds check, so
+indexes 21 to 31 read past it.  The out-of-bounds value lands in the
+callback table that follows the array, which is never NULL, so the
+existing !ccmni check does not catch it and the driver dereferences
+whatever sits there as a struct t7xx_ccmni.
 
-The rules are also fed back into the hardware: the trigger stores what is
-read back, and a later write of device_name programs it again, expanding
-TRIGGER_NETDEV_LINK to every speed in on_set. An LED configured for a
-single speed is thereby silently widened to "on at any link speed".
+Drop the skb when the index is out of range.
 
-Both are easy to see on the EcoNet EN7528, whose four PHYs share one LED
-block. The first LED programs the block correctly, the second reads those
-rules back and rewrites them widened, and the remaining two then read the
-widened value, so an LED configured for "link_10 link_100" ends up lit on a
-1000 Mbps link.
-
-on_set holds every speed the LED can indicate and is exactly what
-mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so report the
-speed independent rule only when all of them are on, and the individual
-speeds otherwise. The mapping is then the inverse of the one used when
-programming the LED and round trips without changing the register.
-
-Fixes: c66937b0f8db ("net: phy: mediatek-ge-soc: support PHY LEDs")
+Fixes: 05d19bf500f8 ("net: wwan: t7xx: Add WWAN network interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260912134306.3544329-1-naseefkm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/phy/mediatek/mtk-phy-lib.c |   33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
 
---- a/drivers/net/phy/mediatek/mtk-phy-lib.c
-+++ b/drivers/net/phy/mediatek/mtk-phy-lib.c
-@@ -156,20 +156,27 @@ int mtk_phy_led_hw_ctrl_get(struct phy_d
- 	if (!rules)
- 		return 0;
+Verified in a QEMU guest with a fault injector setting the netif
+index to 25: the unpatched driver reads a value past ccmni_inst[],
+which lands in the callback table, and dereferences it far enough to
+queue the skb.  With this check the packet is dropped.  Well-formed
+traffic on index 0 is unaffected.
+
+Changes in v2: none.
+
+Link: https://patch.msgid.link/20260911021734.1396599-3-zhugl3@xiaopeng.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ drivers/net/wwan/t7xx/t7xx_netdev.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/drivers/net/wwan/t7xx/t7xx_netdev.c
++++ b/drivers/net/wwan/t7xx/t7xx_netdev.c
+@@ -420,6 +420,10 @@ static void t7xx_ccmni_recv_skb(struct t
  
--	if (on & on_set)
-+	/* TRIGGER_NETDEV_LINK must not be reported together with any of the
-+	 * per-speed rules, the netdev trigger rejects that combination.
-+	 * on_set holds every speed this LED can indicate and is what
-+	 * mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so
-+	 * report the speed independent rule only when they are all on.
-+	 */
-+	if ((on & on_set) == on_set) {
- 		*rules |= BIT(TRIGGER_NETDEV_LINK);
--
--	if (on & MTK_PHY_LED_ON_LINK10)
--		*rules |= BIT(TRIGGER_NETDEV_LINK_10);
--
--	if (on & MTK_PHY_LED_ON_LINK100)
--		*rules |= BIT(TRIGGER_NETDEV_LINK_100);
--
--	if (on & MTK_PHY_LED_ON_LINK1000)
--		*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
--
--	if (on & MTK_PHY_LED_ON_LINK2500)
--		*rules |= BIT(TRIGGER_NETDEV_LINK_2500);
-+	} else {
-+		if (on & MTK_PHY_LED_ON_LINK10)
-+			*rules |= BIT(TRIGGER_NETDEV_LINK_10);
-+
-+		if (on & MTK_PHY_LED_ON_LINK100)
-+			*rules |= BIT(TRIGGER_NETDEV_LINK_100);
-+
-+		if (on & MTK_PHY_LED_ON_LINK1000)
-+			*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
-+
-+		if (on & MTK_PHY_LED_ON_LINK2500)
-+			*rules |= BIT(TRIGGER_NETDEV_LINK_2500);
+ 	skb_cb = T7XX_SKB_CB(skb);
+ 	netif_id = skb_cb->netif_idx;
++	if (netif_id >= NIC_DEV_MAX) {
++		dev_kfree_skb(skb);
++		return;
 +	}
- 
- 	if (on & MTK_PHY_LED_ON_FDX)
- 		*rules |= BIT(TRIGGER_NETDEV_FULL_DUPLEX);
+ 	ccmni = READ_ONCE(ccmni_ctlb->ccmni_inst[netif_id]);
+ 	if (!ccmni) {
+ 		dev_kfree_skb(skb);
 
 
