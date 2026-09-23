@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C910D53162E;
-	Wed, 23 Sep 2026 14:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439DA531633;
+	Wed, 23 Sep 2026 14:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173357; cv=none; b=pvlDGyhpOUqCPsd8R2El5DD00QRc0jdn9oFIvUKdrKFHnKSDVyWwBO4RfDkyE0o48iYT2mSKdPMh4C4Ana6HLY5ZxavGEnusT0AAj3UuC8VRhC2Za1MueA7fY/a55EIyVpXUdMMCJmcd+MX8oBVflTrXUNqSIfXgD54vMEPzySg=
+	t=1790173360; cv=none; b=O8LjZZIfCSFCfy+qt1pEqhfFqYNPagWRh5X31dyWJM2IYgy8SM9LXRMWfEw+2ni2riAq4PMXzUPLTwN7PwqoJ5d+15vM/oH/HxONa4abdsXGGvnPEj49yANAivnsJM3MH21Bl4jiHItZ/j6baHUdZmYnRtWbGB1AV9BqG5jnIlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173357; c=relaxed/simple;
-	bh=+a+8iI1PUx49Siuzc8tGCy5ltTXYYQUZF6lYByYDnMs=;
+	s=arc-20240116; t=1790173360; c=relaxed/simple;
+	bh=2LDVOcCHQjBGIEVC7fMCEjCWY/DQmO/4tNnUYAk6EdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+8UlEODbjqrGlf4yMRUMdCsKN8sv04GzEXTGv5sW9O96EqfWD4PeYonRM0Inb+/QUg5bsjT1tCQAbTPiqJJakuF02cgUexSHx4swFCvtQYUX7afVLwjGpCJf5mJGKvFhwz/nBNUC2Xxm86DxQO7+qkGDCNpMI3mBmRjV3Q3it4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdLKpqQG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WU3Lj4CH6tb+hxiHAa+IYUqggf9hc1CRoEJHGCtKsrQU5PblRWVtpmjv59luRrv4GR79+DZsn4zOh6Big+MOzrK4Sks+H9JmAxaMqY+LDlPqGgGyu/Hq918o0ddqxEmduGpEKaeNPoQYh+P1V1m4suZ/wKWaDjgwcf/tOIJJ2pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc9FcfC6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdLKpqQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C7D1F000FF;
-	Wed, 23 Sep 2026 14:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc9FcfC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E61F000FF;
+	Wed, 23 Sep 2026 14:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173355;
-	bh=BnlZXE6M5p2qXJVS/vtfdKlCd63mpfOff5Kh5iElkFU=;
+	s=korg; t=1790173359;
+	bh=ClG84Irm/kcen+h60R0jDcu7wMWPlVWpbupkOAxqO3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdLKpqQGHbDYVkgziM1D9YA0MWJ7Th1KxlNXhkChxwthciZkf9W6DmF1tRZNhk+DD
-	 BraKom+d5q+kuuX9zzrOefVGfGxkzQB78fcoIUwTqlrAqBEKXjVletzKXJCPHMrGCc
-	 q7fNLj4Eq3HpPH3nCZiNXXHrW+L/WbsOPD82rhvM=
+	b=Bc9FcfC6hEPuipPMknzefNzEfioElqF5JuntOJtLqoJI/DuQRdXwEJhtZktOE8AWr
+	 2mgB8/l+TzGv/Wwxez+gmQnFZMoa9iSf46LjwRJF75d0GeS9IeZtD9cTtmsWRTd1dv
+	 LrO2UdJUcqGG9QVZA8WdPiFPATHPzZzDfY/7Ea6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Gal Pressman <gal@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 186/438] drop_monitor: fix out-of-bounds write in reset_per_cpu_data()
-Date: Wed, 23 Sep 2026 16:03:27 +0200
-Message-ID: <20260923140649.585267689@linuxfoundation.org>
+Subject: [PATCH 7.2 187/438] net: stmmac: do not overwrite phc_index when no PTP clock is registered
+Date: Wed, 23 Sep 2026 16:03:28 +0200
+Message-ID: <20260923140649.611233420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,60 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 439f392084f8f7f59ab9d47a9579185accefe1d8 ]
+[ Upstream commit f0ef4b1eaed000a304726a43091588e8426ba08a ]
 
-In reset_per_cpu_data(), al is computed as:
+stmmac_get_ts_info() reports phc_index as 0 when hardware timestamping
+is supported but no PTP clock has been registered yet (e.g. while the
+interface is down). Zero is a valid PHC index and would make userspace
+resolve the wrong clock; the absence of a clock should be reported as
+-1.
 
-    al = sizeof(struct net_dm_alert_msg);
-    al += dm_hit_limit * sizeof(struct net_dm_drop_point);
-    al += sizeof(struct nlattr);
+The ethtool core already initializes phc_index to -1 before invoking
+the get_ts_info callback (ethtool_init_tsinfo()), so just drop the
+erroneous assignment.
 
-    skb = genlmsg_new(al, GFP_KERNEL);
-    ...
-    nla = nla_reserve(skb, NLA_UNSPEC, sizeof(struct net_dm_alert_msg));
-    ...
-    msg = nla_data(nla);
-    memset(msg, 0, al);
-
-Because al includes sizeof(struct nlattr) (the 4-byte attribute header),
-genlmsg_new() allocates al bytes of tailroom starting at nla.
-However, msg points to nla_data(nla), which is located
-sizeof(struct nlattr) bytes past nla. Calling memset(msg, 0, al)
-therefore writes al bytes starting from msg, exceeding the allocated
-buffer by sizeof(struct nlattr) (4 bytes) and corrupting
-skb_shared_info.
-
-Fix this by letting al represent only the payload length, allocating
-the skb with genlmsg_new(nla_total_size(al), GFP_KERNEL), and zeroing
-al bytes from msg.
-
-Fixes: 683703a26e46 ("drop_monitor: Update netlink protocol to include netlink attribute header in alert message")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260910204612.3762015-5-edumazet@google.com
+Fixes: 9364fa7fcf12 ("net: stmmac: Remove setting of RX software timestamp")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20260914-stmmac-fix-phc_index-v2-1-bf3d90373fe4@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 795c15dd1771a..edc660778408e 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -141,9 +141,8 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index 92585d27ab883..2a4882f2a498d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -1013,8 +1013,6 @@ static int stmmac_get_ts_info(struct net_device *dev,
  
- 	al = sizeof(struct net_dm_alert_msg);
- 	al += dm_hit_limit * sizeof(struct net_dm_drop_point);
--	al += sizeof(struct nlattr);
+ 		if (priv->ptp_clock)
+ 			info->phc_index = ptp_clock_index(priv->ptp_clock);
+-		else
+-			info->phc_index = 0;
  
--	skb = genlmsg_new(al, GFP_KERNEL);
-+	skb = genlmsg_new(nla_total_size(al), GFP_KERNEL);
+ 		info->tx_types = (1 << HWTSTAMP_TX_OFF) | (1 << HWTSTAMP_TX_ON);
  
- 	if (!skb)
- 		goto err;
 -- 
 2.53.0
 
