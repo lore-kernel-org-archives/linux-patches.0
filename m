@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83F453A895;
-	Wed, 23 Sep 2026 14:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5825383E1;
+	Wed, 23 Sep 2026 14:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174699; cv=none; b=GP1LANcZ7BtktseGJobnMzaFc2FKjV9aQSmqtR4UqOOYEMcO/F+hgudxWBruYrqGQx0h+7Pd5c1FWhsOvKisbZVv5nZi4u40DJrtmVrfUNrG2pM2iUjS762Y3yV+y4SWMSGQi7QjWoI66JXBzHinM0lCN0a1hJ/0ZyfezGTq4Mo=
+	t=1790174702; cv=none; b=jcMQWReOyKSkKA6kZhpn1dyxLYXuMjnPUDOrO7ggzM8nYvJKzfnbT3AwtAo2ZrCzRy50Opi1Rz5Kwa+CFODpriUPYderXOI5mNrhjZm4QOGAayytFGUDIldZVQR8CcTSq64Xv5RqRxAr9pVB4wlkNPaUXktSxUS+0pIfAIlYUj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174699; c=relaxed/simple;
-	bh=h/nyfrrBhX9zplTD0v0y0vFijrPgrC2gaHjeHRGTPnw=;
+	s=arc-20240116; t=1790174702; c=relaxed/simple;
+	bh=TL8x6L59XeUWbGQbm60rhuTNvZiq5O2P5yHgqFtqwLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrdtiWybwVh+uWkxjilH3M2duuuVOSJQ0g2OwLB27g9yYOwLbj7jhxyRaZ26628a5hvnvqzxSHxiEYiPYq1gxTk47iPLezUOEKsYJqxkvznBvsDIaLZy8h3cZnqVLL6OtiekP3cIhY3cHUT+ggD17aJXvCneR32LjxqJOQ4PNq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3Av9r6s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OqKBxznm/dekrPwqHHXHRIwqRHTMoweKL13VPYhTcbQGL+yNpoSaP8qhum+H5Dq+t/fPjA1vz9cXXACT/SQlE3i6poX3zrtaJROyK1BEzvBL/fOlLgyBz0qbyKJsth1cvUFv46ySmINIXB7vFxOvOUforXLPy4g+WxMtatWMJFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXCJo1mK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3Av9r6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA671F000FF;
-	Wed, 23 Sep 2026 14:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXCJo1mK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3EF1F0089B;
+	Wed, 23 Sep 2026 14:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174697;
-	bh=kgvrVnC0yGN4tBq9gFAFAlnXNDdpKXF2mOyGOG+3gfc=;
+	s=korg; t=1790174700;
+	bh=hrnssL50iBiOi1QKGk/+HH8+GaApzYBJYAW1qEagUOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3Av9r6s/sums7wRacUSVkCdG8PZS679/+9KSdPyYbQgtFpaqyA6yg6sjsnb5qHZU
-	 0sRSQUzoXcejkPewtkHIj2sSZdeZ0mmlFWJY5npYvR8/iBjGDk24l2CPWqu0OqD6aw
-	 KLKFt5+NK05tkSRVmLogbugLyLFzdR9ljvFsCgbI=
+	b=QXCJo1mKvFRxxhVAXIcNH2eP0mXdbZ+dOAnynQqGxmbM5xRQDzTX6XwnrGdo4fLbN
+	 x1Hnh+0wMy7+kBL1B99Ml2NP8XAsvH3/OdsCIEaiswIn5CzU18sXLg9iUKBROYZkQ2
+	 w71yIIi27ZnTt83hXqnEcYmvuieyI6AnWp+ii/oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberts Kursitis <roberts.kursitis@azeron.eu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 197/398] Input: xpad - add support for Azeron devices
-Date: Wed, 23 Sep 2026 16:04:31 +0200
-Message-ID: <20260923140648.529775223@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 171/398] ASoC: sdw_utils: tidyup .count_sidecar
+Date: Wed, 23 Sep 2026 16:04:05 +0200
+Message-ID: <20260923140647.866414202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,51 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberts Kursitis <roberts.kursitis@azeron.eu>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit cba76c0f47af1a389d718c5bb69e75cbd67bba98 upstream.
+[ Upstream commit c97f0bf5f705b16d150f2b0d5ce0ee24eee4f68a ]
 
-Azeron controllers (Cyro, Cyborg, Classic/Compact, Cyro Lefty,
-Cyborg II and Keyzen) present a standard Xbox 360 controller
-interface, so they work with the existing xpad driver once their
-USB IDs are added.
+count_sidecar() is not using *card. Tidyup it.
 
-The 0x16d0 vendor ID is a shared block, but this is safe because
-xpad only binds interfaces that match the Xbox 360 signature.
+Current code makes old style / new style conversion difficult.
+To make future conversions easier to understand, this patch clean up the
+code a little. but no functional change.
 
-Tested with an Azeron Keyzen.
-
-Signed-off-by: Roberts Kursitis <roberts.kursitis@azeron.eu>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260906143040.162418-1-roberts.kursitis@azeron.eu
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/87jyrlety1.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0b7d55d3a912 ("ASoC: amd: acp: refactor codec config count in SOF SoundWire machine driver")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/sound/soc_sdw_utils.h                | 28 ++++++++++----------
+ sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c |  4 +--
+ sound/soc/sdw_utils/soc_sdw_utils.c          |  2 +-
+ 3 files changed, 16 insertions(+), 18 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -327,6 +327,12 @@ static const struct xpad_device {
- 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1103, "Azeron Cyro", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x113c, "Azeron Cyborg", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1192, "Azeron Classic/Compact", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1212, "Azeron Cyro Lefty", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x12f7, "Azeron Cyborg II", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x13ea, "Azeron Keyzen", 0, XTYPE_XBOX360 },
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
-@@ -569,6 +575,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
-+	XPAD_XBOX360_VENDOR(0x16d0),		/* Azeron controllers */
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+diff --git a/include/sound/soc_sdw_utils.h b/include/sound/soc_sdw_utils.h
+index 7badbd1d32319..f27019f1b4e51 100644
+--- a/include/sound/soc_sdw_utils.h
++++ b/include/sound/soc_sdw_utils.h
+@@ -44,6 +44,18 @@
+ 
+ struct asoc_sdw_codec_info;
+ 
++struct asoc_sdw_mc_private {
++	struct snd_soc_card card;
++	struct snd_soc_jack sdw_headset;
++	struct device *headset_codec_dev; /* only one headset per card */
++	struct device *amp_dev1, *amp_dev2;
++	bool append_dai_type;
++	bool ignore_internal_dmic;
++	void *private;
++	unsigned long mc_quirk;
++	int codec_info_list_count;
++};
++
+ struct asoc_sdw_dai_info {
+ 	const bool direction[2]; /* playback & capture support */
+ 	const char *dai_name;
+@@ -84,25 +96,13 @@ struct asoc_sdw_codec_info {
+ 
+ 	int (*codec_card_late_probe)(struct snd_soc_card *card);
+ 
+-	int  (*count_sidecar)(struct snd_soc_card *card,
++	int  (*count_sidecar)(struct asoc_sdw_mc_private *ctx,
+ 			      int *num_dais, int *num_devs);
+ 	int  (*add_sidecar)(struct snd_soc_card *card,
+ 			    struct snd_soc_dai_link **dai_links,
+ 			    struct snd_soc_codec_conf **codec_conf);
+ };
+ 
+-struct asoc_sdw_mc_private {
+-	struct snd_soc_card card;
+-	struct snd_soc_jack sdw_headset;
+-	struct device *headset_codec_dev; /* only one headset per card */
+-	struct device *amp_dev1, *amp_dev2;
+-	bool append_dai_type;
+-	bool ignore_internal_dmic;
+-	void *private;
+-	unsigned long mc_quirk;
+-	int codec_info_list_count;
+-};
+-
+ struct asoc_sdw_endpoint {
+ 	struct list_head list;
+ 
+@@ -219,7 +219,7 @@ int asoc_sdw_cs42l43_spk_init(struct snd_soc_card *card,
+ 			      bool playback);
+ 
+ /* CS AMP support */
+-int asoc_sdw_bridge_cs35l56_count_sidecar(struct snd_soc_card *card,
++int asoc_sdw_bridge_cs35l56_count_sidecar(struct asoc_sdw_mc_private *ctx,
+ 					  int *num_dais, int *num_devs);
+ int asoc_sdw_bridge_cs35l56_add_sidecar(struct snd_soc_card *card,
+ 					struct snd_soc_dai_link **dai_links,
+diff --git a/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c b/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
+index c7e55f4433514..8f189025c20cc 100644
+--- a/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
++++ b/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
+@@ -104,11 +104,9 @@ static const struct snd_soc_dai_link bridge_dai_template = {
+ 	SND_SOC_DAILINK_REG(asoc_sdw_bridge_dai),
+ };
+ 
+-int asoc_sdw_bridge_cs35l56_count_sidecar(struct snd_soc_card *card,
++int asoc_sdw_bridge_cs35l56_count_sidecar(struct asoc_sdw_mc_private *ctx,
+ 					  int *num_dais, int *num_devs)
+ {
+-	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
+-
+ 	if (ctx->mc_quirk & SOC_SDW_SIDECAR_AMPS) {
+ 		(*num_dais)++;
+ 		(*num_devs) += ARRAY_SIZE(bridge_cs35l56_name_prefixes);
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 80f24a2296f03..7336375cd386d 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -1405,7 +1405,7 @@ int asoc_sdw_parse_sdw_endpoints(struct snd_soc_card *card,
+ 			ctx->ignore_internal_dmic |= codec_info->ignore_internal_dmic;
+ 
+ 			if (codec_info->count_sidecar && codec_info->add_sidecar) {
+-				ret = codec_info->count_sidecar(card, &num_dais, num_devs);
++				ret = codec_info->count_sidecar(ctx, &num_dais, num_devs);
+ 				if (ret)
+ 					return ret;
+ 
+-- 
+2.53.0
+
 
 
