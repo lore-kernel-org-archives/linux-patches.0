@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F53E329C7C;
-	Wed, 23 Sep 2026 14:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F3E448D11;
+	Wed, 23 Sep 2026 14:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174618; cv=none; b=ccG5RRjGA4L41PEKbL5gswYUZKqfMh7qmpu+V1/GfkRaf/4N0VlrKcb3YpK9f5LYAla05YtU64ermPn23pYzOjlGwBZPu0J6BWtzcf63gKJ57qzuHTkJqnnOXG+xhD9LeDsOQ08G04XcLS2c2qBZJ14cgkMThY9WgqEWVKEHda0=
+	t=1790174622; cv=none; b=dtLl8LvH4Q4gYoNLNG4pMc5Cj9H9h8x8B665fO/O2aqwc/XWQOzTF457uxBtdlrgXcEm/ewIZBBmDQh3mgb0cKf1xxkASn6FHWakRq9Fw2bse0U2ODzFpcNMKUZc6nRJgExFOVEYmf6uOTmia+Ufk/X5sIIC1BXggq8tJo4PrGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174618; c=relaxed/simple;
-	bh=toELB1w27b01lC2BQRqIOyVGezzi+FgGOZkqN3ehdtY=;
+	s=arc-20240116; t=1790174622; c=relaxed/simple;
+	bh=KvJrE/WpHy5MNMAEKoSdID+XwdrIZxwBX7IHpQ7GJsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BP6rtfN57yLYQXf8oSwyQi2XmsCI6arqUYSB8hKF7RZwjI0heWHgB3snthzSElTqTrjPPx1knXkPkc9lfYww1VUbS8ee+G6ng4tpyckC79FACnTRoGIW7hEUACfGJ/t+kk6Iyc8EgvwwKv1nqflqCF3EitxXWzxTa852OPnuIGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvYfIbWh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z/f8YqlUvD+ljG5pxLU3j+6Uo8y6SWhkAENEcOgMkgjGAwTGqYrLmmpWaQmFl4DWAXIsgnw/2fyGvk2h/3V2FNR9mYE+mGg4iv/23kC2OpIjirFi7kNc9Y+C5Cg1JhE33cZQY6LaKN0CXY379P0CnfaWJiyO+pJC3oQ+SsudjDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUFszBbE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvYfIbWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A174C1F00899;
-	Wed, 23 Sep 2026 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUFszBbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9501F000FF;
+	Wed, 23 Sep 2026 14:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174617;
-	bh=c34aRssCUpP+34rcZ7osSVntmOPafdK5VM2bliGMS0Q=;
+	s=korg; t=1790174620;
+	bh=zULC4U/p2uFz+cBGSs7m9ss9x5pPP8xZXPPNgRuO1N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvYfIbWhTUgiUAG/JjnXME0d7S+oExQF1l+7w/O3pj8LpMy2N+qXvklX+ayjrvAE7
-	 8fArbS3KPCTaFwVDnGHgOUUuT19SeEs3AFzwjVE/z6laa8CKg7szMVTVuEZgqyU3La
-	 +r7px9gYqePEQl8ymUZ1oUbIx57Esn8a5Tw7pbw4=
+	b=aUFszBbEt2rCD3WHyiMxKzbEv0Zhp8WCo7F5zv6qyuQWtiR7f19C3mVaGG3it4TjX
+	 D2C3YCp6SfdQhZ1bSMSvZa62FBMb7kN7j/bi2qSlUX5YBH9ngDG1k/a/FA4kQkjeWf
+	 HyR7W7/Mi6R6Jb4Zy1j5TGiJlzS8JInbU4suWrtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b170dbf55520ebf5969a@syzkaller.appspotmail.com,
-	Aby Sam Ross <abysamross@gmail.com>,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mengshi Wu <mengshi.wu@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/398] Bluetooth: coredump: Quiesce dump work on unregister
-Date: Wed, 23 Sep 2026 16:03:37 +0200
-Message-ID: <20260923140647.138130532@linuxfoundation.org>
+Subject: [PATCH 6.18 144/398] Bluetooth: hci_qca: Refactor HFP hardware offload capability handling
+Date: Wed, 23 Sep 2026 16:03:38 +0200
+Message-ID: <20260923140647.164898936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -55,190 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
 
-[ Upstream commit d236517c264e41dc09833c708ef23bccb7a91219 ]
+[ Upstream commit 22d893eec0d52fa97d25d3de248285648f26ef68 ]
 
-hci_devcd_handle_pkt_init() arms dump_timeout and coredump producers
-queue dump_rx without holding an hdev reference. Unregister leaves both
-works live, so disconnecting during an active dump lets them access hdev
-after hci_release_dev() frees it.
+Replace SoC-specific check with capability-based approach for HFP
+hardware offload configuration. Add QCA_CAP_HFP_HW_OFFLOAD capability
+flag and support_hfp_hw_offload field to qca_serdev structure. Add
+QCA_CAP_HFP_HW_OFFLOAD capability flag to QCA2066 device data
+structures.
 
-Shut down coredump processing during unregister. Close the producer gate
-under dump_q.lock before disabling both works, then free the active buffer
-and queued packets under hci_dev_lock. Serializing the gate with enqueue
-prevents controller-specific workers from adding packets after the final
-purge.
-
-Fixes: 9695ef876fd1 ("Bluetooth: Add support for hci devcoredump")
-Reported-by: syzbot+b170dbf55520ebf5969a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b170dbf55520ebf5969a
-Reported-by: Aby Sam Ross <abysamross@gmail.com>
-Link: https://lore.kernel.org/r/20260322210849.68743-1-abysamross@gmail.com
-Suggested-by: Aby Sam Ross <abysamross@gmail.com>
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://lore.kernel.org/r/20260814231248.3096377-1-tristmd@gmail.com
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: OpenAI Codex:gpt-5
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 4e93c65f8782 ("Bluetooth: hci_qca: Do not write to the serial port after it is closed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/coredump.h |  2 +
- net/bluetooth/coredump.c         | 65 +++++++++++++++++++++-----------
- net/bluetooth/hci_core.c         |  1 +
- 3 files changed, 47 insertions(+), 21 deletions(-)
+ drivers/bluetooth/hci_qca.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/bluetooth/coredump.h b/include/net/bluetooth/coredump.h
-index 72f51b587a046..00c12c7ac042f 100644
---- a/include/net/bluetooth/coredump.h
-+++ b/include/net/bluetooth/coredump.h
-@@ -61,6 +61,7 @@ struct hci_devcoredump {
- #ifdef CONFIG_DEV_COREDUMP
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index b510b03dae870..5c03f8f3a53ab 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -86,6 +86,7 @@ enum qca_flags {
+ enum qca_capabilities {
+ 	QCA_CAP_WIDEBAND_SPEECH = BIT(0),
+ 	QCA_CAP_VALID_LE_STATES = BIT(1),
++	QCA_CAP_HFP_HW_OFFLOAD  = BIT(2),
+ };
  
- void hci_devcd_reset(struct hci_dev *hdev);
-+void hci_devcd_shutdown(struct hci_dev *hdev);
- void hci_devcd_rx(struct work_struct *work);
- void hci_devcd_timeout(struct work_struct *work);
+ /* HCI_IBS transmit side sleep protocol states */
+@@ -228,6 +229,7 @@ struct qca_serdev {
+ 	u32 init_speed;
+ 	u32 oper_speed;
+ 	bool bdaddr_property_broken;
++	bool support_hfp_hw_offload;
+ 	const char *firmware_name[2];
+ };
  
-@@ -75,6 +76,7 @@ int hci_devcd_abort(struct hci_dev *hdev);
- #else
+@@ -1915,7 +1917,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	const char *rampatch_name = qca_get_rampatch_name(hu);
+ 	int ret;
+ 	struct qca_btsoc_version ver;
+-	struct qca_serdev *qcadev;
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(hu->serdev);
+ 	const char *soc_name;
  
- static inline void hci_devcd_reset(struct hci_dev *hdev) {}
-+static inline void hci_devcd_shutdown(struct hci_dev *hdev) {}
- static inline void hci_devcd_rx(struct work_struct *work) {}
- static inline void hci_devcd_timeout(struct work_struct *work) {}
+ 	ret = qca_check_speeds(hu);
+@@ -1979,7 +1981,6 @@ static int qca_setup(struct hci_uart *hu)
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-		qcadev = serdev_device_get_drvdata(hu->serdev);
+ 		if (qcadev->bdaddr_property_broken)
+ 			hci_set_quirk(hdev, HCI_QUIRK_BDADDR_PROPERTY_BROKEN);
  
-diff --git a/net/bluetooth/coredump.c b/net/bluetooth/coredump.c
-index 720cb79adf964..b15971ad78a8f 100644
---- a/net/bluetooth/coredump.c
-+++ b/net/bluetooth/coredump.c
-@@ -105,6 +105,22 @@ static void hci_devcd_free(struct hci_dev *hdev)
- 	hci_devcd_reset(hdev);
- }
+@@ -2073,7 +2074,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	else
+ 		hu->hdev->set_bdaddr = qca_set_bdaddr;
  
-+void hci_devcd_shutdown(struct hci_dev *hdev)
-+{
-+	unsigned long flags;
+-	if (soc_type == QCA_QCA2066)
++	if (qcadev->support_hfp_hw_offload)
+ 		qca_configure_hfp_offload(hdev);
+ 
+ 	qca->fw_version = le16_to_cpu(ver.patch_ver);
+@@ -2157,7 +2158,8 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
+ static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
+ 	.soc_type = QCA_QCA2066,
+ 	.num_vregs = 0,
+-	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
++	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
++			QCA_CAP_HFP_HW_OFFLOAD,
+ };
+ 
+ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
+@@ -2542,6 +2544,9 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 
+ 		if (!(data->capabilities & QCA_CAP_VALID_LE_STATES))
+ 			hci_set_quirk(hdev, HCI_QUIRK_BROKEN_LE_STATES);
 +
-+	spin_lock_irqsave(&hdev->dump.dump_q.lock, flags);
-+	hdev->dump.supported = false;
-+	spin_unlock_irqrestore(&hdev->dump.dump_q.lock, flags);
-+
-+	disable_work_sync(&hdev->dump.dump_rx);
-+	disable_delayed_work_sync(&hdev->dump.dump_timeout);
-+
-+	hci_dev_lock(hdev);
-+	hci_devcd_free(hdev);
-+	hci_dev_unlock(hdev);
-+}
-+
- /* Call with hci_dev_lock only. */
- static int hci_devcd_alloc(struct hci_dev *hdev, u32 size)
- {
-@@ -444,7 +460,29 @@ EXPORT_SYMBOL(hci_devcd_register);
++		if (data->capabilities & QCA_CAP_HFP_HW_OFFLOAD)
++			qcadev->support_hfp_hw_offload = true;
+ 	}
  
- static inline bool hci_devcd_enabled(struct hci_dev *hdev)
- {
--	return hdev->dump.supported;
-+	return READ_ONCE(hdev->dump.supported);
-+}
-+
-+static int hci_devcd_queue(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	unsigned long flags;
-+	int err = 0;
-+
-+	spin_lock_irqsave(&hdev->dump.dump_q.lock, flags);
-+	if (!hdev->dump.supported)
-+		err = -EOPNOTSUPP;
-+	else
-+		__skb_queue_tail(&hdev->dump.dump_q, skb);
-+	spin_unlock_irqrestore(&hdev->dump.dump_q.lock, flags);
-+
-+	if (err) {
-+		kfree_skb(skb);
-+		return err;
-+	}
-+
-+	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
-+
-+	return 0;
- }
- 
- int hci_devcd_init(struct hci_dev *hdev, u32 dump_size)
-@@ -461,10 +499,7 @@ int hci_devcd_init(struct hci_dev *hdev, u32 dump_size)
- 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_INIT;
- 	put_unaligned_le32(dump_size, skb_put(skb, 4));
- 
--	skb_queue_tail(&hdev->dump.dump_q, skb);
--	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
--
--	return 0;
-+	return hci_devcd_queue(hdev, skb);
- }
- EXPORT_SYMBOL(hci_devcd_init);
- 
-@@ -480,10 +515,7 @@ int hci_devcd_append(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_SKB;
- 
--	skb_queue_tail(&hdev->dump.dump_q, skb);
--	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
--
--	return 0;
-+	return hci_devcd_queue(hdev, skb);
- }
- EXPORT_SYMBOL(hci_devcd_append);
- 
-@@ -505,10 +537,7 @@ int hci_devcd_append_pattern(struct hci_dev *hdev, u8 pattern, u32 len)
- 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_PATTERN;
- 	skb_put_data(skb, &p, sizeof(p));
- 
--	skb_queue_tail(&hdev->dump.dump_q, skb);
--	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
--
--	return 0;
-+	return hci_devcd_queue(hdev, skb);
- }
- EXPORT_SYMBOL(hci_devcd_append_pattern);
- 
-@@ -525,10 +554,7 @@ int hci_devcd_complete(struct hci_dev *hdev)
- 
- 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_COMPLETE;
- 
--	skb_queue_tail(&hdev->dump.dump_q, skb);
--	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
--
--	return 0;
-+	return hci_devcd_queue(hdev, skb);
- }
- EXPORT_SYMBOL(hci_devcd_complete);
- 
-@@ -545,9 +571,6 @@ int hci_devcd_abort(struct hci_dev *hdev)
- 
- 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_ABORT;
- 
--	skb_queue_tail(&hdev->dump.dump_q, skb);
--	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
--
--	return 0;
-+	return hci_devcd_queue(hdev, skb);
- }
- EXPORT_SYMBOL(hci_devcd_abort);
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 31c668ad99366..c0a8bd7af781e 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2709,6 +2709,7 @@ void hci_unregister_dev(struct hci_dev *hdev)
- 	disable_work_sync(&hdev->error_reset);
- 	disable_delayed_work_sync(&hdev->cmd_timer);
- 	disable_delayed_work_sync(&hdev->ncmd_timer);
-+	hci_devcd_shutdown(hdev);
- 
- 	hci_cmd_sync_clear(hdev);
- 
+ 	return 0;
 -- 
 2.53.0
 
