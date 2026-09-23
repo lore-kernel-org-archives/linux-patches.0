@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2813A7F64;
-	Wed, 23 Sep 2026 14:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7910D3A7F64;
+	Wed, 23 Sep 2026 14:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174262; cv=none; b=mkLB1o1jL3lGGFt9phQ6sOr8+eHaWaTpO/czEZxJBt8Y7Kof7BH6WjdQyF34P88KHjLNe129yXbvYF+abA+tSWh+7/ULWvq6FcU781ok6eAHw+2Vz+DYjGuil0jAwvyyEyQ1VyZv+AgvoOhXzqcY+PWI5k4qIRxdQFMQ+q7LvKM=
+	t=1790174265; cv=none; b=Xjk0wZmOzpZxZvel4clfS83WoRmCbKZ24F8o/h7lAv7SHtvy6sgWwf11T+HPMP8F9ljX7Uf+BaStPAspBK6DCWHAZdtSPzJWntMR47bGr9IVfmZ5r3NgUtezGaME4svrJ9xMGFYltP1Vmxkn7Wx9oxzSaeB7XMLVow/I50zXxQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174262; c=relaxed/simple;
-	bh=xuXMnOdwW3IdIviUZUiL05o3eWfcGZouttqeX0qbgkM=;
+	s=arc-20240116; t=1790174265; c=relaxed/simple;
+	bh=EHqur83uzHwjJ5tPwIuPsdy5ulSE3rXbd2uiweSYN1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D36cxV39/V4TulIFjtULP0pqZltNvaIKGcM3KmDdaSFl7aaaSAwqNJ1y2jMxEKB1Py+LUpGZpXhITR4MInQ824WcEuk2TGEblY38SnQY5IC/b25moJRMZsO+EFuXwpG0e8RmShj/b3J6Zz5lOE4eHNLO0zrh6upbk4INGXS7e5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df6iErIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSGm+uJRjZQKKer2v+8qP/oQqkFAjtKCBr6MMVQWDHtquljhXIEmgbkFtSVlvVhm5cIdCV367eLnUMEio2DaU8Bf1/TpRbgsxyP9Y6AX9I+TKyJ6Np3SRPkNCg69ZZKMb2GwOBrs6BxNEfkPvb30hZBfs95mOWdnx3/aMW/a/4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZWeKLtA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df6iErIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB3E1F000FF;
-	Wed, 23 Sep 2026 14:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZWeKLtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F5A1F000FF;
+	Wed, 23 Sep 2026 14:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174261;
-	bh=S34dWoBiIToEflMQ23MLJ1raJfHOYnnQTHvHp132zFQ=;
+	s=korg; t=1790174264;
+	bh=wo7QMA/ZpCqeByHGMgqif4Fc15fhcXa3N0mWhkyE1po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Df6iErIBnwQEyAAqdWw1COYzmIlJ94+6cRD+cR0rTwmQ18qAedfmfM93O0pe76Ce4
-	 9NUOIqb9FZ0nDYT89FvCHj2b6xIjGW/C066ELOWLilR3xvbPcDga4KxZCt5m6w3K5i
-	 vfCgVY2fDnAQvK85j0e3N9r2CuCEgsNb9PUDEhmU=
+	b=2ZWeKLtAPtVi6fnNngzGVfYTK1nmB5YhIaccjUs+vEOAPuR8ewPPb47bp0y13qO98
+	 EkADWJArwdPe+lu6t8IRU6ORrzGKzfCdJ9npyzopzPFYPnPxNGw4J/MgihtoPGnjRf
+	 q8iU/4QLG79QABIQOXSDwZF75cZIUxQsF+7hKqDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Shivank Garg <shivankg@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+189dcafc06865d38178d@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/398] dmaengine: wait for RCU readers before releasing dma_device
-Date: Wed, 23 Sep 2026 16:02:12 +0200
-Message-ID: <20260923140644.927984612@linuxfoundation.org>
+Subject: [PATCH 6.18 059/398] wifi: cfg80211: dont free driver-owned scan requests
+Date: Wed, 23 Sep 2026 16:02:13 +0200
+Message-ID: <20260923140644.959707974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,59 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit dc750422170a563c7a81f6e49d36bb02c62ae37f ]
+[ Upstream commit dab68a74e90b8e07f08ed9deaa5884857a3cfe89 ]
 
-dma_issue_pending_all() walks the dma_device_list with
-list_for_each_entry_rcu() under rcu_read_lock(). dma_device_release()
-unlinks the device with list_del_rcu() and then calls
-device->device_release() (which in many drivers, such as plx_dma.c,
-directly calls kfree()).
+When an interface goes down while a scan is running, cfg80211 completes
+the scan towards userspace and frees the scan request. However, the
+driver can be convinced that it owns the request, since the cancellation
+is (intended to be) asynchronous.
 
-Because there is no grace period between unlinking the device and
-freeing it, concurrent RCU readers in dma_issue_pending_all() can
-access the device after it has been freed.
+The WARN_ON() in the netdev notifier was meant to catch this, but it's
+not actually avoidable, so it triggers and we get a UAF in scan_done().
 
-The lockless walk originally relied on clients holding a dmaengine
-reference to pin the provider module, and therefore the device, for as
-long as they might traverse the list. Commit 8ad342a86359 ("dmaengine:
-Add reference counting to dma_device struct") decoupled the dma_device
-lifetime from the module reference, so the device can now be released
-while a reader is still walking the list.
+There doesn't seem to be a great way around it, so just track that the
+driver is still convinced it owns the request, and then just free it on
+completion if it was already cancelled. Also remove the warnings since
+they can trigger in the intended architecture.
 
-Add synchronize_rcu() before the device is freed, so RCU readers are
-guaranteed to have finished. Keep it unconditional: providers that do
-not implement device_release() free the device themselves once
-dma_async_device_unregister() returns. This call will delay for a grace
-period with dma_list_mutex held, which is safe and only teardown path is
-delayed.
-
-Fixes: 2ba05622b8b1 ("dmaengine: provide a common 'issue_pending_all' implementation")
-Suggested-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260526-dmaengine-kref-fix-v2-0-3df60afac01d@amd.com
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-4-d4a4ee47d927@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: LLM
+Fixes: 4a58e7c38443 ("cfg80211: don't "leak" uncompleted scans")
+Reported-by: syzbot+189dcafc06865d38178d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=189dcafc06865d38178d
+Link: https://patch.msgid.link/20260904165614.375e543228b1.I03cbb5a54cb02d6bba5034286af1ed73aba134d1@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/core.c     | 11 +++++------
+ net/wireless/core.h     | 10 ++++++++++
+ net/wireless/rdev-ops.h |  3 +++
+ net/wireless/scan.c     | 31 +++++++++++++++++++++++++++++--
+ 4 files changed, 47 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index cb4a81715ded1..fa2019d51918c 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -428,6 +428,7 @@ static void dma_device_release(struct kref *ref)
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index b565f777e5561..55abf5a203338 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -241,9 +241,8 @@ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
+ 	rdev->opencount--;
  
- 	list_del_rcu(&device->global_node);
- 	dma_channel_rebalance();
-+	synchronize_rcu();
+ 	if (rdev->scan_req && rdev->scan_req->req.wdev == wdev) {
+-		if (WARN_ON(!rdev->scan_req->notified &&
+-			    (!rdev->int_scan_req ||
+-			     !rdev->int_scan_req->notified)))
++		if (!rdev->scan_req->notified &&
++		    (!rdev->int_scan_req || !rdev->int_scan_req->notified))
+ 			rdev->scan_req->info.aborted = true;
+ 		___cfg80211_scan_done(rdev, false);
+ 	}
+@@ -1660,9 +1659,9 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
+ 		wiphy_lock(&rdev->wiphy);
+ 		cfg80211_update_iface_num(rdev, wdev->iftype, -1);
+ 		if (rdev->scan_req && rdev->scan_req->req.wdev == wdev) {
+-			if (WARN_ON(!rdev->scan_req->notified &&
+-				    (!rdev->int_scan_req ||
+-				     !rdev->int_scan_req->notified)))
++			if (!rdev->scan_req->notified &&
++			    (!rdev->int_scan_req ||
++			     !rdev->int_scan_req->notified))
+ 				rdev->scan_req->info.aborted = true;
+ 			___cfg80211_scan_done(rdev, false);
+ 		}
+diff --git a/net/wireless/core.h b/net/wireless/core.h
+index 1086aa1a44f42..d7ac3145fd1ae 100644
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -24,6 +24,16 @@
+ struct cfg80211_scan_request_int {
+ 	struct cfg80211_scan_info info;
+ 	bool notified;
++	/*
++	 * set while the request is handed to the driver, i.e. between
++	 * rdev_scan() and cfg80211_scan_done()
++	 */
++	bool driver_owns;
++	/*
++	 * set when cfg80211 is done with the request but the driver still
++	 * owns it, so that cfg80211_scan_done() knows to just free it
++	 */
++	bool stale;
+ 	/* must be last - variable members */
+ 	struct cfg80211_scan_request req;
+ };
+diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
+index f4c06282b2e15..bc99458b6ed71 100644
+--- a/net/wireless/rdev-ops.h
++++ b/net/wireless/rdev-ops.h
+@@ -464,7 +464,10 @@ static inline int rdev_scan(struct cfg80211_registered_device *rdev,
+ 		return -EINVAL;
  
- 	if (device->device_release)
- 		device->device_release(device);
+ 	trace_rdev_scan(&rdev->wiphy, request);
++	request->driver_owns = true;
+ 	ret = rdev->ops->scan(&rdev->wiphy, &request->req);
++	if (ret)
++		request->driver_owns = false;
+ 	trace_rdev_return_int(&rdev->wiphy, ret);
+ 	return ret;
+ }
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 9648e24181fb0..69f2f5e539af2 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1115,6 +1115,21 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
+ 	return 0;
+ }
+ 
++/*
++ * Release the scan request, but free it only if the driver is also done,
++ * e.g. mac80211 may cancel it asynchronously and still use it.
++ */
++static void cfg80211_put_scan_req(struct cfg80211_scan_request_int *req)
++{
++	if (!req)
++		return;
++
++	if (req->driver_owns)
++		req->stale = true;
++	else
++		kfree(req);
++}
++
+ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
+ 			   bool send_message)
+ {
+@@ -1174,10 +1189,10 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
+ 
+ 	dev_put(wdev->netdev);
+ 
+-	kfree(rdev->int_scan_req);
++	cfg80211_put_scan_req(rdev->int_scan_req);
+ 	rdev->int_scan_req = NULL;
+ 
+-	kfree(rdev->scan_req);
++	cfg80211_put_scan_req(rdev->scan_req);
+ 	rdev->scan_req = NULL;
+ 
+ 	if (!send_message)
+@@ -1200,6 +1215,18 @@ void cfg80211_scan_done(struct cfg80211_scan_request *request,
+ 	struct cfg80211_scan_info old_info = intreq->info;
+ 
+ 	trace_cfg80211_scan_done(intreq, info);
++
++	intreq->driver_owns = false;
++
++	if (intreq->stale) {
++		/*
++		 * The scan is already completed as far as we're concerned,
++		 * it was just kept around for the driver - done now, free it.
++		 */
++		kfree(intreq);
++		return;
++	}
++
+ 	WARN_ON(intreq != rdev->scan_req &&
+ 		intreq != rdev->int_scan_req);
+ 
 -- 
 2.53.0
 
