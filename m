@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3585328D1;
-	Wed, 23 Sep 2026 14:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06370531629;
+	Wed, 23 Sep 2026 14:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173571; cv=none; b=pXpJyx1sEFkI3hHBceQFqaOQAh6q8QIJeBOCeJke5+ySWtgV51vrtfp5ar3bTRw4dyRXBFywnFs/5/zh9ueZ1aJGw/6j0xwiecZysvQdxuAZnRERx8+T6azoNORVbuR1hA5zj5HcPSJ2vbNfKhHiu5zYpUoO8HQZ7i3tin77mbw=
+	t=1790173575; cv=none; b=b2NtXBmLK8kuDibPsmg8jiIGE1o2nAyRQQQGP6qXfsI7gVpZz1PyFHtQ5C+yGC3YM9vZmV+q0nZiRqu4mEpHmq21vSd4PDxJ43MNkXgQ93AF7YtlSn5dVV3t0ZRf9XYOc4KTdqcTt+KKZFu+491ZycoUPt/vWCm/bM1xs5dtBkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173571; c=relaxed/simple;
-	bh=VbrGJIvMefhaxpizxhR9WgbgK45wJJUqQl56vyu0OFA=;
+	s=arc-20240116; t=1790173575; c=relaxed/simple;
+	bh=11No511uxBeGybqDLmZYsibnJTFgCJfs2Yi0JC0IFao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVImckAEhj/BjiT4d8qKWaFT2IQ+7c4LyYU4recQC0Q+ss2eThQQePv+xyAmk23AiTPCe5TBwzP8QnW3Pctb5rSnwmgXrPeSvgHj6dikMZ9Ncm5PFmUQLbFgsCJdYxG6a1ev5V17tnN05+MMyp0GaJ9ovHhAaFhYn7ZcOSPS3Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4rNPbnY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hb2CWuMiga901jweigxZROHnvYvcRYployDEajz+pr9OXFJ3d4kPkidAHnbpkCglnK6WaQSoONZBDpTw9+v0pXL92O/kdbKOE7Ulb3OihqaDjWLwLrj36kxeaS2LQgIx4pKrFvJYn54+T+oVsoBFZWapnnLw5/GHyhALD76rXsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKbdF6Gt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4rNPbnY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618601F00893;
-	Wed, 23 Sep 2026 14:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKbdF6Gt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF56E1F00893;
+	Wed, 23 Sep 2026 14:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173569;
-	bh=P99t7xV0PHkgL8t79VZpv332SubiJfOvZim+OooXnoE=;
+	s=korg; t=1790173573;
+	bh=MXg7c3NFHuCuXAK5l0J/3I69A8zN6RPC8nkXg9FrFPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q4rNPbnYjipaMnJ3vHoOwllMDbrL2bcBQVDI3YFj1h3lnNFVSNawN0brTiz3930un
-	 G1WZa8UKQljBF6/DIxDQ5wPYftOTBDBE8KHU642N0DiMkmQA5LVOjs/fLXC8sVijD4
-	 ELZMUDUQOY3Tv6Hgj8SrOeeh/K7eHlSJst7s1qMg=
+	b=wKbdF6GtJpbdiclKrUH31B593ccj1/hA+pPBYLksPBF30+nj1uvRrgIF1//gNSo5E
+	 Jbw09woHJGomfHKc64UsBz8LPCbdhto/77t8S77fIvinsAZQu9iLhnTQjbuAAk58Iq
+	 /2lPmyXDCQS0Zic503pOfw/XwgwR/gjxT7if4F6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Daniel Drake <dan@reactivated.net>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.2 287/438] gpiolib: of: dont mark hog nodes OF_POPULATED before a chip is found
-Date: Wed, 23 Sep 2026 16:05:08 +0200
-Message-ID: <20260923140652.211765155@linuxfoundation.org>
+	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 7.2 288/438] dmaengine: sun6i: fix non-atomic read of DMA position registers
+Date: Wed, 23 Sep 2026 16:05:09 +0200
+Message-ID: <20260923140652.238248584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,62 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 
-commit 1f1d0812f6a8ab8e6f709c599f137c99646512cc upstream.
+commit c90b6973daa37f4c283342dff881ae001dea4fe6 upstream.
 
-When a gpio-hog node is attached by a device-tree overlay before its
-parent GPIO chip has been registered, of_gpio_notify() sets
-OF_POPULATED on the node via of_node_test_and_set_flag() and only then
-discovers that there is no gpio_device for the parent, returning
-NOTIFY_DONE without clearing the flag.
+sun6i_get_chan_size() reads DMA_CHAN_LLI_ADDR and DMA_CHAN_CUR_CNT in two
+separate readl() calls with no synchronisation between them:
 
-Since gpiochip_hog_lines() skips any hog child whose of_node carries
-OF_POPULATED, the leaked flag makes the hog silently ignored when the
-chip is registered later. Applying an overlay containing both a GPIO
-controller node and its hog children - and populating devices only
-after the overlay apply completes - hits this on every boot; the hog
-is only applied if the chip driver is unbound (which clears the flag
-in the remove path) and rebound.
+    pos   = readl(pchan->base + DMA_CHAN_LLI_ADDR);
+    bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
 
-Look up the parent gpio_device before claiming the node so that a hog
-attached ahead of its chip stays unclaimed and is picked up normally
-by gpiochip_hog_lines() at registration time.
+DMA_CHAN_LLI_ADDR holds the physical address of the *next* descriptor the
+engine will load once the current one completes. DMA_CHAN_CUR_CNT holds the
+remaining byte count for the *current* descriptor. If the DMA engine
+advances to the next LLI entry between the two reads, pos becomes stale: it
+still points to what was the next descriptor at the time of the first read,
+but that descriptor is now the current one and CUR_CNT reflects its initial
+(full) byte count. The subsequent virtual-chain walk starts one entry too
+early and accumulates an extra full period's worth of bytes into the
+residue estimate.
 
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Fixes: a23226b7c1f6 ("gpiolib: handle gpio-hogs only once")
+Fix this by re-reading DMA_CHAN_LLI_ADDR after DMA_CHAN_CUR_CNT and
+retrying if the value changed. This double-read pattern guarantees that
+both registers were sampled during the same descriptor interval. The cost
+is at most one extra readl() pair per call in the racy case, which occurs
+only at descriptor boundaries (~every 2 ms) and is negligible.
+
+Fixes: a90e173f3faf ("dmaengine: sun6i: Add cyclic capability")
 Cc: stable@vger.kernel.org
-Reviewed-by: Daniel Drake <dan@reactivated.net>
-Link: https://patch.msgid.link/20260815-gpiolib-of-hog-flag-leak-v1-1-6126aac5f6f3@nexthop.ai
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260817135723.12807-2-christian.lugnberg@soundtrack.io
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/sun6i-dma.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 940b566946ce..f36e4b171fa7 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -788,13 +788,13 @@ static int of_gpio_notify(struct notifier_block *nb, unsigned long action,
- 		if (!of_property_read_bool(rd->dn, "gpio-hog"))
- 			return NOTIFY_DONE;	/* not for us */
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -354,8 +354,10 @@ static size_t sun6i_get_chan_size(struct
+ 	size_t bytes;
+ 	dma_addr_t pos;
  
--		if (of_node_test_and_set_flag(rd->dn, OF_POPULATED))
--			return NOTIFY_DONE;
--
- 		gdev = of_find_gpio_device_by_node(rd->dn->parent);
- 		if (!gdev)
- 			return NOTIFY_DONE;	/* not for us */
+-	pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
+-	bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
++	do {
++		pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
++		bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
++	} while (pos != readl(pchan->base + DMA_CHAN_LLI_ADDR));
  
-+		if (of_node_test_and_set_flag(rd->dn, OF_POPULATED))
-+			return NOTIFY_DONE;
-+
- 		ret = gpiochip_add_hog(gpio_device_get_chip(gdev), of_fwnode_handle(rd->dn));
- 		if (ret < 0) {
- 			pr_err("%s: failed to add hogs for %pOF\n", __func__,
--- 
-2.55.0
-
+ 	if (pos == LLI_LAST_ITEM)
+ 		return bytes;
 
 
