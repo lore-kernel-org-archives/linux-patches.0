@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAE3527599;
-	Wed, 23 Sep 2026 14:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8315328C6;
+	Wed, 23 Sep 2026 14:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172743; cv=none; b=ppCe2xLHmDamWUGl77PofgnkemSM0+1Sav2Y3tXiZxRSQ39RztKD8VBR6YXcluXBtKkGSuIx20C3qExbMPqcrUd/66i84W+l5PTJ+7p6agLFCKmk/+hPOp836Wj7l0SUIchgPV6IejzHdAJ5W8NYH4FrDLp/G0R8DPZ0jdxsoAw=
+	t=1790172746; cv=none; b=Qi51Yccn16MFdzvY90Mk0lXV9BdtNVGM28t9QeD+sYx6Bu/vBB5/yFIJaLETrIRFmDTsT1EUgKME6fZD3zqOhghnquaXLgf2162GGMdmGadSNSJz9O4DxDtQ1KdjCJlmfK+0TSaILHQIsqZx/bGDQsz1iySs0MIRx2STixxxypk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172743; c=relaxed/simple;
-	bh=lXADqwXi8CK9byXsOmGaPjqGEcY8ASKz1WCwVL2Q2hQ=;
+	s=arc-20240116; t=1790172746; c=relaxed/simple;
+	bh=kaEKn6RoqD5eeVDHiBHv4927Jx7gS30A4ieUohe7faY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knkekuuHj6ljU+Pq69n+ARiCEV04smILlCdrjupf8cU7XmnuvXCV1Y61GZ0uTxkjCcY8jHsyvdCYTdH7pmzQN6od5YNmpfwHe6VlnzuKvPAHEedJVMCyr07liuchfaI5WDECW9BONeOLsjquMgAooJsF0T7IcTCKbyTCVIvlvtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGQYiwvh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rh2dsAPTCf9WduEG+EGT/TKq2luaV7cwFyT1fEJTfG4Oz3dsknTmzhBbXqPljiEny+q6dEWLkk8gdD05mDiYYYDEuRc//fg9ziKODAfuByCSRwSPFmFvzyGl3AFlmuXyAKe39UyPp0wEV6bkGSjF22uZvYd3fZZif2k7H6/iDEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTHHDsnh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGQYiwvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B781F000FF;
-	Wed, 23 Sep 2026 14:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTHHDsnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6629F1F000FF;
+	Wed, 23 Sep 2026 14:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172742;
-	bh=peaZQzrBD0/b/LAzAlh2vV2KnbCZbXTTnVCC403EK/I=;
+	s=korg; t=1790172745;
+	bh=Z4zOxgIWsOnPpnwdJpAbWFbdBJFCr6oVPqmd4EajtJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGQYiwvhOZuhB3HHbfrR/o0V0WVLGAmUwgqmeaunOoRdUNPh7qpqOHTjZRZAB+JC5
-	 JZdrVNeiGbiz1hyR1PKZOubmtFqo1GTAjxIg2HWH6uhhfZb4mnEa1+FbcUlo2TnTXq
-	 TQQ1xQOySdA5UzAJyRe/ell5SS7TeeGZGKzH2I4M=
+	b=qTHHDsnhkqFf58bX2sZyvFAIxyHzOJTIGAcW+ScfaG+QLQjyYREB/3h4xU6iVEmwn
+	 iml94UJ0KXXFVCsEbt+etgI6ipv01EFnBcx4dn19tZNJ+jjnVk0heu54CKFSw7T3XZ
+	 WIveghP6HicUK649GHYHoCqntQ+NXAcCKkFgIlYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Lucas Tanure <tanure@linux.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 022/438] clk: scpi: bound-check DVFS index in scpi_dvfs_recalc_rate
-Date: Wed, 23 Sep 2026 16:00:43 +0200
-Message-ID: <20260923140645.352017559@linuxfoundation.org>
+Subject: [PATCH 7.2 013/438] arm64: dts: amlogic: t7: fix the pin groups of two PWM outputs
+Date: Wed, 23 Sep 2026 16:00:34 +0200
+Message-ID: <20260923140645.118479142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,40 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Lucas Tanure <tanure@linux.com>
 
-[ Upstream commit 70f4b78d560e592cbf3325b162424737d032fc1d ]
+[ Upstream commit ae7be5c58a819259e5eb98a3abfa60842478f2ae ]
 
-dvfs_get_idx() may return an out-of-range index if the SCP firmware is
-buggy or returns a stale value. Only negative indexes were rejected, so a
-large index walked past info->opps and could treat garbage as a clock rate
-(KASAN OOB / wrong frequency to consumers). The missing upper bound dates
-back to the original SCPI clock driver.
+Two of the PWM outputs can each appear on more than one pin, but the
+description named a single group that does not exist, so anything using
+it refused to start.
 
-Treat indexes >= opp count as invalid and return 0, same as idx < 0.
+Name the real groups instead, one entry per pin, the same way the other
+multi-pin PWM output is already described.
 
-Fixes: cd52c2a4b5c4 ("clk: add support for clocks provided by SCP(System Control Processor)")
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/04f9ab766e07.v2.1785200642.git.liuxixin@kylinos.cn
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 2a2a7b9701a7 ("arm64: dts: amlogic: t7: Add PWM pinctrl nodes")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Lucas Tanure <tanure@linux.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260829094758.23248-3-tanure@linux.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-scpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 32 ++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk-scpi.c b/drivers/clk/clk-scpi.c
-index 24cee7c9fda6c..3c33a9e3c6909 100644
---- a/drivers/clk/clk-scpi.c
-+++ b/drivers/clk/clk-scpi.c
-@@ -85,7 +85,7 @@ static unsigned long scpi_dvfs_recalc_rate(struct clk_hw *hw,
- 	int idx = clk->scpi_ops->dvfs_get_idx(clk->id);
- 	const struct scpi_opp *opp;
+diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
+index cc371fcd18967..66605b200b708 100644
+--- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
++++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
+@@ -458,9 +458,25 @@ mux {
+ 					};
+ 				};
  
--	if (idx < 0)
-+	if (idx < 0 || idx >= clk->info->count)
- 		return 0;
+-				pwm_ao_g_pins: pwm-ao-g {
++				pwm_ao_g_d11_pins: pwm-ao-g-d11 {
+ 					mux {
+-						groups = "pwm_ao_g";
++						groups = "pwm_ao_g_d11";
++						function = "pwm_ao_g";
++						bias-disable;
++					};
++				};
++
++				pwm_ao_g_d7_pins: pwm-ao-g-d7 {
++					mux {
++						groups = "pwm_ao_g_d7";
++						function = "pwm_ao_g";
++						bias-disable;
++					};
++				};
++
++				pwm_ao_g_e_pins: pwm-ao-g-e {
++					mux {
++						groups = "pwm_ao_g_e";
+ 						function = "pwm_ao_g";
+ 						bias-disable;
+ 					};
+@@ -474,9 +490,17 @@ mux {
+ 					};
+ 				};
  
- 	opp = clk->info->opps + idx;
+-				pwm_ao_h_pins: pwm-ao-h {
++				pwm_ao_h_d5_pins: pwm-ao-h-d5 {
++					mux {
++						groups = "pwm_ao_h_d5";
++						function = "pwm_ao_h";
++						bias-disable;
++					};
++				};
++
++				pwm_ao_h_d10_pins: pwm-ao-h-d10 {
+ 					mux {
+-						groups = "pwm_ao_h";
++						groups = "pwm_ao_h_d10";
+ 						function = "pwm_ao_h";
+ 						bias-disable;
+ 					};
 -- 
 2.53.0
 
