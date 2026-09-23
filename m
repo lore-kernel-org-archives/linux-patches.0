@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60E850B429;
-	Wed, 23 Sep 2026 14:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3AD3AD517;
+	Wed, 23 Sep 2026 14:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174340; cv=none; b=Knk8IcQ8JE/AsTuXHqmr3IEa/kY3IPSOuxmaMv97I6/Vw+R6bYyN7+/WaiiGoPxYzfEDu/OjS0o6LxcY6r3Uo4MEjzhyPQePW7EjsMn5JXKIRyyNvt6hoS5mX1DoZEW8U7Z53OCnUToKjeLKgO/NUQP6E8f8tyWra23CuTPUMe4=
+	t=1790174343; cv=none; b=eKCNWs4KioYNcfvhoM5qUTEAs7js9X8zWRHluJCfe1+jwyAJm6Kja4ojxglmvcIuDNGiG+slLEqZPBtsiq9eUxQyDbXk4CCGTXRKLJqCC8yeYZ6mTk2ThBpfXVBk0Kw52wh8upzQJTAmZSsLwh8+C1O9YUtlwIuP5zYTuWuTPqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174340; c=relaxed/simple;
-	bh=OmqjJ9cRkP+8Bxn6jIKCCekU7bgXeSzj7y9gfJ5wNfk=;
+	s=arc-20240116; t=1790174343; c=relaxed/simple;
+	bh=3sGcRQ4nBur/AltzHwrZE8foC7tXV032hC4P7j2hHw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FR95eBb/uoy5DEKDfcE6jJzQURC7WMF/tEOrjBAzg+RvnHCyVI31gsWvMERNt1a58qLdmPk7NJoisKf/I2Wf+aWyRwsfd1tav8RlqKs6bRL3XvXYPtMbcfRL8bwmuCSU6Xvdk1UmhVIPLFbp4VMe2sY1vN7MI16KrpTAAzezZzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5qUvo7/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bToG/xYJNI1G0+/paLs3wPm+gmm15LouCbwg1NZv4KPgKp3lwiTnGbB0MgzGVCtFVTiCu9xL2IPtESUMAQvSAWLriLRgcXD/4Ati5RNggBxo5mrgswSOf6McS4ZOTSMXWb7Vz7r3oZKCM2x7WMIjuOFHtTU/69YwF6go2gDIAeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHK4UuUD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5qUvo7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3D11F000FF;
-	Wed, 23 Sep 2026 14:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHK4UuUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158CE1F000FF;
+	Wed, 23 Sep 2026 14:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174338;
-	bh=i4w1dB+XbkhB4mKuazm3DVJqEBFsEysAUsp1ZDxXXHg=;
+	s=korg; t=1790174342;
+	bh=/31JAzn8tkLyAlYGhfhoKkjPrf5XLJNumkk9acxh8Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5qUvo7/bQScBRFifHyKY6G2vqz5vA0OKGbNAfysnSP6bxZEpKFnHSXCnMgMt+ClW
-	 vN7Zr7WTQR6zZP1451OTMynCcy1Z5oceXD7+CZNmL7Y3yAOt5MY27YL0YnL5DlBrac
-	 w79MYwYU8/CQPOWF8VeB0pqy5KiRClbwX5h2QeSQ=
+	b=gHK4UuUDoOEzEdNcSQBnfJrrGp4V+ZLw/rrRUrK+OPzBrGKpABroa8gJjJmcoY3yk
+	 KPKH1+dwNQ7E4nohce2wnbAb9kgdQ3TI6Zik6Ob6iEAKsNp45BBDQbz1j/m1u5ZG9k
+	 de0ZOSFOc6WUmHE3KcLA6XEKlGQTAaSbW59Phl+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meijing Zhao <zhaomeijing@lixiang.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/398] mm: memblock: show all region flags in debugfs
-Date: Wed, 23 Sep 2026 16:02:37 +0200
-Message-ID: <20260923140645.586954715@linuxfoundation.org>
+Subject: [PATCH 6.18 084/398] scsi: qla2xxx: Fix the ql2xfc2target parameter description
+Date: Wed, 23 Sep 2026 16:02:38 +0200
+Message-ID: <20260923140645.613478518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,58 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meijing Zhao <zhaomeijing@lixiang.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit e2d5b01f878d76bd1142e512a0b979a1d3cd0abf ]
+[ Upstream commit 779f202a92ef10a426efc07d0f4267918cb07ca3 ]
 
-Commit 493f349e38d0 ("memblock: Add flags and nid info in memblock
-debugfs") made memblock_debug_show() stop after finding the first set
-flag. A memblock region can carry multiple flags, so the remaining flags
-are hidden from debugfs.
+The module parameter is ql2xfc2target, but its MODULE_PARM_DESC() names
+qla2xfc2target, so modinfo describes a parameter that does not exist and
+shows no description for the real one.
 
-Walk all bits in the region flags and print every set flag separated by
-"|". Keep walking beyond flagname[] so that a set flag without a known
-name is reported as UNKNOWN rather than silently ignored.
+Use the parameter name in the description.
 
-Fixes: 493f349e38d0 ("memblock: Add flags and nid info in memblock debugfs")
-Signed-off-by: Meijing Zhao <zhaomeijing@lixiang.com>
-Link: https://patch.msgid.link/20260902075944.3742866-1-zhaomeijing100@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 877b03795fcf ("scsi: qla2xxx: Add option to disable FC2 Target support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260906171009.2560-1-kmehltretter@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memblock.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/memblock.c b/mm/memblock.c
-index 757258d68425a..e2f15bbc274b5 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -2727,14 +2727,18 @@ static int memblock_debug_show(struct seq_file *m, void *private)
- 		else
- 			seq_printf(m, "%4c ", 'x');
- 		if (reg->flags) {
--			for (j = 0; j < count; j++) {
--				if (reg->flags & (1U << j)) {
--					seq_printf(m, "%s\n", flagname[j]);
--					break;
--				}
-+			unsigned int flags = reg->flags;
-+			bool first = true;
-+
-+			for (j = 0; flags; j++, flags >>= 1) {
-+				if (!(flags & 1))
-+					continue;
-+				if (!first)
-+					seq_putc(m, '|');
-+				seq_puts(m, j < count ? flagname[j] : "UNKNOWN");
-+				first = false;
- 			}
--			if (j == count)
--				seq_printf(m, "%s\n", "UNKNOWN");
-+			seq_putc(m, '\n');
- 		} else {
- 			seq_printf(m, "%s\n", "NONE");
- 		}
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 3e148e4e94593..07ccfe0226c5e 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -351,7 +351,7 @@ MODULE_PARM_DESC(ql2xnvme_queues,
+ 
+ int ql2xfc2target = 1;
+ module_param(ql2xfc2target, int, 0444);
+-MODULE_PARM_DESC(qla2xfc2target,
++MODULE_PARM_DESC(ql2xfc2target,
+ 		  "Enables FC2 Target support. "
+ 		  "0 - FC2 Target support is disabled. "
+ 		  "1 - FC2 Target support is enabled (default).");
 -- 
 2.53.0
 
