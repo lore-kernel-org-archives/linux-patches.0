@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC0353162E;
-	Wed, 23 Sep 2026 14:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A283A9636;
+	Wed, 23 Sep 2026 14:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173768; cv=none; b=BTjQKVXuT046CO0JeA24xo1JSG9Q4vehe3NoCSEZg0OLAJPHb1cjb5r40UtSoGcx0yGjJq7F1rQ5GZbj5QstefIB7h0iFiSKTj30+bS6pfawVDh1l6gZ5BiG/zQH5p0EzfTHec2wqduo6n0zh+vEYeq8r5bYb4vWBW8+nFdULd8=
+	t=1790173772; cv=none; b=SS+/joZj95vY/URzcq43RO3oCNbrLnn8U2ttjP3aiFLUyiz+a4OZ0jTkCjTxXOMz/siqpGYGu1ru2FtlOMzBJTOf2ebSdXWxVs/+hpq7VIvI9V/rQISLmX/Rz3xzDHr1pvZvm+ONBcJVxctyfocjrg6TIH0M7m/j/ahHSW9iWHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173768; c=relaxed/simple;
-	bh=Hsw6NE/w08Eao3lyKus/f+1u1xJGdgX/V3OMcURV868=;
+	s=arc-20240116; t=1790173772; c=relaxed/simple;
+	bh=YTnkAE/0W1+U7cfICaLExG6vwKExGViac9a0oCGSmsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JS356KSFl8130RYg+uVY4BpDjj5gMbPO+Dem4WSA19vPi56ilv1W2iHD/zYDjaFBVgvRko7TKadPHHY1wQmqaldawuWHLLt1fwY1Zyz+9aTuYVjOjNTJHwNDdEwG9DyT4Veln0emp2trMnvJWwnG+5jZ06TqKUVaa9LbhM77R4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lTxxvDt/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MK//yE/fJI3djq9L3X7RJ9JzuPeeM3BY8tiBDx+7D/svzNPfjOZGxpSb8Aahsz7P/JuRPrZ4tfxl6JVGuMnQ9ex1L/0nIfL4rsq55p4TW9n5vtWjvnOWTr/GBCo9Jyisfm0j9rLxeb6vyvTKlOtVLiGUgNitDiSOPRopkV1GLlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO5Xq7/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTxxvDt/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2034C1F000FF;
-	Wed, 23 Sep 2026 14:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO5Xq7/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D75C1F000FF;
+	Wed, 23 Sep 2026 14:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173767;
-	bh=5NvU9vgRcSkly440AIYzcTk2dZGSQhDgQE6iQp9plEA=;
+	s=korg; t=1790173771;
+	bh=o9ezO5bTBRyVIAZlGirDl3n/O0StNxFBV6B5ujwc6KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lTxxvDt/IIMnKM269bVosoCM+rVmp/CuX/fcLqPOCXHG8MFpQHTMmuJk1aNf+P9k7
-	 awz4VylM0KGzWjdmEnK7K8//O2oXFDd9BEFxN5EBUx+35D1V0yfY1M6hNUxMXm5irZ
-	 fvRHyD2IhCwYwVwwZkWs6WVYTnhm/5vmJXSc+fNY=
+	b=lO5Xq7/+Fyn2NFZimhc+j7PlrdIy5f0k6dK+aXd8EaiAm0/wXFpbBSWeVph6FCnV9
+	 paGTlIMPjgVD5wlaqb+FMTYWSHBEPyf8I+kmb2u69lN/iZ02q+N9MV0GUSi2XFEM8H
+	 XyPYSaT+YWpNLvj0xLbBDMVr6u9EoRqvjvcMD0gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 7.2 330/438] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
-Date: Wed, 23 Sep 2026 16:05:51 +0200
-Message-ID: <20260923140653.364048414@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 339/438] mmc: core: Cancel SDIO IRQ work before freeing host
+Date: Wed, 23 Sep 2026 16:06:00 +0200
+Message-ID: <20260923140653.602502574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,55 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
+commit 6feadbecdae60a6324c967f3b1493741083793a3 upstream.
 
-register_pkey_tree() ignores errors from register_one_pkey_tree() and
-continues registering the remaining slaves. The per-slave error path has
-already released the pkey parent kobjects, but their pointers remain
-stored in the device. A later device cleanup therefore passes the stale
-pointers to kobject_put(), causing a use-after-free.
+A host controller that uses sdio_signal_irq() schedules host->sdio_irq_work
+from its interrupt handler.  That work is only cancelled on the suspend
+path (mmc_sdio_suspend()), not on the remove/free path, so a worker armed
+just before the controller freed its IRQ can run after
+mmc_host_classdev_release() has freed the host and dereference it through
+container_of().
 
-Clear the parent pointers after releasing a failed slave tree and skip
-unregistered trees during device cleanup. This preserves the existing
-best-effort registration behavior while preventing a second cleanup of
-the failed tree.
+Cancel host->sdio_irq_work in mmc_free_host(), like the existing
+host->detect drain added by commit 1036f69e2513 ("mmc: core: Cancel
+delayed work before releasing host").
 
-Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+This issue was found by an in-house static analysis tool.
+
+Fixes: 682696605c70 ("mmc: sdio: Add API to manage SDIO IRQs from a workqueue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mmc/core/host.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/infiniband/hw/mlx4/sysfs.c
-+++ b/drivers/infiniband/hw/mlx4/sysfs.c
-@@ -751,11 +751,13 @@ err_add:
- 		kobject_put(p);
- 	}
- 	kobject_put(dev->dev_ports_parent[slave]);
-+	dev->dev_ports_parent[slave] = NULL;
- 
- err_ports:
- 	kobject_put(dev->pkeys.device_parent[slave]);
- 	/* extra put for the device_parent create_and_add */
- 	kobject_put(dev->pkeys.device_parent[slave]);
-+	dev->pkeys.device_parent[slave] = NULL;
- 
- fail_dev:
- 	kobject_put(dev->iov_parent);
-@@ -785,6 +787,8 @@ static void unregister_pkey_tree(struct
- 		return;
- 
- 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
-+		if (!device->pkeys.device_parent[slave])
-+			continue;
- 		list_for_each_entry_safe(p, t,
- 					 &device->pkeys.pkey_port_list[slave],
- 					 entry) {
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -698,6 +698,7 @@ EXPORT_SYMBOL(mmc_remove_host);
+ void mmc_free_host(struct mmc_host *host)
+ {
+ 	cancel_delayed_work_sync(&host->detect);
++	cancel_work_sync(&host->sdio_irq_work);
+ 	mmc_pwrseq_free(host);
+ 	put_device(&host->class_dev);
+ }
 
 
