@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE0051EE0C;
-	Wed, 23 Sep 2026 14:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6DB53162E;
+	Wed, 23 Sep 2026 14:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173634; cv=none; b=pTkU19Nnvg7pv5KS+si40VUTahFdpnvIM0I8NkSJzbyBfmpHylCKd9nm94k673PuM5OGb90myxVZ6UFnu5Mkxf8ihnFU1GeNhkWNgin46vGbeSqJzqTETNWKTPsAWEiOL+PI0lUl7b5KbbhtIU9pMf7RMp8n0v6K8p4VO2AoLBA=
+	t=1790173636; cv=none; b=ew73QiJ0th6cX9Vf1PXJ6OSkpMC85g0wGsE5HojgAThx2d4yVDgxFBO8B6aY43LX53Z2Wp+JArB9Mjn5B6fqXNvdb4aGXWgic4A5Gzl0qftSh7cE1fR2jX88U+soMwQ0Es89dDELQKcKr1khvZYldrrDnkBxVOlTqhMuqgEMd/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173634; c=relaxed/simple;
-	bh=NBkMvD0m+P2yceg4V9+/HMKqDDwLdT7PpcwELz7Xvz8=;
+	s=arc-20240116; t=1790173636; c=relaxed/simple;
+	bh=JO530mmRmAzrip5waI4LlZKVj3Tv2j0xu6wNfNEdaf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyQ1nJN72RTCwB+jlLt6Ms4yDQdcjvJD8zRjqYyACsVuAgn+pOpTG4RChs9w0Pw0fIB+MDyd7fiZWT4Lroead4aV+vzoSrpd2bY+CZryb2JO9os4TrhFHaJe3OMXzWtubu6VLmmCdLpaYZY7I2sSrXENCjgNhA6s2gJg7ini+v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHhmnRB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J+yv8KLZKASJCcX1UX0j5BfpRnWqTBLQn+mKf0l1nKEO+zJuaV6lyoxEYZgEfMskSA/w9FBuTcpk+W9TbcRMSlr9LQFbDgsROYVnetFoNivjqcI7gHAMqIkgmJpmR3ncJJR1z+Kbsf/CupTXEXgHAKNhOcXpdQZB7k2OV14HuLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVeQPIVq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHhmnRB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E991F000FF;
-	Wed, 23 Sep 2026 14:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVeQPIVq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42131F000FF;
+	Wed, 23 Sep 2026 14:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173632;
-	bh=6IhUms7P/OGYQskOBVcCFBedljJQ5OuwEQpYZC43uBs=;
+	s=korg; t=1790173635;
+	bh=HRFdua4r2nOqjc9ImfmN52Y3WAqlx8fDVGmApb9SdN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mHhmnRB9+1TNJ+yZiLovFyq6YKKf2uuAFU4wcK/DJ2SBD7F6d42wxI20JrP8Mxfyo
-	 0mqqrY1WqLZmJBgLj1FY/eOHlCrIIORjcbDUQEou4Z93/+ofx02ZKAOZ9dtC95NdBu
-	 Ryipw9FVyFQmlL0QUjikyQWXMxpkEy+Fd26GQhaM=
+	b=nVeQPIVqhl9oNQnzSguptvQ0cbSBU5enwUk/glnvSkI+IC+8gRz1+K9Dju5le/d5H
+	 tzrjwxYGwoRbAvDH7Vnnj7hwZWu2tN+6fyAHyHqJ2KHE15LBL/pygLmI3CDP1VQFoY
+	 QNzYm24xP+1emMGbIbk1LVxopGyXIqLsvW1xRmzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 7.2 308/438] xfrm: save input state data before secpath resets
-Date: Wed, 23 Sep 2026 16:05:29 +0200
-Message-ID: <20260923140652.757267512@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 7.2 309/438] soc: samsung: exynos-pmu: fix use-after-free of interrupt generator node
+Date: Wed, 23 Sep 2026 16:05:30 +0200
+Message-ID: <20260923140652.783258176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,108 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-commit 3cf5cdecd99c9c186a5ea518d93bbf3045b6e3aa upstream.
+commit 4dd1999783d7d12434006289338373e49492dc96 upstream.
 
-xfrm_input() stores the current xfrm_state in the skb secpath while it
-continues receive-side processing. Some input paths can reset that secpath
-before xfrm_input() has finished dereferencing the state.
+The setup_cpuhp_and_cpuidle() parses the device tree node for the
+interrupt generation block via of_parse_phandle() and decrements its
+reference count using of_node_put() immediately after fetching the resource
+address. However, later the intr_gen_node pointer is passed into
+of_syscon_register_regmap().
 
-Receive callback users such as VTI and XFRM interfaces can reset the
-secpath. The VTI receive path does so before checking whether the packet
-crosses network namespaces, while the XFRM interface path does so only for
-cross-network-namespace packets. The XFRM_MAX_DEPTH error path can also
-reset the secpath before the final drop callback reports the current
-state's protocol.
+Fix this by declaring intr_gen_node with __free() and removing
+of_node_put().
 
-If secpath_reset() drops the last state reference while the state is
-concurrently deleted, xfrm_input() can still dereference the freed state
-when selecting transport_finish() or reporting the drop callback protocol.
-
-Save the state protocol on the stack while the state is still valid,
-and use the already saved address family for transport_finish(). A larval
-XFRM_STATE_ACQ state has no type, so retain nexthdr as its protocol. This
-preserves the existing drop-path fallback while avoiding the post-reset
-state dereferences without adding an extra state reference to every
-received packet.
-
-Fixes: df3893c176e9 ("vti: Update the ipv4 side to use it's own receive hook.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260513-exynos850-cpuhotplug-v4-0-54fec5f65362@linaro.org?part=3
+Fixes: 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for gs101")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20260828-exynos-pmu-cpuhp-idle-fixes-v2-1-06bce6107bd6@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20260917081641.72291-2-krzk@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_input.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/soc/samsung/exynos-pmu.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -474,6 +474,7 @@ int xfrm_input(struct sk_buff *skb, int
- 	struct xfrm_state *x = NULL;
- 	xfrm_address_t *daddr;
- 	u32 mark = skb->mark;
-+	u8 xfrm_proto = nexthdr;
- 	unsigned int family = AF_UNSPEC;
- 	int decaps = 0;
- 	int async = 0;
-@@ -485,6 +486,7 @@ int xfrm_input(struct sk_buff *skb, int
- 	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0 ||
- 				      encap_type == UDP_ENCAP_ESPINUDP))) {
- 		x = xfrm_input_state(skb);
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
+--- a/drivers/soc/samsung/exynos-pmu.c
++++ b/drivers/soc/samsung/exynos-pmu.c
+@@ -409,13 +409,12 @@ static struct notifier_block exynos_cpup
  
- 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
- 			if (x->km.state == XFRM_STATE_ACQ)
-@@ -592,11 +594,13 @@ int xfrm_input(struct sk_buff *skb, int
+ static int setup_cpuhp_and_cpuidle(struct device *dev)
+ {
+-	struct device_node *intr_gen_node;
++	struct device_node *intr_gen_node __free(device_node) =
++		of_parse_phandle(dev->of_node, "google,pmu-intr-gen-syscon", 0);
+ 	struct resource intrgen_res;
+ 	void __iomem *virt_addr;
+ 	int ret, cpu;
  
- 		x = xfrm_input_state_lookup(net, mark, daddr, spi, nexthdr, family);
- 		if (x == NULL) {
-+			xfrm_proto = nexthdr;
- 			secpath_reset(skb);
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
- 			xfrm_audit_state_notfound(skb, family, spi, seq);
- 			goto drop;
- 		}
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
- 
- 		if (unlikely(x->dir && x->dir != XFRM_SA_DIR_IN)) {
- 			secpath_reset(skb);
-@@ -604,6 +608,7 @@ int xfrm_input(struct sk_buff *skb, int
- 			xfrm_audit_state_notfound(skb, family, spi, seq);
- 			xfrm_state_put(x);
- 			x = NULL;
-+			xfrm_proto = nexthdr;
- 			goto drop;
- 		}
- 
-@@ -728,7 +733,7 @@ resume_decapped:
- 	} while (!err);
- 
- 	rcu_read_lock();
--	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
-+	err = xfrm_rcv_cb(skb, family, xfrm_proto, 0);
- 	if (err) {
- 		rcu_read_unlock();
- 		goto drop;
-@@ -753,7 +758,7 @@ resume_decapped:
- 			xfrm_gro = xo->flags & XFRM_GRO;
- 
- 		err = -EAFNOSUPPORT;
--		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
-+		afinfo = xfrm_state_afinfo_get_rcu(family);
- 		if (likely(afinfo))
- 			err = afinfo->transport_finish(skb, xfrm_gro || async);
- 		if (xfrm_gro) {
-@@ -776,7 +781,7 @@ drop_unlock:
- drop:
- 	if (async)
- 		dev_put(dev);
--	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
-+	xfrm_rcv_cb(skb, family, xfrm_proto, -1);
- 	kfree_skb(skb);
- 	return 0;
- }
+-	intr_gen_node = of_parse_phandle(dev->of_node,
+-					 "google,pmu-intr-gen-syscon", 0);
+ 	if (!intr_gen_node) {
+ 		/*
+ 		 * To maintain support for older DTs that didn't specify syscon
+@@ -431,8 +430,6 @@ static int setup_cpuhp_and_cpuidle(struc
+ 	 * syscon provided regmap.
+ 	 */
+ 	ret = of_address_to_resource(intr_gen_node, 0, &intrgen_res);
+-	of_node_put(intr_gen_node);
+-
+ 	virt_addr = devm_ioremap(dev, intrgen_res.start,
+ 				 resource_size(&intrgen_res));
+ 	if (!virt_addr)
 
 
