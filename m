@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084B251DAEC;
-	Wed, 23 Sep 2026 14:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4182511E8A;
+	Wed, 23 Sep 2026 14:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173955; cv=none; b=rO9pF4q3ZXOdSq5O5KnRQUfFnbvSATKSZKTkJNH/ayhC9T36u49PmulC86LUTbLn1J/PBhO8qae7zuWOfY5jupxdgvtSWiSNnXIWZgstcq+pNRhLw0DjIBRscybJaNJUUA5KZ+Gp0PgCs0bBAPG9QfHTz4Cz7kkRHwofObkMG3c=
+	t=1790173959; cv=none; b=fdYD5o2dkMR/XXy6dhsIkGB7f+CY2svRW3FlmZAUDsfs9EQ7ihQqDpxNGIbhZwub0yq0JR/slX0h1SiIEaRuYV4wGo8ok2RvAiN6kl1+thPgN5j8yOOYlP3O43B4xwupm7DbXsprc0qydvoeDH+4GRc5KoDG6XDW9hikMYSaJ08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173955; c=relaxed/simple;
-	bh=j+O8ifGXmiSAG+mo94iVAvhK7lLySKKfLWeNKNhSXa4=;
+	s=arc-20240116; t=1790173959; c=relaxed/simple;
+	bh=fsHnsO3cUifYLnyH58WiH5S/6PnV+kPNqFARpYnLlaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kIh09BUvZszqDd2fjTvyv9qkkN7x/7xYB9Hh1qmH+it2avQ9WNwUCW1qfce5ck6DVCKElFixvkz8gPACZ6TamHOjoBdepaOc7urqIUIaZQH8+3CmNNBAjSIKeib0ijHhxkSe0fBHBORBlfGGHopZARz7tA/+L4NkvFLgiky7yDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBdvDYhY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dED0wJeR4jMK7mILY/eJ6zyL0d9QytY3v7fae+u2Wg9dcDWLWfPZD1ag2vqSWNAx8qSGcvXogWWWKudcbuUDfdc1AV65E5raK1gbsLiCECOJcZ7G4hxnLmnxKInQ8/oSZ+7uCpmqmai8lOgpPuBDFfQIef/NZ/XzWYSGchkXhZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6VIk6WE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBdvDYhY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF871F00893;
-	Wed, 23 Sep 2026 14:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6VIk6WE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF171F00898;
+	Wed, 23 Sep 2026 14:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173953;
-	bh=96hQYW82MOT3osVdDMbrsvWscluPbvD2lj707Y8UUno=;
+	s=korg; t=1790173957;
+	bh=77E7ZiRtrGCTYyw7E8+9frbqm7iJGSLvvIEbQiIXWVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBdvDYhYVKhG60ADmWF/yriVZ3tnSZvBhfbIDakaB2E/a7nXLdescBg3MgdkvXrkz
-	 Pg9xqc85vCwcqVziiiAbOWE6Nxys4HtvpIC8gPsNcrkQxaP3qNH9FmBs67r018y9BL
-	 Mmt13TaJTOfIReN6e3bi41mmHQcylzWgOu2y1agQ=
+	b=p6VIk6WEkngcL2kjTYkWq8PSriEHqePEdS9AGxBG23KZHSj/oAbLzvYxN/mXKB0d0
+	 ljlDVrj+S8KpIRtomKzq/HfGwd2WNnZtBPw78c/V7jCw3XKV5Jj7pk2b9+PGwEU4pI
+	 9PNPeYiHA9idLR4HFkyJgYggR1X5oCFC9pBKgpP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.2 369/438] hwmon: (pwm-fan) Stop RPM timer before freeing tach data
-Date: Wed, 23 Sep 2026 16:06:30 +0200
-Message-ID: <20260923140654.421910822@linuxfoundation.org>
+	Johannes Berg <johannes@sipsolutions.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 396/438] wifi: mwifiex: validate action frame fixed fields
+Date: Wed, 23 Sep 2026 16:06:57 +0200
+Message-ID: <20260923140655.154419126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,87 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 26d5ff79768548efb1e604bb6e8697c101e06269 upstream.
+commit 1c25bfad93e69ce13f744a2fb919f02ea396a985 upstream.
 
-sample_timer() rearms the RPM timer and accesses the devm-managed
-ctx->tachs and ctx->pulses_per_revolution arrays. The cleanup action
-which stops the timer is registered before those arrays are allocated.
+mwifiex_process_mgmt_packet() accepts an rx_pkt_length as small as a
+four-address struct ieee80211_hdr plus the two-byte firmware length prefix.
+After stripping the prefix, mwifiex_parse_mgmt_packet() can receive a
+frame equal to sizeof(struct ieee80211_hdr).
 
-Since devres releases entries in reverse order, driver detach can free
-the arrays before pwm_fan_cleanup() shuts down the timer. A timer expiry
-in that window accesses the freed tach data.
+For action frames, the parser reads the category byte immediately after
+that header and, for a public action frame, reads the following action
+code byte without verifying that either field is present. A truncated frame
+can therefore make the parser consume up to two bytes past the
+firmware-declared frame length. If those bytes look like a TDLS discovery
+response, the malformed frame can spuriously update peer signal state.
 
-With a KASAN kernel, a test-only kprobe delayed entry to
-pwm_fan_cleanup() while normal sysfs unbind ran. Each of three runs
-reported three four-byte reads and two four-byte writes in sample_timer()
-after its backing devm allocations had been freed. The helper did not
-invoke the timer callback, cleanup actions or free functions.
+Require the category and public action-code fields before reading them.
+Use sizeof(*ieee_hdr) so the checks and field accesses directly match the
+firmware four-address layout being parsed before address4 is removed.
 
-With the fix, three matching unbind runs completed without KASAN, BUG,
-WARNING, Oops or panic. Instrumentation confirmed that timer retirement
-completed before the first timer backing allocation was released.
-
-Split timer retirement from the power cleanup and register its devres
-action after the timer backing data and IRQ actions are installed. This
-preserves the early power rollback action while ensuring the timer is
-retired before its backing data is released. Use timer_shutdown_sync()
-because the callback can rearm itself.
-
-Fixes: 01695410d452 ("hwmon: (pwm-fan) Store tach data separately")
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Suggested-by: Brian Norris <briannorris@chromium.org>
+Fixes: 72e5aa8d2a6d ("mwifiex: support for parsing TDLS discovery frames")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Link: https://patch.msgid.link/20260911071809.130151-1-lhfff@tju.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/all/66f148d83eb9f0970b9abbccc85d1b61244e54ad.camel@sipsolutions.net/
+Link: https://lore.kernel.org/all/20260708195911.84365-8-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723011013.76968-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723202257.688-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/anuWyiPQja6_5vly@google.com/
+Assisted-by: Codex:gpt-5
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260825112523.95774-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pwm-fan.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/util.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/pwm-fan.c
-+++ b/drivers/hwmon/pwm-fan.c
-@@ -483,7 +483,6 @@ static void pwm_fan_cleanup(void *__ctx)
- {
- 	struct pwm_fan_ctx *ctx = __ctx;
+--- a/drivers/net/wireless/marvell/mwifiex/util.c
++++ b/drivers/net/wireless/marvell/mwifiex/util.c
+@@ -317,10 +317,16 @@ mwifiex_parse_mgmt_packet(struct mwifiex
  
--	timer_delete_sync(&ctx->rpm_timer);
- 	if (ctx->pwm_shutdown) {
- 		ctx->enable_mode = pwm_enable_reg_enable;
- 		__set_pwm(ctx, ctx->pwm_shutdown);
-@@ -494,6 +493,13 @@ static void pwm_fan_cleanup(void *__ctx)
- 	}
- }
- 
-+static void pwm_fan_timer_cleanup(void *__ctx)
-+{
-+	struct pwm_fan_ctx *ctx = __ctx;
+ 	switch (stype) {
+ 	case IEEE80211_STYPE_ACTION:
+-		category = *(payload + sizeof(struct ieee80211_hdr));
++		if (len < sizeof(*ieee_hdr) + 1)
++			return -1;
 +
-+	timer_shutdown_sync(&ctx->rpm_timer);
-+}
++		category = *(payload + sizeof(*ieee_hdr));
+ 		switch (category) {
+ 		case WLAN_CATEGORY_PUBLIC:
+-			action_code = *(payload + sizeof(struct ieee80211_hdr)
++			if (len < sizeof(*ieee_hdr) + 2)
++				return -1;
 +
- static int pwm_fan_probe(struct platform_device *pdev)
- {
- 	struct thermal_cooling_device *cdev;
-@@ -648,6 +654,10 @@ static int pwm_fan_probe(struct platform
- 	}
- 
- 	if (ctx->tach_count > 0) {
-+		ret = devm_add_action_or_reset(dev, pwm_fan_timer_cleanup, ctx);
-+		if (ret)
-+			return ret;
-+
- 		ctx->sample_start = ktime_get();
- 		mod_timer(&ctx->rpm_timer, jiffies + HZ);
- 
-@@ -704,6 +714,7 @@ static void pwm_fan_shutdown(struct plat
- {
- 	struct pwm_fan_ctx *ctx = platform_get_drvdata(pdev);
- 
-+	pwm_fan_timer_cleanup(ctx);
- 	pwm_fan_cleanup(ctx);
- }
- 
++			action_code = *(payload + sizeof(*ieee_hdr)
+ 					+ 1);
+ 			if (action_code == WLAN_PUB_ACTION_TDLS_DISCOVER_RES) {
+ 				addr2 = ieee_hdr->addr2;
 
 
