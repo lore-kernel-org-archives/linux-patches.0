@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C16E5372F7;
-	Wed, 23 Sep 2026 14:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0AD52B1FE;
+	Wed, 23 Sep 2026 14:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174146; cv=none; b=uW43wVLqzfS2bhFApRxFbHG/8rVA1SdZv7IhaHTGUvcymUy4PeWQ37q7p0jMU5ulwGbFaQt27mS5IKbeF04FrcYGBoAy9rshJhbGroOae8SLzlpGT4B7ARvyBauT3XdarFj40TuB1tqiJJdz5D8CLrDth4KGfIv1zbPVUUJdDy8=
+	t=1790174149; cv=none; b=N7DfePSqpKqBH24zFQrPUQYLWLu88xEyyMvBOR1ifqt31HitiI3qAHPTtkHmIYQvie0PCuYWQDwYxw/k/Jzxghl+XNRGiu26t0bJicTApmqzTzFg1e93nx5sMji2h9Z4stW1tJ67bopzPV48LDCovRwKF601dklZ77n9mjrR1so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174146; c=relaxed/simple;
-	bh=4c8W3FIe2Q9FMMpEP4l519lCGhWYDQe5982qWWJ6rHk=;
+	s=arc-20240116; t=1790174149; c=relaxed/simple;
+	bh=QhYYpx7vSf3DYiAbroZIktUG1PualkQ91N+w4Ce419o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9s6pb49XtJrJE51QEoOu51i0rvrMhZUKExrlvOfgEduGg+eE1/wQhrWpQHEMJ3Ry/FOfL2yeYf+jPj5lgVSVJkmmsCIWOf4Bv6FRZdE2y/ASgDiANhyXh8mh4K+iiTYFfzQlQjXplvnFqW4ARZ+L5eDb2eqSn7Kgre/l5KFDdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGVIHK3B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qxk9AxupV1ycoaD7+MjdYZt98RJ1HU11W0XXdVOi7NXA3G4TXCR6XoVEV0a+fRsJ8Oz7iyPltM8dyCZf4wAk/Xtsf07Pwd+89eHyrTcVTXAglWFw2Wd7AV/YqCAyXHRbKXgQA8dZGAQhxEyEfVc+Dkf+OjlVlC6Ek+28XYFzFzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egOrrVdC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGVIHK3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47BF1F000FF;
-	Wed, 23 Sep 2026 14:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egOrrVdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03AC1F000FF;
+	Wed, 23 Sep 2026 14:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174145;
-	bh=eljYWi1V4C2ZkxugSotMPc+F79r3XxMWxBSKHBVLQVs=;
+	s=korg; t=1790174148;
+	bh=VffMbus/KZfqCCItkVTzsKWMewXxRo9gddOxt6KnhRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGVIHK3BquOwianWwGNHSN2Z1aAMKWQ5Es7h/5txcj3aGTlmpTzLB3ZNuvXSuq64A
-	 2nQ1ocgoOow8MY1Ag7eYaHhyj+XRZ47r9tMZ4qgS3tpb9BbxyGeR5SYTnVwj7pM+bg
-	 iXBaGw4vQtRyKQgTDkHymW76Cck1Q/VwbcCNrFcU=
+	b=egOrrVdCuwGwg2dqtSPkKE43eKGMIo8cJW7+6Exnb0OoBZ80CC1a1eFqKXwqY1Zrs
+	 x65O9xAwdRuQPopX8NtaaeyfuHdfjtJ9rOWJGPlxbinf2jQkMp12nC5uKObAnWzbNz
+	 16QEK9peYuna7UtYn313We7WxMOmGgRH0Mumi5NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/398] RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept
-Date: Wed, 23 Sep 2026 16:01:38 +0200
-Message-ID: <20260923140644.058840250@linuxfoundation.org>
+Subject: [PATCH 6.18 025/398] RDMA/rxe: validate access flags before swapping the MRs PD
+Date: Wed, 23 Sep 2026 16:01:39 +0200
+Message-ID: <20260923140644.084005685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,65 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 32cd87f54dd1070020e664ccb0312a9f0fea79b4 ]
+[ Upstream commit ae36a5b609ae79f4de966328b78d2584be9719a4 ]
 
-We need to clear cep before release state_lock as siw_qp_llp_close and
-siw_qp_modify->siw_qp_llp_close did.
+rxe_rereg_user_mr() reassigns mr->ibmr.pd first and only then
+validates the IB_MR_REREG_ACCESS argument:
 
-Otherwise if siw_qp_modify() fails in siw_accept(), the QP's state_lock
-is released before the error path cleanup. A concurrent ibv_modify_qp()
-transitioning the QP to ERROR can race in this window:
+	if (flags & IB_MR_REREG_PD) {
+		rxe_put(old_pd);
+		rxe_get(pd);
+		mr->ibmr.pd = ibpd;
+	}
 
-  siw_accept()                       ibv_modify_qp(ERROR)
-  ----------------------             ----------------------
-  siw_qp_modify() fails
-  up_write(&qp->state_lock)
-                                     down_write(&qp->state_lock)
-                                     nextstate_from_idle():
-				     if (qp->cep)
-                                       siw_cep_put(qp->cep) <- frees cep
-                                       qp->cep = NULL
-  goto error
-    cep->qp = NULL                   <- UAF
+	if (flags & IB_MR_REREG_ACCESS) {
+		if (access & ~RXE_ACCESS_SUPPORTED_MR)
+			return ERR_PTR(-EOPNOTSUPP);
+		mr->access = access;
+	}
 
-Clear qp->cep and drop the association reference taken by siw_cep_get(),
-all under the write lock held from the initial down_write(&qp->state_lock).
-Thread B therefore sees qp->cep == NULL, skips its own put, and cannot free
-the cep before siw_accept() is done with it.
+Both flags pass the entry check because RXE_MR_REREG_SUPPORTED is
+IB_MR_REREG_PD | IB_MR_REREG_ACCESS, so a caller can reach the access
+check with mr->ibmr.pd already reassigned.
 
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://lore.kernel.org/linux-rdma/d6fbe475-a5c2-f975-99b0-a0bd6b6d10e8@linux.dev/T/#m5876c1ff2de8686a9a1173b8f1aa0ff5363a785c
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://patch.msgid.link/20260827125553.12831-1-guoqing.jiang@linux.dev
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+mr->ibmr.pd is owned by the core, which adjusts pd->usecnt only on the
+success path: ib_uverbs_rereg_mr() jumps to put_new_uobj on a driver error
+without undoing the reassignment, so mr->pd == new_pd while the usecnts
+still charge the MR to orig_pd. ib_dereg_mr_user() then decrements
+new_pd, whose count can reach zero while a memory window still references
+it; uverbs_free_pd() frees the PD on that count alone and rxe_mw_cleanup()
+writes to freed memory:
+
+  BUG: KASAN: slab-use-after-free in __rxe_put+0x31/0xa0
+  Write of size 4 at addr ffff8881301dd690 by task rxe_poc/591
+   __rxe_put+0x31/0xa0
+   rxe_mw_cleanup+0x42/0x200
+   __rxe_cleanup+0x115/0x370
+   rxe_dealloc_mw+0x4c/0x80
+  Allocated by task 591:
+   ib_uverbs_alloc_pd+0x258/0x540
+  Freed by task 591:
+   ib_dealloc_pd_user+0x174/0x210
+   uverbs_free_pd+0x8d/0xc0
+   ib_uverbs_dealloc_pd+0x18e/0x1d0
+
+Validate the access flags before mutating any state so the callback either
+applies every requested change or none.
+
+Fixes: 544c7f62cf32 ("RDMA/rxe: Implement rereg_user_mr")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/46E1D5C0-24BE-4D01-BDB3-634FE09B22C5@doyensec.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index bb7d909639071..04fabab440581 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1669,9 +1669,12 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 			   SIW_QP_ATTR_STATE | SIW_QP_ATTR_LLP_HANDLE |
- 				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
- 				   SIW_QP_ATTR_MPA);
-+	if (rv) {
-+		qp->cep = NULL;
-+		siw_cep_put(cep);
-+		goto error_unlock;
-+	}
- 	up_write(&qp->state_lock);
--	if (rv)
--		goto error;
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 23304765decff..a1c75ccea40d5 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -1346,19 +1346,20 @@ static struct ib_mr *rxe_rereg_user_mr(struct ib_mr *ibmr, int flags,
+ 	if (err)
+ 		return ERR_PTR(err);
  
- 	siw_dbg_cep(cep, "[QP %u]: send mpa reply, %d byte pdata\n",
- 		    qp_id(qp), params->private_data_len);
++	if ((flags & IB_MR_REREG_ACCESS) &&
++	    (access & ~RXE_ACCESS_SUPPORTED_MR)) {
++		rxe_err_mr(mr, "access = %#x not supported\n", access);
++		return ERR_PTR(-EOPNOTSUPP);
++	}
++
+ 	if (flags & IB_MR_REREG_PD) {
+ 		rxe_put(old_pd);
+ 		rxe_get(pd);
+ 		mr->ibmr.pd = ibpd;
+ 	}
+ 
+-	if (flags & IB_MR_REREG_ACCESS) {
+-		if (access & ~RXE_ACCESS_SUPPORTED_MR) {
+-			rxe_err_mr(mr, "access = %#x not supported\n", access);
+-			return ERR_PTR(-EOPNOTSUPP);
+-		}
++	if (flags & IB_MR_REREG_ACCESS)
+ 		mr->access = access;
+-	}
+ 
+ 	return NULL;
+ }
 -- 
 2.53.0
 
