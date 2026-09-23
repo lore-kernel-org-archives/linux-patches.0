@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2794A33ADBA;
-	Wed, 23 Sep 2026 14:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5D7379981;
+	Wed, 23 Sep 2026 14:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174484; cv=none; b=lZjkL6FW5e4KTATq0rKhnXTtss2sHmM2AdSWLZwX81onx3eUn2upGXd0Y9m3SS/Ah8ND5hAGJrJDiKhSuW3UyfgbRjLBdh4rx6iaReEUBk0pYp2kiRDuUepgAPjb8Xs43c5NHs5NVmc+DLyiQ2k+FV+69UvgH37P8lvqllQES04=
+	t=1790174487; cv=none; b=txpeRrsRjQExaxUBlWnA/V+DVC/e/TPieO9LSLeyiqR5WSimTxc2oHZurvB/QLSEUPRkysLSUFA1iWu69W533BHBkGxwW+1wksmmFrY/fgCHAdsJ/SFxlNpTM/zIM5VndjxEG57dU3KYza3yjnJKc2WTMszsijIghuF2PW0AA+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174484; c=relaxed/simple;
-	bh=hYXpfhPj1nwCJnvqJSOt5nps1arfzah6QvXjhj0/Km4=;
+	s=arc-20240116; t=1790174487; c=relaxed/simple;
+	bh=PBzVP/7BqVBcCtjP6KpJdetDKJPz4c4iU3sWU2ktZtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPOuz/a1vnLW7MCzUeYdKFT5eukyepLBnFXF8Z1qt4W8Zf1o+eUQEcPfkh/UZapLkyFGi9Ke0R24vUO6QJbuY93xlFNk1M8ZkHQ6YtfZ81UJ2ayrdYuhKaQnJr1Ytdsmg/30dOH+jx97r0BCnBaHiORbXmr15lJyEeNlkQdH01w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAaq/xUQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K+jR0s6gnldbEuEyzkktXqZxVyu0wAI6eoaqK507tN0owpUU4fsj5Yu+XzczU7kc0jHmpDxGsglGgc+XM+xBEjNFU7akqvpNxqKdCgVVBCiAgBbT2CUYqFUsxG+05uHLlDHR3KUPWwkxSGFj51IX9+0iSjX4veBPNfec0Ipfl40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQqYJ7IX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAaq/xUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F61F000FF;
-	Wed, 23 Sep 2026 14:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQqYJ7IX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7B21F000FF;
+	Wed, 23 Sep 2026 14:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174483;
-	bh=5/EtbS57F/5DOcBbMsgXl2+ZybAKmvF1aHo7w07IMO8=;
+	s=korg; t=1790174486;
+	bh=gtWZojkBN0obPu9uVQTo2O2WT0vpMevS1txYC1E+zzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zAaq/xUQc1Acsn6cHTvTlgXkrK6Y1Ole0uvlcxoEEaGoSCvd+2md3UAb2pIBZz1CJ
-	 aL4I3Zljn8pBp8G71a11TakNB62sdQAaqf+oEMbHz1V+kPa7DMVrI8zfawJkzIxAkx
-	 5VwdeZqMSp3D6E//iQcohfXzprAkX2J7uHPTUxq4=
+	b=OQqYJ7IXeUqOYHmdV2PSVzrheZ3buI3z2lH6Qkgj/mX9MyH9kkfubpUBVYfcT1u96
+	 f6IQ1T5IWKpTxa6NdTuqnt4l5uQ3ix+Y8bh2mWOrzxWhbEVCcD0UhaobqmXEkWna8K
+	 1KRovj8f6syp/FgK1px6h5XoGm/C3CLQKhse6BEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Justin Chen <justin.chen@broadcom.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/398] net: bcmgenet: convert RX path to page_pool
-Date: Wed, 23 Sep 2026 16:03:23 +0200
-Message-ID: <20260923140646.783275824@linuxfoundation.org>
+Subject: [PATCH 6.18 103/398] neighbour: Skip default parms when resumed in neightbl_dump_info().
+Date: Wed, 23 Sep 2026 16:02:57 +0200
+Message-ID: <20260923140646.110220974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,482 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 7bc054c2d4ed1fa3560144fea41d91a87eaa25f1 ]
+[ Upstream commit 979aabdad8dd03394467ee484a1a70f3d40b19ba ]
 
-Replace the per-packet __netdev_alloc_skb() + dma_map_single() in the
-RX path with page_pool. SKBs are built from pool pages via
-napi_build_skb() with skb_mark_for_recycle() so the network stack
-returns pages to the pool, and DMA mapping happens once per page
-instead of once per packet.
+neightbl_dump_info() calls neightbl_fill_info() in each loop
+to render the default parms.
 
-Reject HW-reported lengths smaller than the RSB so a runt cannot
-underflow the SKB build path.
+If there are many devices and neightbl_fill_param_info() failed,
+neightbl_fill_info() is called again when the dump resumes:
 
-Drop the now-unused priv->rx_buf_len field and the rx_dma_failed soft
-MIB counter (nothing increments it after the conversion). This
-removes the "rx_dma_failed" entry from ethtool -S, which is a
-user-visible change for monitoring tools that key on stat names.
+  # ynl --family rt-neigh --dump getneightbl --output-json |
+    jq '.[] | {name: .name, ifindex: .parms.ifindex}'
+  ...
+  {
+    "name": "ndisc_cache",
+    "ifindex": null
+  }
+  ...
+  {
+    "name": "ndisc_cache",
+    "ifindex": 6
+  }
+  {
+    "name": "ndisc_cache",
+    "ifindex": null
+  }
+  {
+    "name": "ndisc_cache",
+    "ifindex": 5
+  }
 
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Justin Chen <justin.chen@broadcom.com>
-Tested-by: Justin Chen <justin.chen@broadcom.com>
-Link: https://patch.msgid.link/20260610114835.2225423-1-nb@tipi-net.de
+Let's skip neightbl_fill_info() if it is already called in
+neightbl_dump_info().
+
+Note that we cannot use !neigh_skip instead of !default_skip
+because default_skip == 1 && neigh_skip == 0 could be true
+if the first neightbl_fill_param_info() fails.
+
+Also, nidx must be cleared at the end of each table loop;
+otherwise, if neightbl_fill_info() for a subsequent table
+fails, the leftover nidx from the previous table would be
+saved in cb->args[1], resulting in erroneously skipping parms
+of the subsequent table in the next dump.
+
+Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260909233143.2401847-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 23ca4ddc4fce ("net: bcmgenet: restore the hardware filters on open")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/Kconfig         |   1 +
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 220 +++++++++++-------
- .../net/ethernet/broadcom/genet/bcmgenet.h    |   5 +-
- 3 files changed, 141 insertions(+), 85 deletions(-)
+ net/core/neighbour.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
-index fe15d684990fc..47e9ece4b37af 100644
---- a/drivers/net/ethernet/broadcom/Kconfig
-+++ b/drivers/net/ethernet/broadcom/Kconfig
-@@ -77,6 +77,7 @@ config BCMGENET
- 	select BCM7XXX_PHY
- 	select MDIO_BCM_UNIMAC
- 	select DIMLIB
-+	select PAGE_POOL
- 	select BROADCOM_PHY if ARCH_BCM2835
- 	help
- 	  This driver supports the built-in Ethernet MACs found in the
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index fc5c8a4ae41eb..7f9d43a75f3bd 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -52,6 +52,12 @@
- #define RX_BUF_LENGTH		2048
- #define SKB_ALIGNMENT		32
- 
-+/* Page pool RX buffer layout:
-+ * RSB(64) + pad(2) | frame data | skb_shared_info
-+ * The HW writes the 64B RSB + 2B alignment padding before the frame.
-+ */
-+#define GENET_RSB_PAD		(sizeof(struct status_64) + 2)
-+
- /* Tx/Rx DMA register offset, skip 256 descriptors */
- #define WORDS_PER_BD(p)		(p->hw_params->words_per_bd)
- #define DMA_DESC_SIZE		(WORDS_PER_BD(priv) * sizeof(u32))
-@@ -1153,7 +1159,6 @@ static const struct bcmgenet_stats bcmgenet_gstrings_stats[] = {
- 			UMAC_RBUF_ERR_CNT_V1),
- 	STAT_GENET_MISC("mdf_err_cnt", mib.mdf_err_cnt, UMAC_MDF_ERR_CNT),
- 	STAT_GENET_SOFT_MIB("alloc_rx_buff_failed", mib.alloc_rx_buff_failed),
--	STAT_GENET_SOFT_MIB("rx_dma_failed", mib.rx_dma_failed),
- 	STAT_GENET_SOFT_MIB("tx_dma_failed", mib.tx_dma_failed),
- 	STAT_GENET_SOFT_MIB("tx_realloc_tsb", mib.tx_realloc_tsb),
- 	STAT_GENET_SOFT_MIB("tx_realloc_tsb_failed",
-@@ -1889,21 +1894,13 @@ static struct sk_buff *bcmgenet_free_tx_cb(struct device *dev,
- }
- 
- /* Simple helper to free a receive control block's resources */
--static struct sk_buff *bcmgenet_free_rx_cb(struct device *dev,
--					   struct enet_cb *cb)
-+static void bcmgenet_free_rx_cb(struct enet_cb *cb,
-+				struct page_pool *pool)
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index d51899b011ddd..862867874e121 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -2564,9 +2564,10 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
  {
--	struct sk_buff *skb;
--
--	skb = cb->skb;
--	cb->skb = NULL;
--
--	if (dma_unmap_addr(cb, dma_addr)) {
--		dma_unmap_single(dev, dma_unmap_addr(cb, dma_addr),
--				 dma_unmap_len(cb, dma_len), DMA_FROM_DEVICE);
--		dma_unmap_addr_set(cb, dma_addr, 0);
-+	if (cb->rx_page) {
-+		page_pool_put_full_page(pool, cb->rx_page, false);
-+		cb->rx_page = NULL;
- 	}
--
--	return skb;
- }
+ 	const struct nlmsghdr *nlh = cb->nlh;
+ 	struct net *net = sock_net(skb->sk);
++	int default_skip = cb->args[2];
++	int neigh_skip = cb->args[1];
+ 	int family, tidx, nidx = 0;
+ 	int tbl_skip = cb->args[0];
+-	int neigh_skip = cb->args[1];
+ 	struct neigh_table *tbl;
  
- /* Unlocked version of the reclaim routine */
-@@ -2237,46 +2234,29 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 	goto out;
- }
+ 	if (cb->strict_check) {
+@@ -2590,12 +2591,13 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (tidx < tbl_skip || (family && tbl->family != family))
+ 			continue;
  
--static struct sk_buff *bcmgenet_rx_refill(struct bcmgenet_priv *priv,
--					  struct enet_cb *cb)
-+static int bcmgenet_rx_refill(struct bcmgenet_rx_ring *ring,
-+			      struct enet_cb *cb)
- {
--	struct device *kdev = &priv->pdev->dev;
--	struct sk_buff *skb;
--	struct sk_buff *rx_skb;
-+	struct bcmgenet_priv *priv = ring->priv;
- 	dma_addr_t mapping;
-+	struct page *page;
+-		if (neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
++		if (!default_skip &&
++		    neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
+ 				       nlh->nlmsg_seq, RTM_NEWNEIGHTBL,
+ 				       NLM_F_MULTI) < 0)
+ 			break;
  
--	/* Allocate a new Rx skb */
--	skb = __netdev_alloc_skb(priv->dev, priv->rx_buf_len + SKB_ALIGNMENT,
--				 GFP_ATOMIC | __GFP_NOWARN);
--	if (!skb) {
-+	page = page_pool_alloc_pages(ring->page_pool,
-+				     GFP_ATOMIC);
-+	if (!page) {
- 		priv->mib.alloc_rx_buff_failed++;
- 		netif_err(priv, rx_err, priv->dev,
--			  "%s: Rx skb allocation failed\n", __func__);
--		return NULL;
--	}
--
--	/* DMA-map the new Rx skb */
--	mapping = dma_map_single(kdev, skb->data, priv->rx_buf_len,
--				 DMA_FROM_DEVICE);
--	if (dma_mapping_error(kdev, mapping)) {
--		priv->mib.rx_dma_failed++;
--		dev_kfree_skb_any(skb);
--		netif_err(priv, rx_err, priv->dev,
--			  "%s: Rx skb DMA mapping failed\n", __func__);
--		return NULL;
-+			  "%s: Rx page allocation failed\n", __func__);
-+		return -ENOMEM;
- 	}
+-		nidx = 0;
++		default_skip = 1;
  
--	/* Grab the current Rx skb from the ring and DMA-unmap it */
--	rx_skb = bcmgenet_free_rx_cb(kdev, cb);
-+	/* page_pool handles DMA mapping via PP_FLAG_DMA_MAP */
-+	mapping = page_pool_get_dma_addr(page);
- 
--	/* Put the new Rx skb on the ring */
--	cb->skb = skb;
--	dma_unmap_addr_set(cb, dma_addr, mapping);
--	dma_unmap_len_set(cb, dma_len, priv->rx_buf_len);
-+	cb->rx_page = page;
- 	dmadesc_set_addr(priv, cb->bd_addr, mapping);
- 
--	/* Return the current Rx skb to caller */
--	return rx_skb;
-+	return 0;
- }
- 
- /* bcmgenet_desc_rx - descriptor based rx process.
-@@ -2328,25 +2308,29 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
- 	while ((rxpktprocessed < rxpkttoprocess) &&
- 	       (rxpktprocessed < budget)) {
- 		struct status_64 *status;
-+		struct page *rx_page;
-+		void *hard_start;
- 		__be16 rx_csum;
- 
- 		cb = &priv->rx_cbs[ring->read_ptr];
--		skb = bcmgenet_rx_refill(priv, cb);
- 
--		if (unlikely(!skb)) {
-+		/* Save the received page before refilling */
-+		rx_page = cb->rx_page;
-+
-+		if (bcmgenet_rx_refill(ring, cb)) {
- 			BCMGENET_STATS64_INC(stats, dropped);
- 			goto next;
+ 		list_for_each_entry_rcu(p, &tbl->parms_list, list) {
+ 			if (!net_eq(neigh_parms_net(p), net))
+@@ -2618,12 +2620,15 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
  		}
  
--		status = (struct status_64 *)skb->data;
-+		/* Sync the full buffer; the HW may have written anywhere
-+		 * up to RX_BUF_LENGTH.
-+		 */
-+		page_pool_dma_sync_for_cpu(ring->page_pool, rx_page, 0,
-+					   RX_BUF_LENGTH);
-+
-+		hard_start = page_address(rx_page);
-+		status = (struct status_64 *)hard_start;
- 		dma_length_status = status->length_status;
--		if (dev->features & NETIF_F_RXCSUM) {
--			rx_csum = (__force __be16)(status->rx_csum & 0xffff);
--			if (rx_csum) {
--				skb->csum = (__force __wsum)ntohs(rx_csum);
--				skb->ip_summed = CHECKSUM_COMPLETE;
--			}
--		}
- 
- 		/* DMA flags and length are still valid no matter how
- 		 * we got the Receive Status Vector (64B RSB or register)
-@@ -2359,10 +2343,13 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
- 			  __func__, p_index, ring->c_index,
- 			  ring->read_ptr, dma_length_status);
- 
--		if (unlikely(len > RX_BUF_LENGTH)) {
--			netif_err(priv, rx_status, dev, "oversized packet\n");
-+		/* Reject lengths that would underflow the SKB build path. */
-+		if (unlikely(len > RX_BUF_LENGTH || len < GENET_RSB_PAD)) {
-+			netif_err(priv, rx_status, dev,
-+				  "invalid packet length %d\n", len);
- 			BCMGENET_STATS64_INC(stats, length_errors);
--			dev_kfree_skb_any(skb);
-+			page_pool_put_full_page(ring->page_pool, rx_page,
-+						true);
- 			goto next;
- 		}
- 
-@@ -2370,7 +2357,8 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
- 			netif_err(priv, rx_status, dev,
- 				  "dropping fragmented packet!\n");
- 			BCMGENET_STATS64_INC(stats, fragmented_errors);
--			dev_kfree_skb_any(skb);
-+			page_pool_put_full_page(ring->page_pool, rx_page,
-+						true);
- 			goto next;
- 		}
- 
-@@ -2398,21 +2386,42 @@ static unsigned int bcmgenet_desc_rx(struct bcmgenet_rx_ring *ring,
- 						DMA_RX_RXER)) == DMA_RX_RXER)
- 				u64_stats_inc(&stats->errors);
- 			u64_stats_update_end(&stats->syncp);
--			dev_kfree_skb_any(skb);
-+			page_pool_put_full_page(ring->page_pool, rx_page,
-+						true);
- 			goto next;
- 		} /* error packet */
- 
--		skb_put(skb, len);
-+		/* Build SKB from the page - data starts at hard_start,
-+		 * frame begins after RSB(64) + pad(2) = 66 bytes.
-+		 */
-+		skb = napi_build_skb(hard_start, PAGE_SIZE);
-+		if (unlikely(!skb)) {
-+			BCMGENET_STATS64_INC(stats, dropped);
-+			page_pool_put_full_page(ring->page_pool, rx_page,
-+						true);
-+			goto next;
-+		}
-+
-+		skb_mark_for_recycle(skb);
- 
--		/* remove RSB and hardware 2bytes added for IP alignment */
--		skb_pull(skb, 66);
--		len -= 66;
-+		/* Reserve the RSB + pad, then set the data length */
-+		skb_reserve(skb, GENET_RSB_PAD);
-+		__skb_put(skb, len - GENET_RSB_PAD);
- 
- 		if (priv->crc_fwd_en) {
--			skb_trim(skb, len - ETH_FCS_LEN);
--			len -= ETH_FCS_LEN;
-+			skb_trim(skb, skb->len - ETH_FCS_LEN);
-+		}
-+
-+		/* Set up checksum offload */
-+		if (dev->features & NETIF_F_RXCSUM) {
-+			rx_csum = (__force __be16)(status->rx_csum & 0xffff);
-+			if (rx_csum) {
-+				skb->csum = (__force __wsum)ntohs(rx_csum);
-+				skb->ip_summed = CHECKSUM_COMPLETE;
-+			}
- 		}
- 
-+		len = skb->len;
- 		bytes_processed += len;
- 
- 		/*Finish setting up the received SKB and send it to the kernel*/
-@@ -2484,12 +2493,11 @@ static void bcmgenet_dim_work(struct work_struct *work)
- 	dim->state = DIM_START_MEASURE;
- }
- 
--/* Assign skb to RX DMA descriptor. */
-+/* Assign page_pool pages to RX DMA descriptors. */
- static int bcmgenet_alloc_rx_buffers(struct bcmgenet_priv *priv,
- 				     struct bcmgenet_rx_ring *ring)
- {
- 	struct enet_cb *cb;
--	struct sk_buff *skb;
- 	int i;
- 
- 	netif_dbg(priv, hw, priv->dev, "%s\n", __func__);
-@@ -2497,10 +2505,7 @@ static int bcmgenet_alloc_rx_buffers(struct bcmgenet_priv *priv,
- 	/* loop here for each buffer needing assign */
- 	for (i = 0; i < ring->size; i++) {
- 		cb = ring->cbs + i;
--		skb = bcmgenet_rx_refill(priv, cb);
--		if (skb)
--			dev_consume_skb_any(skb);
--		if (!cb->skb)
-+		if (bcmgenet_rx_refill(ring, cb))
- 			return -ENOMEM;
+ 		neigh_skip = 0;
++		nidx = 0;
++		default_skip = 0;
  	}
+ out:
+ 	rcu_read_unlock();
  
-@@ -2509,16 +2514,18 @@ static int bcmgenet_alloc_rx_buffers(struct bcmgenet_priv *priv,
+ 	cb->args[0] = tidx;
+ 	cb->args[1] = nidx;
++	cb->args[2] = default_skip;
  
- static void bcmgenet_free_rx_buffers(struct bcmgenet_priv *priv)
- {
--	struct sk_buff *skb;
-+	struct bcmgenet_rx_ring *ring;
- 	struct enet_cb *cb;
--	int i;
--
--	for (i = 0; i < priv->num_rx_bds; i++) {
--		cb = &priv->rx_cbs[i];
-+	int q, i;
- 
--		skb = bcmgenet_free_rx_cb(&priv->pdev->dev, cb);
--		if (skb)
--			dev_consume_skb_any(skb);
-+	for (q = 0; q <= priv->hw_params->rx_queues; q++) {
-+		ring = &priv->rx_rings[q];
-+		if (!ring->page_pool)
-+			continue;
-+		for (i = 0; i < ring->size; i++) {
-+			cb = ring->cbs + i;
-+			bcmgenet_free_rx_cb(cb, ring->page_pool);
-+		}
- 	}
+ 	return skb->len;
  }
- 
-@@ -2736,6 +2743,30 @@ static void bcmgenet_init_tx_ring(struct bcmgenet_priv *priv,
- 	netif_napi_add_tx(priv->dev, &ring->napi, bcmgenet_tx_poll);
- }
- 
-+static int bcmgenet_rx_ring_create_pool(struct bcmgenet_priv *priv,
-+					struct bcmgenet_rx_ring *ring)
-+{
-+	struct page_pool_params pp_params = {
-+		.order = 0,
-+		.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV,
-+		.pool_size = ring->size,
-+		.nid = NUMA_NO_NODE,
-+		.dev = &priv->pdev->dev,
-+		.dma_dir = DMA_FROM_DEVICE,
-+		.max_len = RX_BUF_LENGTH,
-+	};
-+	int err;
-+
-+	ring->page_pool = page_pool_create(&pp_params);
-+	if (IS_ERR(ring->page_pool)) {
-+		err = PTR_ERR(ring->page_pool);
-+		ring->page_pool = NULL;
-+		return err;
-+	}
-+
-+	return 0;
-+}
-+
- /* Initialize a RDMA ring */
- static int bcmgenet_init_rx_ring(struct bcmgenet_priv *priv,
- 				 unsigned int index, unsigned int size,
-@@ -2743,7 +2774,7 @@ static int bcmgenet_init_rx_ring(struct bcmgenet_priv *priv,
- {
- 	struct bcmgenet_rx_ring *ring = &priv->rx_rings[index];
- 	u32 words_per_bd = WORDS_PER_BD(priv);
--	int ret;
-+	int ret, i;
- 
- 	ring->priv = priv;
- 	ring->index = index;
-@@ -2754,10 +2785,19 @@ static int bcmgenet_init_rx_ring(struct bcmgenet_priv *priv,
- 	ring->cb_ptr = start_ptr;
- 	ring->end_ptr = end_ptr - 1;
- 
--	ret = bcmgenet_alloc_rx_buffers(priv, ring);
-+	ret = bcmgenet_rx_ring_create_pool(priv, ring);
- 	if (ret)
- 		return ret;
- 
-+	ret = bcmgenet_alloc_rx_buffers(priv, ring);
-+	if (ret) {
-+		for (i = 0; i < ring->size; i++)
-+			bcmgenet_free_rx_cb(ring->cbs + i, ring->page_pool);
-+		page_pool_destroy(ring->page_pool);
-+		ring->page_pool = NULL;
-+		return ret;
-+	}
-+
- 	bcmgenet_init_dim(ring, bcmgenet_dim_work);
- 	bcmgenet_init_rx_coalesce(ring);
- 
-@@ -2951,6 +2991,20 @@ static void bcmgenet_fini_rx_napi(struct bcmgenet_priv *priv)
- 	}
- }
- 
-+static void bcmgenet_destroy_rx_page_pools(struct bcmgenet_priv *priv)
-+{
-+	struct bcmgenet_rx_ring *ring;
-+	unsigned int i;
-+
-+	for (i = 0; i <= priv->hw_params->rx_queues; ++i) {
-+		ring = &priv->rx_rings[i];
-+		if (ring->page_pool) {
-+			page_pool_destroy(ring->page_pool);
-+			ring->page_pool = NULL;
-+		}
-+	}
-+}
-+
- /* Initialize Rx queues
-  *
-  * Queues 0-15 are priority queues. Hardware Filtering Block (HFB) can be
-@@ -3022,6 +3076,7 @@ static void bcmgenet_fini_dma(struct bcmgenet_priv *priv)
- 	}
- 
- 	bcmgenet_free_rx_buffers(priv);
-+	bcmgenet_destroy_rx_page_pools(priv);
- 	kfree(priv->rx_cbs);
- 	kfree(priv->tx_cbs);
- }
-@@ -3100,6 +3155,7 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
- 	if (ret) {
- 		netdev_err(priv->dev, "failed to initialize Rx queues\n");
- 		bcmgenet_free_rx_buffers(priv);
-+		bcmgenet_destroy_rx_page_pools(priv);
- 		kfree(priv->rx_cbs);
- 		kfree(priv->tx_cbs);
- 		return ret;
-@@ -4021,8 +4077,6 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 
- 	/* Mii wait queue */
- 	init_waitqueue_head(&priv->wq);
--	/* Always use RX_BUF_LENGTH (2KB) buffer for all chips */
--	priv->rx_buf_len = RX_BUF_LENGTH;
- 	INIT_WORK(&priv->bcmgenet_irq_work, bcmgenet_irq_task);
- 
- 	priv->clk_wol = devm_clk_get_optional(&priv->pdev->dev, "enet-wol");
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index 9e4110c7fdf6f..22a958ba99024 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -15,6 +15,7 @@
- #include <linux/phy.h>
- #include <linux/dim.h>
- #include <linux/ethtool.h>
-+#include <net/page_pool/helpers.h>
- 
- #include "../unimac.h"
- 
-@@ -149,7 +150,6 @@ struct bcmgenet_mib_counters {
- 	u32	rbuf_err_cnt;
- 	u32	mdf_err_cnt;
- 	u32	alloc_rx_buff_failed;
--	u32	rx_dma_failed;
- 	u32	tx_dma_failed;
- 	u32	tx_realloc_tsb;
- 	u32	tx_realloc_tsb_failed;
-@@ -469,6 +469,7 @@ struct bcmgenet_rx_stats64 {
- 
- struct enet_cb {
- 	struct sk_buff      *skb;
-+	struct page         *rx_page;
- 	void __iomem *bd_addr;
- 	DEFINE_DMA_UNMAP_ADDR(dma_addr);
- 	DEFINE_DMA_UNMAP_LEN(dma_len);
-@@ -575,6 +576,7 @@ struct bcmgenet_rx_ring {
- 	struct bcmgenet_net_dim dim;
- 	u32		rx_max_coalesced_frames;
- 	u32		rx_coalesce_usecs;
-+	struct page_pool *page_pool;
- 	struct bcmgenet_priv *priv;
- };
- 
-@@ -609,7 +611,6 @@ struct bcmgenet_priv {
- 	void __iomem *rx_bds;
- 	struct enet_cb *rx_cbs;
- 	unsigned int num_rx_bds;
--	unsigned int rx_buf_len;
- 	struct bcmgenet_rxnfc_rule rxnfc_rules[MAX_NUM_OF_FS_RULES];
- 	struct list_head rxnfc_list;
- 
 -- 
 2.53.0
 
