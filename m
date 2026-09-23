@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E572D6E64;
-	Wed, 23 Sep 2026 14:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD79531B0B;
+	Wed, 23 Sep 2026 14:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172730; cv=none; b=B5PHLU+fc1tMbVUm94BS6VcZ9POrriTWenzaCIeBYmylUOpyEdDGUrTLOr80eWUlInFxs/kKPuIV4ah8vBK2n3WFsWtaZtkP3tt5qOeRFJj7QvWUNAWzmCbLpcVy0SvlU0AW1F4e63Jlz/N4r5KYPTQqJ44KsEA1EjSmlEM2NrI=
+	t=1790172733; cv=none; b=brh+8qxV8sOUIEOwjQcCNVQjJobx1PvIw2brFTHgJTDRbP3Yaf1SOhKK8O53uc4sWCun6COc/HP6BuDtI9mxtyS8N4pMlq56ZB5e7Lt3H7nve+7motbm/x/8xfooQfbcxUbUBY3H7eb8SNJkjDVu9N9eVU4GAnAj8EpIL0av1Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172730; c=relaxed/simple;
-	bh=tFsqQcM7cA4YPi6cfG+LP/SomdaXLy2Tig3ghlmN9kQ=;
+	s=arc-20240116; t=1790172733; c=relaxed/simple;
+	bh=wwqcgmzOElUyh+PmZSebLpMIT+DrCjfzDLPVQf3Wsf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ghp4NaXCvvGOp1r9A2CfcCvIOZf33ac2K7Cv8OeWi/BiblTHt7cKF5ZLTQ4EI/hByR3o7K/AhN+d/hjv0TIhMFXzwUomRAkvcMKEY9Zb8HO2dC1qvO41z/gjIYTJ2cJ/e/W7lg1NqN9OVW6IcGen9Zg1f+QqN6WFP7R45smhmAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEiR7zIn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H4xYcC6dv2Kqnx77tJacKyhsESoaY3t43Q/VBu/TobPYJ83FbNMvuA1IR/yatX/aKAi/h0aXMjJacowF5/L8C9r/Y0Y5ory6JswbIhC2h9ypb36nQDjcKFgZmzBkKlLNllhNa0H1D9f9p2perqgEt8RdBuQ99iomRPe7OYDLgKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBIzpDgj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEiR7zIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B24B1F000FF;
-	Wed, 23 Sep 2026 14:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBIzpDgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2EE1F000FF;
+	Wed, 23 Sep 2026 14:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172729;
-	bh=nSoKlnNaeZErKUGkDXRJRwnfTn7Va5rxdSOQloyJwW4=;
+	s=korg; t=1790172732;
+	bh=b5xl2psrtcd5drfQj3w61OAe+7MHPKCG7z4/cYmKMpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FEiR7zInv3udDjGaoMENTIWkhQhW84WwILtsv5kB/wLPsuW2bVN0zkUZfgqY2n9DK
-	 GzqNu/Ea5++siYiUh75CZ+zjD1z3CI86owbX3uxcxGhcuJOjC4JGZFO1wybS6j1r8L
-	 OGl6y8etpv6FQwakNXbK2wsYSDEIfDANmmFgrLWQ=
+	b=SBIzpDgj1qu1NED9/o4lwg6HP/xJSvtdZVbg8OrVwpF5oXJKPRQIx6k1E1aYArn3Q
+	 cRjtUczj9jQ8w9jQ8N+Inx2HA+yHRZTniwHpGAtCeXBvSxWDVt3sCoUC6YSOzx+Zgt
+	 HFCNtF06siJrTNW1hnnUOphJO/PJkhxdYlPffqbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Gang Yan <yangang@kylinos.cn>,
 	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Shukai Ni <shukai.ni@kuleuven.be>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 018/438] RDMA/rxe: validate access flags before swapping the MRs PD
-Date: Wed, 23 Sep 2026 16:00:39 +0200
-Message-ID: <20260923140645.248067951@linuxfoundation.org>
+Subject: [PATCH 7.2 019/438] RDMA/rxe: Fix integer overflow in mr_check_range() leading to OOB access
+Date: Wed, 23 Sep 2026 16:00:40 +0200
+Message-ID: <20260923140645.273853201@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,94 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-[ Upstream commit ae36a5b609ae79f4de966328b78d2584be9719a4 ]
+[ Upstream commit d10e2a08799e858d3e71ea4169bcd018f216d444 ]
 
-rxe_rereg_user_mr() reassigns mr->ibmr.pd first and only then
-validates the IB_MR_REREG_ACCESS argument:
+mr_check_range() validates that [iova, iova+length) falls within the
+registered MR range using wraparound-prone arithmetic:
 
-	if (flags & IB_MR_REREG_PD) {
-		rxe_put(old_pd);
-		rxe_get(pd);
-		mr->ibmr.pd = ibpd;
-	}
+    if (iova < mr->ibmr.iova ||
+        iova + length > mr->ibmr.iova + mr->ibmr.length)
 
-	if (flags & IB_MR_REREG_ACCESS) {
-		if (access & ~RXE_ACCESS_SUPPORTED_MR)
-			return ERR_PTR(-EOPNOTSUPP);
-		mr->access = access;
-	}
+A remote peer can craft an RDMA-Write/Read RETH so that iova + length
+wraps to 0 (e.g. iova=0xfffffffffffffff8, length=8), bypassing the
+check. rxe_mr_iova_to_index() then computes a huge index (int idx, only
+guarded by WARN_ON) and rxe_mr_copy_xarray() dereferences
+mr->page_info[huge], causing an out-of-bounds read/write and a kernel
+oops that is triggerable by an unauthenticated remote peer.
 
-Both flags pass the entry check because RXE_MR_REREG_SUPPORTED is
-IB_MR_REREG_PD | IB_MR_REREG_ACCESS, so a caller can reach the access
-check with mr->ibmr.pd already reassigned.
+Rewrite the check in overflow-safe form; the first two clauses guarantee
+that the subsequent subtractions do not underflow:
 
-mr->ibmr.pd is owned by the core, which adjusts pd->usecnt only on the
-success path: ib_uverbs_rereg_mr() jumps to put_new_uobj on a driver error
-without undoing the reassignment, so mr->pd == new_pd while the usecnts
-still charge the MR to orig_pd. ib_dereg_mr_user() then decrements
-new_pd, whose count can reach zero while a memory window still references
-it; uverbs_free_pd() frees the PD on that count alone and rxe_mw_cleanup()
-writes to freed memory:
+    if (iova < mr->ibmr.iova ||
+        length > mr->ibmr.length ||
+        iova - mr->ibmr.iova > mr->ibmr.length - length)
 
-  BUG: KASAN: slab-use-after-free in __rxe_put+0x31/0xa0
-  Write of size 4 at addr ffff8881301dd690 by task rxe_poc/591
-   __rxe_put+0x31/0xa0
-   rxe_mw_cleanup+0x42/0x200
-   __rxe_cleanup+0x115/0x370
-   rxe_dealloc_mw+0x4c/0x80
-  Allocated by task 591:
-   ib_uverbs_alloc_pd+0x258/0x540
-  Freed by task 591:
-   ib_dealloc_pd_user+0x174/0x210
-   uverbs_free_pd+0x8d/0xc0
-   ib_uverbs_dealloc_pd+0x18e/0x1d0
+With the fix, mr_check_range() returns -EINVAL for the crafted iova and
+the responder reports REMOTE_ACCESS_ERROR instead of triggering the OOB.
 
-Validate the access flags before mutating any state so the callback either
-applies every requested change or none.
-
-Fixes: 544c7f62cf32 ("RDMA/rxe: Implement rereg_user_mr")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/46E1D5C0-24BE-4D01-BDB3-634FE09B22C5@doyensec.com
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Link: https://patch.msgid.link/20260814093740.292954-1-gang.yan@linux.dev
 Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Shukai Ni <shukai.ni@kuleuven.be>
+Tested-by: Shukai Ni <shukai.ni@kuleuven.be>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_verbs.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 1ec130fee8ea7..f8c29fc5961d7 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -1327,19 +1327,20 @@ static struct ib_mr *rxe_rereg_user_mr(struct ib_mr *ibmr, int flags,
- 	if (err)
- 		return ERR_PTR(err);
- 
-+	if ((flags & IB_MR_REREG_ACCESS) &&
-+	    (access & ~RXE_ACCESS_SUPPORTED_MR)) {
-+		rxe_err_mr(mr, "access = %#x not supported\n", access);
-+		return ERR_PTR(-EOPNOTSUPP);
-+	}
-+
- 	if (flags & IB_MR_REREG_PD) {
- 		rxe_put(old_pd);
- 		rxe_get(pd);
- 		mr->ibmr.pd = ibpd;
- 	}
- 
--	if (flags & IB_MR_REREG_ACCESS) {
--		if (access & ~RXE_ACCESS_SUPPORTED_MR) {
--			rxe_err_mr(mr, "access = %#x not supported\n", access);
--			return ERR_PTR(-EOPNOTSUPP);
--		}
-+	if (flags & IB_MR_REREG_ACCESS)
- 		mr->access = access;
--	}
- 
- 	return NULL;
- }
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 875eceb55fdfa..71d9ea4772890 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -33,7 +33,8 @@ int mr_check_range(struct rxe_mr *mr, u64 iova, size_t length)
+ 	case IB_MR_TYPE_USER:
+ 	case IB_MR_TYPE_MEM_REG:
+ 		if (iova < mr->ibmr.iova ||
+-		    iova + length > mr->ibmr.iova + mr->ibmr.length) {
++		    length > mr->ibmr.length ||
++		    iova - mr->ibmr.iova > mr->ibmr.length - length) {
+ 			rxe_dbg_mr(mr, "iova/length out of range\n");
+ 			return -EINVAL;
+ 		}
 -- 
 2.53.0
 
