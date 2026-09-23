@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD9A4EB853;
-	Wed, 23 Sep 2026 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE104A3850;
+	Wed, 23 Sep 2026 14:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172617; cv=none; b=QCNMrPXZMHC0+NIMAUMPHA91Y/2EDRZSb4tZDIe+fce5zztQsnStaNUx3XkMSLhBaxYNtkaqApECDM5T1yqPGxW30sAkpEcSDPOu7rsk71pfa7yJnkJ01nuWh5XRzxwZx/Uac9JE8jERdfxJsdSjvdDYXdxO1gbejvqqjeW6MIc=
+	t=1790172620; cv=none; b=janXKCBEMAuLi1CMDfsBfUn7+ip+mgEch8KxPD8CXvdepy3p3axCJvsDsrWSOq68dJ/Wg7cRp3Ci6qpnVDbkGbyVTdZqEjlrSoPZGW9CnqTxP7pLBwyGkSyeWTfnxJEFQ3nORzkNClwy+C4ZtiHZQy89OwL8gcVmoAaxbYzYHHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172617; c=relaxed/simple;
-	bh=ylWFkkdt+bOOEnDhhfQB4yz7ht2e06EtxZRZJUeAn+o=;
+	s=arc-20240116; t=1790172620; c=relaxed/simple;
+	bh=ZDBeiqVAzDBsmn+b2UpIYUBKGcFowhhVjUcvty/ird0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcwLY6yWh896caN5FgsS80GrXE39ur276lwe3j1hP1JEhRBe2zHQPghL42qEPx31R1sB51lc+1s7L10Mwi0/IaUuU+CbsnRQNYuVtYJ79V47Xu5ISGB31347Hjkmo4YKkuDo5ckRJZi9/9+daSXlzi9PFyqkh4+o1wY8M2fnMEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cUMvD7g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t7avLu/3hDV7Na3jcNAfFdnyKwD1g+OffjR0JAXZgbobV2uCEIelcdchfu/xgILHGVZnWwTqDIy8uUQWb1gi8uH0ig97kItdGefLsE5jlm+vPNKGPiAAL1EjekvnPSW0XjpmlqkQpZzEtnXpEAI4IfxQCFw+ukATPrM3/Nebgjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKDpEKo8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cUMvD7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926C71F000FF;
-	Wed, 23 Sep 2026 14:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKDpEKo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EC81F000FF;
+	Wed, 23 Sep 2026 14:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172616;
-	bh=SGsG5KpzffhBAhyVdaZHbgVY4dogEVifuDSzHKEtnx4=;
+	s=korg; t=1790172619;
+	bh=d4C3KbkzZVyE0lVq2d+NF+LTB91afMIe+sXPS7tPUjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0cUMvD7gnUX9hlcOL4uVbXRMbNjwB/EhposG67Gw8mZ1Ze9Ny8E+8JVL1nKslx2E2
-	 yJ4DtDI633MP4tPUh87fQQEjWC945nv4Dxr5O6UOmGNQUtoIzA5K6RYj6pTRiA6qGD
-	 LQMeTAzzJoILE03iuiTgB7BrkRG8OtVFWMfBtCEk=
+	b=MKDpEKo87vyypv7TzUIhmAM4OkVXF+Vab+URyxrhZQ+basypcbOTaUZhNXUKh9099
+	 Dyiskj/1O8DL025QYhpAyGB48ApxEkje0nPsEZukP6+JIVXfE2FLJRPoGTty+amVAP
+	 yjQEQp90vFi/dj9BNY2NDcfkAt2bF5HsVt5OgXKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Tanure <tanure@linux.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Maher Azzouzi <maherazz04@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 012/438] arm64: dts: amlogic: t7: khadas-vim4: allow the SD card to be power cycled
-Date: Wed, 23 Sep 2026 16:00:33 +0200
-Message-ID: <20260923140645.092328177@linuxfoundation.org>
+Subject: [PATCH 7.2 010/438] esp: downgrade zerocopy managed frags before mutating skb frags
+Date: Wed, 23 Sep 2026 16:00:31 +0200
+Message-ID: <20260923140645.038968289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,47 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Tanure <tanure@linux.com>
+From: Maher Azzouzi <maherazz04@gmail.com>
 
-[ Upstream commit c793a084ab3088744516aef437b4239d0d98623f ]
+[ Upstream commit f89416eb3db151170a6f3c6dfc5239d26cdce4d2 ]
 
-SD cards start at 3.3V and switch to 1.8V to reach UHS-I speeds. Some
-cards refuse that switch, and the SD specification says the only way
-to recover is to power the card off and start again.
+On the out-of-place output path (esp->inplace == false) ESP rewrites the
+skb frag array: esp_output_head() appends a trailer frag and
+esp_output_tail() replaces the frags with a destination page, both
+referenced with get_page().
 
-SD_3V3 is marked regulator-always-on, so the supply never goes off,
-the card stays stuck half way through the switch, and the MMC core
-retries forever:
+When the skb carries zerocopy managed frags (SKBFL_MANAGED_FRAG_REFS) the
+payload frags are owned by the ubuf and must not be referenced or
+unreferenced individually, but ESP mutates the frag array without ever
+downgrading the skb.  This breaks the managed-frag invariant two ways:
 
-  mmc1: error -95 whilst initialising SD card
+  - esp_ssg_unref() walks the source scatterlist and drops a page
+    reference for every frag, including the ubuf-owned payload frags,
+    pushing their refcount below the GUP pin bias while the pages are
+    still pinned, i.e. a use-after-free of the zerocopy pages;
 
-Drop regulator-always-on. regulator-boot-on still turns the supply on
-at boot, and a card that refuses the switch now falls back to high
-speed instead of failing to initialise.
+  - esp_output_tail() installs its destination page as frag 0 with
+    get_page() but leaves SKBFL_MANAGED_FRAG_REFS set, so
+    skb_release_data() takes the skip_unref branch and never drops that
+    reference, leaking the x->xfrag page at packet rate.
 
-Fixes: 8c45bf9ae4ef ("arm64: dts: amlogic: t7: khadas-vim4: Add power regulators")
-Signed-off-by: Lucas Tanure <tanure@linux.com>
-Assisted-by: Claude:claude-fable-5
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260823115335.102219-3-tanure@linux.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fix this the way every other frag-mutating site does (__ip_append_data(),
+__ip6_append_data(), tcp_sendmsg_locked()) and call
+skb_zcopy_downgrade_managed() before ESP touches the frag array: it takes
+a real reference on each existing frag and clears SKBFL_MANAGED_FRAG_REFS,
+so the per-frag unref in esp_ssg_unref() and the frag release in
+skb_release_data() are both balanced and no mixed-ownership frag array is
+left behind.
+
+Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
+Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 1 -
- 1 file changed, 1 deletion(-)
+ net/ipv4/esp4.c | 6 ++++++
+ net/ipv6/esp6.c | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index 75d81ad6830df..c94afaaf8826e 100644
---- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-+++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -71,7 +71,6 @@ sd_3v3: regulator-sdcard-3v3 {
- 		vin-supply = <&vddao_3v3>;
- 		gpio = <&gpio GPIOD_11 GPIO_ACTIVE_LOW>;
- 		regulator-boot-on;
--		regulator-always-on;
- 	};
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index dfc81ee969ae0..faa48f5b97395 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -441,6 +441,12 @@ int esp_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info *
  
- 	sdio_pwrseq: sdio-pwrseq {
+ 			esp->inplace = false;
+ 
++			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
++			 * we mutate the frag array, so the per-frag unref stays balanced
++			 * for zerocopy managed frags (see __ip_append_data()).
++			 */
++			skb_zcopy_downgrade_managed(skb);
++
+ 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
+ 
+ 			spin_lock_bh(&x->lock);
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 296b57926abb9..a3a3857eed98a 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -470,6 +470,12 @@ int esp6_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info
+ 
+ 			esp->inplace = false;
+ 
++			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
++			 * we mutate the frag array, so the per-frag unref stays balanced
++			 * for zerocopy managed frags (see __ip_append_data()).
++			 */
++			skb_zcopy_downgrade_managed(skb);
++
+ 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
+ 
+ 			spin_lock_bh(&x->lock);
 -- 
 2.53.0
 
