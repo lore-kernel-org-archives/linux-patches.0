@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C1530DFB;
-	Wed, 23 Sep 2026 14:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3546E5172F9;
+	Wed, 23 Sep 2026 14:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173184; cv=none; b=kElSZDxSfpsZQSCaJbn9B/n93AbcEgwyvVgjEBL/wCmoT16kYpD8MSq994m2r1xbz6rbJNW7DLbNTU0/y/uu6NiYxNo5qvLKaWhRBNL/QLs8AeiiP5pnp7UqZSG9tq29N6s7gvRZrJahJbzfjF7LOFoG4W7Z2qogYzKB2F3bEeM=
+	t=1790173187; cv=none; b=LzvX/hLuknxKY2IaS8rWZbbRxMcKhyZL8hBj9JEtfBOCjQ/uKGf7BTjA04bHO2Qc7NOXT4JwgH+SeeFxXARL8iLFPXawItLq6tCpp715Mi3toX/DbU+NpAMwFZSzzrcVWHgDWtNG+nk9uByuWeHMXdG0SaTT8qywemCiSNVmV/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173184; c=relaxed/simple;
-	bh=SNZX4MLwOljJYhqfpY1irnyOipLfUHOnVUUIfQfEAYg=;
+	s=arc-20240116; t=1790173187; c=relaxed/simple;
+	bh=GarwIrsQpfH/VT9Y3VYBB+lHHximamqJrMgzQGd8DVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=US2K8b2XTo+IS3VkviASgKjPMAMx2pUyQ+YR6MJVSV+wfYiniwO0ekxBks8zLU92RC7O03iQPP6Ul1133qEfTdN2ZEipoTsKNLOnRs3S1oIJnfi4wqV/hR3udTnLuicm2WEGYYJowCZV7jDFog4lb8NzuUkhyNrlzsmSUtGIIME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ6xnSO2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m1gNcfhckoZBVqLoPowTA0YpUSdql8z6FfwkheIgpy0K2mGZ0AHbdlROBvdDViDJSSfQm0YGvzyuCJeUJaIYXKga0M4adc4nxtRMFJfoi/FWqu81281WONmN/xRci0aYg5aYiob+xIjHrllq8Om1yDNjvvc138+bYufIeMR+nik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FB7lxoCS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ6xnSO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678711F00898;
-	Wed, 23 Sep 2026 14:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FB7lxoCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873EF1F000FF;
+	Wed, 23 Sep 2026 14:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173183;
-	bh=3fpk393231iYi6TBRCknA4mVgbJfTFnk/3dM06g3oh4=;
+	s=korg; t=1790173186;
+	bh=Qwc0pM49/DsG7s+Pmp3hw5ZMUX7dijZcXVnUPl+2/O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZ6xnSO274XxbG31b5iVWxg+D2KtPCvNyttHaYhqy2HAcoP63PpiL9jEOQ3RsVIq0
-	 vSyescaLbZiCU410vv9tcjYb0Q0xZYXDjtlOp6fsu4xcYsJ2p4LbcXIfv+2TVJGQ39
-	 JjNHHjgMJ5OxUCbHrt/Cm3FLu1MotExhDB8RfCZY=
+	b=FB7lxoCS7Wi30rbq1ijhd9Rgzb68LZ4gO3h0KXFLMKcnS51NsA86gs3CccrP6nIUL
+	 9kR7865eLSnyJl/FDk8Mnv3YjskzUHK0U2FQtRdTsPb5dpqhcH/cIFLiieX8jZSDPt
+	 03ckpGlvoBym3gZBrlAhVIeOvnggGIU6dRYQ+pK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mobin Aydinfar <mobin@mobintestserver.ir>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Baineng Shou <shoubaineng@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 166/438] ksmbd: keep compound responses on query info errors
-Date: Wed, 23 Sep 2026 16:03:07 +0200
-Message-ID: <20260923140649.073660394@linuxfoundation.org>
+Subject: [PATCH 7.2 167/438] dmaengine: mmp_pdma: fix wrong sg length in mmp_pdma_prep_slave_sg()
+Date: Wed, 23 Sep 2026 16:03:08 +0200
+Message-ID: <20260923140649.098146643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,143 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Baineng Shou <shoubaineng@gmail.com>
 
-[ Upstream commit 9fa26285ae70ac2d3d1b47459a6b4463ab053e1c ]
+[ Upstream commit 075bc7b1d3dde5ed43fbaabbc1a69f09b7fc3a47 ]
 
-Do not reset the RFC1002 length of the complete response when a query
-info buffer is too small. The current command will add its error response
-through ksmbd_iov_pin_rsp(), while resetting the base length can truncate
-earlier responses in a compound request.
+In mmp_pdma_prep_slave_sg(), for_each_sg() iterates the scatterlist
+putting each entry into 'sg', but the entry length is read from 'sgl'
+(the list head) instead of 'sg' (the current entry):
 
-This lets ksmbd return the earlier responses and the query-info error
-response together. Remove the now-unused rsp_org parameter from the pipe
-query-info helpers.
+    for_each_sg(sgl, sg, sg_len, i) {
+        addr = sg_dma_address(sg);
+        avail = sg_dma_len(sgl);   /* should be 'sg' */
 
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Reported-by: Mobin Aydinfar <mobin@mobintestserver.ir>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Consequently 'avail' is always the length of the first entry. For
+multi-sg lists this causes out-of-bounds reads when a later entry is
+shorter than the first, and silent data loss when it is longer.
+Single-sg or uniformly-sized lists happen to mask the issue.
+
+Fixes: c8acd6aa6bed3 ("dmaengine: mmp-pdma support")
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260910021652.1296640-1-shoubaineng@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ drivers/dma/mmp_pdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f6b9a0ad922ff..5312ae3fc5023 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5624,21 +5624,18 @@ int smb2_query_dir(struct ksmbd_work *work)
-  * @reqOutputBufferLength:	max buffer length expected in command response
-  * @fixed_len:			minimum fixed response length
-  * @rsp:		query info response buffer contains output buffer length
-- * @rsp_org:		base response buffer pointer in case of chained response
-  *
-  * Return:	0 on success, otherwise error
-  */
- static int buffer_check_err(int reqOutputBufferLength,
- 			    unsigned int fixed_len,
--			    struct smb2_query_info_rsp *rsp,
--			    void *rsp_org)
-+			    struct smb2_query_info_rsp *rsp)
- {
- 	unsigned int output_len = le32_to_cpu(rsp->OutputBufferLength);
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index 78e3e07e681df..ed520737882bc 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -712,7 +712,7 @@ mmp_pdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
  
- 	if (reqOutputBufferLength < fixed_len) {
- 		pr_err("Invalid Buffer Size Requested\n");
- 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
--		*(__be32 *)rsp_org = cpu_to_be32(sizeof(struct smb2_hdr));
- 		return -EINVAL;
- 	}
+ 	for_each_sg(sgl, sg, sg_len, i) {
+ 		addr = sg_dma_address(sg);
+-		avail = sg_dma_len(sgl);
++		avail = sg_dma_len(sg);
  
-@@ -5649,8 +5646,7 @@ static int buffer_check_err(int reqOutputBufferLength,
- 	return 0;
- }
- 
--static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp,
--				   void *rsp_org)
-+static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp)
- {
- 	struct smb2_file_standard_info *sinfo;
- 
-@@ -5665,8 +5661,7 @@ static void get_standard_info_pipe(struct smb2_query_info_rsp *rsp,
- 		cpu_to_le32(sizeof(struct smb2_file_standard_info));
- }
- 
--static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num,
--				   void *rsp_org)
-+static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num)
- {
- 	struct smb2_file_internal_info *file_info;
- 
-@@ -5680,8 +5675,7 @@ static void get_internal_info_pipe(struct smb2_query_info_rsp *rsp, u64 num,
- 
- static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 				   struct smb2_query_info_req *req,
--				   struct smb2_query_info_rsp *rsp,
--				   void *rsp_org)
-+				   struct smb2_query_info_rsp *rsp)
- {
- 	u64 id;
- 	int rc;
-@@ -5706,16 +5700,16 @@ static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 
- 	switch (req->FileInfoClass) {
- 	case FILE_STANDARD_INFORMATION:
--		get_standard_info_pipe(rsp, rsp_org);
-+		get_standard_info_pipe(rsp);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      le32_to_cpu(rsp->OutputBufferLength),
--				      rsp, rsp_org);
-+				      rsp);
- 		break;
- 	case FILE_INTERNAL_INFORMATION:
--		get_internal_info_pipe(rsp, id, rsp_org);
-+		get_internal_info_pipe(rsp, id);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      le32_to_cpu(rsp->OutputBufferLength),
--				      rsp, rsp_org);
-+				      rsp);
- 		break;
- 	default:
- 		ksmbd_debug(SMB, "smb2_info_file_pipe for %u not supported\n",
-@@ -6431,8 +6425,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_PIPE)) {
- 		/* smb2 info file called for pipe */
--		rc = smb2_get_info_file_pipe(work->sess, req, rsp,
--					       work->response_buf);
-+		rc = smb2_get_info_file_pipe(work->sess, req, rsp);
- 		goto iov_pin_out;
- 	}
- 
-@@ -6544,7 +6537,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 		}
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      fixed_len,
--				      rsp, work->response_buf);
-+				      rsp);
- 	}
- 	ksmbd_fd_put(work, fp);
- 
-@@ -6806,7 +6799,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	}
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 			      fixed_len,
--			      rsp, work->response_buf);
-+			      rsp);
- 	path_put(&path);
- 
- 	if (!rc)
-@@ -6908,7 +6901,7 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
- 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 			      le32_to_cpu(rsp->OutputBufferLength),
--			      rsp, work->response_buf);
-+			      rsp);
- 	if (rc)
- 		goto err_out;
- 
+ 		do {
+ 			len = min_t(size_t, avail, PDMA_MAX_DESC_BYTES);
 -- 
 2.53.0
 
