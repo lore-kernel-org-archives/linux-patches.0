@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B2F3ABD9F;
-	Wed, 23 Sep 2026 14:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3280D53976D;
+	Wed, 23 Sep 2026 14:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174937; cv=none; b=K01BCu8QtRnKSn2pt4ecQSUhA1ke6cGHfyNNq2hgHPbif+2WjRxtAxc6cZNG6E0Ab/cu2OJXQRCxBlPRKpIKqJxV357pudP88DX3+k/wZPpH9qGuYmEIhl4CRzPmR5EvFKVKIpEZoIFyzdyAlVhHONOyuwIwHzpflOo6CuSBqcI=
+	t=1790174940; cv=none; b=eWPe3vr+2atgW7LG64t9AcdpEMrn53tpqzASGhIeq9dGmX0eYdfKWHZVbeMuBaintAPCMmUd/vGgO46U2bSwrpQ9cashFA1osTvsbvikJOB+rmZngRDO+7VMQdPrcii7/hV6yP8ZeW5HAEAx6yZ2rPFvqAEPY/6hCuRWbbheTPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174937; c=relaxed/simple;
-	bh=HFwMdBVWdMey9S0++DNzeQIBRV0H/WBdUMOb59LOyx0=;
+	s=arc-20240116; t=1790174940; c=relaxed/simple;
+	bh=TmmnACM6p+mYAkcDwZCxdO7KI3mxmGDaCAKe6DIAfsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0WQ8gg2zY321cGjsRs280cLOKXtHIkM4oTtjJCVEtdq8WiZrHsKL7eQSni7L0l6UU0K6BcyO8mbRBtVoOfk8YnKljZZUihwJ/yyqEFVsayI0BlQuUIWFK6pRYgJcFpkyVkcKnT3RpNeL7lWDwWnviO+VAamdY0lIprp0gSZ+vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOH1i6E4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DP2QPlkLqIU6KCCq4K9oq0ilMEJ277DElMU0xCkO9hEiJW/0Ga2pDhIieKnDUj31FI+9GTu/mMVUtO4ExX2YOUQHUTAxUS0oqreGO7VJisosrOUR1xnBYzKatBQbcVMWefG+yNbJ0wrDN6V8FMjzmGDsH4VgKVD/vPsXlWGSPTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcyzDRei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOH1i6E4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7271F000FF;
-	Wed, 23 Sep 2026 14:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcyzDRei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17E21F000FF;
+	Wed, 23 Sep 2026 14:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174936;
-	bh=BuBcU+wNP186sFrjKeHf9tC3mVA52bsMrjwcPAVq5Q8=;
+	s=korg; t=1790174939;
+	bh=k5/2teR+JwPvwvtON7fHUcR2KzGX1qIv3ykM84PqRcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOH1i6E4rJfePmYnxz/AomiYRtjrcASgv7J99Oqk6ti3pgAssifMw4b5z7xCxD/II
-	 IQ1bcMwEtpb47ymhxgJr5j+XGXhaz4NdWGpiF4mfyHV9yuz54TSlBCxsRsIG39UcvF
-	 u4BSkwJfI6m8KokXvnUxqCCzCroBZ3UQHieOu5gE=
+	b=lcyzDReiF1vmUu729/sS+P7BGZCCMjrCTp40cQpBRniO4ns5ratdR9WFR1COZBDX5
+	 wkyl2F4ICvY9KdX8gTJvblHzVVn4Jf1cUoKO+W2KwoPrswAw4lho4vlrZOaQSTeIII
+	 YQ9yc0ztI5TJ/5GDqBqGE3Zmm0iy6r8/eubDBXZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 270/398] i2c: imx: disable autosuspend on remove
-Date: Wed, 23 Sep 2026 16:05:44 +0200
-Message-ID: <20260923140650.415590428@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.18 271/398] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
+Date: Wed, 23 Sep 2026 16:05:45 +0200
+Message-ID: <20260923140650.441820945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,46 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit e0c3e9d76adbe522dd420a766ce42d03ce887c29 upstream.
+commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
 
-i2c_imx_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+register_pkey_tree() ignores errors from register_one_pkey_tree() and
+continues registering the remaining slaves. The per-slave error path has
+already released the pkey parent kobjects, but their pointers remain
+stored in the device. A later device cleanup therefore passes the stale
+pointers to kobject_put(), causing a use-after-free.
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+Clear the parent pointers after releasing a failed slave tree and skip
+unregistered trees during device cleanup. This preserves the existing
+best-effort registration behavior while preventing a second cleanup of
+the failed tree.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
-
-This issue was found by manual code inspection.
-
-Fixes: 588eb93ea49f ("i2c: imx: add runtime pm support to improve the performance")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <stable@vger.kernel.org> # v4.5+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260914091544.1667137-1-lgs201920130244@gmail.com
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1922,6 +1922,7 @@ static void i2c_imx_remove(struct platfo
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -753,11 +753,13 @@ err_add:
+ 		kobject_put(p);
+ 	}
+ 	kobject_put(dev->dev_ports_parent[slave]);
++	dev->dev_ports_parent[slave] = NULL;
  
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- }
+ err_ports:
+ 	kobject_put(dev->pkeys.device_parent[slave]);
+ 	/* extra put for the device_parent create_and_add */
+ 	kobject_put(dev->pkeys.device_parent[slave]);
++	dev->pkeys.device_parent[slave] = NULL;
  
- static int i2c_imx_runtime_suspend(struct device *dev)
+ fail_dev:
+ 	kobject_put(dev->iov_parent);
+@@ -787,6 +789,8 @@ static void unregister_pkey_tree(struct
+ 		return;
+ 
+ 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
++		if (!device->pkeys.device_parent[slave])
++			continue;
+ 		list_for_each_entry_safe(p, t,
+ 					 &device->pkeys.pkey_port_list[slave],
+ 					 entry) {
 
 
