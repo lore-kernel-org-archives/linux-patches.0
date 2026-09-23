@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7F7329C7C;
-	Wed, 23 Sep 2026 14:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E715753C3AE;
+	Wed, 23 Sep 2026 14:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174811; cv=none; b=rSMhvPLkIKaOyQpWtbRxtlOEAUZnIqJPjPaz5fwMJLM3LVam2XJLCBsJfGLZkq5w7IQb323ygX5tcnwZtlapZQB9UGFG0DdOWIAM0/2OMopqnZxfVQcyCd6gZHyUBpu2dRlTm4F09VC5847f1y9LqnSoLdd8hNDNPg1N2JmRAss=
+	t=1790174814; cv=none; b=n/biCwuoWVxqX5Of1CZuCWGuHOSZlGa3dfpVMhN3cKHgFjkQNsESzwfW4kJvkQLOfY5UlFzyKqrq8+LSRmr5zOD7bsVVLUd3WMqfaPmQP5BYmStwJrvTXMaGDD4E7r7hoMLKbffW6Tnf5N4CiYybtiyefHFRzPLuESrpj/s4PJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174811; c=relaxed/simple;
-	bh=74a/734VhPiJemFmNgKJJhd2FqGDWK9BfrW70gA+DVQ=;
+	s=arc-20240116; t=1790174814; c=relaxed/simple;
+	bh=lI3XAwxzZOVMbOF/iqX3k3td6pMA9lS5l2N6yXLRmYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUOdNoWFzxRct8Ax7gyZsnV3az0iLKJSQCHsFooReEWDRvFB/Y5EENVgt18xPecta5fvWCKR+10Ps/4HbI65ysn3ANsX51DJ4wILNLM454IBrOw6pOl4fOjML7ahd41Tzvv/aNZDRkSlHLX7DhPZQYa7+LBqqmdrKItjCU14AxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWswLy0u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IfNUqjPBevsfvoW9Mzn90FpjyUHHeqji+K0Nh43OWfir1ZldSKZkKsW1YjQKh0QpQ8lIKjnwwA798suvIhAVlxlyos0yxKZ0Unvry+nH3shhaGvPtDbKt1uSwLs0DBv7aweEKffAC8ZrP2ZeTCz8eqsegMxtfIp322DxrG/GzdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nd+qlT2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWswLy0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7604A1F000FF;
-	Wed, 23 Sep 2026 14:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nd+qlT2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B81B1F000FF;
+	Wed, 23 Sep 2026 14:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174809;
-	bh=TYDhngAqqtXhE3jlLg3eUnlBgcis8ahSen1ZWFdPjZs=;
+	s=korg; t=1790174812;
+	bh=9I2zr3sot+mAYndYQ8YcTC56pwQyoaScwv2Foxvh+t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YWswLy0uBsTd4DOK7ZASXUCaUgmWh7fnZ3aiYYIBCp2VdOm5SOfLdiZDgLH2hm1jB
-	 GosExi6P8w9M3Mv+e8pETyfJj/Zi7uQgbjAye63sxJ/M7TZH7zNFGptHCGWSNTgIxg
-	 V9LeH1FD5fTWyb6bTYtIu3qD3+0LTIfpPbUtKEkI=
+	b=nd+qlT2RWuMcKNQdO7MWlESGsB4F0gBqgb0lRpuL7ERGbO6cn1fOTEJ/tseGZGm8T
+	 yp08KLyo9WNIkCFZFcWa57SyPuhosRQ47md3i/KGlhiJhETSWlfss5lRgbLdTWpfgd
+	 SPDPPwf2JVrUweJqjDkmtCb1DZlcQa2l9O1wfIq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Yang Shi <yang@os.amperecomputing.com>
-Subject: [PATCH 6.18 232/398] arm64: percpu: Fix LSE operations on {8,16}-bit types
-Date: Wed, 23 Sep 2026 16:05:06 +0200
-Message-ID: <20260923140649.432683995@linuxfoundation.org>
+	Nicolas Thibert <nithibert@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 233/398] Bluetooth: btusb: fix NXP IW610 composite device handling
+Date: Wed, 23 Sep 2026 16:05:07 +0200
+Message-ID: <20260923140649.458976256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -59,61 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Nicolas Thibert <nithibert@gmail.com>
 
-commit 8cf2093f5372952a9ebc805c418d45df7112cd14 upstream.
+commit 2b50adefed9808a56d84d1de803cad882cc787fa upstream.
 
-The assembly for __percpu_##name##_case_##sz() and
-__percpu_##name##_return_case_##sz() doesn't use the 'sfx' macro
-argument to form the LSE instruction. Without 'sfx', a W register
-argument will imply a 32-bit memory location, and consequently
-{8,16}-bit ops will erroneously read and write 32 bits of memory when
-the LSE instruction is used.
+The NXP IW610 module exposes itself as a composite USB device
+(0471:0215) with three interfaces: two real Bluetooth HCI interfaces
+(class 0xe0) and one vendor-specific WiFi interface (class 0xff) used
+by mwifiex-nxp.
 
-Fix this by appending 'sfx' to 'op_lse' to LSE instruction. It is not
-necessary (and not valid) to append 'sfx' to 'op_llsc', as 'op_llsc' is
-a register-register operation which does not access memory (and does not
-take a size suffix).
+The composite device's whole USB descriptor reports class 0xe0/01/01
+(Bluetooth), so btusb_table's generic USB_DEVICE_INFO(0xe0, 0x01, 0x01)
+entry matches every interface, not just the two real HCI ones -- btusb
+ends up binding the WiFi interface too, and mwifiex-nxp never gets it.
 
-Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <yang@os.amperecomputing.com>
+Fix:
+1. In btusb_table (the table the USB core actually matches against),
+   explicitly ignore the WiFi interface via BTUSB_IGNORE, ahead of the
+   generic entry.
+2. In quirks_table, scope the existing BTUSB_MARVELL entry to the BT
+   interface class instead of matching the whole device by VID/PID
+   (harmless either way since quirks_table isn't consulted for initial
+   binding, but keep it correct).
+
+Not upstream anywhere: checked NXP's own i.MX kernel fork
+(nxp-imx/linux-imx), no IW610 references in btusb.c on any branch --
+their reference designs wire this chip differently (WiFi over SDIO
+per their release notes), so they never hit this.
+
+Signed-off-by: Nicolas Thibert <nithibert@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: LLM (Claude Sonnet 5, Anthropic)
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/percpu.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -77,7 +77,7 @@ __percpu_##name##_case_##sz(void *ptr, u
- 	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
- 	"	cbnz	%w[loop], 1b",					\
- 	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
-+		#op_lse #sfx "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
- 		__nops(3))						\
- 	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
- 	  [ptr] "+Q"(*(u##sz *)ptr)					\
-@@ -98,7 +98,7 @@ __percpu_##name##_return_case_##sz(void
- 	"	stxr" #sfx "\t%w[loop], %" #w "[ret], %[ptr]\n"		\
- 	"	cbnz	%w[loop], 1b",					\
- 	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
-+		#op_lse #sfx "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
- 		#op_llsc "\t%" #w "[ret], %" #w "[ret], %" #w "[val]\n"	\
- 		__nops(2))						\
- 	: [loop] "=&r" (loop), [ret] "=&r" (ret),			\
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -70,6 +70,15 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_BROKEN_EXT_SCAN		BIT(29)
+ 
+ static const struct usb_device_id btusb_table[] = {
++	/*
++	 * NXP IW610 (0471:0215): the composite device reports Bluetooth
++	 * class at the whole-device level, so the generic entry below
++	 * would also match this WiFi vendor interface. Ignore it here
++	 * first so mwifiex-nxp can bind it instead.
++	 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0471, 0x0215, 0xff, 0xff, 0xff),
++	  .driver_info = BTUSB_IGNORE },
++
+ 	/* Generic Bluetooth USB device */
+ 	{ USB_DEVICE_INFO(0xe0, 0x01, 0x01) },
+ 
+@@ -474,6 +483,14 @@ static const struct usb_device_id quirks
+ 	{ USB_DEVICE(0x1286, 0x2046), .driver_info = BTUSB_MARVELL },
+ 	{ USB_DEVICE(0x1286, 0x204e), .driver_info = BTUSB_MARVELL },
+ 
++	/*
++	 * NXP IW610 BT interfaces (Marvell-lineage silicon, same quirk as
++	 * the 0x1286 entries above). Scoped to the BT interface class,
++	 * not just VID/PID -- see the btusb_table entry above.
++	 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0471, 0x0215, 0xe0, 0x01, 0x01),
++	  .driver_info = BTUSB_MARVELL },
++
+ 	/* Intel Bluetooth devices */
+ 	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_COMBINED },
+ 	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_COMBINED },
 
 
