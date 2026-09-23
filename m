@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B165B5372EA;
-	Wed, 23 Sep 2026 14:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30C7538D94;
+	Wed, 23 Sep 2026 14:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174758; cv=none; b=Mytbmw16Q9NPprGcyz7bzQ5iOeTwnFDGatenJ++bXn4YwKUu8yadOEUM6sGVGfPN683OVCGmLd2DHsOAgfH3DRcIMGVWlCNSNBrgXhVEHMvN8Qn/mCSNcXbaX698YJtVNUhfBeWf2RV0Gz/kjAS6b/cU5IuASqDHegX055Hx4+Q=
+	t=1790174762; cv=none; b=E0oR/p+S7jh1e9g1sstCzX9TikmUru8hkYVc9u8Y0O6PkWUYx9TYCttG2+Kq8rv5FbKKACCprsKhyXEURDfUpT04Uy+zaXHpVSzTBiH1RcBorAe0fnTKTfblP+7kePDD/Ddiou/HqJe1GjQeitqtZR5PW7nqYL62jUQc04cPX0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174758; c=relaxed/simple;
-	bh=cNqD363b8OxKXat1O3h18NPL4AIHTHpnjCnV7Mg2014=;
+	s=arc-20240116; t=1790174762; c=relaxed/simple;
+	bh=oIPjjwBa68rlXYMeFnIF2F/vRO5Jwj4nSubVkRo0Nrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0EymzFKdcB3ZfU5nM19FzrfMcdeNzyK9hmPNBFOCVICVK+R6elTzUMsOpU8O/Mqt+KVaycQRJ0vJic+bLxEn3cou1N6BBFb82Gef24NjNjoZOIxU9jkwssqEWPKip2dbW/MV1REqNUqq/PXPDiHc0jqY0AQiYTSUjp/un0qeiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgU6rUFo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SLLHGK8r4ypzKD2kVHo+5hPWOy0zT9BIQCv6kSnHlui0taWzPr6ktNBHlyEVLPLZmwgnlRPQW85ixGXCT0rdAviPGqt5DysZxXvAjNZgsk4hJuz2apvOdv76KZPiPmyh6ZtI2KylkQ8vbLvyYbMMAIPu0y/ljnrAZem7Tfgho4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bvq94PTM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgU6rUFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96601F000FF;
-	Wed, 23 Sep 2026 14:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bvq94PTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394051F000FF;
+	Wed, 23 Sep 2026 14:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174757;
-	bh=3dpCoY4mYnSLgD32BU9VaGWZ4FS7I8tidzfbdQblgwc=;
+	s=korg; t=1790174760;
+	bh=jYyoUH3B09NUSU3fwo8HolaFm36YhZ1lRQsxBKHZAu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgU6rUFoF9ri1jexMRCi71OQ01iTdv9LK4ahqlgvC20hpd1aHebHfNCBR9VopGxqc
-	 kz7ovhh9g39YZvHLTyEcObC6wN77U+8WPgaR0fneTcsO9XkIO7fP5gUAD64uAtzVT/
-	 17n51Ii9ZtnVVRnM3z0GOI2+fudk4HU2QT4sm8gc=
+	b=Bvq94PTMEgvWnYCJuG+LiAm67MRRfg3O/SOj2F1r0OiSBVXYkPkdvmwcWZ167f7R4
+	 ZGdKXgqkdoLv8OUTAKcob5IHLzaDmS2AoVV0Zsntl/rAcJM74/vzGtOuisnEij6Xd3
+	 oOvN7WLQa0tgp9eW0pRTzFy+BSdSHXLGnVERNmuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <amit.klein@mail.huji.ac.il>,
-	Tamir Shahar <tamir.shahar1@mail.huji.ac.il>,
-	Inbal Schussheim <inbal.lipshtat@mail.huji.ac.il>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 217/398] tcp: exclude old ACKs from tcp fast path
-Date: Wed, 23 Sep 2026 16:04:51 +0200
-Message-ID: <20260923140649.048098374@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 6.18 218/398] swiotlb: use the adjusted address for the highmem page lookup
+Date: Wed, 23 Sep 2026 16:04:52 +0200
+Message-ID: <20260923140649.074022546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,58 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inbal Schussheim <inbal.lipshtat@mail.huji.ac.il>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit f81e6c3fb06327bc49cdd6e559845293ba06a704 upstream.
+commit b7d7914a9ae3097e63d113007e4fb44d33d515b1 upstream.
 
-Exclude old ACKs before SND.UNA from the tcp fast path
-as well as ACKs after SND.NXT.
+swiotlb_bounce() reads the page frame number from the slot's recorded
+orig_addr, then advances orig_addr by tlb_offset to reach the address
+the caller asked about. The highmem branch mixes the two: the offset
+within the page comes from the adjusted address, the page from the value
+before it.
 
-Such ACKs will fall through to the slow path, where tcp_ack()
-performs the appropriate validation and challenge ACK handling
-according to RFC5961 and Commit 3d501dd326fb1c7 ("tcp: do not
-accept ACK of bytes we never sent").
+Once the adjustment crosses a page boundary the pair no longer describes
+one location, and the whole copy lands one page below the intended one
+for a positive tlb_offset, one above for a negative one. DMA_FROM_DEVICE
+writes the device data over the wrong page and leaves the intended one
+stale, DMA_TO_DEVICE feeds the device from a page the mapping may not
+cover. Partial syncs through dma_sync_single_range_for_*() are what make
+tlb_offset non-zero.
 
-This prevents old ACKs from being accepted
-or modifying connection state as part of the fast path before
-appropriate ACK validation is applied.
-In particular, this prevents payload carried by a segment with
-an excessively old ACK from advancing RCV.NXT before the ACK
-is rejected.
+The branch test is picked the same way, so a slot recorded in lowmem can
+be adjusted into highmem and the lowmem path then hands a highmem
+address to phys_to_virt().
 
-Fixes: 31770e34e43d ("tcp: Revert "tcp: remove header prediction"")
-Reported-by: Amit Klein <amit.klein@mail.huji.ac.il>
-Reported-by: Tamir Shahar <tamir.shahar1@mail.huji.ac.il>
-Reported-by: Inbal Schussheim <inbal.lipshtat@mail.huji.ac.il>
-Suggested-by: Eric Dumazet <edumazet@google.com>
+Take both from orig_addr once it is final and keep pfn in the branch
+that uses it. PhysHighMem() asks the question straight from the address,
+as dma-debug already does.
+
+Fixes: 5f89468e2f06 ("swiotlb: manipulate orig_addr when tlb_addr has offset")
 Cc: stable@vger.kernel.org
-Signed-off-by: Inbal Schussheim <inbal.lipshtat@mail.huji.ac.il>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260914090408.1435080-2-inbal.lipshtat@mail.huji.ac.il
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20260905084210.148255-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/dma/swiotlb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6283,6 +6283,7 @@ reset:
-  *	  or pure receivers (this means either the sequence number or the ack
-  *	  value must stay constant)
-  *	- Unexpected TCP option.
-+ *	- ACK sequence number is outside [SND.UNA, SND.NXT].
-  *
-  *	When these conditions are not satisfied it drops into a standard
-  *	receive procedure patterned after RFC793 to handle all cases.
-@@ -6332,7 +6333,7 @@ void tcp_rcv_established(struct sock *sk
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -869,7 +869,6 @@ static void swiotlb_bounce(struct device
+ 	int index = (tlb_addr - mem->start) >> IO_TLB_SHIFT;
+ 	phys_addr_t orig_addr = mem->slots[index].orig_addr;
+ 	size_t alloc_size = mem->slots[index].alloc_size;
+-	unsigned long pfn = PFN_DOWN(orig_addr);
+ 	unsigned char *vaddr = mem->vaddr + tlb_addr - mem->start;
+ 	int tlb_offset;
  
- 	if ((tcp_flag_word(th) & TCP_HP_BITS) == tp->pred_flags &&
- 	    TCP_SKB_CB(skb)->seq == tp->rcv_nxt &&
--	    !after(TCP_SKB_CB(skb)->ack_seq, tp->snd_nxt)) {
-+	    between(TCP_SKB_CB(skb)->ack_seq, tp->snd_una, tp->snd_nxt)) {
- 		int tcp_header_len = tp->tcp_header_len;
- 		s32 delta = 0;
- 		int flag = 0;
+@@ -899,7 +898,8 @@ static void swiotlb_bounce(struct device
+ 		size = alloc_size;
+ 	}
+ 
+-	if (PageHighMem(pfn_to_page(pfn))) {
++	if (PhysHighMem(orig_addr)) {
++		unsigned long pfn = PFN_DOWN(orig_addr);
+ 		unsigned int offset = orig_addr & ~PAGE_MASK;
+ 		struct page *page;
+ 		unsigned int sz = 0;
 
 
