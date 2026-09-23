@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1AD3A255A;
-	Wed, 23 Sep 2026 14:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E69531B0E;
+	Wed, 23 Sep 2026 14:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173803; cv=none; b=RoCxcipeFsuymQUWdJC1kQwCxMwALMvePdYpxiX02epG4ThRZ9e9kfg91H1b1cnmbE0Od97eL2EOluAAN348hkJUOKpofRkWSre6v+DCsABx5UreddjYDTxQgyewGcSS9PqGb6MC6yh8TztbQPG7A/Z9abz4spo8yNIkPR9GKpU=
+	t=1790173807; cv=none; b=ag3swOBW4ULOYV/RvUqEmx7/fHx+OEHpjh18MrjvRndksVV1Inwus5yRWk/9RjSap0acrjt4Qp3WIGD050qcDJrVwlnqUa6+ZDI9zCDMcfIF3rFkjIBto3OU3vBxY5b5TlgbZIlT5twHIvDgzQ+61UXxUcWhv7XY+y/gmm0yLOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173803; c=relaxed/simple;
-	bh=NbGNRLc1VFfFtcpst2mWEOL7r25roeTSzm1nfUfCYBY=;
+	s=arc-20240116; t=1790173807; c=relaxed/simple;
+	bh=P4td8dWbJbD7s/tECUrIdmtH3xO9W5Hz60sz5XAeADc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/S9qRWhfa8xYnwHAWYEDbroYkiLIqRlDVt9cF9wijbnEK6boaP8LoYfNLJUwnBPsrXPxEJGtDtSv5Ik+za3wvWYp8x0j7qRGT1fjH1oRKyFowpUE9aqu+xaw8KkHGKCWwmSUHEjLcbh7ALOjvAsv/Bqvls5VNXmylJOANuz3Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5Jr9C87; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mRvdakQk+dELsbV20K1R6+Lhwb4GvFoPF8nwpb88+iH4NdvuQdFNuex8iZy3pQlxWrkZ4/nZVuOYBG74iSfDELrwJVR8CddSdDH7GjHqLmctHjep3fz6hbEi7y0N8maN2DZCw65uKlMJZRoepgHxyUSHqg3r/7qZu79J8NwYBak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxLK8pAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5Jr9C87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7976A1F000FF;
-	Wed, 23 Sep 2026 14:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxLK8pAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2451F00893;
+	Wed, 23 Sep 2026 14:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173802;
-	bh=pSNJqW6k+zya0opnTjMh8OFC7ILoPpo/s+yXjrMKcpI=;
+	s=korg; t=1790173805;
+	bh=bumQrx6itgBB9H9+HMh8mdJW8VQLcPjUz+OVlBfE+d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5Jr9C876Ofdo2lWmzg3oZFlCEnXcau8HkyG9SzBGik+IhxvFcrY2PhfYTndEMe/L
-	 iMlVir/Iw5xNR+rkbXOGXZ3aw6bXsDJWbk6bt2Np0QiY5HikKXIGYFI8nyBVh/+fje
-	 pnBztIIsbaW75yHVmNcKCFNzs2kdsS2jaQ1P8hMc=
+	b=SxLK8pAN+dVEZHoqnPuFUTsDugsIYhm/o20AqqxEATQxU0NyORP5Xg4/6HxeWzqwU
+	 g+lgUYFBxpUtRQnkpd/ySTXzOyAim1aU8jMX34fqmD1nDnUoEvWb1a+7o0o7sifB7o
+	 6iTusf/RXFpDm+ySQeuJqZsKG0blMlk2VXABpHDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 7.2 331/438] IB/hfi1: Resolve the credit-return buffer through the send contexts node
-Date: Wed, 23 Sep 2026 16:05:52 +0200
-Message-ID: <20260923140653.390088948@linuxfoundation.org>
+	"Diogo Ivo (Schneider Electric)" <diogo.ivo@bootlin.com>,
+	Judith Mendez <jm@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 349/438] mmc: sdhci_am654: Move tuning_loop to local variable
+Date: Wed, 23 Sep 2026 16:06:10 +0200
+Message-ID: <20260923140653.868644172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,54 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+From: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
 
-commit 975396b9e5a4028e649f4b9a6a5ca5dfb76a824b upstream.
+commit ff894dced1a7ad7523f9c65dbdb53d02474cca0f upstream.
 
-hfi1_file_mmap()'s PIO_CRED case derives this context's credit-return
-page offset, and the DMA handle for it, from dd->cr_base[uctxt->numa_id].
-uctxt->numa_id is the node of whichever CPU the process happened to be
-running on, but the entry itself lives in the credit-return allocation of
-the send context's own node:
+The tuning_loop field in struct sdhci_am654_data is only used within
+sdhci_am654_platform_execute_tuning() as a loop counter that is
+initialized to 0 in sdhci_am654_init(). Since it shouldn't persist across
+function calls, otherwise every failure expends its "budget", move it to a
+local variable and remove the struct field along with the now-unnecessary
+initialization.
 
-	sc->hw_free = &sc->dd->cr_base[sc->node].va[gc].cr[index];
-
-and user send contexts are allocated with sc_alloc(dd, SC_USER, ...,
-dd->node), the HFI-local node.  On a multi-socket host with the process
-running off that node the two allocations differ, so the subtraction
-produces an offset into an unrelated buffer and the DMA handle belongs to
-the wrong allocation.
-
-Use the send context's own node for all three references.  The
-continuation lines are reindented at the same time; they mixed spaces and
-tabs.
-
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
+Reviewed-by: Judith Mendez <jm@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: de31f6ab68a3 ("mmc: sdhci_am654: Reset Command and Data line after tuning")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
-Link: https://patch.msgid.link/20260809032743.2671579-2-jyohuku.alterego@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/file_ops.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci_am654.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/file_ops.c
-+++ b/drivers/infiniband/hw/hfi1/file_ops.c
-@@ -382,10 +382,10 @@ static int hfi1_file_mmap(struct file *f
- 		 * of enabled contexts > 64 and 128 respectively).
- 		 */
- 		cr_page_offset = ((u64)uctxt->sc->hw_free -
--			  	     (u64)dd->cr_base[uctxt->numa_id].va) &
--				   PAGE_MASK;
--		memvirt = dd->cr_base[uctxt->numa_id].va + cr_page_offset;
--		memdma = dd->cr_base[uctxt->numa_id].dma + cr_page_offset;
-+				  (u64)dd->cr_base[uctxt->sc->node].va) &
-+				 PAGE_MASK;
-+		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
-+		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
- 		memlen = PAGE_SIZE;
- 		flags &= ~VM_MAYWRITE;
- 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -151,7 +151,6 @@ struct sdhci_am654_data {
+ 	u32 flags;
+ 	u32 quirks;
+ 	bool dll_enable;
+-	u32 tuning_loop;
+ 
+ #define SDHCI_AM654_QUIRK_FORCE_CDTEST BIT(0)
+ #define SDHCI_AM654_QUIRK_SUPPRESS_V1P8_ENA BIT(1)
+@@ -576,13 +575,14 @@ static int sdhci_am654_platform_execute_
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+ 	unsigned char timing = host->mmc->ios.timing;
+ 	struct device *dev = mmc_dev(host->mmc);
++	unsigned int tuning_loop = 0;
+ 	int itapdly;
+ 
+ 	do {
+ 		itapdly = sdhci_am654_do_tuning(host, opcode);
+ 		if (itapdly >= 0)
+ 			break;
+-	} while (++sdhci_am654->tuning_loop < RETRY_TUNING_MAX);
++	} while (++tuning_loop < RETRY_TUNING_MAX);
+ 
+ 	if (itapdly < 0) {
+ 		dev_err(dev, "Failed to find itapdly, fail tuning\n");
+@@ -806,9 +806,6 @@ static int sdhci_am654_init(struct sdhci
+ 	regmap_update_bits(sdhci_am654->base, CTL_CFG_3, TUNINGFORSDR50_MASK,
+ 			   TUNINGFORSDR50_MASK);
+ 
+-	/* Use to re-execute tuning */
+-	sdhci_am654->tuning_loop = 0;
+-
+ 	ret = sdhci_setup_host(host);
+ 	if (ret)
+ 		return ret;
 
 
