@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6983334C3B;
-	Wed, 23 Sep 2026 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47DD4DEC16;
+	Wed, 23 Sep 2026 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173320; cv=none; b=TNJx/SIOh9AS2mr2wy9mSw5dp6uEmPO3FEaRNLaDhQ6wHixsITa5G1ADnHKy+pqoS9Q08wCuBpsgofHNydlVo8vsN9rXloDYVn1um8aQiW6Q+93pJRhGxbK7DuFtCBOms/pDGcyz8s9MAghlYz+jPEiq50u07I4aPd38+ut/cIM=
+	t=1790173324; cv=none; b=tFmfTfbFl+MPWLCHyBvxi2IqOgz5rcoapFs+nOdJeSr9qgF1aqkUSHzAM4IvcfUIC9nSbmZ7QuWgrI1eR7gJpi2HABH4U6VNvV8YkCM5uGfyN7wKOdkExe6IVW4jOt5rJGa8Ah0FRmS+6etIYHWY1PUkjpUiHUMbT6tmJRg057Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173320; c=relaxed/simple;
-	bh=7qE6rp69nR2Icatmff2YmYqAVMqthcHSCymDQDxjKEM=;
+	s=arc-20240116; t=1790173324; c=relaxed/simple;
+	bh=4TQN4n5Rz47ksbZGQq4B4eloowxK43Vjy6VYedMk/Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nu+9BSEycqJwVM4XrTFQoG/PR6GLhsUIWMowPF2A7qe66pkRCTYOJcmQZ1FTWrWt4RWu+1C0rdC3tMBA+ubKyTxW8PNyh14f8mV6Ni2rEpULwF8qTeTgdrn/kg1MBr/hTrEvqU50J/Lffel1z+sslC70ZoAVtwhh2HYQA8Q5H1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09tJYVrp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cXT9WUw0ltabNb/oKPzcLBdtGnMCVfQ3shlVCPMBfC5BOeiCM9N3dC1lQYFehM/+X4rtchq0voTFpiMH8IUJGhq9vPVTTOcFm+Z65AtRcWTsK9Luw3Ggo6dbymr7BULxWZmqAse/lO1+fukpN+AfnVZCdr0VCMMpR9yReYHXGpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2d4824kx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09tJYVrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99E81F000FF;
-	Wed, 23 Sep 2026 14:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2d4824kx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314301F000FF;
+	Wed, 23 Sep 2026 14:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173319;
-	bh=pBzxbri98l5hfILfqDGmezhdA5SKZ4DicipzYSIPSsA=;
+	s=korg; t=1790173322;
+	bh=EDmry+hrKz99rByqSSWSuVJ0AHCdsiJ+OViqmN0kywY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09tJYVrpUCNwZmtu6a4sWihGuTuamOVuIaEcVCHEuhS/LyRxhrZblXg77N0IPhQNp
-	 SQucriAKYg3XDCLeCayH/EgyuQ8xrtTv1K7msPdOKMorGMvNTVay/Oq1sWuOYn1MX0
-	 10u9Sll5nznp78uXzE10X7sCDSqTGA7DBWIs0aSg=
+	b=2d4824kxAaJihKezI5RvbunPRHrOuLTqelynexR0tLl/7LOmHVPtpSLrtu9Dbabiz
+	 c6UkFuNTd5WEtgsSGda0BAQLyqrrSYeoTbJ+OPCtjH0UqjJMX7IgqGXNXgfEWEew0D
+	 vf2TUlIC70eWPtyvyPTnB6PkMTHMoclIG0hcBYaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Yige Jiang <yigejiang86@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 209/438] net: remove WARN_ON_ONCE() from the dev_fill_forward_path() loop check
-Date: Wed, 23 Sep 2026 16:03:50 +0200
-Message-ID: <20260923140650.177967426@linuxfoundation.org>
+Subject: [PATCH 7.2 210/438] net: netsec: fix device_node reference leak on phy_np
+Date: Wed, 23 Sep 2026 16:03:51 +0200
+Message-ID: <20260923140650.202763582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,46 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhad Alemi <farhad.alemi@berkeley.edu>
+From: Yige Jiang <yigejiang86@gmail.com>
 
-[ Upstream commit 150dba2c69e93302af24a0c868eebe4871e2e107 ]
+[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
 
-ipip_fill_forward_path() and ip6_tnl_fill_forward_path() look up the
-route to the tunnel's remote endpoint and set ctx->dev to its device,
-which is the tunnel itself when that route resolves back to the tunnel.
-dev_fill_forward_path() then makes no progress and trips
-WARN_ON_ONCE(last_dev == ctx->dev) as soon as a flowtable tries to
-offload a flow through the tunnel. That routing loop is a configuration
-any CAP_NET_ADMIN user can set up, and ip_tunnel_xmit() and
-ip6_tnl_xmit() already treat it as a tx error, so remove the warning and
-just fail the walk, as commit 008e7a7c293b ("net: remove WARN_ON_ONCE
-when accessing forward path array") did for the path stack overflow.
+netsec_of_probe() takes a reference on the PHY device_node with
+of_parse_phandle() and stores it in priv->phy_np, but the driver never
+drops it.  One device_node reference is leaked per probe, on the success
+path as well as on every error path reached after netsec_of_probe().
 
-Fixes: ab427db17885 ("netfilter: flowtable: Add IPIP rx sw acceleration")
-Fixes: d98103575dcd ("netfilter: flowtable: Add IP6IP6 rx sw acceleration")
-Closes: https://lore.kernel.org/all/CA+0ovCgaRvbd0Udj70b2xxG8Cx3CaCpNhnf1V4RWQuDveZYZhA@mail.gmail.com/
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/CA+0ovCgKDOk+Bg6Gh5Lwx94u_jJjQ30-vY1JcY2BYfhnWJJbPA@mail.gmail.com
+Neither consumer takes ownership.  of_mdio_parse_addr() is a static
+inline taking a const struct device_node * that only reads the "reg"
+property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
+drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
+:364 and of_node_put() at :373, which would be a double put if
+of_phy_connect() consumed the reference.
+
+The node is still in use at netsec_netdev_open() time, where it is
+passed to of_phy_connect(), so it has device lifetime.  Release it at
+the probe error label, which every failure path after the acquire
+funnels through, and in netsec_remove().  Both releases precede
+free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
+leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
+
+There is no end-user visible symptom on currently supported platforms:
+a device_node is only freed once OF_DYNAMIC is enabled and the node has
+been detached, so on a static device tree the imbalance is inert.  It is
+observable as a refcount that grows across bind/unbind cycles, and would
+matter under device tree overlays.
+
+Found by static analysis of reference acquire/release pairing rather
+than from a runtime report.  No reproducer was produced and the change
+has not been runtime tested; it is compile-tested only (arm64,
+CONFIG_SNI_NETSEC=m via COMPILE_TEST).
+
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/socionext/netsec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 679e75d3699ae..ff25e4c71588e 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -789,7 +789,7 @@ int dev_fill_forward_path(struct net_device_path_ctx *ctx,
- 			goto err_out;
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index d14a6584473c8..79a0a324c921d 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -2149,6 +2149,7 @@ static int netsec_probe(struct platform_device *pdev)
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ free_ndev:
++	of_node_put(priv->phy_np);
+ 	free_netdev(ndev);
+ 	dev_err(&pdev->dev, "init failed\n");
  
- 		stack->num_paths++;
--		if (WARN_ON_ONCE(last_dev == ctx->dev))
-+		if (last_dev == ctx->dev)
- 			goto err_out;
- 	}
+@@ -2166,6 +2167,7 @@ static void netsec_remove(struct platform_device *pdev)
+ 	netif_napi_del(&priv->napi);
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	of_node_put(priv->phy_np);
+ 	free_netdev(priv->ndev);
+ }
  
 -- 
 2.53.0
