@@ -1,48 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB5470121;
-	Wed, 23 Sep 2026 14:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B59470121;
+	Wed, 23 Sep 2026 14:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173654; cv=none; b=ssoB/LEqpqGVDSp9yGUzaLpPLfbMriER+dMtsBMQe0pabjEB1W+qMrsA+yqEnU/T+gN1pWjDxj0fbg93AO+YrvXSEryAI8Lk5ic82gYtCg52vT0AbmlsPAfSHBN/aZ6t7LtvZJyflR07UF2ArZTJhK7dr38LZm9f4pyY8eVO+ZA=
+	t=1790173657; cv=none; b=Oaxw+49Oc3RyYOFu4B7+8zWNLr3h5UAFkeEDL9frU4xKJfXI4N5k5d9Kqnu+oq+W2m8PEv2baPaE1cphXVwsLCfxXiXHBIRzBPGRkQA1CVTWZzmkA4s22lfikEvfghijEnNEIBn2Tdqy6ZABHMEUMkPHHxfFadwiJzO9woQtPU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173654; c=relaxed/simple;
-	bh=iBARcU4q1H0NUxBuFLaD+5Gk3zpDWARmWoq6IKOjYTY=;
+	s=arc-20240116; t=1790173657; c=relaxed/simple;
+	bh=oatbCy1U+/nKem0La2h3NxPIKb8JZ4UsBjpgNqwK1Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wf9jslpnptwi0KiX41aJA/8oBgJZ6PmHQ8Iud5Kt8z5QcGQgy4WAtMHIMQ3U0TQNjlFUg76T3i1OUzUTnc/SBFMOX66HwX8qwysUE9dfPyRJsVyB1Pzpn+TfQz+vZcSsI5zFY7l7Tzjlq3B43vO9tYdFot/5m3yygfGDG/nNV0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlSGs+Zd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DsBjmlfqx8+GZ8O9A7UxuiolaJs7ddgc2+R8xdfScACL70iRmJRRN4WLGJ02BIH+FipYDh3V9+POELAamuZVzRxUd4qndVT8IPFRlYRJyQiRapih6FCv9ImOBpoC2QLtra1ka2Gl6mv/JvwciU/DurXgwTe9IAIJsc9nnHj44hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRTXNbgL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlSGs+Zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CD91F000FF;
-	Wed, 23 Sep 2026 14:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRTXNbgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E371F00893;
+	Wed, 23 Sep 2026 14:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173651;
-	bh=k0JPni+3kk2Q+CPnMwyp/WwQL+PPkL1CllivE97wG9s=;
+	s=korg; t=1790173655;
+	bh=jgMKP9Uug9VMnKs/DOzMey+4Bbxye8zwqqUM/Y4nDN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlSGs+ZdVxj+MAq4eV4Gj2ip6I5zVEVNmUtcT6qQQrPCzEyWkZibSwgYtOhTlQHqP
-	 nbbjWhgwH0N2i9hRj4prtt2YUmvmg/ZJWjl7QHUDEXSyP+3dIbGM+p4c/Ch3GickYx
-	 sVksoBpAHHQjaka7GzSPUK5CWiCPdvKJCCfEKHRg=
+	b=VRTXNbgLpMg1Dmc9UJi+7zVgS5JtvMNG4XZpmn97Q+3FTjOCDJ9ODK/AJgXMsz5F0
+	 RsMiTogh2L3+6ha03mP4b9KiZUFSvNZbvvfHp6Sz9U7vOJVxv4oZ241vm0WI5u2BG0
+	 EF+u2l1UhkkZdMvXroiqEP4ofz9+SqugN//ee8ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nhat Pham <nphamcs@gmail.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kairui Song <kasong@tencent.com>,
-	Baoquan He <baoquan.he@linux.dev>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Cedric Le Goater <clg@redhat.com>,
+	Saravanan D <saravanand@crusoe.ai>,
+	Lance Yang <lance.yang@linux.dev>,
+	SJ Park <sj@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Barry Song <baohua@kernel.org>,
-	Chris Li <chrisl@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Youngjun Park <youngjun.park@lge.com>
-Subject: [PATCH 7.2 313/438] mm, swap: fix SWAP_USAGE_OFFLIST_BIT collision with real usage count
-Date: Wed, 23 Sep 2026 16:05:34 +0200
-Message-ID: <20260923140652.895943362@linuxfoundation.org>
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 314/438] mm/huge_memory: bypass THP tuneables for huge pfnmap mappings
+Date: Wed, 23 Sep 2026 16:05:35 +0200
+Message-ID: <20260923140652.925229019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -61,73 +63,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nhat Pham <nphamcs@gmail.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 12e9ac7bc5b254048f886bf421e3a15491106c1f upstream.
+commit e384abeb559d10d6505aec053ede9368d81d4c71 upstream.
 
-SWAP_USAGE_OFFLIST_BIT is embedded in the si->inuse_pages usage counter,
-and is meant to sit above any value that counter can reach.  However, it
-is defined from BITS_PER_TYPE(atomic_t), so it is bit 30.  On a system
-with 4 KiB pages the flag collides with the usage count once that count
-reaches 4 TiB.
+The sysfs THP tuneables at /sys/kernel/mm/transparent_huge_pages/ rather
+confusingly only control the behaviour of THP in some instances.
 
-swap_usage_in_pages() masks bit 30 out, so whenever the real count has
-that bit set, every caller of it reads 4 TiB low:
+They are not applicable to MADV_COLLAPSE operations, nor to DAX mappings.
 
-* /proc/swaps understates Used by 4 TiB.
+Long-term, THP is predicated upon compaction being able to obtain large
+folios to populate THP ranges.
 
-* A raw count of exactly 2^30 masks to zero, so try_to_unuse() takes its
-  "if (!swap_usage_in_pages(si)) goto success;" early exit and swapoff
-  tears the device down while pages are still swapped out. Nothing in
-  the rest of swapoff aborts the teardown, so those pages are lost.
+However, vm_normal_folio() returns NULL for PFN map mappings, thus their
+reference count is maintained by the driver, not core mm.
 
-Independently of swapoff, the collision also corrupts the counter and the
-plist.  On a device in normal use, a free that leaves bit 30 set in the
-count makes swap_usage_sub() see the flag where there is only count, and
-call add_to_avail_list().  It clears the bit with
-fetch_and(~SWAP_USAGE_OFFLIST_BIT), leaving the stored count 4 TiB below
-the real one, and calls plist_add() on a device that is already listed,
-tripping the WARN_ON(!plist_node_empty(node)) in plist_add() and linking
-the node a second time.
+As a consequence, the folios are not subject to reclaim nor compaction, so
+are not truly part of the THP mechanism at all.
 
-Change the definition of SWAP_USAGE_OFFLIST_BIT to be based on
-atomic_long_t instead.  Note that the usage counter field itself is of
-this same type, so it is still a valid bit.
+However, since commit 5dd40721f147 ("mm: allow THP orders for PFNMAPs")
+introduced the ability to establish huge PFN maps, they have been subject
+to THP tuneables.
 
-Link: https://lore.kernel.org/20260828191433.3304458-1-nphamcs@gmail.com
-Fixes: b228386cf237 ("mm, swap: clean up plist removal and adding")
-Signed-off-by: Nhat Pham <nphamcs@gmail.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260825153238.2695446-1-nphamcs%40gmail.com
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Kairui Song <kasong@tencent.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
+This is incorrect - if a huge PFN map is available (defined by
+vma->vm_ops->huge_fault being non-NULL for a VMA_PFNMAP_BIT VMA), then it
+should be mapped huge upon fault-in.
+
+Correct this by explicitly checking for this while ensuring that smaps
+continues to accurately report THPeligible statistics.
+
+While here, abstract the entire file-backed THP check in
+vma_can_map_huge_file(), with sensible separation of logic into helper
+functions.
+
+Note that drm_gem_shmem_mmap() and panthor_gem_mmap() establish huge PFN
+maps of shmem folios, however they are marked unevictable in
+drm_gem_get_pages(), and in any case would fail the reference check in
+__remove_mapping() even if they weren't.
+
+Failing to map huge PFN maps has resulted in significant real-world
+performance degradation, see links for details.
+
+[ziy@nvidia.com: rename some functions]
+  Link: https://lore.kernel.org/DL1HIHWYJ7TB.1CY76SJS0V03L@nvidia.com
+Link: https://lore.kernel.org/20260827-hugepfn-allowable-orders-v1-1-94819c8807c8@kernel.org
+Fixes: 5dd40721f147 ("mm: allow THP orders for PFNMAPs")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Cedric Le Goater <clg@redhat.com>
+Closes: https://lore.kernel.org/linux-mm/20260805055544.1568534-1-clg@redhat.com/
+Reported-by: Saravanan D <saravanand@crusoe.ai>
+Closes: https://lore.kernel.org/linux-mm/20260821070520.25759-1-saravanand@crusoe.ai/
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Saravanan D <saravanand@crusoe.ai>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: SJ Park <sj@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: Barry Song <baohua@kernel.org>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/huge_memory.c |   86 ++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 64 insertions(+), 22 deletions(-)
 
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -156,7 +156,7 @@ static struct swap_info_struct *swap_ent
-  * This bit will be set if the device is not on the plist and not
-  * usable, will be cleared if the device is on the plist.
-  */
--#define SWAP_USAGE_OFFLIST_BIT (1UL << (BITS_PER_TYPE(atomic_t) - 2))
-+#define SWAP_USAGE_OFFLIST_BIT (1UL << (BITS_PER_TYPE(atomic_long_t) - 2))
- #define SWAP_USAGE_COUNTER_MASK (~SWAP_USAGE_OFFLIST_BIT)
- static long swap_usage_in_pages(struct swap_info_struct *si)
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -92,7 +92,7 @@ unsigned long huge_anon_orders_madvise _
+ unsigned long huge_anon_orders_inherit __read_mostly;
+ static bool anon_orders_configured __initdata;
+ 
+-static inline bool file_thp_enabled(struct vm_area_struct *vma)
++static inline bool file_thp_enabled(const struct vm_area_struct *vma)
  {
+ 	struct inode *inode;
+ 
+@@ -118,6 +118,67 @@ static bool vma_is_special_huge(const st
+ 	return vma_test_any(vma, VMA_PFNMAP_BIT, VMA_MIXEDMAP_BIT);
+ }
+ 
++static bool vma_file_bypass_thp_tuneables(const struct vm_area_struct *vma,
++		enum tva_type type)
++{
++	const bool has_huge_fault = vma->vm_ops->huge_fault;
++
++	/* MADV_COLLAPSE ignores tuneables. */
++	if (type == TVA_FORCED_COLLAPSE)
++		return true;
++	/* Huge PFN mappings are uncompactable so the policy doesn't apply. */
++	if (vma_test(vma, VMA_PFNMAP_BIT) && has_huge_fault)
++		return true;
++	return false;
++}
++
++static bool vma_file_allow_thp_tuneables(vm_flags_t vm_flags)
++{
++	/* THP=always? */
++	if (hugepage_global_always())
++		return true;
++	/* THP=madvise and marked MADV_HUGEPAGE? */
++	if (hugepage_global_enabled() && (vm_flags & VM_HUGEPAGE))
++		return true;
++	return false;
++}
++
++static bool vma_file_check_thp_tuneables(const struct vm_area_struct *vma,
++		vm_flags_t vm_flags, enum tva_type type)
++{
++	return vma_file_bypass_thp_tuneables(vma, type) ||
++		vma_file_allow_thp_tuneables(vm_flags);
++}
++
++static bool vma_can_map_huge_file(const struct vm_area_struct *vma,
++		vm_flags_t vm_flags, enum tva_type type)
++{
++	const bool has_huge_fault = vma->vm_ops->huge_fault;
++
++	/*
++	 * Enforce THP collapse requirements as necessary. Anonymous vmas
++	 * were already handled in thp_vma_allowable_orders().
++	 */
++	if (!vma_file_check_thp_tuneables(vma, vm_flags, type))
++		return false;
++
++	switch (type) {
++	case TVA_PAGEFAULT:
++		/*
++		 * Trust that ->huge_fault() handlers know what they are doing
++		 * in fault path.
++		 */
++		return has_huge_fault;
++	case TVA_SMAPS:
++		if (has_huge_fault)
++			return true;
++		fallthrough;
++	default:
++		/* Only regular file is valid in collapse path. */
++		return file_thp_enabled(vma);
++	}
++}
++
+ unsigned long __thp_vma_allowable_orders(struct vm_area_struct *vma,
+ 					 vm_flags_t vm_flags,
+ 					 enum tva_type type,
+@@ -190,27 +251,8 @@ unsigned long __thp_vma_allowable_orders
+ 						   vma, vma->vm_pgoff, 0,
+ 						   forced_collapse);
+ 
+-	if (!vma_is_anonymous(vma)) {
+-		/*
+-		 * Enforce THP collapse requirements as necessary. Anonymous vmas
+-		 * were already handled in thp_vma_allowable_orders().
+-		 */
+-		if (!forced_collapse &&
+-		    (!hugepage_global_enabled() || (!(vm_flags & VM_HUGEPAGE) &&
+-						    !hugepage_global_always())))
+-			return 0;
+-
+-		/*
+-		 * Trust that ->huge_fault() handlers know what they are doing
+-		 * in fault path.
+-		 */
+-		if (((in_pf || smaps)) && vma->vm_ops->huge_fault)
+-			return orders;
+-		/* Only regular file is valid in collapse path */
+-		if (((!in_pf || smaps)) && file_thp_enabled(vma))
+-			return orders;
+-		return 0;
+-	}
++	if (!vma_is_anonymous(vma))
++		return vma_can_map_huge_file(vma, vm_flags, type) ? orders : 0;
+ 
+ 	if (vma_is_temporary_stack(vma))
+ 		return 0;
 
 
