@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B004374E64;
-	Wed, 23 Sep 2026 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A068306D2A;
+	Wed, 23 Sep 2026 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175240; cv=none; b=HJ1iF1QB1BNDI9ietBBPLNNdeZkAVAo5kYZ6RllBLU24bDgIKlp30HTUrMAfOVN5z3Ayn2nQiZ+rht/DL+aWZf45ThNAvtjTgLptCubPebEvezYDem1LrL+B96aK7/J2hOiaS1SOsZKnE9ZQdqgBq3HUeJfIb9w+hltyFTUh1ww=
+	t=1790175243; cv=none; b=QgR7mKizVWLT+Ue/I5bvsjpEPpjgTRDwxH85I5LRnNK3Y7rsQdPxvwer/Xq+hR+FqMytlFZOvbM6XK0OIZIT2iKkTh47B1NV3QkdMggQRQXbZoPF9/57YkbsNAOYsMU9N0C2mYR+YdACZDG7Vij0viRZzzlByrSkGUlTKzFEx8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175240; c=relaxed/simple;
-	bh=pjZSndSuZarcREDzDGzXwwCGKJuMBRbEBlGb3Zvnr9E=;
+	s=arc-20240116; t=1790175243; c=relaxed/simple;
+	bh=w9x/YYi/6IkHmnvs0qQjH0iErUxpZjULaTlCKWYefZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duwm03yLxtiu0p/bmLnQ7d7k3Bj1G92f8Gr3skSNQQa+9LfyismrZdlstU28f5BzCjSaYSmGHnz84IXrq4PeXelgdW70CMsxz6AiVIZhWW2hXJJuD6VTZvU81HCyuvju677mOtUtmvc2zXDdBCwK9x1j98PRElBVIkcxsTzIXvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNebK5wz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tOgrYfSb6C/M6+qABK0epbROc/vuAc9CM3F+v+BD7he6K64aFW2Zp5f9n8oZOY3MqabfqM57oxwomo4U83r0qiJG+KXfbbgB1aNL60Wp3dsxAP3q++woFwvLjNF6/PyNmhGJ2/82BeyxO27kzl0u+msrcAUK2ZFditI60GNGttA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BV1zHV7y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNebK5wz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767F51F000FF;
-	Wed, 23 Sep 2026 14:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BV1zHV7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B021F000FF;
+	Wed, 23 Sep 2026 14:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175239;
-	bh=3+j4+2iF6DTLRIPrxus90NO1Kb+fQhEWVU7gmkgD7LM=;
+	s=korg; t=1790175242;
+	bh=X7ewYrk22M1ihG654ya4PnkXUzUDoGr0n1aDeZWvQTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNebK5wzeQjGlswQmZLmSTnErvXmIxvWZUNTMgENWh39/OulyIE3mJJq7nLKE3gwt
-	 uZO6UszyWkdhu6x8lY39tDLljpHSm+j+k+0eDxvIf1jW0zIaUN6yRTGy0Pit8E2Wul
-	 Bmw6rzor/lfnh05Yn0eQKRG7gFojPBoML+R9B0y8=
+	b=BV1zHV7yT6mYmEq+s2ELXWWpKqRG0CEsXjKxZVYATgKBSPs4Ey2BpSmD8CoUKXwmJ
+	 P3dtg6WxLwXPROnC5R848INrAuBBVSY8eWbHgaxU8h2gik16TvsqVKgDrY5NHOgJf/
+	 7Ej0dW9vzgUn9tJGVLheWDm/oVvxLpfkXw8Yklvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
+	Xu Chunxiao <xuchunxiao3@huawei.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/398] xfrm: Refactor xfrm_input lock to reduce contention with RSS
-Date: Wed, 23 Sep 2026 16:07:19 +0200
-Message-ID: <20260923140652.897992788@linuxfoundation.org>
+Subject: [PATCH 6.18 366/398] xfrm: Fix dev use-after-free in xfrm async resumption
+Date: Wed, 23 Sep 2026 16:07:20 +0200
+Message-ID: <20260923140652.927563417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,107 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit 10a11861943902fda74f37f456b45183b2bca270 ]
+[ Upstream commit 8045c0df98d4f14c54e5cb875f1c9c0ce89fe4ff ]
 
-With newer NICs like mlx5 supporting RSS for IPsec crypto offload,
-packets for a single Security Association (SA) are scattered across
-multiple CPU cores for parallel processing. The xfrm_state spinlock
-(x->lock) is held for each packet during xfrm processing.
+xfrm async resumption hold skb->dev refcnt until after transport_finish.
+However, xfrm_rcv_cb may modify skb->dev to tunnel dev without taking
+device reference, such as vti_rcv_cb. The subsequent async resumption
+will decrement the tunnel device's reference count, which lead to uaf
+of tunnel dev and refcnt leak of orig dev as below:
 
-When multiple connections or flows share the same SA, this parallelism
-causes high lock contention on x->lock, creating a performance
-bottleneck and limiting scalability.
+unregister_netdevice: waiting for vti1 to become free. Usage count = -2
 
-The original xfrm_input() function exacerbated this issue by releasing
-and immediately re-acquiring x->lock. For hardware crypto offload
-paths, this unlock/relock sequence is unnecessary and introduces
-significant overhead. This patch refactors the function to relocate
-the type_offload->input_tail call for the offload path, performing all
-necessary work while continuously holding the lock. This reordering is
-safe, since packets which don't pass the checks below will still fail
-them with the new code.
+Stash the original skb->dev to fix refcnt imbalance. The new skb->dev set
+by xfrm_rcv_cb can race with device teardown. Extend rcu protection over
+xfrm_rcv_cb and transport_finish to prevent races.
 
-Performance testing with iperf using multiple parallel streams over a
-single IPsec SA shows significant improvement in throughput as the
-number of queues (and thus CPU cores) increases:
-
-+-----------+---------------+--------------+-----------------+
-| RX queues | Before (Gbps) | After (Gbps) | Improvement (%) |
-+-----------+---------------+--------------+-----------------+
-|         2 |          32.3 |         34.4 |             6.5 |
-|         4 |          34.4 |         40.0 |            16.3 |
-|         6 |          24.5 |         38.3 |            56.3 |
-|         8 |          23.1 |         38.3 |            65.8 |
-|        12 |          18.1 |         29.9 |            65.2 |
-|        16 |          16.0 |         25.2 |            57.5 |
-+-----------+---------------+--------------+-----------------+
-
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Fixes: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
+Reported-by: Xu Chunxiao <xuchunxiao3@huawei.com>
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Stable-dep-of: 3cf5cdecd99c ("xfrm: save input state data before secpath resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_input.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/ipv4/xfrm4_input.c |    2 --
+ net/ipv6/xfrm6_input.c |    2 --
+ net/xfrm/xfrm_input.c  |   29 ++++++++++++++++-------------
+ 3 files changed, 16 insertions(+), 17 deletions(-)
 
+--- a/net/ipv4/xfrm4_input.c
++++ b/net/ipv4/xfrm4_input.c
+@@ -76,8 +76,6 @@ int xfrm4_transport_finish(struct sk_buf
+ 	NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+ 		dev_net(dev), NULL, skb, dev, NULL,
+ 		xfrm4_rcv_encap_finish);
+-	if (async)
+-		dev_put(dev);
+ 	return 0;
+ }
+ 
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -71,8 +71,6 @@ int xfrm6_transport_finish(struct sk_buf
+ 	NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
+ 		dev_net(dev), NULL, skb, dev, NULL,
+ 		xfrm6_transport_finish2);
+-	if (async)
+-		dev_put(dev);
+ 	return 0;
+ }
+ 
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
-@@ -504,6 +504,7 @@ int xfrm_input(struct sk_buff *skb, int
- 		if (encap_type == -1) {
- 			async = 1;
- 			seq = XFRM_SKB_CB(skb)->seq.input.low;
-+			spin_lock(&x->lock);
- 			goto resume;
- 		}
- 		/* GRO call */
-@@ -540,6 +541,8 @@ int xfrm_input(struct sk_buff *skb, int
- 				XFRM_INC_STATS(net, LINUX_MIB_XFRMINHDRERROR);
- 				goto drop;
- 			}
-+
-+			nexthdr = x->type_offload->input_tail(x, skb);
- 		}
+@@ -464,6 +464,7 @@ int xfrm_input(struct sk_buff *skb, int
+ {
+ 	const struct xfrm_state_afinfo *afinfo;
+ 	struct net *net = dev_net(skb->dev);
++	struct net_device *dev = skb->dev;
+ 	int err;
+ 	__be32 seq;
+ 	__be32 seq_hi;
+@@ -490,7 +491,7 @@ int xfrm_input(struct sk_buff *skb, int
+ 					       LINUX_MIB_XFRMINSTATEINVALID);
  
- 		goto lock;
-@@ -637,11 +640,9 @@ lock:
- 			goto drop_unlock;
+ 			if (encap_type == -1)
+-				dev_put(skb->dev);
++				dev_put(dev);
+ 			goto drop;
  		}
  
--		spin_unlock(&x->lock);
--
- 		if (xfrm_tunnel_check(skb, x, family)) {
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
--			goto drop;
-+			goto drop_unlock;
- 		}
+@@ -652,16 +653,16 @@ lock:
  
- 		seq_hi = htonl(xfrm_replay_seqhi(x, seq));
-@@ -649,9 +650,8 @@ lock:
- 		XFRM_SKB_CB(skb)->seq.input.low = seq;
- 		XFRM_SKB_CB(skb)->seq.input.hi = seq_hi;
- 
--		if (crypto_done) {
--			nexthdr = x->type_offload->input_tail(x, skb);
--		} else {
-+		if (!crypto_done) {
-+			spin_unlock(&x->lock);
- 			dev_hold(skb->dev);
+ 		if (!crypto_done) {
+ 			spin_unlock(&x->lock);
+-			dev_hold(skb->dev);
++			dev_hold(dev);
  
  			nexthdr = x->type->input(x, skb);
-@@ -662,9 +662,9 @@ lock:
+ 			if (nexthdr == -EINPROGRESS) {
+ 				if (async)
+-					dev_put(skb->dev);
++					dev_put(dev);
+ 				return 0;
  			}
  
- 			dev_put(skb->dev);
-+			spin_lock(&x->lock);
+-			dev_put(skb->dev);
++			dev_put(dev);
+ 			spin_lock(&x->lock);
  		}
  resume:
--		spin_lock(&x->lock);
- 		if (nexthdr < 0) {
- 			if (nexthdr == -EBADMSG) {
- 				xfrm_audit_state_icvfail(x, skb,
+@@ -696,7 +697,7 @@ resume:
+ 		err = xfrm_inner_mode_input(x, skb);
+ 		if (err == -EINPROGRESS) {
+ 			if (async)
+-				dev_put(skb->dev);
++				dev_put(dev);
+ 			return 0;
+ 		} else if (err) {
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
+@@ -723,9 +724,12 @@ resume_decapped:
+ 		crypto_done = false;
+ 	} while (!err);
+ 
++	rcu_read_lock();
+ 	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
+-	if (err)
++	if (err) {
++		rcu_read_unlock();
+ 		goto drop;
++	}
+ 
+ 	nf_reset_ct(skb);
+ 
+@@ -736,8 +740,9 @@ resume_decapped:
+ 		if (skb_valid_dst(skb))
+ 			skb_dst_drop(skb);
+ 		if (async)
+-			dev_put(skb->dev);
++			dev_put(dev);
+ 		gro_cells_receive(&gro_cells, skb);
++		rcu_read_unlock();
+ 		return 0;
+ 	} else {
+ 		xo = xfrm_offload(skb);
+@@ -745,23 +750,21 @@ resume_decapped:
+ 			xfrm_gro = xo->flags & XFRM_GRO;
+ 
+ 		err = -EAFNOSUPPORT;
+-		rcu_read_lock();
+ 		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
+ 		if (likely(afinfo))
+ 			err = afinfo->transport_finish(skb, xfrm_gro || async);
+-		rcu_read_unlock();
+ 		if (xfrm_gro) {
+ 			sp = skb_sec_path(skb);
+ 			if (sp)
+ 				sp->olen = 0;
+ 			if (skb_valid_dst(skb))
+ 				skb_dst_drop(skb);
+-			if (async)
+-				dev_put(skb->dev);
+ 			gro_cells_receive(&gro_cells, skb);
+-			return err;
+ 		}
+ 
++		if (async)
++			dev_put(dev);
++		rcu_read_unlock();
+ 		return err;
+ 	}
+ 
+@@ -769,7 +772,7 @@ drop_unlock:
+ 	spin_unlock(&x->lock);
+ drop:
+ 	if (async)
+-		dev_put(skb->dev);
++		dev_put(dev);
+ 	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
+ 	kfree_skb(skb);
+ 	return 0;
 
 
