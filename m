@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E32A48A2BC;
-	Wed, 23 Sep 2026 14:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F8151CF76;
+	Wed, 23 Sep 2026 14:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174874; cv=none; b=hNNqlJiq1zcUwksAkg5+2GnaY2uc9Ez+8j/Dt/RA+VniJtxiTjKHU6/9OjchPI9dkc02ucTsVvZ8BWnDbpzOEdQlMPR7KaUEDR4Bmm9DBVOwUG8gbjePQjBoJuxXm6PrPfaGRMAxUvMX0JmE2K4+/dxESCxzy2L63/L89rBS+EI=
+	t=1790174877; cv=none; b=ZEl1/MUDS7mnybuhsj2LHULKVP+nhzX+b/OlxHnleUP0oEzWS3O+DZ1+KxWd6TbPEkxwjFwznkVRZH2B68kGLL37JveRooKenS6TdlCS2cCsx6iLsOppcqFIx9OthZtDrqLon2e10Vd26yUD7X97luvmTqwjKnIxNrA3h1iLu5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174874; c=relaxed/simple;
-	bh=EX5ebwjfuS2uFq3kCHQpcys/xDu4GZ3UOCBxrWzYkZ8=;
+	s=arc-20240116; t=1790174877; c=relaxed/simple;
+	bh=nBqMIs4KLke9tW0Lq2No0jGaFEKxWX21YozgH5aOPM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sx5deFJhzGSBlh5zih5gxUuKWoE9nErugod3DR0Vuv/4NcwASlk6oxHnWf00ymTSmmTueI2cfZTECHll8IYXOtpiI84bQpoaRks9JuJOY3ujALjaAtIu2zeT38OAEakO+eWl+MAX3jF+CaX85FPLEIJlaLay4NARKMf3AwmG9ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+AyJ3rj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=c3ECOHYpYbtoJNAIILAF76e/lYNMvYZhqEkA2OPi9ilJv1W2rKENA1JP3AjbF6siLpkSKYbNyVkIuwmIaLO9H5u7bfUrWcZagt3jMUY5VNaYyf8ov/se4pTen4dAHfmdzN7polWHUHLxLxZcdiCvT0r/SJQxG5BW+3fHtwbd9xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSeEJZA2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+AyJ3rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E551F000FF;
-	Wed, 23 Sep 2026 14:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSeEJZA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6641F000FF;
+	Wed, 23 Sep 2026 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174873;
-	bh=cWNB+96ZldweumdF4xZDeOAcl572RtclwEHiE03uR4s=;
+	s=korg; t=1790174876;
+	bh=ZxqvYLhtn1yvM7AJXDuA5ocpLW1arEKr3RUtUHa6bQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+AyJ3rj3QZjXmjxjU1ayQse0KsSFmDJoZwzJPvoBE8cWyHNDuyBMo/NcGvh3OZGr
-	 bL4VMzhl9/o9u2a4BnKOwOPUKFIs9x8tKF6S8YsPb4gZcXkkYoar9XffE6ZJstBShI
-	 MbWum4Ex9GH1ATg/Iiz1tTLwPwCAI6ld7/c64ATo=
+	b=eSeEJZA2eJrRzPDF9CepNYd5dAiLsaQAdczc018gfUDbCbF9JpCwrJruoVtwPkFq4
+	 Pxojfu4ma0WQGM/AlI/IGXrkNMnUQ/AXy8gRvZhOlFFgB8Kj/xy/rT3UHQC5lFHE/f
+	 CxbkMAxx5VFS54qZ4ptHF62A18maRKC4/cC2uzEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Siwei Zhang <fourdizhang@tencent.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 254/398] xfrm: serialize state GC with device state flush
-Date: Wed, 23 Sep 2026 16:05:28 +0200
-Message-ID: <20260923140650.000214739@linuxfoundation.org>
+Subject: [PATCH 6.18 255/398] xfrm: use hlist_del_init_rcu for state_cache and state_cache_input
+Date: Wed, 23 Sep 2026 16:05:29 +0200
+Message-ID: <20260923140650.025208001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -44,110 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Siwei Zhang <fourdizhang@tencent.com>
 
-commit 89fefad9f971bc637fb22373078144f2563c4be9 upstream.
+commit 2afb8dc1f4390f164db8352f8e685e126e9db566 upstream.
 
-The deferred-device pass in xfrm_dev_state_flush() finds states under
-xfrm_state_dev_gc_lock, but drops the lock before calling
-xfrm_dev_state_free() because the driver callback may sleep.  The device
-GC list does not hold an xfrm_state reference, so the state GC worker can
-destroy the same state concurrently.
+Commit 14acf9652e56 ("xfrm: defensively unhash xfrm_state lists in
+__xfrm_state_delete") converted bydst/bysrc/byseq/byspi from
+hlist_del_rcu() to hlist_del_init_rcu() so that a second
+__xfrm_state_delete() on the same object becomes a no-op rather than a
+write through LIST_POISON pprev. It missed state_cache and
+state_cache_input, which kept hlist_del_rcu():
 
-The race can proceed as follows:
+- hlist_del_rcu() leaves pprev = LIST_POISON2 (non-NULL), so
+  hlist_unhashed() returns false.
+- hlist_del_init_rcu() leaves pprev = NULL, so hlist_unhashed()
+  returns true.
 
-  CPU 0                               CPU 1
-  find x on the device GC list
-  drop xfrm_state_dev_gc_lock
-  read x->xso.dev
-                                      xfrm_state_gc_destroy(x)
-                                      xfrm_dev_state_free(x)
-                                      xfrm_state_free(x)
-  continue xfrm_dev_state_free(x)
+A second __xfrm_state_delete() therefore enters __hlist_del() on the
+already-deleted state_cache/state_cache_input nodes and does
+WRITE_ONCE(*pprev, next) through LIST_POISON2 — a write use-after-free
+once the slab is reused. The corruption can in turn cause a subsequent
+hlist_for_each_entry_rcu traversal to follow a dangling next pointer,
+producing the read use-after-free reported in xfrm_input_state_lookup().
 
-Both paths can invoke the driver callback and drop the device reference.
-CPU 0 can also access the xfrm_state after CPU 1 has freed it.
+Switch state_cache and state_cache_input to hlist_del_init_rcu() to
+match the other four lists, closing the write use-after-free and, with
+it, the read use-after-free it spawns.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in xfrm_dev_state_free+0x24c/0x2a0
-  Read of size 8 at addr ffff88810bbaa960 by task poc/102
-
-  Call Trace:
-   xfrm_dev_state_free+0x24c/0x2a0
-   xfrm_dev_state_flush+0x353/0x400
-   xfrm_dev_event+0x26d/0x3a0
-   notifier_call_chain+0xc0/0x280
-   __dev_notify_flags+0x169/0x250
-   netif_change_flags+0xe7/0x160
-   dev_change_flags+0x96/0x220
-   devinet_ioctl+0x7f4/0x1880
-
-  Allocated by task 87:
-   xfrm_state_alloc+0x1e/0x5c0
-   xfrm_add_sa+0xe7f/0x5820
-   xfrm_user_rcv_msg+0x4f3/0x940
-
-  Freed by task 57:
-   kmem_cache_free+0xcb/0x3d0
-   xfrm_state_gc_task+0x4a8/0x650
-   process_one_work+0x63a/0x1070
-
-Serialize xfrm_state destruction against the deferred-device pass with a
-mutex.  Keep xfrm_state_dev_gc_lock limited to list operations and retain
-the existing callback and device-reference release ordering.
-
-Fixes: 07b87f9eea0c ("xfrm: Fix unregister netdevice hang on hardware offload.")
+Assisted-by: CodeBuddy:GLM-5.2
+Fixes: 0045e3d80613 ("xfrm: Cache used outbound xfrm states at the policy.")
+Fixes: 81a331a0e72d ("xfrm: Add an inbound percpu state cache.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Siwei Zhang <fourdizhang@tencent.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/xfrm/xfrm_state.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/net/xfrm/xfrm_state.c
 +++ b/net/xfrm/xfrm_state.c
-@@ -226,6 +226,7 @@ static struct xfrm_state_afinfo __rcu *x
+@@ -826,9 +826,9 @@ int __xfrm_state_delete(struct xfrm_stat
+ 		if (!hlist_unhashed(&x->byseq))
+ 			hlist_del_init_rcu(&x->byseq);
+ 		if (!hlist_unhashed(&x->state_cache))
+-			hlist_del_rcu(&x->state_cache);
++			hlist_del_init_rcu(&x->state_cache);
+ 		if (!hlist_unhashed(&x->state_cache_input))
+-			hlist_del_rcu(&x->state_cache_input);
++			hlist_del_init_rcu(&x->state_cache_input);
  
- static DEFINE_SPINLOCK(xfrm_state_gc_lock);
- static DEFINE_SPINLOCK(xfrm_state_dev_gc_lock);
-+static DEFINE_MUTEX(xfrm_state_gc_mutex);
- 
- int __xfrm_state_delete(struct xfrm_state *x);
- 
-@@ -632,8 +633,10 @@ static void xfrm_state_gc_task(struct wo
- 
- 	synchronize_rcu();
- 
-+	mutex_lock(&xfrm_state_gc_mutex);
- 	hlist_for_each_entry_safe(x, tmp, &gc_list, gclist)
- 		xfrm_state_gc_destroy(x);
-+	mutex_unlock(&xfrm_state_gc_mutex);
- }
- 
- static enum hrtimer_restart xfrm_timer_handler(struct hrtimer *me)
-@@ -1000,6 +1003,7 @@ restart:
- out:
- 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
- 
-+	mutex_lock(&xfrm_state_gc_mutex);
- 	spin_lock_bh(&xfrm_state_dev_gc_lock);
- restart_gc:
- 	hlist_for_each_entry_safe(x, tmp, &xfrm_state_dev_gc_list, dev_gclist) {
-@@ -1014,6 +1018,7 @@ restart_gc:
- 
- 	}
- 	spin_unlock_bh(&xfrm_state_dev_gc_lock);
-+	mutex_unlock(&xfrm_state_gc_mutex);
- 
- 	xfrm_flush_gc();
- 
+ 		if (!hlist_unhashed(&x->byspi))
+ 			hlist_del_init_rcu(&x->byspi);
 
 
