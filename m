@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11CF5372FC;
-	Wed, 23 Sep 2026 14:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0316A530DFF;
+	Wed, 23 Sep 2026 14:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174885; cv=none; b=urd5pzblnP8nBpkCHutITVVZzYRBKf/0WU1tXB8/kYGG4AgpojIpUXh7ji9AOz8G9az4Ra4kV9UO15ud11fUN4yFANaN+JLHD46CBO3hZv0TZHs2yVHbPHGMWT06JVmGhVPugwy6LXZNhPi0u+jOuYehPQvjS9itnDoI+zyY5sg=
+	t=1790174889; cv=none; b=L+M0ZKhmXijNKYNSEIOtYa67KX/5fUBy/xnuQNarIMp+2rkpfbW0qYsdNfNMpur7y0bAK2uVb/ZdlxT0kUXLuRFvlctEQyuyqP62SlHzPsLFdTEXEVm6v+dhQ2c+UBH7xSMWCWLmSQVP4LjHQ2jkM6F1+bZ2GW93RIEBdeANlmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174885; c=relaxed/simple;
-	bh=9+1cw/S1DvnPW/1xXkcHvptt+slvIo/ivrBqzb6qN9s=;
+	s=arc-20240116; t=1790174889; c=relaxed/simple;
+	bh=GmROYx+opRd3/WBMdysuhoCPe99dd4gUtc+m0QEBGV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2HfyjC3BqMigu3iLI8LzX1rGsj4MljRsGCOf8pcIuZx9k/2qI8s+kso47D5G80XzlcuaU5l4XKarGFG2Sy3CWPQhSlsGVEFoHFI7tnF7ZEwWoR9gTygvbVnL7xzKQsYW6lq4XP8nMtEKqCDbSkQBt6Yt3EDEGJMTPZ0fEKlEtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOkc/GPf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qx9o0Fb/xrodc1ynMX8Qi0eLFc/dEmsJVdTrYXR7fgQDykaCOCBpcOCLsmW6Nfyu5rRiWri35kowzvLegLKfAHFYI3b5w3biGkW6oMGeSAa9Cc/AZ8AF53OklwBYIe+Yod4/Q+L0L5/FRX8QkKomh9P3ULoHIVA2dunGV8gZsik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acggRDIs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOkc/GPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094051F000FF;
-	Wed, 23 Sep 2026 14:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acggRDIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC3D1F000FF;
+	Wed, 23 Sep 2026 14:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174884;
-	bh=wAReV6725kUKBLI7DExAt8jI2t4lw3V7qejE8SDMxgM=;
+	s=korg; t=1790174887;
+	bh=JfHq/OPxPB4sCuMfRfdZybNF1q2NXIcS3YIIQS8P+CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOkc/GPfmuTKvJE+W2Sp4X0Vz8ijvkFO95ta9Z2YohjmGS72k+cSLGIq3sEwOa1qj
-	 5moeyeoJBAa35q4z2DpoEbICm1ffV8XUJnKGGwslTjsPZuNKHLnZvHEdYakA+JrQBK
-	 cZoxde4Bj5JeMeZMQRtm53hSttNnbGlwgcgLt6n0=
+	b=acggRDIsUixK3w9A14Eh2ZJiDxPBS4ZFmPAopwPF8V88J/S3Zdmj2sF3HTfL3a/9t
+	 OxEw5ghbtC5FIygTl9VLYnjOHFFtzCl75oyalg5DIfvMt0UQO3qVy6mEueUW/frq8m
+	 69K9hoPX2a32yy/n5DtOLZs+Sr1pxyTdlTTrbZF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.18 256/398] soc: samsung: exynos-pmu: fix use-after-free of interrupt generator node
-Date: Wed, 23 Sep 2026 16:05:30 +0200
-Message-ID: <20260923140650.051252098@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Muchun Song <muchun.song@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 257/398] memcg: avoid charging the root memcg from obj_cgroup_charge_pages()
+Date: Wed, 23 Sep 2026 16:05:31 +0200
+Message-ID: <20260923140650.076942355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,59 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 4dd1999783d7d12434006289338373e49492dc96 upstream.
+commit 6e673d0879ef78c395cfe0d3ba316690a60055d8 upstream.
 
-The setup_cpuhp_and_cpuidle() parses the device tree node for the
-interrupt generation block via of_parse_phandle() and decrements its
-reference count using of_node_put() immediately after fetching the resource
-address. However, later the intr_gen_node pointer is passed into
-of_syscon_register_regmap().
+obj_cgroup_charge_pages() resolves the objcg to its memcg and calls
+try_charge_memcg(), which does not short circuit the root memcg.  That
+memcg can be the root memcg: obj_cgroup_is_root() reflects the memcg the
+objcg was created for and is never updated, while memcg_reparent_objcgs()
+does redirect objcg->memcg to the parent on rmdir.  An objcg of a dying
+child of root therefore passes every obj_cgroup_is_root() filter but
+resolves to the root memcg.
 
-Fix this by declaring intr_gen_node with __free() and removing
-of_node_put().
+Folios keep the objcg they were charged with, so this is easy to reach
+through zswap: allocate anon memory in a cgroup, move the task out, remove
+the cgroup, then write to the root cgroup's memory.reclaim.  The reclaimed
+folios are charged through the reparented objcg and end up in
+refill_stock() with the root memcg:
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260513-exynos850-cpuhotplug-v4-0-54fec5f65362@linaro.org?part=3
-Fixes: 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for gs101")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20260828-exynos-pmu-cpuhp-idle-fixes-v2-1-06bce6107bd6@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20260917081641.72291-2-krzk@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+  WARNING: mm/memcontrol.c:2198 at refill_stock+0x644/0x940
+   refill_stock+0x644/0x940
+   try_charge_memcg+0x12d6/0x1570
+   __obj_cgroup_charge+0x35/0xf0
+   obj_cgroup_charge+0x1de/0x210
+   obj_cgroup_charge_zswap+0x83/0x270
+   zswap_store+0x1620/0x2000
+   swap_writeout+0x94c/0x14c0
+   shrink_folio_list+0x3388/0x52b0
+   [...]
+   try_to_free_mem_cgroup_pages+0x30d/0x830
+   user_proactive_reclaim+0x504/0x840
+   memory_reclaim+0x1f/0x30
+
+Beyond the warning, the charge is asymmetric: obj_cgroup_uncharge_pages()
+skips refill_stock() for the root memcg, so the root's page counter grows
+and is never uncharged.  It is not user visible, since memory.current is
+not exposed on the root, but it is a leak.
+
+Use try_charge(), which returns early for the root memcg, restoring the
+symmetry with obj_cgroup_uncharge_pages().
+
+The above sequence was scripted into a standalone reproducer (zswap on,
+swap on a virtio disk, 512MB of anon memory faulted in inside a child of
+the root cgroup, the task then migrated to the root cgroup, the child
+removed, followed by "echo 600M swappiness=max > memory.reclaim" on the
+root) and run in a CONFIG_DEBUG_VM=y VM.  It reproduces the splat on the
+first zswap store of a reparented folio, with the same call chain as the
+report.  With this patch applied the splat is gone while the zswap store
+count over the run is unchanged, so the same path is still exercised.
+cgroup selftests test_zswap, test_kmem and test_memcontrol show no new
+failures.
+
+Link: https://lore.kernel.org/20260829023251.474083-1-shakeel.butt@linux.dev
+Fixes: 20d6c1725228 ("memcg: avoid refill_stock for root memcg")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/all/CA+0ovCgWzUMK+nNbbtH7eV65Ca=fDN4Ozu7iASgryjvv8Tk8zQ@mail.gmail.com/
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/samsung/exynos-pmu.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ mm/memcontrol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/samsung/exynos-pmu.c
-+++ b/drivers/soc/samsung/exynos-pmu.c
-@@ -540,13 +540,12 @@ static struct notifier_block exynos_cpup
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2812,7 +2812,7 @@ static int obj_cgroup_charge_pages(struc
  
- static int setup_cpuhp_and_cpuidle(struct device *dev)
- {
--	struct device_node *intr_gen_node;
-+	struct device_node *intr_gen_node __free(device_node) =
-+		of_parse_phandle(dev->of_node, "google,pmu-intr-gen-syscon", 0);
- 	struct resource intrgen_res;
- 	void __iomem *virt_addr;
- 	int ret, cpu;
+ 	memcg = get_mem_cgroup_from_objcg(objcg);
  
--	intr_gen_node = of_parse_phandle(dev->of_node,
--					 "google,pmu-intr-gen-syscon", 0);
- 	if (!intr_gen_node) {
- 		/*
- 		 * To maintain support for older DTs that didn't specify syscon
-@@ -562,8 +561,6 @@ static int setup_cpuhp_and_cpuidle(struc
- 	 * syscon provided regmap.
- 	 */
- 	ret = of_address_to_resource(intr_gen_node, 0, &intrgen_res);
--	of_node_put(intr_gen_node);
--
- 	virt_addr = devm_ioremap(dev, intrgen_res.start,
- 				 resource_size(&intrgen_res));
- 	if (!virt_addr)
+-	ret = try_charge_memcg(memcg, gfp, nr_pages);
++	ret = try_charge(memcg, gfp, nr_pages);
+ 	if (ret)
+ 		goto out;
+ 
 
 
