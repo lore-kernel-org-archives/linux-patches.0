@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F151CF6B;
-	Wed, 23 Sep 2026 14:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE32F391832;
+	Wed, 23 Sep 2026 14:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174736; cv=none; b=TPLgBZcNhrPrj782FFor2gtmlznMevy8KVc1vD8BC4qL6ZqPV7JvE0GvKCYZdYDry5XKsiyjvuCsPFh2JZTPchS8XOsB3AExI4707Ag+Yg2c/ZVEfNbb4asYG+usc/zqcHB9Di3HzWLE6gS0ZpN22wlEQT1VsmnmdDcjJVWygdo=
+	t=1790174740; cv=none; b=mZnasECI1kyfss/5S4DVotyd9H+esK2ej08zAeWdmGHhZRhnfG2R7p81qBGm3z9i6Tu80XlAPuHeN9++jzp77Vv8y34YLcCgvzQKHEI/8JPubb6tQ2p26oG1aGT6R+IwdRRLpqZCpnKJD53hhLUTg1BkjG7qIACzY25yXoKB3j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174736; c=relaxed/simple;
-	bh=3uR5e++nKjLUejUeKRoEbelC6gDod9llDihaIWBslj8=;
+	s=arc-20240116; t=1790174740; c=relaxed/simple;
+	bh=pA86XsBFU5wxKpf58K54aeEdXiiCPKln8HUhUF5cOaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNfZKEy2GwT9YK8f/k1snGY0CKleVC/ubFW3NlF0lsts1g3ASXynbOlXKM+8uiGEU3FYeiBOb6Hm04Vhlxyo/8ByxYjlXm5qR/dpS0HsXWzT1rrOluWAxp3TOOqeqxKU5088M08TlDJVXce4Svazv9vSS57pFNgtvVButYwVgIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytk0/UoQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+m/wz64KaMm1b9UX52/+SDVARidZ1WI2POilBkJDkOh2W9eyUDXg+gHSYRxaexpnaivV2qr7Au8YmK9NKylEKuwYAQGQVhdS4DdU8eSytGu3OPy2LRzv7nRmnW20Zj/XWmHg//hoKmVZ7OdrWt6qhPRWKqutlon5oXWD8ubB3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqbiMfly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytk0/UoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FB11F00899;
-	Wed, 23 Sep 2026 14:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqbiMfly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB651F000FF;
+	Wed, 23 Sep 2026 14:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174735;
-	bh=TtQiX7xCxSDXyAL1LU0SXG6+U7p1nYzUe0UlXGo2Ro0=;
+	s=korg; t=1790174738;
+	bh=v1+Q8cfLAvuvr8TaZ9dNn+foFPlOPlzT8SDoY3g0StQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ytk0/UoQdT50ao8rl2dHU3TdsYlwcne4SmDpMpejZQdCqiZ7SMlIDMDeRignOCMOY
-	 OllMrsDjhinUvKf/7aPZpkC8xvdgz6nupgIMKDWHhR0/yX/T1f7gU7hPedtQUfnjl9
-	 3niSJ3O0HJ29cxP3bLuYb5XvCZf9zHn9ZjolMNhA=
+	b=RqbiMflyqIsa1UtvrtIPXVJlwxns6oECJfoc3bUdq53/bnFOsVG5p/a7cP2ciHeom
+	 7YZLdz6QYSNFqCMEqUUTR9ZIauQnm8fT+TkIkbDiMA3oMvzQ4U7gBOUEGDr+e4ss3r
+	 laPkNH7EW4zowLHvSukoW4of0S9X2Q8I+oLnj43Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/398] ASoC: amd: acp: bounds-check SoundWire link ID in machine drivers
-Date: Wed, 23 Sep 2026 16:04:02 +0200
-Message-ID: <20260923140647.789615339@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.18 203/398] ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()
+Date: Wed, 23 Sep 2026 16:04:37 +0200
+Message-ID: <20260923140648.684384598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,72 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 29218a4d11a31a8157389bc2b9e62dd768d7ea42 ]
+commit 0d1cb83337f13af082afb68b28d3fdfe29cde7fb upstream.
 
-Add a bounds check in create_sdw_dailink() to validate that the
-SoundWire link ID derived from link_mask does not exceed the maximum
-supported by the platform. If the link ID is out of range or link_mask
-is zero, log an error and return -EINVAL to prevent accessing invalid
-CPU pin ID tables.
+of_find_device_by_node() takes a reference on the port platform device,
+which is only used to look up its port regulator and is never released,
+neither on success nor on the error paths. Drop the reference with
+put_device() once the regulator has been obtained, which covers both the
+success and error paths.
 
-Applied to both acp-sdw-sof-mach.c and acp-sdw-legacy-mach.c.
-
-Fixes: 6d8348ddc56e ("ASoC: amd: acp: refactor SoundWire machine driver code")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260910161728.1452808-2-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c7d7ddee7e24 ("ata: libahci: Allow using multiple regulators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260915065933.1733061-1-vulab@iscas.ac.cn
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 10 ++++++++++
- sound/soc/amd/acp/acp-sdw-sof-mach.c    |  9 +++++++++
- 2 files changed, 19 insertions(+)
+ drivers/ata/libahci_platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index ac955a9b51dc3..09387accd1269 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -189,6 +189,16 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 			return -EINVAL;
- 		}
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -623,10 +623,10 @@ struct ahci_host_priv *ahci_platform_get
+ 			of_platform_device_create(child, NULL, NULL);
  
-+		if (!soc_end->link_mask) {
-+			dev_err(dev, "invalid zero link_mask\n");
-+			return -EINVAL;
-+		}
-+		if ((ffs(soc_end->link_mask) - 1) >= amd_ctx->max_sdw_links) {
-+			dev_err(dev, "link_id %d exceeds max_sdw_links %d\n",
-+				ffs(soc_end->link_mask) - 1, amd_ctx->max_sdw_links);
-+			return -EINVAL;
-+		}
-+
- 		switch (amd_ctx->acp_rev) {
- 		case ACP63_PCI_REV:
- 			ret = get_acp63_cpu_pin_id(ffs(soc_end->link_mask - 1),
-diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-index 14d6e31d50408..d365c51bb99c1 100644
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -121,6 +121,15 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 			return -EINVAL;
- 		}
- 
-+		if (!sof_end->link_mask) {
-+			dev_err(dev, "invalid zero link_mask\n");
-+			return -EINVAL;
-+		}
-+		if ((ffs(sof_end->link_mask) - 1) >= amd_ctx->max_sdw_links) {
-+			dev_err(dev, "link_id %d exceeds max_sdw_links %d\n",
-+				ffs(sof_end->link_mask) - 1, amd_ctx->max_sdw_links);
-+			return -EINVAL;
-+		}
- 		switch (amd_ctx->acp_rev) {
- 		case ACP63_PCI_REV:
- 			ret = get_acp63_cpu_pin_id(ffs(sof_end->link_mask - 1),
--- 
-2.53.0
-
+ 			port_dev = of_find_device_by_node(child);
+-
+ 			if (port_dev) {
+ 				rc = ahci_platform_get_regulator(hpriv, port,
+ 								&port_dev->dev);
++				put_device(&port_dev->dev);
+ 				if (rc == -EPROBE_DEFER)
+ 					goto err_out;
+ 			}
 
 
