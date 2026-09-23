@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C1E52FE48;
-	Wed, 23 Sep 2026 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4184752B1F7;
+	Wed, 23 Sep 2026 14:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173252; cv=none; b=s1j74n5brAZi4KTWDrn530LjZvJ0IRFlNKMAPuKNTltZ3uCSE4g8x4OItgUdAU6WAZ5DHrSVxyztuQgWCM9pafui4sSy4rDjZk/kV6y7jwquOk/spWUCRywgNU7LuYQD0o9mNjQD5e2/mJaWc1adzFPT+ozSwgiLvqlDv/3edXg=
+	t=1790173255; cv=none; b=dDlhQvaNgJjKxXmU35ZeS+ETea84L/cepLiO7ABKlfh4kAxa0ytsGPvI29Y9v8f/ciNUIS3agIrQ1Oumz6bOcj6tHK8Oh7o1BASTRwVEGvD4IrqBRHm4jirg7gwKlagNMHR7WXa7FGpzOb3zf4/r5Nd8lzm9gHvBqL3V1lKMLAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173252; c=relaxed/simple;
-	bh=us6Auv/6ts6IqJ5oeunK1/jj1sUuejQeoSCEwxQsMiE=;
+	s=arc-20240116; t=1790173255; c=relaxed/simple;
+	bh=hXLs16eDx5NVvD0Qy8+mSglFbcEIILhVC09j8a76aSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7yw2LsFc90dwwrdV7wCUwdG8nZkcyGbKD3KmxBD9EVGVbQ/xbmPpAh6iziW16G8nQARWOx9CJCbyImex+N5KeCwT7R0XEqdxrVw015EQE9/87ilZse8N9ZgsvFQIWsUCKML41IKZRoBTtv8aBN8psKrtvfH6InhixiNBtsuwAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTeejIc2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d3z6narW86uzb5eZXCvo2gT4TBU0pC+0ZiNQcY5/GfLNVf07XYOfTW/V1rCWYDIWcwT+IZSt3dBfL6jAzgWwQSsA/zbq6Ax32a9fllDTd/WR0EzquaG4WW+GRxVKSu9lP2zi69upoNeXQMktkyUpG9M29Wni2soU0i/XZsDhcx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdfMvhtt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTeejIc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494221F000FF;
-	Wed, 23 Sep 2026 14:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdfMvhtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EA51F000FF;
+	Wed, 23 Sep 2026 14:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173250;
-	bh=lYxqyfO4ZHby8feiYFO5XjXsjVFWLP2DzpXLSTSJEMo=;
+	s=korg; t=1790173253;
+	bh=739OqC81eRBF62d6Cf0eXvPq+7kosTkntT/QC4W01xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTeejIc2SfwMRGrAsbbrFUuk+xZASb+WVx4u9ph42gMpZwWQnU3PAP8hWJ7MWyyi7
-	 9Vyv+nZsIg+w56TJr7aaL3CB1YIkgRtUEfm/uPItVbtpF1N4417xvCaNG5XkdKNibY
-	 6w0Ah9MKqmnxx7zjo89QfRvB5Rv3EfmqqBSjK5vo=
+	b=fdfMvhttD8hHUlGUFaZXPSMaDCKwhoXkVhZ1EzxsEIjkRzT4NR/L7BpSKGZb2wvWn
+	 egDPQuylJaGbsTmm4dvc+j9u+vk11ER3OBvuxdt51oGx06Cm/3A+85N5W/CSim02us
+	 jVuYvmGv9dgAQ87ld5zGiRUR844S47q2JDcFw/yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ilia Levi <ilia.levi@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 154/438] seg6: set IPSKB_L3SLAVE from IP6SKB_L3SLAVE on IPIP decapsulation
-Date: Wed, 23 Sep 2026 16:02:55 +0200
-Message-ID: <20260923140648.761331883@linuxfoundation.org>
+Subject: [PATCH 7.2 145/438] drm/xe/mmio_gem: use write-back mapping for dummy page
+Date: Wed, 23 Sep 2026 16:02:46 +0200
+Message-ID: <20260923140648.530194369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,61 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Ilia Levi <ilia.levi@intel.com>
 
-[ Upstream commit 7616242a2b37883f7322aaa1d2bd6cd0fed28315 ]
+[ Upstream commit 819f189265a5955da743e78e20a713a038982e89 ]
 
-When an SRv6 packet arrives on an interface enslaved to a VRF,
-vrf_ip6_rcv() sets IP6SKB_L3SLAVE in IP6CB, but decap_and_validate()
-has never set IPSKB_L3SLAVE in IPCB. The bit stayed clear in the
-common case, and with CONFIG_IPV6_MIP6 the leftover frag_max_size of
-a reassembled outer packet could even set it, with no VRF involved.
-Commit 44930446dde4 ("ipv6: seg6: clear IPv4 control block on IPIP
-decapsulation") then made the unreliable bit reliably clear.
+Currently vmf_insert_pfn() maps the dummy page as UC, inheriting the
+VMA's page protection which was set for the real MMIO region. This
+conflicts with the direct map's WB mapping of the same page, creating a
+cache type alias which is architecturally undefined on some platforms.
 
-The effect of the missing flag is visible with End.DX4 when a
-delivery to a local address of the node reaches the socket lookup.
-For example, a UDP socket bound to the enslaved ingress interface
-does not receive any of the decapsulated packets, while an unbound
-socket outside the VRF does.
-This contradicts Documentation/networking/vrf.rst: by default the
-scope of an unbound UDP or TCP socket is limited to the default VRF.
+Use vmf_insert_pfn_prot() with a WB pgprot instead. Also simplify to
+fault in the requested page instead of the whole VMA.
 
-Set IPSKB_L3SLAVE for IPv4 in decap_and_validate(), which already does
-the same for IPv6. The socket lookup then matches the decapsulated
-packet like any other packet received on that enslaved interface. Such
-a packet matches an unbound UDP or TCP socket only when
-udp_l3mdev_accept or tcp_l3mdev_accept is set.
-
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260913194421.31-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1ffcf8b8ae8a ("drm/xe: Support for mmap-ing mmio regions")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260525125801.975038-6-ilia.levi%40intel.com
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Ilia Levi <ilia.levi@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260908165046.1393557-12-matthew.auld@intel.com
+(cherry picked from commit 1e8e28e35df0e77ae1b22fc091c1f422f62fa5e9)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_mmio_gem.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 7b52122201858..d1070aec7b72b 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -257,10 +257,13 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
- 		return false;
+diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.c b/drivers/gpu/drm/xe/xe_mmio_gem.c
+index f15a6a84af159..418a24bdfa4ed 100644
+--- a/drivers/gpu/drm/xe/xe_mmio_gem.c
++++ b/drivers/gpu/drm/xe/xe_mmio_gem.c
+@@ -172,14 +172,13 @@ static void xe_mmio_gem_release_dummy_page(struct drm_device *dev, void *res)
+ 	__free_page((struct page *)res);
+ }
  
- 	if (proto == IPPROTO_IPIP) {
-+		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+-static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
++static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_fault *vmf)
+ {
++	struct vm_area_struct *vma = vmf->vma;
+ 	struct drm_gem_object *base = vma->vm_private_data;
+ 	struct drm_device *dev = base->dev;
+-	vm_fault_t ret = VM_FAULT_NOPAGE;
+ 	struct page *page;
+ 	unsigned long pfn;
+-	unsigned long i;
  
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		IPCB(skb)->iif = iif;
-+		if (l3slave)
-+			IPCB(skb)->flags |= IPSKB_L3SLAVE;
- 	} else if (proto == IPPROTO_IPV6) {
- 		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+ 	page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (!page)
+@@ -190,16 +189,8 @@ static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
+ 
+ 	pfn = page_to_pfn(page);
+ 
+-	/* Map the entire VMA to the same dummy page */
+-	for (i = 0; i < base->size; i += PAGE_SIZE) {
+-		unsigned long addr = vma->vm_start + i;
+-
+-		ret = vmf_insert_pfn(vma, addr, pfn);
+-		if (ret & VM_FAULT_ERROR)
+-			break;
+-	}
+-
+-	return ret;
++	return vmf_insert_pfn_prot(vma, vmf->address, pfn,
++				   vm_get_page_prot(vma->vm_flags));
+ }
+ 
+ static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
+@@ -219,7 +210,7 @@ static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
+ 		 * It is assumed the userspace will receive the notification via some
+ 		 * other channel (e.g. drm uevent).
+ 		 */
+-		return xe_mmio_gem_vm_fault_dummy_page(vma);
++		return xe_mmio_gem_vm_fault_dummy_page(vmf);
+ 	}
+ 
+ 	for (i = 0; i < base->size; i += PAGE_SIZE) {
 -- 
 2.53.0
 
