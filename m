@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35ED2535FA9;
-	Wed, 23 Sep 2026 14:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0578848E0E7;
+	Wed, 23 Sep 2026 14:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173760; cv=none; b=ks+auBZuqBg1Gec9ioyAswuFPLr0OK1L0gE2MhAm2ywADWuSyFiq3jTR/Cw/6ZpBGjVn89GQh9fdUHPjdzn1Ybe6LeSWTYpFb3uLCzt2cJ9DPrplum0ahQKbbFSO1lIttvI/h7VWCuJIFNxip0GrJB8XZeV9E769PETkiLrK0VU=
+	t=1790173763; cv=none; b=RnFs2K2qjA7Sd4rfBMxW+tn6eh2LWo2TzcoCUMabJIONtAAsJ6bB/9xpVpRGUYRYd2ydT+qutEJ1jPEXMMk+2Um6wPxAe1UD0jwuibML2ktRDcuKl7nYZzRd0uXsuWnYuhqVJwClDQUdyYIj/xPr7r8eqt7yMMH3IWlFiLoHj/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173760; c=relaxed/simple;
-	bh=QhMhU43O1BNrGbyDrNDuLsX5LuAkIfX3Flg+AXqX8IU=;
+	s=arc-20240116; t=1790173763; c=relaxed/simple;
+	bh=Y/chAPsKtVn3UQQ2cpm2P+/fLcPle9ivNtoU79ydjao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qdr3spuzy2ex2hAbMi2X5T2mJ+3+VOH/G4IAyGYuNuFP/kvKDi8HlZui/HLOEtoNdPRw3daDeGRNU53LkFe/DUWItBbJRFUurXq1aTsMddWU/GjigutKOZVeKyNWSS01xZVBlpXtTpLqfOZ5iiMhu4IOvVGaQIqKJweapVdRr+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb9B8rR1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o3PnpsgJY1KA65ZiXgboT3Rt3oJ6yeT/kK5Fder/CqexYGhYciP828bQBSjdGkR4iyugPtUfbk1sJAmQZx8KtLXqhXhFsLd3xcNhMpI1q1v/RYDBdhfBEQpTpeyFGM0RDV2Kr4Pk7IgNgGgvZj+trt35pPvEQxpjKNQP2AGejgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJkeXIwh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb9B8rR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395361F000FF;
-	Wed, 23 Sep 2026 14:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJkeXIwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486421F000FF;
+	Wed, 23 Sep 2026 14:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173758;
-	bh=f9LElnOVAUlMeV1EDz3EfmN5+LGlnVQvGeKGCNk0XXw=;
+	s=korg; t=1790173761;
+	bh=CgrjqP0m7ofjFcOjmT+fjQbTfs7Eg5wdjf75unrO770=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vb9B8rR1agmyrkNdVtwsjV5c2kei0Jy8htG9zaOw/ez8V67YH0rqreO9KxgMorvWs
-	 XVoiEh76L2bUATSCH+Ob2yl15AndkUxoM5FpDOvAv3hSsk3VQncjnwiUO8OPPtt+m4
-	 4lA2GGlNP2OV4gFDpYOk6pOnufRGqCeMH8eYWYqA=
+	b=AJkeXIwh0SZurlmupfeIjyKTCF2r2IHzo7jMCJkJsqEIxXbgCvIRru1UqIMI9qOT+
+	 UBtFs2M7f3t//RL6VFto54x+9/Ql0W+oA89MKnjg2/MUt5mkZuomJxKn/l6WTGQYNy
+	 jmR+uEU1LZ7gIHyLg5Po2rgmPNrhgbgZ2SiLDlxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 300/438] net: wwan: mhi_wwan_mbim: check skb_copy_bits() return value
-Date: Wed, 23 Sep 2026 16:05:21 +0200
-Message-ID: <20260923140652.554804166@linuxfoundation.org>
+Subject: [PATCH 7.2 301/438] net/sched: act_api: release tail references on DELACTION failure
+Date: Wed, 23 Sep 2026 16:05:22 +0200
+Message-ID: <20260923140652.580768708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,82 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 31550d585589fde1ae95bf7f7a8188b2d2fdf1c7 upstream.
+commit 6e05e46fa821a5c1b281355f1f622ac76cb6080a upstream.
 
-mhi_mbim_rx() ignores the return value of skb_copy_bits() when it
-copies each datagram out of the NTB.  The datagram offset and length
-come from the DPE, which is only checked to lie within the NTB
-itself, so a modem can point a datagram outside the received skb.
-The copy then fails and the freshly allocated skbn is passed to
-netif_rx() with its uninitialized contents still in place, leaking
-kernel heap memory into the network stack.
+A batched RTM_DELACTION request takes a temporary reference on each
+action before attempting any deletion. tcf_action_delete() clears
+each processed slot and drops its temporary reference before attempting
+the deletion. If deletion fails, tca_action_gd() calls
+tcf_action_put_many() to release the remaining references, but its
+tcf_act_for_each_action() iterator stops at the first NULL slot.
 
-Free the skb and account an error when the copy fails.
+When a batch stops at an action bound to a filter, this leaks a
+reference on each subsequent action. A later delete of an unbound
+action can then return success without removing it from the IDR.
 
-Fixes: aa730a9905b7 ("net: wwan: Add MHI MBIM network driver")
+Walk the full array in tcf_action_put_many() and skip NULL slots to
+release the references held on the unprocessed actions.
+
+Fixes: a0e947c9ccff ("net/sched: act_api: avoid non-contiguous action array")
 Cc: stable@vger.kernel.org
-Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Verified in a QEMU guest with a fault injector pointing a DPE
-outside the received NTB: the copy fails, and the unpatched driver
-hands the uninitialized skbn to the network stack (observed as
-"unknown protocol" on bytes that were never written).  With this
-check the failed datagram is dropped and counted as an rx error.
-
-Changes in v2: factor the free-and-count sequence out into
-mhi_mbim_rx_drop(), shared with the unknown-protocol path, as
-suggested by Loic Poulain.
-
-Link: https://patch.msgid.link/20260911021734.1396599-2-zhugl3@xiaopeng.com
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260910093413.34509-2-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/mhi_wwan_mbim.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/sched/act_api.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wwan/mhi_wwan_mbim.c
-+++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -251,6 +251,14 @@ static int mbim_rx_verify_ndp16(struct s
- 	return ret;
- }
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1218,11 +1218,16 @@ static int tcf_action_put(struct tc_acti
  
-+static void mhi_mbim_rx_drop(struct mhi_mbim_link *link, struct sk_buff *skb)
-+{
-+	dev_kfree_skb_any(skb);
-+	u64_stats_update_begin(&link->rx_syncp);
-+	u64_stats_inc(&link->rx_errors);
-+	u64_stats_update_end(&link->rx_syncp);
-+}
-+
- static void mhi_mbim_rx(struct mhi_mbim_context *mbim, struct sk_buff *skb)
+ static void tcf_action_put_many(struct tc_action *actions[])
  {
- 	int ndpoffset;
-@@ -320,7 +328,10 @@ static void mhi_mbim_rx(struct mhi_mbim_
- 				continue;
+-	struct tc_action *a;
+ 	int i;
  
- 			skb_put(skbn, dgram_len);
--			skb_copy_bits(skb, dgram_offset, skbn->data, dgram_len);
-+			if (skb_copy_bits(skb, dgram_offset, skbn->data, dgram_len)) {
-+				mhi_mbim_rx_drop(link, skbn);
-+				continue;
-+			}
- 
- 			switch (skbn->data[0] & 0xf0) {
- 			case 0x40:
-@@ -332,10 +343,7 @@ static void mhi_mbim_rx(struct mhi_mbim_
- 			default:
- 				net_err_ratelimited("%s: unknown protocol\n",
- 						    link->ndev->name);
--				dev_kfree_skb_any(skbn);
--				u64_stats_update_begin(&link->rx_syncp);
--				u64_stats_inc(&link->rx_errors);
--				u64_stats_update_end(&link->rx_syncp);
-+				mhi_mbim_rx_drop(link, skbn);
- 				continue;
- 			}
- 
+-	tcf_act_for_each_action(i, a, actions) {
+-		const struct tc_action_ops *ops = a->ops;
++	/* Deletion may have cleared entries before failing. */
++	for (i = 0; i < TCA_ACT_MAX_PRIO; i++) {
++		struct tc_action *a = actions[i];
++		const struct tc_action_ops *ops;
++
++		if (!a)
++			continue;
++		ops = a->ops;
+ 		if (tcf_action_put(a))
+ 			module_put(ops->owner);
+ 	}
 
 
