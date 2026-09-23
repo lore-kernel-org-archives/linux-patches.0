@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9257D418368;
-	Wed, 23 Sep 2026 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E406A334C3B;
+	Wed, 23 Sep 2026 14:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173289; cv=none; b=KGdMzpopTJLaDG6nlp40IAE/bdlZwEfGbcXVpcSsUU4qhul4wxrMf1KyA64TKomWrb0lyBfJfpddxPzH4AeVCGyI6WHDykVoBe1183yBok4hoS8XyxkYTsbWQGct025Z4zeKATC75TKqXtmrk76BJkH/rtGKOjg02rVBtm7a5WQ=
+	t=1790173293; cv=none; b=e6ggjtMsLHbwOk4F4xGYs+JTP2ulzOQif82Mbg4sVGPpVrqyUmTEN76YTp/f/X3u5AfdlXQ5MaE4tWa65NthpkAWIyKFXzI7O5LA5mYVOqOteKujdCDAAGhDlmu3/X1t5YyC2Wmj3KAJTwYYCzdVpMh+cH6y3OFv7m2v9tRJuV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173289; c=relaxed/simple;
-	bh=qLr8yRpgg+rSNeRoMMIZ2YZ1lbWLdW4ADK9zeCkucFY=;
+	s=arc-20240116; t=1790173293; c=relaxed/simple;
+	bh=wRaOBCX6i3Ppmn9/X3R8HYwPzYCoFkZI5GpdDp6MGt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXy9ubMmi/hvmF0I7eFSn8SurM0MWoNevhYCUoydsmaUnfw8Pt4NhttgsG35bvQf9J6pPPw7gisxFngug2qDroZKCRnDlePvqhb96oV86WvTsgO5EGDTI2ovm92rJdtkgfGkiyj/w+9P7bMjEoWNah1ZSZov/8X7u4QmpCQp/w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8S3C4n6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EBpszYzW7qMCMx4MGDCwezmAewbTjykxk+eZEK6l1DAJtmkHB8BUY+T5kFXdcM5S2vq/XAmPoskGwO43Z8GqIsL7oCJQixsQv0OfgQm/Im1pelTjS5dQVcYHowQzKZGNXjWInD1pcj6VNgXB9mcLrc8x1zk+cyK6eskZnfGdFEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5/OY1wa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8S3C4n6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8241F000FF;
-	Wed, 23 Sep 2026 14:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5/OY1wa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9581F000FF;
+	Wed, 23 Sep 2026 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173288;
-	bh=rBJerXTgQLcf2ftim1RntQBT2KjqnBW4WtN5qPKjDQY=;
+	s=korg; t=1790173291;
+	bh=oy8TiWaAwAgeFy1OoGuCg/Tu8WqD3N3U3GcFPNVfw/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8S3C4n6XC2Xr8jVaysvTzJu0DT9rmnJDDpPWePncy8Eg8SvxiFUrY6M5F0w0NESb
-	 rrgt0+jXZfZmulXNJAUg3zRe7Q08Mlm7Ra1UptM5HGx1zZ5vj/ov7LWOn+K1lzDT40
-	 yBrRu2FVoVnsn1U5gvxHmhAMdQah1x6DktnPapRc=
+	b=s5/OY1wa7HvYo0FIp7HOtyTKvrPCdX8BJiLHt1iC+/5n1BzB0buhN0SqkCpLNbYhn
+	 sMqVrI8Cz8Vvp+UO/c6E3svXDZGrc2eC6H0t3Y9jLwklBLhM/XEBR25Xy9/1329s4+
+	 b42+5nHgJGoTec4qvJFuLPwFGAgnejO0alBGLxks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 201/438] ASoC: sdw_utils: tidyup .count_sidecar
-Date: Wed, 23 Sep 2026 16:03:42 +0200
-Message-ID: <20260923140649.975772423@linuxfoundation.org>
+Subject: [PATCH 7.2 184/438] drop_monitor: use timer_shutdown_sync() to prevent timer rearming during teardown
+Date: Wed, 23 Sep 2026 16:03:25 +0200
+Message-ID: <20260923140649.534427435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,117 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c97f0bf5f705b16d150f2b0d5ce0ee24eee4f68a ]
+[ Upstream commit c391a40f71886b28c082b47270f0e856fa3e1150 ]
 
-count_sidecar() is not using *card. Tidyup it.
+In drop_monitor teardown paths (net_dm_trace_off_set(),
+net_dm_hw_monitor_stop(), and error unwind paths in net_dm_trace_on_set()
+and net_dm_hw_monitor_start()), per-CPU timers are stopped using
+timer_delete_sync() followed by cancel_work_sync().
 
-Current code makes old style / new style conversion difficult.
-To make future conversions easier to understand, this patch clean up the
-code a little. but no functional change.
+However, there is a circular dependency between send_timer and
+dm_alert_work:
+1) sched_send_work() (timer callback) schedules dm_alert_work.
+2) send_dm_alert() / net_dm_hw_summary_work() calls reset_per_cpu_data()
+   or net_dm_hw_reset_per_cpu_data().
+3) If memory allocation fails under memory pressure in the reset
+   function, it re-arms the timer via mod_timer(&data->send_timer, ...).
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/87jyrlety1.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 0b7d55d3a912 ("ASoC: amd: acp: refactor codec config count in SOF SoundWire machine driver")
+If dm_alert_work is running concurrently while timer_delete_sync()
+executes on another CPU, an allocation failure in the worker will
+re-arm the timer after timer_delete_sync() has already returned.
+Once cancel_work_sync() completes and module_put() is called, the timer
+remains active in the timer wheel. If the module is then unloaded, the
+timer will fire and execute sched_send_work() in freed memory,
+triggering a kernel panic / use-after-free.
+
+Switch from timer_delete_sync() to timer_shutdown_sync(). This guarantees
+that any in-flight timer handler has finished and prevents subsequent
+re-arming attempts from running workers from succeeding. When monitoring
+is restarted later, timer_setup() is invoked, which cleanly
+re-initializes the timer.
+
+Fixes: 9398e9c0b1d4 ("drop_monitor: Perform cleanup upon probe registration failure")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260910204612.3762015-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc_sdw_utils.h                | 28 ++++++++++----------
- sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c |  4 +--
- sound/soc/sdw_utils/soc_sdw_utils.c          |  2 +-
- 3 files changed, 16 insertions(+), 18 deletions(-)
+ net/core/drop_monitor.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/soc_sdw_utils.h b/include/sound/soc_sdw_utils.h
-index 79c21966220b2..443d63dc6ea37 100644
---- a/include/sound/soc_sdw_utils.h
-+++ b/include/sound/soc_sdw_utils.h
-@@ -44,6 +44,18 @@
+diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
+index 018d19e3a71de..873155ca72432 100644
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -1083,7 +1083,7 @@ static int net_dm_hw_monitor_start(struct netlink_ext_ack *extack)
+ 		struct per_cpu_dm_data *hw_data = &per_cpu(dm_hw_cpu_data, cpu);
+ 		struct sk_buff *skb;
  
- struct asoc_sdw_codec_info;
+-		timer_delete_sync(&hw_data->send_timer);
++		timer_shutdown_sync(&hw_data->send_timer);
+ 		cancel_work_sync(&hw_data->dm_alert_work);
+ 		while ((skb = __skb_dequeue(&hw_data->drop_queue))) {
+ 			struct devlink_trap_metadata *hw_metadata;
+@@ -1117,7 +1117,7 @@ static void net_dm_hw_monitor_stop(struct netlink_ext_ack *extack)
+ 		struct per_cpu_dm_data *hw_data = &per_cpu(dm_hw_cpu_data, cpu);
+ 		struct sk_buff *skb;
  
-+struct asoc_sdw_mc_private {
-+	struct snd_soc_card card;
-+	struct snd_soc_jack sdw_headset;
-+	struct device *headset_codec_dev; /* only one headset per card */
-+	struct device *amp_dev1, *amp_dev2;
-+	bool append_dai_type;
-+	bool ignore_internal_dmic;
-+	void *private;
-+	unsigned long mc_quirk;
-+	int codec_info_list_count;
-+};
-+
- struct asoc_sdw_dai_info {
- 	const bool direction[2]; /* playback & capture support */
- 	const char *codec_name;
-@@ -88,25 +100,13 @@ struct asoc_sdw_codec_info {
+-		timer_delete_sync(&hw_data->send_timer);
++		timer_shutdown_sync(&hw_data->send_timer);
+ 		cancel_work_sync(&hw_data->dm_alert_work);
+ 		while ((skb = __skb_dequeue(&hw_data->drop_queue))) {
+ 			struct devlink_trap_metadata *hw_metadata;
+@@ -1179,7 +1179,7 @@ static int net_dm_trace_on_set(struct netlink_ext_ack *extack)
+ 		struct per_cpu_dm_data *data = &per_cpu(dm_cpu_data, cpu);
+ 		struct sk_buff *skb;
  
- 	int (*codec_card_late_probe)(struct snd_soc_card *card);
+-		timer_delete_sync(&data->send_timer);
++		timer_shutdown_sync(&data->send_timer);
+ 		cancel_work_sync(&data->dm_alert_work);
+ 		while ((skb = __skb_dequeue(&data->drop_queue)))
+ 			consume_skb(skb);
+@@ -1207,7 +1207,7 @@ static void net_dm_trace_off_set(void)
+ 		struct per_cpu_dm_data *data = &per_cpu(dm_cpu_data, cpu);
+ 		struct sk_buff *skb;
  
--	int  (*count_sidecar)(struct snd_soc_card *card,
-+	int  (*count_sidecar)(struct asoc_sdw_mc_private *ctx,
- 			      int *num_dais, int *num_devs);
- 	int  (*add_sidecar)(struct snd_soc_card *card,
- 			    struct snd_soc_dai_link **dai_links,
- 			    struct snd_soc_codec_conf **codec_conf);
- };
- 
--struct asoc_sdw_mc_private {
--	struct snd_soc_card card;
--	struct snd_soc_jack sdw_headset;
--	struct device *headset_codec_dev; /* only one headset per card */
--	struct device *amp_dev1, *amp_dev2;
--	bool append_dai_type;
--	bool ignore_internal_dmic;
--	void *private;
--	unsigned long mc_quirk;
--	int codec_info_list_count;
--};
--
- struct asoc_sdw_endpoint {
- 	struct list_head list;
- 
-@@ -235,7 +235,7 @@ int asoc_sdw_es9356_amp_init(struct snd_soc_card *card,
- int asoc_sdw_es9356_exit(struct snd_soc_card *card, struct snd_soc_dai_link *dai_link);
- 
- /* CS AMP support */
--int asoc_sdw_bridge_cs35l56_count_sidecar(struct snd_soc_card *card,
-+int asoc_sdw_bridge_cs35l56_count_sidecar(struct asoc_sdw_mc_private *ctx,
- 					  int *num_dais, int *num_devs);
- int asoc_sdw_bridge_cs35l56_add_sidecar(struct snd_soc_card *card,
- 					struct snd_soc_dai_link **dai_links,
-diff --git a/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c b/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
-index e0e32a279787c..129a437ae397e 100644
---- a/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
-+++ b/sound/soc/sdw_utils/soc_sdw_bridge_cs35l56.c
-@@ -99,11 +99,9 @@ static const struct snd_soc_dai_link bridge_dai_template = {
- 	SND_SOC_DAILINK_REG(asoc_sdw_bridge_dai),
- };
- 
--int asoc_sdw_bridge_cs35l56_count_sidecar(struct snd_soc_card *card,
-+int asoc_sdw_bridge_cs35l56_count_sidecar(struct asoc_sdw_mc_private *ctx,
- 					  int *num_dais, int *num_devs)
- {
--	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
--
- 	if (ctx->mc_quirk & SOC_SDW_SIDECAR_AMPS) {
- 		(*num_dais)++;
- 		(*num_devs) += ARRAY_SIZE(bridge_cs35l56_name_prefixes);
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index ce2a9c28fe1a5..982be8a286133 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -2045,7 +2045,7 @@ int asoc_sdw_parse_sdw_endpoints(struct snd_soc_card *card,
- 			ctx->ignore_internal_dmic |= codec_info->ignore_internal_dmic;
- 
- 			if (codec_info->count_sidecar && codec_info->add_sidecar) {
--				ret = codec_info->count_sidecar(card, &num_dais, num_devs);
-+				ret = codec_info->count_sidecar(ctx, &num_dais, num_devs);
- 				if (ret)
- 					return ret;
- 
+-		timer_delete_sync(&data->send_timer);
++		timer_shutdown_sync(&data->send_timer);
+ 		cancel_work_sync(&data->dm_alert_work);
+ 		while ((skb = __skb_dequeue(&data->drop_queue)))
+ 			consume_skb(skb);
 -- 
 2.53.0
 
