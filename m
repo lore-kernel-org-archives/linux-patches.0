@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD863A1681;
-	Wed, 23 Sep 2026 14:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDB24CCDC0;
+	Wed, 23 Sep 2026 14:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172774; cv=none; b=NSOuSlq9lJKGWrIQFMCB23TC4kS8+lrvmq0PcZFP6KqwNloR3wlimJdwgn3fISNOsecHRP4cZBzf0QecekYFbDapKuVXeYG29u+FeViqG6PwQfWqUBI8IKLcxLBFvO8VrHRUmAUBgtx8mHm4vFfTOCozXoP8f2B5FtQlRyWTRTQ=
+	t=1790172777; cv=none; b=lfDtN9eg2l+n/fOP3qQiWiqSW4dAGJRyOltJROX1XD/e4tVv9UcZEFI1vfSddUei1XY+YPZkG+usEhTKn6d7gfuDai4vRiKkmTj7/iJ0j1roE2cgBhTVTAlzW/NJTOjZSS5NkliBj3W2AMOQMrZb/s5B87W9gozoVewTKxIbXA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172774; c=relaxed/simple;
-	bh=GB9DgswRc/td9fMbPbmcCJwPceuflhaPR18O3BCE3RQ=;
+	s=arc-20240116; t=1790172777; c=relaxed/simple;
+	bh=O8rC4sau9ndiK7zQjvfZLzRQubbY1BSX+no8PbGtmY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9umoVeKF5V+CiYDxcl0npAcM48Uog9r3zX06Hv3v5D6WnYIkseOYlehmF/i+uzZzXeWPI+UZUQhS8gyjJcxZNbYqUmanWmr4vJ1jnkXa6KTfqHvmooWUvSncfHOXOx+GycceXi4/bNxbk2UXdyEPVegu4I6ligQvC6oQlt5UkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXhIHekS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hr+X+6v3T04eQayjLecwDwmBaCWikjKjhyC5/fppjOYDfjuq9Mfg2QiHlQN0tdWrNdLW6WoiPv+8pbCXxGmIAiQpus3vW/+rsxEd/rGMrI5T6UcL/d4clGtwDhpTFgK0t2pBHDGQU1LAk8oEOrgsoYQXODKHBfD9BytUaUmBkak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9p2ScHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXhIHekS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CA71F000FF;
-	Wed, 23 Sep 2026 14:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9p2ScHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6771E1F000FF;
+	Wed, 23 Sep 2026 14:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172772;
-	bh=3bgGgoxwJL+CtqQZHFuqs4reR1qE7zasmG3h6GJsXB0=;
+	s=korg; t=1790172775;
+	bh=Dq97EH6puMOSzM2kt8t9n8/BVfVJMtGjxdAhbh3hqwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXhIHekSTAVk38aj/tTbTSmWOHM3SjxlW1xgOFNuG+ooRs4E1EyR6lQLZS1FTSYxE
-	 H/0/HzxXMerUVJiN93614k8CmqDEhHY9L03JzWeMBVnxC25fFW6RbHDCEHoJeY+7As
-	 9EkaVbEh4mGRWJK5WLNEe8snJzSf0DDZsIE9uhvQ=
+	b=n9p2ScHcdJ5ft3myfVyFODNvinYvqYzMGSBIVycMvuknfAVE0Ause9Bt3c1fWnqpC
+	 rXr+qAYpyAR8gGJLMaREbM94K3HUMy+5upltWy4m23E9x3Y4AWBauIcdefy3jRzWJH
+	 AeLGRtl76CoUNniYmlgUzKuQwcNtk+ciQEkejxe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 058/438] MIPS: Octeon: apply USB FDT fixups also when USB is modular
-Date: Wed, 23 Sep 2026 16:01:19 +0200
-Message-ID: <20260923140646.290173897@linuxfoundation.org>
+Subject: [PATCH 7.2 059/438] dma-coherent: report a failed reserved memory assignment
+Date: Wed, 23 Sep 2026 16:01:20 +0200
+Message-ID: <20260923140646.316198998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,51 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 126f16e0a1b353c2ba5c7e2c8626cfa865934f9f ]
+[ Upstream commit 504981db4f69bdd28054fb98c96a3a67f7248dde ]
 
-The uctl/usbn device-tree fixups in octeon_prune_device_tree() - which
-set the board's USB reference-clock frequency and type from
-__cvmx_helper_board_usb_get_clock_type() - are guarded by
-"#ifdef CONFIG_USB", which is false when USB is built as a module. The
-fixups then silently disappear and octeon-hcd sees whatever default the
-DTS carries (12MHz crystal in octeon_3xxx.dts), leaving the PHY dead or
-the bus erroring on boards with a different reference clock.
+rmem_dma_device_init() drops the return value of
+dma_assign_coherent_memory() and always reports success. That call fails
+with -EBUSY when the device already has a coherent pool, and the file
+allows only "*one* such region of memory" per device.
 
-Use IS_ENABLED() so USB=m gets the same fixups as USB=y.
+of_reserved_mem_device_init_by_idx() reads the zero as success. It logs
+"assigned reserved memory node" for a region that was not assigned and
+records the pairing, so of_reserved_mem_device_release() later runs
+rmem_dma_device_release() for it. That clears dev->dma_mem without
+looking at which region it was called for, dropping the pool the device
+did get and leaving it on ordinary memory.
 
-Fixes: 7fd57ab9d9cf ("MIPS: Octeon: Fix compile error when USB is not enabled.")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+dma_declare_coherent_memory() checks the same call and releases the
+memory on failure, and rmem_swiotlb_device_init() propagates its own
+errors. Return the error here as well, so a device tree that assigns two
+pools to one device fails the probe instead of half working.
+
+Fixes: 7bfa5ab6fa1b ("drivers: dma-coherent: add initialization from device tree")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20260905074727.108029-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/octeon-platform.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/dma/coherent.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/mips/cavium-octeon/octeon-platform.c b/arch/mips/cavium-octeon/octeon-platform.c
-index 47677b5d7ed00..f53c98372e0be 100644
---- a/arch/mips/cavium-octeon/octeon-platform.c
-+++ b/arch/mips/cavium-octeon/octeon-platform.c
-@@ -18,7 +18,7 @@
- #include <asm/octeon/octeon.h>
- #include <asm/octeon/cvmx-helper-board.h>
+diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+index bcdc0f76d2e80..b6fe902c6a6db 100644
+--- a/kernel/dma/coherent.c
++++ b/kernel/dma/coherent.c
+@@ -351,8 +351,7 @@ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
+ 	    min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit))
+ 		dev_warn(dev, "reserved memory is beyond device's set DMA address range\n");
  
--#ifdef CONFIG_USB
-+#if IS_ENABLED(CONFIG_USB)
- #include <linux/usb/ehci_def.h>
- #include <linux/usb/ehci_pdriver.h>
- #include <linux/usb/ohci_pdriver.h>
-@@ -1080,7 +1080,7 @@ int __init octeon_prune_device_tree(void)
- 		;
- 	}
+-	dma_assign_coherent_memory(dev, mem);
+-	return 0;
++	return dma_assign_coherent_memory(dev, mem);
+ }
  
--#ifdef CONFIG_USB
-+#if IS_ENABLED(CONFIG_USB)
- 	/* OHCI/UHCI USB */
- 	alias_prop = fdt_getprop(initial_boot_params, aliases,
- 				 "uctl", NULL);
+ static void rmem_dma_device_release(struct reserved_mem *rmem,
 -- 
 2.53.0
 
