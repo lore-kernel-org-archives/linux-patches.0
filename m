@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95767332EC5;
-	Wed, 23 Sep 2026 14:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326894CCDC0;
+	Wed, 23 Sep 2026 14:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175150; cv=none; b=iMXwEyCpxfGmYho5oO0m1osr76vtWzZFr+qxCdDvaR4feB7GE8wHiPpcJFbqRq4x+dCt7ldjNv809SxyGokzzkep8XfagyaI3R8kPOGvHfFn98hn7UQT+wV6cP92ME25crPFNsfVB3tsYZxiz0wdpBkXOdjMn6gk+yiiSAZSbW0=
+	t=1790175155; cv=none; b=drhNDIuP//K5TSmiyuzTwt0n5Gpwz3ikvjyAVtq24L53eAM5ShuwS6UNIBy8OsOfM7529DJC+oBm5J/luFvdE/eXA6Vl67yaRkx9JuSQGbYzh24f0qvgy1VfKLMGaYrOKhTAdOX7bBMK5xvvUYmIKt3rMj03xOOI14KULUFhRDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175150; c=relaxed/simple;
-	bh=8jRYDq+GvpY7xHAUOKrir0DgbyDBFgbNdka7THJlNj0=;
+	s=arc-20240116; t=1790175155; c=relaxed/simple;
+	bh=phHiNKL6mx5YhXX2n2C6sINmhJJtlK7acMANpbAo3AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6vQa9NKPYpViTZJXt1/FxkrVfHCMGhVY1OUZcsuHdkFXOTDaZR7XHkZaXSlWMTIkKlFEV1HdTpGSdu9F7VUbys6188IRbc15Vw8njlYc2hVsRj9tAXq/AoWhlUaqT3LOLow/0cmKx1bLNyhnnxs/ULoOQwmtV85HItT7v+HYKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqtCCffS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gn3YuGmZ2R/UoLmRjwa3nfAAKBnHZ+L9+0motLqWB5UqT3wcJ2+PyhFRYJhrY2xoTMlCRjpht8+TZ2gFnAlDExLEhtABP00Lto8ayv7Eq0fIvpW+xFCSHf+Dka1SZX/890sWzQYASJIYf1l5CVz5OO3eqG/6c2wkzqWnq+jF2Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVa62Cmj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqtCCffS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631D51F00893;
-	Wed, 23 Sep 2026 14:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVa62Cmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782581F000FF;
+	Wed, 23 Sep 2026 14:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175147;
-	bh=n6iqhq656JKzDqMl2APypjpkXvQ5cYnZ0ClT4GTGvGg=;
+	s=korg; t=1790175151;
+	bh=VgFPCnKaE5JB+q7O/1MfvS4CmF7/5+NHWh5Kr4ycIMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqtCCffSQoKb5IPoW5emeqWuet9VBdjvfn6BYNuYE9VUEc9UUKJJ0zw/LSn83u3IL
-	 k1xDejCKK22P+aPwgkwA260RRtzwnzfvDWMdsSdfzaLd7LrEKgNPaAx1DoBHXVWOwy
-	 7lGwNkLoahTYfepRaPiVrpmSwGGS65EuNpqBIG+o=
+	b=gVa62CmjsjVDCf0WmMAeAzBqRGXaKn2BcRvq48z78nRY+BhCEuloy5AL3y3qpC6p7
+	 O6LBw1TI4jQuypHNox+aXtQYl+m2X5rozfQBtK/HXAd9BljY4z/IDzK9bY5IJdI7+/
+	 pYrgU8alsHYA1xprT63nZiKmJ96C0AaNeIi6liqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 335/398] wifi: mwifiex: prevent authentication frame length truncation
-Date: Wed, 23 Sep 2026 16:06:49 +0200
-Message-ID: <20260923140652.103803386@linuxfoundation.org>
+Subject: [PATCH 6.18 336/398] wifi: mwifiex: validate action frame fixed fields
+Date: Wed, 23 Sep 2026 16:06:50 +0200
+Message-ID: <20260923140652.132555907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,71 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit fa00193eb991f92b007aefe7afb6a7566976dacf upstream.
+commit 1c25bfad93e69ce13f744a2fb919f02ea396a985 upstream.
 
-mwifiex_cfg80211_authenticate() derives the authentication frame length
-from req->ie_len and req->auth_data_len, both of type size_t, but stores
-it in a u16.
+mwifiex_process_mgmt_packet() accepts an rx_pkt_length as small as a
+four-address struct ieee80211_hdr plus the two-byte firmware length prefix.
+After stripping the prefix, mwifiex_parse_mgmt_packet() can receive a
+frame equal to sizeof(struct ieee80211_hdr).
 
-NL80211_ATTR_AUTH_DATA only has a minimum length policy. Since nla_len is
-a u16, a single attribute can carry up to 65531 bytes of payload, so the
-sum can exceed U16_MAX before it is assigned to pkt_len. The truncated
-pkt_len determines the skb frame area, while the copy length remains
-req->auth_data_len - 4, resulting in a heap buffer overflow.
+For action frames, the parser reads the category byte immediately after
+that header and, for a public action frame, reads the following action
+code byte without verifying that either field is present. A truncated frame
+can therefore make the parser consume up to two bytes past the
+firmware-declared frame length. If those bytes look like a TDLS discovery
+response, the malformed frame can spuriously update peer signal state.
 
-For example, with auth_data_len equal to 65510 and no IEs, the sum is
-65546. It is truncated to 10 and then reduced by four to 6. The driver
-appends only six bytes to the skb with skb_put(), but then copies 65506
-user-provided bytes into the authentication body.
+Require the category and public action-code fields before reading them.
+Use sizeof(*ieee_hdr) so the checks and field accesses directly match the
+firmware four-address layout being parsed before address4 is removed.
 
-Reaching this path requires CAP_NET_ADMIN in the user namespace owning
-the network namespace, an up station netdev, and a suitable BSS/SAE
-authentication request.
-
-Compute the length in size_t, reject values that cannot be represented by
-the firmware's u16 frame length field, and only then assign it to pkt_len.
-
-Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
-Cc: stable@vger.kernel.org # 6.12+
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260820062155.3981976-1-lilinmao@kylinos.cn
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Suggested-by: Brian Norris <briannorris@chromium.org>
+Fixes: 72e5aa8d2a6d ("mwifiex: support for parsing TDLS discovery frames")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/66f148d83eb9f0970b9abbccc85d1b61244e54ad.camel@sipsolutions.net/
+Link: https://lore.kernel.org/all/20260708195911.84365-8-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723011013.76968-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723202257.688-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/anuWyiPQja6_5vly@google.com/
+Assisted-by: Codex:gpt-5
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260825112523.95774-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/util.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4271,6 +4271,7 @@ mwifiex_cfg80211_authenticate(struct wip
- 	struct mwifiex_adapter *adapter = priv->adapter;
- 	struct sk_buff *skb;
- 	u16 pkt_len, auth_alg;
-+	size_t frame_len;
- 	int ret;
- 	struct mwifiex_ieee80211_mgmt *mgmt;
- 	struct mwifiex_txinfo *tx_info;
-@@ -4343,10 +4344,17 @@ mwifiex_cfg80211_authenticate(struct wip
+--- a/drivers/net/wireless/marvell/mwifiex/util.c
++++ b/drivers/net/wireless/marvell/mwifiex/util.c
+@@ -317,10 +317,16 @@ mwifiex_parse_mgmt_packet(struct mwifiex
  
- 	mwifiex_cancel_scan(adapter);
- 
--	pkt_len = (u16)req->ie_len + req->auth_data_len +
-+	frame_len = req->ie_len + req->auth_data_len +
- 		MWIFIEX_MGMT_HEADER_LEN + MWIFIEX_AUTH_BODY_LEN;
- 	if (req->auth_data_len >= 4)
--		pkt_len -= 4;
-+		frame_len -= 4;
+ 	switch (stype) {
+ 	case IEEE80211_STYPE_ACTION:
+-		category = *(payload + sizeof(struct ieee80211_hdr));
++		if (len < sizeof(*ieee_hdr) + 1)
++			return -1;
 +
-+	if (frame_len > U16_MAX) {
-+		mwifiex_dbg(priv->adapter, ERROR,
-+			    "auth frame too long: %zu bytes\n", frame_len);
-+		return -EINVAL;
-+	}
-+	pkt_len = frame_len;
- 
- 	skb = dev_alloc_skb(MWIFIEX_MIN_DATA_HEADER_LEN +
- 			    MWIFIEX_MGMT_FRAME_HEADER_SIZE +
++		category = *(payload + sizeof(*ieee_hdr));
+ 		switch (category) {
+ 		case WLAN_CATEGORY_PUBLIC:
+-			action_code = *(payload + sizeof(struct ieee80211_hdr)
++			if (len < sizeof(*ieee_hdr) + 2)
++				return -1;
++
++			action_code = *(payload + sizeof(*ieee_hdr)
+ 					+ 1);
+ 			if (action_code == WLAN_PUB_ACTION_TDLS_DISCOVER_RES) {
+ 				addr2 = ieee_hdr->addr2;
 
 
