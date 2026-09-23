@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B9B3ADBB4;
-	Wed, 23 Sep 2026 14:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B1F530DFB;
+	Wed, 23 Sep 2026 14:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173177; cv=none; b=jsePzfdrWsrRU0NLbw7OAvqGlU7sFY2VkAlA5kGx29xtVSBzkrAyoZ9u8zaJ7YpeC6jGsDPB+KCl3KWu9leBu4PrOREhPeIbOTSc2injH3r82Ke0YliHqVEDfJ73pLsenSRbkAhwjWt+LbTR7qMAQ+NvrKmiqvphVE0HmNid/pQ=
+	t=1790173182; cv=none; b=qsXw2pxz9yPWWBNG3bNzHws88YkeV5rCVTMQXGyyJ/fF6C2rBe0Z7TWl7nSjA8tBXXas90s4Ex12+vrtCdmZcta/ZJu1XiQnoczxFkv+PVMJ1Qi4/yxymckUsoK4D/WyHpyb9jCEbaN8/0VYQSq9pUSJY1cBNmIJ2EOkJtpXTQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173177; c=relaxed/simple;
-	bh=/pIDuMymE1vI9liruiopF3MZsMUr2jiXzvZlPXOg+ew=;
+	s=arc-20240116; t=1790173182; c=relaxed/simple;
+	bh=+QQwGl12vY3av5sAh52ot2srRjH+sZivbpn88bF5SBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RUnUzgLLQETWIilt0l7tQw2GYFVCuWQWsyYgD97EhBOb+Y3h+HXW2eWdFz+bkOK0OuSd5NQFvbaZfP+bjODDDMY7Hk3rED6zZbgO52R5qoFIBcoriOeCTsEpdUdaS+rULedXJDDnxCAKMkOAyn/JQusJUTrbjVyim1HbnlVa6s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqMZnt8u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hScIBzRV4iA7B1OS0J1AmGouBCFp4Ke+eED+pN77K+ayFSwEhrQTrT4H6EXSlDmpO7sWYK7Ymuxj8AZruc4XiFK5i473UQa7//4x23gr4o1FoXsZ4keVUh/jvGe0ZvFPpCzSLqCVFdN/imJOXbeRiWUT+p+ktO38SFtYI53+GPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7T5rIrc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqMZnt8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC56D1F00893;
-	Wed, 23 Sep 2026 14:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7T5rIrc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F811F000FF;
+	Wed, 23 Sep 2026 14:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173176;
-	bh=QLnWfob7OmUFn+mPGkkT6d37UQFnLUbJrgnw/ElcH+U=;
+	s=korg; t=1790173179;
+	bh=GDwRkcvq14JqVPTt9IFE6C13oDB3kGygEvV8ifuj0P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HqMZnt8uJ0mN+MB2v5bmpxGB/txfSb2uIAkAkoqqvadJmpAwrHnVrgcMyxndE06VF
-	 Vgryn+LOhr+uKSP2bVIeCFV8j8wJf4bEste1N7XIG+SSdwU8K+1Qfcn0ROFdIjtep3
-	 Jb9gPKNoeL9TTd3wUJg7WrgrqCJiq03T6I5Ts1G8=
+	b=m7T5rIrcwCalaU5CWsRSmgvO2766acTbpZJ92/QK5Iw4R0JcR273AqkovwabaMDgZ
+	 LCSnvn3VK7weWegVmeOVpAA2mPtmT4OFIqfrWd93GIhQtQYvFIzSqWj3CqWYZZdy9n
+	 UENx59qV60enA3YQbuFParVyH1nR8+ecL0K0bJX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 147/438] drm/xe/shrinker: Return the freed page count through a parameter
-Date: Wed, 23 Sep 2026 16:02:48 +0200
-Message-ID: <20260923140648.583214663@linuxfoundation.org>
+Subject: [PATCH 7.2 165/438] ksmbd: fix partial file information responses
+Date: Wed, 23 Sep 2026 16:03:06 +0200
+Message-ID: <20260923140649.048259858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -47,172 +44,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3c90e42a01426262f0cd166bc01b45c05562640d ]
+[ Upstream commit 6b8b79226bc3e0ac3fdd4e91836241af712e8cd1 ]
 
-__xe_shrinker_walk() and xe_shrinker_walk() return either the number of
-pages freed or a negative error, so the two cannot be reported at once.
-On error the pages already freed are dropped, and since xe_shrinker_scan()
-only accumulates non-negative returns while *scanned is updated by
-pointer, the shrinker tells mm that it scanned without freeing.
+Variable-length file information handlers use the client output length
+while constructing the response. FILE_ALL_INFORMATION can consequently
+return -EINVAL before the common buffer check, while stream information
+can stop building the complete result too early.
 
-Accumulate the count into a caller-provided counter and return only the
-status, so an error no longer discards what the walk had freed.
+Build the complete response within the available server response buffer
+and apply the client output length only when selecting the final status
+and transmitted length. Use the protocol-defined fixed sizes for all,
+alternate-name, and stream information to distinguish
+STATUS_INFO_LENGTH_MISMATCH from STATUS_BUFFER_OVERFLOW.
 
-Fixes: 00c8efc3180f ("drm/xe: Add a shrinker for xe bos")
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260909162102.1097006-2-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit d7aac1a0235a6ce41e30cec385e2db8c33dad12d)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+This fixes smb2.getinfo.qfile_buffercheck.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 9fa26285ae70 ("ksmbd: keep compound responses on query info errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_shrinker.c | 62 ++++++++++++++------------------
- 1 file changed, 26 insertions(+), 36 deletions(-)
+ fs/smb/server/smb2pdu.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_shrinker.c b/drivers/gpu/drm/xe/xe_shrinker.c
-index 83374cd576608..89445cd202380 100644
---- a/drivers/gpu/drm/xe/xe_shrinker.c
-+++ b/drivers/gpu/drm/xe/xe_shrinker.c
-@@ -54,13 +54,14 @@ xe_shrinker_mod_pages(struct xe_shrinker *shrinker, long shrinkable, long purgea
- 	write_unlock(&shrinker->lock);
- }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index cd533dbdc2b23..f6b9a0ad922ff 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5997,7 +5997,6 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 	char *filename;
+ 	u64 time;
+ 	int ret, buf_free_len, filename_len;
+-	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
  
--static s64 __xe_shrinker_walk(struct xe_device *xe,
-+static int __xe_shrinker_walk(struct xe_device *xe,
- 			      struct ttm_operation_ctx *ctx,
- 			      const struct xe_bo_shrink_flags flags,
--			      unsigned long to_scan, unsigned long *scanned)
-+			      unsigned long to_scan, unsigned long *scanned,
-+			      unsigned long *freed)
- {
- 	unsigned int mem_type;
--	s64 freed = 0, lret;
-+	s64 lret;
+ 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
+ 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
+@@ -6010,10 +6009,9 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 		return PTR_ERR(filename);
  
- 	for (mem_type = XE_PL_SYSTEM; mem_type <= XE_PL_TT; ++mem_type) {
- 		struct ttm_resource_manager *man = ttm_manager_type(&xe->ttm, mem_type);
-@@ -82,7 +83,7 @@ static s64 __xe_shrinker_walk(struct xe_device *xe,
- 			if (lret < 0)
- 				return lret;
+ 	filename_len = strlen(filename);
+-	buf_free_len = smb2_calc_max_out_buf_len(work,
++	buf_free_len = smb2_resp_buf_len(work,
+ 			offsetof(struct smb2_query_info_rsp, Buffer) +
+-			offsetof(struct smb2_file_all_info, FileName),
+-			le32_to_cpu(req->OutputBufferLength));
++			offsetof(struct smb2_file_all_info, FileName));
+ 	if (buf_free_len < (filename_len + 1) * 2) {
+ 		kfree(filename);
+ 		return -EINVAL;
+@@ -6104,7 +6102,6 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 	ssize_t xattr_list_len;
+ 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
+ 	int buf_free_len;
+-	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
+ 	int ret;
  
--			freed += lret;
-+			*freed += lret;
- 			if (*scanned >= to_scan)
- 				break;
- 		}
-@@ -90,7 +91,7 @@ static s64 __xe_shrinker_walk(struct xe_device *xe,
- 		xe_assert(xe, !IS_ERR(ttm_bo));
+ 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+@@ -6114,10 +6111,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 
+ 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
+ 
+-	buf_free_len =
+-		smb2_calc_max_out_buf_len(work,
+-				offsetof(struct smb2_query_info_rsp, Buffer),
+-				le32_to_cpu(req->OutputBufferLength));
++	buf_free_len = smb2_resp_buf_len(work,
++			offsetof(struct smb2_query_info_rsp, Buffer));
+ 	if (buf_free_len < 0)
+ 		goto out;
+ 
+@@ -6430,6 +6425,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 	struct ksmbd_file *fp;
+ 	int fileinfoclass = 0;
+ 	int rc = 0;
++	unsigned int fixed_len;
+ 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
+ 
+ 	if (test_share_config_flag(work->tcon->share_conf,
+@@ -6533,10 +6529,23 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 			    fileinfoclass);
+ 		rc = -EOPNOTSUPP;
  	}
+-	if (!rc)
++	if (!rc) {
++		fixed_len = le32_to_cpu(rsp->OutputBufferLength);
++		switch (fileinfoclass) {
++		case FILE_ALL_INFORMATION:
++			fixed_len = FILE_ALL_INFORMATION_SIZE;
++			break;
++		case FILE_ALTERNATE_NAME_INFORMATION:
++			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
++			break;
++		case FILE_STREAM_INFORMATION:
++			fixed_len = FILE_STREAM_INFORMATION_SIZE;
++			break;
++		}
+ 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
+-				      le32_to_cpu(rsp->OutputBufferLength),
++				      fixed_len,
+ 				      rsp, work->response_buf);
++	}
+ 	ksmbd_fd_put(work, fp);
  
--	return freed;
-+	return 0;
- }
- 
- /*
-@@ -99,40 +100,35 @@ static s64 __xe_shrinker_walk(struct xe_device *xe,
-  * add writeback. This avoids stalls and explicit writebacks with light or
-  * moderate memory pressure.
-  */
--static s64 xe_shrinker_walk(struct xe_device *xe,
-+static int xe_shrinker_walk(struct xe_device *xe,
- 			    struct ttm_operation_ctx *ctx,
- 			    const struct xe_bo_shrink_flags flags,
--			    unsigned long to_scan, unsigned long *scanned)
-+			    unsigned long to_scan, unsigned long *scanned,
-+			    unsigned long *freed)
- {
- 	bool no_wait_gpu = true;
- 	struct xe_bo_shrink_flags save_flags = flags;
--	s64 lret, freed;
-+	int ret;
- 
- 	swap(no_wait_gpu, ctx->no_wait_gpu);
- 	save_flags.writeback = false;
--	lret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned);
-+	ret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned, freed);
- 	swap(no_wait_gpu, ctx->no_wait_gpu);
--	if (lret < 0 || *scanned >= to_scan)
--		return lret;
-+	if (ret || *scanned >= to_scan)
-+		return ret;
- 
--	freed = lret;
- 	if (!ctx->no_wait_gpu) {
--		lret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned);
--		if (lret < 0)
--			return lret;
--		freed += lret;
--		if (*scanned >= to_scan)
--			return freed;
-+		ret = __xe_shrinker_walk(xe, ctx, save_flags, to_scan, scanned,
-+					 freed);
-+		if (ret || *scanned >= to_scan)
-+			return ret;
- 	}
- 
--	if (flags.writeback) {
--		lret = __xe_shrinker_walk(xe, ctx, flags, to_scan, scanned);
--		if (lret < 0)
--			return lret;
--		freed += lret;
--	}
-+	if (flags.writeback)
-+		ret = __xe_shrinker_walk(xe, ctx, flags, to_scan, scanned,
-+					 freed);
- 
--	return freed;
-+	return ret;
- }
- 
- static unsigned long
-@@ -214,7 +210,6 @@ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_con
- 	bool runtime_pm;
- 	bool purgeable;
- 	bool can_backup = !!(sc->gfp_mask & __GFP_FS);
--	s64 lret;
- 
- 	nr_to_scan = sc->nr_to_scan;
- 
-@@ -225,12 +220,9 @@ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_con
- 	/* Might need runtime PM. Try to wake early if it looks like it. */
- 	runtime_pm = xe_shrinker_runtime_pm_get(shrinker, false, nr_to_scan, can_backup);
- 
--	if (purgeable && nr_scanned < nr_to_scan) {
--		lret = xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
--					nr_to_scan, &nr_scanned);
--		if (lret >= 0)
--			freed += lret;
--	}
-+	if (purgeable && nr_scanned < nr_to_scan)
-+		xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
-+				 nr_to_scan, &nr_scanned, &freed);
- 
- 	sc->nr_scanned = nr_scanned;
- 	if (nr_scanned >= nr_to_scan || !can_backup)
-@@ -242,10 +234,8 @@ static unsigned long xe_shrinker_scan(struct shrinker *shrink, struct shrink_con
- 
- 	shrink_flags.purge = false;
- 
--	lret = xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
--				nr_to_scan, &nr_scanned);
--	if (lret >= 0)
--		freed += lret;
-+	xe_shrinker_walk(shrinker->xe, &ctx, shrink_flags,
-+			 nr_to_scan, &nr_scanned, &freed);
- 
- 	sc->nr_scanned = nr_scanned;
- out:
+ iov_pin_out:
 -- 
 2.53.0
 
