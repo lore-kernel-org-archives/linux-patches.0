@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DFC531AF3;
-	Wed, 23 Sep 2026 14:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43304442397;
+	Wed, 23 Sep 2026 14:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174097; cv=none; b=c/hUDsVyK+GoCUuMS7tLfoLH2ajgrtEwNZz2kOWHuHwJhUV/U88GxPsachy7ljaB8DYibxKPK8bbVPBZVTbY+FZTEr9pGsjMg9HZnJcj9wbkVe96+Il2a228JkxqrBVGgI67842P+Vhq3SA6tKqw4c9u3EPu6T6I65baFXC0/hE=
+	t=1790174100; cv=none; b=VHpksV22ZGbRTqXS5mWuoHoUW/fLJkUB1ykSC9PSLAC6aWeWerd1u6L1nMv4Krg4WrJZ3D6m1X59Ka4E8LBovD3dVGaDVltMZKlwATzZROEhHwQnxuOH59F41oQZcnleNkESdnMSCEhPy91eNMiSl5yAASHfuNxBIky25ez7HYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174097; c=relaxed/simple;
-	bh=+6DU3Rgpl0cAMCUQhXz7MMERTo4M8sp3v2N5DtU7KXg=;
+	s=arc-20240116; t=1790174100; c=relaxed/simple;
+	bh=IzcYIBS6mdK7tXXmwtYF129un+uSC7dsKfXj8Mi28Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dn0Jf4OhHadKnLBCtDM7bqBwSb1RcNr25wbVdd0BcNsFAoL9SZTQE+IDJhMc1JoAPZs+qm5gmIfA0dJvHFYDZuDvS+Ey3+pxahL7F+fPMHrfu1PZMZE7Foj1O9ggERfiL/rk8cEfEoQoUVPt5JPIWDFgQGA+4UCnDXmFri7yFhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1h4hUpp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H4LBYs6+rS5EeF1PwP8KfCZ0K5FL+ZiIBySGEgn+PK7+//hcysm314DwOE3llk7SrRFDKBAvB2jIJ3NLEzK8JguS+UAUfsCd6UOdNjdsLP/M61l5oLW8FLkE9JszK7iOHLrPjXxSNZ5zyQa5Jc804hd/ps5KIBLWbvDelJOK92k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIvRLrZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1h4hUpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8143D1F000FF;
-	Wed, 23 Sep 2026 14:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIvRLrZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944281F000FF;
+	Wed, 23 Sep 2026 14:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174096;
-	bh=UZumUiw3G2GEAz0zxG6mCapI/1eu3zGElEeIZDMwR5s=;
+	s=korg; t=1790174099;
+	bh=i4eEHAJPAF2aAeOy7K3KsupswSysO4Qz6mt3m9Ar8Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A1h4hUppg5VPJz8F2weGChxPGEOO+DqIBS/VHSXAXQajTg9HQysKZAZji5jOU1eNh
-	 /JKEABN2rIQpRZuJzrfVlZzYOcUW7jFOsg5HnUYV0ljC0fyfXDr7zshvzXO4aHAULq
-	 H9H1mdYYEkz7sXj6ER1Xg+11Q6szs5AIXjIZOmVo=
+	b=UIvRLrZC3SVNEa0/GVLLjX6orsGPXOyoGqgBTCoEvP/IkYPtQ4UHGetq+HjIRsmwu
+	 3CB4GjkJGF4JK7c4Ks79AiO1I69APh6LrLP+lys3PfBzw3AVqEKxAvYKTQeWX1FuM7
+	 N6akRX9TQQGHZ2fG09pd45/c+OTbkV2rSSRJU/x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	Arulprabhu Ponnusamy <arulponn@cisco.com>,
-	Gian Carlo Boffa <gcboffa@cisco.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Arun Easi <aeasi@cisco.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	chong li <chongli2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 432/438] scsi: fnic: Fix missed link-up when critical IRQ targets offline CPU
-Date: Wed, 23 Sep 2026 16:07:33 +0200
-Message-ID: <20260923140656.127060535@linuxfoundation.org>
+Subject: [PATCH 7.2 433/438] drm/amdgpu: reduce early full GPU access during SR-IOV init
+Date: Wed, 23 Sep 2026 16:07:34 +0200
+Message-ID: <20260923140656.155518583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -56,131 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Easi <aeasi@cisco.com>
+From: chong li <chongli2@amd.com>
 
-[ Upstream commit 0cb1fd924126f1f581621a5e804df98a02be9dff ]
+[ Upstream commit cba4928cdffaa0f9012acff0ec4f896320107077 ]
 
-When CPU Hyper Threading is disabled, sibling CPUs remain present but
-are reported offline. Managed MSI-X IRQs can still receive affinity
-masks that include those offline CPUs. If a driver-critical vector is
-managed, it can be parked on an offline CPU and the driver may miss
-critical events such as link-up.
+Allow early FB reads to fall back to BAR0 when the VRAM aperture is not ready.
+This lets SR-IOV VFs consume host-provided init data before requesting full GPU access.
 
-Keep driver-critical vectors unmanaged so they can be migrated by the
-IRQ core when their target CPU is offlined.
+For ASICs that support request_init_data,
+defer full GPU access until after non-GPU early init to shorten the full-access window.
 
-Since HWQ-0 is unmanaged now, in some queue combinations there can be no
-mappings to it in mq_map. So without the blk-mq fix mentioned below,
-system may crash during cpu offline/online tests.
+Legacy ASICs(before NV12) do not send request_init_data;
+the host dumps init data only during full GPU access,
+so keep the original early full-access request path for them.
 
-Fixes: 8a8449ca5e33 ("scsi: fnic: Modify ISRs to support multiqueue (MQ)")
-Cc: stable@vger.kernel.org
-Depends-on: commit 10845a105bbc ("blk-mq: skip CPU offline notify on unmapped hctx")
-Reviewed-by: Sesidhar Baddela <sebaddel@cisco.com>
-Reviewed-by: Arulprabhu Ponnusamy <arulponn@cisco.com>
-Reviewed-by: Gian Carlo Boffa <gcboffa@cisco.com>
-Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
-Signed-off-by: Arun Easi <aeasi@cisco.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260903175547.57971-1-aeasi@cisco.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ Inlined fnic_mq_init_queue_map() into fnic_mq_map_queues_cpus() using the existing cpu variable. ]
+Signed-off-by: chong li <chongli2@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 04de4007d323 ("drm/amdgpu: Fix GPU PCIe link capability reporting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fnic/fnic.h      |    2 +-
- drivers/scsi/fnic/fnic_isr.c  |   13 ++++++++++---
- drivers/scsi/fnic/fnic_main.c |   33 ++++++++++++++++++++++++++++++++-
- 3 files changed, 43 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   88 +++++++++++++++++++++++++++--
+ drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c      |    7 +-
+ 2 files changed, 88 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/fnic/fnic.h
-+++ b/drivers/scsi/fnic/fnic.h
-@@ -30,7 +30,7 @@
- 
- #define DRV_NAME		"fnic"
- #define DRV_DESCRIPTION		"Cisco FCoE HBA Driver"
--#define DRV_VERSION		"1.9.0.0"
-+#define DRV_VERSION		"1.9.0.1"
- #define PFX			DRV_NAME ": "
- #define DFX                     DRV_NAME "%d: "
- 
---- a/drivers/scsi/fnic/fnic_isr.c
-+++ b/drivers/scsi/fnic/fnic_isr.c
-@@ -245,7 +245,14 @@ int fnic_set_intr_mode_msix(struct fnic
- 	unsigned int m = ARRAY_SIZE(fnic->wq);
- 	unsigned int o = ARRAY_SIZE(fnic->hw_copy_wq);
- 	unsigned int min_irqs = n + m + 1 + 1; /*rq, raw wq, wq, err*/
--
-+	/*
-+	 * Make driver critical vectors unmanaged, or else it can get tied
-+	 * to an offline CPU. This can happen when hyper-threading is off.
-+	 */
-+	struct irq_affinity affd = {
-+		.pre_vectors = n + m + 1, /* rq, raw wq, 1 ioq */
-+		.post_vectors = 1, /* err */
-+	};
- 	/*
- 	 * We need n RQs, m WQs, o Copy WQs, n+m+o CQs, and n+m+o+1 INTRs
- 	 * (last INTR is used for WQ/RQ errors and notification area)
-@@ -263,8 +270,8 @@ int fnic_set_intr_mode_msix(struct fnic
- 		int vec_count = 0;
- 		int vecs = fnic->rq_count + fnic->raw_wq_count + fnic->wq_copy_count + 1;
- 
--		vec_count = pci_alloc_irq_vectors(fnic->pdev, min_irqs, vecs,
--					PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
-+		vec_count = pci_alloc_irq_vectors_affinity(fnic->pdev, min_irqs,
-+			    vecs, PCI_IRQ_MSIX|PCI_IRQ_AFFINITY, &affd);
- 		FNIC_ISR_DBG(KERN_INFO, fnic,
- 					"allocated %d MSI-X vectors\n",
- 					vec_count);
---- a/drivers/scsi/fnic/fnic_main.c
-+++ b/drivers/scsi/fnic/fnic_main.c
-@@ -680,6 +680,8 @@ static int fnic_scsi_drv_init(struct fni
- 
- void fnic_mq_map_queues_cpus(struct Scsi_Host *host)
- {
-+	const struct cpumask *mask;
-+	unsigned int queue, cpu;
- 	struct fnic *fnic = *((struct fnic **) shost_priv(host));
- 	struct pci_dev *l_pdev = fnic->pdev;
- 	int intr_mode = fnic->config.intr_mode;
-@@ -700,7 +702,36 @@ void fnic_mq_map_queues_cpus(struct Scsi
- 		return;
- 	}
- 
--	blk_mq_map_hw_queues(qmap, &l_pdev->dev, FNIC_PCI_OFFSET);
-+	for_each_possible_cpu(cpu)
-+		qmap->mq_map[cpu] = 0;
-+
-+	/*
-+	 * Setup CPU to Queue mapping for all managed MSI-X IRQs.
-+	 * Q0 is driver critical and non-managed, hence start from Q1.
-+	 */
-+	for (queue = 1; queue < qmap->nr_queues; queue++) {
-+		int irq_num = pci_irq_vector(fnic->pdev,
-+					     queue + FNIC_PCI_OFFSET);
-+
-+		if (irq_num < 0)
-+			continue;
-+
-+		mask = pci_irq_get_affinity(fnic->pdev,
-+					    queue + FNIC_PCI_OFFSET);
-+		if (!mask) {
-+			shost_printk(KERN_ERR, host,
-+				"failed to get irq_affinity map for queue:%d\n", irq_num);
-+			continue;
-+		}
-+		FNIC_MAIN_DBG(KERN_INFO, fnic,
-+				"got irq_affinity map for %d:\n", irq_num);
-+		for_each_cpu(cpu, mask) {
-+			qmap->mq_map[cpu] = qmap->queue_offset + queue;
-+			FNIC_MAIN_DBG(KERN_INFO, fnic,
-+				      "[Q%d] cpu:%d <=> irq:%d\n",
-+				      queue, cpu, irq_num);
-+		}
-+	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -750,6 +750,64 @@ void amdgpu_device_mm_access(struct amdg
+ 	drm_dev_exit(idx);
  }
  
- static int fnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
++#ifdef CONFIG_64BIT
++/*
++ * During early SR-IOV VF init, host-provided init data can live in FB before
++ * the normal VRAM aperture mapping is ready.  Use a temporary BAR0 mapping for
++ * reads only, and verify it matches the VRAM aperture when aperture information
++ * is already available.
++ */
++static int amdgpu_device_read_fb_via_bar0(struct amdgpu_device *adev,
++					  u64 offset, void *buf, size_t size)
++{
++	resource_size_t aper_base, aper_size, bar_start, bar_size, map_base;
++	void __iomem *vram;
++	size_t map_offset, map_size;
++	unsigned long flags;
++	u64 end;
++
++	if (!buf || !size)
++		return -EINVAL;
++
++	flags = pci_resource_flags(adev->pdev, 0);
++	if ((flags & IORESOURCE_UNSET) || !(flags & IORESOURCE_MEM))
++		return -EINVAL;
++
++	bar_start = pci_resource_start(adev->pdev, 0);
++	bar_size = pci_resource_len(adev->pdev, 0);
++	if (!bar_size)
++		return -ENODEV;
++
++	aper_base = adev->gmc.aper_base;
++	aper_size = adev->gmc.visible_vram_size ? adev->gmc.visible_vram_size :
++						  adev->gmc.aper_size;
++
++	if (aper_base || aper_size) {
++		if (aper_base != bar_start || aper_size > bar_size)
++			return -EINVAL;
++	} else {
++		aper_base = bar_start;
++		aper_size = bar_size;
++	}
++
++	if (check_add_overflow(offset, size, &end) || end > aper_size)
++		return -EINVAL;
++
++	map_offset = offset_in_page(offset);
++	map_base = aper_base + (offset & PAGE_MASK);
++	map_size = PAGE_ALIGN(map_offset + size);
++
++	vram = ioremap_wc(map_base, map_size);
++	if (!vram)
++		return -ENOMEM;
++
++	memcpy_fromio(buf, (u8 __iomem *)vram + map_offset, size);
++	iounmap(vram);
++
++	return 0;
++}
++#endif
++
+ /**
+  * amdgpu_device_aper_access - access vram by vram aperture
+  *
+@@ -769,8 +827,12 @@ size_t amdgpu_device_aper_access(struct
+ 	size_t count = 0;
+ 	uint64_t last;
+ 
+-	if (!adev->mman.aper_base_kaddr)
++	if (!adev->mman.aper_base_kaddr) {
++		/* Writes still require the regular aperture/MM path. */
++		if (!write && !amdgpu_device_read_fb_via_bar0(adev, pos, buf, size))
++			return size;
+ 		return 0;
++	}
+ 
+ 	last = min(pos + size, adev->gmc.visible_vram_size);
+ 	if (last > pos) {
+@@ -2011,16 +2073,25 @@ static int amdgpu_device_ip_early_init(s
+ {
+ 	struct amdgpu_ip_block *ip_block;
+ 	struct pci_dev *parent;
+-	bool total, skip_bios;
++	bool total, skip_bios, early_full_gpu_access = false;
+ 	uint32_t bios_flags;
+ 	int i, r;
+ 
+ 	amdgpu_device_enable_virtual_display(adev);
+ 
+ 	if (amdgpu_sriov_vf(adev)) {
+-		r = amdgpu_virt_request_full_gpu(adev, true);
+-		if (r)
+-			return r;
++		/*
++		 * Legacy hosts do not provide init data before early init, so
++		 * keep the original early full GPU access request for them.  Newer
++		 * hosts publish the init data through VF FB, which lets us defer
++		 * full GPU access until after non-GPU early init work is done.
++		 */
++		early_full_gpu_access = (adev->virt.req_init_data_ver == 0);
++		if (early_full_gpu_access) {
++			r = amdgpu_virt_request_full_gpu(adev, true);
++			if (r)
++				return r;
++		}
+ 
+ 		r = amdgpu_virt_init_critical_region(adev);
+ 		if (r)
+@@ -2183,6 +2254,13 @@ static int amdgpu_device_ip_early_init(s
+ 	if (!total)
+ 		return -ENODEV;
+ 
++	/* Request full GPU access only for the remaining SR-IOV init work. */
++	if (amdgpu_sriov_vf(adev) && !early_full_gpu_access) {
++		r = amdgpu_virt_request_full_gpu(adev, true);
++		if (r)
++			return r;
++	}
++
+ 	if (adev->gmc.xgmi.supported)
+ 		amdgpu_xgmi_early_init(adev);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
++++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
+@@ -185,8 +185,11 @@ static int xgpu_ai_send_access_requests(
+ 	} else if (req == IDH_REQ_GPU_INIT_DATA){
+ 		/* Dummy REQ_GPU_INIT_DATA handling */
+ 		r = xgpu_ai_poll_msg(adev, IDH_REQ_GPU_INIT_DATA_READY);
+-		/* version set to 0 since dummy */
+-		adev->virt.req_init_data_ver = 0;	
++		/*
++		 * AI uses the GPU_CRIT_REGION_V1 layout in practice, so fix the
++		 * dummy version value to match the actual init-data format.
++		 */
++		adev->virt.req_init_data_ver = GPU_CRIT_REGION_V1;
+ 	}
+ 
+ 	return 0;
 
 
