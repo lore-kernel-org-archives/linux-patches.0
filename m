@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088F6533580;
-	Wed, 23 Sep 2026 14:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ACD470121;
+	Wed, 23 Sep 2026 14:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173562; cv=none; b=WXu36AszOZcjxzrFUYKumLhGAbQQ1tYloLIXzD+VwSZuD/W63pQz6tWn1Lwb9C8muxIMnhzHHJv8+eCK0JjKGFbmmNv2bmIMCNvIViyeL17bSFXzt648oDrB02wsA4cIlMpY9pHuWeuj6LlGrIU5FGed7frEGaD0OO+xiKB4UZU=
+	t=1790173565; cv=none; b=rc4qor7rEqQ0xUpZj/Xcm8/7eWVp5sRb7QOa1gG8bvG90ZNJQ70FCvvGH3C46mqyqKeRZCq3wwXXOKJjIc/KRbz4RChRJS5Uc9u/frCAM5ByNpfY0C7TSsToPHwE9ipoPUtpNcO29MwbY6W/69ehgYrSu2UwCcLiSP75/qIorc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173562; c=relaxed/simple;
-	bh=MvLk6aRhnxK/CkBhp7TnMrQBCgdff+xjOo3hhtGiPNQ=;
+	s=arc-20240116; t=1790173565; c=relaxed/simple;
+	bh=kJEsir04UzekK72Tit4okIj4hR7h4HfVH+d03207+8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMGx9EDYweacur4o8JBuaI0jrO95cepqdKPeWmIQbv59TlywWGC/AmPtky3xi9YAUazYfvxGk1VyKLcJX2u7vhb2uPJ7lDO75HYNfbUabLk+I4sWeSvvHGbc6esuXyXlvUb9ykjO+cMDWDAL4aa06zk+2zNjrvLXtpZOw1oHod0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOCX2n+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=glX7LSF9HWWwVLzVwp3y5j/BVNgs2jKAVZ66QTFsGwzszJklusPnQa62wdnLArnqAT0sOw/0kNwcW8QZyIwVhwg4qreQeRzysq0RNoNOUzZ1vFoWNOmrXqjIFTgY0M54LDnLUbn7q4esPXVvZIDO884VdEWaeEuJA7eqPRTCj/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfGtOx2i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOCX2n+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427AA1F000FF;
-	Wed, 23 Sep 2026 14:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfGtOx2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A551F000FF;
+	Wed, 23 Sep 2026 14:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173560;
-	bh=CQKzUsoqaDtwAsNQMT8yOp6nN+NzD0TJ3o0+gPOWrM8=;
+	s=korg; t=1790173563;
+	bh=PZk5wf46M5juLc6Slw+yiRmyXyNa6APopmXl5nyrfbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOCX2n+1gv06Z9OhU4rgkwpsuVcQg8Z1ezOH4s25gliCgngiwCzbhFGCBYcKnjDrs
-	 v/hbQwlMxskzmMT0/BeHoIDYyYpENS860iqtA3C9tldFdMiVs0j+H8ag4hrHUOlh6s
-	 IyQw1Fyso+GEfmQpinWQEDb0IJRgiTfyZhvY6gm0=
+	b=LfGtOx2iuY/eZOs4MaKij4Xl52c+LjZt2Y+BAieV/Szmj8uwDdlZIYYxuJKBQVQZe
+	 2vRUuEE5/+XT10ZpjwS7XAStLLA3IJLB+gqTEjljKw6f/HGqXw2skmHYjat93AIgOI
+	 0dULzxgPTibvh8t3C6++HN8GZUc3ntG35zk6x4c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 7.2 258/438] x86/microcode/intel: Reject problematic loading on Granite Rapids systems
-Date: Wed, 23 Sep 2026 16:04:39 +0200
-Message-ID: <20260923140651.463054955@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Guanghui Yang <3497809730@qq.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 7.2 285/438] btrfs: clear free space tree creation state on rebuild failure
+Date: Wed, 23 Sep 2026 16:05:06 +0200
+Message-ID: <20260923140652.161125571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,72 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit e7d3e2f46dd5a69046e6d95a0f189155a5516b93 upstream.
+commit 3565893cc72cdf6b795cf6a33e7ff9605322334d upstream.
 
-Microcode updates can usually jump revisions. However, there is an erratum on
-Granite Rapids systems. If they "jump over" revision 0x1000405, they result in
-an #MC. Avoid it.
+btrfs_rebuild_free_space_tree() sets BTRFS_FS_CREATING_FREE_SPACE_TREE
+before rebuilding the free space tree.  Several error paths return
+without clearing this flag.
 
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916225939.1144524-1-chang.seok.bae@intel.com
+The transaction restart failure path can leave the flag set on a live
+filesystem, causing delayed reference processing to be skipped. Clear it
+on all free space tree rebuild failure paths. Keep
+BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED set, since a failed rebuild leaves
+the free space tree untrusted. Callers must fall back to extent-tree
+caching.
+
+Fixes: 882af9f13e83 ("btrfs: handle free space tree rebuild in multiple transactions")
+CC: stable@vger.kernel.org # 6.14+
+Assisted-by: LLM
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/intel.c |   26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ fs/btrfs/free-space-tree.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -345,6 +345,26 @@ static void save_microcode_patch(struct
- 		pr_err("Unable to allocate microcode memory size: %u\n", size);
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1353,7 +1353,7 @@ int btrfs_rebuild_free_space_tree(struct
+ 	if (unlikely(ret)) {
+ 		btrfs_abort_transaction(trans, ret);
+ 		btrfs_end_transaction(trans);
+-		return ret;
++		goto out_clear;
+ 	}
+ 
+ 	node = rb_first_cached(&fs_info->block_group_cache_tree);
+@@ -1371,14 +1371,16 @@ int btrfs_rebuild_free_space_tree(struct
+ 		if (unlikely(ret)) {
+ 			btrfs_abort_transaction(trans, ret);
+ 			btrfs_end_transaction(trans);
+-			return ret;
++			goto out_clear;
+ 		}
+ next:
+ 		if (btrfs_should_end_transaction(trans)) {
+ 			btrfs_end_transaction(trans);
+ 			trans = btrfs_start_transaction(free_space_root, 1);
+-			if (IS_ERR(trans))
+-				return PTR_ERR(trans);
++			if (IS_ERR(trans)) {
++				ret = PTR_ERR(trans);
++				goto out_clear;
++			}
+ 		}
+ 		node = rb_next(node);
+ 	}
+@@ -1390,6 +1392,10 @@ next:
+ 	ret = btrfs_commit_transaction(trans);
+ 	clear_bit(BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED, &fs_info->flags);
+ 	return ret;
++
++out_clear:
++	clear_bit(BTRFS_FS_CREATING_FREE_SPACE_TREE, &fs_info->flags);
++	return ret;
  }
  
-+static bool revision_is_safe(struct cpu_signature *sig, u32 rev)
-+{
-+	u32 vfm = IFM(x86_family(sig->sig), x86_model(sig->sig));
-+
-+	/*
-+	 * Erratum GNR98 can cause #MCs if "jumping over" revision 0x1000405.
-+	 * Avoid the jumps.
-+	 */
-+	if (vfm == INTEL_GRANITERAPIDS_X &&
-+	    x86_stepping(sig->sig) == 1 &&
-+	    sig->pf & 0x95 &&
-+	    sig->rev < 0x1000405 &&
-+	    rev > 0x1000405) {
-+		pr_err_once("Erratum GNR98: skipping revision 0x%x.\n", rev);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- /* Scan blob for microcode matching the boot CPUs family, model, stepping */
- static __init struct microcode_intel *scan_microcode(void *data, size_t size,
- 						     struct ucode_cpu_info *uci,
-@@ -366,6 +386,9 @@ static __init struct microcode_intel *sc
- 		if (!intel_find_matching_signature(data, &uci->cpu_sig))
- 			continue;
- 
-+		if (!revision_is_safe(&uci->cpu_sig, mc_header->rev))
-+			continue;
-+
- 		/*
- 		 * For saving the early microcode, find the matching revision which
- 		 * was loaded on the BSP.
-@@ -914,6 +937,9 @@ static enum ucode_state parse_microcode_
- 		if (!intel_find_matching_signature(mc, &uci->cpu_sig))
- 			continue;
- 
-+		if (!revision_is_safe(&uci->cpu_sig, mc_header.rev))
-+			continue;
-+
- 		is_safe = ucode_validate_minrev(&mc_header);
- 		if (force_minrev && !is_safe)
- 			continue;
+ static int __add_block_group_free_space(struct btrfs_trans_handle *trans,
 
 
