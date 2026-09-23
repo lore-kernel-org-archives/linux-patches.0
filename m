@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5A5244687;
-	Wed, 23 Sep 2026 14:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56AB5304DF;
+	Wed, 23 Sep 2026 14:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172703; cv=none; b=NBX82XJ7ramO3d/y59SqJ43FDjozU8bbNYoprfCij5GFnP2vPHe+xX3mwLUNcK7Mz2/cCKEewe69LL46zwDu9j5nZWL7771oURG7Jt93E+9KXQAGUJxvwJ5L2lVpP0L6X6CAyFiZtt8T5OAGlaot1Hme81MHlo+9KF/9+YvmLHE=
+	t=1790172706; cv=none; b=CwiizEW4NkfrxntwX2+feXX1bkMKc59FQOmlrOw3kgk/FShOx5YJ0ymTj4328xJ1uU+ohZFZW/XDs3nvytr4mKh/eicSSFJnP3grxaJKizefzBMYH9CcF13cuPG7lRKrYRXzcS/3ibAS6g908OzMJHVe5HKTSD2EvnXyoEkFQQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172703; c=relaxed/simple;
-	bh=KRdZMk6NbemO/5LBQZi3lCueDt98UqE3bgFJ7DUrsPM=;
+	s=arc-20240116; t=1790172706; c=relaxed/simple;
+	bh=WmL5nbCvPOUZKW2bgjN4RBxbCy92CI4TULedSBlh+6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/dB44ZhilV0L+sfrBO2daGwJ5qxOYAhRzkDuwAgwSSRz9gON5I47wAUArLoovUVHcvk1wI32xRcWpgj2u6r0FryDqWf80HAbpam3vNUm/PXW6Vgnn0wWpqXeSc/25G+eD8vak+RYY3DKe8fnENh2kjTd9P6p0VPHk2Edep0U+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pp4oVPQB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouOju8xpAJMFXcGwnUO0rNR7T24O1ixQT6ClBxspMw6epaPcPFIwL6WXL5V1tEoMZlXBj8TVU3uYCqAIhYkqh/WOUBkREGM1cc76boyE6qJtlaHkQOYlynn0gDw72EHB7uDSuCMdjfZK52tNgsvDzsU41crtMCiETYwIipK0Z8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQuEHchx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pp4oVPQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B23D1F000FF;
-	Wed, 23 Sep 2026 14:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQuEHchx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC081F000FF;
+	Wed, 23 Sep 2026 14:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172701;
-	bh=3il9uM4icDaCxg7wTbMBW5X8eb8EP5WgMP8HomgdH3w=;
+	s=korg; t=1790172704;
+	bh=1KkGpRK2m/QwUJ6JGrFIaox93iJltqtAqNApyMknNk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pp4oVPQBTDfU971JDPimnZVukW6QDNyPunW1M2E4knNrjl0YetvbxgfbG4o2bpB+Z
-	 +EtOFwWG6ztt9VIsT6gzaH3ZKuHL23M4dbpNElR4ANRwsmUv1D4YqLFCaEGn6Ld25p
-	 D+bMEbDMs2kS1ZzDatY8fZzwdvHPVfbbxTBGIwgw=
+	b=EQuEHchxuJeRh1f4hOCnfGfT5yhbbMN9zYX8gq9vIdEJd/el+gP6KObFgnMUHCw0g
+	 xeToSdOpx5jYhSg0qpVxlJ5s1S6jtNZAXu2tHNmm3AgIZZLVHbcHWKDkY54Y5ZHKRi
+	 uq+lwA3q7r1UANKnsbBPfiLuJc2NAbVUZB2H/Wng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 034/438] arm64: dts: renesas: r9a09g087: Switch GBETH TX queue scheduling to WRR
-Date: Wed, 23 Sep 2026 16:00:55 +0200
-Message-ID: <20260923140645.666751728@linuxfoundation.org>
+Subject: [PATCH 7.2 035/438] IB/iser: reject a remote invalidation of an unregistered direction
+Date: Wed, 23 Sep 2026 16:00:56 +0200
+Message-ID: <20260923140645.692731708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,180 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 2ac7bad110be6ebe478d6bd57821f7f5259a1f54 ]
+[ Upstream commit d85f0f0a7c85756fc992c70d869706f19dac9259 ]
 
-The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
-falls back to Strict Priority. In this configuration the queue with the
-highest priority gets all the traffic, starving the others under load.
+A write command whose data is sent entirely as immediate data is not
+registered.  iser_reg_mem_fastreg() takes the DMA key path and leaves
+rdma_reg[ISER_DIR_OUT].desc at NULL, while iser_dma_map_task_data() has
+already set dir[ISER_DIR_OUT].
 
-Under sustained UDP TX load with multiple data streams, this starvation
-triggers spurious adapter resets due to TX queue timeouts:
+iser_check_remote_inv() looks at dir[] alone and hands the descriptor to
+iser_inv_desc(), which reads desc->sig_protected.  A target that answers
+such a command with IB_WR_SEND_WITH_INV faults the initiator.
+Leaving those commands unregistered is deliberate.
 
-  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
-  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
-  end0: Reset adapter.
+The same function already terminates the connection when a target sends
+a remote invalidation the initiator did not ask for.  A target that
+invalidates a direction that was never registered is in the same class,
+so give it the same answer.
 
-Investigation shows that only the highest priority queue is advancing
-while the others stall for more than 5 seconds, causing a netdev watchdog
-reset.
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000004: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000020-0x0000000000000027]
+  CPU: 0 UID: 0 PID: 40 Comm: kworker/u8:2 Not tainted 7.2.0-rc5-ISERHOST-gf5098b6bae76-dirty #3 PREEMPT(lazy)
+  Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  Workqueue: rxe_wq do_work
+  RIP: 0010:iser_task_rsp+0x6d6/0xec0
+  Code: 48 c1 ea 03 80 3c 02 00 0f 85 ba 06 00 00 48 8b 9b 78 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 8d 7b 20 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 06 0f 8e 76 06 00 00 80 7b 20 00 0f 84 3d 04
+  RSP: 0018:ffff88811b008db8 EFLAGS: 00010202
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000001848
+  RDX: 0000000000000004 RSI: 1ffff11021587b12 RDI: 0000000000000020
+  RBP: ffff88810adc1ae4 R08: ffff888109b7f860 R09: ffffffff90a922c0
+  R10: ffff88810adc1a1c R11: 000000000000003c R12: ffff888109b7f800
+  R13: ffff88810adc1acc R14: ffff888109b7f820 R15: 0000000000000000
+  FS:  0000000000000000(0000) GS:ffff88818a676000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00000000005afe2b CR3: 000000010af23005 CR4: 0000000000770ef0
+  PKRU: 55555554
+  Call Trace:
+   <IRQ>
+   __ib_process_cq+0xe1/0x390
+   ib_poll_handler+0x6e/0x200
+   irq_poll_softirq+0x1df/0x480
+   ? clockevents_program_event+0x2ba/0x860
+   ? __pfx_irq_poll_softirq+0x10/0x10
+   handle_softirqs+0x18e/0x590
+   ? __pfx_handle_softirqs+0x10/0x10
+   ? __hrtimer_rearm_deferred+0x156/0x450
+   do_softirq+0x3b/0x60
+   </IRQ>
+   <TASK>
+   __local_bh_enable_ip+0x61/0x70
+   __alloc_skb+0x732/0x890
+   ? _raw_spin_lock_irqsave+0x85/0xe0
+   ? __pfx___alloc_skb+0x10/0x10
+   ? _raw_read_unlock_irqrestore+0x16/0x50
+   rxe_init_packet+0x16b/0x4f0
+   prepare_ack_packet+0xb8/0x830
+   rxe_receiver+0x499/0x9980
+   ? __pfx_rxe_receiver+0x10/0x10
+   ? rxe_completer+0x29e5/0x38c0
+   ? hrtimer_start_range_ns_common+0x75f/0x1730
+   ? hrtimer_start_range_ns+0xa6/0x2c0
+   ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+   ? __pfx_rxe_receiver+0x10/0x10
+   do_work+0x144/0x470
+   process_one_work+0x633/0x1030
+   ? assign_work+0x11d/0x370
+   worker_thread+0x45b/0xd10
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0x2c6/0x3b0
+   ? recalc_sigpending+0x15c/0x1e0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x36e/0x5a0
+   ? __pfx_ret_from_fork+0x10/0x10
+   ? __switch_to+0x572/0xdd0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
 
-Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
-traffic is processed across all queues, eliminating the stalls.
-
-Fixes: c4698a34993b ("arm64: dts: renesas: r9a09g087: Add GMAC nodes")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260722085353.136986-6-ovidiu.panait.rb@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 59caaed7a72a ("IB/iser: Support the remote invalidation exception")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260819010804.641772-1-yhlee@isslab.korea.ac.kr
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g087.dtsi | 27 ++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/infiniband/ulp/iser/iser_initiator.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-index e8d4f76949ccb..03b976d93e105 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-@@ -643,36 +643,45 @@ queue7 {
+diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
+index 12a2d12fef070..7ea6888b479cf 100644
+--- a/drivers/infiniband/ulp/iser/iser_initiator.c
++++ b/drivers/infiniband/ulp/iser/iser_initiator.c
+@@ -598,11 +598,8 @@ static int iser_check_remote_inv(struct iser_conn *iser_conn, struct ib_wc *wc,
+ 		iser_dbg("conn %p: remote invalidation for rkey %#x\n",
+ 			 iser_conn, rkey);
  
- 			mtl_tx_setup0: tx-queues-config {
- 				snps,tx-queues-to-use = <8>;
-+				snps,tx-sched-wrr;
+-		if (unlikely(!iser_conn->snd_w_inv)) {
+-			iser_err("conn %p: unexpected remote invalidation, terminating connection\n",
+-				 iser_conn);
+-			return -EPROTO;
+-		}
++		if (unlikely(!iser_conn->snd_w_inv))
++			goto bad_inv;
  
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 				};
+ 		task = iscsi_itt_to_ctask(iser_conn->iscsi_conn, hdr->itt);
+ 		if (likely(task)) {
+@@ -611,12 +608,16 @@ static int iser_check_remote_inv(struct iser_conn *iser_conn, struct ib_wc *wc,
  
- 				queue1 {
-+					snps,weight = <0x11>;
- 					snps,dcb-algorithm;
- 				};
+ 			if (iser_task->dir[ISER_DIR_IN]) {
+ 				desc = iser_task->rdma_reg[ISER_DIR_IN].desc;
++				if (unlikely(!desc))
++					goto bad_inv;
+ 				if (unlikely(iser_inv_desc(desc, rkey)))
+ 					return -EINVAL;
+ 			}
  
- 				queue2 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 				};
+ 			if (iser_task->dir[ISER_DIR_OUT]) {
+ 				desc = iser_task->rdma_reg[ISER_DIR_OUT].desc;
++				if (unlikely(!desc))
++					goto bad_inv;
+ 				if (unlikely(iser_inv_desc(desc, rkey)))
+ 					return -EINVAL;
+ 			}
+@@ -627,6 +628,11 @@ static int iser_check_remote_inv(struct iser_conn *iser_conn, struct ib_wc *wc,
+ 	}
  
- 				queue3 {
-+					snps,weight = <0x13>;
- 					snps,dcb-algorithm;
- 				};
+ 	return 0;
++
++bad_inv:
++	iser_err("conn %p: unexpected remote invalidation, terminating connection\n",
++		 iser_conn);
++	return -EPROTO;
+ }
  
- 				queue4 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 				};
  
- 				queue5 {
-+					snps,weight = <0x15>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue6 {
-+					snps,weight = <0x16>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue7 {
-+					snps,weight = <0x17>;
- 					snps,dcb-algorithm;
- 				};
- 			};
-@@ -790,36 +799,45 @@ queue7 {
- 
- 			mtl_tx_setup1: tx-queues-config {
- 				snps,tx-queues-to-use = <8>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x11>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x13>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue4 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue5 {
-+					snps,weight = <0x15>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue6 {
-+					snps,weight = <0x16>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue7 {
-+					snps,weight = <0x17>;
- 					snps,dcb-algorithm;
- 				};
- 			};
-@@ -937,36 +955,45 @@ queue7 {
- 
- 			mtl_tx_setup2: tx-queues-config {
- 				snps,tx-queues-to-use = <8>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x11>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x13>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue4 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue5 {
-+					snps,weight = <0x15>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue6 {
-+					snps,weight = <0x16>;
- 					snps,dcb-algorithm;
- 				};
- 
- 				queue7 {
-+					snps,weight = <0x17>;
- 					snps,dcb-algorithm;
- 				};
- 			};
 -- 
 2.53.0
 
