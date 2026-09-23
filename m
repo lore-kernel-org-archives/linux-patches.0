@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE3337997E;
-	Wed, 23 Sep 2026 14:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80146379979;
+	Wed, 23 Sep 2026 14:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173837; cv=none; b=S9NjofeYEY73A6Luqs2MqruXo69W20CwpVGp5VDE6Cvsr6mlrVMCe/2e+3YFh/qOGIcyOSdL+4h1uxgXp4yKrtbDH0tYfR6TLy2iyZaGsDZh3XMCqar5C960FPCsGeD6TnSBsMzrw80WX5gmFrxBtFhAursEIblK1Lc61IAVQPE=
+	t=1790173840; cv=none; b=R7ffs7XpJbG05bM6ws57wmjaAgg5+3aW4qYwJpprc75xLwExXknUC+uswpUUN9mvISrC6QNtTqizXA2pvp6hPEBFyIsX+eKQUhhs6IlpTsobr8JyjX0ecz+tKEVUR4JV7JL/dzyvoP+6zq+YxCSCMJC33pmdVrKDoGWZkKln2Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173837; c=relaxed/simple;
-	bh=UaNKFKT7LUA6HSSmxhxnAkdZ5GWw3m40s+4iQbluNfE=;
+	s=arc-20240116; t=1790173840; c=relaxed/simple;
+	bh=A75/wN66IHcuDiiXd5FAtjlKBA/v7vUKOg++d28Qg5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHlQsSgWVL5Hwje5SxvX8oQgWUi+q1kqsEoK3k6gGNA+YDJpW8wHYFZiYsKkRjyqkzmfG3O77wk9CoeRN8HfikwOJjYC51txiFboAZ67G5YSh4MQ0txGog5qKv4i8Aqkd+5dwX+5UP9sk+d24ZVYkIWwpEDz+MBVVlP2TrK49+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqL5FsqT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IO/BeKz6mTJPMBR9ldIkjqKNX1+ksBVDDoPNIPKGXfNxFE2UCZE2ZBkEq1ST3yAbKB0XpyDy8u5ft3OGkMfrai+CfwNd7s0E8tJDmCiggRk3OYUfKp3rg4cx//pxtPxaZjvskSzt4u+ua2Pu1+k5M1WRFxrUOwSshIg1SPnPNXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV5n+4LX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqL5FsqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D611F000FF;
-	Wed, 23 Sep 2026 14:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV5n+4LX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57B71F000FF;
+	Wed, 23 Sep 2026 14:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173836;
-	bh=L78w2mWekIKNl5yzQc4N2rnSFSsohu3NU89Zv3Rz+s0=;
+	s=korg; t=1790173839;
+	bh=mvHLXgun0QFXA4kH/YWfnjYqcseRNTGNvmX/XOrK8hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VqL5FsqTmTid3KBIqVwsEuQrZcfesL7aqJBsCzsgVybs4rYRljr0wWB7Oo52U+gX9
-	 1UtVV+xc/NQK59kWFTXF6A1JwG3P2uaO23Bq8rSfb/2cX3fIsQOvQU6KlwI8xEjCfM
-	 +LngWk5FUW01SeNv4/Vx03OxHKPqUpMaFzKqEVHM=
+	b=MV5n+4LX5hUffWX6VvcxdAlJtYeYaMufm7B6jISbg6Ue1fp7LR3GUWZcTWycGECp9
+	 A5L+NGpgAwQtLvpwsWArU4hGZx1FSvFJnJ5bxjE7LVRm3vnYwMKHrdX4fecEmvCwtN
+	 TsJZymY4HDQdoHDiOwbbhApSALMfM9ZtSjbyrozA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 7.2 332/438] IB/hfi1: Fix the PIO_CRED credit-return mmap
-Date: Wed, 23 Sep 2026 16:05:53 +0200
-Message-ID: <20260923140653.415908629@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.2 359/438] Input: rmi_smbus - fix out-of-bounds read in rmi_smb_write_block()
+Date: Wed, 23 Sep 2026 16:06:20 +0200
+Message-ID: <20260923140654.156409229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,118 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 62f0f34fbd2b2d5653d33d3b9d42fdcabb1c0101 upstream.
+commit 51cfe54f815ae175c7d1126b983d4d7c89715004 upstream.
 
-hfi1_file_mmap()'s PIO_CRED case must hand user space the single
-credit-return page that holds this context's entry.  That page is the
-second or third page of the per-node credit-return allocation once the
-hardware send context index reaches 64 or 128, so the failure below is
-intermittent: when the entry lands on the first page the offset is zero
-and everything works.
+When chunking writes into SMBus blocks in rmi_smb_write_block(), the
+loop calculates block_len using the original total length (len) instead
+of the remaining length (cur_len).
 
-Two things are wrong.
+If len is greater than 32 bytes (SMB_MAX_COUNT), block_len remains 32
+for every iteration, even on the final partial chunk where fewer than 32
+bytes remain. This causes smb_block_write() to read 32 bytes from the
+advanced data buffer pointer, reading past the end of the input buffer.
 
-First, cr_page_offset is a byte offset but .va is a struct
-credit_return *, so adding it is pointer arithmetic and scales the offset
-by sizeof(struct credit_return) == 64.  memvirt then lands 256 KiB or
-512 KiB past a 10240-byte allocation.  With an IOMMU translating, that
-address is inside the vmalloc range but in no vm_area, so
-dma_mmap_coherent() -> iommu_dma_mmap() finds no pages, vmalloc_to_pfn()
-returns page_to_pfn(NULL), and remap_pfn_range() installs a frame above
-MAXPHYADDR.  The first user read then takes:
+Fix this by calculating block_len using cur_len and advancing the buffer
+and address pointers by block_len.
 
-  psm2_ep_open_pr: Corrupted page table at address 7a14d007e000
-  PGD 800000013886a067 P4D 800000013886a067 PUD 13886b067 PMD 13886c067
-                                            PTE 800049168e911235
-  Oops: Bad pagetable: 000d [#1] SMP PTI
-
-Second, and still wrong once the arithmetic is corrected,
-dma_mmap_coherent() describes a whole coherent buffer and selects the
-page within it with vma->vm_pgoff.  Offsetting cpu_addr has no effect:
-for a vmap'd allocation iommu_dma_mmap() uses cpu_addr only to locate the
-vm_area and then maps pages[vm_pgoff], which hfi1_file_mmap() has just
-set to 0.  User space therefore always receives the first credit-return
-page, every credit read is for the wrong context, and send PIO stalls
-forever.
-
-Use the DMA API as intended: pass the base of the allocation with its
-full length and select the page with vm_pgoff.  A separate length is
-needed because memlen must keep describing the VMA for the existing size
-check.  The dma-direct path stays correct as well, since dma_direct_mmap()
-adds the same vm_pgoff to the base pfn.
-
-Tested on a Dell T7610 (Xeon E5-2650 v2, Intel IOMMU in DMA-FQ mode)
-against a Threadripper PRO 3995WX peer, both Omni-Path 100.  Before this
-change psm2_ep_open() Oopses the kernel; with only the arithmetic
-corrected psm2_ep_open() succeeds but any transfer that uses send PIO
-hangs, PSM2_SDMA=2 (send PIO disabled) completing normally while
-PSM2_SDMA=0 (send PIO only) hangs every time.  With this change send PIO,
-send DMA and the default mixed mode all work.
-
-Fixes: 1ec82317a1da ("IB/hfi1: Use dma_mmap_coherent for matching buffers")
+Fixes: 82264d0cf7ae ("Input: synaptics-rmi4 - add SMBus support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
-Link: https://patch.msgid.link/20260809032743.2671579-3-jyohuku.alterego@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: LLM
+Link: https://patch.msgid.link/anLFSMKSoKyyZ272@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/file_ops.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/input/rmi4/rmi_smbus.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/file_ops.c
-+++ b/drivers/infiniband/hw/hfi1/file_ops.c
-@@ -326,6 +326,7 @@ static int hfi1_file_mmap(struct file *f
- 	void *memvirt = NULL;
- 	dma_addr_t memdma = 0;
- 	u8 subctxt, mapio = 0, vmf = 0, type;
-+	size_t memdmalen = 0;
- 	ssize_t memlen = 0;
- 	int ret = 0;
- 	u16 ctxt;
-@@ -371,7 +372,9 @@ static int hfi1_file_mmap(struct file *f
- 		mapio = 1;
- 		break;
- 	case PIO_CRED: {
-+		struct credit_return_base *cr = &dd->cr_base[uctxt->sc->node];
- 		u64 cr_page_offset;
-+
- 		if (flags & VM_WRITE) {
- 			ret = -EPERM;
- 			goto done;
-@@ -381,11 +384,18 @@ static int hfi1_file_mmap(struct file *f
- 		 * second or third page allocated for credit returns (if number
- 		 * of enabled contexts > 64 and 128 respectively).
+--- a/drivers/input/rmi4/rmi_smbus.c
++++ b/drivers/input/rmi4/rmi_smbus.c
+@@ -140,7 +140,7 @@ static int rmi_smb_write_block(struct rm
+ 	u8 commandcode;
+ 	struct rmi_smb_xport *rmi_smb =
+ 		container_of(xport, struct rmi_smb_xport, xport);
+-	int cur_len = (int)len;
++	size_t cur_len = len;
+ 
+ 	mutex_lock(&rmi_smb->page_mutex);
+ 
+@@ -148,7 +148,7 @@ static int rmi_smb_write_block(struct rm
+ 		/*
+ 		 * break into 32 bytes chunks to write get command code
  		 */
--		cr_page_offset = ((u64)uctxt->sc->hw_free -
--				  (u64)dd->cr_base[uctxt->sc->node].va) &
-+		cr_page_offset = ((u64)uctxt->sc->hw_free - (u64)cr->va) &
- 				 PAGE_MASK;
--		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
--		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
-+		/*
-+		 * dma_mmap_coherent() describes the whole coherent buffer and
-+		 * selects the page within it with vma->vm_pgoff, so pass the
-+		 * base of the allocation and its length and let vm_pgoff pick
-+		 * the page.
-+		 */
-+		vma->vm_pgoff = cr_page_offset >> PAGE_SHIFT;
-+		memvirt = cr->va;
-+		memdma = cr->dma;
-+		memdmalen = TXE_NUM_CONTEXTS * sizeof(struct credit_return);
- 		memlen = PAGE_SIZE;
- 		flags &= ~VM_MAYWRITE;
- 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
-@@ -567,7 +577,8 @@ static int hfi1_file_mmap(struct file *f
- 		ret = 0;
- 	} else if (memdma) {
- 		ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
--					memvirt, memdma, memlen);
-+					memvirt, memdma,
-+					memdmalen ? memdmalen : memlen);
- 	} else if (mapio) {
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 PFN_DOWN(memaddr),
+-		int block_len = min_t(int, len, SMB_MAX_COUNT);
++		int block_len = min_t(size_t, cur_len, SMB_MAX_COUNT);
+ 
+ 		retval = rmi_smb_get_command_code(xport, rmiaddr, block_len,
+ 						  false, &commandcode);
+@@ -161,9 +161,9 @@ static int rmi_smb_write_block(struct rm
+ 			goto exit;
+ 
+ 		/* prepare to write next block of bytes */
+-		cur_len -= SMB_MAX_COUNT;
+-		databuff += SMB_MAX_COUNT;
+-		rmiaddr += SMB_MAX_COUNT;
++		cur_len -= block_len;
++		databuff += block_len;
++		rmiaddr += block_len;
+ 	}
+ exit:
+ 	mutex_unlock(&rmi_smb->page_mutex);
 
 
