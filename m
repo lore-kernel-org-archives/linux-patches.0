@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748CC48EC6C;
-	Wed, 23 Sep 2026 14:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02423ACF1C;
+	Wed, 23 Sep 2026 14:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173646; cv=none; b=nGvc6V1OuAEU7m65x0950JL5Lj//Xqm2zTDbuh8kvcJEOg6GmgzHmKiqFzn+dvvC5MeotSugZS9OWzbTAH7KYaF97Nvkq2/YzixZHwf9RpLLDpqnzHKk7UtGEKUrrvek/VTMvWvHI7MbzW3J7/G18XGETAiWr4PKT19H/+nBHaU=
+	t=1790173650; cv=none; b=MDvCI5IgaNflnNXgLwukU/9B3Je6yh4ZS+pirxC86Odb0HzsMYoMdNJagZ6wChkZf3IA8zN44ywqvHA/I6abzh6A/ZxHUj5oqMDoXKTBvWJulHPD/ICuCfVIw+wBDvp7e9w33D1vfXcz34uGh3NLXEiaf51ObXiPGrAZhFH1zzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173646; c=relaxed/simple;
-	bh=tn4eSZkjflTGdSV5uCuJOh+EceX9zMI0KG96e4b4ZKw=;
+	s=arc-20240116; t=1790173650; c=relaxed/simple;
+	bh=KCSD11N4uTtxW7zW4BJr2u/eaCkMW+moLsddD+R7W5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIUZ02S7i92QxCqY5fhLOu6HGfPZIHYwal/0dspiFsHuAoCZMIWXUsgCnKeV4DT83yMv+SCgV2hIWru8cuQ0TS5FV+TV2UhL6Ocf0UQUnVmeDy4Fdh1vjEmN6QwhKkdZ6zo6VCaSCNSmWQZyf88GDnssqVpHor5rs3iFHdL6e0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZmBAMjf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KFsYPZ39XD7w5GMgetpDZz+X6P5oPaHQEHA/Cbo/MKLukgBdRhx/8udlhJonW5GXgL9qsGXbGOW+/PAFP534ahjRRyEFmHplb1KAHxCsEqSSmJZsZo7IbMB/RVDI3AFW5xN4WivfEAe0HIBcQbYiuVoxr7JybKkpRIpikXbmEr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVarAQKG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZmBAMjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5EF1F000FF;
-	Wed, 23 Sep 2026 14:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVarAQKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E50D1F000FF;
+	Wed, 23 Sep 2026 14:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173645;
-	bh=hQtxUk77lIxPj91jbGLOAxIXkkFRnPEn4AW84yFObwA=;
+	s=korg; t=1790173648;
+	bh=tcSXOvhFThqeo8VaaLGkqpxwllf/+qntjnHtu9PIuWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VZmBAMjfE+nw5Aq/RaL63w/yZwp+jy2XDF0RoHMPfmLkGgny9PGRXMcE+nUm1AT2o
-	 eAM6T3Vsta7Xhg0hCHWmsmvQMNATtTmQs5cpL+EX6ufNWYbDNCB4brcrZR2GyBVpSM
-	 rW2KDLGe8zWX8liiEywmxsxT/FThStJupoM+oDcE=
+	b=VVarAQKGNYwghVSuaUYbWVzh9E4HqMGAnpQu143ODsFv2h8OzkeffngXYYH6za2AB
+	 lYN2Nn1styJyWpVcEuAcYLLOCNF59nTWBZ5Nnikq4xY8TB4Ms+xezYZk4KiZe/rKjL
+	 89UcJ4IPNts41eqhv/cwWQ8in6LJUGm6aWECkE0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 7.2 294/438] ipv6: xfrm: use full sockets in local error paths
-Date: Wed, 23 Sep 2026 16:05:15 +0200
-Message-ID: <20260923140652.397094539@linuxfoundation.org>
+	Yifei Gao <gyf161023@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 312/438] memstick: ms_block: destroy io_queue workqueue on removal
+Date: Wed, 23 Sep 2026 16:05:33 +0200
+Message-ID: <20260923140652.867085163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,62 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Yifei Gao <gyf161023@gmail.com>
 
-commit 6973a21ee73c5567f883813c8ef414774b45892f upstream.
+commit 90af7fde083e1b22c349c3a8b1626728e44e474c upstream.
 
-xfrm6_local_rxpmtu() and xfrm6_local_error() dereference skb->sk as if it
-always pointed at a full IPv6 socket.
+msb_init_disk() creates the per-card ordered workqueue msb->io_queue with
+alloc_ordered_workqueue(). It is torn down with destroy_workqueue() only
+on the init error path; msb_remove() never destroys it. msb_stop() merely
+flushes the queue, and neither msb_data_clear() nor put_disk() free it. As
+a result every card insert/remove cycle leaks the workqueue and its
+kworker, exhausting kernel memory over repeated cycles.
 
-That is not guaranteed. TCP SYN-ACK skbs can be owned by a
-TCP_NEW_SYN_RECV request_sock while the output path itself is driven by the
-full listener. If rerouting selects an IPv6 XFRM tunnel route with a lower
-MTU, the local PMTU/error handling path can reach these callbacks with that
-mini-socket still attached to the skb.
+Destroy the workqueue in msb_remove() after the disk has been removed and
+the queue drained.
 
-The callbacks then miscast the request socket as a full inet/IPv6 socket and
-can read beyond the request_sock allocation when they access inet_sock or
-ipv6_pinfo state.
-
-Resolve the owner with skb_to_full_sk() in both callbacks and bail out when
-no full socket is attached. This matches the surrounding XFRM IPv6 PMTU/error
-logic, which already reasons about full sockets with skb_to_full_sk().
-
-Fixes: dd767856a36e ("xfrm6: Don't call icmpv6_send on local error")
+Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_output.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/memstick/core/ms_block.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv6/xfrm6_output.c
-+++ b/net/ipv6/xfrm6_output.c
-@@ -19,7 +19,10 @@
- void xfrm6_local_rxpmtu(struct sk_buff *skb, u32 mtu)
- {
- 	struct flowi6 fl6;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
-+
-+	if (!sk)
-+		return;
+--- a/drivers/memstick/core/ms_block.c
++++ b/drivers/memstick/core/ms_block.c
+@@ -2204,6 +2204,8 @@ static void msb_remove(struct memstick_d
+ 	msb_data_clear(msb);
+ 	mutex_unlock(&msb_disk_lock);
  
- 	fl6.flowi6_oif = sk->sk_bound_dev_if;
- 	fl6.daddr = ipv6_hdr(skb)->daddr;
-@@ -31,7 +34,10 @@ void xfrm6_local_error(struct sk_buff *s
- {
- 	struct flowi6 fl6;
- 	const struct ipv6hdr *hdr;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
++	destroy_workqueue(msb->io_queue);
 +
-+	if (!sk)
-+		return;
- 
- 	hdr = skb->encapsulation ? inner_ipv6_hdr(skb) : ipv6_hdr(skb);
- 	fl6.fl6_dport = inet_sk(sk)->inet_dport;
+ 	put_disk(msb->disk);
+ 	memstick_set_drvdata(card, NULL);
+ }
 
 
