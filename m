@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF0F25E469;
-	Wed, 23 Sep 2026 14:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3959535FF5B;
+	Wed, 23 Sep 2026 14:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172914; cv=none; b=tLy7u3yNLAJaLsexwCrqcvsfCpUOZr32jcoGBZ+2xee2tsoLHJfeowSj+EUcOkMehdg5hGP1llOSOn1L4ryLkxuzatZwAMO7q6oL2BtEB+urL2zIoE6pAclpe9Su7lF2YtJn0YBp/LT891N+yQAfokV816jdkxkutbtgzkf81yM=
+	t=1790172917; cv=none; b=aRTDBVPsPp2dreg+OsYAQotgZJUHEWfAhExgYdzSEVcloIkj7e8h+F0cITkPQDIs6z6e0hvS76SmTkgJrUHbDAb0VwbnpHxd4N0mE4K7yqSMtudKbA3H1TpRgnZIueWph+cxtH2/EP41yoA6PYsAPP647+Q2B78pUQEMDhdEW8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172914; c=relaxed/simple;
-	bh=9YgSfhapoOcfQv5DVm8lwaQ/MOgkPIHiwsWAisdCS0U=;
+	s=arc-20240116; t=1790172917; c=relaxed/simple;
+	bh=Lv+l7vnegX56ICNxRpXiG4RLkHkH1BWNCZq8kS5gdkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxVlj5BshZpyK1J1+EFH/zLSiHnqX+tFsgs1nKKAgn3pCpenHrNllDkMU2fwsCCFyVrv/sC2etagMc9nWSWVZOmpYKIkBL5Rz8gQT+KAn8dGi+c5EpXJO7uhmYxVuwWWFLRLxiwOljSqQV2Y90a0QSQZJfHA4ScFxfQC7og7S/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVtbO8z7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k8ESeHVVlv7dTgaNBGl++zkTvLtlTjtNVj+1dViu38rT1vqUmf/+iOl5IRdLwBH6oWakDn8CKB66+Sy2Wz9cTKhyan4YCaqdVUgiiLg4TwEfG5QE3mDmi5VtnmK1K7RrtnoRDr4ftp6W0HNAzCOw+nwGbZfknVuhSyYAK9FmR6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meCO6aeP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVtbO8z7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE2E1F000FF;
-	Wed, 23 Sep 2026 14:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meCO6aeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900321F00893;
+	Wed, 23 Sep 2026 14:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172912;
-	bh=ZbPJ8YlZDghDiVJP/vJMz3BRCETTR2E7Lme7sa339rM=;
+	s=korg; t=1790172916;
+	bh=aomKAOrkMmSFeZmrbt2TyAIyw6ZYQJRnqu1Ayx9nXSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVtbO8z73nA+O2ktkz4VAm+e8iH28nTMuTCHpi/e12SeFoS7hfXVaQwV0zL/FL54p
-	 dOtVzRmRnSvbRScyX6WhyXady4eeFKl1/ae7N5APA4uqsaSZgvwNUMcaqqy9LrjZT1
-	 j+40CVdi85L529vHJjPRXCjz4nTs59B29ZTPqUPE=
+	b=meCO6aePPFgol50tP1IlisX51NhEKkpv/hnJP/BeXm7gQmKAJAJviOGWxem2Hl0qO
+	 Rd6dg3yGyEfZH+UGvF2YGscq7+MW5oLSsgi2V3Cg8nKZbbdCLXLRYMSP35dk2p7bWm
+	 xzxN2oc1fczQy6dPtU7te74UnVXBJFQ4cW8pzlPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c5f8a81e794d4a4f2014@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 080/438] wifi: cfg80211: get the wiphy out of a dying network namespace
-Date: Wed, 23 Sep 2026 16:01:41 +0200
-Message-ID: <20260923140646.857590680@linuxfoundation.org>
+Subject: [PATCH 7.2 098/438] RDMA/efa: Keep admin queues alive while IRQ is registered
+Date: Wed, 23 Sep 2026 16:01:59 +0200
+Message-ID: <20260923140647.318480038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,121 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 4635b1a1c1d693178a537446a6e09963f0fdae52 ]
+[ Upstream commit e08aca85c02ff290f785f07acae758f0daf5f49e ]
 
-When a network namespace is destroyed, cfg80211_pernet_exit() moves any
-wiphy back to the initial namespace, and just warns if that fails. But
-moving an interface can fail (due to allocation failures), and then the
-wiphy is left behind with a garbage netns pointer:
+The management IRQ handler accesses both the admin completion queue and the
+async event queue. The driver registered the IRQ before constructing these
+queues and destroyed them before freeing the IRQ, so the handler's lifetime
+was not contained by the resources it accesses.
 
-  Kernel mode fault at addr 0x30
-  genlmsg_multicast_netns.constprop.0+0x46/0xcf [cfg80211]
-  nl80211_notify_wiphy+0xcd/0xe8 [cfg80211]
-  wiphy_unregister+0x169/0x3fc [cfg80211]
+Initialize the queues with interrupts masked, request the IRQ, and then
+switch to interrupt mode. On removal, reset the device and free the IRQ
+before destroying the queues. Also reset the device before destroying the
+queues if IRQ registration fails, because the device already has their DMA
+addresses.
 
-Note that commit debac3a20dec ("net: Remove conflicting altnames for
-dying netns in __dev_change_net_namespace().") fixed another path
-that could reach it without allocation failures.
-
-Remove interfaces that cannot be moved instead of failing the switch,
-so that the wiphy always ends up in the initial namespace. In this
-case the netdev core will unregister the interfaces anyway.
-
-Assisted-by: LLM
-Reported-by: syzbot+c5f8a81e794d4a4f2014@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c5f8a81e794d4a4f2014
-Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
-Link: https://patch.msgid.link/20260904170220.7f3edc6d9992.I5e57921011244d3d8ef14d89e738aa19a5d972a0@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: b7f5e880f377 ("RDMA/efa: Add the efa module")
+Link: https://patch.msgid.link/20260907-use-after-free-of-admin-queue-struct-v1-1-dd9d9267fbf4@nvidia.com
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/efa/efa_com.c  |  4 +---
+ drivers/infiniband/hw/efa/efa_main.c | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 59facacf1a36f..bc7e2c50cc726 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -168,20 +168,24 @@ static int cfg80211_switch_wdev_netns(struct wireless_dev *wdev,
- 	return err;
- }
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 7cc3f4af0bb9d..12ccb6441d13d 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -786,7 +786,7 @@ int efa_com_admin_init(struct efa_com_dev *edev,
  
--int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
--			  struct net *net)
-+static int __cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
-+				   struct net *net, bool force)
- {
- 	struct net *old_net = wiphy_net(&rdev->wiphy);
--	struct wireless_dev *wdev;
-+	struct wireless_dev *wdev, *tmp;
- 	int err = 0;
+ 	aq->dmadev = edev->dmadev;
+ 	aq->efa_dev = edev->efa_dev;
+-	set_bit(EFA_AQ_STATE_POLLING_BIT, &aq->state);
++	efa_com_set_admin_polling_mode(edev, true);
  
--	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
--		return -EOPNOTSUPP;
+ 	sema_init(&aq->avail_cmds, aq->depth);
+ 
+@@ -804,8 +804,6 @@ int efa_com_admin_init(struct efa_com_dev *edev,
+ 	if (err)
+ 		goto err_destroy_sq;
+ 
+-	efa_com_set_admin_polling_mode(edev, false);
 -
--	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
-+	list_for_each_entry_safe(wdev, tmp, &rdev->wiphy.wdev_list, list) {
- 		err = cfg80211_switch_wdev_netns(wdev, net);
--		if (err)
-+		if (!err)
-+			continue;
-+		if (!force)
- 			goto undo;
-+		/* remove interfaces that fail to allow wiphy switching */
-+		dev_close(wdev->netdev);
-+		scoped_guard(wiphy, &rdev->wiphy)
-+			cfg80211_unregister_wdev(wdev);
-+		err = 0;
- 	}
+ 	err = efa_com_admin_init_aenq(edev, aenq_handlers);
+ 	if (err)
+ 		goto err_destroy_cq;
+diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
+index 97da8e828e340..25af30c441929 100644
+--- a/drivers/infiniband/hw/efa/efa_main.c
++++ b/drivers/infiniband/hw/efa/efa_main.c
+@@ -611,18 +611,21 @@ static struct efa_dev *efa_probe_device(struct pci_dev *pdev)
+ 	edev->aq.msix_vector_idx = dev->admin_msix_vector_idx;
+ 	edev->aenq.msix_vector_idx = dev->admin_msix_vector_idx;
  
- 	scoped_guard(wiphy, &rdev->wiphy) {
-@@ -199,7 +203,7 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
- 		/* this only fails on allocation failure */
- 		err = device_rename(&rdev->wiphy.dev,
- 				    dev_name(&rdev->wiphy.dev));
--		if (err)
-+		if (err && !force)
- 			wiphy_net_set(&rdev->wiphy, old_net);
+-	err = efa_set_mgmnt_irq(dev);
++	err = efa_com_admin_init(edev, &aenq_handlers);
+ 	if (err)
+ 		goto err_disable_msix;
  
- 		nl80211_notify_wiphy(rdev, NL80211_CMD_NEW_WIPHY);
-@@ -212,8 +216,8 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
- 		}
- 	}
- 
--	if (!err)
--		return 0;
-+	if (!err || force)
-+		return err;
- 
- 	/* set to the last one to undo all of them */
- 	wdev = list_entry(&rdev->wiphy.wdev_list, typeof(*wdev), list);
-@@ -229,6 +233,15 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
- 	return err;
- }
- 
-+int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
-+			  struct net *net)
-+{
-+	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
-+		return -EOPNOTSUPP;
+-	err = efa_com_admin_init(edev, &aenq_handlers);
++	err = efa_set_mgmnt_irq(dev);
+ 	if (err)
+-		goto err_free_mgmnt_irq;
++		goto err_destroy_admin;
 +
-+	return __cfg80211_switch_netns(rdev, net, false);
-+}
-+
- static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
- {
- 	struct cfg80211_registered_device *rdev = data;
-@@ -1879,7 +1892,7 @@ static void __net_exit cfg80211_pernet_exit(struct net *net)
- 	rtnl_lock();
- 	for_each_rdev(rdev) {
- 		if (net_eq(wiphy_net(&rdev->wiphy), net))
--			WARN_ON(cfg80211_switch_netns(rdev, &init_net));
-+			WARN_ON(__cfg80211_switch_netns(rdev, &init_net, true));
- 	}
- 	rtnl_unlock();
- }
++	efa_com_set_admin_polling_mode(edev, false);
+ 
+ 	return dev;
+ 
+-err_free_mgmnt_irq:
+-	efa_free_irq(dev, &dev->admin_irq);
++err_destroy_admin:
++	efa_com_dev_reset(edev, EFA_REGS_RESET_INIT_ERR);
++	efa_com_admin_destroy(edev);
+ err_disable_msix:
+ 	efa_disable_msix(dev);
+ err_reg_read_destroy:
+@@ -646,8 +649,8 @@ static void efa_remove_device(struct pci_dev *pdev,
+ 
+ 	edev = &dev->edev;
+ 	efa_com_dev_reset(edev, reset_reason);
+-	efa_com_admin_destroy(edev);
+ 	efa_free_irq(dev, &dev->admin_irq);
++	efa_com_admin_destroy(edev);
+ 	efa_disable_msix(dev);
+ 	efa_com_mmio_reg_read_destroy(edev);
+ 	devm_iounmap(&pdev->dev, edev->reg_bar);
 -- 
 2.53.0
 
