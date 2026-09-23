@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E07D535FA9;
-	Wed, 23 Sep 2026 14:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB986488219;
+	Wed, 23 Sep 2026 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175165; cv=none; b=sviV+ubDT6kdii2z9BZwxzWh9QbmzvfJoavU14Zpo9DXcfmup6Zj2C5aFP96lT1IRs2RsN/+6lydB+1NZAdie9gdKgmvD3oKH0P0v0J3leGbKHvNOxW9mn+ObQxwHSmAmX14+MFnkWE4eTpMNAwaO60yHOaMygOuqE8byi0gH7o=
+	t=1790175167; cv=none; b=X/FGN3/+/WYs6112p2tsNqFhLqMILrSw6PM99yweestAyC6nZyQ9SN0nEfwXkfTtEeP3MPtU79BdAdZd3hJUYnCqFniZ2lA2E70ncOH2VzIWc8ADFf9XBBknhsDHSSZpNc8/8O/KwYIEELWG8KSHOXM7uhDPK2d9g8nob7brgIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175165; c=relaxed/simple;
-	bh=E6f7m8EMIfuLJ3czsBG/gh0Ml2bS1MOQf3M1IlPQ/V0=;
+	s=arc-20240116; t=1790175167; c=relaxed/simple;
+	bh=MxdkB5hS1C+sBqfohl8DWZdDeq5iHUT3vCEc9hrSnv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPbT2PFoNkuO2KTTvwVgx2Xb4OTdpcyhxmuqzOXjt4pkQxT+DVqAu13gm97eJCm1hjEn49zdSl1uV1JoSBwPoNJg514zYKT7uDMA1xee0JtdcswcuKfM28sPX49eBENkNyn46xez+vsEI3i9MBzAm57YTZclX8zFYc0/xe797Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooG2Y3Rg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fm0N1mNCPtOznxMTisKEO43t7GlNhDbHU13UniXyK5wGTb5VlGt5LcXW+VW7dK4y/awvAbPu1R6uD27SpsL+vfYj4XVQizOCmz9n/k+YQGgcnhQ95JWLXWB5mbrfoN3OQ/PNNzbc2DEPKKKmy0o7truATQtveKYmPEbjDG3YFmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gK2CtwtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooG2Y3Rg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F41F00893;
-	Wed, 23 Sep 2026 14:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK2CtwtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056D81F00899;
+	Wed, 23 Sep 2026 14:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175160;
-	bh=zUiCCtkgC7IDaKTz2e1qUBzeOza1kMzHSDmaQBaN28k=;
+	s=korg; t=1790175163;
+	bh=o9ghTWMzMYeQVUq1oBwCVqLDLZdtaHLtVnTOFmTb1Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ooG2Y3RgDk1H3rB+yFnlfB8ZXiz22lX6ut6YOAqkbZeakuSV5AC+PUUJja3WYLEH2
-	 bZPuiOA0MkrNucmjiQSyz4eBi2pbW6QKK0iXTIyraSJr8tTDLyz47EzNhHMjikXtgd
-	 gbfoevqwFoIpQM4PJj1LJVTvuIV5jKbyZgudj3Jw=
+	b=gK2CtwtHDBq65wjF3a80xrkJ5WTkNHTttTvNuXS401zEsBzZvxx17koMF3hu6R6aB
+	 QsrgTReGZH8/1qtlUdxLtBkINFiw65AyVaEl968FKSDbURM1CF9eInA12F4eQr92Oa
+	 t6/36CFgDf+JOvbd6g+B4PYu4TRRgdXdYbPa1zW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sophie D <patches@scd31.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Ruben Wauters <rubenru09@aol.com>
-Subject: [PATCH 6.18 339/398] drm/gud: Ignore damage clips in full update mode
-Date: Wed, 23 Sep 2026 16:06:53 +0200
-Message-ID: <20260923140652.212773245@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.18 340/398] drm/msm/adreno: fix autosuspend cleanup during teardown
+Date: Wed, 23 Sep 2026 16:06:54 +0200
+Message-ID: <20260923140652.241423651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,46 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sophie D <patches@scd31.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit effce1cb87ee0d8b3a8cbe7722968f4ea7efd360 upstream.
+commit 6fbbf1e152f34ad3913e4a6476680aba672c5068 upstream.
 
-When running in full update mode, previously small updates (such as
-moving the mouse across the screen) would cause many full frames to be
-generated. This would bog down the bus and lower the effective framerate
-significantly - I was seeing a drop from 60 FPS to 2 FPS.
+adreno_gpu_init() calls pm_runtime_use_autosuspend(), but
+adreno_gpu_cleanup() does not call the matching
+pm_runtime_dont_use_autosuspend() during teardown.
 
-Set ignore_damage_clips in full update mode so the damage iterator
-yields a single full-plane rectangle instead of one per clip.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
-Fixes: 73cfd166e045 ("drm/gud: Replace simple display pipe with DRM atomic helpers")
-Cc: <stable@vger.kernel.org> # 6.18.x
-Signed-off-by: Sophie D <patches@scd31.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Ruben Wauters <rubenru09@aol.com>
-Signed-off-by: Ruben Wauters <rubenru09@aol.com>
-Link: https://patch.msgid.link/20260910014910.8564-1-patches@scd31.com
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
+
+Add the missing pm_runtime_dont_use_autosuspend() call to
+adreno_gpu_cleanup().
+
+This issue was found by manual code inspection.
+
+Fixes: eeb754746b14 ("drm/msm/gpu: use pm-runtime")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/745110/
+Link: https://lore.kernel.org/r/20260808131624.2854412-1-lgs201920130244@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gud/gud_pipe.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/gud/gud_pipe.c b/drivers/gpu/drm/gud/gud_pipe.c
-index 5ef887d8485a..3388fdc8ea7b 100644
---- a/drivers/gpu/drm/gud/gud_pipe.c
-+++ b/drivers/gpu/drm/gud/gud_pipe.c
-@@ -482,6 +482,9 @@ int gud_plane_atomic_check(struct drm_plane *plane,
- 	if (!new_plane_state->visible)
- 		return 0;
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1245,6 +1245,8 @@ void adreno_gpu_cleanup(struct adreno_gp
+ 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
+ 		release_firmware(adreno_gpu->fw[i]);
  
-+	if (gdrm->flags & GUD_DISPLAY_FLAG_FULL_UPDATE)
-+		new_plane_state->ignore_damage_clips = true;
++	pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
 +
- 	if (old_plane_state->rotation != new_plane_state->rotation)
- 		crtc_state->mode_changed = true;
+ 	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
+ 		pm_runtime_disable(&priv->gpu_pdev->dev);
  
--- 
-2.55.0
-
 
 
