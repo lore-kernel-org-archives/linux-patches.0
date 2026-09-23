@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EA3418368;
-	Wed, 23 Sep 2026 14:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3429C377A80;
+	Wed, 23 Sep 2026 14:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173430; cv=none; b=L8kqgNiUd2fkXba1F7Eds3s1grW1UJ5arJq1kpPMpzqp7EtPD6L0tjUTdUmK4hV0r4QzmyBEn9GUvoMkOUUv0VSiwc7GAWQnUoQmFFu7obwFZphTIq4ubUz0sBnZZMLkcxEb8yY+mP3v1Ij9W8a73xRhnazC5sgxC94ubpQq/wM=
+	t=1790173433; cv=none; b=lWdvemxAEKzmboyxLT4ick/BIsmgppc6mBhdxrM5uvpRfnW8NJ2dkmafJJIzsqvyl3LVKFKTIqyJyfzAQ8vsXMti2+KycfBdjyKM6fp7RudNdpoBeTpbyr9XNKW9vOjN7kAaVWsNKwX+BGobHIizRKBRHmhHz5eC9nVhaPso0vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173430; c=relaxed/simple;
-	bh=1BIbtlLQsCt224VCsLtHOVEO8mTeFJcMD+34yn5jht0=;
+	s=arc-20240116; t=1790173433; c=relaxed/simple;
+	bh=hwqTLBWDfFgkc4mi/Z/2Rb+zBqpyl68OlIJ1bAINWNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIKbehUnJAWCwwtwI4F6xX5oa5FELlFqyJ/GFsLVNXE36uKC/cIm+2yLTs9G7wp58WOQWJ4+uekKiXVexNVyOHWaOsUwkSkrRDlMf86MT4YEXXyoB86O2XMa2wTY2S3hv8fMNHh8JmFb8D4pSvk9fEC2AzXnGltGYIC0EoW7dvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UtqMSuY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxkmgFWWCUOjkDyAWqTdaRQ6vglIpPVBFqcewddA5Svk5uOvFcgK+Soy/0bouexUSIr7lrxSv6aWsPoX+f3JQzFe29UmNmNhtPCeE38qiBJv22TK3QvpLxFrJc9S7zfwYQ/YadwsMhe5iycoTbi89AbiY+vQPtlgpZGnDbF61ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KttI6jF3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UtqMSuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF1F1F000FF;
-	Wed, 23 Sep 2026 14:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KttI6jF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724541F000FF;
+	Wed, 23 Sep 2026 14:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173428;
-	bh=87tk47gfXUkWSgr2yjhyvWk5fnfMOQiL18U2X2/SVh4=;
+	s=korg; t=1790173432;
+	bh=3WZ+1nRoWU/dypfLOZCtCbnc5Qoz2dwZ1nX+6sGGvJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UtqMSuY2HvR88jMrRlpbp8ik/JwMywcuiW0NbUiloM3nUTzii1uL7xXrRTn2KjNT
-	 q1XDbyyXQdKKGRzojcA3ZZLaG1usa00P6GLkn61YkACnxnIntOTf1jxIy5qBdUyH3j
-	 +hUspR0MFHC1ZMovvQnHcTYmYP9pwNz1ckQM2eK0=
+	b=KttI6jF3fWc23b77yeNA9iitIM9+UlCuqQVzLJ8f1JYd3GOOi0zXzvLokJCOZ5nG0
+	 2lJx3vvxAN7BoGUXP6GDIe8EIkqRdIJzZiTSL503kEnjrqcu4JJUn2xV91TLSwt/Je
+	 RmE5DPpCrX/w2S5HYcwc0fQPBTdMmk+hmLEeT4pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 7.2 243/438] ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()
-Date: Wed, 23 Sep 2026 16:04:24 +0200
-Message-ID: <20260923140651.070074536@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 244/438] cifs: Fix server use-after-free in cifs_chan_skip_or_disable()
+Date: Wed, 23 Sep 2026 16:04:25 +0200
+Message-ID: <20260923140651.095447761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 0d1cb83337f13af082afb68b28d3fdfe29cde7fb upstream.
+commit 717e0a25036b6c92cecace30913b2d874a4c22b8 upstream.
 
-of_find_device_by_node() takes a reference on the port platform device,
-which is only used to look up its port regulator and is never released,
-neither on success nor on the error paths. Drop the reference with
-put_device() once the regulator has been obtained, which covers both the
-success and error paths.
+When a secondary channel is no longer supported by the server,
+cifs_chan_skip_or_disable() drops the channel reference with
+cifs_put_tcp_session() and then continues to use the server pointer by
+calling cifs_signal_cifsd_for_reconnect() on it and reading its
+primary_server pointer. cifs_put_tcp_session() can drop the last
+reference of the channel and tear it down, so both the channel and the
+primary server (whose reference is also dropped by
+cifs_put_tcp_session()) can be freed before they are signaled for
+reconnect.
 
-Fixes: c7d7ddee7e24 ("ata: libahci: Allow using multiple regulators")
+Signal the channel and the primary server and capture the primary
+server pointer before dropping the channel reference with
+cifs_put_tcp_session().
+
+Fixes: f591062bdbf4 ("cifs: handle servers that still advertise multichannel after disabling")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260915065933.1733061-1-vulab@iscas.ac.cn
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libahci_platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2pdu.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -620,10 +620,10 @@ struct ahci_host_priv *ahci_platform_get
- 			of_platform_device_create(child, NULL, NULL);
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -189,18 +189,19 @@ cifs_chan_skip_or_disable(struct cifs_se
+ 		spin_unlock(&ses->chan_lock);
  
- 			port_dev = of_find_device_by_node(child);
+ 		/*
+-		 * the above reference of server by channel
+-		 * needs to be dropped without holding chan_lock
+-		 * as cifs_put_tcp_session takes a higher lock
+-		 * i.e. cifs_tcp_ses_lock
++		 * signal the channel and its primary server to
++		 * reconnect before dropping the above reference of
++		 * server by channel, which is done without holding
++		 * chan_lock as cifs_put_tcp_session takes a higher
++		 * lock i.e. cifs_tcp_ses_lock
+ 		 */
+-		cifs_put_tcp_session(server, from_reconnect);
 -
- 			if (port_dev) {
- 				rc = ahci_platform_get_regulator(hpriv, port,
- 								&port_dev->dev);
-+				put_device(&port_dev->dev);
- 				if (rc == -EPROBE_DEFER)
- 					goto err_out;
- 			}
+ 		cifs_signal_cifsd_for_reconnect(server, false);
+ 
+ 		/* mark primary server as needing reconnect */
+ 		pserver = server->primary_server;
+ 		cifs_signal_cifsd_for_reconnect(pserver, false);
++
++		cifs_put_tcp_session(server, from_reconnect);
+ skip_terminate:
+ 		return -EHOSTDOWN;
+ 	}
 
 
