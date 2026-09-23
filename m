@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0ED7521219;
-	Wed, 23 Sep 2026 14:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9326377A80;
+	Wed, 23 Sep 2026 14:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173410; cv=none; b=Zg+kbRFdfqGVdM3XjAxzwYKJ+/4sO4F41Cnnm2jjvaVJa9VqQGSuuSvthSwTxjGKk202ZPtd4bYMEyT4zLWcyubmSXIj2bLVNdgXvfhXDyEbapwqBDzjmEXrie9+7M5AYk7qjWAkXI/UG3RncNmhDjLBaafvvZiRXEiv4rwlWYQ=
+	t=1790173415; cv=none; b=moQmQf0TWOehJASjVttOGpxR1Ilt8iGzqlI2bdi/F6dMOSb0Is3ZYuZUdZC/ghtMSGsBCIK0QCagflsePG2/tLve3wqNzKAbdQ1wejwdOAEPMYc4zNeQ34h8/TzKesrmeZO9gfeHSzg5EjkXeTHfDqRsO9qyieUNPsFfPQF44xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173410; c=relaxed/simple;
-	bh=vQg2Gy8Lo9PK1A3CoILCKc5Ccp0x92aPXT+IwOefWvw=;
+	s=arc-20240116; t=1790173415; c=relaxed/simple;
+	bh=VmVcq98xOnRhZC8ZnhwNLoplPK0V1yPqUEYd5m6X05U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMcXcFwpuDyyMtxM+YWnWkgVCNiSErNj1t6zxDavI8SuI77gwIJdxly1rFKG5Q8JKEHsClQRxpqHrGlvtVPfpxQJmkg3Dg53AQ0YnE3XJDN7FacV/WGsltXhGGtJrNdQB+16FS4QwgZ/n5Ifch1h/hBvXsKDzjBPdoyMpEumv5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNji88I5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+38TvhIZjkh/3bEIch7wk2sJQRB7MB5IvmmjAbROVvQjuZNVlD8U8o+OKfLD7Criqw+0rnolG+rzda/ac5iFkVGN0V8McjbXE9/+Wq66qjpWLxOOM23BIdVRQ4jFlT2LbSxvzvaXxCKsf5D+a1P0Sm6wbGx5eLEbP+eDQKlkMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUzY6Jby; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNji88I5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE05D1F000FF;
-	Wed, 23 Sep 2026 14:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUzY6Jby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5951F000FF;
+	Wed, 23 Sep 2026 14:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173409;
-	bh=ec9DrN+u1zSMBbhaDPv1AoZtI3YjTXrKzvWOmIZQjYs=;
+	s=korg; t=1790173413;
+	bh=xqy29CptV9BMyULhdfl0igVSm12Jmtizlq9UgBbIsG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNji88I5AeXrLeMpXjdL+k1wKUQ5j2qbnxuGgrzc9RMjpPbh9V03LInekomdNcgMy
-	 XORGHGjzeUx+k2ah5S8pDVDmd1t9CImIy0TQ8BDS02K0ARsERVYrVziIOpzKZ8MAXt
-	 QWFt4s2RslAagN7S15Z5z2cm/ZlPKsngPst9nlFE=
+	b=VUzY6Jbyek4LBlkZRU4+FvHV7kV7o95f7E671Xuztr11FKbsuK7xAFF6d82Cz3h7S
+	 Fgo6/NMrLbfnr/EHumwUXaNTLI0MbZ3zjZ3Z63VuERbAb6TY2yvIzavEDmiO7qvCsb
+	 lMuBF3vPujCt/i/G2hPgRsgZKvTxr22NDpaqeo00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+8eacd4fa193b1b28@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 238/438] ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity
-Date: Wed, 23 Sep 2026 16:04:19 +0200
-Message-ID: <20260923140650.942100582@linuxfoundation.org>
+	syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com,
+	Xuanqiang Luo <xuanqiang.luo@linux.dev>,
+	Allison Henderson <achender@kernel.org>,
+	rds-devel@oss.oracle.com,
+	Eric Dumazet <edumazet@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 221/438] net: skbuff: do not leave stale header offsets after pskb_carve()
+Date: Wed, 23 Sep 2026 16:04:02 +0200
+Message-ID: <20260923140650.495915820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,103 +56,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 76a986c980bb502c7688d605ac7a67fd257a9a1b upstream.
+[ Upstream commit a5117e1eccac6ee3bd4aed7cacf8ebcb6b3eb309 ]
 
-data_ep_set_params() allocates each data URB for exactly u->packets
-isochronous frames, so urb->iso_frame_desc[] has u->packets slots and
-ctx->packets is the driver's only record of that limit. For an implicit
-feedback sink, snd_usb_queue_pending_output_urbs() overwrites it with the
-sync source's packet count, which is calculated independently from the
-capture endpoint's parameters. When that count is larger,
-prepare_playback_urb() and prepare_silent_urb() can write
-iso_frame_desc[] past the allocation; their existing bounds limit payload
-bytes, not the descriptor index.
+pskb_carve_inside_header() and pskb_carve_inside_nonlinear() remove
+the first bytes of a packet and reallocate skb->head.
 
-The reproducer uses a high-speed UAC2 device declaring bInterval 1 for
-implicit feedback capture (8 packets) and bInterval 4 for playback
-(1 packet). On the first capture completion after the stream starts, it
-accesses seven descriptors spanning 112 bytes beyond the one-packet URB:
+All the headers that were present before the operation are gone,
+but both functions call skb_headers_offset_update(skb, 0), which
+is a no-op : skb->mac_header, skb->network_header,
+skb->transport_header and skb->csum_start keep their old values and
+now describe bytes which are no longer there.
 
-  BUG: KASAN: slab-out-of-bounds in prepare_playback_urb (sound/usb/pcm.c:1560)
-  Write of size 4 at addr ffff88801e696ad0 by task vhci_rx/178
-   prepare_playback_urb (sound/usb/pcm.c:1560)
-   prepare_outbound_urb (sound/usb/endpoint.c:340)
-   snd_usb_queue_pending_output_urbs (sound/usb/endpoint.c:501)
-   snd_complete_urb (sound/usb/endpoint.c:1834)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
-   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107)
-   kthread (kernel/kthread.c:436)
-  The buggy address belongs to the object at ffff88801e696a00
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes to the right of
-   allocated 208-byte region [ffff88801e696a00, ffff88801e696ad0)
+Both helpers size the new head from the old skb_end_offset(), so the
+stale offsets still land inside the new allocation. They point past
+skb_tail_pointer() though, to bytes that were never initialized.
 
-Record the allocated packet count per endpoint and clamp both the adopted
-count and the packet-size copy to it. Fold the Format Type II delimiter
-into urb_packs before the allocation loop so the recorded limit matches
-every URB.
+pskb_carve_inside_nonlinear() is the worst case, because it leaves a
+zombie skb with an empty linear part (skb->data ==
+skb_tail_pointer(skb), skb_headlen(skb) == 0), while
+skb_mac_header_was_set() is still true and skb->mac_header is way
+ahead of skb->data.
 
-Fixes: cf044e441902 ("ALSA: usb-audio: Update the number of packets properly at receiving")
-Reported-by: co+8eacd4fa193b1b28@bugs.sh
-Closes: https://lore.kernel.org/all/22xPn8drvIUtYgVeQnBiNqXuevOTpBAjepLz%40bugs.sh/
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260912200530.1955491-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The only user of pskb_extract() is rds_tcp_data_recv(), and the
+carved skb is queued on tinc->ti_skb_list. When the RDS incoming
+message is released, rds_tcp_inc_free() calls skb_queue_purge(),
+which frees the skbs with SKB_DROP_REASON_QUEUE_PURGE. This is
+visible from drop_monitor, which then tries to pull back to the
+(bogus) mac header :
+
+skbuff: __skb_pull(len=234)
+skb len=6968 data_len=6968 headroom=0 headlen=0 tailroom=0
+end-tail=384 mac=(234,14) mac_len=14 net=(248,40) trans=288
+shinfo(txflags=0 nr_frags=1 gso(size=1428 type=16 segs=5))
+csum(0x100120 start=288 offset=16 ip_summed=3 complete_sw=0 valid=1 level=0)
+hash(0x7b446c6c sw=0 l4=1) proto=0x86dd pkttype=0 iif=60
+kernel BUG at ./include/linux/skbuff.h:2847!
+
+Add skb_carve_reset_headers() to mark the mac and transport headers
+as not set, reset the network header, clear skb->mac_len, and drop
+a now meaningless CHECKSUM_PARTIAL (csum_start no longer describes
+anything).
+
+Invalidate the inner offsets as well. Unlike mac_header and
+transport_header they have no "unset" sentinel, so a leftover
+non-zero value still looks like a real header. Zero
+skb->inner_mac_header, skb->inner_network_header,
+skb->inner_transport_header, skb->inner_protocol and
+skb->encapsulation, so that all the header state is invalidated in
+one place.
+
+v2: fixed an inaccurate changelog. The stale offsets stay inside the
+    new skb->head, which is never smaller than the old one, they
+    simply point past skb_tail_pointer() to bytes that are gone.
+    Thanks to Xuanqiang Luo for insisting on this.
+    Also invalidate the inner header state, as suggested by the
+    netdev AI review :
+    https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260911114922.621937-1-edumazet%40google.com
+
+Fixes: 6fa01ccd8830 ("skbuff: Add pskb_extract() helper function")
+Reported-by: syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6aa3e9d3.f2639fcc.29487d.0028.GAE@google.com/
+Cc: Xuanqiang Luo <xuanqiang.luo@linux.dev>
+Cc: Allison Henderson <achender@kernel.org>
+Cc: rds-devel@oss.oracle.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260915130423.3956471-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.h     |    1 +
- sound/usb/endpoint.c |   12 +++++++-----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ net/core/skbuff.c | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/sound/usb/card.h
-+++ b/sound/usb/card.h
-@@ -116,6 +116,7 @@ struct snd_usb_endpoint {
- 	unsigned int phase;		/* phase accumulator */
- 	unsigned int maxpacksize;	/* max packet size in bytes */
- 	unsigned int maxframesize;      /* max packet size in frames */
-+	unsigned int max_urb_packs;	/* packets allocated per data URB */
- 	unsigned int max_urb_frames;	/* max URB size in frames */
- 	unsigned int curpacksize;	/* current packet size in bytes (for capture) */
- 	unsigned int curframesize;      /* current packet size in frames (for capture) */
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -492,9 +492,10 @@ int snd_usb_queue_pending_output_urbs(st
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 0e964c67a7213..c485be081aeaa 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6820,6 +6820,34 @@ struct sk_buff *alloc_skb_with_frags(unsigned long header_len,
+ }
+ EXPORT_SYMBOL(alloc_skb_with_frags);
  
- 		/* copy over the length information */
- 		if (implicit_fb) {
--			ctx->packets = packet->packets;
-+			ctx->packets = min_t(int, packet->packets,
-+					     ep->max_urb_packs);
- 			memcpy(ctx->packet_size, packet->packet_size,
--			       packet->packets * sizeof(packet->packet_size[0]));
-+			       ctx->packets * sizeof(packet->packet_size[0]));
- 		}
- 
- 		/* call the data handler to fill in playback data */
-@@ -1239,15 +1240,16 @@ static int data_ep_set_params(struct snd
- 		ep->nurbs = min(max_urbs, urbs_per_period * ep->cur_buffer_periods);
- 	}
- 
-+	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
-+		urb_packs++; /* for transfer delimiter */
-+	ep->max_urb_packs = urb_packs;
++/* pskb_carve_inside_header() and pskb_carve_inside_nonlinear()
++ * remove the first bytes of a packet and reallocate skb->head.
++ *
++ * Whatever headers were present before the operation are gone,
++ * we must not leave stale offsets, otherwise users of this skb
++ * (skb_dump(), drop_monitor, taps, ...) would read or pull garbage.
++ */
++static void skb_carve_reset_headers(struct sk_buff *skb)
++{
++	skb_unset_mac_header(skb);
++	skb_unset_transport_header(skb);
++	skb_reset_network_header(skb);
++	skb->mac_len = 0;
 +
- 	/* allocate and initialize data urbs */
- 	for (i = 0; i < ep->nurbs; i++) {
- 		struct snd_urb_ctx *u = &ep->urb[i];
- 		u->index = i;
- 		u->ep = ep;
- 		u->packets = urb_packs;
--
--		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
--			u->packets++; /* for transfer delimiter */
- 		u->buffer_size = maxsize * u->packets;
- 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
- 		if (!u->urb)
++	/* Inner offsets have no "unset" marker, zero them so that
++	 * skb_inner_network_header_was_set() becomes false and no
++	 * consumer mistakes them for a real (and long gone) header.
++	 */
++	skb->inner_mac_header = 0;
++	skb->inner_network_header = 0;
++	skb->inner_transport_header = 0;
++	skb->inner_protocol = 0;
++	skb->encapsulation = 0;
++
++	if (skb->ip_summed == CHECKSUM_PARTIAL)
++		skb->ip_summed = CHECKSUM_NONE;
++}
++
+ /* carve out the first off bytes from skb when off < headlen */
+ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 				    const int headlen, gfp_t gfp_mask)
+@@ -6875,7 +6903,7 @@ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 	skb->head_frag = 0;
+ 	skb_set_end_offset(skb, size);
+ 	skb_set_tail_pointer(skb, skb_headlen(skb));
+-	skb_headers_offset_update(skb, 0);
++	skb_carve_reset_headers(skb);
+ 	skb->cloned = 0;
+ 	skb->hdr_len = 0;
+ 	skb->nohdr = 0;
+@@ -7015,7 +7043,7 @@ static int pskb_carve_inside_nonlinear(struct sk_buff *skb, const u32 off,
+ 	skb->data = data;
+ 	skb_set_end_offset(skb, size);
+ 	skb_reset_tail_pointer(skb);
+-	skb_headers_offset_update(skb, 0);
++	skb_carve_reset_headers(skb);
+ 	skb->cloned   = 0;
+ 	skb->hdr_len  = 0;
+ 	skb->nohdr    = 0;
+-- 
+2.53.0
+
 
 
