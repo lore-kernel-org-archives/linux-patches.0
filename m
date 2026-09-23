@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5928D5326DD;
-	Wed, 23 Sep 2026 14:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729FB535FAB;
+	Wed, 23 Sep 2026 14:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174122; cv=none; b=b33LLzv+KmjlpBanaZNtb0Yy4hs+EmzqyrZsUoAh2Vs9R9fHPnT2xTKHILOindPdTG0s8pmQ/78DSN1FSy1FDmjmqhSAuax84T9V2P+QQ27QwNV4AOBb7YFbbOB663tlU259XCwepe/wU29TEPzhr4aPGBXQW0kDjhe2DUzuVjk=
+	t=1790174125; cv=none; b=M4FzCKLR2L+Dr/ZEQXS4zLy9UrzWid4FE3Z2kwMMTHezewAh3CF70jhEnXHH4vVTuFWj76v/LL22VyoXbbn7AVzPXFMMv8zzqnWPJXRlvpWPaRe8Xzx3oL8w+vBSDHxqOdPs5cfvcfSIZRvpII+QS8TS10L9ucodo9kI6Bo1Ct0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174122; c=relaxed/simple;
-	bh=SZ7T4w6YH5TdFXJTOVlkcYkpU1Vsf5reVYT9QE/g9DQ=;
+	s=arc-20240116; t=1790174125; c=relaxed/simple;
+	bh=AQ+RxIoJSsWqMak05EKI4oAlilIiM8ovpayOTfoPv5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpSlWRUBpqBE9YK55kxrhDx5YeV48Ly90QbiwA2usUDmpGWRk8HltSOfkf7UtoiA96QHOIusxf9YT2eGOk6mZ1eiuSU7FuzpUejPsThvbH3lVkH6v87dgtt7wQ5ebywwmXImFgdZ9iK8lz4k3KSP6V3LQYw+tkinmvILBmwG+CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djyL1sMN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XbN3+6Xlk/PWOIempUSzv6ogoaz9FblN8lVVnijaaFzlbcL4TJkgjW4BSyGGjW9CRU5np/HY5eKh4ICyr65zsE9Zksld+tAK+ThahoUslCkjfreWy7pc0mZ4+bJR4Xmzg0R6SLhn6sCHb1KAZl6uzueuWTBTvvMMGQfCb+c1qOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRqnq4vC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djyL1sMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20CD1F000FF;
-	Wed, 23 Sep 2026 14:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRqnq4vC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFDC1F000FF;
+	Wed, 23 Sep 2026 14:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174121;
-	bh=SNrMhj1hmWcsyKnlIQTuv44Kvmi24mw6DnuzV80fCgg=;
+	s=korg; t=1790174124;
+	bh=KCewmwSuURV0TaDuSwaEmDwz4jf8/6SbPcORD5VBXy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=djyL1sMN39bfqN3ZXvjzNeYlaOu55kYKurfNUnq7FnzcWwKcfKl4cwu/AC+mCuXz7
-	 6ZfERHvuCZDeigCJGQc0/+ruuPGfiZpO/DfLE59NQIfCYtHz9XYMDNIFFFIGJWqlGp
-	 l+OBux2PcO05eiF5VMVEkOKyq5oo8QzgS80XduLo=
+	b=RRqnq4vC94m2psMSfWsiwKCYyf8m6SIsk2MZmSavYoPmVnNHVXwkGoZjC/RcKB3Q1
+	 kHGVsmsUS0Y3Pbf7RhccZRr47zGlkpugxEA4urWLQMBQo6uIAdPxGTRb3KBkBpkErk
+	 tDp04BI1ptrSE3sSbQu0XCXij591QgCcc9mozTw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 410/438] drm/amdkfd: Avoid integer underflow in EOP ring size calculation.
-Date: Wed, 23 Sep 2026 16:07:11 +0200
-Message-ID: <20260923140655.533568865@linuxfoundation.org>
+	Sophie D <patches@scd31.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ruben Wauters <rubenru09@aol.com>
+Subject: [PATCH 7.2 401/438] drm/gud: Ignore damage clips in full update mode
+Date: Wed, 23 Sep 2026 16:07:02 +0200
+Message-ID: <20260923140655.288485543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,79 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Sophie D <patches@scd31.com>
 
-commit 8ee521b8b189799e361d4233c5180ba56656d4d4 upstream.
+commit effce1cb87ee0d8b3a8cbe7722968f4ea7efd360 upstream.
 
-The low 6 bits of cp_hqd_eop_control store the base-2 logarithm
-of the EOP ring size. This was calculated as
+When running in full update mode, previously small updates (such as
+moving the mouse across the screen) would cause many full frames to be
+generated. This would bog down the bus and lower the effective framerate
+significantly - I was seeing a drop from 60 FPS to 2 FPS.
 
-order_base_2(q->eop_ring_buffer_size / 4) - 1
+Set ignore_damage_clips in full update mode so the damage iterator
+yields a single full-plane rectangle instead of one per clip.
 
-But order_base_2 can in theory return 0, so this could underflow
-(although in practice the ring buffer size cannot be less than 4096).
-
-Change this to
-
-order_base_2(q->eop_ring_buffer_size / 8)
-
-using properties of logarithms.
-
-Also add to the above comment to make the mathematics more clear.
-
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: David Francis <David.Francis@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f0f43fcf8b2b3a924cad9444340921c96ed5f634)
-Cc: stable@vger.kernel.org
+Fixes: 73cfd166e045 ("drm/gud: Replace simple display pipe with DRM atomic helpers")
+Cc: <stable@vger.kernel.org> # 6.18.x
+Signed-off-by: Sophie D <patches@scd31.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Acked-by: Ruben Wauters <rubenru09@aol.com>
+Signed-off-by: Ruben Wauters <rubenru09@aol.com>
+Link: https://patch.msgid.link/20260910014910.8564-1-patches@scd31.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c |    6 +++++-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c |    5 ++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/gud/gud_pipe.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -299,6 +299,10 @@ static void update_mqd(struct mqd_manage
- 		1 << CP_HQD_IB_CONTROL__IB_EXE_DISABLE__SHIFT;
+--- a/drivers/gpu/drm/gud/gud_pipe.c
++++ b/drivers/gpu/drm/gud/gud_pipe.c
+@@ -482,6 +482,9 @@ int gud_plane_atomic_check(struct drm_pl
+ 	if (!new_plane_state->visible)
+ 		return 0;
  
- 	/*
-+	 * The lowest 6 bits of eop_control store the EOP ring size. If
-+	 * their value is X, the ring size is 2^(X + 1) dwords, or
-+	 * 2^(X + 3) bytes.
-+	 *
- 	 * HW does not clamp this field correctly. Maximum EOP queue size
- 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
- 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
-@@ -310,7 +314,7 @@ static void update_mqd(struct mqd_manage
- 	 *
- 	 */
- 	m->cp_hqd_eop_control = q->eop_ring_buffer_size ?
--		min(0xA, order_base_2(q->eop_ring_buffer_size / 4) - 1) : 0;
-+		min(0xA, order_base_2(q->eop_ring_buffer_size / 8)) : 0;
++	if (gdrm->flags & GUD_DISPLAY_FLAG_FULL_UPDATE)
++		new_plane_state->ignore_damage_clips = true;
++
+ 	if (old_plane_state->rotation != new_plane_state->rotation)
+ 		crtc_state->mode_changed = true;
  
- 	m->cp_hqd_eop_base_addr_lo =
- 			lower_32_bits(q->eop_ring_buffer_address >> 8);
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-@@ -208,6 +208,9 @@ static void __update_mqd(struct mqd_mana
- 			mtype << CP_HQD_IB_CONTROL__MTYPE__SHIFT;
- 
- 	/*
-+	 * The lowest 6 bits of eop_control store the EOP ring size. If
-+	 * their value is X, the ring size is 2^(X + 1) dwords, or
-+	 * 2^(X + 3) bytes.
- 	 * HW does not clamp this field correctly. Maximum EOP queue size
- 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
- 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
-@@ -215,7 +218,7 @@ static void __update_mqd(struct mqd_mana
- 	 * is safe, giving a maximum field value of 0xA.
- 	 */
- 	m->cp_hqd_eop_control |= q->eop_ring_buffer_size ? min(0xA,
--		order_base_2(q->eop_ring_buffer_size / 4) - 1) : 0;
-+		order_base_2(q->eop_ring_buffer_size / 8)) : 0;
- 	m->cp_hqd_eop_base_addr_lo =
- 			lower_32_bits(q->eop_ring_buffer_address >> 8);
- 	m->cp_hqd_eop_base_addr_hi =
 
 
