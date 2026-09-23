@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062844EC64E;
-	Wed, 23 Sep 2026 14:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26554EC64E;
+	Wed, 23 Sep 2026 14:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173553; cv=none; b=fgLjB437E6+jtHfiW+WEPiH733mbaVYsbxkIueI6UxjIsPlIGksDiMxMo5ZsfnDQqja87IeYoXzObRol+vLPEkdi+57fZymtakeW6JdkELcE4meaKVyGvhW09Ja3g28IVK3zEZFUL3C7TZ4DdV1BxrxXjDYsgjCS7NBGlsLrF1A=
+	t=1790173555; cv=none; b=ok5M+m7GS83ZQolCHyWfMUngV+DUtE875CYqlwsrZD9mdRj3+Y+XGl7oBwx5LpczG45rxwW9WXulOvIFe0OZOvScPPHJNBouqEwspJyvbfRNgq1wnP6RvPP07sXvp/EQAq1kRlsqXvdHYRX3oIu95UIwxgTXhtZ2UVQ9xqAV3Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173553; c=relaxed/simple;
-	bh=TT72R7I4jq96EMEP52uEEey6kkOUbXv9OrTKsQTbRxk=;
+	s=arc-20240116; t=1790173555; c=relaxed/simple;
+	bh=sD3diYbVB9Jxg07G/3pyFqkmb621YNuOBnXr1WwsURs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXkcmVlL6MCfHxspOt+Icty8GOdBrzaI/toSK8yBr/ss//V9/tmUrSQi3LrO67zxWIIeVw7F6Wmmr4L4ZBy9z0OHHnjV6nor70XNOjnxeqMqA437zze6plGkNNXsb13hfFQpugzPjAR39XGHnkJbg+DU9/3tZCqPjECL410kYwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXm8DdoG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cMuKhLxtFDNCnmBXj/wrbHokGfwiACOzEsn8gliUzp4EpykjNWv9w+DnPK0W6nLQPgtggZ5AosbZUKXjS5iIwuXq+tEwtZjeSLJc55KRqvBIwttenHSelmdKqbebuzGjIcnsb8g5rDNQdWpPGGnOfIEr7iCQu30bYJdFS2Q59D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NggspDBK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXm8DdoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1D81F000FF;
-	Wed, 23 Sep 2026 14:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NggspDBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8EA1F000FF;
+	Wed, 23 Sep 2026 14:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173551;
-	bh=DhXswKBCoKrwLJ6u6itmVTAUk53syiyqNZ6Fbq9MpD4=;
+	s=korg; t=1790173554;
+	bh=ByC4wMzOETLgux9WwrcLm25BIPLB9cTvFs8iSBcDr64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXm8DdoGDOrMSvi9kwFbmGiqK8qgvg/s6tihdH71pArrg9sBjhSVFhI67yKv/nGC3
-	 57JJ90u99ZqpkijapAhgyDnpUstTzcJ5AfKq8HGgiAIUFrc9N2D3YLp8fxJpj4MRx+
-	 PjCewM25ZZ8Ixc9FZ5mIOadQrlL5dem5eKysu5Zc=
+	b=NggspDBKPtA1UyLgGeAQ8FkG2EZrvGlddf3EQAaUymMom+CjtLanksToKXNDemt58
+	 SIRfq6P3PzzCWGZv7/Lx8FxFZLIASuOnkM1uElPsdWmmI3HB6kAgwwsQghdr3laizy
+	 vt+wBNRv/erECZO436t3Zn9TvjWTb8uEXvJIgV7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
+	Hanabishi <i.r.e.c.c.a.k.u.n+kernel.org@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.2 282/438] btrfs: take commit root semaphore when iterating in mark_block_group_to_copy()
-Date: Wed, 23 Sep 2026 16:05:03 +0200
-Message-ID: <20260923140652.083453986@linuxfoundation.org>
+Subject: [PATCH 7.2 283/438] btrfs: fix creation of compressed inline extents that dont save space
+Date: Wed, 23 Sep 2026 16:05:04 +0200
+Message-ID: <20260923140652.108595671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,38 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 0594e3423f4ba3137c734371169491f9a98e9af4 upstream.
+commit cc337324cc6be1ce0ae7e5a068dcb7e99ae1b59c upstream.
 
-mark_block_group_to_copy() iterates over the commit root with
-skip_locking=true. A concurrent transaction commit can swap and free
-the commit root during iteration, causing use-after-free when
-accessing extent buffers.
+If the compressed data of an inline extent is larger than or equals to the
+size of the uncompressed data, we are still allowing the creation of the
+compressed inline extent, which does not result in any benefits, quite the
+contrary as we waste metadata space and have to decompress when reading.
 
-Fix it by using path->need_commit_sem to protect the commit root search.
+This is a recent regression introduced in commit 3eaf5f082c4c ("btrfs:
+extract inlined creation into a dedicated delalloc helper").
 
-Fixes: 78ce9fc269af ("btrfs: zoned: mark block groups to copy for device-replace")
-CC: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
+It happens because we are passing the block size to btrfs_compress_bio(),
+so we don't get -E2BIG from the compression code anymore, but we can not
+pass i_size either, because if i_size is smaller than sector size, we
+end up never creating lzo compressed inline extent for such small i_size
+values. So refuse the compressed result at run_delalloc_inline() if
+its size is not smaller than the uncompressed size (i_size).
+
+Reported-by: Hanabishi <i.r.e.c.c.a.k.u.n+kernel.org@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/c97652a5-ac6b-4de6-aa23-3cdebc01d00b@gmail.com/
+Fixes: 3eaf5f082c4c ("btrfs: extract inlined creation into a dedicated delalloc helper")
+CC: stable@vger.kernel.org # 7.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/dev-replace.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/inode.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/btrfs/dev-replace.c
-+++ b/fs/btrfs/dev-replace.c
-@@ -493,6 +493,7 @@ static int mark_block_group_to_copy(stru
- 	path->reada = READA_FORWARD;
- 	path->search_commit_root = true;
- 	path->skip_locking = true;
-+	path->need_commit_sem = true;
- 
- 	key.objectid = src_dev->devid;
- 	key.type = BTRFS_DEV_EXTENT_KEY;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2338,12 +2338,27 @@ static int run_delalloc_inline(struct bt
+ 		} else if (inode->prop_compress) {
+ 			compress_type = inode->prop_compress;
+ 		}
++		/*
++		 * We need to pass blocksize and not i_size, otherwise we can't
++		 * create compressed inline extents for data smaller than sector
++		 * size with lzo.
++		 */
+ 		cb = btrfs_compress_bio(inode, 0, blocksize, compress_type, compress_level, 0);
+ 		if (IS_ERR(cb)) {
+ 			cb = NULL;
+ 			/* Just fall back to non-compressed case. */
+ 		} else {
+ 			compressed_size = cb->bbio.bio.bi_iter.bi_size;
++			/*
++			 * If we did not save space, it's pointless and wasteful
++			 * to have an inline compressed extent, so fallback to
++			 * an uncompressed inline extent.
++			 */
++			if (compressed_size >= i_size) {
++				cleanup_compressed_bio(cb);
++				cb = NULL;
++				compressed_size = 0;
++			}
+ 		}
+ 	}
+ 	if (!can_cow_file_range_inline(inode, 0, i_size, compressed_size)) {
 
 
