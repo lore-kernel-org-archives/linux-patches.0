@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521123ADBB4;
-	Wed, 23 Sep 2026 14:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C9139A07C;
+	Wed, 23 Sep 2026 14:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173145; cv=none; b=N1JbU/9C1QaDag4H8LLfJiT6b64mOPtpqUP5E0nT/9T9LonTH4EYnv5XO24DMkEdSVjrwZ91Fqdaff6/7vswm2TfP1bPh8qnlja71koLyUfgx+td4FwVhRfUaggkad0kwoIR1DTxpspniqOV0UdJBk6BZ67Y0QIJA4965uDdJYA=
+	t=1790173148; cv=none; b=K6dO7DMvCllTOMjZ+Qk6spRHDbE/lQTAfBxjOrBtguQsNBTVQ0lQZfzJOMpseVYqtCie6hQ4w3Tsl0DUbQolCcAyxMQYReNITG5jYS0uD4zc3dTTXjbW/OS4UQGzyMVcXb9rJ7z8W73wulZme64xNYIQhcqDuDr0YtWqRilCFoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173145; c=relaxed/simple;
-	bh=FAIvJ1w2KqJ7dbFAbaX1yMj99g8S80A5fu6pvpnQSYw=;
+	s=arc-20240116; t=1790173148; c=relaxed/simple;
+	bh=TLWdzHLSZ665B/CEy6HnjcD3yNZW2XqKuu2pCziO4ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKvoVipXc0G/dOKlyP9jNyXyseAB/Yk541UzUmgs3ZpKSe3uIcuXD/9waDuTiQ9p7TiN94LswsiBHG6JioLepJipWM0zQvUc7QqPMDjag8Ytb7v+ixHXO60JeakXVcWkYYXWNB55jLtVy38FU8AvVGERqAisstqYMB4xGoLzY3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9y7sMLb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QRqPqW5F3LdVMSETTFbhOKXRBpmW/eq5mvZz3dYD8eKZRw+VSNRG576lGSMdkfebChaXXKpLr/Hj42VnKDqAjt0SGQjzWU4c6IGQo0YmyDoPw6eqg/j+6yUkLbh6agVF/ydXdZVb2tXf3Lx1o2+uqGvwhsK1Fsq2+jcc/9xamjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0Q4Vgb/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9y7sMLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C46C1F000FF;
-	Wed, 23 Sep 2026 14:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0Q4Vgb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33191F000FF;
+	Wed, 23 Sep 2026 14:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173144;
-	bh=ReLWYjKRos0SxZjW+qjQuOTD5XlGG/BGz7zJSxT3sEg=;
+	s=korg; t=1790173147;
+	bh=uVBlKjAShSF2omU5xiydKmpwUuiDKD6Ry2KYuOkMR2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9y7sMLbXQM+7N073Ms9s6lEMvzSEG9P/9K/0xjL21TMD8gYeI3z3XM2FbvAhohv3
-	 fLnOf1Mu2HF4fLyL6aTDr4i2Kzm+aJSsMEtBgyAwi2B5HY7+QYpODfIl6PDL07Ncii
-	 IHhXwaGNJeOKxr9EcdvsDxIpNB+ZMPOgR54MJT9o=
+	b=Y0Q4Vgb/86Fn5KiS4vJq15KwEjFQ8k/uk/d9X1kOvtINo/KB+Nkc49TDZo7sZRsfR
+	 +Znq5Goz2BpOH3qjx7qFpV12FZgEyWxVMBji+qhzkYoRnO3LKdIjQXzF3uj56ECsR3
+	 LK/yWsSQDgUlxlM1GlHZ756Td1HpjH9AGfcfmW+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 155/438] net: dsa: mxl862xx: disable the stats poll on teardown
-Date: Wed, 23 Sep 2026 16:02:56 +0200
-Message-ID: <20260923140648.786908152@linuxfoundation.org>
+Subject: [PATCH 7.2 156/438] net: bcmgenet: restore the hardware filters on open
+Date: Wed, 23 Sep 2026 16:02:57 +0200
+Message-ID: <20260923140648.813597000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,109 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 9e92ad4630f5dd1838ce6bbe6b1bd2c73d34de36 ]
+[ Upstream commit 23ca4ddc4fce2c233a49e9fd34d4b5b02bd7324e ]
 
-mxl862xx_setup() arms the stats poll before mxl862xx_setup_mdio(), and
-nothing stops it until dsa_register_switch() has returned an error to
-mxl862xx_probe(). DSA frees the dsa_port list before it returns, so a
-poll that fires once .setup or a later step of dsa_tree_setup() has
-failed walks freed ports. On shutdown the user ports stay registered,
-and the WORK_STOPPED flag test in mxl862xx_get_stats64() is not atomic
-with the cancel in mxl862xx_shutdown(), so a re-arm that read the flag
-before it was set queues the poll after cancel_delayed_work_sync() has
-returned.
+bcmgenet_hfb_init() runs INIT_LIST_HEAD() on priv->rxnfc_list, which drops
+every rule off the list, and bcmgenet_open() calls it on each ifup. Every
+rule the user configured is silently lost:
 
-Arm the poll once .setup has succeeded and stop it from a .teardown op,
-which DSA calls on unregister and after a failed registration, in both
-cases before it frees the ports. Use disable_delayed_work_sync() there
-and in shutdown(): it drains a running poll as the cancel did and turns
-every later attempt to queue the work into a no-op, so the re-arm
-cannot bring the poll back. remove() and the probe error path only set
-WORK_STOPPED, which crc_err_work tests before it walks the ports.
+  # ethtool -N eth0 flow-type ether dst $MAC action 0
+  Added rule with ID 0
+  # ethtool -n eth0 | grep -c Filter:
+  1
+  # ip link set eth0 down && ip link set eth0 up
+  # ethtool -n eth0 | grep -c Filter:
+  0
 
-Fixes: a21d33a5265f ("net: dsa: mxl862xx: implement .get_stats64")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/1eb6f7fc1789b67e4b11e3f4d5ff080d0b6f7cbb.1789045590.git.daniel@makrotopia.org
+Initialise the lists once at probe and restore the rules on open, as
+bcmgenet_resume() already does.
+
+Fixes: 3e370952287c ("net: bcmgenet: add support for ethtool rxnfc flows")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260913190052.939955-1-nb@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mxl862xx/mxl862xx.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/mxl862xx/mxl862xx.c b/drivers/net/dsa/mxl862xx/mxl862xx.c
-index cfa7e3e269a28..e05ad52cd297e 100644
---- a/drivers/net/dsa/mxl862xx/mxl862xx.c
-+++ b/drivers/net/dsa/mxl862xx/mxl862xx.c
-@@ -685,10 +685,22 @@ static int mxl862xx_setup(struct dsa_switch *ds)
- 	if (ret)
- 		return ret;
- 
-+	ret = mxl862xx_setup_mdio(ds);
-+	if (ret)
-+		return ret;
-+
- 	schedule_delayed_work(&priv->stats_work,
- 			      MXL862XX_STATS_POLL_INTERVAL);
- 
--	return mxl862xx_setup_mdio(ds);
-+	return 0;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index a2305e6428d1f..b916080f4ff17 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -749,8 +749,17 @@ static void bcmgenet_hfb_init(struct bcmgenet_priv *priv)
+ 		INIT_LIST_HEAD(&priv->rxnfc_rules[i].list);
+ 		priv->rxnfc_rules[i].state = BCMGENET_RXNFC_STATE_UNUSED;
+ 	}
 +}
 +
-+static void mxl862xx_teardown(struct dsa_switch *ds)
++static void bcmgenet_hfb_restore(struct bcmgenet_priv *priv)
 +{
-+	struct mxl862xx_priv *priv = ds->priv;
++	struct bcmgenet_rxnfc_rule *rule;
+ 
+ 	bcmgenet_hfb_clear(priv);
 +
-+	set_bit(MXL862XX_FLAG_WORK_STOPPED, &priv->flags);
-+	disable_delayed_work_sync(&priv->stats_work);
++	list_for_each_entry(rule, &priv->rxnfc_list, list)
++		if (rule->state != BCMGENET_RXNFC_STATE_UNUSED)
++			bcmgenet_hfb_create_rxnfc_filter(priv, rule);
  }
  
- static int mxl862xx_port_state(struct dsa_switch *ds, int port, bool enable)
-@@ -2047,9 +2059,7 @@ static void mxl862xx_get_stats64(struct dsa_switch *ds, int port,
+ static int bcmgenet_begin(struct net_device *dev)
+@@ -3376,8 +3385,8 @@ static int bcmgenet_open(struct net_device *dev)
  
- 	spin_unlock_bh(&priv->ports[port].stats_lock);
+ 	bcmgenet_set_hw_addr(priv, dev->dev_addr);
  
--	/* Trigger a fresh poll so the next read sees up-to-date counters.
--	 * No-op if the work is already pending, running, or teardown started.
--	 */
-+	/* Trigger a fresh poll so the next read sees up-to-date counters. */
- 	if (!test_bit(MXL862XX_FLAG_WORK_STOPPED, &priv->flags))
- 		schedule_delayed_work(&priv->stats_work, 0);
- }
-@@ -2057,6 +2067,7 @@ static void mxl862xx_get_stats64(struct dsa_switch *ds, int port,
- static const struct dsa_switch_ops mxl862xx_switch_ops = {
- 	.get_tag_protocol = mxl862xx_get_tag_protocol,
- 	.setup = mxl862xx_setup,
-+	.teardown = mxl862xx_teardown,
- 	.port_setup = mxl862xx_port_setup,
- 	.port_teardown = mxl862xx_port_teardown,
- 	.phylink_get_caps = mxl862xx_phylink_get_caps,
-@@ -2131,7 +2142,6 @@ static int mxl862xx_probe(struct mdio_device *mdiodev)
- 	err = dsa_register_switch(ds);
- 	if (err) {
- 		set_bit(MXL862XX_FLAG_WORK_STOPPED, &priv->flags);
--		cancel_delayed_work_sync(&priv->stats_work);
- 		mxl862xx_host_shutdown(priv);
- 		for (i = 0; i < MXL862XX_MAX_PORTS; i++)
- 			cancel_work_sync(&priv->ports[i].host_flood_work);
-@@ -2152,7 +2162,6 @@ static void mxl862xx_remove(struct mdio_device *mdiodev)
- 	priv = ds->priv;
+-	/* HFB init */
+-	bcmgenet_hfb_init(priv);
++	/* Restore the filters, the MAC was reset above */
++	bcmgenet_hfb_restore(priv);
  
- 	set_bit(MXL862XX_FLAG_WORK_STOPPED, &priv->flags);
--	cancel_delayed_work_sync(&priv->stats_work);
+ 	/* Reinitialize TDMA and RDMA and SW housekeeping */
+ 	ret = bcmgenet_init_dma(priv, true);
+@@ -4075,6 +4084,7 @@ static int bcmgenet_probe(struct platform_device *pdev)
  
- 	dsa_unregister_switch(ds);
+ 	/* Mii wait queue */
+ 	init_waitqueue_head(&priv->wq);
++	bcmgenet_hfb_init(priv);
+ 	INIT_WORK(&priv->bcmgenet_irq_work, bcmgenet_irq_task);
  
-@@ -2181,7 +2190,7 @@ static void mxl862xx_shutdown(struct mdio_device *mdiodev)
- 	dsa_switch_shutdown(ds);
+ 	priv->clk_wol = devm_clk_get_optional(&priv->pdev->dev, "enet-wol");
+@@ -4272,10 +4282,7 @@ static int bcmgenet_resume(struct device *d)
+ 	bcmgenet_set_hw_addr(priv, dev->dev_addr);
  
- 	set_bit(MXL862XX_FLAG_WORK_STOPPED, &priv->flags);
--	cancel_delayed_work_sync(&priv->stats_work);
-+	disable_delayed_work_sync(&priv->stats_work);
+ 	/* Restore hardware filters */
+-	bcmgenet_hfb_clear(priv);
+-	list_for_each_entry(rule, &priv->rxnfc_list, list)
+-		if (rule->state != BCMGENET_RXNFC_STATE_UNUSED)
+-			bcmgenet_hfb_create_rxnfc_filter(priv, rule);
++	bcmgenet_hfb_restore(priv);
  
- 	mxl862xx_host_shutdown(priv);
- 
+ 	/* Reinitialize TDMA and RDMA and SW housekeeping */
+ 	ret = bcmgenet_init_dma(priv, false);
 -- 
 2.53.0
 
