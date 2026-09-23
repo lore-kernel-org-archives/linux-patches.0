@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7341B32B125;
-	Wed, 23 Sep 2026 14:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B501B3750D5;
+	Wed, 23 Sep 2026 14:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172948; cv=none; b=lUSqfqrPzBxK6D8fs6jv+K4bsK9YA80rhnZwd61e/dzhGuh6js00YPFbN4BJUi2/JAginuihZcSn6v9dEIha8o5BuJcBWrcHbZ65/h/+0UaaW0UpQE7irdUHxB0rd65SzbC28RtHwyrU+xoWDl02rzZcjx7YJhfbpjX/D/HIgd8=
+	t=1790172951; cv=none; b=XQv+R7iftMeGCR8ViSWZyj9frz6rp67KimQ5zYXm4MuLsJBBnsNPze1bSOJS77Ou0z4BUgBIJwGonlR+rPqmdsh9Py6aQZpYLp3C1+8vhyuj4RWYZMOzYAYcTP2qvsWAjHo0itoVFsyuoL7O/Z6KK2KiGwpB89KR458kK4PodBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172948; c=relaxed/simple;
-	bh=qXmNdf9Z7CHHd2IPUOq+Vi88ZOrKyOPZXz8YUIQYTSw=;
+	s=arc-20240116; t=1790172951; c=relaxed/simple;
+	bh=hwDiFMsN2HHt0TMR/9q1lGULgsQgdUZ/z6la8XhM4lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xe74kcJziMdCsJBvvF3wtB0I9rhN8NoPCGDwVaFGg0bVXoQS5rvjBgOgk2dYGUAYFbprJsNSLxACrsckCeh/k5wAXQIch2jR6iKInBJC6DbX7g+r9WFdwxGJYBwS142KSkQN7rStPRgHi9W+2PR+0HnhzCH45mPGXcvziseCPTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8TjIqfG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lziyhcHCE+gjo4VgVxg54EFFqyHDZj/ZADxkVDKm3+q35bmEOBr2kz5RqwYRWy+ezaiBI9CrdtEOKsSjMwM8iVN4ZjmBq4uimOuNFHpPyCnRFVqXT2cMGz3q7eUOuIh/s97OD64NO3xTDkaA/8FidMYIb21tQmZVYidE8C5tpq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8HwIJIE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8TjIqfG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D8F1F000FF;
-	Wed, 23 Sep 2026 14:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8HwIJIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDBA1F000FF;
+	Wed, 23 Sep 2026 14:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172947;
-	bh=P9KuulEjk+4BEh4zblzQ1N2CWBv/Wh7/W+ledKL6mtI=;
+	s=korg; t=1790172950;
+	bh=+2bsZ/iH1KPnHVmw/0d+VnmGKrxiAg+wWMWZbdwmnT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N8TjIqfGsEJrs1D+/nwCYwRniSdFSerlH76dl8Wqjl+uTCCsujF9npK/4y4tX9r6b
-	 oxxh88F/aOFFD/1HHK+NP2Ol2JQ3lhGWv/d1owQ7XqP2oip4mkYNr7hxsk+B/blkvZ
-	 iYmRkHYuP75In3/gzyhNrgh8v1vA7cHZgQGJ73ao=
+	b=a8HwIJIEatTA8OxKbR8o9v7MxQPkXgc8VXuamCzjzuJ9pWwh1t63jVmEagkgijqy+
+	 ln6S+5OtnXkeTYAAhJ+wOrzMvFewRe1e32CajgDx4YFji/eMhpmqHfwDBbdWpVZbWY
+	 z9jPlOwTG/yyCzapQ3xx9U+FtkjMALbYaA0NDh1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b4aa2b672b18f1d4dc5f@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 081/438] wifi: mac80211_hwsim: dont hand frames to mac80211 while stopping
-Date: Wed, 23 Sep 2026 16:01:42 +0200
-Message-ID: <20260923140646.883645465@linuxfoundation.org>
+Subject: [PATCH 7.2 108/438] netfilter: flowtable: hold reference on ct until flow is released
+Date: Wed, 23 Sep 2026 16:02:09 +0200
+Message-ID: <20260923140647.580607112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,134 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 87840d4a3a21b1c19b867a80e16ba69dff284de2 ]
+[ Upstream commit e75a9fa1d44bcbd66ea02e8781bcca6ea4076e0d ]
 
-The code checks ->started for frames coming from wmediumd, but the
-radio can be stopped after the check and before frame delivery,
-causing mac80211 to hit the WARN_ON(!local->started).
+nf_ct_put() releases the ct->ext area inmediately, the rcu typesafe
+semantics also allow to refer to the wrong conntrack from the flowtable
+datapath. Hold reference on ct until flow is released after rcu grace
+period.
 
-Expand the mutex for this case and synchronise against it when the
-radio is stopped to avoid being able to hit the warning with hwsim.
+Add rcu_barrier() on module exit path, to ensure pending flow entries
+are release before module goes away.
 
-Drop the error print that would've complicated the error path, it
-only triggers for allocation failures (already noisy) and malformed
-frames anyway.
-
-Assisted-by: LLM
-Fixes: 7882513bacb1 ("mac80211_hwsim driver support userspace frame tx/rx")
-Reported-by: syzbot+b4aa2b672b18f1d4dc5f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b4aa2b672b18f1d4dc5f
-Link: https://patch.msgid.link/20260904170140.5f69a10d606b.I4a7921d00643f69e439c7a3b221d104f66a3dcdc@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 0ff90b6c2034 ("netfilter: nf_flow_offload: fix use-after-free and a resource leak")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/virtual/mac80211_hwsim_main.c    | 39 ++++++++++++-------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ net/netfilter/nf_flow_table_core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim_main.c b/drivers/net/wireless/virtual/mac80211_hwsim_main.c
-index b4cabbfa9cdba..8c634cada5ddd 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim_main.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim_main.c
-@@ -2317,7 +2317,12 @@ static void mac80211_hwsim_stop(struct ieee80211_hw *hw, bool suspend)
- 	struct sk_buff *skb;
- 	int i;
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 8b1165f2b5a49..254063fca0780 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -258,6 +258,14 @@ static void flow_offload_route_release(struct flow_offload *flow)
+ 	nft_flow_dst_release(flow, FLOW_OFFLOAD_DIR_REPLY);
+ }
  
--	data->started = false;
-+	/*
-+	 * Serialise against wmediumd userspace, so no more frames
-+	 * can be handed to mac80211 after this returns.
-+	 */
-+	scoped_guard(mutex, &data->mutex)
-+		data->started = false;
- 
- 	for (i = 0; i < ARRAY_SIZE(data->link_data); i++)
- 		hrtimer_cancel(&data->link_data[i].beacon_timer);
-@@ -6453,12 +6458,12 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 
- 	if (frame_data_len < sizeof(struct ieee80211_hdr_3addr) ||
- 	    frame_data_len > IEEE80211_MAX_DATA_LEN)
--		goto err;
-+		goto out;
- 
- 	/* Allocate new skb here */
- 	skb = alloc_skb(frame_data_len, GFP_KERNEL);
- 	if (skb == NULL)
--		goto err;
-+		goto out;
- 
- 	/* Copy the data */
- 	skb_put_data(skb, frame_data, frame_data_len);
-@@ -6483,10 +6488,17 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 			goto out;
- 	}
- 
-+	/*
-+	 * Serialise against mac80211_hwsim_stop() - mac80211 doesn't allow
-+	 * frames reported while the HW is down, hence the ->started check
-+	 * must be under mutex.
-+	 */
-+	mutex_lock(&data2->mutex);
++static void flow_offload_free_rcu(struct rcu_head *rcu_head)
++{
++	struct flow_offload *flow = container_of(rcu_head, struct flow_offload, rcu_head);
 +
- 	/* check if radio is configured properly */
++	nf_ct_put(flow->ct);
++	kfree(flow);
++}
++
+ void flow_offload_free(struct flow_offload *flow)
+ {
+ 	switch (flow->type) {
+@@ -267,8 +275,7 @@ void flow_offload_free(struct flow_offload *flow)
+ 	default:
+ 		break;
+ 	}
+-	nf_ct_put(flow->ct);
+-	kfree_rcu(flow, rcu_head);
++	call_rcu(&flow->rcu_head, flow_offload_free_rcu);
+ }
+ EXPORT_SYMBOL_GPL(flow_offload_free);
  
- 	if ((data2->idle && !data2->tmp_chan) || !data2->started)
--		goto out;
-+		goto out_unlock;
+@@ -852,6 +859,7 @@ static int __init nf_flow_table_module_init(void)
  
- 	/* A frame is received from user space */
- 	memset(&rx_status, 0, sizeof(rx_status));
-@@ -6505,22 +6517,18 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 		iter_data.channel = ieee80211_get_channel(data2->hw->wiphy,
- 							  rx_status.freq);
- 		if (!iter_data.channel)
--			goto out;
-+			goto out_unlock;
- 		rx_status.band = iter_data.channel->band;
- 
--		mutex_lock(&data2->mutex);
- 		if (!hwsim_chans_compat(iter_data.channel, channel)) {
- 			ieee80211_iterate_active_interfaces_atomic(
- 				data2->hw, IEEE80211_IFACE_ITER_NORMAL,
- 				mac80211_hwsim_tx_iter, &iter_data);
--			if (!iter_data.receive) {
--				mutex_unlock(&data2->mutex);
--				goto out;
--			}
-+			if (!iter_data.receive)
-+				goto out_unlock;
- 		}
--		mutex_unlock(&data2->mutex);
- 	} else if (!channel) {
--		goto out;
-+		goto out_unlock;
- 	} else {
- 		rx_status.freq = channel->center_freq;
- 		rx_status.band = channel->band;
-@@ -6528,7 +6536,7 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 
- 	rx_status.rate_idx = nla_get_u32(info->attrs[HWSIM_ATTR_RX_RATE]);
- 	if (rx_status.rate_idx >= data2->hw->wiphy->bands[rx_status.band]->n_bitrates)
--		goto out;
-+		goto out_unlock;
- 	rx_status.signal = nla_get_u32(info->attrs[HWSIM_ATTR_SIGNAL]);
- 
- 	hdr = (void *)skb->data;
-@@ -6538,10 +6546,11 @@ static int hwsim_cloned_frame_received_nl(struct sk_buff *skb_2,
- 		rx_status.boottime_ns = ktime_get_boottime_ns();
- 
- 	mac80211_hwsim_rx(data2, &rx_status, skb);
-+	mutex_unlock(&data2->mutex);
- 
- 	return 0;
--err:
--	pr_debug("mac80211_hwsim: error occurred in %s\n", __func__);
-+out_unlock:
-+	mutex_unlock(&data2->mutex);
- out:
- 	dev_kfree_skb(skb);
- 	return -EINVAL;
+ static void __exit nf_flow_table_module_exit(void)
+ {
++	rcu_barrier();
+ 	nf_flow_table_offload_exit();
+ 	unregister_pernet_subsys(&nf_flow_table_net_ops);
+ 	kmem_cache_destroy(flow_offload_cachep);
 -- 
 2.53.0
 
