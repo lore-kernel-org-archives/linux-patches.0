@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFCC52B1FE;
-	Wed, 23 Sep 2026 14:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2F7391832;
+	Wed, 23 Sep 2026 14:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174205; cv=none; b=UJv8f76u+fG+SC/qEUXvo0F4skM86Tfb8B4yOTN010aaT/owarivFwijoLx+77d+2K/cNMTUXB8jZo2NFXGOzQoka/k9L1MobXMpIkpvU4mBXLh0TdE0AJzLWdv2iKIuAuugHF8wtaDx3ksb4LiDVk6YnMq+7FUo2i3ZlLsaNcI=
+	t=1790174208; cv=none; b=BDDYB3m0B0Yt82Fejkx8/hSZmi2RXxAluTtr4ufut2LovCg7aefB+S6kF6XfdlP/rJyulv3xABg9BtWokJghuxKHTLKUlJ76LFHrb6QQdE9MX2LupUHg1yGaI4xJgcbE9nTDxPkgF8HYJP3jPBFRz4JSKF6v+D/TwP3YTwR2VIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174205; c=relaxed/simple;
-	bh=+JLnRg3TJGSBuViFGHdVmsnrAFkBBwgJmahPtQ0Kc1U=;
+	s=arc-20240116; t=1790174208; c=relaxed/simple;
+	bh=DxKBt0n1mwMVxkS9L73unl//mUtVq1l0HsnqpiNCRmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIsSeTzzjKZxAn2xqTdglQElTANshuh0QxA6g1z+bqh1phupRwXXDpwa/P51yidAujsc5PgSU4QrrxkzXlDoIazL6yLCCI7uzH1e1sB9a8hlqpaEYyrSvuX4tkm4P0ayvSNU1joqlcATw5vD55aBqhjeBLsudpyiviWmloOg2JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a11vpW2v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P46EA2TyCcsIrEkyY5vNozFn5z3cmRnwdLA7u8I8+af0HrD0jiHtZ46GKlwBWSoisWOfPPPLrJ26T0Wm06V1A3Oj8wHQ95rX8qVZqsgegIFLXZKWr6JUTYwUBWsWq2SgBsiOFFvmGBL2tb2qeaW0fHVLwPYSV0fWoC3BVVM9wHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oupCwpRx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a11vpW2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0751F000FF;
-	Wed, 23 Sep 2026 14:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oupCwpRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D081F000FF;
+	Wed, 23 Sep 2026 14:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174203;
-	bh=0Bz61IR9PHdOxuwQTqRZhnWCY2ZNqwGHwE0aI6FshUg=;
+	s=korg; t=1790174207;
+	bh=ZtcEx/9gYDCO+JnIEU/tYqXCugsZ6QoszboCX5pwR/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a11vpW2vyx/wvD8Hwrx6GPhX07iVOOfLSO8TGKtXPvSnFPorDT4qKtdu2ifzL9oRX
-	 RvGkuOgYmtaHuKyUJVORy8Z1XmybVLGSoJGq+GLYk2OYviC7DXu3oO+/NwBITDZb5X
-	 AitxZu9aXqLo1YVQ6TvZwv1AXS8xBv6H9xluv7CM=
+	b=oupCwpRx77qYRk2jJntKEKFVQqvW3Cl4wG9bFdWZU+4EqU2Eo4RexqUEmbK4IaLWL
+	 S9Lx7J2FB8qraDnVhs5O38JJGOPQ8XsSomX47njZr2daLRW43bWT0a93pitwBlPQ9P
+	 pSK6Jwi7KM2gTAdB7/M29uRr0c8aEp/GaGqe6Amk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 035/398] arm64: dts: renesas: r9a09g056: Switch GBETH TX queue scheduling to WRR
-Date: Wed, 23 Sep 2026 16:01:49 +0200
-Message-ID: <20260923140644.338405271@linuxfoundation.org>
+Subject: [PATCH 6.18 044/398] wifi: mac80211: include TIM bitmap control for buffered S1G mcast traffic
+Date: Wed, 23 Sep 2026 16:01:58 +0200
+Message-ID: <20260923140644.567821092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,100 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit 66fcbdbeca0118b8aeac218b33fa18c394513543 ]
+[ Upstream commit af72b5946d493cecced27d0951ea37c1d178601e ]
 
-The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
-falls back to Strict Priority. In this configuration the queue with the
-highest priority gets all the traffic, starving the others under load.
+Currently when building the S1G TIM element, we only build the bitmap
+control if we have buffered unicast traffic. Since AID 0 sits within
+the bitmap control if we have buffered multicast traffic with no
+buffered unicast traffic the bitmap control won't be emitted and
+dozing stations will be unaware of buffered multicast.
 
-Under sustained UDP TX load with multiple data streams, this starvation
-triggers spurious adapter resets due to TX queue timeouts:
+To fix, only exclude the bitmap control byte when we don't have
+both buffered unicast and multicast traffic.
 
-  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
-  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
-  end0: Reset adapter.
-
-Investigation shows that only the highest priority queue is advancing
-while the others stall for more than 5 seconds, causing a netdev watchdog
-reset.
-
-Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
-traffic is processed across all queues, eliminating the stalls.
-
-Fixes: c8c8a57c5b40 ("arm64: dts: renesas: r9a09g056: Add GBETH nodes")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260722085353.136986-3-ovidiu.panait.rb@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: ee6360945483 ("wifi: mac80211: support block bitmap S1G TIM encoding")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260827054302.254124-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g056.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/mac80211/tx.c | 41 ++++++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g056.dtsi b/arch/arm64/boot/dts/renesas/r9a09g056.dtsi
-index 8871108789060..cde453fd35e24 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g056.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g056.dtsi
-@@ -827,23 +827,28 @@ queue3 {
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index e7df1a0c85911..cd1d814cdb824 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4954,10 +4954,18 @@ static void ieee80211_beacon_add_tim_pvb(struct ps_data *ps,
+  */
+ static void ieee80211_s1g_beacon_add_tim_pvb(struct ps_data *ps,
+ 					     struct sk_buff *skb,
+-					     bool mcast_traffic)
++					     bool mcast_traffic,
++					     bool ucast_traffic)
+ {
+ 	int blk;
  
- 			mtl_tx_setup0: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
++	/*
++	 * if no unicast and multicast traffic don't emit a bitmap control
++	 * or pvb
++	 */
++	if (!mcast_traffic && !ucast_traffic)
++		return;
++
+ 	/*
+ 	 * Emit a bitmap control block with a page slice number of 31 and a
+ 	 * page index of 0 which indicates as per IEEE80211-2024 9.4.2.5.1
+@@ -4966,6 +4974,10 @@ static void ieee80211_s1g_beacon_add_tim_pvb(struct ps_data *ps,
+ 	 */
+ 	skb_put_u8(skb, mcast_traffic | (31 << 1));
  
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
++	/* If there's no unicast traffic we don't need to include a PVB. */
++	if (!ucast_traffic)
++		return;
++
+ 	/* Emit an encoded block for each non-zero sub-block */
+ 	for (blk = 0; blk < IEEE80211_MAX_SUPPORTED_S1G_TIM_BLOCKS; blk++) {
+ 		u8 blk_bmap = 0;
+@@ -5047,25 +5059,16 @@ static void __ieee80211_beacon_add_tim(struct ieee80211_sub_if_data *sdata,
  
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
+ 	ps->dtim_bc_mc = mcast_traffic;
  
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
+-	if (have_bits) {
+-		if (s1g)
+-			ieee80211_s1g_beacon_add_tim_pvb(ps, skb,
+-							 mcast_traffic);
+-		else
+-			ieee80211_beacon_add_tim_pvb(ps, skb, mcast_traffic);
++	if (s1g) {
++		ieee80211_s1g_beacon_add_tim_pvb(ps, skb, mcast_traffic,
++						 have_bits);
++	} else if (have_bits) {
++		ieee80211_beacon_add_tim_pvb(ps, skb, mcast_traffic);
+ 	} else {
+-		/*
+-		 * If there is no buffered unicast traffic for an S1G
+-		 * interface, we can exclude the bitmap control. This is in
+-		 * contrast to other phy types as they do include the bitmap
+-		 * control and pvb even when there is no buffered traffic.
+-		 */
+-		if (!s1g) {
+-			/* Bitmap control */
+-			skb_put_u8(skb, mcast_traffic);
+-			/* Part Virt Bitmap */
+-			skb_put_u8(skb, 0);
+-		}
++		/* Bitmap control */
++		skb_put_u8(skb, mcast_traffic);
++		/* Part Virt Bitmap */
++		skb_put_u8(skb, 0);
+ 	}
  
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
-@@ -928,23 +933,28 @@ queue3 {
- 
- 			mtl_tx_setup1: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
+ 	tim->datalen = skb_tail_pointer(skb) - tim->data;
 -- 
 2.53.0
 
