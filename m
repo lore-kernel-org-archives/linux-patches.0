@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E347A53A3BF;
-	Wed, 23 Sep 2026 14:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065DF53A3BF;
+	Wed, 23 Sep 2026 14:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175079; cv=none; b=AvxfnVuWNZ8caQepAoLcZoZt4BBYVcq3fxnByyO+Im2i8d7WhdXsAUBFbxxJ6df8XEEYITSXwUjQraOajKRiRdAUEN5EGIuWOJaFbQtmxqFAh/BImodjKjIAZySXUdJ+7MiVUmH9WJ5Jn9Yh4f/GGT6IQXcxI2ZDHKdwlNEVZBU=
+	t=1790175087; cv=none; b=UTW+qW7pA/QkN3dVimnm9wZbzZVBr3LKIuDKRFCHxrXdez89ZIsP/SFwxdiNOqQiYuvHpfI48MOVYhd1R9l8ep5lEMbWoDcS49Ge3dFBkGh0sI8sIK92sBP3lVBZabks1rdudleKhCiLQps7W2Ca6NMhx8oyPYzsOwbYe/NJl5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175079; c=relaxed/simple;
-	bh=GLAWsFOepfIdVWn8f4yaOJ5LOa5fplh59dapH+gYWcg=;
+	s=arc-20240116; t=1790175087; c=relaxed/simple;
+	bh=amEjk9uKlgVWxP5EAyPNHDxYA7v1ttB318sX+mybMOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPm84AKLjkIzgz6LdpzqFZckP5ZsDVMdO663VuMree2aMWh8mmuNCESHJAtdhNERn/ItpyIFvfhf2yb77NtXO0hAVi0wQntvNlmyjU+8Ug6ZWa7+Cf7qQ94mfgURHTQmkxXwyQ3lfCC2mZIazA+9DQomULUqGJzuY18tlvJQ3wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeHi55Jm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PPu/gm/ksvTyhWgNmCfEDdP2m8lW2fxK/l+jAicicp1W2ibOe3Vy0DdmeHg/lDsxkRsD+XAyTTmpX/heBvb1onto6dmh2KaKltOd9SgFGEyxu8Nc7P4UKyYbFBX7NDEWwvy6s5ywknmefp44oak9J95VbcjScVLQ/B0yNaEU7xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL/4MlzX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeHi55Jm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3852E1F000FF;
-	Wed, 23 Sep 2026 14:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL/4MlzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479431F000FF;
+	Wed, 23 Sep 2026 14:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175077;
-	bh=jxLh6TlcPdmXmmmgevFkwf5xhpHLq2MSZDnfftLtu7A=;
+	s=korg; t=1790175085;
+	bh=w6DGxcM0Uu4Iovl7ZljzBTGlqqXLLgg593AEnYQ1skQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zeHi55JmaFThCGL9Tcd1C4Z1QKz4fHHShaD/juIoSR2H7ZFM9X2D82X8oGQRmeNer
-	 BCgI9blVTg07NGMmi53RQrIG9SmAoqR4sYmHjFUGagwUOlyzrp0yZYmhS02zRGK3mm
-	 BY8EOtrhC5bz/KVm7DXIqrURJ7qfNHzUwQFW1lPc=
+	b=TL/4MlzXWmiH+xPSOJD4WaA1aHYCEum9/yg0u/k8oVP2EbS3yha70p0Yo8plVY3tk
+	 rKrShePPqU91E3cOFbNdsZETKmPk0yL/5JCYbdTYCKatm1QOyqG5J52OITtmFtT3ko
+	 XKeSJpn35cUxJV3nQVzNJTKf4XyVFjEqoi2IsPNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	"Thomas Richard (congatec GmbH)" <thomas.richard@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 314/398] hwmon: (cgbc-hwmon) Add missing sensors
-Date: Wed, 23 Sep 2026 16:06:28 +0200
-Message-ID: <20260923140651.562263326@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 282/398] mmc: hsq: Fix use-after-free in retry work
+Date: Wed, 23 Sep 2026 16:05:56 +0200
+Message-ID: <20260923140650.724685681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,195 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 3550d1dbbcb9f51b77e077e8958423ee2c401c6c upstream.
+commit 5d132990475f02cfa1debe03d50b479432864ebd upstream.
 
-Add the following sensors:
-- Alternate Board Temperature (temp11_input)
-- Top DIMM 1-7 Temperature (temp12_input to temp18_input)
-- Bottom DIMM 1 Temperature (temp19_input)
-- 12V Standby Voltage (in14_input)
+mmc_hsq_pump_requests() queues retry_work when request_atomic() returns
+-EBUSY; today sdhci-sprd is the only consumer that implements
+request_atomic(). The work is embedded in a devm-allocated mmc_hsq, but
+is never cancelled during driver removal. Work still pending at unbind
+can therefore run after the devm allocation has been released and
+dereference hsq->mmc and hsq->mrq.
 
-This fixes the following warning on conga-SA7:
+Use devm_work_autocancel() to cancel and drain retry_work before the devm
+allocation is released. By the time devres cleanup begins,
+mmc_remove_host() has already stopped the host, so no new requests can
+arm the work.
 
-  Board Controller returned an unknown sensor (bc_type=1, bc_id=11), ignore it
+This issue was found by an in-house static analysis tool.
 
-Also update existing labels to match Congatec documentation.
-
-Cc: stable@kernel.org
-Fixes: 08ebc9def79f ("hwmon: Add Congatec Board Controller monitoring driver")
-Signed-off-by: Thomas Richard (congatec GmbH) <thomas.richard@bootlin.com>
-Link: https://patch.msgid.link/20260911-cgbc-hwmon-fix-and-new-sensors-v2-2-0c6bf078d173@bootlin.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 6db96e5810e0 ("mmc: host: Introduce the request_atomic() for the host")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/hwmon/cgbc-hwmon.rst |   42 ++++++++++++++++++-----------
- drivers/hwmon/cgbc-hwmon.c         |   52 ++++++++++++++++++++++++-------------
- 2 files changed, 60 insertions(+), 34 deletions(-)
+ drivers/mmc/host/mmc_hsq.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/Documentation/hwmon/cgbc-hwmon.rst
-+++ b/Documentation/hwmon/cgbc-hwmon.rst
-@@ -28,34 +28,44 @@ system.
- Name          Description
- ============= ======================
- temp1_input   CPU temperature
--temp2_input   Box temperature
-+temp2_input   Case temperature
- temp3_input   Ambient temperature
--temp4_input   Board temperature
--temp5_input   Carrier temperature
--temp6_input   Chipset temperature
--temp7_input   Video temperature
-+temp4_input   CPU Board temperature
-+temp5_input   Carrier Board temperature
-+temp6_input   System Chipset temperature
-+temp7_input   Video Controller/Board temperature
- temp8_input   Other temperature
--temp9_input   TOPDIM temperature
--temp10_input  BOTTOMDIM temperature
--in0_input     CPU voltage
-+temp9_input   Top DIMM 0 temperature
-+temp10_input  Bottom DIMM 0 temperature
-+temp11_input  Alternate Board temperature
-+temp12_input  Top DIMM 1 temperature
-+temp13_input  Top DIMM 2 temperature
-+temp14_input  Top DIMM 3 temperature
-+temp15_input  Top DIMM 4 temperature
-+temp16_input  Top DIMM 5 temperature
-+temp17_input  Top DIMM 6 temperature
-+temp18_input  Top DIMM 7 temperature
-+temp19_input  Bottom DIMM 1 temperature
-+in0_input     CPU Core voltage
- in1_input     DC Runtime voltage
- in2_input     DC Standby voltage
- in3_input     CMOS Battery voltage
--in4_input     Battery voltage
-+in4_input     Battery Supply voltage
- in5_input     AC voltage
- in6_input     Other voltage
--in7_input     5V voltage
-+in7_input     5V Runtime voltage
- in8_input     5V Standby voltage
--in9_input     3V3 voltage
-+in9_input     3V3 Runtime voltage
- in10_input    3V3 Standby voltage
- in11_input    VCore A voltage
- in12_input    VCore B voltage
--in13_input    12V voltage
--curr1_input   DC current
--curr2_input   5V current
--curr3_input   12V current
-+in13_input    12V Runtime voltage
-+in14_input    12V Standby voltage
-+curr1_input   DC Runtime current
-+curr2_input   5V Runtime current
-+curr3_input   12V Runtime current
- fan1_input    CPU fan
--fan2_input    Box fan
-+fan2_input    Case fan
- fan3_input    Ambient fan
- fan4_input    Chiptset fan
- fan5_input    Video fan
---- a/drivers/hwmon/cgbc-hwmon.c
-+++ b/drivers/hwmon/cgbc-hwmon.c
-@@ -41,32 +41,42 @@ enum cgbc_sensor_types {
+--- a/drivers/mmc/host/mmc_hsq.c
++++ b/drivers/mmc/host/mmc_hsq.c
+@@ -7,6 +7,7 @@
+  * Author: Baolin Wang <baolin.wang@linaro.org>
+  */
  
- static const char * const cgbc_hwmon_labels_temp[] = {
- 	"CPU Temperature",
--	"Box Temperature",
-+	"Case Temperature",
- 	"Ambient Temperature",
--	"Board Temperature",
--	"Carrier Temperature",
--	"Chipset Temperature",
--	"Video Temperature",
-+	"CPU Board Temperature",
-+	"Carrier Board Temperature",
-+	"System Chipset Temperature",
-+	"Video Controller/Board Temperature",
- 	"Other Temperature",
--	"TOPDIM Temperature",
--	"BOTTOMDIM Temperature",
-+	"Top DIMM 0 Temperature",
-+	"Bottom DIMM 0 Temperature",
-+	"Alternate Board Temperature",
-+	"Top DIMM 1 Temperature",
-+	"Top DIMM 2 Temperature",
-+	"Top DIMM 3 Temperature",
-+	"Top DIMM 4 Temperature",
-+	"Top DIMM 5 Temperature",
-+	"Top DIMM 6 Temperature",
-+	"Top DIMM 7 Temperature",
-+	"Bottom DIMM 1 Temperature",
- };
++#include <linux/devm-helpers.h>
+ #include <linux/mmc/card.h>
+ #include <linux/mmc/host.h>
+ #include <linux/module.h>
+@@ -345,6 +346,7 @@ static const struct mmc_cqe_ops mmc_hsq_
  
- static const char * const cgbc_hwmon_labels_in[] = {
--	"CPU Voltage",
-+	"CPU Core Voltage",
- 	"DC Runtime Voltage",
- 	"DC Standby Voltage",
- 	"CMOS Battery Voltage",
--	"Battery Voltage",
-+	"Battery Supply Voltage",
- 	"AC Voltage",
- 	"Other Voltage",
--	"5V Voltage",
-+	"5V Runtime Voltage",
- 	"5V Standby Voltage",
--	"3V3 Voltage",
-+	"3V3 Runtime Voltage",
- 	"3V3 Standby Voltage",
- 	"VCore A Voltage",
- 	"VCore B Voltage",
--	"12V Voltage",
-+	"12V Runtime Voltage",
-+	"12V Standby Voltage",
- };
+ int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
+ {
++	int ret;
+ 	int i;
+ 	hsq->num_slots = HSQ_NUM_SLOTS;
+ 	hsq->next_tag = HSQ_INVALID_TAG;
+@@ -363,7 +365,11 @@ int mmc_hsq_init(struct mmc_hsq *hsq, st
+ 	for (i = 0; i < HSQ_NUM_SLOTS; i++)
+ 		hsq->tag_slot[i] = HSQ_INVALID_TAG;
  
- /*
-@@ -77,14 +87,14 @@ static const struct {
- 	const char *label;
- 	int id;
- } cgbc_hwmon_labels_curr[] = {
--	{ "DC Current", 0x12 },
--	{ "5V Current", 0x18 },
--	{ "12V Current", 0x1E },
-+	{ "DC Runtime Current", 0x12 },
-+	{ "5V Runtime Current", 0x18 },
-+	{ "12V Runtime Current", 0x1E },
- };
+-	INIT_WORK(&hsq->retry_work, mmc_hsq_retry_handler);
++	ret = devm_work_autocancel(mmc_dev(mmc), &hsq->retry_work,
++				   mmc_hsq_retry_handler);
++	if (ret)
++		return ret;
++
+ 	spin_lock_init(&hsq->lock);
+ 	init_waitqueue_head(&hsq->wait_queue);
  
- static const char * const cgbc_hwmon_labels_fan[] = {
- 	"CPU Fan",
--	"Box Fan",
-+	"Case Fan",
- 	"Ambient Fan",
- 	"Chipset Fan",
- 	"Video Fan",
-@@ -255,7 +265,12 @@ static const struct hwmon_channel_info *
- 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
--			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL),
-+			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(in,
- 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
- 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
-@@ -263,7 +278,8 @@ static const struct hwmon_channel_info *
- 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
- 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
- 			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
--			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL),
-+			   HWMON_I_INPUT | HWMON_I_LABEL, HWMON_I_INPUT | HWMON_I_LABEL,
-+			   HWMON_I_INPUT | HWMON_I_LABEL),
- 	HWMON_CHANNEL_INFO(curr,
- 			   HWMON_C_INPUT | HWMON_C_LABEL, HWMON_C_INPUT | HWMON_C_LABEL,
- 			   HWMON_C_INPUT | HWMON_C_LABEL),
 
 
