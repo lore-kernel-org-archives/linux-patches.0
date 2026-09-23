@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425DC533580;
-	Wed, 23 Sep 2026 14:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F285372DB;
+	Wed, 23 Sep 2026 14:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173881; cv=none; b=Bl/88rd7aDuB3ywRgIbqSUMTYUH5w072p3CsIPL+MH8jKW/HDm1OgoGS7FZhJApVWEkWUqq978pn4xScuaHdOIFaqJgxKv+cgg4x1UuXTokbq1Xt9c4WaTr/cJxngtSf06nNnd7tXHImYlfpOPIYEYekTUFwXAxCaa9vWsqP8r4=
+	t=1790173884; cv=none; b=Yckv9+bOUzHhaspw1N6kHOO0neyt6O9WCHk1511Yz3iU+1MSh7XQzGPGc33UQXIcYIGG5BK37ebC/0cNkM8fhNBuRYzsGvzb9xl6+R312I8ug7Oq7i2jEKhkEPeTMwKoKK+YmeOMfkgDMPIc2Oe/mSbaagDul6AJq6JaVeytvEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173881; c=relaxed/simple;
-	bh=LGWEXuduP+lHa3jdEvOy9VwT1dFeBTOCD6JrpiP/6Ps=;
+	s=arc-20240116; t=1790173884; c=relaxed/simple;
+	bh=efiD8YfuakoKqCVBOojT+Ig14LARR16BXaWLEOA1uZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayP6DJORMnXDpeyBN7XRSwYLdg+ic81k4yp+PKcC9ErMFL+3Ilazbjf4ffkBNAVdIxA0shUlIbIvNjrcl8ah+6iF33y5GQFiIHoz+8ICrWc2RHFiXDTD+yYWaTUBNdIUkuX+nvDYKoV0v+wU7zyPPMk959sBIJQGyC+Y+KoslkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQtXozUi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uhWS+QMeweU1I44OnHsCxS8s/PQx1QyApaRU56aAec+r733o8WxujHnYb8qPTfXJh0BAhqf2BnLm6LcpYOvMzWbxoGF/0CpnwtsrllynXNxLJ3MzI+v/ffkeNsdkv7zR3/Cb0h5kGrcGPcHVKCO51fq/zu+L5dS6+LZRMTkHDgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/Avcq2g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQtXozUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5006E1F000FF;
-	Wed, 23 Sep 2026 14:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/Avcq2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4133D1F0089B;
+	Wed, 23 Sep 2026 14:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173879;
-	bh=c88PlwGRdJsDtGgj/CCBvjeMtnIiuUl4RBOaSdvqLrU=;
+	s=korg; t=1790173882;
+	bh=bg/EJW/BMvgV2r9Qg0s1AYoXoO87X6TM9HGaoohCFRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQtXozUi5ZT7+xwzsOUWx/c0AOtHB0AWWzg3HKsTEReGzl/aE4N2WGrdOJFoYXxdQ
-	 G7eeRJdZOmvT6MwFXaXiRAvL+yxokFzw5ROrJ5NphXrl4kpr7GDFgAc0C8gK+2SpgE
-	 jwI5TPCWimVWrND1g5e7iM/4pt/ov2ot/RN4dqeo=
+	b=0/Avcq2gha9VS2LxmdkOtn1mEu4oK85BXRdbjj0uV7qomwShWsEWsF8T6T7Mw3pVA
+	 mVbQk2GGcLSNKgjMlT9Q9WgCkj+qx6O3Jx7CsgCmlNedlaE3ZDTscikBpd9TDKKnkr
+	 3pU+b+1/wxBaLp6oFqxER0ItVGu5O9OVf/dVXV1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.2 329/438] i2c: imx: disable autosuspend on remove
-Date: Wed, 23 Sep 2026 16:05:50 +0200
-Message-ID: <20260923140653.335546431@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.2 367/438] hwmon: (pmbus/tps53679) Fix TPS53676 phase page decoding
+Date: Wed, 23 Sep 2026 16:06:28 +0200
+Message-ID: <20260923140654.368837101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,46 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit e0c3e9d76adbe522dd420a766ce42d03ce887c29 upstream.
+commit 1d12fb94ac0975566545871dda100df34df5f845 upstream.
 
-i2c_imx_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+tps53676_identify() reads the USER_DATA_03 phase configuration to count
+the phases assigned to each channel and derive the number of PMBus pages.
+In each 16-bit phase descriptor the channel (PAGE) is encoded in bit 4 and
+the firing order in bits 3:0, but the code tested bit 3 (0x08), which is
+part of the firing-order field.
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+TPS53676 supports up to seven phases, so firing-order bit 3 is never set.
+As a result the existing test classifies every enabled phase as channel A.
+On a dual-channel configuration the phases assigned to channel B are
+therefore miscounted as channel A and page 1 is not exposed.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+Test the PAGE field (bit 4) instead.
 
-This issue was found by manual code inspection.
-
-Fixes: 588eb93ea49f ("i2c: imx: add runtime pm support to improve the performance")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <stable@vger.kernel.org> # v4.5+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260914091544.1667137-1-lgs201920130244@gmail.com
+Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://patch.msgid.link/20260915164823.160977-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/pmbus/tps53679.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1922,6 +1922,7 @@ static void i2c_imx_remove(struct platfo
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- }
- 
- static int i2c_imx_runtime_suspend(struct device *dev)
+--- a/drivers/hwmon/pmbus/tps53679.c
++++ b/drivers/hwmon/pmbus/tps53679.c
+@@ -187,7 +187,7 @@ static int tps53676_identify(struct i2c_
+ 		return -EIO;
+ 	for (i = 0; i < 2 * TPS53676_MAX_PHASES; i += 2) {
+ 		if (buf[i + 1] & 0x80) {
+-			if (buf[i] & 0x08)
++			if (buf[i] & BIT(4))
+ 				phases_b++;
+ 			else
+ 				phases_a++;
 
 
