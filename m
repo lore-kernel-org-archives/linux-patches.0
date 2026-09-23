@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EB82E718B;
-	Wed, 23 Sep 2026 14:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8445232B125;
+	Wed, 23 Sep 2026 14:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172926; cv=none; b=TpMbguhk/bOdcvfuWOM3hoITEyCGdzyym38fnZDKhg2DRszUY5+FFftChepJ1eu0E0YyLIzj+4vOjd3jsR6GXeKNsSIGZjCNBiO6oCQw7E0BUvW3JL0tFCZea2qwQFzxv5xexivQ9KiV0uRDPHN6U2EQY25kNBvdGp9TiXobW6I=
+	t=1790172929; cv=none; b=X4QQRkfGcSgPo3DC65LN8iPkLQQTGBmAayFweZVt7sSRmqQ81fYUcaOgAVeIFgrZe1N1gLRNva6kLQINJZVihxG9EEZIIVlvFVOMhzaCWbelyMjKX0SsdOAmyEqliK2qtvbKmdi8LBbs2AB8lT/VkX21nyX3glQGDvTh3jUeXRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172926; c=relaxed/simple;
-	bh=D6TTwe+dZRrTvq8e3w1PCaiZqjy2h02ad7MDoK3KTZQ=;
+	s=arc-20240116; t=1790172929; c=relaxed/simple;
+	bh=Yl+P/1kuUxEZcAsbKv4vPONbtfks0iHaFUguhELLGxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdHa0/YhlC6/nIDVtfmTeHrhcINNt+wNDSP0ryKJkxpiOeNx7owxoTvZSV6qghz5p0LkYGj0QppZ/7jyij5WmeO1TaNiXGhJREkocuLjA716lsRnthf1fbhcn4HfzHh2hVGzYPe9sxb+2MUzq0pCJ7ZTRnqi7nkM26HKk38w720=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDlJ+gpW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jf635PFob6JARwuk/fxJ0OXIXKD2QDFAVUn9+KjQa2wtwDKY7NjJoxi+XjvdwrNlzXoqSmSHQHlwoX+iy3wUjHkGq8EPYUyFlnN8WGolwbh/TvtOkIHMucSAIK4kpeA2CI20vDLaK3TPUBnHAi4ePQR+DzM3DoHqjbPXRaZdB30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT/Uap8p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDlJ+gpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63241F00893;
-	Wed, 23 Sep 2026 14:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT/Uap8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23E01F00898;
+	Wed, 23 Sep 2026 14:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172925;
-	bh=lJvnJt6PN/yrSdeqJqHUFlFqE5CduW61JRnW5jZZbSM=;
+	s=korg; t=1790172928;
+	bh=tae9UwAKRMK3AoHDJUFwNpNdcXUr7uS9YJyN/K1ZReA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDlJ+gpWy0lnEqtpuG02rfBVyouA8AgM613Py7aU68zyhJ0d5bH2U1BRZ+QrmLeO5
-	 ogwT/bNhQu4k5ztehfewbfBZAtmrgR72SBKTj3YiaAJJqwXS9puqWigtLUxBpc5A4V
-	 RfEyP/duw9hrrWtJYwq4k5zR6j6rkZVnogsSXISI=
+	b=LT/Uap8pxg8LrjFUbXXMQ5cr4T597iBvyRcDaQEgRTQ4jODqE9kk6+xVR21j9bHNi
+	 UEPmxSk7tuUcguKafzlHnlKguNy+IXVkBfnuYGiLw3j+vhusgza/4WEfOAcypBddDC
+	 pOJnVG/1D1Z7OFzMRR5ExepGCgexZG9Y1pj3Xkmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 101/438] x86/div64: Fix addition of large constants in mul_u64_add_u64_div_u64()
-Date: Wed, 23 Sep 2026 16:02:02 +0200
-Message-ID: <20260923140647.395524690@linuxfoundation.org>
+Subject: [PATCH 7.2 102/438] drm/msm: Fix the separate_gpu_kms parameter description
+Date: Wed, 23 Sep 2026 16:02:03 +0200
+Message-ID: <20260923140647.420986970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit f65d38155aef069c897a64643a03db237dd1e0c8 ]
+[ Upstream commit adf5967331318bcb436fc80069915231ec039352 ]
 
-Adding constants over 2^31 fails to compile because the ADD instruction only
-supports 32bit signed immediates.
+The module parameter is separate_gpu_kms, but its MODULE_PARM_DESC()
+names separate_gpu_drm, so modinfo describes a parameter that does not
+exist and shows no description for the real one.
 
-Replace the "irm" constraint with "erm" so that the compiler loads large
-constants into a register.
+Use the parameter name in the description.
 
-Found by a patch to drivers/iio/frequency/ad9910.c
-
-  [ bp: Massage commit message. ]
-
-Fixes: 6480241f31f5 ("lib: add mul_u64_add_u64_div_u64() and mul_u64_u64_div_u64_roundup()")
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: H. Peter Anvin <hpa@zytor.com>
-Link: https://patch.msgid.link/20260803094702.3852-2-david.laight.linux@gmail.com
+Fixes: 217ed15bd399 ("drm/msm: enable separate binding of GPU and display devices")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/751407/
+Message-ID: <20260906170347.2427-1-kmehltretter@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/div64.h | 2 +-
+ drivers/gpu/drm/msm/msm_drv.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/div64.h b/arch/x86/include/asm/div64.h
-index 30fd06ede751c..8a2d343f977ec 100644
---- a/arch/x86/include/asm/div64.h
-+++ b/arch/x86/include/asm/div64.h
-@@ -111,7 +111,7 @@ static inline u64 mul_u64_add_u64_div_u64(u64 rax, u64 mul, u64 add, u64 div)
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 32d5ebea2596f..fa46ab3063e6f 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -55,7 +55,7 @@ MODULE_PARM_DESC(modeset, "Use kernel modesetting [KMS] (1=on (default), 0=disab
+ module_param(modeset, bool, 0600);
  
- 	if (!statically_true(!add))
- 		asm ("addq %[add], %[lo]; adcq $0, %[hi]" :
--			[lo] "+r" (rax), [hi] "+r" (rdx) : [add] "irm" (add));
-+			[lo] "+r" (rax), [hi] "+r" (rdx) : [add] "erm" (add));
+ static bool separate_gpu_kms;
+-MODULE_PARM_DESC(separate_gpu_drm, "Use separate DRM device for the GPU (0=single DRM device for both GPU and display (default), 1=two DRM devices)");
++MODULE_PARM_DESC(separate_gpu_kms, "Use separate DRM device for the GPU (0=single DRM device for both GPU and display (default), 1=two DRM devices)");
+ module_param(separate_gpu_kms, bool, 0400);
  
- 	asm ("divq %[div]" : "+a" (rax), "+d" (rdx) : [div] "rm" (div));
- 
+ DECLARE_FAULT_ATTR(fail_gem_alloc);
 -- 
 2.53.0
 
