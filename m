@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54A8492E5C;
-	Wed, 23 Sep 2026 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F443A255A;
+	Wed, 23 Sep 2026 14:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173781; cv=none; b=VrHzgBcJ7x+unojdywPDxioqjIO74LA8o5eVoLhUmF6jRomrszxJQYE33D4+PO3Z+ulG20lObiNd5Xz6ROvK/iqD8dDQRgeytY/Hv8WtAgz92C+BZLel5CJgGlpE9uAvWqe8VI1Xl8mBeHzDvu1/su0kG9JA9Dq47uDuLAjFa+Y=
+	t=1790173788; cv=none; b=jfv63XtNGT6y1J5cf85x8u+SRiyXzKSf7W0JphGo/gPiN32/scwIDU7BSVAw0TV29vFgbydY2vKfCxbB3NFXoTebWJUTKEDO7v024H3rZxMI9Sy2NLaivIXrpN8uJV5SLz8i1oXWhcVe9h8pz86FUP3J0Epid7HOz8aI9nW/nHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173781; c=relaxed/simple;
-	bh=F64mA3T17ScHlLzn2gtpaHYqhTYi3YlULNe9m0UpIUw=;
+	s=arc-20240116; t=1790173788; c=relaxed/simple;
+	bh=4KEHWTQzqzoqgN82nRhDsiq0hjegHTqpI+R71GRxAWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4fjxfZIlQP8gTpyEBzClKFxcoFD+CP9wfs9AtK8utuyyFsCq/0ykHPNfRlCefa0+zH2idlEuDubSw/5u7Umr5LFpF/Cymo6Vz6Y/o1lPjsaGpLyfYRMBrhduZVn7Cwmbk/feNf/g0bHuDhYlkKm+2FJasQa5Zm1CDnXoIQqOYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4lx/RLu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XJWdJ71guHjjiHbNmethgr2/VYbn/NlonlwOSXl46Avf8V5b8OuJ5NVTLQPUCpQr7hV4Bs9HqFmvyr/PuyCQ5RJNoThbtH3os3YTCd1TXD88umQFJqXpInSxUKeH1GVTdHa8ZDxju7uLo71pSAXOGEZLtg/pnYvjtkEdsWXnKxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0fRcoIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4lx/RLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200A01F00893;
-	Wed, 23 Sep 2026 14:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0fRcoIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D741F00893;
+	Wed, 23 Sep 2026 14:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173780;
-	bh=ijX5ASAdB4kZ1mDHkvHd3uJygCfVUsW2jTTK54ZGfTA=;
+	s=korg; t=1790173786;
+	bh=4TmHeC7A1pY3bpiUusr8664/AQbe4e/NIIftf8TrBPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r4lx/RLusOHn+Oj7sd+yXFP1w843QU1/NAwVgq+QeGgbahpjp4p8Ygrx7CWOWw9gT
-	 he24qpirRbsBCTO9xDcDc0F5q0zCgMEAMZ61wrPMP0whKuFP/1PGiE6WYo4Mteys/i
-	 AeCL2tSnabeEhODYfdNNZU3Q9krgG08LxN9pA/vU=
+	b=X0fRcoIFcP+kId4YU+mmTf/DFzvcGKEPHsvHt8z0bUMtAe9tMM7zbP7IZYCibS2/z
+	 LXys3pVv23B90AI28UIGG4yndKA75ItJ6l0CghSNqNC831NoAWSqoU/SfYdsW2Xrzi
+	 Jw9+3lyeE9+GT4PeabIY5eoqw/L22TtZs4ETdxKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Florian Maillard <florian.maillard@mailoo.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 342/438] mmc: mmci: Fix use-after-free in busy-timeout work
-Date: Wed, 23 Sep 2026 16:06:03 +0200
-Message-ID: <20260923140653.681901803@linuxfoundation.org>
+Subject: [PATCH 7.2 344/438] mmc: rtsx_pci_sdmmc: ignore broken write-protect on ThinkPad X260
+Date: Wed, 23 Sep 2026 16:06:05 +0200
+Message-ID: <20260923140653.734884096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,43 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Florian Maillard <florian.maillard@mailoo.org>
 
-commit 2b19cf3e50cddaff07b657dae1a8f30f06032852 upstream.
+commit 9c182bc5d7817437a7d04ab96133f9191846d93d upstream.
 
-ux500_busy_complete() can queue ux500_busy_timeout_work for an R1b
-command, but mmci_remove() never cancels it. The work can subsequently
-dereference the devm-allocated mmci_host after it has been released.
+The Realtek RTS522A card reader in the Lenovo ThinkPad X260
+(subsystem 17aa:504a) incorrectly reports inserted SD cards as
+write-protected.
 
-Mask the controller interrupts and disable the delayed work during
-removal. This drains any queued instance and stops an IRQ handler that
-is still in progress from queueing the work again once it has been
-disabled.
+This causes the MMC core to expose the card as read-only:
 
-This issue was found by an in-house static analysis tool.
+  mmcblk0: mmc0:aaaa SN256 238 GiB (ro)
 
-Fixes: b1a665932dc2 ("mmc: mmci: Add support for SW busy-end timeouts")
-Cc: stable@vger.kernel.org # v6.10+
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+and /sys/block/mmcblk0/ro reports 1.
+
+Setting MMC_CAP2_NO_WRITE_PROTECT makes the card writable again.
+Limit the quirk to the affected Lenovo subsystem.
+
+Assisted-by: ChatGPT:GPT-5.6 Sol
+Signed-off-by: Florian Maillard <florian.maillard@mailoo.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/rtsx_pci_sdmmc.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2511,6 +2511,9 @@ static void mmci_remove(struct amba_devi
- 		writel(0, host->base + MMCICOMMAND);
- 		writel(0, host->base + MMCIDATACTRL);
- 
-+		if (variant->busy_detect)
-+			disable_delayed_work_sync(&host->ux500_busy_timeout_work);
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -1425,6 +1425,11 @@ static void realtek_init_host(struct rea
+ 		mmc->caps = mmc->caps | MMC_CAP_AGGRESSIVE_PM;
+ 	mmc->caps2 = MMC_CAP2_NO_PRESCAN_POWERUP | MMC_CAP2_FULL_PWR_CYCLE |
+ 		MMC_CAP2_NO_SDIO;
 +
- 		mmci_dma_release(host);
- 		clk_disable_unprepare(host->clk);
- 	}
++	if (pcr->pci->device == 0x522a &&
++	    pcr->pci->subsystem_vendor == PCI_VENDOR_ID_LENOVO &&
++	    pcr->pci->subsystem_device == 0x504a)
++		mmc->caps2 |= MMC_CAP2_NO_WRITE_PROTECT;
+ 	mmc->max_current_330 = 400;
+ 	mmc->max_current_180 = 800;
+ 	mmc->ops = &realtek_pci_sdmmc_ops;
 
 
