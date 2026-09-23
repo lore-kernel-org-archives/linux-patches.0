@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEF3AA19B;
-	Wed, 23 Sep 2026 14:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BA75304D1;
+	Wed, 23 Sep 2026 14:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173388; cv=none; b=dte3IJL9noybDLpaYmxro8c60HLrGESdsgF5jjdseNsEbRy20YCNzAweUBulV9bFNx4mgLR5NOdMCRPC3NNHcrKpUPXSOYUge922VaVWif0ODdsWgLjD9rIekInvqsBPDlecKM3dnhmHrrzQmrTQb17CO7tG7fYo/1jrAF1+eX0=
+	t=1790173391; cv=none; b=NW1FfhNYYopTr05LK0w+R3fMQbPsyN6f5dxFJhh8xaHR/5fOTweeSXWpCu4LR78LPnE2z8TWr3CreWbd8mWCV1eY1paMqVSLl9mmhaT3jPWgUhsiBi1VZRLiSOsG6+/TrklVIZrLnE0cy/b836cLYlU+WHhLVDnczxkBripU6w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173388; c=relaxed/simple;
-	bh=1NoPrEXoEn0OE7rlrvTBrZmRJOH2GQgqNE1ahXzozt4=;
+	s=arc-20240116; t=1790173391; c=relaxed/simple;
+	bh=Q0r47aaheG5FShJwGaBDnq/gEsiT1g47oW/3qGvWS4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBnWJhRk8BVYhPh9UwYDGbtyfmSKpbuZIkLMf/0lwUaWgdziQVXNt/MZBs9WBSide7MdIMOLsoG/I97jrrwPO6MJ3t4dTUs2FccN9+SwDsXNfMXU9uVPjPsUqRTRuxiwqO3AN9eCp0yPIgZ1Z3ENYRtgMEROhhrTQw6TneJWpYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDaXuUKi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mf6+etlFz2Z+4db3yqRuEAuMQvhzQjEYJmcPRXJTWItC0HDp6LcZI38W+KKQhz6zEMgvs72ttqHhmESxkTb5OuxyTM6CFIDxSb1Jc9Q5saoikEMG+aLf/lk4aONMuMOEJrJ/hwoZuzo7uaYLP3uG8iudRTCgXV/mGmTwPSji16A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhUDqyvT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDaXuUKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12261F0089A;
-	Wed, 23 Sep 2026 14:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhUDqyvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5501F00893;
+	Wed, 23 Sep 2026 14:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173387;
-	bh=89+xlVMvCKhDOss4pgQ7NnDexfp4jOF/JGQ64gXYPGY=;
+	s=korg; t=1790173390;
+	bh=UWonb80z2L/BCtBxQKgSZdS9mkh4msKngPClMG8Dq9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDaXuUKiyjyiz/s5Su6EyNdpZqtKZfz+YnZp+dF3z7G4njfa/d5rAtIneS4lml3k7
-	 zHb49qjozKsiu3WMVI5L7uQzdR3Azx9IA+z9clUFbxoqAodJBpCSaAkICwzjOguGxw
-	 W/aao98XPV3jBecVfjw0KszYfiY7Z9meVWcfXsEA=
+	b=YhUDqyvTjda6Vh+HDwlXj2wS1iEfs8DA7Jo145+zEVUaSCMRePJWGnxb3ACVu+W7n
+	 OEqFnZKOX3nKRq1Qa3TnLUQ8WZ01uUsOK6wj7/vnSmCMdwBfe0zTV6TXsY8mt8kuQS
+	 vZEgx8hvvr9BYoludmwMQ8xTYqAXy/jCZk4EJu6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	James Seo <james@equiv.tech>,
+	Li Jun <lijun01@kylinos.cn>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 231/438] hwmon: (hp-wmi-sensors) Improve raw WMI string handling
-Date: Wed, 23 Sep 2026 16:04:12 +0200
-Message-ID: <20260923140650.752707962@linuxfoundation.org>
+Subject: [PATCH 7.2 232/438] watchdog: da9062: fix suspend/resume handling of HW_RUNNING watchdog
+Date: Wed, 23 Sep 2026 16:04:13 +0200
+Message-ID: <20260923140650.776544711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -46,112 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Seo <james@equiv.tech>
+From: Li Jun <lijun01@kylinos.cn>
 
-[ Upstream commit 92b68492eae701e5b0e9d142ffe229921af7b1fa ]
+[ Upstream commit 5071122bf5a628494db16d98d253f622a5aab074 ]
 
-Commit c9ba59258094 ("hwmon: (hp-wmi-sensors) Fix failure to load on
-EliteDesk 800 G6") left out some logic for recognizing raw WMI
-strings in check_numeric_sensor_wobj(). This issue was reported by a
-user along with an incomplete and unsuitable proposed solution [1].
+da9062_wdt_suspend() and da9062_wdt_resume() only check watchdog_active(),
+when the watchdog is left running by the driver sets
+WDOG_HW_RUNNING in da9062_wdt_probe() but userspace never opens the
+device, so WDOG_ACTIVE remains cleared, the wdt_disable() will not be
+executed in da9062_wdt_suspend. In this case, the suspend callback is
+a no-op and the watchdog keeps counting during system suspend,
+leading to an unexpected system reset.
+Check WDOG_HW_RUNNING and wdt->wdd，can fix this issue.
 
-Add the missing logic and properly remedy the issue. Also slightly
-refactor how raw WMI strings are recognized elsewhere to make the
-intent that they should be treated as regular ACPI strings clearer.
-
-Reported-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/linux-hwmon/20260916002907.161210-1-meatuni001@gmail.com/ [1]
-Fixes: c9ba59258094 ("hwmon: (hp-wmi-sensors) Fix failure to load on EliteDesk 800 G6")
-Signed-off-by: James Seo <james@equiv.tech>
-Link: https://patch.msgid.link/20260916221912.434119-5-james@equiv.tech
+Fixes: f6c98b08381c7 ("watchdog: da9062: add power management ops")
+Cs: stable@vger.kernel.org
+Signed-off-by: Li Jun <lijun01@kylinos.cn>
+Link: https://patch.msgid.link/20260914062353.582205-1-lijun01@kylinos.cn
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ drivers/watchdog/da9062_wdt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
-index 03c684ba83bd6..cb2eb9bd278a2 100644
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -526,14 +526,12 @@ static int check_wobj(const union acpi_object *wobj,
- 	for (prop = 0; prop <= last_prop; prop++) {
- 		type = elements[prop].type;
- 		valid_type = property_map[prop];
--		if (type != valid_type) {
--			if (type == ACPI_TYPE_BUFFER &&
--			    valid_type == ACPI_TYPE_STRING &&
--			    is_raw_wmi_string(elements[prop].buffer.pointer,
--					      elements[prop].buffer.length))
--				continue;
-+		if (type == ACPI_TYPE_BUFFER &&
-+		    is_raw_wmi_string(elements[prop].buffer.pointer,
-+				      elements[prop].buffer.length))
-+			type = ACPI_TYPE_STRING;
-+		if (type != valid_type)
- 			return -EINVAL;
--		}
- 	}
+diff --git a/drivers/watchdog/da9062_wdt.c b/drivers/watchdog/da9062_wdt.c
+index 426962547df16..4d558652e9e71 100644
+--- a/drivers/watchdog/da9062_wdt.c
++++ b/drivers/watchdog/da9062_wdt.c
+@@ -256,7 +256,7 @@ static int __maybe_unused da9062_wdt_suspend(struct device *dev)
+ 	if (!wdt->use_sw_pm)
+ 		return 0;
+ 
+-	if (watchdog_active(wdd))
++	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
+ 		return da9062_wdt_stop(wdd);
  
  	return 0;
-@@ -579,6 +577,7 @@ static int check_numeric_sensor_wobj(const union acpi_object *wobj,
- 	int prop = HP_WMI_PROPERTY_NAME;
- 	acpi_object_type valid_type;
- 	union acpi_object *elements;
-+	union acpi_object *element;
- 	u32 elem_count;
- 	int last_prop;
- 	bool is_new;
-@@ -602,13 +601,20 @@ static int check_numeric_sensor_wobj(const union acpi_object *wobj,
- 	    elem_count > HP_WMI_MAX_PROPERTIES)
- 		return -EINVAL;
+@@ -270,7 +270,7 @@ static int __maybe_unused da9062_wdt_resume(struct device *dev)
+ 	if (!wdt->use_sw_pm)
+ 		return 0;
  
--	type = elements[HP_WMI_PROPERTY_SIZE].type;
-+	element = &elements[HP_WMI_PROPERTY_SIZE];
-+	type = element->type;
- 	switch (type) {
- 	case ACPI_TYPE_INTEGER:
- 		is_new = true;
- 		last_prop = HP_WMI_PROPERTY_RATE_UNITS;
- 		break;
+-	if (watchdog_active(wdd))
++	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
+ 		return da9062_wdt_start(wdd);
  
-+	case ACPI_TYPE_BUFFER:
-+		if (!is_raw_wmi_string(element->buffer.pointer,
-+				       element->buffer.length))
-+			return -EINVAL;
-+		fallthrough;
-+
- 	case ACPI_TYPE_STRING:
- 		is_new = false;
- 		last_prop = HP_WMI_PROPERTY_CURRENT_READING;
-@@ -631,6 +637,10 @@ static int check_numeric_sensor_wobj(const union acpi_object *wobj,
- 	for (i = 0; i < elem_count && prop <= last_prop; i++, prop++) {
- 		type = elements[i].type;
- 		valid_type = hp_wmi_property_map[prop];
-+		if (type == ACPI_TYPE_BUFFER &&
-+		    is_raw_wmi_string(elements[i].buffer.pointer,
-+				      elements[i].buffer.length))
-+			type = ACPI_TYPE_STRING;
- 		if (type != valid_type)
- 			return -EINVAL;
- 
-@@ -651,6 +661,10 @@ static int check_numeric_sensor_wobj(const union acpi_object *wobj,
- 			/* PossibleStates[0] has already been type-checked. */
- 			for (j = 0; i + 1 < elem_count && j + 1 < count; j++) {
- 				type = elements[++i].type;
-+				if (type == ACPI_TYPE_BUFFER &&
-+				    is_raw_wmi_string(elements[i].buffer.pointer,
-+						      elements[i].buffer.length))
-+					type = ACPI_TYPE_STRING;
- 				if (type != valid_type)
- 					return -EINVAL;
- 			}
+ 	return 0;
 -- 
 2.53.0
 
