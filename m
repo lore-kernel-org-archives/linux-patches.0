@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FB34AC152;
-	Wed, 23 Sep 2026 14:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F673B52E6;
+	Wed, 23 Sep 2026 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175287; cv=none; b=krj7brVpbtQ3O/ZBYsEXwOP0pyyYvokozb8NqUNtyfI3rofhLPgHZa4Mce26ZPDFz/yHA89QcKNCZL6nSFsC1NKODyOf/bbdfVjc9vrR6JQKWV1VS/VsQ9gF7spfgUOh6M16c5loiQziztO7J94gD4nIJPMMI6uaU+36WmfepTY=
+	t=1790175291; cv=none; b=W879ZNuXrEIybcAOXtY0G+6LRaJ/G3KJgk6peIYouF+GMgWmv51QNpgAm1FLg8FBcVVOtUI7mtTwH0y7C7tz5gOlevErUrSMkpe5JOJAjikGnRajXN1Sk66TAwhaueuhhhgkhn91HPip4o1YJwoIk+Om3BS6bkUYIa9R8Zi/HLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175287; c=relaxed/simple;
-	bh=kl1a9keIv2BecltdSSgo6KVE8TAces7JCOvP7+63H6w=;
+	s=arc-20240116; t=1790175291; c=relaxed/simple;
+	bh=fgdi7z2NuU8ZW6I7saP+AXX2lvyfI56DyMxXA4wXbtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KiLx9uB9ziCv7oG7AihpVvdtO3BCbJFSgqgVbEPuNJbVsLQeerXXWPrDUBFpZVWBOZYfnuNfCoWA/brb3Qcbroz9eLnMHecg9SrJOa7/OJ9Z/4qbiUDOmYrV25fZD+ebD7jr+Jnl9fpyFvao9QDqwIR3zmpJTCNAHAdssrgD/gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLu8tKBx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OPMHPpyFbdnOvZWX1iezX54yotc26k830uZnCljrhyVMlCT4D3YkXWedVivQAL7sUzKw3oTrvm+s3/30ZxNe98CjaxjPLDcobjAzgSGpv4nZmhbCu+frSWkqSBRQ3odbaAvwlQtigXh8higJt9tK8kpJZUGkJYhN2ljOTyP+gFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwYGIF9w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLu8tKBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D391F00893;
-	Wed, 23 Sep 2026 14:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwYGIF9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677CC1F000FF;
+	Wed, 23 Sep 2026 14:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175286;
-	bh=YMuhI7p1P+WgjFOakrSjyMNN1jZLHQOYeurXeW6QOxQ=;
+	s=korg; t=1790175289;
+	bh=QabtGHCXTuW5nYxAZ7IODllH9bmCf+nKt4pWiKwtWyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLu8tKBxGyUO2Ws1mN9EtrtfaFiwF0azvxhv6bs/1AbN1zE7OryTnRUare8XpXwGL
-	 yVtiKZbsxFu22cWivuj8FdhLMbJupdC/3P8ZWeAnEpfkW2+87uhQdz9Niw0GjyauKE
-	 71CSZx+Nkpi2lEOuq+IqAVQ2DRZeHJcooMVDNEe4=
+	b=xwYGIF9w5wUSBvk4Dq6cJrnQiM4ekUGE1kmBj/AnO8YpcSut+Ia/or90+AORisDox
+	 HypKSErHwdS0BbtzahFU0ao6/raAOHzEgn/RGQpPviBBzQjw31bq3LFAK9MPryNnC8
+	 0qWfouId52diRPP5CN59STPas1cYGuJmeEyS5HsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	Arulprabhu Ponnusamy <arulponn@cisco.com>,
-	Gian Carlo Boffa <gcboffa@cisco.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Arun Easi <aeasi@cisco.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 379/398] scsi: fnic: Fix missed link-up when critical IRQ targets offline CPU
-Date: Wed, 23 Sep 2026 16:07:33 +0200
-Message-ID: <20260923140653.281439685@linuxfoundation.org>
+Subject: [PATCH 6.18 380/398] smb: client: fix cifsFileInfo reference leak in deferred close
+Date: Wed, 23 Sep 2026 16:07:34 +0200
+Message-ID: <20260923140653.308570238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -56,130 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Easi <aeasi@cisco.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 0cb1fd924126f1f581621a5e804df98a02be9dff ]
+[ Upstream commit 5520e89a5a4f834bced64cf2ac927001cc513a40 ]
 
-When CPU Hyper Threading is disabled, sibling CPUs remain present but
-are reported offline. Managed MSI-X IRQs can still receive affinity
-masks that include those offline CPUs. If a driver-critical vector is
-managed, it can be parked on an offline CPU and the driver may miss
-critical events such as link-up.
+When cifs_close() defers a close, it hands the cifsFileInfo reference
+of the closing struct file to the queued work. Each execution of
+smb2_deferred_work_close() drops one such reference.
 
-Keep driver-critical vectors unmanaged so they can be migrated by the
-IRQ core when their target CPU is offlined.
+deferred_close_scheduled can be false while the work is pending: the
+workqueue clears PENDING when the callback starts to run, before the
+callback clears the flag under deferred_lock. A close in that
+interval requeues the running work, and the callback then clears the
+flag, leaving the requeued work pending with the flag down. A later
+cifs_open() can reuse the handle and its cifs_close() reaches the
+same branch: queue_delayed_work() fails because the work is still
+pending, but cifs_close() returns without dropping the closing file's
+reference. The cifsFileInfo count stays pinned and its tlink, dentry
+and server handle are leaked.
 
-Since HWQ-0 is unmanaged now, in some queue combinations there can be no
-mappings to it in mq_map. So without the blk-mq fix mentioned below,
-system may crash during cpu offline/online tests.
+Check the return value and hand off the reference only when work was
+actually queued. Otherwise, use the shared _cifsFileInfo_put(), like
+the mod_delayed_work() branch above: the pending execution already
+owns its reference.
 
-Fixes: 8a8449ca5e33 ("scsi: fnic: Modify ISRs to support multiqueue (MQ)")
+This issue was found by an in-house static analysis tool.
+
+Fixes: c3f207ab29f7 ("cifs: Deferred close for files")
 Cc: stable@vger.kernel.org
-Depends-on: commit 10845a105bbc ("blk-mq: skip CPU offline notify on unmapped hctx")
-Reviewed-by: Sesidhar Baddela <sebaddel@cisco.com>
-Reviewed-by: Arulprabhu Ponnusamy <arulponn@cisco.com>
-Reviewed-by: Gian Carlo Boffa <gcboffa@cisco.com>
-Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
-Signed-off-by: Arun Easi <aeasi@cisco.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260903175547.57971-1-aeasi@cisco.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ Adjusted cifs_close() context due to missing trace_smb3_close_cached(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fnic/fnic.h      |    2 +-
- drivers/scsi/fnic/fnic_isr.c  |   13 ++++++++++---
- drivers/scsi/fnic/fnic_main.c |   33 ++++++++++++++++++++++++++++++++-
- 3 files changed, 43 insertions(+), 5 deletions(-)
+ fs/smb/client/file.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/fnic/fnic.h
-+++ b/drivers/scsi/fnic/fnic.h
-@@ -30,7 +30,7 @@
- 
- #define DRV_NAME		"fnic"
- #define DRV_DESCRIPTION		"Cisco FCoE HBA Driver"
--#define DRV_VERSION		"1.9.0.0"
-+#define DRV_VERSION		"1.9.0.1"
- #define PFX			DRV_NAME ": "
- #define DFX                     DRV_NAME "%d: "
- 
---- a/drivers/scsi/fnic/fnic_isr.c
-+++ b/drivers/scsi/fnic/fnic_isr.c
-@@ -245,7 +245,14 @@ int fnic_set_intr_mode_msix(struct fnic
- 	unsigned int m = ARRAY_SIZE(fnic->wq);
- 	unsigned int o = ARRAY_SIZE(fnic->hw_copy_wq);
- 	unsigned int min_irqs = n + m + 1 + 1; /*rq, raw wq, wq, err*/
--
-+	/*
-+	 * Make driver critical vectors unmanaged, or else it can get tied
-+	 * to an offline CPU. This can happen when hyper-threading is off.
-+	 */
-+	struct irq_affinity affd = {
-+		.pre_vectors = n + m + 1, /* rq, raw wq, 1 ioq */
-+		.post_vectors = 1, /* err */
-+	};
- 	/*
- 	 * We need n RQs, m WQs, o Copy WQs, n+m+o CQs, and n+m+o+1 INTRs
- 	 * (last INTR is used for WQ/RQ errors and notification area)
-@@ -263,8 +270,8 @@ int fnic_set_intr_mode_msix(struct fnic
- 		int vec_count = 0;
- 		int vecs = fnic->rq_count + fnic->raw_wq_count + fnic->wq_copy_count + 1;
- 
--		vec_count = pci_alloc_irq_vectors(fnic->pdev, min_irqs, vecs,
--					PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
-+		vec_count = pci_alloc_irq_vectors_affinity(fnic->pdev, min_irqs,
-+			    vecs, PCI_IRQ_MSIX|PCI_IRQ_AFFINITY, &affd);
- 		FNIC_ISR_DBG(KERN_INFO, fnic,
- 					"allocated %d MSI-X vectors\n",
- 					vec_count);
---- a/drivers/scsi/fnic/fnic_main.c
-+++ b/drivers/scsi/fnic/fnic_main.c
-@@ -678,6 +678,8 @@ static int fnic_scsi_drv_init(struct fni
- 
- void fnic_mq_map_queues_cpus(struct Scsi_Host *host)
- {
-+	const struct cpumask *mask;
-+	unsigned int queue, cpu;
- 	struct fnic *fnic = *((struct fnic **) shost_priv(host));
- 	struct pci_dev *l_pdev = fnic->pdev;
- 	int intr_mode = fnic->config.intr_mode;
-@@ -698,7 +700,36 @@ void fnic_mq_map_queues_cpus(struct Scsi
- 		return;
- 	}
- 
--	blk_mq_map_hw_queues(qmap, &l_pdev->dev, FNIC_PCI_OFFSET);
-+	for_each_possible_cpu(cpu)
-+		qmap->mq_map[cpu] = 0;
-+
-+	/*
-+	 * Setup CPU to Queue mapping for all managed MSI-X IRQs.
-+	 * Q0 is driver critical and non-managed, hence start from Q1.
-+	 */
-+	for (queue = 1; queue < qmap->nr_queues; queue++) {
-+		int irq_num = pci_irq_vector(fnic->pdev,
-+					     queue + FNIC_PCI_OFFSET);
-+
-+		if (irq_num < 0)
-+			continue;
-+
-+		mask = pci_irq_get_affinity(fnic->pdev,
-+					    queue + FNIC_PCI_OFFSET);
-+		if (!mask) {
-+			shost_printk(KERN_ERR, host,
-+				"failed to get irq_affinity map for queue:%d\n", irq_num);
-+			continue;
-+		}
-+		FNIC_MAIN_DBG(KERN_INFO, fnic,
-+				"got irq_affinity map for %d:\n", irq_num);
-+		for_each_cpu(cpu, mask) {
-+			qmap->mq_map[cpu] = qmap->queue_offset + queue;
-+			FNIC_MAIN_DBG(KERN_INFO, fnic,
-+				      "[Q%d] cpu:%d <=> irq:%d\n",
-+				      queue, cpu, irq_num);
-+		}
-+	}
- }
- 
- static int fnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -1467,11 +1467,18 @@ int cifs_close(struct inode *inode, stru
+ 					cifsFileInfo_get(cfile);
+ 			} else {
+ 				/* Deferred close for files */
+-				queue_delayed_work(deferredclose_wq,
+-						&cfile->deferred, cifs_sb->ctx->closetimeo);
+-				cfile->deferred_close_scheduled = true;
+-				spin_unlock(&cinode->deferred_lock);
+-				return 0;
++				/*
++				 * Each queued execution owns one reference.
++				 * If nothing was queued, the reference of
++				 * the closing file is dropped below.
++				 */
++				if (queue_delayed_work(deferredclose_wq,
++						       &cfile->deferred,
++						       cifs_sb->ctx->closetimeo)) {
++					cfile->deferred_close_scheduled = true;
++					spin_unlock(&cinode->deferred_lock);
++					return 0;
++				}
+ 			}
+ 			spin_unlock(&cinode->deferred_lock);
+ 			_cifsFileInfo_put(cfile, true, false);
 
 
