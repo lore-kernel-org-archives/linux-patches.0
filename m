@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DC05328AE;
-	Wed, 23 Sep 2026 14:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A240747A88C;
+	Wed, 23 Sep 2026 14:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175187; cv=none; b=DIW7Hmroz8mdga/fVNVqBjr3zqF1aZr3wkmnRRWLakZXPgIlvBdwyOoforsGh3cV2oYQn9ETDPWVrGRt3aWA2+dIGc3T+dgekTdXRFW/n8wXYm1rwr7cMjVnLTKDkREGSGp08nf9QWug4xv2Zr6GHKlXpW5qz6goDGWd/DB4GAo=
+	t=1790175190; cv=none; b=UwGvzzuifoIEasepQL9Hx0mF3/5MqQPEjD6G8nrvB4FUqZ0wcgGHFnkBIUWogHqp+EOXkGD5Vhzh2GXt9nIVypYaGgazQrxj4ZRFoQqWhjUjRfye0d1U7EIuwpbwWn2Juo2TkWJktmCdZAJZFUlNgndF0IJlQqnJzIBBA2sX3c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175187; c=relaxed/simple;
-	bh=jXSIwymDqb/R9txFJWyEcHyUdXXhJe6wkuzJgNyHpaQ=;
+	s=arc-20240116; t=1790175190; c=relaxed/simple;
+	bh=j9/UKM6s8cFC3e/wtBFeYCzTs2mS5vNVQ18UM1/LwFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0Itqtgzbk8wH6ajwIh/7sPPXiOZQfsaJfoaf3ndodpdfugtbq2Bypp7vGJNZpvX8CGzZS0NZjCabp9HYa6jdxkrZdrNYq9qOW49tozKupPgBQC4FfHr6e1gAqMycxvX2XIrx4JyRY4KyBVCdZIkrD4LAR8ujWyEyZi4AHLvmvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYGe7LNk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQsmgO8dibOfLPr7Sj7iN4SB7Sii+6uzlmC4VIFZ8i0To0TEF38PYyxg7fH1saHxDbvbYu/9rDMcFrkQTRTKZ5s+7gBo3karedXeJoeEdR5mFh2AdMIwGhsnddkBuf0zeqlU4B02VQdVnkCdjLVaar5NF1Q+gsZlEcW/fdPX26Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USAnBCWC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYGe7LNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB67D1F000FF;
-	Wed, 23 Sep 2026 14:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USAnBCWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35AC1F000FF;
+	Wed, 23 Sep 2026 14:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175185;
-	bh=MeM6ZwmF9VErecpsQ5Weo2On0tkvxbSJLF11WWhFlNg=;
+	s=korg; t=1790175188;
+	bh=z6XCcUjPt1zg/Si0bC4q84F9esrkUQxPWRBxuf1JCQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYGe7LNkmHMPsBrP/HUxgRwdDupOMAflqLBlqwQw4FWIfxqlbl/wIVfvbA9EKiqXS
-	 Z3UJC2Pbvy/fimCLHtrw+ex3ugstA7DEiaxWe0svRh2craiG6J5TODra/G6Js2+gHc
-	 akGPFyAph6sr0EQ8GYpEFI9OXX4O6AnKQ57H0XiE=
+	b=USAnBCWCCoUtaKpRweso9KfRlbo8vKn7iDT+It2als65PPEGfdb7wCtyCtqYJ43yL
+	 6ngJ3d47RSPmEU57e+EFdumTg4HbbqkPA4ZtHtELBLypYH97GS7mnbq/NEUtI30m9A
+	 ZfLszATtzPTS3pUQ/+Ug7LNv48bCf1nOKzsWgN4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.18 346/398] smb: client: fix rlist race and missing initialization
-Date: Wed, 23 Sep 2026 16:07:00 +0200
-Message-ID: <20260923140652.397833092@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 347/398] smb: client: fix use-after-free of iface in cifs_try_adding_channels()
+Date: Wed, 23 Sep 2026 16:07:01 +0200
+Message-ID: <20260923140652.424022050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -55,68 +51,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 5f270f091256da1338c3631083e15d7f83cc05e1 upstream.
+commit d034e836eefd7ce75e588f7031cffbeec594f5ac upstream.
 
-TCP_Server_Info.rlist is allocated via kzalloc which zeros both ->next
-and ->prev to NULL instead of pointing to itself, making list_empty()
-always return false and list_add() dereference a NULL ->prev pointer.
+cifs_try_adding_channels() iterates ses->iface_list with
+list_for_each_entry_safe_from(), which captures the next entry
+(niface) under iface_lock.  The loop body then drops iface_lock for
+the whole duration of cifs_ses_add_channel().
 
-Also, cifs_signal_cifsd_for_reconnect() can be called concurrently
-from multiple cifsd threads, allowing the same server's rlist node to
-be added twice into the local list, corrupting it.
+A concurrent interface refresh (SMB3_request_interfaces() ->
+parse_server_interfaces()) marks all ifaces inactive and removes and
+frees any that are not re-advertised via list_del() + kref_put(),
+where release_iface() is a bare kfree().  Since niface typically has
+no channel holding a reference, the list reference is its last and it
+can be freed inside the unlocked window.  On continue, the iterator
+advance step then dereferences niface->iface_head.next, and the loop
+body reads iface->rdma_capable/is_active, both on freed memory.
 
-Closes: https://sashiko.dev/#/patchset/20260911204446.1719356-1-pc%40manguebit.org
-Fixes: df0e03a4fb94 ("smb: client: fix potential deadlock when reconnecting channels")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Fix this by never keeping an unreferenced list pointer across the
+unlocked window.  Each channel attempt now re-scans the list from the
+head under iface_lock, takes a kref on the selected candidate, and
+passes only that referenced candidate to cifs_ses_add_channel().
+weight_fulfilled still tracks selection progress, so restarting the
+scan preserves the original weighted distribution and the
+weight_fulfilled-before-kref_put ordering on the failure path.
+
+Add a per-pass attempts cap so a flapping interface refresh cannot
+keep the inner loop spinning within a single tries increment.
+
+Fixes: aa45dadd34e4 ("cifs: change iface_list from array to sorted linked list")
 Cc: stable@vger.kernel.org
+Assisted-by: Qoder:Qwen3.8-Max
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Acked-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/client/sess.c |  106 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 64 insertions(+), 42 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -171,6 +171,8 @@ cifs_signal_cifsd_for_reconnect(struct T
- 				nserver = ses->chans[i].server;
- 				if (!nserver)
- 					continue;
-+				if (!list_empty(&nserver->rlist))
-+					continue;
- 				nserver->srv_count++;
- 				list_add(&nserver->rlist, &reco);
- 			}
-@@ -179,11 +181,15 @@ cifs_signal_cifsd_for_reconnect(struct T
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -150,9 +150,9 @@ int cifs_try_adding_channels(struct cifs
+ 	int old_chan_count, new_chan_count;
+ 	int left;
+ 	int rc = 0;
+-	int tries = 0;
++	int tries = 0, attempts;
+ 	size_t iface_weight = 0, iface_min_speed = 0;
+-	struct cifs_server_iface *iface = NULL, *niface = NULL;
++	struct cifs_server_iface *iface = NULL, *candidate = NULL;
+ 	struct cifs_server_iface *last_iface = NULL;
+ 
+ 	spin_lock(&ses->chan_lock);
+@@ -198,67 +198,89 @@ int cifs_try_adding_channels(struct cifs
+ 			break;
  		}
+ 
+-		if (!iface)
+-			iface = list_first_entry(&ses->iface_list, struct cifs_server_iface,
+-						 iface_head);
+ 		last_iface = list_last_entry(&ses->iface_list, struct cifs_server_iface,
+ 					     iface_head);
+ 		iface_min_speed = last_iface->speed;
++		spin_unlock(&ses->iface_lock);
+ 
+-		list_for_each_entry_safe_from(iface, niface, &ses->iface_list,
+-				    iface_head) {
+-			/* do not mix rdma and non-rdma interfaces */
+-			if (iface->rdma_capable != ses->server->rdma)
+-				continue;
+-
+-			/* skip ifaces that are unusable */
+-			if (!iface->is_active ||
+-			    (is_ses_using_iface(ses, iface) &&
+-			     !iface->rss_capable))
+-				continue;
++		attempts = 0;
++		while (left > 0) {
++			spin_lock(&ses->iface_lock);
+ 
+-			/* check if we already allocated enough channels */
+-			iface_weight = iface->speed / iface_min_speed;
++			/*
++			 * iface_lock must be dropped while opening a channel,
++			 * and a concurrent interface refresh may remove and
++			 * free entries during that window, so no list entry
++			 * may be kept across it without a reference.  Scan
++			 * the list from the beginning each time and only pass
++			 * a referenced candidate to cifs_ses_add_channel();
++			 * weight_fulfilled tracks the progress so that no
++			 * iface is selected beyond its weight.
++			 */
++			candidate = NULL;
++			list_for_each_entry(iface, &ses->iface_list, iface_head) {
++				/* do not mix rdma and non-rdma interfaces */
++				if (iface->rdma_capable != ses->server->rdma)
++					continue;
++
++				/* skip ifaces that are unusable */
++				if (!iface->is_active ||
++				    (is_ses_using_iface(ses, iface) &&
++				     !iface->rss_capable))
++					continue;
++
++				/* check if we already allocated enough channels */
++				iface_weight = iface->speed / iface_min_speed;
++
++				if (iface->weight_fulfilled >= iface_weight)
++					continue;
++
++				/* take ref before unlock */
++				kref_get(&iface->refcount);
++				candidate = iface;
++				break;
++			}
+ 
+-			if (iface->weight_fulfilled >= iface_weight)
+-				continue;
++			if (!candidate) {
++				/* no usable iface. reset weight_fulfilled and start over */
++				list_for_each_entry(iface, &ses->iface_list, iface_head)
++					iface->weight_fulfilled = 0;
++				spin_unlock(&ses->iface_lock);
++				break;
++			}
+ 
+-			/* take ref before unlock */
+-			kref_get(&iface->refcount);
++			attempts++;
++			if (attempts > 3 * ses->chan_max) {
++				kref_put(&candidate->refcount, release_iface);
++				spin_unlock(&ses->iface_lock);
++				break;
++			}
+ 
+ 			spin_unlock(&ses->iface_lock);
+-			rc = cifs_ses_add_channel(ses, iface);
++			rc = cifs_ses_add_channel(ses, candidate);
+ 			spin_lock(&ses->iface_lock);
+ 
+ 			if (rc) {
+ 				cifs_dbg(VFS, "failed to open extra channel on iface:%pIS rc=%d\n",
+-					 &iface->sockaddr,
++					 &candidate->sockaddr,
+ 					 rc);
+ 				/* failure to add chan should increase weight */
+-				iface->weight_fulfilled++;
+-				kref_put(&iface->refcount, release_iface);
++				candidate->weight_fulfilled++;
++				kref_put(&candidate->refcount, release_iface);
++				spin_unlock(&ses->iface_lock);
+ 				continue;
+ 			}
+ 
+-			iface->num_channels++;
+-			iface->weight_fulfilled++;
++			candidate->num_channels++;
++			candidate->weight_fulfilled++;
+ 			cifs_info("successfully opened new channel on iface:%pIS\n",
+-				 &iface->sockaddr);
+-			break;
+-		}
+-
+-		/* reached end of list. reset weight_fulfilled and start over */
+-		if (list_entry_is_head(iface, &ses->iface_list, iface_head)) {
+-			list_for_each_entry(iface, &ses->iface_list, iface_head)
+-				iface->weight_fulfilled = 0;
++				 &candidate->sockaddr);
+ 			spin_unlock(&ses->iface_lock);
+-			iface = NULL;
+-			continue;
+-		}
+-		spin_unlock(&ses->iface_lock);
+ 
+-		left--;
+-		new_chan_count++;
++			left--;
++			new_chan_count++;
++			break;
++		}
  	}
  
-+	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry_safe(server, nserver, &reco, rlist) {
- 		list_del_init(&server->rlist);
- 		set_need_reco(server);
-+		spin_unlock(&cifs_tcp_ses_lock);
- 		cifs_put_tcp_session(server, 0);
-+		spin_lock(&cifs_tcp_ses_lock);
- 	}
-+	spin_unlock(&cifs_tcp_ses_lock);
- }
- 
- /*
-@@ -1823,6 +1829,7 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 	spin_lock_init(&tcp_ses->mid_counter_lock);
- 	INIT_LIST_HEAD(&tcp_ses->tcp_ses_list);
- 	INIT_LIST_HEAD(&tcp_ses->smb_ses_list);
-+	INIT_LIST_HEAD(&tcp_ses->rlist);
- 	INIT_DELAYED_WORK(&tcp_ses->echo, cifs_echo_request);
- 	INIT_DELAYED_WORK(&tcp_ses->reconnect, smb2_reconnect_server);
- 	mutex_init(&tcp_ses->reconnect_mutex);
+ 	return new_chan_count - old_chan_count;
 
 
