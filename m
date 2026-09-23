@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5DF53C3A0;
-	Wed, 23 Sep 2026 14:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE853C3BC;
+	Wed, 23 Sep 2026 14:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175001; cv=none; b=eBdYc7R2zm/0BS6C8mRd6HF9W9B+yw9/EK8kWlGGJUtqHuMzL1xmLe8fl7jaKfMKbf+9LeJXTv8BX1iCzqsjolPMXKN8G34VhyVI5sBNnwH9SdzKsi/taYbAyGMBMtUGkNAN5sa1jjwWAFPpNlhhxvwNnEiGVu4yClfk0vGWFCM=
+	t=1790175004; cv=none; b=EwWDJcu18HG/ZXHMhPCrKOKULX2gaiL+ql+NNRDMjHcZr1IH9zheFwrQHIrgk20O7Mef5UF3wiVBm+3Hz6VsWKQ8yaNPMwpHM1hV582WwFZSxn00U+U5FKRCQ3j1T7lgul2so5KvbibQ8ie33i4H8JJZOjSHDChX95zirRaarro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175001; c=relaxed/simple;
-	bh=k9zT5Mx6WpvbIgTa5b4XsCuqchOOVS+Qp0qNgJ2PESY=;
+	s=arc-20240116; t=1790175004; c=relaxed/simple;
+	bh=hCc7qY1FONxICjoIYzByhRVvbzam97oTYGgEg7+l75I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DjoMHixyhJxf0NClLM6NZUqWWZmlFdI+j3HuhLo3KyUQzPpeqiv2PsyXKIsR+QTjyGp0fF8wXMsNJ6eYCvegs048au8DJ9qkz08CWoe3d/IllgiMijXxC0qEI7/M8Eb4BFmIxYspMjWxvNWWBZe+oNUsV6bUX8/9V4cpwxQ5J9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpQxJa7Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZkmid10tbrz1uwvp0zaakNTn0qbOluWoJwJWn9DKVtLb3vXPWCn1H45Vvqhf2Pr/X8rlMn0iUmsJEBS+mt0113bgMtez3hZeu3+TNA9AJDKHFzGKXPL2U2BItznKJ1gPN80CrpcaZwMYgBkaED8a9Ez7/ygmgZ1TsVUqIB39zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwVTApKA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpQxJa7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98A41F000FF;
-	Wed, 23 Sep 2026 14:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwVTApKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5571F000FF;
+	Wed, 23 Sep 2026 14:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174999;
-	bh=ihBDQ0AtCA7jO4rJOB5k4ZgOfJpiv83SgB2AWpuOGeI=;
+	s=korg; t=1790175002;
+	bh=Jd9wBhSgyIdh4balTqTVpRmcmAs2amTEj0vHma1Jehs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JpQxJa7Q5BT4cVQDbte0AKC/R7wewH11TPxJUTfh14sfvbNlN5Qqx2TCwzDzBkjLn
-	 elh48ZPpLviBRyHjzmZal9dQ3Od+OD1xPJl/jfc/jwFDHDq88C5p0SDSFRmqkzuNJa
-	 PO1GHJB3Phi0ogWEkfa3sLQ3/CSjSG61EXik2x1I=
+	b=ZwVTApKAR/qxXyEmF+omJSfGzIzWBbaypJIic0QX42DtOyTTpw996bBW8HKRN0UXo
+	 jgHol/ncU+iNPkdq4UgAORBKT19n5JdsyrglgZFwl16WuZt1QfHTbD/NZwu4nN3CLL
+	 Ecl6Tr31HQwTP7Lg3QXcRe32AHi9ieCC+4BA9bCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Judith Mendez <jm@ti.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 291/398] mmc: sdhci_am654: Reset command and data lines on failed tuning
-Date: Wed, 23 Sep 2026 16:06:05 +0200
-Message-ID: <20260923140650.968204048@linuxfoundation.org>
+Subject: [PATCH 6.18 292/398] mmc: sdhci_am654: Clear ITAPDLY on tuning failure
+Date: Wed, 23 Sep 2026 16:06:06 +0200
+Message-ID: <20260923140650.994168591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,14 +54,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
 
-commit 7197d9107d9545730153b82ea5a411c5208b443f upstream.
+commit c9f47cc8c37f7659897142ffe216c250fbc1d4ed upstream.
 
-The CMD/DATA reset after tuning should be performed regardless of
-whether tuning succeeded or failed, since tuning data may remain in
-the buffer in either case. Move the error return after the reset so
-that the controller is always cleaned up.
+When tuning fails, stale ITAPDLY values can persist and interfere with
+subsequent I/O accesses, for example in DDR50 mode in cards with no tuning
+support. Move the ITAPDLY enable setting out of the tuning loop to after
+successful tuning, and explicitly clear ITAPDLY (delay and enable) when
+tuning fails so that we are sure only working values are actually left in
+hardware.
 
-Fixes: de31f6ab68a3 ("mmc: sdhci_am654: Reset Command and Data line after tuning")
+Fixes: 901d16e46296 ("mmc: sdhci_am654: Add retry tuning")
 Cc: stable@vger.kernel.org
 Signed-off-by: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
 Reviewed-by: Judith Mendez <jm@ti.com>
@@ -69,27 +71,48 @@ Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/mmc/host/sdhci_am654.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 --- a/drivers/mmc/host/sdhci_am654.c
 +++ b/drivers/mmc/host/sdhci_am654.c
-@@ -442,15 +442,13 @@ static int sdhci_am654_execute_tuning(st
- 	struct sdhci_host *host = mmc_priv(mmc);
- 	int err = sdhci_execute_tuning(mmc, opcode);
+@@ -527,7 +527,6 @@ static int sdhci_am654_do_tuning(struct
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+-	unsigned char timing = host->mmc->ios.timing;
+ 	struct window fail_window[ITAPDLY_LENGTH];
+ 	struct device *dev = mmc_dev(host->mmc);
+ 	u8 curr_pass, itap;
+@@ -536,11 +535,8 @@ static int sdhci_am654_do_tuning(struct
  
--	if (err)
--		return err;
- 	/*
- 	 * Tuning data remains in the buffer after tuning.
- 	 * Do a command and data reset to get rid of it
- 	 */
- 	sdhci_reset(host, SDHCI_RESET_CMD | SDHCI_RESET_DATA);
+ 	memset(fail_window, 0, sizeof(fail_window));
  
--	return 0;
-+	return err;
- }
+-	/* Enable ITAPDLY */
+-	sdhci_am654->itap_del_ena[timing] = 0x1;
+-
+ 	for (itap = 0; itap < ITAPDLY_LENGTH; itap++) {
+-		sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
++		sdhci_am654_write_itapdly(sdhci_am654, itap, 0x1);
  
- static u32 sdhci_am654_cqhci_irq(struct sdhci_host *host, u32 intmask)
+ 		curr_pass = !mmc_send_tuning(host->mmc, opcode, NULL);
+ 
+@@ -584,10 +580,16 @@ static int sdhci_am654_platform_execute_
+ 
+ 	if (itapdly < 0) {
+ 		dev_err(dev, "Failed to find itapdly, fail tuning\n");
++		sdhci_am654_write_itapdly(sdhci_am654, 0, 0);
++		sdhci_am654->itap_del_ena[timing] = 0;
++		sdhci_am654->itap_del_sel[timing] = 0;
+ 		return -1;
+ 	}
+ 
+ 	dev_dbg(dev, "Passed tuning, final itapdly=%d\n", itapdly);
++
++	/* Enable ITAPDLY */
++	sdhci_am654->itap_del_ena[timing] = 0x1;
+ 	sdhci_am654_write_itapdly(sdhci_am654, itapdly, sdhci_am654->itap_del_ena[timing]);
+ 	/* Save ITAPDLY */
+ 	sdhci_am654->itap_del_sel[timing] = itapdly;
 
 
