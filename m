@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8642F52FE4E;
-	Wed, 23 Sep 2026 14:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BB39F190;
+	Wed, 23 Sep 2026 14:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173921; cv=none; b=l51ULKjKzQFZ7/j+W8l2lSdbebTJfUoaceKRbCMh7mqGmZjfWGQI2o6vrBjGAk1MvEcKreFqd1YPqu8GlD8MBwHbbjZIu7H9FcuGBzBv9fc7VuUc7W3jaZwK1fahylhcBSZJlNlZqlsPmZLavbszHANq07/rpLxsIxjmwHClBAo=
+	t=1790173924; cv=none; b=SbyCHdi7MuwuUKz4APdFwjhigJRju36eV/dPRHA+MALv1zt+j7S035bfXzKqYm9UU4iAM+3kpvazUNKyrblRiWG4c2Nwc3wCDa+M8RKKCa+suDMKor+bwOJAMd6rdzSCbybOf54abQkuh0glV71btDf+Q8hDeLac7xs4egmiKbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173921; c=relaxed/simple;
-	bh=UzIsHAe95Wag0m/4Ka++pz2eqO8+vr/NAm64LUIG0Nw=;
+	s=arc-20240116; t=1790173924; c=relaxed/simple;
+	bh=j60SGVWrRavf4bMavDCgVT8E5Nd6p0yt1dqGlA75/10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHZYPfO1nCVBQeMU8NX38+hS6E8TMAXWYrybEkiTR3B1y38xIFk8TEgovPBp9ZQJy6wOCShGIJSNBkjNT72r+0devR4DJA1rcGW+UiEuMpTqapv4X7ATQAZISf/KkhC9aAKnyAfm663acbfadk4r00l/rb4D34DixfN1sx1RKho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khgmdLWL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVOhVkxABpKRfOA4F0jmHJCtWND+bjpOdDqBu9BZtFE/O3xjCKI25AnJnxkKEVSVSHnsQ/lkN+xAOxP8t1g4AFBBJnJdQK+dBizC+DfV9ZyfMrzSnk721OpuAT90OoikhVZKY1C2+VDYMqC5y+hmOrYWjg7SxkbqN6ju4qY/S7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv+T7E4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khgmdLWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19691F000FF;
-	Wed, 23 Sep 2026 14:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv+T7E4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC951F000FF;
+	Wed, 23 Sep 2026 14:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173919;
-	bh=BLxHhpx1+pDgIphkIkXrlE2B9FjwM8OcANqXxdLDnys=;
+	s=korg; t=1790173922;
+	bh=GJCl5iRk33eKSvfqVY1uO7IoysNh1NMnbDJfuPmElnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khgmdLWLh9yLjbgZ5N4TpVoYAgeSqABsk+J1rCAUqoTGKDjUuY8fpedC2XRb0Ps6J
-	 t7bjnj7HYPeUNar49TlbUDyb/7Uc26DeRXTHVLep+eexmH6vBE+nVZP+4C3o9J3hSr
-	 GdlV8kdY6gqSVtLKHuNVh0JgiNeCFmsT/q7B22m4=
+	b=Vv+T7E4I8rd6B8mVvaZEZ3otynzPGFGzMKCUdt64B5UA/+imj9wZvlI2V9HUTML0x
+	 SH3e7ZSr9Ih8xAiED6Qdh2xncMgqCqONVDw4JA2pVC8lkn4BGpac6QIFsfaibeKqgE
+	 3TFRhEeZinHfNrOA9DnWJ9grvmqiFnYfJvRkOJ9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.2 368/438] hwmon: (pmbus/tps53679) Select page 0 for single-page TPS53676
-Date: Wed, 23 Sep 2026 16:06:29 +0200
-Message-ID: <20260923140654.395002310@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 386/438] wifi: rsi: fix heap OOB write on key removal
+Date: Wed, 23 Sep 2026 16:06:47 +0200
+Message-ID: <20260923140654.880519163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,45 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 089070b51ccbac411462a30a454690274c6e4270 upstream.
+commit e6c5ed7a98d7bc8b0f7918246f1c90ddb3f79dfa upstream.
 
-tps53676_identify() derives the number of PMBus pages but does not
-ensure that page 0 is selected for single-page configurations.
-pmbus_set_page() does not update the PAGE register when info->pages is
-1, so if boot firmware leaves PAGE set to another value subsequent
-register accesses may target the wrong page.
+When a key is removed (data == NULL), rsi_hal_load_key() runs:
 
-For single-page devices, select page 0 explicitly.
+	memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
 
-Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+set_key is a struct rsi_set_key *, so the subscript is scaled by
+sizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is
+skb->data + 2560, and the memset writes 144 zero bytes starting
+2.4KB past the end of the 160-byte skb data buffer, corrupting
+unrelated heap objects. The intended byte offset would have been
+(u8 *)set_key + FRAME_DESC_SZ.
+
+The write fires on every DISABLE_KEY callback, so plain disconnects,
+roams and interface teardowns trigger it on real networks.
+
+The memset is redundant: the whole buffer is zeroed right after
+allocation, so the frame sent to the device is byte-identical
+without it. Drop the else branch; normal operation is unaffected.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://patch.msgid.link/20260916235406.681131-2-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/90bb2b07007942064c04aa3729cedd9eb1e930b1@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/tps53679.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/rsi/rsi_91x_mgmt.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/hwmon/pmbus/tps53679.c
-+++ b/drivers/hwmon/pmbus/tps53679.c
-@@ -200,6 +200,15 @@ static int tps53676_identify(struct i2c_
- 	if (phases_b > 0) {
- 		info->pages = 2;
- 		info->phases[1] = phases_b;
-+	} else {
-+		/*
-+		 * pmbus_set_page() does not update the PAGE register on
-+		 * single-page devices, so select page 0 explicitly in case
-+		 * the boot firmware left the device on another page.
-+		 */
-+		ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+		if (ret < 0)
-+			return ret;
+--- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+@@ -852,8 +852,6 @@ int rsi_hal_load_key(struct rsi_common *
+ 			memcpy(set_key->tx_mic_key, &data[16], 8);
+ 			memcpy(set_key->rx_mic_key, &data[24], 8);
+ 		}
+-	} else {
+-		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
  	}
- 	return 0;
- }
+ 
+ 	skb_put(skb, frame_len);
 
 
