@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2BD53A3BB;
-	Wed, 23 Sep 2026 14:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159532E2663;
+	Wed, 23 Sep 2026 14:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175173; cv=none; b=rcSbUX6TsvxVlGV3Y6RKP9S8j7YPwqTZ67ZZRAb5dlunId+a/oTic2R/FLMr78yAlJ/vk9qN+A66045+b8SALSSyRci+qmGyXukUY0ZkhJpjSZRd9RFHr40VA6gdD1ehHNu1bygRk/esaJGtwX/DBGNTV60jWWJepmz8IDI0eAY=
+	t=1790175174; cv=none; b=mUH096DZEOd8UQLXFbtYemqK5p9A9B1zX8Nt2i0ZysI+P7jwpPQJfwjtLMBleEBx/x/SPjxmE7Cdj7jxAjaL4Ftj5RJP7NdUZMYI6mG8JoQ0ypSbSEXmbErzTKIenqT90Lt0LPwsrKgcWMbROZtUFHwo7NaVEifn11jltJO6/vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175173; c=relaxed/simple;
-	bh=dDC3n04EPJYeGkzQYh0uotAvwW+w9C7YtmtN0uu+WQU=;
+	s=arc-20240116; t=1790175174; c=relaxed/simple;
+	bh=Z7EoNY61JZY54KQe06ne9ZjgToC03v19O2mNiQAUT9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzn9WTF4VIRH+C5wqDOaNvdW3wkTY8ZTIcx2dwFlTt+XMgFHmEgCQgdxjuBIVrKF7wDOdU0fCSWr9EIjpylItdY2uLgbbaJxE1UoBFH1l/cC4+5Jix/Se061KaFGX76XRYyfmK72UwTPUgXgCyfWomnmhtQLNTKfxReIJA47ZJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OeiCclp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1OM0MmzHukHV5n1a+1cg8E809vSZPD3pfKH5WOG3wTthfwVoM7tqJoq4TYd6ck/qvTfnDwkssv+MkiJ5cZi+3wZb63jJev/pTC8PC+fQ9uskWrsfnK0SMZZJAjvbClJZpWspmScsgDPkGE0kgv0An21V5z0+8yV5CbR1OhkeSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VO8MIqTy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OeiCclp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5EF1F000FF;
-	Wed, 23 Sep 2026 14:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VO8MIqTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0711F00899;
+	Wed, 23 Sep 2026 14:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175166;
-	bh=M3gwzyAy/5XHk+QKKzYcOIavFBfvI3P6pvnG+g4FXOg=;
+	s=korg; t=1790175169;
+	bh=X/1ks0qPMEXwi7y7GOr+4yhKvAWm9dhaPVMfB7U+1pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0OeiCclphDumAszz7KSpJXXOI6h1C5r+iQM/CXviTHEPIhISGrdTEEruk9SdEAX88
-	 URzmsXk9K6hQyU+mPYnPzp+AYsdvK5eE72rTeF8fRrb0gYmk+4LUGkzUUby0+GN8+2
-	 8nT5UwVsxlgZQB2T9/VzRImgbSllPcCkXHsojD38=
+	b=VO8MIqTyYkaMO+6LJM5rRnqIjD0i5VRxD42EFUYdnzQ4NEhREU6/g+ctuSxLnhInj
+	 FHlKlnpz7qYwOO/1hHMpuoyj3GoOqp9mMOZXm9GYgtXgeh69y8vkCpz2YpBwya29S6
+	 /j+xU39lLGmiZ/sv8T3IDllLAV+QJwcW4iNZ3qNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saim Shujah <saimzst@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.18 341/398] drm/msm/dpu: clear pending peripheral flush state
-Date: Wed, 23 Sep 2026 16:06:55 +0200
-Message-ID: <20260923140652.270069308@linuxfoundation.org>
+Subject: [PATCH 6.18 342/398] drm/msm/hdmi_phy: fix runtime PM cleanup on probe failure
+Date: Wed, 23 Sep 2026 16:06:56 +0200
+Message-ID: <20260923140652.294041418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,41 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saim Shujah <saimzst@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit a5b5cc909931572aec446e129c035b76b3f0c1fa upstream.
+commit f4fae975db08a9aeec0b15e145c7d4d0fe02a0ec upstream.
 
-dpu_hw_ctl_clear_pending_flush() resets the cached per-block state after a
-flush transaction, but misses pending_periph_flush_mask.
+msm_hdmi_phy_probe() enables runtime PM before enabling the PHY
+resources and initializing the PLL, but failures from either operation
+return without calling the matching pm_runtime_disable().
 
-The peripheral flush updater accumulates interface bits in this mask. A
-later transaction which sets the top-level peripheral flush bit can write
-stale interface bits to CTL_PERIPH_FLUSH together with the current state.
+The remove path disables runtime PM, but it is not called when probe
+fails. As a result, runtime PM remains enabled after an unsuccessful
+probe.
 
-Peripheral flush support was added after the helper started clearing every
-individual pending flush mask. Clear the peripheral mask together with the
-other cached child masks.
+Route failures after pm_runtime_enable() through a common error path
+and disable runtime PM before returning.
 
-Fixes: 64f7b81f0358 ("drm/msm/dpu: add support of new peripheral flush mechanism")
+This issue was found by manual code inspection.
+
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saim Shujah <saimzst@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/748968/
-Link: https://lore.kernel.org/r/20260828065440.140410-1-saimzst@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/753043/
+Link: https://lore.kernel.org/r/20260913085814.1509352-1-lgs201920130244@gmail.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -118,6 +118,7 @@ static inline void dpu_hw_ctl_clear_pend
- 	ctx->pending_intf_flush_mask = 0;
- 	ctx->pending_wb_flush_mask = 0;
- 	ctx->pending_cwb_flush_mask = 0;
-+	ctx->pending_periph_flush_mask = 0;
- 	ctx->pending_merge_3d_flush_mask = 0;
- 	ctx->pending_dsc_flush_mask = 0;
- 	ctx->pending_cdm_flush_mask = 0;
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -168,13 +168,13 @@ static int msm_hdmi_phy_probe(struct pla
+ 
+ 	ret = msm_hdmi_phy_resource_enable(phy);
+ 	if (ret)
+-		return ret;
++		goto err_pm_disable;
+ 
+ 	ret = msm_hdmi_phy_pll_init(pdev, phy->cfg->type);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "couldn't init PLL\n");
+ 		msm_hdmi_phy_resource_disable(phy);
+-		return ret;
++		goto err_pm_disable;
+ 	}
+ 
+ 	msm_hdmi_phy_resource_disable(phy);
+@@ -182,6 +182,10 @@ static int msm_hdmi_phy_probe(struct pla
+ 	platform_set_drvdata(pdev, phy);
+ 
+ 	return 0;
++
++err_pm_disable:
++	pm_runtime_disable(dev);
++	return ret;
+ }
+ 
+ static void msm_hdmi_phy_remove(struct platform_device *pdev)
 
 
