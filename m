@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E963AC0EF;
-	Wed, 23 Sep 2026 14:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38A93AC0EF;
+	Wed, 23 Sep 2026 14:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173199; cv=none; b=Vf19PYLfWfiUYHiImM4BqUBWBvWRicd+0nk9Qb4aCgp2pQDYBqLq9Fz4sYrFMqqHuj0U3RxWiA6o7OxTSkdlb7getIDD4mE1i+Bi5Gk20Y6iv1OsDzpnaL4RaEW7zemR3EKPABOe9R3Fw4D7Oq/fZ822SqEH+0/9AMMMe8XwdNM=
+	t=1790173203; cv=none; b=RBJdudYTEjVmohD2mNuFxMIsnpdfAEDz5Phg9FcHe2cL996VRA0P+1K0fgBq62LRYIA4VufOKyHOxFSk5LvCm+6VwjgFOiVaKH7vtB6GY6XbrpzDTejkG6DQ44fpLBcFq25XzyqN5WpoaNZnvxX+kH8RuO5A4zHiPKB3zeDYnfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173199; c=relaxed/simple;
-	bh=o0A3S3DIUgMylRww/C6M18EavRHDiTiWoCoEGxZZhJM=;
+	s=arc-20240116; t=1790173203; c=relaxed/simple;
+	bh=w1uW1ZR1VrhE209PiG9eHKS6cke+zDcZ8ah6t5tM0mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4WtCQzEdZgP4vLsGg/gg8fg4ysQgv5Yw1B27P2ke1DRz/Q/lkuc00m1AwSxIkvqcubSh25xk0ObLgAU+7+pT2tiIMFa/KRSjxkNrcKe+2GtGtKubzCzw16XDdnM8qyKkmeE7s2guficNfWKcHra1Eml3mS78t1rUCE1sO2qXVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfHiAEJC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uzUMerY+rj1hRqetGDKl+/D4gkiTxeezJ4kAGt1t1FPg6WWYNQzEgJMStP5kJS8T9rS71AncoOZ2Nll9zXQ+AypTrs84w93x8W5tUANotJ6CNDCkvMOlvT4EIFJ5um6cYFQkILL57rcg9Gp85qJopV2x7aNSjvEiuNzHnCMnNQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ar3e+5P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfHiAEJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8621F1F000FF;
-	Wed, 23 Sep 2026 14:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ar3e+5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4195A1F00893;
+	Wed, 23 Sep 2026 14:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173198;
-	bh=+bDTOUiOL3+sQT2+CcHRPSauMQBfCJBeEceLfBuEi5Y=;
+	s=korg; t=1790173201;
+	bh=YjuPIfdoPe3Bjb58p6ZISwObrWRk1oHTxuDkFdxrHQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MfHiAEJCUX3XsKT3MaD8uuOIdPqGwzYOe4YFDAXyAp29PRSC1EVRLDWxIO403ncj+
-	 VmleV9kKI+n5t5REU+4FMZYD6toZEHQY0cDG47nhhq0Xp9URhCgGFswszEEMe/rn3j
-	 Gk8TiRge0tEQh3Y3Wh041pBNZFoTEp+hhgkJxQXM=
+	b=1Ar3e+5Pg/8VrwLJ3lCf0wAQMNGIXYB/2f1d0EfZ91fagxj3m4Lt1p3TX8EfHFj3K
+	 Dj/WYKVA+YXyciawTli2YpvbfsV7AIy6BqUALBWcS38Bgj/l/8oUYXiGttuXb+w3Lo
+	 8lBX8dVgU/SnaF4h/rDcvGszNtTnzkKeObjwW1aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radek Podgorny <radek@podgorny.cz>,
+	Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 171/438] Bluetooth: put the peers on-air address on air when we cannot resolve
-Date: Wed, 23 Sep 2026 16:03:12 +0200
-Message-ID: <20260923140649.202015502@linuxfoundation.org>
+Subject: [PATCH 7.2 172/438] Bluetooth: hci_qca: Do not write to the serial port after it is closed
+Date: Wed, 23 Sep 2026 16:03:13 +0200
+Message-ID: <20260923140649.226880527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,111 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radek Podgorny <radek@podgorny.cz>
+From: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
 
-[ Upstream commit 4914c499896121ae8b9d5b90f0abc5c8287ff396 ]
+[ Upstream commit 4e93c65f87825e1e012bce56615320aeb123815d ]
 
-An identity address only reaches a peer that is advertising an RPA if the
-controller resolves it on our behalf. Where it cannot, the host has to put
-the peer's on-air address on air itself.
+hci_uart_close() closes the serdev port if HCI_QUIRK_NON_PERSISTENT_SETUP
+is set (for example, for the WCN399x family). A failed hci_dev_open_sync()
+following a successful qca_setup() calls hdev->close() but not
+hdev->shutdown(), so the port is closed while power->vregs_on is left true.
+qca_serdev_remove() then passes its power->vregs_on test and calls
+qca_power_off(), which writes to the closed port unconditionally.
 
-hci_connect_le() still swaps the caller's identity address for the peer's
-cached RPA before creating the connection, but __hci_conn_add() resolves
-the RPA back to the identity address when it stores it, so the identity is
-what goes out. Storing the identity is right when the controller
-translates it on the way to the radio; without LL Privacy, or with this
-peer absent from the resolving list, nothing does.
+Seen on a WCN3988 by unbinding the driver after a controller failure. The
+trace below is from a 7.0.0 based kernel, where qca_power_off() was still
+named qca_power_shutdown():
 
-A peer advertising an RPA cannot answer its identity address, so the
-attempt burns a full create-connection timeout. That is not merely a slow
-connect: a controller without extended scanning cannot scan while it is
-initiating, so every dead attempt also takes the scanner off the air for
-the whole timeout.
+  Unable to handle kernel NULL pointer dereference at virtual address
+  0000000000000038
+  Call trace:
+   tty_set_termios+0x50/0x238 (P)
+   ttyport_set_baudrate+0x84/0xc0
+   serdev_device_set_baudrate+0x24/0x40
+   qca_power_shutdown+0x158/0x1fc [hci_uart]
+   qca_serdev_remove+0x54/0x68 [hci_uart]
+   serdev_drv_remove+0x1c/0x2c
+   device_remove+0x4c/0x80
+   device_release_driver_internal+0x1cc/0x224
+   device_driver_detach+0x18/0x24
+   unbind_store+0xb4/0xc0
 
-Measured on a CYW43438, which reports neither LL Privacy nor extended
-advertising (LE features 3f 00 00 08 00 00 00 00), against a peer
-advertising a resolvable private address the host holds the IRK for, with
-the connection requested on the peer's identity address:
+Check HCI_UART_PROTO_READY, which hci_uart_close() clears in the same place
+it closes the port, before writing to it. The regulator disable is left
+unconditional so the controller is still powered down.
 
-  before: LE Create Connection to the identity address, public type
-          1.61s -> 22.07s, then LE Create Connection Cancel
-          LE Connection Complete: Unknown Connection Identifier (0x02)
-  after:  LE Create Connection to the peer's RPA, random type
-          LE Connection Complete: Success
+The dangling serport->tty that turns this into a use-after-free is
+addressed in a separate patch.
 
-Advertising reports reaching the host per second, same window, same five
-unrelated devices on the adapter:
-
-  before   1s:2   [nothing from 2s through 21s]   22s:5  23s:3
-  after    0s:11 1s:5 2s:2 3s:5 4s:3 5s:4 ... 21s:2 22s:1 23s:2
-
-One dead connect costs twenty seconds of scanning for every device on the
-adapter, not just the one being dialled.
-
-Keep the RPA in conn->dst unless the controller will translate the
-identity address: address resolution enabled and the peer's identity
-actually programmed into the resolving list. Testing ll_privacy_capable()
-alone would not be enough: it reports the feature bit, not whether
-resolution is switched on and not whether this peer is in the list.
-Resolution is cleared with the other volatile flags on power-off and
-switched off again while suspend pauses scanning, and a peer's IRK is only
-programmed along the accept list path, so a direct-connect target, a peer
-without HCI_CONN_FLAG_ADDRESS_RESOLUTION, and one that did not fit in a
-full list are all absent from it.
-
-With the peer programmed, the identity address stays in conn->dst and the
-controller translates it: measured on an Intel controller, the host dials
-the identity and LE Enhanced Connection Complete reports Resolved Public
-with the peer's RPA in the separate peer resolvable private address field.
-With the peer absent from the list the same setup dials the RPA itself.
-
-Everything downstream already copes with an RPA in conn->dst: it is what
-every outgoing LE connection stored before 14b06c3a88f7, the connection
-complete event names the address that was dialled, and
-le_conn_complete_evt() resolves it back to the identity once the link is
-up. ISO links keep the unconditional conversion: they are created from an
-existing ACL or a periodic sync and never dial this address themselves.
-
-Keeping the RPA is only right while the peer is still using it, which is
-why the preceding patch drops the cached RPA as soon as the peer is seen
-advertising its identity address. Without that, a peer that turns privacy
-off would be dialled on the address it abandoned rather than the one it
-is answering on.
-
-Fixes: 14b06c3a88f7 ("Bluetooth: HCI: Always use the identity address when initializing a connection")
-Assisted-by: Claude:claude-opus-5
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Radek Podgorny <radek@podgorny.cz>
+Fixes: fa9ad876b8e0 ("Bluetooth: hci_qca: Add support for Qualcomm Bluetooth chip wcn3990")
+Signed-off-by: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/bluetooth/hci_qca.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 8de98af2fb581..c9466cb2c7c00 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1023,6 +1023,19 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type,
- 		if (!hdev->le_mtu && hdev->acl_mtu < HCI_MIN_LE_MTU)
- 			return ERR_PTR(-ECONNREFUSED);
- 		irk = hci_get_irk(hdev, dst, dst_type);
-+		/* An identity address only reaches a peer advertising an RPA
-+		 * if the controller translates it. Unless address resolution
-+		 * is enabled and this peer is programmed into the resolving
-+		 * list, keep the RPA the peer is on air with;
-+		 * le_conn_complete_evt() resolves it back once the link is
-+		 * up.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 1222f97800f4a..875093e61c681 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2228,8 +2228,8 @@ static void qca_power_off(struct hci_uart *hu)
+ 	bool sw_ctrl_state;
+ 	struct qca_power *power;
+ 
+-	/* From this point we go into power off state. But serial port is
+-	 * still open, stop queueing the IBS data and flush all the buffered
++	/* From this point we go into power off state. But serial port may
++	 * still be open, stop queueing the IBS data and flush all the buffered
+ 	 * data in skb's.
+ 	 */
+ 	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
+@@ -2251,8 +2251,14 @@ static void qca_power_off(struct hci_uart *hu)
+ 	case QCA_WCN3990:
+ 	case QCA_WCN3991:
+ 	case QCA_WCN3998:
+-		host_set_baudrate(hu, 2400);
+-		qca_send_power_pulse(hu, false);
++		/* Both of these write to the serial port which may have
++		 * already been closed by hci_uart_close(), which closes
++		 * the port if HCI_QUIRK_NON_PERSISTENT_SETUP is set.
 +		 */
-+		if (irk &&
-+		    (!hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) ||
-+		     !hci_bdaddr_list_lookup_with_irk(&hdev->le_resolv_list,
-+						      &irk->bdaddr,
-+						      irk->addr_type)))
-+			irk = NULL;
++		if (test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
++			host_set_baudrate(hu, 2400);
++			qca_send_power_pulse(hu, false);
++		}
  		break;
- 	case SCO_LINK:
- 	case ESCO_LINK:
+ 	default:
+ 		break;
 -- 
 2.53.0
 
