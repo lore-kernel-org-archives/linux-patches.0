@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4813F58D9;
-	Wed, 23 Sep 2026 14:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D59B51EE1A;
+	Wed, 23 Sep 2026 14:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172840; cv=none; b=NROTRxJ5Bsga9WsG5PGQiwIQMc+tziPwAxmRka632o2A/1P3Nw3RVkf1lm3tyswodjCo3ClO0NlvyEyiY1f5V9cr6Oe6APu2brgXZg/flOc6qaQfteq6RcJE2X+d8Gju7vLuidDvV3KjE6aQN1TNFUBcZih4eFZU7lXl8rC7658=
+	t=1790172846; cv=none; b=ZIdYmqDWGfoq80HD66qFFs1Z7X90jCKeCNm062uPY2lD6agZArHS54zqOMVaKFsqGNlJHcG5+4ppbsoSjC8dshB006OIcnjK8lIisCviE63j7nvTN6Q3+/3C9S2evN3/Kj6KnfTjxlikCkvNCJ3YCLzy4KxcOu+estjbXFt3tSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172840; c=relaxed/simple;
-	bh=0nNjxtPNxyIRVNkSdkKH2JZ5MTNgZmB917dGv8JfOJg=;
+	s=arc-20240116; t=1790172846; c=relaxed/simple;
+	bh=Hd6bEj8P1Um+ITgNr4yUg5FD/E7OAzs+fBRotCTSNOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYEKUMFQJNUKGrIg2UGy4SDhXDYdQ3Yrqc42MNpjS1pcyP0cNrcESbkwWYcKLCIj53lA07JFeAFWKr6+aJN2NNHbkSgR3cimmNkQTJ65Y2E6oYcUrHTOEbeWJ1r2pv4I8nL8LP+eUnK2LQ6kr0IO5ouSljLI3eTTE7faaQU9C38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKQ9GWt9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d90pMr+j79BwbBxDEX3UsHKE/tOPZvadU3TEQjHp/QnCFN3x1rxxBFIZwkuZz751krxVR5UpulCH9e3hwfLCrY+CxMBeubSIME9FIFgCtmnIES/upghNxNldX657jdmNHhFdFMGu85zcJdKchMdbn/Aa8TPeiXE4LzlYbjLQNcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXLm2ckR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKQ9GWt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1701F000FF;
-	Wed, 23 Sep 2026 14:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXLm2ckR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9853C1F000FF;
+	Wed, 23 Sep 2026 14:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172839;
-	bh=M9uqVwzT2SuWenUQnoVAaEiuHiJ2ughI62XtuNTd+bc=;
+	s=korg; t=1790172845;
+	bh=ojy2Ez+4dROi7nznEAsef5TT2g+bmOkb6i+fLoRBpEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HKQ9GWt963yV1NbR8sn2fx4hnJv9bVLiNVhoN4NJDmvJYjG+bSmISgRH2tgL6Yi8S
-	 zeohS3klIDyPlIszu//psS0+PV4dBegCS1Vw0E0q7wxMJu1awYfPRjpghO9gpan1l9
-	 AsqutL0ha8a/SeojfPSkJRqjQHlZUesfhx6+tR+k=
+	b=TXLm2ckRgJDqjiF4KH8rE7e7+DtLhAQUE+HuTvYwEjsiu/KSKQWMLQSKiwRcvvRpM
+	 Ylja8MWpHXl4oqj3PiZFJx53Zx4kRAudu/3Wm5VrtRC//MrLISZkIN0VmuqeQ4/eaw
+	 EKh2lnmnzZSHLn+lu6nNRaYLNJjl9VJT3wDYkMDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com,
-	syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com,
+	syzbot+e84ecca6d1fa09a9b3d9@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 074/438] wifi: mac80211: reset state when starting AP fails
-Date: Wed, 23 Sep 2026 16:01:35 +0200
-Message-ID: <20260923140646.704228053@linuxfoundation.org>
+Subject: [PATCH 7.2 075/438] wifi: mac80211: reset the LED state when ifup fails
+Date: Wed, 23 Sep 2026 16:01:36 +0200
+Message-ID: <20260923140646.729779388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,61 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3f28551d0241254a75626d868041c6340285088b ]
+[ Upstream commit 78183e8331958fda11cd2b6850bb424a9747c4b2 ]
 
-ieee80211_start_ap() can set enable_beacon (and beacon_int) and fail
-later, leaving it set forever. Scanning can then attempt to restore
-beaconing on such an interface, leading to:
+When the first interface comes up, the radio LED is turned on. This can
+start the TPT trigger timer, which continues running.
 
-  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:mac80211_hwsim_link_info_changed+0xca7/0xf00
-  Call Trace:
-   drv_link_info_changed+0x413/0x860 net/mac80211/driver-ops.c:495
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_return+0x381/0x580 net/mac80211/offchannel.c:160
-   __ieee80211_scan_completed+0x993/0xe30 net/mac80211/scan.c:519
-   ieee80211_scan_work+0x472/0x2010 net/mac80211/scan.c:1193
-   cfg80211_wiphy_work+0x2b7/0x550 net/wireless/core.c:538
+But if bringing up the interface fails then the timer keeps running and
+won't be stopped by anything, eventually it can be freed:
 
-in hwsim. Also, cfg80211 then allows changing the interface type,
-and the off-channel path getgs confused about beaconing as well,
-leading to another warning:
+  ODEBUG: free active (active state 0) object: ffff888127e12130 object type: timer_list hint: tpt_trig_timer+0x0/0x300 net/mac80211/led.c:145
+  WARNING: CPU: 0 PID: 5923 at lib/debugobjects.c:612 debug_print_object+0x1a2/0x2b0
+   debug_check_no_obj_freed+0x4b7/0x600 lib/debugobjects.c:1129
+   kfree+0x436/0x670 mm/slub.c:6818
+   ieee80211_led_exit+0x162/0x1c0 net/mac80211/led.c:210
+   ieee80211_unregister_hw+0x27e/0x3a0 net/mac80211/main.c:1706
+   rt2x00lib_remove_dev+0x55b/0x670
 
-  WARNING: net/mac80211/driver-ops.c:468 at drv_link_info_changed+0x583/0x880
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_stop_vifs+0x328/0x5c0 net/mac80211/offchannel.c:122
-   ieee80211_start_sw_scan net/mac80211/scan.c:583 [inline]
-   __ieee80211_start_scan+0xfb6/0x1af0 net/mac80211/scan.c:882
-
-Reset the state on failures to always have it correct.
+Undo the LED state in the error path.
 
 Assisted-by: LLM
-Fixes: d6a83228823f ("mac80211: track enable_beacon explicitly")
-Reported-by: syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ca7a2759caaa6cd4e3db
-Reported-by: syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c4686c3eb8b64032618f
-Link: https://patch.msgid.link/20260904165722.9629429a5221.I7f599412bfe12a09d41ea4901be9ad165d07d133@changeid
+Fixes: 67408c8c7b9d ("mac80211: selective throughput LED trigger active")
+Reported-by: syzbot+e84ecca6d1fa09a9b3d9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e84ecca6d1fa09a9b3d9
+Link: https://patch.msgid.link/20260904165722.044aa432f873.I601a67a2cd558b8ef8416a07554ae7efe896e9d8@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/iface.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 213f1d39f9e07..45f8e3c87884a 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1929,6 +1929,9 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
- 	return 0;
- 
- error:
-+	link_conf->enable_beacon = false;
-+	link_conf->beacon_int = prev_beacon_int;
-+	sdata->vif.cfg.ssid_len = 0;
- 	ieee80211_link_release_channel(link);
- 
- 	return err;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 8c300e045fdf9..4c34c3287eb4a 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -1606,8 +1606,12 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+  err_del_interface:
+ 	drv_remove_interface(local, sdata);
+  err_stop:
+-	if (!local->open_count)
++	if (!local->open_count) {
++		ieee80211_led_radio(local, false);
++		ieee80211_mod_tpt_led_trig(local, 0,
++					   IEEE80211_TPT_LEDTRIG_FL_RADIO);
+ 		drv_stop(local, false);
++	}
+ 	if (sdata->vif.type == NL80211_IFTYPE_NAN_DATA)
+ 		RCU_INIT_POINTER(sdata->u.nan_data.nmi, NULL);
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
 -- 
 2.53.0
 
