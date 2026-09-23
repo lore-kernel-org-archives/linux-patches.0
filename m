@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D67647A0C4;
-	Wed, 23 Sep 2026 14:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E17B527590;
+	Wed, 23 Sep 2026 14:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175337; cv=none; b=O8Gr2klw+mOx6x0AOdEQ4NgMQ2GBnRNl7XzMKK7e6I4WwhbyBro/AYkzYj2RcnGlSarqWJVTNCJoRlman32mEbWbQNHf6HfgtpCmw0t6hO72q9IamojDqXYKZvrz63KNymRJ8Tf50QB4jRfvahCr4Dh2i0ZUNOOzla0WGpwoIKk=
+	t=1790175340; cv=none; b=S6PT9OAiAuR8rn7Pe+F0HQsFw4/+nTI9mUXIG2dYJx0Cuj92ApX/wOvYsdoaup4c/Zwn7EneVdSrEC4G0ftVqC+40M2lQ7PUFl6GBjUVhiQ/zn3EI/KgQsZVkgH2gx7HNPdLZjEqEkWhiTmu+5ZCaKjS3mvHx507kk9b5KBtkyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175337; c=relaxed/simple;
-	bh=0tDQwprzjaeU0c4YE4sc3wJtECAXi/HJBUsl6XRtzW0=;
+	s=arc-20240116; t=1790175340; c=relaxed/simple;
+	bh=e/CYtoyy1RcmST78OT6gp6E2eR2u3hUihN10T0BGLww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onW2dCqZaL3RtjSRA06GgeZ4eQshZUd3hTy1WHe6NkoWakdPaGqYcOIUeN6hS+a6n0hbwX0efctHJg40llUfnaSJVlc3TjSk8mxoiasU65XRtjRLwZZ1xIF4/49w2HIwj3ZOCnHOOvXHYIHOSJMc8u2iWmriQwd+kSn7ERk4IVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJIvo+Za; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLHv1MqkD3Zp5JMIQ8yYzTmzdUty9WaKsnd208OrI7LuLoDRd1m4qLm1PMvxaVRBsBkaN5C3Zj4SNBG4yiJaUIS05sJVZMWaN1h0XXrg7Gm1tzI7w7cgP0Atcvd01c7k+caJCNJczF7mukZqgXOT63Y4QMwAyCXRVqWsMK71YuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRvMA4nT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJIvo+Za"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44C31F000FF;
-	Wed, 23 Sep 2026 14:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRvMA4nT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09BD1F000FF;
+	Wed, 23 Sep 2026 14:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175336;
-	bh=uqHCYQvnPRH/nSN2krUfzHmbqUOimSVePkPvdbBUdd8=;
+	s=korg; t=1790175339;
+	bh=Bc4FktaRDarXLJf26jjXcMxsYyBZTZ9WmMr8kIUJkho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJIvo+ZazOnMha1NFfxGSUzZ78teoMaj+ZboFTDyq/BjvRKbu+GjHafPtO3jINRFg
-	 6bZJBjtYLr5r47oqjNbL7UP4uvjE9ZOVa6tPwrydGqJ1xQencmopi8WQjwpT2/LYpW
-	 Lsq4ut5r8Fhlsz+HB1QjuA6gSfqwcAqQvPHX+kcE=
+	b=IRvMA4nTq7e/VW0iJMHA9As9Vxc/vPsfTbE7B+k7r31bxTAt2jN1o78K2x+rq30LT
+	 FV9WtbiATlPntF7mW6fm2+4NBUqE9/5+RF2mhOYEf3DnHt6lWcmUVv5nM8Fsh7oLgL
+	 CeFsHs9ZVR1MNyqyzzAyT81KhsVgxJqBL0RWCXjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 396/398] Bluetooth: hci_qca: fix NULL pointer dereference in qca_setup() for non-serdev device
-Date: Wed, 23 Sep 2026 16:07:50 +0200
-Message-ID: <20260923140653.733944875@linuxfoundation.org>
+	"stable@vger.kernel.org, Namjae Jeon" <linkinjeon@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.18 397/398] Revert "ksmbd: Fix to handle removal of rfc1002 header from smb_hdr"
+Date: Wed, 23 Sep 2026 16:07:51 +0200
+Message-ID: <20260923140653.759668377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,58 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Revert commit 29dbb4e29e1f197172b1a0513f65c3ff6ec4fbc8 which is commit
+0a70cac7896712a08e3cd22c16f44be976d40dbf upstream.
 
-commit 3ec629fee178d429f01ae843e4ea888de93012bf upstream.
+Commit 29dbb4e29e1f ("ksmbd: Fix to handle removal of rfc1002 header
+from smb_hdr") is a backport of upstream commit 0a70cac78967.
 
-hu->serdev is NULL for hci_uart attached via non-serdev paths, but
-qca_setup() unconditionally calls serdev_device_get_drvdata(hu->serdev)
-and dereferences the result, causing a NULL pointer dereference.
+The upstream commit depends on SMB1 header refactoring which removed the
+RFC1002 length field from struct smb_hdr. Those prerequisite changes are
+not present in the 6.18.y stable tree, where ksmbd still defines struct
+smb_hdr with the smb_buf_length field.
 
-Fix by guarding the dereference with a NULL check, consistent with the
-rest of qca_setup().
+As a result, smb_get_msg() advances the buffer by four bytes before it is
+cast to a structure that already includes the RFC1002 field. This causes a
+four-byte offset mismatch while parsing and constructing the initial SMB1
+multi-protocol negotiate response.
 
-Fixes: 22d893eec0d5 ("Bluetooth: hci_qca: Refactor HFP hardware offload capability handling")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Windows clients then receive a malformed negotiate response and abort the
+connection.
+
+This reverts commit 29dbb4e29e1f ("ksmbd: Fix to handle removal of
+rfc1002 header from smb_hdr").
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/smb/server/server.c     |    2 +-
+ fs/smb/server/smb_common.c |   20 ++++++++++----------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1917,9 +1917,12 @@ static int qca_setup(struct hci_uart *hu
- 	const char *rampatch_name = qca_get_rampatch_name(hu);
- 	int ret;
- 	struct qca_btsoc_version ver;
--	struct qca_serdev *qcadev = serdev_device_get_drvdata(hu->serdev);
-+	struct qca_serdev *qcadev = NULL;
- 	const char *soc_name;
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -95,7 +95,7 @@ static inline int check_conn_state(struc
  
-+	if (hu->serdev)
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+
- 	ret = qca_check_speeds(hu);
- 	if (ret)
- 		return ret;
-@@ -1981,7 +1984,7 @@ retry:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--		if (qcadev->bdaddr_property_broken)
-+		if (qcadev && qcadev->bdaddr_property_broken)
- 			hci_set_quirk(hdev, HCI_QUIRK_BDADDR_PROPERTY_BROKEN);
+ 	if (ksmbd_conn_exiting(work->conn) ||
+ 	    ksmbd_conn_need_reconnect(work->conn)) {
+-		rsp_hdr = smb_get_msg(work->response_buf);
++		rsp_hdr = work->response_buf;
+ 		rsp_hdr->Status.CifsError = STATUS_CONNECTION_DISCONNECTED;
+ 		return 1;
+ 	}
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -140,7 +140,7 @@ int ksmbd_verify_smb_message(struct ksmb
+ 	if (smb2_hdr->ProtocolId == SMB2_PROTO_NUMBER)
+ 		return ksmbd_smb2_check_message(work);
  
- 		hci_set_aosp_capable(hdev);
-@@ -2074,7 +2077,7 @@ out:
- 	else
- 		hu->hdev->set_bdaddr = qca_set_bdaddr;
+-	hdr = smb_get_msg(work->request_buf);
++	hdr = work->request_buf;
+ 	if (*(__le32 *)hdr->Protocol == SMB1_PROTO_NUMBER &&
+ 	    hdr->Command == SMB_COM_NEGOTIATE) {
+ 		work->conn->outstanding_credits++;
+@@ -278,14 +278,15 @@ static int ksmbd_negotiate_smb_dialect(v
+ 						  req->DialectCount);
+ 	}
  
--	if (qcadev->support_hfp_hw_offload)
-+	if (qcadev && qcadev->support_hfp_hw_offload)
- 		qca_configure_hfp_offload(hdev);
++	proto = *(__le32 *)((struct smb_hdr *)buf)->Protocol;
+ 	if (proto == SMB1_PROTO_NUMBER) {
+ 		struct smb_negotiate_req *req;
  
- 	qca->fw_version = le16_to_cpu(ver.patch_ver);
+-		req = (struct smb_negotiate_req *)smb_get_msg(buf);
++		req = (struct smb_negotiate_req *)buf;
+ 		if (le16_to_cpu(req->ByteCount) < 2)
+ 			goto err_out;
+ 
+-		if (offsetof(struct smb_negotiate_req, DialectsArray) +
++		if (offsetof(struct smb_negotiate_req, DialectsArray) - 4 +
+ 			le16_to_cpu(req->ByteCount) > smb_buf_length) {
+ 			goto err_out;
+ 		}
+@@ -319,8 +320,8 @@ static u16 get_smb1_cmd_val(struct ksmbd
+  */
+ static int init_smb1_rsp_hdr(struct ksmbd_work *work)
+ {
+-	struct smb_hdr *rsp_hdr = (struct smb_hdr *)smb_get_msg(work->response_buf);
+-	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb_get_msg(work->request_buf);
++	struct smb_hdr *rsp_hdr = (struct smb_hdr *)work->response_buf;
++	struct smb_hdr *rcv_hdr = (struct smb_hdr *)work->request_buf;
+ 
+ 	rsp_hdr->Command = SMB_COM_NEGOTIATE;
+ 	*(__le32 *)rsp_hdr->Protocol = SMB1_PROTO_NUMBER;
+@@ -411,10 +412,9 @@ static int init_smb1_server(struct ksmbd
+ 
+ int ksmbd_init_smb_server(struct ksmbd_conn *conn)
+ {
+-	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb_get_msg(conn->request_buf);
+ 	__le32 proto;
+ 
+-	proto = *(__le32 *)rcv_hdr->Protocol;
++	proto = *(__le32 *)((struct smb_hdr *)conn->request_buf)->Protocol;
+ 	if (conn->need_neg == false) {
+ 		if (proto == SMB1_PROTO_NUMBER)
+ 			return -EINVAL;
+@@ -572,12 +572,12 @@ static int __smb2_negotiate(struct ksmbd
+ 
+ static int smb_handle_negotiate(struct ksmbd_work *work)
+ {
+-	struct smb_negotiate_rsp *neg_rsp = smb_get_msg(work->response_buf);
++	struct smb_negotiate_rsp *neg_rsp = work->response_buf;
+ 
+ 	ksmbd_debug(SMB, "Unsupported SMB1 protocol\n");
+ 
+-	if (ksmbd_iov_pin_rsp(work, (void *)neg_rsp,
+-			      sizeof(struct smb_negotiate_rsp)))
++	if (ksmbd_iov_pin_rsp(work, (void *)neg_rsp + 4,
++			      sizeof(struct smb_negotiate_rsp) - 4))
+ 		return -ENOMEM;
+ 
+ 	neg_rsp->hdr.Status.CifsError = STATUS_SUCCESS;
 
 
