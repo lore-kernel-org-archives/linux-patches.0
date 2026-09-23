@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037DF5476C5;
-	Wed, 23 Sep 2026 14:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00E553C3D1;
+	Wed, 23 Sep 2026 14:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174715; cv=none; b=Z4Q/uBPx+UAZXXxCWzfHEHxl2rjUeFRhdHlHCgeQsbyrMuPWVxAtUzAnQZFZuLYXFFqO06QywrzxvFoJCArZkZaRVf6PlpI4XIx5wjbgqA2XSA5ql8wExAbmILN1ELtoKbHYvzODkGnVGI+ovMWhJ9HLy3HwwnPE1UveTdbEZCU=
+	t=1790174717; cv=none; b=GuCnzkn4bJpvgM9qypWdPiV8BjjZVWsaWFQdopSTNaq+Bx1wEF74JflTXGFxgPbyfpWc7reQ8DMIHcHCTldUOXxE2XMdpE79oxY+mZ4Hvow0QygfOKDlb8d6+9sux+KEW2wRAeOMLn8NeMbDfpwgzwxm18UlsdVykwb03fh5sXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174715; c=relaxed/simple;
-	bh=TmgvBmerN0Lmind046pZT2vGtHshboU6iamKcuEIC5M=;
+	s=arc-20240116; t=1790174717; c=relaxed/simple;
+	bh=QiloDyRurNobbmjNLbsTg7lhQSu0JzFZCOxFjQ4/Fvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC0wQ4C4LRmKB6ueGAKXl6hNASV4iF/ztIyPBDOvUjDTlh7VyN/pHK13a1TMmpkzxN7yU+0+4whyi1Lno2J4V0u+DIc1wfMnHLq49zZ/sIHYUMhjPhW6+Cskt66OM2iQlS/zvpm1q+tTY/FdsqiTqX+bJaSMAxZM4l25V8UnVPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vu9NMlZ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T0Tkg5SN4AC2L9M8DcOp/OpH1LRIhFNCx0eTzHY8QhQUI+3+JMqGjelPGt1X8UNxsBJwFSr/sr+xJtDgUAdR5IRjgGx9JYgHe4shoT9K6g1owymbF+JCKTVBWD8oAcz7Z3Avwk5VoynLV67d5WlSn9Wv1ZcNqACoN+P8l49WPMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY4tAUrR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vu9NMlZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69A11F000FF;
-	Wed, 23 Sep 2026 14:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY4tAUrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57FD1F00893;
+	Wed, 23 Sep 2026 14:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174713;
-	bh=HVp0JaKCfJ8Z023tp68/eaPc2xN0+UsDPpBsXSN5ZhU=;
+	s=korg; t=1790174716;
+	bh=cUeKK0gaGGJ1cLGGfUCsbf702MlPC8r5Q6EX7fyFpCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vu9NMlZ9T/JZte8+E61oLmQWPuhS+ew7nlMiOtRUqv23NsvuVw4fNVkVaLX5cFVQX
-	 cw+X66OuUD8YBRb3djvsdkDeGw4fKtfWmiHNQuAVK3zOx8opKcgZRIGfR1eaWJIhTx
-	 azLTFkKZ4of3mVUPqETELNZiAeIrQNpljHXZRC4c=
+	b=BY4tAUrR1X1HRJw1tx5vBGeBG9SBcEtbQWL2dUFf1V7myEP4qH6LVE/MUGHrCG8Ax
+	 1aGR48OkfEl61L/xRI/tw2U/ZGJh/eyQMMMdY5OWgoeOAnL2Oj2SbzTLs196X303AF
+	 QmxCfLI8oZhEGqOkHZ6NDGrCsMg+U41R5E1fN7Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 201/398] ASoC: codecs: rt712-sdca-dmic: fix uninitialized stream_config->type
-Date: Wed, 23 Sep 2026 16:04:35 +0200
-Message-ID: <20260923140648.633158443@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 172/398] ASoC: sdw_utils: tidyup asoc_sdw_parse_sdw_endpoints()
+Date: Wed, 23 Sep 2026 16:04:06 +0200
+Message-ID: <20260923140647.891933476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,68 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 03a5699a0a04309c597683967aaaf25d1e555ea2 upstream.
+[ Upstream commit a1332be2a07090cf422507ec812ce2b9ba0a558a ]
 
-stream_config is not initialized before being passed to
-sdw_stream_add_slave().  The type field may contain garbage and is
-later copied to stream->type by sdw_config_stream().
+We can avoid to use *card. Tidyup it.
 
-Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
+Current code makes old style / new style conversion difficult.
+To make future conversions easier to understand, this patch clean up the
+code a little. but no functional change.
 
-While at it, use snd_sdw_params_to_config() helper instead of
-open-coding the same logic.
-
-Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260914104712.379574-1-yijiangshan@kylinos.cn
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/87ik75etxw.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 0b7d55d3a912 ("ASoC: amd: acp: refactor codec config count in SOF SoundWire machine driver")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt712-sdca-dmic.c |   14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ include/sound/soc_sdw_utils.h           | 3 ++-
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 2 +-
+ sound/soc/amd/acp/acp-sdw-sof-mach.c    | 2 +-
+ sound/soc/intel/boards/sof_sdw.c        | 2 +-
+ sound/soc/sdw_utils/soc_sdw_utils.c     | 5 ++---
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/sound/soc/codecs/rt712-sdca-dmic.c
-+++ b/sound/soc/codecs/rt712-sdca-dmic.c
-@@ -14,6 +14,7 @@
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
-+#include <sound/sdw.h>
- #include <sound/tlv.h>
- #include "rt712-sdca.h"
- #include "rt712-sdca-dmic.h"
-@@ -636,10 +637,10 @@ static int rt712_sdca_dmic_hw_params(str
+diff --git a/include/sound/soc_sdw_utils.h b/include/sound/soc_sdw_utils.h
+index f27019f1b4e51..ea8b8adf33b7f 100644
+--- a/include/sound/soc_sdw_utils.h
++++ b/include/sound/soc_sdw_utils.h
+@@ -177,7 +177,8 @@ int asoc_sdw_count_sdw_endpoints(struct snd_soc_card *card,
+ struct asoc_sdw_dailink *asoc_sdw_find_dailink(struct asoc_sdw_dailink *dailinks,
+ 					       const struct snd_soc_acpi_endpoint *new);
+ 
+-int asoc_sdw_parse_sdw_endpoints(struct snd_soc_card *card,
++int asoc_sdw_parse_sdw_endpoints(struct device *dev,
++				 struct asoc_sdw_mc_private *ctx,
+ 				 struct snd_soc_aux_dev *soc_aux,
+ 				 struct asoc_sdw_dailink *soc_dais,
+ 				 struct asoc_sdw_endpoint *soc_ends,
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index 5a62e4a116311..1eebdaa2f80b9 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -428,7 +428,7 @@ static int soc_card_dai_links_create(struct snd_soc_card *card)
+ 	if (!soc_aux)
+ 		return -ENOMEM;
+ 
+-	ret = asoc_sdw_parse_sdw_endpoints(card, soc_aux, soc_dais, soc_ends, &num_confs);
++	ret = asoc_sdw_parse_sdw_endpoints(dev, ctx, soc_aux, soc_dais, soc_ends, &num_confs);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+index 9213f2b1208cb..616cf0f763529 100644
+--- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+@@ -312,7 +312,7 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
+ 	if (!sof_aux)
+ 		return -ENOMEM;
+ 
+-	ret = asoc_sdw_parse_sdw_endpoints(card, sof_aux, sof_dais, sof_ends, &num_devs);
++	ret = asoc_sdw_parse_sdw_endpoints(dev, ctx, sof_aux, sof_dais, sof_ends, &num_devs);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 0be07ea03f512..e27bfc0196d7b 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -1208,7 +1208,7 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
+ 		goto err_dai;
+ 	}
+ 
+-	ret = asoc_sdw_parse_sdw_endpoints(card, sof_aux, sof_dais, sof_ends, &num_confs);
++	ret = asoc_sdw_parse_sdw_endpoints(dev, ctx, sof_aux, sof_dais, sof_ends, &num_confs);
+ 	if (ret < 0)
+ 		goto err_end;
+ 
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 7336375cd386d..8729e00826959 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -1356,14 +1356,13 @@ static int is_sdca_endpoint_present(struct device *dev,
+ 	return ret;
+ }
+ 
+-int asoc_sdw_parse_sdw_endpoints(struct snd_soc_card *card,
++int asoc_sdw_parse_sdw_endpoints(struct device *dev,
++				 struct asoc_sdw_mc_private *ctx,
+ 				 struct snd_soc_aux_dev *soc_aux,
+ 				 struct asoc_sdw_dailink *soc_dais,
+ 				 struct asoc_sdw_endpoint *soc_ends,
+ 				 int *num_devs)
  {
- 	struct snd_soc_component *component = dai->component;
- 	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
--	struct sdw_stream_config stream_config;
-+	struct sdw_stream_config stream_config = {0};
- 	struct sdw_port_config port_config;
- 	struct sdw_stream_runtime *sdw_stream;
--	int retval, num_channels;
-+	int retval;
- 	unsigned int sampling_rate;
- 
- 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
-@@ -651,13 +652,8 @@ static int rt712_sdca_dmic_hw_params(str
- 	if (!rt712->slave)
- 		return -EINVAL;
- 
--	stream_config.frame_rate = params_rate(params);
--	stream_config.ch_count = params_channels(params);
--	stream_config.bps = snd_pcm_format_width(params_format(params));
--	stream_config.direction = SDW_DATA_DIR_TX;
--
--	num_channels = params_channels(params);
--	port_config.ch_mask = GENMASK(num_channels - 1, 0);
-+	/* SoundWire specific configuration */
-+	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
- 	port_config.num = 2;
- 
- 	retval = sdw_stream_add_slave(rt712->slave, &stream_config,
+-	struct device *dev = card->dev;
+-	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
+ 	struct snd_soc_acpi_mach *mach = dev_get_platdata(dev);
+ 	struct snd_soc_acpi_mach_params *mach_params = &mach->mach_params;
+ 	const struct snd_soc_acpi_link_adr *adr_link;
+-- 
+2.53.0
+
 
 
