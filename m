@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9326377A80;
-	Wed, 23 Sep 2026 14:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67333AA19B;
+	Wed, 23 Sep 2026 14:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173415; cv=none; b=moQmQf0TWOehJASjVttOGpxR1Ilt8iGzqlI2bdi/F6dMOSb0Is3ZYuZUdZC/ghtMSGsBCIK0QCagflsePG2/tLve3wqNzKAbdQ1wejwdOAEPMYc4zNeQ34h8/TzKesrmeZO9gfeHSzg5EjkXeTHfDqRsO9qyieUNPsFfPQF44xY=
+	t=1790173417; cv=none; b=lzvTXH42nLJvAQ2637mrV99wntgzdsrylO18akIG4n+io2FCQM58RuPx5sO4zYS6d/D+BL9mJiYN5cOr5LAW6XvAGRI7rTdJtdWz1M8oV34vWJ+2HYBhmb+yFwBANl75SKQpHohL4+UVo+113pHuqb1OtY4hAMbJpHVixxcBjFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173415; c=relaxed/simple;
-	bh=VmVcq98xOnRhZC8ZnhwNLoplPK0V1yPqUEYd5m6X05U=;
+	s=arc-20240116; t=1790173417; c=relaxed/simple;
+	bh=3Stk7zTuhAt3rTB4icV/38yPNn9OwMR47BQDwqDkHBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+38TvhIZjkh/3bEIch7wk2sJQRB7MB5IvmmjAbROVvQjuZNVlD8U8o+OKfLD7Criqw+0rnolG+rzda/ac5iFkVGN0V8McjbXE9/+Wq66qjpWLxOOM23BIdVRQ4jFlT2LbSxvzvaXxCKsf5D+a1P0Sm6wbGx5eLEbP+eDQKlkMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUzY6Jby; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rf2gjG10p0tmqdI7x7J7s+CMimybEhAj7bgiRVd43aL80+ueLWR0mYx7KcynFPHe1A+4j6PVH36vNMz4mwV+rhh1MPXrAUjg3fgq7TVeWslDS5ksUigWgRCccnnsW/wlJ4oZTZ8Ns+t3CPCKFUdgraYOLKwxToB1ZM2dn5tTogY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4GEgT9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUzY6Jby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5951F000FF;
-	Wed, 23 Sep 2026 14:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4GEgT9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BDE1F000FF;
+	Wed, 23 Sep 2026 14:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173413;
-	bh=xqy29CptV9BMyULhdfl0igVSm12Jmtizlq9UgBbIsG0=;
+	s=korg; t=1790173416;
+	bh=IcojMWaJ82KzQI+alDBXS3xqqJBBsr/VbvFey3OSZus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUzY6Jbyek4LBlkZRU4+FvHV7kV7o95f7E671Xuztr11FKbsuK7xAFF6d82Cz3h7S
-	 Fgo6/NMrLbfnr/EHumwUXaNTLI0MbZ3zjZ3Z63VuERbAb6TY2yvIzavEDmiO7qvCsb
-	 lMuBF3vPujCt/i/G2hPgRsgZKvTxr22NDpaqeo00=
+	b=f4GEgT9Xhfvy6or4TcirSWpdzya4dpUH3AUDTRqrIwVDNWKDhNq1Nr0vqBQoK/Pf3
+	 BJOHKNviA1KkHFMe/1/I6uE24o0pmIjz3h4dPf39OKloQVgAPQb9HklgjpQ0XhL5s6
+	 Nmlz6fnNxn5xp69ltaj0gictisEykOijIax2SE50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com,
-	Xuanqiang Luo <xuanqiang.luo@linux.dev>,
-	Allison Henderson <achender@kernel.org>,
-	rds-devel@oss.oracle.com,
-	Eric Dumazet <edumazet@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 221/438] net: skbuff: do not leave stale header offsets after pskb_carve()
-Date: Wed, 23 Sep 2026 16:04:02 +0200
-Message-ID: <20260923140650.495915820@linuxfoundation.org>
+	Yuho Choi <oss.patchbox@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 239/438] ALSA: virtio: reset device before deleting virtqueues
+Date: Wed, 23 Sep 2026 16:04:20 +0200
+Message-ID: <20260923140650.968923604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -56,139 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit a5117e1eccac6ee3bd4aed7cacf8ebcb6b3eb309 ]
+commit 6c05d00af307560e6a9f1631d6270d3df5aa2272 upstream.
 
-pskb_carve_inside_header() and pskb_carve_inside_nonlinear() remove
-the first bytes of a packet and reallocate skb->head.
+virtsnd_remove() and virtsnd_freeze() delete the virtqueues before
+resetting the device. del_vqs() frees the vring backing, but does not
+provide a generic device quiesce operation. In particular, modern
+virtio-pci keeps enabled queues active until the device is reset.
 
-All the headers that were present before the operation are gone,
-but both functions call skb_headers_offset_update(skb, 0), which
-is a no-op : skb->mac_header, skb->network_header,
-skb->transport_header and skb->csum_start keep their old values and
-now describe bytes which are no longer there.
+Reset the device before deleting the virtqueues so it can no longer
+access the vring memory when that memory is released. This also covers
+probe failures after DRIVER_OK, which unwind through virtsnd_remove().
 
-Both helpers size the new head from the old skb_end_offset(), so the
-stale offsets still land inside the new allocation. They point past
-skb_tail_pointer() though, to bytes that were never initialized.
-
-pskb_carve_inside_nonlinear() is the worst case, because it leaves a
-zombie skb with an empty linear part (skb->data ==
-skb_tail_pointer(skb), skb_headlen(skb) == 0), while
-skb_mac_header_was_set() is still true and skb->mac_header is way
-ahead of skb->data.
-
-The only user of pskb_extract() is rds_tcp_data_recv(), and the
-carved skb is queued on tinc->ti_skb_list. When the RDS incoming
-message is released, rds_tcp_inc_free() calls skb_queue_purge(),
-which frees the skbs with SKB_DROP_REASON_QUEUE_PURGE. This is
-visible from drop_monitor, which then tries to pull back to the
-(bogus) mac header :
-
-skbuff: __skb_pull(len=234)
-skb len=6968 data_len=6968 headroom=0 headlen=0 tailroom=0
-end-tail=384 mac=(234,14) mac_len=14 net=(248,40) trans=288
-shinfo(txflags=0 nr_frags=1 gso(size=1428 type=16 segs=5))
-csum(0x100120 start=288 offset=16 ip_summed=3 complete_sw=0 valid=1 level=0)
-hash(0x7b446c6c sw=0 l4=1) proto=0x86dd pkttype=0 iif=60
-kernel BUG at ./include/linux/skbuff.h:2847!
-
-Add skb_carve_reset_headers() to mark the mac and transport headers
-as not set, reset the network header, clear skb->mac_len, and drop
-a now meaningless CHECKSUM_PARTIAL (csum_start no longer describes
-anything).
-
-Invalidate the inner offsets as well. Unlike mac_header and
-transport_header they have no "unset" sentinel, so a leftover
-non-zero value still looks like a real header. Zero
-skb->inner_mac_header, skb->inner_network_header,
-skb->inner_transport_header, skb->inner_protocol and
-skb->encapsulation, so that all the header state is invalidated in
-one place.
-
-v2: fixed an inaccurate changelog. The stale offsets stay inside the
-    new skb->head, which is never smaller than the old one, they
-    simply point past skb_tail_pointer() to bytes that are gone.
-    Thanks to Xuanqiang Luo for insisting on this.
-    Also invalidate the inner header state, as suggested by the
-    netdev AI review :
-    https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260911114922.621937-1-edumazet%40google.com
-
-Fixes: 6fa01ccd8830 ("skbuff: Add pskb_extract() helper function")
-Reported-by: syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6aa3e9d3.f2639fcc.29487d.0028.GAE@google.com/
-Cc: Xuanqiang Luo <xuanqiang.luo@linux.dev>
-Cc: Allison Henderson <achender@kernel.org>
-Cc: rds-devel@oss.oracle.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260915130423.3956471-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: de3a9980d8c3 ("ALSA: virtio: add virtio sound driver")
+Fixes: 575483e90a32 ("ALSA: virtio: introduce device suspend/resume support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://patch.msgid.link/20260911031121.1542502-1-oss.patchbox@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ sound/virtio/virtio_card.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 0e964c67a7213..c485be081aeaa 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6820,6 +6820,34 @@ struct sk_buff *alloc_skb_with_frags(unsigned long header_len,
- }
- EXPORT_SYMBOL(alloc_skb_with_frags);
+--- a/sound/virtio/virtio_card.c
++++ b/sound/virtio/virtio_card.c
+@@ -354,8 +354,8 @@ static void virtsnd_remove(struct virtio
+ 	if (snd->card)
+ 		snd_card_free(snd->card);
  
-+/* pskb_carve_inside_header() and pskb_carve_inside_nonlinear()
-+ * remove the first bytes of a packet and reallocate skb->head.
-+ *
-+ * Whatever headers were present before the operation are gone,
-+ * we must not leave stale offsets, otherwise users of this skb
-+ * (skb_dump(), drop_monitor, taps, ...) would read or pull garbage.
-+ */
-+static void skb_carve_reset_headers(struct sk_buff *skb)
-+{
-+	skb_unset_mac_header(skb);
-+	skb_unset_transport_header(skb);
-+	skb_reset_network_header(skb);
-+	skb->mac_len = 0;
-+
-+	/* Inner offsets have no "unset" marker, zero them so that
-+	 * skb_inner_network_header_was_set() becomes false and no
-+	 * consumer mistakes them for a real (and long gone) header.
-+	 */
-+	skb->inner_mac_header = 0;
-+	skb->inner_network_header = 0;
-+	skb->inner_transport_header = 0;
-+	skb->inner_protocol = 0;
-+	skb->encapsulation = 0;
-+
-+	if (skb->ip_summed == CHECKSUM_PARTIAL)
-+		skb->ip_summed = CHECKSUM_NONE;
-+}
-+
- /* carve out the first off bytes from skb when off < headlen */
- static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
- 				    const int headlen, gfp_t gfp_mask)
-@@ -6875,7 +6903,7 @@ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
- 	skb->head_frag = 0;
- 	skb_set_end_offset(skb, size);
- 	skb_set_tail_pointer(skb, skb_headlen(skb));
--	skb_headers_offset_update(skb, 0);
-+	skb_carve_reset_headers(skb);
- 	skb->cloned = 0;
- 	skb->hdr_len = 0;
- 	skb->nohdr = 0;
-@@ -7015,7 +7043,7 @@ static int pskb_carve_inside_nonlinear(struct sk_buff *skb, const u32 off,
- 	skb->data = data;
- 	skb_set_end_offset(skb, size);
- 	skb_reset_tail_pointer(skb);
--	skb_headers_offset_update(skb, 0);
-+	skb_carve_reset_headers(skb);
- 	skb->cloned   = 0;
- 	skb->hdr_len  = 0;
- 	skb->nohdr    = 0;
--- 
-2.53.0
-
+-	vdev->config->del_vqs(vdev);
+ 	virtio_reset_device(vdev);
++	vdev->config->del_vqs(vdev);
+ 
+ 	for (i = 0; snd->substreams && i < snd->nsubstreams; ++i) {
+ 		struct virtio_pcm_substream *vss = &snd->substreams[i];
+@@ -383,8 +383,8 @@ static int virtsnd_freeze(struct virtio_
+ 	virtsnd_disable_event_vq(snd);
+ 	virtsnd_ctl_msg_cancel_all(snd);
+ 
+-	vdev->config->del_vqs(vdev);
+ 	virtio_reset_device(vdev);
++	vdev->config->del_vqs(vdev);
+ 
+ 	for (i = 0; i < snd->nsubstreams; ++i)
+ 		cancel_work_sync(&snd->substreams[i].elapsed_period);
 
 
