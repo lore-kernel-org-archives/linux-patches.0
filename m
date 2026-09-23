@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B2E492E5C;
-	Wed, 23 Sep 2026 14:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EAF492E5C;
+	Wed, 23 Sep 2026 14:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175207; cv=none; b=JBDJEccFjKm0wBcRp4+u/4BlaqeiAKNxzXNpi2IAkIj32BD19n2KPewqMqEs45EROvceHBZoqs+expSTq2XxWrjvWxV7G5RX3v/YIsg+E2Wrb6pjmbYQtmXU+eswYoBfLtzx3uKyxkqMqdje0uwVwGKk0oKDCbs1G+79enBhnNw=
+	t=1790175211; cv=none; b=iyrfMo4OGkTuxrDS3D/UB89DXoSOTnnk2mfs46JHRmOhwmhZh+EqRf0rbdT58vC0A/RRzvT5mXf18IYm96w5kY4LOTX9sELO8Trzq6QPdbDIXsi5+q7EcfeQjO6qGVhIgUtd4DhaYVS4y92JaYn0YHFadG2QZ59wwXJJdLbnDDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175207; c=relaxed/simple;
-	bh=ImP73V65SZhKOJbhCaLcOJ50la53WdDwPXvrhZuZm3k=;
+	s=arc-20240116; t=1790175211; c=relaxed/simple;
+	bh=qL5i0fdrlmIeS2J9xZGp/83q+h04F+46z8KGiZAmJyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJvsM+qVptJeWe3vrfw4JdstSQdNGjOWhOWfExNe7Fx3Qk8u5WaopS6EM6TFYFJI2PPnklicZKCMF1q0C+2mJh+jxXZ8oK3Lj3PwcA9ovj7HaohFcwtTsnMMv+gKi4PxNYYyA9PZNgGCqGPdBQgod28DzC4pm/gUy8Ab2YrMTsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsJj1Rb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6V0tU82Gu0aqALvhJtSHZXFKxVRqF/L75RRgpl08dNE5Q+IlfREKdXp3x/KEEMSE3nHfKGvJkhnEoAa+CsyeCSaIsx6//QRfdoqDHMuJ8OrgwEqWIh3C6dqNUGQEjrdq89thmsmZFbuDO13nZ4jVN2jbPVAU28rOxZ7taHyEgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJXLEU0C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsJj1Rb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B001F000FF;
-	Wed, 23 Sep 2026 14:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJXLEU0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C061F000FF;
+	Wed, 23 Sep 2026 14:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175206;
-	bh=4G6hb9bzFoSQyVgOp87Q+wV8Qfl6MbY/sDJ1buZlyrM=;
+	s=korg; t=1790175209;
+	bh=PtoOqfuVzsc41K4YwTsrCl6Qm1auySlWRsWQJCd0qyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsJj1Rb+icNLR6RP0FwcHFzAelp8fYzAZqRTwZqzxrWnU1bEvzjEgj3qwr2lna2hT
-	 rDTSFilyN5n3rq9yS62h2bdjtH2YJ95FJsdKdJTMpHKa/5Px0DcVa3eaHHToBlX8A3
-	 787F2qAfJp7jWEJ49FRnuLn85Ib0KsIrlJNhEmWw=
+	b=EJXLEU0CpExZwnH/KbmdVFKb7JYFIh+uNonv6nGdGsnVs56M2yeADYebs3mwl7KU9
+	 mbSv5zFkiWrFTRojpMv5/4Rl85iKs+MsMV/gGSg8mMo5jAB3PC7x9AzE6w6+s1SesC
+	 E+4sGGpzuLRoo83FXpcVMf6SpJfaepfowcgEeUus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 319/398] watchdog: rtd119x: Avoid division by zero
-Date: Wed, 23 Sep 2026 16:06:33 +0200
-Message-ID: <20260923140651.689569969@linuxfoundation.org>
+Subject: [PATCH 6.18 320/398] watchdog: rzv2h: Avoid division by zero
+Date: Wed, 23 Sep 2026 16:06:34 +0200
+Message-ID: <20260923140651.714434993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 5af7d2cbd20f893def03c8310a460ade66a5d822 upstream.
+commit 6274281c41efa8dd1aa5234c59ad904ff89d7af4 upstream.
 
 clk_get_rate() could return 0.  Avoid a division by zero panic.
 
-Fixes: 2bdf6acbfead ("watchdog: Add Realtek RTD1295")
+Fixes: f6febd0a30b6 ("watchdog: Add Watchdog Timer driver for RZ/V2H(P)")
 Cc: stable@vger.kernel.org
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913064851.8239-3-tzungbi@kernel.org
+Link: https://patch.msgid.link/20260913064851.8239-4-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/rtd119x_wdt.c |    7 ++++++-
+ drivers/watchdog/rzv2h_wdt.c |    7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/watchdog/rtd119x_wdt.c
-+++ b/drivers/watchdog/rtd119x_wdt.c
-@@ -98,6 +98,7 @@ static int rtd119x_wdt_probe(struct plat
- {
+--- a/drivers/watchdog/rzv2h_wdt.c
++++ b/drivers/watchdog/rzv2h_wdt.c
+@@ -280,6 +280,7 @@ static int rzv2h_wdt_probe(struct platfo
  	struct device *dev = &pdev->dev;
- 	struct rtd119x_watchdog_device *data;
+ 	struct rzv2h_wdt_priv *priv;
+ 	struct clk *count_clk;
 +	unsigned long rate;
+ 	int ret;
  
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -111,10 +112,14 @@ static int rtd119x_wdt_probe(struct plat
- 	if (IS_ERR(data->clk))
- 		return PTR_ERR(data->clk);
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -316,8 +317,12 @@ static int rzv2h_wdt_probe(struct platfo
+ 		return dev_err_probe(dev, -EINVAL, "Invalid count source\n");
+ 	}
  
-+	rate = clk_get_rate(data->clk);
++	rate = clk_get_rate(count_clk);
 +	if (!rate)
-+		return -EINVAL;
++		return dev_err_probe(dev, -EINVAL, "Invalid clock rate\n");
 +
- 	data->wdt_dev.info = &rtd119x_wdt_info;
- 	data->wdt_dev.ops = &rtd119x_wdt_ops;
- 	data->wdt_dev.timeout = 120;
--	data->wdt_dev.max_timeout = 0xffffffff / clk_get_rate(data->clk);
-+	data->wdt_dev.max_timeout = 0xffffffff / rate;
- 	data->wdt_dev.min_timeout = 1;
- 	data->wdt_dev.parent = dev;
+ 	priv->wdev.max_hw_heartbeat_ms = (MILLI * priv->of_data->timeout_cycles *
+-					  priv->of_data->cks_div) / clk_get_rate(count_clk);
++					  priv->of_data->cks_div) / rate;
+ 	dev_dbg(dev, "max hw timeout of %dms\n", priv->wdev.max_hw_heartbeat_ms);
  
+ 	ret = devm_pm_runtime_enable(dev);
 
 
