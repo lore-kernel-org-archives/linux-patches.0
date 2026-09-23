@@ -1,45 +1,45 @@
-Received: from smtp-42ad.mail.infomaniak.ch (smtp-42ad.mail.infomaniak.ch [84.16.66.173])
+Received: from smtp-8fae.mail.infomaniak.ch (smtp-8fae.mail.infomaniak.ch [83.166.143.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C41530DE5
-	for <patches@lists.linux.dev>; Wed, 23 Sep 2026 13:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.16.66.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DCD530DFB
+	for <patches@lists.linux.dev>; Wed, 23 Sep 2026 13:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.166.143.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790169789; cv=none; b=XGwM5kxIMKTCyXrtgZ3bM5WGLK3AusTS/iY3RBTf8h2ak04SQsmN5Qg/D28HRVAZ22D+5WlGYSXzSth4DPWiM7u+S9zeVe5kZ48QXORw0ks6Pch7P3Wjap/pEH6BLsujn5A/k7akC23LTsyMaSuwldauP52QKGtqp6jNkKn/Pa4=
+	t=1790169879; cv=none; b=gHAMt39N7Wq2eFx63CtxCCPo2/xwwDr2c6mrcaksv43CBQjq591nLZjR3NskBK6HU+oUPrWP3xhNDoJV2hN/ZUVlIrT46wPwHulE7P5M8vN30FA5r2ksDOqJ8rxKJVCmiy+OrVdb301oAqMYvB3kzSccJo4eQ/R+p9KDdpk7LvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790169789; c=relaxed/simple;
-	bh=KajFQ6bNnrzVT+GGG6ogiF7BxZ1yFlJ2+J1uNpOtQ9Y=;
+	s=arc-20240116; t=1790169879; c=relaxed/simple;
+	bh=OWL6TNbODPYoQAv70YKpZ56vGDuCcLZtjoR+kDieLP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a/7q2f+pAj2rxg6T4h8miqLqdA1I8qIk3apnvW6Dx9abIoOjOvJgz1dM9AE6muEX7bR8UnnJtrvRsmA1s6d06MTz/96AwAMXFCGkPB3l4mp6ev2b8ziDScWx7LJJWzB119Z5alnnjBLJ+TJq0X24tsKLRUrNtnZx9ycfcFPzEt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=Vjn12mSL; arc=none smtp.client-ip=84.16.66.173
+	 MIME-Version:Content-Type; b=JxvIFLTZZeSyoetky0PJQMGJPVaNevhmMrp4uhGpl1n3BvDHhfeAW1y522VVvEG3HX0+20s2Y3Fa6EOnxDcq40zRPPBCFvTZ7nWXoACux+kDNxi+pH0plGi2KKdifXD4JIaL2GS8QA738J3ucUMEZD9n/7KNVxNAc+YHui/3fMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=zN45yrEm; arc=none smtp.client-ip=83.166.143.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="Vjn12mSL"
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="zN45yrEm"
 Received: from smtp-3-0001.mail.infomaniak.ch (smtp-3-0001.mail.infomaniak.ch [10.4.36.108])
-	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hqd1t2rVmz3Tf;
-	Wed, 23 Sep 2026 15:22:58 +0200 (CEST)
+	by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hqd3N4sPMz41r;
+	Wed, 23 Sep 2026 15:24:16 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1790169778;
-	bh=o+zVbE+z96g4lFxeA6U9DUhc8OZEw9Pw2KkAdPN9Lgs=;
+	s=20191114; t=1790169856;
+	bh=YLNQB1jqVWB0jblNz4ezwYLazSTiVGWekOBIPu2pTTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vjn12mSLeuZAujhcMnkrbQLhzkEdV9gJ2BoIdqt1IbCzfi9hr0B1D5j0TGa1JfeX2
-	 wD2ogdwnUUkLYwlo+iuturieeNeDNOtETDZzjhutLlrBSlsPsmgyMQQiqqvkq7FkHd
-	 LfPZxjA2vNQmfJnWksuCwEVzpO3U6CsW3zuXlL30=
-Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4hqd1s28gDzGJj;
-	Wed, 23 Sep 2026 15:22:57 +0200 (CEST)
+	b=zN45yrEm4gttmse6mqeLHhdWwks1P3w//Bk1wMi39jl3EAmoqKui91+7eSf9HjY04
+	 r52S2+YAoNdkld12iXmCae0hu2OFNA9nEJqJWKk4CgfATKAbWAn5pDhL4+t8j/L7UN
+	 eL1gXdrMD4ObPIZz97NmR83f2mdFVVwae73hyZMc=
+Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4hqd3M6MG4zFRV;
+	Wed, 23 Sep 2026 15:24:15 +0200 (CEST)
 From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
 To: stable@vger.kernel.org
 Cc: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Sasha Levin <sashal@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?utf-8?q?G=C3=BCnther_Noack?= <gnoack@google.com>,
 	Paul Moore <paul@paul-moore.com>,
-	syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1.y v2] selftests/landlock: Add layout1.refer_mount_root
-Date: Wed, 23 Sep 2026 15:22:47 +0200
-Message-ID: <6d6d7bd89976cbca94e4797cd60d4b155eb96393.1790169454.git.mic@digikod.net>
+	syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com
+Subject: [PATCH 6.6.y v2] selftests/landlock: Add layout1.refer_mount_root
+Date: Wed, 23 Sep 2026 15:24:11 +0200
+Message-ID: <6bc11809968399ed4d29493d5666d9af5db14bb1.1790169454.git.mic@digikod.net>
 In-Reply-To: <2026-09-17-daily-reply-0018-landlock-refer-mount-root-v2@kernel.org>
 References: <2026-09-17-daily-reply-0018-landlock-refer-mount-root-v2@kernel.org>
 Precedence: bulk
@@ -67,19 +67,19 @@ Signed-off-by: Mickaël Salaün <mic@digikod.net>
 ---
 
 Changes since v1:
-https://patch.msgid.link/661e8a7821258da80d7ab0e2c2d7e19b07ccfae0.1789655724.git.mic@digikod.net
-- Move <linux/mount.h> below <unistd.h> and restore the upstream
-  header-conflict comment (requested by Sasha Levin).
+https://patch.msgid.link/761a7c88d1ed83c222b845fb767d4a271dcaed70.1789655724.git.mic@digikod.net
+- Move <linux/mount.h> below <unistd.h> with the upstream conflict
+  comment to support older libc versions (requested by Sasha Levin).
 ---
  tools/testing/selftests/landlock/fs_test.c | 50 ++++++++++++++++++++++
  1 file changed, 50 insertions(+)
 
 diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index 864309ebb0b4..0cb8e28e853a 100644
+index c239838c796a..8d1df6ddcbc7 100644
 --- a/tools/testing/selftests/landlock/fs_test.c
 +++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -21,6 +21,12 @@
- #include <sys/sysmacros.h>
+@@ -23,6 +23,12 @@
+ #include <sys/vfs.h>
  #include <unistd.h>
  
 +/*
@@ -91,7 +91,7 @@ index 864309ebb0b4..0cb8e28e853a 100644
  #include "common.h"
  
  #ifndef renameat2
-@@ -32,6 +38,13 @@ int renameat2(int olddirfd, const char *oldpath, int newdirfd,
+@@ -34,6 +40,13 @@ int renameat2(int olddirfd, const char *oldpath, int newdirfd,
  }
  #endif
  
@@ -105,7 +105,7 @@ index 864309ebb0b4..0cb8e28e853a 100644
  #ifndef RENAME_EXCHANGE
  #define RENAME_EXCHANGE (1 << 1)
  #endif
-@@ -2178,6 +2191,43 @@ TEST_F_FORK(layout1, refer_denied_by_default4)
+@@ -2264,6 +2277,43 @@ TEST_F_FORK(layout1, refer_denied_by_default4)
  				layer_dir_s1d1_refer);
  }
  
