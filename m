@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A953CA8F;
-	Wed, 23 Sep 2026 14:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DAE542EF6;
+	Wed, 23 Sep 2026 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175028; cv=none; b=ILGIv1FgvkNbH5pJ6ohF7DVqShQnWQwvDZr6SRWVR2QRdr2kRVdyvTtO0MLGTs5Bn/QSu3RzspmF/LL/DdmWX3yUQ7yhP+41ZoDV0+k4+F4guq44wlm9wts733gwz2bcnU+qbqqQQqK381yxUYSOOMXupLt6E20B/EmJqrlKNeI=
+	t=1790175031; cv=none; b=Ox7s4IMdAfSybwIzlM3fjbRBiIArQGlZ32WbSC4lygsQUY8sxby0oL2sbF0lwzEOA66aSv/A5oKSk63a4xwFxuj4aJMdDP6xmGKYYNckhMhHRfiInBncbcLHRnVRRY8UAJVdLSE9l2/UCfio2D0E1ZA05cdK4tptW/w0vkYzp0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175028; c=relaxed/simple;
-	bh=Zo6t+j+KSBzfdunhOM8MF8QvOPoM1bbj0rbM0UzW/aI=;
+	s=arc-20240116; t=1790175031; c=relaxed/simple;
+	bh=K+RkJuFjVrYcR7x5nKZp8wXeTgghPKTstVZq6dyWLgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyqo0+V0ULzNh6l3Ilj6qLSVJq4fFdO9N9JU5adrzfvdy0bjFtCr4nZ/pXEkGf8ke0pXaU7Slx4uEbud4AjCT9UmVdK9Om2M+2ffM4iPvk9wpLjcTUz9U5AdYYlaB6ZbKYT0clOpNU3xpvPe0kuUWhHSu/k4cFnTY7e9KWwYFMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgd0A3qD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IbSo7gz6horQ7wy6QAO1TvqSzVKiZwK8CvD2LP++tNLZmPaynI4yYGwGrNppMBNbeFJxSM04QYn9FX7KqVFHjk0U+l6Z3QYKOWUtRH1rEBULnwKxaT/pFo8tYsGlbl/MPCiqYUF/BFIKQeeS6mGxTk1IOl+yO2JzX5pPbcXH9CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziBJRpBI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgd0A3qD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F82F1F00893;
-	Wed, 23 Sep 2026 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziBJRpBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A20D1F000FF;
+	Wed, 23 Sep 2026 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175027;
-	bh=8b/Plks0OHFh5C8QaoRSow7/tfDNis1QzgwsBm49tP0=;
+	s=korg; t=1790175030;
+	bh=AyG0DQtDPKiABXtj8/ugp63Zei66QwoEIwa/NrODsnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vgd0A3qDJSbzR8USIxYNphEqG9DTmNRxgKk+ddn0DWa9Yj5Qacv5vj1DZ8EzKcoGP
-	 6qyGqNvlWK8UyLhdpLapZCDKPyl8GLtfpKRQ3/bzcLI3yc4zM2FgjhxXa9tjOi3h/f
-	 kXYwprPUfES2U1SZxVIq3d5CFReNcBigNULaQzRg=
+	b=ziBJRpBIMMJMa5K+l+O+d+5BOwrm3K/htsDj47mOAOktbc/naS+Zn4En9NQhHeHpa
+	 txo+XuGrfyFim2RO+a2rzrTwRDPslooqXUhry2JArxv3z45cPRAb0wADESxgQO61zA
+	 /YKYgKdclLpUaj1IgPwax6DCF6OdIEbmDhLbfrho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Sommers <chris.sommers@icloud.com>,
+	sashiko-bot@kernel.org,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 299/398] Input: i8042 - add quirk for Acer Aspire Go 15 AG15-42P
-Date: Wed, 23 Sep 2026 16:06:13 +0200
-Message-ID: <20260923140651.172798753@linuxfoundation.org>
+Subject: [PATCH 6.18 300/398] Input: rmi_smbus - fix out-of-bounds read in rmi_smb_write_block()
+Date: Wed, 23 Sep 2026 16:06:14 +0200
+Message-ID: <20260923140651.199659771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,45 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Sommers <chris.sommers@icloud.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 25e424eb4ae1a662d9c3573218d06ac32f797fc5 upstream.
+commit 51cfe54f815ae175c7d1126b983d4d7c89715004 upstream.
 
-On the Acer Aspire Go 15 (AG15-42P), the internal keyboard drops out
-~5 seconds after boot on both Linux and Linux-LTS kernels. Keystrokes on
-the built-in keyboard stop registering while the trackpad and external
-keyboards remain functional.
+When chunking writes into SMBus blocks in rmi_smb_write_block(), the
+loop calculates block_len using the original total length (len) instead
+of the remaining length (cur_len).
 
-Testing confirms that booting with the i8042.reset kernel parameter
-resolves the issue and keeps the internal keyboard responsive.
+If len is greater than 32 bytes (SMB_MAX_COUNT), block_len remains 32
+for every iteration, even on the final partial chunk where fewer than 32
+bytes remain. This causes smb_block_write() to read 32 bytes from the
+advanced data buffer pointer, reading past the end of the input buffer.
 
-Add SERIO_QUIRK_RESET_ALWAYS to i8042_dmi_quirk_table for the Acer
-Aspire AG15-42P to automatically apply this quirk on boot.
+Fix this by calculating block_len using cur_len and advancing the buffer
+and address pointers by block_len.
 
-Signed-off-by: Chris Sommers <chris.sommers@icloud.com>
-Link: https://patch.msgid.link/20260907182723.2709981-1-chris.sommers@icloud.com
+Fixes: 82264d0cf7ae ("Input: synaptics-rmi4 - add SMBus support")
 Cc: stable@vger.kernel.org
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: LLM
+Link: https://patch.msgid.link/anLFSMKSoKyyZ272@google.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/rmi4/rmi_smbus.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -261,6 +261,13 @@ static const struct dmi_system_id i8042_
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire AG15-42P"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_RESET_ALWAYS)
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire ES1-132"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_RESET_ALWAYS)
+--- a/drivers/input/rmi4/rmi_smbus.c
++++ b/drivers/input/rmi4/rmi_smbus.c
+@@ -140,7 +140,7 @@ static int rmi_smb_write_block(struct rm
+ 	u8 commandcode;
+ 	struct rmi_smb_xport *rmi_smb =
+ 		container_of(xport, struct rmi_smb_xport, xport);
+-	int cur_len = (int)len;
++	size_t cur_len = len;
+ 
+ 	mutex_lock(&rmi_smb->page_mutex);
+ 
+@@ -148,7 +148,7 @@ static int rmi_smb_write_block(struct rm
+ 		/*
+ 		 * break into 32 bytes chunks to write get command code
+ 		 */
+-		int block_len = min_t(int, len, SMB_MAX_COUNT);
++		int block_len = min_t(size_t, cur_len, SMB_MAX_COUNT);
+ 
+ 		retval = rmi_smb_get_command_code(xport, rmiaddr, block_len,
+ 						  false, &commandcode);
+@@ -161,9 +161,9 @@ static int rmi_smb_write_block(struct rm
+ 			goto exit;
+ 
+ 		/* prepare to write next block of bytes */
+-		cur_len -= SMB_MAX_COUNT;
+-		databuff += SMB_MAX_COUNT;
+-		rmiaddr += SMB_MAX_COUNT;
++		cur_len -= block_len;
++		databuff += block_len;
++		rmiaddr += block_len;
+ 	}
+ exit:
+ 	mutex_unlock(&rmi_smb->page_mutex);
 
 
