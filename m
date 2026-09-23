@@ -1,50 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2605D48EC6C;
-	Wed, 23 Sep 2026 14:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233524A2A72;
+	Wed, 23 Sep 2026 14:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173526; cv=none; b=N1VFGFF/kfbHJBsnJeDKEE0XuSSH/MpnJdbGt1bWEn82MdZpq/NdNvAlsZc/hkcStDeNNV2nTZwE2w7nrOft++ZaN1fo6X9Szgg9P+yAEG/s85L499kHyGdahaBI0KRNCERERVxCP2u+4eaDUr8DRiSITOfodOAyR2D0+tmrCFI=
+	t=1790173529; cv=none; b=b9ZpL9bekJz8GZQ1qUT5HMTziKYpdk3dKnMYkoOi53VT/Gcm8ccYs2zwdBSsfhy7FdG5F9r/B4jX1Tq42gPYc21Di26Lsb/asBqqf7XguLk9hp59dLNHDMP+S3x8+EK/KOakPtv7ysZhUhBgvSIXIosLA6xRGfNa9E6TqGaR/E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173526; c=relaxed/simple;
-	bh=vbHsr3M8QEJLfIAGVc2Fl7sDCNbLNqHYj0CcSDS78vI=;
+	s=arc-20240116; t=1790173529; c=relaxed/simple;
+	bh=NGdd6Q0Pkd+zwvSr8Bwj8KgvRli3UqUT+dS9m8YB9Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQgJmU64Pn5uIyI/ZlvIwnCcYOoV0azVyD6DQtWBIELTW7MtQW7N2T9nzwE9A+YjIp4y5rupFsPEzwsYoLrjJOtBv11WmvvHY3bSfGMHUoSucvZnUFInnSTPzqrR1xdLaWj5b0N393k6vUkWarRCiYiTSVts9toeJhLmRIAmC2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIIEHlBy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rEl4d7wgVmJvq1i46d6FSUwOSxVzhWO3NM3eQPO6Nknnh65ygWTl2WCV4FrP9hBn4A32KKFN+AOV5lR42ZQQ7gKc9oK3zMCnihWomTBTA4BEF/HNHXi3L18B8Xzz44mcSUK+k7UI6AjpPFC6hXF83rRoIa0w5n7Zom4rK++vz+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbkX9h1k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIIEHlBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506AF1F000FF;
-	Wed, 23 Sep 2026 14:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbkX9h1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8AC1F000FF;
+	Wed, 23 Sep 2026 14:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173525;
-	bh=ll7WZZcQyN5QsauoV3cBFlyJSu9rg7nkQs38T9uY5po=;
+	s=korg; t=1790173528;
+	bh=Mcun79obQq0ph/zYGMSyPX3jNXAEq574n8FB2Cep1Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OIIEHlByV7IXZkn9LyHHZg/s+bARpDAv7fW1C6hBP1+5rZ4t6VAZrJM6XGX6uHRYV
-	 lwZSu2pXp34lO19bB7zmX89HZ3Sn5OnpOW8oubXvWQruVFIlnZjpZMvCi2lOZqBco7
-	 6ReGoVE4nXmYYj0W75coZzVhydv3L376K2E7Vl2o=
+	b=tbkX9h1k4hG+vBK6CbrrUyalCQER6wpjxocJBVd6ZnIZnHBrscatBppjDOB5X3FpN
+	 HtU7VX1iSJTBxvl6PUEM41AECeLttMZwzqxuKw0VU14OOdH6Bdg4FDTfWf4cpT/w5L
+	 yaWgguwwhKwh+9bVZgKaaN7C9QIKGYGXlFTfQ+ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"Christopher Lameter (Ampere)" <cl@gentwo.org>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-Subject: [PATCH 7.2 274/438] arm64: percpu: Fix this_cpu_write() casting
-Date: Wed, 23 Sep 2026 16:04:55 +0200
-Message-ID: <20260923140651.876154421@linuxfoundation.org>
+	Omar Avelar <omar.avelar@intel.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 257/438] x86/build/64: Prevent native builds from generating EGPR use
+Date: Wed, 23 Sep 2026 16:04:38 +0200
+Message-ID: <20260923140651.432523731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -63,71 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-commit 885bff055a0f251a51a0d4fd4f0a7b525582a3de upstream.
+commit 63edf5a009ae366369a1b484cd9ae4ee7c51946c upstream.
 
-The arm64 implementation of this_cpu_write() casts 'val' to unsigned
-long. This is necessary to handle cases where 'val' is a pointer type,
-and to avoid spurious compiler warnings for the (unreachable!) cases
-where the pointer type would be cast to a smaller integer type.
+Omar reports that CONFIG_X86_NATIVE_CPU=y allows builds to opportunistically
+emit instructions using %r16-%r31 (EGPRs) when the build host supports APX
+since the commit:
 
-Unfortunately, the cast is applied to 'val' rather than '(val)', which
-won't always generate the expected value when 'val' is an expression.
+  ea1dcca1de12 ("x86/kbuild/64: Add the CONFIG_X86_NATIVE_CPU option to locally optimize the kernel with '-march=native'")
 
-For example, for this_cpu_write(pcp, zero - 1), where 'pcp' is a u64 and
-'zero' is a u32:
+But the kernel is not yet prepared to use new registers internally. For
+example, there is no context-switch support for general in-kernel use.
 
-* 'zero'                      ===> (u32) 0x00000000
-* 'zero - 1'                  ===> (u32) 0xffffffff
-* '(unsigned long)zero - 1'   ===> (u64) 0xffffffffffffffff
-* '(unsigned long)(zero - 1)' ===> (u64) 0x00000000ffffffff
+Explicitly disable EGPR use when building with -march=native.
 
-Fix this by adding brackets around 'val'.
+For C, since GCC 14 and Clang 18, both compilers support suppressing EGPR
+use with -mno-apx-features=egpr, whose availability can be detected via
+cc-option.
 
-Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
-Reported-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: David Laight <david.laight.linux@gmail.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Acked-by: Christopher Lameter (Ampere) <cl@gentwo.org>
-Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <yang@os.amperecomputing.com>
+For Rust, pass features=-apxf through the generated JSON to avoid
+unstable-feature warnings, see
+
+  https://github.com/rust-lang/rust/issues/139284
+
+Note Rust only accepts the option to disable APX instructions entirely or not.
+
+Support for this gating also depends on the Rust/LLVM combination. Rust
+1.88 introduced the `apxf` feature option, but versions prior to 1.93 may
+emit an `apxf` attribute to the backend that only LLVM 23 or later can
+interpret. Restrict native Rust builds accordingly.
+
+Fixes: ea1dcca1de12 ("x86/kbuild/64: Add the CONFIG_X86_NATIVE_CPU option to locally optimize the kernel with '-march=native'")
+Reported-by: Omar Avelar <omar.avelar@intel.com>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://patch.msgid.link/20260916230003.1144622-1-chang.seok.bae@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/percpu.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/Kconfig.cpu            |   11 +++++++++++
+ arch/x86/Makefile               |    5 +++++
+ scripts/generate_rust_target.rs |    5 +++++
+ 3 files changed, 21 insertions(+)
 
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -179,13 +179,13 @@ PERCPU_RET_OP(add, add, ldadd)
- 	_pcp_protect_return(__percpu_read_64, pcp)
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -204,10 +204,21 @@ config CC_HAS_MARCH_NATIVE
+ 	# usage warnings that only appear wth '-march=native'.
+ 	depends on CC_IS_GCC || CLANG_VERSION >= 190100
  
- #define this_cpu_write_1(pcp, val)	\
--	_pcp_protect(__percpu_write_8, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_8, pcp, (unsigned long)(val))
- #define this_cpu_write_2(pcp, val)	\
--	_pcp_protect(__percpu_write_16, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_16, pcp, (unsigned long)(val))
- #define this_cpu_write_4(pcp, val)	\
--	_pcp_protect(__percpu_write_32, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_32, pcp, (unsigned long)(val))
- #define this_cpu_write_8(pcp, val)	\
--	_pcp_protect(__percpu_write_64, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_64, pcp, (unsigned long)(val))
++config RUSTC_HAS_APXF
++	# The kernel isn't ready for in-kernel APX instructions. Without
++	# explicit frontend gating of APX, the backend may emit those
++	# instructions in native builds.
++	#
++	# Rust 1.88 added the `apxf` feature option, but versions before 1.93
++	# emit an `apxf` target attribute that only LLVM 23+ can interpret.
++	def_bool (RUSTC_VERSION >= 108800 && RUSTC_LLVM_MAJOR_VERSION >= 23) || \
++		 RUSTC_VERSION >= 109300
++
+ config X86_NATIVE_CPU
+ 	bool "Build and optimize for local/native CPU"
+ 	depends on X86_64
+ 	depends on CC_HAS_MARCH_NATIVE
++	depends on !RUST || RUSTC_HAS_APXF
+ 	help
+ 	  Optimize for the current CPU used to compile the kernel.
+ 	  Use this option if you intend to build the kernel for your
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -161,6 +161,11 @@ else
  
- #define this_cpu_add_1(pcp, val)	\
- 	_pcp_protect(__percpu_add_case_8, pcp, val)
+ ifdef CONFIG_X86_NATIVE_CPU
+         KBUILD_CFLAGS += -march=native
++        # Prevent the compiler from generating EGPR use. The kernel is
++        # not yet prepared for general in-kernel use.
++        KBUILD_CFLAGS += $(call cc-option,-mno-apx-features=egpr)
++
++        # generate_rust_target.rs handles Rust APX gating.
+         KBUILD_RUSTFLAGS += -Ctarget-cpu=native
+ else
+         KBUILD_CFLAGS += -march=x86-64 -mtune=generic
+--- a/scripts/generate_rust_target.rs
++++ b/scripts/generate_rust_target.rs
+@@ -224,6 +224,11 @@ fn main() {
+             features += ",+harden-sls-ijmp";
+             features += ",+harden-sls-ret";
+         }
++        if cfg.has("X86_NATIVE_CPU") {
++            // Prevent the backend from generating APX instructions. The kernel is not yet prepared
++            // for general in-kernel EGPR use.
++            features += ",-apxf";
++        }
+         ts.push("features", features);
+         ts.push("llvm-target", "x86_64-linux-gnu");
+         ts.push("supported-sanitizers", ["kcfi", "kernel-address"]);
 
 
