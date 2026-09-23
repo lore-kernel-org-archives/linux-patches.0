@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB7F5383E2;
-	Wed, 23 Sep 2026 14:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE8653B32E;
+	Wed, 23 Sep 2026 14:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174899; cv=none; b=YzDDV11Qbpvvp6GHh/044X5qZFx6E/ualRVaZLO4peakprgZ9OuTCWb0/VSkaF6SUuIv+DkHQON4P9qhrM4rvTmCJ4OGZxiuzWtVFg7Orcfw56yv2kz5FE4HKPBLy0Vi5oUiAgAg4YOD0Ocu13G1PSfs/xxQ0WmQ3ua6/LBgM5E=
+	t=1790174902; cv=none; b=ZhfEYcLXJC/jMbQTcYVkkkx5IgKUXFMW+4B0IuK0TK0CImCzXgbLImTF5bSJS+hejOAzmuQ0Y0zwOhRqjCNdiUqxFvlr6K187gNYg6Y1UYaQlidynp/8xJvRIsAFOojozdpacmxlq9ycldmXp5uquvL7JKWG/EciQ4I2KT/Go60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174899; c=relaxed/simple;
-	bh=cBV90XD6f1qhXmifnCrG2hXRExa0Y8drBsmxzzFKWL8=;
+	s=arc-20240116; t=1790174902; c=relaxed/simple;
+	bh=8B0auiOdW1vs3V0Z5wSzkjYkvWtF8h1Qqk+DqvciCDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpIk0UJJxzgV87tteOd7N5pIAows/RdVFsAeTPSoIp/NuN1j/PQF6Au3siU7HN1OHfujJ6zJiXvL2ByMF3XP9KWwC2cLuWJqmj5i4HbLCsqZw9rhSF9Nxqgrv+9381ESzKAHQSGZfr/fvkV5Cc4iF2trWzbvth0Ki03fj5hVpOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWLLMJEH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G24eMFwOiZuTAR2lOB06ZEEsZAfcfaxF5tuNG4g1105e896GCHBg9NjLR5ysgt1Qf9JgrLCYS+d8NDW34rIudGp78Qa0DLlZiVo0x3k25TEq+PfEuDzNmqhPihf/YXkDUu4gZrcQPdm5AXRdFIEECVG49+vRbenWTxOVtfnCJOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYEmBhrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWLLMJEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A791F000FF;
-	Wed, 23 Sep 2026 14:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYEmBhrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B2F1F000FF;
+	Wed, 23 Sep 2026 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174898;
-	bh=TMQ2OlCrJSY74kGE4IJJDYwTk4uDygk2SAQNQTANSPQ=;
+	s=korg; t=1790174900;
+	bh=rt4KQeoqwDx2rCF2LX9D1sqJS5XS8oW1tbMKQRo0lnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWLLMJEHEz4EvE2ich3hlRMCKUxntmg0UAdfoEa4BWcfWeln3RirJ35n1VONo+JMx
-	 o4BRbU6WGfy52qefU5ioWG6YPlVYyhICTnWNIh+F0Fs8531tCnmWRXk8zL+xV9fx97
-	 zAPSroy7iqdYmq0SdZWnuYPuVxpKuunEs6rmQzxE=
+	b=aYEmBhrPeMV0Au4cq7k330rPsNTB8UNWNm+DqyJs1Vm/J8n/9N1ZRKgosoYEy0JuJ
+	 R4XLSE+ueZ+PtKGY9cDO810q5xBrAbMuM2MMMoK2gPqLz1CFH1YeKUD8RkDQjSxB3j
+	 0p6fa1vf46jEft3agxjfv5rbRiBEewEI4ubz+/w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 242/398] ipv6: xfrm: use full sockets in local error paths
-Date: Wed, 23 Sep 2026 16:05:16 +0200
-Message-ID: <20260923140649.687481334@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com,
+	Hugh Dickins <hughd@google.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 260/398] mm/mlock: use the IRQ-safe accessor for NR_MLOCK in __munlock_folio()
+Date: Wed, 23 Sep 2026 16:05:34 +0200
+Message-ID: <20260923140650.152824554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,62 +58,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 6973a21ee73c5567f883813c8ef414774b45892f upstream.
+commit e14a3454806468b086fe2e4ca2e1bff95b528531 upstream.
 
-xfrm6_local_rxpmtu() and xfrm6_local_error() dereference skb->sk as if it
-always pointed at a full IPv6 socket.
+NR_MLOCK is updated from interrupt context.  __free_pages_prepare() clears
+a stray PG_mlocked and adjusts NR_MLOCK, and a folio can reach it with the
+flag still set from a bio completion handler:
 
-That is not guaranteed. TCP SYN-ACK skbs can be owned by a
-TCP_NEW_SYN_RECV request_sock while the output path itself is driven by the
-full listener. If rerouting selects an IPv6 XFRM tunnel route with a lower
-MTU, the local PMTU/error handling path can reach these callbacks with that
-mini-socket still attached to the skb.
+  __free_pages_ok+0x6af/0x7a0
+  <IRQ>
+  __bio_release_pages+0xde/0x260
+  __iomap_dio_bio_end_io+0x16e/0x1a0
+  blk_update_request+0x14b/0x3d0
+  blk_mq_end_request+0x18/0x30
+  blk_done_softirq+0x49/0x60
 
-The callbacks then miscast the request socket as a full inet/IPv6 socket and
-can read beyond the request_sock allocation when they access inet_sock or
-ipv6_pinfo state.
+The folio gets there like this.  A MAP_SHARED file mapping is mlocked, so
+its page cache folios carry PG_mlocked, and an O_DIRECT write sourced from
+that mapping GUP-pins those same folios.  munlock() then runs
+mlock_vma_pages_range(), which clears VM_LOCKED before walking the page
+tables to munlock each folio.  A concurrent hole punch reaches the folio
+through the rmap (i_mmap_rwsem, not mmap_lock) and can land inside that
+window: __folio_remove_rmap() -> munlock_vma_folio() sees VM_LOCKED
+already clear, so it neither queues the folio on the mlock batch nor takes
+a reference, and the pte it clears makes the pending mlock_pte_range()
+walk skip the folio at its !pte_present() check.  filemap_remove_folio()
+then drops the page cache reference, leaving the bio's pin as the last
+one, released from the completion handler above.
 
-Resolve the owner with skb_to_full_sk() in both callbacks and bail out when
-no full socket is attached. This matches the surrounding XFRM IPv6 PMTU/error
-logic, which already reasons about full sockets with skb_to_full_sk().
+So __zone_stat_mod_folio() here needs interrupts disabled, not merely
+preemption, and __munlock_folio() has a path where they are not: when the
+folio has already been taken off the LRU by somebody else the function
+jumps straight to the counter update without taking the lruvec lock.  The
+read-modify-write of the per-CPU NR_MLOCK diff can then be interrupted by
+the softirq above, and one of the two decrements is lost, leaving Mlocked
+in /proc/meminfo permanently overstated.
 
-Fixes: dd767856a36e ("xfrm6: Don't call icmpv6_send on local error")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Use zone_stat_mod_folio().  mod_zone_state()'s this_cpu_try_cmpxchg() is
+atomic against a same-CPU interrupt and retries, and on the path where the
+lruvec lock is held its cost is negligible next to the lock itself.
+
+The UNEVICTABLE_PG* events are deliberately left on the __ accessors: they
+occupy different vm_event_states slots from the UNEVICTABLE_PGCLEARED that
+__free_pages_prepare() bumps, and nothing updates those two from interrupt
+context.
+
+Link: https://lore.kernel.org/20260901180109.3797944-1-shakeel.butt@linux.dev
+Fixes: 2fbb0c10d1e8 ("mm/munlock: mlock_page() munlock_page() batch by pagevec")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: syzbot+cd2073ee6d958a8d0fcd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/6a931c5a.08e933ee.dbf97.0093.GAE@google.com/
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_output.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/mlock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/xfrm6_output.c
-+++ b/net/ipv6/xfrm6_output.c
-@@ -19,7 +19,10 @@
- void xfrm6_local_rxpmtu(struct sk_buff *skb, u32 mtu)
- {
- 	struct flowi6 fl6;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
-+
-+	if (!sk)
-+		return;
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -141,7 +141,7 @@ static struct lruvec *__munlock_folio(st
  
- 	fl6.flowi6_oif = sk->sk_bound_dev_if;
- 	fl6.daddr = ipv6_hdr(skb)->daddr;
-@@ -31,7 +34,10 @@ void xfrm6_local_error(struct sk_buff *s
- {
- 	struct flowi6 fl6;
- 	const struct ipv6hdr *hdr;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
-+
-+	if (!sk)
-+		return;
- 
- 	hdr = skb->encapsulation ? inner_ipv6_hdr(skb) : ipv6_hdr(skb);
- 	fl6.fl6_dport = inet_sk(sk)->inet_dport;
+ munlock:
+ 	if (folio_test_clear_mlocked(folio)) {
+-		__zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
++		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
+ 		if (isolated || !folio_test_unevictable(folio))
+ 			__count_vm_events(UNEVICTABLE_PGMUNLOCKED, nr_pages);
+ 		else
 
 
