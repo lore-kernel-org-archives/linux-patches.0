@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63D2418368;
-	Wed, 23 Sep 2026 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4940418368;
+	Wed, 23 Sep 2026 14:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173398; cv=none; b=OU+1w3xMhLlKR8jMxvE6KVlauULFW9wYy5Ze33YSAJlkLoMTKtqrWaEKNL4kp1b7oBYRvE+9YQrTqiBrrcVdNQ2WIkHp5atVyji2aoiGeJ8f2XEDPtdi9TGH21KX3y9UTvnIxZ86WirsOTgMoAIDPNrr/8E0XjjyeB0/5y4y2FE=
+	t=1790173400; cv=none; b=dkMliz0Y7dOqWXYGH0Syk6QJKNWZjh8JfJs6kY2NBUQrn6zcfI84TzzFyfjJQVfvs0NsCBAdndgu9pAJRiz3hn1q9AB6DNPtm3p+/zlFW2Ps2GZmF/N1ZWcd/ChKz6y5js93sIXNRln/CiDst2b4CWzP64oIEZ6Zp1rNvSlx4HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173398; c=relaxed/simple;
-	bh=XWhwDMUTVYZioqRDzPe8LCPTxMFqHllxR6dI1GmmZ80=;
+	s=arc-20240116; t=1790173400; c=relaxed/simple;
+	bh=NaDlkqrbIppJi3HVQsaf8fKMldeVJEKHVMloPKG/kQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/nyoUWBqyketou+MfEk0Yx1kfn/1Q0lL1KF0/VW/SCoyOCBp6nzkMiaUMKGQFOnxpcYBjPiObXuFiuTg5SoOpG+7Whxf3id0AOyOiwh3Ab8b8kObXM9w4OEUW7BHN4GvJ2z7u7wijqlfcn737SRcGFc2EEpy/CJZRYv1njXFa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl+T/Zzq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZvIabhbLrI0euFujJ60q47d4CjrfqS/897S9PAc77uhKGWDmFLubG7y8lD2eN5la9NsOlodCk5M68WIn8EcYAnttBOPxZbjLlZzlotPM/8LEAmH2dHz9AtCYOtnBZcDiON6p+M8h+Z9ZWaOU1+qCg3JvGThB0GiaVifGozGwhbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/YOZvAd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl+T/Zzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFD21F000FF;
-	Wed, 23 Sep 2026 14:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/YOZvAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAB41F000FF;
+	Wed, 23 Sep 2026 14:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173396;
-	bh=f6DLjb+0GqxjgsNAEA9f6A7OwUfBxZ9lv/waTHrSJMk=;
+	s=korg; t=1790173399;
+	bh=KdcBuMTi8HBePq1/kKlEn8dlPkYS6882lG5MJwSkook=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kl+T/Zzqhd+ViVK0tgf171AHNdtrdEQz4popQ9KFM57Q3iGKN2/5z0p30dYmGknYC
-	 J9d45vNB0BjhoK4EmtyUHrmqU+CeRDy7nyRi9HRpmVxoQ/I8Hu2ThDRyB4qraXokR+
-	 UTcLXzDLl4EtHdAF0H4pYpMMM+F/F4ZeH1MrLpII=
+	b=b/YOZvAdmk8bM8aApXRG72eOkCJdr8zYOGZSiibp1hDfNutb1V95dyYRuGVEUY146
+	 2Jf5Xg3LeqTVFoiRmGi6XpghHsTI2AydXCyc4mZ8+xBnb5zuk0Ro5ZUerkgqws8tlW
+	 tFLc70s4rVdikXqQRK+XEIJWKskzZiTo6jVzkx3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberts Kursitis <roberts.kursitis@azeron.eu>,
+	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 234/438] Input: xpad - add support for Azeron devices
-Date: Wed, 23 Sep 2026 16:04:15 +0200
-Message-ID: <20260923140650.834351351@linuxfoundation.org>
+Subject: [PATCH 7.2 235/438] Input: xpad - fix PDP Marvel Xbox 360 controller
+Date: Wed, 23 Sep 2026 16:04:16 +0200
+Message-ID: <20260923140650.860805096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,51 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberts Kursitis <roberts.kursitis@azeron.eu>
+From: Jeremy Nyberg <slickstretch3.0@gmail.com>
 
-commit cba76c0f47af1a389d718c5bb69e75cbd67bba98 upstream.
+commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
 
-Azeron controllers (Cyro, Cyborg, Classic/Compact, Cyro Lefty,
-Cyborg II and Keyzen) present a standard Xbox 360 controller
-interface, so they work with the existing xpad driver once their
-USB IDs are added.
+The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
+incorrectly classified as an Xbox One controller.
 
-The 0x16d0 vendor ID is a shared block, but this is safe because
-xpad only binds interfaces that match the Xbox 360 signature.
+With the current XTYPE_XBOXONE classification, the controller is
+detected but produces no input, while its four player LEDs continue
+blinking indefinitely.
 
-Tested with an Azeron Keyzen.
+Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
 
-Signed-off-by: Roberts Kursitis <roberts.kursitis@azeron.eu>
+Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
+All inputs register correctly and the player LED indicates the
+current player.
+
+Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260906143040.162418-1-roberts.kursitis@azeron.eu
+Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
+Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/joystick/xpad.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -293,6 +293,12 @@ static const struct xpad_device {
- 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1103, "Azeron Cyro", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x113c, "Azeron Cyborg", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1192, "Azeron Classic/Compact", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1212, "Azeron Cyro Lefty", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x12f7, "Azeron Cyborg II", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x13ea, "Azeron Keyzen", 0, XTYPE_XBOX360 },
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
-@@ -535,6 +541,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
-+	XPAD_XBOX360_VENDOR(0x16d0),		/* Azeron controllers */
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+@@ -215,7 +215,7 @@ static const struct xpad_device {
+ 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
+-	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
++	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x015d, "PDP Mirror's Edge Official Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
 
 
