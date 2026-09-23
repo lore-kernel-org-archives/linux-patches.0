@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAE488233;
-	Wed, 23 Sep 2026 14:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA79488233;
+	Wed, 23 Sep 2026 14:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173067; cv=none; b=QY83mvqc2HBM/kRbNfCIiQDCFpfk41kLoy39DpMdIO6uSjQGCQPrrft5A0OKzjS/rs5qqZrRHKAr6QHB3vodFL6giD2+8Zc5tAwkuzOZk7Q9CLPka83e50pqOA6rqDvLsyNkOblHK4cn5cz5tOng4FWt7JOAeSRRFI1jXGfmfbY=
+	t=1790173070; cv=none; b=XtW0mUKHg9OkNS6XTTkRZwuAkCQzAF0o2Z984N5PsiSQ2xQRv458Q56lGTH213MUx71LbCrtjjIU4Bf/uF3GV3BxjZZ27JKccXP2tB7HkxFkzx77NBeJ63guqXGNcZh1gtHrUKWAsK2fHyGdVYYlxyjxNQ25Ih9gOQhDAEdWavw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173067; c=relaxed/simple;
-	bh=MZBzn/wmsm/pr82i+oX+3oXFhPXy7fnRPf/GAQScCR8=;
+	s=arc-20240116; t=1790173070; c=relaxed/simple;
+	bh=m0VaA835JpfW5CPnaQ2mtVd4XlJgw4umUhQmVStr3KY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AMBG4EsKf3nzHjJqo8K/4dP6dn+UwEtmzC4ax58kMXW0tPTCIrkmAgZ9gp0IeC31NPm0mjIq718q1egWOICVIsHQagr55A2kri57McwaGhfmQwXPEDvFflC12LJIxAMWYiCgwllQTMZgjPoam2ON4/4pqIFfN8tunkHKXG+pUqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrUP8y95; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PXxotTBoJKdCgyrThVI8xcKBZd/oxXbOIXX8HT2QEMYfYSPvsdEc1L0o9Uq2aSvCt7LGtxdvCmdQ/YL8ajgHM+QaKK2vywaxoYya48w7v6KeVLGlXANrxsVIISENNJd3D284UxPywyA2YQx4WbkE5IqDislr77aPFLNk1ttrcec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBE6y4kB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrUP8y95"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6A21F000FF;
-	Wed, 23 Sep 2026 14:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBE6y4kB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2881F000FF;
+	Wed, 23 Sep 2026 14:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173065;
-	bh=Lid1G3slo33CNWgNLIS9xbpgbuTJOuzM5hHkp7Igejw=;
+	s=korg; t=1790173068;
+	bh=llCU0x1Il1itfCMTPmRcZoidQ8KZiYFHvNGV/NGOcJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrUP8y95C2a2S9ntt+igVoDqsUVHPwDGw2zpmsTlXl21ueU12uyPBLCP74VIVtsjb
-	 AWylh+M3+HZT2Om81wzbPWQcOuNtmBalUzRdUgmfmPPPDpczugzOjeNPSWn0T1MLGu
-	 eh3aFD+AGYUVfo1FYdu5c6lGAy8iUWrSvQ6E0lSk=
+	b=RBE6y4kBUYzTCjwvaV1S9Mv3esqW6Xtx2B1GZhTPlQ9jHFO1sz85/rVmvim0HQs0r
+	 qo7akwarJfTVyZCJIbHMJm7+39eaxcGUEjWsEFNbh0NH1sAzHSJ4rPIO8H/gI3z0ed
+	 5nmbq2r/b2+CuiPk2xYxWZEmn/UzilqxMk21fp6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 140/438] ksmbd: fix malformed procfs status output
-Date: Wed, 23 Sep 2026 16:02:41 +0200
-Message-ID: <20260923140648.403730763@linuxfoundation.org>
+Subject: [PATCH 7.2 141/438] ksmbd: extend procfs server statistics
+Date: Wed, 23 Sep 2026 16:02:42 +0200
+Message-ID: <20260923140648.428346438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,324 +52,336 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1f7dd03a88a8405143aab195f6fa9ed2243494b1 ]
+[ Upstream commit 4c670ccd5790816fc0f5714d5ee3c67dd5a9c67a ]
 
-The ksmbd procfs monitoring files produce misleading or malformed output.
-The constant-name helper uses a bitwise test for enum values. This omits
-zero-valued constants and can print multiple names for one lease state. It
-also unconditionally emits a newline, splitting entries in the open-file
-table across two lines. Session capabilities are printed as numeric flag
-values even though a table of descriptive names is available.
+The server proc entry does not expose configured limits or enough outcome
+data to distinguish protocol errors from transport stalls.
 
-Use exact matching for enum values. Print flag names as a comma-separated
-list, preserving unknown bits as hexadecimal values. Let callers control
-line termination so each open-file entry remains on one line. Print common
-session properties once, and report signing and encryption independently.
-
-Adjust client and open-file column widths for IPv6 addresses and 64-bit
-file IDs, and fix the misspelled OPLOCK_EXCLUSIVE name. Also expose and
-maintain the total request count alongside the per-command counters.
+Report the server state, listener and signing configuration, connection
+limits, timeout values, current client and open-file totals, IPC activity,
+and durable scavenger state. Classify processed SMB2 response statuses by
+NTSTATUS severity and provide counters for common error groups while
+retaining the per-command counters.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: d7fd1f98607f ("ksmbd: follow SMB2 session expiration semantics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c        | 12 ++---
- fs/smb/server/mgmt/user_session.c | 75 +++++++++++++------------------
- fs/smb/server/misc.h              |  7 +--
- fs/smb/server/proc.c              | 38 ++++++++++++++++
- fs/smb/server/stats.h             |  4 +-
- fs/smb/server/vfs_cache.c         | 16 ++++---
- 6 files changed, 89 insertions(+), 63 deletions(-)
+ fs/smb/server/proc.c       | 121 +++++++++++++++++++++++++++++++++----
+ fs/smb/server/server.c     |   7 ++-
+ fs/smb/server/smb_common.h |   2 +-
+ fs/smb/server/stats.h      |  53 +++++++++++++++-
+ fs/smb/server/vfs_cache.c  |  10 +++
+ fs/smb/server/vfs_cache.h  |   1 +
+ 6 files changed, 176 insertions(+), 18 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 39ac777fd4527..cef279b8fd27e 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -35,9 +35,9 @@ static int proc_show_clients(struct seq_file *m, void *v)
- 	struct timespec64 now, t;
+diff --git a/fs/smb/server/proc.c b/fs/smb/server/proc.c
+index 13742a2404a58..826353ed05538 100644
+--- a/fs/smb/server/proc.c
++++ b/fs/smb/server/proc.c
+@@ -11,10 +11,12 @@
+ #include <linux/seq_file.h>
+ 
+ #include "misc.h"
++#include "connection.h"
+ #include "server.h"
+ #include "stats.h"
+ #include "smb_common.h"
+ #include "smb2pdu.h"
++#include "vfs_cache.h"
+ 
+ static struct proc_dir_entry *ksmbd_proc_fs;
+ struct ksmbd_counters ksmbd_counters;
+@@ -90,34 +92,127 @@ static const struct ksmbd_const_smb2_process_req smb2_process_req[KSMBD_COUNTER_
+ 	{le16_to_cpu(SMB2_OPLOCK_BREAK), "SMB2_OPLOCK_BREAK"},
+ };
+ 
++static const char *ksmbd_server_state_string(void)
++{
++	switch (READ_ONCE(server_conf.state)) {
++	case SERVER_STATE_STARTING_UP:
++		return "starting";
++	case SERVER_STATE_RUNNING:
++		return "running";
++	case SERVER_STATE_RESETTING:
++		return "resetting";
++	case SERVER_STATE_SHUTTING_DOWN:
++		return "shutdown";
++	default:
++		return "unknown";
++	}
++}
++
++static const char *ksmbd_signing_mode_string(void)
++{
++	switch (server_conf.signing) {
++	case KSMBD_CONFIG_OPT_DISABLED:
++		return "disabled";
++	case KSMBD_CONFIG_OPT_MANDATORY:
++		return "mandatory";
++	case KSMBD_CONFIG_OPT_AUTO:
++		return "auto";
++	default:
++		return "unknown";
++	}
++}
++
++static void proc_show_runtime_totals(struct seq_file *m)
++{
++	struct ksmbd_conn *conn;
++	unsigned int clients = 0;
++	unsigned int open_files = 0;
++	int i;
++
++	down_read(&conn_list_lock);
++	hash_for_each(conn_list, i, conn, hlist) {
++		clients++;
++		open_files += atomic_read(&conn->stats.open_files_count);
++	}
++	up_read(&conn_list_lock);
++
++	seq_printf(m, "clients:\t%u\n", clients);
++	seq_printf(m, "open_files:\t%u\n", open_files);
++}
++
+ static int proc_show_ksmbd_stats(struct seq_file *m, void *v)
+ {
  	int i;
  
--	seq_printf(m, "#%-20s %-10s %-10s %-10s %-10s %-10s\n",
--			"<name>", "<dialect>", "<credits>", "<open files>",
--			"<requests>", "<last active>");
-+	seq_printf(m, "#%-40s %-10s %-10s %-12s %-10s %s\n",
-+		   "<client>", "<dialect>", "<credits>", "<open files>",
-+		   "<requests>", "<last active>");
+ 	seq_puts(m, "Server\n");
+-	seq_printf(m, "name: %s\n", ksmbd_server_string());
+-	seq_printf(m, "netbios: %s\n", ksmbd_netbios_name());
+-	seq_printf(m, "work group: %s\n", ksmbd_work_group());
+-	seq_printf(m, "min protocol: %s\n", ksmbd_get_protocol_string(server_conf.min_protocol));
+-	seq_printf(m, "max protocol: %s\n", ksmbd_get_protocol_string(server_conf.max_protocol));
+-	seq_printf(m, "flags: 0x%08x\n", server_conf.flags);
+-	seq_printf(m, "share_fake_fscaps: 0x%08x\n",
++	seq_printf(m, "state:\t%s\n", ksmbd_server_state_string());
++	seq_printf(m, "name:\t%s\n", ksmbd_server_string());
++	seq_printf(m, "netbios:\t%s\n", ksmbd_netbios_name());
++	seq_printf(m, "work_group:\t%s\n", ksmbd_work_group());
++	seq_printf(m, "min_protocol:\t%s\n", ksmbd_get_protocol_string(server_conf.min_protocol));
++	seq_printf(m, "max_protocol:\t%s\n", ksmbd_get_protocol_string(server_conf.max_protocol));
++	seq_printf(m, "flags:\t0x%08x\n", server_conf.flags);
++	seq_printf(m, "tcp_port:\t%u\n", server_conf.tcp_port);
++	seq_printf(m, "signing:\t%s\n", ksmbd_signing_mode_string());
++	seq_printf(m, "signing_enforced:\t%s\n",
++		   server_conf.enforced_signing ? "yes" : "no");
++	seq_printf(m, "bind_interfaces_only:\t%s\n",
++		   server_conf.bind_interfaces_only ? "yes" : "no");
++	seq_printf(m, "max_connections:\t%u\n", server_conf.max_connections);
++	seq_printf(m, "max_connections_per_ip:\t%u\n",
++		   server_conf.max_ip_connections);
++	seq_printf(m, "max_inflight_requests:\t%u\n",
++		   server_conf.max_inflight_req);
++	seq_printf(m, "deadtime_seconds:\t%lu\n", server_conf.deadtime / HZ);
++	seq_printf(m, "ipc_timeout_seconds:\t%u\n", server_conf.ipc_timeout / HZ);
++	if (server_conf.ipc_last_active)
++		seq_printf(m, "ipc_last_active_seconds:\t%lu\n",
++			   jiffies_to_msecs(jiffies - server_conf.ipc_last_active) /
++			   MSEC_PER_SEC);
++	else
++		seq_puts(m, "ipc_last_active_seconds:\tnever\n");
++	seq_printf(m, "durable_scavenger:\t%s\n",
++		   ksmbd_durable_scavenger_active() ? "running" : "stopped");
++	seq_printf(m, "share_fake_fscaps:\t0x%08x\n",
+ 		   server_conf.share_fake_fscaps);
+-	seq_printf(m, "sessions: %lld\n",
++	proc_show_runtime_totals(m);
++	seq_printf(m, "sessions:\t%lld\n",
+ 		   ksmbd_counter_sum(KSMBD_COUNTER_SESSIONS));
+-	seq_printf(m, "tree connects: %lld\n",
++	seq_printf(m, "tree_connects:\t%lld\n",
+ 		   ksmbd_counter_sum(KSMBD_COUNTER_TREE_CONNS));
+-	seq_printf(m, "requests: %lld\n",
++	seq_printf(m, "requests:\t%lld\n",
+ 		   ksmbd_counter_sum(KSMBD_COUNTER_REQUESTS));
+-	seq_printf(m, "read bytes: %lld\n",
++	seq_printf(m, "read_bytes:\t%lld\n",
+ 		   ksmbd_counter_sum(KSMBD_COUNTER_READ_BYTES));
+-	seq_printf(m, "written bytes: %lld\n",
++	seq_printf(m, "written_bytes:\t%lld\n",
+ 		   ksmbd_counter_sum(KSMBD_COUNTER_WRITE_BYTES));
  
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, i, conn, hlist) {
-@@ -46,11 +46,11 @@ static int proc_show_clients(struct seq_file *m, void *v)
- 		t = timespec64_sub(now, t);
- #if IS_ENABLED(CONFIG_IPV6)
- 		if (!conn->inet_addr)
--			seq_printf(m, "%-20pI6c", &conn->inet6_addr);
-+			seq_printf(m, " %-40pI6c", &conn->inet6_addr);
- 		else
- #endif
--			seq_printf(m, "%-20pI4", &conn->inet_addr);
--		seq_printf(m, "   0x%-10x %-10u %-12d %-10d %ptT\n",
-+			seq_printf(m, " %-40pI4", &conn->inet_addr);
-+		seq_printf(m, " 0x%-8x %-10u %-12d %-10d %ptT\n",
- 			   conn->dialect,
- 			   conn->total_credits,
- 			   atomic_read(&conn->stats.open_files_count),
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 10b31df185a60..37ebfc914b6d4 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -90,9 +90,15 @@ static int show_proc_session(struct seq_file *m, void *v)
- 	sess = (struct ksmbd_session *)m->private;
- 	ksmbd_user_session_get(sess);
- 
-+	seq_printf(m, "%-20s\t%s\n", "user", session_user_name(sess));
-+	seq_printf(m, "%-20s\t%llu\n", "id", sess->id);
-+	seq_printf(m, "%-20s\t%s\n", "state", session_state_string(sess));
+ 	seq_puts(m, "\nSMB2\n");
+ 	for (i = 0; i < KSMBD_COUNTER_MAX_REQS; i++)
+-		seq_printf(m, "%-20s:\t%lld\n", smb2_process_req[i].name,
++		seq_printf(m, "%s:\t%lld\n", smb2_process_req[i].name,
+ 			   ksmbd_counter_sum(KSMBD_COUNTER_FIRST_REQ + i));
 +
- 	i = 0;
- 	down_read(&sess->chann_lock);
- 	xa_for_each(&sess->ksmbd_chann_list, id, chan) {
-+		const char *name;
-+
- #if IS_ENABLED(CONFIG_IPV6)
- 		if (chan->conn->inet_addr)
- 			seq_printf(m, "%-20s\t%pI4\n", "client",
-@@ -104,29 +110,37 @@ static int show_proc_session(struct seq_file *m, void *v)
- 		seq_printf(m, "%-20s\t%pI4\n", "client",
- 				&chan->conn->inet_addr);
- #endif
--		seq_printf(m, "%-20s\t%s\n", "user", session_user_name(sess));
--		seq_printf(m, "%-20s\t%llu\n", "id", sess->id);
--		seq_printf(m, "%-20s\t%s\n", "state",
--				session_state_string(sess));
--
- 		seq_printf(m, "%-20s\t", "capabilities");
- 		ksmbd_proc_show_flag_names(m,
- 				ksmbd_sess_cap_const_names,
- 				ARRAY_SIZE(ksmbd_sess_cap_const_names),
- 				chan->conn->vals->req_capabilities);
-+		seq_putc(m, '\n');
- 
- 		if (sess->sign) {
--			seq_printf(m, "%-20s\t", "signing");
--			ksmbd_proc_show_const_name(m, "%s\t",
--					ksmbd_signing_const_names,
--					ARRAY_SIZE(ksmbd_signing_const_names),
--					le16_to_cpu(chan->conn->signing_algorithm));
--		} else if (sess->enc) {
--			seq_printf(m, "%-20s\t", "encryption");
--			ksmbd_proc_show_const_name(m, "%s\t",
--					ksmbd_cipher_const_names,
--					ARRAY_SIZE(ksmbd_cipher_const_names),
--					le16_to_cpu(chan->conn->cipher_type));
-+			unsigned int algorithm =
-+				le16_to_cpu(chan->conn->signing_algorithm);
-+
-+			name = ksmbd_proc_const_name(ksmbd_signing_const_names,
-+						     ARRAY_SIZE(ksmbd_signing_const_names),
-+						     algorithm);
-+			if (name)
-+				seq_printf(m, "%-20s\t%s\n", "signing", name);
-+			else
-+				seq_printf(m, "%-20s\t0x%04x\n", "signing",
-+					   algorithm);
-+		}
-+		if (sess->enc) {
-+			unsigned int cipher = le16_to_cpu(chan->conn->cipher_type);
-+
-+			name = ksmbd_proc_const_name(ksmbd_cipher_const_names,
-+						     ARRAY_SIZE(ksmbd_cipher_const_names),
-+						     cipher);
-+			if (name)
-+				seq_printf(m, "%-20s\t%s\n", "encryption", name);
-+			else
-+				seq_printf(m, "%-20s\t0x%04x\n", "encryption",
-+					   cipher);
- 		}
- 		i++;
- 	}
-@@ -152,35 +166,6 @@ static int show_proc_session(struct seq_file *m, void *v)
++	seq_puts(m, "\nSMB2 status\n");
++	seq_printf(m, "success:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_STATUS_SUCCESS));
++	seq_printf(m, "informational:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_STATUS_INFORMATIONAL));
++	seq_printf(m, "warning:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_STATUS_WARNING));
++	seq_printf(m, "error:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_STATUS_ERROR));
++	seq_printf(m, "access_denied:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_ACCESS_DENIED));
++	seq_printf(m, "not_found:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_NOT_FOUND));
++	seq_printf(m, "invalid_parameter:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_INVALID_PARAMETER));
++	seq_printf(m, "sharing_violation:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_SHARING_VIOLATION));
++	seq_printf(m, "not_supported:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_NOT_SUPPORTED));
++	seq_printf(m, "other:\t%lld\n",
++		   ksmbd_counter_sum(KSMBD_COUNTER_ERROR_OTHER));
  	return 0;
  }
  
--void ksmbd_proc_show_flag_names(struct seq_file *m,
--				const struct ksmbd_const_name *table,
--				int count,
--				unsigned int flags)
--{
--	int i;
--
--	for (i = 0; i < count; i++) {
--		if (table[i].const_value & flags)
--			seq_printf(m, "0x%08x\t", table[i].const_value);
--	}
--	seq_putc(m, '\n');
--}
--
--void ksmbd_proc_show_const_name(struct seq_file *m,
--				const char *format,
--				const struct ksmbd_const_name *table,
--				int count,
--				unsigned int const_value)
--{
--	int i;
--
--	for (i = 0; i < count; i++) {
--		if (table[i].const_value & const_value)
--			seq_printf(m, format, table[i].name);
--	}
--	seq_putc(m, '\n');
--}
--
- static int create_proc_session(struct ksmbd_session *sess)
- {
- 	char name[30];
-diff --git a/fs/smb/server/misc.h b/fs/smb/server/misc.h
-index c7b063f571a7a..1faaddd0f5f75 100644
---- a/fs/smb/server/misc.h
-+++ b/fs/smb/server/misc.h
-@@ -53,11 +53,8 @@ void ksmbd_proc_show_flag_names(struct seq_file *m,
- 				const struct ksmbd_const_name *table,
- 				int count,
- 				unsigned int flags);
--void ksmbd_proc_show_const_name(struct seq_file *m,
--				const char *format,
--				const struct ksmbd_const_name *table,
--				int count,
--				unsigned int const_value);
-+const char *ksmbd_proc_const_name(const struct ksmbd_const_name *table,
-+				  int count, unsigned int const_value);
- #else
- static inline int ksmbd_proc_init(void) { return 0; }
- static inline void ksmbd_proc_cleanup(void) {}
-diff --git a/fs/smb/server/proc.c b/fs/smb/server/proc.c
-index 5c9f3f314dbe1..13742a2404a58 100644
---- a/fs/smb/server/proc.c
-+++ b/fs/smb/server/proc.c
-@@ -27,6 +27,42 @@ struct proc_dir_entry *ksmbd_proc_create(const char *name,
- 			   show, v);
- }
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 0b080972e9085..26c424e6682ea 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -156,8 +156,11 @@ static int __process_request(struct ksmbd_work *work, struct ksmbd_conn *conn,
+ 	}
  
-+void ksmbd_proc_show_flag_names(struct seq_file *m,
-+				const struct ksmbd_const_name *table,
-+				int count, unsigned int flags)
-+{
-+	unsigned int remaining = flags;
-+	bool separator = false;
-+	int i;
+ 	ret = cmds->proc(work);
+-	if (conn->ops->inc_reqs)
+-		conn->ops->inc_reqs(command);
++	if (conn->ops->inc_reqs) {
++		struct smb2_hdr *rsp = ksmbd_resp_buf_curr(work);
 +
-+	for (i = 0; i < count; i++) {
-+		unsigned int flag = table[i].const_value;
-+
-+		if (!flag || (remaining & flag) != flag)
-+			continue;
-+		seq_printf(m, "%s%s", separator ? "," : "", table[i].name);
-+		separator = true;
-+		remaining &= ~flag;
++		conn->ops->inc_reqs(command, rsp->Status);
 +	}
-+
-+	if (remaining)
-+		seq_printf(m, "%s0x%08x", separator ? "," : "", remaining);
-+	else if (!separator)
-+		seq_puts(m, "none");
-+}
-+
-+const char *ksmbd_proc_const_name(const struct ksmbd_const_name *table,
-+				  int count, unsigned int const_value)
-+{
-+	int i;
-+
-+	for (i = 0; i < count; i++) {
-+		if (table[i].const_value == const_value)
-+			return table[i].name;
-+	}
-+	return NULL;
-+}
-+
- struct ksmbd_const_smb2_process_req {
- 	unsigned int const_value;
- 	const char *name;
-@@ -71,6 +107,8 @@ static int proc_show_ksmbd_stats(struct seq_file *m, void *v)
- 		   ksmbd_counter_sum(KSMBD_COUNTER_SESSIONS));
- 	seq_printf(m, "tree connects: %lld\n",
- 		   ksmbd_counter_sum(KSMBD_COUNTER_TREE_CONNS));
-+	seq_printf(m, "requests: %lld\n",
-+		   ksmbd_counter_sum(KSMBD_COUNTER_REQUESTS));
- 	seq_printf(m, "read bytes: %lld\n",
- 		   ksmbd_counter_sum(KSMBD_COUNTER_READ_BYTES));
- 	seq_printf(m, "written bytes: %lld\n",
+ 
+ 	if (ret < 0)
+ 		ksmbd_debug(CONN, "Failed to process %u [%d]\n", command, ret);
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index b090b56743c4c..7b9c5cfcb63b0 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -135,7 +135,7 @@ struct file_id_both_directory_info {
+ 
+ struct smb_version_ops {
+ 	u16 (*get_cmd_val)(struct ksmbd_work *swork);
+-	void (*inc_reqs)(unsigned int cmd);
++	void (*inc_reqs)(unsigned int cmd, __le32 status);
+ 	int (*init_rsp_hdr)(struct ksmbd_work *swork);
+ 	void (*set_rsp_status)(struct ksmbd_work *swork, __le32 err);
+ 	int (*allocate_rsp_buf)(struct ksmbd_work *work);
 diff --git a/fs/smb/server/stats.h b/fs/smb/server/stats.h
-index b60c30c690770..08ee66f91eaab 100644
+index 08ee66f91eaab..bc864efa0d46b 100644
 --- a/fs/smb/server/stats.h
 +++ b/fs/smb/server/stats.h
-@@ -52,8 +52,10 @@ static inline void ksmbd_counter_sub(int type, s64 value)
+@@ -9,12 +9,24 @@
+ #ifndef __KSMBD_STATS_H__
+ #define __KSMBD_STATS_H__
  
- static inline void ksmbd_counter_inc_reqs(unsigned int cmd)
- {
--	if (cmd < KSMBD_COUNTER_MAX_REQS)
-+	if (cmd < KSMBD_COUNTER_MAX_REQS) {
-+		percpu_counter_inc(&ksmbd_counters.counters[KSMBD_COUNTER_REQUESTS]);
- 		percpu_counter_inc(&ksmbd_counters.counters[KSMBD_COUNTER_FIRST_REQ + cmd]);
-+	}
++#include "../common/smb2status.h"
++
+ #define KSMBD_COUNTER_MAX_REQS	19
+ 
+ enum {
+ 	KSMBD_COUNTER_SESSIONS = 0,
+ 	KSMBD_COUNTER_TREE_CONNS,
+ 	KSMBD_COUNTER_REQUESTS,
++	KSMBD_COUNTER_STATUS_SUCCESS,
++	KSMBD_COUNTER_STATUS_INFORMATIONAL,
++	KSMBD_COUNTER_STATUS_WARNING,
++	KSMBD_COUNTER_STATUS_ERROR,
++	KSMBD_COUNTER_ERROR_ACCESS_DENIED,
++	KSMBD_COUNTER_ERROR_NOT_FOUND,
++	KSMBD_COUNTER_ERROR_INVALID_PARAMETER,
++	KSMBD_COUNTER_ERROR_SHARING_VIOLATION,
++	KSMBD_COUNTER_ERROR_NOT_SUPPORTED,
++	KSMBD_COUNTER_ERROR_OTHER,
+ 	KSMBD_COUNTER_READ_BYTES,
+ 	KSMBD_COUNTER_WRITE_BYTES,
+ 	KSMBD_COUNTER_FIRST_REQ,
+@@ -50,8 +62,45 @@ static inline void ksmbd_counter_sub(int type, s64 value)
+ 	percpu_counter_sub(&ksmbd_counters.counters[type], value);
  }
  
- static inline s64 ksmbd_counter_sum(int type)
+-static inline void ksmbd_counter_inc_reqs(unsigned int cmd)
++static inline void ksmbd_counter_inc_reqs(unsigned int cmd, __le32 status)
+ {
++	unsigned int severity = le32_to_cpu(status) >> 30;
++	int type;
++
++	switch (severity) {
++	case 0:
++		type = KSMBD_COUNTER_STATUS_SUCCESS;
++		break;
++	case 1:
++		type = KSMBD_COUNTER_STATUS_INFORMATIONAL;
++		break;
++	case 2:
++		type = KSMBD_COUNTER_STATUS_WARNING;
++		break;
++	default:
++		type = KSMBD_COUNTER_STATUS_ERROR;
++		break;
++	}
++	percpu_counter_inc(&ksmbd_counters.counters[type]);
++
++	if (severity == 3) {
++		if (status == STATUS_ACCESS_DENIED)
++			type = KSMBD_COUNTER_ERROR_ACCESS_DENIED;
++		else if (status == STATUS_OBJECT_NAME_NOT_FOUND ||
++			 status == STATUS_NO_SUCH_FILE)
++			type = KSMBD_COUNTER_ERROR_NOT_FOUND;
++		else if (status == STATUS_INVALID_PARAMETER)
++			type = KSMBD_COUNTER_ERROR_INVALID_PARAMETER;
++		else if (status == STATUS_SHARING_VIOLATION)
++			type = KSMBD_COUNTER_ERROR_SHARING_VIOLATION;
++		else if (status == STATUS_NOT_SUPPORTED ||
++			 status == STATUS_NOT_IMPLEMENTED)
++			type = KSMBD_COUNTER_ERROR_NOT_SUPPORTED;
++		else
++			type = KSMBD_COUNTER_ERROR_OTHER;
++		percpu_counter_inc(&ksmbd_counters.counters[type]);
++	}
++
+ 	if (cmd < KSMBD_COUNTER_MAX_REQS) {
+ 		percpu_counter_inc(&ksmbd_counters.counters[KSMBD_COUNTER_REQUESTS]);
+ 		percpu_counter_inc(&ksmbd_counters.counters[KSMBD_COUNTER_FIRST_REQ + cmd]);
+@@ -68,7 +117,7 @@ static inline void ksmbd_counter_inc(int type) {}
+ static inline void ksmbd_counter_dec(int type) {}
+ static inline void ksmbd_counter_add(int type, s64 value) {}
+ static inline void ksmbd_counter_sub(int type, s64 value) {}
+-static inline void ksmbd_counter_inc_reqs(unsigned int cmd) {}
++static inline void ksmbd_counter_inc_reqs(unsigned int cmd, __le32 status) {}
+ static inline s64 ksmbd_counter_sum(int type) { return 0; }
+ #endif
+ 
 diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index a23bd9b1a68bc..1b5f4efb6ae01 100644
+index 1b5f4efb6ae01..5eae49ed1c799 100644
 --- a/fs/smb/server/vfs_cache.c
 +++ b/fs/smb/server/vfs_cache.c
-@@ -66,7 +66,7 @@ static const struct ksmbd_const_name ksmbd_lease_const_names[] = {
- static const struct ksmbd_const_name ksmbd_oplock_const_names[] = {
- 	{SMB2_OPLOCK_LEVEL_NONE, "OPLOCK_NONE"},
- 	{SMB2_OPLOCK_LEVEL_II, "OPLOCK_II"},
--	{SMB2_OPLOCK_LEVEL_EXCLUSIVE, "OPLOCK_EXECL"},
-+	{SMB2_OPLOCK_LEVEL_EXCLUSIVE, "OPLOCK_EXCLUSIVE"},
- 	{SMB2_OPLOCK_LEVEL_BATCH, "OPLOCK_BATCH"},
- };
+@@ -140,6 +140,16 @@ static bool durable_scavenger_running;
+ static DEFINE_MUTEX(durable_scavenger_lock);
+ static wait_queue_head_t dh_wq;
  
-@@ -76,14 +76,14 @@ static int proc_show_files(struct seq_file *m, void *v)
- 	unsigned int id;
- 	struct oplock_info *opinfo;
- 
--	seq_printf(m, "#%-10s %-10s %-10s %-10s %-15s %-10s %-10s %s\n",
-+	seq_printf(m, "#%-10s %-18s %-18s %-10s %-16s %-10s %-10s %s\n",
- 		   "<tree id>", "<pid>", "<vid>", "<refcnt>",
- 		   "<oplock>", "<daccess>", "<saccess>",
- 		   "<name>");
- 
- 	read_lock(&global_ft.lock);
- 	idr_for_each_entry(global_ft.idr, fp, id) {
--		seq_printf(m, "%#-10x %#-10llx %#-10llx %#-10x",
-+		seq_printf(m, " %#-10x %#-18llx %#-18llx %#-10x",
- 			   fp->tcon ? fp->tcon->id : 0,
- 			   fp->persistent_id,
- 			   fp->volatile_id,
-@@ -93,6 +93,7 @@ static int proc_show_files(struct seq_file *m, void *v)
- 		opinfo = rcu_dereference(fp->f_opinfo);
- 		if (opinfo) {
- 			const struct ksmbd_const_name *const_names;
-+			const char *name;
- 			int count;
- 			unsigned int level;
- 
-@@ -106,11 +107,14 @@ static int proc_show_files(struct seq_file *m, void *v)
- 				level = opinfo->level;
- 			}
- 			rcu_read_unlock();
--			ksmbd_proc_show_const_name(m, " %-15s",
--						   const_names, count, level);
-+			name = ksmbd_proc_const_name(const_names, count, level);
-+			if (name)
-+				seq_printf(m, " %-16s", name);
-+			else
-+				seq_printf(m, " 0x%-14x", level);
- 		} else {
- 			rcu_read_unlock();
--			seq_printf(m, " %-15s", " ");
-+			seq_printf(m, " %-16s", " ");
- 		}
- 
- 		seq_printf(m, " %#010x %#010x %s\n",
++bool ksmbd_durable_scavenger_active(void)
++{
++	bool active;
++
++	mutex_lock(&durable_scavenger_lock);
++	active = durable_scavenger_running;
++	mutex_unlock(&durable_scavenger_lock);
++	return active;
++}
++
+ void ksmbd_set_fd_limit(unsigned long limit)
+ {
+ 	limit = min(limit, get_max_files());
+diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
+index d6a9cd4b6d563..1c6fc4349b883 100644
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -209,6 +209,7 @@ unsigned int ksmbd_open_durable_fd(struct ksmbd_file *fp);
+ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp);
+ void ksmbd_launch_ksmbd_durable_scavenger(void);
+ void ksmbd_stop_durable_scavenger(void);
++bool ksmbd_durable_scavenger_active(void);
+ void ksmbd_close_tree_conn_fds(struct ksmbd_work *work);
+ void ksmbd_close_session_fds(struct ksmbd_work *work);
+ void ksmbd_wake_session_blocked_works(struct ksmbd_session *sess);
 -- 
 2.53.0
 
