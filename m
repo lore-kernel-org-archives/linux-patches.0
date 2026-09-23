@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2B239A07C;
-	Wed, 23 Sep 2026 14:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6B3497B79;
+	Wed, 23 Sep 2026 14:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173168; cv=none; b=PS2Ayax20s1nUpYXpc52FVfmH16OmQw9Hc7v8Hn2i7LUfR0NsTzp9U9A0MZvA63O82ms+emuZoAc9IL3n6u2wXFKqDvgU+I4buKb982fZVFon/ZqyGz3g3bPGfLJung6ARQI3Cib7gvFwcEO0v7Uh0nvK3SH7Wad0Br3sXTUJ40=
+	t=1790173171; cv=none; b=UcVmmZsNMhFBWgjA00WJDOLCSmO0+c2o9ZHuBg3aCxn0miaGyAXTFWa07OBM6B/OH4vNdfQI995i33srjgLd7xYcGKcs4BG5+18kNvA5TztVYggAPxNWi8Cy5qDWY4O3uiojbWyV4FY2T+QzBLjVVasaHNc/s9mSSXrYPvWTZco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173168; c=relaxed/simple;
-	bh=paZLMpods6L5fGzzZDKXVSbLQKRaMA8FPEPUKxNfFeg=;
+	s=arc-20240116; t=1790173171; c=relaxed/simple;
+	bh=XdnjV+rnY5U5aR5JCvxQwOCpG/RuUtke1SUOO4zJfqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srZjQOnNLL26QZMHiqg6VSm7N0BtZGKMdY0iPHL9dtprda5UsyWFDQIhAEqZNB8t/z0NNQdWVhVkxM4Udpy4/jqP2V1JEbim41UUj14VXoXRbVez+E9NP3rQ2Nf0LgWgetK8KeZWMSTeZlF64rIg9FZQcVl5JzuFASQCZlQa/NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TthgXL0v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKWpd2P4bigaeBp4wkQj3gbtQ4Ah0nrz7EZGFrRdPoFxQT2cdgX1/PrVsvolBw0vE7RpN9DWcc/qYI7lV/GLe9ThoxxHGbBE43hN8PKHIXIu1/ewaqW+vxa2qx3MUhPjDUNh9m+9zpq+YphGivYklIIRpgKn9qASr5w1r12hVZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVxGk8Vs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TthgXL0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116411F00893;
-	Wed, 23 Sep 2026 14:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVxGk8Vs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C591F000FF;
+	Wed, 23 Sep 2026 14:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173166;
-	bh=1TJTomzgZGEBilREInS7xUjvgpXSJ/mKAsAtiadZIJ8=;
+	s=korg; t=1790173169;
+	bh=vD4JI+FYhPsd/VN/yEBHYPmdcfl11N2/7m0lWSQdeJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TthgXL0vdPcmw8Um6hRuhotjhruRcaWQCdICHcpEVWSRSGSNaFuzdxpsMQ/6JswkU
-	 51C6wmzZKSSIc8t7JrWdLlgSHXRVcI8lkpe8iAFfnCuWhGxvwUpnS/3ckCT9DgYpek
-	 LyUrQBDnnk5RYM0NYRjo6Y6OpQR1BZDSryVKXKxM=
+	b=JVxGk8Vs3o9opq4l5j06q1Lkm1+PMojiLrpEWewp5AYG84+rwVW4fXnbOK82MKV0Z
+	 2fxum/42vf6dZcXztkEfAXlRmFzwfQBKTJ714tTCvLsdZulxpetlV5IwhjvvkqM/Tl
+	 /sSW+KVYHoFEqLGuasQ4VIRSIMcP65IAwNRySkyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taras Madan <tarasmadan@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 162/438] tcp: Dont call skb_clone_and_charge_r() for close()d listener in tcp_v6_do_rcv().
-Date: Wed, 23 Sep 2026 16:03:03 +0200
-Message-ID: <20260923140648.971210459@linuxfoundation.org>
+Subject: [PATCH 7.2 163/438] tcp: do not let tcp_rmem be set below 4096
+Date: Wed, 23 Sep 2026 16:03:04 +0200
+Message-ID: <20260923140648.998297081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,81 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8e759cd1f6444a946bd1fd2b2b29eea582eea1d5 ]
+[ Upstream commit 83a945a529d6e002dd7339c532288a931f463dba ]
 
-tcp_v6_do_rcv() no longer calls skb_clone_and_charge_r() for
-TCP_LISTEN since commit 073d89808c06 ("net: fix data-races around
-sk->sk_forward_alloc").
+We can hit a division by zero crash in tcp_rcvbuf_grow()
+and tcp_rcv_space_adjust():
 
-However, there is still a small race window between tcp_v6_rcv()
-and tcp_v6_do_rcv(), where concurrent close() changes TCP_LISTEN
-to TCP_CLOSE, causing skb_clone_and_charge_r() to be called
-locklessly and resulting in the splat below. [0]
+divide error: 0000 [#1] PREEMPT SMP
+RIP: 0010:tcp_rcvbuf_grow+0x187/0x450 net/ipv4/tcp_input.c:939
+...
+grow = div_u64(((u64)rcvwin << 1) * (newval - oldval), oldval);
 
-Let's avoid calling skb_clone_and_charge_r() for TCP_CLOSE as well.
+The division uses oldval = tp->rcvq_space.space as divisor.
+When tp->rcvq_space.space is zero, this leads to a divide-by-zero
+exception.
 
-This is fine for non-listeners because tcp_rcv_state_process()
-drops skb for TCP_CLOSE and opt_skb was freed immediately anyway.
+tp->rcvq_space.space is initialized in tcp_init_buffer_space():
+    tp->rcvq_space.space = min3(tp->rcv_ssthresh, tp->rcv_wnd,
+                                (u32)TCP_INIT_CWND * tp->advmss);
 
-[0]:
-sk->sk_forward_alloc
-WARNING: net/ipv4/af_inet.c:162 at inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162, CPU#1: ksoftirqd/1/28
-Modules linked in:
-CPU: 1 UID: 0 PID: 28 Comm: ksoftirqd/1 Not tainted 7.2.0 #17 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-RIP: 0010:inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162
-Code: 3d 49 ff e9 06 fd ff ff e8 d0 5b 83 f8 90 0f 0b 90 e9 35 fe ff ff e8 c2 5b 83 f8 90 0f 0b 90 e9 c5 fe ff ff e8 b4 5b 83 f8 90 <0f> 0b 90 e9 04 ff ff ff e8 a6 5b 83 f8 90 0f 0b 90 e9 65 fe ff ff
-RSP: 0018:ffffc90000677bb8 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff8880117bde80 RCX: ffffffff8957eb41
-RDX: ffff88801dad5d00 RSI: ffffffff8957ec3c RDI: 0000000000000005
-RBP: 00000000fffff000 R08: ffffffff8957eb41 R09: 00000000fffff000
-R10: 0000000000000005 R11: 0000000000000000 R12: dffffc0000000000
-R13: ffff8880117bdf10 R14: ffffffff81c08eb7 R15: 0000000000000003
-FS:  0000000000000000(0000) GS:ffff8880d7ae5000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f93a1021138 CR3: 00000000207a9000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- __sk_destruct+0x82/0xae0 net/core/sock.c:2356
- rcu_do_batch kernel/rcu/tree.c:2645 [inline]
- rcu_core+0x59c/0x1100 kernel/rcu/tree.c:2897
- handle_softirqs+0x1e4/0x9b0 kernel/softirq.c:622
- run_ksoftirqd kernel/softirq.c:1076 [inline]
- run_ksoftirqd+0x38/0x60 kernel/softirq.c:1068
- smpboot_thread_fn+0x458/0xc80 kernel/smpboot.c:160
- kthread+0x396/0x4a0 kernel/kthread.c:436
- ret_from_fork+0x8e0/0xe40 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+If tcp_rmem[1] is configured to very small values (such as 1),
+sk->sk_rcvbuf is initialized to 1. Then tcp_full_space(sk), which
+computes (sk->sk_rcvbuf * scaling_ratio) >> 8, truncates to 0.
+This sets tp->window_clamp = 0, tp->rcv_ssthresh = 0, and
+tp->rcvq_space.space = 0. Later, when data arrives and DRS is invoked,
+tcp_rcvbuf_grow() divides by oldval == 0.
 
-Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
-Reported-by: Taras Madan <tarasmadan@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260914011420.115556-1-kuniyu@google.com
+Back in 2015, commit b1cb59cf2efe ("net: sysctl_net_core: check SNDBUF
+and RCVBUF for min length") ensured that net.core.rmem_default and
+net.core.rmem_max cannot be set below SOCK_MIN_RCVBUF. Similarly,
+SO_RCVBUF setsockopt enforces max_t(int, val * 2, SOCK_MIN_RCVBUF).
+
+However, net.ipv4.tcp_rmem still had .extra1 = SYSCTL_ONE, allowing
+arbitrarily small values.
+
+Because SOCK_MIN_RCVBUF depends on sizeof(struct sk_buff) and cacheline
+alignment, its value varies across architectures and configuration options.
+Using a fixed constant of 4096 ensures a predictable, architecture-
+independent lower bound that is safely above SOCK_MIN_RCVBUF everywhere
+and matches the documented 4K default.
+
+Fix this by setting tcp_rmem.extra1 to 4096 and updating the documentation.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260912144848.3448026-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/networking/ip-sysctl.rst | 2 ++
+ net/ipv4/sysctl_net_ipv4.c             | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index df9c29eb5c1f4..7fa4ed2fd4f16 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1604,7 +1604,8 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
- 	   by tcp. Feel free to propose better solution.
- 					       --ANK (980728)
- 	 */
--	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
-+	if (np->rxopt.all &&
-+	    !((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)))
- 		opt_skb = skb_clone_and_charge_r(skb, sk);
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index b05829e44d8fc..f7af0286341c9 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -874,6 +874,8 @@ tcp_rmem - vector of 3 INTEGERs: min, default, max
+ 	case this value is ignored.
+ 	Default: between 131072 and 32MB, depending on RAM size.
  
- 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
++	Each of the three values cannot be set below 4096.
++
+ tcp_sack - BOOLEAN
+ 	Enable select acknowledgments (SACKS).
+ 
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index ca1180dba1dea..e921cb381b53c 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -51,6 +51,8 @@ static int tcp_ecn_mode_max = 5;
+ static u32 icmp_errors_extension_mask_all =
+ 	GENMASK_U8(ICMP_ERR_EXT_COUNT - 1, 0);
+ 
++static int tcp_min_rcvbuf = 4096;
++
+ /* obsolete */
+ static int sysctl_tcp_low_latency __read_mostly;
+ 
+@@ -1462,7 +1464,7 @@ static struct ctl_table ipv4_net_table[] = {
+ 		.maxlen		= sizeof(init_net.ipv4.sysctl_tcp_rmem),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ONE,
++		.extra1		= &tcp_min_rcvbuf,
+ 	},
+ 	{
+ 		.procname	= "tcp_comp_sack_delay_ns",
 -- 
 2.53.0
 
