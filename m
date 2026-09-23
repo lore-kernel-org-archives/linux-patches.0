@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5974189DD;
-	Wed, 23 Sep 2026 14:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D35F49DB99;
+	Wed, 23 Sep 2026 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173129; cv=none; b=Yz0EFb+x9S8rGALRMf5lezvI3utbh8EG7/A2DeeLiwl/ySOKYG/E7AmTK0SmzI6TwJXma0ejNZoyNnsrmNBmL5GPPJrrqqk4B+m0wAT9yx4jsNV0KMTpRLRACh977V9ayjRDW1N58DckUZ/Jl/ikhVaahRKjKO3YgJ+aNrMGfLA=
+	t=1790173132; cv=none; b=E3dSc8Svv0cozV6AasjqLxk34gDU22uUHdguc9bpHYLFeUTy+1xso/Nj6SW5WHJgM9NzVnTNmkTnqPCnPJA6Yt1GfQIjcD9+3h7Kt9Djn7h5hmkgX76pEkgEW4D0yvDrmvYCUM98DacpreibVQBa6XjAUdh/BsgXZOkoA1mUYNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173129; c=relaxed/simple;
-	bh=XJMdLHWN7YMSBEWKFNpb1pJA7nNRkv6iu5fL11jCedw=;
+	s=arc-20240116; t=1790173132; c=relaxed/simple;
+	bh=mlIZZjFk8uV2jVXECJeC/achXvCZ0wQEJ+bUXbh6aHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HltwwUUnvg+7EIOaqAhXNxWEtv71ZktrckiFync/F2PhiaIgqO5ebrwKgt7DIsaYvfLXyx24CrKuwDROmGtQifnk/98uKGHR9evLUsm4zBRWKZPYzq/21QMteiHknJHfXvsALeCKzGOPph52UfQv+GPUY+tyr5/jL3DRjbxPoMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1Pvb/+L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uxrRw86qdg+Wx+nrNCyuW2aEJUjESRphlE1z5RIJgxLjzaL7pchW08aXmz2oGM1dPEVrvQBzpXPeWBO5EFvqOF2x1Jkap1oIrg8cqUUvrdUjjN0k1Jsx+XE+n8Tec5Jei2oUHt5YHpFJX1gR1LY4V+BYMZab8ygpDJcwigq2GF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfdKzRLD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1Pvb/+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953591F000FF;
-	Wed, 23 Sep 2026 14:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfdKzRLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874811F000FF;
+	Wed, 23 Sep 2026 14:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173128;
-	bh=zfWdI/pid5zHoa6GnMa9WPoGCQGwAHTVkwMvVhqGfrY=;
+	s=korg; t=1790173131;
+	bh=ZTuQwYbiwvGnPRVK/5nr4PBk46E3xzet5Qu+DKUAI9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o1Pvb/+LvK43AB1a8/caAUL4ws1+E9M3pmNTHKDgC4sZLc1o9KqOVH8vo7VLYE+qf
-	 OQTSLNpTiOaV1Tb7Kx+7yDIDUexQPtUkQpPnc/b+nKjlKs4XkSQrcCbCy3Rp1cQUF6
-	 toDqETncZi9UN2/qaz8SddrnwPbkS7xPJDH3d9UQ=
+	b=yfdKzRLDEizoFMFvLb5wvnKvRbDqTX4YwWBOrbHqh+XMUdbfj89gE9o2PX+PpaGyI
+	 h0mReh9TawsqoHTTHdYBCzBDwFEsISkBf4XSXVpFnobSR/UkH68uJ8PB012D39aB61
+	 Hc0P0/emPC4MXwG22dRvR57jFaqTPfVXPWGM2fOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 117/438] neighbour: Dont render blackhole_netdev via RTM_GETNEIGHTBL.
-Date: Wed, 23 Sep 2026 16:02:18 +0200
-Message-ID: <20260923140647.813161180@linuxfoundation.org>
+Subject: [PATCH 7.2 118/438] neighbour: Skip default parms when resumed in neightbl_dump_info().
+Date: Wed, 23 Sep 2026 16:02:19 +0200
+Message-ID: <20260923140647.842305540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,58 +54,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 7b430fcfc972f61b09cc19ca95997586af4a147d ]
+[ Upstream commit 979aabdad8dd03394467ee484a1a70f3d40b19ba ]
 
-The cited commits started to initialise blackhole_netdev with
-neigh_parms_alloc().
+neightbl_dump_info() calls neightbl_fill_info() in each loop
+to render the default parms.
 
-This is visible in init_net as the ifindex==0 entries via
-RTM_GETNEIGHTBL:
+If there are many devices and neightbl_fill_param_info() failed,
+neightbl_fill_info() is called again when the dump resumes:
 
-  # ynl --family rt-neigh --dump getneightbl --output-json \
-    | jq '.[] | select(.parms.ifindex == 0)
-              | {name: .name, ifindex: .parms.ifindex}'
+  # ynl --family rt-neigh --dump getneightbl --output-json |
+    jq '.[] | {name: .name, ifindex: .parms.ifindex}'
+  ...
   {
-    "name": "arp_cache",
-    "ifindex": 0
+    "name": "ndisc_cache",
+    "ifindex": null
+  }
+  ...
+  {
+    "name": "ndisc_cache",
+    "ifindex": 6
   }
   {
     "name": "ndisc_cache",
-    "ifindex": 0
+    "ifindex": null
+  }
+  {
+    "name": "ndisc_cache",
+    "ifindex": 5
   }
 
-For RTM_SETNEIGHTBL, ifindex being 0 means wildcard.
+Let's skip neightbl_fill_info() if it is already called in
+neightbl_dump_info().
 
-Let's skip blackhole_netdev's parms in neightbl_dump_info().
+Note that we cannot use !neigh_skip instead of !default_skip
+because default_skip == 1 && neigh_skip == 0 could be true
+if the first neightbl_fill_param_info() fails.
 
-Note that lookup_neigh_parms() does not need the same change
-because the default parms is always the first entry and matches
-with ifindex == 0.
+Also, nidx must be cleared at the end of each table loop;
+otherwise, if neightbl_fill_info() for a subsequent table
+fails, the leftover nidx from the previous table would be
+saved in cb->args[1], resulting in erroneously skipping parms
+of the subsequent table in the next dump.
 
-Fixes: e5f80fcf869a ("ipv6: give an IPv6 dev to blackhole_netdev")
-Fixes: 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
+Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260909233143.2401847-4-kuniyu@google.com
+Link: https://patch.msgid.link/20260909233143.2401847-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/neighbour.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 0db78a0dfb516..02bf940ce00af 100644
+index 02bf940ce00af..7448320f7ad52 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -2624,7 +2624,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+@@ -2587,9 +2587,10 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	const struct nlmsghdr *nlh = cb->nlh;
+ 	struct net *net = sock_net(skb->sk);
++	int default_skip = cb->args[2];
++	int neigh_skip = cb->args[1];
+ 	int family, tidx, nidx = 0;
+ 	int tbl_skip = cb->args[0];
+-	int neigh_skip = cb->args[1];
+ 	struct neigh_table *tbl;
+ 
+ 	if (cb->strict_check) {
+@@ -2613,12 +2614,13 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (tidx < tbl_skip || (family && tbl->family != family))
+ 			continue;
+ 
+-		if (neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
++		if (!default_skip &&
++		    neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
+ 				       nlh->nlmsg_seq, RTM_NEWNEIGHTBL,
+ 				       NLM_F_MULTI) < 0)
+ 			break;
+ 
+-		nidx = 0;
++		default_skip = 1;
+ 
+ 		list_for_each_entry_rcu(p, &tbl->parms_list, list) {
  			if (!net_eq(neigh_parms_net(p), net))
- 				continue;
+@@ -2641,12 +2643,15 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 		}
  
--			if (!p->dev)
-+			if (!p->dev || p->dev == blackhole_netdev)
- 				continue;
+ 		neigh_skip = 0;
++		nidx = 0;
++		default_skip = 0;
+ 	}
+ out:
+ 	rcu_read_unlock();
  
- 			if (nidx < neigh_skip)
+ 	cb->args[0] = tidx;
+ 	cb->args[1] = nidx;
++	cb->args[2] = default_skip;
+ 
+ 	return skb->len;
+ }
 -- 
 2.53.0
 
