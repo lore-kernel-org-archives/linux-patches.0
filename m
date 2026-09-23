@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20BE470121;
-	Wed, 23 Sep 2026 14:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D3B51EE0C;
+	Wed, 23 Sep 2026 14:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173666; cv=none; b=bSAbppZxIozjP7TKQ7Zj5hr5vQ9vo91U5vZckAWalMSGWTOrFw1M7pjvL4UZpcJCHjU7vbyQH7+pB5m3Mcbhv9oPylFwuTjzbFx4dsL4u50JstWnYi4lD7gaI2ZFnr+WBPWgk+lGbKeDDz06XpjSHdsDRmUA3SJevx/Qq5YN2Kc=
+	t=1790173670; cv=none; b=jOz/T+Lib4sxIjZ1WP0/afdGGm+DR6/r56NrdI1Op7GFFIsx89hy+fFrlBdIteZSkwdThuA5NKk6oWfpRPajgJDfaBGk3UcktKu+mEzaxAeJQopBrmohJ+AceHWArsrRP6jDVKGTnoy2JgZ/q2RIfHhdn0yXkAGgN/1mtYCKv0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173666; c=relaxed/simple;
-	bh=/KPB5pPtjG5kIy+f5e5YaahUYv3q6YKfwK/wmTxdl9Y=;
+	s=arc-20240116; t=1790173670; c=relaxed/simple;
+	bh=gqi+EzLWUV1dpwmg0LuVrcp9vAlQo14EiWEGucxDWRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bd9SFbmf/OS+LbI2o1Luy1U0MmbF9rkmX04H88adIxcmZ/6VzgVusrzjc04vh/Q2W6sTbcFf2HwWXMSXkcfl/J8uIrRFSROL98HK0lpO6uKxZGgA2B3vsKTnSxV6s/rEUbyBbAV2305/T8DKSPiLR6PBHHjzX9f9LVWgLTvVkdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCdhtLJr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XDoVSFXj3bFr4opbxqxLBLG2WTA8u3nZZyIzxagJ3Mh6ebxuFA33642ImILcU7WoKLHf0cf7i2SqlmEdzCsQn5/2cvCsJs8L1UmOQGCTC1JLXaGi05RhfMg9WpLE2cTVLmCvlkbYuLkjMr4Pf2Vyr6FWiAC2RgxDwuIjAZmktBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBgnGrSh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCdhtLJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDBE1F000FF;
-	Wed, 23 Sep 2026 14:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBgnGrSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B66F1F000FF;
+	Wed, 23 Sep 2026 14:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173665;
-	bh=GrRsmntFvVUuadutjr8rWn+jflRGj/WKyZgDFRbE5D0=;
+	s=korg; t=1790173668;
+	bh=gfKkVUwSa+/pVMA8WHtynEjx5ybeupJGCibgYysTJIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCdhtLJrA7E0ZyMSqKPwond6XMnS2RXxHHAm0hmLoQgd4B4NW8MpXly/2UWgTY1gK
-	 ldsThpxtSkPuE9crHdikowa+PmBHaH3WP8DTlM5k7ozuFhrpqdjl/zYdU1EBu3HLV9
-	 uS3piB7A/vUZi47+lVzQeU7irpkEvnx54FOr4Wos=
+	b=NBgnGrShmMnTxJqtLxC9TCkeLC/UX7SrdnGDyyd4GFXs1wokwET4b75U44JI3/8y7
+	 hmIbg878vmGabgYOv/0+L309LOcEqPVHQSGZsiiKSJd3vA0x1DY33gbjYXjEpMhq+y
+	 TSDc77gfieTvsBUdSQViZRZuFVKMVaE/RmbmcEU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Usama Arif <usama.arif@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <kasong@tencent.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 317/438] mm/shrinker: fix bogus set_shrinker_bit() with cgroup.memory=nokmem
-Date: Wed, 23 Sep 2026 16:05:38 +0200
-Message-ID: <20260923140653.009105876@linuxfoundation.org>
+Subject: [PATCH 7.2 318/438] mm/vma: correctly unaccount on mmap_prepare() failure
+Date: Wed, 23 Sep 2026 16:05:39 +0200
+Message-ID: <20260923140653.034969490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -57,77 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 932cfb25e7ce98d1f93895671ec186a3087e4f80 upstream.
+commit 6cc27d82196385fe06853319f74312a7d8019726 upstream.
 
-With cgroup.memory=nokmem, shrinker_memcg_alloc() bails out early and
-never allocates an id, so shrinker->id keeps the 0 it got from the
-kzalloc() in shrinker_alloc().  __list_lru_init() then copies that 0 into
-lru->shrinker_id, where it looks like a valid bit index.
+__mmap_setup() accounts memory for relevant mappings via:
 
-Nothing calls expand_shrinker_info() on nokmem either, so shrinker_nr_max
-stays 0 and every memcg ends up with an empty map (map_nr_max == 0).
+security_vm_enough_memory_mm()
+  -> __vm_enough_memory()
+    -> vm_acct_memory()
 
-deferred_split_folio() hands a real memcg to __list_lru_add() regardless
-of whether the lru is memcg aware, so the first THP queued in a cgroup
-does set_shrinker_bit(memcg, nid, 0) and trips the bounds check:
+If __mmap_setup() fails, this indicates that this accounting did not take
+place, and thus it's appropriate for __mmap_region() to jump to
+abort_munmap.
 
-WARNING: mm/shrinker.c:212 at set_shrinker_bit+0x7d/0x90, CPU#126
-Call Trace:
- <TASK>
- deferred_split_folio+0x18c/0x220
- map_anon_folio_pmd_nopf+0xdd/0x130
- map_anon_folio_pmd_pf+0x14/0xb0
- do_huge_pmd_anonymous_page+0x1a1/0x620
- __handle_mm_fault+0xea9/0x10d0
- handle_mm_fault+0xe5/0x320
- do_user_addr_fault+0x1cc/0x870
- exc_page_fault+0x81/0x1b0
- asm_exc_page_fault+0x27/0x30
- </TASK>
+However if call_mmap_prepare() fails, it also jumps there and any accounted
+memory is not correctly unaccounted.
 
-Harmless, the WARN_ON_ONCE() is what keeps the out of bounds unit[] read
-from happening, but the id should not look valid in the first place.
-Clear it before returning.
+Fix this by handling each error separately.
 
-Two other spots could paper over this: drop the id in __list_lru_init()
-when nokmem turns memcg_aware off, or make deferred_split_folio() pass
-NULL like list_lru_add_obj() does.  Both leave shrinker->id lying around
-for the next caller, so fix it where the id is handed out.
-
-Link: https://lore.kernel.org/20260902073800.305481-1-jiayuan.chen@linux.dev
-Fixes: fafaeceb89a5 ("mm: switch deferred split shrinker to list_lru")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Usama Arif <usama.arif@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Link: https://lore.kernel.org/20260902-fix-unaccount-mmap_prepare-v1-1-ea070189fdfb@kernel.org
+Fixes: c84bf6dd2b83 ("mm: introduce new .mmap_prepare() file callback")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker.c | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/vma.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/shrinker.c b/mm/shrinker.c
-index a70aab124a0e..7ec2a9704f6f 100644
---- a/mm/shrinker.c
-+++ b/mm/shrinker.c
-@@ -227,6 +227,8 @@ static int shrinker_memcg_alloc(struct shrinker *shrinker)
- {
- 	int id;
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -2754,10 +2754,12 @@ static unsigned long __mmap_region(struc
+ 	map.check_ksm_early = can_set_ksm_flags_early(&map);
  
-+	shrinker->id = -1;
-+
- 	if (mem_cgroup_disabled())
- 		return -ENOSYS;
- 	if (mem_cgroup_kmem_disabled() && !(shrinker->flags & SHRINKER_NONSLAB))
--- 
-2.55.0
-
+ 	error = __mmap_setup(&map, &desc, uf);
+-	if (!error && have_mmap_prepare)
+-		error = call_mmap_prepare(&map, &desc);
+ 	if (error)
+ 		goto abort_munmap;
++	if (have_mmap_prepare)
++		error = call_mmap_prepare(&map, &desc);
++	if (error)
++		goto unacct_error;
+ 
+ 	if (map.check_ksm_early)
+ 		update_ksm_flags(&map);
 
 
