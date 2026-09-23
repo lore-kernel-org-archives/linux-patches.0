@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DF73B27D1;
-	Wed, 23 Sep 2026 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C9C4CCDC0;
+	Wed, 23 Sep 2026 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174521; cv=none; b=WxqRzCTq63PzwL/gvf2TmrPoA8cIjYGmH7FNMh9cu6sn0H52FPY10HXSe1CR5uScCGnq87VjlDjRs/78Z/vOibiFbnbs2Nwve4I/nJZruJp481IdGe9a9bGdIpVCGWqgG3bmHiaTrCWhmLVnooSXnldN2gQsUj7fZavMsRWUuok=
+	t=1790174524; cv=none; b=bbiDzPvBGq7Eg0XgYxE6xmZWJ4dnr9XK61+PHihTBvQZ9W5ES6kSqTWkrQHRLR389xLfY4paogsDlleMzdCn5Nyq7FPrhSRj1HGFrgjKEIt+8MIJKUUgLZLrbUdd7KttOymgZPNi/pY2tVYA4L5fzai5nPvryP/9DKdsNX1fXUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174521; c=relaxed/simple;
-	bh=r49+WxKBaZYbxRZNO86vhzWORRxfFQJIaS2EoAq5sok=;
+	s=arc-20240116; t=1790174524; c=relaxed/simple;
+	bh=9Nzz6ZgG0AWRN6E6YrNDtRT/8ekgkCulniKPoQnnR6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohuuTZz8cElBqHYgzn0EpH72fSzzmzLiRC+IW+Zo46/sQ/Q5QZqJOogt5JY9ggtlWv+KJPPD8RtZ71H8kr7sdlbD/2LWFlCeQSIbYHgFPRMrgh6tcuv4ODO6G9kTFkoGXzGnAIkkb2IIhcIlDLnUDHSAooj2wgHo7CLrqgZetXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9QIIGlm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ph9N3On/VEHhD+C3NNzTqX4d6I2S4nX0G4+2Xbjg9Ktgj8nXSIIYjbYycYmMzjBg7D69OmR5S0vO9q3J4qnwm5oau574pI5FPKcxM3d38FTQlDQmrN281l1al6o8pyilyvOg65lHY8+hfOJscP3kAppiCUmm6urxRc6+CjZmyB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oO4LM7o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9QIIGlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6A31F000FF;
-	Wed, 23 Sep 2026 14:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oO4LM7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57A21F000FF;
+	Wed, 23 Sep 2026 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174519;
-	bh=hjhvkdHoBQQGEbvPqNBroXEuhQVGXd5uump7oBFQ5No=;
+	s=korg; t=1790174522;
+	bh=BBPdaSzG4aVhBlyEf0S5kWRIDeSlpaipAplL5i6b914=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b9QIIGlms1qNfnJXBJjA7Y2DMxqJsapX8aJ4nD2wIQ46rvPNxYdYbVeEvxFVxYGYi
-	 SHPS150gvLdBzHJDDwD+B5XwvROp2OE3I8QXtx/ScsUYUJw/bKB7xo7jlyQB/Yt/th
-	 BqqmJEoJ5sl1XjqcdyQMOxfjIsIlM2Y4xyNyUhgg=
+	b=0oO4LM7oif4EXa8gfe8za03ihxuRUhpokLP0m/eC8XWgvtc0KCKFeS4cOqV0ArVit
+	 7jUyjtgioqLbTVPP4WHZOi6akatSroNtA55kR/yv8M22ofdS5T0lBlM9uX5zOB7uOt
+	 ugWR/z5EDd4jB3OZI7nI/0FNmGPG21fJlldbJJ9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Casco <jesse.casco@gmail.com>,
+	William Bright <william.bright@imd-tec.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 108/398] drm/msm/dp: skip PUSH_IDLE when the link was never enabled
-Date: Wed, 23 Sep 2026 16:03:02 +0200
-Message-ID: <20260923140646.239371636@linuxfoundation.org>
+Subject: [PATCH 6.18 109/398] drm/msm/dp: fix link bandwidth check when wide bus is enabled
+Date: Wed, 23 Sep 2026 16:03:03 +0200
+Message-ID: <20260923140646.266917777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,93 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Casco <jesse.casco@gmail.com>
+From: William Bright <william.bright@imd-tec.com>
 
-[ Upstream commit e249a6e2a130c08bb4d8b0a55cbe29754307e5c9 ]
+[ Upstream commit 58995b11dfb7dda095d23f22fa4dc79b923b5adf ]
 
-msm_dp_display_atomic_enable() returns early when link training fails,
-leaving ->power_on false and the main link down.
-msm_dp_display_atomic_disable() nevertheless writes DP_STATE_CTRL_PUSH_IDLE
-and waits for an idle-pattern completion that cannot arrive, so every failed
-enable is followed by "PUSH_IDLE pattern timedout".
+msm_dp_display_mode_valid() halves the pixel clock when either YUV420 or
+wide bus is in use, then uses that halved value both for the controller
+pixel clock limit and for the DP link bandwidth check.
 
-Every other step of the teardown is already gated on that flag:
-msm_dp_display_disable(), called from .atomic_post_disable(), returns early
-on !power_on. The PUSH_IDLE write is the only one that is not, so the
-controller's runtime-PM reference is then dropped without the link having
-been taken down.
+Only YUV420 halves the data crossing the link. Wide bus widens the
+internal DPU to DP interface to two pixels per clock, halving the
+controller clock. Every pixel is still transmitted, so the link
+bandwidth requirement remains.
 
-On glymur (Snapdragon X2 Elite) the consequence is not a warning. The SoC
-does not survive it: TrustZone force-stops the SOCCP and ADSP remote
-processors and the machine resets silently about 50 ms later, with no oops
-and no panic. On an ASUS Zenbook A16 (UX3607OA), whose eDP panel does not
-currently train, this reproduces without any compositor or GPU involvement:
+As a result, modes needing up to twice the available link bandwidth pass
+validation. On the IMDT QCS8550 SBC (rev5 with CYPD6125), where DP runs
+over USB-C alt mode where only two lanes are available, 3840x2160@60 was
+accepted despite needing 9.6 Gbps against the 8.64 Gbps the link can
+carry.
 
-  # eDP enable has already failed with "Failed link training (rc=-104)"
-  echo 1 > /sys/class/graphics/fb0/blank
+Use a separate link pixel clock that is only halved for YUV420 for the
+bandwidth calculation, leaving the wide bus halving to apply solely to
+the controller pixel clock limit. With this, 4k@60 is correctly rejected
+and 4k@30 selected instead.
 
-  [535.645455] === marker ===
-  [535.694833] qcom_q6v5_pas d00000.remoteproc: fatal error received: \
-                 sys_m_smsm.c:512:TZ force stop
-  [535.694875] remoteproc remoteproc0: crash detected in soccp: type fatal error
-  [535.728857] qcom_q6v5_pas 6800000.remoteproc: fatal error received: \
-                 sys_m_smsm.c:783:err fatal notification received from TZ
-  <SoC reset>
-
-Gate the PUSH_IDLE write on ->power_on so the disable path is consistent
-with the rest of the teardown. With this applied the same sequence is
-harmless and the machine stays up; without it, it resets every time.
-
-The unconditional write dates back to the original DP driver
-(c943b4948b58 ("drm/msm/dp: add displayPort driver support")), but the
-surrounding code has been restructured several times since, so no Fixes:
-tag is offered.
-
-Note that the eDP link-training failure that exposes this on the A16 is a
-separate problem in the glymur eDP PHY and is reported separately; this
-change is about not damaging the machine when training fails, for whatever
-reason.
-
-Tested on ASUS Zenbook A16 (UX3607OA), Snapdragon X2 Elite Extreme, on
-linux-next next-20260803 and next-20260807. The machine has since been
-running next-20260807 with this patch as its daily driver.
-
-Assisted-by: Anthropic:Claude-Opus-5
-Signed-off-by: Jesse Casco <jesse.casco@gmail.com>
+Fixes: df9cf852ca30 ("drm/msm/dp: account for widebus and yuv420 during mode validation")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: William Bright <william.bright@imd-tec.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/745167/
-Link: https://lore.kernel.org/r/20260808171325.133041-1-jesse.casco@gmail.com
+Patchwork: https://patchwork.freedesktop.org/patch/746145/
+Link: https://lore.kernel.org/r/20260812-msm-dp-link-bw-v1-1-b0e3ce1190be@imd-tec.com
+[DB: dropped useless comment]
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_display.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 68043dbe72bfa..0f6e4a1072a8f 100644
+index 0f6e4a1072a8f..131753ba57b5e 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1647,6 +1647,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
+@@ -930,6 +930,7 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	u32 mode_rate_khz = 0, supported_rate_khz = 0, mode_bpp = 0;
+ 	struct msm_dp *dp;
+ 	int mode_pclk_khz = mode->clock;
++	int link_pclk_khz;
+ 	bool is_yuv_420;
  
- 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+ 	dp = to_dp_bridge(bridge)->msm_dp_display;
+@@ -951,6 +952,8 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	if (is_yuv_420 && !msm_dp_display->panel->vsc_sdp_supported)
+ 		return MODE_NO_420;
  
-+	/*
-+	 * If .atomic_enable() bailed out - link training failure is the common
-+	 * case - the mainlink was never brought up and ->power_on stayed false.
-+	 * Driving the PUSH_IDLE pattern into a controller that was never
-+	 * enabled times out, and .atomic_post_disable() then drops the
-+	 * controller's runtime-PM reference without tearing the PHY back down,
-+	 * because msm_dp_display_disable() returns early on !power_on.  On
-+	 * glymur (Snapdragon X2 Elite) that combination is answered by a
-+	 * TrustZone-level SOCCP/ADSP force-stop and a silent SoC reset.
-+	 * There is nothing to push idle, so leave it alone.
-+	 */
-+	if (!dp->power_on)
-+		return;
++	link_pclk_khz = is_yuv_420 ? mode_pclk_khz / 2 : mode_pclk_khz;
 +
- 	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
- }
+ 	if (is_yuv_420 || msm_dp_display->wide_bus_supported)
+ 		mode_pclk_khz /= 2;
  
+@@ -962,9 +965,9 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 		mode_bpp = default_bpp;
+ 
+ 	mode_bpp = msm_dp_panel_get_mode_bpp(msm_dp_display->panel,
+-			mode_bpp, mode_pclk_khz);
++			mode_bpp, link_pclk_khz);
+ 
+-	mode_rate_khz = mode_pclk_khz * mode_bpp;
++	mode_rate_khz = link_pclk_khz * mode_bpp;
+ 	supported_rate_khz = link_info->num_lanes * link_info->rate * 8;
+ 
+ 	if (mode_rate_khz > supported_rate_khz)
 -- 
 2.53.0
 
