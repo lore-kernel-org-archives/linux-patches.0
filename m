@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3E35304D1;
-	Wed, 23 Sep 2026 14:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72D048035A;
+	Wed, 23 Sep 2026 14:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173484; cv=none; b=pdyMpHrFo9aoRXCCjQUfaWGIT3D3zuuN3ZZqvyrh86KnbU28yhZj8kp/aZ1UH9iJM1abZ1E8nl0wsVPCodW1Wd3MSW8AHbcVaEORhM1OkN8HtcD/6YIoQh9Mj1ATvlV/R5/KhrRbMnWFdDEA6Mzu+m9sPNc0sZtRaecEwCqgpLw=
+	t=1790173487; cv=none; b=a0sWjD3oKWt4+dfgKztXj78tNH2IjG7HMvF7+6VZkaNBWONn4WCFd+Upvxfwu68XUQSaQuQnHIB/dAOrLcorDn9S/gRQoy8APXSJ/MLDZJOogh/4vTUp8awVjCDmoukch0HYE+sYIlxcVWRDUt9bAqfYwtpQmaXPZtqU12wEg/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173484; c=relaxed/simple;
-	bh=aOuFnOa1McVPYhPH7ZsMdYznZq5AY6uCx7DbLTUCJy8=;
+	s=arc-20240116; t=1790173487; c=relaxed/simple;
+	bh=x4gXGnEVssIRHXR8o9EBMH4GYn8yT8Gl3utURpUZyxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olZEDPAbN+VNFiWpE2v17S9H8r+sKwaDEf5KJ86OsRcrAiwSMkZ4bZBt6wp6X+TMFgE3qQ6pT2ZVk2ZaVplQNzaZPQj+nntAILj8yJDBfpO/VlUbVqN+N/2t4LDCoHxYoNizZ6lv0s2l6spCWXqCgLZ1tTGt/w4Wfc+ZORPOsbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpEylkvK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wym+Lv3O9vfQGq1jLkBsS0npEbZRm/8gezJAIqNcZPX1hizAtNU5rwoosGXfyq3/knNOwjUroXntC0fHcnasZ1J/hFiH0DSEPKs6ZUyrI+FJE1B4Zkaslf8U/cjmU978uiJnnTEQcHNwj3I8tK4PCh/jFUgfE6chzqL65mhfIVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeyhAJ+q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpEylkvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E781F000FF;
-	Wed, 23 Sep 2026 14:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeyhAJ+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D131F000FF;
+	Wed, 23 Sep 2026 14:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173482;
-	bh=xL4dAfUzLJ0laoQTUYiwSMkuOdhfqSwo6cMWqLpUgW0=;
+	s=korg; t=1790173485;
+	bh=nsaLyV1/Y9I2+Xu1FT1fFSGx7sUlUwMJK7xno/NhX24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JpEylkvKi8uDEnVK8e2ngTQxWkUujdaFlfbiUAFTuMFytDY8GhUM9zLF0k36J07Ie
-	 UNlXHo0uFgsEY8fCXoqMD2ZsfY/xix51LV0P7kxieChGt0f50LiEZ3tE65vHAJe3J/
-	 mLuLPUTy+IkG8BA3caCu03vzig/CXU5AT7cz531c=
+	b=JeyhAJ+qnPjR0oF5H39E/JKw3grRomZTkCW+WA3f+BYDdUPOXaTcJwD8V0qrH+WAW
+	 7XqIHRyVTYcVxSmJ+q5gC8fEADNRQEk4vZ6NDcd+0YzTqcYe63nd1J6WGqVnrMf7gh
+	 Hjhk4B3UIOITRCswHTGyUtlWTDwD03r1TASXvxHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
+	Paul Gofman <pgofman@codeweavers.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	John Stultz <jstultz@google.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 227/438] sched/core: Avoid false migration warning for proxy donors
-Date: Wed, 23 Sep 2026 16:04:08 +0200
-Message-ID: <20260923140650.653340480@linuxfoundation.org>
+Subject: [PATCH 7.2 228/438] x86/fred: Reconstruct the #GP context for rejected INT instructions
+Date: Wed, 23 Sep 2026 16:04:09 +0200
+Message-ID: <20260923140650.678241126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,74 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit fe3c73d7bc769e7afc252f867a3421fe168b898d ]
+[ Upstream commit 93f53499d0b945e8ae447f497faf743d60069f61 ]
 
-Proxy execution can move a blocked donor's scheduling context to the
-lock owner's CPU even when the donor is migration-disabled. The donor
-does not execute there, and its original execution CPU remains recorded
-in wake_cpu.
+FRED event delivery does not use the IDT, so the gate DPL check that
+rejects a user INT n falls to software (Intel FRED specification [1],
+section 8.3). fred_intx() rejects the same vectors as IDT delivery, but
+reports a zero error code and the IP after the INT. This breaks the
+signal ABI. Wine uses the error code to recognize INT 0x2d, so the
+changed context turns a handled breakpoint into an access violation in
+Elden Ring.
 
-set_task_cpu() warns unconditionally for migration-disabled tasks, so a
-subsequent proxy migration or the wakeup path returning the donor home
-triggers a false positive: moving a blocked scheduling context does not
-violate the migration-disabled execution context.
+Rewind IP using the instruction length in the augmented SS and
+synthesize the IDT selector error code, (vector << 3) | 2. Set RF in the
+saved flags, as the CPU does for a #GP fault. Section 5.2.1 defines the
+saved vector, instruction length and RF state. The supplied length
+handles prefixes without reading user memory. Limit the changes to
+already-rejected software interrupts, preserving the accepted INT3, INT4
+and enabled INT80 paths and hardware exceptions. With IA32 emulation
+disabled, INT 0x80 now reports the same #GP as the DPL 0 gate IDT
+installs there. The rewound IP also stops fixup_iopl_exception() from
+inspecting the byte after the INT.
 
-For example, creating a mutex owner on CPU1 and a migration-disabled
-waiter on CPU0 can trigger the following warning:
+Also clear the software event flag. Section 6.2.3 specifies that ERETU
+with this flag and TF set traps before executing any user instruction. A
+tracer that suppresses SIGSEGV and resumes with TF set expects the next
+instruction to run first, as after IRET. The sigreturn path clears the
+same flag for this reason in prevent_single_step_upon_eretu().
 
-  proxy_migrate_repro: donor blocking on CPU0 with migration disabled
-  proxy_migrate_repro: donor moved from CPU0 to CPU1
-  WARNING: kernel/sched/core.c:3389 at set_task_cpu+0x1d3/0x280
-  ...
-  Call Trace:
-   try_to_wake_up+0x43f/0x780
-   __mutex_unlock_slowpath+0x330/0x540
-   owner_fn+0x9f/0xc0 [proxy_migrate_repro]
-  ...
-  proxy_migrate_repro: donor woke on CPU0, task_cpu=0
-  proxy_migrate_repro: completed
+[1] Intel Flexible Return and Event Delivery (FRED) Specification,
+revision 9.0 (346446-009US), sections 5.2.1, 6.2.3 and 8.3.
 
-Exclude blocked proxy donors from the warning. The proxy wakeup path
-restores an executable placement before clearing the blocked state.
-
-Fixes: b049b81bdff6 ("sched: Handle blocked-waiter migration (and return migration)")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/15745
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16132
+Reported-by: Paul Gofman <pgofman@codeweavers.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260915184101.2621252-1-arighi@nvidia.com
+Reviewed-by: H. Peter Anvin <hpa@zytor.com>
+Link: https://cdrdv2.intel.com/v1/dl/getContent/678938 # [1]
+Link: https://patch.msgid.link/20260917230907.2080792-2-matthew.schwartz@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/x86/entry/entry_fred.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 35d647c8c3683..3d6c55598726f 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -3352,6 +3352,8 @@ void relax_compatible_cpus_allowed_ptr(struct task_struct *p)
- void set_task_cpu(struct task_struct *p, unsigned int new_cpu)
- {
- 	unsigned int state = READ_ONCE(p->__state);
-+	bool proxy_migrated = sched_proxy_exec() && p->is_blocked &&
-+			      task_cpu(p) != p->wake_cpu;
+diff --git a/arch/x86/entry/entry_fred.c b/arch/x86/entry/entry_fred.c
+index fb3594ddf731f..854899bfec5d9 100644
+--- a/arch/x86/entry/entry_fred.c
++++ b/arch/x86/entry/entry_fred.c
+@@ -10,6 +10,7 @@
+ #include <asm/desc.h>
+ #include <asm/fred.h>
+ #include <asm/idtentry.h>
++#include <asm/processor-flags.h>
+ #include <asm/syscall.h>
+ #include <asm/trapnr.h>
+ #include <asm/traps.h>
+@@ -71,7 +72,15 @@ static noinstr void fred_intx(struct pt_regs *regs)
+ #endif
  
- 	/*
- 	 * We should never call set_task_cpu() on a blocked task,
-@@ -3387,7 +3389,12 @@ void set_task_cpu(struct task_struct *p, unsigned int new_cpu)
- 	 */
- 	WARN_ON_ONCE(!cpu_online(new_cpu));
- 
--	WARN_ON_ONCE(is_migration_disabled(p));
-+	/*
-+	 * Proxy execution can move a blocked task's scheduling context to any
-+	 * CPU without moving its migration-disabled execution context. The
-+	 * wakeup path will return the task to a CPU where it can execute.
-+	 */
-+	WARN_ON_ONCE(is_migration_disabled(p) && !proxy_migrated);
- 
- 	trace_sched_migrate_task(p, new_cpu);
+ 	default:
+-		return exc_general_protection(regs, 0);
++		/*
++		 * Reconstruct the #GP fault state that IDT delivery would produce.
++		 * Clear the software event flag so ERETU with TF set does not trap
++		 * before the resumed instruction. See prevent_single_step_upon_eretu().
++		 */
++		regs->ip -= regs->fred_ss.insnlen;
++		regs->flags |= X86_EFLAGS_RF;
++		regs->fred_ss.swevent = 0;
++		return exc_general_protection(regs, (regs->fred_ss.vector << 3) | 2);
+ 	}
+ }
  
 -- 
 2.53.0
