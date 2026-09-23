@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE04153CA71;
-	Wed, 23 Sep 2026 14:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3551D53C3B2;
+	Wed, 23 Sep 2026 14:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174837; cv=none; b=JKA2Szs6wdFk9Bem02sos6+5zi2H41abWFbHtiNrkshs6czGfAN4h92B9QWQkFpq4FGHA1SDMD3KTTCpBzTtoxRluG5mNqdciQblVDBu+oAOfCGxSrpOlNspjQqgQXciM2TggC06+eRnbWuF9PUSD9lE2qCxIOEGKtdb3IWwGeQ=
+	t=1790174840; cv=none; b=NlITCIk3fISkrmPm1ePvl9gSL5vzzaXtGVq/0BjEib+86JB59MG5N/I0jvc0NOACrL6lT5aGH6CCWiAfQ9FbmdmEke5N26T6TTNgNwXzNUREkI1974124iHqa9IciooftXTdSyVbkExO5SW6HpdKP5cQcuPeZrfB9psP9tUgYx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174837; c=relaxed/simple;
-	bh=K3rfcnKEmCxH+DGULTQ/Wv2j+wTl9A4xzu1wq5dlfkk=;
+	s=arc-20240116; t=1790174840; c=relaxed/simple;
+	bh=K/YpUJDhndycpLeVFO2ekJylgc5ntBzj+qjNLTTfbYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PP89Bd+GHv7QrzJ8E35U9l2khlkg0v8vQPVcxWJShqijtalhwwZZ+jFCaEJEErDi/92h52uE3SYG/TDcB76AqKJafkQB9ZKoVvwH7suUoJhEgae92YeHO+jlxG6Dbis+FH15J5K7rW/xtWfcVl50fF47xfm7dC2k2eNTBYhh9RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcoy1w6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TqDXIKcoCPDTvZe9WnWRwZ6laof9FjYFMk70QcYjJhlXEIN5w6qfVCkrEuNXfY+mrUTwTKVRnLrfckvLJs/qug8hy/iyxBENIvUdBOP5oKEOZ/j5i1srSe0iTwNc0giZCpOmwlYohHpQlYmCVFR+9hjag83aiTEkvLXPMl8C1VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyklOWjd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcoy1w6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF9F1F000FF;
-	Wed, 23 Sep 2026 14:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyklOWjd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B32C1F000FF;
+	Wed, 23 Sep 2026 14:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174835;
-	bh=QS+xDCk4kNDICClUisq1aGmDp7HYkXq2OkaNzTXrrs0=;
+	s=korg; t=1790174839;
+	bh=ATScFx15TnqNjr4DC0aOsxhjpoNpmOrwyQIUiXzKeN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wcoy1w6GozCR8Y+cTst0wMqeLBlkOFrjmq3cBbu1VFT02X7chsFORNTxQXgL01gGb
-	 SDZbB/91KFd/1F38Aa7FgybVQihlwY0UYmYtwGqfPbOfr9zKb4YeRNjm6/cR4GwVM4
-	 CbzVrDnCc3vtuwNwUQ2mZ0S3jtK+XEt3o/RAaiDE=
+	b=yyklOWjdAQGvhn5NzLxUojjAXcRMTdGGnR4G6kfqe20/tnZivKNUyuADnMrBicQE6
+	 hEi+GnNI6wGpgHh8E7iOun5gtCzZw87LbK7ZHHwGtKUBZhVRGeHpMGFSMtbbIqP6n+
+	 nE8isz43v+egKtuMV6vCXlnItRomuoHKHLgnHP8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunguk Shin <seunguk.shin@arm.com>,
-	Jan Kara <jack@suse.cz>,
-	Alistair Popple <apopple@nvidia.com>,
-	Kiara Grouwstra <cinereal@riseup.net>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 206/398] fs/dax: check zero or empty entry before converting xarray entry
-Date: Wed, 23 Sep 2026 16:04:40 +0200
-Message-ID: <20260923140648.761407876@linuxfoundation.org>
+	Pavel Machek <pavel@nabladev.com>,
+	Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 207/398] phy: renesas: rcar-gen3-usb2: Avoid long delay in atomic context
+Date: Wed, 23 Sep 2026 16:04:41 +0200
+Message-ID: <20260923140648.788399507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -56,136 +53,536 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seunguk Shin <seunguk.shin@arm.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 8e2b8614039853e68d5338e37821e8bcee9fc05f upstream.
+commit 48e97c59a49c9e90270f5e3d221db253b76de5da upstream.
 
-Calling dax_to_folio() with empty entry causes kernel panic below when
-booting a VM with DAX enabled storage.
+The OTG PHY initialization sequence needs to wait for 20 ms at a specific
+step, as described in commit 72c0339c115b ("phy: renesas:
+rcar-gen3-usb2: follow the hardware manual procedure").
 
-This patch checks empty entry before calling dax_to_folio() on
-dax_associate_entry(), dax_disassociate_entry(), and dax_busy_page().
+Commit 55a387ebb921 ("phy: renesas: rcar-gen3-usb2: Lock around hardware
+registers and driver data") tried to address various problems in the
+rcar-gen3-usb2 driver and converted the mutex protecting HW register
+accesses to a spin lock, leaving, however, a long delay in the critical
+section protected by the spin lock. This may become a problem,
+especially on RT kernels.
 
-Commit 98c183a4fccf ("fs/dax: don't disassociate zero page entries") added
-guards in the associate and disassociate paths, but the guards still come
-after dax_to_folio(), and dax_busy_page() still has the same problem.
+To address this, release the spin lock before sleeping for 20 ms as
+required by the HW manual and reacquire it afterwards. To avoid other
+threads entering the critical section and configuring the HW while the
+software is waiting for the OTG initialization to complete, introduce the
+otg_initializing variable alongside the otg_init_done wait queue. Any
+other thread trying to configure the HW while the OTG PHY initialization
+is in progress waits for the wait queue instead of immediately returning
+errors to PHY users. The IRQs were also disabled while waiting for the OTG
+PHY initialization to complete, as the interrupt handler may also apply HW
+settings.
 
-[    0.737679] EXT4-fs (pmem0p1): mounted filesystem 79676804-7c8b-491a-b2a6-9bae3c72af70 ro with ordered data mode. Quota mode: disabled.
-[    0.737891] VFS: Mounted root (ext4 filesystem) readonly on device 259:1.
-[    0.739119] devtmpfs: mounted
-[    0.739476] Freeing unused kernel memory: 1920K
-[    0.740156] Run /sbin/init as init process
-[    0.740229]   with arguments:
-[    0.740286]     /sbin/init
-[    0.740321]   with environment:
-[    0.740369]     HOME=/
-[    0.740400]     TERM=linux
-[    0.743162] Unable to handle kernel paging request at virtual address fffffdffbf000008
-[    0.743285] Mem abort info:
-[    0.743316]   ESR = 0x0000000096000006
-[    0.743371]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    0.743444]   SET = 0, FnV = 0
-[    0.743489]   EA = 0, S1PTW = 0
-[    0.743545]   FSC = 0x06: level 2 translation fault
-[    0.743610] Data abort info:
-[    0.743656]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-[    0.743720]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    0.743785]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    0.743848] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000b9d17000
-[    0.743931] [fffffdffbf000008] pgd=10000000bfa3d403, p4d=10000000bfa3d403, pud=1000000040bfe403, pmd=0000000000000000
-[    0.744070] Internal error: Oops: 0000000096000006 [#1]  SMP
-[    0.748888] CPU: 0 UID: 0 PID: 1 Comm: init Not tainted 6.18.4 #1 NONE
-[    0.749421] pstate: 004000c5 (nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.749969] pc : dax_disassociate_entry.constprop.0+0x20/0x50
-[    0.750444] lr : dax_insert_entry+0xcc/0x408
-[    0.750802] sp : ffff80008000b9e0
-[    0.751083] x29: ffff80008000b9e0 x28: 0000000000000000 x27: 0000000000000000
-[    0.751682] x26: 0000000001963d01 x25: ffff0000004f7d90 x24: 0000000000000000
-[    0.752264] x23: 0000000000000000 x22: ffff80008000bcc8 x21: 0000000000000011
-[    0.752836] x20: ffff80008000ba90 x19: 0000000001963d01 x18: 0000000000000000
-[    0.753407] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[    0.753970] x14: ffffbf3154b9ae70 x13: 0000000000000000 x12: ffffbf3154b9ae70
-[    0.754548] x11: ffffffffffffffff x10: 0000000000000000 x9 : 0000000000000000
-[    0.755122] x8 : 000000000000000d x7 : 000000000000001f x6 : 0000000000000000
-[    0.755707] x5 : 0000000000000000 x4 : 0000000000000000 x3 : fffffdffc0000000
-[    0.756287] x2 : 0000000000000008 x1 : 0000000040000000 x0 : fffffdffbf000000
-[    0.756871] Call trace:
-[    0.757107]  dax_disassociate_entry.constprop.0+0x20/0x50 (P)
-[    0.757592]  dax_iomap_pte_fault+0x4fc/0x808
-[    0.757951]  dax_iomap_fault+0x28/0x30
-[    0.758258]  ext4_dax_huge_fault+0x80/0x2dc
-[    0.758594]  ext4_dax_fault+0x10/0x3c
-[    0.758892]  __do_fault+0x38/0x12c
-[    0.759175]  __handle_mm_fault+0x530/0xcf0
-[    0.759518]  handle_mm_fault+0xe4/0x230
-[    0.759833]  do_page_fault+0x17c/0x4dc
-[    0.760144]  do_translation_fault+0x30/0x38
-[    0.760483]  do_mem_abort+0x40/0x8c
-[    0.760771]  el0_ia+0x4c/0x170
-[    0.761032]  el0t_64_sync_handler+0xd8/0xdc
-[    0.761371]  el0t_64_sync+0x168/0x16c
-[    0.761677] Code: f9453021 f2dfbfe3 cb813080 8b001860 (f9400401)
-[    0.762168] ---[ end trace 0000000000000000 ]---
-[    0.762550] note: init[1] exited with irqs disabled
-[    0.762631] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+The OTG can only be initialized once. It is initialized by the first PHY
+that calls struct phy_ops::rcar_gen3_phy_usb2_init().
 
-Link: https://lore.kernel.org/m2y0enxtzk.fsf@arm.com
-Fixes: 38607c62b34b ("fs/dax: properly refcount fs dax pages")
-Signed-off-by: Seunguk Shin <seunguk.shin@arm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Reported-by: Kiara Grouwstra <cinereal@riseup.net>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+To avoid failures when multiple PHYs call struct
+phy_ops::rcar_gen3_phy_usb2_init() simultaneously, and the PHY responsible
+for initializing the OTG either fails or deinit quiqly and another PHY
+takes over the PHY init role), the code waiting for the
+channel->otg_init_done wait queue retries up to NUM_OF_PHYS times.
+
+Fixes: 55a387ebb921 ("phy: renesas: rcar-gen3-usb2: Lock around hardware registers and driver data")
+Cc: stable@vger.kernel.org
+Reported-by: Pavel Machek <pavel@nabladev.com>
+Closes: https://lore.kernel.org/all/afhkX2Ys2BG1gnqy@duo.ucw.cz
+Reported-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+Closes: https://lore.kernel.org/all/afhkX2Ys2BG1gnqy@duo.ucw.cz
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/all/afhkX2Ys2BG1gnqy@duo.ucw.cz
+Link: https://patch.msgid.link/20260716183246.3183877-1-claudiu.beznea+renesas@tuxon.dev
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dax.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c |  310 ++++++++++++++++++++++++++-----
+ 1 file changed, 265 insertions(+), 45 deletions(-)
 
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -443,11 +443,12 @@ static void dax_associate_entry(void *en
- 				unsigned long address, bool shared)
- {
- 	unsigned long size = dax_entry_size(entry), index;
--	struct folio *folio = dax_to_folio(entry);
-+	struct folio *folio;
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -26,6 +26,7 @@
+ #include <linux/reset.h>
+ #include <linux/string.h>
+ #include <linux/usb/of.h>
++#include <linux/wait.h>
+ #include <linux/workqueue.h>
  
- 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
- 		return;
+ /******* USB2.0 Host registers (original offset is +0x200) *******/
+@@ -105,6 +106,13 @@
+ /*  RZ/G2L specific */
+ #define USB2_LINECTRL1_USB2_IDMON	BIT(0)
  
-+	folio = dax_to_folio(entry);
- 	index = linear_page_index(vma, address & ~(size - 1));
- 	if (shared && (folio->mapping || dax_folio_is_shared(folio))) {
- 		if (folio->mapping)
-@@ -468,21 +469,23 @@ static void dax_associate_entry(void *en
- static void dax_disassociate_entry(void *entry, struct address_space *mapping,
- 				bool trunc)
- {
--	struct folio *folio = dax_to_folio(entry);
-+	struct folio *folio;
++/*
++ * The OTG initialization is expected to finish in 20ms. Choose a large enough
++ * timeout to avoid waiters exit prematurely the waiting section under heavy
++ * CPU load.
++ */
++#define USB2_OTG_INIT_TIMEOUT		msecs_to_jiffies(120)
++
+ #define NUM_OF_PHYS			4
+ enum rcar_gen3_phy_index {
+ 	PHY_INDEX_BOTH_HC,
+@@ -136,12 +144,20 @@ struct rcar_gen3_chan {
+ 	struct rcar_gen3_phy rphys[NUM_OF_PHYS];
+ 	struct regulator *vbus;
+ 	struct work_struct work;
++	wait_queue_head_t otg_init_done;
+ 	spinlock_t lock;	/* protects access to hardware and driver data structure. */
+ 	enum usb_dr_mode dr_mode;
+ 	bool extcon_host;
+ 	bool is_otg_channel;
+ 	bool uses_otg_pins;
+ 	bool otg_internal_reg;
++	/*
++	 * The OTG can be initialized only once and needs to release the spinlock
++	 * and wait for 20 ms due to hardware constraints. If a thread executes
++	 * PHY configuration code while the OTG PHY is waiting for the 20 ms, the
++	 * thread will have to wait for the OTG PHY initialization to complete.
++	 */
++	bool otg_initializing;
+ };
  
- 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
- 		return;
+ struct rcar_gen3_phy_drv_data {
+@@ -392,26 +408,58 @@ static ssize_t role_store(struct device
+ 	struct rcar_gen3_chan *ch = dev_get_drvdata(dev);
+ 	bool is_b_device;
+ 	enum phy_mode cur_mode, new_mode;
++	int retries = NUM_OF_PHYS;
++	unsigned long flags;
++	int ret = -EIO;
  
-+	folio = dax_to_folio(entry);
- 	dax_folio_put(folio);
+-	guard(spinlock_irqsave)(&ch->lock);
++	spin_lock_irqsave(&ch->lock, flags);
+ 
+-	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
+-		return -EIO;
++	if (!ch->is_otg_channel)
++		goto unlock;
++
++	while (retries-- && ch->otg_initializing) {
++		spin_unlock_irqrestore(&ch->lock, flags);
++
++		ret = wait_event_timeout(ch->otg_init_done, !ch->otg_initializing,
++					 USB2_OTG_INIT_TIMEOUT);
++		ret = ret ? 0 : -ETIMEDOUT;
++		if (ret && !retries)
++			goto exit;
++
++		spin_lock_irqsave(&ch->lock, flags);
++	}
++
++	/* If another thread started a new initialization just return -EBUSY. */
++	if (ch->otg_initializing) {
++		ret = -EBUSY;
++		goto unlock;
++	} else {
++		ret = 0;
++	}
++
++	if (!rcar_gen3_is_any_otg_rphy_initialized(ch)) {
++		ret = -EIO;
++		goto unlock;
++	}
+ 
+-	if (sysfs_streq(buf, "host"))
++	if (sysfs_streq(buf, "host")) {
+ 		new_mode = PHY_MODE_USB_HOST;
+-	else if (sysfs_streq(buf, "peripheral"))
++	} else if (sysfs_streq(buf, "peripheral")) {
+ 		new_mode = PHY_MODE_USB_DEVICE;
+-	else
+-		return -EINVAL;
++	} else {
++		ret = -EINVAL;
++		goto unlock;
++	}
+ 
+ 	/* is_b_device: true is B-Device. false is A-Device. */
+ 	is_b_device = rcar_gen3_check_id(ch);
+ 	cur_mode = rcar_gen3_get_phy_mode(ch);
+ 
+ 	/* If current and new mode is the same, this returns the error */
+-	if (cur_mode == new_mode)
+-		return -EINVAL;
++	if (cur_mode == new_mode) {
++		ret = -EINVAL;
++		goto unlock;
++	}
+ 
+ 	if (new_mode == PHY_MODE_USB_HOST) { /* And is_host must be false */
+ 		if (!is_b_device)	/* A-Peripheral */
+@@ -425,7 +473,10 @@ static ssize_t role_store(struct device
+ 			rcar_gen3_init_for_peri(ch);
+ 	}
+ 
+-	return count;
++unlock:
++	spin_unlock_irqrestore(&ch->lock, flags);
++exit:
++	return ret ?: count;
  }
  
- static struct page *dax_busy_page(void *entry)
+ static ssize_t role_show(struct device *dev, struct device_attribute *attr,
+@@ -441,14 +492,11 @@ static ssize_t role_show(struct device *
+ }
+ static DEVICE_ATTR_RW(role);
+ 
+-static void rcar_gen3_init_otg(struct rcar_gen3_chan *ch)
++static void rcar_gen3_init_otg_phase0(struct rcar_gen3_chan *ch)
  {
--	struct folio *folio = dax_to_folio(entry);
-+	struct folio *folio;
+ 	void __iomem *usb2_base = ch->base;
+ 	u32 val;
  
- 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
- 		return NULL;
+-	if (!ch->is_otg_channel || rcar_gen3_is_any_otg_rphy_initialized(ch))
+-		return;
+-
+ 	/* Should not use functions of read-modify-write a register */
+ 	val = readl(usb2_base + USB2_LINECTRL1);
+ 	val = (val & ~USB2_LINECTRL1_DP_RPD) | USB2_LINECTRL1_DPRPD_EN |
+@@ -471,7 +519,11 @@ static void rcar_gen3_init_otg(struct rc
+ 			writel(val | USB2_ADPCTRL_IDPULLUP, usb2_base + USB2_ADPCTRL);
+ 		}
+ 	}
+-	mdelay(20);
++}
++
++static void rcar_gen3_init_otg_phase1(struct rcar_gen3_chan *ch)
++{
++	void __iomem *usb2_base = ch->base;
  
-+	folio = dax_to_folio(entry);
- 	if (folio_ref_count(folio) - folio_mapcount(folio))
- 		return &folio->page;
- 	else
+ 	writel(0xffffffff, usb2_base + USB2_OBINTSTA);
+ 	writel(ch->phy_data->obint_enable_bits, usb2_base + USB2_OBINTEN);
+@@ -502,6 +554,7 @@ static irqreturn_t rcar_gen3_phy_usb2_ir
+ 	void __iomem *usb2_base = ch->base;
+ 	struct device *dev = ch->dev;
+ 	irqreturn_t ret = IRQ_NONE;
++	unsigned long flags;
+ 	u32 status;
+ 
+ 	pm_runtime_get_noresume(dev);
+@@ -509,33 +562,102 @@ static irqreturn_t rcar_gen3_phy_usb2_ir
+ 	if (pm_runtime_suspended(dev))
+ 		goto rpm_put;
+ 
+-	scoped_guard(spinlock, &ch->lock) {
+-		status = readl(usb2_base + USB2_OBINTSTA);
+-		if (status & ch->phy_data->obint_enable_bits) {
+-			dev_vdbg(dev, "%s: %08x\n", __func__, status);
+-			if (ch->phy_data->vblvl_ctrl)
+-				writel(USB2_OBINTSTA_CLEAR, usb2_base + USB2_OBINTSTA);
+-			else
+-				writel(ch->phy_data->obint_enable_bits, usb2_base + USB2_OBINTSTA);
+-			rcar_gen3_device_recognition(ch);
+-			rcar_gen3_configure_vblvl_ctrl(ch);
+-			ret = IRQ_HANDLED;
+-		}
++	spin_lock_irqsave(&ch->lock, flags);
++
++	status = readl(usb2_base + USB2_OBINTSTA);
++	if (status & ch->phy_data->obint_enable_bits) {
++		dev_vdbg(dev, "%s: %08x\n", __func__, status);
++		if (ch->phy_data->vblvl_ctrl)
++			writel(USB2_OBINTSTA_CLEAR, usb2_base + USB2_OBINTSTA);
++		else
++			writel(ch->phy_data->obint_enable_bits, usb2_base + USB2_OBINTSTA);
++
++		ret = IRQ_HANDLED;
++
++		/* This should not happen! */
++		if (ch->otg_initializing)
++			goto unlock;
++
++		rcar_gen3_device_recognition(ch);
++		rcar_gen3_configure_vblvl_ctrl(ch);
+ 	}
+ 
++unlock:
++	spin_unlock_irqrestore(&ch->lock, flags);
+ rpm_put:
+ 	pm_runtime_put_noidle(dev);
+ 	return ret;
+ }
+ 
++static void rcar_gen3_phy_usb2_irqs_mask_all(struct rcar_gen3_chan *channel,
++					     u32 *masked_irqs_bits)
++{
++	u32 val, bitmask = USB2_INT_ENABLE_UCOM_INTEN;
++	void __iomem *usb2_base = channel->base;
++
++	for (unsigned int i = 0; i < NUM_OF_PHYS; i++)
++		bitmask |= channel->rphys[i].int_enable_bits;
++
++	val = readl(usb2_base + USB2_INT_ENABLE);
++	*masked_irqs_bits = val & bitmask;
++	val &= ~bitmask;
++	writel(val, usb2_base + USB2_INT_ENABLE);
++
++	/*
++	 * Don't report channel->phy_data->obint_enable_bits IRQs. These are
++	 * unmasked anyway in rcar_gen3_init_otg_phase1().
++	 */
++	val = readl(usb2_base + USB2_OBINTEN);
++	val &= ~channel->phy_data->obint_enable_bits;
++	writel(val, usb2_base + USB2_OBINTEN);
++}
++
++static void rcar_gen3_phy_usb2_irqs_unmask(struct rcar_gen3_chan *channel,
++					   u32 irqs_bits)
++{
++	u32 val, bitmask = USB2_INT_ENABLE_UCOM_INTEN;
++	void __iomem *usb2_base = channel->base;
++
++	for (unsigned int i = 0; i < NUM_OF_PHYS; i++)
++		bitmask |= channel->rphys[i].int_enable_bits;
++
++	val = readl(usb2_base + USB2_INT_ENABLE);
++	val &= ~bitmask;
++	val |= irqs_bits;
++	writel(val, usb2_base + USB2_INT_ENABLE);
++}
++
+ static int rcar_gen3_phy_usb2_init(struct phy *p)
+ {
+ 	struct rcar_gen3_phy *rphy = phy_get_drvdata(p);
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	void __iomem *usb2_base = channel->base;
++	int retries = NUM_OF_PHYS;
++	unsigned long flags;
+ 	u32 val;
++	int ret;
+ 
+-	guard(spinlock_irqsave)(&channel->lock);
++	spin_lock_irqsave(&channel->lock, flags);
++
++	while (retries-- && channel->otg_initializing) {
++		spin_unlock_irqrestore(&channel->lock, flags);
++
++		ret = wait_event_timeout(channel->otg_init_done, !channel->otg_initializing,
++					 USB2_OTG_INIT_TIMEOUT);
++		ret = ret ? 0 : -ETIMEDOUT;
++		if (ret && !retries)
++			return ret;
++
++		spin_lock_irqsave(&channel->lock, flags);
++	}
++
++	/* If another thread started a new initialization just return -EBUSY. */
++	if (channel->otg_initializing) {
++		ret = -EBUSY;
++		goto unlock;
++	} else {
++		ret = 0;
++	}
+ 
+ 	/* Initialize USB2 part */
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+@@ -548,8 +670,23 @@ static int rcar_gen3_phy_usb2_init(struc
+ 	}
+ 
+ 	/* Initialize otg part (only if we initialize a PHY with IRQs). */
+-	if (rphy->int_enable_bits)
+-		rcar_gen3_init_otg(channel);
++	if (rphy->int_enable_bits && channel->is_otg_channel &&
++	    !rcar_gen3_is_any_otg_rphy_initialized(channel)) {
++		u32 masked_irq_bits = 0;
++
++		rcar_gen3_init_otg_phase0(channel);
++		rcar_gen3_phy_usb2_irqs_mask_all(channel, &masked_irq_bits);
++		channel->otg_initializing = true;
++		spin_unlock_irqrestore(&channel->lock, flags);
++
++		fsleep(20000);
++
++		spin_lock_irqsave(&channel->lock, flags);
++		rcar_gen3_phy_usb2_irqs_unmask(channel, masked_irq_bits);
++		rcar_gen3_init_otg_phase1(channel);
++		channel->otg_initializing = false;
++		wake_up_all(&channel->otg_init_done);
++	}
+ 
+ 	if (channel->phy_data->vblvl_ctrl) {
+ 		/* SIDDQ mode release */
+@@ -568,7 +705,10 @@ static int rcar_gen3_phy_usb2_init(struc
+ 
+ 	rphy->initialized = true;
+ 
+-	return 0;
++unlock:
++	spin_unlock_irqrestore(&channel->lock, flags);
++
++	return ret;
+ }
+ 
+ static int rcar_gen3_phy_usb2_exit(struct phy *p)
+@@ -576,9 +716,32 @@ static int rcar_gen3_phy_usb2_exit(struc
+ 	struct rcar_gen3_phy *rphy = phy_get_drvdata(p);
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	void __iomem *usb2_base = channel->base;
++	int retries = NUM_OF_PHYS;
++	unsigned long flags;
+ 	u32 val;
++	int ret;
+ 
+-	guard(spinlock_irqsave)(&channel->lock);
++	spin_lock_irqsave(&channel->lock, flags);
++
++	while (retries-- && channel->otg_initializing) {
++		spin_unlock_irqrestore(&channel->lock, flags);
++
++		ret = wait_event_timeout(channel->otg_init_done, !channel->otg_initializing,
++					 USB2_OTG_INIT_TIMEOUT);
++		ret = ret ? 0 : -ETIMEDOUT;
++		if (ret && !retries)
++			return ret;
++
++		spin_lock_irqsave(&channel->lock, flags);
++	}
++
++	/* If another thread started a new initialization just return -EBUSY. */
++	if (channel->otg_initializing) {
++		ret = -EBUSY;
++		goto unlock;
++	} else {
++		ret = 0;
++	}
+ 
+ 	rphy->initialized = false;
+ 
+@@ -588,7 +751,9 @@ static int rcar_gen3_phy_usb2_exit(struc
+ 		val &= ~USB2_INT_ENABLE_UCOM_INTEN;
+ 	writel(val, usb2_base + USB2_INT_ENABLE);
+ 
+-	return 0;
++unlock:
++	spin_unlock_irqrestore(&channel->lock, flags);
++	return ret;
+ }
+ 
+ static int rcar_gen3_phy_usb2_power_on(struct phy *p)
+@@ -596,8 +761,10 @@ static int rcar_gen3_phy_usb2_power_on(s
+ 	struct rcar_gen3_phy *rphy = phy_get_drvdata(p);
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	void __iomem *usb2_base = channel->base;
++	int retries = NUM_OF_PHYS;
++	unsigned long flags;
+ 	u32 val;
+-	int ret = 0;
++	int ret;
+ 
+ 	if (channel->vbus && !channel->otg_internal_reg) {
+ 		ret = regulator_enable(channel->vbus);
+@@ -605,7 +772,27 @@ static int rcar_gen3_phy_usb2_power_on(s
+ 			return ret;
+ 	}
+ 
+-	guard(spinlock_irqsave)(&channel->lock);
++	spin_lock_irqsave(&channel->lock, flags);
++
++	while (retries-- && channel->otg_initializing) {
++		spin_unlock_irqrestore(&channel->lock, flags);
++
++		ret = wait_event_timeout(channel->otg_init_done, !channel->otg_initializing,
++					 USB2_OTG_INIT_TIMEOUT);
++		ret = ret ? 0 : -ETIMEDOUT;
++		if (ret && !retries)
++			goto disable_regulator;
++
++		spin_lock_irqsave(&channel->lock, flags);
++	}
++
++	/* If another thread started a new initialization just return -EBUSY. */
++	if (channel->otg_initializing) {
++		ret = -EBUSY;
++		goto unlock;
++	} else {
++		ret = 0;
++	}
+ 
+ 	if (!rcar_gen3_are_all_rphys_power_off(channel))
+ 		goto out;
+@@ -620,27 +807,59 @@ out:
+ 	/* The powered flag should be set for any other phys anyway */
+ 	rphy->powered = true;
+ 
+-	return 0;
++unlock:
++	spin_unlock_irqrestore(&channel->lock, flags);
++
++disable_regulator:
++	if (ret && channel->vbus && !channel->otg_internal_reg)
++		regulator_disable(channel->vbus);
++
++	return ret;
+ }
+ 
+ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
+ {
+ 	struct rcar_gen3_phy *rphy = phy_get_drvdata(p);
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+-	int ret = 0;
++	int retries = NUM_OF_PHYS;
++	unsigned long flags;
++	int ret;
+ 
+-	scoped_guard(spinlock_irqsave, &channel->lock) {
+-		rphy->powered = false;
++	spin_lock_irqsave(&channel->lock, flags);
+ 
+-		if (rcar_gen3_are_all_rphys_power_off(channel)) {
+-			u32 val = readl(channel->base + USB2_USBCTR);
++	while (retries-- && channel->otg_initializing) {
++		spin_unlock_irqrestore(&channel->lock, flags);
+ 
+-			val |= USB2_USBCTR_PLL_RST;
+-			writel(val, channel->base + USB2_USBCTR);
+-		}
++		ret = wait_event_timeout(channel->otg_init_done, !channel->otg_initializing,
++					 USB2_OTG_INIT_TIMEOUT);
++		ret = ret ? 0 : -ETIMEDOUT;
++		if (ret && !retries)
++			return ret;
++
++		spin_lock_irqsave(&channel->lock, flags);
++	}
++
++	/* If another thread started a new initialization just return -EBUSY. */
++	if (channel->otg_initializing) {
++		ret = -EBUSY;
++		goto unlock;
++	} else {
++		ret = 0;
++	}
++
++	rphy->powered = false;
++
++	if (rcar_gen3_are_all_rphys_power_off(channel)) {
++		u32 val = readl(channel->base + USB2_USBCTR);
++
++		val |= USB2_USBCTR_PLL_RST;
++		writel(val, channel->base + USB2_USBCTR);
+ 	}
+ 
+-	if (channel->vbus && !channel->otg_internal_reg)
++unlock:
++	spin_unlock_irqrestore(&channel->lock, flags);
++
++	if (!ret && channel->vbus && !channel->otg_internal_reg)
+ 		ret = regulator_disable(channel->vbus);
+ 
+ 	return ret;
+@@ -1018,6 +1237,7 @@ static int rcar_gen3_phy_usb2_probe(stru
+ 	}
+ 
+ 	spin_lock_init(&channel->lock);
++	init_waitqueue_head(&channel->otg_init_done);
+ 	for (i = 0; i < NUM_OF_PHYS; i++) {
+ 		channel->rphys[i].phy = devm_phy_create(dev, NULL,
+ 							channel->phy_data->phy_usb2_ops);
 
 
