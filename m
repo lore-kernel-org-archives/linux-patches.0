@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E1E5383FA;
-	Wed, 23 Sep 2026 14:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E765383F5;
+	Wed, 23 Sep 2026 14:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174642; cv=none; b=gUP0rvIQPTkWDSG4Un8rHNLg5eiUEKQhus52Ts/oaYLqs9qW85Tueclv1ufperCvBqGuJMwWAtYfXndfXnWuPxn60UKNBlcZuSSSpenqernKcaUJ8Tz8i3y5BhBtFcTYA8NU8cU5YwuhS9UkGvA9MNE1qif/pEF0+I2v79ZAxOk=
+	t=1790174644; cv=none; b=qvuvWQzP8OOP2S+Ibbx0nWsdbP3XKAr73arPmQyqgQg62nQ41BbmHdTA1tj6v7EvfebT4g+qYzFVwmEFbva68YqrPhsynHSBTxglvu+Bzl957iB/Kfoa9Lw5GBHlWcsQSvmyNQ+JmiqtPiPQP9nlsvHJ9qh0AEg4aCmQPG5hyOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174642; c=relaxed/simple;
-	bh=7suGsd1dpQ2MQGcguBzd+iP1Gp2tmH+q0P2UnAZaXoU=;
+	s=arc-20240116; t=1790174644; c=relaxed/simple;
+	bh=yqFlr3emXXirsCPRZynxIBoo3dIQDZN7DhSPWKozIHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGnBhGG+iU01qP1XHgCeKga6Fk3TLsOiL47UJeyQnBvE7a01TN3xX29uR1Lh7/PDWl0kRI2tmB1Q58LpCmW6aXJoWZSQi0+u7+6MAPsquLxs1RIhdF8JWJPmQPlBz++oJFc4JsL9AiJLP9LLxRSNzu70s/0SkGoKabCY3dMgKGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGz0HvkD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=atSMgVc4uu6VwXLMMS+sKtz9NdZsKOGzFq1heNzn3ScSw+iqH5SxuFrFMiZXZi2mdA7aNBASbBYD7Yce7uaPnX2qjQYOwLYd7/nZqbT4s5CZOQJhhw2oQbxoPfyhkwK8/JHd1eqEzBTVi3S6RzXH+/aSpNagm3vKVZdSFJF+cgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG7pKaLn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGz0HvkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1221F000FF;
-	Wed, 23 Sep 2026 14:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG7pKaLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51371F000FF;
+	Wed, 23 Sep 2026 14:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174640;
-	bh=ld+h2zJC7bDna7omz72R0lGzPqmw/ahCVpmxW5kEKxI=;
+	s=korg; t=1790174643;
+	bh=xQnIMBmeAOsWPKtFNmH8ahgAo3s4Jdyv8oE+2WmSvsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGz0HvkDoJgdpb/1dvlV5/K/qz5iSNQdnayqhuodth8D00Xxn6Vx768txmobMS6M/
-	 S2QAdvD4WdcCKe+WJ6Z/6ET/0lVmRkC7TrqNL+wHalcjPRZbq+oa6gpX8Kv2rNXerf
-	 2mRYH8jtn92d6haj8KGDg7twwlPncY3294ktJeK4=
+	b=bG7pKaLnCujxVaS9tEgA4tNIgEg8U2TRxToaazr/L+W5Cf9hka4t69/6jZkqhrkNA
+	 oPKTi//Et1ux1QwK4HieUr3vA1Ix7ora+r/W3lar/pOV34gB2RaK5jpJEC2BEYP6FU
+	 5bob1P2lU9iEez2QEcadQo4L3YYkbb34C5LZkyPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 180/398] net: psp: avoid conflicts with skb->decrypted and sk_validate_xmit_skb()
-Date: Wed, 23 Sep 2026 16:04:14 +0200
-Message-ID: <20260923140648.097214500@linuxfoundation.org>
+Subject: [PATCH 6.18 181/398] x86/alternative: Refactor INT3 call emulation selftest
+Date: Wed, 23 Sep 2026 16:04:15 +0200
+Message-ID: <20260923140648.124822384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,108 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Zahka <daniel.zahka@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit a41f24c612c3f5139a3143307eb85bbcf1bd4d07 ]
+[ Upstream commit 3049fc4b5f1d2320a84e2902b3ac5a735f60ca04 ]
 
-PSP conflicts with TLS ULP in its usage of both skb->decrypted and
-sk->sk_validate_xmit_skb().
+The INT3 call emulation selftest is a bit fragile as it relies on the
+compiler not inserting any extra instructions before the
+int3_selftest_ip() definition.
 
-Make PSP mutually exclusive with TLS ULP, the only other user of either
-of these. As other users of skb->decrypted come along, they can be added
-to sk_has_decrypt_user(). It would make sense to also assert that
-sk->sk_validate_xmit_skb() is also NULL in both of these setup paths for
-similar future proofing, but the PSP listener/sk_clone() path is still
-broken and it could be seen as a regression to not allow rx assoc to run
-on a child of a listener socket with PSP tx assoc state.
+Also, the int3_selftest_ip() symbol overlaps with the int3_selftest
+symbol(), which can confuse objtool.
 
-Include all TCP ULPs in the sk_has_decrypt_user() check, even though TLS
-is the only one that conflicts with PSP via the decrypted bit. This is
-intentional because PSP was not designed to be used with ULPs. It is
-best to close off surface area that may make bugs reachable, until
-someone wishes to design and test an actual user of PSP with ULPs.
+Fix those issues by slightly reworking the functionality and moving
+int3_selftest_ip() to a separate asm function.  While at it, improve the
+naming.
 
-Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
-Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260915-psp-ktls-fix-v2-1-0eedc3b148ec@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Joe Lawrence <joe.lawrence@redhat.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Stable-dep-of: a5f7a5bb3b7f ("x86/kprobes: Fix crash when probing CS CALL instructions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 ++
- net/core/sock.c    | 7 +++++++
- net/ipv4/tcp_ulp.c | 4 ++++
- net/psp/psp_sock.c | 4 ++++
- 4 files changed, 17 insertions(+)
+ arch/x86/kernel/alternative.c | 51 +++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 23 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 9e13e1233e417..fb91d72a955dd 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2260,6 +2260,8 @@ static inline void sk_gso_disable(struct sock *sk)
- 	sk->sk_route_caps &= ~NETIF_F_GSO_MASK;
- }
- 
-+bool sk_has_decrypt_user(const struct sock *sk);
-+
- static inline int skb_do_copy_data_nocache(struct sock *sk, struct sk_buff *skb,
- 					   struct iov_iter *from, char *to,
- 					   int copy, int offset)
-diff --git a/net/core/sock.c b/net/core/sock.c
-index a0288a3618193..0d5f167e6ce69 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -142,6 +142,7 @@
- 
- #include <trace/events/sock.h>
- 
-+#include <net/psp.h>
- #include <net/tcp.h>
- #include <net/busy_poll.h>
- #include <net/phonet/phonet.h>
-@@ -2635,6 +2636,12 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- }
- EXPORT_SYMBOL_GPL(sk_setup_caps);
- 
-+bool sk_has_decrypt_user(const struct sock *sk)
-+{
-+	return psp_sk_assoc(sk) ||
-+	       (sk_is_inet(sk) && inet_csk_has_ulp(sk)); /* for tls */
-+}
-+
- /*
-  *	Simple resource managers for sockets.
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index 109a285cca514..4917d2843feb4 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -2266,21 +2266,34 @@ int alternatives_text_reserved(void *start, void *end)
+  * See entry_{32,64}.S for more details.
   */
-diff --git a/net/ipv4/tcp_ulp.c b/net/ipv4/tcp_ulp.c
-index 2aa442128630e..b58045df101e5 100644
---- a/net/ipv4/tcp_ulp.c
-+++ b/net/ipv4/tcp_ulp.c
-@@ -136,6 +136,10 @@ static int __tcp_set_ulp(struct sock *sk, const struct tcp_ulp_ops *ulp_ops)
- 	if (icsk->icsk_ulp_ops)
- 		goto out_err;
  
-+	err = -EINVAL;
-+	if (sk_has_decrypt_user(sk))
-+		goto out_err;
+-/*
+- * We define the int3_magic() function in assembly to control the calling
+- * convention such that we can 'call' it from assembly.
+- */
++extern void int3_selftest_asm(unsigned int *ptr);
+ 
+-extern void int3_magic(unsigned int *ptr); /* defined in asm */
++asm (
++"	.pushsection	.init.text, \"ax\", @progbits\n"
++"	.type		int3_selftest_asm, @function\n"
++"int3_selftest_asm:\n"
++	ANNOTATE_NOENDBR
++	/*
++	 * INT3 padded with NOP to CALL_INSN_SIZE. The INT3 triggers an
++	 * exception, then the int3_exception_nb notifier emulates a call to
++	 * int3_selftest_callee().
++	 */
++"	int3; nop; nop; nop; nop\n"
++	ASM_RET
++"	.size		int3_selftest_asm, . - int3_selftest_asm\n"
++"	.popsection\n"
++);
 +
- 	if (sk->sk_socket)
- 		clear_bit(SOCK_SUPPORT_ZC, &sk->sk_socket->flags);
++extern void int3_selftest_callee(unsigned int *ptr);
  
-diff --git a/net/psp/psp_sock.c b/net/psp/psp_sock.c
-index a931d825d1cc4..0fcc60c92c329 100644
---- a/net/psp/psp_sock.c
-+++ b/net/psp/psp_sock.c
-@@ -143,6 +143,10 @@ int psp_sock_assoc_set_rx(struct sock *sk, struct psp_assoc *pas,
- 		NL_SET_ERR_MSG(extack, "Socket already has PSP state");
- 		err = -EBUSY;
- 		goto exit_unlock;
-+	} else if (sk_has_decrypt_user(sk)) {
-+		NL_SET_ERR_MSG(extack, "Socket has incompatible state");
-+		err = -EINVAL;
-+		goto exit_unlock;
- 	}
+ asm (
+ "	.pushsection	.init.text, \"ax\", @progbits\n"
+-"	.type		int3_magic, @function\n"
+-"int3_magic:\n"
++"	.type		int3_selftest_callee, @function\n"
++"int3_selftest_callee:\n"
+ 	ANNOTATE_NOENDBR
+-"	movl	$1, (%" _ASM_ARG1 ")\n"
++"	movl	$0x1234, (%" _ASM_ARG1 ")\n"
+ 	ASM_RET
+-"	.size		int3_magic, .-int3_magic\n"
++"	.size		int3_selftest_callee, . - int3_selftest_callee\n"
+ "	.popsection\n"
+ );
  
- 	refcount_inc(&pas->refcnt);
+@@ -2289,7 +2302,7 @@ extern void int3_selftest_ip(void); /* defined in asm below */
+ static int __init
+ int3_exception_notify(struct notifier_block *self, unsigned long val, void *data)
+ {
+-	unsigned long selftest = (unsigned long)&int3_selftest_ip;
++	unsigned long selftest = (unsigned long)&int3_selftest_asm;
+ 	struct die_args *args = data;
+ 	struct pt_regs *regs = args->regs;
+ 
+@@ -2304,7 +2317,7 @@ int3_exception_notify(struct notifier_block *self, unsigned long val, void *data
+ 	if (regs->ip - INT3_INSN_SIZE != selftest)
+ 		return NOTIFY_DONE;
+ 
+-	int3_emulate_call(regs, (unsigned long)&int3_magic);
++	int3_emulate_call(regs, (unsigned long)&int3_selftest_callee);
+ 	return NOTIFY_STOP;
+ }
+ 
+@@ -2320,19 +2333,11 @@ static noinline void __init int3_selftest(void)
+ 	BUG_ON(register_die_notifier(&int3_exception_nb));
+ 
+ 	/*
+-	 * Basically: int3_magic(&val); but really complicated :-)
+-	 *
+-	 * INT3 padded with NOP to CALL_INSN_SIZE. The int3_exception_nb
+-	 * notifier above will emulate CALL for us.
++	 * Basically: int3_selftest_callee(&val); but really complicated :-)
+ 	 */
+-	asm volatile ("int3_selftest_ip:\n\t"
+-		      ANNOTATE_NOENDBR
+-		      "    int3; nop; nop; nop; nop\n\t"
+-		      : ASM_CALL_CONSTRAINT
+-		      : __ASM_SEL_RAW(a, D) (&val)
+-		      : "memory");
+-
+-	BUG_ON(val != 1);
++	int3_selftest_asm(&val);
++
++	BUG_ON(val != 0x1234);
+ 
+ 	unregister_die_notifier(&int3_exception_nb);
+ }
 -- 
 2.53.0
 
