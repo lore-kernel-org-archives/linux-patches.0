@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D583497B79;
-	Wed, 23 Sep 2026 14:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF94E3ADBB4;
+	Wed, 23 Sep 2026 14:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173080; cv=none; b=qJSuhLo6e88t5RLp6Gh2/w27eiZwetbE0qwsAT8EIrbbwLfe9wJcGX6Se0izas8xqcNs1irc5WA9k5YhdBjtLehg3b1egXT62qvsSt+3qKvAMjs9TqqBF5Ptbqx+FnnzYe9PTzzBJDYU3wj68iWXQRpqTqcXDCbGQEInMNMGxoc=
+	t=1790173083; cv=none; b=d2YjyOn/qvNE1bhPG9RMAeywS4lzkWnvCd43fkXGRfJ/SxO3ZeIn6HxwWvbdDdjsE1ZVqYmLE1fd9LRDYDQn0/JeAKekTPtW1qzuVNpfZxsEuJsIhX6GjolMV0I7IEubmCGtpx8vpuHBgfWn28LCm/rTpDEtqHmjv50N08FOGX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173080; c=relaxed/simple;
-	bh=2z78EJISyYF7LeuQ3Jz8sN7wFavEDQC5pKBj59E7fgs=;
+	s=arc-20240116; t=1790173083; c=relaxed/simple;
+	bh=2mP2Bd1Y3SXBF+ac06395SsWJ+IwW0Uygih3EV+xt30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owN5S/Vy9t7CnUJwbATPD9Hgygrrh5KzDTzg+gPuesG8OkTB2O/qYk2Ryz2hmiLoRMxhbTDdAFYK8xp88QlsAg1EhlJdytH9+JDaJzIaOSDDFODtdjHl9AQa87ggx5D/rpNwn25isMIcEHfgoq2BhMoYPij9rMVSPDCsZdhqiws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4Ij0bqU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UJ9tset8w1NuiWRxVv+outbkaF8k95yuCp2FYHQ4jxcr5HhjDduOwt5QygyR22P8oGAVm8dBfkuoZZ4IaHJbKZB33tpjyAB258DPj2/jqnb3C6hi0opUv58YxbAME3yEatTmM0pgF2i4g9PaVr9zn3Y7VcekvsGGKumHDP7MVgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tt7/Cf8F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4Ij0bqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE68A1F00898;
-	Wed, 23 Sep 2026 14:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tt7/Cf8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CC01F000FF;
+	Wed, 23 Sep 2026 14:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173079;
-	bh=xLWjHE+52A1B2fV/oaKWDYJqHEDQhrtjd46wON+ScA8=;
+	s=korg; t=1790173082;
+	bh=CrTAJpXbP6KRKN/q/Gg69ccKMrq5dE869a/TMdA8+qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F4Ij0bqU/0Tq/u7DilU6NESx79oj/+9WPSR0z6uVQj7iczEMa5c7+4LmTY+OvigvO
-	 GzSx0QDmOzoWEaUC9Ff5rXkotxkW/T5lDwK6J3QgskAPu5SI9ysDENC6tlulyyDW9G
-	 m/DxnoCXgzcYM+De58Cmhg0+UG1UrlQwdMIa/z8c=
+	b=tt7/Cf8Fcz9Vi4aQ8bFRbg7sLuSBO7ElQFUu0CHGpqYtuW95i0WSSYzWyTyR60bab
+	 f4NhSYeiX9Pk1b81f6M+cdBUdKfOOpBlvqpKjO3TT9UtTSQuuhd+Mwk1eqMpeumcek
+	 ivQ9a6MyTxTd0Y1AR22iPON61aMNhLB/93skgwck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Ilia Levi <ilia.levi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 144/438] drm/xe/mmio_gem: forbid VMA split
-Date: Wed, 23 Sep 2026 16:02:45 +0200
-Message-ID: <20260923140648.504565856@linuxfoundation.org>
+Subject: [PATCH 7.2 114/438] keys: fix lost wakeup when reaping a dead key type
+Date: Wed, 23 Sep 2026 16:02:15 +0200
+Message-ID: <20260923140647.734648920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,56 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 247a82da6f563dcfd9074a68f99a0c0997d0679c ]
+[ Upstream commit 2725ab3f5ad1c5f375c7c9fee4af02a9b138f701 ]
 
-The fault handler assumes it always operates on a VMA spanning the entire
-GEM object. This does not hold when the VMA has been split, e.g. by a
-partial munmap or mprotect. In that case the handler may map wrong
-physical pages or cause SIGBUS.
+clear_bit() is atomic with respect to the word it modifies, but it is
+an unordered operation: it implies no memory barrier on either side
+(Documentation/atomic_bitops.txt).
 
-Handle this by forbidding VMA split, as partial unmaps are not deemed
-useful for MMIO GEMs.
+key_garbage_collector() clears KEY_GC_REAPING_KEYTYPE with clear_bit()
+and calls wake_up_bit() after reaping a dead key type. wake_up_bit()
+uses a lockless waitqueue check and requires a full barrier after the
+clear.
 
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Fixes: 1ffcf8b8ae8a ("drm/xe: Support for mmap-ing mmio regions")
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260908165046.1393557-11-matthew.auld@intel.com
-(cherry picked from commit f3391a0b12d7bf826a0b21600d2f294f3dce4c14)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The existing smp_mb() is before clear_bit(), so nothing orders the clear
+against that check. The GC can see an empty waitqueue while
+unregister_key_type() still sees the bit set. The final wakeup is then
+lost, leaving module unload stuck in wait_on_bit().
+
+Use clear_and_wake_up_bit(). Its clear_bit_unlock() has RELEASE
+semantics, so the completed GC work stays ordered before the clear, and
+its smp_mb__after_atomic() orders the clear before the waitqueue check.
+
+Fixes: 0c061b5707ab ("KEYS: Correctly destroy key payloads when their keytype is removed")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260821025327.61488-1-kmehltretter@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_mmio_gem.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ security/keys/gc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.c b/drivers/gpu/drm/xe/xe_mmio_gem.c
-index 8c803ef233cc4..f15a6a84af159 100644
---- a/drivers/gpu/drm/xe/xe_mmio_gem.c
-+++ b/drivers/gpu/drm/xe/xe_mmio_gem.c
-@@ -39,10 +39,20 @@ struct xe_mmio_gem {
- 	phys_addr_t phys_addr;
- };
+diff --git a/security/keys/gc.c b/security/keys/gc.c
+index 748e83818a760..eda445f815d47 100644
+--- a/security/keys/gc.c
++++ b/security/keys/gc.c
+@@ -318,9 +318,7 @@ static void key_garbage_collector(struct work_struct *work)
  
-+static int xe_mmio_gem_vm_may_split(struct vm_area_struct *area, unsigned long addr)
-+{
-+	/*
-+	 * Forbid splitting. Together with VM_DONTEXPAND, this keeps the VMA
-+	 * matching the GEM object exactly.
-+	 */
-+	return -EINVAL;
-+}
-+
- static const struct vm_operations_struct vm_ops = {
- 	.open = drm_gem_vm_open,
- 	.close = drm_gem_vm_close,
- 	.fault = xe_mmio_gem_vm_fault,
-+	.may_split = xe_mmio_gem_vm_may_split,
- };
+ 	if (unlikely(gc_state & KEY_GC_REAPING_DEAD_3)) {
+ 		kdebug("dead wake");
+-		smp_mb();
+-		clear_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+-		wake_up_bit(&key_gc_flags, KEY_GC_REAPING_KEYTYPE);
++		clear_and_wake_up_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+ 	}
  
- static const struct drm_gem_object_funcs xe_mmio_gem_funcs = {
+ 	if (gc_state & KEY_GC_REAP_AGAIN)
 -- 
 2.53.0
 
