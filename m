@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0504466B5E;
-	Wed, 23 Sep 2026 14:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC0353162E;
+	Wed, 23 Sep 2026 14:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173765; cv=none; b=h/vmAA6mAlg1kAvPAfjq6nMuiBrbvoMXVQw/imI/H94PkW/x13oqgv2JxOBrpHGaeDa3VCUcMnHFSwDNiUqShuftUXSoLSbF9Hz5j4V9KdfJtvp0tRwpt38fUelhCbUvtZgSK9c0TfZhb2WrZm5BOkQvmVRGlYsYDn6eGk57Tck=
+	t=1790173768; cv=none; b=BTjQKVXuT046CO0JeA24xo1JSG9Q4vehe3NoCSEZg0OLAJPHb1cjb5r40UtSoGcx0yGjJq7F1rQ5GZbj5QstefIB7h0iFiSKTj30+bS6pfawVDh1l6gZ5BiG/zQH5p0EzfTHec2wqduo6n0zh+vEYeq8r5bYb4vWBW8+nFdULd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173765; c=relaxed/simple;
-	bh=XsEkSz9Rrkd3Q3j/N3vsQQYGRLagy6l3G3I+yl/TMTQ=;
+	s=arc-20240116; t=1790173768; c=relaxed/simple;
+	bh=Hsw6NE/w08Eao3lyKus/f+1u1xJGdgX/V3OMcURV868=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZRn1qfxep5Bns6iTpH2vjOFzi60cc/NZcnCiSkQyEeJLMkL6SBvs0b6Ja6P4Fd7O5C5GPS2rR8v50Nzr+FtJ3RbfkBNqaBT6fpNybqgxZ48bQ9qOa3Y29mBkIw86P7rinOM5LM3pvIbYouRzxkWsuF1yzoaZEf9htxdqjJg0ztE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dodZyRb/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JS356KSFl8130RYg+uVY4BpDjj5gMbPO+Dem4WSA19vPi56ilv1W2iHD/zYDjaFBVgvRko7TKadPHHY1wQmqaldawuWHLLt1fwY1Zyz+9aTuYVjOjNTJHwNDdEwG9DyT4Veln0emp2trMnvJWwnG+5jZ06TqKUVaa9LbhM77R4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lTxxvDt/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dodZyRb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4331F000FF;
-	Wed, 23 Sep 2026 14:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTxxvDt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2034C1F000FF;
+	Wed, 23 Sep 2026 14:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173764;
-	bh=eiwmnUxzGMBV1WAYpShvYh43iLScb/PJjG4MJB9jdCE=;
+	s=korg; t=1790173767;
+	bh=5NvU9vgRcSkly440AIYzcTk2dZGSQhDgQE6iQp9plEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dodZyRb/2fbzlML3z4BnG9JqCeWgtdd3EE8FDF99zl7q97biCsw2tVbDNRzX3VfAN
-	 /t4oy/wvd5LY7SNSW0KKBaq0BuXZiQsLy4rL/DaDIvjwu2vyI46x2SDiGEIKiUB+eu
-	 qaqGSgHgVxB6j9dF4QwBhTrPs6pQ+J2vVidd6b1c=
+	b=lTxxvDt/IIMnKM269bVosoCM+rVmp/CuX/fcLqPOCXHG8MFpQHTMmuJk1aNf+P9k7
+	 awz4VylM0KGzWjdmEnK7K8//O2oXFDd9BEFxN5EBUx+35D1V0yfY1M6hNUxMXm5irZ
+	 fvRHyD2IhCwYwVwwZkWs6WVYTnhm/5vmJXSc+fNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	iommu@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	David Hu <xuehaohu@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 7.2 292/438] dma-buf: Fix silent overflow for phys vec to sgt
-Date: Wed, 23 Sep 2026 16:05:13 +0200
-Message-ID: <20260923140652.346742302@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 7.2 330/438] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
+Date: Wed, 23 Sep 2026 16:05:51 +0200
+Message-ID: <20260923140653.364048414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -48,97 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hu <xuehaohu@google.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit b344ca94e8cc85796f16ea25e2e5a8e0303fe813 upstream.
+commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
 
-In case MMIO size is bigger than 4G and peer2peer DMA goes
-through host bridge, we trigger a code path that assigns the
-total linked IOVA (which is greater than 4G) to mapped_len.
+register_pkey_tree() ignores errors from register_one_pkey_tree() and
+continues registering the remaining slaves. The per-slave error path has
+already released the pkey parent kobjects, but their pointers remain
+stored in the device. A later device cleanup therefore passes the stale
+pointers to kobject_put(), causing a use-after-free.
 
-Previously, `mapped_len` was declared as 32-bit `unsigned int`.
-When accumulating `size_t` lengths, this leads to a silent wrap-around.
-This truncation causes truncated lengths to be passed to functions
-like `fill_sg_entry()`.
+Clear the parent pointers after releasing a failed slave tree and skip
+unregistered trees during device cleanup. This preserves the existing
+best-effort registration behavior while preventing a second cleanup of
+the failed tree.
 
-Fix this by changing `mapped_len` to `size_t` (64-bit). While
-at it, fix similar potential overflow issues in `calc_sg_nents`
-by using `check_add_overflow()` for `nents` and using
-`unsigned int` for the loop iterator in `fill_sg_entry` to match.
-
-Fixes: 3aa31a8bb11e ("dma-buf: provide phys_vec to scatter-gather mapping routine")
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
 Cc: stable@vger.kernel.org
-Cc: iommu@lists.linux.dev
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: David Hu <xuehaohu@google.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260901170849.4052816-2-dhu@x6u.co
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-buf-mapping.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/dma-buf/dma-buf-mapping.c
-+++ b/drivers/dma-buf/dma-buf-mapping.c
-@@ -5,12 +5,13 @@
-  */
- #include <linux/dma-buf-mapping.h>
- #include <linux/dma-resv.h>
-+#include <linux/overflow.h>
- 
- static struct scatterlist *fill_sg_entry(struct scatterlist *sgl, size_t length,
- 					 dma_addr_t addr)
- {
- 	unsigned int len, nents;
--	int i;
-+	unsigned int i;
- 
- 	nents = DIV_ROUND_UP(length, UINT_MAX);
- 	for (i = 0; i < nents; i++) {
-@@ -40,8 +41,12 @@ static unsigned int calc_sg_nents(struct
- 	size_t i;
- 
- 	if (!state || !dma_use_iova(state)) {
--		for (i = 0; i < nr_ranges; i++)
--			nents += DIV_ROUND_UP(phys_vec[i].len, UINT_MAX);
-+		for (i = 0; i < nr_ranges; i++) {
-+			unsigned int added = DIV_ROUND_UP(phys_vec[i].len, UINT_MAX);
-+
-+			if (check_add_overflow(nents, added, &nents))
-+				return 0;
-+		}
- 	} else {
- 		/*
- 		 * In IOVA case, there is only one SG entry which spans
-@@ -95,9 +100,10 @@ struct sg_table *dma_buf_phys_vec_to_sgt
- 					 size_t nr_ranges, size_t size,
- 					 enum dma_data_direction dir)
- {
--	unsigned int nents, mapped_len = 0;
- 	struct dma_buf_dma *dma;
- 	struct scatterlist *sgl;
-+	size_t mapped_len = 0;
-+	unsigned int nents;
- 	dma_addr_t addr;
- 	size_t i;
- 	int ret;
-@@ -133,6 +139,8 @@ struct sg_table *dma_buf_phys_vec_to_sgt
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -751,11 +751,13 @@ err_add:
+ 		kobject_put(p);
  	}
+ 	kobject_put(dev->dev_ports_parent[slave]);
++	dev->dev_ports_parent[slave] = NULL;
  
- 	nents = calc_sg_nents(dma->state, phys_vec, nr_ranges, size);
-+
-+	/* sg_alloc_table will cleanly fail and return -EINVAL if nents == 0 */
- 	ret = sg_alloc_table(&dma->sgt, nents, GFP_KERNEL | __GFP_ZERO);
- 	if (ret)
- 		goto err_free_state;
+ err_ports:
+ 	kobject_put(dev->pkeys.device_parent[slave]);
+ 	/* extra put for the device_parent create_and_add */
+ 	kobject_put(dev->pkeys.device_parent[slave]);
++	dev->pkeys.device_parent[slave] = NULL;
+ 
+ fail_dev:
+ 	kobject_put(dev->iov_parent);
+@@ -785,6 +787,8 @@ static void unregister_pkey_tree(struct
+ 		return;
+ 
+ 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
++		if (!device->pkeys.device_parent[slave])
++			continue;
+ 		list_for_each_entry_safe(p, t,
+ 					 &device->pkeys.pkey_port_list[slave],
+ 					 entry) {
 
 
