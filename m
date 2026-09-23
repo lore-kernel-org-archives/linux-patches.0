@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB4B53D9EE;
-	Wed, 23 Sep 2026 14:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D86539790;
+	Wed, 23 Sep 2026 14:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175023; cv=none; b=rZRg5HdRZyHZYvGGaIlkMJJw4aOSrEkC2EA0Itl3xUGlQGHpzB6Uu4PHbeIN558chESo08ZSWhbWr3qodWjSFWaOCY45imPn1PhluHsUQOqvtCcmubePuR+JvK1PxD322kwQWBSMHrEUsgDWTXGzT+oZ1bEJiUuJ3PI14mGuayA=
+	t=1790175025; cv=none; b=hRqb1zMWOkoAmWvFXsdKcGoYu+WvfxfOhPckH+hXb3dzqUuRHtlO57r4XZ1bN6bMYS5WzgFZJkxT82NGljJsVfZbI9QZnTVuNNH2O2/dt0ZWnhDsAIMqRVVScvdVBu6hUaxxK9RTibMvOpiKZv+zAZ8RsbnGrNUZl6zHaNJjS54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175023; c=relaxed/simple;
-	bh=vyJ8a2SH8HjUfPFsG24sLfxPo9xNmMavgCiTpi4ZoJ8=;
+	s=arc-20240116; t=1790175025; c=relaxed/simple;
+	bh=DNN1jYSZHsNumfPzXUDUyN5zWWXh/+zxs4GUVmQCqbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hecIsTcd57YRzrx89BiCiXScRH35jEP78GCavDOyBgy3EquyafSLgq2piElFODOtul+Qa2pSR/mtbfEgIm/RGzePGxSNBuX/XOIQ2ETE1Xb0ea2QF8zqFwJH7fCCUVEvej9grfbNutT6wXs3aZ1F+wVHYAp4LnlqaAIifw1sefI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3jUhhTr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDcmNASBumsmyoWIQwbZ7csZ8RCNYXv8A6hzvaadrt27YEhgMRnbYb9cxumoztIE8b6g2XWZ19lpgAdh0ORLzDmc43HMy1Ul5ppIJPyPXjsRqYiDZill6NWD0wImb6S4AQE7d2YO/hhH40mrmsoQkwcrWvzs6Mm7Ecg9do8jxM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+0Y4TkB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3jUhhTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED9B1F000FF;
-	Wed, 23 Sep 2026 14:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+0Y4TkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDEE1F000FF;
+	Wed, 23 Sep 2026 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175021;
-	bh=WMg4R3A9BbDFsZA+dlXiNxD9ozD3dk7GZtC0ShYyuuI=;
+	s=korg; t=1790175024;
+	bh=iNK/2m+cJ9y5OHHrBQHWGFlsRRNTpnEFeTrzgXIsUkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D3jUhhTrRGAFptrh0ozacfMVkLUjNCLHvSoTUhWmQBoJ6P607emRDqUHS+6Na350g
-	 sIdBw4jyPs8XmwlxWWc4El1lfxuPIX/cVht3Pe7ymdclhbpy9yDkyrOXAMN3KAlKBG
-	 wC2BPOeO9NVG49JO5iXfCWuFQgQQDm2ImuOp4wA4=
+	b=Z+0Y4TkBjJEkwIvseyJW0aIZmLJr1DGlEFac2GFiWDdLUs6ZOJsQjvNJhdRzyedEw
+	 KQ35USK32vmaeGgGJxJMUCYGO05vJqaNfim7Oh69jUI9re6VUv4RD7bZ1JYVcfW81H
+	 wt6DwgWvuBtITQWj2Ri6a8YLx9PjSB1igJY8oZc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 280/398] mmc: core: Cancel SDIO IRQ work before freeing host
-Date: Wed, 23 Sep 2026 16:05:54 +0200
-Message-ID: <20260923140650.675093369@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Helge Deller <deller@gmx.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 298/398] Input: hp_sdc - shut down kicker timer on module exit
+Date: Wed, 23 Sep 2026 16:06:12 +0200
+Message-ID: <20260923140651.146678663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 6feadbecdae60a6324c967f3b1493741083793a3 upstream.
+commit 309731e95917125bbd13626a7a5600490a5bf44f upstream.
 
-A host controller that uses sdio_signal_irq() schedules host->sdio_irq_work
-from its interrupt handler.  That work is only cancelled on the suspend
-path (mmc_sdio_suspend()), not on the remove/free path, so a worker armed
-just before the controller freed its IRQ can run after
-mmc_host_classdev_release() has freed the host and dereference it through
-container_of().
+hp_sdc_kicker() rearms hp_sdc.kicker with mod_timer() after scheduling the
+tasklet.  The module exit path uses timer_delete_sync().  That waits for a
+callback already running but can still leave the timer rearmed.
 
-Cancel host->sdio_irq_work in mmc_free_host(), like the existing
-host->detect drain added by commit 1036f69e2513 ("mmc: core: Cancel
-delayed work before releasing host").
+A callback can therefore leave the timer pending while hp_sdc_exit() tears
+down the driver, allowing timer activity to access dismantled driver state.
 
-This issue was found by an in-house static analysis tool.
+Use timer_shutdown_sync() for final teardown.  It waits for a running
+callback and prevents rearming after module exit begins.
 
-Fixes: 682696605c70 ("mmc: sdio: Add API to manage SDIO IRQs from a workqueue")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20260902154004.3595416-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/serio/hp_sdc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -693,6 +693,7 @@ EXPORT_SYMBOL(mmc_remove_host);
- void mmc_free_host(struct mmc_host *host)
- {
- 	cancel_delayed_work_sync(&host->detect);
-+	cancel_work_sync(&host->sdio_irq_work);
- 	mmc_pwrseq_free(host);
- 	put_device(&host->class_dev);
- }
+--- a/drivers/input/serio/hp_sdc.c
++++ b/drivers/input/serio/hp_sdc.c
+@@ -981,7 +981,7 @@ static void hp_sdc_exit(void)
+ 	free_irq(hp_sdc.irq, &hp_sdc);
+ 	write_unlock_irq(&hp_sdc.lock);
+ 
+-	timer_delete_sync(&hp_sdc.kicker);
++	timer_shutdown_sync(&hp_sdc.kicker);
+ 
+ 	tasklet_kill(&hp_sdc.task);
+ 
 
 
