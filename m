@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B58C5372DB;
-	Wed, 23 Sep 2026 14:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2930750B429;
+	Wed, 23 Sep 2026 14:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174287; cv=none; b=HyvzTJNGj3lX9SEVzElsuiqm9eWd76H2KJRRCoxzLXmTCrAebu8/SERSwwBUMulSr4pz1W+3s4HOpJ+hekmQE6chdNRhYkzMQRj7dsdEfHIfPQ33MPjjaRjLxKcs5lSNxy2zZm+E93kWrW5Ro8hCN1tAOucZUh8LBTlf06RjzG8=
+	t=1790174290; cv=none; b=clkRk24NMHlvLOQKC8VOVavk83PG3pF9BfJa+Dtq3HlaetJ1VPu04VxFAMUldCcgEaYypSpDT5fwagsYyWWbM2dMeQs0jIakOhVg9eMqYWNuLc6Mj+XPr/+thP+3FAo4uuCn+PfLz6NcFvrLXLlgTVRyL44wTzmLfa9eILA2ccs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174287; c=relaxed/simple;
-	bh=RgEGFM8ZhiUP64haHJXA3UsqpG+cgxk8TK9pML3cTMg=;
+	s=arc-20240116; t=1790174290; c=relaxed/simple;
+	bh=AO1yn0b9QUpu+7nw+CaxsottnQ2XyW5BDm+KwtbHYc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfhygI/u40/XR16YwsYmHC6acP8GKOQdOPBbyYdQ8uuZC9jYzhNVySpn9gsjqFqzYzL6HWolh0zeDswTNl9cTdvkrlXklHHxPrebjsCfzuBfOQBY0mRpcQvighkrf371sd9L70pnnqsd1RYCxyt8L0NxHoQeLcs0Uu/55I2Brhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVdrvdi0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PsF0APNmfHjmw1ri5sMStF1svTseA3AKb3gHstoYR3vFXAf+52uKtW92RLGB18qSJ2gOzDLLnfwh1sb8NH1u4sf89338B5z/qG83+T1hgpQi/zxVxmXE9BrGJBWZxMGxXhfvQoHuR7WBAKMC8REvKjoXayXBv21Op8ZL0u1U83A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c9XGREF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVdrvdi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3B51F000FF;
-	Wed, 23 Sep 2026 14:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c9XGREF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5484A1F000FF;
+	Wed, 23 Sep 2026 14:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174285;
-	bh=QU/ISHWFglzKyYH9xGmuR096qxrgZ+sGDqZMGTpsgdA=;
+	s=korg; t=1790174289;
+	bh=+PP6hjGrdxp17SIHHItx/7Omp9SinwNdCEtsfyG4038=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVdrvdi08oBXqsPD3RNdMMPgslxwvGMPkqO3XYpkTEa4N6kky9aTkRz0/9NgSTzWr
-	 6shN7F1UccFjOYmnmGvvJvppzO2Utbmz71miRyCyySeseCELwFEEzjFvdyJ6fQJSO2
-	 3y8HRTPJ/N5S4l2UT2ne+SiWcon9BWi9wx4Ec8RI=
+	b=2c9XGREFg8RRZUJEPFFIHvVZ3ddCtHG4ADdiPfqGk7aZFTfxE0pwLCDgGQd9n/gs7
+	 WLHXX3+qRyYWhvOz93ZPcUtkuHISU73Ei3xd1C5egRE8H6VPY22AJpjg9mvW0esz6L
+	 8Nn7JLBBn5BmMDiKtXaDdMvFupduLtUVzIxvWlts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56a1a45a9a2c04d425ff@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/398] wifi: mac80211: suppress chanctx warning for debugfs reset
-Date: Wed, 23 Sep 2026 16:02:19 +0200
-Message-ID: <20260923140645.116657693@linuxfoundation.org>
+Subject: [PATCH 6.18 038/398] IB/isert: wait for deferred control PDU completions before releasing the connection
+Date: Wed, 23 Sep 2026 16:01:52 +0200
+Message-ID: <20260923140644.414370594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,95 +51,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit bf29d085e0eba92388518719d044f4702a8c6644 ]
+[ Upstream commit a8fe3dfce8c0d8a76dc3d8486a5bff5feebe156f ]
 
-Before suspend all the channel contexts should removed, so the
-warning makes sense and should be there, but during reset the
-same code is called without first removing. Limit the check to
-the real suspend case.
+isert_send_done() hands ISTATE_SEND_TASKMGTRSP, ISTATE_SEND_REJECT and
+ISTATE_SEND_TEXTRSP completions off to isert_comp_wq and returns.  The work
+item then runs isert_completion_put() -> isert_put_cmd(), which reads
+isert_conn->conn and takes conn->cmd_lock.
 
-Assisted-by: LLM
-Fixes: 12e7f517029d ("mac80211: cleanup generic suspend/resume procedures")
-Reported-by: syzbot+56a1a45a9a2c04d425ff@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=56a1a45a9a2c04d425ff
-Link: https://patch.msgid.link/20260904165722.fe46395e310b.Ic4aaa95bd9d0ceb6a3cd7d84c425afee7d7d3dd7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Nothing orders that work item against teardown.  isert_wait_conn() queues
+isert_release_work, which frees isert_conn, and iscsit_close_connection()
+frees the iscsit_conn right after it returns, so the queued work can run
+against freed memory.
+
+Count the deferred control PDU completions per connection and let
+isert_wait_conn() wait for them before the release work is queued.
+
+ISTATE_SEND_LOGOUTRSP is deliberately not counted: that branch runs
+iscsit_logout_post_handler(), which ends up waiting for
+conn->conn_wait_comp, and that completion is only sent by
+iscsit_close_connection() after it has called iscsit_wait_conn().
+Waiting for it here would deadlock.  Its wait stays the existing
+isert_wait4logout().
+
+The splat below is from a kernel with tracing printk()s and an msleep(200)
+injected into isert_do_control_comp() to widen the window:
+
+  BUG: KASAN: slab-use-after-free in isert_put_cmd+0x53d/0x620
+  Read of size 8 at addr ffff8881054f1038 by task kworker/u17:1/182
+
+  CPU: 0 UID: 0 PID: 182 Comm: kworker/u17:1 Tainted: G    B               7.2.0-rc5-TWIDE-gb8babf08acc7 #1 PREEMPT(lazy)
+  Tainted: [B]=BAD_PAGE
+  Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  Workqueue: isert_comp_wq isert_do_control_comp
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x53/0x70
+   print_report+0xd0/0x630
+   ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+   ? _raw_spin_unlock_irqrestore+0x3e/0x70
+   ? isert_put_cmd+0x53d/0x620
+   kasan_report+0xce/0x100
+   ? isert_put_cmd+0x53d/0x620
+   isert_put_cmd+0x53d/0x620
+   ? isert_completion_put+0x305/0x330
+   ? isert_do_control_comp+0x2ef/0x310
+   process_one_work+0x633/0x1030
+   ? assign_work+0x11d/0x370
+   worker_thread+0x45b/0xd10
+   ? __pfx_worker_thread+0x10/0x10
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0x2c6/0x3b0
+   ? recalc_sigpending+0x15c/0x1e0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x36e/0x5a0
+   ? __pfx_ret_from_fork+0x10/0x10
+   ? __switch_to+0x572/0xdd0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+  Allocated by task 48:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0x8f/0xa0
+   __kmalloc_cache_noprof+0x158/0x370
+   isert_cma_handler+0x1e3/0x2ae0
+   cma_cm_event_handler+0x3e/0x240
+   cma_ib_req_handler+0x17d9/0x4490
+   cm_process_work+0x41/0x330
+   cm_work_handler+0x5727/0xc160
+   process_one_work+0x633/0x1030
+   worker_thread+0x45b/0xd10
+   kthread+0x2c6/0x3b0
+   ret_from_fork+0x36e/0x5a0
+   ret_from_fork_asm+0x1a/0x30
+
+  Freed by task 184:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x43/0x70
+   kfree+0x121/0x380
+   iscsit_close_connection+0x7cf/0x1e60
+   iscsit_take_action_for_connection_exit+0x1b6/0x360
+   iscsi_target_tx_thread+0x472/0x690
+   kthread+0x2c6/0x3b0
+   ret_from_fork+0x36e/0x5a0
+   ret_from_fork_asm+0x1a/0x30
+
+Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260821080620.1694119-1-yhlee@isslab.korea.ac.kr
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c         | 2 +-
- net/mac80211/debugfs.c     | 2 +-
- net/mac80211/ieee80211_i.h | 2 +-
- net/mac80211/pm.c          | 8 +++++---
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/infiniband/ulp/isert/ib_isert.c | 22 ++++++++++++++++++++++
+ drivers/infiniband/ulp/isert/ib_isert.h |  2 ++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 72c9d5aceae58..f6e8352665c1a 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -3094,7 +3094,7 @@ static int ieee80211_set_txq_params(struct wiphy *wiphy,
- static int ieee80211_suspend(struct wiphy *wiphy,
- 			     struct cfg80211_wowlan *wowlan)
- {
--	return __ieee80211_suspend(wiphy_priv(wiphy), wowlan);
-+	return __ieee80211_suspend(wiphy_priv(wiphy), wowlan, false);
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index 6483a55170cd1..b3fc753982a38 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -21,6 +21,7 @@
+ #include <target/target_core_fabric.h>
+ #include <target/iscsi/iscsi_transport.h>
+ #include <linux/semaphore.h>
++#include <linux/wait_bit.h>
+ 
+ #include "ib_isert.h"
+ 
+@@ -311,6 +312,7 @@ isert_init_conn(struct isert_conn *isert_conn)
+ 	init_completion(&isert_conn->login_req_comp);
+ 	init_waitqueue_head(&isert_conn->rem_wait);
+ 	kref_init(&isert_conn->kref);
++	atomic_set(&isert_conn->ctrl_comp_cnt, 0);
+ 	mutex_init(&isert_conn->mutex);
+ 	INIT_WORK(&isert_conn->release_work, isert_release_work);
+ }
+@@ -1697,6 +1699,8 @@ isert_do_control_comp(struct work_struct *work)
+ 	struct isert_conn *isert_conn = isert_cmd->conn;
+ 	struct ib_device *ib_dev = isert_conn->cm_id->device;
+ 	struct iscsit_cmd *cmd = isert_cmd->iscsit_cmd;
++	/* The switch below may free isert_cmd. */
++	bool counted = isert_cmd->ctrl_counted;
+ 
+ 	isert_dbg("Cmd %p i_state %d\n", isert_cmd, cmd->i_state);
+ 
+@@ -1718,6 +1722,14 @@ isert_do_control_comp(struct work_struct *work)
+ 		dump_stack();
+ 		break;
+ 	}
++
++	/*
++	 * The count is what keeps isert_conn alive, so drop it last.  The wait
++	 * queue lives in the global hash table, not in isert_conn, so this is
++	 * safe even if the waiter has already freed the connection.
++	 */
++	if (counted && atomic_dec_and_test(&isert_conn->ctrl_comp_cnt))
++		wake_up_var(&isert_conn->ctrl_comp_cnt);
  }
  
- static int ieee80211_resume(struct wiphy *wiphy)
-diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
-index 687a66cd49433..14ce2ea105939 100644
---- a/net/mac80211/debugfs.c
-+++ b/net/mac80211/debugfs.c
-@@ -409,7 +409,7 @@ static ssize_t reset_write(struct file *file, const char __user *user_buf,
+ static void
+@@ -1761,6 +1773,12 @@ isert_send_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	case ISTATE_SEND_TEXTRSP:
+ 		isert_unmap_tx_desc(tx_desc, ib_dev);
  
- 	rtnl_lock();
- 	wiphy_lock(local->hw.wiphy);
--	__ieee80211_suspend(&local->hw, NULL);
-+	__ieee80211_suspend(&local->hw, NULL, true);
- 	ret = __ieee80211_resume(&local->hw);
- 	wiphy_unlock(local->hw.wiphy);
++		/* Paired with the wait in isert_wait_conn(). */
++		isert_cmd->ctrl_counted =
++			isert_cmd->iscsit_cmd->i_state != ISTATE_SEND_LOGOUTRSP;
++		if (isert_cmd->ctrl_counted)
++			atomic_inc(&isert_conn->ctrl_comp_cnt);
++
+ 		INIT_WORK(&isert_cmd->comp_work, isert_do_control_comp);
+ 		queue_work(isert_comp_wq, &isert_cmd->comp_work);
+ 		return;
+@@ -2605,6 +2623,10 @@ static void isert_wait_conn(struct iscsit_conn *conn)
+ 	isert_wait4cmds(conn);
+ 	isert_wait4logout(isert_conn);
  
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index b0e64cf346e2b..3f5fd978cb51d 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2365,7 +2365,7 @@ int ieee80211_reconfig(struct ieee80211_local *local);
- void ieee80211_stop_device(struct ieee80211_local *local, bool suspend);
- 
- int __ieee80211_suspend(struct ieee80211_hw *hw,
--			struct cfg80211_wowlan *wowlan);
-+			struct cfg80211_wowlan *wowlan, bool reset);
- 
- static inline int __ieee80211_resume(struct ieee80211_hw *hw)
- {
-diff --git a/net/mac80211/pm.c b/net/mac80211/pm.c
-index 5a508d99e84f7..f63676c448536 100644
---- a/net/mac80211/pm.c
-+++ b/net/mac80211/pm.c
-@@ -18,7 +18,8 @@ static void ieee80211_sched_scan_cancel(struct ieee80211_local *local)
- 	cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
++	/* Paired with the count taken in isert_send_done(). */
++	wait_var_event(&isert_conn->ctrl_comp_cnt,
++		       !atomic_read(&isert_conn->ctrl_comp_cnt));
++
+ 	queue_work(isert_release_wq, &isert_conn->release_work);
  }
  
--int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
-+int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan,
-+			bool reset)
- {
- 	struct ieee80211_local *local = hw_to_local(hw);
- 	struct ieee80211_sub_if_data *sdata;
-@@ -166,9 +167,10 @@ int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.h b/drivers/infiniband/ulp/isert/ib_isert.h
+index 0bac5aa66c802..519b17e54bd34 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.h
++++ b/drivers/infiniband/ulp/isert/ib_isert.h
+@@ -153,6 +153,7 @@ struct isert_cmd {
+ 	struct work_struct	comp_work;
+ 	struct scatterlist	sg;
+ 	bool			ctx_init_done;
++	bool			ctrl_counted;
+ };
  
- 	/*
- 	 * We disconnected on all interfaces before suspend, all channel
--	 * contexts should be released.
-+	 * contexts should be released, but on 'reset' debugfs that's
-+	 * not true so don't check there.
- 	 */
--	WARN_ON(!list_empty(&local->chanctx_list));
-+	WARN_ON(!reset && !list_empty(&local->chanctx_list));
- 
- 	/* stop hardware - this must stop RX */
- 	ieee80211_stop_device(local, true);
+ static inline struct isert_cmd *tx_desc_to_cmd(struct iser_tx_desc *desc)
+@@ -187,6 +188,7 @@ struct isert_conn {
+ 	struct mutex		mutex;
+ 	struct kref		kref;
+ 	struct work_struct	release_work;
++	atomic_t		ctrl_comp_cnt;
+ 	bool                    logout_posted;
+ 	bool                    snd_w_inv;
+ 	wait_queue_head_t	rem_wait;
 -- 
 2.53.0
 
