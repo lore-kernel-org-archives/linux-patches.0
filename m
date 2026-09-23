@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D303A255A;
-	Wed, 23 Sep 2026 14:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084B251DAEC;
+	Wed, 23 Sep 2026 14:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173952; cv=none; b=d9IAX5Idu7yhHMHw2SDxUR90arLA5czLNyCzWIvuuIhH2TvweH+upgOqENie/6k+8aDgrQZDw7ryP+n8S4GUTm6eFs/zo84GijPm2HShhRJtUUZo54QsTH8rElnhC1ZiqpoLPBbfIl708f+rLmzVCZWFPWLw0+xACRmJYGOVF+0=
+	t=1790173955; cv=none; b=rO9pF4q3ZXOdSq5O5KnRQUfFnbvSATKSZKTkJNH/ayhC9T36u49PmulC86LUTbLn1J/PBhO8qae7zuWOfY5jupxdgvtSWiSNnXIWZgstcq+pNRhLw0DjIBRscybJaNJUUA5KZ+Gp0PgCs0bBAPG9QfHTz4Cz7kkRHwofObkMG3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173952; c=relaxed/simple;
-	bh=7GkQrsueI9N9jqMrxC2PHhVHCxJNpNBEovOfQbf/cKw=;
+	s=arc-20240116; t=1790173955; c=relaxed/simple;
+	bh=j+O8ifGXmiSAG+mo94iVAvhK7lLySKKfLWeNKNhSXa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkaeBXsV0MSlzLdMcxR50dK/HcbnqC2Mx5olRJPw19VacZc9wlRMbjJDKzzQTbmwN7dzqaRLGGmhomVfsxmi97nM8lm+1dcQIO2Mp0ArjpKLv9Znu0S+kzc+qBLzYVVQGopEUreFZU3ooBndKdPY5XZZvEgvFFD//FKsTSFNCgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWWvCuZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kIh09BUvZszqDd2fjTvyv9qkkN7x/7xYB9Hh1qmH+it2avQ9WNwUCW1qfce5ck6DVCKElFixvkz8gPACZ6TamHOjoBdepaOc7urqIUIaZQH8+3CmNNBAjSIKeib0ijHhxkSe0fBHBORBlfGGHopZARz7tA/+L4NkvFLgiky7yDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBdvDYhY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWWvCuZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7B21F000FF;
-	Wed, 23 Sep 2026 14:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBdvDYhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF871F00893;
+	Wed, 23 Sep 2026 14:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173950;
-	bh=uCgdTZCPTarWACYGbxFxiFrMfiT7DCQLp/1IwpTfWow=;
+	s=korg; t=1790173953;
+	bh=96hQYW82MOT3osVdDMbrsvWscluPbvD2lj707Y8UUno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWWvCuZVtcbdlXj8KuqMY4SVXgQBqq9GEm1SVY7op57N3Mx5Z+LOEruP9XmiBS3Ow
-	 /j3WkTlFnjujXHvuwg6PLl3qBZXQABUOOxcBtUvV0fuwtJDrh0ywYVVczwEdl2p8ZE
-	 cLdlGn21cyBUgYejbLueOEoCmzbJseUpsBE7Q+s8=
+	b=iBdvDYhYVKhG60ADmWF/yriVZ3tnSZvBhfbIDakaB2E/a7nXLdescBg3MgdkvXrkz
+	 Pg9xqc85vCwcqVziiiAbOWE6Nxys4HtvpIC8gPsNcrkQxaP3qNH9FmBs67r018y9BL
+	 Mmt13TaJTOfIReN6e3bi41mmHQcylzWgOu2y1agQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 395/438] wifi: mwifiex: prevent authentication frame length truncation
-Date: Wed, 23 Sep 2026 16:06:56 +0200
-Message-ID: <20260923140655.123541187@linuxfoundation.org>
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.2 369/438] hwmon: (pwm-fan) Stop RPM timer before freeing tach data
+Date: Wed, 23 Sep 2026 16:06:30 +0200
+Message-ID: <20260923140654.421910822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,71 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-commit fa00193eb991f92b007aefe7afb6a7566976dacf upstream.
+commit 26d5ff79768548efb1e604bb6e8697c101e06269 upstream.
 
-mwifiex_cfg80211_authenticate() derives the authentication frame length
-from req->ie_len and req->auth_data_len, both of type size_t, but stores
-it in a u16.
+sample_timer() rearms the RPM timer and accesses the devm-managed
+ctx->tachs and ctx->pulses_per_revolution arrays. The cleanup action
+which stops the timer is registered before those arrays are allocated.
 
-NL80211_ATTR_AUTH_DATA only has a minimum length policy. Since nla_len is
-a u16, a single attribute can carry up to 65531 bytes of payload, so the
-sum can exceed U16_MAX before it is assigned to pkt_len. The truncated
-pkt_len determines the skb frame area, while the copy length remains
-req->auth_data_len - 4, resulting in a heap buffer overflow.
+Since devres releases entries in reverse order, driver detach can free
+the arrays before pwm_fan_cleanup() shuts down the timer. A timer expiry
+in that window accesses the freed tach data.
 
-For example, with auth_data_len equal to 65510 and no IEs, the sum is
-65546. It is truncated to 10 and then reduced by four to 6. The driver
-appends only six bytes to the skb with skb_put(), but then copies 65506
-user-provided bytes into the authentication body.
+With a KASAN kernel, a test-only kprobe delayed entry to
+pwm_fan_cleanup() while normal sysfs unbind ran. Each of three runs
+reported three four-byte reads and two four-byte writes in sample_timer()
+after its backing devm allocations had been freed. The helper did not
+invoke the timer callback, cleanup actions or free functions.
 
-Reaching this path requires CAP_NET_ADMIN in the user namespace owning
-the network namespace, an up station netdev, and a suitable BSS/SAE
-authentication request.
+With the fix, three matching unbind runs completed without KASAN, BUG,
+WARNING, Oops or panic. Instrumentation confirmed that timer retirement
+completed before the first timer backing allocation was released.
 
-Compute the length in size_t, reject values that cannot be represented by
-the firmware's u16 frame length field, and only then assign it to pkt_len.
+Split timer retirement from the power cleanup and register its devres
+action after the timer backing data and IRQ actions are installed. This
+preserves the early power rollback action while ensuring the timer is
+retired before its backing data is released. Use timer_shutdown_sync()
+because the callback can rearm itself.
 
-Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
-Cc: stable@vger.kernel.org # 6.12+
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260820062155.3981976-1-lilinmao@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 01695410d452 ("hwmon: (pwm-fan) Store tach data separately")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Link: https://patch.msgid.link/20260911071809.130151-1-lhfff@tju.edu.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/hwmon/pwm-fan.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4279,6 +4279,7 @@ mwifiex_cfg80211_authenticate(struct wip
- 	struct mwifiex_adapter *adapter = priv->adapter;
- 	struct sk_buff *skb;
- 	u16 pkt_len, auth_alg;
-+	size_t frame_len;
- 	int ret;
- 	struct mwifiex_ieee80211_mgmt *mgmt;
- 	struct mwifiex_txinfo *tx_info;
-@@ -4351,10 +4352,17 @@ mwifiex_cfg80211_authenticate(struct wip
+--- a/drivers/hwmon/pwm-fan.c
++++ b/drivers/hwmon/pwm-fan.c
+@@ -483,7 +483,6 @@ static void pwm_fan_cleanup(void *__ctx)
+ {
+ 	struct pwm_fan_ctx *ctx = __ctx;
  
- 	mwifiex_cancel_scan(adapter);
+-	timer_delete_sync(&ctx->rpm_timer);
+ 	if (ctx->pwm_shutdown) {
+ 		ctx->enable_mode = pwm_enable_reg_enable;
+ 		__set_pwm(ctx, ctx->pwm_shutdown);
+@@ -494,6 +493,13 @@ static void pwm_fan_cleanup(void *__ctx)
+ 	}
+ }
  
--	pkt_len = (u16)req->ie_len + req->auth_data_len +
-+	frame_len = req->ie_len + req->auth_data_len +
- 		MWIFIEX_MGMT_HEADER_LEN + MWIFIEX_AUTH_BODY_LEN;
- 	if (req->auth_data_len >= 4)
--		pkt_len -= 4;
-+		frame_len -= 4;
++static void pwm_fan_timer_cleanup(void *__ctx)
++{
++	struct pwm_fan_ctx *ctx = __ctx;
 +
-+	if (frame_len > U16_MAX) {
-+		mwifiex_dbg(priv->adapter, ERROR,
-+			    "auth frame too long: %zu bytes\n", frame_len);
-+		return -EINVAL;
-+	}
-+	pkt_len = frame_len;
++	timer_shutdown_sync(&ctx->rpm_timer);
++}
++
+ static int pwm_fan_probe(struct platform_device *pdev)
+ {
+ 	struct thermal_cooling_device *cdev;
+@@ -648,6 +654,10 @@ static int pwm_fan_probe(struct platform
+ 	}
  
- 	skb = dev_alloc_skb(MWIFIEX_MIN_DATA_HEADER_LEN +
- 			    MWIFIEX_MGMT_FRAME_HEADER_SIZE +
+ 	if (ctx->tach_count > 0) {
++		ret = devm_add_action_or_reset(dev, pwm_fan_timer_cleanup, ctx);
++		if (ret)
++			return ret;
++
+ 		ctx->sample_start = ktime_get();
+ 		mod_timer(&ctx->rpm_timer, jiffies + HZ);
+ 
+@@ -704,6 +714,7 @@ static void pwm_fan_shutdown(struct plat
+ {
+ 	struct pwm_fan_ctx *ctx = platform_get_drvdata(pdev);
+ 
++	pwm_fan_timer_cleanup(ctx);
+ 	pwm_fan_cleanup(ctx);
+ }
+ 
 
 
