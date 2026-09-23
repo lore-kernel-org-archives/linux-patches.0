@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49A53769F9;
-	Wed, 23 Sep 2026 14:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EB82E718B;
+	Wed, 23 Sep 2026 14:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172923; cv=none; b=c7xFnPZwxWXNOdZUbr3Za+EDmQq6C53OVBHPDpyxD81ze8vME7X0p4j1X//FMIpVTnM956MLl3bP9wDW8Ar/Pvvy30eEz4pq43GryL0iS7UFS2SZjdtrhiuglQGczQ022Pu7uYSCl24rgksbeUehNHJLzMLNvpgsBoawNCZglzM=
+	t=1790172926; cv=none; b=TpMbguhk/bOdcvfuWOM3hoITEyCGdzyym38fnZDKhg2DRszUY5+FFftChepJ1eu0E0YyLIzj+4vOjd3jsR6GXeKNsSIGZjCNBiO6oCQw7E0BUvW3JL0tFCZea2qwQFzxv5xexivQ9KiV0uRDPHN6U2EQY25kNBvdGp9TiXobW6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172923; c=relaxed/simple;
-	bh=ONNmhMF62oM+BA6LWmuR8rUCABydZ0vKqOhkN3G1hjU=;
+	s=arc-20240116; t=1790172926; c=relaxed/simple;
+	bh=D6TTwe+dZRrTvq8e3w1PCaiZqjy2h02ad7MDoK3KTZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FWdEQFd1h0zkQD2n5PNsJdFg2F+UzG4IiZhkMuJ28ld7k+bhr8Q0oQNFkvlTetoPiZo3531KlfQOHiAXnOMWw6toEP02nFAeEmDTgffHQQZkU1+fp3/eqK/AmhIznqMbjLcV0J4x8CNxNeEH2fboVNtvAYzesSJHnyabIdiPSbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJSffDIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MdHa0/YhlC6/nIDVtfmTeHrhcINNt+wNDSP0ryKJkxpiOeNx7owxoTvZSV6qghz5p0LkYGj0QppZ/7jyij5WmeO1TaNiXGhJREkocuLjA716lsRnthf1fbhcn4HfzHh2hVGzYPe9sxb+2MUzq0pCJ7ZTRnqi7nkM26HKk38w720=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDlJ+gpW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJSffDIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB7F1F000FF;
-	Wed, 23 Sep 2026 14:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDlJ+gpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63241F00893;
+	Wed, 23 Sep 2026 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172922;
-	bh=+lFFAX9AbxiKhFTJDfzrtIpAnaSUQdeudH1YLvOq5pQ=;
+	s=korg; t=1790172925;
+	bh=lJvnJt6PN/yrSdeqJqHUFlFqE5CduW61JRnW5jZZbSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJSffDIB9JVizfLuAoUxIdq2iC+YIa6Of2zLrQB4jREP5T8buLpST3mgkvb/Bowiy
-	 JnkR+jvaksy+QfSl30vdiRzSVEKkxRFFjcbdtwZtosShbrHPN9yDUZ0OgfiLpeTcB1
-	 31NPXLZBg6uAMBmvqa/EzYNh7FKFaihKsN9XMUkE=
+	b=kDlJ+gpWy0lnEqtpuG02rfBVyouA8AgM613Py7aU68zyhJ0d5bH2U1BRZ+QrmLeO5
+	 ogwT/bNhQu4k5ztehfewbfBZAtmrgR72SBKTj3YiaAJJqwXS9puqWigtLUxBpc5A4V
+	 RfEyP/duw9hrrWtJYwq4k5zR6j6rkZVnogsSXISI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 100/438] RDMA/siw: Bound fragmented header copies by the remaining length
-Date: Wed, 23 Sep 2026 16:02:01 +0200
-Message-ID: <20260923140647.369814247@linuxfoundation.org>
+Subject: [PATCH 7.2 101/438] x86/div64: Fix addition of large constants in mul_u64_add_u64_div_u64()
+Date: Wed, 23 Sep 2026 16:02:02 +0200
+Message-ID: <20260923140647.395524690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -46,52 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 9ff797e516dbc1ecb73701ec4c24055712d44411 ]
+[ Upstream commit f65d38155aef069c897a64643a03db237dd1e0c8 ]
 
-siw_get_hdr() can receive an extended DDP/RDMAP header across more than
-one TCP callback. The first callback may receive most of the header,
-while the next one still limits the copy to hdrlen - MIN_DDP_HDR instead
-of the number of missing bytes. This makes the destination move past the
-end of the header and overwrite the receive state, including
-fpdu_part_rcvd. A later callback can then use a negative fpdu_part_rcvd
-value as a copy offset, which creates an OOB write.
+Adding constants over 2^31 fails to compile because the ADD instruction only
+supports 32bit signed immediates.
 
-Use the number of header bytes already received when calculating the
-next copy length.
+Replace the "irm" constraint with "erm" so that the compiler loads large
+constants into a register.
 
-Fixes: 754209850df8 ("RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260908085520.1746329-1-Jeremy.Jean@oss.cyber.gouv.fr
-Assisted-by: Codex:gpt-6
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Found by a patch to drivers/iio/frequency/ad9910.c
+
+  [ bp: Massage commit message. ]
+
+Fixes: 6480241f31f5 ("lib: add mul_u64_add_u64_div_u64() and mul_u64_u64_div_u64_roundup()")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: H. Peter Anvin <hpa@zytor.com>
+Link: https://patch.msgid.link/20260803094702.3852-2-david.laight.linux@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c | 2 +-
+ arch/x86/include/asm/div64.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
-index b566d163c5aab..e5b641c8d694a 100644
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1079,7 +1079,7 @@ static int siw_get_hdr(struct siw_rx_stream *srx)
- 	if (iwarp_pktinfo[opcode].hdr_len > sizeof(struct iwarp_ctrl_tagged)) {
- 		int hdrlen = iwarp_pktinfo[opcode].hdr_len;
+diff --git a/arch/x86/include/asm/div64.h b/arch/x86/include/asm/div64.h
+index 30fd06ede751c..8a2d343f977ec 100644
+--- a/arch/x86/include/asm/div64.h
++++ b/arch/x86/include/asm/div64.h
+@@ -111,7 +111,7 @@ static inline u64 mul_u64_add_u64_div_u64(u64 rax, u64 mul, u64 add, u64 div)
  
--		bytes = min_t(int, hdrlen - MIN_DDP_HDR, srx->skb_new);
-+		bytes = min_t(int, hdrlen - srx->fpdu_part_rcvd, srx->skb_new);
+ 	if (!statically_true(!add))
+ 		asm ("addq %[add], %[lo]; adcq $0, %[hi]" :
+-			[lo] "+r" (rax), [hi] "+r" (rdx) : [add] "irm" (add));
++			[lo] "+r" (rax), [hi] "+r" (rdx) : [add] "erm" (add));
  
- 		skb_copy_bits(skb, srx->skb_offset,
- 			      (char *)c_hdr + srx->fpdu_part_rcvd, bytes);
+ 	asm ("divq %[div]" : "+a" (rax), "+d" (rdx) : [div] "rm" (div));
+ 
 -- 
 2.53.0
 
