@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B88418368;
-	Wed, 23 Sep 2026 14:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C0B524B19;
+	Wed, 23 Sep 2026 14:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173420; cv=none; b=Dr0Uznq2sk8+Ed7LlG6x94z97RRNA6Y9LtOxHJfY7kGN5Mwc9zVwCZdtxRAp5o4BQJ0nzskDScKpS5E8yzAAvbVSqgiuT+7+kVXwseUJHbl2XtC+t6V0ON38/M7lsao6CdFk1m/9++Kc6A1fKmZNuai9YQory3+d9ot7FlsQOQ0=
+	t=1790173423; cv=none; b=fcyQN3p407V+J/TZo2+ZXqFbPYGcTXfV+P1NdE1Qwe7eWBwFz3FzMQEX48ing8D9NB1au1WffoHH5pX7lsDDLLQHCyUTQnUfRs7T71+ZlVPqpwsZNLDOg//IaaKcLIn6gSAMlNeDRjOhNk6Qcre3BjlzCbon/kU9KKZ8C11wyWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173420; c=relaxed/simple;
-	bh=RN4rNoL2hYqQx5SiDx7uxDJLR7uKMGpUu/bj88Ro8xM=;
+	s=arc-20240116; t=1790173423; c=relaxed/simple;
+	bh=F4B/KkBD+Em0z+e7AdTetUMMXf3YyCUGnZqJ2KsOWxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOUpGOzpOuZstIWoXuoyICreVuhJBNhyz/Kgrcp9c1piisdcKwGL3rB5pn5yl/GDQxDrNgASn70oYFE1V0TYWbtXxmvQw5H+eg3o82aK+dFPDKdROZhkPZPWrfCqloO6w1XRsDJCJthRYW8bPW1mpvK9SlyyWJmDBycSusueOL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow2LX9Vv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sz5Mxlc1bWLnGVzD1Dj4hmi2fEwK0ucv4y5kcyDjCXvMxheCstPsjCtIfutDpYHew4CT9RZWotaAiXp4J0MckH3WrfX0jeICWKGWxJpTD5IovvhW8v5vnNYnNaEzy9hyg5sVL6gjfte19aYVcbEOT5NjE16WqMzN96NlS+D35sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yug5sDk5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow2LX9Vv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256FA1F000FF;
-	Wed, 23 Sep 2026 14:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yug5sDk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE901F000FF;
+	Wed, 23 Sep 2026 14:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173419;
-	bh=KKJHPjjSoxRJIoGXiY1iHXn8FdKf++nO//qIdlBpBEM=;
+	s=korg; t=1790173422;
+	bh=In2ssANMxVZbAVdRBNNN8SmptQG5lq0t/+Zh0AtXi+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ow2LX9VvT5JkATci4my3+MHDuFYJGseWZrFEMgKAdx8k8L9l9VkxhZpEOEx2q5PIQ
-	 RB62BBn3TV7gna76PK2kmsNEKXueUAkX26/EQHWWD63p2YBcLtKZF6aBLGUgY999+i
-	 Xgo7UndMQ4A+6VABR6oFD+0aKXk8jlzHTYWPcIa4=
+	b=yug5sDk5or24cSVqdXPwFwPF8H8Y8I3UdLgBC1ypY4uvDaFd4jfdoA1T7+U2U260Z
+	 0enpCKlRJPg43Vrj5MiMtgy9nMyIUeflZotOgZy5Qm7hSo+52hbbj5jSKkT5DWiSlL
+	 ptQUBtkNqpb7RavSUJrT9DRc8MCWEYxCVloCyIko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 240/438] ASoC: codecs: rt712-sdca-dmic: fix uninitialized stream_config->type
-Date: Wed, 23 Sep 2026 16:04:21 +0200
-Message-ID: <20260923140650.994150780@linuxfoundation.org>
+	Noah Elias Feldt <N.Feldt@mittwald.de>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.2 241/438] cgroup: Avoid iteration of dying tasks with zero refcount
+Date: Wed, 23 Sep 2026 16:04:22 +0200
+Message-ID: <20260923140651.019913467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -45,74 +46,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit 03a5699a0a04309c597683967aaaf25d1e555ea2 upstream.
+commit 057dac23d329d5c5ed62352f2659a39fd46c6d4a upstream.
 
-stream_config is not initialized before being passed to
-sdw_stream_add_slave().  The type field may contain garbage and is
-later copied to stream->type by sdw_config_stream().
+The commit 260fbcb92bbea ("cgroup: Move dying_tasks cleanup from
+cgroup_task_release() to cgroup_task_free()") extended the lifetime of
+tasks on the dying_tasks list.
+The iterators have provision to go through dying_tasks because of
+dying threadgroup leaders or explicit CSS_TASK_ITER_WITH_DEAD, however,
+it was expected that such tasks can obtain a new reference (that is
+possible before cgroup_task_release()/put_task_struct_rcu_user()).
+The tasks after cgroup_task_release() and before cgroup_task_free()
+are subject to race when they may or may not have ->usage count > 0.
 
-Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
+The race window is between css_task_iter_next() invocations
+when css_set_lock is released and we may arrive at a new ->task_pos.
+The iterator should not attempt to resurrect tasks whose ->usage count
+dropped to zero. (When that happens, __put_task_struct_rcu_cb() is
+already imminent and the returned task_struct would could be used
+after free.)
 
-While at it, use snd_sdw_params_to_config() helper instead of
-open-coding the same logic.
+As for the fix, we cannot simply check the signal->live count of a task
+on the dying list because that won't distinguish regular zombies waiting
+to be reaped from RCU remnant tasks that are going to be free'd.
+Therefore add an extra check to rule out ->usage==0 tasks from any
+iteration.
 
-Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260914104712.379574-1-yijiangshan@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The repeat: loop in css_task_iter_advance() doesn't consider ->usage
+count, so add a new loop to css_task_iter_next() to skip de-used tasks
+on the dying_list.
+
+Rough illustration of the possible race
+
+  R (reader of cgroup.procs)         T (thread)                       L (group leader)
+  ---------------------------------  -------------------------------- --------------------------------
+                                                                      L exits, signal->live > 0
+                                                                      cgroup_task_dead(L)
+                                                                        css_set_skip_task_iters() // skips only cset->tasks
+                                                                        list_add_tail(&L->cg_list, &cset->dying_tasks)
+  css_task_iter_next()
+    take css_set_lock
+    css_task_iter_advance()
+      leader && signal->live != 0
+      => it->task_pos = &L->cg_list
+    release css_set_lock
+                                     T exits
+                                     --signal->live == 0
+				     cgroup_task_dead(T) // css_set_lock
+                                     release_task(T)
+                                       cgroup_task_release(T)
+                                       release_task(L) // zap_leader
+                                         cgroup_task_release(L)
+                                         put_task_struct_rcu_user(L)
+                                         ...RCU...
+                                         put_task_struct(L)
+                                           L->usage = 0
+                                           /* L still on dying_tasks */
+                                           ...RCU...
+                                           __put_task_struct(L)
+  css_task_iter_next() // another iteration
+    take css_set_lock
+    it->task_pos = &L->cg_list
+    get_task_struct(L)
+      => addition on 0
+    drop css_set_lock
+                                           cgroup_task_free(L)
+                                             css_set_skip_task_iters() // dying skip comes too late
+                                           free_task(L)
+  cgroup_procs_show()
+    task_pid_vnr(L)
+
+Fixes: 260fbcb92bbea ("cgroup: Move dying_tasks cleanup from cgroup_task_release() to cgroup_task_free()")
+Cc: stable@vger.kernel.org # v6.19+
+Link: https://lists.debian.org/debian-kernel/2026/08/msg00220.html
+Reported-by: Noah Elias Feldt <N.Feldt@mittwald.de>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt712-sdca-dmic.c |   14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ kernel/cgroup/cgroup.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/rt712-sdca-dmic.c
-+++ b/sound/soc/codecs/rt712-sdca-dmic.c
-@@ -13,6 +13,7 @@
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
-+#include <sound/sdw.h>
- #include <sound/tlv.h>
- #include "rt712-sdca.h"
- #include "rt712-sdca-dmic.h"
-@@ -632,10 +633,10 @@ static int rt712_sdca_dmic_hw_params(str
- {
- 	struct snd_soc_component *component = dai->component;
- 	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
--	struct sdw_stream_config stream_config;
-+	struct sdw_stream_config stream_config = {0};
- 	struct sdw_port_config port_config;
- 	struct sdw_stream_runtime *sdw_stream;
--	int retval, num_channels;
-+	int retval;
- 	unsigned int sampling_rate;
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5228,10 +5228,13 @@ struct task_struct *css_task_iter_next(s
+ 	if (it->flags & CSS_TASK_ITER_SKIPPED)
+ 		css_task_iter_advance(it);
  
- 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
-@@ -647,13 +648,8 @@ static int rt712_sdca_dmic_hw_params(str
- 	if (!rt712->slave)
- 		return -EINVAL;
+-	if (it->task_pos) {
++	while (it->task_pos && !it->cur_task) {
+ 		it->cur_task = list_entry(it->task_pos, struct task_struct,
+ 					  cg_list);
+-		get_task_struct(it->cur_task);
++		/* a task on dying_tasks with zero refcount is only valid for
++		 * RCU readers, not even interesting for
++		 * CSS_TASK_ITER_WITH_DEAD, find another one */
++		it->cur_task = tryget_task_struct(it->cur_task);
+ 		css_task_iter_advance(it);
+ 	}
  
--	stream_config.frame_rate = params_rate(params);
--	stream_config.ch_count = params_channels(params);
--	stream_config.bps = snd_pcm_format_width(params_format(params));
--	stream_config.direction = SDW_DATA_DIR_TX;
--
--	num_channels = params_channels(params);
--	port_config.ch_mask = GENMASK(num_channels - 1, 0);
-+	/* SoundWire specific configuration */
-+	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
- 	port_config.num = 2;
- 
- 	retval = sdw_stream_add_slave(rt712->slave, &stream_config,
 
 
