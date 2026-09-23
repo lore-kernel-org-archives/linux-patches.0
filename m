@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8280C3AE198;
-	Wed, 23 Sep 2026 14:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB103AE198;
+	Wed, 23 Sep 2026 14:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174241; cv=none; b=c1sCdprrGGvRf2TCYi38QsLhSGp6KB+cuI6ku9QZ3rUYU5b+xMZVZpJWmvJrUjuGZmP6ALT4x460XWNSq1GErck77Bte0sZCARDN3uG+PsZLLsLjTh1Ow9HoLl2n4oCZzVPr2QKpsDJcTjoRcHa1lB6N/WOi9lVZxoytLM2B68Q=
+	t=1790174244; cv=none; b=Ujv9BT0iCK8uDhYMmKFduJ2gYuqF0iEHStrVVXxlpZoPEra+vGhjf2dzjL/rHxgDRRo1B3nq2Z1rqupuKn7sfSaVjlYopAD1w1bGjyqc+9vuM8BUIjtHbZRJ0bMpJvObiNT08tvyD2+vKbmGAjjcSvSkxQGD/gBAk/56L5N741Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174241; c=relaxed/simple;
-	bh=AxUJ7TrG4k3XsZelUV+IHd1szmNYfwAl4joELbBPxqM=;
+	s=arc-20240116; t=1790174244; c=relaxed/simple;
+	bh=UuQCT/S5ynwOjlvDpXYpSH/KNThCCbgGTXUkNcxL3RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duQiZU3/1eras1NyCAWP/lCqyyQu7t5sWlq7msmdNA76yDleGN0qJ3SqrNHWSBQ/QveRibTwDjw5v8tAjhVBDb1G91RkpJzzWKFAbBh522EIUBWl8oJNfZaXz+D2qU3sCmHfsuT7vqKAFMvXpdjDcth+xJM7JECoVDvkSbhQQ3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd6G+I1T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ith8PE/LGfGYXhoeJTizDi+WbGhGrifMvm4dM/qJIhEAejYGJJHJefrdTUSFoZYFCK87qjBZ2mo6Wb+tvSpEPhl/g1SBlsfRManrQNh+wXrc7z2bJeu7K+OMpPZRTbMJvOd4HLjJzymPNEcp1lrJ7kYSe0v34nhk6xdWYnvRclU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fw/PJCR4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd6G+I1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43631F000FF;
-	Wed, 23 Sep 2026 14:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fw/PJCR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FC01F000FF;
+	Wed, 23 Sep 2026 14:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174240;
-	bh=zcSuNAR7rMz3w3yFjKxoE3EKv7aEa5J7qwkelkPvpXQ=;
+	s=korg; t=1790174243;
+	bh=xoXzEEZzQYBmz6jVJNvz5sTcVH/WXi+Xa3T864eCCaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qd6G+I1TydJwRFLNQjNORkdbBwX2bXdpJrYRuLt/yLaXcew1T6k+fIPZsLsgJACjt
-	 OPtYEb3poYrO4Tn4q6dBF6sI8jMihP2A9OdEoAZPnqFhrL6J8G1E8lr8mTh7CTPuE0
-	 Cdtb48b3Qhf2NSLkzVOyBZfLKidxwXTKzmHUM7zE=
+	b=fw/PJCR4/1gTMuR9hEEQGdq75oJXtc6tkqYy4dpyTKobmFL4HKSYP67y4b/3ibGZH
+	 /zJ/526fv1i8ayBiYWyDy8FkEdxIWKuhRByoKxkWLIya45jvtlQQXRfmruKjNh3RJ2
+	 GwflrYELWf3ZSp7T0xWSvTQ8M4bGIJ8c8owV3Pe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	David Lin <david.lin@intel.com>,
-	Shuming Fan <shumingf@realtek.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 053/398] soundwire: cadence_master: wait and cancel cdns->work before clock stop
-Date: Wed, 23 Sep 2026 16:02:07 +0200
-Message-ID: <20260923140644.795719435@linuxfoundation.org>
+Subject: [PATCH 6.18 036/398] arm64: dts: renesas: r9a09g047: Switch GBETH TX queue scheduling to WRR
+Date: Wed, 23 Sep 2026 16:01:50 +0200
+Message-ID: <20260923140644.362813155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,44 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit aba7b41faeecb7692458095ce6fafc341fe0b80e ]
+[ Upstream commit 63016c3a91f2c458ca75869c8c782e899591f22d ]
 
-A peripheral event could happen during the clock stop process. We need
-to wait for the event be handled before stopping the bus clock.
-Otherwise, we will get the IO transfer timed out issue.
+The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
+falls back to Strict Priority. In this configuration the queue with the
+highest priority gets all the traffic, starving the others under load.
 
-Fixes: af4cc917826f ("soundwire: cadence: mask Slave interrupt before stopping clock")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: David Lin <david.lin@intel.com>
-Reviewed-by: Shuming Fan <shumingf@realtek.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260901031019.233254-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Under sustained UDP TX load with multiple data streams, this starvation
+triggers spurious adapter resets due to TX queue timeouts:
+
+  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
+  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
+  end0: Reset adapter.
+
+Investigation shows that only the highest priority queue is advancing
+while the others stall for more than 5 seconds, causing a netdev watchdog
+reset.
+
+Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
+traffic is processed across all queues, eliminating the stalls.
+
+Fixes: 41ffbb1c42d3 ("arm64: dts: renesas: r9a09g047: Add GBETH nodes")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Link: https://patch.msgid.link/20260722085353.136986-4-ovidiu.panait.rb@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/renesas/r9a09g047.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index d7a0a14ad9626..9c7296afd711a 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -1702,6 +1702,13 @@ int sdw_cdns_clock_stop(struct sdw_cdns *cdns, bool block_wake)
- 		return 0;
- 	}
+diff --git a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
+index 47d843c790212..603810ed39476 100644
+--- a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
+@@ -973,23 +973,28 @@ queue3 {
  
-+	/*
-+	 * wait for any in-flight peripheral event handling to complete before stopping the clock.
-+	 * No need to disable peripheral interrupts before canceling the work, as the peripheral
-+	 * interrupts are already masked before the work is scheduled.
-+	 */
-+	cancel_work_sync(&cdns->work);
-+
- 	/*
- 	 * Before entering clock stop we mask the Slave
- 	 * interrupts. This helps avoid having to deal with e.g. a
+ 			mtl_tx_setup0: tx-queues-config {
+ 				snps,tx-queues-to-use = <4>;
++				snps,tx-sched-wrr;
+ 
+ 				queue0 {
++					snps,weight = <0x10>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x1>;
+ 				};
+ 
+ 				queue1 {
++					snps,weight = <0x12>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x2>;
+ 				};
+ 
+ 				queue2 {
++					snps,weight = <0x14>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x4>;
+ 				};
+ 
+ 				queue3 {
++					snps,weight = <0x18>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x8>;
+ 				};
+@@ -1073,23 +1078,28 @@ queue3 {
+ 
+ 			mtl_tx_setup1: tx-queues-config {
+ 				snps,tx-queues-to-use = <4>;
++				snps,tx-sched-wrr;
+ 
+ 				queue0 {
++					snps,weight = <0x10>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x1>;
+ 				};
+ 
+ 				queue1 {
++					snps,weight = <0x12>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x2>;
+ 				};
+ 
+ 				queue2 {
++					snps,weight = <0x14>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x4>;
+ 				};
+ 
+ 				queue3 {
++					snps,weight = <0x18>;
+ 					snps,dcb-algorithm;
+ 					snps,priority = <0x8>;
+ 				};
 -- 
 2.53.0
 
