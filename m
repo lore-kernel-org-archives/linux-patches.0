@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89843391832;
-	Wed, 23 Sep 2026 14:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8280C3AE198;
+	Wed, 23 Sep 2026 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174238; cv=none; b=BW0Lxbu+xFCTeozvVtmdXhxH+d6CWcaLkfUeCmcTJuoXTnOHriDzY4pHytQ1I+ER3+o+db7xXUC16SlHrX5Srtrv0hRyl7fPmEFKot2ZJKycwnS4P7/lftZ59+EQHlL2cCLKI0wCL/c9dFGDDDjY/bhOipsb5rFaCFZnuAe4PRA=
+	t=1790174241; cv=none; b=c1sCdprrGGvRf2TCYi38QsLhSGp6KB+cuI6ku9QZ3rUYU5b+xMZVZpJWmvJrUjuGZmP6ALT4x460XWNSq1GErck77Bte0sZCARDN3uG+PsZLLsLjTh1Ow9HoLl2n4oCZzVPr2QKpsDJcTjoRcHa1lB6N/WOi9lVZxoytLM2B68Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174238; c=relaxed/simple;
-	bh=LH/QhVWeGIBDiRyV0f4HeonyCOjWaRtIpjlvTxftoOo=;
+	s=arc-20240116; t=1790174241; c=relaxed/simple;
+	bh=AxUJ7TrG4k3XsZelUV+IHd1szmNYfwAl4joELbBPxqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6yY/J0H8rE2OLvyQqWTt21n1A8P7NM8/LeM/mOwZv4oalVHlgwshXE28KoaoSF3cpvjjUSe3mn4DtZaYQYPTK8vfCq4mb7odHl4Pw6onJcNxSV6IiWJ6KXNdF7U7pMyDoz9/wXcjkt/mSr7atYKIoaOzDziaQ/rCj/YjPcIF44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzjrMTnD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=duQiZU3/1eras1NyCAWP/lCqyyQu7t5sWlq7msmdNA76yDleGN0qJ3SqrNHWSBQ/QveRibTwDjw5v8tAjhVBDb1G91RkpJzzWKFAbBh522EIUBWl8oJNfZaXz+D2qU3sCmHfsuT7vqKAFMvXpdjDcth+xJM7JECoVDvkSbhQQ3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd6G+I1T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzjrMTnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9793A1F00893;
-	Wed, 23 Sep 2026 14:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd6G+I1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43631F000FF;
+	Wed, 23 Sep 2026 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174237;
-	bh=6BZmSdwsXF9nWTfUkdjFw79E9WtdtzOXSVpkkiKJ3F4=;
+	s=korg; t=1790174240;
+	bh=zcSuNAR7rMz3w3yFjKxoE3EKv7aEa5J7qwkelkPvpXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzjrMTnDYSto0fs/hRDpC67h+eLNKdoz/Q0I8wRXI55K2jbDyHbNroeeD8UHJ91oR
-	 jTDVxDqMfjHMcKcxOBxAdoh8g7XGYIK2vPAGfThihGZF3e+rUvJtkj7UlV2QMeua7a
-	 CkwNc5kTdLiK0A6ZDfLLSBRcubHleQ2Hz1yakgMc=
+	b=qd6G+I1TydJwRFLNQjNORkdbBwX2bXdpJrYRuLt/yLaXcew1T6k+fIPZsLsgJACjt
+	 OPtYEb3poYrO4Tn4q6dBF6sI8jMihP2A9OdEoAZPnqFhrL6J8G1E8lr8mTh7CTPuE0
+	 Cdtb48b3Qhf2NSLkzVOyBZfLKidxwXTKzmHUM7zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+878ddc3962f792e9af59@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	David Lin <david.lin@intel.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/398] wifi: cfg80211: check IP header size in cfg80211_classify8021d()
-Date: Wed, 23 Sep 2026 16:02:06 +0200
-Message-ID: <20260923140644.768993776@linuxfoundation.org>
+Subject: [PATCH 6.18 053/398] soundwire: cadence_master: wait and cancel cdns->work before clock stop
+Date: Wed, 23 Sep 2026 16:02:07 +0200
+Message-ID: <20260923140644.795719435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,73 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 48b2c5c628b09cf36cbeca53e0432fc2a7518be7 ]
+[ Upstream commit aba7b41faeecb7692458095ce6fafc341fe0b80e ]
 
-A frame that looks like IP can be transmitted, but be too short, so
-the DS field is read incorrectly:
+A peripheral event could happen during the clock stop process. We need
+to wait for the event be handled before stopping the bus clock.
+Otherwise, we will get the IO transfer timed out issue.
 
-  BUG: KMSAN: uninit-value in cfg80211_classify8021d+0x99d/0x12b0 net/wireless/util.c:1027
-   cfg80211_classify8021d+0x99d/0x12b0 net/wireless/util.c:1027
-   ieee80211_select_queue+0x37a/0x9e0 net/mac80211/wme.c:180
-   __ieee80211_subif_start_xmit+0x60f/0x1d90 net/mac80211/tx.c:4304
-   ieee80211_subif_start_xmit+0xa8/0x6d0 net/mac80211/tx.c:4538
-   ...
-   packet_sendmsg+0x9173/0xa2a0 net/packet/af_packet.c:3108
-
-Use skb_header_pointer() like the MPLS case.
-
-Assisted-by: LLM
-Fixes: e31a16d6f64e ("wireless: move some utility functions from mac80211 to cfg80211")
-Reported-by: syzbot+878ddc3962f792e9af59@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=878ddc3962f792e9af59
-Link: https://patch.msgid.link/20260904165614.5e61a4c80b92.I37d68d3f406cb3b90b32e6943418d66070b65197@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: af4cc917826f ("soundwire: cadence: mask Slave interrupt before stopping clock")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: David Lin <david.lin@intel.com>
+Reviewed-by: Shuming Fan <shumingf@realtek.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260901031019.233254-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/soundwire/cadence_master.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 3a60dfca77236..0254cd5f89f15 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -962,12 +962,30 @@ unsigned int cfg80211_classify8021d(struct sk_buff *skb,
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index d7a0a14ad9626..9c7296afd711a 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -1702,6 +1702,13 @@ int sdw_cdns_clock_stop(struct sdw_cdns *cdns, bool block_wake)
+ 		return 0;
  	}
  
- 	switch (skb->protocol) {
--	case htons(ETH_P_IP):
--		dscp = ipv4_get_dsfield(ip_hdr(skb)) & 0xfc;
-+	case htons(ETH_P_IP): {
-+		const struct iphdr *iph;
-+		struct iphdr _iph;
++	/*
++	 * wait for any in-flight peripheral event handling to complete before stopping the clock.
++	 * No need to disable peripheral interrupts before canceling the work, as the peripheral
++	 * interrupts are already masked before the work is scheduled.
++	 */
++	cancel_work_sync(&cdns->work);
 +
-+		iph = skb_header_pointer(skb, sizeof(struct ethhdr),
-+					 sizeof(*iph), &_iph);
-+		if (!iph)
-+			return 0;
-+
-+		dscp = ipv4_get_dsfield(iph) & 0xfc;
- 		break;
--	case htons(ETH_P_IPV6):
--		dscp = ipv6_get_dsfield(ipv6_hdr(skb)) & 0xfc;
-+	}
-+	case htons(ETH_P_IPV6): {
-+		const struct ipv6hdr *ip6h;
-+		struct ipv6hdr _ip6h;
-+
-+		ip6h = skb_header_pointer(skb, sizeof(struct ethhdr),
-+					  sizeof(*ip6h), &_ip6h);
-+		if (!ip6h)
-+			return 0;
-+
-+		dscp = ipv6_get_dsfield(ip6h) & 0xfc;
- 		break;
-+	}
- 	case htons(ETH_P_MPLS_UC):
- 	case htons(ETH_P_MPLS_MC): {
- 		struct mpls_label mpls_tmp, *mpls;
+ 	/*
+ 	 * Before entering clock stop we mask the Slave
+ 	 * interrupts. This helps avoid having to deal with e.g. a
 -- 
 2.53.0
 
