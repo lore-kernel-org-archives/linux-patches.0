@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D033386441;
-	Wed, 23 Sep 2026 14:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30064535FD3;
+	Wed, 23 Sep 2026 14:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174454; cv=none; b=KcdLUrqhmvSALcOq5+z2t5dX1bmoWs7tmKGXA8GYYCaveg4m0WEbJmPGtOzT9ImcM4BVfZNFm6Rn/Pn0eWjnWlqPTCG9jgXCkl+fUzFu2e07mzcc72zHiypsoagb5a1zSahImK8dMALKDmuhIXxTs4XUaeCoXl8YHb3nOWNPxRM=
+	t=1790174457; cv=none; b=gDv44JA9RXapRpVTdkg73VH5O5f+1N8MjLyv464olPZnh66SgNKhOXkj43ykSGMGoHhBAryffUSUTOsX8wNUQxnWrmHnBwfDcnDcxCALob+7XR3IP4LybMxOV8TowALsr96KMMcZfkFVzijDWY5rc89nmb/CTmkF/unzyydZUkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174454; c=relaxed/simple;
-	bh=PTuIrYvhkxToiQ6pgv5AMNc0UzZGZVDjAH67xC3+48A=;
+	s=arc-20240116; t=1790174457; c=relaxed/simple;
+	bh=9lbXgLW0nFYq1ZqL8tHSdnnx0oKRRuhn/giEEW48Oo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilyMP0TlrtKE2SUeVqmSaTA0x7GVBgVdtcCfh0HTXGAfXj38KFD6yEXrW/FOPJ7E+A/QC9M4lZOpew8EkgUJK27f7CEXySn0tmmdhSm4P/+B127bSJw31x1NrbcVtqZd1VxSvIcGOfnCjY9nSevOo3ckQWJNYwbGzTWP3U6mm0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07uhlpOy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=srqrCfI7fBSd7zR0jmb8O0UZalU369+pdWJULSd4ypdErDPfvHI/j4BkasKA2KkDn21yQjFh1F+2rzftg8LeLv3rDhAS0DFuvXkNvlG4tC5SNq0OamZ0plMQKu0NccquLA+lRrdRTZUK1XtfSL3rPRKsMc5CmFtEJeoaPBpjfHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsSF+G4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07uhlpOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769191F00899;
-	Wed, 23 Sep 2026 14:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsSF+G4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4811F000FF;
+	Wed, 23 Sep 2026 14:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174453;
-	bh=1KggqFKhpwxSX+eYZ3ZlrKOZEK1dDhCkerxB8Nnx5Hs=;
+	s=korg; t=1790174455;
+	bh=GZjg9GoUEg+Qs0JHtwh26zNGfjGa15OuLgbpmnv2iIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=07uhlpOyJKc35wUud47GVsEi7evJWbdJ+H8b4CGSRfPwqHG3e7TQaWAOpMtASIO/9
-	 qZ74O4Me3rp5W544ptmHtMxEgklHHY/FV4kQ50bn7CXpNelT8naO1sL0HKmwVReIqt
-	 mIwkRd2IuI3Wvbv2Lf2GmayFWbXnAAxIHMeZXn/4=
+	b=tsSF+G4Q7xjUkfNNozooAJYpguYpsF8VZDh0iu0Ibd3CHP38JXVmbF2TwpCP4awyU
+	 jv7DxLjz+klwgXVgmHAeJsxBdykC4ZaxqU19vqlPJrjSUpPnT7srcMCDa0rmSOGmjq
+	 6x6cso/te3bF8KTYL3JcV+9KlPVHCbLkrbcy9vaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ilia Levi <ilia.levi@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/398] neighbour: Add missing RCU annotation for neightbl_dump_info().
-Date: Wed, 23 Sep 2026 16:02:56 +0200
-Message-ID: <20260923140646.083450196@linuxfoundation.org>
+Subject: [PATCH 6.18 120/398] drm/xe/mmio_gem: use write-back mapping for dummy page
+Date: Wed, 23 Sep 2026 16:03:14 +0200
+Message-ID: <20260923140646.552574074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,50 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ilia Levi <ilia.levi@intel.com>
 
-[ Upstream commit 764dcebb033764633700a036c7351a7c6350eec6 ]
+[ Upstream commit 819f189265a5955da743e78e20a713a038982e89 ]
 
-neightbl_dump_info() fetches the first non-default neigh_parms
-with list_next_entry(&tbl->parms, ...) and iterates through the
-list with list_for_each_entry_from_rcu().
+Currently vmf_insert_pfn() maps the dummy page as UC, inheriting the
+VMA's page protection which was set for the real MMIO region. This
+conflicts with the direct map's WB mapping of the same page, creating a
+cache type alias which is architecturally undefined on some platforms.
 
-However, list_next_entry() does not use RCU helper.
+Use vmf_insert_pfn_prot() with a WB pgprot instead. Also simplify to
+fault in the requested page instead of the whole VMA.
 
-Let's use list_for_each_entry_rcu() and skip the default parms.
-
-Fixes: 4ae34be50064 ("neighbour: Convert RTM_GETNEIGHTBL to RCU.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260909233143.2401847-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 979aabdad8dd ("neighbour: Skip default parms when resumed in neightbl_dump_info().")
+Fixes: 1ffcf8b8ae8a ("drm/xe: Support for mmap-ing mmio regions")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260525125801.975038-6-ilia.levi%40intel.com
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Ilia Levi <ilia.levi@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260908165046.1393557-12-matthew.auld@intel.com
+(cherry picked from commit 1e8e28e35df0e77ae1b22fc091c1f422f62fa5e9)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_mmio_gem.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 9873fc08b7494..d51899b011ddd 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -2596,11 +2596,14 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 			break;
+diff --git a/drivers/gpu/drm/xe/xe_mmio_gem.c b/drivers/gpu/drm/xe/xe_mmio_gem.c
+index 6daedf0feae99..30c31b0658e2b 100644
+--- a/drivers/gpu/drm/xe/xe_mmio_gem.c
++++ b/drivers/gpu/drm/xe/xe_mmio_gem.c
+@@ -172,14 +172,13 @@ static void xe_mmio_gem_release_dummy_page(struct drm_device *dev, void *res)
+ 	__free_page((struct page *)res);
+ }
  
- 		nidx = 0;
--		p = list_next_entry(&tbl->parms, list);
--		list_for_each_entry_from_rcu(p, &tbl->parms_list, list) {
-+
-+		list_for_each_entry_rcu(p, &tbl->parms_list, list) {
- 			if (!net_eq(neigh_parms_net(p), net))
- 				continue;
+-static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
++static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_fault *vmf)
+ {
++	struct vm_area_struct *vma = vmf->vma;
+ 	struct drm_gem_object *base = vma->vm_private_data;
+ 	struct drm_device *dev = base->dev;
+-	vm_fault_t ret = VM_FAULT_NOPAGE;
+ 	struct page *page;
+ 	unsigned long pfn;
+-	unsigned long i;
  
-+			if (!p->dev)
-+				continue;
-+
- 			if (nidx < neigh_skip)
- 				goto next;
+ 	page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (!page)
+@@ -190,16 +189,8 @@ static vm_fault_t xe_mmio_gem_vm_fault_dummy_page(struct vm_area_struct *vma)
  
+ 	pfn = page_to_pfn(page);
+ 
+-	/* Map the entire VMA to the same dummy page */
+-	for (i = 0; i < base->size; i += PAGE_SIZE) {
+-		unsigned long addr = vma->vm_start + i;
+-
+-		ret = vmf_insert_pfn(vma, addr, pfn);
+-		if (ret & VM_FAULT_ERROR)
+-			break;
+-	}
+-
+-	return ret;
++	return vmf_insert_pfn_prot(vma, vmf->address, pfn,
++				   vm_get_page_prot(vma->vm_flags));
+ }
+ 
+ static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
+@@ -219,7 +210,7 @@ static vm_fault_t xe_mmio_gem_vm_fault(struct vm_fault *vmf)
+ 		 * It is assumed the userspace will receive the notification via some
+ 		 * other channel (e.g. drm uevent).
+ 		 */
+-		return xe_mmio_gem_vm_fault_dummy_page(vma);
++		return xe_mmio_gem_vm_fault_dummy_page(vmf);
+ 	}
+ 
+ 	for (i = 0; i < base->size; i += PAGE_SIZE) {
 -- 
 2.53.0
 
