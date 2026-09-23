@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4258B376A04;
-	Wed, 23 Sep 2026 14:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22ABA51DAEC;
+	Wed, 23 Sep 2026 14:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173816; cv=none; b=Tyqf8IY35il2L08EVtvUdRWsrV52muIe2Qxscz7jbySgngHF23Ok1SjtOpZ7GkNydzeqbrSarhAl8I4+aifEFuxMS0JvXDJubg6+z6yMx2QYXdRSBjghvfR9gA4FbV4+e+2/tGvLNmDTxjTt0BNYHEn/KuKSL71Qh8ZcMwDOy8U=
+	t=1790173819; cv=none; b=aIwkpsQEgXLuKTVlDuZSEE8MvrlotISrG/CiDY5pprRR1jY11sFlY9wevfQXUZFavVahyzXdeMdVCrV6xUj0m0xF4JCk5pftldesSYLGg71R7GXRN0ccCGiiA213PzrkWBbHw1OwNXnMQia9yHQKnKRTAuXK10juNZCFLOM2qX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173816; c=relaxed/simple;
-	bh=fTQe7ZKH4EN2hFQXlBa40uMm0g2NuPWXqoprr0z2Jgo=;
+	s=arc-20240116; t=1790173819; c=relaxed/simple;
+	bh=UDPCbrW1qRRXzUlR9GNf9f7/UgQIAn976e01dq9o91c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3Qia+QS52zD6iZh+GsMzJTKOCCaxOH9YB1NYiHHSWbWGA/UfPUTqYxRqPWCW5xHCxmJDqIdX4XJblRckQf55YVsnmXPXxrUzm/1WilRFe1H2QaVirZVu34ZjcleoA9ifu2UAesL+9vwlrwjYRphAtzVIACd0/CqwYxlpNSmNj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrQ1/+TM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=un577dXjkeboog4jjRuD23Qe+D1fTJz+WGikBf2SJ8ALxR6+NRKthC2F88zWQQUr2OnYRqu+N78ZJOf4qim/YtmCLGc0xyidzkBD594+NFbQSFm80WAwqvpvSg1pZRbVg2ZMBV0W2YSzvz1XexoDJcUOX+QOSdu5zHTsH5s4Zq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGK3ATj5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrQ1/+TM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AAD51F000FF;
-	Wed, 23 Sep 2026 14:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGK3ATj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE3C1F00893;
+	Wed, 23 Sep 2026 14:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173815;
-	bh=T6Kv1SL4W993XZLTgqq92G5eqOptGyMzHdJ7oXkposg=;
+	s=korg; t=1790173818;
+	bh=vf92Ykn415YzNmgEhopPouOC1XzGVU4sAgKWhhBFj+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WrQ1/+TMawz+26m08GZGDVYgAjcO87Zh+gZLEOD7fbEs2RQEMIBxdveoYnRYxkdEA
-	 DS8Ae6H+X1VY+dGMQwcKpLiLcyn8L2XBS8bhWb/AjsGycKFkZShe71ruxp5RUwWVop
-	 IalMfGxwtf6CIZsh4nuIhvfnm4jGuJ9zS4DFsALg=
+	b=dGK3ATj5zqjeavSBz7znZ0GqGtJwAOvvO1lfDF9qROvTzcXk1k3iZZUvrynIDHqJT
+	 yJx57edn6+ETmO8owb0WfpFmfeXGOOKa3FJSmNEYx3GLTzDHghCDspa7yPjVIbcPx/
+	 46Rg2mjnW6pgtdpsAjsZUIU1bbZZmZF/lpUm3Leo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Diogo Ivo (Schneider Electric)" <diogo.ivo@bootlin.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Judith Mendez <jm@ti.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 352/438] mmc: sdhci_am654: Fallback to DT-provided itap delay on DDR50 tuning failure
-Date: Wed, 23 Sep 2026 16:06:13 +0200
-Message-ID: <20260923140653.956130677@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.2 353/438] Input: adp5588-keys - cache GPIO state before registering the gpiochip
+Date: Wed, 23 Sep 2026 16:06:14 +0200
+Message-ID: <20260923140653.982806462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -46,89 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
+From: Alvin Šipraga <alvin.sipraga@analog.com>
 
-commit 308d05225281d86150d88141990d6caf8c902349 upstream.
+commit 21efadc62272cabee9bec27777ae75d84a9ca8a8 upstream.
 
-DDR50 mode is not required to support the tuning command CMD19, meaning
-that calibration may fail on cards that do not implement it, in which
-case a known-good itap delay value should be programmed into the host
-controller.
+So as not to clobber any pre-programmed GPIO state in the execution
+of its gpiochip ops, the driver caches things during probe time.
+However, since those ops can be called both during and immediately after
+the call to devm_gpiochip_add_data(), it is imperative that things are
+cached before that. That's not the case right now, so reorder the two
+steps to prevent any clobbering.
 
-Do this by reading the (already defined) itap delay DT property for DDR50
-and, if tuning fails for this mode, fall back to the DT-provided itap delay
-value. If the DT does not provide a value for DDR50 fallback then this
-simply disables using itapdly.
+In the concrete example which motivated this change, a bootloader was
+preconfiguring an important GPIO output to HIGH before booting the
+kernel. Linux would then inadvertently set that output to LOW while
+configuring a GPIO hog on a discrete GPIO line within the same 8-bit
+bank (because the cached value was 0=LOW).
 
-Fixes: 901d16e46296 ("mmc: sdhci_am654: Add retry tuning")
+Fixes: ba9f507a1bea ("Input: adp5588-keys - export unused GPIO pins")
+Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260818-adp5588-gpio-cache-v1-1-650a2674fc0d@analog.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Judith Mendez <jm@ti.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |   26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/input/keyboard/adp5588-keys.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -126,7 +126,7 @@ static const struct timing_data td[] = {
- 				   NULL,
- 				   MMC_CAP_UHS_SDR104},
- 	[MMC_TIMING_UHS_DDR50]	= {"ti,otap-del-sel-ddr50",
--				   NULL,
-+				   "ti,itap-del-sel-ddr50",
- 				   MMC_CAP_UHS_DDR50},
- 	[MMC_TIMING_MMC_DDR52]	= {"ti,otap-del-sel-ddr52",
- 				   "ti,itap-del-sel-ddr52",
-@@ -144,6 +144,8 @@ struct sdhci_am654_data {
- 	u32 otap_del_sel[ARRAY_SIZE(td)];
- 	u32 itap_del_sel[ARRAY_SIZE(td)];
- 	u32 itap_del_ena[ARRAY_SIZE(td)];
-+	u32 itap_del_sel_dt_ddr50;
-+	u32 itap_del_ena_dt_ddr50;
- 	int clkbuf_sel;
- 	int trm_icp;
- 	int drv_strength;
-@@ -579,10 +581,19 @@ static int sdhci_am654_platform_execute_
- 	} while (++tuning_loop < RETRY_TUNING_MAX);
+--- a/drivers/input/keyboard/adp5588-keys.c
++++ b/drivers/input/keyboard/adp5588-keys.c
+@@ -446,12 +446,6 @@ static int adp5588_gpio_add(struct adp55
  
- 	if (itapdly < 0) {
--		dev_err(dev, "Failed to find itapdly, fail tuning\n");
--		sdhci_am654_write_itapdly(sdhci_am654, 0, 0);
--		sdhci_am654->itap_del_ena[timing] = 0;
--		sdhci_am654->itap_del_sel[timing] = 0;
-+		if (timing == MMC_TIMING_UHS_DDR50) {
-+			dev_dbg(dev, "Failed DDR50 tuning, fallback to DT ITAP\n");
-+			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel_dt_ddr50;
-+			sdhci_am654->itap_del_ena[timing] = sdhci_am654->itap_del_ena_dt_ddr50;
-+		} else {
-+			dev_err(dev, "Failed to find itapdly, fail tuning\n");
-+			sdhci_am654->itap_del_ena[timing] = 0;
-+			sdhci_am654->itap_del_sel[timing] = 0;
-+		}
-+
-+		sdhci_am654_write_itapdly(sdhci_am654,
-+					  sdhci_am654->itap_del_sel[timing],
-+					  sdhci_am654->itap_del_ena[timing]);
- 		return -1;
+ 	mutex_init(&kpad->gpio_lock);
+ 
+-	error = devm_gpiochip_add_data(dev, &kpad->gc, kpad);
+-	if (error) {
+-		dev_err(dev, "gpiochip_add failed: %d\n", error);
+-		return error;
+-	}
+-
+ 	for (i = 0; i <= ADP5588_BANK(ADP5588_MAXGPIO); i++) {
+ 		kpad->dat_out[i] = adp5588_read(kpad->client,
+ 						GPIO_DAT_OUT1 + i);
+@@ -459,6 +453,12 @@ static int adp5588_gpio_add(struct adp55
+ 		kpad->pull_dis[i] = adp5588_read(kpad->client, GPIO_PULL1 + i);
  	}
  
-@@ -758,6 +769,11 @@ static int sdhci_am654_get_otap_delay(st
- 		}
- 	}
- 
-+	sdhci_am654->itap_del_sel_dt_ddr50 =
-+		sdhci_am654->itap_del_sel[MMC_TIMING_UHS_DDR50];
-+	sdhci_am654->itap_del_ena_dt_ddr50 =
-+		sdhci_am654->itap_del_ena[MMC_TIMING_UHS_DDR50];
++	error = devm_gpiochip_add_data(dev, &kpad->gc, kpad);
++	if (error) {
++		dev_err(dev, "gpiochip_add failed: %d\n", error);
++		return error;
++	}
 +
  	return 0;
  }
