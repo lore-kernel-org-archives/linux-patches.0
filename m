@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159532E2663;
-	Wed, 23 Sep 2026 14:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493BD53B332;
+	Wed, 23 Sep 2026 14:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175174; cv=none; b=mUH096DZEOd8UQLXFbtYemqK5p9A9B1zX8Nt2i0ZysI+P7jwpPQJfwjtLMBleEBx/x/SPjxmE7Cdj7jxAjaL4Ftj5RJP7NdUZMYI6mG8JoQ0ypSbSEXmbErzTKIenqT90Lt0LPwsrKgcWMbROZtUFHwo7NaVEifn11jltJO6/vE=
+	t=1790175175; cv=none; b=cnbZSbWVt2L4t10HHbpMXkHac+iFLoaTZJZ9bLHAjmUsXN0iF7zGVkOKZ/ExeXIgsZLDV0sQtFARkD1yqcV0OUUZNCULDwJ7qj8/WY6A74ZlYWJzzyluoAt29PPyrB2cEbHY8Vz3gPnm5p5u3HKGwsGn3jWiZFmVYWrHIt/M8iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175174; c=relaxed/simple;
-	bh=Z7EoNY61JZY54KQe06ne9ZjgToC03v19O2mNiQAUT9Q=;
+	s=arc-20240116; t=1790175175; c=relaxed/simple;
+	bh=xil9GfY0wQGpe++ofXNSpWt+ECYM6eW4+gHpQ6xOU7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1OM0MmzHukHV5n1a+1cg8E809vSZPD3pfKH5WOG3wTthfwVoM7tqJoq4TYd6ck/qvTfnDwkssv+MkiJ5cZi+3wZb63jJev/pTC8PC+fQ9uskWrsfnK0SMZZJAjvbClJZpWspmScsgDPkGE0kgv0An21V5z0+8yV5CbR1OhkeSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VO8MIqTy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kGBDpOL2HSJkzs71fwRYWxj/YxZ1U12jQab0ldZ9/8vAs4s+2H5xbEn6Vz7kw8NQTntwBPehBnbuS44a5drlRizOIzXOv7LHQn9/IWmI8t1bxZTcqsqbr4if0MLt/B2/iWh7uxMHJA5hMPDEQo37qR1lT7ERdVzyVFzk9Qveu44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhOwWxve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VO8MIqTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0711F00899;
-	Wed, 23 Sep 2026 14:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhOwWxve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EA41F00893;
+	Wed, 23 Sep 2026 14:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175169;
-	bh=X/1ks0qPMEXwi7y7GOr+4yhKvAWm9dhaPVMfB7U+1pA=;
+	s=korg; t=1790175172;
+	bh=bKAiN7oyfzlI46DvbgNkqyhRw9Z79mXO3N97ohmQKq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VO8MIqTyYkaMO+6LJM5rRnqIjD0i5VRxD42EFUYdnzQ4NEhREU6/g+ctuSxLnhInj
-	 FHlKlnpz7qYwOO/1hHMpuoyj3GoOqp9mMOZXm9GYgtXgeh69y8vkCpz2YpBwya29S6
-	 /j+xU39lLGmiZ/sv8T3IDllLAV+QJwcW4iNZ3qNI=
+	b=dhOwWxves6xQaycMmaSEc8jswE7pJL4jCMZWA84NjkbvACfDybnv3vTuoC/fLCtsY
+	 yxFJH25gRTGc/jjs7tpA7/dzKXXxnjl6Bv7VKSUANXJVq2TR17vixiOhnN31qhDxQA
+	 VPCeFSMTuXYPca97ac5dzTcSpqEcn6o8aUlUf5s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.18 342/398] drm/msm/hdmi_phy: fix runtime PM cleanup on probe failure
-Date: Wed, 23 Sep 2026 16:06:56 +0200
-Message-ID: <20260923140652.294041418@linuxfoundation.org>
+	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.18 343/398] drm/msm: RCU-free the scheduler-containing ring and VM objects
+Date: Wed, 23 Sep 2026 16:06:57 +0200
+Message-ID: <20260923140652.320954680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,64 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
 
-commit f4fae975db08a9aeec0b15e145c7d4d0fe02a0ec upstream.
+commit 01c8d1f385f788f1bbbbb7687c4386d614281218 upstream.
 
-msm_hdmi_phy_probe() enables runtime PM before enabling the PHY
-resources and initializing the PLL, but failures from either operation
-return without calling the matching pm_runtime_disable().
+Both struct msm_ringbuffer and struct msm_gem_vm embed a struct
+drm_gpu_scheduler.  msm_ringbuffer_destroy() and the VM free callback
+msm_gem_vm_free() call drm_sched_fini() on the embedded scheduler and then
+free the containing object with plain kfree().
 
-The remove path disables runtime PM, but it is not called when probe
-fails. As a result, runtime PM remains enabled after an unsuccessful
-probe.
+drm_sched_fence_get_timeline_name() returns fence->sched->name, and the
+scheduler fence keeps a .release callback so it is not ops-detached on
+signalling.  A finished fence exported to userspace (the submit out-fence, or
+a VM_BIND fence, via sync_file / drm_syncobj) keeps pointing at the embedded
+scheduler after the ring/VM is freed, so a later get_timeline_name() --
+reachable unprivileged through SYNC_IOC_FILE_INFO -- dereferences freed slab
+memory (KASAN slab-use-after-free read).
 
-Route failures after pm_runtime_enable() through a common error path
-and disable runtime PM before returning.
+Per the dma-fence lifetime contract the exporter must keep the data backing a
+signalled fence alive for an RCU grace period.  Free the scheduler-containing
+objects with kfree_rcu() instead of kfree().
 
-This issue was found by manual code inspection.
-
-Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
+Fixes: 92395af63a99 ("drm/msm: Add VM_BIND submitqueue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/753043/
-Link: https://lore.kernel.org/r/20260913085814.1509352-1-lgs201920130244@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/750234/
+Message-ID: <20260902012720.880783-1-malhyuk97@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.h        |    3 +++
+ drivers/gpu/drm/msm/msm_gem_vma.c    |    2 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c |    2 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h |    1 +
+ 4 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -168,13 +168,13 @@ static int msm_hdmi_phy_probe(struct pla
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -68,6 +68,9 @@ struct msm_gem_vm {
+ 	/** @base: Inherit from drm_gpuvm. */
+ 	struct drm_gpuvm base;
  
- 	ret = msm_hdmi_phy_resource_enable(phy);
- 	if (ret)
--		return ret;
-+		goto err_pm_disable;
- 
- 	ret = msm_hdmi_phy_pll_init(pdev, phy->cfg->type);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "couldn't init PLL\n");
- 		msm_hdmi_phy_resource_disable(phy);
--		return ret;
-+		goto err_pm_disable;
- 	}
- 
- 	msm_hdmi_phy_resource_disable(phy);
-@@ -182,6 +182,10 @@ static int msm_hdmi_phy_probe(struct pla
- 	platform_set_drvdata(pdev, phy);
- 
- 	return 0;
++	/** @rcu: RCU-delayed free so an exported sched fence->sched stays valid. */
++	struct rcu_head rcu;
 +
-+err_pm_disable:
-+	pm_runtime_disable(dev);
-+	return ret;
+ 	/**
+ 	 * @sched: Scheduler used for asynchronous VM_BIND request.
+ 	 *
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -166,7 +166,7 @@ msm_gem_vm_free(struct drm_gpuvm *gpuvm)
+ 	dma_fence_put(vm->last_fence);
+ 	put_pid(vm->pid);
+ 	kfree(vm->log);
+-	kfree(vm);
++	kfree_rcu(vm, rcu);
  }
  
- static void msm_hdmi_phy_remove(struct platform_device *pdev)
+ /**
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -140,5 +140,5 @@ void msm_ringbuffer_destroy(struct msm_r
+ 
+ 	msm_gem_kernel_put(ring->bo, ring->gpu->vm);
+ 
+-	kfree(ring);
++	kfree_rcu(ring, rcu);
+ }
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.h
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+@@ -53,6 +53,7 @@ struct msm_ringbuffer {
+ 	/*
+ 	 * The job scheduler for this ring.
+ 	 */
++	struct rcu_head rcu;
+ 	struct drm_gpu_scheduler sched;
+ 	bool sched_initialized;
+ 
 
 
