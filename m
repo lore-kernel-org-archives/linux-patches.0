@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8923B4EB853;
-	Wed, 23 Sep 2026 14:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6008A4A3850;
+	Wed, 23 Sep 2026 14:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172598; cv=none; b=Ag6CCnJj/ZUrE6dwUDoWTCZgIBCCStZjsho19BgBb0Y5LEvnyUiZjUZbFfAbWjdFi0wroReCxRoCaSCvKbLlmNZwIfjK3hF/Gc6xRwDuxviCi9pm8shnVJKe4wiCGVGKESrCE0vh5IXh1AOYRYuwPbLs0SourqqpHVcwCjlTiSc=
+	t=1790172601; cv=none; b=t8x6CeBp4IjxifqbfK4OGhb7EHR3zw0GsOCOqpLptfPw6BYO/ZQEw4m2rXsg1LQEAldNtEsaZD24Trs4i/IoYoVoRFV3BHtYXLZ1iTNWo/0Mqth0vDNBisYxXyyB1t9LC7RgPJ954YaNhFyWq+aoxKAONN9gvC8Z42LQFP8Mat8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172598; c=relaxed/simple;
-	bh=p0iwWaAXnnPOXhucXC+hZkZBAoiWJ267b0iAXxyWxoQ=;
+	s=arc-20240116; t=1790172601; c=relaxed/simple;
+	bh=FAdHvTWS7pWcDa4JoUDxZsdIBpRSwqX6h9sB5T81aE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N57ecz/6+nS3+QAIna3Cxjz/21E9S3acCHubjb/Rvvswv5l4r+rp2klPdzUQbm1sz63fqk9zI/iU0tJ6Iqla2/9IAke2jccWim2GyMOyAhMVqNz12TJ2Os/tTIIH53rRLXyUW8VFuy+t56M0rRURlkqzYHJYEg+rMsqZy2BpBgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFl62URV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sk10omr+1GexIXOJh6T357zl2GJ5sqS5g7ol7FgFkl84T6wt9C+JpYVew4ZX4s9WPP7ewP6TfPxAHML1CwrOKQpvIz/pv6hMJqDMOvYNh0y6lnO1OmJRtKaIstcuaHy/RACKOYHJgw8sFi/0fszuWhu2Yqzb42mWXZJjJkZUJno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfUYdLhj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFl62URV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847631F000FF;
-	Wed, 23 Sep 2026 14:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfUYdLhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A491F000FF;
+	Wed, 23 Sep 2026 14:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172597;
-	bh=p0dbSgMaL4IeG5/VHq8Ffc7SGRbOafkv8Sny8knrbP8=;
+	s=korg; t=1790172599;
+	bh=lVuo+mIJ5qBcdBmFdzYSl2SKcDG95t+Ld7uVDTOxmhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFl62URV3K07AFMBttYHeeko42/3cD+AFDQOM37S0ll1oyTyt+rNfvqwbbkJRtAKm
-	 dYytrNMjrtUc1XGNF8vrw++QeG+ocNxuTmj5Gm0JYY7vsuMDnbcz//VqNq+3yx5iFU
-	 JzregvGjYHlSbglUuPFA+8kOOy/IGCNBk6wDFcvM=
+	b=WfUYdLhjPi7uXsoUAHFqxx8vSZ22MTgLWSerPor1On9cNFwyRomCzDFdffRySD9RD
+	 MRoNSIwo/M/trg69QpZxAkoIq7XUqhmi2CxCiRY+dB5Tjsv/KioPrSlRCRK/ySBF+a
+	 M9r1gKNTiNOjYgMK7MVQjs7HqSh3yEFuakp76SsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c0e99a1aa85a286d7a3b@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 006/438] xfrm: add missing RCU read lock in xfrm_send_migrate_state()
-Date: Wed, 23 Sep 2026 16:00:27 +0200
-Message-ID: <20260923140644.929931923@linuxfoundation.org>
+Subject: [PATCH 7.2 007/438] xfrm: iptfs: fix runt reassembly panic from short inner tot_len
+Date: Wed, 23 Sep 2026 16:00:28 +0200
+Message-ID: <20260923140644.960446527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,57 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 42d100f5232f39b8ea7b00a7c2482325c7f032a4 ]
+[ Upstream commit dc33262be1fe43d0eb0b84fb58c6ed42e2f64a8c ]
 
-xfrm_nlmsg_multicast() requires the RCU read lock to be held because it
-safely dereferences the net->xfrm.nlsk pointer using rcu_dereference().
-When it is called from xfrm_send_migrate_state(), the RCU read lock is not
-held, which triggers a suspicious RCU usage warning:
+When the start of an inner packet is split across two outer packets
+such that fewer than 4 bytes land at the end of the first one,
+__input_process_payload() saves those bytes as a runt and skips the
+iplen/iphlen validation performed for in-place packets. When the
+continuation packet arrives, iptfs_reassem_cont() only requires the
+declared inner length to be >= sizeof(ra_runt) (6) before allocating
+the reassembly skb with that attacker-controlled length.
 
-WARNING: suspicious RCU usage
-net/xfrm/xfrm_user.c:1630 suspicious rcu_dereference_check() usage!
+However, __iptfs_iphlen() always returns the fixed minimum IP header
+size (20 for IPv4, 40 for IPv6), so for an inner IPv4 tot_len in
+[6, 19] the header-completion copy writes past the declared packet
+length, and the subsequent "ipremain -= copylen" underflows to ~4GB,
+leaving the payload copy length bounded only by blkoff (up to 64KB).
+At runtime the skb_put() tailroom check turns this into
+skb_over_panic(), i.e. an unprivileged kernel panic (DoS), reachable
+locally via userns+netns IPTFS SAs and remotely against IPTFS VPN
+gateways when the decrypted outer skb is linear (e.g. AF_PACKET taps,
+tun/tap delivery).
 
-Call Trace:
- lockdep_rcu_suspicious+0x13f/0x1d0 kernel/locking/lockdep.c:6876
- xfrm_nlmsg_multicast+0x1d8/0x1f0 net/xfrm/xfrm_user.c:1630
- xfrm_send_migrate_state+0x870/0xae0 net/xfrm/xfrm_user.c:3340
- xfrm_do_migrate_state+0x1749/0x1e90 net/xfrm/xfrm_user.c:3507
- xfrm_user_rcv_msg+0x7a8/0xf30 net/xfrm/xfrm_user.c:3907
+Align the runt path with the normal path by requiring the declared
+inner length to cover at least the IP header size. This also subsumes
+the previous >= sizeof(ra_runt) check, since the minimum IP header
+is always larger than the runt buffer.
 
-Fix this by wrapping the xfrm_nlmsg_multicast() call in
-xfrm_send_migrate_state() with rcu_read_lock() and rcu_read_unlock().
+This issue was found by the autokbug dynamic kernel fuzzer at
+Tencent Yunding Lab.
 
-Fixes: a9d155ea9b44 ("xfrm: add XFRM_MSG_MIGRATE_STATE for single SA migration")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+c0e99a1aa85a286d7a3b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c0e99a1aa85a286d7a3b
-Link: https://syzkaller.appspot.com/ai_job?id=8977f559-3a7e-4bb5-b4d6-1196956260b6
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Fixes: 075694765446 ("xfrm: iptfs: handle received fragmented inner packets")
+Reported-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_iptfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 6266a92cf3020..980dbeb5a57de 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3337,7 +3337,11 @@ static int xfrm_send_migrate_state(struct net *net,
- 		return err;
- 	}
- 
--	return xfrm_nlmsg_multicast(net, skb, 0, XFRMNLGRP_MIGRATE);
-+	rcu_read_lock();
-+	err = xfrm_nlmsg_multicast(net, skb, 0, XFRMNLGRP_MIGRATE);
-+	rcu_read_unlock();
-+
-+	return err;
- }
- 
- static int xfrm_do_migrate_state(struct sk_buff *skb, struct nlmsghdr *nlh,
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index 2ce15c472cc4d..6920940a35b49 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -828,8 +828,8 @@ static u32 iptfs_reassem_cont(struct xfrm_iptfs_data *xtfs, u64 seq,
+ 		 * allocate an in progress skb
+ 		 */
+ 		ipremain = __iptfs_iplen(xtfs->ra_runt);
+-		if (ipremain < sizeof(xtfs->ra_runt)) {
+-			/* length has to be at least runtsize large */
++		if (ipremain < __iptfs_iphlen(xtfs->ra_runt)) {
++			/* length has to be at least the IP header size */
+ 			XFRM_INC_STATS(xs_net(xtfs->x),
+ 				       LINUX_MIB_XFRMINIPTFSERROR);
+ 			goto abandon;
 -- 
 2.53.0
 
