@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D62494824;
-	Wed, 23 Sep 2026 14:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA53494824;
+	Wed, 23 Sep 2026 14:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173228; cv=none; b=V7S84/vtYIVNOi3oMgJI+SVPtEsoHo1IIzs3pVPO1zkSXqY0purb3FLDEZgli6W8RsZTFdBlmgXAs7foVnIO5ZDS8julkn7McaIJs5/33ywpRBZyWyGRkjJcqYShrSVPwCWjNsNcDVLvkqrpwZ2QWVXZWW/qEXTg2bC/4+e46hM=
+	t=1790173231; cv=none; b=akYYBWeG7t7webafirndPsrZsyCWCeAxPeU70vOpz9bysPtQIIDZu2ugQ/xH9PVmbnrpXZi3OPYMdLKL9RGF2z+hpKedow1Bpro+3B3aZIpVQ0G6wpK80FBESeepdns/Qe3DXPKJl5I9IcoW6t7IN5C4MXYmFZGYWFhBujix+8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173228; c=relaxed/simple;
-	bh=NYo7oLV/4Yd6LqCs/btZxZD3yQKMJ6K15u2oqV09BYo=;
+	s=arc-20240116; t=1790173231; c=relaxed/simple;
+	bh=o3DHTPiMv7deMuXjUlkicMbpiUtHcR8+TWPOzqWF1F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcpHRCyp/3J4wYH+xTTrRsnxWrR3MEsXiMBeFuwt3tHTtYqUVeynMpjhKQO68uwaZKLmOgzmC6Suxbal/zzWN5gRwD2yfN9OKPjgNcwZLqn76rL8CiGklzSXrnr34kdDr8SSBg74pt+3drc2BChGAum1HCUNWbkz62QLsNaRDnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEOecvcr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mg8siOWH0s0WRoYevWjK5nTcO04MgNiR5v25Lv5m9Lr/y/aLgavb0bZpihAMA53HawKkdZmeG8fkWTlhbsMY+az2ROKlYDUMiWbjOnG8gcJxH4qkiUtYH677MdmhFMthYpY6FBcGBXLH0Yh+xCrGJ2IkDiUYbr3CB5FER75RMRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xts0loG7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEOecvcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBD11F000FF;
-	Wed, 23 Sep 2026 14:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xts0loG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD48E1F000FF;
+	Wed, 23 Sep 2026 14:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173226;
-	bh=ZaArCk/xHQA2zXzJjAI1akg+176qefbHl/JWqhSG8XM=;
+	s=korg; t=1790173229;
+	bh=0QMZlADmWi93KrmooMOEzpB4mcbg0hVAGd9Nb1l59m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hEOecvcrCTRr67HdczbQZR+0gbMvADykReYMROm3zLCRWDqJjTwF88A7S6k4syzFR
-	 ZBFh56qt3d5gEuZAoOmRnt/KBfaNdeW9WQ+Am3H8qFInjtfMr+dG0VmM9XK3GWRtS2
-	 DIi5WvzyQE+TwPd9EZN02zIxh9fxW+PpmSlTyvs0=
+	b=Xts0loG7NEWR4Pw3EI49Fp9lDuzPYATBFxKk3cJkWoAO+V+Dd7Dog9sR1/LSAEd+O
+	 2CIfmN5u0ttVWS+Z+O8aknYVg/j0xrB3+g+WObHwHRAUFYMeIG+8pSiY6OZwwWwRNy
+	 CIz5CO4pYl3PtOydSpdW330u7Ewj/rW6klZjrcnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com,
-	Juan Perdomo <jcperdomo100@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	James Burton <jamesburton@meta.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 179/438] Bluetooth: RFCOMM: avoid socket lock inversion in listener cleanup
-Date: Wed, 23 Sep 2026 16:03:20 +0200
-Message-ID: <20260923140649.405552252@linuxfoundation.org>
+Subject: [PATCH 7.2 180/438] af_unix: Unify scc_index when finalising SCC in __unix_walk_scc().
+Date: Wed, 23 Sep 2026 16:03:21 +0200
+Message-ID: <20260923140649.431153456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,77 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juan Perdomo <jcperdomo100@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 801fb950cae7048eb7d83b18857d1ca37b8cd5a4 ]
+[ Upstream commit 4a4263dfeabad72f95e8ab6e15146861fa4144dd ]
 
-rfcomm_sock_cleanup_listen() closes unaccepted child sockets through
-rfcomm_sock_close(), which takes the child socket lock before
-rfcomm_dlc_close() acquires rfcomm_mutex. The RFCOMM worker takes these
-locks in reverse order while handling connections and DLC state changes,
-so lockdep reports a possible deadlock.
+Commit bfdb01283ee8 ("af_unix: Assign a unique index to SCC.")
+changed Tarjan's algorithm to update lowlink with lowlink,
+which is called lowpoint (unix_vertex.scc_index).
 
-Close dequeued children without taking their socket lock. The accept queue
-owns a reference to each child, and bt_accept_dequeue() locks the child
-while unlinking it and clearing its parent pointer.
+unix_vertex_dead() assumes all vertices in an SCC share the same
+lowpoint, but this is not always true if an SCC has two or more
+back edges, depending on the order of DFS.
 
-Dropping the child lock makes it important to prevent a concurrent
-rfcomm_connect_ind() from enqueueing a new child after cleanup observes an
-empty queue. Set a listening socket to BT_CLOSED while its lock is still
-held, before dropping the lock and draining the queue. The state check in
-rfcomm_connect_ind() then rejects new children once cleanup starts.
+For example, the graph below has two back edges from B to A
+and from C to B.
 
-Reported-by: syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0cece8fa7d83523f47a3
-Fixes: b7ce436a5d79 ("Bluetooth: switch to lock_sock in RFCOMM")
-Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  A --> B --> C
+  ^    | ^    |
+  `----' `----'
+
+If DFS walks through A -> B -> C -> B (-> C -> B) -> A (-> B -> A),
+each index and scc_index will be updated as follows.
+
+  A --> B --> C    C = (3, 3)  (index, scc_index)
+                   B = (2, 2)
+                   A = (1, 1)
+
+  A ... B ... C    C = (3, 2)<-.
+         ^    |    B = (2, 2) -'
+         `----'    A = (1, 1)
+
+  A ... B ... C    C = (3, 2)
+  ^    | .    .    B = (2, 1)<-.
+  `----'  ....     A = (1, 1) -'
+
+Then, unix_vertex_dead() thinks that B is passed to another
+SCC with scc_index 2, and the SCC is not garbage-collected.
+
+This does not happen if DFS walks in a different order below
+or starts from B.
+
+    1      3
+  A --> B --> C
+  ^    | ^    |
+  `----' `----'
+     2      4
+
+Let's unify scc_index across the SCC when finalising it.
+
+Note that updating v->index was previously done in unix_scc_dead(),
+when called from __unix_walk_scc(), just to save one loop.  Since
+__unix_walk_scc() now iterates over the SCC anyway, the update is
+moved back to __unix_walk_scc() and 'fast' argument is dropped.
+
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
+Reported-by: James Burton <jamesburton@meta.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260912030852.1467872-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/unix/garbage.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index feb302a491fa0..24b42483b3c0c 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -241,9 +241,7 @@ static void __rfcomm_sock_close(struct sock *sk)
-  */
- static void rfcomm_sock_close(struct sock *sk)
- {
--	lock_sock(sk);
- 	__rfcomm_sock_close(sk);
--	release_sock(sk);
- }
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 9fcaaf55cba5d..da774f56ca648 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -374,7 +374,7 @@ static bool unix_vertex_dead(struct unix_vertex *vertex)
+ static LIST_HEAD(unix_visited_vertices);
+ static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
  
- static void rfcomm_sock_init(struct sock *sk, struct sock *parent)
-@@ -904,6 +902,7 @@ static int rfcomm_sock_compat_ioctl(struct socket *sock, unsigned int cmd, unsig
- static int rfcomm_sock_shutdown(struct socket *sock, int how)
+-static bool unix_scc_dead(struct list_head *scc, bool fast)
++static bool unix_scc_dead(struct list_head *scc)
  {
- 	struct sock *sk = sock->sk;
-+	bool cleanup_listen = false;
- 	int err = 0;
+ 	struct unix_vertex *vertex;
+ 	bool scc_dead = true;
+@@ -386,10 +386,6 @@ static bool unix_scc_dead(struct list_head *scc, bool fast)
+ 		/* Don't restart DFS from this vertex. */
+ 		list_move_tail(&vertex->entry, &unix_visited_vertices);
  
- 	BT_DBG("sock %p, sk %p", sock, sk);
-@@ -914,9 +913,17 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
- 	lock_sock(sk);
- 	if (!sk->sk_shutdown) {
- 		sk->sk_shutdown = SHUTDOWN_MASK;
-+		if (sk->sk_state == BT_LISTEN) {
-+			/* Block new children before cleaning up without sk lock. */
-+			sk->sk_state = BT_CLOSED;
-+			cleanup_listen = true;
+-		/* Mark vertex as off-stack for __unix_walk_scc(). */
+-		if (!fast)
+-			vertex->index = unix_vertex_grouped_index;
+-
+ 		if (scc_dead)
+ 			scc_dead = unix_vertex_dead(vertex);
+ 	}
+@@ -521,6 +517,7 @@ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
+ 	}
+ 
+ 	if (vertex->index == vertex->scc_index) {
++		struct unix_vertex *v;
+ 		struct list_head scc;
+ 
+ 		/* SCC finalised.
+@@ -530,7 +527,13 @@ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
+ 		 */
+ 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
+ 
+-		if (unix_scc_dead(&scc, false)) {
++		list_for_each_entry_reverse(v, &scc, scc_entry) {
++			/* Mark vertex as off-stack and assign a unique ID. */
++			v->index = unix_vertex_grouped_index;
++			v->scc_index = vertex->scc_index;
 +		}
++
++		if (unix_scc_dead(&scc)) {
+ 			unix_collect_skb(&scc, hitlist);
+ 		} else {
+ 			if (unix_vertex_max_scc_index < vertex->scc_index)
+@@ -588,7 +591,7 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+ 		list_add(&scc, &vertex->scc_entry);
  
- 		release_sock(sk);
--		__rfcomm_sock_close(sk);
-+		if (cleanup_listen)
-+			rfcomm_sock_cleanup_listen(sk);
-+		else
-+			__rfcomm_sock_close(sk);
- 		lock_sock(sk);
- 
- 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
+-		if (unix_scc_dead(&scc, true)) {
++		if (unix_scc_dead(&scc)) {
+ 			cyclic_sccs--;
+ 			unix_collect_skb(&scc, hitlist);
+ 		}
 -- 
 2.53.0
 
