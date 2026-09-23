@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB49370AFD;
-	Wed, 23 Sep 2026 14:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF0F25E469;
+	Wed, 23 Sep 2026 14:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172911; cv=none; b=DGvNFqRAhnKZ3645ERQN545isstKLFUjF37Id1qDim103fLj78Xtw58IU5mPy6V3R/0HyuFYzQsWeHcRfbKRsIfgJ30bnY5cyQHMb/gy5llEuJWTLgG8ERZbjijDtlHeFSE9jSRSh2/9Twx1ZqV1RaWubdgTfhLNCUyjrSZ3+2U=
+	t=1790172914; cv=none; b=tLy7u3yNLAJaLsexwCrqcvsfCpUOZr32jcoGBZ+2xee2tsoLHJfeowSj+EUcOkMehdg5hGP1llOSOn1L4ryLkxuzatZwAMO7q6oL2BtEB+urL2zIoE6pAclpe9Su7lF2YtJn0YBp/LT891N+yQAfokV816jdkxkutbtgzkf81yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172911; c=relaxed/simple;
-	bh=vSweNF9alXqDYIM+Uh5JsRqaYkRG3IwKH7ONzv4nX3M=;
+	s=arc-20240116; t=1790172914; c=relaxed/simple;
+	bh=9YgSfhapoOcfQv5DVm8lwaQ/MOgkPIHiwsWAisdCS0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMzOpTBYZLkwmppf9EaYv07z0NQiFeUk8fPnyMvogoOGFS5mxKlTd7RBqGedgvpYcwl04evvrnKBVjAn85ImhQeXHdXHoBnFlz8mVoJ0ZiiOB69l8NToCRAPaYpBH+FUmt7V1G/AZHjuNy8JPz+MFwHX+/eOHnenYTTU1L54S+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdVeGLhl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IxVlj5BshZpyK1J1+EFH/zLSiHnqX+tFsgs1nKKAgn3pCpenHrNllDkMU2fwsCCFyVrv/sC2etagMc9nWSWVZOmpYKIkBL5Rz8gQT+KAn8dGi+c5EpXJO7uhmYxVuwWWFLRLxiwOljSqQV2Y90a0QSQZJfHA4ScFxfQC7og7S/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVtbO8z7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdVeGLhl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F561F00893;
-	Wed, 23 Sep 2026 14:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVtbO8z7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE2E1F000FF;
+	Wed, 23 Sep 2026 14:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172909;
-	bh=eu5i573xkiwGQXdRlRSdTdVh8X7105tYhjP458sfRu4=;
+	s=korg; t=1790172912;
+	bh=ZbPJ8YlZDghDiVJP/vJMz3BRCETTR2E7Lme7sa339rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdVeGLhlaEDScNmltFuftcSZu2e0rSp293csGGVhuMhEoYBlpkk+H6E1dvkMJy9hy
-	 NNXQuWTZSqQigEdHTtaTUGMgLoF3mwPP5TOIOkSI7Jv4litGrmG7Q2sDZM93wk615M
-	 WNTfIWBVmj17L2Xxb0uYDUn8zlvUg1sZuxxM89zs=
+	b=aVtbO8z73nA+O2ktkz4VAm+e8iH28nTMuTCHpi/e12SeFoS7hfXVaQwV0zL/FL54p
+	 dOtVzRmRnSvbRScyX6WhyXady4eeFKl1/ae7N5APA4uqsaSZgvwNUMcaqqy9LrjZT1
+	 j+40CVdi85L529vHJjPRXCjz4nTs59B29ZTPqUPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bereza <alex@bereza.email>,
-	Frank Li <Frank.Li@nxp.com>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+c5f8a81e794d4a4f2014@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 097/438] dmaengine: xilinx_dma: Fix hardware buffer descriptor chain after cyclic DMA
-Date: Wed, 23 Sep 2026 16:01:58 +0200
-Message-ID: <20260923140647.291940800@linuxfoundation.org>
+Subject: [PATCH 7.2 080/438] wifi: cfg80211: get the wiphy out of a dying network namespace
+Date: Wed, 23 Sep 2026 16:01:41 +0200
+Message-ID: <20260923140646.857590680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,81 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bereza <alex@bereza.email>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 7ed1e3070c9b4bbd67d5519e14711038dd53ab13 ]
+[ Upstream commit 4635b1a1c1d693178a537446a6e09963f0fdae52 ]
 
-Using the DMA in cyclic mode modifies the hardware buffer descriptor
-chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
-the cyclic transfer points back to the first descriptor, but it never
-restores the original descriptor ring. This breaks using non-cyclic mode
-after cyclic mode with an error like:
+When a network namespace is destroyed, cfg80211_pernet_exit() moves any
+wiphy back to the initial namespace, and just warns if that fails. But
+moving an interface can fail (due to allocation failures), and then the
+wiphy is left behind with a garbage netns pointer:
 
-  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
+  Kernel mode fault at addr 0x30
+  genlmsg_multicast_netns.constprop.0+0x46/0xcf [cfg80211]
+  nl80211_notify_wiphy+0xcd/0xe8 [cfg80211]
+  wiphy_unregister+0x169/0x3fc [cfg80211]
 
-The only way to get out of this error state is to rebuild the hardware
-buffer descriptor ring by releasing and re-acquiring the channel.
+Note that commit debac3a20dec ("net: Remove conflicting altnames for
+dying netns in __dev_change_net_namespace().") fixed another path
+that could reach it without allocation failures.
 
-Fix using non-cyclic mode after cyclic mode by always restoring the
-original buffer descriptor ring in the same manner as it is set up by
-xilinx_dma_alloc_chan_resources().
+Remove interfaces that cannot be moved instead of failing the switch,
+so that the wiphy always ends up in the initial namespace. In this
+case the netdev core will unregister the interfaces anyway.
 
-Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
-Signed-off-by: Alex Bereza <alex@bereza.email>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
-Link: https://patch.msgid.link/20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: LLM
+Reported-by: syzbot+c5f8a81e794d4a4f2014@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c5f8a81e794d4a4f2014
+Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
+Link: https://patch.msgid.link/20260904170220.7f3edc6d9992.I5e57921011244d3d8ef14d89e738aa19a5d972a0@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ net/wireless/core.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 0e62e523d0ccd..12cf1ca3a98a1 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -756,15 +756,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
- 	return segment;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 59facacf1a36f..bc7e2c50cc726 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -168,20 +168,24 @@ static int cfg80211_switch_wdev_netns(struct wireless_dev *wdev,
+ 	return err;
  }
  
--static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
-+static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
-+				     struct xilinx_axidma_tx_segment *segment)
+-int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+-			  struct net *net)
++static int __cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
++				   struct net *net, bool force)
  {
--	u32 next_desc = hw->next_desc;
--	u32 next_desc_msb = hw->next_desc_msb;
-+	dma_addr_t next;
-+	u32 i;
+ 	struct net *old_net = wiphy_net(&rdev->wiphy);
+-	struct wireless_dev *wdev;
++	struct wireless_dev *wdev, *tmp;
+ 	int err = 0;
  
--	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
-+	/*
-+	 * Restore the buffer descriptor's next descriptor pointer to the value
-+	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
-+	 * in cyclic mode leaves the next descriptor pointer altered and
-+	 * prevents subsequent non-cyclic transfers.
-+	 */
-+	i = segment - chan->seg_v;
-+	next = chan->seg_p +
-+	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
+-	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
+-		return -EOPNOTSUPP;
+-
+-	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
++	list_for_each_entry_safe(wdev, tmp, &rdev->wiphy.wdev_list, list) {
+ 		err = cfg80211_switch_wdev_netns(wdev, net);
+-		if (err)
++		if (!err)
++			continue;
++		if (!force)
+ 			goto undo;
++		/* remove interfaces that fail to allow wiphy switching */
++		dev_close(wdev->netdev);
++		scoped_guard(wiphy, &rdev->wiphy)
++			cfg80211_unregister_wdev(wdev);
++		err = 0;
+ 	}
  
--	hw->next_desc = next_desc;
--	hw->next_desc_msb = next_desc_msb;
-+	memset(&segment->hw, 0, sizeof(segment->hw));
-+	segment->hw.next_desc = lower_32_bits(next);
-+	segment->hw.next_desc_msb = upper_32_bits(next);
+ 	scoped_guard(wiphy, &rdev->wiphy) {
+@@ -199,7 +203,7 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 		/* this only fails on allocation failure */
+ 		err = device_rename(&rdev->wiphy.dev,
+ 				    dev_name(&rdev->wiphy.dev));
+-		if (err)
++		if (err && !force)
+ 			wiphy_net_set(&rdev->wiphy, old_net);
+ 
+ 		nl80211_notify_wiphy(rdev, NL80211_CMD_NEW_WIPHY);
+@@ -212,8 +216,8 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 		}
+ 	}
+ 
+-	if (!err)
+-		return 0;
++	if (!err || force)
++		return err;
+ 
+ 	/* set to the last one to undo all of them */
+ 	wdev = list_entry(&rdev->wiphy.wdev_list, typeof(*wdev), list);
+@@ -229,6 +233,15 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 	return err;
  }
  
- static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
-@@ -786,7 +796,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
- static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
- 				struct xilinx_axidma_tx_segment *segment)
++int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
++			  struct net *net)
++{
++	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
++		return -EOPNOTSUPP;
++
++	return __cfg80211_switch_netns(rdev, net, false);
++}
++
+ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
  {
--	xilinx_dma_clean_hw_desc(&segment->hw);
-+	xilinx_dma_clean_hw_desc(chan, segment);
- 
- 	list_add_tail(&segment->node, &chan->free_seg_list);
+ 	struct cfg80211_registered_device *rdev = data;
+@@ -1879,7 +1892,7 @@ static void __net_exit cfg80211_pernet_exit(struct net *net)
+ 	rtnl_lock();
+ 	for_each_rdev(rdev) {
+ 		if (net_eq(wiphy_net(&rdev->wiphy), net))
+-			WARN_ON(cfg80211_switch_netns(rdev, &init_net));
++			WARN_ON(__cfg80211_switch_netns(rdev, &init_net, true));
+ 	}
+ 	rtnl_unlock();
  }
 -- 
 2.53.0
