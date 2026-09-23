@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5C3750D5;
-	Wed, 23 Sep 2026 14:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49A53769F9;
+	Wed, 23 Sep 2026 14:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172920; cv=none; b=puU8TZcGQqxZGFdM4+IdUVsyfMrWJNZE2wAHaWSTVdVi7821FT5/iAP2CNEWTVMac0xjTImy5muT4ql2m7uAg1l2ZEBg5O7LOkiF9UxkBd7xLQZ2A2uObBDMd5aG/q6DTNLIoViU3GU3JiNtA18sfsSGdtZgT1L/wn3yVY/+3X0=
+	t=1790172923; cv=none; b=c7xFnPZwxWXNOdZUbr3Za+EDmQq6C53OVBHPDpyxD81ze8vME7X0p4j1X//FMIpVTnM956MLl3bP9wDW8Ar/Pvvy30eEz4pq43GryL0iS7UFS2SZjdtrhiuglQGczQ022Pu7uYSCl24rgksbeUehNHJLzMLNvpgsBoawNCZglzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172920; c=relaxed/simple;
-	bh=NAj+cRqDlYiGL4o19OOddlOVJtJrjdLOovnr3XxYgx4=;
+	s=arc-20240116; t=1790172923; c=relaxed/simple;
+	bh=ONNmhMF62oM+BA6LWmuR8rUCABydZ0vKqOhkN3G1hjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5LYL4HifIV2Jb3jI1hKahRxjtpuXQ0pCNF4GuA6HlrJF9QWYA0SG8WAcdIrnMqiEpS84GALfJSK22D5+pRzXCQiAVQ2SLPVKT9B1ZOLZ66+X2ZBX37oydV7s3PvkSOMjRHz20EnAoXLa4Ap/2U3nlgDVAEszcRlpWlUhteNG2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylz+yAn8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FWdEQFd1h0zkQD2n5PNsJdFg2F+UzG4IiZhkMuJ28ld7k+bhr8Q0oQNFkvlTetoPiZo3531KlfQOHiAXnOMWw6toEP02nFAeEmDTgffHQQZkU1+fp3/eqK/AmhIznqMbjLcV0J4x8CNxNeEH2fboVNtvAYzesSJHnyabIdiPSbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJSffDIB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylz+yAn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9610C1F000FF;
-	Wed, 23 Sep 2026 14:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJSffDIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB7F1F000FF;
+	Wed, 23 Sep 2026 14:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172919;
-	bh=xur00F8C88fMvNpaqPTIVNYyBhfqjbrrOylkuDcUOt8=;
+	s=korg; t=1790172922;
+	bh=+lFFAX9AbxiKhFTJDfzrtIpAnaSUQdeudH1YLvOq5pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ylz+yAn8LyYG1B3NdLAKH4wftnnlzGwlZGTDqs+uxpPC5nrmAi7lscfKpeCdZBmBI
-	 4TqmJVnV75EiHcf6MUok9ggf3aPosMSR/1tkF50yfzMo1I3PSBn0pw+qvuK7OA0Ljr
-	 MLxbrGADmD/51/AXwAWhmFLOH+DFALNWCD8qKG/I=
+	b=JJSffDIB9JVizfLuAoUxIdq2iC+YIa6Of2zLrQB4jREP5T8buLpST3mgkvb/Bowiy
+	 JnkR+jvaksy+QfSl30vdiRzSVEKkxRFFjcbdtwZtosShbrHPN9yDUZ0OgfiLpeTcB1
+	 31NPXLZBg6uAMBmvqa/EzYNh7FKFaihKsN9XMUkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Margolin <mrgolin@amazon.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 099/438] RDMA/efa: Keep EQ resources alive while IRQ is registered
-Date: Wed, 23 Sep 2026 16:02:00 +0200
-Message-ID: <20260923140647.344961095@linuxfoundation.org>
+Subject: [PATCH 7.2 100/438] RDMA/siw: Bound fragmented header copies by the remaining length
+Date: Wed, 23 Sep 2026 16:02:01 +0200
+Message-ID: <20260923140647.369814247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -45,111 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit e22a3627b7151754f07f90ea3d1ab6e85f5d93f4 ]
+[ Upstream commit 9ff797e516dbc1ecb73701ec4c24055712d44411 ]
 
-The completion IRQ handler accesses the EQ state and DMA buffer. Its IRQ was
-registered before that state was initialized, while teardown released the
-buffer before free_irq() synchronized the handler.
+siw_get_hdr() can receive an extended DDP/RDMAP header across more than
+one TCP callback. The first callback may receive most of the header,
+while the next one still limits the copy to hdrlen - MIN_DDP_HDR instead
+of the number of missing bytes. This makes the destination move past the
+end of the header and overwrite the receive state, including
+fpdu_part_rcvd. A later callback can then use a negative fpdu_part_rcvd
+value as a copy offset, which creates an OOB write.
 
-Initialize the EQ without arming it, register the IRQ, and then arm it.
-Reverse the resource order during teardown by freeing the IRQ before
-destroying the EQ.
+Use the number of header bytes already received when calculating the
+next copy length.
 
-Fixes: 2a152512a155 ("RDMA/efa: CQ notifications")
-Link: https://patch.msgid.link/20260907-use-after-free-of-admin-queue-struct-v1-2-dd9d9267fbf4@nvidia.com
-Reviewed-by: Michael Margolin <mrgolin@amazon.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 754209850df8 ("RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260908085520.1746329-1-Jeremy.Jean@oss.cyber.gouv.fr
+Assisted-by: Codex:gpt-6
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_com.c  |  3 +--
- drivers/infiniband/hw/efa/efa_com.h  |  1 +
- drivers/infiniband/hw/efa/efa_main.c | 18 ++++++++++--------
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/infiniband/sw/siw/siw_qp_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
-index 12ccb6441d13d..eed6000fc62df 100644
---- a/drivers/infiniband/hw/efa/efa_com.c
-+++ b/drivers/infiniband/hw/efa/efa_com.c
-@@ -1192,7 +1192,7 @@ static void efa_com_destroy_eq(struct efa_com_dev *edev,
- 				      err);
- }
+diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
+index b566d163c5aab..e5b641c8d694a 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -1079,7 +1079,7 @@ static int siw_get_hdr(struct siw_rx_stream *srx)
+ 	if (iwarp_pktinfo[opcode].hdr_len > sizeof(struct iwarp_ctrl_tagged)) {
+ 		int hdrlen = iwarp_pktinfo[opcode].hdr_len;
  
--static void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq)
-+void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq)
- {
- 	u32 val = 0;
+-		bytes = min_t(int, hdrlen - MIN_DDP_HDR, srx->skb_new);
++		bytes = min_t(int, hdrlen - srx->fpdu_part_rcvd, srx->skb_new);
  
-@@ -1281,7 +1281,6 @@ int efa_com_eq_init(struct efa_com_dev *edev, struct efa_com_eq *eeq,
- 	eeq->phase = 1;
- 	eeq->depth = params.depth;
- 	eeq->cb = cb;
--	efa_com_arm_eq(edev, eeq);
- 
- 	return 0;
- 
-diff --git a/drivers/infiniband/hw/efa/efa_com.h b/drivers/infiniband/hw/efa/efa_com.h
-index f8c692b0e092e..d9b3eb0cdf37c 100644
---- a/drivers/infiniband/hw/efa/efa_com.h
-+++ b/drivers/infiniband/hw/efa/efa_com.h
-@@ -159,6 +159,7 @@ int efa_com_admin_init(struct efa_com_dev *edev,
- void efa_com_admin_destroy(struct efa_com_dev *edev);
- int efa_com_eq_init(struct efa_com_dev *edev, struct efa_com_eq *eeq,
- 		    efa_eqe_handler cb, u16 depth, u8 msix_vec);
-+void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq);
- void efa_com_eq_destroy(struct efa_com_dev *edev, struct efa_com_eq *eeq);
- int efa_com_dev_reset(struct efa_com_dev *edev,
- 		      enum efa_regs_reset_reason_types reset_reason);
-diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
-index 25af30c441929..c2ecd44476d4f 100644
---- a/drivers/infiniband/hw/efa/efa_main.c
-+++ b/drivers/infiniband/hw/efa/efa_main.c
-@@ -300,28 +300,30 @@ static void efa_set_host_info(struct efa_dev *dev)
- 
- static void efa_destroy_eq(struct efa_dev *dev, struct efa_eq *eq)
- {
--	efa_com_eq_destroy(&dev->edev, &eq->eeq);
- 	efa_free_irq(dev, &eq->irq);
-+	efa_com_eq_destroy(&dev->edev, &eq->eeq);
- }
- 
- static int efa_create_eq(struct efa_dev *dev, struct efa_eq *eq, u32 msix_vec)
- {
- 	int err;
- 
--	efa_setup_comp_irq(dev, eq, msix_vec);
--	err = efa_request_irq(dev, &eq->irq);
-+	err = efa_com_eq_init(&dev->edev, &eq->eeq, efa_process_eqe,
-+			      dev->dev_attr.max_eq_depth, msix_vec);
- 	if (err)
- 		return err;
- 
--	err = efa_com_eq_init(&dev->edev, &eq->eeq, efa_process_eqe,
--			      dev->dev_attr.max_eq_depth, msix_vec);
-+	efa_setup_comp_irq(dev, eq, msix_vec);
-+	err = efa_request_irq(dev, &eq->irq);
- 	if (err)
--		goto err_free_comp_irq;
-+		goto err_destroy_eq;
-+
-+	efa_com_arm_eq(&dev->edev, &eq->eeq);
- 
- 	return 0;
- 
--err_free_comp_irq:
--	efa_free_irq(dev, &eq->irq);
-+err_destroy_eq:
-+	efa_com_eq_destroy(&dev->edev, &eq->eeq);
- 	return err;
- }
- 
+ 		skb_copy_bits(skb, srx->skb_offset,
+ 			      (char *)c_hdr + srx->fpdu_part_rcvd, bytes);
 -- 
 2.53.0
 
