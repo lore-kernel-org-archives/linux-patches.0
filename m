@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40435335B8;
-	Wed, 23 Sep 2026 14:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B022153B35C;
+	Wed, 23 Sep 2026 14:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175318; cv=none; b=bKROfTLd4tk/pTssLAfVpjEiy+5EB3J+7PbzTRAsKfDR7HDWdABh0xKCutP3Cxt53bTsrP/iDd4lnUM76YBhaSXYdMEzHKxI9KMQawNB/T50uOmf3XXcYWa3L/tBIiEfqOjOQ44SAnfeyOWCUdgyd3v9i0cN13R+Xs+jDDjzTPU=
+	t=1790175320; cv=none; b=efmgnYkp7ETR77hARG2QBZpdwkLIvVPuolINoOCxyNkgMeTVyJbzTqYhgsRf72PQCzleCXYAcQdMkifIVc2DcsZQKe1mtJigB7QPtzjODy8bcBX1sn14CMjk8/mPYH+wcxZyNvNueQ24IqkTC+pH6emuY/Djo1K/8w3Q+eDffzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175318; c=relaxed/simple;
-	bh=pZ5ZtSHX+EyCvS/cy8vEconra8ZvemqLBUY/m/W1xSs=;
+	s=arc-20240116; t=1790175320; c=relaxed/simple;
+	bh=YMdJzZnSe5qE4rt9TdJhrReRu8hku88w4TdpL/h2ETs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZUQQLtaI+qk44lb60lKnDcXjLRNhD/pCA56EHlwTGzPrVdajp2ZD8w1ka8cV2zLLPFJuWIcabI8rm8ORGyWFyTFY4sNcY+huqDYGpMxANYTDThR0aIsZH2uMqgJUSV+F1IW4aJlCKmtTKm3QqNaCTQ+PDms85maIaVGHuH3Qw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBjRGFhz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=la1BPIixA/9dphgLF0a4yoJalpSKCHRWVmmo/LGf8ueNCTrp6PK+4vYSBAByPfmHVQPwTxuVsFUmEZZxj1bidNlxusfD3njfIH+rkbhz6HEbjZE/zu43tWS9GGbjH3SLyhOaWwfLabqeT9vxdUaIi6pJHF0sUL4fy/dbfL7V8Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fap9qOuX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBjRGFhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074391F000FF;
-	Wed, 23 Sep 2026 14:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fap9qOuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6611F000FF;
+	Wed, 23 Sep 2026 14:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175316;
-	bh=FA707egiJkzTlbOagXg+OCMNnQNld899Jg1gw8Ytsts=;
+	s=korg; t=1790175319;
+	bh=KP6Di9DwhMJfDXdMU+VAP0O3hjIaivrplcYEs8DCfwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBjRGFhzhV/5Ohq2Q6nMlvdaMCIqjaULl8iScI5s9y+eQSKnw2ld1vt08kn1egEQi
-	 gvlDAf0tw/bQNcEpvs9qc91KTSmuCbx+MxavNsqUtouz2PMS4/xUUlYPIwFs1/ck+7
-	 KxOt5wgEdHThcFQMiERYtsaTpBBR5LUoNHpSPc/c=
+	b=Fap9qOuXnr0xUDF0IC/75KCws07TIaq2Mf8vltauCzIRfipDvWfVa8PqsBttw+RiE
+	 JADu99fmzfaCgSL+JQiZ198t5Vsk5Z7e9c8a41epA0S4hQkefyWLF9kXmRDCnQhTD/
+	 lrcUNi45J4jBKAMPnUDRnCUnzAslcz44ZBkq3Qug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Subject: [PATCH 6.18 360/398] smb: client: fix busy dentry warning on unmount after DIO
-Date: Wed, 23 Sep 2026 16:07:14 +0200
-Message-ID: <20260923140652.756908921@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 361/398] ALSA: usb-audio: Optimize the copy of packet sizes for implicit fb handling
+Date: Wed, 23 Sep 2026 16:07:15 +0200
+Message-ID: <20260923140652.782691794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,148 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 75f5c412fa867efa0bf9b646bffe0d912109e84a upstream.
+[ Upstream commit 36adb51ac0b19edb32ffeea3fe66b174bad25ead ]
 
-Commit c68337442f03 ("cifs: Fix busy dentry used after unmounting") fixed
-the issue in cifs where deferred close of a file led to a dentry reference
-count not being released in umount, by flushing deferredclose_wq in
-cifs_kill_sb() to solve it.
+We did manual copies over loop for the packet data update of the
+implicit feedback, but this can be optimized with a simple memcpy().
 
-However, the cifs DIO path suffers from the same busy-dentry problem caused
-by a delayed dentry reference-count release:
+Along with it, change the data type of snd_usb_packet_info struct to
+align with other (from uint32_t to int).
 
-	[dio]			[cifsd]			[close + umount]
-netfs_unbuffered_write_iter_locked
-...
-				cifs_demultiplex_thread
- netfs_unbuffered_write
-  cifs_issue_write
-  netfs_wait_for_in_progress_stream [1]
-				...
-				 netfs_write_subrequest_terminated
-				  netfs_subreq_clear_in_progress
-				   netfs_wake_collector // wake [1]
-				  netfs_put_subrequest
- netfs_put_request
-  queue_work(system_dfl_wq, xxx) [2]
- // dio write return					cifs_close
-							 _cifsFileInfo_put
-							  // cfile->count 2->1
-							  --cfile->count [3]
+No functional changes but only code optimizations.
 
-							// umount
-							cifs_kill_sb
-							 kill_anon_super
-							  // warning triggered!
-							  shrink_dcache_for_umount [4]
-[system_dfl_wq] [5]
-netfs_free_request
- ...
- _cifsFileInfo_put
-  // cfile->count 1->0
-  --cfile->count
-  queue_work(fileinfo_put_wq, xxx)
-
-[fileinfo_put_wq] [6]
-cifsFileInfo_put_work
- cifsFileInfo_put_final
-  dput
-
-If the umount path is triggered before [5], it results warning:
-BUG: Dentry 00000000eab1f070{i=9a917b66ae404fec,n=test}  still in use (1)
-[unmount of cifs cifs]
-
-The existing per-inode ictx->io_count wait in cifs_evict_inode() does not
-help: it lives in the inode eviction path, which runs after
-shrink_dcache_for_umount() has already warned about the busy dentries.
-
-Fix it by adding a per-superblock outstanding-rreq counter that is
-incremented in cifs_init_request() and decremented in cifs_free_request().
-In cifs_kill_sb(), before kill_anon_super(), wait for this counter to reach
-0 - which guarantees that all cleanup_work for this sb have run and thus
-all relevant cfile puts are queued on fileinfo_put_wq or serverclose_wq.
-Then drain the workqueue so the dentry refs are dropped.
-
-This is a targeted wait, not a flush of the system-wide system_dfl_wq.
-
-Fixes: 340cea84f691c ("cifs: open files should not hold ref on superblock")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/20260216141209.1849200-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 76a986c980bb ("ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_fs_sb.h |    1 +
- fs/smb/client/cifsfs.c     |   12 ++++++++++++
- fs/smb/client/connect.c    |    1 +
- fs/smb/client/file.c       |    5 +++++
- 4 files changed, 19 insertions(+)
+ sound/usb/card.h     |    2 +-
+ sound/usb/endpoint.c |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/cifs_fs_sb.h
-+++ b/fs/smb/client/cifs_fs_sb.h
-@@ -57,6 +57,7 @@ struct cifs_sb_info {
- 	struct smb3_fs_context *ctx;
- 	atomic_t active;
- 	atomic_t mnt_cifs_flags;
-+	atomic_t outstanding_rreq;	/* nr of rreqs not yet fully deinitialized */
- 	struct delayed_work prune_tlinks;
- 	struct rcu_head rcu;
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -90,7 +90,7 @@ struct snd_usb_endpoint {
+ 	struct snd_urb_ctx urb[MAX_URBS];
  
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -342,6 +342,18 @@ static void cifs_kill_sb(struct super_bl
- 		/* Wait for all opened files to release */
- 		flush_workqueue(deferredclose_wq);
+ 	struct snd_usb_packet_info {
+-		uint32_t packet_size[MAX_PACKS_HS];
++		int packet_size[MAX_PACKS_HS];
+ 		int packets;
+ 	} next_packet[MAX_URBS];
+ 	unsigned int next_packet_head;	/* ring buffer offset to read */
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -470,7 +470,7 @@ int snd_usb_queue_pending_output_urbs(st
+ 	while (ep_state_running(ep)) {
+ 		struct snd_usb_packet_info *packet;
+ 		struct snd_urb_ctx *ctx = NULL;
+-		int err, i;
++		int err;
  
-+		/*
-+		 * Wait for all in-flight netfs I/O requests to finish their
-+		 * cleanup_work so that any cifsFileInfo final puts they queue
-+		 * to fileinfo_put_wq/serverclose_wq have been queued, then
-+		 * drain the workqueue so the cfile dentry refs are dropped to
-+		 * avoid the busy dentry warning.
-+		 */
-+		wait_var_event(&cifs_sb->outstanding_rreq,
-+			       !atomic_read(&cifs_sb->outstanding_rreq));
-+		flush_workqueue(serverclose_wq);
-+		flush_workqueue(fileinfo_put_wq);
-+
- 		/* finally release root dentry */
- 		dput(cifs_sb->root);
- 		cifs_sb->root = NULL;
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3597,6 +3597,7 @@ int cifs_setup_cifs_sb(struct cifs_sb_in
+ 		scoped_guard(spinlock_irqsave, &ep->lock) {
+ 			if ((!implicit_fb || ep->next_packet_queued > 0) &&
+@@ -490,8 +490,8 @@ int snd_usb_queue_pending_output_urbs(st
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
+ 			ctx->packets = packet->packets;
+-			for (i = 0; i < packet->packets; i++)
+-				ctx->packet_size[i] = packet->packet_size[i];
++			memcpy(ctx->packet_size, packet->packet_size,
++			       packet->packets * sizeof(packet->packet_size[0]));
+ 		}
  
- 	spin_lock_init(&cifs_sb->tlink_tree_lock);
- 	cifs_sb->tlink_tree = RB_ROOT;
-+	atomic_set(&cifs_sb->outstanding_rreq, 0);
- 
- 	cifs_dbg(FYI, "file mode: %04ho  dir mode: %04ho\n",
- 		 ctx->file_mode, ctx->dir_mode);
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -289,6 +289,7 @@ static int cifs_init_request(struct netf
- 		return -EIO;
- 	}
- 
-+	atomic_inc(&cifs_sb->outstanding_rreq);
- 	return 0;
- }
- 
-@@ -310,9 +311,13 @@ static void cifs_rreq_done(struct netfs_
- static void cifs_free_request(struct netfs_io_request *rreq)
- {
- 	struct cifs_io_request *req = container_of(rreq, struct cifs_io_request, rreq);
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(rreq->inode->i_sb);
- 
- 	if (req->cfile)
- 		cifsFileInfo_put(req->cfile);
-+
-+	if (atomic_dec_and_test(&cifs_sb->outstanding_rreq))
-+		wake_up_var(&cifs_sb->outstanding_rreq);
- }
- 
- static void cifs_free_subrequest(struct netfs_io_subrequest *subreq)
+ 		/* call the data handler to fill in playback data */
 
 
