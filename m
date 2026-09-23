@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E1A51D52A;
-	Wed, 23 Sep 2026 14:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014982D6E64;
+	Wed, 23 Sep 2026 14:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172767; cv=none; b=pt9WjabOm7QAUPPPij3fEnjMstsTL3IVVdGqMnVferr/kX4be7OGytYXNItuJfGRinEKi1t4WW9RzU701I13fmD36M/w1HeIOdvIXFpOPexehhWyH+rIFb1I/zIE6SwR/lc5AzwrtCG5nJ4tVBLDnLgWL857/SDWU0bOhXGO3Hc=
+	t=1790172771; cv=none; b=qKxLkvDvam3IWrRrVsqw2NjIDxt7/tfgyhitgXVZF/XZTSNK5jUESh0eu5ki3plBxpWLtNSl1TMpbA9u5iOge6w9GMntVfcHXru/25GpffBCqTIOUZQ5tJAfPSAsnlCcDkadN+vjDZ4vyV4vTgpZ7AxOQKG3kkRchLu+64vIjLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172767; c=relaxed/simple;
-	bh=YMDrY+F39CWvWKTjPL9COrOTIxubDRvag+52jeNEKxA=;
+	s=arc-20240116; t=1790172771; c=relaxed/simple;
+	bh=nY6+yUnBMLqyIZSjUXGZcB3ptFTl1DQYCEaKUYuuzlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6Yd0qj1jqicvUfKbawMhZvKQhde4A7ew8J0QOtR+0LvTAoX48Xd7QP3z3kF8Vmvgjqcu6O2d5i9oAQvGk/Wj+eaFgQrmmTgPSb/8gfew16PY0V8mNPBjOiV8hdbYZ+bdhHpc5dS9xSxw3VAgouwnnNbSXHozeF++1tjAioQQQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBXKsd8e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sqbLKhjgkjSYPXfiE/15XYRJrsMpogA3yEVKqRnUSWEiEO0xfl6MhUYIVONH3Uqp0q9RphNvWa1mXNpkMwgwP+dfGrX8Y272g/ltZ/5r5/QndW/qdzfz0wP5OumviOiwp7cXZkMkgjcrqL0jiNySzit8qSygoy5U8ko9HcuAVbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0/grZ7C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBXKsd8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8A11F000FF;
-	Wed, 23 Sep 2026 14:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0/grZ7C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2B81F000FF;
+	Wed, 23 Sep 2026 14:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172765;
-	bh=G8zxBrEk+cCeBRx2ADuUTGI/SQI1lm288L/byBuZvu4=;
+	s=korg; t=1790172769;
+	bh=CswqvaRThtH8BiEUjSR0bxgIMY+PqMUZyvA0eKmRh38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBXKsd8e+9Kms3WUOKn+xbOG6Misj8g/cBac1Stu//O9Fyq9VDtz9dEA7BT5LS5dQ
-	 KYP0VhUk9NT9AtemXziAjv0LqkOWVoSdjv1vPUEF3k+9OhELbPxp82h6NqT11P9L1b
-	 71HBgPpEGZ37tC/Mjn4CVr5nd7UsmvOkyWWnEVzg=
+	b=O0/grZ7C2hhtew4kZ+kBh2EjzTq30tEu8pbhi+umwRJwdcHZCnYeHjW03xJEvYc5l
+	 MznC89XjZlzScRieZV+bYa4fdwhUhBKF+s2JplcQJKzUltFq3kG+H13MadpY4B+bpf
+	 yOfyRnqZjETjvjwX7JtzdaKlsgGUIo4uBT1d4C7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	David Lin <david.lin@intel.com>,
-	Shuming Fan <shumingf@realtek.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Julian Braha <julianbraha@gmail.com>,
+	Caleb James DeLisle <cjd@cjdns.fr>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 056/438] soundwire: cadence_master: wait and cancel cdns->work before clock stop
-Date: Wed, 23 Sep 2026 16:01:17 +0200
-Message-ID: <20260923140646.235598127@linuxfoundation.org>
+Subject: [PATCH 7.2 057/438] mips: econet: fix unmet dependencies for ECONET
+Date: Wed, 23 Sep 2026 16:01:18 +0200
+Message-ID: <20260923140646.264884974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,44 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit aba7b41faeecb7692458095ce6fafc341fe0b80e ]
+[ Upstream commit fb5a08026a68be0ec5f660588311fb1091bf5d58 ]
 
-A peripheral event could happen during the clock stop process. We need
-to wait for the event be handled before stopping the bus clock.
-Otherwise, we will get the IO transfer timed out issue.
+ECONET selects EARLY_PRINTK_8250, SERIAL_OF_PLATFORM, and SERIAL_8250
+without ensuring their dependencies, EARLY_PRINTK and TTY are met. This
+causes unmet dependencies:
 
-Fixes: af4cc917826f ("soundwire: cadence: mask Slave interrupt before stopping clock")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: David Lin <david.lin@intel.com>
-Reviewed-by: Shuming Fan <shumingf@realtek.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260901031019.233254-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+WARNING: unmet direct dependencies detected for SERIAL_8250
+  Depends on [n]: TTY [=n] && HAS_IOMEM [=y] && !S390
+  Selected by [y]:
+  - ECONET [=y]
+
+WARNING: unmet direct dependencies detected for EARLY_PRINTK_8250
+  Depends on [n]: EARLY_PRINTK [=n] && USE_GENERIC_EARLY_PRINTK_8250 [=y]
+  Selected by [y]:
+  - ECONET [=y]
+
+WARNING: unmet direct dependencies detected for SERIAL_OF_PLATFORM
+  Depends on [n]: TTY [=n] && HAS_IOMEM [=y] && SERIAL_8250 [=y] && OF [=y]
+  Selected by [y]:
+  - ECONET [=y]
+
+However, in the discussion of v1 of this patch, Arnd pointed out that these
+selects don't belong here in the first place. [1]
+Let's remove them to resolve the unmet dependencies.
+
+These unmet dependencies were found by kconfirm, a static analysis tool for
+Kconfig.
+
+Fixes: 79ee1d20e37c ("mips: econet: Fix incorrect Kconfig dependencies")
+Fixes: 35fb26f94dfa ("mips: Add EcoNet MIPS platform support")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/mips/Kconfig | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index 98ed337fb9b01..cf456d7cf0a8f 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -1701,6 +1701,13 @@ int sdw_cdns_clock_stop(struct sdw_cdns *cdns, bool block_wake)
- 		return 0;
- 	}
- 
-+	/*
-+	 * wait for any in-flight peripheral event handling to complete before stopping the clock.
-+	 * No need to disable peripheral interrupts before canceling the work, as the peripheral
-+	 * interrupts are already masked before the work is scheduled.
-+	 */
-+	cancel_work_sync(&cdns->work);
-+
- 	/*
- 	 * Before entering clock stop we mask the Slave
- 	 * interrupts. This helps avoid having to deal with e.g. a
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index 8555bbf47c633..4a1e665bf012a 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -397,10 +397,7 @@ config ECONET
+ 	select BOOT_RAW
+ 	select CPU_BIG_ENDIAN
+ 	select DEBUG_ZBOOT if DEBUG_KERNEL
+-	select EARLY_PRINTK_8250
+ 	select ECONET_EN751221_TIMER
+-	select SERIAL_8250
+-	select SERIAL_OF_PLATFORM
+ 	select SYS_SUPPORTS_BIG_ENDIAN
+ 	select SYS_HAS_CPU_MIPS32_R1
+ 	select SYS_HAS_CPU_MIPS32_R2
 -- 
 2.53.0
 
