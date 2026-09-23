@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F1652CCE9;
-	Wed, 23 Sep 2026 14:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FC1538D94;
+	Wed, 23 Sep 2026 14:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174626; cv=none; b=WOpy6J9oetYFL0JaLlpkh3jM3im3nwnPHwtvXV4kds2l0vgLP3vwKUdVKYtCQlEiLNqynFAK9s+ATLbUE6IHjE4yJ9i9TY4UP3COjofU114pbhS3TNswZTcvVL55os/r5VRMNAey+45uHmo9lNsG34Z9bodRTe4+if1Xf+VHO58=
+	t=1790174630; cv=none; b=u/hHGUluWXFQY2fW9949ppcEyhKMMlQ6ZQh8AAlsbaguHPRgBjvk0m/aehDOxqSVghaSiOAOIgQDz0LZV/2y47LgNsS3xKSUhBHg7OkxRjNIKseYQjXaJO6NRUwB/GR2vxGhCPhSt5RFyRHTaNPW9D1SJ5kzelTawIZswH55WYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174626; c=relaxed/simple;
-	bh=6PnKN/oZKO6eJ+szrHu8Eh28Eurvim+V74o0IagQFT8=;
+	s=arc-20240116; t=1790174630; c=relaxed/simple;
+	bh=kWEMnwaAhcV0fXkPaPsMN+Fjobck511nVI1VzGFLrMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzup/pn59heltcekEgQQuMoTBe/7H3n85yaUKpzr1li/+FCrpuGn7yRzYNEwat0AS4vTrqyaGj2VYwXnWV9vKQva78j3gr0FabldmmJo46YhghGQZeUkKwIqP/dteVXwLvXYZH9gssOuMzc27dtXVp9D8gr6CIuK3TDjjfAs/VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnFOx7lc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=owP3G5ozAiNjqcY9wWXHZh7Q6AH99bYwCZl3iOzsApA/ya5kAcfuPhSHXbtQTupZuRK9aKXznpEjxKeEPeyo8WcBckqzYCcRpExIg4Iy5zRhIb9lg/cyDLqqPSB2gMMkj21XbWdlfx8KMprTAKoam+ejcidc5VcpFtqascqk9Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfyci0RT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnFOx7lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7DC1F00893;
-	Wed, 23 Sep 2026 14:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfyci0RT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BC11F000FF;
+	Wed, 23 Sep 2026 14:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174624;
-	bh=CxF3b8/7ij7CtxqV15NZYPn9fXvE1GcVO/3Ds4as3MA=;
+	s=korg; t=1790174627;
+	bh=c1F6Ybdec4zALz2Ytwk/XZ99iqKOUj7DsUPjULcRln0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnFOx7lcjGf90jkSmdLIYS7lwDwY/v7rkA2YwxDfbHY6uoqPMgZ9iuthXw2jYoxoR
-	 6/EaXF5yTeETj3O6tKKQr6w6KrgPZKDqTyMHIs4sH6yVDRIBME06n1Lq7YGlmGHDf3
-	 Pxq72YsdBR4cYzDkCMBBwtyQaNWj36UVUgbxgX0U=
+	b=gfyci0RT6SiEyMEn+cKZTtYPrcVYodZAplBcUeCvDaTSLf+5mmd+dUX0PEYCUTaEv
+	 SPg07P3rsUmQv4JVGrXzE+QwXG9Px9aZEBG21YTsQbHYBKtAciduHiOaJ1s63PapsG
+	 4zw8WDwq0PIIJ0EWrodfw9nqWK4zVKUGcvNcgCBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek Sahu <vivek.sahu@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 145/398] Bluetooth: qca: Refactor code on the basis of chipset names
-Date: Wed, 23 Sep 2026 16:03:39 +0200
-Message-ID: <20260923140647.190418210@linuxfoundation.org>
+Subject: [PATCH 6.18 136/398] tcp: do not let tcp_rmem be set below 4096
+Date: Wed, 23 Sep 2026 16:03:30 +0200
+Message-ID: <20260923140646.959088336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,191 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vivek Sahu <vivek.sahu@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f29bc37dfc4ad7570d78f8cd482d4b83c3caffdf ]
+[ Upstream commit 83a945a529d6e002dd7339c532288a931f463dba ]
 
-Whenever new chipset support is added to the driver code,
-we ended up adding chipset name to the last of the switch case
-arising code readability issue because of improper sorting of
-the chipset names in various places of the code.
+We can hit a division by zero crash in tcp_rcvbuf_grow()
+and tcp_rcv_space_adjust():
 
-Refactor code such a way that new chipset can be added easily
-in the code without compromising code readability.
+divide error: 0000 [#1] PREEMPT SMP
+RIP: 0010:tcp_rcvbuf_grow+0x187/0x450 net/ipv4/tcp_input.c:939
+...
+grow = div_u64(((u64)rcvwin << 1) * (newval - oldval), oldval);
 
-Signed-off-by: Vivek Sahu <vivek.sahu@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 4e93c65f8782 ("Bluetooth: hci_qca: Do not write to the serial port after it is closed")
+The division uses oldval = tp->rcvq_space.space as divisor.
+When tp->rcvq_space.space is zero, this leads to a divide-by-zero
+exception.
+
+tp->rcvq_space.space is initialized in tcp_init_buffer_space():
+    tp->rcvq_space.space = min3(tp->rcv_ssthresh, tp->rcv_wnd,
+                                (u32)TCP_INIT_CWND * tp->advmss);
+
+If tcp_rmem[1] is configured to very small values (such as 1),
+sk->sk_rcvbuf is initialized to 1. Then tcp_full_space(sk), which
+computes (sk->sk_rcvbuf * scaling_ratio) >> 8, truncates to 0.
+This sets tp->window_clamp = 0, tp->rcv_ssthresh = 0, and
+tp->rcvq_space.space = 0. Later, when data arrives and DRS is invoked,
+tcp_rcvbuf_grow() divides by oldval == 0.
+
+Back in 2015, commit b1cb59cf2efe ("net: sysctl_net_core: check SNDBUF
+and RCVBUF for min length") ensured that net.core.rmem_default and
+net.core.rmem_max cannot be set below SOCK_MIN_RCVBUF. Similarly,
+SO_RCVBUF setsockopt enforces max_t(int, val * 2, SOCK_MIN_RCVBUF).
+
+However, net.ipv4.tcp_rmem still had .extra1 = SYSCTL_ONE, allowing
+arbitrarily small values.
+
+Because SOCK_MIN_RCVBUF depends on sizeof(struct sk_buff) and cacheline
+alignment, its value varies across architectures and configuration options.
+Using a fixed constant of 4096 ensures a predictable, architecture-
+independent lower bound that is safely above SOCK_MIN_RCVBUF everywhere
+and matches the documented 4K default.
+
+Fix this by setting tcp_rmem.extra1 to 4096 and updating the documentation.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260912144848.3448026-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c   | 37 +++++++++++++++++++------------------
- drivers/bluetooth/hci_qca.c | 30 +++++++++++++++---------------
- 2 files changed, 34 insertions(+), 33 deletions(-)
+ Documentation/networking/ip-sysctl.rst | 2 ++
+ net/ipv4/sysctl_net_ipv4.c             | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index f404eefbfc85b..bdbb5801b2400 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -818,6 +818,14 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		snprintf(config.fwname, sizeof(config.fwname), "qca/%s", rampatch_name);
- 	} else {
- 		switch (soc_type) {
-+		case QCA_QCA2066:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/hpbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_QCA6390:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/htbtfw%02x.tlv", rom_ver);
-+			break;
- 		case QCA_WCN3950:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/cmbtfw%02x.tlv", rom_ver);
-@@ -832,14 +840,6 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apbtfw%02x.tlv", rom_ver);
- 			break;
--		case QCA_QCA2066:
--			snprintf(config.fwname, sizeof(config.fwname),
--				 "qca/hpbtfw%02x.tlv", rom_ver);
--			break;
--		case QCA_QCA6390:
--			snprintf(config.fwname, sizeof(config.fwname),
--				 "qca/htbtfw%02x.tlv", rom_ver);
--			break;
- 		case QCA_WCN6750:
- 			/* Choose mbn file by default.If mbn file is not found
- 			 * then choose tlv file
-@@ -887,6 +887,16 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		}
- 	} else {
- 		switch (soc_type) {
-+		case QCA_QCA2066:
-+			qca_get_nvm_name_by_board(config.fwname,
-+						  sizeof(config.fwname),
-+						  "hpnv", soc_type, ver,
-+						  rom_ver, boardid);
-+			break;
-+		case QCA_QCA6390:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/htnv%02x.bin", rom_ver);
-+			break;
- 		case QCA_WCN3950:
- 			if (le32_to_cpu(ver.soc_id) == QCA_WCN3950_SOC_ID_T)
- 				variant = "t";
-@@ -909,15 +919,6 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apnv%02x.bin", rom_ver);
- 			break;
--		case QCA_QCA2066:
--			qca_get_nvm_name_by_board(config.fwname,
--				sizeof(config.fwname), "hpnv", soc_type, ver,
--				rom_ver, boardid);
--			break;
--		case QCA_QCA6390:
--			snprintf(config.fwname, sizeof(config.fwname),
--				 "qca/htnv%02x.bin", rom_ver);
--			break;
- 		case QCA_WCN6750:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/msnv%02x.bin", rom_ver);
-@@ -944,9 +945,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	}
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index e13131770fa0c..27a861053b2f5 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -844,6 +844,8 @@ tcp_rmem - vector of 3 INTEGERs: min, default, max
+ 	case this value is ignored.
+ 	Default: between 131072 and 32MB, depending on RAM size.
  
- 	switch (soc_type) {
--	case QCA_WCN3991:
- 	case QCA_QCA2066:
- 	case QCA_QCA6390:
-+	case QCA_WCN3991:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 5c03f8f3a53ab..1897d7bf7629a 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1853,6 +1853,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 		return 0;
- 
- 	switch (soc_type) {
-+	case QCA_QCA6390:
- 	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
-@@ -1861,7 +1862,6 @@ static int qca_power_on(struct hci_dev *hdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--	case QCA_QCA6390:
- 		ret = qca_regulator_init(hu);
- 		break;
- 
-@@ -2099,6 +2099,18 @@ static const struct hci_uart_proto qca_proto = {
- 	.dequeue	= qca_dequeue,
- };
- 
-+static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
-+	.soc_type = QCA_QCA2066,
-+	.num_vregs = 0,
-+	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
-+			QCA_CAP_HFP_HW_OFFLOAD,
-+};
++	Each of the three values cannot be set below 4096.
 +
-+static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
-+	.soc_type = QCA_QCA6390,
-+	.num_vregs = 0,
-+};
+ tcp_sack - BOOLEAN
+ 	Enable select acknowledgments (SACKS).
+ 
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index afcbb9d48cfa2..34a8a932402d8 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -49,6 +49,8 @@ static int tcp_plb_max_cong_thresh = 256;
+ static unsigned int tcp_tw_reuse_delay_max = TCP_PAWS_MSL * MSEC_PER_SEC;
+ static int tcp_ecn_mode_max = 2;
+ 
++static int tcp_min_rcvbuf = 4096;
 +
- static const struct qca_device_data qca_soc_data_wcn3950 __maybe_unused = {
- 	.soc_type = QCA_WCN3950,
- 	.vregs = (struct qca_vreg []) {
-@@ -2155,18 +2167,6 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
- 	.num_vregs = 4,
- };
+ /* obsolete */
+ static int sysctl_tcp_low_latency __read_mostly;
  
--static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
--	.soc_type = QCA_QCA2066,
--	.num_vregs = 0,
--	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
--			QCA_CAP_HFP_HW_OFFLOAD,
--};
--
--static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
--	.soc_type = QCA_QCA6390,
--	.num_vregs = 0,
--};
--
- static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
- 	.soc_type = QCA_WCN6750,
- 	.vregs = (struct qca_vreg []) {
-@@ -2403,6 +2403,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 		qcadev->btsoc_type = QCA_ROME;
- 
- 	switch (qcadev->btsoc_type) {
-+	case QCA_QCA6390:
- 	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
-@@ -2411,7 +2412,6 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--	case QCA_QCA6390:
- 		qcadev->bt_power = devm_kzalloc(&serdev->dev,
- 						sizeof(struct qca_power),
- 						GFP_KERNEL);
-@@ -2423,9 +2423,9 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	}
- 
- 	switch (qcadev->btsoc_type) {
-+	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--	case QCA_WCN6750:
- 		if (!device_property_present(&serdev->dev, "enable-gpios")) {
- 			/*
- 			 * Backward compatibility with old DT sources. If the
+@@ -1435,7 +1437,7 @@ static struct ctl_table ipv4_net_table[] = {
+ 		.maxlen		= sizeof(init_net.ipv4.sysctl_tcp_rmem),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ONE,
++		.extra1		= &tcp_min_rcvbuf,
+ 	},
+ 	{
+ 		.procname	= "tcp_comp_sack_delay_ns",
 -- 
 2.53.0
 
