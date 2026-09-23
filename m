@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F40B531629;
-	Wed, 23 Sep 2026 14:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E4D440A16;
+	Wed, 23 Sep 2026 14:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175092; cv=none; b=cwnq6ZSA1jkiDTzG25VOiODN/yJDZNq4m5j4h7nWdvpTi1MBBDIl3SfErV9gIi/5rhDa83LwGF+e5GJxUlx2MaGPPSStiImEm28g/ymRyIptgZLKoAhtuC1bLU3u6oxPl4xw0a0Cqv5/kegbG6dw9ucWMONIQw7Q3KVnWMF7Oo0=
+	t=1790175095; cv=none; b=iHMpYcck6uSyNCaYnHlZZyl7D3xDPHh//ld48PgxuI8Bp1Ww2eWvC/2dFp5Gh7r1R4spV/lh4BnBWoyq7aVyab4HN0J160VaNc1Ec8OOjG19WrOniTsBB21Wbc3y76CByUBCJ0GiCRSyTyAkboxvaUdlqsaHRAJOcycQnHafVhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175092; c=relaxed/simple;
-	bh=cwCOOLM72rqAsGi8Q8r2TtvnRKI1TRT/v5Yr+Q75AcM=;
+	s=arc-20240116; t=1790175095; c=relaxed/simple;
+	bh=pMU7Ic4tzUeoUfXzIHEB08cJaaEIAWT8VsCVeCMDDwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDPmcZ4RfeeGfUFsgjYNmKEGKVfLQ813O3G2DHbdRyYU9umx22lyS+oKYWHTupwY9Nc2TwK6I3bjrxmkR6yMihfM8jhs7RteHytRii5ViCwMQ9V4wEjy5QuJgkXziR5cI8O5jDc0dCq7VnLx1zkox2tG2mS68eUi0Ik7kwoZLo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT2hmka0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pi6b7cXvi6Mf5dLY4BKVx7XO/Lw/JCs0jzvFJvmUnBLBVgleJhnoKa2y2XqlaleSl/xocShnpsaEeQv/9xy0hV14/CZ40Nl0jvKXY3EhVxR7DqC0+YkSGuHnoebPQwHc7buTyLzDXfQzh0P3qjWaXHrCSpWSEyT7CDAcIHBuXAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myNZoUab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT2hmka0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F71A1F000FF;
-	Wed, 23 Sep 2026 14:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myNZoUab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834221F000FF;
+	Wed, 23 Sep 2026 14:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175090;
-	bh=vMW70z5ULC60p0yepuqznGm7BdP4AyIQma4ruUuHWdo=;
+	s=korg; t=1790175093;
+	bh=8RFTf8Y+PdtxLNv5PxSrdzGRlT6p+TRRVaE45klBi/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FT2hmka0ghJj1YYRH3IxXl5vRNPTTD5jNJPaqZC67uxS/5clInWHhllKXLNP8V4Mm
-	 sb2fjnROBneZb9PeukuCX8wKH8OIIoPc1zTAKB/9IymB8CNVrULzL6yC0NL28Oo1eH
-	 qierS8jIT8xZX2gBY6D3CS5t1ueXQLtgH6faKygs=
+	b=myNZoUabRFnTfpq4R7zy+47R5NUNfbzs48F/mlogOoQXWL3d6LFoV2v8UF6nlzyNF
+	 e6fpLeRnIz1drT+xyXOo7qogkM1xXvrBRMnDpFRS7Ue0K0xLuAuFpfzpQ15DLOuJBP
+	 +i7v/7bMSExvWzMxyAoJXiDhshM1TLiJu7Z0segQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fan Wu <fanwu01@zju.edu.cn>,
-	Linus Walleij <linusw@kernel.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 283/398] mmc: mmci: Fix use-after-free in busy-timeout work
-Date: Wed, 23 Sep 2026 16:05:57 +0200
-Message-ID: <20260923140650.750798647@linuxfoundation.org>
+Subject: [PATCH 6.18 284/398] mmc: mxcmmc: cancel data work and watchdog on remove
+Date: Wed, 23 Sep 2026 16:05:58 +0200
+Message-ID: <20260923140650.779056030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,41 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 2b19cf3e50cddaff07b657dae1a8f30f06032852 upstream.
+commit d3a421c82412344022982d5b91ba23194a0a6f29 upstream.
 
-ux500_busy_complete() can queue ux500_busy_timeout_work for an R1b
-command, but mmci_remove() never cancels it. The work can subsequently
-dereference the devm-allocated mmci_host after it has been released.
+mxcmci_remove() frees the host through the devm tail, but neither it nor
+mmc_remove_host() drains the driver's own asynchronous state.
+host->watchdog, a 10 s timer armed on the DMA path in mxcmci_setup_data(),
+is deleted only by the DMA- and IRQ-complete paths, which the remove path
+does not explicitly drain; it can therefore fire after the host is freed
+and dereference it in mxcmci_watchdog().  host->datawork, armed from the
+IRQ handler on the PIO path, is not cancelled by the remove path either.
 
-Mask the controller interrupts and disable the delayed work during
-removal. This drains any queued instance and stops an IRQ handler that
-is still in progress from queueing the work again once it has been
-disabled.
+Free the devm-registered IRQ, then cancel datawork and delete the watchdog
+in mxcmci_remove(), before dma_release_channel().  Freeing the IRQ first
+keeps a trailing handler from re-arming datawork between the cancel and
+the host free.  Both callbacks are non-self-rearming.
 
 This issue was found by an in-house static analysis tool.
 
-Fixes: b1a665932dc2 ("mmc: mmci: Add support for SW busy-end timeouts")
-Cc: stable@vger.kernel.org # v6.10+
+Fixes: f6ad0a481342 ("mmc: mxcmmc: fix bug that may block a data transfer forever")
+Cc: stable@vger.kernel.org
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/mxcmmc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2511,6 +2511,9 @@ static void mmci_remove(struct amba_devi
- 		writel(0, host->base + MMCICOMMAND);
- 		writel(0, host->base + MMCIDATACTRL);
+--- a/drivers/mmc/host/mxcmmc.c
++++ b/drivers/mmc/host/mxcmmc.c
+@@ -1173,6 +1173,10 @@ static void mxcmci_remove(struct platfor
  
-+		if (variant->busy_detect)
-+			disable_delayed_work_sync(&host->ux500_busy_timeout_work);
+ 	mmc_remove_host(mmc);
+ 
++	devm_free_irq(&pdev->dev, platform_get_irq(pdev, 0), host);
++	cancel_work_sync(&host->datawork);
++	timer_delete_sync(&host->watchdog);
 +
- 		mmci_dma_release(host);
- 		clk_disable_unprepare(host->clk);
- 	}
+ 	if (host->pdata && host->pdata->exit)
+ 		host->pdata->exit(&pdev->dev, mmc);
+ 
 
 
