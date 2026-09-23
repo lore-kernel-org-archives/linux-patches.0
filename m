@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2673A5383F9;
-	Wed, 23 Sep 2026 14:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61F85383CA;
+	Wed, 23 Sep 2026 14:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175035; cv=none; b=JcnUI0/hZA7m8iGkHUmvbK7lOR/Lm3wD0apOH0QRaS/nUwgHy4q5E9u8Sp0pGQ+5AeC3mj0pJs2cW5cbMZRxrsVD42weE1osE3i3Xp6xizLi5zP51qr2OCraCNMDqQhq0TFXj9RCk2OwsGgYPMlwhurkUkILvwxpAvOjLmgCSyo=
+	t=1790175038; cv=none; b=dREtSzcoDzn+BpbBqxwdqcuiHnOGDpOGgI150n+1bIR+lmU9KZ/qBw/KeyOmhbF6z+BaGyjSMr3G2yZPwvr7h5QdyERc/aKOGG+E8WjS4SJV2PquysvsjnsDcJEfMoGGfEI5ml/kStT+I9jVTXBQrfMmWiMK3wEqRvNGRGEe22Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175035; c=relaxed/simple;
-	bh=GHhO/HT0ChDXkVDnDkw1zBVGnlhVICQHcSMnMpJoZNU=;
+	s=arc-20240116; t=1790175038; c=relaxed/simple;
+	bh=l4qg46iwSd63ZJRZBSgZ+LBwG0Msdb3YNRuREsmMQUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvvYBxpLVhD/X1RjD942pbpiKgylNydY3rewmaSrl0YcQVUjkybIfE9X/WRmDVu5eeTxLnlGA784pnMAn8GklyIxSw1i1N9boWjmt/gGeUmFxBXxRUJMfS1AuZPngpQ9o/DR3iNSDH+mhzzX2cQwAeXtjdHyqJgBql5DAUKy/w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbyvikzr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHJQTeBO+X0hyWlAttAtea9Os45dfakOaWuZTMnkYNJIZztE5eg4Rsw2AJE4xuKZr4WHH8AiDgEiaVqk5+CG2S7M0DxuX9N5EQkkZ+JpDRnooQpk94NhLf6DUc5JhGlJtisr29pIjq3yTMqCStt8v+PqdxLt/eChmUMwwrXwrHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvRf4VFq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbyvikzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357831F000FF;
-	Wed, 23 Sep 2026 14:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvRf4VFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CFA1F000FF;
+	Wed, 23 Sep 2026 14:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175033;
-	bh=PPZRS+tdPamjARWwXOvQDWzjgMNjdB+vRP3bqOPW37M=;
+	s=korg; t=1790175036;
+	bh=mzAJB57GCzA59LpJjOP8LeV30hNUdMGxy+D5e6nJsDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jbyvikzrlw1o1V4t8y29cuwPjYFlDEG98MRpiXj0kbUZPyEPvMt9sFtbAaQB7R1kW
-	 ikkaRI8YLiggTI4O9kqieserlBMfw6bbTS/Ay4vMulwYj51FGtgQ765u6thO7DhVm9
-	 Sb3VR1oLwrwEZmW2I2DnQlOeHOFqC1ORN1xPRx44=
+	b=WvRf4VFq+1CNBs/jInkpa2dBqIxzcNtIV4Rx2cMX2cl7W772rlu9iKjVbJMDBS267
+	 AYpqDMzgWSEZ5pP/ahs9TBm3NVbO+chkmdcI0SJDyXexLcJ981SkqSqq8jF1ZoCpQ+
+	 /msH2A8yiHZb6tRa6HYom4OhHwSnsaQ46ktJpUAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Lebedev <lsa.uz@pm.me>,
+	Shashiko <sashiko-bot@kernel.org>,
 	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 301/398] Input: soc_button_array - fix MS Surface Pro 11 probe failure
-Date: Wed, 23 Sep 2026 16:06:15 +0200
-Message-ID: <20260923140651.225138673@linuxfoundation.org>
+Subject: [PATCH 6.18 302/398] Input: soc_button_array - check btns_desc->package.count
+Date: Wed, 23 Sep 2026 16:06:16 +0200
+Message-ID: <20260923140651.249212899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,75 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-commit ed22ad5fdbdbf9b4cb4ad3003f60314b5a5eb89d upstream.
+commit fb5022278b6ea7f1838e3ef78028d5d5e3375f65 upstream.
 
-On the MS Surface Pro 11 soc_button_array probing races with the GPIO
-driver probing. If soc_button_array wins the race then gpiod_get() returns
-EPROBE_DEFER, which should normally take care of retrying later, but
-the soc_button_array code deliberately ignores EPROBE_DEFER causing it
-to fail its probe() which causes the volume and power buttons to now work.
+Check that btns_desc->package.count is not 0 before accessing
+btns_desc->package.elements[0].
 
-The ignoring of EPROBE_DEFER is there to deal with a problem specific to
-older Bay Trail (BYT) and Cherry Trail (CHT) tablets which often use this
-driver. Modify the error handling to only ignore EPROBE_DEFER on BYT and
-CHT platforms and propagate EPROBE_DEFER normally on other platforms.
-
-Fixes: bcf059578980 ("Input: soc_button_array - partial revert of support for newer surface devices")
+Fixes: 4c3362f44980 ("Input: soc_button_array - add support for ACPI 6.0 Generic Button Device")
 Cc: stable@vger.kernel.org
-Reported-by: Sergey Lebedev <lsa.uz@pm.me>
-Closes: https://lore.kernel.org/lkml/20260830141355.55898-1-lsa.uz@pm.me/
+Reported-by: Shashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-input/20260909091440.3384C1F00A3A@smtp.kernel.org/
 Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Tested-by: Sergey Lebedev <lsa.uz@pm.me>
-Link: https://patch.msgid.link/20260909093934.29411-1-johannes.goede@oss.qualcomm.com
+Link: https://patch.msgid.link/20260909093934.29411-2-johannes.goede@oss.qualcomm.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/soc_button_array.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/input/misc/soc_button_array.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/input/misc/soc_button_array.c
 +++ b/drivers/input/misc/soc_button_array.c
-@@ -16,6 +16,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/gpio_keys.h>
- #include <linux/gpio.h>
-+#include <linux/platform_data/x86/soc.h>
- #include <linux/platform_device.h>
- 
- static bool use_low_level_irq;
-@@ -160,7 +161,7 @@ soc_button_device_create(struct platform
- 	struct gpio_keys_platform_data *gpio_keys_pdata;
- 	const struct dmi_system_id *dmi_id;
- 	int invalid_acpi_index = -1;
--	int error, gpio, irq;
-+	int error, gpio, irq = 0;
- 	int n_buttons = 0;
- 
- 	for (info = button_info; info->name; info++)
-@@ -191,8 +192,9 @@ soc_button_device_create(struct platform
- 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
- 		if (error || irq < 0) {
- 			/*
--			 * Skip GPIO if not present. Note we deliberately
--			 * ignore -EPROBE_DEFER errors here. On some devices
-+			 * Propagate -EPROBE_DEFER, skip button on other errors.
-+			 *
-+			 * -EPROBE_DEFER is ignored on Bay & Cherry Trail. Here
- 			 * Intel is using so called virtual GPIOs which are not
- 			 * GPIOs at all but some way for AML code to check some
- 			 * random status bits without need a custom opregion.
-@@ -201,6 +203,12 @@ soc_button_device_create(struct platform
- 			 * we do not have a driver for these so they will never
- 			 * show up, therefore we ignore -EPROBE_DEFER.
- 			 */
-+			if ((error == -EPROBE_DEFER || irq == -EPROBE_DEFER) &&
-+			    !(soc_intel_is_byt() || soc_intel_is_cht())) {
-+				error = -EPROBE_DEFER;
-+				goto err_free_mem;
-+			}
-+
- 			continue;
+@@ -377,7 +377,7 @@ static struct soc_button_info *soc_butto
  		}
+ 	}
  
+-	if (!btns_desc) {
++	if (!btns_desc || !btns_desc->package.count) {
+ 		dev_err(dev, "ACPI Button Descriptors not found\n");
+ 		button_info = ERR_PTR(-ENODEV);
+ 		goto out;
 
 
