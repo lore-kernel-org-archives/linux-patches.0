@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079A0426D2E;
-	Wed, 23 Sep 2026 14:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE8053A8A3;
+	Wed, 23 Sep 2026 14:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174778; cv=none; b=COJLODxns8iI8bJuUjdIZlB7o7NRpDJHsVVmEMrag7Hj7v3McqpqZ+/+0QAtMpUwZBMrXvMCUyiiplpuCe1JNkNlgxlfpeimSQY2BcJvovX0oCUBnlBCoP49/TuXW1zA8+XTOhaoVwMlqY+L/AEWW+Q+Q8re9oH10GCVVSE/PgI=
+	t=1790174781; cv=none; b=rAuDH5fnnw73qkUipDVtQogYgbAQWU5SlYN4PyO5+QHKsPYHByFyO9Ct5yXwRIy32DtyT4AKoornOlpDLkeg1wfD5KmkKUEUZR1HSA2/lQ6sPVIYRCVR34hmtCKB71W/6/oBySFh7S6lni3+DMWMCFOt0NYkZVW9dpwv3J0+/9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174778; c=relaxed/simple;
-	bh=21GbXfQv8avx1q6lbO7XNYUZr5x550LWsQEMyJ0LiEU=;
+	s=arc-20240116; t=1790174781; c=relaxed/simple;
+	bh=P/jOioT9zfCS7+3wNn1YeN4hMd5Y+5j2LZqLsEafiuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tK47xhB1ijJHgFMBhqEqmeSdeRH0vodwnhmH7vXy4Z1fDnIlEA9XkwSuVwhIiDqMmdMDcThdhEfVFQFj9Kflv2xDMjmJz8JAiV/cSOuxJRP/rnkFYQCxL0TZPUjLI+aX75Z+AakD5vhR9BZq8h2+GBLAUgmjytqljXvRR+KrNtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkTintTb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fj+2Q+F2hqYNVOIOJCFux1MnkZujOuNQ0b4kwY1Dp1BGXCstXXUMXdxc7CyT80jT/lVdoH33eouzqhnFBrJfS4dfHBGZTYFy6VBKsU6Pqiz+SjUhxlhF01IhJUlvYyY47QZDMa7qBnuWZn/GGTgk3ODPwO1myv+XkBbd8ZMN+N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzcrYSTk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkTintTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCB01F000FF;
-	Wed, 23 Sep 2026 14:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzcrYSTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FD81F000FF;
+	Wed, 23 Sep 2026 14:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174776;
-	bh=islrV1ajejZ/npR3y9cPtse/6RPwDHTS3jqeKO6t0qI=;
+	s=korg; t=1790174779;
+	bh=7DM/X2ttHYyEykIoMuRiX75gJGW7gOkWhyaCg8cNpyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkTintTbBqYK0rn4efHRXQ9gbgFbUgKSq2IPEwBqrdBApkpTHG9gtsXOyixHa6Bzm
-	 OHtQsicPT7eAh+wdmsTNBjEIfx2ccriIi8GYEYrgCu5VkFrlurW1/8ZLF6vRZBD/S8
-	 yQmxVlIgj1eFcPsRD22d/0yPJHazFEVYLDrfcJ8A=
+	b=gzcrYSTkQmLxUWl1lntipLqBzkuKOSIchRczIx1ylFfia2OVNIHGy0Z2+YFxPZvRl
+	 jFTWdp7mLySGE83vTGaCpIEkDuPzBtqlAuvo8l7S+SWPlR6n3b32tweA74ARG6Yukv
+	 Clh87TWBYDXIVdzwWS1aGuw1XNfqUqvcI0El6Ves=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a6ffe86390c8a6afc818@syzkaller.appspotmail.com,
-	Quanye Yang <quanyeyang@proton.me>,
+	syzbot+bd317784d628820741b5@syzkaller.appspotmail.com,
+	Jeffin Philip <jeffinphilip14@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.18 222/398] RDMA/ucma: Serialize join and leave on copy_to_user failure
-Date: Wed, 23 Sep 2026 16:04:56 +0200
-Message-ID: <20260923140649.175927471@linuxfoundation.org>
+Subject: [PATCH 6.18 223/398] RDMA/core: fix refcount bug in iwpm_get_nlmsg_request()
+Date: Wed, 23 Sep 2026 16:04:57 +0200
+Message-ID: <20260923140649.201861142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Jeffin Philip <jeffinphilip14@gmail.com>
 
-commit 662ade4de9ff5eceb0820a9f8e9fac70ba6a815b upstream.
+commit 33fb59da49c4c3f5c2ec9f9d4447a56857a02c02 upstream.
 
-rdma_join_multicast() queues RoCE work that later reads the ucma_multicast
-through event->param.ud.private_data, then list_add()s the CMA multicast
-at the head of id_priv->mc_list. rdma_leave_multicast() matches only by
-sockaddr and destroys the first hit.
+iwpm_get_nlmsg_request() initializes refcount _after_ list_add_tail()
+making it accessible to global list where another CPU can kref_get()
+on nlmsg_request causing a refcount "addition on 0" bug. Fix this
+by initializing kref _before_ list_add_tail() so refcount for
+nlmsg_request can be incremented/decremented normally. In addition,
+also initialize every field before list_add_tail().
 
-ucma_process_join() used to drop ctx->mutex after a successful join and
-retake it only if copy_to_user() failed. Two concurrent JOIN_MCAST calls
-with the same address can therefore insert a second CMA entry before the
-first thread's leave. leave then cancels the newer work and the older
-worker still dereferences the ucma_multicast that the first thread frees.
-
-Keep ctx->mutex held from rdma_join_multicast() through copy_to_user() and,
-on -EFAULT, through rdma_leave_multicast() so leave cannot miss this join.
-Do not leave if join itself failed: that path never published this address
-on mc_list, and a leave-by-addr would destroy an earlier successful join.
-
-Reported-by: syzbot+a6ffe86390c8a6afc818@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a6ffe86390c8a6afc818
-Fixes: fe454dc31e84 ("RDMA/ucma: Fix use-after-free bug in ucma_create_uevent")
+Reported-by: syzbot+bd317784d628820741b5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bd317784d628820741b5
+Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
 Cc: stable@vger.kernel.org
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Link: https://patch.msgid.link/20260831-rdma-ucma-mc-uaf-v1-1-b8eeb7046aff@proton.me
+Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
+Link: https://patch.msgid.link/20260904131437.12917-1-jeffinphilip14@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/ucma.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/iwpm_util.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/core/ucma.c
-+++ b/drivers/infiniband/core/ucma.c
-@@ -1556,9 +1556,10 @@ static ssize_t ucma_process_join(struct
- 	mutex_lock(&ctx->mutex);
- 	ret = rdma_join_multicast(ctx->cm_id, (struct sockaddr *)&mc->addr,
- 				  join_state, mc);
--	mutex_unlock(&ctx->mutex);
--	if (ret)
-+	if (ret) {
-+		mutex_unlock(&ctx->mutex);
- 		goto err_xa_erase;
-+	}
+--- a/drivers/infiniband/core/iwpm_util.c
++++ b/drivers/infiniband/core/iwpm_util.c
+@@ -314,10 +314,6 @@ struct iwpm_nlmsg_request *iwpm_get_nlms
+ 	if (!nlmsg_request)
+ 		return NULL;
  
- 	resp.id = mc->id;
- 	if (copy_to_user(u64_to_user_ptr(cmd->response),
-@@ -1566,6 +1567,7 @@ static ssize_t ucma_process_join(struct
- 		ret = -EFAULT;
- 		goto err_leave_multicast;
- 	}
-+	mutex_unlock(&ctx->mutex);
+-	spin_lock_irqsave(&iwpm_nlmsg_req_lock, flags);
+-	list_add_tail(&nlmsg_request->inprocess_list, &iwpm_nlmsg_req_list);
+-	spin_unlock_irqrestore(&iwpm_nlmsg_req_lock, flags);
+-
+ 	kref_init(&nlmsg_request->kref);
+ 	kref_get(&nlmsg_request->kref);
+ 	nlmsg_request->nlmsg_seq = nlmsg_seq;
+@@ -326,6 +322,11 @@ struct iwpm_nlmsg_request *iwpm_get_nlms
+ 	nlmsg_request->err_code = 0;
+ 	sema_init(&nlmsg_request->sem, 1);
+ 	down(&nlmsg_request->sem);
++
++	spin_lock_irqsave(&iwpm_nlmsg_req_lock, flags);
++	list_add_tail(&nlmsg_request->inprocess_list, &iwpm_nlmsg_req_list);
++	spin_unlock_irqrestore(&iwpm_nlmsg_req_lock, flags);
++
+ 	return nlmsg_request;
+ }
  
- 	xa_store(&multicast_table, mc->id, mc, 0);
- 
-@@ -1573,7 +1575,6 @@ static ssize_t ucma_process_join(struct
- 	return 0;
- 
- err_leave_multicast:
--	mutex_lock(&ctx->mutex);
- 	rdma_leave_multicast(ctx->cm_id, (struct sockaddr *) &mc->addr);
- 	mutex_unlock(&ctx->mutex);
- 	ucma_cleanup_mc_events(mc);
 
 
