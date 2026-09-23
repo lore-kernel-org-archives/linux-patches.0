@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DA23D75AD;
-	Wed, 23 Sep 2026 14:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B8497B7C;
+	Wed, 23 Sep 2026 14:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172889; cv=none; b=QfWXc/eFeOxFKbqW7fcHjOlTHcZQUkndM4+rJZVPa+UAAXutRpDHjcBhP1H/kmy4Csf1Z1C1PsNnOFR5jeTY9VoOL2TnG8//CflYjtlBjhdHuvhPT8np0qegVdH3wFSxWx1Hhv8ml/WaNDeRUtCb4OtWIv+O4fJ8tFeSwJGVIsA=
+	t=1790172892; cv=none; b=Pc9SoiIk69Hd/AEmyZKMwcfmwm7PDuZJMzEgh56yTbnqzwDEWT3fOtEpVMWAnBm6C43U67lH6BtlvgwwVnCTPDVL7ye2Vrosju62Alx9jbxseYpc+NSbREWasAPNC4nK6lYJyBgWDmHsDg8nSndhVEATC2xscEfhbFa/3r4Fsao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172889; c=relaxed/simple;
-	bh=HmzNoqefekb9Za2ZcZtZBXgPULxtnyxQELI78da4t1g=;
+	s=arc-20240116; t=1790172892; c=relaxed/simple;
+	bh=C1DFduXssIQcERFLh7axqlCzEpgHmW3RyzvOV/aQaE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvPS5cdYNUhiSSKxPp8MVF1P663bpzhznkhrW8bJziBvZzjftkyJzG8HOaFqwur2tcAcMFvSE62Y5/LCugLx5fObIaCSL9Qp5TxWbN/qz2hyiZtqBWqLdb5uQmyv2SzGftkiQnN/SvkLdc9FzkwaiNnnWhIC8VUKTG0IfjNL2IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w95HoC1T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dY00Tb7eE0Ld088AhSXC82YTZJMrFcXHqqFtaDgULK2ECa9fxRLPZWV1qplRtlau+K0NVej3bPkscoZHUsHmHljZZYmn7cGmGRHYrGeHYzvwR8fnFNkBog2zVoC9V725tlyg7Kf6TbqJ3i0HXRSPhjznhOE4E9Lt2uu/kMaSyIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB84YglZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w95HoC1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589241F000FF;
-	Wed, 23 Sep 2026 14:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB84YglZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1F91F000FF;
+	Wed, 23 Sep 2026 14:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172887;
-	bh=TQDoGUWzxJFfiNaD6qxhSoydQe7TJT6n4JJBF4S8Dt8=;
+	s=korg; t=1790172891;
+	bh=9dpt2O+VKMMoILza4gqkPhV/sYMN7Y2rsuBPjnTC8DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w95HoC1T0HgOTGCtf1KmGV2K7xWBYJ8/5lo+tv1eZODPrqK0wiIIlyF0mm+83XCgn
-	 hC8hEDhQOQDQMfETE6/iibw1z9AGl8HjDcIijH2QUiOGaBR057j7Kk7V5UxkOh6H9R
-	 rePsfcQTdhMQMW1U5v6knF4YhfL/oASwNNFH4Wew=
+	b=EB84YglZOQoFwrJ1ey8j1WKgwruhGJpLJ8dzYp3bfx8bKEVbc6hGJ9o5rNpftcuu5
+	 EcLi5r2p35LPn1PTTBEQ4JX4N0Xwdbn+4g5DGkO2OmtTaC3jLvwVVWFcU8QnP28IuZ
+	 qWpDR+FyqjIHevfmg3Pe6XEulm8f/Kw4/yp4lna0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+63a84ea9c0f57d6133fa@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 090/438] wifi: mac80211: mesh: release the channel if start fails
-Date: Wed, 23 Sep 2026 16:01:51 +0200
-Message-ID: <20260923140647.112953224@linuxfoundation.org>
+Subject: [PATCH 7.2 091/438] wifi: mac80211: set up the TX info early to fix failure paths
+Date: Wed, 23 Sep 2026 16:01:52 +0200
+Message-ID: <20260923140647.138709976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,56 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ae97fff6495a8764bc0ef281cfe5444f701e527f ]
+[ Upstream commit 50d3d79dc0743b616afb00d01a626c76758721f7 ]
 
-ieee80211_join_mesh() acquires a channel context and then calls
-ieee80211_start_mesh(), which can fail. In that case, the chanctx
-isn't released then interface removal will attempt to unassign it
-after it's removed from the driver, hitting:
+The previous commit 2c51457d930f ("wifi: mac80211: free ack status
+frame on TX header build failure") cleaned up the leak, but still
+left the code a bit messy and the failed SKB didn't get reported
+to userspace.
 
-  wlan0: Failed check-sdata-in-driver check, flags: 0x0
-  WARNING: net/mac80211/driver-ops.c:366 at drv_unassign_vif_chanctx
-   ieee80211_assign_link_chanctx
-   __ieee80211_link_release_channel
-   ieee80211_link_release_channel
-   ieee80211_teardown_sdata
-   unregister_netdevice_many_notify
-   _cfg80211_unregister_wdev
-   ieee80211_remove_interfaces
-   ieee80211_unregister_hw
-   mac80211_hwsim_del_radio
-   hwsim_exit_net
-
-Correctly release the channel on start failures.
+Fix this up by initialising skb->cb[] earlier, which allows using
+ieee80211_free_txskb() and therefore reports it for the failure
+in ieee80211_build_hdr(), and unifies the ieee80211_skb_resize()
+failure path with it.
 
 Assisted-by: LLM
-Reported-by: syzbot+63a84ea9c0f57d6133fa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=63a84ea9c0f57d6133fa
-Fixes: 2b5e19677592 ("mac80211: cache mesh beacon")
-Link: https://patch.msgid.link/20260908122838.201719-21-johannes@sipsolutions.net
+Fixes: c3e7724b6bc2 ("mac80211: use ieee80211_free_txskb to fix possible skb leaks")
+Link: https://patch.msgid.link/20260908122838.201719-22-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 45f8e3c87884a..8e2ff624a0caa 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -3323,7 +3323,11 @@ static int ieee80211_join_mesh(struct wiphy *wiphy, struct net_device *dev,
- 	if (err)
- 		return err;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index a726a697c32d7..e264121208736 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2974,10 +2974,23 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 	 */
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (unlikely(!skb)) {
+-		ret = -ENOMEM;
+-		goto free;
++		/* skb_share_check() already freed the skb */
++		if (info_id)
++			ieee80211_remove_ack_skb(local, info_id);
++		return ERR_PTR(-ENOMEM);
+ 	}
  
--	return ieee80211_start_mesh(sdata);
-+	err = ieee80211_start_mesh(sdata);
-+	if (err)
-+		ieee80211_link_release_channel(&sdata->deflink);
++	/* set this up so failure paths can clean up ack skb */
++	info = IEEE80211_SKB_CB(skb);
++	memset(info, 0, sizeof(*info));
 +
-+	return err;
- }
++	info->flags = info_flags;
++	if (info_id) {
++		info->status_data = info_id;
++		info->status_data_idr = 1;
++	}
++	info->band = band;
++
+ 	hdr.frame_control = fc;
+ 	hdr.duration_id = 0;
+ 	hdr.seq_ctrl = 0;
+@@ -3016,10 +3029,8 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 		head_need += local->tx_headroom;
+ 		head_need = max_t(int, 0, head_need);
+ 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
+-			ieee80211_free_txskb(&local->hw, skb);
+-			skb = NULL;
+ 			ret = -ENOMEM;
+-			goto free;
++			goto free_txskb;
+ 		}
+ 	}
  
- static int ieee80211_leave_mesh(struct wiphy *wiphy, struct net_device *dev)
+@@ -3046,16 +3057,6 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 
+ 	skb_reset_mac_header(skb);
+ 
+-	info = IEEE80211_SKB_CB(skb);
+-	memset(info, 0, sizeof(*info));
+-
+-	info->flags = info_flags;
+-	if (info_id) {
+-		info->status_data = info_id;
+-		info->status_data_idr = 1;
+-	}
+-	info->band = band;
+-
+ 	if (likely(!cookie)) {
+ 		ctrl_flags |= u32_encode_bits(link_id,
+ 					      IEEE80211_TX_CTRL_MLO_LINK);
+@@ -3079,16 +3080,17 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 					     pre_conf_link_id, link_id);
+ #endif
+ 			ret = -EINVAL;
+-			goto free;
++			goto free_txskb;
+ 		}
+ 	}
+ 
+ 	info->control.flags = ctrl_flags;
+ 
+ 	return skb;
++ free_txskb:
++	ieee80211_free_txskb(&local->hw, skb);
++	return ERR_PTR(ret);
+  free:
+-	if (info_id)
+-		ieee80211_remove_ack_skb(local, info_id);
+ 	kfree_skb(skb);
+ 	return ERR_PTR(ret);
+ }
 -- 
 2.53.0
 
