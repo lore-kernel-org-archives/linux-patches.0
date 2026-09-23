@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968E3B5839;
-	Wed, 23 Sep 2026 14:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE103AE198;
+	Wed, 23 Sep 2026 14:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174051; cv=none; b=EpqJX19ksOufD/RxPo6ud5G9FVu05WbMvY8IdSHgoyPZrBU94HXs4hjcXGi7+cXXOyCPawvfEwf5I61vw93x4sCQGHK7cno6Nh+YGGp04gVHHElIdc2xPSORBdcgHrmUAQJmpoFAun0iThB1TZCNgZv9Xui6HuZ2WW3TWdG/Akw=
+	t=1790174054; cv=none; b=p1965nzgfyYWZw9C0HbGrMX8MRF+Pf6mhhezyNq2bJcesP0T0JLAeer0TTZ5r5ezjYf4PO+zObFaoRmYvzdikhmF4IutihaYqOPHXCHv+8mnIj5Hy/dTzRGxTP4XIJkEnV+9+bTZXAFnO07jAMzIfPaK3XzST500OWQNXd1KQXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174051; c=relaxed/simple;
-	bh=DUmID3yPgnlsADKJibAAnJhZvfRARiPOaihrsYIXSOc=;
+	s=arc-20240116; t=1790174054; c=relaxed/simple;
+	bh=YfZgKlsDLOFTGMLPeEqt7Y7e4JJYnts4opdxw0+3cNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pg4hPRqcktYR1gPA7kwtB49JUr1TFO9PWGJdeTMS2mLWNR4jMnmoE+C0m98K1eGshZoDkreZoiRmDMLysd8SFU5q5HXZhbUQYUvxNzFS6g4FmBFYiNBEI54HEfqryMB55KqQ2VLixVIMcZaeDk9tOSDcRn9WpQ2vzb7rfCrnxRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEDkJR8u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BNtB/M8SdWwHvbuq06LLz6qcUcRQT0A9EDP7G5TCOEA/sRHdWgp4jDpVBW/CmkhccfxZaho4ydJWNR+spDZ6fbxSnBqFVTDE5qXBTyt7HK4swGE4XMr12sOQB8U1RAKhquIFjcpbg4DvBQVWMrNlzz7a6lwk/Q79wnOg+4yQY0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5H2w4X+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEDkJR8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED0D1F000FF;
-	Wed, 23 Sep 2026 14:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5H2w4X+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D1C1F000FF;
+	Wed, 23 Sep 2026 14:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174049;
-	bh=3ib5XU6Lt4tLGxGwrXCpcDMXNac5c8Yk1Za5h2AA958=;
+	s=korg; t=1790174053;
+	bh=3B6SKyAWj6iTfdMowunaaJh/X+VstIhHAQb1MbQrkpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nEDkJR8u3G1Os+jliPdVFrbJh7x1IPnNsXjGpi+bn8kp4sfPz/KcC68S0tpuCFbEN
-	 Q7u3Xj1JBGWKyFRNhvNgUJsmljjNFFz/+6KHQjT70MabPVAMujqMnpPMnER6AihHUs
-	 3YqkIjF4Z5/nb+8IcEzFszYqfZathWh/ZZBa++T0=
+	b=W5H2w4X+643HYCt/OOUpUBsiYGRjACbLM6+K10PGhvuMxZ7CpxRJTXicV6kFmhnWZ
+	 iS7bgs4g/bR3DVhp8FTOCtXWIkgNC+NoQdCBhY3G169eh9sg3vez/dN6xVkeJ5I77Z
+	 6q8wAtyDDWwyo0SOkFmby97Nj9hhan84QVFjbyfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 420/438] smb: client: fix fattr leaking on wsl_to_fattr() failure
-Date: Wed, 23 Sep 2026 16:07:21 +0200
-Message-ID: <20260923140655.798534943@linuxfoundation.org>
+	Saim Shujah <saimzst@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 7.2 403/438] drm/msm/dpu: clear pending peripheral flush state
+Date: Wed, 23 Sep 2026 16:07:04 +0200
+Message-ID: <20260923140655.340305385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -55,110 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Saim Shujah <saimzst@gmail.com>
 
-commit e1253a82bb4c0fed6706a5839fc8b6e01be1abe2 upstream.
+commit a5b5cc909931572aec446e129c035b76b3f0c1fa upstream.
 
-wsl_to_fattr() mutates fattr fields as it parses each WSL EA.  If
-validation later fails, the function returns false with partially
-mutated fattr fields that callers do not reset.
+dpu_hw_ctl_clear_pending_flush() resets the cached per-block state after a
+flush transaction, but misses pending_periph_flush_mask.
 
-Fix this by parsing into local variables and only committing them to
-fattr on success.
+The peripheral flush updater accumulates interface bits in this mask. A
+later transaction which sets the top-level peripheral flush bit can write
+stale interface bits to CTL_PERIPH_FLUSH together with the current state.
 
-Closes: https://sashiko.dev/#/patchset/20260906200517.725015-1-pc%40manguebit.org
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Peripheral flush support was added after the helper started clearing every
+individual pending flush mask. Clear the peripheral mask together with the
+other cached child masks.
+
+Fixes: 64f7b81f0358 ("drm/msm/dpu: add support of new peripheral flush mechanism")
 Cc: stable@vger.kernel.org
+Signed-off-by: Saim Shujah <saimzst@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/748968/
+Link: https://lore.kernel.org/r/20260828065440.140410-1-saimzst@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -1149,29 +1149,30 @@ static bool wsl_to_fattr(struct cifs_ope
- 			 u32 tag, struct cifs_fattr *fattr)
- {
- 	unsigned int sbflags = cifs_sb_flags(cifs_sb);
-+	kuid_t uid = cifs_sb->ctx->linux_uid;
-+	kgid_t gid = cifs_sb->ctx->linux_gid;
- 	struct smb2_file_full_ea_info *ea;
- 	bool have_xattr_dev = false;
-+	dev_t rdev = 0;
-+	umode_t mode;
- 	u32 next = 0;
- 
--	fattr->cf_uid = cifs_sb->ctx->linux_uid;
--	fattr->cf_gid = cifs_sb->ctx->linux_gid;
--
--	fattr->cf_mode &= ~S_IFMT;
-+	mode = fattr->cf_mode & ~S_IFMT;
- 	switch (tag) {
- 	case IO_REPARSE_TAG_LX_SYMLINK:
--		fattr->cf_mode |= S_IFLNK;
-+		mode |= S_IFLNK;
- 		break;
- 	case IO_REPARSE_TAG_LX_FIFO:
--		fattr->cf_mode |= S_IFIFO;
-+		mode |= S_IFIFO;
- 		break;
- 	case IO_REPARSE_TAG_AF_UNIX:
--		fattr->cf_mode |= S_IFSOCK;
-+		mode |= S_IFSOCK;
- 		break;
- 	case IO_REPARSE_TAG_LX_CHR:
--		fattr->cf_mode |= S_IFCHR;
-+		mode |= S_IFCHR;
- 		break;
- 	case IO_REPARSE_TAG_LX_BLK:
--		fattr->cf_mode |= S_IFBLK;
-+		mode |= S_IFBLK;
- 		break;
- 	}
- 
-@@ -1195,26 +1196,29 @@ static bool wsl_to_fattr(struct cifs_ope
- 
- 		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
- 			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
--				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
-+				uid = wsl_make_kuid(cifs_sb, v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
- 			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
--				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
-+				gid = wsl_make_kgid(cifs_sb, v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
--			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
-+			if (S_DT(mode) != S_DT(get_unaligned_le32(v)))
- 				return false;
--			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
-+			mode = get_unaligned_le32(v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
--			fattr->cf_rdev = reparse_mkdev(v);
-+			rdev = reparse_mkdev(v);
- 			have_xattr_dev = true;
- 		}
- 	} while (next);
- out:
--
- 	/* Major and minor numbers for char and block devices are mandatory. */
- 	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
- 		return false;
- 
-+	fattr->cf_uid = uid;
-+	fattr->cf_gid = gid;
-+	fattr->cf_mode = mode;
-+	fattr->cf_rdev = rdev;
- 	return true;
- }
- 
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -118,6 +118,7 @@ static inline void dpu_hw_ctl_clear_pend
+ 	ctx->pending_intf_flush_mask = 0;
+ 	ctx->pending_wb_flush_mask = 0;
+ 	ctx->pending_cwb_flush_mask = 0;
++	ctx->pending_periph_flush_mask = 0;
+ 	ctx->pending_merge_3d_flush_mask = 0;
+ 	ctx->pending_dsc_flush_mask = 0;
+ 	ctx->pending_cdm_flush_mask = 0;
 
 
