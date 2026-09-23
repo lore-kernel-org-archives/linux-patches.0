@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C1C3A9636;
-	Wed, 23 Sep 2026 14:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0443A255A;
+	Wed, 23 Sep 2026 14:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173791; cv=none; b=bsfUpZgI1SKZaRDJauspTehiU4VMoKbHj46lXhDxk695gqxWO/75fq3OKLU+WaSGua3qs532uEoKd1R+rWTvuAlFXjntHRoaM7Bdt3Pit3D+Yj4h+/kqdTxsahy+Wd3pOOH0yO0zji+4yn5p4XmLkHGtMzQ6PsOgjZOe7R3QKgQ=
+	t=1790173794; cv=none; b=aLxS3Yxz1Cd7ehRZnUzSlJnjLMP3L9hhNg5ZD+wUqL3qU19UTxpS0U95CQ4RNWWIw6oBr8TdnUKxNn1pu5tOU8gfmDk9WK+KrbLXgfi4uxv343pk9j5HRtRw+zFl7J0gtTHF3KRh9E89hd3N2u7387j51dtOwwU2aYRFv/9w5hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173791; c=relaxed/simple;
-	bh=XVYRwazQKVosNHEAtUKdmnu61Mq+p9ZMonx/6vyc2CM=;
+	s=arc-20240116; t=1790173794; c=relaxed/simple;
+	bh=viWAZiyZ7xhe8OIjg/zEq3JDcZjeymsOJM7HTqwnJQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JG+56nRYGfQRKdOQvzn376bgiyNji8IjC3g6BrrPIJbDidX+2p5KtFOTFF9vjYlqy6dghjxG0XkD+YPncdBMSVqkWvbz6Cyilc7WTl4I52eLvpgyjKS7q6bSOJbxuLUSKH+OfDstM+46pFv7IZdnfDdccstrDYipxs1TMc+mX1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc3V6Tnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BC+P44e281+druXriinKd37KKOPyVqXOw0pA9jmgsK2DTIN9j5PiB8fbBojxPhb3d/COgHQTzjyuGDVlyldTxzMl38OxaFR/l9Dx1iJ4TiqTVA3hyUUJ8MNVHXDHAWXDmUTg1kSsDRUpFOjdUiKIfCku2Hu6tgAk4V+xrvQbiRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+PLotnk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc3V6Tnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534991F000FF;
-	Wed, 23 Sep 2026 14:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+PLotnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633331F000FF;
+	Wed, 23 Sep 2026 14:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173789;
-	bh=gpwU6LmgwwSUKVqS0ByWvDHCf1aCBeA4LZtkGOr9cQU=;
+	s=korg; t=1790173792;
+	bh=5ioUByc5dJ2BzYyS5BLlMCXUWPm82JOaKDjAvemUlT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hc3V6Tnj3agqobf57sKNV3Lp8Noj4xp7yBG4Dess6JZYcofx14KZhm5CqEYUSzOg+
-	 Z+4nwH7/kn32FqtVfssedxwcWYMWtBcQhF2n1vHP5Y0p2olffkfmLrnVhbHmEbvNOZ
-	 L1KdgxG3a72BK+/wC9m9af7kU8TjrTcChSSecn8Y=
+	b=z+PLotnkTE/9PfBg/jd9ox/lCc4gC3DNBgOjKRMT+m+yCD5Pyd/PtNC4g+Z6zn37K
+	 0UCEGKgPL4nL/Rw8Qaol5Hck04Javcm5GUbKBasX5j98dnlAIYIaUHdJg8n2xtKozS
+	 aTeoABLnzqKJzexLkNZWbLlQnyjX/uqIA6XByXR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 345/438] mmc: sdhci-of-aspeed: Remove children before releasing SDC resources
-Date: Wed, 23 Sep 2026 16:06:06 +0200
-Message-ID: <20260923140653.758895390@linuxfoundation.org>
+Subject: [PATCH 7.2 346/438] mmc: sdio_uart: fix xmit_fifo leak when the port table is full
+Date: Wed, 23 Sep 2026 16:06:07 +0200
+Message-ID: <20260923140653.784333920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,56 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 4396d70bb7fec531bcf934fed016b2f3300c670b upstream.
+commit 53823e25793a97d07e6e98e0904bbf74cac8bc76 upstream.
 
-Probe failure and removal leave SDHCI child devices registered after the
-parent clock and managed resources are released.
+sdio_uart_add_port() allocates the transmit fifo before claiming a
+slot in sdio_uart_table[].  When all UART_NR slots are taken, it
+returns -EBUSY with the fifo still allocated, but the probe error
+path only kfree()s the port, leaking the transmit fifo.
 
-Unregister the OF children in reverse order before disabling the parent
-clock on both paths. Use of_platform_device_destroy() because manual
-child creation does not set the flag required by of_platform_depopulate().
+Free the fifo in the failure path of sdio_uart_add_port() itself so
+the function retains nothing on error.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: bb7b8ec62dfb ("mmc: sdhci-of-aspeed: Add support for the ASPEED SD controller")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
+Fixes: 8b197a5ce7a7 ("sdio_uart: Use kfifo instead of the messy circ stuff")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/core/sdio_uart.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -560,12 +560,14 @@ static int aspeed_sdc_probe(struct platf
- 		cpdev = of_platform_device_create(child, NULL, &pdev->dev);
- 		if (!cpdev) {
- 			ret = -ENODEV;
--			goto err_clk;
-+			goto err_children;
- 		}
+--- a/drivers/mmc/core/sdio_uart.c
++++ b/drivers/mmc/core/sdio_uart.c
+@@ -104,6 +104,9 @@ static int sdio_uart_add_port(struct sdi
  	}
+ 	spin_unlock(&sdio_uart_table_lock);
  
- 	return 0;
- 
-+err_children:
-+	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
- err_clk:
- 	clk_disable_unprepare(sdc->clk);
++	if (ret)
++		kfifo_free(&port->xmit_fifo);
++
  	return ret;
-@@ -575,6 +577,7 @@ static void aspeed_sdc_remove(struct pla
- {
- 	struct aspeed_sdc *sdc = dev_get_drvdata(&pdev->dev);
- 
-+	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
- 	clk_disable_unprepare(sdc->clk);
  }
  
 
