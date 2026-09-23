@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB103AE198;
-	Wed, 23 Sep 2026 14:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E0C3AE198;
+	Wed, 23 Sep 2026 14:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174244; cv=none; b=Ujv9BT0iCK8uDhYMmKFduJ2gYuqF0iEHStrVVXxlpZoPEra+vGhjf2dzjL/rHxgDRRo1B3nq2Z1rqupuKn7sfSaVjlYopAD1w1bGjyqc+9vuM8BUIjtHbZRJ0bMpJvObiNT08tvyD2+vKbmGAjjcSvSkxQGD/gBAk/56L5N741Y=
+	t=1790174248; cv=none; b=KzJFwUEZhanEQ4lpvFaWIxacVvG9vJQjHLKVRzwkEE/VIOuy1iBwTB/8ElqjNHbZl1DxFE2HHlqY84MRRmks/uy8LivFF3XRWtNr8JsTVS7DNpiwB4k/xtSs+L0ctqARkyEty1Glg1ZizNCcYqHOtVFMy/PHigG0vBUSAvEK/4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174244; c=relaxed/simple;
-	bh=UuQCT/S5ynwOjlvDpXYpSH/KNThCCbgGTXUkNcxL3RM=;
+	s=arc-20240116; t=1790174248; c=relaxed/simple;
+	bh=RlTAUoCu0QKfrlD4MJ6vv7llse9PjILN7j5mbhOvdh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ith8PE/LGfGYXhoeJTizDi+WbGhGrifMvm4dM/qJIhEAejYGJJHJefrdTUSFoZYFCK87qjBZ2mo6Wb+tvSpEPhl/g1SBlsfRManrQNh+wXrc7z2bJeu7K+OMpPZRTbMJvOd4HLjJzymPNEcp1lrJ7kYSe0v34nhk6xdWYnvRclU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fw/PJCR4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c/riJEG4h7MgGbQEuKZiGPOGvYTnR6pA6sMCfzNClGEOF6JE2JnHeeXud6qvg+7D4QHURNiHOuktn43EOi3JXOhy2F7rGY0Igwtw450vWAfM8SuDXMqhjwtqWnDCvrBy9NTnEEew6AyL0MsRev0JScD7PoXW53ayCviXwgZu61U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ze+2Ep6v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fw/PJCR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FC01F000FF;
-	Wed, 23 Sep 2026 14:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ze+2Ep6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62EF1F000FF;
+	Wed, 23 Sep 2026 14:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174243;
-	bh=xoXzEEZzQYBmz6jVJNvz5sTcVH/WXi+Xa3T864eCCaY=;
+	s=korg; t=1790174247;
+	bh=LV/VVyFIMfjDSJUZv4G+O/XjI/cYB6r/Dahjy9Kqh3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fw/PJCR4/1gTMuR9hEEQGdq75oJXtc6tkqYy4dpyTKobmFL4HKSYP67y4b/3ibGZH
-	 /zJ/526fv1i8ayBiYWyDy8FkEdxIWKuhRByoKxkWLIya45jvtlQQXRfmruKjNh3RJ2
-	 GwflrYELWf3ZSp7T0xWSvTQ8M4bGIJ8c8owV3Pe8=
+	b=Ze+2Ep6vfnAtljG8MQOb59jeyOt0KXEIDGkEecF5z8oh1D0d+TK53qpvbEZTefc5V
+	 UDYoDyOb7vhWTK40c1iXmmZOrNZofdRi5Szw0wSMjvZRKAAUofwfTQC7GjISMviKl2
+	 J3JRLXaxTY1rz3UDbbG4exDKVoTYu5AdYzG33TWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/398] arm64: dts: renesas: r9a09g047: Switch GBETH TX queue scheduling to WRR
-Date: Wed, 23 Sep 2026 16:01:50 +0200
-Message-ID: <20260923140644.362813155@linuxfoundation.org>
+Subject: [PATCH 6.18 054/398] MIPS: Octeon: apply USB FDT fixups also when USB is modular
+Date: Wed, 23 Sep 2026 16:02:08 +0200
+Message-ID: <20260923140644.824542016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,101 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 63016c3a91f2c458ca75869c8c782e899591f22d ]
+[ Upstream commit 126f16e0a1b353c2ba5c7e2c8626cfa865934f9f ]
 
-The GBETH ethernet nodes don't specify a TX scheduling policy, so stmmac
-falls back to Strict Priority. In this configuration the queue with the
-highest priority gets all the traffic, starving the others under load.
+The uctl/usbn device-tree fixups in octeon_prune_device_tree() - which
+set the board's USB reference-clock frequency and type from
+__cvmx_helper_board_usb_get_clock_type() - are guarded by
+"#ifdef CONFIG_USB", which is false when USB is built as a module. The
+fixups then silently disappear and octeon-hcd sees whatever default the
+DTS carries (12MHz crystal in octeon_3xxx.dts), leaving the PHY dead or
+the bus erroring on boards with a different reference clock.
 
-Under sustained UDP TX load with multiple data streams, this starvation
-triggers spurious adapter resets due to TX queue timeouts:
+Use IS_ENABLED() so USB=m gets the same fixups as USB=y.
 
-  iperf3 -c <ip> -i0 -t60 --bind-dev end0 -u -b0 -P4
-  end0: NETDEV WATCHDOG: CPU: 1: transmit queue 1 timed out 5228 ms
-  end0: Reset adapter.
-
-Investigation shows that only the highest priority queue is advancing
-while the others stall for more than 5 seconds, causing a netdev watchdog
-reset.
-
-Switch the TX scheduling policy to Weighted-Round-Robin (WRR) so that
-traffic is processed across all queues, eliminating the stalls.
-
-Fixes: 41ffbb1c42d3 ("arm64: dts: renesas: r9a09g047: Add GBETH nodes")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260722085353.136986-4-ovidiu.panait.rb@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 7fd57ab9d9cf ("MIPS: Octeon: Fix compile error when USB is not enabled.")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g047.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/mips/cavium-octeon/octeon-platform.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-index 47d843c790212..603810ed39476 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g047.dtsi
-@@ -973,23 +973,28 @@ queue3 {
+diff --git a/arch/mips/cavium-octeon/octeon-platform.c b/arch/mips/cavium-octeon/octeon-platform.c
+index 47677b5d7ed00..f53c98372e0be 100644
+--- a/arch/mips/cavium-octeon/octeon-platform.c
++++ b/arch/mips/cavium-octeon/octeon-platform.c
+@@ -18,7 +18,7 @@
+ #include <asm/octeon/octeon.h>
+ #include <asm/octeon/cvmx-helper-board.h>
  
- 			mtl_tx_setup0: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
+-#ifdef CONFIG_USB
++#if IS_ENABLED(CONFIG_USB)
+ #include <linux/usb/ehci_def.h>
+ #include <linux/usb/ehci_pdriver.h>
+ #include <linux/usb/ohci_pdriver.h>
+@@ -1080,7 +1080,7 @@ int __init octeon_prune_device_tree(void)
+ 		;
+ 	}
  
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
-@@ -1073,23 +1078,28 @@ queue3 {
- 
- 			mtl_tx_setup1: tx-queues-config {
- 				snps,tx-queues-to-use = <4>;
-+				snps,tx-sched-wrr;
- 
- 				queue0 {
-+					snps,weight = <0x10>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x1>;
- 				};
- 
- 				queue1 {
-+					snps,weight = <0x12>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x2>;
- 				};
- 
- 				queue2 {
-+					snps,weight = <0x14>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x4>;
- 				};
- 
- 				queue3 {
-+					snps,weight = <0x18>;
- 					snps,dcb-algorithm;
- 					snps,priority = <0x8>;
- 				};
+-#ifdef CONFIG_USB
++#if IS_ENABLED(CONFIG_USB)
+ 	/* OHCI/UHCI USB */
+ 	alias_prop = fdt_getprop(initial_boot_params, aliases,
+ 				 "uctl", NULL);
 -- 
 2.53.0
 
