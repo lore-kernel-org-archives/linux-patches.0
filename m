@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76D73AD517;
-	Wed, 23 Sep 2026 14:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E150B486B8C;
+	Wed, 23 Sep 2026 14:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174350; cv=none; b=TQWDTJaDMCjXuhxBHqhwzEzmdCIIQV5dHIYTgVUAyl/5190DHX6+5pS5aO333Bm5kK5fPU1UzuO/3LOyUEH3n+eejaVyjZzT633CtGU7spKk8JgfbXuqEhP8K8KcW4vA4kaOOyop+Mv64CLWA8vpPFjIQQjkynemFCuzr1whras=
+	t=1790174353; cv=none; b=KCwd6xQQ3W367qRvJTpYtJAqj92q3OaKIgAK3ttj0D4cmg4U1DNlNWtnnh0Ol+6DNKGBz4BcuWUVHAyVAr6SCl8d2FzXRSpU4JD4I1S1sF9J+5yFZmTVm54L9PKX2pX/ZUf8hYX1oS7EUR2H7J6TR0+kI3AZ3mnnp/X8uopcen8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174350; c=relaxed/simple;
-	bh=rrgNm+0g9V/O/4vEc2p8JL/dx3f/2NcN9xfBnAWe9N0=;
+	s=arc-20240116; t=1790174353; c=relaxed/simple;
+	bh=z2uahKibYUcEavsGRRwIY6k1GxvLp3o4sncLIdA7xkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m50DRHRG/wOf3Mr2qH+UnsD/blCoGTTBj4/5KJHdDIZFvOSdKHDMGrAN6p0hOMACiEMyW3iRal8XjXNkfGpvwbj22c7btVDz25D53DUMyzHQd0WNltBceSIXUTqtBvsCGAYsNUgJtOyzilvW7B1yzLLPRbROZ7Ab3087jG14+ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbaGPhhz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iTJd1IXKU78JNHDE2UIQeOjBzde/biQsRew0mFUIrgZVr6Q4IBLvSBZqUVMVasiUS1guegoqWQ8Pp+WpHu9/dqyZ8yClDrMflC2Shpk4WK1Jkh8jS+Qp7D+K3HUKen2VW+QYAKk57rK6AAz56NKH2Y8cWi8DzxXw7+VvyPSRg8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJ4NDwUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbaGPhhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A1D1F000FF;
-	Wed, 23 Sep 2026 14:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJ4NDwUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AFF1F000FF;
+	Wed, 23 Sep 2026 14:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174348;
-	bh=QKMZNRsw8FauIWpgr5gH70n6JKKoX4sAOmeADzp9JeU=;
+	s=korg; t=1790174351;
+	bh=ot+3eSrBHu+TcRVWqx2sIh6rNnD8tcDfb8tckENxhco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pbaGPhhzYwDKpMWgpv93+lQ0oQWWSdH1jjZMbxIA4QiDKWGsGVLi4xLV1X8LbN6l1
-	 LqALRFCNHcxMEgSIYymXlarF4DSJc1FWNrAGU/o7tlJ7dYXcm7vgD07JbIAwJqRcf3
-	 uxeDB6QLnh+AAQVG0Gbo0qKPUzuMD9ueJCnTA6po=
+	b=wJ4NDwUrvF7PSHaKfLkKDr08nKS/Kcd3RpI6LIAvj1E3MUQnyjMo0FlR4X1P7S+rV
+	 3/BXpqcaviHwXfnBO3usSuoobdfKwxE9aNgCzSaq8/Pn3sINZrBkE3VplqCfZ5A24e
+	 dVLH/HhTxoxJMsZWS6bZSGN+trivd89om5UAz2Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alex Bereza <alex@bereza.email>,
+	Frank Li <Frank.Li@nxp.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/398] wifi: cfg80211: restore netns_immutable on failures
-Date: Wed, 23 Sep 2026 16:02:22 +0200
-Message-ID: <20260923140645.194718749@linuxfoundation.org>
+Subject: [PATCH 6.18 086/398] dmaengine: xilinx_dma: Fix hardware buffer descriptor chain after cyclic DMA
+Date: Wed, 23 Sep 2026 16:02:40 +0200
+Message-ID: <20260923140645.666846718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,42 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alex Bereza <alex@bereza.email>
 
-[ Upstream commit eeee52cfd1d639774c9812e8890631404a057dd2 ]
+[ Upstream commit 7ed1e3070c9b4bbd67d5519e14711038dd53ab13 ]
 
-Switching a wiphy's netns has to clear netns_immutable before moving
-interfaces, but then if any of the interfaces fails to move, it gets
-netns_immutable cleared forever. Then userspace can move it by itself,
-breaking the assumption that they all move together.
+Using the DMA in cyclic mode modifies the hardware buffer descriptor
+chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
+the cyclic transfer points back to the first descriptor, but it never
+restores the original descriptor ring. This breaks using non-cyclic mode
+after cyclic mode with an error like:
 
-Fix the order here and always reset netns_immutable after attempting
-the move.
+  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
 
-Assisted-by: LLM
-Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
-Link: https://patch.msgid.link/20260904170220.7ea88157dcbc.Id868585a790be8b9ece9b39b0db464a5963faaf3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The only way to get out of this error state is to rebuild the hardware
+buffer descriptor ring by releasing and re-acquiring the channel.
+
+Fix using non-cyclic mode after cyclic mode by always restoring the
+original buffer descriptor ring in the same manner as it is set up by
+xilinx_dma_alloc_chan_resources().
+
+Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
+Signed-off-by: Alex Bereza <alex@bereza.email>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
+Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
+Link: https://patch.msgid.link/20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 55abf5a203338..3c11f35f957db 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -164,9 +164,9 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
- 			continue;
- 		wdev->netdev->netns_immutable = false;
- 		err = dev_change_net_namespace(wdev->netdev, net, "wlan%d");
-+		wdev->netdev->netns_immutable = true;
- 		if (err)
- 			break;
--		wdev->netdev->netns_immutable = true;
- 	}
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 4ccf519d39610..8b010e0e0c5c4 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -754,15 +754,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
+ 	return segment;
+ }
  
- 	if (err) {
+-static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
++static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
++				     struct xilinx_axidma_tx_segment *segment)
+ {
+-	u32 next_desc = hw->next_desc;
+-	u32 next_desc_msb = hw->next_desc_msb;
++	dma_addr_t next;
++	u32 i;
+ 
+-	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
++	/*
++	 * Restore the buffer descriptor's next descriptor pointer to the value
++	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
++	 * in cyclic mode leaves the next descriptor pointer altered and
++	 * prevents subsequent non-cyclic transfers.
++	 */
++	i = segment - chan->seg_v;
++	next = chan->seg_p +
++	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
+ 
+-	hw->next_desc = next_desc;
+-	hw->next_desc_msb = next_desc_msb;
++	memset(&segment->hw, 0, sizeof(segment->hw));
++	segment->hw.next_desc = lower_32_bits(next);
++	segment->hw.next_desc_msb = upper_32_bits(next);
+ }
+ 
+ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+@@ -784,7 +794,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+ static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
+ 				struct xilinx_axidma_tx_segment *segment)
+ {
+-	xilinx_dma_clean_hw_desc(&segment->hw);
++	xilinx_dma_clean_hw_desc(chan, segment);
+ 
+ 	list_add_tail(&segment->node, &chan->free_seg_list);
+ }
 -- 
 2.53.0
 
