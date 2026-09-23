@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA0A440A16;
-	Wed, 23 Sep 2026 14:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BCE448D11;
+	Wed, 23 Sep 2026 14:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174571; cv=none; b=HdjWoOKmYMZBg22V2v4r+YekkIdM4Z+osk5c8fsWlk1as89Ip3V4VW0YYFPUdWL0hbEvn0Ne3zP0BChdkrH8O+PHLwEekKP2svWF7quKTmcU1rutewJkv4Dr27JRIpRomKQvtKIy8n21yxuNBNI0rL2xuX5a/G7oBUtRbVJtqVI=
+	t=1790174574; cv=none; b=ZD8jzb23mxXaHgUHIYQAcwgn4cof9/OqzvCVtYdDx1ud4j0IF2yNRDgluhkPw5gZex7f8ulBlU5NDYcPCmHNqLq8VrqGroJYAqxaCaJ62lvHoj30OoPMlkwZxJ6OuLHlmIqEgfBWCVb364GHfCznx0WoGxpSi5GAPbQ9FU3DbGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174571; c=relaxed/simple;
-	bh=6/uDEXqzsqXa7L7Zx8JmzNsS21rJJuALxOBhBmP5v+M=;
+	s=arc-20240116; t=1790174574; c=relaxed/simple;
+	bh=Nye3BAsnoeyzhnvPJGZWVinoyvp3l6oZJWexNeroqCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DkQ7IGmWiSsWHmI8Iu79lcQHBiNhHVXpJE24VS/xcnEbtJgf4OzHrdQfexLvbiemAMaWz7of7jySNGYEwg0vYH1je0j/SXzmEVu6GhXewrX8pAc8tSFeYeeu//5jeUNNvh0A6KzosjuZhgecQ3b8WeDYZ3/vLEHyM21zyBTfQf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0NOUoOi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TFVT7cTxpx5xlSMAo1KmUVyW50Z1RAMB0vX26nM1zo2aZn8B/Ey1bqoCFofDkL3bPi9T+5JiIs1SbqNlhP4r90hJVRdnkWGY9pSTks/zNbnvMDpZaW+eTPUDHSqXwIAUu3oyU9X21yxH6ybz5rxEW3TAQ+8jroRyQqifqZKkJHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9F09nM6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0NOUoOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E691F000FF;
-	Wed, 23 Sep 2026 14:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9F09nM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93741F00893;
+	Wed, 23 Sep 2026 14:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174570;
-	bh=OgoZi8gljy5+QytS8jPnDAQ/i+FMcjTcq661/UXOWjc=;
+	s=korg; t=1790174573;
+	bh=FSKRJfpKJ23nPCk4mE2tyVpV/Xk17K4r7begdgevmnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U0NOUoOij3gghe/4F3pNcHby40lUcUl9qUj9c3ADuxdaXSeR7CrFgO9MtHnjef6Io
-	 UIlX+4puwSNq/uVpSXDLqS4Gl+ezFvoU8IUjyQ2TMCCXCKhAz7NadIQncT/uihiJ6N
-	 6FHBY9EVK+FZSZag8Mm6LVwWIwORzemq5tR+J2eY=
+	b=C9F09nM6qFQkaXqRfTFxevpUeNQ/2ApXBqhDhDOqgvS1MziYklbqf62P4C/C6RtWQ
+	 bVinxkyHT4G/dVIY7aGIBnbpWYJKNERnO6JHCl1pTAdA0RciVW4gin7nQQkqQm3sJm
+	 hbCci3rh8xwRwhvMrYK3QX6kWP4msr4yTXomnGYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 157/398] drop_monitor: use timer_shutdown_sync() to prevent timer rearming during teardown
-Date: Wed, 23 Sep 2026 16:03:51 +0200
-Message-ID: <20260923140647.505811367@linuxfoundation.org>
+Subject: [PATCH 6.18 158/398] drop_monitor: fix out-of-bounds write in reset_per_cpu_data()
+Date: Wed, 23 Sep 2026 16:03:52 +0200
+Message-ID: <20260923140647.530438916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,84 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c391a40f71886b28c082b47270f0e856fa3e1150 ]
+[ Upstream commit 439f392084f8f7f59ab9d47a9579185accefe1d8 ]
 
-In drop_monitor teardown paths (net_dm_trace_off_set(),
-net_dm_hw_monitor_stop(), and error unwind paths in net_dm_trace_on_set()
-and net_dm_hw_monitor_start()), per-CPU timers are stopped using
-timer_delete_sync() followed by cancel_work_sync().
+In reset_per_cpu_data(), al is computed as:
 
-However, there is a circular dependency between send_timer and
-dm_alert_work:
-1) sched_send_work() (timer callback) schedules dm_alert_work.
-2) send_dm_alert() / net_dm_hw_summary_work() calls reset_per_cpu_data()
-   or net_dm_hw_reset_per_cpu_data().
-3) If memory allocation fails under memory pressure in the reset
-   function, it re-arms the timer via mod_timer(&data->send_timer, ...).
+    al = sizeof(struct net_dm_alert_msg);
+    al += dm_hit_limit * sizeof(struct net_dm_drop_point);
+    al += sizeof(struct nlattr);
 
-If dm_alert_work is running concurrently while timer_delete_sync()
-executes on another CPU, an allocation failure in the worker will
-re-arm the timer after timer_delete_sync() has already returned.
-Once cancel_work_sync() completes and module_put() is called, the timer
-remains active in the timer wheel. If the module is then unloaded, the
-timer will fire and execute sched_send_work() in freed memory,
-triggering a kernel panic / use-after-free.
+    skb = genlmsg_new(al, GFP_KERNEL);
+    ...
+    nla = nla_reserve(skb, NLA_UNSPEC, sizeof(struct net_dm_alert_msg));
+    ...
+    msg = nla_data(nla);
+    memset(msg, 0, al);
 
-Switch from timer_delete_sync() to timer_shutdown_sync(). This guarantees
-that any in-flight timer handler has finished and prevents subsequent
-re-arming attempts from running workers from succeeding. When monitoring
-is restarted later, timer_setup() is invoked, which cleanly
-re-initializes the timer.
+Because al includes sizeof(struct nlattr) (the 4-byte attribute header),
+genlmsg_new() allocates al bytes of tailroom starting at nla.
+However, msg points to nla_data(nla), which is located
+sizeof(struct nlattr) bytes past nla. Calling memset(msg, 0, al)
+therefore writes al bytes starting from msg, exceeding the allocated
+buffer by sizeof(struct nlattr) (4 bytes) and corrupting
+skb_shared_info.
 
-Fixes: 9398e9c0b1d4 ("drop_monitor: Perform cleanup upon probe registration failure")
+Fix this by letting al represent only the payload length, allocating
+the skb with genlmsg_new(nla_total_size(al), GFP_KERNEL), and zeroing
+al bytes from msg.
+
+Fixes: 683703a26e46 ("drop_monitor: Update netlink protocol to include netlink attribute header in alert message")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260910204612.3762015-3-edumazet@google.com
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260910204612.3762015-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/drop_monitor.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 172fd2dcbfe93..b56da4d8c879e 100644
+index b56da4d8c879e..996ae451af628 100644
 --- a/net/core/drop_monitor.c
 +++ b/net/core/drop_monitor.c
-@@ -1084,7 +1084,7 @@ static int net_dm_hw_monitor_start(struct netlink_ext_ack *extack)
- 		struct per_cpu_dm_data *hw_data = &per_cpu(dm_hw_cpu_data, cpu);
- 		struct sk_buff *skb;
+@@ -141,9 +141,8 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
  
--		timer_delete_sync(&hw_data->send_timer);
-+		timer_shutdown_sync(&hw_data->send_timer);
- 		cancel_work_sync(&hw_data->dm_alert_work);
- 		while ((skb = __skb_dequeue(&hw_data->drop_queue))) {
- 			struct devlink_trap_metadata *hw_metadata;
-@@ -1118,7 +1118,7 @@ static void net_dm_hw_monitor_stop(struct netlink_ext_ack *extack)
- 		struct per_cpu_dm_data *hw_data = &per_cpu(dm_hw_cpu_data, cpu);
- 		struct sk_buff *skb;
+ 	al = sizeof(struct net_dm_alert_msg);
+ 	al += dm_hit_limit * sizeof(struct net_dm_drop_point);
+-	al += sizeof(struct nlattr);
  
--		timer_delete_sync(&hw_data->send_timer);
-+		timer_shutdown_sync(&hw_data->send_timer);
- 		cancel_work_sync(&hw_data->dm_alert_work);
- 		while ((skb = __skb_dequeue(&hw_data->drop_queue))) {
- 			struct devlink_trap_metadata *hw_metadata;
-@@ -1180,7 +1180,7 @@ static int net_dm_trace_on_set(struct netlink_ext_ack *extack)
- 		struct per_cpu_dm_data *data = &per_cpu(dm_cpu_data, cpu);
- 		struct sk_buff *skb;
+-	skb = genlmsg_new(al, GFP_KERNEL);
++	skb = genlmsg_new(nla_total_size(al), GFP_KERNEL);
  
--		timer_delete_sync(&data->send_timer);
-+		timer_shutdown_sync(&data->send_timer);
- 		cancel_work_sync(&data->dm_alert_work);
- 		while ((skb = __skb_dequeue(&data->drop_queue)))
- 			consume_skb(skb);
-@@ -1208,7 +1208,7 @@ static void net_dm_trace_off_set(void)
- 		struct per_cpu_dm_data *data = &per_cpu(dm_cpu_data, cpu);
- 		struct sk_buff *skb;
- 
--		timer_delete_sync(&data->send_timer);
-+		timer_shutdown_sync(&data->send_timer);
- 		cancel_work_sync(&data->dm_alert_work);
- 		while ((skb = __skb_dequeue(&data->drop_queue)))
- 			consume_skb(skb);
+ 	if (!skb)
+ 		goto err;
 -- 
 2.53.0
 
