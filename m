@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34A73A255A;
-	Wed, 23 Sep 2026 14:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968E3B5839;
+	Wed, 23 Sep 2026 14:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174048; cv=none; b=RnRkQ0y0xLxNfger57SLrRtXvlan/L+yAftUnRnx24aslVoH1KwRw/gpoFYxzh+K6c+14Y11SOmGUstG5re74MXpj45MXihpPz3teOiYHHrHO6wK3+V8nNkZqhIw63XPgrntF6andnEJzMsFf86pUXSYy6azZHH0uDAjbLi1V1k=
+	t=1790174051; cv=none; b=EpqJX19ksOufD/RxPo6ud5G9FVu05WbMvY8IdSHgoyPZrBU94HXs4hjcXGi7+cXXOyCPawvfEwf5I61vw93x4sCQGHK7cno6Nh+YGGp04gVHHElIdc2xPSORBdcgHrmUAQJmpoFAun0iThB1TZCNgZv9Xui6HuZ2WW3TWdG/Akw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174048; c=relaxed/simple;
-	bh=zGKZVDdlmq+1qRR+fQ3z0dOJ0X3XRu81LFzJGJW6Frs=;
+	s=arc-20240116; t=1790174051; c=relaxed/simple;
+	bh=DUmID3yPgnlsADKJibAAnJhZvfRARiPOaihrsYIXSOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ln8lL2wXFG7L6Cnk4JfETBgH2rbuIQ4T/fTmenXowSyH2h6BbKkzpUpMu4Aa51z7GZbL/mxWxae8i7hYJyTS7HSf6SEfQfq2jDTT1Czq5Ldi9KQxUZ3Ts2EJS+A9diY2cIj8XKRHNX6UAssyiAoh+piX2ethlf2IA56LrrVdiA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcmLmHwI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pg4hPRqcktYR1gPA7kwtB49JUr1TFO9PWGJdeTMS2mLWNR4jMnmoE+C0m98K1eGshZoDkreZoiRmDMLysd8SFU5q5HXZhbUQYUvxNzFS6g4FmBFYiNBEI54HEfqryMB55KqQ2VLixVIMcZaeDk9tOSDcRn9WpQ2vzb7rfCrnxRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEDkJR8u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcmLmHwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C8A1F000FF;
-	Wed, 23 Sep 2026 14:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEDkJR8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED0D1F000FF;
+	Wed, 23 Sep 2026 14:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174046;
-	bh=+ahyLUPyEkxC60sTZWDMsC+oUsLYsgd5qu/0m5WC9ic=;
+	s=korg; t=1790174049;
+	bh=3ib5XU6Lt4tLGxGwrXCpcDMXNac5c8Yk1Za5h2AA958=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcmLmHwIHbbJj5KqcUXVsTBBooKGbK0HrFjRoG27qCDTGmr/eUIMtklJwyvewFzr/
-	 CXo5EVVzM2K8Eiovy62HiiM13ITu0epxLfhebpC3zwS/zcfOX66is63HBWKBM6KwyO
-	 ygP4tKsmOcEr3RjDki15aZOQUmY2yOYU/pkb7pcU=
+	b=nEDkJR8u3G1Os+jliPdVFrbJh7x1IPnNsXjGpi+bn8kp4sfPz/KcC68S0tpuCFbEN
+	 Q7u3Xj1JBGWKyFRNhvNgUJsmljjNFFz/+6KHQjT70MabPVAMujqMnpPMnER6AihHUs
+	 3YqkIjF4Z5/nb+8IcEzFszYqfZathWh/ZZBa++T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 419/438] smb: client: fix unaligned access in WSL reparse point parser
-Date: Wed, 23 Sep 2026 16:07:20 +0200
-Message-ID: <20260923140655.771849660@linuxfoundation.org>
+Subject: [PATCH 7.2 420/438] smb: client: fix fattr leaking on wsl_to_fattr() failure
+Date: Wed, 23 Sep 2026 16:07:21 +0200
+Message-ID: <20260923140655.798534943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -57,21 +57,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit e1aeaf79dea51e6065da56924bc07e22d59012ac upstream.
+commit e1253a82bb4c0fed6706a5839fc8b6e01be1abe2 upstream.
 
-When wsl_to_fattr() parses WSL extended attributes, it computes a
-payload pointer from ea->ea_data + ea_name_length + 1.  Since the
-smb2_file_full_ea_info struct is __packed and all WSL xattr names are
-6 bytes long, the value pointer always lands at an odd byte offset,
-never satisfying __le32 or __le64 alignment requirements.
+wsl_to_fattr() mutates fattr fields as it parses each WSL EA.  If
+validation later fails, the function returns false with partially
+mutated fattr fields that callers do not reset.
 
-The code then casts this pointer to __le32 * or __le64 * and
-dereferences it directly, which may cause alignment faults on some
-architectures.
-
-Replace all such casts with get_unaligned_le32() and
-get_unaligned_le64() in reparse_mkdev(), wsl_make_kuid(),
-wsl_make_kgid() and wsl_to_fattr().
+Fix this by parsing into local variables and only committing them to
+fattr on success.
 
 Closes: https://sashiko.dev/#/patchset/20260906200517.725015-1-pc%40manguebit.org
 Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
@@ -86,60 +79,86 @@ Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |    4 ++--
- fs/smb/client/reparse.h |    7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ fs/smb/client/reparse.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -1201,9 +1201,9 @@ static bool wsl_to_fattr(struct cifs_ope
- 				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
+@@ -1149,29 +1149,30 @@ static bool wsl_to_fattr(struct cifs_ope
+ 			 u32 tag, struct cifs_fattr *fattr)
+ {
+ 	unsigned int sbflags = cifs_sb_flags(cifs_sb);
++	kuid_t uid = cifs_sb->ctx->linux_uid;
++	kgid_t gid = cifs_sb->ctx->linux_gid;
+ 	struct smb2_file_full_ea_info *ea;
+ 	bool have_xattr_dev = false;
++	dev_t rdev = 0;
++	umode_t mode;
+ 	u32 next = 0;
+ 
+-	fattr->cf_uid = cifs_sb->ctx->linux_uid;
+-	fattr->cf_gid = cifs_sb->ctx->linux_gid;
+-
+-	fattr->cf_mode &= ~S_IFMT;
++	mode = fattr->cf_mode & ~S_IFMT;
+ 	switch (tag) {
+ 	case IO_REPARSE_TAG_LX_SYMLINK:
+-		fattr->cf_mode |= S_IFLNK;
++		mode |= S_IFLNK;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_FIFO:
+-		fattr->cf_mode |= S_IFIFO;
++		mode |= S_IFIFO;
+ 		break;
+ 	case IO_REPARSE_TAG_AF_UNIX:
+-		fattr->cf_mode |= S_IFSOCK;
++		mode |= S_IFSOCK;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_CHR:
+-		fattr->cf_mode |= S_IFCHR;
++		mode |= S_IFCHR;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_BLK:
+-		fattr->cf_mode |= S_IFBLK;
++		mode |= S_IFBLK;
+ 		break;
+ 	}
+ 
+@@ -1195,26 +1196,29 @@ static bool wsl_to_fattr(struct cifs_ope
+ 
+ 		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
+ 			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
+-				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
++				uid = wsl_make_kuid(cifs_sb, v);
+ 		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
+ 			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
+-				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
++				gid = wsl_make_kgid(cifs_sb, v);
  		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
  			/* File type in reparse point tag and in xattr mode must match. */
--			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
-+			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
+-			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
++			if (S_DT(mode) != S_DT(get_unaligned_le32(v)))
  				return false;
--			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
-+			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
+-			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
++			mode = get_unaligned_le32(v);
  		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
- 			fattr->cf_rdev = reparse_mkdev(v);
+-			fattr->cf_rdev = reparse_mkdev(v);
++			rdev = reparse_mkdev(v);
  			have_xattr_dev = true;
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -9,6 +9,7 @@
- #include <linux/fs.h>
- #include <linux/stat.h>
- #include <linux/uidgid.h>
-+#include <linux/unaligned.h>
- #include "fs_context.h"
- #include "cifsglob.h"
- #include "../common/smbfsctl.h"
-@@ -23,7 +24,7 @@
+ 		}
+ 	} while (next);
+ out:
+-
+ 	/* Major and minor numbers for char and block devices are mandatory. */
+ 	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
+ 		return false;
  
- static inline dev_t reparse_mkdev(void *ptr)
- {
--	u64 v = le64_to_cpu(*(__le64 *)ptr);
-+	u64 v = get_unaligned_le64(ptr);
- 
- 	return MKDEV(v & 0xffffffff, v >> 32);
++	fattr->cf_uid = uid;
++	fattr->cf_gid = gid;
++	fattr->cf_mode = mode;
++	fattr->cf_rdev = rdev;
+ 	return true;
  }
-@@ -31,7 +32,7 @@ static inline dev_t reparse_mkdev(void *
- static inline kuid_t wsl_make_kuid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 uid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 uid = get_unaligned_le32(ptr);
  
- 	if (cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_UID)
- 		return cifs_sb->ctx->linux_uid;
-@@ -41,7 +42,7 @@ static inline kuid_t wsl_make_kuid(struc
- static inline kgid_t wsl_make_kgid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 gid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 gid = get_unaligned_le32(ptr);
- 
- 	if (cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_GID)
- 		return cifs_sb->ctx->linux_gid;
 
 
