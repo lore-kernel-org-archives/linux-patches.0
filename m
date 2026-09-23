@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D964DEC16;
-	Wed, 23 Sep 2026 14:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6983334C3B;
+	Wed, 23 Sep 2026 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173318; cv=none; b=agjClZuqg/fmUNAuO3wX7wwt51DJPONqhtY6MloJLSswD8b0x5oUG+bk+qh3XgflDOJaTVY86qI5/c2yxmF1VTh6HXaOj89ZYu8XzCHenoXafrU5iRt35cBsaDys1n4YrniRquegPz2cS1OIbtEJtj/JyKxZVEp26+QZieOcz7Y=
+	t=1790173320; cv=none; b=TNJx/SIOh9AS2mr2wy9mSw5dp6uEmPO3FEaRNLaDhQ6wHixsITa5G1ADnHKy+pqoS9Q08wCuBpsgofHNydlVo8vsN9rXloDYVn1um8aQiW6Q+93pJRhGxbK7DuFtCBOms/pDGcyz8s9MAghlYz+jPEiq50u07I4aPd38+ut/cIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173318; c=relaxed/simple;
-	bh=ILgSfDAet39OaOWkuADmrney2qbNd8oQfS79RxOM6cg=;
+	s=arc-20240116; t=1790173320; c=relaxed/simple;
+	bh=7qE6rp69nR2Icatmff2YmYqAVMqthcHSCymDQDxjKEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRMVKXyuE9uKnhUDqIgEiRdiUpMEe0+8JfJwR59aaeu9JJDwPVS9UW1dY/uTysJC3lYp6B0vVnU5SRgt2L6e6QntQe9cxSxDYewhZmZJZ2RnJpkxaJIlN1CzaWBDgKaDyqgGQ5DbykavnK5JBCSbUUVStgbRhm8xvc626kaisIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu7ccVIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nu+9BSEycqJwVM4XrTFQoG/PR6GLhsUIWMowPF2A7qe66pkRCTYOJcmQZ1FTWrWt4RWu+1C0rdC3tMBA+ubKyTxW8PNyh14f8mV6Ni2rEpULwF8qTeTgdrn/kg1MBr/hTrEvqU50J/Lffel1z+sslC70ZoAVtwhh2HYQA8Q5H1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09tJYVrp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu7ccVIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1351F00893;
-	Wed, 23 Sep 2026 14:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09tJYVrp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99E81F000FF;
+	Wed, 23 Sep 2026 14:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173316;
-	bh=lC2Z/M1z70O8exXr39yY+dJ+mLnaoIFnCiAcMmAGhIo=;
+	s=korg; t=1790173319;
+	bh=pBzxbri98l5hfILfqDGmezhdA5SKZ4DicipzYSIPSsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cu7ccVIWuiDnoa0w6aRNhgGxjV7Q07RzMrKoL/Mu0fgDa+U/tslnglAJNdFJweAc/
-	 rsUhvyMynDGnBV71nDzUd0qkui+ZcpcaCtcOQY/n5BBXt91VLV++nhPlj+yCw6KO/C
-	 SX+nqZ4gQHaBk5vmrntgBTg8DMMtTEZiHUq+7LxI=
+	b=09tJYVrpUCNwZmtu6a4sWihGuTuamOVuIaEcVCHEuhS/LyRxhrZblXg77N0IPhQNp
+	 SQucriAKYg3XDCLeCayH/EgyuQ8xrtTv1K7msPdOKMorGMvNTVay/Oq1sWuOYn1MX0
+	 10u9Sll5nznp78uXzE10X7sCDSqTGA7DBWIs0aSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Simon Horman <horms@kernel.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 208/438] net: pass net_device_path_ctx to dev_fill_forward_path()
-Date: Wed, 23 Sep 2026 16:03:49 +0200
-Message-ID: <20260923140650.153620101@linuxfoundation.org>
+Subject: [PATCH 7.2 209/438] net: remove WARN_ON_ONCE() from the dev_fill_forward_path() loop check
+Date: Wed, 23 Sep 2026 16:03:50 +0200
+Message-ID: <20260923140650.177967426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,182 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Farhad Alemi <farhad.alemi@berkeley.edu>
 
-[ Upstream commit 95133a416809c7e822da4023b7f4193ef2620796 ]
+[ Upstream commit 150dba2c69e93302af24a0c868eebe4871e2e107 ]
 
-Refactor dev_fill_forward_path() to take a struct net_device_path_ctx
-pointer instead of a (dev, daddr) pair, so the caller can build and
-populate the context up front and keep it after the forward path walk.
+ipip_fill_forward_path() and ip6_tnl_fill_forward_path() look up the
+route to the tunnel's remote endpoint and set ctx->dev to its device,
+which is the tunnel itself when that route resolves back to the tunnel.
+dev_fill_forward_path() then makes no progress and trips
+WARN_ON_ONCE(last_dev == ctx->dev) as soon as a flowtable tries to
+offload a flow through the tunnel. That routing loop is a configuration
+any CAP_NET_ADMIN user can set up, and ip_tunnel_xmit() and
+ip6_tnl_xmit() already treat it as a tx error, so remove the warning and
+just fail the walk, as commit 008e7a7c293b ("net: remove WARN_ON_ONCE
+when accessing forward path array") did for the path stack overflow.
 
-This allows additional fields (e.g. vlan and ether_type) to be carried
-in the context and shared with ndo_fill_forward_path implementations,
-instead of being reconstructed on the stack inside the core helper.
-
-Update the mtk_ppe_offload, airoha_ppe and nf_flow_table_path callers to
-allocate and fill the context before invoking dev_fill_forward_path().
-The network topology resolution behaviour is unchanged.
-
-This is a preliminary patch to enable HW flowtable offload for IPv4
-over IPv6 tunnels.
-
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 150dba2c69e9 ("net: remove WARN_ON_ONCE() from the dev_fill_forward_path() loop check")
+Fixes: ab427db17885 ("netfilter: flowtable: Add IPIP rx sw acceleration")
+Fixes: d98103575dcd ("netfilter: flowtable: Add IP6IP6 rx sw acceleration")
+Closes: https://lore.kernel.org/all/CA+0ovCgaRvbd0Udj70b2xxG8Cx3CaCpNhnf1V4RWQuDveZYZhA@mail.gmail.com/
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/CA+0ovCgKDOk+Bg6Gh5Lwx94u_jJjQ30-vY1JcY2BYfhnWJJbPA@mail.gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_ppe.c       |  7 ++++++-
- .../net/ethernet/mediatek/mtk_ppe_offload.c    |  7 ++++++-
- include/linux/netdevice.h                      |  2 +-
- net/core/dev.c                                 | 18 +++++++-----------
- net/netfilter/nf_flow_table_path.c             |  7 ++++++-
- 5 files changed, 26 insertions(+), 15 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index c8fd95e800937..bc2b4deafd83a 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -280,14 +280,19 @@ static int airoha_ppe_get_wdma_info(struct net_device *dev, const u8 *addr,
- 				    struct airoha_wdma_info *info)
- {
- 	struct net_device_path_stack stack;
-+	struct net_device_path_ctx ctx = {
-+		.dev = dev,
-+	};
- 	struct net_device_path *path;
- 	int err;
- 
- 	if (!dev)
- 		return -ENODEV;
- 
-+	ether_addr_copy(ctx.daddr, addr);
-+
- 	rcu_read_lock();
--	err = dev_fill_forward_path(dev, addr, &stack);
-+	err = dev_fill_forward_path(&ctx, &stack);
- 	rcu_read_unlock();
- 	if (err)
- 		return err;
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-index 771d9118f94ad..99b28aaa7cc47 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -92,6 +92,9 @@ static int
- mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_info *info)
- {
- 	struct net_device_path_stack stack;
-+	struct net_device_path_ctx ctx = {
-+		.dev = dev,
-+	};
- 	struct net_device_path *path;
- 	int err;
- 
-@@ -101,8 +104,10 @@ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_i
- 	if (!IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED))
- 		return -1;
- 
-+	ether_addr_copy(ctx.daddr, addr);
-+
- 	rcu_read_lock();
--	err = dev_fill_forward_path(dev, addr, &stack);
-+	err = dev_fill_forward_path(&ctx, &stack);
- 	rcu_read_unlock();
- 	if (err)
- 		return err;
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index d325027b03705..6a86a211fff57 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3423,7 +3423,7 @@ void dev_remove_offload(struct packet_offload *po);
- 
- int dev_get_iflink(const struct net_device *dev);
- int dev_fill_metadata_dst(struct net_device *dev, struct sk_buff *skb);
--int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
-+int dev_fill_forward_path(struct net_device_path_ctx *ctx,
- 			  struct net_device_path_stack *stack);
- void dev_fill_forward_path_release(struct net_device_path_stack *stack);
- struct net_device *dev_get_by_name(struct net *net, const char *name);
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 2b493f4c2f0cb..679e75d3699ae 100644
+index 679e75d3699ae..ff25e4c71588e 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -769,35 +769,31 @@ void dev_fill_forward_path_release(struct net_device_path_stack *stack)
- }
- EXPORT_SYMBOL_GPL(dev_fill_forward_path_release);
- 
--int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
-+int dev_fill_forward_path(struct net_device_path_ctx *ctx,
- 			  struct net_device_path_stack *stack)
- {
- 	const struct net_device *last_dev;
--	struct net_device_path_ctx ctx = {
--		.dev	= dev,
--	};
- 	struct net_device_path *path;
- 	int ret = 0;
- 
--	memcpy(ctx.daddr, daddr, sizeof(ctx.daddr));
- 	stack->num_paths = 0;
--	while (ctx.dev && ctx.dev->netdev_ops->ndo_fill_forward_path) {
--		last_dev = ctx.dev;
-+	while (ctx->dev && ctx->dev->netdev_ops->ndo_fill_forward_path) {
-+		last_dev = ctx->dev;
- 		path = dev_fwd_path(stack);
- 		if (!path)
- 			goto err_out;
- 
- 		memset(path, 0, sizeof(struct net_device_path));
--		ret = ctx.dev->netdev_ops->ndo_fill_forward_path(&ctx, path);
-+		ret = ctx->dev->netdev_ops->ndo_fill_forward_path(ctx, path);
- 		if (ret < 0)
+@@ -789,7 +789,7 @@ int dev_fill_forward_path(struct net_device_path_ctx *ctx,
  			goto err_out;
  
  		stack->num_paths++;
--		if (WARN_ON_ONCE(last_dev == ctx.dev))
-+		if (WARN_ON_ONCE(last_dev == ctx->dev))
+-		if (WARN_ON_ONCE(last_dev == ctx->dev))
++		if (last_dev == ctx->dev)
  			goto err_out;
  	}
  
--	if (!ctx.dev)
-+	if (!ctx->dev)
- 		return ret;
- 
- 	path = dev_fwd_path(stack);
-@@ -805,7 +801,7 @@ int dev_fill_forward_path(const struct net_device *dev, const u8 *daddr,
- 		goto err_out;
- 
- 	path->type = DEV_PATH_ETHERNET;
--	path->dev = ctx.dev;
-+	path->dev = ctx->dev;
- 	stack->num_paths++;
- 
- 	return 0;
-diff --git a/net/netfilter/nf_flow_table_path.c b/net/netfilter/nf_flow_table_path.c
-index 98c03b487f521..b9df7453f7620 100644
---- a/net/netfilter/nf_flow_table_path.c
-+++ b/net/netfilter/nf_flow_table_path.c
-@@ -50,6 +50,9 @@ static int nft_dev_fill_forward_path(const struct nf_flow_route *route,
- {
- 	const void *daddr = &ct->tuplehash[!dir].tuple.src.u3;
- 	struct net_device *dev = dst_cache->dev;
-+	struct net_device_path_ctx ctx = {
-+		.dev = dev,
-+	};
- 	struct neighbour *n;
- 	u8 nud_state;
- 
-@@ -72,7 +75,9 @@ static int nft_dev_fill_forward_path(const struct nf_flow_route *route,
- 		return -1;
- 
- out:
--	return dev_fill_forward_path(dev, ha, stack);
-+	ether_addr_copy(ctx.daddr, ha);
-+
-+	return dev_fill_forward_path(&ctx, stack);
- }
- 
- struct nft_forward_info {
 -- 
 2.53.0
 
