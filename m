@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2F42C11E4;
-	Wed, 23 Sep 2026 14:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C193161A2;
+	Wed, 23 Sep 2026 14:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173927; cv=none; b=GMd4ue8EKvg4YRm3JweHEIV0LH3Cd1vUbiAyvVCPOlrR1PCue+ZWOJknpg6koPHg40Den2esrjhNQGQ7dUP0fIlKA5Ep/XQmXzvqS8iXXBVhdMqGPNpWTvHgEIzT3QfOphkwbDkV2csuGr/jd7JzktN2qv8mnZ3HTU9LPxznHVk=
+	t=1790173930; cv=none; b=iw5Mfn1bsGxLR73d3n5WBzCybINzQ2UjNKfYXaix7YWHfhhCAxkzVewpJ3F0pJp6oF/B8DHX/DWna6zYv8GpCtgA0tPgXnTiMYicph7aFyM3yN6ejRk7lEvDnuuE0VP/mLHEZhBtAoBTBn82cnBOIgbI5OZGNPVld9HZgjmPHnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173927; c=relaxed/simple;
-	bh=gE7clvhbZP3OCzFJPELwDWVEk8/mr41wMpS8+XbB8Rg=;
+	s=arc-20240116; t=1790173930; c=relaxed/simple;
+	bh=LrPZwwxhBkPXn65rm6LlNN7rWqJi6uDqNdgYLIME4ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzl4ZURRK3Dz7lhRMRAvixDulk7v+BUoShBlZrpHPq9xLcMjRWdqSeLfM8ICWAZNMoX+LW+WS3+ByOXDSeYxxm7O+Ms+J4lZCcwF1UCvh4CWjoE402pVThSgIsfOp7/BDSBengRFyB5cpiSePuiZLCXRu2XbLs6Uqu660L05e4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWSSaR/L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o9g92vt81SOgHfLZHg6GYlqKlYKN5DKZ1cSXzTlQ7V5g0+c44m4gRz23Klv+lScVHiaeEVBQszAbJax1T+fcxrpZfKulC2SpuADfzgUR2rjxqboZkw4ziB0wXwnf2Q9C/iLXlWb+34OrvrNAUidbRNH0XyexxS8KatEMT1rbEgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j94eoIIo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWSSaR/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7C01F00898;
-	Wed, 23 Sep 2026 14:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j94eoIIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AC11F000FF;
+	Wed, 23 Sep 2026 14:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173925;
-	bh=Y+JY0ZOjnHertGHSVNr8YUOCEgeHrFNvzMFMcRr5wIY=;
+	s=korg; t=1790173929;
+	bh=Yi5uHDM727vS3vrRBl5dhDzSZiLFYr0KLYmoZrfWFQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WWSSaR/LPoe0BJ8ESduLCHR5vQj3FHu6oQNirig1+Xx8CA+UjGupOSKFvYYR+znKi
-	 pItEJcJw12fW4EGlDe8KcelPodfxWn5Q+O/apPuH+wGVX5HX589HgPjuOmhtSof1j+
-	 q45uMd/EU8zwTY07BAXqC3GCcPHGLi9ySlp1YiFo=
+	b=j94eoIIoKRmm23qYctSh1d2+JErBqJuFe8LDuv/swy7daftTQyegQc49+iZIa9s6y
+	 whLy502iY5pKBKWg6GXQbRlX+CXSH7mLT35UGd8gLP2t374DAbygf2XDZnKd35A0M/
+	 8bA07X3OKJydtCY4+GSG3Uwv4zaUSmGLezVjku/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 7.2 387/438] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
-Date: Wed, 23 Sep 2026 16:06:48 +0200
-Message-ID: <20260923140654.908312277@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 388/438] wifi: wlcore: release runtime PM ref on regdomain config failure
+Date: Wed, 23 Sep 2026 16:06:49 +0200
+Message-ID: <20260923140654.934171141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,50 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit d9be5e75530772fc31637070d51e5717d6aeaa2a upstream.
+commit 8a1f3cf89ddcc700e25afe42cfad333059adcc94 upstream.
 
-wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
-which only dequeues the timer and does not wait for a callback that is
-already executing; the preceding free_irq() calls synchronize the
-interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
-therefore be running past the teardown and use the wcn freed along
-with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
-reads wcn->tx_ack_skb and passes wcn->hw to
-ieee80211_tx_status_irqsafe().
+wlcore_regdomain_config() gets a runtime PM reference before sending
+the regulatory-domain command. When
+wlcore_cmd_regdomain_config_locked() fails, the function queues recovery
+and returns without dropping that reference.
 
-Fix this by using timer_shutdown_sync(), which waits for a running
-callback and also prevents the timer from being rearmed again. The
-timer is set up again by wcn36xx_dxe_init() on the next start, so the
-start/stop cycle is unaffected.
+Release the reference after handling the command result so both success
+and failure paths balance the preceding
+pm_runtime_resume_and_get(). The recovery worker takes a separate
+runtime PM reference and cannot release the reference held here.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
+Fixes: fa2648a34e73 ("wlcore: Add support for runtime PM")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820125126.12757-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/wcn36xx/dxe.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ti/wlcore/main.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/net/wireless/ath/wcn36xx/dxe.c
-+++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -1055,7 +1055,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -3724,10 +3724,8 @@ void wlcore_regdomain_config(struct wl12
+ 		goto out;
  
- 	free_irq(wcn->tx_irq, wcn);
- 	free_irq(wcn->rx_irq, wcn);
--	timer_delete(&wcn->tx_ack_timer);
-+	timer_shutdown_sync(&wcn->tx_ack_timer);
+ 	ret = wlcore_cmd_regdomain_config_locked(wl);
+-	if (ret < 0) {
++	if (ret < 0)
+ 		wl12xx_queue_recovery_work(wl);
+-		goto out;
+-	}
  
- 	if (wcn->tx_ack_skb) {
- 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
+ 	pm_runtime_put_autosuspend(wl->dev);
+ out:
 
 
