@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A85D377ECF;
-	Wed, 23 Sep 2026 14:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2253A6F1C;
+	Wed, 23 Sep 2026 14:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172954; cv=none; b=djsjkcSM4nwmQx/rsvcmE7rtv7e2eY6u+yBHuop6qFMS+a241+7jA8VflcoIiYIpPKCyWhRAkJXcEvV/vshbdw5klp9SarmfOgdwa7yr1+Xe2gpsafcg6tu84xENuxMuHoryGxzl949dxCSrRCg1SOW4dGCiEDSSxylGHJJqMe4=
+	t=1790172957; cv=none; b=rwHqBXg1Wzo6Xr9d0pmo1dVXvv1pMBUCMZRKguwNRxXKsoSeiMND5FPsE2g51KCNfVHQ9zcitZmJCEcp/HuY0bxuh37cIuxbBNT2thiTYCxfiatq3Wtviw+fgifM4vafUJfVpcimSUWfL83T7+gGad7p59MmC6wsQAeXA7x8Vm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172954; c=relaxed/simple;
-	bh=9qfSEbYeb5HHtCSDdI5dycyMMifavTyQrrLGkaLSWFM=;
+	s=arc-20240116; t=1790172957; c=relaxed/simple;
+	bh=1JHe7B1Bs4VlAj39xIOsVLKi+l+imX3NUHklxmJodkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JV7rk38AJXBoN14cEBpKKVnhT3JlrCVpxEaXVO+9cd6oMSmB8ZqHDtTyNOvaQgrI54NxjxbZDhystWNif8nXVBATWoBope/eNhPzEPNx6GktPDoV2Vzmsai0pJ0ZnOFamK731DBBhUXidWTvLapLb4I3gMFAU/jMHz6ntZ3pvDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/fhfbAL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nexqJQHsaXgR5qtdFpIk20WagxiQuGc2RDFYQu68VzDc+jBHjbFCKBgUIh//7K/lymuoYYA1RHMSfkNTAYzlZk8G0IhejzuswVf/fQ+Hl0lwh9OYJrmyR4xXMH85LOrpD3KeGXfnUBoBvESf7j0Ew14o0KfBu2kJwcCz35rQpw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9VmIK1f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/fhfbAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CAB1F00893;
-	Wed, 23 Sep 2026 14:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9VmIK1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB96C1F000FF;
+	Wed, 23 Sep 2026 14:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172953;
-	bh=JAnA26o6iEGCSW9OjjIyO2RHL4QKztyENPXZrPq2Ci0=;
+	s=korg; t=1790172956;
+	bh=VDJ4uwFP26vIbI5z+D4+Z1rqhOFDECan1POs5l4Kn2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/fhfbAL9YrFpqwAacuDszWkiLrvf0hunTmR+0lIJsEsEl7rgu1sjvVTI3dMv6Vux
-	 i8OksJDn82DiFDPz8wyLQdn2RiI47U1rSo7i/FMbzyF0gv9eYpWKP157UsAEpeK8Lh
-	 LM5gsV/GXc/yzRcNhTxTnJhPHPhyA22zsCSzrWRM=
+	b=g9VmIK1fEeE6w+ROlJfxjJ5txVXr3IA/yWRqX/aBZQ+oD2KSRD1cp20GT0stmR/vw
+	 xSRJWgth1FWGCCF7YiJRbgnb31ag1+qdfyUppdMUYSsCsF5HASoOHP7N0teDqyLTsJ
+	 tMwzV/ylEihBJ9wFLT4l8dtP/I81G4NLYjCZ7q/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shouping Wang <allen.wang@hj-micro.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 109/438] perf/arm-cmn: Fix wp_dev_sel2 setting for multi-DTM configurations
-Date: Wed, 23 Sep 2026 16:02:10 +0200
-Message-ID: <20260923140647.606395923@linuxfoundation.org>
+Subject: [PATCH 7.2 082/438] wifi: mac80211: dont allow injecting frames wider than the chanctx
+Date: Wed, 23 Sep 2026 16:01:43 +0200
+Message-ID: <20260923140646.908870269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,64 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shouping Wang <allen.wang@hj-micro.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 49daa3d668b69a5454b5aba0078848a479f79f1c ]
+[ Upstream commit e14bf37bb2b3853012ff160131d1c6233f7a9cc9 ]
 
-When MXP_MULTIPLE_DTM_EN is TRUE, each DTM will monitor at most
-two device ports. In this case, {wp_dev_sel2, wp_dev_sel} will
-only use values 2'b00 and 2'b01 per DTM.
+Frames injected on a monitor interface can carry a radiotap
+field requesting a bandwidth, which mac80211 passes down to
+the driver regardless of the the actual operational bandwidth.
 
-Previously the setting allowed values beyond the supported range
-per DTM, which could cause each DTM to select invalid ports when
-MXP_MULTIPLE_DTM_EN is TRUE.
+If the bandwidth requested is too wide, that triggers a warning
+in hwsim:
 
-Fix this by only setting CMN_DTM_WPn_CONFIG_WP_DEV_SEL2 when
-!multi_dtm.
+  WARN_ON(hwsim_get_chanwidth(bw) > hwsim_get_chanwidth(confbw))
 
-Fixes: 60d1504070c2 ("perf/arm-cmn: Support new IP features")
-Signed-off-by: Shouping Wang <allen.wang@hj-micro.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Drop such frames entirely instead since they cannot be sent.
+
+Assisted-by: LLM
+Fixes: 646e76bb5daf ("mac80211: parse VHT info in injected frames")
+Reported-by: syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=435fdb053cf98bfa5778
+Link: https://patch.msgid.link/20260908122838.201719-13-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ include/net/mac80211.h |  5 ++++-
+ net/mac80211/iface.c   |  2 +-
+ net/mac80211/tx.c      | 28 ++++++++++++++++++++++++++--
+ 3 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 6e5cc4086a9e2..7e75903811710 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1393,13 +1393,14 @@ static void arm_cmn_claim_wp_idx(struct arm_cmn_dtm *dtm,
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 4f95da023746f..36055d40172a1 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -7615,11 +7615,14 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+  *
+  * @skb: packet injected by userspace
+  * @dev: the &struct device of this 802.11 device
++ * @chandef: the channel definition the frame will be transmitted on, or
++ *	%NULL to skip the bandwidth checks
+  *
+  * Return: %true if the radiotap header was parsed, %false otherwise
+  */
+ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+-				 struct net_device *dev);
++				 struct net_device *dev,
++				 const struct cfg80211_chan_def *chandef);
  
- static u32 arm_cmn_wp_config(struct perf_event *event, int wp_idx)
+ /**
+  * struct ieee80211_noa_data - holds temporary data for tracking P2P NoA state
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 842bfb4a7cb68..ca66eb493ac7d 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -991,7 +991,7 @@ static u16 ieee80211_monitor_select_queue(struct net_device *dev,
+ 	/* reset flags and info before parsing radiotap header */
+ 	memset(info, 0, sizeof(*info));
+ 
+-	if (!ieee80211_parse_tx_radiotap(skb, dev))
++	if (!ieee80211_parse_tx_radiotap(skb, dev, NULL))
+ 		return 0; /* doesn't matter, frame will be dropped */
+ 
+ 	len_rthdr = ieee80211_get_radiotap_len(skb->data);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 7cb9dd1b27314..a726a697c32d7 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2096,8 +2096,29 @@ static bool ieee80211_validate_radiotap_len(struct sk_buff *skb)
+ 	return true;
+ }
+ 
++static bool ieee80211_rate_bw_usable(u16 rate_flags,
++				     const struct cfg80211_chan_def *chandef)
++{
++	int width;
++
++	if (!chandef)
++		return true;
++
++	if (rate_flags & IEEE80211_TX_RC_160_MHZ_WIDTH)
++		width = 160;
++	else if (rate_flags & IEEE80211_TX_RC_80_MHZ_WIDTH)
++		width = 80;
++	else if (rate_flags & IEEE80211_TX_RC_40_MHZ_WIDTH)
++		width = 40;
++	else
++		return true;
++
++	return width <= cfg80211_chandef_get_width(chandef);
++}
++
+ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+-				 struct net_device *dev)
++				 struct net_device *dev,
++				 const struct cfg80211_chan_def *chandef)
  {
-+	struct arm_cmn *cmn = to_cmn(event->pmu);
- 	u32 config;
- 	u32 dev = CMN_EVENT_WP_DEV_SEL(event);
- 	u32 chn = CMN_EVENT_WP_CHN_SEL(event);
- 	u32 grp = CMN_EVENT_WP_GRP(event);
- 	u32 exc = CMN_EVENT_WP_EXCLUSIVE(event);
- 	u32 combine = CMN_EVENT_WP_COMBINE(event);
--	bool is_cmn600 = to_cmn(event->pmu)->part == PART_CMN600;
-+	bool is_cmn600 = cmn->part == PART_CMN600;
+ 	struct ieee80211_local *local = wdev_priv(dev->ieee80211_ptr);
+ 	struct ieee80211_radiotap_iterator iterator;
+@@ -2271,6 +2292,9 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+ 		struct ieee80211_supported_band *sband =
+ 			local->hw.wiphy->bands[info->band];
  
- 	/* CMN-600 supports only primary and secondary matching groups */
- 	if (is_cmn600)
-@@ -1407,8 +1408,11 @@ static u32 arm_cmn_wp_config(struct perf_event *event, int wp_idx)
++		if (!ieee80211_rate_bw_usable(rate_flags, chandef))
++			return false;
++
+ 		info->control.flags |= IEEE80211_TX_CTRL_RATE_INJECT;
  
- 	config = FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL, dev) |
- 		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_CHN_SEL, chn) |
--		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp) |
--		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
-+		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp);
-+
-+	if (!cmn->multi_dtm)
-+		config |= FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
-+
- 	if (exc)
- 		config |= is_cmn600 ? CMN600_WPn_CONFIG_WP_EXCLUSIVE :
- 				      CMN_DTM_WPn_CONFIG_WP_EXCLUSIVE;
+ 		for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+@@ -2470,7 +2494,7 @@ netdev_tx_t ieee80211_monitor_start_xmit(struct sk_buff *skb,
+ 	 * selected chandef above to accurately set injection rates and
+ 	 * retransmissions.
+ 	 */
+-	if (!ieee80211_parse_tx_radiotap(skb, dev))
++	if (!ieee80211_parse_tx_radiotap(skb, dev, chandef))
+ 		goto fail_rcu;
+ 
+ 	/* remove the injection radiotap header */
 -- 
 2.53.0
 
