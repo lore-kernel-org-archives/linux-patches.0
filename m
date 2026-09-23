@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FF75372F7;
-	Wed, 23 Sep 2026 14:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D165372E9;
+	Wed, 23 Sep 2026 14:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174312; cv=none; b=i3jZHKPrf58kbVjV4Pt6w23VnrF3BvY5HrZDCkI+ErBqFRzzugYRbbsVE5iPQz4irkkilaIn92lVQXiQpSWDLS15v4vZ5wxee1z1mSa8+DwOCMLSU3xKeOq4PF6CmJEu44HvxyfxpVP0+NSWAwKlTUswkBEURyAyro+8wcx1w/c=
+	t=1790174316; cv=none; b=TCuvJMDaF/w1qyR8pmy/cfH1kwwlFLkTMSmZI7pHscdzAkNbLnkR8zq05IUr6rPTjIUHHaebCFBbTAiI19t3avo8WFQwPI6zhAh0EcESIahWZ14rG6IhIuijivyCU/yrld98/WJOVGV+ODkk01TwXyFR4ROY4jJWk3iiSwQAZuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174312; c=relaxed/simple;
-	bh=74DSPuT06NmYNxl1QhlvZQ69VESrIgieZHrQ4hhsW18=;
+	s=arc-20240116; t=1790174316; c=relaxed/simple;
+	bh=bGYCUwoyS/lXwlasH9piYFyXQ7k5HguhuJlppBbgF/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+bUUfjggDU9oRqkTq9WLAc4N/EDeZzP0WHF0ILlsUVtWybMuxXZW16h3jToIdYKLGaedKeWaRMalY1JRcH0/PR/G5d4msTGqHQJQhjfbTOuDo3f7xjxOS8f3taNeSfhpkX06ruC6uZC5he7W1URLEs6gxXCK5pHTRxyvx0SzM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVVZCI+y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R9N41yCroxKpj7qGq4qBb/Vlq6FwnQf1UxuiOTi2lNq/aV2GTeI7uarsgXcyB3fu/LHuDU8Y69jfCHVpFo5K0d0Xdh1N2/b8E1kjUCv6HBkdlNaIcp01T5Ac2ID+dy6p2yE2oWMPltpwANvl70s3bYSManq8y2TkfilMtMeJwWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT+EKqie; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVVZCI+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00981F00893;
-	Wed, 23 Sep 2026 14:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT+EKqie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128E71F000FF;
+	Wed, 23 Sep 2026 14:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174311;
-	bh=rZGkugKZypWrqDI2cn1znOE7c2KHtF1w7irukJS0Ymw=;
+	s=korg; t=1790174314;
+	bh=tXkeD/nIvaYlPo8yBFJHqyPkJU81RRcR9Teh7qr4nyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVVZCI+y0nH1ex4zBYwa89+dU7crp0I7OH9f5CnZMp/CVBK/Xhtq/LYZsIIn3Q6zg
-	 aMXC/snd+qtQtMVIdZkkc15wckQlcs5r9f5Kix4hMlD6VZGENYCXxCd++xAtEuroyr
-	 xXmJsBJcgQ6BeHzR9Jybjm1EH2RYDeu8YeRPOdt4=
+	b=iT+EKqie0rVk/lgGiyrZqag0++JYqSwxemP3T3zIQ2LTQDsD1QASfdaco7+ud+LHl
+	 sTnEKugtNk2ZXweDfXAhBLtqRyJ+IpDPuAQ1/IaXTTwo1XnZ+QX/f5n918NwsZOqqo
+	 d1J5FehPT7y3ndqj3TrUu7EnIIAqVwOVsLoY/p8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com,
-	syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com,
+	syzbot+582469b3a9ef5f13606b@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/398] wifi: mac80211: reset state when starting AP fails
-Date: Wed, 23 Sep 2026 16:02:21 +0200
-Message-ID: <20260923140645.168604594@linuxfoundation.org>
+Subject: [PATCH 6.18 076/398] wifi: mac80211: dont allow link changes when iface is down
+Date: Wed, 23 Sep 2026 16:02:30 +0200
+Message-ID: <20260923140645.402413735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -54,61 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3f28551d0241254a75626d868041c6340285088b ]
+[ Upstream commit 370872d30349d81dec519e15ea2949fd63511cf7 ]
 
-ieee80211_start_ap() can set enable_beacon (and beacon_int) and fail
-later, leaving it set forever. Scanning can then attempt to restore
-beaconing on such an interface, leading to:
+ieee80211_set_active_links() only checks that the interface is running in
+the inner __ieee80211_set_active_links(), after drv_can_activate_links()
+was already called, so using active_links on an interface that's down
+triggers the check-sdata-in-driver warning.
 
-  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:mac80211_hwsim_link_info_changed+0xca7/0xf00
-  Call Trace:
-   drv_link_info_changed+0x413/0x860 net/mac80211/driver-ops.c:495
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_return+0x381/0x580 net/mac80211/offchannel.c:160
-   __ieee80211_scan_completed+0x993/0xe30 net/mac80211/scan.c:519
-   ieee80211_scan_work+0x472/0x2010 net/mac80211/scan.c:1193
-   cfg80211_wiphy_work+0x2b7/0x550 net/wireless/core.c:538
-
-in hwsim. Also, cfg80211 then allows changing the interface type,
-and the off-channel path getgs confused about beaconing as well,
-leading to another warning:
-
-  WARNING: net/mac80211/driver-ops.c:468 at drv_link_info_changed+0x583/0x880
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_stop_vifs+0x328/0x5c0 net/mac80211/offchannel.c:122
-   ieee80211_start_sw_scan net/mac80211/scan.c:583 [inline]
-   __ieee80211_start_scan+0xfb6/0x1af0 net/mac80211/scan.c:882
-
-Reset the state on failures to always have it correct.
+Add the missing check in the debugfs file.
 
 Assisted-by: LLM
-Fixes: d6a83228823f ("mac80211: track enable_beacon explicitly")
-Reported-by: syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ca7a2759caaa6cd4e3db
-Reported-by: syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c4686c3eb8b64032618f
-Link: https://patch.msgid.link/20260904165722.9629429a5221.I7f599412bfe12a09d41ea4901be9ad165d07d133@changeid
+Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
+Reported-by: syzbot+582469b3a9ef5f13606b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=582469b3a9ef5f13606b
+Link: https://patch.msgid.link/20260908122838.201719-16-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 3 +++
+ net/mac80211/debugfs_netdev.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index f6e8352665c1a..84e27d8a75ef1 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1717,6 +1717,9 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
- 	return 0;
+diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
+index 30a5a978a678c..ba241567ac7e0 100644
+--- a/net/mac80211/debugfs_netdev.c
++++ b/net/mac80211/debugfs_netdev.c
+@@ -728,6 +728,9 @@ static ssize_t ieee80211_if_parse_active_links(struct ieee80211_sub_if_data *sda
+ 	if (kstrtou16(buf, 0, &active_links) || !active_links)
+ 		return -EINVAL;
  
- error:
-+	link_conf->enable_beacon = false;
-+	link_conf->beacon_int = prev_beacon_int;
-+	sdata->vif.cfg.ssid_len = 0;
- 	ieee80211_link_release_channel(link);
- 
- 	return err;
++	if (!ieee80211_sdata_running(sdata))
++		return -ENETDOWN;
++
+ 	return ieee80211_set_active_links(&sdata->vif, active_links) ?: buflen;
+ }
+ IEEE80211_IF_FILE_RW(active_links);
 -- 
 2.53.0
 
