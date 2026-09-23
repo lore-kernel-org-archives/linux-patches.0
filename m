@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610C7418368;
-	Wed, 23 Sep 2026 14:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290713AA19B;
+	Wed, 23 Sep 2026 14:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173405; cv=none; b=d9bumcwqKpFBwLbPaZhnYoj7WPirn8FRzbb3wagSW1U8aclXXLaBNVana4AFYHwuUZeba6PIECtuURHvCSjPY1qINH0IeJeJMtNrbO7FfqdS/lVo6YyrAoxhUz/Qt5dj0guANGPe5l6CgdEFAOsWKdeziOM8UjBeLsnnlO/RXmo=
+	t=1790173407; cv=none; b=vFPRirh/huOfqs17G6ZIK2oadEiYaaGhlXyL2+/93i3nH58N/zTfP73D8v74qmOVMzKgdYCk4M0mxfJV3LlbFn5Rcm4IgXNiA+dnF0qqmpbQxwdvPKILzGG8KOmHB2qpr2NDd9XJm0muW+gT04NgxjiymezbL+q/fRtXtGL0m98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173405; c=relaxed/simple;
-	bh=12tA3XnDvv/xmsbEQ2TzjW/eNi0TP4e9Y+sw3POLAOw=;
+	s=arc-20240116; t=1790173407; c=relaxed/simple;
+	bh=VchAHWNb47GJ/bsTDazoA10EgySshnYKAxFaBJft2L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBFPC3qfC1jbjmHaqXl/vIpcD2I7LPN8MpMkhStV9JLi7nwuo7KbIVUDTDTAcG1+Z21zU5xX8wUnbpxWqh6XCJKL1Rj7NnAvdzdxdbDrAlzHxeLhAlUKmCgUqAY1grnVTGEezNZg48wLluTROgnfstfKynOhjkL+pzGM2/gpfSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0qjmxlk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASGfV8APqEB+t0+uzOyeBeqZf4DACG5dVu2UsplOrNzvqsk8oTn0Fed9KkpdLsSY1himSp7ch3N/cRz+FwnFJzhFfk/xnWlwgcqa2LLi6mL2F02SvoXSan5yF/Um0zWWNwY2NBFZ877EizLTIZk/T4cL08CQYPQ1SCqCXDuOONU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyX8ia0w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0qjmxlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367C11F000FF;
-	Wed, 23 Sep 2026 14:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyX8ia0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EC01F00893;
+	Wed, 23 Sep 2026 14:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173402;
-	bh=Tvi9IuZfOmIPrkZ8IhgOGxqDXG8suWFxbpTtTLxy7Cw=;
+	s=korg; t=1790173406;
+	bh=I2hhDBpp8dUN3IOfWyW/ktRmZjSw3V2SiT8b4ZdmcpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q0qjmxlkiwUPz+crd6W5dHyzl+bEfnVjGT5SRoRH0Tns3+a88VZmZHwoNCkJtotcU
-	 0/+ziiiWINya5TofZ90rzvjnkJPlRe1SLTE0O0ryEeAi6O31N4ULltodjs9KTJSMAk
-	 FS+WGQtpeGNikyfd3lA3zPvBt2LI/4agzUvJL0a8=
+	b=jyX8ia0ww52HgRvJU1nicMjN3VnMgo3qA7WbsFGu23efei2+FcsIYsi8tqOuswObK
+	 7f4mULlfmA8UAkJiLgjUmR75mQPYckMnsOCLwC0g5VFOaX8Azq9nDeynZVEAoCp1Jj
+	 nWmXOUlpIkPjuqwsPYgeYql/2RXBdH0BFl/L64uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Mulqueen <mike@method-b.uk>,
-	David Howells <dhowells@redhat.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 7.2 236/438] 9p: Fix v9fs_issue_write() to update i_size and remote_i_size
-Date: Wed, 23 Sep 2026 16:04:17 +0200
-Message-ID: <20260923140650.889977952@linuxfoundation.org>
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 237/438] ALSA: core: Fix potential UAF after asynchronous card release
+Date: Wed, 23 Sep 2026 16:04:18 +0200
+Message-ID: <20260923140650.914644684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,69 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit c60ae98c5aa64021751b38ab1313b19d620bf640 upstream.
+commit fd95e68df6fe66344161a1329cbe5e5805e7b704 upstream.
 
-Fix v9fs_issue_write() to update i_size and remote_i_size to the new size
-of the server file if we made it larger, using the start fpos and the count
-returned by p9_client_write() to calculate the new minimum file size.
+Usually a sound driver releases the resources assigned to the card via
+snd_card_free(), and it synchronizes with the whole release procedure.
+However, when the card is released asynchronously via
+snd_card_free_when_closed() like USB-audio driver, the situation is
+slightly different; although the snd_card_disconnect() call at the
+disconnection guarantees that any newer accesses will be gated, the
+in-flight tasks might be still accessing to the underlying card->dev
+device even after the disconnection, which would cause a
+use-after-free in the end, as reported by fuzzers.
 
-This assumes that if the 9P server makes a short write (say it hits
-ENOSPC), a reduced count is returned.
+For addressing the bug above, this patch takes the refcount of
+card->dev at initialization of the card object, and releases at its
+destructor.   This assures the availability of the card->dev in its
+whole lifecycle.
 
-Fixes: 5fb70e7275a6 ("netfs, 9p: Implement helpers for new write code")
-Reported-by: Michael Mulqueen <mike@method-b.uk>
-Closes: https://lore.kernel.org/r/fbb9e395-1e07-4212-8f70-23f3cd498074@method-b.uk/
-Cc: stable@vger.kernel.org
-Signed-off-by: David Howells <dhowells@redhat.com>
-Message-ID: <2226525.1789118704@warthog.procyon.org.uk>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/CA+0ovChexj4TrZL_2iG_P0WBEbZc5+73GfB3DkciQi=R8pZOnA@mail.gmail.com
+Closes: https://lore.kernel.org/CA+0ovCgQUQNN=Z1tJTouiCsDaXR5M-3-SQEGk-cpPXQkM5Xh+w@mail.gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260912162150.455144-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_addr.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ sound/core/init.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -54,11 +54,37 @@ static void v9fs_begin_writeback(struct
- static void v9fs_issue_write(struct netfs_io_subrequest *subreq)
- {
- 	struct p9_fid *fid = subreq->rreq->netfs_priv;
-+	struct inode *inode = subreq->rreq->inode;
-+	struct netfs_inode *ictx = netfs_inode(inode);
- 	int err, len;
- 
- 	len = p9_client_write(fid, subreq->start, &subreq->io_iter, &err);
--	if (len > 0)
-+	if (len > 0) {
-+		uoff_t end = subreq->start + len, i_size, remote, zp;
-+		bool set = false;
-+
-+		spin_lock(&inode->i_lock);
-+
-+		/* We can read the sizes directly as we hold i_lock. */
-+		i_size = inode->i_size;
-+		remote = ictx->_remote_i_size;
-+		zp = ictx->_zero_point;
-+
-+		if (end > i_size) {
-+			i_size = end;
-+			set = true;
-+		}
-+		if (end > remote) {
-+			remote = end;
-+			set = true;
-+		}
-+
-+		if (set)
-+			netfs_write_sizes(inode, i_size, remote, zp);
-+		spin_unlock(&inode->i_lock);
-+
- 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
-+	}
- 	netfs_write_subrequest_terminated(subreq, len ?: err);
- }
- 
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -310,7 +310,7 @@ static int snd_card_init(struct snd_card
+ 			kfree(card); /* manually free here, as no destructor called */
+ 		return err;
+ 	}
+-	card->dev = parent;
++	card->dev = get_device(parent);
+ 	card->number = idx;
+ 	WARN_ON(IS_MODULE(CONFIG_SND) && !module);
+ 	card->module = module;
+@@ -601,6 +601,7 @@ static int snd_card_do_free(struct snd_c
+ 		dev_warn(card->dev, "unable to free card info\n");
+ 		/* Not fatal error */
+ 	}
++	put_device(card->dev);
+ 	if (card->release_completion)
+ 		complete(card->release_completion);
+ 	if (!managed)
 
 
