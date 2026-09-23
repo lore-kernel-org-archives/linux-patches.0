@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A0F33ADBA;
-	Wed, 23 Sep 2026 14:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B2548A2BC;
+	Wed, 23 Sep 2026 14:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174493; cv=none; b=uvfYJXISQ1Ki1ZHRlgirlsPS5dKoHP9rJpsiLLTV/1IeKHMeBskc9P9hPwqUoqUMQZFIDkdSOnpEebaCBkwD615RZpkM97prOJh64zTW1xIc+3WOnjD3dM1Vgck2HkyvHF9XSuSdtu7qsq6gWoog3XuqmTi7x935V4Grl29U+XY=
+	t=1790174496; cv=none; b=EcJwt6l2a6iUb3gVVB89kGw+8n0ZNk4LPOydV4gCwYPbDCMHFGhmu/C2jWIiR9aFOiQA4dkiURvSlfTX7gnTtxvijUHaXiWn3ktYtUqaDTiboe2+GROAplak0Dq4z6nJwB9d4et16i3Yhk4ME5RMMNfjlKJG1WQiKS9PMgnDjAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174493; c=relaxed/simple;
-	bh=QyMedtRiLxQZskiACh0/wsoShVnrTTBkl/4eaUs/SWY=;
+	s=arc-20240116; t=1790174496; c=relaxed/simple;
+	bh=NZOu0+iBM7+r+02cY3hsglECD6dSEVScUpZAONQH3r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZ5lYCYNZeCjTcx9Bh/DjgJxMHsl8nenb6mGp50zd9m3tQ7kPbNhtPNS3XdVeIeeJjOnFlomzcOGNJlMSvkvQSal35NKnAlJ5NnZeHN6mOjqYxBf0vFwAHn9YgkU30tOt2o9UR7xia8KTyT/7vqI0woZegFfdrSLgZVp4R7+kRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0ZsqtRR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bfxqCFj0UlW/Ld/R3BmOyW+UHozF2ga4Nx/gs+k7Ay/nj0N6/OnO5ePmWbpuUSQloxkEoChMU67E20AOeaLFidKgSchDavCc+b3oZMrOb5MirpR3gBbp9XOA3jlmhCMNMryE4+SAjy2P+u2pisV+Z64PjL/ODUUna/Zn/qEZmN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPr3Ta3z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0ZsqtRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D791F000FF;
-	Wed, 23 Sep 2026 14:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPr3Ta3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818031F00893;
+	Wed, 23 Sep 2026 14:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174492;
-	bh=xKdlFVbOyEMmc3pCngxNkAoJZPKJFevahePYhv9+Td4=;
+	s=korg; t=1790174495;
+	bh=TIApVqSCoUtYtCxRl0t9BiOBCBKIGk1jTe7vTGWQ95o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0ZsqtRRyB2sF4VfaDWPsTzzq6ucJxRePdM6KhfcEu8fPni0KwIYSiC0onCL7hVMD
-	 3rOIMwo7jEnCJlCCiKUTbpD8EimlOjofC2my1W9ufonunrmkyU+B+RPPQpjYYTHxze
-	 47DxyJT7swGU5Tch73qnwSwg9gnfnl5dP6LAwEr8=
+	b=sPr3Ta3zr5zuvbU8Mt+eZk8OJsCITgkOjK/SFd5Z/8s3zxiLliaDGHqlKulCTt3fp
+	 DEtRynAox6fAuoTffw/1hMZ3dIlRbrUKVNN0gXZHh3pkkoc08nnpaueSJb3CToeWdz
+	 ZoX7uvdH8i0eV7kJwIFAKLLC67apfQapfnUTvXxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	Hohyun Sim <tlaghgus0425@korea.ac.kr>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/398] ipv4: icmp: reject RTN_UNREACHABLE input routes in icmp_route_lookup
-Date: Wed, 23 Sep 2026 16:03:25 +0200
-Message-ID: <20260923140646.832785023@linuxfoundation.org>
+Subject: [PATCH 6.18 132/398] net: fddi: skfp: fix NULL deref when setting the MAC address while down
+Date: Wed, 23 Sep 2026 16:03:26 +0200
+Message-ID: <20260923140646.858018138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,82 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Hohyun Sim <tlaghgus0425@korea.ac.kr>
 
-[ Upstream commit 2998147b59c9df0a51477c7a6b3d1f0ba3127dd4 ]
+[ Upstream commit 7c8810c2e69c3d9ca6df870b40ae9218e50b4fb1 ]
 
-When the forward output route cannot be used in icmp_route_lookup(),
-it enters the "reverse path" and calls ip_route_input() on fl4_dec.daddr,
-the original packet's source address.
+skfp_ctl_set_mac_address() calls ResetAdapter() unconditionally, without
+checking netif_running(). ResetAdapter() first calls card_stop(), which
+sets smc->hw.hw_state to STOPPED, and then mac_drv_clear_tx_queue(),
+which walks the two transmit queues:
 
-ip_route_input() only returns an error for truly invalid packets. For
-unreachable addresses it will succeed and return an input route whose
-dst.output is set to ip_rt_bug(). The existing check only rejects
-RTN_LOCAL routes, so the RTN_UNREACHABLE route types can still be returned
-and later used for output, syzkaller triggering a WARN_ON_ONCE()
-in ip_rt_bug() as bellow:
+	for (i = QUEUE_S; i <= QUEUE_A0; i++) {
+		queue = smc->hw.fp.tx[i] ;
+		...
+		t = queue->tx_curr_get ;
 
- ------------[ cut here ]------------
- WARNING: net/ipv4/route.c:1273 at ip_rt_bug+0x14/0x20
- RIP: 0010:ip_rt_bug+0x14/0x20
- Call Trace:
-  ip_push_pending_frames+0xfa/0x100
-  __icmp_send+0x905/0xf10
-  ip_options_compile+0xc0/0xd0
-  ip_rcv_finish_core+0x321/0xae0
-  ip_rcv+0x1de/0x260
-  __netif_receive_skb_one_core+0x11a/0x130
-  netif_receive_skb+0x7b/0x260
-  tun_get_user+0x11bf/0x1c10
- ------------[ cut here ]------------
+smc->hw.fp.tx[] is only populated by init_tx(), which is reached from
+skfp_open() through init_smt() -> init_fddi_driver() -> init_fplus() ->
+init_mac() -> init_tx(). The private area is allocated and zeroed by
+alloc_fddidev(), so on an interface that has never been brought up both
+queue pointers are still NULL. The hw_state test at the top of
+mac_drv_clear_tx_queue() does not catch this, because card_stop() has
+just set STOPPED; the function proceeds into the loop and dereferences
+NULL. ResetAdapter() does call init_smt() itself, but only after the
+queues have been cleared.
 
-Reject input route that is RTN_UNREACHABLE to fix it. The net warning
-is only printed for RTN_LOCAL, as RTN_UNREACHABLE is not the result of
-a race condition.
+Setting the MAC address on a down interface therefore oopses:
 
-Fixes: 8b7817f3a959 ("[IPSEC]: Add ICMP host relookup support")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Link: https://patch.msgid.link/20260910140042.1880242-1-dongchenchen2@huawei.com
+  ip link set dev fddi0 address 02:00:00:00:00:01
+
+  BUG: KASAN: null-ptr-deref in mac_drv_clear_tx_queue+0x68/0x2c0 [skfp]
+  Read of size 8 at addr 0000000000000010 by task ip/302
+  Call Trace:
+   <TASK>
+   mac_drv_clear_tx_queue+0x68/0x2c0 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   ResetAdapter+0x29/0x100 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   skfp_ctl_set_mac_address+0x57/0x80 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   netif_set_mac_address+0x1e4/0x2c0
+   do_setlink+0x684/0x2680
+   </TASK>
+
+Address 0x10 is the offset of tx_curr_get, the third pointer in
+struct s_smt_tx_queue, on 64-bit. mac_drv_clear_rx_queue(), which
+ResetAdapter() calls immediately afterwards, dereferences
+smc->hw.fp.rx[QUEUE_R1] in the same way behind the same ineffective
+hw_state test; the transmit queue merely crashes first. Both are
+covered by the guard below.
+
+Skip the adapter reset when the interface is down. dev_addr_set() is
+left unconditional, so the new address is still recorded in
+dev->dev_addr. Nothing is lost by not resetting the adapter here:
+skfp_open() deliberately re-reads the factory address on every open,
+
+	read_address(smc, NULL);
+	eth_hw_addr_set(dev, smc->hw.fddi_canon_addr.a);
+
+and the comment above it states this is done to discard exactly such an
+address override across a close/open cycle. An address set while the
+interface is down could not have survived the following open even
+before this change, so the guard removes no working behaviour. Guarding
+the hardware side of ndo_set_mac_address() with netif_running() is
+established practice; skge_set_mac_address() has done so since commit
+2eb3e621c4e0 ("skge: set mac address bonding fix").
+
+Guarding the reset as a whole, rather than NULL-checking the queues, is
+also what the rest of the driver expects. After a previous open/close
+the queue pointers are stale but non-NULL, so there is no crash, yet
+ResetAdapter() goes on to call smt_online() and STI_FBI() ("Enable
+Board Interrupts") while skfp_close() has already called free_irq() -
+the adapter would be brought back online with no handler installed. The
+only other ResetAdapter() caller is skfp_interrupt(), which by
+construction runs only while the device is open.
+
+Found by automated driver testing against an emulated SysKonnect FDDI
+adapter under a KASAN-enabled 7.0.0 kernel. Triggering it requires
+CAP_NET_ADMIN.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM KASAN
+Signed-off-by: Hohyun Sim <tlaghgus0425@korea.ac.kr>
+Link: https://patch.msgid.link/20260910063743.110747-1-tlaghgus0425@korea.ac.kr
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/fddi/skfp/skfddi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index a66e1a7175e90..c59a32160ee6a 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -572,16 +572,19 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
- 		skb_dstref_restore(skb_in, orefdst);
+diff --git a/drivers/net/fddi/skfp/skfddi.c b/drivers/net/fddi/skfp/skfddi.c
+index a273362c9e703..feea7baa48168 100644
+--- a/drivers/net/fddi/skfp/skfddi.c
++++ b/drivers/net/fddi/skfp/skfddi.c
+@@ -928,7 +928,8 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
  
- 		/*
--		 * At this point, fl4_dec.daddr should NOT be local (we
--		 * checked fl4_dec.saddr above). However, a race condition
--		 * may occur if the address is added to the interface
--		 * concurrently. In that case, ip_route_input() returns a
--		 * LOCAL route with dst.output=ip_rt_bug, which must not
--		 * be used for output.
-+		 * fl4_dec.daddr is not expected to be local here, but it can be
-+		 * added to an interface concurrently, in which case
-+		 * ip_route_input() returns a LOCAL route. It can also fail to
-+		 * build a forwarding route towards fl4_dec.daddr, for example,
-+		 * when forwarding is disabled, and return an UNREACHABLE route.
-+		 * Both cases will result in a route with dst.output=ip_rt_bug,
-+		 * which must not be used for output.
- 		 */
--		if (!err && rt2 && rt2->rt_type == RTN_LOCAL) {
-+		if (!err && rt2 && rt2->rt_type == RTN_LOCAL)
- 			net_warn_ratelimited("detected local route for %pI4 during ICMP sending, src %pI4\n",
- 					     &fl4_dec.daddr, &fl4_dec.saddr);
-+		if (!err && rt2 &&
-+		    (rt2->rt_type == RTN_LOCAL || rt2->rt_type == RTN_UNREACHABLE)) {
- 			dst_release(&rt2->dst);
- 			err = -EINVAL;
- 		}
+ 	dev_addr_set(dev, p_sockaddr->sa_data);
+ 	spin_lock_irqsave(&bp->DriverLock, Flags);
+-	ResetAdapter(smc);
++	if (netif_running(dev))
++		ResetAdapter(smc);
+ 	spin_unlock_irqrestore(&bp->DriverLock, Flags);
+ 
+ 	return 0;		/* always return zero */
 -- 
 2.53.0
 
