@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C375350B429;
-	Wed, 23 Sep 2026 14:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EA639EF12;
+	Wed, 23 Sep 2026 14:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174390; cv=none; b=EDNN1xTFPnSX9rzo+QZDEH3FaqDv1vZXswX8RDyi4kd9MBxEMQ5qBolU4wWXEVHL27HQti96+HnP4hl5WZrB3fvJzXBf6b/Qqjuywbx0NTsFYAlONywTQJWaR5xUEGymR2y65n3n6G72fpGiLP38chO0w9budPrUuYP6tFLyy5Y=
+	t=1790174393; cv=none; b=X32dqb0UaXeVYaboVUxWZsIwzWmlw4VASj/OxAJG6t2DTxzTmSettbaLB2OOjzUvSvvjbGwMh1vvaS3n1zRL7myZXbr6iCgFRfPljeZTBwAxYy6weHBbfqeUNUGkCXIg1VA5Q/xXvJSpAAV65eZFcOCodOLrmenygM57I//BQbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174390; c=relaxed/simple;
-	bh=ELECzpTZ/+YEIn7WkbGabmKgj3+qfpUYhDC3hSjf/FY=;
+	s=arc-20240116; t=1790174393; c=relaxed/simple;
+	bh=iypqyHAsu//7SKZHjr+6rJBvasLdxmPG7QMbuJTracY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WD/p4WB1UHi6n7kWSFoCTdvDUJiR5wi5TfOShvD28RBbb5p5jEgxCNptu9e96wXZvf5tCQkEeCH/0a3FX5H5H211I730lwb0M2fisKb8pmT40GrGwn9ZSvjnzLFQI3anQYWHKjVl4jKwPmzn+q2rGRVmEXHRsYfwG8Qz7x+niyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqFjZHTL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DDBKbrJ+Yj7fiNuo5zU4L69mY+jKvI9s7MF3Nw8N3t2UBFH7yjVpiRVm70WbozEQfvc02DjcVtEdhc16oO3qNzS7rwW6OKjtqxAhjhlqsGwbBhPD/U5VKY//reTCzvIhXVzSGFH/9kTm9PnUMFQu6yEfUOP22UwVKHrCeBUXdPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bg+11Xw4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqFjZHTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89061F000FF;
-	Wed, 23 Sep 2026 14:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bg+11Xw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97CA1F000FF;
+	Wed, 23 Sep 2026 14:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174389;
-	bh=TgwTZ5AkhfBy/8327QPegFIUertMcPTa9n2IAtf+38w=;
+	s=korg; t=1790174392;
+	bh=vpswqzf4fWSIOQZl8mr/SLswDuH2OhYV6RY9kcV/BFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqFjZHTLJedUfGhVB1n70g+I4MUQgl0QbQurY4NRi8bZCWO6J/9cbTxygwW9T8Qfw
-	 alvHsDkErzggQc22CmjkE3l6r2l0h0mVy/ybMUn8xipuZlPM6/LZQY94iEIFH6Tmnd
-	 rCvDi/P60W82bR31xWqy/D4yF3bG9ujFOtxikW6I=
+	b=Bg+11Xw48JP2i02puZA6UvTFNPm6WnFUuON3AbT0yjAk1Ef552YL4Xs0vDhdqIoq1
+	 diPX7upAuLyUeZOzkGdO0XBPg4ESgijtxnEINc27Pt8sGZcDAgG5NdhgMO/UoqCqSE
+	 KK7ovytZr6QvWgItMQf/JX9s34J4oDj6CD9FxwXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	sashiko-bot@kernel.org,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Melissa Wen <mwen@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/398] arm64: hibernate: clone only the linear map that exists at runtime
-Date: Wed, 23 Sep 2026 16:02:51 +0200
-Message-ID: <20260923140645.953278382@linuxfoundation.org>
+Subject: [PATCH 6.18 098/398] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
+Date: Wed, 23 Sep 2026 16:02:52 +0200
+Message-ID: <20260923140645.977245745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -52,57 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit e4a6f57d22e079e23fafac51057fad534160b269 ]
+[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
 
-This is similar to commit 1537e55728ec2 ("arm64: trans_pgd: clone only
-the linear map that exists at runtime"), but in a different place.
+When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
+set, a drm_pending_vblank_event will be allocated. If later, there is an
+allocation failure or another failure at setup_out_fence(), that event
+will not have base.fence set and it will not be released at
+complete_signaling().
 
-swsusp_arch_resume() clones the kernel linear map with
-trans_pgd_create_copy(..., PAGE_OFFSET, PAGE_END). PAGE_OFFSET comes
-from the compile-time VA_BITS, so a CONFIG_ARM64_VA_BITS_52 kernel
-booting on hardware without LPA2 -- vabits_actual is 48 and the fifth
-level is folded -- hands the walk a 3.9PB window while its linear map
-only spans the top 128TB.
+Release the event and set crtc_state->event to NULL just like in the
+DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
+drm_event_reserve_init(). That is, prepare_signaling() releases the
+event and there is nothing to be done at complete_signaling(). Use
+drm_event_cancel_free() as that will also undo drm_event_reserve_init()
+in case it has been called.
 
-On a VA_BITS_52 4k kernel with CONFIG_KASAN_GENERIC in a 4GB VM, I see:
-
-  swapper/0: page allocation failure: order:0, mode:0x920(GFP_ATOMIC|__GFP_ZERO)
-   hibernate_page_alloc+0x10/0x1c
-   swsusp_arch_resume+0x70/0x320
-   hibernation_restore+0xa4/0x138
-   software_resume+0x15c/0x270
-  PM: hibernation: Failed to load image, recovering.
-  PM: hibernation: resume failed (-12)
-
-Fix it by copying the linear map that is the actual one, not the
-compiled one.
-
-Fixes: a6bbf5d4d9d1 ("arm64: mm: Add definitions to support 5 levels of paging")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
+Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/hibernate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/hibernate.c b/arch/arm64/kernel/hibernate.c
-index 7bf1174277772..424291c547f02 100644
---- a/arch/arm64/kernel/hibernate.c
-+++ b/arch/arm64/kernel/hibernate.c
-@@ -423,8 +423,8 @@ int __nocfi swsusp_arch_resume(void)
- 	 * Create a second copy of just the linear map, and use this when
- 	 * restoring.
- 	 */
--	rc = trans_pgd_create_copy(&trans_info, &tmp_pg_dir, PAGE_OFFSET,
--				   PAGE_END);
-+	rc = trans_pgd_create_copy(&trans_info, &tmp_pg_dir,
-+				   _PAGE_OFFSET(vabits_actual), PAGE_END);
- 	if (rc)
- 		return rc;
+diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+index 1a11eebfbab06..4fc5f95731842 100644
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -1244,10 +1244,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 			struct dma_fence *fence;
+ 			struct drm_out_fence_state *f;
  
++			ret = -ENOMEM;
++
+ 			f = krealloc(*fence_state, sizeof(**fence_state) *
+ 				     (*num_fences + 1), GFP_KERNEL);
+ 			if (!f)
+-				return -ENOMEM;
++				goto err_free_event;
+ 
+ 			memset(&f[*num_fences], 0, sizeof(*f));
+ 
+@@ -1256,12 +1258,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 
+ 			fence = drm_crtc_create_fence(crtc);
+ 			if (!fence)
+-				return -ENOMEM;
++				goto err_free_event;
+ 
+ 			ret = setup_out_fence(&f[(*num_fences)++], fence);
+ 			if (ret) {
+ 				dma_fence_put(fence);
+-				return ret;
++				goto err_free_event;
+ 			}
+ 
+ 			crtc_state->event->base.fence = fence;
+@@ -1317,6 +1319,11 @@ static int prepare_signaling(struct drm_device *dev,
+ 	}
+ 
+ 	return 0;
++
++err_free_event:
++	drm_event_cancel_free(dev, &crtc_state->event->base);
++	crtc_state->event = NULL;
++	return ret;
+ }
+ 
+ static void complete_signaling(struct drm_device *dev,
 -- 
 2.53.0
 
