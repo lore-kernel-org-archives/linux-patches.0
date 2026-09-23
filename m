@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A105349B7;
-	Wed, 23 Sep 2026 14:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4089C52B1FE;
+	Wed, 23 Sep 2026 14:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174229; cv=none; b=NvCXzRbYmU5y+oo50tbUYn2Dcgta3gTz4oEUPqsuKKcHxqw23Cy9QVyveCu5aawtEwrkfO95HLJNrTJ+RjHWqIFiG8Dzhh6i9D1H2YlmiFaSjwAIQ9EwHovUG/y5aEQpkzpmJPLZ2Pse0UxFcYRnju6Ud2VI/Ha0Z/8kllzpbkk=
+	t=1790174232; cv=none; b=m4sghPXHTKHp6AjtKrfijCyP+dBWfE1K8tZ18YochUnmg2DMH4q6NZ7U9GkN03ia9QiAIzigr5M8xqY+kv8/f4ve7qvkFXMqF4VinoMJBj6Yc1GQe4Pv/DrbXClN49IomrsLTfd+w/yyVWg3kDmx1iOHN7J4oFyDn/u2Of2tihY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174229; c=relaxed/simple;
-	bh=uAqXVlsYMmriBZV6/I+vUOvAFUwHkTGS50ZxRu6AxxQ=;
+	s=arc-20240116; t=1790174232; c=relaxed/simple;
+	bh=0Y/f3n9l4eTuhec2OreWzzClfw1Wh8SpRvKFa93ZkvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCrtx2I1R5o2rmF6FG0WwoKx2A9Ly7fyzhDuHHS5pkUfHRkjbagx6nJordJMbYRqMZ82s1CpOpQiXcxH6In+GNBi5TqB4lwtNacs6x2TKCUtRaXFzCnua1JAlkXgW9LsbyPJp5yyaYoEPNZa+qW0COVyGX1Pt39Txng1AuDshqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9tdvBE0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nixaj8HABtVRpLB33gu4W/zDESk4Q0JE53N17ulKK5M0lPn8LOHeWXCRZdKQhF2I7LA2fBFGwfk3QdmTeCnzXaPruZRMbQuPfve52eF/sqysL4zsq1HThMMo8xzJRk26kDo/Z+X2agOHJK+aQJD8Ny3yzX1a/5M0QvN9dEeTLRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHfshzyF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9tdvBE0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DD21F00893;
-	Wed, 23 Sep 2026 14:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHfshzyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A051F000FF;
+	Wed, 23 Sep 2026 14:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174227;
-	bh=AmoxW4KNXtzPCQ8YecK6Gg8z8TSSE9y1nh1nHUT4axk=;
+	s=korg; t=1790174231;
+	bh=oJ2sDe+qJo2EDAT/EkEjadhA1uG9owBfrLkDH4X79+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9tdvBE07F8O1L4l8KeYz/PXRU6CuRo8HO0bcBhGUGzmENEUKaqfL9hzxdYNwREYM
-	 wnUzPq8uuuoANnphVveWgOx3ouAvuUIi6s6NQxFTkinbL+F79tfu9GQ5jit6eJZQoL
-	 i5gDDWoC7mj0fkMql4X6Jvei5oGuo/oa8FhEvZTk=
+	b=cHfshzyFq51uT4gG9O+03GHFNqey9HrFG+9+Ax6J+9zlKgFzXkLxtShAWkFLXNkZ3
+	 yXdOWdOzIrKNExuX/+mmdQnBknx2lpYrpLQ2qgSmS8dh9Z9D4yKFfyTk2c5GUpawxp
+	 2pNqLl2zYGOGFKGvQk8xwRxK77m+aQyRZLkGsOu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shmulik Cohen <anuk909@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ben Davies <ben.davies@gresearch.co.uk>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/398] wifi: libipw: reject too-short association responses
-Date: Wed, 23 Sep 2026 16:02:03 +0200
-Message-ID: <20260923140644.693290865@linuxfoundation.org>
+Subject: [PATCH 6.18 050/398] IB/IPoIB: Avoid restoring OPER_UP after multicast flush
+Date: Wed, 23 Sep 2026 16:02:04 +0200
+Message-ID: <20260923140644.717761680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,56 +54,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shmulik Cohen <anuk909@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit adb7118b7d2cfd7e8213c17d7d2829f353017754 ]
+[ Upstream commit 9a141d3dc869d18b2eab35e999f4790a9b84e40f ]
 
-libipw_handle_assoc_resp() reads the capability, status and aid fields
-of the 30-byte association response prefix and then computes the
-information element length as
+ipoib_ib_dev_flush_light() temporarily clears IPOIB_FLAG_OPER_UP to
+prevent multicast joins while ipoib_mcast_dev_flush() is running, and
+restores the flag afterwards if it was previously set.
 
-	stats->len - sizeof(*frame)
+This restore races with ipoib_ib_dev_down(). If the interface is brought
+down while the flush is in progress, ipoib_ib_dev_down() clears
+IPOIB_FLAG_OPER_UP, but the flush path may set it again after the device
+has already gone down.
 
-stats->len is a u16 and sizeof() has type size_t, so the subtraction is
-evaluated as size_t and wraps instead of going negative.  Truncating
-that to the u16 length parameter of libipw_parse_info_param() turns a
-frame shorter than the fixed fields into a length near 64 KiB, and the
-parser then reads past the receive buffer.
+Since commit 894021a75291 ("IB/ipoib: Make the carrier_on_task race
+aware"), ipoib_mcast_carrier_on_task() relies on IPOIB_FLAG_OPER_UP
+being cleared to terminate its rtnl_trylock() retry loop. If the flag is
+left set after shutdown, the workqueue retries forever, causing teardown
+to deadlock when ipoib_ndo_uninit() waits in destroy_workqueue() while
+holding RTNL.
 
-Both the ipw2100 and ipw2200 management receive paths reach this
-function having established only that the frame carries the generic
-24-byte three-address header.
+Instead of overloading IPOIB_FLAG_OPER_UP to block multicast joins
+during a light flush, introduce a dedicated IPOIB_FLAG_MCAST_FLUSH flag.
+Use it together with IPOIB_FLAG_OPER_UP to determine whether multicast
+joins are allowed, avoiding the race with device shutdown.
 
-Reject the frame before any fixed field is touched.
-
-Found by an AI-assisted review of length arithmetic in management frame
-parsers.  Verified with a KUnit case under Generic KASAN on arm64 under
-QEMU; I do not have the hardware, so it is not tested on a real device.
-
-Fixes: 9e8571affd1c ("[PATCH] ieee80211: Add QoS (WME) support to the ieee80211 subsystem")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Shmulik Cohen <anuk909@gmail.com>
-Link: https://patch.msgid.link/20260812190412.18333-3-anuk909@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 344bacca8cd8 ("IB/ipoib: Don't allow MC joins during light MC flush")
+Reported-by: Ben Davies <ben.davies@gresearch.co.uk>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260902-avoid-rest-oper-up-v1-1-04fcd4916cae@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/ipw2x00/libipw_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/ulp/ipoib/ipoib.h           |  7 +++++++
+ drivers/infiniband/ulp/ipoib/ipoib_ib.c        | 12 +++++++-----
+ drivers/infiniband/ulp/ipoib/ipoib_multicast.c | 16 ++++++++--------
+ 3 files changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
-index 2661dac6985e4..424349a6935e4 100644
---- a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
-+++ b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
-@@ -1209,6 +1209,9 @@ static int libipw_handle_assoc_resp(struct libipw_device *ieee, struct libipw_as
- 	struct libipw_network *network = &network_resp;
- 	struct net_device *dev = ieee->dev;
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib.h b/drivers/infiniband/ulp/ipoib/ipoib.h
+index 91f866e3fb8bd..143e03b649021 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib.h
++++ b/drivers/infiniband/ulp/ipoib/ipoib.h
+@@ -87,6 +87,7 @@ enum {
+ 	IPOIB_FLAG_INITIALIZED	  = 1,
+ 	IPOIB_FLAG_ADMIN_UP	  = 2,
+ 	IPOIB_PKEY_ASSIGNED	  = 3,
++	IPOIB_FLAG_MCAST_FLUSH	  = 4,
+ 	IPOIB_FLAG_SUBINTERFACE	  = 5,
+ 	IPOIB_STOP_REAPER	  = 7,
+ 	IPOIB_FLAG_ADMIN_CM	  = 9,
+@@ -414,6 +415,12 @@ struct ipoib_dev_priv {
+ 	const struct net_device_ops	*rn_ops;
+ };
  
-+	if (stats->len < sizeof(*frame))
-+		return 1;
++static inline bool ipoib_mcast_allowed(struct ipoib_dev_priv *priv)
++{
++	return test_bit(IPOIB_FLAG_OPER_UP, &priv->flags) &&
++	       !test_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
++}
 +
- 	network->flags = 0;
- 	network->qos_data.active = 0;
- 	network->qos_data.supported = 0;
+ struct ipoib_ah {
+ 	struct net_device *dev;
+ 	struct ib_ah	  *ah;
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_ib.c b/drivers/infiniband/ulp/ipoib/ipoib_ib.c
+index 10b0dbda6cd53..8d9aa75b83206 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_ib.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_ib.c
+@@ -1227,17 +1227,19 @@ static void __ipoib_ib_dev_flush(struct ipoib_dev_priv *priv,
+ 	}
+ 
+ 	if (level == IPOIB_FLUSH_LIGHT) {
+-		int oper_up;
+ 		ipoib_mark_paths_invalid(dev);
+-		/* Set IPoIB operation as down to prevent races between:
++		/* Set MCAST_FLUSH to prevent races between:
+ 		 * the flush flow which leaves MCG and on the fly joins
+ 		 * which can happen during that time. mcast restart task
+ 		 * should deal with join requests we missed.
++		 *
++		 * Do not clear OPER_UP for this; restoring it races with
++		 * ipoib_ib_dev_down() and can leave OPER_UP set after the
++		 * device is down.
+ 		 */
+-		oper_up = test_and_clear_bit(IPOIB_FLAG_OPER_UP, &priv->flags);
++		set_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
+ 		ipoib_mcast_dev_flush(dev);
+-		if (oper_up)
+-			set_bit(IPOIB_FLAG_OPER_UP, &priv->flags);
++		clear_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
+ 		ipoib_reap_dead_ahs(priv);
+ 	}
+ 
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
+index 8a4ab9ff0a681..4f7639bbc7dc5 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
+@@ -74,7 +74,7 @@ static void __ipoib_mcast_schedule_join_thread(struct ipoib_dev_priv *priv,
+ 					       struct ipoib_mcast *mcast,
+ 					       bool delay)
+ {
+-	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
++	if (!ipoib_mcast_allowed(priv))
+ 		return;
+ 
+ 	/*
+@@ -469,7 +469,7 @@ static int ipoib_mcast_join(struct net_device *dev, struct ipoib_mcast *mcast)
+ 	int ret = 0;
+ 
+ 	if (!priv->broadcast ||
+-	    !test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
++	    !ipoib_mcast_allowed(priv))
+ 		return -EINVAL;
+ 
+ 	init_completion(&mcast->done);
+@@ -555,7 +555,7 @@ void ipoib_mcast_join_task(struct work_struct *work)
+ 	unsigned long delay_until = 0;
+ 	struct ipoib_mcast *mcast = NULL;
+ 
+-	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
++	if (!ipoib_mcast_allowed(priv))
+ 		return;
+ 
+ 	if (ib_query_port(priv->ca, priv->port, &port_attr)) {
+@@ -577,7 +577,7 @@ void ipoib_mcast_join_task(struct work_struct *work)
+ 	netif_addr_unlock_bh(dev);
+ 
+ 	spin_lock_irq(&priv->lock);
+-	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
++	if (!ipoib_mcast_allowed(priv))
+ 		goto out;
+ 
+ 	if (!priv->broadcast) {
+@@ -749,7 +749,7 @@ void ipoib_mcast_send(struct net_device *dev, u8 *daddr, struct sk_buff *skb)
+ 
+ 	spin_lock_irqsave(&priv->lock, flags);
+ 
+-	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags)		||
++	if (!ipoib_mcast_allowed(priv)				||
+ 	    !priv->broadcast					||
+ 	    !test_bit(IPOIB_MCAST_FLAG_ATTACHED, &priv->broadcast->flags)) {
+ 		++dev->stats.tx_dropped;
+@@ -871,7 +871,7 @@ void ipoib_mcast_restart_task(struct work_struct *work)
+ 	LIST_HEAD(remove_list);
+ 	struct ib_sa_mcmember_rec rec;
+ 
+-	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
++	if (!ipoib_mcast_allowed(priv))
+ 		/*
+ 		 * shortcut...on shutdown flush is called next, just
+ 		 * let it do all the work
+@@ -965,9 +965,9 @@ void ipoib_mcast_restart_task(struct work_struct *work)
+ 	ipoib_mcast_remove_list(&remove_list);
+ 
+ 	/*
+-	 * Double check that we are still up
++	 * Double check that we are still up and not flushing
+ 	 */
+-	if (test_bit(IPOIB_FLAG_OPER_UP, &priv->flags)) {
++	if (ipoib_mcast_allowed(priv)) {
+ 		spin_lock_irq(&priv->lock);
+ 		__ipoib_mcast_schedule_join_thread(priv, NULL, 0);
+ 		spin_unlock_irq(&priv->lock);
 -- 
 2.53.0
 
