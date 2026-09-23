@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26554EC64E;
-	Wed, 23 Sep 2026 14:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F5D5326B7;
+	Wed, 23 Sep 2026 14:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173555; cv=none; b=ok5M+m7GS83ZQolCHyWfMUngV+DUtE875CYqlwsrZD9mdRj3+Y+XGl7oBwx5LpczG45rxwW9WXulOvIFe0OZOvScPPHJNBouqEwspJyvbfRNgq1wnP6RvPP07sXvp/EQAq1kRlsqXvdHYRX3oIu95UIwxgTXhtZ2UVQ9xqAV3Ic=
+	t=1790173559; cv=none; b=Bkgxu+qwzfGosdeSK61A0SG3ARp4+BfGgA/HWss3q9N/4l7Xry/5AIJsjL80NlTi6F84mGPLgQw0rxtvbVWbLG79c6vv8m+Y5jyRm7HsSz53wBcyz0/Gm+PHC1V1HjfdVSbck2R3ThtzpZnQjiL6VpQ4Sz7mFOSJjjCvSnUm/Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173555; c=relaxed/simple;
-	bh=sD3diYbVB9Jxg07G/3pyFqkmb621YNuOBnXr1WwsURs=;
+	s=arc-20240116; t=1790173559; c=relaxed/simple;
+	bh=FSgug/RHFZHrxPYNblR2Yf5V6Jjy17h3EpmJpHMnveA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMuKhLxtFDNCnmBXj/wrbHokGfwiACOzEsn8gliUzp4EpykjNWv9w+DnPK0W6nLQPgtggZ5AosbZUKXjS5iIwuXq+tEwtZjeSLJc55KRqvBIwttenHSelmdKqbebuzGjIcnsb8g5rDNQdWpPGGnOfIEr7iCQu30bYJdFS2Q59D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NggspDBK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ys+QGcN/n0cpZ9jhr9SUiLCVf7Aaw9rMr0Hyrs9G2yxUHAGhIvLAPCTmF0CsCoaKOvWL2JG1J4Ahk54g9x2bOuYRWw6QRF9p/Qa50OloYvM3YZCmnLRghWuyHS/fMIQhCy8t8331MD7RgaNLpDV0eG3xG0u09kTflhYkpecbPTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxrJjGKI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NggspDBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8EA1F000FF;
-	Wed, 23 Sep 2026 14:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxrJjGKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8201F000FF;
+	Wed, 23 Sep 2026 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173554;
-	bh=ByC4wMzOETLgux9WwrcLm25BIPLB9cTvFs8iSBcDr64=;
+	s=korg; t=1790173557;
+	bh=2gZZYEf782Bm9rfA555RvBWWAdQZX8bUgfbQJ0NXsN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NggspDBKPtA1UyLgGeAQ8FkG2EZrvGlddf3EQAaUymMom+CjtLanksToKXNDemt58
-	 SIRfq6P3PzzCWGZv7/Lx8FxFZLIASuOnkM1uElPsdWmmI3HB6kAgwwsQghdr3laizy
-	 vt+wBNRv/erECZO436t3Zn9TvjWTb8uEXvJIgV7M=
+	b=dxrJjGKIqYCioK/pRGpjriZsReOgxb8kkCJhfq5MW0CAwzHU0Ls/vgqRr2MMwFbuX
+	 5uCQydvWdhS5hYVoejdK4BCDvhi1EyTryUeAQ8Tgpj8B+dBItHBz4xlb5KdgtlAro6
+	 aLJQV/MCCciBURE8CyvyDuBJ/sQxbRNI/b2DzFhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanabishi <i.r.e.c.c.a.k.u.n+kernel.org@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Anand Jain <asj@kernel.org>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.2 283/438] btrfs: fix creation of compressed inline extents that dont save space
-Date: Wed, 23 Sep 2026 16:05:04 +0200
-Message-ID: <20260923140652.108595671@linuxfoundation.org>
+Subject: [PATCH 7.2 284/438] btrfs: derive f_fsid with dev_t only when temp_fsid is active
+Date: Wed, 23 Sep 2026 16:05:05 +0200
+Message-ID: <20260923140652.134540027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,66 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Anand Jain <asj@kernel.org>
 
-commit cc337324cc6be1ce0ae7e5a068dcb7e99ae1b59c upstream.
+commit 72de4807ba84da485dda1a91572d66da9149e95a upstream.
 
-If the compressed data of an inline extent is larger than or equals to the
-size of the uncompressed data, we are still allowing the creation of the
-compressed inline extent, which does not result in any benefits, quite the
-contrary as we waste metadata space and have to decompress when reading.
+Commit c2a74ed0494c ("btrfs: derive f_fsid from on-disk fsid and dev_t")
+mixed dev_t into f_fsid for all single-device setups to avoid f_fsid
+collisions with cloned filesystems.
 
-This is a recent regression introduced in commit 3eaf5f082c4c ("btrfs:
-extract inlined creation into a dedicated delalloc helper").
+However, doing this unconditionally breaks backward compatibility.
+statfs(2) f_fsid changes after a kernel upgrade, and also can shift
+across reboots or dev re-attaches as dev_t values change.
 
-It happens because we are passing the block size to btrfs_compress_bio(),
-so we don't get -E2BIG from the compression code anymore, but we can not
-pass i_size either, because if i_size is smaller than sector size, we
-end up never creating lzo compressed inline extent for such small i_size
-values. So refuse the compressed result at run_delalloc_inline() if
-its size is not smaller than the uncompressed size (i_size).
+Fix this by only mixing dev_t when temp_fsid is active.  This means for
+non-temp_fsid setups or the original mount, we use the old method of
+deriving fsid based on the UUID.
 
-Reported-by: Hanabishi <i.r.e.c.c.a.k.u.n+kernel.org@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/c97652a5-ac6b-4de6-aa23-3cdebc01d00b@gmail.com/
-Fixes: 3eaf5f082c4c ("btrfs: extract inlined creation into a dedicated delalloc helper")
-CC: stable@vger.kernel.org # 7.1+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+So in the case of a cloned Btrfs filesystem, we won't be able to
+maintain the same fsid across mount recycle if the mount order changes.
+
+Reported-by: Dave Hansen <dave.hansen@intel.com>
+Link: https://lore.kernel.org/linux-btrfs/be0c08f5-2f31-40f5-8a3b-f2f58b3e00ff@intel.com
+Fixes: c2a74ed0494c ("btrfs: derive f_fsid from on-disk fsid and dev_t")
+CC: stable@vger.kernel.org # 7.2
+Signed-off-by: Anand Jain <asj@kernel.org>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/btrfs/super.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2338,12 +2338,27 @@ static int run_delalloc_inline(struct bt
- 		} else if (inode->prop_compress) {
- 			compress_type = inode->prop_compress;
- 		}
-+		/*
-+		 * We need to pass blocksize and not i_size, otherwise we can't
-+		 * create compressed inline extents for data smaller than sector
-+		 * size with lzo.
-+		 */
- 		cb = btrfs_compress_bio(inode, 0, blocksize, compress_type, compress_level, 0);
- 		if (IS_ERR(cb)) {
- 			cb = NULL;
- 			/* Just fall back to non-compressed case. */
- 		} else {
- 			compressed_size = cb->bbio.bio.bi_iter.bi_size;
-+			/*
-+			 * If we did not save space, it's pointless and wasteful
-+			 * to have an inline compressed extent, so fallback to
-+			 * an uncompressed inline extent.
-+			 */
-+			if (compressed_size >= i_size) {
-+				cleanup_compressed_bio(cb);
-+				cb = NULL;
-+				compressed_size = 0;
-+			}
- 		}
- 	}
- 	if (!can_cow_file_range_inline(inode, 0, i_size, compressed_size)) {
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1845,8 +1845,12 @@ static int btrfs_statfs(struct dentry *d
+ 	f_fsid.val[0] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root) >> 32;
+ 	f_fsid.val[1] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root);
+ 
+-	/* Hash dev_t to avoid f_fsid collision with cloned filesystems. */
+-	if (fs_info->fs_devices->total_devices == 1) {
++	/*
++	 * Hash dev_t to avoid f_fsid collisions with cloned filesystems.
++	 * Only do this when a clone is present so the original filesystem
++	 * (mounted first) maintains backward-compatible f_fsid behavior.
++	 */
++	if (fs_info->fs_devices->temp_fsid) {
+ 		__kernel_fsid_t dev_fsid =
+ 			u64_to_fsid(huge_encode_dev(fs_info->fs_devices->latest_dev->bdev->bd_dev));
+ 
 
 
