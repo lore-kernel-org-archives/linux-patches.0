@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2DD3AA19B;
-	Wed, 23 Sep 2026 14:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0E55304A0;
+	Wed, 23 Sep 2026 14:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173376; cv=none; b=AsS0hqyzBwd2i8Ng2Bx+7VAjf++gCYMYWJrs7D0xCxSFGTbZfHm9rrSuV+IRUKRa3reNWxz/1i1A3ZB246TGAPSPrvJCmjhLGmIuDxDqtA30LzJ6QvmOcEpFPjEAvurLnWiERi5jVT02VMEQUlaPNndPFYuiWelTaV7Whg7XOR4=
+	t=1790173379; cv=none; b=K1apqHy8T+K0WHLiOW0mvZkPX/huR5olEOIEfQ9qr+oZkTm837xnriYrr/Qx8kYhYImmxX5VdCnZ2g3gd9XBW8CjQskOCXpGTEsk6EtLGQ5AajCkNwATeiWa+w98wjvobicgJ0HbCBpLP3OzTR9hqUr4PfYB78wnEhvKGFSXnEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173376; c=relaxed/simple;
-	bh=Hj1LkWxYQQRNsryxUNWUjbxkdD0D/BtncPoZ///nhK8=;
+	s=arc-20240116; t=1790173379; c=relaxed/simple;
+	bh=Br00mF/hTM6FoYsbVJouDhoS42Jxc3FuliQlWdEiFhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeV9fZVpFMD6IVDwvNpgKCQ+A3jDL10RrN8qt97BTwtzK/SqvSztwz1htJ0MBZDigSGs/s26BOWfNBzTLfy68JLfCPUDnF2e7ACR/LLYH63BgqppDb7J26Tw8xfVhKzDrHAQvcE1Om6jjmkYPg+n8cQzZRWidb8nas2A7dUGIeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZ9cPlyV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hOpV2+5H4JYjKTyQMzvrP+/eVe1UMECNTdVZICooVQX3EDzZbdcNcb7pvAmuyYQbeccSbAGHXcK14gzx7v2g1aSzj0uNH8OENr7d+XKBWh2r0EM8B2OWE8aCmulWO1jb2AMKYCAUqzYPSUc8e4RvLzxIabeaCaUB1gknKpUdMaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fY4qtt8Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZ9cPlyV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54641F000FF;
-	Wed, 23 Sep 2026 14:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fY4qtt8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A621F000FF;
+	Wed, 23 Sep 2026 14:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173375;
-	bh=U3NqCIElL1LSbFSsgDoMEdDosgEpNfTiJCXR2VxFwT8=;
+	s=korg; t=1790173378;
+	bh=6Dz2CsKozSf0DeZvzh3Tj1xDXm7AiUwStR/q6A+XLNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oZ9cPlyVAPK/XLywR5O3FLRihERqK4H8BlGTRccDNhXxrg66E8aDFfvuTMo1eRaty
-	 MnMVWuws5Y6o68cDc90zzGBHnPGsr2KavgAo5v31tw2aPqS1ProP7OfgFKdOpDjEAd
-	 P16JdGbUjpgerBbN8PvVkNaHcAjtLKAlTd4pufqs=
+	b=fY4qtt8ZWMg365tc/bYI4d/oz3/XPwwx7RHRSr8TYF358wZuwIDSE2oPtGb537XXp
+	 Rj/ea189SPRBCJ7V8mzURskKS/yFCf5Nb7MrxLTGT68Lo2gII/VgExRiV1Q7xojSNW
+	 HYaMk9/i83t4HWBhqEtgb8bYXBRsIgB0JDDgt1dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 182/438] pppoatm: ensure a writable skb header and linear data
-Date: Wed, 23 Sep 2026 16:03:23 +0200
-Message-ID: <20260923140649.483008924@linuxfoundation.org>
+Subject: [PATCH 7.2 220/438] net: mvpp2: prevent buffer overflow in page_pool allocation
+Date: Wed, 23 Sep 2026 16:04:01 +0200
+Message-ID: <20260923140650.468339996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -46,124 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
 
-[ Upstream commit ecc7253683a3c55caa868ce0ee530fcb0044bd3c ]
+[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
 
-In pppoatm_send(), LLC encapsulation checks whether there is sufficient
-headroom for the 4-byte LLC header, but does not ensure that the skb header
-is writable.
+The per‑processor buffering scheme is supported only if the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
+This is already checked in mvpp2_probe() during the initial
+activation of percpu_pools.
 
-Normal transmit packets passing through ppp_start_xmit() have their header
-unshared via skb_cow_head(). However, packets can also reach pppoatm_send()
-via PPP channel bridging (PPPIOCBRIDGECHAN) without going through
-ppp_start_xmit().
+However, mvpp2_change_mtu() may later call
+mvpp2_bm_switch_buffers(priv, true) without this check, which can
+lead to an out-of-bounds access in the priv->page_pool array in
+mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
+entries, and mvpp2_get_nrxqs() may return exactly that value. The
+per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
+bounds.
 
-Use skb_cow_head() to ensure both sufficient headroom and a writable
-header before pushing the LLC header.
+Check that the hardware version is MVPP22 or newer and that the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
+before switching to per-CPU mode.
 
-While at it:
-- Call pskb_may_pull(skb, 1) before inspecting skb->data[0] to prevent
-  out-of-bounds reads on zero-length or non-linear frames (e.g. from
-  bridging).
-- Defer SC_COMP_PROT protocol compression until after pppoatm_may_send()
-  succeeds. This eliminates the temporary skb allocation on admission failure
-  and completely removes the fragile "undo" heuristic at the nospace label,
-  avoiding any risk of reading uninitialized headroom or performing an
-  unbalanced skb_push().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260912233048.3977192-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/pppoatm.c | 42 +++++++++++++++++-------------------------
- 1 file changed, 17 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/atm/pppoatm.c b/net/atm/pppoatm.c
-index 6da52d12df68e..5214786e61d11 100644
---- a/net/atm/pppoatm.c
-+++ b/net/atm/pppoatm.c
-@@ -292,10 +292,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 	struct atm_vcc *vcc;
- 	int ret;
- 
-+	if (!pskb_may_pull(skb, 1)) {
-+		kfree_skb(skb);
-+		return DROP_PACKET;
-+	}
-+
- 	ATM_SKB(skb)->vcc = pvcc->atmvcc;
- 	pr_debug("(skb=0x%p, vcc=0x%p)\n", skb, pvcc->atmvcc);
--	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
--		(void) skb_pull(skb, 1);
- 
- 	vcc = ATM_SKB(skb)->vcc;
- 	bh_lock_sock(sk_atm(vcc));
-@@ -317,23 +320,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 
- 	switch (pvcc->encaps) {		/* LLC encapsulation needed */
- 	case e_llc:
--		if (skb_headroom(skb) < LLC_LEN) {
--			struct sk_buff *n;
--			n = skb_realloc_headroom(skb, LLC_LEN);
--			if (n != NULL &&
--			    !pppoatm_may_send(pvcc, n->truesize)) {
--				kfree_skb(n);
--				goto nospace;
--			}
--			consume_skb(skb);
--			skb = n;
--			if (skb == NULL) {
--				bh_unlock_sock(sk_atm(vcc));
--				return DROP_PACKET;
--			}
--		} else if (!pppoatm_may_send(pvcc, skb->truesize))
-+		if (skb_cow_head(skb, LLC_LEN)) {
-+			bh_unlock_sock(sk_atm(vcc));
-+			kfree_skb(skb);
-+			return DROP_PACKET;
-+		}
-+		if (!pppoatm_may_send(pvcc, skb->truesize))
- 			goto nospace;
--		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
- 		break;
- 	case e_vc:
- 		if (!pppoatm_may_send(pvcc, skb->truesize))
-@@ -346,6 +339,12 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 		return 1;
- 	}
- 
-+	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
-+		skb_pull(skb, 1);
-+
-+	if (pvcc->encaps == e_llc)
-+		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
-+
- 	atm_account_tx(vcc, skb);
- 	pr_debug("atm_skb(%p)->vcc(%p)->dev(%p)\n",
- 		 skb, ATM_SKB(skb)->vcc, ATM_SKB(skb)->vcc->dev);
-@@ -355,13 +354,6 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 	return ret;
- nospace:
- 	bh_unlock_sock(sk_atm(vcc));
--	/*
--	 * We don't have space to send this SKB now, but we might have
--	 * already applied SC_COMP_PROT compression, so may need to undo
--	 */
--	if ((pvcc->flags & SC_COMP_PROT) && skb_headroom(skb) > 0 &&
--	    skb->data[-1] == '\0')
--		(void) skb_push(skb, 1);
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index ccc24a1301f22..848ee655c6ea6 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5086,7 +5086,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
+ 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
+ 			mvpp2_bm_switch_buffers(priv, false);
+ 		}
+-	} else {
++	} else if (priv->hw_version >= MVPP22 &&
++		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
+ 		bool jumbo = false;
+ 		int i;
  
 -- 
 2.53.0
