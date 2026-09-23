@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4940418368;
-	Wed, 23 Sep 2026 14:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610C7418368;
+	Wed, 23 Sep 2026 14:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173400; cv=none; b=dkMliz0Y7dOqWXYGH0Syk6QJKNWZjh8JfJs6kY2NBUQrn6zcfI84TzzFyfjJQVfvs0NsCBAdndgu9pAJRiz3hn1q9AB6DNPtm3p+/zlFW2Ps2GZmF/N1ZWcd/ChKz6y5js93sIXNRln/CiDst2b4CWzP64oIEZ6Zp1rNvSlx4HQ=
+	t=1790173405; cv=none; b=d9bumcwqKpFBwLbPaZhnYoj7WPirn8FRzbb3wagSW1U8aclXXLaBNVana4AFYHwuUZeba6PIECtuURHvCSjPY1qINH0IeJeJMtNrbO7FfqdS/lVo6YyrAoxhUz/Qt5dj0guANGPe5l6CgdEFAOsWKdeziOM8UjBeLsnnlO/RXmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173400; c=relaxed/simple;
-	bh=NaDlkqrbIppJi3HVQsaf8fKMldeVJEKHVMloPKG/kQc=;
+	s=arc-20240116; t=1790173405; c=relaxed/simple;
+	bh=12tA3XnDvv/xmsbEQ2TzjW/eNi0TP4e9Y+sw3POLAOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvIabhbLrI0euFujJ60q47d4CjrfqS/897S9PAc77uhKGWDmFLubG7y8lD2eN5la9NsOlodCk5M68WIn8EcYAnttBOPxZbjLlZzlotPM/8LEAmH2dHz9AtCYOtnBZcDiON6p+M8h+Z9ZWaOU1+qCg3JvGThB0GiaVifGozGwhbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/YOZvAd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBFPC3qfC1jbjmHaqXl/vIpcD2I7LPN8MpMkhStV9JLi7nwuo7KbIVUDTDTAcG1+Z21zU5xX8wUnbpxWqh6XCJKL1Rj7NnAvdzdxdbDrAlzHxeLhAlUKmCgUqAY1grnVTGEezNZg48wLluTROgnfstfKynOhjkL+pzGM2/gpfSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0qjmxlk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/YOZvAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAB41F000FF;
-	Wed, 23 Sep 2026 14:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0qjmxlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367C11F000FF;
+	Wed, 23 Sep 2026 14:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173399;
-	bh=KdcBuMTi8HBePq1/kKlEn8dlPkYS6882lG5MJwSkook=;
+	s=korg; t=1790173402;
+	bh=Tvi9IuZfOmIPrkZ8IhgOGxqDXG8suWFxbpTtTLxy7Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b/YOZvAdmk8bM8aApXRG72eOkCJdr8zYOGZSiibp1hDfNutb1V95dyYRuGVEUY146
-	 2Jf5Xg3LeqTVFoiRmGi6XpghHsTI2AydXCyc4mZ8+xBnb5zuk0Ro5ZUerkgqws8tlW
-	 tFLc70s4rVdikXqQRK+XEIJWKskzZiTo6jVzkx3Y=
+	b=Q0qjmxlkiwUPz+crd6W5dHyzl+bEfnVjGT5SRoRH0Tns3+a88VZmZHwoNCkJtotcU
+	 0/+ziiiWINya5TofZ90rzvjnkJPlRe1SLTE0O0ryEeAi6O31N4ULltodjs9KTJSMAk
+	 FS+WGQtpeGNikyfd3lA3zPvBt2LI/4agzUvJL0a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 235/438] Input: xpad - fix PDP Marvel Xbox 360 controller
-Date: Wed, 23 Sep 2026 16:04:16 +0200
-Message-ID: <20260923140650.860805096@linuxfoundation.org>
+	Michael Mulqueen <mike@method-b.uk>,
+	David Howells <dhowells@redhat.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 7.2 236/438] 9p: Fix v9fs_issue_write() to update i_size and remote_i_size
+Date: Wed, 23 Sep 2026 16:04:17 +0200
+Message-ID: <20260923140650.889977952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,43 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Nyberg <slickstretch3.0@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
+commit c60ae98c5aa64021751b38ab1313b19d620bf640 upstream.
 
-The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
-incorrectly classified as an Xbox One controller.
+Fix v9fs_issue_write() to update i_size and remote_i_size to the new size
+of the server file if we made it larger, using the start fpos and the count
+returned by p9_client_write() to calculate the new minimum file size.
 
-With the current XTYPE_XBOXONE classification, the controller is
-detected but produces no input, while its four player LEDs continue
-blinking indefinitely.
+This assumes that if the 9P server makes a short write (say it hits
+ENOSPC), a reduced count is returned.
 
-Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
-
-Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
-All inputs register correctly and the player LED indicates the
-current player.
-
-Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
+Fixes: 5fb70e7275a6 ("netfs, 9p: Implement helpers for new write code")
+Reported-by: Michael Mulqueen <mike@method-b.uk>
+Closes: https://lore.kernel.org/r/fbb9e395-1e07-4212-8f70-23f3cd498074@method-b.uk/
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
-Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Message-ID: <2226525.1789118704@warthog.procyon.org.uk>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/9p/vfs_addr.c |   28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -215,7 +215,7 @@ static const struct xpad_device {
- 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
--	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
-+	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
- 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x015d, "PDP Mirror's Edge Official Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+--- a/fs/9p/vfs_addr.c
++++ b/fs/9p/vfs_addr.c
+@@ -54,11 +54,37 @@ static void v9fs_begin_writeback(struct
+ static void v9fs_issue_write(struct netfs_io_subrequest *subreq)
+ {
+ 	struct p9_fid *fid = subreq->rreq->netfs_priv;
++	struct inode *inode = subreq->rreq->inode;
++	struct netfs_inode *ictx = netfs_inode(inode);
+ 	int err, len;
+ 
+ 	len = p9_client_write(fid, subreq->start, &subreq->io_iter, &err);
+-	if (len > 0)
++	if (len > 0) {
++		uoff_t end = subreq->start + len, i_size, remote, zp;
++		bool set = false;
++
++		spin_lock(&inode->i_lock);
++
++		/* We can read the sizes directly as we hold i_lock. */
++		i_size = inode->i_size;
++		remote = ictx->_remote_i_size;
++		zp = ictx->_zero_point;
++
++		if (end > i_size) {
++			i_size = end;
++			set = true;
++		}
++		if (end > remote) {
++			remote = end;
++			set = true;
++		}
++
++		if (set)
++			netfs_write_sizes(inode, i_size, remote, zp);
++		spin_unlock(&inode->i_lock);
++
+ 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
++	}
+ 	netfs_write_subrequest_terminated(subreq, len ?: err);
+ }
+ 
 
 
