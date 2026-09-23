@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F7E469855;
-	Wed, 23 Sep 2026 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E3651FCD4;
+	Wed, 23 Sep 2026 14:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174784; cv=none; b=aVgTwlSKiA16/oTJJ/FXce+/o6Eq0z4PS6UOXFRp3wuwmtGT5k5YZ6C8YNdd2r0ExQiXotBaGJx8j1Hr1h9AewHVcVzlBca8XjDW5iwwongAVeJnKRcopUu8HaNORP06IQZuMFpCgixzWS1CG1nOgMS+LKjuLYb4dAc9wRYMFe0=
+	t=1790174787; cv=none; b=qmifoCK42JY2tehtINwNwo1jK5GmSB8/LgKQJFz2R99eh5AOpmnxQy8EUwk83d0SwD4IsOOkTkuZIWQs0FS0Kowy8UgzHZi9PYVHuQeiI5ImChmgDiSizXja6+V3+Ajn/DJe4MdvtPUjF0EoZzCVPtow9+QRX4LaxQ4/vpN8HQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174784; c=relaxed/simple;
-	bh=LX8XtziXVS1zvt9i2h8LLnUzXlVUQ+mbRaxPO98Z3uM=;
+	s=arc-20240116; t=1790174787; c=relaxed/simple;
+	bh=MS8gZaBpTezjFLWQ14GjnJVT7s7qgWHAMaPKHywbpOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnk82worZUQQ2PfJO4MsvDuhQQimjVaUsTR+3xqsqfCkkkhMljeeRuMJel6cu4LgYLvx6fDPL1uPZZYsd5soFWgl4oigiEU3KGE4LtLSfJxSoC2+S4IpJnHCcRANYbWtBGSCxOA8VGS9byh37RO3RoCpcNcKit24yFb5zGApajw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUnGiHBo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jfw4511EKbBX+CF2n+nj0N5xETC4YUlakCTXzg8h7KqUcADLDzSUUfZpd/iWBmIE0e5bL4I7ga0GhXaSFB1dIijJVzLdmoqCby9T4+6aP0yS6hrQ8hxPbBuzDSp29gcU1T1guacz/zzvv9E6ztfHI5uQY5kQg7QlSqe06mGT3H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdCQ0GLs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUnGiHBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3381F000FF;
-	Wed, 23 Sep 2026 14:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdCQ0GLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9A61F00893;
+	Wed, 23 Sep 2026 14:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174783;
-	bh=JlSD+8EzXg4nnUGHX8u88rrQcy4BdQiABgMKjJxH8dA=;
+	s=korg; t=1790174786;
+	bh=lD73PH15P4Z+TZ8B8wHGRpH5PgIjMjZtwNkMdiww5n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wUnGiHBoWrLbgX26HnlBHPwCXGV2OT5xjfAUpGDct5Tv6Qpo0zMvpoSKfAUdLmn3D
-	 +liOkuC0W4Wa5IGXpr2/n3KGWW86gYtUGg1Tx4bR0Pgj2icp/wCfcL9ls18Zy1zIG8
-	 rfe1aN3DfDi5plOn6bZcvSyxnefnmbdIBsGf+dAo=
+	b=gdCQ0GLsnNj5kYixDPQxINhzv7qJcGk17vrFXMDDQz7mmn1qxvjwlCgf7/BjfQjtB
+	 awqMbls9NmKoz2CCFAHrDWQuLUvwaZY5Ns/Fl3TQrxoeZJ6nTe7oIrD4ZcShUMOJDR
+	 8sPm5tSEagIYGI+L9Lc4LJfpFiSGxQZNl+m92l7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 224/398] openvswitch: avoid reallocating confirmed conntrack labels
-Date: Wed, 23 Sep 2026 16:04:58 +0200
-Message-ID: <20260923140649.227011139@linuxfoundation.org>
+	Wyatt Feng <wf.kernel.dev@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.18 225/398] net: xfrm: reject unrepresentable espintcp transport headers
+Date: Wed, 23 Sep 2026 16:04:59 +0200
+Message-ID: <20260923140649.253938651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,42 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Wyatt Feng <wf.kernel.dev@gmail.com>
 
-commit 3f118c8217c109fd13ca61caa301d72c483897ef upstream.
+commit 96f01b53c2d05e003b040892256de54a586e8529 upstream.
 
-ovs_ct_get_conn_labels() adds the labels extension when a conntrack
-entry does not have one.  Confirmed conntracks can be read locklessly,
-so adding an extension may reallocate and free the extension block
-while another CPU accesses it.
+ESP-in-TCP can hand xfrm packets whose transport header offset no longer
+fits after the stream parser trims the TCP envelope. The plain transport
+header reset truncates that offset and triggers the skb warning path.
 
-Only add the extension for unconfirmed conntracks.  A confirmed
-conntrack without labels now fails the caller's label operation instead
-of reallocating its extension storage.
+Use the careful transport-header helper and drop the skb through the
+existing XFRM error path when the offset cannot be represented.
 
-Fixes: c2ac66735870 ("openvswitch: Allow matching on conntrack label")
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/372fbb062b40ae6723684f55484be86ff0064f8e.1789218015.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <wf.kernel.dev@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/espintcp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -366,7 +366,7 @@ static struct nf_conn_labels *ovs_ct_get
- 	struct nf_conn_labels *cl;
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -33,7 +33,11 @@ static void handle_esp(struct sk_buff *s
+ {
+ 	struct tcp_skb_cb *tcp_cb = (struct tcp_skb_cb *)skb->cb;
  
- 	cl = nf_ct_labels_find(ct);
--	if (!cl) {
-+	if (!cl && !nf_ct_is_confirmed(ct)) {
- 		nf_ct_labels_ext_add(ct);
- 		cl = nf_ct_labels_find(ct);
- 	}
+-	skb_reset_transport_header(skb);
++	if (!skb_reset_transport_header_careful(skb)) {
++		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
++		kfree_skb(skb);
++		return;
++	}
+ 
+ 	/* restore IP CB, we need at least IP6CB->nhoff */
+ 	memmove(skb->cb, &tcp_cb->header, sizeof(tcp_cb->header));
 
 
