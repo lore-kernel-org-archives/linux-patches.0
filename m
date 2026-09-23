@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D882418368;
-	Wed, 23 Sep 2026 14:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B30377A80;
+	Wed, 23 Sep 2026 14:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173436; cv=none; b=VgJneyjR1rd5sTCKqWlApGeMi5HxdDxTUT/4NAl1i9r6lVFDkGYBjF6JXqeZoQp8t+AEDtE2iP9ChjLUAvl0egnHHviSdM1V0jtgLVcKbaIDY0u8NAlDYI6mUX6XolzF5v52kkefWuU+LPwRt6B6zq+qkxu1ON2UoBpKFfTuQzg=
+	t=1790173439; cv=none; b=lPeBKXVrg677zo0lBL9IchrRQYhINF2MbzmrgGT4oHsnpjHO6bRTrPRv73vZL8Tbwz6h+ps9a7VOMRy6GMEHplBCwEmzicEZ9IZJc2HiEFp1nO9jexfcWWGI9SM9Xg/9cfw8kxb9JPm52qOzrTfWa2tX0U0iE3h7HJXUtkfXPmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173436; c=relaxed/simple;
-	bh=xpeByvoxlMPtVpprzQazGcjvw19VQOmXcd0NCScUv38=;
+	s=arc-20240116; t=1790173439; c=relaxed/simple;
+	bh=GxvWVfdzOM5iYQ8i0zscUp43pyCE4CL/1Y4fzFCKYWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTunmD7kQDjYwmsTZZkkXGVOQz98VxstbetVVgVayXdsRtXr5qCEK6NkotXUYuawReeBep5ByvVgLBHOTXk56MZ0VlkiP4wYkCrP0LtERN680WTnGpMg2gb9lZ995Xs6hdeIHZ368+JGP7AvGXoKh4KDStJG1Dol6l4XgzMWKKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuUYkobh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mkM9X+NWOUuAGO1bC15llvSXxPrbptg/qoz/tY/ytfyxmH+dqQU1ZX0+GBvt4FqCVt00gdW67RkBaTvGCAXJA/GdkrF+6QrJTEKHII5qIqMDMCAHFz7Uxuyf6wa0B5aSYbVfYPMOzghuSPjEJ9scKrdVWSchMSVcUBK4Q0ljwYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAvwhFHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuUYkobh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA25F1F000FF;
-	Wed, 23 Sep 2026 14:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAvwhFHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C667E1F000FF;
+	Wed, 23 Sep 2026 14:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173435;
-	bh=yjPgzjQ7ZA8rMlL2ZUj0PGOunD8Bc6RZh2D4ROgBJsY=;
+	s=korg; t=1790173438;
+	bh=kuf32kDdy/MSq6il+Fofob3z25d5ky/p/Rl2F6mzNKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BuUYkobhBTv60F8NDQY2hPrwo5xmvMLeQp5bPt4BUVU60+HksbphpeBFBwWQpeyCE
-	 KEMdJS1G2wLAWARO5+iBtKluNpMXkQe3rV/LS7cyISYG5UzyiuinRx9AdcrZqop8R9
-	 hiqrnhA0mA6KqLbfrSr2f4A3g6vqygDBX9G18zV8=
+	b=LAvwhFHbKPrM5Dy0MAUnAy+dZdF9R4MgWx92GkkP/m65h7VnWqWdbkAWlFEglg9Bv
+	 FiV/xL/dzN4LeAXRDYTV2sKln7rquHSuVIRUfR5uv8Oss4xSmDTKTAV/NcyrNb0as9
+	 /4VM4iGmD02zge8OWGctXnado6GT3wr7u2gijpP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Kijo Park <red993688@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 7.2 245/438] exec: Cleanup POSIX timers right after de_thread()
-Date: Wed, 23 Sep 2026 16:04:26 +0200
-Message-ID: <20260923140651.119842581@linuxfoundation.org>
+	Seunguk Shin <seunguk.shin@arm.com>,
+	Jan Kara <jack@suse.cz>,
+	Alistair Popple <apopple@nvidia.com>,
+	Kiara Grouwstra <cinereal@riseup.net>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 246/438] fs/dax: check zero or empty entry before converting xarray entry
+Date: Wed, 23 Sep 2026 16:04:27 +0200
+Message-ID: <20260923140651.147199925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -53,128 +56,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Seunguk Shin <seunguk.shin@arm.com>
 
-commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
+commit 8e2b8614039853e68d5338e37821e8bcee9fc05f upstream.
 
-A per-thread CPU timer holds a reference to the PID of the thread it is
-attached to and, while it is armed, its node is queued in that thread's
-posix_cputimers. The task is looked up by that PID.
+Calling dax_to_folio() with empty entry causes kernel panic below when
+booting a VM with DAX enabled storage.
 
-When a non-leader thread exec()s, de_thread() changes which task owns
-that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
-but the node is still queued on tsk, which is alive. timer_lock_sighand()
-takes a failed lookup to mean that the node is already dequeued, so it
-has nothing to undo.
+This patch checks empty entry before calling dax_to_folio() on
+dax_associate_entry(), dax_disassociate_entry(), and dax_busy_page().
 
-begin_new_exec() calls posix_cpu_timers_exit(me) right after
-exec_task_namespaces() and that removes the leftover node, so the state
-normally stays invisible. But bprm->point_of_no_return is set before
-de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
-exec_task_namespaces() fails, the task dies before it gets there.
-exit_itimers() then frees the k_itimer while its node is still queued,
-and reaping tsk later erases that freed node from the rbtree.
+Commit 98c183a4fccf ("fs/dax: don't disassociate zero page entries") added
+guards in the associate and disassociate paths, but the guards still come
+after dax_to_folio(), and dax_busy_page() still has the same problem.
 
-In short:
+[    0.737679] EXT4-fs (pmem0p1): mounted filesystem 79676804-7c8b-491a-b2a6-9bae3c72af70 ro with ordered data mode. Quota mode: disabled.
+[    0.737891] VFS: Mounted root (ext4 filesystem) readonly on device 259:1.
+[    0.739119] devtmpfs: mounted
+[    0.739476] Freeing unused kernel memory: 1920K
+[    0.740156] Run /sbin/init as init process
+[    0.740229]   with arguments:
+[    0.740286]     /sbin/init
+[    0.740321]   with environment:
+[    0.740369]     HOME=/
+[    0.740400]     TERM=linux
+[    0.743162] Unable to handle kernel paging request at virtual address fffffdffbf000008
+[    0.743285] Mem abort info:
+[    0.743316]   ESR = 0x0000000096000006
+[    0.743371]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    0.743444]   SET = 0, FnV = 0
+[    0.743489]   EA = 0, S1PTW = 0
+[    0.743545]   FSC = 0x06: level 2 translation fault
+[    0.743610] Data abort info:
+[    0.743656]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+[    0.743720]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    0.743785]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    0.743848] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000b9d17000
+[    0.743931] [fffffdffbf000008] pgd=10000000bfa3d403, p4d=10000000bfa3d403, pud=1000000040bfe403, pmd=0000000000000000
+[    0.744070] Internal error: Oops: 0000000096000006 [#1]  SMP
+[    0.748888] CPU: 0 UID: 0 PID: 1 Comm: init Not tainted 6.18.4 #1 NONE
+[    0.749421] pstate: 004000c5 (nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.749969] pc : dax_disassociate_entry.constprop.0+0x20/0x50
+[    0.750444] lr : dax_insert_entry+0xcc/0x408
+[    0.750802] sp : ffff80008000b9e0
+[    0.751083] x29: ffff80008000b9e0 x28: 0000000000000000 x27: 0000000000000000
+[    0.751682] x26: 0000000001963d01 x25: ffff0000004f7d90 x24: 0000000000000000
+[    0.752264] x23: 0000000000000000 x22: ffff80008000bcc8 x21: 0000000000000011
+[    0.752836] x20: ffff80008000ba90 x19: 0000000001963d01 x18: 0000000000000000
+[    0.753407] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[    0.753970] x14: ffffbf3154b9ae70 x13: 0000000000000000 x12: ffffbf3154b9ae70
+[    0.754548] x11: ffffffffffffffff x10: 0000000000000000 x9 : 0000000000000000
+[    0.755122] x8 : 000000000000000d x7 : 000000000000001f x6 : 0000000000000000
+[    0.755707] x5 : 0000000000000000 x4 : 0000000000000000 x3 : fffffdffc0000000
+[    0.756287] x2 : 0000000000000008 x1 : 0000000040000000 x0 : fffffdffbf000000
+[    0.756871] Call trace:
+[    0.757107]  dax_disassociate_entry.constprop.0+0x20/0x50 (P)
+[    0.757592]  dax_iomap_pte_fault+0x4fc/0x808
+[    0.757951]  dax_iomap_fault+0x28/0x30
+[    0.758258]  ext4_dax_huge_fault+0x80/0x2dc
+[    0.758594]  ext4_dax_fault+0x10/0x3c
+[    0.758892]  __do_fault+0x38/0x12c
+[    0.759175]  __handle_mm_fault+0x530/0xcf0
+[    0.759518]  handle_mm_fault+0xe4/0x230
+[    0.759833]  do_page_fault+0x17c/0x4dc
+[    0.760144]  do_translation_fault+0x30/0x38
+[    0.760483]  do_mem_abort+0x40/0x8c
+[    0.760771]  el0_ia+0x4c/0x170
+[    0.761032]  el0t_64_sync_handler+0xd8/0xdc
+[    0.761371]  el0t_64_sync+0x168/0x16c
+[    0.761677] Code: f9453021 f2dfbfe3 cb813080 8b001860 (f9400401)
+[    0.762168] ---[ end trace 0000000000000000 ]---
+[    0.762550] note: init[1] exited with irqs disabled
+[    0.762631] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
 
-      the non-leader thread B           the parent
-
-  timer_create(CLOCK_THREAD_CPUTIME_ID)
-  timer_settime()
-    arm_timer()            // the node is queued on B
-  execve()
-    de_thread(B)
-      exchange_tids(B, leader)  // B's PID now belongs to the leader
-      release_task(leader)
-        __exit_signal(leader)
-          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
-          __unhash_process(leader)  // that PID has no task anymore
-    exec_mmap()
-      mmap_read_lock_killable(old_mm)
-                                kill(B, SIGKILL)
-      // -EINTR
-  get_signal()
-    do_exit()
-      exit_itimers()
-        posix_timer_delete()
-          posix_cpu_timer_del()
-        posix_timer_unhash_and_free()  // freed while still queued
-                                wait4()
-                                  release_task(B)
-                                    posix_cpu_timers_exit(B)
-                                      cleanup_timerqueue()
-                                        timerqueue_del()  // use-after-free
-
-Move the POSIX timer cleanup right after de_thread() before any of the
-later failure conditions brings the task into do_exit().
-
-[ tglx: Move the cleanup right after de_thread() ]
-
-Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Kijo Park <red993688@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
-Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
+Link: https://lore.kernel.org/m2y0enxtzk.fsf@arm.com
+Fixes: 38607c62b34b ("fs/dax: properly refcount fs dax pages")
+Signed-off-by: Seunguk Shin <seunguk.shin@arm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Reported-by: Kiara Grouwstra <cinereal@riseup.net>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ fs/dax.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1104,6 +1104,17 @@ void __set_task_comm(struct task_struct
- 	perf_event_comm(tsk, exec);
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -480,11 +480,12 @@ static void dax_associate_entry(void *en
+ 				unsigned long address, bool shared)
+ {
+ 	unsigned long size = dax_entry_size(entry), index;
+-	struct folio *folio = dax_to_folio(entry);
++	struct folio *folio;
+ 
+ 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
+ 		return;
+ 
++	folio = dax_to_folio(entry);
+ 	index = linear_page_index(vma, address & ~(size - 1));
+ 	if (shared && (folio->mapping || dax_folio_is_shared(folio))) {
+ 		if (folio->mapping)
+@@ -505,21 +506,23 @@ static void dax_associate_entry(void *en
+ static void dax_disassociate_entry(void *entry, struct address_space *mapping,
+ 				bool trunc)
+ {
+-	struct folio *folio = dax_to_folio(entry);
++	struct folio *folio;
+ 
+ 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
+ 		return;
+ 
++	folio = dax_to_folio(entry);
+ 	dax_folio_put(folio);
  }
  
-+static void posixtimer_exec(struct task_struct *me)
-+{
-+#ifdef CONFIG_POSIX_TIMERS
-+	spin_lock_irq(&me->sighand->siglock);
-+	posix_cpu_timers_exit(me);
-+	spin_unlock_irq(&me->sighand->siglock);
-+	exit_itimers(me);
-+	flush_itimer_signals();
-+#endif
-+}
-+
- /*
-  * Calling this is the point of no return. None of the failures will be
-  * seen by userspace since either the process is already taking a fatal
-@@ -1137,6 +1148,16 @@ int begin_new_exec(struct linux_binprm *
- 	retval = de_thread(me);
- 	if (retval)
- 		goto out;
-+
-+	/*
-+	 * This must be done here to ensure that POSIX CPU timers which were
-+	 * armed on the current task are dequeued from me::posix_cputimers.
-+	 * Otherwise in case of a TID switch the deletion of the related POSIX
-+	 * timer would not remove an enqueued timer because the TID lookup
-+	 * of the old TID fails.
-+	 */
-+	posixtimer_exec(me);
-+
- 	/* see the comment in check_unsafe_exec() */
- 	current->fs->in_exec = 0;
- 	/*
-@@ -1191,14 +1212,6 @@ int begin_new_exec(struct linux_binprm *
- 	if (retval)
- 		goto out_unlock;
+ static struct page *dax_busy_page(void *entry)
+ {
+-	struct folio *folio = dax_to_folio(entry);
++	struct folio *folio;
  
--#ifdef CONFIG_POSIX_TIMERS
--	spin_lock_irq(&me->sighand->siglock);
--	posix_cpu_timers_exit(me);
--	spin_unlock_irq(&me->sighand->siglock);
--	exit_itimers(me);
--	flush_itimer_signals();
--#endif
--
- 	/*
- 	 * Make the signal table private.
- 	 */
+ 	if (dax_is_zero_entry(entry) || dax_is_empty_entry(entry))
+ 		return NULL;
+ 
++	folio = dax_to_folio(entry);
+ 	if (folio_ref_count(folio) - folio_mapcount(folio))
+ 		return &folio->page;
+ 	else
 
 
