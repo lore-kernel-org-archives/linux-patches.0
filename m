@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F45C334C3B;
-	Wed, 23 Sep 2026 14:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D97418368;
+	Wed, 23 Sep 2026 14:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173474; cv=none; b=enpHG5yBz0ssA3PwdHxxIDtbUE/eqhuF1rpZ+nLetLf5E2AKu+MJ/3tnR3YSzasW0yTuIWco5RrJ3C/FPqHuVqXRKmvqhMfCOARVb4ViVOqXEgXlloxisBjeJGo8yylhFhcuM0TCuSd7juBy7KzxWfcgb4BOenhRez5QrYzbRa4=
+	t=1790173477; cv=none; b=FtnsJul/Ra8ZrmF6MBqT0ggTcjEBa+qgjiDHmAg6W07/AI2HvRxgS4WgickndX7bcpeJlGQXbcYA7z0YU4QvdpHcm7a2MGs2ob77fjQsS8eDUSDVJyp7WRn0nns5/TdCqeHAJeDTIVd+0kXiou9JKaJw68VdwEJNNO0nUEp49Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173474; c=relaxed/simple;
-	bh=VGonTURYXV6qde/nfA/DCKrUfxw7vHq/ZEpcUtmdLIE=;
+	s=arc-20240116; t=1790173477; c=relaxed/simple;
+	bh=Eot9Yo96bXZsr0snBsZYk6WKix/PoulWEMOX9Zfc6FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaMvXGTCPWQwZM1SrExkvgOAdDgf8ygQ3T5PuJpAM7yV1L+vMMgtc1W+hfHkvCZ04E9MHz/Vc0+O7B996QxLYEEfCg1TnsXkQRCj0m8vYul83b3E5RrbRYuYkyXrccf7YpdA9xsDVJoljtht7QIKT0cOFZf4lVcQDWJJDavVUA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiXfYxI5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3apYYBLt+Aoln2H/qpJM9WXdigrx+yY3srxuljxV2EOm9IdMsi3zTYM2cFJOpbxZ4Ka9rXt3nENhPHL0OfUkY0EqU1xOZoiT3mYcUY1I9lYcSqprzxXzCbm6GiM7S76Db09zWvWYmLmUjiX+OZZv8vCIYEH4GKg6Eb+o8CH1pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAaq1lDD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiXfYxI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B291C1F000FF;
-	Wed, 23 Sep 2026 14:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAaq1lDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43041F000FF;
+	Wed, 23 Sep 2026 14:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173473;
-	bh=RU4XG6YxgH2VCVcDOyAFGT967nfmCU5C4ydPKJvEwKE=;
+	s=korg; t=1790173476;
+	bh=UwesviyCPRw1ZPFv0bx89qcKFLufpRQlXZRlu7FLqq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xiXfYxI5DFUX/fC9+I6Rnqvya1PjhgTYjFdZbAXtGeZGNzoqsBCxjKQ7utV8xmyvm
-	 bzQSr8Kh8w05tQAgSS/nGz6y1kVyBlEE/VnUr9q+WGiUknElPrlQIkQ7UHq5EUH9H8
-	 wFeqyveWT55M02o0G8KvI0vIX7oLPvwWSpo4S98M=
+	b=aAaq1lDDoJTGi/PY/UmlVWItdIlnvtnzHOM1hW0etPYzfynPQC8ojMLFvHn1vbGJ0
+	 p3WL+ufYNjRyoGTD/VWDCqBORn5Am+2ahDaqMouDR2D9VxX4QzkLdIVvdWJNCc1c50
+	 NI1Hn5glmPk7lnd3rXSfl3Q3xn8OhdvY6f47/zg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 224/438] btrfs: abort transaction on failure to update inode for hole punching and reflinking
-Date: Wed, 23 Sep 2026 16:04:05 +0200
-Message-ID: <20260923140650.572088928@linuxfoundation.org>
+Subject: [PATCH 7.2 225/438] btrfs: check if there is space for chunk item when validating sys chunk array
+Date: Wed, 23 Sep 2026 16:04:06 +0200
+Message-ID: <20260923140650.598187645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -54,41 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 97fcd34aa9fd73cefe3120ac9a82ca9d7763922f ]
+[ Upstream commit aeab4c62875748ecfd390a47ac1d91ea7c9a6abb ]
 
-If we fail to update the inode we error out without aborting the
-transaction, which can result in a persistent inconsistency if after
-the failure the transaction is committed, as we have dropped file
-extent items from a range and either punched a hole or insert a new file
-extent item for that range (for reflinks).
+We checked if have enough remaining space for a key before dereferencing a
+key, but we then dereference a chunk item, to get the number of stripes,
+without checking if there is space for the item. So add a check to see if
+there is enough space for a chunk item before dereferencing the item to
+extract the stripe count.
 
-So add the missing transaction abort.
-
-Fixes: 2aaa66558172 ("Btrfs: add hole punching")
+Fixes: 2a9bb78cfd36 ("btrfs: validate system chunk array at btrfs_validate_super()")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index f949805f2c3ef..d892683927149 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2513,8 +2513,10 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
- 					      inode_set_ctime_current(&inode->vfs_inode));
- 
- 		ret = btrfs_update_inode(trans, inode);
--		if (ret)
-+		if (unlikely(ret)) {
-+			btrfs_abort_transaction(trans, ret);
- 			break;
-+		}
- 
- 		btrfs_end_transaction(trans);
- 		btrfs_btree_balance_dirty(fs_info);
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index de6e23b88b406..12b771bda43aa 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2358,6 +2358,10 @@ static int validate_sys_chunk_array(const struct btrfs_fs_info *fs_info,
+ 				  key.type, cur);
+ 			return -EUCLEAN;
+ 		}
++
++		if (unlikely(cur + sizeof(*chunk) > sys_array_size))
++			goto short_read;
++
+ 		chunk = (struct btrfs_chunk *)(sb->sys_chunk_array + cur);
+ 		num_stripes = btrfs_stack_chunk_num_stripes(chunk);
+ 		if (unlikely(cur + btrfs_chunk_item_size(num_stripes) > sys_array_size))
 -- 
 2.53.0
 
