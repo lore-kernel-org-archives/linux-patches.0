@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8EF5383E2;
-	Wed, 23 Sep 2026 14:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE085326C7;
+	Wed, 23 Sep 2026 14:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173741; cv=none; b=cTm42DVKG2NHQEyRSEEZBSgU8ecvs66BK0JHmw1J6u8ipLDTLQwJqj70dCVIbokLfqjKhITgPgHZdvg0V7Mo6TyI6Bl73An+Py0lHZX+aZTpbxhPrjhDwpSbwE4KhS13dWc4OVjCldD5W98EWihoxTQ6EASBL53YMTiyPsP+Mcs=
+	t=1790173745; cv=none; b=VsGtG0KfcjH55FeUhcinzNwIiFfag7csA7QNS+ZbfJqfs5IX+Wg2HOi5kxzCvhIvCoMXe9vEvUKQzkJ60bfTzY6kC+RppYNaGxAW8RiQs+EGjVwrx8rMFwRs21T8euiH1nS1Swv+kpeWG2UlaDC69HL+x0Fgsx0rks+wZN26Yj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173741; c=relaxed/simple;
-	bh=/4YmbLqCjzRPTsdYTI68mnwb0xkoA9jByxn8skjDFIw=;
+	s=arc-20240116; t=1790173745; c=relaxed/simple;
+	bh=MNQY2ym90CetV5k0Ze0PPGbAVLRmC1ZMYJFY3fg7a/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuDy14Buw/CQC9BDkTezlt7DujSDxSkx+0FS3Mc5KtltdZ+3WNPSCwyEVEO+qptI5tWDa+Xx02mRUO26v7U72iljEEjbX66cGgOxyhTct311FSs+zeh8gtAq82Tf691bVqQCqXIsPXJoNlMyhMpVA2yuFREQBbSuj3pGzLKHE/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBmoLVXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+MtyiOi8Fhir6T1blcZRV3CLuZrn+fZX6jA6vtbATa8pLEKTrhHx/FxNBu4AjtbjMWq83vvfzg33Fab94LjTlFFDOC63ia2Fsa0Ira+tdHViebjqq63/AokcfKvwGmKTh33JIZ/K1W5Cf9sy+/tmGwad+Yt7BbN69EOyMOk3IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU/P52PF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBmoLVXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6491F000FF;
-	Wed, 23 Sep 2026 14:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU/P52PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1AF1F000FF;
+	Wed, 23 Sep 2026 14:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173740;
-	bh=HULhbuyxlWb1O94cPIlyGY5Tj7dmnuAEBRCv4aEBg2g=;
+	s=korg; t=1790173743;
+	bh=dsUrQrfc9Xus81ETLGzKvE0Y6fk/GiOzxm37bxOh6vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBmoLVXJLVVE2dr2NvtP6kKWFcmk9kNt7RBokx10Sh8xNW1djCbgoZdT3m212x3Qx
-	 OvM+Rbg70lrrv3HoYghbT0I/noOxRaZoyWTsc2ciNvgNIhAirx4AUytr7MD2xSQpzf
-	 GkKZMfEXg+NFGfDyM2T52jhGsNRFmUoyT/z/34Gw=
+	b=SU/P52PFrrGjeJ9opkwiyDIOTN6Q2m5Xwra3NrxaqjMKEL4L0Tj19VFewjvt834lZ
+	 KKHSJHm5nAKyuspSDPWUK4Op9HaWFEAVdrALdlma7LA5NssZmAm1AT0xaxOK9nlXpU
+	 1cOqjx6Z1GCJRXxuEg5XMayMNYRYrdGuDptIoNKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Liu Zhenlong <dragonliu2018@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Shengzhuo Wei <me@cherr.cc>,
+	Frank Li <Frank.Li@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.2 327/438] i2c: qcom-cci: fix device_node refcount leak in cci_probe()/cci_remove()
-Date: Wed, 23 Sep 2026 16:05:48 +0200
-Message-ID: <20260923140653.280109814@linuxfoundation.org>
+Subject: [PATCH 7.2 328/438] i2c: imx: release DMA channels on probe error
+Date: Wed, 23 Sep 2026 16:05:49 +0200
+Message-ID: <20260923140653.308173651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,103 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Zhenlong <dragonliu2018@gmail.com>
+From: Shengzhuo Wei <me@cherr.cc>
 
-commit 7362a1553eb09a8cdf8be7e509bd5309a8342486 upstream.
+commit e9f03b9625e2eeaca357b065c92d5b14064a1583 upstream.
 
-The of_node_put() matching of_node_get() runs after i2c_del_adapter(),
-whose trailing memset() zeroes adap->dev and thus adap->dev.of_node,
-making the put a no-op and leaking the node on every adapter removal
-and error cleanup.
+i2c_imx_dma_request() acquires exclusive tx/rx DMA channels and is
+optional: on errors other than -EPROBE_DEFER the driver falls back to
+PIO mode and probe continues. If i2c_add_numbered_adapter() then fails,
+probe returns through clk_notifier_unregister without releasing the
+channels, because the remove callback is not invoked after a failed
+probe.
 
-Use a devm action: the pointer is captured at registration, out of
-reach of that memset(), and devres runs the put once on probe failure
-and detach, replacing the three manual of_node_put() calls.  The
-setup loop uses the scoped iterator form so the child node is released
-automatically if devm_add_action_or_reset() fails mid-loop.
+Release the channels on the probe error path, mirroring
+i2c_imx_remove().
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 02a4a69667a2 ("i2c: qcom-cci: don't put a device tree node before i2c_add_adapter()")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Liu Zhenlong <dragonliu2018@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.17+
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: ce1a78840ff7 ("i2c: imx: add DMA support for freescale i2c driver")
+Assisted-by: GLM:5.3
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Cc: <stable@vger.kernel.org> # v3.19+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260818175750.4205-1-dragonliu2018@gmail.com
+Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-2-271d4adc03a0@cherr.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -497,10 +497,14 @@ static const struct dev_pm_ops qcom_cci_
- 	SET_RUNTIME_PM_OPS(cci_suspend_runtime, cci_resume_runtime, NULL)
- };
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1880,6 +1880,8 @@ static int i2c_imx_probe(struct platform
  
-+static void cci_put_of_node(void *data)
-+{
-+	of_node_put(data);
-+}
-+
- static int cci_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *child;
- 	struct resource *r;
- 	struct cci *cci;
- 	int ret, i;
-@@ -516,7 +520,7 @@ static int cci_probe(struct platform_dev
- 	if (!cci->data)
- 		return -ENOENT;
- 
--	for_each_available_child_of_node(dev->of_node, child) {
-+	for_each_available_child_of_node_scoped(dev->of_node, child) {
- 		struct cci_master *master;
- 		u32 idx;
- 
-@@ -537,6 +541,9 @@ static int cci_probe(struct platform_dev
- 		master->adap.algo = &cci_algo;
- 		master->adap.dev.parent = dev;
- 		master->adap.dev.of_node = of_node_get(child);
-+		ret = devm_add_action_or_reset(dev, cci_put_of_node, child);
-+		if (ret)
-+			return ret;
- 		master->master = idx;
- 		master->cci = cci;
- 
-@@ -606,10 +613,8 @@ static int cci_probe(struct platform_dev
- 			continue;
- 
- 		ret = i2c_add_adapter(&cci->master[i].adap);
--		if (ret < 0) {
--			of_node_put(cci->master[i].adap.dev.of_node);
-+		if (ret < 0)
- 			goto error_i2c;
--		}
- 	}
- 
- 	return 0;
-@@ -617,10 +622,8 @@ static int cci_probe(struct platform_dev
- error_i2c:
- 
- 	for (--i ; i >= 0; i--) {
--		if (cci->master[i].cci) {
-+		if (cci->master[i].cci)
- 			i2c_del_adapter(&cci->master[i].adap);
--			of_node_put(cci->master[i].adap.dev.of_node);
--		}
- 	}
- disable_clocks:
- 	cci_disable_clocks(cci);
-@@ -636,7 +639,6 @@ static void cci_remove(struct platform_d
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
--			of_node_put(cci->master[i].adap.dev.of_node);
- 			cci_halt(cci, i);
- 		}
- 	}
+ clk_notifier_unregister:
+ 	clk_notifier_unregister(i2c_imx->clk, &i2c_imx->clk_change_nb);
++	if (i2c_imx->dma)
++		i2c_imx_dma_free(i2c_imx);
+ 	free_irq(irq, i2c_imx);
+ rpm_disable:
+ 	pm_runtime_put_noidle(&pdev->dev);
 
 
