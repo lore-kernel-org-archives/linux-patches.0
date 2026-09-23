@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B00517BAA;
-	Wed, 23 Sep 2026 14:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3752B426D2E;
+	Wed, 23 Sep 2026 14:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175054; cv=none; b=hwRK1C9eR4W6nRSdbkaQC22H9cHwhH8+GrHo2kRITUnkv0NrLK8jL8sG1qUwAqreicmHzttV4eDxP+r4Ul4Mw8ZBJovEDULKeT8QEqDFwMYDRunV0HjPbJHcK9dL8LfNcQlLM6pLoQ8s+PqCDtKZK6AdQ1g2WGej27yBA4hDik4=
+	t=1790175057; cv=none; b=Hqc3qXwFYD+ezqBfILF7vtS35U/EcH8lcdpjRfnRoj2EEqoz9IHWugnJffbifboUBMtQUOSH5XoJEvMU5bF9jtZZdaY5/NuaxuqBCtS2EvGkx83lFWn+VidvN1U4SHnk1B54ktDfy8a3lBScbx6ZZnKGWViKWqHFj4f14jB/YFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175054; c=relaxed/simple;
-	bh=DKj5daTf5l0izdsulaBtLCFJMXYooPyCCA4E9qKJkpE=;
+	s=arc-20240116; t=1790175057; c=relaxed/simple;
+	bh=ohlY1lUuMp8RbIMKMeq2dfEO/1LHmCaYD/8NhDZz/nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M6pc94iCizBtj8p9lk1T6F2axjGytKlnLv7a3zHyg/2AYqqi6JfY0HM15pdtnRYO7CjYbFds2N4ynakM1Hf7O/g9wl6n8m3GmV9oHNC7BO+6LJJRjuf7XjoDPrgcKCwWutoPlRlDItsjQ4zWT21A/ua1yFnZO51wjzC5xv8qmWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ls/4Xavs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=doQ/L1M4UhYluWPdCcxOh+H63FdfWLTYoelF6uL6H1awInjMlO2edPr6eQvPMUI4XvwYolpNRh/h3DDsKgRlWH7K0IXsOdEcOICIErCMKj8XkM6IRfWj93DxpW3lh5ia+uZsPE0AnYOW8H4gcu5bHG18NDG5Gy9yqEVSU28CwWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jW5xJZM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ls/4Xavs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D97F1F000FF;
-	Wed, 23 Sep 2026 14:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jW5xJZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8C51F000FF;
+	Wed, 23 Sep 2026 14:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175053;
-	bh=mWopp7LQwyZei86B7FU9Ktspzpvm2LdAARTcwObLwEQ=;
+	s=korg; t=1790175056;
+	bh=fXLfOFUtUgnA1apRwDYfRwDzqVodnLZl0ZTgXJ0Lz3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ls/4Xavs1QeJlIPxAvGeQrHKzrR3SbRInDcIIeaM2M/pZmEg7kxzBqqK4NVrPOZjf
-	 axL9i7Z9nlqcVFc9YAkj9NFEP1CbUuD1yK9Ape/Tv7GKh2yOdF+O2JL2LGSfYA655k
-	 f0mI/mzqUDZjEoMC3PUKdVlIwRcwGKbBRUUhITGk=
+	b=2jW5xJZM+utKuIJCqRaPkDMOb//KqaY1hJeWt7AnSDWb4+Apc/ODK177tAe5zF5Zw
+	 91X8TBMzTq0ipSYVis16AcqxvSkTGaRb0Vsy+reRXQWx5CMLYRENJCmVj77Xd4gbDg
+	 6eYfJmRxkhqzKM8g9RaOt8NZ2tmsPkGCjPu873l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 307/398] hwmon: (pmbus/core) increase number of phases and add new mask
-Date: Wed, 23 Sep 2026 16:06:21 +0200
-Message-ID: <20260923140651.375890228@linuxfoundation.org>
+	Zhu Ling <zhuling0805@qq.com>,
+	Shawn Lin <shawn.lin@linux.dev>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 281/398] mmc: core: Fix OF node reference leak on card add failure
+Date: Wed, 23 Sep 2026 16:05:55 +0200
+Message-ID: <20260923140650.699657985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -44,61 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Zhu Ling <zhuling0805@qq.com>
 
-commit 06bd6794b5fd2163880ac3bfe973d4cc61f359f3 upstream.
+commit 08b54e16d547d5c1aa61bf7a3595bb1620975eeb upstream.
 
-Increase the number of phases to 16 as a new upcoming device supports
-such a number.
+mmc_of_find_child_device() returns a device node with its reference count
+incremented. mmc_add_card() stores the reference before calling
+device_add(), while the card is marked present only after device_add()
+succeeds.
 
-While at it, add a new mask for controlling the source of the output
-voltage.
+If device_add() fails, the callers release the card through
+mmc_remove_card(). However, mmc_remove_card() only drops the OF node
+reference for a present card, leaking the reference on this error path.
 
-Note (groeck):
+Move of_node_put() outside the present-card conditional so the reference
+is released for both registered cards and card-add failures.
 
-This patch was meant to prepare for support of MAX20826 and compatible
-devices, which support more than 10 phases per page. However, Sashiko
-reports that the mp2975 driver already supports up to 14 phases, and the
-mp2856 driver supports up to 12 phases. This already has the potential for
-out-of-bounds writes when probing the affected chips, making this patch a
-bug fix.
-
-Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
-Fixes: f9e5f289b686 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260911-hwmon-max20826-support-v2-1-5e30cbd97d84@analog.com
+Fixes: 25185f3f31c9 ("mmc: Add SDIO function devicetree subnode parsing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Zhu Ling <zhuling0805@qq.com>
+Reviewed-by: Shawn Lin <shawn.lin@linux.dev>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/core/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/pmbus.h
-+++ b/drivers/hwmon/pmbus/pmbus.h
-@@ -242,6 +242,7 @@ enum pmbus_regs {
- /*
-  * OPERATION
-  */
-+#define PB_OPERATION_CONTROL_V_SRC	GENMASK(5, 4)
- #define PB_OPERATION_CONTROL_ON		BIT(7)
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -417,8 +417,8 @@ void mmc_remove_card(struct mmc_card *ca
+ 				mmc_hostname(card->host), card->rca);
+ 		}
+ 		device_del(&card->dev);
+-		of_node_put(card->dev.of_node);
+ 	}
++	of_node_put(card->dev.of_node);
  
- /*
-@@ -386,7 +387,7 @@ enum pmbus_sensor_classes {
- };
- 
- #define PMBUS_PAGES	32	/* Per PMBus specification */
--#define PMBUS_PHASES	10	/* Maximum number of phases per page */
-+#define PMBUS_PHASES	16	/* Maximum number of phases per page */
- 
- /* Functionality bit mask */
- #define PMBUS_HAVE_VIN		BIT(0)
+ 	if (host->cqe_enabled) {
+ 		host->cqe_ops->cqe_disable(host);
 
 
