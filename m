@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7180353E315;
-	Wed, 23 Sep 2026 14:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E113538D7A;
+	Wed, 23 Sep 2026 14:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174804; cv=none; b=olgfRo+Ky5s8mFM2cag+oHXyR1rDczn2FGWXkQVixXhPJKIVyHswUzb+jJKcPaYOqHgh2uA0T4WL55gQOK3WQXfKUyLiS4SRn1QUEoR606rHFEwFO7UmSpsCFoJxPBLTKk1L/sLFh7su9Ykwj5t9Wvh6Qzq+N+0dl1WoLHx300E=
+	t=1790174807; cv=none; b=nUpd0P9nM+uupwdD68J49nab3a+fHn829LDKRcS2dYcqYp4+Ylt42ZXS8pkjbBcJqnu3Yc/juRh5sij6nNE+wz9m0gKqKCKQb48wefBcbTQH/L94PDbPozVbsBxiNC0wOCxCzzXZvrTIbTwc0alaUjaSEsBmgmZ49V/AMd+wbX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174804; c=relaxed/simple;
-	bh=pRKWOon/i5pvImNQx3gCmFSSsman4n/hGLBJxuPl3KM=;
+	s=arc-20240116; t=1790174807; c=relaxed/simple;
+	bh=beoGYQF9n2mgqkl9gT3a5bJQCPgI86FGbTWTNGa266o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLEmkV+U/gDl3/qEcei5/CHFxuJcMRiFxjBzey6yOLGRzYqwnbqyQb9w+zRwWvd1htseS9AfZNDIdZ1anuyPLETjC/qL0nw7RiOw3pmkM0ilmKae5GfALj5tnJPNlzdnL5qx+9kuzm6YvcLeFPvvQM8kzEaZa4BB1cvOjgxktO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmzL9Fh1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lq4fOEVHZBnblpGC48FrBlN2bVCKhQnzTQcjkO1hFTtc1wozf5UW3gXJ72jp2nAGqlNt5b1goJO8y6/hQxg/2yExfKJaCVuiI4Hy0kH3V3dzmG6sTJthagO3Qbi5Mmep5cli9hWtXlvojL27qeASyBp7Gt3J7aXTa+3Z6bbbw3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMOw2Roj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmzL9Fh1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3C61F000FF;
-	Wed, 23 Sep 2026 14:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMOw2Roj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94EF1F000FF;
+	Wed, 23 Sep 2026 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174803;
-	bh=6hjoaK0jV9bMUr7iZvEuAoZOjYMNUtTRCjsXPQhuJEc=;
+	s=korg; t=1790174806;
+	bh=DmTjSafAF9Un08i6eKzWDWsmZgd5wIIYiuo3hhdqpkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MmzL9Fh1BvzFzNDwke5IL7BzoTJrWVSuX4xUM5zuoFn843ca7srpoTTUlBAN4L+lI
-	 wx9jIpmiHcy+REhqZ69zOiymBUsNQz7Dz53XLc6hEz2tbm5zmpnmn6u1pgzoLlvXFr
-	 h5pzUOVNyMf5iYsDGXmqziZ1MJNWgqaArBvhG6k0=
+	b=PMOw2RojEVGvLrkivvnUc0sbX/Rqbw1hZn1Ffg8/CIYQ/PI1B55Qp5Yu83P46QO4m
+	 OeTeHepyHW758n6KqaeEU+IcVf65kS7iZjku1Xzdu9BjxR1oh1+KsfDTKpBYbuh/X5
+	 XkW/c90hlnzzWXuKU5lLrJ7rTgohe0/saEqFdDYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"Christopher Lameter (Ampere)" <cl@gentwo.org>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Yang Shi <yang@os.amperecomputing.com>
-Subject: [PATCH 6.18 231/398] arm64: percpu: Fix this_cpu_and() mask generation
-Date: Wed, 23 Sep 2026 16:05:05 +0200
-Message-ID: <20260923140649.406517596@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Kijo Park <red993688@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 6.18 205/398] exec: Cleanup POSIX timers right after de_thread()
+Date: Wed, 23 Sep 2026 16:04:39 +0200
+Message-ID: <20260923140648.737203036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -61,86 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 44274c657256b4911de82f8104e9e22f054cf742 upstream.
+commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
 
-The arm64 implementation of this_cpu_and(pcp, val) is built in terms of
-ANDNOT operations, which requires the 'val' argument to be bitwise
-negated. The bitwise negation is not implemented correctly, with two
-bugs described below.
+A per-thread CPU timer holds a reference to the PID of the thread it is
+attached to and, while it is armed, its node is queued in that thread's
+posix_cputimers. The task is looked up by that PID.
 
-(1) The bitwise negation is performed as '~val' rather than '~(val)'.
-    This won't always generate the expected value when 'val' is an
-    expression.
+When a non-leader thread exec()s, de_thread() changes which task owns
+that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
+but the node is still queued on tsk, which is alive. timer_lock_sighand()
+takes a failed lookup to mean that the node is already dequeued, so it
+has nothing to undo.
 
-    For example, for this_cpu_and(pcp, 1 - 1):
+begin_new_exec() calls posix_cpu_timers_exit(me) right after
+exec_task_namespaces() and that removes the leftover node, so the state
+normally stays invisible. But bprm->point_of_no_return is set before
+de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
+exec_task_namespaces() fails, the task dies before it gets there.
+exit_itimers() then frees the k_itimer while its node is still queued,
+and reaping tsk later erases that freed node from the rbtree.
 
-    * 'val'    is  '1 - 1'   ===> (int) 0x00000000
-    * '~val'   is '~1 - 1'   ===> (int) 0xfffffffd
-    * '~(val)' is '~(1 - 1)' ===> (int) 0xffffffff
+In short:
 
-    ... and thus bit[1] of 'pcp' would be preserved unexpectedly by the
-    ANDNOT operation.
+      the non-leader thread B           the parent
 
-(2) The bitwise negation is performed on 'val' before it has been cast
-    to (at least) the width of 'pcp'. This won't always generate the
-    expected value for the upper bits.
+  timer_create(CLOCK_THREAD_CPUTIME_ID)
+  timer_settime()
+    arm_timer()            // the node is queued on B
+  execve()
+    de_thread(B)
+      exchange_tids(B, leader)  // B's PID now belongs to the leader
+      release_task(leader)
+        __exit_signal(leader)
+          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
+          __unhash_process(leader)  // that PID has no task anymore
+    exec_mmap()
+      mmap_read_lock_killable(old_mm)
+                                kill(B, SIGKILL)
+      // -EINTR
+  get_signal()
+    do_exit()
+      exit_itimers()
+        posix_timer_delete()
+          posix_cpu_timer_del()
+        posix_timer_unhash_and_free()  // freed while still queued
+                                wait4()
+                                  release_task(B)
+                                    posix_cpu_timers_exit(B)
+                                      cleanup_timerqueue()
+                                        timerqueue_del()  // use-after-free
 
-    For example, for this_cpu_and(pcp, zero), where 'pcp' is a u64 and
-    'zero' is a u32:
+Move the POSIX timer cleanup right after de_thread() before any of the
+later failure conditions brings the task into do_exit().
 
-    * 'zero'           ===> (u32) 0x00000000
-    * '~(zero)'        ===> (u32) 0xffffffff
-    * '(u64)~(zero)'   ===> (u64) 0x00000000ffffffff
-    * '~((u64)(zero))' ===> (u64) 0xffffffffffffffff
+[ tglx: Move the cleanup right after de_thread() ]
 
-    ... and thus bits[63:32] of 'pcp' would be preserved unexpectedly by
-    the ANDNOT operation.
-
-Fix these issues by adding brackets around 'val', and by casting 'val'
-to an appropriately-sized type before bitwise negation.
-
-Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Acked-by: Christopher Lameter (Ampere) <cl@gentwo.org>
-Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <yang@os.amperecomputing.com>
+Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Kijo Park <red993688@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
+Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/percpu.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/exec.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -206,13 +206,13 @@ PERCPU_RET_OP(add, add, ldadd)
- 	_pcp_protect_return(__percpu_add_return_case_64, pcp, val)
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1094,6 +1094,17 @@ void __set_task_comm(struct task_struct
+ 	perf_event_comm(tsk, exec);
+ }
  
- #define this_cpu_and_1(pcp, val)	\
--	_pcp_protect(__percpu_andnot_case_8, pcp, ~val)
-+	_pcp_protect(__percpu_andnot_case_8, pcp, ~(u8)(val))
- #define this_cpu_and_2(pcp, val)	\
--	_pcp_protect(__percpu_andnot_case_16, pcp, ~val)
-+	_pcp_protect(__percpu_andnot_case_16, pcp, ~(u16)(val))
- #define this_cpu_and_4(pcp, val)	\
--	_pcp_protect(__percpu_andnot_case_32, pcp, ~val)
-+	_pcp_protect(__percpu_andnot_case_32, pcp, ~(u32)(val))
- #define this_cpu_and_8(pcp, val)	\
--	_pcp_protect(__percpu_andnot_case_64, pcp, ~val)
-+	_pcp_protect(__percpu_andnot_case_64, pcp, ~(u64)(val))
++static void posixtimer_exec(struct task_struct *me)
++{
++#ifdef CONFIG_POSIX_TIMERS
++	spin_lock_irq(&me->sighand->siglock);
++	posix_cpu_timers_exit(me);
++	spin_unlock_irq(&me->sighand->siglock);
++	exit_itimers(me);
++	flush_itimer_signals();
++#endif
++}
++
+ /*
+  * Calling this is the point of no return. None of the failures will be
+  * seen by userspace since either the process is already taking a fatal
+@@ -1127,6 +1138,16 @@ int begin_new_exec(struct linux_binprm *
+ 	retval = de_thread(me);
+ 	if (retval)
+ 		goto out;
++
++	/*
++	 * This must be done here to ensure that POSIX CPU timers which were
++	 * armed on the current task are dequeued from me::posix_cputimers.
++	 * Otherwise in case of a TID switch the deletion of the related POSIX
++	 * timer would not remove an enqueued timer because the TID lookup
++	 * of the old TID fails.
++	 */
++	posixtimer_exec(me);
++
+ 	/* see the comment in check_unsafe_exec() */
+ 	current->fs->in_exec = 0;
+ 	/*
+@@ -1181,14 +1202,6 @@ int begin_new_exec(struct linux_binprm *
+ 	if (retval)
+ 		goto out_unlock;
  
- #define this_cpu_or_1(pcp, val)		\
- 	_pcp_protect(__percpu_or_case_8, pcp, val)
+-#ifdef CONFIG_POSIX_TIMERS
+-	spin_lock_irq(&me->sighand->siglock);
+-	posix_cpu_timers_exit(me);
+-	spin_unlock_irq(&me->sighand->siglock);
+-	exit_itimers(me);
+-	flush_itimer_signals();
+-#endif
+-
+ 	/*
+ 	 * Make the signal table private.
+ 	 */
 
 
