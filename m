@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F9253B5ED;
-	Wed, 23 Sep 2026 14:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA8B2E2663;
+	Wed, 23 Sep 2026 14:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175181; cv=none; b=qZPNZS8FIzXDTWtDek75aqsqQmHC/IORdLZwS8/jq3xDggM60wq+BbgmWXlzfnbUhdJq3vJd4aTqP2SqO0TrszpOq7bb0ms9flFSOE+Wd/sBrkKNvh0P3EAU6cxPw4vGoJ7+jTY9xTqqR/1cbaq9x07OpqFrjJLXbnj3jmp1Ch8=
+	t=1790175184; cv=none; b=D1fCefTgXCNkw5Uh3pbCShfBlw2EunjRGfj0i8zfU9rilAbOBewWaoO5ch81K/3LC3GTyMKiNEvRstIOzxnUOqMoApi2O6dMPO5kaQksjOFBZxj9UuhZJTWmbN0ljtvjg+c8Cuk1isTukWeryeuVwzSYGMJhcwLYrbasvYwEVDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175181; c=relaxed/simple;
-	bh=EDScgsurfjYl9Dh4vUgid8+uKtQCRLInxLlQXsqdPAw=;
+	s=arc-20240116; t=1790175184; c=relaxed/simple;
+	bh=OzPEvHatMMKP678wMbjp0BhDToyl7O4Xvb7QK5eJo/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i28QltgazpSvgh9dq2L4the9ctlPa4zca6vKNh3LMao2riDMDNDLOufzulhDSOM1ygGK0+qYvsNCqTG2KXb0sGJWylZPOXoD31K54HbcQZRbWD/v6Gfg9hW+OSat2/Ve4oRl109zyezXENNhTXC0Xpc+CS0n3Or+QVWZdA7l8vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wacrmwA0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrfZU6i5tFmTMJ1yFo+qTB61qHw/+h1zhkG/dtEfY4oOPnngZc5CsnfsE/mJhtiANcstfPphuHJfZCKT4TDUtZKR7/Wkb/k4PuI6/e4tpkakLlTI5e550kaFvcQoUdf9GazlDbNTwFAbYfip9OyG+KamAh4SeYe3CL1fKumMrmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5Nem6Ob; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wacrmwA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0581F00893;
-	Wed, 23 Sep 2026 14:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5Nem6Ob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70131F000FF;
+	Wed, 23 Sep 2026 14:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175179;
-	bh=99y4oV6uLzzTf7ccU4hFIht6tXm28o3C6Y/75HLVvVU=;
+	s=korg; t=1790175182;
+	bh=Fwxmb7uC81/RbOskkrlb25hflVL8pS5ma/NRSGZRJhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wacrmwA0GJQWIm/wgDnzp5wRtmYgzbqk20WXdt4SnBq5M1fq4RraOrrArXJ4bYJTg
-	 zyiczc8HbnEEmlBr9Q5fqz5H1TFJnevmXYkqRdqxubykoVmmY06w4zeanGsWCQLyRc
-	 L+udoygd1jv86m+tRI1Bqbw4nWsfo2ciRR3+uq6A=
+	b=e5Nem6ObbRI2AgM46JOEngqmPlzKBY2O3LddI4EqDnsGuwF879Y7sEFxNVK/gukHq
+	 SJG66i6ChXeQsbOIhtU2QHeIDqZmd84mdAI4mOwjJn4+oT8PshhHM0WmZU8lOCof7B
+	 kLMQsYS3CwFWkveMKqt3Vx2CRC7jD1PxQOVw3eXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 318/398] watchdog: msc313e: Propagate error code in resume()
-Date: Wed, 23 Sep 2026 16:06:32 +0200
-Message-ID: <20260923140651.664263238@linuxfoundation.org>
+	syzbot+5003556314abc915a71f@syzkaller.appspotmail.com,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.18 345/398] smb: client: cancel reconnect work in clean_demultiplex_info()
+Date: Wed, 23 Sep 2026 16:06:59 +0200
+Message-ID: <20260923140652.371680943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,47 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 1d9763f34a85680db1e8233d654fdb85e5f897cc upstream.
+commit c65eae6f61d1778ff7a82e4aae4080e26f486af1 upstream.
 
-If msc313e_wdt_start() fails during system resume, the error is
-currently ignored.  Consequently, the watchdog isn't running without the
-user's knowledge.
+clean_demultiplex_info() cancels server->echo delayed work but not
+server->reconnect, which can cause a use-after-free when the
+demultiplex thread exits while a reconnect work is still queued:
 
-Propagate the error code and print a message if msc313e_wdt_start()
-fails.
+  cifs_demultiplex_thread()
+    cifs_readv_from_socket()
+      cifs_reconnect()
+        __cifs_reconnect()
+          cifs_queue_server_reconn()
+            mod_delayed_work(cifsiod_wq, &server->reconnect, 0)
+    clean_demultiplex_info()
+      cancel_delayed_work_sync(&server->echo)   // echo canceled
+                                                 // reconnect NOT canceled
+      kfree_sensitive(server)                    // server freed
 
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Fixes: e9800b7994642 ("watchdog: Add Mstar MSC313e WDT driver")
+  ...later, on cifsiod_wq:
+
+  smb2_reconnect_server()
+    server->srv_count  // UAF read of freed server
+
+Fix this by canceling server->reconnect delayed work in
+clean_demultiplex_info() before the server is freed, the same way
+cifs_put_tcp_session() already does.
+
+Reported-by: syzbot+5003556314abc915a71f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6aa4a12d.f81106d8.2ab401.0023.GAE@google.com
+Fixes: 53e0e11efe92 ("CIFS: Fix a possible memory corruption during reconnect")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260912163334.28636-1-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/msc313e_wdt.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/smb/client/connect.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -198,11 +198,15 @@ static int __maybe_unused msc313e_wdt_su
- static int __maybe_unused msc313e_wdt_resume(struct device *dev)
- {
- 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
-+	int ret = 0;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1064,6 +1064,7 @@ clean_demultiplex_info(struct TCP_Server
+ 	spin_unlock(&server->srv_lock);
  
--	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
--		msc313e_wdt_start(&priv->wdev);
-+	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev)) {
-+		ret = msc313e_wdt_start(&priv->wdev);
-+		if (ret)
-+			dev_err(dev, "Failed to restart watchdog (err=%d)\n", ret);
-+	}
+ 	cancel_delayed_work_sync(&server->echo);
++	cancel_delayed_work_sync(&server->reconnect);
  
--	return 0;
-+	return ret;
- }
- 
- static SIMPLE_DEV_PM_OPS(msc313e_wdt_pm_ops, msc313e_wdt_suspend, msc313e_wdt_resume);
+ 	spin_lock(&server->srv_lock);
+ 	server->tcpStatus = CifsExiting;
 
 
