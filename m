@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D903497B76;
-	Wed, 23 Sep 2026 14:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF8A531AF3;
+	Wed, 23 Sep 2026 14:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174168; cv=none; b=e7B86NuuvANvDGQ2vrmrVFniVK8eUVjOf3qh1al6Usw5eFmneR/GDrbDlrbknDNQwHevJ7DVe6JJycIFogx768XGT60RtOLdrIxKutgRf2EVh8m0UUKFjBEl+zyiDKOOKf7lfmfgZ3z37oZn1lrnOhposJpHbP7a4atn7VJnFKw=
+	t=1790174171; cv=none; b=Fj5JpdS1DGOgKHPz3TVhF0PYQOf4D2IzvEgiVDryuKnl1TgxffWt7Ym8ubRl6kTa5IrRluUEbqD07UTdYi8N05T9OWrV/OgoSoo7tJ1Yv5YE10+0tf3Mep4z/HkQACuRjz59BPMY09+fkBLBushZMlrstxdwZuVJtuc4UYHZwTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174168; c=relaxed/simple;
-	bh=BU/9+9K7Z1RZ/KE1XBYRoT0f3zJLcYY6iGVim+P4Y74=;
+	s=arc-20240116; t=1790174171; c=relaxed/simple;
+	bh=l7comICOUgmJ78UhUSkYuG7JlBetfIqoQeTkJ/W5bgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNyxVIW4KYjVb8dhHQ27Iqd8XvSVbY5+WTfYI4IVPcan3/PtYG1bXaLvTlT+3sGiatTMv6cDO/g5xGZtZ8ywz5WQstPoK7q0WkjTxLl0Ka8+syvwvhbdJE76el9NUO6yzSrBiZBGJY2M88LR5xp1HkrGcYd4HGQkb5YRmYGhI1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01vu3C92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CnDjeEcKC+YAa1XxhCzKvqh3O0ghDUjO+Fpbv854GD3ktJWpPfV8D2QrLF9lOMQG91Ogt/OWdvRLX3FZZ2CpUNeYI5rHea/4edaDerBQxDqaMyE0eAvUQ399H7hsqh39JwI6AuBQhZgTOOOxzcCPin/PkcM3QDJk81sKb7MxFFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ec5bfQIa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01vu3C92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B031F000FF;
-	Wed, 23 Sep 2026 14:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ec5bfQIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E1A1F000FF;
+	Wed, 23 Sep 2026 14:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174166;
-	bh=8jfwsv9Sk1Vfva3SwH7gkowSP7KlIKlymuQUzLxAY3w=;
+	s=korg; t=1790174169;
+	bh=9xbs3iwSU083a6FgXp7/9LNLHa7+jJ64hjNoJeluQCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01vu3C92R0/aozETd2Zay7CMnZH5Qr+Z8TxiNtn9tvtVDc6QP/M+rujYFXZR6zGsY
-	 VAzBqPsrIxVACUiQh56d7cywnLHb3Eaw9ch4tYJ1jYmeBodTWn9AI+X6sOVDOiH+vN
-	 fbWxexEvJye5fjwb/rkY+Mu4lbU/hXOrdRQuZ0Hs=
+	b=ec5bfQIafHKygJOv6CtJNNIIRzRfFkI6SokFcGC7imdxJmJa/PmKF6FNpDIuLkuzD
+	 sFmERXSDFQFSMIlsLTpeqcpO3Ubcx03GO5r5tlV9zJq4mEpK0S3OMzmGUbVb+MlBWh
+	 3SH1NFpA9C+cZ14bAEeo/vb5bAXuWs8NRuebn39s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
+	syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com,
+	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/398] RDMA/mlx5: Remove warn on missing representor in query_port_speed
-Date: Wed, 23 Sep 2026 16:01:45 +0200
-Message-ID: <20260923140644.235508872@linuxfoundation.org>
+Subject: [PATCH 6.18 032/398] RDMA/core: Reject unregistering netdevs in ib_get_eth_speed
+Date: Wed, 23 Sep 2026 16:01:46 +0200
+Message-ID: <20260923140644.260738426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,54 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
 
-[ Upstream commit 2be77295316c2dff0a33c0dc3a65abdab4ccf796 ]
+[ Upstream commit ef9fbe1b93f3b617b96e86d5cd76b3fa44514cb5 ]
 
-The representor ib_device's phys_port_cnt is set to the total vport
-count when the uplink vport rep loads. Individual port[i].rep entries
-are populated only as each VF/SF vport rep registers. A NULL .rep for
-a given port index is therefore expected while VF reps are still
-loading or haven't been enabled yet.
+ib_device_get_netdev() intentionally returns a referenced net_device even
+when it is unregistering, so matching and cleanup callers can still find
+the association. The reference keeps struct net_device allocated, but does
+not guarantee that the device remains operational.
 
-Tools like ibstat and ibv_devinfo iterate over all ports of all RDMA
-devices. Some ports may not have an eswitch representor, causing
-repeated dmesg warnings when these tools run without a device argument.
-This causes dmesg to be flooded with this message on every ibstat
-invocation.
+ib_get_eth_speed() uses the returned device operationally by invoking its
+ethtool callback. Although that call is made under RTNL, the function does
+not verify the registration state first. An asynchronous RDMA port query
+can therefore call into a netdev after NETDEV_UNREGISTER and ndo_uninit
+have completed.
 
-Remove the warning and return -ENODEV when no representor exists for
-the queried port.
+Check for NETREG_REGISTERED while holding RTNL and return -ENODEV for a
+device which is being unregistered. Keeping RTNL across the check and the
+ethtool operation prevents unregister from starting between them.
 
-Fixes: aaecff5e13cd ("RDMA/mlx5: Implement query_port_speed callback")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260811-remove-warn-on-miss-rep-v1-1-eccf399bc6af@nvidia.com
+Keep the speed fallback and warning under RTNL as well, so the warning can
+safely read netdev->name. Drop the netdev reference before releasing RTNL
+once all accesses to the device are complete.
+
+Fixes: d41861942fc5 ("IB/core: Add generic function to extract IB speed from netdev")
+Reported-by: syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5fe14f2ff4ccbace9a26
+Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+Link: https://patch.msgid.link/20260812081708.32468-1-krystianmkaniewski@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/infiniband/core/verbs.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index c6b0bb786739d..3dd100cd91565 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1669,11 +1669,8 @@ static int mlx5_ib_query_port_speed_rep(struct mlx5_ib_dev *dev, u32 port_num,
- 	struct mlx5_core_dev *mdev;
- 	u16 op_mod;
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index 4357164a9976c..fcc21fb5fb86c 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -2051,11 +2051,13 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
+ 		return -ENODEV;
  
--	if (!dev->port[port_num - 1].rep) {
--		mlx5_ib_warn(dev, "Representor doesn't exist for port %u\n",
--			     port_num);
--		return -EINVAL;
--	}
-+	if (!dev->port[port_num - 1].rep)
+ 	rtnl_lock();
+-	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
+-	rtnl_unlock();
+-
+-	dev_put(netdev);
++	if (READ_ONCE(netdev->reg_state) != NETREG_REGISTERED) {
++		dev_put(netdev);
++		rtnl_unlock();
 +		return -ENODEV;
++	}
  
- 	rep = dev->port[port_num - 1].rep;
- 	mdev = mlx5_eswitch_get_core_dev(rep->esw);
++	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
+ 	if (!rc && lksettings.base.speed != (u32)SPEED_UNKNOWN) {
+ 		netdev_speed = lksettings.base.speed;
+ 	} else {
+@@ -2064,6 +2066,8 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
+ 			pr_warn("%s speed is unknown, defaulting to %u\n",
+ 				netdev->name, netdev_speed);
+ 	}
++	dev_put(netdev);
++	rtnl_unlock();
+ 
+ 	ib_get_width_and_speed(netdev_speed, lksettings.lanes,
+ 			       speed, width);
 -- 
 2.53.0
 
