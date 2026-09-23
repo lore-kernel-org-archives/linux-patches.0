@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3670E5304DD;
-	Wed, 23 Sep 2026 14:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D44524B19;
+	Wed, 23 Sep 2026 14:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173541; cv=none; b=Gs8KkY0yqszbAZlU3xOwUa3REwbVDf4RpfZVD7Ajjfp9P9p7mmfRT9wpoFyORBDtDQd8zwHnm6y7QgiBTsXk5t3oueXpW10hs5obWka0/ERqz9YcRQhdWMrMDPHlGakLscz/EuOi5x9Cz2+B4HMc3lQ4Sw/QS4O2vV7dy8vE4fA=
+	t=1790173544; cv=none; b=B2Yx6Sspa4OzERJ9ic+s1JMvRlw34mM2/mJjU7RDR8Z6bY0LKQcRXvyvmvEHhtdsWawzcLLqMCJ/xQxR4ptqhBXiomqUK/6bpbiH2wKGbXSq4W9tdx6uteVClNKqMH/9d10t8ASZwm3TarGMi2xMNTmWLbpWfGM5mwHnWbZSe/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173541; c=relaxed/simple;
-	bh=GQ8WoS4kcADi6zlOXaUCJX61E0qvwG8wj/3d1PAaxXA=;
+	s=arc-20240116; t=1790173544; c=relaxed/simple;
+	bh=S+ExaYdOj0nBO2nN8RnZY78B+5V4ePOHzGmkFO5AKH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzBZpfbnin4PiDhVYPaPFv9s9nhQLC6SsY0dyKbMxB6E1XmtcOGO8Vq1Y/39XfpZfJ6tTm5YXNtPtOHVFOfqVZxq7RyRsr4CDK7I/pyKCbCvzV3bUhRHI7WAFKy2F/PenfRfozsLVjaTeTy0dYyeVIRZbpoRjwHIBMwg+3YbB54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reuPFsIL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iyVxA4ZUjkmYWMR/lgGYLtsnmWaIbOWJLfTmyLtEXfKGySa+Ca2nV6w+eeItRA3Igg6me3ILvJ1q8FAAVW3c6z8ls3xPeU2UuJThZHK1E7wlcejSFmBh6FXgH8A2bMJu5BiUaUFH6McotQCi/NVUZ9r74HMWPkTvZaa8DMNZEOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lwyGO4M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reuPFsIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876581F000FF;
-	Wed, 23 Sep 2026 14:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lwyGO4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4391F000FF;
+	Wed, 23 Sep 2026 14:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173540;
-	bh=/fxNOJmz+UIFryZ0gSJH+z50i5cxmVMGSLZe4bQdQP0=;
+	s=korg; t=1790173543;
+	bh=tGkG1NOnYyiF0q77pM0OgPU8jke0caQHa/JTI8mS5Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=reuPFsILIjLOG4XoVCcjxcQCeDQXkjCkC5CVAdUbk8IF3+QWENYps1IasjvLkzPA5
-	 P9Nn16s1mEKLuixjmh4YyeAyr0flpImyNBBggogSouCZ7R0eU/japKkjchHwmDos2e
-	 3Ym3YOLQoDodLu43dbJN+GS5l5pMqZqYGDYUAQp8=
+	b=0lwyGO4MR47ehnqebcgyz0HPJsBvdBqrHbslYGNUh8Nm9gspwx2Jz6aFU4Lqu7ZdO
+	 Isb0xyq2QadO3eNNWaorivnTbcQ14mAQ20j3mFF+I2rmp9cjsXKxg3goIFwQ21mTVn
+	 UAp4ovvAOspKSUQVcnJs8260V3vEFP5BViBrnyrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 278/438] Bluetooth: eir: validate service data length before reading UUID
-Date: Wed, 23 Sep 2026 16:04:59 +0200
-Message-ID: <20260923140651.981507508@linuxfoundation.org>
+Subject: [PATCH 7.2 279/438] Bluetooth: hci_codec: validate vendor codec count length
+Date: Wed, 23 Sep 2026 16:05:00 +0200
+Message-ID: <20260923140652.009438359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,52 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit e8241766794cf551d787fa3a77c0d54bbea6f6aa upstream.
+commit d0795cfd6f655f4de84868a4f4bb41a03f037b3d upstream.
 
-eir_get_service_data() reads a 16-bit UUID from the service data using
-get_unaligned_le16() without first checking that the data is long enough
-to hold a UUID16 (2 bytes). If a malformed EIR entry has a service data
-field with only 1 byte of payload (field_len=2), eir_get_data() returns
-dlen=1. The subsequent get_unaligned_le16() then reads 1 byte past the
-field boundary.
+The Read Local Supported Codecs parsers consume the variable-sized
+standard codec array before parsing the vendor codec count.  Although the
+initial reply-size check includes a vendor count byte in the fixed layout,
+it does not guarantee that the byte remains after the standard codec array.
 
-Additionally, if the corrupted UUID happens to match, the length
-calculation "dlen - 2" underflows to SIZE_MAX since dlen is size_t.
-Current callers either pass NULL for the length parameter or bounds-check
-the returned length, but future callers may not.
+If a controller reply ends immediately after that array, calculating the
+vendor codec array size reads vnd_codecs->num beyond the skb data.  Use
+skb_pull_data() to validate and consume each codec header before using its
+count in both command variants.
 
-Add a check that dlen >= sizeof(u16) and skip fields that are too short
-to contain a valid UUID16.
-
-Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
+Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
+Fixes: 9ae664028a9e ("Bluetooth: Add support for Read Local Supported Codecs V2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/eir.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_codec.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -373,7 +373,15 @@ void *eir_get_service_data(u8 *eir, size
- 	size_t dlen;
+--- a/net/bluetooth/hci_codec.c
++++ b/net/bluetooth/hci_codec.c
+@@ -145,11 +145,12 @@ void hci_read_supported_codecs(struct hc
  
- 	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
--		u16 value = get_unaligned_le16(eir);
-+		u16 value;
-+
-+		if (dlen < sizeof(value)) {
-+			eir += dlen;
-+			eir_len = eir_end - eir;
-+			continue;
-+		}
-+
-+		value = get_unaligned_le16(eir);
+ 	skb_pull(skb, sizeof(rp->status));
  
- 		if (uuid == value) {
- 			if (len)
+-	std_codecs = (void *)skb->data;
++	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
++	if (!std_codecs)
++		goto error;
+ 
+ 	/* validate codecs length before accessing */
+-	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
+-	    + sizeof(std_codecs->num))
++	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
+ 		goto error;
+ 
+ 	/* enumerate codec capabilities of standard codecs */
+@@ -161,15 +162,14 @@ void hci_read_supported_codecs(struct hc
+ 					    LOCAL_CODEC_ACL_MASK | LOCAL_CODEC_SCO_MASK, &caps);
+ 	}
+ 
+-	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
+-		 + sizeof(std_codecs->num));
++	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
+ 
+-	vnd_codecs = (void *)skb->data;
++	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
++	if (!vnd_codecs)
++		goto error;
+ 
+ 	/* validate vendor codecs length before accessing */
+-	if (skb->len <
+-	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
+-	    + sizeof(vnd_codecs->num))
++	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
+ 		goto error;
+ 
+ 	/* enumerate vendor codec capabilities */
+@@ -214,11 +214,12 @@ void hci_read_supported_codecs_v2(struct
+ 
+ 	skb_pull(skb, sizeof(rp->status));
+ 
+-	std_codecs = (void *)skb->data;
++	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
++	if (!std_codecs)
++		goto error;
+ 
+ 	/* check for payload data length before accessing */
+-	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
+-	    + sizeof(std_codecs->num))
++	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
+ 		goto error;
+ 
+ 	memset(&caps, 0, sizeof(caps));
+@@ -229,15 +230,14 @@ void hci_read_supported_codecs_v2(struct
+ 					    &caps);
+ 	}
+ 
+-	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
+-		 + sizeof(std_codecs->num));
++	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
+ 
+-	vnd_codecs = (void *)skb->data;
++	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
++	if (!vnd_codecs)
++		goto error;
+ 
+ 	/* check for payload data length before accessing */
+-	if (skb->len <
+-	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
+-	    + sizeof(vnd_codecs->num))
++	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
+ 		goto error;
+ 
+ 	for (i = 0; i < vnd_codecs->num; i++) {
 
 
