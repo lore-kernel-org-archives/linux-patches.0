@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22F23A255A;
-	Wed, 23 Sep 2026 14:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48623F58D9;
+	Wed, 23 Sep 2026 14:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174029; cv=none; b=M8VPCi5smaISoliM/fFZ+ho5k6uHE3LDHrXfT8fIdAeZfs9US9bFZibO/fzPOk5IAw5ADtAzuP5qaEhg/4mecbsc4YyZXRUVKrh5vc7mbkCu8Lg55NIbhW21GaAJp9YNeM+JhzzGh8kX7GCqPNyxixLbZoiIGN7Yt2bE6Ra46NU=
+	t=1790174032; cv=none; b=VyEo5scT0MI1VJCMdYOok3MVWO2d6f7d/zLSKhmi6ANU9D6efyNIs7DcxRxyObA7XeRKjKtlHmEL7j1eNAt8QpooqkK2D2/q7ou1YMGUjqESGvg6tQs9mXtbr3dFxIWeyZ5Lljj90/R0Jz3A0aeRr31m1nLec6JTXcY9/ha0JtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174029; c=relaxed/simple;
-	bh=3iVFF26OftExikvzTC7W2OGMBG+SWZoMMTcN/F4PrJM=;
+	s=arc-20240116; t=1790174032; c=relaxed/simple;
+	bh=VeAZ5A7t1U3nRVm16SnqbQXKhB3yUZN28eqdJeTZRlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQTyrGwP442fDwon7Nm8UYBcPywhJb4ryd90Yxo/eLlSyeDcgoIIPBTrGTJzC/uWzj5BZfGyEAHmeQ7O9aQEJvsyG9ivGyCt4p+zw3/XVF+Oyo+JRSBYKImO5TR25grwwrxGuRKySC/MlfWppZ5gWhcR/7mQdMOWn2hjtR4ebsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2Ae4U+P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sqIcGOEpED2k/ZeTVqPVcALAAUGPVctSlWQkJ/GP3wdA+345BS4MMFX/uDEpC3Qj9tT8NaxeBND+oVWiiKbnazDxfYNxg/7V15vugTTexSOT8abM6kW4ejIt7iXdRGYn43NXj2q1vn2VOVsB8iDNh3DzH89EJfPwWNSkW7hHbps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4gojKxD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2Ae4U+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEF41F000FF;
-	Wed, 23 Sep 2026 14:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4gojKxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167E01F000FF;
+	Wed, 23 Sep 2026 14:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174028;
-	bh=1dr4nkh2IUXT7ZLRynxykIoVEel+RpEztXxcsA/aEeI=;
+	s=korg; t=1790174031;
+	bh=kB6otazVlYKkabdt8+dR8XHsffEdVHBNTMqa+ySP/tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2Ae4U+P1RXIDNB5sSplxu1UC0SHVRuVX/JU0d52FNiEJafw/Fm/wnpYv4bf2OapQ
-	 0kdO9SEh3813dz4wFP3LDLcRM1xwJg7KcrYTcnnLT7I6N/sVew5IcS3bCodxBUyWh0
-	 JkhZ9hRrdJOotqBiRo2OwUbs4+mKHfzJx7+ezcuo=
+	b=V4gojKxDALiixZJ9rr6rvGNv+2HET2YBh89nHFG0jKfc0VlM5pfvhqNrh37ax1Sh4
+	 Y2xkPENRGfVbp51tO3cD0+g+XY92ocGjwf9TI9hy7Ab8meGZ9omZ6IM9QaD906Q+wx
+	 L15NEYl3XLphauqrIzn8mENDeE0zKsUMsPmTwEM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5003556314abc915a71f@syzkaller.appspotmail.com,
+	April Cardenas <april.cardenas@canonical.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 413/438] smb: client: cancel reconnect work in clean_demultiplex_info()
-Date: Wed, 23 Sep 2026 16:07:14 +0200
-Message-ID: <20260923140655.613635401@linuxfoundation.org>
+	Bharath S M <bharathsm@microsoft.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 414/438] smb/client: send lease break ACKs thru correct session for multiuser mounts
+Date: Wed, 23 Sep 2026 16:07:15 +0200
+Message-ID: <20260923140655.641478384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -56,60 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: April Cardenas <april.cardenas@canonical.com>
 
-commit c65eae6f61d1778ff7a82e4aae4080e26f486af1 upstream.
+commit ebc5660132ddd244b57f03ed324922013a3d7363 upstream.
 
-clean_demultiplex_info() cancels server->echo delayed work but not
-server->reconnect, which can cause a use-after-free when the
-demultiplex thread exits while a reconnect work is still queued:
+Currently, when cifs_oplock_break handles a break request from the server
+it searches for the appropriate tlink to handle the request
+but incorrectly uses the current fsuid as the search key, eventually
+causing read errors for users with multiuser mounts on NetApp.
+Fix this by using the tlink from the cfile struct instead to respond
+through the correct session.
 
-  cifs_demultiplex_thread()
-    cifs_readv_from_socket()
-      cifs_reconnect()
-        __cifs_reconnect()
-          cifs_queue_server_reconn()
-            mod_delayed_work(cifsiod_wq, &server->reconnect, 0)
-    clean_demultiplex_info()
-      cancel_delayed_work_sync(&server->echo)   // echo canceled
-                                                 // reconnect NOT canceled
-      kfree_sensitive(server)                    // server freed
+As breaks are handled in a worker thread, the current fsuid
+isn't guaranteed to match the session that the break is intended for.
+This means that cifs_sb_tlink may search the rbtree using the wrong fsuid,
+and return a tlink with an incorrect session than
+the lease break was intended for. As a result, the breaks
+may be ACKed through an incorrect session.
 
-  ...later, on cifsiod_wq:
+While it seems that Samba/Windows Servers 2016-2025 ignore this as long as
+the lease key is correct, we ran into a case where if you're using
+NetApp ONTAP or Azure NetApp Files they will reject the ACK
+and return `STATUS_LOCK_NOT_GRANTED` errors on any future read requests
+a user may initiate through their still held open file handle,
+and the server will eventually close the file.
 
-  smb2_reconnect_server()
-    server->srv_count  // UAF read of freed server
+In the dmesg logs, the user may see errors like these:
 
-Fix this by canceling server->reconnect delayed work in
-clean_demultiplex_info() before the server is freed, the same way
-cifs_put_tcp_session() already does.
+CIFS: Status code returned 0xc0000128 STATUS_FILE_CLOSED
+CIFS: VFS: Send error in read = -9
 
-Reported-by: syzbot+5003556314abc915a71f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6aa4a12d.f81106d8.2ab401.0023.GAE@google.com
-Fixes: 53e0e11efe92 ("CIFS: Fix a possible memory corruption during reconnect")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+With a multiuser mount using NetApp, this issue is really easy
+for users to hit on a wide variety of kernel versions
+by attempting to copy a file from the share
+to the local machine through GNOME Files/Nautilus.
+This copy will always result in Nautilus throwing
+a `Bad File Descriptor` error to the user and fail.
+With this fix, you can copy files through Nautilus without issue.
+
+>From looking at the traces, it seems that glib will
+open the file first, and call listxattr before actually attempting
+to copy the file data. The listxattr call always triggers a break,
+causing the copy to fail.
+
+The proposed fix returns to the way the client grabbed the tlink before
+commit e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break").
+
+The bulk of that commit (checking for list empty) remains untouched, and
+I think the change to using cifs_sb_tlink was intended to avoid a
+NULL/ERR deference on the tlink as well as update the reference count.
+
+I believe this fix should preserve those safety properties, but of course
+I'd appreciate any corrections here.
+
+Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
 Cc: stable@vger.kernel.org
+Signed-off-by: April Cardenas <april.cardenas@canonical.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Bharath S M <bharathsm@microsoft.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/file.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1067,6 +1067,7 @@ clean_demultiplex_info(struct TCP_Server
- 	spin_unlock(&server->srv_lock);
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -3330,8 +3330,8 @@ void cifs_oplock_break(struct work_struc
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
  
- 	cancel_delayed_work_sync(&server->echo);
-+	cancel_delayed_work_sync(&server->reconnect);
- 
- 	spin_lock(&server->srv_lock);
- 	server->tcpStatus = CifsExiting;
+-	tlink = cifs_sb_tlink(cifs_sb);
+-	if (IS_ERR(tlink)) {
++	tlink = cifs_get_tlink(cfile->tlink);
++	if (IS_ERR_OR_NULL(tlink)) {
+ 		/* drop the reference taken when the break was queued */
+ 		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 		goto out;
 
 
