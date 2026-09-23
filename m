@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4663749F7;
-	Wed, 23 Sep 2026 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FAA3749F7;
+	Wed, 23 Sep 2026 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174531; cv=none; b=XjxbfsgUj0U20IsphgtF7v4cth42gTBiF65ODyCsatHkm/NkB1vU6ZVsOtPry1EzRbeWPMID8UNa12qvcD9D92P4WXnJy9kt3j2D6xOqB4FRIyx1pX+BQAAM+GFJul+gtfBgaV2M53/Jxf6nruWZRYYiIj0yZkYTPdF8hU1aNhg=
+	t=1790174535; cv=none; b=sDBkjNQJHC3YEDGUpdmr9UmBnITG0tiD9B6M6G4KGAi7fPUL80qx7WC+QRKrBx8kmNZAlg9HHxoYUtZxI4X77zMyT24E7CY5iIvQCSjlhB7X+eqM8B1QHainsosvG3CJbRppNtPLAlHIkahXsWcuR6wIxTH/p9cGZ/u2sBJjy3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174531; c=relaxed/simple;
-	bh=kJ3yOp52uUWg5E2zgVGCsRLD+YJwuP+5pU1+8vt9op4=;
+	s=arc-20240116; t=1790174535; c=relaxed/simple;
+	bh=JulqoqHiOOMkMLlzJg0M0yIenrrP5c42yYUcwDn+kxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A01YylgfKY8mjekmn9+HT7KkmroitKbPgcO6BKTfiWOO14LTgqVdBpA/3vT1kN4mpdXVzI0GZonw6wFxe0EqxHN0nrTUNTQ06mQw5dnw6r8pS2thCj1p8bCeVelP0cL5YBLqMk2KrtSMcuFE9bwO8Ys8f3bKpG9BSjuqv9B5qh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykfg+BOe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNmCKPjdB7XNNT7v/GLgCLBYZ6fcGiaQvN2hNIQLesyhp7gWid9VZli+rT3+4XGo1zyLhSAeNFiOAfy0LmN8FsbGzjO7O6DMezsXwg9kbMglQhzTDwCjB/el4pZNLLZODFtdmJTwjr352v1sMuiOGA2xgysyS0QgUXrAY+ezcGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8ReNArA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykfg+BOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A141F000FF;
-	Wed, 23 Sep 2026 14:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8ReNArA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88CB1F00893;
+	Wed, 23 Sep 2026 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174529;
-	bh=zN4iG7NahzkGWvMnk8/eNvJt/Kmpn6hWetY/qTVhX/k=;
+	s=korg; t=1790174533;
+	bh=t4VnUwB4P236VB/AqveDvn5jXGpkSMREFQwUyeg0tHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ykfg+BOe4e9jJsol/0NdwW42BVeQO0NNxXZoM/ABFtSfv8v9aD7KRRG9YXzbcwo9a
-	 vSU7TAkg+i4AdEHdOJfoLzaN21u7E6BB86S/ZToRdH0wLAcAX/0q5qFgOAkLQUR4JO
-	 0nR6piCcYytjtVOTufrgv0Yh6Dyyu7YvBCoEvVFA=
+	b=N8ReNArAnEajx3hM7dNzGwiDdlEqumaxC7W6DTblp9MDu/PucdpDgdMXAGKq/5NgW
+	 LJL3rRrI+Zx+DCfWkTvgDa28dWmTfZ0L1hiFzomy7ZhST5/VlIZCxrmodnPgUwn5DQ
+	 PclgBE+GFJy1u/NDEefidx5QbLETlBrvZq59dJIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/398] ksmbd: return buffer overflow for partial filesystem info
-Date: Wed, 23 Sep 2026 16:03:31 +0200
-Message-ID: <20260923140646.984733474@linuxfoundation.org>
+Subject: [PATCH 6.18 146/398] Bluetooth: qca: enable pwrseq support for WCN39xx devices
+Date: Wed, 23 Sep 2026 16:03:40 +0200
+Message-ID: <20260923140647.215856743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,183 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 0ecd35fac4b4f2828490689b46039744d201dcb0 ]
+[ Upstream commit 9f168e4de5fd43766f6d49b393f445be805c1e05 ]
 
-The query-info buffer check returns STATUS_INFO_LENGTH_MISMATCH for
-every output buffer smaller than the complete response. Variable-length
-filesystem information instead requires STATUS_BUFFER_OVERFLOW when the
-fixed portion fits but the complete data does not.
+The WCN39xx family of WiFi/BT chips incorporates a simple PMU, spreading
+voltages over internal rails. Implement support for using powersequencer
+for this family of QCA devices in addition to using regulators.
 
-Pass the fixed size for each filesystem information class to the buffer
-checker. Keep INFO_LENGTH_MISMATCH for buffers below that size, and
-return BUFFER_OVERFLOW with a response truncated to the requested length
-for larger partial buffers.
-
-This fixes smb2.getinfo.qfs_buffercheck.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 9fa26285ae70 ("ksmbd: keep compound responses on query info errors")
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 4e93c65f8782 ("Bluetooth: hci_qca: Do not write to the serial port after it is closed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index cd7bfc73cf087..092788ac01b5d 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4633,21 +4633,30 @@ int smb2_query_dir(struct ksmbd_work *work)
- /**
-  * buffer_check_err() - helper function to check buffer errors
-  * @reqOutputBufferLength:	max buffer length expected in command response
-+ * @fixed_len:			minimum fixed response length
-  * @rsp:		query info response buffer contains output buffer length
-  * @rsp_org:		base response buffer pointer in case of chained response
-  *
-  * Return:	0 on success, otherwise error
-  */
- static int buffer_check_err(int reqOutputBufferLength,
-+			    unsigned int fixed_len,
- 			    struct smb2_query_info_rsp *rsp,
- 			    void *rsp_org)
- {
--	if (reqOutputBufferLength < le32_to_cpu(rsp->OutputBufferLength)) {
-+	unsigned int output_len = le32_to_cpu(rsp->OutputBufferLength);
-+
-+	if (reqOutputBufferLength < fixed_len) {
- 		pr_err("Invalid Buffer Size Requested\n");
- 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
- 		*(__be32 *)rsp_org = cpu_to_be32(sizeof(struct smb2_hdr));
- 		return -EINVAL;
- 	}
-+
-+	if (reqOutputBufferLength < output_len) {
-+		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+		rsp->OutputBufferLength = cpu_to_le32(reqOutputBufferLength);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 1897d7bf7629a..8de195c2fc8d6 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2239,6 +2239,18 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	qcadev = serdev_device_get_drvdata(hu->serdev);
+ 	power = qcadev->bt_power;
+ 
++	switch (soc_type) {
++	case QCA_WCN3988:
++	case QCA_WCN3990:
++	case QCA_WCN3991:
++	case QCA_WCN3998:
++		host_set_baudrate(hu, 2400);
++		qca_send_power_pulse(hu, false);
++		break;
++	default:
++		break;
 +	}
- 	return 0;
- }
++
+ 	if (power && power->pwrseq) {
+ 		pwrseq_power_off(power->pwrseq);
+ 		set_bit(QCA_BT_OFF, &qca->flags);
+@@ -2250,8 +2262,6 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	case QCA_WCN3990:
+ 	case QCA_WCN3991:
+ 	case QCA_WCN3998:
+-		host_set_baudrate(hu, 2400);
+-		qca_send_power_pulse(hu, false);
+ 		qca_regulator_disable(qcadev);
+ 		break;
  
-@@ -4710,11 +4719,13 @@ static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 	case FILE_STANDARD_INFORMATION:
- 		get_standard_info_pipe(rsp, rsp_org);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
- 				      rsp, rsp_org);
- 		break;
- 	case FILE_INTERNAL_INFORMATION:
- 		get_internal_info_pipe(rsp, id, rsp_org);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
- 				      rsp, rsp_org);
- 		break;
- 	default:
-@@ -5535,6 +5546,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+@@ -2423,6 +2433,11 @@ static int qca_serdev_probe(struct serdev_device *serdev)
  	}
- 	if (!rc)
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
- 				      rsp, work->response_buf);
- 	ksmbd_fd_put(work, fp);
  
-@@ -5556,6 +5568,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	struct kstatfs stfs;
- 	struct path path;
- 	int rc = 0, len;
-+	unsigned int fixed_len = 0;
- 
- 	if (!share->path)
- 		return -EIO;
-@@ -5590,6 +5603,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 			info->DeviceCharacteristics |=
- 				cpu_to_le32(FILE_READ_ONLY_DEVICE);
- 		rsp->OutputBufferLength = cpu_to_le32(8);
-+		fixed_len = 8;
- 		break;
- 	}
- 	case FS_ATTRIBUTE_INFORMATION:
-@@ -5618,6 +5632,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->FileSystemNameLen = cpu_to_le32(len);
- 		sz = sizeof(struct filesystem_attribute_info) + len;
- 		rsp->OutputBufferLength = cpu_to_le32(sz);
-+		fixed_len = 16;
- 		break;
- 	}
- 	case FS_VOLUME_INFORMATION:
-@@ -5644,6 +5659,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->Reserved = 0;
- 		sz = sizeof(struct filesystem_vol_info) + len;
- 		rsp->OutputBufferLength = cpu_to_le32(sz);
-+		fixed_len = 24;
- 		break;
- 	}
- 	case FS_SIZE_INFORMATION:
-@@ -5656,6 +5672,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
- 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
- 		rsp->OutputBufferLength = cpu_to_le32(24);
-+		fixed_len = 24;
- 		break;
- 	}
- 	case FS_FULL_SIZE_INFORMATION:
-@@ -5671,6 +5688,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
- 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
- 		rsp->OutputBufferLength = cpu_to_le32(32);
-+		fixed_len = 32;
- 		break;
- 	}
- 	case FS_OBJECT_ID_INFORMATION:
-@@ -5691,6 +5709,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->extended_info.rel_date = 0;
- 		memcpy(info->extended_info.version_string, "1.1.0", strlen("1.1.0"));
- 		rsp->OutputBufferLength = cpu_to_le32(64);
-+		fixed_len = 64;
- 		break;
- 	}
- 	case FS_SECTOR_SIZE_INFORMATION:
-@@ -5712,6 +5731,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->ByteOffsetForSectorAlignment = 0;
- 		info->ByteOffsetForPartitionAlignment = 0;
- 		rsp->OutputBufferLength = cpu_to_le32(28);
-+		fixed_len = 28;
- 		break;
- 	}
- 	case FS_CONTROL_INFORMATION:
-@@ -5732,6 +5752,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->DefaultQuotaLimit = cpu_to_le64(SMB2_NO_FID);
- 		info->Padding = 0;
- 		rsp->OutputBufferLength = cpu_to_le32(48);
-+		fixed_len = 48;
- 		break;
- 	}
- 	case FS_POSIX_INFORMATION:
-@@ -5752,6 +5773,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
- 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
- 			rsp->OutputBufferLength = cpu_to_le32(56);
-+			fixed_len = 56;
+ 	switch (qcadev->btsoc_type) {
++	case QCA_WCN3950:
++	case QCA_WCN3988:
++	case QCA_WCN3990:
++	case QCA_WCN3991:
++	case QCA_WCN3998:
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+@@ -2447,12 +2462,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 			else
+ 				break;
  		}
- 		break;
- 	}
-@@ -5760,6 +5782,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		return -EOPNOTSUPP;
- 	}
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+			      fixed_len,
- 			      rsp, work->response_buf);
- 	path_put(&path);
- 
-@@ -5874,6 +5897,7 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
- iov_pin:
- 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+			      le32_to_cpu(rsp->OutputBufferLength),
- 			      rsp, work->response_buf);
- 	if (rc)
- 		goto err_out;
+-		fallthrough;
+-	case QCA_WCN3950:
+-	case QCA_WCN3988:
+-	case QCA_WCN3990:
+-	case QCA_WCN3991:
+-	case QCA_WCN3998:
++
+ 		qcadev->bt_power->dev = &serdev->dev;
+ 		err = qca_init_regulators(qcadev->bt_power, data->vregs,
+ 					  data->num_vregs);
 -- 
 2.53.0
 
