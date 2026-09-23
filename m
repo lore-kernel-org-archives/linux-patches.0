@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D165372E9;
-	Wed, 23 Sep 2026 14:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE59530E0F;
+	Wed, 23 Sep 2026 14:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174316; cv=none; b=TCuvJMDaF/w1qyR8pmy/cfH1kwwlFLkTMSmZI7pHscdzAkNbLnkR8zq05IUr6rPTjIUHHaebCFBbTAiI19t3avo8WFQwPI6zhAh0EcESIahWZ14rG6IhIuijivyCU/yrld98/WJOVGV+ODkk01TwXyFR4ROY4jJWk3iiSwQAZuM=
+	t=1790174319; cv=none; b=IoinAExORIc/WPs9auefah0r2fOBsWoxaeqPdngYG4pxzrt2vc0/teA1KdVYWv2Za30HBKSFVnl+lXORq8EaOovCPxn4scpgwX9M0gx8P0+fijirHXbWUJWuKVar6klYtKcOHxxyiA9pzxH7dnCYjJOwOroZLZyQB79vJFRHEzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174316; c=relaxed/simple;
-	bh=bGYCUwoyS/lXwlasH9piYFyXQ7k5HguhuJlppBbgF/E=;
+	s=arc-20240116; t=1790174319; c=relaxed/simple;
+	bh=Qf4SSHYKWzvF0ZaHt+KOzzvG31uz38uXaYQf9rbxhLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9N41yCroxKpj7qGq4qBb/Vlq6FwnQf1UxuiOTi2lNq/aV2GTeI7uarsgXcyB3fu/LHuDU8Y69jfCHVpFo5K0d0Xdh1N2/b8E1kjUCv6HBkdlNaIcp01T5Ac2ID+dy6p2yE2oWMPltpwANvl70s3bYSManq8y2TkfilMtMeJwWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT+EKqie; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CyHwn2b/SX+t9j83slLLygurnPpV+sX6BOyAujWB0BRov0dljKo6/f99/aW6locArg9yzri5h5MndKc+kLYOfoNGLXgx4R5vTgkHr8Hd0ne6d5PG2rXSbFLrF25Lqmi88E2xzrgG6ZJVZd6AP0InSG1mmvZb5pLnJwe6CML1CyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTc10sG5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT+EKqie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128E71F000FF;
-	Wed, 23 Sep 2026 14:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTc10sG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83B91F000FF;
+	Wed, 23 Sep 2026 14:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174314;
-	bh=tXkeD/nIvaYlPo8yBFJHqyPkJU81RRcR9Teh7qr4nyk=;
+	s=korg; t=1790174318;
+	bh=h1f4IJEeW1R8XdDgFJ8/dpSo9n/4xxC2p0y67FwqTu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iT+EKqie0rVk/lgGiyrZqag0++JYqSwxemP3T3zIQ2LTQDsD1QASfdaco7+ud+LHl
-	 sTnEKugtNk2ZXweDfXAhBLtqRyJ+IpDPuAQ1/IaXTTwo1XnZ+QX/f5n918NwsZOqqo
-	 d1J5FehPT7y3ndqj3TrUu7EnIIAqVwOVsLoY/p8w=
+	b=hTc10sG5JGf+L0gDy/I5eX4cIk36RPRotBRx7dN5Bi4dDJq8TVx/8x7//0xoTt3/W
+	 ucZ60IRdopEMfiWdyBMGEORLtq+qU1+sCJynyWUzHpPUnzqUOXw9e5AdMfBvOv6llW
+	 JbWEtWcHB7odPL+uzLR5hGUs43G2Dn/zNNMpKVBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+582469b3a9ef5f13606b@syzkaller.appspotmail.com,
+	syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/398] wifi: mac80211: dont allow link changes when iface is down
-Date: Wed, 23 Sep 2026 16:02:30 +0200
-Message-ID: <20260923140645.402413735@linuxfoundation.org>
+Subject: [PATCH 6.18 077/398] wifi: mac80211: dont RCU-dereference the mesh CSA settings we just set
+Date: Wed, 23 Sep 2026 16:02:31 +0200
+Message-ID: <20260923140645.427386813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 370872d30349d81dec519e15ea2949fd63511cf7 ]
+[ Upstream commit b481e64e4498e2c053d5954f546ee02338f6ab63 ]
 
-ieee80211_set_active_links() only checks that the interface is running in
-the inner __ieee80211_set_active_links(), after drv_can_activate_links()
-was already called, so using active_links on an interface that's down
-triggers the check-sdata-in-driver warning.
+In the error path of ieee80211_mesh_csa_beacon() the settings that were
+just assigned are read back with rcu_dereference(), which lockdep then
+complains about.
 
-Add the missing check in the debugfs file.
+There's no need to read the pointer at all, tmp_csa_settings still is
+the right value anyway.
 
 Assisted-by: LLM
-Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
-Reported-by: syzbot+582469b3a9ef5f13606b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=582469b3a9ef5f13606b
-Link: https://patch.msgid.link/20260908122838.201719-16-johannes@sipsolutions.net
+Fixes: b8456a14e9d2 ("{nl,cfg,mac}80211: implement mesh channel switch userspace API")
+Reported-by: syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b59873f5699e941717ca
+Link: https://patch.msgid.link/20260908122838.201719-17-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/mesh.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index 30a5a978a678c..ba241567ac7e0 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -728,6 +728,9 @@ static ssize_t ieee80211_if_parse_active_links(struct ieee80211_sub_if_data *sda
- 	if (kstrtou16(buf, 0, &active_links) || !active_links)
- 		return -EINVAL;
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index 04b3ac4525035..a6c90cbb0baad 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -1575,7 +1575,6 @@ int ieee80211_mesh_csa_beacon(struct ieee80211_sub_if_data *sdata,
  
-+	if (!ieee80211_sdata_running(sdata))
-+		return -ENETDOWN;
-+
- 	return ieee80211_set_active_links(&sdata->vif, active_links) ?: buflen;
- }
- IEEE80211_IF_FILE_RW(active_links);
+ 	ret = ieee80211_mesh_rebuild_beacon(sdata);
+ 	if (ret) {
+-		tmp_csa_settings = rcu_dereference(ifmsh->csa);
+ 		RCU_INIT_POINTER(ifmsh->csa, NULL);
+ 		kfree_rcu(tmp_csa_settings, rcu_head);
+ 		return ret;
 -- 
 2.53.0
 
