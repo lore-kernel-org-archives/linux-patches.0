@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E7A379981;
-	Wed, 23 Sep 2026 14:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8383B27D1;
+	Wed, 23 Sep 2026 14:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174408; cv=none; b=SFIc07dY3p8V9+xOAzy1M/gVO4PawWyoOH5igKECIMBKJTXOLrx2xhbce+sz62C2n8Q8foPl4CK+hc9OFAqjLAxqFe1F31rSsTkyKJvqm30PbvhMeqVNJRP063HHR7HMD+/c9SOmrtm4KySowULhEQ/miGQIKZ5MCRWHqXA5lhU=
+	t=1790174411; cv=none; b=p1/Agf03B7ofDvizRueIN9Ype/FiTwdjd9CyweC5V+cXbJGWw5XU6K4shkAAJLIWHfC3B4l8ODAktbDGMuxwWRYz8E16Ji8CaI9QkJGrzzkhvXKp6MxiOJGrAJqnvCe41JD7C4mgDbfJOMlkMWy+CepDzt6i8Dz4a8IwXBZRU6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174408; c=relaxed/simple;
-	bh=jyfIGeLystJ6l72ex2DPJVKgDGdKLXHyqnUdB3x7fuk=;
+	s=arc-20240116; t=1790174411; c=relaxed/simple;
+	bh=ghkUgZhRNxI6Wqo4tw/JtkUxEOLub8QzsYqYmczF8rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3wjHzuWKDHe7ArqOWVZcSfTTVNq8Vu3LHJ+Rm5eBr9hxHV33XkCsaK6WNZV52kAqxHSXzWsCKysO6JanntHpiDS0g69STQIEVQjwWiFZqUcTat7cPXwT04s3btXNJaefBiOgChN2I4nStmfrbBf4rTfWV6RFCE2sSBfQNEAkDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baejfCOq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mAI7kuYrxsKgxZx527K67zg2E/nlZW1fQijC8SHX5mnY7j3bGRVBM5bsNNVQirTBKIph/Q7gHtTZE3WrTwPMA/cDc7dCxmC9fUBS94eUtdfh76AVIecrxqAAxdg/288rbEigIodlB+w9oncD01MPNBoVE+EbooAcSEkR+w/IRhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSXjxWaN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baejfCOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4121F00898;
-	Wed, 23 Sep 2026 14:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSXjxWaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D410F1F000FF;
+	Wed, 23 Sep 2026 14:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174407;
-	bh=RJTH8Y53+2jzRQyjsxtixZmPUT6z6/kXTNqkOTa0H+U=;
+	s=korg; t=1790174410;
+	bh=IhvcuVx3a9uo9kRJLenC0gRusDs11U+4ZjrUC1EcYcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=baejfCOqgia0AEUX1YmyhR4ucX86glVqequBlNBNmQeWBmf0u7mVfKN0q0C37JDql
-	 E9o74MvFHVIp4jklLmt1b1NqYPS00Hlp1jtdkr9bJ4mvjaDjukhgeoqel3XqGLT5UV
-	 +BAQiy6ShCyxjipjt9HjSk2rlbV8P1T/6BXnQiyI=
+	b=oSXjxWaN73CnijPtrIm6g1z+hTB2fmG1dImvmpWePPAzKHSs2/98tlOYEM1GUVKDx
+	 WYcxoPasuvAa7HOdJOWJxhPfFj+D80Qx4an0gPmuNehwREEYdlqO9a+FHbchEJjnlS
+	 xDvIqbNgyh6lboGgXqTHqJ9eUn2qnwY6eSn7qE04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com,
+	syzbot+de3ee5362db09487ea37@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/398] wifi: mac80211: dont allow injecting frames wider than the chanctx
-Date: Wed, 23 Sep 2026 16:02:27 +0200
-Message-ID: <20260923140645.325160101@linuxfoundation.org>
+Subject: [PATCH 6.18 074/398] wifi: mac80211: reset the AP_VLAN tailroom counter on ifdown
+Date: Wed, 23 Sep 2026 16:02:28 +0200
+Message-ID: <20260923140645.350948912@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -53,119 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e14bf37bb2b3853012ff160131d1c6233f7a9cc9 ]
+[ Upstream commit 4504f3960dc4501c73be9f99eabda2e26e9db41e ]
 
-Frames injected on a monitor interface can carry a radiotap
-field requesting a bandwidth, which mac80211 passes down to
-the driver regardless of the the actual operational bandwidth.
+On ifup, AP_VLAN interfaces get crypto_tx_tailroom_needed_cnt from
+the AP interface, but it's never decremented again unless the AP is
+also brought down. Thus, bringing the same AP_VLAN up again will
+increment the counter again and eventually hit the sanity check:
 
-If the bandwidth requested is too wide, that triggers a warning
-in hwsim:
+  WARN_ON_ONCE(sdata->crypto_tx_tailroom_needed_cnt !=
+               master->crypto_tx_tailroom_needed_cnt);
 
-  WARN_ON(hwsim_get_chanwidth(bw) > hwsim_get_chanwidth(confbw))
-
-Drop such frames entirely instead since they cannot be sent.
+Reset it on ifdown to avoid that.
 
 Assisted-by: LLM
-Fixes: 646e76bb5daf ("mac80211: parse VHT info in injected frames")
-Reported-by: syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=435fdb053cf98bfa5778
-Link: https://patch.msgid.link/20260908122838.201719-13-johannes@sipsolutions.net
+Fixes: f9dca80b98ca ("mac80211: fix AP_VLAN crypto tailroom calculation")
+Reported-by: syzbot+de3ee5362db09487ea37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=de3ee5362db09487ea37
+Link: https://patch.msgid.link/20260908122838.201719-14-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h |  5 ++++-
- net/mac80211/iface.c   |  2 +-
- net/mac80211/tx.c      | 28 ++++++++++++++++++++++++++--
- 3 files changed, 31 insertions(+), 4 deletions(-)
+ net/mac80211/iface.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index ac2546b121385..d19b95d3c3a49 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -7309,11 +7309,14 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
-  *
-  * @skb: packet injected by userspace
-  * @dev: the &struct device of this 802.11 device
-+ * @chandef: the channel definition the frame will be transmitted on, or
-+ *	%NULL to skip the bandwidth checks
-  *
-  * Return: %true if the radiotap header was parsed, %false otherwise
-  */
- bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
--				 struct net_device *dev);
-+				 struct net_device *dev,
-+				 const struct cfg80211_chan_def *chandef);
- 
- /**
-  * struct ieee80211_noa_data - holds temporary data for tracking P2P NoA state
 diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 3da26d4d75fc3..0c739af80f1ee 100644
+index 0c739af80f1ee..22ffae46f7cb7 100644
 --- a/net/mac80211/iface.c
 +++ b/net/mac80211/iface.c
-@@ -952,7 +952,7 @@ static u16 ieee80211_monitor_select_queue(struct net_device *dev,
- 	/* reset flags and info before parsing radiotap header */
- 	memset(info, 0, sizeof(*info));
- 
--	if (!ieee80211_parse_tx_radiotap(skb, dev))
-+	if (!ieee80211_parse_tx_radiotap(skb, dev, NULL))
- 		return 0; /* doesn't matter, frame will be dropped */
- 
- 	len_rthdr = ieee80211_get_radiotap_len(skb->data);
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index cd1d814cdb824..4258dcea36f0b 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2084,8 +2084,29 @@ static bool ieee80211_validate_radiotap_len(struct sk_buff *skb)
- 	return true;
- }
- 
-+static bool ieee80211_rate_bw_usable(u16 rate_flags,
-+				     const struct cfg80211_chan_def *chandef)
-+{
-+	int width;
-+
-+	if (!chandef)
-+		return true;
-+
-+	if (rate_flags & IEEE80211_TX_RC_160_MHZ_WIDTH)
-+		width = 160;
-+	else if (rate_flags & IEEE80211_TX_RC_80_MHZ_WIDTH)
-+		width = 80;
-+	else if (rate_flags & IEEE80211_TX_RC_40_MHZ_WIDTH)
-+		width = 40;
-+	else
-+		return true;
-+
-+	return width <= cfg80211_chandef_get_width(chandef);
-+}
-+
- bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
--				 struct net_device *dev)
-+				 struct net_device *dev,
-+				 const struct cfg80211_chan_def *chandef)
- {
- 	struct ieee80211_local *local = wdev_priv(dev->ieee80211_ptr);
- 	struct ieee80211_radiotap_iterator iterator;
-@@ -2259,6 +2280,9 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
- 		struct ieee80211_supported_band *sband =
- 			local->hw.wiphy->bands[info->band];
- 
-+		if (!ieee80211_rate_bw_usable(rate_flags, chandef))
-+			return false;
-+
- 		info->control.flags |= IEEE80211_TX_CTRL_RATE_INJECT;
- 
- 		for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
-@@ -2448,7 +2472,7 @@ netdev_tx_t ieee80211_monitor_start_xmit(struct sk_buff *skb,
- 	 * selected chandef above to accurately set injection rates and
- 	 * retransmissions.
- 	 */
--	if (!ieee80211_parse_tx_radiotap(skb, dev))
-+	if (!ieee80211_parse_tx_radiotap(skb, dev, chandef))
- 		goto fail_rcu;
- 
- 	/* remove the injection radiotap header */
+@@ -609,6 +609,8 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 		RCU_INIT_POINTER(sdata->vif.bss_conf.chanctx_conf, NULL);
+ 		/* see comment in the default case below */
+ 		ieee80211_free_keys(sdata, true);
++		/* increased by AP value on ifup, so reset on ifdown */
++		sdata->crypto_tx_tailroom_needed_cnt = 0;
+ 		/* no need to tell driver */
+ 		break;
+ 	case NL80211_IFTYPE_MONITOR:
 -- 
 2.53.0
 
