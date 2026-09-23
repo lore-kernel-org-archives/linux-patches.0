@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5801B38D6A2;
-	Wed, 23 Sep 2026 14:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C648377A80;
+	Wed, 23 Sep 2026 14:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173468; cv=none; b=jcqk4x4qVBS0fNTWiPiha3Ikxm5pS3Tzzwma1EoOreD3d++bRYwLcipKAvpeZXi8cj7kWAsoisc2MSiQ3DC3O77K3hEWbzSfJosa6E+OwQQZhoVUYIMf1iNa85144jSvlRwDReT16eOY5KMbke8Ci5GDW/xVbcbLlh1JzIyt3yA=
+	t=1790173471; cv=none; b=cURO4v62uZbHAk5teBN8hluS8ZPwhJ1IzUrGXBUK7TnetDtvcSFEwtbMl3CHzmqMPDrvgTSWKFFzHxEk2GUfVZSE2LmBkqBvpyE6Q3EzwgmjDLAUSZHDqJuOQKFTQmxVP3h/IMVLjM8Zuya4UaHoPSFg9oTkGH1l0y5/cDkrHgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173468; c=relaxed/simple;
-	bh=pDoR5X9ARGsqwfTeEj+dbDEZFSwU3Xmak2Oc5NPc1wk=;
+	s=arc-20240116; t=1790173471; c=relaxed/simple;
+	bh=ZNRCUWD8xMEX2AwgXuY0mc4Kb3OKvEvmlubc0QChngA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAPFyKME15djQBGYl6h5QZU+oQszHI1aFowlVSzIMsgwS/aIg8xxxx9vIGrHeRcWv1gPxPN8nzZhi57ymOxUiMiGqx6p65IQZNvsFYPJsvfwkhwHKVdgviG6o0pNq1ToYHGnvfi7Bi5rprkcyX6UXPHteLDMcH9KIxZ5u/wweGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIirmdIT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F5VNThQJZVIMSj9Y/qW8xX9ayKDucksbp393YAjVJP0BTWsB3vwuOyWu9u3b6iSOv3J8PcWOeZQs36oNdvWSgpNr/9kian4Y35Jl4OoTA0ZzxR1FQFH+k79FYdjxDOFoNoKDg7ZnkM5T0Ip+cCBKabZJjMBLrrLBkuIzYBJeewo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmN9/kLf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIirmdIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EAF1F000FF;
-	Wed, 23 Sep 2026 14:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmN9/kLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DC71F000FF;
+	Wed, 23 Sep 2026 14:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173467;
-	bh=kpPZRPvKd/dR4pPgMz294+JOg+iJLry4hiM/xMB3LMw=;
+	s=korg; t=1790173470;
+	bh=gzMhtq5NBSBp4zYFNMC/I7snkytoOVBkODxrrlOJtIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JIirmdITD7Dt7kAkqlxZk/AXS2puVvXFiBO3HYjf+dioNtXZ5HkYUJEJ2N5VS0oGG
-	 UJKIf0duinyk1DHdSO3ROsRzPHYc1PygLcbAYgg6GUrUMNg0n7yvIXy/W4yIENEThZ
-	 bnlCx21hgsc6yvHheOUoUzIhHbFy4voQXwZcRSpc=
+	b=xmN9/kLfvgZsEvsy5A4kiOeo1BKpNaVw0qwpzSZGmUkvOqXu/mLL0qhDR00P2B+GF
+	 qfDRKHdazVKvajIVk8yXmPf2C3GMgtwW+LHNcIzYV/+yYsJOAZT4gPX+amjMvWYf8I
+	 SjHZUpL5UlSKy6xR3lgjeVtpI8KN/lMOAS6ATD9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 7.2 254/438] drm/nouveau/gsp: Increase delay for magic sleep in r535_gsp_fini()
-Date: Wed, 23 Sep 2026 16:04:35 +0200
-Message-ID: <20260923140651.354271514@linuxfoundation.org>
+	Francis Marlou Pacaro <pacaro.francis.marlou.n@gmail.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 223/438] drm/amd/display: fix MALL hysteresis timer underflow at high refresh rates
+Date: Wed, 23 Sep 2026 16:04:04 +0200
+Message-ID: <20260923140650.545138856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -50,92 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Francis Marlou Pacaro <pacaro.francis.marlou.n@gmail.com>
 
-commit bbb9293c9bb792f3f16c842f223b8c97bdbaf227 upstream.
+[ Upstream commit 2ac2fe765ef475f409616ac0b57c4a3922749b0f ]
 
-As it turns out, Turing isn't the only architecture that needs this. On
-this Dell Precision 7780 with an AD103 GPU, along with pretty much every
-other laptop I tested, runtime PM is still somewhat unreliable. At first
-glance it seems as if it's fixed, but lowering the autosuspend delay to
-500ms and then doing a stress test of suspend/resume cycles on the GPU ends
-up causing everything to start timing out.
+dcn30_apply_idle_power_optimizations() derives the MALL frame cache
+hysteresis timer with
 
-After quite a lot of digging, I eventually landed back on this magic
-timeout in r535_gsp_fini(). As it turns out, increasing the timeout ends up
-fixing the runtime PM issues as far as I can tell, even during intense
-stress testing.
+	tmr_delay = (uint32_t)(div_u64(..., denom) - 64LL);
 
-Unfortunately after spending quite a bit of time trying to dig through
-OpenRM to figure out what this magic sleep is actually doing, I've also
-come up short with any reasonable explanation. In lieu of that, I'm going
-to include the observations I did make while trying to figure this out in
-hopes someone eventually does figure this out:
+div_u64() returns a u64, so when the quotient is smaller than 64 the
+subtraction wraps instead of going negative and tmr_delay ends up huge.
+The loop that follows tries to squeeze it into the 6 bit register field
+by doubling denom, but that only makes the quotient smaller, so tmr_delay
+can never converge.  tmr_scale is bumped past 3 and the function gives up
+with
 
-* The magic sleep has to occur after fbsr is initialized. Performing it at
-  any time before that doesn't appear to work.
-* In situations where runtime PM starts getting flaky, some rather
-  interesting visual effects end up happening on occasion before the GPU
-  fully falls over. In particular, squares that look like the result of an
-  incomplete blitting operation to a tiled buffer end up showing up on
-  applications like vkcube. Interestingly enough, they remain in precisely
-  the same place between runtime PM cycles until the GPU falls over - even
-  when restarting vkcube multiple times, and even when vkcube is actively
-  updating the screen. Even more interestingly, they're not limited to a
-  specific framebuffer - you can see the squares changing as the cube
-  rotates around.
-  We cannot however, say that this is likely to be a incomplete fbsr
-  operation. The magic sleep happens before fbsr is actually saved (which
-  happens on the GSP unload), so it's something else.
-* During a short bit of testing with a desktop that I have, the magic sleep
-  seemed to make no difference to whether or not suspend/resume works. It
-  seems to generally work almost always. So we can assume this is likely
-  exclusive to runtime PM, not S3.
+	/* Delay exceeds range of hysteresis timer */
+	ASSERT(false);
 
-As well, here's a list of the things I tried before settling on the magic
-sleep:
+even though the requested delay is too *short* to encode, not too long.
 
-* Hooking up NV2080_CTRL_CMD_INTERNAL_GCX_ENTRY_PREREQUISITE and then
-  blocking runtime PM until OpenRM signals that GC6/GCOFF is ready appears
-  to make no difference.
-* Hooking up some (maybe not all, unsure about that part) bits of comptag
-  saving including:
-  * Fetching static memsys information from GSP
-  * Adding the size of the comptag storage to the fbsr data
-  * Adding a GA103+ workaround for disabling raw compression mode during
-    fbsr (it doesn't seem like it applies for any systems I tried it on
-    anyhow)
-  * Setting bPreserveVideoMemoryAllocations=1 in GspSystemInfo
+With mall_additional_timer_percent left at its default of 0, the quotient
+drops below 64 once the refresh rate used for the calculation goes above
+~243 Hz.  Every DCN 3.0 display above that loses MALL static screen
+entirely and splats a WARN once per boot.  Reproduced on Navi 23
+(RX 6600) driving 1920x1080, resetting /sys/kernel/debug/clear_warn_once
+between modes:
 
-So, until we can figure this out properly - just sleep for longer.
+	refresh   MALL       ASSERT
+	144 Hz    enabled    no
+	240 Hz    enabled    no
+	280 Hz    skipped    yes
+	360 Hz    skipped    yes
 
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
-Cc: <stable@vger.kernel.org> # v6.16+
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260814194542.781955-5-lyude@redhat.com
-(cherry picked from commit 09b47186a4164f3aaa3591313f80794443117342)
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Commit 3bb68cec4db8 ("drm/amd/display: Add Overflow check to skip MALL")
+already covered the other end of the range, where a large stutter period
+makes the delay too long to encode.  Cover the short end by clamping to
+0, which selects the shortest hysteresis the register can express,
+65.28us * 64 = ~4.18ms.  That is marginally longer than what the formula
+asks for at these refresh rates, and erring long is the safe direction:
+it only delays MALL entry, it can never enter early.
+
+The numerator does not change between iterations, only denom does, so
+compute it once and keep both call sites inside 100 columns.
+
+The genuinely out of range case at very low refresh rates still reaches
+the ASSERT, which is where it belongs.
+
+Fixes: 52f2e83e2fe5 ("drm/amdgpu/display: add MALL support (v2)")
+Signed-off-by: Francis Marlou Pacaro <pacaro.francis.marlou.n@gmail.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 387550e53e1405f1f960b62b22f8783db17c8e1d)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-@@ -1761,8 +1761,12 @@ r535_gsp_fini(struct nvkm_gsp *gsp, enum
- 		 * TODO: Debug the GSP firmware / RPC handling to find out why
- 		 * without this Turing (but none of the other architectures)
- 		 * ends up resetting all channels after resume.
-+		 * Additionally, runtime suspend on other architectures quickly
-+		 * becomes unreliable without this sleep. If you're experiencing
-+		 * issues with runtime suspend, try bumping this delay up and
-+		 * sending a patch if it fixes your GPU.
- 		 */
--		msleep(50);
-+		msleep(200);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+index 2d3587a31bc8b..2ecd3a4068c03 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+@@ -1058,10 +1058,12 @@ bool dcn30_apply_idle_power_optimizations(struct dc *dc, bool enable)
+ 				 */
+ 				unsigned int denom = refresh_hz * 6528;
+ 				unsigned int stutter_period = dc->current_state->perf_params.stutter_period_us;
++				uint64_t num = (1000000LL + 2 * stutter_period * refresh_hz) *
++					(100LL + dc->debug.mall_additional_timer_percent);
++				uint64_t tmr_ticks;
  
- 	ret = r535_gsp_rpc_unloading_guest_driver(gsp, suspend);
+-				tmr_delay = (uint32_t)(div_u64(((1000000LL + 2 * stutter_period * refresh_hz) *
+-						(100LL + dc->debug.mall_additional_timer_percent) + denom - 1),
+-						denom) - 64LL);
++				tmr_ticks = div_u64(num + denom - 1, denom);
++				tmr_delay = tmr_ticks > 64 ? (uint32_t)(tmr_ticks - 64) : 0;
+ 
+ 				/* In some cases the stutter period is really big (tiny modes) in these
+ 				 * cases MALL cant be enabled, So skip these cases to avoid a ASSERT()
+@@ -1083,9 +1085,8 @@ bool dcn30_apply_idle_power_optimizations(struct dc *dc, bool enable)
+ 					}
+ 
+ 					denom *= 2;
+-					tmr_delay = (uint32_t)(div_u64(((1000000LL + 2 * stutter_period * refresh_hz) *
+-							(100LL + dc->debug.mall_additional_timer_percent) + denom - 1),
+-							denom) - 64LL);
++					tmr_ticks = div_u64(num + denom - 1, denom);
++					tmr_delay = tmr_ticks > 64 ? (uint32_t)(tmr_ticks - 64) : 0;
+ 				}
+ 
+ 				/* Copy HW cursor */
+-- 
+2.53.0
+
 
 
