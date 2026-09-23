@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4680453FD28;
-	Wed, 23 Sep 2026 14:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D49B53C3BA;
+	Wed, 23 Sep 2026 14:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174820; cv=none; b=Y/XeXjMnoqOBqCswWI/Bs7WmEOxHARlSlKqN+vwZVeUDOADQTKpW+lJSBI0JvjteJ/cXbQxPvN6gn3V+oxrU47wEGriyznwLvjvaQ8fsJDLKSlLK7hXVMB838GGDMk1u0ui+1gwTSAtyFnfIksmwzUcwSIvwqYk1k573b/uSGsw=
+	t=1790174823; cv=none; b=BPOB33ncBsBclGmE2Nw+g2JnzJPZTRfgWK939krvcZt6IcCTA95bFTjQPvgHzSINUCbqrK7MO7nyiVHyfRQwBLYEJVfI64adyBD+GykICr2LbCKKcF+XMeWyFfo0WEmIYNAoF8QPfnVAH2EWKM/TbUb5g6YG93KgF1yEN6y3Mrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174820; c=relaxed/simple;
-	bh=bHGFKYpTXeYBcvAFvq0IbVe1o8Jk7L535fhfCb+LGjg=;
+	s=arc-20240116; t=1790174823; c=relaxed/simple;
+	bh=EUI2z7gbvE1xWSrB2MsW6wkv0eq/6/TpRyZoLLXbmTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMv08KYG2UVhMoJ6/s4At0odDXrh8lt5KCmPFuuaSCiqgd0nfyhBpVkipQGZqmHiAg0DbVSPmq0jekfbvDkqR9ISYEq9Saig5/+Qt5hRLy8FTeDW0RaJP07WCNeyw2NEMUxfuc83v6YUCo/wsm9xMj7YCkvpFkXHb6N1yXlzSDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI7oOOF/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QuIySM3Arpf6Uu8rbYn3EXfKpJqilRpdLdV+4xn5R/sqzoR/REfBSALlx5yrCZUkVtzPHLCmPMBx2DWoWTWHZwZYKz+z02jHFxxZIkGd+oibjbZ4ShX3qfZ5+zSUnr3lb4osAByB8kdMicjzog03aiKRQ2DK61bjzle4kjP4g18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVHqbZtD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI7oOOF/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750241F00893;
-	Wed, 23 Sep 2026 14:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVHqbZtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58611F000FF;
+	Wed, 23 Sep 2026 14:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174819;
-	bh=Raowu7Sj3/36u5enggo8se1MyuVte4sNumkfXJ9neo0=;
+	s=korg; t=1790174822;
+	bh=oUszyOaFSpxfsIzg6G+D561Z8Gy8ORerlyHexChxLRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BI7oOOF/vcKOQs1jZMX3PuxsED6+TBvhursA4yC4mxvB7N3ozV8n4zxvKC374rmym
-	 +hF1+XyP8BOkp8+noGYepVe+mnB/4ijEuAhTwJYcOkYy6EPXvBjCTWjBafWF7IWe4I
-	 +WcZspuia8gEZ3LPyH0KNnmegFraLjDh+nEHFrwo=
+	b=IVHqbZtDnmqaS/UFsnXN+Ea8YO/bmnxAiUR7ckOq6GJEETb6pptr6K7+tMIeJ+Xfw
+	 ubWlreq6zOFlqlVy1Hzt46pfKDG8KjoeFfzXKzlW1t3sBMn/ReVS/n0KqFJ72TKb2Z
+	 sEH/zbiOK8gsiWHOlGzyMlfpinfITNL/cLRf38/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 235/398] Bluetooth: hci_codec: validate vendor codec count length
-Date: Wed, 23 Sep 2026 16:05:09 +0200
-Message-ID: <20260923140649.509102892@linuxfoundation.org>
+Subject: [PATCH 6.18 236/398] Bluetooth: hci_sync: Serialize local codec list cleanup
+Date: Wed, 23 Sep 2026 16:05:10 +0200
+Message-ID: <20260923140649.534547361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,106 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit d0795cfd6f655f4de84868a4f4bb41a03f037b3d upstream.
+commit 9a10987a2f160a44a638c9a35994ca6e3089696e upstream.
 
-The Read Local Supported Codecs parsers consume the variable-sized
-standard codec array before parsing the vendor codec count.  Although the
-initial reply-size check includes a vendor count byte in the fixed layout,
-it does not guarantee that the byte remains after the standard codec array.
+hci_dev_close_sync() clears hdev->local_codecs after releasing hdev->lock.
+Codec list additions and both traversals in sco_sock_getsockopt() use that
+lock, but the close path does not. A close and BT_CODEC query can therefore
+interleave as follows:
 
-If a controller reply ends immediately after that array, calculating the
-vendor codec array size reads vnd_codecs->num beyond the skb data.  Use
-skb_pull_data() to validate and consume each codec header before using its
-count in both command variants.
+  hci_dev_close_sync()          sco_sock_getsockopt()
+                                hci_dev_lock()
+                                fetch codec entry
+  hci_codec_list_clear()
+    kfree(entry)
+                                read entry->id
 
-Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
-Fixes: 9ae664028a9e ("Bluetooth: Add support for Read Local Supported Codecs V2")
+The reader then accesses an entry which the close path has freed. KASAN
+reported:
+
+  BUG: KASAN: slab-use-after-free in sco_sock_getsockopt+0xfa0/0xfe0
+  Read of size 1 at addr ffff8881001c3450
+  Call Trace:
+   sco_sock_getsockopt+0xfa0/0xfe0
+   do_sock_getsockopt+0x537/0x7b0
+   __sys_getsockopt+0xf2/0x170
+  Allocated by task 92:
+   hci_codec_list_add.isra.0+0x2c/0x440
+   hci_read_codec_capabilities+0x224/0x590
+   hci_read_supported_codecs+0x2c2/0x640
+  Freed by task 92:
+   kfree+0x131/0x3c0
+   hci_codec_list_clear+0xd8/0x160
+   hci_dev_close_sync+0x92a/0xfa0
+
+Take hdev->lock around the clear operation at its existing point in the
+close path. This makes the clear wait for active readers and prevents a new
+traversal until the list is empty without changing teardown ordering.
+
+Fixes: b938790e7054 ("Bluetooth: hci_codec: Fix leaking content of local_codecs")
 Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_codec.c |   36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ net/bluetooth/hci_sync.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -145,11 +145,12 @@ void hci_read_supported_codecs(struct hc
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5508,7 +5508,9 @@ int hci_dev_close_sync(struct hci_dev *h
+ 	memset(hdev->eir, 0, sizeof(hdev->eir));
+ 	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
+ 	bacpy(&hdev->random_addr, BDADDR_ANY);
++	hci_dev_lock(hdev);
+ 	hci_codec_list_clear(&hdev->local_codecs);
++	hci_dev_unlock(hdev);
  
- 	skb_pull(skb, sizeof(rp->status));
- 
--	std_codecs = (void *)skb->data;
-+	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
-+	if (!std_codecs)
-+		goto error;
- 
- 	/* validate codecs length before accessing */
--	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
--	    + sizeof(std_codecs->num))
-+	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
- 		goto error;
- 
- 	/* enumerate codec capabilities of standard codecs */
-@@ -161,15 +162,14 @@ void hci_read_supported_codecs(struct hc
- 					    LOCAL_CODEC_ACL_MASK | LOCAL_CODEC_SCO_MASK, &caps);
- 	}
- 
--	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
--		 + sizeof(std_codecs->num));
-+	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
- 
--	vnd_codecs = (void *)skb->data;
-+	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
-+	if (!vnd_codecs)
-+		goto error;
- 
- 	/* validate vendor codecs length before accessing */
--	if (skb->len <
--	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
--	    + sizeof(vnd_codecs->num))
-+	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
- 		goto error;
- 
- 	/* enumerate vendor codec capabilities */
-@@ -214,11 +214,12 @@ void hci_read_supported_codecs_v2(struct
- 
- 	skb_pull(skb, sizeof(rp->status));
- 
--	std_codecs = (void *)skb->data;
-+	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
-+	if (!std_codecs)
-+		goto error;
- 
- 	/* check for payload data length before accessing */
--	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
--	    + sizeof(std_codecs->num))
-+	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
- 		goto error;
- 
- 	memset(&caps, 0, sizeof(caps));
-@@ -229,15 +230,14 @@ void hci_read_supported_codecs_v2(struct
- 					    &caps);
- 	}
- 
--	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
--		 + sizeof(std_codecs->num));
-+	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
- 
--	vnd_codecs = (void *)skb->data;
-+	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
-+	if (!vnd_codecs)
-+		goto error;
- 
- 	/* check for payload data length before accessing */
--	if (skb->len <
--	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
--	    + sizeof(vnd_codecs->num))
-+	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
- 		goto error;
- 
- 	for (i = 0; i < vnd_codecs->num; i++) {
+ 	hci_dev_put(hdev);
+ 	return err;
 
 
