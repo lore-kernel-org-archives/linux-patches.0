@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C83B39EF12;
-	Wed, 23 Sep 2026 14:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598E6535FBB;
+	Wed, 23 Sep 2026 14:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174429; cv=none; b=W1Y7o/S7wF/oDJoIwFqpVBVeNsA9FycTQPvC04hzDY7eqUVwkxWxG64rfSbAsSVvP84Duo1uFSqYe1Rm4BIrJim03lVo349cCOttXsQNb1GRGeM8SeF8+I+YneMPzQD860ZvWSnQ0eebdcXq8Bgk3w4/t+MEg69OvedxWmNmlxA=
+	t=1790174432; cv=none; b=uUP5PmoK6JA1c6so4lyFXn4RVd9PzcSuDI3VCq9weA89sYrW31q6vHC1wpeXwnpjsTF7Pw4O2L8nicQoHdQv0lSIbDl4LKTAV+qBAGuWNj+ijamG23Hd7sB/G3CW8sq1juvJ11BByN6+x9Tc3BAOyNnab/xHHskjZC/3d7P3cK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174429; c=relaxed/simple;
-	bh=doOgkExQTeKR+Aw/WbGqWYUOoyieVQI3UPDrcOedMNM=;
+	s=arc-20240116; t=1790174432; c=relaxed/simple;
+	bh=BdVX4HxdrDTk49EDFgXTNiZbIv9+pq/2XkwqhrIUtOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2Vi+qVR1Nz3fIhGCJywiaWdZkR7x4ywFk/zPNrR7BsfR857s4dgpjsNXw4sRENXFocBBkA5w4AqY6qe84LG41+hJNDKBX1QO+JGK3DpN9QhtbpQr/aaoi8yp2z8sz1Nv1unVEyTy4/z3SkCfxxf011kp4cv4g9vidlgpKFVMjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RETztg5s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H32Kcl/v67x9t/xERpI5ZbFS1RwSx3vUD3eS1AuKxL91PRBoaZt56G1r4Ec6frioGrslLRt598OZ1+8v9wHj84ah6EChfG9YKWUSQ4F4yKF/NghGZoFyRKAgNfM2tz4vpq+/oYPEugeoklOfiSLc9XKfwgBvkEwwAYU1tVe6Ngc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bnc0d8B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RETztg5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A9D1F000FF;
-	Wed, 23 Sep 2026 14:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bnc0d8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B165B1F000FF;
+	Wed, 23 Sep 2026 14:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174428;
-	bh=RNt4Mr+APMLCLX+c6rcQQwv1VqZoxkMLOyxAO9Err5k=;
+	s=korg; t=1790174431;
+	bh=BBGEd9F0xcIc7cq3MDLCN3nQGnNCq2+50K6DLcm59J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RETztg5sEQOWJY9voLQrF3VNrgai7cX3zaZn0Xb0bnbisVBqwjzt1l/hLRimUvGi4
-	 oFUl/ChsadA4+axAMFM4sPhGjerlLT+MSHdzSDczd8IAjyxBKuJMM+PxK2e0wS5x5L
-	 cTPvEXzn8n267CYjoEIFhqzykoDzK1KiKgUQXEXA=
+	b=1bnc0d8BaNf7qFjiOq0NzkW45DQBkOOOsnNX6Rk1PEaQRXqH/eGsoVfv1D86xctsx
+	 D9FYxPJvTcnOA9cWNuJWJc5H4iX1Y+SbrE62VmtvrytEmUe5UlmnhNGtW3+iQcwrxY
+	 AxcyOL+BIWtucotIp3jpvBQZ/bsWxDhiGc6qikoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Md Sadre Alam <md.alam@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/398] ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params
-Date: Wed, 23 Sep 2026 16:03:06 +0200
-Message-ID: <20260923140646.345919241@linuxfoundation.org>
+Subject: [PATCH 6.18 113/398] spi: spi-qpic-snand: avoid writing QPIC_EBI2_ECC_BUF_CFG register
+Date: Wed, 23 Sep 2026 16:03:07 +0200
+Message-ID: <20260923140646.374163564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,76 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 6b382bdfe26a2232091bf743e454e6794295783e ]
+[ Upstream commit 930a7312c946bf4731721cadd82bb9a2ada496ca ]
 
-In __soc_pcm_hw_params() if there is a snd_soc_dai_link_ch_map with
-non-zero codec_ch_mask, use that channel mask to restrict which channels
-are enabled on the codec. But only if there isn't a TDM mask.
+The description of commit bfb34eced559 ("mtd: rawnand: qcom: avoid writing
+to obsolete register") says this:
 
-It is possible that a snd_soc_dai_link_ch_map could include the same codec
-multiple times on different CPUs so the for_each_rtd_ch_maps() loop
-accumulates the channel masks for all entries of that codec.
+  "QPIC_EBI2_ECC_BUF_CFG register got obsolete from QPIC V2.0 onwards.
+  Avoid writing this register if QPIC version is V2.0 or newer."
 
-If a TDM mask was also set, it takes priority and is used instead of any
-possible snd_soc_dai_link_ch_map entries. (They cannot be ANDed together
-because the bit positions are indicating different things: TDM is a bit
-for each TDM slot, codec_ch_mask is a bit for each codec channel.)
+Although the referenced commit is related to the 'qcom-nandc' driver,
+however the hardware supported by the current driver is also based on
+QPIC v2.0 so we should avoid writing that register here as well.
 
-This fixes a problem of incorrect TX channels enabled on the codec when
-multiple codecs are aggregated on a single capture link. For example:
+Remove the register writing code to avoid undefined behaviour.
 
-- Two CPUs with six 4-channel codecs.
-- The machine driver chooses to assign one channel from each codec to
-  one channel on the CPU
-- But the codec hw_params() would be passed a channel count of 6, which
-  (a) is more channels than the codec has and (b) allows enabling channels
-  that should not be driving the audio bus.
-
-Fixes: ac950278b087 ("ASoC: add N cpus to M codecs dai link support")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260910114500.1586637-4-rf@opensource.cirrus.com
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260909-qpic-snand-avoid-ebi2-reg-write-v1-1-9b1b1466cc75@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-pcm.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/spi/spi-qpic-snand.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index ebd766e00bac6..b6e35cfe50b7c 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -1075,7 +1075,9 @@ static int __soc_pcm_hw_params(struct snd_pcm_substream *substream,
- 		goto out;
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 42f8fb272fa68..222e4aa7ee488 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -740,8 +740,6 @@ static int qcom_spi_read_cw_raw(struct qcom_nand_controller *snandc, u8 *data_bu
  
- 	for_each_rtd_codec_dais(rtd, i, codec_dai) {
--		unsigned int tdm_mask = snd_soc_dai_tdm_mask_get(codec_dai, substream->stream);
-+		unsigned int ch_mask = snd_soc_dai_tdm_mask_get(codec_dai, substream->stream);
-+		struct snd_soc_dai_link_ch_map *ch_maps;
-+		int j;
+ 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
+ 	qcom_write_reg_dma(snandc, &snandc->regs->cfg0, NAND_DEV0_CFG0, 3, 0);
+-	qcom_write_reg_dma(snandc, &snandc->regs->ecc_buf_cfg, NAND_EBI2_ECC_BUF_CFG, 1, 0);
+-
+ 	qcom_write_reg_dma(snandc, &snandc->regs->erased_cw_detect_cfg_clr,
+ 			   NAND_ERASED_CW_DETECT_CFG, 1, 0);
+ 	qcom_write_reg_dma(snandc, &snandc->regs->erased_cw_detect_cfg_set,
+@@ -1012,8 +1010,6 @@ static void qcom_spi_config_page_write(struct qcom_nand_controller *snandc)
+ {
+ 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
+ 	qcom_write_reg_dma(snandc, &snandc->regs->cfg0, NAND_DEV0_CFG0, 3, 0);
+-	qcom_write_reg_dma(snandc, &snandc->regs->ecc_buf_cfg, NAND_EBI2_ECC_BUF_CFG,
+-			   1, NAND_BAM_NEXT_SGL);
+ }
  
- 		/*
- 		 * Skip CODECs which don't support the current stream type,
-@@ -1097,9 +1099,15 @@ static int __soc_pcm_hw_params(struct snd_pcm_substream *substream,
- 		/* copy params for each codec */
- 		tmp_params = *params;
- 
--		/* fixup params based on TDM slot masks */
--		if (tdm_mask)
--			soc_pcm_codec_params_fixup(&tmp_params, tdm_mask);
-+		/* fixup params based on TDM or ch_map masks */
-+		if (!ch_mask) {
-+			for_each_rtd_ch_maps(rtd, j, ch_maps)
-+				if (ch_maps->codec == i)
-+					ch_mask |= ch_maps->codec_ch_mask;
-+		}
-+
-+		if (ch_mask)
-+			soc_pcm_codec_params_fixup(&tmp_params, ch_mask);
- 
- 		ret = snd_soc_dai_hw_params(codec_dai, substream,
- 					    &tmp_params);
+ static void qcom_spi_config_cw_write(struct qcom_nand_controller *snandc)
 -- 
 2.53.0
 
