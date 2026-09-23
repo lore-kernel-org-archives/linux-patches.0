@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147DC51C356;
-	Wed, 23 Sep 2026 14:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1076E485CC7;
+	Wed, 23 Sep 2026 14:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790172785; cv=none; b=Od49IJS0r/8pHbMBC9fjyE+bBpIJSZuIsejnBQHTUP1kS6uMRZFas4Fm+cRI4tAcTxbTMuRt0HKbYKsoj6tuu3gR1ru383/q3fE1t5nvMeBI+Zn99x82We9sU/+CP0aCGBr85iISoTdOl30Ah7VYOWoCzUwDoF3X0ANs7f+bOyM=
+	t=1790172788; cv=none; b=CSmHc80kFKyhj3jsRPApJZgLS4GDaXYISWf4QZzgg7xXsAIoL80J6KZDt1WgiELPRIwgZ/IznlbV9nGh4qMXBhN8khmcoN7rupQGcDn9phd6y66Ysxe5Alb4QDD7/tzgPFD38JamXypoYLZzYIzfSDreDlAgXhhnFpnCE2C7ZjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790172785; c=relaxed/simple;
-	bh=3R80QZu16dqFjX3Phu2KJrrML1thvxhOR0zXyYAs/O4=;
+	s=arc-20240116; t=1790172788; c=relaxed/simple;
+	bh=Yi8HYtLJI5jlqiKUWmh5MObaGuDhcm13PYOmXZ8Wwa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6tsfNNO7MD1LukqJ27LycYUx1t0zcWLzdOqGSFMRDEFXCK7Uy3xG8TIkrel1YetoZshOvTRbNGCwL/Vajja6DnbDN5z9g7gUwP42aCK0qkOZ82/fSXXkgXoCwUiNkpqGOCl/jdoLJcIzwuHgHjrfkV4Dajn6jDoNfLh1o58B04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NORcYYTV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mELK2F8pn7d0NJRsycNiPpcrS6llnJETUxFUK29purgeyFw5z2a/hh05Y6gT5+m0ktA4svan2bx6ZLDBFHObNkMVjLBLCWveNs4NaS10hHoC04VZXKCpMlElCjtH6o7c383optYSomVuDYsMklyx06nD0Vv5gdYnEwcCkWQ340k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLi6fKai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NORcYYTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BC81F000FF;
-	Wed, 23 Sep 2026 14:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLi6fKai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B171F000FF;
+	Wed, 23 Sep 2026 14:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790172783;
-	bh=l/o5cLseikR2cZ42dqt9E7ZLiXFIql1xeKt0+d3bZq8=;
+	s=korg; t=1790172786;
+	bh=ore18qMNlEKBBKQnOjDLoACgDZeSPeI4fGB+rDMr14U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NORcYYTVvRdrX26KF1aFCV/fIf6kdezZcNOJMXng2eYdkDRAEzruOLUc9j1eYdULz
-	 z/GxT0jb8voQEkjoIW6lwnLfNgQFqDr5IvdwHoTv+n1h3lGrIkwJal9mHrstCDadfH
-	 wowQG1a5Yty08xPf6ziJA2TyQquWMexb6y98DKXk=
+	b=DLi6fKai3MYt12x08l6Ajjb2QTSk4yg3XZ8kLcZsUiy7e5LZb/4UZBeL6l+zZ+ryG
+	 /H5kBMN4rbescQkfafaqQ/SB69+HGmMMIka/412kpBC0wDTk+54IDngvRDulj7k5YF
+	 qtkNsjLzqaT4b/lQ06Ca79fmus31mI6p6jYUTJag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 043/438] RDMA/irdma: Enforce local fence for IB_WR_REG_MR
-Date: Wed, 23 Sep 2026 16:01:04 +0200
-Message-ID: <20260923140645.898170663@linuxfoundation.org>
+Subject: [PATCH 7.2 061/438] dmaengine: Fix device kref underflow in dma_chan_put()
+Date: Wed, 23 Sep 2026 16:01:22 +0200
+Message-ID: <20260923140646.372838442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -51,40 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Shivank Garg <shivankg@amd.com>
 
-[ Upstream commit 3fb905f07ea45b31c8f67ba6e4668de46f527e65 ]
+[ Upstream commit 44dab659064eb5c10adb0306510eebe848ed592d ]
 
-Enforce local fence for IB_WR_REG_MR to avoid spurious
-FASTREG_VALID_MKEY async events during heavy invalidation
-and registration activity.
+dma_chan_get() takes chan->device->ref only on the slow path:
 
-Commit 69e8e429bca2 ("RDMA/irdma: Enforce local fence for LOCAL_INV WRs")
-was very similar, but was not sufficient to prevent all occurrences
-of these async events.
+	/* no kref on fast path */
+	if (chan->client_count) {
+		__module_get(owner);
+		chan->client_count++;
+		return 0;
+	}
+	if (!try_module_get(owner))
+		return -ENODEV;
+	if (!dma_device_get(chan->device)) { // calls kref_get_unless_zero()
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260901160014.2026285-1-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+dma_chan_put() drops the ref unconditionally, so every fast-path
+get/put pair drops one extra device reference.
+
+The bug fires when two conditions hold together: a non-private
+provider has a persistent client holding chan->client_count > 0
+and another client cycles dmaengine_get()/dmaengine_put().
+When the kref hits zero, the subsequent dma_find_channel() returns
+NULL even though the provider module is still loaded.
+
+Fix this by dropping device->ref only on the last put, matching the
+single slow-path get.
+
+Fixes: 8ad342a86359 ("dmaengine: Add reference counting to dma_device struct")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Shivank Garg <shivankg@amd.com>
+Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-2-d4a4ee47d927@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dmaengine.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 04d5af78686b5..e926eb37982c6 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -4244,7 +4244,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
- 			stag_info.total_len = iwmr->ibmr.length;
- 			stag_info.reg_addr_pa = *palloc->level1.addr;
- 			stag_info.first_pm_pbl_index = palloc->level1.idx;
--			stag_info.local_fence = ib_wr->send_flags & IB_SEND_FENCE;
-+			stag_info.local_fence = true;
- 			if (iwmr->npages > IRDMA_MIN_PAGES_PER_FMR)
- 				stag_info.chunk_size = 1;
- 			err = irdma_sc_mr_fast_register(&iwqp->sc_qp, &stag_info,
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 9049171df8578..4d8c6655c7a15 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -515,7 +515,9 @@ static void dma_chan_put(struct dma_chan *chan)
+ 		chan->route_data = NULL;
+ 	}
+ 
+-	dma_device_put(chan->device);
++	/* This channel is not in use anymore, drop the device ref */
++	if (!chan->client_count)
++		dma_device_put(chan->device);
+ 	module_put(dma_chan_to_owner(chan));
+ }
+ 
 -- 
 2.53.0
 
