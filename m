@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF55332EC5;
-	Wed, 23 Sep 2026 14:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010B853E30D;
+	Wed, 23 Sep 2026 14:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790175140; cv=none; b=oNvwc79dslzbC0e+kfuIpDJpen886NKP7alp92db4tOO51wnJwa4AlOw2pgZuKP/hvD0VR70vcpnAngVgSGN014i8py5xIvmOHo4Vo5nsPd+6/mh89dRSCEJ3w4v9bznbInivIoLEjN+08dQkgTlTLLobYnPNUwPbZL9uHrG6hI=
+	t=1790175144; cv=none; b=qQMX5iAd9PqStI244gQkfHB7oB6/0HD5wLOfGPFi247QHZUzvobznGfmV7C3CS2zqdkfi9J+9NtXbdA9dQOi5YkqnBOQyPj4lcwd/I4LYjMTQ+IJ5EO52SSGi2a0jRN/SicyEdyOngqDuZA5E+ZyAhV86uoxtJfwgsknzgSzIuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790175140; c=relaxed/simple;
-	bh=CO1v1otAD2Idv/swLkX0Qr8jk5Jqk4TQ6HUfe09XZ/I=;
+	s=arc-20240116; t=1790175144; c=relaxed/simple;
+	bh=W2hVgFoMDZGXhwLlfpkMNwhvjjWIeCCKYqYTS2yuJ8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOu3wfRuILlxfY+VuVHG0XWWVZZNJIWBhc0bnwrrZyNJZ2vpr6b+dmsqzLbbPzG+0qCAXU3NFuvtmXqSwCYbWqXrxBXa2NHsh71Luihcfneud0Xb/aYP4RMV78Vi8lT0ATSGKHauWzuQsa8SXIKhzy/DWyVoBnX2TXu/naglxFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FwxPqSp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gg+LpSLGAF738gxOkNM0ZZmaANsESg9n1z++yoOqBuspcW56AQZN5vTWKdE+0OeCNIju1brvkzSPVon5vHi+tpoIaxChEwcBHZwqLGhyg9JbrKDP5MfIT63sJByonx6v8kD4hxJeMg0QydhT1M57VIKV60d4SBe72osJdaEycYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxh2nxdu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FwxPqSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD8C1F000FF;
-	Wed, 23 Sep 2026 14:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxh2nxdu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F221F00893;
+	Wed, 23 Sep 2026 14:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790175137;
-	bh=u1LNR8KsFkv8L2BVXtoMymjK3mZ4JVOr0MstpEJbGKQ=;
+	s=korg; t=1790175140;
+	bh=qBt1VNHLK4EQTy5VOhU8PWwtzf3AH83P0D6d1PJhGa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FwxPqSpBkAuB7c4xMIFafpBpYrFfMXy87B8aHjaMtUJGZnM/5hHR3ADnnw0KlhON
-	 YLHMJGU10B2G0Krb+xxxn4hflNhirDm0IEPKpePe2bD+qE9Cb0nZaHcJCGuX3/9qnp
-	 kPCvO6ENnDBBpSRHYgXxKgXClfwlDtnL54/kr2aM=
+	b=Fxh2nxduLrcafWLv8cQ+1QUb660Q+7WnsqeSMTVuDlo2QBLGr2K9oasN8X/mX4+pZ
+	 //gLL9gSOdbnd4iFjtnBTp1K6/xgDgc/xVRXCZ8JP18st3psK+OyBWaOCMGG84zeCs
+	 Pc8jSn32TxFUg+jlZffyUaOtdbpewqGpUl0E13Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 333/398] wifi: mwifiex: bound the pairwise-cipher OUI walk to the IE length
-Date: Wed, 23 Sep 2026 16:06:47 +0200
-Message-ID: <20260923140652.052363505@linuxfoundation.org>
+Subject: [PATCH 6.18 334/398] wifi: mwifiex: validate scan response extents
+Date: Wed, 23 Sep 2026 16:06:48 +0200
+Message-ID: <20260923140652.076897248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -50,98 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit e667aee1c192d67d27c803007bfa9c6e0873e959 upstream.
+commit 3687d7d48070838cc2953431b3a27717cab0aaf6 upstream.
 
-mwifiex_search_oui_in_ie() reads a pairwise-cipher (PTK) count from a
-beacon/probe-response RSN or WPA information element and then walks that
-many 4-byte OUIs, comparing each with memcmp(). The count comes straight
-from the (attacker-supplied) IE and is never checked against the
-element's own length, and the callers admit the element on element_id
-alone (has_ieee_hdr() / has_vendor_hdr(), no length check). A crafted
-RSN/WPA IE with a large pairwise count therefore makes the walk read up
-to 255 * 4 bytes past the element -- an out-of-bounds read of the
-kmemdup()'d beacon buffer, reachable from any AP whose beacon/probe
-response is processed during scan-result parsing.
+mwifiex_ret_802_11_scan() subtracts the fixed response fields and the
+firmware-provided BSS length from resp->size without first proving that
+either extent fits. A short response or oversized BSS length can
+therefore underflow tlv_buf_size and make the TLV parser walk beyond the
+command response.
 
-Pass the number of IE bytes available at the OUI list and bound the walk
-to the element. Keep the length signed and reject a negative value
-before any unsigned arithmetic, so a small or zero IE length cannot
-underflow to a large size_t and defeat the bound.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
+Compute the fixed extent from the selected normal or background scan
+response. Validate that the fixed fields and BSS data fit before deriving
+the TLV extent and entering the parser.
 
 Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260814134704.85902-1-doruk@0sec.ai
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260815135227.50392-1-pengpeng@iscas.ac.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/scan.c |   25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/scan.c |   29 ++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 --- a/drivers/net/wireless/marvell/mwifiex/scan.c
 +++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -104,12 +104,24 @@ has_vendor_hdr(struct ieee_types_vendor_
-  * a given oui in PTK.
-  */
- static u8
--mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui)
-+mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui, int ie_len)
- {
-+	const size_t ptk_body_offset = offsetof(struct ie_body, ptk_body);
- 	u8 count;
+@@ -2117,6 +2117,7 @@ int mwifiex_ret_802_11_scan(struct mwifi
+ 	u32 bytes_left;
+ 	u32 idx;
+ 	u32 tlv_buf_size;
++	size_t fixed_size;
+ 	struct mwifiex_ie_types_chan_band_list_param_set *chan_band_tlv;
+ 	struct chan_band_param_set *chan_band;
+ 	u8 is_bgscan_resp;
+@@ -2132,6 +2133,14 @@ int mwifiex_ret_802_11_scan(struct mwifi
+ 	else
+ 		scan_rsp = &resp->params.scan_resp;
  
-+	/* ie_len is the number of bytes available at iebody. Keep it signed
-+	 * and reject a negative (underflowed) length before the unsigned
-+	 * comparisons below, so a small or zero IE length cannot wrap.
-+	 */
-+	if (ie_len < 0 || (size_t)ie_len < ptk_body_offset)
-+		return MWIFIEX_OUI_NOT_PRESENT;
-+
- 	count = iebody->ptk_cnt[0];
++	scan_resp_size = le16_to_cpu(resp->size);
++	fixed_size = scan_rsp->bss_desc_and_tlv_buffer - (u8 *)resp;
++	if (scan_resp_size < fixed_size) {
++		mwifiex_dbg(adapter, ERROR,
++			    "SCAN_RESP: response is too short\n");
++		ret = -1;
++		goto check_next_scan;
++	}
  
-+	/* Reject an OUI count whose list would run past the element. */
-+	if (ptk_body_offset + count * sizeof(iebody->ptk_body) > (size_t)ie_len)
-+		return MWIFIEX_OUI_NOT_PRESENT;
-+
- 	/* There could be multiple OUIs for PTK hence
- 	   1) Take the length.
- 	   2) Check all the OUIs for AES.
-@@ -143,11 +155,14 @@ mwifiex_is_rsn_oui_present(struct mwifie
- 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
+ 	if (scan_rsp->number_of_sets > MWIFIEX_MAX_AP) {
+ 		mwifiex_dbg(adapter, ERROR,
+@@ -2149,8 +2158,6 @@ int mwifiex_ret_802_11_scan(struct mwifi
+ 		    "info: SCAN_RESP: bss_descript_size %d\n",
+ 		    bytes_left);
  
- 	if (has_ieee_hdr(bss_desc->bcn_rsn_ie, WLAN_EID_RSN)) {
-+		int ie_len = (int)bss_desc->bcn_rsn_ie->ieee_hdr.len -
-+			RSN_GTK_OUI_OFFSET;
-+
- 		iebody = (struct ie_body *)
- 			 (((u8 *) bss_desc->bcn_rsn_ie->data) +
- 			  RSN_GTK_OUI_OFFSET);
- 		oui = &mwifiex_rsn_oui[cipher][0];
--		ret = mwifiex_search_oui_in_ie(iebody, oui);
-+		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
- 		if (ret)
- 			return ret;
- 	}
-@@ -169,10 +184,14 @@ mwifiex_is_wpa_oui_present(struct mwifie
- 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
+-	scan_resp_size = le16_to_cpu(resp->size);
+-
+ 	mwifiex_dbg(adapter, INFO,
+ 		    "info: SCAN_RESP: returned %d APs before parsing\n",
+ 		    scan_rsp->number_of_sets);
+@@ -2158,15 +2165,17 @@ int mwifiex_ret_802_11_scan(struct mwifi
+ 	bss_info = scan_rsp->bss_desc_and_tlv_buffer;
  
- 	if (has_vendor_hdr(bss_desc->bcn_wpa_ie, WLAN_EID_VENDOR_SPECIFIC)) {
-+		int ie_len = (int)bss_desc->bcn_wpa_ie->vend_hdr.len -
-+			(int)sizeof(bss_desc->bcn_wpa_ie->vend_hdr.oui) -
-+			WPA_GTK_OUI_OFFSET;
-+
- 		iebody = (struct ie_body *)((u8 *)bss_desc->bcn_wpa_ie->data +
- 					    WPA_GTK_OUI_OFFSET);
- 		oui = &mwifiex_wpa_oui[cipher][0];
--		ret = mwifiex_search_oui_in_ie(iebody, oui);
-+		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
- 		if (ret)
- 			return ret;
- 	}
+ 	/*
+-	 * The size of the TLV buffer is equal to the entire command response
+-	 *   size (scan_resp_size) minus the fixed fields (sizeof()'s), the
+-	 *   BSS Descriptions (bss_descript_size as bytesLef) and the command
+-	 *   response header (S_DS_GEN)
++	 * The TLV buffer follows the command-specific fixed fields and the BSS
++	 * descriptions. Background-scan responses have an additional fixed
++	 * field before scan_rsp, which is included in fixed_size.
+ 	 */
+-	tlv_buf_size = scan_resp_size - (bytes_left
+-					 + sizeof(scan_rsp->bss_descript_size)
+-					 + sizeof(scan_rsp->number_of_sets)
+-					 + S_DS_GEN);
++	if (bytes_left > scan_resp_size - fixed_size) {
++		mwifiex_dbg(adapter, ERROR,
++			    "SCAN_RESP: BSS data exceeds response\n");
++		ret = -1;
++		goto check_next_scan;
++	}
++	tlv_buf_size = scan_resp_size - fixed_size - bytes_left;
+ 
+ 	tlv_data = (struct mwifiex_ie_types_data *) (scan_rsp->
+ 						 bss_desc_and_tlv_buffer +
 
 
