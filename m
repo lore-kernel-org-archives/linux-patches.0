@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6925D5172F9;
-	Wed, 23 Sep 2026 14:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46F152CCCA;
+	Wed, 23 Sep 2026 14:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173190; cv=none; b=hIVsvmoyv9WruFZQ077XjRlZUgWAIecXj78CnFaKQ+MxVJC4FZU3/4bb22an0bYUNr9AvudEHRF7XDA3leVmEA27slHUa/Jz7h9YxnYWzVLmSD87QpLWhZ51WloP0cgSBdUwG1Dpwkd/8Ii0Wr2C0BC4JjHGF6QQiyprrHmxD4A=
+	t=1790173194; cv=none; b=Q2B55j1OvtRG2yH1CdOZSft1ZOK3fRd5X06pa4wklBfeQdHgwdr5T1EhLtxQByhC8w0qaYKLJheE0MhDpn5Sgm7y3+bQ1VoUzJc76SHNs4q1/73pAl7I6smEBCDbSgky0LH0oS/i8HPIIB3oQGw9+5Zd6e1NZch+o+NQzorIdXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173190; c=relaxed/simple;
-	bh=7PSDoxeNNmDfmx4KdTiwFgdZxJdGCTLLYS8F5p14O5Y=;
+	s=arc-20240116; t=1790173194; c=relaxed/simple;
+	bh=37LH8BnuOn5/bAqUbZlQ/um/Nzv7IJRl9CdFJsn0dNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ui4EL/AEqRsPROqc0+WLdv9GecF0bMsXws0RVF2yD5dtEIDosUfHQ310RFEmcxUnUdgQcgk19XxZeU5AZlgeC7KeB7ktZsM6gmCrbwb0qAEJY/Dj32w1QsmJGzEvcIBFH1Y5YQ2BIJ9VM2gW7/n8cYK6HNgIs1WhEPT+DtL4mIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3i6EONQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jHvd5CXVjpkkAJmbXNxWtYkFzfh4E7RGnjXe2QXrX/2+yx01eaTB0cCXcE3I5lSOo8s+pM9bZnn96aZqlZpUd9z3b4wpYuVW0irseE8VzBGFdv/Mbq4D5lNwPbz4wwyAAQUB+nZlDI2ALmipD8CV1W0mNBbVu2rU+YW5V3iIM5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTLuyxaf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3i6EONQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68AE1F000FF;
-	Wed, 23 Sep 2026 14:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTLuyxaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE35D1F000FF;
+	Wed, 23 Sep 2026 14:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790173189;
-	bh=bfD+pFnwzpSTjkVCDrYdSOd6+b84TD+jEa+URm2GZYg=;
+	s=korg; t=1790173192;
+	bh=yYn+505i9Mksd5CCogy0OMZZVXX2gGoKpYWCfU8Ka6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3i6EONQ5o4QKIm/mWiF4wDuzIq7/fmdbDCcbLQgOtOwYF9OGNDXfJdqlCfwnVAdm
-	 Qw0xzKvsAC3bzeea/0sgcTpK2bJ3wuJsIRrlAWu3q1dwFdp+38r48CPXmdGMOVobeK
-	 zZRBe3u07GwgOos33FSBZraR64SRSsOP8/jvPgdg=
+	b=HTLuyxafuOm9IrdSdJLTLddGntT9AwgKBxNvN1R85LzhWZVBVhMk8ai0N2AQGU0EL
+	 UWrtTEoxnJPC2jPp9/nc2cqJlTX8pWVFfjM58g6fTBP5tFZRBDLN9TB2+v+R0wZXH0
+	 qFMxkG9YnHp01r/+7v25T7sRCcpkX1Zf4NbRxy8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b6919040d9958e2fc1ae@syzkaller.appspotmail.com,
-	ThangNN99 <ngocthang2710.1999@gmail.com>,
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 168/438] Bluetooth: hci_core: Fix queuing tx_work after workqueue is drained
-Date: Wed, 23 Sep 2026 16:03:09 +0200
-Message-ID: <20260923140649.125635788@linuxfoundation.org>
+Subject: [PATCH 7.2 169/438] Bluetooth: btintel_pcie: validate TX skb length in send_sync
+Date: Wed, 23 Sep 2026 16:03:10 +0200
+Message-ID: <20260923140649.152090721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
 References: <20260923140644.756254324@linuxfoundation.org>
@@ -52,89 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ThangNN99 <ngocthang2710.1999@gmail.com>
+From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 
-[ Upstream commit 6610c6fe4b8936c232048e6049bf77c70a6f759c ]
+[ Upstream commit 4b837ebd0ea21ae5cc26f02dc042edc6fe7b46b9 ]
 
-hci_send_acl(), hci_send_sco() and hci_send_iso() queue hdev->tx_work
-unconditionally. They can run from the L2CAP/SCO/ISO socket send path
-while hci_dev_close_sync() is draining hdev->workqueue (HCIDEVDOWN
-racing with a socket write). Since that queue_work() is not chained
-work from the tx_work worker itself, __queue_work() sees the queue
-marked __WQ_DRAINING, warns "cannot queue %ps on wq %s", and drops
-the work:
+btintel_pcie_prepare_tx() copies skb->len bytes into a fixed
+BTINTEL_PCIE_BUFFER_SIZE (4096) DMA slot via an unchecked memcpy.
+Oversized packets are currently rejected only in
+btintel_pcie_send_frame(); any future caller of
+btintel_pcie_send_sync() would silently overflow the DMA buffer.
 
-  WARNING: CPU: 1 PID: 5985 at kernel/workqueue.c:2352 __queue_work
-  Call Trace:
-   queue_work_on
-   l2cap_chan_send
-   l2cap_sock_sendmsg
-   ...
+Add the bounds check in btintel_pcie_send_sync() itself, right
+before skb_push() and the DMA copy.
 
-hci_dev_close_sync() already sets HCI_CMD_DRAIN_WORKQUEUE before
-draining, but only hci_cmd_work() and handle_cmd_cnt_and_timer()
-check it before queuing. Route the tx_work producers through the
-same guard via a shared hci_sched_tx() helper.
-
-Fixes: 525daaea459f ("Bluetooth: hci_sync: Set HCI_CMD_DRAIN_WORKQUEUE during device close")
-Reported-by: syzbot+b6919040d9958e2fc1ae@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b6919040d9958e2fc1ae
-Signed-off-by: ThangNN99 <ngocthang2710.1999@gmail.com>
+Assisted-by: Copilot:claude-sonnet-5 code-review code-generation
+Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index f747492da5f66..86a9677ed7025 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3234,6 +3234,17 @@ static void hci_queue_acl(struct hci_chan *chan, struct sk_buff_head *queue,
- 	bt_dev_dbg(hdev, "chan %p queued %d", chan, skb_queue_len(queue));
- }
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index c64e96fe88976..aad466e453013 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -404,6 +404,12 @@ static int btintel_pcie_send_sync(struct btintel_pcie_data *data,
+ 	if (tfd_index > txq->count)
+ 		return -ERANGE;
  
-+/* Queue hdev->tx_work, unless hdev->workqueue is being drained by
-+ * hci_dev_close_sync(), which would otherwise WARN and drop the work.
-+ */
-+static void hci_sched_tx(struct hci_dev *hdev)
-+{
-+	rcu_read_lock();
-+	if (!hci_dev_test_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE))
-+		queue_work(hdev->workqueue, &hdev->tx_work);
-+	rcu_read_unlock();
-+}
++	if (skb->len > BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN) {
++		bt_dev_err(hdev, "TX skb too large (%u > %u)", skb->len,
++			   BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN);
++		return -EMSGSIZE;
++	}
 +
- void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
- {
- 	struct hci_dev *hdev = chan->conn->hdev;
-@@ -3242,7 +3253,7 @@ void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
- 
- 	hci_queue_acl(chan, &chan->data_q, skb, flags);
- 
--	queue_work(hdev->workqueue, &hdev->tx_work);
-+	hci_sched_tx(hdev);
- }
- 
- /* Send SCO data */
-@@ -3267,7 +3278,7 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb)
- 	bt_dev_dbg(hdev, "hcon %p queued %d", conn,
- 		   skb_queue_len(&conn->data_q));
- 
--	queue_work(hdev->workqueue, &hdev->tx_work);
-+	hci_sched_tx(hdev);
- }
- 
- /* Send ISO data */
-@@ -3338,7 +3349,7 @@ void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb)
- 
- 	hci_queue_iso(conn, &conn->data_q, skb);
- 
--	queue_work(hdev->workqueue, &hdev->tx_work);
-+	hci_sched_tx(hdev);
- }
- 
- /* ---- HCI TX task (outgoing data) ---- */
+ 	/* Firmware raises alive interrupt on HCI_OP_RESET or
+ 	 * BTINTEL_HCI_OP_RESET
+ 	 */
 -- 
 2.53.0
 
