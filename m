@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF4C5326DD;
-	Wed, 23 Sep 2026 14:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A752ED2F;
+	Wed, 23 Sep 2026 14:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174214; cv=none; b=bbXaEDypwcxpLqddEFnZfBxnm+p+yLxDwcV/R+50Z/aA7taajNaFDb2voiPbtC5d17gUgDgCz2tvzHM0pjjp8i4IegE2ZYdv5pob20Pl4XV8FPMoCcwo+re+o8JCyfuuwQwQd/IooSrrY2nGOeCPfsc39kIPe+9WcFWKX7FncQ4=
+	t=1790174217; cv=none; b=o9xqXyWVYtMh/b6v9QsbW1MUp0nkWlmfoo5TjciDw8c07O9V/TtTze+JJOuKCxZIBdmYlYnsSdvJVdiL1QyR6CtMmMJOIMUFR8spXpdPry4AF/ErwmTv4NwJhLa+oqzbvvcuGciB3mfSYsw093wQvw1guuIR1GqDA5rx8AGDHjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174214; c=relaxed/simple;
-	bh=Gfcv94jAdkzImcx0SV0jtCEfwYnbsjThn389foBlSvw=;
+	s=arc-20240116; t=1790174217; c=relaxed/simple;
+	bh=XOvV5BNMLjrv2BASdNs/ioso6+7B5iWi1v4ZiT3Cq64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGSyD6PP0fXEWBEM+CtxnZXfozbBpA52bAaJO/CXaae6iwq5dD3I91z7qve6UGIJGP9i4N0k3w3SDH6U6Zy5/XlkzGkZSwBeUNRXDxeJmSr/FP9V9KX8irXG2A02FVqrEwVQPX9FZyNdDf7N2vOE5FvgMqhVnScY1t3xe4PMSFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NraM6pdM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjZ8Ah70a1VKkaed+In70OdDiT8krzCrd85lqbTUHcATK3ErI4QlXGRLW/L61KinX42hJkIFAxbZIwe7LDXwq5pJRGXJsPm8zoKUef89N3FPeAV4LA9Oy8fM9/HTZiyyZObFUx1f8QWL5UwcgPgarOB3GtmpJTfNLW9l0ogtk90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tON7KZUy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NraM6pdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32A51F000FF;
-	Wed, 23 Sep 2026 14:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tON7KZUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBABE1F00898;
+	Wed, 23 Sep 2026 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174213;
-	bh=UWkZpDDuWu4EyyhWKx3d48k+NJH8lsBkbFjhK1daEHM=;
+	s=korg; t=1790174216;
+	bh=5D4LiDnwEDeP+FOIrznekP96tJ8lM7P1K0Xxrpt5rcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NraM6pdMLmfLRL8RPsUj6MI3fBcMNSI6RE/2WR1f/LzfV0d7b5EcfD81aCHu+dOsc
-	 UvdiorPjTpIvX0KEA3qE6Ze8vMnPpp3o/2b0nDuIh1RfZd/ziR5K6QRzWTILohtdnz
-	 /rydbAuDUVPfRFAlkLe8C/2vJsrcDL19Qc+sq2/w=
+	b=tON7KZUyTmO6CQ6H8Wl64tr3MICDyZF7spdDk3XNkCe4ChS2FKHP+zamhdFWOJ71H
+	 07Pa4GPh3utVcjFfnOAucTqenp6vZSJMm1T8OWlviQI51nAHEBLkNifrPX54xho8PF
+	 SzHOnNV8pI8LOHqLHh6TgoXC9p9t0wJoBCW7p2N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Hao <flyingpeng@tencent.com>,
+	Bogdan Nicolae <bogdan.nicolae@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/398] wifi: mwifiex: fix IRQ leak using wrong index in MSI-X error path
-Date: Wed, 23 Sep 2026 16:02:00 +0200
-Message-ID: <20260923140644.617446656@linuxfoundation.org>
+Subject: [PATCH 6.18 047/398] wifi: brcmfmac: cyw: pass PMKID to firmware if present
+Date: Wed, 23 Sep 2026 16:02:01 +0200
+Message-ID: <20260923140644.643509754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,40 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Hao <flyingpenghao@gmail.com>
+From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
 
-[ Upstream commit a3d722190cdef18da4878b5efc27c3c386dda248 ]
+[ Upstream commit e2de8d5eb2984416affdd9559e55f37c7f1bbf47 ]
 
-mwifiex_pcie_request_irq() registers each MSI-X vector with a per-index
-dev_id (&card->msix_ctx[i]). On a request_irq() failure the cleanup loop
-"for (j = 0; j < i; j++)" frees msix_entries[j].vector but passes the
-failed index's &card->msix_ctx[i] as the dev_id. free_irq() matches on
-(irq, dev_id), so it fails to find the action registered with
-&card->msix_ctx[j]: the already-requested IRQ j is not freed (leaked) and
-free_irq() warns about freeing a non-existent IRQ. Use &card->msix_ctx[j].
+Zero out auth_status on initialization. Otherwise, garbage will
+leak from the stack to the firmware (when ssid is less than 32 bytes
+and/or when params->pmkid is set). Then, pass the params->pmkid to the
+firmware (without it, the firmware caches a garbage PMKID on successful
+authentication and denies a subsequent association request that includes
+the PMKID).
 
-Fixes: 99074fc1e67b ("mwifiex: enable pcie MSIx interrupt mode support")
-Signed-off-by: Peng Hao <flyingpeng@tencent.com>
-Link: https://patch.msgid.link/20260828111531.56723-1-flyingpeng@tencent.com
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Signed-off-by: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260807163418.487508-1-bogdan.nicolae@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index a760de191fce7..a9425e9a94f45 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -3068,7 +3068,7 @@ static int mwifiex_pcie_request_irq(struct mwifiex_adapter *adapter)
- 					    ret);
- 				for (j = 0; j < i; j++)
- 					free_irq(card->msix_entries[j].vector,
--						 &card->msix_ctx[i]);
-+						 &card->msix_ctx[j]);
- 				pci_disable_msix(pdev);
- 			} else {
- 				mwifiex_dbg(adapter, MSG, "MSIx enabled!");
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index b7472e19dd608..32a6e9ca2a469 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -201,7 +201,7 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ {
+ 	struct brcmf_if *ifp;
+ 	struct brcmf_pub *drvr;
+-	struct brcmf_auth_req_status_le auth_status;
++	struct brcmf_auth_req_status_le auth_status = {};
+ 	int ret = 0;
+ 
+ 	brcmf_dbg(TRACE, "Enter\n");
+@@ -209,6 +209,9 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ 	ifp = netdev_priv(dev);
+ 	drvr = ifp->drvr;
+ 	if (params->status == WLAN_STATUS_SUCCESS) {
++		if (params->pmkid)
++			memcpy(auth_status.pmkid, params->pmkid,
++			       WLAN_PMKID_LEN);
+ 		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_SUCCESS);
+ 	} else {
+ 		bphy_err(drvr, "External authentication failed: status=%d\n",
 -- 
 2.53.0
 
