@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC7339A07C;
-	Wed, 23 Sep 2026 14:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A953AE198;
+	Wed, 23 Sep 2026 14:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790174198; cv=none; b=HlozXGxkfYZiTDFgwN+L7r8XCy6wkG5soWtiI4/qelQ7Qa42hkdwBjeMRgz2HKGou2BXApkAk3+/2tdxV2jqxnwzpCtXs/56ErKp0T227uuyfcCXKfeLyFN7z+efGnhqTPsFUQWD3GOhZV7fxME22lfm88tPDJsF3YtARlWYCyU=
+	t=1790174202; cv=none; b=R9RuCYJC6LECXWEobEq9iHHAazwBGL4N4t1tq8UMNJbQtSHwLw/YIZCtLneLWGbA4kH6WKdJBmJJpufQu88sodgnfHsBinhZ5DR0biWbsUHuVnr+RzE1NmqqF0WJUHXi0lG+JCM1/+eRd09MOXm2u/06Jm3LrZCPsy8M7pC+ius=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790174198; c=relaxed/simple;
-	bh=6M8QLswBip4uS9GtOglT0tTvel8MhWixRMFMMyepwbY=;
+	s=arc-20240116; t=1790174202; c=relaxed/simple;
+	bh=DstQleBGlytkDUXQlzqjPuNyjGkJq9dgwfBtlcPDyts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lr+Vf3GxCi3D5nw56jrZWd3xmppHVRXPclVUqfm3Rpfsgsm6mvovlpv4K02hg2wy6i74GNvN/c79HPwYudwov/N77xh3flPh1JMJh1iYVmYwz8zzK74b8gZNrLj6k8ojDjhjGDgCrWcEJmxUTy1utTgqxd+yY6Ht4TG72fto5AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKaiT6fx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fSYzCKDseU+e502TaMDNOxF08O7TrsEfBHlMWnuaGHfKqWVZ+qlZaFzypwl/DNuzvOn8/DvIqjmWp1bELdi0kafyeAeaczAq04IABqPHOghPmy6pwnAP1BkYxjlWQNRPCxPTaGdHs8w5jlpV9NtE9RxQvqzFBipqu+n6l8KzdcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZR5KiuQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKaiT6fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8861F00893;
-	Wed, 23 Sep 2026 14:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZR5KiuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DD21F000FF;
+	Wed, 23 Sep 2026 14:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790174197;
-	bh=f7Tz3Y+eeSMCTtAbhU1twHdy3y1j7JHHXhaEvjkgH6Q=;
+	s=korg; t=1790174200;
+	bh=XqBJwgnj8ydpezHOGqLXG2TbjCJsQ+umPsL1xL7vibc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KKaiT6fxLlvG5gYRyq8oRWvfsTLbuMrNTPIOlU+N0t7igwkzNb8mKZnWrw0t3VWJ+
-	 wMY6uG6qBFBCVcwL2eB8RdXcFM+sewNAIRnYMX1WswxCyIGKnbahYaok/pHoNpXi0k
-	 uki9lopNwP6GSgerYJLoPsCBrIm9AVOnSazD6aww=
+	b=HZR5KiuQl6iaBfsxWrfMtgEFMZCf25wYcjlVdbxg+99crLqG3ywJeWXpOE6IaQXtL
+	 A0w7kKOhbdhSspcxqUtvfaOmJF0UN7ORzIpALjrl4jxRJix3LnwMlS7/KMaUC7DCSA
+	 OSGA9zZFEtvXm+6A1gaMuubQ5t7C3hJ/pwqeDypM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Stian Halseth <stian@itx.no>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/398] esp: downgrade zerocopy managed frags before mutating skb frags
-Date: Wed, 23 Sep 2026 16:01:36 +0200
-Message-ID: <20260923140644.009262182@linuxfoundation.org>
+Subject: [PATCH 6.18 013/398] sunvdc: fix -EIO issue due to lack of retries
+Date: Wed, 23 Sep 2026 16:01:27 +0200
+Message-ID: <20260923140643.785011481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923140643.441954610@linuxfoundation.org>
 References: <20260923140643.441954610@linuxfoundation.org>
@@ -51,81 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Azzouzi <maherazz04@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f89416eb3db151170a6f3c6dfc5239d26cdce4d2 ]
+[ Upstream commit 5067d4ba713961d8ccea1e06cd4c453793f3121e ]
 
-On the out-of-place output path (esp->inplace == false) ESP rewrites the
-skb frag array: esp_output_head() appends a trailer frag and
-esp_output_tail() replaces the frags with a destination page, both
-referenced with get_page().
+John reports that since commit:
 
-When the skb carries zerocopy managed frags (SKBFL_MANAGED_FRAG_REFS) the
-payload frags are owned by the ubuf and must not be referenced or
-unreferenced individually, but ESP mutates the frag array without ever
-downgrading the skb.  This breaks the managed-frag invariant two ways:
+a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
 
-  - esp_ssg_unref() walks the source scatterlist and drops a page
-    reference for every frag, including the ubuf-owned payload frags,
-    pushing their refcount below the GUP pin bias while the pages are
-    still pinned, i.e. a use-after-free of the zerocopy pages;
+users of Linux inside Solaris ldom see occasional -EIO errors because
+the request send loop now times out. The current loop does 10 retries,
+and inside vio_ldc_send() a further 1000 1usec retries are done as well.
+Even with 10.5 msec of busy loop retries that's apparently not enough to
+always succeed.
 
-  - esp_output_tail() installs its destination page as frag 0 with
-    get_page() but leaves SKBFL_MANAGED_FRAG_REFS set, so
-    skb_release_data() takes the skip_unref branch and never drops that
-    reference, leaking the x->xfrag page at packet rate.
+Rather than introduce continued busy looping, requeue the request and
+have the delayed queue kicking retry the request after another 10ms.
+This obviously isn't ideal, but there's seemingly no way to wait for
+this type of event. And if 10ms of busy looping was not enough to make
+progress, then presumably this is an edge condition and we just need to
+guarantee to make forward progress at some later point in time. That's
+more suitably done through letting the CPU tend to other work, rather
+than sitting in a tight loop retrying.
 
-Fix this the way every other frag-mutating site does (__ip_append_data(),
-__ip6_append_data(), tcp_sendmsg_locked()) and call
-skb_zcopy_downgrade_managed() before ESP touches the frag array: it takes
-a real reference on each existing frag and clears SKBFL_MANAGED_FRAG_REFS,
-so the per-frag unref in esp_ssg_unref() and the frag release in
-skb_release_data() are both balanced and no mixed-ownership frag array is
-left behind.
+[stian: rebased on top of the cookie-unmap fix, without which every
+ requeued attempt leaks LDC map table entries; tested on an
+ UltraSPARC T4 LDOM where the vdc_tx_trigger failure condition was
+ reproduced and absorbed by the requeue with no I/O error]
 
-Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
-Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/all/20251006100226.4246-2-glaubitz@physik.fu-berlin.de/
+Link: https://lore.kernel.org/all/418310b3-2b77-4534-b2fd-27dcc11e333c@kernel.dk/
+Signed-off-by: Stian Halseth <stian@itx.no>
+Link: https://patch.msgid.link/20260901173947.3292110-3-stian@itx.no
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 6 ++++++
- net/ipv6/esp6.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/block/sunvdc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 513c8215c947f..346e78c23af00 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -438,6 +438,12 @@ int esp_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info *
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index 2eb96136632ac..1b5757aae57bd 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -556,6 +556,7 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	struct vdc_port *port = hctx->queue->queuedata;
+ 	struct vio_dring_state *dr;
+ 	unsigned long flags;
++	int ret;
  
- 			esp->inplace = false;
+ 	dr = &port->vio.drings[VIO_DRIVER_TX_RING];
  
-+			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
-+			 * we mutate the frag array, so the per-frag unref stays balanced
-+			 * for zerocopy managed frags (see __ip_append_data()).
-+			 */
-+			skb_zcopy_downgrade_managed(skb);
-+
- 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
+@@ -577,7 +578,13 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		return BLK_STS_DEV_RESOURCE;
+ 	}
  
- 			spin_lock_bh(&x->lock);
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 57481e423e59e..b26b85afb92ed 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -467,6 +467,12 @@ int esp6_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info
- 
- 			esp->inplace = false;
- 
-+			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
-+			 * we mutate the frag array, so the per-frag unref stays balanced
-+			 * for zerocopy managed frags (see __ip_append_data()).
-+			 */
-+			skb_zcopy_downgrade_managed(skb);
-+
- 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
- 
- 			spin_lock_bh(&x->lock);
+-	if (__send_request(bd->rq) < 0) {
++	ret = __send_request(bd->rq);
++	if (ret == -EAGAIN) {
++		spin_unlock_irqrestore(&port->vio.lock, flags);
++		/* already spun for 10msec, defer 10msec and retry */
++		blk_mq_delay_kick_requeue_list(hctx->queue, 10);
++		return BLK_STS_DEV_RESOURCE;
++	} else if (ret < 0) {
+ 		spin_unlock_irqrestore(&port->vio.lock, flags);
+ 		return BLK_STS_IOERR;
+ 	}
 -- 
 2.53.0
 
