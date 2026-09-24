@@ -1,47 +1,47 @@
 Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011070.outbound.protection.outlook.com [52.101.57.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5676036A37F
-	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3207F37DAD5
+	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258027; cv=fail; b=Wx/XesQZDd7mO+/xMeBWdg4aJXpsrLqGVd6E3nO75HvqzZF3OYyx07MiU/m9mrjXo1cIOv5jBaS4ntqeahVh18MZXIAJ23ALyvU7Uo4ffm/1wT3xbLlnB8e/LDJ50VKhfVfQ4jdxPvclDBXun/XLsZe+8xckm0rQtJn8GdezB6Q=
+	t=1790258030; cv=fail; b=KAq7VWSp4SHhj6X6L99UqIy+kbCKXRkPaFZBLGkxWQC1Bt++M+2Kj7b3hsDvokvI8zKwG9H+KYMaWQy6x7VNkH6+anvW5Sa3G4RNpjCBOOutZsxtxK3zYtaQZTEy3vMJWJSehE42MoH57RlTeHuW+BCry+rOKyTlRJUfCl/AOLc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258027; c=relaxed/simple;
-	bh=3KfMnlyJDfi3ZUHL4ggBGJ+B447clshB3XX7oXphiXI=;
+	s=arc-20240116; t=1790258030; c=relaxed/simple;
+	bh=n3rw65AQNnmcuGxxgwHV+3qDFXrfmMbkDnFp9F3UFxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=OAJ3UqIqoc5SaA52firfb2gWk2yg/WhLBVucCaOgX8z2AnlhJnGA3WVDOEl177e3FIxejrIIcVPqmX1cQfDLpXcehK3AmxVtO7psfihizzFxkabJbX7pl1CAuJpbRxBVGtQ+X3lnboaRul/lHP5klGxiJZaUSG0Zo5Y6wCtl78Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RmTnXoBh; arc=fail smtp.client-ip=52.101.57.70
+	 Content-Type:MIME-Version; b=khfOUlcuwyWYE2icjAQ2lryKVhm6t9ycg0Ea/S5kBQXBNbmOhrVpSvu9PnF2SOM1VF5+Luer9/aeHyR4P2cTxSnzZS7rtA5BICh7kGZdBoJckSu8Z9UUOMzbTXaANpkeC+jT3+7va61HCJ+fnOXd7AdbrCHZWt5uiSjP8qIGBEc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Q8oRl8N/; arc=fail smtp.client-ip=52.101.57.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RmTnXoBh"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Q8oRl8N/"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SVggcphgHEIipdmWNT76tsZwAfdvwvMeJx0cGCNmP8wprDzISR8hESnTqWpTvTGwkB+aAMm3hdjL79omBe5G9XtgaiR3rkuUDuB4vyDiBY0p65ge21W2bWacTWkmImOJhGUmb2anflu5L3Csyxm7dRlBdEq6ofjOT26zQtyL2cQqdOkaZ4zCYMhXIFfmBlbojLJHOg862L6y6slVbfhIr8tzrIequpALP6j4ER3BhVZvBqhpK6RJYabytUnAOgeKvSYuIfFJcyVyE4zKKxO92fLxjjBxMchFpNMtvvk/xahOX8g/QAMZuePQJSADVdA63p23Md/A/6WS73x+wtbRoQ==
+ b=vVreV9XsuFTiBDlpCTTiVhnaNpu8kFIgH0luYR7QaBcADWR9Q8dDHfhna/458alu2RvAdwBMoHmJcDP7Dlv97LVe+PCQJsisDzSfViuUuyiLXwjkplPUjbnBNMygEeFSogIWHgWhDYFQtGxmJ/s5UH+tbOl2ddW3GdwFGFELgnK8ecRMbfKAMwbwxbI2zVEZW9tmU6hN5NW5BVmB2AOUa6EftvFnl7kpRgjfcrObO+jB8FzN1V4hKbSm2Z6IKHABwPmuvIPGl0+Q2h0NZdrMQ1UV6mRGdgxAx0RbOeHSiPJob/U+yIVAUONd3mWZ98HgWeA29r5/mNZrg8wXVgVA2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H7K5V/q/fUz06iuOwo7oLdNJVoNwR+GZ5zXNVLVWbKE=;
- b=n+lsLg2DQS6U2LwnL86hSztHO1BCZQyPT6+vkpQGflkEfd7b115CWP1aP8ZDGr0ajI3VXHoHGa5nK5Pas8251MR0dj5VMVsXCjJVw8laMV8dRlafiByY9zvQ7DRhd4PNTSOthvEnZ5YTLlLfqX5Hc8Sx9w7mNlSiHlLwYog1vOg0QiaY+9b0kC5mEF1aSurT3vly35L6YUg8Xmpeg9ycX46LjmCl6CTUf5zLZbm4P+D3UZpUO4JzMOZvwsVtyWGt0P5u9+9B9KlnxjTNNn7aiOY8EJ7QCII/rkOFe4x2IkLE0pOmV4g7VQBQql8xY92JAmNCsJOzNXG7HvsRATGmgQ==
+ bh=xIKqo8urN/WaCUEhDWLkEkLq1DB/HTQzdY3dhT2Pjaw=;
+ b=VIwBroUxixIk8E0+mOqHn9RMNCop8t0tFNXt7D4NFOKVfII0LeyefiJqQU2CGx5F43lnVu0paGUkqScxmS2Ibcqu88263xpyUbLg23Lx8Y+nZhatCTHjkqgoNVnxMk2qyctrdhZiMDOfv4dtgCrI3o0FN3zwWPghLSQ1xuysJuepXEWVhi/vbYTtV7+vPDoSCMn/CzrntXovDeYY1VBIdOVVWQi6n09FXmA5M0H1q0gROXdZlkfhLqXNnx30VVby8664iiPxOhpe/ryspOybNtW8AIpMspb6/FU7IM5hKHlhVXhfyUGjIN8bGyHFCYaVmohUxQNyWhfdd+RsU94t/Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H7K5V/q/fUz06iuOwo7oLdNJVoNwR+GZ5zXNVLVWbKE=;
- b=RmTnXoBh40Lyft8rLzzVOMLZWsx4E0vnXfHHxdxbxhR8v59lvc28sVcdXewzlnt4V1k7dZQ1cSnaPsWC9AvRtAc2JxvDx8UZUhQbkMyTyEqp+3dHqVceY6tFH+MswA56PeuKdJupmz9tKpuyL1+0EcpGauw+h20E6G8QkgDZgWfz9sZiHUy8KbteRPXlQHtgyhl3xv91yZ2gmY9QZUK9z/URaqb5WmlPmUMh5OMZeCnlPyh3+MKLH9I1JCH3Qh62jpNcV6XlxMLu/PgUf/LYUoTAVlWIH/sg2pv+PGYXwXqOU8HnD8EwoVw3c1imtNBfcLzNiqQTPDUed6Mr9LZHaA==
+ bh=xIKqo8urN/WaCUEhDWLkEkLq1DB/HTQzdY3dhT2Pjaw=;
+ b=Q8oRl8N/SXaDyh5gMFfOJ0e1Ce5TMsTAOqqlMtYwm+irKBncy+WSS96QyQc1T0ujYTSW6/FU5bJS9q3b8hRBIqXprugEdG2XA289LE/uhf3lxx/YmQQGaSaYoSAaJtAdp6xLoA/JJ7dfEnN8gN639tBfBy2dcsSkZzJth+8q4/utzJCXIP2wQSR5VGKY9KmuVwMdzN2qDrn3KKQaefIfMwLRyOHYRgQXXYuhgZc3MXvqpJUHGaA4sKnKwnSloUzUNztiL+qI/MHbd1xzikaMZXFaUQG1RylCQDPVaHMEiVabT/HJLp1SotwyvaqIL6avIhiHg5I7+48KsR9pf84IUQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12) by PH7PR12MB7186.namprd12.prod.outlook.com
  (2603:10b6:510:202::15) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 13:53:37 +0000
+ 2026 13:53:36 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 13:53:37 +0000
+ 13:53:36 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Alexandre Ghiti <alex@ghiti.fr>,
 	Albert Ou <aou@eecs.berkeley.edu>,
@@ -72,15 +72,15 @@ Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Ross Philipson <ross.philipson@gmail.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Song Shuai <songshuaishuai@tinylab.org>
-Subject: [PATCH 06/16] arm64/efi: Use CONFIG_EFI_STUB_IMAGE_INFO for code_size
-Date: Thu, 24 Sep 2026 10:53:09 -0300
-Message-ID: <6-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+Subject: [PATCH 08/16] efi/libstub: Add generic arch callbacks for DRTM
+Date: Thu, 24 Sep 2026 10:53:11 -0300
+Message-ID: <8-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
 In-Reply-To: <0-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH7P220CA0101.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32d::17) To CHBPR12MB731189.namprd12.prod.outlook.com
+X-ClientProxiedBy: PH7PR17CA0049.namprd17.prod.outlook.com
+ (2603:10b6:510:325::26) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -90,253 +90,362 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|PH7PR12MB7186:EE_
-X-MS-Office365-Filtering-Correlation-Id: 055cc95f-b60e-4f32-a79a-08df1a4334d3
+X-MS-Office365-Filtering-Correlation-Id: d764b544-f387-4f76-65c8-08df1a43338b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|7416014|376014|921020|10067099003|56012099006|11063799006|18002099003|22082099003|3023799007;
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|7416014|376014|921020|10067099003|56012099006|11063799006|18002099003|22082099003|6133799003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	8yzoWn5mgObXcCjhu3mVPOav3pxyPZmMAOSr8Zm2h2uStzCrzTUZv9uZ6C3OWfK3Ur+hdR5D+hsXj1fCAtKOJdlRMVzqwhNq/kC1/N/hfB84o++wHx6ET/04j8rofb+DO+wC5wAd1e5MdgoX4UCTtyOmgjyJHi37TEKvKnxs73SWLPhY1RVvCE28yjE8FC2u+Lh6r3eX9rfEUQOrEn4BV4LJp+ilmtdjAvV48bok1zbFgUk9VtzoRs0oXNCOb4qO8WzGHqzILD1cCh5XkQ3KzTKg8BJ5Es1j5RxF1n58cvYhAanSQ5bWawuafUggvjNzJ2gjjlq0tpMGUBwpEasAg9FuHxayYYqjaHfHskxS9XfsEgc+DcX16nri6ZUpGr6dLBoSV94fqPc++vwoj55G67ZG52WiB8h7exJcD2Hbn5CStswWd/YtrEUtwDG4GXicwYo/xJZjqD5QN43st+0sKWXEPz5flDXRLWwBWNCJRtrWTd2RKx61WBp0SvGafg2yGAKLTrR79AxZzze0t7k3pJeH4P8s36MhyzQD6V2Z3aJa2m0O1EAhnx+VQsYPF+1UD6Al2pX/qpv9mzfjC72PJ7Xh7Z8r4TAPsRGPwQDjKUXZXyhP4YskpfBJAm3SMB5cH/GaWdHyHOi7W/FfGB/d1Qj9H6W1BPfcT2IDPuU4rTbKuvmokgYdRtlRvGKqOusZSTfzzb4or8GPHEs1GMR60g==
+	wwrZpr99108YH4t0EGTVmH4KTVmnmXFgGDX2vmOEcJ44bBCDTU0/hTMcNTyVMv6tAjJUrd0Pph+y00WQTyfw1FT9ipe1EiCmCpQ9RqLX6jxxpfO+KQh9W47+ijtIjh3LvFn0BvPa2GokLjY/in87McJqL3/otvJnV6gfUrel9HZ5mkYV1hcdMAI9M9SFvR15S95N4elTyMvMLIpKN6KF6rLczc37MLc77QiCOV5ejle0DxP60cBdfzTOKHx8FPy6+KcZtP2ZZC7liohN/mNhuOuyl2RVlcrmQFxv+ZaaL5oT7NwxSvz3LWLZtMKihd9hfR9QYaTC5Xnk0IGaIi3bAymcQhy5PQd7W1LSFOIiUqCTUKWS2vXUDa66t+eiifyXtbyaFOQL4UTP7pbC7t82DD+v73YleeAd0n8q6mNSJGwZ6rhjH7Y5l1V903l2f8qznX9op6Kdxgz3AL0Dv3VTGiMSNylyQHte8F+2zEPCzqQQMHZipjcW/HJSKn9ph4n5Ncx7ZBn18rRWipTo6TkdS1OirP8G6VEH0g/4d9tNwNQNnxsDbY3egvFXpXpOV0dbXIvnizL+Q5xTa8yuDlTMCMBcBHBmuFJOFwCXiksgYPX83WVsYM1rnhscpm4KpYNbzSlZ/E4K/heTQcNgEVwA3j+Bds62QvnNpn0LR0JyPX99OFi9wh9zXH+MRWgVs8d7ynaS/ARayIwzAZ5sL1QiOA==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(921020)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(921020)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?iKF6yxefO4v923hb3qndMuxL25COqzTpZkWujEDGt/mV1Kq1nlsvPCITcsoj?=
- =?us-ascii?Q?SKNvEVWvzi6aPzwBFp0gcAiyPBIvyARqAh6F7DVDm5ntpj+p2wTda1qVyhDX?=
- =?us-ascii?Q?CJyZLsibhSkChBev8iExPsO4+aQIQi+NiiZGkDvFWTk6vD8xDyuQtbRiP8Px?=
- =?us-ascii?Q?MMpFYLNgG8uonIXvo93qaU0ELM4AnCXPRDdGAreuROfzzK4POxlJGxhIwk6A?=
- =?us-ascii?Q?LTV2Vx+ORMrThj7CjdI5KD9BiaK7k5iyTx40VBVctvJp1GUzwFlBeZWmJftS?=
- =?us-ascii?Q?Fvv9ivVDRPJb+aDqBaCi7zFcxux5kQ1wiV3OSHFoeqq6sJW16Wv53e1yUtwr?=
- =?us-ascii?Q?/8ZM68+GsChgH6IxOd3bLzfOCz5q8U+4dO+zYgYs4nIrJ9HFpCV6xY73j1kC?=
- =?us-ascii?Q?ijopEtVTFeUWIDdd3Xt0QmfnIUGWS8BKS5Fq5WqSY0iWPl7vcW7saxrbFT2T?=
- =?us-ascii?Q?fdNUih5i0bcVKfnpjY+jFyLL/cq51goeJZNSkfSNYPAdlVnzZD+jyQBfI2Up?=
- =?us-ascii?Q?ObgTPbqeb04XaWpdlzJbleFhW7I9iR9lQ0hZAvIRtd3PFCOx3+6qIAMjsWHZ?=
- =?us-ascii?Q?w53hjGnYOCAT6GB7J7g6VapfCpKPZmVPkIdrncw6Qw6xrUngqkzfTkO5ypaR?=
- =?us-ascii?Q?4r5fcuyl9ZISY4SLI3j6X/X5eMbJLMl3rHuODkCQ2RXuVToFRlP9cK2CCKv2?=
- =?us-ascii?Q?9obwTHhfgHrp1WgvdjSmkBilCd0aRaaCF/yb1vg9/D7w9rnE0LBl494uwVrO?=
- =?us-ascii?Q?NZXG/LP4FzzbnH6ZFbo/itoHh8muTy8sbtBsxYsaBg0ls91nZbKEFA1n9SNf?=
- =?us-ascii?Q?ARJW7pB1SBh5ATSDYHQJ3EyBOfXgdKUoQIYQiAYy+fH2lrtA/3aLLzhaacFZ?=
- =?us-ascii?Q?mt9jrhrkjv4YypaNCxQTdFM/0HmkzuTq4IpfiE7zcvcPBwTPYzjI6ZxNg+Lm?=
- =?us-ascii?Q?p7z4/e/hOTuJ4iybab84A6Yg/B8T8Qk+QevtMx0//DXk3oNREitbmJH+tJRu?=
- =?us-ascii?Q?5Szgb63Eg0e+qqWmLY6XwxygbtR407GsvPd1qdccTT+IZ7LdZaFRbaq6iNFq?=
- =?us-ascii?Q?gqazOq1aTCFUohbDsDb+jgpAHHU2juXe7Ub1PCXYHWHA7vjDvw1G/qUmyJO3?=
- =?us-ascii?Q?3u+51Cwm/hPIczeFpIRdOmW/9eaa7pAWhEU8G3hrWcyGVm+qbw5ZsMn0mkik?=
- =?us-ascii?Q?4di4JaxThNh8qvmQqzC2o75hEA0MZKyOt7RR8k5IGbLCVJzfVov6v5c84VH6?=
- =?us-ascii?Q?5NBMJKj9ZPoEGm9Z7ide46FHR+H5IBOqbtowkrhlQqVUoKlzJ0JrSCAGOhlu?=
- =?us-ascii?Q?xwNjLUd15q12pZCIm4ZfDD4lH9hUTG7OUzJ2RvZm0bT5ZC4L4jR03f5wh/i7?=
- =?us-ascii?Q?csq45zImcoF291d5U89uqYYFf2Qmejjf7nba/JKOiZ4mpMnr+pk5CilUzxt6?=
- =?us-ascii?Q?AXGqAlgqhNa65qc5MVPVqUoCCIK7th1xxUaBX3U0+jfciOi/zPqzI56k8ySc?=
- =?us-ascii?Q?5Zkk8fJZL0KyG1yzacMOJ3t09vYCzZDSSyS5FeZiKsayRw9iJi0t2/fDr4Sx?=
- =?us-ascii?Q?Po0mcPpWEroqwbclG3grIFhRLF/3RkfGimdDpux+5cRq+CSV0nX+TiDEYLhH?=
- =?us-ascii?Q?Hw8umWdKdArIqxNhGbcEONW1nlwKcuKwjumbxLuxALptSWH16aX5tazyU27p?=
- =?us-ascii?Q?4imU5mBgnSmlIYWuSjlBXZl2tBNz0nX/IOwdZMXgXQWcGrmj?=
+	=?us-ascii?Q?uNf2xQhadXnBB+4lex9N2Q/HhmXnwSiasyooYXjLODQ9ClwyHM53L+mXle1+?=
+ =?us-ascii?Q?Z2OXNshMUrSK54Eij/VxQEWPpBQ9GxPmCFMeRWngwcKS19cCMnJMcGpOhNFt?=
+ =?us-ascii?Q?qlS4aN/bFfQNvPDZRKfanK1t8YAiOMjdjVmnkeHaDZA/tDPtr2fy/H1Qm/gj?=
+ =?us-ascii?Q?ZMb/RvbyEimgMucy+E6x25sAsKjnTg8gtXOGx+1u8MhN12JbUm8Go5mjXpH2?=
+ =?us-ascii?Q?5CHWbiP1jId+fOiJsydLturG1SQCT2XN8Uq5kyhNS1dPI/o1hCxtSb4ZVAP8?=
+ =?us-ascii?Q?cNwsR/bxGxSOVSQSHxfc/B6bcyvghzQ6RoNZ8bs2wbjRyIMBVbJUVRclOI5x?=
+ =?us-ascii?Q?qpUaB4gjxUrXx9hJGvi4RzkxeP+DhE8+JUXOrqeBkozXTJuS2ipsPlez5CBv?=
+ =?us-ascii?Q?mxWmjLS6y69bCLCukgErSUL9LYW6bWPnvggfI/9veA+nbhkFiLtBCp68mLmT?=
+ =?us-ascii?Q?MYP3gkvxnM383Tj7hEvP3S2m5TC1LsQIJ9BQN/Hrlz9Fhsud4A3hsPLq2e8e?=
+ =?us-ascii?Q?EIyJ3nFDwnOxYpyW8+63QdJQhfE6pE2XaJfB3LBBjFdqd+DDrSTPeJnWmHHc?=
+ =?us-ascii?Q?PInDzSBJwPgFw6/dYswgURYUgJKfxhpCaEm+yDOHp0UIrpTHXJwYTAJOohMN?=
+ =?us-ascii?Q?ET/2mMxv1AMzVU4KP3G6yZAQFl/qSSDRrZj4Z4tqOsLxavgvVEJ/kjggh16V?=
+ =?us-ascii?Q?7DnHUr+lIc+HWqcfpEm37QiOjE7d9J9t/Ar5pGFkOrWpBtLoA3+I+U54OmYj?=
+ =?us-ascii?Q?eXcgo9tbS4ACOZq9ssttaL4lCNPSBKI5FJpOdJlbWzzpJh5JlzDmqxZ3ZkOD?=
+ =?us-ascii?Q?Pbg/yTpudlYu+OJG5KGoZt0H1eO1WCsaknOp4MUBm6h+zDvYoZPo51ptlYWk?=
+ =?us-ascii?Q?EqCQAwBTzX85I5eJ1sFa0q7pXmmEaoM57EhCID2PmonFjl5n3vpR7VOcCeLK?=
+ =?us-ascii?Q?VKe8oN+Z+FmfxSEzvGTcupdVflIMxxg8DJubzlNik9NrxXlbUqcsi2Xnr8S/?=
+ =?us-ascii?Q?2q+KMvXO7CiYZoEpTFMptyOWKcF9xWnwNZcygnLn7awqlMLgwe6w02ves0kv?=
+ =?us-ascii?Q?TNEgko+4Il/rH6WtXMa7U/a8LGSl58X3PVnXcmvYeyVnlmay3GlJ6r+RmKqT?=
+ =?us-ascii?Q?sEnzHaoUbiyZ3qG8urkNZrPzAQYSSwkkBrL/P6Q4MawGXQjM+KoRVKXAkD1O?=
+ =?us-ascii?Q?nPPHGwTM88Zt+8m44uwk2H+c9fRZ5apR9RgOYFb4snmqATx7H8Sp74JnazX6?=
+ =?us-ascii?Q?BUrwkqoHHN+0wJOnD2Gd5ZszCN1zWI3slJOtp/u+crN4DAyKiocyGMaeg6gA?=
+ =?us-ascii?Q?AwmOm0xIly/P2gBHjr4Y3bevXxZR/ZFDnhKsaErW1hfKYr4svAc8zAn/RkaU?=
+ =?us-ascii?Q?sQr5yIiCNGlkheiIsLqItwi1LQSlAaJA5pbMi5mJnlOl77qP2D9IKiEJPc1I?=
+ =?us-ascii?Q?V6TqOsWmyGu855JMzYBVl1+LnueE6835iThN2Lj5shnFvPLkQPih0AgZXCX8?=
+ =?us-ascii?Q?tE8Xul3YzoBbPN3RNZSwRV6vg0t7igHpXxlDPx+44HtWCioAC/TVsBht3Uyn?=
+ =?us-ascii?Q?9sI1fM7ejWciivMe88iFiNWXHDVVRJAwBCQ5ieHXdMC1V9IHHGvaU+0lgU5o?=
+ =?us-ascii?Q?DYPDbCZDJAdFJvbl5Y3++gBWhwuElCRfk5yrxtE55RPbfEEiqdoENgK18w+D?=
+ =?us-ascii?Q?Gsz9mAKFn3MK58vKLxi8LDKa0qlu1RbLw/e8rklMQ31jaVz5?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 055cc95f-b60e-4f32-a79a-08df1a4334d3
+X-MS-Exchange-CrossTenant-Network-Message-Id: d764b544-f387-4f76-65c8-08df1a43338b
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 13:53:26.3596
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 13:53:24.2162
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: row396Yztt5BFAOIB4sWTdIR5ccatC32T6B5YwmpC2Q6lPdZpbQaxRlSgmnc98dB
+X-MS-Exchange-CrossTenant-UserPrincipalName: RYO4CqQ8v054oVz75FaYavVVlu2XLC8Id752c+zxQThqMji+KYfvBI/A8OUBNHGO
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7186
 
-Pass code_size to zboot through struct efi_image_info instead of the
-custom objcopy trick and remove the objcopy way.
+If the architecture supports an EFI stub launched version of DRTM, it
+can select the kconfig and provide the hooks under its architecture
+build.
 
-The linker still computes code_size, it just gets placed into the struct.
+Have the common code parse a drtm=enforce|auto|off kernel command line
+parameter to set the boot behavior. Support commas in the args list since
+there will be more options here down the road.
+
+efi_drtm_prepare() is called before doing any decompression or image
+relocation. It should figure out if DRTM is supported, policy-permitted,
+and how much memory efi_drtm_get_extra_size() should return.
+
+The image handling is revised to allocate extra_size at the end of
+the normal image. The architecture can use this to store any
+information needed for the DRTM flow. It is always contiguous with
+Image, which is a requirement of ARM's specification.
+
+efi_drtm_prepare_launch() is called while still in EFI boot services after
+Image is fully prepared in its final location.
+
+efi_drtm_launch() is called after exiting boot services and must
+jump into the kernel through the DRTM flow. If it returns, then the
+normal launch is tried (auto mode).
+
+The extra_size is allocated directly after the Image. Handle the
+trivial zboot flow now, and vmlinux in the following patch.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- arch/arm64/Kconfig                          |  1 +
- arch/arm64/boot/Makefile                    |  3 ---
- arch/arm64/include/asm/image.h              | 11 +++++++++++
- arch/arm64/kernel/image-vars.h              |  8 +++-----
- arch/arm64/kernel/vmlinux.lds.S             |  4 ++++
- drivers/firmware/efi/libstub/Makefile.zboot |  2 +-
- drivers/firmware/efi/libstub/arm64-stub.c   |  5 ++++-
- drivers/firmware/efi/libstub/arm64.c        |  4 ++--
- drivers/firmware/efi/libstub/zboot.lds      |  3 ---
- 9 files changed, 26 insertions(+), 15 deletions(-)
+ .../admin-guide/kernel-parameters.txt         | 12 +++++++
+ drivers/firmware/efi/Kconfig                  | 30 ++++++++++++++++
+ drivers/firmware/efi/libstub/efi-stub-entry.c |  4 +++
+ .../firmware/efi/libstub/efi-stub-helper.c    | 34 ++++++++++++++++++
+ drivers/firmware/efi/libstub/efistub.h        | 36 +++++++++++++++++++
+ drivers/firmware/efi/libstub/fdt.c            |  8 ++++-
+ drivers/firmware/efi/libstub/zboot.c          | 19 +++++++---
+ 7 files changed, 137 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index b5a51b0ef9440a..4a752835ce1116 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -2532,6 +2532,7 @@ config EFI
- 	select EFI_PARAMS_FROM_FDT
- 	select EFI_RUNTIME_WRAPPERS
- 	select EFI_STUB
-+	select EFI_STUB_IMAGE_INFO
- 	select EFI_GENERIC_STUB
- 	imply IMA_SECURE_AND_OR_TRUSTED_BOOT
- 	default y
-diff --git a/arch/arm64/boot/Makefile b/arch/arm64/boot/Makefile
-index b5a08333bc57b5..cfbad0c210fa04 100644
---- a/arch/arm64/boot/Makefile
-+++ b/arch/arm64/boot/Makefile
-@@ -51,7 +51,4 @@ EFI_ZBOOT_BFD_TARGET	:= elf64-littleaarch64
- EFI_ZBOOT_MACH_TYPE	:= ARM64
- EFI_ZBOOT_FORWARD_CFI	:= $(CONFIG_ARM64_BTI_KERNEL)
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 68647ff4bdd24b..a576e06bd43584 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -1373,6 +1373,18 @@ Kernel parameters
+ 			data set with no connector name will be used for
+ 			any connectors not explicitly specified.
  
--EFI_ZBOOT_OBJCOPY_FLAGS	= --add-symbol zboot_code_size=0x$$( \
--				$(NM) vmlinux|grep _kernel_codesize|cut -d' ' -f1)
--
- include $(srctree)/drivers/firmware/efi/libstub/Makefile.zboot
-diff --git a/arch/arm64/include/asm/image.h b/arch/arm64/include/asm/image.h
-index 9ba85173f85765..4a220c71f76c6a 100644
---- a/arch/arm64/include/asm/image.h
-+++ b/arch/arm64/include/asm/image.h
-@@ -5,6 +5,8 @@
- 
- #define ARM64_IMAGE_MAGIC	"ARM\x64"
- 
-+#define EFI_IMAGE_INFO_SIZE	8
++	drtm=		[EFI,EARLY]
++			Format: { "off" | "auto" | "enforce" }
++			Control the EFI stub Dynamic Root of Trust for
++			Measurement (DRTM) launch policy.
++			off: do not attempt a DRTM launch.
++			auto: attempt a DRTM launch when supported, but fall
++			back to a normal boot if preparation or launch fails.
++			enforce: require a DRTM launch and refuse to fall back
++			to a normal boot if preparation or launch fails.
++			The default is selected by the EFI_STUB_DRTM_DEFAULT_*
++			configuration options.
 +
- #define ARM64_IMAGE_FLAG_BE_SHIFT		0
- #define ARM64_IMAGE_FLAG_PAGE_SIZE_SHIFT	(ARM64_IMAGE_FLAG_BE_SHIFT + 1)
- #define ARM64_IMAGE_FLAG_PHYS_BASE_SHIFT \
-@@ -54,6 +56,15 @@ struct arm64_image_header {
- 	__le32 res5;
- };
+ 	dscc4.setup=	[NET]
  
-+/*
-+ * This struct is filled in by the linker, see EFI_IMAGE_INFO.
-+ * Any change requires updating arch/arm64/kernel/vmlinux.lds.S
-+ */
-+struct efi_image_info {
-+	__le64 code_size;
-+};
-+static_assert(sizeof(struct efi_image_info) == EFI_IMAGE_INFO_SIZE);
+ 	dt_cpu_ftrs=	[PPC,EARLY]
+diff --git a/drivers/firmware/efi/Kconfig b/drivers/firmware/efi/Kconfig
+index 3d6fb3ca2806ca..f77fa1ae716843 100644
+--- a/drivers/firmware/efi/Kconfig
++++ b/drivers/firmware/efi/Kconfig
+@@ -75,6 +75,36 @@ config EFI_GENERIC_STUB
+ config EFI_STUB_IMAGE_INFO
+ 	bool
+ 
++config EFI_STUB_DRTM
++	bool
 +
- #endif /* __ASSEMBLER__ */
++choice
++	prompt "Default DRTM launch policy"
++	depends on EFI_STUB_DRTM
++	default EFI_STUB_DRTM_DEFAULT_OFF
++	help
++	  Select the DRTM policy used when no drtm= option is present on the
++	  kernel command line. The command-line option overrides this default.
++
++config EFI_STUB_DRTM_DEFAULT_OFF
++	bool "Off"
++	help
++	  Do not attempt a DRTM launch unless it is requested explicitly.
++
++config EFI_STUB_DRTM_DEFAULT_AUTO
++	bool "Automatic with fallback"
++	help
++	  Attempt a DRTM launch when the firmware supports it, but fall back to
++	  normal boot if preparation or a returnable launch attempt fails.
++
++config EFI_STUB_DRTM_DEFAULT_ENFORCE
++	bool "Enforce"
++	help
++	  Require a DRTM launch and refuse normal-boot fallback if preparation
++	  or a returnable launch attempt fails.
++
++endchoice
++
+ config EFI_ZBOOT
+ 	bool "Enable the generic EFI decompressor"
+ 	depends on EFI_GENERIC_STUB && !ARM
+diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
+index 83fade2b0d3b84..5b356c4be78975 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-entry.c
++++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
+@@ -67,6 +67,10 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
+ 	if (status != EFI_SUCCESS)
+ 		return status;
  
- #endif /* __ASM_IMAGE_H */
-diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
-index 14beb7b9d304c1..13c0b77627d82e 100644
---- a/arch/arm64/kernel/image-vars.h
-+++ b/arch/arm64/kernel/image-vars.h
-@@ -35,8 +35,10 @@ PROVIDE(__efistub_caches_clean_inval_pou = __pi_caches_clean_inval_pou);
++	status = efi_drtm_prepare();
++	if (status != EFI_SUCCESS)
++		return status;
++
+ 	efi_info("Booting Linux Kernel...\n");
  
- PROVIDE(__efistub__text			= _text);
- PROVIDE(__efistub__end			= _end);
--PROVIDE(__efistub___inittext_end       	= __inittext_end);
- PROVIDE(__efistub__edata		= _edata);
-+#ifdef CONFIG_EFI_STUB_IMAGE_INFO
-+PROVIDE(__efistub_efi_image_info_offset = __efi_image_info_offset);
+ 	status = handle_kernel_image(&image_addr, &image_size,
+diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
+index f27f2e1f001997..2dd4a5ac916000 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-helper.c
++++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
+@@ -27,6 +27,37 @@ static bool efi_disable_pci_dma = IS_ENABLED(CONFIG_EFI_DISABLE_PCI_DMA);
+ 
+ int efi_mem_encrypt;
+ 
++#ifdef CONFIG_EFI_STUB_DRTM
++enum efi_drtm_policy efi_drtm_policy =
++	IS_ENABLED(CONFIG_EFI_STUB_DRTM_DEFAULT_ENFORCE) ? EFI_DRTM_ENFORCE :
++	IS_ENABLED(CONFIG_EFI_STUB_DRTM_DEFAULT_AUTO) ? EFI_DRTM_AUTO :
++	EFI_DRTM_OFF;
++
++static void efi_drtm_parse_options(char *options)
++{
++	char *keyword;
++
++	while (options) {
++		keyword = options;
++		while (*options && *options != ',')
++			options++;
++		if (*options)
++			*options++ = '\0';
++		else
++			options = NULL;
++
++		if (!strcmp(keyword, "off"))
++			efi_drtm_policy = EFI_DRTM_OFF;
++		else if (!strcmp(keyword, "auto"))
++			efi_drtm_policy = EFI_DRTM_AUTO;
++		else if (!strcmp(keyword, "enforce"))
++			efi_drtm_policy = EFI_DRTM_ENFORCE;
++	}
++}
++#else
++static void efi_drtm_parse_options(char *options) {}
 +#endif
- #if defined(CONFIG_EFI_EARLYCON) || defined(CONFIG_SYSFB)
- PROVIDE(__efistub_sysfb_primary_display	= sysfb_primary_display);
- #endif
-@@ -150,10 +152,6 @@ KVM_NVHE_ALIAS(kvm_protected_mode_initialized);
++
+ bool __pure __efi_soft_reserve_enabled(void)
+ {
+ 	return !efi_nosoftreserve;
+@@ -89,6 +120,9 @@ efi_status_t efi_parse_options(char const *cmdline)
+ 				efi_mem_encrypt = 1;
+ 			else if (parse_option_str(val, "off"))
+ 				efi_mem_encrypt = -1;
++		} else if (IS_ENABLED(CONFIG_EFI_STUB_DRTM) &&
++			   !strcmp(param, "drtm") && val) {
++			efi_drtm_parse_options(val);
+ 		} else if (!strcmp(param, "efi") && val) {
+ 			efi_nochunk = parse_option_str(val, "nochunk");
+ 			efi_novamap |= parse_option_str(val, "novamap");
+diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+index da01d6005a62af..f3a6aefdc052ca 100644
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -1078,6 +1078,42 @@ efi_status_t check_platform_features(void);
  
- #endif /* CONFIG_KVM */
+ void *get_efi_config_table(efi_guid_t guid);
  
--#ifdef CONFIG_EFI_ZBOOT
--_kernel_codesize = ABSOLUTE(__inittext_end - _text);
--#endif
--
- /*
-  * LLD will occasionally error out with a '__init_end does not converge' error
-  * if INIT_IDMAP_DIR_SIZE is defined in terms of _end, as this results in a
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index af1d720209764f..8305b47995954b 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -282,6 +282,10 @@ SECTIONS
- 		CON_INITCALL
- 		INIT_RAM_FS
- 		*(.init.altinstructions .init.bss)	/* from the EFI stub */
-+		EFI_IMAGE_INFO(
-+			/* code_size */
-+			EFI_IMAGE_INFO_OFFSET(__inittext_end);
-+		)
++enum efi_drtm_policy {
++	EFI_DRTM_OFF,
++	EFI_DRTM_AUTO,
++	EFI_DRTM_ENFORCE,
++};
++
++#ifdef CONFIG_EFI_STUB_DRTM
++extern enum efi_drtm_policy efi_drtm_policy;
++efi_status_t efi_drtm_prepare(void);
++unsigned long efi_drtm_get_extra_size(void);
++efi_status_t efi_drtm_prepare_launch(unsigned long image_base,
++				     unsigned long fdt_addr);
++void efi_drtm_launch(void);
++#else
++enum {efi_drtm_policy = EFI_DRTM_OFF};
++static inline efi_status_t efi_drtm_prepare(void)
++{
++	return EFI_SUCCESS;
++}
++
++static inline unsigned long efi_drtm_get_extra_size(void)
++{
++	return 0;
++}
++
++static inline efi_status_t
++efi_drtm_prepare_launch(unsigned long image_base, unsigned long fdt_addr)
++{
++	return EFI_SUCCESS;
++}
++
++static inline void efi_drtm_launch(void)
++{
++}
++#endif
++
+ /* NOTE: These functions do not print a trailing newline after the string */
+ void efi_char16_puts(efi_char16_t *);
+ void efi_puts(const char *str);
+diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
+index 5b2dd709d7b151..15bb331f2dc56c 100644
+--- a/drivers/firmware/efi/libstub/fdt.c
++++ b/drivers/firmware/efi/libstub/fdt.c
+@@ -223,6 +223,7 @@ static
+ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
+ 					    efi_loaded_image_t *image,
+ 					    unsigned long *new_fdt_addr,
++					    unsigned long kernel_addr,
+ 					    char *cmdline_ptr)
+ {
+ 	unsigned long desc_size;
+@@ -289,6 +290,10 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
+ 		goto fail_free_new_fdt;
  	}
- 	.exit.data : {
- 		EXIT_DATA
-diff --git a/drivers/firmware/efi/libstub/Makefile.zboot b/drivers/firmware/efi/libstub/Makefile.zboot
-index 6eebac66b73b18..de89d3d84465b5 100644
---- a/drivers/firmware/efi/libstub/Makefile.zboot
-+++ b/drivers/firmware/efi/libstub/Makefile.zboot
-@@ -35,7 +35,7 @@ efi-zboot-objcopy-flags-$(CONFIG_EFI_STUB_IMAGE_INFO) = \
- 		awk '$$3 == "_efi_image_info_offset" { print $$1 }')
  
- # avoid eager evaluation to prevent references to non-existent build artifacts
--OBJCOPYFLAGS_vmlinuz.o = -I binary -O $(EFI_ZBOOT_BFD_TARGET) $(EFI_ZBOOT_OBJCOPY_FLAGS) \
-+OBJCOPYFLAGS_vmlinuz.o = -I binary -O $(EFI_ZBOOT_BFD_TARGET) \
- 			  $(efi-zboot-objcopy-flags-y) \
- 			  --rename-section .data=.gzdata,load,alloc,readonly,contents
- $(obj)/vmlinuz.o: $(obj)/vmlinuz FORCE
-diff --git a/drivers/firmware/efi/libstub/arm64-stub.c b/drivers/firmware/efi/libstub/arm64-stub.c
-index 2c38693561475c..1d3fc8ac13efa7 100644
---- a/drivers/firmware/efi/libstub/arm64-stub.c
-+++ b/drivers/firmware/efi/libstub/arm64-stub.c
-@@ -9,6 +9,7 @@
++	status = efi_drtm_prepare_launch(kernel_addr, *new_fdt_addr);
++	if (status != EFI_SUCCESS)
++		goto fail_free_new_fdt;
++
+ 	priv.new_fdt_addr = (void *)*new_fdt_addr;
  
- #include <linux/efi.h>
- #include <asm/efi.h>
-+#include <asm/image.h>
- #include <asm/memory.h>
- #include <asm/sections.h>
+ 	status = efi_exit_boot_services(handle, &priv, exit_boot_func);
+@@ -350,7 +355,7 @@ efi_status_t efi_boot_kernel(void *handle, efi_loaded_image_t *image,
+ 	efi_status_t status;
  
-@@ -21,6 +22,7 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 				 efi_loaded_image_t *image,
- 				 efi_handle_t image_handle)
+ 	status = allocate_new_fdt_and_exit_boot(handle, image, &fdt_addr,
+-						cmdline_ptr);
++						kernel_addr, cmdline_ptr);
+ 	if (status != EFI_SUCCESS) {
+ 		efi_err("Failed to update FDT and exit boot services\n");
+ 		return status;
+@@ -359,6 +364,7 @@ efi_status_t efi_boot_kernel(void *handle, efi_loaded_image_t *image,
+ 	if (IS_ENABLED(CONFIG_ARM))
+ 		efi_handle_post_ebs_state();
+ 
++	efi_drtm_launch();
+ 	efi_enter_kernel(kernel_addr, fdt_addr, fdt_totalsize((void *)fdt_addr));
+ 	/* not reached */
+ }
+diff --git a/drivers/firmware/efi/libstub/zboot.c b/drivers/firmware/efi/libstub/zboot.c
+index 960a542881d875..6ca231ad593b20 100644
+--- a/drivers/firmware/efi/libstub/zboot.c
++++ b/drivers/firmware/efi/libstub/zboot.c
+@@ -35,7 +35,7 @@ asmlinkage efi_status_t __efiapi
+ efi_zboot_entry(efi_handle_t handle, efi_system_table_t *systab)
  {
-+	const struct efi_image_info *info;
- 	unsigned long kernel_size, kernel_codesize, kernel_memsize;
+ 	char *cmdline_ptr __free(efi_pool) = NULL;
+-	unsigned long image_base, alloc_size;
++	unsigned long image_base, image_size, alloc_size;
+ 	efi_loaded_image_t *image;
+ 	efi_status_t status;
  
- 	if (image->image_base != _text) {
-@@ -33,7 +35,8 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 			SEGMENT_ALIGN >> 10);
+@@ -52,12 +52,17 @@ efi_zboot_entry(efi_handle_t handle, efi_system_table_t *systab)
+ 	if (status != EFI_SUCCESS)
+ 		return status;
  
- 	kernel_size = _edata - _text;
--	kernel_codesize = __inittext_end - _text;
-+	info = efi_get_image_info((unsigned long)_text);
-+	kernel_codesize = le64_to_cpu(info->code_size);
- 	kernel_memsize = kernel_size + (_end - _edata);
- 	*reserve_size = kernel_memsize;
- 	*image_addr = (unsigned long)_text;
-diff --git a/drivers/firmware/efi/libstub/arm64.c b/drivers/firmware/efi/libstub/arm64.c
-index e57cd3de0a00f4..67d66fdea77122 100644
---- a/drivers/firmware/efi/libstub/arm64.c
-+++ b/drivers/firmware/efi/libstub/arm64.c
-@@ -88,11 +88,11 @@ efi_status_t check_platform_features(void)
- #define DCTYPE	"cvau"
- #endif
- 
--u32 __weak code_size;
+-	efi_info("Decompressing Linux Kernel...\n");
 -
- void efi_cache_sync_image(unsigned long image_base,
- 			  unsigned long alloc_size)
- {
-+	const struct efi_image_info *info = efi_get_image_info(image_base);
-+	unsigned long code_size = le64_to_cpu(info->code_size);
- 	u32 ctr = read_cpuid_effective_cachetype();
- 	u64 lsize = 4 << cpuid_feature_extract_unsigned_field(ctr,
- 						CTR_EL0_DminLine_SHIFT);
-diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/efi/libstub/zboot.lds
-index cc55aa8fb0630f..c7c2f4dd144301 100644
---- a/drivers/firmware/efi/libstub/zboot.lds
-+++ b/drivers/firmware/efi/libstub/zboot.lds
-@@ -2,7 +2,6 @@
+-	status = efi_zboot_decompress_init(&alloc_size);
++	status = efi_drtm_prepare();
+ 	if (status != EFI_SUCCESS)
+ 		return status;
  
- ENTRY(__efistub_efi_zboot_header);
++	efi_info("Decompressing Linux Kernel...\n");
++
++	status = efi_zboot_decompress_init(&image_size);
++	if (status != EFI_SUCCESS)
++		return status;
++	alloc_size = image_size + efi_drtm_get_extra_size();
++
+ 	 // If the architecture has a preferred address for the image,
+ 	 // try that first.
+ 	image_base = alloc_preferred_address(alloc_size);
+@@ -92,8 +97,12 @@ efi_zboot_entry(efi_handle_t handle, efi_system_table_t *systab)
+ 	}
  
--PROVIDE(zboot_code_size = ABSOLUTE(0));
- PROVIDE(efi_zboot_image_info_offset = ABSOLUTE(0));
- 
- SECTIONS
-@@ -23,8 +22,6 @@ SECTIONS
- 		*(.rodata* .init.rodata* .srodata*)
- 
- 		. = ALIGN(4);
--		__efistub_code_size = .;
--		LONG(zboot_code_size);
- 		__efistub_efi_image_info_offset = .;
- 		LONG(efi_zboot_image_info_offset);
- 
+ 	// Decompress the payload into the newly allocated buffer
+-	status = efi_zboot_decompress((void *)image_base, alloc_size);
++	status = efi_zboot_decompress((void *)image_base, image_size);
+ 	if (status == EFI_SUCCESS) {
++		/*
++		 * Have to sync the entire allocation because the sync also
++		 * remaps and changes the permissions.
++		 */
+ 		efi_cache_sync_image(image_base, alloc_size);
+ 		status =
+ 			efi_stub_common(handle, image, image_base, cmdline_ptr);
 -- 
 2.43.0
 
