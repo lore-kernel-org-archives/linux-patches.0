@@ -1,231 +1,189 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011067.outbound.protection.outlook.com [40.93.194.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F3C477282;
-	Thu, 24 Sep 2026 12:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790254614; cv=none; b=rs0g7tV8YPEUr1gdDU6OYSdkc5VY85n6C3sMKHFCv4FTZzxPIlk6xdxXj6ZNLJZMPCJRmh1XIHYiJyFhFFrmHhGbyPJ4qD7q8oc9OHCwkrg0UnIaMOFQOfJPZyXUraeXNW4oQSpoQQM9c901eo9qFLfc00zaJbQbHqjVhX0sprk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790254614; c=relaxed/simple;
-	bh=9KFP333nBL3cE3MWpAffOS+SZ2NE4xEC9rmyuPBFGBs=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VCvBhbYniQtIGlraDdVUb6qr5PqvvSSROgEe+AvB4/aWmcMZ3y5RIjVXKw2jqK4GlAlZ5KWAWISN2/FL6tqp4wLCiHzJ8LBQ2dsFpPnFmWmnUu2z0zj+Hsf4sHPKAZx0GAkzW30MUW5bMU+al0P5aTwFheH+a4oe4StzzvGJsLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=SfDv2A2m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hPDQhnza; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876F2266576
+	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 13:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790258009; cv=fail; b=EuQPIWI4AIEgVlpXy0FT6IgmEBAdmvUjrRnl7DE2MZjCgsJKzUWibl/lyglKMFE839P65WQQR/BKvf/wjPekgNhmMQgynfWcMmeJX9V4gU966PTIcjtR8lbZUfIvefEq3LW/HnH/28rGLaXMSLBJwjGIx16VNQFI76Uy43BKVp8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790258009; c=relaxed/simple;
+	bh=Lt9qzVScktaur8W1eRTqgbBOHj6kYymkI9Dyf07bB4I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ZfbPkZefPmpEHp/Fu45OZYPGPSxqz9liE7RcfAkXFzvg19HGmFkQBkveTi31XdC2+sCvr4qXqzkuhKpTL0B/F0f0mGRkerWvbOx+ECP5zNIf3J4d0/qWii2hsLrY/jQNY7aBxp8tLwGHADgTwMh6jkg57ERzOtbqecWzK49cTfM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=B27Mevkl; arc=fail smtp.client-ip=40.93.194.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="SfDv2A2m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hPDQhnza"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8A2C1EC006C;
-	Thu, 24 Sep 2026 08:56:49 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 24 Sep 2026 08:56:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790254609;
-	 x=1790341009; bh=nh5lY07F/XdtpzZWisBcou4EdetqWlxWEhSWH7F4qoU=; b=
-	SfDv2A2mrCaoAZJYIg+Gdd5VA7VdxBZbvuu2ggT9DdEBxG9zdV7rTuHSEkdp2muC
-	RrKs1Ca7dVpiS45RImV8oYv+FoCsLmwQD3kkyb+4+C2iNKThGf9SWJoIu2b6PgYv
-	vZcIM/pQOrPURQUUMWcywq/mJv9M4Spdmnm5RAAc41f0uhx81mNomQAjmA2nDhxU
-	+8LlYteXhm/Pc5N2bEAm1UeTQ8PsFO2uox+rLk1WibktQi656HxEJ62wXfUGdKdk
-	WWgGVzAQbQxDrbUjTkHDEoJ3QDP8hcpdgbfVbUWumn5d2XbwRUz6GiB5EYFMuKPQ
-	brbE8PDidMo+hX1w+fZA/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790254609; x=
-	1790341009; bh=nh5lY07F/XdtpzZWisBcou4EdetqWlxWEhSWH7F4qoU=; b=h
-	PDQhnza67R40uz4KVjCagCuK/1ooUwva9Er/NXECJ0FHEjMoMBoke2aHuIF2ssXJ
-	QsG6/RCqtJNK/IZzLbY0mngXIEhP7YJdFnZEgu44m0ROGyqO4yEL8LA0oeg6hdiv
-	g+4BV8T2xgDx+1+sH6oOz7vY0K9damZ4tMI7KMy/1EJCGdwDy7HOLikaDy+JfnLX
-	6ceMFdyezhDzCrzOLqL6xFG+ahmA+HuwZgt1Quxl3FtMB7QbzKyIolhlTc3W51ft
-	1HO6VkDpAhH89/pvPW98PePu5IgoTQb8T4nDUYoG+ICHwCQxGQCVMj+gRn/fkw6q
-	oDCYZqON4IQ53LirsjKSQ==
-X-ME-Sender: <xms:EB61ag6hannoEnoGHm6M8Td2p4HPwBZaXj4x4b9wNZ05UmtIGoWlIg>
-    <xme:EB61ajnCXa8dcuv_zjPzBiXZBLBc6SilmBzOljFoB43fww6ABJ517VLYOPGLIdCA0
-    EfKyxUGve3geURx3lvzvz7lryK1DCOfJ2dyFr_G9eIdujkUFOKC8vA>
-X-ME-Received: <xmr:EB61ai6Z9V5eFqttc2Xvt_ymbI2pa28pxkVrhI-YoRi6duOZ1uWRfDQBgIn8MA>
-X-ME-Proxy-Cause: dmFkZTF32quzzh7iukCEspo2//2/EETePHBVgKSDjotfiMLGFMKMi36qp1G2l6m0603LrJ
-    etTQuK4n5psitazgA7NI8ZNAj7Boz3Iz2PTvtSHc4YlI+thZ+g9AxqEWr6smXP4eTxr12L
-    j4iqpnH1GtJD2uV9oEuEdNTFWS+cbDLo5wkX85Q/VxLJ3pJBv3fDm5p4L0ICSGL2DRf+46
-    Zml5juxNyzXgitBUARzy5Q+nGWTe5JIDB908ZQufVLIQOoOBXqBBTkAU9StkEDBWH3HPm1
-    ntYntvDmBSd8joOmDn8RlxUIhT6RE2mlz7OAGRk1ORprL1NHSpdJ4EtNFWlP7TEPEI2LL+
-    pYpBOVi8BAwOPzs8KcdsKkIryA6tKwcjIx9YbxHEmrYndho1FvpUUtTEwlPkk7X/dQD9Ri
-    ojMeInjDm3Qf5JrK4MBzkNA7Dt3NJ6cqbP3mXwlxY66VM1OQkoplQn+y8dqGjimJQChM0H
-    X/OWXCexHTyaKnsGcaXBBz4P6OIry6aIZOK+2kHFAjj6C2QgTN1cKSnEM8fuIS6PcDd0+W
-    qERUKkVymlRMm2x+LmGNo26NcGSU5Ypn9oOO6KRxrdQT6g4w9CrjoWNMiED9/ya8srtUMd
-    ZvrlCrWUre43Cm5+vQfUS0dE4wk7Jh2khI5DPdNo3cIJyUXSXDtSlgOb28sw
-X-ME-Proxy: <xmx:EB61ak-CCIp6-CYCczNih1SN9_54-HNNmAHQY0ICnnl0s8AO4EmszA>
-    <xmx:EB61aqjS8hEqWBBS_8_EGr-7wJVSDCuh5GhtYl6xKl0pHw9uD66TrA>
-    <xmx:EB61aq4gadEPI3rZSlrTz5wkDYHf32dqAFu2Lg2_LiD0KyoCtx3ypw>
-    <xmx:EB61avZEX_jEZucgTShjdxZtDWzWj6mznxYhBi5hg5Z0SqiIAAABXg>
-    <xmx:ER61aii1kJ3fAXJc8Rp40Kh9XAv9uxpj6Ga3ZpCPvgjzzFsOuVxOhPuQ>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 08:56:45 -0400 (EDT)
-Date: Thu, 24 Sep 2026 06:56:42 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Leon Romanovsky <leon@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, David Matlack <dmatlack@google.com>,
- Fuad Tabba <fuad.tabba@linux.dev>, Joey Gouly <joey.gouly@arm.com>,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- linux-rdma@vger.kernel.org, Marc Zyngier <maz@kernel.org>, Mark Bloch
- <mbloch@nvidia.com>, netdev@vger.kernel.org, Oliver Upton
- <oupton@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Saeed Mahameed
- <saeedm@nvidia.com>, Sean Christopherson <seanjc@google.com>, Steffen Eiden
- <seiden@linux.ibm.com>, Shuah Khan <shuah@kernel.org>, Suzuki K Poulose
- <suzuki.poulose@arm.com>, Tariq Toukan <tariqt@nvidia.com>, Zenghui Yu
- <yuzenghui@huawei.com>, patches@lists.linux.dev, alex@shazbot.org
-Subject: Re: [PATCH v7 00/10] mlx5 support for VFIO self test
-Message-ID: <20260924065642.125986a4@shazbot.org>
-In-Reply-To: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
-References: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="B27Mevkl"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HQUhfQqMsObmkOIhscpLMUihZGGKU8zh4LihWCZ/dEneccvD7d+YFoVtQJ4EFCVfGFoKOD2yUiA4g/77bPCAT3EHGqIDkmMjRNx3HyRqsNVlYzFCUtohRx9LtTrils17PjgkrtCgUhy2wi2msAQXrk4JoqQ34HbZytPy3ThKnjee150bLq4/rhgTVrottYvfLVOFdnbqIirZWw4L8jUAnzV5IZz2qqdkUlUJI1u2eNfEVZMe9CpwAj8orxCtSGyDHHaqk/9oC0+uEFHManqVEZkYKWa69+ynTly5PYKjJlvv2rzJNeNUTacOPPc+EQUNQunz0P4uDf+8Ps6R2cj5gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hjZROA+4HmRedO50bc/ZSCbT1mxRaRI6UzqOntV1t3g=;
+ b=Ru9DAOSS0csyxVm+TTSFsdZ/6pJWmqtjJTUlxGO1wr9/qzEuD0OS6Pl7y5HER/FoVZO+8nBeKtu1sLsO3MxTkfSIdWZur2Fmd/zFklkuof+7B9wIemOrWCc/kfroJXLNWHJCcAlY+cmWztxMfZgYKMUqmBGy2stS6L9+RRlYWjqqjhXMUXmKlrx8ii/0XbJTwcr0Y/XAHxpU5HWtHUSLf/Mv48awm1D9bVjm8VXDyOhOjBxk/5BQsx8C0Twa+9NJn7YxhIZ3Njfaai8ADF/PgQlvnLxDxRR2z3mPaldE6oN+MLlHIgXnaF7x70Zyo258OTf7gVV6Knc4uYg5sI7Raw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hjZROA+4HmRedO50bc/ZSCbT1mxRaRI6UzqOntV1t3g=;
+ b=B27MevklegjCVxEs17mSNSMTrSGlCrIMLdFBwGX4OOdO6r1rgPogSLu7NS3GpZSkKr0YIXvRPhKFVLaUn4k4A7NsemUY24cw2pl5Nu/R6/9lu4oQ9EQTmbar5ZEY1c5Nw927FsfDunKocs00F5J8eUjXe2WZNGap3G7gJQMwIhyk3gxs+vvTlN2N3nAUfzynd9gKb8CuDDIOrV3aNFZkY9qurV2Do7Evnf7Gpd7sgGgaqZHY2JEDOHCVV8cdfIoAvUGPSEoWNBoUyXPHRPLoHZEwI+2aZkeGoHibJR5yf+vCh1EJBTyY/uyVFO0aqNZjcHK7NY6zZniAxNkYi3dQSA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12) by PH8PR12MB7375.namprd12.prod.outlook.com
+ (2603:10b6:510:215::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
+ 2026 13:53:21 +0000
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
+ 13:53:21 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	David Sterba <dsterba@suse.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-doc@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Simon Glass <sjg@chromium.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nick Terrell <terrelln@fb.com>,
+	Will Deacon <will@kernel.org>
+Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	linux-integrity@vger.kernel.org,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	patches@lists.linux.dev,
+	Ross Philipson <ross.philipson@gmail.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Song Shuai <songshuaishuai@tinylab.org>
+Subject: [PATCH 01/16] efi/libstub: Fix error unwind freeing fdt in allocate_new_fdt_and_exit_boot()
+Date: Thu, 24 Sep 2026 10:53:04 -0300
+Message-ID: <1-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+In-Reply-To: <0-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+References:
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH7P220CA0102.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:32d::12) To CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|PH8PR12MB7375:EE_
+X-MS-Office365-Filtering-Correlation-Id: 157f3b73-e1a5-465d-1d1e-08df1a433218
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|921020|11063799006|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	T5utDGxpEzJDwKs2WYn3ppPvFJIHT0lV81xmkw56K5+1UxsVDvruBIYkHAsMO+mEbh2eY1ZebkmLOwPqWa/qWrprt8DPDgtQXX3wZovSbo6DFhOMZYZVH8DhLZ0s9Raf4ksKzuKafnvIESNY6gyAtoID+cQI2ckpsiOQVkNRE+KkoSPG15Gq1pSQpBU5VuqMiQRWqeS77gENsKBL9zYDl3IMAtgXFF7oicRXGE39/IS7em5ShIryp4lwtA98Ov97ikP0S4CCIlO6pK0a/OTMNV6FCm8F+KI3G6f+W/SToJx7fUjuhSrGnubyVmnsPtZ+rR83JeNpXJKtaUWC/hJNuNIjN0bvSrk2JzV2DbNQXRhlm8tF5sl8rVxpt+gVGVk+S8vIRFtpIWRFSBEQDhG57X45IBv6hsPPUjmTsv3RF2Pd5reSCQplfplnERGETo7lWHIkZKG0BzaJc6PCbnWwzM7jCjro6dN4YDvR0fhVMTDF+qRYrbqzrvKf1Vhw2b2nodOYxuTN8UmkXIbF3MfKonmv7pRTwTEnop13gE50rsxfKOoq/VKrqX8/xg0KzsoMB1fZe3jxKZzNNEWugksDw+OzauPXJdFP64QeIH4Kyc1pJdYBb/4o4XoiEjjYLacXbv0GCzEhvXObN5w1ZhfY8BadHWyPGV9O6HAOYnLGwJLMj3T3xF6EfqzT2Ur/TO6m+n7hR/jvkkgimYVOHKgbiw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(921020)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?rhcPvh93CpRt6cQFzCYjWzMsiY0NJzuaSZR9nutmYC2f1eTcIRIjFgIpY2/V?=
+ =?us-ascii?Q?4NamulQOgXXhUJ0ToBxGxDBX0H8IFXGA6qK+6cX3KNQypeMprCTqdhJvkyn1?=
+ =?us-ascii?Q?15FfQ9579lhLrbq1e0YcJ+RUWtulJGjYKS1t3X2ormFTPlTUh5XUt3kNrb47?=
+ =?us-ascii?Q?PdtNiUc10FmVCx35smF6/F1S8bkQtcjy7hFFc3YqV5Pz80S1QBiKpz5GGioV?=
+ =?us-ascii?Q?Gy0Z5HmnDCE3L6ZMli6An8Dyh0AYWCjOVlz8UE4Gex1Dzw5Yg0BpCpzj8Kzn?=
+ =?us-ascii?Q?OzqIAKKmHB4/DduU/7GRQIOIwYp4MVb6N3QAGSH2115GoutelAUz2yEHVe6u?=
+ =?us-ascii?Q?tpt8cP5v6S30w1rEPz7JEJZkquAeebeKUy/ZFTnrPpiTHsxoddUoXsQl93/J?=
+ =?us-ascii?Q?phZeyycx9eL903Zq0Acar8AHd5qadgZ/r52LUXxHQzrRKri107J7szGyXh+F?=
+ =?us-ascii?Q?GIB+gsd70yT6TVkdj7lUIgnF66fgQMdrw9x0Dc3HuHJKlYxV3mSgwZ+jVU8a?=
+ =?us-ascii?Q?bBSlpaWlQPwqcrmbgj7oDBAAf5EV0mkr9JnCI93dD/8jzTefwJLD9cPXknBo?=
+ =?us-ascii?Q?PW2CdcPPdT6UrxRclwTwqx3ClJTRxdMIAmP4LNRO3oSwmBufpeR8buP6MRF5?=
+ =?us-ascii?Q?+yqSTgiBh0g4wKK91qXA5MWmsRYaPoYSVJyMofIIjf8scC1R+GPsJRWFVlP3?=
+ =?us-ascii?Q?k3GP3ituu7PbjzLnXeU7XSC5WfGknmV771XbiQsw9s3IrlhenrAs4eWGEKiE?=
+ =?us-ascii?Q?anwli6gBtk3hzf+64pCNWQnFx68KrJm/DZ2zQNNmfLj184/zbg0v+Y0OKWyb?=
+ =?us-ascii?Q?q3unJijkL9lTNCOYFoMJZJxOOzMCnCaaENWM6nEydOY+TX8Gwzj94bFcwIGq?=
+ =?us-ascii?Q?o/xoqctNfqxuMX8O2+321e01fOBqLlsYR3tA8sW/0t+CKOs/GkTsVTiWMVT2?=
+ =?us-ascii?Q?CfGtFD+vxZCD1QBfbV4ahEVf+sA+AuiILKQxDhKbPcz+mmKRO9Aunnkqn+MS?=
+ =?us-ascii?Q?Jf7V1UVs5RcTUNtVBDIcKNsSA9O7oEHOteR1fUjGW0MD5S7H5buypXnKwa9q?=
+ =?us-ascii?Q?3e8hIb3wWiBOlajPv0ZXcdUl7YTyEHObqOOOc7mudUsvjA0G2HVS1s+/G5U4?=
+ =?us-ascii?Q?JVu5OlJFAr6KA6GrvGmdU4Ax06q5umoEPmrLaJMsit24SKZl/EXPjwNB+nLA?=
+ =?us-ascii?Q?bGF//Bb1GuKVc6uSMS4bMHcTnhmddFjlb2lNIC2KBoxTN0ZruvoIqQfUaMB5?=
+ =?us-ascii?Q?8V7qp23lHWz8zdTZR3Y+Wf8oh/JqbRQhUMIVrOEvuYkJRfHrk6ZryW2FKPn2?=
+ =?us-ascii?Q?M1k+NpCzHmdZZ9bG++UGrA5rLKMBYZJNvtQXPdWYNZaLsAt4ahhQai84ClCp?=
+ =?us-ascii?Q?qrwljUOujgbcAtl6cJkMVpeqFQAqIg1dqunXglPKatdyhjdpgNmmv9/stUvc?=
+ =?us-ascii?Q?dkDkzGec2chP+qovC+4s+Cx6wXAa/u4HXVHrXpnCyr04H9E4FQBD5vlyA37/?=
+ =?us-ascii?Q?2SAJm3TLEgzIiOVVo4G3UqZzRcvfXdmyYTuX+7JzYKPwBLq5LPtS+2pvSmri?=
+ =?us-ascii?Q?3k9m6F6U3us8axgfw9ZgdWwj8zg0dJefkjkNfNfnI7f+DDndYLMxTI/RbVgS?=
+ =?us-ascii?Q?UgW9vDrxmfyp41n6hbzc6jVnPm9uqeR0Y6eGxxOWCuNFfVHdSacdFvv+cmeU?=
+ =?us-ascii?Q?o3VGxqhHoiQbHwBFXI/K7TcGnXdahdzo4KbLrBUsVtNGiJXa?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 157f3b73-e1a5-465d-1d1e-08df1a433218
+X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 13:53:21.6613
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sEYKxlI48RT9odQuLwYZ9rcqRmnLbgRb8OyEwVgVWiCi1jnmImRSY+SeeeM3lE4c
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7375
 
+Sashiko says fdt_addr can point to either an allocated fdt or the fdt from
+get_fdt() which is memory owned by FW.
 
-Leon, can we get your ack on 1-4?  I'll publish an rc1-based branch for
-any conflict management.  Thanks,
+Only the allocated fdt should be freed on the error unwind path. Use a
+dedicated variable for the allocation's size so that the free does not get
+confused.
 
-Alex
+Fixes: 4fc8e738ff3e ("efi: libstub: remove DT dependency from generic stub")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/firmware/efi/libstub/fdt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-On Mon, 21 Sep 2026 19:35:40 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> Add an mlx5 driver to VFIO self test. This is largely a remix of the
-> existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
-> to issue RDMA WRITE operations which effectively perform memory
-> copies using DMA. Since mlx5 has a stable programming ABI this
-> should work on devices from CX5 to current HW. The device FW must
-> support the QP loopback configuration.
-> 
-> Also support send_msi by arming completion events of the RDMA WRITE
-> to trigger MSI delivery.
-> 
-> mlx5 device startup is very complex and most of this code is just
-> booting the device, with a smaller amount for operating the QP.
-> 
-> This entire series was coded by Claude Code in about 4 days. It
-> used about 4.5M output tokens, 30 individual sessions and 5600 lines
-> of AI-generated .md files. I spent an annoying amount of time
-> de-slopping and cleaning its work product to make it presentable.
-> However, previous VFIO drivers have taken on the order of 1-2
-> months to write, so getting one in a week is pretty remarkable.
-> 
-> For those interested, the flow I used was broadly a prompt sequence
-> sort of like:
-> 
->  - Hey Claude, go look at the falcon series, VFIO self test, the
->    mlx5 driver, rdma-core and some PDF documentation and make a
->    plan to put mlx5 under the selftest.
->  - Write an rdma-core application using the built-in VFIO provider
->    that can do the required memcpy operations that vfio selftests
->    wants.
->    (This resulted in a 1k loc C file that compiled and ran the
->     first time but had a few bugs related to device programming
->     that the AI resolved.)
->  - Replace the rdma-core components with open-coded versions to
->    create a fully stand-alone program that does the DMA memcpy.
->  - Review and audit the thing.
->  [Pause and de-slop it]
->  - Make it work on a PF too (this is surprisingly hard!).
->  [Move to a kernel tree and copy all the .md files and .c program
->   it made]
->  - Hey Claude, look at all this stuff and make a broad plan to
->    actually build a VFIO self test.
->  - Here is my 1 sentence advice on what each patch should look
->    like, make a detailed plan to make a patch for every one.
->  [Pause and polish the patch plans]
->  - Execute plan X then commit it [pause and de-slop each patch,
->    repeat].
->  [Review and final polish]
-> 
-> v7:
->  - Fix some compilation problems, kvm and the igb
-> v6: https://patch.msgid.link/r/0-v6-8af36cf7b73f+e2-mlx5st_jgg@nvidia.com
->  - Rebase on v7.3-rc3
->  - Correct some minor sashiko remarks
-> v5: https://patch.msgid.link/r/0-v5-4cacb99249f6+1b4-mlx5st_jgg@nvidia.com
->  - Rebase on v7.3-rc1
->  - Adjust how region_size is computed to min it to getpagesize()
-> v4: https://patch.msgid.link/r/0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com
->  - Rebase on vfio next, update igb and falcon
->  - Move rounding to iova_allocator_alloc()
->  - Remove arm barrier changes
-> v3: https://patch.msgid.link/r/0-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com
->  - Move max into vfio_pci_driver_probe()
->  - Rebase on v7.2-rc3
-> v2: https://patch.msgid.link/r/0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com
->  - Rebase on v7.1-rc3, drop falcon patches
->  - dev_dbg checks the format string even in non debug builds
->  - Sort includes
->  - Adjust comments/commit messageas
->  - Use linux/pci_ids.h
->  - Compute the driver.max_memcpy_size the same as mlx5 kernel driver, it
->    should be GBs now on most devices
->  - Put region_size into all drivers instead of allowing 0
-> v1: https://patch.msgid.link/r/0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com
-> 
-> Jason Gunthorpe (10):
->   net/mlx5: Add IFC structures for CQE and WQE
->   net/mlx5: Move HW constant groups from device.h/cq.h to mlx5_ifc.h
->   net/mlx5: Extract MLX5_SET/GET macros into mlx5_ifc_macros.h
->   net/mlx5: Add ONCE and MMIO accessor variants to mlx5_ifc_macros.h
->   selftests: Add additional kernel functions to tools/include/
->   vfio: selftests: Allow drivers to specify required region size
->   vfio: selftests: Add dev_dbg
->   vfio: selftests: Add mlx5 driver - HW init and command interface
->   vfio: selftests: Add mlx5 driver - data path and memcpy ops
->   vfio: selftests: mlx5 driver - add send_msi support
-> 
->  include/linux/mlx5/cq.h                       |   10 -
->  include/linux/mlx5/device.h                   |  231 +-
->  include/linux/mlx5/mlx5_ifc.h                 |  178 ++
->  include/linux/mlx5/mlx5_ifc_macros.h          |  185 ++
->  tools/arch/arm64/include/asm/barrier.h        |    4 +
->  tools/arch/x86/include/asm/barrier.h          |    5 +
->  tools/include/asm-generic/io.h                |   28 +
->  tools/include/asm/barrier.h                   |    8 +
->  tools/include/linux/stddef.h                  |   10 +
->  .../selftests/kvm/include/arm64/processor.h   |    4 +-
->  tools/testing/selftests/kvm/irq_test.c        |    2 -
->  .../selftests/vfio/lib/drivers/dsa/dsa.c      |    1 +
->  .../selftests/vfio/lib/drivers/igb/igb.c      |    1 +
->  .../selftests/vfio/lib/drivers/ioat/ioat.c    |    1 +
->  .../selftests/vfio/lib/drivers/mlx5/mlx5.c    | 1928 +++++++++++++++++
->  .../selftests/vfio/lib/drivers/mlx5/mlx5_hw.h |  114 +
->  .../vfio/lib/drivers/mlx5/mlx5_ifc.h          |    1 +
->  .../vfio/lib/drivers/mlx5/mlx5_ifc_fpga.h     |    1 +
->  .../vfio/lib/drivers/mlx5/mlx5_ifc_macros.h   |    1 +
->  .../vfio/lib/drivers/nv_falcon/nv_falcon.c    |    1 +
->  .../lib/include/libvfio/vfio_pci_device.h     |   11 +
->  .../lib/include/libvfio/vfio_pci_driver.h     |    6 +
->  .../selftests/vfio/lib/iova_allocator.c       |    7 +-
->  tools/testing/selftests/vfio/lib/libvfio.mk   |    1 +
->  .../selftests/vfio/lib/vfio_pci_driver.c      |    6 +
->  .../selftests/vfio/vfio_pci_driver_test.c     |    3 +-
->  26 files changed, 2502 insertions(+), 246 deletions(-)
->  create mode 100644 include/linux/mlx5/mlx5_ifc_macros.h
->  create mode 100644 tools/include/linux/stddef.h
->  create mode 100644 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
->  create mode 100644 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_hw.h
->  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc.h
->  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc_fpga.h
->  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc_macros.h
-> 
-> 
-> base-commit: fd73f4a6659897191fa0d40695fe370925dd3780
+diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
+index 23b3543d3041b0..5b2dd709d7b151 100644
+--- a/drivers/firmware/efi/libstub/fdt.c
++++ b/drivers/firmware/efi/libstub/fdt.c
+@@ -229,6 +229,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
+ 	u32 desc_ver;
+ 	efi_status_t status;
+ 	struct exit_boot_struct priv;
++	unsigned long fdt_size_allocated = 0;
+ 	unsigned long fdt_addr = 0;
+ 	unsigned long fdt_size = 0;
+ 
+@@ -257,6 +258,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
+ 			efi_err("Failed to load device tree!\n");
+ 			goto fail;
+ 		}
++		fdt_size_allocated = fdt_size;
+ 	}
+ 
+ 	if (fdt_addr) {
+@@ -334,7 +336,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
+ 	efi_free(MAX_FDT_SIZE, *new_fdt_addr);
+ 
+ fail:
+-	efi_free(fdt_size, fdt_addr);
++	efi_free(fdt_size_allocated, fdt_addr);
+ 	if (!efi_novamap)
+ 		efi_bs_call(free_pool, priv.runtime_map);
+ 
+-- 
+2.43.0
 
