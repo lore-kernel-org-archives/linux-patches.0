@@ -1,47 +1,47 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011067.outbound.protection.outlook.com [40.93.194.67])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013011.outbound.protection.outlook.com [40.93.196.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020A036197C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1B7361954
 	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 13:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.67
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.11
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258020; cv=fail; b=qUKSi1VlDOzogr0yQ08QpV8T1LyTNc32FJDpG9rznds8eNWWUkP1rNHPS7WDp73l+lRmMTfbAzkle3PBttcNsSpHowkbr1iMGkp8r3CmjbEDlwW4d288AuZNZx9ZV6ZWFgRxwRo+lwgBkiSe7RCjy3UEdCPyvBakSKNxolf7ISY=
+	t=1790258021; cv=fail; b=rT9nRpux/aw7Idin4ry9d7VLkcxmJ8TDk4m7MYdk1naRO7aZEB49zj/VkYfX29upQ9RAigDftlX1rJ/o0ujDDoA176BQQB3+1Roz49rIMtfgA1RlwYuiKtgmp53IZ8v1TY4pXmEDefHiwn+sIEe1+ND+qWLk3UkeVnu6Y6+pQqI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258020; c=relaxed/simple;
-	bh=UeBONd9+F9gmO5i1k2CHjwptu+o/0iy3e/PXI8aoork=;
+	s=arc-20240116; t=1790258021; c=relaxed/simple;
+	bh=5++FrB5AIMxU99Vv+LaWBMmjEuZzXbsOl/xIq/+1wQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dMItKm9tKJzvl5+Rs0MAB1kDz+n7l+zTqL1w1QzbvRMmo4XB4OdYuOL872GpqaWMYcg4mfNAOoSlRTzH3DJ20XtRScZNhKUFhItVVwwzZh3xUqnn11ZLMFxrkfB2gqTvPxbY9HQmpawpt8ZY+pM3lvbNnK96ZAECNczsW2m7FJw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=sWu2aoly; arc=fail smtp.client-ip=40.93.194.67
+	 Content-Type:MIME-Version; b=VPpkTd0DNJued7/dj8TZPvs5RFQH7nUa/9PBRpaOdjqVsSnTbSeDULxLa5e9zEPtnu3LGbGB30LLO7rATH9RYBhHFP/9L1/D3hoJIlanx4PfWKM2SF8p63g8+nisvfeDDW+quZ/vUa/JYmjsLhKvlf8JT7fiSwzQoXBtNmEptvc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ZwH6d0c7; arc=fail smtp.client-ip=40.93.196.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="sWu2aoly"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZwH6d0c7"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S+vOYVSB0SoaatAmJiGAMH1vBAy6oJHchuNY8PB0JSv5v04cS/LkdHO7ZJ13axTMrZ3ORI05PBD3elksZpSPOXS6Z50rsPX6oaBwxjW4svpQj1+RSmYgzTrZ2dW5Jg7y+BeY7kVeFoN/hC7kY6sUwZxMQZ8ymzRQbeclwLT046kX/Y6RSs66+ZSG5D3jIxcBTrOeXlKZPJPDw0RMbriZQZFpkB2vqW4zu3KpceIzid6ECBkzevUQfx9h1tNrfnYCQpzi5OoG9rX7/iMkXHj3KzyBjO6FPlgjPIR6Hk8ZdF/gAfzee3XwhKUyW1KTfBMgJf8/2og7diief+y8340t5A==
+ b=q782A5RTuxonmznSpbBz0WYdl7DgU7ucxkHQNb5qCQdF3j2f/7anw9NmfvMN1DONe8LxTDDDITnIUu7+l9lBdX+ELOBJiR3vlqzLEHbypZQYoLpc9jpVvFJ6oSTQsE8+ExzPEGzrbutgp/r2aNnzPMPdLFqpI1QaK7r2PC1efvmzD9dueBM8NWNBKOaLX109x1wPWWeLSFdDsUu8LxVewcC/iIJTgkRg0QjoSRBjA43vsHWChlqlovEYM0RivzFltv8rHQsIGBC3mc8YUMgcS2P7RiDBiBLMrbvBchc4JMRPoEPflLFWc32zfcCHZsxjkry3U1MqDgPJzBsmuoOUfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Nw7PzHQwbEo5I9z07gtV3tA6jK2BAsEGh1TBpDu6LAQ=;
- b=iNLfdXX1d4VbryWo9Nda5alsuyxuYQuzx0RS5U4/pfLuVI2iYFis3Sso3TSyEYe6WoEwTsuyt4BW9cfFOquJ6U8ZXD06ZvKyF0Ha9Y0E622uYE44CHpQQy28gfOea70ONMjpo+HYb6VdqXN/b0EaPMih+1E8qSriGo8vPVzxKAe5PzGVkzLFhd1w4InmgpjorTk/qnh8z2pA4mFBfx5qAPSHHCbp82n35hOqg6KtUJrd/IbrXISrJfuRjI6qgKTogz4IWrcnJfPhv0Ilpcg6+jShbn70u6uNe/7f/2qs6QTJE6YICnlhXAMLOgNyaxkWGcL2hTOS7g2bcDvNoo9lwQ==
+ bh=iy+N+6kKai5ROs71xVyYy+U/MC3utt9/ggIPvjuUj8U=;
+ b=m+L83EIwTjVsRiFgTZ9+ZjH//kneQPXLXlO5ZKpf3N58yXUFb6k55LqMb6VR92VlH8g0Xi/+i6jvMOd4E3giYKNG7NA25ut7TID8O+CmqLIBc/NM8sSAHGMnTS8L/IdJIoCI9u+EyaidKXZRuxYALvuQTYH0ssWae1yCEux3XyePwlz0o72msuhQdqzPspBAO6kuGuC4+E3l75F07XSV8jCZg4wmrT1s3pl7b7hLKc62RHS/75vtYsX0g0fPnlMEShKKaY1eHhKK8faq24P5nEDmL8xM+8yFB3sQ7QLG7QOo2/jBH/IWxx4yF78HsvSn61W1f2NQ6EI24EWhBShp3A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Nw7PzHQwbEo5I9z07gtV3tA6jK2BAsEGh1TBpDu6LAQ=;
- b=sWu2aolylQzBGYT7L0zH9+KBfbIHYYbqETFtY2RiJXY1NUvReuXcXiwTrikk6q9XCEa46Ou9gK/w6GPpCuYWeE8gv8pKy8Wequ2uGBT3f53aqiKAhbNbdTpoZyVdGfxrUkBNcU0BDXRpLIA17haKJxicaeoO9DaflVtTZryfT4qbR+xbADPvCLS5XpvGy+f0XyP4RMox8xiPbiReDSaO6//4thyZnTO7syHhsUrkZMWgk9+TUarVulG9podzAm+Foyvy9TpzfZYyZeb7a7VYBjPqztUkJOSW7GIEOSH+5bJk3sa8PYAt2RgUA9+7nbWZJTyN2phBpc3SkePrN84jBQ==
+ bh=iy+N+6kKai5ROs71xVyYy+U/MC3utt9/ggIPvjuUj8U=;
+ b=ZwH6d0c7Uxgul9Y8T/kuSMPIgDSbmxltNpDyFZbllTj38aChMZuZ4jM4XcBDVs623wq9Ht7L8WCmOr42a+/NX7V74Jt9rvrb2UtI6PZ/RIdL9Bs01eZ+UjidGidnwsRrjPJNnmi5AVd5A2yjxLU2iNjBhYe1TqMWEOSRqDTUev0czS0jkimldTTshsb2dr7W9l15QhqoH598Mv/mMtuSim/GO3YFO5dXlhweu8uSP7xXG7FbUPlZnc/WuPup19235dCTkjiUv0wJ/AwOIJitgcu6hbzk1GOxiA/690KrtgEsOjUcnomvSBPo9iZ7FdExpAwbuSJQ/teJm6HrYDpjCg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12) by PH8PR12MB7375.namprd12.prod.outlook.com
  (2603:10b6:510:215::12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 13:53:25 +0000
+ 2026 13:53:30 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 13:53:25 +0000
+ 13:53:30 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Alexandre Ghiti <alex@ghiti.fr>,
 	Albert Ou <aou@eecs.berkeley.edu>,
@@ -72,15 +72,15 @@ Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Ross Philipson <ross.philipson@gmail.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Song Shuai <songshuaishuai@tinylab.org>
-Subject: [PATCH 03/16] efi/libstub: Free cmdline_ptr in efi_pe_entry
-Date: Thu, 24 Sep 2026 10:53:06 -0300
-Message-ID: <3-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+Subject: [PATCH 13/16] arm64: drtm: Update the linker script for EFI_STUB_DRTM
+Date: Thu, 24 Sep 2026 10:53:16 -0300
+Message-ID: <13-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
 In-Reply-To: <0-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH0PR07CA0081.namprd07.prod.outlook.com
- (2603:10b6:510:f::26) To CHBPR12MB731189.namprd12.prod.outlook.com
+X-ClientProxiedBy: PH0PR07CA0075.namprd07.prod.outlook.com
+ (2603:10b6:510:f::20) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -90,81 +90,229 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|PH8PR12MB7375:EE_
-X-MS-Office365-Filtering-Correlation-Id: 687acb3f-232c-4a7b-d544-08df1a433351
+X-MS-Office365-Filtering-Correlation-Id: cb68d15b-f318-4898-c49a-08df1a43335a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|921020|11063799006|56012099006|10067099003|18002099003|22082099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	G2T7kXUNAs+TBXP0ruIc2AZ1KNs6DXHJW0RFAwsmZ6kozXjUcq/NS2Vo+B9pgXnSChxA12eaQ6vggMgqibfeHK4m1wUSRdBmH4U01pf9yTUy70oGfA5ShYNNoA52HT9t640EMOuTyGcolR1ULaMzLzOSTNzGVY51Nwlf5aIY5lnxtrn79iX6OKw37btHu3SXodObKlWAj4w5XPjVDQsIWWhes6C3eHWGCI/HUTK1LPuo/GyvB//Cq1sk5Zgdv00Tc3nMfdVdIQo905/QOaE6pL4SfwaEt2oOSDh+XzPcCZH3Ib6YEkikwChQPi4m56OYs6SECeWXvBlD4SlGNnv58HviwxNhDdCRkXLfjTfjvDhVAa7sA2S5HYHhQ1afXdr2BJu3+Fze8LPQw9nPuJIvri2btffARsHpxw3dCH/sw4+GcAltpAp21m0cnaJxymNuUPPScYJA9pT2r+u2vfwfXdBqCvZ3KGucfSl5KNJLPbuu0CUsIbggvwifAfTjgh2DvuKbKjMbjw+2RWTps74CcRT6TsnNRj23JgUwaXbvUTY92MoprTR6q2w0HVVdYvat6skaM1Gk8e2H3XBzDNCSJEqFByMLWfKtfX5ZJcxfpya9OA0w2UVsfUyIBK9TY6f9rLxaaRJJqRm7qLmgrd6u52XW6BZC8+2SmKqXUKQlxb9sFjYJN0x0KLDTsndZ7QnnqFykxGs4C5IPYT0Bg8V+dw==
+	jYbm6Ree4kOFgELGIzNWB5rHZHNNussFLXF/6x5XvvH0ircHjn6OHYjAjak2gljAz0/Ckp/ZorjJjF1rUn1GTboGZApdk7LCrAjNVaPOByw7XF02m39IIKOhffO9AvpGV4f4+jhGe+MOKRV6uyqHN8YulpLpnQ0Yt+/TiKzKaMlIFXCwcvXpUUIskezNjS7nmWm2sydRnKyjZfijwMhlQFo0Xjwp/Ns54nM3icNySy4s7ReEXE5+uscHgCyZ/kL+CMZeaemNQqlyYUzpAXvPX3fcCXrdDi3wM0+VaAo4lChh/mDbG2IjFUlDsJHK4AjIOSBJNGuPZJvSKcg61t5CEE6OHWlOveqIk1Zp35z2siEaKbIXPshJHpA427Z/AU8W8ijn3uT4jrnrmGykb3FM3yULsLOnxIwV1xxCWYO6CcCNR34qR5mO1nGrNSFsJGu3+W99lGfmCn3s2ngSR3uk6RbBBz5M6DGwZVrympr3E34IO7Ed0Ww2aYibMRfJzuizkcXt5fLXJsPbEjKA3aPpzjrmYvn01kvt+nnezTxXPlZDnu3U11wo3HxwDYjmwpqMvveaG/tMu/8VV6FS1RzjysCU0ci+bYQKfvfvmMH3MwzQGoGX0vnQrGXH/7O56YsB53UQ4TcLEBr1yoXLaN91PGKHR6Uv4LfBaWrQSxn7AdtQcBKy56uMFKM+Gh3C+nf/URBImWoGCuik/Rjm4R2KUQ==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(921020)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?YCsvxliBZTPBChi9lW3bK1sHJiBCvuwXsUEWR+7iO2Pm5KOXzQyCxPGPI0U5?=
- =?us-ascii?Q?S4dskgAkslnj0ewccp06r9BgqrX0kIrB20YTbiYdaCHZ+Kq4vRMzjXJRot4n?=
- =?us-ascii?Q?CcD/Y07z0D8AsS2cjlaUG/cWCRrQTwk+1c657Z7m0dSOABAN610RaU9ijbln?=
- =?us-ascii?Q?6C6IZoKWv5dVdxBTcf1OzWAKSsa0PuywdcuS/WDFrGGRU/MPGl6yrZjjyb/E?=
- =?us-ascii?Q?M0+0KsywyJimDRYYdp+AHXS0cYX+0FSlHKktAjNjlgFaBjDOEdtkTqS1JpaY?=
- =?us-ascii?Q?IaUl/3S8cqfqL3yvCNt0tONy5HbkAwtbPZkK7U5TG9bNs2lUJWOdVGnvZEgF?=
- =?us-ascii?Q?jbsYvnjcS15Wa48qkVkT7FZm3en+iAcdodKA68TIDj24S8e0V+SEIb8DqGlC?=
- =?us-ascii?Q?jsryYUZZUZjlmTMeUumKhn9RRBrq+y8N0QE4cQvDCGD+aVKXljW9+QV7AdRC?=
- =?us-ascii?Q?bANtU+bUIOcalgkOtdR764mOAllc0T3FFyIQJulXIWdhlLUB+/+07Yzs6b3Y?=
- =?us-ascii?Q?v0ePPT4BlppN/5D3fuuej+5O/LNu2MaEZgkDw5tSSgAi1fu/s+TWbKda/By7?=
- =?us-ascii?Q?owPdJ8RODWGQ/ecrIdYZDY4AXXZJXPz175D2jINU8CFKtcqvxyHCkwORR9mB?=
- =?us-ascii?Q?Jo1HqzkFs9h/qXocAx2qg8AGyboAbG+Wbbayy6T49vFf7yyMabCgrOYjlR6c?=
- =?us-ascii?Q?xzQ6MDQQVBhYvid2NBjT3gwrEr8alvltyDHqg+Qod2eMB6y+68ODaP42G/Ge?=
- =?us-ascii?Q?0KPUCHGh/zqAuwLh4a8hfaNYUoVhZaDRRqjDG6W70ybYHIEiFjWgW443iCyc?=
- =?us-ascii?Q?qhFnODrByTGQL4lFIbcK0JDi5HXJciHw1RS+rQ6hjo1QHCZdWYqB/8/884zZ?=
- =?us-ascii?Q?M0aqJfPEUm+PWJaGE/v/Lafpr/2pA1GLd+FoSg3u7MKHB5RWe97mCanwE00l?=
- =?us-ascii?Q?y9lYmvtg4q9NL9EBCxGW6IFV3vjAcMXg66XmiEo6rgLPCSj4+j67eyYyrmb6?=
- =?us-ascii?Q?WuD0wVa5jw8FJ4L0Vil/kYFHkBkp0vs7fdCZsgr3aPJkpM/PiLzl4c6FtjJW?=
- =?us-ascii?Q?uJgEScHZxyIIAUwNvwf7MGwzfyxvreRsrFPCyqOW9hWJGICTndeyJorESJwt?=
- =?us-ascii?Q?S473SVQWzuGJyZbEnLprkJLFpcAj7ra6xGOQwn+01W6qs2ZIy3LARR7A/rsn?=
- =?us-ascii?Q?Jpi0wsehu/x/ASgrNwMxz43KI6RL3/exA6t3cJZ797C3bym0MbvFl+DaEdeO?=
- =?us-ascii?Q?fNGlsGpIbzMq027MJ8SCgGk/HOtJfuyo35VrHcb7d1UvddAeGIgL90tLl8/R?=
- =?us-ascii?Q?MkQ3gFPK2AN/nPxQ7lt2bWSyIJIuqWM+xZGqXGtN4L23uMPFiTeb441+Zl+5?=
- =?us-ascii?Q?OErKaCLuWA7bQaQ4WOhAYW7sDq88V4exic0JA6VRoVJsJiADgWDHqQwLTot1?=
- =?us-ascii?Q?r25VEJQYyaccukMa9sD5SPQuhTNCscbEs0vw/vLFIWtqk4UkzsN3kV6IGfn8?=
- =?us-ascii?Q?gVgvkPh+G1/XE8LGgUS1MWKZB6jpuDB/lNtZ1t90/MbhPsCl9+rcCENN/ZVj?=
- =?us-ascii?Q?x5kdl11hD461Yoy3aWCkpkHTVEvnZAF7QwVkwvcfD6NFV450on/vnIbe7hek?=
- =?us-ascii?Q?h27EnPYi8w48mygRYqa4OgGWRp2RrocptNDpp8YtcvzEzePaW36HeJoJbZcb?=
- =?us-ascii?Q?bKPHMMR4hCD/Z0UJKYf6kh3DHyTaUq7X3MTAWcwqBUkqYLOn?=
+	=?us-ascii?Q?WhZ+tykOIkO9lnsjY26yKZ3p4BFsCWuYrdwru2vMzf43eyblVYWjjeXFl/1A?=
+ =?us-ascii?Q?U3DqDhYZu+OzuruLXADDJ3sCn6SnhIJv0KdaHAF3+ZUrQqqyKJcHLzHd+9Np?=
+ =?us-ascii?Q?4/X2OCemPUrHMJRLhtb0vZubJeQ+S4XT29SAHF++Wyb+5J898KVjb7otI71Y?=
+ =?us-ascii?Q?vI3lEnvEYUb3hRtwGVb5oQRnorYSoWDSZS5zCC5KebAPUL/h9uVjBjz5baCE?=
+ =?us-ascii?Q?W4QmXUiGtDTb7HzJcvycZk2agndp/Zd3y9Fqx0oIKWjS96qBSpFxf3kFow1O?=
+ =?us-ascii?Q?YpzltbgJsizGNw0/a49JQKh5l9mHOBuyHPDaUHLcvwlIkQS0+bCiDdH9OBeT?=
+ =?us-ascii?Q?aiALgnrEMM8xnSKYW2XzrA0+dr9Se5gDqbBdStF51tHpnT2UL83rDB+3sgKo?=
+ =?us-ascii?Q?4vX/wiAhr9cpeKyD+VDM8WLJdZYpHGuKWq+qZRUi+YukdaBtRQNVkeUqb0qM?=
+ =?us-ascii?Q?pSWbAHhedw3K+0t+1Cznd1hFolDxmQukA8AWDf8bJSrXJr1Dj9ftHO99ZAPE?=
+ =?us-ascii?Q?8XLzEF1j9PGDgejaYUlgn/0H9aUZGhAPJo8197ptM6s6pKvToJ0dm7jJiq2m?=
+ =?us-ascii?Q?XWTPbcgu5/rUeZbDQyDQs+LvGBsceuZSEX1lP/jAaSLwCdQAF+ibs1V0TOTA?=
+ =?us-ascii?Q?el8pJTF2wk95yStg6RiuI/EF1qRicRR+CwIg9GDuLUYUQbYZoGMT9ymL7BBY?=
+ =?us-ascii?Q?bZjdwoa+apIbH5RaWbsotbj+KjUP/wldM2zcHjF9i6rmoi8Ri1/kk52mUjVz?=
+ =?us-ascii?Q?A9HrWQ2DB8MMTpHxRxWT5klhlabeAsnElvrvdW13QrY+iQwGojkppq9Z2f/A?=
+ =?us-ascii?Q?niGLTQl3u5eVUCNaqL8z2p/SgeJstNM0jo+U4hz7Cf3IMhM2uZ2CWUnVPVeF?=
+ =?us-ascii?Q?hp93ASWb4y5R3UvDR/lPv3nL06f4HV3VVeClUI4IEb0tcv6h0Ow+SmgBxaOn?=
+ =?us-ascii?Q?G2wijnfBZpx8TXtPD0PPPknA4OTxNdlFSFtJJO/bUkdkMkZFlZUychC6MRP2?=
+ =?us-ascii?Q?HQHfTjTn3l3633P0wVyh3SsTkZO6AYndM5B+r9yRBb0BqW5tKqsO+rBW6ZBR?=
+ =?us-ascii?Q?KNs4lB5NzSQWOj1U5ve9WQdpqauQm/7SN4CGhZurE7wo/CGU5qbfOXiN7K0b?=
+ =?us-ascii?Q?3nNTJq68/2d6VD5c/dWzka3ZUSsAqft055BT36bzBu5KI2EfkZI+T+rRAF2w?=
+ =?us-ascii?Q?qHplJUGLeZRZCkx0Tmg0Llk6rX3W5HxIXyL3z8MZayu30z16Z35Gv+rEoM17?=
+ =?us-ascii?Q?xTwEs00qAXorNCbnrgqAtN+JnbZMH1eZjv+M3/3jTDHAde0HB7YNgQf7KOsx?=
+ =?us-ascii?Q?7nt7tv/zBViD7hfWxmns2CAb4b/6mO0CrKhj4mLsfNqjZOApeL27o2a2zSfz?=
+ =?us-ascii?Q?S7+U9aK/H4/FB2q6cvb1kr2wO1jskttoIAXmCmrJq5pfBuK2yXFE7E1m6wut?=
+ =?us-ascii?Q?VWmZ2MXHtWPGfg2Z6SDhZYlI3a6nEH+11nnJxU+lCOtuYUdVb2YWeYXvFMCz?=
+ =?us-ascii?Q?1gpwQ58Kfn0QXbzTv4K+qD2epqjfAhqfi+LJANamR86qnwVdsXBUX5UdoOt2?=
+ =?us-ascii?Q?jNq5EZBUyjL/2l529f66KOMpjrnQABE2Q1vVVl3rWoFPFG0oSgvrq7pOta+w?=
+ =?us-ascii?Q?9A99GFFOcQrPEal7yoW6piRFeCRE6a941nwAw/0GY0hUc1vLXAsZC20W+3Z0?=
+ =?us-ascii?Q?hrEigLOf8QUCyudT0sknFJTDM69DMiApSSKSg0Zop+yMFqCo?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 687acb3f-232c-4a7b-d544-08df1a433351
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb68d15b-f318-4898-c49a-08df1a43335a
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 13:53:23.6960
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 13:53:23.7546
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VbqVU3mEckO0CU1fJPb3Ndh3LaR2Ytcn1aeOq0N83OfZPmmY5Rq78KQsm/o2hut4
+X-MS-Exchange-CrossTenant-UserPrincipalName: NrKYfF/kqp3NCyJdN05QRSOjNHaMs/RC49VEfl+3Zo1hyRt90YGDpedHrUZbxAIn
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7375
 
-Sashiko points out that efi_handle_cmdline() allocates this memory and
-hands it over to the caller. If efi_pe_entry() ever returns it should be
-freed. Add a __free annotation.
+Implement the link layout that CONFIG_EFI_STUB_DRTM requires. This maps
+vmlinux into the Dynamic Launch Measured Environment (DLME) defined by the
+spec.
 
-Fixes: 42c8ea3dca09 ("efi: libstub: Factor out EFI stub entrypoint into separate file")
+Broadly, Image fits into the spec defined DLME region memory layout in
+this order:
+ - Program headers and padding up to _stext. EFI can write to these while
+   loading the stub so they do not have a stable measurement.
+ - All the boot-time immutable data, including .text, .data, .init
+   and so on (measured)
+ - Data written by the EFI stub
+ - .bss, padding and other 0'd data up to _end
+ - The "DLME Data" written by the launch process. This is a datastructure
+   the post launch kernel will parse to get trusted information about th
+   launch.
+
+New linker symbols are added to mark these areas and their offsets are
+placed into the efi_image_info so both stubs can get them.
+
+The spec's design of the DLME was intended to fit a typical OS image like
+this, with two areas that are unmeasured and an inner measured region.
+
+Linux zeroes the unmeasured area of .bss/etc after the DRTM launch so it
+also reaches a known value. The DLME data is written by the launch and is
+trusted. The EFI stub data is either ignored or will have to be sanitized.
+
+Add a section for the unmeasured data before the PECOFF padding. This is
+an allocated section so it is zero'd in the image and is only 64 bytes in
+my builds. There is a high chance it gets absorbed into the padding
+region.
+
+The post-launch kernel will have to reserve the "DLME Data" before
+starting the allocator since it falls outside the linker map. This will
+happen in the first series to consume this data.
+
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/firmware/efi/libstub/efi-stub-entry.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/image.h  |  8 +++++
+ arch/arm64/kernel/vmlinux.lds.S | 64 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 71 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index aa85e910fe595e..83fade2b0d3b84 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -40,7 +40,7 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 	unsigned long image_addr;
- 	unsigned long image_size = 0;
- 	/* addr/point and size pairs for memory management*/
--	char *cmdline_ptr = NULL;
-+	char *cmdline_ptr __free(efi_pool) = NULL;
- 	efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	unsigned long reserve_addr = 0;
- 	unsigned long reserve_size = 0;
+diff --git a/arch/arm64/include/asm/image.h b/arch/arm64/include/asm/image.h
+index 4a220c71f76c6a..a4af9a94037bfb 100644
+--- a/arch/arm64/include/asm/image.h
++++ b/arch/arm64/include/asm/image.h
+@@ -5,7 +5,11 @@
+ 
+ #define ARM64_IMAGE_MAGIC	"ARM\x64"
+ 
++#ifdef CONFIG_ARM64_DRTM
++#define EFI_IMAGE_INFO_SIZE	40
++#else
+ #define EFI_IMAGE_INFO_SIZE	8
++#endif
+ 
+ #define ARM64_IMAGE_FLAG_BE_SHIFT		0
+ #define ARM64_IMAGE_FLAG_PAGE_SIZE_SHIFT	(ARM64_IMAGE_FLAG_BE_SHIFT + 1)
+@@ -62,6 +66,10 @@ struct arm64_image_header {
+  */
+ struct efi_image_info {
+ 	__le64 code_size;
++#ifdef CONFIG_ARM64_DRTM
++	__le64 drtm_measured_start;
++	__le64 dlme_measured_size;
++#endif
+ };
+ static_assert(sizeof(struct efi_image_info) == EFI_IMAGE_INFO_SIZE);
+ 
+diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+index 8305b47995954b..18d9717fb26741 100644
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -190,10 +190,24 @@ SECTIONS
+ 
+ 	.head.text : {
+ 		_text = .;
++#ifdef CONFIG_ARM64_DRTM
++		/* DEN0113 R314010: The DLME region must start at a 4KB aligned address. */
++		ASSERT((_text & (SZ_4K - 1)) == 0,
++		       "DLME region is not 4 KiB aligned")
++#endif
+ 		HEAD_TEXT
+ 	}
+ 	.text : ALIGN(SEGMENT_ALIGN) {	/* Real text segment		*/
+ 		_stext = .;		/* Text and read-only data	*/
++#ifdef CONFIG_ARM64_DRTM
++		__drtm_measured_start = _stext;
++		/*
++		 * DEN0113 R314020: The DLME image must start at a 4KB aligned
++		 * address. This happens always because SEGMENT_ALIGN is big.
++		 */
++		ASSERT((__drtm_measured_start & (SZ_4K - 1)) == 0,
++		       "DLME measured start is not 4 KiB aligned")
++#endif
+ 			IRQENTRY_TEXT
+ 			SOFTIRQENTRY_TEXT
+ 			ENTRY_TEXT
+@@ -285,6 +299,11 @@ SECTIONS
+ 		EFI_IMAGE_INFO(
+ 			/* code_size */
+ 			EFI_IMAGE_INFO_OFFSET(__inittext_end);
++#ifdef CONFIG_ARM64_DRTM
++			EFI_IMAGE_INFO_OFFSET(__drtm_measured_start);
++			/* dlme_measured_size */
++			EFI_IMAGE_INFO_ENTRY(__drtm_measured_end - __drtm_measured_start);
++#endif
+ 		)
+ 	}
+ 	.exit.data : {
+@@ -348,6 +367,44 @@ SECTIONS
+ 		__mmuoff_data_end = .;
+ 	}
+ 
++	/*
++	 * DRTM layout for DEN0113 as it relates to the link layout, refer
++	 * to Figure 8 in 1.4b. In that language:
++	 *  "Free Space 1" is the PE header and padding between _text and
++	 *        __drtm_measured_start (_stext)
++	 *  "DLME Image" is from __drtm_measured_start to __drtm_measured_end
++	 *  "Free Space 2" is kernel efi data/bss/etc till __drtm_dlme_start
++	 *  "DLME Data" is a memory sized "Minimum Size of DLME data"
++	 *        and is retained after boot for use by the kernel
++	 *
++	 * Thus, the DRTM_PARAMETERS follow from that:
++	 *   DLME Region Address = _text's PA ie the start of Image
++	 *   DLME Region Size = DLME Data Offset + "Minimum Size of DLME data"
++	 *   DLME Image Start Offset = __drtm_measured_start - _text
++	 *   DLME Image Size = __drtm_measured_end - __drtm_measured_start
++	 *   DLME Data Offset = __drtm_dlme_start - _text
++	 *   Normal World DCE region address = PA of __drtm_dlme_start +
++	 *                                  "Minimum Size of DLME data"
++	 *
++	 * The EFI stub will place any optional "Normal World DCE" region
++	 * immediately after the "DLME data". It is only used internally by the
++	 * FW during the launch and has no effect on the link layout.
++	 */
++#ifdef CONFIG_ARM64_DRTM
++	__drtm_measured_end = .;
++
++	/*
++	 * Writable EFI stub state. When DRTM is being used the stub's mutable
++	 * data cannot reside in the normal .init.data because that section
++	 * will be measured.
++	 */
++	.unmeasured.data : {
++		*(.unmeasured.data)
++		*(.init.efidata .init.efidata.*)
++		*(.init.efibss .init.efibss.*)
++	}
++#endif
++
+ 	PECOFF_EDATA_PADDING
+ 	__pecoff_data_rawsize = ABSOLUTE(. - __initdata_begin);
+ 	_edata = .;
+@@ -370,10 +427,15 @@ SECTIONS
+ 
+ 	. += SZ_4K;		/* stack for the early C runtime */
+ 	early_init_stack = .;
+-
+ 	. = ALIGN(SEGMENT_ALIGN);
+ 	__pecoff_data_size = ABSOLUTE(. - __initdata_begin);
+ 	_end = .;
++#ifdef CONFIG_ARM64_DRTM
++	/* DEN0113 R314030: The DLME data must start at a 4KB aligned address. */
++	__drtm_dlme_start = .;
++	ASSERT((__drtm_dlme_start & (SZ_4K - 1)) == 0,
++	       "DLME data is not 4 KiB aligned")
++#endif
+ 	__pi__end = .;
+ 
+ 	STABS_DEBUG
 -- 
 2.43.0
 
