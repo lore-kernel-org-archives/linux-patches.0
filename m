@@ -1,143 +1,231 @@
-Received: from mail-ej2-f43.google.com (mail-ej2-f43.google.com [74.125.228.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E7444708
-	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 11:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790250680; cv=pass; b=G91PkF6mez9Ua7GebnYoRdEyET+5neNrSdmWZCeuta/pufaC+En9pqWR2tis7EHEFruMHoKrngC1noUrRFbLEpBvV/gdlbltZ24Bpp96zVLwrU4E3VWgweoKf0qFeocZ/0fesFXsFRLon7VwxILCaGJ2OFP3ecpORDuq8cfA1ic=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790250680; c=relaxed/simple;
-	bh=beqzQKKjoxSVK9Ait4o2AWQYoYHmh36alBr6u7mmw2I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C5RLLijg0sZQLTTfMxV0Z60qyyeC0ivyQU6yueYb1eMgOpP0kWJgR+qSwdyU47IuZGRa/0oxMgzn3CEksNM6sYS5jmTykTXiZQLfiyiGJyyKhQstNIuoXSIjNZ6+95uGiL2Y6js092FlcLNDgbxfNGlSph49VkrEYTcvTeKWwI4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=xpOV51fA; arc=pass smtp.client-ip=74.125.228.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F3C477282;
+	Thu, 24 Sep 2026 12:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790254614; cv=none; b=rs0g7tV8YPEUr1gdDU6OYSdkc5VY85n6C3sMKHFCv4FTZzxPIlk6xdxXj6ZNLJZMPCJRmh1XIHYiJyFhFFrmHhGbyPJ4qD7q8oc9OHCwkrg0UnIaMOFQOfJPZyXUraeXNW4oQSpoQQM9c901eo9qFLfc00zaJbQbHqjVhX0sprk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790254614; c=relaxed/simple;
+	bh=9KFP333nBL3cE3MWpAffOS+SZ2NE4xEC9rmyuPBFGBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VCvBhbYniQtIGlraDdVUb6qr5PqvvSSROgEe+AvB4/aWmcMZ3y5RIjVXKw2jqK4GlAlZ5KWAWISN2/FL6tqp4wLCiHzJ8LBQ2dsFpPnFmWmnUu2z0zj+Hsf4sHPKAZx0GAkzW30MUW5bMU+al0P5aTwFheH+a4oe4StzzvGJsLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=SfDv2A2m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hPDQhnza; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="xpOV51fA"
-Received: by mail-ej2-f43.google.com with SMTP id a640c23a62f3a-c254f55efe5so316885966b.2
-        for <patches@lists.linux.dev>; Thu, 24 Sep 2026 04:51:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790250676; cv=none;
-        d=google.com; s=arc-20260327;
-        b=A2bygeJKY5MLNdkUK/Wg1jwQoXCMIKGwFHgsNBJ6BrglXc1vNflTUG/K63jG7aV+Ff
-         0LhGp5K1TITHMfLo+D5Y2NGJRp1Qxg3n3lvbigM3PYYTXV1V9HxO2oHf98ZoT7KbbggA
-         VLWhRXIGN3xDMlGy9lOcDqruRCUTgXNvLz9QtTTzt9OUGtjMPiA4cuvBdq0m5BxWNUpW
-         6ayOuDJybwkNJ2roPuZ2x1t9DVVLvo4iiRdA1VUl48R2OOz0ssYJR2JMn8hOUJ8W7KKP
-         jifeVqSSUXFtmH9tSNWVKvuxGcQ7BGCT6u6OvN1yn4lJuI18rQKhTf1ntOJpsxJ6DpVo
-         dnZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=omFqe/7YRCaMs7Y6/oYqn8ZEqPS++HtW5gJ+iDHObDM=;
-        fh=c88K/ogOwHM1NuqgTkqi3IwCjWwo5OTBzYomSQVMeKE=;
-        b=sW4J1TJ2KAvTfabvVXzIaQwa+iYO7RHl+uSvEtApZxEJ7mSBWgAaT8E9GKjUfEHp3d
-         mqThrs3t0DV5TUK8iB+Ycl0I084Z3WhfYuRqp1kzsJ9e6Kktu6/+W+8bo5OrNT7O/Mhc
-         BHvUjaFbZfv1jZGpXl7JdzH+3TOmTeptNrokx6UPFzM2OiENdLQerrFmcxeymJlK4wkS
-         C+hUiqtQlxGfqFjPiSHhpPNK2i1uf8k+7lIRQwqJNNYClrkYZ8QDXFWSBgHGBGfToW0V
-         77UXAoAhNdAxcGY3ZtIQ0sBX0C92LhfrBvA8YBETmjEZ1qQoB9/W1tz3YWqAp7b2UOQr
-         XQ+A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1790250676; x=1790855476; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=omFqe/7YRCaMs7Y6/oYqn8ZEqPS++HtW5gJ+iDHObDM=;
-        b=xpOV51fA5lPrhTC3N/IurYAFCwRI916RtoQhq3G3G4/uebM6U9FyLJ1zD7RheTydHY
-         1p/OH/XvyA44IQMlYvT4P418VGY5jEbfl6P45OT4hds2xvpSSxUCNlia0HIabWCv8tj8
-         ocIaSNRHRndS8JDR6eBSaGUel160i87t1JPSocLkiFkbUjuWwYHUkwArH9N7vKPDq27c
-         Jp1C2ECYMuMxqA3BLwZjAn7+24Wwbfj26rblvj3dNYLkpD0OyFc5aX6PhjouWSWKbJtj
-         aDfPue5cBTwDSahsIlqAbp+Z2zD4nkgczkXSGc9HfJIxOU3tasXCxxX3CRykHpHH7tfn
-         YFIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790250676; x=1790855476;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=omFqe/7YRCaMs7Y6/oYqn8ZEqPS++HtW5gJ+iDHObDM=;
-        b=fpx+6p8LJFd4ylXmTIfqWWnVMlgoXTGmwcagLq/rAPopWQAJTijuv2ivAqSxPzFlDU
-         uzdGVtCTeZ0bn43Yutf0agvRndie3I99teC0OFfoyOLVrNSVsHsWYb7ikJaz0J3SOfLh
-         QGiUZmStECmYCfBragXlmO3FLzCutEiSwe87u2ZUMCOqxZ+VFjPM3RlYUhJ3mRdE7KLn
-         EUjhmQGud1xhKZjNFE1Z9jemVzRfWsVfsRPnbZ6OBOZpL0JwZuWpGWCyYGDbYJ9EmdmM
-         1+6pWVk/Ui4EYiLu6hNZNiCQ8YGoDH9zwJ/0NpcJzlELJs+vC4CCyUcs9UlxJa86NAae
-         3zpA==
-X-Forwarded-Encrypted: i=1; AKwUvBzSBQkSpwGbzr4ehTGBPUX2/rFFOguvZyjJztFVc6DRHic2MgkdFhHQqUcjN/IQWfdLv07BSPaB@lists.linux.dev
-X-Gm-Message-State: AFuF++ntfTitd7TOj9PHVMuqemtSltvcjgpUbs/TRFggiTb2w60LakC6
-	uuDD/ADHPVRahUnuKY/ins7qtLBZf2yFHDfXk3JREOK964p/ReGPQrHjbJQu3xLJiVYLO4GO8n3
-	2DGKO16RkAkTVD0+186M6PXQ/qSD0Ppk9KIITUiaI0Q==
-X-Gm-Gg: AYBFou1bz/Zk2B2iD8Ej3OGE5qBYZQ0FDfS3WsKBduNFui0/8lnKi0ltR2FzsZySb5y
-	uLGtzB4Y5xVjFMpEVIlSviIePZdTtlN1kvNeZjEFb7V/4tV24FtLQSNVVKS/O1XysQaKdZQ2Sre
-	dR12tSPzC6gjoISDy8OCQNa8FL2WN8y3BVJGza7zQ/kRUUm7ABA8dQx73EOsVep3bF8zGG53fDH
-	H2MraVSoTUnzCSjfZH3lgF12USrMHXsZlIRmTVDcHIi5HwgzEY7pyGyu0n2F5az3BnxDqdJgZhA
-	ECKXAr0PWdSRJhTmJtV84FNbt9bEbaLyJLPyxfdEhb+GoUH03HFmVCRm
-X-Received: by 2002:a17:907:97cb:b0:c25:6230:dfcd with SMTP id
- a640c23a62f3a-c2ac239eb52mr194296566b.15.1790250675739; Thu, 24 Sep 2026
- 04:51:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="SfDv2A2m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hPDQhnza"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8A2C1EC006C;
+	Thu, 24 Sep 2026 08:56:49 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Thu, 24 Sep 2026 08:56:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790254609;
+	 x=1790341009; bh=nh5lY07F/XdtpzZWisBcou4EdetqWlxWEhSWH7F4qoU=; b=
+	SfDv2A2mrCaoAZJYIg+Gdd5VA7VdxBZbvuu2ggT9DdEBxG9zdV7rTuHSEkdp2muC
+	RrKs1Ca7dVpiS45RImV8oYv+FoCsLmwQD3kkyb+4+C2iNKThGf9SWJoIu2b6PgYv
+	vZcIM/pQOrPURQUUMWcywq/mJv9M4Spdmnm5RAAc41f0uhx81mNomQAjmA2nDhxU
+	+8LlYteXhm/Pc5N2bEAm1UeTQ8PsFO2uox+rLk1WibktQi656HxEJ62wXfUGdKdk
+	WWgGVzAQbQxDrbUjTkHDEoJ3QDP8hcpdgbfVbUWumn5d2XbwRUz6GiB5EYFMuKPQ
+	brbE8PDidMo+hX1w+fZA/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790254609; x=
+	1790341009; bh=nh5lY07F/XdtpzZWisBcou4EdetqWlxWEhSWH7F4qoU=; b=h
+	PDQhnza67R40uz4KVjCagCuK/1ooUwva9Er/NXECJ0FHEjMoMBoke2aHuIF2ssXJ
+	QsG6/RCqtJNK/IZzLbY0mngXIEhP7YJdFnZEgu44m0ROGyqO4yEL8LA0oeg6hdiv
+	g+4BV8T2xgDx+1+sH6oOz7vY0K9damZ4tMI7KMy/1EJCGdwDy7HOLikaDy+JfnLX
+	6ceMFdyezhDzCrzOLqL6xFG+ahmA+HuwZgt1Quxl3FtMB7QbzKyIolhlTc3W51ft
+	1HO6VkDpAhH89/pvPW98PePu5IgoTQb8T4nDUYoG+ICHwCQxGQCVMj+gRn/fkw6q
+	oDCYZqON4IQ53LirsjKSQ==
+X-ME-Sender: <xms:EB61ag6hannoEnoGHm6M8Td2p4HPwBZaXj4x4b9wNZ05UmtIGoWlIg>
+    <xme:EB61ajnCXa8dcuv_zjPzBiXZBLBc6SilmBzOljFoB43fww6ABJ517VLYOPGLIdCA0
+    EfKyxUGve3geURx3lvzvz7lryK1DCOfJ2dyFr_G9eIdujkUFOKC8vA>
+X-ME-Received: <xmr:EB61ai6Z9V5eFqttc2Xvt_ymbI2pa28pxkVrhI-YoRi6duOZ1uWRfDQBgIn8MA>
+X-ME-Proxy-Cause: dmFkZTF32quzzh7iukCEspo2//2/EETePHBVgKSDjotfiMLGFMKMi36qp1G2l6m0603LrJ
+    etTQuK4n5psitazgA7NI8ZNAj7Boz3Iz2PTvtSHc4YlI+thZ+g9AxqEWr6smXP4eTxr12L
+    j4iqpnH1GtJD2uV9oEuEdNTFWS+cbDLo5wkX85Q/VxLJ3pJBv3fDm5p4L0ICSGL2DRf+46
+    Zml5juxNyzXgitBUARzy5Q+nGWTe5JIDB908ZQufVLIQOoOBXqBBTkAU9StkEDBWH3HPm1
+    ntYntvDmBSd8joOmDn8RlxUIhT6RE2mlz7OAGRk1ORprL1NHSpdJ4EtNFWlP7TEPEI2LL+
+    pYpBOVi8BAwOPzs8KcdsKkIryA6tKwcjIx9YbxHEmrYndho1FvpUUtTEwlPkk7X/dQD9Ri
+    ojMeInjDm3Qf5JrK4MBzkNA7Dt3NJ6cqbP3mXwlxY66VM1OQkoplQn+y8dqGjimJQChM0H
+    X/OWXCexHTyaKnsGcaXBBz4P6OIry6aIZOK+2kHFAjj6C2QgTN1cKSnEM8fuIS6PcDd0+W
+    qERUKkVymlRMm2x+LmGNo26NcGSU5Ypn9oOO6KRxrdQT6g4w9CrjoWNMiED9/ya8srtUMd
+    ZvrlCrWUre43Cm5+vQfUS0dE4wk7Jh2khI5DPdNo3cIJyUXSXDtSlgOb28sw
+X-ME-Proxy: <xmx:EB61ak-CCIp6-CYCczNih1SN9_54-HNNmAHQY0ICnnl0s8AO4EmszA>
+    <xmx:EB61aqjS8hEqWBBS_8_EGr-7wJVSDCuh5GhtYl6xKl0pHw9uD66TrA>
+    <xmx:EB61aq4gadEPI3rZSlrTz5wkDYHf32dqAFu2Lg2_LiD0KyoCtx3ypw>
+    <xmx:EB61avZEX_jEZucgTShjdxZtDWzWj6mznxYhBi5hg5Z0SqiIAAABXg>
+    <xmx:ER61aii1kJ3fAXJc8Rp40Kh9XAv9uxpj6Ga3ZpCPvgjzzFsOuVxOhPuQ>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 08:56:45 -0400 (EDT)
+Date: Thu, 24 Sep 2026 06:56:42 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Leon Romanovsky <leon@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, David Matlack <dmatlack@google.com>,
+ Fuad Tabba <fuad.tabba@linux.dev>, Joey Gouly <joey.gouly@arm.com>,
+ kvm@vger.kernel.org, kvmarm@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ linux-rdma@vger.kernel.org, Marc Zyngier <maz@kernel.org>, Mark Bloch
+ <mbloch@nvidia.com>, netdev@vger.kernel.org, Oliver Upton
+ <oupton@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Saeed Mahameed
+ <saeedm@nvidia.com>, Sean Christopherson <seanjc@google.com>, Steffen Eiden
+ <seiden@linux.ibm.com>, Shuah Khan <shuah@kernel.org>, Suzuki K Poulose
+ <suzuki.poulose@arm.com>, Tariq Toukan <tariqt@nvidia.com>, Zenghui Yu
+ <yuzenghui@huawei.com>, patches@lists.linux.dev, alex@shazbot.org
+Subject: Re: [PATCH v7 00/10] mlx5 support for VFIO self test
+Message-ID: <20260924065642.125986a4@shazbot.org>
+In-Reply-To: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
+References: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923140644.756254324@linuxfoundation.org>
-In-Reply-To: <20260923140644.756254324@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Thu, 24 Sep 2026 20:50:58 +0900
-X-Gm-Features: AclHuK-Phr3WDpb7SshIHOAYwI2RYTxswDPC0MCmKsbJLi96tShPIIuezgDdacA
-Message-ID: <CAKL4bV7H-9F-JEM2ohs3G6GyC5Gi-C2sb0wJdixuObcE-bSuCQ@mail.gmail.com>
-Subject: Re: [PATCH 7.2 000/438] 7.2.8-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi Greg
 
-On Thu, Sep 24, 2026 at 12:19=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.2.8 release.
-> There are 438 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 25 Sep 2026 14:05:46 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.2.8-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.2.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Leon, can we get your ack on 1-4?  I'll publish an rc1-based branch for
+any conflict management.  Thanks,
 
-Linux version 7.2.8-rc1 tested.
+Alex
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+On Mon, 21 Sep 2026 19:35:40 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+> Add an mlx5 driver to VFIO self test. This is largely a remix of the
+> existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
+> to issue RDMA WRITE operations which effectively perform memory
+> copies using DMA. Since mlx5 has a stable programming ABI this
+> should work on devices from CX5 to current HW. The device FW must
+> support the QP loopback configuration.
+> 
+> Also support send_msi by arming completion events of the RDMA WRITE
+> to trigger MSI delivery.
+> 
+> mlx5 device startup is very complex and most of this code is just
+> booting the device, with a smaller amount for operating the QP.
+> 
+> This entire series was coded by Claude Code in about 4 days. It
+> used about 4.5M output tokens, 30 individual sessions and 5600 lines
+> of AI-generated .md files. I spent an annoying amount of time
+> de-slopping and cleaning its work product to make it presentable.
+> However, previous VFIO drivers have taken on the order of 1-2
+> months to write, so getting one in a week is pretty remarkable.
+> 
+> For those interested, the flow I used was broadly a prompt sequence
+> sort of like:
+> 
+>  - Hey Claude, go look at the falcon series, VFIO self test, the
+>    mlx5 driver, rdma-core and some PDF documentation and make a
+>    plan to put mlx5 under the selftest.
+>  - Write an rdma-core application using the built-in VFIO provider
+>    that can do the required memcpy operations that vfio selftests
+>    wants.
+>    (This resulted in a 1k loc C file that compiled and ran the
+>     first time but had a few bugs related to device programming
+>     that the AI resolved.)
+>  - Replace the rdma-core components with open-coded versions to
+>    create a fully stand-alone program that does the DMA memcpy.
+>  - Review and audit the thing.
+>  [Pause and de-slop it]
+>  - Make it work on a PF too (this is surprisingly hard!).
+>  [Move to a kernel tree and copy all the .md files and .c program
+>   it made]
+>  - Hey Claude, look at all this stuff and make a broad plan to
+>    actually build a VFIO self test.
+>  - Here is my 1 sentence advice on what each patch should look
+>    like, make a detailed plan to make a patch for every one.
+>  [Pause and polish the patch plans]
+>  - Execute plan X then commit it [pause and de-slop each patch,
+>    repeat].
+>  [Review and final polish]
+> 
+> v7:
+>  - Fix some compilation problems, kvm and the igb
+> v6: https://patch.msgid.link/r/0-v6-8af36cf7b73f+e2-mlx5st_jgg@nvidia.com
+>  - Rebase on v7.3-rc3
+>  - Correct some minor sashiko remarks
+> v5: https://patch.msgid.link/r/0-v5-4cacb99249f6+1b4-mlx5st_jgg@nvidia.com
+>  - Rebase on v7.3-rc1
+>  - Adjust how region_size is computed to min it to getpagesize()
+> v4: https://patch.msgid.link/r/0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com
+>  - Rebase on vfio next, update igb and falcon
+>  - Move rounding to iova_allocator_alloc()
+>  - Remove arm barrier changes
+> v3: https://patch.msgid.link/r/0-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com
+>  - Move max into vfio_pci_driver_probe()
+>  - Rebase on v7.2-rc3
+> v2: https://patch.msgid.link/r/0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com
+>  - Rebase on v7.1-rc3, drop falcon patches
+>  - dev_dbg checks the format string even in non debug builds
+>  - Sort includes
+>  - Adjust comments/commit messageas
+>  - Use linux/pci_ids.h
+>  - Compute the driver.max_memcpy_size the same as mlx5 kernel driver, it
+>    should be GBs now on most devices
+>  - Put region_size into all drivers instead of allowing 0
+> v1: https://patch.msgid.link/r/0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com
+> 
+> Jason Gunthorpe (10):
+>   net/mlx5: Add IFC structures for CQE and WQE
+>   net/mlx5: Move HW constant groups from device.h/cq.h to mlx5_ifc.h
+>   net/mlx5: Extract MLX5_SET/GET macros into mlx5_ifc_macros.h
+>   net/mlx5: Add ONCE and MMIO accessor variants to mlx5_ifc_macros.h
+>   selftests: Add additional kernel functions to tools/include/
+>   vfio: selftests: Allow drivers to specify required region size
+>   vfio: selftests: Add dev_dbg
+>   vfio: selftests: Add mlx5 driver - HW init and command interface
+>   vfio: selftests: Add mlx5 driver - data path and memcpy ops
+>   vfio: selftests: mlx5 driver - add send_msi support
+> 
+>  include/linux/mlx5/cq.h                       |   10 -
+>  include/linux/mlx5/device.h                   |  231 +-
+>  include/linux/mlx5/mlx5_ifc.h                 |  178 ++
+>  include/linux/mlx5/mlx5_ifc_macros.h          |  185 ++
+>  tools/arch/arm64/include/asm/barrier.h        |    4 +
+>  tools/arch/x86/include/asm/barrier.h          |    5 +
+>  tools/include/asm-generic/io.h                |   28 +
+>  tools/include/asm/barrier.h                   |    8 +
+>  tools/include/linux/stddef.h                  |   10 +
+>  .../selftests/kvm/include/arm64/processor.h   |    4 +-
+>  tools/testing/selftests/kvm/irq_test.c        |    2 -
+>  .../selftests/vfio/lib/drivers/dsa/dsa.c      |    1 +
+>  .../selftests/vfio/lib/drivers/igb/igb.c      |    1 +
+>  .../selftests/vfio/lib/drivers/ioat/ioat.c    |    1 +
+>  .../selftests/vfio/lib/drivers/mlx5/mlx5.c    | 1928 +++++++++++++++++
+>  .../selftests/vfio/lib/drivers/mlx5/mlx5_hw.h |  114 +
+>  .../vfio/lib/drivers/mlx5/mlx5_ifc.h          |    1 +
+>  .../vfio/lib/drivers/mlx5/mlx5_ifc_fpga.h     |    1 +
+>  .../vfio/lib/drivers/mlx5/mlx5_ifc_macros.h   |    1 +
+>  .../vfio/lib/drivers/nv_falcon/nv_falcon.c    |    1 +
+>  .../lib/include/libvfio/vfio_pci_device.h     |   11 +
+>  .../lib/include/libvfio/vfio_pci_driver.h     |    6 +
+>  .../selftests/vfio/lib/iova_allocator.c       |    7 +-
+>  tools/testing/selftests/vfio/lib/libvfio.mk   |    1 +
+>  .../selftests/vfio/lib/vfio_pci_driver.c      |    6 +
+>  .../selftests/vfio/vfio_pci_driver_test.c     |    3 +-
+>  26 files changed, 2502 insertions(+), 246 deletions(-)
+>  create mode 100644 include/linux/mlx5/mlx5_ifc_macros.h
+>  create mode 100644 tools/include/linux/stddef.h
+>  create mode 100644 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+>  create mode 100644 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_hw.h
+>  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc.h
+>  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc_fpga.h
+>  create mode 120000 tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc_macros.h
+> 
+> 
+> base-commit: fd73f4a6659897191fa0d40695fe370925dd3780
 
-[    0.000000] Linux version 7.2.8-rc1rv-g54e8ef17140e
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 16.2.1 20260810, GNU ld (GNU
-Binutils) 2.47) #1 SMP PREEMPT_DYNAMIC Thu Sep 24 19:15:39 JST 2026
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
