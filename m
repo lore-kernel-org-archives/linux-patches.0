@@ -1,92 +1,61 @@
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308FE46A60B
-	for <patches@lists.linux.dev>; Wed, 23 Sep 2026 22:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652CA2E2EEE;
+	Thu, 24 Sep 2026 00:21:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790203374; cv=none; b=diezNrLkgYzxmLn6AQjT+aTkngOQAnwIQzKJzpJm7qnDmpTWqfbi6i6TLjLWd0tOJVjXvcXlsiZcbGtPypvc6QgBH6ajDFVona8gQqqUkJ0e0YtnHflAa429i0GvB7w99F+T1X7QPxbNDFWmySUZU7yWLeKXL67I1XablhG55Vw=
+	t=1790209282; cv=none; b=CJ+Mpywciki1cimjE3aYqI29zzO3Y+1L4GIo6MuHrTStGDx3Y+BoHXDF3Skr0uLlDdiLgOv6/t8SVv+6VfY0gxkRlhgZm+pH5+Nh5n/9zoeWkzqe4uNMOt5VSYUDlR421oScgJSsqqG5x6mRbcFrbeMP0zrr0bPhBV8hE7BmH10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790203374; c=relaxed/simple;
-	bh=XC0GtZzu0BD86oQ6ghzNMhSkH0mMeg+u7BsmzLp0cIw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=FSqRlU4ksBBjBiotznDgo+OZRK7WXDC1U5n7xM5aRWR6FCAYKiqnOLA9OAXPc3Ddmmo0PcYGWK7goUsbmz2XN/ed2XTcnIKBg32Al5QmFtktOGBpzuk24JU/yLdpoRqiqi0qb+4xnInd0YImHR20vWAogHkvbILjun5cBKd6O4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sBqMFvkR; arc=none smtp.client-ip=209.85.216.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1790209282; c=relaxed/simple;
+	bh=oJBDwbulhQv+3dl/6JmOr8DE/kmdjKbXF18qWfxprno=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZDGLD7ulkgGa8jCrQIwz1hMh7iA3Glg2h/BR2gm+SnRyO5NcWmdwXFTvlpuJTQcUx9sQCjqwl7S4mz8iQrEoERtTSsXjZ1XovgaQOxi9GlQjvv2DkkV2s/esnEZLr0FglN/OLw6Ov9u4X5XTk0EwpshA4YuBB23htrAsDjNB9rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Co/AoPqq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sBqMFvkR"
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-39d8646b10eso1074736a91.1
-        for <patches@lists.linux.dev>; Wed, 23 Sep 2026 15:42:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790203373; x=1790808173; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=c4ROB5gmPay6sdQJPjpG61DXTR2zRREmvWIvdqy7Ui4=;
-        b=sBqMFvkRA37HrnNq8h2fpHv3da+MinbKcJC8lurwzycyrz0603ZCzuGl+8m8bKkncU
-         R2TOGg+5jyh+ZCGso77rtmewz79bPN0DubMhynf+q5c59Gi2snd81KiU5y6REAjBFhzZ
-         xZ8EqUfH9NPb/ZFxDvorI7hqc3dcmq8xBA+yUH5Vgt515I6pG4EzAmshYwjcSsswUBQy
-         vNGUoN5plSWYhAGnBt0EJmK4DeC1GhwhVy1flwXuJT7O5sWotrH3T4H5C6fs13Ps9v/5
-         Xnvw+XVuCWejHlX5RwfsjXl5MnSwfBvbHdG7sgsSqAHCJLDlqLzO56D5lDsFsu6KVCPc
-         yAeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790203373; x=1790808173;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=c4ROB5gmPay6sdQJPjpG61DXTR2zRREmvWIvdqy7Ui4=;
-        b=kQXgqsDGwqPpP9w25sQdLhtmH2uE7aXs4qz5i07nFOSb9Spw3GG5MWYsuVmD22wz8j
-         uFZthu80WqSE7FW/p9Ev9bWqYvSqgb3GH3COjpgGn4vf0JbcmI8G+WHD5UHgb7ek2Z7c
-         0pr8TcbM4nuNEd7d2I3yb56c6EirC9ZOEaL508KuTPQWqigjvJviiP9Va9cA8NGuQv/j
-         8AAjsBUJ4e1c8mg2l5FcsKIJoyOm2UC+nH8YCArV1mOgMaSJvR6emhJVkLn+h+Itg9P1
-         iBAE+LE6Zy2fGgTAUOqo/GBFQdNHOeMXy9AUWFPpPOeBydSDzitDATtCcohfiQ7srXJi
-         i9Dg==
-X-Forwarded-Encrypted: i=1; AKwUvByMrjypGVAHhkpQx53yT4dkBlmhMqqMRBgsgteAS61XoqfcO5b++fznM5n4yAUheXgZaknSJjzE@lists.linux.dev
-X-Gm-Message-State: AFuF++kseS8F83+V1EXe749osmTg9XLw1N9FXGlIchBQ7y0WKSxX+Hez
-	ItEfjvd08wsnR5Oj8Oaa9uiZfj1UAoTXyQGaWTGXw4w9fplVVX8qbB9pqx4MW5jespcdutZdJFZ
-	bpnNuRw==
-X-Received: from pjbbh7.prod.google.com ([2002:a17:90b:487:b0:3a0:8315:fa7b])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:3f87:b0:398:a486:81ec
- with SMTP id 98e67ed59e1d1-3a0985b8f01mr435176a91.11.1790203372353; Wed, 23
- Sep 2026 15:42:52 -0700 (PDT)
-Date: Wed, 23 Sep 2026 15:42:51 -0700
-In-Reply-To: <6-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Co/AoPqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ECB1F0089C;
+	Thu, 24 Sep 2026 00:21:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790209280;
+	bh=nGMTxiwjgEFtjgmebmTFVMfHhqpjVxwsdK/Gaqrcz44=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Co/AoPqqybyHfyuCFtAOVPZ1CRaINUD4GS7hNDThvJdxhEuUgSKUzslDnr7Dhc073
+	 Maq5qT3a6VZO0oKgQl5cSQ/HoWJNe3YkXb8oSsXCj+rEEgBrHTi6dL4FHloqQpE3b0
+	 Xt79y0FJBGF/FtW09GPYDx1giJ8vEiZaDY8K9FJK5IR0SYAZPCkR0722O8+pPjLjUG
+	 9sWXhIC1oy0tH19OlqBdWpM8XYpeV0nzRdlav2VB5Rs2SuKD1V8YhCCJEfWHuT/ovT
+	 C4IpNDKfabRxAitEmLorG1mRy6Q23F4GZ6YQzr33WQsI2XUmlu4XBV9UOjrA8dfJmF
+	 pq/gCcyIGAITA==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Paul Moore <paul@paul-moore.com>,
+	syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com
+Subject: Re: [PATCH 6.6.y v2] selftests/landlock: Add layout1.refer_mount_root
+Date: Wed, 23 Sep 2026 20:21:01 -0400
+Message-ID: <2026-09-23-daily-reply-0012-re-landlock-refer-mount-root-v2-6-6@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <6bc11809968399ed4d29493d5666d9af5db14bb1.1790169454.git.mic@digikod.net>
+References: <6bc11809968399ed4d29493d5666d9af5db14bb1.1790169454.git.mic@digikod.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com> <6-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
-Message-ID: <arRV6y-d1rkRV2Fa@google.com>
-Subject: Re: [PATCH v7 06/10] vfio: selftests: Allow drivers to specify
- required region size
-From: Sean Christopherson <seanjc@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, David Matlack <dmatlack@google.com>, 
-	Fuad Tabba <fuad.tabba@linux.dev>, Joey Gouly <joey.gouly@arm.com>, kvm@vger.kernel.org, 
-	kvmarm@lists.linux.dev, Leon Romanovsky <leon@kernel.org>, 
-	linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, Marc Zyngier <maz@kernel.org>, Mark Bloch <mbloch@nvidia.com>, 
-	netdev@vger.kernel.org, Oliver Upton <oupton@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, 
-	Steffen Eiden <seiden@linux.ibm.com>, Shuah Khan <shuah@kernel.org>, 
-	Suzuki K Poulose <suzuki.poulose@arm.com>, Tariq Toukan <tariqt@nvidia.com>, 
-	Zenghui Yu <yuzenghui@huawei.com>, patches@lists.linux.dev
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 21, 2026, Jason Gunthorpe wrote:
-> Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> declare how much DMA-mapped region they need. The mlx5 driver will need
-> ~18MB for firmware pages. Existing drivers pass in the sizeof their state
-> struct. Since drivers all use only their declared state we can use the
-> value directly and remove the SZ_2M hard coding.
-> 
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
+> Changes since v1:
+> https://patch.msgid.link/761a7c88d1ed83c222b845fb767d4a271dcaed70.1789655724.git.mic@digikod.net
+> - Move <linux/mount.h> below <unistd.h> with the upstream conflict
+>   comment to support older libc versions (requested by Sasha Levin).
 
-The KVM test still runs, and in David I trust:
+Queued for 6.6, thanks.
 
-Acked-by: Sean Christopherson <seanjc@google.com>
+-- 
+Thanks,
+Sasha
