@@ -1,39 +1,39 @@
 Received: from mail.tipi-net.de (mail.tipi-net.de [194.13.80.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C30F35BDC2
-	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 08:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59EF3955FE
+	for <patches@lists.linux.dev>; Thu, 24 Sep 2026 10:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.13.80.246
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790237459; cv=none; b=galczov+52g50qRlMrI0V0vb3ccj17mMAdqi2zjOAfS+mQZ5Ed+vZ6EHacMOLz1b5Xk7ZOmYSJWK0796NK7YkX1yH9PWqoMN/623hWkyxac69tiuPuVL+b5/jZXvgG7sutuRG7BCTwJ8UFOUE4+47xz8Gw9kdVso7Swkz1mCroY=
+	t=1790246193; cv=none; b=TPX3oy5FT0jQwDJqKYbq51O1sN5kG24ovDyKF2zWalwyCeo89BNteyB4T5Q2iay6iInuV4Fveb+SoNdYio91aZ10EUg7bwvcBsgq/gVGgxN56DOCVLNNpgdWjeudrDS53PTmobDpUy4J8vnfZ5jQ990dJPxAlxGx2RvTequiOaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790237459; c=relaxed/simple;
-	bh=M9DLzBsC/kmPzotkCWu7Vfezv+7isEBbZYFAMOMtkSM=;
+	s=arc-20240116; t=1790246193; c=relaxed/simple;
+	bh=NTeYQLsuf98Ic3vI+zEEghNcv6SNhi342hDMhrvnO4g=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=gc4s9zzy9vXxYVTxrC+St4kD/VBc6tL6LNKr7Hp2InadF8Y2ZALYIIRFuKwvQD4BZ3Llpky9vJoAaRE87XGfCwIjzxGMUn+5tKCY2Gn/3W4H3WbShFx/Hm1j9NcCVsPstX2moDkkavwH5KHvwHnMyqRVNrZ/uLozVZ6IlBUpwHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tipi-net.de; spf=pass smtp.mailfrom=tipi-net.de; dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b=nMYTjKBD; arc=none smtp.client-ip=194.13.80.246
+	 Message-ID:Content-Type; b=DwIwNXD2ptynStcp7y7eePreahauXAmaP3jeObnlo/MsZd6aLpNCS6fi5ESQSK4IBPaSvaj7WLMpO0FVaKbDsf1Zcoy45qraePp/HiSrYE4YRdzQu2DOkriS+bTnMCneftX0MdvfDy4X/o+iJfw0iFV6RjEMru7BdCs82tWngzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tipi-net.de; spf=pass smtp.mailfrom=tipi-net.de; dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b=scddT6GJ; arc=none smtp.client-ip=194.13.80.246
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tipi-net.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tipi-net.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b="nMYTjKBD"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0C4C8A4AAD;
-	Thu, 24 Sep 2026 10:10:49 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b="scddT6GJ"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8604FA4AAD;
+	Thu, 24 Sep 2026 12:36:23 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tipi-net.de; s=dkim;
-	t=1790237451; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1790246184; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=03E15lf2Odsx2dSXpnaC4f3m1J1FQ7fdkgcJqb90RfY=;
-	b=nMYTjKBDyOfdRV6ddfWdetJBJjtb4vb+oFsonA4EiMHmLKH4wxpNncaLHPTFWabz/mKSA1
-	6Gn+20PNSWplZue4LBswZJfBm9blin9frMcrfdNnlivlxQC7ijC7ZhVkrOYLmc0Rr483iW
-	qIN90cjpEEqCua9Y78iND4zYx3o5l6cWyosn9w53I8lj0dcx4TgO92eNIa0rjXgq60B92V
-	vLZ86FBZ8p9fhOeqZfkfyl5bAcHgBXrKxfPB0eF7nUEVjN8qO4RTpelfJg7jDnUXuHaAtX
-	WGzpM8RiCIZK2xfULwnziB5jSrrvvt5KFgjvANFXLNuJmFr7+qTl0I5r24zHTg==
+	bh=2ZlSsKFn6BuIGCgoF7TU+8VkNgBvyDMHIwsMO9aG6gQ=;
+	b=scddT6GJVjBZAIf1mFOosImNGjmP9+wbEFrmrr6jbmNa9ySQIFJGUGvYDbJ8qePY14mpKp
+	nrCzUgAM2PzceqQfu/wYHumgg1gxFWWvbrVAgVpCQ8F/Eg1+PzBynIrkmFGQbuRWIYNqHR
+	npIwtTdepB56Jl/RGmidi8mq24xPY8B1aeUQPMg0kd6WUEJ6psLclDpOeD2QlQ4b0mTf1E
+	/rYDIZ6//9RT3e2+hCHVY7iy+NDIPPbDhGo7Ba9o75o7LAkCftqzpf5VHaDJOsLLX5ycg7
+	AoBG9OkfZqBSw0/pJr7iXCad1vqAA4427DfKvYhuDLZBBL7qtBVKhRd6xU6aIw==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 24 Sep 2026 10:10:49 +0200
+Date: Thu, 24 Sep 2026 12:36:23 +0200
 From: Nicolai Buchwitz <nb@tipi-net.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Karl Mehltretter <kmehltretter@gmail.com>, stable@vger.kernel.org,
@@ -48,46 +48,28 @@ References: <20260923140643.441954610@linuxfoundation.org>
  <20260923140646.783275824@linuxfoundation.org>
  <20260924065839.56793-1-kmehltretter@gmail.com>
  <2026092430-contently-pungent-f0cc@gregkh>
-Message-ID: <ecf28c4f181b2fcb3b15e27daac07c9a@tipi-net.de>
+Message-ID: <222228376db00a8aa7a4bcab1b5659bc@tipi-net.de>
 X-Sender: nb@tipi-net.de
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-Hi Greg
+Hi Greg, hi Karl
 
 On 24.9.2026 09:28, Greg Kroah-Hartman wrote:
 > On Thu, Sep 24, 2026 at 08:58:39AM +0200, Karl Mehltretter wrote:
->> I have a small objection to taking patch 129 into 6.18.y only as a
->> dependency for patch 130.
->> 
->> My LLM agent helped me running these tests.
->> 
->> On a 64 KiB arm64 kernel in a custom QEMU Pi 400 model with functional
->> GENET v5 DMA, patch 129 increased the socket receive-memory charge per
->> 512-byte UDP datagram from 2,752 to 65,792 bytes.
->> 
->> With the same 512 KiB socket receive-buffer limit, this reduced the 
->> number
->> of queued datagrams from 190 to 7 and increased socket receive-buffer 
->> drops
->> from 810 to 993 per 1,000 datagrams. I obtained the same result in 
->> five
->> bursts.
->> 
->> The page-pool conversion otherwise worked in this test, and physical 
->> Pi 400
->> testing with 4 KiB pages found no correctness failure. However, patch 
->> 130
->> was also verified on the Pi 400 to work without patch 129 after a 
->> small
->> contextual adaptation.
->> 
+
+> [...]
+
 >> I would appreciate the BCMGENET maintainers' view on whether this 
 >> page-pool
 >> conversion is appropriate for 6.18.y.
->> 
+
+I would rather have the page_pool conversion in 6.18.y. More fixes will
+land on top of it, and carrying it is less work than adapting each of
+them. The fix for the regression applies on top of it unchanged.
+
 >> Please consider omitting patch 129 from 6.18.y and applying that 
 >> adapted
 >> version of patch 130 directly.
@@ -95,8 +77,14 @@ On 24.9.2026 09:28, Greg Kroah-Hartman wrote:
 > But when you update to a newer release, that memory increase will
 > happen, right?  So why not fix the root problem upstream first?
 
-Agree. I will have a look at Karl's regression report and probably sent
-patches via netdev with cc stable.
+The fix is on netdev, "net: bcmgenet: allocate RX buffers as page
+fragments", with a Fixes tag for 7bc054c2d4ed:
+
+   https://lore.kernel.org/netdev/20260924101922.2675127-1-nb@tipi-net.de
+
+I was able to reproduce Karl's numbers on a CM4 with a 64 KiB page 
+kernel
+and fortunately the fix was straightforward.
 
 > [...]
 
