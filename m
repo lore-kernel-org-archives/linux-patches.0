@@ -1,106 +1,83 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012060.outbound.protection.outlook.com [52.101.53.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B902C54705B
-	for <patches@lists.linux.dev>; Sat, 26 Sep 2026 00:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9A736DA18
+	for <patches@lists.linux.dev>; Sat, 26 Sep 2026 18:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.60
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790381490; cv=fail; b=TVtorDKUf0MIuOBKJA85GOX/FW/VJGSoRd/1jssQiSH9B48ppO+KH21fUoIM+Mb/pEjJ1vlbS95JdK+GHtIsHeBTCA1KzDhy9cUFvvuyz33LMEs1JqTEI4m3Aq8j9FWec1xOouLq6Hs9EG49YCyXOon0x5jEGVD++OAsC/nl1VE=
+	t=1790447265; cv=fail; b=iWpZAvhqnppmX53pSrodHZAswZv+ru1UNAhOwG5K7vgyzLqS5xJzkGItsX7ZZDVcoJfcrsQvUm9YBTM5II47IoM1T76GQG4Uf2v3FisMG/j56XiI+4jvwATSGEm0H/iFkyaAwsIporatLZlXDT5IjEs7tB28OcnIRRI7Zecraj8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790381490; c=relaxed/simple;
-	bh=chFwT2Gu2S2USqjm3K0b1+EE8HMf34vnvW5Denjgt4U=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=UA579FfoaVbpnDFJDgN+MIOZpLZAHgD3YJXmVgNvhzFjTJMRgry0HMMScsBceIm7dxyqXb1h02GFHd0H2V+zybWi0NPNQibKS5l2Jf8Ajft8pLHSt4/MFoXnk110npCPNkOE+1WFCA4SVkT6Iq+atu9AT8NiwqHDUK1iJ07zN9I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a6GvtJP1; arc=fail smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790447265; c=relaxed/simple;
+	bh=wq8/kwI/k6y6JYjcG2DndgCEdz4tPU/yxoOZR+ovrHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=C5eOGHCrSvjH/e50inbO2PKe+T9Vzoxutr5bSjcxSxKb/x5dVSrbLNV6L40MQba1frh6xT/E+sH30fofVjryabEHFr8YfhX3BXXpc1/gaRl8NbGR8AMse38kiQQwC5ynD41wBz8hCZ4rvPW7z0DH/Exg6/sslJSStGsayLJHvvY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=C/3QEAyL; arc=fail smtp.client-ip=52.101.53.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a6GvtJP1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790381489; x=1821917489;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=chFwT2Gu2S2USqjm3K0b1+EE8HMf34vnvW5Denjgt4U=;
-  b=a6GvtJP1nPco5WCl3RNcKsLCnsk2Vhu28D7x3VDTqEfKprdHUHpM9ddr
-   MtC+LNgQj26fYmqgkPiUrFh3aENFiDLkM9M1hGm3K38LonbDAHIvYafYN
-   qjHqiaQAkcXlg+MYX6Dj/nOpzZAMe9LNwHn6gIvcKe2vyBfVKeagxFWHZ
-   8CJH79JSo0WbOYOhz17E5un7DRZ8PJQeygA3wN0BZ+doav4elcgnryjRM
-   FGMTQ3kAh+pFT5100gSkhJiTKpTXitqVfeEbt6yFHXh8IiHOLWBZ4Z85n
-   zD63clLC5J0nJOZFsYwg/b+e0ig+AiTR2+Gm1m0Fieni2e1Ura+YzMFMQ
-   w==;
-X-CSE-ConnectionGUID: kO04eNC7Qz62C9bLLwlp+g==
-X-CSE-MsgGUID: DwX0JuMfSlK3HFXI4uPuxw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11916"; a="101745677"
-X-IronPort-AV: E=Sophos;i="6.27,123,1787036400"; 
-   d="scan'208";a="101745677"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 17:11:28 -0700
-X-CSE-ConnectionGUID: ibpovdJUSjOybFsL83zTig==
-X-CSE-MsgGUID: 9PwuAEBIT9KxXOQmYXq7vw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,123,1787036400"; 
-   d="scan'208";a="273569569"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 17:11:28 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Fri, 25 Sep 2026 17:11:27 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Fri, 25 Sep 2026 17:11:27 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.65) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Fri, 25 Sep 2026 17:11:26 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="C/3QEAyL"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yygA+EVUMWQDGYTGtYkYc4fH4w/OMEh8A8bAuRtcfYjfr0ZEM2QLWHGlInmuhoHN9Bal7f0lBAfCri1+qnpd3W2MJUT4hHfxbcqyX2qj+nGIk33Ummw3sjIKuYX8o+xGR2SDaPGoNJVZlciS8dT0mhCd9wrnqL7Amo4n1xsrjlAAE2xnI7jrw28o8ngZINhwKA6NDxkTv9M800m3uh0KdHyYzwzfaErJImjGB9lGjY6bf5qs+gjOgLop0NZV0YXBa7veT7xONXc+tGkcJ8l4sMQKwY2v1LR0h8ZEMmhkrLzrrFfueHGnwTAQfF8cjrgo8qnpU58J7bA+jyHKyHZfig==
+ b=nosdLy8nRUby5Ns2d3DeOrfyeQE9v42k0EeYwi3sxA6bNHOIy63raEhII3ZPTuzG2ASWQpIXWjASsA5UmkL+dpC2jtCo8UrZLy9OO4dwzB3Kd5kGESw4vXx+SkaFjpgb6j9CBV1eYq2CVRjJBmAX7qOlHLV9oS5NhlBzeAJ2SGr3lRF5W31vRxqXxHcx04dhw9c7gB7P4E4gLgIps1KuBG+sEvhqd4umccEeKb8RjQ3/wwtGGqYZvzHkGRqsIWs/osijajrPRGtIJx4do7T0V8immCEAE8NRhPHVbz3C0VODLgH/jeM9Skw0Yr77ThvzDMp1/QUYXeXy/z2/9HmT6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AlKhZ01Ir8fGDgcEm40NVmEyUfcmssV6Rx4DSxW/eLA=;
- b=idgUJ0+36AP/bUGWOWmd027Gff9ly7lxrUGOolGxkGTISY1uS5K9ePcEOFB+LoPwkWu1DbNC1BBsjkZ1DxVOPYiU6Xz+sgjNVy/gaxMwQrnsTrlHeLc1UNQBRd9HJgfAUyOFw9C27yFfZh6S6G9veRcNSj8rZ9yKDL+PCqafJFbogejJCFud5RP9UPz3goOrhmvis7v8w9G1+P6Hb7GHelZn9NEmbh9jmH916AEuKIcvj4a8T4oC2Xw0o+50Ts4WxueOcUoU7OkGdpZ4JvzW+zZZQPKYiycwX8eeDyoUNb+tslFaczv5156vjNEBwWE/f7GiMLFwuT3vJH2cGybySQ==
+ bh=aJsRb1/nw4q/dpsi/IT2Cexb4DylEARhC1JgpVcCMuA=;
+ b=HxOJu63San3DCKeC3TVCWUDFPrrJxRMqF0PlzH/esCG1OKkDI2FrvzfHZkJlb0WVT5F3KblaEECSDKkzewBlmavBAsSAFDUNPl9UiXsfNaa8O8Lf8PrB7PqKnWwgFelQAQNv4klTuoOSMyDQHxuJeJo6eI7eCHEKDUkZiyDEF7Am+uBx6VW7qppQb6PFjl6NcVktA/HHATf03PlU5nIBIdAqrnZpLDP/W4HTbcgPZ5JiZBCak/AyFzUzq3NmbFrTUeCBfKKQKV7cVtD61dDL2W9Y91XajeWx3Kl0cTd6HgUfe/dtsCJs9cIu/kV2mLV5TCL9ucb0SMcFkPzH5AauPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aJsRb1/nw4q/dpsi/IT2Cexb4DylEARhC1JgpVcCMuA=;
+ b=C/3QEAyLw7YN3p4mjp158Mo3XEDA6ZWcHsfOc63EdDbV2JR1FZLsCyBLqCIKYKRaWHWvJTH6RK7+s8bTLfQsXtTn7fLsSO2Of+pWa6oQ22itZr5Sg23sK9nEz591V49kC8lSN9vRTyLYkjwLnauhaUv9nI3CG11T/K1wwdqMJCyRWgz4gsdKxVVSQPHxT6jZd5X5mK27VKJd7OTUjyHwwG2Tqg9/xNgWKyVegv1nu2oE3I6sj38eZLERQuSAyh/y9xaC6clncTqRPvNNNL+7fjmKoG1qbL6wuq9Hgyb73BObFqbXF0XczqUopjQJY6FibAGFTLGzx1aeImTHo3iEkA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
- by LV8PR11MB8485.namprd11.prod.outlook.com (2603:10b6:408:1e6::13) with
- Microsoft SMTP Server (version=TLS1_2,
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12) by MW6PR12MB8868.namprd12.prod.outlook.com
+ (2603:10b6:303:242::20) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Sat, 26 Sep
- 2026 00:11:24 +0000
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc%5]) with mapi id 15.21.0451.014; Sat, 26 Sep 2026
- 00:11:24 +0000
-Message-ID: <39627dfb-31dc-4b09-bf35-230e655ece2d@intel.com>
-Date: Fri, 25 Sep 2026 17:11:21 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 06/25] arm,x86,fs/resctrl: Replace architecture
- resctrl_arch_{alloc,mon}_capable()
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
-	<yu.c.chen@intel.com>, David E Box <david.e.box@intel.com>, <x86@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20260916231320.14502-1-tony.luck@intel.com>
- <20260916231320.14502-7-tony.luck@intel.com>
- <d0e563ec-65c4-4a00-bd54-61c30d80890f@intel.com>
- <arbyVMoQOeCq5F_m@agluck-desk3>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <arbyVMoQOeCq5F_m@agluck-desk3>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0359.namprd03.prod.outlook.com
- (2603:10b6:303:dc::34) To SJ2PR11MB8370.namprd11.prod.outlook.com
- (2603:10b6:a03:540::20)
+ 2026 18:27:38 +0000
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Sat, 26 Sep 2026
+ 18:27:38 +0000
+Date: Sat, 26 Sep 2026 15:27:36 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
+	Ard Biesheuvel <ardb@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Corbet <corbet@lwn.net>, David Sterba <dsterba@suse.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-doc@vger.kernel.org, linux-efi@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Simon Glass <sjg@chromium.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nick Terrell <terrelln@fb.com>, Will Deacon <will@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	linux-integrity@vger.kernel.org,
+	Palmer Dabbelt <palmer@rivosinc.com>, patches@lists.linux.dev,
+	Ross Philipson <ross.philipson@gmail.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: Re: [PATCH 12/16] arm64: drtm: Add macro definitions for DEN0113
+Message-ID: <20260926182736.GA473004@nvidia.com>
+References: <0-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+ <12-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
+ <20260924172952.0000527e@oss.qualcomm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260924172952.0000527e@oss.qualcomm.com>
+X-ClientProxiedBy: YT4P288CA0023.CANP288.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d4::24) To CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -108,191 +85,184 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|LV8PR11MB8485:EE_
-X-MS-Office365-Filtering-Correlation-Id: 388feecd-ee8a-4eaf-4f37-08df1b62b365
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|MW6PR12MB8868:EE_
+X-MS-Office365-Filtering-Correlation-Id: eede5eb7-558e-4978-4183-08df1bfbd7e2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014|23010399003|10067099003|6133799003|11063799006|56012099006|5023799004|4143699003|3023799007|22082099003|18002099003|13003099007;
-X-Microsoft-Antispam-Message-Info: aBCYnp0312mjBwrupNCOv422rqkJKRQHCqC9ZW6NIq27QA45tIlT9XD91jc2vuXaCKBuKwj88RBCt9/0EU5D3lGTE7rSwHfIk8/pmKGQe/+Pi4EMUtHDRS6LM9C+5nbK7mzYQCT9XqXHSG8X9iXswZADm6DNcVvTeSAdAT/rXogEqrBn8t3/BdC3tkl1GKLQZE/gynwRixs8IjHBT21Iz1Ui5CW+/iwiYCM40HVPnEwILilb4z0JfQ+vvQEgnlGCGBK25PUyxXQI0BpCp2izN6DmaIfOQFTBzRoH/IeMaYgedqcTBNWPEmeGU2ERGu8W/ahfp/0W4hFPkHgT5fgt1nlqxkNqgehMpNVATYqI5bavomT9p51wqf2W+Qc0/YMlngQLbuRHxCCW0lowF6GJxphJIUQ6A2nVmarQaRw2duAIIX8UIo9VJ24d6EW3lH4OuAcFmK23uK7nphuwMc1Ic3phVLci3bAUfTuyZm0DtzsSjL+Z0LUrM1aaJj8VDnHHGWVIrPcd8bkLL9WYzz/OG2fGfEW5KthbH9M9YzNarE8DJ8CYwpVYeDZrbS7bVGDPMCksJFS9H9da+04QsnSkBUMpTynIWGzQZWsAty5X9tg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(23010399003)(10067099003)(6133799003)(11063799006)(56012099006)(5023799004)(4143699003)(3023799007)(22082099003)(18002099003)(13003099007);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|7416014|3023799007|6133799003|10067099003|11063799006|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	UA+sCkz5pHrUIm2WiWp0NTTEu0/ziz1MYhhlIhK3UyJlLeFUiagSpQxvrmFJYnbQsxity7uqDDKtyt2NKod6lOuJ8m3bM0hbdX7k9rIBXdOkvb12UYNkWN0n5NhpxfaTCavMPhpbUB0edxCGx8eg+k2GIcsTSaP54lb1WE9EsTj/SCBhw3VFukUdczUn8IM+RZLi9QS5XUJ16RGq/et4KdaNrWNWzWyTmQ6azAmfeNXgqlu2dzetfH8+n0M9352Lo+EyYb8/e7jm1ouJR6zoNt7bXcpxGH5QKolCM9/JDkkzXX+3/+FVSv16FbCyWMw8m74F5zG/EpeSFkuBjJ5lF9FfhFwGw1azS0AJh5HtkeBYQpVByWzv+Krcm3vDvHPMFyYe3lnDbnBnqMkagj38AB39rVPDf+gCjqgwzRsc0VYOznHS4iS1lchzBf7NANAbZnHQGpNyDAfoEx23XFyDsHRrUQr+5B4NG8F2d6NxdM5425FUV7bCoratt8Br/B6JVS+Em+wD74xl65SbwlfJ/TzvITr9Wk4gmGBfhRkJ+CNUCoF/3G7aDa/dd+0l9G7+o5KIM+vm0Q/rE+HD/GE8ppG9ZYXD8cVPG2pwanCALZ5HfTm+20hmUXxE32YHXhC9NoS6xdlET1c2AZvvbZYdkPITSo5AjgfhyWWmNhXCwr0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(7416014)(3023799007)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RG9XNHdSMDJsbmpObWFoQ09sTS9yR0xOMHVJVjF1eVNSZmltTTJFdjFtTkh6?=
- =?utf-8?B?ZGM2ZHd1dUhDQlZiV1lSSUhQRG43MkpBTmpJUVpHWGhGd1VtOHdQOFdSOTVQ?=
- =?utf-8?B?eDFmUG5WejBJZmZxU1gxRm1lUEZhWVM3c3N0b2FRVkFDRFRJUFY4TVBGVlZF?=
- =?utf-8?B?LzZCU2loMTUvcGsvRGE1Nm1IQitlYXZnMkhqVXBCdFR5b0RrVUdBSkVEcGpV?=
- =?utf-8?B?RCtiTXlQU0FzdzBldytmS01UaFI5dzEydmVRYWJmYlphNTZDclBSWWRZK0tU?=
- =?utf-8?B?MnAwOGR6SWc3S2pvZEVVVEJIc0l1ZitNd1JraWE0empvWnBVdUlwUHc0bytW?=
- =?utf-8?B?VEQ0aFBwaG9IcFNjcTJTaER4Z2l0bDFnM1Y2KzJrOWdrMnNWRFFQcTQzZDRO?=
- =?utf-8?B?aGJFNVk3cS9NWTF0Q2JoUFZGd2l1UDVtZXozeE5uWjVCNnU0SDk1MW1pQ3lm?=
- =?utf-8?B?by96SmNiT0JLTHlLVkJxSENaa1FBZUl2MnJJd2JHZDVIYTZOR0ZSYitOYmJO?=
- =?utf-8?B?UzRQZ2NkRHFoRERTWkpGVmRmZytuRkxVblp1UnZGcXp4N1RQc2VBUDNGNHVx?=
- =?utf-8?B?QTluMGJvSlRDandVRHdLNGpoaVRmZXkwNkdmSXV2T29oazhoZVpkNForOHJH?=
- =?utf-8?B?YXg1R2lYR0JCaVhlaER0blFGWjNLKzkxN0tQR1ZkV0owQ1kyWHg2dVFYbXVx?=
- =?utf-8?B?OWV6LzV6WjcwN09vQkU4UUM1N052ajJZd1hJRkFBVUlFSnFOaG9Ub3FCdGtV?=
- =?utf-8?B?RHQ2QXhHUjRSQVNwREJidlpuMzVnN2tnNmVSaUd0di9IRDF4cGE2SENtNHhr?=
- =?utf-8?B?NC84bS9wMVhRc2JvZDlVY0YyU2hYdmFPN0hRS21xRTBxazZEd3RITldsbFR5?=
- =?utf-8?B?VXpCVXk3WFhKM3QvR1VMWjZGNWdXYzFvbWV3Mlk1WnZUaTAxSzFJTDRoSDdm?=
- =?utf-8?B?akt1djZrQStlOFFKOW1JeXhOWmFCQlV5RncvU3E4NFRnK0t2SDJmQnZ6NU5P?=
- =?utf-8?B?R3I0aGJnd0c4MVR6T3d5c084c0RrR2lyMkEwWCtmNU5lZlJoUkZaaWthbEZQ?=
- =?utf-8?B?eGp5aWdqRFF1RWpxajI1akc4Rnc5ajlYZmFsQnJneUZFT0o1RWVEMnkxM0VN?=
- =?utf-8?B?bURkbGRpMHhnYVJ2R2hWamlPWHUzVVNGbHZLRW4vVjNaQUpCSnJVOElLa3Mx?=
- =?utf-8?B?eG9zQ2pGUFFuaFFteTRWWEp5Rm9FcUJXSUkvQis4UU5LT3VsOVZVWGNkcVRi?=
- =?utf-8?B?MkhyU3UvUjJLRlNScnJzRVhVZk5HR1ZhVjVFVGtWWElWc1kvWHJPeWhoSmFz?=
- =?utf-8?B?WWl6MmR0NGx6Z3pxUmQwbWszZXhFZlk1R2RqZ0IzM2lhNU93dUdON3RtcDZm?=
- =?utf-8?B?MTV1dG9udHplL3NSWnAyYjJ4RzhhQnFlYjBTUGJyOGtZQmhkbHZJWjhhakpN?=
- =?utf-8?B?TmwvWm1BV2szWndsRUxRNC90Yk1FSUNkUk9xNExJTTlwVlNFMVVPWE9PNTg5?=
- =?utf-8?B?cGN0djZnTWhDcHF2ZmFIMDZWazhrNVRMOThNT2V2NVRBK0x2ZFUyMEc4Smph?=
- =?utf-8?B?QU05NmY5SWRSSUgvYjBja1BwLzRxL0xiVEdySTlxZHI3RFF0aVJRT25Vakp3?=
- =?utf-8?B?NGpPRWhVdEZFRFZJVHFWbVYyMnJRYkEzdXRWUGFOQW50bWZIdk5qZzFmRmk4?=
- =?utf-8?B?K25PME4vZG9tQnl5ejFmejJ6ZnlzQVVUYUg1QU5kdWcxUEl0UG1zMDVHalZw?=
- =?utf-8?B?N2pVL24wcGxvWlZXVzM1dnlTYTJ2MGhIL3oyVm9YRFdKUWd1MFVUYXJsRXV0?=
- =?utf-8?B?OHpqanU0bkVrVHBsWjBUM2JKNlFoc2ZtckdSSG80ZE5zYzRaN0xvNHI0QzNX?=
- =?utf-8?B?eHltSHBaMEtES0VZVkVtM09zckNsRXFvQW9NME1jY3F1WEJkL2pBc2RTemxR?=
- =?utf-8?B?SEJTVUNoYmNrM2xUR2pid3Exc29EdFBrT2JKc3hnWXRUL210TkV6M3cwZEd5?=
- =?utf-8?B?T3ZBazRYc0xQVlA0RHhtajhiUDEyRjF4WWZiTHpiaEdZWkU5L1VOSnpZRFVz?=
- =?utf-8?B?OHNaRGJzTGtla2xtQ0Rwck4rbE0zVlFXWHgzRGtiaUkwNjl1ZWVKUUZ0U3gr?=
- =?utf-8?B?T3ZqTGNWT2RyaGM2STRoN1IxZFlVZnFTL0tScTlHRXowU2ZESDIyT1NvOTQx?=
- =?utf-8?B?K1p2WWhhemNlV0NBbG5Eb0VreGt4d0FGektBT0xyQ1BTT0dBU1FUR04xQzNr?=
- =?utf-8?B?MlZhb1JKL3lBTE8rNnBPR3R4b3Z3aWxQSUJJVUdraWo1bWFVUDZMdFlvbGlz?=
- =?utf-8?B?QXg3ekZtRzdQaDRiMFJmMG90Q21uM1BCdzVEODZyRVVDYUYzcEdFQ3lEUkNm?=
- =?utf-8?Q?ytgjhMHh1BpftMuc=3D?=
-X-Exchange-RoutingPolicyChecked: AJ/pBaNRC6D5d42NkbcCaiR0hhMNqYpJOY20ZegW8m1pRLJXpDGk7e3ZaEHLJeMCvzjmHnsCOA6FMUC6QtHQUtJaW6SWvlaNqwXtF420QF4JWrz4/JeG3lQuVAXq31abckMwUddQAU0SO9ZluDel5nsTz4zRDhv9DIS1VjeN7Z3lDNd+c15tbWdxwSPzBOc0lgavKa7AnK+MEefPWr2WTMtmpuGJm+mmzPYYm9ZclbyM+56UWq3Ekt6Giq0rr8F8VlJ+aeYITa/dGYMy4Bt1FFLBilWxkGgRCs18UWQiljZcgfXA31wLTrtuNtENZqP/rJMkXJ8/yMgoy3ZXFGhTIA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 388feecd-ee8a-4eaf-4f37-08df1b62b365
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?D+hMZDL5GTVRnJXhX1ycnCQKro2VyOEevI/a0FU7AAg28ujiSf+rHIhhO12m?=
+ =?us-ascii?Q?k4QQ9yzrDo+oELqawOVMREAnHiJR5NFinC3U2xcGDFq673x7w5VZS/at7Raj?=
+ =?us-ascii?Q?0J+c0p9WC4nE8hJH0jnM5ERRStnlE0nUKVXSwMZ5exij8mUwbwqzI5hCGa+m?=
+ =?us-ascii?Q?Bg015eaqX2VgtIePU8gIYGgxmGiFExRLd6Uc2wLCAhDXiAi9NKmy7XJBnTRv?=
+ =?us-ascii?Q?GGZo0+hy6qGNEiGmcwCHC4vf65QgK6D62nQ4MGhltAPriahvYpBplDOv1uaU?=
+ =?us-ascii?Q?ozv5SkiwEkfrhYwnbUKFP0P6xHCKKFrH/Yl+5bHitWBCAyQ8jH5HiWWDoPZp?=
+ =?us-ascii?Q?zGoF3critkIlrvNjLKqX6u84q4giDV9sMQF2jeA/+O6gBW7IjJbCnT6FOLop?=
+ =?us-ascii?Q?v0CcFtVDNMJJ+vPVApe4Ys7aSLXLrqMghOFdTMCNEcSKlnzSEiovJ0mHaa1W?=
+ =?us-ascii?Q?MItcwDCKoFJ/6cFwyRAQ+uZx2f3j9GJuf6RKMiDVsdCpeJbKeTuXspl8OMm3?=
+ =?us-ascii?Q?IaHKbwPdPoTmToFdnxI2NSf17mtzs9fa6XmpQpH8W0Fs8qV+fXF7YJYwgVDr?=
+ =?us-ascii?Q?BEJSSsNXUk9ZE3rtO5N7YxBm5DMrAYlgnbkkrQqFj4KZOXQ0EqDNkQVGSdE/?=
+ =?us-ascii?Q?NnAtXd8Hnw36E8iW4quo8bO0qDrDTOaju73R3EqUw8Xv1q8oS+8bH6IApzaC?=
+ =?us-ascii?Q?VGTpYt4nDjsyzLxvjYBWVI5gyA3QfT2UV6uFkl9M2Kp9AQmrCfJj6g6LPn8f?=
+ =?us-ascii?Q?89Ocn5Qh6ALlVH+QAalVUfabKUMT8Q7tAN8i/QRBkNurisbILo2/aWpLPUNM?=
+ =?us-ascii?Q?uVky9WDRqqQ7Vcy1H3FcMQv9FFyyd2TDqmNKEREh9EOXOuCHKXy2oumCHkTD?=
+ =?us-ascii?Q?TbzLGP/regQaBHa0oGpc2t+48aMa2meAeuAvgYaC0aGf25tGmgZoGff4cx5b?=
+ =?us-ascii?Q?TQHMBcx84NLpV15YBDnxcS2h6p3IHmI26OsV2WdmmBxGnPXA9+nXC+w6BN2O?=
+ =?us-ascii?Q?jhBVsgq8MDTc3ytMMW5d7BT84vZa2UJPUjWs9WOYBb3erhmKWm990o/ljjpR?=
+ =?us-ascii?Q?8Y38CuOIy/8aNlDO5FVdbbO1JrTlTLYW23gl+AF9v9HwVP1Bbz3gmxQ6GKlg?=
+ =?us-ascii?Q?8PXCltQczsne/uBFFmgZmLQqqxDBz/OGFJ9aXGCOWbKZFTdnGqtkuhgRKSAh?=
+ =?us-ascii?Q?tvPo+pXMX2HE5Fow6d5qN617leVavFOuEVfFA56AP7ZXLnczDarPnzMN4VDo?=
+ =?us-ascii?Q?sbnC3Xew2EaQvoW6YIlimQgqpG/J3Y3xC4TrkHDSZBqjWHpzFrs9BuuS1RN8?=
+ =?us-ascii?Q?aA7DRE19LJmt58DiI9fPo1Y6Y3zm8NG4MaJxkQVUi1pBiriAijhyPVuEpafG?=
+ =?us-ascii?Q?VgBw+X3Wq5lekPbkP2/RygtNhSfMIsPHUCPjDiiH+ImbD8Q+/3poNBmx/j7M?=
+ =?us-ascii?Q?tUtB2rP4cgCNXqxXk4E7fSJHcA5R1iU8cPL5FAju27US1F/hDtZq5hKWUtP+?=
+ =?us-ascii?Q?P7UXGDIeJTeuBA10sJK2B2h5qXlJbLfCoZ4/0UJ4UMxJZPI7i8OOTgoD5yXB?=
+ =?us-ascii?Q?ELgQDvmMz/jI8YGWWobLSeEii5waOIl8pwclhMyju0214ku/67ZSGVL8LIbm?=
+ =?us-ascii?Q?jQEOqIs58IjIPIv9VPhB7TQxoj0KfMJkR+KPehLdgxlqYdzaPjZtda+nysm1?=
+ =?us-ascii?Q?vtNrgp1rrcYJXrD5D2up/cDZoFHnjvi9jL8tdRv2118OYZmu?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eede5eb7-558e-4978-4183-08df1bfbd7e2
+X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2026 00:11:24.1556
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2026 18:27:38.3404
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lyagwDDYiBFK0Zun3jM9xhhsZIes4KeQcKHFoqjc0+XoT+xNh6qOFZBixVC8ByO124ZBMGSIY09QQiwUX0dfm+hsqIWgfL6Nlqg3lXs512I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8485
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4WkVDWy9d1m2jBxVXSVCgjtHKEoJtN8zmy/AWLWcfFFM9j7383msZvR4xirS9tTG
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8868
 
-Hi Tony,
+On Thu, Sep 24, 2026 at 05:29:52PM -0700, Jonathan Cameron wrote:
+> This one at least does it via base and sum.  But that then separates it from
+> the spec?   That is sort of the case anyway because the spec has the full
+> number.  0xC400_0110 so I guess not too bad.
 
-On 9/25/26 3:14 PM, Luck, Tony wrote:
-> On Thu, Sep 24, 2026 at 08:22:47AM -0700, Reinette Chatre wrote:
->> Hi Tony,
->>
->> On 9/16/26 4:13 PM, Tony Luck wrote:
->>> All the information to determine whether a system is alloc, or mon,
->>> capable is available to the file system. Architecture helpers are not
->>
->> nit: "is alloc, or mon, capable" -> "is capable of allocation or monitoring"?
->>
->>> needed.
->>>
->>> Define generic resctrl_alloc_capable() and resctrl_mon_capable() and
->>> replace all architecture versions.
->>>
->>> Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
->>> Signed-off-by: Tony Luck <tony.luck@intel.com>
->>> ---
->>
->> Please note that the pending RISC-V enabling [1] is not compatible with this
->> change but there is a change planned that will let resctrl_alloc_capable()
->> introduced here work on RISC-V also. We need to coordinate these two
->> series.
+I wasn't sure what to do with this since the spec had the full hex and
+we have these helper macros.. I made it look more like something else
+with the offset style instead of the function call style:
+
+> > +#define ARM_DRTM_SMC_VERSION			(ARM_DRTM_SMC_FN_BASE + 0x00)
+
+IDK, maybe ARM_DRTM_SMC_FN_BASE(0x110) is more connected to the spec,
+but I'm used to doing it like this from ioctl land which is very
+similar.
+
+
+> > +#define ARM_DRTM_FEATURE_SELECTOR	BIT_U64(63)
+> > +#define ARM_DRTM_FEATURE_TPM		0x01
+> > +#define ARM_DRTM_FEATURE_MIN_MEMORY	0x02
+> > +#define ARM_DRTM_FEATURE_DMA_PROTECTION	0x03
+> > +#define ARM_DRTM_FEATURE_BOOT_PE	0x04
+> > +#define ARM_DRTM_FEATURE_TCB_HASH	0x05
+> > +#define ARM_DRTM_FEATURE_IMAGE_AUTH	0x06
+>
+> Nice to have a mask for the 8 bits of the feature field.
+
+OK
+
+> Also nice to keep order the same as the SMC defines which would put this after
+> version.  That also puts it next to the values returned for each feature.
+
+I reorganized everything
+
+> > +#define ARM_DRTM_TPM_ALG_MASK		GENMASK_U64(15, 0)
+> > +#define ARM_DRTM_TPM_HASHING		BIT_U64(32)
+> > +#define ARM_DRTM_PCR_SCHEMA_MASK	GENMASK_U64(36, 33)
+> > +#define ARM_DRTM_PCR_SCHEMA_DEFAULT	BIT_U64(33)
+> > +#define ARM_DRTM_PCR_SCHEMA_AUTHORITIES	BIT_U64(34)
 > 
-> The first few patches in this series have relatively simple cleanups
-> suggested. Perhaps when I post v13 you could focus on getting these to
-> the finish line and have Boris consider them for inclusion.
+> Ah.  Always love a field made up of a bunch of bits. Hard to define
+> cleanly.   Do you actually need the PCR_SCHEMA_MASK?  
 
-I was hoping that me rewriting so many changelogs entirely for you would
-already make it clear that I am already trying to get this over the finish
-line. 
+I did it with a field content which gets reused in the launch struct:
 
-Alas, me writing the changelogs for you seems to be the wrong strategy because,
-as the new changelog below shows, the points I keep making about changelogs
-appear to end up in /dev/null.
+/*
+ * PCR schema numbers. ARM_DRTM_PCR_SCHEMA_MASK is a bitmap indexed by these,
+ * and the Launch Features ARM_DRTM_LAUNCH_PCR_SCHEMA_MASK field holds one.
+ */
+#define ARM_DRTM_PCR_SCHEMA_DEFAULT		0
+#define ARM_DRTM_PCR_SCHEMA_AUTHORITIES		1
 
-> That would get this change into TIP x86/cache and let the RISC-V
-> folks move forward.
+/*
+ * DMA protection types. ARM_DRTM_DMA_PROTECTION_MASK is a bitmap indexed by
+ * these, and the Launch Features ARM_DRTM_LAUNCH_DMA_PROTECTION_MASK field
+ * holds one.
+ */
+#define ARM_DRTM_DMA_PROTECTION_COMPLETE	0
+#define ARM_DRTM_DMA_PROTECTION_REGION		1
+
+Have to use BIT() to get the bitmap encoding.
+
+> Same here.  I vaguely wonder if it is worth adding something
+> reflecting the relevant feature ID to each of these defines
+> so we know what the are referring to?
+
+I added comments and spec references for everything
+
+> > +#define ARM_DRTM_LAUNCH_HASH_FIRMWARE	0
+> > +#define ARM_DRTM_LAUNCH_HASH_TPM	BIT_U32(0)
 > 
-> Note there will be one new patch in the initial sequence. The bug
-> fix for is_closid_match() that you suggested I separate out from
-> patch 9.
-> 
-> Draft version of new patch below.
-> 
->>
->> | Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
->>
->> Reinette
->>
->> [1] https://lore.kernel.org/lkml/20260917-dfustini-atl-sc-cbqri-dt-v8-2-7964e8d73fe8@kernel.org/
-> 
-> -Tony
-> 
-> commit 986bf1a4e789de917e955fe549bdd71e51dc2e48
-> Author: Tony Luck <tony.luck@intel.com>
-> Date:   Thu Sep 24 12:40:41 2026 -0700
-> 
->     fs/resctrl: Ensure default group reports tasks on monitor-only systems
->     
->     Sashiko reported[1]:
+> I'd rather see them as fields and field value pairs but
+> can see that is going to get a bit verbose.
 
-The custom for this is to use tags. For this patch it would be:	
-	Closes: https://sashiko.dev/#/patchset/20260831174421.13921-1-tony.luck%40intel.com?part=9
-	Reported-by: Sashiko <sashiko-bot@kernel.org>
+I think that would be too verbose in this case, and the usage is very
+limited.
 
->     
->       This is a pre-existing issue, but the resctrl_alloc_capable() check in
->       is_closid_match() actively breaks the default group on systems that only
->       support monitoring capabilities.
->       When a user reads the root /sys/fs/resctrl/tasks file on a system with
->       monitoring capabilities but no allocation capabilities, the following call
->       chain occurs:
->       rdtgroup_tasks_show()
->         show_rdt_tasks()
->           is_closid_match()
->       Since resctrl_alloc_capable() evaluates to false on such systems,
->       is_closid_match() unconditionally returns false for all tasks. Furthermore,
->       because the default group has type RDTCTRL_GROUP, is_rmid_match() will also
->       return false.
->       This causes the root tasks file to appear completely empty, hiding all tasks
->       on the system that have not been explicitly moved to a monitoring group.
 
-Please separate paragraphs with empty lines. It is easier to read.
+> > +static inline s64 arm_drtm_features(u64 function_or_feature, u64 *value)
+> > +{
+> > +	struct arm_smccc_res res;
+> > +	s64 status;
+> > +
+> > +	arm_smccc_1_1_smc(ARM_DRTM_SMC_FEATURES, function_or_feature,
+> > +			  0, 0, 0, 0, 0, 0, &res);
+> > +	status = res.a0;
+> > +	if (status >= 0 && value)
+> > +		*value = res.a1;
+> If status == 0, is res.a1 useful?
+> You have a helpful comment at the call site in the final patch but none
+> the less I have read the spec section a couple of times and have no idea.
 
->     
->     Remove the resctrl_alloc_capable() check from is_closid_match().
+I read the spec as 0 is not allowed.
 
-This is obvious from the patch. <sigh>. Please do not just verbatim describe the code
-in the changelog.  
+I changed this around to have two wrapper functions, which works a bit
+better.
 
-Could you instead describe why this check is removed? I understand that the bug
-description already mentions that it "actively breaks the default group" but it
-highlights that this only happens on systems that only support monitoring capabilities.
+static inline s64 arm_drtm_query_function(u64 function_id)
+{
+	struct arm_smccc_res res;
 
-Could the description of the fix describe *why* removing it is sufficient
-to address the reported issue without breaking anything else?
+	arm_smccc_1_1_smc(ARM_DRTM_SMC_FEATURES, function_id, 0, 0, 0, 0, 0, 0,
+			  &res);
+	return res.a0;
+}
 
->     
->     Fixes: e6b2fac36fcc ("x86/resctrl: Use is_closid_match() in more places")
->     Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
+/*
+ * v1.4b Section 3.3.1 says:
+ *   A return value of greater than 0 means the feature ID is
+ *   implemented, and there are other feature-specific
+ *   feature or capability bits available in other return value
+ *   registers.
+ * And for FEATURE_SELECTOR all defined features return data in other
+ * registers, so 0 is not an allowed return.
+ */
+static inline s64 arm_drtm_query_feature(u64 feature, u64 *value)
+{
+	struct arm_smccc_res res;
 
-I do not recall suggesting this fix.
+	arm_smccc_1_1_smc(ARM_DRTM_SMC_FEATURES,
+			  ARM_DRTM_FEATURE_SELECTOR |
+				  FIELD_PREP(ARM_DRTM_FEATURE_ID_MASK, feature),
+			  0, 0, 0, 0, 0, 0, &res);
+	*value = res.a1;
+	return res.a0;
+}
 
->     Signed-off-by: Tony Luck <tony.luck@intel.com>
->     Link: https://sashiko.dev/#/patchset/20260831174421.13921-1-tony.luck%40intel.com?part=9 # [1]
->     ---
->     v13:
->             New patch (split from patch 9)
-> 
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 5dcbb0a964e8..6733ed174f51 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -685,7 +685,7 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
->  
->  static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
->  {
-> -	return (resctrl_arch_alloc_capable() && (r->type == RDTCTRL_GROUP) &&
-> +	return (r->type == RDTCTRL_GROUP &&
->  		resctrl_arch_match_closid(t, r->closid));
->  }
->  
-
-Reinette
+Thanks,
+Jason
