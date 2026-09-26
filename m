@@ -1,202 +1,119 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011067.outbound.protection.outlook.com [40.107.208.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs2-f38.google.com (mail-vs2-f38.google.com [74.125.227.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C6E39656D
-	for <patches@lists.linux.dev>; Sat, 26 Sep 2026 18:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.67
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790448365; cv=fail; b=HHifLUrOjwtA4t66O5V1WM7iiHyj4lV/G6LtwzkiiVvCOWfFgolUJSosICKzIiJQriKdw2tzuSTDYupDfnNfmf1fiMYrqO2OP8iVL5QWY8+o2kxtWw7B7kJ5Nsw0qfTxg1913uO0Sl/RsO+vlF8shVoRgqHDAXALZ6RCX8+9zjg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790448365; c=relaxed/simple;
-	bh=o0uMLxTI1xVrIut3XxN7UsyiLovOSrIuR8sTQBezPJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=aZzYtmZWHVIwbscgAX7VsFi35rwwRn51nq1aoqdBjYaPx8PwDRDFl9RHkklAag78cnc6CUwMcZFsdTz7PWtcoK2xaGJ2jVpG1XQnnqlZ9xfOM7JUUad4bVUQdMZnVf8v2oazmxmsTPLeqpL2HXJVbtKFBAn+zQHUID4HszN8w0Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IrGl31j1; arc=fail smtp.client-ip=40.107.208.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517A022FE0E
+	for <patches@lists.linux.dev>; Sat, 26 Sep 2026 23:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.38
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790464801; cv=none; b=r1+DpqwKHNjOxAld6GpFbCvUIC91OCGrat7SEu8nM/7w/u3Ujl/Wo0yQj0HIvfLxuyxlhjxJGNJ4OHycSwy0S1ahATvXWyxuQ/je5LZ4FoXETXAyDYecLYKGItqR/4MOp/Di/VngY8shdS4oVEiE36AMDJiPwQlJzjlzQlIVPeo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790464801; c=relaxed/simple;
+	bh=x+lyFU8fw2NYtSeu1jk9/sJSW85cbGjiEFqzRVsY3s0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j2MV0TYy/alKxRfuQHfxS3I4H7hNwrKTTrjPNNKk2p7lhsfubfbL/wX7Ek4q88JRG31LRgBIodZD7XAsPKTiWGWZajZJTHY4pBWapRUKu5oWY96nUb7h4FmakEMgJJ0TiGOVx2wISKo1Fxy3795sJFKlW0oZ5dR4hcd7Pur6FZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGijhT3v; arc=none smtp.client-ip=74.125.227.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IrGl31j1"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WvCIvyGe09xnt0xNQ1qXMF5w8kJU4YBHKRMSAOSGVljqY9fQhGi5qoyuoj5MmnVxJcstFckNdE782t2IMkJljQ/LoKDlQl404EwU6VSzNVjiVopzTGUFuvouHbEaMLOdFvhd1Ih6RWUTwlDEEuYpeMso7TR6kqbDtI78sapfwmbxAx9a7aoqm0qLPx6/iiU+8ltCXmAguXz5Tl0Ml+jqaVr1R/eE14avVOsRodQq1YxspcUB9xPFE8bjZ7PeVeIm5/B2xCFdYSvoRGZUYePZS+DGSNiWX6ebFDOxXhpK69yz2zxWP4vODiTAgkBEO1nftz5fxoBTUCpXLBy+Hhq7xA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rPJSWCK+lwQS5s8kV2JpbENy9VWhMOo8bp2XUDLokKM=;
- b=CK8K9uIkXtExeVog0Q+OTjfH4QYBSDW8MNuiFJEYbXYg9z3LbG/n48YnMjc+xDVyC1tK+dKh1KA4p+weuwytrH5l1XhEN/641P+kZVmeouj0mPdEZWVKx3r1Wmkn8ECvFcSlfm5Yhlimn9/Co5Fc2vc9c4DQ+sEjvvaFbVnlDkJgQM9g4Cp8P6OupLvjWfnIcxm4bRxqfhcxxrEschwMJax8w+cD6u05Aw7AgNPjfT1WkXG04RQ8xuytd6zrPRDDp3p+GVTb8A+PZVpZdsI8t9cJH9EwrzsRT8hDOEP3RJsqKRdt1MgvfKmoLHshgdCSbIOmnxI6VDo1K6Tlj7CL8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rPJSWCK+lwQS5s8kV2JpbENy9VWhMOo8bp2XUDLokKM=;
- b=IrGl31j1sUfpCEOBnVadQb/Uws64VnWDw8qb3jVzFKhmr0g5OCpf+HilhFl7gTSpvOfW5sMiRtdxS077B05WR0Z8fgSnV7KZZ6WFXanoruui6uMmTM4AbsN4WiVBDnrY/hCkPj8seWZXYYcV6lUkMcwMvfwIcGfoc7hlxUhTxhNxAjwOVEXYZ1wWiCxxrYZlseCJGb9/9OW0kO9CUsMrPEk0wYH8LNxe3rdQx9sRNw3QfKzUU2MCM/DPYBBmCaNrFWneOKpH6nW/2bxeUAeLMpamSYWYy1iN4aT6Bj9lhVXUGMbqvXqlTY7DDJJpYUuGn0Y5zDN26DA0OxbY7L6AFA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by LV8PR12MB9690.namprd12.prod.outlook.com
- (2603:10b6:408:296::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.19; Sat, 26 Sep
- 2026 18:45:59 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Sat, 26 Sep 2026
- 18:45:59 +0000
-Date: Sat, 26 Sep 2026 15:45:58 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
-	Ard Biesheuvel <ardb@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Corbet <corbet@lwn.net>, David Sterba <dsterba@suse.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-doc@vger.kernel.org, linux-efi@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Simon Glass <sjg@chromium.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Nick Terrell <terrelln@fb.com>, Will Deacon <will@kernel.org>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-integrity@vger.kernel.org,
-	Palmer Dabbelt <palmer@rivosinc.com>, patches@lists.linux.dev,
-	Ross Philipson <ross.philipson@gmail.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Song Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH 16/16] efi/arm64: Implement ARM64 DRTM in the stub
-Message-ID: <20260926184558.GB473004@nvidia.com>
-References: <0-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
- <16-v1-27d06b313981+8b-arm64_drtm_jgg@nvidia.com>
- <20260925113709.00005cd1@oss.qualcomm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260925113709.00005cd1@oss.qualcomm.com>
-X-ClientProxiedBy: YT4P288CA0066.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:b01:d2::29) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGijhT3v"
+Received: by mail-vs2-f38.google.com with SMTP id 71dfb90a1353d-5cdb9cb7feeso330323e0c.2
+        for <patches@lists.linux.dev>; Sat, 26 Sep 2026 16:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790464799; x=1791069599; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=e8rVZ31dhnVvTYNLVTgnVU1B4iKZs/qhV9xXBXWsikI=;
+        b=lGijhT3vdNfztYGI1brZV6FqbHBMrhmnMWPVkmqrZ5x0hUqWUwpl8hz+B/zHEWfREG
+         0IHl9iDJYBI95iLfjXWr9UnmQobXvFyv7zEI2wpODfWa5UtWW0KnYGpkC0gHH/uXmBwh
+         o/4SFxJ9gpsm/Nz74p/lgkZh9pRjbuBT7HLS/DcEEPJ5a9ps4oi2e3Aq+TaG3ft58Q52
+         Uxwk5Mz02rNF4j/SqXBZDttOPvjjI5MzzCIE3Ca185HkVGEL5PItR9893BuYtN4/lRfV
+         TkIMVDzvX9na4MVUwG90cV9a0ruVi8Gi/NPwxSU4noCr8ysaR5JkHypBLbyBOnFxaZ+S
+         oPHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790464799; x=1791069599;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=e8rVZ31dhnVvTYNLVTgnVU1B4iKZs/qhV9xXBXWsikI=;
+        b=vuxKBg6XspLvZQHrU01Pv8Oq6ZDhk3YoBo51reLpa19tot3nSqFfeMDJaPT+gxI0fU
+         9aO45b+R0jSgvSFZXNLZNKxz0ygEgm9zmGDCdpgjcr8CtnEv4+zaU4h4ZVe1qZxmHQ/E
+         BcwrXabeq0xWdfzICDNV6zEBV9F5aPmLEpRIMEmvnVItdlDPvuz1LNdm/bfbd06eYCM0
+         FdE36nZImvTbSYZTNj2aYaW2hlCSZ72XRH0gBdj4SI/vFtJWaGyWH47Afvxw+z3cyaTy
+         5C+rKnHRowgEm0cGnIZgxq4GL/fCdV2QpdqZdC1taKZcQYATD8W5pHfwDctNgLdcKZ4K
+         4Iiw==
+X-Gm-Message-State: AFq9FYKVred7pU/M/rYNVzPKABWgy3nvR4IogGyquxKBFc8shabPdRL2
+	qYnTQnzYJav6i7RnGU7e5mAkiIC2CiED7WA/emA7SIytl0tRcyBAV4Jl
+X-Gm-Gg: AYBFou35Ul8urivMHvVIbcmBNHm5fJB7En9II3XIg+fcY3eMFCaB0X3TIUzKRr2tUS4
+	v9AlIHZV6sEbcqOoYQPzB7qsRIPxq1Kp2Z++Y/GTRkfFpfyZT7uKs9mU6WUMeKu0wKt1qTBrQpc
+	DVx3XXhljTYOOIIGALjrjjEYNUQrldcvs1jcK9ejaMTU5PL13KZ9Qb1MHyMGRqh+1d0Ko32SYEF
+	ifR9/X7p+8R81gVZsirdZ98ivXgBzVwkSrgdm1E1fuZu2xfgA6pqbWu/bc3tTPOfi+fHcETYQo/
+	HqAUD4fJehQKhpt18/Mk2M+5+eh5DSNG6FbiE9D70BsjWhEoiR/mTlEfKlHoGeSdOmLadNHoQrP
+	YEoGkI8UUL2M3rXemO6X6oiwIqMKr5SgJdLbQovQxHlYNThRLc3rVZP09QicUS6bwqPTenXx0h7
+	bTwPxkK2wIkPxNpzwG6Bs+xQ+1qeYUI2pwOeuCWvTrs0l1gGrphcL8cCyWxTX+qg0/FIjwYgiKl
+	cmjbEZYmXM0OW6CkjoB4UcPHXh8+JiAFU3TqFmNezlsRA==
+X-Received: by 2002:a05:6122:1c0d:b0:5c9:c60e:3a42 with SMTP id 71dfb90a1353d-5cb0bf4f842mr3983859e0c.20.1790464799140;
+        Sat, 26 Sep 2026 16:19:59 -0700 (PDT)
+Received: from [192.168.1.2] (host179.190-30-68.telecom.net.ar. [190.30.68.179])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5cde5a70282sm3358365e0c.10.2026.09.26.16.19.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Sep 2026 16:19:58 -0700 (PDT)
+Message-ID: <5ed0ee13-9502-42f1-94b7-a99607ca2bea@gmail.com>
+Date: Sat, 26 Sep 2026 20:19:55 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|LV8PR12MB9690:EE_
-X-MS-Office365-Filtering-Correlation-Id: 39cdece0-8545-42b4-d2b8-08df1bfe6806
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|366016|1800799024|23010399003|4143699003|10067099003|6133799003|11063799006|56012099006|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	UwO2XeLf0Co06FtjTdaIaZNTHERoAvQmy/Ul6JHxMmh+sTHufnArVpyS8rrtWHvVd6Qu7hHHVpjaUmDlIu2RXPl0Jf1fEd/O/IloHJxdzYjlOPRdA1dd1zpayyCDFkk6Px+6/4+SSEzwT0sZwf0+2iLQv9bSe4NfS1CxDyTsirN2Zo8HwFzDOAKmB3AL+5Ll5K15LwQ3+g+y2if7cMTQuCJpEjKssOzXz+FdOyopAzneG1eu8CkPXg3E4WDcgu5AZJpBYJteIjTbc3y6fhK1zRh0lX3XR+NE8QTSNubQ1IjVr53+2rUp5fh1WLArRv8IcWJjeawO3BAC86/HLMxdF8vJpZAyflAqaTQ7wxZop2hNBRqSsPyghnuj7fOwQQKDVfrFBckRHUY2Qdiqg9prtAQjbYIYOFTeJjWe+249hRv2cMJmNPgsmX4J5vQAk9RecL4+bmQ6nX39gnLXbuVUETColQjXQDGa2vxC2yyF2FIhKcwBduUxFNmWhmMci4qkK1ZAkDm5pe4fTapM8UE8SaMS+fP/6Hfkt5yB9r5VWHRMcCv4wPOBjihUTJLXdrYgewnG9bBRm+LpwwvUPXDlZQSaRpNLjSW3W5493kYpdIJlQE0yrVp0lzOymdkZaEcj7WBzzlQJDdHbBfCck04EPMDX7a3QGu/bg9prlPGFcQ4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(4143699003)(10067099003)(6133799003)(11063799006)(56012099006)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jentSjukOMJtDkl8RkK5YMqSvkDGw981oOi/PpHNphryJJzVOOzszncv4kuD?=
- =?us-ascii?Q?J6Ko7mgkq/MNvzQ7BRvwt3SkLLasxmXDuh9pngKGmn+9oObDvFP4Zaj4U4B3?=
- =?us-ascii?Q?ToybcmoG8knMQwRWAmqUfmAgp/3WlWv0vabd0jQOS1ccgiVGyu1jxX8wEsgv?=
- =?us-ascii?Q?xerHyUvmTFFtiWhoFi5cXPOD0553CoxiDxdPC3XgGYOl9KUlNeN89DZf66ey?=
- =?us-ascii?Q?aQQmFH9JixuJHHDlpM5coVyz6o4TaS0NbIQ1ssELO65ErslgN+PFtdhNbhTv?=
- =?us-ascii?Q?obMI7uWHlcRZ+noWypmkogO71UIiRMgfrbI5fWbwqpPXEurgVbJMXYy6og38?=
- =?us-ascii?Q?ita1LyuG6PKg7guXgz1ln+eyeEwb/Sl2YOPUoOlaSM1WlH5QYkpWuxk4qhQb?=
- =?us-ascii?Q?/WLqQK7QzSABfmzncSK7DWy9XBVcckTJZyUg8Bd0pwbmytxMGA9RCmVfhMTd?=
- =?us-ascii?Q?Vs0tvGf5e+ek26xNjwoJZR8zsxgN+oeM4XqDYJZtsegW9dLS6KxrCqC+jJva?=
- =?us-ascii?Q?Myna6TO1RrBJw+uqIChFDhmEQ5d1EufKOHIc3hLckIlrIZl9yETGHAsfl+Fh?=
- =?us-ascii?Q?EUvp6dNsQQ46sJF9ltM2Le5vakuZXfpoLwHPYaHW53LD58V8u53mmadUZoqv?=
- =?us-ascii?Q?qcQ1dHL+TSSx+M//It6Ef2tzLoUQz44kaZt5qIGjsiv9mMDeQXJybAhNCl2K?=
- =?us-ascii?Q?4k/bnNAeSZNDjoSbRBJ1s7LuTiDT8/BYTimyrNuSPogVV0Ux3aSfNFQcsNPI?=
- =?us-ascii?Q?ZqIF+VydglKnx12qNHsVbwhvtxfaYhFomjUTvUtmZFXhlDBELwNCuabhb9XK?=
- =?us-ascii?Q?M+QdlO4zmQPinWIRytJP8rj/hYtF+EtdXHGbtY8AS7beAGvnNH3ndhvmy5Ri?=
- =?us-ascii?Q?JwkWDhrtyZ+8mVKw13lDabmH/vSQzYDFMSzxo8NBdrYHhBmtCwfC/u3ezplV?=
- =?us-ascii?Q?KLSxsOXKzBjX0KRLHtECzAwWuDiyCk41FFsfV+aKEFYFNBIw0AKd91+opVLq?=
- =?us-ascii?Q?9NoQc7ZzF/yasJ4O3sOQ7T8fc20bj+RwYiDkAPfzoq7B43We/J+FLZ/GanWL?=
- =?us-ascii?Q?TKRjGnDBgK8SKRsLANd0KBteFygc3CooDNaUdLrSqEhrK+ucDkN71tO50E/N?=
- =?us-ascii?Q?tBm9peXqOx3Ot9WapPtaAqHyixOqcwPeDp2SX4boXsQrQfnAvEJCGR9n9qjd?=
- =?us-ascii?Q?khVfEQtsMPGKKeAtYVYb0IA3XV2Zeh843JpyEAQY4KoK7mq+XmclJfXGbRM8?=
- =?us-ascii?Q?hW6dd1/yBVmjCdH92a7+Kg6Fpbb5Q2OuXCXTSuVS8TW5fgIp6Vo6L7CWyS7U?=
- =?us-ascii?Q?DQ7s1bKdYQ8LgcvRgEGtc2Hez+TRIX0ANmqrqzoEtsdC0q8lzxTyj8KX3g2H?=
- =?us-ascii?Q?AImmDkUQN4lENF53mTaTzR3AKRoIf/Cffy7opz3qbszoNQqFmBqpUW3VSuCj?=
- =?us-ascii?Q?HUVkuQy/G/B+/XCQf8fk54WVDzHFdMUOOiHl7iEoU0qdCNqPndamZNpUOatw?=
- =?us-ascii?Q?tmsh3lqzxSjfAcZ8+nl2SAnh2CebDrRw+pOknpvVyp3Pphv1EYRnfxlsRy1s?=
- =?us-ascii?Q?KrsIvr2/d8MVJLCW6Gz5U3zg1uZWxtwN6IV48OwVJdN2ZE3OMxduQJcS7n/S?=
- =?us-ascii?Q?3bvZsVciAWhxp3NmhTxdKJRjPsmnvebnOVtm51MtYno5iJvIs5BtRA0g9XEM?=
- =?us-ascii?Q?Zs38WX2KtnVIgl23GX261WoTASuwEa+XDZPRLTGPoxk6TbpV?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 39cdece0-8545-42b4-d2b8-08df1bfe6806
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2026 18:45:59.1485
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7sDJZQhd6yOVoRS+drHRbqMh/xB9L2gYKQk3AeSz8RWtmpB88bww5E+IleDVdghS
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9690
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 303/398] Input: synaptics - disable InterTouch on
+ ThinkPad T440p (board id 2722)
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, =?UTF-8?Q?Rapha=C3=ABl_Larocque?=
+ <rlarocque@disroot.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ linux-input@vger.kernel.org
+References: <20260923140643.441954610@linuxfoundation.org>
+ <20260923140651.274430576@linuxfoundation.org>
+Content-Language: en-US
+From: Daniel Salmun <salmundani@gmail.com>
+In-Reply-To: <20260923140651.274430576@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 25, 2026 at 11:37:09AM -0700, Jonathan Cameron wrote:
-> > +efi_status_t efi_drtm_prepare(void)
-> > +{
-> > +	s64 feature_status;
-> > +	u16 major, minor;
-> > +	s32 status;
-> > +
-> > +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> > +		return EFI_SUCCESS;
-> > +
-> > +	if (!efi_arm64_psci_smccc_compatible())
-> > +		return efi_drtm_failure();
-> > +
-> > +	/* VERSION must be the first DRTM call. */
+On 9/23/26 11:06, Greg Kroah-Hartman wrote:
+> 6.18-stable review patch.  If anyone has any objections, please let
+> me know.
 > 
-> Words like 'must' should be backed by a specific spec reference.
-> I couldn't immediately fine one other than common sense suggesting it should
-> be called to check we have a version we understand ho to talk to.
-
-	/*
-	 * v1.4B section 3.2.1 "DRTM_VERSION usage" explains that a new major
-	 * ABI version may "Change behavior of existing functions". Verify the
-	 * major version before calling anything so we don't trigger unknown
-	 * behavior.
-	 */
-	status = arm_drtm_version(&major, &minor); 
-
-> > +	/*
-> > +	 * See arch/arm64/kernel/vmlinux.lds.S for the DRTM Memory layout. After
-> > +	 * the DLME we choose to place the Normal World DCE region followed by
-> > +	 * the aligned DRTM_PARAMETERS structure.
-> > +	 */
-> > +	memset((void *)dlme_start, 0, efi_drtm_get_extra_size());
+> ------------------
 > 
-> Is that efi_drtm_get_extra_size() adding much? 
-
-Yeah, it is the one place we compute the extra amount that was
-allocated. How about:
-
-	/*
-	 * For robustness zero all the trailing space at the end of the
-	 * alocation. This contains the DRTM_PARAMETERS structure too, so
-	 * must be done before filling it.
-	 */
-	memset((void *)dlme_start, 0, efi_drtm_get_extra_size());
-
-
-> Maybe it is worth keeping for the big comment in there, but it does
-> feel like that and what we have here could be combined.
-
-efi_drtm_get_extra_size() is called by the generic EFI code, I can't
-remove it.
-
-> > +	/*
-> > +	 * DEN0113 section 3.4 returns from DYNAMIC_LAUNCH only on error. Boot
+> From: Raphaël Larocque <rlarocque@disroot.org>
 > 
-> I'd use a spec version for references + ideally title of section.
-> As much as folk may try, sometimes these things move around.
+> commit 26eb3d92c7a4d7adb1ae1740ca6e8e100b11d1ec upstream.
+> 
+> The Lenovo ThinkPad T440p (PNP ID LEN0036, board id 2722) has a
+> Synaptics touchpad whose SMBus companion is not ready at boot and
+> takes roughly 200 seconds to appear.
+[...]
+> Disable SMBus InterTouch for board id 2722 so the touchpad and
+> TrackPoint work immediately via PS/2 from boot.
 
-I tightened all of this
+I have a concern about this one. Board id 2722 isn't specific to the
+T440p. My ThinkPad L440 has the same Synaptics board id, and this patch
+would move it from SMBus/RMI4 to PS/2. I have never hit the issue this
+commit fixes, and I haven't seen it reported on other potentially
+affected models either.
 
-Thanks,
-Jason
+I sent a patch [1] that limits the quirk to the T440p. Previous
+attempts to move these touchpads to PS/2 were rejected [2], as
+explained in that patch's commit message.
+
+Could this be dropped from the stable queue until it's sorted out
+upstream?
+
+[1] https://lore.kernel.org/all/20260925230039.236786-1-
+salmundani@gmail.com/
+[2] https://lore.kernel.org/linux-
+input/65C23A49-5A55-4CF4-9AFD-2DA504DAABF5@duggan.us/
