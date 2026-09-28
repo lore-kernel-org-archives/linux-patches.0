@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AAC4908DD
-	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 22:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4AF509EE9
+	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 22:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790633754; cv=none; b=lHLwYUwoJ5UFgxjmnGg1YN6ZrP2DsJU67xjBJlN1cgYAU109D1UfkdqVdmwWrtlsXtiaHBFmYr2YulcHw7kiGCrHdu7a8ZFF6wGDHEPCe2eK6/HiL9rR0H/YKf+sjGuG1m2av+JaLNG+uToJCl7AuZJWlAGboh2DNji5dfeo1mg=
+	t=1790633756; cv=none; b=P82YbqK0XP8JcjVBomv86pGvtFTIb4Yx11pg+tkdC39BdxHP7eCDQXjyl6Dt2Qj8QGEqfqjA+lIiiz9CjRP+l2vfjDokVjxiEyahELdlVdxglO5oKE3YUMYnPV+rrfX8hsgp7qHftO7QiOFggydd151qtf7qOzXHZoGGTpXv/oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790633754; c=relaxed/simple;
-	bh=sNszKQchq7cQtxcVzIVlVMf/t28mnexgBL7l5QdwTD8=;
+	s=arc-20240116; t=1790633756; c=relaxed/simple;
+	bh=1VQspnzX74QyFv8aqwqudsOJTo/9hsK3Ncf9cUiiQPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4rPX29r0ZQEJk7usekd6puzB3M+yy0dvew9PhwdpJpht94g4SPFr4x1LyGF+YbtyUwys+XG1ngNpFsZTcNbddaasVcBFkDA4nut0yDFgaM1QJpkxrVARGz1PPpCkJHsi2oOiry39uzenRP2JmucHhRh02Q2D5s/iY60vzC1WLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lbOJr5Sp; arc=none smtp.client-ip=198.175.65.17
+	 MIME-Version; b=Zx4JKgpJRCUnR1B98j8NNhtPDfh8Sg2RM/NgwsFYjcSKG4m4lPlhoY0mGgU/4gzW54s7roYMoMprSP/+1CtH8G0yNAJis59W38u/gkhy+WotHYhuTbbYYXZ2jYg3SUzS2nkvZAPFX4Ji/ptFO91EzOd1PadYXzJkViKRNVK6fOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AQ9eoo55; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lbOJr5Sp"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AQ9eoo55"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790633748; x=1822169748;
+  t=1790633754; x=1822169754;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=sNszKQchq7cQtxcVzIVlVMf/t28mnexgBL7l5QdwTD8=;
-  b=lbOJr5SpC0XZmo4qvPWDoipNy2m+er+9rhtatIAMGHOvPcamsqRoXzDF
-   MFoGKjckrPa4LS03ZlY0v10r+IBSya/t7UnFiYa7g/MuEhAjTJcqHTA8P
-   P4/2RaohhzonZam5tqqMoz86RU64YbRRCE+FHVFP3JZZYuiubkhXcsBOL
-   QdmWEZvzMqd1i5I7Sb/D+JWGAu3LpQe2s33ad6iFvC51hPWYyc/GbJmYT
-   l9qy4YQgkI/iqJK+oBdNMfTiaODLGdzUxg3tOKKUHGvi6ORHovtC8eOqM
-   o3eqym0IWf+NBOPfJgUGvO7jUYh5nyDxTlua5cy4WOU7yuRlQ9hw8Mfmc
-   g==;
-X-CSE-ConnectionGUID: BoC/Qn5yTh2+72KWT2zU7g==
-X-CSE-MsgGUID: kzMjB0dXSZu6/D+nv5FSKA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="90387300"
+  bh=1VQspnzX74QyFv8aqwqudsOJTo/9hsK3Ncf9cUiiQPE=;
+  b=AQ9eoo551AbC+SZmk57OzLfLbAMxOiD8oFNQX05WSXEwrLLI6L/C/UOT
+   3OHsqs70PJY/5fPk6jmrtito+0LDX38g9jZGy/LmiJMLJg/zLARtCHnIC
+   lurXMEsaUHjtp0xzKEksKIZgfTYwpdyHaoL2qOPhnx2YvoeJvfQblsePh
+   oOux5cYVnCfsRv5gAKGBWOvMLb7lFMSN0zgV2p6E2gU+IHw1cRSeVWAzw
+   ubxaW8qz4JKRKHNd07kIxeeZIUzyaF1P745w1QZHpVC59EryAYSEIYZXg
+   T6YbshIjYpsXIpAFNAp0dcymUfJYSa+Y9DOsrMl6Mk59ArC3eVnGMysXn
+   Q==;
+X-CSE-ConnectionGUID: Hf80xLSaSSWKl3lhF4QNnA==
+X-CSE-MsgGUID: NKFQ/XyET9epmzr2Cac5CQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="90387350"
 X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="90387300"
+   d="scan'208";a="90387350"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:20 -0700
-X-CSE-ConnectionGUID: wCu6PmXSTmuqO44FlsoJvg==
-X-CSE-MsgGUID: RxHkCz3WQLC20lcfg2FSlg==
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:21 -0700
+X-CSE-ConnectionGUID: emYv+3JETtCYzx00ylaOMw==
+X-CSE-MsgGUID: YUCg4K5RQk2tT4aqSsfGRw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="274685517"
+   d="scan'208";a="274685541"
 Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.143])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:19 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:20 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v13 16/25] x86/resctrl: Add PMT registration API for AET enumeration callbacks
-Date: Mon, 28 Sep 2026 15:15:00 -0700
-Message-ID: <20260928221509.68002-17-tony.luck@intel.com>
+Subject: [PATCH v13 22/25] platform/x86/intel/pmt: Inform resctrl when MMIO maps are being removed
+Date: Mon, 28 Sep 2026 15:15:06 -0700
+Message-ID: <20260928221509.68002-23-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928221509.68002-1-tony.luck@intel.com>
 References: <20260928221509.68002-1-tony.luck@intel.com>
@@ -73,101 +73,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl is always built-in but needs to call into the pmt_telemetry
-code to enumerate Application Energy Telemetry (AET) features. Requiring
-CONFIG_INTEL_PMT_TELEMETRY=y allows these calls to work.
+When a telemetry device is unbound from its driver or deleted the
+pmt_telemetry driver invalidates all the MMIO mappings for that
+device. When resctrl reads a telemetry event it faults on the access
+to the event counter.
 
-In preparation for allowing pmt_telemetry to be built as a module, add
-and export register/unregister functions. pmt_telemetry can then supply
-and clear the enumeration callbacks as it is loaded and unloaded.
+Before destroying devices, tell resctrl that the virtual addresses
+supplied by an earlier call to intel_pmt_get_regions_by_feature()
+are about to be invalidated and should not be used again.
 
-Suggested-by: Christoph Hellwig <hch@infradead.org>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v13:
-	Rewrote commit message using correct context at this point in the series.
-	Use "pmt_telemetry" throughout.
----
- include/linux/intel_vsec.h              | 12 ++++++++++++
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 24 ++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+	Context paragraph added describing the problem.
 
-diff --git a/include/linux/intel_vsec.h b/include/linux/intel_vsec.h
-index 843cda8f8644..c04b1d0f3143 100644
---- a/include/linux/intel_vsec.h
-+++ b/include/linux/intel_vsec.h
-@@ -257,4 +257,16 @@ static inline void
- intel_pmt_put_feature_group(struct pmt_feature_group *feature_group) {}
- #endif
- 
-+#ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
-+void intel_aet_register_enumeration(struct module *module,
-+				    struct pmt_feature_group *(*get)(enum pmt_feature_id id),
-+				    void (*put)(struct pmt_feature_group *p));
-+void intel_aet_unregister_enumeration(void);
-+#else
-+static inline void intel_aet_register_enumeration(struct module *module,
-+						  struct pmt_feature_group *(*get)(enum pmt_feature_id id),
-+						  void (*put)(struct pmt_feature_group *p)) { }
-+static inline void intel_aet_unregister_enumeration(void) { }
-+#endif /* CONFIG_X86_CPU_RESCTRL_INTEL_AET */
-+
- #endif
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 4ad6ad78e93e..6c4f0bf3b876 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -17,12 +17,14 @@
- #include <linux/cpumask.h>
- #include <linux/err.h>
- #include <linux/errno.h>
-+#include <linux/export.h>
- #include <linux/gfp_types.h>
- #include <linux/init.h>
- #include <linux/intel_pmt_features.h>
- #include <linux/intel_vsec.h>
- #include <linux/io.h>
- #include <linux/minmax.h>
-+#include <linux/module.h>
- #include <linux/printk.h>
- #include <linux/rculist.h>
- #include <linux/rcupdate.h>
-@@ -291,6 +293,10 @@ static enum pmt_feature_id lookup_pfid(const char *pfname)
- 	return FEATURE_INVALID;
+	New aet_mmio_lock moved to previous patch to avoid
+	churn here changing lines that were just changed there.
+
+	Add a comment in code that all entries for a removed device
+	are on the same package.
+---
+ drivers/platform/x86/intel/pmt/telemetry.c | 30 ++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
+index 57eb2967a4d0..bd63653802d9 100644
+--- a/drivers/platform/x86/intel/pmt/telemetry.c
++++ b/drivers/platform/x86/intel/pmt/telemetry.c
+@@ -366,12 +366,42 @@ pmt_telem_find_and_register_endpoint(struct device *dev, u32 guid, u16 pos)
  }
+ EXPORT_SYMBOL_NS_GPL(pmt_telem_find_and_register_endpoint, "INTEL_PMT_TELEMETRY");
  
-+static struct module *pmt_module;
-+static struct pmt_feature_group *(*get_feature)(enum pmt_feature_id id);
-+static void (*put_feature)(struct pmt_feature_group *p);
-+
- /*
-  * Request a copy of struct pmt_feature_group for each event group. If there is
-  * one, the returned structure has an array of telemetry_region structures,
-@@ -325,6 +331,24 @@ bool intel_aet_get_events(void)
- 	return ret;
- }
- 
-+void intel_aet_register_enumeration(struct module *module,
-+				    struct pmt_feature_group *(*get)(enum pmt_feature_id id),
-+				    void (*put)(struct pmt_feature_group *p))
++static int pmt_telem_get_package_id(struct pmt_telem_priv *priv)
 +{
-+	get_feature = get;
-+	put_feature = put;
-+	pmt_module = module;
-+}
-+EXPORT_SYMBOL_NS_GPL(intel_aet_register_enumeration, "INTEL_PMT");
++	int i;
 +
-+void intel_aet_unregister_enumeration(void)
-+{
-+	pmt_module = NULL;
-+	get_feature = NULL;
-+	put_feature = NULL;
-+}
-+EXPORT_SYMBOL_NS_GPL(intel_aet_unregister_enumeration, "INTEL_PMT");
++	for (i = 0; i < priv->num_entries; i++) {
++		struct intel_pmt_entry *entry = &priv->entry[i];
++		struct pci_dev *pdev = to_pci_dev(entry->ep->dev);
++		struct oobmsm_plat_info *plat_info;
 +
- void __exit intel_aet_exit(void)
++		plat_info = intel_vsec_get_mapping(pdev);
++		if (!IS_ERR(plat_info)) {
++			/* All entries for a device have the same package ID */
++			return plat_info->package_id;
++		}
++	}
++
++	return -ENODEV;
++}
++
+ static void pmt_telem_remove(struct auxiliary_device *auxdev)
  {
- 	struct event_group **peg;
+ 	struct pmt_telem_priv *priv = auxiliary_get_drvdata(auxdev);
++	int package_id;
+ 	int i;
+ 
+ 	mutex_lock(&ep_lock);
++	package_id = pmt_telem_get_package_id(priv);
++	/*
++	 * Tell resctrl/AET that virtual mappings for MMIO space in a CPU
++	 * package are about to be torn down.
++	 */
++	if (package_id < 0)
++		dev_dbg(&auxdev->dev, "Unable to determine package ID for removed device\n");
++	else
++		intel_aet_invalidate(package_id);
++
+ 	for (i = 0; i < priv->num_entries; i++) {
+ 		struct intel_pmt_entry *entry = &priv->entry[i];
+ 
 -- 
 2.55.0
 
