@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB5F4963AC
-	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 22:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A9C502D66
+	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 22:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790633737; cv=none; b=ixfVEkUAnD1NfeNg+Mwoh3Toyc2Sq++T4HAL+4WzotEYBa77Nx1pWMQfNeJUp8+VciMN1NrXogLmaLecFRSEl2mS6uUR1iHtwgk3/igN0uagMY+lbcngSaA+j3GCtPrY+vOroaMv2lVOQuLrebDbW4G/EzN4aQhRy+qBgVndbTU=
+	t=1790633737; cv=none; b=gyLeyzu7g4ffh6RJdDbqTrf1ri7BGli5XHpTv7/h15PbTz16mtFX12UABnkEons5JHjOIjcNU7V+orzK88t4KU8jC5DBwqzbvgBvBqaLOOtuqCLK3FYCstoY/S0plWFchNBtKVWF5vljlIqo+p51Xat9lzTM8w4viw/OCPWDSbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790633737; c=relaxed/simple;
-	bh=pTDhq79ddpggY0n+KqOqU6TsTZ4sAikNtUXGt1GAhlk=;
+	bh=ORcn5Bqc+X6QEQ4Z9MnWRaiUpiUs1Wz3q6TdqweOMv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyvDyLSfouZYGrVeZeZNdQmSz4xUEmGb6hcnUw9v70De0epZXZnIwOhL1ImjSMZ328DcfNHMEAV16TqgoE7KBQ6HO4fsI0lHMeXKyYxpGfdZ5C/36RM3zShYhn0ohFq2kdrUCv3Hprkcrtoe3tyRsk8XVq8+oFPaRvmnfTFl/Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hjwp8J52; arc=none smtp.client-ip=198.175.65.17
+	 MIME-Version; b=dFXOQbPWUe6OgsOHyCI299RH3ZdZ7ZMvI8Mt1CmqzO1xJDfuurqaAYnfe0OHIRnY+8GehuTNMFHZDBi1FIRKrdIzFoZr8kyho0oQdC6LG5vNKQuMndqvogcu3bKeoD6nDGbPPuA4yEuqRmB3bIOA71XXWbf9r2zrxXgqyK97G14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CLgYSfoL; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hjwp8J52"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CLgYSfoL"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790633734; x=1822169734;
+  t=1790633730; x=1822169730;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=pTDhq79ddpggY0n+KqOqU6TsTZ4sAikNtUXGt1GAhlk=;
-  b=hjwp8J52ddjpwjDB7Fy/Z4+Ojyx3Uco/GIJ0hPprfHvDwvi9Ci0rgnPE
-   CxGIH7MG6sIGoyU+D+j4e5mEdVvZHZMu4GuCMZmqU+53QR+kGTjMeztLK
-   hU9w3AMbBqddfXagw5LoJlx/4altXLNDFt7goKatPHxvptLIDjwZdRpib
-   8xQMd7XJJBe8f5247GPnOIDo3vyd5amnaeHar5hROVoH0lnv4h4tZ7wlB
-   c2cKBAaNjI1XukqcA/VYHXk1izOWCQkc7Nmo1C1ThL8CxjMi9oy5r68aO
-   cCvyj04khsmz0iy84m+TfDGtz2QL/KlqB4MPgQr51UZ3MSVF2rptGSoie
-   Q==;
-X-CSE-ConnectionGUID: gjlFwQ41TMS/4btnpJ4KZQ==
-X-CSE-MsgGUID: ClT6NaPBS+mlnH9kU2Bf2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="90387242"
+  bh=ORcn5Bqc+X6QEQ4Z9MnWRaiUpiUs1Wz3q6TdqweOMv4=;
+  b=CLgYSfoLYBk+OzhenZ0nI+HFnPGWUUEpdoxk55T3NlbDR/NCSO4S9xaP
+   ojZhKR3satCk5pvkbxvusfdU5/mGfbx57ziBCvooWywgG70GdJRr6aOGE
+   oiE/kE7MJ2Wi8bmI/YG6XYMJJ6MHXzwiaLIonJpPjsCRj0gpUyw+RPLav
+   jdwHyorfWJ2+3Y1wIW7Np1LA8NM3aNJZ0idnRuZLl/d8Uo+RRiTd2UzKr
+   eZbdEMU2kfZ+JYG7LCfdfGpjE2XkPiikl7u3vF/rWwhuJJ9VmeEjLTTTo
+   QpG+uLnG8FqJr2x6x2IG77YAsMz0qyF/ixXzaW4dMWu0hOAkyZ1nXenNY
+   g==;
+X-CSE-ConnectionGUID: q4bODmS3RFe8d1RoS/WQLQ==
+X-CSE-MsgGUID: 6u3XCgj/QJiEbLJLj6/w0w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="90387232"
 X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="90387242"
+   d="scan'208";a="90387232"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:19 -0700
-X-CSE-ConnectionGUID: 7byRebtfQFy3NSzZYLVlBw==
-X-CSE-MsgGUID: WTQQtDslSBOQLvW0EkeU+w==
+X-CSE-ConnectionGUID: 5rOpH4jNQjGQT0YF0VmoNQ==
+X-CSE-MsgGUID: zLXYvyaeSKWkhz1D+KQysw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="274685493"
+   d="scan'208";a="274685490"
 Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.143])
   by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 15:15:18 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v13 10/25] fs/resctrl: Remove redundant calls to resctrl_mon_capable()
-Date: Mon, 28 Sep 2026 15:14:54 -0700
-Message-ID: <20260928221509.68002-11-tony.luck@intel.com>
+Subject: [PATCH v13 09/25] x86/resctrl: Delete rdt_alloc_capable and rdt_mon_capable
+Date: Mon, 28 Sep 2026 15:14:53 -0700
+Message-ID: <20260928221509.68002-10-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928221509.68002-1-tony.luck@intel.com>
 References: <20260928221509.68002-1-tony.luck@intel.com>
@@ -73,60 +73,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl_mon_capable() indicates whether any monitoring resources
-are enabled on the system. It does this by scanning all resources.
-
-Redundant calls to resctrl_mon_capable() in hot code paths should
-be eliminated. There are two prime examples:
-
-1) mbm_handle_overflow()
-This function is called once per second from worker threads running on
-each L3 domain. resctrl_mon_capable() is clearly redundant because worker
-threads are only created if the MBM monitoring feature is enabled.
-
-2) is_rmid_match()
-This is called for every task on the system so making it less expensive is
-appealing.  resctrl_mon_capable() is redundant because the function also
-checks "r->type == RDTMON_GROUP" and this type of group can only be created
-on systems that support monitoring.
-
-Remove the call to resctrl_mon_capable() from each of these functions.
+These global variables have been replaced with resctrl_alloc_capable() or
+resctrl_mon_capable(), delete the global declarations.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v13:
-	Moved change to is_closid_match() to its own patch.
+	Expand commit message.
 ---
- fs/resctrl/monitor.c  | 2 +-
- fs/resctrl/rdtgroup.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/resctrl.h        |  2 --
+ arch/x86/kernel/cpu/resctrl/core.c    | 13 +++----------
+ arch/x86/kernel/cpu/resctrl/monitor.c |  6 ------
+ 3 files changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 362737e13cd3..02e81fc82b14 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -888,7 +888,7 @@ void mbm_handle_overflow(struct work_struct *work)
- 	 * If the filesystem has been unmounted this work no longer needs to
- 	 * run.
- 	 */
--	if (!resctrl_mounted || !resctrl_mon_capable())
-+	if (!resctrl_mounted)
- 		goto out_unlock;
+diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+index 9c44a7766631..8c3b51398ddc 100644
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -42,8 +42,6 @@ struct resctrl_pqr_state {
  
- 	/*
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 96a4978ce6b6..7cf809380c53 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -691,7 +691,7 @@ static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
+ DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
  
- static bool is_rmid_match(struct task_struct *t, struct rdtgroup *r)
+-extern bool rdt_alloc_capable;
+-extern bool rdt_mon_capable;
+ extern unsigned int rdt_l3_mon_scale;
+ 
+ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index f2bf160d01c1..2e3b9c16cbda 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -45,12 +45,6 @@ static DEFINE_MUTEX(domain_list_lock);
+  */
+ DEFINE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+ 
+-/*
+- * Global boolean for rdt_alloc which is true if any
+- * resource allocation is enabled.
+- */
+-bool rdt_alloc_capable;
+-
+ static void mba_wrmsr_intel(struct msr_param *m);
+ static void cat_wrmsr(struct msr_param *m);
+ static void mba_wrmsr_amd(struct msr_param *m);
+@@ -781,7 +775,6 @@ void resctrl_arch_pre_mount(void)
+ 	cpus_read_lock();
+ 	mutex_lock(&domain_list_lock);
+ 	r->mon_capable = true;
+-	rdt_mon_capable = true;
+ 	for_each_online_cpu(cpu)
+ 		domain_add_cpu_mon(cpu, r);
+ 	mutex_unlock(&domain_list_lock);
+@@ -1026,10 +1019,10 @@ static __init void check_quirks(void)
+ 
+ static __init bool get_rdt_resources(void)
  {
--	return (resctrl_mon_capable() && (r->type == RDTMON_GROUP) &&
-+	return (r->type == RDTMON_GROUP &&
- 		resctrl_arch_match_rmid(t, r->mon.parent->closid,
- 					r->mon.rmid));
+-	rdt_alloc_capable = get_rdt_alloc_resources();
+-	rdt_mon_capable = get_rdt_mon_resources();
++	bool alloc = get_rdt_alloc_resources();
++	bool mon = get_rdt_mon_resources();
+ 
+-	return (rdt_mon_capable || rdt_alloc_capable);
++	return alloc || mon;
  }
+ 
+ static __init void rdt_init_res_defs_intel(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 468e9821f35a..82a555855c1b 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -26,12 +26,6 @@
+ 
+ #include "internal.h"
+ 
+-/*
+- * Global boolean for rdt_monitor which is true if any
+- * resource monitoring is enabled.
+- */
+-bool rdt_mon_capable;
+-
+ /*
+  * Scale factor to convert L3 monitor events to bytes.
+  */
 -- 
 2.55.0
 
