@@ -1,64 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0054D36A009;
-	Mon, 28 Sep 2026 10:54:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E63B4A92F9
+	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 11:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790592900; cv=none; b=KCLVlb2JV0Oxk+x9gzpufW3csPRJfEHKFNTEQPLUpv4dbt6KD4lNttYbgkLG5Q7k0Oj/lowSAoPF+5RinyOqLjOnBRyFGTVf1w07sq/L8DYrlAchkEDQHROYHPc8HNrcAfDAv0npBpSRb4apetm9j1qxLc+Fo3RQd3PYHop7JgU=
+	t=1790595253; cv=none; b=oeXhf4PKlTvK8yFeLQiHL6YT6QGJd20TBTJYUK9bUW57TDRIT49Om/E7PcGFDVzWGTruo7iZnmEgFdKGjzDW+LZ/1oHI/Igckd8JT2kr+zHHVTn/Axvm2hctUTAHwIev7id1geWB3XseBouWlbzthRvWU3CBi5WkxO/ABW/mhfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790592900; c=relaxed/simple;
-	bh=RMiA1glm5nH84RTSkVfzcKxtvLXouWt4+7Y2p/BGxZo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZxZvsKieNx9hXKbQZtkar8jyHb1/A9Bpchf7m4khQlkwYGRXgTsSEWEt76q1/LcA/aoUBJV+ccFRA546KwJOwIKr4RBsrcS8ugQn547j05EakLRIFxoHYHZXnpji/RKvv9n3XjiQ0iNisH7RKLPwE45Fifrl6zoNWPJ4Pcw+es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i5Y2+Mc7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790595253; c=relaxed/simple;
+	bh=Jt7kPh9XkqywM/6h7nDHDZz6YThHu04q3E5/FsPi8vs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rp4i8kIYGMwtErQK66RRDIxJHB2DkdMTwBT8NMG86E6OFvy0Oep3m2E3cng6I4+IzpSGNxUeGcLZI945XeD9nObJlpUY67MizjKFL+UZDTcwlsZXv1YQh2sku4Wn6/AiDO3GhnFViXTrHyxXXd+yuKggjyFe6LlViVzN8KunZQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iLfw62dF; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i5Y2+Mc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E080A1F000FF;
-	Mon, 28 Sep 2026 10:54:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790592898;
-	bh=vPvCVYSwaOmTKYCEYdt/i64f9mwJezF3NLnKoKYCTsM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i5Y2+Mc7Iqes0iqz8PcAu7pObpKxaQudzVAW79q/C8dZF8V5BXj2/e/xtyIp2bTOi
-	 ciEMGcyL2W5sK95TNArp+W7vRRtegBIh7dhjBzIWl1whKmzUSQILATMjTtqsrt3+t+
-	 qpyTNndR3ey+8SqkT9gNbfdUcSBL8AOtRxSI8UfFaKRfvRX9Ux1MkhR3ZP4RDtBfqI
-	 0ndxzaNJOjszMRNM8JV1dag/P089vgl/58Id09dy7CZaPIrFUxwO0t3sQNauHA+JBH
-	 0iY8guUyHd5F7ftTwFaPz2882CuYWcx7OveVvHd2DGHDSKWMrjYI6JEhiUe/CkCm0Z
-	 /VPsU9pJsdlog==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: ojeda@kernel.org
-Cc: fujita.tomonori@gmail.com,
-	gregkh@linuxfoundation.org,
-	kuba@kernel.org,
-	patches@lists.linux.dev,
-	springbreeze@stu.pku.edu.cn,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 6.18 210/398] rust: net: phy: fix off-by-one bit positions in device status accessors
-Date: Mon, 28 Sep 2026 12:54:43 +0200
-Message-ID: <20260928105443.205758-1-ojeda@kernel.org>
-In-Reply-To: <20260928102547.201475-1-ojeda@kernel.org>
-References: <20260928102547.201475-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iLfw62dF"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d8fd7a3f38so67605ad.1
+        for <patches@lists.linux.dev>; Mon, 28 Sep 2026 04:34:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790595251; x=1791200051; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=bqZIT4CuwAtsItk7lmKS5Bq3DdAgNyIdg2q2F0jacX0=;
+        b=iLfw62dFtaB57AuLygdspTv2YK73OW5lPf4P9rFNrk4zCTCfwPqi5zfWZpcH7KsVue
+         1IJaA42qx6X0od9lvtWZwOCnjfwxhuxywto195l/4u4YOKDydCUz8EaYbf1cah4yvQ2M
+         uysmgMuAP841ut3idQrkQwvni+UZniU7q3Q9x19+OW93JXomtV51ELu1kbkUSp8+xcyy
+         wiqqpvtHP+oWmAl1zbEuzG6SEfapKaSWVNC7HowEuoNCvbx0wP5PhOjf5rdAFLL+LfRY
+         o6Lq4Ygpo4iIYPmO8YIjm+5Em7lPavEFzlNWeQxCqfe8WlnPGxyKJjrbqRgFP64Prs7S
+         9cmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790595251; x=1791200051;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bqZIT4CuwAtsItk7lmKS5Bq3DdAgNyIdg2q2F0jacX0=;
+        b=ptNQTNtSvkEjBZpLZ2NWA5LOu5n7fi1qcZC4veRCOya+IlS53HoLcJlXf3GY4wiTi7
+         NJ0HI0/grmFfJEgT3+VIPXsIigXecl0SM3JfIvKx+eij84wJI0GMgwvKmy3rHR4mdkLj
+         1bu0Ebyv6hzRLySdzc9x8XDU8cPW4xJEpAWQwbUBYvsHNW3BoXli6BKF5vj+UtZjmgBC
+         23PXDrdJlTlKkNlGlxyZ2HmLsYuebYvy+Vl6KpnmiUf0l35gf+fA2hyp+4AyIEbfolCm
+         SpHTrgJJbJwAwqbxAs56SfOJ3xs+79926rLf0yu3XHn0L8scukityBqsaZKaJrtYQ646
+         H2Wg==
+X-Forwarded-Encrypted: i=1; AKwUvBx1BWIYp5zVO9PRTKrJYAuyWN/PxQ/ki3NPH3fO3gHfgz4LcS+1RCwLvVGQol8B3+R77ij1MiZ2@lists.linux.dev
+X-Gm-Message-State: AFq9FYJHE7uUInJK0NS2szHXNsUKHSh0EgglpnIt7JCBK3YldH5NjKv6
+	5OBGXewoZlcihICYf4hNGOLHe3QDBDuLdjfSrC8zp8zAShMuRuF9XzCpTmxhbbUCNA==
+X-Gm-Gg: AYBFou3M7k7tcXwpLV/2ln/brc2nxmrUtY3T5D5S9wlm0jWoA/ovel1yMgwLGOS0+eR
+	HAEKZMYED7WPqrc5ebM3bd32czUsO7wYf26pwNQ+g5e8+P45ZnLs3GUuY6h7qENTnf9LkoVpMG9
+	uT7KH0bq9CfnP66Bm/4iQql68S5vY0MK9mwwDhosbOMqaZyxze1e+Q/PvK5emv5jK+i/b8yssXo
+	+ort6TRMvYsxZO/uPJ6G9rp2+GndjOmgSpeTc9T5hQD/1pgRTZX4zs2PF9g0ACrmtHyXSFnPoxd
+	fjb+Q7jMrrGb2yvjsUSmX44h5ipUCd2kvnlhvKfeFKQeEiFEqUDUFBO+7QO+/+aNN5a497R883X
+	5MjR3DGFNHYNSUyI5LXVh01Pc/pgHdKNfaDzHp2H87ceF4fk7vB5kYZPq2gY7l6nB5PI/Nxr8TC
+	lC/46yHERJcuc5NbbBy6OKtb/dZ/QWrifxwiKadsDpxGMqn5o5dxa4J5lT/ku/JuP/C6QfQrdad
+	IeI7vJ97jl8Vkd87JjT3Nlo9wvwNNPxGjHC
+X-Received: by 2002:a17:902:d54f:b0:2d5:c090:3810 with SMTP id d9443c01a7336-2dfa615a5b9mr4545925ad.2.1790595250807;
+        Mon, 28 Sep 2026 04:34:10 -0700 (PDT)
+Received: from google.com (105.211.142.34.bc.googleusercontent.com. [34.142.211.105])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a0972f111csm26688235a91.2.2026.09.28.04.34.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 04:34:10 -0700 (PDT)
+Date: Mon, 28 Sep 2026 11:34:01 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Will Deacon <will@kernel.org>, David Matlack <dmatlack@google.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>, stable@vger.kernel.org,
+	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+Subject: Re: [PATCH v7 2/9] iommu/arm-smmu-v3: Pass the parameters for the
+ invalidation in a struct
+Message-ID: <arpQqQXkdkNRBn-l@google.com>
+References: <0-v7-e84261bbe7cd+2ea80b-smmu_tlbi_jgg@nvidia.com>
+ <2-v7-e84261bbe7cd+2ea80b-smmu_tlbi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2-v7-e84261bbe7cd+2ea80b-smmu_tlbi_jgg@nvidia.com>
 
-On Mon, 28 Sep 2026 12:25:47 +0200 Miguel Ojeda <ojeda@kernel.org> wrote:
->
-> Let me send a quick series using a revert which is clearer, and if that
-> is what you meant, then please confirm you are OK with the SoB!
+On Mon, Sep 21, 2026 at 08:55:10PM -0300, Jason Gunthorpe wrote:
+> From: Jason Gunthorpe <jgg@ziepe.ca>
+> 
+> These parameters go to a lot of different functions and the next patches
+> will add more. Put them into a struct to keep things tidy.
+> 
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Mostafa Saleh <smostafa@google.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Done:
-
-  https://lore.kernel.org/stable/20260928104855.205416-1-ojeda@kernel.org/
-
-I ended up sending #2 in the series with myself as author just in case,
-but if you somehow had posted it elsewhere, or if you prefer to be
-listed as author, please let us now!
-
-Cheers,
-Miguel
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
