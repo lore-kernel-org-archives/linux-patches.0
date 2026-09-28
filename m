@@ -1,158 +1,109 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEB74963AC;
-	Mon, 28 Sep 2026 22:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7117125333F
+	for <patches@lists.linux.dev>; Mon, 28 Sep 2026 23:03:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790634527; cv=none; b=tPqilv4L7WbwQ4SSpJv5P8Bteu5FqdV6eF1uvgHpfHKJbVNyITiqcdq2+o07WWlHe4+J1ziO+yigjJO3CmLuD8r9ZerHATucsH84vQ3jYU6YC7vSs3AzrLaz8ABWBrC1dryW4OOB+Wr1s9yDUx6NWn1veTsITZous09wg/Tn/AE=
+	t=1790636630; cv=none; b=sRv5ZqSvqePV9SBfabqZgRmPugUn116LqJeUy0yQsQ94npODWS+jni3P/U97M3VgG5SDmir9W8kYSro59Nuq8YFi94UkUX6r48De/03tcwtfBYmM3dBTWiS3p+yNldaCJziuWvsrb2MUf1xPj5XjumD2IQV/ya1gtz99IaFa9DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790634527; c=relaxed/simple;
-	bh=6w98JnFuqLQ7swHNEd357ROn9GLTXPPxfoytR/6X2d8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TauxGHCqskAeNjBxtOone6Z3zX0uFeZ9iKBq6KTspJi7eTAuwZsegYIJQL7tkGc0VzbXDgBCQNP8yna4GLyqKz3xn0zcVSZP9xLPGRQZxhgdkBkcod9rBLcNnqdcHew5lzRSV4UHiWvMNaYh4yJpiT1DWS60Z+lXNJZG3duy5UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=j3wTQjhT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EWj7Cksj; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	s=arc-20240116; t=1790636630; c=relaxed/simple;
+	bh=+NbROVe4afASwW55xJJaNok12pyEvCa8CWrMaS1gt/Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nZlGBqeQla2vBniCzs4hXfecCZu9Ph4Ly3dnjFrRLoRLhKmufEuSp4JIX/PDZRXxcgu1kdff/dQc2OGPzDuSmoCmla9aK3QbeZNghkDUWFEz8eVM8959XUsg+dWbsDYIBdttM4dVqK3oEwN8QtNhW0oWlb9Chi1T8wknaDD+CzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CX2Vh6mW; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="j3wTQjhT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EWj7Cksj"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7BE121D000F5;
-	Mon, 28 Sep 2026 18:28:43 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Sep 2026 18:28:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790634523;
-	 x=1790720923; bh=9MPDcqcdVPxLHwAEsIz514gjGwXbAqqJQTEEaOtjMO4=; b=
-	j3wTQjhTxx52qxsu1bMl9sKoMbMl1BZnN2+NpHHsZ1BT1YX0ehYUiK+LN6iVE063
-	3S1nhAJxVe83MoBpHjPj7GgMuckze7YcDr2ou8eq5SZUFeiHo2cDGZrWmryik7Ug
-	2GcUmh10FNCI9nPAXfwliw/MwL7C9munsoXET0YAyTaSrxtuLCudZPGVk/ljg9eF
-	Fg4Md0EtUhzkvATPsRMG1STwkbwXdVoycpy2lwQUmixG/wWvuHRsUCUGdzaI99Rb
-	ljr75nX+RM5LGjZ4kqxe59u5FVZVGUxh+yDSJ3rdZgbZr9XO9gRY/gwKL/XBYtDX
-	51Ge7V3EcRiYZH0mlJdhXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790634523; x=
-	1790720923; bh=9MPDcqcdVPxLHwAEsIz514gjGwXbAqqJQTEEaOtjMO4=; b=E
-	Wj7CksjYMwdPK8xmqIDeZ54MgQKToCMAwtXGQnbdFgizxPZEbaaCRcOwRKhbLkvf
-	WWQO0ySQW0Q50JWuP41HcANiYfqSfAlGcVvdUngsv946b3zoMHO373s8LnIcWId1
-	lruw2cmo//rKffEaK85yShp9HxKkz2gPFIaW00nxaXidasZ2v8WninLDGEGpIkCT
-	XKYo0UeT9m/Md8S3J4LFin3vyHova+adSRIOcM/VJjh8Wm7zAYNjWS8qJUvJYGOq
-	4ROh8NaCZB55hb8Wn6spfS8sPAtRPJ5INVzAWrotx/mU7papQsS07ciY1CK/OMxw
-	2/CyIUvDf85bEGAhfv+hg==
-X-ME-Sender: <xms:Guq6alx2AwZECemahxNwQPKZ7z2_KexZDXZep-GdBOy7y9lt9eKJMg>
-    <xme:Guq6am-o_CPnO-6avvxCwsvF3DQeaU7YHlzI4jOH_Gr2BphmbvMuajDKqUBoRegrH
-    ObMBuDdJbvm6JIy5sH-zZE9dmTJPHjMm-5Dwd33S9Z1dZ13LCYB8BY>
-X-ME-Received: <xmr:Guq6aiwiOtcexKnuJj_2UZ1VkvwSmIzme9mbKJHqYV22rM-iKb5ELfk3eadttg>
-X-ME-Proxy-Cause: dmFkZTFtelLzGYVdByzqF87ZFqdfB2mHNpYaUcMvT3rUJICZTimYyNFKN0gvw38v8OfulS
-    V+LtKiv9pTdKAJkxNact9rNtRfWcp1ZGRLo4EiS7QK47poRep96qaNDx+k6VLf1aCP9ajp
-    GWmIqF5zmAislVGo3WAhg9qeGF8kjw6J+atOHc9LOkjvP7htlA1d3beVjPXdbRSDFuWPTA
-    EZxQlx4IuRccXM0/a9U+aBKw7ikA0m6o/ohVm1qZUYvBgIzPJIcNlZadEAp4dVzTaJwS+w
-    GqjOfEWO15mdHZS2k6h2kgUs6G4fLmoKfmzbX/9m5D2PJV5Q2VMghmHV5RYGgbv2BfLicD
-    RiuG3VRpRNoyntw+Dl6M04vackSXZ88Gp/Kv/qDC1sqzEdnB7MqH7e31vaYP37e587LiAv
-    jL6xJ1skQVPk8FSKPEByOnYvqa3tVOYH2oua34FfOtXwLHUQpV8tx3Z3cu1oJSmL+hCOoR
-    ZRAL9ObWl+fdooqw/6hxw1SoTYJuStMAq7isswv8fC59VOXq1G0vRuMTltm2m52iUXn9Zp
-    dFZ4tzCir3cHpBVykLjIDXnFS5qC25visDUh6ehKSgADHqM1s2ktp9CrNTJ+m7vt6JjapV
-    mgpeSq81kVD2g60MTQSU60KQNwJZ4DBESmWvMzhcEgokS9EvnwdHMR7FHtMg
-X-ME-Proxy: <xmx:Guq6anUKc-C8WE-WKXQPOmycrnrMSdVJRemt4J2GHIHz1HXivqoHLg>
-    <xmx:Guq6atbuqApBLPkF6syEogeopjD3l2-LLL3UJmVVRlZe0BhYquI_oQ>
-    <xmx:Guq6akR0rDJQQdbvTWSWxhBWyH5wuswX8TXhlJQh7uo46aIlGeUSlg>
-    <xmx:Guq6atSfagFSZAJcoRygzwN_UhBzo1gyKK3Dl1y5UzFps-oWKtl6Pw>
-    <xmx:G-q6ai7wgQ7FDkIe0PnIuexj2YKVBzji4IlLXWlWk_2uxff7tT7h7M2Y>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 18:28:40 -0400 (EDT)
-Date: Mon, 28 Sep 2026 16:28:38 -0600
-From: Alex Williamson <alex@shazbot.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CX2Vh6mW"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2db33db4de9so22245ad.0
+        for <patches@lists.linux.dev>; Mon, 28 Sep 2026 16:03:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790636629; x=1791241429; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OMftjJLAh8xtsCYYhvQzmmzmnj+Oz+ZcLlSPeG/s0X0=;
+        b=CX2Vh6mWLxK+P2GwlsvBpsX/37qV5YkHAYdQiuc3+M7AWk1b197sJhpXGZ3i1QX0Tw
+         QEu0Bi4idJOLFetY8cJR5YZnCuctnygYXvesU3W9b2VOSU1DN8AHKEKWxhYAshSC2phq
+         7rBUoVlVP22fKcJsckdgD/gJcqVhDwED7uL4VBQ8oMcbnulQOD2eLKT9n8sqIGGVj0jL
+         dLS8cwdrmGoqqacETJ245apVgQuQ5cuBdDNpKJZohQ6N4NfPBsRsXbSr2meibgzlWCkV
+         SM3L+pGOs8MAp5KykP+/owcEoVIdnLo5PwJx7uNJfqjuitKuWoJcosKqRXzKToPXXaKj
+         sfXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790636629; x=1791241429;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OMftjJLAh8xtsCYYhvQzmmzmnj+Oz+ZcLlSPeG/s0X0=;
+        b=g9hHU9qvDjV39e2oaXy0GdowVBOtxqPSsheRabrpHQve+6TMhDIKZYR1rgoURY4Ak2
+         Jus9WETdos1G5nsLOYon/fyqzGhn7m5IZF3u1TZSkMsCjvhoveG0kMhNFOQ9VMc3gvsB
+         dKKvQrKXUwbP0deVtSFJi+wgqKx3U7xOyMPZ4dS5gzQhWNKS4XzT2Wi5ZdEan3u5uAEa
+         i7kSEapyU1Wh3TPX/P98j1B1zcqHFnwTTmPworL46ZfXYg8iRPwxrnR/j0L/lsAOyZJT
+         NIlG2hlfTvb3l8I5Nn/qjopagKiips/QN9JKMgXZ4A6tcJ7ZfUqpRkDVhT9ehxlpmK1h
+         aP9w==
+X-Forwarded-Encrypted: i=1; AKwUvBxc6GWIMMzHR8ii0+FZ2m2qBHPB2XcZha62GIW7hD4Ks77mYDEhHEKIgm/0yuU5Ad0Gmd3ORSfD@lists.linux.dev
+X-Gm-Message-State: AFq9FYLqnlg82vV9JPV/OUgOFYuB3MWstD4z/9NNHjglA063oNL1FF5C
+	et87HYEIg+aGecBquav1FKknBn40QHaukoLvO8M1TJEiakgEll0e5h0KBNQZtwZL2A==
+X-Gm-Gg: AYBFou3X5hkNkcTgvltNn2hOtH52tDMn/EiO39nUAtk/QAXryeJqa6bKcu7NBu3Xvrj
+	KL+8YJiXM/W9RFo2rFOUFCZB/qQZNkva9iR+8KKPkkjy4BktrG/rH3JAWoonWaqWURFALeZdIS1
+	cLcw57N1vwBOO2KWKLWQ3UOlDN9vx76FSLi35fS66/BUa9dtFoaBZtsD3Aq7c7oEEKehKU2OCte
+	zHj3W4HVi6Fi75Ooh3R3KZf6F6Wqr48JkmQGE7qrf0HQOUohot72QnMJe0rRP1hkzC97pLpzCGn
+	wMBPIuaJ+Rr4BaY627jbAsNNT6shR0qho8zeihzeytiRp/5tvApikztVFeFLz00Y3K/JSFE5UPZ
+	IIGt1rzhH9lL5/SU+3dDBHxgQqUFsVdz4FraSe7K9/2+od+3rujb5aahGOXw5CDhQ7RfCOGClgc
+	jkadJIyQLFLWOWWrPhvwGTohmd7kFa6VWu06TVUjzlCvc3kQ+sznID8LHryoVTJ6YXXhOP8w4mM
+	fh2I6D72+QLofXfDUCXw9Lwe9FtZaRT+NIK
+X-Received: by 2002:a17:902:f707:b0:2c7:f688:f22f with SMTP id d9443c01a7336-2e2c79fbdd5mr691405ad.13.1790636627971;
+        Mon, 28 Sep 2026 16:03:47 -0700 (PDT)
+Received: from google.com (105.211.142.34.bc.googleusercontent.com. [34.142.211.105])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87feac93380sm4714358b3a.33.2026.09.28.16.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 16:03:47 -0700 (PDT)
+Date: Mon, 28 Sep 2026 23:03:41 +0000
+From: Pranjal Shrivastava <praan@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Matlack <dmatlack@google.com>, Fuad Tabba <fuad.tabba@linux.dev>,
- Joey Gouly <joey.gouly@arm.com>, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev, Leon Romanovsky <leon@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- linux-rdma@vger.kernel.org, Marc Zyngier <maz@kernel.org>, Mark Bloch
- <mbloch@nvidia.com>, netdev@vger.kernel.org, Oliver Upton
- <oupton@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Saeed Mahameed
- <saeedm@nvidia.com>, Sean Christopherson <seanjc@google.com>, Steffen Eiden
- <seiden@linux.ibm.com>, Shuah Khan <shuah@kernel.org>, Suzuki K Poulose
- <suzuki.poulose@arm.com>, Tariq Toukan <tariqt@nvidia.com>, Zenghui Yu
- <yuzenghui@huawei.com>, patches@lists.linux.dev, alex@shazbot.org
-Subject: Re: [PATCH v7 00/10] mlx5 support for VFIO self test
-Message-ID: <20260928162838.44dc6abb@shazbot.org>
-In-Reply-To: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
-References: <0-v7-c6d30e8ce1e4+3dfa6-mlx5st_jgg@nvidia.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v2 1/9] iommupt: Remove the sanity check for
+ pt_num_items_lg2() at the top level
+Message-ID: <arryTf6sRapjC1uW@google.com>
+References: <0-v2-563ee63886f0+1209-iommupt_armv8_jgg@nvidia.com>
+ <1-v2-563ee63886f0+1209-iommupt_armv8_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1-v2-563ee63886f0+1209-iommupt_armv8_jgg@nvidia.com>
 
-On Mon, 21 Sep 2026 19:35:40 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Wed, Aug 12, 2026 at 05:09:17PM -0300, Jason Gunthorpe wrote:
+> This was ill conceived, the existing formats work OK because they
+> happen to support pt_num_items_lg2() at the top level. However the
+> documentation is clear that is not permitted because ARMv8 has
+> concatenated top levels and we do not want to calculate an exact
+> pt_num_items_lg2() for the top level special case.
+> 
+> The logic to compute the number of items of the top level is shown in
+> pt_top_memsize_lg2() which is:
+> 
+> 	num_items_lg2 = common->max_vasz_lg2 - pt_table_item_lg2sz(&pts);
+> 
+> Which is pointless to try and sanity check.
+> 
+> Reviewed-by: Mostafa Saleh <smostafa@google.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-> Add an mlx5 driver to VFIO self test. This is largely a remix of the
-> existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
-> to issue RDMA WRITE operations which effectively perform memory
-> copies using DMA. Since mlx5 has a stable programming ABI this
-> should work on devices from CX5 to current HW. The device FW must
-> support the QP loopback configuration.
-> 
-> Also support send_msi by arming completion events of the RDMA WRITE
-> to trigger MSI delivery.
-> 
-> mlx5 device startup is very complex and most of this code is just
-> booting the device, with a smaller amount for operating the QP.
-> 
-> This entire series was coded by Claude Code in about 4 days. It
-> used about 4.5M output tokens, 30 individual sessions and 5600 lines
-> of AI-generated .md files. I spent an annoying amount of time
-> de-slopping and cleaning its work product to make it presentable.
-> However, previous VFIO drivers have taken on the order of 1-2
-> months to write, so getting one in a week is pretty remarkable.
-> 
-> For those interested, the flow I used was broadly a prompt sequence
-> sort of like:
-> 
->  - Hey Claude, go look at the falcon series, VFIO self test, the
->    mlx5 driver, rdma-core and some PDF documentation and make a
->    plan to put mlx5 under the selftest.
->  - Write an rdma-core application using the built-in VFIO provider
->    that can do the required memcpy operations that vfio selftests
->    wants.
->    (This resulted in a 1k loc C file that compiled and ran the
->     first time but had a few bugs related to device programming
->     that the AI resolved.)
->  - Replace the rdma-core components with open-coded versions to
->    create a fully stand-alone program that does the DMA memcpy.
->  - Review and audit the thing.
->  [Pause and de-slop it]
->  - Make it work on a PF too (this is surprisingly hard!).
->  [Move to a kernel tree and copy all the .md files and .c program
->   it made]
->  - Hey Claude, look at all this stuff and make a broad plan to
->    actually build a VFIO self test.
->  - Here is my 1 sentence advice on what each patch should look
->    like, make a detailed plan to make a patch for every one.
->  [Pause and polish the patch plans]
->  - Execute plan X then commit it [pause and de-slop each patch,
->    repeat].
->  [Review and final polish]
-> eeb2cc76b0b4
-> v7:
->  - Fix some compilation problems, kvm and the igb
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
-Applied to vfio next branch for v7.4.  Topic branch published as
-mlx5-vfio-selftest-v7[1] for conflict management.  Thanks,
-
-Alex
-
-[1]https://github.com/awilliam/linux-vfio.git mlx5-vfio-selftest-v7
+Thanks,
+Praan
