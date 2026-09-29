@@ -1,114 +1,137 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DC53D9556
-	for <patches@lists.linux.dev>; Tue, 29 Sep 2026 03:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790651844; cv=none; b=rRXLQCwqoUdxdG1kCBP1HdcZZVdn9CcBxnfnQ0LkRfGjfgMVZ31qfjf+jasxqa7C4MUHLMU0CA6KXwgaR7yC6MC7GuFUT1meZ6DX1XHCi0ue3AfZPf4O95ymHLXaB2dgAZQ5p8RhxXXRT/o/F+mm0GwE7K0W0CyF77Hdfb8Kym4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790651844; c=relaxed/simple;
-	bh=HAop2N+maciAE28Gx0/XfwtqLaUPFfgtMM4poUGrHNo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Qt+5231kzoUvcUo3QeK/UCchmWnO7bTRZlWuB3C2fptZL2RvLKeGzOMQRZg1dqLp7DcJO+JIVYp7gGEiXDmybZcJVKiCPCaqA//9ECAjKEwqgJZSCORup3MJGSYhqoGQa9XsL+HYGnmHXIiVFMA5zEGXjaUyVWMEwCU9oCecjmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stu.pku.edu.cn; spf=pass smtp.mailfrom=stu.pku.edu.cn; dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b=M+p6FIyy; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stu.pku.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stu.pku.edu.cn
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88743DDDAC
+	for <patches@lists.linux.dev>; Tue, 29 Sep 2026 05:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790658842; cv=pass; b=s2U1IRUIP33xIjS++R0Ex5AArFWXuE3iP/6bY+M4r5JjlkvtmjLQDCdWFh82uDA8/fx/fVbCIBUNZYr6j5abxbVN08aVUusy0NuMl86rOdelLb/i6pNDr/IdwyxHxgz0OQUqUTnUtNYTtBH/4ofppMCKhEyZ/rUybAj/gO86LPc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790658842; c=relaxed/simple;
+	bh=nt1iDr2ETez6hUNqs0WgZtwZnWmFB0cRIaZZaRitIY0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WQwXq0XEGbJu+VsMJn5PQafgqm9iXlQnwCoCYslo6uID6hPEwChJ2fiE9Rid5QFBJqCrgKWY1Lfq72OyFAGMFYWjEyHm4vDT/m81FgBRo8fDbXSrKIee8UcWEnEVBJGSExjpKX8QH53kgucCEj+Al2wq6V84KJYLO3BxlX5LnTk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CbbKucKL; arc=pass smtp.client-ip=74.125.229.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=stu.pku.edu.cn header.i=@stu.pku.edu.cn header.b="M+p6FIyy"
-Received: from SEWP216MB977011.KORP216.PROD.OUTLOOK.COM (unknown [IPV6:2603:1046:c07:1031:365:be:0:25])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4f6eb54b6;
-	Tue, 29 Sep 2026 11:17:10 +0800 (GMT+08:00)
-From: "springbreeze@stu.pku.edu.cn" <springbreeze@stu.pku.edu.cn>
-To: Miguel Ojeda <ojeda@kernel.org>
-CC: "fujita.tomonori@gmail.com" <fujita.tomonori@gmail.com>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "kuba@kernel.org"
-	<kuba@kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>
-Subject: Re: [PATCH 6.18 210/398] rust: net: phy: fix off-by-one bit positions
- in device status accessors
-Thread-Topic: [PATCH 6.18 210/398] rust: net: phy: fix off-by-one bit
- positions in device status accessors
-Thread-Index: AWEtNDcxCRMh1Nl/IUG8ISseq2E43mEtNzMx9Tutabg=
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Tue, 29 Sep 2026 03:09:08 +0000
-Message-ID:
-	<SEWP216MB9770115E94C3B65C35C3692830F98C2@SEWP216MB977011.KORP216.PROD.OUTLOOK.COM>
-References: <20260928102547.201475-1-ojeda@kernel.org>
- <20260928105443.205758-1-ojeda@kernel.org>
-In-Reply-To: <20260928105443.205758-1-ojeda@kernel.org>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator:
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CbbKucKL"
+Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33bc6ff6cadso503754eec.0
+        for <patches@lists.linux.dev>; Mon, 28 Sep 2026 22:14:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790658840; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lTP23Rsz78ZmrCwJJCUwFovKPfGt80wyRU3UYIC7JNNWjf9N9Qa10xxzDvuLFW9XIf
+         qc5OzTXvRzKodUIEiomMU0t1W2C+gJgwgFt4/IifHTslIGUrb7t2CyDtif59v+T7XKkQ
+         C9apAwleQ+GC3f4ufS9oyZiAjbnydCOTzFowPh6c0ytouXf95T5BcptYKMnt68Wbr+Qu
+         Rvw5JdWxGJ8BTXfNZgkar4gbNCobqzQzNMkrgZ46NT19BzxD+tMUOA4vaCOWj+pg3JOB
+         NhvVGbwRX6cp0NJyi9/tl4OV2Txm/1x0ovSVeQyMWuIiOYGCdaF85yquboPGadrMcGZK
+         QtoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EAEfNr5sJR9Z3DQLQ0Wzy87dnyw+ZdWq7blTmjddLn4=;
+        fh=gZUTiNoOUxtxgsmRJY6GG2tFIFVv1rDBowIPYWszbx8=;
+        b=hYi7IaZGB1SZvPwQFw41u+lKqYCX4OE3K6E937RMapqtWnHGxMJ5nOCwSbm3BXUXsR
+         EAaUt7aBwHUW6NJahWEAzaFrH0mxGaiqi+tAgiYwNptMMqadHIjxIF8qeOwm9pGqG3Dn
+         XP4wqWF3pupAP7G0u5wUwRKuAicKTk1X05dwl8/Hl/VV8MGtjviXu0oZUyAEPRV/9lDg
+         vOf2Dg0N0hSCNnWkerxX6QbNHCZb6KnxCbF0Nj45J16iFQpGohFDQHEMRgJ98FwFvB8G
+         1pPodt+tXoox+izs5XU5Pz/BkPBVSIFviS4p3rLQBsA7dY+3FTs9yYbcQw8PEQqXuAQ8
+         0mQg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790658840; x=1791263640; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=EAEfNr5sJR9Z3DQLQ0Wzy87dnyw+ZdWq7blTmjddLn4=;
+        b=CbbKucKLqEQLNsuUglTLZEit8iMIWk8ulZDrM1S1s043qdGurUe6xXin9uPH9XACxG
+         6ON2edzAOzBqU7L823J0ppLAMB95sL14KhuwbNoRDf3v7h2zAZzNJsy9Z7JiBRTEgSJ8
+         H51y/HKTXIB6KP5zWs9fhCfPbogvvng9zwtP6pxBDFFH3FqcTkwLXm3YR4f15eXOXyyP
+         N+Xu1H5aKe6+m6Zwe+T0ldby0O3XqAYoU18yDZ/nxuJxjcvw1/w8LSXbSMHfQWXIp7KA
+         77C2UTk1E3/ftFBIdYmATacaglGRvkNw7Vlemow7HjJjne/I2fID28sdkV6LPsDiXhjP
+         iXww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790658840; x=1791263640;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EAEfNr5sJR9Z3DQLQ0Wzy87dnyw+ZdWq7blTmjddLn4=;
+        b=2VEY/33Lwb7RCXuY23n2OMBX9G1l0GBEFxm6VWa4L8fcTgotpRGmCZia4zCStw86MR
+         4oUoKpoI9ICwsQdPnuXuJrglMXsStaXO7ZMY/yC9QrnW4QMRAh/5oZZ2eSa3mTBP9cvR
+         7HQ5t6fVFNjp12OIRxntxJa5eaFm996+3eP+ganJcFDmDjv/7V+RjqkzInd14aekJxHs
+         kHFxEwJjQA2zuhkiCzaHaAP1+vMNhh8/33xabDtviNoMn0lwIB4uUf2sxXNWXPll03Sa
+         GcAizj5hdFirfdmYVtXcgh51snpzsHoEMg6w5Et6JxOmfTspPtWox9vrOKLb6T58cYw5
+         J8gg==
+X-Forwarded-Encrypted: i=1; AKwUvBzte0xh3Zrea2xvIP4kSY6d5fp3DjMtdQ5hw8gmF4+qZ/yyK6oibEwLJuzmR5VcXBJtVxlliYTk@lists.linux.dev
+X-Gm-Message-State: AFq9FYI47NUrrxss6gHJBwnFqd32MOKLxILHdie41gPa6hh8hWUQTaSF
+	YKUnvTjDu3UDcEijVEeRUypBnO7iYbjfYV6LCiTOQrcTcSP3uYi6fw/HuKMXbX4jyn91agoMalc
+	XcSgQMIFl2XLkJpQ46SJP5ceGgfWG8w0=
+X-Gm-Gg: AYBFou30ev90j3MKQMk2+HueikVaVR47TeE7E29LY4SDvzgyHV7MxUJb0nXZOetVBds
+	YAr8eSjSuRfh+Te6wu5jbiFoAPNm8Seqxto0WEo47rkdH9WhJhosVCLnmbVY0GyiTdyX5x+8wp6
+	MovmjJoAPCQ388HS8PIcqMIFdUruwpmDPQW0OyVhKvxVTzg/HSJPMEwkv3dCoPl7sD0UoMfHf2H
+	6PGETFHf5QoR63TBtqFIPVQxITDENDVM1joq/TfFCHNTj3QJ6RC3tyOAFKK9hlDLgy+zBA7Puom
+	6Up8S5Owjwah1DczKUrlbAlfXeeaR1L1VGOCQMumz4K81iAk1k81kXM29PSH7HQ+XAgupbaUV+7
+	+DoyPuMVz6UGk/BhXdifSCjGoMHm7LuYEW1AFjSz0mt414wGX8ifd13ADYYLtaF/GBBenxSGepd
+	yAyomaiK5oJFK8hAdptfXcloRSKU6KLPCq0M/nWpMy5SplZhy8KVc=
+X-Received: by 2002:a05:693c:65d6:b0:33e:8552:6e06 with SMTP id
+ 5a478bee46e88-3426cfdd194mr20205871eec.0.1790658839924; Mon, 28 Sep 2026
+ 22:13:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-HM-Tid: 0aa0eb2a91ae03a1kunm3e9e2184220188
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDHh0dVhkeSkpPSkNMQx1KHlYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlJTUtIQUpLT01BGEtMQUpLSEpBSE1OQRkeQUtBSU5ZV1kWGg
-	8SFR0UWUFZT0tIVUpLSUJDQkpVSktLVUtZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=M+p6FIyy2k5DdQ4D/X2U8uGzyI0kgoth7FTJEAfis1cORUqemO0Cqar/CRYILqp2aaIu+A+1LfFQeGuG01W+82ULnIw7VDs+3aQZ8naFNLrgWe1jvxbEGzXEL5S+1Ody/k/vTjSN+rEfk20sS0j500/ouFkoAamJ+uEWKNW+q7Y=; c=relaxed/relaxed; s=default; d=stu.pku.edu.cn; v=1;
-	bh=3J9k0y1JChLWUSI1di/6/GTZ56EuP44rEo33z610ZjM=;
-	h=date:mime-version:subject:message-id:from;
+References: <20260928102547.201475-1-ojeda@kernel.org> <20260928105443.205758-1-ojeda@kernel.org>
+ <SEWP216MB9770115E94C3B65C35C3692830F98C2@SEWP216MB977011.KORP216.PROD.OUTLOOK.COM>
+In-Reply-To: <SEWP216MB9770115E94C3B65C35C3692830F98C2@SEWP216MB977011.KORP216.PROD.OUTLOOK.COM>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 29 Sep 2026 07:13:46 +0200
+X-Gm-Features: AclHuK8zhqw4hzXAxQU-LgN3hhSsxqTyet2X0hWMvxsfudBQiH4fkjXMyED0XbU
+Message-ID: <CANiq72n6RwJeBo8_fKn5g7LH+kzhuGcTt1Hv3jOE2m5mjLqGVw@mail.gmail.com>
+Subject: Re: [PATCH 6.18 210/398] rust: net: phy: fix off-by-one bit positions
+ in device status accessors
+To: "springbreeze@stu.pku.edu.cn" <springbreeze@stu.pku.edu.cn>
+Cc: Miguel Ojeda <ojeda@kernel.org>, 
+	"fujita.tomonori@gmail.com" <fujita.tomonori@gmail.com>, 
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "kuba@kernel.org" <kuba@kernel.org>, 
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, "stable@vger.kernel.org" <stable@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-Hi Miguel,
-
-Yes, that is exactly what I meant -- thanks a lot for taking care of it.
-I re-checked the series against v6.18 and it is correct:
-
-    1d17bf1ae87d (6.18.y today)  ->  bf6272d87a7b (1/2, back to v6.18)
-                                 ->  5963dbbd54af (2/2, offsets 15/14/16)
-
-That matches the backport I had prepared locally, so:
-
-Acked-by: Chunfeng Song <springbreeze@stu.pku.edu.cn>
-
-Please keep yourself as the author of 2/2, and of course I am fine with
-your SoB -- the upstream Signed-off-by is enough for me.
-
-One nit, feel free to ignore: 2/2 still carries the upstream paragraph
-starting "Use the bindgen-generated raw accessors ..." and the Cc: stable
-scope line, neither of which matches the diff anymore.  Your bracketed
-note already explains it, but dropping those two bits may read better.
-
-Thanks again,
-Chunfeng
-
-________________________________________
-From: Miguel Ojeda <ojeda@kernel.org>
-Sent: Monday, September 28, 2026 18:54
-To: ojeda@kernel.org
-Cc: fujita.tomonori@gmail.com; gregkh@linuxfoundation.org; kuba@kernel.org;=
- patches@lists.linux.dev; springbreeze@stu.pku.edu.cn; stable@vger.kernel.o=
-rg
-Subject: Re: [PATCH 6.18 210/398] rust: net: phy: fix off-by-one bit positi=
-ons in device status accessors
-
-On Mon, 28 Sep 2026 12:25:47 +0200 Miguel Ojeda <ojeda@kernel.org> wrote:
+On Tue, Sep 29, 2026 at 5:17=E2=80=AFAM springbreeze@stu.pku.edu.cn
+<springbreeze@stu.pku.edu.cn> wrote:
 >
-> Let me send a quick series using a revert which is clearer, and if that
-> is what you meant, then please confirm you are OK with the SoB!
+> Yes, that is exactly what I meant -- thanks a lot for taking care of it.
+> I re-checked the series against v6.18 and it is correct:
+>
+>     1d17bf1ae87d (6.18.y today)  ->  bf6272d87a7b (1/2, back to v6.18)
+>                                  ->  5963dbbd54af (2/2, offsets 15/14/16)
+>
+> That matches the backport I had prepared locally, so:
+>
+> Acked-by: Chunfeng Song <springbreeze@stu.pku.edu.cn>
 
-Done:
+Let me reply with your tag in the patches to make sure it is not missed.
 
-  https://lore.kernel.org/stable/20260928104855.205416-1-ojeda@kernel.org/
+> Please keep yourself as the author of 2/2, and of course I am fine with
+> your SoB -- the upstream Signed-off-by is enough for me.
 
-I ended up sending #2 in the series with myself as author just in case,
-but if you somehow had posted it elsewhere, or if you prefer to be
-listed as author, please let us now!
+Thanks a lot for double-checking it!
+
+> One nit, feel free to ignore: 2/2 still carries the upstream paragraph
+> starting "Use the bindgen-generated raw accessors ..." and the Cc: stable
+> scope line, neither of which matches the diff anymore.  Your bracketed
+> note already explains it, but dropping those two bits may read better.
+
+Yeah, I am not sure what the stable team prefers. Normally, I either
+do the square bracket thing (to try to keep the commit "as is") or I
+send a completely new one explaining the difference. I was on the
+fence about this one, because the original commit had quite a bit of
+context that seemed bad to lose, but it is true that of course it
+doesn't match the contents.
 
 Cheers,
 Miguel
