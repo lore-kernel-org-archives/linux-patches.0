@@ -1,151 +1,172 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013055.outbound.protection.outlook.com [40.107.201.55])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5E037B02E;
-	Tue, 29 Sep 2026 14:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790691627; cv=fail; b=YfyXUfoZA2io0sakq8Y0MwcbCayCgOydU1zIBQvhFLgDfyDgPV9Ic0lHPBwZrByGEa2xVf+y487C329YngfAicPM+tMoC7ko6/QRfFTuB2d2rJOCw7+YWIw7N5TrTuYMGXs4V3Fd5eJ69+h8GnSB1Cb33Evga/5h7/+k+cEYzdc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790691627; c=relaxed/simple;
-	bh=/yQU8Y0Ex70T/gAmBawtTxrXcz4FXXsm8ToxQpL6GMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=eK6Di9wE45/hNiOEHv8vqbenSKvB5v3m50G2g8b7P0Bl2oE4V4aCGdEza1iOjuJOLqe3koiWzZirLEf2wlS6E+NVL/z5YGIrNuZ7H/pPhdsLnR5q62Tm8WF5ge0H2BMO6NqXUyW8mBOI56noDtbgYnUXjEOqC6Yp0QV7QjHRocY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qWagKXmV; arc=fail smtp.client-ip=40.107.201.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4311D4BFE7B
+	for <patches@lists.linux.dev>; Tue, 29 Sep 2026 17:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790702324; cv=none; b=OYKpd/ner0gxUt2MPwIzQtL5anw/viGuBrrqc9S4jtyMFcxpKZdzoZ3IWXSdBgGR5qA/Yvj9EJwwyv2AorEGPmsFvcvTIseXHFQT02UDuyt4gbrwFgO4DnetpF+I+NnqP8Dq2L1jBIgMzhL6E0dRYxDrJDFY/fGvrxVSnoVy9q4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790702324; c=relaxed/simple;
+	bh=DXYTu9iRM7A2MiRfgO+m8s/lo9l1pag+TLogl3KZ/xk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IuOSAMYchDEFlYW5s82EyGka3gFoXtnr4ZeQe9Icbty74F+y4ZieplcmaW8LqvEKmoYtu7PQc9w+eUSzGZ1Smah+YKUGNbXQzyhBNV2FPlet1LrqN5SABlHJzfYcxGKAuWvk+ACdaIH+re4uRmn2CluRkGjFOtB/r8Ryyp+ACj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JLn1QkYK; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qWagKXmV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M8rdHzOhlMlBvdMnIvaftuG/tsf6z8RpJgZs4wrPQCNvGxFNnJ3rN0N65wLxVCL799ZZFHJ5obtvi13wufXV2M2op3AXuR558hdVpXV9dGXNMPgHAQ1VQiXAW3QnF2wi1OW+weY9MPfmHPFbV+CZx+0esN0l1523TiosljwL2NY/WhbHU40iZ31yE3Z/2I1DwwoWg+lmXUEwFGsQiHGS+PDGA8ufelkSVJ6JcG6M/8x0ibrc6KS5hh1ODmGbNQjujV+D0V7KBbxk1sfLhM/zGP0L6DzZwWbmd8VBwueDcHMHtdtiOL/hu2FCnYI/78xkhiKpHZnV0S8Gku74n//NZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AIOCmutbwd8F2t+MiX36pDWhxX0/jkdB2DenpWMn1KA=;
- b=CCoVui84PnTFyJm5kyE5Ij2XJGD7Yn6P6N9uRPE1M0S5xBqTnigGUIS0TNlSLfCTW3AFyO+d8JTXWdbupWt868iMYaM2RBI6ND5jQJWfyKV4ej2J6KKTmNw/pLiNvLNzEcqS98Qfeo1zh82bbK1YBuRrHOd50y4zNFYMZZB+ecbrBdDlV+85gQcdxJSzIIaItYmKnzUkI9UqGy9cwRFiHe6ImR7kCCLhAl8Vi4mKnWQN5hBqq3LPvkReD8vKiTa88VgyMxpw1eaUacAcH8RNBIbXx26TeGiw28WjiwUCHoovNptp/5cYtsRdeAizZGzMH8CBXuf8UcN9tSTyzRAemQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AIOCmutbwd8F2t+MiX36pDWhxX0/jkdB2DenpWMn1KA=;
- b=qWagKXmVI3XOcmaDwoP487ELCHxbHSHLMwjU5NQE5RLk1//Hai92lxASB5yQJpucNfInzqy/qJfMMbpObtsd5w3IpE/ikUSRNzoxqP1HjSSzgO1Geu4e0quyfSjXWgUG4ztJRHilnU1M5jDNc47Aont0U2t3jvKXHIVpbSBFxJ4qjCCgM7K3xWdLUm0YecjxoKPrMpjZaFbldVXZF6YJcZ88XxDfhZ/kHDgDQQhqKskEWPZWON079OZWkikqU1njPbfoz80JeVlSvz0guudNKbu5VvG0QkzUlJvGwilUv504YiozsEpnYmHCnXLfb6I+nhbea2Cnto2wbxNNxR8NYw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by LV5PR12MB9825.namprd12.prod.outlook.com
- (2603:10b6:408:2ff::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
- 2026 14:20:20 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.024; Tue, 29 Sep 2026
- 14:20:20 +0000
-Date: Tue, 29 Sep 2026 11:20:18 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Pranjal Shrivastava <praan@google.com>
-Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 2/9] iommupt/kunit: Skip test configs without
- supported features
-Message-ID: <20260929142018.GM1616761@nvidia.com>
-References: <0-v2-563ee63886f0+1209-iommupt_armv8_jgg@nvidia.com>
- <2-v2-563ee63886f0+1209-iommupt_armv8_jgg@nvidia.com>
- <arr1SdQI-s46qG20@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <arr1SdQI-s46qG20@google.com>
-X-ClientProxiedBy: SJ0PR05CA0007.namprd05.prod.outlook.com
- (2603:10b6:a03:33b::12) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JLn1QkYK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790702322; x=1822238322;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=DXYTu9iRM7A2MiRfgO+m8s/lo9l1pag+TLogl3KZ/xk=;
+  b=JLn1QkYKazp2Bz/G2C86zlcdtjQRgz4IbPl6WSoduUQ8m2683I8d2h05
+   Tl8PLrblIV624puwUPZyznWr/QrSXcZ2nnJ2zu2LXFBOfdPTYAKh92oZK
+   Qor4qKTthObRXm+QzIWGFHDrcrQ9sn4hpoFtZ662RCc4i7s+N52Tem8tr
+   PuqfWTqoErLryWnaeU6pQnCRLUNoFr7263omphMlTHdfAiWWjPs6Gl0kD
+   I1OeWQDD2it+EzuSkC+6NfufTAhkALaZckqziuyBJjwKZcPpq46ll1sy2
+   bxFm4KY2RCcyvxRLH6a5dIb5qXbQ0VmYQHLRe5i9TP3ZBlGD/1YNS6FqH
+   g==;
+X-CSE-ConnectionGUID: weKXaCF8T2WdN3dW4tF6xA==
+X-CSE-MsgGUID: C036DhaXTRCgtdHd+IjvQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="91526329"
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
+   d="scan'208";a="91526329"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 10:18:42 -0700
+X-CSE-ConnectionGUID: Y5EAOsZwQDqs8kBMgeM25g==
+X-CSE-MsgGUID: VXejmXVjQSGapkn3N2zsLA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
+   d="scan'208";a="278778532"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.232])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 10:18:42 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2] x86,fs/resctrl: Add event group descriptions for Intel Diamond Rapids
+Date: Tue, 29 Sep 2026 10:18:33 -0700
+Message-ID: <20260929171833.15883-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|LV5PR12MB9825:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1ee491ff-43d8-4e77-d47c-08df1e34cafb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|7416014|376014|366016|1800799024|22082099003|18002099003|11063799006|56012099006|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	omLk/jHcBBJQdIhkNFJn/P8YeDsWcFfYawtsdqKXq06R/xm8Y2Ap2S5WTfqrjKpnqNHgXTQnJ9pfuPau2tNexFEMJYrfDFSPMiP03kagpFWKh/kkXbFMITT0QIYIitCrtU9cV2VOFWw8aYZBE7HiLOS7DE5ZFqzfX1baaTJ30Rnp0HXdef7bKZfDW8x06OCbKj+d3hMAHobQwUZZYfzri3xEJZFl1MSPDjTdpLxzEl5JZ414eI3NLF8C4SpAiQqoD6lyaH19e376SLDtmu6pXBnTftyFbHmEaKNIsBQRnraJdG4gAx6tboVOmiZJTuKbexjAFpBTA+RRDy5eA+6KB1a1m/06jX/pNa7T2fvTPUM+kW2Xq2MsRoNEFpUBeifmdpi71uzuN9ZzNdN9HzuaOO98U6kzyNStWzQO0lLR3L1xUiDPDeUmaE2+gP4MTRZQUiXKBEJFfMit28l0OoOJZKTeRgGh9N6/Py8aRPEld6P+FrRAjM+XZPSagCrqwydBodLyFehs2sGtE7iNuqxIKjoUZpgW9ZlMrKBeXK7XR5IIbI9TCPbQA92gQG2E/awA9/JYj/F6qYd1EZ7DQYYdWMVh++DcgcOL2ZigaUNpkOEFNrO1q06ZLr+d6RTvLo4XSPHxWQE7cCUHYtMsvot5Cmp1xtGC+I6RyYohunmr+Go=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(22082099003)(18002099003)(11063799006)(56012099006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?SGRIrSz7cvMzsgnH11jP7XcqxXq5mVje5Dex4QhNpbd9JIzd4HwmaqEnaWWg?=
- =?us-ascii?Q?vlHO2JJ/gY62PoZ+TadSjJ3761Y59O58AJ/X99/euGBmypDXENYGFYqOZ2te?=
- =?us-ascii?Q?cA5EXNGgNTvK3KDyXMLoy7MFOI/wLu4N8l8rnA4ktA1uM031C7A0SFfJNUMM?=
- =?us-ascii?Q?EIlHJ2kWmWn9VOAp3U/N+oDV40cP25nsVn/wDoQao1WLnwZBJP0/u6YNF3DA?=
- =?us-ascii?Q?Rt4ej+iTGdkYSrsW4k/+++H0Bhe8elYv9CiedJsOdy5CVZnb47U/4yQDxSrI?=
- =?us-ascii?Q?d0Q/+zj4dqk6nxz5R8ddraASgLRvUv0ABUFb5lBhGhnWyBQ8zKbPE5O2Z7P1?=
- =?us-ascii?Q?29n5VhfTxQoNet9oWLkBTPZyuhrQNzCq5AocV4d5kH91r6pMivTf+dnEAqhg?=
- =?us-ascii?Q?ZpCLd5aQ7KsfTgM7XwBIZ6UIrnPHPSQ7UVe0BuiOAd2fqZnoiXRLJtgBPgqy?=
- =?us-ascii?Q?TQNtm/xANxT8A8aSlzTZY4TdQUJpBQmtG/x32s8EmbT7+irQ7POAa98Sb6sQ?=
- =?us-ascii?Q?LckXJTlnG4384SFgSrC8Ic1Rvl8AKtXkAQdKH9hO4KD9MLtjp5abQM4DjW9u?=
- =?us-ascii?Q?vCf7vRZhE6wHNMaMazpTGgh0iP2F3LyS8IyQ7BF9PY1I0Zzux+Fud9X44rV1?=
- =?us-ascii?Q?pRWBKsddti9LQC187aE4QenmPCp1drcdzRmyhw5Kbdf61jspnwz7HAmiYvsG?=
- =?us-ascii?Q?GJHG8CqpOSLe6+fXaJsUeG6bzqRWYACazh5D9MmxhC9w05ljqWH93LjjYRHu?=
- =?us-ascii?Q?iI57iYETybZ1VhjZ4eXZWn3lYVzajN0YbF6O32sz/GrmuNXQDuOYujF81Jct?=
- =?us-ascii?Q?YmTOkeC2A91RCpEWLwrFsskN3rBilC3Ao6NQUvh4Vb36nhwzuiQGXY4Aoyx/?=
- =?us-ascii?Q?aIND+u0D6R+gaqHxP0+pRSKdDZgvtUG1jpsdKNDhAlm+wE7H9ecfFukaZjZH?=
- =?us-ascii?Q?YILvBe3d47nKVwFUgxuwB09U8T6EorP1nAX9TEn/LXj2dogHKIKj/n5PvwBr?=
- =?us-ascii?Q?Bsa15+CZ7CAU6GVfquQOGBH4AKy35h4xOeFicgWpowkU0o4qKQXnqaj0m+hQ?=
- =?us-ascii?Q?JqnfiJVpqzwTT22j5oZhuuIpy2IVkSptEp3RQ56d/9UWjuCPduUbVEFFsYX3?=
- =?us-ascii?Q?vKyorJDrdCfpBj7zKNSCVBtC4mn/vS4oNBIYjWYiTvd+6EpafL6ysmjmF5YK?=
- =?us-ascii?Q?VkN3C/QdH3EO1biu6/ob6QFLUwyDFJwoow53hYXuX2qEIaClYaUXdP0u+zMT?=
- =?us-ascii?Q?aVMj1tv94jctzmJASQiPCsxC37TGrBN2NN06HZu+kjx9WkfSfgxYluARqlBU?=
- =?us-ascii?Q?PIvuYB9c2DxH+1QgcIsOriGdDELqPdh/Bqa3xICOrR4ID2g58b6EMNxc5XyG?=
- =?us-ascii?Q?ritcVUPSdhXkH9xtZg+JykQ/vW2ByBwTZUp1PyiHsUX2AvILTl1gE8L9jZYH?=
- =?us-ascii?Q?itunLQumwdP2R+MpOGavVZd+XMyjyQzs6X5vuiviU2ALoOsvsJNFXfTm+LAf?=
- =?us-ascii?Q?Y4B4bwk01NVE47su7a4Orq5bXTCkuYnHr3OFjcoUr26wzWK8d47FPE43SWaT?=
- =?us-ascii?Q?kmcSnFrO9M5Gkib8GDBOFrDQh8uzmpyLq+lhiu/jS/rRwUc7XETG5YMjtdV2?=
- =?us-ascii?Q?9ANnxTNxNYs08gyVvWgPBmzA5jth/Qc2Bd31+b3wFUWJiqVUKCU4L9oBkqap?=
- =?us-ascii?Q?yXOQxXDYDtoK9BAQbDkD2I9XIkc8zFVI6pnv8Tj9cAJWIfOn?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ee491ff-43d8-4e77-d47c-08df1e34cafb
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 14:20:20.3487
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8WJT1Z2wmX+Pp7x4zqDMnbYltp0lJpGzWlLuTj1CA6EZ8LX8BLjRSind9xjnl9zn
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV5PR12MB9825
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 28, 2026 at 11:16:25PM +0000, Pranjal Shrivastava wrote:
-> I can't quite build this as I can't find this macro:
-> 
-> drivers/iommu/generic_pt/fmt/../kunit_iommu.h:129:35: error: use of undeclared identifier 'KUNIT_PT_SUPPORTED_FEATURES'
->   129 |         if (priv->cfg.common.features & ~KUNIT_PT_SUPPORTED_FEATURES)
->       |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   CC      drivers/tty/tty_port.o
->   CC      drivers/clk/clk-fixed-factor.o
->   AS      arch/arm64/lib/strrchr.o
-> 1 error generated.
-> make[5]: *** [drivers/iommu/generic_pt/fmt/Makefile:30: drivers/iommu/generic_pt/fmt/kunit_iommu_armv8.o] Error 1
-> make[4]: *** [scripts/Makefile.build:551: drivers/iommu/generic_pt/fmt] Error 2
-> 
-> Am I missing a series it was defined in? Can't find anything on lore,
-> but I did find a commit on your github [1] that is supposed to preclude
-> this, I guess?
+Intel Diamond Rapids exposes Application Energy Telemetry through two
+new PMT aggregator GUIDs: one covering the "energy" feature, and one
+covering the "perf" feature, both documented in the Intel-PMT XML
+repository [1].
 
-Oh, there is a patch in my pile I didn't realize was needed, I'll add
-it to this series. The github has it:
+The "perf" aggregator references two events not previously enumerated
+by resctrl: retired instructions (INST_RETIRED), and a count of
+unhalted core clock cycles perceived by hardware as contributing to
+instruction execution (PCNT).
 
- iommupt/kunit: Do not test INCOHERENT on anything but x86
+Add definitions for both aggregators, and add the two new events to
+the resctrl filesystem so they can be exposed to user space.
 
-Thanks,
-Jason
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://github.com/intel/Intel-PMT # [1]
+---
+v2:
+	Reinette kindly wrote a much better commit message.
+	Code unchanged.
+
+ include/linux/resctrl_types.h           |  2 ++
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 34 +++++++++++++++++++++++++
+ fs/resctrl/monitor.c                    |  2 ++
+ 3 files changed, 38 insertions(+)
+
+diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
+index a5f56faa18d2..e2e2cf3d9ff6 100644
+--- a/include/linux/resctrl_types.h
++++ b/include/linux/resctrl_types.h
+@@ -60,6 +60,8 @@ enum resctrl_event_id {
+ 	PMT_EVENT_AUTO_C6_RES,
+ 	PMT_EVENT_UNHALTED_REF_CYCLES,
+ 	PMT_EVENT_UOPS_RETIRED,
++	PMT_EVENT_INST_RETIRED,
++	PMT_EVENT_PCNT,
+ 
+ 	/* Must be the last */
+ 	QOS_NUM_EVENTS,
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index c22c3cf5167d..3555b0aa33ce 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -125,9 +125,43 @@ static struct event_group perf_0x26557651 = {
+ 	}
+ };
+ 
++/*
++ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/DMR/OOBMSM/RMID-ENERGY/dmr_aggregator.xml
++ */
++static struct event_group energy_0x47903099 = {
++	.pfname		= "energy",
++	.guid		= 0x47903099,
++	.num_rmid	= 256,
++	.mmio_size	= XML_MMIO_SIZE(256, 2, 3),
++	.num_events	= 2,
++	.evts		= {
++		EVT(PMT_EVENT_ENERGY, 0, 18),
++		EVT(PMT_EVENT_ACTIVITY, 1, 18),
++	}
++};
++
++/*
++ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/DMR/OOBMSM/RMID-PERF/dmr_aggregator.xml
++ */
++static struct event_group perf_0x1415910A = {
++	.pfname		= "perf",
++	.guid		= 0x1415910A,
++	.num_rmid	= 256,
++	.mmio_size	= XML_MMIO_SIZE(256, 4, 3),
++	.num_events	= 4,
++	.evts		= {
++		EVT(PMT_EVENT_UNHALTED_REF_CYCLES, 0, 0),
++		EVT(PMT_EVENT_UNHALTED_CORE_CYCLES, 1, 0),
++		EVT(PMT_EVENT_INST_RETIRED, 2, 0),
++		EVT(PMT_EVENT_PCNT, 3, 0),
++	}
++};
++
+ static struct event_group *known_event_groups[] = {
+ 	&energy_0x26696143,
++	&energy_0x47903099,
+ 	&perf_0x26557651,
++	&perf_0x1415910A,
+ };
+ 
+ #define for_each_event_group(_peg)						\
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 73413cb128ea..04e4ea612b7c 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1041,6 +1041,8 @@ struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
+ 	MON_EVENT(PMT_EVENT_AUTO_C6_RES,		"c6_res",		RDT_RESOURCE_PERF_PKG,	false),
+ 	MON_EVENT(PMT_EVENT_UNHALTED_REF_CYCLES,	"unhalted_ref_cycles",	RDT_RESOURCE_PERF_PKG,	false),
+ 	MON_EVENT(PMT_EVENT_UOPS_RETIRED,		"uops_retired",		RDT_RESOURCE_PERF_PKG,	false),
++	MON_EVENT(PMT_EVENT_INST_RETIRED,		"inst_retired",		RDT_RESOURCE_PERF_PKG,	false),
++	MON_EVENT(PMT_EVENT_PCNT,			"pcnt",			RDT_RESOURCE_PERF_PKG,	false),
+ };
+ 
+ bool resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
+-- 
+2.55.0
+
