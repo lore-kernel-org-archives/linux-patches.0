@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A104D51D520;
-	Wed, 30 Sep 2026 18:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8227A34CFDE;
+	Wed, 30 Sep 2026 18:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791362; cv=none; b=FVv8CH4gKtk0mP9TywP6hcsvFYPat4JoD0LyCnqx3ceIF4HkJ1rxuQ6JxeTcm1EosmvKsSL1CIr25nr6uew9APatORKKCcY9DyL6mN7LBaXi2MfoiClT1PWShI82C2uIaueynDLq+apSaFTXDCkRa55gfjm6468q7s6sVUN5dt4=
+	t=1790791364; cv=none; b=iAwB5SarES0tpKR+cUburX2bLIb2Jc/4Upq8PuA6P2WLmshUGlFcUCZD03FX3xhXzwgrN39fsI5AH8irHK9yQLW3ts56RzdB0sjaNMmQ3nT1A60iSUb8Fbjlwx2r9f2P6uY6eUow1l++tfd5PetsBDSBUp15R2CyuyMjEsqtFK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791362; c=relaxed/simple;
-	bh=sAUZmSPoH6dODAAHKZAyQy9ScatK6V7l0Spk/ptU1Uc=;
+	s=arc-20240116; t=1790791364; c=relaxed/simple;
+	bh=mX3Zr1OEoc0b6htyI6pvX4L/hBJipzPRNcE2kX24lLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMc2zHeto/bFa+ITbh2GjTDpkCZtfwAtY9/4tqdgoYbagOoehL3hwcGuoo+BNM7CHLf6aI+MHrYneLNt9edXtvQd+Nf5Oz2onU4MCWq3euMeSZPQZFki4pnAwCVhX53avtqLkWuQed9Nw98702js1jLQ4LfQM5GlzyEnOobcfEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gaj6zeG+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XfZQLbSUU6aY4wkhVFNJqoieHVc6eR3XIhhOc3FHNIFYkgiOqcrJPbn89tl8ALNugoy0ZXrpJ4Udmq2OTRinmh7WLlQzzyMQtbjfpFTyeFeo5GL5aTKlPDGAsal/5+jI4j9MauvG9EHsb5R1eStMxga2/5zXTCiVWMz23BI6Z10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHTov9va; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gaj6zeG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078731F000FF;
-	Wed, 30 Sep 2026 18:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHTov9va"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCA31F000FF;
+	Wed, 30 Sep 2026 18:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791360;
-	bh=eBh4gwtie+TQSyQjEWOI74d//2aW57H4tWmEvAkycqw=;
+	s=korg; t=1790791363;
+	bh=hAuiDCR0tor4YKpmk3fLzhSjxiMlzxEke6Ctf3iBMWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gaj6zeG+cODuknjWK2Wncdx033yxOeqeflTNwhyorHjBHuCNcZaWZJtQGRTQuMyIQ
-	 H11CHfsgP2cLSpxFQgMwhdHI8MR8a+CmutN92sBTF47uKtxN8zkfKjJxNo7ZqVDCh4
-	 yduY2in4kckWARSDfs1TOp4aznM80BVz2XMO83tE=
+	b=GHTov9vahFz0UE8heS36CbvnVQt0VwV9ablYRcmHER9Gx+q6j9l//RQc5kZ32iv19
+	 2/wR1eV7RLa8z2Ydy5GqM49kZrt+nS45G0ogJEsui+iFiTUzrg2SZNLDMJyz1K3qTr
+	 cIUJ/H9DyIGZkNRSqrbOKSoidjGN07apQOqzICO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vlatko Kosturjak <kost@linux.hr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Anushree Mathur <anushree.mathur@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/752] ppp_async: drop the errored frame instead of resetting its headroom
-Date: Wed, 30 Sep 2026 17:21:40 +0200
-Message-ID: <20260930152403.238871642@linuxfoundation.org>
+Subject: [PATCH 5.15 221/752] powerpc/pseries: Ensure vpa,slb_shadow & dtl are unregistered during crash
+Date: Wed, 30 Sep 2026 17:21:31 +0200
+Message-ID: <20260930152403.036497621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,94 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlatko Kosturjak <kost@linux.hr>
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
 
-[ Upstream commit 8dc5d98a16fa23c00999aecf10018c9f69fa5bf4 ]
+[ Upstream commit 810d07fb4cf7577847f85a6fd6273b69cad8d580 ]
 
-ppp_receive_nonmp_frame() prepends a two-byte direction tag before running
-the pass/active BPF filters:
+Currently pseries_kexec_cpu_down() skips unregistering vpa, slb_shadow and
+dtl areas during a crash and kexec shutdown path. It was done to avoid
+doing an HCALL while crashing. However recently Anushree reported that
+during kernel crash while the kdump kernel was coming up, Hypervisor
+reported invalid values for 'vpa.yield_count' while it dispatching L2-KVM
+Guest vcpus. The error manifested as debug build Hypervisor assert
+triggering to indicate possible VPA corruption.
 
-	*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+Looking at the kexec cpu offline path it was discovered that during crash
+kernel doesn't unregister the VPA/SLB-Shadow/DTL area with
+Hypervisor. Instead it re-allocates and re-registers these areas
+for cpus during boot. During kexec boot the previously allocated areas
+can get overwritten with new content without hypervisor knowledge. This
+creates a small window where while kexec kernel boots and the L2-VCPUs are
+being dispatched, Hypervisor may try to read/write to a wrong memory area
+which previously belonged to older VPA.
 
-Nothing on the receive path guarantees those two bytes of headroom. The
-frame-error path in ppp_async's process_input_packet() resets a reused skb's
-headroom to zero while claiming to restore it to a freshly allocated state -
-but a fresh skb from dev_alloc_skb() carries NET_SKB_PAD:
+Fix this possible race and memory corruption by updating
+pseries_kexec_cpu_down() to also unregister vpa,slb_shadow & dtl areas
+during a kernel crash.
 
-	err:
-		if (skb) {
-			/* make skb appear as freshly allocated */
-			skb_trim(skb, 0);
-			skb_reserve(skb, - skb_headroom(skb));
-		}
-
-ap->rpkt still points at that skb, so the next frame is reassembled into it
-with no headroom at all. A peer that sends a bad-FCS frame followed by one
-beginning ff 03 then leaves a single byte of headroom by the time the filter
-tag is pushed, which lands one byte below skb->head:
-
-  skbuff: skb_under_panic: len:49 put:2 head:ffff888003c10000
-          data:ffff888003c0ffff tail:0x30 end:0x640 dev:<NULL>
-  kernel BUG at net/core/skbuff.c:214!
-  RIP: 0010:skb_panic+0x13e/0x230
-  Call Trace:
-   skb_push+0xbd/0x100
-   ppp_receive_nonmp_frame+0x48a/0x1d10
-   ppp_input+0x4e9/0x2f80
-   ppp_async_process+0x2a/0xe0
-   tasklet_action_common+0x20f/0x8a0
-   handle_softirqs+0x18e/0x590
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Zeroing the headroom violates the NET_SKB_PAD guarantee that dev_alloc_skb()
-gives the rest of the receive path. Besides the filter panic above, when CCP
-compression is enabled ppp_decompress_frame() hands skb->data - 2 to
-->decompress()/->incomp(), which then reads out of bounds before skb->head
-for the same reason.
-
-Rather than restore the headroom, drop the errored frame - as ppp_synctty
-already does on its error path - and clear ap->rpkt so the next frame is
-reassembled into a fresh skb with proper headroom. This is simpler and fixes
-both the filter under-panic and the CCP out-of-bounds read.
-
-The original V1 of this patch made room in ppp_receive_nonmp_frame() with
-skb_cow_head(); Eric pointed out that fixing the root cause in the transport
-is the right approach.
-
-Found by fuzzing the PPP receive path with a mutating peer on a pty; it is an
-interesting (remote) DoS: root configures PPP, the peer supplies two crashing
-frames. The reproducer (repro-ppp-skb.c, unchanged from v1) panics in about a
-second, and returns cleanly with this applied.
-
-Fixes: 6722e78c9005 ("[PPP]: handle misaligned accesses")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Vlatko Kosturjak <kost@linux.hr>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/apkR6ZU+tqP2C3Fl@griffin.linux.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260708015802.274271-1-vaibhav@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/powerpc/platforms/pseries/kexec.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index f7cd56d4677ea..61da58e1775e2 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -822,11 +822,8 @@ process_input_packet(struct asyncppp *ap)
-  err:
- 	/* frame had an error, remember that, reset SC_TOSS & SC_ESCAPE */
- 	ap->state = SC_PREV_ERROR;
--	if (skb) {
--		/* make skb appear as freshly allocated */
--		skb_trim(skb, 0);
--		skb_reserve(skb, - skb_headroom(skb));
--	}
-+	kfree_skb(skb);
-+	ap->rpkt = NULL;
- }
- 
- /* Called when the tty driver has data for us. Runs parallel with the
+diff --git a/arch/powerpc/platforms/pseries/kexec.c b/arch/powerpc/platforms/pseries/kexec.c
+index 145fcfbc017f2..d8bded55e9e53 100644
+--- a/arch/powerpc/platforms/pseries/kexec.c
++++ b/arch/powerpc/platforms/pseries/kexec.c
+@@ -20,12 +20,15 @@
+ void pseries_kexec_cpu_down(int crash_shutdown, int secondary)
+ {
+ 	/*
+-	 * Don't risk a hypervisor call if we're crashing
+-	 * XXX: Why? The hypervisor is not crashing. It might be better
+-	 * to at least attempt unregister to avoid the hypervisor stepping
+-	 * on our memory.
++	 * Ensure vpa/slb_shadow/dtl cleanup even while we are crashing.
++	 * Why? The hypervisor is not crashing so at least attempt unregister to
++	 * avoid the hypervisor stepping on our memory. If hypervisor or kexec
++	 * kernel steps on the old memory allocated to these areas before the
++	 * new kexec-kernel happens to allocate and register new areas,
++	 * the hypervisor will see invalid content which may cause
++	 * unexpected behavior.
+ 	 */
+-	if (firmware_has_feature(FW_FEATURE_SPLPAR) && !crash_shutdown) {
++	if (firmware_has_feature(FW_FEATURE_SPLPAR)) {
+ 		int ret;
+ 		int cpu = smp_processor_id();
+ 		int hwcpu = hard_smp_processor_id();
 -- 
 2.53.0
 
