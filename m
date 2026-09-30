@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE265221EA;
-	Wed, 30 Sep 2026 18:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101365221EA;
+	Wed, 30 Sep 2026 18:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792756; cv=none; b=u/tsN/PfNtzZBE2XQLgAp015tk+PdbO9uPJvTtUzsXTzKjODJgtIguEghIykXMtJXAW7H4rllKzu4HpECeSRFM5+DWIpl0Y+UXXrxcAn2jw+aGKfzKX/tpgVgzozoN2vqkI+0yoG0q/Ue4bAMLG68wk7wEAykg+Y2gMghOnHZwQ=
+	t=1790792759; cv=none; b=tjrPKSROEXgWJ95NE6/8xpzI8CNsaRAt49U23OsV4c/V8jCVoVmHnOOfxQBJ7+KXKM3MqMWWxanPfOpa0qUmvm+yiIyYOSqJ8cM6wo/xJptd7jXBBcTdU+f3QxzL4dDcnfjATSuquG2UxJZpg6EJLkOYhO6BV/yicUELFThxkIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792756; c=relaxed/simple;
-	bh=EkSDGJ59zkI7TZLbQhBBLJnEFureu84lPIFTVK6AG0o=;
+	s=arc-20240116; t=1790792759; c=relaxed/simple;
+	bh=C10CCan3HYlpp6mmcWTGYDeFCBdmTAnmpse1AZQNklI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuGOvAL6cOXSmgPcbSQoW+XhwYwIA/KhU8dvVu64ErtR1fM5pTfBuxm6D3c9LdmzXUY7vkhB9UjnTqsfw9qtRpLKhQ0A5Ni86uRsGn+MLh7gzHtzxkndJXFjALtKatUR7JEVDUT0Ff4qJLrpZr9Hoe5hH3Kg3ssJzEdnsMuU0YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5EDUVTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E90pOI/rC/evBMlWfyD3VM+C6V+Le0IbqqhFFDtzCF6JczBViJjvPvmie3YqmYkP8E8Oih234AwAChUkdMw+vLqNB9/pul2KuxP52hBKYAmNr+7q6zJMDOv2eTN97k8WU9WNFnlmwNxBCiMnEYCBu0J/DfSsfJjBctw5O1hJE1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pliS5BPT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5EDUVTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F8B1F0089B;
-	Wed, 30 Sep 2026 18:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pliS5BPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3401F000FF;
+	Wed, 30 Sep 2026 18:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792755;
-	bh=ORHKqEp1zoL+lZk/rTfexwLoTzlZG6i5KNm1WN5HKJ4=;
+	s=korg; t=1790792758;
+	bh=Awfp71Pw+Aiky6Sjl4aZo+IKfUaO5I6T9pVEUmdnlis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5EDUVTiKvStdDN9SQY3vzlxZiCLzRwWY+4anD80sLyFOohrpZCkT1KhthvlqfGhe
-	 XsR2g544m1jli+DDPKd+YbIpvwZ+EUoH9N6ScSvZoJlCTIV2NrQ/md2iQJlNXLx9p1
-	 PSzOaAjT/NL6xcy24Ssq+40YmNWZU0FI8qhGgq2Q=
+	b=pliS5BPTUYCaEwAUXZiwBcmDheSotT9LjEzysczCn3w8GSB3up3ORtXdwJNNs3fvL
+	 fpIbO43AvqEC5qUjd6KPolx/tee6IZgfOdq37TTvcm+CIGx2clcFKl2VOgT13Bs2Vk
+	 9npz3aAsyUVIF/ynHi380hUnHAgYbQvqEhl3h5j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
+	mayhemandcoffee <mayhemandcoffee@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 015/395] tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
-Date: Wed, 30 Sep 2026 17:24:37 +0200
-Message-ID: <20260930152340.947518555@linuxfoundation.org>
+Subject: [PATCH 6.18 016/395] HID: multitouch: Add report ID mismatch quirk for ASUS ROG Z13 Folio
+Date: Wed, 30 Sep 2026 17:24:38 +0200
+Message-ID: <20260930152340.968757915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,80 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
 
-[ Upstream commit eaab8cab451b9502ce224cd202550375b894a467 ]
+[ Upstream commit aaaea79efba5a27cb9e0a5a628046d829d3f2cbb ]
 
-bpf_sock_destroy() runs from the tcp iterator, under rcu_read_lock(). If
-the sock is a listener that still has children in its accept queue,
-tcp_abort() ends up in inet_csk_listen_stop() and the cond_resched()
-there trips the debug check:
+Commit e716edafedad ("HID: multitouch: Check to ensure report
+responses match the request") introduced validating GET_FEATURE
+responses return the requested report ID.
 
-BUG: sleeping function called from invalid context at net/ipv4/inet_connection_sock.c:1523
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 628, name: test_progs
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-locks held by test_progs/628: 3, last CPU#3:
- #0: ffff8881158cee18 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x56/0x1210
- #1: ffff8881106bb858 (sk_lock-AF_INET6){+.+.}-{0:0}, at: bpf_iter_tcp_seq_show+0x32b/0x4b0
- #2: ffffffffb435af20 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x46b/0xde0
-CPU: 3 UID: 0 PID: 628 Comm: test_progs Tainted: G        W           7.2.0+ #65 PREEMPT
-Tainted: [W]=WARN
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc1/0xf0
- dump_stack+0x10/0x20
- __might_resched+0x3d2/0x610
- inet_csk_listen_stop+0x7b/0xbf0
- tcp_abort+0x23b/0x3b0
- bpf_sock_destroy+0xfc/0x140
- bpf_prog_448133d24601754f_iter_tcp6_server+0x81/0x8a
- bpf_iter_run_prog+0x538/0xde0
- bpf_iter_tcp_seq_show+0x26b/0x4b0
- bpf_seq_read+0x424/0x1210
- vfs_read+0x197/0xe40
- ksys_read+0x119/0x240
- __x64_sys_read+0x72/0xc0
- x64_sys_call+0x647/0x27e0
- do_syscall_64+0xe5/0x610
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fad39b28aca
-RSP: 002b:00007ffc381c61c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 00007ffc381c6a88 RCX: 00007fad39b28aca
-RDX: 0000000000000032 RSI: 00007ffc381c6250 RDI: 0000000000000014
-RBP: 00007ffc381c61e0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-R13: 0000000000000000 R14: 000055f077c1bbb0 R15: 00007fad3a0f3000
- </TASK>
+ASUS ROG Z13 Flow (2025) GZ302EA touchpad (USB 0b05:1a30) returns
+a different report ID for Win8 feature request. Before this check,
+the response was still processed and allowed device to switch into
+its full Touchpad Precision mode.
 
-The commit that added the kfunc already guards lock_sock() in tcp_abort()
-and udp_abort() with has_current_bpf_ctx(), but missed the listener path.
-Do the same for the cond_resched(). The loop runs inside the iterator's
-rcu_read_lock(), it must not reschedule or report a quiescent state there.
+After the validation, the response is discarded before
+hid_report_raw_event() processes it and device remains in fallback
+mode and no longer exposes ABS_MT_SLOT, ABS_MT_TOOL_TYPE or the
+multi-finger BTN_TOOL_* capabilities for palm rejection.
 
-Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260910112736.153710-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Add a device quirk to allow the known firmware behavior for
+this device while preserving report ID validation for all other
+devices.
+
+The device previously matched the generic MT_CLS_WIN_8 entry, so
+base the new class on MT_CLS_WIN_8 to keep it on the same quirk set
+as before the regression.  MT_QUIRK_CONFIDENCE must be set
+explicitly: it is normally enabled by the class name check in
+mt_touch_input_mapping(), which only matches the MT_CLS_WIN_8*
+names, and it is what makes ABS_MT_TOOL_TYPE available for
+touchpads.
+
+Fixes: e716edafedad ("HID: multitouch: Check to ensure report responses match the request")
+
+Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+Reported-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221774
+Tested-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221774
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 6193db63b2973..a44c8096725fe 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1533,7 +1533,8 @@ void inet_csk_listen_stop(struct sock *sk)
- 		local_bh_enable();
- 		sock_put(child);
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 35f9f4f76a550..4b736cd012db9 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -79,6 +79,7 @@ MODULE_LICENSE("GPL");
+ #define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
+ #define MT_QUIRK_YOGABOOK9I		BIT(24)
+ #define MT_QUIRK_KEEP_LATENCY_ON_CLOSE	BIT(25)
++#define MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH	BIT(26)
  
--		cond_resched();
-+		if (!has_current_bpf_ctx())
-+			cond_resched();
- 	}
- 	if (queue->fastopenq.rskq_rst_head) {
- 		/* Free all the reqs queued in rskq_rst_head. */
+ #define MT_INPUTMODE_TOUCHSCREEN	0x02
+ #define MT_INPUTMODE_TOUCHPAD		0x03
+@@ -233,6 +234,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
+ #define MT_CLS_APPLE_TOUCHBAR			0x0114
+ #define MT_CLS_YOGABOOK9I			0x0115
+ #define MT_CLS_EGALAX_P80H84			0x0116
++#define MT_CLS_ASUS_ROG_Z13_FOLIO		0x0117
+ #define MT_CLS_SIS				0x0457
+ 
+ #define MT_DEFAULT_MAXCONTACT	10
+@@ -403,6 +405,16 @@ static const struct mt_class mt_classes[] = {
+ 		.quirks = MT_QUIRK_ALWAYS_VALID |
+ 			MT_QUIRK_CONTACT_CNT_ACCURATE |
+ 			MT_QUIRK_ASUS_CUSTOM_UP },
++	{ .name = MT_CLS_ASUS_ROG_Z13_FOLIO,
++		.quirks = MT_QUIRK_ALWAYS_VALID |
++			MT_QUIRK_IGNORE_DUPLICATES |
++			MT_QUIRK_HOVERING |
++			MT_QUIRK_CONTACT_CNT_ACCURATE |
++			MT_QUIRK_STICKY_FINGERS |
++			MT_QUIRK_WIN8_PTP_BUTTONS |
++			MT_QUIRK_CONFIDENCE |
++			MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH,
++		.export_all_inputs = true },
+ 	{ .name = MT_CLS_VTL,
+ 		.quirks = MT_QUIRK_ALWAYS_VALID |
+ 			MT_QUIRK_CONTACT_CNT_ACCURATE |
+@@ -505,6 +517,7 @@ static const struct attribute_group mt_attribute_group = {
+ 
+ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+ {
++	struct mt_device *td = hid_get_drvdata(hdev);
+ 	int ret;
+ 	u32 size = hid_report_len(report);
+ 	u8 *buf;
+@@ -526,8 +539,14 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+ 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
+ 			 report->id);
+ 	} else {
+-		/* The report ID in the request and the response should match */
+-		if (report->id != buf[0]) {
++		/*
++		 * The report ID in the request and the response should match.
++		 * Some firmware (e.g. the ASUS ROG Z13 Folio
++		 * touchpad) returns a mismatched ID on this specific fetch;
++		 * tolerate it only for devices explicitly flagged as such.
++		 */
++		if (report->id != buf[0] &&
++		    !(td->mtclass.quirks & MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH)) {
+ 			hid_err(hdev, "Returned feature report did not match the request\n");
+ 			goto free;
+ 		}
+@@ -2716,6 +2735,12 @@ static const struct hid_device_id mt_devices[] = {
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
+ 			   I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288) },
+ 
++	/* Asus ROG Flow Z13 (2025) GZ302EA keyboard-cover touchpad */
++	{ .driver_data = MT_CLS_ASUS_ROG_Z13_FOLIO,
++		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
++			USB_VENDOR_ID_ASUSTEK,
++			USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO) },
++
+ 	/* Generic MT device */
+ 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_MULTITOUCH, HID_ANY_ID, HID_ANY_ID) },
+ 
 -- 
 2.53.0
 
