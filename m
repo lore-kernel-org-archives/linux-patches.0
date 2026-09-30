@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E32F4DEC26;
-	Wed, 30 Sep 2026 18:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B68E519E12;
+	Wed, 30 Sep 2026 18:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792481; cv=none; b=fLRWp0sOAj76uJmp+04zKUtgk8tQ6KXuK5Jb387j1C4ow4j9CGlGH+S4Q28DLFCaHzg5GdSVujUCoD1Aoubdx+ajx9V9MSInhjzQflY2mmZIXTwF+hJh3c7ftomiaMhnX7FS02XjWtz9zs1NEhkmV3ruoW7lHkXDTCyI0405f6I=
+	t=1790792484; cv=none; b=p6xBVeLbI1oUIdYZukHDTPHkXy6OBn2VV4AEiY//q4pmkImyhVEAsCFCbZDayLZJIb0f+s+k+STFYaOV6l3cfizR1I87+eyNvkX7Ey1a1i/trPdIqHXHBRQyQ4j6Wm2Lu1oVJuO6ZH5fgWsBnPYC29JfJkK6dUw8UCJHwd5QeZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792481; c=relaxed/simple;
-	bh=tgq57Qj9qBa/69AhPpdknis7afTe05oaGw5s3QRflZc=;
+	s=arc-20240116; t=1790792484; c=relaxed/simple;
+	bh=U3UYpZVp/j7/o43YAwJ0NtBSr7DIe1ayTrvOipwJgE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTI08SH4YHb3BF76TtvJEVPnoKLFWB+9MBi37sCTX+0riPTNJjEEdkcIY6vIGfPvBsm32uoLgh1ccL/TnJwX5E8aqQ63ndFTRa/K+hbwUYbGj/ImY0e9bqcJVuTnbNF216PKex2ICXR8GA5+z/vbAGoCsdwRhi7bcZqfs8eM2uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbHQeSbo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KYZp2YWh9GMABG6ksGOTsfOeoljq5KTkCZkX/9ZOzKz1k4P8xxK8Mp7jr0aB9RIINIzIgfCQfYTByjZVDYLeooRwtttWtuN79ttMNh45gbYPqL6JFjk4Gvar8gdaFyqhwGkxmRyrWzkjBLVfHYf3RO9CvO9YmNuI9rk6yd2OBi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xTRIgGB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbHQeSbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A945A1F00898;
-	Wed, 30 Sep 2026 18:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xTRIgGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871401F000FF;
+	Wed, 30 Sep 2026 18:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792480;
-	bh=K7ZRFwGne1UGfX6YInir5NJT44N/gsfzCFt33wNHFVs=;
+	s=korg; t=1790792483;
+	bh=w1TB3jeOlHJ+oAfOj57FsMdyYzTdnGPXE41SmgxhfKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rbHQeSboS7rvTES1uCwauH144m9qx1SjyxFoEUS8Ypp7E2s8X2KtCWnHbKZOVw3TM
-	 x3LAFp8fpT3hFpmbZNEIlVzoXJPPyVf+gPZ2Ujul3zXeuxFUT0e+wDiz9UVVCkgI0T
-	 +B9b09nkYx2Fx4kTjuHuFMiW71gl6sl9OtWZZRFM=
+	b=1xTRIgGBlk3kcN74FlIzZwkc5WGlfZk45v7Suct5B+ba7zCLWceerxXy+zOal6eM7
+	 9SMemD1a4VOu62/5khdcKfQWlVIeqUlebYQuLq75WrPNbqNxYqAWcykCbAbHvyYVz4
+	 0Bl0vm0HAY0BAMBWpEQS/tVo8iwL65Ian9MFzCrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 671/752] net/smc: stop links when their GID is removed
-Date: Wed, 30 Sep 2026 17:29:01 +0200
-Message-ID: <20260930152412.771078207@linuxfoundation.org>
+Subject: [PATCH 5.15 654/752] selftests: nci: Fix uninitialized family ID on missing attribute
+Date: Wed, 30 Sep 2026 17:28:44 +0200
+Message-ID: <20260930152412.410027765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,94 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karsten Graul <kgraul@linux.ibm.com>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 29397e34c76b57ce596493008176cf374f1cb867 ]
+[ Upstream commit eda518d2cdb6074a0bcdfa06af291616bcb5c421 ]
 
-With SMC-Rv2 the GID is an IP address that can be deleted from the
-device. When an IB_EVENT_GID_CHANGE event is provided then iterate over
-all active links and check if their GID is still defined. Otherwise
-stop the affected link.
+get_family_id() walks the generic netlink CTRL_CMD_GETFAMILY reply
+looking for the CTRL_ATTR_FAMILY_ID attribute and returns the parsed
+value in the local variable "id". If the reply does not carry that
+attribute, the parsing loop never assigns "id" and the function returns
+an indeterminate stack value, which the caller stores in self->fid and
+uses for subsequent netlink requests.
 
-Signed-off-by: Karsten Graul <kgraul@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 61cb282fe97b ("net/smc: fix UAF on lgr list traversal in smcr_port_err()")
+Initialize "id" to 0 so a missing attribute yields a deterministic
+(invalid) family ID instead of a garbage value.
+
+Fixes: f595cf1242f3 ("selftests: Add nci suite")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260901070618.3299012-1-nagachaithanya9911@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_ib.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ tools/testing/selftests/nci/nci_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
-index f0ec1f1d50fac..04a8612529b36 100644
---- a/net/smc/smc_ib.c
-+++ b/net/smc/smc_ib.c
-@@ -217,6 +217,58 @@ int smc_ib_determine_gid(struct smc_ib_device *smcibdev, u8 ibport,
- 	return -ENODEV;
- }
- 
-+/* check if gid is still defined on smcibdev */
-+static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
-+				  struct smc_ib_device *smcibdev, u8 ibport)
-+{
-+	const struct ib_gid_attr *attr;
-+	bool rc = false;
-+	int i;
-+
-+	for (i = 0; !rc && i < smcibdev->pattr[ibport - 1].gid_tbl_len; i++) {
-+		attr = rdma_get_gid_attr(smcibdev->ibdev, ibport, i);
-+		if (IS_ERR(attr))
-+			continue;
-+
-+		rcu_read_lock();
-+		if ((!smcrv2 && attr->gid_type == IB_GID_TYPE_ROCE) ||
-+		    (smcrv2 && attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP &&
-+		     !(ipv6_addr_type((const struct in6_addr *)&attr->gid)
-+				     & IPV6_ADDR_LINKLOCAL)))
-+			if (!memcmp(gid, &attr->gid, SMC_GID_SIZE))
-+				rc = true;
-+		rcu_read_unlock();
-+		rdma_put_gid_attr(attr);
-+	}
-+	return rc;
-+}
-+
-+/* check all links if the gid is still defined on smcibdev */
-+static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
-+{
-+	struct smc_link_group *lgr;
-+	int i;
-+
-+	spin_lock_bh(&smc_lgr_list.lock);
-+	list_for_each_entry(lgr, &smc_lgr_list.list, list) {
-+		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
-+			    SMC_MAX_PNETID_LEN))
-+			continue; /* lgr is not affected */
-+		if (list_empty(&lgr->list))
-+			continue;
-+		for (i = 0; i < SMC_LINKS_PER_LGR_MAX; i++) {
-+			if (lgr->lnk[i].state == SMC_LNK_UNUSED ||
-+			    lgr->lnk[i].smcibdev != smcibdev)
-+				continue;
-+			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
-+						   lgr->smc_version == SMC_V2,
-+						   smcibdev, ibport))
-+				smcr_port_err(smcibdev, ibport);
-+		}
-+	}
-+	spin_unlock_bh(&smc_lgr_list.lock);
-+}
-+
- static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
- {
+diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
+index 6f571e3c21c09..87262f8d0c101 100644
+--- a/tools/testing/selftests/nci/nci_dev.c
++++ b/tools/testing/selftests/nci/nci_dev.c
+@@ -182,7 +182,7 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
+ 	} ans;
+ 	struct nlattr *na;
+ 	int resp_len;
+-	__u16 id;
++	__u16 id = 0;
+ 	int len;
  	int rc;
-@@ -255,6 +307,7 @@ static void smc_ib_port_event_work(struct work_struct *work)
- 		} else {
- 			clear_bit(port_idx, smcibdev->ports_going_away);
- 			smcr_port_add(smcibdev, port_idx + 1);
-+			smc_ib_gid_check(smcibdev, port_idx + 1);
- 		}
- 	}
- }
+ 
 -- 
 2.53.0
 
