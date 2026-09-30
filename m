@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F3C3BFAEE;
-	Wed, 30 Sep 2026 19:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D873C1986;
+	Wed, 30 Sep 2026 19:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794879; cv=none; b=LlX9mHTGedOVajaF63J519H5A45H8+hFDtKRKie6gPHM64cRwOJIl0VoXoWQIVJg1Q0wPC72HAxaeGVnQucyN45bIgRSP7Bch9IBjodxmrHmfMcaa/5Rz9VRpalTB0b5MAvuXWIcfMTS6lwUoHR0aPBfkqWKwQtxRoB9xbmvEfE=
+	t=1790794880; cv=none; b=A/OiFuMr6orXiUSjJ+0vwg4x0iFlFJAtE0xSr/8GOndI20ow6JYKLmn/VsgJN1W79iSE6kmAm2AoPOxjkyi5Ov83v7EGRPoE7QJZawwDrdzqYUNdrlLQnRPWU/AT7z2kA3d3fe3t66bkATtjFDS/2c/bV25K9pE8WxvVVAkfKYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794879; c=relaxed/simple;
-	bh=2JEfmT4z8UBIKbzqpvWcJMgK9Gy6rCy8nT2eVB2mlvw=;
+	s=arc-20240116; t=1790794880; c=relaxed/simple;
+	bh=uR8otVK42GuNM2FkGrKRADYF4OInn1qwm4Drlq7XSXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1JMKhoFsOvb8D4W9q0LicaRqoJQswkoviy+1Jr00YuidFhc6LwJl3ODEiV8JVk7iY0HY1B5G0/FYiSaFfYr2nnScimraEd73TlGWjaTPDJlWQyA1TOG5qKChcINlU5rm3ffivVRRbkvXWToa//7kFTVo+LP9sVIkyLIRAV/HXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUVPUR0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FdcmVqXLZrIZLjcaoggVBfbM1TPSQa/eG3PcqD3aEor/BzQy/LfGnoMSQHQCR8v5DNSDwLSW70XvHehzWxbzbgZYItWLsbf4eraUx4zzEBaAEWXgGlFqA6Ms6e3qh+SsPGe6CcLAFMlJ3x4yjn094x6noHgZiuRHCcbOKFCWvhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb/9QNzB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUVPUR0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD31F000FF;
-	Wed, 30 Sep 2026 19:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb/9QNzB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B151F00899;
+	Wed, 30 Sep 2026 19:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794850;
-	bh=IMvM6+Uuw5za00wu4W5I8OG2YRGZmgEsrpho4wWxZeo=;
+	s=korg; t=1790794855;
+	bh=ECdg2b0Xll1k071PQfq4S18xwo/cjVKHGu7Kp2UsjTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUVPUR0anhsihDOIH58R+vfuPtlIhTRNhPFHEj6ojDDF/kXNsr99P7pY6h5mJ1q3n
-	 9DMNmWGUNEUYdxo28ZLvCBwrgStSBT5yxBDE8QQacGz8L+dpBtH2uG5yS4AaQ/AbeP
-	 l748Ur6pfZle6OuISkxmFrcDW86bLX5QIVxOs5f0=
+	b=Gb/9QNzBtvN4bwamykLjuAFlkXPZ4dK1R9EygzHZ02QRphZMpwUR+jC3RwLwTo8Op
+	 D4dlbDeMAtmutV0v9Mk+OOYhn3KcoIwFSvCzZAhhVbh3HleLLRuvdChfQgeAU423U3
+	 4AdfA+Q3Fwlr+hNOjAbtK5tz9o3PEIMVC6PdAcwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0354/1193] net: drop_monitor: fix info leak in NET_DM_ATTR_PAYLOAD
-Date: Wed, 30 Sep 2026 17:17:18 +0200
-Message-ID: <20260930152442.032393436@linuxfoundation.org>
+Subject: [PATCH 6.6 0356/1193] Bluetooth: ISO: fix malformed ISO_END/CONT handling
+Date: Wed, 30 Sep 2026 17:17:20 +0200
+Message-ID: <20260930152442.078102845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,75 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 5e9c8baee0329fbefe7c67aea945e2a07f15e98b ]
+[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
 
-net_dm_packet_report_fill() and net_dm_hw_packet_report_fill() open code
-the NET_DM_ATTR_PAYLOAD attribute to avoid zeroing the packet payload
-before overwriting it with skb_copy_bits().
+Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
+ISO_CONT, ISO_END packets.  We currently reject them if they are last.
 
-skb_put() reserves nla_total_size(payload_len), i.e. the header plus the
-NLA_ALIGN() padding, but only payload_len bytes are copied in. When
-payload_len is not a multiple of 4 the 1-3 padding bytes are never
-initialized and are leaked to user space inside the netlink message.
+If controller sends malformed sequence
 
-KMSAN confirms the leak for the software path when the packet payload
-length is not 4-byte aligned:
+    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
 
-  BUG: KMSAN: kernel-infoleak in _copy_to_iter
-   _copy_to_iter
-   __skb_datagram_iter
-   skb_copy_datagram_iter
-   netlink_recvmsg
-   sock_recvmsg
-   __sys_recvfrom
-  Uninit was created at:
-   kmem_cache_alloc_node_noprof
-   __alloc_skb
-   net_dm_packet_work
-  Bytes 173-175 of 176 are uninitialized
+that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
+too long ISO_END, we panic on skb_put. If controller sends too short
+ISO_END we accept it.
 
-Use __nla_reserve(), which sets up the attribute header and zeroes the
-padding, instead of open coding the attribute construction.
+Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
+skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
+as they require the same initial checks. Reject too short ISO_END
+packets.
 
-Fixes: ca30707dee2b ("drop_monitor: Add packet alert mode")
-Fixes: 5e58109b1ea4 ("drop_monitor: Add support for packet alert mode for hardware drops")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260722122817.5548-1-yhlee@isslab.korea.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/bluetooth/iso.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index fe560b2d161f9..60ca18b440a34 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -669,9 +669,7 @@ static int net_dm_packet_report_fill(struct sk_buff *msg, struct sk_buff *skb,
- 	if (nla_put_u16(msg, NET_DM_ATTR_PROTO, be16_to_cpu(skb->protocol)))
- 		goto nla_put_failure;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index ea5d8171fde73..23776ffbc60a3 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2037,7 +2037,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 	switch (pb) {
+ 	case ISO_START:
+ 	case ISO_SINGLE:
+-		if (conn->rx_len) {
++		if (conn->rx_skb || conn->rx_len) {
+ 			BT_ERR("Unexpected start frame (len %d)", skb->len);
+ 			kfree_skb(conn->rx_skb);
+ 			conn->rx_skb = NULL;
+@@ -2104,12 +2104,14 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		break;
  
--	attr = skb_put(msg, nla_total_size(payload_len));
--	attr->nla_type = NET_DM_ATTR_PAYLOAD;
--	attr->nla_len = nla_attr_size(payload_len);
-+	attr = __nla_reserve(msg, NET_DM_ATTR_PAYLOAD, payload_len);
- 	if (skb_copy_bits(skb, 0, nla_data(attr), payload_len))
- 		goto nla_put_failure;
+ 	case ISO_CONT:
+-		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
++	case ISO_END:
++		BT_DBG("%s: frag len %d (expecting %d)",
++		       (pb == ISO_END) ? "End" : "Cont", skb->len,
+ 		       conn->rx_len);
  
-@@ -829,9 +827,7 @@ static int net_dm_hw_packet_report_fill(struct sk_buff *msg,
- 	if (nla_put_u16(msg, NET_DM_ATTR_PROTO, be16_to_cpu(skb->protocol)))
- 		goto nla_put_failure;
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected continuation frame (len %d)",
+-			       skb->len);
++		if (!conn->rx_skb) {
++			BT_ERR("Unexpected ISO %s frame (len %d)",
++			       (pb == ISO_END) ? "End" : "Cont", skb->len);
+ 			goto drop;
+ 		}
  
--	attr = skb_put(msg, nla_total_size(payload_len));
--	attr->nla_type = NET_DM_ATTR_PAYLOAD;
--	attr->nla_len = nla_attr_size(payload_len);
-+	attr = __nla_reserve(msg, NET_DM_ATTR_PAYLOAD, payload_len);
- 	if (skb_copy_bits(skb, 0, nla_data(attr), payload_len))
- 		goto nla_put_failure;
+@@ -2125,17 +2127,9 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+ 					  skb->len);
+ 		conn->rx_len -= skb->len;
+-		break;
  
+-	case ISO_END:
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected end frame (len %d)", skb->len);
+-			goto drop;
+-		}
+-
+-		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+-					  skb->len);
+-		conn->rx_len -= skb->len;
++		if (pb == ISO_CONT)
++			break;
+ 
+ 		if (!conn->rx_len) {
+ 			struct sk_buff *rx_skb = conn->rx_skb;
+@@ -2146,6 +2140,13 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 			 */
+ 			conn->rx_skb = NULL;
+ 			iso_recv_frame(conn, rx_skb);
++		} else {
++			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
++			       skb->len, conn->rx_len);
++			kfree_skb(conn->rx_skb);
++			conn->rx_skb = NULL;
++			conn->rx_len = 0;
++			goto drop;
+ 		}
+ 		break;
+ 	}
 -- 
 2.53.0
 
