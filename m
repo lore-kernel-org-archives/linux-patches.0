@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E074B525A66;
-	Wed, 30 Sep 2026 17:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66D6524AE8;
+	Wed, 30 Sep 2026 17:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790479; cv=none; b=S2elNbNqhF0ssKoteW2MWYXaWe6wmYzjdMgSO08dCixIU673ZMOJnRx5iaCUu9/QQf99obzQth2r7HBdmAOOllgQnIBBBlK4Dx+iBC24b6NVWdhuGrWHD2bNurHk7C5eFFWn14tg/iqjk81v5BL5aTOoCE/7cPMzFGM77IE9KNg=
+	t=1790790481; cv=none; b=T2GlxzuCjqQE6qIp/t0w9U9wdFXaMZe7na+wbGS6B0/rt4Q0Eo2XMHOSbNG38fnaqt7wq65XqdWFbJYQFCswMlMwp7I7Tqk/uGo2EJ6VrWNRnykiNFELTorwbPZ1PFc95Gf8IpKEFDp1cpl45dTN8hMLr7fy6IcdjmMyipOd7U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790479; c=relaxed/simple;
-	bh=PqAHfspnbWjJddRk3kR3TiYPcXwA4foelyw51nqvkoo=;
+	s=arc-20240116; t=1790790481; c=relaxed/simple;
+	bh=UfslXHh43kfszb+niZztdRjlWGmKOHIFUyYZHb5U+vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1W7otBJyIpgJ931wzz8zaMeS4F+aA3Wju/drlO8BAhvpYLxc+Gqj+SLPurnb9mxEra2GB1lN3ynLryk9+HZjOGm0UfuGrkOGqn4nq73ajiTq4ruEbVneuyX/Eo+U3cvI9VrOmqstQTDrG0CcsmtxNwSA8t5tNAyJWCWZQzRHT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXkO4xCx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9udeB5oExTjFYxVkkjfvSvV/AzoXRc4+8TCBwvFdHMv4S6FFf5Aq1dRC7ZKd9wirBCoB9rUDr4+meuZ0DZEZYt9sHOHrdUMwk6Va1+sxHp/UGLlHMZ7o214vvrxoLAD09/qvv2Ei4i7gy/aoBLHc5I29TjOovRfls0b7nAtfNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGFHImJf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXkO4xCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459951F000FF;
-	Wed, 30 Sep 2026 17:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGFHImJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD701F000FF;
+	Wed, 30 Sep 2026 17:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790477;
-	bh=q1v76n9RiV+w4fqAM4mUHFnCbgHXstaFnk+jAee5cKw=;
+	s=korg; t=1790790480;
+	bh=5qaKIHy/AP/xv5Kc/+uonpvUfX4flqiyz/4oQZYwpdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXkO4xCxM8wysq4x/kNmpX2Nk7yVKfoCdLeF9vfIwS3skzTJlHtNCJF0FdcORFout
-	 O+phQEoVK3M148KrrtqC0CiFTvMFVyY1netYzwHC1KEznTosLN7lg73ik/yfoPJ8lL
-	 mXAR1dCMv+TCEeU80W2RLTT9WotlOxOJLqWEwesM=
+	b=XGFHImJfRLp4SDBho4zzI+DBxqOd3WA7bMpcy1hMJGWtV5rFOlFF0M5PsoVBljdf7
+	 8p6fCuFUYlblc9QfsgP/PPyd+5FRyufFeytO0mVdjygnQ1TnD5l7dlxyohAJNIjagG
+	 7Q7V1ghmWzD6wphSBNZ4UYJyeCnUMjUzO/6l6pEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arinzon <darinzon@amazon.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 844/877] net: ena: Remove autopolling mode
-Date: Wed, 30 Sep 2026 17:29:15 +0200
-Message-ID: <20260930152432.952238275@linuxfoundation.org>
+Subject: [PATCH 6.12 845/877] net: ena: fix MMIO read buffer leak on probe failure
+Date: Wed, 30 Sep 2026 17:29:16 +0200
+Message-ID: <20260930152432.973870035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,106 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit b356b9170815f822394667010d478d53901ff581 ]
+[ Upstream commit 9476b4468862927297c94c440863cd8ed1e7cc83 ]
 
-This manually reverts
-commit a4e262cde3cd ("net: ena: allow automatic fallback to polling mode")
+ena_device_init() initializes the MMIO read mechanism with
+ena_com_mmio_reg_read_request_init(), which allocates a coherent DMA
+buffer for MMIO read responses.
 
-which is unused.
+The normal removal path releases this buffer through
+ena_com_mmio_reg_read_request_destroy(). However, if ena_probe() fails
+after ena_device_init() succeeds, the error path destroys the admin
+resources and eventually frees ena_dev without destroying the MMIO read
+request, leaving the coherent DMA buffer allocated.
 
-(I did it manually because there are other minor comment
-and function changes surrounding it).
-Build tested only.
+Call ena_com_mmio_reg_read_request_destroy() in the probe error path
+before releasing the remaining device resources.
 
-Suggested-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-Link: https://patch.msgid.link/20241103194149.293456-1-linux@treblig.org
+This issue was found by manual code inspection.
+
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260921154202.471662-3-lgs201920130244@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 9476b4468862 ("net: ena: fix MMIO read buffer leak on probe failure")
+[ Adjusted cleanup context for missing PHC and devlink support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_com.c |   25 +++++--------------------
- drivers/net/ethernet/amazon/ena/ena_com.h |   14 --------------
- 2 files changed, 5 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -763,25 +763,16 @@ static int ena_com_wait_and_process_admi
- 
- 		if (comp_ctx->status == ENA_CMD_COMPLETED) {
- 			netdev_err(admin_queue->ena_dev->net_device,
--				   "The ena device sent a completion but the driver didn't receive a MSI-X interrupt (cmd %d), autopolling mode is %s\n",
--				   comp_ctx->cmd_opcode, admin_queue->auto_polling ? "ON" : "OFF");
--			/* Check if fallback to polling is enabled */
--			if (admin_queue->auto_polling)
--				admin_queue->polling = true;
-+				   "The ena device sent a completion but the driver didn't receive a MSI-X interrupt (cmd %d)\n",
-+				   comp_ctx->cmd_opcode);
- 		} else {
- 			netdev_err(admin_queue->ena_dev->net_device,
- 				   "The ena device didn't send a completion for the admin cmd %d status %d\n",
- 				   comp_ctx->cmd_opcode, comp_ctx->status);
- 		}
--		/* Check if shifted to polling mode.
--		 * This will happen if there is a completion without an interrupt
--		 * and autopolling mode is enabled. Continuing normal execution in such case
--		 */
--		if (!admin_queue->polling) {
--			admin_queue->running_state = false;
--			ret = -ETIME;
--			goto err;
--		}
-+		admin_queue->running_state = false;
-+		ret = -ETIME;
-+		goto err;
- 	}
- 
- 	ret = ena_com_comp_status_to_errno(admin_queue, comp_ctx->comp_status);
-@@ -1650,12 +1641,6 @@ void ena_com_set_admin_polling_mode(stru
- 	ena_dev->admin_queue.polling = polling;
- }
- 
--void ena_com_set_admin_auto_polling_mode(struct ena_com_dev *ena_dev,
--					 bool polling)
--{
--	ena_dev->admin_queue.auto_polling = polling;
--}
--
- int ena_com_mmio_reg_read_request_init(struct ena_com_dev *ena_dev)
- {
- 	struct ena_com_mmio_read *mmio_read = &ena_dev->mmio_read;
---- a/drivers/net/ethernet/amazon/ena/ena_com.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.h
-@@ -224,9 +224,6 @@ struct ena_com_admin_queue {
- 	/* Indicate if the admin queue should poll for completion */
- 	bool polling;
- 
--	/* Define if fallback to polling mode should occur */
--	bool auto_polling;
--
- 	u16 curr_cmd_id;
- 
- 	/* Indicate that the ena was initialized and can
-@@ -493,17 +490,6 @@ bool ena_com_get_admin_running_state(str
-  */
- void ena_com_set_admin_polling_mode(struct ena_com_dev *ena_dev, bool polling);
- 
--/* ena_com_set_admin_auto_polling_mode - Enable autoswitch to polling mode
-- * @ena_dev: ENA communication layer struct
-- * @polling: Enable/Disable polling mode
-- *
-- * Set the autopolling mode.
-- * If autopolling is on:
-- * In case of missing interrupt when data is available switch to polling.
-- */
--void ena_com_set_admin_auto_polling_mode(struct ena_com_dev *ena_dev,
--					 bool polling);
--
- /* ena_com_admin_q_comp_intr_handler - admin queue interrupt handler
-  * @ena_dev: ENA communication layer struct
-  *
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -4088,6 +4088,7 @@ err_worker_destroy:
+ err_device_destroy:
+ 	ena_com_delete_host_info(ena_dev);
+ 	ena_com_admin_destroy(ena_dev);
++	ena_com_mmio_reg_read_request_destroy(ena_dev);
+ err_metrics_destroy:
+ 	ena_com_delete_customer_metrics_buffer(ena_dev);
+ err_netdev_destroy:
 
 
