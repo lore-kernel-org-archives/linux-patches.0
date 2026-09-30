@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316D951A148;
-	Wed, 30 Sep 2026 17:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1860D50C2A4;
+	Wed, 30 Sep 2026 17:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788480; cv=none; b=GyQK8rycanCLv1h2wAW9kM/yvvr9o0vqz8ikgVAIwAdDS412eY96FVb8ufJ8ICMJgyQajH0dm7TApgD8xjRlQTTqhBw77W0bIuVN3yGVAX23N4Q8s6QZQLUKJ2k5Z83eE1X4mSKwY7s+y6OlBE0ofwHNQtzd35xoHkx1GE5lhaU=
+	t=1790788483; cv=none; b=OSDARuXK6JdXMRJWcKyunv5G4+dx5O79uu/yS+uB6X/TSZslj2zYxbzxx5X3Rah/+sKZ8SJezD3fFC280bymDV0wdPWlP2WLsS6Ve5XgmGxbgkLElxD3oj3DMLOM36yAqCdIuCfXizmH+CXEwSb+9egZDjljf1cAISOHzXcET3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788480; c=relaxed/simple;
-	bh=KZaFhYXwsXVyf78aZgiFwnVTlGD42j7g6eqx+jLbQ4U=;
+	s=arc-20240116; t=1790788483; c=relaxed/simple;
+	bh=mJp8JjdhXnoTduR2ZW63hiWja+Iuigtau+3Rl/hBDI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPZrsWzBCUSJI2EbotQDa4myB0FxVr2JU0pYZh4bbWY7Hk3854A+bQM83mo4IF1MTwGEfQAnhTPkKcUy6CowdwmSJnlnDoIvXp+f5L67STHze2xpQmgpHGJdRgiejxPZ0VSIStYuyQPkozHTrS7j3nfIBB0HvZSWqWc/QF+n27E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USgDqXm4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RInhcpcOD6lR0cUI8SV41AVJKs72klmPPj4sA3lZq6cvcoqXYyB0H5k1nmoRml0jS4xiqOEKfvYwXGW5AyAWzfXbuC1qpELjTmkNAWEk0M32Zvcjf+t3rkTXYEIfiJLizuNV9Tp15vtfBvzfBwwWiJZF3zb5JrWb4hJs/aaOXUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGOPT+aV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USgDqXm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C781F000FF;
-	Wed, 30 Sep 2026 17:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGOPT+aV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3761F000FF;
+	Wed, 30 Sep 2026 17:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788478;
-	bh=NIhOTp/I+D5/+pT31fcRjELbG3kWs4MRjXn8uZtoyuA=;
+	s=korg; t=1790788481;
+	bh=/5yFCcjT3bUSk4t+VAP/cj9XsWkQkKzVqJJrTtc1uz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USgDqXm4DL7Yjjl14Wu+u9RnMrtON3i0+49XUN6c/B19Wx5jJ/XeOM7FI6RTpkoXR
-	 54f1dVtJcdh1P9szKTgFySGSxVOn6gpI2mcq4ckTTcXMddGuxJi/Bxfq+m2kt/lqJf
-	 Xf36cUMCSQly+ZvgZvhPCjBxW4tb0YAGfQVRwel0=
+	b=GGOPT+aV1rLvtvOHRaB2IeTzfZ7ZljXmVUL1WuAHM/795Gsqg4I6B+gpr5ZYyox6u
+	 Wv/xGFBde8+sLVneJbBmjf6uLQdXvbObxor5KOWT3+HV1H0BGQUqBx4OSkhTaF26WC
+	 KQNLtSXa6fs+0CG9HVhAQRgrBWc4q44U8Z7JNvLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/877] pppoatm: ensure a writable skb header and linear data
-Date: Wed, 30 Sep 2026 17:17:30 +0200
-Message-ID: <20260930152417.727362404@linuxfoundation.org>
+Subject: [PATCH 6.12 113/877] wifi: virt_wifi: dont transfer operstate before register
+Date: Wed, 30 Sep 2026 17:17:04 +0200
+Message-ID: <20260930152417.175634301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,119 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit ecc7253683a3c55caa868ce0ee530fcb0044bd3c ]
+[ Upstream commit e5c8d7acd31b27057ea42cd405d0b3ece097bc89 ]
 
-In pppoatm_send(), LLC encapsulation checks whether there is sufficient
-headroom for the 4-byte LLC header, but does not ensure that the skb header
-is writable.
+virt_wifi_newlink() calls netif_stacked_transfer_operstate() before
+register_netdevice(). If the lower device is dormant, that queues the
+new netdev on lweventlist while it is still uninitialized. If
+registration fails after that, for example because of an invalid name
+such as "bad/name", free_netdev() immediately frees the object. A
+later linkwatch_fire_event() then use-after-frees the list entry.
 
-Normal transmit packets passing through ppp_start_xmit() have their header
-unshared via skb_cow_head(). However, packets can also reach pppoatm_send()
-via PPP channel bridging (PPPIOCBRIDGECHAN) without going through
-ppp_start_xmit().
+Move the transfer to after netdev_upper_dev_link(), as macvlan and
+ipvlan already do.
 
-Use skb_cow_head() to ensure both sufficient headroom and a writable
-header before pushing the LLC header.
-
-While at it:
-- Call pskb_may_pull(skb, 1) before inspecting skb->data[0] to prevent
-  out-of-bounds reads on zero-length or non-linear frames (e.g. from
-  bridging).
-- Defer SC_COMP_PROT protocol compression until after pppoatm_may_send()
-  succeeds. This eliminates the temporary skb allocation on admission failure
-  and completely removes the fragile "undo" heuristic at the nospace label,
-  avoiding any risk of reading uninitialized headroom or performing an
-  unbalanced skb_push().
-
-Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260912233048.3977192-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/f5a832fb0ab228ce6e2b5a91fba4ca8b79198a2f.1788948455.git.zihanx@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/pppoatm.c | 42 +++++++++++++++++-------------------------
- 1 file changed, 17 insertions(+), 25 deletions(-)
+ drivers/net/wireless/virtual/virt_wifi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/atm/pppoatm.c b/net/atm/pppoatm.c
-index 3e4f17d335feb..b668a30b67a8d 100644
---- a/net/atm/pppoatm.c
-+++ b/net/atm/pppoatm.c
-@@ -292,10 +292,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 	struct atm_vcc *vcc;
- 	int ret;
- 
-+	if (!pskb_may_pull(skb, 1)) {
-+		kfree_skb(skb);
-+		return DROP_PACKET;
-+	}
-+
- 	ATM_SKB(skb)->vcc = pvcc->atmvcc;
- 	pr_debug("(skb=0x%p, vcc=0x%p)\n", skb, pvcc->atmvcc);
--	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
--		(void) skb_pull(skb, 1);
- 
- 	vcc = ATM_SKB(skb)->vcc;
- 	bh_lock_sock(sk_atm(vcc));
-@@ -318,23 +321,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 
- 	switch (pvcc->encaps) {		/* LLC encapsulation needed */
- 	case e_llc:
--		if (skb_headroom(skb) < LLC_LEN) {
--			struct sk_buff *n;
--			n = skb_realloc_headroom(skb, LLC_LEN);
--			if (n != NULL &&
--			    !pppoatm_may_send(pvcc, n->truesize)) {
--				kfree_skb(n);
--				goto nospace;
--			}
--			consume_skb(skb);
--			skb = n;
--			if (skb == NULL) {
--				bh_unlock_sock(sk_atm(vcc));
--				return DROP_PACKET;
--			}
--		} else if (!pppoatm_may_send(pvcc, skb->truesize))
-+		if (skb_cow_head(skb, LLC_LEN)) {
-+			bh_unlock_sock(sk_atm(vcc));
-+			kfree_skb(skb);
-+			return DROP_PACKET;
-+		}
-+		if (!pppoatm_may_send(pvcc, skb->truesize))
- 			goto nospace;
--		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
- 		break;
- 	case e_vc:
- 		if (!pppoatm_may_send(pvcc, skb->truesize))
-@@ -347,6 +340,12 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 		return 1;
+diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
+index 056d375e3f41f..4d36c15c1118e 100644
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -554,7 +554,6 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
  	}
  
-+	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
-+		skb_pull(skb, 1);
-+
-+	if (pvcc->encaps == e_llc)
-+		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
-+
- 	atm_account_tx(vcc, skb);
- 	pr_debug("atm_skb(%p)->vcc(%p)->dev(%p)\n",
- 		 skb, ATM_SKB(skb)->vcc, ATM_SKB(skb)->vcc->dev);
-@@ -356,13 +355,6 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
- 	return ret;
- nospace:
- 	bh_unlock_sock(sk_atm(vcc));
--	/*
--	 * We don't have space to send this SKB now, but we might have
--	 * already applied SC_COMP_PROT compression, so may need to undo
--	 */
--	if ((pvcc->flags & SC_COMP_PROT) && skb_headroom(skb) > 0 &&
--	    skb->data[-1] == '\0')
--		(void) skb_push(skb, 1);
- 	return 0;
- }
+ 	eth_hw_addr_inherit(dev, priv->lowerdev);
+-	netif_stacked_transfer_operstate(priv->lowerdev, dev);
  
+ 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+ 
+@@ -580,6 +579,8 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
+ 		goto unregister_netdev;
+ 	}
+ 
++	netif_stacked_transfer_operstate(priv->lowerdev, dev);
++
+ 	dev->priv_destructor = virt_wifi_net_device_destructor;
+ 	priv->being_deleted = false;
+ 	priv->is_connected = false;
 -- 
 2.53.0
 
