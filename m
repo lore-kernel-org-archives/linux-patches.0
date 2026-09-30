@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39D33D3CF5;
-	Wed, 30 Sep 2026 19:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1303C3F56;
+	Wed, 30 Sep 2026 19:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795217; cv=none; b=vFx5mK0zQc711N5ZDZFw6NluPvt5CZFTcDXbneMM+uFhNHmlI87qp0f3KeaH1PeQVQeB9sSvqF1XOcmSRmJj0Mes4w6ouUBp9/sxjosO+90UFJoNsmah/700P1MJgm+yJd5tbc087P4p91lI+Gge/zOINHyIRxx21/a/uZRTTPI=
+	t=1790795221; cv=none; b=kSN9UBGagqh4QLzyvnihfHzOJGuev1NHuSjP2x2r1Sq8Hc0Xu6v6f6o4gVF2fN/zS2vJzlnNVnr+leBxgsz4EpSUHI8otwbvYmqzoTOgvzC2sE3HfInHJ96yfaH2rThPTyNpllFjgjD3Ja3cv82qBCIvQ9Ltz3KJUNhdZuEw53s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795217; c=relaxed/simple;
-	bh=32jCyFWGKLjA//RCSWEvI9/R/AG3MqIc/ZRIgZiancU=;
+	s=arc-20240116; t=1790795221; c=relaxed/simple;
+	bh=fsxMV7ZDYjFr4L7vNbZbfQE3i5PDkjvNRv13o5u4A04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ec0xYCQH38eAj0ViCY1oVoBeK7p2bJGlNBTKndzAzOmYsvdHHBgZ3ocG33+WIR/JL9D0vimd1A4AvTqwM3UtH1r5YN2DWDJYQLBFSueIWEoXpEJ/nVivhhenO8Ods2sIA1j+YsV0JmXTNT0ZbEFpic2HB24kcwn0z4Y0CmUQC1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwiegYem; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HEylasFvv0YU6ucduipgRzk0FqNKEZqPuevAtGCcKmmzWjB92wf/gZW5P4ZVXNeB4rI+CEt76nJ/zQR5uwzrV5E8OpmF1nWo+nqzZX+INiVWQUbYQbULNAYTa9hOU6trdO52tJ8KIdzlN6mRMz7mcN04RV0EsczPNn2OjdNvLt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiUg/twC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwiegYem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD2F1F000FF;
-	Wed, 30 Sep 2026 19:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiUg/twC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037271F000FF;
+	Wed, 30 Sep 2026 19:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795216;
-	bh=S9pCNa0AfvNCJTig3RTZt5eiErpnLkJgi8qkF3Bt28c=;
+	s=korg; t=1790795219;
+	bh=rhu/BOL9WTWHghgQe7f64ACeLOPloiaGave/r9LgWxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lwiegYemKQDNseozwf6gmqBgRSu5yCXe00RlDVx40IDEAOJv4pLaSHCpDcheqmL+x
-	 wxxR8Vzdgz1RDki4WZKZL1A0XAogTFuErrbZc+CG77K/F3CNk04BtyeQ4lUX5nLyvv
-	 fcQGzKJM57C0rqCQqjiZvDsBRwlfjN9y68aAXWg4=
+	b=DiUg/twCKOcNgt5mirJg0nI9G1kLLWgXFD5FiyEDHPZHeCGL3xfk1zTw1TTdhq+rl
+	 e/NM+M7duK5Ev6rZCV/9uWvLzD25dT9UmiDvlF6X48Ow5tWUMlRVavxg/Z4M4ShJRO
+	 zoHjupFCpaXGEmh/r2uGEaucJbfeyKXN0JL0U9BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Brad Cowie <brad@faucet.nz>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0485/1193] bpf: Mark bpf_btf_find_by_name_kind() as sleepable
-Date: Wed, 30 Sep 2026 17:19:29 +0200
-Message-ID: <20260930152444.930273956@linuxfoundation.org>
+Subject: [PATCH 6.6 0486/1193] selftests/bpf: Update tests for new ct zone opts for nf_conntrack kfuncs
+Date: Wed, 30 Sep 2026 17:19:30 +0200
+Message-ID: <20260930152444.951168650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,48 +51,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Brad Cowie <brad@faucet.nz>
 
-[ Upstream commit 620614bf7672130c43b3cff375525a2202f61979 ]
+[ Upstream commit a87f34e742d279d54d529e4bc4763fdaab32a466 ]
 
-When bpf_btf_find_by_name_kind() finds a type in module BTF, it
-returns a new BTF object fd through __btf_new_fd(). This reaches
-anon_inode_getfd(), which can sleep while allocating or expanding the
-current task fd table.
+Add test for allocating and looking up ct entry in a
+non-default ct zone with kfuncs bpf_{xdp,skb}_ct_alloc
+and bpf_{xdp,skb}_ct_lookup.
 
-The helper prototype does not set might_sleep, so the verifier allows
-the helper in non-sleepable contexts such as BPF timer callbacks. The
-fd allocation can then sleep in softirq context and install the fd into
-the interrupted task.
+Add negative tests for looking up ct entry in a different
+ct zone to where it was allocated and with a different
+direction.
 
-Mark the helper as sleepable. This preserves calls from the main body
-of a sleepable syscall program while rejecting calls from its
-non-sleepable regions.
+Update reserved test for old struct definition to test for
+ct_zone_id being set when opts size isn't NF_BPF_CT_OPTS_SZ (16).
 
-Fixes: 3d78417b60fb ("bpf: Add bpf_btf_find_by_name_kind() helper.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/bpf/20260903155150.D57251F000E9@smtp.kernel.org
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260903214758.2727663-4-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Brad Cowie <brad@faucet.nz>
+Link: https://lore.kernel.org/r/20240522050712.732558-2-brad@faucet.nz
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Stable-dep-of: 5e8c349bc8d7 ("selftests/bpf: Fix flaky bpf_nf test when random NAT port is 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/config            |   1 +
+ .../testing/selftests/bpf/prog_tests/bpf_nf.c |   7 ++
+ .../testing/selftests/bpf/progs/test_bpf_nf.c | 108 ++++++++++++++++++
+ 3 files changed, 116 insertions(+)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 3ae36f9f6c303..1c9119f0dfd72 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -7594,6 +7594,7 @@ BPF_CALL_4(bpf_btf_find_by_name_kind, char *, name, int, name_sz, u32, kind, int
- const struct bpf_func_proto bpf_btf_find_by_name_kind_proto = {
- 	.func		= bpf_btf_find_by_name_kind,
- 	.gpl_only	= false,
-+	.might_sleep	= true,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
+diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
+index 5751614aef6a5..9b6ed235c12c4 100644
+--- a/tools/testing/selftests/bpf/config
++++ b/tools/testing/selftests/bpf/config
+@@ -76,6 +76,7 @@ CONFIG_NETFILTER_XT_MATCH_STATE=y
+ CONFIG_NETFILTER_XT_TARGET_CT=y
+ CONFIG_NF_CONNTRACK=y
+ CONFIG_NF_CONNTRACK_MARK=y
++CONFIG_NF_CONNTRACK_ZONES=y
+ CONFIG_NF_DEFRAG_IPV4=y
+ CONFIG_NF_DEFRAG_IPV6=y
+ CONFIG_NF_NAT=y
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+index f80660c00a1a7..fad98f01e2c06 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -110,6 +110,7 @@ static void test_bpf_nf_ct(int mode)
+ 
+ 	ASSERT_EQ(skel->bss->test_einval_bpf_tuple, -EINVAL, "Test EINVAL for NULL bpf_tuple");
+ 	ASSERT_EQ(skel->bss->test_einval_reserved, -EINVAL, "Test EINVAL for reserved not set to 0");
++	ASSERT_EQ(skel->bss->test_einval_reserved_new, -EINVAL, "Test EINVAL for reserved in new struct not set to 0");
+ 	ASSERT_EQ(skel->bss->test_einval_netns_id, -EINVAL, "Test EINVAL for netns_id < -1");
+ 	ASSERT_EQ(skel->bss->test_einval_len_opts, -EINVAL, "Test EINVAL for len__opts != NF_BPF_CT_OPTS_SZ");
+ 	ASSERT_EQ(skel->bss->test_eproto_l4proto, -EPROTO, "Test EPROTO for l4proto != TCP or UDP");
+@@ -128,6 +129,12 @@ static void test_bpf_nf_ct(int mode)
+ 	ASSERT_EQ(skel->bss->test_exist_lookup_mark, 43, "Test existing connection lookup ctmark");
+ 	ASSERT_EQ(skel->data->test_snat_addr, 0, "Test for source natting");
+ 	ASSERT_EQ(skel->data->test_dnat_addr, 0, "Test for destination natting");
++	ASSERT_EQ(skel->data->test_ct_zone_id_alloc_entry, 0, "Test for alloc new entry in specified ct zone");
++	ASSERT_EQ(skel->data->test_ct_zone_id_insert_entry, 0, "Test for insert new entry in specified ct zone");
++	ASSERT_EQ(skel->data->test_ct_zone_id_succ_lookup, 0, "Test for successful lookup in specified ct_zone");
++	ASSERT_EQ(skel->bss->test_ct_zone_dir_enoent_lookup, -ENOENT, "Test ENOENT for lookup with wrong ct zone dir");
++	ASSERT_EQ(skel->bss->test_ct_zone_id_enoent_lookup, -ENOENT, "Test ENOENT for lookup in wrong ct zone");
++
+ end:
+ 	if (client_fd != -1)
+ 		close(client_fd);
+diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+index 77ad8adf68daa..0289d8ce2b80d 100644
+--- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
++++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+@@ -9,10 +9,14 @@
+ #define EINVAL 22
+ #define ENOENT 2
+ 
++#define NF_CT_ZONE_DIR_ORIG (1 << IP_CT_DIR_ORIGINAL)
++#define NF_CT_ZONE_DIR_REPL (1 << IP_CT_DIR_REPLY)
++
+ extern unsigned long CONFIG_HZ __kconfig;
+ 
+ int test_einval_bpf_tuple = 0;
+ int test_einval_reserved = 0;
++int test_einval_reserved_new = 0;
+ int test_einval_netns_id = 0;
+ int test_einval_len_opts = 0;
+ int test_eproto_l4proto = 0;
+@@ -22,6 +26,11 @@ int test_eafnosupport = 0;
+ int test_alloc_entry = -EINVAL;
+ int test_insert_entry = -EAFNOSUPPORT;
+ int test_succ_lookup = -ENOENT;
++int test_ct_zone_id_alloc_entry = -EINVAL;
++int test_ct_zone_id_insert_entry = -EAFNOSUPPORT;
++int test_ct_zone_id_succ_lookup = -ENOENT;
++int test_ct_zone_dir_enoent_lookup = 0;
++int test_ct_zone_id_enoent_lookup = 0;
+ u32 test_delta_timeout = 0;
+ u32 test_status = 0;
+ u32 test_insert_lookup_mark = 0;
+@@ -45,6 +54,17 @@ struct bpf_ct_opts___local {
+ 	s32 netns_id;
+ 	s32 error;
+ 	u8 l4proto;
++	u8 dir;
++	u8 reserved[2];
++};
++
++struct bpf_ct_opts___new {
++	s32 netns_id;
++	s32 error;
++	u8 l4proto;
++	u8 dir;
++	u16 ct_zone_id;
++	u8 ct_zone_dir;
+ 	u8 reserved[3];
+ } __attribute__((preserve_access_index));
+ 
+@@ -220,10 +240,97 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
+ 	}
+ }
+ 
++static __always_inline void
++nf_ct_opts_new_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
++						 struct bpf_ct_opts___new *, u32),
++		    struct nf_conn *(*alloc_fn)(void *, struct bpf_sock_tuple *, u32,
++						struct bpf_ct_opts___new *, u32),
++		    void *ctx)
++{
++	struct bpf_ct_opts___new opts_def = { .l4proto = IPPROTO_TCP, .netns_id = -1 };
++	struct bpf_sock_tuple bpf_tuple;
++	struct nf_conn *ct;
++
++	__builtin_memset(&bpf_tuple, 0, sizeof(bpf_tuple.ipv4));
++
++	opts_def.reserved[0] = 1;
++	ct = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
++		       sizeof(opts_def));
++	opts_def.reserved[0] = 0;
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_einval_reserved_new = opts_def.error;
++
++	bpf_tuple.ipv4.saddr = bpf_get_prandom_u32(); /* src IP */
++	bpf_tuple.ipv4.daddr = bpf_get_prandom_u32(); /* dst IP */
++	bpf_tuple.ipv4.sport = bpf_get_prandom_u32(); /* src port */
++	bpf_tuple.ipv4.dport = bpf_get_prandom_u32(); /* dst port */
++
++	/* use non-default ct zone */
++	opts_def.ct_zone_id = 10;
++	opts_def.ct_zone_dir = NF_CT_ZONE_DIR_ORIG;
++	ct = alloc_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
++		      sizeof(opts_def));
++	if (ct) {
++		__u16 sport = bpf_get_prandom_u32();
++		__u16 dport = bpf_get_prandom_u32();
++		union nf_inet_addr saddr = {};
++		union nf_inet_addr daddr = {};
++		struct nf_conn *ct_ins;
++
++		bpf_ct_set_timeout(ct, 10000);
++
++		/* snat */
++		saddr.ip = bpf_get_prandom_u32();
++		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC___local);
++		/* dnat */
++		daddr.ip = bpf_get_prandom_u32();
++		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST___local);
++
++		ct_ins = bpf_ct_insert_entry(ct);
++		if (ct_ins) {
++			struct nf_conn *ct_lk;
++
++			/* entry should exist in same ct zone we inserted it */
++			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
++					  &opts_def, sizeof(opts_def));
++			if (ct_lk) {
++				bpf_ct_release(ct_lk);
++				test_ct_zone_id_succ_lookup = 0;
++			}
++
++			/* entry should not exist with wrong direction */
++			opts_def.ct_zone_dir = NF_CT_ZONE_DIR_REPL;
++			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
++					  &opts_def, sizeof(opts_def));
++			opts_def.ct_zone_dir = NF_CT_ZONE_DIR_ORIG;
++			if (ct_lk)
++				bpf_ct_release(ct_lk);
++			else
++				test_ct_zone_dir_enoent_lookup = opts_def.error;
++
++			/* entry should not exist in default ct zone */
++			opts_def.ct_zone_id = 0;
++			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
++					  &opts_def, sizeof(opts_def));
++			if (ct_lk)
++				bpf_ct_release(ct_lk);
++			else
++				test_ct_zone_id_enoent_lookup = opts_def.error;
++
++			bpf_ct_release(ct_ins);
++			test_ct_zone_id_insert_entry = 0;
++		}
++		test_ct_zone_id_alloc_entry = 0;
++	}
++}
++
+ SEC("xdp")
+ int nf_xdp_ct_test(struct xdp_md *ctx)
+ {
+ 	nf_ct_test((void *)bpf_xdp_ct_lookup, (void *)bpf_xdp_ct_alloc, ctx);
++	nf_ct_opts_new_test((void *)bpf_xdp_ct_lookup, (void *)bpf_xdp_ct_alloc, ctx);
+ 	return 0;
+ }
+ 
+@@ -231,6 +338,7 @@ SEC("tc")
+ int nf_skb_ct_test(struct __sk_buff *ctx)
+ {
+ 	nf_ct_test((void *)bpf_skb_ct_lookup, (void *)bpf_skb_ct_alloc, ctx);
++	nf_ct_opts_new_test((void *)bpf_skb_ct_lookup, (void *)bpf_skb_ct_alloc, ctx);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
