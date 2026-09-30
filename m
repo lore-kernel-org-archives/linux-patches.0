@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8295C389104;
-	Wed, 30 Sep 2026 17:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585DD44F574;
+	Wed, 30 Sep 2026 17:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787682; cv=none; b=B87yoetYEcWgQTnaNsB4S38koXZiPIgz5xGjXtSu4p8+V4hrbJ9WhZ/Cc+S95RQhCg4ogCebNjNALwenwjxOepU7xiB4EYU5V8KV/no08dJkHLjr8AZEhJrtBNS7HwFq7piiHJi9r1QWZrb7PdDqKOvhdwlCtEMheYXZe9KynHc=
+	t=1790787685; cv=none; b=UQR6ySZ5H3bpxVJ0NSmpExlP7W1E9nVOs+AIIUIdtHKZhDM43A5Ro10n8FGEyczJFDECwfI7HTEKkGOHCgjxDAaes3e8hi4VfcfPVc3MtMJLpKtseCeLm7cEpMvdv4lcUBSWhyl2yV5S59kybTzf8XUWvkG3YMzMneaC3Wp03Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787682; c=relaxed/simple;
-	bh=ez2y8BMW1/pURIgwLW8rBUCVwUxxHt9iB0ULZYj9sD4=;
+	s=arc-20240116; t=1790787685; c=relaxed/simple;
+	bh=0loVeLQJfn0BsISkbWGDyvC4VGoN8RB9v5z2X1MVJvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBIx+6Rjo/IkaIYq0wtc75zTyoqlm0S4Tmo1KXG9u2pcAeRlPBMWNcWe/ZZ66HObOXNLj3zwqW51/RN1nlfIq6N/iRg9lrln9inXju2mNhtuH/3hAaFkNrV8gsIeVpmU+4RwflLJHlre5InUcn9a/L3GjyqD1xLv7PwbgoOupL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONgpWOVD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NQemY1ZFyPlfKuZQqK6oRFJMddOeiUNgXxR5dHhb7Sjf34h7ai2O8yg8+SGbD//2hQHkukNKyZ+fRTbAc4+qu7ZxSU22NzdxOn6Pbw9o2XkbCQAcIYWc4IkWTsWKOcWOtRpcI9F4zMmyPRVpcgllXCJeN9yTy/ZAyg0Y5Z/MHAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jKTy0KK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONgpWOVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E090E1F000FF;
-	Wed, 30 Sep 2026 17:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jKTy0KK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EE31F000FF;
+	Wed, 30 Sep 2026 17:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787681;
-	bh=owL9aUoNkY+Ju5+dXOQePliGl1sn6y1icChCMy+tVzg=;
+	s=korg; t=1790787684;
+	bh=5SH7FmQ9LZnDAth/bKs/KkgrsfOAroIxcwLRBSojlRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONgpWOVDjcqEPko0GAI8UOBnHoTdYbxZ4AkFAM0rvMJaiu0dlTiO8iSdv0BccP1/b
-	 /xkPp2VuPGDzxyiGrPPR3fYMbaM/9IyhuS8Tee4qRJDdy0zVCxavHMvrKcmD7m3poc
-	 OdrcHoGmBkZfHeU80SzPnEZ3beiswdzYpKiMKCnw=
+	b=2jKTy0KKcN5hAuA85VdOPVU89WBhXWOEGv0C1M44UmKfF8hz8CPiHuAL4GOP5i0w4
+	 gSC02K5azi5H5/rm78sWUHt6u7g9of7D6WpUM6CzknKUj7LvlsZ5//vmZvSnTvG+NI
+	 yrXEPofamwmeKJMtdfYpEea4d372cxO3xX5t8gCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 299/457] drm/nouveau: Fix runtime PM leak in nouveau_connector_detect()
-Date: Wed, 30 Sep 2026 17:26:44 +0200
-Message-ID: <20260930152352.485151882@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 317/457] mm/damon/core: allow esz to be set to zero
+Date: Wed, 30 Sep 2026 17:27:02 +0200
+Message-ID: <20260930152352.866451469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
-commit 1e04611d3735543bd80a67d9d13dc13f503746fb upstream.
+commit 90179da203ba8b708c84a12a07cd44be0f346334 upstream.
 
-If nvif_outp_edid_get() fails, nouveau_connector_detect() returns
-early without dropping the runtime PM reference taken at the start
-of the function, keeping the device powered on until the next
-successful detect.
+When the temporal quota goal tuner determines that the goal has been
+achieved (score >= 10000), it sets esz_bp to zero so that the esz becomes
+zero.  However, damos_set_effective_quota() clamps the esz to
+min_region_sz when quota->ms is set.
 
-Balance the reference on the error path like the other exit paths
-do.
+This is a minor issue, the main problem is that it doesn't match the
+description in the documentation, which state that if the goal has already
+been [over-]achieved, the quota will be set to zero.
 
-Fixes: 0cd7e0718139 ("drm/nouveau/disp: add output method to fetch edid")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260916180342.2090360-1-vulab@iscas.ac.cn
+Fix this by set quota (esz) as minimum as possible.
+
+Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
+Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # v7.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/damon/core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -600,8 +600,11 @@ nouveau_connector_detect(struct drm_conn
- 				new_edid = drm_get_edid(connector, nv_encoder->i2c);
- 		} else {
- 			ret = nvif_outp_edid_get(&nv_encoder->outp, (u8 **)&new_edid);
--			if (ret < 0)
-+			if (ret < 0) {
-+				pm_runtime_mark_last_busy(dev->dev);
-+				pm_runtime_put_autosuspend(dev->dev);
- 				return connector_status_disconnected;
-+			}
- 		}
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2896,6 +2896,7 @@ static void damos_set_effective_quota(st
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long throughput;
+ 	unsigned long esz = ULONG_MAX;
++	unsigned long esz_time;
  
- 		nouveau_connector_set_edid(nv_connector, new_edid);
+ 	if (!quota->ms && list_empty(&quota->goals)) {
+ 		quota->esz = quota->sz;
+@@ -2916,8 +2917,8 @@ static void damos_set_effective_quota(st
+ 					1000000, quota->total_charged_ns);
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+-		esz = min(throughput * quota->ms, esz);
+-		esz = max(ctx->min_region_sz, esz);
++		esz_time = max(throughput * quota->ms, ctx->min_region_sz);
++		esz = min(esz_time, esz);
+ 	}
+ 
+ 	if (quota->sz && quota->sz < esz)
 
 
