@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C744F4F30C4;
-	Wed, 30 Sep 2026 16:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094AB4E36E9;
+	Wed, 30 Sep 2026 16:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784305; cv=none; b=LU3iMaMMg2wawzFJwg10s2QW07wzX03UeVxzyEcxHZRCfeOZ0pa0rk+bVbs7MGplkUdJv7W3mp+AV9TXYk+U9ntxx9ByqYOp0D7vx4Th2QNnMcjjvXcQ5+gOPo5w6u9g0vfvdCcwY77++PYRPdpGk0wb4I37J5qwJCvfFtGIoWw=
+	t=1790784307; cv=none; b=djaCpDO/c6BB42xUsUBwpNxw81eT4VsDx/UXVSzghjINkDng2C8S/iv3nIgHMc9zuYNEas+OZri+5qWayzXa7dA2NETiNmAeBvkPEMJ3FRpyv4A5lq8zjrfIn5mdWusJCWFnU2AgzezHA/TfEyCPunmK864dcmQHi1TMRPSlowY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784305; c=relaxed/simple;
-	bh=fZk9M0UZ8NGz5JRGVHYhpYJcKyfvDps3BjDMQRhyMFA=;
+	s=arc-20240116; t=1790784307; c=relaxed/simple;
+	bh=Up34UqDI+6c1HIYyCjb6etWO9lRy4mA8QYfE61duaeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PucKpRuQaTUXVJnjSF+UTe/Hj3/MYPgap3Uo6BiL29D2F+KBVYTh12cMWpcu1c+u/4fhi6l+oyFiq4V0sCWhTUNUxmv1Fx/TWOujXUjVBAAXKAO3Dz4SxMNemm46em8nVOW68k9s+SLDhbjHFbdZbP7WpRecfB7VOGbqIxHd+SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+TzMaz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jQUoWHOPqBIPaZAarRQ0F4tTOf8SLh4Ie4/3zG4AfL6YrS7af5CbjzVePede+3TRDFYWsZd6RJ6Ei1Kq5gvw/dWwhdXXG6mV2mVhLUeb7hwNVDWgRolMedPjA5SkaGuHoh4ahmzjZtKXyctiQzyKtym0QYNJtF2m4o9NNV+4iKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyzehRN9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+TzMaz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97CD1F00893;
-	Wed, 30 Sep 2026 16:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyzehRN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8181F000FF;
+	Wed, 30 Sep 2026 16:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784301;
-	bh=7BnUAFIvFKjmcak1b1mFnSIJ1VKfuyaWikXurzagtJ4=;
+	s=korg; t=1790784303;
+	bh=cMrA6wxtWSN0ETyFXTCP0lOEWZVYKfxVhuWeEDo5Ca8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+TzMaz9EIyvKA2yOcr/QCeyMvwdJ7gyXsn1G2n2o150Jhc3Pfe1fKsY8iMYGtmgL
-	 3mhYc2KpiAiAH6jpviJPE6kwb0NLdiUivB1kBf5d+q9dWcdcoDjSyJ7rJCN3i3m5Mt
-	 9GYtbHYyUAnbPaz2QQkTCpfdddd/v/YvKCPusZaY=
+	b=uyzehRN9IkdTQQgJtt3swCffk6szGI826yHfqOoSMH9QtmxX8ob4tTp6/mNjXf9xZ
+	 J6W+SYJcn9ZjvxNr5wzebx4zb/ctgTWO3oUSEHuwjJpLS12lv9cb2WF2lRSbieQvdr
+	 32GFRG/elp/wPJa7PSVWCGbUtTs+2QP+er41ARMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/982] ACPICA: Improve argument parsing in acpi_ps_get_next_simple_arg()
-Date: Wed, 30 Sep 2026 17:14:02 +0200
-Message-ID: <20260930152419.088340022@linuxfoundation.org>
+Subject: [PATCH 6.1 107/982] ACPICA: validate handler object type in two places
+Date: Wed, 30 Sep 2026 17:14:03 +0200
+Message-ID: <20260930152419.108886583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,146 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 27d27e75ecb752a0b4da848c440bb3a88396ecba ]
+[ Upstream commit c5296da2d516707862f8a2dbb4b515f777e5294f ]
 
-Improve argument parsing in acpi_ps_get_next_simple_arg() to handle
-remaining AML data safely.
+ACPICA: validate handler object type in acpi_ev_has_default_handler()
+and acpi_ev_find_region_handler().
 
-Link: https://github.com/acpica/acpica/commit/ecbb8bcfe301
+Link: https://github.com/acpica/acpica/commit/f6fc648a1389
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2008043.taCxCBeP46@rafael.j.wysocki
+Link: https://patch.msgid.link/48111441.fMDQidcC6G@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 78 +++++++++++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 10 deletions(-)
+ drivers/acpi/acpica/evhandler.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index cc27f7888bdca..1a52bc08db4ce 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -384,6 +384,8 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 	u32 length;
- 	u16 opcode;
- 	u8 *aml = parser_state->aml;
-+	u32 remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
-+	u64 partial_value;
+diff --git a/drivers/acpi/acpica/evhandler.c b/drivers/acpi/acpica/evhandler.c
+index be9a05498adc3..6f16e863a60f3 100644
+--- a/drivers/acpi/acpica/evhandler.c
++++ b/drivers/acpi/acpica/evhandler.c
+@@ -130,6 +130,14 @@ acpi_ev_has_default_handler(struct acpi_namespace_node *node,
+ 		/* Walk the linked list of handlers for this object */
  
- 	ACPI_FUNCTION_TRACE_U32(ps_get_next_simple_arg, arg_type);
- 
-@@ -393,8 +395,13 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 1 byte from the AML stream */
- 
- 		opcode = AML_BYTE_OP;
--		arg->common.value.integer = (u64) *aml;
--		length = 1;
-+		if (remaining >= 1) {
-+			arg->common.value.integer = (u64)*aml;
-+			length = 1;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+		}
- 		break;
- 
- 	case ARGP_WORDDATA:
-@@ -402,8 +409,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 2 bytes from the AML stream */
- 
- 		opcode = AML_WORD_OP;
--		ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
--		length = 2;
-+		if (remaining >= 2) {
-+			ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
-+			length = 2;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_DWORDDATA:
-@@ -411,8 +429,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 4 bytes from the AML stream */
- 
- 		opcode = AML_DWORD_OP;
--		ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
--		length = 4;
-+		if (remaining >= 4) {
-+			ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
-+			length = 4;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_QWORDDATA:
-@@ -420,8 +449,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 8 bytes from the AML stream */
- 
- 		opcode = AML_QWORD_OP;
--		ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
--		length = 8;
-+		if (remaining >= 8) {
-+			ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
-+			length = 8;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_CHARLIST:
-@@ -434,10 +474,28 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Find the null terminator */
- 
- 		length = 0;
--		while (aml[length]) {
-+		while ((length < remaining) && aml[length]) {
-+			length++;
-+		}
-+		if (length < remaining) {
+ 		while (handler_obj) {
 +
-+			/* Account for the terminating null */
- 			length++;
-+		} else {
-+			/*
-+			 * No terminator found - add null at buffer boundary
-+			 * and report a warning
-+			 */
-+			ACPI_WARNING((AE_INFO,
-+				      "Invalid AML string: no null terminator, truncating at offset %u",
-+				      (u32)(aml - parser_state->aml)));
++			/* Validate handler object type before accessing fields */
 +
-+			/* Add null terminator at the boundary */
-+			if (remaining > 0) {
-+				aml[remaining - 1] = 0;
-+				length = remaining;
++			if (handler_obj->common.type !=
++			    ACPI_TYPE_LOCAL_ADDRESS_HANDLER) {
++				break;
 +			}
- 		}
--		length++;
- 		break;
++
+ 			if (handler_obj->address_space.space_id == space_id) {
+ 				if (handler_obj->address_space.handler_flags &
+ 				    ACPI_ADDR_HANDLER_DEFAULT_INSTALLED) {
+@@ -292,6 +300,9 @@ union acpi_operand_object *acpi_ev_find_region_handler(acpi_adr_space_type
+ 	/* Walk the handler list for this device */
  
- 	case ARGP_NAME:
+ 	while (handler_obj) {
++		if (handler_obj->common.type != ACPI_TYPE_LOCAL_ADDRESS_HANDLER) {
++			break;
++		}
+ 
+ 		/* Same space_id indicates a handler is installed */
+ 
 -- 
 2.53.0
 
