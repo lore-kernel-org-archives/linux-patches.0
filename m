@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498CB4FE2F2;
-	Wed, 30 Sep 2026 16:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F63511E96;
+	Wed, 30 Sep 2026 16:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786865; cv=none; b=p7yr/3yPYaRy4l7pgELP4VHTmYS+5gknSVPugyAwcAtsCwfFohYFGDmbA8rA86+HlgK/PAnB/LDOFdCpuxUQZkwFwTGUzdfOPlr114vfbHAJ5lRxXjbOULAXS/uC11GA3yEvOOHVZJjino2vOfbFaxuHj1FfGZ9XkYCkjeHkgGc=
+	t=1790786868; cv=none; b=VjbCWkSUkbG2BU/sea51O5+oKUSfBJgcITk+xz5CjceUTAkeHI/1a87GnFOmHSnAyK0Awj8gkYqvPB65EM+rvbwV0ViXVZcUO80ubX1QueQ5ir0GlKlPbmTfb69+d0rBeH1xy2o0M7C9f/sUcsLBYk2vo6wvidNLSAHO2ROOrx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786865; c=relaxed/simple;
-	bh=wPQnbyBZmuuEJGeFdBVIhjbzsEZ521GA31blD7pEzgY=;
+	s=arc-20240116; t=1790786868; c=relaxed/simple;
+	bh=0t2IAKJte51D4TOybmWFwvQw0hTx7sAy9ogvyQtyLx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2b9EpovvANWyYOOAuw/b41fdJHlbgwsfE9hlwYEi4zCLcKhfD7BHfeaBdDxmUSoFlBmVmmq2hKA7ID5QtQzAL2ANHV9YBp7HTsr4t4HC/gOwDE6eQyu0rMkZvs4klb8ZUK2oBUIgmbmD9UpHGRVdQvml5ZapSd/MKkhpGx19tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeSeylRv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AwfyqDLPoZNcla1CLP6bMXyxD3dRMAwQLecDaSdNr/+9I1mkb0MTQLQqY0g7TupB+TRtzS8xNHO3Qty1/3qNEmZ8cbROo4u1tzz/Dhfb7LM2/vckX+PTBOwAtyBPSxpOuAA/ID06nY7U3zbMGie6hQ/O36GOvxz8zTGKpg4SyOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1unn/x9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeSeylRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41351F000FF;
-	Wed, 30 Sep 2026 16:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1unn/x9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FD61F00899;
+	Wed, 30 Sep 2026 16:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786864;
-	bh=gaJzHnh/YhKHauU+1GR+zldO8zapfbcW92bTBIkCCDU=;
+	s=korg; t=1790786867;
+	bh=97/TbInhiNnZU2Ksrs0I2k3ZrxmmWsuAx9vyRo7xhpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qeSeylRvazBPWP/DXvUtqeKirwLMfNMs2HH61mrTCU+QZXJi2c55+WXbGsxqoZVDi
-	 lHUxbfuCWZLMo/hnEARAZxXwwqlwE1WDN81MnZA7i8JrY6qVzqyRWCnqgoJChtXQ92
-	 zEZ6u4YAlOCuI1ylPGN+L9oy8BVJvQgMlReO8yP0=
+	b=1unn/x9n4O0n7woDgee4MHkIphZACt8JGoKGqIKwVObzEfDyapYprtc4W+uNjehjP
+	 auo+ofHhV3gDkJWG5MgNywupNjT0s07jP2nN/rr1wzfN2VbQEXX08iCBrLmIZHzxBN
+	 NNRxRkOtyGQ13BuQ8Ypm8tiJ1zl6Q3ae7VpLxRtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Masoud Aghasi <maghasi@disroot.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 012/457] KVM: s390: Fix race in _destroy_pages_crste()
-Date: Wed, 30 Sep 2026 17:21:57 +0200
-Message-ID: <20260930152346.296599661@linuxfoundation.org>
+Subject: [PATCH 7.2 030/457] bpf: Fix u32 overflow issue in map batch operations
+Date: Wed, 30 Sep 2026 17:22:15 +0200
+Message-ID: <20260930152346.684685431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,41 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Masoud Aghasi <maghasi@disroot.org>
 
-[ Upstream commit 4ca00a9154f998116fba9a32cce5bd938d228065 ]
+[ Upstream commit 953824e508b27d12837e32ef37ef6248e1f6fc7a ]
 
-Use READ_ONCE() in _destroy_pages_crste() to read the crste, avoid
-dereferencing the pointer multiple times.
+Several map batch operation implementations such as
+generic_map_lookup_batch() use calculations in the form of
+"values + cp * map->value_size" to compute the desired userspace memory
+address for reading or writing. This can overflow the u32 type
+(the result of "cp * map->value_size") when the map size exceeds 4GB.
 
-Fixes: a2c17f9270cc ("KVM: s390: New gmap code")
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260828115439.145885-9-imbrenda@linux.ibm.com>
+generic_map_lookup_batch() may corrupt values for some keys in
+userspace memory, and in some cases it mismatches values for some keys
+while still reporting success.
+
+Other batch operations may fail to delete or update some keys,
+or the syscall may return unexpected errors.
+
+Add size_t casts to prevent the affected offset and size calculations
+from overflowing.
+
+Fixes: cb4d03ab499d ("bpf: Add generic support for lookup batch op")
+Fixes: aa2e93b8e58e ("bpf: Add generic support for update and delete batch ops")
+Fixes: 057996380a42 ("bpf: Add batch ops to all htab bpf map")
+Signed-off-by: Masoud Aghasi <maghasi@disroot.org>
+Link: https://lore.kernel.org/r/20260903082734.623904-1-maghasi@disroot.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/gmap.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/bpf/hashtab.c |  8 ++++----
+ kernel/bpf/syscall.c | 10 +++++-----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/s390/kvm/gmap.c b/arch/s390/kvm/gmap.c
-index 8abb4f55b306b..f11d4ecaef7be 100644
---- a/arch/s390/kvm/gmap.c
-+++ b/arch/s390/kvm/gmap.c
-@@ -991,11 +991,13 @@ static long _destroy_pages_pte(union pte *ptep, gfn_t gfn, gfn_t next, struct da
- static long _destroy_pages_crste(union crste *crstep, gfn_t gfn, gfn_t next, struct dat_walk *walk)
- {
- 	phys_addr_t origin, cur, end;
-+	union crste crste;
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 419692f41ffde..5117447ac291b 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1998,10 +1998,10 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
  
--	if (!crstep->h.fc || !crstep->s.fc1.pr)
-+	crste = READ_ONCE(*crstep);
-+	if (!crste.h.fc || !crste.s.fc1.pr)
- 		return 0;
+ 	rcu_read_unlock();
+ 	bpf_enable_instrumentation();
+-	if (bucket_cnt && (copy_to_user(ukeys + total * key_size, keys,
+-	    key_size * bucket_cnt) ||
+-	    copy_to_user(uvalues + total * value_size, values,
+-	    value_size * bucket_cnt))) {
++	if (bucket_cnt && (copy_to_user(ukeys + (size_t)total * key_size, keys,
++	    (size_t)key_size * bucket_cnt) ||
++	    copy_to_user(uvalues + (size_t)total * value_size, values,
++	    (size_t)value_size * bucket_cnt))) {
+ 		ret = -EFAULT;
+ 		goto after_loop;
+ 	}
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index c7cb336fb0648..57d61de03306e 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2033,7 +2033,7 @@ int generic_map_delete_batch(struct bpf_map *map,
  
--	origin = crste_origin_large(*crstep);
-+	origin = crste_origin_large(crste);
- 	cur = ((max(gfn, walk->start) - gfn) << PAGE_SHIFT) + origin;
- 	end = ((min(next, walk->end) - gfn) << PAGE_SHIFT) + origin;
- 	for ( ; cur < end; cur += PAGE_SIZE)
+ 	for (cp = 0; cp < max_count; cp++) {
+ 		err = -EFAULT;
+-		if (copy_from_user(key, keys + cp * map->key_size,
++		if (copy_from_user(key, keys + (size_t)cp * map->key_size,
+ 				   map->key_size))
+ 			break;
+ 
+@@ -2095,9 +2095,9 @@ int generic_map_update_batch(struct bpf_map *map, struct file *map_file,
+ 
+ 	for (cp = 0; cp < max_count; cp++) {
+ 		err = -EFAULT;
+-		if (copy_from_user(key, keys + cp * map->key_size,
++		if (copy_from_user(key, keys + (size_t)cp * map->key_size,
+ 		    map->key_size) ||
+-		    copy_from_user(value, values + cp * value_size, value_size))
++		    copy_from_user(value, values + (size_t)cp * value_size, value_size))
+ 			break;
+ 
+ 		err = bpf_map_update_value(map, map_file, key, value,
+@@ -2176,12 +2176,12 @@ int generic_map_lookup_batch(struct bpf_map *map,
+ 		if (err)
+ 			goto free_buf;
+ 
+-		if (copy_to_user(keys + cp * map->key_size, key,
++		if (copy_to_user(keys + (size_t)cp * map->key_size, key,
+ 				 map->key_size)) {
+ 			err = -EFAULT;
+ 			goto free_buf;
+ 		}
+-		if (copy_to_user(values + cp * value_size, value, value_size)) {
++		if (copy_to_user(values + (size_t)cp * value_size, value, value_size)) {
+ 			err = -EFAULT;
+ 			goto free_buf;
+ 		}
 -- 
 2.53.0
 
