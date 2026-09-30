@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820813DBD49;
-	Wed, 30 Sep 2026 19:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014393AFAE2;
+	Wed, 30 Sep 2026 19:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796085; cv=none; b=EiHw7mdjQ+Vcu6qVktc2ZSB/Xb/gsSaC464lUNbE6hDNbl1rCxPDo2RfN/v40OUZmn7J9yA8Mb7ient9/rox0RZmoWCbivrw7kJldAhHxF803XHdtYB2P6hXklkcqL/uBpS7rMqgO3DOUWAV18yz7VNQc4sjB4TjbAB5IrEIUqs=
+	t=1790796087; cv=none; b=qyzjXbQeDeafMrbwGh8C2LrUka908OkofOgNPgbPArqtj0yEX12OF+zQN28aPCbWjSNV5W1yy4mT3q9UmWZo5CwYfHIH4ehwoW6eet8IGsO7iuVyBK0tyGzVp42mN7TEx5fyBWHbmBu+Bez7CtQTEFG9LimBafZwpMu4pZwL+L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796085; c=relaxed/simple;
-	bh=BTWooyvWEkE5NfwO4B9gtPR4Zi98DDRo2vxub1+iGmM=;
+	s=arc-20240116; t=1790796087; c=relaxed/simple;
+	bh=Bm5PugpV4XxSZJ9BqLffm2plzEy0hnHn431kfYpQ1Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFqulAo4TiRjKoGkyN5dyPRbcNtZTgEAdF5nI7tiJKfs4BnSlKw8ApIIpCxFGaI95Oaejt7HQwCp6254xdvdIFkvsHkjp6CfUDh+quCnMHSczG5zZmDfhtX38znu9EHU9UUuIoo3I3g9DADSqwKDZfsNrST05aMwaK0kjNyxvrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7Mtab4Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxoeVQ7e1SPvsp43YejpeiM7ePJkOXBL9Wj17E0iLB6IDx3Jev1rxXuLrMZ2LVyjl2S5iLtOPbdPqnr2z27Kzn1iqOt/9RRMBwHbFqEHxdYK4jmLVpyDQGX2WnyMytffu7mYXcLZXP5fS80NlSuUp89m6YjEShUlulZf2dKh+o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xex4znEc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7Mtab4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8986E1F0089B;
-	Wed, 30 Sep 2026 19:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xex4znEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA661F000FF;
+	Wed, 30 Sep 2026 19:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796083;
-	bh=is9v+LwaJ1d6KTo5micUjK/cf6kIAL2bkv4hE5WZowA=;
+	s=korg; t=1790796085;
+	bh=9VljK6/V8lahKOlpZlLLjxlzr9k6xwCUUwiX8Ja84dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P7Mtab4ZGOBB1li9/cPGUL72VX2VVW03Yd/qvd9Mu8hdz7JcT2BHobfugv20rZsLk
-	 VRYNV7iSM57oJI0dHQ5y+kBfZOV/q438VZ8vUFt3R+GD1fvUqd5b3RHXgHk3gDdMis
-	 d0Lz+x47y5nlkjdUpo4tuxGxsRziJunpf3YzElVg=
+	b=Xex4znEcJzDfyOD0JQsKir8P45dagi/RulOAAOmjxS/uW04hA7gEKuXZekbiM0kmf
+	 kvwte6nxAT5aPWrMuTrHT9QpKk9eqaxpXHR6miXVmn59N/FzyP1D/kx44qPI8ddF8M
+	 HpixmnMOIZWSFdtQoJR7MOH52Oteg5FzVUs0AQHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	co+855929c2df672879@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0787/1193] ALSA: usb: 6fire: Avoid embedded URBs
-Date: Wed, 30 Sep 2026 17:24:31 +0200
-Message-ID: <20260930152451.730520552@linuxfoundation.org>
+Subject: [PATCH 6.6 0788/1193] ALSA: 6fire: fix OOB write from device-reported iso length
+Date: Wed, 30 Sep 2026 17:24:32 +0200
+Message-ID: <20260930152451.753361666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,562 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9fe49dbc023e82dfaee7b245997d820d01742a9a ]
+[ Upstream commit 1589afe2d099d3e817873bc474676968d7080410 ]
 
-The USB 6fire driver uses URBs embedded in different structs for PCM,
-MIDI and communication, and this is basically a buggy implementation
-nowadays; since a URB is managed with a refcount, this may lead to a
-UAF when the URB is released asynchronously.
+usb6fire_pcm_in_urb_handler() sizes each outgoing isochronous packet as
+(actual_length - 4) / (in_n_analog << 2) * (out_n_analog << 2) + 4, where
+actual_length is the unsigned length the device reported for the matching
+IN packet.  A packet completed with status 0 and actual_length < 4 wraps
+the subtraction to 0x7fffffec; a zero-length isochronous packet is legal
+on the bus, and the preceding loop rejects only non-zero status.  The sum
+reaches memset() on out_urb->buffer, a 4832-byte object from
+kcalloc(PCM_MAX_PACKET_SIZE, PCM_N_PACKETS_PER_URB).
 
-For addressing the problem, this patch converts those embedded URBs to
-ones that are properly allocated via usb_alloc_urb().  The
-pcm_urb.packets[] is gone, as it's allocated by usb_alloc_urb(), hence
-it's found in urb.iso_frame_desc[] instead.
+Even without the wrap the result is out of bounds: at 88.2/96 kHz the
+4-in/6-out scaling turns a full 420-byte IN packet into 628, so eight
+packets span 5024 bytes of that buffer.  usb_submit_urb() rejects an
+over-long descriptor only after the memset() and the
+usb6fire_pcm_playback() copy of user PCM data have run.
 
-The conversions are rather straightforward; each embedded struct urb
-is changed to a pointer, and its callers are updated accordingly.
-The resource for those structs are released in the common destructor
-functions (usb6fire_comm_free(), etc), which are called at both the
-init error path and the disconnect.
+Guard the subtraction as the sibling usb6fire_pcm_capture() already does,
+and limit the frame count to what fits in rt->out_packet_size, the OUT
+endpoint's wMaxPacketSize.  This bounds total_length by the buffer size
+while keeping each packet length aligned to a whole output frame.
 
-No functional changes, only compile-tested.
+  BUG: KASAN: out-of-bounds in usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
+  Write of size 18446744073709551456 at addr ffff88802a3d0000 by task vhci_rx/5018
+  Call Trace:
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
+   __asan_memset (mm/kasan/shadow.c:84)
+   usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
+   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107 drivers/usb/usbip/vhci_rx.c:242)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Link: https://lore.kernel.org/20260903130757.0668310a.michal.pecio@gmail.com
+  Allocated by task 10:
+   __kmalloc_cache_noprof (mm/slub.c:5563)
+   usb6fire_pcm_init (sound/usb/6fire/pcm.c:560 sound/usb/6fire/pcm.c:595)
+   usb6fire_chip_probe (sound/usb/6fire/chip.c:133)
+   usb_probe_interface (drivers/usb/core/driver.c:399)
+
+  The buggy address belongs to the object at ffff88802a3d0000
+   which belongs to the cache kmalloc-8k of size 8192
+  The buggy address is located 0 bytes inside of
+   4832-byte region [ffff88802a3d0000, ffff88802a3d12e0)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
+Reported-by: co+855929c2df672879@bugs.sh
+Closes: https://lore.kernel.org/all/gisnub8aWGLbyZLcDCSc7zWsHonMWGcyRgt5%40bugs.sh/
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260914074324.3590843-1-xmei5@asu.edu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260903160458.1938392-4-tiwai@suse.de
-Stable-dep-of: 1589afe2d099 ("ALSA: 6fire: fix OOB write from device-reported iso length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/comm.c |  42 +++++++++-----
- sound/usb/6fire/comm.h |   2 +-
- sound/usb/6fire/midi.c |  43 +++++++++-----
- sound/usb/6fire/midi.h |   2 +-
- sound/usb/6fire/pcm.c  | 128 ++++++++++++++++++++++++-----------------
- sound/usb/6fire/pcm.h  |   5 +-
- 6 files changed, 136 insertions(+), 86 deletions(-)
+ sound/usb/6fire/pcm.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/6fire/comm.c b/sound/usb/6fire/comm.c
-index bcfb34db37d95..cfaaad9d24028 100644
---- a/sound/usb/6fire/comm.c
-+++ b/sound/usb/6fire/comm.c
-@@ -21,7 +21,6 @@ enum {
- static void usb6fire_comm_init_urb(struct comm_runtime *rt, struct urb *urb,
- 		u8 *buffer, void *context, void(*handler)(struct urb *urb))
- {
--	usb_init_urb(urb);
- 	urb->transfer_buffer = buffer;
- 	urb->pipe = usb_sndintpipe(rt->chip->dev, COMM_EP);
- 	urb->complete = handler;
-@@ -142,6 +141,19 @@ static int usb6fire_comm_write16(struct comm_runtime *rt, u8 request,
- 	return ret;
- }
- 
-+static void usb6fire_comm_free(struct comm_runtime *rt)
-+{
-+	if (!rt)
-+		return;
-+
-+	if (rt->chip)
-+		rt->chip->comm = NULL;
-+
-+	usb_free_urb(rt->receiver);
-+	kfree(rt->receiver_buffer);
-+	kfree(rt);
-+}
-+
- int usb6fire_comm_init(struct sfire_chip *chip)
- {
- 	struct comm_runtime *rt = kzalloc(sizeof(struct comm_runtime),
-@@ -154,14 +166,18 @@ int usb6fire_comm_init(struct sfire_chip *chip)
- 
- 	rt->receiver_buffer = kzalloc(COMM_RECEIVER_BUFSIZE, GFP_KERNEL);
- 	if (!rt->receiver_buffer) {
--		kfree(rt);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto error;
- 	}
- 
--	urb = &rt->receiver;
-+	urb = usb_alloc_urb(0, GFP_KERNEL);
-+	if (!urb) {
-+		ret = -ENOMEM;
-+		goto error;
-+	}
-+	rt->receiver = urb;
- 	rt->serial = 1;
- 	rt->chip = chip;
--	usb_init_urb(urb);
- 	rt->init_urb = usb6fire_comm_init_urb;
- 	rt->write8 = usb6fire_comm_write8;
- 	rt->write16 = usb6fire_comm_write16;
-@@ -176,13 +192,15 @@ int usb6fire_comm_init(struct sfire_chip *chip)
- 	urb->interval = 1;
- 	ret = usb_submit_urb(urb, GFP_KERNEL);
- 	if (ret < 0) {
--		kfree(rt->receiver_buffer);
--		kfree(rt);
- 		dev_err(&chip->dev->dev, "cannot create comm data receiver.");
--		return ret;
-+		goto error;
- 	}
- 	chip->comm = rt;
- 	return 0;
-+
-+ error:
-+	usb6fire_comm_free(rt);
-+	return ret;
- }
- 
- void usb6fire_comm_abort(struct sfire_chip *chip)
-@@ -190,14 +208,10 @@ void usb6fire_comm_abort(struct sfire_chip *chip)
- 	struct comm_runtime *rt = chip->comm;
- 
- 	if (rt)
--		usb_poison_urb(&rt->receiver);
-+		usb_poison_urb(rt->receiver);
- }
- 
- void usb6fire_comm_destroy(struct sfire_chip *chip)
- {
--	struct comm_runtime *rt = chip->comm;
--
--	kfree(rt->receiver_buffer);
--	kfree(rt);
--	chip->comm = NULL;
-+	usb6fire_comm_free(chip->comm);
- }
-diff --git a/sound/usb/6fire/comm.h b/sound/usb/6fire/comm.h
-index 2447d7ecf1798..89976f510f6c2 100644
---- a/sound/usb/6fire/comm.h
-+++ b/sound/usb/6fire/comm.h
-@@ -19,7 +19,7 @@ enum /* settings for comm */
- struct comm_runtime {
- 	struct sfire_chip *chip;
- 
--	struct urb receiver;
-+	struct urb *receiver;
- 	u8 *receiver_buffer;
- 
- 	u8 serial; /* urb serial */
-diff --git a/sound/usb/6fire/midi.c b/sound/usb/6fire/midi.c
-index 6c6bccc0c410d..9a1dd5b6557c7 100644
---- a/sound/usb/6fire/midi.c
-+++ b/sound/usb/6fire/midi.c
-@@ -66,7 +66,7 @@ static void usb6fire_midi_out_trigger(
- 		struct snd_rawmidi_substream *alsa_sub, int up)
- {
- 	struct midi_runtime *rt = alsa_sub->rmidi->private_data;
--	struct urb *urb = &rt->out_urb;
-+	struct urb *urb = rt->out_urb;
- 	__s8 ret;
- 
- 	guard(spinlock_irqsave)(&rt->out_lock);
-@@ -137,6 +137,19 @@ static const struct snd_rawmidi_ops in_ops = {
- 	.trigger = usb6fire_midi_in_trigger
- };
- 
-+static void usb6fire_midi_free(struct midi_runtime *rt)
-+{
-+	if (!rt)
-+		return;
-+
-+	if (rt->chip)
-+		rt->chip->midi = NULL;
-+
-+	usb_free_urb(rt->out_urb);
-+	kfree(rt->out_buffer);
-+	kfree(rt);
-+}
-+
- int usb6fire_midi_init(struct sfire_chip *chip)
- {
- 	int ret;
-@@ -149,8 +162,14 @@ int usb6fire_midi_init(struct sfire_chip *chip)
- 
- 	rt->out_buffer = kzalloc(MIDI_BUFSIZE, GFP_KERNEL);
- 	if (!rt->out_buffer) {
--		kfree(rt);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto error;
-+	}
-+
-+	rt->out_urb = usb_alloc_urb(0, GFP_KERNEL);
-+	if (!rt->out_urb) {
-+		ret = -ENOMEM;
-+		goto error;
- 	}
- 
- 	rt->chip = chip;
-@@ -161,15 +180,13 @@ int usb6fire_midi_init(struct sfire_chip *chip)
- 	spin_lock_init(&rt->in_lock);
- 	spin_lock_init(&rt->out_lock);
- 
--	comm_rt->init_urb(comm_rt, &rt->out_urb, rt->out_buffer, rt,
-+	comm_rt->init_urb(comm_rt, rt->out_urb, rt->out_buffer, rt,
- 			usb6fire_midi_out_handler);
- 
- 	ret = snd_rawmidi_new(chip->card, "6FireUSB", 0, 1, 1, &rt->instance);
- 	if (ret < 0) {
--		kfree(rt->out_buffer);
--		kfree(rt);
- 		dev_err(&chip->dev->dev, "unable to create midi.\n");
--		return ret;
-+		goto error;
- 	}
- 	rt->instance->private_data = rt;
- 	strcpy(rt->instance->name, "DMX6FireUSB MIDI");
-@@ -183,6 +200,10 @@ int usb6fire_midi_init(struct sfire_chip *chip)
- 
- 	chip->midi = rt;
- 	return 0;
-+
-+ error:
-+	usb6fire_midi_free(rt);
-+	return ret;
- }
- 
- void usb6fire_midi_abort(struct sfire_chip *chip)
-@@ -190,14 +211,10 @@ void usb6fire_midi_abort(struct sfire_chip *chip)
- 	struct midi_runtime *rt = chip->midi;
- 
- 	if (rt)
--		usb_poison_urb(&rt->out_urb);
-+		usb_poison_urb(rt->out_urb);
- }
- 
- void usb6fire_midi_destroy(struct sfire_chip *chip)
- {
--	struct midi_runtime *rt = chip->midi;
--
--	kfree(rt->out_buffer);
--	kfree(rt);
--	chip->midi = NULL;
-+	usb6fire_midi_free(chip->midi);
- }
-diff --git a/sound/usb/6fire/midi.h b/sound/usb/6fire/midi.h
-index 47640c845903b..8716ab8a863ae 100644
---- a/sound/usb/6fire/midi.h
-+++ b/sound/usb/6fire/midi.h
-@@ -22,7 +22,7 @@ struct midi_runtime {
- 	spinlock_t in_lock;
- 	spinlock_t out_lock;
- 	struct snd_rawmidi_substream *out;
--	struct urb out_urb;
-+	struct urb *out_urb;
- 	u8 out_serial; /* serial number of out packet */
- 	u8 *out_buffer;
- 	int buffer_offset;
 diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
-index 14d23e3103989..9e8f4371e89ff 100644
+index 9e8f4371e89ff..5f6a63f79990b 100644
 --- a/sound/usb/6fire/pcm.c
 +++ b/sound/usb/6fire/pcm.c
-@@ -138,8 +138,8 @@ static void usb6fire_pcm_stream_stop(struct pcm_runtime *rt)
- 		rt->stream_state = STREAM_STOPPING;
- 
- 		for (i = 0; i < PCM_N_URBS; i++) {
--			usb_kill_urb(&rt->in_urbs[i].instance);
--			usb_kill_urb(&rt->out_urbs[i].instance);
-+			usb_kill_urb(rt->in_urbs[i].instance);
-+			usb_kill_urb(rt->out_urbs[i].instance);
- 		}
- 		ctrl_rt->usb_streaming = false;
- 		ctrl_rt->update_streaming(ctrl_rt);
-@@ -161,13 +161,13 @@ static int usb6fire_pcm_stream_start(struct pcm_runtime *rt)
- 		rt->stream_state = STREAM_STARTING;
- 		for (i = 0; i < PCM_N_URBS; i++) {
- 			for (k = 0; k < PCM_N_PACKETS_PER_URB; k++) {
--				packet = &rt->in_urbs[i].packets[k];
-+				packet = &rt->in_urbs[i].instance->iso_frame_desc[k];
- 				packet->offset = k * rt->in_packet_size;
- 				packet->length = rt->in_packet_size;
- 				packet->actual_length = 0;
- 				packet->status = 0;
- 			}
--			ret = usb_submit_urb(&rt->in_urbs[i].instance,
-+			ret = usb_submit_urb(rt->in_urbs[i].instance,
- 					GFP_ATOMIC);
- 			if (ret) {
- 				usb6fire_pcm_stream_stop(rt);
-@@ -197,6 +197,7 @@ static void usb6fire_pcm_capture(struct pcm_substream *sub, struct pcm_urb *urb)
- 	unsigned int total_length = 0;
- 	struct pcm_runtime *rt = snd_pcm_substream_chip(sub->instance);
- 	struct snd_pcm_runtime *alsa_rt = sub->instance->runtime;
-+	struct usb_iso_packet_descriptor *isoc;
- 	u32 *src = NULL;
- 	u32 *dest = (u32 *) (alsa_rt->dma_area + sub->dma_off
- 			* (alsa_rt->frame_bits >> 3));
-@@ -207,8 +208,9 @@ static void usb6fire_pcm_capture(struct pcm_substream *sub, struct pcm_urb *urb)
- 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
- 		/* at least 4 header bytes for valid packet.
- 		 * after that: 32 bits per sample for analog channels */
--		if (urb->packets[i].actual_length > 4)
--			frame_count = (urb->packets[i].actual_length - 4)
-+		isoc = &urb->instance->iso_frame_desc[i];
-+		if (isoc->actual_length > 4)
-+			frame_count = (isoc->actual_length - 4)
- 					/ (rt->in_n_analog << 2);
- 		else
- 			frame_count = 0;
-@@ -220,7 +222,7 @@ static void usb6fire_pcm_capture(struct pcm_substream *sub, struct pcm_urb *urb)
- 		else
- 			return;
- 		src++; /* skip leading 4 bytes of every packet */
--		total_length += urb->packets[i].length;
-+		total_length += isoc->length;
- 		for (frame = 0; frame < frame_count; frame++) {
- 			memcpy(dest, src, bytes_per_frame);
- 			dest += alsa_rt->channels;
-@@ -244,6 +246,7 @@ static void usb6fire_pcm_playback(struct pcm_substream *sub,
- 	int frame_count;
- 	struct pcm_runtime *rt = snd_pcm_substream_chip(sub->instance);
- 	struct snd_pcm_runtime *alsa_rt = sub->instance->runtime;
-+	struct usb_iso_packet_descriptor *isoc;
- 	u32 *src = (u32 *) (alsa_rt->dma_area + sub->dma_off
- 			* (alsa_rt->frame_bits >> 3));
- 	u32 *src_end = (u32 *) (alsa_rt->dma_area + alsa_rt->buffer_size
-@@ -263,8 +266,9 @@ static void usb6fire_pcm_playback(struct pcm_substream *sub,
- 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
- 		/* at least 4 header bytes for valid packet.
- 		 * after that: 32 bits per sample for analog channels */
--		if (urb->packets[i].length > 4)
--			frame_count = (urb->packets[i].length - 4)
-+		isoc = &urb->instance->iso_frame_desc[i];
-+		if (isoc->length > 4)
-+			frame_count = (isoc->length - 4)
- 					/ (rt->out_n_analog << 2);
- 		else
- 			frame_count = 0;
-@@ -289,6 +293,7 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
- 	struct pcm_urb *out_urb = in_urb->peer;
- 	struct pcm_runtime *rt = in_urb->chip->pcm;
- 	struct pcm_substream *sub;
-+	struct usb_iso_packet_descriptor *isoc_out, *isoc_in;
- 	bool period_elapsed;
- 	int total_length = 0;
- 	int frame_count;
-@@ -299,11 +304,13 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
- 
- 	if (usb_urb->status || rt->panic || rt->stream_state == STREAM_STOPPING)
- 		return;
--	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++)
--		if (in_urb->packets[i].status) {
-+	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
-+		isoc_in = &in_urb->instance->iso_frame_desc[i];
-+		if (isoc_in->status) {
- 			rt->panic = true;
- 			return;
- 		}
-+	}
- 
- 	if (rt->stream_state == STREAM_DISABLED) {
- 		dev_err(&rt->chip->dev->dev,
-@@ -328,12 +335,13 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+@@ -335,11 +335,19 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
  
  	/* setup out urb structure */
  	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
--		out_urb->packets[i].offset = total_length;
--		out_urb->packets[i].length = (in_urb->packets[i].actual_length
--				- 4) / (rt->in_n_analog << 2)
-+		isoc_out = &out_urb->instance->iso_frame_desc[i];
-+		isoc_in = &in_urb->instance->iso_frame_desc[i];
-+		isoc_out->offset = total_length;
-+		isoc_out->length = (isoc_in->actual_length - 4) / (rt->in_n_analog << 2)
- 				* (rt->out_n_analog << 2) + 4;
--		out_urb->packets[i].status = 0;
--		total_length += out_urb->packets[i].length;
-+		isoc_out->status = 0;
-+		total_length += isoc_out->length;
- 	}
- 	memset(out_urb->buffer, 0, total_length);
- 
-@@ -354,9 +362,10 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
- 
- 	/* setup the 4th byte of each sample (0x40 for analog channels) */
- 	dest = out_urb->buffer;
--	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++)
--		if (out_urb->packets[i].length >= 4) {
--			frame_count = (out_urb->packets[i].length - 4)
-+	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
-+		isoc_out = &out_urb->instance->iso_frame_desc[i];
-+		if (isoc_out->length >= 4) {
-+			frame_count = (isoc_out->length - 4)
- 					/ (rt->out_n_analog << 2);
- 			*(dest++) = 0xaa;
- 			*(dest++) = 0xaa;
-@@ -370,8 +379,10 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
- 					*(dest++) = 0x40;
- 				}
- 		}
--	usb_submit_urb(&out_urb->instance, GFP_ATOMIC);
--	usb_submit_urb(&in_urb->instance, GFP_ATOMIC);
-+	}
++		unsigned int frames = 0;
 +
-+	usb_submit_urb(out_urb->instance, GFP_ATOMIC);
-+	usb_submit_urb(in_urb->instance, GFP_ATOMIC);
- }
- 
- static void usb6fire_pcm_out_urb_handler(struct urb *usb_urb)
-@@ -534,22 +545,25 @@ static const struct snd_pcm_ops pcm_ops = {
- 	.pointer = usb6fire_pcm_pointer,
- };
- 
--static void usb6fire_pcm_init_urb(struct pcm_urb *urb,
--				  struct sfire_chip *chip, bool in, int ep,
--				  void (*handler)(struct urb *))
-+static int usb6fire_pcm_init_urb(struct pcm_urb *urb,
-+				 struct sfire_chip *chip, bool in, int ep,
-+				 void (*handler)(struct urb *))
- {
- 	urb->chip = chip;
--	usb_init_urb(&urb->instance);
--	urb->instance.transfer_buffer = urb->buffer;
--	urb->instance.transfer_buffer_length =
-+	urb->instance = usb_alloc_urb(PCM_N_PACKETS_PER_URB, GFP_KERNEL);
-+	if (!urb->instance)
-+		return -ENOMEM;
-+	urb->instance->transfer_buffer = urb->buffer;
-+	urb->instance->transfer_buffer_length =
- 			PCM_N_PACKETS_PER_URB * PCM_MAX_PACKET_SIZE;
--	urb->instance.dev = chip->dev;
--	urb->instance.pipe = in ? usb_rcvisocpipe(chip->dev, ep)
-+	urb->instance->dev = chip->dev;
-+	urb->instance->pipe = in ? usb_rcvisocpipe(chip->dev, ep)
- 			: usb_sndisocpipe(chip->dev, ep);
--	urb->instance.interval = 1;
--	urb->instance.complete = handler;
--	urb->instance.context = urb;
--	urb->instance.number_of_packets = PCM_N_PACKETS_PER_URB;
-+	urb->instance->interval = 1;
-+	urb->instance->complete = handler;
-+	urb->instance->context = urb;
-+	urb->instance->number_of_packets = PCM_N_PACKETS_PER_URB;
-+	return 0;
- }
- 
- static int usb6fire_pcm_buffers_init(struct pcm_runtime *rt)
-@@ -571,14 +585,23 @@ static int usb6fire_pcm_buffers_init(struct pcm_runtime *rt)
- 	return 0;
- }
- 
--static void usb6fire_pcm_buffers_destroy(struct pcm_runtime *rt)
-+static void usb6fire_pcm_free(struct pcm_runtime *rt)
- {
- 	int i;
- 
-+	if (!rt)
-+		return;
+ 		isoc_out = &out_urb->instance->iso_frame_desc[i];
+ 		isoc_in = &in_urb->instance->iso_frame_desc[i];
++		if (isoc_in->actual_length > 4)
++			frames = (isoc_in->actual_length - 4)
++					/ (rt->in_n_analog << 2);
++		frames = min_t(unsigned int, frames,
++				       (rt->out_packet_size - 4)
++				       / (rt->out_n_analog << 2));
 +
-+	if (rt->chip)
-+		rt->chip->pcm = NULL;
-+
- 	for (i = 0; i < PCM_N_URBS; i++) {
-+		usb_free_urb(rt->out_urbs[i].instance);
- 		kfree(rt->out_urbs[i].buffer);
-+		usb_free_urb(rt->in_urbs[i].instance);
- 		kfree(rt->in_urbs[i].buffer);
+ 		isoc_out->offset = total_length;
+-		isoc_out->length = (isoc_in->actual_length - 4) / (rt->in_n_analog << 2)
+-				* (rt->out_n_analog << 2) + 4;
++		isoc_out->length = frames * (rt->out_n_analog << 2) + 4;
+ 		isoc_out->status = 0;
+ 		total_length += isoc_out->length;
  	}
-+	kfree(rt);
- }
- 
- int usb6fire_pcm_init(struct sfire_chip *chip)
-@@ -593,11 +616,8 @@ int usb6fire_pcm_init(struct sfire_chip *chip)
- 		return -ENOMEM;
- 
- 	ret = usb6fire_pcm_buffers_init(rt);
--	if (ret) {
--		usb6fire_pcm_buffers_destroy(rt);
--		kfree(rt);
--		return ret;
--	}
-+	if (ret)
-+		goto error;
- 
- 	rt->chip = chip;
- 	rt->stream_state = STREAM_DISABLED;
-@@ -609,10 +629,14 @@ int usb6fire_pcm_init(struct sfire_chip *chip)
- 	spin_lock_init(&rt->capture.lock);
- 
- 	for (i = 0; i < PCM_N_URBS; i++) {
--		usb6fire_pcm_init_urb(&rt->in_urbs[i], chip, true, IN_EP,
--				usb6fire_pcm_in_urb_handler);
--		usb6fire_pcm_init_urb(&rt->out_urbs[i], chip, false, OUT_EP,
--				usb6fire_pcm_out_urb_handler);
-+		ret = usb6fire_pcm_init_urb(&rt->in_urbs[i], chip, true, IN_EP,
-+					    usb6fire_pcm_in_urb_handler);
-+		if (ret < 0)
-+			goto error;
-+		ret = usb6fire_pcm_init_urb(&rt->out_urbs[i], chip, false, OUT_EP,
-+					    usb6fire_pcm_out_urb_handler);
-+		if (ret < 0)
-+			goto error;
- 
- 		rt->in_urbs[i].peer = &rt->out_urbs[i];
- 		rt->out_urbs[i].peer = &rt->in_urbs[i];
-@@ -620,10 +644,8 @@ int usb6fire_pcm_init(struct sfire_chip *chip)
- 
- 	ret = snd_pcm_new(chip->card, "DMX6FireUSB", 0, 1, 1, &pcm);
- 	if (ret < 0) {
--		usb6fire_pcm_buffers_destroy(rt);
--		kfree(rt);
- 		dev_err(&chip->dev->dev, "cannot create pcm instance.\n");
--		return ret;
-+		goto error;
- 	}
- 
- 	pcm->private_data = rt;
-@@ -636,6 +658,10 @@ int usb6fire_pcm_init(struct sfire_chip *chip)
- 
- 	chip->pcm = rt;
- 	return 0;
-+
-+ error:
-+	usb6fire_pcm_free(rt);
-+	return ret;
- }
- 
- void usb6fire_pcm_abort(struct sfire_chip *chip)
-@@ -653,8 +679,8 @@ void usb6fire_pcm_abort(struct sfire_chip *chip)
- 			snd_pcm_stop_xrun(rt->capture.instance);
- 
- 		for (i = 0; i < PCM_N_URBS; i++) {
--			usb_poison_urb(&rt->in_urbs[i].instance);
--			usb_poison_urb(&rt->out_urbs[i].instance);
-+			usb_poison_urb(rt->in_urbs[i].instance);
-+			usb_poison_urb(rt->out_urbs[i].instance);
- 		}
- 
- 	}
-@@ -662,9 +688,5 @@ void usb6fire_pcm_abort(struct sfire_chip *chip)
- 
- void usb6fire_pcm_destroy(struct sfire_chip *chip)
- {
--	struct pcm_runtime *rt = chip->pcm;
--
--	usb6fire_pcm_buffers_destroy(rt);
--	kfree(rt);
--	chip->pcm = NULL;
-+	usb6fire_pcm_free(chip->pcm);
- }
-diff --git a/sound/usb/6fire/pcm.h b/sound/usb/6fire/pcm.h
-index 5a092dfd69f5a..b586fe220fd11 100644
---- a/sound/usb/6fire/pcm.h
-+++ b/sound/usb/6fire/pcm.h
-@@ -24,10 +24,7 @@ enum /* settings for pcm */
- struct pcm_urb {
- 	struct sfire_chip *chip;
- 
--	/* BEGIN DO NOT SEPARATE */
--	struct urb instance;
--	struct usb_iso_packet_descriptor packets[PCM_N_PACKETS_PER_URB];
--	/* END DO NOT SEPARATE */
-+	struct urb *instance;
- 	u8 *buffer;
- 
- 	struct pcm_urb *peer;
 -- 
 2.53.0
 
