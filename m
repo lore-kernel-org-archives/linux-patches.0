@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DA646D577;
-	Wed, 30 Sep 2026 16:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E313A361DA8;
+	Wed, 30 Sep 2026 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785448; cv=none; b=ahnleb0YYcXElGubWLQIL/en0M5mO7owZtuCF7d0dBmSPyFhapnPI97mViZe+dVhKJERRhvxyxsyiP/o+kgUsXIe9JVYRRubTOd8d5HuBMPwLBZEaOi+4BPg35UGRwBLJ1kskaTnnVS3eYrDWiWpZaaVHhqqYcM+ezicXuTRNwY=
+	t=1790785449; cv=none; b=usG6Pi+tDMyfFT2yNfkrR/tWoh6tp84o/EpoLgFO5E4SaCS0YZDAjuJABdcGCymWDQ+bgQA37889nJ5U9GBm7B3jbvCBcyBRgujYPoihTCTZTdGH22CHVSagdRWZA7bh19X54p6/vAeiauJm+yrXcpQH+zeTs7ufqmQi5P1/1r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785448; c=relaxed/simple;
-	bh=OY28303UwN+S6/I1hw4xTSvV6XzMShIyGdHQGmNHMdY=;
+	s=arc-20240116; t=1790785449; c=relaxed/simple;
+	bh=k/8KF0leY6FXMyiI9uIVwciZUqJgOoWs7pnUYFSDCh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTs/cR55quoQoWen3lR50H6oV51g4kui2ZAsaRgFThIUMXxL2d2uLolom5unpCX8VKwz7tfeOv+0M3ipR9/u9ecaxTWSmzGZVPL/duJIE0RBhAOmObS0iLlTOA/TlBsxXFs2A7UDlF+PBlXBtkHnZowpcslZO85PicjoNLIVS98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCWJ4QT6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c/7FzxcM1YzWUV28EHSJ/pzi9QEsdRx+5wixyZZQgDmkrAd4tXW3Zhng4Ti2W5BEm4kuDHl0n7fsfSZRWKbMjN5SWQaQEHwMU+F/2hz4eXJESNU7XwEVIBs8X/4AYdc7Cx4/uAMxTB9+DRU+8aY+Wt2tU7KuCLHrtbc/ee/PxH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdp/c6rD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCWJ4QT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972AF1F0089A;
-	Wed, 30 Sep 2026 16:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdp/c6rD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AC41F00893;
+	Wed, 30 Sep 2026 16:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785441;
-	bh=zdJxtJ7Z/766iaYijt/W4aX1Pmdp8bQN+bIjw8k9aog=;
+	s=korg; t=1790785444;
+	bh=h5udVSGjpFUAMQCeIonU6s3yhSwPaxcm2CLx29hMVz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nCWJ4QT6ZkkrylJPcKLSZGAbIUtpTl/RXc3n1Kes6M2oysmYaKbq5jAsJZSs7O/9s
-	 MtF9Al5DHLhkOLzxX3cshKdFVJik2kzmVfVwMRTr/nb7TqlWYI8NBI0NLilGTdBNV0
-	 LZeCVDKywHt30xTSC4wJXuFGntr5JU4qap4z0N04=
+	b=Tdp/c6rDAVvoREhKDPffEqKtZtGiLuMAhW2DvAtAYI+SgCwGAr/20vGH0BpyY49ZE
+	 64uY8nTw+7uS9R1LyjJgvOGhRkDJcOPSnLGjJlRn6bCBqdxxMXJ/6jFSzrJexaakHl
+	 D10YQSsZvSmVqfiJxT/vxpVcsXFRH/Kk33UCbGVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 511/982] tracing: Keep the entry count when the histogram stats allocation fails
-Date: Wed, 30 Sep 2026 17:20:47 +0200
-Message-ID: <20260930152427.752829458@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Miguel Gazquez <miguel.gazquez@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 494/982] ipv4: adopt dst_dev, skb_dst_dev and skb_dst_dev_net[_rcu]
+Date: Wed, 30 Sep 2026 17:20:30 +0200
+Message-ID: <20260930152427.391235500@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,106 +53,404 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 06f5634ec5584954177f9a22e36b3bfb398a971b upstream.
+[ Upstream commit a74fc62eec155ca5a6da8ff3856f3dc87fe24558 ]
 
-print_entries() uses n_entries both as the number of sort entries and as
-its own return value, so the -ENOMEM it stores when the stats allocation
-fails overwrites the count that the cleanup still needs:
+Use the new helpers as a first step to deal with
+potential dst->dev races.
 
-	n_entries = tracing_map_sort_entries(map, ...);
-	if (n_entries < 0)
-		return n_entries;
-	...
-			if (!stats) {
-				n_entries = -ENOMEM;
-				goto out;
-			}
-	...
- out:
-	tracing_map_destroy_sort_entries(sort_entries, n_entries);
-
-tracing_map_destroy_sort_entries() takes an unsigned int and loops up to
-it, so -ENOMEM arrives as 4294967284. It walks an array of at most
-map->max_elts pointers and calls destroy_sort_entry(), which dereferences
-and frees, on whatever lies past the end.
-
-Reading the hist file of a trigger with a .percent value, with that
-allocation forced to fail:
-
-  BUG: KASAN: vmalloc-out-of-bounds in tracing_map_destroy_sort_entries+0xa0/0xb0
-  Read of size 8 at addr ffffc90000045000 by task init/1
-   tracing_map_destroy_sort_entries+0xa0/0xb0
-   hist_show+0x6f7/0x1df0
-   seq_read_iter+0x2b8/0x1190
-   vfs_read+0x176/0xa40
-  The buggy address belongs to a 4-page vmalloc region starting at
-  ffffc90000041000 allocated at tracing_map_sort_entries+0x5c/0xd50
-
-A few pages further the fault is fatal. The registers at the oops confirm
-the bound: the loop's end pointer less the array start, over the pointer
-size, is 4294967284.
-
-Return the error in a separate variable and leave n_entries holding the
-count, the way tracing_map_sort_entries() does on its own error path.
-
-The stats block is only entered for a value carrying .percent or .graph,
-which __create_val_field() has rejected since v6.3, so this cannot be
-reached in mainline as it stands. It becomes reachable again with
-"tracing: hist: let values keep the percent and graph modifiers", so it
-should be applied first.
-
-Cc: stable@vger.kernel.org
-Fixes: abaa5258ce5e ("tracing: Add .percent suffix option to histogram values")
-Link: https://patch.msgid.link/20260907060323.480728-1-donggeunyoo.kernel@gmail.com
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260907053113.1CED91F00A3A@smtp.kernel.org/
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ minor modifications to fix conflict ]
+Signed-off-by: Miguel Gazquez <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/net/inet_hashtables.h |  2 +-
+ include/net/ip.h              | 11 ++++++-----
+ include/net/route.h           |  2 +-
+ net/ipv4/icmp.c               | 24 +++++++++++++-----------
+ net/ipv4/igmp.c               |  2 +-
+ net/ipv4/ip_fragment.c        |  2 +-
+ net/ipv4/ip_output.c          |  4 ++--
+ net/ipv4/ip_vti.c             |  4 ++--
+ net/ipv4/netfilter.c          |  4 ++--
+ net/ipv4/route.c              |  8 ++++----
+ net/ipv4/tcp_fastopen.c       |  4 +++-
+ net/ipv4/tcp_ipv4.c           |  3 ++-
+ net/ipv4/tcp_metrics.c        |  8 ++++----
+ net/ipv4/xfrm4_output.c       |  2 +-
+ 14 files changed, 43 insertions(+), 37 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5416,7 +5416,7 @@ static int print_entries(struct seq_file
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index ce58cf10ecb43..ac85405308c9c 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -470,7 +470,7 @@ static inline struct sock *__inet_lookup_skb(struct inet_hashinfo *hashinfo,
+ 	if (sk)
+ 		return sk;
+ 
+-	return __inet_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
++	return __inet_lookup(skb_dst_dev_net(skb), hashinfo, skb,
+ 			     doff, iph->saddr, sport,
+ 			     iph->daddr, dport, inet_iif(skb), sdif,
+ 			     refcounted);
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 05ce8b38e3dab..414772ca7bb77 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -452,7 +452,7 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ 						    bool forwarding)
  {
- 	struct tracing_map_sort_entry **sort_entries = NULL;
- 	struct tracing_map *map = hist_data->map;
--	int i, j, n_entries;
-+	int i, j, n_entries, ret;
- 	struct hist_val_stat *stats = NULL;
- 	u64 val;
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net *net = dev_net(dst->dev);
++	struct net *net = dev_net(dst_dev(dst));
+ 	unsigned int mtu;
  
-@@ -5426,6 +5426,8 @@ static int print_entries(struct seq_file
- 	if (n_entries < 0)
- 		return n_entries;
+ 	if (READ_ONCE(net->ipv4.sysctl_ip_fwd_use_pmtu) ||
+@@ -468,7 +468,7 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ 	if (mtu)
+ 		goto out;
  
-+	ret = n_entries;
-+
- 	/* Calculate the max and the total for each field if needed. */
- 	for (j = 0; j < hist_data->n_vals; j++) {
- 		if (!(hist_data->fields[j]->flags &
-@@ -5435,7 +5437,7 @@ static int print_entries(struct seq_file
- 			stats = kcalloc(hist_data->n_vals, sizeof(*stats),
- 				       GFP_KERNEL);
- 			if (!stats) {
--				n_entries = -ENOMEM;
-+				ret = -ENOMEM;
- 				goto out;
- 			}
- 		}
-@@ -5456,7 +5458,7 @@ static int print_entries(struct seq_file
- out:
- 	tracing_map_destroy_sort_entries(sort_entries, n_entries);
+-	mtu = READ_ONCE(dst->dev->mtu);
++	mtu = READ_ONCE(dst_dev(dst)->mtu);
  
--	return n_entries;
-+	return ret;
+ 	if (unlikely(ip_mtu_locked(dst))) {
+ 		if (rt->rt_uses_gateway && mtu > 576)
+@@ -484,16 +484,17 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
+ 					  const struct sk_buff *skb)
+ {
++	const struct dst_entry *dst = skb_dst(skb);
+ 	unsigned int mtu;
+ 
+ 	if (!sk || !sk_fullsock(sk) || ip_sk_use_pmtu(sk)) {
+ 		bool forwarding = IPCB(skb)->flags & IPSKB_FORWARDED;
+ 
+-		return ip_dst_mtu_maybe_forward(skb_dst(skb), forwarding);
++		return ip_dst_mtu_maybe_forward(dst, forwarding);
+ 	}
+ 
+-	mtu = min(READ_ONCE(skb_dst(skb)->dev->mtu), IP_MAX_MTU);
+-	return mtu - lwtunnel_headroom(skb_dst(skb)->lwtstate, mtu);
++	mtu = min(READ_ONCE(dst_dev(dst)->mtu), IP_MAX_MTU);
++	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
  }
  
- static void hist_trigger_show(struct seq_file *m,
+ struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
+diff --git a/include/net/route.h b/include/net/route.h
+index 4fa45dda2bb32..ce608f8830401 100644
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -362,7 +362,7 @@ static inline int ip4_dst_hoplimit(const struct dst_entry *dst)
+ 		const struct net *net;
+ 
+ 		rcu_read_lock();
+-		net = dev_net_rcu(dst->dev);
++		net = dev_net_rcu(dst_dev(dst));
+ 		hoplimit = READ_ONCE(net->ipv4.sysctl_ip_default_ttl);
+ 		rcu_read_unlock();
+ 	}
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index 7c4c7b7fe3846..f0c8c3366740a 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -313,18 +313,20 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
+ {
+ 	struct dst_entry *dst = &rt->dst;
+ 	struct inet_peer *peer;
++	struct net_device *dev;
+ 	bool rc = true;
+ 
+ 	if (!apply_ratelimit)
+ 		return true;
+ 
+ 	/* No rate limit on loopback */
+-	if (dst->dev && (dst->dev->flags&IFF_LOOPBACK))
++	dev = dst_dev(dst);
++	if (dev && (dev->flags & IFF_LOOPBACK))
+ 		goto out;
+ 
+ 	rcu_read_lock();
+ 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
+-			       l3mdev_master_ifindex_rcu(dst->dev));
++			       l3mdev_master_ifindex_rcu(dev));
+ 	rc = inet_peer_xrlim_allow(peer,
+ 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
+ 	rcu_read_unlock();
+@@ -472,13 +474,13 @@ static void icmp_reply(struct icmp_bxm *icmp_param, struct sk_buff *skb)
+  */
+ static struct net_device *icmp_get_route_lookup_dev(struct sk_buff *skb)
+ {
+-	struct net_device *route_lookup_dev = NULL;
++	struct net_device *dev = skb->dev;
++	const struct dst_entry *dst;
+ 
+-	if (skb->dev)
+-		route_lookup_dev = skb->dev;
+-	else if (skb_dst(skb))
+-		route_lookup_dev = skb_dst(skb)->dev;
+-	return route_lookup_dev;
++	if (dev)
++		return dev;
++	dst = skb_dst(skb);
++	return dst ? dst_dev(dst) : NULL;
+ }
+ 
+ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
+@@ -911,7 +913,7 @@ static enum skb_drop_reason icmp_unreach(struct sk_buff *skb)
+ 	struct net *net;
+ 	u32 info = 0;
+ 
+-	net = dev_net_rcu(skb_dst(skb)->dev);
++	net = skb_dst_dev_net_rcu(skb);
+ 
+ 	/*
+ 	 *	Incomplete header ?
+@@ -1054,7 +1056,7 @@ static enum skb_drop_reason icmp_echo(struct sk_buff *skb)
+ 	struct icmp_bxm icmp_param;
+ 	struct net *net;
+ 
+-	net = dev_net_rcu(skb_dst(skb)->dev);
++	net = skb_dst_dev_net_rcu(skb);
+ 	/* should there be an ICMP stat for ignored echos? */
+ 	if (READ_ONCE(net->ipv4.sysctl_icmp_echo_ignore_all))
+ 		return SKB_NOT_DROPPED_YET;
+@@ -1231,7 +1233,7 @@ static enum skb_drop_reason icmp_timestamp(struct sk_buff *skb)
+ 	return SKB_NOT_DROPPED_YET;
+ 
+ out_err:
+-	__ICMP_INC_STATS(dev_net_rcu(skb_dst(skb)->dev), ICMP_MIB_INERRORS);
++	__ICMP_INC_STATS(skb_dst_dev_net_rcu(skb), ICMP_MIB_INERRORS);
+ 	return SKB_DROP_REASON_PKT_TOO_SMALL;
+ }
+ 
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index ede991885b1f8..1b8adf5fbf8a4 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -428,7 +428,7 @@ static int igmpv3_sendpack(struct sk_buff *skb)
+ 
+ 	pig->csum = ip_compute_csum(igmp_hdr(skb), igmplen);
+ 
+-	return ip_local_out(dev_net(skb_dst(skb)->dev), skb->sk, skb);
++	return ip_local_out(skb_dst_dev_net(skb), skb->sk, skb);
+ }
+ 
+ static int grec_size(struct ip_mc_list *pmc, int type, int gdel, int sdel)
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 0ed999fdca2d7..a70ede523297c 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -481,7 +481,7 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ /* Process an incoming IP datagram fragment. */
+ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ {
+-	struct net_device *dev = skb->dev ? : skb_dst(skb)->dev;
++	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
+ 	int vif = l3mdev_master_ifindex_rcu(dev);
+ 	struct ipq *qp;
+ 
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 6fd7995ff8dd1..707c634c0305a 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -113,7 +113,7 @@ int __ip_local_out(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	skb->protocol = htons(ETH_P_IP);
+ 
+ 	return nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT,
+-		       net, sk, skb, NULL, skb_dst(skb)->dev,
++		       net, sk, skb, NULL, skb_dst_dev(skb),
+ 		       dst_output);
+ }
+ 
+@@ -195,7 +195,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	struct rtable *rt = (struct rtable *)dst;
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
+ 	struct neighbour *neigh;
+ 	bool is_v6gw = false;
+diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
+index 7daf01af6295a..2e07592d8b966 100644
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -226,7 +226,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		goto tx_error_icmp;
+ 	}
+ 
+-	tdev = dst->dev;
++	tdev = dst_dev(dst);
+ 
+ 	if (tdev == dev) {
+ 		dst_release(dst);
+@@ -256,7 +256,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ xmit:
+ 	skb_scrub_packet(skb, !net_eq(tunnel->net, dev_net(dev)));
+ 	skb_dst_set(skb, dst);
+-	skb->dev = skb_dst(skb)->dev;
++	skb->dev = skb_dst_dev(skb);
+ 
+ 	err = dst_output(tunnel->net, skb->sk, skb);
+ 	if (net_xmit_eval(err) == 0)
+diff --git a/net/ipv4/netfilter.c b/net/ipv4/netfilter.c
+index bd135165482aa..c450509d6efde 100644
+--- a/net/ipv4/netfilter.c
++++ b/net/ipv4/netfilter.c
+@@ -19,12 +19,12 @@
+ /* route_me_harder function, used by iptable_nat, iptable_mangle + ip_queue */
+ int ip_route_me_harder(struct net *net, struct sock *sk, struct sk_buff *skb, unsigned int addr_type)
+ {
++	struct net_device *dev = skb_dst_dev(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
+ 	struct rtable *rt;
+ 	struct flowi4 fl4 = {};
+ 	__be32 saddr = iph->saddr;
+ 	__u8 flags;
+-	struct net_device *dev = skb_dst(skb)->dev;
+ 	struct flow_keys flkeys;
+ 	unsigned int hh_len;
+ 
+@@ -73,7 +73,7 @@ int ip_route_me_harder(struct net *net, struct sock *sk, struct sk_buff *skb, un
+ #endif
+ 
+ 	/* Change in oif may mean change in hh_len. */
+-	hh_len = skb_dst(skb)->dev->hard_header_len;
++	hh_len = skb_dst_dev(skb)->hard_header_len;
+ 	if (skb_headroom(skb) < hh_len &&
+ 	    pskb_expand_head(skb, HH_DATA_ALIGN(hh_len - skb_headroom(skb)),
+ 				0, GFP_ATOMIC))
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 783460ebfc471..a2985265c7929 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -416,7 +416,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 					   const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	struct neighbour *n;
+ 
+ 	rcu_read_lock();
+@@ -443,7 +443,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ static void ipv4_confirm_neigh(const struct dst_entry *dst, const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	const __be32 *pkey = daddr;
+ 
+ 	if (rt->rt_gw_family == AF_INET) {
+@@ -1069,7 +1069,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 		return;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst->dev);
++	net = dev_net_rcu(dst_dev(dst));
+ 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
+ 		lock = true;
+ 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
+@@ -1367,7 +1367,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ 	struct net *net;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst->dev);
++	net = dev_net_rcu(dst_dev(dst));
+ 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+ 				   net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index c99f10786c1f9..156685b4ae68a 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -558,6 +558,7 @@ bool tcp_fastopen_active_should_disable(struct sock *sk)
+ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
+ {
+ 	struct tcp_sock *tp = tcp_sk(sk);
++	struct net_device *dev;
+ 	struct dst_entry *dst;
+ 	struct sk_buff *skb;
+ 
+@@ -575,7 +576,8 @@ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
+ 	} else if (tp->syn_fastopen_ch &&
+ 		   atomic_read(&sock_net(sk)->ipv4.tfo_active_disable_times)) {
+ 		dst = sk_dst_get(sk);
+-		if (!(dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK)))
++		dev = dst ? dst_dev(dst) : NULL;
++		if (!(dev && (dev->flags & IFF_LOOPBACK)))
+ 			atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);
+ 		dst_release(dst);
+ 	}
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index ec3b0aa0a6260..9c5d227b749c4 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -733,7 +733,8 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 	arg.iov[0].iov_base = (unsigned char *)&rep;
+ 	arg.iov[0].iov_len  = sizeof(rep.th);
+ 
+-	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : skb_dst_dev_net(skb);
++
+ #ifdef CONFIG_TCP_MD5SIG
+ 	rcu_read_lock();
+ 	hash_location = tcp_parse_md5sig_option(th);
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index a4e03a7a2c030..8bf1118e04c66 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -166,11 +166,11 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 					  unsigned int hash)
+ {
+ 	struct tcp_metrics_block *tm;
+-	struct net *net;
+ 	bool reclaim = false;
++	struct net *net;
+ 
+ 	spin_lock_bh(&tcp_metrics_lock);
+-	net = dev_net(dst->dev);
++	net = dev_net(dst_dev(dst));
+ 
+ 	/* While waiting for the spin-lock the cache might have been populated
+ 	 * with this entry and so we have to check again.
+@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
+ 		return NULL;
+ 	}
+ 
+-	net = dev_net(dst->dev);
++	net = dev_net(dst_dev(dst));
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 
+@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
+ 	else
+ 		return NULL;
+ 
+-	net = dev_net(dst->dev);
++	net = dev_net(dst_dev(dst));
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 
+diff --git a/net/ipv4/xfrm4_output.c b/net/ipv4/xfrm4_output.c
+index 3cff51ba72bb0..0ae67d537499a 100644
+--- a/net/ipv4/xfrm4_output.c
++++ b/net/ipv4/xfrm4_output.c
+@@ -31,7 +31,7 @@ static int __xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ int xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
+-			    net, sk, skb, skb->dev, skb_dst(skb)->dev,
++			    net, sk, skb, skb->dev, skb_dst_dev(skb),
+ 			    __xfrm4_output,
+ 			    !(IPCB(skb)->flags & IPSKB_REROUTED));
+ }
+-- 
+2.53.0
+
 
 
