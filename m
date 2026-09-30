@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AA65172F8;
-	Wed, 30 Sep 2026 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B3D50EBE5;
+	Wed, 30 Sep 2026 16:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784867; cv=none; b=EZtSVBKOfQDnlvPtIDsoLmYek8BDGkgEGODZTVheoLlNmEFc5fUDK98FFrEjnuBPGPrRqRIGOiwUJIjY585eNE39qsOAwbZ7FHrEWBH2q/vNTH4BySpKITR9Z44Wx5+BCNPE2eknluaBUfbgcll0Icy+rG9opGhXn7o6pGEMb/Q=
+	t=1790784867; cv=none; b=SqpiGJkgsK8jo1vbqq0iC7SEc78nRDNp2H4RlFVV/C+1KXi7fDlTfhWM5upNyGdloS71rVKXYvzlVgw5wP6hA8We/Q/eyc8xwW7SrRCXJAPgWievb4fWzVFhjO872MT0QqE1EbbK4WxFEhu+c2yQjQXLLnNuxeAMv9nczTQFmlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784867; c=relaxed/simple;
-	bh=UuADlHMARCLy/v9bsAFHzefv6EAGHygWY67DqY2mQq0=;
+	bh=D9jRfIVAnHQ3L+hmRgg22TXJAuuu5iKBnLPiV3IGo18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPI9AqQFEaImQeK17jXDA/Cm73OY+10lSGqd0k0tgmCFfcoQzgKNcroUyUuKRzr06t+3lMv86WEZSRlaeI06l3ZXmQGxIe3cZwRhdJ72dl+0geqiNag5M8BcR+BsN0PuHz5Pa5qzM5zKpAwx+Jxz+3qinJxUpmyD1T/umpAAUMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERgsWBny; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVlT3GTPojoWqzC/B4TAKJMcrjz4JLmgsHZjLabnjA3kyqiy+j6/BtrWg1NqFfMIGkAnqJIsloFQYYk/7cW5rvtO9xRLoiKwxQfcR10rZjb3paOI7YkEFMhnrgFj6Guk5lKYeoVE+kcxlGMgQDXDW7JoxVtAe4O4v2Xid+0EVAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTJaTGd5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERgsWBny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16CE1F00898;
-	Wed, 30 Sep 2026 16:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTJaTGd5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5951F000FF;
+	Wed, 30 Sep 2026 16:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784864;
-	bh=WYuULiD+qITh60IPHhgo9qHqzY+IlpIAAph2mR0IM+A=;
+	s=korg; t=1790784858;
+	bh=ZPZszcoMAEPpXVkUdPo3bLLIgt1b+GsLh4Lx7UuLf+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERgsWBnyXm5cgt/s9k0K0bWooA0z5g5Ob9vsCjoxoi67G5YNLZmyEt1Hg7U6hp+fX
-	 ps1Uwml5LPwoOvEs76n93Uymh5EgnPiR2G7VP/9jFlG7KP6HN7KgSa3uoXXOU48FN9
-	 dGKmzPSPcZp4Z0qQARkr/vlItZHGAltiGqiqzcTA=
+	b=UTJaTGd5ZjNli3mRM2R0Ek5HhyfVcl8TsGBDQ7ahPGRq4VnhD9j+wn5JntjjjOwLI
+	 0cgL7CaY9mWT1NyLwxb7h8J43Ca+32SpqJ6UNH29FA1KxyGUVjkxrGOHbpsSk8k5TB
+	 d2s3Q0YfuRTM61jBWA+CC+QVZhdRJzail8BQusuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Dave Chen <davechen@synology.com>,
-	David Sterba <dsterba@suse.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 261/982] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
-Date: Wed, 30 Sep 2026 17:16:37 +0200
-Message-ID: <20260930152422.403019037@linuxfoundation.org>
+Subject: [PATCH 6.1 259/982] wifi: rsi: validate beacon length before fixed buffer copy
+Date: Wed, 30 Sep 2026 17:16:35 +0200
+Message-ID: <20260930152422.358666344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,72 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chen <davechen@synology.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
+[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
 
-btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
-and adds it (sector-aligned) to stat->blocks for every inode type.
-However, new_delalloc_bytes lives in a union with last_dir_index_offset:
+rsi_prepare_beacon() copies the mac80211 beacon frame after
+FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
+than MAX_MGMT_PKT_SIZE after alignment.
 
-    union {
-        u64 new_delalloc_bytes;     /* files only */
-        u64 last_dir_index_offset;  /* directories only */
-    };
+Validate the beacon length against the actual tailroom before the copy
+and skb_put(). Leave ownership of the management skb with the caller on
+error, matching the existing rsi_send_beacon() cleanup path.
 
-For a directory inode this memory holds last_dir_index_offset, which is
-set during directory logging (e.g. flush_dir_items_batch()) to the
-offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
-the number of entries ever created in the directory (dir indexes are
-monotonic and never reused), so it can be arbitrarily large.
-
-As a result, after a directory has been logged (e.g. via an fsync that
-triggers directory logging), btrfs_getattr() reports inflated st_blocks
-for that directory.  The inflation is purely in-core and disappears
-after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
-union), e.g. after a remount.
-
-Reproducer (on a btrfs filesystem):
-
-    D=/mnt/btrfs/d
-    mkdir -p $D
-    for i in $(seq 1 20000); do touch $D/f$i; done
-    sync                      # commit, push dir index high
-    touch $D/trigger          # dirty the dir in a new transaction
-    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
-    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
-    # umount + mount -> st_blocks drops back to the correct value
-
-The evict path already knows this union is type-dependent and guards the
-corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
-btrfs_getattr() was missing the equivalent check.
-
-Only read new_delalloc_bytes for regular files, which are the only
-inodes that ever set it.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Dave Chen <davechen@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index b2a1d96a806a9..e53b42a047e8b 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9275,7 +9275,8 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
- 	stat->dev = BTRFS_I(inode)->root->anon_dev;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index c7460fbba0142..389de0bc25608 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	struct ieee80211_vif *vif;
+ 	struct sk_buff *mac_bcn;
+ 	u8 vap_id = 0, i;
++	unsigned int tailroom;
+ 	u16 tim_offset = 0;
  
- 	spin_lock(&BTRFS_I(inode)->lock);
--	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
-+	delalloc_bytes = S_ISREG(inode->i_mode) ?
-+			 BTRFS_I(inode)->new_delalloc_bytes : 0;
- 	inode_bytes = inode_get_bytes(inode);
- 	spin_unlock(&BTRFS_I(inode)->lock);
- 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
+ 	for (i = 0; i < RSI_MAX_VIFS; i++) {
+@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	if (mac_bcn->data[tim_offset + 2] == 0)
+ 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
+ 
++	tailroom = skb_tailroom(skb);
++	if (tailroom < FRAME_DESC_SZ ||
++	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
++		dev_kfree_skb(mac_bcn);
++		return -EMSGSIZE;
++	}
++
+ 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
+ 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
+ 
 -- 
 2.53.0
 
