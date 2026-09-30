@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF4151DAEB;
-	Wed, 30 Sep 2026 18:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A8651DB02;
+	Wed, 30 Sep 2026 18:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792819; cv=none; b=Fh77/1O4faWMz+uwXPveAPEauETMxxOgE7Msr8roA4GFioDSDFwrwhqnXBOrfz7VBPWHmCzW47bbYwoKwriMXY+NXPpwsU4SVW+kgTI+qTaUAVZRI75ONIvY82fnNYjmvj4xJBKeocGPk2NqBjbK9D72VZZa+e3SzoT5jegNDVk=
+	t=1790792822; cv=none; b=DX38g0hxLwVtw2xMWBE4FLGS/locYbGlzdm09RwdsE9xHCi4RGI4yZSzhdpG/Ma2RfuNtLHdIoCQ9B/2+Q1rRxYTEU50qhu0LfxHs6NQ1recW7K20FeFunUDv9lNS+U2fNQcPjVSPQnvRWh+zKACAL+ek4jMxhxL1Eo2CJ1qAGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792819; c=relaxed/simple;
-	bh=22JWvb2tBcOXPUCUPk7B6iU2j8ORsZsQi9mCYN17Pvs=;
+	s=arc-20240116; t=1790792822; c=relaxed/simple;
+	bh=K/BFH1ccmG6Q1QMuT18TVKZX23kSWas5SbRoIGF5vJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ToNTDZQU4cbrkRAcuklrbjZ5a5Z3QxXN4/ofvLrrClSRu54Q53fe6mNsRv5yKKDqWufR86ag8Gx3ArdNijjt+NppqGau7GU6vi4dS1ZiWoxwHijwU6AUieDrEiEXHJZdJkonR/mq10xP08FOtPxLzu309T6fIC5BSyBrhFaVXcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhpPTCT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHcmN91QM93NYzo2hQouYan6+Oj/Yn/zKHX+pc/RYexFwKdEJG6gG0ilVe3amDvdz29BuUDrsno7dFxtF9wvrTeC4huQoeDT8zwrHP8amzNLxQQhO5CYYk1zoAUnxLPDAoeP8XiByiKAsjJLnmVcKilA98omDyf6gQMEqfsacKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFr9vgcB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhpPTCT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6938C1F000FF;
-	Wed, 30 Sep 2026 18:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFr9vgcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6841F000FF;
+	Wed, 30 Sep 2026 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792817;
-	bh=kwTFmDyoYerSQ3vp+JYtMAfR41gxn4XPfXLLUE39YWU=;
+	s=korg; t=1790792820;
+	bh=VoUsB1/h0jv3G0z46PQDzTpfYYBplyPhZHPwzBE7DVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhpPTCT5aF4kL4kWcqeq9AVwggYJ2lDW1uygVlkN6iyu5cmW/fnIvrakAparNscJT
-	 PEoRQBB5QCHwDDi9idNLyrHRGWDEW//Xk0YS1O4O+9XYAHxpgsmlHel1SwnK9Cj2Dk
-	 Vz5jLxETU0xyX4J1u6zYaCLIaqFDQxap04EIKa0U=
+	b=qFr9vgcBm7n4Yl25yqX4V0UjPLpq2sNaqf0hYFJ3+PY9337KB3OGfhFOd4lu2tmqm
+	 dVKu8LrfvVBSAt5WHlqrwhncpnsiYT45NLrOGP9a9zCv+c9uh43GWUpq4qca8giAGz
+	 atn9GBrVc2uwT5DZLG4QjhKP2Q0kLJIY04dvh+bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Horgan <ben.horgan@arm.com>,
 	Fuad Tabba <tabba@google.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/395] KVM: arm64: Fix MTE flag initialization for protected VMs
-Date: Wed, 30 Sep 2026 17:24:59 +0200
-Message-ID: <20260930152341.427929483@linuxfoundation.org>
+Subject: [PATCH 6.18 038/395] KVM: arm64: Include VM type when checking VM capabilities in pKVM
+Date: Wed, 30 Sep 2026 17:25:00 +0200
+Message-ID: <20260930152341.450548303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,64 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit ebbcaece84738f71b35f32339bdeb8776004e641 ]
+[ Upstream commit 43a21a0f0c4ab7de755f2cee2ff4700f26fe0bba ]
 
-The function pkvm_init_features_from_host() initializes guest
-features, propagating them from the host. The logic to propagate
-KVM_ARCH_FLAG_MTE_ENABLED (Memory Tagging Extension)
-has a couple of issues.
+Certain features and capabilities are restricted in protected mode. Most
+of these features are restricted only for protected VMs, but some
+are restricted for ALL VMs in protected mode.
 
-First, the check was in the common path, before the divergence for
-protected and non-protected VMs. For non-protected VMs, this was
-unnecessary, as 'kvm->arch.flags' is completely overwritten by
-host_arch_flags immediately after, which already contains the MTE flag.
-For protected VMs, this was setting the flag even if the feature is not
-allowed.
+Extend the pKVM capability check to pass the VM (kvm), and use that when
+determining supported features.
 
-Second, the check was reading 'host_kvm->arch.flags' instead of using
-the local 'host_arch_flags', which is read once from the host flags.
-
-Fix these by moving the MTE flag check inside the protected-VM-only
-path, checking if the feature is allowed, and changing it to use the
-correct host_arch_flags local variable. This ensures non-protected VMs
-get the flag via the bulk copy, and protected VMs get it via an explicit
-check.
-
-Fixes: b7f345fbc32a ("KVM: arm64: Fix FEAT_MTE in pKVM")
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20251211104710.151771-4-tabba@google.com
+Link: https://patch.msgid.link/20251211104710.151771-6-tabba@google.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Stable-dep-of: 4f16c5fc8dc4 ("KVM: arm64: Derive GUEST_HAS_SVE from the SVE feature bit at EL2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/kvm_pkvm.h | 10 ++++++----
+ arch/arm64/kvm/arm.c              |  4 ++--
+ arch/arm64/kvm/hyp/nvhe/pkvm.c    | 10 +++++-----
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
+diff --git a/arch/arm64/include/asm/kvm_pkvm.h b/arch/arm64/include/asm/kvm_pkvm.h
+index 08be89c95466e..7195be508d994 100644
+--- a/arch/arm64/include/asm/kvm_pkvm.h
++++ b/arch/arm64/include/asm/kvm_pkvm.h
+@@ -23,10 +23,12 @@ void pkvm_destroy_hyp_vm(struct kvm *kvm);
+ int pkvm_create_hyp_vcpu(struct kvm_vcpu *vcpu);
+ 
+ /*
+- * This functions as an allow-list of protected VM capabilities.
+- * Features not explicitly allowed by this function are denied.
++ * Check whether the specific capability is allowed in pKVM.
++ *
++ * Certain features are allowed only for non-protected VMs in pKVM, which is why
++ * this takes the VM (kvm) as a parameter.
+  */
+-static inline bool kvm_pvm_ext_allowed(long ext)
++static inline bool kvm_pkvm_ext_allowed(struct kvm *kvm, long ext)
+ {
+ 	switch (ext) {
+ 	case KVM_CAP_IRQCHIP:
+@@ -43,7 +45,7 @@ static inline bool kvm_pvm_ext_allowed(long ext)
+ 	case KVM_CAP_ARM_PTRAUTH_GENERIC:
+ 		return true;
+ 	default:
+-		return false;
++		return !kvm || !kvm_vm_is_protected(kvm);
+ 	}
+ }
+ 
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 5d2435dd76f35..52549bebb7829 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -87,7 +87,7 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
+ 	if (cap->flags)
+ 		return -EINVAL;
+ 
+-	if (kvm_vm_is_protected(kvm) && !kvm_pvm_ext_allowed(cap->cap))
++	if (is_protected_kvm_enabled() && !kvm_pkvm_ext_allowed(kvm, cap->cap))
+ 		return -EINVAL;
+ 
+ 	switch (cap->cap) {
+@@ -312,7 +312,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ {
+ 	int r;
+ 
+-	if (kvm && kvm_vm_is_protected(kvm) && !kvm_pvm_ext_allowed(ext))
++	if (is_protected_kvm_enabled() && !kvm_pkvm_ext_allowed(kvm, ext))
+ 		return 0;
+ 
+ 	switch (ext) {
 diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index 26a19185e2ada..1b73a2411a998 100644
+index 1b73a2411a998..43195083fe7d0 100644
 --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
 +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -341,9 +341,6 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
- 	/* Preserve the vgic model so that GICv3 emulation works */
- 	hyp_vm->kvm.arch.vgic.vgic_model = host_kvm->arch.vgic.vgic_model;
- 
--	if (test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &host_kvm->arch.flags))
--		set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
--
- 	/* No restrictions for non-protected VMs. */
- 	if (!kvm_vm_is_protected(kvm)) {
- 		hyp_vm->kvm.arch.flags = host_arch_flags;
-@@ -359,6 +356,9 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
+@@ -356,23 +356,23 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
  		return;
  	}
  
-+	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_MTE))
-+		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_MTE_ENABLED);
-+
+-	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_MTE))
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_MTE))
+ 		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_MTE_ENABLED);
+ 
  	bitmap_zero(allowed_features, KVM_VCPU_MAX_FEATURES);
  
  	set_bit(KVM_ARM_VCPU_PSCI_0_2, allowed_features);
+ 
+-	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_PMU_V3))
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_PMU_V3))
+ 		set_bit(KVM_ARM_VCPU_PMU_V3, allowed_features);
+ 
+-	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_PTRAUTH_ADDRESS))
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_PTRAUTH_ADDRESS))
+ 		set_bit(KVM_ARM_VCPU_PTRAUTH_ADDRESS, allowed_features);
+ 
+-	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_PTRAUTH_GENERIC))
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_PTRAUTH_GENERIC))
+ 		set_bit(KVM_ARM_VCPU_PTRAUTH_GENERIC, allowed_features);
+ 
+-	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_SVE)) {
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_SVE)) {
+ 		set_bit(KVM_ARM_VCPU_SVE, allowed_features);
+ 		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_GUEST_HAS_SVE);
+ 	}
 -- 
 2.53.0
 
