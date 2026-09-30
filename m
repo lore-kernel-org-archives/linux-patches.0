@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AE952E06C;
-	Wed, 30 Sep 2026 17:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C6D5304BF;
+	Wed, 30 Sep 2026 17:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790581; cv=none; b=KWGMqUP81FSA8XbRtoY6RmezVB29Xp6/Q0VN5nd1Urc8q6KqOTX/YpMc4gwHhlhk9GjhbF9pXX1drdW2GZ4Wt4j4tN8sbEqrcFgUm18qlZldKkKp28h61ThG7QCYqUyfMRqWECwAyew0L6waz4/85+745UK1J/X6XrX2jYXK6Lw=
+	t=1790790584; cv=none; b=p7cdV4eC2kABDyAHd+a1LJkhY7tRg9yeC5IC00vlkp21A4kYD+uurFpL++CBtcM/dteiPdurNfDD7gsl9CwEVVdWaLXBNie34CMSTX+PVwHzot5jcKKBvZKKgdIFRO7ElLmrAnupZT4WryDePKoWwFCBk5giomJiQXL7/cP5qso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790581; c=relaxed/simple;
-	bh=XeJmobMnFIyHr8HtH8Ym3vwFviwXsIstKBnzSKTGVVY=;
+	s=arc-20240116; t=1790790584; c=relaxed/simple;
+	bh=bGRvT8yJmwKT3VkLfwy/lXZGo2WZlDdpqQtHxxVpstQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLtG3znQJj2oGy3e7EwOtwPhLg8wrZ3yMB21iGkX1seEu4NGRxo/rK7W7JbXYTeE/Bn5QHcROsCPUV+HQ1ihKT9gL3pzP35agx9Jx9W/XUpVgipGXJX8WJGQ0+udRx7PQ3Q/pYMhZ9Tx+jJn7Z3Nm/WAdjldiuENOWfIBhr24j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvMPgvih; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lM2F7LUTT4xWFanbTsG40zptxiKO1JRfttIUKTm2JWFIL3NWuUNtzzjp7kgfsO0+aLUB15+p+Lm/xr29Jdg9GNeatasy3XFfZ2MDRD4G4KxrSWAoxpd9na8VUmPXRCRS2zTaG9MuKscWCO6AZP3IG8stcXr6wlBPQKLYppfUfOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfsC0CMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvMPgvih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282CF1F000FF;
-	Wed, 30 Sep 2026 17:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfsC0CMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026451F000FF;
+	Wed, 30 Sep 2026 17:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790579;
-	bh=mY4pkuTNwlEFflP25GXXR545S1nyl0m8NdC9Wc/ommQ=;
+	s=korg; t=1790790582;
+	bh=Zcm04X43eP1DfstJZyFYsVB1Yp0RciLPIDfVxv3I5PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvMPgvihmVh/dD7LwajGD+1V21JCx9GteO3DJPN4uXfzatw3EkG4RuEIGwChOe5Gd
-	 icJ6S+pWus2G2A1CS/iEvbDAE8IfIwL+vtPs4kjikgT8el4Mw8VnR963l/b1GOnv1n
-	 3WsN+MNzn7+eN+ck05Rpoj3FiFcV0qLJ9suFBOYY=
+	b=QfsC0CMvB7YZlUha9FxaWOTfE8QSy5mcFfOqithSolDIYf7I+k4kTzusDLj9auoUQ
+	 +Dl/eo1EIOGqLV9m+GlVR+akjLAp0s6kr9H67boQKzcwnXEJea/+fc/8dHpPJyYQUo
+	 mDQ7sBjqA1DNXQ7+pDHaSJdlPS7FqKpOhj/msWts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 834/877] super: make iterate_supers_type() deletion-safe
-Date: Wed, 30 Sep 2026 17:29:05 +0200
-Message-ID: <20260930152432.732251966@linuxfoundation.org>
+Subject: [PATCH 6.12 835/877] PCI: Fix Resizable BAR restore order
+Date: Wed, 30 Sep 2026 17:29:06 +0200
+Message-ID: <20260930152432.754059880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,167 +46,185 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 2d2a2d7aa98741b58f54cacc99b52024e4d865f9 ]
+[ Upstream commit 5528fd38f230c906fcebb202cc94fbb8ed8f122a ]
 
-iterate_supers_type() drops sb_lock while invoking the callback and keeps
-only a passive reference to the current superblock. That reference keeps
-the object allocated, but does not keep its s_instances node linked.
+The commit 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback
+path") changed BAR resize to layer rebar code and resource setup/restore
+code cleanly. Unfortunately, it did not consider how the value of the BAR
+Size field impacts the read-only bits in the Base Address Register (PCIe7
+spec, sec. 7.8.6.3). That is, it very much matters in which order the BAR
+Size and Base Address Register are restored.
 
-After the iterator releases s_umount, final teardown can unlink the current
-s_instances node. The iterator then advances through a reinitialized node.
-With the current hlist it stops without visiting the remaining superblocks.
-The unlink moved from generic_shutdown_super() to kill_super_notify(), but
-the cursor lifetime has been unsafe since the helper was introduced.
+Post-337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
+during BAR resize rollback, pci_do_resource_release_and_resize() attempts
+to restore the old address to the BAR that was resized, but it can fail to
+setup the address correctly if the address has low bits set that collide
+with the bits that are still read-only. As a result, kernel's resource and
+BAR will be out-of-sync.
 
-The CIFS DFS lookup can consequently miss a matching superblock and return
--EINVAL.
+Fix this by restoring BAR Size before rolling back the resource changes and
+restoring the BAR.
 
-Move removal from fs_supers to put_super(), alongside removal from
-super_blocks, so a passive reference keeps both list nodes linked. Keep
-the filesystem module reference until then, since unlinking s_instances
-may touch type->fs_supers.
-
-Make sget_fc() skip SB_DEAD superblocks before invoking test(), and set
-SB_DEAD under sb_lock to serialize with those callbacks. This allows
-kernfs to free its private information after kill_anon_super() returns.
-Keep matching SB_DYING superblocks until SB_DEAD is set so concurrent
-mounts still wait for teardown before retrying.
-
-Fixes: 43e15cdbefea ("new helper: iterate_supers_type()")
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Closes: https://lore.kernel.org/r/20260903013336.92081-1-kmehltretter@gmail.com
-Suggested-by: Jan Kara <jack@suse.cz>
+Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://lore.kernel.org/linux-pci/aW_w1oFQCzUxGYtu@intel.com/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 Cc: stable@vger.kernel.org
-Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
-[kmehltretter: supplied the commit message]
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260909193034.7467-1-kmehltretter@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ Adapted s_passive reference counting to s_count using the existing __put_super() helper. ]
+Link: https://patch.msgid.link/20260121131417.9582-3-ilpo.jarvinen@linux.intel.com
+
+[6.12 dependency preparation for d58384c22739848efe14b34e9586e4f1242f33c0:
+Keep the existing memory-decoding and supported-size checks in rebar.c.
+Move BAR size programming and rollback into the resource release helper,
+so the old size is restored before restoring BAR addresses.
+
+Use the assigned parent window to select resources for release, retaining
+the old flags-based selection when the resized BAR has no parent. Provide
+file-local macro mappings for the follow-up's bridge reassignment and
+resource assignment checks; no functions are added.
+
+Retain the upstream pre-target pci_bus_sem placement to allow the target
+to apply without conflicts. This preparatory dependency must be applied
+together with d58384c22739848efe14b34e9586e4f1242f33c0, which takes the lock
+before releasing resources and assigns released BARs on root buses.]
+
+Stable-dep-of: d58384c22739 ("PCI: Fix BAR resize for devices on a root bus")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/kernfs/mount.c |    4 ++--
- fs/super.c        |   43 +++++++++++++++++++++++--------------------
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ drivers/pci/rebar.c     |   19 +------------------
+ drivers/pci/setup-bus.c |   39 ++++++++++++++++++++++++++++++++-------
+ 2 files changed, 33 insertions(+), 25 deletions(-)
 
---- a/fs/kernfs/mount.c
-+++ b/fs/kernfs/mount.c
-@@ -396,8 +396,8 @@ void kernfs_kill_sb(struct super_block *
- 	up_write(&root->kernfs_supers_rwsem);
- 
- 	/*
--	 * Remove the superblock from fs_supers/s_instances
--	 * so we can't find it, before freeing kernfs_super_info.
-+	 * Mark the superblock dead so sget_fc() can't find it,
-+	 * before freeing kernfs_super_info.
- 	 */
- 	kill_anon_super(sb);
- 	kfree(info);
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -404,11 +404,16 @@ fail:
- static void __put_super(struct super_block *s)
+--- a/drivers/pci/rebar.c
++++ b/drivers/pci/rebar.c
+@@ -156,7 +156,6 @@ int pci_resize_resource(struct pci_dev *
+ 			int exclude_bars)
  {
- 	if (!--s->s_count) {
-+		struct file_system_type *type = s->s_type;
-+
- 		list_del_init(&s->s_list);
-+		hlist_del_init(&s->s_instances);
- 		WARN_ON(s->s_dentry_lru.node);
- 		WARN_ON(s->s_inode_lru.node);
- 		WARN_ON(!list_empty(&s->s_mounts));
- 		call_rcu(&s->rcu, destroy_super_rcu);
-+		/* The unlink above may touch type->fs_supers, so drop it last. */
-+		put_filesystem(type);
- 	}
- }
+ 	struct pci_host_bridge *host;
+-	int old, ret;
+ 	u32 sizes;
+ 	u16 cmd;
  
-@@ -435,23 +440,16 @@ static void kill_super_notify(struct sup
- 		return;
+@@ -176,22 +175,6 @@ int pci_resize_resource(struct pci_dev *
+ 	if (!(sizes & BIT(size)))
+ 		return -EINVAL;
  
- 	/*
--	 * Remove it from @fs_supers so it isn't found by new
--	 * sget{_fc}() walkers anymore. Any concurrent mounter still
--	 * managing to grab a temporary reference is guaranteed to
--	 * already see SB_DYING and will wait until we notify them about
--	 * SB_DEAD.
--	 */
--	spin_lock(&sb_lock);
--	hlist_del_init(&sb->s_instances);
--	spin_unlock(&sb_lock);
+-	old = pci_rebar_get_current_size(dev, resno);
+-	if (old < 0)
+-		return old;
 -
--	/*
- 	 * Let concurrent mounts know that this thing is really dead.
--	 * We don't need @sb->s_umount here as every concurrent caller
--	 * will see SB_DYING and either discard the superblock or wait
--	 * for SB_DEAD.
-+	 * sget{_fc}() skips SB_DEAD superblocks and calls test() under
-+	 * sb_lock, so set it under sb_lock: once we return no test()
-+	 * runs on this superblock anymore and none will start. Everyone
-+	 * else already saw SB_DYING and either discarded the superblock
-+	 * or waits for SB_DEAD.
- 	 */
-+	spin_lock(&sb_lock);
- 	super_wake(sb, SB_DEAD);
-+	spin_unlock(&sb_lock);
+-	ret = pci_rebar_set_size(dev, resno, size);
+-	if (ret)
+-		return ret;
+-
+-	ret = pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
+-	if (ret)
+-		goto error_resize;
+-
+-	return 0;
+-
+-error_resize:
+-	pci_rebar_set_size(dev, resno, old);
+-	return ret;
++	return pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
+ }
+ EXPORT_SYMBOL(pci_resize_resource);
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2368,6 +2368,11 @@ static int pci_reassign_bridge_resources
+ 	return 0;
  }
  
- /**
-@@ -482,7 +480,6 @@ void deactivate_locked_super(struct supe
- 		list_lru_destroy(&s->s_dentry_lru);
- 		list_lru_destroy(&s->s_inode_lru);
++/* Keep the resize follow-up compatible with the 6.12 resource helpers. */
++#define pbus_reassign_bridge_resources(bus, res, saved) \
++	pci_reassign_bridge_resources((bus)->self, (res)->flags, (saved))
++#define resource_assigned(res) ((res)->parent != NULL)
++
+ int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size,
+ 				       int exclude_bars)
+ {
+@@ -2375,12 +2380,20 @@ int pci_do_resource_release_and_resize(s
+ 	unsigned long flags = res->flags;
+ 	struct pci_dev_resource *dev_res;
+ 	struct pci_bus *bus = pdev->bus;
+-	struct resource *r;
++	struct resource *b_win, *r;
+ 	LIST_HEAD(saved);
+ 	unsigned int i;
+-	int ret = 0;
++	int old, ret;
  
--		put_filesystem(fs);
- 		put_super(s);
- 	} else {
- 		super_unlock_excl(s);
-@@ -668,12 +665,12 @@ void generic_shutdown_super(struct super
- 	}
- 	/*
- 	 * Broadcast to everyone that grabbed a temporary reference to this
--	 * superblock before we removed it from @fs_supers that the superblock
--	 * is dying. Every walker of @fs_supers outside of sget{_fc}() will now
--	 * discard this superblock and treat it as dead.
-+	 * superblock that it is dying. Every walker of @fs_supers outside
-+	 * of sget{_fc}() will now discard this superblock and treat it as
-+	 * dead.
- 	 *
--	 * We leave the superblock on @fs_supers so it can be found by
--	 * sget{_fc}() until we passed sb->kill_sb().
-+	 * sget{_fc}() keeps finding the superblock until SB_DEAD is set, so
-+	 * a concurrent mounter waits until we passed sb->kill_sb().
- 	 */
- 	super_wake(sb, SB_DYING);
- 	super_unlock_excl(sb);
-@@ -751,6 +748,9 @@ retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
- 		hlist_for_each_entry(old, &fc->fs_type->fs_supers, s_instances) {
-+			/* Only unlinked at the last passive reference. */
-+			if (super_flags(old, SB_DEAD))
-+				continue;
- 			if (test(old, fc))
- 				goto share_extant_sb;
+-	down_read(&pci_bus_sem);
++	b_win = res->parent;
++
++	old = pci_rebar_get_current_size(pdev, resno);
++	if (old < 0)
++		return old;
++
++	ret = pci_rebar_set_size(pdev, resno, size);
++	if (ret)
++		return ret;
+ 
+ 	pci_dev_for_each_resource(pdev, r, i) {
+ 		if (i >= PCI_BRIDGE_RESOURCES)
+@@ -2389,7 +2402,10 @@ int pci_do_resource_release_and_resize(s
+ 		if (exclude_bars & BIT(i))
+ 			continue;
+ 
+-		if (!pci_resource_len(pdev, i) || r->flags != flags)
++		if (!pci_resource_len(pdev, i))
++			continue;
++
++		if (b_win ? r->parent != b_win : r->flags != flags)
+ 			continue;
+ 
+ 		ret = add_to_list(&saved, pdev, r, 0, 0);
+@@ -2403,7 +2419,8 @@ int pci_do_resource_release_and_resize(s
+ 	if (!bus->self)
+ 		goto out;
+ 
+-	ret = pci_reassign_bridge_resources(bus->self, res->flags, &saved);
++	down_read(&pci_bus_sem);
++	ret = pbus_reassign_bridge_resources(bus, res, &saved);
+ 	if (ret)
+ 		goto restore;
+ 
+@@ -2413,14 +2430,22 @@ out:
+ 	return ret;
+ 
+ restore:
+-	/* Revert to the old configuration */
++	/*
++	 * Revert to the old configuration.
++	 *
++	 * BAR Size must be restored first because it affects the read-only
++	 * bits in BAR (the old address might not be restorable otherwise
++	 * due to low address bits).
++	 */
++	pci_rebar_set_size(pdev, resno, old);
++
+ 	list_for_each_entry(dev_res, &saved, list) {
+ 		struct resource *res = dev_res->res;
+ 		struct pci_dev *dev = dev_res->dev;
+ 
+ 		i = res - dev->resource;
+ 
+-		if (res->parent) {
++		if (resource_assigned(res)) {
+ 			release_child_resources(res);
+ 			pci_release_resource(dev, i);
  		}
-@@ -834,6 +834,9 @@ retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
- 		hlist_for_each_entry(old, &type->fs_supers, s_instances) {
-+			/* Only unlinked at the last passive reference. */
-+			if (super_flags(old, SB_DEAD))
-+				continue;
- 			if (!test(old, data))
- 				continue;
- 			if (user_ns != old->s_user_ns) {
 
 
