@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA66527585;
-	Wed, 30 Sep 2026 18:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6374522F1F;
+	Wed, 30 Sep 2026 18:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793706; cv=none; b=tyhShqEB1O0Hbbto/523pYnLZZQBuSVtZPUTGn9UqEgM/hZTBYwj+++sqL+DfJYGk3ypSUjiHMVgddCzd6KHYPqGQ7er6XhgF2jA7kwagYQ6dmZOjc1wtyXBOvXOnz0PldvNo/b4X4HFKiZdxG9GI8fSmh6EFgoB5Ye3pvKcHa0=
+	t=1790793709; cv=none; b=tjRPiKB8OCTUbLaRreqd9Os9GA0PR7ir/vPIwyT/kDMLNpV7mF+9wLXXdRRIZKtdzWud6XUUYmY3llC+MbsjOho4ZQnOIQKAo+nCgRIWAMbacyLddSPtZrXc825sKqaGh0Vo2+EA7qu0A4o201g0W/h2wyVXi7MsGxbllq7umfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793706; c=relaxed/simple;
-	bh=BXla7pNVpL6m/TCDpD1FefyT3EXDfeIrAi2wyQgXL/Y=;
+	s=arc-20240116; t=1790793709; c=relaxed/simple;
+	bh=B+TnPhamw+y7RwPg07/deEzLlltzxcS5e4jUjr7gkiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqqXZbImkG1lwpcctDAaP99KoKZ1YfmRARkqxLaxS8ORLxKXLQxqD4jn0zrMZBiyuAG+/uz0khkR7B0Z9AQfspmzqldJQeXjo4wUtmU8XVcwQcHVOiYPK9SQDO8Abl4eaFNrLTNTm4X5beRC1Z+GorXXWND/XcHHNyv3d6KDMxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRdQNeIa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qHIfKO+I+LLqOfhv0RbDhoBpXPO0enQ8ARvBP/AoBHVsH71qTb4YGOdahkEnxx2YVTk+bYqBTCvyV11bI2iyltIGjInEKGgJ5Kl1ptkbCpWsIw7glB7cJa8mSrob0JuF+ZLx8Qa4Z84OLi7gYyBVYVcuB3oK+4YGReWJwdjrYsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTneuTxI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRdQNeIa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC8F1F00898;
-	Wed, 30 Sep 2026 18:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTneuTxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8631F000FF;
+	Wed, 30 Sep 2026 18:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793704;
-	bh=VfHNInFzx0KVi3DtDlausdJx+00rrNsseRUTxhL6/iE=;
+	s=korg; t=1790793707;
+	bh=WtUO8sDXY3djrTX4OhI5cLEa8rWQCCvw1QcTv8Gd+Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hRdQNeIaQ80tcqe8CZrPjTtEPoTZzdf8pBRI2I+1D2TK1SXPqtek2F6Jxh26mXClZ
-	 o1pbKD9/v5unh9KQQuq8S7cWRzJ3w3mMAKftVKJ9iXVoOqm3PMFcscKbwOlo5eWaEU
-	 Y6KazdBoKei4matDolVsRqY7ydSR9rBNlsiXRcQQ=
+	b=zTneuTxI68hiR/G704go1CgL0pX0dRaA3XlI3SAoJcwGyYHZOQ7VGiipzbBX2H+sh
+	 1XrkTZ5dgQQcbsLvmBsVH46u40k7eEv51UtKM0d1wPHTovLgsV20hs5BYhQE6zVYVF
+	 lzIQ3yIHm7is3a6fIt1kCOwv6AnIjSgBh9RCsYnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/395] net: tls: fix silent data drop under pipe back-pressure
-Date: Wed, 30 Sep 2026 17:30:10 +0200
-Message-ID: <20260930152348.225635637@linuxfoundation.org>
+Subject: [PATCH 6.18 349/395] cgroup/cpuset: Move up prstate_housekeeping_conflict() helper
+Date: Wed, 30 Sep 2026 17:30:11 +0200
+Message-ID: <20260930152348.249348489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,43 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 7e7be31bfdb066c1c780dcd6b1224078fc54063f ]
+[ Upstream commit 6cfeddbf4ade9202849d75c27c4d0c82b42c73d1 ]
 
-tls_sw_splice_read() uses len when advancing rxm->offset / rxm->full_len
-after skb_splice_bits(), rather than copied (the actual number of bytes
-successfully spliced into the pipe). When the destination pipe cannot
-accept all the requested bytes, splice_to_pipe() returns fewer bytes
-than len, and 'len - copied' of data is effectively skipped over.
+Move up the prstate_housekeeping_conflict() helper so that it can be
+used in remote partition code.
 
-Fixes: e062fe99cccd ("tls: splice_read: fix accessing pre-processed records")
-Link: https://patch.msgid.link/20260429222944.2139041-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 31c88350b7dd ("cgroup/cpuset: Return PERR_NOCPUS in remote_partition_enable() on subpartitions_cpus conflict")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/cgroup/cpuset.c |   40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ea78e2ce754fb..ad6c0d61d5474 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2372,9 +2372,9 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	if (copied < 0)
- 		goto splice_requeue;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1449,6 +1449,26 @@ static bool isolated_cpus_can_update(str
+ 	return res;
+ }
  
--	if (chunk < rxm->full_len) {
--		rxm->offset += len;
--		rxm->full_len -= len;
-+	if (copied < rxm->full_len) {
-+		rxm->offset += copied;
-+		rxm->full_len -= copied;
- 		goto splice_requeue;
- 	}
++/*
++ * prstate_housekeeping_conflict - check for partition & housekeeping conflicts
++ * @prstate: partition root state to be checked
++ * @new_cpus: cpu mask
++ * Return: true if there is conflict, false otherwise
++ *
++ * CPUs outside of boot_hk_cpus, if defined, can only be used in an
++ * isolated partition.
++ */
++static bool prstate_housekeeping_conflict(int prstate, struct cpumask *new_cpus)
++{
++	if (!have_boot_isolcpus)
++		return false;
++
++	if ((prstate != PRS_ISOLATED) && !cpumask_subset(new_cpus, boot_hk_cpus))
++		return true;
++
++	return false;
++}
++
+ static void update_isolation_cpumasks(bool isolcpus_updated)
+ {
+ 	int ret;
+@@ -1751,26 +1771,6 @@ invalidate:
+ 	remote_partition_disable(cs, tmp);
+ }
  
--- 
-2.53.0
-
+-/*
+- * prstate_housekeeping_conflict - check for partition & housekeeping conflicts
+- * @prstate: partition root state to be checked
+- * @new_cpus: cpu mask
+- * Return: true if there is conflict, false otherwise
+- *
+- * CPUs outside of boot_hk_cpus, if defined, can only be used in an
+- * isolated partition.
+- */
+-static bool prstate_housekeeping_conflict(int prstate, struct cpumask *new_cpus)
+-{
+-	if (!have_boot_isolcpus)
+-		return false;
+-
+-	if ((prstate != PRS_ISOLATED) && !cpumask_subset(new_cpus, boot_hk_cpus))
+-		return true;
+-
+-	return false;
+-}
+-
+ /**
+  * update_parent_effective_cpumask - update effective_cpus mask of parent cpuset
+  * @cs:      The cpuset that requests change in partition root state
 
 
