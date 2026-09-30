@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7630E3BE642;
-	Wed, 30 Sep 2026 18:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482B751AFD6;
+	Wed, 30 Sep 2026 18:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792895; cv=none; b=bSTw7r3XZnS9JRg63RfqZ2zeH4tbzp2fIwyUdlufMlXXigpuwJ8V1XmJmltDRN/qAqthdJV6+SIwUR5Hr6GfYmIS/c/rFIQe5oZzVKXCdd8JZXT8Ee9ksH23KYqgnUy00PGWRAt40tKb4fnuRzWEvTkfHpglq7TMhedWmO/zj7U=
+	t=1790792898; cv=none; b=D8rmsJmiK3Mqitjn0YqwbQBEx2wfL7bB8ocIhPshWCJ6L8oX278lGyqcAVD+45fPeIqi015PSyPkf5luJGseP6GC9k6bO2qv4hv2bHwzCNpWaRDQYW4jDPIAYjV9rYwQveg8O521+SUE35p0NFZyketgkX3Tl1YKjihNC0iNWSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792895; c=relaxed/simple;
-	bh=Nyz/weyFDmkTAwQGTnX1Hmybcar8dqY09f2q4ce+Gfw=;
+	s=arc-20240116; t=1790792898; c=relaxed/simple;
+	bh=z/Ykk6K4O2ZgptVf+bRqIVTwXBQeOCTL4NQ3BsPcAco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbd3jENdMlcv26B4QpYy+YvAdmioOHObLbX1QJL3YgU4k2YmGQ+7XP3CuoKqUOLlvzzER+MkYSRSb3/00qhUECimvd2Ch5dXYQB5SHGuQ2oSgnmr5noNAgyaUaF3M9tgFAbrv6w9e4TZRosRVKClWuHEM5OAPhvSJbDpVBbfZQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnEVpoSZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GSKig+teSBiJjpj04coOQHUpLE11l4GdY+DsjDXHt18LhlfLdxkECPbExiZP8eHjR/xsLTBadUXCT5wqitP0zBIeJKdENxpQf4MI5oRm1oPGN1UmU9Mii7OkSqwS3YfcgsOuv4dUkw8b9+4mMJgn5ta5U2F6Sj2fJL6qOkwiNJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXbGDx53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnEVpoSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D9A1F000FF;
-	Wed, 30 Sep 2026 18:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXbGDx53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A516F1F000FF;
+	Wed, 30 Sep 2026 18:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792894;
-	bh=e7uzK6WyAqC9dotCFiU6Js6yXqyUHWzSZ9/Blh38yBQ=;
+	s=korg; t=1790792897;
+	bh=Vn/n6OUDGMhDH5jXCL3pfr7O1ilB3BjlBrPmLsOlxVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnEVpoSZczTVPTpCJ5qSQ3+w0kTMxLCYANCalt+AA6zUenm6oteY7x6U6oed6hOYS
-	 QdMevFh/IDhRWtkA6b/xg6mZX3ZL/GQHw+j+jQK9w8ioeZ9LUavigXI40YROc+U5/W
-	 7baLT2gguk6heU/GrqN4Ed1M0yLXLiX2bF/FmP6Q=
+	b=bXbGDx53QgsywGtknmuVmWminlpGJPrPCE5QviygvRYUFUDtjPxqc40b6q+aE1wir
+	 VmqztpRDHyjrTvVn1Qty0wBnC/argGxvqE0OY8uuxrpuDp5C0XFPK8R26ulxm44vyA
+	 h9O46QYng5p3jcnygAfsMcfSpQwSegkPZFmuENSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Akiva Goldberger <agoldberger@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/395] net/mlx5: devcom, Base component size on linked devices
-Date: Wed, 30 Sep 2026 17:25:24 +0200
-Message-ID: <20260930152341.978856704@linuxfoundation.org>
+Subject: [PATCH 6.18 063/395] bpf: Restrict CO-RE poisoning to relocatable instructions
+Date: Wed, 30 Sep 2026 17:25:25 +0200
+Message-ID: <20260930152341.999623936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,73 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d09e8f64653c93da5793c16be19330968f2a32e6 ]
+[ Upstream commit 394ae398337c5f87e567f6cd63b937fc2b2f6ddc ]
 
-mlx5_devcom_comp_get_size() returns the component's kref count. That
-kref is bumped in mlx5_devcom_register_component() under comp_list_lock,
-before the comp_dev is linked onto comp_dev_list_head under comp->sem.
-The event broadcast (mlx5_devcom_locked_send_event()) walks that list.
+CO-RE relocation records can name any instruction offset. When a
+relocation cannot be resolved, bpf_core_patch_insn() currently poisons its
+target before checking whether that instruction is a valid relocation
+target. Malformed metadata can therefore replace jumps, calls, exits,
+register-source arithmetic, or non-immediate loads instead of failing at
+the relocation step.
 
-Hence, a caller can read the expected size, but send_event won't be sent
-to all peers. In the SD group registration path, this lets a member
-broadcast its role-election event over an incomplete list, electing a
-primary that never completes the group, is never marked ready, and
-leaves the group with a stale primary.
+Handle poisoning only after the instruction has passed the same class and
+operand-form checks used for a resolved relocation. Route invalid forms
+through the existing diagnostic and return a hard error. Keep poisoning
+supported instructions, including both halves of a plain ldimm64, so an
+unresolved relocation in dead code remains valid.
 
-Track the number of linked comp_devs in a dedicated counter, maintained
-under comp->sem together with the list add/remove, and return it from
-mlx5_devcom_comp_get_size().
+Extend bpf_core_poison_insn() to poison both halves of ldimm64, and return
+its status directly from each validated instruction case. This avoids
+routing the success path through a common label and leaves the helper free
+to report errors.
 
-Fixes: 9bb1ac80738a ("net/mlx5: devcom, Add component size getter")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260915113459.3934760-2-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The shared relocation code applies this restriction to both libbpf and
+in-kernel CO-RE.
+
+Fixes: d7a252708dbc ("libbpf: Improve handling of failed CO-RE relocations")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260917233222.2542500-7-memxor@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/lib/bpf/relo_core.c | 58 +++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-index e749618229bc0..8946ba5e30bf1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-@@ -36,6 +36,7 @@ struct mlx5_devcom_comp {
- 	struct mlx5_devcom_key key;
- 	mlx5_devcom_event_handler_t handler;
- 	struct kref ref;
-+	int nr_devs;
- 	bool ready;
- 	struct rw_semaphore sem;
- 	struct lock_class_key lock_key;
-@@ -169,6 +170,7 @@ devcom_alloc_comp_dev(struct mlx5_devcom_dev *devc,
- 
- 	down_write(&comp->sem);
- 	list_add_tail(&devcom->list, &comp->comp_dev_list_head);
-+	WRITE_ONCE(comp->nr_devs, comp->nr_devs + 1);
- 	up_write(&comp->sem);
- 
- 	return devcom;
-@@ -181,6 +183,7 @@ devcom_free_comp_dev(struct mlx5_devcom_comp_dev *devcom)
- 
- 	down_write(&comp->sem);
- 	list_del(&devcom->list);
-+	WRITE_ONCE(comp->nr_devs, comp->nr_devs - 1);
- 	up_write(&comp->sem);
- 
- 	kref_put(&devcom->devc->ref, mlx5_devcom_dev_release);
-@@ -283,7 +286,7 @@ int mlx5_devcom_comp_get_size(struct mlx5_devcom_comp_dev *devcom)
- {
- 	struct mlx5_devcom_comp *comp = devcom->comp;
- 
--	return kref_read(&comp->ref);
-+	return READ_ONCE(comp->nr_devs);
+diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
+index 0ccc8f548cbaa..a6a88e1cad270 100644
+--- a/tools/lib/bpf/relo_core.c
++++ b/tools/lib/bpf/relo_core.c
+@@ -980,23 +980,30 @@ static int bpf_core_calc_relo(const char *prog_name,
  }
  
- int mlx5_devcom_send_event(struct mlx5_devcom_comp_dev *devcom,
+ /*
+- * Turn instruction for which CO_RE relocation failed into invalid one with
++ * Turn instruction for which CO-RE relocation failed into invalid one with
+  * distinct signature.
+  */
+-static void bpf_core_poison_insn(const char *prog_name, int relo_idx,
+-				 int insn_idx, struct bpf_insn *insn)
++static int bpf_core_poison_insn(const char *prog_name, int relo_idx,
++				struct bpf_insn *insn, int insn_idx)
+ {
+-	pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
+-		 prog_name, relo_idx, insn_idx);
+-	insn->code = BPF_JMP | BPF_CALL;
+-	insn->dst_reg = 0;
+-	insn->src_reg = 0;
+-	insn->off = 0;
+-	/* if this instruction is reachable (not a dead code),
+-	 * verifier will complain with the following message:
+-	 * invalid func unknown#195896080
+-	 */
+-	insn->imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	int insn_cnt = is_ldimm64_insn(insn) ? 2 : 1;
++	int i;
++
++	for (i = 0; i < insn_cnt; i++) {
++		pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
++			 prog_name, relo_idx, insn_idx + i);
++		insn[i].code = BPF_JMP | BPF_CALL;
++		insn[i].dst_reg = 0;
++		insn[i].src_reg = 0;
++		insn[i].off = 0;
++		/*
++		 * If this instruction is reachable (not dead code), the verifier
++		 * will complain with "invalid func unknown#195896080".
++		 */
++		insn[i].imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	}
++
++	return 0;
+ }
+ 
+ static int insn_bpf_size_to_bytes(struct bpf_insn *insn)
+@@ -1047,17 +1054,6 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 
+ 	class = BPF_CLASS(insn->code);
+ 
+-	if (res->poison) {
+-poison:
+-		/* poison second part of ldimm64 to avoid confusing error from
+-		 * verifier about "unknown opcode 00"
+-		 */
+-		if (is_ldimm64_insn(insn))
+-			bpf_core_poison_insn(prog_name, relo_idx, insn_idx + 1, insn + 1);
+-		bpf_core_poison_insn(prog_name, relo_idx, insn_idx, insn);
+-		return 0;
+-	}
+-
+ 	orig_val = res->orig_val;
+ 	new_val = res->new_val;
+ 
+@@ -1065,7 +1061,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_ALU:
+ 	case BPF_ALU64:
+ 		if (BPF_SRC(insn->code) != BPF_K)
+-			return -EINVAL;
++			goto bad_insn;
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (ALU/ALU64) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx,
+@@ -1082,6 +1080,8 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_LDX:
+ 	case BPF_ST:
+ 	case BPF_STX:
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->off != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDX/ST/STX) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx, insn_idx, insn->off, (unsigned long long)orig_val,
+@@ -1097,7 +1097,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			pr_warn("prog '%s': relo #%d: insn #%d (LDX/ST/STX) accesses field incorrectly. "
+ 				"Make sure you are accessing pointers, unsigned integers, or fields of matching type and size.\n",
+ 				prog_name, relo_idx, insn_idx);
+-			goto poison;
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		}
+ 
+ 		orig_val = insn->off;
+@@ -1140,6 +1140,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			return -EINVAL;
+ 		}
+ 
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
++
+ 		imm = (__u32)insn[0].imm | ((__u64)insn[1].imm << 32);
+ 		if (res->validate && imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDIMM64) value: got %llu, exp %llu -> %llu\n",
+@@ -1157,6 +1160,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 		break;
+ 	}
+ 	default:
++bad_insn:
+ 		pr_warn("prog '%s': relo #%d: trying to relocate unrecognized insn #%d, code:0x%x, src:0x%x, dst:0x%x, off:0x%x, imm:0x%x\n",
+ 			prog_name, relo_idx, insn_idx, insn->code,
+ 			insn->src_reg, insn->dst_reg, insn->off, insn->imm);
 -- 
 2.53.0
 
