@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25123749F6;
-	Wed, 30 Sep 2026 16:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F1733E345;
+	Wed, 30 Sep 2026 16:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786097; cv=none; b=OIm+M6JgweMWTHmTmFwcBGXbmvaKe+5v1rWi4uL2om5lB1W4va8QPvsecWl8tRStQjxe0Zoo/jRcSKCYnpF0iTN5Zl3rxVDnot/lNZueDav+3dZLHcsv3+LnXCwiWPQhsHerLfKaTIKSwu5/OhgAPNctgxNHxgodPr7DwjRZwk0=
+	t=1790786099; cv=none; b=GyHPJNQ6pp78rKCeRUteM4qTEwytpyeaIS+mbaMExMTAe/8RIG95RwfFCz7MhnVkPGrHW3/zcGaixt711DqFVMfQOxI2c+3le0jJtN/pHgJEtErdsul85Egx/XAImmuzeCfcd3XqdC/NJQ50s8U7sEGQEttq4SjsxoZX8k0Iz04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786097; c=relaxed/simple;
-	bh=H6i1FMKy4akM3sFQR0syRAGv6Mh9vmzUgT2CmbzhyWQ=;
+	s=arc-20240116; t=1790786099; c=relaxed/simple;
+	bh=HXjw1Yc0MEe9Qw9uaRwU31vjo32vWYyieKvQ90BDeE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jw/ib7h/JSlJaoM4ArSCgujh+I0VWzlhtHUDin0Nkyb9Metlet8KTcn2wqXzqBfHGTR5N6HkiS3RU6tCwA+3aLkAbHJuqseZvk0UvbVsIhr0Gf0MKo8ZWJjygaNiEmb0fPZnQdB1Rh8ne11kUX8/C5HPWrVII5rb8vToSIQSe7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=De7Ojchk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfUZZqXKf2wtPMhmuct4Hql2F4V7xFQzzB4HGRMIp/u1Qm3m2oQEJgX4hi9tvBn/YM6KZ1qOV2M64UUcnI0syNGUWmCeWgPpbRivWdOpV0820ItnqZ6HKO+dDL8M3CprxfVbPvwGGxYAShzBxFwOdqyx5xoWk+bwIXzdrcyvH/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osVzcXmQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="De7Ojchk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477941F000FF;
-	Wed, 30 Sep 2026 16:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osVzcXmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208131F000FF;
+	Wed, 30 Sep 2026 16:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786095;
-	bh=kz6khbcrkbBCdwnR94stWM38b0ETYavzCCI6Zj8BQS8=;
+	s=korg; t=1790786098;
+	bh=jmlGDxmoZxo0jRddsWGeULjQ8pPf8TabzNsqYXkCzBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=De7OjchkpmyvPasXT3L4aCuR7yxt2JBuoOOILEnzHNa6s+JQwoDavDY0lGOzYoIh9
-	 cjTI4RwUYiy7l+hE7a+dIm/IJDfbbVH7turmI40UzEbGaZ8QpGcqpPMLadAIoRS39V
-	 P+0m32ErNuf1y6C7DnN9MK4AjlLkjlDVQmVD7LT4=
+	b=osVzcXmQlTHe3FG9XSsiC6dhsFjgSPk33pCtBdyjywr8GV3GFlgvUwncRbAiE0Usl
+	 pu3GCkrLt6LWn9bk/+KYkEAMtQbJcR3kCIIJYSvr3Xh5qlcLPTKUET/4XLZUEeJRFV
+	 I5mss/1E8ZAULVrl6tbEjCPE6l7DaWc+e/6N+29s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 734/982] mmc: sdhci-of-aspeed: Remove children before releasing SDC resources
-Date: Wed, 30 Sep 2026 17:24:30 +0200
-Message-ID: <20260930152432.521571891@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 743/982] Input: rmi_smbus - fix out-of-bounds read in rmi_smb_write_block()
+Date: Wed, 30 Sep 2026 17:24:39 +0200
+Message-ID: <20260930152432.714568611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,57 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 4396d70bb7fec531bcf934fed016b2f3300c670b upstream.
+commit 51cfe54f815ae175c7d1126b983d4d7c89715004 upstream.
 
-Probe failure and removal leave SDHCI child devices registered after the
-parent clock and managed resources are released.
+When chunking writes into SMBus blocks in rmi_smb_write_block(), the
+loop calculates block_len using the original total length (len) instead
+of the remaining length (cur_len).
 
-Unregister the OF children in reverse order before disabling the parent
-clock on both paths. Use of_platform_device_destroy() because manual
-child creation does not set the flag required by of_platform_depopulate().
+If len is greater than 32 bytes (SMB_MAX_COUNT), block_len remains 32
+for every iteration, even on the final partial chunk where fewer than 32
+bytes remain. This causes smb_block_write() to read 32 bytes from the
+advanced data buffer pointer, reading past the end of the input buffer.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+Fix this by calculating block_len using cur_len and advancing the buffer
+and address pointers by block_len.
 
-Fixes: bb7b8ec62dfb ("mmc: sdhci-of-aspeed: Add support for the ASPEED SD controller")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
+Fixes: 82264d0cf7ae ("Input: synaptics-rmi4 - add SMBus support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: LLM
+Link: https://patch.msgid.link/anLFSMKSoKyyZ272@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_smbus.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -565,12 +565,14 @@ static int aspeed_sdc_probe(struct platf
- 		if (!cpdev) {
- 			of_node_put(child);
- 			ret = -ENODEV;
--			goto err_clk;
-+			goto err_children;
- 		}
+--- a/drivers/input/rmi4/rmi_smbus.c
++++ b/drivers/input/rmi4/rmi_smbus.c
+@@ -140,7 +140,7 @@ static int rmi_smb_write_block(struct rm
+ 	u8 commandcode;
+ 	struct rmi_smb_xport *rmi_smb =
+ 		container_of(xport, struct rmi_smb_xport, xport);
+-	int cur_len = (int)len;
++	size_t cur_len = len;
+ 
+ 	mutex_lock(&rmi_smb->page_mutex);
+ 
+@@ -148,7 +148,7 @@ static int rmi_smb_write_block(struct rm
+ 		/*
+ 		 * break into 32 bytes chunks to write get command code
+ 		 */
+-		int block_len = min_t(int, len, SMB_MAX_COUNT);
++		int block_len = min_t(size_t, cur_len, SMB_MAX_COUNT);
+ 
+ 		retval = rmi_smb_get_command_code(xport, rmiaddr, block_len,
+ 						  false, &commandcode);
+@@ -161,9 +161,9 @@ static int rmi_smb_write_block(struct rm
+ 			goto exit;
+ 
+ 		/* prepare to write next block of bytes */
+-		cur_len -= SMB_MAX_COUNT;
+-		databuff += SMB_MAX_COUNT;
+-		rmiaddr += SMB_MAX_COUNT;
++		cur_len -= block_len;
++		databuff += block_len;
++		rmiaddr += block_len;
  	}
- 
- 	return 0;
- 
-+err_children:
-+	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
- err_clk:
- 	clk_disable_unprepare(sdc->clk);
- 	return ret;
-@@ -580,6 +582,7 @@ static int aspeed_sdc_remove(struct plat
- {
- 	struct aspeed_sdc *sdc = dev_get_drvdata(&pdev->dev);
- 
-+	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
- 	clk_disable_unprepare(sdc->clk);
- 
- 	return 0;
+ exit:
+ 	mutex_unlock(&rmi_smb->page_mutex);
 
 
