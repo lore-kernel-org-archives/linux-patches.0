@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED27451DDE4;
-	Wed, 30 Sep 2026 17:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8FB51D53E;
+	Wed, 30 Sep 2026 17:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790283; cv=none; b=ujezaYF1DCpLGOUgPwX1+BgveUHsPVObd1g5Hh9gvrNQDU15I57wqS7h+/WFusGCLyu8XxKh56Bkd7JqonsQkanYB5ROnZ5TdbBAWE8l5STWyQrSzWM/JjscNaDR03ejrB0WqxrodOt/gCPcLhtnHhpvqnFG1MKd2uOMNXeEn70=
+	t=1790790285; cv=none; b=pwrEbIq8LTVJrtr+2QyvA+3HQpJ94i20wEozXmglNTQ56WU0BDmxr2MyXq7YuO00XCsQaaOBSM1wXSfjrYCZrGE5hvV9VaGrWPQxBjVeOLc68eifgMywKPRzzRD979yYrNc9iMRitg6MfYNcNuIjuoE0UmPOHucglsMuQHpYuHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790283; c=relaxed/simple;
-	bh=DGWLgiz52ATVPHynPZQVra8LJ8OSqFCC+B7YsyHOVp8=;
+	s=arc-20240116; t=1790790285; c=relaxed/simple;
+	bh=QRpkGjyeRZ/AR3w6aIi+0K6dA/yBwJ2H7Pxdz27lqIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIhQ4mRAmsqx6u6sRnNO3StM9kb3NOQoXc+JDYbH9iIA9CvHlsoh6bS7M/GLH0fNyqDgaIs1jaaZsNJIkCOI2OYtoNFYGZ42DwL6EBJzUrbhNip4G+bDgIJGdvG1GIr8TVotF7EU2d/9unRh9iv/nLfMVbiLQ6jnYUVwNUp6oB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P56xBTHw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HovsQJomhIM1MPeP4f2XvTs6SMkKpHnb0yZeS+M1pyw9Clv3SXSFoqlabe6CV1tEVQv+7kfWiwV0eqjbqRIJndeYncV7MEUA6EJRYaZ8YDjyjil4PMPVyB0W7H6znD5gXRlJv2SoN55GeFbGcRhlC0lCOBPHYeM73gw+77YEP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUaSKNj8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P56xBTHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465771F000FF;
-	Wed, 30 Sep 2026 17:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUaSKNj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BB1F000FF;
+	Wed, 30 Sep 2026 17:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790281;
-	bh=9b1cl1XiwPGCxiLYDcgxmoH+MknYzhxst7X521lxmMk=;
+	s=korg; t=1790790284;
+	bh=MovbtiRQ0c7p40Z1nQXjtRC5AeiqCWNhox8sY18wQfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P56xBTHwis8nP7haxxtzqyJLykgB32eTfoGLFiAv+qt5Dkr2O3sbfA0vvcAkLc18J
-	 X6MzAc1kIy2cjFiSEeHnQc1rQXnAP9AOZoizQyJvvVlnRxZ+wbGDHfWfeFMg8ZRo/j
-	 Ml/m8Qml0EsEZknVVdfT50uNmpAa8ldOw0wNX2I4=
+	b=WUaSKNj8p/1z5bjcS8atFT33IYr7ok6SChnrY65eKYKTFD+bLXBND+yMg5xZiVoxt
+	 SPDa2BuwPUtgaV1KzaZU1xOrhG+67rAPFU1NEetpuq9Leha3IQezFB7onssvo5RL/e
+	 4j0L08GSdptSvsQgS+1Jdj+ZXYrY9Bn261ar6RJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 772/877] mptcp: do not reschedule the RTX timer for fallback sockets
-Date: Wed, 30 Sep 2026 17:28:03 +0200
-Message-ID: <20260930152431.373908540@linuxfoundation.org>
+Subject: [PATCH 6.12 773/877] mptcp: prevent race between disconnect() and rtx
+Date: Wed, 30 Sep 2026 17:28:04 +0200
+Message-ID: <20260930152431.395456304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,104 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit e2ab913f68c7d11e2561b8a8ad0b87ffefcad667 ]
+[ Upstream commit 85c580b0d8590520ae00a15c29e9fb9c99427a3e ]
 
-On fallback socket the retrans timer is a quite convoluted no-op, but
-currently nothing prevents the MPTCP core to keep rescheduling it.
+Sashiko noted that the two event can race, leading to inconsistent
+status. Prevent the race using the synchronous timer stop operation.
 
-Additionally gate RTX timer reset to the msk not being fallen back to
-TCP yet. To avoid adding multiple tests in fast-path, use a new flags
-bit for such condition.
-
-The RTX enable bit is clear at close time and set before the msk could
-start retransmitting, with a couple of caveats:
-
-- passive sockets inherit the bit from the listener msk; set the bit on
-  such socket to avoid flipping it in the fast-path, even if the
-  listener will obviously never retransmit.
-
-- while fastopening (MPTFO), mptcp_sendmsg_fastopen still ends-up
-  calling mptcp_connect via tcp_sendmsg_fastopen ->
-  __inet_stream_connect(ssk->sk_socket), and the first subflow's
-  sk_socket points to the msk one.
-
-Fixes: b51f9b80c032 ("mptcp: introduce MPTCP retransmission timer")
 Cc: stable@vger.kernel.org
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-1-df1de70348b6@kernel.org
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-6-df1de70348b6@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   13 ++++++++++---
- net/mptcp/protocol.h |    1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -82,6 +82,7 @@ bool __mptcp_try_fallback(struct mptcp_s
+@@ -3367,6 +3367,7 @@ static void mptcp_copy_inaddrs(struct so
  
- 	msk->allow_subflows = false;
- 	set_bit(MPTCP_FALLBACK_DONE, &msk->flags);
-+	clear_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	__MPTCP_INC_STATS(net, fb_mib);
- 	spin_unlock_bh(&msk->fallback_lock);
- 	return true;
-@@ -993,13 +994,14 @@ static bool mptcp_rtx_timer_pending(stru
- 
- static void mptcp_reset_rtx_timer(struct sock *sk)
+ static int mptcp_disconnect(struct sock *sk, int flags)
  {
-+	struct mptcp_sock *msk = mptcp_sk(sk);
- 	unsigned long tout;
++	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
  
--	/* prevent rescheduling on close */
--	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
-+	/* Prevent rescheduling on close and in case of fallback. */
-+	if (!test_bit(MPTCP_RTX_ENABLED, &msk->flags))
- 		return;
+ 	/* We are on the fastopen error path. We can't call straight into the
+@@ -3379,8 +3380,13 @@ static int mptcp_disconnect(struct sock
+ 	mptcp_check_listen_stop(sk);
+ 	mptcp_set_state(sk, TCP_CLOSE);
  
--	tout = mptcp_sk(sk)->timer_ival;
-+	tout = msk->timer_ival;
- 	sk_reset_timer(sk, &sk->mptcp_retransmit_timer, jiffies + tout);
- }
+-	mptcp_stop_rtx_timer(sk);
+-	mptcp_stop_tout_timer(sk);
++	/* The later subflow close can not kick again the tout timer,
++	 * as the msk is already in closed status.
++	 */
++	msk->timer_ival = icsk->icsk_rto_min;
++	sk_stop_timer_sync(sk, &sk->mptcp_retransmit_timer);
++	icsk->icsk_mtup.probe_timestamp = 0;
++	sk_stop_timer_sync(sk, &icsk->mptcp_tout_timer);
  
-@@ -3121,6 +3123,9 @@ void mptcp_set_state(struct sock *sk, in
- 		 * transition from TCP_SYN_RECV to TCP_CLOSE_WAIT.
- 		 */
- 		break;
-+	case TCP_CLOSE:
-+		clear_bit(MPTCP_RTX_ENABLED, &mptcp_sk(sk)->flags);
-+		fallthrough;
- 	default:
- 		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
- 			MPTCP_DEC_STATS(sock_net(sk), MPTCP_MIB_CURRESTAB);
-@@ -3944,6 +3949,7 @@ static int mptcp_connect(struct sock *sk
- 	if (IS_ERR(ssk))
- 		return PTR_ERR(ssk);
- 
-+	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	mptcp_set_state(sk, TCP_SYN_SENT);
- 	subflow = mptcp_subflow_ctx(ssk);
- #ifdef CONFIG_TCP_MD5SIG
-@@ -4092,6 +4098,7 @@ static int mptcp_listen(struct socket *s
- 		goto unlock;
- 	}
- 
-+	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
- 	mptcp_set_state(sk, TCP_LISTEN);
- 	sock_set_flag(sk, SOCK_RCU_FREE);
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -116,6 +116,7 @@
- #define MPTCP_WORK_RTX		1
- #define MPTCP_FALLBACK_DONE	2
- #define MPTCP_WORK_CLOSE_SUBFLOW 3
-+#define MPTCP_RTX_ENABLED	4
- 
- /* MPTCP socket release cb flags */
- #define MPTCP_PUSH_PENDING	1
+ 	if (msk->token)
+ 		mptcp_event(MPTCP_EVENT_CLOSED, msk, NULL, GFP_KERNEL);
 
 
