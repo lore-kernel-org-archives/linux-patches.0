@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7062E4F7CCF;
-	Wed, 30 Sep 2026 17:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F4B400963;
+	Wed, 30 Sep 2026 17:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789111; cv=none; b=VdgYLOKMxZoV4nCi702KAG6lmoC19Wg3EhH1O5FvO5PgQGEkxqE+7dw8nJecYiQUANGE/JSlf20hU8F1YSUDpn5ueEK/re92ujuW4NW4WNlK1fAJeZDD1TEcn8wH+xO9VmwioICFgomHI7+Hb9DLg42hn3Vxtyt6sAkJcxmiAV4=
+	t=1790789114; cv=none; b=U2Fe5VRXSGRJqjiLpR2+AfXFPZY4Dh4JgVDYqjtFegte9IW+SitA5IKCGyU+LcHn6EEHvEkqXsYv69TlXjGtEXD9/GljByKHH/AFIdgLgis4qDbp6LwIOulzsvfZ4OwiuYbzI5bNdHXA8X2Jsgqza35FAK0Ob0J6oJcHqUIBajI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789111; c=relaxed/simple;
-	bh=plbJvyayg8qwuV5ScVusaai37BKeLa/vAat+nGAUVQ4=;
+	s=arc-20240116; t=1790789114; c=relaxed/simple;
+	bh=F3u9kI/BZ1rbdUYznpC4eEOu+/RApO2ISjlPXAOcSaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxgKnM7s5drmHFfKU1gbMyO5Ev1Utm+DlMlTJhthNxPyWrA6eUg6e1GzLWgVaylwMch1dzYB8w/0KdxsnLcQ7SYcMiZ8P8UEJS8p5SFxPVwUcaJzVfrZztOCH6xTG+Dsozf87Fh3i5wjKpThklkcglYawdlx7dJLFXm8fkC9Cno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYroGZ0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KtuzgBxQXptzLGFzJLKU7NWjJeJF/QmgASsDu8/ko2kN44tXMGfZ99xN6VF/6Ey5QJym4BrhskjWe+rwADtUeDOMJ82bdus7vHkh+z5KIjETtcc3pJccC75JiBqWpdZOIiL3IxerkaTU6PCW5Bmwc3ZGs/G14pmJ1XbeEmm+YqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaPgYJKH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYroGZ0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB141F000FF;
-	Wed, 30 Sep 2026 17:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaPgYJKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9457F1F000FF;
+	Wed, 30 Sep 2026 17:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789110;
-	bh=KKZLJyX1tWGjxBgvJXW1GyuoCFOP3Uizg+dHWm6ETSw=;
+	s=korg; t=1790789113;
+	bh=S8xv3ZOgUhMsEVtM9xEHrGHSewIGF4wAtCUzRXDtDm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYroGZ0ViXj1DquDhKYkiPzA/h3h7O8PsX80XDMs4RJCvGwbQMWr8OBP8Bv42fxyf
-	 r48Ui1sCvKsOukKmWXZUOAI9nDp3TIIR30Lq/mIj403bIQp6PP5zA/RR7kfRxWdsUe
-	 9pukW84TvJ6QGPx9WTcOr0zNYwVqxrvEkR+eCD9U=
+	b=UaPgYJKHVcuFy01uUU+NqTkWSaEVSX7b7Y8fv0aYCTZVkYx6+T4StCNCNFufnKSyX
+	 M03Wu9uU75GfqstBN6jZPuHhFyAdRZdkdVPOOHjIEpyh25hPr8NCK+hZbOLRNtwABR
+	 l4S+9nLmsTHYSPJ+QiXjRSrIzyfkWDXPcOI0PMn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Simon Horman <horms@kernel.org>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 363/877] eth: fbnic: Set AW_FLUSH_MODE alongside AW_FLUSH when flushing the mailbox
-Date: Wed, 30 Sep 2026 17:21:14 +0200
-Message-ID: <20260930152422.510807288@linuxfoundation.org>
+Subject: [PATCH 6.12 364/877] sctp: avoid livelock while updating retransmit path
+Date: Wed, 30 Sep 2026 17:21:15 +0200
+Message-ID: <20260930152422.532573309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,74 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Yiqi Sun <sunyiqixm@gmail.com>
 
-[ Upstream commit 8947f13e436a4ff5eed9f8f019b2865a07af4bb2 ]
+[ Upstream commit d2c31b837406395e576afeb25958c98e9938f3f6 ]
 
-When tearing down the FW mailbox Rx ring, fbnic_mbx_reset_desc_ring()
-writes AW_CFG with FLUSH set and everything else, BME included, cleared.
-Clearing BME halts the device's writes to the host but leaves the staged
-requests parked in the PUL write pipeline rather than draining them, so
-on the write path FLUSH alone never terminates the outstanding requests
-and the flush the firmware waits on never completes.
+sctp_assoc_update_retran_path() can loop forever when every remaining
+transport, including retran_path, is SCTP_UNCONFIRMED: the state check
+runs before the wraparound test, so the loop cannot observe that it has
+completed a full pass.
 
-Add the FLUSH_MODE definition and set both bits so the staged writes
-drain out of the pipeline on their own. BME stays cleared, so nothing
-lands on the host; it is restored later in fbnic_mbx_init_desc_ring()
-when the ring is rebuilt, once the outstanding writes are gone.
+Fix this by considering a transport only when it is not UNCONFIRMED,
+then checking whether the walk has returned to retran_path. This makes
+the full-pass termination independent of the transport state while
+preserving the existing fallback selection semantics.
 
-The read path is unaffected. AR_CFG has no equivalent mode bit and
-AR_FLUSH terminates the outstanding reads by itself, so it is left as
-is.
+Also restore the NULL guard around the retran_path assignment. In the
+all-UNCONFIRMED case there is no eligible replacement transport, and
+installing NULL would leave later retransmit-path users and the debug
+print with a NULL path.
 
-Both writes remain plain stores rather than read-modify-writes. That is
-deliberate: the matching write in fbnic_mbx_init_desc_ring() restores
-BME and the TLP attributes, and clears both flush bits as a side effect.
-
-Fixes: 3b12f00ddd08 ("fbnic: Gate AXI read/write enabling on FW mailbox")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/178942022583.7700.11050671998277309744.stgit@ahduyck-xeon-server.home.arpa
+Fixes: 4c47af4d5eb2 ("net: sctp: rework multihoming retransmission path selection to rfc4960")
+Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260915095017.942213-1-sunyiqixm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_csr.h | 1 +
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c  | 9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/sctp/associola.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-index e91b4432fddd7..2da0f5f8882bc 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-@@ -700,6 +700,7 @@ enum {
- /* PUL User Registers */
- #define FBNIC_CSR_START_PUL_USER	0x31000	/* CSR section delimiter */
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG	0x3103d		/* 0xc40f4 */
-+#define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH_MODE	CSR_BIT(20)
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH	CSR_BIT(19)
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_BME		CSR_BIT(18)
- #define FBNIC_PUL_OB_TLP_HDR_AR_CFG	0x3103e		/* 0xc40f8 */
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index 6f606bdfd2296..175ad17bd47b5 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -60,8 +60,15 @@ static void fbnic_mbx_reset_desc_ring(struct fbnic_dev *fbd, int mbx_idx)
- 	 */
- 	switch (mbx_idx) {
- 	case FBNIC_IPC_MBX_RX_IDX:
-+		/* Clearing BME blocks the device from writing to the host
-+		 * but leaves the requests parked in the write pipeline. The
-+		 * write path only clears outstanding requests when both FLUSH
-+		 * and FLUSH_MODE are set; FLUSH_MODE lets them drain without
-+		 * landing on the host.
-+		 */
- 		wr32(fbd, FBNIC_PUL_OB_TLP_HDR_AW_CFG,
--		     FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH);
-+		     FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH |
-+		     FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH_MODE);
- 		break;
- 	case FBNIC_IPC_MBX_TX_IDX:
- 		wr32(fbd, FBNIC_PUL_OB_TLP_HDR_AR_CFG,
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index f409b9f6b228f..0a19aea3b5246 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -1303,18 +1303,19 @@ void sctp_assoc_update_retran_path(struct sctp_association *asoc)
+ 		/* Manually skip the head element. */
+ 		if (&trans->transports == &asoc->peer.transport_addr_list)
+ 			continue;
+-		if (trans->state == SCTP_UNCONFIRMED)
+-			continue;
+-		trans_next = sctp_trans_elect_best(trans, trans_next);
+-		/* Active is good enough for immediate return. */
+-		if (trans_next->state == SCTP_ACTIVE)
+-			break;
++		if (trans->state != SCTP_UNCONFIRMED) {
++			trans_next = sctp_trans_elect_best(trans, trans_next);
++			/* Active is good enough for immediate return. */
++			if (trans_next->state == SCTP_ACTIVE)
++				break;
++		}
+ 		/* We've reached the end, time to update path. */
+ 		if (trans == asoc->peer.retran_path)
+ 			break;
+ 	}
+ 
+-	asoc->peer.retran_path = trans_next;
++	if (trans_next)
++		asoc->peer.retran_path = trans_next;
+ 
+ 	pr_debug("%s: association:%p updated new path to addr:%pISpc\n",
+ 		 __func__, asoc, &asoc->peer.retran_path->ipaddr.sa);
 -- 
 2.53.0
 
