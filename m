@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CC451A73A;
-	Wed, 30 Sep 2026 17:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3641C51B16D;
+	Wed, 30 Sep 2026 17:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790757; cv=none; b=m3wwjmQoaEd9Gdi+dbzZjXYgL/6XkAt9FInmnRlU0GQwVnjtXyo/ZZ6n71I3CYciGwH9+huayk+wEf6KMV8QsDcT+RV3mMNN8u64GgVtIi3hKVN2jn3eCJjMXxDyIg5pX+WC1sYqwbcgekOowxZRxfTnZ7EmLwglKjwOS8tqVvo=
+	t=1790790760; cv=none; b=s90Cw+XSRyExIV5jAeUK0Nta3QVRfbwDGcShNAocSNRwREyBFAzRpmRPDAayplr0rUqv4PXlwepNZMVVVmx0nbf7cCU6NUb78/1kzWuNt0usjDae6N2yo3sV16SnOJb03wG18LAGnQl/TREGLPo7iVKEgF29aJ1JtJcsCHDurRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790757; c=relaxed/simple;
-	bh=WhzR4QkpJcbB3Unhsx1giALA8MYkxVRGQZwHRj9dJ6U=;
+	s=arc-20240116; t=1790790760; c=relaxed/simple;
+	bh=R3ybNG73v9oRcTAJHFVr/Mh5QLIymSOOrpED0LFu+iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5wrN1MKptb5j7Y9Gme7ofrVFautqDhn+cQ2V0NiHWP67JcP33aVCcoAGWURV7WNKdH4Q3G2rfvnpIPyB5Jw4iDuGc6xy4I4oCemlnKbrZZRjyl2myJlt241fTEC7XYDywm8oXdsUt5dC8KziS+yZe7oRDga8GeRRbYO4k5o5OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrlTxOCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m8jzjNIHBKekJvglH6j3cof+FvLSTyG1bT2fMltVIm21VoxrZg356pwLVb6ffShvMwNe2cnsSmCAXRWEbTu0LS7/GynSyhw3q1g6zVH5yeIh+8pzpnUQ1v929JdKjruJo+Fc3EVZieczsVE7mt3ZuA8UFwJ7E1GcUvdTTv9szOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlFVPzkY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrlTxOCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B011F000FF;
-	Wed, 30 Sep 2026 17:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlFVPzkY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F3D1F000FF;
+	Wed, 30 Sep 2026 17:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790756;
-	bh=LSRhswyMIwhEjs5OrOdCSkoSkhrSCCQ23vK3N4SlPZo=;
+	s=korg; t=1790790759;
+	bh=wvFgeZP7Ok4cHfR8bdLQhOoIgf2mifdX8+r0g3waMJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SrlTxOCDSFN2/qnW+xhqFajK5d8BqYU6PwSLgsQRE5SbDR+I8ndplconvtI8aH/KG
-	 OgX/TtuYM4cS72fg6oBOy1DY1pYK5iWfKEaLWldt07wliLJD4zhR1fhwpP3FHn+Mpk
-	 PSYiWUenHv38AdQpq+gFJ2q8lu/r0Ox9FNfu8sHI=
+	b=QlFVPzkY09I/36/vnHYZWS/VBFF9Hf4w1lkaTLalglM9jXxRLWdt7jZqCIigXFQ4L
+	 FrS/AugYmQsWWG3VzhBJuA1uNLRawP7rXrlKO7PI0punesX1w4ebOqOu/syPErDVDn
+	 SHpeykrNQws5dqJUmvUHtL0lZAi/ejkFkn5oavNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/752] char/nvram: Remove redundant nvram_mutex
-Date: Wed, 30 Sep 2026 17:18:52 +0200
-Message-ID: <20260930152359.499044524@linuxfoundation.org>
+Subject: [PATCH 5.15 063/752] netlabel: fix IPv6 unlabeled address add error handling
+Date: Wed, 30 Sep 2026 17:18:53 +0200
+Message-ID: <20260930152359.521566128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,85 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit e8c715f3a7dae43fabae261493a26474fec11863 ]
+[ Upstream commit 56872b930feee7ae07b9720ca950dd9fa65596ee ]
 
-The global nvram_mutex in drivers/char/nvram.c is redundant and unused,
-and this triggers compiler warnings on some configurations.
+netlbl_unlhsh_add_addr6() always returned zero after
+netlbl_af6list_add(), masking failures such as duplicate
+IPv6 static label entries.
 
-All platform-specific nvram operations already provide their own internal
-synchronization, meaning the wrapper-level mutex does not provide any
-additional safety.
-
-Remove the nvram_mutex definition along with all remaining lock/unlock
-users across PPC32, x86, and m68k code paths, and rely entirely on the
-per-architecture nvram implementations for locking.
-
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>
-Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: yeswanth <yeswanth@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://patch.msgid.link/20260428061540.73668-1-venkat88@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20260522022910.398416-1-zhaochenguang@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/nvram.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ net/netlabel/netlabel_unlabeled.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/nvram.c b/drivers/char/nvram.c
-index e9f694b368719..bd7510abdc076 100644
---- a/drivers/char/nvram.c
-+++ b/drivers/char/nvram.c
-@@ -53,7 +53,6 @@
- #include <asm/nvram.h>
- #endif
+diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
+index 4c4b91ce446df..f84bb8da1904a 100644
+--- a/net/netlabel/netlabel_unlabeled.c
++++ b/net/netlabel/netlabel_unlabeled.c
+@@ -295,7 +295,7 @@ static int netlbl_unlhsh_add_addr6(struct netlbl_unlhsh_iface *iface,
  
--static DEFINE_MUTEX(nvram_mutex);
- static DEFINE_SPINLOCK(nvram_state_lock);
- static int nvram_open_cnt;	/* #times opened */
- static int nvram_open_mode;	/* special open modes */
-@@ -310,11 +309,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		break;
- #ifdef CONFIG_PPC32
- 	case IOC_NVRAM_SYNC:
--		if (ppc_md.nvram_sync != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (ppc_md.nvram_sync)
- 			ppc_md.nvram_sync();
--			mutex_unlock(&nvram_mutex);
--		}
- 		ret = 0;
- 		break;
- #endif
-@@ -324,11 +320,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		if (!capable(CAP_SYS_ADMIN))
- 			return -EACCES;
+ 	if (ret_val != 0)
+ 		kfree(entry);
+-	return 0;
++	return ret_val;
+ }
+ #endif /* IPv6 */
  
--		if (arch_nvram_ops.initialize != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (arch_nvram_ops.initialize)
- 			ret = arch_nvram_ops.initialize();
--			mutex_unlock(&nvram_mutex);
--		}
- 		break;
- 	case NVRAM_SETCKS:
- 		/* just set checksum, contents unchanged (maybe useful after
-@@ -336,11 +329,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		if (!capable(CAP_SYS_ADMIN))
- 			return -EACCES;
- 
--		if (arch_nvram_ops.set_checksum != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (arch_nvram_ops.set_checksum)
- 			ret = arch_nvram_ops.set_checksum();
--			mutex_unlock(&nvram_mutex);
--		}
- 		break;
- #endif /* CONFIG_X86 || CONFIG_M68K */
- 	}
 -- 
 2.53.0
 
