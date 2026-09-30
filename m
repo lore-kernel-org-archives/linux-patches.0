@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBCA5187EF;
-	Wed, 30 Sep 2026 17:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382AD528423;
+	Wed, 30 Sep 2026 17:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791072; cv=none; b=n/R3apNHkb/nzqz39EcZ+I21BJjaXHD8f0DTzqdpTj0AsBHaG9hWObOQSijMG+TZaKIS9HV037gaKYF0RaMCPSfWTfgp64qPbcOf+GhO8642EyJO3rTeGx3z742iNxApKuQfXE52+kyzLLOjIi+UHgB2vMeWJ8YSqgTm7l5Wn9E=
+	t=1790791075; cv=none; b=AKSAvirgTE/p/xvbPPwG2A0gOdXWnCpKdpxf6s6wZZOPSwyvrCEHUw03SZrVPFxI18oZ32gW7aYOao4fcj+xbBSjNzaeRIKg6cnm5r+q0cYoSd4NY3aTzj419ANYeg/tddr2ihnva7jM+23ns4rxOTQrnYVqYd3yqe/snVP8roA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791072; c=relaxed/simple;
-	bh=g92l1x/VtNUf77kFKGZ35nPq4yUA9VbfPNWZug9Nw3U=;
+	s=arc-20240116; t=1790791075; c=relaxed/simple;
+	bh=w3YzIE588HI3eVBxLK65I8IEMDaLxdSEGpTdabfr9w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCdulgKFFrw10or2WnhNIn4bATP54Rkx6arPAQDJfWWK7NbN3wg5WfGKAhfOrLNkDwiA7yH4rQmmL3DZtspVmv8REPmTE+KTCwS80GuU2o4V1PuEv6rG0bBN/rPed8fGUk9BChBPkN3wx3qMr2GfCGebgPRdperIHX3Vz4ApknE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHpnJ3u9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ljOTO9CrP28unZxTFFVk9teptBxjd0hvOS5CvSZdCQkbuZXXGECXbxVHn6F4RvqyGAmq5YsMbE5U4ppA5uhbnil09JRPpQnlTJwG6taUJabapD2Ll3eARtmRQiivaAowJqKrR11HGvbBW5HbevN+lLBsxROKENAIwbVwmkH0DHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crOnD+qi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHpnJ3u9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C982C1F000FF;
-	Wed, 30 Sep 2026 17:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crOnD+qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934AC1F000FF;
+	Wed, 30 Sep 2026 17:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791071;
-	bh=K5FFEK2ExB/UOvrRti7jXUVpqirI8eUojZdeceWCiZ4=;
+	s=korg; t=1790791074;
+	bh=uhH1U/ILwZ96F04JwdAAGc4FGU8MLbF9fXgyzJ4d7hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pHpnJ3u94lYQvmt80HBV8woOP5kBaRWY9c54da/Mcush4mC7W2V15IFPNR6Ou0cRj
-	 S3HLN34G+1/7Ka7lDMQX0QXRwoIH49lgsTtEg+69u/Q7IFyRQxef7dW8e6PNBETEn0
-	 DsvEq1O/g7+LcYgNNrt5+BiD8dYJJVqoi5GK9z80=
+	b=crOnD+qiUifUUpRDnEALYvA08Cw42yiL4np2aXBOhxPPKd9vxhDVmcWkI7drVTGTK
+	 yZPMolfF/M0/W8rJvvneJN1l1e2olzSNofs3jHwWU6KPM3z1YgZKtxN216gvXImMik
+	 UrmIKpjsp+wnOUnzvKcHSFvB4IzG/nP1wjFyul6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 172/752] ksmbd: treat unnamed DATA stream as base file
-Date: Wed, 30 Sep 2026 17:20:42 +0200
-Message-ID: <20260930152401.925087340@linuxfoundation.org>
+Subject: [PATCH 5.15 133/752] wifi: mt76: transform aspm_conf for pci_disable_link_state
+Date: Wed, 30 Sep 2026 17:20:03 +0200
+Message-ID: <20260930152401.057820156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,63 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit 171b5d72dd80f99271c073c6e38d5263687c3b6d ]
+[ Upstream commit 2dd78856223484895306351df1f903a4b75d213f ]
 
-The SMB path suffix :: names the unnamed data stream of the base
-file, not an alternate data stream backed by a DosStream xattr.
+commit b478e162f227 ("PCI/ASPM: Consolidate link state defines") changed
+PCIE_LINK_STATE_L0S (1) to (BIT(0) | BIT(1)). PCI_EXP_LNKCTL_ASPM_L0S (1)
+and PCI_EXP_LNKCTL_ASPM_L1 (2) are no longer matched with
+PCIE_LINK_STATE_L0S (3) and PCIE_LINK_STATE_L1 (4).
 
-Canonicalize an empty stream name with an explicit  type to a NULL
-stream name after parsing. This keeps the base filename produced by
-strsep() and lets open continue through the normal base-file path instead
-of looking for a non-existent empty stream xattr.
+On the platform enabling ASPM L0s and L1, mt76_pci_disable_aspm is not able
+to disable L1. Fix this by transforming aspm_conf to pcie link state.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
+Link: https://patch.msgid.link/20260602054349.42429-1-liujia6264@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/misc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ksmbd/misc.c b/fs/ksmbd/misc.c
-index 9e8afaa686e3a..11314f7c622a6 100644
---- a/fs/ksmbd/misc.c
-+++ b/fs/ksmbd/misc.c
-@@ -121,7 +121,9 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
- 	char *stream_type;
- 	char *s_name;
- 	int rc = 0;
-+	bool has_stream_type = false;
+diff --git a/drivers/net/wireless/mediatek/mt76/pci.c b/drivers/net/wireless/mediatek/mt76/pci.c
+index 4c1c159fbb62f..36dba6e03e8b4 100644
+--- a/drivers/net/wireless/mediatek/mt76/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/pci.c
+@@ -30,8 +30,14 @@ void mt76_pci_disable_aspm(struct pci_dev *pdev)
  
-+	*stream_name = NULL;
- 	s_name = filename;
- 	filename = strsep(&s_name, ":");
- 	ksmbd_debug(SMB, "filename : %s, streams : %s\n", filename, s_name);
-@@ -137,14 +139,20 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
+ 	if (IS_ENABLED(CONFIG_PCIEASPM)) {
+ 		int err;
++		int state = 0;
  
- 		ksmbd_debug(SMB, "stream name : %s, stream type : %s\n", s_name,
- 			    stream_type);
--		if (!strncasecmp("$data", stream_type, 5))
-+		if (!strncasecmp("$data", stream_type, 5)) {
- 			*s_type = DATA_STREAM;
--		else if (!strncasecmp("$index_allocation", stream_type, 17))
-+			has_stream_type = true;
-+		} else if (!strncasecmp("$index_allocation", stream_type, 17)) {
- 			*s_type = DIR_STREAM;
--		else
-+			has_stream_type = true;
-+		} else {
- 			rc = -ENOENT;
-+		}
- 	}
- 
-+	if (has_stream_type && !s_name[0] && *s_type == DATA_STREAM)
-+		goto out;
+-		err = pci_disable_link_state(pdev, aspm_conf);
++		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L0S)
++			state |= PCIE_LINK_STATE_L0S;
++		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L1)
++			state |= PCIE_LINK_STATE_L1;
 +
- 	*stream_name = s_name;
- out:
- 	return rc;
++		err = pci_disable_link_state(pdev, state);
+ 		if (!err)
+ 			return;
+ 	}
 -- 
 2.53.0
 
