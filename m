@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBE43E022B;
-	Wed, 30 Sep 2026 18:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EF73DB328;
+	Wed, 30 Sep 2026 18:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794155; cv=none; b=frxFLzAriz5OvsGFms0UouQIdvJaLa5+HfozIOqi4PC5UHr7nEw3tlYOMuNkUGZ77XbVF9YT2dbSrlpNIAGlZVKgz3NZYSb48mwXXR0rU2U6+6k5swVXDTDzFyMusRWtiziSP9VBPU642J5FC1DXAJq1QdoFWHq41KiBSO4FMe0=
+	t=1790794158; cv=none; b=F2nGGm5F+7Q0jod82F4ivvs3KFrdSzGx+OAImA0IY0D0Y0HkR3R5Zr6UallBRllqFLPDB5lNECsURg0iwrTbfQ1Lx9M0nmAtkySR3icWWbJ9ls5vs7jt57dPu1b/XcwcPvAml5tUuNjXs/fbyB+pvpe7c5xvEjcTKdzSI8tkPKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794155; c=relaxed/simple;
-	bh=ld7K5kcVlSG4hcf2RBlh6AT9G3U/dD2Fa1sTf6lzt0o=;
+	s=arc-20240116; t=1790794158; c=relaxed/simple;
+	bh=pn4Yr8eN1UykFr/hLULnQVk869FofN6lc7lehENabIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o4KySNEIvlQTGe8HfUZKkMWubnAEEqgIzoUCzuZcVwG8Be1mnlZ+mKGWfN9VD2nUjA6zv8sBw/bV4RfHkffRfsbTDupY3gjL6Hp6ceVEv/SFGwjpfoem/pygqn7BbklfFUy+b2Rx52RmF3y3jQMTm0mBVQkiBmzfAmA/JhWGoPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJ0f7Dmc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YOIhm4nr3+LwcZV0QoyqM5ULrFEhOpHsUpL9AJOS72zds2egXv+e2GQuQUk2V/OXPs4oggl4Mm45ooWUJo9fVurK637PG3bXRevOjEioA5LJr1sRg3Ewgb3JXZllZiAmEKzSCq/mx2L1DEtOBDP7k9OttCs4YgXJhZDJEoaybts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzyfRygx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJ0f7Dmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F8E1F000FF;
-	Wed, 30 Sep 2026 18:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzyfRygx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E7D1F000FF;
+	Wed, 30 Sep 2026 18:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794154;
-	bh=jhhFQqbxKGAowRCuFq9tw6mw/QzwfYncZsasm+HoTes=;
+	s=korg; t=1790794157;
+	bh=Wl8oSkNI69pp7tQHtvj1wMkCeocqx768IgRjd8Whp5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJ0f7DmciFSY1tq/OXtg5RK3lkkbIqbCK+w7upENK3Ai2yBjdOfZNDP8Rs585dmJX
-	 8w0fyBKzKWf81CMdqrCDobRQFDvKFFA0OO40WdJIE9nTtkSeqBa+mOSD2XMD4Pqmlf
-	 sRAxMt8cnqpmzEp4BsQBh3M+9pdQKjIAkARfJ/AI=
+	b=JzyfRygx5bCyP4XGHh8yD7AHy9d4HA4HC/AMlK6kecVUsh2KODEHf+YDh695kU8n2
+	 p8JrEUXYnCgZX9kum5fMgaeBcTNmlvAl0ElCPrgu2WUkZr/nJY5hUjO/SJvMdxUCoh
+	 ESb2XAsmW/q3TyU6iOBJberjF48jLg54BHo8cWao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20K=C3=BCchler?= <uwe@kuechler.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0112/1193] ALSA: usb-audio: Add quirk for Novation Mininova
-Date: Wed, 30 Sep 2026 17:13:16 +0200
-Message-ID: <20260930152436.714361070@linuxfoundation.org>
+Subject: [PATCH 6.6 0113/1193] net: hsr: require valid EOT supervision TLV
+Date: Wed, 30 Sep 2026 17:13:17 +0200
+Message-ID: <20260930152436.736102063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,48 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Küchler <uwe@kuechler.org>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit b2e9d2cbbb71b00faf3e27fb741a27b9ad455edd ]
+[ Upstream commit 46d111a3ef3b5972804dcdce0833767143a12192 ]
 
-Add a device-specific quirk for the Novation Mininova synthesizer
-(USB ID 1235:001e) to enable proper recognition and functionality
-as a MIDI device.
+Supervision frames are only valid if terminated with a zero-length EOT
+TLV. The current check fails to reject non-EOT entries as the terminal
+TLV, potentially allowing malformed supervision traffic.
 
-Signed-off-by: Uwe Küchler <uwe@kuechler.org>
-Link: https://patch.msgid.link/20260526162033.7513-1-uwe@kuechler.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by strictly requiring the terminal TLV to be HSR_TLV_EOT with
+a length of zero.
+
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/hsr/hsr_forward.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index d1bd8e0d60252..c20a4df886906 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2131,6 +2131,14 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 		}
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 2a6df958292c8..c66728d7d285e 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -110,7 +110,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
  	}
- },
-+{
-+	USB_DEVICE(0x1235, 0x001e),
-+	QUIRK_DRIVER_INFO {
-+		/* .vendor_name = "Novation", */
-+		/* .product_name = "Mininova", */
-+		QUIRK_DATA_RAW_BYTES(0)
-+	}
-+},
- {
- 	USB_DEVICE_VENDOR_SPEC(0x1235, 0x4661),
- 	QUIRK_DRIVER_INFO {
+ 
+ 	/* end of tlvs must follow at the end */
+-	if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
++	if (hsr_sup_tlv->HSR_TLV_type != HSR_TLV_EOT ||
+ 	    hsr_sup_tlv->HSR_TLV_length != 0)
+ 		return false;
+ 
 -- 
 2.53.0
 
