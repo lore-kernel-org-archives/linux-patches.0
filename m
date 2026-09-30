@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1FD4E80BD;
-	Wed, 30 Sep 2026 15:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11583750CF;
+	Wed, 30 Sep 2026 15:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782938; cv=none; b=bKBvanmOj9J3JqTPHAykmkOSFFLYwUH5WowN0my2OokvMFRJkL7f7HlAsho1H7gUODBCt+acbDybybbBrijpg1QSBZQdF29U+dtonrjwhOhkwZkvN+Xgmot3Eu94ov/eDFvZOqL37oZ3IsZ6rRkSoJGxNiebphvv5ZT5DQH0n48=
+	t=1790782940; cv=none; b=KXbCivuiEOBB4S7nbLdRylMvnG2r3JIK0BGZHAEOOPkL5dpeUJ4DJB8Wssszigl0G9fMPIbZPeaWVixsNRtVhWczbUSa0e2x7oyLtf3QaKVwUaOasu+2vdAxL3CJa0nkYvNkNQ1fVEuyOJytiy+LxIX7Q72YWGFb3HOy9ddDs+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782938; c=relaxed/simple;
-	bh=04QjaOMa9KEmlb8pICtrt3TSXyWWF1q/R9o5BruNYEM=;
+	s=arc-20240116; t=1790782940; c=relaxed/simple;
+	bh=JWiTDNCipVbjZSxx+v2N+haccJPdI6cgnR37hqWuMvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhyZwXeLJLZnqI8RNLmdm0Zt5qzF7mt0Seswq7sYNoL4ZnYFzciWONgH5QuZuDWMxyXzSxQc7IyHmmyUivHhY8tB0ZlzPVnw3t7HDKS8SCBK2YbE9P33bJtywYeDwMzkoGvFF4UoKo2Hn4cnO4cVbeerp7BK2sSi/Gkk17xFGFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxOpEHFj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hO901zLfiz0qziDC3NAiCiLQadxaRj+UxRZB56h8BgjmAf09PZyCWBSHMq9FQuGqr2Wmbx2VAzHMdzdyONJXKCg0Ip8fQKRUAOJ+O6MeECW44CN+WPk+rkSiwY3bZYxMG5Ep3cifau2+gEy3RKL/mZmQZJnWBtvhHZGOj4A8DJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5CJHSpo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxOpEHFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6BA1F000FF;
-	Wed, 30 Sep 2026 15:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5CJHSpo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20181F00893;
+	Wed, 30 Sep 2026 15:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782933;
-	bh=yenM3mczCg89/KPEM12eGI2NbhePlemj0ecdMhdJ0PE=;
+	s=korg; t=1790782936;
+	bh=QumbdE+Bocav5InDHysb6QRzxHMETcbTERzYECAA81g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxOpEHFj4O2XbSiKMFMYc/VM/0A78fIn0OpwFs051huLf64R3rlXTolD8Pj2VmNEP
-	 9yGYw3h+IBxatZlE+q75DVeJsFfZJjy5VhGUXvMzwRwWtXtQLSQwnEZGzRpSGfk0+4
-	 K/3LaTsNQVPUqQMGXee0b9Md2tLQk4SnCA0g4R3s=
+	b=M5CJHSpo1FIuYCg7E6u8afrmMLpHP9i/ZF2YO8AtwQSZ4lrvTbzLD1QZElkzvHElk
+	 J8h0InIW8E3dkQkGI6gnpvTvtVY1GTZzZvELmiWtbMCTK4CoFLuQvnpDq1ySMaJctF
+	 AhJu/Vhr3ifmMZTu3/r9Yvq2iUNIgOMmJf/l7b3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Josef Bacik <josef@toxicpanda.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/595] btrfs: return an error from btrfs_record_root_in_trans
-Date: Wed, 30 Sep 2026 17:21:55 +0200
-Message-ID: <20260930152352.503801226@linuxfoundation.org>
+Subject: [PATCH 5.10 223/595] btrfs: do not force reloc root creation during qgroup_account_snapshot()
+Date: Wed, 30 Sep 2026 17:21:56 +0200
+Message-ID: <20260930152352.525364553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,51 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 03a7e111a94961092e2832a6259d39c8c01d6def ]
+[ Upstream commit cacf35832292997018837e484283f95a9301ebf5 ]
 
-We can create a reloc root when we record the root in the trans, which
-can fail for all sorts of different reasons.  Propagate this error up
-the chain of callers.  Future patches will fix the callers of
-btrfs_record_root_in_trans() to handle the error.
+[BUG]
+When running btrfs/252 with quota enabled through MKFS_OPTIONS="-O quota",
+it has a high chance to trigger the following kernel warning and flips
+the fs RO:
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+  BTRFS info (device dm-2): relocating block group 30408704 flags metadata|dup
+  ------------[ cut here ]------------
+  WARNING: fs/btrfs/extent-tree.c:879 at lookup_inline_extent_backref+0x74b/0x960 [btrfs], CPU#4: btrfs/2173
+  CPU: 4 UID: 0 PID: 2173 Comm: btrfs Not tainted 7.2.0-rc6-custom+ #457 PREEMPT(full)  3adc6528fb66f7a55fe1095385818e742f200aab
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:lookup_inline_extent_backref+0x74b/0x960 [btrfs]
+  Call Trace:
+   <TASK>
+   insert_inline_extent_backref+0x7c/0x160 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   __btrfs_inc_extent_ref+0xa9/0x270 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   __btrfs_run_delayed_refs+0x4af/0x11c0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_run_delayed_refs+0x9d/0xf0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   create_pending_snapshot+0x39d/0xf00 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   create_pending_snapshots+0x9b/0xc0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_commit_transaction+0x280/0xeb0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   prepare_to_relocate+0x147/0x200 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   relocate_block_group+0x6b/0x5e0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_relocate_block_group+0x92c/0x2380 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_relocate_chunk+0x3f/0x1a0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_balance+0xa2c/0x19c0 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   btrfs_ioctl+0x2839/0x2d30 [btrfs 32f09462c54d9c922fca74a3e4866f4aa7737b72]
+   __x64_sys_ioctl+0x416/0x9a0
+   do_syscall_64+0xe1/0x790
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  BTRFS info (device dm-2): leaf 4593991680 gen 233 total ptrs 175 free space 5953 owner 2
+  BTRFS info (device dm-2): refs 3 lock_owner 2173 current 2173
+  	item 0 key (166772736 METADATA_ITEM 1) itemoff 16250 itemsize 33
+  		extent refs 1 gen 222 flags 2
+  		ref#0: tree block backref root 266
+         [ Skip the tree dump ]
+  	item 174 key (263225344 METADATA_ITEM 0) itemoff 10328 itemsize 33
+  		extent refs 1 gen 162 flags 258
+  		ref#0: tree block backref root 267
+  BTRFS error (device dm-2): extent item not found for insert, bytenr 179847168 num_bytes 16384 parent 4594335744 root_objectid 273 owner 0 offset 0
+  BTRFS error (device dm-2): failed to run delayed ref for logical 179847168 num_bytes 16384 type 182 action 1 ref_mod 1: -117
+
+[CAUSE]
+The above error is showing that there is a tree reference to a metadata
+extent that is no longer there.
+
+With "ref_verify" mount option (requires CONFIG_BTRFS_DEBUG), there is
+some extra debug output:
+
+  BTRFS error (device dm-2): dumping block entry [180961280 16384], num_refs 0, metadata 1, from disk 0
+  BTRFS error (device dm-2):   root entry 256, num_refs 18446744073709551615
+  BTRFS error (device dm-2):   root entry 273, num_refs 18446744073709551615
+  BTRFS error (device dm-2):   Ref action 3, root 273, ref_root 273, parent 0, owner 0, offset 0, num_refs 1
+     btrfs_force_cow_block+0x129/0x7d0 [btrfs]
+     btrfs_cow_block+0x10a/0x250 [btrfs]
+     btrfs_search_slot+0x5eb/0xf40 [btrfs]
+     btrfs_insert_empty_items+0x3a/0x70 [btrfs]
+     insert_with_overflow+0x53/0x130 [btrfs]
+     btrfs_insert_dir_item+0x125/0x290 [btrfs]
+     btrfs_add_link+0xaa/0x410 [btrfs]
+     btrfs_rename+0x5ea/0xcd0 [btrfs]
+     btrfs_rename2+0x28/0x60 [btrfs]
+     vfs_rename+0x5b2/0xe10
+     filename_renameat2+0x244/0x430
+     __x64_sys_rename+0x48/0x70
+     do_syscall_64+0xe1/0x790
+     entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  BTRFS error (device dm-2):   Ref action 2, root 273, ref_root 273, parent 0, owner 0, offset 0, num_refs 18446744073709551615
+     btrfs_force_cow_block+0x327/0x7d0 [btrfs]
+     btrfs_cow_block+0x10a/0x250 [btrfs]
+     btrfs_search_slot+0x5eb/0xf40 [btrfs]
+     btrfs_lookup_file_extent+0x4d/0x70 [btrfs]
+     btrfs_drop_extents+0x151/0xf00 [btrfs]
+     insert_reserved_file_extent+0xfe/0x3e0 [btrfs]
+     btrfs_finish_one_ordered+0x549/0xc40 [btrfs]
+     btrfs_work_helper+0xde/0x350 [btrfs]
+     process_one_work+0x198/0x380
+     worker_thread+0x1c8/0x330
+     kthread+0xee/0x120
+     ret_from_fork+0x28f/0x310
+     ret_from_fork_asm+0x11/0x20
+  BTRFS error (device dm-2):   Ref action 1, root 273, ref_root 0, parent 4594335744, owner 0, offset 0, num_refs 1
+     __btrfs_mod_ref+0x1c5/0x2d0 [btrfs]
+     btrfs_copy_root+0x262/0x390 [btrfs]
+     create_reloc_root+0xb9/0x370 [btrfs]
+     btrfs_init_reloc_root+0xb0/0x1b0 [btrfs]
+     record_root_in_trans+0xa6/0xd0 [btrfs]
+     create_pending_snapshot+0x383/0xf00 [btrfs]
+     create_pending_snapshots+0x9b/0xc0 [btrfs]
+     btrfs_commit_transaction+0x280/0xeb0 [btrfs]
+     prepare_to_relocate+0x147/0x200 [btrfs]
+     relocate_block_group+0x6b/0x5e0 [btrfs]
+     btrfs_relocate_block_group+0x92c/0x2380 [btrfs]
+     btrfs_relocate_chunk+0x3f/0x1a0 [btrfs]
+     btrfs_balance+0xa2c/0x19c0 [btrfs]
+     btrfs_ioctl+0x2839/0x2d30 [btrfs]
+     __x64_sys_ioctl+0x416/0x9a0
+     do_syscall_64+0xe1/0x790
+
+The above shows the direct cause, Ref action 3 is the oldest operation,
+which shows the tree block is created by COW.  Then ref action 2 shows
+it's COWed away, by a metadata update, meaning the tree block is already
+released, should not be referred any more.
+
+Then the final one, is trying to create a reloc tree for subvolume 273,
+and that reloc root creation is referring to the already dropped tree
+block.
+
+The root cause is that, during qgroup_account_snapshot(), we are calling
+record_root_in_trans() with "force = true".
+So if the root has no reloc root, we will create one, but at that
+timing it's already too late.
+
+Normally reloc root should be created before the commit and current
+roots diverge, to avoid the same problem we are hitting.
+
+But during relocation initialization, we are committing the current
+running transaction, with a new reloc_control attached halfway.
+
+And if qgroup is enabled, the record_root_in_trans() with "force = true"
+calls will force reloc root creation even if we do not and should not
+create reloc root at that timing.
+
+[FIX]
+Do not force reloc root creation during record_root_in_trans() with
+"force = true" cases, which is only called by qgroup_account_snapshot().
+
+If we're really under relocation, the reloc root should be created way
+early, before the commit and current root diverge.  If the root has no
+reloc tree yet, it means we're still initializing the reloc, and do not
+need a reloc root.
+
+So skipping the reloc tree creation in qgroup_account_snapshot() should
+be safe.
+
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1275740
+Fixes: 4d31778aa2fa ("btrfs: qgroup: Fix root item corruption when multiple same source snapshots are created with quota enabled")
+Assisted-by: LLM (initial analysis, but incorrect conclusion with too many burnt tokens)
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: cacf35832292 ("btrfs: do not force reloc root creation during qgroup_account_snapshot()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/transaction.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index f9b27cf776c91..5686bafa31c4b 100644
+index 5686bafa31c4b..e5ff67abe91be 100644
 --- a/fs/btrfs/transaction.c
 +++ b/fs/btrfs/transaction.c
-@@ -404,6 +404,7 @@ static int record_root_in_trans(struct btrfs_trans_handle *trans,
- 			       int force)
- {
- 	struct btrfs_fs_info *fs_info = root->fs_info;
-+	int ret = 0;
- 
- 	if ((test_bit(BTRFS_ROOT_SHAREABLE, &root->state) &&
- 	    root->last_trans < trans->transid) || force) {
-@@ -452,11 +453,11 @@ static int record_root_in_trans(struct btrfs_trans_handle *trans,
+@@ -452,8 +452,19 @@ static int record_root_in_trans(struct btrfs_trans_handle *trans,
+ 		 * through btrfs_record_root_in_trans without having to take the
  		 * lock.  smp_wmb() makes sure that all the writes above are
  		 * done before we pop in the zero below
++		 *
++		 * If @force is true, it means the call is from
++		 * qgroup_account_snapshot(), which only requires radix tree
++		 * tracking.
++		 * We should not force reloc root creation here, as the root
++		 * may have already been modified, and in that case
++		 * root->commit_root has already been dropped.
++		 *
++		 * Using that commit root will cause the reloc root to refer
++		 * to a deleted extent, causing extent tree corruption.
  		 */
--		btrfs_init_reloc_root(trans, root);
-+		ret = btrfs_init_reloc_root(trans, root);
+-		ret = btrfs_init_reloc_root(trans, root);
++		if (!force)
++			ret = btrfs_init_reloc_root(trans, root);
  		smp_mb__before_atomic();
  		clear_bit(BTRFS_ROOT_IN_TRANS_SETUP, &root->state);
  	}
--	return 0;
-+	return ret;
- }
- 
- 
 -- 
 2.53.0
 
