@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5425172E2;
-	Wed, 30 Sep 2026 16:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498CB4FE2F2;
+	Wed, 30 Sep 2026 16:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786862; cv=none; b=G2JXqupZ6qlhpDcMkk1h5RPFJ1gwydR9TgjJyYlTuB62r3AZajugOuQlwwjn3PUZgUxN5J1gR+6qkn0mf8KPZHxdWGrKJvVX9lygNwDMcDFZDGC8pjv9RRoQd26C+Qz6CTpF7racOkFe6nyrjEqf+m2V0psMKg+IncO6WE6u+PI=
+	t=1790786865; cv=none; b=p7yr/3yPYaRy4l7pgELP4VHTmYS+5gknSVPugyAwcAtsCwfFohYFGDmbA8rA86+HlgK/PAnB/LDOFdCpuxUQZkwFwTGUzdfOPlr114vfbHAJ5lRxXjbOULAXS/uC11GA3yEvOOHVZJjino2vOfbFaxuHj1FfGZ9XkYCkjeHkgGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786862; c=relaxed/simple;
-	bh=ySAqvmorQ+RnSKO1ja2tz345bBlSjUHypK6XcOAeTBQ=;
+	s=arc-20240116; t=1790786865; c=relaxed/simple;
+	bh=wPQnbyBZmuuEJGeFdBVIhjbzsEZ521GA31blD7pEzgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZVEDOWgzcUQV4qYlt8i8QtiMdYFpQBzRzCnVMyWEUy12xT1p0VBx67ryFPphSTexfxxFv7t3lW3xNMh9gG0GOFvyxCDybIxwiRVkfajtQFwo+pTexxdQkwdqfIJJyh5XRl8TIQlpikklKLRZu4c5maN+QgWwdxHZrZl2tBBVG6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loQcCklS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y2b9EpovvANWyYOOAuw/b41fdJHlbgwsfE9hlwYEi4zCLcKhfD7BHfeaBdDxmUSoFlBmVmmq2hKA7ID5QtQzAL2ANHV9YBp7HTsr4t4HC/gOwDE6eQyu0rMkZvs4klb8ZUK2oBUIgmbmD9UpHGRVdQvml5ZapSd/MKkhpGx19tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeSeylRv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loQcCklS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD25E1F0089B;
-	Wed, 30 Sep 2026 16:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeSeylRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41351F000FF;
+	Wed, 30 Sep 2026 16:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786861;
-	bh=XCUz1nvifj3I00TfWrJpZVTrhOMCVb6jc4j/fMwYtxs=;
+	s=korg; t=1790786864;
+	bh=gaJzHnh/YhKHauU+1GR+zldO8zapfbcW92bTBIkCCDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loQcCklSNaPnj09zX6aukdowltVtSa4Wo4pUnTS7nVugSsDSCwLJ1rVYqb4Ik0imr
-	 JbAudCrwOBA2vL1sHZSKEhjTsXvJPIqbJbak7udONriVbQyvXdmiYZ7npnoycFscTb
-	 /zHQqTXnDxfgyaHIPUTHMKk3LuOGDHp71oKCxiUg=
+	b=qeSeylRvazBPWP/DXvUtqeKirwLMfNMs2HH61mrTCU+QZXJi2c55+WXbGsxqoZVDi
+	 lHUxbfuCWZLMo/hnEARAZxXwwqlwE1WDN81MnZA7i8JrY6qVzqyRWCnqgoJChtXQ92
+	 zEZ6u4YAlOCuI1ylPGN+L9oy8BVJvQgMlReO8yP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 029/457] bpf, sockmap: Fix self-redirect copied_seq double-counting
-Date: Wed, 30 Sep 2026 17:22:14 +0200
-Message-ID: <20260930152346.663195014@linuxfoundation.org>
+Subject: [PATCH 7.2 012/457] KVM: s390: Fix race in _destroy_pages_crste()
+Date: Wed, 30 Sep 2026 17:21:57 +0200
+Message-ID: <20260930152346.296599661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,77 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 490a83d6386eec1d29f470c8d7331677fb46c3b7 ]
+[ Upstream commit 4ca00a9154f998116fba9a32cce5bd938d228065 ]
 
-When a BPF stream_verdict program redirects an skb back to the same
-socket (self-redirect with BPF_F_INGRESS), sk_psock_verdict_apply()
-calls tcp_eat_skb() which advances tcp_sk->copied_seq. However, the
-skb is then delivered to the socket's psock ingress queue and later
-read by tcp_bpf_recvmsg_parser(), which also advances copied_seq via
-the copied_from_self accounting path. This double-counting causes
-copied_seq to advance by 2x the actual data length, triggering:
+Use READ_ONCE() in _destroy_pages_crste() to read the crste, avoid
+dereferencing the pointer multiple times.
 
-  TCP recvmsg seq # bug 2: copied BF2E806, seq BF2E7FD, \
-			   rcvnxt BF2E806, fl 0
-  WARNING: net/ipv4/tcp.c:2745 at tcp_recvmsg_locked+0x72b/0x2640
-  Call Trace:
-   tcp_recvmsg+0x10a/0x500
-   sock_recvmsg+0x168/0x1d0
-   __sys_recvfrom+0x19a/0x2a0
-   __x64_sys_recvfrom+0xe4/0x1f0
-   do_syscall_64+0xf7/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  cleanup rbuf bug: copied BF2E806 seq BF2E806 rcvnxt BF2E806
-  WARNING: net/ipv4/tcp.c:1609 at tcp_cleanup_rbuf+0xf2/0x1c0
-  Call Trace:
-   tcp_recvmsg_locked+0x8d1/0x2640
-   tcp_recvmsg+0x10a/0x500
-   sock_recvmsg+0x168/0x1d0
-   __sys_recvfrom+0x19a/0x2a0
-   __x64_sys_recvfrom+0xe4/0x1f0
-   do_syscall_64+0xf7/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fix this by converting self-redirect verdict to __SK_PASS at the
-beginning of sk_psock_verdict_apply(). This bypasses the
-__SK_REDIRECT case entirely (which calls sk_psock_eat_skb), letting
-the __SK_PASS path queue the skb to the psock ingress queue. The
-data is then read via tcp_bpf_recvmsg_parser(), which advances
-copied_seq exactly once through copied_from_self. Cross-socket
-redirects continue through __SK_REDIRECT with sk_psock_eat_skb()
-unchanged.
-
-Fixes: e5c6de5fa025 ("bpf, sockmap: Incorrectly handling copied_seq")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/1a8e797a1b26e2f695aaac22ac644c2862f63466.1788858299.git.tanggeliang@kylinos.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a2c17f9270cc ("KVM: s390: New gmap code")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260828115439.145885-9-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/kvm/gmap.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 2521b643fa05d..df385a5a961e8 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1000,6 +1000,10 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
- 	int err = 0;
- 	u32 len, off;
+diff --git a/arch/s390/kvm/gmap.c b/arch/s390/kvm/gmap.c
+index 8abb4f55b306b..f11d4ecaef7be 100644
+--- a/arch/s390/kvm/gmap.c
++++ b/arch/s390/kvm/gmap.c
+@@ -991,11 +991,13 @@ static long _destroy_pages_pte(union pte *ptep, gfn_t gfn, gfn_t next, struct da
+ static long _destroy_pages_crste(union crste *crstep, gfn_t gfn, gfn_t next, struct dat_walk *walk)
+ {
+ 	phys_addr_t origin, cur, end;
++	union crste crste;
  
-+	if (verdict == __SK_REDIRECT && skb_bpf_ingress(skb) &&
-+	    skb_bpf_redirect_fetch(skb) == psock->sk)
-+		verdict = __SK_PASS;
-+
- 	switch (verdict) {
- 	case __SK_PASS:
- 		err = -EIO;
+-	if (!crstep->h.fc || !crstep->s.fc1.pr)
++	crste = READ_ONCE(*crstep);
++	if (!crste.h.fc || !crste.s.fc1.pr)
+ 		return 0;
+ 
+-	origin = crste_origin_large(*crstep);
++	origin = crste_origin_large(crste);
+ 	cur = ((max(gfn, walk->start) - gfn) << PAGE_SHIFT) + origin;
+ 	end = ((min(next, walk->end) - gfn) << PAGE_SHIFT) + origin;
+ 	for ( ; cur < end; cur += PAGE_SIZE)
 -- 
 2.53.0
 
