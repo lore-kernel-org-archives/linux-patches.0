@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA563CD8B8;
-	Wed, 30 Sep 2026 19:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EAF36826E;
+	Wed, 30 Sep 2026 19:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796562; cv=none; b=oy7XFHIwfCjZaXBtGlQ4Zy8981EsVj/C/JyzB1LlqUNvV+gmlo0aT9tYJhTRhrFuijHoxoNHRbJSewGsSa/CbQiUdQFj9zoy5kItN1v4PUZvE23f/09imrdWfxII/dUd4cZrSB+ws8BY/RAQGr/DwA7YYGtws0B9sstEGCvqRS8=
+	t=1790796565; cv=none; b=AE/i8HK4TPdM7bmR5Lw7rImQDn5ullHBOXwhfg/xLOV9TSZ499RJfhl5Mv7O9Q5ypWqvuIBg/W4MMtFV7/RzKQ9UWmM7iaW3DE7K6bbwbDVG0ePdA7TnfBJF607mc4w3wqSwvDHvPKJALquqwa5y8WZRQGWHruOaliJODAXszhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796562; c=relaxed/simple;
-	bh=RHCg5JkzDF6b9QuwYjXNLr0pNsxpjUi0dP3aErJXFVw=;
+	s=arc-20240116; t=1790796565; c=relaxed/simple;
+	bh=Hg2BqVfCbdiAU/J4U8PwHVtc7CFFRWizMISUP7bVFWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toCggjmGA9XKmOEr6uV6lX+T5oOPHcfBZ4tMantSnw+kPx7AS3+qjVWH/BYOyXfLJ/VEPgV61HL2wxBKT3NTouVHikg7GRhajZqSGz1OwFwjZHjAMu2/yz+hWmMq8uLaDd+bXjc3MuttFjgVZBO+bnZVll8SfXvIQOX7zr/Piho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbzg5l2e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZnzkNGTAUaUbpebtUp1mnNlm3DWMpa16ggFn+U9fL63KhUuypcdDjaVYPEkOp8l8GZ6pFSvl6KD7LlKXpSw7jYvU6L+LLtRPnh8aSxl55F/HoYtp8csixfyqrSW0QEY2OYjSLXzzx19rYkom5VmffSKGG+0ySDLkZr1ZjzBjkmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDw1TZCd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbzg5l2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255BC1F000FF;
-	Wed, 30 Sep 2026 19:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDw1TZCd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057EA1F000FF;
+	Wed, 30 Sep 2026 19:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796561;
-	bh=AXjwH3qnEsqQjFwZ1xq2db/I34e1CJbXNOu/arukbzE=;
+	s=korg; t=1790796564;
+	bh=i76YHYQJAxPvCLWgGBDYDlFZ3bEyR7OnImzReUhFcrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cbzg5l2eTM/pjwnug3tIC424sdcLzKwOR2uFj3OPFHe7VQ2TxTbu851IPLeObcNHt
-	 tCrft3jjexTagZCWaTBdImuTc6KPVm/T1KHho9phceXHlYOEIZgZQ3uHsKU3L25ajS
-	 9y0IXIU71s/+Txr6xW7TGjFBqcY9HG9Lmx0qgs50=
+	b=mDw1TZCdKBj8b78sjxe408JfrkUAJCMZ0QPXX27T3T5muiUvhqFONUL4C8/g1GCDy
+	 BcaRZwgx20D+PzDEoV5M3vei7kJbkNjVklU2SAGCj27/AwG25yCMgVtL8ZXs318Irs
+	 Qui1yRg1DG+RIsyitQfw/I56sdvwSlaMzxmGlg4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0958/1193] remoteproc: qcom_q6v5_adsp: Fix iommu_unmap() usage
-Date: Wed, 30 Sep 2026 17:27:22 +0200
-Message-ID: <20260930152455.527861803@linuxfoundation.org>
+Subject: [PATCH 6.6 0959/1193] KVM: s390: Fix IRQ injection with SIGP Stop and Store Status
+Date: Wed, 30 Sep 2026 17:27:23 +0200
+Message-ID: <20260930152455.550288386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,71 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 0d8e2195bce6f08c1c53c5ef4d7347fe46418101 ]
+[ Upstream commit d343407b728a80b74be3c24b59f15e60289ea527 ]
 
-During adsp_map_carveout, the IOVA is computed by combining the
-physical address and the SID:
-    iova = adsp->mem_phys | (sid << 32);
+When __inject_sigp_stop() is called for a Stop and Store Status
+operation, if the vCPU is running, the interrupt is marked as pending
+and the status is stored by the thread performing the KVM_RUN IOCTL.
 
-However, adsp_unmap_carveout() uses the physical address and not
-the IOVA in iommu_unmap(), causing the unmap to fail or leak
-mappings because the address doesn't match the original IOVA.
+If the vCPU is already stopped, the status is stored immediately.
 
-Cache the constructed IOVA within the qcom_adsp device struct
-during mapping and use it during unmapping.
+Storing the status means writing into userspace, which might fault, and
+__inject_sigp_stop() is called from do_inject_vcpu() which in turn is
+always called holding a spinlock, which is obviously an issue.
 
-Fixes: f22eedff28af ("remoteproc: qcom: Add support for memory sandbox")
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Link: https://lore.kernel.org/r/20260827203055.640116-1-smostafa@google.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this by returning -EWOULDBLOCK from __inject_sigp_stop(), and
+adding a bool flag to indicate whether a store status is needed. The
+callers of do_inject_vcpu() are modified to pass the pointer to the
+bool flag; whenever a Store Status operation is needed, the callers can
+now perform it outside the spinlock.
+
+Opportunistically refactor kvm_s390_set_irq_state() to use
+scoped_guard() and __free().
+
+Fixes: 6cddd432e3da ("KVM: s390: handle stop irqs without action_bits")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+[ Added Fixes tag while picking -- Claudio ]
+Message-ID: <20260812104436.109741-7-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/s390/kvm/interrupt.c | 70 +++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 00a98de6d112e..6b1d7c32a44b1 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -105,6 +105,7 @@ struct qcom_adsp {
- 	struct completion stop_done;
- 
- 	phys_addr_t mem_phys;
-+	unsigned long iova;
- 	phys_addr_t mem_reloc;
- 	void *mem_region;
- 	size_t mem_size;
-@@ -340,7 +341,7 @@ static void adsp_unmap_carveout(struct rproc *rproc)
- 	struct qcom_adsp *adsp = rproc->priv;
- 
- 	if (adsp->has_iommu)
--		iommu_unmap(rproc->domain, adsp->mem_phys, adsp->mem_size);
-+		iommu_unmap(rproc->domain, adsp->iova, adsp->mem_size);
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 4b3892584f5b9..234dd3d4acc99 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -1586,23 +1586,21 @@ static int __inject_set_prefix(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
  }
  
- static int adsp_map_carveout(struct rproc *rproc)
-@@ -348,7 +349,6 @@ static int adsp_map_carveout(struct rproc *rproc)
- 	struct qcom_adsp *adsp = rproc->priv;
- 	struct of_phandle_args args;
- 	long long sid;
--	unsigned long iova;
- 	int ret;
+ #define KVM_S390_STOP_SUPP_FLAGS (KVM_S390_STOP_FLAG_STORE_STATUS)
+-static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+ 	struct kvm_s390_stop_info *stop = &li->irq.stop;
+-	int rc = 0;
  
- 	if (!adsp->has_iommu)
-@@ -365,9 +365,9 @@ static int adsp_map_carveout(struct rproc *rproc)
- 	of_node_put(args.np);
+ 	vcpu->stat.inject_stop_signal++;
+ 	trace_kvm_s390_inject_vcpu(vcpu->vcpu_id, KVM_S390_SIGP_STOP, 0, 0);
  
- 	/* Add SID configuration for ADSP Firmware to SMMU */
--	iova =  adsp->mem_phys | (sid << 32);
-+	adsp->iova = adsp->mem_phys | (sid << 32);
+ 	if (irq->u.stop.flags & ~KVM_S390_STOP_SUPP_FLAGS)
+ 		return -EINVAL;
+-
+ 	if (is_vcpu_stopped(vcpu)) {
+-		if (irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS)
+-			rc = kvm_s390_store_status_unloaded(vcpu,
+-						KVM_S390_STORE_STATUS_NOADDR);
+-		return rc;
++		if (!(irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS))
++			return 0;
++		*storestatus = true;
++		return -EWOULDBLOCK;
+ 	}
  
--	ret = iommu_map(rproc->domain, iova, adsp->mem_phys,
-+	ret = iommu_map(rproc->domain, adsp->iova, adsp->mem_phys,
- 			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE,
- 			GFP_KERNEL);
- 	if (ret) {
+ 	if (test_and_set_bit(IRQ_PEND_SIGP_STOP, &li->pending_irqs))
+@@ -2142,7 +2140,7 @@ void kvm_s390_clear_stop_irq(struct kvm_vcpu *vcpu)
+ 	spin_unlock(&li->lock);
+ }
+ 
+-static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	int rc;
+ 
+@@ -2154,7 +2152,7 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ 		rc = __inject_set_prefix(vcpu, irq);
+ 		break;
+ 	case KVM_S390_SIGP_STOP:
+-		rc = __inject_sigp_stop(vcpu, irq);
++		rc = __inject_sigp_stop(vcpu, irq, storestatus);
+ 		break;
+ 	case KVM_S390_RESTART:
+ 		rc = __inject_sigp_restart(vcpu);
+@@ -2190,11 +2188,16 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ int kvm_s390_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
++	bool storestatus = false;
+ 	int rc;
+ 
+ 	spin_lock(&li->lock);
+-	rc = do_inject_vcpu(vcpu, irq);
++	rc = do_inject_vcpu(vcpu, irq, &storestatus);
+ 	spin_unlock(&li->lock);
++
++	if (rc == -EWOULDBLOCK && storestatus)
++		rc = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++
+ 	if (!rc)
+ 		kvm_s390_vcpu_wakeup(vcpu);
+ 	return rc;
+@@ -2930,7 +2933,8 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e, struct kvm *kvm,
+ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+-	struct kvm_s390_irq *buf;
++	struct kvm_s390_irq *buf __free(kvfree) = NULL;
++	bool tmp, storestatus = false;
+ 	int r = 0;
+ 	int n;
+ 
+@@ -2938,31 +2942,33 @@ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	if (copy_from_user((void *) buf, irqstate, len)) {
+-		r = -EFAULT;
+-		goto out_free;
+-	}
++	if (copy_from_user((void *)buf, irqstate, len))
++		return -EFAULT;
+ 
+-	/*
+-	 * Don't allow setting the interrupt state
+-	 * when there are already interrupts pending
+-	 */
+-	spin_lock(&li->lock);
+-	if (li->pending_irqs) {
+-		r = -EBUSY;
+-		goto out_unlock;
+-	}
++	scoped_guard(spinlock, &li->lock) {
++		/*
++		 * Don't allow setting the interrupt state
++		 * when there are already interrupts pending
++		 */
++		if (li->pending_irqs)
++			return -EBUSY;
+ 
+-	for (n = 0; n < len / sizeof(*buf); n++) {
+-		r = do_inject_vcpu(vcpu, &buf[n]);
+-		if (r)
+-			break;
++		for (n = 0; n < len / sizeof(*buf); n++) {
++			tmp = false;
++			r = do_inject_vcpu(vcpu, &buf[n], &tmp);
++			if (r == -EWOULDBLOCK && tmp) {
++				storestatus = true;
++				r = 0;
++			}
++			if (r)
++				break;
++		}
+ 	}
+ 
+-out_unlock:
+-	spin_unlock(&li->lock);
+-out_free:
+-	vfree(buf);
++	if (storestatus) {
++		n = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++		return r ? r : n;
++	}
+ 
+ 	return r;
+ }
 -- 
 2.53.0
 
