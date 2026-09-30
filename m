@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFAA46D577;
-	Wed, 30 Sep 2026 16:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7DF4E324D;
+	Wed, 30 Sep 2026 16:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785510; cv=none; b=j5U5N5ZkXyIDh2AiruJqMPn5ZA4cS7XB2yqJnyJ/P+CE1n2c+WI7u6GJULiSPAIgoLqOmUPA0miCh1cqUiq/MCFrXsda738+HCwdYIS9iNl03YbHcN3Bsf30UIyaCxcsUCW8vnXYOkVS9+00KRcrs6mlObRf+ykSGma87SfR9Vs=
+	t=1790785512; cv=none; b=cYTF7dezISKuA22qRvyJiuacUHGxafyTLlzGhUjq4WDXAayj5x8THgOpQAn1ukfeYTtyoQSdwPXX0DjFIwQRd83iaBYbiViBhibC7c/O/lN12nQSM+UjE6JWA9SpWqXTPGMKyjjkDVA3EkCOkh887EvvTGbTRg2UMz4UxgByaW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785510; c=relaxed/simple;
-	bh=iOTUOQLrkkCFiLBMyangLIA4GNEpeHPR6OljCyy8tkg=;
+	s=arc-20240116; t=1790785512; c=relaxed/simple;
+	bh=B1j0DM3CzzjOUPi7hyGHSxUcSH7IHgsJmn43Q0Pqh2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTgacq0ucK0eCa8bX57t3AnI027u2cRHYSrzIftPVoWEmMNJtsEqURE1A4GVH+CgwSVL/UpL6ZR1hpsX7NQ1FTWOFV05aPdLhjr3IL/xev57aGiHxt8UThUsgkfDLsTvuXVgo9NoIP8wWr1N6hBa5st650fhoJXr8+PMqQxGjxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU47pVce; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cRIQGKXT9GQSR4M5XlbDI/aBk0+DMNfuxxl1KGe53h+aAXszfOYKsYdgbrTaJdFAgpQWfSdMfHSQVoAoNsZiB2mxQZFYf14fTvKdHInL8F03WyOFf2zWcVZi53cazJfoYipB/vubhwXS2IJIjFoddyVRTg1ogaB9nJxmhphrf54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/+LrCic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU47pVce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D3F1F00898;
-	Wed, 30 Sep 2026 16:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/+LrCic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37FB1F000FF;
+	Wed, 30 Sep 2026 16:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785500;
-	bh=Sr/VRCPuFvFcBfgL9TfhCv9bTEBUM/rblkjQLjg5uv0=;
+	s=korg; t=1790785506;
+	bh=Y5GVBOiJs/dJi6j7QdGYEk0YH8Tn7JnMEEjYXA5TtrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QU47pVcehfUOH0dEmSTgM+LlAWqKGFr/8m2hLvnq8guYuEClm4aMLH2sJSR7IKydD
-	 aMeMi6jXzx4+l+oFkJuGIqO4FCNgYhN32VDWtfbkP3k7C4gA20M3trIA/u2OLmQWpF
-	 AmUKW/owfUBHZhQ9SOyp35UngzWdAVvkYCjBN1dI=
+	b=c/+LrCicIFDq9tVYkgcVPikOIKoDJTWSS6vJQtUnI9Wajl+zAYbNguU9neqeIABkQ
+	 36AshqBamSIxdomqrL0Iz4yodEnnVRb8FmEV3Cl94UA1Ysg8dXcJ9dhW6WPlgTY+X7
+	 UXReHt3y5Zdh/QJaGTlFg57hlHcvFk9Fsw91U0fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 530/982] s390/crypto: Fix missing scrub of temp buffers with AES ctr and gcm algorithm
-Date: Wed, 30 Sep 2026 17:21:06 +0200
-Message-ID: <20260930152428.155967385@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 496/982] ipv4: start using dst_dev_rcu()
+Date: Wed, 30 Sep 2026 17:20:32 +0200
+Message-ID: <20260930152427.435278609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,72 +53,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8b7c3b6914f19caf648d05726a86af6326d3c2c6 upstream.
+[ Upstream commit 6ad8de3cefdb6ffa6708b21c567df0dbf82c43a8 ]
 
-In function ctr_aes_crypt() there is a buffer used to process
-remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
-thus could lead to expose of unwanted data. When the buffer is used
-explicitly scrub it at the end of the code block to avoid exposure of
-maybe sensitive data.
+Change icmpv4_xrlim_allow(), ip_defrag() to prevent possible UAF.
 
-In a similar way the function gcm_aes_crypt() hat an error path where
-the CPACF param block was not scrubbed. Instead of return early now
-these error paths go to end of function where explicit scrubbing is
-done. Similar with the buffers which are part of the gcm_sg_walk
-structs from the variables gw_in and gw_out.
+Change ipmr_prepare_xmit(), ipmr_queue_fwd_xmit(), ip_mr_output(),
+ipv4_neigh_lookup() to use lockdep enabled dst_dev_rcu().
 
-Fixes: d07f951903fa ("crypto: s390/aes - Fix buffer overread in CTR mode")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 6.8+
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ minor modifications to fix conflict, added rcu_read_lock and unlock
+to ip_defrag function ]
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/crypto/aes_s390.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/ipv4/icmp.c        | 6 +++---
+ net/ipv4/ip_fragment.c | 9 +++++++--
+ net/ipv4/ipmr.c        | 2 +-
+ net/ipv4/route.c       | 4 ++--
+ 4 files changed, 13 insertions(+), 8 deletions(-)
 
---- a/arch/s390/crypto/aes_s390.c
-+++ b/arch/s390/crypto/aes_s390.c
-@@ -608,6 +608,7 @@ static int ctr_aes_crypt(struct skcipher
- 		memcpy(walk.dst.virt.addr, buf, nbytes);
- 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
- 		ret = skcipher_walk_done(&walk, 0);
-+		memzero_explicit(buf, sizeof(buf));
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index f0c8c3366740a..5c38af80bc14e 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -320,17 +320,17 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
+ 		return true;
+ 
+ 	/* No rate limit on loopback */
+-	dev = dst_dev(dst);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
+ 	if (dev && (dev->flags & IFF_LOOPBACK))
+ 		goto out;
+ 
+-	rcu_read_lock();
+ 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
+ 			       l3mdev_master_ifindex_rcu(dev));
+ 	rc = inet_peer_xrlim_allow(peer,
+ 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
+-	rcu_read_unlock();
+ out:
++	rcu_read_unlock();
+ 	if (!rc)
+ 		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
+ 	else
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index a70ede523297c..43b1265f5ac19 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -481,13 +481,16 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ /* Process an incoming IP datagram fragment. */
+ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ {
+-	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
+-	int vif = l3mdev_master_ifindex_rcu(dev);
++	struct net_device *dev;
+ 	struct ipq *qp;
++	int vif;
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
+ 
+ 	/* Lookup (or create) queue header */
++	rcu_read_lock();
++	dev = skb->dev ? : skb_dst_dev_rcu(skb);
++	vif = l3mdev_master_ifindex_rcu(dev);
+ 	qp = ip_find(net, ip_hdr(skb), user, vif);
+ 	if (qp) {
+ 		int ret;
+@@ -497,9 +500,11 @@ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ 		ret = ip_frag_queue(qp, skb);
+ 
+ 		spin_unlock(&qp->q.lock);
++		rcu_read_unlock();
+ 		ipq_put(qp);
+ 		return ret;
+ 	}
++	rcu_read_unlock();
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
+ 	kfree_skb(skb);
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index f64651c0dea6c..8d4f556fced2c 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1879,7 +1879,7 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 			goto out_free;
  	}
  
- 	return ret;
-@@ -909,10 +910,14 @@ static int gcm_aes_crypt(struct aead_req
- 			  gw_in.ptr, aad_bytes);
+-	dev = rt->dst.dev;
++	dev = dst_dev_rcu(&rt->dst);
  
- 		n = aad_bytes + pc_bytes;
--		if (gcm_in_walk_done(&gw_in, n) != n)
--			return -ENOMEM;
--		if (gcm_out_walk_done(&gw_out, n) != n)
--			return -ENOMEM;
-+		if (gcm_in_walk_done(&gw_in, n) != n) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
-+		if (gcm_out_walk_done(&gw_out, n) != n) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
- 		aadlen -= aad_bytes;
- 		pclen -= pc_bytes;
- 	} while (aadlen + pclen > 0);
-@@ -924,7 +929,10 @@ static int gcm_aes_crypt(struct aead_req
- 	} else
- 		scatterwalk_map_and_copy(param.t, req->dst, len, taglen, 1);
+ 	if (skb->len+encap > dst_mtu(&rt->dst) && (ntohs(iph->frag_off) & IP_DF)) {
+ 		/* Do not fragment multicasts. Alas, IPv4 does not
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index e3cce307e0e9c..5528a5543df51 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -416,11 +416,11 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 					   const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst_dev(dst);
++	struct net_device *dev;
+ 	struct neighbour *n;
  
-+out:
- 	memzero_explicit(&param, sizeof(param));
-+	memzero_explicit(gw_in.buf, sizeof(gw_in.buf));
-+	memzero_explicit(gw_out.buf, sizeof(gw_out.buf));
- 	return ret;
- }
- 
+ 	rcu_read_lock();
+-
++	dev = dst_dev_rcu(dst);
+ 	if (likely(rt->rt_gw_family == AF_INET)) {
+ 		n = ip_neigh_gw4(dev, rt->rt_gw4);
+ 	} else if (rt->rt_gw_family == AF_INET6) {
+-- 
+2.53.0
+
 
 
