@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156703B777D;
-	Wed, 30 Sep 2026 18:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AAE4F68C9;
+	Wed, 30 Sep 2026 18:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793306; cv=none; b=FeGLNN7oXsPi9cBLXh+6fZqafgEAD4pf+cAV0C5gWrw1Dl334BFVAP85FOO+/k4SRMhKtQ7ZfBkVBp3NJpM8Dln7PUz2//hQIcRNQStuzUwmfBas190nGatXcOvm6l3krY9yC9+Th6wb52fbpxJBIvyIrEaAF3rE8AiDAUgTEsU=
+	t=1790793309; cv=none; b=owop9k+ClnRQAD5J5T493Dm8p8SCG5AGAT32xcuiPmfDzWUpI6OCix+i9AkzHq5DuuyfNmBWxDKg1k9sePoZFMsSYGLa/z3LvHRxDwZ/tQOhql9D6efqKFv/x0wyjLonLnCUQI7REc3xES2ADg4eoTL9Ww0u66ZQuIY48rzpqbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793306; c=relaxed/simple;
-	bh=8UrFMH6H9RS4T5Tqe02WhqkWg9yLSt2QzqFGFFJcQ8Y=;
+	s=arc-20240116; t=1790793309; c=relaxed/simple;
+	bh=81EXGqL3/eHIqeCC2UDI3FnjV30OPSROXkP/UNfRpoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XN9AjESaLd/lHMxk45Jof3YRHxI9iQr1NfQ7DM9/dV6TipFS/tWuT1dxWT/xoxtir3QxgMNpd1K8J/smFpt5Qxmkr4XiVXFBZXfIoNK50iexmJiMokfTqF8FHGDGaUi8u/3MyvJveO3kjpMVBGjw0GnfAS3BDHUmlnSeDq4aaUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUcFOFYd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gd5dZExrLNrRh34b0gycnQrTBwgILNOENrhvWyl/JhK/h2/6H5+hLKZ0ydOgSP6Nxz5EiTeDVUvWeV/z7wLc1TrXlsF6I7sfag41tNOjxuoVSU+MAdZFHtOZyFzJ0eHGM2a2YW8vTsrEYNG4/nMFw88W9hhScOOMpQmaCUzAbic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZq66e8M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUcFOFYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7501F000FF;
-	Wed, 30 Sep 2026 18:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZq66e8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9BF1F000FF;
+	Wed, 30 Sep 2026 18:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793305;
-	bh=Cc1C9knvcza/0odn9VvTKvyYc8nGqgNOVmq1NN4NUS0=;
+	s=korg; t=1790793307;
+	bh=DGt51DqixQa/vA3b8YPNoxvpaECyBP7tJj9+y620Z9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fUcFOFYdVgZwfsNwR6NHTxCTmdr/8QBvoqOcFpE/6PMt4z3msjk6czombdOCszOir
-	 iNyt62T9XiMImgpM6GaPTRsGtZttMk9i+F1E4UqiyX2EC6mxW7Yrou/Zb0bwnj7AFQ
-	 IhzKPXnEOYGDqqAT1M7RGS2d1/ycf1AZDGf+ISMc=
+	b=gZq66e8MvUNz3cFKTf3ZJIZpRJLNUaVAIZi9wUe3jmV7fmUwJihHs5i1eJU8CzYaK
+	 d9mQXskl5MbVUBFmYSoIFGqBH9DsO3xjUSJhOM58pBDUWATRj5b0VTZavEE61a/uFp
+	 3vbzsAF8Qv3qO0kMO3Kxh2xJY7oXkt4Fz96c9oW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Etienne <mikael1022bzh@gmail.com>,
-	Arthur Husband <artmoty@gmail.com>,
-	Alvin Lim <alvinwylim@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	John Smith <imjohnsmith4000@gmail.com>,
-	Lennert Buytenhek <kernel@wantstofly.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Roland Waltersson <roland.waltersson@netinsight.net>
-Subject: [PATCH 6.18 207/395] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
-Date: Wed, 30 Sep 2026 17:27:49 +0200
-Message-ID: <20260930152345.141312481@linuxfoundation.org>
+	mst@redhat.com,
+	jasowangio@gmail.com,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 208/395] virtio_net: copy zerocopy frags in start_xmit without NAPI
+Date: Wed, 30 Sep 2026 17:27:50 +0200
+Message-ID: <20260930152345.164710661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -58,147 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
+commit 07e1a9408b6c2f9d0cfb757b67dabb52da7a32b2 upstream.
 
-Multiple users report data corruption during 64-bit DMA transfers on
-systems with AMD NBIO 7.7 and 7.11 controllers.
+Virtio-net without NAPI frees completed skbs lazily on the next
+start_xmit. Senders waiting for in-flight zerocopy buffers can
+deadlock if they cannot transmit more packets, as then no
+completed packets will be freed.
 
-This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
-Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
-corrupted.
+When !use_napi, virtio-net already calls skb_orphan to avoid waiting
+up for transmitted skbs to be freed. For zerocopy packets that
+require deep copying on orphan (i.e. those that do not set
+SKBFL_DONT_ORPHAN, such as PACKET_TX_RING), call skb_orphan_frags
+before orphaning to release the buffers.
 
-Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
+This fixes the tpacket_snd slot reuse bug on skb_orphan for
+virtio-net, and prevents PACKET_TX_RING from running out of slots.
 
-Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
-Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
-Reported-by: Arthur Husband <artmoty@gmail.com>
-Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
-Reported-by: Alvin Lim <alvinwylim@gmail.com>
-Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: commit log, s/IOVA/DMA/ in comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+This fix also touches vhost_net zerocopy packets, which also do not
+set SKBFL_DONT_ORPHAN. This is fine: vhost_net packets only encounter
+virtio-net in nested virtualization, and only if napi_tx is
+explicitly disabled (it has been default-enabled since Linux 4.12).
+In that rare case, copying the frags is desirable anyway to prevent
+holding guest descriptors pinned across unbounded intervals.
+
+This is a prerequisite for the next patch, which converts
+PACKET_TX_RING to standard zerocopy completion. Without this patch
+first, a bounded ring sender can stall indefinitely behind a
+virtio-net virtqueue that cannot reclaim.
+
+Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
 Cc: stable@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: John Smith <imjohnsmith4000@gmail.com>
-Cc: Lennert Buytenhek <kernel@wantstofly.org>
-Cc: Niklas Cassel <cassel@kernel.org>
-Cc: Roland Waltersson <roland.waltersson@netinsight.net>
-Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
+Cc: mst@redhat.com
+Cc: jasowangio@gmail.com
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260919004748.1463985-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ drivers/net/virtio_net.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -886,6 +886,105 @@ static void quirk_clear_strap_no_soft_re
- 	}
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+
-+/*
-+ * Enhanced atomic operations can cause corruption with 64-bit DMA
-+ * on these devices.
-+ */
-+#define RX_ENH_ATOMIC_EN		BIT(8)
-+
-+static const u32 nbio_7_7_pcie_smn_addrs[] = {
-+	0x111401d0,
-+	0x111411d0,
-+	0x111421d0,
-+	0x111431d0,
-+	0x111441d0,
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x114401d0,
-+};
-+
-+static const u32 nbio_7_11_pcie_smn_addrs[] = {
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x113411d0,
-+	0x113421d0,
-+	0x113431d0,
-+	0x113441d0,
-+	0x113451d0,
-+};
-+
-+static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
-+					   const u32 *smn_addrs,
-+					   size_t nr_smn_addrs)
-+{
-+	bool changed = false;
-+	size_t i;
-+	u32 data;
-+	int ret;
-+
-+	for (i = 0; i < nr_smn_addrs; i++) {
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (!(data & RX_ENH_ATOMIC_EN))
-+			continue;
-+		data = data & ~RX_ENH_ATOMIC_EN;
-+		ret = amd_smn_write(0, smn_addrs[i], data);
-+		if (ret)
-+			continue;
-+		if (changed)
-+			continue;
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (data & RX_ENH_ATOMIC_EN)
-+			continue;
-+		changed = true;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3397,6 +3397,14 @@ static netdev_tx_t start_xmit(struct sk_
+ 	else
+ 		virtqueue_disable_cb(sq->vq);
+ 
++	if (!use_napi &&
++	    unlikely(skb_orphan_frags(skb, GFP_ATOMIC))) {
++		DEV_STATS_INC(dev, tx_dropped);
++		dev_kfree_skb_any(skb);
++		kick = !xmit_more || netif_xmit_stopped(txq);
++		goto kick_vq;
 +	}
 +
-+	if (changed)
-+		pci_info(host_bridge, "enhanced atomics disabled\n");
-+}
-+
-+static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
-+}
-+
-+static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
-+}
-+
-+/* Phoenix, Hawk Point (NBIO 7.7) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+
-+/* Strix, Krackan, Strix Halo (NBIO 7.11) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+
- #endif
+ 	/* timestamp packet in software */
+ 	skb_tx_timestamp(skb);
  
- /*
+@@ -3429,6 +3437,7 @@ static netdev_tx_t start_xmit(struct sk_
+ 
+ 	kick = use_napi ? __netdev_tx_sent_queue(txq, skb->len, xmit_more) :
+ 			  !xmit_more || netif_xmit_stopped(txq);
++kick_vq:
+ 	if (kick) {
+ 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
+ 			u64_stats_update_begin(&sq->stats.syncp);
 
 
