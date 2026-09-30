@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F7C51DE0C;
-	Wed, 30 Sep 2026 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F723519DFC;
+	Wed, 30 Sep 2026 17:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789463; cv=none; b=gMcm71QL1OWAPQgN9CItnlilgOJgV0Tl0jOKA+5Mlgg1O2DDBjeLbl0ddE1KHVlyyl/Bn3UWR7QVQ59EJIr7xGFDffbB/EXj2wDGr7ArGTpZZu1iC4g3QEoxkByVfD4XIC1BeUhFMYhBTDyk+cE3dIRScEhZXxChuZMU1NLkSL4=
+	t=1790789466; cv=none; b=DnuvfQ7U1GCAqgk86thPbwo4S8M9okpvV0WAf51VUwEZe7Sg8hrhQx4Fwii+HUvekO0Zc5KNzZPlYnV8VlexhJyl4Ysfv+SzFhR9j5rzacIL9ykNT2arG8zpU+NJC/hiaBSBeNKqtyd/B7PjyFLzyxCU/JS6HSvh7hBML1jB36M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789463; c=relaxed/simple;
-	bh=g+CPHjuM4H7l1kM6RlRxApKFVeTQLVhjOVxfTZt7T9U=;
+	s=arc-20240116; t=1790789466; c=relaxed/simple;
+	bh=w0refd4i7wlh67kf7hf6BcfkgdZHDPLL0+4p9JShn8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PoeJ36vPEmHpkzbjagoWmMGXa6LNQolQ5H+COJHvHEk5NVZCE5HAEBEBEZDGjer7hDKtYUBO1nlREq5rQTFgFEVyzwQtIczXFjGOfAo3Kh/16CHedi/rxeFrv1IjzDSjxUkryEzWKsxBoCRW8Jdp31GYM/xo68WKMeoya5UJG7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBtiqbGU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MW4/89aGmLM3BQjs/TsuFRowN3LdCLTU2rgZnBpb7/BazKjYNUzhXpnfvHb66T5oteOGgvhTOk+rhGURdcn0kPcR6DvooaUzqatm6BzlZ0yiJI6aWkesLhFA6RgC/YHjeKfp+ALtP0t7oFD5wpsbsVTiywucYlV/rtQX0d8XT/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro5tZGCN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBtiqbGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D677F1F000FF;
-	Wed, 30 Sep 2026 17:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro5tZGCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC521F000FF;
+	Wed, 30 Sep 2026 17:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789462;
-	bh=GmogIiwjIKqDzFvf+Q9WNtMFI61eJz6SH7UuDUxU7ac=;
+	s=korg; t=1790789465;
+	bh=I8COxF/UzMtBmRLOXBPiJjc2rsVISvznfE+lGTXNMQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IBtiqbGUcrvovSZmvlZWRy2HkJVWczCgEoCGG9M28YV0ZOMVjErEakhVp6QBgPyVM
-	 8dTrB5MgsktsE11O34D2JP38kZw/tIOYkH0bdkC+T7RKsarD+CIOHVseZrkBVrMF/i
-	 8mA9jToOMRC+U0kYSGsqeR3rI5EcQO2D4a4JfEOw=
+	b=Ro5tZGCNvvWsNlfiaIvac5E6Kog9i06TBnXUz2JrE7I3Bqin7wwlnVWc5K5kZDmE5
+	 oPPDEAOjrs4hk1aUFMsJC5V3SOjBOvETnRIixq66bgwdD+7bZN5sVGRMz+6CPbcG4W
+	 jO9QsZcZIAMjnmmaJhocvkJv95KZOCqsTQhblywk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 485/877] drm/amdgpu: Fix runtime PM leak in amdgpu_debugfs_test_ib_show()
-Date: Wed, 30 Sep 2026 17:23:16 +0200
-Message-ID: <20260930152425.130650511@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 450/877] perf/x86/intel: Dont write PEBS_ENABLED on host<=>guest xfers if CPU has PEBS isolation, to fix stuck PEBS_ENABLED
+Date: Wed, 30 Sep 2026 17:22:41 +0200
+Message-ID: <20260930152424.390451890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,43 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2b86ab1bd6673c525adda88819d7658ba9e784ec upstream.
+[ Upstream commit 4b64dbdc5861477f148e13d1ed127e7fe7182e4f ]
 
-amdgpu_debugfs_test_ib_show() resumes the device with
-pm_runtime_get_sync() before taking the reset domain semaphore with
-down_write_killable().  If the write lock acquisition is interrupted,
-the function returns without calling pm_runtime_put_autosuspend(),
-leaking the runtime PM reference acquired for the device and keeping
-the GPU awake.
+When filling the list of MSRs to be loaded by KVM on VM-Enter and VM-Exit,
+*never* insert an entry for PEBS_ENABLED if the CPU properly isolates PEBS
+events, in which case disabling counters via PERF_GLOBAL_CTRL is sufficient
+to prevent unwanted PEBS events in the guest (or host).  Because perf loads
+PEBS_ENABLE with the unfiltered cpu_hw_events.pebs_enabled, i.e. with both
+host and guest masks, there is no need to load different values for the
+guest versus host, perf+KVM can and should simply control which counters
+are enabled/disabled via PERF_GLOBAL_CTRL.
 
-Drop the runtime PM reference on the interrupted down_write_killable()
-error path before returning.
+Avoiding touching PEBS_ENABLED "fixes" a bug where PEBS_ENABLED can end up
+with "stuck" bits if a PEBS event is throttled between generating the list
+and actually entering the guest (Intel CPUs can't arbtitrarily block NMIs).
+Fixes in quotes because leaving PEBS_ENABLED as-is doesn't fix the
+underlying problem of perf (via PMIs) being able to modify state after the
+perf<=>KVM handoff.
 
-Fixes: 6049db43d6dd ("drm/amdgpu: change reset lock from mutex to rw_semaphore")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ec30a576c2d4c0364549e6c04218f50704ef56c8)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But not writing PEBS_ENABLED is desirable no matter what, as stating the
+obvious, leaving PEBS_ENABLED as-is avoids three MSR writes on every VMX
+transition: one each on entry/exit, and one more explicit WRMSR to zero
+PEBS_ENABLED before VM-Entry (KVM assumes the only reason PEBS_ENABLED is
+in the load list is if the CPU lacks PEBS isolation and thus needs a
+quiescent period).
+
+Opportunistically add comments to (better) explain the rules for generating
+the set of PEBS counters that will be active while the guest is running,
+along with a FIXME for the suspected hack-a-fix where perf disables guest
+PEBS if _any_ PEBS event is configured to count in the host (commit
+854250329c02 ("KVM: x86/pmu: Disable guest PEBS temporarily in two rare
+situations") doesn't explain the motivation, at all).
+
+Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260921191418.950933-3-seanjc@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/core.c | 55 ++++++++++++++++++++++++------------
+ 1 file changed, 37 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1671,8 +1671,10 @@ static int amdgpu_debugfs_test_ib_show(s
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index b4c1875ef1373..573298a35005f 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4288,12 +4288,15 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
+ 	struct kvm_pmu *kvm_pmu = (struct kvm_pmu *)data;
+ 	u64 intel_ctrl = hybrid(cpuc->pmu, intel_ctrl);
+ 	u64 pebs_mask = cpuc->pebs_enabled & x86_pmu.pebs_capable;
+-	int global_ctrl, pebs_enable;
++	u64 guest_pebs_mask;
++	int global_ctrl;
  
- 	/* Avoid accidently unparking the sched thread during GPU reset */
- 	r = down_write_killable(&adev->reset_domain->sem);
--	if (r)
-+	if (r) {
-+		pm_runtime_put_autosuspend(dev->dev);
- 		return r;
-+	}
+ 	/*
+ 	 * In addition to obeying exclude_guest/exclude_host, remove bits being
+ 	 * used for PEBS when running a guest, because PEBS writes to virtual
+-	 * addresses (not physical addresses).
++	 * addresses (not physical addresses).  If the guest wants to utilize
++	 * PEBS, and PEBS can be safely enabled in the guest, bits for the guest's
++	 * PEBS-enabled counters will be OR'd back in as appropriate.
+ 	 */
+ 	*nr = 0;
+ 	global_ctrl = (*nr)++;
+@@ -4340,24 +4343,40 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
+ 		};
+ 	}
  
- 	/* hold on the scheduler */
- 	for (i = 0; i < AMDGPU_MAX_RINGS; i++) {
+-	pebs_enable = (*nr)++;
+-	arr[pebs_enable] = (struct perf_guest_switch_msr){
+-		.msr = MSR_IA32_PEBS_ENABLE,
+-		.host = cpuc->pebs_enabled & ~cpuc->intel_ctrl_guest_mask,
+-		.guest = pebs_mask & ~cpuc->intel_ctrl_host_mask & kvm_pmu->pebs_enable,
+-	};
++	/*
++	 * Restrict guest PEBS events to counters that (a) perf supports, (b)
++	 * the guest wants to use for PEBS, (c) are not excluded from counting
++	 * in the guest, and (d) _are_ excluded from counting in the host.
++	 */
++	guest_pebs_mask = pebs_mask & intel_ctrl & kvm_pmu->pebs_enable &
++			  ~cpuc->intel_ctrl_host_mask &
++			  cpuc->intel_ctrl_guest_mask;
+ 
+-	if (arr[pebs_enable].host) {
+-		/* Disable guest PEBS if host PEBS is enabled. */
+-		arr[pebs_enable].guest = 0;
+-	} else {
+-		/* Disable guest PEBS thoroughly for cross-mapped PEBS counters. */
+-		arr[pebs_enable].guest &= ~kvm_pmu->host_cross_mapped_mask;
+-		arr[global_ctrl].guest &= ~kvm_pmu->host_cross_mapped_mask;
+-		/* Set hw GLOBAL_CTRL bits for PEBS counter when it runs for guest */
+-		arr[global_ctrl].guest |= intel_ctrl & arr[pebs_enable].guest;
+-	}
++	/*
++	 * Disable counters where the guest PMC is different than the host PMC
++	 * being used on behalf of the guest, as the PEBS record includes
++	 * PERF_GLOBAL_STATUS, i.e. the guest will see overflow status for the
++	 * wrong counter(s).
++	 */
++	guest_pebs_mask &= ~kvm_pmu->host_cross_mapped_mask;
++
++	/*
++	 * FIXME: Allow guest and host usage of PEBS events to co-exist instead
++	 *        of disabling guest PEBS entirely if the host is using PEBS.
++	 *        What exactly goes wrong if guest and host are using PEBS is
++	 *        unknown.
++	 */
++	if (pebs_mask & ~cpuc->intel_ctrl_guest_mask)
++		guest_pebs_mask = 0;
+ 
++	/*
++	 * Do NOT mess with PEBS_ENABLED.  As above, disabling counters via
++	 * PERF_GLOBAL_CTRL is sufficient, and loading a stale PEBS_ENABLED,
++	 * e.g. on VM-Exit, can put the system in a bad state.  Simply enable
++	 * counters in PERF_GLOBAL_CTRL, as perf load PEBS_ENABLED with the
++	 * full value, i.e. perf *also* relies on PERF_GLOBAL_CTRL.
++	 */
++	arr[global_ctrl].guest |= guest_pebs_mask;
+ 	return arr;
+ }
+ 
+-- 
+2.53.0
+
 
 
