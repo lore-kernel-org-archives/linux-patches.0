@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C4550279A;
-	Wed, 30 Sep 2026 18:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694C051B16C;
+	Wed, 30 Sep 2026 18:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791311; cv=none; b=Nlp2ZAdmNfxJHhkP3FlsPJJTMqkNDS2vcb6rqBk7eqVHMC81qo6cOV+YGRN/lFvre7DB1dewNJpoQ/3eDglAh9aTIItkuxaGnv2LyVluq1R23gEtYx9neDtQXuafN9MxXLpnzzw/eYZRgJBFkFsDS+jLKIruA1EPTNh50p1wMvU=
+	t=1790791313; cv=none; b=K7JWQxOHQYUCxYKjiX76ydCNff8VQJq2pQip3+5V+PBsd46XMH8hoqvT9Iquu/AEouVVS4SAYAWLaicb6rH0d/yy8XIvUl4C2RgLr+p/Vmtohj2y+1HXwCpnFPwAwuP7AOT4bQ5J7Rz1bVQatrKWFOVMYrtVk1gSNYxa+O/N0s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791311; c=relaxed/simple;
-	bh=k+8QA61TXSQE5I6giEjlQA/0+vXRjcnE4QRMTKUYx8w=;
+	s=arc-20240116; t=1790791313; c=relaxed/simple;
+	bh=I/UpgXO+mlcoHBXZ1uFcEhCWdGZ0Vnlrs+tDm45u+3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huV+2okaYk3ekaoXlmfstH//mS91H3j2UmeqX2PJMjRgTZQDhewzN8g6CIT0mNOPMO13leS850AZKgQvT82Ti/8G0a822ImE1jgsU44gECTX2WNlrgjbqzd29DZn4pmJGpUZ8jUFnLnRESjRbQMjnIGUi097gsGg2YUcFq94fs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH3Jlhli; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fSoSHGonNZeOrErzjsBgup95OFTVyC8ibt9EmVuDkpEulhln3AeCIhS3/CTa5xjHh2jVzXJW4VZ+DkPkHa2sbJUmD4Sa799PDBWPKdYJ9Q3sH7irvdww6a/RjBdkZoxOzynKAEpOjNMyw+bCZxnrETsgvTAv2IcECEUN83qnsmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0Zhj7Go; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH3Jlhli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7D21F00898;
-	Wed, 30 Sep 2026 18:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0Zhj7Go"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1391F000FF;
+	Wed, 30 Sep 2026 18:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791309;
-	bh=nknDBq2nv7oxq+1leRz655huw2GzIqWpY6XcdgWMotE=;
+	s=korg; t=1790791312;
+	bh=yNt6276Ui2cfgOaHMU1dIeVFe/RUITPlm3ApZphCWoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GH3Jlhli7W232nkji1WmzCvvE79i0lnKFjR27J8hY+9iQNoRl256ciaiji6CFVbsw
-	 dBVqaCP46DL/GjsR/FsT5I+MVnamAo72zuG3tkGFiYSW5zdKv2zLnILiTMfAzt0oxX
-	 Vb36qmliPGhbztUJU4flcNRTacUqhFTUy2/eVRVQ=
+	b=b0Zhj7GoL6WLRDrsgMXT4GTh/rGhFrJYLdV5lexUxwjdWT6H9WHh9u5f3sQRc00H/
+	 QxyBQYTkd+r2MGPsx8JJiSJQ9lwwu6Z1de4YBq4Vf1hte0Hj7/JrR+pmZM4bIhNSRh
+	 Pz7CGfeL+zp3AKu2Usl7YmePJC4BfnmtrgLjWhDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 256/752] ASoC: ab8500: Repair the DAPM capture graph
-Date: Wed, 30 Sep 2026 17:22:06 +0200
-Message-ID: <20260930152403.818924217@linuxfoundation.org>
+Subject: [PATCH 5.15 257/752] ASoC: ab8500: Update to modern clocking terminology
+Date: Wed, 30 Sep 2026 17:22:07 +0200
+Message-ID: <20260930152403.839952111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,270 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 103fe1a37f040ef6ac9ed1cf33be786149d2bb15 ]
+[ Upstream commit ef92ed2623ead917e4f10465451aa12cd7977241 ]
 
-The capture stream routes point away from the stream widget. Digital
-microphone mux routes are unconditional and bypass their enable bits,
-and several widgets independently own shared AD path enable bits. The
-dummy ADC and DAC widgets hide the resulting power graph errors.
+As part of moving to remove the old style defines for the bus clocks update
+the ab8500 driver to use more modern terminology for clocking.
 
-Connect each real AIF widget to the stream and main supply, use the mux
-item names on digital microphone routes, and model shared AD enables as
-supplies. Also make the ANC DAPM switch writable.
-
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-2-f85024e717e3@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20210916141335.43818-1-broonie@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: f98785adf004 ("ASoC: ab8500: Correct digital interface format setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 120 +++++++++++++++-----------------
- 1 file changed, 56 insertions(+), 64 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 4b472f4f64f28..0569978e436bf 100644
+index 0569978e436bf..0add0db540d89 100644
 --- a/sound/soc/codecs/ab8500-codec.c
 +++ b/sound/soc/codecs/ab8500-codec.c
-@@ -305,7 +305,7 @@ static const struct snd_kcontrol_new dapm_anc_in_select[] = {
- /* ANC - Enable/Disable */
- static const struct snd_kcontrol_new dapm_anc_enable[] = {
- 	SOC_DAPM_SINGLE("Switch", AB8500_ANCCONF1,
--			AB8500_ANCCONF1_ENANC, 0, 0),
-+			AB8500_ANCCONF1_ENANC, 1, 0),
- };
+@@ -2096,26 +2096,26 @@ static int ab8500_codec_set_dai_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 			BIT(AB8500_DIGIFCONF3_IF0MASTER);
+ 	val = 0;
  
- /* ANC to Earpiece - Mute */
-@@ -387,12 +387,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+-	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
+-	case SND_SOC_DAIFMT_CBM_CFM: /* codec clk & FRM master */
++	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
++	case SND_SOC_DAIFMT_CBP_CFP:
+ 		dev_dbg(dai->component->dev,
+-			"%s: IF0 Master-mode: AB8500 master.\n", __func__);
++			"%s: IF0 Master-mode: AB8500 provider.\n", __func__);
+ 		val |= BIT(AB8500_DIGIFCONF3_IF0MASTER);
+ 		break;
+-	case SND_SOC_DAIFMT_CBS_CFS: /* codec clk & FRM slave */
++	case SND_SOC_DAIFMT_CBC_CFC:
+ 		dev_dbg(dai->component->dev,
+-			"%s: IF0 Master-mode: AB8500 slave.\n", __func__);
++			"%s: IF0 Master-mode: AB8500 consumer.\n", __func__);
+ 		break;
+-	case SND_SOC_DAIFMT_CBS_CFM: /* codec clk slave & FRM master */
+-	case SND_SOC_DAIFMT_CBM_CFS: /* codec clk master & frame slave */
++	case SND_SOC_DAIFMT_CBC_CFP:
++	case SND_SOC_DAIFMT_CBP_CFC:
+ 		dev_err(dai->component->dev,
+-			"%s: ERROR: The device is either a master or a slave.\n",
++			"%s: ERROR: The device is either a provider or a consumer.\n",
+ 			__func__);
+ 		fallthrough;
+ 	default:
+ 		dev_err(dai->component->dev,
+-			"%s: ERROR: Unsupporter master mask 0x%x\n",
+-			__func__, fmt & SND_SOC_DAIFMT_MASTER_MASK);
++			"%s: ERROR: Unsupporter clocking mask 0x%x\n",
++			__func__, fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK);
+ 		return -EINVAL;
+ 	}
  
- 	/* DA/AD */
- 
--	SND_SOC_DAPM_INPUT("ADC Input"),
--	SND_SOC_DAPM_ADC("ADC", "ab8500_0c", SND_SOC_NOPM, 0, 0),
--
--	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
--	SND_SOC_DAPM_OUTPUT("DAC Output"),
--
- 	SND_SOC_DAPM_AIF_IN("DA_IN1", NULL, 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_IN("DA_IN2", NULL, 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_IN("DA_IN3", NULL, 0, SND_SOC_NOPM, 0, 0),
-@@ -584,9 +578,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 	SND_SOC_DAPM_MIXER("AD3 Channel Volume",
- 			SND_SOC_NOPM, 0, 0,
- 			NULL, 0),
--	SND_SOC_DAPM_MIXER("AD3 Enable",
--			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34, 0,
--			NULL, 0),
-+	SND_SOC_DAPM_SUPPLY("AD34 Enable", AB8500_ADPATHENA,
-+			    AB8500_ADPATHENA_ENAD34, 0, NULL, 0),
- 
- 	/* Mic 2 */
- 
-@@ -645,9 +638,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 			SND_SOC_NOPM, 0, 0,
- 			NULL, 0),
- 
--	SND_SOC_DAPM_MIXER("AD12 Enable",
--			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD12, 0,
--			NULL, 0),
-+	SND_SOC_DAPM_SUPPLY("AD12 Enable", AB8500_ADPATHENA,
-+			    AB8500_ADPATHENA_ENAD12, 0, NULL, 0),
- 
- 	/* HD Capture path */
- 
-@@ -661,12 +653,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 	SND_SOC_DAPM_MIXER("AD6 Channel Volume",
- 			SND_SOC_NOPM, 0, 0,
- 			NULL, 0),
--	SND_SOC_DAPM_MIXER("AD57 Enable",
--			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
--			NULL, 0),
--	SND_SOC_DAPM_MIXER("AD68 Enable",
--			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
--			NULL, 0),
-+	SND_SOC_DAPM_SUPPLY("AD5768 Enable", AB8500_ADPATHENA,
-+			    AB8500_ADPATHENA_ENAD5768, 0, NULL, 0),
- 
- 	/* Digital Microphone path */
- 
-@@ -698,10 +686,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 	SND_SOC_DAPM_MIXER("AD4 Channel Volume",
- 			SND_SOC_NOPM, 0, 0,
- 			NULL, 0),
--	SND_SOC_DAPM_MIXER("AD4 Enable",
--			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34,
--			0, NULL, 0),
--
- 	/* Acoustical Noise Cancellation path */
- 
- 	SND_SOC_DAPM_INPUT("ANC Configure Input"),
-@@ -749,24 +733,17 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"Main Supply", NULL, "Audio Power"},
- 	{"Main Supply", NULL, "Audio Analog Power"},
- 
--	{"DAC", NULL, "ab8500_0p"},
--	{"DAC", NULL, "Main Supply"},
--	{"ADC", NULL, "ab8500_0c"},
--	{"ADC", NULL, "Main Supply"},
--
- 	/* ANC Configure */
- 	{"ANC Configure Input", NULL, "Main Supply"},
- 	{"ANC Configure Output", NULL, "ANC Configure Input"},
- 
--	/* AD/DA */
--	{"ADC", NULL, "ADC Input"},
--	{"DAC Output", NULL, "DAC"},
--
- 	/* Powerup charge pump if DA1/2 is in use */
- 
- 	{"DA_IN1", NULL, "ab8500_0p"},
-+	{"DA_IN1", NULL, "Main Supply"},
- 	{"DA_IN1", NULL, "Charge Pump"},
- 	{"DA_IN2", NULL, "ab8500_0p"},
-+	{"DA_IN2", NULL, "Main Supply"},
- 	{"DA_IN2", NULL, "Charge Pump"},
- 
- 	/* Headset path */
-@@ -801,8 +778,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	/* HF or LineOut path */
- 
- 	{"DA_IN3", NULL, "ab8500_0p"},
-+	{"DA_IN3", NULL, "Main Supply"},
- 	{"DA3 Channel Volume", NULL, "DA_IN3"},
- 	{"DA_IN4", NULL, "ab8500_0p"},
-+	{"DA_IN4", NULL, "Main Supply"},
- 	{"DA4 Channel Volume", NULL, "DA_IN4"},
- 
- 	{"Speaker Left Source", "Audio Path", "DA3 Channel Volume"},
-@@ -860,8 +839,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	/* Vibrator path */
- 
- 	{"DA_IN5", NULL, "ab8500_0p"},
-+	{"DA_IN5", NULL, "Main Supply"},
- 	{"DA5 Channel Volume", NULL, "DA_IN5"},
- 	{"DA_IN6", NULL, "ab8500_0p"},
-+	{"DA_IN6", NULL, "Main Supply"},
- 	{"DA6 Channel Volume", NULL, "DA_IN6"},
- 
- 	{"VIB1 DAC", NULL, "DA5 Channel Volume"},
-@@ -903,13 +884,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"AD1 Channel Volume", NULL, "AD1 Source Select"},
- 	{"AD2 Channel Volume", NULL, "AD2 Source Select"},
- 
--	{"AD12 Enable", NULL, "AD1 Channel Volume"},
--	{"AD12 Enable", NULL, "AD2 Channel Volume"},
-+	{"AD1 Channel Volume", NULL, "AD12 Enable"},
-+	{"AD2 Channel Volume", NULL, "AD12 Enable"},
- 
--	{"AD_OUT1", NULL, "ab8500_0c"},
--	{"AD_OUT1", NULL, "AD12 Enable"},
--	{"AD_OUT2", NULL, "ab8500_0c"},
--	{"AD_OUT2", NULL, "AD12 Enable"},
-+	{"ab8500_0c", NULL, "AD_OUT1"},
-+	{"AD_OUT1", NULL, "Main Supply"},
-+	{"AD_OUT1", NULL, "AD1 Channel Volume"},
-+	{"ab8500_0c", NULL, "AD_OUT2"},
-+	{"AD_OUT2", NULL, "Main Supply"},
-+	{"AD_OUT2", NULL, "AD2 Channel Volume"},
- 
- 	/* Mic 1 */
- 
-@@ -926,11 +909,11 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"AD3 Source Select", "Mic 1", "MIC1 ADC"},
- 
- 	{"AD3 Channel Volume", NULL, "AD3 Source Select"},
-+	{"AD3 Channel Volume", NULL, "AD34 Enable"},
- 
--	{"AD3 Enable", NULL, "AD3 Channel Volume"},
--
--	{"AD_OUT3", NULL, "ab8500_0c"},
--	{"AD_OUT3", NULL, "AD3 Enable"},
-+	{"ab8500_0c", NULL, "AD_OUT3"},
-+	{"AD_OUT3", NULL, "Main Supply"},
-+	{"AD_OUT3", NULL, "AD3 Channel Volume"},
- 
- 	/* HD Capture path */
- 
-@@ -939,14 +922,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 
- 	{"AD5 Channel Volume", NULL, "AD5 Source Select"},
- 	{"AD6 Channel Volume", NULL, "AD6 Source Select"},
-+	{"AD5 Channel Volume", NULL, "AD5768 Enable"},
-+	{"AD6 Channel Volume", NULL, "AD5768 Enable"},
- 
--	{"AD57 Enable", NULL, "AD5 Channel Volume"},
--	{"AD68 Enable", NULL, "AD6 Channel Volume"},
--
--	{"AD_OUT57", NULL, "ab8500_0c"},
--	{"AD_OUT57", NULL, "AD57 Enable"},
--	{"AD_OUT68", NULL, "ab8500_0c"},
--	{"AD_OUT68", NULL, "AD68 Enable"},
-+	{"ab8500_0c", NULL, "AD_OUT57"},
-+	{"AD_OUT57", NULL, "Main Supply"},
-+	{"AD_OUT57", NULL, "AD5 Channel Volume"},
-+	{"ab8500_0c", NULL, "AD_OUT68"},
-+	{"AD_OUT68", NULL, "Main Supply"},
-+	{"AD_OUT68", NULL, "AD6 Channel Volume"},
- 
- 	/* Digital Microphone path */
- 
-@@ -957,17 +941,25 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"DMic 5", NULL, "V-DMIC"},
- 	{"DMic 6", NULL, "V-DMIC"},
- 
--	{"AD1 Source Select", NULL, "DMic 1"},
--	{"AD2 Source Select", NULL, "DMic 2"},
--	{"AD3 Source Select", NULL, "DMic 3"},
--	{"AD5 Source Select", NULL, "DMic 5"},
--	{"AD6 Source Select", NULL, "DMic 6"},
-+	{"DMIC1", NULL, "DMic 1"},
-+	{"DMIC2", NULL, "DMic 2"},
-+	{"DMIC3", NULL, "DMic 3"},
-+	{"DMIC4", NULL, "DMic 4"},
-+	{"DMIC5", NULL, "DMic 5"},
-+	{"DMIC6", NULL, "DMic 6"},
-+
-+	{"AD1 Source Select", "DMic 1", "DMIC1"},
-+	{"AD2 Source Select", "DMic 2", "DMIC2"},
-+	{"AD3 Source Select", "DMic 3", "DMIC3"},
-+	{"AD5 Source Select", "DMic 5", "DMIC5"},
-+	{"AD6 Source Select", "DMic 6", "DMIC6"},
- 
--	{"AD4 Channel Volume", NULL, "DMic 4"},
--	{"AD4 Enable", NULL, "AD4 Channel Volume"},
-+	{"AD4 Channel Volume", NULL, "DMIC4"},
-+	{"AD4 Channel Volume", NULL, "AD34 Enable"},
- 
--	{"AD_OUT4", NULL, "ab8500_0c"},
--	{"AD_OUT4", NULL, "AD4 Enable"},
-+	{"ab8500_0c", NULL, "AD_OUT4"},
-+	{"AD_OUT4", NULL, "Main Supply"},
-+	{"AD_OUT4", NULL, "AD4 Channel Volume"},
- 
- 	/* LineIn Bypass path */
- 
-@@ -992,13 +984,13 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 
- 	/* Sidetone Filter path */
- 
--	{"Sidetone Left Source", "LineIn Left", "AD12 Enable"},
--	{"Sidetone Left Source", "LineIn Right", "AD12 Enable"},
--	{"Sidetone Left Source", "Mic 1", "AD3 Enable"},
-+	{"Sidetone Left Source", "LineIn Left", "AD1 Channel Volume"},
-+	{"Sidetone Left Source", "LineIn Right", "AD2 Channel Volume"},
-+	{"Sidetone Left Source", "Mic 1", "AD3 Channel Volume"},
- 	{"Sidetone Left Source", "Headset Left", "DA_IN1"},
--	{"Sidetone Right Source", "LineIn Right", "AD12 Enable"},
--	{"Sidetone Right Source", "Mic 1", "AD3 Enable"},
--	{"Sidetone Right Source", "DMic 4", "AD4 Enable"},
-+	{"Sidetone Right Source", "LineIn Right", "AD2 Channel Volume"},
-+	{"Sidetone Right Source", "Mic 1", "AD3 Channel Volume"},
-+	{"Sidetone Right Source", "DMic 4", "AD4 Channel Volume"},
- 	{"Sidetone Right Source", "Headset Right", "DA_IN2"},
- 
- 	{"STFIR1 Control", NULL, "Sidetone Left Source"},
 -- 
 2.53.0
 
