@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245C64EB879;
-	Wed, 30 Sep 2026 15:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A22502554;
+	Wed, 30 Sep 2026 15:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782339; cv=none; b=r+XwR60pIkSVRClhM/09bm545/Th8ZQ5Razf0pMag/EWNLcQlhbcQ0St2aP8xLB02Dbnv04KRnvH1AyPcxu1+Iap8ruzJxsVp9SnOyZxdOkpt4jboyy8i7pFJBbZP8gjbFTXv9sl2mDYTKL6JZaJIC+xrvSLl4iNVmwbn1f4AZk=
+	t=1790782344; cv=none; b=LD6EXDwlmVmDfl7ANrL7xd5MhaUhxvFmBUF9KFZokrGOM9UgFRuqOiRLlzA0R/7/djq8QHdjddNP87PqNyEabwcG0xJtNKCs4AUa4TQ9npUCY8zJmKcZVuIEFZBZytwoIN5RhRphmAStm2/iNtsjxW+EQqliag9XOUv1yA34Gq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782339; c=relaxed/simple;
-	bh=pgMR7FNrOrhbR/34fR5KpN+DL0AmA3bfq8iMlkg19ZA=;
+	s=arc-20240116; t=1790782344; c=relaxed/simple;
+	bh=iRvxgToI0ru96Gdlv7fvM+KvZRcjmKWQcLeE7HWlnzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9HlvUYagJcKLhzvRccCAjfZZ07G4qTYW+y6LxKfuMQjPqa/V33+A69TeZzwZsMyugE+SCNKgpWryScR+4oUjwHA4L/qVeA/vR/IIroq+00k88cZc3gO8xB55ddEyPiDRKjJgxtTHM3Q8H51uS24GHDt1Ha2zFu4COfxtCxrrNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV3lUm/Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ParI3+l3DUjO1dZjIzG3KJ8iMt/UtD+wEAGqmBUTNTfwUgWpmKIf8uyEuWh/iEcxbLi4qaXBLG13aU+UzRMY3xzm6u3IqdU6sFG1S3rdzIpnHqnzVgbfY64zKwTfM4bBpKPkF4XJ8mGyB/HcFhveLPNxsBE/KNxrzryCGv13+xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJUS64uR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV3lUm/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AF01F000FF;
-	Wed, 30 Sep 2026 15:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJUS64uR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CD21F00893;
+	Wed, 30 Sep 2026 15:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782328;
-	bh=Ccjxr8nzCrTJH5jPlTtHNHl7weWbGlWvn5/3gbxzh2A=;
+	s=korg; t=1790782331;
+	bh=zi+JI1JJ0BkSTZDooQYYk126f9rlqIl/gPzXFu7/FGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PV3lUm/Zd4GHpA6mAP8gjlV2W9x4QJhc65PF5STxX0C5QcdYrIozx28el4oyPpa39
-	 Bc3yf0ZT4h5Z8E5WFUX24rGDFq0U5A+2CWwZyLdwKGusZpx+QOLgmMC91o60rrEYtJ
-	 nsCpQ08TmH3mgg5cjLwfsyc50GWXTnBVQL4dFbwM=
+	b=wJUS64uRe9tuSMsjaHaDzmSw/VEl5klNC7rf+auQQ8ZmeVUzg08fh8zlI+kkSqIG0
+	 QcTMAKbWHOHL5Hkhxc6HIMTXeyerOBNg/IWYha5c1u1GwTzqXKR66DkEwpk+cW5tvD
+	 oi0Pu7VIxO5Zxh7T7RkT1rGQEX+MgHNt/kv17v4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/595] batman-adv: dat: atomically update mac addresses
-Date: Wed, 30 Sep 2026 17:18:14 +0200
-Message-ID: <20260930152347.739510634@linuxfoundation.org>
+Subject: [PATCH 5.10 010/595] soundwire: validate DT compatible before parsing it
+Date: Wed, 30 Sep 2026 17:18:23 +0200
+Message-ID: <20260930152347.940438145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,239 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit e6de568d3eda3e3c01c868fabd7a9535d5ee4a73 upstream.
+[ Upstream commit 45c7bda7b7440183850012153988e40b300f40d0 ]
 
-When a MAC address is updated in batadv_dat_entry_add(), it is done using a
-simple copy function. A parallel reader might only see parts of this
-update. In worst case, the reader is transporting the half updated MAC
-address over the network or is creating an ARP response using it -
-poisoning the ARP cache.
+`sdw_of_find_slaves()` fetches raw `"compatible"` bytes with
+`of_get_property()` and then immediately parses them with
+`sscanf("sdw%01x%04hx%04hx%02hhx", ...)`.
 
-atomic64_t can be used to store the 48 bit of a mac address. A reader will
-then either see the old mac address or the new one - never a mixture of
-both.
+Live-tree OF properties are stored as raw bytes plus a separate length;
+they are not globally guaranteed to be NUL-terminated. Validate the
+first compatible string before parsing it.
 
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
-[ Context, integrate support for dat_cache debugfs file ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260403183504.4-soundwire-compatible-pengpeng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/distributed-arp-table.c | 65 ++++++++++++++++++--------
- net/batman-adv/types.h                 |  2 +-
- 2 files changed, 46 insertions(+), 21 deletions(-)
+ drivers/soundwire/slave.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
-index 4277fd832f4d0..6ff856a803dd1 100644
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -377,18 +377,19 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
- static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
- 				 u8 *mac_addr, unsigned short vid)
- {
-+	u64 u64_mac = ether_addr_to_u64(mac_addr);
- 	struct batadv_dat_entry *dat_entry;
- 	int hash_added;
+diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
+index a08f4081c1c48..30cca4730fc2b 100644
+--- a/drivers/soundwire/slave.c
++++ b/drivers/soundwire/slave.c
+@@ -209,8 +209,8 @@ int sdw_of_find_slaves(struct sdw_bus *bus)
+ 		struct sdw_slave_id id;
+ 		const __be32 *addr;
  
- 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip, vid);
- 	/* if this entry is already known, just update it */
- 	if (dat_entry) {
--		if (!batadv_compare_eth(dat_entry->mac_addr, mac_addr))
--			ether_addr_copy(dat_entry->mac_addr, mac_addr);
-+		atomic64_set(&dat_entry->mac_addr, u64_mac);
-+
- 		dat_entry->last_update = jiffies;
- 		batadv_dbg(BATADV_DBG_DAT, bat_priv,
- 			   "Entry updated: %pI4 %pM (vid: %d)\n",
--			   &dat_entry->ip, dat_entry->mac_addr,
-+			   &dat_entry->ip, mac_addr,
- 			   batadv_print_vid(vid));
- 		goto out;
- 	}
-@@ -399,7 +400,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+-		compat = of_get_property(node, "compatible", NULL);
+-		if (!compat)
++		ret = of_property_read_string(node, "compatible", &compat);
++		if (ret)
+ 			continue;
  
- 	dat_entry->ip = ip;
- 	dat_entry->vid = vid;
--	ether_addr_copy(dat_entry->mac_addr, mac_addr);
-+	atomic64_set(&dat_entry->mac_addr, u64_mac);
- 	dat_entry->last_update = jiffies;
- 	kref_init(&dat_entry->refcount);
- 
-@@ -415,7 +416,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
- 	}
- 
- 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "New entry added: %pI4 %pM (vid: %d)\n",
--		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
-+		   &dat_entry->ip, mac_addr, batadv_print_vid(vid));
- 
- out:
- 	if (dat_entry)
-@@ -876,6 +877,8 @@ int batadv_dat_cache_seq_print_text(struct seq_file *seq, void *offset)
- 	struct hlist_head *head;
- 	unsigned long last_seen_jiffies;
- 	int last_seen_msecs, last_seen_secs, last_seen_mins;
-+	u8 mac[ETH_ALEN] __aligned(2);
-+	u64 u64_mac;
- 	u32 i;
- 
- 	primary_if = batadv_seq_print_text_primary_if_get(seq);
-@@ -897,8 +900,11 @@ int batadv_dat_cache_seq_print_text(struct seq_file *seq, void *offset)
- 			last_seen_msecs = last_seen_msecs % 60000;
- 			last_seen_secs = last_seen_msecs / 1000;
- 
-+			u64_mac = atomic64_read(&dat_entry->mac_addr);
-+			u64_to_ether_addr(u64_mac, mac);
-+
- 			seq_printf(seq, " * %15pI4 %pM %4i %6i:%02i\n",
--				   &dat_entry->ip, dat_entry->mac_addr,
-+				   &dat_entry->ip, mac,
- 				   batadv_print_vid(dat_entry->vid),
- 				   last_seen_mins, last_seen_secs);
- 		}
-@@ -927,6 +933,8 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
- 			    struct netlink_callback *cb,
- 			    struct batadv_dat_entry *dat_entry)
- {
-+	u8 mac[ETH_ALEN];
-+	u64 u64_mac;
- 	int msecs;
- 	void *hdr;
- 
-@@ -939,11 +947,12 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
- 	genl_dump_check_consistent(cb, hdr);
- 
- 	msecs = jiffies_to_msecs(jiffies - dat_entry->last_update);
-+	u64_mac = atomic64_read(&dat_entry->mac_addr);
-+	u64_to_ether_addr(u64_mac, mac);
- 
- 	if (nla_put_in_addr(msg, BATADV_ATTR_DAT_CACHE_IP4ADDRESS,
- 			    dat_entry->ip) ||
--	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN,
--		    dat_entry->mac_addr) ||
-+	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN, mac) ||
- 	    nla_put_u16(msg, BATADV_ATTR_DAT_CACHE_VID, dat_entry->vid) ||
- 	    nla_put_u32(msg, BATADV_ATTR_LAST_SEEN_MSECS, msecs)) {
- 		genlmsg_cancel(msg, hdr);
-@@ -1220,6 +1229,8 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
- 	struct net_device *soft_iface = bat_priv->soft_iface;
- 	int hdr_size = 0;
- 	unsigned short vid;
-+	u8 mac[ETH_ALEN];
-+	u64 u64_mac;
- 
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
- 		goto out;
-@@ -1247,6 +1258,9 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
- 
- 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_dst, vid);
- 	if (dat_entry) {
-+		u64_mac = atomic64_read(&dat_entry->mac_addr);
-+		u64_to_ether_addr(u64_mac, mac);
-+
- 		/* If the ARP request is destined for a local client the local
- 		 * client will answer itself. DAT would only generate a
- 		 * duplicate packet.
-@@ -1255,7 +1269,7 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
- 		 * additional DAT answer may trigger kernel warnings about
- 		 * a packet coming from the wrong port.
- 		 */
--		if (batadv_is_my_client(bat_priv, dat_entry->mac_addr, vid)) {
-+		if (batadv_is_my_client(bat_priv, mac, vid)) {
- 			ret = true;
- 			goto out;
- 		}
-@@ -1265,18 +1279,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
- 		 * the backbone gws belonging to our backbone has claimed the
- 		 * destination.
- 		 */
--		if (!batadv_bla_check_claim(bat_priv,
--					    dat_entry->mac_addr, vid)) {
-+		if (!batadv_bla_check_claim(bat_priv, mac, vid)) {
- 			batadv_dbg(BATADV_DBG_DAT, bat_priv,
- 				   "Device %pM claimed by another backbone gw. Don't send ARP reply!",
--				   dat_entry->mac_addr);
-+				   mac);
- 			ret = true;
- 			goto out;
- 		}
- 
- 		skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
--						      dat_entry->mac_addr,
--						      hw_src, vid);
-+						      mac, hw_src, vid);
- 		if (!skb_new)
- 			goto out;
- 
-@@ -1319,6 +1331,8 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
- 	struct batadv_dat_entry *dat_entry = NULL;
- 	bool ret = false;
- 	unsigned short vid;
-+	u8 mac[ETH_ALEN];
-+	u64 u64_mac;
- 	int err;
- 
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
-@@ -1346,8 +1360,11 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
- 	if (!dat_entry)
- 		goto out;
- 
-+	u64_mac = atomic64_read(&dat_entry->mac_addr);
-+	u64_to_ether_addr(u64_mac, mac);
-+
- 	skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
--					      dat_entry->mac_addr, hw_src, vid);
-+					      mac, hw_src, vid);
- 	if (!skb_new)
- 		goto out;
- 
-@@ -1439,6 +1456,8 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
- 	u8 *hw_src, *hw_dst;
- 	bool dropped = false;
- 	unsigned short vid;
-+	u8 mac[ETH_ALEN];
-+	u64 u64_mac;
- 
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
- 		goto out;
-@@ -1467,11 +1486,17 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
- 	 * this frame would lead to doubled receive of an ARP reply.
- 	 */
- 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_src, vid);
--	if (dat_entry && batadv_compare_eth(hw_src, dat_entry->mac_addr)) {
--		batadv_dbg(BATADV_DBG_DAT, bat_priv, "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
--			   hw_src, &ip_src, hw_dst, &ip_dst,
--			   dat_entry->mac_addr,	&dat_entry->ip);
--		dropped = true;
-+	if (dat_entry) {
-+		u64_mac = atomic64_read(&dat_entry->mac_addr);
-+		u64_to_ether_addr(u64_mac, mac);
-+
-+		if (batadv_compare_eth(hw_src, mac)) {
-+			batadv_dbg(BATADV_DBG_DAT, bat_priv,
-+				   "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
-+				   hw_src, &ip_src, hw_dst, &ip_dst,
-+				   mac, &dat_entry->ip);
-+			dropped = true;
-+		}
- 	}
- 
- 	/* Update our internal cache with both the IP addresses the node got
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index 790f62abfe030..49cef1a85639a 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -2387,7 +2387,7 @@ struct batadv_dat_entry {
- 	__be32 ip;
- 
- 	/** @mac_addr: the MAC address associated to the stored IPv4 */
--	u8 mac_addr[ETH_ALEN];
-+	atomic64_t mac_addr;
- 
- 	/** @vid: the vlan ID associated to this entry */
- 	unsigned short vid;
+ 		ret = sscanf(compat, "sdw%01x%04hx%04hx%02hhx", &sdw_version,
 -- 
 2.53.0
 
