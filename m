@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF4151596E;
-	Wed, 30 Sep 2026 17:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5EC509F05;
+	Wed, 30 Sep 2026 17:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787603; cv=none; b=Mthlx7iQh8Cr5lzL0ui4zhzLxLgb92PWil5Npc6Wwo8hyb6ZcyTD87QNJGnIZP5733pR3K45itbPpPQyz7uUbmrpf+2vJJ5IEu1OTV3alBwH1vsHLxtxxe1lQWAQE4PJTgy5C9z0YVMy4AkR6A7bc54H45dWSjveepG+gCpkHFc=
+	t=1790787606; cv=none; b=lT9lPd7oZhxyI8HlKWRZoHvX5z4nUrnOZcN5FEzXvpcrcpCdTRJG/HZaZvNk5MKaPKXGu8xQyLmVnJTYSzEKjoChDwUxXQ1Y4PTmlsOMltiTpsBgsfJvguTgyxslDJBhzqLdU7z1ASPdNIQdyf833wDjp1i26F+qtYIY6GaK3xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787603; c=relaxed/simple;
-	bh=XHyc9OOttYn6ve+M3vc9umOswNAmCB1RGe4Qj3yioSA=;
+	s=arc-20240116; t=1790787606; c=relaxed/simple;
+	bh=BZY855hYihsgGp0FzN4Ks1ij9c+BpnoBKuFRN5PCph4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l330BfP4jd008dvqzcMaNL0RNgc95i4HIGY8fQWxXR6m88t0jyG5WErkZJmnv2cG67ACTKZQXi2dozzx8ig2DwSn8U1IuKu70PupLI/IcpDH8J28h8nfKW3KuEhbp/Evs/vMZgTvaVHQrTaFD0tHk9GCDd7Oh2fNoIEShXjQgws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuMlEfxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfEh4Dz4Gg9ckcVWJwxxQuE9Ip93QDi5RYDiRyJT2hlHrxk8H6t4xXXIgyTNJJEFcvPS8j27ilAaHes0q4GGry41PxKkxIwXqB6XJ7JjYKkl4dJZrHSM443xIfo4rXbckkZ19LWkpEMesOLfKQmzEqh1BAbNG3M6CFa+tfeoLeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qn4XT39a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuMlEfxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28091F000FF;
-	Wed, 30 Sep 2026 17:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qn4XT39a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFACC1F000FF;
+	Wed, 30 Sep 2026 17:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787602;
-	bh=5VE8+H/Ta/YqklP4MAtWdHjyZ4kB0lsXab7TK/zRjoU=;
+	s=korg; t=1790787605;
+	bh=0/yxVRoh/HPakPgjM20oDq34tgIsCi1qkDXHrvwwu+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuMlEfxlHFni46y5XGqFRpsTbgx9LUQpFCgVbCx0GFCSN00G+SVPpUlFPOYdbvTG4
-	 oJZnRFWGm3Oeqb8hI9/tp+nYk8f1w1gcgIVD0b/FUV3+xfinvsyZ8CrtwTodQMcLy7
-	 S/S7amIUJL9fU86eQDTpPzbj3jysdld9y/m7fZC0=
+	b=Qn4XT39aDflZ+G5o2h7R8TMZKJHx9sDtg5IeliJl9Wjv27+Jwg8dx5RCwX/BJQ2rL
+	 aUXVGfe0X8hoxiGP+SBqv3SaC1U3A5vjjy8uy1+iOmfVpEyoqyjVekqWtkXzWBvhu/
+	 oIHrklGcS+tMuG3sqPhn7145x0uTSw8mBoTIJfh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jesse.Zhang" <Jesse.Zhang@amd.com>,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 287/457] drm/amdgpu/vcn5.0.1: fix video_timeout unit mismatch in jpeg reset wait
-Date: Wed, 30 Sep 2026 17:26:32 +0200
-Message-ID: <20260930152352.228561537@linuxfoundation.org>
+Subject: [PATCH 7.2 288/457] drm/amdgpu: Fix acpi device leak in amdgpu_acpi_enumerate_xcc()
+Date: Wed, 30 Sep 2026 17:26:33 +0200
+Message-ID: <20260930152352.250216491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -46,56 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit f952ed353a27b46c86c9525a39b7a642850b8139 upstream.
+commit a997baa61179b450bd55c4810c7ccfed3b753a54 upstream.
 
-vcn_v5_0_1_reset_jpeg_pre_helper() passes adev->video_timeout directly
-to amdgpu_fence_wait_polling(), whose timeout parameter is documented
-and implemented in usecs (busy-wait loop decrementing by udelay(2)).
+amdgpu_acpi_enumerate_xcc() looks up each XCC ACPI device with
+acpi_dev_get_first_match_dev(), which takes a reference to the device.
+The reference is dropped with acpi_dev_put() after the XCC info is
+initialized, but if the kzalloc_obj() allocation of the XCC info fails
+the function returns -ENOMEM without releasing the reference, leaking
+the last reference to the ACPI device.
 
-adev->video_timeout is set in jiffies by
-amdgpu_device_get_job_timeout_settings(), via msecs_to_jiffies().
-Passing it unconverted means the intended ~2s wait for outstanding
-JPEG fences to complete before the JPEG queue is torn down actually
-lasts only a couple of microseconds (HZ jiffies interpreted as usecs),
-so pending jobs are almost never given a real chance to finish before
-the reset path forces completion in the following helper.
+Drop the ACPI device reference on the allocation failure path before
+returning.
 
-Convert the jiffies value to usecs with jiffies_to_usecs() before
-passing it to amdgpu_fence_wait_polling().
-
-Fixes: fab47d2db5ca ("drm/amdgpu/vcn5.0.1: rework reset handling")
-Cc: Jesse.Zhang <Jesse.Zhang@amd.com>
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Fixes: 4d5275ab0b18 ("drm/amdgpu: Add parsing of acpi xcc objects")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b8334fec8b90ebffcaa01001a23edca9f29a05e9)
+(cherry picked from commit 9211ef48b31ec66999cf55e04d0cbc60cd855fd5)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-@@ -1318,7 +1318,8 @@ static int vcn_v5_0_1_reset_jpeg_pre_hel
- 		/* if Jobs are still pending after timeout,
- 		 * We'll handle them in the bottom helper
- 		 */
--		amdgpu_fence_wait_polling(ring, wait_seq, adev->video_timeout);
-+		amdgpu_fence_wait_polling(ring, wait_seq,
-+					  jiffies_to_usecs(adev->video_timeout));
-        }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -1167,8 +1167,10 @@ int amdgpu_acpi_enumerate_xcc(void)
+ 		}
  
- 	return 0;
+ 		xcc_info = kzalloc_obj(struct amdgpu_acpi_xcc_info);
+-		if (!xcc_info)
++		if (!xcc_info) {
++			acpi_dev_put(acpi_dev);
+ 			return -ENOMEM;
++		}
+ 
+ 		INIT_LIST_HEAD(&xcc_info->list);
+ 		xcc_info->handle = acpi_device_handle(acpi_dev);
 
 
