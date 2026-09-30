@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008E2515886;
-	Wed, 30 Sep 2026 16:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C2A511E96;
+	Wed, 30 Sep 2026 16:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786871; cv=none; b=L6rHqsIamNmipzAMkp7OemRnBC0VvQNPAo8k9TLUFOKde93AvM5+RwmJkuClhUWuOSI9nWspIElBc11tOq7lMd+n2c4D5dvpyjAGN2jTu2/XY0werhzodekULfjrbr5DU4xifA4HCsKhncSj8z/ktNzWM9rlpF0dZqwGFfaxrw4=
+	t=1790786873; cv=none; b=TH6odFEB8IafnxqvrTROUGFMDQYaytosCAYBDrUwIxhBFSqAEYrfM49BOkvodKJsolCpdcp/YmPO7JahaZ20eJvFUXZq1/qjrKU+3gFpysAz9dOcxSnIBUxK1TRxLQ8+EK2Fi6UKhqXBoub0hIq3WnhOO/P3LNjOTOEAFRZajN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786871; c=relaxed/simple;
-	bh=Pe9zgHDNMoqrYGxT8n9hhNMSUCr49qs2hP7E0FVKgGM=;
+	s=arc-20240116; t=1790786873; c=relaxed/simple;
+	bh=/ICoE4zy0VRkt1IZVmvTYTLq3mL2OV7In1O/MRjDyhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HysPwmDXW80XMSqgVPIHQzLPbcym18sw2jMtMtLn+soMbfstkGZ/37UcYel9fMortFxSxTSzIoKphzjDJLiItu484bu35x14UNN+MT461a6d7mFv8ggnt75pX37ErYsE5kvKfLdMvPy+WbsVIqkx/RuWmIl0dJOGfPD/XWGBM5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaaLOkTw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jycCl7FxZTrCIv5JkOCz2gXj9xzJllXBSA1IkTripLVFeVYkGO787aT1zeaTWqDc8v+kk9b4IHag4WxGwKkLJQw9MCk1xfEeiiiR4IMnilpj2+FQvhOR94VIsTHiErvTohDLMmCnpCixjBXuX1dYrgm/1NmOJo8BmSySUC1CjUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZHjJAF5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaaLOkTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B99C1F00893;
-	Wed, 30 Sep 2026 16:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZHjJAF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0CB1F00893;
+	Wed, 30 Sep 2026 16:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786869;
-	bh=KedqVV77QEbB1z1eaAs/ag38iSd6YnFOxpj1nKOspyk=;
+	s=korg; t=1790786872;
+	bh=o6//4rD8fmwp5BdeztOZlLDF17lfC/wnrAFtzgGh8oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uaaLOkTwV8kDuDoBTqMh8okSLF9hGTr2rdMnT0f0UDsr9V3QYnz50XC+aNbdtiCqI
-	 8gxr7u8Br0GXh5serQCGa0Sk4Br/+pxSzMCnVsTT31vEIu+lma6v79TLDX+4JwxkQr
-	 JNii13jP0mlWuTCNtWPc51QEqi4BC25y4iVVtk0k=
+	b=mZHjJAF5U/8jmbs0oxRf1az88RrRyvIy3Ey/DvVz6O48pS9ihAR0Qj4maQxux3JjC
+	 1Sw22lukkxkXlO1et1BSYuCl68i7chu9SvBLNUyT7SBCr1dxngTOwu6fHwY4eRdPIy
+	 AOsFfm/7xPkvlMRjTPIhByZ72HxD/GU8hlqWR4oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sean Anderson <sanderson@brivo.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 031/457] bpf, arm64: set up the frame pointer for the exception callback
-Date: Wed, 30 Sep 2026 17:22:16 +0200
-Message-ID: <20260930152346.706186685@linuxfoundation.org>
+Subject: [PATCH 7.2 032/457] pinctrl: meson: Fix typo in s4 group name
+Date: Wed, 30 Sep 2026 17:22:17 +0200
+Message-ID: <20260930152346.727581589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,72 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Sean Anderson <sanderson@brivo.com>
 
-[ Upstream commit ef1fb82f12186dd26153b14d9fbcf4ec98db81b3 ]
+[ Upstream commit 692f32609a30f75ca3401e25b504bfd06bd5662a ]
 
-A program acting as exception boundary saves all callee-saved registers,
-so build_prologue() takes the exception_cb path and never calls
-push_callee_regs(). That is the only place find_used_callee_regs() runs,
-and with it the only place ctx->fp_used is set, so the callback prologue
-does not emit the
+One of the i2c pin groups has some junk at the end. The name should be
+i2c2_scl_h1, and indeed that's the name used by i2c2_pins3 in
+meson-s4.dtsi.
 
-  mov x25, sp
-
-that points BPF_REG_FP at the frame the callback runs on. x25 keeps
-whatever it held when bpf_throw() was called. If the throw came from a
-subprogram that uses its own BPF stack, that is the subprogram's frame
-pointer, and since the subprogram never returns it never restores x25
-either.
-
-Stack accesses through BPF_REG_FP are rewritten to be stack pointer
-relative, so those still land in the callback's own frame. Materializing
-the register does not: a callback that passes the address of a local
-variable to a helper hands over an address in the dead subprogram's
-frame. That address is below the callback's stack pointer by then, and
-the helper's own call chain covers it, so the helper can write over its
-own return address. 0x1234 below is the value the helper was asked to
-store:
-
-  pc : 0x1234
-  lr : 0x1234
-  Call trace:
-   0x1234 (P)
-   bpf_test_run+0x188/0x3e0
-   bpf_prog_test_run_skb+0x47c/0x998
-   __sys_bpf+0xbdc/0xdd8
-  Kernel panic - not syncing: Oops: Fatal exception in interrupt
-
-Set ctx->fp_used on the exception callback path so that the existing code
-further down sets x25 from the stack pointer. The epilogue restores it
-from the main program's save area along with the other callee-saved
-registers, as it already does. x86 sets the frame pointer for the
-callback from the argument it is passed, and powerpc computes it from
-the stack pointer.
-
-Fixes: 5d4fa9ec5643 ("bpf, arm64: Avoid blindly saving/restoring all callee-saved registers")
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://lore.kernel.org/r/20260907130624.611942-2-donggeunyoo.kernel@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 775214d389c25 ("pinctrl: meson: add pinctrl driver support for Meson-S4 Soc")
+Signed-off-by: Sean Anderson <sanderson@brivo.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/meson/pinctrl-meson-s4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index d4e62484baea0..8c0c9b0fda16f 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -600,6 +600,8 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf)
- 		 * 12 registers are on the stack
- 		 */
- 		emit(A64_SUB_I(1, A64_SP, A64_FP, 96), ctx);
-+		/* The callback may use its own BPF stack, set up fp for it. */
-+		ctx->fp_used = true;
- 	}
+diff --git a/drivers/pinctrl/meson/pinctrl-meson-s4.c b/drivers/pinctrl/meson/pinctrl-meson-s4.c
+index 872948699e9fe..365dafe457a9f 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson-s4.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-s4.c
+@@ -854,7 +854,7 @@ static const char * const i2c1_groups[] = {
+ static const char * const i2c2_groups[] = {
+ 	"i2c2_sda_d", "i2c2_scl_d",
+ 	"i2c2_sda_h8", "i2c2_scl_h9",
+-	"i2c2_sda_h0", "i2c2_scl_h1l,"
++	"i2c2_sda_h0", "i2c2_scl_h1",
+ };
  
- 	/* Stack must be multiples of 16B */
+ static const char * const i2c3_groups[] = {
 -- 
 2.53.0
 
