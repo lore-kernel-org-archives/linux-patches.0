@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882F04F93A8;
-	Wed, 30 Sep 2026 16:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB175013C9;
+	Wed, 30 Sep 2026 16:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784289; cv=none; b=aS0sWwo68HPTwCokn7XTJJtaVwMVuX6w6Rb9yAlS0gcz+mUZTwlhpicsST99Dm6wHh8R9QVfDXFpzwqoSG477gVqichhJg07eX+gWTiGZWNAr0CEdsCu2RGM4J7Xh+8u/4ayaL61n/cb3I3m1V583kxd5CmLduMT6DgpWv/dksg=
+	t=1790784297; cv=none; b=GFL/7Z1e1ODZVWGWKhMV33gjFy0XrrlUBGqvd77QAbHIo1AuDD6JGTt4q04J+usvfDPZjFOlXu06tPkMugUV5fdUdTPl73UCH6URVEmt7ErlJt2V9pkswKXQFk33VmQwZ6C9O2rD6r546CWcID0yEvm8VnrwX6OvoB8BymW16wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784289; c=relaxed/simple;
-	bh=0MF/LjwbxmmiKva8yMXJpyksZciEHV5AMUQ6B5wnfis=;
+	s=arc-20240116; t=1790784297; c=relaxed/simple;
+	bh=qhfDWYtyFTNn35yf1m0xu3GfrOtvrgXtE/1EhV+4nbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSabd1uu5J10pf0ri/yffUTsc0bFHm5sgEYPEyg3+biLqwFp1/uJYGwVKlFS+SCxuxs3mTBESHCM/JPp0LK6LrFNnG1GUjCsSzze6VVj2g9Grq1aTWGaoVQPPlrMF15HGU96/7BKcE384oH0AV/6e0Fg3lOoVNngHZ9EMuZI4Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYkU0lyM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FY1QQVJMu+7c2LfT+jzVUGXdbQTyWpNr7ZVBNgsOhGRRkBDxv3GhWLkAllNrFWVEYea7U2SgzzpbDGWj3e064YbwqB6PEf5HyKsnuuuNMXrYTv97YEmfQF061234CLNZQiBo3Ne51XME9JuxYj18ZjXWU7HE5CRgz1eL+eH4ujM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/unyM+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYkU0lyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C57B1F00898;
-	Wed, 30 Sep 2026 16:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/unyM+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102D71F00898;
+	Wed, 30 Sep 2026 16:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784286;
-	bh=gHuDrNZVgpUWcG795l36Vro1ZEioaZxw7k5LKehM+cQ=;
+	s=korg; t=1790784292;
+	bh=yR/iOlv1ygoWcd2Z8dcOqTM7WjGtcxQIqE80+Fda2xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kYkU0lyMdmJkGIOfqLwQIErANul6BaJtiO1iBQdSphL2ZZrRZNyOHc9auwdsd+f90
-	 dm/DV0b6LWPRDP8DlPj6AHBj3wA3JvD9/RqpnHKZVYuxR3lNpeXnhpDipoW5zhozSA
-	 tn58eZZv9RlNxeMfl82q3Pyi/tfjl73NwB960y9Q=
+	b=F/unyM+f/vO3zxCpPsEjEeqOy06qqAT9Vc3wzktaycertXtEJOB7Xo4AU9o4LGhRg
+	 DWg9FJSSVKED3Y9kbqkLDGahmHavyw+2WvkTjdavbD4i5uDxGw3nRIdu1KdSwvhWpg
+	 oLADKn0ALCTF7xV2duTsES6tfLPaSMfujUnrKdQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/982] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
-Date: Wed, 30 Sep 2026 17:13:57 +0200
-Message-ID: <20260930152418.980828637@linuxfoundation.org>
+Subject: [PATCH 6.1 103/982] ACPICA: validate byte_count in acpi_ps_get_next_package_length()
+Date: Wed, 30 Sep 2026 17:13:59 +0200
+Message-ID: <20260930152419.024589983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,81 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
+[ Upstream commit d49c6ee08365a8596f639da46eb7e71752b0cd42 ]
 
-Fix use-after-free issue in acpi_ds_terminate_control_method() by
-clearing references to method locals and arguments.
+Validate package length reading in acpi_ps_get_next_package_length().
 
-Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
+Link: https://github.com/acpica/acpica/commit/40e03f9941e2
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
+Link: https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index 12efc4ac9ba64..01fe931163e6c 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -698,6 +698,8 @@ void
- acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 				 struct acpi_walk_state *walk_state)
- {
-+	u32 i;
-+	struct acpi_namespace_node *ref_node;
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 55af9b3fe8d40..cc27f7888bdca 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -48,6 +48,7 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	u32 package_length = 0;
+ 	u32 byte_count;
+ 	u8 byte_zero_mask = 0x3F;	/* Default [0:5] */
++	u32 remaining;
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
+ 	ACPI_FUNCTION_TRACE(ps_get_next_package_length);
  
-@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 	}
- 
- 	if (walk_state) {
-+		/*
-+		 * Check if the return value is a ref_of reference to a method local
-+		 * or argument. If so, clear the reference to avoid use-after-free
-+		 * when the walk state is deleted.
-+		 */
-+		if (walk_state->return_desc &&
-+		    (walk_state->return_desc->common.type ==
-+		     ACPI_TYPE_LOCAL_REFERENCE)
-+		    && (walk_state->return_desc->reference.class ==
-+			ACPI_REFCLASS_REFOF)) {
-+			ref_node = walk_state->return_desc->reference.object;
-+			if (ref_node) {
+@@ -55,7 +56,23 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	 * Byte 0 bits [6:7] contain the number of additional bytes
+ 	 * used to encode the package length, either 0,1,2, or 3
+ 	 */
 +
-+				/* Check against method locals */
-+				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
-+					if (ref_node ==
-+					    &walk_state->local_variables[i]) {
-+						acpi_ut_remove_reference
-+						    (walk_state->return_desc);
-+						walk_state->return_desc = NULL;
-+						break;
-+					}
-+				}
++	/* Check if we have at least one byte to read */
++	remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
++	if (remaining == 0) {
++		return_UINT32(0);
++	}
 +
-+				/* Check against method arguments if not already cleared */
-+				if (walk_state->return_desc) {
-+					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
-+					     i++) {
-+						if (ref_node ==
-+						    &walk_state->arguments[i]) {
-+							acpi_ut_remove_reference
-+							    (walk_state->
-+							     return_desc);
-+							walk_state->
-+							    return_desc = NULL;
-+							break;
-+						}
-+					}
-+				}
-+			}
-+		}
+ 	byte_count = (aml[0] >> 6);
++
++	/* Validate byte_count and ensure we have enough bytes to read */
++	if (byte_count >= remaining) {
++
++		/* Clamp to available bytes and advance to end */
++		parser_state->aml = parser_state->aml_end;
++		return_UINT32(0);
++	}
++
+ 	parser_state->aml += ((acpi_size)byte_count + 1);
  
- 		/* Delete all arguments and locals */
- 
+ 	/* Get bytes 3, 2, 1 as needed */
 -- 
 2.53.0
 
