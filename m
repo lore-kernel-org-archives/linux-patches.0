@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EC95328AC;
-	Wed, 30 Sep 2026 17:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CD95328D4;
+	Wed, 30 Sep 2026 17:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790003; cv=none; b=Ogtd5rGoV8wNi15aoUYbrP/AC8Qc3c5zQERN4XzEQRvtvjO2biVoCtLnmVfk/euB5WXncvZW1rdXrY8hTawVXOVS/fm70lVexQtgjhUg0lLe0cKlIKTsT9qAVG9/UUqCrNLUKITvEyPtlYetwsQEzQRzb0cROYFneENT79T+AGA=
+	t=1790790006; cv=none; b=l4PskG8ssXC/nOu5CWvhA/RGRgWcmwBQSauvI3dZQdwb3sVIwBLmxe32er+gxMWy8+sdb9Xhj3QY1YIJ2BRodPQ3q4wkF4yJ5ceVDH7nMHIMPtqpxYAlP12/jLDkGeiEXV0dOwRie8r4LQZFMYx5wHMERXJuaKp2C+1o5bI5bnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790003; c=relaxed/simple;
-	bh=AJAUY5a9mTIekdc8+9/bhvHq2IbnbeoZ3cNTf8b80Qg=;
+	s=arc-20240116; t=1790790006; c=relaxed/simple;
+	bh=G+E/GaL+Ajv8F9zEcDb6h6vDkueQa63Y+61iSoWYnis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+xK1uqE2BXG7npDf4L3rwoQ758PDV/Qr7l+uo7TBZD5EnRsLPjjOtyUpqb54uxojUNDjXZ1fUJXRdqjX4C73FN4UBif7sB+BK9XqlcNgYz9zWSIm35HVV/LKs8pTEDfcq1Kbk5EZYQNHho4BaRyaNqjF+8BserXFXw+ms/HRro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bN7mly5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NvAXcRkKbIV9+FAD1Ly0MEzL9bDsMSV4DBip7aLcp2tuPo34ujFLKjJx8MP1/zc00/K51Av1Iz8+dV0Ir/+LMolGOElpj8WMqrWX+UY5/bJqZuRI3UQ+b175DWI6y9zTmKRkxtfjMyr4b4X0mwgjsKNmtulrymSJgCC96pWOtgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzz/dYfI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bN7mly5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D931F000FF;
-	Wed, 30 Sep 2026 17:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzz/dYfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0B61F000FF;
+	Wed, 30 Sep 2026 17:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790002;
-	bh=KaWboywJLhiwXy+ATmOvw3hcq2LHNxhqM4anykuUb1M=;
+	s=korg; t=1790790005;
+	bh=y2Jr+kF7DSSGfq/laC+RqIcgiSNA3a/R00cWGXdLpzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2bN7mly5I4GVby+TC8giTtwruv8yoA+DylcMPwOoDb+ko1mmZAqif7bworE4xlzEz
-	 xAzbKioa5T1kpIxxcfHLKEz8q+rZ8JMNKc8p09a1YEHNQkgZ9zCjxJLZzFs0XkBveP
-	 2WKAL+P8mXY/4TG76au5k1jI3XwZM+oyCxgtuJ/I=
+	b=dzz/dYfIg8EhmlBoQvgvcXqmwQGmdtAfWQxDBi+OTEdguLtg01OiEOluq8YNOErHG
+	 L6554tPsu0vgNn9WpsPrIf84uaCHdUMWNZqzNSEQfM2T0LgfPQjPWVWnH5iLHNfH57
+	 IeweLzhmwhM3dAXwuXWgwyZC54/QAGcyeUeRdI+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 675/877] scsi: qla2xxx: Bound VP index against VP_CTRL IOCB bitmap size
-Date: Wed, 30 Sep 2026 17:26:26 +0200
-Message-ID: <20260930152429.236715877@linuxfoundation.org>
+Subject: [PATCH 6.12 676/877] media: chips-media: wave5: Add timeout while stop_streaming
+Date: Wed, 30 Sep 2026 17:26:27 +0200
+Message-ID: <20260930152429.260677492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,79 +47,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-[ Upstream commit 878613ecb5a36db26859c4fd83daf9283a334fa2 ]
+[ Upstream commit 2ae7faed2e60d6d07d9efdd962d20dcb15330ced ]
 
-The VP control IOCB selects its target virtual port by setting one bit
-in vp_idx_map, a fixed 16-byte (128-bit) array in both
-vp_ctrl_entry_24xx and vp_ctrl_entry_24xx_ext. qla25xx_ctrlvp_iocb()
-computes map = (vp_index - 1) / 8 and writes vce->vp_idx_map[map]
-without checking that map stays within the array.
+When stop_streaming is called, an infinite loop may occur in some cases.
+Add a bounded poll of the queue status: loop until the queues drain,
+sleeping briefly between polls, and bail out once VPU_DEC_STOP_TIMEOUT
+elapses.
 
-max_npiv_vports is taken from firmware and only sanitized to a
-MIN_MULTI_ID_FABRIC-aligned boundary, so it can legitimately be 191 or
-255, and qla24xx_control_vp() only rejects vp_index >= max_npiv_vports.
-A vp_index above 128 therefore yields map >= 16 and an out-of-bounds
-write of up to 16 bytes past vp_idx_map, corrupting the trailing IOCB
-fields (or the adjacent request-ring slot on the 64-byte layout).
-
-Reject a vp_index that cannot be represented in the IOCB bitmap in
-qla24xx_control_vp(), and add a defensive ARRAY_SIZE() guard in
-qla25xx_ctrlvp_iocb() before the write. Adapters that report the usual
-63 or 127 NPIV vports are unaffected.
-
-Fixes: 2853192e154b ("scsi: qla2xxx: Use IOCB path to submit Control VP MBX command")
+Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-49-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ Adjusted guard placement in qla25xx_ctrlvp_iocb() to match the older initialization order. ]
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ adapted the stop loop to use 6.12’s existing report_queue_count condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c |    6 ++++++
- drivers/scsi/qla2xxx/qla_mid.c  |    8 ++++++++
- 2 files changed, 14 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c   |   12 ++++++------
+ drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h |    1 +
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -3828,6 +3828,12 @@ qla25xx_ctrlvp_iocb(srb_t *sp, struct vp
- 	 */
- 	map = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) / 8;
- 	pos = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) & 7;
-+	if (map >= ARRAY_SIZE(vce->vp_idx_map)) {
-+		ql_log(ql_log_warn, sp->vha, 0x307c,
-+		       "ctrlvp: vp_index %u exceeds vp_idx_map capacity\n",
-+		       sp->u.iocb_cmd.u.ctrlvp.vp_index);
-+		return;
-+	}
- 	vce->vp_idx_map[map] |= 1 << pos;
- }
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -5,6 +5,7 @@
+  * Copyright (C) 2021-2023 CHIPS&MEDIA INC
+  */
  
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -962,6 +962,14 @@ int qla24xx_control_vp(scsi_qla_host_t *
- 	if (vp_index == 0 || vp_index >= ha->max_npiv_vports)
- 		return QLA_PARAMETER_ERROR;
++#include <linux/delay.h>
+ #include "wave5-helper.h"
  
-+	/*
-+	 * The VP_CTRL IOCB selects the target VP through a fixed 128-bit
-+	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
-+	 * if firmware advertises more NPIV vports.
-+	 */
-+	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
-+		return QLA_PARAMETER_ERROR;
-+
- 	/* ref: INIT */
- 	sp = qla2x00_get_sp(base_vha, NULL, GFP_KERNEL);
- 	if (!sp)
+ #define VPU_DEC_DEV_NAME "C&M Wave5 VPU decoder"
+@@ -1567,24 +1568,23 @@ static void wave5_vpu_dec_stop_streaming
+ {
+ 	struct vpu_instance *inst = vb2_get_drv_priv(q);
+ 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
+-	bool check_cmd = TRUE;
++	unsigned long timeout;
+ 
+ 	dev_dbg(inst->dev->dev, "%s: type: %u\n", __func__, q->type);
+ 
+-	while (check_cmd) {
++	timeout = jiffies + msecs_to_jiffies(VPU_DEC_STOP_TIMEOUT);
++	while (true) {
+ 		struct queue_status_info q_status;
+-		struct dec_output_info dec_output_info;
+ 
+ 		wave5_vpu_dec_give_command(inst, DEC_GET_QUEUE_STATUS, &q_status);
+ 
+ 		if (q_status.report_queue_count == 0)
+ 			break;
+ 
+-		if (wave5_vpu_wait_interrupt(inst, VPU_DEC_TIMEOUT) < 0)
++		if (time_after(jiffies, timeout))
+ 			break;
+ 
+-		if (wave5_vpu_dec_get_output_info(inst, &dec_output_info))
+-			dev_dbg(inst->dev->dev, "there is no output info\n");
++		usleep_range(1000, 2000);
+ 	}
+ 
+ 	v4l2_m2m_update_stop_streaming_state(m2m_ctx, q);
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
+@@ -40,6 +40,7 @@
+ //  application specific configuration
+ #define VPU_ENC_TIMEOUT                 60000
+ #define VPU_DEC_TIMEOUT                 60000
++#define VPU_DEC_STOP_TIMEOUT            300
+ 
+ // for WAVE encoder
+ #define USE_SRC_PRP_AXI         0
 
 
