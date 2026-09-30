@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B2D3B776D;
-	Wed, 30 Sep 2026 18:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB3631987D;
+	Wed, 30 Sep 2026 18:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794386; cv=none; b=iVZjSAMm+aYX0sCdzQdZyt/HPOeqxcLpcrnN9dNaMOghSGznFGH8whZgXqfL1T38JZfp8wGsJe0hnRyezCDtE7zcNKzLWPA9/Sa34jh0P3i7MWUNOyy6oCOmOaLzz3vkM3frznObCPbLsEj9A6fsD+kJPBR0COiFEg3Jz3eDNR8=
+	t=1790794388; cv=none; b=LleGnknw5LLA8dzmy8eBtYxrxHvih0ygA0xqacDDkU31XX7vpP3LnzUADvSGYvgdVq6t8g356ne9KtUdVtpEv9kVFk9lBur1SMNHj4cBQBWLFQA9oIOdOcwMyznuEqx3wKdt58vFujUvWIA5gX4sWQwQbiaprwDt8oY7JkGHNl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794386; c=relaxed/simple;
-	bh=P51FoTLI+BWHQbL5LtR2rwW22WwLmwxCP9GmvQvNxPc=;
+	s=arc-20240116; t=1790794388; c=relaxed/simple;
+	bh=veQKcz+9rEMbSrGdAyPJTZbWHH4W+yFeRgncJJ86fms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APYTRxUsaoRHaQBqsD7aahpfmqRHV3gDZ95XNUDLzYdJYERpcgy1eq7frLpbWfyZ+dHrcJYsI4ZUFAZXC8UdNhn0Orb6ya3inoRvccihVA4IoCuM2Ar5EnZnFO1xnMZPOgYVrqfghBTOWpIeng9iwlW+b0DC/wT8BytlrmtKoW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUJhc9Uy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cgz0VtgJ39cjh9VqRi3za0gg00qzajYHajHIbPNAn4luJTgv7w8H5ivNkcxkmGIi8tmcPPtdhNcuO/tvEueUPV/hmpgzGrxCqUEr96lZdB+zYleQSlTQWU+yMmaFRLuoCLsjRQ4YDkn1Oz8AGKad2LdzuWZETZ9B2wXEiQwzR9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4APP/RP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUJhc9Uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7081F000FF;
-	Wed, 30 Sep 2026 18:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4APP/RP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050D11F000FF;
+	Wed, 30 Sep 2026 18:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794384;
-	bh=odwqegOxpCpZwPprQzvY+K7J6qm6aIENszeANU2o3ks=;
+	s=korg; t=1790794387;
+	bh=PCFYKTlp42BXhoBI2HDQsjXmTuYxcqCnQZxMuF16g5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nUJhc9UyzLKpjS6YwUs5nPxDo4YNdAdDYonwx3ZwjgjUV2Peiq12/NN554Zvk7Ggu
-	 QtpVvcvKfnMHqc0d+EQ9PnmXmdaqicApTF88D9Hj9IuXoSB84nCkFAY2hDnPT55suK
-	 2CrPiIGyxgcLhROZYCiY1XsLGHWhQlxIQbr4xXIA=
+	b=N4APP/RPS1VyzGsMjecm6TwZ7iGdDXbcA6mBNqTjHSKQIR9l4KlXAGjeaVsq70W6G
+	 bvdKpqVW76zB+qdRZ5abC+lGMFq/Q+PznnbTDAkeW5cxixS9qgPb4jyXdqtL4yF5j8
+	 hJYAT0RygJTgtxD+kVdc0hKWHlY+kFq7SvDFKe64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Pei <cp0613@linux.alibaba.com>,
-	"Dan Williams (nvidia)" <djbw@kernel.org>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0154/1193] ACPI: PCI: Clear _DEP dependencies after PCI root bridge attach
-Date: Wed, 30 Sep 2026 17:13:58 +0200
-Message-ID: <20260930152437.626972234@linuxfoundation.org>
+Subject: [PATCH 6.6 0155/1193] net: qrtr: fix node refcount leak on ctrl packet alloc failure
+Date: Wed, 30 Sep 2026 17:13:59 +0200
+Message-ID: <20260930152437.647942000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,53 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 3a59c3b772e5dc0cedecce8e7fbf7c2d6245b643 ]
+[ Upstream commit 3b09ff54114566864eea59020f6b69c5bb325b9d ]
 
-PCI root bridges enumerated by acpi_pci_root_add() can be the _DEP
-supplier for other ACPI consumers, most notably ACPI0017 CXL root
-devices whose probe path depends on acpi_pci_find_root() succeeding.
-Once the root bus has been added, those consumers can safely be
-enumerated, so notify them by clearing the dependency.
+qrtr_send_resume_tx() calls qrtr_node_lookup() which takes a
+reference on the returned node. If the subsequent call to
+qrtr_alloc_ctrl_packet() fails due to memory allocation failure, the
+function returns -ENOMEM without calling qrtr_node_release() to
+release the node reference.
 
-Call acpi_dev_clear_dependencies() at the end of acpi_pci_root_add(),
-after pci_bus_add_devices(), following the same pattern used by other
-ACPI suppliers such as the EC (drivers/acpi/ec.c) and the ACPI PCI
-Link device (drivers/acpi/pci_link.c). The clear is intentionally
-done only on the success path; on the error paths the supplier did
-not attach and consumers must keep dep_unmet set.
+Add qrtr_node_release(node) before returning on the allocation failure
+path to properly release the reference.
 
-This is a prerequisite for honoring _DEP on ACPI0016 host bridges,
-which matters on architectures where the probe order of acpi_pci_root
-relative to cxl_acpi is not guaranteed (e.g. RISC-V).
-
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Suggested-by: Dan Williams (nvidia) <djbw@kernel.org>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260526025118.38935-2-cp0613@linux.alibaba.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260528080019.1176700-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pci_root.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/qrtr/af_qrtr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
-index e9ec4eb16051b..80c12398218f1 100644
---- a/drivers/acpi/pci_root.c
-+++ b/drivers/acpi/pci_root.c
-@@ -764,6 +764,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
- 	pci_lock_rescan_remove();
- 	pci_bus_add_devices(root->bus);
- 	pci_unlock_rescan_remove();
-+
-+	/* Clear _DEP dependencies to allow consumers to enumerate */
-+	acpi_dev_clear_dependencies(device);
-+
- 	return 1;
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index fcd24a7df3f00..1f40496d84a33 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -1009,8 +1009,10 @@ static int qrtr_send_resume_tx(struct qrtr_cb *cb)
+ 		return -EINVAL;
  
- remove_dmar:
+ 	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
+-	if (!skb)
++	if (!skb) {
++		qrtr_node_release(node);
+ 		return -ENOMEM;
++	}
+ 
+ 	pkt->cmd = cpu_to_le32(QRTR_TYPE_RESUME_TX);
+ 	pkt->client.node = cpu_to_le32(cb->dst_node);
 -- 
 2.53.0
 
