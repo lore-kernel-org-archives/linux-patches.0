@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3789E5172CF;
-	Wed, 30 Sep 2026 17:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCB8518128;
+	Wed, 30 Sep 2026 17:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787971; cv=none; b=k5vefYKNkOi/5516KGy4nrYzWsraJgTKRhC1FJ1UtO85/84lqN/KgU9eaRCNaZbgVRF/6r33Fd7Q+lMlha8ORhxtBjbhYpNuPt8KvqraFgwukmY8h91EXHUm0dvjWxTTdLkzebeapJvf5rSmRQeU8gPXqVBOaOcTUeQ9DdnK+/s=
+	t=1790787974; cv=none; b=rJDOg95ks9ZdHvUrswKFZ169jAcvqwFBg3YztVFqv7aNliIltK1Xy0ObpztjdNCqSpNcB2ZhgcoTzcSiM39GtNCvgqhuB4GY+BFNHN7SeNrbA2VwDfz71i7JwwnxZwjYgU9i01lA4DlYH52nj1Xj93rqPevxW/PaujnMy7Sw+Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787971; c=relaxed/simple;
-	bh=TU75L2+nKl5TngsBxTk6Xjzys3uUa171SKkxbMX/ulk=;
+	s=arc-20240116; t=1790787974; c=relaxed/simple;
+	bh=htkhOJ0L7VkDrR4/xxObnEUP+jVLjsOPKySpjepbFKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABfCL0gvbadt97x87ia3EZhsTCJu/zLy8MUX6i4lKKugianSB7A60MDRjmxNdgkP0rfWfAfCyBeo4N1xEk/QDj8WuOaKEi0bSjYzhGwO7LIPkz5N5ERnTleosXG+nFGGGgm9rhtRFkwI4cdrvH9TI/tFqDt8bycxvaT6uaYh01M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThP5jAqX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XAiSurUUmrR+J2ZLKZorAyG0wWFJ7eb6tI3AdsOlrtVlJmgn4LchooYmntM4Fr6pNJC27cDCTHKa4sgGAyDR4RnRYpLdWewTcikU//N6QQK8j+T/eCh5ucICJYh8C/lbxd8oOOd48HCdJHs1PNeoeb0dvnnrBGL9pQDvMi1LiTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZ3V0iyw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThP5jAqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913A61F000FF;
-	Wed, 30 Sep 2026 17:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZ3V0iyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF7A1F000FF;
+	Wed, 30 Sep 2026 17:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787970;
-	bh=Ig7Wc0ZY7OkDYCNpz98LVm+dbEjxrl+5yKto2izpda0=;
+	s=korg; t=1790787973;
+	bh=4V4FeZtjfjuYNG09pjcrZrm5GhOyhHG2lQe8K6uFWnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ThP5jAqXmxr7r5w0Rh+JeDCTp+nqxbBd1Pgx3cy3fv/RynBdPsAGd7M01mCGNl0y6
-	 pxHtp4W+haaITtOWUQi9UNoX41Egmm6FoNIHBOQgcDWjSqUYVrpV1xTyo4jYmpARyo
-	 Y++Hl+puoxNbrAO64GNB3TmjC2vjUEBpwZuhe4Xc=
+	b=UZ3V0iywVe9d4QvrtwQ0Igf2aBO0Mzah15mwguk6UHnUiI0mhrAtPCIsCfHoLhcCd
+	 BAtAqIWfD7LC2cVxJMLetVjhIteHRVbDoQunhnRyewJfs8fH+GqQ+z1wU9+v1j5CMo
+	 /UIm8kjCp8ZhR7bFgoKdTrIFBGeA5aE6sI7xmzO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 418/457] xfs: release orphanage dir inode if chown fails
-Date: Wed, 30 Sep 2026 17:28:43 +0200
-Message-ID: <20260930152355.007152067@linuxfoundation.org>
+Subject: [PATCH 7.2 419/457] xfs: use correct jiffies comparison function in xchk_maybe_relax
+Date: Wed, 30 Sep 2026 17:28:44 +0200
+Message-ID: <20260930152355.029613491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,41 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1c32cdc986467eaffeedb6c5334852809555b82d upstream.
+commit 984aab2d905a8557fafb27cd9e8713d6d12b3437 upstream.
 
-LOLLM points out that we leak the igrab'd reference to the orphanage
-directory inode if chowning it fails.  Fix that.
+LOLLM points out that we're supposed to use time_after_eq, not a raw >=
+operation here, or else jiffies wraps can go unnoticed.  Fix this.
 
 Cc: stable@vger.kernel.org # v6.10
-Fixes: 1e58a8ccf2597c ("xfs: move orphan files to the orphanage")
+Fixes: 271557de7cbfde ("xfs: reduce the rate of cond_resched calls inside scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/orphanage.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/scrub.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/orphanage.c
-+++ b/fs/xfs/scrub/orphanage.c
-@@ -192,12 +192,16 @@ xrep_orphanage_create(
- 	/* Make sure the orphanage is owned by root. */
- 	error = xrep_chown_orphanage(sc, XFS_I(orphanage_inode));
- 	if (error)
--		goto out_dput_orphanage;
-+		goto out_rele_orphanage;
+--- a/fs/xfs/scrub/scrub.h
++++ b/fs/xfs/scrub/scrub.h
+@@ -40,7 +40,7 @@ static inline int xchk_maybe_relax(struc
+ 		return 0;
+ 	widget->resched_nr = 0;
  
- 	/* Stash the reference for later and bail out. */
- 	sc->orphanage = XFS_I(orphanage_inode);
- 	sc->orphanage_ilock_flags = 0;
-+	orphanage_inode = NULL;
- 
-+out_rele_orphanage:
-+	if (orphanage_inode)
-+		xchk_irele(sc, XFS_I(orphanage_inode));
- out_dput_orphanage:
- 	end_creating(orphanage_dentry);
- out_dput_root:
+-	if (unlikely(widget->next_resched <= jiffies)) {
++	if (unlikely(time_after_eq(jiffies, widget->next_resched))) {
+ 		cond_resched();
+ 		widget->next_resched = XCHK_RELAX_NEXT;
+ 	}
 
 
