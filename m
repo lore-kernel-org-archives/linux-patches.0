@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37E94FECCF;
-	Wed, 30 Sep 2026 16:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2135172C7;
+	Wed, 30 Sep 2026 16:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787068; cv=none; b=jxwy21OSNJraMGrbqKFR+5/RlERDjneL9Pesw024GJHpukYdiPq3Y7YQv4j+o7ZFCj/OpMQZcpdC3UEZHHWsaeZcmV7r+6sQQM7afRxrb3YPzK3tqVwtXOeb1IyljsK+GOEbZyLN+jLarB+/fX/L8OAIXID/jqlJBxg/lYEI5sw=
+	t=1790787071; cv=none; b=CNGFJFVFadImFWaMdccRiFojRetscnyLjk6ZNVTAxL4guH+Or7RyZwl09iBvGIdbq0xZpvB/eQB6yiMP7WpoEPwno2bfn2LHTKe3XL/Gjd6eO+Nev10Y7lgEzpxI3LUOjNAqKPgeHtZSNtTnevR2RCTo0QU+H85LF1IMQNfLqPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787068; c=relaxed/simple;
-	bh=OzIKRJO14/nM+I+UlSO1sdNJAOOt1hqmDsojG4mnHjo=;
+	s=arc-20240116; t=1790787071; c=relaxed/simple;
+	bh=8OD/aa1CBdvvRJIlmTLshTWCOLI17IR+1ovuI/oMlck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0W63kDoetwnaKq0oYEkG8NOwfRsG0HdvqYjIJeH9Rit+HVuVo9eA18QMIs65Wgx0bsdTTDQsqYQvybdxJvJ1OkYAEKerI4vPg+V2ZdNYzdp6UmxWr8sI2jvtbDIRMWb/ZgkPigpPak1ta2aKpRH83HRbZcXZNJ2ehQNwdVqshE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXonkE0H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nWu69J/XPkSxRQqlVoGrYo6WqBEU5zf8Ygc9t34QIzD7yDUby8FO7XlOdXLQb5AC8TemfCRjcpeP9/DKvESO9K01LH5klLIarQq7pzlt0frGB065TjGFHNufF7HKj42nstgCFjFYqZlYMvkIh05D/cgb1tBSUdMVUEJyE4fTm70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usksI9DF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXonkE0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2009C1F000FF;
-	Wed, 30 Sep 2026 16:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usksI9DF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025271F000FF;
+	Wed, 30 Sep 2026 16:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787066;
-	bh=OqOzjvaUCmtF6z9SWguHyHG5YhRudleGBD1CfxXPJIY=;
+	s=korg; t=1790787069;
+	bh=EpoUYLBzyE4e6hM+oF95qHVMUDwRz5+Z1Esc+NoUm5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OXonkE0HPBodECriR1qOT76/vD3jt38e/gYNR2b/xflxjV1glJ7I5Er+6W4QGuWey
-	 qfqRIAKkR4CiXdzqMFIPl9XLBr7EcZ79JrnqpqtsSx0CM3rFrHNGYvFMSVLwnd0rLE
-	 A0JPmVXAHY+4V+9cAzOgiiaf+WeRonEa0LcpqgjM=
+	b=usksI9DFVAi2hdEIZ2h1o6pwqo35Jx3ldW2/nmQDjpUw01H9+m1zWiVeNNErwGZfF
+	 3sYa0HNJGiLkcw+6+2tJd/SKt8A/K9y+3JAnYYYO+N53qVBd3yC9Vw/w2XSq+fDErM
+	 ZCZujgTW9NKHALVKTaiDfuBF2WwRPVkeLS0DcIdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 098/457] eth: fbnic: use the Rx queue napi pointer to find the napi vector
-Date: Wed, 30 Sep 2026 17:23:23 +0200
-Message-ID: <20260930152348.166357848@linuxfoundation.org>
+Subject: [PATCH 7.2 099/457] eth: fbnic: reset num_napi when the napi vectors are freed
+Date: Wed, 30 Sep 2026 17:23:24 +0200
+Message-ID: <20260930152348.188681385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,111 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit b5d9e9d4d0c13bc8b60d8d97e7a07fb25fea639e ]
+[ Upstream commit 4bcc4a92c603fe7f062cea22e20da2e0ad6b12c3 ]
 
-The queue management ndos pick the napi vector for an Rx queue with:
-	nv = fbn->napi[idx % fbn->num_napi];
+fbn->num_napi is the count of live napi vectors, each of which owns an
+IRQ.  The PM path had freed them without clearing the count.
+fbnic_pm_suspend() tears the datapath down via ndo_stop() and frees the
+IRQs, but leaves netif_running() true so resume knows to re-open.  Resume
+rebuilds the datapath in __fbnic_pm_resume() and fbnic_reset_queues() sets
+num_napi and __fbnic_open() re-allocates the vectors.
 
-The issue is this is only correct in the cases where there are no
-standalone Tx vectors. In those cases we were allocating the Tx vectors
-first and then the Rx so the queues would be pointing to Tx NAPI vectors
-instead of the Rx ones.
+When the datapath is torn down but never rebuilt, num_napi is left
+pointing at freed vectors under 2 different scenarios:
+ - a PCIe error recovery that fails (fbnic_err_slot_reset() ->
+   __fbnic_pm_resume() returns an error -> PCI_ERS_RESULT_DISCONNECT), so
+   .resume never runs; or
+ - an __fbnic_open() that fails partway on resume and unwinds, freeing
+   the vectors after fbnic_reset_queues() has already set num_napi.
 
-The mapping the ndos want is already recorded.  fbnic_set_netif_napi()
-publishes it with netif_queue_set_napi(), which stores the napi pointer
-in netdev_rx_queue.napi, and fbnic_reset_netif_napi() clears it again.
-Both run under the netdev instance lock that the queue management ndos
-also hold, so the pointer can be read directly.
+The netdev is then running with num_napi > 0 but napi[] freed, and the
+eventual remove/unbind close re-enters fbnic_down() -> fbnic_dbg_down()
+and dereferences the freed vectors:
+  BUG: kernel NULL pointer dereference, address: 0000000000000210
+  RIP: fbnic_dbg_down+0x28
 
-Use it and drop the divide.  The pointer is NULL exactly while the
-datapath is down, so fbnic_queue_mem_alloc() can reject that case rather
-than reaching into freed state: netdev_rx_queue_restart() calls it
-before it tests netif_running(), and fbnic_pm_suspend() leaves
-netif_running() true across a PCIe recovery that never completes, so a
-queue restart can arrive after fbnic_stop() has freed the rings and the
-vectors.  fbnic_stop() clears the association in
-fbnic_reset_netif_queues() before fbnic_free_napi_vectors(), so the
-NULL is always published first.  fbnic_queue_start() and
-fbnic_queue_stop() need no check of their own, as
-netdev_rx_queue_reconfig() only reaches them once fbnic_queue_mem_alloc()
-has succeeded under the same instance lock.
+Clear num_napi when the vectors are freed: in the suspend teardown (a
+good resume re-establishes it before __fbnic_open()) and on the resume
+open failure.  A redundant ndo_stop() then walks an empty napi[].  The
+normal ndo_stop() down/up cycle is untouched and keeps num_napi for the
+next ndo_open().
 
-Fixes: da43127a8edc ("eth: fbnic: support queue ops / zero-copy Rx")
+Fixes: bc6107771bb4 ("eth: fbnic: Allocate a netdevice and napi vectors with queues")
 Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/178942021136.7700.4391219358260544104.stgit@ahduyck-xeon-server.home.arpa
+Link: https://patch.msgid.link/178942021809.7700.10804028989308077839.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 26 +++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-index a30aa44508487..10caacffee0f0 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-@@ -7,6 +7,7 @@
- #include <linux/iopoll.h>
- #include <linux/pci.h>
- #include <net/netdev_queues.h>
-+#include <net/netdev_rx_queue.h>
- #include <net/page_pool/helpers.h>
- #include <net/tcp.h>
- #include <net/xdp.h>
-@@ -2853,6 +2854,17 @@ void fbnic_napi_depletion_check(struct net_device *netdev)
- 	fbnic_wrfl(fbd);
- }
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+index 8b9bc9e8ea56c..c6698e3002a13 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+@@ -434,6 +434,7 @@ static int fbnic_pm_suspend(struct device *dev)
+ {
+ 	struct fbnic_dev *fbd = dev_get_drvdata(dev);
+ 	struct net_device *netdev = fbd->netdev;
++	struct fbnic_net *fbn;
  
-+/* Returns the napi vector servicing an Rx queue, or NULL if the datapath
-+ * is torn down.  The association is published by fbnic_set_netif_napi()
-+ * and cleared by fbnic_reset_netif_napi(), both under the instance lock.
-+ */
-+static struct fbnic_napi_vector *fbnic_rxq_nv(struct net_device *dev, int idx)
-+{
-+	struct napi_struct *napi = __netif_get_rx_queue(dev, idx)->napi;
+ 	if (fbnic_init_failure(fbd))
+ 		goto null_uc_addr;
+@@ -441,11 +442,16 @@ static int fbnic_pm_suspend(struct device *dev)
+ 	rtnl_lock();
+ 	netdev_lock(netdev);
+ 
++	fbn = netdev_priv(netdev);
 +
-+	return napi ? container_of(napi, struct fbnic_napi_vector, napi) : NULL;
-+}
+ 	netif_device_detach(netdev);
+ 
+ 	if (netif_running(netdev))
+ 		netdev->netdev_ops->ndo_stop(netdev);
+ 
++	/* The IRQs are about to be freed, so drop the napi vector count */
++	fbn->num_napi = 0;
 +
- static int fbnic_queue_mem_alloc(struct net_device *dev,
- 				 struct netdev_queue_config *qcfg,
- 				 void *qmem, int idx)
-@@ -2865,8 +2877,16 @@ static int fbnic_queue_mem_alloc(struct net_device *dev,
- 	if (!netif_running(dev))
- 		return fbnic_alloc_qt_page_pools(fbn, qt, idx);
+ 	netdev_unlock(netdev);
+ 	rtnl_unlock();
  
-+	/* A failed PCIe recovery or resume can leave the datapath torn down
-+	 * while netif_running() is still true.  This ndo runs before
-+	 * netdev_rx_queue_restart() checks netif_running(), so bail out
-+	 * rather than touching rings and vectors that are already freed.
-+	 */
-+	nv = fbnic_rxq_nv(dev, idx);
-+	if (!nv)
-+		return -ENETDOWN;
+@@ -508,16 +514,20 @@ static int __fbnic_pm_resume(struct device *dev)
+ 	if (fbnic_init_failure(fbd))
+ 		return 0;
+ 
++	rtnl_lock();
++	netdev_lock(netdev);
 +
- 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
--	nv = fbn->napi[idx % fbn->num_napi];
+ 	fbn = netdev_priv(netdev);
  
- 	fbnic_ring_init(&qt->sub0, real->sub0.doorbell, real->sub0.q_idx,
- 			real->sub0.flags);
-@@ -2917,7 +2937,7 @@ static int fbnic_queue_start(struct net_device *dev,
- 	struct fbnic_q_triad *real;
+ 	/* Reset the queues if needed */
+ 	fbnic_reset_queues(fbn, fbn->num_tx_queues, fbn->num_rx_queues);
  
- 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
--	nv = fbn->napi[idx % fbn->num_napi];
-+	nv = fbnic_rxq_nv(dev, idx);
+-	rtnl_lock();
+-	netdev_lock(netdev);
+-
+-	if (netif_running(netdev))
++	if (netif_running(netdev)) {
+ 		err = __fbnic_open(fbn);
++		/* On failure the vectors are freed, so drop the count */
++		if (err)
++			fbn->num_napi = 0;
++	}
  
- 	fbnic_aggregate_ring_bdq_counters(fbn, &real->sub0);
- 	fbnic_aggregate_ring_bdq_counters(fbn, &real->sub1);
-@@ -2939,7 +2959,7 @@ static int fbnic_queue_stop(struct net_device *dev, void *qmem, int idx)
- 	int err;
- 
- 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
--	nv = fbn->napi[idx % fbn->num_napi];
-+	nv = fbnic_rxq_nv(dev, idx);
- 	fbnic_dbg_nv_exit(nv);
- 
- 	napi_disable_locked(&nv->napi);
+ 	netdev_unlock(netdev);
+ 	rtnl_unlock();
 -- 
 2.53.0
 
