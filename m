@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856F4FE2E6;
-	Wed, 30 Sep 2026 17:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE73551123D;
+	Wed, 30 Sep 2026 17:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790876; cv=none; b=ayiZZZbTJWZpG7bg6dwGS6LHiIhKeBCjBl2C5rU1yRGnkwAWbqlmjQ5ldrzcQiktvaOve/r/kIQLFzYN+QmG3y3m/dASCSKSV7/XKNnwL6ljgxPTDoByhb+4+sUNTj+FqMtpoqKwg/ohcig336L+sso1VB4tN4c8EmBMEHB7l9k=
+	t=1790790879; cv=none; b=Vk4BK+vSpelWA8jiPoM4QsrLbKyGwASwRiDllO4U2kWgmPmGOSu1+ivJV6oT53W8DviJ09rx4NP8Tq5zAPNsc38t5IyXF6hcNZS8CJsu/nhAxXSQRNN8PlcRHXa0gSffzCn2bUHhA8d5OwOOdB3jAAuY80xF32Vt1Ydia1a8bt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790876; c=relaxed/simple;
-	bh=lfdt9W9ksvbAEWmJrYvbb3YC4Edlqo8VILhOQRS66Do=;
+	s=arc-20240116; t=1790790879; c=relaxed/simple;
+	bh=eCDV1YOF5NmDzc0te0FWGFTT3cEBmI7MKD5oGmO5+Ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lm9zPrbKhe60JhxAnj7+4ainZ3H+GMJtni5dyMCyahPrnhkPGjDKMA0ijPxwhw2EufL3sQ6NYDF2oelO7qlxqrr/st5AvqCdt0EhlT9yGsT/5R0GScyLJJixhi0qh+e4Kd8wqx5beaY41XVgndVKkIsFHaTeECymx6XGpSCZ7Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvEPou0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=paiP4hWXHbfQQRn5EBVrCoWcDJZD8h0aEf5d1+gUg4iuAUIcpbCzOtE7cyDWtAIk7KyC5rl+6hq9U8aTNMG+nIMEviADeHkRfvQGLUcY64oRFrLggXy0YQS8sM83zzCQh5c4IKGH52qidRCBL0Oyi8+CRdB74OmhGh/zJ44vtoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZ1Gvaey; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvEPou0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36691F000FF;
-	Wed, 30 Sep 2026 17:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZ1Gvaey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE41B1F000FF;
+	Wed, 30 Sep 2026 17:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790875;
-	bh=yO9359Y0WLUSIneOY4cE+raWq95kZKPVwYA+Zxc+1zc=;
+	s=korg; t=1790790878;
+	bh=lBYJbOFNg0TnMds2cX717Ane2g10XsVtGhICtHd9GAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvEPou0asbdqgC4JwZn8Y2OOmZq7OJGhr7Fw4Bpw7dRtQ+HpIH2Bl0x0e9G/MI4xT
-	 G9j7IkShyNRuMz99vv5FRziMq667Uk6mTE2nMvOOd/Xr9107dWP6JQX3/SKuzVHaq2
-	 S9XXKy2dGPZIWHjipLwJpqGNvKmIZ5oRKy9yaTTw=
+	b=VZ1GvaeyEytWCKloA1IRv1k9CAfsYfPCx1afmXTBd1UeA5OqotWU8rE4w2fzIl2RI
+	 iuDDRT4pB3V2vKIFTho86Gt8mbdkrzCtyjFtucfO9HJMPblq+yEEUfazMK3zJmdXM7
+	 Gqv+YHFgTncD+4dUH1bfRELAACnGl6bVNYaUeA7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Simon Xue <xxm@rock-chips.com>,
+	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/752] ACPICA: add boundary checks in acpi_ps_get_next_field()
-Date: Wed, 30 Sep 2026 17:19:08 +0200
-Message-ID: <20260930152359.853704857@linuxfoundation.org>
+Subject: [PATCH 5.15 105/752] iommu/rockchip: disable fetch dte time limit
+Date: Wed, 30 Sep 2026 17:19:35 +0200
+Message-ID: <20260930152400.440613049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -45,77 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Simon Xue <xxm@rock-chips.com>
 
-[ Upstream commit e15aa60de0256d63df2331bf5a4bc4dd287504cd ]
+[ Upstream commit 8d4346ecd4950ae08cc76a6de327c264e846758c ]
 
-Add boundary checks in acpi_ps_get_next_field() to prevent out-of-bounds
-access.
+Disable the Bit 31 of the AUTO_GATING iommu register, as it causes
+hangups with the RGA3 (Raster Graphics Acceleration 3) peripheral.
+The RGA3 register description of the TRM already states that the bit
+must be set to 1. The vendor kernel sets the bit unconditionally to
+1 to fix VOP (Video Output Processor) screen black issues. This patch
+squashes the 2 vendor kernel commits with the following commit messages:
 
-Link: https://github.com/acpica/acpica/commit/c39183ea84bc
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/24388159.6Emhk5qWAg@rafael.j.wysocki
+Master fetch data and cpu update page table may work in parallel, may
+have the following procedure:
+
+	master                  cpu
+	fetch dte               update page tabl
+	        |                       |
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make iommu block)  <-  zap iotlb entry
+
+New iommu version has the above bug, if fetch dte consecutively four
+times, then it will be blocked. Fortunately, we can set bit 31 of
+register MMU_AUTO_GATING to 1 to make it work as old version which does
+not have this issue.
+
+This issue only appears on RV1126 so far, so make a workaround dedicated
+to "rockchip,rv1126" machine type.
+
+iommu/rockchip: fix vop blocked and screen black on RK356X and RK3588
+
+RK3568 and RK3588 has the same issue as RV1126/RV1109 that caused by
+dte fetch time limit, So we can set BIT(31) of register 0x24 default
+to 1 as a workaround.
+
+Signed-off-by: Simon Xue <xxm@rock-chips.com>
+Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iommu/rockchip-iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 29239a569bfd7..a4e2349f43323 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -474,6 +474,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 	ASL_CV_CAPTURE_COMMENTS_ONLY(parser_state);
- 	aml = parser_state->aml;
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index f9f6492c430df..bb40b2ddbc71d 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -73,6 +73,8 @@
+ #define SPAGE_ORDER 12
+ #define SPAGE_SIZE (1 << SPAGE_ORDER)
  
-+	if (aml >= parser_state->aml_end) {
-+		return_PTR(NULL);
-+	}
++#define DISABLE_FETCH_DTE_TIME_LIMIT BIT(31)
 +
- 	/* Determine field type */
+  /*
+   * Support mapping any size that fits in one page table:
+   *   4 KiB to 4 MiB
+@@ -922,6 +924,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 	struct iommu_domain *domain = iommu->domain;
+ 	struct rk_iommu_domain *rk_domain = to_rk_domain(domain);
+ 	int ret, i;
++	u32 auto_gate;
  
- 	switch (ACPI_GET8(parser_state->aml)) {
-@@ -522,6 +526,11 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 	ret = clk_bulk_enable(iommu->num_clocks, iommu->clocks);
+ 	if (ret)
+@@ -940,6 +943,11 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 			       rk_ops->mk_dtentries(rk_domain->dt_dma));
+ 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
+ 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
++
++		/* Workaround for iommu blocked, BIT(31) default to 1 */
++		auto_gate = rk_iommu_read(iommu->bases[i], RK_MMU_AUTO_GATING);
++		auto_gate |= DISABLE_FETCH_DTE_TIME_LIMIT;
++		rk_iommu_write(iommu->bases[i], RK_MMU_AUTO_GATING, auto_gate);
+ 	}
  
- 		/* Get the 4-character name */
- 
-+		if ((parser_state->aml + ACPI_NAMESEG_SIZE) >
-+		    parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		ACPI_MOVE_32_TO_32(&name, parser_state->aml);
- 		acpi_ps_set_name(field, name);
- 		parser_state->aml += ACPI_NAMESEG_SIZE;
-@@ -567,6 +576,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 
- 		/* Get the two bytes (Type/Attribute) */
- 
-+		if ((parser_state->aml + 2) > parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		access_type = ACPI_GET8(parser_state->aml);
- 		parser_state->aml++;
- 		access_attribute = ACPI_GET8(parser_state->aml);
-@@ -578,6 +591,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 		/* This opcode has a third byte, access_length */
- 
- 		if (opcode == AML_INT_EXTACCESSFIELD_OP) {
-+			if (parser_state->aml >= parser_state->aml_end) {
-+				acpi_ps_free_op(field);
-+				return_PTR(NULL);
-+			}
- 			access_length = ACPI_GET8(parser_state->aml);
- 			parser_state->aml++;
- 
+ 	ret = rk_iommu_enable_paging(iommu);
 -- 
 2.53.0
 
