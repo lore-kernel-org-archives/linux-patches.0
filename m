@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA69A463B8B;
-	Wed, 30 Sep 2026 16:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4CC4FD267;
+	Wed, 30 Sep 2026 16:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784383; cv=none; b=HhRzSFKjSYgmmtaVrl4o2D4M4HEFolHnggOnGgWVEq/hIpvPtkHPO2eIH+Zui3A1pFI43olXNLXDOUnrOVER5atktDuMDCu8TyjZS7oIeiAuQW4dmNl8619kYU3PUUf1CxKJCeRGBj/JVHCe6EZDbFunfp11Ez5VneGgopn3BnM=
+	t=1790784383; cv=none; b=TmGlin+aQ+8/Ju5ubFhre7OcvncujPBYjWnj4MyVN16OAStESLF5horWrTFyrEdPllIf++dVlR2gLE+ANBV9mw1buGisVgv5Sl4YDpqkTnocEcZx22zn+eGhqxz0bpTCO7I4axHnyvZ27cs096BWQVpayZeAJhAyJbQZ8tQST9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784383; c=relaxed/simple;
-	bh=c450vveyCK86zi16emSCRmRohGLVW2gqMXtgj/xaNwA=;
+	bh=7xMaePklfrXh28G6eZegsA8ENzrylNPoF/gRwTTbWws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVnHLkHrnqlYdy+tsdg1cXwN1pQwMN3mPAq4H5eJTDvzIOl+3KnbRwTFS6aP87Wkn9fcRKx1G3E/sLHWLJr7E12c5sTgdJtXg+Aej4xqb/CXovUayhVSI1ErHGafZQWITP4cThuitxnL5LQR71hMcXSIWxLDaJafTgRBV7kLBhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vD7XKHgd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XiDwEVs+EziVocXUKj/Rywil1577Bhp/7eJC9NGf/yOU4WMjYZvxyijamUAycu44jIHWxo6g26eEBXZv2pPpg+zB/t1W0WAem94sVhfxMNJjIrMe9aXOEtMVjnIKDIf0UL1PWlPsBzr5IL1dWL1WJ4uyq668CdpfN/MziZyTnig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kkm8Sr8v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vD7XKHgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E905E1F00898;
-	Wed, 30 Sep 2026 16:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kkm8Sr8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8701F00899;
+	Wed, 30 Sep 2026 16:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784377;
-	bh=NzCFeJL6ZeQPc2NnI7jN4OuED+p2/UPghGwZxW6KTiQ=;
+	s=korg; t=1790784380;
+	bh=VME9xsk2PgnVHoLgp7iHCB0USimDTWsb3g3p4b1OH/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vD7XKHgdv9hLr8OY835iTAjh1EYjZg4z1K5P/b5AhdD41J2JBUJ3yMJFbxTU7vf2D
-	 RTqGfD1vaj5jtLVW4jJiAREpvKuFVGvpnEdz79X4XPG469K7ZZQpHXbJxmFGm3dM9K
-	 4hetkzCkLkFvABY/41kDWGqUw4r+cFGqj+gniwfQ=
+	b=Kkm8Sr8v4uqWthapwZUolI+Z4Ii0W0vO3ACOyHnGcGl9nMjywq+fofz7fz5xU/2O6
+	 zw4E/ddm6fp5zsEcm2Fb4W7RtAqNyC7L7eCcGALBDto2dCHwFKeIVWU3hkPmEgyFOG
+	 dJXCxPfSvRqmWf+XGF7juFssIrBqZxxvinwxB25U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Chen Pei <cp0613@linux.alibaba.com>,
+	"Dan Williams (nvidia)" <djbw@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/982] scripts: modpost: detect and report truncated buf_printf() output
-Date: Wed, 30 Sep 2026 17:14:13 +0200
-Message-ID: <20260930152419.332657001@linuxfoundation.org>
+Subject: [PATCH 6.1 135/982] ACPI: PCI: Clear _DEP dependencies after PCI root bridge attach
+Date: Wed, 30 Sep 2026 17:14:31 +0200
+Message-ID: <20260930152419.714828777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,54 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit d7231d8cb262b1e350c00271bf53d54414b4f3b1 ]
+[ Upstream commit 3a59c3b772e5dc0cedecce8e7fbf7c2d6245b643 ]
 
-buf_printf() uses a fixed-size stack buffer. vsnprintf() returns the
-number of bytes that *would* have been written to that buffer, which can
-be larger than the size of said buffer if the formatted string is too
-long.
+PCI root bridges enumerated by acpi_pci_root_add() can be the _DEP
+supplier for other ACPI consumers, most notably ACPI0017 CXL root
+devices whose probe path depends on acpi_pci_find_root() succeeding.
+Once the root bus has been added, those consumers can safely be
+enumerated, so notify them by clearing the dependency.
 
-The problem is that whenever this happens buf_printf() currently passes
-this length, unchecked, to buf_write(), which silently reads past the
-stack buffer and copies invalid data into the output buffer.
+Call acpi_dev_clear_dependencies() at the end of acpi_pci_root_add(),
+after pci_bus_add_devices(), following the same pattern used by other
+ACPI suppliers such as the EC (drivers/acpi/ec.c) and the ACPI PCI
+Link device (drivers/acpi/pci_link.c). The clear is intentionally
+done only on the success path; on the error paths the supplier did
+not attach and consumers must keep dep_unmet set.
 
-Fix this by detecting vsnprintf() failures and truncations before
-appending to the output buffer, and report a fatal error instead of
-producing corrupt symbol names.
+This is a prerequisite for honoring _DEP on ACPI0016 host bridges,
+which matters on architectures where the probe order of acpi_pci_root
+relative to cxl_acpi is not guaranteed (e.g. RISC-V).
 
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20260527-nova-exports-v2-1-06de4c556d55@nvidia.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Suggested-by: Dan Williams (nvidia) <djbw@kernel.org>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260526025118.38935-2-cp0613@linux.alibaba.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/acpi/pci_root.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index b2388814fe976..990e514cd747d 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1861,8 +1861,17 @@ void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer *buf,
- 
- 	va_start(ap, fmt);
- 	len = vsnprintf(tmp, SZ, fmt, ap);
--	buf_write(buf, tmp, len);
- 	va_end(ap);
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index 92e7aefcce81b..4201677fa748b 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -763,6 +763,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
+ 	pci_lock_rescan_remove();
+ 	pci_bus_add_devices(root->bus);
+ 	pci_unlock_rescan_remove();
 +
-+	if (len < 0) {
-+		perror("vsnprintf failed");
-+		exit(1);
-+	}
-+	if (len >= SZ)
-+		fatal("buf_printf output truncated for string %s: %d bytes needed, %d available\n",
-+		      tmp, len + 1, SZ);
++	/* Clear _DEP dependencies to allow consumers to enumerate */
++	acpi_dev_clear_dependencies(device);
 +
-+	buf_write(buf, tmp, len);
- }
+ 	return 1;
  
- void buf_write(struct buffer *buf, const char *s, int len)
+ remove_dmar:
 -- 
 2.53.0
 
