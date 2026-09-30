@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FFA514764;
-	Wed, 30 Sep 2026 16:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5B6513567;
+	Wed, 30 Sep 2026 16:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784745; cv=none; b=Nmyi3toMKSzns8Z9IznAsJ8X7hnQ5BncoRQTOTm0HHGHYQdp2M//cgaq2rElboBtdDSnRl0Kogz8m07XeRfufdDyMbf+7yO24s4JhKkrTJSWURGGzygDyAqprgAOSd2ZaRANmTqtPJlCX0yA9fg6LwSyk0CNxGuNNhgWcz4xFIk=
+	t=1790784750; cv=none; b=Qg7IDRVSOT9ifOSpt5hCrgEXQXCReHDK7gbeblsVyd72zVnRWN2MxWKsKN9KXA4qRgqLWjRJFDpEjPFNY7LHDtsDtmi3HFEvripMVvjK4sFnKZgeP7z7uzaLgb36Y+KxiYIAmKTUuPXCVeIioXE6n8Q/1avarHaHNRO8LuDciMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784745; c=relaxed/simple;
-	bh=aam009M5krlUoXq/SE6KL+kestnVyGxnKJ+ytWI6Xfc=;
+	s=arc-20240116; t=1790784750; c=relaxed/simple;
+	bh=zcChnpeaQ+TR6egnHmrpJOBcGIttyUQUECe/Y8rYCZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYItb0Sgb8CCibK1DCF2dyrdlF1Q/XKa60nPHIQfsFB5OxLthgWRN74BVcIBXGztgY8DbHcsJZreOmDrg4sI6MrtIgeNCQy0VazgQAFd5CMnr4cU/sZsQzMFrQX0V7wvEST0pG+/BUwH/34sP00B4GpbG/sSY7hccuDgiFoaTzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPv3JzSQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNBTFjnx5hmtNZdt6JGxFaq/tcXMCYqNwka9IAl8akP/e+FS28L+sQOU1CedBGctYfeArbVKCby0JQS9u6OB930aDnJAWqsdRuYj83GBEr3oKTK7f3fuV4q0O1LdzqyhmGbyEUhrTY8Xj0IO4XYD90UakvBg6qGoT2JrBS/5/fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEpjWMsH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPv3JzSQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9791F00893;
-	Wed, 30 Sep 2026 16:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEpjWMsH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE551F00898;
+	Wed, 30 Sep 2026 16:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784739;
-	bh=CgYrbx9MY7+VnVDDyvf1QNkxJEmz5FuAE45bBv7apHs=;
+	s=korg; t=1790784742;
+	bh=qCRpac8XZiCRvXhtY2CxAvyAZKSL6PhNQIfhveg7UJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPv3JzSQwXc4hOxFjxZfkJ+a1KAuQnWW6z7cGIEcPNHdwY21kFXkjtp3BmAosW0zV
-	 4DGs3mZaU1Yh5Ex0q7bHjuKZqwFVr7URi7OXNOt8QyUYRgRTNxYn7EkvtnX3ceImTk
-	 SIK4CpUkgJveihUTtpuJOBxJoxWrxZ3r73JkLcrE=
+	b=hEpjWMsHJ96B8hNJjfllWIQ0PZiu+wzrYVKqKX7dNgX37evnbmd3wXq7J70wCCkQn
+	 3RxrdrPkFMGWphaJyhykqWtSUNT2eEf4GJ0brLQdrKxdOiSXE1Z8uhx9Uv8oIcE6SQ
+	 v8Bn1aJhW3Bt+QGexqIQ6bn0dannc4FafAXkAk2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang YuWei <1973615295@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 263/982] spi: dw-dma: Wait for controller idle before completing Tx
-Date: Wed, 30 Sep 2026 17:16:39 +0200
-Message-ID: <20260930152422.451711943@linuxfoundation.org>
+Subject: [PATCH 6.1 264/982] btrfs: fix reloc root cleanup in merge_reloc_roots()
+Date: Wed, 30 Sep 2026 17:16:40 +0200
+Message-ID: <20260930152422.472721599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,46 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang YuWei <1973615295@qq.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 0bcd59706aeda8a5d48ba656bab74cb26f2b423e ]
+[ Upstream commit b78fe9563e2d5ae47805f1e5dc722c91fd30e1f8 ]
 
-dw_spi_dma_wait_tx_done() polls dw_spi_dma_tx_busy(), which only checks
-DW_SPI_SR_TF_EMPT. An empty TX FIFO merely means the last data word has
-been moved into the shift register; the transfer is not complete on the
-bus until DW_SPI_SR_BUSY is also cleared. As a result the wait can
-return while the controller is still shifting out the final word.
+If the root we got has zero root refs in its root item, we are resetting
+the root's ->reloc_root without using barriers like we do everywhere else.
+Sashiko complained about this while reviewing another patch, and it's
+correct (see the Link tag below).
 
-Any caller that tears down or reconfigures the controller right after
-the transfer can then lose the tail of the transfer.
+Also, we should not clear BTRFS_ROOT_DEAD_RELOC_TREE from the root unless
+the root points to the reloc root we have.
 
-The memory-operation path in spi-dw-core.c already waits for both
-DW_SPI_SR_BUSY == 0 and DW_SPI_SR_TF_EMPT == 1. Use the same completion
-condition in the DMA path so the transfer is guaranteed to be finished
-on the bus before the wait returns.
+Fix this by using clear_reloc_root(), which issues the memory barrier
+after setting the root's ->reloc_root to NULL and before clearing the bit
+BTRFS_ROOT_DEAD_RELOC_TREE from the root.
 
-Signed-off-by: Wang YuWei <1973615295@qq.com>
-Link: https://patch.msgid.link/tencent_4EA7B5C94669ED4C38A5F6C1C9126E5D9106@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw-dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/relocation.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
-index ababb910b3914..a795df52c5fe7 100644
---- a/drivers/spi/spi-dw-dma.c
-+++ b/drivers/spi/spi-dw-dma.c
-@@ -241,7 +241,8 @@ static int dw_spi_dma_wait(struct dw_spi *dws, unsigned int len, u32 speed)
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index ffd1319a9155d..84b153eb9d6b8 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -2084,11 +2084,10 @@ void merge_reloc_roots(struct reloc_control *rc)
+ 		} else {
+ 			if (!IS_ERR(root)) {
+ 				if (root->reloc_root == reloc_root) {
+-					root->reloc_root = NULL;
++					clear_reloc_root(root);
++					/* Drop the ref for root->reloc_root. */
+ 					btrfs_put_root(reloc_root);
+ 				}
+-				clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE,
+-					  &root->state);
+ 				btrfs_put_root(root);
+ 			}
  
- static inline bool dw_spi_dma_tx_busy(struct dw_spi *dws)
- {
--	return !(dw_readl(dws, DW_SPI_SR) & DW_SPI_SR_TF_EMPT);
-+	return (dw_readl(dws, DW_SPI_SR) &
-+		(DW_SPI_SR_BUSY | DW_SPI_SR_TF_EMPT)) != DW_SPI_SR_TF_EMPT;
- }
- 
- static int dw_spi_dma_wait_tx_done(struct dw_spi *dws,
 -- 
 2.53.0
 
