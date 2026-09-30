@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134C84F405C;
-	Wed, 30 Sep 2026 17:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24145519E1E;
+	Wed, 30 Sep 2026 17:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788253; cv=none; b=Aa7zTuCn9k2fkuu4bYm/WIqpIgKuOWyZs+Z2P8E242TzWZyhA6OfUN45AfofZblaGkjoepEkQ3KHHHHi+9irqzvRhPX8lcUmUVF9RJaZFeBnU+AV51+xSgUUcg5UWuuxzYJ/2pJnOAruW4xvIAm22uOT/HmxHj7ClbJp6/5pO+I=
+	t=1790788256; cv=none; b=KB/15MXR2fnewsFVZulCTfcnQCF40pB+x4s7cy+pHfYmGAkVBkRZo/D5y4+0bYt3aPZ14X0nhb3ordJmS6SKrcmqtUu7b7WFAqS7QQd00lZfP6sxC8kRDuAavFV5c+aPGMxrPL7PDFl9mIjPvr2H66Cbpm+J080wZQOAY6r9CkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788253; c=relaxed/simple;
-	bh=fT1i8VolyTGFED9HhSi6EgWrfnKVMq5TZBri1PRIzM4=;
+	s=arc-20240116; t=1790788256; c=relaxed/simple;
+	bh=y2goUT0nuFw6eJ3hibsA2Wy5jU7S8ZINn+nDVGi6ksw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/e0wu93XvxKe3N8AhL1etVAOqZJg+PopyGBYBfnOqjuoqD18+7R9rDvr+IcqsxVa06KBQwA27CyhN9rcKwH9GfuxfiHP8x03MdZmMrqW4fE7Xi3K/FG9D8S1D3s5bnDNc82hiueHF8B+BggfeU2ROQ7QeH9kZPeZJeS4p8uDQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpFv5PVe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uq69/FeT7Y4Tor9wEhVtDJVJUXO9SsoaJZNRtzJZOzSIqIRpAQ/bDfE0iVZsP4N3WYKfGEsTE9TJu8OxOJedyE2n9tLQcUm8Et2SB1FVK9KobAi/qjopeQl0kdRzCGH6ECy77zNf7rRuo4QEHg65XNQ8sBf6qQVpdIWKrNlno1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHyitg9e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpFv5PVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A71F000FF;
-	Wed, 30 Sep 2026 17:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHyitg9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A031F000FF;
+	Wed, 30 Sep 2026 17:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788252;
-	bh=kNN2+U/wS5i9NLptBGIbQJ2VFLhlgBCEvB4aYNef4aU=;
+	s=korg; t=1790788254;
+	bh=nWi+2Pxu65LVSbd1ZZvnk+4kCQBS8W7XRXB0yy947PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpFv5PVerlVxdWm8vT/KYW2s9xx6WRPKQB02JbrWekqjBFWquYebWvVyKlqqfY81K
-	 4UCel54lAP8anLqsBKxe35TEfXfv/JSGOUH/yVnIQFuQktB6kTqs/hsmjzlDn7jHl3
-	 T8Ae53HF7u3vLBom4coqQTcmZawj1BCFjQ9TdziY=
+	b=dHyitg9eu46vnz/+zYtV+89BFM7sXfDhhUuhgO2TOnIpmdySFl3hUxM3mRk0LlAny
+	 1uWV7im16Y8kdZkHw83QL3fw+0KgQfrRZSZ/eK7rUv+aePErWAGDBAdQ1zfZQZ5Ur7
+	 0b2LNlO5E0mzivq64eDeOlBHBbd979/YphUzPoC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/877] wifi: mac80211: dont start a ROC while scanning
-Date: Wed, 30 Sep 2026 17:16:08 +0200
-Message-ID: <20260930152415.975417172@linuxfoundation.org>
+Subject: [PATCH 6.12 058/877] wifi: cfg80211: add option for vif allowed radios
+Date: Wed, 30 Sep 2026 17:16:09 +0200
+Message-ID: <20260930152415.996225996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,53 +51,338 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 733f0fde95392ed5f61a4e36aee661ea8d0e8581 ]
+[ Upstream commit 3607798ad9bdef35ad08489a8239390fccaac6b5 ]
 
-The ROC work can be pending when a scan starts (which requires
-ROC list to be empty, but that's possible), and then a new ROC
-can be added to the list and the work will pick it up.
+This allows users to prevent a vif from affecting radios other than the
+configured ones. This can be useful in cases where e.g. an AP is running
+on one radio, and triggering a scan on another radio should not disturb it.
 
-Avoid starting that ROC if a scan made it between things, as
-otherwise we'll hit a warning later:
+Changing the allowed radios list for a vif is supported, but only while
+it is down.
 
-  WARNING: net/mac80211/offchannel.c:404 at ieee80211_start_next_roc+0x256/0x2d0
-  Workqueue: events_unbound cfg80211_wiphy_work
-  Call Trace:
-   __ieee80211_scan_completed+0x4fd/0xe40 net/mac80211/scan.c:537
-   ieee80211_scan_work+0x472/0x1ff0 net/mac80211/scan.c:1193
-   cfg80211_wiphy_work+0x410/0x570 net/wireless/core.c:513
+While it is possible to achieve the same by always explicitly specifying
+a frequency list for scan requests and ensuring that the wrong channel/band
+is never accidentally set on an unrelated interface, this change makes
+multi-radio wiphy setups a lot easier to deal with for CLI users.
 
-Assisted-by: LLM
-Fixes: aaa016ccd5df ("mac80211: rewrite remain-on-channel logic")
-Reported-by: syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c3a167b5615df4ccd7fb
-Link: https://patch.msgid.link/20260904165722.f9d5b150edd8.I61bc9de8c8d089096ad695213b9c85c7df38c3bd@changeid
+By itself, this patch only enforces the radio mask for scanning requests
+and remain-on-channel. Follow-up changes build on this to limit configured
+frequencies.
+
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/eefcb218780f71a1549875d149f1196486762756.1728462320.git-series.nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: a7491b7efbd9 ("wifi: mac80211: don't warn when an IBSS has no channel to scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/offchannel.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/cfg80211.h       | 14 +++++++++
+ include/uapi/linux/nl80211.h |  5 +++
+ net/wireless/core.c          |  2 ++
+ net/wireless/nl80211.c       | 60 +++++++++++++++++++++++++++++++-----
+ net/wireless/scan.c          | 10 ++++--
+ net/wireless/util.c          | 29 +++++++++++++++++
+ 6 files changed, 109 insertions(+), 11 deletions(-)
 
-diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
-index 29fab7ae47b4c..0d9807526ecbd 100644
---- a/net/mac80211/offchannel.c
-+++ b/net/mac80211/offchannel.c
-@@ -462,6 +462,13 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
- 		return;
- 
- 	if (!roc->started) {
-+		/*
-+		 * The work can be started by a previous ROC work, but a scan
-+		 * can get between things; scan finish will retrigger us.
-+		 */
-+		if (local->scanning)
-+			return;
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index fcc5934a20c0f..f3915118c15d7 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -6353,6 +6353,7 @@ enum ieee80211_ap_reg_power {
+  *	entered.
+  * @links.cac_time_ms: CAC time in ms
+  * @valid_links: bitmap describing what elements of @links are valid
++ * @radio_mask: Bitmask of radios that this interface is allowed to operate on.
+  */
+ struct wireless_dev {
+ 	struct wiphy *wiphy;
+@@ -6465,6 +6466,8 @@ struct wireless_dev {
+ 		unsigned int cac_time_ms;
+ 	} links[IEEE80211_MLD_MAX_NUM_LINKS];
+ 	u16 valid_links;
 +
- 		WARN_ON(!local->emulate_chanctx);
- 		_ieee80211_start_next_roc(local);
- 	} else {
++	u32 radio_mask;
+ };
+ 
+ static inline const u8 *wdev_address(struct wireless_dev *wdev)
+@@ -6650,6 +6653,17 @@ static inline bool cfg80211_channel_is_psc(struct ieee80211_channel *chan)
+ bool cfg80211_radio_chandef_valid(const struct wiphy_radio *radio,
+ 				  const struct cfg80211_chan_def *chandef);
+ 
++/**
++ * cfg80211_wdev_channel_allowed - Check if the wdev may use the channel
++ *
++ * @wdev: the wireless device
++ * @chan: channel to check
++ *
++ * Return: whether or not the wdev may use the channel
++ */
++bool cfg80211_wdev_channel_allowed(struct wireless_dev *wdev,
++				   struct ieee80211_channel *chan);
++
+ /**
+  * ieee80211_get_response_rate - get basic rate for a given rate
+  *
+diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
+index c2d7faf8d87fa..8ce0c143e9fde 100644
+--- a/include/uapi/linux/nl80211.h
++++ b/include/uapi/linux/nl80211.h
+@@ -2868,6 +2868,9 @@ enum nl80211_commands {
+  *	nested item, it contains attributes defined in
+  *	&enum nl80211_if_combination_attrs.
+  *
++ * @NL80211_ATTR_VIF_RADIO_MASK: Bitmask of allowed radios (u32).
++ *	A value of 0 means all radios.
++ *
+  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
+  * @NL80211_ATTR_MAX: highest attribute number currently defined
+  * @__NL80211_ATTR_AFTER_LAST: internal use
+@@ -3416,6 +3419,8 @@ enum nl80211_attrs {
+ 	NL80211_ATTR_WIPHY_RADIOS,
+ 	NL80211_ATTR_WIPHY_INTERFACE_COMBINATIONS,
+ 
++	NL80211_ATTR_VIF_RADIO_MASK,
++
+ 	/* add attributes here, update the policy in nl80211.c */
+ 
+ 	__NL80211_ATTR_AFTER_LAST,
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 8f7f84c5f440b..7c278b8694393 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1456,6 +1456,8 @@ void cfg80211_init_wdev(struct wireless_dev *wdev)
+ 	/* allow mac80211 to determine the timeout */
+ 	wdev->ps_timeout = -1;
+ 
++	wdev->radio_mask = BIT(wdev->wiphy->n_radio) - 1;
++
+ 	if ((wdev->iftype == NL80211_IFTYPE_STATION ||
+ 	     wdev->iftype == NL80211_IFTYPE_P2P_CLIENT ||
+ 	     wdev->iftype == NL80211_IFTYPE_ADHOC) && !wdev->use_4addr)
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index b302caafd4d31..6261befa1e949 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -834,6 +834,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
+ 	[NL80211_ATTR_MLO_TTLM_DLINK] = NLA_POLICY_EXACT_LEN(sizeof(u16) * 8),
+ 	[NL80211_ATTR_MLO_TTLM_ULINK] = NLA_POLICY_EXACT_LEN(sizeof(u16) * 8),
+ 	[NL80211_ATTR_ASSOC_SPP_AMSDU] = { .type = NLA_FLAG },
++	[NL80211_ATTR_VIF_RADIO_MASK] = { .type = NLA_U32 },
+ };
+ 
+ /* policy for the key attributes */
+@@ -3975,7 +3976,8 @@ static int nl80211_send_iface(struct sk_buff *msg, u32 portid, u32 seq, int flag
+ 	    nla_put_u32(msg, NL80211_ATTR_GENERATION,
+ 			rdev->devlist_generation ^
+ 			(cfg80211_rdev_list_generation << 2)) ||
+-	    nla_put_u8(msg, NL80211_ATTR_4ADDR, wdev->use_4addr))
++	    nla_put_u8(msg, NL80211_ATTR_4ADDR, wdev->use_4addr) ||
++	    nla_put_u32(msg, NL80211_ATTR_VIF_RADIO_MASK, wdev->radio_mask))
+ 		goto nla_put_failure;
+ 
+ 	if (rdev->ops->get_channel && !wdev->valid_links) {
+@@ -4296,6 +4298,29 @@ static int nl80211_valid_4addr(struct cfg80211_registered_device *rdev,
+ 	return -EOPNOTSUPP;
+ }
+ 
++static int nl80211_parse_vif_radio_mask(struct genl_info *info,
++					u32 *radio_mask)
++{
++	struct cfg80211_registered_device *rdev = info->user_ptr[0];
++	struct nlattr *attr = info->attrs[NL80211_ATTR_VIF_RADIO_MASK];
++	u32 mask, allowed;
++
++	if (!attr) {
++		*radio_mask = 0;
++		return 0;
++	}
++
++	allowed = BIT(rdev->wiphy.n_radio) - 1;
++	mask = nla_get_u32(attr);
++	if (mask & ~allowed)
++		return -EINVAL;
++	if (!mask)
++		mask = allowed;
++	*radio_mask = mask;
++
++	return 1;
++}
++
+ static int nl80211_set_interface(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
+@@ -4303,6 +4328,8 @@ static int nl80211_set_interface(struct sk_buff *skb, struct genl_info *info)
+ 	int err;
+ 	enum nl80211_iftype otype, ntype;
+ 	struct net_device *dev = info->user_ptr[1];
++	struct wireless_dev *wdev = dev->ieee80211_ptr;
++	u32 radio_mask = 0;
+ 	bool change = false;
+ 
+ 	memset(&params, 0, sizeof(params));
+@@ -4316,8 +4343,6 @@ static int nl80211_set_interface(struct sk_buff *skb, struct genl_info *info)
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_MESH_ID]) {
+-		struct wireless_dev *wdev = dev->ieee80211_ptr;
+-
+ 		if (ntype != NL80211_IFTYPE_MESH_POINT)
+ 			return -EINVAL;
+ 		if (otype != NL80211_IFTYPE_MESH_POINT)
+@@ -4348,6 +4373,12 @@ static int nl80211_set_interface(struct sk_buff *skb, struct genl_info *info)
+ 	if (err > 0)
+ 		change = true;
+ 
++	err = nl80211_parse_vif_radio_mask(info, &radio_mask);
++	if (err < 0)
++		return err;
++	if (err && netif_running(dev))
++		return -EBUSY;
++
+ 	if (change)
+ 		err = cfg80211_change_iface(rdev, dev, ntype, &params);
+ 	else
+@@ -4356,11 +4387,11 @@ static int nl80211_set_interface(struct sk_buff *skb, struct genl_info *info)
+ 	if (!err && params.use_4addr != -1)
+ 		dev->ieee80211_ptr->use_4addr = params.use_4addr;
+ 
+-	if (change && !err) {
+-		struct wireless_dev *wdev = dev->ieee80211_ptr;
++	if (radio_mask)
++		wdev->radio_mask = radio_mask;
+ 
++	if (change && !err)
+ 		nl80211_notify_iface(rdev, wdev, NL80211_CMD_SET_INTERFACE);
+-	}
+ 
+ 	return err;
+ }
+@@ -4371,6 +4402,7 @@ static int _nl80211_new_interface(struct sk_buff *skb, struct genl_info *info)
+ 	struct vif_params params;
+ 	struct wireless_dev *wdev;
+ 	struct sk_buff *msg;
++	u32 radio_mask;
+ 	int err;
+ 	enum nl80211_iftype type = NL80211_IFTYPE_UNSPECIFIED;
+ 
+@@ -4408,6 +4440,10 @@ static int _nl80211_new_interface(struct sk_buff *skb, struct genl_info *info)
+ 	if (err < 0)
+ 		return err;
+ 
++	err = nl80211_parse_vif_radio_mask(info, &radio_mask);
++	if (err < 0)
++		return err;
++
+ 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
+ 	if (!msg)
+ 		return -ENOMEM;
+@@ -4449,6 +4485,9 @@ static int _nl80211_new_interface(struct sk_buff *skb, struct genl_info *info)
+ 		break;
+ 	}
+ 
++	if (radio_mask)
++		wdev->radio_mask = radio_mask;
++
+ 	if (nl80211_send_iface(msg, info->snd_portid, info->snd_seq, 0,
+ 			       rdev, wdev, NL80211_CMD_NEW_INTERFACE) < 0) {
+ 		nlmsg_free(msg);
+@@ -9178,6 +9217,9 @@ static bool cfg80211_off_channel_oper_allowed(struct wireless_dev *wdev,
+ 
+ 	lockdep_assert_wiphy(wdev->wiphy);
+ 
++	if (!cfg80211_wdev_channel_allowed(wdev, chan))
++		return false;
++
+ 	if (!cfg80211_beaconing_iface_active(wdev))
+ 		return true;
+ 
+@@ -9390,7 +9432,8 @@ static int nl80211_trigger_scan(struct sk_buff *skb, struct genl_info *info)
+ 			}
+ 
+ 			/* ignore disabled channels */
+-			if (chan->flags & IEEE80211_CHAN_DISABLED)
++			if (chan->flags & IEEE80211_CHAN_DISABLED ||
++			    !cfg80211_wdev_channel_allowed(wdev, chan))
+ 				continue;
+ 
+ 			request->channels[i] = chan;
+@@ -9410,7 +9453,8 @@ static int nl80211_trigger_scan(struct sk_buff *skb, struct genl_info *info)
+ 
+ 				chan = &wiphy->bands[band]->channels[j];
+ 
+-				if (chan->flags & IEEE80211_CHAN_DISABLED)
++				if (chan->flags & IEEE80211_CHAN_DISABLED ||
++				    !cfg80211_wdev_channel_allowed(wdev, chan))
+ 					continue;
+ 
+ 				request->channels[i] = chan;
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 9d21667641a50..a7d704d0a282a 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -953,7 +953,8 @@ static int cfg80211_scan_6ghz(struct cfg80211_registered_device *rdev)
+ 		struct ieee80211_channel *chan =
+ 			ieee80211_get_channel(&rdev->wiphy, ap->center_freq);
+ 
+-		if (!chan || chan->flags & IEEE80211_CHAN_DISABLED)
++		if (!chan || chan->flags & IEEE80211_CHAN_DISABLED ||
++		    !cfg80211_wdev_channel_allowed(rdev_req->wdev, chan))
+ 			continue;
+ 
+ 		for (i = 0; i < rdev_req->n_channels; i++) {
+@@ -3519,9 +3520,12 @@ int cfg80211_wext_siwscan(struct net_device *dev,
+ 			continue;
+ 
+ 		for (j = 0; j < wiphy->bands[band]->n_channels; j++) {
++			struct ieee80211_channel *chan;
++
+ 			/* ignore disabled channels */
+-			if (wiphy->bands[band]->channels[j].flags &
+-						IEEE80211_CHAN_DISABLED)
++			chan = &wiphy->bands[band]->channels[j];
++			if (chan->flags & IEEE80211_CHAN_DISABLED ||
++			    !cfg80211_wdev_channel_allowed(creq->wdev, chan))
+ 				continue;
+ 
+ 			/* If we have a wireless request structure and the
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index f9e0ec311982e..8cc205b9f105c 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -2965,3 +2965,32 @@ bool cfg80211_radio_chandef_valid(const struct wiphy_radio *radio,
+ 	return true;
+ }
+ EXPORT_SYMBOL(cfg80211_radio_chandef_valid);
++
++bool cfg80211_wdev_channel_allowed(struct wireless_dev *wdev,
++				   struct ieee80211_channel *chan)
++{
++	struct wiphy *wiphy = wdev->wiphy;
++	const struct wiphy_radio *radio;
++	struct cfg80211_chan_def chandef;
++	u32 radio_mask;
++	int i;
++
++	radio_mask = wdev->radio_mask;
++	if (!wiphy->n_radio || radio_mask == BIT(wiphy->n_radio) - 1)
++		return true;
++
++	cfg80211_chandef_create(&chandef, chan, NL80211_CHAN_HT20);
++	for (i = 0; i < wiphy->n_radio; i++) {
++		if (!(radio_mask & BIT(i)))
++			continue;
++
++		radio = &wiphy->radio[i];
++		if (!cfg80211_radio_chandef_valid(radio, &chandef))
++			continue;
++
++		return true;
++	}
++
++	return false;
++}
++EXPORT_SYMBOL(cfg80211_wdev_channel_allowed);
 -- 
 2.53.0
 
