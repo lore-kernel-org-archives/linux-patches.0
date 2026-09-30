@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DDD514753;
-	Wed, 30 Sep 2026 18:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CA651B16B;
+	Wed, 30 Sep 2026 18:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793516; cv=none; b=e+3STVAF/mmtIhzFHVq19LMVI3KGXz0SToRFdVNAI+V0aNNaG/cO0w50ALpyYKv9ZVJjeu4a31iHn5FFJRb0voKrVxTh9g+Msb8JjP7Tcpqplr/UVoaisDSJLKVR+2lPrqfe/IX81nufHrmrggsjs5+pBeXoM9VP/tx7l3j1vWM=
+	t=1790793519; cv=none; b=Gj5tEtfbdbzNEerjEA73NTWZ25vqtgTvSAKDrDnNByHae0HiEPy6acRd/JNflhxHppuRkUjVQT0M/4Natp9lxClJDdtVgEppozDAcN08hyvZhV1JY8KRiyJ21VWQkDy4w5pqxxa+Lryktw2AuYe4bGkt5AIBZHgJ70Ewj2r1Ob4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793516; c=relaxed/simple;
-	bh=Z8sapW5/13zpZ7/VsslZcQg44nhEoPMgBQ5ozIEdkD8=;
+	s=arc-20240116; t=1790793519; c=relaxed/simple;
+	bh=OypERW3G55lDD8Yu164hbYgOxYn1kGumTdtywSRK2Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdkW8eLF3YAD9Nn6EMeSCF8/a6FubWSmVIUbhPkthYLgN+gU8vpqgpA8XPJHd2RrjERoMfN710PE1Rr+iOi1sadhF3hr2aKYrW9NUr3hqI70l9NScF75b9qIWB2e5j2LHCB7ZbONrk6wGJHMEEmta6gx7Sfi1/AIBxyHxtxJkOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clC6IKJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kS5S8hrdKXhCaJU568s6rVG97wqJYH9Ul+P3KDgue4LOdoaIvw07gMKWgbplILm1oRFVKYfC9U31zUiaO+hiiMkgDoA9VRPztauhPkLAHpYlgTFWRq0fOMaMueWkASiMK9O1Dh48PR5bLX7TYinmrlGjK2ml++gvDWWnVg2EW8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rvp9kFrK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clC6IKJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3226C1F000FF;
-	Wed, 30 Sep 2026 18:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rvp9kFrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14591F00898;
+	Wed, 30 Sep 2026 18:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793514;
-	bh=4Thjt70vFKa3RGX9lyZQz+wEgIipK425fjkdCprK8pk=;
+	s=korg; t=1790793517;
+	bh=+r4/j43hFiMK4GBZagBRL9YlgteoHCcKh5C1sfWCVTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=clC6IKJSNq8F6sYVVDmyDLzAHBM0Ip6xnmVj5QBn44efVo7V1PV9FWiDDtw/WRJpH
-	 8W/+Ymfn4kd+RRwfm896b4Esm9etPS+QdrW340f0cm9VgbXgpk6l5XuRKYgQ3NWqxz
-	 7TGV0dJ29dKf4VT2w++Ih6kLYIgW/PWpmKfQCmAY=
+	b=Rvp9kFrKr8EFS1sdh7Crl99sJm88KomZ3NaEs/EpF4jlG52/GQr5EC/Z6O9mmGQPN
+	 oLKv4tRGBvQTvIdo01T28/igr4fT6LIvGtaPePeVEvDxm87wWgHAQLXmq00KW68g2o
+	 ayE5gAPuC+o9cBJl6GzUtm5gu3J1YZqctFMMiaHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 283/395] net: bridge: mdb: restart port group walk after deletion
-Date: Wed, 30 Sep 2026 17:29:05 +0200
-Message-ID: <20260930152346.798814377@linuxfoundation.org>
+Subject: [PATCH 6.18 284/395] net: ena: fix PHC cleanup on probe failure
+Date: Wed, 30 Sep 2026 17:29:06 +0200
+Message-ID: <20260930152346.821094900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,49 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit ab1404ac81154a89fb61ac50ae9a04cd8d4834dc upstream.
+commit 0958ea4355e2e9220ad4e13da3b7d94f365ed34f upstream.
 
-br_mdb_flush_pgs() keeps a pointer-to-pointer cursor while walking
-mp->ports. br_multicast_del_pg() can re-enter the same MDB entry through
-br_multicast_sg_del_exclude_ports() and unlink other port groups. If the
-cursor points into one of those groups, the next iteration dereferences a
-stale cursor and can leave mp->ports pointing at freed memory.
+ena_probe() initializes the PHC as part of ena_device_init(), but the
+probe failure path does not destroy it before freeing the PHC private
+data.
 
-A following RTM_GETMDB exposes the dangling pointer:
+The normal removal path calls ena_phc_destroy() through
+ena_destroy_device() before ena_phc_free(). However, if probe fails
+after ena_device_init() succeeds, the error path reaches ena_phc_free()
+without unregistering the PTP clock or destroying the device PHC
+resources.
 
-  BUG: KASAN: slab-use-after-free in br_mdb_dump
-  Read of size 8
-    br_mdb_dump
-    rtnl_mdb_dump
-    rtnl_dumpit
-    netlink_dump
+Call ena_phc_destroy() in the probe error path before freeing the PHC
+private data.
 
-Reset the cursor to mp->ports after every deletion. The deletion removes at
-least the selected group, so the restarted walk always makes progress.
+This issue was found by manual code inspection.
 
-Fixes: a6acb535afb2 ("bridge: mdb: Add MDB bulk deletion support")
+Cc: stable@vger.kernel.org tags and describe this as a consistency cleanup
+Fixes: e0ea34158ee8 ("net: ena: Add PHC support in the ENA driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260920110852.60293-1-fouriezhang@tencent.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: stable
+Link: https://patch.msgid.link/20260921154202.471662-2-lgs201920130244@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_mdb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bridge/br_mdb.c
-+++ b/net/bridge/br_mdb.c
-@@ -1523,6 +1523,8 @@ static void br_mdb_flush_pgs(struct net_
- 		}
- 
- 		br_multicast_del_pg(mp, p, pp);
-+		/* br_multicast_del_pg() can remove other groups from this list. */
-+		pp = &mp->ports;
- 	}
- }
- 
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -4126,6 +4126,7 @@ err_worker_destroy:
+ err_device_destroy:
+ 	ena_com_delete_host_info(ena_dev);
+ 	ena_com_admin_destroy(ena_dev);
++	ena_phc_destroy(adapter);
+ ena_devlink_destroy:
+ 	ena_devlink_free(devlink);
+ err_metrics_destroy:
 
 
