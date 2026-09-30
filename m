@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF0351EDF1;
-	Wed, 30 Sep 2026 17:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BD22EEE63;
+	Wed, 30 Sep 2026 17:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790328; cv=none; b=icAENfViqiZvR5I5lQSBIfkAxrflsw4rIH3yPIzJiIa+KO4C/BjQ+EDCaFbzXfRofkyjWZAdSI9lDSDh7wardtooT1MopQ6U7n2H5zKBd7zHPwgTF2b7o7qo2hUaJd9uVW4CgtEjoDuc/TWd6kIRYbZal2TTANuxRfZhefucw8M=
+	t=1790790331; cv=none; b=GrZ3G3EPbsxtcfdxvhvlMpqKXHbWZmvKQ5yISLPcU9asjE5WDei7IEh1ZYh+znQBM7auSj9o9N7ryvO5gzpAk92pWAC6TOFUsa6l6/gzq46VRtsrtb2q2zVhLXB/mWARl06c2C+QRX687T/Klcv3FUbaCIj/Wyn7PTn3b5jR3vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790328; c=relaxed/simple;
-	bh=rUf1OY+BGc/F9Irrs2O1t6mTkIKdozPlZb4oXGkta6E=;
+	s=arc-20240116; t=1790790331; c=relaxed/simple;
+	bh=49c+G1J73zDhfkPdIU3NBI1Zfn9k21gTNSOwDHAxVD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkcXfGqpHoq9g3LLjUfHmcvK6u6u5B8wI/eXvkGNVmAYLKt3JcoW66obMIA0YKuf6pAW/DkuN4tHANKD5YZN1VRsWXJDLRcuQv3l4PDxBdlsc62zAodo49ZtCpVRautkFeckOjJ6vjidOB8qgAwI/VBeSHunipZt2FyiANqN53c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTn5CUHH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MbU6paLY7QjvvnSxZkXtSj80cBclwgoLdJvC6q93s+4cxsfeSKXgpHxe4UmufZXmbtHWeL+oHfPCRoTKjmWlIad8rmgs9Mu6pmlkMzdMb5dvRuZ52rCdNUNC1o1n6+Wk5vXrHJ9kaL7mFVBT+KEZZ31KN3+zbij/hhm9V6bLO0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgn6JO/P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTn5CUHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0F41F000FF;
-	Wed, 30 Sep 2026 17:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgn6JO/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2E51F000FF;
+	Wed, 30 Sep 2026 17:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790327;
-	bh=TdiKgBQnkLKkHoe970DAcVfXBLpY3tBkJnPLKfnq3EM=;
+	s=korg; t=1790790329;
+	bh=xzUx+RyWNb0+x1HiTtUvWFtkqN04lqQMP2ILJxthxAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTn5CUHHMalVLqKttN6xFza3m2hy5MYQWb+5k3ZM76QAyS9vJscSOiKIRLgK0YSUO
-	 6paCRJuFzHUaFve+GtzoM89+im8tAZCd0xqpSxR+S32uwGa5vUoUBgMwdW64bRNaQI
-	 5Coyw6IWeNfdHGZ7UJ2VZJpKznbNI8TmnWlxibSw=
+	b=bgn6JO/PEMON4HHlO5QJm8TgtcBGc5E9inmiqevlta/7hLg/M+uD4HqmyA0An1fWX
+	 hQ/1+MwR/TSvf3tvRix5QfBguw0uzKwJZmWwTIn39Ga/UKt52jxrPNjTHBkfjU3b5Q
+	 P1OXmb5XyY9BOG9ixXSkMUkVI0+kMGb/G1Iqy1KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mark Rutland <mark.rutland@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	James Morse <james.morse@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
 	Will Deacon <will@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 791/877] arm64: Use load LSE atomics for the non-return per-CPU atomic operations
-Date: Wed, 30 Sep 2026 17:28:22 +0200
-Message-ID: <20260930152431.783514002@linuxfoundation.org>
+Subject: [PATCH 6.12 792/877] arm64: percpu: Fix LSE operations on {8,16}-bit types
+Date: Wed, 30 Sep 2026 17:28:23 +0200
+Message-ID: <20260930152431.805309898@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,40 +60,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 535fdfc5a228524552ee8810c9175e877e127c27 ]
+[ Upstream commit 8cf2093f5372952a9ebc805c418d45df7112cd14 ]
 
-The non-return per-CPU this_cpu_*() atomic operations are implemented as
-STADD/STCLR/STSET when FEAT_LSE is available. On many microarchitecture
-implementations, these instructions tend to be executed "far" in the
-interconnect or memory subsystem (unless the data is already in the L1
-cache). This is in general more efficient when there is contention as it
-avoids bouncing cache lines between CPUs. The load atomics (e.g. LDADD
-without XZR as destination), OTOH, tend to be executed "near" with the
-data loaded into the L1 cache.
+The assembly for __percpu_##name##_case_##sz() and
+__percpu_##name##_return_case_##sz() doesn't use the 'sfx' macro
+argument to form the LSE instruction. Without 'sfx', a W register
+argument will imply a 32-bit memory location, and consequently
+{8,16}-bit ops will erroneously read and write 32 bits of memory when
+the LSE instruction is used.
 
-STADD executed back to back as in srcu_read_{lock,unlock}*() incur an
-additional overhead due to the default posting behaviour on several CPU
-implementations. Since the per-CPU atomics are unlikely to be used
-concurrently on the same memory location, encourage the hardware to to
-execute them "near" by issuing load atomics - LDADD/LDCLR/LDSET - with
-the destination register unused (but not XZR).
+Fix this by appending 'sfx' to 'op_lse' to LSE instruction. It is not
+necessary (and not valid) to append 'sfx' to 'op_llsc', as 'op_llsc' is
+a register-register operation which does not access memory (and does not
+take a size suffix).
 
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
-[will: Add comment and link to the discussion thread]
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: 8cf2093f5372 ("arm64: percpu: Fix LSE operations on {8,16}-bit types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/percpu.h |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/percpu.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/arch/arm64/include/asm/percpu.h
 +++ b/arch/arm64/include/asm/percpu.h
@@ -94,30 +103,19 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
  	"	cbnz	%w[loop], 1b",					\
  	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %[ptr]\n"			\
-+		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
+-		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
++		#op_lse #sfx "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
  		__nops(3))						\
  	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
  	  [ptr] "+Q"(*(u##sz *)ptr)					\
-@@ -124,9 +124,16 @@ PERCPU_RW_OPS(8)
- PERCPU_RW_OPS(16)
- PERCPU_RW_OPS(32)
- PERCPU_RW_OPS(64)
--PERCPU_OP(add, add, stadd)
--PERCPU_OP(andnot, bic, stclr)
--PERCPU_OP(or, orr, stset)
-+
-+/*
-+ * Use value-returning atomics for CPU-local ops as they are more likely
-+ * to execute "near" to the CPU (e.g. in L1$).
-+ *
-+ * https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
-+ */
-+PERCPU_OP(add, add, ldadd)
-+PERCPU_OP(andnot, bic, ldclr)
-+PERCPU_OP(or, orr, ldset)
- PERCPU_RET_OP(add, add, ldadd)
- 
- #undef PERCPU_RW_OPS
+@@ -98,7 +98,7 @@ __percpu_##name##_return_case_##sz(void
+ 	"	stxr" #sfx "\t%w[loop], %" #w "[ret], %[ptr]\n"		\
+ 	"	cbnz	%w[loop], 1b",					\
+ 	/* LSE atomics */						\
+-		#op_lse "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
++		#op_lse #sfx "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
+ 		#op_llsc "\t%" #w "[ret], %" #w "[ret], %" #w "[val]\n"	\
+ 		__nops(2))						\
+ 	: [loop] "=&r" (loop), [ret] "=&r" (ret),			\
 
 
