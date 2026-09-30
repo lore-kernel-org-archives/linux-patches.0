@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109D9380FEB;
-	Wed, 30 Sep 2026 15:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587EE46EF77;
+	Wed, 30 Sep 2026 15:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783255; cv=none; b=OH6R0Beth9yVEruOjOpgzxiI/9ZNRcUiW8Hbh3u3zx5ugTJSLIWVogUCc1ghVRsNu6xVao4vbfPnwNujdy72SDxC2gRVYPYjg+RzfLfCJmYNAlKfvHAhD8QzlWxhvL+1X75N3eHuqEstlvOwtsfH8kRBmASUKNg6BI4LnJaajoU=
+	t=1790783258; cv=none; b=rasKLFV39eJwr9pvn0I/Tmse81mC8BWu8sLDe2BRdE8BO3fO/eG4hdbiYsBzrL47IMrDui0zIBeFhjCqElswk2yPFhdDxYP8gy4oleh/awJUq39fQFM3CE2jk9o/wYkAiGRpykUnYKlFSphi30YlQMFeLxomxiuSYeT/Et57Nkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783255; c=relaxed/simple;
-	bh=YDh9w69CsROqxBt6DMBgf5ths1746Eti62MGEocqN1I=;
+	s=arc-20240116; t=1790783258; c=relaxed/simple;
+	bh=j4V/+7CtQndtb9sjiqn+T8QIXE4ErnlAPW6ba2nUP5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOTUxZrEWy+bfae2a56tq6FIknOozCFSejWmtoUHUVWzJpYgzCJnvTRdmK1P6y8+AAcLUCHlNIUdierZVncQaYu7aAmnQiXyQKsDFbGXEiK+A0ln1op91ynD5E6xx9xmd799zGkLGoXlI9khQ35SyeNnkLFX8CuZRbPcC57AOHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1n0WOv7w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=skSAp4q7P1QxJcUZFidux78gyeUrxDtSHxfMJF6N7/PyRnvAotQHNStJuFlyMRrPRvvIcNUeTBFIuErB/YZieXprKdrVhD4dwkMBe3MijjrROhLiEfLeAHBtdWfc3qUDwZ3OCqGXAaYu+5y/FJ/lpO0B2+Nsz3aEaU+Ylb6pp7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7ZRU+R3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1n0WOv7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C555D1F00893;
-	Wed, 30 Sep 2026 15:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7ZRU+R3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E81F000FF;
+	Wed, 30 Sep 2026 15:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783251;
-	bh=bG+l4i4/NKY+v69GZ0e0hWIeo/62m9072xgRHlSIu4k=;
+	s=korg; t=1790783254;
+	bh=zx16DvXGRmgTSXwrjtVpx6TurAiK4KRzGWBFaIZWdlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1n0WOv7wBmrtpP3Q3MNUHTXV3CEoWbpkP3Xpnm0/o3pC3cXT77Lq0/C9aKcRvc8Qe
-	 ZH/puAgX9UngZ+Bs7kG4LEJOPZVwRE5/f0DP2a0MhuRcXgCWpgjpN1SHLU4sEE3+2E
-	 8BmC0nFFhS1QXUKPi49XoPZPcg6R7EwLE+M9OmPA=
+	b=C7ZRU+R3nChdwFiHjTN3iOLRlU+Di02RI8+9Z5aqppmpUztEcanfjCKNSUrYcIrr5
+	 /LaGuRju2wqw8XpeZmOJ9fUo9t6r7EZ7EeKh/7GyPSAMoDhRheRaRAsWdrVka3U5gh
+	 wJ9AqaNTCrRd577Ixcz9y5OQQxjNC9MZdTjcNBmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+c25629c98ba36ebe@bugs.sh,
-	stable@kernel.org,
-	Weiming Shi <bestswngs@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 306/595] fbdev: vfb: defer cleanup until the last reference
-Date: Wed, 30 Sep 2026 17:23:19 +0200
-Message-ID: <20260930152354.270624204@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 333/595] Bluetooth: L2CAP: Fix deadlock
+Date: Wed, 30 Sep 2026 17:23:46 +0200
+Message-ID: <20260930152354.844673481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,84 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit a0a34a40ed299c9c7cff6af163a5b883ee9d6d73 upstream.
+[ Upstream commit f1a8f402f13f94263cf349216c257b2985100927 ]
 
-FBIOGETCMAP takes a shallow snapshot of info->cmap and performs the
-usercopy after dropping info->lock. vfb_remove() frees the colormap
-immediately after unregistering the framebuffer, even when an open file
-still holds a reference to fb_info. A concurrent driver unbind can
-therefore free the colormap while the ioctl copies it to userspace.
+This fixes the following deadlock introduced by 39a92a55be13
+("bluetooth/l2cap: sync sock recv cb and release")
 
-KASAN reports:
+============================================
+WARNING: possible recursive locking detected
+6.10.0-rc3-g4029dba6b6f1 #6823 Not tainted
+--------------------------------------------
+kworker/u5:0/35 is trying to acquire lock:
+ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_sock_recv_cb+0x44/0x1e0
 
-  BUG: KASAN: slab-use-after-free in _copy_to_user
-  Read of size 512 by task poc/125
+but task is already holding lock:
+ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_get_chan_by_scid+0xaf/0xd0
 
-   _copy_to_user (./include/linux/instrumented.h:129 ./include/linux/uaccess.h:201 lib/usercopy.c:24)
-   fb_cmap_to_user (./include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
-   do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-   Allocated by task 1:
-   fb_alloc_cmap_gfp (./include/linux/slab.h:973 ./include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
-   vfb_probe (drivers/video/fbdev/vfb.c:459)
+       CPU0
+       ----
+  lock(&chan->lock#2/1);
+  lock(&chan->lock#2/1);
 
-   Freed by task 124:
-   fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
-   vfb_remove (drivers/video/fbdev/vfb.c:489)
+ *** DEADLOCK ***
 
-unregister_framebuffer() drops the registration reference, and fbdev calls
-fb_destroy after the last put_fb_info(). Move the registered framebuffer's
-cleanup into an fb_destroy callback so its colormap and screen buffer stay
-alive until all file references have been released.
+ May be due to missing lock nesting notation
 
-Fixes: 5e266e2e0e19 ("vfb: fix memory leaks in removal path")
-Reported-by: co+c25629c98ba36ebe@bugs.sh
-Cc: stable@kernel.org
-Closes: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Assisted-by: Codex:gpt-5
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+3 locks held by kworker/u5:0/35:
+ #0: ffff888002b8a940 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
+process_one_work+0x750/0x930
+ #1: ffff888002c67dd0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
+at: process_one_work+0x44e/0x930
+ #2: ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_get_chan_by_scid+0xaf/0xd0
+
+To fix the original problem this introduces l2cap_chan_lock at
+l2cap_conless_channel to ensure that l2cap_sock_recv_cb is called with
+chan->lock held.
+
+Fixes: 89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Karl Mehltretter: only the l2cap_core.c and l2cap_sock.c hunks apply
+  to this tree. hci_sync.c and hci_sync.h do not exist here, and the
+  hci_core.c change is an unrelated conversion of hci_dev_cmd() off
+  the old hci_request API. The changes to both L2CAP files apply
+  unmodified.
+
+  The lock this adds to l2cap_conless_channel() is also the one that
+  commit c531e63871c0 ("Bluetooth: l2cap: always unlock channel in
+  l2cap_conless_channel()") was backported without, so it additionally
+  pairs the l2cap_chan_unlock() that function currently calls on a
+  mutex it never acquired. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/vfb.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c |  3 +++
+ net/bluetooth/l2cap_sock.c | 13 +------------
+ 2 files changed, 4 insertions(+), 12 deletions(-)
 
---- a/drivers/video/fbdev/vfb.c
-+++ b/drivers/video/fbdev/vfb.c
-@@ -78,6 +78,13 @@ static int vfb_pan_display(struct fb_var
- static int vfb_mmap(struct fb_info *info,
- 		    struct vm_area_struct *vma);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index e974d8038dec8..cb883bd13286a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -8055,6 +8055,8 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
  
-+static void vfb_destroy(struct fb_info *info)
-+{
-+	vfree(info->screen_buffer);
-+	fb_dealloc_cmap(&info->cmap);
-+	framebuffer_release(info);
-+}
+ 	BT_DBG("chan %p, len %d", chan, skb->len);
+ 
++	l2cap_chan_lock(chan);
 +
- static const struct fb_ops vfb_ops = {
- 	.fb_read        = fb_sys_read,
- 	.fb_write       = fb_sys_write,
-@@ -89,6 +96,7 @@ static const struct fb_ops vfb_ops = {
- 	.fb_copyarea	= sys_copyarea,
- 	.fb_imageblit	= sys_imageblit,
- 	.fb_mmap	= vfb_mmap,
-+	.fb_destroy	= vfb_destroy,
- };
+ 	if (chan->state != BT_BOUND && chan->state != BT_CONNECTED)
+ 		goto drop;
  
-     /*
-@@ -485,9 +493,6 @@ static int vfb_remove(struct platform_de
- 
- 	if (info) {
- 		unregister_framebuffer(info);
--		vfree(videomemory);
--		fb_dealloc_cmap(&info->cmap);
--		framebuffer_release(info);
+@@ -8072,6 +8074,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
  	}
- 	return 0;
+ 
+ drop:
++	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ free_skb:
+ 	kfree_skb(skb);
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 9d834f2254626..018b5a0c87ce9 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1548,18 +1548,9 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	struct l2cap_pinfo *pi;
+ 	int err;
+ 
+-	/* To avoid race with sock_release, a chan lock needs to be added here
+-	 * to synchronize the sock.
+-	 */
+-	l2cap_chan_hold(chan);
+-	l2cap_chan_lock(chan);
+ 	sk = chan->data;
+-
+-	if (!sk) {
+-		l2cap_chan_unlock(chan);
+-		l2cap_chan_put(chan);
++	if (!sk)
+ 		return -ENXIO;
+-	}
+ 
+ 	pi = l2cap_pi(sk);
+ 	lock_sock(sk);
+@@ -1611,8 +1602,6 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ 
+ done:
+ 	release_sock(sk);
+-	l2cap_chan_unlock(chan);
+-	l2cap_chan_put(chan);
+ 
+ 	return err;
  }
+-- 
+2.53.0
+
 
 
