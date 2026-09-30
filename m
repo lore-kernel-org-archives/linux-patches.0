@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C9C4F30C4;
-	Wed, 30 Sep 2026 17:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298C4F7CCF;
+	Wed, 30 Sep 2026 17:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789125; cv=none; b=TUNpW1C/KczNoiw1R6DbdSR/TLi5bNTh7R6+8AmnDXVX+EAd+6yx1JHWXYgzKO7iCk7tQtZk0ZCTfU9/lze9hjcpmDJuY8+1cr2BG/ZF6dl2D2X21edn++BNY9HsPmUqWvRj3wiHvmpqobW/zNDqsqkvMRV/6iphf9yT6rtXrY8=
+	t=1790789128; cv=none; b=kFGwkHwt/rzVaudg8Y75u/YnT3SyzL0lBrJUe5SUwaEX9yTlug2eA5kZoX303cbMDq1APVxWjdXdVPCJSRZXgoSvqQcQornFO7PUtyb1PQWv5mN9rDRJ7uw5sTN3axJshAPdQDmAgBwq09JPRcoOL0s6KRLG9dn2Pfag2+6PWDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789125; c=relaxed/simple;
-	bh=iA9oTaie/QfMM8wQpkqjqYqdIv6gI+ZdtX6yMmMT7ss=;
+	s=arc-20240116; t=1790789128; c=relaxed/simple;
+	bh=UOVBugchRtgyDvGuN3RL6pqrWOzuXcQXQKvO2tZY6t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ddo6D5w2zhDcPb7J9ex9UMXCunI73iNiGcBUIuoNAZWlS4hyx4NZGVUYFcfxUI3uwo/sxDOq801YJa9A3ip+gDEaBVajWhIEoVY9zp+lrLVna3rQwi5diTSPorBl5AuDjvBteBJKK6krHAMTmbof+yZYtQJxNG35B93HF8CWjEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4tTLhjT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=guH+7UVPd1HSJibAAwhTXlSU3ZApR9LgioeSK1xlQSaP81kgQtPinBkRu56okjldO32BoghPxLXgbTvSI25AWSdKK95mXu69Qt5a5n69uYizfYRZR8eOytxdB6oUiYdKJkxOyIsgZJxxGGmhXkc0nAH9ySqFyIg0xcukKIw8JlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR4Gkj71; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4tTLhjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055121F000FF;
-	Wed, 30 Sep 2026 17:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR4Gkj71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE821F000FF;
+	Wed, 30 Sep 2026 17:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789124;
-	bh=FGBJ0L8j/jcZckALVFMTRHGkiHuJ7TweDaZ3zt3Eo6k=;
+	s=korg; t=1790789127;
+	bh=8aLEoKTnsEutYSLVCr/7wptpeNJF0W0Kbk1Z2NuQqxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h4tTLhjTLFdfpzL3KvLT6LngEKz5qfid+JB6z3tgyP80p+Oq8Rwv/QX28Hv92UHoH
-	 BUax9mfRoBBtAoExXHOpTh0GtMrQu/RJKIlBie9QQGltPRaekjZ+NOQKIcD+KNBjY/
-	 yrMCXOpqENEWUFm7J2K8DuwRH4iiHarB16xQD8FY=
+	b=JR4Gkj71WFMh/ID73f0WoLIaQ/d/wHaU625EdP7C0zE2GQwQUDoyNyjWw3LdvJ8/w
+	 xgFxrbjhFSD1phmPstifVTIapadlzOox7555FtwGkQOXfJI3jXGco/3WYshZ1En/Vt
+	 wJ2Hb3AMhqejzGqM3+zH27TS7b/olFurNxr6hVAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 368/877] net/sched: sch_hfsc: bound the classify inner-filter walk with a drift budget
-Date: Wed, 30 Sep 2026 17:21:19 +0200
-Message-ID: <20260930152422.619662380@linuxfoundation.org>
+Subject: [PATCH 6.12 369/877] drm/virtio: fix object leak when drm_gem_handle_create() fails
+Date: Wed, 30 Sep 2026 17:21:20 +0200
+Message-ID: <20260930152422.641471836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -48,128 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 8a60ade2277e1f0e0d0578d565354e52292fa46d ]
+[ Upstream commit 36570ef2244cc4d7563b1f0157bc0f032498638c ]
 
-hfsc_classify() applies the "filter may only point downwards" level check
-only when the filter result carries no bound class. A filter created with
-a flowid gets res.class set once at bind time, so the check never runs for
-it during classification. hfsc_adjust_levels() can later raise a class's
-level without revalidating existing bindings, leaving two binds that were
-each legal at bind time pointing at each other; the classify walk then
-bounces between two interior classes forever with the qdisc lock held and
-BH disabled — a soft lockup from a single packet. The stuck walk trips
-the watchdog:
+virtio_gpu_gem_create() owns the reference taken by
+virtio_gpu_object_create(). On the drm_gem_handle_create() error path it
+calls drm_gem_object_release() instead of dropping that reference.
 
-  watchdog: BUG: soft lockup - CPU#3 stuck for 13s! [ping:444]
-  RIP: 0010:u32_classify+0x542/0x17f0
-  ...
-  tcf_classify+0x66/0xa0
-  hfsc_enqueue+0x166/0xdf0
+drm_gem_object_release() is the inverse of drm_gem_object_init() and does
+not touch the reference count or call obj->funcs->free(), so it is only
+correct as the last step of a destructor, as in
+virtio_gpu_cleanup_object(). Using it here leaves the bo at refcount 1
+with no remaining reference, so virtio_gpu_free_object() never runs and
+the shmem pages, sg table and virtio_gpu_object are leaked. Since
+virtio_gpu_object_create() has already set bo->created,
+VIRTIO_GPU_CMD_RESOURCE_UNREF is not queued either, leaking the host-side
+resource and the resource id.
 
-Bound the traversal with a budget of non-descending hops, the only way a
-configured walk can move without descending the class tree once levels
-drift after bind time. The budget is cumulative over the whole walk and
-is deliberately not reset on a descending hop: a chain that alternates a
-descent with a lateral hop would return the budget every lap and never
-trip. Descending hops never decrement it, so legitimately deep trees are
-unaffected and a terminating lateral chain still classifies normally.
-Drop the packet with a rate-limited warning once the budget is exhausted,
-mirroring the merged HTB fix.
+drm_gem_handle_create_tail() drops the handle reference on all of its
+internal error paths, so the caller only has to drop its own. Use
+drm_gem_object_put(), matching the success path below.
 
-This is a follow-up to commit 729c4896ab82 ("net/sched: sch_htb: limit
-htb_classify inner-class filter hops"), which bounded the same classify
-loop on the HTB side but left the HFSC walk unbounded.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_SCH_HFSC, CONFIG_NET_CLS_U32,
-  CONFIG_LOCKUP_DETECTOR.
-- Build a cycle with two legal-at-bind-time flowid binds and a level
-  drift: class X 1:1 (child of root) with leaf child 1:10; class Y 1:2
-  (sibling of X) with children 1:20 and 1:200; root u32 filter flowid
-  1:1; filter on X flowid 1:2 (legal when Y is a leaf); after Y's level
-  rises to 2, filter on Y flowid 1:1 (legal then). Send one packet (ping
-  on the device). Unfixed kernel: classify spins with the qdisc lock
-  held; with softlockup_panic=1 it panics.
-- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
-
-Fixes: a2f79227138c ("net_sched: sch_hfsc: fix classification loops")
-Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/QDISC-CTUU.v2.20260913192614@mojatatu.com/
-Link: https://sashiko.dev/#/patchset/QDISC-CTUU.v2.20260913192614@mojatatu.com
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-CTUU.v2.20260913192614%40mojatatu.com
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-CTUU.v3.20260916184908@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dc5698e80cf7 ("Add virtio gpu driver.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260915-fixes-v2-1-a0d799e4db66@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpu/drm/virtio/virtgpu_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 601f99dd989ae..df3501dfe01a8 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -386,6 +386,15 @@ cftree_update(struct hfsc_class *cl)
- #define	SM_MASK		((1ULL << SM_SHIFT) - 1)
- #define	ISM_MASK	((1ULL << ISM_SHIFT) - 1)
+diff --git a/drivers/gpu/drm/virtio/virtgpu_gem.c b/drivers/gpu/drm/virtio/virtgpu_gem.c
+index 2e75cdeb49b3d..0233a1c3181c5 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_gem.c
++++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
+@@ -45,7 +45,7 @@ static int virtio_gpu_gem_create(struct drm_file *file,
  
-+/*
-+ * Cap on the non-descending hops a classify walk may take before its
-+ * filter chain is treated as misconfigured. A flowid binding that was
-+ * legal at bind time can become lateral once hfsc_adjust_levels()
-+ * raises a class level; a few such hops are legitimate, an unbounded
-+ * run means the chain cycles.
-+ */
-+#define	HFSC_CLASSIFY_MAX_DRIFT	8
-+
- static inline u64
- seg_x2y(u64 x, u64 sm)
- {
-@@ -1133,6 +1142,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 	struct hfsc_class *head, *cl;
- 	struct tcf_result res;
- 	struct tcf_proto *tcf;
-+	unsigned int drift;
- 	int result;
+ 	ret = drm_gem_handle_create(file, &obj->base.base, &handle);
+ 	if (ret) {
+-		drm_gem_object_release(&obj->base.base);
++		drm_gem_object_put(&obj->base.base);
+ 		return ret;
+ 	}
  
- 	if (TC_H_MAJ(skb->priority ^ sch->handle) == 0 &&
-@@ -1142,6 +1152,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 
- 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
- 	head = &q->root;
-+	drift = HFSC_CLASSIFY_MAX_DRIFT;
- 	tcf = rcu_dereference_bh(q->root.filter_list);
- 	while (tcf && (result = tcf_classify(skb, NULL, tcf, &res, false)) >= 0) {
- #ifdef CONFIG_NET_CLS_ACT
-@@ -1167,6 +1178,17 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 		if (cl->level == 0)
- 			return cl; /* hit leaf class */
- 
-+		/*
-+		 * flowid binds skip the level check above (res.class is set
-+		 * at bind time and levels drift after), so a walk can follow
-+		 * lateral hops without descending; a bounded number of them
-+		 * is legal, more means the chain cycles.
-+		 */
-+		if (cl->level >= head->level && drift-- == 0) {
-+			pr_warn_ratelimited("hfsc: classify hop budget exhausted, dropping packet\n");
-+			return NULL;
-+		}
-+
- 		/* apply inner filter chain */
- 		tcf = rcu_dereference_bh(cl->filter_list);
- 		head = cl;
 -- 
 2.53.0
 
