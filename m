@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD03550B8A8;
-	Wed, 30 Sep 2026 18:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538634DEC26;
+	Wed, 30 Sep 2026 18:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792338; cv=none; b=T+9fHruppMOZ7t80Wn/rvkulWsykmbVJyfW5KNu18vNOXD+H1NDwERFbBt5sSYGTfYPrCeoi3buEuwVP7yIIcDq+yO4V4QtXExi/oZxdK9SY5ZJSCNhQfgxYHwYj/WZimp3n1LeuJ6av1eBwUD6/VzzQ43LBpOgkUN/fX/ObhxU=
+	t=1790792340; cv=none; b=eTQ47mMi7wXETImmeEWUAbSEc3C7t7sew4XRUe47DAdEti1bT37P0B/llpeZ0CbjruWbI7rRGMs/brBrDloWTPDhvBZ5Qz02wioslfdRW+i5U7kt84GyMKQdWpz+AnKNCrhZnz7TZAv02Q3DRKhuGU1u8Ous6e4k/tGrtW717bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792338; c=relaxed/simple;
-	bh=s7ST8w8cieeKOI7r8OBFIxh4uckzgD10PCalqn8np6w=;
+	s=arc-20240116; t=1790792340; c=relaxed/simple;
+	bh=9PUN+Vm5FwJ+RLcPxLTos6ubAdQ5J5rmTC+pa0te69k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBNXIvXQAWk1p7qQy4Pm5nxZYjlQG5a4/4xpqugog0LahFIjkBWPGqe6yBn16lgHt5ZZbfcEPTbQaFVao3/JAcL4456+vNiDJIWF5J7dYmOdbP1rvfBx9+6lyXDFxTM686xwwiMKP5mMFMOHE4ZmMRSaSgppmb091KMshbKYOC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kyb4Hj29; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UU6zAMzbJ7eTu1IY0NnrZdHH9NYfR3O9e+ZChFiSUpfe4Ws3JtH94/im7lOi1ZH22EFQMiUDtBttcYVq1Mc982NKv2b0Qln/mvqlb0C44U9QNxtNUekAagoB5XCb2SmAuDEqKkw43ToAFkXLHFVCZopG0ljQXpEVpqglEDvMy/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMTKcEBu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kyb4Hj29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C571F000FF;
-	Wed, 30 Sep 2026 18:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMTKcEBu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75BF1F000FF;
+	Wed, 30 Sep 2026 18:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792336;
-	bh=xZG9tywubKbShYplC+kgqVWDTG6AsDLkKuv67LDi8CU=;
+	s=korg; t=1790792339;
+	bh=JFRNkUuFARpNDBtGRZ641fsPKl14mvrJ8bio7H4puFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kyb4Hj29OD4EIRdbKMlw+NDYdiQ68WbMIKQ6sAglmfvHUnvSnHTpsMoe4dqZXsbb+
-	 oMyWDe91jgnvojdo4D0QReT1bgS2k0hw6u1x0Kl1HgT3sTRjA1tzwC9C826uzluCpr
-	 vH0hTxoN4oBsOXEK2X9ItFti9q0I7YLk0qOJFGC4=
+	b=dMTKcEBuYE3CKpNhVlz/XqzDG1kDkncR6Z+LgvGvoCb2460WTTDhDe3U8yjDvy85+
+	 YpQVzEE7hPQlG2RdoSSi5Eft4IMvwKcYAxLiCNarfK3IJuw/w6Ap6G/fawnYUQHlf7
+	 oCtXPuBEUxa34OLN1ZI+x8iXL/1p5oh1ozdmX2n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	kernel test robot <lkp@intel.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Francesco Magazzu <postadelmaga@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 620/752] ocfs2: make ocfs2_calc_xattr_init() return void
-Date: Wed, 30 Sep 2026 17:28:10 +0200
-Message-ID: <20260930152411.694632692@linuxfoundation.org>
+Subject: [PATCH 5.15 621/752] drm/nouveau/clk: fix list cursor use after loop in nvkm_clk_ustate_update
+Date: Wed, 30 Sep 2026 17:28:11 +0200
+Message-ID: <20260930152411.715864962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -58,121 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 525c0edc032b3297d0c1056cf1fa20cf1f9e6184 ]
+[ Upstream commit aff09d9e37e02dc60bde79035ac15b136d602259 ]
 
-ocfs2_calc_xattr_init() used to read the default ACL off the parent inode
-itself, so it could return an error from ocfs2_xattr_get_nolock().  Commit
-bd7c05fb4a47 ("ocfs2: fix circular locking dependency in
-ocfs2_init_acl()") moved that lookup before the transaction starts and
-deleted the error path, but left the now vestigial 'int ret = 0'
-declaration and both 'return ret' statements behind, along with an
-unreachable error branch in ocfs2_mknod().
+If list_for_each_entry() exits without hitting a break then "pstate" is
+not a valid pstate pointer.  Introduce a "found" variable instead.
 
-Drop the leftover variable and convert the return type to void, so the
-callee states that it always succeeds and the caller no longer carries a
-check that can never trigger.
+The check is reachable from userspace: nvkm_clk_ustate_update() takes the
+pstate id straight from the 'pstate' debugfs file, so requesting an id
+that is not in clk->states - or any id at all when the perf tables are
+broken and the list is empty - makes the pstate->pstate != req test
+dereference the list head cast to a struct nvkm_pstate, which is an
+out-of-bounds read.
 
-No functional change.
-
-Link: https://lore.kernel.org/20260904023751.3703334-1-joseph.qi@linux.alibaba.com
-Fixes: bd7c05fb4a47 ("ocfs2: fix circular locking dependency in ocfs2_init_acl()")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609040247.8B3lmoqX-lkp@intel.com/
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Fixes: 7c8565220697 ("drm/nouveau/clk: implement power state and engine clock control in core")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+[Francesco: rebased on drm-misc-next, expanded the commit message]
+Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260918131620.405133-2-postadelmaga@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c |  9 ++-------
- fs/ocfs2/xattr.c | 13 +++++--------
- fs/ocfs2/xattr.h |  8 ++++----
- 3 files changed, 11 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index c97c6fdb8cec2..62f9d976c8fb3 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -332,13 +332,8 @@ static int ocfs2_mknod(struct user_namespace *mnt_userns,
- 		goto leave;
- 
- 	/* calculate meta data/clusters for setting security and acl xattr */
--	status = ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters,
--				       &xattr_credits, &want_meta,
--				       &acl_state);
--	if (status < 0) {
--		mlog_errno(status);
--		goto leave;
--	}
-+	ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters, &xattr_credits,
-+			      &want_meta, &acl_state);
- 
- 	/* Reserve a cluster if creating an extent based directory. */
- 	if (S_ISDIR(mode) && !ocfs2_supports_inline_data(osb)) {
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 3f6cf0259679b..62d6d73083642 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -611,12 +611,11 @@ int ocfs2_calc_security_init(struct inode *dir,
- 	return ret;
- }
- 
--int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
--			  struct ocfs2_security_xattr_info *si,
--			  int *want_clusters, int *xattr_credits,
--			  int *want_meta, struct ocfs2_acl_state *acl_state)
-+void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
-+			   struct ocfs2_security_xattr_info *si,
-+			   int *want_clusters, int *xattr_credits,
-+			   int *want_meta, struct ocfs2_acl_state *acl_state)
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+index c2b5cc5f97eda..7c7f7c1c8d383 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+@@ -474,6 +474,7 @@ static int
+ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
  {
--	int ret = 0;
- 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
- 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
+ 	struct nvkm_pstate *pstate;
++	bool found = false;
+ 	int i = 0;
  
-@@ -638,7 +637,7 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
- 	}
+ 	if (!clk->allow_reclock)
+@@ -481,12 +482,14 @@ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
  
- 	if (!(s_size + a_size))
--		return ret;
-+		return;
- 
- 	/*
- 	 * The max space of security xattr taken inline is
-@@ -704,8 +703,6 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
- 			}
+ 	if (req != -1 && req != -2) {
+ 		list_for_each_entry(pstate, &clk->states, head) {
+-			if (pstate->pstate == req)
++			if (pstate->pstate == req) {
++				found = true;
+ 				break;
++			}
+ 			i++;
  		}
+ 
+-		if (pstate->pstate != req)
++		if (!found)
+ 			return -EINVAL;
+ 		req = i;
  	}
--
--	return ret;
- }
- 
- static int ocfs2_xattr_extend_allocation(struct inode *inode,
-diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
-index 5901f2095bc57..016374e9a147e 100644
---- a/fs/ocfs2/xattr.h
-+++ b/fs/ocfs2/xattr.h
-@@ -57,10 +57,10 @@ int ocfs2_calc_security_init(struct inode *,
- 			     int *, int *, struct ocfs2_alloc_context **);
- 
- struct ocfs2_acl_state;
--int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
--			  struct ocfs2_security_xattr_info *si,
--			  int *want_clusters, int *xattr_credits,
--			  int *want_meta, struct ocfs2_acl_state *acl_state);
-+void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
-+			   struct ocfs2_security_xattr_info *si,
-+			   int *want_clusters, int *xattr_credits,
-+			   int *want_meta, struct ocfs2_acl_state *acl_state);
- 
- /*
-  * xattrs can live inside an inode, as part of an external xattr block,
 -- 
 2.53.0
 
