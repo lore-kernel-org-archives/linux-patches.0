@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4363750CF;
-	Wed, 30 Sep 2026 16:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56663B47C6;
+	Wed, 30 Sep 2026 16:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784140; cv=none; b=t01UULtfnJKhrHkkzMTLnnefn3rqt2N/6f1bstq/kyoPO4s/R8LPOeBwqtyQTW+LQjGpsC9LL58/VRYl5B+OHo1IG9RsXd73kFYZ7zpRg/JQg+h4K7ZA2F34q/1ivOcDiNw4B8J6XSitM3uZ9tmGcF8FiT89+0sP7PXaRIzthZI=
+	t=1790784144; cv=none; b=PcpU1Dif64l+wFdFVi1fQtmbla9FWdIGzqEJ48BRGZl4nTgx6pfkpUJ+1kxtpblFVAuMRn7EoVNGgFvlWbyBwJCEOvyBnxxo83DID2F4awd78aml2tLcAONMPvmrm4eNsCMsGGohjalZcWMcTKL0bizqWwDpmSZ4fEUejqBz16A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784140; c=relaxed/simple;
-	bh=IdP8dCcOz1MN/KvH7pacqvjqezbpSO8hv/W/O4Gc24U=;
+	s=arc-20240116; t=1790784144; c=relaxed/simple;
+	bh=2zvucq3KNhADPmXqTR6/NUBVm3kXBLWGxfgm4QHb4D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoRtIDhLbCpXBIm5KdrZyglVC5c9tsT6lXajbjL253kcjwX7EAC4IDSOmdM9ELQnnidEwjA3UQj5qyWQRBdgMI8rHtBzvQBN+9kYSRKFTSLakqu06xqo3fxLnEUpIyatqsNVhSZo8bJp7cdwnBEK5QD9rq9GFRprIy4xbsZ9Uv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLuW5kY5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bzfm+R3lmnGHFKt8ejGX3ImxqDr5UDOuoUYLZbMOCZSxaD4lHhRgq4SNxyuZVSCvc/ROmZ190dqmEVS/Bi0MHLAanpIkclyf74JULZRJ0cbFOq4ehp4hsYojOQkwktcbYUfAPZbNNcmsaPqDEnKCQFqChQw4vtGtePUWsyrzRAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeN+VxJR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLuW5kY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D9D1F000FF;
-	Wed, 30 Sep 2026 16:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeN+VxJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FF71F00893;
+	Wed, 30 Sep 2026 16:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784136;
-	bh=M0DrUrIOE15hSUWGIkmOBKZzN2OJC/PYuuYoz+/rrck=;
+	s=korg; t=1790784139;
+	bh=6mEIyLeN6kucxUQDu7lLLSxWBinPadG8P5IPHQwBasY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLuW5kY5fw+Kpn6SfYbtCmkN71/x/jjT/Sf9hJ3uXFgLOzkDPvUtowWKIscXYy8nE
-	 MQt+dZ9Suwv23E49kurjZ/JPnO7MQ1g5H/5ef7QvEpH/cnT7Qcejzv0FD0yK1HhJXm
-	 iG+9ROCr8AipRmC5f5myrq8fO4EvL41fOpiROubI=
+	b=SeN+VxJR0TckFgNQJzNDlDHEvE675BuKF8p1vwWPKZCEB6N6xw5mRiZVjaDjEWeEr
+	 QfBIV4QQupxXYVSwb12NefikD8N1t3nLbXwnApvhin95Bw2gtR/hCW6so840Z7NIAR
+	 eTfEnlIvyBi6DYZjp/D585OVuO07WMlU2HSEqA1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Joonwon Kang <joonwonkang@google.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/982] thunderbolt: Dont create multiple DMA tunnels on firmware connection manager
-Date: Wed, 30 Sep 2026 17:12:38 +0200
-Message-ID: <20260930152417.269556296@linuxfoundation.org>
+Subject: [PATCH 6.1 049/982] mailbox: Make mbox_send_message() return error code when tx fails
+Date: Wed, 30 Sep 2026 17:13:05 +0200
+Message-ID: <20260930152417.846806856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,123 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Joonwon Kang <joonwonkang@google.com>
 
-[ Upstream commit cf0c38ee554c3e9062408cc3a38325483d52ecd0 ]
+[ Upstream commit 96a3d2f3167f5644b30e60171898e67123c3c2c6 ]
 
-Firmware connection manager supports only one DMA tunnel per XDomain
-connection. Firmware prior Intel Titan Ridge failed the operation
-directly but the same does not happen anymore on Titan Ridge and
-forward. For this reason add an explicit check, and fail the operation
-accordingly in the driver.
+When the mailbox controller failed transmitting message, the error code
+was only passed to the client's tx done handler and not to
+mbox_send_message() in blocking mode. For this reason, the function could
+return a false success. This commit resolves the issue by introducing the
+tx status and checking it before mbox_send_message() returns.
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+This commit works with the premise that the multi-threads' access to a
+channel in blocking mode is serialized by clients, not by the mailbox
+APIs, since the current mbox_send_message() in blocking mode does not
+support multi-threads.
+
+Signed-off-by: Joonwon Kang <joonwonkang@google.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/icm.c     | 10 ++++++++++
- drivers/thunderbolt/xdomain.c | 25 +++++++++++++++++++------
- include/linux/thunderbolt.h   |  2 ++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ drivers/mailbox/mailbox.c          | 6 +++++-
+ include/linux/mailbox_controller.h | 2 ++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
-index 6d354392fcbc4..090388d71f46f 100644
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -565,6 +565,11 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_fr_pkg_approve_xdomain request;
- 	int ret;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index c5b9d24efb69c..a00a02b6709c7 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -110,8 +110,10 @@ static void tx_tick(struct mbox_chan *chan, int r)
+ 	if (chan->cl->tx_done)
+ 		chan->cl->tx_done(chan->cl, mssg, r);
  
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
+-	if (r != -ETIME && chan->cl->tx_block)
++	if (r != -ETIME && chan->cl->tx_block) {
++		chan->tx_status = r;
+ 		complete(&chan->tx_complete);
 +	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.link_info = xd->depth << ICM_LINK_INFO_DEPTH_SHIFT | xd->link;
-@@ -1134,6 +1139,11 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_tr_pkg_approve_xdomain request;
- 	int ret;
- 
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.route_hi = upper_32_bits(xd->route);
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index f0753a0d5b72e..6dac354de4bb8 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1920,6 +1920,7 @@ struct tb_xdomain *tb_xdomain_alloc(struct tb *tb, struct device *parent,
- 	INIT_DELAYED_WORK(&xd->state_work, tb_xdomain_state_work);
- 	INIT_DELAYED_WORK(&xd->properties_changed_work,
- 			  tb_xdomain_properties_changed);
-+	atomic_set(&xd->ntunnels, 0);
- 
- 	xd->local_uuid = kmemdup(local_uuid, sizeof(uuid_t), GFP_KERNEL);
- 	if (!xd->local_uuid)
-@@ -2181,9 +2182,15 @@ int tb_xdomain_enable_paths(struct tb_xdomain *xd, int transmit_path,
- 			    int transmit_ring, int receive_path,
- 			    int receive_ring)
- {
--	return tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
--					       transmit_ring, receive_path,
--					       receive_ring);
-+	int ret;
-+
-+	ret = tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
-+					      transmit_ring, receive_path,
-+					      receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_inc(&xd->ntunnels);
-+	return 0;
  }
- EXPORT_SYMBOL_GPL(tb_xdomain_enable_paths);
  
-@@ -2206,9 +2213,15 @@ int tb_xdomain_disable_paths(struct tb_xdomain *xd, int transmit_path,
- 			     int transmit_ring, int receive_path,
- 			     int receive_ring)
- {
--	return tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
--						  transmit_ring, receive_path,
--						  receive_ring);
-+	int ret;
-+
-+	ret = tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
-+						 transmit_ring, receive_path,
-+						 receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_dec(&xd->ntunnels);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tb_xdomain_disable_paths);
+ static enum hrtimer_restart txdone_hrtimer(struct hrtimer *hrtimer)
+@@ -281,6 +283,8 @@ int mbox_send_message(struct mbox_chan *chan, void *mssg)
+ 		if (ret == 0) {
+ 			t = -ETIME;
+ 			tx_tick(chan, t);
++		} else if (chan->tx_status < 0) {
++			t = chan->tx_status;
+ 		}
+ 	}
  
-diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
-index 98af9ad04cac1..fbeab0ec165ca 100644
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -210,6 +210,7 @@ void tb_unregister_property_dir(const char *key, struct tb_property_dir *dir);
-  *				changed notification
-  * @bonding_possible: True if lane bonding is possible on local side
-  * @target_link_width: Target link width from the remote host
-+ * @ntunnels: Keeps track of how many tunnels go through this XDomain
-  * @link: Root switch link the remote domain is connected (ICM only)
-  * @depth: Depth in the chain the remote domain is connected (ICM only)
-  *
-@@ -256,6 +257,7 @@ struct tb_xdomain {
- 	int properties_changed_retries;
- 	bool bonding_possible;
- 	u8 target_link_width;
-+	atomic_t ntunnels;
- 	u8 link;
- 	u8 depth;
- };
+diff --git a/include/linux/mailbox_controller.h b/include/linux/mailbox_controller.h
+index 6fee33cb52f58..02e54ac37a6c0 100644
+--- a/include/linux/mailbox_controller.h
++++ b/include/linux/mailbox_controller.h
+@@ -108,6 +108,7 @@ struct mbox_controller {
+  * @txdone_method:	Way to detect TXDone chosen by the API
+  * @cl:			Pointer to the current owner of this channel
+  * @tx_complete:	Transmission completion
++ * @tx_status:		Transmission status
+  * @active_req:		Currently active request hook
+  * @msg_count:		No. of mssg currently queued
+  * @msg_free:		Index of next available mssg slot
+@@ -120,6 +121,7 @@ struct mbox_chan {
+ 	unsigned txdone_method;
+ 	struct mbox_client *cl;
+ 	struct completion tx_complete;
++	int tx_status;
+ 	void *active_req;
+ 	unsigned msg_count, msg_free;
+ 	void *msg_data[MBOX_TX_QUEUE_LEN];
 -- 
 2.53.0
 
