@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8604385D97;
-	Wed, 30 Sep 2026 17:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC90951CF6E;
+	Wed, 30 Sep 2026 17:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790257; cv=none; b=TRxo7ZL+2IdG3v1pw7rTROKSC6VJ9ErVfo/0crXqPmjyB1XF+ifWygkbPFyEvkD9LsM8HfKWhjsUQBzMliamujwCD363UwGeTL8Xq9AE2lLtH2X5XvgLZbDoM2aRFW4ArgxiJREIJZQxEKG0GTXjFS2Yen+WGV3w7xnuqXQEivA=
+	t=1790790259; cv=none; b=ALSLv9GBIM6U55X0Qi4U2xFApt6A+qYF1xFGAyKkwKbgwbhEOWBY7MmzrM1kOOpNkS/qkDDOgVkfVGp2kPvELv+S2OgFZwBLchaYLyCtKqOUmDsF53nZl291voQit/PGsGkF2Xv0bpCJBrbcIuNpPncjbTsqWxdMLw37kj7y6ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790257; c=relaxed/simple;
-	bh=acpAS6Rygr/oMwnX8cToHGtMFJCTQbqI7iBifelpptc=;
+	s=arc-20240116; t=1790790259; c=relaxed/simple;
+	bh=FHD1gTcmI4zHyhulc2MB9z/CGaqmcRhgZ6a7qDul8/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AM7P5DXFljMvCNZX6FPFatWV7osn9RGs5LXj37e0ZsN+PGYLCcrTjcOrWmm2ORq+GBQveG8S7gBnhUixg/Y3vhLJkQg48jM+66oiltldt6NMSFyfWo0+8jOSS8dgrsRg82DfGI+Yfn9PM71kMuFsKaIuOHMVFYAeTbbN8vuKo44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lemc3a06; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mx4JyqcC9bCdtdqOCwV49h5b3/A6r/AE7qLWp4Ae/+qokcdrVCyyF/GVZexU498dpfNO29GKpzI3zvYuXueT/KCZ+gWkQlPU06kOZl8v4GraCzFd3b109Cv3XxLbkMzV9zbYutUxuAoIcNLL3UkX7JmB6JHD+ej/I0PmCh5lPgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4JxWUnY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lemc3a06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC8B1F00898;
-	Wed, 30 Sep 2026 17:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4JxWUnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103DC1F000FF;
+	Wed, 30 Sep 2026 17:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790255;
-	bh=f6dMbCrQGR3tAJaqglVlW9QIY7HDwpfJ/XiMT+qpkxI=;
+	s=korg; t=1790790258;
+	bh=izU5sDHJcumXd/VhT2FDBicbrXczd2bKNDQ2oiPkS/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lemc3a06zROwifca6Os8QOZNVMgOUZP/hilrwet9dV39Cykf0IdyTMDlPDDMyWv//
-	 XXSQgeEPLG/GhFMAWrRdXFgk+fayDuHiVvyv7LN3tJ4TMzOYfr+Jk716jqV8J03mUM
-	 gMzoC4xORHvRqjDeCkJwUd+iWhddhsK/Jw/X67aI=
+	b=n4JxWUnYTEKGuoITNgkF8TuUUvpTb0FlS8btHKk2WSuSsW6xcGr3DPp0KgJvWWjv7
+	 tVTTh7ols2NS7TLXcMJkpgz01YjRrnfi9udGgwvOPgg5ksLfRaj1KSf/8izUkvdl8s
+	 tmGuWChjFMTRrgwLIUPtxcnVw+xbHkW2XWf1FKbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Will Chen <will.chen.tty@gmail.com>,
+	Joe Damato <joe@dama.to>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Pavel Begunkov <asml.silence@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 764/877] eth: bnxt: store rx buffer size per queue
-Date: Wed, 30 Sep 2026 17:27:55 +0200
-Message-ID: <20260930152431.191702923@linuxfoundation.org>
+Subject: [PATCH 6.12 765/877] bnxt: fix memory leak in bnxt_queue_mem_alloc error cases
+Date: Wed, 30 Sep 2026 17:27:56 +0200
+Message-ID: <20260930152431.213833110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,346 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Will Chen <will.chen.tty@gmail.com>
 
-[ Upstream commit f57efb32aae1da5c0a25acf473ef4ab559894adf ]
+[ Upstream commit d1000fd7995e51deec872d154e0a40d82f7a539f ]
 
-Instead of using a constant buffer length, allow configuring the size
-for each queue separately. There is no way to change the length yet, and
-it'll be passed from memory providers in a later patch.
+There is a small memory leak in bnxt_queue_mem_alloc:
+when bnxt_alloc_rx_agg_bmap() succeeds
+but bnxt_alloc_one_tpa_info() later fails,
+the rx_agg_bmap allocated by bnxt_alloc_rx_agg_bmap()
+is not freed in the fallthrough cleanup cases.
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Free the rx_agg_bmap in the err_free_rx_agg_ring case
+and initialize clone->rx_agg_bmap = NULL earlier in the function
+to allow for safe fallthrough.
+
+Fixes: bd649c5cc958 ("bnxt_en: handle tpa_info in queue API implementation")
+Signed-off-by: Will Chen <will.chen.tty@gmail.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260729220132.1256924-1-will.chen.tty@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 Stable adaptation for 6.12:
 
-Keep the per-queue buffer size change using the existing page-based RX
-and XDP interfaces. Apply aggregation truesize accounting in
-bnxt_rx_agg_pages_skb(), and program the size in the existing firmware
-ring allocation path instead of adding the newer helper functions.
+The preceding per-queue buffer-size backport already initializes the
+clone's rx_agg_bmap to NULL. Retain that initialization and apply the
+missing bitmap cleanup to err_free_rx_agg_ring. This frees the clone's
+bitmap when TPA allocation fails, while earlier allocation failures
+can safely fall through with a NULL bitmap.
 
-This tree has no unreadable netmem pools. Derive head-pool separation
-from the queue buffer size, keep head allocations at order zero, and
-use the same queue-specific decision for allocation and cleanup. Keep
-the existing pool sizing and NAPI association. Queue sizes start at
-BNXT_RX_PAGE_SIZE and are inherited by restart clones.
-
-Initialize the clone's rx_agg_bmap to NULL to separate it from the live
-ring and provide the common initialization context needed to cherry-pick
-5ce7f36c334d ("bnxt_en: Don't free the live ring's TPA state on queue
-restart failure") cleanly. The target's TPA pointer resets are left to
-that commit. No functions are added.
+Keep the existing queue allocation interface and inherited RX page
+size: this tree has neither qcfg nor need_head_pool. Leave the TPA
+pointer resets to target commit 5ce7f36c334d. No functions are added.
 
 Stable-dep-of: 5ce7f36c334d ("bnxt_en: Don't free the live ring's TPA state on queue restart failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |   60 ++++++++++++++------------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     |    1 
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |    6 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h |    2 
- 4 files changed, 39 insertions(+), 30 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -867,9 +867,9 @@ static void bnxt_tx_int(struct bnxt *bp,
- 		bnapi->events &= ~BNXT_TX_CMP_EVENT;
- }
- 
--static bool bnxt_separate_head_pool(void)
-+static bool bnxt_separate_head_pool(struct bnxt_rx_ring_info *rxr)
- {
--	return PAGE_SIZE > BNXT_RX_PAGE_SIZE;
-+	return rxr->rx_page_size != PAGE_SIZE;
- }
- 
- static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
-@@ -879,9 +879,9 @@ static struct page *__bnxt_alloc_rx_page
- {
- 	struct page *page;
- 
--	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE) {
-+	if (rxr->rx_page_size < PAGE_SIZE) {
- 		page = page_pool_dev_alloc_frag(rxr->page_pool, offset,
--						BNXT_RX_PAGE_SIZE);
-+						rxr->rx_page_size);
- 	} else {
- 		page = page_pool_dev_alloc_pages(rxr->page_pool);
- 		*offset = 0;
-@@ -1101,9 +1101,9 @@ static struct sk_buff *bnxt_rx_multi_pag
- 		return NULL;
- 	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, rxr->rx_page_size,
- 				bp->rx_dir);
--	skb = napi_build_skb(data_ptr - bp->rx_offset, BNXT_RX_PAGE_SIZE);
-+	skb = napi_build_skb(data_ptr - bp->rx_offset, rxr->rx_page_size);
- 	if (!skb) {
- 		page_pool_recycle_direct(rxr->page_pool, page);
- 		return NULL;
-@@ -1135,7 +1135,7 @@ static struct sk_buff *bnxt_rx_page_skb(
- 		return NULL;
- 	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, rxr->rx_page_size,
- 				bp->rx_dir);
- 
- 	if (unlikely(!payload))
-@@ -1149,7 +1149,7 @@ static struct sk_buff *bnxt_rx_page_skb(
- 
- 	skb_mark_for_recycle(skb);
- 	off = (void *)data_ptr - page_address(page);
--	skb_add_rx_frag(skb, 0, page, off, len, BNXT_RX_PAGE_SIZE);
-+	skb_add_rx_frag(skb, 0, page, off, len, rxr->rx_page_size);
- 	memcpy(skb->data - NET_IP_ALIGN, data_ptr - NET_IP_ALIGN,
- 	       payload + NET_IP_ALIGN);
- 
-@@ -1253,7 +1253,7 @@ static u32 __bnxt_rx_agg_pages(struct bn
- 			return 0;
- 		}
- 
--		dma_sync_single_for_cpu(&pdev->dev, mapping, BNXT_RX_PAGE_SIZE,
-+		dma_sync_single_for_cpu(&pdev->dev, mapping, rxr->rx_page_size,
- 					bp->rx_dir);
- 
- 		total_frag_len += frag_len;
-@@ -1268,6 +1268,7 @@ static struct sk_buff *bnxt_rx_agg_pages
- 					     struct sk_buff *skb, u16 idx,
- 					     u32 agg_bufs, bool tpa)
- {
-+	struct bnxt_rx_ring_info *rxr = cpr->bnapi->rx_ring;
- 	struct skb_shared_info *shinfo = skb_shinfo(skb);
- 	u32 total_frag_len = 0;
- 
-@@ -1281,7 +1282,7 @@ static struct sk_buff *bnxt_rx_agg_pages
- 
- 	skb->data_len += total_frag_len;
- 	skb->len += total_frag_len;
--	skb->truesize += BNXT_RX_PAGE_SIZE * agg_bufs;
-+	skb->truesize += rxr->rx_page_size * agg_bufs;
- 	return skb;
- }
- 
-@@ -2222,8 +2223,7 @@ static int bnxt_rx_pkt(struct bnxt *bp,
- 			if (!skb)
- 				goto oom_next_rx;
- 		} else {
--			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs,
--						 rxr->page_pool, &xdp);
-+			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs, rxr, &xdp);
- 			if (!skb) {
- 				/* we should be able to free the old skb here */
- 				bnxt_xdp_buff_frags_free(rxr, &xdp);
-@@ -3647,7 +3647,7 @@ static void bnxt_free_rx_rings(struct bn
- 			xdp_rxq_info_unreg(&rxr->xdp_rxq);
- 
- 		page_pool_destroy(rxr->page_pool);
--		if (bnxt_separate_head_pool())
-+		if (bnxt_separate_head_pool(rxr))
- 			page_pool_destroy(rxr->head_pool);
- 		rxr->page_pool = rxr->head_pool = NULL;
- 
-@@ -3672,12 +3672,14 @@ static int bnxt_alloc_rx_page_pool(struc
- 	pp.pool_size = bp->rx_agg_ring_size;
- 	if (BNXT_RX_PAGE_MODE(bp))
- 		pp.pool_size += bp->rx_ring_size;
-+
-+	pp.order = get_order(rxr->rx_page_size);
- 	pp.nid = numa_node;
- 	pp.napi = &rxr->bnapi->napi;
- 	pp.netdev = bp->dev;
- 	pp.dev = &bp->pdev->dev;
- 	pp.dma_dir = bp->rx_dir;
--	pp.max_len = PAGE_SIZE;
-+	pp.max_len = PAGE_SIZE << pp.order;
- 	pp.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
- 
- 	pool = page_pool_create(&pp);
-@@ -3685,7 +3687,9 @@ static int bnxt_alloc_rx_page_pool(struc
- 		return PTR_ERR(pool);
- 	rxr->page_pool = pool;
- 
--	if (bnxt_separate_head_pool()) {
-+	if (bnxt_separate_head_pool(rxr)) {
-+		pp.order = 0;
-+		pp.max_len = PAGE_SIZE;
- 		pp.pool_size = max(bp->rx_ring_size, 1024);
- 		pool = page_pool_create(&pp);
- 		if (IS_ERR(pool))
-@@ -4140,6 +4144,8 @@ static void bnxt_init_ring_struct(struct
- 		if (!rxr)
- 			goto skip_rx;
- 
-+		rxr->rx_page_size = BNXT_RX_PAGE_SIZE;
-+
- 		ring = &rxr->rx_ring_struct;
- 		rmem = &ring->ring_mem;
- 		rmem->nr_pages = bp->rx_nr_pages;
-@@ -4299,7 +4305,7 @@ static void bnxt_init_one_rx_agg_ring_rx
- 	ring = &rxr->rx_agg_ring_struct;
- 	ring->fw_ring_id = INVALID_HW_RING_ID;
- 	if ((bp->flags & BNXT_FLAG_AGG_RINGS)) {
--		type = ((u32)BNXT_RX_PAGE_SIZE << RX_BD_LEN_SHIFT) |
-+		type = ((u32)rxr->rx_page_size << RX_BD_LEN_SHIFT) |
- 			RX_BD_TYPE_RX_AGG_BD;
- 
- 		/* On P7, setting EOP will cause the chip to disable
-@@ -6865,6 +6871,7 @@ static void bnxt_hwrm_ring_grp_free(stru
- }
- 
- static int hwrm_ring_alloc_send_msg(struct bnxt *bp,
-+				    struct bnxt_rx_ring_info *rxr,
- 				    struct bnxt_ring_struct *ring,
- 				    u32 ring_type, u32 map_index)
- {
-@@ -6937,7 +6944,7 @@ static int hwrm_ring_alloc_send_msg(stru
- 			/* Association of agg ring with rx ring */
- 			grp_info = &bp->grp_info[ring->grp_idx];
- 			req->rx_ring_id = cpu_to_le16(grp_info->rx_fw_ring_id);
--			req->rx_buf_size = cpu_to_le16(BNXT_RX_PAGE_SIZE);
-+			req->rx_buf_size = cpu_to_le16(rxr->rx_page_size);
- 			req->stat_ctx_id = cpu_to_le32(grp_info->fw_stats_ctx);
- 			req->enables |= cpu_to_le32(
- 				RING_ALLOC_REQ_ENABLES_RX_RING_ID_VALID |
-@@ -7093,7 +7100,7 @@ static int bnxt_hwrm_rx_ring_alloc(struc
- 	u32 map_idx = bnapi->index;
- 	int rc;
- 
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, rxr, ring, type, map_idx);
- 	if (rc)
- 		return rc;
- 
-@@ -7113,7 +7120,7 @@ static int bnxt_hwrm_rx_agg_ring_alloc(s
- 	int rc;
- 
- 	map_idx = grp_idx + bp->rx_nr_rings;
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, rxr, ring, type, map_idx);
- 	if (rc)
- 		return rc;
- 
-@@ -7145,7 +7152,7 @@ static int bnxt_hwrm_ring_alloc(struct b
- 
- 		vector = bp->irq_tbl[map_idx].vector;
- 		disable_irq_nosync(vector);
--		rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+		rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type, map_idx);
- 		if (rc) {
- 			enable_irq(vector);
- 			goto err_out;
-@@ -7176,7 +7183,7 @@ static int bnxt_hwrm_ring_alloc(struct b
- 			ring = &cpr2->cp_ring_struct;
- 			ring->handle = BNXT_SET_NQ_HDL(cpr2);
- 			map_idx = bnapi->index;
--			rc = hwrm_ring_alloc_send_msg(bp, ring, type2, map_idx);
-+			rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type2, map_idx);
- 			if (rc)
- 				goto err_out;
- 			bnxt_set_db(bp, &cpr2->cp_db, type2, map_idx,
-@@ -7185,7 +7192,7 @@ static int bnxt_hwrm_ring_alloc(struct b
- 		}
- 		ring = &txr->tx_ring_struct;
- 		map_idx = i;
--		rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+		rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type, map_idx);
- 		if (rc)
- 			goto err_out;
- 		bnxt_set_db(bp, &txr->tx_db, type, map_idx, ring->fw_ring_id);
-@@ -7209,7 +7216,7 @@ static int bnxt_hwrm_ring_alloc(struct b
- 
- 			ring = &cpr2->cp_ring_struct;
- 			ring->handle = BNXT_SET_NQ_HDL(cpr2);
--			rc = hwrm_ring_alloc_send_msg(bp, ring, type2, map_idx);
-+			rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type2, map_idx);
- 			if (rc)
- 				goto err_out;
- 			bnxt_set_db(bp, &cpr2->cp_db, type2, map_idx,
-@@ -15394,6 +15401,7 @@ static int bnxt_queue_mem_alloc(struct n
- 	clone->rx_agg_prod = 0;
- 	clone->rx_sw_agg_prod = 0;
- 	clone->rx_next_cons = 0;
+@@ -15459,6 +15459,8 @@ err_free_tpa_info:
+ 	bnxt_free_one_tpa_info(bp, clone);
+ err_free_rx_agg_ring:
+ 	bnxt_free_ring(bp, &clone->rx_agg_ring_struct.ring_mem);
++	kfree(clone->rx_agg_bmap);
 +	clone->rx_agg_bmap = NULL;
- 
- 	rc = bnxt_alloc_rx_page_pool(bp, clone, rxr->page_pool->p.nid);
- 	if (rc)
-@@ -15457,7 +15465,7 @@ err_rxq_info_unreg:
- 	xdp_rxq_info_unreg(&clone->xdp_rxq);
- err_page_pool_destroy:
- 	page_pool_destroy(clone->page_pool);
--	if (bnxt_separate_head_pool())
-+	if (bnxt_separate_head_pool(clone))
- 		page_pool_destroy(clone->head_pool);
- 	clone->page_pool = NULL;
- 	clone->head_pool = NULL;
-@@ -15476,7 +15484,7 @@ static void bnxt_queue_mem_free(struct n
- 	xdp_rxq_info_unreg(&rxr->xdp_rxq);
- 
- 	page_pool_destroy(rxr->page_pool);
--	if (bnxt_separate_head_pool())
-+	if (bnxt_separate_head_pool(rxr))
- 		page_pool_destroy(rxr->head_pool);
- 	rxr->page_pool = NULL;
- 	rxr->head_pool = NULL;
-@@ -15620,7 +15628,7 @@ static int bnxt_queue_stop(struct net_de
- 	bnxt_hwrm_rx_agg_ring_free(bp, rxr, false);
- 	rxr->rx_next_cons = 0;
- 	page_pool_disable_direct_recycling(rxr->page_pool);
--	if (bnxt_separate_head_pool())
-+	if (bnxt_separate_head_pool(rxr))
- 		page_pool_disable_direct_recycling(rxr->head_pool);
- 
- 	memcpy(qmem, rxr, sizeof(*rxr));
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1098,6 +1098,7 @@ struct bnxt_rx_ring_info {
- 
- 	unsigned long		*rx_agg_bmap;
- 	u16			rx_agg_bmap_size;
-+	u32			rx_page_size;
- 
- 	dma_addr_t		rx_desc_mapping[MAX_RX_PAGES];
- 	dma_addr_t		rx_agg_desc_mapping[MAX_RX_AGG_PAGES];
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -182,7 +182,7 @@ void bnxt_xdp_buff_init(struct bnxt *bp,
- 			u16 cons, u8 *data_ptr, unsigned int len,
- 			struct xdp_buff *xdp)
- {
--	u32 buflen = BNXT_RX_PAGE_SIZE;
-+	u32 buflen = rxr->rx_page_size;
- 	struct bnxt_sw_rx_bd *rx_buf;
- 	struct pci_dev *pdev;
- 	dma_addr_t mapping;
-@@ -454,7 +454,7 @@ int bnxt_xdp(struct net_device *dev, str
- 
- struct sk_buff *
- bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
--		   struct page_pool *pool, struct xdp_buff *xdp)
-+		   struct bnxt_rx_ring_info *rxr, struct xdp_buff *xdp)
- {
- 	struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
- 
-@@ -463,7 +463,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, stru
- 
- 	xdp_update_skb_shared_info(skb, num_frags,
- 				   sinfo->xdp_frags_size,
--				   BNXT_RX_PAGE_SIZE * num_frags,
-+				   rxr->rx_page_size * num_frags,
- 				   xdp_buff_is_frag_pfmemalloc(xdp));
- 	return skb;
- }
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-@@ -32,6 +32,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp,
- void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
- 			      struct xdp_buff *xdp);
- struct sk_buff *bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb,
--				   u8 num_frags, struct page_pool *pool,
-+				   u8 num_frags, struct bnxt_rx_ring_info *rxr,
- 				   struct xdp_buff *xdp);
- #endif
+ err_free_rx_ring:
+ 	bnxt_free_ring(bp, &clone->rx_ring_struct.ring_mem);
+ err_rxq_info_unreg:
 
 
