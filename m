@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462893C76AD;
-	Wed, 30 Sep 2026 19:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E653DDDA1;
+	Wed, 30 Sep 2026 19:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795112; cv=none; b=dPp0YQUqlerCKX25niJDAyybVoRasAkyAwGF6Tz4H+kihvqGLSS4zQvZd4kDqQzlw6tr9Nu5BwRDNiHFvP09T/4PFakh5ocq6LSufnPaGZ2dI8bfbILBPsld99iGhuwDAZ5mCrnOP05AXzs4DQMMqYuin73sTlLfbyTLhJf7Tf4=
+	t=1790795115; cv=none; b=odF+NNSPq/gLN1UjzOCuSwCzbYznCIRSXolqUYpjFQg1+4aXbjqBkZvb5Ku+px4xTLsF3fJdEQFh1lZjQyogBVBYZ5tWSmEmzSuichCiYQQGJEESI4+IYJ+aSllaOmgGws+qYGapLgXEudVT53ktOeGhrAArgYpicJ/cgie4gt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795112; c=relaxed/simple;
-	bh=bieEqBcINC1zHMIFnh2AKinVIaZrrdHMVBN0qaDTOMQ=;
+	s=arc-20240116; t=1790795115; c=relaxed/simple;
+	bh=mih4/EQWz6sVrs8zUrOo3uOfr1HUmtXo4L4gUVu+TsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYO49uiZ4YfEfGCQzcCdAaOeBaAOiJT9wo4gWqRBmyTL/Ei0CHe5MBX7icXcQXt+iC08C02C26nd9sCCuhiIeN9HvOVp5o1TtGZhhghNTKgT9u5j8JAz0GqKoo9tP+Tq7a0ldCURfsBRRd97gGTEnuYIpjb4SyL62PTWctub4Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tg56UKsP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uvD/2ywUJuP5KAgfC0WQaBlVlgjRKaZw1hu8gH+NtxegGRvQr6HcDCx67Cpah5AryiDLMWMe3OrcY32LdkRdvyYP0076baK7QjNYxHyW1wbu3x+Ph9GXWyu4HRq5fUXirjWeV8aW6bFUI9IU5joLS1Yk0WTXhCM9BOqOaC/EYSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9E5LcuY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tg56UKsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6321F000FF;
-	Wed, 30 Sep 2026 19:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9E5LcuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8232A1F00899;
+	Wed, 30 Sep 2026 19:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795111;
-	bh=OS8fIY1PA3Lbhbq/ZA8gzU+rGsc0l06NoPE9poWMnlw=;
+	s=korg; t=1790795114;
+	bh=qIyBG4KknZZQMu5mmCXUbpXP/csmJV1YbKNpHrOMnmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tg56UKsPVN7jED34EhGfx61CmelrxT2milXRCt5CScKBgxINLawjSvnfZJWYQZdLC
-	 o10+AoyAe6ii2u7mchGL3/GCv7sDEzU9AceNdmG81+UPN4Xpa6wr2dBp3/Kpf1zhaA
-	 ygNCSghdE/5TS6AaU3e3FbVE0GLFLTz+AeWHAXV0=
+	b=h9E5LcuYQVztKyQONTn1QbKKNxsR0yFDY+FWcR2mhWF0XeQOPlkwu4g/PykafDcZ3
+	 gLVVooPKjzpEHx0i3DIGR2uaWAyqao3aW9k2BU4hTSoWo7brnurQrne+m78EBMy8K+
+	 v/gYmfcpVWzKmNk7bWvqlXpo/El2a1Q9MBuUrfZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qingyu Zhang <usupergate@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0447/1193] ALSA: ump: Update rawmidi name per EP name update
-Date: Wed, 30 Sep 2026 17:18:51 +0200
-Message-ID: <20260930152444.111435352@linuxfoundation.org>
+Subject: [PATCH 6.6 0448/1193] ALSA: ump: do not touch legacy_rmidi before it exists
+Date: Wed, 30 Sep 2026 17:18:52 +0200
+Message-ID: <20260930152444.132940251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,92 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Qingyu Zhang <usupergate@gmail.com>
 
-[ Upstream commit aca565359596c5998cab1cc72f61aa83b3ccd152 ]
+[ Upstream commit adeee7187694719890aaffdc14b7e89cfd736f1d ]
 
-The rawmidi name string should be updated dynamically when the device
-receives the UMP EP name update, too.  Both the core and legacy
-rawmidi names are updated.
+snd_ump_parse_endpoint() sets ump->parsed on every exit, including
+error, before the caller attaches the legacy rawmidi device.
+ump_handle_ep_name_msg() then treats parsed as "legacy_rmidi is live"
+and calls ump_legacy_set_rawmidi_name(), which snprintf()s into
+ump->legacy_rmidi->name. If a UMP packet arrives in that window
+(IRQ path from snd_ump_receive), legacy_rmidi is still NULL
+(KASAN null-ptr-deref in snprintf).
 
+Guard the legacy helpers. parsed only means endpoint info was
+parsed, not that legacy_rmidi exists.
+
+Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
+Signed-off-by: Qingyu Zhang <usupergate@gmail.com>
+Link: https://patch.msgid.link/20260902073918.880245-1-usupergate@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250110155943.31578-7-tiwai@suse.de
-Stable-dep-of: adeee7187694 ("ALSA: ump: do not touch legacy_rmidi before it exists")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ sound/core/ump.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/sound/core/ump.c b/sound/core/ump.c
-index e258000d2d8e6..2b6c16d3afa4f 100644
+index 2b6c16d3afa4f..70c74207b6c0f 100644
 --- a/sound/core/ump.c
 +++ b/sound/core/ump.c
-@@ -37,6 +37,7 @@ static int process_legacy_output(struct snd_ump_endpoint *ump,
- 				 u32 *buffer, int count);
- static void process_legacy_input(struct snd_ump_endpoint *ump, const u32 *src,
- 				 int words);
-+static void ump_legacy_set_rawmidi_name(struct snd_ump_endpoint *ump);
- static void update_legacy_names(struct snd_ump_endpoint *ump);
- #else
- static inline int process_legacy_output(struct snd_ump_endpoint *ump,
-@@ -48,6 +49,9 @@ static inline void process_legacy_input(struct snd_ump_endpoint *ump,
- 					const u32 *src, int words)
+@@ -1305,6 +1305,8 @@ static void update_legacy_names(struct snd_ump_endpoint *ump)
  {
- }
-+static inline void ump_legacy_set_rawmidi_name(struct snd_ump_endpoint *ump)
-+{
-+}
- static inline void update_legacy_names(struct snd_ump_endpoint *ump)
- {
- }
-@@ -740,8 +744,16 @@ static void ump_set_rawmidi_name(struct snd_ump_endpoint *ump)
- static int ump_handle_ep_name_msg(struct snd_ump_endpoint *ump,
- 				  const union snd_ump_stream_msg *buf)
- {
--	return ump_append_string(ump, ump->info.name, sizeof(ump->info.name),
--				 buf->raw, 2);
-+	int ret;
-+
-+	ret = ump_append_string(ump, ump->info.name, sizeof(ump->info.name),
-+				buf->raw, 2);
-+	if (ret && ump->parsed) {
-+		ump_set_rawmidi_name(ump);
-+		ump_legacy_set_rawmidi_name(ump);
-+	}
-+
-+	return ret;
- }
+ 	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
  
- /* handle EP product id stream message; update the UMP product_id string */
-@@ -1297,6 +1309,14 @@ static void update_legacy_names(struct snd_ump_endpoint *ump)
++	if (!rmidi)
++		return;
+ 	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_INPUT);
  	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT);
  }
- 
-+static void ump_legacy_set_rawmidi_name(struct snd_ump_endpoint *ump)
-+{
-+	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
-+
-+	snprintf(rmidi->name, sizeof(rmidi->name), "%.68s (MIDI 1.0)",
-+		 ump->core.name);
-+}
-+
- int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
- 				  char *id, int device)
+@@ -1313,6 +1315,8 @@ static void ump_legacy_set_rawmidi_name(struct snd_ump_endpoint *ump)
  {
-@@ -1328,12 +1348,11 @@ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
- 	if (output)
- 		snd_rawmidi_set_ops(rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT,
- 				    &snd_ump_legacy_output_ops);
--	snprintf(rmidi->name, sizeof(rmidi->name), "%.68s (MIDI 1.0)",
--		 ump->core.name);
- 	rmidi->info_flags = ump->core.info_flags & ~SNDRV_RAWMIDI_INFO_UMP;
- 	rmidi->ops = &snd_ump_legacy_ops;
- 	rmidi->private_data = ump;
- 	ump->legacy_rmidi = rmidi;
-+	ump_legacy_set_rawmidi_name(ump);
- 	update_legacy_names(ump);
+ 	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
  
- 	rmidi->tied_device = ump->core.device;
++	if (!rmidi)
++		return;
+ 	snprintf(rmidi->name, sizeof(rmidi->name), "%.68s (MIDI 1.0)",
+ 		 ump->core.name);
+ }
 -- 
 2.53.0
 
