@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368EA4F7CCF;
-	Wed, 30 Sep 2026 16:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79F8502D40;
+	Wed, 30 Sep 2026 16:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785402; cv=none; b=XCnmteiYWH7PAxg9f7HDQv65GeW2POMxjkd8HjDJD+716qWE5rQAZX7al4Sf4ZL2z1NeckmYBck3VVCQHFj9oj+HpF/AMQ1baAMP1uLJbxQAuaN1apvTQMdR8myCNuHNPhMtZ7w9OnoU7kxcpS2AZiXQ7bXbVP2fz5pt4RvOTnU=
+	t=1790785404; cv=none; b=HVSVLmujF971ooK+tDQjfYB3+I92PRb5ASklTIl+o8s68bzb6Bk5Xq3hNSnUvDd6XRUpWDqtrQjOXcuY18bc9HHgjwdoc5xpC2lmn63FmOrmntKQMDEaVJWTgEyBq7fk52dOQUQngV6AfnVUryZy7VgvmrvCmOiaqpLyeZSaKlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785402; c=relaxed/simple;
-	bh=17C0WNLNahdR27IWZJh+ZMZx0d9IbTzfTYC2sOW+0VA=;
+	s=arc-20240116; t=1790785404; c=relaxed/simple;
+	bh=nceXatrEWCmygsXY3y3udCQFDCjXJMDCyPp7BqiaTPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKT16UDS++CFi904xIy+qdxG6mL8cqgjmuJu9wx1caNcSDdcbhxHuQaPSJFTtQaxVz9tC5/s5+4Gg5DqBubDdIWOR+fJPjVrl0g6ytOPZHFej7dp0w62iblUOIlPRdgJtCFK9ee5qztRoYAPUByf2fj9EhdDbfsWwErcEI9Qbo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6stykPY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FZLDf+42l62P3kIQIFWZlgVMiHxS45pVS33GbJxS+z63REM3KORln4gGyLbkmNzlY0ZYPjYC4pmxQS6pnXEpJW5WG/LDuYrIkIJYVKZHH7qZ99ygTgM36o+fhiSCDdVpiYAWvAzEsjatLoUS6rcnjPBwtoeGCkP0GPxZslP6J7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRcNEqpp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6stykPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84ECA1F00899;
-	Wed, 30 Sep 2026 16:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRcNEqpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424241F00898;
+	Wed, 30 Sep 2026 16:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785393;
-	bh=ynvXslOGVRrRMAw8Ys07kMeC4AM81E+ZAzeU6JPwwVk=;
+	s=korg; t=1790785398;
+	bh=7P3hxSjBCP+HkWSX1zbU1NJibY/Ga6bDh/Y1PxQXIQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6stykPYxBdtZE7cQuNPUCKkbPCaPcD0QBBK/RrMIA68Lao1xoqDaiR7QuJENlZT9
-	 gm/tn35Dq8Yoqj9dKsm72oPN6b+3p8P9A9BcmAwAxxzm9unE4WkLvTQWvkG3/1jymp
-	 1a8yAHuyVzP4JpI8tjcUjGFOCTAXR1WeF4GGpjk8=
+	b=zRcNEqpp4SiVm1ZgNXExPjKsgXI5rpN8LeWQJqPJduMoEoOKtK0Q/5lRM+twD61oH
+	 4ylKHxSO+VpiY1kQIbibrBXxIpj8i8ImMTI16arTbE6tA7qt/lWTElX1LCaf76zvDP
+	 Jdwu/UymikPfZ414pMiiOgd2SrCkeGt8aq/xaVFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 491/982] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
-Date: Wed, 30 Sep 2026 17:20:27 +0200
-Message-ID: <20260930152427.327798190@linuxfoundation.org>
+Subject: [PATCH 6.1 450/982] net: ethernet: cortina: No mapping is a dropped rx
+Date: Wed, 30 Sep 2026 17:19:46 +0200
+Message-ID: <20260930152426.459882754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
+[ Upstream commit 2cb156213093a62b80cf40b1ec71738e93491971 ]
 
-When a LUN_RESET aborts a WRITE command that is in the
-TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
-waits for the frontend to finish processing.
+Increase stats.rx_dropped++ even if this is the first fragment
+(skb == NULL) so we are doing proper accounting.
 
-If the initiator subsequently sends the remaining dataout PDUs,
-__iscsit_check_dataout_hdr() catches the payload, stops the dataout
-timer if the sequence is final and finally dumps the data.  However, the
-iSCSI target doesn't trigger the completion process for these aborted
-commands. Because of this, the abort path hangs indefinitely in
-target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
-
-Fix this by explicitly calling target_complete_cmd() when the final
-dataout PDU is received for an aborted WRITE command.
-target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
-the command into target_abort_work, allowing the abort completion to
-successfully unblock.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: b266bacba796 ("net: ethernet: cortina: Drop half-assembled SKB")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-1-6c5d20ddc35b@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 6520198c430c ("net: ethernet: cortina: Count RX drops once per frame")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 8806be03c304f..fea642ab87779 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -1569,8 +1569,10 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
- 		 */
- 		if (se_cmd->transport_state & CMD_T_ABORTED) {
- 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
--			    --cmd->outstanding_r2ts < 1)
-+			    --cmd->outstanding_r2ts < 1) {
- 				iscsit_stop_dataout_timer(cmd);
-+				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
-+			}
- 
- 			return iscsit_dump_data_payload(conn, payload_length, 1);
- 		}
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 62ddaf3e99775..85d476301f3ea 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1500,9 +1500,9 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
++			port->stats.rx_dropped++;
+ 			if (skb) {
+ 				napi_free_frags(&port->napi);
+-				port->stats.rx_dropped++;
+ 				skb = NULL;
+ 				frag_nr = 0;
+ 			}
 -- 
 2.53.0
 
