@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCDF37AA95;
-	Wed, 30 Sep 2026 18:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435B63B05A4;
+	Wed, 30 Sep 2026 18:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794635; cv=none; b=i0Rl/G1dkADqIWLv13qWUonPgt+nJp3P1STPGoZY3FUjmw8Bpb1HYQkig5MUDxLWajD9gj8sduskcotLFrvmsrOVJc07Cq9bm92B1+Bt3NjXfPIY3zYpHRlljZDmCI4UmdvmAoLFTdaY4GgkwSFDfbse3nBo+EuvQ/CU82BVBOs=
+	t=1790794638; cv=none; b=HZ7NVh/W3MGD2kBwRLEXjZsxQd7YjUZcB60k2rz2YMg/XZ1JfXM7Yq7gj5TGLt328CuIi7i5abmsM7fbAe/aILvNov2VeO/pCNCiVbtINw1aEt9bAxlF0KNrfvGhg3F+DGXH3IDL6tNNe69iML26ecAQK15zGzmvJ+GKNX0qU8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794635; c=relaxed/simple;
-	bh=6qIVWRRLxmjVb4fubCt4/M9DISCAFt8inx4M1XC6HZg=;
+	s=arc-20240116; t=1790794638; c=relaxed/simple;
+	bh=sG/tgHSyx+L8DUEXu6SpJ1jw88v4iSk6Op0yOO/yuFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZ66i3n/B6KvdrTh7qFtT2KCky7nlupbTjUzWGSmo77kdUZn5sxQqxAg/eeTULGAyn+rACV35DqLKGosMhRCfb2DH2YT4n109eDBS55HmdPml45HuDmA1G8OlKUb7b5mqLntzLmwb54FFpVJq9jlY6hgVGV6rRhLigJx4FfJWyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz3E1jKz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJJAcDpOqQWUUW+IoiMBAP9OAvgSqa85p5WfHquHbC//ticVuUZ+ER9dx5tOg8Nq4fIJRnLp3/4g0cJNzQPMJBGo/dBH10sTJigfTUc4T+AY2Plc6J6tDuOm9fjhsXk1uf84x2wrF0ywRe4npA9zN5gMH6orXRoprPTr+VOFO40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXPzzRv7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz3E1jKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D021F000FF;
-	Wed, 30 Sep 2026 18:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXPzzRv7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF961F000FF;
+	Wed, 30 Sep 2026 18:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794634;
-	bh=4Pb9QO/IjhwGLE9Lm3eGTol98Ut648cwuh9uQ5JjG7c=;
+	s=korg; t=1790794637;
+	bh=VDoUIMTOIb9nTkOv8qqLaX01ERdFdn/oJpkoeNu2R8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dz3E1jKzzHsd31DTAYP1z6Q4mj55kFVdsp60GCgXFRrMTIdDSTgME5NomTWY81Ioe
-	 7lpbuBUf/+MpXJU0KqJ0qtqE8w0rS9Qtx1ggqj/MmgVt61cdC1cgQkqYRh859Yegyk
-	 8Pxe8F6lVDxgozLjdqfQn4sIVGgc89Aw4GZdbbDk=
+	b=BXPzzRv7RQptrKRRlAqELRM4I3uNm48lMVhDIajS1Oy0RnRBRgTJZHzaLkyMfKaKX
+	 ifoI1swGHm8qr0W8VOoF7HAr2U6sg0vBgN5BkhxtPuTmw+TuhupTg1nPUd7mNfuWgB
+	 buUG4Xbo/F+7nE/0iybi6KKClItBTOT8DBgijNv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Galen Hassen <rwekyes@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0235/1193] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
-Date: Wed, 30 Sep 2026 17:15:19 +0200
-Message-ID: <20260930152439.414405337@linuxfoundation.org>
+Subject: [PATCH 6.6 0236/1193] leds: uleds: Return -EFAULT on copy_to_user() failure
+Date: Wed, 30 Sep 2026 17:15:20 +0200
+Message-ID: <20260930152439.435733902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,73 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Galen Hassen <rwekyes@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
+[ Upstream commit 61ed78f55a46e12afd4b464c4ba736f55ff33c5e ]
 
-The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
-Conexant SN6140 codec. The internal microphone is on pin 0x1a but
-the BIOS configures it with pin default 0x95a60120, which includes
-a jack detection bit that causes the kernel to treat it as an
-unplugged external mic rather than a fixed internal mic.
+uleds_read() copies the current brightness value to userspace but
+ignores copy_to_user() failures. It then clears the pending update and
+reports a successful full read even when no data was copied.
 
-Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
-setting the connectivity bits to indicate a fixed/always-connected
-device. This allows the internal microphone to be correctly
-identified and used.
+Return -EFAULT when the copy fails and leave the update pending so a
+later read can retry.
 
-Signed-off-by: Galen Hassen <rwekyes@gmail.com>
-Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260521181205.15130-1-alhouseenyousef@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/leds/uleds.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index ec1c92db7cd67..25cd3283906a2 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -307,6 +307,7 @@ enum {
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
- 	CXT_PINCFG_SWS_JS201D,
-+	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
- 	CXT_PINCFG_TOP_SPEAKER,
- 	CXT_FIXUP_HP_A_U,
- 	CXT_FIXUP_ACER_SWIFT_HP,
-@@ -841,6 +842,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
- 	{}
- };
+diff --git a/drivers/leds/uleds.c b/drivers/leds/uleds.c
+index d69e1febc79fa..d0b7d8c1fcf55 100644
+--- a/drivers/leds/uleds.c
++++ b/drivers/leds/uleds.c
+@@ -148,10 +148,13 @@ static ssize_t uleds_read(struct file *file, char __user *buffer, size_t count,
+ 		} else if (!udev->new_data && (file->f_flags & O_NONBLOCK)) {
+ 			retval = -EAGAIN;
+ 		} else if (udev->new_data) {
+-			retval = copy_to_user(buffer, &udev->brightness,
+-					      sizeof(udev->brightness));
+-			udev->new_data = false;
+-			retval = sizeof(udev->brightness);
++			if (copy_to_user(buffer, &udev->brightness,
++					 sizeof(udev->brightness))) {
++				retval = -EFAULT;
++			} else {
++				udev->new_data = false;
++				retval = sizeof(udev->brightness);
++			}
+ 		}
  
-+/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
-+static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
-+	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
-+	{}
-+};
-+
- /* SuoWoSi/South-holding JS201D with sn6140 */
- static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
- 	{ 0x16, 0x03211040 }, /* hp out */
-@@ -1015,6 +1022,10 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
-+	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
-+	},
- 	[CXT_PINCFG_TOP_SPEAKER] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -1123,6 +1134,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
-+	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
- 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
+ 		mutex_unlock(&udev->mutex);
 -- 
 2.53.0
 
