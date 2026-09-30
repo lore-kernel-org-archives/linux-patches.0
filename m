@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BC150E5B0;
-	Wed, 30 Sep 2026 16:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807BA50C2B4;
+	Wed, 30 Sep 2026 16:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785687; cv=none; b=i6WTEZYuZlny1z7xBNiewxe4vnxxGovseRDubm2o2LuOFnHyzolLn71mdW5Bloku1+TzgnSwwBshCGdh+GcS2qBJSbQWpakzYhIUIMtIw7D8uiKAfDZ9dNwPe3s9Lbh4uxCTFfh3262iwYdeoN9R/6wznCF3WWJIDOE7EQMAQxI=
+	t=1790785691; cv=none; b=tbiGhssCLK/ICQyXCl/heXihJffK3eYi9fFvelgxef8L8h0/xCEjZOGNzylv2eEzjTCJOuMItszcYpT47JAZ2hWjIVjdWv6G1kt4j4Dr4WV+iDxmU8FxxyxCiSwjZoZl3EbVMVeoIna/fWfx2Qa/6VzhalFfpNtNGThnEbO8Fc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785687; c=relaxed/simple;
-	bh=daAmoYgNext3SqVi0Mpc4ViV/2UZ5cd4oDxKuFicBT4=;
+	s=arc-20240116; t=1790785691; c=relaxed/simple;
+	bh=fw3VoSgIR5yAJ93JjTip7MkEhL20Ohen1SlgFW5o2OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7EiZmu/8eryzigzOQdLFNPPnelmhNzQ7BSFbZsPZZJRNCm1PjhtomT2Vc39R4xcrjZa66oVN63/Ag4Z0ARABBQpkQ96U0fcoB1gk3FyYIeOHuyJNUgl9miFEfvCP2+y0ykRfBEcK74jpMT8by2Uz03opvHl37CtvECS48VIjPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTuEFg2T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHWacBke/i+SwNbR8IZCymEwti7Hw/BQAeTavSBJuyCedKOaRhjiLXhYt24GyMsIICnoQ7nKE9iB14Tq2BTvdQcmDJN0UOqtIyQculPPdz+Bz94Qzq68T2nTq/TbqLBeC9AP7fT6iAa0Jqey6lDz6fKPZSS5tzfMOQKekj4Fj4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDDOHNFo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTuEFg2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC051F000FF;
-	Wed, 30 Sep 2026 16:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDDOHNFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6901F00893;
+	Wed, 30 Sep 2026 16:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785679;
-	bh=6SK7NdJcjFPjWZkBWJl6EJnQSsPca9ymoGuNriQl4Pc=;
+	s=korg; t=1790785685;
+	bh=QJeIJKFRpvnDKq/EhwmX+C7m3iYX5cNsShAqakQIaBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PTuEFg2TeKBJ5niFqsbWdDCTRr3DtA/GT3QCdmgh2ZnepYfrQ1eZoIEo8XwvrvY0+
-	 v2fcV/r35igkinKs1CGLja9zZQP2EwvZfE80SDmiDjixgcUPAn/yShMUTuxSYSkYpj
-	 aOBHoMTYD+7WX/R+X1dS4U7PBmq8vrmpb0r8GY8Q=
+	b=hDDOHNFoOSbUGHCu/aBfogkR6kZwyRVIn4yH8xALQ+eQuz2vWHS1CKcS3C7qcveSa
+	 JpGnFEnCp/pQf4T2+QErG+tieFJqRE3hp4N4XZSV66jO8qVrRseSQOQ+Y58f6VoCke
+	 saqJe5oQAbyNZkUfdyGYSa+F0VXxa3Nhi6vO7MLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 548/982] bpftool: remove duplicate free_btf_vmlinux() definition
-Date: Wed, 30 Sep 2026 17:21:24 +0200
-Message-ID: <20260930152428.542108167@linuxfoundation.org>
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 540/982] bnxt_en: Propagate RX ring init failures in bnxt_init_nic()
+Date: Wed, 30 Sep 2026 17:21:16 +0200
+Message-ID: <20260930152428.370358168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Jitindar Singh <surajjs@amazon.com>
+From: Joe Damato <joe@dama.to>
 
-v6.1.188 backported
+commit 8e6a850c0746bb4be167aedf1ee57469fcda09a9 upstream.
 
-  660a19e46942 ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
-  [ upstream commit 66d7e39e49b0 ]
+bnxt_init_rx_rings() returns an error when bnxt_alloc_one_rx_ring()
+fails, but bnxt_init_nic() discards that return value and calls
+bnxt_init_chip(), which enables TPA.
 
-which re-adds free_btf_vmlinux(). However, the prerequisite cleanup
+If an allocation fails, this could leave rxr->rx_tpa[] partially zeroed
+and TPA would be enabled over an array with zeroed entries. This would
+lead to a zeroed DMA address being handed out if the agg_idx is
+translated to a SW index at a zeroed entry.
 
-  52df1a8aabad ("bpftool: remove function free_btf_vmlinux()")
+Fix this by propagating the error out of bnxt_init_nic(). Both callers
+already check its return value and unwind with bnxt_free_skbs() and
+bnxt_free_mem(), which tolerate a partially initialized RX ring.
 
-was never backported to 6.1.y, so the tree still carried the original
-free_btf_vmlinux() definition. The backport therefore produced two
-identical-signature static definitions in tools/bpf/bpftool/map.c and
-the build fails:
-
-  map.c: error: redefinition of 'free_btf_vmlinux'
-
-Remove the stale pre-existing definition, keeping the one reintroduced
-by 660a19e46942 (which also resets btf_vmlinux = NULL). This matches the
-current mainline end state.
-
-Fixes: 660a19e46942 ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
+Cc: stable@vger.kernel.org
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260902015652.2421609-6-joe@dama.to
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bpf/bpftool/map.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
-index a77bf45d6f834..748b3def6b2c2 100644
---- a/tools/bpf/bpftool/map.c
-+++ b/tools/bpf/bpftool/map.c
-@@ -817,11 +817,6 @@ static void free_map_kv_btf(struct btf *btf)
- 		btf__free(btf);
- }
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8964,8 +8964,13 @@ static int bnxt_shutdown_nic(struct bnxt
  
--static void free_btf_vmlinux(void)
--{
--	btf__free(btf_vmlinux);
--}
--
- static int
- map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
- 	 bool show_header)
--- 
-2.53.0
-
+ static int bnxt_init_nic(struct bnxt *bp, bool irq_re_init)
+ {
++	int rc;
++
+ 	bnxt_init_cp_rings(bp);
+-	bnxt_init_rx_rings(bp);
++	rc = bnxt_init_rx_rings(bp);
++	if (rc)
++		return rc;
++
+ 	bnxt_init_tx_rings(bp);
+ 	bnxt_init_ring_grps(bp, irq_re_init);
+ 	bnxt_init_vnics(bp);
 
 
