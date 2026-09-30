@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F09C516178;
-	Wed, 30 Sep 2026 16:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419D04CA784;
+	Wed, 30 Sep 2026 16:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787221; cv=none; b=t0p9XbCCs3GT0c7iMUGiSTjYy/p8Ao4JJpXGtw0J6nVG2NZvu7S8T8qsyvvgR/kmW9YqYAklPFGMuhQQXJR4xtSoJD1xwz/+Xh4Y3hBk052vdLG2y+Japm9hSnfRj+6AyFaY91adhnr3tH/RZ5+E6ITzVI1qlTXFRtbq1ZM3ets=
+	t=1790787225; cv=none; b=mc4bpFojwZTu9gto6iENGvUg2kldfRZ50cU+/HbfY3/kH4wyxpDCPsp1SxlgSVqryUU2ExFHhYdAEuaF3rtpEhBrfBxD7oIj297CAh3bQOqVM8INq8oZP+TXhDnUZzjueRkgWR6fY3ttmOGTOcLVH6jYdE19TqPTWu6Qr5to344=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787221; c=relaxed/simple;
-	bh=xER/k8vUZKklALMIew8XUmNRiq9srPPhZfW0THZoWHA=;
+	s=arc-20240116; t=1790787225; c=relaxed/simple;
+	bh=T2bEzJWCi2ZN4KgCmfs7gK81lVPzX4wilGmaihTAad0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hG7tJ2epo0rPi4tVeh/F7ne1Mn9Hlv0GGLilCuxUyuAIDLvA0ZN7LuAgUMfD+8o0B/5Kf2Do5X6Ha3tZYXhVqNjxbtRcEq8VViBIQSfWwXlBoJr3bRztBUUnGrYmpMBK5+jFbu+yefBaD+RuvlGQ+eDwesap7FfCpMC4JxyIdRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNlNsotT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DiMcFNDvbSdscRXK1DCO1JAFtstV5I3c1kfDSe0Vix9eOxedwV++s5SxzPPO6ym4wMdu1A+uit14p/FK7amXa0Z5q6Der3lIoJ8uucwryzhwrbTr5MRtANAxA8+JK2RZgZDxLAeTAC6jVCchx6T9YO01iiW/feTa74SJCOJJ0sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnWbHMU8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNlNsotT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B271F00898;
-	Wed, 30 Sep 2026 16:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnWbHMU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9941F00898;
+	Wed, 30 Sep 2026 16:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787220;
-	bh=ciw0cELX+clRT3FTUh6/X+TPNAOrScwYHi06uB1Owbw=;
+	s=korg; t=1790787223;
+	bh=s41pItIGk4clNWaWN6sOKWeCs5OT2TtDKAT0rfiRvX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNlNsotT3jCczLFJywnrcAb/cllqVobWKM7jLS6qdCk8w95bFIyTGQ71HWWDqr3ip
-	 mTQU9Ofm4j3wo8FJxsvfvaESN7QtIcQWAGde/rzoclld0YMluTnwZgWc4hu1/as3B5
-	 ykfCQKfTHIDW6gRYO6ABEhd6YkqyxLkLdGnR03w4=
+	b=EnWbHMU8qUyCqPkNpQRelRpKA5K4uI/mkr5WJ10jxixgaYMXCbCrdwS1NsdiuPeRF
+	 4k9sV8N4XxnL9xKKh/DnVCztyz4mJrmEJxmKDjvASYSy4cYM5BDosFXdajxHiGV9+N
+	 leF3mYUERsZ1I+uQV+Xcp940cWHc0LJ0nmaHVB94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 152/457] bpf, sockmap: Reject max_entries > INT_MAX in sock_map_alloc
-Date: Wed, 30 Sep 2026 17:24:17 +0200
-Message-ID: <20260930152349.331163190@linuxfoundation.org>
+Subject: [PATCH 7.2 110/457] drm/virtio: fix object leaks in virtio_gpu_resource_create_blob_ioctl()
+Date: Wed, 30 Sep 2026 17:23:35 +0200
+Message-ID: <20260930152348.427943398@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,73 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 814a81c842bd88f6bd8a4ce550d560df071a5d03 ]
+[ Upstream commit 24b6d5c7641412c9ebef0d4c8b888d49a0e6b880 ]
 
-sock_map_alloc() only rejects max_entries == 0 and otherwise allows any
-u32 value.  sock_map_free() then walks the sks[] array with a signed int
-iterator:
+virtio_gpu_resource_create_blob_ioctl() calls drm_gem_object_release() on
+both the virtio_gpu_resource_assign_uuid() and drm_gem_handle_create()
+error paths instead of dropping the reference it owns, so
+obj->funcs->free() never runs and the virtio_gpu_object, the resource id
+and the host-side resource are leaked.
 
-	int i;
-	for (i = 0; i < stab->map.max_entries; i++)
-		struct sock **psk = &stab->sks[i];
+Use drm_gem_object_put() instead.
 
-When a SOCKMAP is created with max_entries = 0xffffffff (UINT_MAX), the
-allocation of 32 GiB can succeed on large-memory hosts.  During free the
-counter reaches 0x80000000, wraps to INT_MIN, is sign-extended by movslq
-and turned into a ~16 GiB negative offset from stab->sks, pointing far
-below the allocation.
-
-The faulting access is an xchg() write in sock_map_free().  Without
-KASAN, the same out-of-bounds write can fault on an unmapped vmalloc page
-or corrupt an unrelated allocation if that vmalloc address is populated.
-On a KASAN kernel with CONFIG_KASAN_VMALLOC=y, the shadow check for that
-address hits an unmapped shadow page and oopses first:
-
-  BUG: unable to handle page fault for address: fffff521b59c5a00
-  RIP: 0010:kasan_check_range+0x107/0x190
-  Call Trace:
-   sock_map_free+0x93/0x190
-   map_create+0x68d/0xb30
-   __sys_bpf+0x21e/0x2e70
-
-Vmcore confirmed stab->map.max_entries == 0xffffffff, stab->sks ==
-0xffffc911ace2d000, and the faulting address sks + (s64)INT_MIN * 8
-exactly at 0xffffc90dace2d000.  The same buggy path is reached on the
-normal close()/bpf_map_free_deferred() path whenever such a map is
-destroyed.
-
-sock_map_alloc() used to bound its allocation size through
-bpf_map_charge_init(), but the bound was dropped when rlimit-based memory
-accounting was removed.  Reject max_entries > INT_MAX at creation time so
-the signed iterator in sock_map_free() never sees a value that would
-overflow.
-
-Triggered by syzkaller and reproduced on both a 6.6-based KASAN kernel
-and the upstream v7.3-rc2 kernel.
-
-Fixes: 0d2c4f964050 ("bpf: Eliminate rlimit-based memory accounting for sockmap and sockhash maps")
-Signed-off-by: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260917121016.48171-1-zhaogongyi@bytedance.com
+Fixes: 897b4d1acaf5 ("drm/virtio: implement blob resources: resource create blob ioctl")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260915-fixes-v2-3-a0d799e4db66@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/virtio/virtgpu_ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 9efbd8ca7db83..09d20318a0eae 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -41,6 +41,7 @@ static struct bpf_map *sock_map_alloc(union bpf_attr *attr)
- 	struct bpf_stab *stab;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+index d16f07abb266a..fcdb07a37972c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
++++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+@@ -557,14 +557,14 @@ static int virtio_gpu_resource_create_blob_ioctl(struct drm_device *dev,
+ 	if (params.blob_flags & VIRTGPU_BLOB_FLAG_USE_CROSS_DEVICE) {
+ 		ret = virtio_gpu_resource_assign_uuid(vgdev, bo);
+ 		if (ret) {
+-			drm_gem_object_release(obj);
++			drm_gem_object_put(obj);
+ 			return ret;
+ 		}
+ 	}
  
- 	if (attr->max_entries == 0 ||
-+	    attr->max_entries > INT_MAX ||
- 	    attr->key_size    != 4 ||
- 	    (attr->value_size != sizeof(u32) &&
- 	     attr->value_size != sizeof(u64)) ||
+ 	ret = drm_gem_handle_create(file, obj, &handle);
+ 	if (ret) {
+-		drm_gem_object_release(obj);
++		drm_gem_object_put(obj);
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
