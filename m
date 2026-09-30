@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFEA51476F;
-	Wed, 30 Sep 2026 17:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9BC5187C6;
+	Wed, 30 Sep 2026 17:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789770; cv=none; b=RpoqS9EzZNrsXc5W4VsmSvqDrmYM8KkSLMIWDXWBobXGQAW0u9MBb6UM+fa9Wv+Wez8Mx9kHWKhwAJtyyBFGFocXx+deY8OfZFfj22EwFMQYq+8YVcJgFv2SQjEYSb+eY8SDMqWbnqRxg7kTbrQP4RSCLvI1fPI2tUAwr6Mjtu8=
+	t=1790789773; cv=none; b=OhZ7piR8shyF7S45WimyOLvhyN3Yz22fpM0GWeCZBAIwZ7X3Da262aseRAnNUtkCUECVFIhG1GCxmunMXBKmNDDHuwU0HYv7iRvvkT+Tz72fQLyxi2zmqnWZ1dYhdggD3jICj/oQh5HReT/L78JNfh4VXTW3tEzBbZAxMVKrANw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789770; c=relaxed/simple;
-	bh=GEpboQ4i4phtdL4/eq4n91FdDtHE6rVw4ddDao/r+vE=;
+	s=arc-20240116; t=1790789773; c=relaxed/simple;
+	bh=Jp3a7LriCte+pR8N+7iYVuT4hX+WT5YyCTZv+csZNik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpO2LxwIffwtz5Pxb3XiE0eIW1/eaJH97Vn+DURh7pj0EyX3Wt8+BlvEtASQQpOrFKL41zX0gbNLiBLaPtNvbU/K+eVENl6Pkj19HUSqnJXCXYTIMPrXZ5b7hcVyBoLrXUNx7tkpUlJ2LIj8eEc+F3JbvUq8ippa8Ak40Xowk2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppxecC0y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t7QjTNm6T0cyKeZ0QdNoxwXRwGIyhQfuz6QM8QD359gT2/cNCThVq6lULsQ/gGB9EDygY4nJSp8fXvDeDo5Vh0gQytEIxSk6WFWX7lxQFg2/fLLylzt87VgjjE9K/MukPd91MmwULAnNgDApiRVeywARfQ1llDrqbNPsH69dX4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiUpPWhu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppxecC0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FFE1F000FF;
-	Wed, 30 Sep 2026 17:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiUpPWhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F751F000FF;
+	Wed, 30 Sep 2026 17:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789769;
-	bh=H6gnGd6LwzW7pVtqC9lUIITPT09CoW2gNT7M2HHp4uk=;
+	s=korg; t=1790789772;
+	bh=bxFaXFXztQp5C3Ee+j0FWuPXyrWKWyWGzNyq77JwSqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppxecC0ySnC28u7DRyXZ1wcgP1b5bSxanz+e9HTihnH6DIVVvq490tH3HZlKyg82D
-	 tqHbEtKQ0E6Y1iXKDOxjcFabhnkXbQERdQ9NI+uDeMkjmpPqslju6r3eabGyhes+Tx
-	 rP5tqStAoKbQ9OuZw4qFDaDp8Fzu9cl3xT0+PAHk=
+	b=GiUpPWhuHiVx5KVzOWPbDiIwPeS2gUV8QhDWUHvEKJhTd+gKv4QypEVwZjbdbi2UU
+	 CmiV+9biSDwBUBsaBnoQghfIMPjFAWELlgV6Qbu3/Yd4Bx9oAAvFhb2ho63LiNRqyc
+	 KLrYWF++szkvp89XvyRnERbjcG+anP/RMaNwDjcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 549/877] xfs: release orphanage dir inode if chown fails
-Date: Wed, 30 Sep 2026 17:24:20 +0200
-Message-ID: <20260930152426.486373584@linuxfoundation.org>
+Subject: [PATCH 6.12 550/877] xfs: use correct jiffies comparison function in xchk_maybe_relax
+Date: Wed, 30 Sep 2026 17:24:21 +0200
+Message-ID: <20260930152426.509345164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,41 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1c32cdc986467eaffeedb6c5334852809555b82d upstream.
+commit 984aab2d905a8557fafb27cd9e8713d6d12b3437 upstream.
 
-LOLLM points out that we leak the igrab'd reference to the orphanage
-directory inode if chowning it fails.  Fix that.
+LOLLM points out that we're supposed to use time_after_eq, not a raw >=
+operation here, or else jiffies wraps can go unnoticed.  Fix this.
 
 Cc: stable@vger.kernel.org # v6.10
-Fixes: 1e58a8ccf2597c ("xfs: move orphan files to the orphanage")
+Fixes: 271557de7cbfde ("xfs: reduce the rate of cond_resched calls inside scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/orphanage.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/scrub.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/orphanage.c
-+++ b/fs/xfs/scrub/orphanage.c
-@@ -193,12 +193,16 @@ xrep_orphanage_create(
- 	/* Make sure the orphanage is owned by root. */
- 	error = xrep_chown_orphanage(sc, XFS_I(orphanage_inode));
- 	if (error)
--		goto out_dput_orphanage;
-+		goto out_rele_orphanage;
+diff --git a/fs/xfs/scrub/scrub.h b/fs/xfs/scrub/scrub.h
+index 737a5d6db15f..b093945f3631 100644
+--- a/fs/xfs/scrub/scrub.h
++++ b/fs/xfs/scrub/scrub.h
+@@ -40,7 +40,7 @@ static inline int xchk_maybe_relax(struct xchk_relax *widget)
+ 		return 0;
+ 	widget->resched_nr = 0;
  
- 	/* Stash the reference for later and bail out. */
- 	sc->orphanage = XFS_I(orphanage_inode);
- 	sc->orphanage_ilock_flags = 0;
-+	orphanage_inode = NULL;
- 
-+out_rele_orphanage:
-+	if (orphanage_inode)
-+		xchk_irele(sc, XFS_I(orphanage_inode));
- out_dput_orphanage:
- 	dput(orphanage_dentry);
- out_unlock_root:
+-	if (unlikely(widget->next_resched <= jiffies)) {
++	if (unlikely(time_after_eq(jiffies, widget->next_resched))) {
+ 		cond_resched();
+ 		widget->next_resched = XCHK_RELAX_NEXT;
+ 	}
+-- 
+2.55.0
+
 
 
