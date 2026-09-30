@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8E651AFF6;
-	Wed, 30 Sep 2026 17:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C27523792;
+	Wed, 30 Sep 2026 17:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790538; cv=none; b=lUdzBoCu47lakikdGhtOGnwxD2kzlgZM/YhoiTy8SHVHb8eg6Dp8Owp6JJa3DR01PBmk5iwYTa3HhgX6p5OgdynvXeWdiQaawG+gv8RMW77+Ecmw7OXw8ieIrfLVi6BeVm6Sd34/8o40lD2rh7J6BgjoDLHkL04gb2yuFRImKjg=
+	t=1790790541; cv=none; b=MmYUZkeR/Fkrvabttu0TxRGE2HoFRkG0gFaY1UMGcRzlxbNErmOW/i8E1lc+O8GBVqwCURvTaqr0vLVxRqosGJMUl+MtJyxC2NoCUCK+Di3/NKI38+pZtEpt07QoWNlzdf3FE89bUPRhW7BKa0pIU8SctA+/ugpt7h3pfFZrAB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790538; c=relaxed/simple;
-	bh=UXteuGVVxiNTGm0T4uSr8kefcd4kD9PNjTIq5xQjYJM=;
+	s=arc-20240116; t=1790790541; c=relaxed/simple;
+	bh=BA248UK98kK3fkhSH/wYrDCokvNnjKoOz/RrxSddP4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zm3a7H/KmZLrOElLlITXmLpfOAgNKG0fsYPk7pcNKXm1P6sJmfTfcT+6eE0TudnL+QdmwKwaCnbfH2l/IyCD3Dkh78gAl1oD4/L7XvdqI4TQrYyHS0TIr59QfqIkzNE2yy3mgw0Yvgr+TjpQH1UEayq04oRAIEsOIraDUekf5SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDRKYLhn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=orYjJbBOAb8P5pC8Ztngan0iUufE6vu/FaXDmClsV9xQ1NfQtApLh785NSBsGlaXu4CmgX3WWKNqjvWsWKv4fsJgr1gtJcCXQNUXRngbZtUzR54xhD3lXLaozEXHuvVZnKRc+gDmARgqrW9jzjt17t0UzlBSWUQUhWmMMPpNKfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqrXV7v/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDRKYLhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F2A1F000FF;
-	Wed, 30 Sep 2026 17:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqrXV7v/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48B91F000FF;
+	Wed, 30 Sep 2026 17:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790537;
-	bh=eckB75hCmW9r1ZEblGQ+JOyHWXC65uQS4Z8Yz/5ZKJ4=;
+	s=korg; t=1790790540;
+	bh=nMriUo286LNHWOYqt1cupbRhlpU4dCnuufmM1d+2Yf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yDRKYLhnDky0d00QVHzcWE6e6Rdm5GGYo67MLeYJ1G3kSYqxT/Vl7L4858eVBcBXo
-	 xXyFaa/J4JwRag+maiW+Y8/NhCXolEWTjhBpWnqWaGPYL4dZKDqZy80X4egpj8FmvK
-	 NPHyFvkQekb1qFIBS5auJPmw8O3sx8dyQWb8PTvQ=
+	b=DqrXV7v/15I1sgwXaMoXwfXZJL36Xhg71c5eO0y8iXWi2KeCKTT+dCN+iqKF9kJfa
+	 ASllZGDFCmTEqf7vLBQPXvM5wpIzdtHg1c6EGf6O51lWrbcw9bOZ++zSC9k1Smxdo7
+	 ssy/VHPEvBQq+UCdQRR/jwsKsoiXGX2ON0uATt1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.12 863/877] rose: fix netdev double-hold in rose_make_new()
-Date: Wed, 30 Sep 2026 17:29:34 +0200
-Message-ID: <20260930152433.359888412@linuxfoundation.org>
+Subject: [PATCH 6.12 864/877] rose: release netdev ref and destroy orphaned incoming sockets
+Date: Wed, 30 Sep 2026 17:29:35 +0200
+Message-ID: <20260930152433.381204859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,48 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit b9fb21ceb4f0d043767a1eba60786ec84809033b upstream.
+commit df12be096302d2c947388acc25764456c7f18cc1 upstream.
 
-rose_make_new() copies orose->device from the listener socket and calls
-netdev_hold(), storing the tracker in rose->dev_tracker.  The only
-caller, rose_rx_call_request(), then overwrites both make_rose->device
-and make_rose->dev_tracker with a fresh netdev_hold() for the actual
-incoming-call device.
+Two related cleanup gaps left the module unremovable after a loopback
+session:
 
-This orphans the tracker allocated by rose_make_new(): it remains in
-the device's refcount_tracker list but no pointer exists to free it
-via netdev_put().  The result is one spurious outstanding reference per
-accepted CALL_REQUEST, visible at rmmod time as:
+1. rose_destroy_socket() did not release the device reference.  When
+   an unaccepted incoming socket (created by rose_rx_call_request()) is
+   destroyed via rose_heartbeat_expiry(), it is removed from rose_list
+   before rose_kill_by_device() can find it, so the netdev_hold() taken
+   in rose_rx_call_request() was never matched by netdev_put().  Add the
+   release at the top of rose_destroy_socket() guarded by a NULL check
+   so that rose_release() and rose_kill_by_device(), which already call
+   netdev_put() and set device = NULL, are not affected.
 
-  ref_tracker: netdev@X has 2/2 users at
-      rose_rx_call_request+0xba3/0x1d50 [rose]
-      rose_loopback_timer+0x3eb/0x670 [rose]
+2. rose_heartbeat_expiry() STATE_0 cleanup required TCP_LISTEN in
+   addition to SOCK_DEAD.  Unaccepted incoming sockets are
+   TCP_ESTABLISHED, so the condition was never true and those sockets
+   lingered forever, holding the module use count above zero and
+   blocking rmmod.  Drop the TCP_LISTEN restriction: any STATE_0 +
+   SOCK_DEAD socket is orphaned and should be destroyed.
 
-The second entry is the orphaned tracker from rose_make_new(); the
-first is the correctly-managed socket reference from rose_rx_call_request().
-
-Fix: initialise rose->device to NULL in rose_make_new() and let
-rose_rx_call_request() -- the sole caller -- assign the correct device
-and take the sole netdev_hold() as it already does.
+Together with the earlier rose_make_new() double-hold fix these three
+patches allow clean rmmod after loopback sessions.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/af_rose.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/rose/af_rose.c    |    9 +++++++++
+ net/rose/rose_timer.c |    9 +++++----
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -631,9 +631,7 @@ static struct sock *rose_make_new(struct
- 	rose->hb	= orose->hb;
- 	rose->idle	= orose->idle;
- 	rose->defer	= orose->defer;
--	rose->device	= orose->device;
--	if (rose->device)
--		netdev_hold(rose->device, &rose->dev_tracker, GFP_ATOMIC);
-+	rose->device	= NULL;  /* rose_rx_call_request() sets this */
- 	rose->qbitincl	= orose->qbitincl;
+@@ -363,6 +363,7 @@ static void rose_destroy_timer(struct ti
+  */
+ void rose_destroy_socket(struct sock *sk)
+ {
++	struct rose_sock *rose = rose_sk(sk);
+ 	struct sk_buff *skb;
  
- 	return sk;
+ 	rose_remove_socket(sk);
+@@ -370,6 +371,14 @@ void rose_destroy_socket(struct sock *sk
+ 	rose_stop_idletimer(sk);
+ 	rose_stop_timer(sk);
+ 
++	/* Drop any device reference not already released by rose_kill_by_device()
++	 * or rose_release() -- e.g. incoming sockets that were never accepted.
++	 */
++	if (rose->device) {
++		netdev_put(rose->device, &rose->dev_tracker);
++		rose->device = NULL;
++	}
++
+ 	rose_clear_queues(sk);		/* Flush the queues */
+ 
+ 	while ((skb = skb_dequeue(&sk->sk_receive_queue)) != NULL) {
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -128,10 +128,11 @@ static void rose_heartbeat_expiry(struct
+ 	}
+ 	switch (rose->state) {
+ 	case ROSE_STATE_0:
+-		/* Magic here: If we listen() and a new link dies before it
+-		   is accepted() it isn't 'dead' so doesn't get removed. */
+-		if (sock_flag(sk, SOCK_DESTROY) ||
+-		    (sk->sk_state == TCP_LISTEN && sock_flag(sk, SOCK_DEAD))) {
++		/* Destroy any orphaned STATE_0 socket: either explicitly
++		 * flagged SOCK_DESTROY, or SOCK_DEAD (covers both unaccepted
++		 * incoming connections and listening sockets whose link died).
++		 */
++		if (sock_flag(sk, SOCK_DESTROY) || sock_flag(sk, SOCK_DEAD)) {
+ 			bh_unlock_sock(sk);
+ 			rose_destroy_socket(sk);
+ 			sock_put(sk);
 
 
