@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4829E36A033;
-	Wed, 30 Sep 2026 17:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD840503BF7;
+	Wed, 30 Sep 2026 17:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791055; cv=none; b=JinxjJbkxYQytfo2cMtAXNbkM0ecazs8q+UIuoQ4Al1VhyicrntYqKGjnjPmESCVIpiuHLogU7jIAhl2Ce2fOe45SyChy5fRqkj/Vo1s2xwVD/gKijNizcFpoPb2nnfLswa3o7te5JnX/Cm0ln/4yuJeF6Ej+GErC1iVspKnFvU=
+	t=1790791059; cv=none; b=SSo9xslHIa64kfT2vN/wW948D7WJADZDSJhPbZ5QZMsSTKWGTTbEuk42JwZpboIAn4KkiwQr5/IhvlP9ItrK2hmUyRxK3q8tV7/8gfEgfofrD9TDXyP6S6se3BFh1UOQrlcemQrFeeBhzNFtqX2nsoc4kYCYYD8xKLQTDQj/nKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791055; c=relaxed/simple;
-	bh=V0NmsMgAr2567AKFZoXBtnInN4qtvtXXueL+QhG4w2U=;
+	s=arc-20240116; t=1790791059; c=relaxed/simple;
+	bh=QNywt2kGdfpshXECd3Y+IGX1Z9jgZCPcy3BYLwGvTyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMaQxpK4qH0rs7FOKr+T8m1vwF9u23tTu45GRImhQIFhKV/GIzOJd3bdEYn6qGrLUJG+17CiTd8RTM6sjz5UZnQpLsq/ii87Q/iZE5bTWLesL6hV6iWa2NaPIVYL0gGkJjlfMFPWiW2i3xYgl2uSyBdvMScx4Oot4MBTCZovCAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMfkZSQJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YEKKcFQk77RGO0EvJe3cLjqhr6lEMLS2OI9LReQfYKGPXpg2cGNHjjpc5TXck2l2mxs+VCDWsHZwP/Rua4/m3ipIhRBKGvPi+hsdowZ1B78dVYOoH0J6VBbZHGmVkDixGf3EXmCi/mio9cFg1crsE0s0Hi3Gqfvs25oXID2zTTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WWrS0Pp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMfkZSQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF631F000FF;
-	Wed, 30 Sep 2026 17:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WWrS0Pp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CF41F000FF;
+	Wed, 30 Sep 2026 17:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791054;
-	bh=5shgV9pmpjxWey92qtwJJZJhy6wWDQiS60eLWKi+LxY=;
+	s=korg; t=1790791057;
+	bh=MxFvTvVEEMZjplS9goMeXF11yJmeH5czYeYlJPGCpwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMfkZSQJcRPN3s8hhDWEyLz5xnYGfQ3PlOgcdToExye7XjMEuYoylqrVvgddiqQZj
-	 GncKRQBMWrHtgQ7tgnIQaMxZryLq0iGN5677nSBi4my70x05j88BFkzV8jnUjmwXpR
-	 /Llxe95Jb3HIex3EP4EsOn6GQZPzBUA2+1l6vZ4g=
+	b=2WWrS0PpmdsH7gkyzLTv0gSZX9KfVQpfs/4P1D3EbFcCMfDbz605JigJSUEJsXGYl
+	 BtNIlFiW38RzKLXEFAatuYoDOeOsLTbkiPTlY31hXEu2B/gmgMAGIZXYsnbX8DqAvj
+	 rVBRxC7I9xTpfonKcok14zBIGMp+aVq1Z90gyZGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
+	Gleb Sonichev <sonichev555@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/752] md/raid5: account discard IO
-Date: Wed, 30 Sep 2026 17:20:37 +0200
-Message-ID: <20260930152401.813456383@linuxfoundation.org>
+Subject: [PATCH 5.15 132/752] platform/x86: dell-laptop: add Inspiron N5110 to touchpad LED quirk table
+Date: Wed, 30 Sep 2026 17:20:02 +0200
+Message-ID: <20260930152401.036281637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -44,89 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Gleb Sonichev <sonichev555@gmail.com>
 
-[ Upstream commit 74ddbf98e2db646ec58f7e7731c936b7a4a470fe ]
+[ Upstream commit bfe91a80b13f8068f6fa07aa8c468d284150d4ad ]
 
-Raid5 handles discard bios internally through make_discard_request() and
-never passes them through md_account_bio(). As a result, discard IO is
-missing the md-device iostat accounting that normal raid5 IO and discard
-IO in other raid levels get from md_account_bio().
+The Inspiron N5110 needs the touchpad LED quirk (Vostro V130 quirk)
+to properly control the touchpad LED. Add its DMI identifier
+to the existing quirk table, next to the similar Inspiron M5110 entry.
 
-Before accounting the bio, trim the request to the full data stripes that
-raid5 will actually discard. The first full stripe is the ceiling of the
-bio start divided by data-stripe sectors, and the last full stripe is the
-floor of the bio end divided by data-stripe sectors. Account that exact
-MD logical full-stripe range, then restore the original iterator so bio
-completion and iostat still cover the original request.
+Tested on Dell Inspiron N5110.
+The touchpad LED works correctly with this quirk enabled.
 
-Link: https://patch.msgid.link/20260605072639.2434847-2-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Gleb Sonichev <sonichev555@gmail.com>
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://patch.msgid.link/20260525100047.20046-1-sonichev555@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ drivers/platform/x86/dell/dell-laptop.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index a957eb3ce7bc6..7ecc339f34a27 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5679,26 +5679,39 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- {
- 	struct r5conf *conf = mddev->private;
- 	sector_t logical_sector, last_sector;
-+	sector_t first_stripe, last_stripe;
- 	struct stripe_head *sh;
-+	struct bvec_iter bi_iter;
-+	struct bio *orig_bi = bi;
- 	int stripe_sectors;
- 
- 	if (mddev->reshape_position != MaxSector)
- 		/* Skip discard while reshape is happening */
- 		return;
- 
--	logical_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
--	last_sector = bio_end_sector(bi);
--
--	bi->bi_next = NULL;
--
- 	stripe_sectors = conf->chunk_sectors *
- 		(conf->raid_disks - conf->max_degraded);
--	logical_sector = DIV_ROUND_UP_SECTOR_T(logical_sector,
--					       stripe_sectors);
--	sector_div(last_sector, stripe_sectors);
-+	first_stripe = DIV_ROUND_UP_SECTOR_T(bi->bi_iter.bi_sector,
-+					     stripe_sectors);
-+	last_stripe = bio_end_sector(bi);
-+	sector_div(last_stripe, stripe_sectors);
-+
-+	if (first_stripe >= last_stripe) {
-+		bio_endio(bi);
-+		return;
-+	}
-+
-+	bi_iter = bi->bi_iter;
-+	bi->bi_iter.bi_sector = first_stripe * stripe_sectors;
-+	bi->bi_iter.bi_size = ((last_stripe - first_stripe) *
-+			       stripe_sectors) << 9;
-+	md_account_bio(mddev, &bi);
-+	orig_bi->bi_iter = bi_iter;
-+	bi->bi_iter = bi_iter;
-+	bi->bi_next = NULL;
- 
--	logical_sector *= conf->chunk_sectors;
--	last_sector *= conf->chunk_sectors;
-+	logical_sector = first_stripe * conf->chunk_sectors;
-+	last_sector = last_stripe * conf->chunk_sectors;
- 
- 	for (; logical_sector < last_sector;
- 	     logical_sector += RAID5_STRIPE_SECTORS(conf)) {
+diff --git a/drivers/platform/x86/dell/dell-laptop.c b/drivers/platform/x86/dell/dell-laptop.c
+index 8230e7a68a5eb..01230c95b0408 100644
+--- a/drivers/platform/x86/dell/dell-laptop.c
++++ b/drivers/platform/x86/dell/dell-laptop.c
+@@ -201,6 +201,15 @@ static const struct dmi_system_id dell_quirks[] __initconst = {
+ 		},
+ 		.driver_data = &quirk_dell_vostro_v130,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "Dell Inspiron N5110",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron N5110"),
++		},
++		.driver_data = &quirk_dell_vostro_v130,
++	},
+ 	{
+ 		.callback = dmi_matched,
+ 		.ident = "Dell Vostro 3360",
 -- 
 2.53.0
 
