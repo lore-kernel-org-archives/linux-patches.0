@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890115158B7;
-	Wed, 30 Sep 2026 16:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83711516148;
+	Wed, 30 Sep 2026 16:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787594; cv=none; b=LCFrXHntkxlWDTPThkFaButK8+nRr3NSDkANv4mflrR73Xqo61wWswywcTZvQhKmEJGb6vL1E/upTnT6PTBkpQGpKO5ECZhcvmAGrwZ7/NsH/Jux1gGwaoyyOLpIK3c8NLf9j5EODrRaNwNo50XZWMTKomyiUSRuI4hgmPBgTUg=
+	t=1790787597; cv=none; b=WM88Ak6sHLD8c09HoNmB3duU030NS8TP4AIqSYu6pxQQVeM60/SzTkDACzeeMlph5Oi/SjybEqlecqXSwgd42bpM5Bg7Ui9ihJ2D/IB0nmknAGCzFOAWB6GY6Qdhnmpr31S4nsq0XttGToA2h5WBKLe62u2999zY5GvW1XRJRzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787594; c=relaxed/simple;
-	bh=Ui8BT0Tpj6tQ+uFfeeHZw/24oTz5r1vgPIuA+dOOcj8=;
+	s=arc-20240116; t=1790787597; c=relaxed/simple;
+	bh=W2cPOiExeKXonWIGni85PZ6NonAFdpbtCJg8ZxiMtmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lieGymrmkNTyt3qD/ns+OIM5+dlJ5gnHKofSztA0x0Q3FoGRe69VFckMhrPgBIFexYN4tkWDscIuFGjt6F/Xo8XHYbfCNnQAPnI620cCClMjhvR/tbuQY16TNTygEIUu4VEShqxUKzAqSnI22jfkLKb4JEw75RgU9My9TJv9wL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4reWgHo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I2IELZEzU9nkgX7deWV5eljTwYIGUcCn8+fE48Yf3IufeQaP8GBEmk17j6WHTdjt6IKkjjXMphThSBcFZOHKiA18c5a1dAVvY7wcDaH6TBoX/fnQZ9blTFXESk9D9u4PYviIC3wr/Nj/v6EINIcEPweAskOW+zK2DrMBQfOzhRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVOI7/zl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4reWgHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EBC1F000FF;
-	Wed, 30 Sep 2026 16:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVOI7/zl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC111F00898;
+	Wed, 30 Sep 2026 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787593;
-	bh=z+2saDFLUwz7IWNVs5aE+bF9VnHNS0XchD1ArMWshZc=;
+	s=korg; t=1790787596;
+	bh=G0DPIORuH3ErQMHG8yNgx80mKD3X6/p1YwWx6WCiBUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4reWgHoFu+4p7YDP4dfEquH+Xhpt7MMrHkCa1//hzoaeOW9wlB4UikH2Wx+H0NBh
-	 hFBIrxSuwilLLdXEBg26urZWgSfSouav590Cqt1CyV+OqFyWVystCmDhYXYJXyXogm
-	 BwO0X+hmqp4KlWJd35p76LEmx5zS4n7Pm/ikCuLI=
+	b=uVOI7/zlRiyl7XWx8QrhsI77HOwB4MNIcHYhecniGU31B7R76MwAxuh36Jw+K1Txi
+	 ENv252nmBeo8VcWa3ckaqbTI0w5YqDfvC2X8dNjj3Q6Ku122fghQ6l9hFY5JNLgQ8/
+	 LLg2uh+fD13P2vBUInqtjK2uRudC8XE1VN5AY0lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Lipski <ivan.lipski@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 284/457] drm/amd/display: Bump frame warning limit for clang builds of dml
-Date: Wed, 30 Sep 2026 17:26:29 +0200
-Message-ID: <20260930152352.163200650@linuxfoundation.org>
+Subject: [PATCH 7.2 285/457] drm/amdgpu/userq: fix double jiffies conversion in hang detect timeout
+Date: Wed, 30 Sep 2026 17:26:30 +0200
+Message-ID: <20260930152352.184579540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -44,58 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit 18779dd84515db093fedb4ebaf0998c9b165a5fb upstream.
+commit cd195f1616b2bb5fb7765465326c4d5d64a620a0 upstream.
 
-[Why&How]
-When building the DML files with clang without any sanitizer or LTO,
-the following -Wframe-larger-than errors break the build under
-CONFIG_WERROR:
+Function amdgpu_userq_start_hang_detect_work() calls msecs_to_jiffies()
+on adev->gfx_timeout/compute_timeout/sdma_timeout before arming
+hang_detect_work. These timeout values already hold jiffies values from
+amdgpu_device_get_job_timeout_settings() at device init.
 
-  display_mode_vba_30.c: error: stack frame size (2512) exceeds limit
-    (2048) in 'dml30_ModeSupportAndSystemConfigurationFull'
-  display_mode_vba_31.c: error: stack frame size (2416) exceeds limit
-    (2048) in 'dml31_ModeSupportAndSystemConfigurationFull'
-  display_mode_vba_314.c: error: stack frame size (2392) exceeds limit
-    (2048) in 'dml314_ModeSupportAndSystemConfigurationFull'
+This silently shrinks the real hang-detect deadline to (2 * HZ) ms
+instead of the intended timeout. e.g. 500ms instead of the 2000ms
+default on a CONFIG_HZ=250 kernel, only coincidentally correct at
+HZ=1000. The shortened window is easily exceeded by ordinary
+fence-completion latency, causing hang_detect_work to fire and
+trigger a per-queue or full GPU reset for queues that are not
+actually hung.
 
-Clang consistently spills more than gcc, pushing the frame past the 2048
-byte limit.
+Pass the jiffies value directly to queue_delayed_work() instead of
+converting it a second time.
 
-Apply an existing approach of increasing the warn stack size to the
-non-sanitizer path so plain clang builds use a 3072 byte limit.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5642
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Fixes: fc3336be9c62 ("drm/amd/amdgpu: Add independent hang detect work for user queue fence")
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 21711b6e66bb7b41b1aec67b2d99aafe768c8fcb)
+(cherry picked from commit 13d44ca033cb74756c2aef0ade54a75cdf2f6271)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -36,7 +36,11 @@ ifneq ($(CONFIG_FRAME_WARN),0)
-             frame_warn_limit := 3072
-         endif
-     else
--        frame_warn_limit := 2048
-+        ifeq ($(CONFIG_CC_IS_CLANG),y)
-+            frame_warn_limit := 3072
-+        else
-+            frame_warn_limit := 2048
-+        endif
-     endif
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -167,27 +167,27 @@ static void amdgpu_userq_hang_detect_wor
+ void amdgpu_userq_start_hang_detect_work(struct amdgpu_usermode_queue *queue)
+ {
+ 	struct amdgpu_device *adev;
+-	unsigned long timeout_ms;
++	unsigned long timeout_jiffies;
  
-     ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
+ 	adev = queue->userq_mgr->adev;
+ 	/* Determine timeout based on queue type */
+ 	switch (queue->queue_type) {
+ 	case AMDGPU_RING_TYPE_GFX:
+-		timeout_ms = adev->gfx_timeout;
++		timeout_jiffies = adev->gfx_timeout;
+ 		break;
+ 	case AMDGPU_RING_TYPE_COMPUTE:
+-		timeout_ms = adev->compute_timeout;
++		timeout_jiffies = adev->compute_timeout;
+ 		break;
+ 	case AMDGPU_RING_TYPE_SDMA:
+-		timeout_ms = adev->sdma_timeout;
++		timeout_jiffies = adev->sdma_timeout;
+ 		break;
+ 	default:
+-		timeout_ms = adev->gfx_timeout;
++		timeout_jiffies = adev->gfx_timeout;
+ 		break;
+ 	}
+ 
+ 	queue_delayed_work(adev->reset_domain->wq, &queue->hang_detect_work,
+-			   msecs_to_jiffies(timeout_ms));
++			   timeout_jiffies);
+ }
+ 
+ void amdgpu_userq_process_fence_irq(struct amdgpu_device *adev, u32 doorbell)
 
 
