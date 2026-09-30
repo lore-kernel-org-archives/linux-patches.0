@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0434630D401;
-	Wed, 30 Sep 2026 19:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAF936826E;
+	Wed, 30 Sep 2026 19:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796357; cv=none; b=Qpx2FWRhBn9fD2b+ZwteetH9jltqQ/0sLEIHtyyknskE/kAld6bqBAowlE6dxwUBJC/aag1by7eO8+F0H/Y28X3kH06UHf09sml5Lmh9dd39WpF0al5hzdDGLtTzePF8/Pz2v6jFqIDbNSQqz4O/nmfR7Rhy+tcRSNP2jT2+g+s=
+	t=1790796358; cv=none; b=E6s8LICOVqmiqj2wflU+lCjPRYFopi7zmHXPJ5SfZMMX6G2wd9FzrEBQaQ6gbH4FABBTbGFaZOExgZbbr1qj5nVsHep1gIdFTmeATjNqj9JIkwXB34jFqEDxLA/wFH+GBVqj/SiaYWtwDLPsAYnrNRUIZMswLUXNWg7M8C21Mk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796357; c=relaxed/simple;
-	bh=4v3JJy6tbaNgnN4I68LmwUWQ60I60fsJOjWQMjqPbac=;
+	s=arc-20240116; t=1790796358; c=relaxed/simple;
+	bh=qhV8Vjq/8Ya0lUkv5yHdNQamqkVCcIMgrrarQLCcSL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf1ioDauGZsUopuP30EUU8xdhhdnpC+sSpkrE8Clb0luHtDDTIXiKDM9zvpOebJigTX5Xw4vbrLSQEuaftUCIw6Q+BFSr7isEp1pcnP3/UxkyjRJxiL1FxASZVr0sGpz4kS2qfV2rUVUHex933q+Y4q+Pk8Ldit2M9ZAyQHSRno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ6Czoxi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/S4TGqDZ2uD+u6dN1tDMnxdV23XEwu4Sc+NMPtHmoaQ8xeASLR03Az2YvbQcGpxKKmBia44u5CbwcXWPNnGK5IGztlAi6zAtI0/La9sX7Qea4M7LxcPK98/JGzzNQA5hI1EdAQJdWR0bkokhQkHmfyLOzgFAPEOfOYWtPkk2Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVWs78um; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ6Czoxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593561F000FF;
-	Wed, 30 Sep 2026 19:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVWs78um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A081F000FF;
+	Wed, 30 Sep 2026 19:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796354;
-	bh=oYYfl6+cOvZF/F/u5lwtFnJd+EL5EHjTmsa0fdAWH5M=;
+	s=korg; t=1790796357;
+	bh=PO6nUHSH48ZNSV+GAVadvIrE/VQlIoultTdmfKrVfRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZ6Czoxif6PwijmvpxEHfGuAjmLp2Q0UarE9NqrYGDyH42vo69Mc8icz3dHDJvCkT
-	 FSPS77L1w2wIo16UejDWY5RUX1SThraVe3XPDiskfK+K064+2jcNiyT5CIMrUhRfAG
-	 61W0/GYDqm/UdKqGAUPTg/6A/0Q2mDSjlmS5l8BM=
+	b=cVWs78umPusNiBSFhxaGkaMFca1AEf8dup42JUABmEnKdffYrrNNOAij6pmnc4zIS
+	 3jglKnWPVrq/0DumzLqZxC3SJap3gdEaeNXFIpLxofDms6Prgwt5fLrHqeqomiwH6q
+	 JQXq5o4M8WqoYelw9tjcZ/JM8amP95unYv0pN7SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Zhu Ling <zhuling0805@qq.com>,
+	Shawn Lin <shawn.lin@linux.dev>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0883/1193] mmc: core: Cancel SDIO IRQ work before freeing host
-Date: Wed, 30 Sep 2026 17:26:07 +0200
-Message-ID: <20260930152453.865207776@linuxfoundation.org>
+Subject: [PATCH 6.6 0884/1193] mmc: core: Fix OF node reference leak on card add failure
+Date: Wed, 30 Sep 2026 17:26:08 +0200
+Message-ID: <20260930152453.887421088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Zhu Ling <zhuling0805@qq.com>
 
-commit 6feadbecdae60a6324c967f3b1493741083793a3 upstream.
+commit 08b54e16d547d5c1aa61bf7a3595bb1620975eeb upstream.
 
-A host controller that uses sdio_signal_irq() schedules host->sdio_irq_work
-from its interrupt handler.  That work is only cancelled on the suspend
-path (mmc_sdio_suspend()), not on the remove/free path, so a worker armed
-just before the controller freed its IRQ can run after
-mmc_host_classdev_release() has freed the host and dereference it through
-container_of().
+mmc_of_find_child_device() returns a device node with its reference count
+incremented. mmc_add_card() stores the reference before calling
+device_add(), while the card is marked present only after device_add()
+succeeds.
 
-Cancel host->sdio_irq_work in mmc_free_host(), like the existing
-host->detect drain added by commit 1036f69e2513 ("mmc: core: Cancel
-delayed work before releasing host").
+If device_add() fails, the callers release the card through
+mmc_remove_card(). However, mmc_remove_card() only drops the OF node
+reference for a present card, leaking the reference on this error path.
 
-This issue was found by an in-house static analysis tool.
+Move of_node_put() outside the present-card conditional so the reference
+is released for both registered cards and card-add failures.
 
-Fixes: 682696605c70 ("mmc: sdio: Add API to manage SDIO IRQs from a workqueue")
+Fixes: 25185f3f31c9 ("mmc: Add SDIO function devicetree subnode parsing")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Zhu Ling <zhuling0805@qq.com>
+Reviewed-by: Shawn Lin <shawn.lin@linux.dev>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -692,6 +692,7 @@ EXPORT_SYMBOL(mmc_remove_host);
- void mmc_free_host(struct mmc_host *host)
- {
- 	cancel_delayed_work_sync(&host->detect);
-+	cancel_work_sync(&host->sdio_irq_work);
- 	mmc_pwrseq_free(host);
- 	put_device(&host->class_dev);
- }
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -397,8 +397,8 @@ void mmc_remove_card(struct mmc_card *ca
+ 				mmc_hostname(card->host), card->rca);
+ 		}
+ 		device_del(&card->dev);
+-		of_node_put(card->dev.of_node);
+ 	}
++	of_node_put(card->dev.of_node);
+ 
+ 	if (host->cqe_enabled) {
+ 		host->cqe_ops->cqe_disable(host);
 
 
