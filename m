@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A3C519E12;
-	Wed, 30 Sep 2026 17:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D4251A747;
+	Wed, 30 Sep 2026 17:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789640; cv=none; b=sighCgjOFEpr2iFw6bEU5SspQfHli0BSkIF3okxK8qz22qiY86JJb1TiJ6CMZ0W9aQMdFQI0XSlr5VamaYldDNtuB84FNSi7iVA+uGi1h7VHMID4ElZeYhtkoBztmUlRdc4jcXfSsQRTSO2OEOoIoWtYc7Uxpa2LYaZ2roIgnaY=
+	t=1790789642; cv=none; b=u3LwS5orrGuFFR8/kJ4inIXNgA2sB3JEqmFvzUJKmsQrq4hyXbiW6JhmJoH654NU7i1hlsqI9JVlpgoLxGdrlqrxvs9I/A3c+aol8JNwoGcWz/hNa9l6pkxRXXHycOEG3s+46hyEmormR7HlH5g4hOyBRQB2wW5iOV5gQO9IKbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789640; c=relaxed/simple;
-	bh=K7mwAtllseLmoRDuM0pOIx0I+FyYetVBKLXXrJGHm5g=;
+	s=arc-20240116; t=1790789642; c=relaxed/simple;
+	bh=HY1YYz0hpresBq3MmdbXvueG0YQGcfr2rkzN7JDAUYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWXHTYw1kAXIeEPXgSSQ7sHKbLXb26E57kR/Rm0v/dFJy27Raa3PPFtEgH5g4CN+kurl4UOy8EY9QD9rXLQCYeo9Zy/l4wrYsV2dMj7ht3eGMsFBv3tJ9RL0TKD5vJt1QIfrhY1usowcaKO+nIU2ik82KOgl0l8jcwTO6CVE2LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMEvGmeT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qZigY+ZS/Ef80qIrFgyL+5JKorTSn8NtXlBRhjF9+oSksrJW+Q61rB+6guLOr1f3zD52vJNv3+rU/1uUvidbDMPZsf6UxS6/f41/QHrU7zZyG3JBpiP+YRi2M9iy1ZszluQ4exaaIiNX5b1oZ0H1nPVOnXa7NwhfgRjtaiA5wnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJAq2PQv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMEvGmeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9391F000FF;
-	Wed, 30 Sep 2026 17:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJAq2PQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B221F00899;
+	Wed, 30 Sep 2026 17:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789638;
-	bh=u4OIDEbwQsLe/rBSN4BTnJesyQLPWKA0rg3UCKostw4=;
+	s=korg; t=1790789641;
+	bh=u1EgIXX6soIVW6THUbUQmN9y9Bl+nGPsgKFjqjcXIYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMEvGmeTOWxS+dEYyfH13equw7ogD4yNpi7IEM5GjPzYcNpBxZbMA8iLAnTFwFY7g
-	 FAxkUeUgRSfUVwZJnZhBxV9d7qKXu8x/ygZajdTTFsooIbPKcH3te/UISKlgXXXJMC
-	 nh0Waz0J1mmEgdCYnRVf4s8KV+Zrm/0oUyPKwrnI=
+	b=HJAq2PQvRZRK8YFVy2qY4cfXO1CX+/IngMq1yLGATsX49z2X3+Jli7kVTGR6w0V+/
+	 0wB3EkOiq9raOxC0DTL4uixPnD6M3ibVs3z315yRjxaTUjkpTxy2ORJAj1Lu34kdGz
+	 8Jd4U3+Q5KMbLvOV/jEDR+OAWceewOVjfITQPZkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <killertofu@gmail.com>,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 503/877] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
-Date: Wed, 30 Sep 2026 17:23:34 +0200
-Message-ID: <20260930152425.516987898@linuxfoundation.org>
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.12 494/877] drm/nouveau: dont bump pin count on failed re-pin in nouveau_bo_pin_locked()
+Date: Wed, 30 Sep 2026 17:23:25 +0200
+Message-ID: <20260930152425.322495653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,62 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie LAW <98lawweijie@gmail.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
+commit 6a6870d3077faa501ca97760057ddca22b68418d upstream.
 
-The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
-invalid offset to hid_field_extract(), resulting in memory reads at
-incorrect addresses -- possibly beyond the end of the report.  If a
-field in the HID descriptor lists more usages than its Report Count
-actually reserves space for, the function's inner 'j' will walk past
-the end of the field:
+nouveau_bo_pin_locked() checks whether an already pinned BO is in a
+memory domain compatible with a new pin request. When the domains are
+incompatible, it sets -EBUSY but still calls ttm_bo_pin() before
+returning.
 
-	for (i = 0; i < report->maxfield; i++) {
-		for (j = 0; j < report->field[i]->maxusage; j++) {
-			...
-			value = hid_field_extract(hdev, raw_data + 1,
-						  offset + j * size, size);
+Callers treat a failed nouveau_bo_pin() as not having acquired a new pin,
+so the extra pin count is never decreased by a matching unpin.
+This triggers the warning in ttm_bo_release():
 
-A descriptor listing 12288 usages against Report Count 1 has the loop
-extract the usage at index 12287 from bit offset 98296 -- about 12 KB
-past a 2-byte received report.  The value is stored in
-wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
-making this an information disclosure.
+	WARN_ON_ONCE(bo->pin_count);
 
-Clamp the loop to field->report_count, the number of value slots the
-report holds.  Value slots past the last declared usage are still
-scanned; they reuse that usage (HID 1.11, 6.2.2.8).
+Found when fuzzing the nouveau driver with a modified Syzkaller:
 
-Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
-such a descriptor trips KASAN before the patch and not after it.
+	WARNING: drivers/gpu/drm/ttm/ttm_bo.c:256 at ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256, CPU#1: syz.3.24/2212
+	Modules linked in:
+	CPU: 1 UID: 0 PID: 2212 Comm: syz.3.24 Not tainted 7.2.0 #24 PREEMPT(lazy)
+	nouveau 0000:01:00.0: gsp:msg fn:103 len:0x40/0x20 res:0x19 resp:0x19
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	RIP: 0010:ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256
+	Code: 02 00 0f 85 51 01 00 00 48 8b 7b 08 e8 d2 20 01 00 e9 80 fd ff ff e8 d8 15 c0 fe 90 0f 0b 90 e9 e1 f8 ff ff e8 ca 15 c0 fe 90 <0f> 0b 90 e9 a4 f8 ff ff e8 bc 15 c0 fe be 03 00 00 00 4c 89 e7 e8
+	msg: 00000000: 05 00 d0 c1 04 00 f0 f1 01 30 00 00 2d 90 00 00  .........0..-...
+	RSP: 0018:ffffc9000f5cf710 EFLAGS: 00010293
+	RAX: 0000000000000000 RBX: ffff888018e5d2a8 RCX: ffffffff82bb1b36
+	RDX: ffff888017b68000 RSI: 0000000000000004 RDI: ffff888018e5d2a8
+	msg: 00000010: 19 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+	RBP: ffff88801261c720 R08: 0000000000000001 R09: ffffed10031cba55
+	R10: ffff888018e5d2ab R11: 00000000000000f3 R12: ffff888018e5d290
+	R13: ffff888018e5d2d4 R14: ffff88801b219c18 R15: dffffc0000000000
+	FS:  0000000000000000(0000) GS:ffff8880e0f6f000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 0000001b31223ffc CR3: 0000000028e00005 CR4: 0000000000770ef0
+	PKRU: 80000000
+	Call Trace:
+	<TASK>
+	kref_put include/linux/kref.h:65 [inline]
+	ttm_bo_put drivers/gpu/drm/ttm/ttm_bo.c:325 [inline]
+	ttm_bo_fini+0x55/0x80 drivers/gpu/drm/ttm/ttm_bo.c:330
+	nouveau_gem_object_del+0xb2/0x1b0 drivers/gpu/drm/nouveau/nouveau_gem.c:90
+	drm_gem_object_free+0x5f/0x90 drivers/gpu/drm/drm_gem.c:1165
+	kref_put include/linux/kref.h:65 [inline]
+	__drm_gem_object_put include/drm/drm_gem.h:562 [inline]
+	drm_gem_object_put include/drm/drm_gem.h:575 [inline]
+	nouveau_abi16_chan_fini.constprop.0+0x44f/0x5a0 drivers/gpu/drm/nouveau/nouveau_abi16.c:195
+	nouveau 0000:01:00.0: syz.2.23[2209]: Unknown handle 0x00000000
+	nouveau_abi16_fini+0x1d0/0x340 drivers/gpu/drm/nouveau/nouveau_abi16.c:225
+	nouveau_drm_postclose+0x18b/0x3e0 drivers/gpu/drm/nouveau/nouveau_drm.c:1284
+	nouveau 0000:01:00.0: syz.2.23[2209]: validate_init
+	drm_file_free.part.0+0x6d6/0xb60 drivers/gpu/drm/drm_file.c:267
+	drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
+	drm_close_helper.isra.0+0x11a/0x160 drivers/gpu/drm/drm_file.c:290
+	drm_release+0x1ab/0x330 drivers/gpu/drm/drm_file.c:438
+	__fput+0x39c/0xa60 fs/file_table.c:512
+	nouveau 0000:01:00.0: syz.2.23[2209]: validate: -2
+	task_work_run+0x15a/0x230 kernel/task_work.c:233
+	exit_task_work include/linux/task_work.h:40 [inline]
+	do_exit+0x82b/0x25a0 kernel/exit.c:1009
+	do_group_exit+0xc2/0x280 kernel/exit.c:1152
+	get_signal+0x1d6e/0x1f30 kernel/signal.c:3046
+	arch_do_signal_or_restart+0x7d/0x6e0 arch/x86/kernel/signal.c:337
+	__exit_to_user_mode_loop kernel/entry/common.c:66 [inline]
+	exit_to_user_mode_loop+0xdf/0x440 kernel/entry/common.c:101
+	__exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
+	syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:230 [inline]
+	syscall_exit_to_user_mode include/linux/entry-common.h:318 [inline]
+	do_syscall_64+0x4f8/0x690 arch/x86/entry/syscall_64.c:100
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7f12bac8594d
+	Code: Unable to access opcode bytes at 0x7f12bac85923.
+	RSP: 002b:00007f12b96e70d8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+	RAX: 0000000000000001 RBX: 00007f12baf15fa8 RCX: 00007f12bac8594d
+	RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 00007f12baf15fac
+	RBP: 00007f12baf15fa0 R08: 00007f12baee8000 R09: 0000000000000000
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 00007f12baf16038 R14: 0000000000000006 R15: 00007ffe2ed394b0
+	</TASK>
+	irq event stamp: 47867
+	hardirqs last  enabled at (47883): [<ffffffff815cafc6>] __up_console_sem+0x66/0x70 kernel/printk/printk.c:347
+	hardirqs last disabled at (47892): [<ffffffff815cafab>] __up_console_sem+0x4b/0x70 kernel/printk/printk.c:345
+	softirqs last  enabled at (47880): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
+	softirqs last  enabled at (47880): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
+	softirqs last  enabled at (47880): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
+	softirqs last disabled at (47875): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
+	softirqs last disabled at (47875): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
+	softirqs last disabled at (47875): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
 
-Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
-Suggested-by: Jason Gerecke <killertofu@gmail.com>
+Fix by calling ttm_bo_pin() only when the existing placement is compatible
+with the new pin request. This matches the correct behavior in other DRM
+drivers such as amdgpu_bo_pin() in amdgpu.
+
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: GLM:glm-5.3
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: ad76b3f7c7a0 ("drm/nouveau: teach nouveau_bo_pin() how to force a contig vram allocation")
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Assisted-by: LLM
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/EACEF2F4E098413F+20260918025312.2814889-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_bo.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -97,8 +97,9 @@ static int wacom_wac_pen_serial_enforce(
+--- a/drivers/gpu/drm/nouveau/nouveau_bo.c
++++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
+@@ -501,8 +501,9 @@ int nouveau_bo_pin_locked(struct nouveau
+ 				      "0x%08x vs 0x%08x\n", bo,
+ 				 bo->resource->mem_type, domain);
+ 			ret = -EBUSY;
++		} else {
++			ttm_bo_pin(&nvbo->bo);
+ 		}
+-		ttm_bo_pin(&nvbo->bo);
+ 		goto out;
+ 	}
  
- 	/* Queue events which have invalid tool type or serial number */
- 	for (i = 0; i < report->maxfield; i++) {
--		for (j = 0; j < report->field[i]->maxusage; j++) {
--			struct hid_field *field = report->field[i];
-+		struct hid_field *field = report->field[i];
-+
-+		for (j = 0; j < field->report_count; j++) {
- 			struct hid_usage *usage = &field->usage[j];
- 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 			unsigned int offset;
 
 
