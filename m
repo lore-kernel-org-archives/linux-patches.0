@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5CE521203;
-	Wed, 30 Sep 2026 17:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C87852BE5E;
+	Wed, 30 Sep 2026 17:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789906; cv=none; b=HP50Uc5JcMphKKHuPY7ysFqDIidDE7nC3ychK/s4AWsJGGU9/0pLvj2lWO0khji50bwtLIdcVqqhEMhStnsHdneqoxhouiJh1ZfiVA7OHd7G/NEN6tnj4C3uM/HRxCUUpsH8O9U2zV07p7ccjNPCi640/ypOguzOnh4grOkk0G8=
+	t=1790789909; cv=none; b=bsZBq/w8vFPYicf2wGDHYTWtIbcUkKKThXcRess3kx8wbgj9IVfxJzAcTrM9d4cK1aw+QapeJDUwjar62TpUGkCvs8az54zF4fsvq+Dx49sRxZSiTcLzPpuXz8fktpq4WZXtzsOgOHreKntjsrp595v6i5t8w3R12go+QVPjPm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789906; c=relaxed/simple;
-	bh=h6aXAmCvTHFLBQMB1kiX8BBNOHvBskPcxsBzbIJREiM=;
+	s=arc-20240116; t=1790789909; c=relaxed/simple;
+	bh=DR2VPm7YVEuOa9OJaBFPP4IcWNN5SRvKSWr4X0KTk08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7kuVUK42Hx7/UufXh3JcNiBN+1aJzAyHLLsZNjK12fP6CPdMAUru33qKwgsV3msStt8oi3swCPrLtt8yQTkVaXoPOw66DDItB3BDEDQbs/bPa0ntagGhU939UkMiBipWUp8n/PLHcWtEWuWs4b+UiceVF01c6zzrgtKUVmaN/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niS3WbRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aiZ0PCfe8jgyKTbHS+/96V+elvhsSxY9i/5ESKOg9Q4qlMBnS8J4sJ2puvK6Dc0YHXYGDVrbZkC82FQ5FlK1v8Xtmp4gWWunL9kmr5p7dXrcT8bMRQV2ynLkv3AduTw1VjgMF8AMRX7+wy0EotQzfL+qd3DF4HgPPHzwqX3Yujw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/8cN7v5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niS3WbRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7341F000FF;
-	Wed, 30 Sep 2026 17:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/8cN7v5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987821F000FF;
+	Wed, 30 Sep 2026 17:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789905;
-	bh=9I/sqbXjSP6WTqWjd5In/xm+sMuJmRcOu0nosdcDP2Q=;
+	s=korg; t=1790789908;
+	bh=3YYaNt1rks9cDWweQwUxd/cNXl4WDhTSV9Z+WpwBAzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=niS3WbRlBJbQ1xEGBgfVh6ANKgHwspSoGRexQLGlwt7Y0uAjkExR7umrIVE5iTQnt
-	 KwmHCjCOudazcKVovWIsSYrKLTqJUhl0aZ76qYcQKkZ85PUAngvurt2ngTUzSZKPND
-	 4I2PERHd4rcaHtQhNGXNHG4Nk9C9YyapirUAiO/o=
+	b=X/8cN7v5TwH5zD3+dr8oYCtKPwEInB1f9p41JSx5mhr9vrq5yF67zcY5Tg9Y9vRzr
+	 HlIr+JgZMDIPH+nyzUJIyDBFT6Hb2X1LX/6Z9p1FD+WAo8/P7UqhnyOg2j8je0Ee2/
+	 zA0GDxIIuQF+UWnZtpTC4phYPsvdba/GY3qGQ+/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 598/877] net/smc: stop killed, freed and out_of_sync sharing a byte
-Date: Wed, 30 Sep 2026 17:25:09 +0200
-Message-ID: <20260930152427.558059437@linuxfoundation.org>
+Subject: [PATCH 6.12 599/877] net/mlx5e: SHAMPO, Always calculate page size
+Date: Wed, 30 Sep 2026 17:25:10 +0200
+Message-ID: <20260930152427.579986390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,55 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit db51a8658c11a82432b64999519a269c3aabb447 ]
+[ Upstream commit dff1c3164a69284ac9fedb1c25d4c008139e9fb8 ]
 
-The three connection state flags are single-bit bitfields, so they occupy
-one byte of struct smc_connection and every store to one is a
-read-modify-write of the other two:
+Adapt the rx path in SHAMPO mode to calculate page size based on
+configured page_shift when dealing with payload data.
 
-    u8  killed : 1;
-    u8  freed : 1;
-    u8  out_of_sync : 1;
+This is necessary as an upcoming patch will add support for using
+different page sizes.
 
-They are not written under a common lock. smc_cdc_msg_validate() sets
-out_of_sync from the receive tasklet, while smc_conn_kill() sets killed
-from process context under lock_sock(), and the receive path does not defer
-to the backlog when the socket is owned -- smc_cdc_msg_recv() takes only
-bh_lock_sock().
+This change has no functional changes.
 
-Give each flag its own byte so a store no longer touches its neighbours.
-All readers test them as booleans and are unchanged. struct smc_connection
-grows by two bytes.
-
-Fixes: b286a0651e44 ("net/smc: handle incoming CDC validation message")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260820074642.966856-2-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260223204155.1783580-9-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: e2466392a0b8 ("net/mlx5e: do not HW-GRO coalesce small frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c |   34 +++++++++++++++---------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
 
---- a/net/smc/smc.h
-+++ b/net/smc/smc.h
-@@ -277,9 +277,9 @@ struct smc_connection {
- 						 * 0 for SMC-R, 32 for SMC-D
- 						 */
- 	u64			peer_token;	/* SMC-D token of peer */
--	u8			killed : 1;	/* abnormal termination */
--	u8			freed : 1;	/* normal termination */
--	u8			out_of_sync : 1; /* out of sync with peer */
-+	u8			killed;		/* abnormal termination */
-+	u8			freed;		/* normal termination */
-+	u8			out_of_sync;	/* out of sync with peer */
- };
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -1983,11 +1983,14 @@ mlx5e_shampo_fill_skb_data(struct sk_buf
+ 			   struct mlx5e_frag_page *frag_page,
+ 			   u32 data_bcnt, u32 data_offset)
+ {
++	u32 page_size = BIT(rq->mpwqe.page_shift);
++
+ 	net_prefetchw(skb->data);
  
- struct smc_sock {				/* smc sock container */
+ 	do {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+-		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - data_offset, data_bcnt);
++		u32 pg_consumed_bytes = min_t(u32, page_size - data_offset,
++					      data_bcnt);
+ 		unsigned int truesize = pg_consumed_bytes;
+ 
+ 		mlx5e_add_skb_frag(rq, skb, frag_page, data_offset,
+@@ -2008,6 +2011,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
+ 	struct mlx5e_frag_page *head_page = frag_page;
+ 	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
++	u32 page_size = BIT(rq->mpwqe.page_shift);
+ 	u32 frag_offset    = head_offset;
+ 	u32 byte_cnt       = cqe_bcnt;
+ 	struct skb_shared_info *sinfo;
+@@ -2051,9 +2055,9 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 		linear_hr = skb_headroom(skb);
+ 		linear_data_len = headlen;
+ 		linear_frame_sz = MLX5_SKB_FRAG_SZ(skb_end_offset(skb));
+-		if (unlikely(frag_offset >= PAGE_SIZE)) {
++		if (unlikely(frag_offset >= page_size)) {
+ 			frag_page++;
+-			frag_offset -= PAGE_SIZE;
++			frag_offset -= page_size;
+ 		}
+ 	}
+ 
+@@ -2065,7 +2069,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 	while (byte_cnt) {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+ 		pg_consumed_bytes =
+-			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
++			min_t(u32, page_size - frag_offset, byte_cnt);
+ 
+ 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
+ 			truesize += pg_consumed_bytes;
+@@ -2102,7 +2106,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 		nr_frags_free = old_nr_frags - sinfo->nr_frags;
+ 		if (unlikely(nr_frags_free)) {
+ 			frag_page -= nr_frags_free;
+-			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
++			truesize -= (nr_frags_free - 1) * page_size +
+ 				ALIGN(pg_consumed_bytes,
+ 				      BIT(rq->mpwqe.log_stride_sz));
+ 		}
+@@ -2311,15 +2315,16 @@ mlx5e_shampo_flush_skb(struct mlx5e_rq *
+ 	rq->hw_gro_data->skb = NULL;
+ }
+ 
+-static bool
+-mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
++static bool mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb,
++					      u16 data_bcnt,
++					      u32 page_size)
+ {
+ 	int nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+-	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
++	if (page_size >= GRO_LEGACY_MAX_SIZE)
+ 		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ 	else
+-		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
++		return page_size * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ }
+ 
+ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cqe64 *cqe)
+@@ -2328,18 +2333,19 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
+ 	u16 header_index	= mlx5e_shampo_get_cqe_header_index(rq, cqe);
+ 	u32 wqe_offset		= be32_to_cpu(cqe->shampo.data_offset);
+ 	u16 cstrides		= mpwrq_get_cqe_consumed_strides(cqe);
+-	u32 data_offset		= wqe_offset & (PAGE_SIZE - 1);
+ 	u32 cqe_bcnt		= mpwrq_get_cqe_byte_cnt(cqe);
+ 	u16 wqe_id		= be16_to_cpu(cqe->wqe_id);
+-	u32 page_idx		= wqe_offset >> PAGE_SHIFT;
+ 	u16 head_size		= cqe->shampo.header_size;
+ 	struct sk_buff **skb	= &rq->hw_gro_data->skb;
+ 	bool flush		= cqe->shampo.flush;
+ 	bool match		= cqe->shampo.match;
++	u32 page_size = BIT(rq->mpwqe.page_shift);
+ 	struct mlx5e_rq_stats *stats = rq->stats;
+ 	struct mlx5e_rx_wqe_ll *wqe;
+ 	struct mlx5e_mpw_info *wi;
+ 	struct mlx5_wq_ll *wq;
++	u32 data_offset;
++	u32 page_idx;
+ 
+ 	wi = mlx5e_get_mpw_info(rq, wqe_id);
+ 	wi->consumed_strides += cstrides;
+@@ -2355,7 +2361,11 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
+ 		goto mpwrq_cqe_out;
+ 	}
+ 
+-	if (*skb && (!match || !(mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt)))) {
++	data_offset = wqe_offset & (page_size - 1);
++	page_idx = wqe_offset >> rq->mpwqe.page_shift;
++	if (*skb &&
++	    !(match && mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt,
++							 page_size))) {
+ 		match = false;
+ 		mlx5e_shampo_flush_skb(rq, cqe, match);
+ 	}
 
 
