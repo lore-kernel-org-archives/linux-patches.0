@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F9B3ED13E;
-	Wed, 30 Sep 2026 19:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE8540B0FA;
+	Wed, 30 Sep 2026 19:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796948; cv=none; b=gMjrNd4rvXqPgziioNGRu/n/poqjDGdN1cJQmpnHrjRkw5GdQxor81qkeGAcRqx6l7tgBFUrdabT9POLcxJLXZOHkiMg59VgW141sNAo2aGJhKXTJjdXVizu9Pol8r74gfa95LHMFhDedhdN5uIRkgiwNdgCww//2s0Pf1xaaiI=
+	t=1790796950; cv=none; b=IMLzNOeEeJsucsqzIbPTephwbkQt+VrvK5Kso0eJafU0pVSIO61DsloafYbQ+Ymb9V/zab2EQlDEaN3w5J+lHay7/WsUY5nU0kES4m29NeIJbUqBoh1UEMttntaWPwEXKU62jUru2zfSDRaeByMyQPy8xz0Nh+0zza8wPee2Slo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796948; c=relaxed/simple;
-	bh=FsvJXlaEKHIKmyPxp50hw6krxzuMrGEyp2r48OOFBgQ=;
+	s=arc-20240116; t=1790796950; c=relaxed/simple;
+	bh=gH1Y1S29yonQKGp6p6KoEeaG/jPQwxC7B52gfuo07xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRfOfFkpalewPNNwaPqXKZJUZ5bfq+szavfSupaWdlLpBLjd14ufu/F2Gq2eOuhJlfj8wJtPxiTecIr5A9gof2I+5NLl9siofY2Z7Lyxwi4HPZoingzCxpxGZil8Ok+IIDYUsMvS3wxI/XTl/Je++P1++vd+HptTITjENT+xax0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtbm6PKK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A9s33m1fBnADHnBhl7FHy+fxse8Ez0LJdW2HncHIxvG342Pon4DHDA0GW34YQAmPQFIbSjjqRodS+Q7qL63hwXJVqJScfbH7aqWhVTyCctzODGXNZ3iAs808q/crP+hDRuII66ZLHnElsS1M2ec4bupXBTf7YGAJT2IRHBuwuWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNNvdCM7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtbm6PKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277581F000FF;
-	Wed, 30 Sep 2026 19:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNNvdCM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE91F000FF;
+	Wed, 30 Sep 2026 19:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796946;
-	bh=mziziFIwdMFfgLaoRN1hxZJVjKoxvDFQkmjAezE8l5I=;
+	s=korg; t=1790796949;
+	bh=6nDwyWp/GozGUeHCZqtAv++noqZ58htmTv8pxlTJGVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rtbm6PKKVXjClMiI0LjVzAHIm9ummRJJxpJ1eZ7j+Nfup5EDQbnAeHvPA1UYSxokh
-	 ZmUIwdfiFgr1IJs6XIObRasw029KuymHaLVDZfCh14ioaUvkjmRn+i9Px5q9Hi3XVY
-	 pugX4Yd7Opsp5v6DumWDsdIY3iSUm4ONbWK1HbfY=
+	b=UNNvdCM79p0JYqZJtb7dZ6d2u7uvsdfUzeQFNypMJM82WMP4jVlD8lFwQjgKVmabk
+	 4uDkUec4cH+VFBTzAoOv9c9cFCLkXlU11tedVV8kDkvDiHIqM+rvqT8qdl2EHsoKsJ
+	 rHNsH3HHl3oaT8pgPMzs829AN3GIblz9at5skJ+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Etienne <mikael1022bzh@gmail.com>,
-	Arthur Husband <artmoty@gmail.com>,
-	Alvin Lim <alvinwylim@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	John Smith <imjohnsmith4000@gmail.com>,
-	Lennert Buytenhek <kernel@wantstofly.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Roland Waltersson <roland.waltersson@netinsight.net>
-Subject: [PATCH 6.6 1091/1193] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
-Date: Wed, 30 Sep 2026 17:29:35 +0200
-Message-ID: <20260930152458.473421618@linuxfoundation.org>
+	James Burton <jamesburton@meta.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1092/1193] tipc: reject invalid and unexpected GRP_ACK_MSG to prevent bc_ackers underflow
+Date: Wed, 30 Sep 2026 17:29:36 +0200
+Message-ID: <20260930152458.495085817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -58,147 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
+commit 99cc2a62e07a44a22254d7beca9ef1f8ad886d0d upstream.
 
-Multiple users report data corruption during 64-bit DMA transfers on
-systems with AMD NBIO 7.7 and 7.11 controllers.
+Commit 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate
+GRP_ACK_MSG") rejected duplicate/stale ACKs in tipc_group_proto_rcv()
+by returning early when less_eq(acked, m->bc_acked).
 
-This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
-Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
-corrupted.
+However, that check remains incomplete in two ways:
 
-Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
+1. When grp->bc_ackers is zero (e.g. on a quiet group, when replicast
+   ACKs were not requested, or after all expected members have already
+   acknowledged), an unexpected GRP_ACK_MSG with acked > m->bc_acked
+   passes less_eq() and unconditionally decrements grp->bc_ackers.
+   Because bc_ackers is a u16, this wraps to 65535, causing
+   tipc_group_bc_cong() to permanently report congestion and blocking
+   all future group broadcasts on the socket.
 
-Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
-Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
-Reported-by: Arthur Husband <artmoty@gmail.com>
-Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
-Reported-by: Alvin Lim <alvinwylim@gmail.com>
-Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: commit log, s/IOVA/DMA/ in comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+2. During an active broadcast round (grp->bc_ackers > 0), the sender
+   transmits packet S and advances grp->bc_snd_nxt to S + 1. Receivers
+   increment their expected counter to S + 1 upon consuming packet S,
+   so the only valid ACK value for the current round is strictly
+   acked == grp->bc_snd_nxt.
+
+   However, tipc_group_update_bc_members() initializes each member's
+   m->bc_acked to prev = grp->bc_snd_nxt - 1 (S - 1 before increment).
+   This leaves a 2-sequence gap (S - 1 to S + 1) in sequence space.
+   An incoming ACK is therefore neither rejected as duplicate nor
+   prevented from decrementing grp->bc_ackers if an unexpected or stale
+   value (such as S) is received. A member sending acked = S followed
+   by acked = S + 1 could decrement grp->bc_ackers twice in the same
+   round, prematurely clearing bc_ackers or underflowing it.
+
+Fix this by:
+- Dropping GRP_ACK_MSG immediately if grp->bc_ackers is zero.
+- Requiring acked == grp->bc_snd_nxt and rejecting duplicates where
+  m->bc_acked == acked. Because replicast broadcast rounds are strictly
+  sequential, only grp->bc_snd_nxt can be acknowledged, and each member
+  can acknowledge at most once per round.
+
+Note that a related pre-existing issue in tipc_group_delete_member()
+(where grp->bc_ackers decrementing to zero upon member departure does
+not restore *grp->open or trigger a socket wakeup) will be addressed
+in a separate patch.
+
+Fixes: 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG")
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
+Reported-by: James Burton <jamesburton@meta.com>
 Cc: stable@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: John Smith <imjohnsmith4000@gmail.com>
-Cc: Lennert Buytenhek <kernel@wantstofly.org>
-Cc: Niklas Cassel <cassel@kernel.org>
-Cc: Roland Waltersson <roland.waltersson@netinsight.net>
-Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260913044233.193927-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ net/tipc/group.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -846,6 +846,105 @@ static void quirk_clear_strap_no_soft_re
- 	}
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+
-+/*
-+ * Enhanced atomic operations can cause corruption with 64-bit DMA
-+ * on these devices.
-+ */
-+#define RX_ENH_ATOMIC_EN		BIT(8)
-+
-+static const u32 nbio_7_7_pcie_smn_addrs[] = {
-+	0x111401d0,
-+	0x111411d0,
-+	0x111421d0,
-+	0x111431d0,
-+	0x111441d0,
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x114401d0,
-+};
-+
-+static const u32 nbio_7_11_pcie_smn_addrs[] = {
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x113411d0,
-+	0x113421d0,
-+	0x113431d0,
-+	0x113441d0,
-+	0x113451d0,
-+};
-+
-+static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
-+					   const u32 *smn_addrs,
-+					   size_t nr_smn_addrs)
-+{
-+	bool changed = false;
-+	size_t i;
-+	u32 data;
-+	int ret;
-+
-+	for (i = 0; i < nr_smn_addrs; i++) {
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (!(data & RX_ENH_ATOMIC_EN))
-+			continue;
-+		data = data & ~RX_ENH_ATOMIC_EN;
-+		ret = amd_smn_write(0, smn_addrs[i], data);
-+		if (ret)
-+			continue;
-+		if (changed)
-+			continue;
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (data & RX_ENH_ATOMIC_EN)
-+			continue;
-+		changed = true;
-+	}
-+
-+	if (changed)
-+		pci_info(host_bridge, "enhanced atomics disabled\n");
-+}
-+
-+static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
-+}
-+
-+static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
-+}
-+
-+/* Phoenix, Hawk Point (NBIO 7.7) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+
-+/* Strix, Krackan, Strix Halo (NBIO 7.11) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+
- #endif
- 
- /*
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -797,10 +797,10 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 		tipc_group_open(m, usr_wakeup);
+ 		return;
+ 	case GRP_ACK_MSG:
+-		if (!m)
++		if (!m || !grp->bc_ackers)
+ 			return;
+ 		acked = msg_grp_bc_acked(hdr);
+-		if (less_eq(acked, m->bc_acked))
++		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
+ 			return;
+ 		m->bc_acked = acked;
+ 		if (--grp->bc_ackers)
 
 
