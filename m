@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459FB51617E;
-	Wed, 30 Sep 2026 16:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251794F93DB;
+	Wed, 30 Sep 2026 16:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787147; cv=none; b=Z5vR9UOeXuGTlWegN15AfrZwDkrVf+80g1MDTe16OO3IcNNFEL+Fq+xH+mdEhouNZZndupPHsyv3gqL5Gf1oio0WEB0gdO5pv2rxD5Ef7CzP75qm02yodJoZzYf13rWJOLLL9hj+A3PckIBsfagqOH0zc2OblmcDu/X6d6yaLug=
+	t=1790787150; cv=none; b=sQKV/PrgCDX7A+M6xW73G7AOIvqg66Z/wOaNgSqNwF10q2F7gNNJN+Uc+U1slbYrWv8TW3Om4vXruaExzzOjlF7Sub2LDHOUIlBSJXy1Muzk1aDQmqB5UpWjuFNeOcecgWdCKr1khuCVu+2/p+0P8pApL5Wz1dY+nl57Hihv+Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787147; c=relaxed/simple;
-	bh=LNLW5kty72SzpFFT7IYJgKJfrcY2Ih27qGj83BE2voo=;
+	s=arc-20240116; t=1790787150; c=relaxed/simple;
+	bh=t0W4WRYYEWuKNOXXP8aJgodMHDfCVSAKBEx3RiOSEsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLcYpCzmaMCOwr5tSpFQLEbDv6l3ygMinal+vaa7YDcna7Q7uhSKgZo7SOINdT7dSXxJXgY+epsH9nzUF167bbtxX4wQaB0Psx3OrRglt1luchXfELU1eJCUIEq7mdG0/zkBx8o7TbCVqCmcrKiQAU2rj+eGPaE/FnQoof87yKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tY48Sykk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4ImDTOclLF6SNX8NmnM7GUdEs1KgRgEYzhOlya7vG31tizBSHVFBj1714yneJC1Zdk0azJUauMAjPMz0FfhpfQMQ26y2WS03GEkVmSmji7Pofad/44auLJvoKhayztpm4FicIv1b4PAYSk8Rf5j9y0GAagXMSopdGA0SgE5PQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1TwVSoz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tY48Sykk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935911F000FF;
-	Wed, 30 Sep 2026 16:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1TwVSoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B0A1F0089B;
+	Wed, 30 Sep 2026 16:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787146;
-	bh=4gCRjo2Wg9Slft66RpUGmO9B4OoKtVYnxfz2e00W+RY=;
+	s=korg; t=1790787149;
+	bh=MemIH6Ia2lcLOMk1hKgQAdyoyqBhTqAOegD5W5lQ/hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tY48SykkbKuhh1UsRFAq26zKMtCoirm7MBpTiRZ4gfJQ7jdx/yKzVI7op7coyM91x
-	 f7Q6xkj5jh3bEvEVNHWts+VWqYO3iK7RCURU5uosJr0pVpoBHkP1H8hVRCpBNPL6RV
-	 dhlo0E1kZbdhAO4d31IKdrmE7Z9Um6H8I7B9u8P0=
+	b=t1TwVSozgv3SFw3ZJMx1IXHKr3KZ0iJvhEQNDCvZDwj8e8q2g3b9YSOu2KvsvOmqh
+	 JAcor6g2SDqc1CEW8LL6SmdQAp0FwmgQJSkQTt2D2GZLvnmpuI5tz5frnL6Z0cROHc
+	 j8Z870Uxj3AkchsELJqnh5ZstY35pZv8F6rK0rl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
+	Hui Peng <benquike@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 128/457] Bluetooth: btintel_pcie: validate device-supplied DMA indices
-Date: Wed, 30 Sep 2026 17:23:53 +0200
-Message-ID: <20260930152348.811160413@linuxfoundation.org>
+Subject: [PATCH 7.2 129/457] Bluetooth: RFCOMM: Reject short EA=0 frames in rfcomm_recv_frame()
+Date: Wed, 30 Sep 2026 17:23:54 +0200
+Message-ID: <20260930152348.833280986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,76 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit 37a11129345337efd6eef8e62b03b6348cd0dd8b ]
+[ Upstream commit 6d91041bb38b97e2feb625123cc0529d7b83a0e1 ]
 
-In btintel_pcie_msix_rx_handle(), the driver processes RX completion
-descriptors (urbd1) written by the PCIe device into DMA-coherent memory.
-urbd1->frbd_tag (a 16-bit field fully controlled by the device firmware
-via DMA) is used directly as an array index into rxq->bufs[] without any
-bounds check. rxq->bufs[] has only BTINTEL_PCIE_RX_DESCS_COUNT (64)
-entries, while frbd_tag can be any value 0-65535. A malicious or
-malfunctioning device can write an out-of-range frbd_tag, causing the
-driver to dereference an out-of-bounds data_buf pointer.
+While rfcomm_recv_frame() verifies that skb->len is at least
+sizeof(*hdr) + 1 (4 bytes: 3-byte header + 1-byte FCS), an RFCOMM frame
+with an extended 2-byte length field (!__test_ea(hdr->len)) has a 4-byte
+header plus a 1-byte FCS (5 bytes minimum, sizeof(*hdr) + 2).
 
-Additionally, cr_hia is read from a DMA-shared index array also writable
-by the device; if the device sets cr_hia >= rxq->count, the while-loop
-never terminates because cr_tia is wrapped via modulo rxq->count and can
-never equal an out-of-range cr_hia.
+When a 4-byte RFCOMM frame with EA == 0 arrives:
+1. The initial skb->len < sizeof(*hdr) + 1 check passes (4 < 4 is false).
+2. Trimming the FCS byte decrements skb->len to 3.
+3. If __check_fcs() succeeds, skb_pull(skb, 4) fails (4 > 3) and returns
+   NULL without advancing skb->data.
+4. Because the return value of skb_pull() is ignored, the un-pulled
+   3-byte struct rfcomm_hdr remains at skb->data and is either queued as
+   application payload via rfcomm_recv_data() or parsed as a multiplexer
+   control command via rfcomm_recv_mcc() on DLCI 0.
 
-Add bounds validation for cr_hia and frbd_tag in the RX path, and cr_hia
-in the TX path. Log invalid values with bt_dev_err before returning.
+Fix this by extending the length check in rfcomm_recv_frame() to also
+require skb->len >= sizeof(*hdr) + 2 when !__test_ea(hdr->len).
 
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
-Signed-off-by: Ravindra <ravindra@intel.com>
+Fixes: b230e5bf501c ("Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/bluetooth/rfcomm/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 3262e950a6bd8..9381895dc3cf0 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1099,6 +1099,11 @@ static void btintel_pcie_msix_tx_handle(struct btintel_pcie_data *data)
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 63fa0f542ccf1..3f757198051a2 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1817,7 +1817,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 		return s;
+ 	}
  
- 	txq = &data->txq;
- 
-+	if (cr_hia >= txq->count) {
-+		bt_dev_err(data->hdev, "TXQ: invalid cr_hia %u", cr_hia);
-+		return;
-+	}
-+
- 	while (cr_tia != cr_hia) {
- 		data->tx_wait_done = true;
- 		wake_up(&data->tx_wait_q);
-@@ -1588,6 +1593,11 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
- 
- 	rxq = &data->rxq;
- 
-+	if (cr_hia >= rxq->count) {
-+		bt_dev_err(hdev, "RXQ: invalid cr_hia %u", cr_hia);
-+		return;
-+	}
-+
- 	/* The firmware sends multiple CD in a single MSI-X and it needs to
- 	 * process all received CDs in this interrupt.
- 	 */
-@@ -1595,6 +1605,12 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
- 		urbd1 = &rxq->urbd1s[cr_tia];
- 		ipc_print_urbd1(data->hdev, urbd1, cr_tia);
- 
-+		if (urbd1->frbd_tag >= rxq->count) {
-+			bt_dev_err(hdev, "RXQ: invalid frbd_tag %u",
-+				   urbd1->frbd_tag);
-+			return;
-+		}
-+
- 		buf = &rxq->bufs[urbd1->frbd_tag];
- 		if (!buf) {
- 			bt_dev_err(hdev, "RXQ: failed to get the DMA buffer for %d",
+-	if (skb->len < sizeof(*hdr) + 1) {
++	if (skb->len < sizeof(*hdr) + 1 ||
++	    (!__test_ea(hdr->len) && skb->len < sizeof(*hdr) + 2)) {
+ 		kfree_skb(skb);
+ 		return s;
+ 	}
 -- 
 2.53.0
 
