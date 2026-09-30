@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E13E4E9C24;
-	Wed, 30 Sep 2026 15:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D62C4A92EF;
+	Wed, 30 Sep 2026 15:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783085; cv=none; b=cXVyx58F6expBGIvz6D8XMIUjXg9UKVfvkPIySCU4pA40H3MgD2ulsZFr1Mogfz8Kv69Sbhe7rNwz+a41/b88nfGe0vuElc2Wg14eQ2Y9uAmNy4h6r9xxY5P2MMng6DTsV89eTC2ZMIAh9Mu6orQ6G+z6k4Gb11LVrOTU+i+Vf8=
+	t=1790783087; cv=none; b=ulZU8DX3isHWnuciRy1opHZn2maumUOkP9VMzE+dRJPo4voKGNnuTR2Q8U+tvmh/6wa4ltzr0SnpGvMZjs5hNQlj6QQTh+ZAvhSWVDGX5uD+XEfbyw4oxLYjbcwIy8e7GDSVT7wZk0BUwtD1u2UrgCd3XnGKrDabqFoKm1CThgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783085; c=relaxed/simple;
-	bh=vjuYb+DIUADYCYzFzY0pIda6rpeBabLtuFR/edGqNbA=;
+	s=arc-20240116; t=1790783087; c=relaxed/simple;
+	bh=UUT2o2dhP+s1CXTO+T9YWlJjmqVChz1QM3DHIHVsC9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HiEA7fApfsF8nvOUIbi8UXTl3EH+OrkDbkQ4rF47iYIAkrIeaFvvzyycYaZ9GGuWi+PWRd/VtlV195P+XuUxSWEr5bGFWCodDEbxgunMQNXZuyttegOiep0oACUHYsXRsfg6kTwYpEAkQdr9DBtrNyUzoV5IpY3DuATQM9wteRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8Jj3fPX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UnbLUOn261UBKhTaRhTPhlD00cBMGoWNgb/4NETqqCYH4YXRUdZjNesy/VL/Nvm3E5QOsp8AIqaeKeSsgdjSQoAJ4CgAzi2JqJ5QlopoGnempQLzNXxfVJ/gBJb7iVJll2uJcT0DPimV4xWAMziwWb3wM+I5aUrKZUFfuvbx2PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGTh/G0H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8Jj3fPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC9C1F000FF;
-	Wed, 30 Sep 2026 15:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGTh/G0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429471F0089A;
+	Wed, 30 Sep 2026 15:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783080;
-	bh=ZKzEGXjZoLl5HmRNxwKiw4gr5LeyoxoN9Q5GFINlR+s=;
+	s=korg; t=1790783077;
+	bh=r3IYzCX7LAsGbl7X9JLKJi+ody71KAQQS2bjB+U/LWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H8Jj3fPXZysHvCYSD/kQM+APrBb+t52w75GIpLse5dF8kcAJDDhucTrpp1XEfPpH8
-	 DMx7l2KVK1A4uzcz0PJ433DlOh14f+IbPrhiFdFm+RMuYCfbt4IFt/R1SFE4jFv9BT
-	 dT9A1lGaDeFu7+U7EI+w6lic/Vr2GF2mYxeGq5TY=
+	b=cGTh/G0HgBBByw5+3DFrLjx2L8YFOJYtVKyhmMO8S0MAVo2ECzzGcHD17HvfkZYuH
+	 c4ZZVzgoKLKRL7Lnqv2+yyq73M9ltNIuq6OvFurJZB3Psd3MXJZWM9DEbQWEkglnYR
+	 9f5HzPLiWz8t3jI1SEi0j5UAycIk8P33eJVM+z6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thibault Ferrante <thibault.ferrante@canonical.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 274/595] selftests/powerpc/tm: Fix tcheck() reading uninitialised CR value
-Date: Wed, 30 Sep 2026 17:22:47 +0200
-Message-ID: <20260930152353.601626503@linuxfoundation.org>
+Subject: [PATCH 5.10 273/595] hwmon: (aspeed-pwm-tacho) Propagate reset deassert errors
+Date: Wed, 30 Sep 2026 17:22:46 +0200
+Message-ID: <20260930152353.580844428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,61 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thibault Ferrante <thibault.ferrante@canonical.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ed28b16eab705071d28edaace47189c2eb3aa108 ]
+[ Upstream commit 09a9e1746a87845d7d8e2b4e23bb613306effdff ]
 
-tcheck() is used to check the current transaction state (active,
-suspended, doomed) via the "tcheck" instruction, which writes its
-result into CR field 0. The inline asm declared a GPR output operand
-for this result but never actually moved the CR into it.
+aspeed_pwm_tacho_probe() installs its reset cleanup action and configures
+the
+controller after an unchecked reset deassertion.
 
-Every caller (tcheck_doomed(), tcheck_active(), tcheck_suspended(),
-tcheck_transactional()) has effectively been testing bits of an unrelated,
-arbitrary register value since this helper was introduced.
-The "& 4" mask discards the TDOOMED and TS_lsb (suspended) bits before
-they ever reach the callers, so tcheck_doomed() and tcheck_suspended()
-can never return true, and tcheck_transactional() degrades to being
-equivalent to tcheck_active().
+Stop probing when the reset controller rejects the transition, before the
+hwmon device becomes visible.
 
-Fix tcheck() to actually move CR into the output register with mfcr,
-and widen the mask from "& 4" to "& 0xf" so the full CR0 nibble
-(TDOOMED | TS_msb | TS_lsb | reserved) is preserved for the callers.
-
-This bug has been present since tcheck() was introduced.
-
-Link: https://bugs.launchpad.net/bugs/2107442
-Fixes: 8e03bd4e70b6 ("selftests/powerpc: Add TM tcheck helpers in C")
-Signed-off-by: Thibault Ferrante <thibault.ferrante@canonical.com>
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/364996ce-aba2-4213-8d20-7dd481b43fe6@linux.ibm.com/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260907215420.1258678-1-thibault.ferrante@canonical.com
+Fixes: 18c514cc0e02 ("hwmon: (aspeed-pwm-tacho) Deassert reset in probe")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830125044.97718-1-pengpeng@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/tm/tm.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hwmon/aspeed-pwm-tacho.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/powerpc/tm/tm.h b/tools/testing/selftests/powerpc/tm/tm.h
-index c5a1e5c163fcd..19d77c3a5706e 100644
---- a/tools/testing/selftests/powerpc/tm/tm.h
-+++ b/tools/testing/selftests/powerpc/tm/tm.h
-@@ -69,8 +69,12 @@ static inline bool failure_is_nesting(void)
- static inline int tcheck(void)
- {
- 	long cr;
--	asm volatile ("tcheck 0" : "=r"(cr) : : "cr0");
--	return (cr >> 28) & 4;
-+	asm volatile("tcheck 0;"
-+		     "mfcr %0;"
-+		     : "=r"(cr)
-+		     :
-+		     : "cr0");
-+	return (cr >> 28) & 0xf;
- }
+diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
+index 3dc97041a704c..ed100c0428374 100644
+--- a/drivers/hwmon/aspeed-pwm-tacho.c
++++ b/drivers/hwmon/aspeed-pwm-tacho.c
+@@ -922,7 +922,9 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
+ 			"missing or invalid reset controller device tree entry");
+ 		return PTR_ERR(priv->rst);
+ 	}
+-	reset_control_deassert(priv->rst);
++	ret = reset_control_deassert(priv->rst);
++	if (ret)
++		return ret;
  
- static inline bool tcheck_doomed(void)
+ 	ret = devm_add_action_or_reset(dev, aspeed_pwm_tacho_remove, priv);
+ 	if (ret)
 -- 
 2.53.0
 
