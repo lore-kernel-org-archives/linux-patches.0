@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580518C332;
-	Wed, 30 Sep 2026 16:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885D1E0DD8;
+	Wed, 30 Sep 2026 16:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787441; cv=none; b=UukbKhw1NMFN2Uxt+sgjbb2Qpc0pQ2shW7RL2qbvByB6rOhML2iPIlHy75Jtt5fza1G+QVSz/QBwC6TXnyFcyNobubkbLrqmJHCaPXiBGhQUdLekbm9MXqIBxoVPE7fqRT/cA4QtdEiVeEo5TUM5ziX6h0onCGmez70rzh1oakw=
+	t=1790787443; cv=none; b=iLhCD5UVezBjh7DLH4qs/RGbVG9I6kAZnP/wAW6TUzXSsoexWf4DJIS1oZMeLn1lyQAkOaH48E2Qug5erir4p+jkqQG/497pz2j1NetCP4lbouP1alIiMRVsOqYcUBi46uBbzbIj/GIO9ev+HeT+m96dHUxgTWrbx6x120jIXg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787441; c=relaxed/simple;
-	bh=L0U1O/neDWpdmA/LuYGDhTcy+G+/qX5AUq2mJwpYknE=;
+	s=arc-20240116; t=1790787443; c=relaxed/simple;
+	bh=x9PowRZe79OpdSYxmcPbi57Nbm/b0Wc5K1fz1wwnJLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/ND+V7DVCc3uuL8S7VRP5AKJWye7hAUX35v0o5e204pGndX97aFhErsf1hQejU9f4KnyRWyLawz0DKFeqRNE4Bj4VqOGoYgPfg5Yy9Z7ZjbD6JvRnPmY35LX0X2QV5YGj3daCZG12hs5x7LlCvZT982V3Oe8O5GWjZF45p1Brw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPCP9LMH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z8mGkkhlQD1K3I50wPtNtOSwOBjsYnUUiksfN/NjZgkyH5U2+1dPovY1rM7OiZOIfSaySzH0U4/Vos0yb5iGbXSLoug+vYy7YcZvF3dtirSf9Stgz00XrGSNr/dLQMGc48n7r1FaWIX4Rw5vyK4i4MiZ3WNEDJTc4oU2a1E+04o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMMO2D9G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPCP9LMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119E51F000FF;
-	Wed, 30 Sep 2026 16:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMMO2D9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DF51F000FF;
+	Wed, 30 Sep 2026 16:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787439;
-	bh=FON/TFk5E94bRtefWESFWdxFwh8cua9/KEcFoz+P5jU=;
+	s=korg; t=1790787442;
+	bh=GOFK5XpsLl4Cy8Qf06oivhYsTWLfabX481Mone52hJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPCP9LMH3V/HQinc2a3SPpWBbVOOhoXyKnYkCfRcbYvqOHNB1cAmiborZhyE23GtS
-	 RZUCMTGSQ9qvSZNllukE4yxeTXbCgU8Q+t1HhtN2lVBcbTKN8CZFnqAy+p2u2CPxem
-	 qmV55fhC1CwkW0+U99xHR6j/iyqaXUwuqG5uvxmQ=
+	b=LMMO2D9G4C750rOpqjO0ec+f4V0iHiPlIo7p4YtQ2hxtoiKy9tnvet++TPpG7khqb
+	 GtWrlet1ml/W+qE7UDJyIVySn7VqmrbMOxpWnJ4gkjA4f4IP4Rsz/6Y+sy5c2f8Ao+
+	 9E6Y8iSZAo2JhKXWP07bc3uDggs/3HzMRjbjrMQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jim Mattson <jmattson@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 204/457] net/sched: act_ife: validate metadata length before decoding
-Date: Wed, 30 Sep 2026 17:25:09 +0200
-Message-ID: <20260930152350.457052298@linuxfoundation.org>
+Subject: [PATCH 7.2 231/457] perf/x86/intel: Make @data a mandatory param for intel_guest_get_msrs()
+Date: Wed, 30 Sep 2026 17:25:36 +0200
+Message-ID: <20260930152351.031653913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,162 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d6ec384c87cc851cfd13bb18c99ce351ccee6192 ]
+[ Upstream commit a391618e1d563f099e4c2a704f45d08329ccdf7c ]
 
-skbmark_decode(), skbprio_decode() and skbtcindex_decode() read fixed-size
-values from the TLV payload without validating its length.
+Drop "support" for passing a NULL @data/@kvm_pmu param when getting guest
+MSRs.  KVM, the only in-tree user, unconditionally passes a non-NULL
+pointer, and carrying code that suggests @data may be NULL is confusing,
+e.g. incorrectly implies that there are scenarios where KVM doesn't pass
+a PMU context.
 
-A malformed IFE frame can declare a shorter payload, causing the decoders
-to consume bytes beyond the declared metadata value:
-
-[TLV type=IFE_META_SKBMARK len=4]
--> dlen == 0, but decode reads 4 bytes
-
-The decoder may therefore set skb metadata from unintended input.
-
-Validate the payload length before decoding and return -EINVAL for
-invalid lengths. Read the values with get_unaligned_be32() and
-get_unaligned_be16(), as TLV payloads are not guaranteed to be
-aligned. Teach tcf_ife_decode() to log a decoder error separately
-from an unknown metaid; both are counted as overlimits and decoding
-continues with the remaining metadata.
-
-The metadata length issue was found by an automated audit of the IFE
-decode path at v6.18-rc7 and reproduced with a userspace sanitizer
-model of the decode path. Compile-tested on x86_64 with defconfig and
-NET_ACT_IFE=y: act_ife.o and the three act_meta_*.o build
-warning-free.
-
-Fixes: 084e2f6566d2 ("Support to encoding decoding skb mark on IFE action")
-Fixes: 200e10f46936 ("Support to encoding decoding skb prio on IFE action")
-Fixes: 408fbc22ef1e ("net sched ife action: Introduce skb tcindex metadata encap decap")
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Link: https://patch.msgid.link/20260921125441.81459-1-fangxy@xiaopeng.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8183a538cd95 ("KVM: x86/pmu: Add IA32_DS_AREA MSR emulation to support guest DS")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260921191418.950933-5-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ife.c             | 17 ++++++++++++-----
- net/sched/act_meta_mark.c       |  6 ++++--
- net/sched/act_meta_skbprio.c    |  6 ++++--
- net/sched/act_meta_skbtcindex.c |  6 ++++--
- 4 files changed, 24 insertions(+), 11 deletions(-)
+ arch/x86/events/intel/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index 9cea71fc1db3d..2afd68983ece4 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -737,6 +737,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
- 		u8 *curr_data;
- 		u16 mtype;
- 		u16 dlen;
-+		int ret;
- 
- 		curr_data = ife_tlv_meta_decode(tlv_data, ifehdr_end, &mtype,
- 						&dlen, NULL);
-@@ -745,13 +746,19 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
- 			return TC_ACT_SHOT;
- 		}
- 
--		if (find_decode_metaid(skb, p, mtype, dlen, curr_data)) {
--			/* abuse overlimits to count when we receive metadata
--			 * but dont have an ops for it
-+		ret = find_decode_metaid(skb, p, mtype, dlen, curr_data);
-+		if (ret < 0) {
-+			/* abuse overlimits to count metadata we cannot
-+			 * decode: no ops for it, or the decoder rejected it
- 			 */
--			pr_info_ratelimited("Unknown metaid %d dlen %d\n",
--					    mtype, dlen);
- 			qstats_cpu_overlimit_inc(ife->common.cpu_qstats);
-+
-+			if (ret == -ENOENT)
-+				pr_info_ratelimited("Unknown metaid %d dlen %d\n",
-+						    mtype, dlen);
-+			else
-+				pr_info_ratelimited("Failed to decode metaid %d dlen %d err %d\n",
-+						    mtype, dlen, ret);
- 		}
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index b9d7fdf6c6585..41134233fc512 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -5333,11 +5333,11 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
  	}
  
-diff --git a/net/sched/act_meta_mark.c b/net/sched/act_meta_mark.c
-index ea0573cb8b2d6..e2f61b22bf0f8 100644
---- a/net/sched/act_meta_mark.c
-+++ b/net/sched/act_meta_mark.c
-@@ -10,6 +10,7 @@
- #include <linux/string.h>
- #include <linux/errno.h>
- #include <linux/skbuff.h>
-+#include <linux/unaligned.h>
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -28,9 +29,10 @@ static int skbmark_encode(struct sk_buff *skb, void *skbdata,
+ 	/*
+-	 * If the guest won't use PEBS or the CPU doesn't support PEBS in the
+-	 * guest, then there's nothing more to do as disabling PMCs via
+-	 * PERF_GLOBAL_CTRL is sufficient on CPUs with guest/host isolation.
++	 * If the CPU doesn't support PEBS in the guest, then there's nothing
++	 * more to do as disabling PMCs via PERF_GLOBAL_CTRL is sufficient on
++	 * CPUs with guest/host isolation.
+ 	 */
+-	if (!kvm_pmu || !x86_pmu.pebs_ept)
++	if (!x86_pmu.pebs_ept)
+ 		return arr;
  
- static int skbmark_decode(struct sk_buff *skb, void *data, u16 len)
- {
--	u32 ifemark = *(u32 *)data;
-+	if (len != sizeof(u32))
-+		return -EINVAL;
- 
--	skb->mark = ntohl(ifemark);
-+	skb->mark = get_unaligned_be32(data);
- 	return 0;
- }
- 
-diff --git a/net/sched/act_meta_skbprio.c b/net/sched/act_meta_skbprio.c
-index 2df3133ce5adc..5cdb57931eab4 100644
---- a/net/sched/act_meta_skbprio.c
-+++ b/net/sched/act_meta_skbprio.c
-@@ -10,6 +10,7 @@
- #include <linux/string.h>
- #include <linux/errno.h>
- #include <linux/skbuff.h>
-+#include <linux/unaligned.h>
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -33,9 +34,10 @@ static int skbprio_encode(struct sk_buff *skb, void *skbdata,
- 
- static int skbprio_decode(struct sk_buff *skb, void *data, u16 len)
- {
--	u32 ifeprio = *(u32 *)data;
-+	if (len != sizeof(u32))
-+		return -EINVAL;
- 
--	skb->priority = ntohl(ifeprio);
-+	skb->priority = get_unaligned_be32(data);
- 	return 0;
- }
- 
-diff --git a/net/sched/act_meta_skbtcindex.c b/net/sched/act_meta_skbtcindex.c
-index 44547caead469..8803710c09058 100644
---- a/net/sched/act_meta_skbtcindex.c
-+++ b/net/sched/act_meta_skbtcindex.c
-@@ -10,6 +10,7 @@
- #include <linux/string.h>
- #include <linux/errno.h>
- #include <linux/skbuff.h>
-+#include <linux/unaligned.h>
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -28,9 +29,10 @@ static int skbtcindex_encode(struct sk_buff *skb, void *skbdata,
- 
- static int skbtcindex_decode(struct sk_buff *skb, void *data, u16 len)
- {
--	u16 ifetc_index = *(u16 *)data;
-+	if (len != sizeof(u16))
-+		return -EINVAL;
- 
--	skb->tc_index = ntohs(ifetc_index);
-+	skb->tc_index = get_unaligned_be16(data);
- 	return 0;
- }
- 
+ 	/*
 -- 
 2.53.0
 
