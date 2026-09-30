@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E24150EC11;
-	Wed, 30 Sep 2026 16:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A131E0DD8;
+	Wed, 30 Sep 2026 16:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787509; cv=none; b=SOF0YZwoMfQ9NnvSWqNSLd9PW/XcDitMkLxY2qBojD0q5VGUZuz2A6mZHMcUlMD64H48Z745IzpxLIIbM4RGfO3AgoebE19kqSCojtqznxrmIKsFjb2p1iWyDD92v4gTFN5W/jb9wjDTTnh6NFe9k/RTI78pEHO9IbDYjdy77RI=
+	t=1790787512; cv=none; b=uBKNDY1G093xMufEcfc6JnJttlxFvnXOPbg7EWS9gjgpKz5iFlM/BZrFHFTUFpL2K+9YLMNoiBtyaPzIVKNXF1Zr4xoLXE9meDZclC3d2/DlzoJUH5MMKb05hEjcM+ewv195x/0ZcbaWlyCkXLfzSQF0Uzi2DiRHW4o/OPRRPLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787509; c=relaxed/simple;
-	bh=bek8BnhmIgcIFt1haYI6N9IypEkQSGep5gJz4FQdWr4=;
+	s=arc-20240116; t=1790787512; c=relaxed/simple;
+	bh=nyxu1owk/zVvRpLlwMMlJ4YdIxU7LJn+sgrU1Jqs6HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRiHHyvJvT5BIKXIS7Th6ddYJVX7ImylMyZwwt6s4rdTbFmlU2qsWdg8x64H0GmTlqBOQQkLeG+FPYVzdGMnAN6AHOCzsSVEl2cvXKPYwjzagC8ronhTZDRTYrNlqmc9Zz1l1wu7ObK4p2G259ulz/P8WEKfqXAdoVGqmFBLhqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvklMCC3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sFfdArTQCsUxGFbyeQiYOxTIDC8Tfe0Xyx0CXMNZoglTclDeXnTvSwBLnhN84RgV9vL+y22PJNkymQmKWovxwjFlhNxJPpVxYmnCZ3BynNAIS+9OkdXn6iKB9NyTvhKdWDi20kjTJtg0lzWy+4QdlsY5XuhLVCPfB1N7cT0Ovjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgtRgYYo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvklMCC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64B71F000FF;
-	Wed, 30 Sep 2026 16:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgtRgYYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972EF1F000FF;
+	Wed, 30 Sep 2026 16:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787508;
-	bh=1Z8Z6y9ayxtMJYXLGjpznViTwijRoK0sirsRNEx4Mhw=;
+	s=korg; t=1790787511;
+	bh=0UqyExBMVuAlIr6o5f4Mwhl/YbowiNClJj4cXq/QpKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvklMCC3wNs65GxtVkubw2D/UwDeNKoesLtA3l+Ld37l5c8ig0Vtv7yh3NrjIKbsD
-	 X+NAYugZK0KRIrv1aEYAq8mzj5x5VRkah91R/seLmmWNPPsOsBduB3nrvVsPjk/Yld
-	 wWVI3EHNDjG06JvDQ4PDR6LIA15jmj+NDqGF/Fp0=
+	b=jgtRgYYooa5ue6jJplspKiSC8XhX7YJn7pY/I6Ip7+AnbQNT3RtWSRZK+pSbN9JXn
+	 DsVrzahzYSo0zsqkHzG+zQRCE1DOlTJo0H55A7pXGeMj4g3MnV9QtrRpwRSp8I8Olk
+	 EsLkIASqOHCoINBSzb1b94apf33wJVjBboQ4IoZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Sviridkin <f@lex.la>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 210/457] net: phylink: record the PHY only once bringup cannot fail
-Date: Wed, 30 Sep 2026 17:25:15 +0200
-Message-ID: <20260930152350.583319858@linuxfoundation.org>
+Subject: [PATCH 7.2 201/457] drm/imagination: clamp freelist reconstruction requests
+Date: Wed, 30 Sep 2026 17:25:06 +0200
+Message-ID: <20260930152350.394427967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,91 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Sviridkin <f@lex.la>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit a940003f44e7e441c228151dd212642152700ec8 ]
+[ Upstream commit 45585c3aa285854face65293acc95eff73063d6d ]
 
-phylink_bringup_phy() stores the PHY in pl->phydev before its last
-fallible step: on a MAC whose phylink ops implement LPI,
-phy_eee_rx_clock_stop() can fail with a real MDIO error. The callers
-unwind with phy_detach(), which knows nothing about pl->phydev, so a
-pointer to a PHY that is no longer attached outlives the failed
-connect.
+The firmware reconstruction count controls accesses to the request's
+fixed freelist ID array and the copy into the fixed response array.
+Neither access currently bounds the count to those protocol arrays.
 
-What that costs depends on how the caller got here.
-phylink_connect_phy() goes through phylink_attach_phy(), which refuses
-to attach while pl->phydev is set, turning a transient MDIO error into
-a permanent -EBUSY. The SFP path is worse than that: sfp_sm_probe_phy()
-answers the failure with phy_device_remove() and phy_device_free(), and
-it assigns sfp->mod_phy only past that error return, so nothing clears
-pl->phydev and it is left pointing at a freed phy_device that
-phylink_resolve() and the ethtool helpers go on reading.
-phylink_fwnode_phy_connect() has no such check, so a later connect
-overwrites the stale pointer and hides the problem. A disconnect does
-not: phylink_disconnect_phy() hands that pointer to phy_disconnect(),
-and the second phy_detach() on the same PHY drops references the first
-one already released.
+Clamp the count to the request capacity, which is shared by the response
+layout, and use that count consistently for reconstruction and response
+publication. Keep the firmware recovery exchange instead of dropping an
+oversized request without a response, as discussed with the firmware
+maintainer.
 
-Found while making a DSA port survive a PHY whose driver arrives after
-the switch probes: keeping the port across a failed connect and
-retrying is what makes this window reachable.
+The issue was found by our static-analysis tool.
 
-Publish the pointer after the last call that can fail instead of
-unwinding it afterwards. Nothing between the two points reads
-pl->phydev, and the registration that follows cannot fail:
-phy_request_interrupt() falls back to polling on its own. The PHY-side
-state keeps the order it had, so no MDIO operation moves relative to
-another.
-
-Fixes: 03abf2a7c654 ("net: phylink: add EEE management")
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260920222044.1752860-1-f@lex.la
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6eedddab733b ("drm/imagination: Implement free list and HWRT create and destroy ioctls")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20260920034329.16614-1-hppiscas@163.com
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/imagination/pvr_free_list.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 27fd9aa2027a4..3477e1104a43a 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -2131,7 +2131,6 @@ static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
- 	mutex_lock(&pl->phydev_mutex);
- 	mutex_lock(&phy->lock);
- 	mutex_lock(&pl->state_mutex);
--	pl->phydev = phy;
- 	pl->phy_state.interface = interface;
- 	pl->phy_state.pause = MLO_PAUSE_NONE;
- 	pl->phy_state.speed = SPEED_UNKNOWN;
-@@ -2198,10 +2197,25 @@ static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
- 			ret = 0;
- 	}
+diff --git a/drivers/gpu/drm/imagination/pvr_free_list.c b/drivers/gpu/drm/imagination/pvr_free_list.c
+index e85cac83834c6..faf5e586d8dc1 100644
+--- a/drivers/gpu/drm/imagination/pvr_free_list.c
++++ b/drivers/gpu/drm/imagination/pvr_free_list.c
+@@ -8,6 +8,7 @@
+ #include "pvr_vm.h"
  
--	if (ret == 0 && phy_interrupt_is_valid(phy))
-+	if (ret)
-+		return ret;
-+
-+	/* Nothing below can fail, so the PHY can be recorded now. Doing it
-+	 * here rather than above keeps a failed bringup from leaving
-+	 * pl->phydev pointing at a PHY the caller is about to detach.
-+	 */
-+	mutex_lock(&pl->phydev_mutex);
-+	mutex_lock(&phy->lock);
-+	mutex_lock(&pl->state_mutex);
-+	pl->phydev = phy;
-+	mutex_unlock(&pl->state_mutex);
-+	mutex_unlock(&phy->lock);
-+	mutex_unlock(&pl->phydev_mutex);
-+
-+	if (phy_interrupt_is_valid(phy))
- 		phy_request_interrupt(phy);
+ #include <drm/drm_gem.h>
++#include <drm/drm_print.h>
+ #include <linux/slab.h>
+ #include <linux/xarray.h>
+ #include <uapi/drm/pvr_drm.h>
+@@ -612,13 +613,21 @@ pvr_free_list_process_reconstruct_req(struct pvr_device *pvr_dev,
+ 	};
+ 	struct rogue_fwif_freelists_reconstruction_data *resp =
+ 		&resp_cmd.cmd_data.free_lists_reconstruction_data;
++	u32 count = min_t(u32, req->freelist_count,
++			  ARRAY_SIZE(req->freelist_ids));
  
--	return ret;
-+	return 0;
+-	for (u32 i = 0; i < req->freelist_count; i++)
++	if (count != req->freelist_count) {
++		drm_warn_once(from_pvr_device(pvr_dev),
++			      "Requested reconstruction of %u freelists, limiting to %u\n",
++			      req->freelist_count, count);
++	}
++
++	for (u32 i = 0; i < count; i++)
+ 		pvr_free_list_reconstruct(pvr_dev, req->freelist_ids[i]);
+ 
+-	resp->freelist_count = req->freelist_count;
++	resp->freelist_count = count;
+ 	memcpy(resp->freelist_ids, req->freelist_ids,
+-	       req->freelist_count * sizeof(resp->freelist_ids[0]));
++	       count * sizeof(resp->freelist_ids[0]));
+ 
+ 	WARN_ON(pvr_kccb_send_cmd(pvr_dev, &resp_cmd, NULL));
  }
- 
- static int phylink_attach_phy(struct phylink *pl, struct phy_device *phy,
 -- 
 2.53.0
 
