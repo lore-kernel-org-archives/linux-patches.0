@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C784B3502A8;
-	Wed, 30 Sep 2026 19:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E932BEFEF;
+	Wed, 30 Sep 2026 19:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794984; cv=none; b=EZYuvKp0VXTV9yhAMtQdHwRX4p/TCrzyOu7+sPdNH4XALghILcwpNTJQ5FsgF5hz5Cjfi4nD9uHD1DH7l3Yv7GxoqLPhcr9M6qqSze1LKP9zA+RUzwELrtZTgZxz68W+7md7QYvJqW3SIgum62nGsaWqi6Mt+YfBB8QSEEuskrM=
+	t=1790794987; cv=none; b=RGKcfDmaezC9V0+WEabsRrcSRk5MFEBMFPzp3AYtCnypyWdBmaRv3EhSxp4I64UAi1FbfLu8tR6k5Qk+3OBoOBxan6sG3nqWDTNRDebK+jkI+7+X1Lv2YcRMtvSJr6KX/8sAadLFYxwpWUKf0OZ9LgSjwN2VSpBuqxg6Hr56Se4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794984; c=relaxed/simple;
-	bh=ooYIyIFKEoU0C6O26DAYlEelCmDEx9YaqV1whJ6uxqs=;
+	s=arc-20240116; t=1790794987; c=relaxed/simple;
+	bh=m365OMzmgsnEuOlR6eENpYiZep3wWK/denRNYHdmRvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxRzmGizxd8b1gR3h7jJUWkxIoq4p9SPzic4gsJL8FrQst4hN8NXFYi9NwA7YjPK0b43ht7DYy77HgT8RwTCAPcvOPcq/0yj7+10+o7NqNa68KfHlCBSoAzq15VxQ7ecy+9899L9lkl8MfldLNGmFZbgcJcSboXB75ZUpsMO4yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQN2tnAA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKX5C2rFycfmP+d7hbYoavAbQtjturTj+PCLPdNVcjyMu8XavVoRDYs61mWIU8fV8nfrgcoBiHiuvZ0yy1WGKGFY6NwBHLLL3jBp7LyhXf9yj6flhBPmkCra/DhDxIPlpXiEIrJgDmns9RFOavByTIdWm6V0ALZ4p1Txo554gFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tpw0b8DQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQN2tnAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3A61F000FF;
-	Wed, 30 Sep 2026 19:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tpw0b8DQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ECF1F000FF;
+	Wed, 30 Sep 2026 19:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794983;
-	bh=EVS04Wwy3b5+VpyyDTDxXBSNIePVjZWd2WnJqmfiDTg=;
+	s=korg; t=1790794986;
+	bh=PW0sgGCbLVTSxaOXU0pFeTifkY6sjEcsdhwxKd/VFnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQN2tnAAsN4gYXiAXJZG4MMcZxtCOSx+IOhM/DiXaD54FqsmvmOdEpyKSrnLVIdIJ
-	 2yueIbNtHv2OGFNh34V9FCCLRZeE0cBvGKTLNtRMrN6Hbvhq7vrW1OMaBZxOegwhGj
-	 f23jACVLqhtQGtsZf8iprK63VnRBcVDf3nXb6QuM=
+	b=Tpw0b8DQ5UvgQ9yDQvoRKGeyMtO/i9AL01J0t/xjMeg+jqGO0sh21sbToei6xoZt8
+	 eUHDXvc0n6z1LU5ShjhuUAt8pblYPZFW6MbvfF/rM7o5z7dtEmp2zmI3+bfQzl4ywE
+	 z4MlLcIiVQj2dlIgPfbcDPySTxhP2+Ya6287J2vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Nugraha <aslan.jnn@gmail.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0401/1193] net: amd-xgbe: discard rx packets with bad FCS
-Date: Wed, 30 Sep 2026 17:18:05 +0200
-Message-ID: <20260930152443.104552709@linuxfoundation.org>
+Subject: [PATCH 6.6 0402/1193] vxlan: mdb: Fix use-after-free in vxlan_mdb_remote_src_del()
+Date: Wed, 30 Sep 2026 17:18:06 +0200
+Message-ID: <20260930152443.126234334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,52 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Nugraha <aslan.jnn@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit ac8d6b28d48c5d951dcd923d33e461588e762a6d ]
+[ Upstream commit 4aa61c88b4e292e10abdfd791334b8272108d68a ]
 
-amd-xgbe driver currently sets the MAC_RCR.DCRCC bit whenever
-RX is enabled. This disables hardware FCS validation, causing packets
-with bad FCS to be accepted unconditionally.
+vxlan_mdb_is_valid_source(), which validates MDBE_ATTR_SOURCE and every
+MDBE_ATTR_SRC_LIST member, accepts the all-zeros address.
 
-This change unsets DCRCC so that packets with bad FCS will be dropped,
-in-line with typical behaviours of many other network controllers.
+A source list is only accepted on a (*, G) entry, whose source is the
+all-zeros address, and for each member of the list an (S, G) entry is
+derived from it by substituting the source. Entries are keyed by a plain
+memcmp() of struct vxlan_mdb_entry_key, so if MDBE_ATTR_SOURCE is present
+and holds the all-zeros address and the source list holds it as well, the
+derived (S, G) key is byte-identical to the (*, G) key and resolves to the
+same entry. Omitting MDBE_ATTR_SOURCE is not equivalent, as the key is
+then left with a zero address family.
 
-Tests:
-- Verified that packets with bad FCS are now dropped.
-- Verified that receiving packets with bad FCS will increment the
-  `rx_crc_errors` counter.
+vxlan_mdb_remote_src_del() removes the forwarding entry of a source before
+freeing the source entry:
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Signed-off-by: James Nugraha <aslan.jnn@gmail.com>
-Link: https://patch.msgid.link/20260827232220.69907-1-aslan.jnn@gmail.com
+	vxlan_mdb_remote_src_fwd_del(vxlan, group, remote, &ent->addr);
+	vxlan_mdb_remote_src_entry_del(ent);
+
+With the keys aliased, the first call deletes the remote of the entry that
+owns 'ent' instead of a separate (S, G) entry, and frees 'ent'. The second
+call then runs on the freed entry, and its hlist_del() reads ->pprev and
+->next out of it and writes through them.
+
+Adding the (*, G) entry with NLM_F_REPLACE and no source list marks the
+all-zeros source for deletion and reaches this from the sweep at the end
+of vxlan_mdb_remote_srcs_replace().
+
+  BUG: KASAN: slab-use-after-free in __vxlan_mdb_add+0x1cd/0xd70
+  Read of size 8 at addr ffff888102852500 by task poc/84
+   __vxlan_mdb_add+0x1cd/0xd70
+   vxlan_mdb_add+0xc0/0x140
+   rtnl_mdb_add+0x157/0x2a0
+   rtnetlink_rcv_msg+0x207/0x5a0
+  Allocated by task 84:
+   __kmalloc_cache_noprof+0x153/0x360
+   vxlan_mdb_remote_srcs_add+0x2eb/0x440
+   __vxlan_mdb_add+0x803/0xd70
+  Freed by task 84:
+   kfree+0x14c/0x3b0
+   vxlan_mdb_remote_del+0x129/0x1a0
+   __vxlan_mdb_del+0x4f/0xe0
+   vxlan_mdb_remote_src_fwd_del.isra.0+0x162/0x1b0
+   __vxlan_mdb_add+0x1c5/0xd70
+
+The MDB operations are netns-scoped, so an unprivileged user can perform
+them in a new user and network namespace.
+
+Reject the all-zeros address in vxlan_mdb_is_valid_source(), which covers
+both call sites. A (*, G) entry is expressed by omitting the source, so
+nothing legitimate is refused.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: a3a48de5eade ("vxlan: mdb: Add MDB control path support")
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260826173604.90158-1-baul.lee@xbow.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-dev.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_mdb.c                 | 8 ++++++++
+ tools/testing/selftests/net/test_vxlan_mdb.sh | 6 ++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-index f1b0fb02b3cd1..811c817a2efc7 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-@@ -3438,7 +3438,7 @@ static void xgbe_enable_rx(struct xgbe_prv_data *pdata)
- 	XGMAC_IOWRITE(pdata, MAC_RQC0R, reg_val);
+diff --git a/drivers/net/vxlan/vxlan_mdb.c b/drivers/net/vxlan/vxlan_mdb.c
+index 2c40e489ff8b2..8ff36e272e446 100644
+--- a/drivers/net/vxlan/vxlan_mdb.c
++++ b/drivers/net/vxlan/vxlan_mdb.c
+@@ -354,6 +354,10 @@ static bool vxlan_mdb_is_valid_source(const struct nlattr *attr, __be16 proto,
+ 			NL_SET_ERR_MSG_MOD(extack, "IPv4 multicast source address is not allowed");
+ 			return false;
+ 		}
++		if (ipv4_is_zeronet(nla_get_in_addr(attr))) {
++			NL_SET_ERR_MSG_MOD(extack, "IPv4 all-zeros source address is not allowed");
++			return false;
++		}
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case htons(ETH_P_IPV6): {
+@@ -368,6 +372,10 @@ static bool vxlan_mdb_is_valid_source(const struct nlattr *attr, __be16 proto,
+ 			NL_SET_ERR_MSG_MOD(extack, "IPv6 multicast source address is not allowed");
+ 			return false;
+ 		}
++		if (ipv6_addr_any(&src)) {
++			NL_SET_ERR_MSG_MOD(extack, "IPv6 all-zeros source address is not allowed");
++			return false;
++		}
+ 		break;
+ 	}
+ #endif
+diff --git a/tools/testing/selftests/net/test_vxlan_mdb.sh b/tools/testing/selftests/net/test_vxlan_mdb.sh
+index be8e66abc74e1..5adafd0ea8299 100755
+--- a/tools/testing/selftests/net/test_vxlan_mdb.sh
++++ b/tools/testing/selftests/net/test_vxlan_mdb.sh
+@@ -688,6 +688,9 @@ star_g_common()
+ 	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $grp permanent filter_mode exclude source_list $grp dst $vtep_ip src_vni 10010"
+ 	log_test $? 255 "Invalid source in source list"
  
- 	/* Enable MAC Rx */
--	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 1);
-+	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 0);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, CST, 1);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, ACS, 1);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, RE, 1);
-@@ -3449,7 +3449,6 @@ static void xgbe_disable_rx(struct xgbe_prv_data *pdata)
- 	unsigned int i;
++	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $grp permanent filter_mode exclude source_list $all_zeros_grp dst $vtep_ip src_vni 10010"
++	log_test $? 255 "All-zeros source in source list"
++
+ 	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $grp permanent source_list $src1 dst $vtep_ip src_vni 10010"
+ 	log_test $? 255 "Source list without filter mode"
+ }
+@@ -787,6 +790,9 @@ sg_common()
+ 	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $grp src $grp permanent dst $vtep_ip src_vni 10010"
+ 	log_test $? 255 "(S, G) with an invalid source list"
  
- 	/* Disable MAC Rx */
--	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, DCRCC, 0);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, CST, 0);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, ACS, 0);
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, RE, 0);
++	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $grp src $all_zeros_grp permanent dst $vtep_ip src_vni 10010"
++	log_test $? 255 "(S, G) with an all-zeros source"
++
+ 	run_cmd "bridge -n $ns1 mdb add dev vx0 port vx0 grp $all_zeros_grp src $src permanent dst $vtep_ip src_vni 10010"
+ 	log_test $? 255 "All-zeros group with source"
+ }
 -- 
 2.53.0
 
