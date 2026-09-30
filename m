@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE590521231;
-	Wed, 30 Sep 2026 18:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D733C4E01FA;
+	Wed, 30 Sep 2026 18:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793222; cv=none; b=ouWpBvZJzEzAdxmVIJ1Dw1stka12QHh+iN2TMjDTMrG+wTSRKMaFskbVSp3kyyqeI2lRRqAQ0tQgSr0GijChul7zx/EJhWPTGa3GdIptpfdElMYAnRb/gbcKF36HVOvAQU9fntmi8OPUwuhm/L7s++4eDpzNMzogekX3npWF9a4=
+	t=1790793225; cv=none; b=K0An7ZPgAqUtz/t+kZr/0laRmBz4qWBDWsZEd8lLM0K7Rgtk7H6MzPh/P6/9dJSR8NFZKNJU/ml8/Mf5tjxwE5H2GaQt/2VqrEEfTletv9ijb/RmTnYN+CDDYOAwFxBkDuUTv98HrX7b4rDXBs//3ZAW0MOKqrxgi94/q87MySI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793222; c=relaxed/simple;
-	bh=5fff91DlHi5NpjDOf85EF5YZ3iEbKPdgEg2cU71/dbw=;
+	s=arc-20240116; t=1790793225; c=relaxed/simple;
+	bh=AImmCSMpa1OIqTTOUZ4FijSieeBv23jsFznx5wwVFRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+lnnovRrQ3Q27RycQi0hgGbv6s1DLqCMiadkT+n70/MITtRTw2hNzQ/xp75IvT/x5u5OZ144GZ+R6W4xH5bEUG6FJ7F/wz1/BK5haRnlWTZ7RC1z1Z1qwTTWnc3MD19chQWp6twLI0da0Ic0y9f/em9bU+hIDoTroCohg46vpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcAQ8Zej; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a5m/WFCb+TeCuhTCuAnv0ZYrbSpqp6QxLrD16d4R3J28YDdtuwN8fKI5bkilT3jk/0vwUbZ1S09cD41pp6osRn94fbQvIUX4Q8/CzXFb3jX2DtBvUSv6mo0tqUdAEdYr2RLHpO8i0bLmx9mFeooRCFSWnc+K0xFemmO+ffYdZdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOuUHcQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcAQ8Zej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E731F00899;
-	Wed, 30 Sep 2026 18:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOuUHcQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D5E1F000FF;
+	Wed, 30 Sep 2026 18:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793220;
-	bh=uChpK+O2IB7590ZBO6F+1dfWGnirmFOKAuNQnPTSbIY=;
+	s=korg; t=1790793223;
+	bh=Mpwa38OOO1NxaQbLZV5VvMDvkZnAz2ooNNEXXq4gtpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcAQ8ZejgJJi9F72zH6ADq2WydynX9u6TtuUijm+BBY6idErC4LR9kOzTCVg1XXm2
-	 4ip6WnrDPIK8tL13IpjIsKzoU8JzC7i/VAKnz3DN3PD+/2KSd0et9y6X+VaMbWZ9Yu
-	 EkEEhpLtFKTaw4d/YRpQQMjqeAWYpK/7SI44o6lY=
+	b=aOuUHcQLaLChn5caV5ReO0CScwkWye4/oPdNp/EG4LWBDuHcYFrD8f/SS0TPdIzuc
+	 SVaZvDKiXavYdGbIsWOhWho+9AUkjk6oat5OWKdRcRKs+9+MvUtA6H9xET+//5rzG2
+	 MSQxk+FPQS2N7xiQ8XWiUwZH4SQiPykmgJ7czI7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 171/395] net: xps: reject an out of range traffic class
-Date: Wed, 30 Sep 2026 17:27:13 +0200
-Message-ID: <20260930152344.361707178@linuxfoundation.org>
+Subject: [PATCH 6.18 180/395] net/smc: fix UAF on lgr list traversal in smcr_port_err()
+Date: Wed, 30 Sep 2026 17:27:22 +0200
+Message-ID: <20260930152344.557178992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,69 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
+[ Upstream commit 61cb282fe97b3b0ba32ca09417a693162bf4ae3f ]
 
-Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
-dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
-lowers dev->num_tc without touching either array.
+smcr_port_err() traverses smc_lgr_list.list without holding
+smc_lgr_list.lock, allowing a concurrent smc_lgr_terminate_sched()
+to free an lgr while it is still being dereferenced.
 
-netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
-netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
-entry is handed out as a traffic class >= dev->num_tc. Taking that
-class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
-negative one and indexes an XPS map sized for dev->num_tc classes:
+Hold smc_lgr_list.lock across the traversal. Update
+smc_ib_gid_check() to call smcr_port_err() after releasing the lock.
 
-	tci = j * num_tc + tc;
-	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
-
-attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
-in the mask, so a class that is not below num_tc pushes tci past the end
-of the map for the last ids and the store overruns it.
-
-Any caller that lowers num_tc leaves such entries behind, and
-mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
-netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
-still describe txq 1..7. The splat is from an XPS write to txq 2 on a
-veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
-j == 6 stores one past the end of the 88-byte map:
-
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
-  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
-   __netif_set_xps_queue (net/core/dev.c:2954)
-   xps_rxqs_store (net/core/net-sysfs.c:1880)
-   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
-  Allocated by task 634:
-   __kmalloc_noprof (mm/slub.c:5439)
-   __netif_set_xps_queue (net/core/dev.c:2937)
-  The buggy address is located 0 bytes to the right of
-   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
-
-Reject a class the map has no room for.
-
-Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
+Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260922073149.474762-1-sidraya@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_core.c |  2 ++
+ net/smc/smc_ib.c   | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 48983bac5b539..6569605cc666a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2863,7 +2863,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 34fa809e95047..fff84df00cab3 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1835,6 +1835,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 	struct smc_link_group *lgr, *n;
+ 	int i;
  
- 		tc = netdev_txq_to_tc(dev, index);
--		if (tc < 0)
-+		if (tc < 0 || tc >= num_tc)
- 			return -EINVAL;
++	spin_lock_bh(&smc_lgr_list.lock);
+ 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
+ 		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
+ 			    SMC_MAX_PNETID_LEN))
+@@ -1849,6 +1850,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 				smcr_link_down_cond_sched(lnk);
+ 		}
  	}
++	spin_unlock_bh(&smc_lgr_list.lock);
+ }
  
+ static void smc_link_down_work(struct work_struct *work)
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index 0052f02756ebb..845f15ed06bf1 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -333,6 +333,7 @@ static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
+ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ {
+ 	struct smc_link_group *lgr;
++	bool stale_gid = false;
+ 	int i;
+ 
+ 	spin_lock_bh(&smc_lgr_list.lock);
+@@ -348,11 +349,16 @@ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ 				continue;
+ 			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
+ 						   lgr->smc_version == SMC_V2,
+-						   smcibdev, ibport))
+-				smcr_port_err(smcibdev, ibport);
++						   smcibdev, ibport)) {
++				stale_gid = true;
++				goto out;
++			}
+ 		}
+ 	}
++out:
+ 	spin_unlock_bh(&smc_lgr_list.lock);
++	if (stale_gid)
++		smcr_port_err(smcibdev, ibport);
+ }
+ 
+ static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
 -- 
 2.53.0
 
