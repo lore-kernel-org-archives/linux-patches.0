@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6124E324D;
-	Wed, 30 Sep 2026 16:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D431F3FD132;
+	Wed, 30 Sep 2026 16:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785497; cv=none; b=luWT6krioELGslfiD87bcQs8nKZwOdVogpqZhbd4BaGkbum6XTXbOFuMJe2xzr25rpLGm0iioPsqWB1KoNI/bOpBT15ryL0vGljUXgVXY9OEoGedbgx+wev6uvIfzIiRkHeOFegq2WHsm5T9nGPqXa7NGdZ+gMAs6wOdGn8AyEA=
+	t=1790785502; cv=none; b=W+AG2u1ojgdY4asF1GHXBcfBAj423E1V7U2PhDLichNGAY/GMvhQDtOrfOnzmoW2mZPO1cMzch1qV5dmD3lBiXJyGRMW2Jtb+8FIAxGTm0iNGfSRVS8FsQWl3pA+Arm77wDSphOHZ1teLqL9hqmSpNaATjTOwmQ7DCszBfhd3Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785497; c=relaxed/simple;
-	bh=drPKblNJSqyxj/oyvoadYADbQGDZ6UNHZM5Fpim0P10=;
+	s=arc-20240116; t=1790785502; c=relaxed/simple;
+	bh=JM7vaMt/Iz7g//OwAUJc7DJWvZEx0+u+J1lCjGkT+qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYCcLO3f/gmwGKiyKfLq7Ti5G076ZkeyEXzyMDSu4ABUlhuWZk18h4peMsaK09jDuOTBgn2qleUtgwT9W3eNqhbJe1fGsFc3x13Fdy+W9i3J3tkUR/gSwhpCOS2B2uf0vKOySOLkWqhn4uHZajNy/KqTlpkNShd6+B3Nto3Mjds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVHGID+c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p54lfoWwqMERBB3OfftTENlI28kpRcAVVnsfFZi55Nulm4gh8sS2DQBUqLeHP0jpozAc8gN1Iiw0L2S16HKJ/xVg+8Xq3UfdRic5KSzvLYmGLO4nvInLKfUKd1CU2lcDORYQ01Wd6k+1bRcx9naY+fjA4GKiTWibD3ZPc6+oFlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnBkbMje; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVHGID+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A205B1F00898;
-	Wed, 30 Sep 2026 16:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnBkbMje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330431F00893;
+	Wed, 30 Sep 2026 16:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785489;
-	bh=q7RDHQ2rPM2U4XNM3q1UmUNdoCkFtedgQyZQZuL+rJs=;
+	s=korg; t=1790785497;
+	bh=aYhwBZB6fcnOxkxNxkbeo/4kZ0rUDdJJVyO0mFxPSsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVHGID+cnFZ8FGEYbCGy47GUJWKCYJRtnN7cYtsfEPjm+HdlyfMWixyN6WxfSGp1A
-	 wsDkQAtG1w519NUr8xBF/+DeUONo6nphA319ndlHx1rZV4ZpPrkAwEZzL4SmWsa7Lh
-	 oqxx9lFJZ4q6K+QDYZZ3m6KuEg/O5Kh2RwDxIbko=
+	b=vnBkbMjePPNETmbqxPz0dv0aNkR2COBtDwnHQ+Avr0JKaowOMXK0eyM2w9pHbLK/X
+	 ExFa6VO07v8ygrs0PAOO3/khdMYy6EIq/V91x/xq0CMlCZII21RCMr3y4ScztDAW1k
+	 FyARthkaGCmhLafcGRdKETc3nv6W1Q7Djhx0i2qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Petr Vorel <pvorel@suse.cz>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Nagamani PV <nagamani@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 526/982] ipv4: fib: bound automatic table ID allocation
-Date: Wed, 30 Sep 2026 17:21:02 +0200
-Message-ID: <20260930152428.073296474@linuxfoundation.org>
+Subject: [PATCH 6.1 529/982] s390/qeth: allow bridgeport queries despite OS_MISMATCH
+Date: Wed, 30 Sep 2026 17:21:05 +0200
+Message-ID: <20260930152428.134435936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,63 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Nagamani PV <nagamani@linux.ibm.com>
 
-commit efdfb1e27a3328085b79540dfe781d537b576ea1 upstream.
+commit 74f27fc8642b7e8d139796f8c18ee46df393c2b2 upstream.
 
-fib_empty_table() probes every table ID from 1 until it finds a
-free one.  IPv4 tables are stored in a 256-bucket hash table, so a
-dense set of IDs makes each probe walk a growing hash chain while
-RTNL is held.
+When HiperSockets interfaces on the same VCHID span different OS
+families, reads of the sysfs attributes bridge_role and bridge_state
+fail with -EPERM if bridge port ownership belongs to another OS family.
 
-Automatic table assignment ("ip rule ... table 0") is an IPv4-only
-legacy path.  Bound the automatically allocated ID to 4096 so the
-RTNL hold stays bounded, without changing lookups of explicitly
-specified table IDs.
+As a result, userspace tools such as 'lszdev -ii' cannot retrieve
+bridge_role and bridge_state, even though firmware returns valid bridge
+port data for QUERY_BRIDGE_PORTS requests.
 
-This changes user-visible behavior.  A table-0 rule previously
-received the lowest free ID in 1..RT_TABLE_MAX (0xFFFFFFFF).  After
-this patch the search stops at 4096 and the rule add fails with
-ENOBUFS if that range is fully occupied.  Explicit table IDs above
-4096 remain usable.
+The firmware reports IPA_RC_SBP_IQD_OS_MISMATCH (0x0010) to indicate
+that bridge port ownership belongs to a different OS family. For
+QUERY_BRIDGE_PORTS operations, firmware still returns valid bridge port
+data (role=none, state=inactive) together with a primary return code of
+0x0000 (success).
 
-The automatic path is unused in practice: it is IPv4-only, not
-documented by ip-rule, uncovered by kernel selftests, and both
-NetworkManager and systemd refuse table 0.
+Allow QUERY_BRIDGE_PORTS requests to return the bridge port data
+provided by the firmware despite OS_MISMATCH. To make the OS family
+mismatch visible to userspace, represent the firmware-reported role
+"none" as "none (OS family mismatch)" while preserving the reported
+bridge_state.
 
-Fixes: b801f54917b7 ("[NET]: Increate RT_TABLE_MAX to 2^32")
+The behavior for non-QUERY bridge port commands is unchanged; SET
+operations continue to return -EPERM when another OS family owns the
+bridge port.
+
+This restores readability of bridge_role and bridge_state.
+
+Fixes: 1b05cf6285c1 ("qeth: Include error message for "OS Mismatch"")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Link: https://patch.msgid.link/6f2f2a7a136aee005512a2e1ac8ede62ac8c7bb6.1788258884.git.zihanx@nebusec.ai
+Suggested-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Nagamani PV <nagamani@linux.ibm.com>
+Link: https://patch.msgid.link/20260901155344.3561483-1-nagamani@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_rules.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/s390/net/qeth_l2.h      |    3 ++-
+ drivers/s390/net/qeth_l2_main.c |   26 ++++++++++++++++++++++----
+ drivers/s390/net/qeth_l2_sys.c  |    7 ++++++-
+ 3 files changed, 30 insertions(+), 6 deletions(-)
 
---- a/net/ipv4/fib_rules.c
-+++ b/net/ipv4/fib_rules.c
-@@ -203,6 +203,8 @@ INDIRECT_CALLABLE_SCOPE int fib4_rule_ma
- 	return 1;
+--- a/drivers/s390/net/qeth_l2.h
++++ b/drivers/s390/net/qeth_l2.h
+@@ -13,7 +13,8 @@ extern const struct attribute_group *qet
+ 
+ int qeth_bridgeport_query_ports(struct qeth_card *card,
+ 				enum qeth_sbp_roles *role,
+-				enum qeth_sbp_states *state);
++				enum qeth_sbp_states *state,
++				bool *os_mismatch);
+ int qeth_bridgeport_setrole(struct qeth_card *card, enum qeth_sbp_roles role);
+ int qeth_bridgeport_an_set(struct qeth_card *card, int enable);
+ 
+--- a/drivers/s390/net/qeth_l2_main.c
++++ b/drivers/s390/net/qeth_l2_main.c
+@@ -1157,7 +1157,7 @@ static void qeth_l2_setup_bridgeport_att
+ 		qeth_bridgeport_setrole(card, card->options.sbp.role);
+ 		/* Let the callback function refresh the stored role value. */
+ 		qeth_bridgeport_query_ports(card, &card->options.sbp.role,
+-					    NULL);
++					    NULL, NULL);
+ 	}
+ 	if (card->options.sbp.hostnotification) {
+ 		if (qeth_bridgeport_an_set(card, 1))
+@@ -1543,6 +1543,7 @@ struct _qeth_sbp_cbctl {
+ 		struct {
+ 			enum qeth_sbp_roles *role;
+ 			enum qeth_sbp_states *state;
++			bool *os_mismatch;
+ 		} qports;
+ 	} data;
+ };
+@@ -1719,10 +1720,19 @@ static int qeth_bridgeport_query_ports_c
+ 	struct qeth_ipa_cmd *cmd = (struct qeth_ipa_cmd *) data;
+ 	struct _qeth_sbp_cbctl *cbctl = (struct _qeth_sbp_cbctl *)reply->param;
+ 	struct qeth_sbp_port_data *qports;
++	u16 sbp_rc;
+ 	int rc;
+ 
+ 	QETH_CARD_TEXT(card, 2, "brqprtcb");
+-	rc = qeth_bridgeport_makerc(card, cmd);
++	sbp_rc = cmd->data.sbp.hdr.return_code;
++
++	/* on OS family mismatch, query still returns valid port data;
++	 * treat as success
++	 */
++	if (sbp_rc == IPA_RC_SBP_IQD_OS_MISMATCH && !cmd->hdr.return_code)
++		rc = 0;
++	else
++		rc = qeth_bridgeport_makerc(card, cmd);
+ 	if (rc)
+ 		return rc;
+ 
+@@ -1738,6 +1748,9 @@ static int qeth_bridgeport_query_ports_c
+ 		if (cbctl->data.qports.state)
+ 			*cbctl->data.qports.state = qports->entry[0].state;
+ 	}
++	if (cbctl->data.qports.os_mismatch)
++		*cbctl->data.qports.os_mismatch =
++			(sbp_rc == IPA_RC_SBP_IQD_OS_MISMATCH);
+ 	return 0;
  }
  
-+#define FIB_MAX_AUTO_TABLE_ID  4096
-+
- static struct fib_table *fib_empty_table(struct net *net)
+@@ -1746,13 +1759,17 @@ static int qeth_bridgeport_query_ports_c
+  * @card:			   qeth_card structure pointer.
+  * @role:   Role of the port: 0-none, 1-primary, 2-secondary.
+  * @state:  State of the port: 0-inactive, 1-standby, 2-active.
++ * @os_mismatch: if non-NULL, set to true when firmware reports
++ *		 OS family mismatch.
+  *
+  * Returns negative errno-compatible error indication or 0 on success.
+  *
+- * 'role' and 'state' are not updated in case of hardware operation failure.
++ * 'role', 'state' and 'os_mismatch' are not updated in case of
++ * hardware operation failure.
+  */
+ int qeth_bridgeport_query_ports(struct qeth_card *card,
+-	enum qeth_sbp_roles *role, enum qeth_sbp_states *state)
++	enum qeth_sbp_roles *role, enum qeth_sbp_states *state,
++	bool *os_mismatch)
  {
- 	u32 id = 1;
-@@ -211,7 +213,7 @@ static struct fib_table *fib_empty_table
- 		if (!fib_get_table(net, id))
- 			return fib_new_table(net, id);
+ 	struct qeth_cmd_buffer *iob;
+ 	struct _qeth_sbp_cbctl cbctl = {
+@@ -1760,6 +1777,7 @@ int qeth_bridgeport_query_ports(struct q
+ 			.qports = {
+ 				.role = role,
+ 				.state = state,
++				.os_mismatch = os_mismatch,
+ 			},
+ 		},
+ 	};
+--- a/drivers/s390/net/qeth_l2_sys.c
++++ b/drivers/s390/net/qeth_l2_sys.c
+@@ -15,6 +15,7 @@ static ssize_t qeth_bridge_port_role_sta
+ {
+ 	struct qeth_card *card = dev_get_drvdata(dev);
+ 	enum qeth_sbp_states state = QETH_SBP_STATE_INACTIVE;
++	bool os_mismatch = false;
+ 	int rc = 0;
+ 	char *word;
  
--		if (id++ == RT_TABLE_MAX)
-+		if (id++ == FIB_MAX_AUTO_TABLE_ID)
- 			break;
+@@ -25,7 +26,7 @@ static ssize_t qeth_bridge_port_role_sta
+ 	if (qeth_card_hw_is_reachable(card) &&
+ 					card->options.sbp.supported_funcs)
+ 		rc = qeth_bridgeport_query_ports(card,
+-			&card->options.sbp.role, &state);
++			&card->options.sbp.role, &state, &os_mismatch);
+ 	if (!rc) {
+ 		if (show_state)
+ 			switch (state) {
+@@ -52,6 +53,10 @@ static ssize_t qeth_bridge_port_role_sta
+ 		if (rc)
+ 			QETH_CARD_TEXT_(card, 2, "SBP%02x:%02x",
+ 				card->options.sbp.role, state);
++		else if (!show_state &&
++			 card->options.sbp.role == QETH_SBP_ROLE_NONE &&
++			 os_mismatch)
++			rc = sysfs_emit(buf, "%s (OS family mismatch)\n", word);
+ 		else
+ 			rc = sprintf(buf, "%s\n", word);
  	}
- 	return NULL;
 
 
