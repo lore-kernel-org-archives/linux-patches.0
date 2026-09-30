@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C243C060F;
-	Wed, 30 Sep 2026 19:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EC93C060F;
+	Wed, 30 Sep 2026 19:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796651; cv=none; b=lF28KU1V0fcf4xjJgCFT6yLcAUHVjspbp/ckzGdnAHnsjraa2qg9lUhAcVMMnv50DAlZlrOyiVayaMNLYVBPVvrAHHiU0mPc+kQK+oQDtaYriFmommjYGgQL6+pxHDXYaCGjD1ojkc80UzG2vRbZBtMOk9k05BSe+bStsKY9E0M=
+	t=1790796654; cv=none; b=c2tosFrFVbrYGYROqxHeyeCyjnky/ivKn3EOWgHu6tfcW3NeUth9CUWlbPEwf5rE2vz7FUTdOODpeAVKFx7z8VQB7UV54WIQpbblVFsH3psjebWpd73OmOypBdsIoabRhuuV/f98deVt/lL25Wq6esuzJnr2lH9qk6ouwaieitM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796651; c=relaxed/simple;
-	bh=SHJhu34EsAt+4tGHpYDU+QWVk2JrdFctwQC56AfW7Uw=;
+	s=arc-20240116; t=1790796654; c=relaxed/simple;
+	bh=iGQbuDThqh8jNWJgj3A9+nylmOiOVK2JqXNem3GEZMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ux/Ap7og2aECMv+oDyNVvp5/o4DZQhMRLf82KgjJUK6xWVjRX97G5FlNUq8F8eEvCrMHu3yD2qHHYpbY+9ymAYYDdTYRYCHECTfSY3L513SWjqbfI9TWGlgZNCx1cLWAiPBOnWofE4BcYwAuM+7WZTkOfOoq+qSJj/o0dJfmMi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYLr28BN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ntosDI7w8Gr9GXLXtgDvX+BF+xBpje3u+q3/GCbqJ882BUeqGtuj2L6tQifhuuhsm4Tbd5R6rF/ZpVefkxnWsjRvz/e29SYlet8ZAQ/RhsYHSLV0tbPwYxVegysejSs5SUtS0LNSf1aR+UyM3HO1Ywm8snIbgHMr+YFKvPeIrOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPsRpMG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYLr28BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614781F000FF;
-	Wed, 30 Sep 2026 19:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPsRpMG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385FA1F00898;
+	Wed, 30 Sep 2026 19:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796649;
-	bh=hQ6dHzlVVeS4foviBCyp6ehm/hP2HtpP1jPISgmpskg=;
+	s=korg; t=1790796652;
+	bh=hEohtxNWMs8ik94UOqk0RUeD36MDI7jAcXSvsc2uSAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYLr28BNw2h4MMBnj170CQwtUuerSCib1UIfl444KIH4A8u0sQMMf+mIhkjVat1n9
-	 aiACu4NpTUlWI2obNUm4ZtrorMTcaD1G81HxoUxsHhB6CktWF7Es2OW/1cC7EIuFq6
-	 MY1bzG4ZVyXRQkozplaexTAHi/iBEl97Y/Tmp1LM=
+	b=XPsRpMG4UEyM4c/f3mvxFnPws1Pz8hM0vQEGBwGl20XaQfRsQKnbYV7DhbdDArIEB
+	 mg9pJBW6jG6f0YT8R6r/jL1QYEOYjxTV55EeKsMEvV9SfOrIbZksxLodE1xfVbN550
+	 Q8qX0pLIEln242sGHOVyxPVKPrRSyP/8jfG11bD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Wenwu Hou <hwenwur@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0987/1193] xsk: Use a 32-bit compare in xsk_map_gen_lookup
-Date: Wed, 30 Sep 2026 17:27:51 +0200
-Message-ID: <20260930152456.172242035@linuxfoundation.org>
+Subject: [PATCH 6.6 0952/1193] erofs: fix large folio race in erofs_fscache_req_complete
+Date: Wed, 30 Sep 2026 17:27:16 +0200
+Message-ID: <20260930152455.392548660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -48,49 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Wenwu Hou <hwenwur@gmail.com>
 
-[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
+This patch is for stable only. Commit c37460cd9b2fc ("erofs: remove fscache
+backend entirely") upstream removed this code.
 
-xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
-using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
-max_entries value of 0x80000000 or higher becomes a threshold larger
-than every zero-extended 32-bit key. An out-of-range index then skips
-the bounds check and the generated lookup reads past xsk_map[].
+xas_for_each() iteration can race with reclamation of an unlocked large
+folio and splitting of its replacement shadow entry. Fix this by
+advancing past the entire folio before unlocking it.
 
-Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
+For example:
+CPU A: EROFS completion               Other CPUs
+----------------------------------   -----------------------------------
+Find F at index 0.
+Mark F uptodate.
+Unlock F.
 
-Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+                                     Reclaim F.
+                                     Replace indices 0–3 with a
+                                     multi-index workingset shadow.
+
+                                     Another reader inserts a smaller
+                                     folio, e.g. order-0 at index 0.
+                                     Split the large shadow entry:
+                                       index 0: new folio
+                                       index 1: shadow
+                                       index 2: shadow
+                                       index 3: shadow
+Find a shadow at index 1.
+folio_mark_uptodate(folio).
+
+This can cause a kernel panic such as:
+[1030374.432778] [     C31] BUG: unable to handle page fault for address: 00001846af017b01
+[1030374.432971] [     C31] #PF: supervisor write access in kernel mode
+[1030374.432973] [     C31] #PF: error_code(0x0002) - not-present page
+[1030374.433543] [     C31] PGD 5a44f75067 P4D 5a44f75067 PUD 0
+[1030374.433546] [     C31] Oops: 0002 [#1] PREEMPT SMP NOPTI
+[1030374.433549] [     C31] CPU: 31 PID: 2425624 Comm: node Kdump: loaded Tainted: G           OE K    6.6.88-****
+[1030374.434154] [     C31] Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS ?-20260421_110423-CN.l65g09119.cloud.sqa.na131 04/01/2014
+[1030374.434156] [     C31] RIP: 0010:erofs_fscache_req_complete+0xc1/0x1a0 [erofs]
+[1030374.434764] [     C31] Code: 17 c5 c3 48 89 c7 48 85 c0 0f 84 af 00 00 00 48 81 ff 06 04 00 00 74 1b 48 81 ff 02 04 00 00 0f 84 b9 00 00 00 66 85 ed 75 04 <f0> 80 0f 08 e8 96 04 24 c3 48 8b 54 24 18 f6 c2 03 0f 95 c0 48 85
+[1030374.435044] [     C31] RSP: 0000:ffffb8f2fc973cc0 EFLAGS: 00010046
+[1030374.435641] [     C31]
+[1030374.435642] [     C31] RAX: 00001846af017b01 RBX: 000000000000000f RCX: 0000000000000001
+[1030374.436885] [     C31] RDX: 000000000000000c RSI: ffffa02ab337d468 RDI: 00001846af017b01
+[1030374.437127] [     C31] RBP: 0000000000000000 R08: ffffffffffffffc0 R09: 0000000000000002
+[1030374.437672] [     C31] R10: 0000000000000005 R11: 0000000000000191 R12: ffffa0060ec72300
+[1030374.437673] [     C31] R13: 0000000008000000 R14: ffffffffc11b1990 R15: 0000000000007000
+[1030374.437677] [     C31] FS:  00007f4928cdec80(0000) GS:ffffa07dc5f80000(0000) knlGS:0000000000000000
+[1030374.437678] [     C31] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[1030374.437680] [     C31] CR2: 00001846af017b01 CR3: 00000063d5356006 CR4: 0000000000770ee0
+[1030374.437681] [     C31] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[1030374.437682] [     C31] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+[1030374.437684] [     C31] PKRU: 55555558
+[1030374.437684] [     C31] Call Trace:
+[1030374.437687] [     C31]  <TASK>
+[1030374.437692] [     C31]  erofs_fscache_req_put+0x27/0x40 [erofs]
+[1030374.438900] [     C31]  cachefiles_read_complete+0x48/0x110 [cachefiles]
+[1030374.440448] [     C31]  iomap_dio_bio_end_io+0x128/0x160
+[1030374.440456] [     C31]  ? __pfx_stripe_end_io+0x10/0x10 [dm_mod]
+[1030374.440950] [     C31]  clone_endio+0x123/0x1f0 [dm_mod]
+[1030374.441550] [     C31]  blk_mq_end_request_batch+0xf4/0x440
+[1030374.441556] [     C31]  ? nohz_balancer_kick+0x31/0x270
+[1030374.441561] [     C31]  ? dma_direct_unmap_sg+0x48/0x1d0
+[1030374.441565] [     C31]  ? dma_pool_free+0x22/0x60
+[1030374.441569] [     C31]  ? nvme_pci_complete_batch+0xaf/0xc0 [nvme]
+[1030374.442070] [     C31]  nvme_irq+0x6e/0x80 [nvme]
+[1030374.442422] [     C31]  ? __pfx_nvme_pci_complete_batch+0x10/0x10 [nvme]
+[1030374.442428] [     C31]  __handle_irq_event_percpu+0x46/0x1a0
+[1030374.442431] [     C31]  handle_irq_event+0x37/0x80
+[1030374.442433] [     C31]  handle_edge_irq+0x93/0x240
+[1030374.442436] [     C31]  __common_interrupt+0x3b/0xa0
+[1030374.442441] [     C31]  common_interrupt+0x3f/0xa0
+[1030374.442446] [     C31]  asm_common_interrupt+0x22/0x40
+
+Fixes: d435d53228dd ("erofs: change to use asynchronous io for fscache readpage/readahead")
+Signed-off-by: Wenwu Hou <hwenwur@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xskmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/fscache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
-index afa457506274c..607f8b7e16d96 100644
---- a/net/xdp/xskmap.c
-+++ b/net/xdp/xskmap.c
-@@ -124,7 +124,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
- 	struct bpf_insn *insn = insn_buf;
- 
- 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
--	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
-+	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
- 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
- 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
- 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index afc37c9029ce7..542c1cc3eba57 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -88,6 +88,8 @@ static void erofs_fscache_req_complete(struct erofs_fscache_request *req)
+ 			continue;
+ 		if (!failed)
+ 			folio_mark_uptodate(folio);
++		/* Skip the entire folio before unlocking allows it to be split. */
++		xas_advance(&xas, folio_next_index(folio) - 1);
+ 		folio_unlock(folio);
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.53.0
 
