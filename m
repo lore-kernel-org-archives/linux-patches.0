@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE1C502D5A;
-	Wed, 30 Sep 2026 18:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22754DEC26;
+	Wed, 30 Sep 2026 18:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792552; cv=none; b=msfpMoZs7Vt4GV1ezPdgNQv9QaOWxqnOQjnIE8e4qz3h2HIbgt5PSOOvdg2p8JJpsEPcHJOskYw1ErNzIOgeVI66FeWGLQnlYPlWuxc4DWzMIf7OVr7SU3mxW4G8SYowKbQgJAB9hthqf9Df0Jhc9OW2RzRKVUT0/mF3kfY///g=
+	t=1790792555; cv=none; b=WvjpQc3OoSyL+dt2pEpDFzwgSJ14Y5k8V65kc9LjUsLK2CRcMOp7xjE7xwszdej6ou5HtaNBwXH1Lldf3BtUa35FBTgZ0nUfDqPjRhxFd2tXqxgj5lP60k5cB2T4IAlhp+N5D7dSan1IgzfIicjJNjSAt9o+BF5iDNWkqrbq/9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792552; c=relaxed/simple;
-	bh=5dWU1h0E7OBYKjmiQHPDafgJSxgOuPJsLt6WkP7prGI=;
+	s=arc-20240116; t=1790792555; c=relaxed/simple;
+	bh=J+abusDuxV90JNlbBggwYS57ZWHYeq+MjdEI4cbT2OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PY5POodUoIq3twm953GLl05K0YIMZZ9+VpxrID+Fsmi8i1YZET/dGj8CdWltfPZTzSRPZYTRR/sr/Me22g9jQ7nhzfsbXvPcBPznxhVKuFAqCdqIzbMh9qw43zj5Fy2RJjct4Z9PX6Tj6DiHAWfj7TknAdMeqPAISqOF86tV44g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guW48CxU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hEUQVc0UMHQu7pYytWemXDcTsbHSsCiROHo2Lj2A4qH8bjtGfhU+AvR36seL6/xSQoYyPJILm9JH5q2AJbtj7t1XuVIR68eXVMiZxZqNnUjsgbimtHtxkDQVGh015iGePMSO6Av5gWf1DXiK59uqiydTMNQMBqof42pUgUTcggY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3wWvRfW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guW48CxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9A71F000FF;
-	Wed, 30 Sep 2026 18:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3wWvRfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1912C1F000FF;
+	Wed, 30 Sep 2026 18:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792551;
-	bh=557UmblKVQiQBKOfzmiipYADxRMjsUOGFWsEXNvvsQY=;
+	s=korg; t=1790792553;
+	bh=jED1YS3jU4skWmw2A0g8WGpPFnONR+bY2VX9Xn5lc2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=guW48CxUDZB73y0LWz1nk9o9LGfWmy0m8N7ChnDwW6feTXJIJ82FOaGMsa+a3mNkb
-	 VRS8L4yLrn3vPzouIMDX3VreTryqCptv8+l77tuyP5CVYSjd8zIXs/R0lQPwQUvNG3
-	 GysMjWDhA7hmNzAwXPRXp2uvoo8BbKrzlP8CR6RU=
+	b=W3wWvRfWjTjQ/nFC0joT1xsWrW9MTbrDi2yUxsy4E5Dlx16hRMFVSjpf9Pw0I7KPq
+	 nuJMG1lrzHZjcW6e0juYFyGIk7asBhAgRrx5yWcGeTJENGv6QDkY1dT+16EnvK3F9e
+	 R31pBBkMPVJZlHYlqHk6FzDf10ACQAz9Rh5ABlfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Seth Forshee <sforshee@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Stephen Dolan <sdolan@janestreet.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 693/752] x86/mm: Fix check/use ordering in switch_mm_irqs_off()
-Date: Wed, 30 Sep 2026 17:29:23 +0200
-Message-ID: <20260930152413.232630046@linuxfoundation.org>
+	Mikael Etienne <mikael1022bzh@gmail.com>,
+	Arthur Husband <artmoty@gmail.com>,
+	Alvin Lim <alvinwylim@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	John Smith <imjohnsmith4000@gmail.com>,
+	Lennert Buytenhek <kernel@wantstofly.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Roland Waltersson <roland.waltersson@netinsight.net>
+Subject: [PATCH 5.15 694/752] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
+Date: Wed, 30 Sep 2026 17:29:24 +0200
+Message-ID: <20260930152413.254034154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,102 +58,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Dolan <sdolan@janestreet.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-This is a stable-specific fix. There is no single upstream commit to
-cherry-pick; the equivalent mainline fix is commit 83b0177a6c48
-("x86/mm: Fix SMP ordering in switch_mm_irqs_off()"), which is in
-v6.18 but does not apply to these trees because the surrounding code
-was refactored.
+commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
 
-The backports of commit fea4e317f9e7 ("x86/mm: Eliminate window where
-TLB flushes may be inadvertently skipped") -- the fix for
-CVE-2025-37964 -- to the 6.1, 6.6 and 6.12 trees ended up with two
-code blocks in the wrong order relative to mainline. The fix depends
-on setting cpu_tlbstate.loaded_mm to LOADED_MM_SWITCHING *before*
-reading tlb_gen, so that a concurrent TLB shootdown either sees
-LOADED_MM_SWITCHING and sends the IPI, or the switching CPU sees the
-updated tlb_gen. In the stable trees the write of LOADED_MM_SWITCHING
-was placed after the tlb_gen read, so the race window fea4e317f9e7 was
-meant to close is still open and CVE-2025-37964 is unfixed there:
-a process can be left running with stale TLB entries, which typically
-manifests as rare, hard-to-bisect memory corruption or segfaults.
+Multiple users report data corruption during 64-bit DMA transfers on
+systems with AMD NBIO 7.7 and 7.11 controllers.
 
-This has been confirmed by several independent parties:
+This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
+Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
+corrupted.
 
-  - reproduced on 6.1.y/6.6.y/6.12.y with the test program in [1],
-    and confirmed fixed by this patch
-  - Seth Forshee saw segfaults on 6.12.y within ~30 minutes of running
-    a test workload; with this patch it ran 18 hours cleanly [2]
-  - Greg Thelen reports 6.6.y- and 6.12.y-based test failures fixed by
-    this patch [3]
+Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
 
-Dave Hansen acked the patch [4] and has no objection to it going into
-stable [5].
-
-The patch below is against 6.12.y; the identical change applies to
-6.1.y and 6.6.y. (The cpumask_test_cpu()/smp_mb() portion of the
-mainline fix is not needed here because commit 209954cbc7d0
-("x86/mm/tlb: Update mm_cpumask lazily") was never backported to these
-trees.)
-
-[1] https://lore.kernel.org/lkml/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
-[2] https://lore.kernel.org/lkml/aZYWXe739XUJrBld@do-x1carbon/
-[3] https://lore.kernel.org/lkml/CAHH2K0brx9omC9QYyB6Lio3t_1Lf8v=VaFoiaG23UgQ-aec89Q@mail.gmail.com/
-[4] https://lore.kernel.org/lkml/281e8018-5506-4a79-8775-e0de7e58b95f@intel.com/
-[5] https://lore.kernel.org/lkml/86421ee5-5332-46c2-bb48-d40310b818be@intel.com/
-
-Fixes: fea4e317f9e7 ("x86/mm: Eliminate window where TLB flushes may be inadvertently skipped")  # 6.1.y/6.6.y/6.12.y backports
-Acked-by: Dave Hansen <dave.hansen@intel.com>
-Tested-by: Seth Forshee <sforshee@kernel.org>
-Tested-by: Eric Hagberg <ehagberg@janestreet.com>
-Signed-off-by: Stephen Dolan <sdolan@janestreet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[Lee: The v5.15.y backport of fea4e317f9e7 (12f703811af0) placed the
-      LOADED_MM_SWITCHING write after the tlb_gen read too, so v5.15.y
-      suffers from the same issue.  Applies cleanly]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
+Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
+Reported-by: Arthur Husband <artmoty@gmail.com>
+Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
+Reported-by: Alvin Lim <alvinwylim@gmail.com>
+Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, s/IOVA/DMA/ in comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Cc: David Laight <david.laight.linux@gmail.com>
+Cc: John Smith <imjohnsmith4000@gmail.com>
+Cc: Lennert Buytenhek <kernel@wantstofly.org>
+Cc: Niklas Cassel <cassel@kernel.org>
+Cc: Roland Waltersson <roland.waltersson@netinsight.net>
+Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/tlb.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
-index 11a43d373baee..f6e541c24ae2d 100644
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -596,6 +596,14 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
- 		 */
- 		cond_mitigation(tsk);
- 
-+		/*
-+		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
-+		 * and others are sensitive to the window where mm_cpumask(),
-+		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-+		 */
-+		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
-+		barrier();
-+
- 		/*
- 		 * Stop remote flushes for the previous mm.
- 		 * Skip kernel threads; we never send init_mm TLB flushing IPIs,
-@@ -615,14 +623,6 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
- 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
- 
- 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
--
--		/*
--		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
--		 * and others are sensitive to the window where mm_cpumask(),
--		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-- 		 */
--		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
--		barrier();
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -844,4 +844,103 @@ static void quirk_clear_strap_no_soft_re
  	}
- 
- 	if (need_flush) {
--- 
-2.53.0
-
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++
++/*
++ * Enhanced atomic operations can cause corruption with 64-bit DMA
++ * on these devices.
++ */
++#define RX_ENH_ATOMIC_EN		BIT(8)
++
++static const u32 nbio_7_7_pcie_smn_addrs[] = {
++	0x111401d0,
++	0x111411d0,
++	0x111421d0,
++	0x111431d0,
++	0x111441d0,
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x114401d0,
++};
++
++static const u32 nbio_7_11_pcie_smn_addrs[] = {
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x113411d0,
++	0x113421d0,
++	0x113431d0,
++	0x113441d0,
++	0x113451d0,
++};
++
++static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
++					   const u32 *smn_addrs,
++					   size_t nr_smn_addrs)
++{
++	bool changed = false;
++	size_t i;
++	u32 data;
++	int ret;
++
++	for (i = 0; i < nr_smn_addrs; i++) {
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (!(data & RX_ENH_ATOMIC_EN))
++			continue;
++		data = data & ~RX_ENH_ATOMIC_EN;
++		ret = amd_smn_write(0, smn_addrs[i], data);
++		if (ret)
++			continue;
++		if (changed)
++			continue;
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (data & RX_ENH_ATOMIC_EN)
++			continue;
++		changed = true;
++	}
++
++	if (changed)
++		pci_info(host_bridge, "enhanced atomics disabled\n");
++}
++
++static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
++}
++
++static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
++}
++
++/* Phoenix, Hawk Point (NBIO 7.7) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++
++/* Strix, Krackan, Strix Halo (NBIO 7.11) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++
+ #endif
 
 
