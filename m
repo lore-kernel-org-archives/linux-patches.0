@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90F34D6C2E;
-	Wed, 30 Sep 2026 18:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD63738DC66;
+	Wed, 30 Sep 2026 18:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792074; cv=none; b=hNmVAwaNTiaJYOc4p5gJF86rAFKU3uDHnXGNkwOH1Cme+fccrOri9m3b31rhA/5VIbNGoAYyocWY1acWW9bar2V4HHSaFJApMvzqmi28Ni3HIdUf7CpS1qdUVFdrOLht22vGKltmV+qzQOPsJvtQxJhIXVSkuPVKsBWPSf8oqMI=
+	t=1790792076; cv=none; b=CbnSyFM0D2Swidpjpg9PvOqR25YtC2HQ8AHDjgbKuWHRo3vawSLqGOR3k4vKn13isE5WyiqgY9pcDYLewZ4w7eKkSgZ607vTt3lMTnLQpWJq7uNUsGd4jx8JRuTTkvy15+SQoGKgFGi6Z/MihSBK7oZ3NhEbitQ1K9ncuWToixA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792074; c=relaxed/simple;
-	bh=8hkYwjE1N7tg5xckr+KQiErwAZgkq3rjYUeR27FxNU4=;
+	s=arc-20240116; t=1790792076; c=relaxed/simple;
+	bh=KUYTW8sqO74cRMhgjyPV7AlN2F6uhL/uPIn0K4qZOas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOZ+OZsjmEr0ydTymdxTeMllavtfv1sJZqyNEiEcR4CVGiQikmM72plC6dh4kb6UTg46PnRhrFmdyjapCRsIBqanTVCbcXMIPGewUkGmX9eGqiBTrIL3N4yJqPtvuAd5O+DyPw19ZxVHLy0dKDIbZclG1NeOOJFs9qsYLSticBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XftGIsnB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lM37IPC8vML7faJjkVEH9QHKR8rf+j8jySRRkvQ6b1b49J4YwQc56uy5ggM9WgcJbnCioXQo+YGFnYcXuAuSd+c2CJ3on/V9JGoF6A4ZLpaO4x63P05+z79DY+3+pe99g9kj+PGNmqkOQEMJSGBlctgFqLX84jLdKEi6P6efzBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ivy03ML3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XftGIsnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8AD1F000FF;
-	Wed, 30 Sep 2026 18:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ivy03ML3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BFC1F000FF;
+	Wed, 30 Sep 2026 18:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792072;
-	bh=ovy++ktEg8eYY00d9jICEfWhb0Yqssv+jzOQDQEyrHA=;
+	s=korg; t=1790792075;
+	bh=b0WMPSPY1qgIPUNgraraCuwBJhLqfFdUCqQN9dUyZGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XftGIsnBYmWTPdWrX193LfYJ3nwffevEzlTVbSNhVOW4QCkoosDDAdkaI6t5mi2TM
-	 9ItLn+tQWxHTd6+hO2sSIKiWdz/vW+jcET+v728NqrAoWNoi9eWwHl+ONmTgkYpHGc
-	 Inz/XAtvNhK4JT8QMvpqs8iabQY6L9afrufyexhQ=
+	b=Ivy03ML3IZtny8SLdHp2jhWWL76Lzmn7K06Q5CQn5GnK6CB3pV96yoz9OiNoiyc1E
+	 he5uj9w8rtAgwesVvndRjTDrnVpsuFbK7SXFegW//X9b9azOUjuta3XXK40+BtxUnC
+	 Y06vTs9IVLDMcf8zSQBgmhjK/FcNI2EQptrkr2o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"Christopher Lameter (Ampere)" <cl@gentwo.org>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-Subject: [PATCH 5.15 527/752] arm64: percpu: Fix this_cpu_write() casting
-Date: Wed, 30 Sep 2026 17:26:37 +0200
-Message-ID: <20260930152409.656787724@linuxfoundation.org>
+	Yige Jiang <yigejiang86@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 510/752] net: netsec: fix device_node reference leak on phy_np
+Date: Wed, 30 Sep 2026 17:26:20 +0200
+Message-ID: <20260930152409.293039273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -63,71 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Yige Jiang <yigejiang86@gmail.com>
 
-commit 885bff055a0f251a51a0d4fd4f0a7b525582a3de upstream.
+[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
 
-The arm64 implementation of this_cpu_write() casts 'val' to unsigned
-long. This is necessary to handle cases where 'val' is a pointer type,
-and to avoid spurious compiler warnings for the (unreachable!) cases
-where the pointer type would be cast to a smaller integer type.
+netsec_of_probe() takes a reference on the PHY device_node with
+of_parse_phandle() and stores it in priv->phy_np, but the driver never
+drops it.  One device_node reference is leaked per probe, on the success
+path as well as on every error path reached after netsec_of_probe().
 
-Unfortunately, the cast is applied to 'val' rather than '(val)', which
-won't always generate the expected value when 'val' is an expression.
+Neither consumer takes ownership.  of_mdio_parse_addr() is a static
+inline taking a const struct device_node * that only reads the "reg"
+property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
+drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
+:364 and of_node_put() at :373, which would be a double put if
+of_phy_connect() consumed the reference.
 
-For example, for this_cpu_write(pcp, zero - 1), where 'pcp' is a u64 and
-'zero' is a u32:
+The node is still in use at netsec_netdev_open() time, where it is
+passed to of_phy_connect(), so it has device lifetime.  Release it at
+the probe error label, which every failure path after the acquire
+funnels through, and in netsec_remove().  Both releases precede
+free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
+leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
 
-* 'zero'                      ===> (u32) 0x00000000
-* 'zero - 1'                  ===> (u32) 0xffffffff
-* '(unsigned long)zero - 1'   ===> (u64) 0xffffffffffffffff
-* '(unsigned long)(zero - 1)' ===> (u64) 0x00000000ffffffff
+There is no end-user visible symptom on currently supported platforms:
+a device_node is only freed once OF_DYNAMIC is enabled and the node has
+been detached, so on a static device tree the imbalance is inert.  It is
+observable as a refcount that grows across bind/unbind cycles, and would
+matter under device tree overlays.
 
-Fix this by adding brackets around 'val'.
+Found by static analysis of reference acquire/release pairing rather
+than from a runtime report.  No reproducer was produced and the change
+has not been runtime tested; it is compile-tested only (arm64,
+CONFIG_SNI_NETSEC=m via COMPILE_TEST).
 
-Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
-Reported-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: David Laight <david.laight.linux@gmail.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Acked-by: Christopher Lameter (Ampere) <cl@gentwo.org>
-Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <yang@os.amperecomputing.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/percpu.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -177,13 +177,13 @@ PERCPU_RET_OP(add, add, ldadd)
- 	_pcp_protect_return(__percpu_read_64, pcp)
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index eb59e8abe6915..cc12a45740063 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -2148,6 +2148,7 @@ static int netsec_probe(struct platform_device *pdev)
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ free_ndev:
++	of_node_put(priv->phy_np);
+ 	free_netdev(ndev);
+ 	dev_err(&pdev->dev, "init failed\n");
  
- #define this_cpu_write_1(pcp, val)	\
--	_pcp_protect(__percpu_write_8, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_8, pcp, (unsigned long)(val))
- #define this_cpu_write_2(pcp, val)	\
--	_pcp_protect(__percpu_write_16, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_16, pcp, (unsigned long)(val))
- #define this_cpu_write_4(pcp, val)	\
--	_pcp_protect(__percpu_write_32, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_32, pcp, (unsigned long)(val))
- #define this_cpu_write_8(pcp, val)	\
--	_pcp_protect(__percpu_write_64, pcp, (unsigned long)val)
-+	_pcp_protect(__percpu_write_64, pcp, (unsigned long)(val))
+@@ -2165,6 +2166,7 @@ static int netsec_remove(struct platform_device *pdev)
+ 	netif_napi_del(&priv->napi);
  
- #define this_cpu_add_1(pcp, val)	\
- 	_pcp_protect(__percpu_add_case_8, pcp, val)
+ 	pm_runtime_disable(&pdev->dev);
++	of_node_put(priv->phy_np);
+ 	free_netdev(priv->ndev);
+ 
+ 	return 0;
+-- 
+2.53.0
+
 
 
