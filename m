@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B60651FCB2;
-	Wed, 30 Sep 2026 18:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7956C314A86;
+	Wed, 30 Sep 2026 18:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791222; cv=none; b=mcdrchyNKSrZ7/WwqkY0SOKIPTiXfHool5A+Rdg1xOMfOUyvqDfGZX+zYrBzSS8ITdq7Ir2CHHi64W/U5+H9e7aH/ClEQNlcNiNx/mzr1ERuRSeyht4uiMzNg+kAguHyUxfc7he+JFDAj76sOihhj3f2qNaHZLlduc2+Gvprjp0=
+	t=1790791225; cv=none; b=YXU93Y2sE+FF49qub56qS6BQXVkwz/P9NFzxfZ2wDgv1yd5goIf/CndbqjCJVcInOGgjmNYEluxMR4TESZyPzsoaU4rnBtFPf0ICbGk0UR5gQZ4CZ22IMTbLmvnD2m4yUu+MSXPDrseNN/dRVg0uCqdVc3alnCSZHwmwmZhtY4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791222; c=relaxed/simple;
-	bh=ws+CeLjp8EKjdvN8DYDUJw4dg03lKTWEPdEKoitKJC8=;
+	s=arc-20240116; t=1790791225; c=relaxed/simple;
+	bh=GhBqsYIjf+WjwgwHTzTnku+cmyI7y/Nzd06OzPPEO3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGYgYgVj/Nbj93x7vNv1GSYkiLH0OYNYRxEVCpFXfbdcScLCwZ3YZksq3KnESrvkmQ7VLhkmVMkXtnzKKj43c+dWTZ2mfKZ3wtU3X2Vowffb2EJumXEptSvOf+UTyZLvxuNHl1++QaAbmYvbhmaT1HfonyqZRJZJwjotF/zclJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkQWNX3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lGjyq4RXy/5q/XMSll5Rc2KOR85qm9ogXZ3E6FZEZZtDhEI2u9jEvrmY4pNzXtKGFln0Q4616EM/DhUphrocw0mCLZdKuKmXMgvVdpn4INcgq4IOf7Wqzxk1YV6SnANWMwAglRDu5OxrQonFlx6UxB0a+zfsN9kdh+LLgKrckbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVvVQZO9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkQWNX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCCD1F000FF;
-	Wed, 30 Sep 2026 18:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVvVQZO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4271F000FF;
+	Wed, 30 Sep 2026 18:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791221;
-	bh=ac32ZeFFucnFX0C0Vqr4ihPnV2WbpSnc9A+L8eiX67Y=;
+	s=korg; t=1790791224;
+	bh=ZSj7L8k4n0DXYnrtEtRmzeKUbBukRa2Zll0fFo3mUTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVkQWNX3eqdSuG/A+XZEIHgiyCDhNdWHSt+RUFPNVP16RJkKP5FORW05hxEpgM2G6
-	 2Pe3S6ibAfZlsr/VAdGSCXxdShsS/Hrhn0Zt/kij6vKItSkd2tDK0JgAPfTqZ0Z7SX
-	 SvNzvAsCjLcIuQjlEg9qelWoYB9TSK89CY99Aqtw=
+	b=gVvVQZO9DCEDOBnxhSBRWkoxL9IDGaRQ3+Zwo+b4lsyYdq6z8XSXaBdU4b35Wnt7u
+	 Q8lGcVL/AhfX/4x+2vE4vKE4jIKbj7n76Jbr9uVdlnNZFLT0mqBDOwzjXuAP4kgQRw
+	 +LGQDulpjylWsTAlj4AdmyeJsFC7QijGJzuZCt6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Qiang Liu <liuqiang@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/752] netfilter: nf_conntrack_expect: zero at allocation time
-Date: Wed, 30 Sep 2026 17:20:51 +0200
-Message-ID: <20260930152402.121052064@linuxfoundation.org>
+Subject: [PATCH 5.15 182/752] ksmbd: fix sd_ndr.data memory leak in ksmbd_vfs_set_sd_xattr
+Date: Wed, 30 Sep 2026 17:20:52 +0200
+Message-ID: <20260930152402.142995881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,81 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Qiang Liu <liuqiang@kylinos.cn>
 
-[ Upstream commit 241ccd2fed9051db443aadce248fc0ab30f55e97 ]
+[ Upstream commit d4d56b00c7df88cd5751e7415bdfabc9fdbc82a7 ]
 
-There are occasional LLM hints wrt. leaking uninitialized data to
-userspace via ctnetlink.  Just zero at allocation time,
-expectations are not frequently used these days.
+ndr_encode_v4_ntacl() allocates sd_ndr.data via kzalloc() at entry.
+If any subsequent ndr_write_*() call returns error during encoding,
+the allocated sd_ndr.data won't be freed and causes memory leak.
 
-Intentionally keeps _init as-is because we could theoretically
-support re-init, so add the missing exp->dir there.
+Move kfree(sd_ndr.data) into out label to ensure the buffer gets
+released on all success and error return paths.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_expect.c  |  3 ++-
- net/netfilter/nf_conntrack_netlink.c | 11 +----------
- 2 files changed, 3 insertions(+), 11 deletions(-)
+ fs/ksmbd/vfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index 6d056ebba57c6..fd83dbfccaced 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -299,7 +299,7 @@ struct nf_conntrack_expect *nf_ct_expect_alloc(struct nf_conn *me)
- {
- 	struct nf_conntrack_expect *new;
+diff --git a/fs/ksmbd/vfs.c b/fs/ksmbd/vfs.c
+index 4804976c0c13f..8da562b11b6f6 100644
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -1510,8 +1510,8 @@ int ksmbd_vfs_set_sd_xattr(struct ksmbd_conn *conn,
+ 	if (rc < 0)
+ 		pr_err("Failed to store XATTR ntacl :%d\n", rc);
  
--	new = kmem_cache_alloc(nf_ct_expect_cachep, GFP_ATOMIC);
-+	new = kmem_cache_zalloc(nf_ct_expect_cachep, GFP_ATOMIC);
- 	if (!new)
- 		return NULL;
- 
-@@ -363,6 +363,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
- #if IS_ENABLED(CONFIG_NF_NAT)
- 	memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
- 	memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
-+	exp->dir = 0;
- #endif
- }
- EXPORT_SYMBOL_GPL(nf_ct_expect_init);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index da00a770ca6d6..699668d1fdb26 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3552,8 +3552,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 	if (cda[CTA_EXPECT_FLAGS]) {
- 		exp->flags = ntohl(nla_get_be32(cda[CTA_EXPECT_FLAGS]));
- 		exp->flags &= ~NF_CT_EXPECT_USERSPACE;
--	} else {
--		exp->flags = 0;
- 	}
- 	if (cda[CTA_EXPECT_FN]) {
- 		const char *name = nla_data(cda[CTA_EXPECT_FN]);
-@@ -3565,8 +3563,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 			goto err_out;
- 		}
- 		exp->expectfn = expfn->expectfn;
--	} else
--		exp->expectfn = NULL;
-+	}
- 
- 	exp->class = class;
- 	exp->master = ct;
-@@ -3580,12 +3577,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 						 exp, nf_ct_l3num(ct));
- 		if (err < 0)
- 			goto err_out;
--#if IS_ENABLED(CONFIG_NF_NAT)
--	} else {
--		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
--		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
--		exp->dir = 0;
--#endif
- 	}
- 	return exp;
- err_out:
+-	kfree(sd_ndr.data);
+ out:
++	kfree(sd_ndr.data);
+ 	kfree(acl_ndr.data);
+ 	kfree(smb_acl);
+ 	kfree(def_smb_acl);
 -- 
 2.53.0
 
