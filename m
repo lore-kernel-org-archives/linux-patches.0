@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8813D4118;
-	Wed, 30 Sep 2026 18:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F393D6477;
+	Wed, 30 Sep 2026 18:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793934; cv=none; b=qPwL2P0gp/5SGnOZW+BCMalEQ9xNBAoE5z3k15Xwn5y6s7JnCR5E0wItTeinf3XOTUeVBTZeYCKTpxeBHctO5kcwEZxTBBfdjrafWxO4lnVhBGtJQ0/gs/eZMDs78dfeXz4WQSJFkuNc/wsCkKkioQhsjB2E7G3V/tjmendzN8Y=
+	t=1790793938; cv=none; b=k85DkikevDu6LopgSENSW/WmmX09Ro6sHaV9048t6GjJzpEsVFQyOkmXFCW2WH6TMpdPlI/80dP5fya3OQ0MLSf7KlTYWqMwtUxYN51fIaVPFbBY+utrA5Mwn6BKEYO8R2pVfxKVZGZKg0OKcWaoeZfkHXKzghx5USyQPBZicec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793934; c=relaxed/simple;
-	bh=2zB8ysOKBbwjadjkDNKUx8XThlmBTmdgdobaNywA2GM=;
+	s=arc-20240116; t=1790793938; c=relaxed/simple;
+	bh=iVGO04wETE+TZwWTpmA+D8Cx52RE4dKZ4pYii7whKYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEg0MS7oBeWSCj4VgYxszYVzzCH9BdSV/UguD5Mb0fMctHFOWJIIzqnM1o55JHbSSSK0HdjuomiaTyTXk+BuVwYMs/aMx0XvHmqfiSd+6ORSV9zF9yoZv5yg3Nr/moIT7G4u7X8/c21rYsN68M5N9MFhIf3P3vP7QubMDZ7v/hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFM8bjHo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HA4jNgT4EkpeyA55HemQQLHIj9R6uJW69IZGe/xEGCxr6cZxaU5w5/uBzzeN9jtVV+RHfUV4aBk4zMNTl7yPrP90pKQSnsU2hNLZnFTsSEmiLZw5ugpbhgnsuMGbk+BTtgX1aPf98S2icfw51C/43x0gXoza2SV8jzYvsp42FVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TVRePGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFM8bjHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346EE1F000FF;
-	Wed, 30 Sep 2026 18:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TVRePGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0B11F000FF;
+	Wed, 30 Sep 2026 18:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793932;
-	bh=FsoxG2OOYuJ2NjZFV+j8S4VW43PNvLSy+QNwFZMN8OA=;
+	s=korg; t=1790793935;
+	bh=vk0fmfOHhNV9xLB7WzaAgC2MkGdO9CHLPaenW8zldLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TFM8bjHoGEkYVg+9AC0w0pkJEJaGhvZqh3AjO+42hh+OHBOTS2kwct52Qmq7sYGX4
-	 6oZo6NiEe0UN/QSYxB2xKi/OfmXILHF/QtFWIy3BIQYNT2tMfKvvN9FhxmuzLpztFN
-	 eoeCFgsfc7EilL6vfsxVsomG0Q6qFD3e+j182qio=
+	b=2TVRePGmNE4MtGPVl2lJjlXE6WtG4XnUSrs/KATcKgOM9DDSVngTzYhqINRTWauPq
+	 PjQm31Gvd997B+AkrWGGrzrrJ15PYQDmMwX47555zIQDSkxqP+l/N1UD/RFLlpiUq8
+	 v0bEU9o/ZMhp5kCN5n77racoc7ZHzOzKYa956YIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0033/1193] media: em28xx-video: fix missing res_free() on init_usb_xfer failure
-Date: Wed, 30 Sep 2026 17:11:57 +0200
-Message-ID: <20260930152435.024069211@linuxfoundation.org>
+Subject: [PATCH 6.6 0034/1193] crypto: ixp4xx - fix buffer chain unwind on allocation failure
+Date: Wed, 30 Sep 2026 17:11:58 +0200
+Message-ID: <20260930152435.044713068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,37 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit cc20e81da6d99926f94fad7af21f75c07e865769 ]
+[ Upstream commit 25056329384010a8672552b134f609601dc4f80e ]
 
-res_get() is called before em28xx_init_usb_xfer(), but the error
-path of em28xx_init_usb_xfer() does not release the resource,
-leading to a persistent busy state.
+chainup_buffers() builds a linked list of buffer descriptors for a
+scatterlist. If dma_pool_alloc() fails while constructing the list, the
+current code sets buf to NULL and later dereferences it unconditionally
+at the end of the function:
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+  buf->next = NULL;
+  buf->phys_next = 0;
+
+This can lead to a null-pointer dereference on allocation failure.
+
+If the failure happens after part of the descriptor chain has already
+been allocated and DMA-mapped, the partially constructed chain also
+needs to be released.
+
+Fix this by terminating the partially constructed chain on allocation
+failure and letting the callers unwind it via their existing cleanup
+paths. Also fix ablk_perform() to preserve the hook pointers before
+checking for failure, so partially built chains can be freed correctly.
+
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 25 ++++++++++++---------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
-index 81fff2fe8c19b..a520bec031248 100644
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -1105,8 +1105,10 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
- 					  dev->max_pkt_size,
- 					  dev->packet_multiplier,
- 					  em28xx_urb_data_copy);
--		if (rc < 0)
-+		if (rc < 0) {
-+			res_free(dev, vq->type);
- 			return rc;
-+		}
- 
- 		/*
- 		 * djh: it's not clear whether this code is still needed.  I'm
+diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+index 662aac9ea186d..5c09f5c2801dc 100644
+--- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
++++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+@@ -884,8 +884,9 @@ static struct buffer_desc *chainup_buffers(struct device *dev,
+ 		ptr = sg_virt(sg);
+ 		next_buf = dma_pool_alloc(buffer_pool, flags, &next_buf_phys);
+ 		if (!next_buf) {
+-			buf = NULL;
+-			break;
++			buf->next = NULL;
++			buf->phys_next = 0;
++			return NULL;
+ 		}
+ 		sg_dma_address(sg) = dma_map_single(dev, ptr, len, dir);
+ 		buf->next = next_buf;
+@@ -983,7 +984,7 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
+ 	unsigned int nbytes = req->cryptlen;
+ 	enum dma_data_direction src_direction = DMA_BIDIRECTIONAL;
+ 	struct ablk_ctx *req_ctx = skcipher_request_ctx(req);
+-	struct buffer_desc src_hook;
++	struct buffer_desc *buf, src_hook;
+ 	struct device *dev = &pdev->dev;
+ 	unsigned int offset;
+ 	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
+@@ -1025,22 +1026,24 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
+ 		/* This was never tested by Intel
+ 		 * for more than one dst buffer, I think. */
+ 		req_ctx->dst = NULL;
+-		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
+-				     flags, DMA_FROM_DEVICE))
+-			goto free_buf_dest;
+-		src_direction = DMA_TO_DEVICE;
++		buf = chainup_buffers(dev, req->dst, nbytes, &dst_hook,
++				      flags, DMA_FROM_DEVICE);
+ 		req_ctx->dst = dst_hook.next;
+ 		crypt->dst_buf = dst_hook.phys_next;
++		if (!buf)
++			goto free_buf_dest;
++		src_direction = DMA_TO_DEVICE;
+ 	} else {
+ 		req_ctx->dst = NULL;
+ 	}
+ 	req_ctx->src = NULL;
+-	if (!chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
+-			     src_direction))
+-		goto free_buf_src;
+-
++	buf = chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
++			      src_direction);
+ 	req_ctx->src = src_hook.next;
+ 	crypt->src_buf = src_hook.phys_next;
++	if (!buf)
++		goto free_buf_src;
++
+ 	crypt->ctl_flags |= CTL_FLAG_PERFORM_ABLK;
+ 	qmgr_put_entry(send_qid, crypt_virt2phys(crypt));
+ 	BUG_ON(qmgr_stat_overflow(send_qid));
 -- 
 2.53.0
 
