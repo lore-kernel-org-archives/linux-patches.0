@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F24B3D7D94;
-	Wed, 30 Sep 2026 19:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9973DA7D3;
+	Wed, 30 Sep 2026 19:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795834; cv=none; b=kKpSpj6V+4Ar20Ge/NsNSOpInVRUmRfrqKWs6RtQ70pZH5j2ucr7nMjNQKMOhTUypH3xvonhyool5bPH8j1yLt/ev7Sz4sONKxgtJwzJBO2R5X371PJohVMm5iqvR5VKrMu0bBudB1NF4dz/VajA5+1bA9EMY0VAKdH6iXiDe00=
+	t=1790795837; cv=none; b=JxPH2V8NCQrfI1w6BVzIquM4G/wg50CuU9iVU6ViQXAp99hBhixIusZO+jTJ9MYXq6/K4Pi+wS+dLY0vzmDHdet/5T/OUkSe0G1iALRAI3FQb847IsAaLS9e11Z2Bc4iXp1KqEbvp/je5gA5GX2ToHYy6UWCGxNlzXusW7FHsGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795834; c=relaxed/simple;
-	bh=c1SjCgeKZB4gJawrbsby2lrcCSK4hjbRCnntEzFfAHs=;
+	s=arc-20240116; t=1790795837; c=relaxed/simple;
+	bh=4plE8jVH+9GcQe01JT8cb75xY851hNK+B21IUDvDbIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFJZRr+bVbmt4a2lR1xYxyfL3mCHxxrcn/4ccPurUmi6UaczaAKme7Kj0el3bS0hR2re2zCqaNNRd0SG8Mg3li5hoF0XCvBqU7GsFri6RBD58pNX54uHKgadU/pgmI7cTCjRyvUdH5VfEpMGc49dbgSphtT6L3ts73iodR9EfLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TvaPhq/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KBsdknt8FbUzlBp6fecACfnYsNZ1YI//gv24Os5B1NPDwzUDXEFcc10mJHCX8zJLHlIjknsDCrEFbkUTALgenTVl/uoByzPHVMQEPPJwTX/W7npY8hxJqrid6XrrqIDEbtDOSLFJHWzWFm7YFbcMPdwvRSr0TX2HHGGeifyPKXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swE8q5Wy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TvaPhq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B580C1F00898;
-	Wed, 30 Sep 2026 19:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swE8q5Wy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933BD1F000FF;
+	Wed, 30 Sep 2026 19:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795833;
-	bh=vr/O2UIX5bCkYVmQ00LfvA4oh8vCcLpBPHtLKZguDoo=;
+	s=korg; t=1790795836;
+	bh=yfjLro7ySMAksTVo58fhxtg+jSvCUvPy+cH/Q0U4vu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TvaPhq/Wfyra1yNy8+tqx+Iw1UdYvupQ9jHJN1gO1KULRWu7CrCewVL1UoZt8agR
-	 SzeMldV1GTq2qVyalmID4XOD9flgpKXnJ6drfN8Jw16fBWBh+7B8Mj9JHDNuEpZ5Hj
-	 5FJc745EP7pgpe9dHXMTZJIZY7ndFO27oxbdgU+E=
+	b=swE8q5WyanyMZ7L0dtKYa58v+6wO99sceraMJ61V5ZQUT51zpxXhWnArlFd7ETn3c
+	 ycFqc50+11iwJDuDVfq7dhx59ydDpGC/WmDk+86NT0Wtcr0NmdhNNQABFhFpN8ggoM
+	 QwEx2VvnaBPKy8O9wqEi8xvyhld9bLPuf7TMD1Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0699/1193] net: appletalk: fix NULL pointer dereference in aarp_send_ddp()
-Date: Wed, 30 Sep 2026 17:23:03 +0200
-Message-ID: <20260930152449.781587190@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0664/1193] smb: client: pin DFS superblock in iterator callback
+Date: Wed, 30 Sep 2026 17:22:28 +0200
+Message-ID: <20260930152448.990137033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,51 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 9e7f36ab5b7bf68463faa5f7b926fea8f35597bb upstream.
+commit d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818 upstream.
 
-aarp_send_ddp() calls atalk_find_dev_addr(dev) in the LocalTalk fast
-path without checking for NULL. When the device has no AppleTalk
-interface configured (dev->atalk_ptr == NULL), this leads to a NULL
-pointer dereference at the at->s_net access.
+tcon_super_cb() stores a raw superblock pointer, but __cifs_get_super()
+takes its active reference only after iterate_supers_type() has dropped
+s_umount and its passive reference. Concurrent DFS automount expiry can
+therefore free the superblock before cifs_sb_active() uses it.
 
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:aarp_send_ddp (net/appletalk/aarp.c:552 (discriminator 2))
- Call Trace:
-  <TASK>
-  atalk_sendmsg (net/appletalk/ddp.c:1715)
-  __sys_sendto (net/socket.c:2265 (discriminator 1))
-  __x64_sys_sendto (net/socket.c:2272)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+A deterministic KASAN test reproduces the race as:
 
-Add a NULL check consistent with the other callers of
-atalk_find_dev_addr().
+  BUG: KASAN: slab-use-after-free in cifs_sb_active+0x77/0x80
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514123806.3085961-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The same test passes with this change applied.
+
+Take the active reference in the callback while iterate_supers_type()
+still holds s_umount shared. cifs_put_tcp_super() remains the matching
+release.
+
+Fixes: bacd704a95ad ("cifs: handle prefix paths in reconnect")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/appletalk/aarp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/misc.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/net/appletalk/aarp.c
-+++ b/net/appletalk/aarp.c
-@@ -573,6 +573,11 @@ int aarp_send_ddp(struct net_device *dev
- 		struct ddpehdr *ddp = (struct ddpehdr *)skb->data;
- 		int ft = 2;
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1269,8 +1269,14 @@ static void tcon_super_cb(struct super_b
+ 	if (t1->ses == t2->ses &&
+ 	    t1->ses->server == t2->ses->server &&
+ 	    t2->origin_fullpath &&
+-	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath))
++	    dfs_src_pathname_equal(t2->origin_fullpath, t1->origin_fullpath)) {
++		/*
++		 * Take the active reference while iterate_supers_type() still
++		 * holds s_umount shared.
++		 */
++		cifs_sb_active(sb);
+ 		sd->sb = sb;
++	}
+ 	spin_unlock(&t2->tc_lock);
+ }
  
-+		if (!at) {
-+			kfree_skb(skb);
-+			return NET_XMIT_DROP;
-+		}
-+
- 		/*
- 		 * Compressible ?
- 		 *
+@@ -1287,15 +1293,8 @@ static struct super_block *__cifs_get_su
+ 
+ 	for (; *fs_type; fs_type++) {
+ 		iterate_supers_type(*fs_type, f, &sd);
+-		if (sd.sb) {
+-			/*
+-			 * Grab an active reference in order to prevent automounts (DFS links)
+-			 * of expiring and then freeing up our cifs superblock pointer while
+-			 * we're doing failover.
+-			 */
+-			cifs_sb_active(sd.sb);
++		if (sd.sb)
+ 			return sd.sb;
+-		}
+ 	}
+ 	pr_warn_once("%s: could not find dfs superblock\n", __func__);
+ 	return ERR_PTR(-EINVAL);
 
 
