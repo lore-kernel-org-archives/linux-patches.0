@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0414ABBA9;
-	Wed, 30 Sep 2026 18:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B34D9540;
+	Wed, 30 Sep 2026 18:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793973; cv=none; b=b4OrhW3IO35okYqxWaDdovoZx6BePpAaRglbqrddKuZmyJL5tIrhaAg7jQzRUf8ROXSLS/RNGNCmvZR8biJb9CB8hQtPqglURn0kT/JE1ADL8aac28d36SPzbfEyj6W93rfPB25Aw9f9nhRSuiptqNkv1E2gxt8O79xvFLuS+Bg=
+	t=1790793976; cv=none; b=t4qV1tRBu+BxRhnGxRft90dI4NicGtD1lOLwIY0ISI18m4CYWDdL9BcXvMldBY/5MHt6ffNfuWrQsHigvl0pJR9B0tMlplLpXRev2sQ7QFvDxDG9pyWaCQ1/PKRgK48Gx55bIbfLVL52Wc4YIX+UWfDupxz0UDSXcHiYzC4+hgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793973; c=relaxed/simple;
-	bh=VeyobfWrcsdE7OdPuKEtjPsVhtk0yowVtNS1phRDjd4=;
+	s=arc-20240116; t=1790793976; c=relaxed/simple;
+	bh=09f07e2fKxu5B0S7EWan8dXPu7//Q7s+5u+wBukG4h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTmOVvRjhmGyAzvNTtLkW46t2cc6dR68DklOYmBLpALr7oGvJFugud3WgZbMiYx0HjXZd1ZkiD66zqf4FZbwYLPXaVONUsjjLz8WHss1hXUoMGvhJ5zPlLUWg1c1Srf7uWK1rVj/BFp4CP59veGZ1sVOXnTpH4OFq8tIPgTH77g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hX4QhELR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iy4iiFk68Bwg7cSa722kzgtH886GTfMbqtQFF5/5GDnHaKBhQ6CKFN3UoB0+2C6OOklkyd7Fz7x/V92u+7DCfNKLe7eWfCzQBkw03gyeRqgtVYzkyKIpHTCSxiefamgX0l062u7AY3J3Y/HuuaTv+YNDf//gIozqKPScceOALaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5iB2C6z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hX4QhELR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48331F000FF;
-	Wed, 30 Sep 2026 18:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5iB2C6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B361F000FF;
+	Wed, 30 Sep 2026 18:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793972;
-	bh=2Cj71tFyVb9AXJ4uDl4jETpvDacE87qr4G2w328wyLQ=;
+	s=korg; t=1790793975;
+	bh=vU+7NPBXW+GcklHdYBk7501DaGjg4F2/FxtroOTssI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hX4QhELRY0Q2KBJJpno1xc4j1GVFLZOU3TEqecqCKBJ2u/O7cYVLZBR18MZpGuXwp
-	 1eHhV5zw0lzeIrXNo+uJhgzXFED7pzdWPjNU/VjyGqUxJaVGGGbey4mKN8NCzp7lm/
-	 JJkjNZEbPTKWesmI7yBYkeFuVYr566gWS6AHSGO8=
+	b=N5iB2C6zFB0SzGTd/vyA1xKPZROwOlVIzinqb5gUURK4a1eVRwu8GTHLzt3R2nVgt
+	 5ls8UpWeUVcT0KlemNXm+5TU3Y/6LM2R123giBR+PH7JYyE9Ozkt4qCkuRTWpoF42L
+	 /d0m53Ds5DOpupa6kjjibIQ5qwmvhWYi+AN3CEPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sophie D <patches@scd31.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Arash Golgol <arash.golgol@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0045/1193] drm/gud: Add RCade Display Adapter VID/PID pair
-Date: Wed, 30 Sep 2026 17:12:09 +0200
-Message-ID: <20260930152435.285106248@linuxfoundation.org>
+Subject: [PATCH 6.6 0046/1193] media: video-i2c: use vb2_video_unregister_device on driver removal
+Date: Wed, 30 Sep 2026 17:12:10 +0200
+Message-ID: <20260930152435.307038549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,41 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sophie D <patches@scd31.com>
+From: Arash Golgol <arash.golgol@gmail.com>
 
-[ Upstream commit ac5ac0acf11df04295eb1811066097b7022d6c7f ]
+[ Upstream commit 56384b486b80ce4a2bc93689aae49995f908f90d ]
 
-The RCade Display Adapter is a hardware device that allows driving an
-Arcade CRT display via the GUD protocol. Currently it spoofs an
-existing GUD VID/PID pair. However, now that it has its own pair
-assigned, it makes sense to add this to the list of pairs that GUD
-supports natively.
+The driver uses vb2_fop_release() as its file release operation, so
+vb2_video_unregister_device() should be used instead of
+video_unregister_device() during driver removal.
 
-More information can be found in the project repositories:
-https://gitlab.scd31.com/stephen/stm32-usb-vga-adapter-hardware
-https://gitlab.scd31.com/stephen/stm32-usb-vga-rcade-adapter
+This ensures that the vb2 queue is properly disconnected before the
+video device is unregistered.
 
-Link: https://pid.codes/1209/4FB3/
-Signed-off-by: Sophie D <patches@scd31.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509025405.4143956-1-patches@scd31.com
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gud/gud_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/video-i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/gud/gud_drv.c b/drivers/gpu/drm/gud/gud_drv.c
-index 9d7bf8ee45f13..ab7662a31c16d 100644
---- a/drivers/gpu/drm/gud/gud_drv.c
-+++ b/drivers/gpu/drm/gud/gud_drv.c
-@@ -660,6 +660,7 @@ static int gud_resume(struct usb_interface *intf)
- static const struct usb_device_id gud_id_table[] = {
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1d50, 0x614d, USB_CLASS_VENDOR_SPEC) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x16d0, 0x10a9, USB_CLASS_VENDOR_SPEC) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1209, 0x4fb3, USB_CLASS_VENDOR_SPEC) },
- 	{ }
- };
+diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
+index 15a7fcf0c3a70..7a975e2eab00b 100644
+--- a/drivers/media/i2c/video-i2c.c
++++ b/drivers/media/i2c/video-i2c.c
+@@ -911,7 +911,7 @@ static void video_i2c_remove(struct i2c_client *client)
+ 	if (data->chip->set_power)
+ 		data->chip->set_power(data, false);
  
+-	video_unregister_device(&data->vdev);
++	vb2_video_unregister_device(&data->vdev);
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
