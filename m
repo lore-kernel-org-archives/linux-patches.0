@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4415187C1;
-	Wed, 30 Sep 2026 17:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB03A51993C;
+	Wed, 30 Sep 2026 17:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788304; cv=none; b=hbVtcaNQWZCPKAo105YEUZCd2omT9rMp+4s4xcUcCR3Y1fXE3aPvQtgQnfQzqEnnsDJvPIMkLDYKFMej1eqZapnMaXMgGKx50p59t1VH1iK6ccn1/wX6b6X5GnDJtwYbz/+z+FmOME/Nq7D1Fwh1k6KXUDB8LTcVCq1tf8eMVAQ=
+	t=1790788307; cv=none; b=HK2LWknBrVyDWHy59OGxd0Xf0sOTYinuNN1T2C4YdFJ9oavpMKRf2z/qolgp500T6uznxw2K8l3eNlM22Ig3+g4i8QbQ0hMb807aBffwVY9pgiNRDTG3/kAWts1pQljJcFuHOmlsRJAzNWi8HDSq9MCYDDGcOYUEQu9Ov1zCJrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788304; c=relaxed/simple;
-	bh=k0MR+l397LKsXdXYeZkW786xGs6w/pr59VHH1FlgnU4=;
+	s=arc-20240116; t=1790788307; c=relaxed/simple;
+	bh=H1xu1Gfz9y8pNmNRKhAnuffSn0r+cqJ7FsQmh4uAtxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3ckeAoCLtHMXYr4c4yvpGNj2ws4KUpx0SUagzBEuawJc5EapFUNh+diHNGt6Gd+J1W3S+wRIwVVv1lwiNmaYl+jtM817LY18Twa1jC6+/E39EepSHCHLZ94UCODPbf9z3HN7S97kCqkToqVqwBcZvBnbKYqoVFAOQgZNt5eFl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVkuXwNz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bflGCVqzhXF7HyBfx4yeYqxhycMtLox7kqawz1a+LeX9MHv+2gB8dlUZRRTvx0nQIuQihwA7xj6Rc+QrOvTb8eBnb1AZb4xAaUG7b6IEK/gqPR9yNvlM7kKdfZaxverp5zOLoA7Cnr/c1OpNvY2qkzcfQ+3nrJntfW1HmOzFzi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlMMixmk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVkuXwNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755891F000FF;
-	Wed, 30 Sep 2026 17:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlMMixmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D901F000FF;
+	Wed, 30 Sep 2026 17:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788303;
-	bh=rraqrmNgyHaUvh49AM/zjPY9eHAVbbI7PQe1r3ym8PQ=;
+	s=korg; t=1790788305;
+	bh=luL50C9KdKxa/FspgVwFrOpH0gaJEfW/3DXBFRyrWiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LVkuXwNzpmr68EoEX0UBj6pQ7uomJ8Kj4Bgl9C8ZsIiSPcJH43bd13oNL/jW6AhEA
-	 LkM3J/rDM0ahK4Mn0qHu/0ykna6cxYS+6fNy7T1bVk8LSUvlzwwUJRGsdBAnWvsoCV
-	 6AY8N+dwtBQcErTvXmA630Yl60N5iGowJilyE25w=
+	b=qlMMixmk3zaNU4c+Nnq4HxhXoPHg09hhV0drjdLfqlAagMQCdFw3VaCiqP4+w6Wvb
+	 gsCChzqSWMN63soC2DdPaSZSRkZK0gB+dmoEG6kwUfhyQ+QmaLUKvstliDI7F1TAUd
+	 P7FX/KT0JZQ1z8g/GVnfWpfjpOq0b23/g52AF2Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Meijing Zhao <zhaomeijing@lixiang.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/877] wifi: mac80211: set up the TX info early to fix failure paths
-Date: Wed, 30 Sep 2026 17:16:29 +0200
-Message-ID: <20260930152416.423471397@linuxfoundation.org>
+Subject: [PATCH 6.12 079/877] mm: memblock: show all region flags in debugfs
+Date: Wed, 30 Sep 2026 17:16:30 +0200
+Message-ID: <20260930152416.445050998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,109 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Meijing Zhao <zhaomeijing@lixiang.com>
 
-[ Upstream commit 50d3d79dc0743b616afb00d01a626c76758721f7 ]
+[ Upstream commit e2d5b01f878d76bd1142e512a0b979a1d3cd0abf ]
 
-The previous commit 2c51457d930f ("wifi: mac80211: free ack status
-frame on TX header build failure") cleaned up the leak, but still
-left the code a bit messy and the failed SKB didn't get reported
-to userspace.
+Commit 493f349e38d0 ("memblock: Add flags and nid info in memblock
+debugfs") made memblock_debug_show() stop after finding the first set
+flag. A memblock region can carry multiple flags, so the remaining flags
+are hidden from debugfs.
 
-Fix this up by initialising skb->cb[] earlier, which allows using
-ieee80211_free_txskb() and therefore reports it for the failure
-in ieee80211_build_hdr(), and unifies the ieee80211_skb_resize()
-failure path with it.
+Walk all bits in the region flags and print every set flag separated by
+"|". Keep walking beyond flagname[] so that a set flag without a known
+name is reported as UNKNOWN rather than silently ignored.
 
-Assisted-by: LLM
-Fixes: c3e7724b6bc2 ("mac80211: use ieee80211_free_txskb to fix possible skb leaks")
-Link: https://patch.msgid.link/20260908122838.201719-22-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 493f349e38d0 ("memblock: Add flags and nid info in memblock debugfs")
+Signed-off-by: Meijing Zhao <zhaomeijing@lixiang.com>
+Link: https://patch.msgid.link/20260902075944.3742866-1-zhaomeijing100@gmail.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ mm/memblock.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index e78e71cb92f7f..228c717ea314b 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2927,10 +2927,23 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 	 */
- 	skb = skb_share_check(skb, GFP_ATOMIC);
- 	if (unlikely(!skb)) {
--		ret = -ENOMEM;
--		goto free;
-+		/* skb_share_check() already freed the skb */
-+		if (info_id)
-+			ieee80211_remove_ack_skb(local, info_id);
-+		return ERR_PTR(-ENOMEM);
- 	}
- 
-+	/* set this up so failure paths can clean up ack skb */
-+	info = IEEE80211_SKB_CB(skb);
-+	memset(info, 0, sizeof(*info));
+diff --git a/mm/memblock.c b/mm/memblock.c
+index 3d7b0114442c4..00ef6bea6fe8c 100644
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -2416,14 +2416,18 @@ static int memblock_debug_show(struct seq_file *m, void *private)
+ 		else
+ 			seq_printf(m, "%4c ", 'x');
+ 		if (reg->flags) {
+-			for (j = 0; j < count; j++) {
+-				if (reg->flags & (1U << j)) {
+-					seq_printf(m, "%s\n", flagname[j]);
+-					break;
+-				}
++			unsigned int flags = reg->flags;
++			bool first = true;
 +
-+	info->flags = info_flags;
-+	if (info_id) {
-+		info->status_data = info_id;
-+		info->status_data_idr = 1;
-+	}
-+	info->band = band;
-+
- 	hdr.frame_control = fc;
- 	hdr.duration_id = 0;
- 	hdr.seq_ctrl = 0;
-@@ -2969,10 +2982,8 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 		head_need += local->tx_headroom;
- 		head_need = max_t(int, 0, head_need);
- 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
--			ieee80211_free_txskb(&local->hw, skb);
--			skb = NULL;
- 			ret = -ENOMEM;
--			goto free;
-+			goto free_txskb;
++			for (j = 0; flags; j++, flags >>= 1) {
++				if (!(flags & 1))
++					continue;
++				if (!first)
++					seq_putc(m, '|');
++				seq_puts(m, j < count ? flagname[j] : "UNKNOWN");
++				first = false;
+ 			}
+-			if (j == count)
+-				seq_printf(m, "%s\n", "UNKNOWN");
++			seq_putc(m, '\n');
+ 		} else {
+ 			seq_printf(m, "%s\n", "NONE");
  		}
- 	}
- 
-@@ -2999,16 +3010,6 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 
- 	skb_reset_mac_header(skb);
- 
--	info = IEEE80211_SKB_CB(skb);
--	memset(info, 0, sizeof(*info));
--
--	info->flags = info_flags;
--	if (info_id) {
--		info->status_data = info_id;
--		info->status_data_idr = 1;
--	}
--	info->band = band;
--
- 	if (likely(!cookie)) {
- 		ctrl_flags |= u32_encode_bits(link_id,
- 					      IEEE80211_TX_CTRL_MLO_LINK);
-@@ -3032,16 +3033,17 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 					     pre_conf_link_id, link_id);
- #endif
- 			ret = -EINVAL;
--			goto free;
-+			goto free_txskb;
- 		}
- 	}
- 
- 	info->control.flags = ctrl_flags;
- 
- 	return skb;
-+ free_txskb:
-+	ieee80211_free_txskb(&local->hw, skb);
-+	return ERR_PTR(ret);
-  free:
--	if (info_id)
--		ieee80211_remove_ack_skb(local, info_id);
- 	kfree_skb(skb);
- 	return ERR_PTR(ret);
- }
 -- 
 2.53.0
 
