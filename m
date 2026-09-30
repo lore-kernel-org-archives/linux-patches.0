@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE4251CF5E;
-	Wed, 30 Sep 2026 17:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410451CF6D;
+	Wed, 30 Sep 2026 17:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789228; cv=none; b=gTSIcc2d6O5C8UYs/akw4AmktGdm7F0ZUKBophWqzZYa2cNkDbYD04Ia1CSK4FNLZwXr3wChgEDTNMU+8rmNNJiFb2KtqH9bQW7LhqrMdL6W9R3cWWXcBZfYyIgkr0yuTsUStCbSt4Jd82yiXqMciZr6BcD5p0bVS5dz5O4a298=
+	t=1790789231; cv=none; b=iIDDlHXAxJJG9QsgyAkc4tuBGCTW0c62goh9ON1MOXiYZatCYOk6pWMbUQTOt1NcyGYGsgQ3T/mpxvbwmTchkq3YGToEgYXdm0lYp7RsljOCJrxio5Db8pgdCN0mR8EwcQ/XptUM+Tz1CBdm5yFm0F/3j25sVIOBy6YBWIPRAIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789228; c=relaxed/simple;
-	bh=CsG2A5G0XZEoBR6ZXp3C923OrjagGcwOBZ7v09DrNZs=;
+	s=arc-20240116; t=1790789231; c=relaxed/simple;
+	bh=I85JsAUJyus3aYEh/21Pn0JsIgEKeMPO/hWItlYq468=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQEaOgyOqDTcwQ2iTlVYCsNUl0YKfNDDHrsZej7KbbzsjssC1tkQ1CDNogy51k7UYJzJrYpyMEfP+NNxfcIrY7PLJwxzbtsLZTxaTDQVNcKyKwyMryf5WwfcQSik9P6hLz9lZ4x9euXqow9++cY2kOzI8g6fmXgjIk7edZlFdMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpLl+4GG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L+0KAWQDtHX7v8WVL302ObVOYwWPBEGpiONTFRvIv6+ef1CGjxG+evoMPYDh/sxLyVAoDO2s29FWw18J5Q2XKe8bxezJz3tWn6XF8F1TbVlg5h80zwLGmFeojgmv6HOBS12jF2QL/qZanLt3DfLqK4v6V0uDnqkGemvskPCAuuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBoAl299; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpLl+4GG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7429B1F000FF;
-	Wed, 30 Sep 2026 17:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBoAl299"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C2F1F000FF;
+	Wed, 30 Sep 2026 17:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789227;
-	bh=9/5s9gyd2Jf9apreLKJ3jNFDGqzoy6cCLHlMDYr80yY=;
+	s=korg; t=1790789229;
+	bh=5LN4/TBK+BVQ8Z0mW+Kyt7OCdTHiZh/pIVLhkI4e3qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpLl+4GG0TAJHSMAi19lV0SY87wBSRg38gWImX19/trvISI2/ZItVq6qG7Jc4rB1i
-	 Tab+KeI2jrgmNMow5tCk3ifFxAmRUbHG4YXt+uMyLbMR57SW4Q7j5bUFDSerGM9a74
-	 W8qLqAInJP/ol+L4lLJbhiNNqJoros46fiGWE2TM=
+	b=GBoAl299xCMULPvUnLe06hkecD7zIJpIzx3wfnBzDhTbEUCXqAkl5Yfp7OYrkBWvb
+	 gCaEwpxvgfO2+DUROv0+Eq/x+p/ejFoIboZ9l6OfkelhuD7GsUm5LNU8/sLCBF+bgg
+	 k3bi29eQ8BTDARdRccWr5fuy5z+M6ou5xL4uyEOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Ranieri <giuseppe@ranieri.dev>,
-	Tano Dzhinski <tano.dzhinski@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 357/877] drm/nouveau/disp: dont reject HDMI config on cards without SCDC
-Date: Wed, 30 Sep 2026 17:21:08 +0200
-Message-ID: <20260930152422.375739703@linuxfoundation.org>
+Subject: [PATCH 6.12 358/877] net/sched: act_ct: dont WARN on benign flow_offload_alloc() failure
+Date: Wed, 30 Sep 2026 17:21:09 +0200
+Message-ID: <20260930152422.402424405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,52 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Ranieri <giuseppe@ranieri.dev>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 1717fcc5be575d4768279148ae9465a8b13d4339 ]
+[ Upstream commit 47abe7a5c4eb53269aca3506446f851572a059a3 ]
 
-nv50_hdmi_enable() passes the sink's SCDC capability from its EDID
-straight through to nvif_outp_hdmi(). On pre-Maxwell-2 cards there is no
-hdmi->scdc callback, so nvkm_uoutp_mthd_hdmi() rejects the whole
-configuration with -EINVAL, and nv50_hdmi_enable() returns before
-hdmi->ctrl() runs and before the AVI and VSI infoframes are sent.
+flow_offload_alloc() returns NULL when the conntrack entry is dying
+(e.g. raced with a conntrack flush) or when the GFP_ATOMIC allocation
+fails; both are expected under load and neither is a kernel bug. This
+path runs from softirq on every committed packet, so with
+panic_on_warn=1 an unprivileged user can panic the box just by racing
+a conntrack flush against a `tc ... action ct commit` classifier.
 
-The result on such a card driving an SCDC-capable HDMI 2.0 sink is that
-HDMI audio silently stops working. Video is unaffected, and nothing is
-logged, which makes the failure hard to attribute.
+Reproduced with a custom repro under QEMU: a small, fixed set of UDP
+flows through `tc filter ... action ct commit` on lo, raced against
+threads flooding bare ctnetlink CT_DELETE (flush) requests. Hits
+WARNING: net/sched/act_ct.c:437 (tcf_ct_flow_table_add(), inlined
+into tcf_ct_act() in this build) within ~15s on the unpatched kernel;
+same setup is clean on the patched kernel. The fix itself is
+behavior-preserving: both branches already did `goto err_alloc`
+before and after, only the WARN is removed.
 
-SCDC is optional, and the hdmi->scdc() call further down is already
-guarded against a missing callback. Requesting it on a card that cannot
-do it need not invalidate the rest of the HDMI configuration, so drop
-that term from the condition and let the existing guard skip SCDC alone.
-
-Fixes: 6c6abab20b99 ("drm/nouveau/disp: add output hdmi config method")
-Signed-off-by: Giuseppe Ranieri <giuseppe@ranieri.dev>
-Co-Authored-By: Tano Dzhinski <tano.dzhinski@gmail.com>
-Signed-off-by: Tano Dzhinski <tano.dzhinski@gmail.com>
-Tested-by: Tano Dzhinski <tano.dzhinski@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260917215114.1136715-1-tano.dzhinski@gmail.com
+Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
+Reported-by: syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6cc37aba98dac721c415
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260915150816.36487-1-ngocthang2710.1999@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sched/act_ct.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-index 377d0e0cef848..9887b3898505b 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-@@ -253,8 +253,7 @@ nvkm_uoutp_mthd_hdmi(struct nvkm_outp *outp, void *argv, u32 argc)
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 8aed25cad9eef..46564bfc13251 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -430,11 +430,10 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
+ 	if (test_and_set_bit(IPS_OFFLOAD_BIT, &ct->status))
+ 		return;
  
- 	if (!ior->func->hdmi ||
- 	    args->v0.max_ac_packet > 0x1f ||
--	    args->v0.rekey > 0x7f ||
--	    (args->v0.scdc && !ior->func->hdmi->scdc))
-+	    args->v0.rekey > 0x7f)
- 		return -EINVAL;
++	/* NULL if ct is dying (raced flush) or the atomic alloc failed. */
+ 	entry = flow_offload_alloc(ct);
+-	if (!entry) {
+-		WARN_ON_ONCE(1);
++	if (!entry)
+ 		goto err_alloc;
+-	}
  
- 	if (!args->v0.enable) {
+ 	if (tcp) {
+ 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
 -- 
 2.53.0
 
