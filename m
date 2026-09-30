@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B719314A86;
-	Wed, 30 Sep 2026 17:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2695B361DA6;
+	Wed, 30 Sep 2026 17:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788791; cv=none; b=Udx2mWfBbmY7Tn0Kor5rizBLh5I7BBpCetYm87aY8pMTEdhQ/bSErmxvD9lrhYc6dnCBW0fNWsFiec6DqyiX7Miy8voPuSUdl24Za+MAu63V4TkPSXEPzkFJV+9NAF1hNELRbNGAh7JDqQr+9Rj1I22OzjioKvVblc1GOxxR0ag=
+	t=1790788795; cv=none; b=V1j6a2jieKN7CKWYnJgd3Xbu+Ga3cT0eZElhGetRyXln4QwryRUpxZHPZ+U2qma8r3b0h3bHXYPniLW/8anetXvDqqJwz5oOFSaGXnpiGvaLBML6j7z+Q+CqJs6HUVftRzi6+KERIxDMxhntA3y5TWzg82hQILsFllcMtjoW8B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788791; c=relaxed/simple;
-	bh=P2BsaLZHs0NlmIJijngyWCvlO4mNKKH+51qJulwAJG4=;
+	s=arc-20240116; t=1790788795; c=relaxed/simple;
+	bh=fMq1lJeV8Scn7PqExo7Vxw9p1CmRvl3l64LUuChLmDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oAJ2JTAGIPCKqnIiQKDj2kq1EQS2XVkpeplnNP7Laf3sH9D92i+fusIEYzlgdw2V6jkRdAPKsXM6vnQV1uDSveGpkwaRJPY6dogoPt574gxpFhYQH1XprBHR3kcZybtL6kG51CV+rhqisNlxpszCpNCpEdOdlsqS0Wz2W4FEOa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbyqxwpQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=prPltgUcx84mu0fy+kCr/bQ4WdH/4yVQHVdkLZo/LWewRc+iiABLY7VUu1mumkhguXXVzwZ8/atrztcndfuUqtiGQfhLMxmYSf7Vi8G3XaB28v5JIYoRkKqRlRQ1+tL1XJS+4NsX2rhOGFuqO2iHL9iJmDX8u32QnH5ZD7m+xUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N19OZfsP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbyqxwpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55C21F000FF;
-	Wed, 30 Sep 2026 17:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N19OZfsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B3A1F000FF;
+	Wed, 30 Sep 2026 17:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788790;
-	bh=rsu6Zsb5wTjBwxgYLOhnb6ib0z3WaWEYVX55mkO3wjc=;
+	s=korg; t=1790788793;
+	bh=JQdbGuYnmgGZzmgLtjq14udZniI6Wqw1j2QW1mNZCvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbyqxwpQvNgUtDWmO0jbeRS5mkJU3HaiWxoPVTzSRG05CC13yVDn3Lr3N9FzKqQG5
-	 vmGhu6tIKkTlCdx2VfpH0vybzvw7rjDvq2zqLMktRe6WHYxv5ntphcJdwBSAvnwAfS
-	 zubWycFNDhQR50dJf5UaJBEMm58fvSODpP7jfRyM=
+	b=N19OZfsPXH6ILF0zbK5i6uF7uxkI5qVRglXFMCymyBfAzyFlFyCitL2bd/KeyLwsW
+	 R0GWksvtcnNQKocybM3n0xuoz2bQ0ZCI9bj/wnjklXkHrklKE229fv3x9lOx3zXZeq
+	 BTM6KTRK58f3g3sDQNANI6lhwAASHWAlYFkhuJgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 247/877] hwmon: (pmbus/core) increase number of phases and add new mask
-Date: Wed, 30 Sep 2026 17:19:18 +0200
-Message-ID: <20260930152420.054333389@linuxfoundation.org>
+Subject: [PATCH 6.12 248/877] hwmon: (pmbus/tps53679) Fix TPS53676 phase page decoding
+Date: Wed, 30 Sep 2026 17:19:19 +0200
+Message-ID: <20260930152420.074891647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -44,61 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 06bd6794b5fd2163880ac3bfe973d4cc61f359f3 upstream.
+commit 1d12fb94ac0975566545871dda100df34df5f845 upstream.
 
-Increase the number of phases to 16 as a new upcoming device supports
-such a number.
+tps53676_identify() reads the USER_DATA_03 phase configuration to count
+the phases assigned to each channel and derive the number of PMBus pages.
+In each 16-bit phase descriptor the channel (PAGE) is encoded in bit 4 and
+the firing order in bits 3:0, but the code tested bit 3 (0x08), which is
+part of the firing-order field.
 
-While at it, add a new mask for controlling the source of the output
-voltage.
+TPS53676 supports up to seven phases, so firing-order bit 3 is never set.
+As a result the existing test classifies every enabled phase as channel A.
+On a dual-channel configuration the phases assigned to channel B are
+therefore miscounted as channel A and page 1 is not exposed.
 
-Note (groeck):
+Test the PAGE field (bit 4) instead.
 
-This patch was meant to prepare for support of MAX20826 and compatible
-devices, which support more than 10 phases per page. However, Sashiko
-reports that the mp2975 driver already supports up to 14 phases, and the
-mp2856 driver supports up to 12 phases. This already has the potential for
-out-of-bounds writes when probing the affected chips, making this patch a
-bug fix.
-
-Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
-Fixes: f9e5f289b686 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260911-hwmon-max20826-support-v2-1-5e30cbd97d84@analog.com
+Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
 Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://patch.msgid.link/20260915164823.160977-2-sanman.pradhan@hpe.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/tps53679.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/pmbus.h
-+++ b/drivers/hwmon/pmbus/pmbus.h
-@@ -241,6 +241,7 @@ enum pmbus_regs {
- /*
-  * OPERATION
-  */
-+#define PB_OPERATION_CONTROL_V_SRC	GENMASK(5, 4)
- #define PB_OPERATION_CONTROL_ON		BIT(7)
- 
- /*
-@@ -385,7 +386,7 @@ enum pmbus_sensor_classes {
- };
- 
- #define PMBUS_PAGES	32	/* Per PMBus specification */
--#define PMBUS_PHASES	10	/* Maximum number of phases per page */
-+#define PMBUS_PHASES	16	/* Maximum number of phases per page */
- 
- /* Functionality bit mask */
- #define PMBUS_HAVE_VIN		BIT(0)
+--- a/drivers/hwmon/pmbus/tps53679.c
++++ b/drivers/hwmon/pmbus/tps53679.c
+@@ -168,7 +168,7 @@ static int tps53676_identify(struct i2c_
+ 		return -EIO;
+ 	for (i = 0; i < 2 * TPS53676_MAX_PHASES; i += 2) {
+ 		if (buf[i + 1] & 0x80) {
+-			if (buf[i] & 0x08)
++			if (buf[i] & BIT(4))
+ 				phases_b++;
+ 			else
+ 				phases_a++;
 
 
