@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986F54E9C24;
-	Wed, 30 Sep 2026 15:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD074DDB2B;
+	Wed, 30 Sep 2026 15:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783100; cv=none; b=KFNgQNp1okzC3v4zkhewjrzcIAX1HN5DKDoH+ueeIkyu1mlOs0BA40FXt8a1+A7WVGlIV3kkH3Ge2fYEHWjAYc8WQx6imx7i9VLA6CWz356D2QLc3RccICIIoXMT6gWKb+mPAGeT0YOHInos9XnHkyZxVInyXA1OEe1eJWuk1oY=
+	t=1790783101; cv=none; b=hNN7YYBLSLkguflvHITy4tbT36FQWI+xtaywLsmVHD10DhFJ3I/dnDkgMvYCJX8hcn4yWK8QwRUGv4dZY1XUefb3Z2WoXK9f2lJigufDHrDazchhRUa2MK1XAaat6TRK6CgV3y2jBJluqFw7zKwaIRrPCXl1PlVj0tQWcmak0AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783100; c=relaxed/simple;
-	bh=0uoxDMqLY7l2QXCk4wTREMSr9Y8PM8IQR7+rz8AjMZU=;
+	s=arc-20240116; t=1790783101; c=relaxed/simple;
+	bh=deulMlLAf5JoMdz8iAsZKLva059UuRFXO3XE3J/aYJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dob6qaqpJkKw0gJE6+ZmesR+tGNg5jwTH8mqphI1L/tGDo2mXYxLS8ceHkxfmL4BGHH2ADfDH1OuVoUnpNsw+za+vcv7wOXt0yHCQXZsjFJICxarxCV1RSsOgkbTPNx+fJ2ZRB51FuQeV/3hljNHgQjUsaT/C7+nhul7R53jeV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2teG2q/t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jiClAyH2sJwnbVHo+uKd8HvIQCV5LQpQSaW0If0JqCwlMigjWph92KptRmG/0WzDN2SLdN20FF8EwmXzYOfs6kOJyBbQ955oS0W5IKg9YCquUVHuVKT+IQjuZw91pP7Zq1OupLXhT5WdRiDpK12sSXf0E/9f0UhGY52VzOp9DUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJllzERW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2teG2q/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3888B1F000FF;
-	Wed, 30 Sep 2026 15:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJllzERW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1187A1F00893;
+	Wed, 30 Sep 2026 15:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783094;
-	bh=e8X3+U2/8gUiRx6wQTbcQUQoVzerTcPqS5uPrjM1Mes=;
+	s=korg; t=1790783097;
+	bh=02eRw8VY7zAccvR6dIfnfXGsxqD6IeZTzrMAQZt94To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2teG2q/tiMwWhUGV4NI1808I922oH3WpLpq52PawhOxt0n8V6oKijRLjfVt8zkuV3
-	 rDOUYufuVJUg1AM9d+sniVMO+QtPgAZyhxP9b2gAcBUWMubDXW3eZ5m2e1DMedpKW/
-	 Ov/uD3pleUOOff8ZwglqW+C6e+9dmEGL0wzUavRE=
+	b=QJllzERWJpMnNhE1Jb7iBe0Z3xGh3/XB/6simfpkhxcJNMy9F3HgqTXoyxraGJbeQ
+	 rSOVE1mZdFGDHZ30Byfp1V3Plg2lsT77hE2my1Wf+/AoL3qf4TVBmSvthQJ2cQUzZl
+	 aaNyeY62xhu01rXAEfLZYM54Pfw1ArhuMJ1FurzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Santosh Shilimkar <santosh.shilimkar@oracle.com>,
+	rds-devel@oss.oracle.com,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 278/595] net: hinic: fix mailbox segment buffer overflow
-Date: Wed, 30 Sep 2026 17:22:51 +0200
-Message-ID: <20260930152353.684715682@linuxfoundation.org>
+Subject: [PATCH 5.10 279/595] net/rds: Pass a pointer to virt_to_page()
+Date: Wed, 30 Sep 2026 17:22:52 +0200
+Message-ID: <20260930152353.705121712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 5d4d985957434867bbe85e4fa5e638f3e48ad522 ]
+[ Upstream commit a60511cf15204e41f4edbcdc4ee80208d528917c ]
 
-check_mbox_seq_id_and_seg_len() validates that seq_id does not
-exceed SEQ_ID_MAX_VAL (42) and seg_len does not exceed
-MBOX_SEG_LEN (48).  However, this allows the last segment
-(seq_id=42) to carry a full 48-byte payload, writing to offset
-42*48=2016 for 48 bytes (ending at byte 2064).  The receive
-buffer is only MBOX_MAX_BUF_SZ (2048) bytes, resulting in a
-16-byte heap buffer overflow.
+Functions that work on a pointer to virtual memory such as
+virt_to_pfn() and users of that function such as
+virt_to_page() are supposed to pass a pointer to virtual
+memory, ideally a (void *) or other pointer. However since
+many architectures implement virt_to_pfn() as a macro,
+this function becomes polymorphic and accepts both a
+(unsigned long) and a (void *).
 
-The hinic3 driver already handles this correctly by defining
-MBOX_LAST_SEG_MAX_LEN and rejecting the last segment when it
-exceeds the remaining buffer space.  Apply the same fix to the
-hinic driver.
+If we instead implement a proper virt_to_pfn(void *addr)
+function the following happens (occurred on arch/arm):
 
-Fixes: a425b6e1c69b ("hinic: add mailbox function support")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB0001AE870B09020B46B5D7DBC8B22@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+net/rds/message.c:357:56: warning: passing argument 1
+  of 'virt_to_pfn' makes pointer from integer without a
+  cast [-Wint-conversion]
+
+Fix this with an explicit cast.
+
+Cc: Santosh Shilimkar <santosh.shilimkar@oracle.com>
+Cc: rds-devel@oss.oracle.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20220829132001.114858-1-linus.walleij@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2ac09b5353fe ("net/rds: fix tcp stream corruption with large pages")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/rds/message.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-index 5078c0c738635..f5781eaea7965 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-@@ -129,6 +129,7 @@ enum hinic_mbox_tx_status {
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 987ef9ca5a8fd..cd13f0c4de540 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -364,7 +364,7 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
  
- #define SEQ_ID_START_VAL			0
- #define SEQ_ID_MAX_VAL				42
-+#define MBOX_LAST_SEG_MAX_LEN			(MBOX_MAX_BUF_SZ - SEQ_ID_MAX_VAL * MBOX_SEG_LEN)
+ 	for (i = 0; i < rm->data.op_nents; ++i) {
+ 		sg_set_page(&rm->data.op_sg[i],
+-				virt_to_page(page_addrs[i]),
++				virt_to_page((void *)page_addrs[i]),
+ 				PAGE_SIZE, 0);
+ 	}
  
- #define DST_AEQ_IDX_DEFAULT_VAL			0
- #define SRC_AEQ_IDX_DEFAULT_VAL			0
-@@ -377,7 +378,8 @@ recv_pf_from_vf_mbox_handler(struct hinic_mbox_func_to_func *func_to_func,
- static bool check_mbox_seq_id_and_seg_len(struct hinic_recv_mbox *recv_mbox,
- 					  u8 seq_id, u8 seg_len)
- {
--	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN)
-+	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN ||
-+	    (seq_id == SEQ_ID_MAX_VAL && seg_len > MBOX_LAST_SEG_MAX_LEN))
- 		return false;
- 
- 	if (seq_id == 0) {
 -- 
 2.53.0
 
