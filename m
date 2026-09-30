@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D7C515964;
-	Wed, 30 Sep 2026 16:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB153749FA;
+	Wed, 30 Sep 2026 16:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787087; cv=none; b=NmcY0Ibj/QjUVNDgI0Ua0siy25rEYqn6FhzkEOETtOCsktMN2JceAn7DZOYuswEkL0OI3w2AKKefbCR0mKutxr4b6bb4MS5ZcfQn9MaQTLokcFLjZAj7sFa+0KGHWANFB0JGHKXnDfXzi7bjx2LWrPYLmdZXZcqs1VTRs9QIowM=
+	t=1790787090; cv=none; b=lebde1E826Sk3ptyNcd0TwHXRfo8qFj4vqM7bkrPVAK+mupr7JTCv1W5BhDHutGUdxsdZgyF4tfHH7KbQSvvjTw2zITIghVq8hXK7t2ou8TuVCduDUY+LOMbKduCIVe0/WRQRN/+kG0gopeFpsRQPNZKcU/opcZSKPhiT51WXZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787087; c=relaxed/simple;
-	bh=BqZkI4oh23gmoVjQp26DQlBZQfuDCO0zzrH+vQvqSzI=;
+	s=arc-20240116; t=1790787090; c=relaxed/simple;
+	bh=hmWGz4Pc14itNG8+J0jdp1UJaQUlb/MBWNYY1JgND/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKWNZNblSk6onOotbHer37QIlcjD51whwZp1Gq1eShC5iLOfKqJtsA0mN70Dkqndm/0vg5t1o+Z2wBBeIiBhJInLeBuW2FzhxCiwAwevmBZiHOucFxbRsAkW+AXshdKokyG99jQLTjlP5YahkXKJALF1u+xodDR6FQIoP22dpnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=at4XwyrR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKYr+vePdHz36X5flVOsg5ikafX6SnYClxQd56hOmbCidAjlM50afhzF//R65a6pKJ3HfPQacfoNPa4Bq3H+WownAD0E5vDs1zVpTGznk/5G2pUtFKKwSg4WBefSbuFv6vMzEXuprSF8uomP0LBSUtEdRaCfsoIJnEvIXtFcp7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1FyBgoG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="at4XwyrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CBD1F008A4;
-	Wed, 30 Sep 2026 16:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1FyBgoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59AE1F008A1;
+	Wed, 30 Sep 2026 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787086;
-	bh=lBjDVKGZ6H+iJUidgdv6YOaS5uWwO6vYv58wACrZyCM=;
+	s=korg; t=1790787089;
+	bh=k7Ak9q2T05PiaNVY0hA5ZNG8CRJgDMMkvH8BiyWn374=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=at4XwyrRwGZD0wqwro3tRVqVT9ru+xJpyF8gNhHRA4ttFRJ607jkBgifkhkJricxp
-	 s3gBqkoF9jYnp+2LyV9RaDTrW+40rocnfMHYOWmzsoiM3wmtnyIELNabebN7N7FCvy
-	 bbdXi+iVaySPKWOqF/563BMvNyRWrAs2pDe7RkzQ=
+	b=T1FyBgoGX29heVl0Cl/+tN9FqBHmvK/PdDPWYIjmbr3aByFSCSvUwyFIAX3fzuqbH
+	 bCjV19IVZ5pH8e6A+NtipRBEYuomjO2je/CWvhDL8sTW0fol81O2nfGrv9ZBbv4Th8
+	 BMoO3wN0/iJI7wkzt+HtUGfysM/Z562cQnor9EuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 063/457] netfs: Fix netfs_read_gaps() to use separate sink folios
-Date: Wed, 30 Sep 2026 17:22:48 +0200
-Message-ID: <20260930152347.399092552@linuxfoundation.org>
+Subject: [PATCH 7.2 064/457] netfs, afs: Fix symlink reading
+Date: Wed, 30 Sep 2026 17:22:49 +0200
+Message-ID: <20260930152347.421152614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -59,110 +57,46 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit fc3ae66514ca5e87251f79044236e3e8babd24a3 ]
+[ Upstream commit c51e89c5b5db3e1927738fad7cd18b66dde68aed ]
 
-Fix netfs_read_gaps() to use separate folios rather than re-using a single
-sink folio to discard the unwanted data so that cifs checksum checking sees
-all the data that was fetched.
+Fix the reading of symlinks from the cache in afs by making netfslib trim
+the amount read down to i_size.  The problem is that afs sets the size of
+the iterator to the size of the buffer (PAGE_SIZE) so that the cache can
+round the read size up to the cache's DIO size.
 
-Fixes: 7f84a7b9892d ("netfs: Make netfs_read_folio() handle streaming-write pages")
-Reported-by: Frank Sorenson <sorenson@redhat.com>
-Closes: https://lore.kernel.org/r/a385053c-1c4a-4060-a3bb-befa007ddb33@redhat.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/3228134.1789399227@warthog.procyon.org.uk
-Tested-by: Frank Sorenson <sorenson@redhat.com>
+Note that this also impacts the reading of AFS mountpoints as they're just
+stored as symlinks with an odd file mode.
+
+Link: https://patch.msgid.link/3912795.1789489319@warthog.procyon.org.uk
+Fixes: c0410adf3da6 ("afs: Fix the locking used by afs_get_link()")
 Reviewed-by: Paulo Alcantara <pc@manguebit.org>
 cc: Paulo Alcantara <pc@manguebit.org>
-cc: Namjae Jeon <linkinjeon@kernel.org>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 cc: netfs@lists.linux.dev
-cc: linux-cifs@vger.kernel.org
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ fs/netfs/read_collect.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 424df70a5c30f..105194de6e13e 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -482,15 +482,14 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 	struct netfs_group *group = netfs_folio_group(folio);
- 	struct netfs_folio *finfo = netfs_folio_info(folio);
- 	struct netfs_inode *ctx = netfs_inode(mapping->host);
--	struct folio *sink = NULL;
--	struct bio_vec *bvec;
-+	struct bio_vec *bvec = NULL;
- 	unsigned int from = finfo->dirty_offset;
- 	unsigned int to = from + finfo->dirty_len;
--	unsigned int off = 0, i = 0;
-+	unsigned int off = 0;
- 	size_t flen = folio_size(folio);
- 	size_t nr_bvec = flen / PAGE_SIZE + 2;
- 	size_t part;
--	int ret;
-+	int ret, i = 0, sink_from = -1, sink_to = -1;
- 
- 	_enter("%lx", folio->index);
- 
-@@ -515,24 +514,23 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 	if (!bvec)
- 		goto discard;
- 
--	sink = folio_alloc(GFP_KERNEL, 0);
--	if (!sink) {
--		kfree(bvec);
--		goto discard;
--	}
--
- 	trace_netfs_folio(folio, netfs_folio_trace_read_gaps);
- 
--	rreq->direct_bv = bvec;
--	rreq->direct_bv_count = nr_bvec;
- 	if (from > 0) {
- 		bvec_set_folio(&bvec[i++], folio, from, 0);
- 		off = from;
+diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
+index 5cf22087d2439..a94197ef01811 100644
+--- a/fs/netfs/read_collect.c
++++ b/fs/netfs/read_collect.c
+@@ -435,6 +435,11 @@ static void netfs_rreq_assess_single(struct netfs_io_request *rreq)
+ 		netfs_single_mark_inode_dirty(rreq->inode);
  	}
-+	sink_from = i;
- 	while (off < to) {
-+		struct folio *sink = folio_alloc(GFP_KERNEL, 0);
+ 
++	/* To do DIO, the cache has to round the size up, so we need to undo
++	 * the rounding.
++	 */
++	rreq->transferred = min(rreq->transferred, rreq->i_size);
 +
-+		if (!sink)
-+			goto discard;
- 		part = min_t(size_t, to - off, PAGE_SIZE);
--		bvec_set_folio(&bvec[i++], sink, part, 0);
-+		bvec_set_folio(&bvec[i], sink, part, 0);
- 		off += part;
-+		sink_to = i;
-+		i++;
- 	}
- 	if (to < flen)
- 		bvec_set_folio(&bvec[i++], folio, flen - to, to);
-@@ -553,8 +551,10 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 		folio_mark_uptodate(folio);
- 	}
- 
--	if (sink)
--		folio_put(sink);
-+	if (sink_to >= 0)
-+		for (; sink_from <= sink_to; sink_from++)
-+			folio_put(bvec_folio(&bvec[sink_from]));
-+	kfree(bvec);
- 	folio_unlock(folio);
- 	netfs_put_request(rreq, netfs_rreq_trace_put_return);
- 	return ret < 0 ? ret : 0;
-@@ -563,6 +563,10 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 	netfs_put_failed_request(rreq);
- alloc_error:
- 	folio_unlock(folio);
-+	if (sink_to >= 0)
-+		for (; sink_from <= sink_to; sink_from++)
-+			folio_put(bvec_folio(&bvec[sink_from]));
-+	kfree(bvec);
- 	return ret;
- }
- 
+ 	if (rreq->iocb) {
+ 		rreq->iocb->ki_pos += rreq->transferred;
+ 		if (rreq->iocb->ki_complete) {
 -- 
 2.53.0
 
