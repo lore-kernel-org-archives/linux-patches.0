@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAAF4F93A8;
-	Wed, 30 Sep 2026 16:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9563C511194;
+	Wed, 30 Sep 2026 16:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786315; cv=none; b=JgHwj3UL8ZO3PSrpAytq3DD/7LSa17aqH6dEn9yE5+NpDlwuX2J0qnZTAJrMsM5wCgPsq+3pJ3abKgbr0cv8P/KZh3SOArO7YodF2R+twKH1xY4kAO+5fgc63FUgA2fc3laxH1L9JBUZcLD28nFrtfT95sjLbAKrNvXdhvTFgT8=
+	t=1790786317; cv=none; b=VNOy0Pz3z6RS0gpGaWV1pFzT5HJQa3ElpJdAIAL/ALZkaMUETTjoo3HLY7BhwROl3SfzE8vgw/2u/cUk3LEy5iyCbxbiWytghMgH5BC//BLzx+5useLSLGbyUiI7SIKXwKg3iVukyBL6vHYB/Nl27SWoByjmT1GuWvsZptSHqkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786315; c=relaxed/simple;
-	bh=UpXJ8+bbjCZz5LMBetAPr2y5SoLBDmiphWFYxddv1NQ=;
+	s=arc-20240116; t=1790786317; c=relaxed/simple;
+	bh=+HjoHA+mC2WJweBiuSYlEnU2EtIllHY6Kt1cClWIv2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SEgk/A4UQuK6yuhLIw+oBlt79rflQIjorMN/8cuh2EXgiqBCfs1J8iJx9xyzcIHMdxxM2Q97PnGx7Q2Rz2J7Sw8hHuuCk7lMGzD595KBhNrJ7vyCnJGKiNdIjMitvySkRKqzkA2AcF8RZku3LTkmrjIeg2FGvp4kTSGqnNQRezQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yszKMDez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i17ig9RX7T4Kv50oX0SSXrtv2BOd4GrEUNTA1n9yLF3uztqtbDpKrVRauwLWlZIjbn/ukD2ZOJC608B8beR37be71uTZeEZmwcLxpHSkahE4KMB/nE/9izP02FIbu9JT5NPlGS4e2F1pCTKYovhbLkz1oOSe8DxtTJFeL5U2gGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZQLWze7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yszKMDez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBE91F000FF;
-	Wed, 30 Sep 2026 16:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZQLWze7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70AA1F000FF;
+	Wed, 30 Sep 2026 16:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786313;
-	bh=i3XMIilWzAmIq41JT8L8IlO+5zIIsup/yOC+msmrsBw=;
+	s=korg; t=1790786316;
+	bh=yeISFip7HlYQbwPeHZFZfX6eFwafmn79SKEI/I9F96Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yszKMDezSShyllED2ol7ojp6eDjn/vzjCUV+OxXhk6qfHIn4+S2fIxBR6abZ3hZ/E
-	 HbBza6IioqBbOyGOwaq7hb95KMQWB8dlXLBjmr3/CkH+3N67KeOxnbCRDda6kfAfTu
-	 ohDBxFZJg7IHHhc0sVSkTgYvQjPJn249Wajkfnw8=
+	b=IZQLWze7m5DPQFHqDoYVRrFB60PB1HNOAk8CTDMkcjy5yAy0YsVziXUAzTupxlppb
+	 XXAqfJgf5jQKwnq2OODPbvW80wJhItdandCZGJiI40nENYm070tPvWSHWyOhXqGi0I
+	 BkpWeOEnPasyZq+wuhNCWzsH3ta+PG+Dl4YI5csI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Ran Hongyun <ranhongyun1@huawei.com>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 817/982] HID: amd_sfh: Validate PCI BAR size before mapping
-Date: Wed, 30 Sep 2026 17:25:53 +0200
-Message-ID: <20260930152434.309069541@linuxfoundation.org>
+Subject: [PATCH 6.1 818/982] squashfs: Add dictionary size range check to prevent shift-out-of-bounds
+Date: Wed, 30 Sep 2026 17:25:54 +0200
+Message-ID: <20260930152434.329273478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,96 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Ran Hongyun <ranhongyun1@huawei.com>
 
-[ Upstream commit 65bcc5f89704efe5b9d69d4ea2c1002d90c31382 ]
+[ Upstream commit 1f7745fb3580152ca902ef181b605f33cabfb1d0 ]
 
-The amd_sfh driver maps PCI BAR 2 using pcim_iomap_regions() and
-subsequently accesses MMIO registers at offsets up to 0x10958 (e.g.,
-AMD_P2C_MSG3 at 0x1068C). However, the driver never validates that the BAR
-size is large enough to cover these accesses. If the driver is bound to a
-device with a smaller BAR 2, this leads to an out-of-bounds memory access
-and a page fault during the probe function.
+When an abnormal SquashFS image (COMP_OPTS flag is 1 but dictionary size
+is 0) is mounted, and performs shift operations using dictionarysize, the
+shift exponent is -1, causing a shift-out-of-bounds.
 
-For example, a page fault can occur when reading from privdata->mmio +
-AMD_P2C_MSG3 in mp2_select_ops():
+Detail as below:
+squashfs_comp_opts(msblk, buffer, length)
+  squashfs_xz_comp_opts()
+    if (comp_opts)
+      n = ffs(opts->dict_size) - 1;<----opts->dict_size=0, n=-1
+      if (opts->dict_size != (1 << n) && opts->dict_size !=
+	  	(1 << n) + (1 << (n + 1))) <----shift-out-of-bounds
 
-  BUG: unable to handle page fault for address: ffffc9000390368c
-  PGD 100000067 P4D 100000067 PUD 1012c1067 PMD 105b64067 PTE 0
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:readl arch/x86/include/asm/io.h:59 [inline]
-  RIP: 0010:mp2_select_ops drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:282
-  [inline]
-  RIP: 0010:amd_mp2_pci_probe+0x337/0x5f0
-  drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:487
-  Call Trace:
-   <TASK>
-   local_pci_probe drivers/pci/pci-driver.c:332 [inline]
-   pci_call_probe drivers/pci/pci-driver.c:394 [inline]
-   __pci_device_probe drivers/pci/pci-driver.c:455 [inline]
-   pci_device_probe+0x431/0xc90 drivers/pci/pci-driver.c:489
+Fix it by adding a dictionary size range check before the shift operation.
 
-Fix this by verifying that the length of BAR 2 is at least 128KB before
-attempting to map it. Since the maximum accessed offset is 0x10958, and PCI
-BAR sizes are powers of 2, any legitimate hardware will have a BAR size of
-at least 128KB.
-
-Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
-Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
-Link: https://syzkaller.appspot.com/ai_job?id=3bc1c45c-548f-4ab5-8243-d2c8ec321d6c
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: ff750311d30a ("Squashfs: add compression options support to xz decompressor")
+Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
+Link: https://patch.msgid.link/20260713115525.2661734-1-ranhongyun1@huawei.com
+Reviewed-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_common.h |  4 ++++
- drivers/hid/amd-sfh-hid/amd_sfh_pcie.c   | 10 ++++++++++
- 2 files changed, 14 insertions(+)
+ fs/squashfs/xz_wrapper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_common.h b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-index 2643bb14fee27..0aeb670ae1a4f 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-@@ -11,11 +11,15 @@
- #define AMD_SFH_COMMON_H
+diff --git a/fs/squashfs/xz_wrapper.c b/fs/squashfs/xz_wrapper.c
+index 6c49481a2f8c4..7d54cd524d6d9 100644
+--- a/fs/squashfs/xz_wrapper.c
++++ b/fs/squashfs/xz_wrapper.c
+@@ -57,10 +57,10 @@ static void *squashfs_xz_comp_opts(struct squashfs_sb_info *msblk,
  
- #include <linux/pci.h>
-+#include <linux/sizes.h>
- #include "amd_sfh_hid.h"
+ 		opts->dict_size = le32_to_cpu(comp_opts->dictionary_size);
  
- #define PCI_DEVICE_ID_AMD_MP2		0x15E4
- #define PCI_DEVICE_ID_AMD_MP2_1_1	0x164A
- 
-+/* The BAR 2 size must cover the highest register offset (0x10958) */
-+#define AMD_SFH_MIN_BAR_SIZE		SZ_128K
-+
- #define AMD_C2P_MSG(regno) (0x10500 + ((regno) * 4))
- #define AMD_P2C_MSG(regno) (0x10680 + ((regno) * 4))
- 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-index 9c963ad27f9d1..20d898a70b8a2 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-@@ -345,6 +345,16 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
- 	if (rc)
- 		return rc;
- 
-+	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_MEM)) {
-+		dev_err(&pdev->dev, "BAR 2 is not IORESOURCE_MEM\n");
-+		return -ENODEV;
-+	}
-+
-+	if (pci_resource_len(pdev, 2) < AMD_SFH_MIN_BAR_SIZE) {
-+		dev_err(&pdev->dev, "BAR 2 is too small\n");
-+		return -EINVAL;
-+	}
-+
- 	rc = pcim_iomap_regions(pdev, BIT(2), DRIVER_NAME);
- 	if (rc)
- 		return rc;
+-		/* the dictionary size should be 2^n or 2^n+2^(n+1) */
++		/* the dictionary size should be positive and 2^n or 2^n+2^(n+1) */
+ 		n = ffs(opts->dict_size) - 1;
+-		if (opts->dict_size != (1 << n) && opts->dict_size != (1 << n) +
+-						(1 << (n + 1))) {
++		if (opts->dict_size <= 0 || (opts->dict_size != (1 << n) &&
++			opts->dict_size != (1 << n) + (1 << (n + 1)))) {
+ 			err = -EIO;
+ 			goto out;
+ 		}
 -- 
 2.53.0
 
