@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432033750CF;
-	Wed, 30 Sep 2026 17:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134C84F405C;
+	Wed, 30 Sep 2026 17:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788250; cv=none; b=mrdcfqdXC/+Z7+V51bx6WiBxBxdrnWNDgGWyaeZcgTiDcoL/Z1W5aXn3Eky65BVV6ANdxriy8BjSaHSPdh2Lmzo8dn1FMhc8cK5T1IkXlR8/gHy0+l+t3hpdkFCHNWpli0tGJBUBKJiTr2CFF3NToFRbuMNbITlaADoPlTOrn+g=
+	t=1790788253; cv=none; b=Aa7zTuCn9k2fkuu4bYm/WIqpIgKuOWyZs+Z2P8E242TzWZyhA6OfUN45AfofZblaGkjoepEkQ3KHHHHi+9irqzvRhPX8lcUmUVF9RJaZFeBnU+AV51+xSgUUcg5UWuuxzYJ/2pJnOAruW4xvIAm22uOT/HmxHj7ClbJp6/5pO+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788250; c=relaxed/simple;
-	bh=rrNaG3zSf1j8z6xwk50te6ZbRL2+sGBqb9qki/U6EUs=;
+	s=arc-20240116; t=1790788253; c=relaxed/simple;
+	bh=fT1i8VolyTGFED9HhSi6EgWrfnKVMq5TZBri1PRIzM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aqfk8QgO+X6Ki1ipGe7COJ2UPXW3AcDQxcAex3sdG6c1S00R+h7+UmB8dqbQFbaxyC/tE/jXkCGNEW8FO9ZrXinsPjNSi3DlXwFOVSeuT3Xh2MPHG7Jo4A9tED7ZC8VdbqE2LKUxsfylVH6UgDofjt3o9DztV0YvM6S5bYNjXiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7oGUCMz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V/e0wu93XvxKe3N8AhL1etVAOqZJg+PopyGBYBfnOqjuoqD18+7R9rDvr+IcqsxVa06KBQwA27CyhN9rcKwH9GfuxfiHP8x03MdZmMrqW4fE7Xi3K/FG9D8S1D3s5bnDNc82hiueHF8B+BggfeU2ROQ7QeH9kZPeZJeS4p8uDQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpFv5PVe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7oGUCMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7E11F00898;
-	Wed, 30 Sep 2026 17:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpFv5PVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A71F000FF;
+	Wed, 30 Sep 2026 17:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788249;
-	bh=xAUkqPgszdbaTQBc18rYphDitDUeShDlrtHo9wnWw8c=;
+	s=korg; t=1790788252;
+	bh=kNN2+U/wS5i9NLptBGIbQJ2VFLhlgBCEvB4aYNef4aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7oGUCMzzuqB3FjHUFnhptEwueisqQ9Fq4LXPhnXH+ZbPMEPkXmr2eCCsg4fLiZQC
-	 W/7s75aWga8/PjF4mLHqssXM8+zu8MBCKxpeePIdoL87RLHI5tCAK77OGX3JLxyYnx
-	 5ElVh09smC0IWO+6xJu4vFuPTWufqeTHJm3EIRus=
+	b=IpFv5PVerlVxdWm8vT/KYW2s9xx6WRPKQB02JbrWekqjBFWquYebWvVyKlqqfY81K
+	 4UCel54lAP8anLqsBKxe35TEfXfv/JSGOUH/yVnIQFuQktB6kTqs/hsmjzlDn7jHl3
+	 T8Ae53HF7u3vLBom4coqQTcmZawj1BCFjQ9TdziY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com,
+	syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/877] wifi: cfg80211: dont filter by BSS type when removing stale entries
-Date: Wed, 30 Sep 2026 17:16:07 +0200
-Message-ID: <20260930152415.955321687@linuxfoundation.org>
+Subject: [PATCH 6.12 057/877] wifi: mac80211: dont start a ROC while scanning
+Date: Wed, 30 Sep 2026 17:16:08 +0200
+Message-ID: <20260930152415.975417172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,49 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b377e1000d963e7182a987082b4b06580bd7ac84 ]
+[ Upstream commit 733f0fde95392ed5f61a4e36aee661ea8d0e8581 ]
 
-When an assoc AP switches to a channel that already has a BSS entry,
-cfg80211_update_assoc_bss_entry() removes that entry before rehashing
-the real one, since the two would otherwise collide in the BSS rbtree.
+The ROC work can be pending when a scan starts (which requires
+ROC list to be empty, but that's possible), and then a new ROC
+can be added to the list and the work will pick it up.
 
-The lookup for that entry also required it to match the connection's BSS
-type, so an entry advertising e.g. the IBSS capability bit was left in
-place, and the following cfg80211_rehash_bss() then ran into it:
+Avoid starting that ROC if a scan made it between things, as
+otherwise we'll hit a warning later:
 
-  WARN_ON(!cmp)
-
-Changing the type shouldn't really happen, but can be triggered by a
-rogue AP/device, so drop the check and remove any entries matching
-the comparison.
+  WARNING: net/mac80211/offchannel.c:404 at ieee80211_start_next_roc+0x256/0x2d0
+  Workqueue: events_unbound cfg80211_wiphy_work
+  Call Trace:
+   __ieee80211_scan_completed+0x4fd/0xe40 net/mac80211/scan.c:537
+   ieee80211_scan_work+0x472/0x1ff0 net/mac80211/scan.c:1193
+   cfg80211_wiphy_work+0x410/0x570 net/wireless/core.c:513
 
 Assisted-by: LLM
-Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
-Reported-by: syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dc6f4dce0d707900cdea
-Link: https://patch.msgid.link/20260904165614.1f05dae1c546.Ib52d57b57caa912efee020f9d4a033a5160617ce@changeid
+Fixes: aaa016ccd5df ("mac80211: rewrite remain-on-channel logic")
+Reported-by: syzbot+c3a167b5615df4ccd7fb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c3a167b5615df4ccd7fb
+Link: https://patch.msgid.link/20260904165722.f9d5b150edd8.I61bc9de8c8d089096ad695213b9c85c7df38c3bd@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/mac80211/offchannel.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index f3b9e7a519ff9..9d21667641a50 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -3398,11 +3398,6 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
- 	cbss->pub.channel = chan;
+diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
+index 29fab7ae47b4c..0d9807526ecbd 100644
+--- a/net/mac80211/offchannel.c
++++ b/net/mac80211/offchannel.c
+@@ -462,6 +462,13 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
+ 		return;
  
- 	list_for_each_entry(bss, &rdev->bss_list, list) {
--		if (!cfg80211_bss_type_match(bss->pub.capability,
--					     bss->pub.channel->band,
--					     wdev->conn_bss_type))
--			continue;
--
- 		if (bss == cbss)
- 			continue;
- 
+ 	if (!roc->started) {
++		/*
++		 * The work can be started by a previous ROC work, but a scan
++		 * can get between things; scan finish will retrigger us.
++		 */
++		if (local->scanning)
++			return;
++
+ 		WARN_ON(!local->emulate_chanctx);
+ 		_ieee80211_start_next_roc(local);
+ 	} else {
 -- 
 2.53.0
 
