@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6275E3624BF;
-	Wed, 30 Sep 2026 16:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD7B3624BF;
+	Wed, 30 Sep 2026 16:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787278; cv=none; b=WxOkW7rEYJ6iMV6O5bCWHt5fGvoKKCqyLSvpdFbGzSSTg2m82GNy68m3R0Ipo94EJT0JmmyhY+M5TSNja0BjKzcdA4U5uc2AiEwCz2apuAnBVAgYJaJmbjOec2qg2yB/d5Qwy7zAguIFK1ptdNkTXeVX/6IObfn6cYQFft1y6Vc=
+	t=1790787281; cv=none; b=LnKzDZtsG3yCep6HwoVzWHRMmHBdQh587ksKtiWRf0gVnlJ93u+AbJ9QjNimyuDgwbt8gEM1t3cGJ9iuQWTtm8Pnvp+Wbq3JT6w5yhTu2H4xk6VLOuCAYMhhCQkvaZfGlVq4ba3UJUdXoppBI6SPtJ0ftMQwOSc7AGd/RNGeAto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787278; c=relaxed/simple;
-	bh=jWYNI3nNL7snlmSzjMZ/UX6QOliVjbD/vd2rsROlNac=;
+	s=arc-20240116; t=1790787281; c=relaxed/simple;
+	bh=J7rsqt8IgEUCY+HDjN5mSOOzTH1tInWdrcINAkbO7Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DranAwPcGRUtPAAP1HIG9Pt45EvhhJrw64JXmasSP1gT8YuO9/kWbn1wEjk4RewDVacgJJYQt+VLY5sEeYSpoYerAvTN2r6CSskcV02kbOGiJNPZXowtaRBR9LFyxEoRig18qjB6YLnh9/OYGt8qB68bqSlHClsViOOPcGZ2DDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M08ERdPh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o7gqOPb906YjN61vZmCAzyGWz8cfLfZqkXl4AgIJWOGicK1ohlXixhVTXwfMuCA63d32wC+Yiq9nusOsc7l6W5Ymr/AS0Z6WLVhqO1CpKOzgUmjYIvApGfliXaIXnfR/d+JLfwzEF8dbH8AZFYmMlzlrT7nC8kDdkwTo/TqSs9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEvHE0xo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M08ERdPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DFA1F000FF;
-	Wed, 30 Sep 2026 16:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEvHE0xo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A221F000FF;
+	Wed, 30 Sep 2026 16:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787277;
-	bh=C8rCXMqWuqhnfHFmsMuaGKWhcXSMYv46oduihpI9Tco=;
+	s=korg; t=1790787280;
+	bh=aAJDFn7P62UHaOQyTg7qrm5zUldGf9xhluUfTl4kr2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M08ERdPhe8i8RoiPjaIBcfhhw2/1eVE4hMbY9jLwQ232FvSkaAc8IZL+dnH/Zsdzo
-	 tmmX9z1KoPw5qqBCeohjukD2zL6usvAPEs0aUToR7BN+wHxBQGeCiKXAsK6mmVTSBf
-	 3aQc+Tr5qyFWZMmLUEQ+fpMlYI1GZcvDWVvb5u3U=
+	b=zEvHE0xo14TJxa3JAp8oqRrELZjLjb3mVAptegkfhNgTnBY3j3KisGR48/ddcIE3/
+	 GIz8GYud9kHLJuwAyn9NlUq9Lj6A16H0pJm/C5rVk+JrZzfdXQCrDaOZU82C/HnVQa
+	 qFf3Anr+9r0YoMuGYj73+ucJNJm0p/BXr5tc8ECo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
+	Cong Nguyen <congnt264@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 174/457] nfc: virtual_ncidev: Add missing ioctl compat handler
-Date: Wed, 30 Sep 2026 17:24:39 +0200
-Message-ID: <20260930152349.808273125@linuxfoundation.org>
+Subject: [PATCH 7.2 175/457] nfc: llcp: fix sdreq TLV list leak on parse/alloc/send failure
+Date: Wed, 30 Sep 2026 17:24:40 +0200
+Message-ID: <20260930152349.830726678@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,73 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 51814683e28fc64eceb415962376956c3cfc75a7 ]
+[ Upstream commit 66f4300206b82b0b143ef0d9be90cd8d29f23a47 ]
 
-The compat handler for ioctls to the virtual nci device is missing. So,
-nci-specific ioctls of a compat task return with -1 and errno set to
-ENOTTY. Add a handler.
+nfc_genl_llc_sdreq() builds a list of TLV nodes while walking nested
+netlink attrs, but 3 error paths (nested-attr parse failure, TLV alloc
+ENOMEM, nfc_llcp_send_snl_sdreq() failure) all skip freeing what was
+already queued.
 
-The handling of an ioctl() call of a compat task to get the index of
-virtual nci device (IOCTL_GET_NCIDEV_IDX) lands in the default case of
-the ioctl compat handler (see fs/ioctl.c):
+Route them through a new free_list label, mirroring the SDRES path in
+the same file which already does this. Harmless on the success path
+too -- send_snl_sdreq() drains the list as it moves nodes, so it's
+already empty by the time free_list runs.
 
-COMPAT_SYSCALL_DEFINE3(ioctl, ...)
-{
-	...
-	default:
-       		error = do_vfs_ioctl(fd_file(f), fd, cmd, ...);
-		if (error != -ENOIOCTLCMD)
-			break;
-
-		if (fd_file(f)->f_op->compat_ioctl)
-			error = fd_file(f)->f_op->compat_ioctl(fd_file(f), cmd, arg);
-		if (error == -ENOIOCTLCMD)
-			error = -ENOTTY;
-	...
-}
-
-There, do_vfs_ioctl() returns -ENOIOCTLCMD and compat_ioctl is not
-set for virtual_ncidev_fops, i.e. f_op->compat_ioctl == NULL. So, the
-ioctl() syscall returns with -1 and errno set to ENOTTY to the compat
-task.
-
-To fix this, use the compat_ptr_ioctl helper for compat handling here.
-It shall be used for ioctls that "either ignore the argument or pass a
-pointer to a compatible data type". The driver's sole ioctl takes a user
-void pointer and copies nfc_dev->idx to it, a 4-byte integer across all
-ABIs.
-
-This issue has been found by running the nci_dev kernel selftest as
-rv64 binary on top of a CHERI kernel, where the ioctl() ends up in
-the ioctl compat handler, similar to a 32-bit application on top of a
-64-bit kernel.
-
-Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
+Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904164252.18351-1-christian.gellermann@codasip.com
+Link: https://patch.msgid.link/20260914121129.2098606-1-congnt264@gmail.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/virtual_ncidev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/nfc/netlink.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
-index 8eeb447ac96e9..e51c647b27ebe 100644
---- a/drivers/nfc/virtual_ncidev.c
-+++ b/drivers/nfc/virtual_ncidev.c
-@@ -195,7 +195,8 @@ static const struct file_operations virtual_ncidev_fops = {
- 	.write = virtual_ncidev_write,
- 	.open = virtual_ncidev_open,
- 	.release = virtual_ncidev_close,
--	.unlocked_ioctl = virtual_ncidev_ioctl
-+	.unlocked_ioctl = virtual_ncidev_ioctl,
-+	.compat_ioctl = compat_ptr_ioctl,
- };
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index 0c58824cb150d..224bdfa2dd0dc 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1181,7 +1181,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
  
- static struct miscdevice miscdev = {
+ 		if (rc != 0) {
+ 			rc = -EINVAL;
+-			goto put_local;
++			goto free_list;
+ 		}
+ 
+ 		if (!sdp_attrs[NFC_SDP_ATTR_URI])
+@@ -1200,7 +1200,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 		sdreq = nfc_llcp_build_sdreq_tlv(tid, uri, uri_len);
+ 		if (sdreq == NULL) {
+ 			rc = -ENOMEM;
+-			goto put_local;
++			goto free_list;
+ 		}
+ 
+ 		tlvs_len += sdreq->tlv_len;
+@@ -1215,6 +1215,9 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	rc = nfc_llcp_send_snl_sdreq(local, &sdreq_list, tlvs_len);
+ 
++free_list:
++	nfc_llcp_free_sdp_tlv_list(&sdreq_list);
++
+ put_local:
+ 	nfc_llcp_local_put(local);
+ 
 -- 
 2.53.0
 
