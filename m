@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6618D3624BF;
-	Wed, 30 Sep 2026 17:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BD552122F;
+	Wed, 30 Sep 2026 17:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790470; cv=none; b=Z/epmKlc9Vo0V3byKwNcaig7vdqrgoJaHHk8ANTzldtv1QxC+KN86JoNs1+F2HDmYJ3LVsIg68jBU9FKjs2eVCQb9cxOjgEPqhmFniwoEH2HhaHrK8E5PArPId5w9c6abmKsP1z/KDm9tmjA0b/R/HVIuk+JikHJKNGnQB5uncQ=
+	t=1790790473; cv=none; b=KGqyPso59OaGHv2CVkIhSmd29kw6oDtnnieyE1ZM56hrH5rxZHErvKSDhxTqeKMzqveDqEeJsdjGPLa81HMpuSu1AWHb9+y22xTK8MFP+WfNCoiaLA/hf2Q0+RE43pquvlHlX94+ksGcBFE55tbXllKhxfqyZvTf1l/YhQ0Il5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790470; c=relaxed/simple;
-	bh=jggbt4NLEJ7nMl6hn7QzG7Q9GL9rxJiTpUWC4JPv/jM=;
+	s=arc-20240116; t=1790790473; c=relaxed/simple;
+	bh=xv56whMrDCMgI0oG4Hjoob0skpcl+tVRTbUH5YvBB5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7Sdy916g00FwxEl8JjRpC+XoVyD9E9HQSJJ0C6A/XTQ7wYF2400715+x+uIf2Rh2hGqp/GC3wdk8kL9MziMpDLjLnz2xzr0AQLs5NC0LSNhtmQkv+f7VSkG2/jy9ge71VvJT362827rVyJNf3wrJzczvSxrL8huEQTeDVcCYgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwRcL/Eq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lFARJDF2DCdpUicfqJjOs6Axcw445rx9i2X92UECJyPr+u6po2d/l8K+jdCqzPB07HryRLHQIO5hY7W/J/5QsiOs2qrSwyhnvupsLBiodpBjyCvbxi8B7Vtn3t67pwKK/pcLMbN+xa86efv5OvwHbTMBlWGOmkhzPEeYMcgaj+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAbCGDwp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwRcL/Eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCC21F00898;
-	Wed, 30 Sep 2026 17:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAbCGDwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7CF1F000FF;
+	Wed, 30 Sep 2026 17:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790469;
-	bh=psyyeT7k4rd+oW63jze2XCnFUAtZAN3zEmVHtBcvSww=;
+	s=korg; t=1790790472;
+	bh=KHcGlSn9xRRGsyxgXeHPlZWsn3EgId3LDcNcZRjtVAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwRcL/Eqr30xjRcfdyP23USB4wWK46bAh+iLExsJrimvwB7Q33guk+nA/m+mJ1NVP
-	 OHlvemONvPjn3KcqyvVHdixRzTYURaz+0ed0+Lf7lhj8H3Xplfuj0G1aahxuHdPLZM
-	 EepVSGc+dYrENVitJk6zWGg4A0H5DyYUy+5ZNAyU=
+	b=hAbCGDwpX5PPNwSNiH8mKgRVNL1PWuzyF1KpvuR+bhGWmhp7E9GYsBecOE0pZlgU0
+	 +CRf9QBTwe9nVlAPMHiX3ve8vEj45cwPBF5lz+gaBQerXs5Xlx0aVSbsgL6Qc+DO6v
+	 NSWDzR+OAI+rDwEQ3Hor2pCcKUqeRvU1wmZ2Eap4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Mierczuk <axel.mierczuk@1password.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 841/877] net/sched: act_ct: avoid modifying shared unconfirmed ct entry
-Date: Wed, 30 Sep 2026 17:29:12 +0200
-Message-ID: <20260930152432.886418980@linuxfoundation.org>
+Subject: [PATCH 6.12 842/877] net: ipconfig: Remove outdated comment and indent code block
+Date: Wed, 30 Sep 2026 17:29:13 +0200
+Message-ID: <20260930152432.907764280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -55,106 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit f85009dfcd65e5969526b0db7a49b5413746e630 ]
+[ Upstream commit e405b3c9d4aaa10972525fe2ea5cf94224020561 ]
 
-In a case where skb with an unconfirmed ct entry gets cloned, we may
-end up processing both again but with different sets of extensions.
+The comment has been around ever since commit 1da177e4c3f4
+("Linux-2.6.12-rc2") and can be removed. Remove it and indent the code
+block accordingly.
 
-The series of events:
-
- 1. The first clone wants to commit and runs the helpers wiring up
-    the extension pointer into the expectation list.
- 2. Then it looses the confirmation keeping the entry unconfirmed.
- 3. Second clone now wants to commit labels or run NAT and adds the
-    new extension for that breaking the pointer in the expectation
-    list causing UAF on the destruction path later.
-
-While this is possible to trigger, there should be no practical
-network pipeline where we need to process both clones without
-modifications in the same zone.  So, let's just reset the entry in
-case for some reason we got an skb with a shared one.  This doesn't
-affect any known use cases, but avoids any potential problems with
-sharing and modification of the unconfirmed ct entry.
-
-Unlike openvswitch module, act_ct allows for NAT without commit.
-Changing that would be a uAPI break.  So, act_ct needs to reset on NAT
-regardless of the commit flag to avoid reallocation of the extension
-space.  This, however, doesn't really change the picture for sensible
-networking cases as there should be no need to run the same packet
-twice (before and after the clone) through conntrack without packet
-header or zone changes and without commit.
-
-The fixes tag points to the introduction of helpers, since that's the
-main UAF trigger for the sharing.
-
-Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
-Cc: stable@vger.kernel.org
-Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260921145655.3167436-5-i.maximets@ovn.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260109121128.170020-2-thorsten.blum@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e47a1958e12a ("net: ipconfig: bound DHCP option construction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/ipv4/ipconfig.c |   89 ++++++++++++++++++++++++----------------------------
+ 1 file changed, 42 insertions(+), 47 deletions(-)
 
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -977,11 +977,11 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
- 				 struct tcf_result *res)
+--- a/net/ipv4/ipconfig.c
++++ b/net/ipv4/ipconfig.c
+@@ -679,8 +679,18 @@ static const u8 ic_bootp_cookie[4] = { 9
+ static void __init
+ ic_dhcp_init_options(u8 *options, struct ic_device *d)
  {
- 	struct net *net = dev_net(skb->dev);
-+	bool cached, commit, clear, nat;
- 	enum ip_conntrack_info ctinfo;
- 	struct tcf_ct *c = to_ct(a);
- 	struct nf_conn *tmpl = NULL;
- 	struct nf_hook_state state;
--	bool cached, commit, clear;
- 	int nh_ofs, err, retval;
- 	struct tcf_ct_params *p;
- 	bool add_helper = false;
-@@ -996,6 +996,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
- 	retval = p->action;
- 	commit = p->ct_action & TCA_CT_ACT_COMMIT;
- 	clear = p->ct_action & TCA_CT_ACT_CLEAR;
-+	nat = p->ct_action & TCA_CT_ACT_NAT;
- 	tmpl = p->tmpl;
+-	u8 mt = ((ic_servaddr == NONE)
+-		 ? DHCPDISCOVER : DHCPREQUEST);
++	static const u8 ic_req_params[] = {
++		1,	/* Subnet mask */
++		3,	/* Default gateway */
++		6,	/* DNS server */
++		12,	/* Host name */
++		15,	/* Domain name */
++		17,	/* Boot path */
++		26,	/* MTU */
++		40,	/* NIS domain name */
++		42,	/* NTP servers */
++	};
++	u8 mt = (ic_servaddr == NONE) ? DHCPDISCOVER : DHCPREQUEST;
+ 	u8 *e = options;
+ 	int len;
  
- 	tcf_lastuse_update(&c->tcf_tm);
-@@ -1044,6 +1045,19 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
- 	 * different zone.
- 	 */
- 	cached = tcf_ct_skb_nfct_cached(net, skb, p);
+@@ -705,51 +715,36 @@ ic_dhcp_init_options(u8 *options, struct
+ 		e += 4;
+ 	}
+ 
+-	/* always? */
+-	{
+-		static const u8 ic_req_params[] = {
+-			1,	/* Subnet mask */
+-			3,	/* Default gateway */
+-			6,	/* DNS server */
+-			12,	/* Host name */
+-			15,	/* Domain name */
+-			17,	/* Boot path */
+-			26,	/* MTU */
+-			40,	/* NIS domain name */
+-			42,	/* NTP servers */
+-		};
+-
+-		*e++ = 55;	/* Parameter request list */
+-		*e++ = sizeof(ic_req_params);
+-		memcpy(e, ic_req_params, sizeof(ic_req_params));
+-		e += sizeof(ic_req_params);
+-
+-		if (ic_host_name_set) {
+-			*e++ = 12;	/* host-name */
+-			len = strlen(utsname()->nodename);
+-			*e++ = len;
+-			memcpy(e, utsname()->nodename, len);
+-			e += len;
+-		}
+-		if (*vendor_class_identifier) {
+-			pr_info("DHCP: sending class identifier \"%s\"\n",
+-				vendor_class_identifier);
+-			*e++ = 60;	/* Class-identifier */
+-			len = strlen(vendor_class_identifier);
+-			*e++ = len;
+-			memcpy(e, vendor_class_identifier, len);
+-			e += len;
+-		}
+-		len = strlen(dhcp_client_identifier + 1);
+-		/* the minimum length of identifier is 2, include 1 byte type,
+-		 * and can not be larger than the length of options
+-		 */
+-		if (len >= 1 && len < 312 - (e - options) - 1) {
+-			*e++ = 61;
+-			*e++ = len + 1;
+-			memcpy(e, dhcp_client_identifier, len + 1);
+-			e += len + 1;
+-		}
++	*e++ = 55;	/* Parameter request list */
++	*e++ = sizeof(ic_req_params);
++	memcpy(e, ic_req_params, sizeof(ic_req_params));
++	e += sizeof(ic_req_params);
 +
-+	/* If the ct entry is not confirmed and shared with some other skb,
-+	 * e.g., a cloned one, we can't just modify it with a commit or nat
-+	 * as we must not modify the extension set.  Reset.
-+	 */
-+	if (cached && (commit || nat)) {
-+		ct = nf_ct_get(skb, &ctinfo);
-+		if (ct && !nf_ct_is_confirmed(ct) && nf_ct_shared(ct)) {
-+			nf_reset_ct(skb);
-+			cached = false;
-+		}
++	if (ic_host_name_set) {
++		*e++ = 12;	/* host-name */
++		len = strlen(utsname()->nodename);
++		*e++ = len;
++		memcpy(e, utsname()->nodename, len);
++		e += len;
 +	}
-+
- 	if (!cached) {
- 		if (tcf_ct_flow_table_lookup(p, skb, family)) {
- 			skip_add = true;
-@@ -1081,7 +1095,7 @@ do_nat:
- 		if (err)
- 			goto drop;
- 		add_helper = true;
--		if (p->ct_action & TCA_CT_ACT_NAT && !nfct_seqadj(ct)) {
-+		if (nat && !nfct_seqadj(ct)) {
- 			if (!nfct_seqadj_ext_add(ct))
- 				goto drop;
- 		}
++	if (*vendor_class_identifier) {
++		pr_info("DHCP: sending class identifier \"%s\"\n",
++			vendor_class_identifier);
++		*e++ = 60;	/* Class-identifier */
++		len = strlen(vendor_class_identifier);
++		*e++ = len;
++		memcpy(e, vendor_class_identifier, len);
++		e += len;
++	}
++	len = strlen(dhcp_client_identifier + 1);
++	/* the minimum length of identifier is 2, include 1 byte type,
++	 * and can not be larger than the length of options
++	 */
++	if (len >= 1 && len < 312 - (e - options) - 1) {
++		*e++ = 61;
++		*e++ = len + 1;
++		memcpy(e, dhcp_client_identifier, len + 1);
++		e += len + 1;
+ 	}
+ 
+ 	*e++ = 255;	/* End of the list */
 
 
