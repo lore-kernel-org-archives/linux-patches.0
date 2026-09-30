@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEA250AC2B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBFF50B41B;
 	Wed, 30 Sep 2026 16:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785329; cv=none; b=kuvIZtBpWjT0XS7e5NAAtupIPrT6GQudKM4d8h/2hzoDcpD6vMAUSoziuGjMbIVNN2RTm9aHkM8W/itnC0uQ7VpWR6zwrEX2hViHkPA9U0hTSEWxhZY+nVHehLtuk+copwTG4GhSBBo5POly/fuh1m8+iqZHqi/XNmwSgzM/XR8=
+	t=1790785331; cv=none; b=SUzS+Pig4qbVW5mEayciKQ54EXO6ijrZpX8pCXD1u7I8c9SHCfC2uin06xCWpqLkc8wQanzrmKoZm/I4cbfLwyCdLvs5uLYVWuLasKh3/x+cVsMdDY1pCuYPGFfN2ntCBqKlL9JPHP3kU8yahQdgoKZDapfOcjADJZnCurKaDWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785329; c=relaxed/simple;
-	bh=S6/V4KbSmrqJkNTL8aQT1UxJ5mhcVU5B4HlXkIsodNE=;
+	s=arc-20240116; t=1790785331; c=relaxed/simple;
+	bh=EZ9HKPQD/cGZ0j/JtzsZL67KYBI5BROxz8LHaORf0Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCMu7H2yJW/V+dVxAZbCMHe1Nn3/Fs98RtYUMcw0kxOkVmJ8Hvk1iezz1D/+J1MteYolq5PoEqS3xSQWRQv+ZvcX2M+mMdAAPzXRsMC2uITa2aM+LbmEwD+B3CCi3tgKoSeYC629moXhoRThU1fYxoTKsiIU/4/NRyyic8toxUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEN9RszP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OOr1KhNrUjMVmXL35Ffw+9ffUO3mu5iFzPimsVYN8znJtrIpLu64LnTyefy6JTF3ehOtRODb1SjOGGVG/r01u2n+k5zkMpAjAuH1Nbk0cnBNrX7RsKXZXRNJCWB2KcFDrZCSAzEC75fg9I/+MGNTLo7Yju9TmTWHD/F5TQqKbXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1VRhPgN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEN9RszP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EDE1F00893;
-	Wed, 30 Sep 2026 16:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1VRhPgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE071F00899;
+	Wed, 30 Sep 2026 16:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785322;
-	bh=saYgQBkIUWOMarjVhf6aCXViviySepZ3haYKvB+pSus=;
+	s=korg; t=1790785325;
+	bh=uXn/Xpw3Yf+rO42wEygyrGDFf3JFlpB/oTpbCMN1kOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEN9RszPh2yR4gmQ3K2NAX0PQbBVX6DmqDEAaxInO32x8v2z6hkGG96Ml8RrhyXso
-	 PxObzQQT050ejLbeu7C2GCK8/qEmHFyXk6bBXngl0hYicsAbbei/NdNKFmrwEEGeK6
-	 UiS3mCF/DL2GG0nFPmvtfSHl8UYOmdNEbMZItrOw=
+	b=v1VRhPgNjQA2DLCumqMqpcPsqoU/h5czmUhxQD2AGaMS8K3KSBNZ/Rat3EtFFIciK
+	 0pNayiqWiaO7gViiViKV5U5T8GbpXn/xLmJ1r8gpP8javJFbcogWnSBJPwywGvWdh5
+	 7flYFTf10/l7byDIqClUA0eOwo2W5zaBncwg8/lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Vasut <marex@nabladev.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 468/982] net/micrel: Fix typos in micrel driver code comments
-Date: Wed, 30 Sep 2026 17:20:04 +0200
-Message-ID: <20260930152426.837879795@linuxfoundation.org>
+Subject: [PATCH 6.1 469/982] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
+Date: Wed, 30 Sep 2026 17:20:05 +0200
+Message-ID: <20260930152426.858164984@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,104 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit c2b733da93bf607d6c6f925b4d40598e6bb516be ]
+[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
 
-Fix various typos and misspellings in code comments in the
-drivers/net/ethernet/micrel directory
+KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
+when issuing a software power-down (PMECR[1:0] = 10) followed by a
+power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
+properly preventing communication. The Transmitter will still send
+data, but no data will be received.
 
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Link: https://patch.msgid.link/20260118121001.136806-3-yiconghui@gmail.com
+The errata sheet also includes a workaround, which states that,
+it is recommended that the software power-down feature not be used.
+
+Implement that workaround and drop the entry into software power-down
+mode. The ks8851_write_mac_addr() calls entry into normal power-on
+mode at the very beginning of the function, therefore dropping the
+second call to enter software power-down mode is sufficient here.
+The ks8851_net_stop() can only be called after ks8851_net_start()
+was already called, and ks8851_net_start() also makes the MAC enter
+normal power-on mode, therefore it is also fine to drop the call to
+enter software power-down mode from ks8851_net_stop().
+
+This will lead to a slight increase in power consumption, but it also
+fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
+is where the problem was reported and this fix was tested.
+
+[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
+
+Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 66ef5adb7544 ("net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ks8842.c        | 4 ++--
- drivers/net/ethernet/micrel/ks8851_common.c | 2 +-
- drivers/net/ethernet/micrel/ks8851_spi.c    | 4 ++--
- drivers/net/ethernet/micrel/ksz884x.c       | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8842.c b/drivers/net/ethernet/micrel/ks8842.c
-index c11b118dc4158..de2ef3c1150d7 100644
---- a/drivers/net/ethernet/micrel/ks8842.c
-+++ b/drivers/net/ethernet/micrel/ks8842.c
-@@ -242,7 +242,7 @@ static void ks8842_reset(struct ks8842_adapter *adapter)
- 		msleep(10);
- 		iowrite16(0, adapter->hw_addr + REG_GRR);
- 	} else {
--		/* The KS8842 goes haywire when doing softare reset
-+		/* The KS8842 goes haywire when doing software reset
- 		* a work around in the timberdale IP is implemented to
- 		* do a hardware reset instead
- 		ks8842_write16(adapter, 3, 1, REG_GRR);
-@@ -312,7 +312,7 @@ static void ks8842_reset_hw(struct ks8842_adapter *adapter)
- 	/* aggressive back off in half duplex */
- 	ks8842_enable_bits(adapter, 32, 1 << 8, REG_SGCR1);
- 
--	/* enable no excessive collison drop */
-+	/* enable no excessive collision drop */
- 	ks8842_enable_bits(adapter, 32, 1 << 3, REG_SGCR2);
- 
- 	/* Enable port 1 force flow control / back pressure / transmit / recv */
 diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index b1e9d1495c019..7c336e0a4b8ae 100644
+index 7c336e0a4b8ae..4267c4cb1acdc 100644
 --- a/drivers/net/ethernet/micrel/ks8851_common.c
 +++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -493,7 +493,7 @@ static int ks8851_net_open(struct net_device *dev)
-  * ks8851_net_stop - close network device
+@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
+ 		ks8851_wrreg16(ks, KS_MAR(i), val);
+ 	}
+ 
+-	if (!netif_running(dev))
+-		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+-
+ 	ks8851_unlock(ks);
+ 
+ 	return 0;
+@@ -494,8 +491,7 @@ static int ks8851_net_open(struct net_device *dev)
   * @dev: The device being closed.
   *
-- * Called to close down a network device which has been active. Cancell any
-+ * Called to close down a network device which has been active. Cancel any
-  * work, shutdown the RX and TX process and then place the chip into a low
-  * power state whilst it is not being used.
+  * Called to close down a network device which has been active. Cancel any
+- * work, shutdown the RX and TX process and then place the chip into a low
+- * power state whilst it is not being used.
++ * work and shutdown the RX and TX process.
   */
-diff --git a/drivers/net/ethernet/micrel/ks8851_spi.c b/drivers/net/ethernet/micrel/ks8851_spi.c
-index 50afe8c11178e..a1d0918b8edd4 100644
---- a/drivers/net/ethernet/micrel/ks8851_spi.c
-+++ b/drivers/net/ethernet/micrel/ks8851_spi.c
-@@ -41,7 +41,7 @@ static int msg_enable;
-  *
-  * The @lock ensures that the chip is protected when certain operations are
-  * in progress. When the read or write packet transfer is in progress, most
-- * of the chip registers are not ccessible until the transfer is finished and
-+ * of the chip registers are not accessible until the transfer is finished and
-  * the DMA has been de-asserted.
-  */
- struct ks8851_net_spi {
-@@ -298,7 +298,7 @@ static unsigned int calc_txlen(unsigned int len)
+ static int ks8851_net_stop(struct net_device *dev)
+ {
+@@ -522,8 +518,6 @@ static int ks8851_net_stop(struct net_device *dev)
+ 	/* shutdown TX process */
+ 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
  
- /**
-  * ks8851_tx_work - process tx packet(s)
-- * @work: The work strucutre what was scheduled.
-+ * @work: The work structure what was scheduled.
-  *
-  * This is called when a number of packets have been scheduled for
-  * transmission and need to be sent to the device.
-diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
-index e6acd1e7b263a..4b35b7f1e6ad3 100644
---- a/drivers/net/ethernet/micrel/ksz884x.c
-+++ b/drivers/net/ethernet/micrel/ksz884x.c
-@@ -1166,7 +1166,7 @@ struct ksz_port_info {
-  * @tx_cfg:		Cached transmit control settings.
-  * @rx_cfg:		Cached receive control settings.
-  * @intr_mask:		Current interrupt mask.
-- * @intr_set:		Current interrup set.
-+ * @intr_set:		Current interrupt set.
-  * @intr_blocked:	Interrupt blocked.
-  * @rx_desc_info:	Receive descriptor information.
-  * @tx_desc_info:	Transmit descriptor information.
-@@ -2181,7 +2181,7 @@ static void sw_dis_prio_rate(struct ksz_hw *hw, int port)
- }
+-	/* set powermode to soft power down to save power */
+-	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+ 	ks8851_unlock(ks);
  
- /**
-- * sw_init_prio_rate - initialize switch prioirty rate
-+ * sw_init_prio_rate - initialize switch priority rate
-  * @hw: 	The hardware instance.
-  *
-  * This routine initializes the priority rate function of the switch.
+ 	/* ensure any queued tx buffers are dumped */
 -- 
 2.53.0
 
