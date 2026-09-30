@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA4A51B196;
-	Wed, 30 Sep 2026 17:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A66A51CF5E;
+	Wed, 30 Sep 2026 17:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789220; cv=none; b=Snt0AFsSEDFmXZds9y8kSL+OYwpYZQl2Py7Mddx3UsH50/U3pVS+2heGZ78euAJ9jFH7/L2dHVVrBqs1CRDVYFw8CLPWPkqFczBkd5mzIDuacSoKbGQT8f0Rlm/sgqimkORcmBzjVrY11keKrtuzZ1KthVc+7rQtZdTq7v6p8P8=
+	t=1790789222; cv=none; b=jFeETU3bSZW/mSRObKuMfaXhejd35VRoFMsrIrhLuiRBe/3appFFTD2rOWlI5wr43FFYt/Q8tm/w37Pii4o7kieIAkeyiKXik9q4iAqOgz4ZKGdTSTupSnoL/it+qEOLV6frqWZ1k3fcxul0wDfkwFZXDqdsAb5IRA3wgyJGyuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789220; c=relaxed/simple;
-	bh=+oHOvKiPcfWBU/DIleN/93//ihBc0i3i11SUnzmmneM=;
+	s=arc-20240116; t=1790789222; c=relaxed/simple;
+	bh=OaBCtu4cSel43+3Jv5WREeyhtfp5gjixYTxe2E3I110=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/hvLmJgYbjpiyB6nl/aThas6GPaI1Yg3HypDveN6Lu72CzJOrePJm0qg5bg35AKwaoFcDUJKT/tnjv/DRANQmbuRAwXwQXkJBZ6mrUlTxr/CJ7AmBCgWgWAH4RbKmqLQc6R2C5cHFv52Dp4yz/ENAUabjGIo36ccDBFoRjHMg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpzeZj06; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AmY/lsqQTvwSEd6MJpVoA/MJbiyuacrcqGWFQkAbHIUQV/UonoYOezSyaACqPsTWfk7LaEbK+JHq2155uzkjh2GrELJwSPHxKPDI2XD9NW/pOIb/2Pq4NCISKKHMpULTUSL0TXxyl3vZQ+RsL7XLBGH2ZSnaNuTilTPLDTlkShs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GULFTBuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpzeZj06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29421F00899;
-	Wed, 30 Sep 2026 17:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GULFTBuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47EE1F00898;
+	Wed, 30 Sep 2026 17:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789218;
-	bh=xmLt2YbLXKrHEmI1J2o891F6rIgXCYqNZ0Ly/yWfRFw=;
+	s=korg; t=1790789221;
+	bh=zD0TtnsG9YPL6eLmcbdf+1/vqeH50kI3mIKDwZ7qqFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpzeZj06Ocv2gqT/RUn/WEQK6BfGHUd6etUbW7MjqyAC08FEMYkqi84hIJaSaGxHn
-	 rDNlGIYGmythqHYD6+p0kOSoNaflm06B89UjBkwOpLUkN3rHJaqZaV0lXrRBKenImh
-	 kY+jA9iaZU8RUB6Rj9pmIHKz2lph1+Tx7lhYXQjo=
+	b=GULFTBuy8umpz6y4984e/KEXBIhOd71jFa/xDWKQajHjPBazYUDPXq6TVez0zilEY
+	 1v0Ip+F6Mou5T9FEP/OADLQ4kdCqDIN6zMFG4dzlvoIYEMl/KIODM3WS5gJEgg1RjE
+	 TaHwUXq55V+Mna20kR0wUcsmWR+lYvet9OI6ZHog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Francesco Magazzu <postadelmaga@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 398/877] net: stmmac: selftests: Capture all packets for vlan checks
-Date: Wed, 30 Sep 2026 17:21:49 +0200
-Message-ID: <20260930152423.269365429@linuxfoundation.org>
+Subject: [PATCH 6.12 355/877] drm/nouveau/clk: fix list cursor use after loop in nvkm_clk_ustate_update
+Date: Wed, 30 Sep 2026 17:21:06 +0200
+Message-ID: <20260930152422.332104477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,110 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 960db6f65788c21249ea04a947d5c01e38d19294 ]
+[ Upstream commit aff09d9e37e02dc60bde79035ac15b136d602259 ]
 
-While we use vlan_vid_add to trigger the tag filtering machinery
-in the driver, there's no netdev associated to the VLAN. This causes the
-skb to arrive with empty skb->vlan_tci fields, as the packet is marked
-OTHERHOST in __netif_receive_skb_core(), and we fail our validation.
+If list_for_each_entry() exits without hitting a break then "pstate" is
+not a valid pstate pointer.  Introduce a "found" variable instead.
 
-Let's use the proxy mechanism introduced for DSA, that registers a
-ETH_P_ALL packet handler that runs earlier, before the vlan netdev
-lookup, then filters for the correct ethertype before passing an skb
-clone to our validation function.
+The check is reachable from userspace: nvkm_clk_ustate_update() takes the
+pstate id straight from the 'pstate' debugfs file, so requesting an id
+that is not in clk->states - or any id at all when the perf tables are
+broken and the list is empty - makes the pstate->pstate != req test
+dereference the list head cast to a struct nvkm_pstate, which is an
+out-of-bounds read.
 
-As we may receive external frames with the right tag from the outside,
-let's move the address check in the vlan validation function earlier.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-5-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7c8565220697 ("drm/nouveau/clk: implement power state and engine clock control in core")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+[Francesco: rebased on drm-misc-next, expanded the commit message]
+Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260918131620.405133-2-postadelmaga@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 6f2edff624134..e39ee3ea0efff 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -242,6 +242,7 @@ struct stmmac_test_priv {
- 	__be16 packet_type;
- 	int (*func)(struct sk_buff *skb, struct net_device *ndev,
- 		    struct packet_type *pt, struct net_device *orig_ndev);
-+	bool capture_all;
- 	int double_vlan;
- 	int vlan_id;
- 	int ok;
-@@ -344,13 +345,15 @@ static void stmmac_sft_add_pack(struct packet_type *pt)
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+index 178dc56909c27..5f4cd122415fa 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+@@ -473,6 +473,7 @@ static int
+ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
  {
- 	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
+ 	struct nvkm_pstate *pstate;
++	bool found = false;
+ 	int i = 0;
  
--	if (netdev_uses_dsa(tpriv->pt.dev)) {
-+	if (netdev_uses_dsa(tpriv->pt.dev) || tpriv->capture_all) {
- 		tpriv->packet_type = tpriv->pt.type;
- 		tpriv->func = tpriv->pt.func;
+ 	if (!clk->allow_reclock)
+@@ -480,12 +481,14 @@ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
  
- 		/* DSA conduit will report ETH_P_XDSA, so our packet handler
- 		 * won't match. Let's register a ETH_P_ALL match and filter
--		 * manually in stmmac_sft_filter.
-+		 * manually in stmmac_sft_filter. This is also useful for
-+		 * VLAN tests, to capture packets otherwise marked as
-+		 * OTHERHOST.
- 		 */
- 		tpriv->pt.type = htons(ETH_P_ALL);
- 		tpriv->pt.func = stmmac_sft_filter;
-@@ -923,6 +926,11 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
- 		goto out;
- 	if (skb_headlen(skb) < (STMMAC_TEST_PKT_SIZE - ETH_HLEN))
- 		goto out;
-+
-+	ehdr = (struct ethhdr *)skb_mac_header(skb);
-+	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
-+		goto out;
-+
- 	if (tpriv->vlan_id) {
- 		if (skb->vlan_proto != htons(proto))
- 			goto out;
-@@ -934,10 +942,6 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
+ 	if (req != -1 && req != -2) {
+ 		list_for_each_entry(pstate, &clk->states, head) {
+-			if (pstate->pstate == req)
++			if (pstate->pstate == req) {
++				found = true;
+ 				break;
++			}
+ 			i++;
  		}
+ 
+-		if (pstate->pstate != req)
++		if (!found)
+ 			return -EINVAL;
+ 		req = i;
  	}
- 
--	ehdr = (struct ethhdr *)skb_mac_header(skb);
--	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
--		goto out;
--
- 	ihdr = ip_hdr(skb);
- 	if (tpriv->double_vlan)
- 		ihdr = (struct iphdr *)(skb_network_header(skb) + 4);
-@@ -979,6 +983,7 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
- 
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1075,6 +1080,7 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
- 
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1355,6 +1361,7 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
- 	tpriv->vlan_id = 0x123;
-+	tpriv->capture_all = true;
- 
- 	ret = vlan_vid_add(priv->dev, htons(proto), tpriv->vlan_id);
- 	if (ret)
 -- 
 2.53.0
 
