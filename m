@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BAD4F4755;
-	Wed, 30 Sep 2026 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271DA50EC11;
+	Wed, 30 Sep 2026 17:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787626; cv=none; b=iDUEULMrnTSuQ667YPCSkOCic2FHaicFo7juJW1POMjI1K7nOt570SB2axe3SvQqNYIiJpH3VmhFz8BdahFazjBxvNrT6find0Og39OnLTIxq6A4rEEGnkpKn2g/oy8ADsg2eO6b5bi3Z/lgmY7o3DyHAnW9FAb++Zp0HO/0Itg=
+	t=1790787629; cv=none; b=Oh+d7IK9A4ZFiJmfkKXwBbaiQslZZNjpDVFDrGlZJf0lZJBziPJMuobPyObUtEddd/S1z8jpjoJYAcr072JNgElA7i1zm2oVhz8idUH0yUZ/t0bpZrUOfBGHZ3EYJY9FykTfL6ng9knk45OLaUyg/aTZ/cMXkM9FMmUgZQ3mKOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787626; c=relaxed/simple;
-	bh=v4DhJ+Eu5rS+3iPzlzsv7AVRJmNZe2SlPtyk7NyK08A=;
+	s=arc-20240116; t=1790787629; c=relaxed/simple;
+	bh=CO95x8UFT8MlrO9mH3YospsKG4Oodszc7joM64So12M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lq7cALYhFFNetPjE/Yuvn657tQaQHMq+xglXxKDzZuc2U6fBRxm2Ng53mPH1+v5qgPinXle64tGdHFkblBwm7hKgeOLMGYz4qACKHF9cGaG3CPnpz8V6QPyqKTQz3O7jGyzuU1sFjdxb4GCaEIis+NCJ6p5FeaqT189sJRh/I18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWxbKsWi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d4HN+sGgfFkVsYUUWbv3+g1Ykjxi91LspBBNX8iUo/skSr4EMMvEHCzdzKK3cj+jTpmJfgHWlUgAXe5UPJj64SUnOMbHOOV0uE2i7X0Gkny7hWlKiyXcdcf0AeBZGsa+A5HYx/Ko9npKpY/P3xGf0BZm5/WYHu+x/OzFFrFjBkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IymOiszv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWxbKsWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C01F000FF;
-	Wed, 30 Sep 2026 17:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IymOiszv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFE01F000FF;
+	Wed, 30 Sep 2026 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787625;
-	bh=RLOKF63MvIpv/eDCnc2Q3G1eRnipcasyJGGElqA1VTQ=;
+	s=korg; t=1790787628;
+	bh=3O64tn1nurd5Uxa+gva5vULCk+9ZWKVNc07khWke88s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FWxbKsWiS9jFlzB3XAZqTMWXG5uUk2VVmGTNSZpINvBPQ4yE+qHCQYLKI6d4TGgMb
-	 lMurcJ/s2B2YpssEQZkcv+X38S2MTgMFExppVc5+aMGeBlgLSH0oXTNpSpV3lxbHk/
-	 ADbKR++LmvUsC7ITlI1qfKSJPEUNVtO4vqfOlT2c=
+	b=IymOiszvXP+w1ChufdgFSnRUUAxgcqm/LP8NExxrBfzxRsN1KFml/L7XG5ZtZuUEH
+	 GN+hgolPcZUBH22Dv5WX7+94okpWrcScCYxiYH6OmRrjKldQTxOpW/7LjPW58zBQ2i
+	 N56T3QzTeJUaSm0VTzKPMyW+zDowuxClG30AYfhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 294/457] drm/nouveau/uvmm: fix UAF in nouveau_uvmm_sm when BO is in TTM_PL_SYSTEM
-Date: Wed, 30 Sep 2026 17:26:39 +0200
-Message-ID: <20260930152352.378425354@linuxfoundation.org>
+Subject: [PATCH 7.2 295/457] drm/nouveau: fix autosuspend cleanup during teardown
+Date: Wed, 30 Sep 2026 17:26:40 +0200
+Message-ID: <20260930152352.399496062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,180 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 3359a372efb6d585c97019ee1b7f1874442bcebe upstream.
+commit fefd9480ec361969f1a836df46326a1801062c26 upstream.
 
-nouveau_uvmm_sm() calls op_map(), which passes bo->resource through
-nouveau_mem() to nouveau_uvma_map(). nouveau_uvmm_vmm_map() then reads
-mem->mem.type.
+nouveau_drm_device_init() calls pm_runtime_use_autosuspend(), but
+nouveau_drm_device_fini() does not call the matching
+pm_runtime_dont_use_autosuspend().
 
-But this is only valid when bo->resource is backed by struct nouveau_mem,
-as is the case for VRAM and TT resources. If the BO is left in
-TTM_PL_SYSTEM, bo->resource is only a struct ttm_resource. Treating it
-as struct nouveau_mem makes the mem->mem.type read past the end of the
-resource, causing a KASAN: slab-use-after-free Read in nouveau_uvmm_sm
-report:
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
-BUG: KASAN: slab-use-after-free in nouveau_uvmm_vmm_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:152 [inline]
-BUG: KASAN: slab-use-after-free in nouveau_uvma_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:199 [inline]
-BUG: KASAN: slab-use-after-free in op_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:849 [inline]
-BUG: KASAN: slab-use-after-free in nouveau_uvmm_sm.constprop.0+0x6ab/0x900 drivers/gpu/drm/nouveau/nouveau_uvmm.c:903
-Read of size 1 at addr ffff888127d3e3a0 by task kworker/0:1/11
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
 
-CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 7.2.0 #5 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nouveau_sched_wq_2224 drm_sched_run_job_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x95/0xe0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xcb/0x5a0 mm/kasan/report.c:482
- kasan_report+0xca/0x100 mm/kasan/report.c:595
- nouveau_uvmm_vmm_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:152 [inline]
- nouveau_uvma_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:199 [inline]
- op_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:849 [inline]
- nouveau_uvmm_sm.constprop.0+0x6ab/0x900 drivers/gpu/drm/nouveau/nouveau_uvmm.c:903
- nouveau_uvmm_sm_unmap drivers/gpu/drm/nouveau/nouveau_uvmm.c:932 [inline]
- nouveau_uvmm_bind_job_run+0xd6/0x250 drivers/gpu/drm/nouveau/nouveau_uvmm.c:1532
- nouveau_job_run drivers/gpu/drm/nouveau/nouveau_sched.c:350 [inline]
- nouveau_sched_run_job+0x62/0xd0 drivers/gpu/drm/nouveau/nouveau_sched.c:364
- drm_sched_run_job_work+0x356/0xa10 drivers/gpu/drm/scheduler/sched_main.c:1061
- process_one_work+0x8a5/0x1900 kernel/workqueue.c:3322
- process_scheduled_works kernel/workqueue.c:3405 [inline]
- worker_thread+0x5dd/0xd80 kernel/workqueue.c:3486
- kthread+0x31d/0x420 kernel/kthread.c:436
- ret_from_fork+0x662/0x940 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+Add the missing pm_runtime_dont_use_autosuspend() call to the common
+device teardown path.
 
-Allocated by task 2224 on cpu 0 at 66.550027s:
- kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
- kasan_save_track+0x17/0x60 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5334 [inline]
- __kmalloc_noprof+0x304/0x7c0 mm/slub.c:5359
- _kmalloc_noprof include/linux/slab.h:992 [inline]
- dma_resv_list_alloc+0x27/0x90 drivers/dma-buf/dma-resv.c:106
- dma_resv_reserve_fences+0x60e/0xa30 drivers/dma-buf/dma-resv.c:205
- ttm_bo_alloc_resource+0x12c/0xbd0 drivers/gpu/drm/ttm/ttm_bo.c:721
- ttm_bo_validate+0x1bc/0x4a0 drivers/gpu/drm/ttm/ttm_bo.c:856
- ttm_bo_init_reserved+0x2c3/0x570 drivers/gpu/drm/ttm/ttm_bo.c:970
- nouveau_bo_init+0x159/0x2c0 drivers/gpu/drm/nouveau/nouveau_bo.c:359
- nouveau_gem_new+0x234/0x5f0 drivers/gpu/drm/nouveau/nouveau_gem.c:272
- nouveau_gem_ioctl_new+0x1eb/0x420 drivers/gpu/drm/nouveau/nouveau_gem.c:352
- drm_ioctl_kernel+0x192/0x350 drivers/gpu/drm/drm_ioctl.c:817
- drm_ioctl+0x4f8/0xb40 drivers/gpu/drm/drm_ioctl.c:914
- nouveau_drm_ioctl+0xea/0x2c0 drivers/gpu/drm/nouveau/nouveau_drm.c:1338
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x180/0x1d0 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This issue was found by manual code inspection.
 
-Freed by task 2223 on cpu 0 at 66.554063s:
- kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
- kasan_save_track+0x17/0x60 mm/kasan/common.c:78
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x61/0x80 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2677 [inline]
- __rcu_free_sheaf_prepare+0xb6/0x2e0 mm/slub.c:2928
- rcu_free_sheaf+0x1b/0x120 mm/slub.c:5978
- rcu_do_batch kernel/rcu/tree.c:2645 [inline]
- rcu_core+0x521/0x1490 kernel/rcu/tree.c:2897
- handle_softirqs+0x1b1/0x8a0 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
- irq_exit_rcu+0x9/0x20 kernel/softirq.c:752
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062 [inline]
- sysvec_apic_timer_interrupt+0x70/0x80 arch/x86/kernel/apic/apic.c:1062
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:674
-
-The buggy address belongs to the object at ffff888127d3e380
- which belongs to the cache kmalloc-96 of size 96
-The buggy address is located 32 bytes inside of
- freed 96-byte region [ffff888127d3e380, ffff888127d3e3e0)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x127d3e
-flags: 0x200000000000000(node=0|zone=2)
-page_type: f5(slab)
-raw: 0200000000000000 ffff888100041280 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff888127d3e280: 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc
- ffff888127d3e300: 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc
->ffff888127d3e380: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-                               ^
- ffff888127d3e400: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
- ffff888127d3e480: 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc
-
-Fix by resetting the placement to the BO's valid domains before
-calling nouveau_bo_validate(), matching the handling in
-nouveau_uvmm_bo_validate(), so map jobs do not run for SYSTEM resources;
-Reject BO that cannot reside in VRAM or GART;
-Also skip op_map() when the GPUVA has been invalidated, matching the
-handling in the unmap and remap paths.
-
-Found when fuzzing the nouveau driver with a modified Syzkaller.
-
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
+Fixes: 5addcf0a5f0f ("nouveau: add runtime PM support (v0.9)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.5
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/0D77BEC410CE0129+20260907052204.1431488-1-peiyang_he@smail.nju.edu.cn
+Link: https://patch.msgid.link/20260808134137.2864847-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -846,6 +846,9 @@ op_map(struct nouveau_uvma *uvma)
- {
- 	struct nouveau_bo *nvbo = nouveau_gem_object(uvma->va.gem.obj);
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -585,6 +585,7 @@ nouveau_drm_device_fini(struct nouveau_d
+ 	if (nouveau_pmops_runtime()) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
++		pm_runtime_dont_use_autosuspend(dev->dev);
+ 	}
  
-+	if (drm_gpuva_invalidated(&uvma->va))
-+		return;
-+
- 	nouveau_uvma_map(uvma, nouveau_mem(nvbo->bo.resource));
- }
- 
-@@ -1232,6 +1235,7 @@ bind_lock_validate(struct nouveau_job *j
- 
- 		drm_gpuva_for_each_op(va_op, op->ops) {
- 			struct drm_gem_object *obj = op_gem_obj(va_op);
-+			struct nouveau_bo *nvbo;
- 
- 			if (unlikely(!obj))
- 				continue;
-@@ -1246,8 +1250,13 @@ bind_lock_validate(struct nouveau_job *j
- 			if (va_op->op == DRM_GPUVA_OP_UNMAP)
- 				continue;
- 
--			ret = nouveau_bo_validate(nouveau_gem_object(obj),
--						  true, false);
-+			nvbo = nouveau_gem_object(obj);
-+			if (!(nvbo->valid_domains &
-+			      (NOUVEAU_GEM_DOMAIN_VRAM | NOUVEAU_GEM_DOMAIN_GART)))
-+				return -EINVAL;
-+
-+			nouveau_bo_placement_set(nvbo, nvbo->valid_domains, 0);
-+			ret = nouveau_bo_validate(nvbo, true, false);
- 			if (ret)
- 				return ret;
- 		}
+ 	nouveau_led_fini(dev);
 
 
