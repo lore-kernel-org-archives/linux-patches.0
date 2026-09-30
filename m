@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FBA38E8CE;
-	Wed, 30 Sep 2026 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC25F38E8CE;
+	Wed, 30 Sep 2026 18:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791370; cv=none; b=ajuID2ezug9G/JA9tpwuBPODiFehdMk4xRjhHLARATsTAYmpD06hd7ogwTd4l4Dr58R4ciHz0zL3iXybSIbUuR33g3hNN6FNQssKgS3L9gwOfH9YxbcDIflu4k70eBmEq+vmR66gnffka4tiEDgd6FdyvoZi0PJCTQnq83egpnQ=
+	t=1790791373; cv=none; b=iuAM53vcP+5sTl0LUI8C8Gy91L8hWoFo/Gnk7VWZsTJmjc85CC4xQfQm5SFLDLaMYNYbacJvHr9L1gUyr+awrxxIZKG0F/2xfnNehH1DFzLJ+uT9rbBbCHzk1P8vT0wEJMWGNC3dYKRluu1vQsTCzLF6qVbTyNvpogmHbgzTlhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791370; c=relaxed/simple;
-	bh=D6xzqgtAladrUSa4m3QwJnU7qAAV8NQGI+6YwcHmbUg=;
+	s=arc-20240116; t=1790791373; c=relaxed/simple;
+	bh=NZGznmP9sPdzGU7mNUhoOLexszwZ4E8bNP4hvjsrcAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHFUhBZCE0EIWCdUKcI009DxE5w9rAUvp4yqaWovqD2GCB2a5Ea6QjGu1U7nmhOtd35gEGwb1Ek+brTeRyReBPVNvFrSRM80o1WHRXeNt7+CILQKtZ2WSviy289o/uE2XiNfUYGTVVTDKz+gqfRdBO05Bc5E9Uo5PVEKmRHz4Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGs1FFYT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rYMT+lI34ls/YSdhtM3KjwM7ue3VuoVZi1FrKT/g7aCexqroIXvQc2/xGRYmCJKgECMZ6Hx5ztR9aGBzzuoFSs/VBn28GOmScrx74aSuB9BJnma69PLqLvXu+qziKS3knHNtZ+5zfFCH1mQba369L9/zudmX51UorJUuRBf+Wjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNZzegqQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGs1FFYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D08E1F000FF;
-	Wed, 30 Sep 2026 18:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNZzegqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AC31F000FF;
+	Wed, 30 Sep 2026 18:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791369;
-	bh=1Y4CE4j19fniuBsmrC7YPjmey4nljY9AdTlnca4pXVk=;
+	s=korg; t=1790791371;
+	bh=8HU0lhfdRBxOVoWSf8nvRD7wEOr2D81jTk0A59LiHsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGs1FFYTYU98NsM2SqsV0VqaaRKD8v9i3Gs19xG5r67MhGVV3Mg/1OoXzKaz14CbN
-	 6hSNMu7nOsNQX1GRnMbjiOs85kQ1OduNLcBFjPwrmSpBXQ33MxMrcznd3iNDEsgB6/
-	 Ak71iAg7U3HNf3hyyMjGOEjdrPOzNO7jhy753hno=
+	b=ZNZzegqQsibMTni5asfoANZLxcx2UAvLA6u/d++NBQy6ejqoR+pSss4lUN73FI43L
+	 OPIoSRlxL6+BLk1cy4e7x4oBDutE2uMtSABrEN7fHpahX78O6TILuevP2GM3TympB8
+	 9w4Lp5dxnQEKfhNmRNLZ89U2ujGiJ3wKYnPx536o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 279/752] ASoC: ux500: Propagate MSP setup errors
-Date: Wed, 30 Sep 2026 17:22:29 +0200
-Message-ID: <20260930152404.327491756@linuxfoundation.org>
+Subject: [PATCH 5.15 280/752] ASoC: ux500: Correct MSP frame and bit clock setup
+Date: Wed, 30 Sep 2026 17:22:30 +0200
+Message-ID: <20260930152404.349270986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,50 +53,273 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 3415421a2b0bc4e32bb5a9df24ed7863512d47a7 ]
+[ Upstream commit 94c18cea657c48680e4ee20b635b6c01f3eb352e ]
 
-The prepare callback continues with a partly initialized configuration
-when format setup fails. Probe likewise tests the allocated pointer
-instead of the return value, so an MMIO resource or mapping failure can
-be ignored after allocation succeeds.
+FRPER plus one is the number of bit clocks in a frame. It must follow
+the configured slot count and width. The legacy rate-dependent
+constants produce malformed frames; notably, a 16-slot, 16-bit frame
+is programmed as 278 rather than 256 clocks.
 
-Return configuration failures from prepare and test the MSP
-initialization result directly.
+Derive the frame period from the TDM geometry and use the real
+functional clock rate. Validate that the requested bit clock has an
+exact, representable divider, program SCKDIV as divider minus one, and
+report the resulting bit clock using that same divisor.
 
 Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-2-4b60b002d55a@kernel.org
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-3-4b60b002d55a@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 75 +++++++--------------------------
+ sound/soc/ux500/ux500_msp_dai.h | 11 -----
+ sound/soc/ux500/ux500_msp_i2s.c | 54 ++++++++++++++----------
+ sound/soc/ux500/ux500_msp_i2s.h |  2 -
+ 4 files changed, 46 insertions(+), 96 deletions(-)
 
 diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 8d57ee06c46d6..6e71615c3b840 100644
+index 6e71615c3b840..2de62175019af 100644
 --- a/sound/soc/ux500/ux500_msp_dai.c
 +++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -470,7 +470,9 @@ static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
- 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter (rate = %d).\n", __func__,
- 		dai->id, snd_pcm_stream_str(substream), runtime->rate);
+@@ -61,72 +61,21 @@ static int setup_pcm_multichan(struct snd_soc_dai *dai,
+ 	return 0;
+ }
  
--	setup_msp_config(substream, dai, &msp_config);
-+	ret = setup_msp_config(substream, dai, &msp_config);
-+	if (ret)
-+		return ret;
+-static int setup_frameper(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static void setup_frameper(struct snd_soc_dai *dai,
++			   struct msp_protdesc *prot_desc)
+ {
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
  
- 	ret = ux500_msp_i2s_open(drvdata->msp, &msp_config);
- 	if (ret < 0) {
-@@ -765,7 +767,7 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+-	switch (drvdata->slots) {
+-	case 1:
+-		switch (rate) {
+-		case 8000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_8_KHZ;
+-			break;
+-
+-		case 16000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_16_KHZ;
+-			break;
+-
+-		case 44100:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_44_1_KHZ;
+-			break;
+-
+-		case 48000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_48_KHZ;
+-			break;
+-
+-		default:
+-			dev_err(dai->dev,
+-				"%s: Error: Unsupported sample-rate (freq = %d)!\n",
+-				__func__, rate);
+-			return -EINVAL;
+-		}
+-		break;
+-
+-	case 2:
+-		prot_desc->frame_period = FRAME_PER_2_SLOTS;
+-		break;
+-
+-	case 8:
+-		prot_desc->frame_period = FRAME_PER_8_SLOTS;
+-		break;
+-
+-	case 16:
+-		prot_desc->frame_period = FRAME_PER_16_SLOTS;
+-		break;
+-	default:
+-		dev_err(dai->dev,
+-			"%s: Error: Unsupported slot-count (slots = %d)!\n",
+-			__func__, drvdata->slots);
+-		return -EINVAL;
+-	}
+-
+-	prot_desc->clocks_per_frame =
+-			prot_desc->frame_period+1;
++	prot_desc->clocks_per_frame = drvdata->slots * drvdata->slot_width;
++	prot_desc->frame_period = prot_desc->clocks_per_frame - 1;
+ 
+ 	dev_dbg(dai->dev, "%s: Clocks per frame: %u\n",
+ 		__func__,
+ 		prot_desc->clocks_per_frame);
+-
+-	return 0;
+ }
+ 
+-static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static int setup_pcm_framing(struct snd_soc_dai *dai,
++			     struct msp_protdesc *prot_desc)
+ {
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
+ 
+@@ -167,7 +116,9 @@ static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+ 	prot_desc->tx_elem_len_2 = MSP_ELEM_LEN_16;
+ 	prot_desc->rx_elem_len_2 = MSP_ELEM_LEN_16;
+ 
+-	return setup_frameper(dai, rate, prot_desc);
++	setup_frameper(dai, prot_desc);
++
++	return 0;
+ }
+ 
+ static int setup_clocking(struct snd_soc_dai *dai,
+@@ -368,7 +319,7 @@ static int setup_msp_config(struct snd_pcm_substream *substream,
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		ret = setup_pcm_framing(dai, runtime->rate, prot_desc);
++		ret = setup_pcm_framing(dai, prot_desc);
+ 		if (ret < 0)
+ 			return ret;
+ 
+@@ -736,7 +687,6 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 	drvdata->tx_mask = 0x01;
+ 	drvdata->rx_mask = 0x01;
+ 	drvdata->slot_width = 16;
+-	drvdata->master_clk = MSP_INPUT_FREQ_APB;
+ 
+ 	drvdata->reg_vape = devm_regulator_get(&pdev->dev, "v-ape");
+ 	if (IS_ERR(drvdata->reg_vape)) {
+@@ -765,6 +715,11 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 			__func__, ret);
+ 		return ret;
  	}
++	drvdata->master_clk = clk_get_rate(drvdata->clk);
++	if (!drvdata->master_clk) {
++		dev_err(&pdev->dev, "MSP clock has no rate\n");
++		return -EINVAL;
++	}
  
  	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
--	if (!drvdata->msp) {
-+	if (ret) {
- 		dev_err(&pdev->dev,
- 			"%s: ERROR: Failed to init MSP-struct (%d)!",
- 			__func__, ret);
+ 	if (ret) {
+diff --git a/sound/soc/ux500/ux500_msp_dai.h b/sound/soc/ux500/ux500_msp_dai.h
+index fcd4b26f5d2de..731f87d626733 100644
+--- a/sound/soc/ux500/ux500_msp_dai.h
++++ b/sound/soc/ux500/ux500_msp_dai.h
+@@ -24,17 +24,6 @@
+ 
+ #define UX500_I2S_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
+ 
+-#define FRAME_PER_SINGLE_SLOT_8_KHZ		31
+-#define FRAME_PER_SINGLE_SLOT_16_KHZ	124
+-#define FRAME_PER_SINGLE_SLOT_44_1_KHZ	63
+-#define FRAME_PER_SINGLE_SLOT_48_KHZ	49
+-#define FRAME_PER_2_SLOTS				31
+-#define FRAME_PER_8_SLOTS				138
+-#define FRAME_PER_16_SLOTS				277
+-
+-#define UX500_MSP_INTERNAL_CLOCK_FREQ  40000000
+-#define UX500_MSP1_INTERNAL_CLOCK_FREQ UX500_MSP_INTERNAL_CLOCK_FREQ
+-
+ #define UX500_MSP_MIN_CHANNELS		1
+ #define UX500_MSP_MAX_CHANNELS		8
+ 
+diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
+index 0b266b682f8b1..5d5efd5074a7d 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.c
++++ b/sound/soc/ux500/ux500_msp_i2s.c
+@@ -214,35 +214,20 @@ static int configure_protocol(struct ux500_msp *msp,
+ 
+ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
+ {
++	struct msp_protdesc *protdesc;
++	u64 desired_bitclk;
++	unsigned int bitclk;
+ 	u32 reg_val_GCR;
+-	u32 frame_per = 0;
+-	u32 sck_div = 0;
+-	u32 frame_width = 0;
+-	u32 temp_reg = 0;
+-	struct msp_protdesc *protdesc = NULL;
++	u32 sck_div;
++	u32 temp_reg;
+ 
+ 	reg_val_GCR = readl(msp->registers + MSP_GCR);
+ 	writel(reg_val_GCR & ~SRG_ENABLE, msp->registers + MSP_GCR);
+ 
+-	if (config->default_protdesc)
+-		protdesc =
+-			(struct msp_protdesc *)&prot_descs[config->protocol];
+-	else
+-		protdesc = (struct msp_protdesc *)&config->protdesc;
+-
+ 	switch (config->protocol) {
+ 	case MSP_PCM_PROTOCOL:
+ 	case MSP_PCM_COMPAND_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
+-		break;
+ 	case MSP_I2S_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
+ 		break;
+ 	default:
+ 		dev_err(msp->dev, "%s: ERROR: Unknown protocol (%d)!\n",
+@@ -251,12 +236,35 @@ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
+ 		return -EINVAL;
+ 	}
+ 
++	if (config->default_protdesc)
++		protdesc = (struct msp_protdesc *)&prot_descs[config->protocol];
++	else
++		protdesc = &config->protdesc;
++
++	if (!config->frame_freq || !protdesc->clocks_per_frame)
++		return -EINVAL;
++
++	desired_bitclk = (u64)config->frame_freq * protdesc->clocks_per_frame;
++	if (desired_bitclk > config->f_inputclk)
++		return -EINVAL;
++	bitclk = desired_bitclk;
++	if (config->f_inputclk % bitclk) {
++		dev_err(msp->dev,
++			"Input clock %u cannot generate bit clock %u\n",
++			config->f_inputclk, bitclk);
++		return -EINVAL;
++	}
++
++	sck_div = config->f_inputclk / bitclk;
++	if (!sck_div || sck_div > SCK_DIV_MASK + 1)
++		return -EINVAL;
++
+ 	temp_reg = (sck_div - 1) & SCK_DIV_MASK;
+-	temp_reg |= FRAME_WIDTH_BITS(frame_width);
+-	temp_reg |= FRAME_PERIOD_BITS(frame_per);
++	temp_reg |= FRAME_WIDTH_BITS(protdesc->frame_width);
++	temp_reg |= FRAME_PERIOD_BITS(protdesc->frame_period);
+ 	writel(temp_reg, msp->registers + MSP_SRG);
+ 
+-	msp->f_bitclk = (config->f_inputclk)/(sck_div + 1);
++	msp->f_bitclk = config->f_inputclk / sck_div;
+ 
+ 	/* Enable bit-clock */
+ 	udelay(100);
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 9b9500492dc73..86a584e18353c 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -14,8 +14,6 @@
+ 
+ #include <linux/platform_device.h>
+ 
+-#define MSP_INPUT_FREQ_APB 48000000
+-
+ /*** Stereo mode. Used for APB data accesses as 16 bits accesses (mono),
+  *   32 bits accesses (stereo).
+  ***/
 -- 
 2.53.0
 
