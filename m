@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C354F85C8;
-	Wed, 30 Sep 2026 16:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6C947140E;
+	Wed, 30 Sep 2026 16:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784004; cv=none; b=k+npbUvEZicB613xiERyFddutt2M8WFXzWCJjj4+zr5d4QESRR4gvunopZcc2JEjweHq54gCiEA6cJunBVNdgBp7X45rB12EGdB7L6/fKkuE0+OQ0DH51udUot6/ZxZhGkGwJMAW7CFv9xleKvS9O2XSpVontWbG/JUELKzECxE=
+	t=1790784009; cv=none; b=NS7ZuWOAN5/hsd+Q8oNyI4GvcKMRzXfxwAI6t32HxcUXPjqnwWdSJUG27y//Kr4o6h2Mxf71Np/yadm71z9ng2enmgJF+ydOm2wBIf+iTtlrHTCabflV3gpLpWm0jmoH67Yxv8qANh7qzO3S7AN4WCAtFalUNzJPzUDokOS7giI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784004; c=relaxed/simple;
-	bh=cPr6DU/HQ7PmBEBy5SZGTghS5455Gx/GUjzA6Locl34=;
+	s=arc-20240116; t=1790784009; c=relaxed/simple;
+	bh=sFMPbO2NxIA1ySJk+JdRCXvGWuC5PXXvcjUT3Q+HU+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=St4MOj+UPcq4d2rv1Cf+AXJJmHNyclYWbWpkGZjv5qOamRZ49BXjsR9m3tlf5dhlV/pnNMHv627uj/beREg2zb2R1ArHjyj/XY5JexDextmVpZhm1zvLEXvYHinv7EpIfe7dVLV3Nyo0AgAOnrG7BX/C71DgYfeE0Gs0p8ThF6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlZIf5nI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lyz2NaFh1e6vWiCPJOIGIHHTwgVQkzy26ygHq7QgBjfkT8nPRE/p4JI0mS/dBoBqXwcN+ypsE83AJXVmsuSO3aAJivFwNNZ9gLMI7yGc2Rt70kUuE0ldE+4DVuCZYBnD/q9T3mMUSePulU3ROzA7SGoHxSpi80xukFp8UDTEv+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnLh7iln; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlZIf5nI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E81A1F00898;
-	Wed, 30 Sep 2026 15:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnLh7iln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2181F000FF;
+	Wed, 30 Sep 2026 16:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784000;
-	bh=64YHucwG9dpw1rzg5SjFFaSiAXXX7LkiFUptsCiao/k=;
+	s=korg; t=1790784003;
+	bh=s7tpApA4Kcuu/EGPLe6cxyeJVjJ6h0LzkTqr3V37RpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JlZIf5nI3MsqDoG0QP6XvK/PACE70IZY4LObtdqoEof2pMrluk8pbQikMloNfvZL4
-	 A9bUKXcgnWLb4IQAvM5LkfSk1QqhgOajMxQzfZOAFgfYCJKZk+0eBMV6jtm0LbOx8R
-	 zPsNvZ4NJKLMqYjMh9Ebt/RwuMAv8eqD8vaefuV8=
+	b=vnLh7ilnCdsCEtYTYfz99Ac4dVBzJ7PrshHkbQlsAlhAOZHNJnph5ogcTL6T8QHRR
+	 Lep93qFxwi9uRsXkSUSseMDtNrQcP1ATHFgI9d0WYPPVr96nRJ+LlTX9s0IGeS8IZM
+	 O7pgGt/ak+MMFttvKrs1NuwbN+NdTRn08V1jrS0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Burton <jamesburton@meta.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jiri Pirko <jiri@resnulli.us>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 552/595] tipc: reject invalid and unexpected GRP_ACK_MSG to prevent bc_ackers underflow
-Date: Wed, 30 Sep 2026 17:27:25 +0200
-Message-ID: <20260930152359.589245955@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 543/595] net/sched: sch_teql: fix shadowed err in __teql_resolve()
+Date: Wed, 30 Sep 2026 17:27:16 +0200
+Message-ID: <20260930152359.391170814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,75 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit 99cc2a62e07a44a22254d7beca9ef1f8ad886d0d upstream.
+[ Upstream commit 907b978e82cb4c1c245fc2985bb27c5d5c88c8f6 ]
 
-Commit 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate
-GRP_ACK_MSG") rejected duplicate/stale ACKs in tipc_group_proto_rcv()
-by returning early when less_eq(acked, m->bc_acked).
+__teql_resolve() declares an inner 'int err;' inside the
+'if (neigh_event_send(n, skb_res) == 0)' block, shadowing the outer
+'int err = 0;'. As a result, a negative return from dev_hard_header()
+is written to the inner variable and __teql_resolve() still returns 0.
 
-However, that check remains incomplete in two ways:
+Remove the shadowed variable and set the outer err to -EINVAL when
+dev_hard_header() returns a negative error.
 
-1. When grp->bc_ackers is zero (e.g. on a quiet group, when replicast
-   ACKs were not requested, or after all expected members have already
-   acknowledged), an unexpected GRP_ACK_MSG with acked > m->bc_acked
-   passes less_eq() and unconditionally decrements grp->bc_ackers.
-   Because bc_ackers is a u16, this wraps to 65535, causing
-   tipc_group_bc_cong() to permanently report congestion and blocking
-   all future group broadcasts on the socket.
-
-2. During an active broadcast round (grp->bc_ackers > 0), the sender
-   transmits packet S and advances grp->bc_snd_nxt to S + 1. Receivers
-   increment their expected counter to S + 1 upon consuming packet S,
-   so the only valid ACK value for the current round is strictly
-   acked == grp->bc_snd_nxt.
-
-   However, tipc_group_update_bc_members() initializes each member's
-   m->bc_acked to prev = grp->bc_snd_nxt - 1 (S - 1 before increment).
-   This leaves a 2-sequence gap (S - 1 to S + 1) in sequence space.
-   An incoming ACK is therefore neither rejected as duplicate nor
-   prevented from decrementing grp->bc_ackers if an unexpected or stale
-   value (such as S) is received. A member sending acked = S followed
-   by acked = S + 1 could decrement grp->bc_ackers twice in the same
-   round, prematurely clearing bc_ackers or underflowing it.
-
-Fix this by:
-- Dropping GRP_ACK_MSG immediately if grp->bc_ackers is zero.
-- Requiring acked == grp->bc_snd_nxt and rejecting duplicates where
-  m->bc_acked == acked. Because replicast broadcast rounds are strictly
-  sequential, only grp->bc_snd_nxt can be acknowledged, and each member
-  can acknowledge at most once per round.
-
-Note that a related pre-existing issue in tipc_group_delete_member()
-(where grp->bc_ackers decrementing to zero upon member departure does
-not restore *grp->open or trigger a socket wakeup) will be addressed
-in a separate patch.
-
-Fixes: 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG")
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Reported-by: James Burton <jamesburton@meta.com>
-Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260913044233.193927-1-edumazet@google.com
+Link: https://patch.msgid.link/20260924082951.1599377-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/group.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_teql.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -796,10 +796,10 @@ void tipc_group_proto_rcv(struct tipc_gr
- 		tipc_group_open(m, usr_wakeup);
- 		return;
- 	case GRP_ACK_MSG:
--		if (!m)
-+		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (less_eq(acked, m->bc_acked))
-+		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
- 			return;
- 		m->bc_acked = acked;
- 		if (--grp->bc_ackers)
+diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
+index e78a849fb1b0b..00ac4386627c7 100644
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -242,14 +242,11 @@ __teql_resolve(struct sk_buff *skb, struct sk_buff *skb_res,
+ 	}
+ 
+ 	if (neigh_event_send(n, skb_res) == 0) {
+-		int err;
+ 		char haddr[MAX_ADDR_LEN];
+ 
+ 		neigh_ha_snapshot(haddr, n, dev);
+-		err = dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
+-				      haddr, NULL, skb->len);
+-
+-		if (err < 0)
++		if (dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
++				    haddr, NULL, skb->len) < 0)
+ 			err = -EINVAL;
+ 	} else {
+ 		err = (skb_res == NULL) ? -EAGAIN : 1;
+-- 
+2.53.0
+
 
 
