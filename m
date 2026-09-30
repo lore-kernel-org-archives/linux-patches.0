@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB9423ABBE;
-	Wed, 30 Sep 2026 18:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159292DEA95;
+	Wed, 30 Sep 2026 18:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794590; cv=none; b=eG6SVarWK+lygT4cQ0o+yu6HHJZ189W3DWC89x61jHH90o+FaOWHuk2HJ6YarQiOoXyr1Q09MMNgCuf5abwkdr2EylxQ7Cf8FfDcQlwk+6A+kG02swHG/5mf/Zw1e8wE/75QrIvKONcek49egzXMwDdNl+WaWnR8zaAiUC/c+rc=
+	t=1790794593; cv=none; b=CeBEYKukWEIIIbBuWWtxpll+crM52ZRfxOHoyblx7Hl6HD/B1Xc8IuTztFxTpGlc1w+++VMeUGvA8t0sdH9OPyW0x0TQJCO7aBvTPRoxW3tu/SWW+yxjiC1+XKB581PMX3pYOnjGsilMp85BhLFK8GEIxfSRb7guxa+ea1+Osjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794590; c=relaxed/simple;
-	bh=wqncKFiPJ2dclg/LV82vWiTo/ndRvBiLTPJs7XclRpE=;
+	s=arc-20240116; t=1790794593; c=relaxed/simple;
+	bh=EtOtssWJE2EQYVNI+xEvanqdjvjVVCzEAUBzx1OQxmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ph+4zpUXeuhgKWz5+guidS2kVP47WrECLCgwD1X6H9EZabx23zc8zx+IqisOQAtxEcgvZlupmTq3Vdvn2RCDDiqE4eB+Z9JvbdcObF7JlRa/fswtiuGvrxb1lk/FFMuhKnE3arNKNHV4mFXJO/TFfnIX6OYx7Fv7Tu5p2tt9kK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOap3JLN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Udsn3fa/S7ZRMUiahWHbZePMa8VSeiulvC27uvh1D3v67i5fe8Q2BrdkZXx+cwLputhc/k52+3Mf85X8BwOFVNc1qpSru1Akbyi5yIBdifTp+AcQfW68BW1iG+wEIUzqwU0hb5InQhGjsXsOObbBBf0wAn1hJFzFczCsDpoSmQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcvhhFxe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOap3JLN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9540A1F000FF;
-	Wed, 30 Sep 2026 18:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcvhhFxe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725921F000FF;
+	Wed, 30 Sep 2026 18:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794589;
-	bh=IyPO3My24tplOhlAFm0uJYB/BzLfOJ4W14NfCQZxM0w=;
+	s=korg; t=1790794592;
+	bh=aheDhFouXP5t96LQm211ctVVEyYq/PZXHxtY9vC68eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOap3JLNhh/kJas70bhSRoJu6PmUYmujnCKKiCmcV+aGTfhpcnbn8wJI8kPn23nww
-	 2j/y0s0fDcAtIqUd/cZFA1CCHPZPYUa52FgeLxWQy/s9IqMsMBIsIg8XgiILnaJE51
-	 738bdq1B/9a/+VMc65+2LSlkUd36Q7EBqUo9dpLU=
+	b=gcvhhFxejFHKSTzbxBo8MKoxD/re1knwY1lj1nzPBRanBcQ0JjTsGxGXOCqKptyLx
+	 CcZX/3Ic000AxzEsBoscsOc/YToMjOZ9CbXRuoQhHKVZofu6gwB+yeyk/9hyveFPlS
+	 E1hgiUONHWRvPk6gK0BhTs+p/OqLGvs30ZMN5Mok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0263/1193] PCI/sysfs: Use kstrtobool() to parse the ROM attribute input
-Date: Wed, 30 Sep 2026 17:15:47 +0200
-Message-ID: <20260930152440.013523541@linuxfoundation.org>
+Subject: [PATCH 6.6 0264/1193] regulator: da9121: Use subvariant ids in the I2C table
+Date: Wed, 30 Sep 2026 17:15:48 +0200
+Message-ID: <20260930152440.036907580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,78 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 92742802ecbf215a2b60dcfd326d2213595010f1 ]
+[ Upstream commit 7ddbf1cde4a03e36e17d06fbc711870eb0b256d7 ]
 
-pci_write_rom() controls access to the ROM content through the
-corresponding sysfs attribute, and treats the input as a request to
-disable only when it matches the string "0\n" exactly:
+da9121_i2c_probe() stores i2c_get_match_data() in chip->subvariant_id
+and da9121_assign_chip_model() switches on DA9121_SUBTYPE_* values.  The
+OF table provides those subvariant values, but the I2C id table
+currently provides DA9121_TYPE_* values.
 
-  if ((off ==  0) && (*buf == '0') && (count == 2))
+Make the I2C id table use the same subvariant namespace as the OF table
+so non-DT I2C matches feed the expected data type into the model
+assignment code.
 
-The count == 2 condition encodes the trailing newline that echo(1) appends.
-This was found when userspace wrote "0" without a trailing newline aiming
-to disable access, which failed to match the condition above and enabled
-access instead.  For example:
-
-  $ echo 0 > rom       # "0\n", count 2, access disabled
-  $ echo -n 0 > rom    # "0", count 1, access enabled
-  $ echo > rom         # "", count 1, access enabled (likely not desirable)
-
-Parse the input with kstrtobool(), which handles common boolean inputs such
-as "0", "1", "n", "y" or "off", "on", with or without a trailing newline,
-so both of the above disable access, and update the now stale comment.
-
-As a side effect, input that does not parse as a boolean is rejected with
--EINVAL rather than enabling access.  The documented "0" and "1" continue
-to work as before, and rejecting malformed input brings the attribute in
-line with how sysfs attributes typically handle it.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260612182448.552406-1-kwilczynski@kernel.org
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624060024.61300-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-sysfs.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/regulator/da9121-regulator.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index f6217872e10f3..346630f3a6f28 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1309,18 +1309,19 @@ void __weak pci_remove_resource_files(struct pci_dev *dev) { return; }
-  * @off: file offset
-  * @count: number of byte in input
-  *
-- * writing anything except 0 enables it
-+ * Writing a boolean value enables or disables the ROM display.
-  */
- static ssize_t pci_write_rom(struct file *filp, struct kobject *kobj,
- 			     struct bin_attribute *bin_attr, char *buf,
- 			     loff_t off, size_t count)
- {
- 	struct pci_dev *pdev = to_pci_dev(kobj_to_dev(kobj));
-+	bool enable;
- 
--	if ((off ==  0) && (*buf == '0') && (count == 2))
--		pdev->rom_attr_enabled = 0;
--	else
--		pdev->rom_attr_enabled = 1;
-+	if (kstrtobool(buf, &enable))
-+		return -EINVAL;
-+
-+	pdev->rom_attr_enabled = enable;
- 
- 	return count;
+diff --git a/drivers/regulator/da9121-regulator.c b/drivers/regulator/da9121-regulator.c
+index 80098035bb13a..a162daa5a054e 100644
+--- a/drivers/regulator/da9121-regulator.c
++++ b/drivers/regulator/da9121-regulator.c
+@@ -1178,15 +1178,15 @@ static void da9121_i2c_remove(struct i2c_client *i2c)
  }
+ 
+ static const struct i2c_device_id da9121_i2c_id[] = {
+-	{"da9121", DA9121_TYPE_DA9121_DA9130},
+-	{"da9130", DA9121_TYPE_DA9121_DA9130},
+-	{"da9217", DA9121_TYPE_DA9217},
+-	{"da9122", DA9121_TYPE_DA9122_DA9131},
+-	{"da9131", DA9121_TYPE_DA9122_DA9131},
+-	{"da9220", DA9121_TYPE_DA9220_DA9132},
+-	{"da9132", DA9121_TYPE_DA9220_DA9132},
+-	{"da9141", DA9121_TYPE_DA9141},
+-	{"da9142", DA9121_TYPE_DA9142},
++	{"da9121", DA9121_SUBTYPE_DA9121},
++	{"da9130", DA9121_SUBTYPE_DA9130},
++	{"da9217", DA9121_SUBTYPE_DA9217},
++	{"da9122", DA9121_SUBTYPE_DA9122},
++	{"da9131", DA9121_SUBTYPE_DA9131},
++	{"da9220", DA9121_SUBTYPE_DA9220},
++	{"da9132", DA9121_SUBTYPE_DA9132},
++	{"da9141", DA9121_SUBTYPE_DA9141},
++	{"da9142", DA9121_SUBTYPE_DA9142},
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(i2c, da9121_i2c_id);
 -- 
 2.53.0
 
