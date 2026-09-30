@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E271357CE0;
-	Wed, 30 Sep 2026 19:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D267C3B3C18;
+	Wed, 30 Sep 2026 19:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795749; cv=none; b=H/gjRiLOSVJaUXygfCL1dSgbiXJK2e9hC0bMe0pbieM/d5ZBmFZmpRQERzyuKz015MVd+E7cmeJm+CW0zQh//YSZL1Ep6xtpqPzrte1P+avQbFXhj8Iyq6hhOhkpEsfyJtCyCPKsixyshDWuRblcPRzrodPidVx8TFlMvJJhPG8=
+	t=1790795752; cv=none; b=US9YUdmJgHYDE0AJknJ3tm7Uv4AoqKs6sZMKLmMB2hyhvPmwICrxBnpYe9PtxdG0OMaPjD6Nd/NELItf4TckGGOSEKaF/KcGthzpeE4iOegnEZYpEB0gN7yfiXJoLYMnGVYHhUZlgmA33Vc7A95JaE/ETU8iUGtfcw4AHEt/e+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795749; c=relaxed/simple;
-	bh=sdbOAgOBJtHuTiv7cjkS5Rjyiw5UzUkHyS2sD2owB9w=;
+	s=arc-20240116; t=1790795752; c=relaxed/simple;
+	bh=l8CalC3iVkJDIIScjEO6PxKFPjfoYg07NpouXTJr6DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTNld5CvJmJuppgCeTxOPfBvJOdqFyc9Tw1ofRkiBCTaRofjREjO+zZv7Z7t2HTV8Y46c1ZfT7ePjnGHjXPh5/nuBHj6+4+deVoZfPZB0Js8h2NJKxszNGCBORlwJDQ4P0g6EV3xWvAbdpUi58HRVb8GiE/PpzFsVQcpZFYyNA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsnabGih; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FmMhX+2iNWcwiNzSxbAcW3TZk/Fgzjy/Qg1Ww5xKtfNjVMnmGvZ7eWLn4+DF7XFkaPd+aMNADGIFEzszM/KsQB7scz48vLiVL2J2IELyrpCDEMp4rpLTZ/wW7pRyXWjGmM3b/c2lwIpvGF9oF9N/9kNaQlDeyvk6kXuzNKYHyn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjoMnf3v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsnabGih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687E41F000FF;
-	Wed, 30 Sep 2026 19:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjoMnf3v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AA61F000FF;
+	Wed, 30 Sep 2026 19:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795747;
-	bh=opb0PgOKVJxT9bnF1BdHBtmqzD84StfujwqWHbA7sEo=;
+	s=korg; t=1790795750;
+	bh=NTrrwi6/2mSmhyvX8tXza4oOdTu668uQmU36WrVbGVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsnabGih36kra7GxL+nqZQVGUOoaaXwI7aDG3KsRbGmzS7YAQQ5RBlAN4Pn4lrncN
-	 wrz1N3l8fFnviXDeDfOdc/PzFL46NLeqV6QWVAvK2ZxP0oLq8qS5tXgYPvlavHfjHN
-	 rGcnaTl30nqPcrWx2l5RUNiGv8Qb6gnb7GZJcLTc=
+	b=FjoMnf3viyiCz/UxenAAeHC75aW6ew9By1o7YRhxMeHjmcArmj3iof1GgDHWzEXcb
+	 snpbVGHeEMQQVj+Zdj78Kj8Ve9EjaMP46ncB7dUj3VX21lg2bb1qSt+Wsldtbpuzb0
+	 32slk591c1U+u/RZ6whvcrxd09LnqOHqrSRh4UVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 0671/1193] xfs: snapshot scrub stats when rendering them
-Date: Wed, 30 Sep 2026 17:22:35 +0200
-Message-ID: <20260930152449.151575469@linuxfoundation.org>
+Subject: [PATCH 6.6 0672/1193] xfs: snapshot old AGFL before rewriting it
+Date: Wed, 30 Sep 2026 17:22:36 +0200
+Message-ID: <20260930152449.174141721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,20 +54,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 568a1588b906780dc3e9be56a61217afb4f7800e upstream.
+commit 3466dfef0a20f842363958deea55be9f1d26818a upstream.
 
-LOLLM complains about concurrency problems in the scrub stats code
-because xchk_stats_format doesn't synchronize in any way with updates.
-These stats are only reported through debugfs so I don't think it really
-matters, but I guess I exist to make bots happy now.
+LOLLM complains that we can't undo an attempt at fixing the AGFL if
+anything goes wrong during the rewrite, so take a snapshot of the whole
+buffer so that we can restore it.  Move the xrep_agfl_update_agf call so
+that we only update the AGF if the AGFL update is 100% successful.
 
-Note: We snapshot the entire stats object with a spinlock so that we
-don't have to worry about users seeing slightly weird numbers (e.g.
-invocations has incremented but none of the outcomes have been yet) if
-we race with xchk_stats_merge_one.  This isn't a hot path.
+While we're at it, fix leaking the used_extents bitmap if the disunion
+operation fails.
 
-Cc: stable@vger.kernel.org # v6.6
-Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
+Cc: stable@vger.kernel.org # v4.19
+Fixes: 0e93d3f43ec7d3 ("xfs: repair the AGFL")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
@@ -75,55 +73,121 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/stats.c |   32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ fs/xfs/scrub/agheader_repair.c |   35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
---- a/fs/xfs/scrub/stats.c
-+++ b/fs/xfs/scrub/stats.c
-@@ -92,25 +92,31 @@ xchk_stats_format(
- 	int			ret = 0;
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -677,14 +677,16 @@ xrep_agfl_init_header(
+ 	struct xfs_scrub	*sc,
+ 	struct xfs_buf		*agfl_bp,
+ 	struct xagb_bitmap	*agfl_extents,
+-	xfs_agblock_t		flcount)
++	xfs_agblock_t		flcount,
++	struct xfs_agfl		*old_agfl)
+ {
+ 	struct xrep_agfl_fill	af = {
+ 		.sc		= sc,
+ 		.flcount	= flcount,
+ 	};
+ 	struct xfs_mount	*mp = sc->mp;
+-	struct xfs_agfl		*agfl;
++	struct xfs_agfl		*agfl = XFS_BUF_TO_AGFL(agfl_bp);
++	const size_t		agfl_sz = BBTOB(agfl_bp->b_length);
+ 	int			error;
  
- 	for (i = 0; i < XFS_SCRUB_TYPE_NR; i++, css++) {
-+		struct xchk_scrub_stats	fss;
-+
- 		if (!name_map[i])
- 			continue;
+ 	ASSERT(flcount <= xfs_agfl_size(mp));
+@@ -693,8 +695,8 @@ xrep_agfl_init_header(
+ 	 * Start rewriting the header by setting the bno[] array to
+ 	 * NULLAGBLOCK, then setting AGFL header fields.
+ 	 */
+-	agfl = XFS_BUF_TO_AGFL(agfl_bp);
+-	memset(agfl, 0xFF, BBTOB(agfl_bp->b_length));
++	memcpy(old_agfl, agfl, agfl_sz);
++	memset(agfl, 0xFF, agfl_sz);
+ 	agfl->agfl_magicnum = cpu_to_be32(XFS_AGFL_MAGIC);
+ 	agfl->agfl_seqno = cpu_to_be32(sc->sa.pag->pag_agno);
+ 	uuid_copy(&agfl->agfl_uuid, &mp->m_sb.sb_meta_uuid);
+@@ -709,13 +711,18 @@ xrep_agfl_init_header(
+ 	xagb_bitmap_walk(agfl_extents, xrep_agfl_fill, &af);
+ 	error = xagb_bitmap_disunion(agfl_extents, &af.used_extents);
+ 	if (error)
+-		return error;
++		goto err_undo;
  
-+		spin_lock(&css->css_lock);
-+		memcpy(&fss, css, offsetof(struct xchk_scrub_stats, css_lock));
-+		spin_unlock(&css->css_lock);
+ 	/* Write new AGFL to disk. */
+ 	xfs_trans_buf_set_type(sc->tp, agfl_bp, XFS_BLFT_AGFL_BUF);
+-	xfs_trans_log_buf(sc->tp, agfl_bp, 0, BBTOB(agfl_bp->b_length) - 1);
++	xfs_trans_log_buf(sc->tp, agfl_bp, 0, agfl_sz - 1);
+ 	xagb_bitmap_destroy(&af.used_extents);
+ 	return 0;
 +
- 		ret = scnprintf(buf, remaining,
-  "%s %u %u %u %u %u %u %u %u %u %llu %u %u %llu\n",
- 				name_map[i],
--				(unsigned int)css->invocations,
--				(unsigned int)css->clean,
--				(unsigned int)css->corrupt,
--				(unsigned int)css->preen,
--				(unsigned int)css->xfail,
--				(unsigned int)css->xcorrupt,
--				(unsigned int)css->incomplete,
--				(unsigned int)css->warning,
--				(unsigned int)css->retries,
--				(unsigned long long)css->checktime_us,
--				(unsigned int)css->repair_invocations,
--				(unsigned int)css->repair_success,
--				(unsigned long long)css->repairtime_us);
-+				(unsigned int)fss.invocations,
-+				(unsigned int)fss.clean,
-+				(unsigned int)fss.corrupt,
-+				(unsigned int)fss.preen,
-+				(unsigned int)fss.xfail,
-+				(unsigned int)fss.xcorrupt,
-+				(unsigned int)fss.incomplete,
-+				(unsigned int)fss.warning,
-+				(unsigned int)fss.retries,
-+				(unsigned long long)fss.checktime_us,
-+				(unsigned int)fss.repair_invocations,
-+				(unsigned int)fss.repair_success,
-+				(unsigned long long)fss.repairtime_us);
- 		if (ret <= 0)
- 			break;
++err_undo:
++	xagb_bitmap_destroy(&af.used_extents);
++	memcpy(agfl, old_agfl, agfl_sz);
++	return error;
+ }
+ 
+ /* Repair the AGFL. */
+@@ -727,6 +734,7 @@ xrep_agfl(
+ 	struct xfs_mount	*mp = sc->mp;
+ 	struct xfs_buf		*agf_bp;
+ 	struct xfs_buf		*agfl_bp;
++	struct xfs_agfl		*old_agfl;
+ 	xfs_agblock_t		flcount;
+ 	int			error;
+ 
+@@ -734,6 +742,10 @@ xrep_agfl(
+ 	if (!xfs_has_rmapbt(mp))
+ 		return -EOPNOTSUPP;
+ 
++	old_agfl = kzalloc(BBTOB(XFS_FSS_TO_BB(mp, 1)), XCHK_GFP_FLAGS);
++	if (!old_agfl)
++		return -ENOMEM;
++
+ 	xagb_bitmap_init(&agfl_extents);
+ 
+ 	/*
+@@ -743,7 +755,7 @@ xrep_agfl(
+ 	 */
+ 	error = xfs_alloc_read_agf(sc->sa.pag, sc->tp, 0, &agf_bp);
+ 	if (error)
+-		return error;
++		goto err_old_agfl;
+ 
+ 	/*
+ 	 * Make sure we have the AGFL buffer, as scrub might have decided it
+@@ -754,7 +766,7 @@ xrep_agfl(
+ 						XFS_AGFL_DADDR(mp)),
+ 			XFS_FSS_TO_BB(mp, 1), 0, &agfl_bp, NULL);
+ 	if (error)
+-		return error;
++		goto err_old_agfl;
+ 	agfl_bp->b_ops = &xfs_agfl_buf_ops;
+ 
+ 	/* Gather all the extents we're going to put on the new AGFL. */
+@@ -771,10 +783,11 @@ xrep_agfl(
+ 	 * we adjust the AGF flcount (which can fail) so avoid updating any
+ 	 * buffers until we know that part works.
+ 	 */
+-	xrep_agfl_update_agf(sc, agf_bp, flcount);
+-	error = xrep_agfl_init_header(sc, agfl_bp, &agfl_extents, flcount);
++	error = xrep_agfl_init_header(sc, agfl_bp, &agfl_extents, flcount,
++			old_agfl);
+ 	if (error)
+ 		goto err;
++	xrep_agfl_update_agf(sc, agf_bp, flcount);
+ 
+ 	/*
+ 	 * Ok, the AGFL should be ready to go now.  Roll the transaction to
+@@ -791,6 +804,8 @@ xrep_agfl(
+ 			XFS_AG_RESV_AGFL);
+ err:
+ 	xagb_bitmap_destroy(&agfl_extents);
++err_old_agfl:
++	kfree(old_agfl);
+ 	return error;
+ }
  
 
 
