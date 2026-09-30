@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352D15372DE;
-	Wed, 30 Sep 2026 17:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203313624BF;
+	Wed, 30 Sep 2026 17:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790706; cv=none; b=NcojUkV4Pp8o5Qxs4XkrEQ3IUSSD3gtoScfuSBQhb70g/VU6vDXcgc/q9WlbcjTlN5dHIQVACBk7tCzEcGdlvEKOeAsk8evsLbSvSsgMTCjLd50k1awz7sqxViqqLcY7uzpGAdBzque9mupI/Dayw115MVy7jfUmnstLINIpNAg=
+	t=1790790709; cv=none; b=K+4qUDPRYkE/YSlpHWmCrXk/Ro2nok4oSsY2kiLUkrobxH9DCA/YkTdKp6Vt5CCtbhWYZPizvB2W7uvZcnzA3khtEWdubbR3XT61J25fORFr/LnAxSAMWytPMADNF6b9wGD6fSx3iAEsC1IZUmRXyS6Da2gZtdFKAsmNbrx18F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790706; c=relaxed/simple;
-	bh=ObZms8D8vIA+MABUuyqugwNt+D85YQpsB9F1hpfkBZU=;
+	s=arc-20240116; t=1790790709; c=relaxed/simple;
+	bh=Y8Ek5eHL1fdputWUZRpsBlAyLv0rH7b5FAxuXhBGfSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egim1jpgaDIS3XipS2oc5WAmfGR1cUHK5kuyPMSwCfqGAiSldqtIPjCyfEG4qqW2beLiARObcFukHuEE1qRpm+FRP21yX5I+nACnP/j5pThdz9/IftBAWsfc/+G6OsElueMIYAKDiWE2pnbWj3BlCX4+BJGnSKaJ6J6ZTokC5WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJhK66GP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s+7th/kHxNB3FgNl5QbwHStGstIhWhy0uuJMDOyR+taHwZ9V2JJXlDxTuMyOxPldxwga+M9A5G6R2pfwiNKTxXGI9ow7lhe1F9jN/AdK/y4aCjUsWYArsswjpAPouxcYXBLGK39jI9b2vI9BowV3IaBDhG+lAXr35ZZ/3z2JL3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqoYQbiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJhK66GP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E21D1F000FF;
-	Wed, 30 Sep 2026 17:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqoYQbiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F411F000FF;
+	Wed, 30 Sep 2026 17:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790705;
-	bh=jOC1NGPSlggdpadHLarFRDCi6mJIFjGgIiYJvgcogjg=;
+	s=korg; t=1790790707;
+	bh=2YOtB8DE8XxacGjY1D4cLQ2oUwr0qOhQm1AG8kP9eQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJhK66GPUFoGYujhkorpYKdfVhPsMALLf46LC9rfrCVyF8Qmi2/2yq8CIj+1bR09w
-	 txebsV8ufsYvzs/iXG8ttmtVjUierArLXmTPQtS9OmXiy5eLxZaA3Wad6i6UUCH0qk
-	 nlTJ+gfG4FW8ZQdxynFjY/FBVGQtwBNI+mkrO+J8=
+	b=VqoYQbiwPFjKBC4klFfOPxscYmpSDJSfE+r2I5HluUcAAbfSoNLkqxtFqIlYVDGJo
+	 4IpbBBGpZ8ru7bdu+5k2O5POpgXFqgJkvvVizVltMeEiMMzJJDdppweo+wqkIGWm3/
+	 mns6jpVfCbtCFP7wFym6pB5/ESjfD2/aLw+i5qSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Kamlesh Kumar <kam@juniper.net>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/752] net/sched: sch_drr: make cl->quantum lockless
-Date: Wed, 30 Sep 2026 17:18:36 +0200
-Message-ID: <20260930152359.149653316@linuxfoundation.org>
+Subject: [PATCH 5.15 029/752] integrity: Check for NULL returned by asymmetric_key_public_key
+Date: Wed, 30 Sep 2026 17:18:19 +0200
+Message-ID: <20260930152358.780518002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,63 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit a4d880b85089e12a5f2e8e2fee386310cec5b99a ]
+[ Upstream commit c93a5f038ccc11ed8558ce642f62d5ede701a348 ]
 
-cl->quantum does not need to be protected by RTNL or qdisc spinlock.
+Check for a NULL pointer returned by asymmetric_key_public_key and return
+-ENOKEY in this case.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260519094618.2632073-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Tested-by: Kamlesh Kumar <kam@juniper.net>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_drr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ security/integrity/digsig_asymmetric.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
-index a2b9802d41c01..01198fe915052 100644
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -99,10 +99,8 @@ static int drr_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 			}
- 		}
+diff --git a/security/integrity/digsig_asymmetric.c b/security/integrity/digsig_asymmetric.c
+index 895f4b9ce8c6b..b6b66f34cbf93 100644
+--- a/security/integrity/digsig_asymmetric.c
++++ b/security/integrity/digsig_asymmetric.c
+@@ -108,6 +108,10 @@ int asymmetric_verify(struct key *keyring, const char *sig,
+ 	pks.hash_algo = hash_algo_name[hdr->hash_algo];
  
--		sch_tree_lock(sch);
- 		if (tb[TCA_DRR_QUANTUM])
--			cl->quantum = quantum;
--		sch_tree_unlock(sch);
-+			WRITE_ONCE(cl->quantum, quantum);
- 
- 		return 0;
- 	}
-@@ -252,7 +250,7 @@ static int drr_dump_class(struct Qdisc *sch, unsigned long arg,
- 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
- 	if (nest == NULL)
- 		goto nla_put_failure;
--	if (nla_put_u32(skb, TCA_DRR_QUANTUM, cl->quantum))
-+	if (nla_put_u32(skb, TCA_DRR_QUANTUM, READ_ONCE(cl->quantum)))
- 		goto nla_put_failure;
- 	return nla_nest_end(skb, nest);
- 
-@@ -371,7 +369,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 	if (!cl_is_active(cl)) {
- 		list_add_tail(&cl->alist, &q->active);
--		WRITE_ONCE(cl->deficit, cl->quantum);
-+		WRITE_ONCE(cl->deficit, READ_ONCE(cl->quantum));
- 	}
- 
- 	sch->qstats.backlog += len;
-@@ -412,7 +410,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
- 			return skb;
- 		}
- 
--		WRITE_ONCE(cl->deficit, cl->deficit + cl->quantum);
-+		WRITE_ONCE(cl->deficit, cl->deficit + READ_ONCE(cl->quantum));
- 		list_move_tail(&cl->alist, &q->active);
- 	}
- out:
+ 	pk = asymmetric_key_public_key(key);
++	if (!pk) {
++		ret = -ENOKEY;
++		goto out;
++	}
+ 	pks.pkey_algo = pk->pkey_algo;
+ 	if (!strcmp(pk->pkey_algo, "rsa")) {
+ 		pks.encoding = "pkcs1";
 -- 
 2.53.0
 
