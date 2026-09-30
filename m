@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B317351DB07;
-	Wed, 30 Sep 2026 16:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D034E2F06;
+	Wed, 30 Sep 2026 16:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784820; cv=none; b=S1f81IJMeyoNNumdz27z9D69IaBDZegsholv//TI+Ovs40WTu8+3LfFGQwr6wdoozAj5+RShxZ6+TJtTK/+TnqFNeWAl+JngxQPpaja+A628ak+5tRBoKJGnFG5wLW8tfTKx9uw5a4lmK6VVsyfEATt2MHZ5+hTz2FohcOVscWc=
+	t=1790784823; cv=none; b=CYeniHGkuLJE/L9BMnss51BiiMif/YeMyHX1nnJo1Rig7BbynZ9tKcoNoeF5qVLDnUXo4fR9F9fIn6PZ0QTxBpCbQAtTMOmAxWhAMz5e7hDC0VUQ8/bzLmLb8Qni/c7ihGI6Mgay8tQznv0k/lEhw9bksrNZkh5sitds1R3Qtzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784820; c=relaxed/simple;
-	bh=iBs8EIjcZ5YZQXmDMo2n23tfpm6v1vzY3joF2jrKdGA=;
+	s=arc-20240116; t=1790784823; c=relaxed/simple;
+	bh=F2wDAMuUZ3S0pLvq7V7tbPJIAOnH69q8dsKyfcyEQXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dprLEAM4mA9d7CYuKfeb8SLs4IsvcYonXEjRsMge1Pj7uzw7l7DkfZQDpOuTrzo0A4Yvd6NqI8VRO3gasY0rDJXq3O94Sdj/hOS3mZYARpyk6liiELCSdHsSo34IoGC5/PttGsqDNG5xiAsSC+H9BdHYpF4ILeYaYTi38fvDeZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZN0gEJl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TH+GgC4r7gEkhQraxdGZcaQkHNMY4MHN4a0U2Fmn3WcTM31uz+gmB4o5sw7GsoY6V2uDjFlYMvPietzGXVj+OB7lmOC2fvTVVoqK/2/C+aDqekCvuesUxlXqjbLU1vRFUoHbO2ofRpHGb4QfCRj+L1Pl77hbDbTm7l8LWXY9S5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KtclRGA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZN0gEJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1DE1F00893;
-	Wed, 30 Sep 2026 16:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KtclRGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D3C1F000FF;
+	Wed, 30 Sep 2026 16:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784813;
-	bh=M7Nt18UPt7EQaV+c0KwBi+1G76YjvLVUOOQl1sE195Q=;
+	s=korg; t=1790784816;
+	bh=CgOzccEJUKSi1EWwUkC3nZALBIV+16NsGP5p7nw19Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZN0gEJlfR8UVKUyRD80k/AHAbPMQ9gIgZZu9R39nhnt28PT4aGxrpwhPUUdcboSr
-	 wEADS3iOEq4hhx5fP53wlz5flJuK/71S3je66Xc6SqCCTwZE9G3PdlG2RyY7G8b654
-	 RBI/l/v9R1z4yxOctq0tu9KVP/+p2zgoExAw/p8c=
+	b=0KtclRGASwm5vtYABEdto26vy4r4sKaodf1hjurUXUH4KhNXqPANrNqW0Lqc0S7wQ
+	 AhJJVuM5Os9zAJ7R+J7e5xxtlVNRDF+TP8L3KlvRscQ8HppUZF+9aqrFoKPA+f1C9r
+	 dOU4i1e7p8e6pMQ8C+JNmfIWPLeMJi+0S2uqPJ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Robert Abrahamse <denobyte2@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 287/982] Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame
-Date: Wed, 30 Sep 2026 17:17:03 +0200
-Message-ID: <20260930152422.966037382@linuxfoundation.org>
+Subject: [PATCH 6.1 288/982] ALSA: usb-audio: Add quirk for Corsair Virtuoso (later revision)
+Date: Wed, 30 Sep 2026 17:17:04 +0200
+Message-ID: <20260930152422.988815802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,54 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Robert Abrahamse <denobyte2@gmail.com>
 
-[ Upstream commit b230e5bf501c5edaf2eb0991cb862ac142031d4b ]
+[ Upstream commit cee046679655b4822f76efc9658f19efee9ac979 ]
 
-rfcomm_recv_frame() casts skb->data to struct rfcomm_hdr and dereferences
-hdr->addr and hdr->ctrl without validating skb->len first. A truncated
-frame with skb->len less than the minimum header size causes an
-out-of-bounds read of uninitialized memory. Additionally, a zero-length
-frame causes skb->len-- to underflow to UINT_MAX, making
-skb_tail_pointer() read far past the buffer.
+Add USB mixer mapping quirk for later revisions of the Corsair Virtuoso
+headset with USB IDs 0x1b1c:0x0a43 (wired) and 0x1b1c:0x0a44
+(wireless). These devices exhibit the same mixer label collision as
+earlier Virtuoso variants: all controls are labelled "Headset", causing
+applications like PulseAudio to move the sidetone control instead of
+the main playback volume.
 
-Commit 23882b828c3c ("Bluetooth: RFCOMM: validate skb length in MCC
-handlers") fixed the same class of missing-length-check bugs in the MCC
-sub-handlers, but the top-level rfcomm_recv_frame() was left unfixed.
-KMSAN reports:
-
-  BUG: KMSAN: uninit-value in rfcomm_run
-  ...
-  Uninit was created at:
-    __alloc_skb+0x474/0xb60
-    vhci_write+0xe9/0x870
-
-Fix this by rejecting frames smaller than sizeof(struct rfcomm_hdr) + 1
-(the minimum frame must have a 3-byte header and a 1-byte FCS).
-
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Robert Abrahamse <denobyte2@gmail.com>
+Link: https://patch.msgid.link/20260728140314.11601-1-denobyte2@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/mixer_maps.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 2914ac1c50024..104d75908dbc9 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1813,6 +1813,11 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
- 		return s;
- 	}
- 
-+	if (skb->len < sizeof(*hdr) + 1) {
-+		kfree_skb(skb);
-+		return s;
-+	}
-+
- 	dlci = __get_dlci(hdr->addr);
- 	type = __get_type(hdr->ctrl);
- 
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index 4d8dca04f87d0..ce27fc871f513 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -638,6 +638,16 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x1b1c, 0x0a42),
+ 		.map = corsair_virtuoso_map,
+ 	},
++	{
++		/* Corsair Virtuoso (wired mode, later revision) */
++		.id = USB_ID(0x1b1c, 0x0a43),
++		.map = corsair_virtuoso_map,
++	},
++	{
++		/* Corsair Virtuoso (wireless mode, later revision) */
++		.id = USB_ID(0x1b1c, 0x0a44),
++		.map = corsair_virtuoso_map,
++	},
+ 	{
+ 		/* Corsair HS80 RGB Wireless (wired mode) */
+ 		.id = USB_ID(0x1b1c, 0x0a6a),
 -- 
 2.53.0
 
