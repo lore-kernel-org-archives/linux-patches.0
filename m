@@ -1,51 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E1B524AED;
-	Wed, 30 Sep 2026 17:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0624E565116;
+	Wed, 30 Sep 2026 17:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790456; cv=none; b=GO4pZRJLCnoSZoMk/W1bO9O3QdgXO9wZBCSO4VIN+egQbCaJNR7n2GGMtsPxuc/EHONvGLiXv5LCQnroR+WTigm/IVjTsf1V8Mu1+t/ma7ZQ77OoFkgqdV8i8eBV0WVCed7dn05hCyTGCbXy0Tc4KL6Llmt49KS9XDgzxf0rwCg=
+	t=1790790459; cv=none; b=T7cWVNkrJR/O8Y3Gr62QSF1mb06zIIHRD2JRv1KZXLRZHXn7TCD1VsbH0H8u+TYdfVy7AQ2GQt/0uydmmufCDqW33n1lAowpqdGK7/V5Kr7xT18RYQ6uz0ULWtVVEw4juocaiT23o7bQ+O82XHqOSlZE7HmyUeHtHtAU2g4exuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790456; c=relaxed/simple;
-	bh=4l3mAjWSwVGvBnqfiZ4d6fQSqg1hdfDMnYtMUWdDRPM=;
+	s=arc-20240116; t=1790790459; c=relaxed/simple;
+	bh=47CvjR4N8BR3cMKxNJN8whzVpTNelNRvLLl6QUz5L6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6Z7R9bQd0iWsti+jHnvR9hUfG61R0BFKU4PrxxBPCUkBkvtVwXcN8Dj9HAbkS8nPbRhXHDVgJ0KcbTSVlivBw+6gqEUIkH6GEL9ueqrswy0j0BwTC6Noo2PseAApbQKvu2hRR0kL9S9Z84Ex3ZYTtpKrxc/PQ1qftWrl4CMDEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA3DYhng; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XbAJVI7BU3KejI94g4SyZq2tJR7UlY3MmexQdij70rZifgsUYyPXjZKN8EymgHsIK2eq0MctBEf5hlsHdMZfIjp236qm3h2SmZQfadx+xzUnKJ6hrI45ersth8mSu6Wcs/ywmAnp/3+J/0lJMsQZdqllpa/MZRvSRtd4TF4Ub94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GR+dsc3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA3DYhng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5982B1F000FF;
-	Wed, 30 Sep 2026 17:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GR+dsc3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601E51F000FF;
+	Wed, 30 Sep 2026 17:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790455;
-	bh=JIWz4BXjCr+3Arh1ApfdagQzohhnWn9sFGUclsDtBGc=;
+	s=korg; t=1790790457;
+	bh=TyX/rELUX3+WLb32i+iDPTLf2GgaZTrYcNGNfzHqHn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iA3DYhng9HD+uoLMe6IVMZRORezMGCO5KBnxMYcPMBU7tibX9sBInhJ5Evygg4A2B
-	 eIOfAPnTrL0F6UHpjDxZqtOPwzWI2XJyWiuCR4erbqZrrkWA7jjrWJkMyz+Ae3Sv3X
-	 o8wO5jBLVOWojdJK06qugE8nAa8Y5XZ/McYRY2Kc=
+	b=GR+dsc3XEwNEWYAlTq7OPuCp1vFFN4eAI4fZPNGHOOY+cbd+Xity73WMrqJeaDl/B
+	 +Q/Tqsti4HtNuunhR6YGNW4ijARO6iJuHY7xM28Vjx2gqV3W7XTXM4TjqkPwyFHTrp
+	 u2+IR7CqB6//EQPmcsXTpXFgs9hFXHxOmm+mltME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Harry Yoo <harry@kernel.org>,
-	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
-	Jann Horn <jannh@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Larry Woodman <lwoodman@redhat.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Rik van Riel <riel@surriel.com>,
+	Katherine Leaver <kleaver@janestreet.com>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 828/877] mm/rmap: fix missing barrier between anon_vma init and vma->anon_vma publish
-Date: Wed, 30 Sep 2026 17:28:59 +0200
-Message-ID: <20260930152432.598585143@linuxfoundation.org>
+Subject: [PATCH 6.12 837/877] packet: use ubuf_info completion for TX_RING packets
+Date: Wed, 30 Sep 2026 17:29:08 +0200
+Message-ID: <20260930152432.798163789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -64,181 +53,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit b6ac0b3f6013c168f22cad97e79967accacb08e1 ]
+[ Upstream commit 9518405613863d0bf0700927a21367f5942cf058 ]
 
-On arm64 server, we find that a task trying to grab the anon_vma lock
-triggers hungtask.
+tpacket_snd sends skbs with frags pointing into its ring slots. Slots
+are released when skb->destructor is called.
 
-INFO: task main:2354726 blocked for more than 120 seconds.
-      Tainted: G            E     5.10.0-0021.aarch64 #1
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:main            state:D stack:    0 pid:2354726 ppid:2350673 flags:0x00000a01
-Call trace:
- __switch_to+0x7c/0xbc
- __schedule+0x3b4/0x8a0
- schedule+0x50/0xe0
- rwsem_down_write_slowpath+0x3cc/0x6cc
- down_write+0x60/0x260
- __anon_vma_prepare+0x6c/0x210
- do_anonymous_page+0x258/0x660
- handle_pte_fault+0x188/0x214
- __handle_mm_fault+0x1b0/0x380
- handle_mm_fault+0xf4/0x284
- do_page_fault+0x19c/0x494
- do_translation_fault+0xcc/0xf8
- do_mem_abort+0x48/0xac
- el0_da+0x44/0x80
- el0_sync_handler+0x88/0xb4
- el0_sync+0x160/0x180
+A call to skb_orphan calls skb->destructor before the skb is freed.
+This can cause the slot to be reused while still linked into the skb.
 
-After analyzing the vmcore, we found the anon_vma->root->rwsem.count is
--1.  There is another anon_vma whose anon_vma->root->rwsem.count is 1, the
-anon_vma->root->rwsem.owner shows the lock is held, but the stack of the
-task shows the task doesn't hold the anon_vma lock.
+Switch to standard zerocopy completion (ubuf_info) so the slot is only
+released once all references to the payload are freed or copied.
+Restore skb->destructor to standard sock_wfree.
 
-After adding more debugging info, we found __anon_vma_prepare() reuses
-anon_vma and triggers the UAF of anon_vma->root due to missing memory
-barrier, leading to locking and unlocking two different anon_vma->root,
-thus leading to an anon_vma will never be unlocked, and another anon_vma
-couldn't be locked anymore.
+The ubuf_info completion callback can be called with a NULL skb, but
+only from net_zcopy_put and related API, used by zerocopy implementations
+that hold their own reference on the uarg, such as MSG_ZEROCOPY. This
+uarg is only ever completed from skb_zcopy_clear, so skb is always set.
 
-This race requires two adjacent VMAs that are not merged but are
-anon_vma-compatible (e.g., they differ in VMA_ACCESS_FLAGS that can be
-changed by mprotect()).  Two threads fault on each VMA concurrently, both
-calling __anon_vma_prepare() with only mmap_lock held for reading.
+To prevent userspace from aliasing in-flight state on shared ring
+slots, allocate tpacket_uarg per packet, rather than per slot. This
+adds a small allocation to the transmit path. Use standard kmalloc to
+allow backporting to stable kernels.
 
-    THREAD A                             THREAD B
-__anon_vma_prepare                __anon_vma_prepare
- find_mergeable_anon_vma() -> NULL
- anon_vma = anon_vma_alloc();
-   anon_vma->root = anon_vma;
- // the two stores may be reordered
- vma->anon_vma = anon_vma;
-                                   // finds A's anon_vma
-                                   anon_vma = find_mergeable_anon_vma(vma);
-                                   anon_vma_lock_write(anon_vma);
-                                     // may still see the old root
-                                     down_write(&anon_vma->root->rwsem);
-                                   anon_vma_unlock_write(anon_vma);
-                                     // see the new root, never unlock old
-                                     up_write(&anon_vma->root->rwsem);
+The uarg holds an sk_wmem_alloc reference, rather than an sk_refcnt
+reference. packet_free_tx_ring waits on sk_wmem_alloc before freeing
+the ring pages. Always allocate vec->deferred for tx_ring so page-backed
+rings also wait on sk_wmem_alloc when skb_copy_ubufs drops page refs
+before calling tpacket_ubuf_complete.
 
-thread A triggers page fault and calls __anon_vma_prepare() to prepare
-anon_vma for the faulting vma.  __anon_vma_prepare() allocates and
-initializes a new anon_vma, and then publishes it to the vma with a plain
-store.  anon_vma_prepare() only requires the mmap_lock to be held for
-reading, so two threads can fault on adjacent VMAs at the same time.
-While thread A publishes a new anon_vma, thread B could find the anon_vma
-via find_mergeable_anon_vma() and then locks anon_vma->root->rwsem.
+Drop the tx_ring.pg_vec test that tpacket_destruct_skb performed before
+accessing the slot. The sk_wmem_alloc reference now guarantees that the
+slot is valid. The test is also not sufficient by itself, as it reads
+pg_vec without pg_vec_lock, so it can race with packet_set_ring.
 
-The store to anon_vma->root in anon_vma_alloc() and the store to
-vma->anon_vma can be reordered.  The anon_vma_lock_write() and spin_lock()
-only provide acquire semantics, which do not prevent prior stores from
-being reordered after them.  The release semantics of the corresponding
-spin_unlock() and anon_vma_unlock_write() come too late, the store to
-vma->anon_vma is already published before they take effect.  As a result,
-thread B can observe the following order:
+As a result a slot is released when its payload is copied, which can
+be before transmission (e.g., in skb_orphan_frags_rx). If copied
+before skb_tx_timestamp() is called, no slot timestamp is recorded,
+similar to when skb_orphan() was called early in the datapath before
+this patch.
 
-    vma->anon_vma = anon_vma;
-    anon_vma->root = anon_vma;
+Revert the now unused previous skb_zcopy_.._nouarg infra.
 
-The anon_vma slab is SLAB_TYPESAFE_BY_RCU, so a newly allocated anon_vma
-may reuse memory from a previously freed one.  The constructor
-(anon_vma_ctor) does not reset anon_vma->root, and __put_anon_vma()
-doesn't clear it either, so the old root value persists until
-anon_vma_alloc() overwrites it.  If that store isn't visible, thread B
-reads a root that points to the old anon_vma and locks it.
+Depends on commit 992cc9f94ca9 ("net/packet: defer vmalloc TX_RING
+free until skbs finish").
 
-As a result, thread B can call anon_vma_lock_write() with the old root,
-and call anon_vma_unlock_write() with the new root, leading to an anon_vma
-will never be unlocked, and another anon_vma couldn't be locked anymore
-(its count is dropped from 0 to -1 due to wrong unlock).
-
-To fix it, change the plain store `vma->anon_vma = anon_vma` to store
-release, so that the fields of anon_vma are visible before anon_vma is
-published to vma->anon_vma.
-
-At read side, the load of anon_vma and anon_vma->root have address
-dependency.  According to Documentation/memory-barriers.txt and some
-investigations, only Alpha needs address-dependency barriers and it has
-been handled by READ_ONCE() in reusable_anon_vma().
-
-We reproduced this issue in v5.10 with KSM enabled.  The kernel doesn't
-merge commit cf7e7a3503df ("mm: prevent KSM from breaking VMA merging for
-new VMAs"), so there are many adjacent VMAs that aren't merged but are
-compatible for anon_vma.
-
-Without this fix, our production environment could reproduce this issue
-about 2-5 times each month.  After adding a smp_mb() before
-anon_vma_lock_write(anon_vma) in __anon_vma_prepare(), which is different
-to this patch, this issue hasn't been reproduced for one month.
-
-Link: https://lore.kernel.org/20260908122924.554373-1-tujinjiang@huawei.com
-Fixes: 5c341ee1dfc8 ("mm: track the root (oldest) anon_vma")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Larry Woodman <lwoodman@redhat.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: <stable@vger.kernel.org>
+Reported-by: Katherine Leaver <kleaver@janestreet.com>
+Reported-by: Bjoern Doebel <doebel@amazon.de>
+Closes: https://lore.kernel.org/netdev/20260909085542.3370986-1-doebel@amazon.de/
+Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
+Cc: stable@vger.kernel.org
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260919004748.1463985-3-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Retained sockc->tsflags instead of sockc in skb_setup_tx_timestamp() for the older helper signature. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c |    6 +++++-
- mm/vma.c  |    8 ++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ include/linux/skbuff.h |   19 ---------
+ net/packet/af_packet.c |  102 ++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 65 insertions(+), 56 deletions(-)
 
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -210,7 +210,11 @@ int __anon_vma_prepare(struct vm_area_st
- 	/* page_table_lock to protect against threads */
- 	spin_lock(&mm->page_table_lock);
- 	if (likely(!vma->anon_vma)) {
--		vma->anon_vma = anon_vma;
-+		/*
-+		 * Make anon_vma fields visible before anon_vma is published.
-+		 * Paired with an address dependency in reusable_anon_vma().
-+		 */
-+		smp_store_release(&vma->anon_vma, anon_vma);
- 		anon_vma_chain_assign(vma, avc, anon_vma);
- 		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
- 		anon_vma->num_active_vmas++;
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1760,6 +1760,13 @@ static int anon_vma_compatible(struct vm
-  * acceptable for merging, so we can do all of this optimistically. But
-  * we do that READ_ONCE() to make sure that we never re-load the pointer.
-  *
-+ * The READ_ONCE() establishes an address dependency between anon_vma and
-+ * any access to its fields, which pairs with the assignment to
-+ * vma->anon_vma performed with release semantics in __anon_vma_prepare().
-+ *
-+ * This is especially important as anon_vma's are SLAB_TYPESAFE_BY_RCU so
-+ * accessing an uninitialised anon_vma's fields may result in a UAF.
-+ *
-  * IOW: that the "list_is_singular()" test on the anon_vma_chain only
-  * matters for the 'stable anon_vma' case (ie the thing we want to avoid
-  * is to return an anon_vma that is "complex" due to having gone through
-@@ -1774,6 +1781,7 @@ static struct anon_vma *reusable_anon_vm
- 					  struct vm_area_struct *b)
- {
- 	if (anon_vma_compatible(a, b)) {
-+		/* Paired with a memory barrier in __anon_vma_prepare(). */
- 		struct anon_vma *anon_vma = READ_ONCE(old->anon_vma);
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1807,22 +1807,6 @@ static inline void skb_zcopy_set(struct
+ 	}
+ }
  
- 		if (anon_vma && list_is_singular(&old->anon_vma_chain))
+-static inline void skb_zcopy_set_nouarg(struct sk_buff *skb, void *val)
+-{
+-	skb_shinfo(skb)->destructor_arg = (void *)((uintptr_t) val | 0x1UL);
+-	skb_shinfo(skb)->flags |= SKBFL_ZEROCOPY_FRAG;
+-}
+-
+-static inline bool skb_zcopy_is_nouarg(struct sk_buff *skb)
+-{
+-	return (uintptr_t) skb_shinfo(skb)->destructor_arg & 0x1UL;
+-}
+-
+-static inline void *skb_zcopy_get_nouarg(struct sk_buff *skb)
+-{
+-	return (void *)((uintptr_t) skb_shinfo(skb)->destructor_arg & ~0x1UL);
+-}
+-
+ static inline void net_zcopy_put(struct ubuf_info *uarg)
+ {
+ 	if (uarg)
+@@ -1845,8 +1829,7 @@ static inline void skb_zcopy_clear(struc
+ 	struct ubuf_info *uarg = skb_zcopy(skb);
+ 
+ 	if (uarg) {
+-		if (!skb_zcopy_is_nouarg(skb))
+-			uarg->ops->complete(skb, uarg, zerocopy_success);
++		uarg->ops->complete(skb, uarg, zerocopy_success);
+ 
+ 		skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY;
+ 	}
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2582,26 +2582,6 @@ drop_n_account:
+ 	goto drop_n_restore;
+ }
+ 
+-static void tpacket_destruct_skb(struct sk_buff *skb)
+-{
+-	struct packet_sock *po = pkt_sk(skb->sk);
+-
+-	if (likely(po->tx_ring.pg_vec)) {
+-		void *ph;
+-		__u32 ts;
+-
+-		ph = skb_zcopy_get_nouarg(skb);
+-
+-		ts = __packet_set_timestamp(po, ph, skb);
+-		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+-
+-		packet_dec_pending(&po->tx_ring);
+-		complete(&po->skb_completion);
+-	}
+-
+-	sock_wfree(skb);
+-}
+-
+ static int __packet_snd_vnet_parse(struct virtio_net_hdr *vnet_hdr, size_t len)
+ {
+ 	if ((vnet_hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
+@@ -2641,27 +2621,56 @@ static int packet_snd_vnet_parse(struct
+ 	return 0;
+ }
+ 
++struct tpacket_uarg {
++	struct ubuf_info	ubuf;
++	struct packet_sock	*po;
++	void			*ph;
++};
++
++static void tpacket_ubuf_complete(struct sk_buff *skb, struct ubuf_info *uarg,
++				  bool success)
++{
++	struct tpacket_uarg *tu = container_of(uarg, struct tpacket_uarg, ubuf);
++	struct packet_sock *po = tu->po;
++	void *ph = tu->ph;
++	__u32 ts;
++
++	DEBUG_NET_WARN_ON_ONCE(!skb);
++
++	if (!refcount_dec_and_test(&uarg->refcnt))
++		return;
++
++	ts = __packet_set_timestamp(po, ph, skb);
++	__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
++
++	packet_dec_pending(&po->tx_ring);
++	complete(&po->skb_completion);
++
++	kfree(tu);
++	sk_free(&po->sk);
++}
++
++static const struct ubuf_info_ops tpacket_ubuf_ops = {
++	.complete = tpacket_ubuf_complete,
++};
++
+ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+-		void *frame, struct net_device *dev, void *data, int tp_len,
++		struct net_device *dev, void *data, int tp_len,
+ 		__be16 proto, unsigned char *addr, int hlen, int copylen,
+ 		int hard_header_len,
+ 		const struct sockcm_cookie *sockc)
+ {
+-	union tpacket_uhdr ph;
+ 	int to_write, offset, len, nr_frags, len_max;
+ 	struct socket *sock = po->sk.sk_socket;
+ 	struct page *page;
+ 	int err;
+ 
+-	ph.raw = frame;
+-
+ 	skb->protocol = proto;
+ 	skb->dev = dev;
+ 	skb->priority = READ_ONCE(po->sk.sk_priority);
+ 	skb->mark = READ_ONCE(po->sk.sk_mark);
+ 	skb_set_delivery_type_by_clockid(skb, sockc->transmit_time, po->sk.sk_clockid);
+ 	skb_setup_tx_timestamp(skb, sockc->tsflags);
+-	skb_zcopy_set_nouarg(skb, ph.raw);
+ 
+ 	skb_reserve(skb, hlen);
+ 	skb_reset_network_header(skb);
+@@ -2801,6 +2810,7 @@ static int tpacket_snd(struct packet_soc
+ 	struct virtio_net_hdr vnet_hdr;
+ 	bool has_vnet_hdr = false;
+ 	struct sockcm_cookie sockc;
++	struct tpacket_uarg *uarg;
+ 	__be16 proto;
+ 	int err, reserve = 0;
+ 	void *ph;
+@@ -2928,7 +2938,7 @@ static int tpacket_snd(struct packet_soc
+ 				err = len_sum;
+ 			goto out_status;
+ 		}
+-		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
++		tp_len = tpacket_fill_skb(po, skb, dev, data, tp_len, proto,
+ 					  addr, hlen, copylen, hard_header_len,
+ 					  &sockc);
+ 		if (likely(tp_len >= 0) &&
+@@ -2960,7 +2970,24 @@ tpacket_error:
+ 			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
+ 
+-		skb->destructor = tpacket_destruct_skb;
++		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
++		if (unlikely(!uarg)) {
++			if (likely(len_sum > 0))
++				err = len_sum;
++			else
++				err = -ENOMEM;
++			goto out_status;
++		}
++		uarg->po = po;
++		uarg->ph = ph;
++		uarg->ubuf.ops = &tpacket_ubuf_ops;
++		uarg->ubuf.flags = SKBFL_ZEROCOPY_FRAG;
++		refcount_set(&uarg->ubuf.refcnt, 1);
++
++		/* Hold a sk_wmem_alloc reference until completion */
++		refcount_inc(&po->sk.sk_wmem_alloc);
++		skb_zcopy_init(skb, &uarg->ubuf);
++
+ 		__packet_set_status(po, ph, TP_STATUS_SENDING);
+ 		packet_inc_pending(&po->tx_ring);
+ 
+@@ -4529,21 +4556,20 @@ static struct pgv *alloc_pg_vec(struct t
+ 	vec->len = block_nr;
+ 	pg_vec = vec->pg_vec;
+ 
++	if (tx_ring) {
++		vec->deferred = kzalloc_obj(*vec->deferred,
++					    GFP_KERNEL | __GFP_NOWARN);
++		if (!vec->deferred)
++			goto out_free_pgvec;
++		vec->deferred->vec = vec;
++		INIT_DELAYED_WORK(&vec->deferred->work,
++				  packet_free_pg_vec_work);
++	}
++
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
+-
+-		if (tx_ring && !vec->deferred &&
+-		    is_vmalloc_addr(pg_vec[i].buffer)) {
+-			vec->deferred = kzalloc_obj(*vec->deferred,
+-						    GFP_KERNEL | __GFP_NOWARN);
+-			if (!vec->deferred)
+-				goto out_free_pgvec;
+-			vec->deferred->vec = vec;
+-			INIT_DELAYED_WORK(&vec->deferred->work,
+-					  packet_free_pg_vec_work);
+-		}
+ 	}
+ 
+ out:
 
 
