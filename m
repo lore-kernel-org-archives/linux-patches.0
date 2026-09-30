@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E803E8C65;
-	Wed, 30 Sep 2026 19:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5D33E2ADB;
+	Wed, 30 Sep 2026 19:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796588; cv=none; b=N0EJDrh1lreVxhMc/yOPwYPWcYFdlhhtYwajNX7SmIXk5ETUI+/yWzaxejhcxmVDdrLHE9H8MrUt94jtzpkp91k/UIUw0MoRvCb25rs8LU0wh5dZHezU0qrz2WF9UAbyDP0CcwxopxGy5Hu7XAbtheEBasoH4pKX2QW5h5clKKw=
+	t=1790796591; cv=none; b=s4Zb1xmdKSSa1oj/xdWFCXgQTW9cAfrj3T6uZheXEFargqc8+AmxUsE9BhjK9kQYeKlox6lsj/iBJNQit+7O6UMdymfdhMdb53IlbyseSxM3aeJP8pt32vUiL8b0t3Nl64VfNCiE3XD+QhUW7OIBJYVxN3KLzJA985jfY0M0Vjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796588; c=relaxed/simple;
-	bh=5AXp6HvUs1yZljxGT4lsZPcz3wrgfM6Nkneat9AQMX8=;
+	s=arc-20240116; t=1790796591; c=relaxed/simple;
+	bh=i85iMLIxpsZGMMN2CkyvyuUbHR2zM2K2ptjIrvwJdAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvF0+dyRDkkRVqukoc2VV7RK+ouONdMPjzhgoQOvbwCpLdyaCLlQSHWNK+7HEEvS/AeiPb1BljxjxCoJ5+rmUjzBAdlcRRn4TettGt3GyMvCjSJudWYKFSJELwrcoSd+wssmu8UgDdjdo70EoScy0VubWAnt/pwjfqlXqZ2rKgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRy43ghE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pSyfwEp+YeDBUh3r5hxudKM6zDjDYGzavjP0zCiaO+phYhxmWhP2q1Wr4ggv4b9uuREi2/a3JJqS//+hzOH5hSlgbP5QKcQrFSVjSVx8g5+OJO/vn62qg6SHcidkmE+e8Oa4K3CFKUbDgJTNjt07sXxXL+sgKu7qN1Aq9uS69dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpeXKcYf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRy43ghE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924E41F000FF;
-	Wed, 30 Sep 2026 19:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpeXKcYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668CC1F000FF;
+	Wed, 30 Sep 2026 19:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796587;
-	bh=rrgXBmQkmr0xz+igF8xUVU/cD1Fk9wCGXhhBZGNpNIo=;
+	s=korg; t=1790796589;
+	bh=Ni0/7ZMbA/1PnUyOxIrli6N3lZz/VJzcUavvFkuIJRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRy43ghE3nvU8qgU8UHce9ym3wmBh3YMugNIR8gRTkjOJPm2+LHoaxvMlBvHLwT18
-	 d2v8FOJJsInmPhQQYl+VSlSPBHRoKymOfebFkEtD3fYPoEIFiuSyG+0Qe6A43qFHDo
-	 suqG6Jx0JduRGlsrIyaSs6vVtWyHgyOTO7FnuM4A=
+	b=mpeXKcYfqR5wsrbAO5Zi8fXz23LZn/bixJH54+4/KDS1vJU5okhymq1TW//SgRWKD
+	 sZqvdBY8qKRs+QZRV3hnU9QAXrJWsFrxnCkWY//3krl0o2cMOAWmRsCn2PrMrrxkrG
+	 lf9br7xFOGKzsO9KwcFvvw6w4vy6/tb2++ovefAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Paul Moore <paul@paul-moore.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0967/1193] bpf: Avoid soft lockup in __htab_map_lookup_and_delete_batch()
-Date: Wed, 30 Sep 2026 17:27:31 +0200
-Message-ID: <20260930152455.729927732@linuxfoundation.org>
+Subject: [PATCH 6.6 0950/1193] selftests/landlock: Add layout1.refer_mount_root
+Date: Wed, 30 Sep 2026 17:27:14 +0200
+Message-ID: <20260930152455.346841584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -48,136 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 85136bf22404474a815fc0ed26ec0d1cbc1bc3f9 ]
+[ Upstream commit 0055f53aac80fd938bf7cdfad7ad414ca6c0e198 ]
 
-__htab_map_lookup_and_delete_batch() has no rescheduling point. The
-batch count bounds how many entries are copied out, not how many
-buckets are visited, so one BPF_MAP_LOOKUP_BATCH call can walk the
-map end to end. The empty-bucket fast path is worse: it stays inside
-a single rcu_read_lock() / bpf_disable_instrumentation() section for
-any run of consecutive empty buckets.
+Add tests to check error codes when linking or renaming a mount root
+directory.  This previously triggered a kernel warning, but it is fixed
+with the previous commit.
 
-That holds up on small maps, but it falls apart at scale. On a
-144-CPU arm64 host running a CONFIG_PREEMPT_NONE kernel, periodic
-BPF_MAP_LOOKUP_BATCH calls against an LRU hash map with 16,777,216
-buckets held a CPU inside the batch op for 77+ seconds and triggered
-the soft lockup watchdog.
-
-Commit 75134f16e7dd ("bpf: Add schedule points in batch ops") fixed this
-same problem in the generic batch ops, but not in this htab-native path,
-which every htab-based hash map variant uses for its lookup[_and_delete]
-batch ops.
-
-Complete that fix here. Leave the critical section after 64 consecutive
-empty buckets, call cond_resched_tasks_rcu_qs(), and resume at the saved
-bucket cursor. No locks are held at that point, and resuming from the
-cursor is already the function's behavior for non-empty buckets. Add the
-same call to the per-bucket loop after copy_to_user(), where every lock
-has been dropped. cond_resched_rcu() is not enough here: sleeping with
-bpf_prog_active elevated makes tracing programs on that CPU silently
-skip their invocations.
-
-Plain cond_resched() is not enough either. It is a no-op under PREEMPT
-and PREEMPT_LAZY, the only models arm64 and x86 have offered since
-commit 7dadeaa6e851 ("sched: Further restrict the preemption modes").
-It is also never a Tasks RCU quiescent state, in any model: the
-reschedule counts as a preemption. The walking task stays a holdout and
-stalls every synchronize_rcu_tasks() caller, ftrace and BPF trampoline
-teardown included, until the syscall returns [1].
-cond_resched_tasks_rcu_qs() is the usual tool for that [2]. It reports
-the quiescent state at each yield and still reschedules as
-cond_resched() does on PREEMPT_NONE and PREEMPT_VOLUNTARY kernels.
-
-Fixes: 057996380a42 ("bpf: Add batch ops to all htab bpf map")
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/bpf/20260715215314.44423f47@fangorn/ [1]
-Link: https://lore.kernel.org/bpf/9d444098-7c03-4163-af12-bd0a79a51443@paulmck-laptop/ [2]
-Assisted-by: LLM
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/r/20260909-b4-htab-batch-resched-v2-1-0cb529d8f95a@toxicpanda.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Paul Moore <paul@paul-moore.com>
+Link: https://lore.kernel.org/r/20240516181935.1645983-3-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adapt to the older selftest header layout]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c |   50 +++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 9c04e33d9d223..e14a0caa07bfa 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -1695,6 +1695,12 @@ static int htab_lru_percpu_map_lookup_and_delete_elem(struct bpf_map *map,
- 						 flags);
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -23,6 +23,12 @@
+ #include <sys/vfs.h>
+ #include <unistd.h>
+ 
++/*
++ * Intentionally included last to work around header conflict.
++ * See https://sourceware.org/glibc/wiki/Synchronizing_Headers.
++ */
++#include <linux/mount.h>
++
+ #include "common.h"
+ 
+ #ifndef renameat2
+@@ -34,6 +40,13 @@ int renameat2(int olddirfd, const char *
+ }
+ #endif
+ 
++#ifndef open_tree
++int open_tree(int dfd, const char *filename, unsigned int flags)
++{
++	return syscall(__NR_open_tree, dfd, filename, flags);
++}
++#endif
++
+ #ifndef RENAME_EXCHANGE
+ #define RENAME_EXCHANGE (1 << 1)
+ #endif
+@@ -2486,6 +2499,43 @@ TEST_F_FORK(layout1, refer_denied_by_def
+ 				layer_dir_s1d1_refer);
  }
  
 +/*
-+ * Max consecutive empty buckets to walk in one RCU +
-+ * instrumentation-disabled section before rescheduling.
++ * Tests walking through a denied root mount.
 + */
-+#define HTAB_BATCH_EMPTY_RESCHED 64
++TEST_F_FORK(layout1, refer_mount_root_deny)
++{
++	const struct landlock_ruleset_attr ruleset_attr = {
++		.handled_access_fs = LANDLOCK_ACCESS_FS_MAKE_DIR,
++	};
++	int root_fd, ruleset_fd;
 +
- static int
- __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 				   const union bpf_attr *attr,
-@@ -1716,6 +1722,7 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	unsigned long flags = 0;
- 	bool locked = false;
- 	struct htab_elem *l;
-+	u32 empty_cnt = 0;
- 	struct bucket *b;
- 	int ret = 0;
- 
-@@ -1885,12 +1892,21 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- next_batch:
--	/* If we are not copying data, we can go to next bucket and avoid
--	 * unlocking the rcu.
-+	/*
-+	 * If we are not copying data, we can go to next bucket and avoid
-+	 * unlocking the rcu. Bound the walk though: after
-+	 * HTAB_BATCH_EMPTY_RESCHED consecutive empty buckets, fully exit
-+	 * the critical section (no locks are held here) and reschedule.
- 	 */
- 	if (!bucket_cnt && (batch + 1 < htab->n_buckets)) {
- 		batch++;
--		goto again_nocopy;
-+		if (++empty_cnt < HTAB_BATCH_EMPTY_RESCHED)
-+			goto again_nocopy;
-+		empty_cnt = 0;
-+		rcu_read_unlock();
-+		bpf_enable_instrumentation();
-+		cond_resched_tasks_rcu_qs();
-+		goto again;
- 	}
- 
- 	rcu_read_unlock();
-@@ -1904,11 +1920,13 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- 	total += bucket_cnt;
-+	empty_cnt = 0;
- 	batch++;
- 	if (batch >= htab->n_buckets) {
- 		ret = -ENOENT;
- 		goto after_loop;
- 	}
-+	cond_resched_tasks_rcu_qs();
- 	goto again;
- 
- after_loop:
--- 
-2.53.0
-
++	/* Creates a mount object from a non-mount point. */
++	set_cap(_metadata, CAP_SYS_ADMIN);
++	root_fd =
++		open_tree(AT_FDCWD, dir_s1d1,
++			  AT_EMPTY_PATH | OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	clear_cap(_metadata, CAP_SYS_ADMIN);
++	ASSERT_LE(0, root_fd);
++
++	ruleset_fd =
++		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
++	ASSERT_LE(0, ruleset_fd);
++
++	ASSERT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
++	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
++	EXPECT_EQ(0, close(ruleset_fd));
++
++	/* Link denied by Landlock: EACCES. */
++	EXPECT_EQ(-1, linkat(root_fd, ".", root_fd, "does_not_exist", 0));
++	EXPECT_EQ(EACCES, errno);
++
++	/* renameat2() always returns EBUSY. */
++	EXPECT_EQ(-1, renameat2(root_fd, ".", root_fd, "does_not_exist", 0));
++	EXPECT_EQ(EBUSY, errno);
++
++	EXPECT_EQ(0, close(root_fd));
++}
++
+ TEST_F_FORK(layout1, reparent_link)
+ {
+ 	const struct rule layer1[] = {
 
 
