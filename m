@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B3D50EBE5;
-	Wed, 30 Sep 2026 16:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F57515967;
+	Wed, 30 Sep 2026 16:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784867; cv=none; b=SqpiGJkgsK8jo1vbqq0iC7SEc78nRDNp2H4RlFVV/C+1KXi7fDlTfhWM5upNyGdloS71rVKXYvzlVgw5wP6hA8We/Q/eyc8xwW7SrRCXJAPgWievb4fWzVFhjO872MT0QqE1EbbK4WxFEhu+c2yQjQXLLnNuxeAMv9nczTQFmlA=
+	t=1790784870; cv=none; b=rT4y1tHp2MH8glOgTtxPMZp0TFvAtsTz6sJip6a+Hil5ir2DaL+HiE7ac5K3N8JHuQFAvfYYK5nHvngDeN0BLjXUZdBPx0DRVns88jPY57LK5WU++GO3rU+vtV3SxTBYXZweaUkFESq79lOpZJCPMGYzAFkMFKsXL4S+s5N/Mcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784867; c=relaxed/simple;
-	bh=D9jRfIVAnHQ3L+hmRgg22TXJAuuu5iKBnLPiV3IGo18=;
+	s=arc-20240116; t=1790784870; c=relaxed/simple;
+	bh=1YV+Lz78vKk7Tds+w4479aa/Ka1lnO83No9zf1pH37M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVlT3GTPojoWqzC/B4TAKJMcrjz4JLmgsHZjLabnjA3kyqiy+j6/BtrWg1NqFfMIGkAnqJIsloFQYYk/7cW5rvtO9xRLoiKwxQfcR10rZjb3paOI7YkEFMhnrgFj6Guk5lKYeoVE+kcxlGMgQDXDW7JoxVtAe4O4v2Xid+0EVAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTJaTGd5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JXIwg8UPTIAdWiMtjU23P5XcxhWXf5Jf5qeQHAht+SSGmfQriqfC+4V/7nK5NxOFES0yXah0gZr+jmP35PrrTnAw6/ySUhcEynr2mDE3UgPX2j7G3TkhyMlj313oBepikLFrh3AeWYIks26JpevKQQlLt3QWjmuSLjnAlL57KJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzvQJS08; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTJaTGd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5951F000FF;
-	Wed, 30 Sep 2026 16:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzvQJS08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E200F1F00899;
+	Wed, 30 Sep 2026 16:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784858;
-	bh=ZPZszcoMAEPpXVkUdPo3bLLIgt1b+GsLh4Lx7UuLf+E=;
+	s=korg; t=1790784861;
+	bh=WfBxESvpBHp4y68YLVOrHsMBcsRhDJLWP+bhYAWaBAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UTJaTGd5ZjNli3mRM2R0Ek5HhyfVcl8TsGBDQ7ahPGRq4VnhD9j+wn5JntjjjOwLI
-	 0cgL7CaY9mWT1NyLwxb7h8J43Ca+32SpqJ6UNH29FA1KxyGUVjkxrGOHbpsSk8k5TB
-	 d2s3Q0YfuRTM61jBWA+CC+QVZhdRJzail8BQusuU=
+	b=tzvQJS08h8VNsxm9dKIIzY4A0uV8uR0VRJzF9GHnbDKFJ6/m+0Mt74yJWcRjJ0/ss
+	 7EiZF0IlJFXWWTmECu/YxfkQ48lCzZubTG6eikh+Otrx7LCXX/zyzhhcgYefku/kad
+	 wd0ImX3Y+cMs9weg2edlIgh3iLBMLvEdp35HPgyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chen Bowen <hicbowen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 259/982] wifi: rsi: validate beacon length before fixed buffer copy
-Date: Wed, 30 Sep 2026 17:16:35 +0200
-Message-ID: <20260930152422.358666344@linuxfoundation.org>
+Subject: [PATCH 6.1 260/982] ALSA: hda/realtek: Fix speakers on MECHREVO WUJIE Series
+Date: Wed, 30 Sep 2026 17:16:36 +0200
+Message-ID: <20260930152422.380909932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,52 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Chen Bowen <hicbowen@gmail.com>
 
-[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
+[ Upstream commit 9064637fb2a80b43105900a47d414997630e5b6b ]
 
-rsi_prepare_beacon() copies the mac80211 beacon frame after
-FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
-than MAX_MGMT_PKT_SIZE after alignment.
+The internal speakers on the MECHREVO WUJIE Series are silent,
+while the headphone output works correctly.
 
-Validate the beacon length against the actual tailroom before the copy
-and skb_put(). Leave ownership of the management skb with the caller on
-error, matching the existing rsi_send_beacon() cleanup path.
+The BIOS reports NID 0x1b on the Realtek ALC233 codec as
+unconnected with pin configuration 0x411111f0. However, the pin
+is connected to an internal speaker.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Overriding NID 0x1b with 0x90170150 makes the HDA generic parser
+detect both 0x14 and 0x1b as speaker outputs and restores internal
+speaker playback.
+
+Add a pin configuration fixup for the affected PCI SSID c011:1d05.
+
+Tested on a MECHREVO WUJIE Series laptop with board
+WUJIE Series-Lark4-LNL and firmware EM_LNL326_V1.0.23.
+
+Signed-off-by: Chen Bowen <hicbowen@gmail.com>
+Link: https://patch.msgid.link/20260710133409.16641-1-hicbowen@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/pci/hda/patch_realtek.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index c7460fbba0142..389de0bc25608 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	struct ieee80211_vif *vif;
- 	struct sk_buff *mac_bcn;
- 	u8 vap_id = 0, i;
-+	unsigned int tailroom;
- 	u16 tim_offset = 0;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 5ff2e113054fe..e79eb082810d7 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7378,6 +7378,7 @@ enum {
+ 	ALC275_FIXUP_DELL_XPS,
+ 	ALC293_FIXUP_LENOVO_SPK_NOISE,
+ 	ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY,
++	ALC233_FIXUP_WUJIE_SPEAKERS,
+ 	ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED,
+ 	ALC255_FIXUP_DELL_SPK_NOISE,
+ 	ALC225_FIXUP_DISABLE_MIC_VREF,
+@@ -7561,6 +7562,13 @@ static void alc298_fixup_lenovo_c940_duet7(struct hda_codec *codec,
+ }
  
- 	for (i = 0; i < RSI_MAX_VIFS; i++) {
-@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	if (mac_bcn->data[tim_offset + 2] == 0)
- 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
- 
-+	tailroom = skb_tailroom(skb);
-+	if (tailroom < FRAME_DESC_SZ ||
-+	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
-+		dev_kfree_skb(mac_bcn);
-+		return -EMSGSIZE;
-+	}
-+
- 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
- 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
- 
+ static const struct hda_fixup alc269_fixups[] = {
++	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1b, 0x90170150 }, /* internal speaker */
++			{ }
++		},
++	},
+ 	[ALC269_FIXUP_GPIO2] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_gpio2,
+@@ -10473,6 +10481,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+ 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
++	SND_PCI_QUIRK(0xc011, 0x1d05, "MECHREVO WUJIE Series", ALC233_FIXUP_WUJIE_SPEAKERS),
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
 -- 
 2.53.0
 
