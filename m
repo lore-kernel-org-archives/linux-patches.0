@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A6E51B196;
-	Wed, 30 Sep 2026 17:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B235E5372FB;
+	Wed, 30 Sep 2026 17:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790102; cv=none; b=jwlQL2i5DA4OkaIjIpxRu478/bTJ5JjV9aNWycvRL3giZm869Vd0ub9pDXup7YvBu8IlA8+H4bBpTS0BfogtnLWU0+txkOYNBNeHyK1a6t0VorkpeLlOcrGhlv0t+c11yUyintK/aRb1JPrdEprcNf0uuo0RSPR4V8kz+TPEk98=
+	t=1790790105; cv=none; b=VG0kqX5IFa7DcwT+6DKclxmlLN0Xqf3MfeACuay4sE6FMsVDvNzFzMYtxgCIwSBMPd2qLA/UdNxXYu1yPnMopzlY0/f7gLdHIaN7hqP+A0kQfbQp9YPlN4EucidUoKXqsbEJZEEoqtTRkUe+y+lTxXLG/2LlU6A0GMZfl81TvZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790102; c=relaxed/simple;
-	bh=amf9mDnWcu+0+qS93U+RIxfbqAlDGTUh+fDaGP6wi4E=;
+	s=arc-20240116; t=1790790105; c=relaxed/simple;
+	bh=GVUFMOgFTOdVTeikuTeStQxT1fGMle5nnmYZa4KGQcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lla7aNWAWlBQ9UDMjo9JS8F+5h9BAtwGetVf/vK/9DRGnMgscbD4s+eI8SHM7+Apyu+o5ehAnv4wuSGBgLyWYy3glmqDlBFGL9xrlk5YNT6qsV13QVjqSJ2gkV/jUWEPgtbjzQytULBVCsnwRWT9DFwQrtsnuWQvbeHl1dqT/bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1g/sqwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtBSVzyAvCEZAZ4pokoNzp0DLjiIJW5lf3xreTeKPTdJ2ULASYTT8fgWMP982vN/R0OfPwVwFJiSkpDrKIlDhiS2V9ERS4lbDa5RI84gUdZg+6C7kvv98kOPN0WKXNKNMKDsLlZyVaKb81mKZ7uZlR8ZYwOwOXXUuNhGjIxuYq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFPej5+i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1g/sqwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D6E1F000FF;
-	Wed, 30 Sep 2026 17:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFPej5+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA39B1F000FF;
+	Wed, 30 Sep 2026 17:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790101;
-	bh=JL97SPYypnBNjeQ+eX6JQlnq/uvK8ODd3EbZH3tBpbM=;
+	s=korg; t=1790790104;
+	bh=p4tUk9SZpM4yqmyQzEHuRDDt6j7wzPpOYXjK7Njy8E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1g/sqwThcwjxS/Rr4LLD2ZG4oG8faJ+ZqtvhmMjtCNFb8/2tF0K2B++NSySCwClo
-	 6phHDaZ6xcB4XCwRQiT2/oEMZQ+RUk6hP4HonPcsWfTRqZ40jOeq0ji4HbMPkp0VXx
-	 XGKtYCW1PGaJZ2zt4w54M4pqJQG9EZeaC320vj1c=
+	b=mFPej5+i08xak4yEh7NFnkVu8Q5cOlZ3KSbD/257XKACRHHOSMIblCFyiL+6f4fu+
+	 SJt6Ks+/AfpmA0ZQ6lmz0AubPZLneOcf29cn6zya07GQyq2cXv4zoXFOS0DDieHIiu
+	 w/dt2v5+axNZlw12p9bIZCRv1IXPGmDcolXNY44o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 711/877] tracing: Fix memory corruption from a "STACKTRACE" histogram key
-Date: Wed, 30 Sep 2026 17:27:02 +0200
-Message-ID: <20260930152430.027023980@linuxfoundation.org>
+Subject: [PATCH 6.12 712/877] ipmr: account multicast table and route memory
+Date: Wed, 30 Sep 2026 17:27:03 +0200
+Message-ID: <20260930152430.049112444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,61 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 7f711e62355bb3123a2ca2f97a2facbfebc678c6 ]
+[ Upstream commit b7ee18725f2292ab554aa96a101ae42d45f008bd ]
 
-"cpu", "CPU", "stacktrace" and "STACKTRACE" are generic fields, defined
-with an offset and a size of zero so that the filter code can match them
-by name. parse_field() maps them onto their common_* equivalents for
-backward compatibility, but unlike the common_* names it hands the
-placeholder back to the caller instead of NULL.
+A netadmin in a user+net namespace can create many IPv4 and IPv6
+multicast routing tables with MRT_TABLE and MRT6_TABLE. Each unseen
+id allocates an mr_table via the shared mr_table_alloc(), links it
+into the per-net list, and leaves it until netns teardown. Those
+objects were not charged to memcg, so the host unreclaimable slab
+grows with the table count.
 
-create_hist_field() takes a non-NULL field as a promise that the record
-carries a stacktrace and picks HIST_FIELD_FN_STACK, so the __data_loc
-word is read from offset 0, that is from common_type, and its low 16
-bits are followed as an offset into the record. What is found there
-becomes the length of an unbounded memcpy. Pick an event whose id is
-small enough that the offset stays inside its own record and the length
-is a kernel text address:
+Account mr_table allocations with GFP_KERNEL_ACCOUNT and mark the
+IPv4/IPv6 MFC caches SLAB_ACCOUNT. This matches the established
+handling of IP addresses, routes and alternate interface names.
 
-  # cd /sys/kernel/tracing
-  # echo 'hist:keys=STACKTRACE' > events/ftrace/print/trigger
-  # echo hello > trace_marker
+Unresolved MFC entries are still allocated from softIRQ with
+GFP_ATOMIC and are not charged. They expire after 10 seconds and are
+bounded by the socket receive queue; see commit 0079ad8e8dc3
+("ipmr: remove hard code cache_resolve_queue_len limit").
 
-  Oops: general protection fault, probably for non-canonical address
-  RIP: 0010:rb_next+0x23/0x60
-   </IRQ>
-  RIP: 0010:memcpy+0xc/0x30
-   event_hist_trigger+0x2e7/0x12c0
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Leave the field NULL, which is what the comment above the branch says
-the code does and what common_stacktrace already does. FILTER_CPU and
-FILTER_COMM are left alone, their create_hist_field() branches never
-look at the field.
-
+Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
+Fixes: d1db275dd3f6 ("ipv6: ip6mr: support multiple tables")
 Cc: stable@vger.kernel.org
-Fixes: 4b512860bdbd ("tracing: Rename stacktrace field to common_stacktrace")
-Link: https://patch.msgid.link/20260907155045.692664-3-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Adjusted context for the missing FILTER_COMM branch in parse_field(). ]
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/050b58f7fc6b45da0fb12768ebb62d18fa46133d.1788784801.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ changed kzalloc_obj(*mrt, GFP_KERNEL_ACCOUNT) to kzalloc(sizeof(*mrt), GFP_KERNEL_ACCOUNT) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/ipmr.c      |    3 ++-
+ net/ipv4/ipmr_base.c |    2 +-
+ net/ipv6/ip6mr.c     |    2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2379,6 +2379,7 @@ parse_field(struct hist_trigger_data *hi
- 				*flags |= HIST_FIELD_FL_CPU;
- 			} else if (field && field->filter_type == FILTER_STACKTRACE) {
- 				*flags |= HIST_FIELD_FL_STACKTRACE;
-+				field = NULL;
- 			} else {
- 				hist_err(tr, HIST_ERR_FIELD_NOT_FOUND,
- 					 errpos(field_name));
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -3162,7 +3162,8 @@ int __init ip_mr_init(void)
+ {
+ 	int err;
+ 
+-	mrt_cachep = KMEM_CACHE(mfc_cache, SLAB_HWCACHE_ALIGN | SLAB_PANIC);
++	mrt_cachep = KMEM_CACHE(mfc_cache,
++				SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT);
+ 
+ 	err = register_pernet_subsys(&ipmr_net_ops);
+ 	if (err)
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -38,7 +38,7 @@ mr_table_alloc(struct net *net, u32 id,
+ 	struct mr_table *mrt;
+ 	int err;
+ 
+-	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL);
++	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL_ACCOUNT);
+ 	if (!mrt)
+ 		return ERR_PTR(-ENOMEM);
+ 	mrt->id = id;
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1387,7 +1387,7 @@ int __init ip6_mr_init(void)
+ {
+ 	int err;
+ 
+-	mrt_cachep = KMEM_CACHE(mfc6_cache, SLAB_HWCACHE_ALIGN);
++	mrt_cachep = KMEM_CACHE(mfc6_cache, SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT);
+ 	if (!mrt_cachep)
+ 		return -ENOMEM;
+ 
 
 
