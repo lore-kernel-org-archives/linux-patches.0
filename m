@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E22516157;
-	Wed, 30 Sep 2026 17:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F07050C2A4;
+	Wed, 30 Sep 2026 17:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788816; cv=none; b=fnEZKl9dXtCclW4oGSRFZNcGgraF7DricKNsXt7DiJfWF4y6XcQTrdb2VYsD36olSrHeXCAKtAUVgcsQCdUQQ9t082wf00pPdgDC41xMAV520gLAu5v1ctR5h8ZeGiZy+B1J7rrsQ5NX14ekTm8En16LdKtwkMBQ4E6ONqu6VTY=
+	t=1790788819; cv=none; b=PzLvHHp2l7dixq9f4D1aS5Fch9fyb32+21lq5UDarDdFX0bVKHRwQuEH9D126TyCaWi3qnmQI62F2QieYY/GbJRwDn5vHwyo+DSTeStafYJo7QJc80G3HA9YVQOCUIxryYlC2zWt7BGyPkqLiGXkIv194OvSFtYLTthimVVixDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788816; c=relaxed/simple;
-	bh=KEuESN9fY49yy0cdjCTSFcc+X/vMysBpgZz9158qiBs=;
+	s=arc-20240116; t=1790788819; c=relaxed/simple;
+	bh=wt92NRG4uB3gdhSjylwisSaCI4jr7zWx6DcTOKBp62s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbKPf2NrO4SOwdcAuAXanvL9hqsg2y+d9MAxZypfokfyn/rWssUf0/amXOC2aqPm3umaID+D7ayoGxIXc0fdddAWU+Ut2ppUMr2S97xzB7WT0gwT3vxm7xnyUSrX16zvlTaKW9Yjh4Qn0NwqdBjvfWr0xje1nalWnJTBLpBjIEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1k6d6iYC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WOq/tV78nM5mWjv1bG+WEzaWx7naWtnPCV0+LjZzm0DoTkoGcHdvrjj6+5XQs08LlsjCxstP1Q8ZJscOVuGOC4uO+bKsh+vn9Dsv824NpulX8PSbpOX9CTkOVq8ku1rtteujDfcaH4SLHdveNs9lmJbBRAj4VnG1/gagvqWkeqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MINXFoNC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1k6d6iYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B9C1F000FF;
-	Wed, 30 Sep 2026 17:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MINXFoNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC8E1F000FF;
+	Wed, 30 Sep 2026 17:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788815;
-	bh=521GeeUxWSXu6KPVYiOZmMBGH5M/5rQsiYPvVFyaRmk=;
+	s=korg; t=1790788818;
+	bh=l6GvzDIr3o5sVjPH4G6ck2bqXAsD97L6hY7+w9AFxag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1k6d6iYC6OZ6C97k3Zfi2uCMJoPIc/A2tasB0s9HrknU9P94Eb5GCxK4sp68wfGlH
-	 Vql+6+j0qP6n/F93bloLCpdTRolabhMO2Yh2+i+kIjUARSSo68ao1cSXnUbsLgVNgb
-	 CSaQulc2TLZIozNXtTYH3864s7idykewxd0214Bg=
+	b=MINXFoNCLHhWGs58eYouRDqXlYOyz2054ONcwGbKNENwv7FMAw7b0xWqr1u7STpAd
+	 9o2rJFHqPkgwkGPHQ11XLYD0HZeVq9ziZUrU+LkNQwOxiqBlXMcokjUOKd2oQWf9Zc
+	 guFgN1oW/562kI16ncUdT3vB2KMtJAJrggMDTu2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.12 212/877] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
-Date: Wed, 30 Sep 2026 17:18:43 +0200
-Message-ID: <20260930152419.303877716@linuxfoundation.org>
+Subject: [PATCH 6.12 213/877] IB/hfi1: Resolve the credit-return buffer through the send contexts node
+Date: Wed, 30 Sep 2026 17:18:44 +0200
+Message-ID: <20260930152419.325153992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,55 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
 
-commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
+commit 975396b9e5a4028e649f4b9a6a5ca5dfb76a824b upstream.
 
-register_pkey_tree() ignores errors from register_one_pkey_tree() and
-continues registering the remaining slaves. The per-slave error path has
-already released the pkey parent kobjects, but their pointers remain
-stored in the device. A later device cleanup therefore passes the stale
-pointers to kobject_put(), causing a use-after-free.
+hfi1_file_mmap()'s PIO_CRED case derives this context's credit-return
+page offset, and the DMA handle for it, from dd->cr_base[uctxt->numa_id].
+uctxt->numa_id is the node of whichever CPU the process happened to be
+running on, but the entry itself lives in the credit-return allocation of
+the send context's own node:
 
-Clear the parent pointers after releasing a failed slave tree and skip
-unregistered trees during device cleanup. This preserves the existing
-best-effort registration behavior while preventing a second cleanup of
-the failed tree.
+	sc->hw_free = &sc->dd->cr_base[sc->node].va[gc].cr[index];
 
-Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+and user send contexts are allocated with sc_alloc(dd, SC_USER, ...,
+dd->node), the HFI-local node.  On a multi-socket host with the process
+running off that node the two allocations differ, so the subtraction
+produces an offset into an unrelated buffer and the DMA handle belongs to
+the wrong allocation.
+
+Use the send context's own node for all three references.  The
+continuation lines are reindented at the same time; they mixed spaces and
+tabs.
+
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+Link: https://patch.msgid.link/20260809032743.2671579-2-jyohuku.alterego@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/hfi1/file_ops.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/hw/mlx4/sysfs.c
-+++ b/drivers/infiniband/hw/mlx4/sysfs.c
-@@ -753,11 +753,13 @@ err_add:
- 		kobject_put(p);
- 	}
- 	kobject_put(dev->dev_ports_parent[slave]);
-+	dev->dev_ports_parent[slave] = NULL;
- 
- err_ports:
- 	kobject_put(dev->pkeys.device_parent[slave]);
- 	/* extra put for the device_parent create_and_add */
- 	kobject_put(dev->pkeys.device_parent[slave]);
-+	dev->pkeys.device_parent[slave] = NULL;
- 
- fail_dev:
- 	kobject_put(dev->iov_parent);
-@@ -787,6 +789,8 @@ static void unregister_pkey_tree(struct
- 		return;
- 
- 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
-+		if (!device->pkeys.device_parent[slave])
-+			continue;
- 		list_for_each_entry_safe(p, t,
- 					 &device->pkeys.pkey_port_list[slave],
- 					 entry) {
+--- a/drivers/infiniband/hw/hfi1/file_ops.c
++++ b/drivers/infiniband/hw/hfi1/file_ops.c
+@@ -382,10 +382,10 @@ static int hfi1_file_mmap(struct file *f
+ 		 * of enabled contexts > 64 and 128 respectively).
+ 		 */
+ 		cr_page_offset = ((u64)uctxt->sc->hw_free -
+-			  	     (u64)dd->cr_base[uctxt->numa_id].va) &
+-				   PAGE_MASK;
+-		memvirt = dd->cr_base[uctxt->numa_id].va + cr_page_offset;
+-		memdma = dd->cr_base[uctxt->numa_id].dma + cr_page_offset;
++				  (u64)dd->cr_base[uctxt->sc->node].va) &
++				 PAGE_MASK;
++		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
++		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
+ 		memlen = PAGE_SIZE;
+ 		flags &= ~VM_MAYWRITE;
+ 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
 
 
