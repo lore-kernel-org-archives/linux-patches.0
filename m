@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE3C4FD27C;
-	Wed, 30 Sep 2026 18:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4084DF4D5;
+	Wed, 30 Sep 2026 18:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793808; cv=none; b=elmfPT/8tomhjIHHqlu/RnE4fHsPuWeiC5OEaAWSzFPBviS34gtfNyLhC4gsPSbvT0BJNsiIN7rhoiqM5h6Z5PqjAGaKXDWMsjVZ7y4MfR4fTzxl5EDTmXSCUFI5OPYBJh3TUWQQMUh3jjQNRKtCxwHve4N4hgOe+EUsFfMuqPs=
+	t=1790793811; cv=none; b=CtmfrAG6kVtCynfKh5JYDn2QMRMInr0j8JU96eWJ8UwROkzIJBtmf/Cz8liBVGcbh8fEo5TC4YcJYEMOVV/2xlji6numQKOCCUZWs0JWPIXOGd5R58Hto4Cu3Uingjg1RobFk6WLs7vNM93tOJsQEgaCUw+vr8zmt3Jgtb50+Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793808; c=relaxed/simple;
-	bh=7Tb8hyYss/PfDQXwt2Yx9/ObWNVEkLsTpMFxtgiUgLI=;
+	s=arc-20240116; t=1790793811; c=relaxed/simple;
+	bh=FeH2qhUYtsysyIx4fEEw/AxjciJd/ip/A1e5pgJsNQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oS3j57g03mNHsEjQzVfzRcq3wYw+I3Y9JXoXnrG2Fal4PEiXZBQfR/r7BwhEdODik0XdQY6WVVZV+++5tOvmFN8R79/pd1/J5tvmn/kqZkP0y4hXRUrNoimKkmTvmz1YF/NoO51BTxuGTra1um/Zeo+AxFLZzadehhWhzUvn43w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlQ8KI9C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPlBLL+oawqfoSJd2Rt6OGZ61UJwRbHV2xYxdEirQKHU9pxmvC6OVPBmSGLnMR4fB4BSyLLJp4K0rbyxA16hlManwASJ5H5BnIx7rm33KoMvLNAi2AN0SpcvrUZddG/47f4bo79EVgkRuF/11RUTkWHMP7Bs4MQJJGzDDQM2H2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyNekMIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlQ8KI9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8511F000FF;
-	Wed, 30 Sep 2026 18:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyNekMIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D9E1F000FF;
+	Wed, 30 Sep 2026 18:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793807;
-	bh=lPo70vZfQLJbgzO53q8c2I8H6PP9tp1zYZ7BQ78T7O8=;
+	s=korg; t=1790793810;
+	bh=mUCZDn5FiiTVPFjnkajWwznYuJSqzUTc7gFDcJj6WVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rlQ8KI9C7KMoUkb5pklYJHSrP00daji/GFaTTp/lZV4Q9rf2rkjkNDNxq92js9PEJ
-	 CmnIu4fXxKtESPRrIKFyz3Z1OWETyYywXl64jNCo7E/bVspCSgjXe9MziFwuPSo50N
-	 hz9hb1J8tyfmWsirln5bRHeMIsheKHVtebJRDaUI=
+	b=ZyNekMIFlfRlkTeDfEljKlk23cxKncdkTShegDsDFKok8jITTEUIrFhJEsb/DKHDd
+	 cnYDXOrzKednefMe73bKR056d0DgxFfUh62SzXMUh0f6Y1C6jtNxIGNb+shyh5qprB
+	 F6bFYaMZkfMZTGWjXvQ8jGYrpjsyxus/IRQs8JsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 385/395] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
-Date: Wed, 30 Sep 2026 17:30:47 +0200
-Message-ID: <20260930152349.054553976@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chunfeng Song <springbreeze@stu.pku.edu.cn>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 386/395] Revert "rust: net: phy: fix off-by-one bit positions in device status accessors"
+Date: Wed, 30 Sep 2026 17:30:48 +0200
+Message-ID: <20260930152349.077664484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,62 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 8ae12ccaec6ec74945d8c1ef39f2c1b8df779abc ]
+This reverts commit f22d349940cb34e56f6e8cd86d69c36d3998b33a which is
+commit 6fb0a9d9071f1ff0cc5cfc0782302d9c90d642cb upstream.
 
-KVM device ioctls are not serialized against KVM_RUN. As a result,
-kvm_riscv_aia_imsic_rw_attr() can snapshot the physical CPU and HGEI of
-an IMSIC VS-file before a concurrent vCPU migration releases it.
+It was not meant to be backported before 7.1.y -- its tag said:
 
-The HGEI can then be allocated to another vCPU before imsic_vsfile_rw()
-uses the stale tuple. A GET or SET attribute may consequently access the
-new owner's interrupt file.
+  Cc: stable@vger.kernel.org # Only 7.1.y and later (requires bindgen's raw pointer accessors).
 
-Serialize the entire IMSIC attribute operation with the target vCPU
-mutex. This prevents the VS-file from being migrated and recycled until
-the attribute access completes. Acquire the mutex killably so that the
-device ioctl remains interruptible while waiting for KVM_RUN to finish.
-
-Fixes: db8b7e97d613 ("RISC-V: KVM: Add in-kernel virtualization of AIA IMSIC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810-imsic-attr-race-v2-1-00ed95ad321e@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/stable/SEWP216MB9770116738884C46F156A686FAF98D2@SEWP216MB977011.KORP216.PROD.OUTLOOK.COM/
+Acked-by: Chunfeng Song <springbreeze@stu.pku.edu.cn>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/aia_imsic.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ rust/kernel/net/phy.rs |   38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -952,9 +952,14 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 	if (!vcpu)
- 		return -ENODEV;
+--- a/rust/kernel/net/phy.rs
++++ b/rust/kernel/net/phy.rs
+@@ -123,37 +123,39 @@ impl Device {
+     /// Gets the current link state.
+     ///
+     /// It returns true if the link is up.
+-    #[inline]
+     pub fn is_link_up(&self) -> bool {
+-        let phydev = self.0.get().cast_const();
+-        // SAFETY: By the type invariant of `Device`, `phydev` points to a valid
+-        // `struct phy_device`, and there is no concurrent write to this field.
+-        let link = unsafe { bindings::phy_device::link_raw(phydev) };
+-        link == 1
++        const LINK_IS_UP: u64 = 1;
++        // TODO: the code to access to the bit field will be replaced with automatically
++        // generated code by bindgen when it becomes possible.
++        // SAFETY: The struct invariant ensures that we may access
++        // this field without additional synchronization.
++        let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
++        bit_field.get(14, 1) == LINK_IS_UP
+     }
  
-+	if (mutex_lock_killable(&vcpu->mutex))
-+		return -EINTR;
-+
- 	imsic = vcpu->arch.aia_context.imsic_state;
--	if (!imsic)
--		return -ENODEV;
-+	if (!imsic) {
-+		rc = -ENODEV;
-+		goto out_unlock;
-+	}
- 	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+     /// Gets the current auto-negotiation configuration.
+     ///
+     /// It returns true if auto-negotiation is enabled.
+-    #[inline]
+     pub fn is_autoneg_enabled(&self) -> bool {
+-        let phydev = self.0.get().cast_const();
+-        // SAFETY: By the type invariant of `Device`, `phydev` points to a valid
+-        // `struct phy_device`, and there is no concurrent write to this field.
+-        let autoneg = unsafe { bindings::phy_device::autoneg_raw(phydev) };
+-        autoneg == bindings::AUTONEG_ENABLE
++        // TODO: the code to access to the bit field will be replaced with automatically
++        // generated code by bindgen when it becomes possible.
++        // SAFETY: The struct invariant ensures that we may access
++        // this field without additional synchronization.
++        let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
++        bit_field.get(13, 1) == u64::from(bindings::AUTONEG_ENABLE)
+     }
  
- 	read_lock_irqsave(&imsic->vsfile_lock, flags);
-@@ -978,6 +983,8 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 		rc = imsic_vsfile_rw(vsfile_hgei, vsfile_cpu, imsic->nr_eix,
- 				     isel, write, val);
+     /// Gets the current auto-negotiation state.
+     ///
+     /// It returns true if auto-negotiation is completed.
+-    #[inline]
+     pub fn is_autoneg_completed(&self) -> bool {
+-        let phydev = self.0.get().cast_const();
+-        // SAFETY: By the type invariant of `Device`, `phydev` points to a valid
+-        // `struct phy_device`, and there is no concurrent write to this field.
+-        let completed = unsafe { bindings::phy_device::autoneg_complete_raw(phydev) };
+-        completed == 1
++        const AUTONEG_COMPLETED: u64 = 1;
++        // TODO: the code to access to the bit field will be replaced with automatically
++        // generated code by bindgen when it becomes possible.
++        // SAFETY: The struct invariant ensures that we may access
++        // this field without additional synchronization.
++        let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
++        bit_field.get(15, 1) == AUTONEG_COMPLETED
+     }
  
-+out_unlock:
-+	mutex_unlock(&vcpu->mutex);
- 	return rc;
- }
- 
+     /// Sets the speed of the PHY.
 
 
