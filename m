@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D704ED196;
-	Wed, 30 Sep 2026 16:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158EC374A16;
+	Wed, 30 Sep 2026 16:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786985; cv=none; b=PJF0Od3E3QuZ6LPO4Nw+GPMqRt3tgdDxGoPDwOdEBkNrPmLf8ccVtKFng/cwDGjE451x4u2dyvtkiLU3B2uce3Th+aYJoVApiUdrpJw/1Rn/AOlB4hLjqZY2k8zT/6eCgIag50FgyjW3AgAOMSaXSoVYEbfOXr+BQzmseXA22iU=
+	t=1790786988; cv=none; b=QDhfwnp455GhjStJB/3XXVWBwELVqTKRvNclnUGmvQXfymsTBGp6oZiBrQHrOQj+tEm3Wunkpt3A1h91wDxYYivoLujBjq74z6t7cpZdGU+AkASOlsiiKg/Dt/hYtDHGt5l+YxWvpGl3UovRlnZttYHzdoRVGs+VrNsjTWoyR3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786985; c=relaxed/simple;
-	bh=W5tdaglF+8Ke4HvGfvyOwh1x4Wuos164UH+B5986mLY=;
+	s=arc-20240116; t=1790786988; c=relaxed/simple;
+	bh=13OWvOf3MR9BTL6XBZ+NUXCkrXi9YqryvL4TxCe8M4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElU81hjVMQoYnIEOLcan44GapmXMWJRnwgijcM+w1MRHHQ6BqezlpBKntdeXwAfSYB+cRhglOahGXxME9n0YU8XvaFRoFjtjWKGD9XCjwMBd1Nw7rix1rpTCXF42MLMhSJZrQB0RzRhSRmte56PDZGXplUalaywX0VZSIGjnCQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4njuUJF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o71bK45W/e/3ueEzXxO3aWi7YgDoYOsTkDeGhijBF1552yEjzeeWQAUpaRkrig6YPyKo8UlPh9SI0YtNQZQ1QERwGMy0WlW5WdeVpe42xaHf/mXyecAIUp8a3CYxPAAO+RXFODSVG4VDzDzSRxCUpJzq2YxB0e/TrtWDRdIzeXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAx2Qgzx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4njuUJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914C01F000FF;
-	Wed, 30 Sep 2026 16:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAx2Qgzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709FE1F000FF;
+	Wed, 30 Sep 2026 16:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786984;
-	bh=3Km/wTXAC4/OWnswVqn/HYkqUi6Hp05HVust3wmesEQ=;
+	s=korg; t=1790786987;
+	bh=tBo8Kkab0HHzhLCRb8SBE+qZ4AkZr3Wj9gp0Cw/+m3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4njuUJFJAe77YNSlGuaEYTQVUkW+aaOG0nrsPGrtV3IfpadtiUYpPuduFwHMYMQE
-	 1bNc8r1dZAUnlB3CXCVpJemydihqY8c70V3Fd3/6/j0aVCJBLjpbp/MriJhamWheub
-	 xhetPjJO3j2qJGpRuuTq1gpmJuJ0TH8PvTM4C4fc=
+	b=yAx2QgzxMgwSv4ngPh/lf0qrQwyjJzW8r60468ibROy5wVl3W+b3gtZmE6Gcr3E3K
+	 H+sc1rj7mCoOSIj6+UV//qGYauhIjFeNrAcgJ2hfNblEe4Bn+OnzjEGl4uCspRAOT2
+	 9Q/+JG3m2faF1WLkORGeCUQ86HW0Pj6QiG7f+Pk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 072/457] net/mlx5: devcom, Base component size on linked devices
-Date: Wed, 30 Sep 2026 17:22:57 +0200
-Message-ID: <20260930152347.603232112@linuxfoundation.org>
+Subject: [PATCH 7.2 073/457] net/mlx5: SD, unload reps on shared FDB create error path
+Date: Wed, 30 Sep 2026 17:22:58 +0200
+Message-ID: <20260930152347.623728368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -55,71 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit d09e8f64653c93da5793c16be19330968f2a32e6 ]
+[ Upstream commit e1e29ada2b938b13ba689a06a8bd8604564da2b3 ]
 
-mlx5_devcom_comp_get_size() returns the component's kref count. That
-kref is bumped in mlx5_devcom_register_component() under comp_list_lock,
-before the comp_dev is linked onto comp_dev_list_head under comp->sem.
-The event broadcast (mlx5_devcom_locked_send_event()) walks that list.
+mlx5_lag_shared_fdb_create() sets sd_fdb_active on every group member
+before reloading the representors, so mlx5_lag_is_active() is already
+true and the guard in mlx5_esw_offloads_rep_load() does not skip the
+VF/SF reps. If the reload then fails, the error path clears
+sd_fdb_active and destroys the shared FDB, leaving the reps loaded
+while SD LAG is inactive - the state cited commit was written
+to prevent.
 
-Hence, a caller can read the expected size, but send_event won't be sent
-to all peers. In the SD group registration path, this lets a member
-broadcast its role-election event over an incomplete list, electing a
-primary that never completes the group, is never marked ready, and
-leaves the group with a stale primary.
+Unload the reps in the error path as well.
 
-Track the number of linked comp_devs in a dedicated counter, maintained
-under comp->sem together with the list add/remove, and return it from
-mlx5_devcom_comp_get_size().
-
-Fixes: 9bb1ac80738a ("net/mlx5: devcom, Add component size getter")
+Fixes: 68c2dd59a6c7 ("net/mlx5: E-Switch, Tie rep load/unload to SD LAG state")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
 Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260915113459.3934760-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260915113459.3934760-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-index 64f92427602de..75855481522b1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-@@ -37,6 +37,7 @@ struct mlx5_devcom_comp {
- 	struct mlx5_devcom_key key;
- 	mlx5_devcom_event_handler_t handler;
- 	struct kref ref;
-+	int nr_devs;
- 	bool ready;
- 	struct rw_semaphore sem;
- 	struct lock_class_key lock_key;
-@@ -170,6 +171,7 @@ devcom_alloc_comp_dev(struct mlx5_devcom_dev *devc,
- 
- 	down_write(&comp->sem);
- 	list_add_tail(&devcom->list, &comp->comp_dev_list_head);
-+	WRITE_ONCE(comp->nr_devs, comp->nr_devs + 1);
- 	up_write(&comp->sem);
- 
- 	return devcom;
-@@ -182,6 +184,7 @@ devcom_free_comp_dev(struct mlx5_devcom_comp_dev *devcom)
- 
- 	down_write(&comp->sem);
- 	list_del(&devcom->list);
-+	WRITE_ONCE(comp->nr_devs, comp->nr_devs - 1);
- 	up_write(&comp->sem);
- 
- 	kref_put(&devcom->devc->ref, mlx5_devcom_dev_release);
-@@ -284,7 +287,7 @@ int mlx5_devcom_comp_get_size(struct mlx5_devcom_comp_dev *devcom)
- {
- 	struct mlx5_devcom_comp *comp = devcom->comp;
- 
--	return kref_read(&comp->ref);
-+	return READ_ONCE(comp->nr_devs);
- }
- 
- int mlx5_devcom_locked_send_event(struct mlx5_devcom_comp_dev *devcom,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c
+index 6b4ad3c53f2f3..424040918fa37 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c
+@@ -270,6 +270,7 @@ int mlx5_lag_shared_fdb_create(struct mlx5_lag *ldev,
+ 			pf->sd_fdb_active = false;
+ 		}
+ 		mlx5_lag_destroy_single_fdb_filter(ldev, group_id);
++		mlx5_lag_unload_reps_from_locked(ldev, filter);
+ 	}
+ err_add_devices:
+ 	mlx5_lag_add_devices_filter(ldev, filter);
 -- 
 2.53.0
 
