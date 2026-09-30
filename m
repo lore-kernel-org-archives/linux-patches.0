@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728EB509EF3;
-	Wed, 30 Sep 2026 16:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52EF4F93A8;
+	Wed, 30 Sep 2026 16:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784212; cv=none; b=SpoUg+X9xTF9Uqv+4Pay+TNkTMX/cM0qmDv4KvEMN7jrjlZcrVki20eJeYlT4Lj5L99RZp8R1HtuDmqwoVegUkUGoJxnAyIhkwsBGIc7aEz/D6HFpIuFZABtnye8sxuuyCSWVHl0k6xpBYilzvQ7CSfdgW8fTnnVTguaYEQe+HQ=
+	t=1790784219; cv=none; b=I0cxc8OlQUThv1ubFqjukX6M6cpRvE7gEk0uDcsK3GUmHj6eywCnwKV+YdKR51ClZ5R7c7f8cQdn4myYxy+im/+Ad7NuoEQfl2C6jXNg1MnmmP1QR5ZiUV/htd5eK2oDh4IFbHMdcZtyUeXiO0UUJdMXHNPVSB3aPXZnYNFZ15I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784212; c=relaxed/simple;
-	bh=A4/YewqPPnAHszdQ482qdvEFJfEWqojEbb98xsMxG6s=;
+	s=arc-20240116; t=1790784219; c=relaxed/simple;
+	bh=BnryMM4oIlFleksVPpFGpCGlIS2B1QCPm52DbkWaQ3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kA6yfyWtDJslM5jaC3Xz2sQINL+CZ7RknV86e5x5puwCtVLfRSnprfYusBOj05GUHo5PyhuUA0U4Rh1lG+MtVb5PEEuE43CY8gHy+WevuhIdlLn609WeoChVVOHUoncW6ii2kPS7QvXS5PSSbTiLWH2iKuePuwXcX/qkvAQwrdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPMzp65+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TGVV3ZgVaBfCgdc0/64GgKg9my5+57nHgGi6bZIQdOyNGeJgnFMyIbqTtgj5hPt6nFYggSkcaPx40vs6KDZPUUNVHRpntcIhDhIdhmSo9O46aVzF6d2MmlEukPX0jXkIjuyOQxn1iysBhgi/pjVRME3gUc0edWrCPP0P7WM3Bz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cizpPt0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPMzp65+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD8E1F000FF;
-	Wed, 30 Sep 2026 16:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cizpPt0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A581F000FF;
+	Wed, 30 Sep 2026 16:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784210;
-	bh=I8i0kFeBYr2NlA+SOID06UXlioIKK0tW/xgixKG9XpM=;
+	s=korg; t=1790784213;
+	bh=6zMzsl6v6Qeg/0qPiMT+zYATyET+3V861c/bz0bG2vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPMzp65+wfQevsI0kbuWnMEzfz/2Sx/puiaTya7bhrMC9YUZAefcvlHXZAaEVphs4
-	 sU3fuHI28EF1F893C8n66+2zQGZloNm7q9nDBMrUzICxsnm/f/n3H5Uiw4BvB2eGD9
-	 XPIxHbtRDvh2Vdv70HIWxrDiixi9z1nUUI7eymNU=
+	b=cizpPt0J8j9Ujvkc3DED0R7c+ZiVNcLjQVCC9j7NyrdIN46Q5LvUUKrQOBFHdHFFN
+	 J6K2F0el+Dn6bP9XTzOrjPjQWXQRQs9YN0rHHSphshQOZdDLt9h6nWo1vU72nlMoPa
+	 8ZK8QciITH+2o/EgY9y06c9ksZbGd7/4B5hp/a4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/982] thunderbolt: Keep XDomain reference during the lifetime of a service
-Date: Wed, 30 Sep 2026 17:12:35 +0200
-Message-ID: <20260930152417.199687785@linuxfoundation.org>
+Subject: [PATCH 6.1 069/982] minix: handle set_blocksize failures
+Date: Wed, 30 Sep 2026 17:13:25 +0200
+Message-ID: <20260930152418.284152703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,40 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 8b4060998637f06975fceee9b73845d8672d411e ]
+[ Upstream commit 38a03dc2bc71e7e0746cdb9ef5e9947f72470c67 ]
 
-This is needed because we release the service ID in tb_service_release()
-and the ID array is owned by the parent XDomain.
+minix uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+        BUG_ON(offset >= folio_size(folio));
+
+in folio_set_bh on the first __bread_gfp call.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-9-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/xdomain.c | 3 ++-
+ fs/minix/inode.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 6a003316b878b..58c91423e4f07 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1026,6 +1026,7 @@ static void tb_service_release(struct device *dev)
- 	ida_simple_remove(&xd->service_ids, svc->id);
- 	kfree(svc->key);
- 	kfree(svc);
-+	tb_xdomain_put(xd);
- }
- 
- struct device_type tb_service_type = {
-@@ -1134,7 +1135,7 @@ static void enumerate_services(struct tb_xdomain *xd)
- 		svc->id = id;
- 		svc->dev.bus = &tb_bus_type;
- 		svc->dev.type = &tb_service_type;
--		svc->dev.parent = &xd->dev;
-+		svc->dev.parent = get_device(&xd->dev);
- 		dev_set_name(&svc->dev, "%s.%d", dev_name(&xd->dev), svc->id);
- 
- 		tb_service_debugfs_init(svc);
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index fbbc4ef1b7a2e..99ba8a1bf9394 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -270,7 +270,8 @@ static int minix_fill_super(struct super_block *s, void *data, int silent)
+ 		sbi->s_namelen = 60;
+ 		sbi->s_version = MINIX_V3;
+ 		sbi->s_mount_state = MINIX_VALID_FS;
+-		sb_set_blocksize(s, m3s->s_blocksize);
++		if (!sb_set_blocksize(s, m3s->s_blocksize))
++			goto out;
+ 		s->s_max_links = MINIX2_LINK_MAX;
+ 	} else
+ 		goto out_no_fs;
 -- 
 2.53.0
 
