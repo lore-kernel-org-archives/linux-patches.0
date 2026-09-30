@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEC242BC3A;
-	Wed, 30 Sep 2026 19:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9862150EBE5;
+	Wed, 30 Sep 2026 19:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797178; cv=none; b=A76jI/5Y/LIkpM9jbn8BZU+lthxb4idLWGHpaZQerysqDaFvvD0Vr3aLZf/qKJQ3YTtuu/NRVwfbSEqq4cmA/JRRrR+ZAcNV3pC79vI38TnJXtsFCFNnk9ehp/wPCk4iFwr1vMFiSlR4BEG02Vjb0JzBjy9MldejiggCmSvU1IY=
+	t=1790797181; cv=none; b=JFd+SQSbUAWC5qO092cjOtQF4WB7CGo0R3MCjZDoorjpnaLvCfFhY/olrw/0Dw47ohAVHqCqeyMqLNwRnyKmjpLa9oBU6jjIKn8MUWCfH4XMW33mT+PpSyJZX/dThL9iIABPhsRkP4ulQzoWKoaiItqTHXjF8k9ENkCFoLoqmFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797178; c=relaxed/simple;
-	bh=sEuLqPjWYuG6KE8aoj+7KEk9WmuKMAD1RYWZrHVXVKM=;
+	s=arc-20240116; t=1790797181; c=relaxed/simple;
+	bh=3lk7GX7NdNxeIVgwJQPV32jfnqp5fNmNCD6/QM9BmE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JrYb4k4zKm4t2sqUS7tGFdfDierziXWxonUU8768OjxXUQ/jE5aylmy3WN22YhMDtQMoh7quJG+Yh4yibLqHYI/r3RDBtkLT7TR5m+SeJbr9U25wcv87gSGJhmHqt2+p9be6AhC3rtQ+haKKs1gXeDB4vTwBJRBZ5QUBB3NCn8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYV8IcD5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G+Wl7cvY7v9N+OknB7JEG/hvmGE4WWsZUGyM7tUU7L7Uln3i0ZkRAq5OdszOT+JK8L89w9WzLYzJ5LGs9btMetqH4tQsZnHwHAic+18CPSsEqhKdrA2waJ2X7wxZOb1j70O1bBE46KU9E/FVvBVvLhbo1bFO5ezT+EZSu1pQPUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpREF5J+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYV8IcD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EAF1F000FF;
-	Wed, 30 Sep 2026 19:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpREF5J+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35C01F00898;
+	Wed, 30 Sep 2026 19:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797173;
-	bh=z/hjjl/3uGFDaaIE14kXtmLl/tW/v1Ir0Bp9Wl/Zpro=;
+	s=korg; t=1790797179;
+	bh=pCiXG6AeQr1a/lbsfOCiajAk04KuPyWfWnxNB60DNcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYV8IcD5ZqO4ZWlhKW1bVu1738aXiOu9KiCb0rkdxqoPTwljsft4IrE2NOBaDHEof
-	 l0eMx/qOFQPPpNhL2wT/2cpn8mGEE9ZRDrUUtMHhrshE+DDxprL4eiKpbiLApy/xRM
-	 ly9lCnELP8JuyE/H1V/NkRHFV7w+7az9YAdXB4bk=
+	b=zpREF5J+hMNogbLrhP23c9KH6QXpZtjib9SK75BLtJhNbpnf4X0xUvklu6ALFIiOj
+	 8rz0Sc8V3f/l8b4z4HxBSIODL7itBUmKW4abVivUMiirNgyZXGsZhEOIgbQvp0qh+j
+	 Wcx633vIPUqFV6FSfbzQeVaBtlOra2pky3G5w7oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Takashi Iwai <tiwai@suse.de>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 6.6 1172/1193] ALSA: hda: Fix missing pointer check in hda_component_manager_init function
-Date: Wed, 30 Sep 2026 17:30:56 +0200
-Message-ID: <20260930152500.284555116@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Peter Chen <peter.chen@kerne.org>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1174/1193] usb: xhci: add helper to read PORTSC register
+Date: Wed, 30 Sep 2026 17:30:58 +0200
+Message-ID: <20260930152500.328184073@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,68 +54,487 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-commit 1cf11d80db5df805b538c942269e05a65bcaf5bc upstream.
+[ Upstream commit 511afe80b82d2b21086e459906e6c97b4eaeed20 ]
 
-The __component_match_add function may assign the 'matchptr' pointer
-the value ERR_PTR(-ENOMEM), which will subsequently be dereferenced.
+Add a dedicated helper function to read the USB Port Status and Control
+(PORTSC) register. This complements xhci_portsc_writel() and improves code
+clarity by providing a clear counterpart for reading the register.
 
-The call stack leading to the error looks like this:
-
-hda_component_manager_init
-|-> component_match_add
-    |-> component_match_add_release
-        |-> __component_match_add ( ... ,**matchptr, ... )
-            |-> *matchptr = ERR_PTR(-ENOMEM);       // assign
-|-> component_master_add_with_match( ...  match)
-    |-> component_match_realloc(match, match->num); // dereference
-
-Add IS_ERR() check to prevent the crash.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: ae7abe36e352 ("ALSA: hda/realtek: Add CS35L41 support for Thinkpad laptops")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[Roman: Instead of modifying hda_component_manager_init() (which does not
-yet exist in version 6.6), a check needs to be added to the
-cs35l41_generic_fixup() function—the very function introduced by the
-offending commit, which calls component_match_add() without verifying its
-successful completion. A check should also be added to
-tas2781_generic_fixup]
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Suggested-by: Peter Chen <peter.chen@kernel.org>
+Reviewed-by: Peter Chen <peter.chen@kerne.org>
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251119142417.2820519-7-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 78203d5b54a4 ("usb: xhci: bail out of setup if the controller is inaccessible")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/host/xhci-debugfs.c |    4 +-
+ drivers/usb/host/xhci-hub.c     |   68 ++++++++++++++++++++--------------------
+ drivers/usb/host/xhci-pci.c     |    2 -
+ drivers/usb/host/xhci-ring.c    |    2 -
+ drivers/usb/host/xhci-tegra.c   |   12 +++----
+ drivers/usb/host/xhci.c         |   14 +++++---
+ drivers/usb/host/xhci.h         |    1 
+ 7 files changed, 55 insertions(+), 48 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7052,6 +7052,11 @@ static void cs35l41_generic_fixup(struct
- 			spec->comps[i].codec = cdc;
- 			component_match_add(dev, &spec->match,
- 					    comp_match_cs35l41_dev_name, rec);
-+			if (IS_ERR(spec->match)) {
-+				codec_err(cdc, "Fail to add component %ld\n",
-+					PTR_ERR(spec->match));
-+				return;
-+			}
+--- a/drivers/usb/host/xhci-debugfs.c
++++ b/drivers/usb/host/xhci-debugfs.c
+@@ -349,7 +349,7 @@ static int xhci_portsc_show(struct seq_f
+ 	u32			portsc;
+ 	char			str[XHCI_MSG_MAX];
+ 
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 	seq_printf(s, "%s\n", xhci_decode_portsc(str, portsc));
+ 
+ 	return 0;
+@@ -379,7 +379,7 @@ static ssize_t xhci_port_write(struct fi
+ 			return count;
+ 		spin_lock_irqsave(&xhci->lock, flags);
+ 		/* compliance mode can only be enabled on ports in RxDetect */
+-		portsc = readl(port->addr);
++		portsc = xhci_portsc_readl(port);
+ 		if ((portsc & PORT_PLS_MASK) != XDEV_RXDETECT) {
+ 			spin_unlock_irqrestore(&xhci->lock, flags);
+ 			return -EPERM;
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -298,7 +298,7 @@ static void xhci_usb2_hub_descriptor(str
+ 	 */
+ 	memset(port_removable, 0, sizeof(port_removable));
+ 	for (i = 0; i < ports; i++) {
+-		portsc = readl(rhub->ports[i]->addr);
++		portsc = xhci_portsc_readl(rhub->ports[i]);
+ 		/* If a device is removable, PORTSC reports a 0, same as in the
+ 		 * hub descriptor DeviceRemovable bits.
+ 		 */
+@@ -355,7 +355,7 @@ static void xhci_usb3_hub_descriptor(str
+ 	port_removable = 0;
+ 	/* bit 0 is reserved, bit 1 is for port 1, etc. */
+ 	for (i = 0; i < ports; i++) {
+-		portsc = readl(rhub->ports[i]->addr);
++		portsc = xhci_portsc_readl(rhub->ports[i]);
+ 		if (portsc & PORT_DEV_REMOVE)
+ 			port_removable |= 1 << (i + 1);
+ 	}
+@@ -597,13 +597,13 @@ static void xhci_disable_port(struct xhc
+ 		return;
+ 	}
+ 
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 	portsc = xhci_port_state_to_neutral(portsc);
+ 
+ 	/* Write 1 to disable the port */
+ 	xhci_portsc_writel(port, portsc | PORT_PE);
+ 
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 	xhci_dbg(xhci, "disable port %d-%d, portsc: 0x%x\n",
+ 		 hcd->self.busnum, port->hcd_portnum + 1, portsc);
+ }
+@@ -653,7 +653,7 @@ static void xhci_clear_port_change_bit(s
+ 	}
+ 	/* Change bits are all write 1 to clear */
+ 	xhci_portsc_writel(port, port_status | status);
+-	port_status = readl(port->addr);
++	port_status = xhci_portsc_readl(port);
+ 
+ 	xhci_dbg(xhci, "clear port%d %s change, portsc: 0x%x\n",
+ 		 wIndex + 1, port_change_bit, port_status);
+@@ -681,7 +681,7 @@ static void xhci_set_port_power(struct x
+ 	u32 temp;
+ 
+ 	hcd = port->rhub->hcd;
+-	temp = readl(port->addr);
++	temp = xhci_portsc_readl(port);
+ 
+ 	xhci_dbg(xhci, "set port power %d-%d %s, portsc: 0x%x\n",
+ 		 hcd->self.busnum, port->hcd_portnum + 1, on ? "ON" : "OFF", temp);
+@@ -691,7 +691,7 @@ static void xhci_set_port_power(struct x
+ 	if (on) {
+ 		/* Power on */
+ 		xhci_portsc_writel(port, temp | PORT_POWER);
+-		readl(port->addr);
++		xhci_portsc_readl(port);
+ 	} else {
+ 		/* Power off */
+ 		xhci_portsc_writel(port, temp & ~PORT_POWER);
+@@ -789,7 +789,7 @@ void xhci_set_link_state(struct xhci_hcd
+ 	u32 temp;
+ 	u32 portsc;
+ 
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 	temp = xhci_port_state_to_neutral(portsc);
+ 	temp &= ~PORT_PLS_MASK;
+ 	temp |= PORT_LINK_STROBE | link_state;
+@@ -805,7 +805,7 @@ static void xhci_set_remote_wake_mask(st
+ {
+ 	u32 temp;
+ 
+-	temp = readl(port->addr);
++	temp = xhci_portsc_readl(port);
+ 	temp = xhci_port_state_to_neutral(temp);
+ 
+ 	if (wake_mask & USB_PORT_FEAT_REMOTE_WAKE_CONNECT)
+@@ -832,7 +832,7 @@ void xhci_test_and_clear_bit(struct xhci
+ {
+ 	u32 temp;
+ 
+-	temp = readl(port->addr);
++	temp = xhci_portsc_readl(port);
+ 	if (temp & port_bit) {
+ 		temp = xhci_port_state_to_neutral(temp);
+ 		temp |= port_bit;
+@@ -993,7 +993,7 @@ static int xhci_handle_usb2_port_link_re
+ 			}
+ 			xhci_ring_device(xhci, slot_id);
+ 		} else {
+-			int port_status = readl(port->addr);
++			int port_status = xhci_portsc_readl(port);
+ 
+ 			xhci_warn(xhci, "Port resume timed out, port %d-%d: 0x%x\n",
+ 				  hcd->self.busnum, wIndex + 1, port_status);
+@@ -1255,7 +1255,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 
+ 		wIndex--;
+ 		port = ports[portnum1 - 1];
+-		temp = readl(port->addr);
++		temp = xhci_portsc_readl(port);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1301,7 +1301,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 
+ 		port = ports[portnum1 - 1];
+ 		wIndex--;
+-		temp = readl(port->addr);
++		temp = xhci_portsc_readl(port);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1311,7 +1311,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 		/* FIXME: What new port features do we need to support? */
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			if ((temp & PORT_PLS_MASK) != XDEV_U0) {
+ 				/* Resume the port to U0 first */
+ 				xhci_set_link_state(xhci, port, XDEV_U0);
+@@ -1323,7 +1323,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 			 * a port unless the port reports that it is in the
+ 			 * enabled (PED = ‘1’,PLS < ‘3’) state.
+ 			 */
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			if ((temp & PORT_PE) == 0 || (temp & PORT_RESET)
+ 				|| (temp & PORT_PLS_MASK) >= XDEV_U3) {
+ 				xhci_warn(xhci, "USB core suspending port %d-%d not in U0/U1/U2\n",
+@@ -1348,11 +1348,11 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 			msleep(10); /* wait device to enter */
+ 			spin_lock_irqsave(&xhci->lock, flags);
+ 
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			bus_state->suspended_ports |= 1 << wIndex;
+ 			break;
+ 		case USB_PORT_FEAT_LINK_STATE:
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			/* Disable port */
+ 			if (link_state == USB_SS_PORT_LS_SS_DISABLED) {
+ 				xhci_dbg(xhci, "Disable port %d-%d\n",
+@@ -1366,7 +1366,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 					PORT_OCC | PORT_RC | PORT_PLC |
+ 					PORT_CEC;
+ 				xhci_portsc_writel(port, temp | PORT_PE);
+-				temp = readl(port->addr);
++				temp = xhci_portsc_readl(port);
+ 				break;
+ 			}
+ 
+@@ -1375,7 +1375,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 				xhci_dbg(xhci, "Enable port %d-%d\n",
+ 					 hcd->self.busnum, portnum1);
+ 				xhci_set_link_state(xhci, port,	link_state);
+-				temp = readl(port->addr);
++				temp = xhci_portsc_readl(port);
+ 				break;
+ 			}
+ 
+@@ -1408,7 +1408,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 					 hcd->self.busnum, portnum1);
+ 				xhci_set_link_state(xhci, port, link_state);
+ 
+-				temp = readl(port->addr);
++				temp = xhci_portsc_readl(port);
+ 				break;
+ 			}
+ 			/* Port must be enabled */
+@@ -1456,7 +1456,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 					xhci_dbg(xhci, "missing U0 port change event for port %d-%d\n",
+ 						 hcd->self.busnum, portnum1);
+ 				spin_lock_irqsave(&xhci->lock, flags);
+-				temp = readl(port->addr);
++				temp = xhci_portsc_readl(port);
+ 				break;
+ 			}
+ 
+@@ -1476,12 +1476,12 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 				spin_unlock_irqrestore(&xhci->lock, flags);
+ 				while (retries--) {
+ 					usleep_range(4000, 8000);
+-					temp = readl(port->addr);
++					temp = xhci_portsc_readl(port);
+ 					if ((temp & PORT_PLS_MASK) == XDEV_U3)
+ 						break;
+ 				}
+ 				spin_lock_irqsave(&xhci->lock, flags);
+-				temp = readl(port->addr);
++				temp = xhci_portsc_readl(port);
+ 				bus_state->suspended_ports |= 1 << wIndex;
+ 			}
+ 			break;
+@@ -1498,20 +1498,20 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 			temp = (temp | PORT_RESET);
+ 			xhci_portsc_writel(port, temp);
+ 
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			xhci_dbg(xhci, "set port reset, actual port %d-%d status  = 0x%x\n",
+ 				 hcd->self.busnum, portnum1, temp);
+ 			break;
+ 		case USB_PORT_FEAT_REMOTE_WAKE_MASK:
+ 			xhci_set_remote_wake_mask(xhci, port, wake_mask);
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			xhci_dbg(xhci, "set port remote wake mask, actual port %d-%d status  = 0x%x\n",
+ 				 hcd->self.busnum, portnum1, temp);
+ 			break;
+ 		case USB_PORT_FEAT_BH_PORT_RESET:
+ 			temp |= PORT_WR;
+ 			xhci_portsc_writel(port, temp);
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			break;
+ 		case USB_PORT_FEAT_U1_TIMEOUT:
+ 			if (hcd->speed < HCD_USB3)
+@@ -1543,7 +1543,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 			goto error;
  		}
- 		ret = component_master_add_with_match(dev, &comp_master_ops, spec->match);
- 		if (ret)
-@@ -7084,6 +7089,11 @@ static void tas2781_generic_fixup(struct
- 		spec->comps[0].codec = cdc;
- 		component_match_add(dev, &spec->match,
- 			comp_match_tas2781_dev_name, rec);
-+			if (IS_ERR(spec->match)) {
-+				codec_err(cdc, "Fail to add component %ld\n",
-+					PTR_ERR(spec->match));
-+				return;
-+			}
- 		ret = component_master_add_with_match(dev, &comp_master_ops,
- 			spec->match);
- 		if (ret)
+ 		/* unblock any posted writes */
+-		temp = readl(port->addr);
++		temp = xhci_portsc_readl(port);
+ 		break;
+ 	case ClearPortFeature:
+ 		if (!portnum1 || portnum1 > max_ports)
+@@ -1552,7 +1552,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 		port = ports[portnum1 - 1];
+ 
+ 		wIndex--;
+-		temp = readl(port->addr);
++		temp = xhci_portsc_readl(port);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1562,7 +1562,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 		temp = xhci_port_state_to_neutral(temp);
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+-			temp = readl(port->addr);
++			temp = xhci_portsc_readl(port);
+ 			xhci_dbg(xhci, "clear USB_PORT_FEAT_SUSPEND\n");
+ 			xhci_dbg(xhci, "PORTSC %04x\n", temp);
+ 			if (temp & PORT_RESET)
+@@ -1679,7 +1679,7 @@ int xhci_hub_status_data(struct usb_hcd
+ 
+ 	/* For each port, did anything change?  If so, set that bit in buf. */
+ 	for (i = 0; i < max_ports; i++) {
+-		temp = readl(ports[i]->addr);
++		temp = xhci_portsc_readl(ports[i]);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1748,7 +1748,7 @@ int xhci_bus_suspend(struct usb_hcd *hcd
+ 		u32 t1, t2;
+ 		int retries = 10;
+ retry:
+-		t1 = readl(ports[port_index]->addr);
++		t1 = xhci_portsc_readl(ports[port_index]);
+ 		t2 = xhci_port_state_to_neutral(t1);
+ 		portsc_buf[port_index] = 0;
+ 
+@@ -1850,7 +1850,7 @@ static bool xhci_port_missing_cas_quirk(
+ {
+ 	u32 portsc;
+ 
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 
+ 	/* if any of these are set we are not stuck */
+ 	if (portsc & (PORT_CONNECT | PORT_CAS))
+@@ -1865,7 +1865,7 @@ static bool xhci_port_missing_cas_quirk(
+ 	portsc |= PORT_WR;
+ 	xhci_portsc_writel(port, portsc);
+ 	/* flush write */
+-	readl(port->addr);
++	xhci_portsc_readl(port);
+ 	return true;
+ }
+ 
+@@ -1913,7 +1913,7 @@ int xhci_bus_resume(struct usb_hcd *hcd)
+ 	}
+ 	port_index = max_ports;
+ 	while (port_index--) {
+-		portsc = readl(ports[port_index]->addr);
++		portsc = xhci_portsc_readl(ports[port_index]);
+ 
+ 		/* warm reset CAS limited ports stuck in polling/compliance */
+ 		if ((xhci->quirks & XHCI_MISSING_CAS) &&
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -942,7 +942,7 @@ static int xhci_pci_poweroff_late(struct
+ 
+ 	for (i = 0; i < HCS_MAX_PORTS(xhci->hcs_params1); i++) {
+ 		port = &xhci->hw_ports[i];
+-		portsc = readl(port->addr);
++		portsc = xhci_portsc_readl(port);
+ 
+ 		if ((portsc & PORT_PLS_MASK) != XDEV_U3)
+ 			continue;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2035,7 +2035,7 @@ static void handle_port_status(struct xh
+ 	hcd = port->rhub->hcd;
+ 	bus_state = &port->rhub->bus_state;
+ 	hcd_portnum = port->hcd_portnum;
+-	portsc = readl(port->addr);
++	portsc = xhci_portsc_readl(port);
+ 
+ 	xhci_dbg(xhci, "Port change event, %d-%d, id %d, portsc: 0x%x\n",
+ 		 hcd->self.busnum, hcd_portnum + 1, port_id, portsc);
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -1974,7 +1974,7 @@ static bool xhci_hub_ports_suspended(str
+ 	u32 value;
+ 
+ 	for (i = 0; i < hub->num_ports; i++) {
+-		value = readl(hub->ports[i]->addr);
++		value = xhci_portsc_readl(hub->ports[i]);
+ 		if ((value & PORT_PE) == 0)
+ 			continue;
+ 
+@@ -2100,7 +2100,7 @@ static void tegra_xhci_enable_phy_sleepw
+ 			if (!is_host_mode_phy(tegra, i, j))
+ 				continue;
+ 
+-			portsc = readl(rhub->ports[index]->addr);
++			portsc = xhci_portsc_readl(rhub->ports[index]);
+ 			speed = tegra_xhci_portsc_to_speed(tegra, portsc);
+ 			tegra_xusb_padctl_enable_phy_sleepwalk(padctl, phy, speed);
+ 			tegra_xusb_padctl_enable_phy_wake(padctl, phy);
+@@ -2195,7 +2195,7 @@ static int tegra_xusb_enter_elpg(struct
+ 	for (i = 0; i < xhci->usb2_rhub.num_ports; i++) {
+ 		if (!xhci->usb2_rhub.ports[i])
+ 			continue;
+-		portsc = readl(xhci->usb2_rhub.ports[i]->addr);
++		portsc = xhci_portsc_readl(xhci->usb2_rhub.ports[i]);
+ 		tegra->lp0_utmi_pad_mask &= ~BIT(i);
+ 		if (((portsc & PORT_PLS_MASK) == XDEV_U3) || ((portsc & DEV_SPEED_MASK) == XDEV_FS))
+ 			tegra->lp0_utmi_pad_mask |= BIT(i);
+@@ -2722,7 +2722,7 @@ static int tegra_xhci_hub_control(struct
+ 		while (i--) {
+ 			if (!test_bit(i, &bus_state->resuming_ports))
+ 				continue;
+-			portsc = readl(ports[i]->addr);
++			portsc = xhci_portsc_readl(ports[i]);
+ 			if ((portsc & PORT_PLS_MASK) == XDEV_RESUME)
+ 				tegra_phy_xusb_utmi_pad_power_on(
+ 					tegra_xusb_get_phy(tegra, "usb2", (int) i));
+@@ -2740,7 +2740,7 @@ static int tegra_xhci_hub_control(struct
+ 			if (!index || index > rhub->num_ports)
+ 				return -EPIPE;
+ 			ports = rhub->ports;
+-			portsc = readl(ports[port]->addr);
++			portsc = xhci_portsc_readl(ports[port]);
+ 			if (portsc & PORT_CONNECT)
+ 				tegra_phy_xusb_utmi_pad_power_on(phy);
+ 		}
+@@ -2759,7 +2759,7 @@ static int tegra_xhci_hub_control(struct
+ 
+ 		if ((type_req == ClearPortFeature) && (value == USB_PORT_FEAT_C_CONNECTION)) {
+ 			ports = rhub->ports;
+-			portsc = readl(ports[port]->addr);
++			portsc = xhci_portsc_readl(ports[port]);
+ 			if (!(portsc & PORT_CONNECT)) {
+ 				/* We don't suspend the PAD while HNP role swap happens on the OTG
+ 				 * port
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -46,6 +46,12 @@ void xhci_portsc_writel(struct xhci_port
+ }
+ EXPORT_SYMBOL_GPL(xhci_portsc_writel);
+ 
++u32 xhci_portsc_readl(struct xhci_port *port)
++{
++	return readl(port->addr);
++}
++EXPORT_SYMBOL_GPL(xhci_portsc_readl);
++
+ static bool td_on_ring(struct xhci_td *td, struct xhci_ring *ring)
+ {
+ 	struct xhci_segment *seg = ring->first_seg;
+@@ -365,7 +371,7 @@ static void compliance_mode_recovery(str
+ 		return;
+ 
+ 	for (i = 0; i < rhub->num_ports; i++) {
+-		temp = readl(rhub->ports[i]->addr);
++		temp = xhci_portsc_readl(rhub->ports[i]);
+ 		if ((temp & PORT_PLS_MASK) == USB_SS_PORT_LS_COMP_MOD) {
+ 			/*
+ 			 * Compliance Mode Detected. Letting USB Core
+@@ -820,7 +826,7 @@ static void xhci_disable_hub_port_wake(s
+ 	spin_lock_irqsave(&xhci->lock, flags);
+ 
+ 	for (i = 0; i < rhub->num_ports; i++) {
+-		portsc = readl(rhub->ports[i]->addr);
++		portsc = xhci_portsc_readl(rhub->ports[i]);
+ 		t1 = xhci_port_state_to_neutral(portsc);
+ 		t2 = t1;
+ 
+@@ -860,7 +866,7 @@ static bool xhci_pending_portevent(struc
+ 	port_index = xhci->usb2_rhub.num_ports;
+ 	ports = xhci->usb2_rhub.ports;
+ 	while (port_index--) {
+-		portsc = readl(ports[port_index]->addr);
++		portsc = xhci_portsc_readl(ports[port_index]);
+ 		if (portsc & PORT_CHANGE_MASK ||
+ 		    (portsc & PORT_PLS_MASK) == XDEV_RESUME)
+ 			return true;
+@@ -868,7 +874,7 @@ static bool xhci_pending_portevent(struc
+ 	port_index = xhci->usb3_rhub.num_ports;
+ 	ports = xhci->usb3_rhub.ports;
+ 	while (port_index--) {
+-		portsc = readl(ports[port_index]->addr);
++		portsc = xhci_portsc_readl(ports[port_index]);
+ 		if (portsc & (PORT_CHANGE_MASK | PORT_CAS) ||
+ 		    (portsc & PORT_PLS_MASK) == XDEV_RESUME)
+ 			return true;
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1975,6 +1975,7 @@ void inc_deq(struct xhci_hcd *xhci, stru
+ unsigned int count_trbs(u64 addr, u64 len);
+ void xhci_process_cancelled_tds(struct xhci_virt_ep *ep);
+ void xhci_portsc_writel(struct xhci_port *port, u32 val);
++u32 xhci_portsc_readl(struct xhci_port *port);
+ 
+ /* xHCI roothub code */
+ void xhci_set_link_state(struct xhci_hcd *xhci, struct xhci_port *port,
 
 
