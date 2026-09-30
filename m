@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4874EF13C;
-	Wed, 30 Sep 2026 17:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB5C51AEEE;
+	Wed, 30 Sep 2026 17:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789489; cv=none; b=XW8QmBm5XivuAfbD65Ihps0WsFHZ0fZIAUZvFqT8+lDUNiYhNb9MrvtovckFDiTApJ9qUWgm3rASrF5RF/QlxgRT405+2brXn8yRIHNyT8vwED/GWuN/hjfW9rKbU9e6FwCxsHawK4rXSMFNuWWl2Rsj49gHGMcehpky/z1Ljus=
+	t=1790789491; cv=none; b=BXfeWhGTx76iZDT4gixo7Wagwec3335CaGdNAXBAYAM36LJ03rMzvNkjUGfa7f4+zhDy/z4mvroARQCCCcJNLSsWhJia8J0gyyh4xOmpZwO9oZ0R7tkYSI0+8HNvF/rh1Jrx8W38cQhfIVpc/fU2WPSUM0t5d0na7OBt4Fd1idE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789489; c=relaxed/simple;
-	bh=seH0pj2tK5yBZgUX3cOVdjLWUEH+Wqkb6DfuT6MWDzw=;
+	s=arc-20240116; t=1790789491; c=relaxed/simple;
+	bh=A/24YctoQ+PP2Q+auQTi4HNPV/vz1ACNqRjbi0ZfjEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbqaLweO35W/Q65Fk0kDNKHxVtbp0CRZwCgG3EJymR2vOkm5+iZiE26pQ5fqTbubUjglvYSRX4Zx+Zxqd1x+YhGQaiv3fERhB0DRlWpYAI2XmeRvZoqBou76iCxeT3rT6gZodE4A0EXsUOZJPeiHUSOXPmqNSxqiUpEnvOUC2SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGzhld6D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lv4NjTLi4+yULFFC0YYoktEeEbE5CpKtAde3D6e0Pi3IxoZ1E3Fd5UfN/TdWyA0pbHy9dnRHGLDowWAnZ4HwugMaUCui9qprvt4UyhDGcDgiQ6j87SMlen3ybaaBTqRVFbp5M1oGXXer1xzruqpmCTtL+Ctb+ngVoB56LjoCOMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psCozqOu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGzhld6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452E81F000FF;
-	Wed, 30 Sep 2026 17:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psCozqOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129C61F000FF;
+	Wed, 30 Sep 2026 17:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789487;
-	bh=L4cfywGSUTfFUHgAOMMKdPMH1L3boyJfag2+Mbh9i3Y=;
+	s=korg; t=1790789490;
+	bh=4QUx6Tg7K0dmy8NmYIGIfq0jZCVRkEhrzgC7OCu8wiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGzhld6DWPeq3vzpxVU/GQSKQaZ2UOHp3ogkGz8S3EfbULUOEkmvqk0MU/chbsnm/
-	 KXwz75pNf9M3T7/LSH/8EMx8uRWPZrTsYUZyXBJy6nbaTG2dCdFTzGZy7PP8xTvktI
-	 gZN6WDtQof9ROZZwbdCUnz+rv4ZEKkqMM0JWuuD0=
+	b=psCozqOuIqSwbz+D6ITz4bamvaS8GHEhJcRHLvpXhMh94Ns/kC2dHeatHuScUK+L4
+	 j7ibaC0uAXIxqg7S/OE9SmuZDZEqTS/1DGcpz8v3Q1Mbs5TB6DahjhFSxrFaIuqrjl
+	 iugee0ctC4z/g4x6XH11PMXmh2cecZjWOlYZQO6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.12 493/877] drm/nouveau: RCU-free the scheduler-containing nouveau_sched
-Date: Wed, 30 Sep 2026 17:23:24 +0200
-Message-ID: <20260930152425.302204866@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jim Mattson <jmattson@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 451/877] perf/x86/intel: Dont pointlessly context switch DS_AREA (and PEBS config) if PEBS is unused
+Date: Wed, 30 Sep 2026 17:22:42 +0200
+Message-ID: <20260930152424.412338892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,59 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f7eae6d8d768fabd6b59779ca7da79e02c74e113 upstream.
+[ Upstream commit d06260e99eb93d2942b7af4ccd789eb8a6c829d3 ]
 
-struct nouveau_sched embeds a struct drm_gpu_scheduler (base).
-nouveau_sched_destroy() calls nouveau_sched_fini() (which does
-drm_sched_fini(&sched->base)) and then frees the object with plain
-kfree(sched).
+When filling the list of MSRs to be loaded by KVM on VM-Enter and VM-Exit,
+load the guest values for DS_AREA and (conditionally) MSR_PEBS_DATA_CFG if
+and only if PEBS will be active in the guest, i.e. only if a PEBS record
+may be generated while running the guest.  As shown by the !pebs_ept path,
+it's perfectly safe to run with the host's DS_AREA, so long as PEBS-enabled
+counters are disabled via PERF_GLOBAL_CTRL.
 
-drm_sched_fence_get_timeline_name() returns fence->sched->name, and the
-scheduler fence keeps a .release callback so it is not ops-detached on
-signalling.  A finished fence exported to userspace via drm_syncobj /
-sync_file therefore keeps pointing at &sched->base after nouveau_sched_destroy(),
-and a later get_timeline_name() -- reachable unprivileged through
-SYNC_IOC_FILE_INFO -- dereferences freed memory (KASAN slab-use-after-free
-read).
+Omitting DS_AREA and MSR_PEBS_DATA_CFG when PEBS is unused saves two MSR
+writes per MSR on each VMX transition, i.e. eliminates two/four pointless
+MSR writes on each VMX roundtrip when PEBS isn't being used by the guest.
 
-Per the dma-fence lifetime contract the exporter must keep the data backing a
-signalled fence alive for an RCU grace period.  Free the scheduler-containing
-object with kfree_rcu() instead of kfree().
-
-Fixes: 5f03a507b29e ("drm/nouveau: implement 1:1 scheduler - entity relationship")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260902012717.880724-1-malhyuk97@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260921191418.950933-4-seanjc@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_sched.c |    2 +-
- drivers/gpu/drm/nouveau/nouveau_sched.h |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/core.c | 39 +++++++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_sched.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
-@@ -512,7 +512,7 @@ nouveau_sched_destroy(struct nouveau_sch
- 	struct nouveau_sched *sched = *psched;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 573298a35005f..313456a90bcbe 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4326,23 +4326,14 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
+ 		return arr;
+ 	}
  
- 	nouveau_sched_fini(sched);
--	kfree(sched);
-+	kfree_rcu(sched, rcu);
++	/*
++	 * If the guest won't use PEBS or the CPU doesn't support PEBS in the
++	 * guest, then there's nothing more to do as disabling PMCs via
++	 * PERF_GLOBAL_CTRL is sufficient on CPUs with guest/host isolation.
++	 */
+ 	if (!kvm_pmu || !x86_pmu.pebs_ept)
+ 		return arr;
  
- 	*psched = NULL;
- }
---- a/drivers/gpu/drm/nouveau/nouveau_sched.h
-+++ b/drivers/gpu/drm/nouveau/nouveau_sched.h
-@@ -98,6 +98,7 @@ void nouveau_job_free(struct nouveau_job
+-	arr[(*nr)++] = (struct perf_guest_switch_msr){
+-		.msr = MSR_IA32_DS_AREA,
+-		.host = (unsigned long)cpuc->ds,
+-		.guest = kvm_pmu->ds_area,
+-	};
+-
+-	if (x86_pmu.intel_cap.pebs_baseline) {
+-		arr[(*nr)++] = (struct perf_guest_switch_msr){
+-			.msr = MSR_PEBS_DATA_CFG,
+-			.host = cpuc->active_pebs_data_cfg,
+-			.guest = kvm_pmu->pebs_data_cfg,
+-		};
+-	}
+-
+ 	/*
+ 	 * Restrict guest PEBS events to counters that (a) perf supports, (b)
+ 	 * the guest wants to use for PEBS, (c) are not excluded from counting
+@@ -4369,6 +4360,26 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
+ 	if (pebs_mask & ~cpuc->intel_ctrl_guest_mask)
+ 		guest_pebs_mask = 0;
  
- struct nouveau_sched {
- 	struct drm_gpu_scheduler base;
-+	struct rcu_head rcu;
- 	struct drm_sched_entity entity;
- 	struct workqueue_struct *wq;
- 	struct mutex mutex;
++	/*
++	 * Context switch DS_AREA and PEBS_DATA_CFG if and only if PEBS will be
++	 * active in the guest; if no records will be generated while the guest
++	 * is running, then simply keep the host values resident in hardware.
++	 */
++	arr[(*nr)++] = (struct perf_guest_switch_msr){
++		.msr = MSR_IA32_DS_AREA,
++		.host = (unsigned long)cpuc->ds,
++		.guest = guest_pebs_mask ? kvm_pmu->ds_area : (unsigned long)cpuc->ds,
++	};
++
++	if (x86_pmu.intel_cap.pebs_baseline) {
++		arr[(*nr)++] = (struct perf_guest_switch_msr){
++			.msr = MSR_PEBS_DATA_CFG,
++			.host = cpuc->active_pebs_data_cfg,
++			.guest = guest_pebs_mask ? kvm_pmu->pebs_data_cfg :
++						   cpuc->active_pebs_data_cfg,
++		};
++	}
++
+ 	/*
+ 	 * Do NOT mess with PEBS_ENABLED.  As above, disabling counters via
+ 	 * PERF_GLOBAL_CTRL is sufficient, and loading a stale PEBS_ENABLED,
+-- 
+2.53.0
+
 
 
