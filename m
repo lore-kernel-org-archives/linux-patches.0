@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA22A51588D;
-	Wed, 30 Sep 2026 18:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1943AD539;
+	Wed, 30 Sep 2026 18:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793301; cv=none; b=bVJaXOFJ0SgzFZSLyAydCoI+ylKN+01hN4ENE2cNvmmiOWb8hGzdCTnmtBOWdCup7O4gikuNkRAxtHeYY0ACwoljQlESclURfdeIaKbvRUYuh5o9Tde8TzpC2DVqC83sWY8gXgbvL9jPoXLHC7F1nbMi00STYfWUl79cMT9Hpd0=
+	t=1790793303; cv=none; b=NPMNIXBZz3w1RvodvNaHrunmVxWX4O7eN4R9k5e7McNC+HhhGaG/Pgee7aw+KX64aLUslTshibkTbVWEpdE8O83iOz4PXUd3tDi21sCT5FPmhPEAHPEn24g+vrswZp3VmWOPBNcq2/TriL//xPGj3ZpvLHPz8OxFqOolK43zhE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793301; c=relaxed/simple;
-	bh=JvfzS9AEMswDI160uVAF0171rrNPAHcr1hdzjXdmdJs=;
+	s=arc-20240116; t=1790793303; c=relaxed/simple;
+	bh=9SFRrXlv1NQiHbA6AlODlkoBh5aX5GAL83Hd2WqIjYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocMSEOcnM5+SG3f1p3vPr4hH3+LrnjJOwOYntD2qmNvHhLxicMyd+EoWd3+qx2bHBZIH/t/IeMI0eWj7GsNq4YCbcwMxn13mPx7YSW7o3z20WwHurqy4dczR8Q8EOPzkb+ZIAdZbdnJiUPMnTqy1+6oevwk2uPEh34NthVA9WzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3hVzcyW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4iBU24474TgsEBUPiSPfaJ6caWSAXH62sMQ6dWpdcdTtlhqrJ2Khs9GYvhd0b/zEvHH0nllXKDhCidniNz91MTdOwO/gvK0qejpLzgvBbWEUsCxzbvGL5uJJ0/nKYv3Amit+pWgSWI3YH0nR4h/VdnpWPuLFDkuiw4ff3aP6Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UemxkGbA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3hVzcyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08AC1F000FF;
-	Wed, 30 Sep 2026 18:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UemxkGbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A8D1F000FF;
+	Wed, 30 Sep 2026 18:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793299;
-	bh=/oNpNMwIGYxCpA/oahyFuHz63zAEsgUA+KQIYA6msKs=;
+	s=korg; t=1790793302;
+	bh=33EQwm/vXUqz/6RsaXIL2EaU6MkaV633cAgLcYGObOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3hVzcyWzRGdZVNZfk6qyVI7esYhGeR5AniLyAKTJ9L5clv86AUpCnbUKxIzKohjf
-	 0DDzEYctZYZTsoKCVSZwsWZZJ4EG1o6WTTlMNZPpi+tftEO+hO6sgCbE5ZOPwrF28y
-	 WpPuk9nrBN8R+yyTwExUo+WmiBDuZ+bH4fOaT7JE=
+	b=UemxkGbAzcg6sxzxGcKS1yEBsj7P78ZkyZa+WUtWZX8OB/qqrmvvJhXKDHhoPgU5r
+	 Jaap1EWCb8ZDMbkjTIrgQD2wyIij8BJSPUgSz2WI0LlsgIOJYqBN0iBdA3UuehbhPv
+	 ydZ+QdXxTg3uuwnysJ8iFDzwo7AoIIcQ2HtnHfDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>
-Subject: [PATCH 6.18 205/395] netfilter: nf_tables: join hook list via splice_list_rcu() in commit phase
-Date: Wed, 30 Sep 2026 17:27:47 +0200
-Message-ID: <20260930152345.096525716@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 206/395] x86/mce: Fix hardware debug register corruption on task migration
+Date: Wed, 30 Sep 2026 17:27:48 +0200
+Message-ID: <20260930152345.119224667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,52 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit a6134e62dba2ea4f760b29d5226907f447c92400 ]
+commit b8d1d5b63a8ef532038eebd9d97d406860385668 upstream.
 
-Publish new hooks in the list into the basechain/flowtable using
-splice_list_rcu() to ensure netlink dump list traversal via rcu is safe
-while concurrent ruleset update is going on.
+In exc_machine_check_user(), local_db_save() and local_db_restore() are
+invoked in the outer entry stubs (DEFINE_IDTENTRY_MCE_USER,
+DEFINE_FREDENTRY_MCE, and DEFINE_IDTENTRY_RAW), surrounding
+exc_machine_check_user().
 
-Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Benjamin Robin (Schneider Electric) <benjamin.robin@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, exc_machine_check_user() calls irqentry_exit_to_user_mode(), which
+handles pending thread work and may schedule() if TIF_NEED_RESCHED is set. If
+the task migrates to another CPU during schedule(), local_db_restore() runs on
+the new CPU with the dr7 state saved from the old CPU. This corrupts the new
+CPU's DR7 hardware debug register and leaves the old CPU's DR7 disabled.  In
+short, local_db_save() and local_db_restore() pair must be run on the same
+CPU.
+
+To fix this, move local_db_save() and local_db_restore() inside
+exc_machine_check_user() and exc_machine_check_kernel(). In
+exc_machine_check_user(), DR7 is saved and restored strictly around
+do_machine_check() to avoid schedule() during migration. In
+exc_machine_check_kernel(), local_db_save() is called at the entry point to
+prevent early memory accesses from triggering nested #DB exceptions, and
+restored on all exits.
+
+Fixes: cd840e424f27 ("x86/entry, mce: Disallow #DB during #MC")
+Assisted-by: LLM
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/179005109564.388919.3937970081044095776.stgit@devnote2
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c |   27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 321a0dd92178b..cfbc8e2529ee9 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10867,8 +10867,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 				nft_chain_commit_update(nft_trans_container_chain(trans));
- 				nf_tables_chain_notify(&ctx, NFT_MSG_NEWCHAIN,
- 						       &nft_trans_chain_hooks(trans));
--				list_splice(&nft_trans_chain_hooks(trans),
--					    &nft_trans_basechain(trans)->hook_list);
-+				list_splice_rcu(&nft_trans_chain_hooks(trans),
-+						&nft_trans_basechain(trans)->hook_list);
- 				/* trans destroyed after rcu grace period */
- 			} else {
- 				nft_chain_commit_drop_policy(nft_trans_container_chain(trans));
-@@ -10997,8 +10997,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 							   nft_trans_flowtable(trans),
- 							   &nft_trans_flowtable_hooks(trans),
- 							   NFT_MSG_NEWFLOWTABLE);
--				list_splice(&nft_trans_flowtable_hooks(trans),
--					    &nft_trans_flowtable(trans)->hook_list);
-+				list_splice_rcu(&nft_trans_flowtable_hooks(trans),
-+						&nft_trans_flowtable(trans)->hook_list);
- 			} else {
- 				nft_clear(net, nft_trans_flowtable(trans));
- 				nf_tables_flowtable_notify(&ctx,
--- 
-2.53.0
-
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2078,6 +2078,9 @@ bool filter_mce(struct mce *m)
+ static __always_inline void exc_machine_check_kernel(struct pt_regs *regs)
+ {
+ 	irqentry_state_t irq_state;
++	unsigned long dr7;
++
++	dr7 = local_db_save();
+ 
+ 	WARN_ON_ONCE(user_mode(regs));
+ 
+@@ -2086,20 +2089,26 @@ static __always_inline void exc_machine_
+ 	 * mce_check_crashing_cpu() for details.
+ 	 */
+ 	if (mca_cfg.initialized && mce_check_crashing_cpu())
+-		return;
++		goto out;
+ 
+ 	irq_state = irqentry_nmi_enter(regs);
+ 
+ 	do_machine_check(regs);
+ 
+ 	irqentry_nmi_exit(regs, irq_state);
++out:
++	local_db_restore(dr7);
+ }
+ 
+ static __always_inline void exc_machine_check_user(struct pt_regs *regs)
+ {
++	unsigned long dr7;
++
+ 	irqentry_enter_from_user_mode(regs);
+ 
++	dr7 = local_db_save();
+ 	do_machine_check(regs);
++	local_db_restore(dr7);
+ 
+ 	irqentry_exit_to_user_mode(regs);
+ }
+@@ -2108,21 +2117,13 @@ static __always_inline void exc_machine_
+ /* MCE hit kernel mode */
+ DEFINE_IDTENTRY_MCE(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ 
+ /* The user mode variant. */
+ DEFINE_IDTENTRY_MCE_USER(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_user(regs);
+-	local_db_restore(dr7);
+ }
+ 
+ #ifdef CONFIG_X86_FRED
+@@ -2139,28 +2140,20 @@ DEFINE_IDTENTRY_MCE_USER(exc_machine_che
+  */
+ DEFINE_FREDENTRY_MCE(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	if (user_mode(regs))
+ 		exc_machine_check_user(regs);
+ 	else
+ 		exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ #endif
+ #else
+ /* 32bit unified entry point */
+ DEFINE_IDTENTRY_RAW(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	if (user_mode(regs))
+ 		exc_machine_check_user(regs);
+ 	else
+ 		exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ #endif
+ 
 
 
