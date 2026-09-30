@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA07851991D;
-	Wed, 30 Sep 2026 16:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFD25012A5;
+	Wed, 30 Sep 2026 16:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784968; cv=none; b=IMmXAm0H0gA2FvGetkeuuiuPENidLCenptgFyDzcB3syJTEf3cHoZt/tdtE3IKx8+ih+5X4dj4WxDaGmWXPInZNHpjYQGLD0Wm8L6k6tcPKZBlMI7w+4V+ns77USkzaTghlVTYlt+vRSj99UyGHxSxLBG83/mWrRD7O6yCRBjPE=
+	t=1790784972; cv=none; b=EKJmsVRRXQsj8HTYn+NYYbI9I4sZjkg7FHDTBde+AMMwkYxxrRMZ8yrzZ7ZU7jFsys17okB/5kO37ckNhvL+G6M3FcFs90SbS6gH2ErF+Zq9cXkodO2GsIuKGXb40jk/6G/46RcSDVnKRSvvfL1qoRNkuWQh+1Qqg2RzJn5FYQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784968; c=relaxed/simple;
-	bh=hYvbpTolN0prcumkOVPpgCjnZItUJvy4mZqW77TZmNA=;
+	s=arc-20240116; t=1790784972; c=relaxed/simple;
+	bh=fAI9bkA/dM4Wuag6RVAgj/B6J834A5yiOIOXqZMnLjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S7q4DUjsCbZx2Z1Evlc1k8QQ5qGezNnXjUqLh/xkME/Us4w07FBYQOBXXhNdk+ySy68DOmWIx6+qOHjfNHmNbzR4Y2vZxz9xyocc06qysS5FrmvGXtKRd8aFVM3CavXA7hBKmna2bCT4SD19I7SopBG0QijEh2vVgHoZnRgq3QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dafKdKzk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WN5cg8yiJesPbPqhK8IE638IH4uJt4nv6Oh1nThBqKPKzhOkMkagW9QxtoRjzOiLP/AabqKTK3Kh9wEV2oqgWJMqYs9b7OmbBBav5VtUP3SxZaFKzVJqKZhw/31Z+nP/U3kqkfZVNNFiOMhHJcrz0bGCRVJqxo5m8keCRtBp70E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPus4Rfq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dafKdKzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20EF1F00893;
-	Wed, 30 Sep 2026 16:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPus4Rfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56B51F000FF;
+	Wed, 30 Sep 2026 16:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784963;
-	bh=5qShvAR4j+lZmDV6K1gVQH8SmXEazbc8J4To65A6Ec4=;
+	s=korg; t=1790784966;
+	bh=uzH6xicN4ikhFiU+dqt2sLIKVlfD/B+RHMJ//zvZnSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dafKdKzkiZWPC+MYENNGa3rhstPTgZeREeJpO/Dvmtjwq9865BJEF8o39U+HIlFsy
-	 IS3QRylgJ4RyDVuY21/D2L8e+9+lq0WOtnR6ydMEHF2UX39tPOw1XecshrWPYyxHfk
-	 799VhDOcJhQpGK0Eb0Jjq+JhMwLPQeHd88nWPlD4=
+	b=jPus4RfqMkRu8L4Tl5eQX3c//bV59qlkXsOiCEq4Ox1baXBSSHyht7YHa/KYAbh8N
+	 Lugdd1nl7U7TvVXChAPrk7G+fAIummme1GE9nQEy6nCvhbXAPVN7gvraUv1JwVnfCq
+	 DVyud/WoRcnNZ+2VLGmz6BuZ8cEKSh0pfCj9dIV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 304/982] drop_monitor: fix size calculations for 64-bit attributes
-Date: Wed, 30 Sep 2026 17:17:20 +0200
-Message-ID: <20260930152423.346238831@linuxfoundation.org>
+Subject: [PATCH 6.1 340/982] raw: annotate disconnect-side IPv4 match writers
+Date: Wed, 30 Sep 2026 17:17:56 +0200
+Message-ID: <20260930152424.120190791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,66 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 7089f7ab99c89f443c92d8fcc585e63f2727f0b3 ]
+[ Upstream commit ac08d183dac0441e41f77bbad50798fe609d90f1 ]
 
-net_dm_packet_report_fill() and net_dm_hw_packet_report_fill() use
-nla_put_u64_64bit() to append 64-bit attributes (NET_DM_ATTR_PC and
-NET_DM_ATTR_TIMESTAMP).
+raw_v4_match() reads inet_daddr, inet_rcv_saddr and
+sk_bound_dev_if locklessly under RCU. Bind and connect writers are
+annotated, but __udp_disconnect() still clears the same fields using
+plain stores.
 
-On 32-bit architectures without CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS,
-nla_put_u64_64bit() may append a 4-byte NET_DM_ATTR_PAD attribute for
-64-bit alignment.
+Commit 18f116931f52e ("raw: annotate lockless match fields in
+raw_v4_match()") added the lockless readers and annotated the raw bind
+and datagram connect writers. Its v4 revision intentionally left the
+shared disconnect-side IPv4 writers for follow-up cleanup.
 
-However, net_dm_packet_report_size() and net_dm_hw_packet_report_size()
-used nla_total_size(sizeof(u64)) instead of nla_total_size_64bit(sizeof(u64)),
-budgeting 12 bytes instead of up to 16 bytes.
+Complete that follow-up by using WRITE_ONCE() for the disconnect-side
+stores, including the inet_rcv_saddr reset in inet_reset_saddr(), to
+pair with the lockless raw socket matcher.
 
-This under-estimation of SKB size can lead to an skb_over_panic() when
-__nla_reserve() or skb_put() is subsequently called.
-
-Fix this by using nla_total_size_64bit(sizeof(u64)) in both size calculations.
-
-Fixes: ca30707dee2b ("drop_monitor: Add packet alert mode")
-Fixes: 5e58109b1ea4 ("drop_monitor: Add support for packet alert mode for hardware drops")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260722141743.3266924-2-edumazet@google.com
+Fixes: 0daf07e52709 ("raw: convert raw sockets to RCU")
+Link: https://lore.kernel.org/netdev/20260716142958.3064224-1-runyu.xiao@seu.edu.cn/
+Suggested-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260828012918.1461-1-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/ip.h | 3 ++-
+ net/ipv4/udp.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index a917faac7c5a8..eb5956d15cde0 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -564,13 +564,13 @@ static size_t net_dm_packet_report_size(size_t payload_len,
- 	       /* NET_DM_ATTR_ORIGIN */
- 	       nla_total_size(sizeof(u16)) +
- 	       /* NET_DM_ATTR_PC */
--	       nla_total_size(sizeof(u64)) +
-+	       nla_total_size_64bit(sizeof(u64)) +
- 	       /* NET_DM_ATTR_SYMBOL */
- 	       nla_total_size(NET_DM_MAX_SYMBOL_LEN + 1) +
- 	       /* NET_DM_ATTR_IN_PORT */
- 	       net_dm_in_port_size() +
- 	       /* NET_DM_ATTR_TIMESTAMP */
--	       nla_total_size(sizeof(u64)) +
-+	       nla_total_size_64bit(sizeof(u64)) +
- 	       /* NET_DM_ATTR_ORIG_LEN */
- 	       nla_total_size(sizeof(u32)) +
- 	       /* NET_DM_ATTR_PROTO */
-@@ -751,7 +751,7 @@ net_dm_hw_packet_report_size(size_t payload_len,
- 	       /* NET_DM_ATTR_FLOW_ACTION_COOKIE */
- 	       net_dm_flow_action_cookie_size(hw_metadata) +
- 	       /* NET_DM_ATTR_TIMESTAMP */
--	       nla_total_size(sizeof(u64)) +
-+	       nla_total_size_64bit(sizeof(u64)) +
- 	       /* NET_DM_ATTR_ORIG_LEN */
- 	       nla_total_size(sizeof(u32)) +
- 	       /* NET_DM_ATTR_PROTO */
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 1b0722e9b55e4..05ce8b38e3dab 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -654,7 +654,8 @@ static inline void ip_ipgre_mc_map(__be32 naddr, const unsigned char *broadcast,
+ 
+ static __inline__ void inet_reset_saddr(struct sock *sk)
+ {
+-	inet_sk(sk)->inet_rcv_saddr = inet_sk(sk)->inet_saddr = 0;
++	inet_sk(sk)->inet_saddr = 0;
++	WRITE_ONCE(inet_sk(sk)->inet_rcv_saddr, 0);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == PF_INET6) {
+ 		struct ipv6_pinfo *np = inet6_sk(sk);
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index d1714aaedf176..6f745efa0db4b 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1968,10 +1968,10 @@ int __udp_disconnect(struct sock *sk, int flags)
+ 	 */
+ 
+ 	sk->sk_state = TCP_CLOSE;
+-	inet->inet_daddr = 0;
++	WRITE_ONCE(inet->inet_daddr, 0);
+ 	inet->inet_dport = 0;
+ 	sock_rps_reset_rxhash(sk);
+-	sk->sk_bound_dev_if = 0;
++	WRITE_ONCE(sk->sk_bound_dev_if, 0);
+ 	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK)) {
+ 		inet_reset_saddr(sk);
+ 		if (sk->sk_prot->rehash &&
 -- 
 2.53.0
 
