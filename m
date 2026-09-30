@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FBE51598A;
-	Wed, 30 Sep 2026 16:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA69C3AFB11;
+	Wed, 30 Sep 2026 16:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787136; cv=none; b=rCfb6NR14mHm1GKGXCJM2SOQGGZqjzE1FZaZZA96JHutcWg6KdnMCoMy52DMOL3mfO7BlgBQvcAP7b187Ggkt8qbkLcundmHCBII/XWozzQlFbIbWQf+AqP269rGpJYjaa7WJC3i7X6IUX0WFaEwmWkM+r/MST2tCoge5Z5dNBc=
+	t=1790787139; cv=none; b=nfIzU0ARU7lnnOhZIBn4R98WeCnHIQdMHJICAyz0PPBZvTTcOS5ZQF8z9+h38IyREFno8PTW9+apTSLAczCL5rQ6GZryvJUsQelxZMYuJfQKH5ZnJ3UknjzBJho5zLSbblS4Mvoa6vU+kANnmlvUNo4E1cjsv9DdPBaZ6C+dqWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787136; c=relaxed/simple;
-	bh=j+aMzEStRaftxESKFahX9AMO9hqDR/pmcwuE0TYQivU=;
+	s=arc-20240116; t=1790787139; c=relaxed/simple;
+	bh=YOxS7JZ4gJ89eQtDaIQoeBlB24pINe3ezrmxX469S/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T+wnNgINm9Vf04zXXWH2QUN//0GEXUgRCywS/r/gizYa5EoI9sFRofdCyCdSRc1LB8h8VgpDX6ZrQiWiSSn2JRzgMCgT5OPT33Fw/7KdM7TJrQEuGu0+SIerbqXYr5iLX9tWW7SnmJXzjrE+k1C3i4SC+faaMNEtCRwCe3ovC6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guURcvRY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ejcrvvzGwh7l5nlscMDbExWqoaDMukIg/z/c6CaGl4zMBUcy2/cDbzNal0ywLlqyznhU4iPxvvCoCYVfEbSS09uTqvi/tyzOEt4bdC+xctsNxQEo54/CE2Jin3oeyVSThf5fAx4FLbV/fA13WnG6HM+/E677kufyYz1l0NNQJAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBjADleD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guURcvRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D6C1F000FF;
-	Wed, 30 Sep 2026 16:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBjADleD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D18D1F000FF;
+	Wed, 30 Sep 2026 16:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787134;
-	bh=EQpVgmTBvb9EyppnSnThKBwk6BI24LxNeTzy6ajhRs0=;
+	s=korg; t=1790787137;
+	bh=9OtUWXPBzX+v0xi8lE46680n9zy/8kYipNVZXRHsiG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=guURcvRYr11hgocWbi3vAUcptZNvk/Sp8W4Ic3qBfE0v/LsiKr52M7W0j5ShO6TNt
-	 DzP3vKuWlFjQHsZxU16GtlOGvWpsL/DWxVTPlMJ9G0eZKh2an6MKTKCQ55GqJQSs/E
-	 +yWENcMYb6YOPLN3J73WvYYFUevSNEmOO0KKazj4=
+	b=SBjADleD2zPIecW1d3dh4grtsa+Si5qeUmDxY2TU6r+IRoWYtrXivEhRti4Q4RfBi
+	 RoUuMA2ZuqLAf6xtjP1cuO1P/vc9owKX0MSovQESkSeL3jlTuR0vCn+KSbF6KO92GY
+	 dKKAZkydEkY3QZ6yxKAVrRJNqeW05vPDpTPwkZ/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 107/457] net/sched: sch_hfsc: bound the classify inner-filter walk with a drift budget
-Date: Wed, 30 Sep 2026 17:23:32 +0200
-Message-ID: <20260930152348.362202181@linuxfoundation.org>
+Subject: [PATCH 7.2 125/457] ovpn: reject invalid peer VPN addresses
+Date: Wed, 30 Sep 2026 17:23:50 +0200
+Message-ID: <20260930152348.748122231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -48,128 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 8a60ade2277e1f0e0d0578d565354e52292fa46d ]
+[ Upstream commit 5940f3407b78062442cb01f541ef6eed709fc380 ]
 
-hfsc_classify() applies the "filter may only point downwards" level check
-only when the filter result carries no bound class. A filter created with
-a flowid gets res.class set once at bind time, so the check never runs for
-it during classification. hfsc_adjust_levels() can later raise a class's
-level without revalidating existing bindings, leaving two binds that were
-each legal at bind time pointing at each other; the classify walk then
-bounces between two interior classes forever with the qdisc lock held and
-BH disabled — a soft lockup from a single packet. The stuck walk trips
-the watchdog:
+In MP mode, ovpn uses peer VPN addresses as lookup keys for selecting
+the peer that should receive outgoing tunnel packets. The netlink
+configuration path currently accepts address values that cannot sensibly
+identify a VPN peer, such as multicast, broadcast or loopback addresses.
 
-  watchdog: BUG: soft lockup - CPU#3 stuck for 13s! [ping:444]
-  RIP: 0010:u32_classify+0x542/0x17f0
-  ...
-  tcf_classify+0x66/0xa0
-  hfsc_enqueue+0x166/0xdf0
+Reject invalid peer VPN addresses when creating or updating an MP peer.
+Keep accepting the unspecified address as the internal unset value,
+provided that at least one VPN address family remains configured.
 
-Bound the traversal with a budget of non-descending hops, the only way a
-configured walk can move without descending the class tree once levels
-drift after bind time. The budget is cumulative over the whole walk and
-is deliberately not reset on a descending hop: a chain that alternates a
-descent with a lateral hop would return the budget every lap and never
-trip. Descending hops never decrement it, so legitimately deep trees are
-unaffected and a terminating lateral chain still classifies normally.
-Drop the packet with a rate-limited warning once the budget is exhausted,
-mirroring the merged HTB fix.
-
-This is a follow-up to commit 729c4896ab82 ("net/sched: sch_htb: limit
-htb_classify inner-class filter hops"), which bounded the same classify
-loop on the HTB side but left the HFSC walk unbounded.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_SCH_HFSC, CONFIG_NET_CLS_U32,
-  CONFIG_LOCKUP_DETECTOR.
-- Build a cycle with two legal-at-bind-time flowid binds and a level
-  drift: class X 1:1 (child of root) with leaf child 1:10; class Y 1:2
-  (sibling of X) with children 1:20 and 1:200; root u32 filter flowid
-  1:1; filter on X flowid 1:2 (legal when Y is a leaf); after Y's level
-  rises to 2, filter on Y flowid 1:1 (legal then). Send one packet (ping
-  on the device). Unfixed kernel: classify spins with the qdisc lock
-  held; with softlockup_panic=1 it panics.
-- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
-
-Fixes: a2f79227138c ("net_sched: sch_hfsc: fix classification loops")
-Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/QDISC-CTUU.v2.20260913192614@mojatatu.com/
-Link: https://sashiko.dev/#/patchset/QDISC-CTUU.v2.20260913192614@mojatatu.com
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-CTUU.v2.20260913192614%40mojatatu.com
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-CTUU.v3.20260916184908@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1d36a36f6d53 ("ovpn: implement peer add/get/dump/delete via netlink")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/ovpn/netlink.c | 55 +++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 13 deletions(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index e87f5021a1995..284490fd6ca91 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -386,6 +386,15 @@ cftree_update(struct hfsc_class *cl)
- #define	SM_MASK		((1ULL << SM_SHIFT) - 1)
- #define	ISM_MASK	((1ULL << ISM_SHIFT) - 1)
+diff --git a/drivers/net/ovpn/netlink.c b/drivers/net/ovpn/netlink.c
+index e9e0f75e04433..5432bc2eb8e80 100644
+--- a/drivers/net/ovpn/netlink.c
++++ b/drivers/net/ovpn/netlink.c
+@@ -185,6 +185,39 @@ static sa_family_t ovpn_nl_family_get(struct nlattr *addr4,
+ 	return AF_UNSPEC;
+ }
  
-+/*
-+ * Cap on the non-descending hops a classify walk may take before its
-+ * filter chain is treated as misconfigured. A flowid binding that was
-+ * legal at bind time can become lateral once hfsc_adjust_levels()
-+ * raises a class level; a few such hops are legitimate, an unbounded
-+ * run means the chain cycles.
-+ */
-+#define	HFSC_CLASSIFY_MAX_DRIFT	8
++static int ovpn_nl_peer_check_vpn_addrs(const struct in_addr *addr4,
++					const struct in6_addr *addr6,
++					struct genl_info *info)
++{
++	int addr6_type;
 +
- static inline u64
- seg_x2y(u64 x, u64 sm)
- {
-@@ -1133,6 +1142,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 	struct hfsc_class *head, *cl;
- 	struct tcf_result res;
- 	struct tcf_proto *tcf;
-+	unsigned int drift;
- 	int result;
- 
- 	if (TC_H_MAJ(skb->priority ^ sch->handle) == 0 &&
-@@ -1142,6 +1152,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 
- 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
- 	head = &q->root;
-+	drift = HFSC_CLASSIFY_MAX_DRIFT;
- 	tcf = rcu_dereference_bh(q->root.filter_list);
- 	while (tcf && (result = tcf_classify_qdisc(skb, tcf, &res, false)) >= 0) {
- #ifdef CONFIG_NET_CLS_ACT
-@@ -1167,6 +1178,17 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
- 		if (cl->level == 0)
- 			return cl; /* hit leaf class */
- 
-+		/*
-+		 * flowid binds skip the level check above (res.class is set
-+		 * at bind time and levels drift after), so a walk can follow
-+		 * lateral hops without descending; a bounded number of them
-+		 * is legal, more means the chain cycles.
-+		 */
-+		if (cl->level >= head->level && drift-- == 0) {
-+			pr_warn_ratelimited("hfsc: classify hop budget exhausted, dropping packet\n");
-+			return NULL;
++	if (addr4->s_addr == htonl(INADDR_ANY) && ipv6_addr_any(addr6)) {
++		NL_SET_ERR_MSG_MOD(info->extack,
++				   "at least one VPN IP must be configured in MP mode");
++		return -EINVAL;
++	}
++
++	if (ipv4_is_multicast(addr4->s_addr) || ipv4_is_lbcast(addr4->s_addr) ||
++	    ipv4_is_loopback(addr4->s_addr)) {
++		NL_SET_ERR_MSG_MOD(info->extack,
++				   "VPN IPv4 address must be valid unicast or any");
++		return -EADDRNOTAVAIL;
++	}
++
++	if (!ipv6_addr_any(addr6)) {
++		addr6_type = ipv6_addr_type(addr6);
++
++		if (!(addr6_type & IPV6_ADDR_UNICAST) ||
++		    (addr6_type & (IPV6_ADDR_LOOPBACK | IPV6_ADDR_COMPATv4))) {
++			NL_SET_ERR_MSG_MOD(info->extack,
++					   "VPN IPv6 address must be valid unicast or any");
++			return -EADDRNOTAVAIL;
 +		}
++	}
 +
- 		/* apply inner filter chain */
- 		tcf = rcu_dereference_bh(cl->filter_list);
- 		head = cl;
++	return 0;
++}
++
+ static int ovpn_nl_peer_precheck(struct ovpn_priv *ovpn,
+ 				 struct genl_info *info,
+ 				 struct nlattr **attrs)
+@@ -387,12 +420,10 @@ int ovpn_nl_peer_new_doit(struct sk_buff *skb, struct genl_info *info)
+ 			vpn_addr6 =
+ 				nla_get_in6_addr(attrs[OVPN_A_PEER_VPN_IPV6]);
+ 
+-		if (vpn_addr4.s_addr == htonl(INADDR_ANY) &&
+-		    ipv6_addr_any(&vpn_addr6)) {
+-			NL_SET_ERR_MSG_FMT_MOD(info->extack,
+-					       "at least one VPN IP must be configured in MP mode");
+-			return -EINVAL;
+-		}
++		ret = ovpn_nl_peer_check_vpn_addrs(&vpn_addr4, &vpn_addr6,
++						   info);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+ 	peer_id = nla_get_u32(attrs[OVPN_A_PEER_ID]);
+@@ -558,13 +589,11 @@ int ovpn_nl_peer_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 	}
+ 
+ 	/* in MP mode VPN IPs are required for selecting the right peer */
+-	if (ovpn->mode == OVPN_MODE_MP &&
+-	    vpn_addr4.s_addr == htonl(INADDR_ANY) &&
+-	    ipv6_addr_any(&vpn_addr6)) {
+-		NL_SET_ERR_MSG_FMT_MOD(info->extack,
+-				       "at least one VPN IP must be configured in MP mode");
+-		ret = -EINVAL;
+-		goto unlock;
++	if (ovpn->mode == OVPN_MODE_MP) {
++		ret = ovpn_nl_peer_check_vpn_addrs(&vpn_addr4, &vpn_addr6,
++						   info);
++		if (ret < 0)
++			goto unlock;
+ 	}
+ 
+ 	ret = ovpn_nl_peer_modify(peer, info, attrs);
 -- 
 2.53.0
 
