@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D283051AEF4;
-	Wed, 30 Sep 2026 17:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A4E516148;
+	Wed, 30 Sep 2026 17:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788735; cv=none; b=qmvGxWcXfl1dOIgqj90g3jadR0cEc8DIsBxGN9v139JDO5ROii36hBnT/Wh9uTsZilZASPcsn+h/2hZXjGUh06icjh7Sz/ggzsED9nbAVLhg/HEW+o45pdT+X4hMSnE40QJwuFi0D2EKp5Ts3UoJYHW94XNgHurkbhVjAEQmGTQ=
+	t=1790788737; cv=none; b=jIPGk5BmNwgvlObDR/7YL/7sFp/m2AMFMSkbDQZBttC0T0c8Dfz6mstsQXpdaqz+AWVjDevctsn2J0Q+juMOVk8Dap7XLcDVDsZRUUK2wu4OxIdTFk8MsR2gJwLUjuBfBZ5N4AQ/n54DGR3J0wIS4YsJDV2GLDIUSyAgujS1uV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788735; c=relaxed/simple;
-	bh=QAHlAI2d72w6XAtqAcZwPFdeyv3KreI25KNwSRT+U8s=;
+	s=arc-20240116; t=1790788737; c=relaxed/simple;
+	bh=cqpY+E4WHvcClENL5WmjfS/CfiUNU2SF13jfsJjcjB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rsj0VJPpYoPUFeBK1kmbYvFpYMoQAB7hWUm52qkClpgwGSwYp93QCvciJqxKy3DFgBXisdFs/rUdkAcsiPDUj6AAssvTrqmgAQRgUva0E4rTm8dVdLZp+Du0WOSgzwBE2LdqeDTrW0bcVl2+O6Rw49qexVOzJ+zbzP8vvgCNpks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQgW1oaM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bC152zDm7f5FkffEtJNnuIivOihWYZqFP6wfZ0MfW64Nlvczl+uendqf6T8FrkOdAqAHILNXN7O07iObz1aTGrKJBLJdaWoToKxToUxChAcujypCq9TXF153Q2i26QWZ5bs9XPSVdJVEA+5WfYmf3rWHQKAHRTzH1wiUknIadns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttnIDWrI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQgW1oaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0661F000FF;
-	Wed, 30 Sep 2026 17:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttnIDWrI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C661F000FF;
+	Wed, 30 Sep 2026 17:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788733;
-	bh=G5zBTBooAXA5ZcSetwhHAyENtaK/VU0EGM534RuqlQQ=;
+	s=korg; t=1790788736;
+	bh=itNrRBuPG1SKHnYtuwmQouN8+NMNnBlY39mzgZ1OEHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQgW1oaMVMwP6gqlygFpKzRadFB5waCW99pltwUgNRbmP/AtGlJstPd1MMKbAApDm
-	 2Nz7332//IKaexF4q+CB1qI1mks/+liW5rJYNFSub+Yn+Nih9nlyhQd84EVPdX/GjU
-	 U0HQ8BSV8WYihYDcUbh1D8xwyz1ft50yzGKhf32o=
+	b=ttnIDWrI3I1Y6l7N7F7jvxM5eK0OFHTnhksR/8bJRTC8uqC+sN6dXJe2iuUwY93oL
+	 KptlGTclMXg1ufiFm9Wm5Du+iWeZOlEiAHENBRatRm9QXnbsA/ihZ5RRbOJTJSj8hS
+	 BWMeSiPLmZ0Se+kv6GFHKokEt9MsLoC+J8xFH6lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Xu Rao <raoxu@uniontech.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 229/877] mmc: sh_mmcif: initialize IRQ-thread mutex before requesting interrupt
-Date: Wed, 30 Sep 2026 17:19:00 +0200
-Message-ID: <20260930152419.668460669@linuxfoundation.org>
+Subject: [PATCH 6.12 230/877] mmc: spi: reset bytes_xfered before retrying CRC failures
+Date: Wed, 30 Sep 2026 17:19:01 +0200
+Message-ID: <20260930152419.691398559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,42 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit d5ea0d226e8f0801d78702142a124d78c317d822 upstream.
+commit 8b0cc8707f65e0f51912e764e1b309b2559db1ec upstream.
 
-The threaded IRQ handler can run before devm_request_threaded_irq()
-returns, but thread_lock was initialized afterwards. Initialize it before
-requesting either interrupt.
+mmc_spi_data_do() updates data->bytes_xfered after each block has been
+transferred successfully.  If a later block in the same data request
+fails with a CRC error, data->bytes_xfered may therefore contain the
+number of bytes completed before the failing block.
 
-Fixes: 8047310ee984 ("mmc: sh_mmcif: fix a race, causing an Oops on SMP")
+mmc_spi_request() has a private recovery path for such CRC failures.  It
+sends STOP_TRANSMISSION, clears data->error and jumps back to
+crc_recover to issue the same command and data request again.  However,
+it does not clear data->bytes_xfered before the retry.
+
+If the retry succeeds, the request is completed with the bytes from the
+failed attempt still included in data->bytes_xfered.  For a multi-block
+request this can make the completed request report more bytes than were
+transferred by the successful retry, and can even exceed the request size
+when most blocks completed before the CRC error.
+
+This is most likely to be observed on MMC-over-SPI systems where long
+multi-block transfers occasionally hit a data CRC error but the
+mmc_spi-internal retry succeeds.  The data itself is retried, but the
+completion accounting is not.
+
+Clear data->bytes_xfered together with data->error before repeating the
+request so the final completion reports only the bytes transferred by the
+successful attempt.
+
+Fixes: 061c6c847eeb ("mmc_spi: Recover from CRC errors for r/w operation over SPI.")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sh_mmcif.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mmc/host/mmc_spi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/sh_mmcif.c
-+++ b/drivers/mmc/host/sh_mmcif.c
-@@ -1461,6 +1461,7 @@ static int sh_mmcif_probe(struct platfor
- 	host->pd = pdev;
- 
- 	spin_lock_init(&host->lock);
-+	mutex_init(&host->thread_lock);
- 
- 	mmc->ops = &sh_mmcif_ops;
- 	sh_mmcif_init_ocr(host);
-@@ -1521,8 +1522,6 @@ static int sh_mmcif_probe(struct platfor
+--- a/drivers/mmc/host/mmc_spi.c
++++ b/drivers/mmc/host/mmc_spi.c
+@@ -952,6 +952,7 @@ crc_recover:
+ 			status = mmc_spi_command_send(host, mrq, &stop, 0);
+ 			crc_retry--;
+ 			mrq->data->error = 0;
++			mrq->data->bytes_xfered = 0;
+ 			goto crc_recover;
  		}
- 	}
  
--	mutex_init(&host->thread_lock);
--
- 	ret = mmc_add_host(mmc);
- 	if (ret < 0)
- 		goto err_clk;
 
 
