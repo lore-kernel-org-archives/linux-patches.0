@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B8F3B3BF2;
-	Wed, 30 Sep 2026 19:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862F234E75A;
+	Wed, 30 Sep 2026 19:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795601; cv=none; b=H8vBDYC8x9gVPs2VE9O05yzk0v+nb3sQQL3BlbRX+yFJOhQvTYu+2h8JKwB3WgQ/WZ1FLVTHgYmHfIMereaaiFJ7BhVeDz4tH+PdwXPca8yFJCZUxWmLKA/wUNj0kDdwRWMfyOwSD+U6CtSSLUMe6KVSbZ3OOcon2xiWwhpLMWI=
+	t=1790795604; cv=none; b=jNI0jOVDKyQj8GemynJL71bQugXJW58iIUD72WNry4dJYIwN+hDw+kHzaNX/9tLrC9xmrcxZe6Akqf9H8Gq6N2ihIG5WY6ILRY7YAdmRXnTXqR1ttO+rMaIPVe9OfJNuJN4cU16qCAWGXv8D4+YaJxsMAavoJh6HgBYgz2Swtis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795601; c=relaxed/simple;
-	bh=7lgu3PckuIFTeXH1ZprRNiuvRzhep62HONH8iSYyRhQ=;
+	s=arc-20240116; t=1790795604; c=relaxed/simple;
+	bh=fkOezXZ5HD2ArPD0tWHGRlzI7m659Xc23J/VzkInPas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmR23aAZjywh0oWabSXsmaCLvoiPBsi4zxdmEIG834M0IoemHZiv1cFe+x4G7F87WrIqXA3+urJUf1dB1Z9yfOveYscUS3XW+NjpFNRlehRWXx5IZ8dV4mkV4LN/omwrKVBaME9R9k8ZqT0XGeLg+/JMryRtBdewJSKTMVwCIxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTrctSfs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z58AfFLItn5kwEcjMA7VYAou3/VGIkCOSUouPHENCUlzZ5EVUWYSy/XKWqjVDyxzSywCSho8V22C+E+Bsk4IXWQSduo/1GyU8ESoY0/1LzkcZMzoG63SYyDuYqiMw1NoY3DfDEPOc30vyQq/sF4ERLmZmMQ4wRY9z5jdMPo9gUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmeSfvDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTrctSfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5521F000FF;
-	Wed, 30 Sep 2026 19:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmeSfvDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25091F000FF;
+	Wed, 30 Sep 2026 19:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795600;
-	bh=9ts2YiCl18I1rmRG0J8KcAZWdcmHkypSsIi4zydqd70=;
+	s=korg; t=1790795603;
+	bh=w4Ng2O4HTuT3xRzJ7JMtAFDXHk6yhoQ3SouUpYbGX7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTrctSfs+xTZN7qvLS+eTijsaHpJJWmQd3/QkYvVHpmtoO9hcjZ7i7gWpAPt3NF3a
-	 bO6R1tPqqheDoj1de5hhgLK1TL5cTQEwglI38bSNX/DeBmvdM8a3vSAImRGoF4sYqq
-	 3v2Df54nImDG5LldL698SgSrQZEZLYGkxYU7PIEw=
+	b=lmeSfvDJBca8fzluR+9gEfRh5GL4nZiiaA2lu+xKX2u6OeS7vDtqKrECGoyd90BSh
+	 EPM8RAxZlwQA/fFt3z1QQebP4hVggg8L5bE7lK2IiOD353dMJ2NjxeUUdYYabRlQts
+	 wFllzj88YDFceV02mcfmX2jPPOKEkW6teHMhYZMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0563/1193] watchdog: msc313e: Sync timeout value if WDT was running at boot
-Date: Wed, 30 Sep 2026 17:20:47 +0200
-Message-ID: <20260930152446.748322790@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.6 0612/1193] tracing: Free histogram the var ref when its initialization fails
+Date: Wed, 30 Sep 2026 17:21:36 +0200
+Message-ID: <20260930152447.841528204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,68 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 01504d14e47b34779911250dd308a03f6ef681c2 ]
+commit 516001d53e6b2ea95a251ee2ef54a1a689a3fd58 upstream.
 
-If WDT was running at boot, the hardware timeout might be set to values
-other than the final software timeout.
+create_var_ref() allocates a VAR_REF hist_field and then calls
+init_var_ref() to fill it in. When that fails the field is leaked.
 
-To be consistent, set the hardware timeout to match the final software
-timeout (i.e., after watchdog_init_timeout()) if WDT was running.
+commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
+var_refs") made destroy_hist_field() return early for
+HIST_FIELD_FL_VAR_REF, since var refs are freed by walking the trigger's
+var_refs[] array instead. create_var_ref() adds the field to that array
+only after init_var_ref() has succeeded, so on this path the field is in
+neither place and nothing frees it. The call was correct when it was
+written, before var refs were taken out of destroy_hist_field().
 
-Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-8-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+init_var_ref() cannot free it either. The caller owns the field, so
+init_var_ref() undoes only its own string allocations and leaves the
+field alone. Freeing it there would leave create_var_ref() passing freed
+memory to destroy_hist_field(), which reads its flags.
+
+Call __destroy_hist_field(), which frees the field without consulting
+the flag.
+
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260906133352.3815019-1-donggeunyoo.kernel@gmail.com
+Fixes: 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy var_refs")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 72620adec641a..eea26c6c95d84 100644
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -145,12 +145,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 	priv->wdev.max_timeout = U32_MAX / rate;
- 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2211,7 +2211,7 @@ static struct hist_field *create_var_ref
+ 	ref_field = create_hist_field(var_field->hist_data, NULL, flags, NULL);
+ 	if (ref_field) {
+ 		if (init_var_ref(ref_field, var_field, system, event_name)) {
+-			destroy_hist_field(ref_field, 0);
++			__destroy_hist_field(ref_field);
+ 			return NULL;
+ 		}
  
-+	watchdog_set_drvdata(&priv->wdev, priv);
-+	platform_set_drvdata(pdev, priv);
-+
-+	watchdog_init_timeout(&priv->wdev, timeout, dev);
-+	watchdog_stop_on_reboot(&priv->wdev);
-+	watchdog_stop_on_unregister(&priv->wdev);
-+	watchdog_stop_ping_on_suspend(&priv->wdev);
-+
- 	ret = clk_prepare_enable(priv->clk);
- 	if (ret)
- 		return ret;
- 
- 	/* If the period is non-zero the WDT is running */
- 	if (msc313e_wdt_get_hw_timeout(priv)) {
-+		msc313e_wdt_set_hw_timeout(priv, priv->wdev.timeout);
- 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
- 		/*
- 		 * Keep the clock enabled. The watchdog core will skip the next
-@@ -161,14 +170,6 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 		clk_disable_unprepare(priv->clk);
- 	}
- 
--	watchdog_set_drvdata(&priv->wdev, priv);
--	platform_set_drvdata(pdev, priv);
--
--	watchdog_init_timeout(&priv->wdev, timeout, dev);
--	watchdog_stop_on_reboot(&priv->wdev);
--	watchdog_stop_on_unregister(&priv->wdev);
--	watchdog_stop_ping_on_suspend(&priv->wdev);
--
- 	ret = devm_watchdog_register_device(dev, &priv->wdev);
- 
- 	/* If the WDT is running and anything goes wrong, disable the clock. */
--- 
-2.53.0
-
 
 
