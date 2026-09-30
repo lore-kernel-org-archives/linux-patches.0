@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942234E4306;
-	Wed, 30 Sep 2026 16:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C3350EC1C;
+	Wed, 30 Sep 2026 16:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786232; cv=none; b=fu4yVwexKmq6jZAf30HvvUypnGEI5HfkE6JXp1YtU07Wab+zNQXofj5BZdrn8dDgH5e6W6zvbuAVriHAXPqgAEsARGOGxfeG20E6RVvb1+gtgtfJHsk2aRNZWhRhWHZcOm+VgMyjSSBDm4teM8q+ChYd8NZmlC7+czklOTKfRSE=
+	t=1790786236; cv=none; b=VDtrajAcj/KFZxcK77wwq/VyqyOSVP17Ru2U3xWDfc4/bMkwdp5K8RMHx1UyLjjhqg0IKy/fLgVXzmZkwSL1ieTCJq1EfY76qGtSy+pPd8/6R88Lz5gjkh7CX8X9dcM4Wza8TSC8Fne4V4la4KUe+gxYzwkTWkTEx30tSTt4Hhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786232; c=relaxed/simple;
-	bh=5DLlyHceBpz7RNffp4qhKbuGXC6y6Si9ar88CCQXoEk=;
+	s=arc-20240116; t=1790786236; c=relaxed/simple;
+	bh=1DgWuwP9BIX0wa17pVBAbPzNSWoVoZdQuPe5xUG57kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjmHZPujG3qdt3NVaabIx/8rsE6wp4DkifxaJ/5Lj/m8u9TnQQdEs+ffnBHPN537sTyiU1FW0793pfX1OeOvSG7uSqiS34EzGp17SE+Ega4ZkfLAObXhm2BtYLzoqM6HQRxO9FcVQTtjSsOvKDa0ldnoPZho3nGyEB/aWU0fm3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2zJ5qoO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JN+ktzbGk42jmKdRanT57Dt7UDEljCbGva3tOyS0sB9Bn6OSqYvkDl4BFb8ewmRhG5UR22RJjJHJEce5I6Ap+6ow42QlQngAv2twQkzFPWtjccqF24UjOQolTxHagRQ66OEHn7UiGzJRYVOYVk6ozoJ3y+TYm6hYVhwfI15G+Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZ/JSkTm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2zJ5qoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB16B1F00893;
-	Wed, 30 Sep 2026 16:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZ/JSkTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4D61F000FF;
+	Wed, 30 Sep 2026 16:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786231;
-	bh=RTbpc7XjpxaC40+PERCSbpMzbOQtuc6/qEy3ndD6Ip4=;
+	s=korg; t=1790786234;
+	bh=lxLLI8f6Up8+ZLartWCxl1S6YUURbxBmnZkj0v+WuL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2zJ5qoOLvK88z7M7rku/jrkdrAXfiqQqG1Cy/kkpr/7aNY+jSHU89n8peeRJ/z2R
-	 NtiVYNswth7PqbEWxgHFj55Sh7G2/gStPQy1Z41uW+Ca1428vlIwEVKTazNRWMWPFI
-	 6ex3blEGLyR5XxxNKLvSOlQX3Eido2NzsggowPaU=
+	b=bZ/JSkTml6t3ucWjMe2i41eLUNW2LZys/LlqinLkz4psDMHK+lgmk12ZHGRIdsyyR
+	 5g9jEV8xm/MGSSqVECygHmAzYnvK8PF485LGSM0wCPnJbZreFKBtz3sNMdGwKjGSf1
+	 9GlcnYdEl9Qwo36KloxXIWuZR6y5Wcp64ytpbEHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Maillard <florian.maillard@mailoo.org>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 733/982] mmc: rtsx_pci_sdmmc: ignore broken write-protect on ThinkPad X260
-Date: Wed, 30 Sep 2026 17:24:29 +0200
-Message-ID: <20260930152432.499571448@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 783/982] HID: logitech-hidpp: fix race condition when accessing stale stack pointer
+Date: Wed, 30 Sep 2026 17:25:19 +0200
+Message-ID: <20260930152433.574351063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -44,51 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Maillard <florian.maillard@mailoo.org>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 9c182bc5d7817437a7d04ab96133f9191846d93d upstream.
+commit e2aaf2d3ad92ac4a8afa6b69ad4c38e7747d3d6e upstream.
 
-The Realtek RTS522A card reader in the Lenovo ThinkPad X260
-(subsystem 17aa:504a) incorrectly reports inserted SD cards as
-write-protected.
+The driver uses hidpp->send_receive_buf to point to a stack-allocated
+buffer in the synchronous command path (__do_hidpp_send_message_sync).
+However, this pointer is not cleared when the function returns.
 
-This causes the MMC core to expose the card as read-only:
+If an event is processed (e.g. by a different thread) while the
+send_mutex is held by a new command, but before that command has
+updated send_receive_buf, the handler (hidpp_raw_hidpp_event) will
+observe that the mutex is locked and dereference the stale pointer.
 
-  mmcblk0: mmc0:aaaa SN256 238 GiB (ro)
+This results in an out-of-bounds access on a different thread's kernel
+stack (or a NULL pointer dereference on the very first command).
 
-and /sys/block/mmcblk0/ro reports 1.
+Fix this by:
+1. Clearing hidpp->send_receive_buf to NULL before releasing the mutex
+   in the synchronous command path.
+2. Moving the assignment of the local 'question' and 'answer' pointers
+   inside the mutex_is_locked() block in the handler, and adding
+   a NULL check before dereferencing.
 
-Setting MMC_CAP2_NO_WRITE_PROTECT makes the card writable again.
-Limit the quirk to the affected Lenovo subsystem.
-
-Assisted-by: ChatGPT:GPT-5.6 Sol
-Signed-off-by: Florian Maillard <florian.maillard@mailoo.org>
+Fixes: 2f31c5252910 ("HID: Introduce hidpp, a module to handle Logitech hid++ devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[Lee: Clear hidpp->send_receive_buf at exit label in hidpp_send_message_sync()
+      as __do_hidpp_send_message_sync() was split out later in 60165ab774cb]
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1488,6 +1488,11 @@ static void realtek_init_host(struct rea
- 		mmc->caps = mmc->caps | MMC_CAP_AGGRESSIVE_PM;
- 	mmc->caps2 = MMC_CAP2_NO_PRESCAN_POWERUP | MMC_CAP2_FULL_PWR_CYCLE |
- 		MMC_CAP2_NO_SDIO;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 1d4df88f690c0..37fe852dd2da9 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -315,6 +315,7 @@ static int hidpp_send_message_sync(struct hidpp_device *hidpp,
+ 	}
+ 
+ exit:
++	hidpp->send_receive_buf = NULL;
+ 	mutex_unlock(&hidpp->send_mutex);
+ 	return ret;
+ 
+@@ -3620,8 +3621,7 @@ static int hidpp_input_configured(struct hid_device *hdev,
+ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 		int size)
+ {
+-	struct hidpp_report *question = hidpp->send_receive_buf;
+-	struct hidpp_report *answer = hidpp->send_receive_buf;
++	struct hidpp_report *question, *answer;
+ 	struct hidpp_report *report = (struct hidpp_report *)data;
+ 	int ret;
+ 
+@@ -3630,6 +3630,12 @@ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 	 * previously sent command.
+ 	 */
+ 	if (unlikely(mutex_is_locked(&hidpp->send_mutex))) {
++		question = hidpp->send_receive_buf;
++		answer = hidpp->send_receive_buf;
 +
-+	if (pcr->pci->device == 0x522a &&
-+	    pcr->pci->subsystem_vendor == PCI_VENDOR_ID_LENOVO &&
-+	    pcr->pci->subsystem_device == 0x504a)
-+		mmc->caps2 |= MMC_CAP2_NO_WRITE_PROTECT;
- 	mmc->max_current_330 = 400;
- 	mmc->max_current_180 = 800;
- 	mmc->ops = &realtek_pci_sdmmc_ops;
++		if (!question)
++			return 0;
++
+ 		/*
+ 		 * Check for a correct hidpp20 answer or the corresponding
+ 		 * error
+-- 
+2.53.0
+
 
 
