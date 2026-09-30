@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9224F5E0E;
-	Wed, 30 Sep 2026 16:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67E44CA784;
+	Wed, 30 Sep 2026 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787464; cv=none; b=L+WxPaxUWKi+9B9ImKPfxzDOQyYaZaG7W42MRbqspYTFm+ouE1JG//5tNQ4xfWqXfl1F8+8xiE009E1JcpsIcH1bB1M8jytVVN0OgxuNO2Akrp/JwEbHXp2mg03Vji4dihc8bJTDk5FWhfMMA+/3rhNeaKEsfTtv5j+7YJaxtUM=
+	t=1790787467; cv=none; b=bqBTKeA8jV9TTH77ex1QvXx2Nvrf7iLp4oIBm7Q+H6Ay5WdtMCzawxTa47BrUqoOvJGON9/R3WUYK9ezRIxrbFU0bWHAU2MMbHxvbEiJAYZtGRJYHgHe5NigRG3UaY6rFsZJapwX4dMHext/+mJaPHANi+jT4ymJw8+H9ad3Fvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787464; c=relaxed/simple;
-	bh=NbKpYIxnhh9jlxaApLSbe7QsjNtNq1kAEU7pvyjDWQY=;
+	s=arc-20240116; t=1790787467; c=relaxed/simple;
+	bh=807k00g4c5MkDeHV9inEFF5pAxL0YwpL89GxaFVOmTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbOECL+GjTfkeFMmpVRrkFhrgC5wo5Pa+tslpZetCg9/8b4wcnQ1p4Ik7pSspiIxfX5OPT0zKOrOnrqzW2h3xl5yNdE+FECvYzs4xcB4V0IISLua30DPQfxA407N9smYokUmUukOCMfIOYkiWc/YZ7i/rUE/iNuUG+/KT0MIuMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuVrT4U8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VGyNCVZXTVJr2c2AeQug+hF/wGMBrD1mRrRoZLso4W3eKeZPlnp7Fi5MRCm6vnwulSjMvQVKEi3WcrFXBSwFn6pLh45nLoFMcEgY6WneSLqan6RRAO38N4CigFXZsjJROKibQa6ZgH9hshVQtsJBFbbowSY29kdoaQsfHksJ3bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mD4buwSM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuVrT4U8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378921F000FF;
-	Wed, 30 Sep 2026 16:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mD4buwSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2BB1F000FF;
+	Wed, 30 Sep 2026 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787462;
-	bh=hdfnu3/71AZsi6HajML0F7j+6gOraONGPQYi60oXRxU=;
+	s=korg; t=1790787465;
+	bh=LsUe9DHBxvP5/qL+VV0tRzLXLlgSv7sb+HM7W7mQIF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RuVrT4U8nQygpy323wRHbmW32NOWr1UsfXjEnvruwK4qNnF5NbOvXxdazweA/IMEo
-	 Xcpqttf8tlDvOK+7WVcHGG8lOKzjDGtOYGnhcgpnkREZvq650/Z4NtO2Zf/D343Ve0
-	 yJMYC/mg0+4zXK98ezqcQl2Nm34I79c+q/Sb7QRY=
+	b=mD4buwSM+f1toDbqJqMTlITKCGs2hP1DK4dlvGpUr1FuSXcFmWEgk9zExnAcFcMy/
+	 Lio/u9pGX1HF1GOoUraX8sikLiuzNfQNxSNsanwzgVqcqW4PGQ3kBMf8WGJo12RTvV
+	 4dWWRBWQt9T9958LDpiqtUloWQ9VsE+kBAQdYKl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+0ea1ac045375cf05@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 238/457] vlan: require the MAC header to be present in __vlan_insert_inner_tag()
-Date: Wed, 30 Sep 2026 17:25:43 +0200
-Message-ID: <20260930152351.180161435@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	stable@kernel.org
+Subject: [PATCH 7.2 239/457] x86/mce: Fix hardware debug register corruption on task migration
+Date: Wed, 30 Sep 2026 17:25:44 +0200
+Message-ID: <20260930152351.201566815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,58 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit ab888242fce4f16f6c4d4c6ec53939ad36aa3b3a upstream.
+commit b8d1d5b63a8ef532038eebd9d97d406860385668 upstream.
 
-__vlan_insert_inner_tag() only guarantees head room via skb_cow_head(),
-never that mac_len bytes of MAC header are present.  Its ETH_HLEN
-wrappers - __vlan_insert_tag() under skb_vlan_push(), and
-vlan_insert_tag() under validate_xmit_vlan() on the generic transmit
-path - therefore rewrite the first 16 bytes at skb->data: a 12-byte
-memmove plus two 2-byte stores at +12 and +14.  No caller supplies the
-bound, while the pop helpers use skb_ensure_writable()/pskb_may_pull().
+In exc_machine_check_user(), local_db_save() and local_db_restore() are
+invoked in the outer entry stubs (DEFINE_IDTENTRY_MCE_USER,
+DEFINE_FREDENTRY_MCE, and DEFINE_IDTENTRY_RAW), surrounding
+exc_machine_check_user().
 
-An IFF_TUN device has hard_header_len == 0, so packet_snd() accepts a
-one-byte AF_PACKET/SOCK_RAW frame.  The first vlan push only sets a
-hwaccel tag; the next - clsact "action vlan push" or
-bpf_skb_vlan_push() - enters the helper with skb->len still 1.  The
-head comes from skbuff_small_head without __GFP_ZERO, so each push
-drags bytes from beyond skb->tail into the frame.  After three the
-one-byte send leaves as 13 bytes carrying 11 bytes of uninitialised
-slab:
+However, exc_machine_check_user() calls irqentry_exit_to_user_mode(), which
+handles pending thread work and may schedule() if TIF_NEED_RESCHED is set. If
+the task migrates to another CPU during schedule(), local_db_restore() runs on
+the new CPU with the dr7 state saved from the old CPU. This corrupts the new
+CPU's DR7 hardware debug register and leaves the old CPU's DR7 disabled.  In
+short, local_db_save() and local_db_restore() pair must be run on the same
+CPU.
 
-  0000: 5a b3 62 12 80 88 ff ff 00 b3 62 12 81
-           `------------------------------'
-  only 0x5a was sent; the rest is slab, here the top 56 bits of a
-  linear-map address
+To fix this, move local_db_save() and local_db_restore() inside
+exc_machine_check_user() and exc_machine_check_kernel(). In
+exc_machine_check_user(), DR7 is saved and restored strictly around
+do_machine_check() to avoid schedule() during migration. In
+exc_machine_check_kernel(), local_db_save() is called at the entry point to
+prevent early memory accesses from triggering nested #DB exceptions, and
+restored on all exits.
 
-Require the MAC header the helper rewrites to be present, so such a
-frame is dropped rather than transmitted.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: co+0ea1ac045375cf05@bugs.sh
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915083152.705309-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cd840e424f27 ("x86/entry, mce: Disallow #DB during #MC")
+Assisted-by: LLM
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/179005109564.388919.3937970081044095776.stgit@devnote2
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/if_vlan.h |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/cpu/mce/core.c |   27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -365,6 +365,9 @@ static inline int __vlan_insert_inner_ta
- 	const u8 meta_len = mac_len > ETH_TLEN ? skb_metadata_len(skb) : 0;
- 	struct vlan_ethhdr *veth;
- 
-+	if (unlikely(!pskb_may_pull(skb, mac_len)))
-+		return -EINVAL;
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2108,6 +2108,9 @@ bool filter_mce(struct mce *m)
+ static __always_inline void exc_machine_check_kernel(struct pt_regs *regs)
+ {
+ 	irqentry_state_t irq_state;
++	unsigned long dr7;
 +
- 	if (skb_cow_head(skb, meta_len + VLAN_HLEN) < 0)
- 		return -ENOMEM;
++	dr7 = local_db_save();
+ 
+ 	WARN_ON_ONCE(user_mode(regs));
+ 
+@@ -2116,20 +2119,26 @@ static __always_inline void exc_machine_
+ 	 * mce_check_crashing_cpu() for details.
+ 	 */
+ 	if (mca_cfg.initialized && mce_check_crashing_cpu())
+-		return;
++		goto out;
+ 
+ 	irq_state = irqentry_nmi_enter(regs);
+ 
+ 	do_machine_check(regs);
+ 
+ 	irqentry_nmi_exit(regs, irq_state);
++out:
++	local_db_restore(dr7);
+ }
+ 
+ static __always_inline void exc_machine_check_user(struct pt_regs *regs)
+ {
++	unsigned long dr7;
++
+ 	irqentry_enter_from_user_mode(regs);
+ 
++	dr7 = local_db_save();
+ 	do_machine_check(regs);
++	local_db_restore(dr7);
+ 
+ 	irqentry_exit_to_user_mode(regs);
+ }
+@@ -2138,21 +2147,13 @@ static __always_inline void exc_machine_
+ /* MCE hit kernel mode */
+ DEFINE_IDTENTRY_MCE(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ 
+ /* The user mode variant. */
+ DEFINE_IDTENTRY_MCE_USER(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_user(regs);
+-	local_db_restore(dr7);
+ }
+ 
+ #ifdef CONFIG_X86_FRED
+@@ -2169,28 +2170,20 @@ DEFINE_IDTENTRY_MCE_USER(exc_machine_che
+  */
+ DEFINE_FREDENTRY_MCE(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	if (user_mode(regs))
+ 		exc_machine_check_user(regs);
+ 	else
+ 		exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ #endif
+ #else
+ /* 32bit unified entry point */
+ DEFINE_IDTENTRY_RAW(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	if (user_mode(regs))
+ 		exc_machine_check_user(regs);
+ 	else
+ 		exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ #endif
  
 
 
