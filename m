@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100C151DE12;
-	Wed, 30 Sep 2026 17:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A8351E446;
+	Wed, 30 Sep 2026 17:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789651; cv=none; b=LpU7fXJ5RLtqOBn53JX9WAedpqj/dMV3akhDxZUIwzvPHjnl+i5swOaoJocK7iW2rvYapQDJj5Ab86jSXYy9vMvZ+2UEWjoTniNQKMiYxewO2imd/CnTHCuFQSuo6o8g4s9eNJ5frVoMmLup68iJyZoKWJE0TJ9UESG5JAeEai8=
+	t=1790789654; cv=none; b=gg81PdCC2e7bvIKJHwPfHQp2g3Sp7KhmLbp9nMCKFiRHDnnGhy5Tkhfa+ZCYlAINyETJf4SDwjFnRW+tiDdeSDtMMz35xfz4YZz6wIt0TNfiWoA8zBxXq6VQrLWPyh4snwq5nfanzBDfghCEdAU++mXqhRWOW6IbHYuNCjZBs5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789651; c=relaxed/simple;
-	bh=OnUFDsh5C/m3NnCwGG+48aCbgXu+FMKKg59ZG/aUh9U=;
+	s=arc-20240116; t=1790789654; c=relaxed/simple;
+	bh=A/q1BZk63kvj0vI+F8PB0Zv1pQ/E4YxFw1TtGf2ZH1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRqAMHD2npISYPo4bx2safZKZOM8G+XxpP4DVzYCQJMBqlqd6oat/zDOw7ID3ohF6iNA7Wc9zCwx6+Nid44uHGHjoJNo36Y0T2fDnF5krICn/UmMjEjOQfFO/RsKlHVgn8JmYl/SFl3H/J7nqoO/7M6OfjWwxtHb1vtZYm+wHgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vluQsgks; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gv6OaAFVTRBDK03c7cLnxaqcJJHgO6QJdNjNHT+PuNtf6qI5W1xRiMu0KIaX4pgUIoXAkuLNI7vJAu7e8IJryQL86COk01VWN/UXba9QPwGg/LSQHugv4WgSoYJOGnsuzD05wOYrdFF9HCUatTYSHmE1hhO5QloKsnQdWpRcCqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjFQ9jKS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vluQsgks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E5A1F00898;
-	Wed, 30 Sep 2026 17:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjFQ9jKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF771F00898;
+	Wed, 30 Sep 2026 17:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789649;
-	bh=09PH0iz2/F29ZRD0w15u3cx87pOQvQedXX8ncrmD+1g=;
+	s=korg; t=1790789652;
+	bh=dJgrMWwdKbIcsRzoO6bzynViKmcZAfGkVD66bmTymrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vluQsgkslTad7yt01+b7IF/X0tsTcX6Larea6o0tQYXMUNaj8zxNJblEidK5Gp6fA
-	 wL4h/DKisZymA88ItZda2DEYX3DB48HtCMBJ43g0bVt5/HDEHhf4BHMu2qzT9fsuZ2
-	 05cE4EnwmhGUAULSqfd+XSRE8cywWIDzzsZY4so8=
+	b=rjFQ9jKSpF7E2hUYoMCb1/84Ssu26+L1IUSQY9skXHkoIyOuRQK+xBIWbBt8E6GzC
+	 VDwt5AVTWGOjnmBVLIZmto/mBD18kXZQTnR1P1VwoGwvzMnsoyVRixW9c7fLHQlxyd
+	 JxwyyNAgiTMgR9+8VphptQ9x2LzBBseYNSLPwFbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 553/877] xfs: check di_forkoff correctly in scrub
-Date: Wed, 30 Sep 2026 17:24:24 +0200
-Message-ID: <20260930152426.575633473@linuxfoundation.org>
+Subject: [PATCH 6.12 554/877] xfs: drop dquot flush lock when we cant find a buffer to flush
+Date: Wed, 30 Sep 2026 17:24:25 +0200
+Message-ID: <20260930152426.598291693@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,35 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit e9193f2f1ce32d02b9230094ffdbfab715ab6137 upstream.
+commit ffb48dccce1960a9ea24463a2f3c21d124d6b672 upstream.
 
-The di_forkoff check in xchk_dinode is incorrect, according to LOLLM.
-XFS_DFORK_BOFF returns a byte count relative to the start of the literal
-area, not the start of the inode.  Therefore, this check won't flag
-di_forkoff values that are larger than the literal area but not the
-inode size itself.  Fix this check; sadly the old APTR code was correct.
+LOLLM noticed that xfs_qm_flush_one fails to drop the dquot flush lock
+if it can't grab the buffer associated with the dquot.  Since there's no
+buffer, nobody else is going to drop the dqflock, so we need to do it
+ourselves.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: 6b5d917780219d ("xfs: dont cast to char * for XFS_DFORK_*PTR macros")
+Cc: stable@vger.kernel.org # v6.13
+Fixes: ca378189fdfa89 ("xfs: convert quotacheck to attach dquot buffers")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_qm.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/inode.c
-+++ b/fs/xfs/scrub/inode.c
-@@ -560,7 +560,7 @@ xchk_dinode(
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -1317,16 +1317,22 @@ xfs_qm_flush_one(
+ 
+ 	error = xfs_dquot_use_attached_buf(dqp, &bp);
+ 	if (error)
+-		goto out_unlock;
++		goto out_dqflock;
+ 	if (!bp) {
+ 		error = -EFSCORRUPTED;
+-		goto out_unlock;
++		goto out_dqflock;
  	}
  
- 	/* di_forkoff */
--	if (XFS_DFORK_BOFF(dip) >= mp->m_sb.sb_inodesize)
-+	if (dip->di_forkoff >= (XFS_LITINO(mp) >> 3))
- 		xchk_ino_set_corrupt(sc, ino);
- 	if (naextents != 0 && dip->di_forkoff == 0)
- 		xchk_ino_set_corrupt(sc, ino);
+ 	error = xfs_qm_dqflush(dqp, bp);
+ 	if (!error)
+ 		xfs_buf_delwri_queue(bp, buffer_list);
+ 	xfs_buf_relse(bp);
++	mutex_unlock(&dqp->q_qlock);
++	xfs_qm_dqrele(dqp);
++	return error;
++
++out_dqflock:
++	xfs_dqfunlock(dqp);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+ 	return error;
 
 
