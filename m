@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8215187DE;
-	Wed, 30 Sep 2026 17:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3068650C2A4;
+	Wed, 30 Sep 2026 17:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788199; cv=none; b=SslOx2uh3TEj+svzA72kKjSqhVeOKxkkkatd6357nKq95aVczGnyjuwCBlCj4DHcq+F2HRb+mkjWZroWJrqr2a1DbxRfGeHlEbgk8xnptqh+4B175M6wqLV1tneK6Dp55xnPsUcfyeJd2kNx+5dWpSE65qi2Svacfx4asgRqTf0=
+	t=1790788202; cv=none; b=DvZxafciHpVFnSqolyQD/snbi++xqs2FrugRyEk716/ApSL5O9Uln8cpf0D2SPUoQdznEP7hfZXTL1wfPe+92em71PV8Fws3eJMLFgenmpqynQcEDvmJiEadzzyKr/jXJrynWdbMAzxt7AzXEI5H4wDta6A6ULjLPlzCGWUmWn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788199; c=relaxed/simple;
-	bh=IqhSGIKb3VNQdi+cQScsZof8SdkFGiiuHAvDGnI+F3c=;
+	s=arc-20240116; t=1790788202; c=relaxed/simple;
+	bh=5qQtcQoGVck4APUdrNrzxl1kYAWRzwwYY1wGMcyCU+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9aSsZpQFdh07hOxTEZUodW72LCQzziXRdL4/VdpE/GFs4mnS11cF9FUWj3svEiWEwrdzG/SYyJZt8Oavf3J/hSoceiISHdvT+ESSatWhKHMmblFPJ98Cbn5RMkX3uUWhTSs9Rett9RNoUf9ic6luv3H6R9ckOsBwiIwMFuhcvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtxSjg7a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZIyIM4p+zQUI0AFKUIXEBZ0u+pPtO8NU/j0aFZgp5ssooYBf5m9l5QBihFiEW7zRdXK4txE49lUTp6TTp30WKHfF4Dcg9DFi8II7GXo/D9swe5aIl8sizEzLZzYkRM1phU8Xo26JxP9CNAAo0bABIjWEUQGdRYwpVXqxym2zKmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Upej3C5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtxSjg7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B32A1F000FF;
-	Wed, 30 Sep 2026 17:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Upej3C5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014F61F00898;
+	Wed, 30 Sep 2026 17:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788197;
-	bh=Sir8MVrjayAKiTc1sLazuVlt7B/UyOQMI1TsEJ28NYI=;
+	s=korg; t=1790788200;
+	bh=aMKPAnSNs5I4RNr2CCObCAmgrFpGrQ3IvdGsE5tbkCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtxSjg7aktn5rWdIq6g+o+e6vS4jwq2UttPRDS6fDkkA/yJl3wvdE6rMWVuUjoXAW
-	 UWhot4+vz3v5812dhmRIbU7ojNf6Q31R6P1tmlSysh1y1d4Wd9hOL+hkBYnAUUZBT6
-	 m4uY14s4oQprqKECKRtJTVszfapeEHx6B3SxxnuU=
+	b=Upej3C5cY9WwpJj7yAKUHlwhINq12/IAXW1HpVUpkvUekhxznw9MyZLv/2kRcMGp/
+	 /xF2g6DTFigOyLSVzwMO9YUSTWBkrQoFcW7sCWsEA4CPgwDtuNrDf3XRaApzZiovcj
+	 sQ3BMGZsKA7Mb3Pz7RUzmuNZKF8nlygIBz/ke9yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Mariano Baragiola <mbaragiola@linux.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/877] dmaengine: sprd: Fix runtime PM reference leak in probe
-Date: Wed, 30 Sep 2026 17:15:51 +0200
-Message-ID: <20260930152415.609313156@linuxfoundation.org>
+Subject: [PATCH 6.12 041/877] wifi: virt_wifi: free skb when disconnected
+Date: Wed, 30 Sep 2026 17:15:52 +0200
+Message-ID: <20260930152415.631640660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Mariano Baragiola <mbaragiola@linux.com>
 
-[ Upstream commit a7df136ec529ee49a789c5029bc37b98b0d4bedd ]
+[ Upstream commit f9edf7cf63b96d2b776fca8d258d3c5256e40c8e ]
 
-pm_runtime_get_sync() increments a device's usage counter even when it
-fails. sprd_dma_probe() currently jumps directly to controller clock
-cleanup on that error, bypassing both pm_runtime_put_noidle() and
-pm_runtime_disable(). This can happen if the preceding unchecked
-pm_runtime_set_active() fails and the following runtime-resume attempt
-also returns an error.
+When the simulated link is disconnected, virt_wifi_start_xmit() returns
+NET_XMIT_DROP without freeing the skb. dev_hard_start_xmit() treats this
+return value as consumed, so every packet sent while disconnected leaks its
+skb.
 
-Enter the existing runtime-PM unwind path instead. This drops the
-reference without idling the partially initialized device, disables
-runtime PM, and then releases the controller clocks. The success path
-and propagated error code are unchanged.
+Free the skb before returning the drop status.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20260813153149.3953497-1-ruoyuw560@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
+Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
+Link: https://patch.msgid.link/20260809124947.3590270-1-mbaragiola@linux.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/virtual/virt_wifi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 3f54ff37c5e05..f000d5a5add52 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1212,7 +1212,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
+index 976edacb689de..056d375e3f41f 100644
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -432,6 +432,7 @@ static netdev_tx_t virt_wifi_start_xmit(struct sk_buff *skb,
+ 	priv->tx_packets++;
+ 	if (!priv->is_connected) {
+ 		priv->tx_failed++;
++		dev_kfree_skb_any(skb);
+ 		return NET_XMIT_DROP;
+ 	}
  
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
--		goto err_rpm;
-+		goto err_register;
- 
- 	ret = dma_async_device_register(&sdev->dma_dev);
- 	if (ret < 0) {
-@@ -1234,7 +1234,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
- err_register:
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
--err_rpm:
- 	sprd_dma_disable(sdev);
- 	return ret;
- }
 -- 
 2.53.0
 
