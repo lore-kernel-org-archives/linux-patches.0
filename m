@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225CB4DD3D1;
-	Wed, 30 Sep 2026 16:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C8D50AC08;
+	Wed, 30 Sep 2026 16:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784558; cv=none; b=pgyM6a0COso5QYNhBEY6wKKwm0RR8uqPEpFCxmO+6ofpaVOCf7865P5a1bpJji32uvt1v5ht3yMh6LHDnLjDIH/2Cm0PnDC1MPbp+L4tKINpQilOnzHHKJrY638WTsIcm56NJWdJta/MEqEffFZw/C03bvYyu1RIaxDCkGlCfjE=
+	t=1790784560; cv=none; b=A9c84jpLN9O7MXnCze25qGeQSG7tSH2CPfLH7xp31ztwuBWmjkmWlUwCMTqfqRq9PZwUplBquCVVkBytSXluGIpSiIVQLhzjafhvpXkWLkhugG6dL8T6tbjMbGNDgKGioph7xM3YQGzS9Dqcs7wT9h9JvWMHo3UZ8icS2FsrcBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784558; c=relaxed/simple;
-	bh=OVCEKfBC6t52KWxW5GFftdE0rzILqiz6gHL18BTqItE=;
+	s=arc-20240116; t=1790784560; c=relaxed/simple;
+	bh=u8ztuRXwyhHDl1FsJBRKe2ulS3Uo6pKnVSOYHmD0vdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qczfl2gF5Tv/pYGmG7+/2Y+af2kIc5bS/5Zszo2yHGVqswaw1u0m48dp8uRe5rqz4/3LlvU/zO6vEOhNmGwC0NICgvd/oFbCUtvwV+Kca46+eGt7pyBP9MROfLBLjqCTDDHqkHNzZPGPsPiebTk2vUR4AXFE9fdTCqY7e0NI9do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp2klPv7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VLL3LLIdM91jgEFd/ueWEIpPPzUPUmZJmz81jb4NmKl2hPNAJJo+0zGSuM3GzPq0LYdAkaW7uMyFu9okLD7YuYc8ZP+RRmjNBLmrv53hNpFlwyv+UyiVkVp+mcMGiGb01PqFtGx/vMSgHhzeK44ZyYobkXQwYJvVjjKr+KQbaIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uCOrSLx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp2klPv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B581F00A08;
-	Wed, 30 Sep 2026 16:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uCOrSLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313BE1F008A5;
+	Wed, 30 Sep 2026 16:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784552;
-	bh=SEM5ZFpI/PAIBXpfSUV5/cHH74WIf7CqgqkOIczv+tM=;
+	s=korg; t=1790784555;
+	bh=j/1IkeHxZ9XXL0F/v9VLrt07CIx3adUTlx1eZXEnuyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xp2klPv77/tTanT6ixYqrOvWsYZjWI8qM8Oc6zfvF0+YqH766ai/XIRMoosJenAO1
-	 FkOF90jeHpSg7qVSQ9QXUq+0HfUVVZULS/4JoTFFVnp2Qx93+7Tl3apJMUmrG8Z8uX
-	 uM7/zOrSpDUx/GAsyWbP5F3wnnYl5vX6I4diEuGw=
+	b=2uCOrSLxeP5i8/rGPrhnSlqgAGpZRcqzfBcv7l0M57cRv2NFZ6hwc+gyop3jicYFy
+	 IP209dh4jK7e/c7Atq4iJbsixWYpK4lF6+3jRNwvTcM9XitiR+nyrb1B35ldRt22e0
+	 9EPOleE4/39WV6QqFXluUZfxRDC6m6b9QP6o9UDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Viktor Menshin <ripeeerr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/982] sparc: Disable compat support with LLD
-Date: Wed, 30 Sep 2026 17:15:31 +0200
-Message-ID: <20260930152421.002686605@linuxfoundation.org>
+Subject: [PATCH 6.1 196/982] ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT
+Date: Wed, 30 Sep 2026 17:15:32 +0200
+Message-ID: <20260930152421.023211644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Viktor Menshin <ripeeerr@gmail.com>
 
-[ Upstream commit 852fed2e8bfe195351fb0078ba7245d41154e7a5 ]
+[ Upstream commit 3a3e810e91080a5121170ee11554a55ed89a1c8b ]
 
-An LLVM=1 sparc64 allmodconfig enables COMPAT and then tries to
-build the 32-bit vDSO. That path cannot be linked with ld.lld:
+The Lenovo Xiaoxin 14 GT (Chinese market model, AMD Ryzen AI 9 365)
+produces constant electrical hissing and crackling noise from both
+internal speakers and 3.5mm headphone jack during audio playback.
+Audio works correctly on Windows.
 
-  ld.lld: error: unknown emulation: elf32_sparc
+The PCI SSID 17aa:3912 is not present in the quirk list. The device
+shares the same AMD platform and ALC287 codec as neighboring Lenovo
+14" AMD models (17aa:3911, 17aa:390d), so apply the same fixup.
 
-ld.lld does not support the 32-bit SPARC ELF emulation used for
-the compat vDSO, so keep COMPAT disabled when LLD is the linker.
-This avoids selecting an unsupported build path while leaving the
-existing GNU ld configuration unchanged.
+Note: the fixup selection is based on similarity with neighboring
+models and has not been verified by testing a compiled kernel.
+Guidance from maintainers on the correct fixup is welcome.
 
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
+Link: https://patch.msgid.link/20260615092515.1082-1-ripeeerr@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/Kconfig | 1 +
+ sound/pci/hda/patch_realtek.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
-index b67d96e3392e5..deb664e7d0142 100644
---- a/arch/sparc/Kconfig
-+++ b/arch/sparc/Kconfig
-@@ -487,6 +487,7 @@ endmenu
- config COMPAT
- 	bool
- 	depends on SPARC64
-+	depends on !LD_IS_LLD
- 	default y
- 	select HAVE_UID16
- 	select ARCH_WANT_OLD_COMPAT_IPC
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index a7e802e6d0d58..5ff2e113054fe 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10399,6 +10399,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
 -- 
 2.53.0
 
