@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4B94EDCC3;
-	Wed, 30 Sep 2026 15:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8186450B8B1;
+	Wed, 30 Sep 2026 15:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783326; cv=none; b=FFWCvpnE7VjDPuERTb+i3jyS4mgZVQ9BnvE5H7s9216LUScSBeucvXFIrIJOl8hcICtTZiGX8LGCwN88lSaNKuivDHdG4hBJK4OT9ZQAuy4hdBISIh7206OlQjSaTxYmOcwWxJDiUWQxbmcxrkXmScQWMwGkufM9rjYSdRuSZI8=
+	t=1790783332; cv=none; b=rOLetGHb8USdeFsaLmPsTgQ/yndfTTjoCkGfkikHkPBDOpVTEgVIJMiwa1NYdhiey0PSiplwd8A4XQYIUAotg+3l6O3drcfCuG7XfpUQCJG87jdDX8JQS0hU7aVoJDGtc8kCVKp/4h8uzNq/BrZkWB7AmiyYWfXlQTGcp43PNRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783326; c=relaxed/simple;
-	bh=iQJivbiAABFpETm+E2jfsvl1gs08xLddgEC681CC/FM=;
+	s=arc-20240116; t=1790783332; c=relaxed/simple;
+	bh=BQ1UphbrQWbfhI9RWvsh+aw3e9zfnxZcNVgdQV0Jwjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wgdai3U5YAoaLPIGPjaf/w8usTXwK2qNi6kz5E1wKumK+0QBAv0XxYxtTuIR37nftVJt1RuxtLHGrBSw5hAa7HTj6MtlRqmN3lfcGoPN2cSjJfV+hM/f/TdUZw7a7TvckH0zZBoJya5yBhLjeGqdBHdJxL4X6viK19wD4VdZP1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9TOqUDy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gt18BjReqamYQ+nMIZLzbzwth0ICL7Ndel9mDjc8pEyEHKZYcPkZF/gaawFLVglqmi1A/xxfGVbY1yXTAM5EeywxJcpJjEE67Y5hZHVieuuc2AUfWBEKgr6g8d7a4eZIlTLICZSqv3ju0iP1mE2kCaAkFF+4a4QHHVCA1/fyJFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhwsTA7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9TOqUDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712671F00893;
-	Wed, 30 Sep 2026 15:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhwsTA7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084AE1F00893;
+	Wed, 30 Sep 2026 15:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783322;
-	bh=uUVn1cHU55imrAWqJgku+Ys018JCuuFoUGZpVWHMxaM=;
+	s=korg; t=1790783327;
+	bh=GnozS9ibdy7+aWE8UoPlqK3Nfaj/KH6n5P+sfWNp+0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z9TOqUDy7oUWwGj6p++TWzxviDt5FnlQNRsSdbboPSSZaAPjDKmtLc9D280LDQ6ek
-	 Mw1IS3UrIvYA2je4n+F1Ic2924xLXxEE7UpFXYN816/lsXPKL6sHsETirNS4/LiZ+2
-	 ATS54OofUCY1RrZdU/wCQM5pDUdmZ5Enf1eLF+qY=
+	b=fhwsTA7Y06tPHndYauEsunrjopLC+r3HipxELwmXYETH/n/NeNX31+dFRcpekWmgt
+	 vOWTnSO+KmXcvwUeflsVssuibCNjFJ9tT4m4jnlFrM6E9wbC2Dahud9D1zg4fbz2rr
+	 dXBxJn1JYLLYN9RdPtqds+RT9WOtK5mNQktx5zi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Jiri Benc <jbenc@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 303/595] net: mpls: clear inner_protocol when the last label is popped
-Date: Wed, 30 Sep 2026 17:23:16 +0200
-Message-ID: <20260930152354.208044480@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 361/595] scsi: target: iscsi: Avoid in_interrupt() usage in iscsit_close_session()
+Date: Wed, 30 Sep 2026 17:24:14 +0200
+Message-ID: <20260930152355.442247587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,82 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 78a86d75a70e1e227711c72865c59b1422d0a5ae upstream.
+[ Upstream commit 433675486af4635416f8ece70b92b020a5b91005 ]
 
-skb_mpls_push() records the pre-encapsulation network header once, gated
-on !skb->inner_protocol. skb_mpls_pop() never clears that record, so it
-outlives the encapsulation it describes.
+iscsit_close_session() uses in_interrupt() to decide if it needs to check
+the return value of iscsit_check_session_usage_count() if it was not able
+to sleep.
 
-Open vSwitch can then re-push MPLS onto a packet whose
-inner_network_header still points at the older, deeper offset: push a
-label, pop every label, recirculate (ovs_flow_key_update() re-derives
-key->eth.type and resets network_header, but leaves inner_*), then push
-again. ovs_fragment() trusts the record:
+The usage of in_interrupt() in drivers is phased out and Linus clearly
+requested that code which changes behaviour depending on context should
+either be separated or the context be conveyed in an argument passed by the
+caller, which usually knows the context.
 
-	skb->network_header = skb->inner_network_header;
+iscsit_close_session() has two callers:
 
-so skb_network_offset() goes negative. The bound check is signed:
+ - iscsit_handle_time2retain_timeout()
+   A timer_list callback.
 
-	if (skb_network_offset(skb) > MAX_L2_LEN)
+ - iscsit_close_connection()
+   Runs in preemptible context, acquires a mutex.
 
-a negative offset passes it, and prepare_frag() widens the value:
+Add an argument to iscsit_close_session() indicating if sleeping is
+possible.
 
-	unsigned int hlen = skb_network_offset(skb);
-	memcpy(&data->l2_data, skb->data, hlen);
-
-which is a ~4GiB memcpy out of a 30-byte per-CPU buffer.
-
-Reproduced on v7.3-rc1. RDX is the truncated length, (unsigned int)(-8):
-
-  BUG: unable to handle page fault for address: ffffe8ffffc16000
-  #PF: supervisor write access in kernel mode
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:memcpy+0x8/0x20
-  RDX: 00000000fffffff8 RSI: ffff888105d732db RDI: ffffe8ffffc16000
-   prepare_frag+0x3df/0x4e0
-   ovs_fragment+0x589/0x7e0
-   do_output+0x4ce/0x5e0
-   do_execute_actions+0x55d2/0x7b30
-   ovs_execute_actions+0xea/0x450
-
-Same root-cause shape as commit 975b5b067f52 ("ipv6: sr: restore network
-header before routing and forwarding"): a stale network header offset
-reaching a consumer that widens it. Here it originates in the MPLS
-push/pop path.
-
-Clear inner_protocol once the packet is no longer MPLS, so a later push
-re-records the current header. net/sched/act_mpls.c is the only other
-skb_mpls_pop() caller and gets the same fix; sch_frag.c saves and
-restores inner_protocol around fragmentation in the same way OVS does.
-
-Fixes: 48d2ab609b6b ("net: mpls: Fixups for GSO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Acked-by: Jiri Benc <jbenc@redhat.com>
-Link: https://patch.msgid.link/20260902092719.2874481-1-fouriezhang@tencent.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20201220203638.43615-2-bigeasy@linutronix.de
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: a8fe3dfce8c0 ("IB/isert: wait for deferred control PDU completions before releasing the connection")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/target/iscsi/iscsi_target.c      | 10 +++++-----
+ drivers/target/iscsi/iscsi_target.h      |  2 +-
+ drivers/target/iscsi/iscsi_target_erl0.c |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5924,6 +5924,13 @@ int skb_mpls_pop(struct sk_buff *skb, __
- 	}
- 	skb->protocol = next_proto;
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index e2ba02c27b5e5..76c2b6b97dd9a 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4343,7 +4343,7 @@ int iscsit_close_connection(
+ 	     atomic_read(&sess->session_fall_back_to_erl0)) {
+ 		spin_unlock_bh(&sess->conn_lock);
+ 		complete_all(&sess->session_wait_comp);
+-		iscsit_close_session(sess);
++		iscsit_close_session(sess, true);
  
-+	/* The last label is gone, so the inner header recorded by
-+	 * skb_mpls_push() no longer describes this packet. Drop it, or a
-+	 * later push keeps the stale offset.
-+	 */
-+	if (!eth_p_mpls(next_proto))
-+		skb->inner_protocol = 0;
-+
- 	return 0;
+ 		return 0;
+ 	} else if (atomic_read(&sess->session_logout)) {
+@@ -4353,7 +4353,7 @@ int iscsit_close_connection(
+ 		if (atomic_read(&sess->session_close)) {
+ 			spin_unlock_bh(&sess->conn_lock);
+ 			complete_all(&sess->session_wait_comp);
+-			iscsit_close_session(sess);
++			iscsit_close_session(sess, true);
+ 		} else {
+ 			spin_unlock_bh(&sess->conn_lock);
+ 		}
+@@ -4369,7 +4369,7 @@ int iscsit_close_connection(
+ 		if (atomic_read(&sess->session_close)) {
+ 			spin_unlock_bh(&sess->conn_lock);
+ 			complete_all(&sess->session_wait_comp);
+-			iscsit_close_session(sess);
++			iscsit_close_session(sess, true);
+ 		} else {
+ 			spin_unlock_bh(&sess->conn_lock);
+ 		}
+@@ -4382,7 +4382,7 @@ int iscsit_close_connection(
+  * If the iSCSI Session for the iSCSI Initiator Node exists,
+  * forcefully shutdown the iSCSI NEXUS.
+  */
+-int iscsit_close_session(struct iscsi_session *sess)
++int iscsit_close_session(struct iscsi_session *sess, bool can_sleep)
+ {
+ 	struct iscsi_portal_group *tpg = sess->tpg;
+ 	struct se_portal_group *se_tpg = &tpg->tpg_se_tpg;
+@@ -4418,7 +4418,7 @@ int iscsit_close_session(struct iscsi_session *sess)
+ 	 * time2retain handler) and contain and active session usage count we
+ 	 * restart the timer and exit.
+ 	 */
+-	if (!in_interrupt()) {
++	if (can_sleep) {
+ 		iscsit_check_session_usage_count(sess);
+ 	} else {
+ 		if (iscsit_check_session_usage_count(sess) == 2) {
+diff --git a/drivers/target/iscsi/iscsi_target.h b/drivers/target/iscsi/iscsi_target.h
+index 7409ce2a66078..b35a96ded9c19 100644
+--- a/drivers/target/iscsi/iscsi_target.h
++++ b/drivers/target/iscsi/iscsi_target.h
+@@ -41,7 +41,7 @@ extern void iscsit_thread_get_cpumask(struct iscsi_conn *);
+ extern int iscsi_target_tx_thread(void *);
+ extern int iscsi_target_rx_thread(void *);
+ extern int iscsit_close_connection(struct iscsi_conn *);
+-extern int iscsit_close_session(struct iscsi_session *);
++extern int iscsit_close_session(struct iscsi_session *, bool can_sleep);
+ extern void iscsit_fail_session(struct iscsi_session *);
+ extern void iscsit_stop_session(struct iscsi_session *, int, int);
+ extern int iscsit_release_sessions_for_tpg(struct iscsi_portal_group *, int);
+diff --git a/drivers/target/iscsi/iscsi_target_erl0.c b/drivers/target/iscsi/iscsi_target_erl0.c
+index b4abd7b68e6da..102c9cbf59f38 100644
+--- a/drivers/target/iscsi/iscsi_target_erl0.c
++++ b/drivers/target/iscsi/iscsi_target_erl0.c
+@@ -765,7 +765,7 @@ void iscsit_handle_time2retain_timeout(struct timer_list *t)
+ 
+ 	iscsit_fill_cxn_timeout_err_stats(sess);
+ 	spin_unlock_bh(&se_tpg->session_lock);
+-	iscsit_close_session(sess);
++	iscsit_close_session(sess, false);
  }
- EXPORT_SYMBOL_GPL(skb_mpls_pop);
+ 
+ void iscsit_start_time2retain_handler(struct iscsi_session *sess)
+-- 
+2.53.0
+
 
 
