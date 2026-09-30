@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F97650B437;
-	Wed, 30 Sep 2026 17:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351993644C1;
+	Wed, 30 Sep 2026 17:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788839; cv=none; b=kYrIV8nhcJ7bw0WDsUxonG67a2UbWSjbP8DM2Ut9cpfzJZep0Ouu7sYxLZ+2jfZO7lTKwFzi6dPTKcp5cKY13KXrLXf2b/RaDhzs2BvzvSfqbQ+Mjkvf8qcJBCcA9zJyDFMxhFH7T/ldsFXOrJ1qYPpFWNiwLWxwjVWOezjFw7M=
+	t=1790788842; cv=none; b=m5iG0/wO/52TsCsLYBC1kOidSxxbUxa/BRcC0rvIll4olLht0T3nx6Y3ds4mL2SwKIxVileN5AXYIn6NR4dG7zS3cZ0foek1Ky/Bzb5DBKovSDTQCc9hQRMVS+PacxkKUBovKw7KaFeO6KBgUQAEp/ZjEMcGJjgopzF+4ofiGR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788839; c=relaxed/simple;
-	bh=RJIY+2DB7Mwf6hfR7o2TAIP36t1+o5ZTq8x2J/N1hPw=;
+	s=arc-20240116; t=1790788842; c=relaxed/simple;
+	bh=KunNLt3n8vXxb6JMwVS5VnhwiyJCQQz6MDjCcLaJn78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2Xo38OFn+RIvZqT9AZYYFuq/Jun1wSoaZp3BE1hpaSipmW8+IZ5r/uM3iAQ3qGbrO5uQQowcG06oGsKhJdE1nM+d9rT3CqW1AXEYh+OyWRLfj+wl5elMs97++wQl3KinJP34zWwywLL+ENGqfzCNOq3q4CrK7UDwDVdqH2Iezs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Rfk9moU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aez0/k9ORPBEK9GYlEbwLXRLSlIr85vpBwzftQGAomF2vTfdhxEf7TOsllGNdigJE83EnRG8cGOikjQ98JWQ3nk9D9PMtZvh6PRf7YEktS38Vvmmoy0yh//T+7asx6BTdwMrzvbuS7sWQw3iHcQD+1W6NA8DG3C8wocBTae1j84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdp8rKVM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Rfk9moU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97ED1F000FF;
-	Wed, 30 Sep 2026 17:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdp8rKVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FEC1F000FF;
+	Wed, 30 Sep 2026 17:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788838;
-	bh=BooxwCAj+z2fsq/DWPrm/IR94jz+74nDqwYbf0aSjpw=;
+	s=korg; t=1790788841;
+	bh=eOOHr079yeGEENy/javcdXi3cvkhFhllTCIY+Z8bIuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Rfk9moUzw4a9Oe2kvL+rqxZy8N21R6pXCVREIjdiTzu86tykcGTiNWX5elDl9nIV
-	 UpXxdjX3pAseK3f5pxbADuKflf+pZHZ/xH0Xbq5gLWVLUdpoF2jctcFC/ArRd+TYKW
-	 sdMzCQUmY0lC9GCc4qPoEn9VvkBVzm4cPEoo88Qw=
+	b=Tdp8rKVMa7wt9o5bVz5H5KVTFOXj2hpyxI7lYxBE456/1GWdjvHI+Jmhy9aO3i8f0
+	 pXo+tf8KRjU5Yjjq19SoLHIeE7BYpxtXAV+nhnhrIEb+7/sK+I3npUNI0j4gqto6mi
+	 P0gEA+4SZSFsTIevoWL0jG/U9VCeOHjEpifL792M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Shengzhuo Wei <me@cherr.cc>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 267/877] wifi: p54: require a full exp_if record in PDR_INTERFACE_LIST
-Date: Wed, 30 Sep 2026 17:19:38 +0200
-Message-ID: <20260930152420.485970269@linuxfoundation.org>
+Subject: [PATCH 6.12 268/877] wifi: mwifiex: bound the pairwise-cipher OUI walk to the IE length
+Date: Wed, 30 Sep 2026 17:19:39 +0200
+Message-ID: <20260930152420.506814547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,42 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit d8efd84f49379ed28624098821f80e992657d935 upstream.
+commit e667aee1c192d67d27c803007bfa9c6e0873e959 upstream.
 
-The PDR_INTERFACE_LIST loop only checks that the record start is within
-the entry before reading an entire struct exp_if from it. A truncated
-trailing record makes the if_id/variant reads cross the entry boundary
-into the heap beyond the EEPROM buffer (verified with a KASAN
-reproducer of the loop). The variant also feeds the synth front-end
-selection, so this is not only a leak.
+mwifiex_search_oui_in_ie() reads a pairwise-cipher (PTK) count from a
+beacon/probe-response RSN or WPA information element and then walks that
+many 4-byte OUIs, comparing each with memcmp(). The count comes straight
+from the (attacker-supplied) IE and is never checked against the
+element's own length, and the callers admit the element on element_id
+alone (has_ieee_hdr() / has_vendor_hdr(), no length check). A crafted
+RSN/WPA IE with a large pairwise count therefore makes the walk read up
+to 255 * 4 bytes past the element -- an out-of-bounds read of the
+kmemdup()'d beacon buffer, reachable from any AP whose beacon/probe
+response is processed during scan-result parsing.
 
-Advance only while a full record still fits in the entry.
+Pass the number of IE bytes available at the OUI list and bound the walk
+to the element. Keep the length signed and reject a negative value
+before any unsigned arithmetic, so a small or zero IE length cannot
+underflow to a large size_t and defeat the bound.
 
-Fixes: eff1a59c48e3 ("[P54]: add mac80211-based driver for prism54 softmac hardware")
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
 Cc: stable@vger.kernel.org
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Assisted-by: GLM:5.3
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Link: https://patch.msgid.link/20260831-p54-pda-validation-v2-2-dae566b388c8@cherr.cc
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260814134704.85902-1-doruk@0sec.ai
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intersil/p54/eeprom.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/scan.c |   25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/intersil/p54/eeprom.c
-+++ b/drivers/net/wireless/intersil/p54/eeprom.c
-@@ -816,7 +816,8 @@ int p54_parse_eeprom(struct ieee80211_hw
- 			break;
- 		case PDR_INTERFACE_LIST:
- 			tmp = entry->data;
--			while ((u8 *)tmp < entry->data + data_len) {
-+			while ((u8 *)tmp + sizeof(struct exp_if) <=
-+			       entry->data + data_len) {
- 				struct exp_if *exp_if = tmp;
- 				if (exp_if->if_id == cpu_to_le16(IF_ID_ISL39000))
- 					synth = le16_to_cpu(exp_if->variant);
+--- a/drivers/net/wireless/marvell/mwifiex/scan.c
++++ b/drivers/net/wireless/marvell/mwifiex/scan.c
+@@ -104,12 +104,24 @@ has_vendor_hdr(struct ieee_types_vendor_
+  * a given oui in PTK.
+  */
+ static u8
+-mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui)
++mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui, int ie_len)
+ {
++	const size_t ptk_body_offset = offsetof(struct ie_body, ptk_body);
+ 	u8 count;
+ 
++	/* ie_len is the number of bytes available at iebody. Keep it signed
++	 * and reject a negative (underflowed) length before the unsigned
++	 * comparisons below, so a small or zero IE length cannot wrap.
++	 */
++	if (ie_len < 0 || (size_t)ie_len < ptk_body_offset)
++		return MWIFIEX_OUI_NOT_PRESENT;
++
+ 	count = iebody->ptk_cnt[0];
+ 
++	/* Reject an OUI count whose list would run past the element. */
++	if (ptk_body_offset + count * sizeof(iebody->ptk_body) > (size_t)ie_len)
++		return MWIFIEX_OUI_NOT_PRESENT;
++
+ 	/* There could be multiple OUIs for PTK hence
+ 	   1) Take the length.
+ 	   2) Check all the OUIs for AES.
+@@ -143,11 +155,14 @@ mwifiex_is_rsn_oui_present(struct mwifie
+ 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
+ 
+ 	if (has_ieee_hdr(bss_desc->bcn_rsn_ie, WLAN_EID_RSN)) {
++		int ie_len = (int)bss_desc->bcn_rsn_ie->ieee_hdr.len -
++			RSN_GTK_OUI_OFFSET;
++
+ 		iebody = (struct ie_body *)
+ 			 (((u8 *) bss_desc->bcn_rsn_ie->data) +
+ 			  RSN_GTK_OUI_OFFSET);
+ 		oui = &mwifiex_rsn_oui[cipher][0];
+-		ret = mwifiex_search_oui_in_ie(iebody, oui);
++		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -169,10 +184,14 @@ mwifiex_is_wpa_oui_present(struct mwifie
+ 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
+ 
+ 	if (has_vendor_hdr(bss_desc->bcn_wpa_ie, WLAN_EID_VENDOR_SPECIFIC)) {
++		int ie_len = (int)bss_desc->bcn_wpa_ie->vend_hdr.len -
++			(int)sizeof(bss_desc->bcn_wpa_ie->vend_hdr.oui) -
++			WPA_GTK_OUI_OFFSET;
++
+ 		iebody = (struct ie_body *)((u8 *)bss_desc->bcn_wpa_ie->data +
+ 					    WPA_GTK_OUI_OFFSET);
+ 		oui = &mwifiex_wpa_oui[cipher][0];
+-		ret = mwifiex_search_oui_in_ie(iebody, oui);
++		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
+ 		if (ret)
+ 			return ret;
+ 	}
 
 
