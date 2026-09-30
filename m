@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD345111AC;
-	Wed, 30 Sep 2026 16:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C49513567;
+	Wed, 30 Sep 2026 16:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785221; cv=none; b=d2w0RllZ3UBvKSUjSBzy08OBtiRA6vruvI9gXkNrdmkOf6D7ZHYr3VrKbIaJ0I1RNHTZp6Zn6rPO2sk4UBd6qcgAetaf1dR4yen4KwAOmLJFUVlgF+eaoNaArw9ziKx2ac6Jpl4pECTjYSdzY1ac7EeZpE4PDckfbBjbFD2Xq2o=
+	t=1790785229; cv=none; b=U9zUcQYHnfdLVmPP82F356DrKtRsbIcNEiJ8vLJwk7h8z0vl6VJnVBO+aQJbYflv/3sdqQXEiEhxYNhaIM+c7E2N8POpGvvYSiwxCsUa0Wfyh9sBCI5Wgpfz+lsRKdeMEu7nRs271oht1M/JikYOeDDUxUpAyvv6cAzsy1x/iYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785221; c=relaxed/simple;
-	bh=31TTsZaCok/O2IBJx38gWKj3UexUT8c37BnW672ZblY=;
+	s=arc-20240116; t=1790785229; c=relaxed/simple;
+	bh=Tm7IxzkDOJrxk/M2817OSUwRqZZPfjqjc5N+LjtxmZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMZnPGgPIWC58rT8pIMDw0sEKoEBcVtKdiJBGcs1Vz3OiWcbow+ucpcrslvUCnQczTc/rxAdxqr0Cg3y59y5UVs3joXGf0ZN62pBql66zIwAAls1wpMLfBp+anJq65If+jYxOcuiIyN/Gk31CywuqCUa4FbaPdl94gq+TJPJz9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlR0ulHD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=reTjobTd4Z4iacMdCkntiA/zQbuYOhIdOP8ph+ZFUQEQ/W/5n9Q33hW0rc+JKiuuQocmGqhqg15K6GdvvY/je9CT1kO/r1XsDoUBHM2PnevksyK9S/6biCPzXYlxoYLbqWhxeIKow3PVjaO+jbP21sF+SWX0ipDN+aLaX25hV7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToQ9w6q3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlR0ulHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C5B1F00893;
-	Wed, 30 Sep 2026 16:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToQ9w6q3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E311F000FF;
+	Wed, 30 Sep 2026 16:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785217;
-	bh=JruDyR1kne4TQzSuvWo73WyK/Sn46Qv7EszKIr9i6DU=;
+	s=korg; t=1790785220;
+	bh=SMm5ndJYUkkwBApvwaryIgsUhKBiP+7rk8Cks/+aElQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FlR0ulHDzl6YGKQ8rlpXO00VsUQQt47Wni8AazpAkmKEXl1b9ut/9/EAYrHpSElFT
-	 GaBb5fahXPkK6OgMu72DvyZhWDY2wu5sIdcAnOChGHEtHyQyrH1g/rXnRF5e63HtCs
-	 VSJsuddLC0zMirgzKGulxqciZfQze8BzHeKaOrUk=
+	b=ToQ9w6q3Mlwzf/39q0iE0Xy7/0LrupK3jMGXJ3pt25S7N084EQH51+67DJpBc5Sds
+	 zm6BQ3qIja7KSzDRsXlfvBUQkjorC3SFuFt7O75Ao0HXV/ZoJu5mN6P/bc0b+nXVBU
+	 7Jc8w/TnzbRDXfAXpk2KcX9NCD6hEWKneE+50v1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen Pais <allen.lkml@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 430/982] workqueue: Introduce from_work() helper for cleaner callback declarations
-Date: Wed, 30 Sep 2026 17:19:26 +0200
-Message-ID: <20260930152426.034743323@linuxfoundation.org>
+Subject: [PATCH 6.1 431/982] net: macb: rename bp->sgmii_phy field to bp->phy
+Date: Wed, 30 Sep 2026 17:19:27 +0200
+Message-ID: <20260930152426.055153089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,59 +47,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Allen Pais <apais@linux.microsoft.com>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-[ Upstream commit 60b2ebf48526567b53e0188dbd1a4df8e646bcc1 ]
+[ Upstream commit 3f7e51cd5fbf4d970b14956ee9464515bb40666f ]
 
-To streamline the transition from tasklets to worqueues, a new helper
-function, from_work(), is introduced. This helper, inspired by existing
-from_() patterns, utilizes container_of() and eliminates the redundancy
-of declaring variable types, leading to more concise and readable code.
+The bp->sgmii_phy field is initialised at probe by init_reset_optional()
+if bp->phy_interface == PHY_INTERFACE_MODE_SGMII. It gets used by:
+ - zynqmp_config: "cdns,zynqmp-gem" or "xlnx,zynqmp-gem" compatibles.
+ - mpfs_config: "microchip,mpfs-macb" compatible.
+ - versal_config: "xlnx,versal-gem" compatible.
 
-The modified code snippet demonstrates the enhanced clarity achieved
-with from_wq():
+Make name more generic as EyeQ5 requires the PHY in SGMII & RGMII cases.
 
-  void callback(struct work_struct *w)
-   {
-     - struct some_data_structure *local = container_of(w,
-						       struct some_data_structure,
-						       work);
-     + struct some_data_structure *local = from_work(local, w, work);
+Drop "for ZynqMP SGMII mode" comment that is already a lie, as it gets
+used on Microchip platforms as well. And soon it won't be SGMII-only.
 
-This change aims to facilitate a smoother transition and uphold code
-quality standards.
-
-Based on:
-  git://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git disable_work-v3
-
-Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20251023-macb-eyeq5-v3-4-af509422c204@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 38b6be101006 ("net: macb: fix NULL pointer dereference on unbind with fixed-link")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/workqueue.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/cadence/macb.h      |  2 +-
+ drivers/net/ethernet/cadence/macb_main.c | 26 ++++++++++++------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 5d052e193a85c..737219d7dd2b6 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -436,6 +436,9 @@ alloc_workqueue(const char *fmt, unsigned int flags, int max_active, ...);
- #define create_singlethread_workqueue(name)				\
- 	alloc_ordered_workqueue("%s", __WQ_LEGACY | WQ_MEM_RECLAIM, name)
+diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
+index 0d3c6eb72163f..9d825e3b4d945 100644
+--- a/drivers/net/ethernet/cadence/macb.h
++++ b/drivers/net/ethernet/cadence/macb.h
+@@ -1311,7 +1311,7 @@ struct macb {
  
-+#define from_work(var, callback_work, work_fieldname)	\
-+	container_of(callback_work, typeof(*var), work_fieldname)
-+
- extern void destroy_workqueue(struct workqueue_struct *wq);
+ 	struct macb_ptp_info	*ptp_info;	/* macb-ptp interface */
  
- struct workqueue_attrs *alloc_workqueue_attrs(void);
+-	struct phy		*sgmii_phy;	/* for ZynqMP SGMII mode */
++	struct phy		*phy;
+ 
+ #ifdef MACB_EXT_DESC
+ 	uint8_t hw_dma_cap;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 513a1267a6ef7..e33ff04797f7d 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -3034,7 +3034,7 @@ static int macb_open(struct net_device *dev)
+ 
+ 	macb_init_hw(bp);
+ 
+-	err = phy_power_on(bp->sgmii_phy);
++	err = phy_power_on(bp->phy);
+ 	if (err)
+ 		goto reset_hw;
+ 
+@@ -3050,7 +3050,7 @@ static int macb_open(struct net_device *dev)
+ 	return 0;
+ 
+ phy_off:
+-	phy_power_off(bp->sgmii_phy);
++	phy_power_off(bp->phy);
+ 
+ reset_hw:
+ 	macb_reset_hw(bp);
+@@ -3081,7 +3081,7 @@ static int macb_close(struct net_device *dev)
+ 	phylink_stop(bp->phylink);
+ 	phylink_disconnect_phy(bp->phylink);
+ 
+-	phy_power_off(bp->sgmii_phy);
++	phy_power_off(bp->phy);
+ 
+ 	spin_lock_irqsave(&bp->lock, flags);
+ 	macb_reset_hw(bp);
+@@ -4780,13 +4780,13 @@ static int init_reset_optional(struct platform_device *pdev)
+ 
+ 	if (bp->phy_interface == PHY_INTERFACE_MODE_SGMII) {
+ 		/* Ensure PHY device used in SGMII mode is ready */
+-		bp->sgmii_phy = devm_phy_optional_get(&pdev->dev, NULL);
++		bp->phy = devm_phy_optional_get(&pdev->dev, NULL);
+ 
+-		if (IS_ERR(bp->sgmii_phy))
+-			return dev_err_probe(&pdev->dev, PTR_ERR(bp->sgmii_phy),
++		if (IS_ERR(bp->phy))
++			return dev_err_probe(&pdev->dev, PTR_ERR(bp->phy),
+ 					     "failed to get SGMII PHY\n");
+ 
+-		ret = phy_init(bp->sgmii_phy);
++		ret = phy_init(bp->phy);
+ 		if (ret)
+ 			return dev_err_probe(&pdev->dev, ret,
+ 					     "failed to init SGMII PHY\n");
+@@ -4815,7 +4815,7 @@ static int init_reset_optional(struct platform_device *pdev)
+ 	/* Fully reset controller at hardware level if mapped in device tree */
+ 	ret = device_reset_optional(&pdev->dev);
+ 	if (ret) {
+-		phy_exit(bp->sgmii_phy);
++		phy_exit(bp->phy);
+ 		return dev_err_probe(&pdev->dev, ret, "failed to reset controller");
+ 	}
+ 
+@@ -4823,7 +4823,7 @@ static int init_reset_optional(struct platform_device *pdev)
+ 
+ err_out_phy_exit:
+ 	if (ret)
+-		phy_exit(bp->sgmii_phy);
++		phy_exit(bp->phy);
+ 
+ 	return ret;
+ }
+@@ -5195,7 +5195,7 @@ static int macb_probe(struct platform_device *pdev)
+ 	mdiobus_free(bp->mii_bus);
+ 
+ err_out_phy_exit:
+-	phy_exit(bp->sgmii_phy);
++	phy_exit(bp->phy);
+ 
+ err_out_free_netdev:
+ 	free_netdev(dev);
+@@ -5219,7 +5219,7 @@ static int macb_remove(struct platform_device *pdev)
+ 	if (dev) {
+ 		bp = netdev_priv(dev);
+ 		unregister_netdev(dev);
+-		phy_exit(bp->sgmii_phy);
++		phy_exit(bp->phy);
+ 		mdiobus_unregister(bp->mii_bus);
+ 		mdiobus_free(bp->mii_bus);
+ 
+@@ -5249,7 +5249,7 @@ static int __maybe_unused macb_suspend(struct device *dev)
+ 	u32 tmp;
+ 
+ 	if (!device_may_wakeup(&bp->dev->dev))
+-		phy_exit(bp->sgmii_phy);
++		phy_exit(bp->phy);
+ 
+ 	if (!netif_running(netdev))
+ 		return 0;
+@@ -5365,7 +5365,7 @@ static int __maybe_unused macb_resume(struct device *dev)
+ 	int err;
+ 
+ 	if (!device_may_wakeup(&bp->dev->dev))
+-		phy_init(bp->sgmii_phy);
++		phy_init(bp->phy);
+ 
+ 	if (!netif_running(netdev))
+ 		return 0;
 -- 
 2.53.0
 
