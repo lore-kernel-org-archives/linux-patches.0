@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D75F515964;
-	Wed, 30 Sep 2026 16:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42298357D11;
+	Wed, 30 Sep 2026 16:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787096; cv=none; b=B6rRV1+/aBsrtBp29NHiTO0wDeaJnVmoNRPWcQGkbfJafWYTJ7uuJa83XsXCa4ukOhkeCQHlJRXnBLJFHpWBpj2VNJcZ10xISJQWT5ncxDURqTkZ3hhA6TLOHEzjcNdHCR43Tz1YZfujfQoaCpUbDKIQ8H/TcFFvQJJklD6AFI4=
+	t=1790787099; cv=none; b=Ce/H/Rqph03JVO4XadwdKJM4CY5F5PQ8JJahEklSIP7tIiWmGJBtPyV/2hyZQTDfxpHeRU1+GlqIf9asKA1EaPepHhqNqoz1gBX9DU9sCAKIZ1ONAvdYCpmBlVUYfWLIQgTfixpaP77XPTaI6GWzP18nIIZh7YyDmwr1Al7NhKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787096; c=relaxed/simple;
-	bh=mitsdmbSqPQRzQHuIowkV+WMbOT3sow3EcaGOEj/fmE=;
+	s=arc-20240116; t=1790787099; c=relaxed/simple;
+	bh=CZr2esHfEgIbI5mcOjJwa2pC+AnEWPkFhjdSCW8T8Bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6Jkym4BHWg8/gIUsoCYh+ua0BVcilCbQYQ9KujRdZf519k2Z6ISgdvbtqp/0/oPAAKyfZgTY0/ETi5VCZkn+m8+MQd6JL0yy39SxUW22vXXzfVeUtM3wUbxT9oIZsh39DuDRKWIdrHzoGXIOQjiTbShcwT72yMRjYSBwgFefmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mb9ASOSU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OwVD0OyCtRpNHqgOA9umLt5YtHaywZc95r2UL3G9Zg3mhCd/07PhUF5t7OsgO9+td7aqsjNJ+xPFLalmkwSn6pLDkRo4DVTuRHCy8EvNtKbmQ51urJ80Us9e+I13VtPDSjds/L+MQC0JwxJHiVpetvqwUmOPwh0ja5RxKFQCfaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBa+m5ps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mb9ASOSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2191F000FF;
-	Wed, 30 Sep 2026 16:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBa+m5ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600D21F000FF;
+	Wed, 30 Sep 2026 16:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787095;
-	bh=oHJnPo1hO16gHUu0M5yNBeU57qyJ5hluggiTzpKIn14=;
+	s=korg; t=1790787097;
+	bh=Ajq8lgTr+k4/npRrd818AgQWhcVm5m7V8OpKVP4rb9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mb9ASOSUGpJMBszZza6rbXGwdTxHEUZtS1lvg7WxRDQYDEfJ6kMF61WRubghThmLU
-	 MffGLSHYPDA3WTEtOo90LKccVG2GD7MhwrGJLc/76uefTAzQS/rRuV1Xiu8ijJ0jv7
-	 +XdVihHAd92aRHNcO4scH8j5XMcOGtVb1xq4GD30=
+	b=zBa+m5psPzCxl8kEbCNNv0pjXH+QWXg/040tXUYjy/HsgCduEH/ruAxjA+B12j6gV
+	 Suqiq8IhzA9vjP7z2GcPTFBpozHlYcSqhd4RboymhZJMopU0547in+BbjxVKYOFOAP
+	 sF5RH92ajcfYwi4/kbQSCdnEcx6+H6N9SyHPB/ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 066/457] xsk: Use a 32-bit compare in xsk_map_gen_lookup
-Date: Wed, 30 Sep 2026 17:22:51 +0200
-Message-ID: <20260930152347.468523406@linuxfoundation.org>
+Subject: [PATCH 7.2 067/457] bpf: Skip unsettled links in link iterator
+Date: Wed, 30 Sep 2026 17:22:52 +0200
+Message-ID: <20260930152347.492575587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
+[ Upstream commit 50e80e2bb5e2be8515205b9c496b9640ddefa434 ]
 
-xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
-using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
-max_entries value of 0x80000000 or higher becomes a threshold larger
-than every zero-extended 32-bit key. An out-of-range index then skips
-the bounds check and the generated lookup reads past xsk_map[].
+bpf_link_prime() inserts a link into link_idr before anon_inode_getfile()
+succeeds and before bpf_link_settle() publishes the ID in link->id.
+bpf_link_by_id() treats such an ID-zero link as unsettled, but the link
+iterator takes a reference without this check.
 
-Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
+If anon_inode_getfile() then fails, the creator removes the ID and frees
+its still-private link directly.  The iterator is left with a dangling
+reference and its next bpf_link_put() accesses freed memory.
 
-Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Treat ID-zero entries as transient in bpf_link_get_curr_or_next(), just as
+bpf_link_by_id() does.
+
+  BUG: KASAN: slab-use-after-free in bpf_link_put
+  Write of size 8 by task exp/384
+  Call Trace:
+  bpf_link_put                    kernel/bpf/syscall.c:3372
+  bpf_link_seq_next               kernel/bpf/link_iter.c:33
+  bpf_seq_read                    kernel/bpf/bpf_iter.c:158
+  vfs_read                        fs/read_write.c:572
+  ksys_read                       fs/read_write.c:716
+  do_syscall_64                   arch/x86/entry/syscall_64.c:84
+  entry_SYSCALL_64_after_hwframe  arch/x86/entry/entry_64.S:121
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+Fixes: 9f8836127308 ("bpf: Add bpf_link iterator")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260914170206.170723-2-bestswngs@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xskmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/syscall.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
-index 3bff346308d0f..bf00d6463c191 100644
---- a/net/xdp/xskmap.c
-+++ b/net/xdp/xskmap.c
-@@ -124,7 +124,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
- 	struct bpf_insn *insn = insn_buf;
- 
- 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
--	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
-+	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
- 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
- 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
- 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 57d61de03306e..77b3252270f3e 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -6106,7 +6106,10 @@ struct bpf_link *bpf_link_get_curr_or_next(u32 *id)
+ again:
+ 	link = idr_get_next(&link_idr, id);
+ 	if (link) {
+-		link = bpf_link_inc_not_zero(link);
++		if (link->id)
++			link = bpf_link_inc_not_zero(link);
++		else
++			link = ERR_PTR(-EAGAIN);
+ 		if (IS_ERR(link)) {
+ 			(*id)++;
+ 			goto again;
 -- 
 2.53.0
 
