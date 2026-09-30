@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C934FDA47;
-	Wed, 30 Sep 2026 17:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871064E73B2;
+	Wed, 30 Sep 2026 17:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789106; cv=none; b=jBz9RTxiQjXp6WjV0BL8L/1yQoIcVPmduP2Rw3Eo5sVQN9/gSVAJodQnWHpfmPWoHKKuLEft1UmQvmQ9rwhkjg4UHojLYw55yR8US3kIMkfZTpoXurKDiuXIyvwgmv7drm19FSkCeKoVgrCG8hCnnTvz7f9LRc4cuSTVCVnB/rQ=
+	t=1790789108; cv=none; b=SnUks6t7PPA0JYhS2uMKzk7MWwpX/uU222EMN9tmN25SIaHJqPtTENnDka6LklyZQfx6cOO+RMZK4z23/JqA2kBK5utXZfVaA/fUaSlb397wq7Q2ca0AgzA6mUYCeevk5v9Q+kEMvBZhilhkVpE+kr5SRBfGUZlOrdLkVqop4SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789106; c=relaxed/simple;
-	bh=KLRbjItU/DzpeWVHj3LkpovJqd9y3X4d4I3fvpxaVpM=;
+	s=arc-20240116; t=1790789108; c=relaxed/simple;
+	bh=16ratCT38+HCz8G1iuPY9lzuu05aQZrxKZSZAA0p664=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lf2v0ix4QUJ1Gv/HhFp7rhpEAYrhW7lE0eyuTO+1jrx5fD6qUIW+1HATQBQ7hD4qp9SrkMclaKAXlByePKhQLdY495L+RdtX4bhm74U6rHmRcoY9F96XBKkrQLyZ0xHyq755bXo2cdzEvOHaw179kSvo+7LKsaoFt/JIXZat30w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxGS0ylr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Fs/Sed1cnaZT1xPxmSTmTBMLu1YH6seaJ4ziFu1Yc+nlwexadGcShgaXdAfLQhFqOvenQ8wlnzKJzpAQR1PP95iXXqnhmYO317Uv8dPcH32L3xvJZVUlnUwUwzj52vlBQ5KyfZNNwm+2Vwq8+tYE5n/UJi1vIehhLHpXj0pDWLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFwBTCAx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxGS0ylr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D1B1F000FF;
-	Wed, 30 Sep 2026 17:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFwBTCAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC451F000FF;
+	Wed, 30 Sep 2026 17:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789104;
-	bh=/9xnQvAPvEAdYMhQcbWonBlX2F5dFJpgrLuiG6+ZUpA=;
+	s=korg; t=1790789107;
+	bh=HQGnfrV4GTxIULuMWtE1Xdr+feuAagaxXzu1374eYwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UxGS0ylrRDDN/2GB7CkwDIF6m0MDuL8Oqr/8CDf0tg2deySPQYfm2UvGTCttUFIu+
-	 g5xO6F53uSc57evEvwwGCaydwaI1luGLYJyXRMYwgru4X5BzZqUpLG8T82rEEMeEx9
-	 CYIM1h3G4JwDR3QXGLVHAz70uUAnaX96GfjMkGqQ=
+	b=MFwBTCAxiMmqTbW70cjVytJ5Z2T8aefktzolXcEdpqcSw3lbBWHGtbCb0st+dpM9g
+	 T6e1OHV5tn5YJXFoWs3SCn1iR/bFJ8QAOQhLIdISc0qUjx1yq8Xjmh97+DGlqd/Rw+
+	 HpxhdNaNMUV63oexT6zibuMA0avnLzFPiO+dOtpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 361/877] ip6_gre: Call ip6erspan_tunnel_unlink_md() in ip6erspan_changelink().
-Date: Wed, 30 Sep 2026 17:21:12 +0200
-Message-ID: <20260930152422.467440815@linuxfoundation.org>
+Subject: [PATCH 6.12 362/877] eth: fbnic: Handle maximum standalone channels
+Date: Wed, 30 Sep 2026 17:21:13 +0200
+Message-ID: <20260930152422.489749921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -47,45 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Björn Töpel <bjorn@kernel.org>
 
-[ Upstream commit dd47bcf279f1083f09bf5266890b26263361022b ]
+[ Upstream commit 1f4c73064a50f53d596c6f1d06d2d700f43c4b32 ]
 
-The cited commit accidentally added ip6gre_tunnel_unlink_md()
-in ip6erspan_changelink().
+Standalone channels use one NAPI vector for each Tx and Rx queue.
+fbnic's allocation path excludes FBNIC_MAX_TXQS from that layout. A
+64-Tx/64-Rx configuration therefore records 128 vectors but allocates
+only 64, leaving NULL entries that resource setup dereferences.
 
-Let's correct it to ip6erspan_tunnel_unlink_md().
+Include the maximum vector count in standalone allocation.
 
-Fixes: b80d0b93b991 ("net: ip6_gre: fix tunnel metadata device sharing.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260916230927.378957-1-kuniyu@google.com
+Fixes: bc6107771bb4 ("eth: fbnic: Allocate a netdevice and napi vectors with queues")
+Signed-off-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/178942020457.7700.13129750616387075931.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 2 +-
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 4b0c166fe7e24..ce1ba9d2af405 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -2314,7 +2314,7 @@ static int ip6erspan_changelink(struct net_device *dev, struct nlattr *tb[],
- 		return PTR_ERR(t);
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+index 16a0e30f8aaa5..38e96b003ea05 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+@@ -1162,7 +1162,7 @@ int fbnic_alloc_napi_vectors(struct fbnic_net *fbn)
+ 	int err;
  
- 	ip6erspan_set_version(data, &p);
--	ip6gre_tunnel_unlink_md(ign, t);
-+	ip6erspan_tunnel_unlink_md(ign, t);
- 	ip6gre_tunnel_unlink(ign, t);
- 	ip6erspan_tnl_change(t, &p, !tb[IFLA_MTU]);
- 	ip6erspan_tunnel_link_md(ign, t);
+ 	/* Allocate 1 Tx queue per napi vector */
+-	if (num_napi < FBNIC_MAX_TXQS && num_napi == num_tx + num_rx) {
++	if (num_napi <= FBNIC_MAX_TXQS && num_napi == num_tx + num_rx) {
+ 		while (num_tx) {
+ 			err = fbnic_alloc_napi_vector(fbd, fbn,
+ 						      num_napi, v_idx,
 -- 
 2.53.0
 
