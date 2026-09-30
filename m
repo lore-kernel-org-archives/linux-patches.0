@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9341D515967;
-	Wed, 30 Sep 2026 16:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5284B511E9F;
+	Wed, 30 Sep 2026 16:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786575; cv=none; b=lEYpq9ckWwyc12g28yhofDdeBy0+DETqzKTjDMkGI8zM9e5NC7/xrZk7XuvK174AAoF11S62FKDUwkPpwidFRR2IAKEaqRjLnH7TlgvNf3IqJhVgNCqlP/QrqrdwLyChhGT5ogLnIIdXTDlzGZMB0H7Cp/Rdeymigdaio7TL9rQ=
+	t=1790786578; cv=none; b=olIUiVQzapFtt8cBTkGZbgUj1+h1aUNgBzCKLJ/GjXMn3Dl3v8Y/YHnYWs7QQulIXiAFVWFaVOPFAdSlcdKO7kEsmHFch9MQvr9+OrMptgKXt6y1WE5miQC/wo1gFBxZpxbyPyTRQrvvQWmOZO+mGdqVuupT7b6TQHcoMgwRlYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786575; c=relaxed/simple;
-	bh=VArIfl9l9xdfrJMfHaN29cYNBmOoyMLX8smpBZQWXNY=;
+	s=arc-20240116; t=1790786578; c=relaxed/simple;
+	bh=jK46oPZeF2gH3nZumJgPvMDKs9vqqADuyNWIZmFDtB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeMuPMry1sxk7B7xZa2at3ExMvs5lrUBM2bU0IQJ/yeXgU8JePjkt050+e5JWstJrcH2v8kESIELJREbybrSS8EQYM7aNoIJM/S8a4epDv9ZYwL37oYP3mBTjDewJjb89UGFoqfv4krkNnZKv+pfuAWWp+urxWzqEZhwgWDu3gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTAGzWiZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LfG7WrPnhINCsTbyNSURmQRyE5Vp+IeySO0j0PTCwBqG/suZppEdnzb9IBmAnMAydi0VUVtaJhI69R8HgBN4SgWOx1lLqclzABZwL9SXuyJEuB1ebxCrSZ2r8XveASD5DySHvRejpBUdAjL+H+MCSUkeQLRF4Lsdg/9SW7wVJ0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAYtr+E7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTAGzWiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26E41F000FF;
-	Wed, 30 Sep 2026 16:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAYtr+E7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D0C1F000FF;
+	Wed, 30 Sep 2026 16:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786574;
-	bh=I+q/1VXnpYoR9dsP7HN5JOBcwg6xhKgzhpFbpM2QXK8=;
+	s=korg; t=1790786577;
+	bh=gmWgRJ3maFI8KLyMLDAxvafXAshgYmCWChQp3M3VeUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTAGzWiZNhMWAVs8zcAzDmvmFp8ohbBhSdy4+2k4F00xawCnIpa/PpwOC9uoV06Po
-	 jHSxTTZ/soI2oRZWxt/T5M5sC3eXDBqRVQejvZwdfIJMjVNiwSxIhXzU1ZGN/V8U/T
-	 +ux44Aaq4V0o/zWEvNbed0I5C5PVlpE2fIMMCyiw=
+	b=zAYtr+E7mZrjW6yJv3MeUyilwLwBjHmn9KvlcaZ3ovGMDA8naL7QLYhBGQwVUwAzW
+	 ABaqzqsF318PT/H8yavKurYDxA699Cp8eqSynaPfEoZZ9dYV1gfdy6DY2iVskENCL1
+	 5B7qxPenL0m1QLMNTO4pt9hjutf+cYwP6SuPBlIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 909/982] net/smc: fix UAF on lgr list traversal in smcr_port_err()
-Date: Wed, 30 Sep 2026 17:27:25 +0200
-Message-ID: <20260930152436.264598390@linuxfoundation.org>
+Subject: [PATCH 6.1 910/982] tipc: Fix a data race on mon->peer_cnt in mon_timeout()
+Date: Wed, 30 Sep 2026 17:27:26 +0200
+Message-ID: <20260930152436.286698212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,80 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit 61cb282fe97b3b0ba32ca09417a693162bf4ae3f ]
+[ Upstream commit 8e1937fed6738460554ec123c64839e2445e7d53 ]
 
-smcr_port_err() traverses smc_lgr_list.list without holding
-smc_lgr_list.lock, allowing a concurrent smc_lgr_terminate_sched()
-to free an lgr while it is still being dereferenced.
+mon_timeout() evaluates dom_size(mon->peer_cnt) before it takes mon->lock,
+while mon->peer_cnt is updated under that lock by tipc_mon_add_peer() and
+tipc_mon_remove_peer().  The value can therefore be stale, and the decision
+whether the local domain has to be recomputed can be based on an outdated
+member count.
 
-Hold smc_lgr_list.lock across the traversal. Update
-smc_ib_gid_check() to call smcr_port_err() after releasing the lock.
+Read mon->peer_cnt inside the write_lock_bh(&mon->lock) protected region.
 
-Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260922073149.474762-1-sidraya@linux.ibm.com
+Fixes: 35c55c9877f8 ("tipc: add neighbor monitoring framework")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260922080909.21123-1-ginger.jzllee@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c |  2 ++
- net/smc/smc_ib.c   | 10 ++++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ net/tipc/monitor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index 213af93f39d3f..5d188222807a8 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1737,6 +1737,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
- 	struct smc_link_group *lgr, *n;
- 	int i;
- 
-+	spin_lock_bh(&smc_lgr_list.lock);
- 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
- 		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
- 			    SMC_MAX_PNETID_LEN))
-@@ -1751,6 +1752,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
- 				smcr_link_down_cond_sched(lnk);
- 		}
- 	}
-+	spin_unlock_bh(&smc_lgr_list.lock);
- }
- 
- static void smc_link_down_work(struct work_struct *work)
-diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
-index 8e41034d8d96f..c1dbcc3f667d1 100644
---- a/net/smc/smc_ib.c
-+++ b/net/smc/smc_ib.c
-@@ -333,6 +333,7 @@ static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
- static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
+index 23efd35adaa35..e96dcdaa93894 100644
+--- a/net/tipc/monitor.c
++++ b/net/tipc/monitor.c
+@@ -632,9 +632,10 @@ static void mon_timeout(struct timer_list *t)
  {
- 	struct smc_link_group *lgr;
-+	bool stale_gid = false;
- 	int i;
+ 	struct tipc_monitor *mon = from_timer(mon, t, timer);
+ 	struct tipc_peer *self;
+-	int best_member_cnt = dom_size(mon->peer_cnt) - 1;
++	int best_member_cnt;
  
- 	spin_lock_bh(&smc_lgr_list.lock);
-@@ -348,11 +349,16 @@ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
- 				continue;
- 			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
- 						   lgr->smc_version == SMC_V2,
--						   smcibdev, ibport))
--				smcr_port_err(smcibdev, ibport);
-+						   smcibdev, ibport)) {
-+				stale_gid = true;
-+				goto out;
-+			}
- 		}
- 	}
-+out:
- 	spin_unlock_bh(&smc_lgr_list.lock);
-+	if (stale_gid)
-+		smcr_port_err(smcibdev, ibport);
- }
- 
- static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
+ 	write_lock_bh(&mon->lock);
++	best_member_cnt = dom_size(mon->peer_cnt) - 1;
+ 	self = mon->self;
+ 	if (self && (best_member_cnt != self->applied)) {
+ 		mon_update_local_domain(mon);
 -- 
 2.53.0
 
