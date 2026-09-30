@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BDD374A16;
-	Wed, 30 Sep 2026 16:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808394FB9AF;
+	Wed, 30 Sep 2026 16:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786672; cv=none; b=FMXh/Z3HlCIVbVS+XIzL6RW7c+PvMb/Kpvt+xchsYrFE27fcje2ib+KPYB0gI2YJ41neGDbOhMqkmmAilqTmPydxtH/xE/hLf4hkhpfL7NLg9csKZKV0226nRD50T00FL+caGpG3np/eCAKs8JSOfQqcR6yenAKHIyEBIl4LccM=
+	t=1790786675; cv=none; b=nbIJ+vwmYmTI45ZKL4cQzfm8oFM01QQag7fnP/KITWSN1whcdbgeNDslzvG0/lq845CV7Chll64OcwTk9H28XiNr1CYACZxQDgFAFPNKgkkHVJiv0aybs1bZPJcosj3u6WjEkyOxPY1u3AD/eszL0oTFzLXAJhO3VcE6FH3ReXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786672; c=relaxed/simple;
-	bh=kCfuuCtoqsqg9AtGbF1pzIcZyUU8DUBItZBIj+dlC20=;
+	s=arc-20240116; t=1790786675; c=relaxed/simple;
+	bh=fitlsVYquvB5t4kEuF/6JfvH6WObfq5WgPAH5xia9Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9UDCeJE4zxXw8y7uKuPDXKolYgqOEZZLidkox081vW4j8XmFB5lz5/Od1ZDvPtTQqilyAqpdSph2A2RhJr90/FGxSv5u5DOEmU+IkYpF0alHMnnoIXSHs5/P1gzvzrZm+oeYye+gNlSinAOGmbRzjc7ZAkDNz3dGrONuP7Gbfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeqFFwGU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dPSsEZKxVJ+CHlaAmUXHdtTbgQOoJRV9mMhkD7+Zi0q0yOsq017oT4A+zcdEK15/kBjIkvKhF6LDq0H33G9TajirVwC3EIGab1dL7vAATHJTvGFntjpZmugo6SHo5e9JLqmeZQ/poJv4qwQTkUY2mH3QkAuwpYqSo8oDso195qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzwDh3kJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeqFFwGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CCD1F000FF;
-	Wed, 30 Sep 2026 16:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzwDh3kJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDC11F000FF;
+	Wed, 30 Sep 2026 16:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786670;
-	bh=lrIZ7l1PzdbWxra1Ro4ze2EZm+0Vphw/p5iQcxRrmXU=;
+	s=korg; t=1790786673;
+	bh=cfN1qTILxHKNhkHRN1YBJVRJ72Nbb/ac8ygtlmLeJVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeqFFwGUXP/l8RUSXg4MHqDHlWeLWlV/leBpojr39nTR0FifUE9E8ALmInAnUCcyq
-	 jSHGCONHpNsLNCK3OnsfcICSLelt3pdJefatme4FjKpjrpk3zAzqhHxabLSp9d3Suz
-	 edItmWizoGxzA/oVYJ8/QQjy9AZWo2lTdzMTJeVM=
+	b=zzwDh3kJY2cvzs0Tyw7Ru87s6pCcqsRr0fkRAve/B1IavtQH+YBR1XzAxTMZ8rUzo
+	 A2dXbplU91fi30gGJ2qRuZypGUO+lmQg9RTjSpONkp4f2VeA5FCF0tPkoaLbOfMN2V
+	 iPp2b7HynaVuvWnltGbgR2hnJ9iVAnDp5GN0XdDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 927/982] af_packet: fix integer overflow in prb_calc_retire_blk_tmo()
-Date: Wed, 30 Sep 2026 17:27:43 +0200
-Message-ID: <20260930152436.654393295@linuxfoundation.org>
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.1 945/982] drm/nouveau: fix double-free in nvif_vmm_dtor
+Date: Wed, 30 Sep 2026 17:28:01 +0200
+Message-ID: <20260930152437.035810048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,98 +50,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 56d82862a0a243ac14ba11b6d7b57ddc2d064b95 upstream.
+commit 97077ac87afe9e91ec074ef0be64454e7ccbf344 upstream.
 
-prb_calc_retire_blk_tmo() computes in 32-bit int arithmetic:
+On failure, nouveau_cli_init() calls nouveau_cli_fini() to tear
+the client down. Then, nouveau_drm_open() also enters into its
+cleanup path and calls nouveau_cli_fini() AGAIN. nouveau_cli_fini()
+calls nouveau_vmm_fini():
 
-        mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
+	void
+	nouveau_vmm_fini(struct nouveau_vmm *vmm)
+	{
+		nouveau_svmm_fini(&vmm->svmm);
+		nvif_vmm_dtor(&vmm->vmm);
+		vmm->cli = NULL;
+	}
 
-If I'm reading the validation right, tp_block_size is user
-controlled and packet_set_ring() only rejects values that are <= 0
-as int or not page aligned, so a 256MiB block goes right through
-(and alloc_one_pg_vec_page() even has a vzalloc fallback for it).
-0x10000000 * 8 wraps to INT_MIN, and on a NIC reporting 1 Gbps
-(div == 1) the function ends up returning -2047.
+Inside nvif_vmm_dtor(), vmm->page is freed unconditionally:
 
-The condition is actually (8 * size) mod 2^32 >= 2^31 && div == 1,
-so the trigger set is [256,512), [768,1024), [1280,1536) and
-[1792,2048) MiB. Other sizes wrap to non-negative values and faster
-links divide the unsigned value back below 2^31, which is why this
-doesn't blow up for everyone.
+	void
+	nvif_vmm_dtor(struct nvif_vmm *vmm)
+	{
+		kfree(vmm->page);
+		nvif_object_dtor(&vmm->object);
+	}
 
-What makes it fatal is what happens next in init_prb_bdqc():
+vmm->page is never cleared after being freed, so the second call of
+nvif_vmm_dtor() will cause a double-free.
 
-        p1->interval_ktime = ms_to_ktime(prb_calc_retire_blk_tmo(...));
-        hrtimer_start(&p1->retire_blk_timer, p1->interval_ktime,
-                      HRTIMER_MODE_REL_SOFT);
+Found by fuzzing the nouveau driver with a modified Syzkaller:
 
-A negative relative timeout expires immediately. The callback
-unconditionally returns HRTIMER_RESTART, and hrtimer_forward() turns
-the negative interval into hrtimer_resolution:
+	BUG: KASAN: double-free in nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	Free of addr ffff888010fcdc30 by task syz.0.173/2567
 
-        if (interval < hrtimer_resolution)
-                interval = hrtimer_resolution;
+	CPU: 1 UID: 0 PID: 2567 Comm: syz.0.173 Not tainted 7.2.0 #24 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	<TASK>
+	__dump_stack lib/dump_stack.c:94 [inline]
+	dump_stack_lvl+0x95/0xe0 lib/dump_stack.c:120
+	print_address_description mm/kasan/report.c:378 [inline]
+	print_report+0xcb/0x5a0 mm/kasan/report.c:482
+	kasan_report_invalid_free+0xaa/0xd0 mm/kasan/report.c:557
+	check_slab_allocation+0xe4/0x110 mm/kasan/common.c:235
+	kasan_slab_pre_free include/linux/kasan.h:199 [inline]
+	slab_free_hook mm/slub.c:2622 [inline]
+	slab_free mm/slub.c:6377 [inline]
+	kfree+0x192/0x590 mm/slub.c:6692
+	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
+	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
+	nouveau_drm_open+0x24e/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1255
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7fc6d687594d
+	Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+	RSP: 002b:00007fc6d5295008 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+	RAX: ffffffffffffffda RBX: 00007fc6d6b06180 RCX: 00007fc6d687594d
+	RDX: 0000000000022501 RSI: 0000200000000000 RDI: ffffffffffffff9c
+	RBP: 00007fc6d691c303 R08: 0000000000000000 R09: 0000000000000000
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 00007fc6d6b06218 R14: 00007fc6d6b06180 R15: 00007ffd9451d760
+	</TASK>
 
-So the SOFT timer re-fires at the maximum rate forever, holding
-sk_receive_queue.lock each pass. One CPU spins in softirq until the
-socket is closed. Repeat with more rings and the machine is gone.
+	Allocated by task 2567 on cpu 1 at 163.593900s:
+	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
+	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
+	poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+	__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
+	kasan_kmalloc include/linux/kasan.h:263 [inline]
+	__do_kmalloc_node mm/slub.c:5334 [inline]
+	__kmalloc_noprof+0x304/0x7c0 mm/slub.c:5359
+	_kmalloc_noprof include/linux/slab.h:992 [inline]
+	nvif_vmm_ctor+0x3c0/0x7e0 drivers/gpu/drm/nouveau/nvif/vmm.c:237
+	nouveau_vmm_init+0x40/0x90 drivers/gpu/drm/nouveau/nouveau_vmm.c:134
+	nouveau_cli_init+0x7b9/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:293
+	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The overflow itself is ancient - it was introduced together with
-TPACKET_V3 in f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer
-implementation."). Its effect prior to f7460d2989fa ("net:
-af_packet: Use hrtimer to do the retire operation", v6.18) was not
-as clear-cut, though: the return value was stored into an unsigned
-short retire_blk_tov, so a negative result was truncated, and a
-0-jiffy delay loop could be programmed as well. Neither is nearly
-as detrimental as the immediate maximum-rate spin the hrtimer
-conversion turned it into.
+	Freed by task 2567 on cpu 1 at 163.601355s:
+	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
+	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
+	kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
+	poison_slab_object mm/kasan/common.c:253 [inline]
+	__kasan_slab_free+0x61/0x80 mm/kasan/common.c:285
+	kasan_slab_free include/linux/kasan.h:235 [inline]
+	slab_free_hook mm/slub.c:2677 [inline]
+	slab_free mm/slub.c:6377 [inline]
+	kfree+0x383/0x590 mm/slub.c:6692
+	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
+	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
+	nouveau_cli_init+0x593/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:324
+	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-(Unrelated to CVE-2019-20812 - that one was the ethtool failure path
-returning 0, which now returns DEFAULT_PRB_RETIRE_TOV.)
+	The buggy address belongs to the object at ffff888010fcdc30
+	which belongs to the cache kmalloc-16 of size 16
+	The buggy address is located 0 bytes inside of
+	16-byte region [ffff888010fcdc30, ffff888010fcdc40)
 
-Reproducer, needs CAP_NET_RAW (a --network host container has it by
-default) and a 1 Gbps NIC (QEMU e1000 works):
+	The buggy address belongs to the physical page:
+	page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10fcd
+	flags: 0x100000000000000(node=0|zone=1)
+	page_type: f5(slab)
+	raw: 0100000000000000 ffff88800d441640 dead000000000100 dead000000000122
+	raw: 0000000000000000 0000000000550055 00000000f5000000 0000000000000000
+	page dumped because: kasan: bad access detected
 
-        int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-        bind(fd, ...);
-        int v = TPACKET_V3;
-        setsockopt(fd, SOL_PACKET, PACKET_VERSION, &v, sizeof(v));
-        struct tpacket_req3 req = {
-                .tp_block_size = 0x10000000,
-                .tp_block_nr = 1,
-                .tp_frame_size = 2048,
-                .tp_frame_nr = 0x10000000 / 2048,
-                .tp_retire_blk_tov = 0,
-        };
-        setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
+	Memory state around the buggy address:
+	ffff888010fcdb00: fc fc 00 04 fc fc fc fc fa fb fc fc fc fc fa fb
+	ffff888010fcdb80: fc fc fc fc fa fb fc fc fc fc 00 07 fc fc fc fc
+	>ffff888010fcdc00: fa fb fc fc fc fc fa fb fc fc fc fc fa fb fc fc
+										^
+	ffff888010fcdc80: fc fc fa fb fc fc fc fc 00 04 fc fc fc fc fa fb
+	ffff888010fcdd00: fc fc fc fc 00 00 fc fc fc fc fa fb fc fc fc fc
 
-Compute in 64 bits instead. The operands are already bounded by the
-existing validation, so nothing else changes. If you'd prefer a
-different fix, just say so and I'll respin.
+Fix by removing the redundant teardown in nouveau_drm_open(),
+since nouveau_cli_init() already does the cleanup work.
+Also clear vmm->page after its freeing.
 
-Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260923050101.1510064-1-zhangdairui@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 20d8a88e557a ("drm/nouveau: tidy up the client init/fini interfaces")
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Assisted-by: LLM
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/03BA723D9E5FF725+20260916103138.2651605-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |    4 +---
+ drivers/gpu/drm/nouveau/nvif/vmm.c    |    1 +
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -638,7 +638,7 @@ static int prb_calc_retire_blk_tmo(struc
- 		return DEFAULT_PRB_RETIRE_TOV;
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -1136,10 +1136,8 @@ nouveau_drm_open(struct drm_device *dev,
+ 	mutex_unlock(&drm->clients_lock);
  
- 	div = ecmd.base.speed / 1000;
--	mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
-+	mbits = (u64)blk_size_in_bytes * 8 / (1024 * 1024);
+ done:
+-	if (ret && cli) {
+-		nouveau_cli_fini(cli);
++	if (ret && cli)
+ 		kfree(cli);
+-	}
  
- 	if (div)
- 		mbits /= div;
+ 	pm_runtime_mark_last_busy(dev->dev);
+ 	pm_runtime_put_autosuspend(dev->dev);
+--- a/drivers/gpu/drm/nouveau/nvif/vmm.c
++++ b/drivers/gpu/drm/nouveau/nvif/vmm.c
+@@ -108,6 +108,7 @@ void
+ nvif_vmm_dtor(struct nvif_vmm *vmm)
+ {
+ 	kfree(vmm->page);
++	vmm->page = NULL;
+ 	nvif_object_dtor(&vmm->object);
+ }
+ 
 
 
