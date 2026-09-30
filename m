@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4B8383C86;
-	Wed, 30 Sep 2026 16:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787C3BE642;
+	Wed, 30 Sep 2026 16:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785920; cv=none; b=Ls2SwGmImTSwQi4K+5/XVMd/H/n5oq6Yw3NXAGvLid2hT8nHRV0uQofLNBc2rBPKTHR2JEpdve8OXQUQnnHVecAFxsD3j3oIGSa0yZTa0jZ8b3QFiRlZJq6zguZg5sQM3r7+BdCsVCgvR1POUy2MG33DLVYicBXzkXPGxt1dPK4=
+	t=1790785922; cv=none; b=f8Drx2xHkuRAzZbbJ+V4jxU5yOp9pkNqW0kzAJ53TComWVnxMqAGLEG8aAF6UK/2gLmhlJHwNyRdaoC5JGSur2TL++740hvm+RCq0ZOtaHITWJwQcY0jXzzUGDeBLGDTcNsDP+cF/i1oe6EvHttaLbD5ORPMkt6f6HVA/AP1r48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785920; c=relaxed/simple;
-	bh=c2MOvdzkCz6EdRrhDIWtoHxk1SFL3lSfvwp36JpCDhw=;
+	s=arc-20240116; t=1790785922; c=relaxed/simple;
+	bh=iFleqEvLY1krAvGQ6z93S8tKilSBhrCwN9R1dy2fxfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixaQOuJcBPeijfhK0lOPZ1ePc627E4iLaoXVk1mGr80AHCxAhJ9DOnhQPUyUxGyAlHgEnZ5qVp7hR4OynGU6aqqPQMICt61H+bV9+MC7Y/gpuqWfsnJgSUHsflPbi2jep6uQ6xSE7hIItJWKx2RgxSUrJ00P8Ljc06KC1UcnXUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osnFH7Tu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LllUfFJ1rwp1WVlBZ7MEGmNqSmIo2AGK7H8M8j+yDc/LTNxz/+iF+rPnho50QPmM+U+jhIMkfQ54q0XHTsgA2muUK/koBZcZK0KxWHHLh08NpUPoobxgQquUvC4exLJBQcdDWJi3cyv6FsDAfA8+TYlYpuwy4l8kmVV3X0mCMEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6jSu6Py; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osnFH7Tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06231F00893;
-	Wed, 30 Sep 2026 16:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6jSu6Py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9411F000FF;
+	Wed, 30 Sep 2026 16:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785918;
-	bh=yu0Z9h6nr/7P0AZIui3ZGBjzIGqLrcNbPtaIBmdXRXg=;
+	s=korg; t=1790785921;
+	bh=j9ZhpdIdm5ZfTpXfh7yK5DYz3o3xGqBGp8u2nUq7m5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osnFH7TuxkHiRrTxYsDNurvqgEGZ4pCVz36J2PwCfUgke40eeGDeGJtUb9cXB58EV
-	 4Fy5JNPLHoT0FFtfHi48YuwOoLZOzI57m2IeGRGf4FnmtG27PJZDdRCTLvHswI6+GJ
-	 xd5KjCgc+evH6aRt1AbbEZPQMCxHIsXxAzobpssg=
+	b=V6jSu6Py3+JjaSAJ8SNKywIVnxysfxvGDQrFobV46wFOQD2iqakqJ4f/+u++O//t7
+	 rTocNnQ/3RI6PfwvqfFpLSsrwf/18nmamfI4h0a/OzqbJS+8rmgCkHsk5a12lmWoiv
+	 /HdXH218QnAYRvuw1s0QAiyTu/qsJSFWb4xKiWCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 641/982] wifi: mac80211: set up the TX info early to fix failure paths
-Date: Wed, 30 Sep 2026 17:22:57 +0200
-Message-ID: <20260930152430.535551728@linuxfoundation.org>
+Subject: [PATCH 6.1 677/982] pppoatm: ensure a writable skb header and linear data
+Date: Wed, 30 Sep 2026 17:23:33 +0200
+Message-ID: <20260930152431.303005427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,109 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 50d3d79dc0743b616afb00d01a626c76758721f7 ]
+[ Upstream commit ecc7253683a3c55caa868ce0ee530fcb0044bd3c ]
 
-The previous commit 2c51457d930f ("wifi: mac80211: free ack status
-frame on TX header build failure") cleaned up the leak, but still
-left the code a bit messy and the failed SKB didn't get reported
-to userspace.
+In pppoatm_send(), LLC encapsulation checks whether there is sufficient
+headroom for the 4-byte LLC header, but does not ensure that the skb header
+is writable.
 
-Fix this up by initialising skb->cb[] earlier, which allows using
-ieee80211_free_txskb() and therefore reports it for the failure
-in ieee80211_build_hdr(), and unifies the ieee80211_skb_resize()
-failure path with it.
+Normal transmit packets passing through ppp_start_xmit() have their header
+unshared via skb_cow_head(). However, packets can also reach pppoatm_send()
+via PPP channel bridging (PPPIOCBRIDGECHAN) without going through
+ppp_start_xmit().
 
-Assisted-by: LLM
-Fixes: c3e7724b6bc2 ("mac80211: use ieee80211_free_txskb to fix possible skb leaks")
-Link: https://patch.msgid.link/20260908122838.201719-22-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Use skb_cow_head() to ensure both sufficient headroom and a writable
+header before pushing the LLC header.
+
+While at it:
+- Call pskb_may_pull(skb, 1) before inspecting skb->data[0] to prevent
+  out-of-bounds reads on zero-length or non-linear frames (e.g. from
+  bridging).
+- Defer SC_COMP_PROT protocol compression until after pppoatm_may_send()
+  succeeds. This eliminates the temporary skb allocation on admission failure
+  and completely removes the fragile "undo" heuristic at the nospace label,
+  avoiding any risk of reading uninitialized headroom or performing an
+  unbalanced skb_push().
+
+Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260912233048.3977192-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ net/atm/pppoatm.c | 42 +++++++++++++++++-------------------------
+ 1 file changed, 17 insertions(+), 25 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index d1e0510d1086f..00e8eda67f130 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2906,10 +2906,23 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 	 */
- 	skb = skb_share_check(skb, GFP_ATOMIC);
- 	if (unlikely(!skb)) {
--		ret = -ENOMEM;
--		goto free;
-+		/* skb_share_check() already freed the skb */
-+		if (info_id)
-+			ieee80211_remove_ack_skb(local, info_id);
-+		return ERR_PTR(-ENOMEM);
- 	}
+diff --git a/net/atm/pppoatm.c b/net/atm/pppoatm.c
+index 3e4f17d335feb..b668a30b67a8d 100644
+--- a/net/atm/pppoatm.c
++++ b/net/atm/pppoatm.c
+@@ -292,10 +292,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 	struct atm_vcc *vcc;
+ 	int ret;
  
-+	/* set this up so failure paths can clean up ack skb */
-+	info = IEEE80211_SKB_CB(skb);
-+	memset(info, 0, sizeof(*info));
-+
-+	info->flags = info_flags;
-+	if (info_id) {
-+		info->status_data = info_id;
-+		info->status_data_idr = 1;
++	if (!pskb_may_pull(skb, 1)) {
++		kfree_skb(skb);
++		return DROP_PACKET;
 +	}
-+	info->band = band;
 +
- 	hdr.frame_control = fc;
- 	hdr.duration_id = 0;
- 	hdr.seq_ctrl = 0;
-@@ -2948,10 +2961,8 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 		head_need += local->tx_headroom;
- 		head_need = max_t(int, 0, head_need);
- 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
--			ieee80211_free_txskb(&local->hw, skb);
--			skb = NULL;
- 			ret = -ENOMEM;
--			goto free;
-+			goto free_txskb;
- 		}
+ 	ATM_SKB(skb)->vcc = pvcc->atmvcc;
+ 	pr_debug("(skb=0x%p, vcc=0x%p)\n", skb, pvcc->atmvcc);
+-	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
+-		(void) skb_pull(skb, 1);
+ 
+ 	vcc = ATM_SKB(skb)->vcc;
+ 	bh_lock_sock(sk_atm(vcc));
+@@ -318,23 +321,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 
+ 	switch (pvcc->encaps) {		/* LLC encapsulation needed */
+ 	case e_llc:
+-		if (skb_headroom(skb) < LLC_LEN) {
+-			struct sk_buff *n;
+-			n = skb_realloc_headroom(skb, LLC_LEN);
+-			if (n != NULL &&
+-			    !pppoatm_may_send(pvcc, n->truesize)) {
+-				kfree_skb(n);
+-				goto nospace;
+-			}
+-			consume_skb(skb);
+-			skb = n;
+-			if (skb == NULL) {
+-				bh_unlock_sock(sk_atm(vcc));
+-				return DROP_PACKET;
+-			}
+-		} else if (!pppoatm_may_send(pvcc, skb->truesize))
++		if (skb_cow_head(skb, LLC_LEN)) {
++			bh_unlock_sock(sk_atm(vcc));
++			kfree_skb(skb);
++			return DROP_PACKET;
++		}
++		if (!pppoatm_may_send(pvcc, skb->truesize))
+ 			goto nospace;
+-		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
+ 		break;
+ 	case e_vc:
+ 		if (!pppoatm_may_send(pvcc, skb->truesize))
+@@ -347,6 +340,12 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 		return 1;
  	}
  
-@@ -2978,16 +2989,6 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 
- 	skb_reset_mac_header(skb);
- 
--	info = IEEE80211_SKB_CB(skb);
--	memset(info, 0, sizeof(*info));
--
--	info->flags = info_flags;
--	if (info_id) {
--		info->status_data = info_id;
--		info->status_data_idr = 1;
--	}
--	info->band = band;
--
- 	if (likely(!cookie)) {
- 		ctrl_flags |= u32_encode_bits(link_id,
- 					      IEEE80211_TX_CTRL_MLO_LINK);
-@@ -3011,16 +3012,17 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 					     pre_conf_link_id, link_id);
- #endif
- 			ret = -EINVAL;
--			goto free;
-+			goto free_txskb;
- 		}
- 	}
- 
- 	info->control.flags = ctrl_flags;
- 
- 	return skb;
-+ free_txskb:
-+	ieee80211_free_txskb(&local->hw, skb);
-+	return ERR_PTR(ret);
-  free:
--	if (info_id)
--		ieee80211_remove_ack_skb(local, info_id);
- 	kfree_skb(skb);
- 	return ERR_PTR(ret);
++	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
++		skb_pull(skb, 1);
++
++	if (pvcc->encaps == e_llc)
++		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
++
+ 	atm_account_tx(vcc, skb);
+ 	pr_debug("atm_skb(%p)->vcc(%p)->dev(%p)\n",
+ 		 skb, ATM_SKB(skb)->vcc, ATM_SKB(skb)->vcc->dev);
+@@ -356,13 +355,6 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 	return ret;
+ nospace:
+ 	bh_unlock_sock(sk_atm(vcc));
+-	/*
+-	 * We don't have space to send this SKB now, but we might have
+-	 * already applied SC_COMP_PROT compression, so may need to undo
+-	 */
+-	if ((pvcc->flags & SC_COMP_PROT) && skb_headroom(skb) > 0 &&
+-	    skb->data[-1] == '\0')
+-		(void) skb_push(skb, 1);
+ 	return 0;
  }
+ 
 -- 
 2.53.0
 
