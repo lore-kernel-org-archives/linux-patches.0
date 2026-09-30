@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC4B3E7BAD;
-	Wed, 30 Sep 2026 19:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F203EEAE7;
+	Wed, 30 Sep 2026 19:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796090; cv=none; b=KvVWjWSHPyl4wytG7qFwJBkTUKqNkgx6j94EeUm4QPAJFGqB4OerxkSGiAWYMg8bpNnzAj1SBvYZK9Si8CQtywFI13tig1CRZde9qUA1sM9FhempEbdzaU7SVBWhUuA69IQUrRVhNSHA8m0qtTzbzbZHrtC6WiLWaU7kAWQmoP8=
+	t=1790796093; cv=none; b=FHd2QcZILwLHI8EpRJYwnqTcrt7EcTJRPUk46SUFbzxBQFzVT4i0DGWA2QkZnU19RNwucLpGD2E7tRD54n2lbHsQnnBhoYRcbGMFjM3fliGhyqQG4FAvPbPjb10+j7rrNxqSxjPZv1sEq5/Ks8j3qRaIbE336u1mqY+MlNoj2N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796090; c=relaxed/simple;
-	bh=/1En8KQU0siprNg8xnZr8AtFRTByua4Yf2wOkRCXCBg=;
+	s=arc-20240116; t=1790796093; c=relaxed/simple;
+	bh=vlXAxyCxCYmwmMqOeNEUDaeyvj7UYApXa8i+/Yms18w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2z4JRqxVqW0lxSQA0nLVDd/27OaC4NJIAVQUDWbZkdu+5GpxfPfaOHA133n9gcXJzrO0ykAkJeZW74ylyaNLyLfYC/QuWrdZwMnE4MmoOR2mdeLL25aawhyhjzKL8W2ZlPZ9RtsKi55i5EeB/i0oa+Flz0lgUtER8RQygE4x2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVtiKiii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qoRDh/OtA4wOHYllaQhjXOAcr+k9yIaeDDbQOvatX3nM3pWA5h0kslhBrOeubuxo8KHgc4zPCLhZxvSlNrjOh4uRekMT26bQAEDtPsDVjdiJIB56EmYBnXAspQ6/dGFM00/Vey373xIX8vJDVDK2HXQ40wzx3N5gvyS6WTo/u9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwWom8Zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVtiKiii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3892A1F000FF;
-	Wed, 30 Sep 2026 19:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwWom8Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135641F000FF;
+	Wed, 30 Sep 2026 19:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796088;
-	bh=bXRlJOpixWC1aPyiVlXPE+z8gZqmXgC+mS+rDjOibxc=;
+	s=korg; t=1790796091;
+	bh=4tuFkljn8c/yDQeyeMGXRtJKE7E+JOueEoYIFzX/MMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sVtiKiiiiNzGCpXki01owiRE2ZS5EPqj+jNg8WSpVo/5qBq6+RjhtUH4bPv3IAmGz
-	 I979KPcz58CQsIkuAdNH1iFJ2ZqbxhvShGq60vJP43BUVMtS2MCPLDqc9g+Nd4KXiF
-	 +rGPSgj4v2Qqsr5E9cH0xc10Vj9RdV0hYwoXZo08=
+	b=rwWom8Zh+dF7Km3a9dWPGg6tZaYiQF/9GKX4iF7OP/aecxm7FdDJAGxlsIqbPNLME
+	 9CsshNt21B6qyHmM0+zo1MYxqggJpN4bjEgLE+vQybmA9LW3/ANI+YD+d1vAD+Zxsd
+	 Am8eIaCxVE58BwbYqdWYR5v2IuhOZrCNuKZoLrmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0789/1193] wifi: virt_wifi: dont transfer operstate before register
-Date: Wed, 30 Sep 2026 17:24:33 +0200
-Message-ID: <20260930152451.774346365@linuxfoundation.org>
+Subject: [PATCH 6.6 0790/1193] drm/ast: Automatically clean up poll helper
+Date: Wed, 30 Sep 2026 17:24:34 +0200
+Message-ID: <20260930152451.797180979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,54 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit e5c8d7acd31b27057ea42cd405d0b3ece097bc89 ]
+[ Upstream commit 10021ef27310279c850cf6cb38542c443a995e92 ]
 
-virt_wifi_newlink() calls netif_stacked_transfer_operstate() before
-register_netdevice(). If the lower device is dormant, that queues the
-new netdev on lweventlist while it is still uninitialized. If
-registration fails after that, for example because of an invalid name
-such as "bad/name", free_netdev() immediately frees the object. A
-later linkwatch_fire_event() then use-after-frees the list entry.
+Automatically clean up the conncetor-poll thread as part of the DRM
+device release. The new helper drmm_kms_helper_poll_init() provides
+a shared implementation for all drivers.
 
-Move the transfer to after netdev_upper_dev_link(), as macvlan and
-ipvlan already do.
+v6:
+- fix kernel doc comment (Sui, kernel test robot)
 
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Link: https://patch.msgid.link/f5a832fb0ab228ce6e2b5a91fba4ca8b79198a2f.1788948455.git.zihanx@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Acked-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240325200855.21150-14-tzimmermann@suse.de
+Stable-dep-of: 073a30d75f30 ("drm/vc4: Use managed KMS polling to fix UAF on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/virt_wifi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ast/ast_mode.c     |  4 +++-
+ drivers/gpu/drm/drm_probe_helper.c | 27 +++++++++++++++++++++++++++
+ include/drm/drm_probe_helper.h     |  2 ++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
-index 41a81642688d4..891ad282d14ea 100644
---- a/drivers/net/wireless/virtual/virt_wifi.c
-+++ b/drivers/net/wireless/virtual/virt_wifi.c
-@@ -554,7 +554,6 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
- 	}
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 27e660e92489f..8303d808ce175 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -1976,7 +1976,9 @@ int ast_mode_config_init(struct ast_device *ast)
  
- 	eth_hw_addr_inherit(dev, priv->lowerdev);
--	netif_stacked_transfer_operstate(priv->lowerdev, dev);
+ 	drm_mode_config_reset(dev);
  
- 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+-	drm_kms_helper_poll_init(dev);
++	ret = drmm_kms_helper_poll_init(dev);
++	if (ret)
++		return ret;
  
-@@ -580,6 +579,8 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
- 		goto unregister_netdev;
- 	}
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index c90afb5d08987..543ea28c312be 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -37,6 +37,7 @@
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_edid.h>
+ #include <drm/drm_fourcc.h>
++#include <drm/drm_managed.h>
+ #include <drm/drm_modeset_helper_vtables.h>
+ #include <drm/drm_print.h>
+ #include <drm/drm_probe_helper.h>
+@@ -949,6 +950,32 @@ void drm_kms_helper_poll_fini(struct drm_device *dev)
+ }
+ EXPORT_SYMBOL(drm_kms_helper_poll_fini);
  
-+	netif_stacked_transfer_operstate(priv->lowerdev, dev);
++static void drm_kms_helper_poll_init_release(struct drm_device *dev, void *res)
++{
++	drm_kms_helper_poll_fini(dev);
++}
 +
- 	dev->priv_destructor = virt_wifi_net_device_destructor;
- 	priv->being_deleted = false;
- 	priv->is_connected = false;
++/**
++ * drmm_kms_helper_poll_init - initialize and enable output polling
++ * @dev: drm_device
++ *
++ * This function initializes and then also enables output polling support for
++ * @dev similar to drm_kms_helper_poll_init(). Polling will automatically be
++ * cleaned up when the DRM device goes away.
++ *
++ * See drm_kms_helper_poll_init() for more information.
++ *
++ * Returns:
++ * 0 on success, or a negative errno code otherwise.
++ */
++int drmm_kms_helper_poll_init(struct drm_device *dev)
++{
++	drm_kms_helper_poll_init(dev);
++
++	return drmm_add_action_or_reset(dev, drm_kms_helper_poll_init_release, dev);
++}
++EXPORT_SYMBOL(drmm_kms_helper_poll_init);
++
+ static bool check_connector_changed(struct drm_connector *connector)
+ {
+ 	struct drm_device *dev = connector->dev;
+diff --git a/include/drm/drm_probe_helper.h b/include/drm/drm_probe_helper.h
+index fad3c4003b2b5..7066a3eca93c5 100644
+--- a/include/drm/drm_probe_helper.h
++++ b/include/drm/drm_probe_helper.h
+@@ -16,6 +16,8 @@ int drm_helper_probe_single_connector_modes(struct drm_connector
+ int drm_helper_probe_detect(struct drm_connector *connector,
+ 			    struct drm_modeset_acquire_ctx *ctx,
+ 			    bool force);
++
++int drmm_kms_helper_poll_init(struct drm_device *dev);
+ void drm_kms_helper_poll_init(struct drm_device *dev);
+ void drm_kms_helper_poll_fini(struct drm_device *dev);
+ bool drm_helper_hpd_irq_event(struct drm_device *dev);
 -- 
 2.53.0
 
