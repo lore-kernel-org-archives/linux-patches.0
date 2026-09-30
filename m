@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA28F4D6C3F;
-	Wed, 30 Sep 2026 16:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A6F514770;
+	Wed, 30 Sep 2026 16:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786570; cv=none; b=j6bvmkKO+RW5QDeUGFPPp9VhpZeEoUpyRyZEUJd/41lgUVRCU/Q3gh83PjEaN/wEBV70jk9vcBQR+5Q3ewt9LX3VAi2cO6QxQX7rLahdI2Uo5LyrYgnhe3UPpaL+8bPchmpGRA2oSGe2KVfDLHOHEwYvJEnDFzJKyUOHmLA4z20=
+	t=1790786572; cv=none; b=OIebUtQJpwPUtZ9dBDq3xnWLCM4fYZA7vtfH3+pNU/lrhduxLv9znSmFvMGuQplvZP/I0s61TMNeCVpRXVr8VIMzJ67kyVTBSSp3SOpPf24hDZ1YhaCbVf2KyoJ7c6fCyr1hr19NBgc2dsvqz2qGswArTkqxndJicnmyawT3ZQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786570; c=relaxed/simple;
-	bh=b94ox2LUr0pVqYPpkjW/fzAw2ch6yuQ9lMbw3/vUAYM=;
+	s=arc-20240116; t=1790786572; c=relaxed/simple;
+	bh=Yc67m/HjDQJXL1WKhJX/GxFSfnyz09/Gxk/XI9yck8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NW2xBxIrlwDzSFIaprq/sDBSNNmM2WsmsomBJlZsvSGJgxJdhBT9Ue9Wn1BHYvSNNo8kWdbCWo2J8W99tDrfuhbaf3ud+ht/sFYNTK84h9Ni9bxQkvcoIDoyoRgy38/2RxHRf6XW3bGs2W00L5MUraxg9Krxgd/LjV7pGSslxCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efeEmFGj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MSkPz4h/Ji+lXOzcWH1ax1M3PxCpMvy2Tdft6+DYhu2/fDIsFkoBYWS/F1qnIqveM9M3MygWTr3OFusKBCrTxHne6bfe/kRhlPUwRu0heuP2xp6Ef6CJPjroXwNibikHbIwS/LCSrM2TbmCxY9CNQjWsRoe8+xK7YXTKTu3Qwfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRdBK1gM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efeEmFGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6B91F000FF;
-	Wed, 30 Sep 2026 16:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRdBK1gM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAEF1F00898;
+	Wed, 30 Sep 2026 16:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786568;
-	bh=ij9jPbS0w313uYiYb8+XMGbWrvP2pgF2uH2BgK95HDM=;
+	s=korg; t=1790786571;
+	bh=VpEaFLs3YiC6helhyaZuVdEGHRfAuY7f0JwFc+p/qNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efeEmFGjSNAKaAWLAUSuVDVmA0apzq0KS21JNITqKzVd/BnazCSn7cMOWYnEtblWr
-	 yh8HAzbV1hooRWYWBdhVcLIlVoFnXviQxsuwwGrih36dW0ojRQEDMLhcDoFdBylO5d
-	 zbDPzWySpcJB4e3mRppDt0DwvVetUi+PPmRGbXgI=
+	b=xRdBK1gMzfx+zzTtqao5qFpRScqgAJhF9aALubiR7e+SaEYWJSuMOsvCD52j2CbwP
+	 RYu6HUb9VdZbLjQZlOeci/ZfMhqEYBNlyxm+KEPWMjngrsrmLzh5hqcsQJSoQAk1ty
+	 u0DNV7TvXg9Ke8pJql+oulo35dpPbH/uYnGIoGrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Weiming Shi <shiweiming@moonshot.ai>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 907/982] net: xps: reject an out of range traffic class
-Date: Wed, 30 Sep 2026 17:27:23 +0200
-Message-ID: <20260930152436.220676514@linuxfoundation.org>
+Subject: [PATCH 6.1 908/982] tcp: fix use-after-free of retransmit_skb_hint in tcp_send_synack()
+Date: Wed, 30 Sep 2026 17:27:24 +0200
+Message-ID: <20260930152436.243819861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,69 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Yilin Zhang <yilinzhang@moonshot.ai>
 
-[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
+[ Upstream commit fe99bbeee5c5dbd3abc30721a8079ced59649d97 ]
 
-Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
-dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
-lowers dev->num_tc without touching either array.
+When tcp_send_synack() replaces the cloned SYN skb at the head of the
+retransmit queue with a copy, it frees the original with
+tcp_rtx_queue_unlink_and_free() and only repairs tp->highest_sack.
+tp->retransmit_skb_hint keeps pointing at the freed
+skbuff_fclone_cache object.
 
-netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
-netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
-entry is handed out as a traffic class >= dev->num_tc. Taking that
-class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
-negative one and indexes an XPS map sized for dev->num_tc classes:
+The dangling hint is read in tcp_verify_retransmit_hint() and used as
+the root of the rbtree walk in tcp_xmit_retransmit_queue().  An
+unprivileged TFO client (sendmsg(MSG_FASTOPEN)) can arm the hint with
+an attacker-supplied ICMP fragmentation-needed message, after which a
+simultaneous open frees the armed SYN skb:
 
-	tci = j * num_tc + tc;
-	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
+  BUG: KASAN: slab-use-after-free in tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+  Read of size 4 at addr ffff88800604d928 by task swapper/1/0
+  Call Trace:
+   tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+   tcp_simple_retransmit (net/ipv4/tcp_input.c:3158)
+   tcp_v4_err (net/ipv4/tcp_ipv4.c:587)
 
-attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
-in the mask, so a class that is not below num_tc pushes tci past the end
-of the map for the last ids and the store overruns it.
+Sync the hint to the copy.
 
-Any caller that lowers num_tc leaves such entries behind, and
-mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
-netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
-still describe txq 1..7. The splat is from an XPS write to txq 2 on a
-veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
-j == 6 stores one past the end of the 88-byte map:
-
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
-  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
-   __netif_set_xps_queue (net/core/dev.c:2954)
-   xps_rxqs_store (net/core/net-sysfs.c:1880)
-   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
-  Allocated by task 634:
-   __kmalloc_noprof (mm/slub.c:5439)
-   __netif_set_xps_queue (net/core/dev.c:2937)
-  The buggy address is located 0 bytes to the right of
-   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
-
-Reject a class the map has no room for.
-
-Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
+Fixes: c31b70c9968f ("tcp: Add logic to check for SYN w/ data in tcp_simple_retransmit")
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Tested-by: Weiming Shi <shiweiming@moonshot.ai>
+Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/8a9dff4063a2745653b7e88ceb745d75efa16e68.1790224474.git.yilinzhang@moonshot.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_output.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 1f5d42c726d8b..3b81f1787222f 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2630,7 +2630,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 256e0a755d544..39f25b886678c 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3551,6 +3551,7 @@ void tcp_send_active_reset(struct sock *sk, gfp_t priority)
+  */
+ int tcp_send_synack(struct sock *sk)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct sk_buff *skb;
  
- 		tc = netdev_txq_to_tc(dev, index);
--		if (tc < 0)
-+		if (tc < 0 || tc >= num_tc)
- 			return -EINVAL;
- 	}
- 
+ 	skb = tcp_rtx_queue_head(sk);
+@@ -3568,6 +3569,8 @@ int tcp_send_synack(struct sock *sk)
+ 			if (!nskb)
+ 				return -ENOMEM;
+ 			INIT_LIST_HEAD(&nskb->tcp_tsorted_anchor);
++			if (skb == tp->retransmit_skb_hint)
++				tp->retransmit_skb_hint = nskb;
+ 			tcp_highest_sack_replace(sk, skb, nskb);
+ 			tcp_rtx_queue_unlink_and_free(skb, sk);
+ 			__skb_header_release(nskb);
 -- 
 2.53.0
 
