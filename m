@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2196C52F262;
-	Wed, 30 Sep 2026 18:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF61B51E451;
+	Wed, 30 Sep 2026 18:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793774; cv=none; b=sO8nEr6ZUm/rHTw9NpT+R2oPYEOYP/HorY97lfNSqSsUTwv6nOxkavNLfjNyyrX/w9WeYaMhvY65AyOKod6Kv7zXYJnsS3GfkcpkEYN1UlcW56R9aCAsloUr8g/DUwgY7wXffcEAKTHk6zxM4aX+XBi8NM+lTOrwA7ksLKnKlYo=
+	t=1790793777; cv=none; b=EwSWd5d7qYqVlT+Gi2P2a5I95xJEn1F6WgR1gCCwmxI8xMXauhpSHQlR734vQpLEAo61FdUcn58TXliK2PpPczwgmZCV2WX6s1BsGw5jD04ALVpfJwN7fLZ76pwyySthANGsolXxqlrvuyntKrKft+JJwDDAv7kqnrzLRRUPiM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793774; c=relaxed/simple;
-	bh=VLB3MhiNAmXFTw/DY00vTP08WUO8DKPIao7zjs//ciM=;
+	s=arc-20240116; t=1790793777; c=relaxed/simple;
+	bh=MrGH/NgxWYLv0uUPYcqQ9gAKgEAzglvZdv74EyVQv4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0vs73h1Y5khTYxCwwgJ+R3cffvgnY4KYgNPJKjpBMiHgcfWzd3Xbo44+ymOZRIWHd3yVLhKSTLi9iRUrNj1x/Rz4nJmNWzX4I3Mp2LLvTI0goEQEBCCEXcbi6/8xZo5/W4xkFRC3uqggUMNCeLbwzz+HAk4DH0T7cYWPEAsPjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoAEJdDM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PSRq5kAdxfi/ka268CpqaiVLT/dwMFVu42cklJ6C8Et8910MMnhRRv2QYLEALPny1+h7AeFGSvMdWQKXGoSChUdaYg2JRd0kaixjWjbzVNhnXH7Gb3OlNSwVmBQ3CKndVSKhNU0E+rIJ6RFUAYdPhb3ZP89KYGV8ZXeoz07u85w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNwiVi3T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoAEJdDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7651F000FF;
-	Wed, 30 Sep 2026 18:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNwiVi3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C691F000FF;
+	Wed, 30 Sep 2026 18:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793773;
-	bh=zN522imgQhz/Gi4Yk6eubeZXoNgxW+T5XO3ev6DtBrY=;
+	s=korg; t=1790793775;
+	bh=IzlrO/btLG8VMZQjG5WxI030dBzA6Rf7rkfpU1D1sJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eoAEJdDMII9QhykNSa5EE7oNR0HmZDmWc+0eRIcrdyuibTeaHnnhgPBIdRizmQbyD
-	 O/Fq6OA8Yrey47Fm2x9xOsB48WoUVEmO0Klo6N+FtfbgXyUHBMBCzbDhLmGpn5kRJ+
-	 8lc+26lz+6i+wRb4PVQvZVxotPjeKSu26Qz3CDmc=
+	b=yNwiVi3TD5+N2RW67lt89iRU5RZPjA0xGyWtxaUUnakg9ZtcODA/uqq/0UPjAmPcP
+	 rqZ3G+3fvNkRlKgqqg09qVuM7B90Z0z4kMH6PEIbaWxvi3Kz0nxMeqsDKKCdVYEWky
+	 tfLwaBAhnUGR9EcJ0gJzaMJEXPwqFW63Lwn4IP4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 374/395] perf/x86/intel: Fix GRT PEBS load/store direction for latency events, to fix sample classification
-Date: Wed, 30 Sep 2026 17:30:36 +0200
-Message-ID: <20260930152348.810000552@linuxfoundation.org>
+Subject: [PATCH 6.18 375/395] perf/x86/intel: Update event constraints and cache_extra_regsfor LNL
+Date: Wed, 30 Sep 2026 17:30:37 +0200
+Message-ID: <20260930152348.832757681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,77 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 89dc568e8c0be60e05e5fcd0b528c79077d7b84b ]
+[ Upstream commit 331c3e4fa39a87560c09bdd878652090ae040b69 ]
 
-On Gracemont, intel_grt_pebs_event_constraints[] applies LAT_CONSTRAINT
-constraints to MEM_UOPS_RETIRED.{LOAD,STORE}_LATENCY, but does not set
-explicit LOAD/STORE flags for those events.
+Update perf hard-coded event constraints and cache_extra_regs[] for
+Lunarlake according to the latest LNL perfmon events (V1.22).
 
-The PEBS latency path (pebs_latency_data(), via __grt_latency_data())
-uses the event flags to determine memory operation direction. Without an
-explicit STORE flag, samples from MEM_UOPS_RETIRED.STORE_LATENCY can be
-misclassified as LOADs.
+LNL introduces new extra register values for the OCR L3 cache events,
+so introduce lnc_hw_cache_extra_regs[] and skt_hw_cache_extra_regs[] to
+reflect the changes.
 
-Set explicit LOAD/STORE flags in intel_grt_pebs_event_constraints[] for:
+LNL perfmon events:
+https://github.com/intel/perfmon/blob/main/LNL/events/lunarlake_lioncove_core.json
+https://github.com/intel/perfmon/blob/main/LNL/events/lunarlake_skymont_core.json
 
-- MEM_UOPS_RETIRED.LOAD_LATENCY
-- MEM_UOPS_RETIRED.STORE_LATENCY
-
-Also update __grt_latency_data() to explicitly interpret these flags when
-assigning the sampled memory operation direction.
-
-This fixes incorrect STORE sample classification.
-
-Fixes: 39a41278f041 ("perf/x86/intel: Fix PEBS memory access info encoding for ADL")
 Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@vger.kernel.org> # v7.2+
-Link: https://patch.msgid.link/20260917015234.981153-2-dapeng1.mi@linux.intel.com
+Link: https://patch.msgid.link/20260515061143.338553-7-dapeng1.mi@linux.intel.com
+
+[Backport to 6.18: retain the Lion Cove PEBS constraint additions needed
+by 7c944595cc43 ("perf/x86/intel: Remove incorrect LionCove PEBS data-source
+constraints"). Keep the matching regular counter masks for
+TOPDOWN.MEMORY_BOUND_SLOTS (0x10a4, 0x8) and MEM_INST_RETIRED.ANY
+(0x87d0, 0x3ff), since that fix removes their PEBS-specific entries and
+falls back to the regular constraint table.
+
+Omit the unrelated cache extra-register tables and PMU initialization
+changes, which depend on cache-event refactoring and intel_pmu_init_cmt()
+absent from 6.18. Also omit the unrelated fixed-counter, non-PEBS OCR,
+0x00e0, and Skymont constraint updates. No functions are added.]
+
+Stable-dep-of: 7c944595cc43 ("perf/x86/intel: Remove incorrect LionCove PEBS data-source constraints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/x86/events/intel/core.c |    3 ++-
+ arch/x86/events/intel/ds.c   |    8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -412,11 +412,12 @@ static struct event_constraint intel_lnc
+ 	INTEL_UEVENT_CONSTRAINT(0x0ca3, 0x4),
+ 	INTEL_UEVENT_CONSTRAINT(0x04a4, 0x1),
+ 	INTEL_UEVENT_CONSTRAINT(0x08a4, 0x1),
+-	INTEL_UEVENT_CONSTRAINT(0x10a4, 0x1),
++	INTEL_UEVENT_CONSTRAINT(0x10a4, 0x8),
+ 	INTEL_UEVENT_CONSTRAINT(0x01b1, 0x8),
+ 	INTEL_UEVENT_CONSTRAINT(0x01cd, 0x3fc),
+ 	INTEL_UEVENT_CONSTRAINT(0x02cd, 0x3),
+ 
++	INTEL_UEVENT_CONSTRAINT(0x87d0, 0x3ff),
+ 	INTEL_EVENT_CONSTRAINT_RANGE(0xd0, 0xdf, 0xf),
+ 
+ 	INTEL_UEVENT_CONSTRAINT(0x00e0, 0xf),
 --- a/arch/x86/events/intel/ds.c
 +++ b/arch/x86/events/intel/ds.c
-@@ -315,6 +315,7 @@ static inline void pebs_set_tlb_lock(u64
- static u64 __grt_latency_data(struct perf_event *event, u64 status,
- 			       u8 dse, bool tlb, bool lock, bool blk)
- {
-+	union perf_mem_data_src src;
- 	u64 val;
+@@ -1218,6 +1218,13 @@ struct event_constraint intel_lnc_pebs_e
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x100, 0x100000000ULL),	/* INST_RETIRED.PREC_DIST */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x0400, 0x800000000ULL),
  
- 	WARN_ON_ONCE(is_hybrid() &&
-@@ -330,7 +331,16 @@ static u64 __grt_latency_data(struct per
- 	else
- 		val |= P(BLK, NA);
- 
--	return val;
-+	src.val = val;
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012a, 0x1),		/* OCR.* events */
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012b, 0x1),		/* OCR.* events */
 +
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_LDLAT | PERF_X86_EVENT_PEBS_LD_HSW))
-+		src.mem_op = P(OP, LOAD);
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_STLAT | PERF_X86_EVENT_PEBS_ST_HSW))
-+		src.mem_op = P(OP, STORE);
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x04a4, 0x1),		/* TOPDOWN.BAD_SPEC_SLOTS */
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x08a4, 0x1),		/* TOPDOWN.BR_MISPREDICT_SLOTS */
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x10a4, 0x8),		/* TOPDOWN.MEMORY_BOUND_SLOTS */
 +
-+	return src.val;
- }
+ 	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3fc),
+ 	INTEL_HYBRID_STLAT_CONSTRAINT(0x2cd, 0x3),
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
+@@ -1227,6 +1234,7 @@ struct event_constraint intel_lnc_pebs_e
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x42d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_STORES */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x81d0, 0xf),	/* MEM_INST_RETIRED.ALL_LOADS */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x82d0, 0xf),	/* MEM_INST_RETIRED.ALL_STORES */
++	INTEL_FLAGS_UEVENT_CONSTRAINT(0x87d0, 0x3ff),		/* MEM_INST_RETIRED.ANY */
  
- u64 grt_latency_data(struct perf_event *event, u64 status)
-@@ -1010,8 +1020,8 @@ struct event_constraint intel_glm_pebs_e
- 
- struct event_constraint intel_grt_pebs_event_constraints[] = {
- 	/* Allow all events as PEBS with no flags */
--	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
--	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0x3f),
-+	INTEL_HYBRID_LDLAT_CONSTRAINT(0x5d0, 0x3),
-+	INTEL_HYBRID_STLAT_CONSTRAINT(0x6d0, 0x3f),
- 	EVENT_CONSTRAINT_END
- };
+ 	INTEL_FLAGS_EVENT_CONSTRAINT_DATALA_LD_RANGE(0xd1, 0xd4, 0xf),
  
 
 
