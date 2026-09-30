@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0706F50B8BB;
-	Wed, 30 Sep 2026 16:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6299C4F93D0;
+	Wed, 30 Sep 2026 16:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785643; cv=none; b=bkADZQz51uDUg8WPGJMQbWkgGINqIUbDuND95O9H+8vKLs1tSqDvx/K5iVQaU+ZHw7kMas/+RQ4xc1YEztxtN0r5MTlVd2CJXrgoDKFLzKNO4GzbIrhFhRnFUm742K2ukIzAFPi4mDZlYwV1WXWliERRwxdVbmSU8E593vj0Csk=
+	t=1790785644; cv=none; b=RQatw0b6a7/YMgYyGGb/ortRBqz9Z19AWhnXas0Zvmp5Rk456Er4w1Rl4STk7Pzvpy3/NhA3x/5S9Y4t4zsHBBANrPQ7SoXW4/pv/g9PUBgGyLrCXsaKMBFz51cPnqlVUbRZxBjkwzRYgKioc74IOKJf34bcH1n/ee/z74Glz30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785643; c=relaxed/simple;
-	bh=R/2Yr5eLohKJ28sSxJnSv+0O0cm/NnFOJ/cnehrFKxc=;
+	s=arc-20240116; t=1790785644; c=relaxed/simple;
+	bh=YUjaioy5we3OvK8XvpDolIx77ljH4ghp4bvwRLKFKDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ROw2kRJYpVU4zQGhYLAOL+migaWjlDEN6z317jIR3o7/74oIPbAzl0r8sEcEcRRvopxT5U1zCbA81AQYht84ucCpYJrSAlfYCTIs0or1nGEsX40cIORSVZja+8y0dOCk9YYYHce9ds7hwLl2WoD68qbbwG+wExqlZ3vX9KIMl3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9Z34h+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eAYJRtSycUtcnutqm29X0bYOOFP2cXoOwythWeJ9iNnThhSA2TzaBwyU8e3xQGorheUSvWV43jkf+1f8VAips23C+d+TlZ7f+lUGy+x8wTnlWet1JsWYT0xFAW4tYrYPmjuVOtBh+hd/Elxpnc577Usg4A8BNcO/Cn6z1Mdbq90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIF97zin; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9Z34h+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC181F00898;
-	Wed, 30 Sep 2026 16:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIF97zin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571381F00893;
+	Wed, 30 Sep 2026 16:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785637;
-	bh=iNc9/Ul5qfStvq7ev0uz19pN3R4aiO6ckWfkUPG88sg=;
+	s=korg; t=1790785639;
+	bh=hbgGbkR1nUbVIQx9if0GLkWhrb3c7Fgv82MNqw8NOeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n9Z34h+1Kd8jpROWr7hLf1gferB0sQNJYbzxf+H+H7hecir7+YqlSzgzbL7xFbZsm
-	 qYKIoiBW6apdJvjRuds8ib3if5D3tPRdX3mC5Udce/R0sBAxdvvfFsmhwCgqUl2u/P
-	 pKc8hcgY0Yl295/aKiM9ZWhP8UzvAhlhZh36rkto=
+	b=RIF97zinUOelpdOe72oybOX/5/7Nw1d2dAixXiKGX+7jGSfjS6aPU6P+tUW+Nk4aH
+	 1gpiY9IXv8czWJ3VZqnBF/8Qjpc4BuVpv+NqkUADy8nZBOeGifzOGdG681vlU7bolG
+	 ZEI6IugKJ5X8w799F46d3hBF+72MP8XOxv9PIwpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Song Liu <song@kernel.org>,
-	Tingmao Wang <m@maowtm.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 578/982] selftests/landlock: Add disconnected leafs and branch test suites
-Date: Wed, 30 Sep 2026 17:21:54 +0200
-Message-ID: <20260930152429.191763414@linuxfoundation.org>
+Subject: [PATCH 6.1 579/982] Revert "alpha: dont leak hardware-fabricated FP exception bits to user space"
+Date: Wed, 30 Sep 2026 17:21:55 +0200
+Message-ID: <20260930152429.213602514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -47,1137 +43,182 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+This reverts commit 096eeed5c31bcfcc04fda3faeb87fafad3890ba8.
 
-[ Upstream commit 54f9baf537b0a091adad860ec92e3e18e0a0754c ]
-
-Test disconnected directories with two test suites
-(layout4_disconnected_leafs and layout5_disconnected_branch) and 43
-variants to cover the main corner cases.
-
-These tests are complementary to the previous commit.
-
-Add test_renameat() and test_exchangeat() helpers.
-
-Test coverage for security/landlock is 92.1% of 1927 lines according to
-LLVM 20.
-
-Cc: Günther Noack <gnoack@google.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Tingmao Wang <m@maowtm.org>
-Link: https://lore.kernel.org/r/20251128172200.760753-5-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[mic: Backport: skip empty rules, use the older fixture teardown, and
-explicitly detach nested mounts]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/fs_test.c | 1064 ++++++++++++++++++++
- 1 file changed, 1064 insertions(+)
+ arch/alpha/kernel/traps.c  |  6 +--
+ arch/alpha/math-emu/math.c | 88 +++++---------------------------------
+ 2 files changed, 14 insertions(+), 80 deletions(-)
 
-diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index 4c855292113fc..2a11c4a26d71c 100644
---- a/tools/testing/selftests/landlock/fs_test.c
-+++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -229,6 +229,16 @@ static void cleanup_layout(struct __test_metadata *const _metadata)
- 	EXPECT_EQ(0, remove_path(TMP_DIR));
- }
+diff --git a/arch/alpha/kernel/traps.c b/arch/alpha/kernel/traps.c
+index 175be96f5644f..de72bd837c5af 100644
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -198,12 +198,12 @@ static long dummy_emul(void) { return 0; }
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
++long (*alpha_fp_emul) (unsigned long pc)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc, unsigned long summary);
++long alpha_fp_emul (unsigned long pc);
+ #endif
  
-+static void
-+cleanup_layout_with_nested_mounts(struct __test_metadata *const _metadata)
-+{
-+	set_cap(_metadata, CAP_SYS_ADMIN);
-+	/* Also detaches disconnected bind mounts nested below TMP_DIR. */
-+	EXPECT_EQ(0, umount2(TMP_DIR, MNT_DETACH));
-+	clear_cap(_metadata, CAP_SYS_ADMIN);
-+	EXPECT_EQ(0, remove_path(TMP_DIR));
-+}
-+
- static void create_layout1(struct __test_metadata *const _metadata)
+ asmlinkage void
+@@ -217,7 +217,7 @@ do_entArith(unsigned long summary, unsigned long write_mask,
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4, summary);
++			si_code = alpha_fp_emul(regs->pc - 4);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+diff --git a/arch/alpha/math-emu/math.c b/arch/alpha/math-emu/math.c
+index 14b0bc325914d..4212258f3cfdc 100644
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -57,13 +57,13 @@ MODULE_DESCRIPTION("FP Software completion module");
+ MODULE_LICENSE("GPL v2");
+ 
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
++extern long (*alpha_fp_emul) (unsigned long pc);
+ 
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc, unsigned long summary);
++static long (*save_emul) (unsigned long pc);
+ 
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long, unsigned long);
++long do_alpha_fp_emul(unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
  {
- 	create_file(_metadata, file1_s1d1);
-@@ -587,6 +597,9 @@ static int create_ruleset(struct __test_metadata *const _metadata,
- 	}
+@@ -91,22 +91,7 @@ module_exit(alpha_fp_emul_cleanup_module);
  
- 	for (i = 0; rules[i].path; i++) {
-+		if (!rules[i].access)
-+			continue;
-+
- 		add_path_beneath(_metadata, ruleset_fd, rules[i].access,
- 				 rules[i].path);
- 	}
-@@ -1881,6 +1894,22 @@ static int test_exchange(const char *const oldpath, const char *const newpath)
- 	return 0;
- }
  
-+static int test_renameat(int olddirfd, const char *oldpath, int newdirfd,
-+			 const char *newpath)
-+{
-+	if (renameat2(olddirfd, oldpath, newdirfd, newpath, 0))
-+		return errno;
-+	return 0;
-+}
-+
-+static int test_exchangeat(int olddirfd, const char *oldpath, int newdirfd,
-+			   const char *newpath)
-+{
-+	if (renameat2(olddirfd, oldpath, newdirfd, newpath, RENAME_EXCHANGE))
-+		return errno;
-+	return 0;
-+}
-+
- TEST_F_FORK(layout1, rename_file)
+ /*
+- * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
+- * software completion bit; bits 1 through 5 report the exceptions the
+- * hardware attributed to the trapping instruction, and lie at the same
+- * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
+- */
+-#define EXC_SUM_INV	(1UL << 1)
+-#define EXC_SUM_DZE	(1UL << 2)
+-#define EXC_SUM_OVF	(1UL << 3)
+-#define EXC_SUM_UNF	(1UL << 4)
+-#define EXC_SUM_INE	(1UL << 5)
+-#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
+-			 | EXC_SUM_UNF | EXC_SUM_INE)
+-
+-/*
+- * Emulate the floating point instruction at address PC.  SUMMARY is the
+- * exception summary register the trap was delivered with.  Returns -1 if the
++ * Emulate the floating point instruction at address PC.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
+  *
+@@ -115,7 +100,7 @@ module_exit(alpha_fp_emul_cleanup_module);
+  * stick the result of the operation into the appropriate register.
+  */
+ long
+-alpha_fp_emul (unsigned long pc, unsigned long summary)
++alpha_fp_emul (unsigned long pc)
  {
- 	const struct rule rules[] = {
-@@ -3849,6 +3878,1041 @@ TEST_F_FORK(layout1_bind, path_disconnected_link)
- 	}
- }
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -320,56 +305,12 @@ alpha_fp_emul (unsigned long pc, unsigned long summary)
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+-	}
  
-+/*
-+ * layout4_disconnected_leafs with bind mount and renames:
-+ *
-+ * tmp
-+ * ├── s1d1
-+ * │   └── s1d2 [source of the bind mount]
-+ * │       ├── s1d31
-+ * │       │   └── s1d41 [now renamed beneath s3d1]
-+ * │       │       ├── f1
-+ * │       │       └── f2
-+ * │       └── s1d32
-+ * │           └── s1d42 [now renamed beneath s4d1]
-+ * │               ├── f3
-+ * │               └── f4
-+ * ├── s2d1
-+ * │   └── s2d2 [bind mount of s1d2]
-+ * │       ├── s1d31
-+ * │       │   └── s1d41 [opened FD, now renamed beneath s3d1]
-+ * │       │       ├── f1
-+ * │       │       └── f2
-+ * │       └── s1d32
-+ * │           └── s1d42 [opened FD, now renamed beneath s4d1]
-+ * │               ├── f3
-+ * │               └── f4
-+ * ├── s3d1
-+ * │   └── s1d41 [renamed here]
-+ * │       ├── f1
-+ * │       └── f2
-+ * └── s4d1
-+ *     └── s1d42 [renamed here]
-+ *         ├── f3
-+ *         └── f4
-+ */
-+/* clang-format off */
-+FIXTURE(layout4_disconnected_leafs) {
-+	int s2d2_fd;
-+};
-+/* clang-format on */
-+
-+FIXTURE_SETUP(layout4_disconnected_leafs)
-+{
-+	prepare_layout(_metadata);
-+
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d31/s1d41/f1");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d31/s1d41/f2");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d32/s1d42/f3");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d32/s1d42/f4");
-+	create_directory(_metadata, TMP_DIR "/s2d1/s2d2");
-+	create_directory(_metadata, TMP_DIR "/s3d1");
-+	create_directory(_metadata, TMP_DIR "/s4d1");
-+
-+	self->s2d2_fd =
-+		open(TMP_DIR "/s2d1/s2d2", O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, self->s2d2_fd);
-+
-+	set_cap(_metadata, CAP_SYS_ADMIN);
-+	ASSERT_EQ(0, mount(TMP_DIR "/s1d1/s1d2", TMP_DIR "/s2d1/s2d2", NULL,
-+			   MS_BIND, NULL));
-+	clear_cap(_metadata, CAP_SYS_ADMIN);
-+}
-+
-+FIXTURE_TEARDOWN(layout4_disconnected_leafs)
-+{
-+	/* Teardown runs before this mount namespace exits. */
-+
-+	/* Removes files after renames. */
-+	remove_path(TMP_DIR "/s3d1/s1d41/f1");
-+	remove_path(TMP_DIR "/s3d1/s1d41/f2");
-+	remove_path(TMP_DIR "/s4d1/s1d42/f1");
-+	remove_path(TMP_DIR "/s4d1/s1d42/f3");
-+	remove_path(TMP_DIR "/s4d1/s1d42/f4");
-+	remove_path(TMP_DIR "/s4d1/s1d42/f5");
-+
-+	cleanup_layout_with_nested_mounts(_metadata);
-+}
-+
-+FIXTURE_VARIANT(layout4_disconnected_leafs)
-+{
-+	/*
-+	 * Parent of the bind mount source.  It should always be ignored when
-+	 * testing against files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_s1d1;
-+	/*
-+	 * Source of bind mount (to s2d2).  It should always be enforced when
-+	 * testing against files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_s1d2;
-+	/*
-+	 * Original parent of s1d41.  It should always be ignored when testing
-+	 * against files under the s1d41 disconnected directory.
-+	 */
-+	const __u64 allowed_s1d31;
-+	/*
-+	 * Original parent of s1d42.  It should always be ignored when testing
-+	 * against files under the s1d42 disconnected directory.
-+	 */
-+	const __u64 allowed_s1d32;
-+	/*
-+	 * Opened and disconnected source directory.  It should always be enforced
-+	 * when testing against files under the s1d41 disconnected directory.
-+	 */
-+	const __u64 allowed_s1d41;
-+	/*
-+	 * Opened and disconnected source directory.  It should always be enforced
-+	 * when testing against files under the s1d42 disconnected directory.
-+	 */
-+	const __u64 allowed_s1d42;
-+	/*
-+	 * File in the s1d41 disconnected directory.  It should always be enforced
-+	 * when testing against itself under the s1d41 disconnected directory.
-+	 */
-+	const __u64 allowed_f1;
-+	/*
-+	 * File in the s1d41 disconnected directory.  It should always be enforced
-+	 * when testing against itself under the s1d41 disconnected directory.
-+	 */
-+	const __u64 allowed_f2;
-+	/*
-+	 * File in the s1d42 disconnected directory.  It should always be enforced
-+	 * when testing against itself under the s1d42 disconnected directory.
-+	 */
-+	const __u64 allowed_f3;
-+	/*
-+	 * Parent of the bind mount destination.  It should always be enforced when
-+	 * testing against files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_s2d1;
-+	/*
-+	 * Directory covered by the bind mount.  It should always be ignored when
-+	 * testing against files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_s2d2;
-+	/*
-+	 * New parent of the renamed s1d41.  It should always be ignored when
-+	 * testing against files under the s1d41 disconnected directory.
-+	 */
-+	const __u64 allowed_s3d1;
-+	/*
-+	 * New parent of the renamed s1d42.  It should always be ignored when
-+	 * testing against files under the s1d42 disconnected directory.
-+	 */
-+	const __u64 allowed_s4d1;
-+
-+	/* Expected result of the call to open([fd:s1d41]/f1, O_RDONLY). */
-+	const int expected_read_result;
-+	/* Expected result of the call to renameat([fd:s1d41]/f1, [fd:s1d42]/f1). */
-+	const int expected_rename_result;
-+	/*
-+	 * Expected result of the call to renameat([fd:s1d41]/f2, [fd:s1d42]/f3,
-+	 * RENAME_EXCHANGE).
-+	 */
-+	const int expected_exchange_result;
-+	/* Expected result of the call to renameat([fd:s1d42]/f4, [fd:s1d42]/f5). */
-+	const int expected_same_dir_rename_result;
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d1_mount_src_parent) {
-+	/* clang-format on */
-+	.allowed_s1d1 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d2_mount_src_refer) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d2_mount_src_create) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d2_mount_src_rename) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d31_s1d32_old_parent) {
-+	/* clang-format on */
-+	.allowed_s1d31 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_READ_FILE |
-+			 LANDLOCK_ACCESS_FS_EXECUTE |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s1d32 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_READ_FILE |
-+			 LANDLOCK_ACCESS_FS_EXECUTE |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d41_s1d42_disconnected_refer) {
-+	/* clang-format on */
-+	.allowed_s1d41 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_READ_FILE,
-+	.allowed_s1d42 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d41_s1d42_disconnected_create) {
-+	/* clang-format on */
-+	.allowed_s1d41 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s1d42 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d41_s1d42_disconnected_rename_even) {
-+	/* clang-format on */
-+	.allowed_s1d41 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s1d42 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* The destination directory has more access right. */
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d41_s1d42_disconnected_rename_more) {
-+	/* clang-format on */
-+	.allowed_s1d41 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s1d42 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG |
-+			 LANDLOCK_ACCESS_FS_EXECUTE,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	/* Access denied. */
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* The destination directory has less access right. */
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s1d41_s1d42_disconnected_rename_less) {
-+	/* clang-format on */
-+	.allowed_s1d41 = LANDLOCK_ACCESS_FS_REFER |
-+			 LANDLOCK_ACCESS_FS_MAKE_REG |
-+			 LANDLOCK_ACCESS_FS_EXECUTE,
-+	.allowed_s1d42 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	/* Access allowed. */
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s2d1_mount_dst_parent_create) {
-+	/* clang-format on */
-+	.allowed_s2d1 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s2d1_mount_dst_parent_refer) {
-+	/* clang-format on */
-+	.allowed_s2d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s2d1_mount_dst_parent_mini) {
-+	/* clang-format on */
-+	.allowed_s2d1 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s2d2_covered_by_mount) {
-+	/* clang-format on */
-+	.allowed_s2d2 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* Tests collect_domain_accesses(). */
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s3d1_s4d1_new_parent_refer) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s3d1_s4d1_new_parent_create) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs,
-+		    s3d1_s4d1_disconnected_rename_even){
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* The destination directory has more access right. */
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s3d1_s4d1_disconnected_rename_more) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG |
-+			LANDLOCK_ACCESS_FS_EXECUTE,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	/* Access denied. */
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* The destination directory has less access right. */
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, s3d1_s4d1_disconnected_rename_less) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG |
-+			LANDLOCK_ACCESS_FS_EXECUTE,
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	/* Access allowed. */
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout4_disconnected_leafs, f1_f2_f3) {
-+	/* clang-format on */
-+	.allowed_f1 = LANDLOCK_ACCESS_FS_READ_FILE,
-+	.allowed_f2 = LANDLOCK_ACCESS_FS_READ_FILE,
-+	.allowed_f3 = LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+TEST_F_FORK(layout4_disconnected_leafs, read_rename_exchange)
-+{
-+	const __u64 handled_access =
-+		LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE |
-+		LANDLOCK_ACCESS_FS_EXECUTE | LANDLOCK_ACCESS_FS_MAKE_REG;
-+	const struct rule rules[] = {
-+		{
-+			.path = TMP_DIR "/s1d1",
-+			.access = variant->allowed_s1d1,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2",
-+			.access = variant->allowed_s1d2,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d31",
-+			.access = variant->allowed_s1d31,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d32",
-+			.access = variant->allowed_s1d32,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d31/s1d41",
-+			.access = variant->allowed_s1d41,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d32/s1d42",
-+			.access = variant->allowed_s1d42,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d31/s1d41/f1",
-+			.access = variant->allowed_f1,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d31/s1d41/f2",
-+			.access = variant->allowed_f2,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d32/s1d42/f3",
-+			.access = variant->allowed_f3,
-+		},
-+		{
-+			.path = TMP_DIR "/s2d1",
-+			.access = variant->allowed_s2d1,
-+		},
-+		/* s2d2_fd */
-+		{
-+			.path = TMP_DIR "/s3d1",
-+			.access = variant->allowed_s3d1,
-+		},
-+		{
-+			.path = TMP_DIR "/s4d1",
-+			.access = variant->allowed_s4d1,
-+		},
-+		{},
-+	};
-+	int ruleset_fd, s1d41_bind_fd, s1d42_bind_fd;
-+
-+	ruleset_fd = create_ruleset(_metadata, handled_access, rules);
-+	ASSERT_LE(0, ruleset_fd);
-+
-+	/* Adds rule for the covered directory. */
-+	if (variant->allowed_s2d2) {
-+		ASSERT_EQ(0, landlock_add_rule(
-+				     ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-+				     &(struct landlock_path_beneath_attr){
-+					     .parent_fd = self->s2d2_fd,
-+					     .allowed_access =
-+						     variant->allowed_s2d2,
-+				     },
-+				     0));
-+	}
-+	EXPECT_EQ(0, close(self->s2d2_fd));
-+
-+	s1d41_bind_fd = open(TMP_DIR "/s2d1/s2d2/s1d31/s1d41",
-+			     O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, s1d41_bind_fd);
-+	s1d42_bind_fd = open(TMP_DIR "/s2d1/s2d2/s1d32/s1d42",
-+			     O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, s1d42_bind_fd);
-+
-+	/* Disconnects and checks source and destination directories. */
-+	EXPECT_EQ(0, test_open_rel(s1d41_bind_fd, "..", O_DIRECTORY));
-+	EXPECT_EQ(0, test_open_rel(s1d42_bind_fd, "..", O_DIRECTORY));
-+	/* Renames to make it accessible through s3d1/s1d41 */
-+	ASSERT_EQ(0, test_renameat(AT_FDCWD, TMP_DIR "/s1d1/s1d2/s1d31/s1d41",
-+				   AT_FDCWD, TMP_DIR "/s3d1/s1d41"));
-+	/* Renames to make it accessible through s4d1/s1d42 */
-+	ASSERT_EQ(0, test_renameat(AT_FDCWD, TMP_DIR "/s1d1/s1d2/s1d32/s1d42",
-+				   AT_FDCWD, TMP_DIR "/s4d1/s1d42"));
-+	EXPECT_EQ(ENOENT, test_open_rel(s1d41_bind_fd, "..", O_DIRECTORY));
-+	EXPECT_EQ(ENOENT, test_open_rel(s1d42_bind_fd, "..", O_DIRECTORY));
-+
-+	enforce_ruleset(_metadata, ruleset_fd);
-+	EXPECT_EQ(0, close(ruleset_fd));
-+
-+	EXPECT_EQ(variant->expected_read_result,
-+		  test_open_rel(s1d41_bind_fd, "f1", O_RDONLY));
-+
-+	EXPECT_EQ(variant->expected_rename_result,
-+		  test_renameat(s1d41_bind_fd, "f1", s1d42_bind_fd, "f1"));
-+	EXPECT_EQ(variant->expected_exchange_result,
-+		  test_exchangeat(s1d41_bind_fd, "f2", s1d42_bind_fd, "f3"));
-+
-+	EXPECT_EQ(variant->expected_same_dir_rename_result,
-+		  test_renameat(s1d42_bind_fd, "f4", s1d42_bind_fd, "f5"));
-+}
-+
-+/*
-+ * layout5_disconnected_branch before rename:
-+ *
-+ * tmp
-+ * ├── s1d1
-+ * │   └── s1d2 [source of the first bind mount]
-+ * │       └── s1d3
-+ * │           ├── s1d41
-+ * │           │   ├── f1
-+ * │           │   └── f2
-+ * │           └── s1d42
-+ * │               ├── f3
-+ * │               └── f4
-+ * ├── s2d1
-+ * │   └── s2d2 [source of the second bind mount]
-+ * │       └── s2d3
-+ * │           └── s2d4 [first s1d2 bind mount]
-+ * │               └── s1d3
-+ * │                   ├── s1d41
-+ * │                   │   ├── f1
-+ * │                   │   └── f2
-+ * │                   └── s1d42
-+ * │                       ├── f3
-+ * │                       └── f4
-+ * ├── s3d1
-+ * │   └── s3d2 [second s2d2 bind mount]
-+ * │       └── s2d3
-+ * │           └── s2d4 [first s1d2 bind mount]
-+ * │               └── s1d3
-+ * │                   ├── s1d41
-+ * │                   │   ├── f1
-+ * │                   │   └── f2
-+ * │                   └── s1d42
-+ * │                       ├── f3
-+ * │                       └── f4
-+ * └── s4d1
-+ *
-+ * After rename:
-+ *
-+ * tmp
-+ * ├── s1d1
-+ * │   └── s1d2 [source of the first bind mount]
-+ * │       └── s1d3
-+ * │           ├── s1d41
-+ * │           │   ├── f1
-+ * │           │   └── f2
-+ * │           └── s1d42
-+ * │               ├── f3
-+ * │               └── f4
-+ * ├── s2d1
-+ * │   └── s2d2 [source of the second bind mount]
-+ * ├── s3d1
-+ * │   └── s3d2 [second s2d2 bind mount]
-+ * └── s4d1
-+ *     └── s2d3 [renamed here]
-+ *         └── s2d4 [first s1d2 bind mount]
-+ *             └── s1d3
-+ *                 ├── s1d41
-+ *                 │   ├── f1
-+ *                 │   └── f2
-+ *                 └── s1d42
-+ *                     ├── f3
-+ *                     └── f4
-+ *
-+ * Decision path for access from the s3d1/s3d2/s2d3/s2d4/s1d3 file descriptor:
-+ *   1. first bind mount:   s1d3 -> s1d2
-+ *   2. second bind mount:    s2d3
-+ *   3. tmp mount:              s4d1 -> tmp [disconnected branch]
-+ *   4. second bind mount:        s2d2
-+ *   5. tmp mount:                  s3d1 -> tmp
-+ *   6. parent mounts:                [...] -> /
-+ *
-+ * The s4d1 directory is evaluated even if it is not in the s2d2 mount.
-+ */
-+
-+/* clang-format off */
-+FIXTURE(layout5_disconnected_branch) {
-+	int s2d4_fd, s3d2_fd;
-+};
-+/* clang-format on */
-+
-+FIXTURE_SETUP(layout5_disconnected_branch)
-+{
-+	prepare_layout(_metadata);
-+
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d3/s1d41/f1");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d3/s1d41/f2");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f3");
-+	create_file(_metadata, TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f4");
-+	create_directory(_metadata, TMP_DIR "/s2d1/s2d2/s2d3/s2d4");
-+	create_directory(_metadata, TMP_DIR "/s3d1/s3d2");
-+	create_directory(_metadata, TMP_DIR "/s4d1");
-+
-+	self->s2d4_fd = open(TMP_DIR "/s2d1/s2d2/s2d3/s2d4",
-+			     O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, self->s2d4_fd);
-+
-+	self->s3d2_fd =
-+		open(TMP_DIR "/s3d1/s3d2", O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, self->s3d2_fd);
-+
-+	set_cap(_metadata, CAP_SYS_ADMIN);
-+	ASSERT_EQ(0, mount(TMP_DIR "/s1d1/s1d2", TMP_DIR "/s2d1/s2d2/s2d3/s2d4",
-+			   NULL, MS_BIND, NULL));
-+	ASSERT_EQ(0, mount(TMP_DIR "/s2d1/s2d2", TMP_DIR "/s3d1/s3d2", NULL,
-+			   MS_BIND | MS_REC, NULL));
-+	clear_cap(_metadata, CAP_SYS_ADMIN);
-+}
-+
-+FIXTURE_TEARDOWN(layout5_disconnected_branch)
-+{
-+	/* Teardown runs before this mount namespace exits. */
-+
-+	/* Removes files after renames. */
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d41/f1");
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d41/f2");
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f1");
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f3");
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f4");
-+	remove_path(TMP_DIR "/s1d1/s1d2/s1d3/s1d42/f5");
-+
-+	cleanup_layout_with_nested_mounts(_metadata);
-+}
-+
-+FIXTURE_VARIANT(layout5_disconnected_branch)
-+{
-+	/*
-+	 * Parent of all files.  It should always be enforced when testing against
-+	 * files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_base;
-+	/*
-+	 * Parent of the first bind mount source.  It should always be ignored when
-+	 * testing against files under the s1d41 or s1d42 disconnected directories.
-+	 */
-+	const __u64 allowed_s1d1;
-+	const __u64 allowed_s1d2;
-+	const __u64 allowed_s1d3;
-+	const __u64 allowed_s2d1;
-+	const __u64 allowed_s2d2;
-+	const __u64 allowed_s2d3;
-+	const __u64 allowed_s2d4;
-+	const __u64 allowed_s3d1;
-+	const __u64 allowed_s3d2;
-+	const __u64 allowed_s4d1;
-+
-+	/* Expected result of the call to open([fd:s1d3]/s1d41/f1, O_RDONLY). */
-+	const int expected_read_result;
-+	/*
-+	 * Expected result of the call to renameat([fd:s1d3]/s1d41/f1,
-+	 * [fd:s1d3]/s1d42/f1).
-+	 */
-+	const int expected_rename_result;
-+	/*
-+	 * Expected result of the call to renameat([fd:s1d3]/s1d41/f2,
-+	 * [fd:s1d3]/s1d42/f3,  RENAME_EXCHANGE).
-+	 */
-+	const int expected_exchange_result;
-+	/*
-+	 * Expected result of the call to renameat([fd:s1d3]/s1d42/f4,
-+	 * [fd:s1d3]/s1d42/f5).
-+	 */
-+	const int expected_same_dir_rename_result;
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d1_mount1_src_parent) {
-+	/* clang-format on */
-+	.allowed_s1d1 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d2_mount1_src_refer) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d2_mount1_src_create) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d2_mount1_src_rename) {
-+	/* clang-format on */
-+	.allowed_s1d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d3_fd_refer) {
-+	/* clang-format on */
-+	.allowed_s1d3 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d3_fd_create) {
-+	/* clang-format on */
-+	.allowed_s1d3 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d3_fd_rename) {
-+	/* clang-format on */
-+	.allowed_s1d3 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s1d3_fd_full) {
-+	/* clang-format on */
-+	.allowed_s1d3 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d1_mount2_src_parent) {
-+	/* clang-format on */
-+	.allowed_s2d1 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d2_mount2_src_refer) {
-+	/* clang-format on */
-+	.allowed_s2d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d2_mount2_src_create) {
-+	/* clang-format on */
-+	.allowed_s2d2 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d2_mount2_src_rename) {
-+	/* clang-format on */
-+	.allowed_s2d2 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d3_mount1_dst_parent_refer) {
-+	/* clang-format on */
-+	.allowed_s2d3 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d3_mount1_dst_parent_create) {
-+	/* clang-format on */
-+	.allowed_s2d3 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d3_mount1_dst_parent_rename) {
-+	/* clang-format on */
-+	.allowed_s2d3 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s2d4_mount1_dst) {
-+	/* clang-format on */
-+	.allowed_s2d4 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s3d1_mount2_dst_parent_refer) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s3d1_mount2_dst_parent_create) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s3d1_mount2_dst_parent_rename) {
-+	/* clang-format on */
-+	.allowed_s3d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s3d2_mount1_dst) {
-+	/* clang-format on */
-+	.allowed_s3d2 = LANDLOCK_ACCESS_FS_REFER |
-+			LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_EXECUTE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s4d1_rename_parent_refer) {
-+	/* clang-format on */
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = EACCES,
-+	.expected_rename_result = EACCES,
-+	.expected_exchange_result = EACCES,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s4d1_rename_parent_create) {
-+	/* clang-format on */
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_READ_FILE |
-+			LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = 0,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = EXDEV,
-+	.expected_exchange_result = EXDEV,
-+};
-+
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(layout5_disconnected_branch, s4d1_rename_parent_rename) {
-+	/* clang-format on */
-+	.allowed_s4d1 = LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_MAKE_REG,
-+	.expected_read_result = EACCES,
-+	.expected_same_dir_rename_result = 0,
-+	.expected_rename_result = 0,
-+	.expected_exchange_result = 0,
-+};
-+
-+TEST_F_FORK(layout5_disconnected_branch, read_rename_exchange)
-+{
-+	const __u64 handled_access =
-+		LANDLOCK_ACCESS_FS_REFER | LANDLOCK_ACCESS_FS_READ_FILE |
-+		LANDLOCK_ACCESS_FS_EXECUTE | LANDLOCK_ACCESS_FS_MAKE_REG;
-+	const struct rule rules[] = {
-+		{
-+			.path = TMP_DIR "/s1d1",
-+			.access = variant->allowed_s1d1,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2",
-+			.access = variant->allowed_s1d2,
-+		},
-+		{
-+			.path = TMP_DIR "/s1d1/s1d2/s1d3",
-+			.access = variant->allowed_s1d3,
-+		},
-+		{
-+			.path = TMP_DIR "/s2d1",
-+			.access = variant->allowed_s2d1,
-+		},
-+		{
-+			.path = TMP_DIR "/s2d1/s2d2",
-+			.access = variant->allowed_s2d2,
-+		},
-+		{
-+			.path = TMP_DIR "/s2d1/s2d2/s2d3",
-+			.access = variant->allowed_s2d3,
-+		},
-+		/* s2d4_fd */
-+		{
-+			.path = TMP_DIR "/s3d1",
-+			.access = variant->allowed_s3d1,
-+		},
-+		/* s3d2_fd */
-+		{
-+			.path = TMP_DIR "/s4d1",
-+			.access = variant->allowed_s4d1,
-+		},
-+		{},
-+	};
-+	int ruleset_fd, s1d3_bind_fd;
-+
-+	ruleset_fd = create_ruleset(_metadata, handled_access, rules);
-+	ASSERT_LE(0, ruleset_fd);
-+
-+	/* Adds rules for the covered directories. */
-+	if (variant->allowed_s2d4) {
-+		ASSERT_EQ(0, landlock_add_rule(
-+				     ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-+				     &(struct landlock_path_beneath_attr){
-+					     .parent_fd = self->s2d4_fd,
-+					     .allowed_access =
-+						     variant->allowed_s2d4,
-+				     },
-+				     0));
-+	}
-+	EXPECT_EQ(0, close(self->s2d4_fd));
-+
-+	if (variant->allowed_s3d2) {
-+		ASSERT_EQ(0, landlock_add_rule(
-+				     ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-+				     &(struct landlock_path_beneath_attr){
-+					     .parent_fd = self->s3d2_fd,
-+					     .allowed_access =
-+						     variant->allowed_s3d2,
-+				     },
-+				     0));
-+	}
-+	EXPECT_EQ(0, close(self->s3d2_fd));
-+
-+	s1d3_bind_fd = open(TMP_DIR "/s3d1/s3d2/s2d3/s2d4/s1d3",
-+			    O_DIRECTORY | O_PATH | O_CLOEXEC);
-+	ASSERT_LE(0, s1d3_bind_fd);
-+
-+	/* Disconnects and checks source and destination directories. */
-+	EXPECT_EQ(0, test_open_rel(s1d3_bind_fd, "..", O_DIRECTORY));
-+	EXPECT_EQ(0, test_open_rel(s1d3_bind_fd, "../..", O_DIRECTORY));
-+	/* Renames to make it accessible through s3d1/s1d41 */
-+	ASSERT_EQ(0, test_renameat(AT_FDCWD, TMP_DIR "/s2d1/s2d2/s2d3",
-+				   AT_FDCWD, TMP_DIR "/s4d1/s2d3"));
-+	EXPECT_EQ(0, test_open_rel(s1d3_bind_fd, "..", O_DIRECTORY));
-+	EXPECT_EQ(ENOENT, test_open_rel(s1d3_bind_fd, "../..", O_DIRECTORY));
-+
-+	enforce_ruleset(_metadata, ruleset_fd);
-+	EXPECT_EQ(0, close(ruleset_fd));
-+
-+	EXPECT_EQ(variant->expected_read_result,
-+		  test_open_rel(s1d3_bind_fd, "s1d41/f1", O_RDONLY));
-+
-+	EXPECT_EQ(variant->expected_rename_result,
-+		  test_renameat(s1d3_bind_fd, "s1d41/f1", s1d3_bind_fd,
-+				"s1d42/f1"));
-+	EXPECT_EQ(variant->expected_exchange_result,
-+		  test_exchangeat(s1d3_bind_fd, "s1d41/f2", s1d3_bind_fd,
-+				  "s1d42/f3"));
-+
-+	EXPECT_EQ(variant->expected_same_dir_rename_result,
-+		  test_renameat(s1d3_bind_fd, "s1d42/f4", s1d3_bind_fd,
-+				"s1d42/f5"));
-+}
-+
- #define LOWER_BASE TMP_DIR "/lower"
- #define LOWER_DATA LOWER_BASE "/data"
- static const char lower_fl1[] = LOWER_DATA "/fl1";
+-	/*
+-	 * EV6 records exception status bits in the FPCR before delivering the
+-	 * software completion trap, and swcr_update_status() above merged them
+-	 * into SWCR.  Some can be wrong for the instruction we just emulated:
+-	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
+-	 * even though the result is exact.  Clear the exceptions the trap
+-	 * reported but that soft-fp did not raise.
+-	 */
+-	if (implver() == IMPLVER_EV6) {
+-		unsigned long spurious = summary & EXC_SUM_MASK;
+-
+-		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
+-			/*
+-			 * EXC_SUM reports only the underflow or overflow,
+-			 * but the hardware sets INE alongside it in the FPCR.
+-			 */
+-			spurious |= EXC_SUM_INE;
+-		} else if (!spurious) {
+-			/*
+-			 * No exception reported, so this was a denormal
+-			 * operand trap, for which INE and UNF can be
+-			 * fabricated as well.
+-			 */
+-			spurious = EXC_SUM_INE | EXC_SUM_UNF;
+-		}
++		/* Update hardware control register.  */
++		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++		fpcr |= ieee_swcr_to_fpcr(swcr);
++		wrfpcr(fpcr);
+ 
+-		/*
+-		 * Never clear an exception software has confirmed.  Every
+-		 * instruction that genuinely raises one traps for software
+-		 * completion and is recorded in ieee_state above, so a bit
+-		 * found there -- including one just set from _fex -- belongs
+-		 * to this or an earlier instruction and must survive.
+-		 */
+-		spurious &= ~(current_thread_info()->ieee_state
+-			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
+-
+-		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
+-	}
+-
+-	/*
+-	 * Update hardware control register.  This has to happen even when
+-	 * soft-fp raised nothing, to clear any fabricated bits.
+-	 */
+-	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-	fpcr |= ieee_swcr_to_fpcr(swcr);
+-	wrfpcr(fpcr);
+-
+-	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -451,16 +392,9 @@ alpha_fp_emul_imprecise (struct pt_regs *regs, unsigned long write_mask)
+ 			break;
+ 		}
+ 		if (!write_mask) {
+-			/*
+-			 * Re-execute insns in the trap-shadow.  Pass no
+-			 * exception summary: it describes the trap, which
+-			 * was taken anywhere in the shadow, and so is not
+-			 * attribution for this instruction.  Nothing is
+-			 * lost, since only EV6 -- which traps precisely and
+-			 * never comes this way -- needs it.
+-			 */
++			/* Re-execute insns in the trap-shadow.  */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc, 0);
++			si_code = alpha_fp_emul(trigger_pc);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 -- 
 2.53.0
 
