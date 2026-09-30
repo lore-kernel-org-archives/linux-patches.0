@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DACC4F3EAA;
-	Wed, 30 Sep 2026 17:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347E14FECCF;
+	Wed, 30 Sep 2026 17:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787716; cv=none; b=W65JKxhjp8Bz/FZuRgzB5fkfl/J3V/nKnZaeOQUWtjNNohwzlcoXCCTK+HatEiDhQfR6HobRDNsrQrmlcgZr5QzARfNPYc0lmHUFBpQqC1lvjvFLQrQToJdpjF1EKSHG3HXaq+1VcrSNEvF9OrO60z7GygaBT1qROAdmIQ44rqw=
+	t=1790787719; cv=none; b=Yw236UayWndiGOHRzSrpAc2ajI/vWMeQyoUDbOHNfppyAzcItvqyyeWDoiJ6B2JKnux5TzfcRrKL02QahhkRK4KnwsDUXVreB8qIiZ1KpBTgyQEJ0XVpQ+MURwVdoCik59e8UvJoXaQXx8xxnHc8T16Ium2mD90R+8jWz0QPJtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787716; c=relaxed/simple;
-	bh=HLlrBlBpqZsat1RLsL4nQlO0HQe1LzXQ36ntX4TtT80=;
+	s=arc-20240116; t=1790787719; c=relaxed/simple;
+	bh=dbg/GgCUxx70ps3sVOXEOoywxHcoMcyRsCypDBryvUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOZoHk8xJzog6y3MmxJcDd6qjXz/tttGX2gUPi55PcmsqulFkOR+ZjU+u7P2qKKP7K93J4rnadRsCFADND1TxnBfHE932tOR+DcQXS2Fufu99+WzWZGdm91Tn/r88WQCzeiEmNvuUXEJq736raj3Dv0Mugnst6oCYLd20ejEl5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juuBHbqZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FkegmIFR7Mm1Ml9rC87/WhIqw/Y2LZAB48G11Hmr3m7DZy7AFa0F26y9iXMmrkJE2vIJvgj/CWBeoACHkMeXCFakyx7nO6e/CkAkVhQtuHYnQrbOkgZJGg9F0hy0D0lXzm7hpXZB+ygN/kPUzfFKAjrCyzX1ui/lOOWzf5dDT78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=np8F2MnJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juuBHbqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1DA1F00898;
-	Wed, 30 Sep 2026 17:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="np8F2MnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854C91F000FF;
+	Wed, 30 Sep 2026 17:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787715;
-	bh=me/2rRN/8THd05PV1mINH47Lzs3Q9gvG9FNiWCG9rtc=;
+	s=korg; t=1790787718;
+	bh=PZH7eZK3eirimMdRx5xyWruteX1tGM8Knf01EemD5NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juuBHbqZoeWRsGhGjXFtoFiFiJTppWfv8kMmShXFISEd5iHA+srege0J801/khsyn
-	 ndhWgcghxpHiBY8e8f1GZiypmDl8YCJHw5fYu5ufxCrOYpJsjEpTYXyPIvu+8AzMgK
-	 Seh9ii1j4bLOJNHjSEa06iL2zkebPiPWB0gPCl3E=
+	b=np8F2MnJm5L7fiSWE0XbhdwTbeEMu9AwbqAWinh5AychY80yvMom8TWR+xPEtJL6f
+	 Z/JU84GKSk0Q9Ycr8jmgBD/QRr0OnnAK+ClAlVyO8wbw6VJQ8eATn48ThyFr4T7shL
+	 8JSPFhJouM51iAT1Lu4GinZoZrsn9PDYR7PX+qvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Ralf Lici <ralf@mandelbit.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 327/457] net/mlx5: Fix rev_entry reference leak in mlx5_tc_ct_shared_counter_get()
-Date: Wed, 30 Sep 2026 17:27:12 +0200
-Message-ID: <20260930152353.078105296@linuxfoundation.org>
+Subject: [PATCH 7.2 328/457] net/mlx5e: advertise MACsec offload only when supported
+Date: Wed, 30 Sep 2026 17:27:13 +0200
+Message-ID: <20260930152353.099507911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,38 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ralf Lici <ralf@mandelbit.com>
 
-commit 0bf6bb567f0edaa771e7dd208ef98da50e6a4485 upstream.
+commit 4581c3d2adc3c73a019bc38db64ca11f28bbd7fd upstream.
 
-When the reverse entry is found but its counter is already being
-released, refcount_inc_not_zero() fails and the reference taken by
-mlx5_tc_ct_entry_get() is never dropped before falling through to
-create_counter.  Drop it so the reverse entry is not kept alive forever
-by a shared counter lookup that did not use it.
+Commit 339ccec8d43d ("net/mlx5: Enable MACsec offload feature for VLAN
+interface") added NETIF_F_HW_MACSEC unconditionally to vlan_features so
+that VLAN devices could inherit MACsec offload support.
 
-Fixes: 1edae2335adf ("net/mlx5e: CT: Use the same counter for both directions")
+mlx5e_build_nic_netdev subsequently copies vlan_features into
+hw_features and features. As a result, all mlx5e NIC netdevices
+advertise MACsec hardware offload, even when the firmware does not
+support it and the driver does not install macsec_ops.
+
+Set the MACsec feature bits in mlx5e_macsec_build_netdev, after device
+capabilities have been validated. This preserves MACsec-over-VLAN
+support and the ethtool feature control on capable devices, without
+advertising either on unsupported hardware.
+
+Fixes: 339ccec8d43d ("net/mlx5: Enable MACsec offload feature for VLAN interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260917113131.2149024-1-vulab@iscas.ac.cn
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Link: https://patch.msgid.link/20260917122724.654639-1-ralf@mandelbit.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c |    2 ++
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c         |    1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-@@ -1082,6 +1082,9 @@ mlx5_tc_ct_shared_counter_get(struct mlx
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
+@@ -1724,6 +1724,8 @@ void mlx5e_macsec_build_netdev(struct ml
+ 	mlx5_core_dbg(priv->mdev, "mlx5e: MACsec acceleration enabled\n");
+ 	netdev->macsec_ops = &macsec_offload_ops;
+ 	netdev->features |= NETIF_F_HW_MACSEC;
++	netdev->hw_features |= NETIF_F_HW_MACSEC;
++	netdev->vlan_features |= NETIF_F_HW_MACSEC;
+ 	netif_keep_dst(netdev);
+ }
  
- 	spin_unlock_bh(&ct_priv->ht_lock);
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5851,7 +5851,6 @@ static void mlx5e_build_nic_netdev(struc
  
-+	if (rev_entry)
-+		mlx5_tc_ct_entry_put(rev_entry);
-+
- create_counter:
- 
- 	shared_counter = mlx5_tc_ct_counter_create(ct_priv);
+ 	netdev->vlan_features    |= NETIF_F_SG;
+ 	netdev->vlan_features    |= NETIF_F_HW_CSUM;
+-	netdev->vlan_features    |= NETIF_F_HW_MACSEC;
+ 	netdev->vlan_features    |= NETIF_F_GRO;
+ 	netdev->vlan_features    |= NETIF_F_TSO;
+ 	netdev->vlan_features    |= NETIF_F_TSO6;
 
 
