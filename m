@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576643E022B;
-	Wed, 30 Sep 2026 19:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2B13E9C1A;
+	Wed, 30 Sep 2026 19:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796628; cv=none; b=fS4IFHO3rnotS4oxMkst3Y/xI2x/PVxSmZl9xlyJt9+ggPT7Phnjgpj5GMD2ydVOsdj26CaCHwl1m+Axsnltsef+xNSTMS35gDFJnsdic9DMUwjA8U2gJoEg57PAAZ01kZZKqhSbSe/6yses1T52s8XzH081pn77QnvMDQZAXbw=
+	t=1790796631; cv=none; b=hcuL1NDev6j6CkrFbpEG4ceFpIde2t0mSltxZx4uNwcbSLoCawvp/ijI2b9K+KJS8rwP38h5XM1U77n2zYFp6alfPm798t9LhlQY+Ac4jjZrBrPKI1YvA4E0xiQXwPeFP0gOYEFoHlQC6PqkpjX4Rvhw9gn6WiwId0st+SMdTdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796628; c=relaxed/simple;
-	bh=4s9MdB2Hr4vRStuNh79v+lSZhcQA2bNgovRRzjpAMhI=;
+	s=arc-20240116; t=1790796631; c=relaxed/simple;
+	bh=96004hWZWb/JWx4DFeBeJjxx/+2a1LmL+nG7/rJT8vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grqQgomlWxUDaP5CWiBOEHlK2e282AV6nLmYMf7ashm9NnQnKPjKa5OYJF2lMDhn/iG33rGni5P8BWdKqi+Lmpl4tWB3J+Sz2Hblq6EUKPiAeIqpYwE1afJFXT7RBZsTZD6JlFQCn2aWSFSNfybVia3ccdWsBrHJ8Y+oSPYPhCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIOB+X86; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BiHeHErum6Kq+I/FE3IzfhA9k2qrl4Xp2r/RWKawDmX1WI/fI9N+g8el0fuKlmaoNyx2Fi5nWSSr2yBbNb2GTK2EypFwvB/qTyISbncVRrPpgouyA/JciRRs5Kz9c/35gJmFx+2TfFTBqo82YJuRFgUnxgawgkLB1DWb/tI9jyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i08fPIZy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIOB+X86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B8B1F000FF;
-	Wed, 30 Sep 2026 19:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i08fPIZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A48B1F000FF;
+	Wed, 30 Sep 2026 19:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796627;
-	bh=7p2P9CQhBQI4gSupb6IAt9mOs3A/2soK92+PbXEr72U=;
+	s=korg; t=1790796630;
+	bh=zjHVCCMmSmxgpt5AlQ9d6tbIjsygfEsuLm9FkvY4m44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PIOB+X86wW6fLGlnX0tfVYtr5zrMIjBUImSdHWeLfgbpkd/ASscuK4OeSdfTFPPV/
-	 QdDkm2Z56v+HLcs0V7htwia8GOWMqBcAuRW5Ff+iM/48BpxPySNnYFdHVo+Jfphhpx
-	 FMLYgHpEi/g0KsEnWPQRqoGkPkfkgLYxO6cy1s7w=
+	b=i08fPIZypTbFrZZ6Vlz55LNKYDMN17wzA8/Kvxhk7LnH6lAdqFmb8u6vpM8eVNVef
+	 68hKbMBDe4XHezMn6gZKwxLaTNa0SucYJ0wfTsjwnahpY2W+RzVy0BpWHWmMcOugtW
+	 6Yre7fH5yA98lEmfSvixQcvVNxBlHqcPiAMZpq68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Tejun Heo <tj@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0979/1193] selftests: cgroup: give the O_TMPFILE open in get_temp_fd() a mode
-Date: Wed, 30 Sep 2026 17:27:43 +0200
-Message-ID: <20260930152455.994021367@linuxfoundation.org>
+Subject: [PATCH 6.6 0980/1193] scsi: megaraid_sas: Protect megasas_get_ctrl_info() in megasas_resume()
+Date: Wed, 30 Sep 2026 17:27:44 +0200
+Message-ID: <20260930152456.017739988@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,46 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit c774ec8f0a5d02a06d34c27f5a7de7e333b91265 ]
+[ Upstream commit 42d1221d321e55afc7bba9109a77aaf5a817c8a3 ]
 
-O_TMPFILE, like O_CREAT, needs the third argument. Without it glibc
-refuses the call at compile time as soon as fortification is on:
+Protect the megasas_get_ctrl_info() call in megasas_resume() with
+instance->reset_mutex using scoped_guard().
 
-  In function 'open',
-      inlined from 'get_temp_fd' at test_memcontrol.c:33:9:
-  /usr/include/bits/fcntl2.h:52:11: error: call to '__open_missing_mode'
-    declared with attribute error: open with O_CREAT or O_TMPFILE in
-    second argument needs 3 arguments
+megasas_get_ctrl_info() may release and reacquire instance->reset_mutex.
+Hence, calling this function without holding instance->reset_mutex is not
+safe.
 
-The fortify checks take effect only once the compiler optimises, and
-cgroup/Makefile builds with "-Wall -pthread" alone, so this goes
-unnoticed in a plain build. Building the tests with the flags
-distributions commonly use, -O2 -D_FORTIFY_SOURCE=3, loses
-test_memcontrol entirely.
-
-Fixes: 84092dbcf901 ("selftests: cgroup: add memory controller self-tests")
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: c3b10a55abc9 ("scsi: megaraid_sas: Update controller info during resume")
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+Cc: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/f06b5ee432b21cf293f0663e15b64f75a84b9fd5.1788204406.git.bvanassche@acm.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_memcontrol.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
-index 609ac5652a46c..25b0ff273d649 100644
---- a/tools/testing/selftests/cgroup/test_memcontrol.c
-+++ b/tools/testing/selftests/cgroup/test_memcontrol.c
-@@ -26,7 +26,7 @@ static bool has_recursiveprot;
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index 54f66142e14a8..b3f1a45a03b5e 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -7871,7 +7871,9 @@ megasas_resume(struct device *dev)
+ 			goto fail_init_mfi;
+ 	}
  
- int get_temp_fd(void)
- {
--	return open(".", O_TMPFILE | O_RDWR | O_EXCL);
-+	return open(".", O_TMPFILE | O_RDWR | O_EXCL, 0600);
- }
+-	if (megasas_get_ctrl_info(instance) != DCMD_SUCCESS)
++	scoped_guard(mutex, &instance->reset_mutex)
++		rval = megasas_get_ctrl_info(instance);
++	if (rval != DCMD_SUCCESS)
+ 		goto fail_init_mfi;
  
- int alloc_pagecache(int fd, size_t size)
+ 	tasklet_init(&instance->isr_tasklet, instance->instancet->tasklet,
 -- 
 2.53.0
 
