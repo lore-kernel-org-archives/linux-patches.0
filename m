@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7836627F4F5;
-	Wed, 30 Sep 2026 15:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D88F4FB9C2;
+	Wed, 30 Sep 2026 15:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782912; cv=none; b=bzz14QGXI3zbpHOLCDyPmUzoIrKyrEsecltA9vY0bR+BfZjPnBC/fVxXUlH26ywiQ5rGUoXLq+TbksOTbDSwmgSODYqHABclhDHfRmaayGi0DvhpVRqVx1RTxc5DpxeMlF1siDHYzgkOhgleC2aUSbfXLeiKBE8AwKkiFIw9lUM=
+	t=1790782914; cv=none; b=GEqEAVhppq+qt8Hx1WX129fxGO+Vj+HelHippeoXVMmdNnA2mWMsHwkwc75f/rb6o8C4Eduh0aiQNJw8UMMBrcX+xDAESaXm0jVx1F6SaWonIc8Wyj1u1sXQG8b0DhCKqA0XA5qcEu0S5sACVAQBclSZG/ThIe/g2qZJKoMnC+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782912; c=relaxed/simple;
-	bh=dIBT/e3p9cbyTxJhGJCboqUgnX7vmoIzov/aQjxlA7s=;
+	s=arc-20240116; t=1790782914; c=relaxed/simple;
+	bh=kmhKav14m+IxN4a4imYZ2oro/AL1uwKwDF+4WttE7S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vDJuiTZFMXAE4CLp7LvKWkB0jCGZL9lWCrOh73kVxQORvplP4F57btcMRZ1Xki+vtsOJlRF1lg3EFAnMBm3yEtOmAik18RxP6eGw7DXlikcXT5W3qSORQsL0aGkKjUtb4L+67MxuwEBoejgcoPnAPwbMbyYNZhxkCF7IwHoPqmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frll0LfJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y5W8i9b5SM6Elj2gUNLxrUp3IaWHGpV6jxmCCG+QZxH9eC/tSZ8edl30XFIrTexNkG6yTlo9wxemea8lTJukZXKMHYNeHxvgQ9MqKAm5gGP4ToeZGeXTiJv0mWGBop3tWD2ae9vQyjlpu5wf2zVGhS4fxZANPcNGxa6pFinXZ4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14wkjRta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frll0LfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADE31F00898;
-	Wed, 30 Sep 2026 15:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14wkjRta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA141F000FF;
+	Wed, 30 Sep 2026 15:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782905;
-	bh=qbHEC+3u87UTVZcfglfgM/M6xxrnmI8c76msFNhKfGg=;
+	s=korg; t=1790782908;
+	bh=5kXinGg7+q0f9caMJUVi5mQjozsnRHSiQBsuTLURkmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=frll0LfJxayWpXDFy1twRhzfvgHsQPd0zFLJL1fKyk+lxPCnxKhQniNo2ahV111bt
-	 HVAt06c+5hN7JELOWJ1IgSAXZr2t3pPOqAkzLQ4nN/tHwpb+5G/FQzijKX9bTMRMkI
-	 HaOHl8KAx5B1Q1GxMpnchQrFh7A+PvKoP+Rdzzvw=
+	b=14wkjRtaPI0iz+Qck+Xr0C8Wua1dlyx8l57r5q5dqHS4cR+VasKF5myuWR57B12ez
+	 UzFm2AZeYBTgy9A+5sTkDk1yJQFrmBqdjaW+dfJgjk8EzqZNjNTYpUpvHVk6J7jVFZ
+	 5C5OzT3O/e3zddmnw9XJdlpSNFCAqIVyWsbwjf2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yu Peng <pengyu@kylinos.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/595] blk-cgroup: fix leaks and online flag on radix_tree_insert failure
-Date: Wed, 30 Sep 2026 17:20:59 +0200
-Message-ID: <20260930152351.310514516@linuxfoundation.org>
+Subject: [PATCH 5.10 167/595] arm64: fixmap: Allow 256K early_ioremap() at any offset
+Date: Wed, 30 Sep 2026 17:21:00 +0200
+Message-ID: <20260930152351.332792245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -46,65 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit dbbca20764382b4d411ec2918f4e278ffe547acc ]
+[ Upstream commit 21fc7ec93f8b633b60d5bddef2f1529ff6b36185 ]
 
-When radix_tree_insert() fails in blkg_create(), the error path has two
-issues:
+NR_FIX_BTMAPS is the per-slot page limit for early_ioremap(). Since
+__early_ioremap() maps the page-aligned physical range, a 256K request
+can require one extra page when the physical address is not page-aligned.
 
-1. blkg->online is set to true unconditionally, even when the blkg was
-   never fully inserted.  Move the assignment inside the success block.
+Reserve one extra page per slot so the 256K mapping budget is usable
+regardless of the initial page offset.
 
-2. The error path calls blkg_put() without first calling
-   percpu_ref_kill().  Because the refcount is still in percpu mode,
-   percpu_ref_put() only does this_cpu_sub() without checking for zero,
-   so blkg_release() is never triggered.  This permanently leaks the
-   blkg memory, its percpu iostat, policy data, the parent blkg
-   reference, and the cgroup css reference — the latter preventing the
-   cgroup from ever being destroyed.
-
-Fix by replacing blkg_put() with percpu_ref_kill(), matching the pattern
-used in blkg_destroy().
-
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Link: https://patch.msgid.link/20260715132407.1469777-1-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/08fd96fa-ee3a-4904-bd11-bb08bd90436f@kylinos.cn
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/fixmap.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 7ffdc3360a6c2..8f6f11ba8ef57 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -295,15 +295,15 @@ static struct blkcg_gq *blkg_create(struct blkcg *blkcg,
- 				blkg->pd[i]->online = true;
- 			}
- 		}
-+		blkg->online = true;
- 	}
--	blkg->online = true;
- 	spin_unlock(&blkcg->lock);
+diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
+index daff882883f92..9dcf004a4166b 100644
+--- a/arch/arm64/include/asm/fixmap.h
++++ b/arch/arm64/include/asm/fixmap.h
+@@ -73,8 +73,12 @@ enum fixed_addresses {
+ 	/*
+ 	 * Temporary boot-time mappings, used by early_ioremap(),
+ 	 * before ioremap() is functional.
++	 *
++	 * Reserve one extra page so a 256K mapping may start at any
++	 * offset within a page. early_ioremap() maps the page-aligned
++	 * physical range, so the initial offset can consume an extra page.
+ 	 */
+-#define NR_FIX_BTMAPS		(SZ_256K / PAGE_SIZE)
++#define NR_FIX_BTMAPS		((SZ_256K / PAGE_SIZE) + 1)
+ #define FIX_BTMAPS_SLOTS	7
+ #define TOTAL_FIX_BTMAPS	(NR_FIX_BTMAPS * FIX_BTMAPS_SLOTS)
  
- 	if (!ret)
- 		return blkg;
- 
- 	/* @blkg failed fully initialized, use the usual release path */
--	blkg_put(blkg);
-+	percpu_ref_kill(&blkg->refcnt);
- 	return ERR_PTR(ret);
- 
- err_put_css:
 -- 
 2.53.0
 
