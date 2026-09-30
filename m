@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7319C51CF51;
-	Wed, 30 Sep 2026 16:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F43513567;
+	Wed, 30 Sep 2026 16:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785030; cv=none; b=hj/HMPO/sWsFye4PDlQ3AjpY1AQwMLxyFVAqJz0xbkvrD5g1t6ZByY39jlHFs0dUxMXgBElqRG/utr+ahAfafW62AFmbcwjVqwMX7yFQmtzAJdttP9clE6yj2N03eWSg4wk9qVuVa0FwjhxKp9o2abCDEZUds1TMZ5bj19i8DMY=
+	t=1790785032; cv=none; b=lBjSAFnKmElRWgta7ZEm0FwFWGby/FZ91DXtq0GExnDAdhMX3L29cCQWtjrCjIprvFZey3bvR5rtfMXar46LUj67bMhiB3pQ4EwwFRS6VzGnvmPPkTmuBv5diobcQSCKdmJaaaTCIZXMsgp/d+RwuxbeHCHmvV6pTY+uGBdwUn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785030; c=relaxed/simple;
-	bh=oLspaOQ+1OA+GxgJJl/Aind9a1QSTV2gPGgB9QKr0TE=;
+	s=arc-20240116; t=1790785032; c=relaxed/simple;
+	bh=H1yy3PxsGzBMZiB4Dn5XsVMCzcIrotK6iAsD/Y+GT/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go4p3s9Qn5FTuyK5jICtXNpeChUys17qfEsa0PteOwUd6bWeA+Lp9Mvm7vRgqRdWcP8KcvO55/ycIehEKkBifjOBnQpir2nzWKbgcx1l+kwQRl/2akN9FpBBbvu0uNmvGqyRk/KVqpz+LQz7rL92puwg6tF/avB4fq70C3elMlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDtJwmAV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hpezTQOsEt4z8NdDIz83LqDQ2OnzfiqbxfL5JketbsN7M08ZwAIBUGwTimr25A8MnSGqL1UEJ8fd3+dU71+4igX7QrZ80oYYHQIqVNBJ3tX4kbJOLW65J5zWMbkfD8ZUZjo3KGjkaIgrI7w2K4UuWS4uu0ucOTgqwCJ8SyEONws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/KmyEPe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDtJwmAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B041F000FF;
-	Wed, 30 Sep 2026 16:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/KmyEPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D926B1F00893;
+	Wed, 30 Sep 2026 16:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785022;
-	bh=a5pJUqh7pAsVDnKXh+eFSwccFuDaO9sx+OtacEPi8+Y=;
+	s=korg; t=1790785025;
+	bh=ekGAaL64+gt7m8+2qgrVKL14zXcLr+Q+Y/zYXkaKT3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FDtJwmAVweiFdYAYAg8vsUgExVgzgJl3Vttq9sOpPBMN2Af0Z0uTSq0QIylxREViY
-	 8ghOcCufEZkm9kCZF328pLGQUw0Wo1lzgeX1pdxObfUbtDP2SlLU+P9arh3o9Spp7t
-	 1GTVveNTW0e01yN4O+22yLt3vWjjW42EHg+PoSOk=
+	b=o/KmyEPer8/3/0T1GGt30bPHczr2ki4lkaEELXVa+k803g5vFKmBsszBuCjG6KZ2c
+	 MH6nB3eNACsKMQB1abzqTP4nLZH/bGs/hb/6Z9GkDFbFyGrzm5bxn0Q35zXcTh1bEN
+	 ODHgLmr4gU9hRTfxFjcZHw2PD76AowsYzueIZMr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guanghui Yang <3497809730@qq.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 363/982] btrfs: detach failed sprout device from transaction update list
-Date: Wed, 30 Sep 2026 17:18:19 +0200
-Message-ID: <20260930152424.609662836@linuxfoundation.org>
+Subject: [PATCH 6.1 364/982] btrfs: restore active device pointers after failed sprout
+Date: Wed, 30 Sep 2026 17:18:20 +0200
+Message-ID: <20260930152424.631196858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,20 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Guanghui Yang <3497809730@qq.com>
 
-[ Upstream commit c93b3c43df561cd9f592cee20ae058b563f9e5b6 ]
+[ Upstream commit e0b54613aabeb8e9da597f23b90c6a03d0981986 ]
 
-When creating the first metadata chunk for a sprout filesystem,
-create_chunk() adds the new device to the transaction dev_update_list
-through device->post_commit_list.
+btrfs_init_new_device() switches latest_dev and possibly s_bdev from the
+seed device to the new sprout device before creating the first writable
+chunks.
 
-If the subsequent system chunk creation fails, btrfs_init_new_device()
-aborts the transaction and releases the device while post_commit_list is
-still linked. This triggers a warning in btrfs_free_device() and leaves
-the transaction list referencing freed memory.
+If chunk creation or the subsequent sprout setup fails, the error path
+releases the new device without switching those pointers back.
+btrfs_show_devname() can then dereference the freed latest_dev and crash.
 
-Detach the device while holding chunk_mutex before releasing it.
+Restore the active device pointers to the latest seed device before
+removing and releasing the failed sprout device.
 
-Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
+Fixes: b7cb29e666fe ("btrfs: update latest_dev when we create a sprout device")
 Assisted-by: Codex:gpt-5
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Guanghui Yang <3497809730@qq.com>
@@ -79,18 +79,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index e0a310bd0421f..cddc3d7908a4d 100644
+index cddc3d7908a4d..f44a3fc149711 100644
 --- a/fs/btrfs/volumes.c
 +++ b/fs/btrfs/volumes.c
-@@ -2894,6 +2894,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+@@ -2893,6 +2893,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+ error_sysfs:
  	btrfs_sysfs_remove_device(device);
  	mutex_lock(&fs_info->fs_devices->device_list_mutex);
++	if (seeding_dev)
++		btrfs_assign_next_active_device(device, seed_devices->latest_dev);
  	mutex_lock(&fs_info->chunk_mutex);
-+	if (!list_empty(&device->post_commit_list))
-+		list_del_init(&device->post_commit_list);
- 	list_del_rcu(&device->dev_list);
- 	list_del(&device->dev_alloc_list);
- 	fs_info->fs_devices->num_devices--;
+ 	if (!list_empty(&device->post_commit_list))
+ 		list_del_init(&device->post_commit_list);
 -- 
 2.53.0
 
