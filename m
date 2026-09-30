@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0996A3B3BE1;
-	Wed, 30 Sep 2026 18:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11AA4CC63A;
+	Wed, 30 Sep 2026 18:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791932; cv=none; b=KPvYrt1Nix+jv1m8VDIZHZwEoA/d/2l1S3j8gYQQcE75Q5BQCfYT+iaU51XaN3CbWfF5Fs9IRXjjpH3Y0Pp+PbpOFOBADuOVcGpsFvTKsbWLtuIWuFj66xXjXRpO+1sEdyn6SDOA53YC/heKi92+HfMbmL5WUywvP/qed/2oAjU=
+	t=1790791934; cv=none; b=o3rRZTTWY3mWmKGsGqza0poDhXGD5ig9eNMzvU+zgB/YyO6u3O4cQIl1Dfs2XkFuIZ0BMdOAwBB+aQ7QnxYOF5+/llaYu6mn/PfUhE1sO+2Q8bWHp/Or845aIXx+E0shXtJygmP1AfvWM+VibYeorp6RV4ZdrHhRU4IGtJbgbc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791932; c=relaxed/simple;
-	bh=uG87h6TUY5RcyjsgG3EUfh4a3xKkjm/EHNumsjgUXdg=;
+	s=arc-20240116; t=1790791934; c=relaxed/simple;
+	bh=8uIA4sVp+sFmLF646AkjKJ9PYkAphAzAfw/fAe4zxPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yo6suWWeeegXTihpCo3FWl6z0zHdSESijwntdAJFkjug/idHSUyBPN8F0xq0MWcjAU240iNSXbVF/OXENRaAHiyNFFGBdl1zyGijCIwu+5Y1R7H6h/rW73i4zERFltkiowtrV9QGiz/bwXk+jT/zrHcTx+33ZE1rBtnnlX4BTkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXWK2yG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R715jHEXGc1DgsdNrz2/0ns4ld5fEKvkbQKb7kOVW+KJHaJS3S2z5RiCdsv8v8kYhxTgmTtTNpe+hL3nCK2IhAozKAv0CpxEOgPyAQNuqG1TEKE8RNVAMgW8Kqp0TCaz+/2plUUvFi7uqcn6hCzOE5SaIYs1PqkS/W2r5J0DT2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CagFv5fh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXWK2yG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648911F000FF;
-	Wed, 30 Sep 2026 18:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CagFv5fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371EA1F000FF;
+	Wed, 30 Sep 2026 18:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791930;
-	bh=fVF+i+KAxwKeYeja4YLtKDwXMqcwNlq/JPKs1oK583o=;
+	s=korg; t=1790791933;
+	bh=I0GRdSCIfMXz8ZY9TW+bMDkjUhmJKNAE5Ig4GM2awLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXWK2yG2YQY/YCe7rTdjUBTBJsjFZ/mWiCQbC685bM5JeMNQsvJR+AQiTrTtXt/P4
-	 jF4XSpLgLV9vRNEZviuwBpPW82HTQhMWB1SrfW85AhSN6VySIZXMOQCOLaCCwZiTkB
-	 habOkOiJhi4C7ia2sdazmpcaGDAigsoz6V6bNQOs=
+	b=CagFv5fhAV5xYMMdATE+BZQGZMz2Ir7Gu7n8ZT8+zpmK3JcfK/1uw8f0pf7xEQoV7
+	 1g2mDqtkyMFRdDOE6KBVT0rwWQ0IoiiN+k0Z43gJUW4CEYaegKng8aJabrY3gF8DHZ
+	 BBrGzo3au9ZEknTbMsaUICiDQdkZglwNBXLxkMdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com,
+	syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 477/752] wifi: mac80211: dont RCU-dereference the mesh CSA settings we just set
-Date: Wed, 30 Sep 2026 17:25:47 +0200
-Message-ID: <20260930152408.594193604@linuxfoundation.org>
+Subject: [PATCH 5.15 478/752] wifi: mac80211: dont access the TSF of a down interface
+Date: Wed, 30 Sep 2026 17:25:48 +0200
+Message-ID: <20260930152408.614661757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,38 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b481e64e4498e2c053d5954f546ee02338f6ab63 ]
+[ Upstream commit 0b1de9feeb8651f7a3bb53ed7c9006e3b5298c01 ]
 
-In the error path of ieee80211_mesh_csa_beacon() the settings that were
-just assigned are read back with rcu_dereference(), which lockdep then
-complains about.
+The tsf debugfs files call the driver even if the interface
+isn't up, tgriggering check-sdata-in-driver warnings.
 
-There's no need to read the pointer at all, tmp_csa_settings still is
-the right value anyway.
+Reject the access in that case.
 
 Assisted-by: LLM
-Fixes: b8456a14e9d2 ("{nl,cfg,mac}80211: implement mesh channel switch userspace API")
-Reported-by: syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b59873f5699e941717ca
-Link: https://patch.msgid.link/20260908122838.201719-17-johannes@sipsolutions.net
+Fixes: 37a41b4affa3 ("mac80211: add ieee80211_vif param to tsf functions")
+Reported-by: syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1c8c45017f784e646b47
+Link: https://patch.msgid.link/20260908122838.201719-18-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/mac80211/debugfs_netdev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index 167b0625b1a17..b6f2bb6c49663 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -1419,7 +1419,6 @@ int ieee80211_mesh_csa_beacon(struct ieee80211_sub_if_data *sdata,
+diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
+index db724fc10a5f6..dc582035288d5 100644
+--- a/net/mac80211/debugfs_netdev.c
++++ b/net/mac80211/debugfs_netdev.c
+@@ -549,6 +549,9 @@ static ssize_t ieee80211_if_fmt_tsf(
+ 	struct ieee80211_local *local = sdata->local;
+ 	u64 tsf;
  
- 	ret = ieee80211_mesh_rebuild_beacon(sdata);
- 	if (ret) {
--		tmp_csa_settings = rcu_dereference(ifmsh->csa);
- 		RCU_INIT_POINTER(ifmsh->csa, NULL);
- 		kfree_rcu(tmp_csa_settings, rcu_head);
- 		return ret;
++	if (!ieee80211_sdata_running((struct ieee80211_sub_if_data *)sdata))
++		return -ENETDOWN;
++
+ 	tsf = drv_get_tsf(local, (struct ieee80211_sub_if_data *)sdata);
+ 
+ 	return scnprintf(buf, buflen, "0x%016llx\n", (unsigned long long) tsf);
+@@ -562,6 +565,9 @@ static ssize_t ieee80211_if_parse_tsf(
+ 	int ret;
+ 	int tsf_is_delta = 0;
+ 
++	if (!ieee80211_sdata_running(sdata))
++		return -ENETDOWN;
++
+ 	if (strncmp(buf, "reset", 5) == 0) {
+ 		if (local->ops->reset_tsf) {
+ 			drv_reset_tsf(local, sdata);
 -- 
 2.53.0
 
