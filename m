@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F1B4DEC26;
-	Wed, 30 Sep 2026 18:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220A44E36F1;
+	Wed, 30 Sep 2026 18:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792238; cv=none; b=tYqgSJL24b3F5W9baveqYVw1bVBq4NuhULv/JlAgakxl3VuWzaBzKU5FzdHPeigZrMEkR4OX9ckIOLLEHtuOEU0Z5QTt7yHQwwqwzeil7Ms7I9HBk6Ezttb+U25fAIXFgHz0gk3r8MXcQWEjn6kwSqWAYXRU2z6W1X+rXjXB/O4=
+	t=1790792241; cv=none; b=lAFNirIiSmqNgYPR0mgf9ggvGmeJdcPYDNqbMrtJsDk8AZmpycKoYQg1qfNKJlrWc8fslyRA/e+8acAY9HCKXY8BDqestSe6fAN3CLqyvt3ZURVRQv+o3BP27/vvXmdm3gkLgQwwny0CyE1o3i+Q4biLguGhXweR9U2TRJWjxlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792238; c=relaxed/simple;
-	bh=Y4BIBYWX+GAkUqTmTUz9rAS6ivvS9aNFpR//JoiN2ws=;
+	s=arc-20240116; t=1790792241; c=relaxed/simple;
+	bh=bboirlFTlmDm2vUWkdr6wDl09O+MhFZN5UzseD5bggM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaZUtDl1qwVbxAlGnoYqmNjNekKyIGZ4fuwXC1KE4AZFxOv6slqNEekf5/llYKoKOKzzXcKwwSoeDr6+jeQYSNxmLaTYXwyPTMNnqKDtTdqGORNI19GQBa3Yzknuw8SD7+3dam9ZGme88wh/tFrFqAfTs4g/gy8w1PQ1SmfH66A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6T8/Zhp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pg+QgBemLVGt3Si1HhiSgDV/lY/RYAd3B7Hl6H7A/WXGYjDaCrQkkHjWWn8USlbZnm33sNNZGwZqwE9Ub8Rl2ARb90QlsiOlv/pLnZUKAOv0E+szjzxKMD0rw4017fb44rlvMqFXtzXBy3/s+lrq2AtI5CulDYkjcKW73pXtF/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmWnLYUO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6T8/Zhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08D91F0089A;
-	Wed, 30 Sep 2026 18:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmWnLYUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738131F000FF;
+	Wed, 30 Sep 2026 18:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792237;
-	bh=YxR1rON1kc7amMgBi5IYcZO/LLFYg1HDAlc9qlUSYHA=;
+	s=korg; t=1790792240;
+	bh=u4m6yAx/Ote/7IhP8EI7dZww2pf1OBOrilDD26JBjMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6T8/Zhpr73TAIPxn6v3ml6t+GAJgjMEQAw9eBe1Q4qLEDqatZLJBSH6HYWE1ojgg
-	 +/Jr3TGAAWSX8kKFXELifQzE2gPxSUdbnKlyIyAU/qyesin3xuVUzpZR4paUHKpxtV
-	 U9NGMlHgIol/S8BMKeYzyN5EtyopEb29P3jjtgr8=
+	b=NmWnLYUOTF1I46An6JpTxo5ijUyPb0HDykSWsBWBX39iiAFyrZUkBlS8n/RFjNH8A
+	 S2wq6Gq3GKuGzxF4rDLIuJaBpWq6Uh2JURIWkm3JhHkZcimS6DUHmQ+AOeO+PQ+8f7
+	 I+ckVz6YxsUwIoO9Ucx2DzXvFS5qvcL/vB6QAnXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guangshuo Li <lgs201920130244@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 5.15 584/752] drm/msm/adreno: fix autosuspend cleanup during teardown
-Date: Wed, 30 Sep 2026 17:27:34 +0200
-Message-ID: <20260930152410.929547718@linuxfoundation.org>
+Subject: [PATCH 5.15 585/752] drm/msm/hdmi_phy: fix runtime PM cleanup on probe failure
+Date: Wed, 30 Sep 2026 17:27:35 +0200
+Message-ID: <20260930152410.951383383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,50 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 6fbbf1e152f34ad3913e4a6476680aba672c5068 upstream.
+commit f4fae975db08a9aeec0b15e145c7d4d0fe02a0ec upstream.
 
-adreno_gpu_init() calls pm_runtime_use_autosuspend(), but
-adreno_gpu_cleanup() does not call the matching
-pm_runtime_dont_use_autosuspend() during teardown.
+msm_hdmi_phy_probe() enables runtime PM before enabling the PHY
+resources and initializing the PLL, but failures from either operation
+return without calling the matching pm_runtime_disable().
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+The remove path disables runtime PM, but it is not called when probe
+fails. As a result, runtime PM remains enabled after an unsuccessful
+probe.
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
-
-Add the missing pm_runtime_dont_use_autosuspend() call to
-adreno_gpu_cleanup().
+Route failures after pm_runtime_enable() through a common error path
+and disable runtime PM before returning.
 
 This issue was found by manual code inspection.
 
-Fixes: eeb754746b14 ("drm/msm/gpu: use pm-runtime")
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/745110/
-Link: https://lore.kernel.org/r/20260808131624.2854412-1-lgs201920130244@gmail.com
+Patchwork: https://patchwork.freedesktop.org/patch/753043/
+Link: https://lore.kernel.org/r/20260913085814.1509352-1-lgs201920130244@gmail.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -957,6 +957,8 @@ void adreno_gpu_cleanup(struct adreno_gp
- 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
- 		release_firmware(adreno_gpu->fw[i]);
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -169,13 +169,13 @@ static int msm_hdmi_phy_probe(struct pla
  
-+	pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
+ 	ret = msm_hdmi_phy_resource_enable(phy);
+ 	if (ret)
+-		return ret;
++		goto err_pm_disable;
+ 
+ 	ret = msm_hdmi_phy_pll_init(pdev, phy->cfg->type);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "couldn't init PLL\n");
+ 		msm_hdmi_phy_resource_disable(phy);
+-		return ret;
++		goto err_pm_disable;
+ 	}
+ 
+ 	msm_hdmi_phy_resource_disable(phy);
+@@ -183,6 +183,10 @@ static int msm_hdmi_phy_probe(struct pla
+ 	platform_set_drvdata(pdev, phy);
+ 
+ 	return 0;
 +
- 	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
- 		pm_runtime_disable(&priv->gpu_pdev->dev);
++err_pm_disable:
++	pm_runtime_disable(dev);
++	return ret;
+ }
  
+ static int msm_hdmi_phy_remove(struct platform_device *pdev)
 
 
