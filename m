@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C87852BE5E;
-	Wed, 30 Sep 2026 17:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D2E52BE5E;
+	Wed, 30 Sep 2026 17:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789909; cv=none; b=bsZBq/w8vFPYicf2wGDHYTWtIbcUkKKThXcRess3kx8wbgj9IVfxJzAcTrM9d4cK1aw+QapeJDUwjar62TpUGkCvs8az54zF4fsvq+Dx49sRxZSiTcLzPpuXz8fktpq4WZXtzsOgOHreKntjsrp595v6i5t8w3R12go+QVPjPm4=
+	t=1790789913; cv=none; b=efNZArjqmGP7EU46qsCdOZ5r+Rtw5w/Qv2v5BwfZAr07mFbn+q4o2IoVjdakRfXv3nVTXLPcixCbIB8CbY7mvkfk6kuD4d1/lMDDaZZH1KJ3BsNT0hnMR14Xn1UaBmfgSwtq3jWzkIBiI20QaGPsKa7bQHdRm04I5oO4MvhpaeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789909; c=relaxed/simple;
-	bh=DR2VPm7YVEuOa9OJaBFPP4IcWNN5SRvKSWr4X0KTk08=;
+	s=arc-20240116; t=1790789913; c=relaxed/simple;
+	bh=+HIRlKGazWC9jNZUsZOGsT3pkoUALHp7nO/k8ndqn8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiZ0PCfe8jgyKTbHS+/96V+elvhsSxY9i/5ESKOg9Q4qlMBnS8J4sJ2puvK6Dc0YHXYGDVrbZkC82FQ5FlK1v8Xtmp4gWWunL9kmr5p7dXrcT8bMRQV2ynLkv3AduTw1VjgMF8AMRX7+wy0EotQzfL+qd3DF4HgPPHzwqX3Yujw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/8cN7v5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ek08kqRec2dH4sBRIszRbTjuAKYz9eEzFdA1RmqlGuPREUzuT7yIDHYETmI2JKbRGai+f8IiIBOSZLQn1j/qaisIkKl/LytwwRgiKkvaDz2yrrW3QFcupdz2f4DtvHCVA8sBxQZiLmARmzrYeEiJMoI9XqmbiI+IokZSL1sfizM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIHwwqYr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/8cN7v5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987821F000FF;
-	Wed, 30 Sep 2026 17:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIHwwqYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9771F00898;
+	Wed, 30 Sep 2026 17:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789908;
-	bh=3YYaNt1rks9cDWweQwUxd/cNXl4WDhTSV9Z+WpwBAzY=;
+	s=korg; t=1790789911;
+	bh=1NKND/TL+GKiJXrVQJYZPPSkhdZnNIvyLrUeHLUKmOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/8cN7v5TwH5zD3+dr8oYCtKPwEInB1f9p41JSx5mhr9vrq5yF67zcY5Tg9Y9vRzr
-	 HlIr+JgZMDIPH+nyzUJIyDBFT6Hb2X1LX/6Z9p1FD+WAo8/P7UqhnyOg2j8je0Ee2/
-	 zA0GDxIIuQF+UWnZtpTC4phYPsvdba/GY3qGQ+/g=
+	b=ZIHwwqYr18rgFewGFbA5WNMAQ1UsBR4sL4+kkXLM23zicwf2tfNQJlZ/JTmzFIYEH
+	 viokTxBotixjAYekRsuZWv4LFwjWJFl9BrNbw5x9/BNGClDIJeCdL9uCY5V0Ubl4jm
+	 UqqJ0m/RLcT5VdINh/R6QpO0/x+5vdlfF/raLpfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sanket Goswami <Sanket.Goswami@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 599/877] net/mlx5e: SHAMPO, Always calculate page size
-Date: Wed, 30 Sep 2026 17:25:10 +0200
-Message-ID: <20260930152427.579986390@linuxfoundation.org>
+Subject: [PATCH 6.12 590/877] platform/x86/amd/pmc: Move STB functionality to a new file for better code organization
+Date: Wed, 30 Sep 2026 17:25:01 +0200
+Message-ID: <20260930152427.380966381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -47,147 +46,818 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit dff1c3164a69284ac9fedb1c25d4c008139e9fb8 ]
+[ Upstream commit 0e914063ddd135407c0550b77a6f5bf779bf8384 ]
 
-Adapt the rx path in SHAMPO mode to calculate page size based on
-configured page_shift when dealing with payload data.
+As the SoC evolves with each generation, the dynamics between the PMC and
+STB layers within the PMC driver are becoming increasingly complex, making
+it challenging to manage both in a single file and maintain code
+readability.
 
-This is necessary as an upcoming patch will add support for using
-different page sizes.
+Additionally, during silicon bringup, the PMC functionality is often
+enabled first, with STB functionality added later. This can lead to missed
+updates in the driver, potentially causing issues.
 
-This change has no functional changes.
+To address these challenges, it's beneficial to move all STB-related
+changes to a separate file. This approach will better accommodate newer
+SoCs, provide improved flexibility for desktop variants, and facilitate
+the collection of additional debug information through STB mechanisms.
 
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260223204155.1783580-9-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e2466392a0b8 ("net/mlx5e: do not HW-GRO coalesce small frames")
+Also the additional checks for entering s2d_init have been moved from
+the PMC probe to amd_pmc_s2d_init(). This adjustment makes more sense
+following the transfer of code to the separate mp1_stb.c file.
+
+Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20241108070822.3912689-3-Shyam-sundar.S-k@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+
+Stable backport adaptation:
+Preserve the delay_suspend module parameter and the existing stable PMC
+workarounds while moving the STB implementation out of pmc.c.
+
+Rename the existing initializer to amd_stb_s2d_init(), define the two
+message-port constants, and move s2d_msg_id into a minimal struct stb_arg.
+These are the interfaces needed for 9cef693bce96 to apply unchanged; the
+later upstream helper functions and unrelated platform changes are not
+needed here. No new functions are introduced.
+
+Retain the existing zero STB physical-address check omitted by the upstream
+move, and restore MSG_PORT_PMC before its -EINVAL return. This preserves
+the stable validation without leaving an extra mailbox error path outside
+the target fix.
+
+Stable-dep-of: 9cef693bce96 ("platform/x86/amd/pmc: Restore msg_port on amd_stb_s2d_init() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c |   34 +++++++++++++++---------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ drivers/platform/x86/amd/pmc/Makefile  |    2 
+ drivers/platform/x86/amd/pmc/mp1_stb.c |  302 +++++++++++++++++++++++++++++++++
+ drivers/platform/x86/amd/pmc/pmc.c     |  285 -------------------------------
+ drivers/platform/x86/amd/pmc/pmc.h     |   16 +
+ 4 files changed, 320 insertions(+), 285 deletions(-)
+ create mode 100644 drivers/platform/x86/amd/pmc/mp1_stb.c
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1983,11 +1983,14 @@ mlx5e_shampo_fill_skb_data(struct sk_buf
- 			   struct mlx5e_frag_page *frag_page,
- 			   u32 data_bcnt, u32 data_offset)
- {
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
+--- a/drivers/platform/x86/amd/pmc/Makefile
++++ b/drivers/platform/x86/amd/pmc/Makefile
+@@ -4,6 +4,6 @@
+ # AMD Power Management Controller Driver
+ #
+ 
+-amd-pmc-objs := pmc.o pmc-quirks.o
++amd-pmc-objs := pmc.o pmc-quirks.o mp1_stb.o
+ obj-$(CONFIG_AMD_PMC) += amd-pmc.o
+ amd-pmc-$(CONFIG_AMD_MP2_STB) += mp2_stb.o
+--- /dev/null
++++ b/drivers/platform/x86/amd/pmc/mp1_stb.c
+@@ -0,0 +1,302 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * AMD MP1 Smart Trace Buffer (STB) Layer
++ *
++ * Copyright (c) 2024, Advanced Micro Devices, Inc.
++ * All Rights Reserved.
++ *
++ * Authors: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
++ *          Sanket Goswami <Sanket.Goswami@amd.com>
++ */
 +
- 	net_prefetchw(skb->data);
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
++
++#include <asm/amd_nb.h>
++#include <linux/debugfs.h>
++#include <linux/seq_file.h>
++#include <linux/uaccess.h>
++
++#include "pmc.h"
++
++/* STB Spill to DRAM Parameters */
++#define S2D_TELEMETRY_DRAMBYTES_MAX	0x1000000
++#define S2D_TELEMETRY_BYTES_MAX		0x100000U
++#define S2D_RSVD_RAM_SPACE		0x100000
++
++/* STB Registers */
++#define AMD_PMC_STB_PMI_0		0x03E30600
++#define AMD_PMC_STB_DUMMY_PC	0xC6000007
++
++/* STB Spill to DRAM Message Definition */
++#define STB_FORCE_FLUSH_DATA		0xCF
++#define FIFO_SIZE		4096
++
++static bool enable_stb;
++module_param(enable_stb, bool, 0644);
++MODULE_PARM_DESC(enable_stb, "Enable the STB debug mechanism");
++
++static bool dump_custom_stb;
++module_param(dump_custom_stb, bool, 0644);
++MODULE_PARM_DESC(dump_custom_stb, "Enable to dump full STB buffer");
++
++enum s2d_arg {
++	S2D_TELEMETRY_SIZE = 0x01,
++	S2D_PHYS_ADDR_LOW,
++	S2D_PHYS_ADDR_HIGH,
++	S2D_NUM_SAMPLES,
++	S2D_DRAM_SIZE,
++};
++
++struct amd_pmc_stb_v2_data {
++	size_t size;
++	u8 data[] __counted_by(size);
++};
++
++int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data)
++{
++	int err;
++
++	err = amd_smn_write(0, AMD_PMC_STB_PMI_0, data);
++	if (err) {
++		dev_err(dev->dev, "failed to write data in stb: 0x%X\n", AMD_PMC_STB_PMI_0);
++		return pcibios_err_to_errno(err);
++	}
++
++	return 0;
++}
++
++int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf)
++{
++	int i, err;
++
++	for (i = 0; i < FIFO_SIZE; i++) {
++		err = amd_smn_read(0, AMD_PMC_STB_PMI_0, buf++);
++		if (err) {
++			dev_err(dev->dev, "error reading data from stb: 0x%X\n", AMD_PMC_STB_PMI_0);
++			return pcibios_err_to_errno(err);
++		}
++	}
++
++	return 0;
++}
++
++static int amd_pmc_stb_debugfs_open(struct inode *inode, struct file *filp)
++{
++	struct amd_pmc_dev *dev = filp->f_inode->i_private;
++	u32 size = FIFO_SIZE * sizeof(u32);
++	u32 *buf;
++	int rc;
++
++	buf = kzalloc(size, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	rc = amd_pmc_read_stb(dev, buf);
++	if (rc) {
++		kfree(buf);
++		return rc;
++	}
++
++	filp->private_data = buf;
++	return rc;
++}
++
++static ssize_t amd_pmc_stb_debugfs_read(struct file *filp, char __user *buf, size_t size,
++					loff_t *pos)
++{
++	if (!filp->private_data)
++		return -EINVAL;
++
++	return simple_read_from_buffer(buf, size, pos, filp->private_data,
++				       FIFO_SIZE * sizeof(u32));
++}
++
++static int amd_pmc_stb_debugfs_release(struct inode *inode, struct file *filp)
++{
++	kfree(filp->private_data);
++	return 0;
++}
++
++static const struct file_operations amd_pmc_stb_debugfs_fops = {
++	.owner = THIS_MODULE,
++	.open = amd_pmc_stb_debugfs_open,
++	.read = amd_pmc_stb_debugfs_read,
++	.release = amd_pmc_stb_debugfs_release,
++};
++
++/* Enhanced STB Firmware Reporting Mechanism */
++static int amd_pmc_stb_handle_efr(struct file *filp)
++{
++	struct amd_pmc_dev *dev = filp->f_inode->i_private;
++	struct amd_pmc_stb_v2_data *stb_data_arr;
++	u32 fsize;
++
++	fsize = dev->dram_size - S2D_RSVD_RAM_SPACE;
++	stb_data_arr = kmalloc(struct_size(stb_data_arr, data, fsize), GFP_KERNEL);
++	if (!stb_data_arr)
++		return -ENOMEM;
++
++	stb_data_arr->size = fsize;
++	memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr, fsize);
++	filp->private_data = stb_data_arr;
++
++	return 0;
++}
++
++static int amd_pmc_stb_debugfs_open_v2(struct inode *inode, struct file *filp)
++{
++	struct amd_pmc_dev *dev = filp->f_inode->i_private;
++	u32 fsize, num_samples, val, stb_rdptr_offset = 0;
++	struct amd_pmc_stb_v2_data *stb_data_arr;
++	int ret;
++
++	/* Write dummy postcode while reading the STB buffer */
++	ret = amd_pmc_write_stb(dev, AMD_PMC_STB_DUMMY_PC);
++	if (ret)
++		dev_err(dev->dev, "error writing to STB: %d\n", ret);
++
++	/* Spill to DRAM num_samples uses separate SMU message port */
++	dev->msg_port = MSG_PORT_S2D;
++
++	ret = amd_pmc_send_cmd(dev, 0, &val, STB_FORCE_FLUSH_DATA, 1);
++	if (ret)
++		dev_dbg_once(dev->dev, "S2D force flush not supported: %d\n", ret);
++
++	/*
++	 * We have a custom stb size and the PMFW is supposed to give
++	 * the enhanced dram size. Note that we land here only for the
++	 * platforms that support enhanced dram size reporting.
++	 */
++	if (dump_custom_stb)
++		return amd_pmc_stb_handle_efr(filp);
++
++	/* Get the num_samples to calculate the last push location */
++	ret = amd_pmc_send_cmd(dev, S2D_NUM_SAMPLES, &num_samples, dev->stb_arg.s2d_msg_id, true);
++	/* Clear msg_port for other SMU operation */
++	dev->msg_port = MSG_PORT_PMC;
++	if (ret) {
++		dev_err(dev->dev, "error: S2D_NUM_SAMPLES not supported : %d\n", ret);
++		return ret;
++	}
++
++	fsize = min(num_samples, S2D_TELEMETRY_BYTES_MAX);
++	stb_data_arr = kmalloc(struct_size(stb_data_arr, data, fsize), GFP_KERNEL);
++	if (!stb_data_arr)
++		return -ENOMEM;
++
++	stb_data_arr->size = fsize;
++
++	/*
++	 * Start capturing data from the last push location.
++	 * This is for general cases, where the stb limits
++	 * are meant for standard usage.
++	 */
++	if (num_samples > S2D_TELEMETRY_BYTES_MAX) {
++		/* First read oldest data starting 1 behind last write till end of ringbuffer */
++		stb_rdptr_offset = num_samples % S2D_TELEMETRY_BYTES_MAX;
++		fsize = S2D_TELEMETRY_BYTES_MAX - stb_rdptr_offset;
++
++		memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr + stb_rdptr_offset, fsize);
++		/* Second copy the newer samples from offset 0 - last write */
++		memcpy_fromio(stb_data_arr->data + fsize, dev->stb_virt_addr, stb_rdptr_offset);
++	} else {
++		memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr, fsize);
++	}
++
++	filp->private_data = stb_data_arr;
++
++	return 0;
++}
++
++static ssize_t amd_pmc_stb_debugfs_read_v2(struct file *filp, char __user *buf, size_t size,
++					   loff_t *pos)
++{
++	struct amd_pmc_stb_v2_data *data = filp->private_data;
++
++	return simple_read_from_buffer(buf, size, pos, data->data, data->size);
++}
++
++static int amd_pmc_stb_debugfs_release_v2(struct inode *inode, struct file *filp)
++{
++	kfree(filp->private_data);
++	return 0;
++}
++
++static const struct file_operations amd_pmc_stb_debugfs_fops_v2 = {
++	.owner = THIS_MODULE,
++	.open = amd_pmc_stb_debugfs_open_v2,
++	.read = amd_pmc_stb_debugfs_read_v2,
++	.release = amd_pmc_stb_debugfs_release_v2,
++};
++
++static bool amd_pmc_is_stb_supported(struct amd_pmc_dev *dev)
++{
++	switch (dev->cpu_id) {
++	case AMD_CPU_ID_YC:
++	case AMD_CPU_ID_CB:
++		dev->stb_arg.s2d_msg_id = 0xBE;
++		return true;
++	case AMD_CPU_ID_PS:
++		dev->stb_arg.s2d_msg_id = 0x85;
++		return true;
++	case PCI_DEVICE_ID_AMD_1AH_M20H_ROOT:
++	case PCI_DEVICE_ID_AMD_1AH_M60H_ROOT:
++		dev->stb_arg.s2d_msg_id = 0xDE;
++		return true;
++	default:
++		return false;
++	}
++}
++
++int amd_stb_s2d_init(struct amd_pmc_dev *dev)
++{
++	u32 phys_addr_low, phys_addr_hi;
++	u64 stb_phys_addr;
++	u32 size = 0;
++	int ret;
++
++	if (!enable_stb)
++		return 0;
++
++	if (amd_pmc_is_stb_supported(dev)) {
++		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
++				    &amd_pmc_stb_debugfs_fops_v2);
++	} else {
++		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
++				    &amd_pmc_stb_debugfs_fops);
++		return 0;
++	}
++
++	/* Spill to DRAM feature uses separate SMU message port */
++	dev->msg_port = MSG_PORT_S2D;
++
++	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->stb_arg.s2d_msg_id, true);
++	if (size != S2D_TELEMETRY_BYTES_MAX)
++		return -EIO;
++
++	/* Get DRAM size */
++	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->stb_arg.s2d_msg_id, true);
++	if (ret || !dev->dram_size)
++		dev->dram_size = S2D_TELEMETRY_DRAMBYTES_MAX;
++
++	/* Get STB DRAM address */
++	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low, dev->stb_arg.s2d_msg_id, true);
++	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi, dev->stb_arg.s2d_msg_id, true);
++
++	if (!phys_addr_hi && !phys_addr_low) {
++		dev_err(dev->dev, "STB is not enabled on the system; disable enable_stb or contact system vendor\n");
++		dev->msg_port = MSG_PORT_PMC;
++		return -EINVAL;
++	}
++
++	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
++
++	/* Clear msg_port for other SMU operation */
++	dev->msg_port = MSG_PORT_PMC;
++
++	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
++	if (!dev->stb_virt_addr)
++		return -ENOMEM;
++
++	return 0;
++}
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -41,25 +41,15 @@
+ #define AMD_PMC_SCRATCH_REG_1AH		0xF14
  
- 	do {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
--		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - data_offset, data_bcnt);
-+		u32 pg_consumed_bytes = min_t(u32, page_size - data_offset,
-+					      data_bcnt);
- 		unsigned int truesize = pg_consumed_bytes;
+ /* STB Registers */
+-#define AMD_PMC_STB_PMI_0		0x03E30600
+ #define AMD_PMC_STB_S2IDLE_PREPARE	0xC6000001
+ #define AMD_PMC_STB_S2IDLE_RESTORE	0xC6000002
+ #define AMD_PMC_STB_S2IDLE_CHECK	0xC6000003
+-#define AMD_PMC_STB_DUMMY_PC		0xC6000007
  
- 		mlx5e_add_skb_frag(rq, skb, frag_page, data_offset,
-@@ -2008,6 +2011,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
- 	struct mlx5e_frag_page *head_page = frag_page;
- 	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
- 	u32 frag_offset    = head_offset;
- 	u32 byte_cnt       = cqe_bcnt;
- 	struct skb_shared_info *sinfo;
-@@ -2051,9 +2055,9 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 		linear_hr = skb_headroom(skb);
- 		linear_data_len = headlen;
- 		linear_frame_sz = MLX5_SKB_FRAG_SZ(skb_end_offset(skb));
--		if (unlikely(frag_offset >= PAGE_SIZE)) {
-+		if (unlikely(frag_offset >= page_size)) {
- 			frag_page++;
--			frag_offset -= PAGE_SIZE;
-+			frag_offset -= page_size;
- 		}
- 	}
+ /* STB S2D(Spill to DRAM) has different message port offset */
+ #define AMD_S2D_REGISTER_MESSAGE	0xA20
+ #define AMD_S2D_REGISTER_RESPONSE	0xA80
+ #define AMD_S2D_REGISTER_ARGUMENT	0xA88
  
-@@ -2065,7 +2069,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 	while (byte_cnt) {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
- 		pg_consumed_bytes =
--			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
-+			min_t(u32, page_size - frag_offset, byte_cnt);
+-/* STB Spill to DRAM Parameters */
+-#define S2D_TELEMETRY_BYTES_MAX		0x100000U
+-#define S2D_RSVD_RAM_SPACE		0x100000
+-#define S2D_TELEMETRY_DRAMBYTES_MAX	0x1000000
+-
+-/* STB Spill to DRAM Message Definition */
+-#define STB_FORCE_FLUSH_DATA		0xCF
+-
+ /* Base address of SMU for mapping physical address to virtual address */
+ #define AMD_PMC_MAPPING_SIZE		0x01000
+ #define AMD_PMC_BASE_ADDR_OFFSET	0x10000
+@@ -98,7 +88,6 @@
  
- 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
- 			truesize += pg_consumed_bytes;
-@@ -2102,7 +2106,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 		nr_frags_free = old_nr_frags - sinfo->nr_frags;
- 		if (unlikely(nr_frags_free)) {
- 			frag_page -= nr_frags_free;
--			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
-+			truesize -= (nr_frags_free - 1) * page_size +
- 				ALIGN(pg_consumed_bytes,
- 				      BIT(rq->mpwqe.log_stride_sz));
- 		}
-@@ -2311,15 +2315,16 @@ mlx5e_shampo_flush_skb(struct mlx5e_rq *
- 	rq->hw_gro_data->skb = NULL;
- }
+ #define DELAY_MIN_US		2000
+ #define DELAY_MAX_US		3000
+-#define FIFO_SIZE		4096
  
--static bool
--mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
-+static bool mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb,
-+					      u16 data_bcnt,
-+					      u32 page_size)
+ enum amd_pmc_def {
+ 	MSG_TEST = 0x01,
+@@ -106,19 +95,6 @@ enum amd_pmc_def {
+ 	MSG_OS_HINT_RN,
+ };
+ 
+-enum s2d_arg {
+-	S2D_TELEMETRY_SIZE = 0x01,
+-	S2D_PHYS_ADDR_LOW,
+-	S2D_PHYS_ADDR_HIGH,
+-	S2D_NUM_SAMPLES,
+-	S2D_DRAM_SIZE,
+-};
+-
+-struct amd_pmc_stb_v2_data {
+-	size_t size;
+-	u8 data[] __counted_by(size);
+-};
+-
+ struct amd_pmc_bit_map {
+ 	const char *name;
+ 	u32 bit_mask;
+@@ -150,27 +126,16 @@ static const struct amd_pmc_bit_map soc1
+ 	{}
+ };
+ 
+-static bool enable_stb;
+-module_param(enable_stb, bool, 0644);
+-MODULE_PARM_DESC(enable_stb, "Enable the STB debug mechanism");
+-
+ static bool disable_workarounds;
+ module_param(disable_workarounds, bool, 0644);
+ MODULE_PARM_DESC(disable_workarounds, "Disable workarounds for platform bugs");
+ 
+-static bool dump_custom_stb;
+-module_param(dump_custom_stb, bool, 0644);
+-MODULE_PARM_DESC(dump_custom_stb, "Enable to dump full STB buffer");
+-
+ static int delay_suspend = -1;
+ module_param(delay_suspend, int, 0644);
+ MODULE_PARM_DESC(delay_suspend,
+ 		 "Delays s2idle by 2.5 seconds to work around buggy ECs, often causing keyboard issues after suspend. 0: don't delay, 1: do delay, -1 (default): let amd_pmc decide. If you need this please report this to: platform-driver-x86@vger.kernel.org");
+ 
+ static struct amd_pmc_dev pmc;
+-static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret);
+-static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf);
+-static int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data);
+ 
+ static inline u32 amd_pmc_reg_read(struct amd_pmc_dev *dev, int reg_offset)
  {
- 	int nr_frags = skb_shinfo(skb)->nr_frags;
+@@ -199,155 +164,6 @@ struct smu_metrics {
+ 	u64 timecondition_notmet_totaltime[32];
+ } __packed;
  
--	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
-+	if (page_size >= GRO_LEGACY_MAX_SIZE)
- 		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
- 	else
--		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
-+		return page_size * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+-static int amd_pmc_stb_debugfs_open(struct inode *inode, struct file *filp)
+-{
+-	struct amd_pmc_dev *dev = filp->f_inode->i_private;
+-	u32 size = FIFO_SIZE * sizeof(u32);
+-	u32 *buf;
+-	int rc;
+-
+-	buf = kzalloc(size, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOMEM;
+-
+-	rc = amd_pmc_read_stb(dev, buf);
+-	if (rc) {
+-		kfree(buf);
+-		return rc;
+-	}
+-
+-	filp->private_data = buf;
+-	return rc;
+-}
+-
+-static ssize_t amd_pmc_stb_debugfs_read(struct file *filp, char __user *buf, size_t size,
+-					loff_t *pos)
+-{
+-	if (!filp->private_data)
+-		return -EINVAL;
+-
+-	return simple_read_from_buffer(buf, size, pos, filp->private_data,
+-				       FIFO_SIZE * sizeof(u32));
+-}
+-
+-static int amd_pmc_stb_debugfs_release(struct inode *inode, struct file *filp)
+-{
+-	kfree(filp->private_data);
+-	return 0;
+-}
+-
+-static const struct file_operations amd_pmc_stb_debugfs_fops = {
+-	.owner = THIS_MODULE,
+-	.open = amd_pmc_stb_debugfs_open,
+-	.read = amd_pmc_stb_debugfs_read,
+-	.release = amd_pmc_stb_debugfs_release,
+-};
+-
+-/* Enhanced STB Firmware Reporting Mechanism */
+-static int amd_pmc_stb_handle_efr(struct file *filp)
+-{
+-	struct amd_pmc_dev *dev = filp->f_inode->i_private;
+-	struct amd_pmc_stb_v2_data *stb_data_arr;
+-	u32 fsize;
+-
+-	fsize = dev->dram_size - S2D_RSVD_RAM_SPACE;
+-	stb_data_arr = kmalloc(struct_size(stb_data_arr, data, fsize), GFP_KERNEL);
+-	if (!stb_data_arr)
+-		return -ENOMEM;
+-
+-	stb_data_arr->size = fsize;
+-	memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr, fsize);
+-	filp->private_data = stb_data_arr;
+-
+-	return 0;
+-}
+-
+-static int amd_pmc_stb_debugfs_open_v2(struct inode *inode, struct file *filp)
+-{
+-	struct amd_pmc_dev *dev = filp->f_inode->i_private;
+-	u32 fsize, num_samples, val, stb_rdptr_offset = 0;
+-	struct amd_pmc_stb_v2_data *stb_data_arr;
+-	int ret;
+-
+-	/* Write dummy postcode while reading the STB buffer */
+-	ret = amd_pmc_write_stb(dev, AMD_PMC_STB_DUMMY_PC);
+-	if (ret)
+-		dev_err(dev->dev, "error writing to STB: %d\n", ret);
+-
+-	/* Spill to DRAM num_samples uses separate SMU message port */
+-	dev->msg_port = 1;
+-
+-	ret = amd_pmc_send_cmd(dev, 0, &val, STB_FORCE_FLUSH_DATA, 1);
+-	if (ret)
+-		dev_dbg_once(dev->dev, "S2D force flush not supported: %d\n", ret);
+-
+-	/*
+-	 * We have a custom stb size and the PMFW is supposed to give
+-	 * the enhanced dram size. Note that we land here only for the
+-	 * platforms that support enhanced dram size reporting.
+-	 */
+-	if (dump_custom_stb)
+-		return amd_pmc_stb_handle_efr(filp);
+-
+-	/* Get the num_samples to calculate the last push location */
+-	ret = amd_pmc_send_cmd(dev, S2D_NUM_SAMPLES, &num_samples, dev->s2d_msg_id, true);
+-	/* Clear msg_port for other SMU operation */
+-	dev->msg_port = 0;
+-	if (ret) {
+-		dev_err(dev->dev, "error: S2D_NUM_SAMPLES not supported : %d\n", ret);
+-		return ret;
+-	}
+-
+-	fsize = min(num_samples, S2D_TELEMETRY_BYTES_MAX);
+-	stb_data_arr = kmalloc(struct_size(stb_data_arr, data, fsize), GFP_KERNEL);
+-	if (!stb_data_arr)
+-		return -ENOMEM;
+-
+-	stb_data_arr->size = fsize;
+-
+-	/*
+-	 * Start capturing data from the last push location.
+-	 * This is for general cases, where the stb limits
+-	 * are meant for standard usage.
+-	 */
+-	if (num_samples > S2D_TELEMETRY_BYTES_MAX) {
+-		/* First read oldest data starting 1 behind last write till end of ringbuffer */
+-		stb_rdptr_offset = num_samples % S2D_TELEMETRY_BYTES_MAX;
+-		fsize = S2D_TELEMETRY_BYTES_MAX - stb_rdptr_offset;
+-
+-		memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr + stb_rdptr_offset, fsize);
+-		/* Second copy the newer samples from offset 0 - last write */
+-		memcpy_fromio(stb_data_arr->data + fsize, dev->stb_virt_addr, stb_rdptr_offset);
+-	} else {
+-		memcpy_fromio(stb_data_arr->data, dev->stb_virt_addr, fsize);
+-	}
+-
+-	filp->private_data = stb_data_arr;
+-
+-	return 0;
+-}
+-
+-static ssize_t amd_pmc_stb_debugfs_read_v2(struct file *filp, char __user *buf, size_t size,
+-					   loff_t *pos)
+-{
+-	struct amd_pmc_stb_v2_data *data = filp->private_data;
+-
+-	return simple_read_from_buffer(buf, size, pos, data->data, data->size);
+-}
+-
+-static int amd_pmc_stb_debugfs_release_v2(struct inode *inode, struct file *filp)
+-{
+-	kfree(filp->private_data);
+-	return 0;
+-}
+-
+-static const struct file_operations amd_pmc_stb_debugfs_fops_v2 = {
+-	.owner = THIS_MODULE,
+-	.open = amd_pmc_stb_debugfs_open_v2,
+-	.read = amd_pmc_stb_debugfs_read_v2,
+-	.release = amd_pmc_stb_debugfs_release_v2,
+-};
+-
+ static void amd_pmc_get_ip_info(struct amd_pmc_dev *dev)
+ {
+ 	switch (dev->cpu_id) {
+@@ -357,18 +173,15 @@ static void amd_pmc_get_ip_info(struct a
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 		dev->num_ips = 12;
+-		dev->s2d_msg_id = 0xBE;
+ 		dev->smu_msg = 0x538;
+ 		break;
+ 	case AMD_CPU_ID_PS:
+ 		dev->num_ips = 21;
+-		dev->s2d_msg_id = 0x85;
+ 		dev->smu_msg = 0x538;
+ 		break;
+ 	case PCI_DEVICE_ID_AMD_1AH_M20H_ROOT:
+ 	case PCI_DEVICE_ID_AMD_1AH_M60H_ROOT:
+ 		dev->num_ips = 22;
+-		dev->s2d_msg_id = 0xDE;
+ 		dev->smu_msg = 0x938;
+ 		break;
+ 	}
+@@ -634,20 +447,6 @@ static void amd_pmc_dbgfs_unregister(str
+ 	debugfs_remove_recursive(dev->dbgfs_dir);
  }
  
- static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cqe64 *cqe)
-@@ -2328,18 +2333,19 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
- 	u16 header_index	= mlx5e_shampo_get_cqe_header_index(rq, cqe);
- 	u32 wqe_offset		= be32_to_cpu(cqe->shampo.data_offset);
- 	u16 cstrides		= mpwrq_get_cqe_consumed_strides(cqe);
--	u32 data_offset		= wqe_offset & (PAGE_SIZE - 1);
- 	u32 cqe_bcnt		= mpwrq_get_cqe_byte_cnt(cqe);
- 	u16 wqe_id		= be16_to_cpu(cqe->wqe_id);
--	u32 page_idx		= wqe_offset >> PAGE_SHIFT;
- 	u16 head_size		= cqe->shampo.header_size;
- 	struct sk_buff **skb	= &rq->hw_gro_data->skb;
- 	bool flush		= cqe->shampo.flush;
- 	bool match		= cqe->shampo.match;
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
- 	struct mlx5e_rq_stats *stats = rq->stats;
- 	struct mlx5e_rx_wqe_ll *wqe;
- 	struct mlx5e_mpw_info *wi;
- 	struct mlx5_wq_ll *wq;
-+	u32 data_offset;
-+	u32 page_idx;
+-static bool amd_pmc_is_stb_supported(struct amd_pmc_dev *dev)
+-{
+-	switch (dev->cpu_id) {
+-	case AMD_CPU_ID_YC:
+-	case AMD_CPU_ID_CB:
+-	case AMD_CPU_ID_PS:
+-	case PCI_DEVICE_ID_AMD_1AH_M20H_ROOT:
+-	case PCI_DEVICE_ID_AMD_1AH_M60H_ROOT:
+-		return true;
+-	default:
+-		return false;
+-	}
+-}
+-
+ static void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
+ {
+ 	dev->dbgfs_dir = debugfs_create_dir("amd_pmc", NULL);
+@@ -683,7 +482,7 @@ static void amd_pmc_dump_registers(struc
+ 	dev_dbg(dev->dev, "AMD_%s_REGISTER_MESSAGE:%x\n", dev->msg_port ? "S2D" : "PMC", value);
+ }
  
- 	wi = mlx5e_get_mpw_info(rq, wqe_id);
- 	wi->consumed_strides += cstrides;
-@@ -2355,7 +2361,11 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
- 		goto mpwrq_cqe_out;
+-static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret)
++int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret)
+ {
+ 	int rc;
+ 	u32 val, message, argument, response;
+@@ -1053,86 +852,6 @@ static const struct pci_device_id pmc_pc
+ 	{ }
+ };
+ 
+-static int amd_pmc_s2d_init(struct amd_pmc_dev *dev)
+-{
+-	u32 phys_addr_low, phys_addr_hi;
+-	u64 stb_phys_addr;
+-	u32 size = 0;
+-	int ret;
+-
+-	if (!enable_stb)
+-		return 0;
+-
+-	if (amd_pmc_is_stb_supported(dev)) {
+-		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
+-				    &amd_pmc_stb_debugfs_fops_v2);
+-	} else {
+-		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
+-				    &amd_pmc_stb_debugfs_fops);
+-		return 0;
+-	}
+-
+-	/* Spill to DRAM feature uses separate SMU message port */
+-	dev->msg_port = 1;
+-
+-	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->s2d_msg_id, true);
+-	if (size != S2D_TELEMETRY_BYTES_MAX)
+-		return -EIO;
+-
+-	/* Get DRAM size */
+-	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->s2d_msg_id, true);
+-	if (ret || !dev->dram_size)
+-		dev->dram_size = S2D_TELEMETRY_DRAMBYTES_MAX;
+-
+-	/* Get STB DRAM address */
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low, dev->s2d_msg_id, true);
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi, dev->s2d_msg_id, true);
+-
+-	if (!phys_addr_hi && !phys_addr_low) {
+-		dev_err(dev->dev, "STB is not enabled on the system; disable enable_stb or contact system vendor\n");
+-		return -EINVAL;
+-	}
+-
+-	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
+-
+-	/* Clear msg_port for other SMU operation */
+-	dev->msg_port = 0;
+-
+-	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
+-	if (!dev->stb_virt_addr)
+-		return -ENOMEM;
+-
+-	return 0;
+-}
+-
+-static int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data)
+-{
+-	int err;
+-
+-	err = amd_smn_write(0, AMD_PMC_STB_PMI_0, data);
+-	if (err) {
+-		dev_err(dev->dev, "failed to write data in stb: 0x%X\n", AMD_PMC_STB_PMI_0);
+-		return pcibios_err_to_errno(err);
+-	}
+-
+-	return 0;
+-}
+-
+-static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf)
+-{
+-	int i, err;
+-
+-	for (i = 0; i < FIFO_SIZE; i++) {
+-		err = amd_smn_read(0, AMD_PMC_STB_PMI_0, buf++);
+-		if (err) {
+-			dev_err(dev->dev, "error reading data from stb: 0x%X\n", AMD_PMC_STB_PMI_0);
+-			return pcibios_err_to_errno(err);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ static int amd_pmc_probe(struct platform_device *pdev)
+ {
+ 	struct amd_pmc_dev *dev = &pmc;
+@@ -1200,7 +919,7 @@ static int amd_pmc_probe(struct platform
  	}
  
--	if (*skb && (!match || !(mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt)))) {
-+	data_offset = wqe_offset & (page_size - 1);
-+	page_idx = wqe_offset >> rq->mpwqe.page_shift;
-+	if (*skb &&
-+	    !(match && mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt,
-+							 page_size))) {
- 		match = false;
- 		mlx5e_shampo_flush_skb(rq, cqe, match);
- 	}
+ 	amd_pmc_dbgfs_register(dev);
+-	err = amd_pmc_s2d_init(dev);
++	err = amd_stb_s2d_init(dev);
+ 	if (err)
+ 		goto err_pci_dev_put;
+ 
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -14,6 +14,11 @@
+ #include <linux/types.h>
+ #include <linux/mutex.h>
+ 
++enum s2d_msg_port {
++	MSG_PORT_PMC,
++	MSG_PORT_S2D,
++};
++
+ struct amd_mp2_dev {
+ 	void __iomem *mmio;
+ 	void __iomem *vslbase;
+@@ -25,6 +30,10 @@ struct amd_mp2_dev {
+ 	bool is_stb_data;
+ };
+ 
++struct stb_arg {
++	u32 s2d_msg_id;
++};
++
+ struct amd_pmc_dev {
+ 	void __iomem *regbase;
+ 	void __iomem *smu_virt_addr;
+@@ -36,7 +45,6 @@ struct amd_pmc_dev {
+ 	u32 active_ips;
+ 	u32 dram_size;
+ 	u32 num_ips;
+-	u32 s2d_msg_id;
+ 	u32 smu_msg;
+ /* SMU version information */
+ 	u8 smu_program;
+@@ -51,6 +59,7 @@ struct amd_pmc_dev {
+ 	bool disable_8042_wakeup;
+ 	bool is_first_check_after_suspend;
+ 	struct amd_mp2_dev *mp2;
++	struct stb_arg stb_arg;
+ };
+ 
+ void amd_pmc_process_restore_quirks(struct amd_pmc_dev *dev);
+@@ -73,4 +82,9 @@ void amd_mp2_stb_deinit(struct amd_pmc_d
+ #define PCI_DEVICE_ID_AMD_1AH_M60H_ROOT 0x1122
+ #define PCI_DEVICE_ID_AMD_MP2_STB	0x172c
+ 
++int amd_stb_s2d_init(struct amd_pmc_dev *dev);
++int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf);
++int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data);
++int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret);
++
+ #endif /* PMC_H */
 
 
