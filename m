@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E59157A5A;
-	Wed, 30 Sep 2026 15:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24A03AFCED;
+	Wed, 30 Sep 2026 15:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783970; cv=none; b=DkTrqYgw0EOabUm+m0Za9mHSVZBmKkZRTlrb0EhKBKEc3sXlxmfGXI2BjX6q1nYXHsIveg5071vmisoFFKoZTvcBPHtyyraKvmhzUg+upuczxOaoDkDR6828vUie4VjNz40fYWIvomBxAnwxfwr1bZtTk9MFtQgTLumQW47YP/4=
+	t=1790783973; cv=none; b=II/hqDt5vdbApbOmmXtQAsW8ComAvGhDvPIV6uFuPatv+by+6SC5MHJrstt1omor6OXSY+7URBzcON9e3r6xLw9KReGLpWP4I7Z/Nxtv6/24uje/pI92A23JmLRBO1Np4HZI1ugcA4YNvi9QOZn9ON5im87lfmz/DdgqCsFZLYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783970; c=relaxed/simple;
-	bh=xTdmb7I7n/cI3VFEkL7USgSUojMdQpYN7Yeg61CKHJo=;
+	s=arc-20240116; t=1790783973; c=relaxed/simple;
+	bh=c5FofId6z+lmU5/dqrWo/MrefiSPen894g0oxd77VFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRYjb6cNTtA40e4ddisLqCivDEEHKXG3EApnZaiTPhqStUN6n+u6DYmkLu9A/qMwp9aJmM/icbRcz9CMctC9W7SY/dFmTC26Lnswi6QlOLNvGRE6bEEYLsr/fJ23l/GnXLx1jaSJEFwE8QqDSsN64sf1/LLTOQ3Lb9MMm8whCMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCYBlv5L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BSiCTms1TzPhCYsqdenhC5YlJQnL/aEo9OWKF4lgqlEODdl1H0LEJ2sZPQJhJOj+FNtsun0gennhm9t7K4lfn/XrlqUy0gSVV4x7efumd/s4RnpevjLNVteALKNVwbacodUGJGssFBhs5lNpBw5AvcL4D3RG2YTwGrQAq6cO8ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaBXfFb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCYBlv5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68A41F000FF;
-	Wed, 30 Sep 2026 15:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaBXfFb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2081F00893;
+	Wed, 30 Sep 2026 15:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783963;
-	bh=wxeibSQeLY8S4WrXys/TVR3vMFOfHeRR/TW5Y4r93mA=;
+	s=korg; t=1790783966;
+	bh=WrVmG2Lb+n7/W4iWb8OOBB6guK9/TLq6ODcHdeRd+TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uCYBlv5LYO9iYZhT1VNBy5RwNbk4O7DJJ44yLYaiOKO3/ZXUWWZpgSSrUo9EEImn2
-	 53n26wUNT0koAeNipkIcEuE8umf73wj9PuISLEGh+8+3eGE63jIfoZMVWyuVfhelnY
-	 wJrVKGcew90NzNKI/T85QKDkqpNUjhX46f3Onw+Q=
+	b=XaBXfFb2Pon6dLzSDQxNftUv5mqFWIPXNWoLF30xVisV51ZVNQz32PQcpIGTahG/+
+	 to+7F92agFDCwD8dLR9U/Jda4+8YGrVnse9zEPnqcGqB1YFgI26fM0dvp4JZL5ydMG
+	 UEU3E8c0W63iHbMka3jAygErfphrT++ySZr9hsHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>
-Subject: [PATCH 5.10 547/595] netfilter: nf_tables: join hook list via splice_list_rcu() in commit phase
-Date: Wed, 30 Sep 2026 17:27:20 +0200
-Message-ID: <20260930152359.478483641@linuxfoundation.org>
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 5.10 583/595] nfc: llcp: drop truncated I/RR/RNR PDUs in nfc_llcp_recv_hdlc()
+Date: Wed, 30 Sep 2026 17:27:56 +0200
+Message-ID: <20260930152400.272814220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit a6134e62dba2ea4f760b29d5226907f447c92400 ]
+commit 273f9d667cde649f8de9d72b1303cc2f4b658c50 upstream.
 
-Publish new hooks in the list into the basechain/flowtable using
-splice_list_rcu() to ensure netlink dump list traversal via rcu is safe
-while concurrent ruleset update is going on.
+nfc_llcp_recv_hdlc() reads the sequence byte skb->data[2], via
+nfc_llcp_ns()/nfc_llcp_nr(), before any length check. The receive path
+only guarantees the two-byte LLCP header -- __nfc_llcp_recv() checks it
+with pskb_may_pull() and nfc_llcp_recv_agf() admits two-byte inner PDUs
+-- so a two-byte I, RR or RNR PDU reads one byte of uninitialised skb
+tailroom. The byte becomes N(R)/N(S); a peer can already set those with
+a well-formed PDU, so this is acting on uninitialised memory, not new
+peer control.
 
-Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Benjamin Robin (Schneider Electric) <benjamin.robin@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Guard the read with pskb_may_pull(), as commit 95674f506c63 ("nfc: llcp:
+reject PDUs shorter than the LLCP header") did for the two-byte header,
+so the sequence byte is present and linear before it is read. RR and RNR
+PDUs are LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE bytes and an I PDU is
+longer, so no valid frame is rejected; a truncated PDU is malformed, so
+return without a DM reply.
+
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/AS8P251MB0001789BBF04B72745C7D96BC8BA2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/llcp_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 5e3f863c487f6..63592c73a7a17 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8797,8 +8797,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 							   nft_trans_flowtable(trans),
- 							   &nft_trans_flowtable_hooks(trans),
- 							   NFT_MSG_NEWFLOWTABLE);
--				list_splice(&nft_trans_flowtable_hooks(trans),
--					    &nft_trans_flowtable(trans)->hook_list);
-+				list_splice_rcu(&nft_trans_flowtable_hooks(trans),
-+						&nft_trans_flowtable(trans)->hook_list);
- 			} else {
- 				nft_clear(net, nft_trans_flowtable(trans));
- 				nf_tables_flowtable_notify(&trans->ctx,
--- 
-2.53.0
-
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -1108,6 +1108,9 @@ static void nfc_llcp_recv_hdlc(struct nf
+ 	struct sock *sk;
+ 	u8 dsap, ssap, ptype, ns, nr;
+ 
++	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE))
++		return;
++
+ 	ptype = nfc_llcp_ptype(skb);
+ 	dsap = nfc_llcp_dsap(skb);
+ 	ssap = nfc_llcp_ssap(skb);
 
 
