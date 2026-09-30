@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCAC50EBE2;
-	Wed, 30 Sep 2026 16:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681BD51617E;
+	Wed, 30 Sep 2026 16:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784592; cv=none; b=Q1vHHIrkVUZX3R5jULCSCtAlo004TDlFXQiyfC7iW3am8RB/xzb0nXMSHIdyFVVlsXHOyRbsYOndCRVlJm6sKvgYdV4VaLnJWDOUdan4edx4XPe4+MCpINU/vbCzB5sdlBBBztxEDcL/RMcaeLOopiXhc+xJj67igJZ5sNYyqUQ=
+	t=1790784596; cv=none; b=OlTUALVVn6x16/WrrPa/9miKGj2I3pteBwmDd50BQIFTLBPMPXndpBQUhknYJsuFmNzWBKxzOj4ehHmiA+tauXr/RbZtE3ooTXXUA42WnE7WTraPNGUdxMxa6z7T/yr2iPOTj3CnLl37LhKXTQS4IbHZfih49oS7bqnxucM5jMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784592; c=relaxed/simple;
-	bh=3xQl1UZeKu9fXVZ5kDLzmS5XPonrC9VGmi3OOc2zdr8=;
+	s=arc-20240116; t=1790784596; c=relaxed/simple;
+	bh=fV82pyCZkk6FxjUlcqVxlwtqv6+cnNO+OTWWEbzT4D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUDF0wLffSXg2CL7Kh/Q3FdM9XJrVqCsi7On4sOoz28SlBHPfPJhilpsGZGpIKcWgzxw2l712sklrcjKCfgTVJbqi8efnseicGDki/zc65lLK9bo8tjg7HjCXGPaA7wMv2fTZHbrkNvgXIYHARJu0u0cmUCdOaOR0041c3Us9do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJg8HNTC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3UFoh9YxEscAc90jEICzlnuYOqWxjalll3BrUr1rd6+qqztqw7cZ03ADVNNTtRmQ5F08hsf8W0VCqT5/jMiV5CA44b8RvTc6yixIgRBTJxoiswc65Lf9WcoB2FzdEUCmHPi9Wzwclx3uhzti9N7MRKHy9uFCDDE5Km85Vd+yNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVrFmnMa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJg8HNTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2E31F00898;
-	Wed, 30 Sep 2026 16:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVrFmnMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E0C1F000FF;
+	Wed, 30 Sep 2026 16:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784586;
-	bh=sK3mchccD7EM5pV+byuHBYqjWfV23Ei1MuoqEHF30N4=;
+	s=korg; t=1790784589;
+	bh=dJNRECwlNhxRelHtc+BzxLCPpLTnuIshEzgJsHfrkKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJg8HNTCgrmiDuN3pYxuqIyUglZZ/WnnZkZoZxiDyQrxIxF3cVjZwmlJlYweUNI0+
-	 wU9Kp0wWNLEAk/dAT2hxCObROrzn/cAA6Y1gZsqgwMHaNS0rWxl2n1IeLthmuBHfsW
-	 AHf7Ih/qAtKxr9Z7S9Q3qFRPkyu/rviin4cGrWlg=
+	b=MVrFmnMaz8RmgrkImErAGirGxC/PgVfyF4nrIS1oud3Z4ucL4CekfH/TeXZvVxukY
+	 7E6E32EWzLt4xzKxP38aygvnRLu4EVnxuFZaEgwBjdIGb0gy0ftQLQ8LIp92m5asZk
+	 W5u4o9CUvSJIKktE/wukclrY9y4GhcvIzzISSPFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Evgenii Burenchev <evg28bur@yandex.ru>,
+	Jason Wang <jasowang@redhat.com>,
+	Zhu Lingshan <lingshan.zhu@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/982] hwmon: (adt7462) Add of_match_table to support devicetree
-Date: Wed, 30 Sep 2026 17:15:08 +0200
-Message-ID: <20260930152420.509807668@linuxfoundation.org>
+Subject: [PATCH 6.1 173/982] vdpa/ifcvf: handle dev_set_name() failure in ifcvf_vdpa_dev_add()
+Date: Wed, 30 Sep 2026 17:15:09 +0200
+Message-ID: <20260930152420.531834270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,52 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit cd1b42617aafe01810ab7d3b9948d2f5fa9fb8af ]
+[ Upstream commit 4c653e85857b41a7148917f2628fae1d04a9c251 ]
 
-Add of_match_table to add support of devicetree probing.
+dev_set_name() may fail and return an error, but its return value
+is currently ignored and overwritten by _vdpa_register_device().
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-[rgantois: Removed of_match_ptr().]
-Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
-Link: https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Abort device creation if dev_set_name() fails and release the
+device reference to avoid continuing with an improperly initialized
+struct device.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Zhu Lingshan <lingshan.zhu@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260226152924.38790-1-evg28bur@yandex.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7462.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/vdpa/ifcvf/ifcvf_main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
-index 9c0235849d4b6..f6ec0c1e51b19 100644
---- a/drivers/hwmon/adt7462.c
-+++ b/drivers/hwmon/adt7462.c
-@@ -12,6 +12,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/mutex.h>
- #include <linux/log2.h>
- #include <linux/slab.h>
-@@ -1814,10 +1815,17 @@ static const struct i2c_device_id adt7462_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adt7462_id);
+diff --git a/drivers/vdpa/ifcvf/ifcvf_main.c b/drivers/vdpa/ifcvf/ifcvf_main.c
+index d5036f49f161a..b1711b2e30ceb 100644
+--- a/drivers/vdpa/ifcvf/ifcvf_main.c
++++ b/drivers/vdpa/ifcvf/ifcvf_main.c
+@@ -766,15 +766,22 @@ static int ifcvf_vdpa_dev_add(struct vdpa_mgmt_dev *mdev, const char *name,
+ 		ret = dev_set_name(&vdpa_dev->dev, "%s", name);
+ 	else
+ 		ret = dev_set_name(&vdpa_dev->dev, "vdpa%u", vdpa_dev->index);
++	if (ret) {
++		IFCVF_ERR(pdev, "Failed to set device name");
++		goto err;
++	}
  
-+static const struct of_device_id adt7462_of_match[] = {
-+	{ .compatible = "onnn,adt7462" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, adt7462_of_match);
+ 	ret = _vdpa_register_device(&adapter->vdpa, vf->nr_vring);
+ 	if (ret) {
+-		put_device(&adapter->vdpa.dev);
+ 		IFCVF_ERR(pdev, "Failed to register to vDPA bus");
+-		return ret;
++		goto err;
+ 	}
+ 
+ 	return 0;
 +
- static struct i2c_driver adt7462_driver = {
- 	.class		= I2C_CLASS_HWMON,
- 	.driver = {
- 		.name	= "adt7462",
-+		.of_match_table = adt7462_of_match,
- 	},
- 	.probe_new	= adt7462_probe,
- 	.id_table	= adt7462_id,
++err:
++	put_device(&adapter->vdpa.dev);
++	return ret;
+ }
+ 
+ static void ifcvf_vdpa_dev_del(struct vdpa_mgmt_dev *mdev, struct vdpa_device *dev)
 -- 
 2.53.0
 
