@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4083E315C;
-	Wed, 30 Sep 2026 19:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6CA43B6F3;
+	Wed, 30 Sep 2026 19:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797033; cv=none; b=pjF98K0jKsFssK05qM3oEWhXCvUCWYL+fIaynRYd/KJA+iKy0QKV4f8k6A0l9uLI08YFPMxrANmG+ME83sFSi5kTueO7e+QzYTPjfC4i/9OcmNKmiTTQDMjJG78j0OAIMqcRgz3tYHYQzo/HKeYsoqUnhzLbsCd+4XLx3YU+dNE=
+	t=1790797035; cv=none; b=jAPAfxKUH5AczgdaYqOqM7uaHx3bApBts5awOD9BGL23SJulTwmHqVX48gWf3GwOKZsJpP6V1SkE1NKlSQrjjbwrIeft277kQ6bKMS9uUEqUCoiRqlIiEDHMDEB6X5/A9fU7RdjPDtYFZul4E4MSL0wcCEcVfretRjZqAJpwyiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797033; c=relaxed/simple;
-	bh=5k1xufQ+NJ2Oe4793JNXpKyxZx7mVQwNwCFi3xvW7ZQ=;
+	s=arc-20240116; t=1790797035; c=relaxed/simple;
+	bh=6v6m1o2LEX5dkmziSbQIaZ65OQgsrjd7OJAz+aIk4jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DR6kqsIat7z0WN6pBsvcYk84tARuhj9TSZPHPXjq3KrggaoSyzrVQz306pqeZXeidV4pSR2tkFtUclzzlhR3IjVNN9mksbqU2a5nG/PHkGZZDdSN1i9cAZQ18XWNw+qau+kj8iZNQGlgXFw6OXsa+rT3gnN/TZWAoGCPUUTzwSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIfNOnCv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HjtCGeAQiG9NLOsCICubOfJuEjpD77Lkg9JtZwuy44ojhY6j4g8sQDn1oLEsIBGGv1pa4OOm9aPyblcYmgnp63aCYxJviiTrTAEuO1B8pi0IJeVYh6gIWKf7+sjKW81fHbtlXo8pstM19VYOMKNMKOphjm8rFL87ft4FNW0K5KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzk5BtXV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIfNOnCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E9F1F00898;
-	Wed, 30 Sep 2026 19:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzk5BtXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECFF1F000FF;
+	Wed, 30 Sep 2026 19:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797031;
-	bh=M2c63Rng3MO9jbbnIFdm7Nc3mPkKElwfDOzRVeErpU4=;
+	s=korg; t=1790797034;
+	bh=Q138i+Ay7NOfy/Ku/8sDbW+XowKOuzsabIJIK+i0fVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIfNOnCvPfyha/w9F3PWQS2q8nBZ1b0R6zOvJ8st7rzArNwRmG2VfuK03oQ4wDZmZ
-	 pvgp66+b9qEPmw2rB0Dzf5+1+Sqq383TSYBww4n6j10I5K5sgLH4SQSnUIITsplClO
-	 cSJbgJm4LORq2IrF0QBatxGs784DRQZDHAQKt1nA=
+	b=mzk5BtXV5hiHDBWqEE5A0kWC/zgk1KXoIC939kQRKMnvsO0FjkHt4NrtAGDkOv1Ik
+	 K9FtLZYvrz8IXi7QykjIk3xdGZop0uITV+I8FXGIausS+Gq4IMJBFPTRUlrAhzHhCk
+	 UHmbbm6KvvzjpBuSGly/bcvHAyt37UyVYvZ4gr/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1096/1193] fou: reject omitted FOU_ATTR_IPPROTO on FOU_ENCAP_DIRECT
-Date: Wed, 30 Sep 2026 17:29:40 +0200
-Message-ID: <20260930152458.584275970@linuxfoundation.org>
+	Jason Gerecke <killertofu@gmail.com>,
+	Wei Jie Law <98lawweijie@gmail.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 1123/1193] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
+Date: Wed, 30 Sep 2026 17:30:07 +0200
+Message-ID: <20260930152459.186122628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,66 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Wei Jie LAW <98lawweijie@gmail.com>
 
-commit d22609f3d13fc5baacd92c222731b03c593401db upstream.
+commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
 
-Commit 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.") added
-NLA_POLICY_MIN(NLA_U8, 1) to fou_nl_policy[FOU_ATTR_IPPROTO], which
-rejects an explicitly supplied FOU_ATTR_IPPROTO == 0 attribute with
--ERANGE.
+The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
+invalid offset to hid_field_extract(), resulting in memory reads at
+incorrect addresses -- possibly beyond the end of the report.  If a
+field in the HID descriptor lists more usages than its Report Count
+actually reserves space for, the function's inner 'j' will walk past
+the end of the field:
 
-However, FOU_ATTR_IPPROTO is an optional netlink attribute. When a user
-sends FOU_CMD_ADD with FOU_ATTR_TYPE set to FOU_ENCAP_DIRECT and omits
-FOU_ATTR_IPPROTO entirely, nla_policy validation succeeds and
-parse_nl_config() leaves cfg->protocol as 0 (from memset(cfg, 0,
-sizeof(*cfg))). fou_create() then creates a FOU_ENCAP_DIRECT socket with
-fou->protocol == 0.
+	for (i = 0; i < report->maxfield; i++) {
+		for (j = 0; j < report->field[i]->maxusage; j++) {
+			...
+			value = hid_field_extract(hdev, raw_data + 1,
+						  offset + j * size, size);
 
-In fou_udp_recv(), returning -fou->protocol to udp_queue_rcv_one_skb()
-triggers IP protocol resubmission when fou->protocol > 0, whereas
-returning 0 tells the UDP tunnel layer that the skb was consumed without
-freeing it. When fou->protocol == 0, every packet received on the socket
-returns 0 from fou_udp_recv() and leaks the sk_buff.
+A descriptor listing 12288 usages against Report Count 1 has the loop
+extract the usage at index 12287 from bit offset 98296 -- about 12 KB
+past a 2-byte received report.  The value is stored in
+wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
+making this an information disclosure.
 
-Reject FOU_ENCAP_DIRECT when !cfg->protocol in fou_create() so that
-creating a direct encapsulation port without FOU_ATTR_IPPROTO fails with
--EINVAL while leaving FOU_CMD_DEL and FOU_CMD_GET (which share
-parse_nl_config()) unaffected.
+Clamp the loop to field->report_count, the number of value slots the
+report holds.  Value slots past the last declared usage are still
+scanned; they reuse that usage (HID 1.11, 6.2.2.8).
 
-Tested in QEMU against Linux 7.3.0-rc3 by sending a FOU_CMD_ADD Generic
-Netlink request with FOU_ATTR_PORT = 5555 and FOU_ATTR_TYPE =
-FOU_ENCAP_DIRECT while omitting FOU_ATTR_IPPROTO. On the unfixed kernel,
-FOU_CMD_ADD succeeds (err = 0), FOU_CMD_GET reports fou->type = 1 and
-fou->protocol = 0, and sending 4000 UDP packets to 127.0.0.1:5555 leaks
-all 4000 sk_buffs (SUnreclaim in /proc/meminfo grows from 41456 kB to
-59008 kB, +17552 kB); with this patch applied, FOU_CMD_ADD is rejected
-with -EINVAL (-22).
+Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
+such a descriptor trips KASAN before the patch and not after it.
 
-Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
-Fixes: 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.")
+Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
+Suggested-by: Jason Gerecke <killertofu@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260921045920.1613098-1-benquike@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Assisted-by: GLM:glm-5.3
+Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fou_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/wacom_sys.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -607,6 +607,10 @@ static int fou_create(struct net *net, s
- 	/* Initial for fou type */
- 	switch (cfg->type) {
- 	case FOU_ENCAP_DIRECT:
-+		if (!cfg->protocol) {
-+			err = -EINVAL;
-+			goto error;
-+		}
- 		tunnel_cfg.encap_rcv = fou_udp_recv;
- 		tunnel_cfg.gro_receive = fou_gro_receive;
- 		tunnel_cfg.gro_complete = fou_gro_complete;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -97,8 +97,9 @@ static int wacom_wac_pen_serial_enforce(
+ 
+ 	/* Queue events which have invalid tool type or serial number */
+ 	for (i = 0; i < report->maxfield; i++) {
+-		for (j = 0; j < report->field[i]->maxusage; j++) {
+-			struct hid_field *field = report->field[i];
++		struct hid_field *field = report->field[i];
++
++		for (j = 0; j < field->report_count; j++) {
+ 			struct hid_usage *usage = &field->usage[j];
+ 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 			unsigned int offset;
 
 
