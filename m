@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297C73C3F56;
-	Wed, 30 Sep 2026 19:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0688F34E75A;
+	Wed, 30 Sep 2026 19:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795483; cv=none; b=X51LMZwo6SN8uSTHWZMhcHY2qKNq/QQeP1uYT1KkWpS+T3tWAiparK/+zHkh/xc4q9b6VQh8GKcpKbTxQpdV++LPM5mi4w9Rm3ElqbBKWGgPHziGJKL52/QdundC0tQTYJquO4MCvoo8O9Vv9VyYf0S9AFMVxIhxm3Q6zqclSCc=
+	t=1790795486; cv=none; b=u2hvGVUNUS9mHKQvAwBWfOSaMBLpY4DQWjOnDn6TKLD7q8GDGGSB92ph5Kgj1Arkj0lg38wJqXou/Fq2jMcn3WR5tXX7sOn5wM4mgJ4wbK2M7+b5GF3FPO7nutzmSVva5kscwHyVwywQD1aW9G465yCy5j/16wntKSd65xSOVvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795483; c=relaxed/simple;
-	bh=SVRocBfCK8TXoHm2r2ZCBOZTUxATamSIJMgMf5Bah7I=;
+	s=arc-20240116; t=1790795486; c=relaxed/simple;
+	bh=X/uWyMorSGqQA+7NMvR0H98HgsDUmxvs6VuqyoPJDnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mU8HWfvKT1T9VoNCxrKvM6ogpXA4E/vAXwdpupnHYeXoo13cgefcEYqfncb47IZ0MWqFUxmlHTdeHhyBpmTtBfEGh+8ruxyB4ntPGvHn1Bn8WoFYMf/WfM45WjfW5R7Y4Bjda4tPAp2aRXp1OZj6md17Cu9xgOVNY55BESYSSLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8hnVJjv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+JDKeo7pLfeyAIxnZK/1PFDr1gtBsHcNuVK4bry/hx4zdbBZmrQ0iZT5XgUEID+1/O2OdLVZjrSBeuGY2blLNsw9b7FrR5XVIBS8kcGvB/adNNA0Y9LdM4YXt+5rCjRxt81OsV/uiOVdULsjZlfm0OWFjiaHy+ShX0iXV8SFU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui3Ol/pK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8hnVJjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B041F000FF;
-	Wed, 30 Sep 2026 19:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui3Ol/pK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6247F1F000FF;
+	Wed, 30 Sep 2026 19:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795482;
-	bh=3GaDz7gStaDaJgae2eprLguwL+I6MaqqYQ4Qq1YnmKo=;
+	s=korg; t=1790795484;
+	bh=ILWRuUtGRa/+F8TSnBCaL8jqOtdIXoIq83Bb+l9E8BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8hnVJjvCXAPZi6ew1C9ef/0YcG6tfQ5g4Btvm5W/hjOM2b9+OX8Caxh3GTiJVaa7
-	 u6F2dQOX5ehFAkRHsTOGHMenLb+qFwE8nYI8sSjEXh0opGW6MctRyFZIJ/uLmJvm8k
-	 kKB73ETYNF0tUyBNJ772M/dTf0GNtIIvPMp4hRkA=
+	b=ui3Ol/pK340Rbtr6i8JCdlZiO2Y9O6YQzaX8cVx+B07FqLD3uFfKM/WZ2yksLdIKd
+	 LyPBJlq7tyKd4CczHSpnvbNES0AuuHpamAZzWz5aah0EmWKbbMhnjU1AOVc6MoxuRY
+	 TH89o6SK3mF4m6tqMSxBPTjq7vEoazSyY4nMv4Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Yabin Cui <yabinc@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0578/1193] perf/core: Check sample_type in perf_sample_save_callchain
-Date: Wed, 30 Sep 2026 17:21:02 +0200
-Message-ID: <20260930152447.083495943@linuxfoundation.org>
+Subject: [PATCH 6.6 0579/1193] perf/x86/intel/ds: Clarify adaptive PEBS processing
+Date: Wed, 30 Sep 2026 17:21:03 +0200
+Message-ID: <20260930152447.107511509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,80 +52,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yabin Cui <yabinc@google.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit f226805bc5f60adf03783d8e4cbfe303ccecd64e ]
+[ Upstream commit 7087bfb0adc9a12ec3b463b1d38072c5efce5d6c ]
 
-Check sample_type in perf_sample_save_callchain() to prevent
-saving callchain data when it isn't required.
+Modify the pebs_basic and pebs_meminfo structs to make the bitfields
+more explicit to ease readability of the code.
 
-Suggested-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Yabin Cui <yabinc@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240515193610.2350456-3-yabinc@google.com
+Co-developed-by: Stephane Eranian <eranian@google.com>
+Signed-off-by: Stephane Eranian <eranian@google.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241119135504.1463839-3-kan.liang@linux.intel.com
 Stable-dep-of: 88aa1223bfff ("perf/x86/intel: Correct pt_regs->flags update for PEBS path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c  | 3 +--
- arch/x86/events/intel/ds.c | 6 ++----
- include/linux/perf_event.h | 5 +++++
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/ds.c        | 43 ++++++++++++++-----------------
+ arch/x86/include/asm/perf_event.h | 16 ++++++++++--
+ 2 files changed, 34 insertions(+), 25 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index fac3d97111b09..ec1b8a193e612 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -1135,8 +1135,7 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 	 * recorded as part of interrupt regs. Thus we need to use rip from
- 	 * interrupt regs while unwinding call stack.
- 	 */
--	if (event->attr.sample_type & PERF_SAMPLE_CALLCHAIN)
--		perf_sample_save_callchain(&data, event, iregs);
-+	perf_sample_save_callchain(&data, event, iregs);
- 
- 	throttle = perf_event_overflow(event, &data, &regs);
- out:
 diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 7dcf5305d695d..025a82d55981a 100644
+index 025a82d55981a..7e3768d4b12b3 100644
 --- a/arch/x86/events/intel/ds.c
 +++ b/arch/x86/events/intel/ds.c
-@@ -1656,8 +1656,7 @@ static void setup_pebs_fixed_sample_data(struct perf_event *event,
- 	 * previous PMI context or an (I)RET happened between the record and
- 	 * PMI.
+@@ -1783,8 +1783,6 @@ static void adaptive_pebs_save_regs(struct pt_regs *regs,
+ }
+ 
+ #define PEBS_LATENCY_MASK			0xffff
+-#define PEBS_CACHE_LATENCY_OFFSET		32
+-#define PEBS_RETIRE_LATENCY_OFFSET		32
+ 
+ /*
+  * With adaptive PEBS the layout depends on what fields are configured.
+@@ -1798,8 +1796,7 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+ 	struct pebs_basic *basic = __pebs;
+ 	void *next_record = basic + 1;
+-	u64 sample_type;
+-	u64 format_size;
++	u64 sample_type, format_group;
+ 	struct pebs_meminfo *meminfo = NULL;
+ 	struct pebs_gprs *gprs = NULL;
+ 	struct x86_perf_regs *perf_regs;
+@@ -1811,7 +1808,7 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 	perf_regs->xmm_regs = NULL;
+ 
+ 	sample_type = event->attr.sample_type;
+-	format_size = basic->format_size;
++	format_group = basic->format_group;
+ 	perf_sample_data_init(data, 0, event->hw.last_period);
+ 	data->period = event->hw.last_period;
+ 
+@@ -1832,7 +1829,7 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 
+ 	if (sample_type & PERF_SAMPLE_WEIGHT_STRUCT) {
+ 		if (x86_pmu.flags & PMU_FL_RETIRE_LATENCY)
+-			data->weight.var3_w = format_size >> PEBS_RETIRE_LATENCY_OFFSET & PEBS_LATENCY_MASK;
++			data->weight.var3_w = basic->retire_latency;
+ 		else
+ 			data->weight.var3_w = 0;
+ 	}
+@@ -1842,12 +1839,12 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 	 * But PERF_SAMPLE_TRANSACTION needs gprs->ax.
+ 	 * Save the pointer here but process later.
  	 */
--	if (sample_type & PERF_SAMPLE_CALLCHAIN)
--		perf_sample_save_callchain(data, event, iregs);
-+	perf_sample_save_callchain(data, event, iregs);
+-	if (format_size & PEBS_DATACFG_MEMINFO) {
++	if (format_group & PEBS_DATACFG_MEMINFO) {
+ 		meminfo = next_record;
+ 		next_record = meminfo + 1;
+ 	}
  
- 	/*
- 	 * We use the interrupt regs as a base because the PEBS record does not
-@@ -1824,8 +1823,7 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
- 	 * previous PMI context or an (I)RET happened between the record and
- 	 * PMI.
- 	 */
--	if (sample_type & PERF_SAMPLE_CALLCHAIN)
--		perf_sample_save_callchain(data, event, iregs);
-+	perf_sample_save_callchain(data, event, iregs);
+-	if (format_size & PEBS_DATACFG_GP) {
++	if (format_group & PEBS_DATACFG_GP) {
+ 		gprs = next_record;
+ 		next_record = gprs + 1;
  
- 	*regs = *iregs;
- 	/* The ip in basic is EventingIP */
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index 90c782749b055..3fdc58cc57831 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -1229,6 +1229,11 @@ static inline void perf_sample_save_callchain(struct perf_sample_data *data,
- {
- 	int size = 1;
+@@ -1860,14 +1857,13 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 			adaptive_pebs_save_regs(regs, gprs);
+ 	}
  
-+	if (!(event->attr.sample_type & PERF_SAMPLE_CALLCHAIN))
-+		return;
-+	if (WARN_ON_ONCE(data->sample_flags & PERF_SAMPLE_CALLCHAIN))
-+		return;
+-	if (format_size & PEBS_DATACFG_MEMINFO) {
++	if (format_group & PEBS_DATACFG_MEMINFO) {
+ 		if (sample_type & PERF_SAMPLE_WEIGHT_TYPE) {
+-			u64 weight = meminfo->latency;
++			u64 latency = x86_pmu.flags & PMU_FL_INSTR_LATENCY ?
++					meminfo->cache_latency : meminfo->mem_latency;
+ 
+-			if (x86_pmu.flags & PMU_FL_INSTR_LATENCY) {
+-				data->weight.var2_w = weight & PEBS_LATENCY_MASK;
+-				weight >>= PEBS_CACHE_LATENCY_OFFSET;
+-			}
++			if (x86_pmu.flags & PMU_FL_INSTR_LATENCY)
++				data->weight.var2_w = meminfo->instr_latency;
+ 
+ 			/*
+ 			 * Although meminfo::latency is defined as a u64,
+@@ -1875,12 +1871,13 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 			 * in practice on Ice Lake and earlier platforms.
+ 			 */
+ 			if (sample_type & PERF_SAMPLE_WEIGHT) {
+-				data->weight.full = weight ?:
++				data->weight.full = latency ?:
+ 					intel_get_tsx_weight(meminfo->tsx_tuning);
+ 			} else {
+-				data->weight.var1_dw = (u32)(weight & PEBS_LATENCY_MASK) ?:
++				data->weight.var1_dw = (u32)latency ?:
+ 					intel_get_tsx_weight(meminfo->tsx_tuning);
+ 			}
 +
- 	data->callchain = perf_callchain(event, regs);
- 	size += data->callchain->nr;
+ 			data->sample_flags |= PERF_SAMPLE_WEIGHT_TYPE;
+ 		}
+ 
+@@ -1901,16 +1898,16 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 		}
+ 	}
+ 
+-	if (format_size & PEBS_DATACFG_XMMS) {
++	if (format_group & PEBS_DATACFG_XMMS) {
+ 		struct pebs_xmm *xmm = next_record;
+ 
+ 		next_record = xmm + 1;
+ 		perf_regs->xmm_regs = xmm->xmm;
+ 	}
+ 
+-	if (format_size & PEBS_DATACFG_LBRS) {
++	if (format_group & PEBS_DATACFG_LBRS) {
+ 		struct lbr_entry *lbr = next_record;
+-		int num_lbr = ((format_size >> PEBS_DATACFG_LBR_SHIFT)
++		int num_lbr = ((format_group >> PEBS_DATACFG_LBR_SHIFT)
+ 					& 0xff) + 1;
+ 		next_record = next_record + num_lbr * sizeof(struct lbr_entry);
+ 
+@@ -1920,11 +1917,11 @@ static void setup_pebs_adaptive_sample_data(struct perf_event *event,
+ 		}
+ 	}
+ 
+-	WARN_ONCE(next_record != __pebs + (format_size >> 48),
+-			"PEBS record size %llu, expected %llu, config %llx\n",
+-			format_size >> 48,
++	WARN_ONCE(next_record != __pebs + basic->format_size,
++			"PEBS record size %u, expected %llu, config %llx\n",
++			basic->format_size,
+ 			(u64)(next_record - __pebs),
+-			basic->format_size);
++			format_group);
+ }
+ 
+ static inline void *
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index ba2a3935dc624..a42ea28e7e8db 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -425,7 +425,9 @@ static inline bool is_topdown_idx(int idx)
+  */
+ 
+ struct pebs_basic {
+-	u64 format_size;
++	u64 format_group:32,
++	    retire_latency:16,
++	    format_size:16;
+ 	u64 ip;
+ 	u64 applicable_counters;
+ 	u64 tsc;
+@@ -434,7 +436,17 @@ struct pebs_basic {
+ struct pebs_meminfo {
+ 	u64 address;
+ 	u64 aux;
+-	u64 latency;
++	union {
++		/* pre Alder Lake */
++		u64 mem_latency;
++		/* Alder Lake and later */
++		struct {
++			u64 instr_latency:16;
++			u64 pad2:16;
++			u64 cache_latency:16;
++			u64 pad3:16;
++		};
++	};
+ 	u64 tsx_tuning;
+ };
  
 -- 
 2.53.0
