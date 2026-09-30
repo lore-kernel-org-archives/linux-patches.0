@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1A35187EB;
-	Wed, 30 Sep 2026 18:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6757333DEF9;
+	Wed, 30 Sep 2026 18:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792929; cv=none; b=uZ22ULrbpMugUjZeJr4gg/0iCPuLlVSRUMMA6Uv8R5uS8lRNylo/O9Ovxt3pKUriaKMdXtiA5s106AT3jOz9L2nhh5xEcjt1rr8+vuL3peuWEx3T2OUvKNxhBnWF8mLCVw4iMgU7MCa52+kCMhcIEYZpzZ/D3z3pYowIlhggBnc=
+	t=1790792932; cv=none; b=HK/Gy/3tONafwQ+J/kNCJS5Zx8YtTt7hEYnxUGb1bEqqgc6kfjzRQYYChatM8puKNuZP7k5Ee2b1jdm7JFqd0KQXDVoUYQwOC2q4TSobeRDWVGADSajgelYIJ4VCo64nEoo1AkLz5n4FwV8GA/KbP2zH8JgPpGYk8gqHgI54Tz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792929; c=relaxed/simple;
-	bh=+x4Z4fA4qMpCodkirdNKGtGE6ScF4dGfQCCVnbRcdHM=;
+	s=arc-20240116; t=1790792932; c=relaxed/simple;
+	bh=nyvD57GpaUpRduA6B1GH9nlPr/WLFm0rbSXYcpmZhtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpMEmdxx1LI/Ip/w0HKXghZUzVx2p2DbMgpc1MH/9lhAMytWQwYAi8mXFjc8BWcYXLyTNn4tNmOT4+A1TUkdf0HhMgDHhY0dXxT5FxPv6NY7LCdu+4JCocNINP5t8uYr0b5XVhQVqJ+BJ3DVH2x3/ef29KaiSvOTaPa4N8DfLmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoBN58yj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PBto2N1B9eMLHsJyLbZWhS+Ifz3UshasSw/xyOQUdBIQgE45TQwKqC0suV1r6sgPOpq3I7LS4JmnvBiAUwzMASuik+hH2/0pGPP0j/WsTT9pPnW+8k4+/mqSWNZKdBapV62RD7pbH+L9MLZ031O+AJ+0eLH1RQSjmkQm5JqUWU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CN2uub37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoBN58yj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F5F1F000FF;
-	Wed, 30 Sep 2026 18:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CN2uub37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0821F00899;
+	Wed, 30 Sep 2026 18:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792928;
-	bh=9ngyJP9BzfWR7cR1IWoD9tv7v98iKqMUarGVcFmz46k=;
+	s=korg; t=1790792931;
+	bh=4AAPyrYSauQPA376qVQNHSCaT5X7wwrJHz8eHxWfuCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MoBN58yjffccpf9pvf4ilUNgdxc51E+8NRw/2CK3Djt2msP7Pdu7d7gfSmLIipHOk
-	 MiDE+Q6xj+z9b9I9aG1o2+tmuD9W0ln+8w/Y9Jf+ft1ugqv0gNmyTsysjx8yv8VwkS
-	 5oOQ71wJQgk/cPaDLxpmK186HDSFMw2f+xob19Lk=
+	b=CN2uub37UsiAK71/rCMZO/R5wfBIjmMGAg/ZQ0pFniW+a9b/jiI/Wbdr3Dx+0GKo/
+	 3JYMWUmc1qLTSaX49l8lzbcs4tu44uZcx7z78F0zzOWNJNsWAic14HeM8h2UHlU7y9
+	 59MABS/685ai5iONCsuRoeBinXKwgtJGY4FXm+Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Francesco Magazzu <postadelmaga@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/395] drm/nouveau/clk: fix list cursor use after loop in nvkm_clk_ustate_update
-Date: Wed, 30 Sep 2026 17:25:35 +0200
-Message-ID: <20260930152342.221142354@linuxfoundation.org>
+Subject: [PATCH 6.18 031/395] RISC-V: KVM: Fix perf-backed counter accounting across stop and read
+Date: Wed, 30 Sep 2026 17:24:53 +0200
+Message-ID: <20260930152341.296091744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,61 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-[ Upstream commit aff09d9e37e02dc60bde79035ac15b136d602259 ]
+[ Upstream commit c7e2cc38c56142cdab25e6f73602a8222bf9479b ]
 
-If list_for_each_entry() exits without hitting a break then "pstate" is
-not a valid pstate pointer.  Introduce a "found" variable instead.
+pmu_ctr_read() adds the event count returned by perf_event_read_value()
+to counter_val, which can accumulate the same count repeatedly across
+reads. kvm_riscv_vcpu_pmu_ctr_stop() also leaves counter_val stale by
+not folding the current event count into it.
 
-The check is reachable from userspace: nvkm_clk_ustate_update() takes the
-pstate id straight from the 'pstate' debugfs file, so requesting an id
-that is not in clk->states - or any id at all when the perf tables are
-broken and the list is empty - makes the pstate->pstate != req test
-dereference the list head cast to a struct nvkm_pstate, which is an
-out-of-bounds read.
+Make reads of perf-backed counters side-effect free, and use
+perf_event_pause() when stopping a counter to fold the current event
+count into counter_val while resetting it. This preserves the counter
+value across stop/start and lets the snapshot path use counter_val
+directly.
 
-Fixes: 7c8565220697 ("drm/nouveau/clk: implement power state and engine clock control in core")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-[Francesco: rebased on drm-misc-next, expanded the commit message]
-Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260918131620.405133-2-postadelmaga@gmail.com
+Fixes: 0cb74b65d2e5 ("RISC-V: KVM: Implement perf support without sampling")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260825083719.643970-4-suunj1331@gmail.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/kvm/vcpu_pmu.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-index 71420f81714b3..8d1874dc3d7f2 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-@@ -473,6 +473,7 @@ static int
- nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index a32a12df726da..b374d92c9aa63 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -249,12 +249,13 @@ static int pmu_ctr_read(struct kvm_vcpu *vcpu, unsigned long cidx,
+ 	if (pmc->cinfo.type == SBI_PMU_CTR_TYPE_FW) {
+ 		fevent_code = get_event_code(pmc->event_idx);
+ 		pmc->counter_val = kvpmu->fw_event[fevent_code].value;
++		*out_val = pmc->counter_val;
+ 	} else if (pmc->perf_event) {
+-		pmc->counter_val += perf_event_read_value(pmc->perf_event, &enabled, &running);
++		*out_val = pmc->counter_val +
++			   perf_event_read_value(pmc->perf_event, &enabled, &running);
+ 	} else {
+ 		return -EINVAL;
+ 	}
+-	*out_val = pmc->counter_val;
+ 
+ 	return 0;
+ }
+@@ -619,7 +620,6 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
  {
- 	struct nvkm_pstate *pstate;
-+	bool found = false;
- 	int i = 0;
- 
- 	if (!clk->allow_reclock)
-@@ -480,12 +481,14 @@ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
- 
- 	if (req != -1 && req != -2) {
- 		list_for_each_entry(pstate, &clk->states, head) {
--			if (pstate->pstate == req)
-+			if (pstate->pstate == req) {
-+				found = true;
- 				break;
-+			}
- 			i++;
+ 	struct kvm_pmu *kvpmu = vcpu_to_pmu(vcpu);
+ 	int i, pmc_index, sbiret = 0;
+-	u64 enabled, running;
+ 	struct kvm_pmc *pmc;
+ 	int fevent_code;
+ 	bool snap_flag_set = flags & SBI_PMU_STOP_FLAG_TAKE_SNAPSHOT;
+@@ -656,8 +656,11 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
+ 			}
+ 		} else if (pmc->perf_event) {
+ 			if (pmc->started) {
+-				/* Stop counting the counter */
+-				perf_event_disable(pmc->perf_event);
++				/*
++				 * Stop the counter and fold the live count into counter_val.
++				 * Reset the event value to avoid redundant accumulation.
++				 */
++				pmc->counter_val += perf_event_pause(pmc->perf_event, true);
+ 				pmc->started = false;
+ 			} else {
+ 				sbiret = SBI_ERR_ALREADY_STOPPED;
+@@ -671,9 +674,6 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
  		}
  
--		if (pstate->pstate != req)
-+		if (!found)
- 			return -EINVAL;
- 		req = i;
- 	}
+ 		if (snap_flag_set && !sbiret) {
+-			if (pmc->perf_event)
+-				pmc->counter_val += perf_event_read_value(pmc->perf_event,
+-									  &enabled, &running);
+ 			/*
+ 			 * The counter and overflow indicies in the snapshot region are w.r.to
+ 			 * cbase. Modify the set bit in the counter mask instead of the pmc_index
 -- 
 2.53.0
 
