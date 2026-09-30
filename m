@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47CC52E047;
-	Wed, 30 Sep 2026 17:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AA85226AE;
+	Wed, 30 Sep 2026 17:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791083; cv=none; b=aHnHKO5jBbbFnBWo6vFcaMWCo6O9ZxvUoL55dxEBDOVy+OlWbZQUGqqsSr+f4EUYAQ76wvS1Poxr+7+MH41DTKJSAniDfN9rtFT/k3lDszkO7n3XfbO48MWqOA0as2T75jGTMGGB65ZJl1W2+gtLb4wAFzlnWkPuz4gwjOCP+2Q=
+	t=1790791086; cv=none; b=lG37Z5HVWDQl40rIc42cy+1c0dtflSkS59fkcYVgy9xtdISNYwSq8UnNPpb8yMK6I3jmS3GF6D7AL0EmnDU9w7r+FJrQMnMFtfIH5pNY8GM07pcOD+42Brs0XjarN7X4VJMm/0nzh80KgZdVLnzE3dYlt70089npr1ydSpLi2As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791083; c=relaxed/simple;
-	bh=xG5DUowCRPTg9958+OAd96ZSDUdJ90qW9HvCEOcJTVE=;
+	s=arc-20240116; t=1790791086; c=relaxed/simple;
+	bh=ib4HWV/TEv0JbzI5kzDHN/oaCplVOtVtwLWYBck2XmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqg513TD3EzD38Cir+bdbn2FijbCUVIWgWnYj9VR26qX7THZJ5KnOr/Ddbzvk3G0oLTSGJYMoKUDLuccTxoK8aU7dSp+tAQ5pC6ig3iuOGZWL+PBXw3qiEWZW3tlV6UbR6LhHeIQNzDvvGFBD/rViwuG4E9ufl6ZgrEJK/2vY+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHEnT05q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GsQ+TaG+NFaN03gfjZnxZ73jlgCXpoXSYONrDwUXDhJPUN1BNheimNmQzJaedelxc9mBoIkh5DpnJBWK0CZi5WaHQxmRYIgsYKNeyl7F7srQcRWO+iNiP0NdUwwTdIwXNz+qbIdDtgAzKykkL4Abtm3F/XyB7jmE2poCSTgkBsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKzbtt1a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHEnT05q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247DB1F000FF;
-	Wed, 30 Sep 2026 17:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKzbtt1a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16381F000FF;
+	Wed, 30 Sep 2026 17:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791082;
-	bh=oV33ms4+D7xbT2z38AswQl9i+qaDMlzO1uMem/SDjoo=;
+	s=korg; t=1790791085;
+	bh=aN6zv5f3YizYtz7lD8HAJ9VNudT65dUD9drh+ad7MCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vHEnT05quzzxUxR4XpzfOsDBnNviJuMDEMEDMUmD02GuMe9ZVeSCX71ZdGhR+uVt8
-	 iGWaMRQpK++gQtyXFRVBO62eqfmX0rGyCqCgvxhbWmIEHP1SPas8xNKgWjwyJ0xDoC
-	 vjHEVv8PMkRrgFZ4VVEnrXEcRIZkXIVoT0MGXbpg=
+	b=iKzbtt1a4tyDQsk2Huu2uaZouXdI/YkJfmKdqUlBLJDnYp3zUWxVpDXLQzaJrfnMV
+	 Bs80SO+VW+rp6qFGgtPmXwukMvzsE9tMk8Uz4cgPdxewicbwSQ420HmlFWYRUjia0w
+	 tkPKQo332K0dyG1lVPRtojiQPVzuvSu65mlgXpWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Nikolay Metchev <nikolaymetchev@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/752] ata: libata-pmp: add JMicron JMS562 quirk
-Date: Wed, 30 Sep 2026 17:20:06 +0200
-Message-ID: <20260930152401.121906311@linuxfoundation.org>
+Subject: [PATCH 5.15 137/752] platform/x86: intel-hid: Add HP ProBook x360 440 G1 to button_array_table
+Date: Wed, 30 Sep 2026 17:20:07 +0200
+Message-ID: <20260930152401.142651580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -46,67 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Nikolay Metchev <nikolaymetchev@gmail.com>
 
-[ Upstream commit c62aff1174cf88e10716c7513702443c47551fc6 ]
+[ Upstream commit c39023ca9a447f09c072080efc84d6874c2275c9 ]
 
-JMicron JMS562, as used in QNAP QDA-A2AR RAID1 adapters, may
-keep the exported ATA device not ready while the array is rebuilding.
+The volume rocker buttons on the HP ProBook x360 440 G1 convertible emit
+events 0xc4-0xc7 via the intel-hid ACPI device (INT33D5). These codes are
+only present in intel_array_keymap, which is used when the "5 button
+array" input device exists. On this machine button_array_present()
+returns false because the firmware does not advertise the array through
+the HEBC method, so notify_handler() routes the events to a NULL
+priv->array and they are dropped as "unknown event 0xc4". As a result
+the side volume keys do nothing.
 
-In this state, libata may repeatedly try to softreset and classify
-the fan-out link.  On the affected adapter, this can time out, make
-PMP/SCR access fail, and eventually disable the fan-out link before
-the RAID volume is exported.
+Add the machine to button_array_table so the array device is created and
+the volume rocker emits KEY_VOLUMEUP / KEY_VOLUMEDOWN. This is equivalent
+to booting with the enable_5_button_array=1 module parameter, which was
+used to confirm the fix on the affected hardware.
 
-A failing boot shows the fan-out link failing SRST, PMP access
-timing out, SCR read failing, and the link being disabled:
-
-  ata4.00: softreset failed (device not ready)
-  ata4.15: qc timeout after 3000 msecs (cmd 0xe4)
-  ata4.00: failed to read SCR 0 (Emask=0x4)
-  ata4.00: failed to recover link after 3 tries, disabling
-
-After that, the root filesystem on the exported RAID volume cannot
-be found.
-
-Add JMS562 to the existing JMicron PMP quirk that disables LPM,
-avoids softreset on fan-out links, and assumes an ATA device.  This
-prevents libata from dropping the exported RAID volume during rebuild
-recovery.
-
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Nikolay Metchev <nikolaymetchev@gmail.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260609213309.445019-1-nikolaymetchev@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-pmp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/hid.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
-index ba7be3f386171..5347ed88f6386 100644
---- a/drivers/ata/libata-pmp.c
-+++ b/drivers/ata/libata-pmp.c
-@@ -446,8 +446,13 @@ static void sata_pmp_quirks(struct ata_port *ap)
- 		 * otherwise.  Don't try hard to recover it.
- 		 */
- 		ap->pmp_link[ap->nr_pmp_links - 1].flags |= ATA_LFLAG_NO_RETRY;
--	} else if (vendor == 0x197b && (devid == 0x2352 || devid == 0x0325)) {
-+	} else if (vendor == 0x197b &&
-+		   (devid == 0x0562 || devid == 0x2352 || devid == 0x0325)) {
- 		/*
-+		 * 0x0562: JMicron JMS562, as used in QNAP QDA-A2AR RAID1
-+		 *         adapters.  The exported device may stay not ready
-+		 *         while the array is rebuilding, and SRST/classify can
-+		 *         time out before the RAID volume is exported.
- 		 * 0x2352: found in Thermaltake BlackX Duet, jmicron JMB350?
- 		 * 0x0325: jmicron JMB394.
- 		 */
+diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
+index b19cd6ca4e2f5..5326ea1e3ba5b 100644
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -123,6 +123,13 @@ static const struct dmi_system_id button_array_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 3"),
+ 		},
+ 	},
++	{
++		.ident = "HP ProBook x360 440 G1",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook x360 440 G1"),
++		},
++	},
+ 	{ }
+ };
+ 
 -- 
 2.53.0
 
