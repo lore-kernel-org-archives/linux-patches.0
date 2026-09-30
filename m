@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BF450B8DF;
-	Wed, 30 Sep 2026 16:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21584BD348;
+	Wed, 30 Sep 2026 16:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784842; cv=none; b=czg6K+Qd3P6eLkNI5MbJcud2rtdBMW/8cIQkHmrIbW/wIUgHQE9CP3kBCVhQhax80OHI4oYCAVE8ndIt6MxB4kzagL4B6ooEszNOScDoXf6pwL+M7BRc4025fTJMT2UOX7qQmFWiOIXZfslbBVNVtPbZ2J0EvUIpxF+UzTp0beY=
+	t=1790784843; cv=none; b=BsYfvkWyOPWYzS9EaQDwrIm31h7AT048JtKY4NVwcwTuOUcw54MIf86qLOdgn0FEWWxjvuM+hiaHl91xVpGvJW0iipjLknHvxxhymH5LsfKfVROIW/CphxjHRKeGR60umDkT+lhSZfJjJP0rnwa5U3YzLmFF7joj+Zxvo6BQskE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784842; c=relaxed/simple;
-	bh=L/0CelVnoHHewS6ddshfqzhYX1K4EIaNBq8Pnd8ikRM=;
+	s=arc-20240116; t=1790784843; c=relaxed/simple;
+	bh=lRsIUl1V5Bu8EbpSBU4a0XuBXpcgjkOE+mV1hPSCe6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0BwDD8OTvXcEyifJrDPaRde8xri5qpKU7bAsk3/sLvNuU+vL5W7nkgT/OAjfHegsU8qJNi2t3HdDdgeJjsGFj+tOLLcCIl8oLd4eWiHx5avXCucMYUQrWQ2cq+QHUdanQQHItrKBDsGPBJK1G3DxLfx8QcYvCFjKDIkAcCjf+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xot5jfS+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ev+pCRDflG+L7Chq7TD4m9p6RW/STdKK5QgQAtZ/vMwsI1slXl+dsvfgeEUagYbWfIlmZtaIlb+LfDkmc7m6evRj3/3jf50OHVzv4QiBoxOw1ql9eRsiFoXmGpR8rkmY5HilsvuDk+A0BtJjR1Cma7aga4gvtKBJue4SQHsbUjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVoH6Vhh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xot5jfS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4D01F00898;
-	Wed, 30 Sep 2026 16:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVoH6Vhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A4A1F000FF;
+	Wed, 30 Sep 2026 16:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784836;
-	bh=JicajmPda1jM3qFj//OQtqXzdZvu2x909hMt/0LwYIE=;
+	s=korg; t=1790784838;
+	bh=ArfxEwyRvSxh1CwdEtZqF3wjVTTQ42CbTj7gKmNoe5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xot5jfS+FxEQ/m/DhrptwAHwL8c8GM7csu54VlRel5A1RsOpMd/SZvHKiQZ7jMija
-	 UCrsLs9gzlC5eyeiJbiDK9rQYnSBrVI+S0NvK1I3bGkLykl/KQN1Ng+E7fcJl2hk14
-	 utk7kGc21wieG/M/v3NjnwWL7tNJ9znFL6hB4wJ8=
+	b=sVoH6Vhh1MdMzXQt/cP32fm7I1uCM+SW/Kb1bU5WQEh3D37y2f0lYqZU/l2X35lrw
+	 91dInaTAuHIO/4c9GNwbZDRibKjLg3IVnkOlbrWjzkXItCbRCGUuLgvQEFLWnLjpFa
+	 joSNRVP9TN4Olg9wHJFvXK1/fesJR5RWj7xzc8zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genevieve Chan <genevieve.chan@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 294/982] firmware: stratix10-svc: fix FCS SMC call kernel-doc
-Date: Wed, 30 Sep 2026 17:17:10 +0200
-Message-ID: <20260930152423.121141462@linuxfoundation.org>
+Subject: [PATCH 6.1 295/982] ksmbd: remove stale channels from all sessions on teardown
+Date: Wed, 30 Sep 2026 17:17:11 +0200
+Message-ID: <20260930152423.142975736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,69 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Genevieve Chan <genevieve.chan@altera.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-[ Upstream commit 9b9a6e31bdd1ff20c3ffdab87431672d8bfc2a07 ]
+[ Upstream commit b10665730fbf6b5e45fe422badcbbc3f0df96ef5 ]
 
-Correct kernel-doc errors for two FCS SMC calls:
+ksmbd_sessions_deregister() removes a connection's channels from other
+sessions' channel lists only while conn->binding is still set:
 
-INTEL_SIP_SMC_FCS_SEND_CERTIFICATE:
-- Describe as async to match STD_CALL_VAL usage
-- Replace INTEL_SIP_SMC_FCS_REJECTED with INTEL_SIP_SMC_REJECTED
+	if (conn->binding) {
+		hash_for_each_safe(sessions_table, ...)
+			ksmbd_chann_del(conn, sess);
+	}
 
-INTEL_SIP_SMC_FCS_GET_PROVISION_DATA:
-- Replace FCS-specific status macros with standard status macros
-  (INTEL_SIP_SMC_STATUS_ERROR and INTEL_SIP_SMC_STATUS_REJECTED)
-- Restore return register documentation for a1 (mailbox error),
-  a2 (physical address), and a3 (structure size)
+conn->binding is a transient flag: it is cleared once a binding
+SESSION_SETUP completes, and also by a subsequent non-binding
+SESSION_SETUP on the same connection (a reauthentication on a bound
+channel, or a new SessionId==0 setup). A connection that has bound a
+channel into another session's ksmbd_chann_list and then clears
+conn->binding leaves that channel behind when it disconnects: the
+channel, whose chann->conn points at the now freed struct ksmbd_conn,
+stays on the owner session's list.
 
-Fixes: 4a4709d470e6 ("firmware: stratix10-svc: add new FCS commands")
-Fixes: 4b0a32016347 ("firmware: stratix10-svc: change get provision data to async SMC call")
-Cc: stable@vger.kernel.org # 6.0+
-Signed-off-by: Genevieve Chan <genevieve.chan@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+When the owning connection later tears down, the second loop
+dereferences the stale channel:
+
+	xa_for_each(&sess->ksmbd_chann_list, chann_id, chann)
+		if (chann->conn != conn)
+			ksmbd_conn_set_exiting(chann->conn);   /* freed */
+
+which is a use-after-free write into the freed ksmbd_conn (the same
+stale channel is also walked by show_proc_session() through /proc). The
+session is leaked as well, because its channel list never empties.
+
+Remove the conn->binding gate so a connection always removes its
+channels from every session on teardown.
+
+Fixes: faf8578c77f3 ("ksmbd: find bound sessions during reauthentication")
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/firmware/intel/stratix10-smc.h | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/smb/server/mgmt/user_session.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/firmware/intel/stratix10-smc.h b/include/linux/firmware/intel/stratix10-smc.h
-index 4ae295c4e9cc1..118be73846ccc 100644
---- a/include/linux/firmware/intel/stratix10-smc.h
-+++ b/include/linux/firmware/intel/stratix10-smc.h
-@@ -557,7 +557,7 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 08eeca8ab0042..605e17c7b2a17 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -232,22 +232,19 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+ {
+ 	struct ksmbd_session *sess;
+ 	unsigned long id;
++	struct hlist_node *tmp;
++	int bkt;
  
- /**
-  * Request INTEL_SIP_SMC_FUNCID_FCS_SEND_CERTIFICATE
-- * Sync call to send a signed certificate
-+ * Async call to send a signed certificate
-  *
-  * Call register usage:
-  * a0 INTEL_SIP_SMC_FCS_SEND_CERTIFICATE
-@@ -566,7 +566,7 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
-  * a3-a7 not used
-  *
-  * Return status:
-- * a0 INTEL_SIP_SMC_STATUS_OK or INTEL_SIP_SMC_FCS_REJECTED
-+ * a0 INTEL_SIP_SMC_STATUS_OK or INTEL_SIP_SMC_REJECTED
-  * a1-a3 not used
-  */
- #define INTEL_SIP_SMC_FUNCID_FCS_SEND_CERTIFICATE 93
-@@ -582,9 +582,11 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
-  * a1-a7 not used
-  *
-  * Return status:
-- * a0 INTEL_SIP_SMC_STATUS_OK, INTEL_SIP_SMC_FCS_ERROR or
-- *      INTEL_SIP_SMC_FCS_REJECTED
-- * a1-a3 not used
-+ * a0 INTEL_SIP_SMC_STATUS_OK, INTEL_SIP_SMC_STATUS_ERROR or
-+ *	INTEL_SIP_SMC_STATUS_REJECTED
-+ * a1 mailbox error if a0 is INTEL_SIP_SMC_STATUS_ERROR
-+ * a2 physical address for the structure of fuse and key hashes
-+ * a3 the size of structure
-  *
-  */
- #define INTEL_SIP_SMC_FUNCID_FCS_GET_PROVISION_DATA 94
+ 	down_write(&sessions_table_lock);
+-	if (conn->binding) {
+-		int bkt;
+-		struct hlist_node *tmp;
+-
+-		hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
+-			if (!ksmbd_chann_del(conn, sess) &&
+-			    xa_empty(&sess->ksmbd_chann_list)) {
+-				hash_del(&sess->hlist);
+-				down_write(&conn->session_lock);
+-				xa_erase(&conn->sessions, sess->id);
+-				up_write(&conn->session_lock);
+-				if (atomic_dec_and_test(&sess->refcnt))
+-					ksmbd_session_destroy(sess);
+-			}
++	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
++		if (!ksmbd_chann_del(conn, sess) &&
++		    xa_empty(&sess->ksmbd_chann_list)) {
++			hash_del(&sess->hlist);
++			down_write(&conn->session_lock);
++			xa_erase(&conn->sessions, sess->id);
++			up_write(&conn->session_lock);
++			if (atomic_dec_and_test(&sess->refcnt))
++				ksmbd_session_destroy(sess);
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
