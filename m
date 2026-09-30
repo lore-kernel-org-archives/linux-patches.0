@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF9B50EBFC;
-	Wed, 30 Sep 2026 16:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695EA47A0DD;
+	Wed, 30 Sep 2026 16:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785992; cv=none; b=P+in1iErpBNYK/KoAIHlHFrr0UmzrZs5BVYMIkDR6ahWr/FfJa1lBuow3OMOTmcxBYp4fvz/mHczXyjVx/5BsBYrTpvDrtRc+RUvDnMLZqtc6TQtHP6qChJE3lOH0TIyUSjUhCNfxrr2h4WLvkVfUfZ6dJzMzOeBtaH+J71h5TI=
+	t=1790785996; cv=none; b=SHzoy0HjEFVvM2Gjdka8byPAUU5cmSVt+DwNEiwsgCfQUIFlrQysFIFMmQWRtVVUOe937Y2Weu8PGjPb3ukIz734lGeG5/Deh2FeiQNOHkuzi0BrHHzpk3avxn+nY3t+HnimEhQE1KbXZsV1ku4KjYfW14o+EiWKnrOD8u9MGjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785992; c=relaxed/simple;
-	bh=owUoaluVTL5YSWmqKcTNtDTNr2Cqbsqnu+X58K+EgCs=;
+	s=arc-20240116; t=1790785996; c=relaxed/simple;
+	bh=W6tsSMaj9jiGpIvgI+70YpvTtJCtNgK7aZ5dMBcUVjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atNFOh4R48pYZbZDW4MJN09FkIzBlDupUfc2xFTnn0JRG+LgFbvj9bl5lWSX4UHG6sAOkdv1xElPa51r2kt+i4BwPWwANpzjLJdmp038QUCSzv0HBYludTD6GGZPyEyQF1sc5H0dJe3MNeWNgU0BWI6i5Ht9CKc6qwnE9H7IIPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiydgBep; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YE15XbZig8Cz0WDnaL8d22Lcol1bfRijnfG81sbAlYcVqKSBiM92OuGKSVgyQUkZn1Cc16cwHLaNWzsCVdfobWESAsRhabViJFdJ532dyt5UyBlVJntpgNANVaOpanX+PXUmM8Zpe3CW8hVxQ6gS7k8gk+TbF3iTjVpMTXHJcbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRa5hYsT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiydgBep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA88A1F000FF;
-	Wed, 30 Sep 2026 16:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRa5hYsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0891F000FF;
+	Wed, 30 Sep 2026 16:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785991;
-	bh=AgBiiQluIJBJWgzab3iK2Nse/OeZG6daSqo8491RUnA=;
+	s=korg; t=1790785994;
+	bh=2Hr0PQ1mz1iT1USXi+ioYFsdv66UnVyQYrbyEJXBHdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KiydgBepIn3YYGgDm9Qh7KRsqilu27BbsOXYH42dm6jv1fb+oLyJq48LZ7vWjWyju
-	 VsPTMiVFuI+5PsusZLR+pUb6WkgltbTu/dAHjqjOybLGIyPmid7w51InP4JRgZ6K4a
-	 7jwk5puH4+Lei7Gfr9bC7bBYZ+TWwmfOYl5LYfkU=
+	b=IRa5hYsThE++s9smNkDwKXvvTyuvFbzwXZ8g3QJ36aanHUrzNQ68mVKrPudOQHWIo
+	 54yvg0Syx+k3lOB8y7KgX1ikj1yUJP5hvlZErV9bygjf7aWkN6+mn35NNp+eZO95a1
+	 Q6FpN0llAO/BjxMNGRQve287/PNIeZt0BELCUZys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 687/982] net: ethernet: cortina: Ack RX overrun interrupt correctly
-Date: Wed, 30 Sep 2026 17:23:43 +0200
-Message-ID: <20260930152431.519092986@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 705/982] arm64: hibernate: pass HVC_SET_VECTORS args to the resume hvc
+Date: Wed, 30 Sep 2026 17:24:01 +0200
+Message-ID: <20260930152431.901201487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,41 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Bradley Morgan <include@grrlz.net>
 
-[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
+commit 955d86e5f3b95b731991fdb84966c50b16314629 upstream.
 
-The RX overrun interrupt is reported in interrupt status register 4, but
-gmac_irq() acknowledges it using the RX descriptor error bit from status
-register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
-the shift leaves no bit in the 32-bit register.
+swsusp_arch_suspend_exit() reinstalls the restored kernel's hyp stub
+vectors with an hvc, but never passes the arguments. x0 is not set to
+HVC_SET_VECTORS and x1 is not set to the vector address, so the stub
+dispatch falls through and returns without writing vbar_el2. EL2 is
+left pointing at the trans_pgd copy of the vectors, a page that
+swsusp_free() releases right after resume.
 
-Acknowledge the same per-port RX overrun bit that was detected.
+Set the arguments up the same way __hyp_set_vectors() does.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Without this fix, Vladimir was able to trigger a hang when resuming from
+hibernation with CONFIG_PAGE_POISONING=y and page_poison=on.
+
+Fixes: 788bfdd97434 ("arm64: trans_pgd: hibernate: Add trans_pgd_copy_el2_vectors")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Tested-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/hibernate-asm.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index fcc6018067226..58189d46b9fb1 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1803,7 +1803,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
+diff --git a/arch/arm64/kernel/hibernate-asm.S b/arch/arm64/kernel/hibernate-asm.S
+index 0e1d9c3c6a93..2baefe7a82d3 100644
+--- a/arch/arm64/kernel/hibernate-asm.S
++++ b/arch/arm64/kernel/hibernate-asm.S
+@@ -89,6 +89,8 @@ alternative_insn "dc cvau, x4",  "dc civac, x4",  ARM64_WORKAROUND_CLEAN_CACHE
+ 	isb
  
- 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
- 		spin_lock(&geth->irq_lock);
--		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
-+		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
- 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
- 		u64_stats_update_begin(&port->ir_stats_syncp);
- 		++port->stats.rx_fifo_errors;
+ 	cbz	x24, 3f		/* Do we need to re-initialise EL2? */
++	mov	x1, x24
++	mov	x0, #HVC_SET_VECTORS
+ 	hvc	#0
+ 3:	ret
+ SYM_CODE_END(swsusp_arch_suspend_exit)
 -- 
-2.53.0
+2.55.0
 
 
 
