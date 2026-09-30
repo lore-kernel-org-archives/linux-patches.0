@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B514E7802;
-	Wed, 30 Sep 2026 16:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92BA4F5E0E;
+	Wed, 30 Sep 2026 16:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787375; cv=none; b=Phuh3ebQfSEK8yREaRJdidfGPdJavSsOPemB8kleSzGzfPj/+1NHsb0kkhRJazy+TrWHbbIjfO+IoT+zTuRRWvnJLxaDJN3Lr2ZabcpLRLHUDiFCJJVy8yDr8/TNrSqUeM2RF6XIgPwSEGFBIOk5zEWOal8aqSHaOF4VSHmWLGo=
+	t=1790787378; cv=none; b=E8tjITMknse+1ebdvTk0J1rJvOTZ6JP6MsctSpNgUl9+y1bZnrKJC7KBetHhFkH+3o57sk5AryyKQQ0F8MteNumCy5Xn9cNUIbMuaq/Rm7DlEQfcya5J9DtemNsBsKG6nUv3q1r4eXakNhucwefTZKwhTHdqHqbw7Q1TDf4R4M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787375; c=relaxed/simple;
-	bh=Um1jy8M1HhJDtzfWcTsYjMgCk0V9U7cDAizvpwAlXJQ=;
+	s=arc-20240116; t=1790787378; c=relaxed/simple;
+	bh=ar8BtQow2cSypKBvcE3K6PoseSJrJWo7rIDlM7y+yrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWREV1SuhZO/sQqz+uxIWBBHZtVyaEyiR2pfvwffD8jKPZluy0PE2kJMC82uV+5+QkBNCzVwt+lwu4tuggVWTsbyziNIOwWpO8EvDsr8ckrhKzLR1soktDHvNdja+pFOesmvKyobgX13tGDUql6R9V1kCdINI92oY/0rSolTjLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsC2Jffq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MvNH5kQ2JtbWBstn0ohX2TRT9vPu/zOgH4RhmB1RBQkqP0nQjMbNIzeesloFoBnkeiNwSMFSNrysmI48Fe8bU7a9+qXynTyrkp0nSR81LFwwxb+QwPgw9IQ3qqIh5O0WWR5tfgkzONqbKq5RMfDHodWUvsdwzz9dG6HefAihddY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWKQJE0O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsC2Jffq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF841F000FF;
-	Wed, 30 Sep 2026 16:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWKQJE0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5851F000FF;
+	Wed, 30 Sep 2026 16:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787374;
-	bh=+D96SvDnNAfVS+vra80EG3huTJ3ZpzkYQ3G1cSIhogc=;
+	s=korg; t=1790787376;
+	bh=1UMvgx6gmOJmikti16q8Y6L+rXFLhdIPxgy8SgABlcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LsC2Jffqq8CXjxcWbuLF5XKbuUUat6U7PYmGx/PFwqzpbCbQZaLpTkwBY+Febr6u4
-	 Yw7V15UgNj9MkM3h/BWK1yVBXUaGXVNXdY7i59sg1SBaR9OPdpPd+FD03lCdJgi4U5
-	 onfzHe5DtfXynJAXWPyy5mbIlPLqC4ENwohNmu9s=
+	b=XWKQJE0OaUD+N4RHuJ3T9VF6Y3gxc+0IZwHbJSSRjQY8gN0AAcNu1W2+p4cW8Uva4
+	 iFqp6uOlDJvyE91LUNkov2cN1DNPjJOUz2RSkNrTepOPt4KrYNLWkk9EAdKLyESmen
+	 wuIj7B7UtpeAopBbGI/h6Bbr1HvUu3FkeFIqG08U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	David Dai <zdai@linux.ibm.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 153/457] firewire: cdev: fix back-transition for iso_resource_auto client resource
-Date: Wed, 30 Sep 2026 17:24:18 +0200
-Message-ID: <20260930152349.352876833@linuxfoundation.org>
+Subject: [PATCH 7.2 202/457] bonding: crypto offload enabled, non-offload slave failover, rekey failed
+Date: Wed, 30 Sep 2026 17:25:07 +0200
+Message-ID: <20260930152350.415392315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,47 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: David Dai <zdai@linux.ibm.com>
 
-[ Upstream commit c6b51091cafff9ce6c03c1416aa13864d17ab97c ]
+[ Upstream commit 00efbbd40bd5fd92c67b7cf1aab8904fa59a96f6 ]
 
-The todo member of iso_resource_auto structure represents the state of the
-client resource and normally transitions in the following order:
+Create a bonding device (i.e. bond0) in active-backup mode, 2 slaves.
+Active slave: offload capable interface (i.e. eth1), primary interface.
+Backup slave: non-offload capable interface(i.e. eth2).
+Configure strongswan service swantl.conf child SA "hw_offload = crypto"
+Start strongswan service
+IPSec Crytpo Offload is enabled on top of bond0. i.e.
+ip xfrm state |grep offload
+        crypto offload parameters: dev bond0 dir out mode crypto
+	crypto offload parameters: dev bond0 dir in mode crypto
 
-    ISO_RES_AUTO_ALLOC -> ISO_RES_AUTO_REALLOC -> ISO_RES_AUTO_DEALLOC
+Active slave eth1 takes adavantage of IPSec Crypto Offload capability.
 
-However, concurrent access from the work item and the file descriptor
-release function can cause the state to transition backwards from
-ISO_RES_AUTO_DEALLOC to ISO_RES_AUTO_REALLOC.
+If active slave eth1 is down for any reason (i.e. eth1 link down):
+ip link set down dev eth1
+non-offload capable interface eth2 failover to becomes active slave.
+The existing SAs can continue use software IPsec after failover.
+Traffic still keeps going properly.
 
-Prevent the back-transition by checking the current state before
-updating it in the work item.
+However if eth1 link had not recovered yet, strongswan service does
+new child SA rekey, or uses swanctl command to do new child SA rekey,
+it will fail because active slave eth2 doesn't support crypto offload.
+In bond_ipsec_add_sa routine, it returns -EINVAL now, which is
+treated as fatal error by xfrm_dev_state_add routine in kernel xfrm.
 
-Fixes: fcabbf40fae5 ("firewire: core: move allocation/reallocation paths into specific branch after isoc resource management in cdev")
-Link: https://lore.kernel.org/r/20260922132639.191593-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+To make the non-offload active slave survive the child SA rekey, need
+to make bond_ipsec_add_sa routine returns -EOPNOTSUPP instead when
+active slave doesn't support IPsec Crypto offload, the xfrm will
+gracefully fallback to create new SA using Software IPsec.
+Network traffic can keep going.
+
+After offload capable interface eth1 link is up, becomes active slave,
+next time strongswan child SA rekey will create a new SA which enables
+crypto offload again.
+
+Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
+Signed-off-by: David Dai <zdai@linux.ibm.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260918211155.1664493-1-zdai@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-cdev.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
-index e49d8a58be09e..664952a67a11a 100644
---- a/drivers/firewire/core-cdev.c
-+++ b/drivers/firewire/core-cdev.c
-@@ -1397,8 +1397,10 @@ static void iso_resource_auto_work(struct work_struct *work)
- 		} else {
- 			// Transit from allocation to reallocation, except if the client requested
- 			// deallocation in the meantime.
--			scoped_guard(spinlock_irq,  &client->lock)
--				r->todo = ISO_RES_AUTO_REALLOC;
-+			scoped_guard(spinlock_irq,  &client->lock) {
-+				if (r->todo == ISO_RES_AUTO_ALLOC)
-+					r->todo = ISO_RES_AUTO_REALLOC;
-+			}
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 6ea46a617ee60..34c5bbbed9aee 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -490,7 +490,7 @@ static int bond_ipsec_add_sa(struct net_device *bond_dev,
+ 	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
+ 	    netif_is_bond_master(real_dev)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Slave does not support ipsec offload");
+-		err = -EINVAL;
++		err = -EOPNOTSUPP;
+ 		goto out;
+ 	}
  
- 			if (channel >= 0)
- 				r->params.channels_mask = BIT_ULL(channel);
 -- 
 2.53.0
 
