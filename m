@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CBF4F85C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEC147124F;
 	Wed, 30 Sep 2026 15:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782499; cv=none; b=n/yO7Tzz4w2OUYeRQ/lK7qulE/TGc25KqwAQzs4UnmAJQZreQrBFLupZbIc+B7PxEwGcy/uaCnq7LM98v7JRX7fljPb+UBDfLSKhQH1Ij/RzMDVrwTAI29qMFYqbJdvJqVTG6UCPcq1Z5DaFza8cTCsmaGkmeNdUR7AfyTgYu7w=
+	t=1790782499; cv=none; b=jPWDLVCK3U6TPFF4vO4US4pnbpnpdw2CAtjk4bbEJdjDjFIFrgGBUK1AEweu9oW+s3lEajg7YZEUDZjs784PCLiWI/NGM9dI80woBq1tH7ibQTcFYWSRL4i1LYe8sqn99q+VOKWbKNYPVVS44xLpS8LfbuVFanU9s6Y4HctiqdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782499; c=relaxed/simple;
-	bh=zeHfdXxPvgejnzi7t/DXVwF9zo4c2XNVOh6EpWqguyI=;
+	bh=Y2s4kF9jGrG3YTm3xCZlyURQ76yrnFAVyxqBs4J27Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kULskgINN+0tQmkZACwnB6fzfCNVozWH6yNmwgTITDCZ/L3hz4FMUYIyuRWhKGaRESBWZcww5UThGDKMQAo8m1tILySvZoCeYvOFESqapTmPds89S7r9aqM2U0m1/qvQ/yQAuBoXpXkl450HsPxx8Pnq1m7aSyeqZEBZ51BMGZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPYS1Fkp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Or8iw9qof50xKGQKTuH03GOf60ikRByPxxHgVSr+BHMPYOclwzcfnIMRrriLSIOqc7Y/BujZdHuKu3r70kMLHrIiYJtRNn8GNRMBcDZWlOmhT58ZpND/GxuPR79FCzETZUSYXRpyoW13BE5PxkKTYVRUC5VF0UPdN2mg7AOgRn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4nH+bR+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPYS1Fkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029B41F00899;
-	Wed, 30 Sep 2026 15:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4nH+bR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD541F00893;
+	Wed, 30 Sep 2026 15:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782490;
-	bh=eyhKv5hkob3YrbNah8LkimQb0kr2KTfkVRu/WuqIis0=;
+	s=korg; t=1790782487;
+	bh=lsFSk1Ux4dPpqAaE6kHfFGLQHTyhIEKc4o9FbRerlD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPYS1Fkpi9DiHN+N824iBBDYfbKzssHIQfWiTakFTx109g64ls5AEoH3KxXWJ3dDH
-	 WmcuaO06Ny+KcEFpwiJ7od/djcALmkW88/A7WQ9lXtQMMb5dk/6UBtPoirMzMcfAQB
-	 vS+3XGqngDJZwvG8rDnpUDC+gf3KymdmErEZTafI=
+	b=U4nH+bR+Th/BQKnHT/JtxVabR7ChE3qV4LzSPcnIorxZdS+GoZgX1O/emaB6FWdXx
+	 x89aacDtNnEQEEGJjORjFkIY15Bm9RnPvBARLHh+V2q7aVUTL/eDwW4OCmfuNbpItb
+	 Y3MGZ0EVJRNv14f6WrYcDcDrLwOkEJvEL+brTAAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Jarkko Nikula <jarkko.nikula@bitmer.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Trimarchi <michael@amarulasolutions.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/595] ASoC: ti: omap3pandora: update board check to use DT compatible
-Date: Wed, 30 Sep 2026 17:18:33 +0200
-Message-ID: <20260930152348.158062270@linuxfoundation.org>
+Subject: [PATCH 5.10 062/595] drm/panel: simple: Add AM-1280800W8TZQW-T00H
+Date: Wed, 30 Sep 2026 17:19:15 +0200
+Message-ID: <20260930152349.070635877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,57 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 45efb8fbdae303539e7fb5562e147583d4ed63ad ]
+[ Upstream commit 6acb810ebc5d8dea5c250326c14dc44e32dc8e92 ]
 
-The omap3pandora driver contains a check for the ARM machine ID via the
-machine_is_omap3_pandora() macro. The board concerned now supports
-only FDT booting, which does not use machine IDs, and therefore the
-code should be updated to check the DT compatible property instead. The
-legacy board file for this machine was removed in commit 7fcf7e061edd
-("ARM: OMAP2+: Remove legacy booting support for Pandora").
-The presence of this machine ID check prevents the removal of machine
-IDs no longer used by the kernel from arch/arm/tools/mach-types,
-because the machine_is_*() macros are generated from mach-types. To
-resolve this issue, use of_machine_is_compatible() instead.
+Add Ampire, AM-1280800W8TZQW-T00H 10.1" TFT LCD panel timings.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@bitmer.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
+Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260515082232.1766586-2-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/omap3pandora.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/sound/soc/ti/omap3pandora.c b/sound/soc/ti/omap3pandora.c
-index a287e9747c2a1..3cec2eaafe62f 100644
---- a/sound/soc/ti/omap3pandora.c
-+++ b/sound/soc/ti/omap3pandora.c
-@@ -11,12 +11,12 @@
- #include <linux/delay.h>
- #include <linux/regulator/consumer.h>
- #include <linux/module.h>
-+#include <linux/of.h>
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index a59adc08267f5..0c18c0cc701c4 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -686,6 +686,31 @@ static const struct panel_desc ampire_am_1280800n3tzqw_t00h = {
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/soc.h>
- 
--#include <asm/mach-types.h>
- #include <linux/platform_data/asoc-ti-mcbsp.h>
- 
- #include "omap-mcbsp.h"
-@@ -224,7 +224,8 @@ static int __init omap3pandora_soc_init(void)
- {
- 	int ret;
- 
--	if (!machine_is_omap3_pandora())
-+	if (!of_machine_is_compatible("openpandora,omap3-pandora-600mhz") &&
-+		!of_machine_is_compatible("openpandora,omap3-pandora-1ghz"))
- 		return -ENODEV;
- 
- 	pr_info("OMAP3 Pandora SoC init\n");
++static const struct drm_display_mode ampire_am_1280800w8tzqw_t00h_mode = {
++	.clock = 72400,
++	.hdisplay = 1280,
++	.hsync_start = 1280 + 40,
++	.hsync_end = 1280 + 40 + 80,
++	.htotal = 1280 + 40 + 80 + 40,
++	.vdisplay = 800,
++	.vsync_start = 800 + 10,
++	.vsync_end = 800 + 10 + 18,
++	.vtotal = 800 + 10 + 18 + 10,
++};
++
++static const struct panel_desc ampire_am_1280800w8tzqw_t00h = {
++	.modes = &ampire_am_1280800w8tzqw_t00h_mode,
++	.num_modes = 1,
++	.bpc = 8,
++	.size = {
++		.width = 217,
++		.height = 136,
++	},
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++};
++
+ static const struct drm_display_mode ampire_am_480272h3tmqw_t01h_mode = {
+ 	.clock = 9000,
+ 	.hdisplay = 480,
+@@ -3921,6 +3946,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	{
+ 		.compatible = "ampire,am-1280800n3tzqw-t00h",
+ 		.data = &ampire_am_1280800n3tzqw_t00h,
++	}, {
++		.compatible = "ampire,am-1280800w8tzqw-t00h",
++		.data = &ampire_am_1280800w8tzqw_t00h,
+ 	}, {
+ 		.compatible = "ampire,am-480272h3tmqw-t01h",
+ 		.data = &ampire_am_480272h3tmqw_t01h,
 -- 
 2.53.0
 
