@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAEF3AD539;
-	Wed, 30 Sep 2026 18:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB14946EF8D;
+	Wed, 30 Sep 2026 18:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793481; cv=none; b=q5X2ZsT7enJgt+D8moa0Lo665xuz4q6EJlHdI5mTX+CxNe5PbJQ79qyaboFGb7Inn2/JmDhbHFCKfMtYuY/0WsCtAy3sAp2aH3uL9MQsmnhHU4fMj3wRae+um+GZx10uKQqAkGrper1ha3R4byr1GtFiRUBaAninqbzI33q0xgM=
+	t=1790793484; cv=none; b=HO0TDoIRDoEsGzK/7cDvRsMs+Ci6S3XPvfNrFVQ57nB/U0HBwucyEoykEjKjZFBxQwzjTPAfG7MiwPEkCj1jGBkCHR4ujMEkKqYa5NP98bez7w1Ml/msofzFj5z3KyoHyNv29lBHebrj47VTwKDTrtsJJPTPqIlLPX+546J0xDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793481; c=relaxed/simple;
-	bh=MuxARrRBuqIzMNjVMq2kGENRP+aGoPEVlYXcrPfXqjk=;
+	s=arc-20240116; t=1790793484; c=relaxed/simple;
+	bh=cuHu+XA5SAOYU5zd8oN0NafXmdCVbXBBImk+4YfQYHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJPieHaungC9krvwtrTgs9UzjZHcyH+hfiQK5hn9QZBMX9qycnoTSI0rA9dHLEUA8Hs2HhfrwsJO8FoNOgvJe2wtEd5DGyA79CtdX7dsAWbzdtiyM76uY2XV1hrzaAiHYuWRYTtAuauyIkoj/WLjgPvf5Qce48Xj2fdU8jnhj2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSvNT1wo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pXFbyZRjO+AIugLFoofiIIp0K8WAIhdb3kzBYQrxOlAksR2WZxaJ9Xxt7rCgEipd1ByAUOwtaayA0U4cSMpU8SXfr5bCCSzj3iZPg6zX18IzFHY+qtZCrydcXY+3F+V8f+RHfnyvhz4sowmaRHL7hhzTVSyqjPmeuvbZrQeC6Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4YT/+YZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSvNT1wo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3378A1F00898;
-	Wed, 30 Sep 2026 18:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4YT/+YZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178D31F000FF;
+	Wed, 30 Sep 2026 18:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793480;
-	bh=etc/h06m+oda1XaeTFCcrYGsAaeCXydnHI1GFJLJpQw=;
+	s=korg; t=1790793483;
+	bh=rokcyKvLDbkO8FOIArGHXOe4w38D6sUxPM5QT4IW+HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cSvNT1woMOUzSVC/XI+G1juLBwQOsTqpin1JKBdNNhOwuhvk1CHNxOOFT+gYCHOTe
-	 yBlMhNxQ6jITvUKLOBhiiHyikH3/jUio1GdBLRXdVM7vwaMjhJfXNTwJOtF26g3hJr
-	 Aa1vQvx4WBvzrSss+3M8p4NqqdQFUxZX+ZA8ig38=
+	b=E4YT/+YZWD/wFsd9NBeSaUxIa1Fl7e7Yp52lmb175qOC1whfKWEUHMIUNUoYlWnrj
+	 s6D0bCDr9psLVn8rkMPkfIgSg13u8gvTIPes2Um02ty7oiyoMp0qGthvePK1pwfnDm
+	 USPKKsBEr0Kn+hGMPHCGQO/xEsuDWeuwr6fRaKhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 225/395] fsl/fman: Fix clk reference leak in read_dts_node()
-Date: Wed, 30 Sep 2026 17:28:07 +0200
-Message-ID: <20260930152345.541547381@linuxfoundation.org>
+	Fan Wu <wufan@kernel.org>
+Subject: [PATCH 6.18 226/395] ipe: fix use-after-free when auditing a newly loaded policy
+Date: Wed, 30 Sep 2026 17:28:08 +0200
+Message-ID: <20260930152345.565462197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,38 +49,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Fan Wu <wufan@kernel.org>
 
-commit a644f09b2090ad22a13fbcf9d141084f573108ef upstream.
+commit 9814077275eca36ebf8d510d2f076d235ff9f51a upstream.
 
-of_clk_get() returns a clock with its reference count incremented, but
-read_dts_node() only uses it to read the rate and never calls clk_put().
-The clock is not stored anywhere, so the reference cannot be released
-later either.
+new_policy() audits the policy after ipe_new_policyfs_node() publishes it
+and drops the new directory's inode lock. A concurrent delete can free
+the policy while ipe_audit_policy_load() is still using it.
 
-Release the clock once its rate has been read, which also covers the
-error path taken when the rate is zero.
+Audit the successful load under that lock.
 
-Fixes: 414fd46e7762 ("fsl/fman: Add FMan support")
+Fixes: f44554b5067b ("audit,ipe: add IPE auditing support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260917110135.2148068-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: LLM
+[FW: remove model name according to latest guideline]
+Signed-off-by: Fan Wu <wufan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/fman/fman.c |    1 +
- 1 file changed, 1 insertion(+)
+ security/ipe/fs.c        |    8 +++-----
+ security/ipe/policy_fs.c |    3 +++
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/freescale/fman/fman.c
-+++ b/drivers/net/ethernet/freescale/fman/fman.c
-@@ -2734,6 +2734,7 @@ static struct fman *read_dts_node(struct
+--- a/security/ipe/fs.c
++++ b/security/ipe/fs.c
+@@ -159,18 +159,16 @@ static ssize_t new_policy(struct file *f
  	}
  
- 	clk_rate = clk_get_rate(clk);
-+	clk_put(clk);
- 	if (!clk_rate) {
- 		err = -EINVAL;
- 		dev_err(&of_dev->dev, "%s: Failed to determine FM%d clock rate\n",
+ 	rc = ipe_new_policyfs_node(p);
+-	if (rc)
+-		goto out;
+ 
+ out:
+ 	kfree(copy);
+ 	if (rc < 0) {
+ 		ipe_free_policy(p);
+ 		ipe_audit_policy_load(ERR_PTR(rc));
+-	} else {
+-		ipe_audit_policy_load(p);
++		return rc;
+ 	}
+-	return (rc < 0) ? rc : len;
++
++	return len;
+ }
+ 
+ static const struct file_operations np_fops = {
+--- a/security/ipe/policy_fs.c
++++ b/security/ipe/policy_fs.c
+@@ -481,6 +481,9 @@ int ipe_new_policyfs_node(struct ipe_pol
+ 	inode_lock(root);
+ 	p->policyfs = policyfs;
+ 	root->i_private = p;
++	/* Only audit signed policies from userspace */
++	if (p->pkcs7)
++		ipe_audit_policy_load(p);
+ 	inode_unlock(root);
+ 
+ 	return 0;
 
 
