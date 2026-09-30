@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C913B42C0;
-	Wed, 30 Sep 2026 18:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0A223ABBE;
+	Wed, 30 Sep 2026 18:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794289; cv=none; b=EvE+JVadw12zRTBdBpm1t3zkONyD2pSfHd8OqtDBKJDVVk+p3xPHcGDDccLphP6utSHKV79URwuLwl1bPEQCy+594Ny0hGbsnv0ViOgC8FrTqFGfj8pVQwykViBs/avaMQhnigqHyUGdqKs90Rc0XQ1WX8BYERJfeydCtivhBWQ=
+	t=1790794292; cv=none; b=cbN1LksuLkq4y7b4XUE+Rg2lzbgiW44muT+U6c7NMPfV6AGhoVn4FDfqXAKjVDfqmZbsMj1ydLefhq0Ay8Pj7zhMBqePNVWU1OB87jRRX3AZL3k3EYyvJBGXs2enGrCYYb4kSEzcYepd0Q13SR8iGi5lm3wYB4TVgRXfPXKOdhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794289; c=relaxed/simple;
-	bh=ao5XYmElVWLS5/n12bL+Yq6Z9zmmnKNwTMPrjYnmaVg=;
+	s=arc-20240116; t=1790794292; c=relaxed/simple;
+	bh=lEcXIZAdeWnDAvHHv8jed9oINUogywBb5N1EPUOAHzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8aRSRiPZeUddsq7YUiT8wmJFybrVBRjpgjUd6SAAmTfrmRHwaXiKY6dZtHeI5kKFvOmJ+iVaJLVzIVQbBJycxuu2FQgl9e58QGE3pFzHPsbEpNq/jL6MBpQ3OfmWaNGSQ4K3AAf2GtRr830uQ7HabCndWKd4oer82Oi2+BU3GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/Kprqlh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EquWOjsOuqWsXCslQPN0VhFxlNEgNOc40NV0GwSwLYwAj7UBi2konBe89Yq16JFWkeqDp8ZMp5Pb/SUJU0NWyWl4gvkhnN1BsxUdarCMbda4V3eadb0TDc3j59xbdaSizLEJbEXavXQbaJWWavBJEmB4Cq4j+UfmgBAgqBUJ/Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5sOlz32; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/Kprqlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B9C1F000FF;
-	Wed, 30 Sep 2026 18:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5sOlz32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381651F000FF;
+	Wed, 30 Sep 2026 18:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794287;
-	bh=tmvGqy+uRAdfC4yioeokeaTMr2a758fOH3HKv+RwWQ0=;
+	s=korg; t=1790794290;
+	bh=z4RU7dANvbb6o+goCFTOzaxrs49k/EPZCj2/EYh8vXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/KprqlhTUJ3PzT7B10eK5cQKabDg5QEWMDbmYVDX01uX2IGeIV0spSX5L6Jdk/Wz
-	 U19cyvsZJjWPY89k1wUflmvlXieOC6hUr+nDRyIEAu5cAHiADkSEoDwNTWVKq5AI4H
-	 LKDiGqfJqZYtW6qgB3Dq1twjE+XQPGnBh6IfuKyg=
+	b=w5sOlz32tGF6jnh9zobkMlPM84CtOEYLR8yr68TCP8EOlYmNoU2hUWlGeXjtMs3V3
+	 v1vtCrKf38Y8ZRMQFzj8T8miaHT/29sPD3SrEAQIJzZNTHsFheymB/ernA65d4vBoA
+	 qGWmexN/UzgUC+awvjXK6tFjHmMm/5Xr7MQu2Rpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
+	Alessandro Schino <7991aleschino@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0159/1193] fs/ntfs3: validate index entry key bounds
-Date: Wed, 30 Sep 2026 17:14:03 +0200
-Message-ID: <20260930152437.732529587@linuxfoundation.org>
+Subject: [PATCH 6.6 0160/1193] ntfs3: fix out-of-bounds read in ntfs_dir_emit() and hdr_find_e()
+Date: Wed, 30 Sep 2026 17:14:04 +0200
+Message-ID: <20260930152437.754470681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,207 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Alessandro Schino <7991aleschino@gmail.com>
 
-[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
+[ Upstream commit aa1bdbb39f49c5bc9779316891c40005517842a5 ]
 
-[BUG]
-A malformed NTFS directory index entry can advertise a key_size larger
-than the bytes actually present in its NTFS_DE payload. Directory lookup
-then passes that malformed key to cmp_fnames(), which can read past the
-end of the kmalloc'ed index buffer.
+The bounds check in ntfs_dir_emit() compares fname->name_len (a
+character count) against e->size (a byte count) without accounting
+for the 2-byte-per-character UTF-16LE encoding or the ATTR_FILE_NAME
+header size:
 
-BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
-BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
-Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
+  if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
 
-Call Trace:
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xd1/0x650 mm/kasan/report.c:482
- kasan_report+0xfb/0x140 mm/kasan/report.c:595
- __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
- fname_full_size fs/ntfs3/ntfs.h:590 [inline]
- cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
- hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
- indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
+This computes: name_len + 16 > e_size
 
-Allocated by task 9279:
- kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
- kasan_save_track+0x14/0x40 mm/kasan/common.c:77
- kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
- poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
- __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
- kasan_kmalloc include/linux/kasan.h:262 [inline]
- __do_kmalloc_node mm/slub.c:5650 [inline]
- __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
- kmalloc_noprof include/linux/slab.h:961 [inline]
- indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
- indx_find+0x447/0x900 fs/ntfs3/index.c:1179
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
+The correct check must account for the ATTR_FILE_NAME header (66 bytes
+before the name) and the UTF-16LE character size (2 bytes each):
 
-[CAUSE]
-The index-header validators only validated INDEX_HDR-level geometry.
-They did not walk each NTFS_DE to verify entry alignment, subnode
-layout, or that key_size fit inside the entry payload. They also
-allowed a last sentinel entry to carry a non-zero key_size.
+  sizeof(NTFS_DE) + offsetof(ATTR_FILE_NAME, name) +
+  name_len * sizeof(short) > e_size
 
-[FIX]
-Walk every NTFS_DE in ntfs3's index-header validators and reject
-entries with invalid layout, mismatched subnode state, oversized
-key_size, or non-zero sentinel keys before lookup or log replay can
-consume them.
+Which computes: 16 + 66 + name_len * 2 > e_size
 
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+The correct calculation already exists as fname_full_size() in ntfs.h
+and is used in cmp_fnames(), namei.c, and fslog.c, but was not used
+in the readdir path.
+
+A crafted NTFS image with an index entry containing a small e->size
+but large fname->name_len bypasses the current check, causing
+ntfs_utf16_to_nls() to read past the entry boundary.
+
+Additionally, add a key_size validation in hdr_find_e() to ensure the
+declared key_size does not exceed the available entry data, preventing
+comparison functions from reading past entry boundaries on the lookup
+path.
+
+Signed-off-by: Alessandro Schino <7991aleschino@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
- fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ fs/ntfs3/dir.c   | 4 +++-
+ fs/ntfs3/index.c | 4 ++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index c293e09881626..cd40a4ddc53d7 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 4bf851273e332..9335d706e2005 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -304,7 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
+ 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
+ 		return true;
  
- bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
- 	__le16 mask;
- 	u32 min_de, de_off, used, total;
- 	const struct NTFS_DE *e;
+-	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
++	if (sizeof(struct NTFS_DE) +
++	    offsetof(struct ATTR_FILE_NAME, name) +
++	    fname->name_len * sizeof(short) > le16_to_cpu(e->size))
+ 		return true;
  
--	if (hdr_has_subnode(hdr)) {
-+	if (has_subnode) {
- 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
- 		mask = NTFS_IE_HAS_SUBNODES;
- 	} else {
-@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- 		return false;
- 	}
- 
--	e = Add2Ptr(hdr, de_off);
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	for (;;) {
- 		u16 esize = le16_to_cpu(e->size);
--		struct NTFS_DE *next = Add2Ptr(e, esize);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
- 
--		if (esize < min_de || PtrOffset(hdr, next) > used ||
-+		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
- 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
- 			return false;
- 		}
- 
--		if (de_is_last(e))
-+		if (size_add(de_off, esize) > used)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
- 			break;
-+		}
-+
-+		data_size = esize - min_de;
-+		if (key_size > data_size)
-+			return false;
- 
--		e = next;
-+		de_off += esize;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	}
- 
- 	return true;
+ 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
 diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 1e468cddb3374..25707c87fa363 100644
+index 25707c87fa363..7ca7e6c762021 100644
 --- a/fs/ntfs3/index.c
 +++ b/fs/ntfs3/index.c
-@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
-  */
- static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
-+	const u16 min_size = sizeof(struct NTFS_DE) +
-+			     (has_subnode ? sizeof(u64) : 0);
- 	u32 end = le32_to_cpu(hdr->used);
- 	u32 tot = le32_to_cpu(hdr->total);
- 	u32 off = le32_to_cpu(hdr->de_off);
-+	const struct NTFS_DE *e;
+@@ -794,6 +794,10 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
+ binary_search:
+ 	e_key_len = le16_to_cpu(e->key_size);
  
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    size_add(off, sizeof(struct NTFS_DE)) > end) {
-+	    size_add(off, min_size) > end) {
- 		/* incorrect index buffer. */
- 		return false;
- 	}
- 
-+	/* Ensure every key stays inside its entry before lookup walks it. */
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	for (;;) {
-+		u16 e_size = le16_to_cpu(e->size);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
++	/* Validate key_size fits within the entry data area. */
++	if (e_key_len > le16_to_cpu(e->size) - sizeof(struct NTFS_DE))
++		return NULL;
 +
-+		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
-+		    de_has_vcn(e) != has_subnode) {
-+			/* incorrect index entry. */
-+			return false;
-+		}
-+
-+		if (size_add(off, e_size) > end)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
-+			break;
-+		}
-+
-+		data_size = e_size - min_size;
-+		if (key_size > data_size)
-+			return false;
-+
-+		off += e_size;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	}
-+
- 	return true;
- }
- 
+ 	diff2 = (*cmp)(key, key_len, e + 1, e_key_len, ctx);
+ 	if (diff2 > 0) {
+ 		if (found) {
 -- 
 2.53.0
 
