@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E2B5304CA;
-	Wed, 30 Sep 2026 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BD85304D7;
+	Wed, 30 Sep 2026 17:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790586; cv=none; b=TzRN7+iKaiPHH/LLqv8Ypvz+EMVjuIAMR0gxzrPsD4Q3GQ29rlDiVvCbMMOgJ1+wM45HY6TWzXd5Fojbc0R9bMpBKd/BEIXkEuBOxogrPJSbLCivHwmVBkHpS0Er71M5X7SYWeDugqptxE8qsTn1B8HS5hrOy1KElL2tacvux18=
+	t=1790790589; cv=none; b=rWHdE4jBNY//fAPpYujbqPgKui1WNK5Xg4CKiRz7qaWfD6wVZ/AlgLqCKIPuxGB1CnpGvvMUmEkc2gj6uwDvGqQUbZOfWWIMU3KpaCmMzKwMbm1O4IoD4nto9ujbE4JE7j3uk6Qu619X+Wd9DpYhmJMkjmD3694i/FQiIqlu524=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790586; c=relaxed/simple;
-	bh=KGrZsvOfsvsbdHK2Nr2NeiNCaJl23W2cjE9inYjfU+I=;
+	s=arc-20240116; t=1790790589; c=relaxed/simple;
+	bh=Hiwwkl3dPVtWZU2Xxe2VL1yHi4R0B1yK/WNMiHgFNo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GWsguTVuAdMn38eIYR3KztoPk6mYkFgZmKc/vuwZUQo1YJrgM0DP1WwtEzeN84xGvHbJSHK5NQgieVKioiapaRs87BdLMyT/Qa5Vh7YgXg8jWc2UMBI1wIW/F3PiTRkTykZpNGZgkrxVB4TfyALb5WdNk3F5h2bKUQAGc60Dzt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNs+/Jw5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gA+IS9SoEgl/Vm9WyPLBBWTMM5xI/NM9NRKXaSjyolFIjKSy2qWmY+YChLtDEBveu6+DOmMV/Ra3ea6EoJ2R2rh4nNQ+ai3828v5loqGFLAgImS6AIW10EX6p1oJXO/PqZMMQI1+3SI9Y2FxILMdwEKxouU2H1UzOeon9Ywx5ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRBmx3Hc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNs+/Jw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD23F1F000FF;
-	Wed, 30 Sep 2026 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRBmx3Hc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2A71F000FF;
+	Wed, 30 Sep 2026 17:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790585;
-	bh=f1/NtchP1JMZ9y/7VW2Et5EVVAB1gexqct4c/pvJUno=;
+	s=korg; t=1790790588;
+	bh=/Zp4z3dHapIjnNsdyJApacildk74oKEYtll4I7VRWog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNs+/Jw51TMVywJYL2O48JYyDwoR8Y+P9YLk1IG49+58/OZ7C+1kagTWJAziWzKQR
-	 LC7B4LYDTrp0aD0k6Ie6lPx5jv4QsMaOdskr4roSg7yjkTDuyBL/YFYvNY3A6um+B9
-	 cK72r6N2jvkH0TW8qebM6wRSb1r54Vgjj2hz08H4=
+	b=DRBmx3HcAK0lyBS+bOieAqo5KabBWWr2gCiEfgj8+eB1x+MLAaDT0qKHdBCLIfEL/
+	 WshdpJZeJEmJOiat/Kkmbueu/Qo3eBuglINI81Wp4rsJ4zUxRCT4JFW/ksy4glvexn
+	 gKEk6IPVY1+rKyZabrCoxmr4nSWB7cCheh9tWcd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Liz Fong-Jones <lizf@honeycomb.io>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Barry Song <v-songbaohua@oppo.com>,
+	Chris Li <chriscli@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 836/877] PCI: Fix BAR resize for devices on a root bus
-Date: Wed, 30 Sep 2026 17:29:07 +0200
-Message-ID: <20260930152432.775974023@linuxfoundation.org>
+Subject: [PATCH 6.12 827/877] mm/rmap: allocate anon_vma_chain objects unlocked when possible
+Date: Wed, 30 Sep 2026 17:28:58 +0200
+Message-ID: <20260930152432.576962427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,132 +58,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liz Fong-Jones <lizf@honeycomb.io>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit d58384c22739848efe14b34e9586e4f1242f33c0 ]
+[ Upstream commit bfc2b13b05a1343bb60a85d840fd8956731866c5 ]
 
-pci_do_resource_release_and_resize() releases device BARs that share a
-bridge window with the BAR being resized, but when the device sits directly
-on a root bus (pdev->bus->self == NULL) it then skips resource assignment
-entirely and returns success, leaving the BARs it just released unassigned
-(IORESOURCE_UNSET).
+There is no reason to allocate the anon_vma_chain under the anon_vma write
+lock when cloning - we can in fact assign these to the destination VMA
+safely as we hold the exclusive mmap lock and therefore preclude anybody
+else accessing these fields.
 
-Skipping pbus_reassign_bridge_resources() is correct in that case -- there
-is no bridge window to adjust -- but the device BARs still have to be
-reassigned. Before the BAR release was consolidated into the PCI core, this
-case worked for amdgpu because the driver released the BARs itself and then
-called pci_assign_unassigned_bus_resources() unconditionally after the
-resize, which assigns unassigned device BARs also on a root bus. Commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call, so nothing assigns the released BARs anymore.
+We only need take the anon_vma write lock when we link rbtree edges from
+the anon_vma to the newly established AVCs.
 
-This breaks amdgpu completely on the SolidRun HoneyComb LX2K (NXP LX2160A,
-arm64, ACPI), where ACPI doesn't expose the Root Port so the GPU endpoint
-appears directly on a "root bus" of its segment:
+This also allows us to eliminate the weird GFP_NOWAIT, GFP_KERNEL dance
+introduced in commit dd34739c03f2 ("mm: avoid anon_vma_chain allocation
+under anon_vma lock"), further simplifying this logic.
 
-  amdgpu 0004:01:00.0: BAR 0 [mem 0xa400000000-0xa40fffffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: BAR 2 [mem 0xa410000000-0xa4101fffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: sw_init of IP block <gmc_v8_0> failed -19
-  amdgpu 0004:01:00.0: amdgpu_device_ip_init failed
-  amdgpu 0004:01:00.0: Fatal error during GPU init
+This should reduce lock anon_vma contention, and clarifies exactly where
+the anon_vma lock is required.
 
-No error is logged because the resize path reports success; amdgpu then
-finds BAR 0 IORESOURCE_UNSET and bails out with -ENODEV.
+We cannot adjust __anon_vma_prepare() in the same way as this is only
+protected by VMA read lock, so we have to perform the allocation here
+under the anon_vma write lock and page_table_lock (to protect against
+racing threads), and we wish to retain the lock ordering.
 
-When there is no upstream bridge, call pci_bus_assign_resources() on the
-root bus to place the BARs released above, using the same alignment-sorted
-algorithm as normal enumeration instead of a manual per-BAR loop. This also
-walks the rest of the hierarchy under the root bus, as
-pci_assign_unassigned_bus_resources() used to for amdgpu before commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call -- the core-side fix that commit asked for ("such a
-problem should be fixed inside pci_resize_resource() instead").
+With this change we can simplify cleanup_partial_anon_vmas() even further
+- since we allocate AVC's without any lock taken and do not insert
+anything into the interval tree until after the allocations are tried, we
+can remove all logic pertaining to this and just free up AVC's only.
 
-pci_bus_assign_resources() returns void, so failure is detected by checking
-whether the released BARs are still assigned afterward; if not, roll back
-as in the bridged case. This is stricter than the bridged path -- it fails
-on any unplaced resource, not just required ones -- since a root bus
-typically has one shared window, and failing loudly seemed better than
-leaving something silently unassigned.
+Link: https://lkml.kernel.org/r/624bf1ac0bde4871fcfca2c8c8e294b6d8f7ae7b.1768746221.git.lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Barry Song <v-songbaohua@oppo.com>
+Cc: Chris Li <chriscli@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Harry Yoo <harry.yoo@oracle.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 
-The root bus path also had a locking bug that any fix here necessarily
-touches: the old "goto out" jumped to up_read(&pci_bus_sem) without a
-matching down_read() (as does the "goto restore" taken when
-pci_dev_res_add_to_list() fails in the release loop). Take pci_bus_sem
-before the BAR release loop so every path through the function holds it
-exactly once.
+[Stable dependency adaptation for 6.18:
+Keep the split of anon_vma_chain_link() into anon_vma_chain_assign() and
+explicit interval-tree insertion at all three callers. Retain the fork
+change that assigns the chain before taking the anon_vma write lock;
+the interval-tree insertion remains protected by that lock.
 
-Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
-Link: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-7.0/+bug/2159596
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Assisted-by: Claude:claude-fable-5 checkpatch
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260918035633.566823-1-lizf@honeycomb.io
+Drop the two-pass clone allocation and cleanup_partial_anon_vmas() changes.
+This tree lacks the prerequisite clone assertions, early unfaulted-VMA
+handling, simplified root locking, and partial-clone cleanup. Preserve the
+existing GFP_NOWAIT/GFP_KERNEL fallback, root locking, list traversal,
+reference accounting, and allocation-failure cleanup instead. No new
+functions are introduced.
+
+The helper split supplies the context needed for b6ac0b3f6013 ("mm/rmap:
+fix missing barrier between anon_vma init and vma->anon_vma publish") to
+merge cleanly while retaining this tree's interval-tree API. The memory
+barrier fix itself is left to that target commit.]
+
+Stable-dep-of: b6ac0b3f6013 ("mm/rmap: fix missing barrier between anon_vma init and vma->anon_vma publish")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/setup-bus.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ mm/rmap.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2380,6 +2380,7 @@ int pci_do_resource_release_and_resize(s
- 	unsigned long flags = res->flags;
- 	struct pci_dev_resource *dev_res;
- 	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge = pci_upstream_bridge(pdev);
- 	struct resource *b_win, *r;
- 	LIST_HEAD(saved);
- 	unsigned int i;
-@@ -2395,6 +2396,8 @@ int pci_do_resource_release_and_resize(s
- 	if (ret)
- 		return ret;
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -148,14 +148,13 @@ static void anon_vma_chain_free(struct a
+ 	kmem_cache_free(anon_vma_chain_cachep, anon_vma_chain);
+ }
  
-+	down_read(&pci_bus_sem);
-+
- 	pci_dev_for_each_resource(pdev, r, i) {
- 		if (i >= PCI_BRIDGE_RESOURCES)
- 			break;
-@@ -2416,13 +2419,21 @@ int pci_do_resource_release_and_resize(s
+-static void anon_vma_chain_link(struct vm_area_struct *vma,
+-				struct anon_vma_chain *avc,
+-				struct anon_vma *anon_vma)
++static void anon_vma_chain_assign(struct vm_area_struct *vma,
++				  struct anon_vma_chain *avc,
++				  struct anon_vma *anon_vma)
+ {
+ 	avc->vma = vma;
+ 	avc->anon_vma = anon_vma;
+ 	list_add(&avc->same_vma, &vma->anon_vma_chain);
+-	anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+ }
  
- 	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
+ /**
+@@ -212,7 +211,8 @@ int __anon_vma_prepare(struct vm_area_st
+ 	spin_lock(&mm->page_table_lock);
+ 	if (likely(!vma->anon_vma)) {
+ 		vma->anon_vma = anon_vma;
+-		anon_vma_chain_link(vma, avc, anon_vma);
++		anon_vma_chain_assign(vma, avc, anon_vma);
++		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+ 		anon_vma->num_active_vmas++;
+ 		allocated = NULL;
+ 		avc = NULL;
+@@ -296,7 +296,8 @@ int anon_vma_clone(struct vm_area_struct
+ 		}
+ 		anon_vma = pavc->anon_vma;
+ 		root = lock_anon_vma_root(root, anon_vma);
+-		anon_vma_chain_link(dst, avc, anon_vma);
++		anon_vma_chain_assign(dst, avc, anon_vma);
++		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
  
--	if (!bus->self)
--		goto out;
--
--	down_read(&pci_bus_sem);
--	ret = pbus_reassign_bridge_resources(bus, res, &saved);
--	if (ret)
--		goto restore;
-+	if (bridge) {
-+		ret = pbus_reassign_bridge_resources(bus, res, &saved);
-+		if (ret)
-+			goto restore;
-+	} else {
-+		/* No bridge window to adjust; let the core reassign the bus. */
-+		pci_bus_assign_resources(bus);
-+
-+		list_for_each_entry(dev_res, &saved, list) {
-+			if (!resource_assigned(dev_res->res)) {
-+				ret = -ENOSPC;
-+				goto restore;
-+			}
-+		}
-+	}
+ 		/*
+ 		 * Reuse existing anon_vma if it has no vma and only one
+@@ -380,8 +381,10 @@ int anon_vma_fork(struct vm_area_struct
+ 	get_anon_vma(anon_vma->root);
+ 	/* Mark this anon_vma as the one where our new (COWed) pages go. */
+ 	vma->anon_vma = anon_vma;
++	anon_vma_chain_assign(vma, avc, anon_vma);
++	/* Now let rmap see it. */
+ 	anon_vma_lock_write(anon_vma);
+-	anon_vma_chain_link(vma, avc, anon_vma);
++	anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+ 	anon_vma->parent->num_children++;
+ 	anon_vma_unlock_write(anon_vma);
  
- out:
- 	up_read(&pci_bus_sem);
 
 
