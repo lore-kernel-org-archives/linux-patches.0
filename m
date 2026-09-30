@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FFA51C358;
-	Wed, 30 Sep 2026 18:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D117551D503;
+	Wed, 30 Sep 2026 18:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793340; cv=none; b=Am8RS2863ZDFwrWTDNwVXWiyQfYZBrCYPRxkmnUbW8tnoXAbmP2KwppC6CWd7ws5DIRbWI49tm2szmaZ/BrQGv3S1O+EbnDGXRWUZyT0JeqxveqA73U45K5/pkHcY7INH79kdYMVeVVo3eRwZgVqHSsLHr47dBy3d5JQ11zRrI0=
+	t=1790793342; cv=none; b=F1N7Nv5Zxa5QKY6KiMNlRYhf+pxk5VJd7gREABZ683S+O25PhHxTa2R867NKtTvvIf3cmy8Vc3FCrSdorzozJV0Wq7bg0EfIlYPOJaQT4ha+C4tAzc0CLqpV//EQphOIjKQXSQRkTYZ5E9/irvSXCqy4OY0/GnfXLTOap6yk2bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793340; c=relaxed/simple;
-	bh=WPOgWUxspZBYdQvXk+n90AjO1UCKFqmQz7Q/0lpRl/8=;
+	s=arc-20240116; t=1790793342; c=relaxed/simple;
+	bh=+GIKawiJovFfYIRHowCbKiKCy59ul9EuX8c/8yJ1pqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7PoHJPcLSsvJ16upQf5bUpPL+2YaIUFH/w8TR6NPophf4fvlHDJ5n1BE8aXsqe1COLohnP9ZxY5F1MNLGF4YFjqDDCEDSB73XQWtoGw5/ZmChnYqMXdKEzCwac9SgEfk38jTCveLzJQl+xfefjAD3AgjETtNiNyN7LkQMoMirI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvZSbtHP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SXSnEndcF0u0PvtN4okVFfX5PsHJRDX5hIVinQMIsPjX3Gxjkjsa3aYkAp2NFhJ0vx0P9aeQ9gt9p2gsj+DwdtxAJjeG4YM21HxkaJGEkZhHPsZC02R0rYHUz1cajh2h6vXKYolNnkt5B6tgOd/0XuV1cpBxZ+eXE8Dvj49VW7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl0oHA/F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvZSbtHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600A01F000FF;
-	Wed, 30 Sep 2026 18:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl0oHA/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373CF1F000FF;
+	Wed, 30 Sep 2026 18:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793338;
-	bh=bd6rEJ43TInRjSzqR+sCUeeXaTsbXKXrU5fBR/67v68=;
+	s=korg; t=1790793341;
+	bh=u8jK0cFRBDY6Fc4vuoLzal4bIv47XdEUzZLlM1zH7k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvZSbtHPPmRc5qcbSBx6YfnmAdzXU262K7KpvdgBaQ1epD+m8ZNhhqYPyvpNa2ZbR
-	 WrBAXP7g8emTgnpolL7FvSbXh+bfObLQ6aUXov2a1Ne+zFc0cpaWqeDZkXsmJ2Vv08
-	 euioFZCsLr0H8+E9lgKlKQcuFRD6Gk56Tq7NzxdM=
+	b=nl0oHA/FG8afSq+SCrF3zleBr+RIZWcx1aitYq38w0gmrtZe3WshQw/MEDhRbxrPs
+	 VXlAL0DFKemoP74kWL17yddwEPcxkbdKTNd9vWqAz5PDO46g/gazXN1HyPuQBinn3q
+	 bLgSfuS62hR4YOTzyXDlKSSefmEWxqCfVxh4mfnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksei Sviridkin <f@lex.la>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/395] net: dsa: mt7530: fix NULL dereference on unbind of MT7531 and MT7621
-Date: Wed, 30 Sep 2026 17:27:17 +0200
-Message-ID: <20260930152344.446479823@linuxfoundation.org>
+Subject: [PATCH 6.18 176/395] net: dsa: mt7530: leave the MDIO IRQ mappings to regmap-irq
+Date: Wed, 30 Sep 2026 17:27:18 +0200
+Message-ID: <20260930152344.468066926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,55 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksei Sviridkin <f@lex.la>
 
-[ Upstream commit c2cdef41e0b4d8ed23a5b41e6ad4e64594e055e4 ]
+[ Upstream commit 0d80ba0a204c6a16bd7778b50de578dff107c0fe ]
 
-The core and io supplies are only requested for ID_MT7530: both the
-devm_regulator_get() in probe and the regulator_enable() in
-mt7530_setup() are guarded by the switch id, but mt7530_remove()
-disables them unconditionally. On an MT7621 or an MT7531 both pointers
-are still NULL from devm_kzalloc(), so rmmod or a sysfs unbind calls
-regulator_disable() on NULL.
+mt7530_remove_common() disposes the per-PHY interrupt mappings from
+.remove, but the regmap-irq chip that owns the domain is devm-registered,
+so its parent interrupt is only freed once .remove has returned. The
+switch's own regmap-irq thread can therefore still dispatch on a mapping
+that is already gone: irq_find_mapping() returns 0, irq_to_desc() returns
+NULL and handle_nested_irq() locks desc->lock without checking it. The
+attached PHYs have not given those interrupts back yet either, which the
+kernel warns about a moment before the fault.
 
-Fixes: ddda1ac116c8 ("net: dsa: mt7530: support the 7530 switch on the Mediatek MT7621 SoC")
+regmap_del_irq_chip() disposes the same mappings itself, after freeing the
+parent interrupt and before removing the domain, so there is nothing left
+for the driver to do here. Until it runs the descriptors stay alive, and a
+late dispatch on one of them is harmless: dsa_unregister_switch() has freed
+the PHY handlers by then, so handle_nested_irq() finds no action and
+returns.
+
+Fixes: 254f6b272e3b ("dsa: mt7530: Utilize REGMAP_IRQ for interrupt handling")
 Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260918015020.2518315-2-f@lex.la
+Link: https://patch.msgid.link/20260918015020.2518315-3-f@lex.la
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530-mdio.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/net/dsa/mt7530.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530-mdio.c b/drivers/net/dsa/mt7530-mdio.c
-index 6cc2c8975af66..119fdbea57160 100644
---- a/drivers/net/dsa/mt7530-mdio.c
-+++ b/drivers/net/dsa/mt7530-mdio.c
-@@ -227,15 +227,17 @@ mt7530_remove(struct mdio_device *mdiodev)
- 	if (!priv)
- 		return;
- 
--	ret = regulator_disable(priv->core_pwr);
--	if (ret < 0)
--		dev_err(priv->dev,
--			"Failed to disable core power: %d\n", ret);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index d7ebb7b8ee72c..4001779a91591 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -3446,9 +3446,6 @@ EXPORT_SYMBOL_GPL(mt7530_probe_common);
+ void
+ mt7530_remove_common(struct mt7530_priv *priv)
+ {
+-	if (priv->irq_domain)
+-		mt7530_free_mdio_irq(priv);
 -
--	ret = regulator_disable(priv->io_pwr);
--	if (ret < 0)
--		dev_err(priv->dev, "Failed to disable io pwr: %d\n",
--			ret);
-+	if (priv->id == ID_MT7530) {
-+		ret = regulator_disable(priv->core_pwr);
-+		if (ret < 0)
-+			dev_err(priv->dev,
-+				"Failed to disable core power: %d\n", ret);
-+
-+		ret = regulator_disable(priv->io_pwr);
-+		if (ret < 0)
-+			dev_err(priv->dev, "Failed to disable io pwr: %d\n",
-+				ret);
-+	}
+ 	dsa_unregister_switch(priv->ds);
  
- 	mt7530_remove_common(priv);
- 
+ 	mutex_destroy(&priv->reg_mutex);
 -- 
 2.53.0
 
