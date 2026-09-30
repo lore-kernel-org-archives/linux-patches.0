@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1394FDA5A;
-	Wed, 30 Sep 2026 16:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB88254705C;
+	Wed, 30 Sep 2026 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785402; cv=none; b=X1EnXXekO4kE2TNmmxjN+b2+QILnwoPLXpJfO0va/kGkE/TAvhRNDRO0Ap/lP0j1X4vuO8clpz3YORz/RSgLhE/fq0yLz8qyaRjsULaPWDJeedyhMNSE6hvbCmBYaUqDd+GNx3HNmcC959fxfU+kTUrK4sNwwFh3NPK9F5hB9VE=
+	t=1790785410; cv=none; b=TVR9Gs4y2qzX+0eF/CMhX6wPcqNNJJXSKmzYSKj4pIb6RAY3XpjmXHRcckrOTTW6getNZMLoiSM7Ce61KMAzpxrTXG3mMPAd3GhOf1PriWx2raJe90M0zdepE2GnqSj38SsKGP/NrUC9NerNptbE4FbPAfE9ygrSm6brBMTMf3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785402; c=relaxed/simple;
-	bh=FVCpNEcYBGoMb+/WpnsmMMDw1h7OrnUM2rYf8vCOPyk=;
+	s=arc-20240116; t=1790785410; c=relaxed/simple;
+	bh=w4K0OnoEsoldxzk6WE6DEj4iELxXqMJQ51lpk+Ojzp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/momqIpL+5qK83zCoq6IAkGuLzsxMlkJl+4rOQx3DDhq8pDfFJBvCUTMeJLGaUj7T0m1Gnru0+hYgQ4Z5liJj0Gk0UJ0gaCqzF/kiYYjZutpZtDAni3Xhbso4Q3PaLGYMot5ud83riYOM/kNatDkOAjtX/Rlg7cvrGGgSQR4uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vU0rtHGt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aiqf1wcDumbkS8r9f1pp/ONW5l2TUTLiN/g6eHBhJ+7VNe9nJYgaQOV0Ovzq9HkEMPmcE04CXpf4uxyqI+Dtpa+5habOviWWCwcT55+cNBHBnSARbawlLleq9GHHKVqWitNfS0iNN+yLUpgs+/c9JkKxKb9Zl9SZY6GphoNUoKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx4B2aex; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vU0rtHGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DB11F00893;
-	Wed, 30 Sep 2026 16:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx4B2aex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D891F00898;
+	Wed, 30 Sep 2026 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785395;
-	bh=VDJmMRomPq2oKzO+SS39YQn5NiBxREvnK40N8D70IJI=;
+	s=korg; t=1790785407;
+	bh=QAi+Z4P/aAEXHB4KSxwqKAc9+DaUxJN9ap40LdT2Gto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vU0rtHGtMNyp9hhwedTTJnSx3BKfS00+LrNJSXBlBl7ROayIbeGSS0fav44Lb4sau
-	 FJwN08UvZmCrV2Th423kFWILUhCS+wHq30Qp6wvcj3oRLYJ2ysXSnpxUYOB6+0GKlK
-	 n7k4i3HgJZNhM5CxzKS0bFyDPEAYcztu/sSqKG/U=
+	b=Hx4B2aexeWRhpkXMAKGUFmDd6QjFdkj/jGAiUe/GpCnbSv0H46muXg2F8n+Q+Dd1A
+	 sTbmrVvWcGjRXdb5bS/yGCL1bFUMhp7GmuS5FBkiFruS3btcp82lAc/TJbQzWJzGVD
+	 rylmubqep3rN8D9Lycb9QeI7M51fnQZwBxiplJzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 449/982] net: ethernet: cortina: Count dropped frames as NAPI work
-Date: Wed, 30 Sep 2026 17:19:45 +0200
-Message-ID: <20260930152426.438969843@linuxfoundation.org>
+Subject: [PATCH 6.1 453/982] drm/logicvc: Drop the select of the nonexistent CONFIG_DRM_KMS_DMA_HELPER
+Date: Wed, 30 Sep 2026 17:19:49 +0200
+Message-ID: <20260930152426.522465562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,76 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b856c552f556bc0341c1dbe0bf88e630fd1dc4b7 ]
+[ Upstream commit f97802dd98b27e45c04293f9926f07642578b23f ]
 
-The RX loop only consumes budget when it successfully delivers a frame.
-Error paths keep consuming descriptors without reducing the budget, so a
-stream of bad frames can process the entire receive ring in one poll.
+CONFIG_DRM_KMS_CMA_HELPER was removed by commit 09717af7d13d ("drm:
+Remove CONFIG_DRM_KMS_CMA_HELPER option"). When commit 6bcfe8eaeef0
+("drm/fb: rename FB CMA helpers to FB DMA helpers") later renamed the
+select in this Kconfig to CONFIG_DRM_KMS_DMA_HELPER, no symbol of that
+name existed, and git log -S finds no Kconfig file that has defined one
+since. The select is silently ignored. The driver already selects
+CONFIG_DRM_GEM_DMA_HELPER, which is what it needs.
 
-Move the budget accounting to a common end-of-frame path. This counts
-each completed frame as NAPI work whether it was delivered or dropped,
-matching the behavior of the vendor driver.
+Remove the dead line.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Fixes: 6bcfe8eaeef0 ("drm/fb: rename FB CMA helpers to FB DMA helpers")
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-3-2bbbd598ca6e@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260905080344.34077-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/logicvc/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 1092f558bc34f..62ddaf3e99775 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1506,7 +1506,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				skb = NULL;
- 				frag_nr = 0;
- 			}
--			continue;
-+			goto next_desc;
- 		}
- 		page = gpage->page;
- 
-@@ -1528,7 +1528,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 
- 		} else if (!skb) {
- 			put_page(page);
--			continue;
-+			goto next_desc;
- 		}
- 
- 		if (word3.bits32 & EOF_BIT)
-@@ -1551,10 +1551,8 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
- 			frag_nr = 0;
--			budget--;
--			received++;
- 		}
--		continue;
-+		goto next_desc;
- 
- err_drop:
- 		if (skb) {
-@@ -1567,6 +1565,13 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			put_page(page);
- 
- 		port->stats.rx_dropped++;
-+
-+next_desc:
-+		/* Final or single-descriptor fragment, advance things */
-+		if (word3.bits32 & EOF_BIT) {
-+			budget--;
-+			received++;
-+		}
- 	}
- 
- 	port->rx_skb = skb;
+diff --git a/drivers/gpu/drm/logicvc/Kconfig b/drivers/gpu/drm/logicvc/Kconfig
+index 1df22a852a23e..283dca51e4bdd 100644
+--- a/drivers/gpu/drm/logicvc/Kconfig
++++ b/drivers/gpu/drm/logicvc/Kconfig
+@@ -3,7 +3,6 @@ config DRM_LOGICVC
+ 	depends on DRM
+ 	depends on OF || COMPILE_TEST
+ 	select DRM_KMS_HELPER
+-	select DRM_KMS_DMA_HELPER
+ 	select DRM_GEM_DMA_HELPER
+ 	select REGMAP
+ 	select REGMAP_MMIO
 -- 
 2.53.0
 
