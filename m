@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6183750CF;
-	Wed, 30 Sep 2026 17:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AD03750CF;
+	Wed, 30 Sep 2026 17:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787926; cv=none; b=cQT3TG9SvPudbZNVxr0qB63F72mfycQG4ofaR8GrcuwFg5X8fdaWe1/5z4qgXB2bTe4elyJueRmIyRU4G19dRtGtj3GsbDs1HGdAkXDkh8IYbUYUGu4efYQND1+nTD3hSALGwXfemNloOFY8etYDhB0GK26kXFlnhWF8Qa932hw=
+	t=1790787928; cv=none; b=F5saGSRkrF8n5s7vi+LS5QL+m/I3rZHuAYy/rIs0nJDxS62Z/fqHI9ARvewS49B364mlUKK239MS6V1pZek6vqOY+nbaGd2Jm6gWcCQGul1PWeC39EbLxPIeck6VF39FdpVHP0uW37GxkmjseJDoD+ceHFW/O200Jt+BnyPrqgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787926; c=relaxed/simple;
-	bh=ylvrlR1rfSKURMtCdULrC/STEpb6h/4hGxhyI6MkGRI=;
+	s=arc-20240116; t=1790787928; c=relaxed/simple;
+	bh=lFtHJ6ZI/dEE13xynl8hL5YDt0ZBYZEyKiCcHIB6zr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qleYi/fQR9sG5SR7SxoB4z45rSZvciFL4fFZcP8jKOqTJYyo1B8QCwVEZ24sNljMi9c2vY6krN32l3gq4ISRTcAKIWLl4E7dmRzfBm+TMtfHa95/MKI1J7YuONZE51ch+Cd7MKw4oL5395tW44inHqaduUMdRHP2Ow/yaozmm4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BruogseG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZZDs17ER5mNASsJe5DZNBzyq972kgKeHa00SwuK8OeIZnJNdTky5G+pGDB9aleeyffw9mwnpdi3J6djhwSnl3JGhJGxgmWHse7iwWkRZoI8IcVGe0V2vhjdf8tWJm4A3qUTVB49ZNxcAekokbR4Zk9qA7c7jje+pXlTiB9SDEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbUZ/iwp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BruogseG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3756E1F000FF;
-	Wed, 30 Sep 2026 17:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbUZ/iwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105841F000FF;
+	Wed, 30 Sep 2026 17:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787924;
-	bh=3G3VP+ReR5lS66HZxfvCuJFT7ZVmWa0R+gdN7/a2IYo=;
+	s=korg; t=1790787927;
+	bh=7t2bEF7hce7VcVMiNSy8Ur66LV3IOmfdB0vbda0WEvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BruogseGKfrTW7gKFBFaS/4ZSeOQ2y6kTkFd8JhvsvgmPcN9XwEEi/aeQ1elna5wd
-	 Sr8kTbF2Dn0sbN/Zs4n7QvPFzea5WYMcvUmaSjHca89/3sUxg4qGu622eMaFBOmbXg
-	 Nv6rJkD+4bQkyoqBLt4CTonCBFSlBEQ0pgzBS67o=
+	b=JbUZ/iwp4dkRZKtig7Mzc67STTLrV8A1Jqt04hz6d50+683hkXtaih15QGjhlQTgt
+	 +mOhCjEIaRt3s1isvGLRgXoQFDhmP2ka8MhTas40hQQKBzomivBSsfLrLOri5HBYly
+	 bRVumMqO1zmnJkF+5t1qd/FmR6SJEn4jjWRvjkUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 7.2 395/457] RISC-V: KVM: Propagate interrupted G-stage faults
-Date: Wed, 30 Sep 2026 17:28:20 +0200
-Message-ID: <20260930152354.521232853@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.2 404/457] Bluetooth: ISO: release unused CIS holds after channel attach
+Date: Wed, 30 Sep 2026 17:28:29 +0200
+Message-ID: <20260930152354.712885697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,51 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit f41fb17143df890855d3de980f8eb92dfd595817 upstream.
+commit 0fcd4dad555c96e0bd3a1b8c569f989be85c7341 upstream.
 
-__kvm_faultin_pfn() reports an interrupted host page fault with
-KVM_PFN_ERR_SIGPENDING. RISC-V currently handles it as a generic
-error PFN and returns -EFAULT.
+hci_bind_cis() and hci_connect_cis() return one hci_conn hold for the
+ISO layer.  A new channel association consumes that hold, which is
+eventually released by iso_conn_free().
 
-Return -EINTR for the signal-pending sentinel so callers can distinguish
-an interrupted fault from an invalid userspace mapping. Do not log the
-expected interruption as a vCPU exit error.
+There are two cases where iso_chan_add() does not create an association:
+it returns success when the socket is already attached to the same
+iso_conn, and it returns -EBUSY when another socket is attached.  The
+hold returned for the current call is unused in both cases.  This occurs
+when deferred setup calls iso_connect_cis() again for its existing
+socket, or when another socket attempts to reuse the CIS.
 
-Fixes: 9d05c1fee837 ("RISC-V: KVM: Implement stage2 page table programming")
+Detect the idempotent case while the connection is locked and release
+the unused hold after iso_chan_add().  Also release it on -EBUSY.  Do not
+drop it for other errors: a newly allocated iso_conn releases the
+transferred hold when its last temporary reference is put.
+
+Fixes: 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via hci_conn")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810051544.3953925-3-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/mmu.c       |    2 ++
- arch/riscv/kvm/vcpu_exit.c |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/iso.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/riscv/kvm/mmu.c
-+++ b/arch/riscv/kvm/mmu.c
-@@ -621,6 +621,8 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *v
- 				vma_pageshift, current);
- 		return 0;
- 	}
-+	if (is_sigpending_pfn(hfn))
-+		return -EINTR;
- 	if (is_error_noslot_pfn(hfn))
- 		return -EFAULT;
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -496,6 +496,7 @@ static int iso_connect_cis(struct sock *
+ 	struct hci_dev  *hdev;
+ 	bdaddr_t src, dst;
+ 	u8 src_type;
++	bool already_attached;
+ 	int err;
  
---- a/arch/riscv/kvm/vcpu_exit.c
-+++ b/arch/riscv/kvm/vcpu_exit.c
-@@ -267,7 +267,7 @@ int kvm_riscv_vcpu_exit(struct kvm_vcpu
+ 	lock_sock(sk);
+@@ -568,8 +569,14 @@ static int iso_connect_cis(struct sock *
+ 		goto unlock;
  	}
  
- 	/* Print details in-case of error */
--	if (ret < 0) {
-+	if (ret < 0 && ret != -EINTR) {
- 		kvm_err("VCPU exit error %d\n", ret);
- 		kvm_err("SEPC=0x%lx SSTATUS=0x%lx HSTATUS=0x%lx\n",
- 			vcpu->arch.guest_context.sepc,
++	iso_conn_lock(conn);
++	already_attached = iso_pi(sk)->conn == conn && conn->sk == sk;
++	iso_conn_unlock(conn);
++
+ 	err = iso_chan_add(conn, sk, NULL);
+ 	iso_conn_put(conn);
++	if (already_attached || err == -EBUSY)
++		hci_conn_drop(hcon);
+ 	if (err)
+ 		goto unlock;
+ 
 
 
