@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A742E7386;
-	Wed, 30 Sep 2026 18:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE280344D9D;
+	Wed, 30 Sep 2026 18:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794726; cv=none; b=hZt4QjLdDf4nMJ/tprYxEczu0SOyZbgZ50OR2i4uqgLjGlknSNoIGETZTgKA+rQ+X00s1USMYganZbjDJ0bUoQyNBVOoK2ia9iTqA1d06ezxhKP4SldsiIeCmu2OL1qwuKKnbQQ6wAWVFpMF0kXlEISlbp3ceIFDBgy1C+4b1tA=
+	t=1790794729; cv=none; b=o/2K85+aucWTMpa3nGygi1f8CfYp1ZilaVP7U+y9pve48SLhuq3nutPJ/BR3Nlf/+QHDjcLujE2uLdkqxcnVy6ug8D+yHKSsaFTS94gbtlHcIAeWID/r6+NP2DdVnfB+vmB/ascBa+UNYvTZgxIiJK66mlhc1C/DBXIEdM08oss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794726; c=relaxed/simple;
-	bh=r+ErAlmRBu2WJGGPi6Bq2GIb6s91vjbQdpOCeeFDvPE=;
+	s=arc-20240116; t=1790794729; c=relaxed/simple;
+	bh=sfvrZ7cExWpDiapZajlDGZCMJLscoxSG9M/Ge8sG3TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVkx4+u6NJUy+Fl1x2TpsIaphNQtgbhrfZFxPsBma23ZwrmulQ0duIKBoV4JyS7ZzK5tjZfWDk7MlZ/5CE68z3sOe3q314gdBGwFFsC5noAmJtsN6A9lIsPuOGX8uQp1dLsRrXkKoweAY4zD6h3fUyREwDt+MQ3PWhnrZOYXnMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VdTXmLw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PRCSsuU0DdtC3B+7nWYkjzwujErrSpp042Z31n1elIeAahCrLmCs3MG4xHog9n5aUmrg+jYF2ZZcjAuSVfeGQMCI3QQoBGUmu1kYdBG3lrZ/vg9M8aTdvcSDvsgLT8p7gdUcsyvQ3VPMWdb4O/r6/fcTxkL5WrxCOwGsrJmKF48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdQp9wMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VdTXmLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73641F000FF;
-	Wed, 30 Sep 2026 18:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdQp9wMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6EA1F000FF;
+	Wed, 30 Sep 2026 18:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794725;
-	bh=2qAarP6D7QEVlYcJ1tNZTwbnRgkjsTBObFrVA/upuHg=;
+	s=korg; t=1790794728;
+	bh=n5vrXccyI+c/TQK+KzMD3dO/uCkKQBnrBVmBa69sDWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2VdTXmLwtIz3BMv9rPXIUohAJE2ilb/+M6VR2pORQn6BVS7/KNqZHSZuGfhl62Yp3
-	 cczGlPf5Lq1iM3WOocg+Okz5nX0ATwq4w5dvr3GnKWTYQLVSCYj+22IJVoSz4ypO5o
-	 sdc9fRQiLIWU5oS/tEipkQoyKfUIkB5T7kJOD6pA=
+	b=gdQp9wMT//xzhGyRco7uP4Tkp8+Af3cmq24Tdc8VBLAKNmUPMu/ur9wtt81lzXjg2
+	 lSQO7GfMqicUvbJebPhcXa0B5I/mFXnlYrSRZty1jSi5jlhxZazf7JnExI1CNVupQR
+	 csgwJchfdLWjEg+HpfYJHxRAHqWEUWPieWMpF/VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Yu Peng <pengyu@kylinos.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0311/1193] wifi: iwlwifi: mvm: fix a possible underflow
-Date: Wed, 30 Sep 2026 17:16:35 +0200
-Message-ID: <20260930152441.052172310@linuxfoundation.org>
+Subject: [PATCH 6.6 0312/1193] arm64: fixmap: Allow 256K early_ioremap() at any offset
+Date: Wed, 30 Sep 2026 17:16:36 +0200
+Message-ID: <20260930152441.073143969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,63 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit 0cb5260a1027a43f8cdb961e128f2ddd42e46832 ]
+[ Upstream commit 21fc7ec93f8b633b60d5bddef2f1529ff6b36185 ]
 
-We shouldn't trust the firmware about the length of the wowlan packet.
+NR_FIX_BTMAPS is the per-slot page limit for early_ioremap(). Since
+__early_ioremap() maps the page-aligned physical range, a 256K request
+can require one extra page when the physical address is not page-aligned.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.fbd989cc85e2.If68de403bfa4943732c025961154c20b01b09e83@changeid
+Reserve one extra page per slot so the 256K mapping budget is usable
+regardless of the initial page offset.
+
+Link: https://lore.kernel.org/r/08fd96fa-ee3a-4904-bd11-bb08bd90436f@kylinos.cn
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/fixmap.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 51abcd20ffbd6..4fbd83d3e8acf 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -1519,6 +1519,10 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
- 		if (WARN_ON_ONCE(truncated < 0))
- 			truncated = 0;
- 
-+		/* this would be a firmware bug */
-+		if (WARN_ON_ONCE(pktsize < sizeof(*hdr)))
-+			return;
-+
- 		if (ieee80211_is_data(hdr->frame_control)) {
- 			int hdrlen = ieee80211_hdrlen(hdr->frame_control);
- 			int ivlen = 0, icvlen = 4; /* also FCS */
-@@ -1527,10 +1531,6 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
- 			if (!pkt)
- 				goto report;
- 
--			skb_put_data(pkt, pktdata, hdrlen);
--			pktdata += hdrlen;
--			pktsize -= hdrlen;
--
- 			if (ieee80211_has_protected(hdr->frame_control)) {
- 				/*
- 				 * This is unlocked and using gtk_i(c)vlen,
-@@ -1556,6 +1556,17 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
- 				truncated = 0;
- 			}
- 
-+			if (IWL_FW_CHECK(mvm,
-+					 pktsize <= hdrlen + ivlen + icvlen,
-+					 "pktsize is too small %d\n",
-+					 pktsize)) {
-+				kfree_skb(pkt);
-+				return;
-+			}
-+
-+			skb_put_data(pkt, pktdata, hdrlen);
-+			pktdata += hdrlen;
-+			pktsize -= hdrlen;
- 			pktsize -= ivlen + icvlen;
- 			pktdata += ivlen;
+diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
+index 58c294a966768..42339f311bc0c 100644
+--- a/arch/arm64/include/asm/fixmap.h
++++ b/arch/arm64/include/asm/fixmap.h
+@@ -72,8 +72,12 @@ enum fixed_addresses {
+ 	/*
+ 	 * Temporary boot-time mappings, used by early_ioremap(),
+ 	 * before ioremap() is functional.
++	 *
++	 * Reserve one extra page so a 256K mapping may start at any
++	 * offset within a page. early_ioremap() maps the page-aligned
++	 * physical range, so the initial offset can consume an extra page.
+ 	 */
+-#define NR_FIX_BTMAPS		(SZ_256K / PAGE_SIZE)
++#define NR_FIX_BTMAPS		((SZ_256K / PAGE_SIZE) + 1)
+ #define FIX_BTMAPS_SLOTS	7
+ #define TOTAL_FIX_BTMAPS	(NR_FIX_BTMAPS * FIX_BTMAPS_SLOTS)
  
 -- 
 2.53.0
