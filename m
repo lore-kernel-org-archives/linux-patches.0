@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56942511235;
-	Wed, 30 Sep 2026 18:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FD751AEEE;
+	Wed, 30 Sep 2026 18:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792464; cv=none; b=rcvAn7wGxdz5eci90LV1btjV2Da/1UVoyhCQn2kTCh9tk1S7unXb1nAQUkwO6lgVaoNg3Hretn1M3zvFpjiYPW7J3g5n8ylYxFmrtkONxNcbH4WsEHdqisbj2sfd8hdvddHvWhN6yGQ11oXha26eTNFqM1+FxAFA/Ey4Ti99aI8=
+	t=1790792467; cv=none; b=MvH7WYVJYg/0AEo3aS8PQDQeZaqgnKA1DAZUblvymgCmNqT+VOiNqRtkXcYWWaKe5lCkRf8w7N0gSJqXTj+o9ftSLK0WmCXAZTkVYXeil63ZQqb2lppOYTvKV8R6T6B0a/nwCAB/RoD1tFXE9ZZlQ1sfP5V8oWQJR/6N9KRpt34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792464; c=relaxed/simple;
-	bh=M6k5P9CUU46G8q/XGVmaqsSigKb5SBMUIOwxNsPQwAw=;
+	s=arc-20240116; t=1790792467; c=relaxed/simple;
+	bh=bnpJgqGzjgmKFTNhrhpKgE//5mPc3oBdtjgYdsjtHIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bz2iy4Vs0fiZfX2nV5nPY/zMUv1QPAdf13BnrAW9VrwFN6JrdytKwSHCDGMeKytOUXfkcjEzlPfrXb7ltlsdP2SdjakeemnT7N+D7dHXC76dS4tY+CnuWv3YmKSrUt/QcAhFtmlqf16u/hYfuIydd7wnKKRcfAOND20ryZFz4zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lh/TCH0n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dE3f4rLJ0SconRPeuhSCfYE/DaRsOY9LoxJq8/JRAQUHGW93uDIeyEXN5STFV2Jm8yi2hDtFlDwkNu3bfaqe++h0tQDCxted2bWEvUbZeNf3EL2I0PLFHC7/nZlsrAocix3F8mRkc6hOGtNsNM71IPjcFQ41RAINozsEgt+xams=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ai63v3uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh/TCH0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6891F00899;
-	Wed, 30 Sep 2026 18:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ai63v3uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845CC1F000FF;
+	Wed, 30 Sep 2026 18:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792463;
-	bh=J08AsDWAOt9+X8k/28FsrsqUPlOh/PkleiHq1N+66lw=;
+	s=korg; t=1790792466;
+	bh=w5md/WINhKU9yUoi7HFY9k9N5Izg0e5UD6AnBSK3KNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lh/TCH0nJpN5IVt3be3H9012LmDKQGKuiffEaE8AwmZJVwpfXSQiforG1oRKRK9v7
-	 nRx9hDv7nYcaaLOcwzMO+sfWoK+Xz/asbZaOq4/b+tNJsch96sxgapJtxyig+E+vxN
-	 tFc07cLO+R+uHi6xWjhMlcFEkURQe7pR0NfHi5sY=
+	b=ai63v3ujw5EbZieejqDoHbnoJSxvv1o6CD/d1iEmfust4qMElJe0kl4HdL43g9x/o
+	 H7l/ksjgq/SMxmMFRLo7pmRKUOXZmoANtVHxYDHpU8d4R+zD2xe2I/mY74US2yJFT2
+	 GXRwuHi3PeDBt+JIrai/RscMhuYX5LIhkElNWbgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Sasso <stesasso@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 665/752] vrf: Stop corrupting skb->csum when capturing CHECKSUM_COMPLETE packets
-Date: Wed, 30 Sep 2026 17:28:55 +0200
-Message-ID: <20260930152412.646368384@linuxfoundation.org>
+Subject: [PATCH 5.15 666/752] net: bcmgenet: validate Ethernet address in bcmgenet_set_mac_addr
+Date: Wed, 30 Sep 2026 17:28:56 +0200
+Message-ID: <20260930152412.667772973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -55,53 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit ab7aa05c06ae340e5c7530bb78fa8d23794e460b ]
+[ Upstream commit 273941c85fc2632cd3e56ddff737b9245de7697d ]
 
-The VRF device is an Ethernet device but it can have non-Ethernet ports
-such as IP tunnels. Before the cited commit, capturing packets from such
-ports on the VRF device resulted in these packets being detected as
-malformed since they lack an Ethernet header.
+bcmgenet_set_mac_addr() did not check whether the provided MAC address is a
+valid Ethernet address before applying it. Userspace could configure an
+invalid address (such as all zeroes or a multicast address) while the
+interface is down.
 
-The cited commit fixed it by pushing a dummy Ethernet header to such
-packets before the capture and pulling it afterwards. In the case of
-CHECKSUM_COMPLETE packets it also updated skb->csum with the checksum of
-the dummy Ethernet header. This is wrong as skb->csum should not include
-the checksum of the Ethernet header ("checksum of the _whole_ packet as
-seen by netif_rx()").
+Add a call to is_valid_ether_addr() and return -EADDRNOTAVAIL if the MAC
+address is not valid.
 
-This also means that L4 protocols receive a corrupted skb->csum and
-potentially drop the packet, as is the case with UDP packets whose
-checksum was completed by software.
-
-Fix by removing the unnecessary call to skb_postpush_rcsum().
-
-Fixes: 048939088220 ("vrf: add mac header for tunneled packets when sniffer is attached")
-Reported-by: Stefano Sasso <stesasso@gmail.com>
-Closes: https://lore.kernel.org/netdev/CALtE316UtL3x7LL6uxfXzx8rW6AbzYPeDOb478hqJCr_-dj=Wg@mail.gmail.com/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260922131239.2509494-1-idosch@nvidia.com
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260921220021.281418-5-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index c0752e8748529..b8b3a48666fab 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1287,8 +1287,6 @@ static int vrf_prepare_mac_header(struct sk_buff *skb,
- 	skb->protocol = eth->h_proto;
- 	skb->pkt_type = PACKET_HOST;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index bafb8c56a5497..abd4a99b9a5dd 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3627,6 +3627,9 @@ static int bcmgenet_set_mac_addr(struct net_device *dev, void *p)
+ 	if (netif_running(dev))
+ 		return -EBUSY;
  
--	skb_postpush_rcsum(skb, skb->data, ETH_HLEN);
--
- 	skb_pull_inline(skb, ETH_HLEN);
++	if (!is_valid_ether_addr(addr->sa_data))
++		return -EADDRNOTAVAIL;
++
+ 	eth_hw_addr_set(dev, addr->sa_data);
  
  	return 0;
 -- 
