@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD25B4EFFDC;
-	Wed, 30 Sep 2026 15:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B450B43D;
+	Wed, 30 Sep 2026 15:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783550; cv=none; b=NajiRwR0fWzBqLfoX3LYNZTA2cGliUB3Qu0Lbygbjzj1IWc4bYkdL72hIfI6cT8a8AXpzCGgpc2TY1rzEXQk1Z8BJ8NvYYif2sfxl/E7svYSMb29tKill88psJx7DizANZ37G4eff+taouYE+snypKOuRXJn2e4rLjzziMr76Ec=
+	t=1790783553; cv=none; b=h+I5oLErphI/gecrS8YjOwzjt53jivH9BdjmcrzIcWMV4FdiXKoBvLln58DnKnBF/NwRmP+AgtZUCVdouWWSNIhvDkLwVOHCGqD7g2l70IbllAMInx7hVYPx+D7kw1cfpFimGyG0HyyGJfIWe8BExqie5/HGcnWGVSxJnywbA2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783550; c=relaxed/simple;
-	bh=vDi/bmS/5N8mtnunhD17VFdKKwsXDvyCYAJuevBvgbQ=;
+	s=arc-20240116; t=1790783553; c=relaxed/simple;
+	bh=xdlygHdam8I0fRUADC51sUAmCIJ6R8O5ebqt1iOrGcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7xtBci4OgB8/wSNO2nIGMRLuIEucHXeJquCV60iqhcrF4o3vD6PMMowrSvwjbEjeNL73T6SNIMxsqRZtpgClTTsF8+T82bZzFeJ5dm+4EvU0ZiI9jgWvoSOMBDkJpsNSB6So1U2oEVhOtmbxJVcUBxrCErFL62RMR7KgPjTwW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+K+4qaP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EI9jDNbZMmJN9lILBDq7syYschOUNoNlcYjeFvfbogAmTVsoDSn3mE3pcLGODhVcCMXrEmtSB98g3hF0FtdRQIy2Xru77Z2HR8LWqRpyK2xeUUezX5s8VJKcfNSg6wD0q78uA4+3T0UE55EZNDAEbrVB6f8pBQgbtcwY5CXF83g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGcR09SR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+K+4qaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB0E1F00893;
-	Wed, 30 Sep 2026 15:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGcR09SR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AD81F00898;
+	Wed, 30 Sep 2026 15:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783546;
-	bh=cRH7RKHMWjnq1uzlC0As0YUZXo77AEdlMWBdhdv8BSM=;
+	s=korg; t=1790783548;
+	bh=z3UIQ0E7ioBhzbiLaETl3b4tztZe0zeeEbh9s7X1Lww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R+K+4qaP/EhjaXOFNTknaQishbanj1k5C9fHe8jiZbQeeac6YGpjnvCGe2GQemBs7
-	 0NGl0x7kLvrNUQYQ+0Hun7TI7T6KBz6UmBg/icJo7fOBLBrRW1S0hWPugWQ+zuiXBX
-	 ewxWmkgkxJ9dl9zCZ/J5qexUCgzITIq5ihwQBfxo=
+	b=rGcR09SRUzMO10D6+t+PU4EYep1DLEMNXnB3CqziuESYDDUSPPWEbzWkrk9Zp9k0/
+	 J2uFfe1bDWornApFL3abZScHYKn/4Jef0352Z7d/IDi7QM7FEmOqVV7OkcWQIbhkhU
+	 7GCs04HSSNft+y8ZZcYeK27UuBfpY6/fHaTEQUYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 436/595] keys: translate request_key_auth pid for the reading procfs instance
-Date: Wed, 30 Sep 2026 17:25:29 +0200
-Message-ID: <20260930152357.058307288@linuxfoundation.org>
+	Shengzhuo Wei <me@cherr.cc>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 437/595] i2c: at91: release DMA channels on remove and probe error
+Date: Wed, 30 Sep 2026 17:25:30 +0200
+Message-ID: <20260930152357.080485377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,103 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Shengzhuo Wei <me@cherr.cc>
 
-commit 0d6a4268b06084baafd8ee5d66955c7e1c2e053b upstream.
+commit f7eeb1af8537b05953fb1c88ab8b59d94059a381 upstream.
 
-request_key_auth_describe() prints rka->pid into /proc/keys as a raw
-pid_t in the initial pid namespace. A reader can open /proc/keys through
-a mount in another pid namespace. That reader sees a number with no
-meaning there. The number can even name an unrelated task. The line
-needs VIEW on the key. So the reader either shares the key owner's uid
-or possesses the key.
+at91_twi_configure_dma() requests exclusive tx/rx DMA channels, but
+nothing ever releases them on driver detach, and the probe error path
+after the channels are acquired (i2c_add_numbered_adapter() failure)
+returns without releasing them either, because the remove callback is
+not invoked after a failed probe.
 
-The fix keeps a struct pid. Commit 4f82f45730c6 ("net ip6 flowlabel:
-Make owner a union of struct pid * and kuid_t") gave
-/proc/net/ip6_flowlabel the same storage. The print goes through
-pid_nr_ns(). It renders against the pid namespace of the procfs instance
-the line is read through. Commit ad08978ab41c ("ipv6/flowlabel: simplify
-pid namespace lookup") moved that print to the same anchor. Output
-through an initial namespace /proc does not change. The line shows 0 for
-a requestor with no number in that namespace.
+Move the release into a helper, call it from the existing
+configure-failure path, the adapter-registration failure path, and
+at91_twi_remove().
 
-Translating at read time was the alternative. find_pid_ns() can resolve
-a recycled number. The line would then name a live task with no
-connection to the key. A stored struct pid gives 0 instead when the
-requestor has no number there.
-
-Link: https://lore.kernel.org/keyrings/20260809110202.2180410-1-maoyixie.tju@gmail.com/
-Fixes: 78b7280cce23 ("KEYS: Improve /proc/keys")
-Cc: stable@vger.kernel.org # v5.10+
-Assisted-by: Claude:claude-opus-5 codeql
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://lore.kernel.org/r/20260821095935.1864998-1-maoyixie.tju@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 60937b2cdbf9 ("i2c: at91: add dma support")
+Assisted-by: GLM:5.3
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Cc: <stable@vger.kernel.org> # v3.8+
+Acked-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-1-271d4adc03a0@cherr.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/keys/request_key_auth-type.h |    2 +-
- security/keys/request_key_auth.c     |   12 +++++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-at91-core.c   |    3 +++
+ drivers/i2c/busses/i2c-at91-master.c |   12 +++++++++++-
+ drivers/i2c/busses/i2c-at91.h        |    1 +
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/include/keys/request_key_auth-type.h
-+++ b/include/keys/request_key_auth-type.h
-@@ -22,7 +22,7 @@ struct request_key_auth {
- 	const struct cred	*cred;
- 	void			*callout_info;
- 	size_t			callout_len;
--	pid_t			pid;
-+	struct pid		*pid;
- 	char			op[8];
- } __randomize_layout;
+--- a/drivers/i2c/busses/i2c-at91-core.c
++++ b/drivers/i2c/busses/i2c-at91-core.c
+@@ -264,6 +264,7 @@ static int at91_twi_probe(struct platfor
  
---- a/security/keys/request_key_auth.c
-+++ b/security/keys/request_key_auth.c
-@@ -9,6 +9,8 @@
+ 		pm_runtime_disable(dev->dev);
+ 		pm_runtime_set_suspended(dev->dev);
++		at91_twi_dma_release(dev);
  
- #include <linux/sched.h>
- #include <linux/err.h>
-+#include <linux/pid.h>
-+#include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -73,7 +75,10 @@ static void request_key_auth_describe(co
- 	seq_puts(m, "key:");
- 	seq_puts(m, key->description);
- 	if (key_is_positive(key))
--		seq_printf(m, " pid:%d ci:%zu", rka->pid, rka->callout_len);
-+		seq_printf(m, " pid:%d ci:%zu",
-+			   pid_nr_ns(rka->pid,
-+				     proc_pid_ns(file_inode(m->file)->i_sb)),
-+			   rka->callout_len);
+ 		return rc;
+ 	}
+@@ -280,6 +281,8 @@ static int at91_twi_remove(struct platfo
+ 	i2c_del_adapter(&dev->adapter);
+ 	clk_disable_unprepare(dev->clk);
+ 
++	at91_twi_dma_release(dev);
++
+ 	pm_runtime_disable(dev->dev);
+ 	pm_runtime_set_suspended(dev->dev);
+ 
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -820,11 +820,21 @@ static int at91_twi_configure_dma(struct
+ error:
+ 	if (ret != -EPROBE_DEFER)
+ 		dev_info(dev->dev, "can't get DMA channel, continue without DMA support\n");
++	at91_twi_dma_release(dev);
++	return ret;
++}
++
++void at91_twi_dma_release(struct at91_twi_dev *dev)
++{
++	struct at91_twi_dma *dma = &dev->dma;
++
+ 	if (dma->chan_rx)
+ 		dma_release_channel(dma->chan_rx);
+ 	if (dma->chan_tx)
+ 		dma_release_channel(dma->chan_tx);
+-	return ret;
++	dma->chan_rx = NULL;
++	dma->chan_tx = NULL;
++	dev->use_dma = false;
  }
  
- /*
-@@ -113,6 +118,7 @@ static void free_request_key_auth(struct
- 	if (rka->cred)
- 		put_cred(rka->cred);
- 	kfree(rka->callout_info);
-+	put_pid(rka->pid);
- 	kfree(rka);
- }
+ static int at91_init_twi_recovery_gpio(struct platform_device *pdev,
+--- a/drivers/i2c/busses/i2c-at91.h
++++ b/drivers/i2c/busses/i2c-at91.h
+@@ -174,6 +174,7 @@ void at91_twi_irq_restore(struct at91_tw
+ void at91_init_twi_bus(struct at91_twi_dev *dev);
  
-@@ -226,14 +232,14 @@ struct key *request_key_auth_new(struct
+ void at91_init_twi_bus_master(struct at91_twi_dev *dev);
++void at91_twi_dma_release(struct at91_twi_dev *dev);
+ int at91_twi_probe_master(struct platform_device *pdev, u32 phy_addr,
+ 			  struct at91_twi_dev *dev);
  
- 		irka = cred->request_key_auth->payload.data[0];
- 		rka->cred = get_cred(irka->cred);
--		rka->pid = irka->pid;
-+		rka->pid = get_pid(irka->pid);
- 
- 		up_read(&cred->request_key_auth->sem);
- 	}
- 	else {
- 		/* it isn't - use this process as the context */
- 		rka->cred = get_cred(cred);
--		rka->pid = current->pid;
-+		rka->pid = get_pid(task_pid(current));
- 	}
- 
- 	rka->target_key = key_get(target);
 
 
