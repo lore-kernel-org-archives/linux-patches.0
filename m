@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B6633DEDF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955634F68C3;
 	Wed, 30 Sep 2026 15:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783019; cv=none; b=auvsvl18eWGEtx3kd47Etxk3N9tIhdF2LDIWs/d8WvvdcotoxjHI4XwxbeaYFf087MmPdIRx6vIwFNN/UknBa7XAFv2F99lpixSYHChKUE3wwI5g9ne0+UushXdV0IKzE8ns8vwECRoEY9M9/ZSn1yPTU02yQGwe8N9YCED/b5o=
+	t=1790783021; cv=none; b=GBYdEtcbqO8f/ZWdE0iMu6IVAK7pVxfF0ZJor2FFtKb+78quMG/C7i6Q+SgBvnZ0vfr31U1MU/zVyeJ7Jrb8LXWbscVeCrmGW+4L/BPkeH933GNao/Z6FFC39xVZv/5v+TPqaCKzd/WdmGnvSYQXtT/tPOi8qt+aws8M1GNF9oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783019; c=relaxed/simple;
-	bh=9QY8k4dF1U611Ef1+Sqx8KvhNkNcSqNkpBmGzsZe9Uw=;
+	s=arc-20240116; t=1790783021; c=relaxed/simple;
+	bh=ptnSwOcb0PP3JJwet+179dSBbvpAdRHH+4WDt8G/UUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=meu+lZMaBVomZm05fMRAe8B2P6F/lp5qFrZRB7+A6usrCSaa7F06HhZuebZiJl1KyGj4otXB2ooE6KN7XFn9CRNUTgWhklQY7DhfIxKegA5H+i+u2a6UFYIWR/sUjf87aHOWofwZihC5MXH51e8fUfPHZVwQqRZCkk4q5FilzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEmQ7nrS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a635pJWxUvMnnrlLyG4ENI9FGchIvvrIrYrI8Lg/SuS562pQFxflucHbx7JdeJhKg4h8ph6ZSDbe1qfEsvqNff49aXI/31PuBI1wiF9JT6EySG0wUCVTs0YiDFlUT7pVcWax7x11zijHzgYKULdOStfQCGY/aoiLH+C+wF/8ZxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3XRj7F2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEmQ7nrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2081F000FF;
-	Wed, 30 Sep 2026 15:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3XRj7F2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454DB1F00893;
+	Wed, 30 Sep 2026 15:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783013;
-	bh=gWbg18w9MDgJB8xNfsHSSsFDXnYuW6OpLb1Fa+wgU/w=;
+	s=korg; t=1790783015;
+	bh=lHuy4ieec96ah97FWQWgWMD1rrW5rooqXzRtEihgV+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEmQ7nrSBqyDMhifJtIakYVw6WEBp7NKo4niJnl/TiQrT1SBPDhOBzoORUwbxIOLH
-	 zvz1s5YW8wlWCkQgzerZ1WyHrJU9oYqyh+RrLAqVVwsVb4THHFFzRbb5edkrkGLoBu
-	 ZFNehhB3e3kSS4JGKSAy17DCeSF0BVrP3WEybK2Q=
+	b=N3XRj7F2h1KL9qF+5slFrXzZy9Aby494MFn+GcpCCA3WXyP8K19zlFxJIKgJlihK3
+	 mp/ucbCclPbsCqX2FQFpUx39LCk2khh/oT5qZVF3ESrUQgLNMq9w+NffiOWUowWy5k
+	 TbT6fSEVTvG3Vm38X588X7lZDoMJ2MFurdWB/pxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/595] net/mlx5e: Fix ETS zero BW reporting when one TC holds 100%
-Date: Wed, 30 Sep 2026 17:22:20 +0200
-Message-ID: <20260930152353.029039911@linuxfoundation.org>
+Subject: [PATCH 5.10 248/595] net/mlx5: E-Switch: fix use-after-free in mlx5_eswitch_termtbl_put
+Date: Wed, 30 Sep 2026 17:22:21 +0200
+Message-ID: <20260930152353.051369667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,48 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Yael Chemla <ychemla@nvidia.com>
 
-[ Upstream commit e7ee89740800a1cf253713e9249c3ee9203ebe91 ]
+[ Upstream commit 7ee07f601f8f507c9faf25c68a49396ab8950596 ]
 
-When ETS TCs with zero bandwidth are configured, the driver programs the
-firmware using an alternate representation. On get, it needs
-to recognize that representation so those TCs can be translated back and
-reported as 0% bandwidth.
+In mlx5_eswitch_termtbl_put(), the zero-ref cleanup check reads
+tt->ref_count after termtbl_mutex has been released.  Two concurrent
+callers on the same mlx5_termtbl_handle race: one decrements ref_count
+to zero, removes the hash entry, and calls kfree(tt) while the other
+has already dropped the mutex and is about to evaluate
+if (!tt->ref_count), producing a use-after-free.
 
-The existing detection relied on the programmed bandwidth because it was
-enough to identify this representation. However, when a single ETS TC
-owns 100% of the bandwidth, its firmware representation becomes the
-same as a strict-priority TC, causing zero-bandwidth ETS TCs to be
-reported with non-zero bandwidth values.
+Fix this by capturing the result of the decrement into a stack-local
+last variable before dropping the mutex.  The cleanup decision is now
+made entirely under termtbl_mutex, and tt is not touched after
+kfree.
 
-Use the cached TSA instead to distinguish the ETS and strict-priority
-cases.
-
-Fixes: be0f161ef141 ("net/mlx5e: DCBNL, Implement tc with ets type and zero bandwidth")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Fixes: 10caabdaad5a ("net/mlx5e: Use termination table for VLAN push actions")
+Signed-off-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193224.3668743-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193514.3668880-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 6ea50a9ef1be5..09bae012d7701 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -133,7 +133,7 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
- 		if (err)
- 			return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+index 132ea9997676a..345585529a30a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+@@ -162,12 +162,15 @@ void
+ mlx5_eswitch_termtbl_put(struct mlx5_eswitch *esw,
+ 			 struct mlx5_termtbl_handle *tt)
+ {
++	bool last;
++
+ 	mutex_lock(&esw->offloads.termtbl_mutex);
+-	if (--tt->ref_count == 0)
++	last = (--tt->ref_count == 0);
++	if (last)
+ 		hash_del(&tt->termtbl_hlist);
+ 	mutex_unlock(&esw->offloads.termtbl_mutex);
  
--		if (ets->tc_tx_bw[i] < MLX5E_MAX_BW_ALLOC &&
-+		if (priv->dcbx.tc_tsa[i] == IEEE_8021QAZ_TSA_ETS &&
- 		    tc_group[i] == (MLX5E_LOWEST_PRIO_GROUP + 1))
- 			is_zero_bw_ets_tc = true;
- 
+-	if (!tt->ref_count) {
++	if (last) {
+ 		mlx5_del_flow_rules(tt->rule);
+ 		mlx5_destroy_flow_table(tt->termtbl);
+ 		kfree(tt);
 -- 
 2.53.0
 
