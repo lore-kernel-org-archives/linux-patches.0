@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD5A4ED1A1;
-	Wed, 30 Sep 2026 17:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A6651FCAD;
+	Wed, 30 Sep 2026 17:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789676; cv=none; b=UJMwzocsqwd/2khFA0Bgp8cmHHWAOoZbwCdl0PD9a/qjrwLPkqTM9ohEKaD7S+cIGrqqwu3SqeMc73I25R4QzV7cNZk3fgLxXPqcZxIQB53ejYgXwYX96NLLNtRCCRlI8lZNnCnlt4+Mk2qMBErn1ebSIKbGLt+rcNJ5tZQVn+A=
+	t=1790789679; cv=none; b=hs/u5j2EdB5peh9ibCDXAHtYbaEBZJpQNMJvMEMk/jYYtXowOcHZ78mTDJCpmddKBtKOA4SCYlFMOeauU9w47zuiY7Gb2W2BmwucDa5Ae04Ig8ncz0z74zrxJCcfRPvBcOErR7ev6kuaFlHL+dcZGzmHHjNg8uGU6KDVPxnhxP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789676; c=relaxed/simple;
-	bh=k0yF4zkl+Ch+oLpkcIjHv0Ps3Z+nKctTNqXRi4N15rQ=;
+	s=arc-20240116; t=1790789679; c=relaxed/simple;
+	bh=k5qSDItR/1KPNbf92NmPEd444rcU+cMVqdh2mZLHmdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bz2s7T5FgNINUM8KKX+kLYoegsNKfcHqKuaoCzfDXkD5EPaSEpn2wFfyDChui7ne+rxO6hh8DP7z+BzqqRU5QhFbByQPcR51B1/s+Bx4l3AYJAAL+TAktTco3lqSHLfiZOIM2Hi4U1uVyGp2jYsJrybzZ030CShpp4hJV7u/dPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EvCraeM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AbDN1zjs+fi7nQWib5jMB2tgNoH0bQreJQyLlDPkvIfJYvdGGfq8hWPXD1o2AE4UTZ8aDgGwvA0W0NUyd6f7EMgNFWSct74msRRzy1+JI4K7jzHKkMPvIg5mgJNRogC3xerb2/i535rrm97ykUmrBxUiHgARJLUH3qLwEgvVi5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+xhTAH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EvCraeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA131F00898;
-	Wed, 30 Sep 2026 17:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+xhTAH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39741F000FF;
+	Wed, 30 Sep 2026 17:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789675;
-	bh=3XQWKrI1rsTjTsJt2SXla0wPCDpqrsYhBqSdKHe3ihg=;
+	s=korg; t=1790789678;
+	bh=+7/WvYJxLpttUTAfIeHnL4E9hWtvDKBLJb+7caBp5vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2EvCraeMlmpt7/1Z8htVHN1uOufAAt2JNrzN6mprm5Hroy9avJfep4gv/nSfonDn8
-	 6xMCcLyuV3Ij2nE147nNNbzWdDd3zfSOwAzXj69ZY8hF8C0GZXE7djpliFpZqc6Dfj
-	 k31i8E+2MFgjHjiVA9F6exFiEAfT3WqZF4aUPPsE=
+	b=M+xhTAH4rDzOK1ES3BI7MHwRCb7IyfaKGcxkKkz8GjOdqoxeq7E5u/Zw94Zo4RDPx
+	 LZc969ZcqK/Kkb0SgrDn2/2HXeCvZUsY1TP8y1CyVtFdc7TULDkST/ebcSGTt1clH5
+	 c8ZLy8iMiJYXym9eA8sJF3FfFOmcfX4VHbqaGhzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 544/877] smb: client: fix create context out-of-bounds reads
-Date: Wed, 30 Sep 2026 17:24:15 +0200
-Message-ID: <20260930152426.380272926@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 562/877] ASoC: codecs: aw88261: reduce log spam
+Date: Wed, 30 Sep 2026 17:24:33 +0200
+Message-ID: <20260930152426.770312167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,192 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Val Packett <val@packett.cool>
 
-commit 67f4c1c6a1b51e203d986779299824d1c2c590a6 upstream.
+[ Upstream commit d90c361af215a9fa2a986d9f47d554d0cf3401dd ]
 
-smb2_parse_contexts() validates the complete create-context area but
-does not limit each record to its Next field before dispatching it.  A
-malformed chain can therefore expose bytes beyond the current context to
-a handler.  The QFid handler also used a full response-structure cast
-although it only reads DiskFileId.
+This driver would create a wall of logspam during initialization due to
+e.g. the PLL not being ready while waiting for it to stabilize. Change
+intermediate dev_err() calls to dev_dbg() to reduce the noise.
 
-The SMB2/SMB3 lease parsers made the same layout assumption: they read
-LeaseState and LeaseFlags at canonical offsets rather than at
-DataOffset.  A valid non-canonical DataOffset could therefore yield
-unrelated in-bounds data, while a short DataLength was still accepted.
+While here, log the detected chip ID when that check fails.
 
-Limit each context to its Next value, reject offsets before the context
-header, and reject malformed chains.  Bound the name range by the current
-context and do not dispatch a known handler when DataLength is zero.  Read
-the QFid DiskFileId only when the context data covers that field.  Parse the
-lease context from DataOffset and require DataLength to match the v1 or v2
-lease_context size used by ksmbd.  A size mismatch skips lease parsing
-without failing the open.
-
-Fixes: b8c32dbb0deb ("CIFS: Request SMB2.1 leases")
-Fixes: f047390a097e ("CIFS: Add create lease v2 context for SMB3")
-Fixes: 89a5bfa350fa ("smb3: optimize open to not send query file internal info")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Val Packett <val@packett.cool>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://patch.msgid.link/20260529200550.529719-4-val@packett.cool
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 06b6f1245567 ("ASoC: codecs: aw88261: only check PLL and clock state at power-up")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   28 ++++++++++++++++++++--------
- fs/smb/client/smb2pdu.c |   44 ++++++++++++++++++++++++++++++++++----------
- 2 files changed, 54 insertions(+), 18 deletions(-)
+ sound/soc/codecs/aw88261.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4405,25 +4405,37 @@ smb3_create_lease_buf(u8 *lease_key, u8
- static __u8
- smb2_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
- {
--	struct create_lease *lc = (struct create_lease *)buf;
-+	struct create_context *cc = buf;
-+	struct lease_context lc;
- 
- 	*epoch = 0; /* not used */
--	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
-+	if (le32_to_cpu(cc->DataLength) != sizeof(lc))
-+		return 0;
-+
-+	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
-+	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
- 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
--	return le32_to_cpu(lc->lcontext.LeaseState);
-+	return le32_to_cpu(lc.LeaseState);
- }
- 
- static __u8
- smb3_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
- {
--	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
-+	struct create_context *cc = buf;
-+	struct lease_context_v2 lc;
-+
-+	if (le32_to_cpu(cc->DataLength) != sizeof(lc)) {
-+		*epoch = 0;
-+		return 0;
-+	}
- 
--	*epoch = le16_to_cpu(lc->lcontext.Epoch);
--	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
-+	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
-+	*epoch = le16_to_cpu(lc.Epoch);
-+	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
- 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
- 	if (lease_key)
--		memcpy(lease_key, &lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--	return le32_to_cpu(lc->lcontext.LeaseState);
-+		memcpy(lease_key, lc.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+	return le32_to_cpu(lc.LeaseState);
- }
- 
- static unsigned int
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2296,11 +2296,17 @@ create_reconnect_durable_buf(struct cifs
- static void
- parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
- {
--	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
-+	u16 doff = le16_to_cpu(cc->DataOffset);
-+	u32 dlen = le32_to_cpu(cc->DataLength);
-+	u8 *beg;
- 
--	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
--		pdisk_id->DiskFileId, pdisk_id->VolumeId);
--	buf->IndexNumber = pdisk_id->DiskFileId;
-+	if (dlen < sizeof(__le64))
-+		return;
-+
-+	beg = (u8 *)cc + doff;
-+	memcpy(&buf->IndexNumber, beg, sizeof(__le64));
-+	cifs_dbg(FYI, "parse query id context 0x%llx\n",
-+		 le64_to_cpu(buf->IndexNumber));
- }
- 
- static void
-@@ -2348,6 +2354,7 @@ int smb2_parse_contexts(struct TCP_Serve
- 	struct smb2_create_rsp *rsp = rsp_iov->iov_base;
- 	struct create_context *cc;
- 	size_t rem, off, len;
-+	size_t cc_len;
- 	size_t doff, dlen;
- 	size_t noff, nlen;
- 	char *name;
-@@ -2370,29 +2377,41 @@ int smb2_parse_contexts(struct TCP_Serve
- 		buf->IndexNumber = 0;
- 
- 	while (rem >= sizeof(*cc)) {
-+		off = le32_to_cpu(cc->Next);
-+		if (off) {
-+			if ((off & 0x7) || off >= rem || off < sizeof(*cc))
-+				return -EINVAL;
-+			cc_len = off;
-+		} else {
-+			cc_len = rem;
-+		}
-+
- 		doff = le16_to_cpu(cc->DataOffset);
- 		dlen = le32_to_cpu(cc->DataLength);
--		if (check_add_overflow(doff, dlen, &len) || len > rem)
-+		if (doff < sizeof(*cc) ||
-+		    check_add_overflow(doff, dlen, &len) || len > cc_len)
- 			return -EINVAL;
- 
- 		noff = le16_to_cpu(cc->NameOffset);
- 		nlen = le16_to_cpu(cc->NameLength);
--		if (noff + nlen > doff)
-+		if (noff < sizeof(*cc) ||
-+		    check_add_overflow(noff, nlen, &len) || len > cc_len ||
-+		    (dlen && len > doff))
- 			return -EINVAL;
- 
- 		name = (char *)cc + noff;
- 		switch (nlen) {
- 		case 4:
--			if (!strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
-+			if (dlen && !strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
- 				*oplock = server->ops->parse_lease_buf(cc, epoch,
- 								       lease_key);
--			} else if (buf &&
-+			} else if (dlen && buf &&
- 				   !strncmp(name, SMB2_CREATE_QUERY_ON_DISK_ID, 4)) {
- 				parse_query_id_ctxt(cc, buf);
- 			}
- 			break;
- 		case 16:
--			if (posix && !memcmp(name, smb3_create_tag_posix, 16))
-+			if (dlen && posix && !memcmp(name, smb3_create_tag_posix, 16))
- 				parse_posix_ctxt(cc, buf, posix);
- 			break;
- 		default:
-@@ -2404,13 +2423,18 @@ int smb2_parse_contexts(struct TCP_Serve
- 		}
- 
- 		off = le32_to_cpu(cc->Next);
--		if (!off)
-+		if (!off) {
-+			rem = 0;
- 			break;
-+		}
- 		if (check_sub_overflow(rem, off, &rem))
- 			return -EINVAL;
- 		cc = (struct create_context *)((u8 *)cc + off);
+--- a/sound/soc/codecs/aw88261.c
++++ b/sound/soc/codecs/aw88261.c
+@@ -150,7 +150,7 @@ static int aw88261_dev_get_iis_status(st
+ 	if (ret)
+ 		return ret;
+ 	if ((reg_val & AW88261_BIT_PLL_CHECK) != AW88261_BIT_PLL_CHECK) {
+-		dev_err(aw_dev->dev, "check pll lock fail,reg_val:0x%04x", reg_val);
++		dev_dbg(aw_dev->dev, "check pll lock fail,reg_val:0x%04x", reg_val);
+ 		return -EINVAL;
  	}
  
-+	if (rem)
-+		return -EINVAL;
-+
- 	if (rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
- 		*oplock = rsp->OplockLevel;
+@@ -164,7 +164,7 @@ static int aw88261_dev_check_mode1_pll(s
+ 	for (i = 0; i < AW88261_DEV_SYSST_CHECK_MAX; i++) {
+ 		ret = aw88261_dev_get_iis_status(aw_dev);
+ 		if (ret) {
+-			dev_err(aw_dev->dev, "mode1 iis signal check error");
++			dev_dbg(aw_dev->dev, "mode1 iis signal check error");
+ 			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
+ 		} else {
+ 			return ret;
+@@ -255,7 +255,7 @@ static int aw88261_dev_check_sysst(struc
+ 		check_val = reg_val & (~AW88261_BIT_SYSST_CHECK_MASK)
+ 							& AW88261_BIT_SYSST_CHECK;
+ 		if (check_val != AW88261_BIT_SYSST_CHECK) {
+-			dev_err(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
++			dev_dbg(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
+ 				reg_val, AW88261_BIT_SYSST_CHECK);
+ 			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
+ 		} else {
+@@ -549,7 +549,7 @@ static int aw88261_dev_start(struct aw88
+ 	int ret;
+ 
+ 	if (aw_dev->status == AW88261_DEV_PW_ON) {
+-		dev_info(aw_dev->dev, "already power on");
++		dev_dbg(aw_dev->dev, "already power on");
+ 		return 0;
+ 	}
+ 
+@@ -559,7 +559,7 @@ static int aw88261_dev_start(struct aw88
+ 
+ 	ret = aw88261_dev_check_syspll(aw_dev);
+ 	if (ret) {
+-		dev_err(aw_dev->dev, "pll check failed cannot start");
++		dev_dbg(aw_dev->dev, "pll check failed");
+ 		goto pll_check_fail;
+ 	}
+ 
+@@ -570,7 +570,7 @@ static int aw88261_dev_start(struct aw88
+ 	/* check i2s status */
+ 	ret = aw88261_dev_check_sysst(aw_dev);
+ 	if (ret) {
+-		dev_err(aw_dev->dev, "sysst check failed");
++		dev_dbg(aw_dev->dev, "sysst check failed");
+ 		goto sysst_check_fail;
+ 	}
+ 
+@@ -671,18 +671,22 @@ static void aw88261_start_pa(struct aw88
+ 	for (i = 0; i < AW88261_START_RETRIES; i++) {
+ 		ret = aw88261_reg_update(aw88261, aw88261->phase_sync);
+ 		if (ret) {
+-			dev_err(aw88261->aw_pa->dev, "fw update failed, cnt:%d\n", i);
++			dev_dbg(aw88261->aw_pa->dev,
++				"aw88261_reg_update failed, cnt:%d, ret:%d\n", i, ret);
+ 			continue;
+ 		}
+ 		ret = aw88261_dev_start(aw88261);
+ 		if (ret) {
+-			dev_err(aw88261->aw_pa->dev, "aw88261 device start failed. retry = %d", i);
++			dev_dbg(aw88261->aw_pa->dev,
++				"aw88261_dev_start failed, cnt:%d, ret:%d\n", i, ret);
+ 			continue;
+ 		} else {
+-			dev_info(aw88261->aw_pa->dev, "start success\n");
++			dev_dbg(aw88261->aw_pa->dev, "start success\n");
+ 			break;
+ 		}
+ 	}
++	if (ret != 0)
++		dev_err(aw88261->aw_pa->dev, "start failure (%d)\n", ret);
+ }
+ 
+ static void aw88261_startup_work(struct work_struct *work)
+@@ -1200,7 +1204,7 @@ static int aw88261_init(struct aw88261 *
+ 		return ret;
+ 	}
+ 	if (chip_id != AW88261_CHIP_ID) {
+-		dev_err(&i2c->dev, "unsupported device");
++		dev_err(&i2c->dev, "unsupported device id = %x", chip_id);
+ 		return -ENXIO;
+ 	}
  
 
 
