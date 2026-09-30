@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C4037BE7A;
-	Wed, 30 Sep 2026 15:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109D9380FEB;
+	Wed, 30 Sep 2026 15:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783251; cv=none; b=eIH84uYu8XIF3raNDxRG3ks5Wy5pc3/AEvoJ1SYnMEv0BaXXTnGmu/oOf88Ib3CgrkAFVTXAP2GZcrHoTcqMa0bhqQhgXRFekRe6EhxwEetVb6eJplD8ClvBSH2o4uM3fxZsETU1l2k2/6DBDb3/SAHLDHQbAHeUDTUF3eWbT1o=
+	t=1790783255; cv=none; b=OH6R0Beth9yVEruOjOpgzxiI/9ZNRcUiW8Hbh3u3zx5ugTJSLIWVogUCc1ghVRsNu6xVao4vbfPnwNujdy72SDxC2gRVYPYjg+RzfLfCJmYNAlKfvHAhD8QzlWxhvL+1X75N3eHuqEstlvOwtsfH8kRBmASUKNg6BI4LnJaajoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783251; c=relaxed/simple;
-	bh=Pe5o3K2p2XEP8u5dW2tYdv2zZ3fvYjiYFZY0m6JaFlw=;
+	s=arc-20240116; t=1790783255; c=relaxed/simple;
+	bh=YDh9w69CsROqxBt6DMBgf5ths1746Eti62MGEocqN1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UK7dJgAlyBcYLkN/jmL1hEIs6yTizqJHPlc7+TbNwFpx8ENsrBpbZ/uLhpsAZU60dlgINvpHBz/CJf/qT84ZkuQJgN9mlgpTBRVKpU7BrUmNLIV+07BJPrvMMa35179h0Pmh0BQSx3/fhHNnJFjmqYVqzDSe2E/56AwPIa1h9ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJNhkdz4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LOTUxZrEWy+bfae2a56tq6FIknOozCFSejWmtoUHUVWzJpYgzCJnvTRdmK1P6y8+AAcLUCHlNIUdierZVncQaYu7aAmnQiXyQKsDFbGXEiK+A0ln1op91ynD5E6xx9xmd799zGkLGoXlI9khQ35SyeNnkLFX8CuZRbPcC57AOHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1n0WOv7w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJNhkdz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0491F000FF;
-	Wed, 30 Sep 2026 15:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1n0WOv7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C555D1F00893;
+	Wed, 30 Sep 2026 15:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783248;
-	bh=Je4PtH1yHRCkGpHX5YOgja24WnNNubBtrWtqc6rYyI0=;
+	s=korg; t=1790783251;
+	bh=bG+l4i4/NKY+v69GZ0e0hWIeo/62m9072xgRHlSIu4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJNhkdz4Z4SmHRv0ErGufGNIcITBe4zJ1x3AeaGwzflfkzjSKVdO99faznTgXKM2e
-	 wpIlHKOAR7c4B+K42qycdI9qq+e7M57XevgLxCh/WckZ0gxDDWpQF2SQsrm2TMzHz6
-	 u2uxXGK2nZg00wrybFVDhrfgtocXN9tHlD0ZD5bY=
+	b=1n0WOv7wBmrtpP3Q3MNUHTXV3CEoWbpkP3Xpnm0/o3pC3cXT77Lq0/C9aKcRvc8Qe
+	 ZH/puAgX9UngZ+Bs7kG4LEJOPZVwRE5/f0DP2a0MhuRcXgCWpgjpN1SHLU4sEE3+2E
+	 8BmC0nFFhS1QXUKPi49XoPZPcg6R7EwLE+M9OmPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 332/595] Reapply "bluetooth/l2cap: sync sock recv cb and release"
-Date: Wed, 30 Sep 2026 17:23:45 +0200
-Message-ID: <20260930152354.824355082@linuxfoundation.org>
+	co+c25629c98ba36ebe@bugs.sh,
+	stable@kernel.org,
+	Weiming Shi <bestswngs@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 306/595] fbdev: vfb: defer cleanup until the last reference
+Date: Wed, 30 Sep 2026 17:23:19 +0200
+Message-ID: <20260930152354.270624204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -49,70 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 89e856e124f9ae548572c56b1b70c2255705f8fe ]
+From: Weiming Shi <bestswngs@gmail.com>
 
-This reverts commit 6ecdf922fb6bf92b6942edfa3f1aa874f1fd7c4d.
+commit a0a34a40ed299c9c7cff6af163a5b883ee9d6d73 upstream.
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+FBIOGETCMAP takes a shallow snapshot of info->cmap and performs the
+usercopy after dropping info->lock. vfb_remove() frees the colormap
+immediately after unregistering the framebuffer, even when an open file
+still holds a reference to fb_info. A concurrent driver unbind can
+therefore free the colormap while the ioctl copies it to userspace.
+
+KASAN reports:
+
+  BUG: KASAN: slab-use-after-free in _copy_to_user
+  Read of size 512 by task poc/125
+
+   _copy_to_user (./include/linux/instrumented.h:129 ./include/linux/uaccess.h:201 lib/usercopy.c:24)
+   fb_cmap_to_user (./include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
+   do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
+
+   Allocated by task 1:
+   fb_alloc_cmap_gfp (./include/linux/slab.h:973 ./include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
+   vfb_probe (drivers/video/fbdev/vfb.c:459)
+
+   Freed by task 124:
+   fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
+   vfb_remove (drivers/video/fbdev/vfb.c:489)
+
+unregister_framebuffer() drops the registration reference, and fbdev calls
+fb_destroy after the last put_fb_info(). Move the registered framebuffer's
+cleanup into an fb_destroy callback so its colormap and screen buffer stay
+alive until all file references have been released.
+
+Fixes: 5e266e2e0e19 ("vfb: fix memory leaks in removal path")
+Reported-by: co+c25629c98ba36ebe@bugs.sh
+Cc: stable@kernel.org
+Closes: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
+Assisted-by: Codex:gpt-5
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/vfb.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index ec95962077e2d..9d834f2254626 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1258,6 +1258,10 @@ static void l2cap_sock_kill(struct sock *sk)
+--- a/drivers/video/fbdev/vfb.c
++++ b/drivers/video/fbdev/vfb.c
+@@ -78,6 +78,13 @@ static int vfb_pan_display(struct fb_var
+ static int vfb_mmap(struct fb_info *info,
+ 		    struct vm_area_struct *vma);
  
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
-+	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
-+	 * sock pointer.
-+	 */
-+	l2cap_pi(sk)->chan->data = NULL;
- 	/* Kill poor orphan */
- 
- 	l2cap_chan_put(l2cap_pi(sk)->chan);
-@@ -1540,12 +1544,25 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
- 
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- {
--	struct sock *sk = chan->data;
--	struct l2cap_pinfo *pi = l2cap_pi(sk);
-+	struct sock *sk;
-+	struct l2cap_pinfo *pi;
- 	int err;
- 
--	lock_sock(sk);
-+	/* To avoid race with sock_release, a chan lock needs to be added here
-+	 * to synchronize the sock.
-+	 */
-+	l2cap_chan_hold(chan);
-+	l2cap_chan_lock(chan);
-+	sk = chan->data;
- 
-+	if (!sk) {
-+		l2cap_chan_unlock(chan);
-+		l2cap_chan_put(chan);
-+		return -ENXIO;
-+	}
++static void vfb_destroy(struct fb_info *info)
++{
++	vfree(info->screen_buffer);
++	fb_dealloc_cmap(&info->cmap);
++	framebuffer_release(info);
++}
 +
-+	pi = l2cap_pi(sk);
-+	lock_sock(sk);
- 	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
- 		err = -ENOMEM;
- 		goto done;
-@@ -1594,6 +1611,8 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ static const struct fb_ops vfb_ops = {
+ 	.fb_read        = fb_sys_read,
+ 	.fb_write       = fb_sys_write,
+@@ -89,6 +96,7 @@ static const struct fb_ops vfb_ops = {
+ 	.fb_copyarea	= sys_copyarea,
+ 	.fb_imageblit	= sys_imageblit,
+ 	.fb_mmap	= vfb_mmap,
++	.fb_destroy	= vfb_destroy,
+ };
  
- done:
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+	l2cap_chan_put(chan);
+     /*
+@@ -485,9 +493,6 @@ static int vfb_remove(struct platform_de
  
- 	return err;
+ 	if (info) {
+ 		unregister_framebuffer(info);
+-		vfree(videomemory);
+-		fb_dealloc_cmap(&info->cmap);
+-		framebuffer_release(info);
+ 	}
+ 	return 0;
  }
--- 
-2.53.0
-
 
 
