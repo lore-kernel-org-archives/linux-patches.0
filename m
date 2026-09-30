@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0902D4F68CD;
-	Wed, 30 Sep 2026 15:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4644FE2F2;
+	Wed, 30 Sep 2026 15:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782670; cv=none; b=RpB73JLZn7lTtIOb/IUe//JBQv1FvbcYKN7WHIZpKKah7iOQVLi5c5m1oVn8Wc0WmgHj6cNK9DRUuxIRcEfsQu7FQy8VNMGnejV1snqubDkXigGNRqRnvLJTeiM6/O3qS+mrWZAh+XUpOuKSh5Hgcq3GYeyHSwdhOZyclKIcl0A=
+	t=1790782672; cv=none; b=Q8sp/XJZvvHobmT4yKp9/wUK4SO3xFth6Pqu5cmHGyndqVjKrBOAJ/fRIknw3CeVWrJREPLehFU2QeSK2fEOmNULobpu+RjJgROhjYPJI5oTyzRkQGEZl3wF0eSaIlSiIxKhdjSu76/6ViZaFS4YKCiti2wKvaYJEMHMTKfw36k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782670; c=relaxed/simple;
-	bh=37bjhBcTUNnz0dVJh1BqQ53k7d4C2jaBEmikppwVdd0=;
+	s=arc-20240116; t=1790782672; c=relaxed/simple;
+	bh=6aF2WKVRRu1aSwNG92CPKjzN9cselWmBgaFJflFy0uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/vBqiu43ptrAoNT/F+8Gd3nWnEEdb+Pvmk1PnSJ9q317KBoZxctR/3WMt5MiC0w9PX3AnKB2Kjalh2JJFCShciesdf5ngF558bt2kBjrZr90kdItz/GuMR85j2C71AsiGfUM8lO4o8IDompidw84AV9rd+aXmRkSE9jYJfHwlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SElKpCkL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lXnrut/xMGkCUSwIHIhort++INOlPqLmjPT+9kc7LbXcNLd6TV7VyLSx+AU1TTOsmtW8R16h/6FL4o3u5a+Jk9aR4YUHr3/TMU559hj/RVZipSkAmvZCbqLtC41mRedIJ6rLnaOQTiMKj96+ARzUI99yKjWdWhlk53yTsaz/pbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaQ9PWc3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SElKpCkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856701F00893;
-	Wed, 30 Sep 2026 15:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaQ9PWc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC231F00899;
+	Wed, 30 Sep 2026 15:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782658;
-	bh=+PdE0wJUuvbm/WnZK2qVwxtH+7wX6dY9AuueAwvOfdY=;
+	s=korg; t=1790782663;
+	bh=8HNMwz+s/C+iYu1K05BS3WiwJ/JMAZ8wcS2ppvZWP1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SElKpCkLouJPdQAFObhjFXzQKycqQRj/4iDtZPyOJSnuyfptj8vSd8hugaVtz1OFS
-	 Mf6b13GETUwVAyaehtU9udqtgfC+cWLFuclw2HhSz0dViFS4UjNeJEJqDXGsp8g7oT
-	 J/zJyjCzO9Q7cdZWlfaInj81u1jFoWUezwtXgtno=
+	b=YaQ9PWc3mQ09/LnAqwRFMa+JEGwxqJKt7CY92kD+wZgrNSx4CVBLUsMKHauoKAdoV
+	 2Ew3wXzGlZFZVvSCaAkV2cYfaijY48rDYw4rlzPzY56LCagDdRqUm5Xxu6rS8aLFgi
+	 nYOHqcM7r56XVnIR9IqFE3ISAkG0zOsnDTjtmi+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
-	Simon Horman <horms@kernel.org>,
+	Iskhakov Daniil <dish@amicon.ru>,
+	Agalakov Daniil <ade@amicon.ru>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/595] net: stmmac: xgmac2: disable RBUE in default RX interrupt mask
-Date: Wed, 30 Sep 2026 17:20:18 +0200
-Message-ID: <20260930152350.427124790@linuxfoundation.org>
+Subject: [PATCH 5.10 127/595] e1000e: limit endianness conversion to boundary words
+Date: Wed, 30 Sep 2026 17:20:20 +0200
+Message-ID: <20260930152350.470164964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,65 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: Agalakov Daniil <ade@amicon.ru>
 
-[ Upstream commit d3265c19b35d036bba327b36b5366bee76b0157c ]
+[ Upstream commit a5ecafcfb27baf2dba766c4fd99dbb947f4e85d8 ]
 
-Enabling the RX Buffer Unavailable (RBUE) interrupt is counterproductive
-and can trigger a MAC interrupt storm under heavy RX pressure. When the
-DMA runs out of RX descriptors it fires RBUE continuously until software
-refills the ring.
+[Why]
+In e1000_set_eeprom(), the eeprom_buff is allocated to hold a range of
+words. However, only the boundary words (the first and the last) are
+populated from the EEPROM if the write request is not word-aligned.
+The words in the middle of the buffer remain uninitialized because they
+are intended to be completely overwritten by the new data via memcpy().
 
-However, RBUE is redundant: the normal RX completion interrupt (RIE)
-already triggers NAPI, which processes completed descriptors and refills
-the ring, causing the DMA to resume. The RBUE handler itself only sets
-handle_rx - the same outcome as RIE.
+The previous implementation had a loop that performed le16_to_cpus()
+on the entire buffer. This resulted in endianness conversion being
+performed on uninitialized memory for all interior words.
 
-On Agilex5 under heavy RX pressure, the MAC interrupt (which includes
-RBUE) was observed firing 1,821,811,555 times against only 2,618,627
-actual RX completions - a ~695x ratio - confirming the severity of the
-storm.
+Fix this by converting the endianness only for the boundary words
+immediately after they are successfully read from the EEPROM.
 
-RBUE does not provide OOM recovery. If page_pool is exhausted,
-stmmac_rx_refill() cannot advance the DMA tail pointer, the DMA stays
-suspended, and RBUE fires again on the next NAPI completion - a storm
-with no forward progress. This patch trades that storm for a clean
-stall with the same RX outcome. Proper OOM recovery is a pre-existing
-gap outside the scope of this fix.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Note: as a consequence of disabling RBUE, the rx_buf_unav_irq ethtool
-counter will always read 0 on XGMAC2 devices. This behaviour is already
-inconsistent across DWMAC core versions.
-
-Remove RBUE from XGMAC_DMA_INT_DEFAULT_EN and XGMAC_DMA_INT_DEFAULT_RX
-to prevent the interrupt storm while keeping normal RX handling intact.
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260609121703.9736-1-muhammad.nazim.amirul.nazle.asmade@altera.com
+Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Agalakov Daniil <ade@amicon.ru>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260609213559.178657-14-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/e1000e/ethtool.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-index 4426cb923ac8f..98474a1207bda 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -398,9 +398,9 @@
- #define XGMAC_RIE			BIT(6)
- #define XGMAC_TBUE			BIT(2)
- #define XGMAC_TIE			BIT(0)
--#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | XGMAC_RBUE | \
-+#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | \
- 					XGMAC_RIE | XGMAC_TIE)
--#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RBUE | XGMAC_RIE)
-+#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RIE)
- #define XGMAC_DMA_INT_DEFAULT_TX	(XGMAC_TIE)
- #define XGMAC_DMA_CH_Rx_WATCHDOG(x)	(0x0000313c + (0x80 * (x)))
- #define XGMAC_RWT			GENMASK(7, 0)
+diff --git a/drivers/net/ethernet/intel/e1000e/ethtool.c b/drivers/net/ethernet/intel/e1000e/ethtool.c
+index 4aca854783e2d..fe2e0ba7d434a 100644
+--- a/drivers/net/ethernet/intel/e1000e/ethtool.c
++++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
+@@ -597,20 +597,25 @@ static int e1000_set_eeprom(struct net_device *netdev,
+ 		/* need read/modify/write of first changed EEPROM word */
+ 		/* only the second byte of the word is being modified */
+ 		ret_val = e1000_read_nvm(hw, first_word, 1, &eeprom_buff[0]);
++		if (ret_val)
++			goto out;
++
++		/* Device's eeprom is always little-endian, word addressable */
++		le16_to_cpus(&eeprom_buff[0]);
++
+ 		ptr++;
+ 	}
+-	if (((eeprom->offset + eeprom->len) & 1) && (!ret_val))
++	if ((eeprom->offset + eeprom->len) & 1) {
+ 		/* need read/modify/write of last changed EEPROM word */
+ 		/* only the first byte of the word is being modified */
+ 		ret_val = e1000_read_nvm(hw, last_word, 1,
+ 					 &eeprom_buff[last_word - first_word]);
++		if (ret_val)
++			goto out;
+ 
+-	if (ret_val)
+-		goto out;
+-
+-	/* Device's eeprom is always little-endian, word addressable */
+-	for (i = 0; i < last_word - first_word + 1; i++)
+-		le16_to_cpus(&eeprom_buff[i]);
++		/* Device's eeprom is always little-endian, word addressable */
++		le16_to_cpus(&eeprom_buff[last_word - first_word]);
++	}
+ 
+ 	memcpy(ptr, bytes, eeprom->len);
+ 
 -- 
 2.53.0
 
