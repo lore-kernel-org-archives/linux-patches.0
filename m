@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E0A3B8948;
-	Wed, 30 Sep 2026 18:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1B430566A;
+	Wed, 30 Sep 2026 18:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794775; cv=none; b=cwvxlXPV7S/NrvPxd1d1wZaroEs+JT41mP36+Y6zQjDm9sBsqnAhSqJxkl9RIuERrXAX17w4skRMEMkFvMsIVoAevLWdX2Seij5PUcEPE6B70Eh4F/KpSQIc+OoVnRoxUMIBcMgPU8tcEtP4NvVRyYAASXBiRwFsuD7yqJph48c=
+	t=1790794777; cv=none; b=tgxwq/hdL75BJDLOnS+ElSU9qMWVEUwZs1AJC2eyE0+1ySVeTmbAkrqY/5HtdIaQaKdPBd8FAqXsj+c02WWU3W9HxlfpwDFvpXZDWIVl0smSRYKUmTEcsfi9wYHcIqipzg5WQ9F1lI4TjLEDtETI9FnTxebhCjNVoscEpWwuwdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794775; c=relaxed/simple;
-	bh=DrkG70NVE4tzETOmc/ew9TtjPtIMlXPourg9KRK67FU=;
+	s=arc-20240116; t=1790794777; c=relaxed/simple;
+	bh=Ar5XDrAqRBS+YSYBiyPydn2z/FnXVI6FPBIC0Krbjb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYuBGiJS12nDTWf6uqiE8s9Ng+BW8PFuHf9Go2IvXLNGpef/pYvvW14MkyXO0E5Cz2/D6sgDeeL8nyHVypbiaOoHltZCL0B7mioAyBfd85m+BjQ/iWoVHW0/yY2iuXB5nlR/QCNDLbRN5FM19UrfFGk+RhdnLYJfJg/npgAyhWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z62u7BWC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Dy/9cqDs6pSZNF/UfG+3yWMGkkUN/0/SlnEhX4Xp7d1F+SWoeYqBkHL12Okdsuqe15onzOtTUrrIZXw+eOyi81FkFdQA2VqZR244af5MNtvT8Z2VAho3OrNGxRyU1d/cD4iEvgaLbyygtQSV8QmUn5XHXX4iORkXtkPtr+rqPIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4/T4IBe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z62u7BWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256271F000FF;
-	Wed, 30 Sep 2026 18:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4/T4IBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015271F000FF;
+	Wed, 30 Sep 2026 18:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794773;
-	bh=wQxqspvGC30fGGvKrelL3BejklfQRWekz5Fww2PHhDo=;
+	s=korg; t=1790794776;
+	bh=Mj+NBBycxkApM9X9XT0Y6XNMh2itvu3uWYkT6ycgAFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z62u7BWCyI6pC+RdETrBLZlI0uGtyEulwNOUJCyczAHNacFF1utMja7a59f6yY8Iy
-	 C01qrDISn1SxViOpH2YrjoaU5S4UXyid7S7V6ZA5odbBr9QNvZSDOYCJElkfHOzrLl
-	 4piYdq/3nCDTtgxLFDPYnPwt4naBYD/XVailoJD8=
+	b=j4/T4IBejTl8lDxnzd2999ysZUx0kk30Dh1qomt7u0/+VdnzGq6t6UdDiiZzKENHe
+	 TLb86G47CD53OPq6Eo7B4bQw6C+cFYc8EhbqYL1c8e0WobG5aA484ONDxyEktO5y6r
+	 La2xCHGRbt3JQHSOkWrSSUHgq3UXuv0XpsgDPKro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0284/1193] ksmbd: fix credit charge calculation for SMB2 QUERY_INFO
-Date: Wed, 30 Sep 2026 17:16:08 +0200
-Message-ID: <20260930152440.476011145@linuxfoundation.org>
+Subject: [PATCH 6.6 0275/1193] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
+Date: Wed, 30 Sep 2026 17:15:59 +0200
+Message-ID: <20260930152440.273879227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,67 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 284dc80ff529a0b454f11b6c2fea0d5daf6f315f ]
+[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
 
-smb2_validate_credit_charge() computes the credit charge a request is
-allowed to consume from the payload size:
+komeda_dev_resume() calls clk_prepare_enable() without checking the
+return value. If the clock fails to enable, the function returns 0
+(success) while IRQs are enabled and IOMMU is connected on potentially
+unclocked hardware, causing undefined behavior on resume.
 
-  CreditCharge = (max(SendPayloadSize, ResponsePayloadSize) - 1)/65536 + 1
+Propagate the error from clk_prepare_enable() and fix all call sites
+in komeda_drv.c that previously ignored the return value of
+komeda_dev_resume():
 
-For SMB2 QUERY_INFO, the server must validate CreditCharge based on the
-*maximum* of InputBufferLength and OutputBufferLength. ksmbd instead
-summed the two lengths, which overestimates the required charge.
+- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
+  (skipping the suspend call, since the clock was never enabled)
+- komeda_pm_resume(): propagate the error and skip
+  drm_mode_config_helper_resume() on failure
 
-As a result a single-credit QUERY_INFO whose InputBufferLength and
-OutputBufferLength each fit in 64KB but whose sum exceeds 64KB is
-rejected with STATUS_INVALID_PARAMETER, even though it is a valid
-request. IOCTL already uses max() of the request and response sizes;
-make QUERY_INFO consistent by feeding InputBufferLength as the request
-length and OutputBufferLength as the expected response length so that
-smb2_validate_credit_charge() takes their maximum.
+This issue was found by code review without access to Komeda hardware.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
+ drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index 6a4f1b8a0b13c..b8cce64675834 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -262,8 +262,12 @@ static int smb2_calc_size(void *buf, unsigned int *len)
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+index 14ee79becacb5..73dc628d72700 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+@@ -321,7 +321,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
  
- static inline int smb2_query_info_req_len(struct smb2_query_info_req *h)
+ int komeda_dev_resume(struct komeda_dev *mdev)
  {
--	return le32_to_cpu(h->InputBufferLength) +
--		le32_to_cpu(h->OutputBufferLength);
-+	return le32_to_cpu(h->InputBufferLength);
-+}
+-	clk_prepare_enable(mdev->aclk);
++	int err;
 +
-+static inline int smb2_query_info_resp_len(struct smb2_query_info_req *h)
-+{
-+	return le32_to_cpu(h->OutputBufferLength);
++	err = clk_prepare_enable(mdev->aclk);
++	if (err)
++		return err;
+ 
+ 	mdev->funcs->enable_irq(mdev);
+ 
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+index cb2a2be24c5ff..abcaf76ae599e 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+@@ -62,8 +62,11 @@ static int komeda_platform_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev))
+-		komeda_dev_resume(mdrv->mdev);
++	if (!pm_runtime_enabled(dev)) {
++		err = komeda_dev_resume(mdrv->mdev);
++		if (err)
++			goto err_destroy_mdev;
++	}
+ 
+ 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
+ 	if (IS_ERR(mdrv->kms)) {
+@@ -81,7 +84,7 @@ static int komeda_platform_probe(struct platform_device *pdev)
+ 		pm_runtime_disable(dev);
+ 	else
+ 		komeda_dev_suspend(mdrv->mdev);
+-
++err_destroy_mdev:
+ 	komeda_dev_destroy(mdrv->mdev);
+ 
+ free_mdrv:
+@@ -127,11 +130,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
+ static int __maybe_unused komeda_pm_resume(struct device *dev)
+ {
+ 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
++	int err = 0;
+ 
+ 	if (!pm_runtime_status_suspended(dev))
+-		komeda_dev_resume(mdrv->mdev);
++		err = komeda_dev_resume(mdrv->mdev);
+ 
+-	return drm_mode_config_helper_resume(&mdrv->kms->base);
++	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
  }
  
- static inline int smb2_set_info_req_len(struct smb2_set_info_req *h)
-@@ -309,6 +313,7 @@ static int smb2_validate_credit_charge(struct ksmbd_conn *conn,
- 	switch (hdr->Command) {
- 	case SMB2_QUERY_INFO:
- 		req_len = smb2_query_info_req_len(__hdr);
-+		expect_resp_len = smb2_query_info_resp_len(__hdr);
- 		break;
- 	case SMB2_SET_INFO:
- 		req_len = smb2_set_info_req_len(__hdr);
+ static const struct dev_pm_ops komeda_pm_ops = {
 -- 
 2.53.0
 
