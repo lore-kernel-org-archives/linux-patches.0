@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C91B3F926D;
-	Wed, 30 Sep 2026 16:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895B1501292;
+	Wed, 30 Sep 2026 16:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784280; cv=none; b=PtYVatxprhniTfh+u00OawQXnOcmlGM6Y2ptlnoZ+WMmUI7yq05zhVJVZrSmyNSU9bw1Njq+1FlrU0gQCv46n9UadQ3hYxNW5Hy751enS5x0xOwx2CCzbeqzl0wSl9CiEDWE88OSjblUjRJAzR30+LELryKbRDZnpqdTUKjUSTM=
+	t=1790784284; cv=none; b=dMTRl2lW/jjWSiDnOMfJOxuBPZCjkG0aibYWMN7CWn0PT/lnz+lm/arN7pIgwnpuMFuLdDai4nVSJqpR0nUug4a2zjsRNSzXazf/ZyIQYuS1mnMsNJY2NoOJtL/0Ybtd2KeeL64N3Td7qsI9Ybr6ewLksx8qM3FtHz1u7yyNFMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784280; c=relaxed/simple;
-	bh=F2D8jVcb3rg62N4n+6Inz9Vwloo5hadwy6dgQGdRVPc=;
+	s=arc-20240116; t=1790784284; c=relaxed/simple;
+	bh=EGhTZ/42DvXtbj0G1gozyVFVso6KdARQA1MRvEpWWsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcNVaZOVfbP/6pMmWMxgrNTphFyEz4bwXCMOyxtpxPerdMtZX3L1OBtjDWr+u+jpMvX7d6c71UbqhH3ES9F2os2HCltHdybhJAOu+mM+gISGP15eSCrssNazKR9viNtjoouxVp3u7kxWT+cA4vwAD8I/CyF21+y9NSeLAj0jtws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAmgfr9u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oSr0J8X0dqbOhGJMOPFU1iESa03b27I2Vyz1bcbFzTWzOVfyE3eYXMzZiP67zuEj55/of7pOKSn5CYUwKBDrgcN9e50MBayd32Vr4XHfRWvksGjvGwV7jlG9O7dHiy5AgoQ/3G0IN7+Nsc8UA7LeqTyd0ELm7vnCSVHTqJZkbKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBzvpiz4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAmgfr9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C2D1F000FF;
-	Wed, 30 Sep 2026 16:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBzvpiz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8F11F00898;
+	Wed, 30 Sep 2026 16:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784275;
-	bh=yY9cAuyoz/OTPmPEuyFVk3R7iXCT+xWNWZJiDYvbG/Y=;
+	s=korg; t=1790784281;
+	bh=ZyxDP3HCgU5uK79AhRXAkfdJz1MDzmYAInFmbKzKA5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAmgfr9uZ9evlyabfkIaKRsKd9gvoUQozjhJMQva01YDUogWLQl6p58OQDau3xD0G
-	 T8XcCLRw9Nk6LUuPM8lVQjmjUz49znuQYYG74Vj//FAAq94x+Hs8EAa54/TlIrjb0V
-	 bXewbfHzA1I6sbB0pqWHNe9WI+0ToJc2oMUvDbnY=
+	b=LBzvpiz4Y3H1uNmLpTG3BFhsG2fOhAbIdWbQSfIvC1tx68+Y02XvDsqaS8igOHspg
+	 G2jCUKU+70UoVIpkNva+52nvi2QeKKX0bGxlKZ4zcSpxVfk728o6r2zw5e6equ1Bkc
+	 qb/JoPMy7/2ZrHF6YrtjXTff9oSc5mV/6/TnPPCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/982] jfs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:13:27 +0200
-Message-ID: <20260930152418.329013929@linuxfoundation.org>
+Subject: [PATCH 6.1 099/982] drm/amd/pm/si: Fix updating clock limits from power states
+Date: Wed, 30 Sep 2026 17:13:55 +0200
+Message-ID: <20260930152418.936924156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,45 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
 
-[ Upstream commit 05107f5602751fcfd3d108c1f579eb45aabead52 ]
+[ Upstream commit e6c5d36756e7d4d260e2365fc4d01226f1973152 ]
 
-jfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+VBIOS can contain conflicting values between:
+- the maximum allowed clocks and voltages on AC or DC
+- the clocks and voltages in power states on AC or DC
 
-        BUG_ON(offset >= folio_size(folio));
+Update maximum clock (and voltage) limits for both AC/DC
+and take the highest value from the VBIOS limits and
+the performance/battery power states. Previously this
+was only done for AC, but is also needed for DC.
 
-in folio_set_bh on the first __bread_gfp call.
+This commit fixes the behaviour on some laptop GPUs,
+where the VBIOS limit was set to the lowest possible
+clock frequency, so the GPU was stuck on the lowest
+possible power level on battery.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-5-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Some affected GPUs are:
+FirePro W4170M (Dell Precision M2800)
+Radeon HD 8790M (Dell Latitude E6540)
+and possibly other laptop GPUs.
+
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Co-developed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 29 ++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/fs/jfs/super.c b/fs/jfs/super.c
-index 85d4f44f2ac4d..698470a2480c2 100644
---- a/fs/jfs/super.c
-+++ b/fs/jfs/super.c
-@@ -524,7 +524,8 @@ static int jfs_fill_super(struct super_block *sb, void *data, int silent)
- 	/*
- 	 * Initialize blocksize to 4K.
- 	 */
--	sb_set_blocksize(sb, PSIZE);
-+	if (!sb_set_blocksize(sb, PSIZE))
-+		goto out_unload;
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index a28bcff24254b..f71585ae68498 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7218,6 +7218,7 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
+ 	struct si_power_info *si_pi = si_get_pi(adev);
+ 	struct  si_ps *ps = si_get_ps(rps);
++	struct amdgpu_clock_and_voltage_limits *limits;
+ 	u16 leakage_voltage;
+ 	struct rv7xx_pl *pl = &ps->performance_levels[index];
+ 	int ret;
+@@ -7277,12 +7278,30 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 		si_pi->mvdd_bootup_value = mvdd;
+ 	}
  
- 	/*
- 	 * Set method vectors.
++	/*
++	 * Update maximum allowed clock limits.
++	 * VBIOS can contain conflicting values between:
++	 * - the maximum allowed clocks and voltages on AC or DC
++	 * - the clocks and voltages in power states on AC or DC
++	 */
+ 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
+-	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE) {
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.sclk = pl->sclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.mclk = pl->mclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddc = pl->vddc;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddci = pl->vddci;
++	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
++	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
++		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
++	else
++		limits = NULL;
++
++	if (limits) {
++		if (pl->sclk > limits->sclk)
++			limits->sclk = pl->sclk;
++		if (pl->mclk > limits->mclk)
++			limits->mclk = pl->mclk;
++		if (pl->vddc > limits->vddc)
++			limits->vddc = pl->vddc;
++		if (pl->vddci > limits->vddci)
++			limits->vddci = pl->vddci;
+ 	}
+ }
+ 
 -- 
 2.53.0
 
