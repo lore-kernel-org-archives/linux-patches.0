@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D3451617B;
-	Wed, 30 Sep 2026 17:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B95013AB;
+	Wed, 30 Sep 2026 17:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789066; cv=none; b=Von4z2uU1bdvneJKRecJ16Xf8f+ru5dlRU8iLmlEFbEc6ZjDfQ8BlptT1sxMSZkZOMA9PY8qVnU1+TrHOFdRDo7JWVTd3s9FO0UMxBRG4QfxE3CfhE1+1cJRyqmQn5IZ9NVunucBz+mpwkGh4XRDnriVcRQUYiQx+Oi7pfgKCfM=
+	t=1790789069; cv=none; b=VymK8NlikW5ddDunrjsMVdbQ8Y54zLCqk9IT8n704/PbDYeyhx2i84tt77tozI+Ya0A15f+7Vl0YfsFdqHfg2L9vCP277pqv90GWB//FN8Rxn9ftK9sb5WIjAkvtdguNm2ZW49UOH4+KP+YyLIADnBgSgXKdFMzSBuWRKTVff0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789066; c=relaxed/simple;
-	bh=n9TZt2384YI2nnmIHDg5r+JjeFJjUPfsnxqKaH6fuos=;
+	s=arc-20240116; t=1790789069; c=relaxed/simple;
+	bh=18GtcZPuVM0a5SjAFe7ysq8jJxqKgTECQCFSneZam0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esYthS2xI8IaVxjX4K1GxUuNc+R/vf3DdG4pjHerTYUl9MMzr4HmI2AYGxrI1vzn7PQd6j9P9W7sC7DZHPtNKPRADCActo9kaUX1xKokjveC2GNqRuANMS65xo94RMRoCx/AzMHRbxV8uZIM5v+cT9YUgY6ZRt9kjl9rkq9Z80s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQQANOdk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hu54izXRVPZWx2tyU77VYFAuDez7wJ2gJSbudiK6BaGdhLm+QvV1qFF49JA9VoqSl+nM+ksOdvDgKDxY5rEIY/A/XuIcBVnfIydyWggrEUPbrrZ/6KosE/kyt0M0II8NKCozoDwOzqc3S3Ujy1Y6Rp9vxFYgJA7JzwftH+eiA/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRLtu8/6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQQANOdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612621F000FF;
-	Wed, 30 Sep 2026 17:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRLtu8/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367441F000FF;
+	Wed, 30 Sep 2026 17:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789064;
-	bh=zLmJAAZyOIsVsxBWrAgeJD9hclcMvWfQXJIlZiGYNuU=;
+	s=korg; t=1790789067;
+	bh=kF7bfj2MKLyT3teY4H8KMrg7IvJnmaZ1oJwSYO45x/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQQANOdk1i1olbRjsbOuFncX6mZ4NvAiaAs8JKgXnTH6MlApFAPnMeFE5JBtrtvOv
-	 Ji/WhRlLAY8Th6puJ6x57MtwTtxzPaNm8inKYI1cWAhEoMTbcA6u76TlSujjzbZSum
-	 U/Ei5g8FgfiYNOYjEbuvlkSShO1duI61lcCE8I+w=
+	b=WRLtu8/6FRd4ooTYDXIEPLCfFuHyrGlo3/tv4IZSgl1z+TQ6hBz2bhYYV0THlou+V
+	 INLtjTIvOqaQf88WAudhYGKUjt3eUOPWoWZ6kJc2CGm+wRuMJtJGbjfStWCKPWEQcC
+	 4pAT1GRRRK387OComh0it+Qdrzd1r1I7yAdiRsis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
+	Shay Drory <shayd@nvidia.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 344/877] net/sched: cls_u32: fix manual hash table handle IDR aliasing
-Date: Wed, 30 Sep 2026 17:20:55 +0200
-Message-ID: <20260930152422.092649233@linuxfoundation.org>
+Subject: [PATCH 6.12 345/877] net/mlx5: devcom, Base component size on linked devices
+Date: Wed, 30 Sep 2026 17:20:56 +0200
+Message-ID: <20260930152422.113503837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -55,78 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 0a5f5d9e94dead312d32c366b917c64e552b72f7 ]
+[ Upstream commit d09e8f64653c93da5793c16be19330968f2a32e6 ]
 
-A u32 hash table created with an explicit handle ('tc filter add ...
-handle 801: u32 divisor N') keys its IDR entry on the raw handle, while
-the destroy paths free it under handle2id(handle). The two key domains
-disagree for handles in the 0x800..0xFFF htid range:
-handle2id() folds them back into the auto-allocated id space (1..0x7FF).
+mlx5_devcom_comp_get_size() returns the component's kref count. That
+kref is bumped in mlx5_devcom_register_component() under comp_list_lock,
+before the comp_dev is linked onto comp_dev_list_head under comp->sem.
+The event broadcast (mlx5_devcom_locked_send_event()) walks that list.
 
-A manual table therefore leaves its raw-keyed IDR entry unreachable on
-delete (a permanent leak), and its delete can drop the idr entry of an
-unrelated live auto table. A later auto allocation can then hand out a
-handle that aliases the live manual table; u32_lookup_ht() first-match
-routes lookups and TCA_U32_LINK for that htid to the wrong table.
+Hence, a caller can read the expected size, but send_event won't be sent
+to all peers. In the SD group registration path, this lets a member
+broadcast its role-election event over an incomplete list, electing a
+primary that never completes the group, is never marked ready, and
+leaves the group with a stale primary.
 
-Key the divisor-path alloc on handle2id(handle) so allocation and
-removal share one key domain. A manual handle that maps onto an id
-already in use is rejected with -ENOSPC, and auto allocation skips ids
-held by live manual tables.
+Track the number of linked comp_devs in a dedicated counter, maintained
+under comp->sem together with the list add/remove, and return it from
+mlx5_devcom_comp_get_size().
 
-Conditions to recreate:
-  ip link add test0 type dummy
-  tc qdisc add dev test0 clsact
-  tc filter add dev test0 ingress protocol ip pref 1 \
-          handle 801: u32 divisor 16
-  tc filter add dev test0 ingress protocol ip pref 2 u32 divisor 16
-  tc -d filter show dev test0 ingress | grep 'fh 801:'
-  # unpatched: two live tables with handle 0x80100000 (the pref 2 root
-  # hnode is auto-allocated id 1); patched: the auto hnode takes id 2.
-
-Also tested with a poc with a live u32 table on the block, add/delete a manual
-table 'handle 901: u32 divisor 1' twice; unpatched, the re-add fails with
--ENOSPC because the raw key leaked on the first delete.
-
-Fixes: 73af53d82076 ("net: sched: cls_u32: Fix u32's systematic failure to free IDR entries for hnodes.")
-Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260822222049.114526-1-jhs@mojatatu.com
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-LQFE.v1.20260911041746.1@mojatatu.com
+Fixes: 9bb1ac80738a ("net/mlx5: devcom, Add component size getter")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260915113459.3934760-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 83a60698cc009..e5e5533f866dc 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1000,8 +1000,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 				return -ENOMEM;
- 			}
- 		} else {
--			err = idr_alloc_u32(&tp_c->handle_idr, ht, &handle,
--					    handle, GFP_KERNEL);
-+			/* The IDR is keyed on the mapped id, and that is
-+			 * what the destroy paths remove. Ask for it here,
-+			 * so a manual handle colliding with the
-+			 * auto-allocated id space is rejected (-ENOSPC)
-+			 * instead of aliasing a future auto id.
-+			 */
-+			u32 id = handle2id(handle);
-+
-+			err = idr_alloc_u32(&tp_c->handle_idr, ht, &id, id,
-+					    GFP_KERNEL);
- 			if (err) {
- 				kfree(ht);
- 				return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
+index 7b0766c89f4cf..cd8ce2abcf189 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
+@@ -29,6 +29,7 @@ struct mlx5_devcom_comp {
+ 	struct list_head comp_dev_list_head;
+ 	mlx5_devcom_event_handler_t handler;
+ 	struct kref ref;
++	int nr_devs;
+ 	bool ready;
+ 	struct rw_semaphore sem;
+ 	struct lock_class_key lock_key;
+@@ -158,6 +159,7 @@ devcom_alloc_comp_dev(struct mlx5_devcom_dev *devc,
+ 
+ 	down_write(&comp->sem);
+ 	list_add_tail(&devcom->list, &comp->comp_dev_list_head);
++	WRITE_ONCE(comp->nr_devs, comp->nr_devs + 1);
+ 	up_write(&comp->sem);
+ 
+ 	return devcom;
+@@ -170,6 +172,7 @@ devcom_free_comp_dev(struct mlx5_devcom_comp_dev *devcom)
+ 
+ 	down_write(&comp->sem);
+ 	list_del(&devcom->list);
++	WRITE_ONCE(comp->nr_devs, comp->nr_devs - 1);
+ 	up_write(&comp->sem);
+ 
+ 	kref_put(&devcom->devc->ref, mlx5_devcom_dev_release);
+@@ -260,7 +263,7 @@ int mlx5_devcom_comp_get_size(struct mlx5_devcom_comp_dev *devcom)
+ {
+ 	struct mlx5_devcom_comp *comp = devcom->comp;
+ 
+-	return kref_read(&comp->ref);
++	return READ_ONCE(comp->nr_devs);
+ }
+ 
+ int mlx5_devcom_send_event(struct mlx5_devcom_comp_dev *devcom,
 -- 
 2.53.0
 
