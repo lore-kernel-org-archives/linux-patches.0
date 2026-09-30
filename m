@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D74503918;
-	Wed, 30 Sep 2026 15:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89DE370AC8;
+	Wed, 30 Sep 2026 15:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783484; cv=none; b=GrC/tHjQf8Ov2MJwweqXgKlPVMzTAOgD/0cmEdtpQ6DykKPasdIaxaQECFbpF1iDJB8/BkdHfopdZjlQhZ7qHwpjgKRzFfrhnbUsMsW9xD02cO+t/MPLRZRy/cFeEvW3rTVpXUvEcYqW9HAW6M4iR+UshaIxDR2VU7OJ8np7Tb4=
+	t=1790783487; cv=none; b=KgfJTxioFFcgjj8hZwSe4QXCgyXo/LheiwURQfdHbJDLBnixLixG4vLyGxe7+sAxPQZYyjwhJCSMily5Vuuq9Pciy7HnCltysH9i6+Z868L+fE00ccLMnDOp9w6Xw7skiVOq6UxKRq8f4YjgZzwSv4hrd1M3rtrthlUFQUO9FpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783484; c=relaxed/simple;
-	bh=Ynd2c2Jsr/yruYnuP7Xg5fdr1SVzPmDRZTU4sD9Pgj8=;
+	s=arc-20240116; t=1790783487; c=relaxed/simple;
+	bh=1XKJG/wgE41vBrqMK2kevUoPd1Py6ph41rzjscGVnVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PeDAauxEutQ/t6+sOFA3oEcRS4afGt8Z4hDp/Z3QoYlSJJeIhLOWvDVTqF6IUacgOXCnAltrSY0swd97CmRE23rVRtC15XhF+uVT6KrMpKgDfT2zlHVtYC2/lFS+wK8wgpqM/Md7Rxqi5xfdLe0SgShMLR6JaPJj7MvI+cr3M+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb25Nv4C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NwXYZz/bPJIWKlBaERnXRlQXj434M/KMxh6UzJcaHX6zIzkDnv/TlGSLfQ0z9jAmJZX+yyJAiIDCKJV0NBFWUuO5maAxbAe9kYRiyYdZmf79Al0MiN+045MzpohTrn5MFiDrlNEoVy4VIIn/IdsHjRBYErmSeIwTSOTOd4JXbfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzANqY+n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb25Nv4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7AF1F000FF;
-	Wed, 30 Sep 2026 15:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzANqY+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9551F00893;
+	Wed, 30 Sep 2026 15:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783478;
-	bh=y9Nq+EMQCoqMwIkp6YSgXOtq0WYMxK4yexyUtsJoGLQ=;
+	s=korg; t=1790783481;
+	bh=eTBC8MP3s05ADra5aXcxAIaXcYZbAi+WIg2zXE92WUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sb25Nv4CtHi2kaAUSeFxJlqsoSAbRiXLZheqE+I/HIHtM+UKLRrCy1cgI6m+p05t8
-	 K2LTlK6UVyHDY7LedoMoThTEcTJcUWcjB3zPipS7mYo3Y2OvAcMJ8Z/GWHGA+k3I7B
-	 yhqG3CS8ExekgWptm+vq3WmaLyOfV8C+HBvG9rn8=
+	b=IzANqY+nctLFsdrkLvyTFek/uHS+bUH+ijmjBISBJwNZ/DcRxZphKwhM+xB6yvJkw
+	 ibpfTA5RpdpzEgINIAWH6lh48B6ZsoP7vf8O9c36oPd6GWj5lQRedSKrmWHEe7B7Wb
+	 SVD5JqniPpDx8XF8ljUhALcwpDx8EdM+tJdVZFzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 414/595] net: mvpp2: prevent buffer overflow in page_pool allocation
-Date: Wed, 30 Sep 2026 17:25:07 +0200
-Message-ID: <20260930152356.583383583@linuxfoundation.org>
+Subject: [PATCH 5.10 415/595] Input: eeti_ts - publish the OF module alias
+Date: Wed, 30 Sep 2026 17:25:08 +0200
+Message-ID: <20260930152356.605666470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,59 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
+[ Upstream commit a52ae68a937efc353251aec27fc995ff66cbe1ca ]
 
-The per‑processor buffering scheme is supported only if the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
-This is already checked in mvpp2_probe() during the initial
-activation of percpu_pools.
+The EETI driver matches eeti,exc3000-i2c Device Tree clients, but only
+publishes the legacy eeti_ts I2C ID. The I2C core emits an OF modalias
+for a Device Tree client.
 
-However, mvpp2_change_mtu() may later call
-mvpp2_bm_switch_buffers(priv, true) without this check, which can
-lead to an out-of-bounds access in the priv->page_pool array in
-mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
-entries, and mvpp2_get_nrxqs() may return exactly that value. The
-per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
-bounds.
+Publish the existing OF match table within its CONFIG_OF guard.
 
-Check that the hardware version is MVPP22 or newer and that the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
-before switching to per-CPU mode.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
-Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
-Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e32d7f1b246c ("Input: eeti - add device tree matching table")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905134004.66336-1-hppiscas@163.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/eeti_ts.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 6d672afc73d50..cb0e319bc2f1d 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -4689,7 +4689,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
- 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
- 			mvpp2_bm_switch_buffers(priv, false);
- 		}
--	} else {
-+	} else if (priv->hw_version >= MVPP22 &&
-+		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
- 		bool jumbo = false;
- 		int i;
+diff --git a/drivers/input/touchscreen/eeti_ts.c b/drivers/input/touchscreen/eeti_ts.c
+index 2e1404cd09ec9..e12601bb5280a 100644
+--- a/drivers/input/touchscreen/eeti_ts.c
++++ b/drivers/input/touchscreen/eeti_ts.c
+@@ -284,6 +284,7 @@ static const struct of_device_id of_eeti_ts_match[] = {
+ 	{ .compatible = "eeti,exc3000-i2c", },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, of_eeti_ts_match);
+ #endif
  
+ static struct i2c_driver eeti_ts_driver = {
 -- 
 2.53.0
 
