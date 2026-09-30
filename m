@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16614509EEF;
-	Wed, 30 Sep 2026 16:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7B65013A9;
+	Wed, 30 Sep 2026 16:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784102; cv=none; b=MCG1awebW/9bGULyzGYaX+97cBhPaGxNnSNch7D2SPERccFl3LKXBPTiX7AjKd6WPUd2Y7GnP9gzzcimZsy9lz4NyCyxtBbLkffSt7S5teXgJDGdOBGGNBY/GpqMXl7+ayiKoAxKsR6frA72nQ5OXgZlEB8Glmu+ag9gLQDGrqk=
+	t=1790784105; cv=none; b=ShyG0K4trG8YbIrxZtzN1SAKVlS45j22tQLqUZZjeGQBU9+de+ssuFRmtAFYKxckb1TnDRYh/o6WZO3o8WMSCMrZWugGNqf7qOVUFHic4HmS7B4RIcfne/p0bBoIAvykfEBhbodJZzQ90VkGy9feHDAqlFU5vBjZYsnDGxm/Lgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784102; c=relaxed/simple;
-	bh=xyWajbLrFv0ZhDn1OTxVEo0rvn8Uyx4HSbK7StVvTKQ=;
+	s=arc-20240116; t=1790784105; c=relaxed/simple;
+	bh=AwsdsWjo/5NdNZ/PMRPziSsu501V6nGNhKHZs5W3aLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/Duis/2SCS1pvE22kdP3JTkNTjopbp0FJBhXfaGTcxikHBh55sVd8u3jTgEtimZCmRmyIkpdmQv2lHGNmptAdLu6kZHsCnFrQtHz8wlqFmMReIHWEM4qfqZgv1Oaz+uXM/Tr/0h8Fq29ADJ/fxQnvcXBICK0tSlBS/sMlRgBVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4bdTNg/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WesbheVcIThd39LW7vbSF0XCUOpxWb/9PzqyoquBq/mSPK0edbiz/BCWt96nKvS2oUMoXo2aa5mVQN6WJiaQwj9uKbxnAkZ78O0lKNvIPk7ta8zuES8a9AtP0CP6CvjccOi+uAYFRXy2ct0f/yXaA7yvd2s92fFAqcTXPpy/8fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkSpCPBO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4bdTNg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828C41F00898;
-	Wed, 30 Sep 2026 16:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkSpCPBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6BB1F00899;
+	Wed, 30 Sep 2026 16:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784097;
-	bh=IaH/K1LofOL9nYRiPk6NjgNSa+CRrEg98/XV1dTuaTQ=;
+	s=korg; t=1790784099;
+	bh=nVHsFi/KQQiqPkFabqCS+aogjJ9c4ZwBaz1JRTmL5QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4bdTNg/+ZRCii/m35wK8U9ApdwNCeW7s322zytQIXW8MgCLDMUP5GQIRV6S3mi0n
-	 4xxgpjUn7QL8R4siY2MAaoZzWTs5aJIhvLy/rmDkh8RIsCRUo2ZRGGKVkCsYQvotO3
-	 1fgpsYqASpVmEhmD9Jofhih5CJeiGGSIsnHAOg0Q=
+	b=PkSpCPBORHCyou8I7k9zOXxSRXe49e1W6lTAa90Y9L5gxvTBUEiy0YK9NZhsO/rpl
+	 Ruow/xC6Jw1hd9V+KuSlggzi5FcdhTtkSHlWPUNHMRE3/44KCGc/sLc3dqNlG6rFUY
+	 LzY1AsuXFNULiwS7vRdNqw91tun4fbXq5eOZLZaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/982] PCI: intel-gw: Enable clock before PHY init
-Date: Wed, 30 Sep 2026 17:12:52 +0200
-Message-ID: <20260930152417.572907147@linuxfoundation.org>
+Subject: [PATCH 6.1 037/982] hfsplus: rework hfsplus_readdir() logic
+Date: Wed, 30 Sep 2026 17:12:53 +0200
+Message-ID: <20260930152417.593822822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,103 +47,225 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit febf9ed3c35e5eec7ea384ebbd55a5296e3ca5e9 ]
+[ Upstream commit 4b0496432844628ad05a5b1efce329a3340174d2 ]
 
-To ensure that the boot sequence is correct, the DWC PCIe core clock must
-be switched on before PHY init call [1]. This changes are based on patched
-kernel sources of the MaxLinear SDK.
+The xfstests' test-case generic/637 fails with error:
 
-The reason why the MaxLinear SDK is used as a reference here is, that this
-PCIe DWC IP is used in the URX851 and URX850 SoC. This SoC was originally
-developed by Intel when they acquired Lantiq’s home networking division in
-2015 [2]. In 2020 the home network division was sold to MaxLinear [3].
-Since then, this SoC belongs to MaxLinear. They use their own SDK, which
-runs on kernel version '5.15.x'.
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc4+ #8 SMP PREEMPT_DYNAMIC Thu May 1 16:43:22 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-[1] https://github.com/maxlinear/linux/blob/updk_9.1.90/drivers/pci/controller/dwc/pcie-intel-gw.c#L544
-[2] https://www.intc.com/news-events/press-releases/detail/364/intel-to-acquire-lantiq-advancing-the-connected-home
-[3] https://investors.maxlinear.com/press-releases/detail/395/maxlinear-to-acquire-intels-home-gateway-platform
+QA output created by 637
+entries 7 and 8 have duplicate d_off 8
+Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
 
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260417-pcie-intel-gw-v5-4-0a2b933fe04f@dev.tdt.de
+Debugging of the hfsplus_readdir() logic showed this:
+
+hfsplus: hfsplus_readdir(): 163 ctx->pos 0
+hfsplus: hfsplus_readdir(): 189 ctx->pos 1
+hfsplus: hfsplus_readdir(): 264 ctx->pos 2, ino 18
+hfsplus: hfsplus_readdir(): 264 ctx->pos 3, ino 19
+hfsplus: hfsplus_readdir(): 264 ctx->pos 4, ino 28
+hfsplus: hfsplus_readdir(): 264 ctx->pos 5, ino 118
+hfsplus: hfsplus_readdir(): 264 ctx->pos 6, ino 29
+hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 30
+hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 31
+hfsplus: hfsplus_readdir(): 304 ctx->pos 8
+hfsplus: hfsplus_unlink():420 dir->i_ino 17, inode->i_ino 28
+hfsplus: hfsplus_readdir(): 141 ctx->pos 7
+hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 31
+hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 32
+hfsplus: hfsplus_readdir(): 264 ctx->pos 9, ino 33
+
+It means that hfsplus_readdir() stopped the processing of
+folder's items on ctx->pos 8, then, item with ino 28 has
+been deleted and hfsplus_readdir() re-started the logic
+from ctx->pos 7. As a result, previous and new sets of
+folder's items have overlapping values for the case of
+d_off 8.
+
+Currently, HFS+ has very complicated and fragile logic
+of rd->file->f_pos correction in hfsplus_delete_cat().
+This patch removes this logic and it stores the current
+pos into hfsplus_readdir_data. Finally, if rd->pos == ctx->pos
+then hfsplus_readdir() tries to find the position in
+b-tree's node by means of hfsplus_cat_key. This position is
+used to re-start the folder's content traversal.
+
+sudo ./check generic/637
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #44 SMP PREEMPT_DYNAMIC Mon May  4 15:58:45 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/637  22s ...  22s
+Ran: generic/637
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/198
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260505220051.2854696-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-intel-gw.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ fs/hfsplus/catalog.c    | 11 -----------
+ fs/hfsplus/dir.c        | 28 +++++++++++-----------------
+ fs/hfsplus/hfsplus_fs.h |  5 +----
+ fs/hfsplus/inode.c      |  2 --
+ fs/hfsplus/super.c      |  2 --
+ 5 files changed, 12 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
-index 333c33d98a701..7b21628a6a63e 100644
---- a/drivers/pci/controller/dwc/pcie-intel-gw.c
-+++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
-@@ -284,13 +284,9 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+diff --git a/fs/hfsplus/catalog.c b/fs/hfsplus/catalog.c
+index 9a82bdf4caf24..2db185c67b2c3 100644
+--- a/fs/hfsplus/catalog.c
++++ b/fs/hfsplus/catalog.c
+@@ -332,7 +332,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
+ 	struct super_block *sb = dir->i_sb;
+ 	struct hfs_find_data fd;
+ 	struct hfsplus_fork_raw fork;
+-	struct list_head *pos;
+ 	int err, off;
+ 	u16 type;
  
- 	intel_pcie_core_rst_assert(pcie);
- 	intel_pcie_device_rst_assert(pcie);
+@@ -390,16 +389,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		hfsplus_free_fork(sb, cnid, &fork, HFSPLUS_TYPE_RSRC);
+ 	}
+ 
+-	/* we only need to take spinlock for exclusion with ->release() */
+-	spin_lock(&HFSPLUS_I(dir)->open_dir_lock);
+-	list_for_each(pos, &HFSPLUS_I(dir)->open_dir_list) {
+-		struct hfsplus_readdir_data *rd =
+-			list_entry(pos, struct hfsplus_readdir_data, list);
+-		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
+-			rd->file->f_pos--;
+-	}
+-	spin_unlock(&HFSPLUS_I(dir)->open_dir_lock);
 -
--	ret = phy_init(pcie->phy);
--	if (ret)
--		return ret;
--
- 	intel_pcie_core_rst_deassert(pcie);
+ 	err = hfs_brec_remove(&fd);
+ 	if (err)
+ 		goto out;
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index 578da2528bee8..0d6f42d91e55e 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -185,7 +185,15 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 	}
+ 	if (ctx->pos >= inode->i_size)
+ 		goto out;
+-	err = hfs_brec_goto(&fd, ctx->pos - 1);
++	rd = file->private_data;
++	if (rd && rd->pos == ctx->pos) {
++		memcpy(fd.search_key, &rd->key, sizeof(struct hfsplus_cat_key));
++		err = hfs_brec_find(&fd, hfs_find_rec_by_key);
++		if (err == -ENOENT)
++			err = hfs_brec_goto(&fd, 1);
++	} else {
++		err = hfs_brec_goto(&fd, ctx->pos - 1);
++	}
+ 	if (err)
+ 		goto out;
+ 	for (;;) {
+@@ -261,7 +269,6 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 		if (err)
+ 			goto out;
+ 	}
+-	rd = file->private_data;
+ 	if (!rd) {
+ 		rd = kmalloc(sizeof(struct hfsplus_readdir_data), GFP_KERNEL);
+ 		if (!rd) {
+@@ -269,15 +276,8 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 			goto out;
+ 		}
+ 		file->private_data = rd;
+-		rd->file = file;
+-		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
+-		list_add(&rd->list, &HFSPLUS_I(inode)->open_dir_list);
+-		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
+ 	}
+-	/*
+-	 * Can be done after the list insertion; exclusion with
+-	 * hfsplus_delete_cat() is provided by directory lock.
+-	 */
++	rd->pos = ctx->pos;
+ 	memcpy(&rd->key, fd.key, sizeof(struct hfsplus_cat_key));
+ out:
+ 	kfree(strbuf);
+@@ -287,13 +287,7 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
  
-+	/* Controller clock must be provided earlier than PHY */
- 	ret = clk_prepare_enable(pcie->core_clk);
- 	if (ret) {
- 		dev_err(pcie->pci.dev, "Core clock enable failed: %d\n", ret);
-@@ -299,13 +295,17 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
- 
- 	pci->atu_base = pci->dbi_base + 0xC0000;
- 
-+	ret = phy_init(pcie->phy);
-+	if (ret)
-+		goto phy_err;
-+
- 	intel_pcie_ltssm_disable(pcie);
- 	intel_pcie_link_setup(pcie);
- 	intel_pcie_init_n_fts(pci);
- 
- 	ret = dw_pcie_setup_rc(&pci->pp);
- 	if (ret)
--		goto app_init_err;
-+		goto err;
- 
- 	dw_pcie_upconfig_setup(pci);
- 
-@@ -314,7 +314,7 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
- 
- 	ret = dw_pcie_wait_for_link(pci);
- 	if (ret)
--		goto app_init_err;
-+		goto err;
- 
- 	/* Enable integrated interrupts */
- 	pcie_app_wr_mask(pcie, PCIE_APP_IRNEN, PCIE_APP_IRN_INT,
-@@ -322,11 +322,12 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
- 
+ static int hfsplus_dir_release(struct inode *inode, struct file *file)
+ {
+-	struct hfsplus_readdir_data *rd = file->private_data;
+-	if (rd) {
+-		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
+-		list_del(&rd->list);
+-		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
+-		kfree(rd);
+-	}
++	kfree(file->private_data);
  	return 0;
- 
--app_init_err:
-+err:
-+	phy_exit(pcie->phy);
-+phy_err:
- 	clk_disable_unprepare(pcie->core_clk);
- clk_err:
- 	intel_pcie_core_rst_assert(pcie);
--	phy_exit(pcie->phy);
- 
- 	return ret;
  }
+ 
+diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
+index 9192637ed739e..8c18b79c0056e 100644
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -246,8 +246,6 @@ struct hfsplus_inode_info {
+ 	sector_t fs_blocks;
+ 	u8 userflags;		/* BSD user file flags */
+ 	u32 subfolders;		/* Subfolder count (HFSX only) */
+-	struct list_head open_dir_list;
+-	spinlock_t open_dir_lock;
+ 	loff_t phys_size;
+ 
+ 	struct inode vfs_inode;
+@@ -297,8 +295,7 @@ struct hfs_find_data {
+ };
+ 
+ struct hfsplus_readdir_data {
+-	struct list_head list;
+-	struct file *file;
++	loff_t pos;
+ 	struct hfsplus_cat_key key;
+ };
+ 
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index caf36ed7f590a..a006db2699c4f 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -449,8 +449,6 @@ struct inode *hfsplus_new_inode(struct super_block *sb, struct inode *dir,
+ 	inode->i_mtime = inode->i_atime = inode->i_ctime = current_time(inode);
+ 
+ 	hip = HFSPLUS_I(inode);
+-	INIT_LIST_HEAD(&hip->open_dir_list);
+-	spin_lock_init(&hip->open_dir_lock);
+ 	mutex_init(&hip->extents_lock);
+ 	atomic_set(&hip->opencnt, 0);
+ 	hip->extent_state = 0;
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index 0d15e440d6869..1e4e5c3003de3 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -90,8 +90,6 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
+ 	HFSPLUS_I(inode)->fs_blocks = 0;
+ 	HFSPLUS_I(inode)->userflags = 0;
+ 	HFSPLUS_I(inode)->subfolders = 0;
+-	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
+ 	HFSPLUS_I(inode)->phys_size = 0;
+ 
+ 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
 -- 
 2.53.0
 
