@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7653D3323;
-	Wed, 30 Sep 2026 17:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F8851AEF3;
+	Wed, 30 Sep 2026 17:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790800; cv=none; b=UhLq4AY+Pqemq/vbUK9w0D3E8q5LM6+1SFOHFyDKFApb4Ct30a5LWVcgmkZZPyOgC6oy0yaL4dHImDs3OMjLMZX9/vnM0vEMg6Q1a5q+Z4Y30gSv1iHm3irYfpYlTNX1kYuEZL/rQA+q2GPOlKTgD9/JY+unwPjgEiEUHC7OPZs=
+	t=1790790803; cv=none; b=Sa8W8MSmXAm9v88FrPB6PG14byqHUj0rA5MgkxVbu39o8bJY14+R/mXwoPrvwU11pWtu2sRV452Xh3oR6CcjUaOakUBflApeOS5jcDtofrQ8eLMBrtcu9XjyKiegUaIWq/EIR6c4EBme5mIoARdmBcPHDbXznyTYQmX4T/PfdIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790800; c=relaxed/simple;
-	bh=DPTdxLpq6KKc/R+q0iwx1Ot8a78cb8dFtTuTYrgMSww=;
+	s=arc-20240116; t=1790790803; c=relaxed/simple;
+	bh=qh3YEaKqOzsm+LARwRLwLHEsUY5l38vnZXqy3aK434s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMgEwO27oJy0ZdGEVJmqyT2BZJYlZbE3VGIeAxyaaFgPoq81G5o34fP9e2zwPY6nuWgK1vTxTNzE2UA0pMVfDld/ElNJ7ImNZNslcVXVyPG6wc+GZZIFH12/aq/kYZd9M85Ue12a2fxvjgnz4S28bOwzI5nZTh9gLtwN+7QpO94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=halzQ6nh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=btCPCXJQqAt55AQOfxw52E9qaKBGVekYa9/pSgyjAQbR6Rx4SksAJaXgz4svqsOGTvmJjdR9Fhth0l5glG/Fz5C7CQG2hX2DbYlyPZCXDYYMeXIZcjPptSkIiWcnv7Ms0wAi7cHeB8Ce6kX0Umld7C1iED1CkTPHKFyJleMxkiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chRTBAH5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="halzQ6nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0821F000FF;
-	Wed, 30 Sep 2026 17:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chRTBAH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351E41F00898;
+	Wed, 30 Sep 2026 17:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790798;
-	bh=vu+fOm+aKPyqNlZw+ZTtBSn7039wJ9d8JBD9catn9IQ=;
+	s=korg; t=1790790801;
+	bh=sCAhE7MTqJBIuHwRQ3pxoxH2jYQl1IrxBVjRkOfXj80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=halzQ6nhFXaqO6V05V8zV/HsVvR0ESn7MA180rnwPGOWrkNc9cDyoyTSo5VKKrnsT
-	 G8M0R5pYbuJICARKznZpnLfAnWcDRT+//fsJYnqAGeefoBj+pVaUqepCj0sd4qVMwW
-	 GedPZUrRm8kHR3bzMpTKPNi+I8Yrh3Wn3GB2OiD0=
+	b=chRTBAH550GqseA1kW5wglYcONGIkF1XGeG3hT+X9Tcshv1DmpuiSMTEJfDgAYfbe
+	 mycEws325WaU+APrhyNJ4qrjwClu7HNOUPvROkFc4j0Br3lc7a0do1D6R8uDmh8qqL
+	 bS5w83I77qU+5Bs16VtawatHg8vlxcoBJhA3kypc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alessandro Baldi <baldovic@virgilio.it>,
+	Sean Young <sean@mess.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/752] crypto: atmel-ecc - add support for atecc608b
-Date: Wed, 30 Sep 2026 17:18:23 +0200
-Message-ID: <20260930152358.866844048@linuxfoundation.org>
+Subject: [PATCH 5.15 034/752] media: imon: Add iMON VFD HID OEM v1.2 key mappings
+Date: Wed, 30 Sep 2026 17:18:24 +0200
+Message-ID: <20260930152358.887818732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Alessandro Baldi <baldovic@virgilio.it>
 
-[ Upstream commit b668edaf8dcc8d09f6f1e71797422b44d4bd22a3 ]
+[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
 
-Tested on hardware with an ATECC608B at 0x60. The device binds
-successfully, passes the driver's sanity check, and registers the
-ecdh-nist-p256 KPP algorithm.
+Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
+This version differs in the codes that generate the
+KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
 
-The hardware ECDH path was also exercised using a minimal KPP test
-module, covering private key generation, public key derivation, and
-shared secret computation.
-
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-ecc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/rc/imon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
-index 6fb1d02c2c30e..b7fa3ea7a3bef 100644
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -360,6 +360,8 @@ static int atmel_ecc_remove(struct i2c_client *client)
- static const struct of_device_id atmel_ecc_dt_ids[] = {
- 	{
- 		.compatible = "atmel,atecc508a",
-+	}, {
-+		.compatible = "atmel,atecc608b",
- 	}, {
- 		/* sentinel */
- 	}
-@@ -369,6 +371,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids);
- 
- static const struct i2c_device_id atmel_ecc_id[] = {
- 	{ "atecc508a" },
-+	{ "atecc608b" },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index a70f449f35290..86310c9b05177 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -295,6 +295,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
+ 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
+ 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
+ 		{ 0x000000000100ffeell, KEY_MUTE },
++		/* iMON VFD HID OEM v1.2 */
++		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
++		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
++		{ 0x000000000c00ffeell, KEY_MUTE },
+ 		/* 0xffdc iMON MCE VFD */
+ 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
+ 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
 -- 
 2.53.0
 
