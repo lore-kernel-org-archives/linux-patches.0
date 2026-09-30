@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A1E50B8A1;
-	Wed, 30 Sep 2026 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C124F4D08;
+	Wed, 30 Sep 2026 15:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782396; cv=none; b=i2+iQpQ0bT3Blwce42t/gnjKjdeTwYJdaGmwFKI+Kp9ucgDEAfOYFQFqtqJkWmZ+PJ0RA1x13IY3hoXwBz3r9fDDFrgiC+Krho4KW6bSGrHJOWd8JGLhr/3Ljs7lriLy1DTNEjRAr1kZPvsMATCNRhhOGvboYnJydhHX8Mqx2D0=
+	t=1790782404; cv=none; b=h4r9MG2tG2jRAUQCAmF0xR53KgjMVb9Ofc0RW7oFWadKYzzb06i9kfF5ppOgUNTwDRA94H/iRovNaHtz3xQJDKTECUg8eskLD2MbVtbBwBTJaY6qezk/JJRT2fbhT7XEY484NV6EIurNXS0kIRMkw3yxqyQiBvujplG7omafOlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782396; c=relaxed/simple;
-	bh=4BEh88bT4RCcyTfi0qxNDynPELQ4NrZ63NieHog+zu4=;
+	s=arc-20240116; t=1790782404; c=relaxed/simple;
+	bh=o9LtYuIlQ1/jvqa6oGlOX0Vc1f7Vc70I081Pw22Rb/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaoolDsGvq5bZR6cEc3vVt1nB8H1fYHftpVuCeirX6uLYQEFyaj3RJ6KEjOTtOKsoVUFkk8FTQ5bqKgLCiNIwGO5uuh8MelOz3EcsT/cWF6KqoL1lYJWYT68QMkTnkEknCZ5I3ntPeg0Z59bPn8EgbaLdB3ySuWo+FtAaXoRNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pguDezRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rS0Pvj/l9Uw8A6nXEnBuCbd/afeK0bQYh82yfTUZ51h/jPPjuY37C7qOWN4x90wu8/3bkHzn3cyiq+RxrR7W9Zcpa1DBVvom4blsDu4s5JxOO0dMDG4hKf7UxHX3l3HG3MrVOX2oEUnihk7E1Jpt6WBWJucaYvsqA3hYPDA3tio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amFdp077; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pguDezRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFB01F0089C;
-	Wed, 30 Sep 2026 15:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amFdp077"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395F61F00898;
+	Wed, 30 Sep 2026 15:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782382;
-	bh=u9A0QQYoKFG50vMqID7Gc38X7omSZcpLyCqswiDJZCs=;
+	s=korg; t=1790782385;
+	bh=zNOz3PfbJXylxfQvrB/BUcca+SCZZt8rPGwvHs4oEys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pguDezRNyHBO4JhrVUrYW53AwtIuGV4Xxt3FYsCM+TglYqMmqjRBbgv3ElFtVynBD
-	 w1GBTH8rR0yH9OT5sWFkhKYi9b4wnXKz+ayxsl+TwqHj+desoYjLsgjmzMeuFtmj3l
-	 ZasRbhRvIeyTCT4D4STrkpsLGkgQ6oJwcOUETyD4=
+	b=amFdp077Bq5p/6e4x/31pQ1wHVM4q5Hnqo5QQyuX66MJYcUVnLTi8Fg7kLlyTKhVq
+	 A1cY2ZwoyXvfW8yy+DHu3x26xZtTKEJDJe85o4J4+zUYaxIhGnNB3h1KFt8LUT8UKo
+	 AImXpoTquFK3MgnJD+z5wDRx/oz5DA2u+8weUzQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Baldi <baldovic@virgilio.it>,
-	Sean Young <sean@mess.org>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/595] media: imon: Add iMON VFD HID OEM v1.2 key mappings
-Date: Wed, 30 Sep 2026 17:18:41 +0200
-Message-ID: <20260930152348.333928084@linuxfoundation.org>
+Subject: [PATCH 5.10 029/595] RDMA/mlx5: Use QP port when decoding responder CQEs
+Date: Wed, 30 Sep 2026 17:18:42 +0200
+Message-ID: <20260930152348.355955908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Baldi <baldovic@virgilio.it>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
+[ Upstream commit 194762e6e436acde0f8f6aef44200b0058c36791 ]
 
-Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
-This version differs in the codes that generate the
-KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
+The responder CQE path determines the link layer via
+rdma_port_get_link_layer(). Use qp->port instead of
+hardcoding port 1, which can mis-decode completions on
+multi-port devices.
 
-Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Link: https://patch.msgid.link/20260410074046.2044595-1-zhaochenguang@kylinos.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/mlx5/cq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 565826cff0db4..dcdccfe5a7318 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -295,6 +295,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
- 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
- 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
- 		{ 0x000000000100ffeell, KEY_MUTE },
-+		/* iMON VFD HID OEM v1.2 */
-+		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
-+		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
-+		{ 0x000000000c00ffeell, KEY_MUTE },
- 		/* 0xffdc iMON MCE VFD */
- 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
- 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index e6d3ac4e10dc0..c505017a289ba 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -166,7 +166,8 @@ enum {
+ static void handle_responder(struct ib_wc *wc, struct mlx5_cqe64 *cqe,
+ 			     struct mlx5_ib_qp *qp)
+ {
+-	enum rdma_link_layer ll = rdma_port_get_link_layer(qp->ibqp.device, 1);
++	enum rdma_link_layer ll =
++		rdma_port_get_link_layer(qp->ibqp.device, qp->port);
+ 	struct mlx5_ib_dev *dev = to_mdev(qp->ibqp.device);
+ 	struct mlx5_ib_srq *srq = NULL;
+ 	struct mlx5_ib_wq *wq;
 -- 
 2.53.0
 
