@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7683C4C33D1;
-	Wed, 30 Sep 2026 16:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1B14E4306;
+	Wed, 30 Sep 2026 16:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786368; cv=none; b=ql3oOWDna9n3aSVViiw73a2rylTQlcU3RegP4ZFkDpmQ66mLDYzD7zD9LAQNj/dc7BdwvB00MunQZghbkiPmW8DOVdzVliyGXBwnJJWr0EuHPVCLq8f9RMQdODtP0GpGUOzjOwl3Q+Qc+2wTnhIDxZE6b8mbYFnUzd4aKWx/x+U=
+	t=1790786371; cv=none; b=D8W1KOr1B4LZpZITpklA7zF20v7hXblyVhAmWHZKEAyDjnKYUxD9aEFSl0VafDqfWyOZXkT8sVhOoKp4wcZVZp2Z3IgYEirm194tviBR7Lf1tgfPXrGMcbG+RbEsbidXKS9NH88JH+RyTQafAuIWhg+86NvpzlWqlcLWZf7qD+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786368; c=relaxed/simple;
-	bh=xOM7wQ5P3zIBXWtUCEONfikhe/C0VbG89iBXda0t4eE=;
+	s=arc-20240116; t=1790786371; c=relaxed/simple;
+	bh=VM7k0fUN9TlwzfSXlGzSSb9lHlugnHQ8lhum7QkMcpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2GJjsRBA/YkPHg5nkob/5YDQPzcQxzvsq7P/8g28Fibm/G/vcggo5gv1iOdkyqhaUBsYfoz+y4md+W+vlqQtTvTJzMW6MsJ/G6ecH91oDAgdFM72LKQza9+HqC1MA6pIMZ6Rjfdbbf/B5Xc2jmacfuOWh0sPkBMkaoq2YGwGq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TklJW0RJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgfG7IuwCXn7eh79uW/6IlrcMlCcpzuk5J5ktCrfp8nXwfNRCLgNTYSLAiqc5IMKq+pwkIaYlap5CZk+honofT846VdYJ35+igmuycxVPvjtOyi3Wgh8Umr1wmfhT/218fCXyXOWzhyughboXkmB0LPbuKxLgQ9cetZIOa3mKG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVUVyCyn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TklJW0RJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF72A1F000FF;
-	Wed, 30 Sep 2026 16:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVUVyCyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3AF1F000FF;
+	Wed, 30 Sep 2026 16:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786367;
-	bh=684Kk59t9TlmwxDJQYtpqphOpid1bw/a+8APDbceWic=;
+	s=korg; t=1790786370;
+	bh=G1k7+1V/UxtjC2l3Fy6SuCDpKON1Jvhgs4k+PpXMFhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TklJW0RJuaQM6XakmEliu3D0obOh2m8WIAsRSnqmCquqkKDNf/nDmIdsUmh+wuliX
-	 sZ/j8CrwYW+0F1XVAIdxDA2V2duscpXMRL3RJ7AkTxNS0BrG5GaYHtTu9Btsl9hss9
-	 opaIpys5YLxbunPIinpRUcJ8BNsW9pWXxMMW1KbA=
+	b=BVUVyCynGfhSBbRHvYhH1rrJo+z4iraUrwrv+oQ3+lVnA/0FgbMgpnNutQlEo1yaU
+	 MJW3ZLS7j7/hEtIWbTBqfKxAzSesL0xS+VpzPT5IRfJjup00hLX7ZOmqNtsY9Pq687
+	 jYFq3hNcsQLUlSZHmNyUQq+KNcmJC0vwT8bv/rzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 782/982] ASoC: SOF: ipc4-topology: Clarify bind failure caused by missing fw_module
-Date: Wed, 30 Sep 2026 17:25:18 +0200
-Message-ID: <20260930152433.553270721@linuxfoundation.org>
+Subject: [PATCH 6.1 831/982] bpf: Restrict CO-RE poisoning to relocatable instructions
+Date: Wed, 30 Sep 2026 17:26:07 +0200
+Message-ID: <20260930152434.606325828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,57 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit de6aa72b265b72bca2b1897d5000c8f0147d3157 ]
+[ Upstream commit 394ae398337c5f87e567f6cd63b937fc2b2f6ddc ]
 
-The original patch uses a feature in lib/vsprintf.c to handle the invalid
-address when tring to print *_fw_module->man4_module_entry.name when the
-*rc_fw_module is NULL.
-This case is handled by check_pointer_msg() internally and turns the
-invalid pointer to '(efault)' for printing but it is hiding useful
-information about the circumstances. Change the print to emmit the name
-of the widget and a note on which side's fw_module is missing.
+CO-RE relocation records can name any instruction offset. When a
+relocation cannot be resolved, bpf_core_patch_insn() currently poisons its
+target before checking whether that instruction is a valid relocation
+target. Malformed metadata can therefore replace jumps, calls, exits,
+register-source arithmetic, or non-immediate loads instead of failing at
+the relocation step.
 
-Fixes: e3720f92e023 ("ASoC: SOF: avoid a NULL dereference with unsupported widgets")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/alsa-devel/4826f662-42f0-4a82-ba32-8bf5f8a03256@kili.mountain/
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Rule: 'Cc: stable@vger.kernel.org' or 'commit <sha1> upstream.'
-Link: https://lore.kernel.org/r/20230403090909.18233-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Handle poisoning only after the instruction has passed the same class and
+operand-form checks used for a resolved relocation. Route invalid forms
+through the existing diagnostic and return a hard error. Keep poisoning
+supported instructions, including both halves of a plain ldimm64, so an
+unresolved relocation in dead code remains valid.
 
-[ Backport to 6.1.y follow-up to e3720f92e023: replace its (efault)
-  pointer formatting with source/sink diagnostics; only hunk locations
-  differ. ]
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Extend bpf_core_poison_insn() to poison both halves of ldimm64, and return
+its status directly from each validated instruction case. This avoids
+routing the success path through a common label and leaves the helper free
+to report errors.
+
+The shared relocation code applies this restriction to both libbpf and
+in-kernel CO-RE.
+
+Fixes: d7a252708dbc ("libbpf: Improve handling of failed CO-RE relocations")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260917233222.2542500-7-memxor@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/lib/bpf/relo_core.c | 58 +++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 27 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index 9540ba6ef659e..ee6f6edec970c 100644
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -1601,10 +1601,12 @@ static int sof_ipc4_route_setup(struct snd_sof_dev *sdev, struct snd_sof_route *
- 	int ret;
+diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
+index 701a4fc305b0a..5dec5f2d84652 100644
+--- a/tools/lib/bpf/relo_core.c
++++ b/tools/lib/bpf/relo_core.c
+@@ -965,23 +965,30 @@ static int bpf_core_calc_relo(const char *prog_name,
+ }
  
- 	if (!src_fw_module || !sink_fw_module) {
--		/* The NULL module will print as "(efault)" */
--		dev_err(sdev->dev, "source %s or sink %s widget weren't set up properly\n",
--			src_fw_module->man4_module_entry.name,
--			sink_fw_module->man4_module_entry.name);
-+		dev_err(sdev->dev,
-+			"cannot bind %s -> %s, no firmware module for: %s%s\n",
-+			src_widget->widget->name, sink_widget->widget->name,
-+			src_fw_module ? "" : " source",
-+			sink_fw_module ? "" : " sink");
+ /*
+- * Turn instruction for which CO_RE relocation failed into invalid one with
++ * Turn instruction for which CO-RE relocation failed into invalid one with
+  * distinct signature.
+  */
+-static void bpf_core_poison_insn(const char *prog_name, int relo_idx,
+-				 int insn_idx, struct bpf_insn *insn)
++static int bpf_core_poison_insn(const char *prog_name, int relo_idx,
++				struct bpf_insn *insn, int insn_idx)
+ {
+-	pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
+-		 prog_name, relo_idx, insn_idx);
+-	insn->code = BPF_JMP | BPF_CALL;
+-	insn->dst_reg = 0;
+-	insn->src_reg = 0;
+-	insn->off = 0;
+-	/* if this instruction is reachable (not a dead code),
+-	 * verifier will complain with the following message:
+-	 * invalid func unknown#195896080
+-	 */
+-	insn->imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	int insn_cnt = is_ldimm64_insn(insn) ? 2 : 1;
++	int i;
 +
- 		return -ENODEV;
- 	}
++	for (i = 0; i < insn_cnt; i++) {
++		pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
++			 prog_name, relo_idx, insn_idx + i);
++		insn[i].code = BPF_JMP | BPF_CALL;
++		insn[i].dst_reg = 0;
++		insn[i].src_reg = 0;
++		insn[i].off = 0;
++		/*
++		 * If this instruction is reachable (not dead code), the verifier
++		 * will complain with "invalid func unknown#195896080".
++		 */
++		insn[i].imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	}
++
++	return 0;
+ }
  
+ static int insn_bpf_size_to_bytes(struct bpf_insn *insn)
+@@ -1032,17 +1039,6 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 
+ 	class = BPF_CLASS(insn->code);
+ 
+-	if (res->poison) {
+-poison:
+-		/* poison second part of ldimm64 to avoid confusing error from
+-		 * verifier about "unknown opcode 00"
+-		 */
+-		if (is_ldimm64_insn(insn))
+-			bpf_core_poison_insn(prog_name, relo_idx, insn_idx + 1, insn + 1);
+-		bpf_core_poison_insn(prog_name, relo_idx, insn_idx, insn);
+-		return 0;
+-	}
+-
+ 	orig_val = res->orig_val;
+ 	new_val = res->new_val;
+ 
+@@ -1050,7 +1046,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_ALU:
+ 	case BPF_ALU64:
+ 		if (BPF_SRC(insn->code) != BPF_K)
+-			return -EINVAL;
++			goto bad_insn;
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (ALU/ALU64) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx,
+@@ -1067,6 +1065,8 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_LDX:
+ 	case BPF_ST:
+ 	case BPF_STX:
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->off != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDX/ST/STX) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx, insn_idx, insn->off, (unsigned long long)orig_val,
+@@ -1082,7 +1082,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			pr_warn("prog '%s': relo #%d: insn #%d (LDX/ST/STX) accesses field incorrectly. "
+ 				"Make sure you are accessing pointers, unsigned integers, or fields of matching type and size.\n",
+ 				prog_name, relo_idx, insn_idx);
+-			goto poison;
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		}
+ 
+ 		orig_val = insn->off;
+@@ -1125,6 +1125,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			return -EINVAL;
+ 		}
+ 
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
++
+ 		imm = (__u32)insn[0].imm | ((__u64)insn[1].imm << 32);
+ 		if (res->validate && imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDIMM64) value: got %llu, exp %llu -> %llu\n",
+@@ -1142,6 +1145,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 		break;
+ 	}
+ 	default:
++bad_insn:
+ 		pr_warn("prog '%s': relo #%d: trying to relocate unrecognized insn #%d, code:0x%x, src:0x%x, dst:0x%x, off:0x%x, imm:0x%x\n",
+ 			prog_name, relo_idx, insn_idx, insn->code,
+ 			insn->src_reg, insn->dst_reg, insn->off, insn->imm);
 -- 
 2.53.0
 
