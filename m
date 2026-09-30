@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A594409277;
-	Wed, 30 Sep 2026 19:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF4F403B1B;
+	Wed, 30 Sep 2026 19:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796832; cv=none; b=qCsA7q+fOJ/N0kKcQD3U1PsBJ2Qol2tLZAhTBYkmvEhkdgwgGZHvJ8ewq8Nvnm+Jb937qLb+EPyylJOg5b/LPmccHavqscfDhkL/9ukKBxeCmezWJLKj3tawfU0XhGID5JsqAVe9xvAftPM7hmDMuc+GjBgmoh8kqDbm/BqKGu0=
+	t=1790796835; cv=none; b=dNS2RyU1rQ5dyUBovMhIqSpmMpO1TUu19LftiXwZJqht4jyrVC8PWIcOqzfsD7uydBO/yjkReL1GcQ7SoB8sh/+FdFnG67OaYf/V8KvV5g9sTQupev5e8Ld9wZc1+QZGty/dTqHS1ADUO65J94mPIUO5nxUKFosM2lBf18gtj3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796832; c=relaxed/simple;
-	bh=4MinrT1TjsOxA4zG0cqkWOlacwdzpLNyosHxgmzBRzw=;
+	s=arc-20240116; t=1790796835; c=relaxed/simple;
+	bh=lpDo+VcNuVBWIax2Fh9Ji1sJho34LJxhKalpXyasNf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9Oj0iWm2J4hgP1Ysdx/dmozCoRvQSrVydmVPy1XRqqxVlgdqXLFGlzElzKFAO/Rl/p2HfdyeF0VKjM6tbSSrLI7rXh9BpmHvnD5Ge9KEoFZce4XP2a122osbOBhhPJx0X0vQbgRGXkNly0tviqyHfpnOpjUpR0b6muP1OkGeFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scmRnFqg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJQii3zWygdirLjHmEnt6R3gyDymDjJXa7n5RmtFZNivPnKolIGmXtVthhwomAvZtkBpYOpZ2nQuWGhHh/FP9ZXWE8B9SlIvXzt2JY7v8dJi269CnAUroAJub4GoMrc7eBpGktFr8hJUDcbUq3ElHOa7dWcg2w0IjG5DcbCNwRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkDVu8un; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scmRnFqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44F81F000FF;
-	Wed, 30 Sep 2026 19:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkDVu8un"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDBB1F00898;
+	Wed, 30 Sep 2026 19:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796831;
-	bh=yps5aqEBVCIWasx3wzB6XFS+nlMmzNT7IE0u8ZqkEbM=;
+	s=korg; t=1790796834;
+	bh=lVs3b3Nwtu4rngbuzMUqYtq4DtqehVXl/6rF4PZwD6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=scmRnFqggvR3z0pm5kBxnZugzATkT6js8v02g0pBZSHcSBTQH0PREM0vXOjgBtSeI
-	 UA/Pssk4w2sM0xyXPVN/68wEe5wRXjLmZ23NvJVjFqBGuO3kaFf9lXkIQLXHOmKoxb
-	 ZmS2hT4IOPbiUeY60Yl+dVxMNZh1VUm4iPDlPN7k=
+	b=rkDVu8unCvE8DOU47iVoDqpzfYGA9sQMNmPCspO+PxRpRL2MUm01Yo1DRTJrgEACm
+	 4iGFsEtJUF+N+W1l4WJq+n/4GRGLJHas+jAhdKJNKx05HSaVrzSqzaBfjI2vbz5FoQ
+	 ClNuZImT7GHatkk+4b4iwRmD7g540YqztjIMMF3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0996/1193] ipvs: revalidate ihl before icmp_send
-Date: Wed, 30 Sep 2026 17:28:00 +0200
-Message-ID: <20260930152456.368274100@linuxfoundation.org>
+Subject: [PATCH 6.6 1046/1193] nfc: st21nfca: validate ISO15693 inventory length
+Date: Wed, 30 Sep 2026 17:28:50 +0200
+Message-ID: <20260930152457.458571410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,48 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
+[ Upstream commit 7f2ea5ed588c03d481f0301e6c3d4240132383fb ]
 
-While the outer IP header is already pulled into the skb head, we must
-be careful and revalidate the embedded headers after reading them from
-the skb frags to prevent possible out-of-bounds access.
+The ISO15693 inventory helper removes a two-byte prefix without checking
+that it exists, then accepts a one-byte remainder before reading data[1] as
+the DSFID.
 
-One such place reported by Sashiko is ip_vs_in_icmp() where local
-process can change the ihl field and after pskb_may_pull() we can see
-larger value. Even if icmp_send() has checks to prevent out-of-bounds
-access, play safe and add check to drop the packet if the ihl field is
-changed.  As the outer headers are pulled, make sure the transport
-header is updated too, it was used before commit 7fcc2fe39fed ("net:
-icmp: avoid invalid transport header access in icmp_send tracepoint")
+Require the prefix and at least two remaining bytes before copying the UID
+data and reading the DSFID.
 
-Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
-Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7974728094d3 ("NFC: st21nfca: Add ISO15693 Reader/Writer support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830132958.6397-1-pengpeng@iscas.ac.cn
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nfc/st21nfca/core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index d15661e5a7f16..a7b495bf1985d 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1772,6 +1772,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		/* Ensure the IP header is present in headroom */
- 		if (!pskb_may_pull(skb, hlen_orig))
- 			goto ignore_tunnel;
-+		skb_set_transport_header(skb, hlen_orig);
-+		/* Before now we may used ihl from skb frag, revalidate it after
-+		 * copying it into skb head to prevent out-of-bounds access
-+		 */
-+		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
-+			goto ignore_tunnel;
- 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
- 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
- 			type, code, ntohl(info));
+diff --git a/drivers/nfc/st21nfca/core.c b/drivers/nfc/st21nfca/core.c
+index 161caf2675cfc..7eb5e5f0686be 100644
+--- a/drivers/nfc/st21nfca/core.c
++++ b/drivers/nfc/st21nfca/core.c
+@@ -577,9 +577,7 @@ static int st21nfca_get_iso15693_inventory(struct nfc_hci_dev *hdev,
+ 	if (r < 0)
+ 		goto exit;
+ 
+-	skb_pull(inventory_skb, 2);
+-
+-	if (inventory_skb->len == 0 ||
++	if (!skb_pull(inventory_skb, 2) || inventory_skb->len < 2 ||
+ 	    inventory_skb->len > NFC_ISO15693_UID_MAXSIZE) {
+ 		r = -EPROTO;
+ 		goto exit;
 -- 
 2.53.0
 
