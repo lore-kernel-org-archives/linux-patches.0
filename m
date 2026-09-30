@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06F53CF039;
-	Wed, 30 Sep 2026 19:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B6B3CF039;
+	Wed, 30 Sep 2026 19:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795656; cv=none; b=q+PieZRf0RNipo2IA7B/4tH9BkLy4PQrS8TDJJ7ilJqOrk49jE02mJ0XLIPMu3r7xVdsKhzyiSVc6Kicub/+XOjcDO16dXNv7pKlhsq01DwGsbdOMtG4ISYHIUKowAMcgz07O3p+qAq2oUU+FKBL2cDBYh7QxJJ5cjXeQpFb4w4=
+	t=1790795658; cv=none; b=MWE+YxjSkfU63Unpj1o+X6TL6Ws4TMDPtjTN2jJfqXzcEEjnt40403UUhF3ciJUQAcXQiFsEszNw0BTO/UWCZuG+ZFAGpPVmsKtV2d1s7zCWouTeyFUTTTL1Tqm1jWbL/tpdGxs1jCmbOXSMLhx1Q9HL/yKu6L2n9U0sfI+mnWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795656; c=relaxed/simple;
-	bh=WXDLCARlb5ZRFkPWYzJV9/UYWhSMChEigOPEHw956/4=;
+	s=arc-20240116; t=1790795658; c=relaxed/simple;
+	bh=dDXmbwNuChZcMkRTn4Tj4WNJ9WlyGJUthHGxBHd84iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noM0839AhQNiMwt/V8j077/DXzZ0a06MLp0YfbjvgsmlG3ce1bPXljYgZAKSRksGyKtJ4e5fNcUxyi7gwC2spxxX3vHEvCGgQ/tm/7lW7H9LkrPlLB8GikaL9TnV7tliWDYVEMN1BuQy90ZMoMyjrgsAQ6bBh1dngzEaw1dCp1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szzY1OHk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QB7rgPhLJ9TkQHXYBumymLRfEGEtFePZZKSZRhNNzWvq5tTr7cggu0dsyuTZJwAPTAnhj/QPcpZ7nQTOBTRW8EhQbaEf+Vr/BjytbLT+sTfBC63knvadAN1kv4rX2wFTaWUx4VqBe+knSKBDURPw88XDAdx9yrQrs/lON0tqEkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNJjLun4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szzY1OHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6591F000FF;
-	Wed, 30 Sep 2026 19:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNJjLun4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DE81F000FF;
+	Wed, 30 Sep 2026 19:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795654;
-	bh=iwr/Uq+21Y7kRo/O2r1mjtpgQcwidJymOWbniDCEfxU=;
+	s=korg; t=1790795657;
+	bh=tEMI8T0mZEBjQnhbirAHYYgZfMpNl5nWzZ6asIGUUR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=szzY1OHk8p1DDVbT7tT0Fua4TMvMO787g3FZYhQ9D2qg34JbdmlfgnjSPL/DICi6T
-	 IC7oIUAj6Pg5GZSccTJOYLIADjGUnG7m/axY7OBxTG3uRQYM2Eisu4JaSmhGbEdNn1
-	 sTTLseX7LhKFoi/6B3o+Pc6CsRxJMWB0f7F1iiKg=
+	b=fNJjLun44OpXro4+OPSarIFCMlkHIvl1ECCjelVUigVLRQeViIRdjyiLhNF9Qs8Cr
+	 zsg+E+zFhTi6XmwimQFNClZT7itH/E+n3OErVF2OsdlVDLLeTUFmLnVF3WMLThuNql
+	 uOYlv9jRk2dUJID3l4ASgwMljdL6E6dIlJLIAcdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com,
+	David Carlier <devnexen@gmail.com>,
 	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.6 0637/1193] ieee802154: 6lowpan: fix NULL dereference in lowpan_newlink
-Date: Wed, 30 Sep 2026 17:22:01 +0200
-Message-ID: <20260930152448.398098964@linuxfoundation.org>
+Subject: [PATCH 6.6 0638/1193] ieee802154: hwsim: serialize pib updates to fix double-free
+Date: Wed, 30 Sep 2026 17:22:02 +0200
+Message-ID: <20260930152448.419960438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,38 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: David Carlier <devnexen@gmail.com>
 
-commit bf79662bc85e820ac3b846e2f347da29fbf6ac95 upstream.
+commit 979d5b8de8ed4e1f997aef12da5694b99be7b871 upstream.
 
-TUNSETLINK allows a TUN device to change its link-layer type to
-ARPHRD_IEEE802154 without initializing ieee802154_ptr. lowpan_newlink()
-checks only the device type before dereferencing the pointer, so an
-RTM_NEWLINK request can trigger a NULL pointer dereference.
+hwsim_update_pib() does an unserialized read-swap-free of phy->pib:
 
-Reject devices without ieee802154_ptr along with devices of the wrong type.
+	pib_old = rtnl_dereference(phy->pib);
+	...
+	rcu_assign_pointer(phy->pib, pib);
+	kfree_rcu(pib_old, rcu);
 
-Fixes: 51e0e5d8124e ("ieee802154: 6lowpan: remove multiple lowpan per wpan support")
+It assumes the RTNL is held, but ->set_channel is not always called
+under it: the mac802154 scan worker changes channels via
+drv_set_channel() without the RTNL. Such an update can race an
+RTNL-held one on the same phy; both read the same pib_old and both
+kfree_rcu() it, double-freeing the object. With SLUB percpu sheaves
+batching kfree_rcu(), this surfaces as a KASAN invalid-free in
+rcu_free_sheaf().
+
+struct hwsim_phy has no lock for pib. Add one and make the swap atomic
+with rcu_replace_pointer() under it, dropping the misleading
+rtnl_dereference().
+
+Reported-by: syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=60332fd095f8bb2946ad
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://lore.kernel.org/0b715da69bd15a86ddc47dad5cf12da648211050.1787997209.git.zhilinz@nebusec.ai
+Link: https://lore.kernel.org/20260709221858.158063-1-devnexen@gmail.com
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/6lowpan/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ieee802154/mac802154_hwsim.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/net/ieee802154/6lowpan/core.c
-+++ b/net/ieee802154/6lowpan/core.c
-@@ -146,7 +146,7 @@ static int lowpan_newlink(struct net *sr
- 	wdev = dev_get_by_index(dev_net(ldev), nla_get_u32(tb[IFLA_LINK]));
- 	if (!wdev)
- 		return -ENODEV;
--	if (wdev->type != ARPHRD_IEEE802154) {
-+	if (wdev->type != ARPHRD_IEEE802154 || !wdev->ieee802154_ptr) {
- 		dev_put(wdev);
- 		return -EINVAL;
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -72,6 +72,8 @@ struct hwsim_phy {
+ 	struct ieee802154_hw *hw;
+ 	u32 idx;
+ 
++	/* Serializes phy->pib_updates. */
++	spinlock_t pib_lock;
+ 	struct hwsim_pib __rcu *pib;
+ 
+ 	bool suspended;
+@@ -102,8 +104,6 @@ static int hwsim_update_pib(struct ieee8
+ 	if (!pib)
+ 		return -ENOMEM;
+ 
+-	pib_old = rtnl_dereference(phy->pib);
+-
+ 	pib->page = page;
+ 	pib->channel = channel;
+ 	pib->filt.short_addr = filt->short_addr;
+@@ -112,7 +112,10 @@ static int hwsim_update_pib(struct ieee8
+ 	pib->filt.pan_coord = filt->pan_coord;
+ 	pib->filt_level = filt_level;
+ 
+-	rcu_assign_pointer(phy->pib, pib);
++	spin_lock_bh(&phy->pib_lock);
++	pib_old = rcu_replace_pointer(phy->pib, pib,
++				      lockdep_is_held(&phy->pib_lock));
++	spin_unlock_bh(&phy->pib_lock);
+ 	kfree_rcu(pib_old, rcu);
+ 	return 0;
+ }
+@@ -952,6 +955,7 @@ static int hwsim_add_one(struct genl_inf
+ 		goto err_pib;
  	}
+ 
++	spin_lock_init(&phy->pib_lock);
+ 	pib->channel = 13;
+ 	pib->filt.short_addr = cpu_to_le16(IEEE802154_ADDR_BROADCAST);
+ 	pib->filt.pan_id = cpu_to_le16(IEEE802154_PANID_BROADCAST);
 
 
