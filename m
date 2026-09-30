@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585DD44F574;
-	Wed, 30 Sep 2026 17:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD7144F574;
+	Wed, 30 Sep 2026 17:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787685; cv=none; b=UQR6ySZ5H3bpxVJ0NSmpExlP7W1E9nVOs+AIIUIdtHKZhDM43A5Ro10n8FGEyczJFDECwfI7HTEKkGOHCgjxDAaes3e8hi4VfcfPVc3MtMJLpKtseCeLm7cEpMvdv4lcUBSWhyl2yV5S59kybTzf8XUWvkG3YMzMneaC3Wp03Hc=
+	t=1790787688; cv=none; b=OwTtNoK1+QbccXuRHLsrkMcVFyOdu8/FBuIAQ74SWDxnPWmm9fujRRcecqW0t6qnN+kcfhBvXg/RzIVBsjhptM6AZkjQgKy+Xfd1gqm8pCm2fuaxBUIyzI2iym8oZfUa/Jg4Mx+L7TWxxS9UJpDwpfgpS/4ErxmbjS3AWMp5d+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787685; c=relaxed/simple;
-	bh=0loVeLQJfn0BsISkbWGDyvC4VGoN8RB9v5z2X1MVJvY=;
+	s=arc-20240116; t=1790787688; c=relaxed/simple;
+	bh=V1VaITbq6VMrMHyNDe4+r4UO1ZGV9H3qglIp1t14ZRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQemY1ZFyPlfKuZQqK6oRFJMddOeiUNgXxR5dHhb7Sjf34h7ai2O8yg8+SGbD//2hQHkukNKyZ+fRTbAc4+qu7ZxSU22NzdxOn6Pbw9o2XkbCQAcIYWc4IkWTsWKOcWOtRpcI9F4zMmyPRVpcgllXCJeN9yTy/ZAyg0Y5Z/MHAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jKTy0KK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3tZAZ3/f0QejkFDXd6/e1EcWmzC9zrADpLJY3yKriHregTnOfyLu/wQ+1bFyAwtVKm+T526r1IAFjwn5Dw1gXj7LBJGwoxpXOpdT4MQbtiAhJMW5Kn0sALZR2+zoTwFRkYBsYE0d0QxyXokXiYDCTaITxi+G9O/us0JIjm75tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHu0I9ca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jKTy0KK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EE31F000FF;
-	Wed, 30 Sep 2026 17:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHu0I9ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEA31F000FF;
+	Wed, 30 Sep 2026 17:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787684;
-	bh=5SH7FmQ9LZnDAth/bKs/KkgrsfOAroIxcwLRBSojlRA=;
+	s=korg; t=1790787687;
+	bh=Syqr74s9uQZ76V7dt1E3E+UUoULRDyItABk+iN1kgz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2jKTy0KKcN5hAuA85VdOPVU89WBhXWOEGv0C1M44UmKfF8hz8CPiHuAL4GOP5i0w4
-	 gSC02K5azi5H5/rm78sWUHt6u7g9of7D6WpUM6CzknKUj7LvlsZ5//vmZvSnTvG+NI
-	 yrXEPofamwmeKJMtdfYpEea4d372cxO3xX5t8gCY=
+	b=UHu0I9capt/vk3t3WvmV5ojvncsPsM/2vy7HUv8UajDdKDOnJdUaNm025X9WTROd4
+	 mHS8Fj9lheDiK6PoIpE3/9heV+ulJOeF7uL1rKB800xP6QUhjvpwclJEmugsYHTBki
+	 amKiDVMC9v3RG5kpYN2ZCkpmQIkoY3I9ZgFmY2GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 317/457] mm/damon/core: allow esz to be set to zero
-Date: Wed, 30 Sep 2026 17:27:02 +0200
-Message-ID: <20260930152352.866451469@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Enze Li <lienze@kylinos.cn>
+Subject: [PATCH 7.2 318/457] mm/damon/core: reset invalid quota->charge_target_from
+Date: Wed, 30 Sep 2026 17:27:03 +0200
+Message-ID: <20260930152352.887555958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,53 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-commit 90179da203ba8b708c84a12a07cd44be0f346334 upstream.
+commit eb64948249781bda35de04feab5a0acc36aa9051 upstream.
 
-When the temporal quota goal tuner determines that the goal has been
-achieved (score >= 10000), it sets esz_bp to zero so that the esz becomes
-zero.  However, damos_set_effective_quota() clamps the esz to
-min_region_sz when quota->ms is set.
+DAMOS can suddenly stop working if a target process that the quota is just
+fully charged on is terminated.  Fix by catching and processing the corner
+case.
 
-This is a minor issue, the main problem is that it doesn't match the
-description in the documentation, which state that if the goal has already
-been [over-]achieved, the quota will be set to zero.
+When DAMOS quota is fully charged, the target and the region to continue
+applying the action in the next round is saved in
+damos_quota->charge_{target,addr}_from.  In the next round, DAMOS iterates
+targets and regions from the beginning.  It skips applying the action to
+the regions until it visits and skips the saved target/region.
 
-Fix this by set quota (esz) as minimum as possible.
+Virtual address space targets become invalid if the process is terminated.
+Trying to apply the scheme to invalid target is just a waste of time.
+Hence commit 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by
+skipping non-existent targets") made the logic to skip invalid targets.
+However, it does skip before the charged target/region skipping/updating.
 
-Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
-Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+Let's suppose the user runs DAMOS for multiple virtual address spaces with
+a quota.  The quota exceeded in the middle of a virtual address space.
+And the process of the address space is terminated.  Then the
+charge_target_from points to the invalid target.  The pointer update logic
+is skipped for the invalid target, so the charge_target_from is never
+updated.  DAMOS action to every target/region is skipped.  From the user's
+perspective, it would look like suddenly DAMOS has stopped working.
+
+No critical leak or crash can happen.  The user could reinstall the
+scheme.  But this makes use of DAMOS under certain setups quite
+unreliable.
+
+When the invalid target is found, further check the corner case and reset
+the pointer.
+
+This issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260910142846.172957-1-sj@kernel.org
+Link: https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org [1]
+Fixes: 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by skipping non-existent targets")
 Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # v7.1.x
+Cc: Enze Li <lienze@kylinos.cn>
+Cc: <stable@vger.kernel.org> # 7.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/damon/core.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2896,6 +2896,7 @@ static void damos_set_effective_quota(st
- 	struct damos_quota *quota = &s->quota;
- 	unsigned long throughput;
- 	unsigned long esz = ULONG_MAX;
-+	unsigned long esz_time;
- 
- 	if (!quota->ms && list_empty(&quota->goals)) {
- 		quota->esz = quota->sz;
-@@ -2916,8 +2917,8 @@ static void damos_set_effective_quota(st
- 					1000000, quota->total_charged_ns);
- 		else
- 			throughput = PAGE_SIZE * 1024;
--		esz = min(throughput * quota->ms, esz);
--		esz = max(ctx->min_region_sz, esz);
-+		esz_time = max(throughput * quota->ms, ctx->min_region_sz);
-+		esz = min(esz_time, esz);
+@@ -3047,8 +3047,15 @@ static void kdamond_apply_schemes(struct
+ 	max_region_sz = damon_region_sz_limit(c);
+ 	mutex_lock(&c->walk_control_lock);
+ 	damon_for_each_target(t, c) {
+-		if (c->ops.target_valid && c->ops.target_valid(t) == false)
++		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
++			damon_for_each_scheme(s, c) {
++				if (s->quota.charge_target_from != t)
++					continue;
++				s->quota.charge_target_from = NULL;
++				s->quota.charge_addr_from = 0;
++			}
+ 			continue;
++		}
+ 		damos_apply_target(c, t, max_region_sz);
  	}
  
- 	if (quota->sz && quota->sz < esz)
 
 
