@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7A74C33E6;
-	Wed, 30 Sep 2026 18:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3F323D7FF;
+	Wed, 30 Sep 2026 18:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793476; cv=none; b=gL2LS82K1hu1xT3kwhZXCDkjBfgSCXDmZONb9gDhvWM9z8Sf/AJbahUyl4C70Z4mrkoFa44KCkenCo/X1u936UoCRG0KHmcrtXf9JC9bhPUsXjhhxnZhIM/28OcR/LTGz3NGZoywfGk6zYK1fLgyky65ZkOAdGw6aZG0lcyoqJs=
+	t=1790793479; cv=none; b=JfJeB0qOTSm8ynvZo1uCNmxO0wALfzhm85zFqRFlo/ALnmXCQwrXOdJDq89MDGowP338voQ0sptII3qE6fNI43Kje6CJb1xo4j5vnRivJ5MKiRUVjFtXlfd0gGqvFTl4oFf4v39xxWt/B/w038kIXgZ57f21n6Y6/04YqbO3IIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793476; c=relaxed/simple;
-	bh=YpBPHJl8pPjszuWWcOhap1X4d+PxgkGXQmnZvn3SgRE=;
+	s=arc-20240116; t=1790793479; c=relaxed/simple;
+	bh=28FEwjs86rHiYUeQy8s1vkNomZtPKwrxxw10KRmN5dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjWYz33IA19/X8lkwcHdeqNO9mmHi3D/YdwfPRmcr9iHrWZbC69hjN8Fs+6B2jVtFQGZ08k/pKvoBd85eWOZ9v4aoB441eyUgJThtCOzsPByNcTUCWuHYDwhzDArkZfl403mj3PMU37mNDcDcwitmf4NQ/m8SV8n0NTSbPGokxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVzG1lRK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTBj3zL8npwJsQXtmPFIXfmP9qG5l2EfSXRSGlGu7Mj+OwuecnaJs21GlG+ldooWM4Z6eDvqiZtpT5uOFzUTSlVSw8WWQWxX6iyuwOvuL42//7kt0C5qHPNNEWruL5ipSVXS4cIICvm1iPNCiPPkxvUxSeLRjfJpy9yO6P2DzGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7Uhajjc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVzG1lRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869A81F000FF;
-	Wed, 30 Sep 2026 18:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7Uhajjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8C81F000FF;
+	Wed, 30 Sep 2026 18:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793475;
-	bh=TodXCWkdl8Wk7jLkO7PiCWI5yCu4glQgfVWPrm91tEw=;
+	s=korg; t=1790793477;
+	bh=E0x1RI18GCektQEQtW9pCOBPM5z4ER/JgioW6INBHQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XVzG1lRK8ECQQGHnTfB5KCGAd7mUfRx7gm2MneVTu2sXhjGUxGF5UjZeHswIbSFT7
-	 NE/pXBY/KW2Qa6s+p3C+Zll8GbBAeuogj1ck8VBsVv5aiKLkkZ+D+N2Kp6ZruxOhua
-	 tlAmyFkkeQ8/OoLnM/w9NP5I+qjc1XH5OyZlHErI=
+	b=e7Uhajjc2psWquI9RNv6SBFdOIJVvEEB8Y+rKGwbsfRdEKbUeCuL94vK0P1/3FxjT
+	 bYHu0o6idJPijS6QEyuesQeBZVOeKGBML/HA4PPVIuFPLIaHD7xKPA1VFp4sBjDyaM
+	 n953wIHF76+c91NBRf6cRJaRkitJnlcbYe64Rxqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 223/395] workqueue: Fix NULL current_pwq deref in flush dependency check
-Date: Wed, 30 Sep 2026 17:28:05 +0200
-Message-ID: <20260930152345.497900347@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tejun Heo <tj@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>
+Subject: [PATCH 6.18 224/395] writeback: report a Tasks-RCU quiescent state per cgwb drain pass
+Date: Wed, 30 Sep 2026 17:28:06 +0200
+Message-ID: <20260930152345.520659288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,68 +63,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit db6365ced4d5855e321f772b240c0e473bcfcdd5 upstream.
+commit 407a5d205179a4ab186571b0e16ec42725dc77bc upstream.
 
-check_flush_dependency() uses current_wq_worker() to determine whether
-the caller is a workqueue worker and then dereferences worker->current_pwq
-to test whether the current workqueue is WQ_MEM_RECLAIM.
+cleanup_offline_cgwbs_workfn() drains a dying cgwb by calling
+cleanup_offline_cgwb() until it returns false, with a cond_resched()
+between passes.  On a CONFIG_PREEMPTION kernel that cond_resched() does
+nothing: _cond_resched() is a plain "return 0", and under PREEMPT_DYNAMIC
+the full and lazy modes disable it.  Since commit 7dadeaa6e851 ("sched:
+Further restrict the preemption modes") those are the only two models on
+the architectures with PREEMPT_LAZY support, arm64 and x86 among them, so
+the drain loop never reports a Tasks-RCU quiescent state.
 
-current_wq_worker() only means that %current has PF_WQ_WORKER set. A
-kworker can reach check_flush_dependency() while it is not executing a
-work item. One such path is worker_thread() acting as the pool manager,
-where create_worker() does GFP_KERNEL allocation and the allocation path
-invokes the OOM notifier. In that state worker->current_pwq is NULL
-because current_pwq is set only by process_one_work() and cleared again
-after the work function returns.
+A worker draining a cgwb with millions of attached inodes runs for
+minutes.  On a 6.18 arm64 host in lazy mode the cgwb worker drained one
+dying cgroup's writeback domain for over 11 minutes.  A BPF program unlink
+(bpf_trampoline_unlink_prog -> bpf_trampoline_update ->
+unregister_ftrace_direct -> ftrace_shutdown -> synchronize_rcu_tasks())
+waited on that grace period while holding the trampoline mutex, 42 tasks
+queued behind it in D state, and the hung task detector fired at 614 s and
+panicked the host.  Any BPF or ftrace detach during a long drain inherits
+the drain's length.
 
-[  416.760634][  T375] Call trace:
-[  416.760638][  T375]  check_flush_dependency+0x80/0x120 (P)
-[  416.760648][  T375]  __flush_work+0x98/0x224
-[  416.760657][  T375]  flush_work+0x30/0x44
-[  416.760665][  T375]  ...
-[  416.760710][  T375]  blocking_notifier_call_chain+0x58/0xa0
-[  416.760719][  T375]  out_of_memory+0xb4/0x458
-[  416.760730][  T375]  __alloc_pages_may_oom+0x11c/0x1a8
-[  416.760739][  T375]  __alloc_pages_slowpath+0x314/0x46c
-[  416.760746][  T375]  __alloc_frozen_pages_noprof+0x110/0x1a4
-[  416.760753][  T375]  new_slab+0x12c/0x484
-[  416.760759][  T375]  ___slab_alloc+0x7a8/0xc7c
-[  416.760765][  T375]  __slab_alloc+0x74/0xd8
-[  416.760772][  T375]  __kmalloc_cache_node_noprof+0x2ac/0x304
-[  416.760779][  T375]  alloc_worker+0x28/0x60
-[  416.760785][  T375]  create_worker+0x4c/0x20c
-[  416.760790][  T375]  worker_thread+0xe8/0x2b8
-[  416.760796][  T375]  kthread+0x1a8/0x200
-[  416.760805][  T375]  ret_from_fork+0x10/0x20
+Fix this by calling cond_resched_tasks_rcu_qs() so we do not stall out
+anybody who calls sycnrhonize_rcu_tasks().  We put this in a do { } while
+loop because if we have many small cgroups cleanup_offline_cgwb() will
+return false and we will never call cond_resched_tasks_rcu_qs(), creating
+the same problem.
 
-Guard the WQ_MEM_RECLAIM-worker warning with worker->current_pwq. If the
-kworker is not currently executing a work item, there is no current
-workqueue to diagnose with that warning. The PF_MEMALLOC warning is left
-unchanged so explicit reclaim context flushing a !WQ_MEM_RECLAIM target
-is still reported.
-
-Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20260909-cgwb-tasks-rcu-qs-v1-1-967a7754771f@toxicpanda.com
+Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/bpf/9d444098-7c03-4163-af12-bd0a79a51443@paulmck-laptop/
 Assisted-by: LLM
-Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/backing-dev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -3796,7 +3796,7 @@ static void check_flush_dependency(struc
- 	WARN_ONCE(current->flags & PF_MEMALLOC,
- 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
- 		  current->pid, current->comm, target_wq->name, target_func);
--	WARN_ONCE(worker && ((worker->current_pwq->wq->flags &
-+	WARN_ONCE(worker && worker->current_pwq && ((worker->current_pwq->wq->flags &
- 			      (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM),
- 		  "workqueue: WQ_MEM_RECLAIM %s:%ps is flushing !WQ_MEM_RECLAIM %s:%ps",
- 		  worker->current_pwq->wq->name, worker->current_func,
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -910,8 +910,9 @@ static void cleanup_offline_cgwbs_workfn
+ 			continue;
+ 
+ 		spin_unlock_irq(&cgwb_lock);
+-		while (cleanup_offline_cgwb(wb))
+-			cond_resched();
++		do {
++			cond_resched_tasks_rcu_qs();
++		} while (cleanup_offline_cgwb(wb));
+ 		spin_lock_irq(&cgwb_lock);
+ 
+ 		wb_put(wb);
 
 
