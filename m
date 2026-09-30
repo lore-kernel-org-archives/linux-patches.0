@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA24BFE6D;
-	Wed, 30 Sep 2026 15:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEE34D7D26;
+	Wed, 30 Sep 2026 15:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782991; cv=none; b=NIXvyrAMfmtCMGgfDp9M51XNj+YL42t32cjcXYFGbXhqSRl1FoAYX9z5voYrCBxm5PGeFGVGlCOKAMtg3PHVKD6x32kP1DC1gNGMv/bUkbBoyS5tMQtegnMuNw+SABoETIvrn/+5iT4rS7YCPM7rjLYBaujI12XHQCtPu6Ob5lg=
+	t=1790782991; cv=none; b=K6NWmCJrWyxbdEd/wXRrlopax+s5uko1e02HACiHiSxFmk0/kew9xaPzGeyWZrG7/CA99UNAdpmnCgRWicf3jlAfDKYGAn5QlRs6XHkPeQokM+x+VINFCiYgCaA6WpbQX6/YbJlVjzMnWXM4hdzgpuIRazZnSoZ++BUIjM3iJqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782991; c=relaxed/simple;
-	bh=zneENQJ0BfWRUC1qduX5XrcamE/Jt7jIQvLQH0dAe6Y=;
+	bh=94kvGuD4RgY/VkLOvCaBMI15640S1aBKWjwygD1MzDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgpCtQaiUArTVntPv7q5/EDi4M2EIcC2WwGuO5HuvGBLKHTG9CMy2p+5FedNElXZBIb6hRx0W9XcNTS/DNIgz4JW273EBoxowhk2Mf93oxOL2p9KNe9JDjDFZ062ptv2eSiz7WsB16825JxinXY2A/62qr/phrpHlr9O+jG7mXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/7zvH+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fPoU4DTZozDhz8nsTl9csTP0s28UiD89ffKaMbA1RfQWlKmzou+UaB6iNZuAbP/fDCvt0w99hhRr84zjEfIaacrwFLXGkPJjBLJ8LaTEo67EugPZZfPCnXpiZwiAYr1yj+Cr7xo/Is2j6BhjrCKSe+FX+VECzM/pDFRjuH6FEkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14zjjIea; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/7zvH+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F16D1F000FF;
-	Wed, 30 Sep 2026 15:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14zjjIea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEF81F00893;
+	Wed, 30 Sep 2026 15:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782984;
-	bh=68N72nMvWHWKR/1ySvUoNWzDe0o2pymLPK/NyCVqITg=;
+	s=korg; t=1790782987;
+	bh=U3UO6BM4ARaYduw4PHGms6NEUj0QR2g297KPESwGp6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/7zvH+OKCR+fcZGrspkaXoHHKgIXLvMB8vy0oWpuLDqA4NfV7jC8KqLBVWN0d6YU
-	 tSaFwygSd4ZEIgcc4/0FHxntYJtounMuHWYB5JieNr08V6AsI71hajgI7vlx7RO5Yl
-	 wi67edKAm4waA2HDhdhWu/YEsBdcvRzn31hmIAYQ=
+	b=14zjjIeaRUN0H1e2UncDx8DcnA+744kaKdXq/5s3XX4U8VT5XHYOLpM7nXtB0Uy9E
+	 JV6AKXRbYYCwe/YAEA+Wd94BJXlZTVWCZVckc1PO7xfw3yVnbpy2+LrnrAwY6PcPpw
+	 kONlJsh+2naunXu6d8xBn6QZxisHVjdLb/qyGQpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 238/595] bpf: Fix NULL-ptr-deref in btf_var_show()
-Date: Wed, 30 Sep 2026 17:22:11 +0200
-Message-ID: <20260930152352.840249542@linuxfoundation.org>
+Subject: [PATCH 5.10 239/595] bonding: use skb_cow_head() in bond_do_alb_xmit() and rlb_arp_xmit()
+Date: Wed, 30 Sep 2026 17:22:12 +0200
+Message-ID: <20260930152352.860612227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,66 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5403a383f52fc0905703b488f7c3db4b2447dc58 ]
+[ Upstream commit 1746ef2e2df2ad71c66eca56364d56bde284523b ]
 
-btf_var_show() calls btf_type_id_resolve() unconditionally, which
-dereferences btf->resolved_ids. That is NULL for a base BTF - e.g. the
-vmlinux BTF that bpf_snprintf_btf() renders against - since base BTF is
-not resolved during parsing. btf_modifier_show() guards this with
-'if (btf->resolved_ids)', but btf_var_show() does not.
+In bond_do_alb_xmit() and rlb_arp_xmit(), make sure to unclone
+skb head via skb_cow_head() before modifying the source MAC address
+(Ethernet header and ARP payload) to avoid silent corruption if
+the skb is shared or cloned. Avoid caching the header pointers
+across skb_cow_head().
 
-A BPF program that passes the type_id of a BTF_KIND_VAR from the vmlinux
-BTF to bpf_snprintf_btf() thus NULL-derefs:
+In rlb_arp_xmit(), only modify arp->mac_src if it differs from
+tx_slave->dev->dev_addr to avoid an unnecessary copy and head
+reallocation.
 
-KASAN: probably user-memory-access in range [0x46638-0x4663f]
-RIP: 0010:btf_var_show (kernel/bpf/btf.c:2929)
-Call Trace:
- <TASK>
- btf_type_show (kernel/bpf/btf.c:8259)
- btf_type_snprintf_show (kernel/bpf/btf.c:8329)
- bpf_snprintf_btf (kernel/trace/bpf_trace.c:1047)
- bpf_prog_test_run_raw_tp (net/bpf/test_run.c:829)
- __sys_bpf (kernel/bpf/syscall.c:4804)
- do_syscall_64 (arch/x86/entry/syscall_64.c:84)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+Also, we should not assume mac header is set in output path.
 
-Resolve the var's type directly with btf_type_skip_modifiers() when
-resolved_ids is NULL, mirroring btf_modifier_show().
+Use skb_eth_hdr() instead of eth_hdr() to fix the issue,
+and remove now redundant skb_reset_mac_header() calls.
 
-Fixes: c4d0bfb45068 ("bpf: Add bpf_snprintf_btf helper")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260901104924.346187-4-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260903143940.1180513-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_alb.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index f3654555d1d6a..bcdd5a64c43b2 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -2457,7 +2457,15 @@ static void btf_var_show(const struct btf *btf, const struct btf_type *t,
- 			 u32 type_id, void *data, u8 bits_offset,
- 			 struct btf_show *show)
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index dff22eddc885a..b6bf69a6f2ee0 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -665,9 +665,15 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
+ 	if (arp->op_code == htons(ARPOP_REPLY)) {
+ 		/* the arp must be sent on the selected rx channel */
+ 		tx_slave = rlb_choose_channel(skb, bond, arp);
+-		if (tx_slave)
++		if (tx_slave &&
++		    !ether_addr_equal_64bits(arp->mac_src,
++					     tx_slave->dev->dev_addr)) {
++			if (unlikely(skb_cow_head(skb, 0)))
++				return NULL;
++			arp = (struct arp_pkt *)skb_network_header(skb);
+ 			bond_hw_addr_copy(arp->mac_src, tx_slave->dev->dev_addr,
+ 					  tx_slave->dev->addr_len);
++		}
+ 		netdev_dbg(bond->dev, "(slave %s): Server sent ARP Reply packet\n",
+ 			   tx_slave ? tx_slave->dev->name : "NULL");
+ 	} else if (arp->op_code == htons(ARPOP_REQUEST)) {
+@@ -1307,7 +1313,6 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 				    struct slave *tx_slave)
  {
--	t = btf_type_id_resolve(btf, &type_id);
-+	/*
-+	 * btf_type_id_resolve() dereferences btf->resolved_ids, which is NULL
-+	 * for a base BTF (e.g. the vmlinux BTF that bpf_snprintf_btf() uses).
-+	 * Resolve the var's type directly in that case.
-+	 */
-+	if (btf->resolved_ids)
-+		t = btf_type_id_resolve(btf, &type_id);
-+	else
-+		t = btf_type_skip_modifiers(btf, t->type, &type_id);
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
+-	struct ethhdr *eth_data = eth_hdr(skb);
  
- 	btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
- }
+ 	if (!tx_slave) {
+ 		/* unbalanced or unassigned, send through primary */
+@@ -1318,7 +1323,9 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 
+ 	if (tx_slave && bond_slave_can_tx(tx_slave)) {
+ 		if (tx_slave != rcu_access_pointer(bond->curr_active_slave)) {
+-			ether_addr_copy(eth_data->h_source,
++			if (unlikely(skb_cow_head(skb, 0)))
++				return bond_tx_drop(bond->dev, skb);
++			ether_addr_copy(skb_eth_hdr(skb)->h_source,
+ 					tx_slave->dev->dev_addr);
+ 		}
+ 
+@@ -1342,8 +1349,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
+ 	struct ethhdr *eth_data;
+ 	u32 hash_index;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	/* Do not TX balance any multicast or broadcast */
+ 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
+@@ -1394,8 +1400,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
+ 	u32 hash_index = 0;
+ 	int hash_size = 0;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	switch (ntohs(skb->protocol)) {
+ 	case ETH_P_IP: {
 -- 
 2.53.0
 
