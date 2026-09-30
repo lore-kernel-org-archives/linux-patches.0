@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF451616F;
-	Wed, 30 Sep 2026 18:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8663850279A;
+	Wed, 30 Sep 2026 18:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793839; cv=none; b=Asy0tnBILBnxDAVfSOqDalrAqZqgpNcwSiHZc26bFObdCg1u2CtpCZAXhHnGShwMGqWIBe9irgyyoVjyGZFg+zigC78dar0DPFGSAGqioGPzqzNePzpsmQDXQQ8ss2mvYCQTKRGPTdnouNwIjjQYy7oc+MWlIqOl7IaEWgweA28=
+	t=1790793842; cv=none; b=Z9EhZ3XoDnuoWKHnEtBW5l/2d/XnI8oUuqChp+YEpr+16Q2QGviE+uk26Fy5SXzivgigHuo8zsmkV03xQ8IZZvcVdkA9yjfjjXUXvuJPqulHUF9j/ElRlo2qr5Ee8r0XtxNZ7r+qUDeedrHSE24s/3OOXThXwbuiOFZ7F0E3sZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793839; c=relaxed/simple;
-	bh=Qj9TdM+RMOyPEaMPAnI0+SNhmj1K9+0chvHxSH18VAQ=;
+	s=arc-20240116; t=1790793842; c=relaxed/simple;
+	bh=yBCP4Uy8RqTWjUoZV2mdPDbrCB5lNwM9aRm4g2Nf9sU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qf9EngfRPNkARMoto+9RXyRT2O8zHdig2ZbiGgFniAmsm3pDBwB6oYWvpGtvFWlCB1e5lgNHSQrSl+a0sTQ13T+l/+kUmUrijfpMKc4vCzuxV+uVf3TqKcEgBT7TcKy0jl7mhtEh922eW8v2vlnH4iCY/1eofNXP31diZt8CGWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H++UFK7Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u0YVLo4LEW8u5NIWFAJCNCQdb8vwy34OVMAq7Wh98k3V6pcOc54VmsOPvd4W3BRn0TdiB3inaY1xQMYxiF++j+ZCfYtQteoTxxM7YI4kryd1DdwjCk6ZYO1M/4tRlUm3+HLJ0bU15ebisWWfSD2CYb9rTESUqv1M1I8K3BY9DHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7KG0EAs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H++UFK7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A441F000FF;
-	Wed, 30 Sep 2026 18:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7KG0EAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA251F000FF;
+	Wed, 30 Sep 2026 18:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793838;
-	bh=DiulsmjJuGs/dE89ID00hVvWFsFc5ov4BSapD2nerJo=;
+	s=korg; t=1790793841;
+	bh=KqR/ipp/PIUsDRKjH41+mmBPfaYLMPM+WRX4CmzQF9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H++UFK7YkT5p2Sl61CV7i3ofC4c0XWQM/SoiyKsmVAgeawYsPlIDGSmagCdE+ulXl
-	 fNg8ew/V1lkfUjL/qhznyLzGRPr+QGEIn/37qwF5jAxav1Vzja7A3O45AT4pbuc3hp
-	 qZAAgch7USwXlIOseMy7UCNFOk56XSPdDr0ClEMc=
+	b=e7KG0EAskoewcE9TobDX0fFKG58z5yI/xKOsCUTeaF+lkHXh3TtA95G0MLTvowhI2
+	 AzFIiI0oJKd76rx5XPmt9zxnR2AlZvcTB+jVtbD6YwTbxvh3oD5JdCmExFyq7umT0M
+	 moOWDxdIQefaKMsOP1DGtfq4Kx/L5siAe3YWxdqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.18 395/395] bpf: Reject key-less BTF for hash maps
-Date: Wed, 30 Sep 2026 17:30:57 +0200
-Message-ID: <20260930152349.270988946@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 366/395] super: make iterate_supers_type() deletion-safe
+Date: Wed, 30 Sep 2026 17:30:28 +0200
+Message-ID: <20260930152348.631901136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,80 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 0895a0c0734703be5532f3883c42db95615fd98b upstream.
+[ Upstream commit 2d2a2d7aa98741b58f54cacc99b52024e4d865f9 ]
 
-map_check_btf() allows a key-less BTF (btf_key_type_id == 0) only for
-maps that have a ->map_check_btf callback, and leaves the actual
-decision to that callback. Hash maps used to have no ->map_check_btf,
-so a key-less BTF was rejected outright.
+iterate_supers_type() drops sb_lock while invoking the callback and keeps
+only a passive reference to the current superblock. That reference keeps
+the object allocated, but does not keep its s_instances node linked.
 
-That changed when htab and rhtab gained a ->map_check_btf to register a
-dtor - htab in commit 1df97a7453ee ("bpf: Register dtor for freeing
-special fields") and rhtab in commit 6905f8601298 ("bpf: Allow special
-fields in resizable hashtab"). Neither looks at the key, so a key-less
-hash map now passes map_check_btf() and gets created. Reading it back
-through bpffs feeds the key type_id 0 into btf_type_seq_show();
-btf_type_by_id() returns the void type, kind_ops[BTF_KIND_UNKN] is NULL,
-and btf_type_show() dereferences it:
+After the iterator releases s_umount, final teardown can unlink the current
+s_instances node. The iterator then advances through a reinitialized node.
+With the current hlist it stops without visiting the remaining superblocks.
+The unlink moved from generic_shutdown_super() to kill_super_notify(), but
+the cursor lifetime has been unsafe since the helper was introduced.
 
-RIP: 0010:btf_type_show+0x223/0x2e0 kernel/bpf/btf.c:8232
-RSP: 0018:ffffc9000399f868 EFLAGS: 00010206
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000028
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: ffffc9000399f970 R11: 0000000000000001 R12: ffffffff9b96b140
-R13: ffffc9000399f8e0 R14: ffff88803d393c00 R15: 0000000000000003
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000000 CR3: 000000003d213000 CR4: 0000000000352ef0
-DR0: 0000000039ae8f55 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- btf_type_seq_show_flags+0xca/0x120 kernel/bpf/btf.c:8250
- htab_map_seq_show_elem+0x12e/0x350 kernel/bpf/hashtab.c:1669
- map_seq_show+0x13d/0x1e0 kernel/bpf/inode.c:293
- traverse.part.0.constprop.0+0x107/0x650 fs/seq_file.c:112
- traverse fs/seq_file.c:99 [inline]
- seq_read_iter+0x93f/0x1270 fs/seq_file.c:196
- seq_read+0x344/0x4d0 fs/seq_file.c:163
- vfs_read+0x1e4/0xb40 fs/read_write.c:572
- ksys_pread64 fs/read_write.c:764 [inline]
- __do_sys_pread64 fs/read_write.c:772 [inline]
- __se_sys_pread64 fs/read_write.c:769 [inline]
- __x64_sys_pread64+0x1eb/0x250 fs/read_write.c:769
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x123/0x790 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The CIFS DFS lookup can consequently miss a matching superblock and return
+-EINVAL.
 
-Reject a key-less BTF in htab_map_check_btf() and rhtab_map_check_btf(),
-restoring the previous behavior.
+Move removal from fs_supers to put_super(), alongside removal from
+super_blocks, so a passive reference keeps both list nodes linked. Keep
+the filesystem module reference until then, since unlinking s_instances
+may touch type->fs_supers.
 
-Fixes: 1df97a7453ee ("bpf: Register dtor for freeing special fields")
-Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
-Reported-by: syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a8f4e88.27659fcc.2ceef7.0008.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260901104924.346187-2-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Make sget_fc() skip SB_DEAD superblocks before invoking test(), and set
+SB_DEAD under sb_lock to serialize with those callbacks. This allows
+kernfs to free its private information after kill_anon_super() returns.
+Keep matching SB_DYING superblocks until SB_DEAD is set so concurrent
+mounts still wait for teardown before retrying.
+
+Fixes: 43e15cdbefea ("new helper: iterate_supers_type()")
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Closes: https://lore.kernel.org/r/20260903013336.92081-1-kmehltretter@gmail.com
+Suggested-by: Jan Kara <jack@suse.cz>
+Cc: stable@vger.kernel.org
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
+[kmehltretter: supplied the commit message]
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260909193034.7467-1-kmehltretter@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ Adapted s_passive reference counting to s_count using the existing __put_super() helper. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/hashtab.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/kernfs/mount.c |    4 ++--
+ fs/super.c        |   43 +++++++++++++++++++++++--------------------
+ 2 files changed, 25 insertions(+), 22 deletions(-)
 
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -543,6 +543,9 @@ static int htab_map_check_btf(const stru
- {
- 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+--- a/fs/kernfs/mount.c
++++ b/fs/kernfs/mount.c
+@@ -433,8 +433,8 @@ void kernfs_kill_sb(struct super_block *
+ 	up_write(&root->kernfs_supers_rwsem);
  
-+	if (btf_type_is_void(key_type))
-+		return -EINVAL;
-+
- 	if (htab_is_prealloc(htab))
- 		return 0;
  	/*
+-	 * Remove the superblock from fs_supers/s_instances
+-	 * so we can't find it, before freeing kernfs_super_info.
++	 * Mark the superblock dead so sget_fc() can't find it,
++	 * before freeing kernfs_super_info.
+ 	 */
+ 	kill_anon_super(sb);
+ 	kfree(info);
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -404,11 +404,16 @@ fail:
+ static void __put_super(struct super_block *s)
+ {
+ 	if (!--s->s_count) {
++		struct file_system_type *type = s->s_type;
++
+ 		list_del_init(&s->s_list);
++		hlist_del_init(&s->s_instances);
+ 		WARN_ON(s->s_dentry_lru.node);
+ 		WARN_ON(s->s_inode_lru.node);
+ 		WARN_ON(s->s_mounts);
+ 		call_rcu(&s->rcu, destroy_super_rcu);
++		/* The unlink above may touch type->fs_supers, so drop it last. */
++		put_filesystem(type);
+ 	}
+ }
+ 
+@@ -435,23 +440,16 @@ static void kill_super_notify(struct sup
+ 		return;
+ 
+ 	/*
+-	 * Remove it from @fs_supers so it isn't found by new
+-	 * sget{_fc}() walkers anymore. Any concurrent mounter still
+-	 * managing to grab a temporary reference is guaranteed to
+-	 * already see SB_DYING and will wait until we notify them about
+-	 * SB_DEAD.
+-	 */
+-	spin_lock(&sb_lock);
+-	hlist_del_init(&sb->s_instances);
+-	spin_unlock(&sb_lock);
+-
+-	/*
+ 	 * Let concurrent mounts know that this thing is really dead.
+-	 * We don't need @sb->s_umount here as every concurrent caller
+-	 * will see SB_DYING and either discard the superblock or wait
+-	 * for SB_DEAD.
++	 * sget{_fc}() skips SB_DEAD superblocks and calls test() under
++	 * sb_lock, so set it under sb_lock: once we return no test()
++	 * runs on this superblock anymore and none will start. Everyone
++	 * else already saw SB_DYING and either discarded the superblock
++	 * or waits for SB_DEAD.
+ 	 */
++	spin_lock(&sb_lock);
+ 	super_wake(sb, SB_DEAD);
++	spin_unlock(&sb_lock);
+ }
+ 
+ /**
+@@ -482,7 +480,6 @@ void deactivate_locked_super(struct supe
+ 		list_lru_destroy(&s->s_dentry_lru);
+ 		list_lru_destroy(&s->s_inode_lru);
+ 
+-		put_filesystem(fs);
+ 		put_super(s);
+ 	} else {
+ 		super_unlock_excl(s);
+@@ -668,12 +665,12 @@ void generic_shutdown_super(struct super
+ 	}
+ 	/*
+ 	 * Broadcast to everyone that grabbed a temporary reference to this
+-	 * superblock before we removed it from @fs_supers that the superblock
+-	 * is dying. Every walker of @fs_supers outside of sget{_fc}() will now
+-	 * discard this superblock and treat it as dead.
++	 * superblock that it is dying. Every walker of @fs_supers outside
++	 * of sget{_fc}() will now discard this superblock and treat it as
++	 * dead.
+ 	 *
+-	 * We leave the superblock on @fs_supers so it can be found by
+-	 * sget{_fc}() until we passed sb->kill_sb().
++	 * sget{_fc}() keeps finding the superblock until SB_DEAD is set, so
++	 * a concurrent mounter waits until we passed sb->kill_sb().
+ 	 */
+ 	super_wake(sb, SB_DYING);
+ 	super_unlock_excl(sb);
+@@ -752,6 +749,9 @@ retry:
+ 	spin_lock(&sb_lock);
+ 	if (test) {
+ 		hlist_for_each_entry(old, &fc->fs_type->fs_supers, s_instances) {
++			/* Only unlinked at the last passive reference. */
++			if (super_flags(old, SB_DEAD))
++				continue;
+ 			if (test(old, fc))
+ 				goto share_extant_sb;
+ 		}
+@@ -828,6 +828,9 @@ retry:
+ 	spin_lock(&sb_lock);
+ 	if (test) {
+ 		hlist_for_each_entry(old, &type->fs_supers, s_instances) {
++			/* Only unlinked at the last passive reference. */
++			if (super_flags(old, SB_DEAD))
++				continue;
+ 			if (!test(old, data))
+ 				continue;
+ 			if (user_ns != old->s_user_ns) {
 
 
