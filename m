@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A659C5519A9;
-	Wed, 30 Sep 2026 17:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F43455295D;
+	Wed, 30 Sep 2026 17:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790152; cv=none; b=NL92lQmUlaiD9nnWMzLA2nB7Sg395mtTMVDCF94j3bpXQTNOOUuwSyt6JIp0uSs6uwalqxcF4SNRKKWE4wyeLqMw6X2ZpfTxGQ/amyEQaYkpPVpm9zkhV6z+OtTNkxOz2zrlyZS9lr6PJgqbM4U7LdjHBX22Jn0/LfiMnuWNAfo=
+	t=1790790155; cv=none; b=Kh+T/wCg9BtJpgYLWACNmFASkCGaovCc1ZGG2teqYPVkBX999m5MHOkiun+WCjv+LAyjpZX9D8oKNR52fi8MAlowaD9WGCXcDF6JTk2n9F0Jg+DvC4B+ZG4v5pBLtAOtAfuIHdsYLIZ9l11hICC8HUtC90i5qAqguOACF5ohkBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790152; c=relaxed/simple;
-	bh=uCk4/QIN2nv+e5cnBUTYi4JBdcyb2/rNvO53fKaqlhk=;
+	s=arc-20240116; t=1790790155; c=relaxed/simple;
+	bh=h+9FtRqUn34NMiV0CurSk1I6i4vnOhbZUAY4LRPfyYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UseVxYQRRj9Fu2jDdF7ifycMGLKOKn2ZcZHZxMuA4whn966ZSuJuRtIkUlG9oLsseLAhKeDEFt7Is0bdZPmaONUB4c2qn6K9X28ave9RDbGn4/5L3Bg/QGLQ0QKiL2YCMiSes1yLWzlkP/ELe4mXUdVLPRWvsfns0Rr6Xy15weo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JroIUWzG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vh89aO+wwBB5+ym8j+yr1p1rDDaSCsBr1eOZwUM30UeL3qdF0nonrdSG5FiN8H9P87cgtZw1SRGW0oftXswRmf/PypZxFJO2NLu5IxcdLiPi/dCbe7gxSHJpjaXu5c8/n1XSv6H3AMTgRS0V+2sUJpVzXi4AP1w9M2DpSNr8psI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blVjcbMQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JroIUWzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2891F000FF;
-	Wed, 30 Sep 2026 17:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blVjcbMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C976A1F00898;
+	Wed, 30 Sep 2026 17:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790150;
-	bh=tvOrySbyTH7g+qJwfhAJNCr9Jjvm9UnRt+sEjyrCBnk=;
+	s=korg; t=1790790153;
+	bh=Hto5BMY4156tk9caliEfzU24eTl5GebZaAa9l0Z3Xy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JroIUWzGTHhS/G/E8LEkmqvzxh2ONfwWEbeehacIeo0clXfy8KFGgQhqkbJuW/Ehg
-	 ECtFkPrVCSZMypChGlD9uUbmL53XyO1v0sGgbTc+BGRSumCtk/Sf/zDResyrvHpY9j
-	 3sFxItvGB4KdOu8IziBa1GKhvoOG5x8yLcf6SXGM=
+	b=blVjcbMQ6LiKOGfeA3HlA2vdiUlc9XRJ3dM+87i/Q9EYEqZb43O8UWACDTu4pB30h
+	 Rbl6cYbAKRw/GVTQhkPMLd2STl+bLXCsOeXcjak7L3KQe9WOxTa6ZYBp98XVnYA7IE
+	 /rmSAHX0FJTmWQ9sDcO2312SaA8I5jgQM88pU/B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Rounak Das <rounakdas2025@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 726/877] tracing: Undo the registration when enabling the histogram trigger fails
-Date: Wed, 30 Sep 2026 17:27:17 +0200
-Message-ID: <20260930152430.352611829@linuxfoundation.org>
+Subject: [PATCH 6.12 727/877] EDAC/altera: Use ECC manager compatible to select A10/S10 IRQ layout
+Date: Wed, 30 Sep 2026 17:27:18 +0200
+Message-ID: <20260930152430.374434505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,115 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Rounak Das <rounakdas2025@gmail.com>
 
-[ Upstream commit 92383cef66791a0c63a2f27755cadbdb2fbf270b ]
+[ Upstream commit d4486fc3098e176cb4a29fee037216484761f9ca ]
 
-Commit 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers
-list") described how a trigger that is registered but not on file->triggers
-ends up freed while still on the global named_triggers list, and moved the
-registration down so that hist_trigger_enable() follows it immediately. One
-path still gets there. hist_trigger_enable() adds the trigger and takes it
-straight back out when the event cannot be enabled:
+The SDMMC ECC IRQ layout selection uses CONFIG_64BIT to distinguish between
+Arria10 and Stratix10 paths.
 
-	list_add_tail_rcu(&data->list, &file->triggers);
+Detect the SoC once at probe via the device match table (.data) store it in
+struct altr_arria10_edac, and use it instead of CONFIG_64BIT.
 
-	update_cond_flag(file);
+This keeps the decision correct for every ECC child device (OCRAM, SD/MMC,
+etc.) and avoids any runtime compatible lookup.
 
-	if (trace_event_trigger_enable_disable(file, 1) < 0) {
-		list_del_rcu(&data->list);
-		update_cond_flag(file);
-		ret--;
-	}
-
-so the list walk in hist_unregister_trigger() matches nothing, test stays
-NULL, and the ->free() that would call del_named_trigger() is skipped.
-out_unreg falls through to out_free, which frees the trigger anyway:
-
- BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
- Read of size 8 at addr ffff8880091d3160 by task init/1
-  find_named_trigger+0xac/0xc0
-  hist_register_trigger+0xc1/0xa00
-  event_hist_trigger_parse+0x3146/0x6af0
-  event_trigger_write+0xce/0x160
- Freed by task 69:
-  kfree+0x154/0x420
-  trigger_kthread_fn+0xfd/0x160
-
-Leave the trigger where hist_unregister_trigger() can find it and let that
-undo the registration, which is the only code that knows all of what
-cmd_ops->init() took: the named list entry, the hist_pad reference, the
-reference on the trigger a named histogram is shared with, and the copied
-cmd_ops. It also pairs the failed trace_event_trigger_enable_disable(),
-whose sm_ref and buffered event reference are otherwise left behind.
-
-Since ->free() releases trigger_data and, for a trigger that does not share
-its histogram, hist_data with it, out_unreg can no longer fall through to
-out_free. For a trigger that does share, hist_register_trigger() has
-already destroyed the caller's hist_data, so the fall-through was reading
-freed memory there as well.
-
-Move the enable_timestamps check in hist_unregister_trigger() above the
-->free() call for the same reason: hist_data does not outlive it once the
-trigger being removed is the one that owns it.
-
-Cc: stable@vger.kernel.org
-Fixes: 067fe038e70f ("tracing: Add variable reference handling to hist triggers")
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-trace-kernel/20260907092944.3950E1F00A3D@smtp.kernel.org/
-Link: https://patch.msgid.link/20260907124420.607097-3-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Rounak Das <rounakdas2025@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://patch.msgid.link/20260708091135.94114-2-rounakdas2025@gmail.com
+Stable-dep-of: 9868f5c077df ("EDAC/altera: Use parent device for devres in altr_portb_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/edac/altera_edac.c |  107 ++++++++++++++++++++++-----------------------
+ drivers/edac/altera_edac.h |    1 
+ 2 files changed, 55 insertions(+), 53 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6605,11 +6605,12 @@ static int hist_trigger_enable(struct ev
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1507,6 +1507,7 @@ static int altr_portb_setup(struct altr_
+ 	int edac_idx, rc;
+ 	struct device_node *np;
+ 	const struct edac_device_prv_data *prv = &a10_sdmmceccb_data;
++	bool is_s10 = device->edac->is_s10;
  
- 	update_cond_flag(file);
+ 	rc = altr_check_ecc_deps(device);
+ 	if (rc)
+@@ -1548,15 +1549,14 @@ static int altr_portb_setup(struct altr_
  
--	if (trace_event_trigger_enable_disable(file, 1) < 0) {
--		list_del_rcu(&data->list);
--		update_cond_flag(file);
-+	/*
-+	 * On failure the caller undoes the registration, and
-+	 * hist_unregister_trigger() can only find the trigger here.
-+	 */
-+	if (trace_event_trigger_enable_disable(file, 1) < 0)
- 		ret--;
--	}
- 
- 	return ret;
- }
-@@ -6687,13 +6688,13 @@ static void hist_unregister_trigger(char
- 		}
- 	}
- 
--	if (test && test->cmd_ops->free)
--		test->cmd_ops->free(test);
--
- 	if (hist_data->enable_timestamps) {
- 		if (!hist_data->remove || test)
- 			tracing_set_filter_buffering(file->tr, false);
- 	}
+ 	/*
+ 	 * Update the PortB IRQs - A10 has 4, S10 has 2, Index accordingly
+-	 *
+-	 * FIXME: Instead of ifdefs with different architectures the driver
+-	 *        should properly use compatibles.
+ 	 */
+-#ifdef CONFIG_64BIT
+-	altdev->sb_irq = irq_of_parse_and_map(np, 1);
+-#else
+-	altdev->sb_irq = irq_of_parse_and_map(np, 2);
+-#endif
 +
-+	if (test && test->cmd_ops->free)
-+		test->cmd_ops->free(test);
- }
++	/* Using compatibles to determine the IRQ Index */
++	if (is_s10)
++		altdev->sb_irq = irq_of_parse_and_map(np, 1);
++	else
++		altdev->sb_irq = irq_of_parse_and_map(np, 2);
++
+ 	if (!altdev->sb_irq) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "Error PortB SBIRQ alloc\n");
+ 		rc = -ENODEV;
+@@ -1570,29 +1570,28 @@ static int altr_portb_setup(struct altr_
+ 		goto err_release_group_1;
+ 	}
  
- static bool hist_file_check_refs(struct trace_event_file *file)
-@@ -6898,6 +6899,8 @@ static int event_hist_trigger_parse(stru
- 	return ret;
-  out_unreg:
- 	event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
-+	/* The unregister frees trigger_data, skip out_free */
-+	goto out;
-  out_free:
- 	event_trigger_reset_filter(cmd_ops, trigger_data);
+-#ifdef CONFIG_64BIT
+-	/* Use IRQ to determine SError origin instead of assigning IRQ */
+-	rc = of_property_read_u32_index(np, "interrupts", 1, &altdev->db_irq);
+-	if (rc) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE,
+-			    "Error PortB DBIRQ alloc\n");
+-		goto err_release_group_1;
+-	}
+-#else
+-	altdev->db_irq = irq_of_parse_and_map(np, 3);
+-	if (!altdev->db_irq) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE, "Error PortB DBIRQ alloc\n");
+-		rc = -ENODEV;
+-		goto err_release_group_1;
+-	}
+-	rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
+-			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
+-			      ecc_name, altdev);
+-	if (rc) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
+-		goto err_release_group_1;
++	if (is_s10) {
++		/* Use IRQ to determine SError origin instead of assigning IRQ */
++		rc = of_property_read_u32_index(np, "interrupts", 1, &altdev->db_irq);
++		if (rc) {
++			edac_printk(KERN_ERR, EDAC_DEVICE, "Error PortB DBIRQ alloc\n");
++			goto err_release_group_1;
++		}
++	} else {
++		altdev->db_irq = irq_of_parse_and_map(np, 3);
++		if (!altdev->db_irq) {
++			edac_printk(KERN_ERR, EDAC_DEVICE, "Error PortB DBIRQ alloc\n");
++			rc = -ENODEV;
++			goto err_release_group_1;
++		}
++		rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
++				      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
++				      ecc_name, altdev);
++		if (rc) {
++			edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
++			goto err_release_group_1;
++		}
+ 	}
+-#endif
  
+ 	rc = edac_device_add_device(dci);
+ 	if (rc) {
+@@ -1974,29 +1973,29 @@ static int altr_edac_a10_device_add(stru
+ 		goto err_release_group1;
+ 	}
+ 
+-#ifdef CONFIG_64BIT
+-	/* Use IRQ to determine SError origin instead of assigning IRQ */
+-	rc = of_property_read_u32_index(np, "interrupts", 0, &altdev->db_irq);
+-	if (rc) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE,
+-			    "Unable to parse DB IRQ index\n");
+-		goto err_release_group1;
+-	}
+-#else
+-	altdev->db_irq = irq_of_parse_and_map(np, 1);
+-	if (!altdev->db_irq) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE, "Error allocating DBIRQ\n");
+-		rc = -ENODEV;
+-		goto err_release_group1;
+-	}
+-	rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
+-			      IRQF_TRIGGER_HIGH,
+-			      ecc_name, altdev);
+-	if (rc) {
+-		edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
+-		goto err_release_group1;
++	if (edac->is_s10) {
++		/* Use IRQ to determine SError origin instead of assigning IRQ */
++		rc = of_property_read_u32_index(np, "interrupts", 0, &altdev->db_irq);
++		if (rc) {
++			edac_printk(KERN_ERR, EDAC_DEVICE,
++				    "Unable to parse DB IRQ index\n");
++			goto err_release_group1;
++		}
++	} else {
++		altdev->db_irq = irq_of_parse_and_map(np, 1);
++		if (!altdev->db_irq) {
++			edac_printk(KERN_ERR, EDAC_DEVICE, "Error allocating DBIRQ\n");
++			rc = -ENODEV;
++			goto err_release_group1;
++		}
++		rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
++				      IRQF_TRIGGER_HIGH,
++				      ecc_name, altdev);
++		if (rc) {
++			edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
++			goto err_release_group1;
++		}
+ 	}
+-#endif
+ 
+ 	rc = edac_device_add_device(dci);
+ 	if (rc) {
+@@ -2122,6 +2121,8 @@ static int altr_edac_a10_probe(struct pl
+ 	platform_set_drvdata(pdev, edac);
+ 	INIT_LIST_HEAD(&edac->a10_ecc_devices);
+ 
++	edac->is_s10 = !!device_get_match_data(&pdev->dev);
++
+ 	edac->ecc_mgr_map =
+ 		altr_sysmgr_regmap_lookup_by_phandle(pdev->dev.of_node,
+ 						     "altr,sysmgr-syscon");
+@@ -2207,7 +2208,7 @@ static int altr_edac_a10_probe(struct pl
+ 
+ static const struct of_device_id altr_edac_a10_of_match[] = {
+ 	{ .compatible = "altr,socfpga-a10-ecc-manager" },
+-	{ .compatible = "altr,socfpga-s10-ecc-manager" },
++	{ .compatible = "altr,socfpga-s10-ecc-manager", .data = (void *)1 },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, altr_edac_a10_of_match);
+--- a/drivers/edac/altera_edac.h
++++ b/drivers/edac/altera_edac.h
+@@ -395,6 +395,7 @@ struct altr_arria10_edac {
+ 	struct irq_chip		irq_chip;
+ 	struct list_head	a10_ecc_devices;
+ 	struct notifier_block	panic_notifier;
++	bool is_s10;
+ };
+ 
+ #endif	/* #ifndef _ALTERA_EDAC_H */
 
 
