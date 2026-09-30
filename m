@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C794F355819;
-	Wed, 30 Sep 2026 17:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0B1519907;
+	Wed, 30 Sep 2026 17:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789440; cv=none; b=JNRP51B05Ww2ogBGMoq+HvGOE+w7rO7Qz7/ZEeF+A292LwEPwXeUNaMgXldcNLkZfLIRrwV1X5WmtX4vgqc5I71kF3IIJn8fftPDRjXedJ0ywCakTR24iVbYlBDDhGgb37IhzXekkcfxilKOSkhZoDLdwEHxDqteNNWyg7qwQjQ=
+	t=1790789444; cv=none; b=fi1DIOBkbCo6m5ETOagtKTphXOUeQ2DNz6OTWk6hhuMKm4ffnpsdeVyf7QNXYC73ULOGC+p1/0cXJ0tXuPgHB735XwqPBrApgERR/g2061lx3Z0VbOWqDwYdYbKkTdyWnrmZHGyWMLXWaS231244O1ELWFi858tUB2CTjwyP+GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789440; c=relaxed/simple;
-	bh=9Xi9F4rY2TVGk7swByqRkySgEEijAtXV5jjJBEW8aIE=;
+	s=arc-20240116; t=1790789444; c=relaxed/simple;
+	bh=RMcQu80CfmsAKM3zR85v4a7MFHzcsrSOvxVwECEuJgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNNXWGCLsxPh21OxCtt/lBHeIK+Zpl2xMXaBQkwhW70HnrQi1cDsoiEIrgSjZ59X2apRYGDfqiGfU8ph9ZRCI16beFmnwxlt8FxVy2OvX3IJo+6kkGulADPbTl+KFQmxxxRXVXe04Fat4LUwoqLW2QLMQaXZc9CsaXmal7iHHxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6zWeOoW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z1OVoKz5lhBj0J6sDag2A+yk6rJTDhJ4mNEF9lFfbntLD5vkv+5GBlpEOC47Vs/XglWwbHM9ArA9NnMnPrGACHgx6I0ePnZMbtoHLr5EG4+zLroGTxFWEyjtefZ8dyzzLnWiwaVFlzLpG068MuvavqmkYT9upXVVXCOyjf6OGtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IM4ZG35x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6zWeOoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7AC1F000FF;
-	Wed, 30 Sep 2026 17:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IM4ZG35x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003071F000FF;
+	Wed, 30 Sep 2026 17:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789439;
-	bh=RIF9dNkpQ06Oj3VaBopl7WCtgbWq60VZc4QLB7zs/7M=;
+	s=korg; t=1790789442;
+	bh=2Q/WKIYrJOPxVbcgIze+497lPM9xwdjkWXoHmgvEWmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6zWeOoW2JXX3maXtuqe4Wp1T5MvgXMJo5Ik53acHQ8N6MYzC4Gm3atcUo1UnF8dv
-	 zdFENvTmX9jrvEKoPvm+B2eYk5nJTFd5vpuuVfBFDtyrmjIRv4JJd8lUo0riAr6+fc
-	 vS7CvlQsRC8P+bNPKp3EtZlFvt5o8HiZSPMgMCvs=
+	b=IM4ZG35xiiDOnV0gX024s7a89F6oyXCGwErqE3dqff7nUMv2/2n3+iG98IG+I0oia
+	 jTwL7Wo4I1tbfvIxniZjdI1hwFgz7mAKG+jbVu85jbna8QTg210vabgPY/9oN0JdIx
+	 MiCKHFs8FEQr2OUtQLT81Ez1CVpK7PAMavwHEWTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Hui Peng <benquike@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 477/877] mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()
-Date: Wed, 30 Sep 2026 17:23:08 +0200
-Message-ID: <20260930152424.964078983@linuxfoundation.org>
+	Dongliang Qin <cccccccccccc777777@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 478/877] rds: ib: Clear the sg list when mapping an MR fails
+Date: Wed, 30 Sep 2026 17:23:09 +0200
+Message-ID: <20260930152424.984634888@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,50 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Dongliang Qin <cccccccccccc777777@gmail.com>
 
-commit 26cc0e69cce062cd3aa6fae33074684669c35a71 upstream.
+commit 58eb1b3325edac42dc6df72c80962bd53a3c8ca7 upstream.
 
-When a socket transmits a packet with MCTP_TAG_PREALLOC set,
-mctp_lookup_prealloc_tag() iterates over the per-netns &mns->keys list
-and matches netid, req_tag, peer_addr, and manual_alloc, without
-checking whether tmp->sk == &msk->sk. This allows any MCTP socket in the
-same network namespace to use and consume another socket's preallocated
-tag.
+rds_ib_map_frmr() stores the caller's scatterlist in the MR before DMA
+mapping and registration can fail. On failure, __rds_rdma_map() unpins
+the pages and frees the scatterlist, but rds_ib_free_frmr() can still
+return the MR to the pool with the stale pointer set.
 
-Iterate the socket's own tag list (&msk->keys via sklist) instead of the
-namespace-wide &mns->keys list in mctp_lookup_prealloc_tag(), ensuring
-that only tags allocated by msk are matched.
+This leaves the pool with a dangling scatterlist and can lead to local
+privilege escalation. KASAN detects the resulting use-after-free when the
+MR is later torn down:
 
-Tested in QEMU against Linux 7.3.0-rc3 by allocating a manual tag
-(0x18) on socket A via SIOCMCTPALLOCTAG for peer EID 9 and sending a
-4-byte message with MCTP_TAG_PREALLOC from socket B in the same network
-namespace. On the unfixed kernel, sendto(sock_b) using socket A's
-preallocated tag succeeds (ret = 4); with this patch applied,
-sendto(sock_b) fails with -ENOENT (errno = 2) while sendto(sock_a)
-succeeds (ret = 4).
+BUG: KASAN: slab-use-after-free in __rds_ib_teardown_mr
+Read of size 8
 
-Fixes: 63ed1aab3d40 ("mctp: Add SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control")
-Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Call Trace:
+ __rds_ib_teardown_mr
+ rds_ib_unreg_frmr
+ rds_ib_flush_mr_pool
+ rds_ib_flush_mrs
+ rds_free_mr
+ rds_setsockopt
+
+Store the scatterlist in the MR only after DMA mapping succeeds. If DMA
+mapping fails, return directly while the MR fields remain clear; the caller
+keeps ownership of the scatterlist and its pinned pages. If a later
+registration step fails, unmap the scatterlist and clear the MR fields
+before returning.
+
+Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Link: https://patch.msgid.link/20260921051002.1656692-1-benquike@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dongliang Qin <cccccccccccc777777@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260922031546.3874605-1-cccccccccccc777777@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/route.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rds/ib_frmr.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -775,7 +775,7 @@ static struct mctp_sk_key *mctp_lookup_p
+--- a/net/rds/ib_frmr.c
++++ b/net/rds/ib_frmr.c
+@@ -204,19 +204,16 @@ static int rds_ib_map_frmr(struct rds_ib
+ 	 */
+ 	rds_ib_teardown_mr(ibmr);
  
- 	spin_lock_irqsave(&mns->keys_lock, flags);
+-	ibmr->sg = sg;
+-	ibmr->sg_len = sg_len;
+-	ibmr->sg_dma_len = 0;
+ 	frmr->sg_byte_len = 0;
+-	WARN_ON(ibmr->sg_dma_len);
+-	ibmr->sg_dma_len = ib_dma_map_sg(dev, ibmr->sg, ibmr->sg_len,
++	ibmr->sg_dma_len = ib_dma_map_sg(dev, sg, sg_len,
+ 					 DMA_BIDIRECTIONAL);
+ 	if (unlikely(!ibmr->sg_dma_len)) {
+ 		pr_warn("RDS/IB: %s failed!\n", __func__);
+ 		return -EBUSY;
+ 	}
  
--	hlist_for_each_entry(tmp, &mns->keys, hlist) {
-+	hlist_for_each_entry(tmp, &msk->keys, sklist) {
- 		if (tmp->net != netid)
- 			continue;
+-	frmr->sg_byte_len = 0;
++	ibmr->sg = sg;
++	ibmr->sg_len = sg_len;
+ 	frmr->dma_npages = 0;
+ 	len = 0;
+ 
+@@ -264,6 +261,8 @@ out_unmap:
+ 	ib_dma_unmap_sg(rds_ibdev->dev, ibmr->sg, ibmr->sg_len,
+ 			DMA_BIDIRECTIONAL);
+ 	ibmr->sg_dma_len = 0;
++	ibmr->sg = NULL;
++	ibmr->sg_len = 0;
+ 	return ret;
+ }
  
 
 
