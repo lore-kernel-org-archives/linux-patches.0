@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7892D524AF6;
-	Wed, 30 Sep 2026 17:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5E4522F1E;
+	Wed, 30 Sep 2026 17:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791015; cv=none; b=ELcf+hr2NB+TaSa/J2oz9ZMdPKB32hBAMsogIQB+qpW0b2GHi4eUtl7f7thmkIqH95Uso8lRv8DjD+ha3UBSXS0S3PVuQsgrK/dAXOVDhGfEgptHX1P/LWS8TDa7CVqJ3EB8idTiActkogDp16FHNIIGlSlDvcDuU8BzIqkz3+g=
+	t=1790791018; cv=none; b=p+upGBRIVUvCXIVhLHsy9KZ3xvIUOU2o9mW8+6Pjb0gn1FCwLBuWecVUoVbSC7UKee2NVs5TGIdMKPh5XRO4LhCSOpBwPblCNBTWAEA4HLyglR7hwVzPluRC5xf6uSQA4emNlb0/50jOzJKwuC6WDimZJ2abxQLRozC/uZVtStg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791015; c=relaxed/simple;
-	bh=K2CcVCUD0HHClmzgKLy09iROL0NtdPuFj+/xr994Q6o=;
+	s=arc-20240116; t=1790791018; c=relaxed/simple;
+	bh=M5QHXQtaHBXUPt55Z33/MpVs81RmhyKu7t0VPE2ykZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUShSw25ONzwvBfesbyMMioTPSHKF+sMar2jYP/WewrXBjl8QVTqH0OVRBrSTT+t/Vyos8OkGIaAqZhuugPIKWXMtmIHQBjL2wP2vZOhu8wMFfbR/sxhkL90bL4KRhaNzoLJEmXz47YprpKoJJbYxhkH9StnhFpgE1Mh59tJO0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S66632qF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eHlNc6GTdQdexDWJtohhzhtZivlOa0QZ/jqzknbdtIhxIJBkt3CQU8LxGQkhJCVulJGkKJxXkZEqueEAmh06Q8jpURbRlEMsa4DtojshQg5RvNViDEv4K1TKcehxRpuVDJqfMrpnmAjjAUzORXy+QOPJjXpupogdBDoHYcm42ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6MSJogH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S66632qF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51441F000FF;
-	Wed, 30 Sep 2026 17:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6MSJogH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47011F000FF;
+	Wed, 30 Sep 2026 17:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791014;
-	bh=uHMEPYsftFpgKrNcBAT2j+6/RdcF34YaeYoMy9Pzd+g=;
+	s=korg; t=1790791017;
+	bh=wgkBcpRIP2AT8+qZ0qrTllRi//3+SfGwPjCtGkN+5xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S66632qFVt/hTSp3FXGE4vql88g3NdCEiqTaM31E1ni5HhLKsGiX1J0Ob6NuRM1wr
-	 xN2n7zBLkULEsjxFhjzb4N+4riyW1P+1WGcKkPib68v5FU+c9uvBAWHZmhOd9zTXvO
-	 zwjlzDH+pd2fmt+BoCWuR+/jB5HRhL5LE6C/yQOw=
+	b=G6MSJogH8LCGxYbYgCMZBbEEJmEeKs+FSeRV5xz5zHitt6AyhYGYhplFkxefR28DU
+	 82A/DcL6sVcrRYk64xO4o9kTL+Q0a0Af9UGBZmXiUeYN3Xu7cZP9STalR4Ggvemwq5
+	 wnZad1xlbtmXkb2gI4+X8hTYmJq0cJC1qw+elQ/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Yichao <liyichao.1@bytedance.com>,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/752] fuse: set ff->flock only on success
-Date: Wed, 30 Sep 2026 17:20:24 +0200
-Message-ID: <20260930152401.520076243@linuxfoundation.org>
+Subject: [PATCH 5.15 155/752] scsi: bfa: Reduce kernel stack usage in bfa_fcs_lport_fdmi_build_portattr_block()
+Date: Wed, 30 Sep 2026 17:20:25 +0200
+Message-ID: <20260930152401.542737477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,36 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 71947173cef279be5eed209ec28f8c11f9d73159 ]
+[ Upstream commit 57a6ed0b41677ccc5e28cc0976e495c1dfa33747 ]
 
-If FUSE_SETLK fails (e.g., due to EWOULDBLOCK), we shall not set
-FUSE_RELEASE_FLOCK_UNLOCK in fuse_file_release().
+bfa_fcs_fdmi_get_portattr() gets inlined into multiple places and has
+two fairly large variables on the stack, to the point of causing a
+warning in some randconfig builds:
 
-Reported-by: Li Yichao <liyichao.1@bytedance.com>
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+drivers/scsi/bfa/bfa_fcs_lport.c:2198:1: error: stack frame size (1560) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_portattr_block' [-Werror,-Wframe-larger-than]
+ 2198 | bfa_fcs_lport_fdmi_build_portattr_block(struct bfa_fcs_lport_fdmi_s *fdmi,
+      | ^
+drivers/scsi/bfa/bfa_fcs_lport.c:1856:1: error: stack frame size (1600) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_rhba_pyld' [-Werror,-Wframe-larger-than]
+ 1856 | bfa_fcs_lport_fdmi_build_rhba_pyld(struct bfa_fcs_lport_fdmi_s *fdmi, u8 *pyld)
+      | ^
+
+Mark the inner function as noinline_for_stack to keep it separate from
+the other variables and prevent multiple copies of the same variable to
+get inlined here.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611125601.3385418-1-arnd@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/bfa/bfa_fcs_lport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index db9211464f1e0..b6b06f760162c 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -2610,8 +2610,9 @@ static int fuse_file_flock(struct file *file, int cmd, struct file_lock *fl)
- 		struct fuse_file *ff = file->private_data;
+diff --git a/drivers/scsi/bfa/bfa_fcs_lport.c b/drivers/scsi/bfa/bfa_fcs_lport.c
+index b12afcc4b1894..58360ea4f0109 100644
+--- a/drivers/scsi/bfa/bfa_fcs_lport.c
++++ b/drivers/scsi/bfa/bfa_fcs_lport.c
+@@ -2673,7 +2673,7 @@ bfa_fcs_fdmi_get_hbaattr(struct bfa_fcs_lport_fdmi_s *fdmi,
  
- 		/* emulate flock with POSIX locks */
--		ff->flock = true;
- 		err = fuse_setlk(file, fl, 1);
-+		if (!err)
-+			ff->flock = true;
- 	}
+ }
  
- 	return err;
+-static void
++static noinline_for_stack void
+ bfa_fcs_fdmi_get_portattr(struct bfa_fcs_lport_fdmi_s *fdmi,
+ 			  struct bfa_fcs_fdmi_port_attr_s *port_attr)
+ {
 -- 
 2.53.0
 
