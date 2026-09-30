@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD38D4A8430;
-	Wed, 30 Sep 2026 18:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A734A8430;
+	Wed, 30 Sep 2026 18:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791861; cv=none; b=TziojUMko1oqKgBMYFLMlOeHWl2kHs2BONQzUANMZTPysmd7LOEKhLl1PCGVYC2+o0aQcXOU6a80NUToX1CG1AcmiKhL6TpznYMji3ggwE7wcTTU8hBIAx2d3SNhItpYgCpNrMk4Krg4JmQ+mbJZq98OzWb8pMaHrpm+3k0MzlU=
+	t=1790791863; cv=none; b=ZL7bB575Sri8bbl+xUB/pPYMpkMRNlsVJZBKMD6UPyhOgdeO6r01FBD5PJXgBfb1ZksYubYftZlT6K4X0dFlC1vQyNWnxl3vUZswFxjNIq+Bu8sjthb0Awj0EY9R8kgDhpYPt/TqwR9tZmEv1XCVj9gh8T0zw3YLaeGHECVsgaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791861; c=relaxed/simple;
-	bh=QZfYItainIok+L+kuMgtQzB7REE5XqfOCsf7kh7kjos=;
+	s=arc-20240116; t=1790791863; c=relaxed/simple;
+	bh=Qx0ESJ2P5PowJjeJ86bye9li34Om2zL+DQOI7t2jC+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgnpq1eMclUwIke5dRtQDeYy3EPfd85NvUoJFNtoMvZ217oebMtDt7oaeTis2pLIRwtGhSblrZlU7mEQC+De+OmVrcSY89N+Vt6My/spi26liXFHvU8yX4tmtH4TqyU+Y8lcHbWZMK9WDJeBBGgRCm2Q/rNrOq5u9fdPiqpHRaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKoE9D5h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XOsZDeAFHN3iH9iWlRicJ+5cPZgkIgUAkXBHOILixHuwfmje34MTc+Li5DLhxboEuJEJ41lKQG7CxtnTCrohTpZqw0lvPb4dFQ0Fs9Ld+64q4H6AI1BqTVp82371QBtCNppWxkx8c/Gg39kfkMe/NjPtyB2N2iKB3B2gJkua0Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKoQP77G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKoE9D5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3401E1F000FF;
-	Wed, 30 Sep 2026 18:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKoQP77G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1568D1F000FF;
+	Wed, 30 Sep 2026 18:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791859;
-	bh=tz1t4MJOecDKBPZN07l7/hBM778PfwaEtIyRDueFiPE=;
+	s=korg; t=1790791862;
+	bh=WSH8iribdz2tWtTYEPV5CgMt/sq/zihLdmGjH6Ge4tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fKoE9D5heYQiChu8UuQdU74V1jarWFxPk2kEeC27iqo0hZG9cGm4piOmSr0NCGov4
-	 2E+Q4PqIDTh9VcMfd9OlwDIUWNQoc3v6VyiXv5nQh3R1PSkaI8eKPdrwVSOHNNpYAd
-	 xlPqd9iV2xjguB0o1FikaTNSgLRPCMXilfRaV754=
+	b=UKoQP77GDyZE59bR48EHM7YkK5KvN7ny31ao3X3xq38OfVn0i7LlYocQyFOP6yfbl
+	 k1E410q1W0oiW4gWHwbfuKkCr/QDXV9pWTgfgiW9zg9IlbV8s4TICT52gwVPax6ktT
+	 9oAdN/YHtn74Hhb4vC+Fdt/0NnWAk2kqVwDx3008=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sergey Gorenko <sergeygo@nvidia.com>,
 	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 450/752] IB/iser: Align coding style across driver
-Date: Wed, 30 Sep 2026 17:25:20 +0200
-Message-ID: <20260930152408.016064134@linuxfoundation.org>
+Subject: [PATCH 5.15 451/752] IB/iser: Remove iser_reg_data_sg helper function
+Date: Wed, 30 Sep 2026 17:25:21 +0200
+Message-ID: <20260930152408.037022934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,595 +55,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Max Gurtovoy <mgurtovoy@nvidia.com>
 
-[ Upstream commit ca2770c65b56374374fa00c349883e67c16943de ]
+[ Upstream commit 7f68d7493ff07a0ad63f63c4a1a4e0781cec0dd2 ]
 
-The following changes were made:
-1. Align function signatures to 80 characters per line.
-2. Remove tabs for variable assignment and use 1 space instead.
-3. Don't compare to NULL in "if" clause.
-4. Remove strange indentations.
+Open coding it makes the code more readable and simple.
 
-This will ease on the maintenance of the driver for the future.
-
-Link: https://lore.kernel.org/r/20211215135721.3662-7-mgurtovoy@nvidia.com
+Link: https://lore.kernel.org/r/20220308145546.8372-2-mgurtovoy@nvidia.com
+Reviewed-by: Sergey Gorenko <sergeygo@nvidia.com>
 Signed-off-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Acked-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: d85f0f0a7c85 ("IB/iser: reject a remote invalidation of an unregistered direction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/iser/iscsi_iser.c     | 72 ++++++++------------
- drivers/infiniband/ulp/iser/iser_initiator.c | 29 +++-----
- drivers/infiniband/ulp/iser/iser_memory.c    | 58 +++++++---------
- drivers/infiniband/ulp/iser/iser_verbs.c     | 54 +++++++--------
- 4 files changed, 87 insertions(+), 126 deletions(-)
+ drivers/infiniband/ulp/iser/iser_memory.c | 31 +++++++----------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/iser/iscsi_iser.c b/drivers/infiniband/ulp/iser/iscsi_iser.c
-index ef2d165d15a8b..35c2e909f2b26 100644
---- a/drivers/infiniband/ulp/iser/iscsi_iser.c
-+++ b/drivers/infiniband/ulp/iser/iscsi_iser.c
-@@ -139,9 +139,8 @@ static int iscsi_iser_set(const char *val, const struct kernel_param *kp)
-  * Notes: In case of data length errors or iscsi PDU completion failures
-  *        this routine will signal iscsi layer of connection failure.
-  */
--void
--iscsi_iser_recv(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
--		char *rx_data, int rx_data_len)
-+void iscsi_iser_recv(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
-+		     char *rx_data, int rx_data_len)
- {
- 	int rc = 0;
- 	int datalen;
-@@ -176,8 +175,7 @@ iscsi_iser_recv(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
-  * Netes: This routine can't fail, just assign iscsi task
-  *        hdr and max hdr size.
-  */
--static int
--iscsi_iser_pdu_alloc(struct iscsi_task *task, uint8_t opcode)
-+static int iscsi_iser_pdu_alloc(struct iscsi_task *task, uint8_t opcode)
- {
- 	struct iscsi_iser_task *iser_task = task->dd_data;
- 
-@@ -198,9 +196,8 @@ iscsi_iser_pdu_alloc(struct iscsi_task *task, uint8_t opcode)
-  * state mutex to avoid dereferencing the IB device which
-  * may have already been terminated.
-  */
--int
--iser_initialize_task_headers(struct iscsi_task *task,
--			     struct iser_tx_desc *tx_desc)
-+int iser_initialize_task_headers(struct iscsi_task *task,
-+				 struct iser_tx_desc *tx_desc)
- {
- 	struct iser_conn *iser_conn = task->conn->dd_data;
- 	struct iser_device *device = iser_conn->ib_conn.device;
-@@ -237,8 +234,7 @@ iser_initialize_task_headers(struct iscsi_task *task,
-  * Return: Returns zero on success or -ENOMEM when failing
-  *         to init task headers (dma mapping error).
-  */
--static int
--iscsi_iser_task_init(struct iscsi_task *task)
-+static int iscsi_iser_task_init(struct iscsi_task *task)
- {
- 	struct iscsi_iser_task *iser_task = task->dd_data;
- 	int ret;
-@@ -272,8 +268,8 @@ iscsi_iser_task_init(struct iscsi_task *task)
-  *	xmit.
-  *
-  **/
--static int
--iscsi_iser_mtask_xmit(struct iscsi_conn *conn, struct iscsi_task *task)
-+static int iscsi_iser_mtask_xmit(struct iscsi_conn *conn,
-+				 struct iscsi_task *task)
- {
- 	int error = 0;
- 
-@@ -290,9 +286,8 @@ iscsi_iser_mtask_xmit(struct iscsi_conn *conn, struct iscsi_task *task)
- 	return error;
- }
- 
--static int
--iscsi_iser_task_xmit_unsol_data(struct iscsi_conn *conn,
--				 struct iscsi_task *task)
-+static int iscsi_iser_task_xmit_unsol_data(struct iscsi_conn *conn,
-+					   struct iscsi_task *task)
- {
- 	struct iscsi_r2t_info *r2t = &task->unsol_r2t;
- 	struct iscsi_data hdr;
-@@ -326,8 +321,7 @@ iscsi_iser_task_xmit_unsol_data(struct iscsi_conn *conn,
-  *
-  * Return: zero on success or escalates $error on failure.
-  */
--static int
--iscsi_iser_task_xmit(struct iscsi_task *task)
-+static int iscsi_iser_task_xmit(struct iscsi_task *task)
- {
- 	struct iscsi_conn *conn = task->conn;
- 	struct iscsi_iser_task *iser_task = task->dd_data;
-@@ -410,8 +404,7 @@ static void iscsi_iser_cleanup_task(struct iscsi_task *task)
-  *
-  *         In addition the error sector is marked.
-  */
--static u8
--iscsi_iser_check_protection(struct iscsi_task *task, sector_t *sector)
-+static u8 iscsi_iser_check_protection(struct iscsi_task *task, sector_t *sector)
- {
- 	struct iscsi_iser_task *iser_task = task->dd_data;
- 	enum iser_data_dir dir = iser_task->dir[ISER_DIR_IN] ?
-@@ -460,11 +453,9 @@ iscsi_iser_conn_create(struct iscsi_cls_session *cls_session,
-  *         -EINVAL in case end-point doesn't exsits anymore or iser connection
-  *         state is not UP (teardown already started).
-  */
--static int
--iscsi_iser_conn_bind(struct iscsi_cls_session *cls_session,
--		     struct iscsi_cls_conn *cls_conn,
--		     uint64_t transport_eph,
--		     int is_leading)
-+static int iscsi_iser_conn_bind(struct iscsi_cls_session *cls_session,
-+				struct iscsi_cls_conn *cls_conn,
-+				uint64_t transport_eph, int is_leading)
- {
- 	struct iscsi_conn *conn = cls_conn->dd_data;
- 	struct iser_conn *iser_conn;
-@@ -519,8 +510,7 @@ iscsi_iser_conn_bind(struct iscsi_cls_session *cls_session,
-  *        from this point iscsi must call conn_stop in session/connection
-  *        teardown so iser transport must wait for it.
-  */
--static int
--iscsi_iser_conn_start(struct iscsi_cls_conn *cls_conn)
-+static int iscsi_iser_conn_start(struct iscsi_cls_conn *cls_conn)
- {
- 	struct iscsi_conn *iscsi_conn;
- 	struct iser_conn *iser_conn;
-@@ -542,8 +532,7 @@ iscsi_iser_conn_start(struct iscsi_cls_conn *cls_conn)
-  *        handle, so we call it under iser the state lock to protect against
-  *        this kind of race.
-  */
--static void
--iscsi_iser_conn_stop(struct iscsi_cls_conn *cls_conn, int flag)
-+static void iscsi_iser_conn_stop(struct iscsi_cls_conn *cls_conn, int flag)
- {
- 	struct iscsi_conn *conn = cls_conn->dd_data;
- 	struct iser_conn *iser_conn = conn->dd_data;
-@@ -578,8 +567,7 @@ iscsi_iser_conn_stop(struct iscsi_cls_conn *cls_conn, int flag)
-  *
-  * Removes and free iscsi host.
-  */
--static void
--iscsi_iser_session_destroy(struct iscsi_cls_session *cls_session)
-+static void iscsi_iser_session_destroy(struct iscsi_cls_session *cls_session)
- {
- 	struct Scsi_Host *shost = iscsi_session_to_shost(cls_session);
- 
-@@ -588,8 +576,7 @@ iscsi_iser_session_destroy(struct iscsi_cls_session *cls_session)
- 	iscsi_host_free(shost);
- }
- 
--static inline unsigned int
--iser_dif_prot_caps(int prot_caps)
-+static inline unsigned int iser_dif_prot_caps(int prot_caps)
- {
- 	int ret = 0;
- 
-@@ -708,9 +695,8 @@ iscsi_iser_session_create(struct iscsi_endpoint *ep,
- 	return NULL;
- }
- 
--static int
--iscsi_iser_set_param(struct iscsi_cls_conn *cls_conn,
--		     enum iscsi_param param, char *buf, int buflen)
-+static int iscsi_iser_set_param(struct iscsi_cls_conn *cls_conn,
-+				enum iscsi_param param, char *buf, int buflen)
- {
- 	int value;
- 
-@@ -760,8 +746,8 @@ iscsi_iser_set_param(struct iscsi_cls_conn *cls_conn,
-  *
-  * Output connection statistics.
-  */
--static void
--iscsi_iser_conn_get_stats(struct iscsi_cls_conn *cls_conn, struct iscsi_stats *stats)
-+static void iscsi_iser_conn_get_stats(struct iscsi_cls_conn *cls_conn,
-+				      struct iscsi_stats *stats)
- {
- 	struct iscsi_conn *conn = cls_conn->dd_data;
- 
-@@ -812,9 +798,9 @@ static int iscsi_iser_get_ep_param(struct iscsi_endpoint *ep,
-  * Return: iscsi_endpoint created by iscsi layer or ERR_PTR(error)
-  *         if fails.
-  */
--static struct iscsi_endpoint *
--iscsi_iser_ep_connect(struct Scsi_Host *shost, struct sockaddr *dst_addr,
--		      int non_blocking)
-+static struct iscsi_endpoint *iscsi_iser_ep_connect(struct Scsi_Host *shost,
-+						    struct sockaddr *dst_addr,
-+						    int non_blocking)
- {
- 	int err;
- 	struct iser_conn *iser_conn;
-@@ -857,8 +843,7 @@ iscsi_iser_ep_connect(struct Scsi_Host *shost, struct sockaddr *dst_addr,
-  *         or more likely iser connection state transitioned to TEMINATING or
-  *         DOWN during the wait period.
-  */
--static int
--iscsi_iser_ep_poll(struct iscsi_endpoint *ep, int timeout_ms)
-+static int iscsi_iser_ep_poll(struct iscsi_endpoint *ep, int timeout_ms)
- {
- 	struct iser_conn *iser_conn = ep->dd_data;
- 	int rc;
-@@ -893,8 +878,7 @@ iscsi_iser_ep_poll(struct iscsi_endpoint *ep, int timeout_ms)
-  * and cleanup or actually call it immediately in case we didn't pass
-  * iscsi conn bind/start stage, thus it is safe.
-  */
--static void
--iscsi_iser_ep_disconnect(struct iscsi_endpoint *ep)
-+static void iscsi_iser_ep_disconnect(struct iscsi_endpoint *ep)
- {
- 	struct iser_conn *iser_conn = ep->dd_data;
- 
-diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
-index 9ea88dd6a414e..f5ae000db7f3d 100644
---- a/drivers/infiniband/ulp/iser/iser_initiator.c
-+++ b/drivers/infiniband/ulp/iser/iser_initiator.c
-@@ -95,11 +95,8 @@ static int iser_prepare_read_cmd(struct iscsi_task *task)
-  *  task->data[ISER_DIR_OUT].data_len, Protection size
-  *  is stored at task->prot[ISER_DIR_OUT].data_len
-  */
--static int
--iser_prepare_write_cmd(struct iscsi_task *task,
--		       unsigned int imm_sz,
--		       unsigned int unsol_sz,
--		       unsigned int edtl)
-+static int iser_prepare_write_cmd(struct iscsi_task *task, unsigned int imm_sz,
-+				  unsigned int unsol_sz, unsigned int edtl)
- {
- 	struct iscsi_iser_task *iser_task = task->dd_data;
- 	struct iser_mem_reg *mem_reg;
-@@ -160,8 +157,8 @@ iser_prepare_write_cmd(struct iscsi_task *task,
- }
- 
- /* creates a new tx descriptor and adds header regd buffer */
--static void iser_create_send_desc(struct iser_conn	*iser_conn,
--				  struct iser_tx_desc	*tx_desc)
-+static void iser_create_send_desc(struct iser_conn *iser_conn,
-+				  struct iser_tx_desc *tx_desc)
- {
- 	struct iser_device *device = iser_conn->ib_conn.device;
- 
-@@ -360,8 +357,7 @@ static inline bool iser_signal_comp(u8 sig_count)
-  * @conn: link to matching iscsi connection
-  * @task: SCSI command task
-  */
--int iser_send_command(struct iscsi_conn *conn,
--		      struct iscsi_task *task)
-+int iser_send_command(struct iscsi_conn *conn, struct iscsi_task *task)
- {
- 	struct iser_conn *iser_conn = conn->dd_data;
- 	struct iscsi_iser_task *iser_task = task->dd_data;
-@@ -434,8 +430,7 @@ int iser_send_command(struct iscsi_conn *conn,
-  * @task: SCSI command task
-  * @hdr: pointer to the LLD's iSCSI message header
-  */
--int iser_send_data_out(struct iscsi_conn *conn,
--		       struct iscsi_task *task,
-+int iser_send_data_out(struct iscsi_conn *conn, struct iscsi_task *task,
- 		       struct iscsi_data *hdr)
- {
- 	struct iser_conn *iser_conn = conn->dd_data;
-@@ -497,8 +492,7 @@ int iser_send_data_out(struct iscsi_conn *conn,
- 	return err;
- }
- 
--int iser_send_control(struct iscsi_conn *conn,
--		      struct iscsi_task *task)
-+int iser_send_control(struct iscsi_conn *conn, struct iscsi_task *task)
- {
- 	struct iser_conn *iser_conn = conn->dd_data;
- 	struct iscsi_iser_task *iser_task = task->dd_data;
-@@ -593,8 +587,7 @@ void iser_login_rsp(struct ib_cq *cq, struct ib_wc *wc)
- 	ib_conn->post_recv_buf_count--;
- }
- 
--static inline int
--iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
-+static inline int iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
- {
- 	if (unlikely((!desc->sig_protected && rkey != desc->rsc.mr->rkey) ||
- 		     (desc->sig_protected && rkey != desc->rsc.sig_mr->rkey))) {
-@@ -610,10 +603,8 @@ iser_inv_desc(struct iser_fr_desc *desc, u32 rkey)
- 	return 0;
- }
- 
--static int
--iser_check_remote_inv(struct iser_conn *iser_conn,
--		      struct ib_wc *wc,
--		      struct iscsi_hdr *hdr)
-+static int iser_check_remote_inv(struct iser_conn *iser_conn, struct ib_wc *wc,
-+				 struct iscsi_hdr *hdr)
- {
- 	if (wc->wc_flags & IB_WC_WITH_INVALIDATE) {
- 		struct iscsi_task *task;
 diff --git a/drivers/infiniband/ulp/iser/iser_memory.c b/drivers/infiniband/ulp/iser/iser_memory.c
-index c362043e7f172..620c627719953 100644
+index 620c627719953..25382d91b891e 100644
 --- a/drivers/infiniband/ulp/iser/iser_memory.c
 +++ b/drivers/infiniband/ulp/iser/iser_memory.c
-@@ -44,8 +44,7 @@ void iser_reg_comp(struct ib_cq *cq, struct ib_wc *wc)
- 	iser_err_comp(wc, "memreg");
- }
- 
--static struct iser_fr_desc *
--iser_reg_desc_get_fr(struct ib_conn *ib_conn)
-+static struct iser_fr_desc *iser_reg_desc_get_fr(struct ib_conn *ib_conn)
- {
- 	struct iser_fr_pool *fr_pool = &ib_conn->fr_pool;
- 	struct iser_fr_desc *desc;
-@@ -60,9 +59,8 @@ iser_reg_desc_get_fr(struct ib_conn *ib_conn)
- 	return desc;
- }
- 
--static void
--iser_reg_desc_put_fr(struct ib_conn *ib_conn,
--		     struct iser_fr_desc *desc)
-+static void iser_reg_desc_put_fr(struct ib_conn *ib_conn,
-+				 struct iser_fr_desc *desc)
- {
- 	struct iser_fr_pool *fr_pool = &ib_conn->fr_pool;
- 	unsigned long flags;
-@@ -73,9 +71,9 @@ iser_reg_desc_put_fr(struct ib_conn *ib_conn,
- }
- 
- int iser_dma_map_task_data(struct iscsi_iser_task *iser_task,
--			    struct iser_data_buf *data,
--			    enum iser_data_dir iser_dir,
--			    enum dma_data_direction dma_dir)
-+			   struct iser_data_buf *data,
-+			   enum iser_data_dir iser_dir,
-+			   enum dma_data_direction dma_dir)
- {
- 	struct ib_device *dev;
- 
-@@ -100,9 +98,8 @@ void iser_dma_unmap_task_data(struct iscsi_iser_task *iser_task,
- 	ib_dma_unmap_sg(dev, data->sg, data->size, dir);
- }
- 
--static int
--iser_reg_dma(struct iser_device *device, struct iser_data_buf *mem,
--	     struct iser_mem_reg *reg)
-+static int iser_reg_dma(struct iser_device *device, struct iser_data_buf *mem,
-+			struct iser_mem_reg *reg)
- {
- 	struct scatterlist *sg = mem->sg;
- 
-@@ -154,8 +151,8 @@ void iser_unreg_mem_fastreg(struct iscsi_iser_task *iser_task,
- 	reg->mem_h = NULL;
- }
- 
--static void
--iser_set_dif_domain(struct scsi_cmnd *sc, struct ib_sig_domain *domain)
-+static void iser_set_dif_domain(struct scsi_cmnd *sc,
-+				struct ib_sig_domain *domain)
- {
- 	domain->sig_type = IB_SIG_TYPE_T10_DIF;
- 	domain->sig.dif.pi_interval = scsi_prot_interval(sc);
-@@ -171,8 +168,8 @@ iser_set_dif_domain(struct scsi_cmnd *sc, struct ib_sig_domain *domain)
- 		domain->sig.dif.ref_remap = true;
- }
- 
--static int
--iser_set_sig_attrs(struct scsi_cmnd *sc, struct ib_sig_attrs *sig_attrs)
-+static int iser_set_sig_attrs(struct scsi_cmnd *sc,
-+			      struct ib_sig_attrs *sig_attrs)
- {
- 	switch (scsi_get_prot_op(sc)) {
- 	case SCSI_PROT_WRITE_INSERT:
-@@ -205,8 +202,7 @@ iser_set_sig_attrs(struct scsi_cmnd *sc, struct ib_sig_attrs *sig_attrs)
+@@ -327,40 +327,26 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
  	return 0;
  }
  
--static inline void
--iser_set_prot_checks(struct scsi_cmnd *sc, u8 *mask)
-+static inline void iser_set_prot_checks(struct scsi_cmnd *sc, u8 *mask)
+-static int iser_reg_data_sg(struct iscsi_iser_task *task,
+-			    struct iser_data_buf *mem,
+-			    struct iser_fr_desc *desc, bool use_dma_key,
+-			    struct iser_mem_reg *reg)
+-{
+-	struct iser_device *device = task->iser_conn->ib_conn.device;
+-
+-	if (use_dma_key)
+-		return iser_reg_dma(device, mem, reg);
+-
+-	return iser_fast_reg_mr(task, mem, &desc->rsc, reg);
+-}
+-
+ int iser_reg_mem_fastreg(struct iscsi_iser_task *task,
+ 			 enum iser_data_dir dir,
+ 			 bool all_imm)
  {
- 	*mask = 0;
- 	if (sc->prot_flags & SCSI_PROT_REF_CHECK)
-@@ -215,11 +211,8 @@ iser_set_prot_checks(struct scsi_cmnd *sc, u8 *mask)
- 		*mask |= IB_SIG_CHECK_GUARD;
- }
+ 	struct ib_conn *ib_conn = &task->iser_conn->ib_conn;
++	struct iser_device *device = ib_conn->device;
+ 	struct iser_data_buf *mem = &task->data[dir];
+ 	struct iser_mem_reg *reg = &task->rdma_reg[dir];
+-	struct iser_fr_desc *desc = NULL;
++	struct iser_fr_desc *desc;
+ 	bool use_dma_key;
+ 	int err;
  
--static inline void
--iser_inv_rkey(struct ib_send_wr *inv_wr,
--	      struct ib_mr *mr,
--	      struct ib_cqe *cqe,
--	      struct ib_send_wr *next_wr)
-+static inline void iser_inv_rkey(struct ib_send_wr *inv_wr, struct ib_mr *mr,
-+				 struct ib_cqe *cqe, struct ib_send_wr *next_wr)
- {
- 	inv_wr->opcode = IB_WR_LOCAL_INV;
- 	inv_wr->wr_cqe = cqe;
-@@ -229,12 +222,11 @@ iser_inv_rkey(struct ib_send_wr *inv_wr,
- 	inv_wr->next = next_wr;
- }
+ 	use_dma_key = mem->dma_nents == 1 && (all_imm || !iser_always_reg) &&
+ 		      scsi_get_prot_op(task->sc) == SCSI_PROT_NORMAL;
++	if (use_dma_key)
++		return iser_reg_dma(device, mem, reg);
  
--static int
--iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
--		struct iser_data_buf *mem,
--		struct iser_data_buf *sig_mem,
--		struct iser_reg_resources *rsc,
--		struct iser_mem_reg *sig_reg)
-+static int iser_reg_sig_mr(struct iscsi_iser_task *iser_task,
-+			   struct iser_data_buf *mem,
-+			   struct iser_data_buf *sig_mem,
-+			   struct iser_reg_resources *rsc,
-+			   struct iser_mem_reg *sig_reg)
- {
- 	struct iser_tx_desc *tx_desc = &iser_task->desc;
- 	struct ib_cqe *cqe = &iser_task->iser_conn->ib_conn.reg_cqe;
-@@ -335,12 +327,10 @@ static int iser_fast_reg_mr(struct iscsi_iser_task *iser_task,
- 	return 0;
- }
- 
--static int
--iser_reg_data_sg(struct iscsi_iser_task *task,
--		 struct iser_data_buf *mem,
--		 struct iser_fr_desc *desc,
--		 bool use_dma_key,
--		 struct iser_mem_reg *reg)
-+static int iser_reg_data_sg(struct iscsi_iser_task *task,
-+			    struct iser_data_buf *mem,
-+			    struct iser_fr_desc *desc, bool use_dma_key,
-+			    struct iser_mem_reg *reg)
- {
- 	struct iser_device *device = task->iser_conn->ib_conn.device;
- 
-diff --git a/drivers/infiniband/ulp/iser/iser_verbs.c b/drivers/infiniband/ulp/iser/iser_verbs.c
-index 8656664a15c5f..cd82f5e0f6023 100644
---- a/drivers/infiniband/ulp/iser/iser_verbs.c
-+++ b/drivers/infiniband/ulp/iser/iser_verbs.c
-@@ -264,14 +264,14 @@ static int iser_create_ib_conn_res(struct ib_conn *ib_conn)
- 	memset(&init_attr, 0, sizeof(init_attr));
- 
- 	init_attr.event_handler = iser_qp_event_callback;
--	init_attr.qp_context	= (void *)ib_conn;
--	init_attr.send_cq	= ib_conn->cq;
--	init_attr.recv_cq	= ib_conn->cq;
--	init_attr.cap.max_recv_wr  = ISER_QP_MAX_RECV_DTOS;
-+	init_attr.qp_context = (void *)ib_conn;
-+	init_attr.send_cq = ib_conn->cq;
-+	init_attr.recv_cq = ib_conn->cq;
-+	init_attr.cap.max_recv_wr = ISER_QP_MAX_RECV_DTOS;
- 	init_attr.cap.max_send_sge = 2;
- 	init_attr.cap.max_recv_sge = 1;
--	init_attr.sq_sig_type	= IB_SIGNAL_REQ_WR;
--	init_attr.qp_type	= IB_QPT_RC;
-+	init_attr.sq_sig_type = IB_SIGNAL_REQ_WR;
-+	init_attr.qp_type = IB_QPT_RC;
- 	init_attr.cap.max_send_wr = max_send_wr;
- 	if (ib_conn->pi_support)
- 		init_attr.create_flags |= IB_QP_CREATE_INTEGRITY_EN;
-@@ -282,9 +282,8 @@ static int iser_create_ib_conn_res(struct ib_conn *ib_conn)
- 		goto out_err;
- 
- 	ib_conn->qp = ib_conn->cma_id->qp;
--	iser_info("setting conn %p cma_id %p qp %p max_send_wr %d\n",
--		  ib_conn, ib_conn->cma_id,
--		  ib_conn->cma_id->qp, max_send_wr);
-+	iser_info("setting conn %p cma_id %p qp %p max_send_wr %d\n", ib_conn,
-+		  ib_conn->cma_id, ib_conn->cma_id->qp, max_send_wr);
- 	return ret;
- 
- out_err:
-@@ -312,7 +311,7 @@ struct iser_device *iser_device_find_by_ib_device(struct rdma_cm_id *cma_id)
- 			goto inc_refcnt;
- 
- 	device = kzalloc(sizeof *device, GFP_KERNEL);
--	if (device == NULL)
-+	if (!device)
- 		goto out;
- 
- 	/* assign this device to the device */
-@@ -391,8 +390,7 @@ void iser_release_work(struct work_struct *work)
-  * so the cm_id removal is out of here. It is Safe to
-  * be invoked multiple times.
-  */
--static void iser_free_ib_conn_res(struct iser_conn *iser_conn,
--				  bool destroy)
-+static void iser_free_ib_conn_res(struct iser_conn *iser_conn, bool destroy)
- {
- 	struct ib_conn *ib_conn = &iser_conn->ib_conn;
- 	struct iser_device *device = ib_conn->device;
-@@ -400,7 +398,7 @@ static void iser_free_ib_conn_res(struct iser_conn *iser_conn,
- 	iser_info("freeing conn %p cma_id %p qp %p\n",
- 		  iser_conn, ib_conn->cma_id, ib_conn->qp);
- 
--	if (ib_conn->qp != NULL) {
-+	if (ib_conn->qp) {
- 		rdma_destroy_qp(ib_conn->cma_id);
- 		ib_cq_pool_put(ib_conn->cq, ib_conn->cq_size);
- 		ib_conn->qp = NULL;
-@@ -410,7 +408,7 @@ static void iser_free_ib_conn_res(struct iser_conn *iser_conn,
- 		if (iser_conn->rx_descs)
- 			iser_free_rx_descriptors(iser_conn);
- 
--		if (device != NULL) {
-+		if (device) {
- 			iser_device_try_release(device);
- 			ib_conn->device = NULL;
- 		}
-@@ -444,7 +442,7 @@ void iser_conn_release(struct iser_conn *iser_conn)
- 	iser_free_ib_conn_res(iser_conn, true);
- 	mutex_unlock(&iser_conn->state_mutex);
- 
--	if (ib_conn->cma_id != NULL) {
-+	if (ib_conn->cma_id) {
- 		rdma_destroy_id(ib_conn->cma_id);
- 		ib_conn->cma_id = NULL;
+-	if (!use_dma_key) {
+-		desc = iser_reg_desc_get_fr(ib_conn);
+-		reg->mem_h = desc;
+-	}
+-
++	desc = iser_reg_desc_get_fr(ib_conn);
+ 	if (scsi_get_prot_op(task->sc) == SCSI_PROT_NORMAL) {
+-		err = iser_reg_data_sg(task, mem, desc, use_dma_key, reg);
++		err = iser_fast_reg_mr(task, mem, &desc->rsc, reg);
+ 		if (unlikely(err))
+ 			goto err_reg;
+ 	} else {
+@@ -372,11 +358,12 @@ int iser_reg_mem_fastreg(struct iscsi_iser_task *task,
+ 		desc->sig_protected = true;
  	}
-@@ -504,9 +502,8 @@ static void iser_connect_error(struct rdma_cm_id *cma_id)
- 	iser_conn->state = ISER_CONN_TERMINATING;
+ 
++	reg->mem_h = desc;
++
+ 	return 0;
+ 
+ err_reg:
+-	if (desc)
+-		iser_reg_desc_put_fr(ib_conn, desc);
++	iser_reg_desc_put_fr(ib_conn, desc);
+ 
+ 	return err;
  }
- 
--static void
--iser_calc_scsi_params(struct iser_conn *iser_conn,
--		      unsigned int max_sectors)
-+static void iser_calc_scsi_params(struct iser_conn *iser_conn,
-+				  unsigned int max_sectors)
- {
- 	struct iser_device *device = iser_conn->ib_conn.device;
- 	struct ib_device_attr *attr = &device->ib_device->attrs;
-@@ -544,8 +541,8 @@ iser_calc_scsi_params(struct iser_conn *iser_conn,
- static void iser_addr_handler(struct rdma_cm_id *cma_id)
- {
- 	struct iser_device *device;
--	struct iser_conn   *iser_conn;
--	struct ib_conn   *ib_conn;
-+	struct iser_conn *iser_conn;
-+	struct ib_conn *ib_conn;
- 	int    ret;
- 
- 	iser_conn = (struct iser_conn *)cma_id->context;
-@@ -592,7 +589,7 @@ static void iser_addr_handler(struct rdma_cm_id *cma_id)
- static void iser_route_handler(struct rdma_cm_id *cma_id)
- {
- 	struct rdma_conn_param conn_param;
--	int    ret;
-+	int ret;
- 	struct iser_cm_hdr req_hdr;
- 	struct iser_conn *iser_conn = (struct iser_conn *)cma_id->context;
- 	struct ib_conn *ib_conn = &iser_conn->ib_conn;
-@@ -608,9 +605,9 @@ static void iser_route_handler(struct rdma_cm_id *cma_id)
- 
- 	memset(&conn_param, 0, sizeof conn_param);
- 	conn_param.responder_resources = ib_dev->attrs.max_qp_rd_atom;
--	conn_param.initiator_depth     = 1;
--	conn_param.retry_count	       = 7;
--	conn_param.rnr_retry_count     = 6;
-+	conn_param.initiator_depth = 1;
-+	conn_param.retry_count = 7;
-+	conn_param.rnr_retry_count = 6;
- 
- 	memset(&req_hdr, 0, sizeof(req_hdr));
- 	req_hdr.flags = ISER_ZBVA_NOT_SUP;
-@@ -686,7 +683,8 @@ static void iser_cleanup_handler(struct rdma_cm_id *cma_id,
- 	complete(&iser_conn->ib_completion);
- }
- 
--static int iser_cma_handler(struct rdma_cm_id *cma_id, struct rdma_cm_event *event)
-+static int iser_cma_handler(struct rdma_cm_id *cma_id,
-+			    struct rdma_cm_event *event)
- {
- 	struct iser_conn *iser_conn;
- 	int ret = 0;
-@@ -764,10 +762,8 @@ void iser_conn_init(struct iser_conn *iser_conn)
-  * starts the process of connecting to the target
-  * sleeps until the connection is established or rejected
-  */
--int iser_connect(struct iser_conn   *iser_conn,
--		 struct sockaddr    *src_addr,
--		 struct sockaddr    *dst_addr,
--		 int                 non_blocking)
-+int iser_connect(struct iser_conn *iser_conn, struct sockaddr *src_addr,
-+		 struct sockaddr *dst_addr, int non_blocking)
- {
- 	struct ib_conn *ib_conn = &iser_conn->ib_conn;
- 	int err = 0;
 -- 
 2.53.0
 
