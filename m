@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA5502D5A;
-	Wed, 30 Sep 2026 18:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8030509F06;
+	Wed, 30 Sep 2026 18:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792207; cv=none; b=cyciIJMU1wlC6Ju6AnwCTzUlyO4DGej2MCqO93fpam4uZ/sMJacAql5GGtvXwoSrGxye8zcxpZUhk2+CQ9KqGZKj4R1/lvnzIvHWr6YgpGrEs8vip+4HLiaHnpRXZHM/K6SOEiCxo4zW+NBpAxpg34rVd+xRMiM2klq270J2nRw=
+	t=1790792210; cv=none; b=rbnETuZTGCHl7wWxSRMYLUa5J8vQsestYm/w53PqTAmHmUsgKrOH4Hubxf/G5dFSCxr7x7ziXzxA1I4UM4Mi9JvcC1K+zOs+Np/Ze+tqYjlsywLE5JI6QFFezHa7OC0HNVt+kYW9c5ttJZpogRnMsC7J5rE6Lg3g6YZWZw8R2Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792207; c=relaxed/simple;
-	bh=fi/ZKJaVkqPKdlXxuWMYLnaZExDwpP1xa6TjiV/wDCQ=;
+	s=arc-20240116; t=1790792210; c=relaxed/simple;
+	bh=1l6vkyNLCrYWvaU8GAujzIRtHXN+5+9P3A+S+a2jldY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEUHJnQ6AuIECwLGhcALCB5uhg9zZBE2/jBWnCJYQaFL8c2n62+kqNzAmsPyDD3X+a4Gf/cgRW9KGYJvxxhjMR9idIdL69L4w/IghNjMsEmGht8PbWEw9VJeabhgG9tsOs3NTdERmgQ4HPA9ckqu0/ddgKsgeSikDlgac3Wzx6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HewTx7ss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tUBk9ANs06s0Dwwh8w2kfqDBLTG1XhsEWn09T6TC7WcdwQWm/UNCdsCJobgI4W5n5TNEJ5CbxoyJEQpC7pdOATxPpYnHfPnxs1Mm6Ajkf5V1PH7ArTkiUBApriV6hQg+pjqcxvzoaCmW5RJAsjuShQIKsEindTO0Bq8l36yylKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwb425rq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HewTx7ss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9BC1F000FF;
-	Wed, 30 Sep 2026 18:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwb425rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E59B1F000FF;
+	Wed, 30 Sep 2026 18:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792205;
-	bh=s513LRVEl4shuiUHeUNL16WU9His0USgaKe83Ld8NMc=;
+	s=korg; t=1790792208;
+	bh=9I5CuDZ8oZKSPRpEeS9p6Kqpw8qrXVicBWjiPdgqxV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HewTx7ss3cn9rlgj1PzHc6cwhgv+w+GkbMDX3rPKvJKnVpebEPRRI8LN0WXavBNGI
-	 y5k9zR7E7EJRESIE1HlS8vVANgeyipJRVFm7dCI25DZAJUdvJD2eNmuUHIcty/1mOg
-	 4dJ7phZiyPnuoa9U3kNJ5+nss8GoTGiQfRHN7+jk=
+	b=hwb425rqZJlpK9IQSgKObz29YF7D4nQk8MhgAwKBdq0K/OC5bfWU3LsxoTE1MPlh+
+	 l4rwEarCrKBtp3f/ZB34C6zgjly/MQghskHa3Av5MQM3h1loJxq81vA1H17wdhMURN
+	 U7G+YRGCaL8VFBuvCPVbx5cU8dNNe9QUHHrAXxUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 574/752] wifi: wlcore: release runtime PM ref on regdomain config failure
-Date: Wed, 30 Sep 2026 17:27:24 +0200
-Message-ID: <20260930152410.716367812@linuxfoundation.org>
+Subject: [PATCH 5.15 575/752] wifi: wilc1000: fix out-of-bounds read in P2P public action frames
+Date: Wed, 30 Sep 2026 17:27:25 +0200
+Message-ID: <20260930152410.737055064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,43 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 8a1f3cf89ddcc700e25afe42cfad333059adcc94 upstream.
+commit ba6cb7c0868a412c2eb68e8efd5aa38bfb258a14 upstream.
 
-wlcore_regdomain_config() gets a runtime PM reference before sending
-the regulatory-domain command. When
-wlcore_cmd_regdomain_config_locked() fails, the function queues recovery
-and returns without dropping that reference.
+wilc_wfi_p2p_rx() and mgmt_tx() start parsing a frame once
+ieee80211_is_public_action() returns true. That helper only verifies the
+frame is long enough for the action category field, that is
+offsetofend(struct ieee80211_mgmt, u.action.category), 25 bytes. Both
+functions then read the P2P public action header up to oui_subtype at
+offset 30 and pass "size - ie_offset" to cfg80211_find_vendor_ie(), where
+ie_offset is offsetof(struct ieee80211_mgmt, u) + sizeof(*d), i.e. 32.
 
-Release the reference after handling the command result so both success
-and failure paths balance the preceding
-pm_runtime_resume_and_get(). The recovery worker takes a separate
-runtime PM reference and cannot release the reference held here.
+A public action frame of 25 to 31 bytes passes the check but is shorter
+than that 32 byte header, so oui_subtype can be read out of bounds, and
+because the length is unsigned, "size - ie_offset" underflows to a value
+close to 4 GiB. cfg80211_find_vendor_ie() takes an unsigned int length,
+so even the size_t subtraction in mgmt_tx() is truncated to the same
+value. It then walks far past the buffer searching for a vendor element
+until it reaches unmapped memory.
 
-Fixes: fa2648a34e73 ("wlcore: Add support for runtime PM")
+In the receive path the frame arrives over the air and needs no
+association, so a nearby unauthenticated device can crash the host while
+it is in P2P listen. Reject frames shorter than the P2P public action
+header in both paths before dereferencing it.
+
+Fixes: 4fb8b5aa2a11 ("staging: wilc1000: refactor p2p action frames handling API's")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260820125126.12757-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260807115230.136767-1-ali@iusegentoo.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ti/wlcore/main.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/microchip/wilc1000/cfg80211.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/wireless/ti/wlcore/main.c
-+++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -3666,10 +3666,8 @@ void wlcore_regdomain_config(struct wl12
- 	}
+--- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
++++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+@@ -1039,6 +1039,13 @@ void wilc_wfi_p2p_rx(struct wilc_vif *vi
+ 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buff, size))
+ 		goto out_rx_mgmt;
  
- 	ret = wlcore_cmd_regdomain_config_locked(wl);
--	if (ret < 0) {
-+	if (ret < 0)
- 		wl12xx_queue_recovery_work(wl);
--		goto out;
--	}
++	/* ieee80211_is_public_action() only validates up to the category
++	 * byte, so reject frames too short for the P2P public action header
++	 * before dereferencing it or computing size - ie_offset.
++	 */
++	if (size < ie_offset)
++		goto out_rx_mgmt;
++
+ 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
+ 	if (d->oui_subtype != GO_NEG_REQ && d->oui_subtype != GO_NEG_RSP &&
+ 	    d->oui_subtype != P2P_INV_REQ && d->oui_subtype != P2P_INV_RSP)
+@@ -1183,6 +1190,13 @@ static int mgmt_tx(struct wiphy *wiphy,
+ 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buf, len))
+ 		goto out_set_timeout;
  
- 	pm_runtime_mark_last_busy(wl->dev);
- 	pm_runtime_put_autosuspend(wl->dev);
++	/* ieee80211_is_public_action() only validates up to the category
++	 * byte, so reject frames too short for the P2P public action header
++	 * before dereferencing it or computing len - ie_offset.
++	 */
++	if (len < ie_offset)
++		goto out_set_timeout;
++
+ 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
+ 	if (d->oui_type != WLAN_OUI_TYPE_WFA_P2P ||
+ 	    d->oui_subtype != GO_NEG_CONF) {
 
 
