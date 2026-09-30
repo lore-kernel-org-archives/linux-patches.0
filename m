@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAA7511225;
-	Wed, 30 Sep 2026 18:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA7E50C287;
+	Wed, 30 Sep 2026 18:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792385; cv=none; b=nOnFrZcjEPQLo+yJ7nX/GJLjcoOVx7x1Xd++Y2BePXRwTqzg/vU7aTps1sAFG0GnyoZNqx5XY1vRY+cXNAE1KUYXzptpn5EbGJ7tm1drTu01370Cqrw1SFdzZPcIA4vaz1wKDaupimuUf05SdxQqbrbNnzgUUgZlvcdIE2iKmnc=
+	t=1790792388; cv=none; b=gfeqAViwpYa/KyuQhy975QT6k6RAB8pO+0kshBA1Qb5ty3gvQpWKlIMWwwSR4tlbtdUFf0mqRyOjRjsuCxnFfkwrZ8Pjx2My0J5vwRjmI0OzHi4eV69q6ZQYXzKG8g8YwcSxxmsHJgFNEwdu1eTbtc6TYjfCdRrNMxdFe6z2Nv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792385; c=relaxed/simple;
-	bh=QYqDS3xfwbIk4Krz9bPJ3ynt7ulnBTzTF1O1US1LioM=;
+	s=arc-20240116; t=1790792388; c=relaxed/simple;
+	bh=re5JRdEjHjhN+U0DstxboiPQdvcXt+6fRNJTGFff/lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlnuiqtDhmywr1XlgPgMrrQqa7l19ngrdsebutEq0M+r2k1Lb1Wzso6u33dGIVJNKVp7u2/jmkoXVbwoXHrvKD2PlQ/CXlFyO/Gw2aDud9fQqBHV8HGf/S82Ha8bQkdGstCeXR/FivA9ZLbMuCtEZybqziyiUNf6fE5QF95jVn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI18WWle; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eDyXS2H0EUu20DDAAtBDgg/O7LV5rEs0GaO0WR4T9QR53ViiWYLXZ5+36jf3u2jzd0C009dqLL+HqZtqWEl7h3hCKt0LlhLCixMOcH/5VCwF5YacU+aWxEGKU54TQxO3NtL4DN3yCjM8DAQxZojQg4ZzBkwcJLT37nkMvaywqNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzFFoum2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI18WWle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3B21F0089B;
-	Wed, 30 Sep 2026 18:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzFFoum2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759C01F000FF;
+	Wed, 30 Sep 2026 18:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792384;
-	bh=ElW/CLy9mPynwUyB9NlfrF7AxMxrXLjKH1O59PJ4qX8=;
+	s=korg; t=1790792387;
+	bh=NWLcdn46lyBLu/EYZ9e0uajJqXswv5LlnIAjyLotq+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YI18WWlejUaXE7epK8Qz3CtSm5EG9/dKJiuKiSlDcK2vK8PuA+85RHdza3hLaxVNi
-	 TRryvEoZAiE66oFGdsukOba6hCO3IuHzdtaj8HYOvRds+0WKf1peFvVeu5FLcMhNIQ
-	 qD58ab7odrTFeK09W8oXCwLgz3qUaGrQQjdsKVOI=
+	b=jzFFoum2SgsUveP84VNaQM8/rZfioRoSY1/PSoH6jj3XaJHvLUFGq9HqoO8i7ItcK
+	 IIe6vdyEmjoaCMiI96SBbQDHU6DgYgHjHGaFWZKyDlr+L7pZoPQXyJXYeEQ4tp4ZvO
+	 LiskCQjCEda4ervcALfX3tcpFpP7wlHiNJbqtY3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Pengpeng Hou <hppiscas@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 635/752] net: usb: sr9700: include receive overhead in the length check
-Date: Wed, 30 Sep 2026 17:28:25 +0200
-Message-ID: <20260930152412.009033274@linuxfoundation.org>
+Subject: [PATCH 5.15 636/752] tg3: clean up PHYLIB resources on probe failure
+Date: Wed, 30 Sep 2026 17:28:26 +0200
+Message-ID: <20260930152412.029986546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,47 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit c06bde80ae7a7b595732f7cabcb92cf08db9d56a ]
+[ Upstream commit a92e1a412c53dc0d9ad639e7abf8b3fc70a5b6ad ]
 
-The receive fixup subtracts the Ethernet CRC from the reported packet
-length, but compares that payload length against the whole remaining
-receive buffer. The following copy starts after the three-byte header,
-and the cursor advance consumes both that header and the four-byte CRC.
+tg3_get_invariants() can register an MDIO bus and connect a PHY for
+USE_PHYLIB devices. If tg3_init_one() later fails, its common error path
+releases the mappings and netdev without undoing those PHYLIB resources.
 
-Require the payload to fit after SR_RX_OVERHEAD before copying it or
-advancing to the next packet. The loop already ensures that the
-remaining buffer is larger than the overhead, so the subtraction is
-safe.
+Disconnect the PHY and unregister the MDIO bus before the remaining
+teardown. Guard PHY cleanup with USE_PHYLIB to match tg3_phy_init(), and
+call tg3_mdio_fini() unconditionally to match tg3_mdio_init(). The existing
+IS_CONNECTED and MDIOBUS_INITED flags make both helpers safe when
+initialization only completed partially.
 
-The issue was found by our static-analysis tool.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Reviewed-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Tested-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Link: https://patch.msgid.link/20260920034745.18468-1-hppiscas@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 158d7abdae85 ("tg3: Add mdio bus registration")
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260917183336.36239-1-mhun512@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 07a018585b30f..d0c3f3b01922c 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -403,7 +403,8 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		/* ignore the CRC length */
- 		len = (skb->data[1] | (skb->data[2] << 8)) - 4;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index e18e58f8258e6..b60f2bb7dfb32 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -17960,6 +17960,10 @@ static int tg3_init_one(struct pci_dev *pdev,
+ 	return 0;
  
--		if (len > ETH_FRAME_LEN || len > skb->len || len < 0)
-+		if (len > ETH_FRAME_LEN || len < 0 ||
-+		    len > skb->len - SR_RX_OVERHEAD)
- 			return 0;
- 
- 		/* the last packet of current skb */
+ err_out_apeunmap:
++	if (tg3_flag(tp, USE_PHYLIB))
++		tg3_phy_fini(tp);
++	tg3_mdio_fini(tp);
++
+ 	if (tp->aperegs) {
+ 		iounmap(tp->aperegs);
+ 		tp->aperegs = NULL;
 -- 
 2.53.0
 
