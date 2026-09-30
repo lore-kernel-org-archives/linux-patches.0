@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85874F3EB8;
-	Wed, 30 Sep 2026 15:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B023515980;
+	Wed, 30 Sep 2026 15:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782565; cv=none; b=d+GZ6ktMEkkbyVET80Is0aofhKIj8PdcZvK9pXJSmbuw3weRNr03Z+JwE9s3UZIXUj456facWJP7jWXPISmOcFOW3o2Xc/Sn5sm2ARBWhNGw/Xtr2P288TnCPFx40abluogjxUY13TkzEkiv07NbphHjNXSrIgouBYB9xuM4H+k=
+	t=1790782568; cv=none; b=IqF0oVnGyIQQw0sgvzwFYyE3mlF3AxcxpW+5sFVYHxuHUpS87HANubvLI5ZNzhg+fEVEsdMrLWub+ql1yivRQgOrBPySIoRro0Xrvcq8TR38Pe0GXK4e6jPVrE6yUa9Id7VaDEbOutSrgWzLhgFK9eIjqtPoLcjgzMNyzmGH1xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782565; c=relaxed/simple;
-	bh=oJfohvgviaP7+9cUvCS26tjgLQqKmZPn+GIomzJJNZ4=;
+	s=arc-20240116; t=1790782568; c=relaxed/simple;
+	bh=7hNopRKrO7mFXrpRop18n3y5fg5BHWtecAH488gWrdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSlth1grbLYlyTM4AcMC0+h4fE3wV1GOzK9+tbmVeJ+kg5MudinmtD6RFmTzxNn17IFOHaLDvfsGdmMlbiCtdCgT+KkbDMLEFdD0cqKoaB62ZMtc458JWxexhx9LQjGStoUb1K2fD30Blc1vVpga1khmXD7bUEahAuDb5Cgjcu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pswH2JWB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iI+2anIeYxlOSZgZ99IMzWZ34aLjcCUw5nHnsQRJTBYrxoFwH9o1E5E9d73H/LL7QGEr751sdFb3G/MvsRfm7V9ZnW1CxbXZAVwbpZOEZVQ5RqBxAega3BRGOV2EkcCA3Kz/jI+vs+vetw7nf9sVFyJAUxdCA79HFjYOx+ORLL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEIML5Wn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pswH2JWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9671F00898;
-	Wed, 30 Sep 2026 15:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEIML5Wn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD691F00899;
+	Wed, 30 Sep 2026 15:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782555;
-	bh=Sjglv/JAgMqvmrk2eI9Fh8rEudvdyZ0pQ99//vQ3GRQ=;
+	s=korg; t=1790782558;
+	bh=OGmJFZoxXUfb1LgTVtEs7OVezuxrKCWNgZX/HRAKRHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pswH2JWBVhhjPTOQ8Hszx3uNRAnhS0IO1voQZ3T1s7Xn/zFNeqdEke3uglzZS8WcU
-	 nDiX/hc4ujaFtr+u0wr0sD86heBRScgz+/Pke/Zlh5wrNjrEjQMY8gJIhJDJRRLaI+
-	 uPrOWpR7feBnDIIB5DNnF6FA8FhcEs7Bo3D5SocA=
+	b=EEIML5WnF2VfDch3ZQ628hQk4Z0trXQepAKZCnzQaArL6yFwkzLardsvKErQPMzDE
+	 Kdp+JkA3cbag/jCoYGfIR3BO9h1/cNXZf7ftxRMxbVUsPzriE/5wGP98ecAUi3WBKp
+	 N2zmnRTKF0SUl33AgInSf032GST567skznfq2CjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/595] iio: accel: mma8452: switch to non-devm request_threaded_irq()
-Date: Wed, 30 Sep 2026 17:19:41 +0200
-Message-ID: <20260930152349.632534071@linuxfoundation.org>
+Subject: [PATCH 5.10 089/595] net: ibm: emac: Reserve VLAN header in MJS limit
+Date: Wed, 30 Sep 2026 17:19:42 +0200
+Message-ID: <20260930152349.653522315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,81 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 0a6726ec20cd4c0101f2de0ca485a11676224dea ]
+[ Upstream commit 0906c117f81c2ae6e6dbfa82719f79c75e1c9325 ]
 
-Avoid using devm_request_threaded_irq() as the driver requires explicit
-error-handling path(s). Using devm_* API together with goto-based
-unwinding breaks the expected LIFO resource release model.
+The IBM EMAC programs its Maximum Jumbo Size (MJS) drop
+threshold from ndev->mtu directly. The hardware sizes the threshold
+against the L2 frame minus the ethernet header, but does not
+discount the 802.1Q tag, so a frame carrying a VLAN tag and a full
+1500-byte payload exceeds MJS by exactly 4 bytes and is dropped.
 
-Add explicit IRQ cleanup in the driver teardown paths to follow kernel
-resource management conventions.
+This is normally hidden because JPSM (and therefore the MJS check)
+only engages when the MTU is raised above ETH_DATA_LEN.  With the
+qca8k DSA tagger the conduit MTU is bumped by QCA_HDR_LEN to 1502
+during dsa_conduit_setup(), which is enough to enable JPSM and
+expose the off-by-VLAN-tag in the limit.
 
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Pad MJS by VLAN_HLEN so a VLAN-tagged full-MTU frame passes.
+
+Reported on Meraki MX60 (qca8k switch): tagged VLAN
+traffic drops at 1500-byte payload, while 1496 bytes works
+and untagged 1500 bytes works.
+
+Assisted-by: Claude:Opus-4.7
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma8452.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/ibm/emac/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index b8ab2b0627a3c..a8a145f818d8a 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -1676,18 +1676,16 @@ static int mma8452_probe(struct i2c_client *client,
- 		goto trigger_cleanup;
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index c00b9097eeea4..61cc137c54f8a 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -30,6 +30,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/crc32.h>
+ #include <linux/ethtool.h>
++#include <linux/if_vlan.h>
+ #include <linux/mii.h>
+ #include <linux/bitops.h>
+ #include <linux/workqueue.h>
+@@ -464,7 +465,7 @@ static inline u32 emac_iff2rmr(struct net_device *ndev)
  
- 	if (client->irq) {
--		ret = devm_request_threaded_irq(&client->dev,
--						client->irq,
--						NULL, mma8452_interrupt,
--						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
--						client->name, indio_dev);
-+		ret = request_threaded_irq(client->irq, NULL, mma8452_interrupt,
-+					   IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-+					   client->name, indio_dev);
- 		if (ret)
- 			goto buffer_cleanup;
+ 	if (emac_has_feature(dev, EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE)) {
+ 		r &= ~EMAC4_RMR_MJS_MASK;
+-		r |= EMAC4_RMR_MJS(ndev->mtu);
++		r |= EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN);
  	}
  
- 	ret = pm_runtime_set_active(&client->dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	pm_runtime_enable(&client->dev);
- 	pm_runtime_set_autosuspend_delay(&client->dev,
-@@ -1696,7 +1694,7 @@ static int mma8452_probe(struct i2c_client *client,
- 
- 	ret = iio_device_register(indio_dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	ret = mma8452_set_freefall_mode(data, false);
- 	if (ret < 0)
-@@ -1707,6 +1705,10 @@ static int mma8452_probe(struct i2c_client *client,
- unregister_device:
- 	iio_device_unregister(indio_dev);
- 
-+free_irq:
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- buffer_cleanup:
- 	iio_triggered_buffer_cleanup(indio_dev);
- 
-@@ -1733,6 +1735,9 @@ static int mma8452_remove(struct i2c_client *client)
- 	pm_runtime_set_suspended(&client->dev);
- 	pm_runtime_put_noidle(&client->dev);
- 
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	mma8452_trigger_cleanup(indio_dev);
- 	mma8452_standby(iio_priv(indio_dev));
+ 	return r;
 -- 
 2.53.0
 
