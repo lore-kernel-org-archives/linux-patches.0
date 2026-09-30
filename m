@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A723E4E36F3;
-	Wed, 30 Sep 2026 15:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C708D353A71;
+	Wed, 30 Sep 2026 15:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783168; cv=none; b=nKTpdgwLwO6G50WexePePREGsKYNpc1IsIfVbmkr5dRqReehhxEDDaDtKVkQqNp7+ef6BBfehmcsPBws4OsmCRDzr+eu7/eH2na2T1pRhNzj9Dt4duZBbgrFG7bcVGlkzkN/grqQ5bjiJU8DQa7RiJMss229vicA0fVg3ebz8Qc=
+	t=1790783170; cv=none; b=lTPS+YsJm20dZGJ2t7Qqkbb+sEW12c0tfpbipBAialalhXEy9axya5b7jJLKjGlG6lYaaujbqwrELmkJ2gn7OKwMOfTzUslfEl50p0VTgb9xg/bMXYE0dKTMEKSv03KQ/qJ8ydYb+YRnSiJ9A/sL/ymf/zyY3nvxtgDVViZz/5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783168; c=relaxed/simple;
-	bh=5S2WoUoBL4PfS4eECf3soIGghJl9DgAKhYOUbkua+04=;
+	s=arc-20240116; t=1790783170; c=relaxed/simple;
+	bh=dwTL7bqg+LQGqvgKTuW1FdhRqna0HdUfpw0dpovyY8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ek0yyqxMj3cFT2yhJAURG4oOZJ3ZVHq+Ch9DLprcz1Wb5my1VqMec4L60p7y8/DN7pXoOyAIiTiV3B6HNB286Blo5kAY0BWZWPIhlkrjDInr8jcLcwtcNEWVIzKLQxlbb6RFkzcI6c5kb6YwmmB9ERKb/O0eG0aM9hQ9XVIXtt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpXlB+uk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjJKQJpdoXy+Ybn5qksAEsPtsvVVO9nkJlKNAF7+W7wSgb17pk0II77eB1yceBdPVIx0MXa63UlOw+qaiPYHCjJOXDeDVGAqtat+3bV1agFmTyojvqShlq7RNCnOq8WOdIRi17mv0BVbA/0K+wn18ED49wvUdaNhYDpqKMvCDWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGpw61s9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpXlB+uk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8CA1F000FF;
-	Wed, 30 Sep 2026 15:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGpw61s9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515DA1F00893;
+	Wed, 30 Sep 2026 15:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783163;
-	bh=GnEh3BKI4SXsdQxtuM5tUg3VYynPraXMGYMRYEKjzeA=;
+	s=korg; t=1790783165;
+	bh=WJiyxR6XH037PlpEqqmWDVI843yXTCRGRsqMjts8Ong=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cpXlB+ukY33pS6cdseJp51OoSxI2ZODMI6hPLeh6Ji+gjix6ZUjpg8ki0/IY+Plrd
-	 2wXMTx3dNI94vCalxwEjyPfAzDGqi1GrLLypqgGvHkvg6NMTjsiNInOMACKxwWLb2e
-	 XabK5WIXoOz4Muk01rloLGWHNVUrzKPfMzrbY1sM=
+	b=qGpw61s9tEp7luY4AowsP1VgdZpEPzkTAht6SoSQvgYWI6H/mbpNiKrLIfBHkt53x
+	 fJFXd89P46mh2iUk0MIe0MS3TelY1oQnobzwKxSW1Nh+j5w9FcwGDMYbngEqr1UPff
+	 41qe1QpnFyNzff49vNUjv0VxlxG2KM3l7D9epLzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Peterson <benjamin@locrian.net>,
-	Jann Horn <jannh@google.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 300/595] exec: do_close_on_exec() before taking exec_update_lock
-Date: Wed, 30 Sep 2026 17:23:13 +0200
-Message-ID: <20260930152354.142322702@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 301/595] drm/i915: Fix memory leak in query_perf_config_list()
+Date: Wed, 30 Sep 2026 17:23:14 +0200
+Message-ID: <20260930152354.163355022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,80 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit e780259b54e618ceb4763fbc21314acf3565e813 upstream.
+commit cbd3dafc2003db679ccd2f6c6a2551db79657049 upstream.
 
-do_close_on_exec() currently happens while holding the exec_update_lock,
-which is used in a lot of places that access process state to
-synchronize access checks.
-I recently added another such use of exec_update_lock, causing a
-regression.
+When krealloc() fails, free the original oa_config_ids before returning
+to avoid a memory leak.
 
-do_close_on_exec() can block waiting for a reply from a filesystem.
-That means a hung filesystem can block codepaths that use
-exec_update_lock; and it also means that a FUSE filesystem which
-attempts to inspect the calling process can deadlock.
-
-To avoid such problems, move do_close_on_exec() before the
-exec_update_lock is taken, but after the FD table has been copied if
-necessary.
-
-I have looked through all the calls between the old and new position of
-the do_close_on_exec() call; there seems to be no file descriptor table
-access in between.
-
-Reported-by: Benjamin Peterson <benjamin@locrian.net>
-Closes: https://lore.kernel.org/r/f5e8166a-88be-46c5-8939-1e5227ffe4c2@app.fastmail.com
-Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260907-cloexec-before-exec-update-lock-v1-1-8018c201a7df@google.com
-Tested-by: Benjamin Peterson <benjamin@locrian.net>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 4f6ccc74a85c ("drm/i915: add support for perf configuration queries")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Cc: <stable@vger.kernel.org> # v5.5+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260823205028.178597-2-thorsten.blum@linux.dev
+(cherry picked from commit 9977e9d84f46d4f12ad35fbbc0ec4638554bce87)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/i915_query.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1268,6 +1268,20 @@ int begin_new_exec(struct linux_binprm *
- 		goto out;
+--- a/drivers/gpu/drm/i915/i915_query.c
++++ b/drivers/gpu/drm/i915/i915_query.c
+@@ -364,8 +364,10 @@ static int query_perf_config_list(struct
+ 		ids = krealloc(oa_config_ids,
+ 			       n_configs * sizeof(*oa_config_ids),
+ 			       GFP_KERNEL);
+-		if (!ids)
++		if (!ids) {
++			kfree(oa_config_ids);
+ 			return -ENOMEM;
++		}
  
- 	/*
-+	 * We have to apply CLOEXEC before we change whether the process is
-+	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
-+	 * trying to access the should-be-closed file descriptors of a process
-+	 * undergoing exec(2).
-+	 *
-+	 * This can block on filesystem ->flush() handlers, including waiting
-+	 * for FUSE daemons, so do it before exec_mmap takes the
-+	 * exec_update_lock.
-+	 * This must happen after the point of no return, and after unsharing
-+	 * the FD table.
-+	 */
-+	do_close_on_exec(me->files);
-+
-+	/*
- 	 * Must be called _before_ exec_mmap() as bprm->mm is
- 	 * not visibile until then. This also enables the update
- 	 * to be lockless.
-@@ -1315,14 +1329,6 @@ int begin_new_exec(struct linux_binprm *
- 	flush_thread();
- 	me->personality &= ~bprm->per_clear;
+ 		alloc = fetch_and_zero(&n_configs);
  
--	/*
--	 * We have to apply CLOEXEC before we change whether the process is
--	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
--	 * trying to access the should-be-closed file descriptors of a process
--	 * undergoing exec(2).
--	 */
--	do_close_on_exec(me->files);
--
- 	if (bprm->secureexec) {
- 		/* Make sure parent cannot signal privileged process. */
- 		me->pdeath_signal = 0;
 
 
