@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D235B511E9B;
-	Wed, 30 Sep 2026 16:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9451518C332;
+	Wed, 30 Sep 2026 16:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787421; cv=none; b=RBjTeIe194+KdWqHPNA2mHnnZtc0yp/vgeFBw4WJ/4adIxzYr/InSaOjPN4SWQ867to4SQm6cT7f/qkr70YPctPd2t/FAwdMjdafjHcceIHyLxVXaxXrqg5qweGi+FEXUWFD7Eqp0vrwyzwLo5PoGPPE9zER2omZxI52FT9QxmM=
+	t=1790787423; cv=none; b=QVTZmuuToLVwKFAK6KGDYMxeZewBbgsZ61FBzrCIQKwomTIV2VjwpNK2xM7uKAZlPVcw6ksvipgvw/wwfiTgDgTN3rQedF3fu1FnuwSkEWbhXAsXTJCIn+CONr2yweYOrGKU2wFIXQnBY7oBfFevO9bEAXCZlgo+4aQqHiYMniw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787421; c=relaxed/simple;
-	bh=Eob14kY/S6SYezrGesZT2r8S+J73dvsN1fyGdbnv/6s=;
+	s=arc-20240116; t=1790787423; c=relaxed/simple;
+	bh=L2aCkJjqScPWVNfoXkzrgEiapXDtJb+5CEhps2xqTYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERJZ+sHAxyjxtsJ0JQTCSEkEYLLsh3KOETrIsX8gC/WST7hFSTA6pYP3Tpqp2cMrE5a35iVi783neDjzL9Q1jQLZyFkuvXYlcn4s5TrsRpGuSP7w7qKP3JFFxERA78mXdhpqVzobq315z1uYvnsOqGCc+09GnasyPjeAGYz+gMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCbCrH2r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RrOdX33lgoTbTimM8CUW1Yn3rFa76TYcAympEYXnD6U0tWA1o6PaqRhB6RLM6OmCV2mzQKEFgjT4ESSA+1DZNYD5t8DHQ9iJr6m5bLA7zWQtCDeW+H2EbAHJ1vugSlB5wePUXLvKklw1WlTgBWpcbq5oKsYkD5m8JBGcZPEwHFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwZbWPES; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCbCrH2r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306471F000FF;
-	Wed, 30 Sep 2026 16:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwZbWPES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258E21F000FF;
+	Wed, 30 Sep 2026 16:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787419;
-	bh=ZPmVgKCw5wQ6ANPM4AEuL/seVzLwq3SGJLcqKmxrWdY=;
+	s=korg; t=1790787422;
+	bh=MMtGCboId9qHqzzIax4k2r7R1KwLGvTSqMgzfDs7IgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SCbCrH2r4DhZpoTTZu/fwmrDCjin7nnNnFLq1Ly9H0DjS37GH+O27JYmJzlMqttCS
-	 eaIpsPVZ3ly+j56rCrRunPeFlyh5BGAowjRbJhdivN5Gbku+1MJt6HoR4ft0OZtDNy
-	 y97FwgHh3n+6CrV6t5agRtE3Ag5P9jNaOGVQGWPc=
+	b=nwZbWPESQUoFHyAgFF2+XD1ulj1lFmg49VsGQ/JBuTrsesf11AlKiYml992K3TcCl
+	 MNaeevFvfPrmAjVZRkYoTGAcrq+8ED6VT3tovFS8j7W2b6XBt05EUA/4tHRRa7pD+N
+	 djtf/ZtccumF9oscIaTQnRVnSTkzGaqFOl3usIiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jiri Pirko <jiri@resnulli.us>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 224/457] net/sched: sch_teql: fix shadowed err in __teql_resolve()
-Date: Wed, 30 Sep 2026 17:25:29 +0200
-Message-ID: <20260930152350.885016066@linuxfoundation.org>
+Subject: [PATCH 7.2 225/457] vlan: ensure sufficient headroom in vlan_dev_hard_header()
+Date: Wed, 30 Sep 2026 17:25:30 +0200
+Message-ID: <20260930152350.905786343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -55,49 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 907b978e82cb4c1c245fc2985bb27c5d5c88c8f6 ]
+[ Upstream commit cd5dd68267c4238795fadaf02b3575ca3f8a6500 ]
 
-__teql_resolve() declares an inner 'int err;' inside the
-'if (neigh_event_send(n, skb_res) == 0)' block, shadowing the outer
-'int err = 0;'. As a result, a negative return from dev_hard_header()
-is written to the inner variable and __teql_resolve() still returns 0.
+Callers that only reserve ETH_HLEN or less (such as llc_alloc_frame()),
+or skbs allocated before dynamic device/headroom changes (e.g. toggling
+VLAN_FLAG_REORDER_HDR or bonding/team switching slaves), can reach
+vlan_dev_hard_header() with insufficient headroom and trigger
+skb_under_panic().
 
-Remove the shadowed variable and set the outer err to -EINVAL when
-dev_hard_header() returns a negative error.
+Use skb_cow_head() in vlan_dev_hard_header() when VLAN_FLAG_REORDER_HDR
+is not set to ensure sufficient headroom for the VLAN header(s) and the
+underlying device hard header.
+
+Use READ_ONCE() to read dev->hard_header_len and dev->needed_headroom as
+they can be updated concurrently under RTNL (e.g. in
+vlan_transfer_features()) while vlan_dev_hard_header() runs locklessly on
+the transmit path. Also avoid LL_RESERVED_SPACE(dev) here so that the
+extra HH_DATA_MOD alignment padding does not trigger unnecessary
+pskb_expand_head() reallocations on inner stacked VLAN devices after the
+outer VLAN header has been pushed.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
+Reported-by: Zixuan Chai <petalzu987@gmail.com>
+Closes: https://lore.kernel.org/netdev/cover.1789987105.git.petalzu987@gmail.com/
+Link: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Cc: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924082951.1599377-4-edumazet@google.com
+Link: https://patch.msgid.link/20260924082951.1599377-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_teql.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/8021q/vlan_dev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
-index 9e52afc2d9808..409ce50cc0dbc 100644
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -265,14 +265,11 @@ __teql_resolve(struct sk_buff *skb, struct sk_buff *skb_res,
- 	}
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index 2859cbac3f266..c949c6a829456 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -55,6 +55,11 @@ static int vlan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
+ 	int rc;
  
- 	if (neigh_event_send(n, skb_res) == 0) {
--		int err;
- 		char haddr[MAX_ADDR_LEN];
+ 	if (!(vlan->flags & VLAN_FLAG_REORDER_HDR)) {
++		unsigned int hlen = READ_ONCE(dev->hard_header_len) +
++				    READ_ONCE(dev->needed_headroom);
++
++		if (skb_cow_head(skb, hlen) < 0)
++			return -ENOMEM;
+ 		vhdr = skb_push(skb, VLAN_HLEN);
  
- 		neigh_ha_snapshot(haddr, n, dev);
--		err = dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
--				      haddr, NULL, skb->len);
--
--		if (err < 0)
-+		if (dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
-+				    haddr, NULL, skb->len) < 0)
- 			err = -EINVAL;
- 	} else {
- 		err = (skb_res == NULL) ? -EAGAIN : 1;
+ 		vlan_tci = vlan->vlan_id;
 -- 
 2.53.0
 
